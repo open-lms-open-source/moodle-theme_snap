@@ -1,0 +1,201 @@
+// everything user customisable via less
+//
+// This needs to override CSS coming from three distinct places
+// 
+//  1. Bootstrap 3 (less/bootstrap3/*.less)
+//  2. Moodle overrides of Bootstrap  (less/moodle/*.less)
+//  3. Snap theme (less/bootswatch/snap-*.less)
+//
+// And in that order, this file will try to follow the order  and 
+// general format of the sources that it overrides to make it 
+// easier to trace back.
+//.
+// Typography 
+// -------------------------
+
+blockquote {
+    border-left: 5px solid @brand-primary;
+}
+
+hr {
+    border-top: 1px solid @brand-primary;
+}
+
+a:not(.btn), 
+a:not(.btn):visited { color:@brand-primary;}
+a:not(.btn):hover { color:darken(@brand-primary, 8%); }
+
+#region-main,
+#region-main textarea {
+    font-family: @font-family-serif;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+legend,
+.mform legend a,
+.mform legend a:hover {
+    font-family: @font-family-sans-serif;
+}
+
+// Pills
+// -------------------------
+.nav-pills {
+  > li {
+    // Links rendered as pills
+    // Active state
+    &.active > a {
+      &,
+      &:hover,
+      &:focus {
+        background-color: @brand-primary;
+      }
+    }
+  }
+}
+// Elements 
+// -------------------------
+
+.editing .summary a:last-of-type:hover,
+.toggle-display.textmenu:hover,
+.toggle-display.textmenu:focus {
+    background-color: @brand-primary;
+}
+
+.fixy-trigger {
+    border: 1px solid @brand-primary;
+}
+
+.fixy-trigger:hover {
+    background-color: @brand-primary;
+}
+
+.fixy{
+    background-color: @brand-primary;
+    .label-success {
+    color: @brand-primary;
+    }
+}
+.courses>.paging.paging-morelink a {
+    background-color: @brand-primary;
+    border-color: @brand-primary;
+    &:hover,
+    &:focus,
+    &:active,
+    &.active {
+        background-color: darken(@brand-primary, 8%);
+        border-color: darken(@brand-primary, 12%);
+    }
+}
+input.form-submit,
+input#id_submitbutton,
+input#id_submitbutton2,
+.path-admin .buttons input[type="submit"],
+td.submit input {
+    background-color: @brand-primary;
+    border-color: #fff;
+    &:hover,
+    &:focus,
+    &:active,
+    &.active {
+        background-color: darken(@brand-primary, 8%);
+        border-color: darken(@brand-primary, 12%);
+    }
+}
+#notice .singlebutton + .singlebutton input,
+.submit.buttons input[name="cancel"] {
+    background-color: @brand-primary;
+    border-color: #fff;
+    &:hover,
+    &:focus,
+    &:active,
+    &.active {
+        background-color: darken(@brand-primary, 8%);
+        border-color: darken(@brand-primary, 12%);
+    }
+}
+
+#login.fixy input[type=submit] {
+    color: @brand-primary;
+}
+
+#show-toc {
+    color: @link-color;
+}
+
+#course-toc {
+    div[role="menubar"]{
+        > span a:hover {
+            border-bottom-color: @brand-primary;
+        }
+    }
+}
+
+.section .moodle-activity:not(.modtype_label) {
+    background-image:
+    linear-gradient(
+      to right,
+      @brand-primary 32%,
+      #fff 32%
+    );
+}
+.section-modchooser-link a,
+button,
+.btn,
+input.form-submit,
+input[type="button"],
+input[type="submit"],
+input[type="reset"] {
+    background-color: @brand-primary;
+    color:#fff;
+    &:hover,
+    &:focus {
+        background-color: darken(@brand-primary, 8%);
+        border-color: darken(@brand-primary, 12%);
+    }
+}
+
+.settings-button {
+    background-color: @brand-primary;
+}
+
+#page-site-index #page-header {
+    background-color: @brand-primary;
+}
+
+.news-article-image {
+    background-color: @brand-primary;
+}
+
+.coursebox .info .coursename>a {
+    color: @brand-primary;
+}
+
+
+#page-course-loginas  #region-main,
+#notice {
+    background-color: @brand-primary;
+}
+
+
+/* highlight selected menu iteam logic */
+
+/*default */
+a[href="#sections"] {
+	border-bottom:0.3em solid @brand-primary;
+}
+/* blocks & appendices */
+#blocks:target a[href="#blocks"] {
+	border-bottom:0.3em solid @brand-primary;
+}
+
+/* moodle edit menus */
+.moodle-actionmenu[data-enhanced].show .menu a:hover, .moodle-actionmenu[data-enhanced].show .menu a:focus {
+	color:@brand-primary;
+	background-color:transparent;
+}
+

@@ -1,0 +1,62 @@
+// Import the bootstrap variables.
+@import "bootstrap3/variables.less";
+
+// Old Moodle stuff from base theme.
+// Massive, needs broken up.
+@import "moodle/variables";
+@import "moodle/mixins";
+@import "moodle/core";
+@import "moodle/admin";
+@import "moodle/calendar";
+@import "moodle/course";
+@import "moodle/filemanager";
+@import "moodle/message";
+@import "moodle/question";
+@import "moodle/user";
+@import "moodle/login";
+@import "moodle/new";
+
+
+// Upstream Bootstrap.
+@import "bootstrap3/bootstrap";
+
+// Override Bootstrap defaults.
+@import "moodle/bootstrapoverride";
+
+// Roll back nameclashes.
+@import "moodle/undo";
+
+@import "bootswatch/web-variables.less";
+
+// New Moodle stuff that builds on Bootstrap.
+@import "moodle/blocks";
+@import "moodle/forms";
+@import "moodle/modules";
+@import "moodle/chat";
+@import "moodle/reports";
+@import "moodle/backup-restore";
+@import "moodle/tables";
+@import "moodle/buttons";
+
+
+
+
+
+// Anything below this line is considered expendable,
+// so it doesn't matter if it doesn't show up in ie < 9
+// though at current time (2013-03-13) the whole file is
+// picked up in IE8, and IE9 fails at some point during the
+// responsive section, cutting off the last 400 selectors.
+
+// The following responsive imports are copied in
+// from "bootstrap/responsive".
+
+@import "moodle/responsive";
+
+@import "moodle/debug";
+@import "moodle/expendable";
+
+@import "bootswatch/web-bootswatch.less";
+//@import "bootswatch/web-course-bootswatch.less";
+@import "bootswatch/web-user-bootswatch.less";
+

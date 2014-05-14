@@ -1,0 +1,27 @@
+/* Custom CSS
+-------------------------*/
+#page-site-index #page-header {
+background: url([[setting:poster]]) no-repeat center center;
+-webkit-background-size: cover;
+-moz-background-size: cover;
+-o-background-size: cover;
+background-size: cover;
+}
+
+#logo {
+display:inline-block;
+background: transparent url([[setting:logo]]) no-repeat;
+height: 38px;
+width: 50%;
+background-size: contain;
+margin:-0.75em 0;
+
+}
+
+
+/* Custom CSS Settings
+-------------------------*/
+[[setting:web-bootswatch]]
+
+[[setting:customcss]]
+
