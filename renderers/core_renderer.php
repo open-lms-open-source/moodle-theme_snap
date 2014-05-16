@@ -310,7 +310,7 @@ class theme_snap_core_renderer extends toc_renderer {
         } else {
             $content .= $menunode->get_text();
         }
-        
+
         $content .= html_writer::end_tag('li');
 
         if ($menunode->has_children()) {
@@ -375,17 +375,16 @@ class theme_snap_core_renderer extends toc_renderer {
             }
             $name    = format_string($discussion->name, true, array('context' => $context));
             $date    = userdate($discussion->timemodified, get_string('strftimedatetime', 'langconfig'));
-            
+
             $readmorebtn = "<a class='btn btn-primary' href='".$CFG->wwwroot."/mod/forum/discuss.php?d=".$discussion->discussion."'>".get_string('readmore', 'theme_snap')."&nbsp;&#187;</a>";
-            
+
             $preview = '';
-            if(!$imagestyle)
-             {
-             	$preview = html_to_text($message, 0, false);
-             	$preview = "<p>".shorten_text($preview, 150)."</p>
-             	<p class='text-right'>".$readmorebtn."</p>";
-             }
-            
+            if (!$imagestyle) {
+                $preview = html_to_text($message, 0, false);
+                $preview = "<p>".shorten_text($preview, 150)."</p>
+                <p class='text-right'>".$readmorebtn."</p>";
+            }
+
 
             $output .= <<<HTML
 <div class="news-article clearfix">
@@ -431,7 +430,13 @@ HTML;
         } else if ($tab->inactive) {
             return html_writer::tag('li', html_writer::tag('a', $tab->text), array('class' => 'disabled'));
         } else {
-            $link = html_writer::link($tab->link, $tab->text, array('title' => $tab->title));
+            if (!($tab->link instanceof moodle_url)) {
+                // Backward compatibility when link was passed as quoted string
+                // to avoid double escaping of ampersands etc.
+                $link = '<a href="'.$tab->link.'" title="'.s($tab->title).'">'.$tab->text.'</a>';
+            } else {
+                $link = html_writer::link($tab->link, $tab->text, array('title' => $tab->title));
+            }
             return html_writer::tag('li', $link);
         }
     }
