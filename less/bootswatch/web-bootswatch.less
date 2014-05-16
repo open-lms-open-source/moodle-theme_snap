@@ -2026,12 +2026,15 @@ http://css-spinners.com/css/spinner/three-quarters.css
 }
 
 /** fix feedback field sizes on mobile devices **/
-@media screen and (max-width: @screen-xs) {
-  textarea{
-    max-width: 100%;
-  }
-  input[type=text]{
-    max-width: 100%;
+@media screen and (max-width: @screen-xs-max) {
+  .mform {
+      .ftags select,
+      textarea {
+        width: 100%;
+      }
+      input[type=text]{
+        max-width: 100%;
+      }
   }
 }
 

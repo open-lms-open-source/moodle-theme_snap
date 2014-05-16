@@ -130,7 +130,11 @@ form {
 }
 .mform .ftags select {
     margin-bottom: 0.7em;
-    min-width: 22em;
+}
+@media screen and (min-width: @screen-sm-min) {
+    .mform .ftags select {
+        min-width: 22em;
+    }
 }
 .mform .helplink img {
     margin: 0 .45em;
