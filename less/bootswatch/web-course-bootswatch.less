@@ -22,7 +22,7 @@
 	position:relative;
 	clear:none;
 	box-shadow:5px 5px #ccc;
-	background-color:#F6F5EA;
+	background-color:#999;
 	input.titleeditor {
 		margin-top:2em;
 		width:auto;
@@ -68,6 +68,7 @@
 		clear:both;
 		padding:0 4%;
 		color:white;
+		text-shadow:1px 1px 1px #666665;
 	}
 }
 /*
@@ -286,13 +287,16 @@ li.snap-resource.modtype_folder {
 }
 	
 // CODE //
+li.snap-resource.snap-mime-markup,
 li.snap-resource.snap-mime-html{
-	background-color:#f1672c;
+	background-color:#e66665;
+	background-image:url([[pix:theme|code]]);
 		&:before {
-			color:#f1672c;
+			color:#e66665;
 			background-color:fade(#fff, 68%);
 		}
 }
+
 
 li.snap-resource.snap-mime-text{
 	background-color:#f1bf26;

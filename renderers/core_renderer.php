@@ -371,20 +371,22 @@ class theme_snap_core_renderer extends toc_renderer {
                 if (!empty($imageurl)) {
                     $imageurl   = s($imageurl);
                     $imagestyle = " style=\"background-image:url('$imageurl')\"";
+                    
                 }
             }
             $name    = format_string($discussion->name, true, array('context' => $context));
             $date    = userdate($discussion->timemodified, get_string('strftimedatetime', 'langconfig'));
-
+            
             $readmorebtn = "<a class='btn btn-primary' href='".$CFG->wwwroot."/mod/forum/discuss.php?d=".$discussion->discussion."'>".get_string('readmore', 'theme_snap')."&nbsp;&#187;</a>";
-
+            
             $preview = '';
-            if (!$imagestyle) {
-                $preview = html_to_text($message, 0, false);
-                $preview = "<p>".shorten_text($preview, 150)."</p>
-                <p class='text-right'>".$readmorebtn."</p>";
-            }
-
+            if(!$imagestyle)
+             {
+             	$preview = html_to_text($message, 0, false);
+             	$preview = "<p>".shorten_text($preview, 200)."</p>
+             	<p class='text-right'>".$readmorebtn."</p>";
+             }
+            
 
             $output .= <<<HTML
 <div class="news-article clearfix">
@@ -393,7 +395,6 @@ class theme_snap_core_renderer extends toc_renderer {
         <div class="news-article-content">
             <h3><a href="$CFG->wwwroot/mod/forum/discuss.php?d=$discussion->discussion">$name</a></h3>
             <em class="news-article-date">$date</em>
-            <!-- <div class="news-article-excerpt">$preview</div> -->
         </div>
     </div>
 </div>

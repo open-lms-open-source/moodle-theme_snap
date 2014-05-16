@@ -95,6 +95,12 @@ img {
     max-width: 100%;
     height: auto;
 }
+img[style*="float:left"],
+img[style*="float: left"],
+img[style*="float: right"],
+img[style*="float:right"]{
+	margin:2%;
+}
 @media screen and (max-width: @screen-sm) {
 	// unfloat images for small screen
 	img[style] {
@@ -1362,10 +1368,8 @@ http://blog.rodneyrehm.de/archives/34-iOS7-Mobile-Safari-And-Viewport-Units.html
 }
 
 #news-articles {
-    max-width: 50.5em;
     margin: 0 auto;
 }
-
 .news-article {
     background-color: #fff;
     margin-bottom: 0.5em;
@@ -1416,6 +1420,12 @@ http://blog.rodneyrehm.de/archives/34-iOS7-Mobile-Safari-And-Viewport-Units.html
           min-height: 300px;
           margin-bottom: 0;
     }
+}
+@media screen and (min-width: @screen-md) {
+	.news-article {
+		min-height:28vh;
+	}
+
 }
 
 //

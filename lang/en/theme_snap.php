@@ -44,7 +44,7 @@ $string['footnotedesc'] = '';
 $string['headingfont'] = 'Heading font';
 $string['headingfont_desc'] = '';
 $string['help'] = 'Help';
-$string['loading'] = 'Loading...';
+$string['knowledgebase'] = 'Moodlerooms Knowledge Base';
 $string['loginform'] = 'Login form';
 $string['logo'] = 'Logo';
 $string['logodesc'] = '';
@@ -62,8 +62,6 @@ $string['poweredbyrunby'] = 'Powered by <a href="http://www.moodlerooms.com/meet
 $string['previoussection'] = 'Previous section';
 $string['region-side-post'] = 'Right';
 $string['region-side-pre'] = 'Left';
-$string['region-side-top'] = 'Top';
-$string['region-main'] = 'Main';
 $string['seriffont'] = 'Serif font';
 $string['seriffont_desc'] = '';
 $string['subtitle'] = 'Site description';
@@ -73,10 +71,9 @@ $string['themecolordesc'] = 'Used in links, buttons and menu backgrounds.';
 $string['togglenavigation'] = 'Toggle navigation';
 $string['via'] = 'via';
 $string['viewyourprofile'] = 'View your profile';
-$string['conditional'] = 'Conditional';
-$string['togglenavigation'] = 'Toggle navigation';
-$string['poweredbyrunby'] = 'Powered by <a href="http://www.moodlerooms.com/meet-joule-lms" target="_blank">Joule</a>';
-$string['manuals'] = 'Joule 2 Manuals';
-$string['knowledgebase'] = 'Moodlerooms Knowledge Base';
-$string['messageread'] = 'Message Read';
 $string['readmore'] = 'Read more';
+
+
+
+
+
