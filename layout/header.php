@@ -1,7 +1,17 @@
 <?php
 $PAGE->set_popup_notification_allowed(false);
 $PAGE->requires->jquery(); // TODO: Might be a better place to put this (EG: in lib.php in a theme lifecycle function).
-$PAGE->requires->strings_for_js(array('close'), 'theme_snap');
+$PAGE->requires->strings_for_js(array('close',
+        'conditional',
+        'debugerrors',
+        'problemsfound',
+        'forumtopic',
+        'forumauthor',
+        'forumreplies',
+        'forumlastpost'
+        ),
+    'theme_snap');
+
 echo $OUTPUT->doctype();
 ?>
 

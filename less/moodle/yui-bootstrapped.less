@@ -1,0 +1,193 @@
+.yui-bootstrapped {
+    .yui-button button {
+        .btn;
+        .btn-default;
+    }
+    .mask {
+        background-color: #fff;
+        opacity: 0.75;
+    }
+    .yui-dt > table {
+        .table;
+        .table-striped;
+        th.yui-dt-sortable {
+            &.yui-dt-asc a.yui-dt-sortable:after {
+                content: "\00a0▲";
+            }
+            &.yui-dt-desc a.yui-dt-sortable:after {
+                content: "\00a0▼";
+            }
+        }
+    }
+    .yui3-tabview-list {
+        .nav;
+        .nav-tabs;
+        .yui3-tab-selected > a {
+          &,
+          &:hover,
+          &:focus {
+            color: @nav-tabs-active-link-hover-color;
+            background-color: @nav-tabs-active-link-hover-bg;
+            border: 1px solid @nav-tabs-active-link-hover-border-color;
+            border-bottom-color: transparent;
+            cursor: default;
+          }
+        }
+    }
+    .yui3-tabview-content {
+        padding-top: 0.5em;
+        .yui3-tabview-panel {
+            padding-top: 0.5em;
+        }
+    }
+    .yui-panel-container {
+        margin-top: 60px;
+        .yui-panel {
+            .modal-content;
+            .hd {
+                .modal-header;
+            }
+            .bd {
+                .modal-body;
+            }
+            .ft {
+                .modal-footer;
+            }
+        }
+    }
+    .yui3-panel {
+        .yui3-panel-content {
+            .modal-content;
+            .yui3-widget-hd {
+                .modal-header;
+            }
+            .yui3-widget-bd {
+                .modal-body;
+            }
+            .yui3-widget-ft,
+            .ft {
+                .modal-footer;
+            }
+        }
+    }
+    .yuimenu {
+        // Extracted from less/bootstrap3/dropdown.less
+        min-width: 160px;
+        padding: 5px 0;
+        margin: 2px 0 0; // override default ul
+        list-style: none;
+        font-size: @font-size-base;
+        background-color: @dropdown-bg;
+        border: 1px solid @dropdown-fallback-border; // IE8 fallback
+        border: 1px solid @dropdown-border;
+        border-radius: @border-radius-base;
+        .box-shadow(0 6px 12px rgba(0,0,0,.175));
+        a.yuimenuitemlabel {
+            display: block;
+            padding: 3px 20px;
+            clear: both;
+            font-weight: normal;
+            line-height: @line-height-base;
+            color: @dropdown-link-color;
+            white-space: nowrap; // prevent links from randomly breaking onto new lines
+            &:hover,
+            &:focus {
+            text-decoration: none;
+            color: @dropdown-link-hover-color;
+            background-color: @dropdown-link-hover-bg;
+            }
+        }
+        &.show-scrollbars {
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+        // Special case this for now but need to find
+        // general rule for when to show and hide
+        // scrollbars.
+        &#pld_gear {
+            overflow: hidden;
+        }
+    }
+    .yui-dt-paginator {
+        .clearfix;
+        .yui-pg-first {
+            .border-left-radius(@border-radius-base);
+        }
+        .yui-pg-last {
+            .border-right-radius(@border-radius-base);
+        }
+        .yui-pg-previous,
+        .yui-pg-first,
+        .yui-pg-next,
+        .yui-pg-last,
+        .yui-pg-page {
+                position: relative;
+                float: left; // Collapse white-space
+                padding: @padding-base-vertical @padding-base-horizontal;
+                line-height: @line-height-base;
+                text-decoration: none;
+                margin-left: -1px;
+                border: 1px solid @pagination-border;
+        }
+        a {
+            &.yui-pg-previous,
+            &.yui-pg-first,
+            &.yui-pg-next,
+            &.yui-pg-last,
+            &.yui-pg-page {
+                color: @pagination-color;
+                background-color: @pagination-bg;
+                &:hover,
+                &:focus {
+                  color: @pagination-hover-color;
+                  background-color: @pagination-hover-bg;
+                  border-color: @pagination-hover-border;
+                }
+            }
+        }
+        span,
+        span:hover,
+        span:focus {
+            &.yui-pg-previous,
+            &.yui-pg-first,
+            &.yui-pg-next,
+            &.yui-pg-last,
+            &.yui-pg-page:not(.yui-pg-current-page) {
+              color: @pagination-disabled-color;
+              background-color: @pagination-disabled-bg;
+              border-color: @pagination-disabled-border;
+              cursor: not-allowed;
+            }
+        }
+        span.yui-pg-current-page {
+            &,
+            &:hover,
+            &:focus {
+                z-index: 2;
+                color: @pagination-active-color;
+                background-color: @pagination-active-bg;
+                border-color: @pagination-active-border;
+                cursor: default;
+            }
+        }
+        .yui-pg-rpp-options {
+            margin: @padding-base-vertical @padding-base-horizontal;
+            float: left;
+        }
+    }
+    &.path-local-pld input[type="button"],
+    &.path-local-pld input[type="submit"] {
+        padding: @padding-base-vertical @padding-base-horizontal;
+    }
+    &#page-local-joulegrader-view .yui3-panel {
+        // Make the buuttons at the bottom look like they're in the footer,
+        // hide the actual, empty footer
+        #fgroup_id_grading_buttonar {
+            .modal-footer;
+            padding-bottom: 0;
+        }
+        .yui3-widget-ft {
+            display: none;
+        }
+    }
+}

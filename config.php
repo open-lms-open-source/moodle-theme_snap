@@ -22,6 +22,13 @@
  * @license   http://opensource.org/licenses/gpl-3.0.html GNU Public License
  */
 
+// Setup debugging html.
+// This allows javascript to target debug messages and move them to footer
+if (!function_exists('xdebug_break')){
+    ini_set('error_prepend_string','<div class="php-debug">');
+    ini_set('error_append_string','</div>');
+}
+
 $THEME->doctype = 'html5';
 $THEME->yuicssmodules = array();
 $THEME->name = 'snap';

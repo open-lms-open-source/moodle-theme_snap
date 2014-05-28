@@ -76,6 +76,97 @@ class snap_shared extends renderer_base {
         return html_writer::tag('nav', $previous.$next, array('id' => 'section_footer'));
     }
 
+    /**
+    * Taken from /format/renderer.php
+    * Generate a summary of the activites in a section
+    *
+    * @param stdClass $section The course_section entry from DB
+    * @param stdClass $course the course record from DB
+    * @param array    $mods (argument not used)
+    * @return string HTML to output.
+    */
+    public static function section_activity_summary($section, $course, $mods) {
+        global $CFG;
+
+        require_once($CFG->libdir.'/completionlib.php');
+
+        $modinfo = get_fast_modinfo($course);
+        if (empty($modinfo->sections[$section->section])) {
+            return '';
+        }
+
+        // Generate array with count of activities in this section:
+        $sectionmods = array();
+        $total = 0;
+        $complete = 0;
+        $cancomplete = isloggedin() && !isguestuser();
+        $completioninfo = new completion_info($course);
+        foreach ($modinfo->sections[$section->section] as $cmid) {
+            $thismod = $modinfo->cms[$cmid];
+
+            if ($thismod->modname == 'label') {
+                // Labels are special (not interesting for students)!
+                continue;
+            }
+
+            if ($thismod->uservisible) {
+                if (isset($sectionmods[$thismod->modname])) {
+                    $sectionmods[$thismod->modname]['name'] = $thismod->modplural;
+                    $sectionmods[$thismod->modname]['count']++;
+                } else {
+                    $sectionmods[$thismod->modname]['name'] = $thismod->modfullname;
+                    $sectionmods[$thismod->modname]['count'] = 1;
+                }
+                if ($cancomplete && $completioninfo->is_enabled($thismod) != COMPLETION_TRACKING_NONE) {
+                    $total++;
+                    $completiondata = $completioninfo->get_data($thismod, true);
+                    if ($completiondata->completionstate == COMPLETION_COMPLETE ||
+                        $completiondata->completionstate == COMPLETION_COMPLETE_PASS) {
+                        $complete++;
+                    }
+                }
+            }
+        }
+
+        if (empty($sectionmods)) {
+            // No sections
+            return '';
+        }
+
+        // Output section activities summary:
+        $o = '';
+        $o.= html_writer::start_tag('div', array('class' => 'section-summary-activities mdl-right'));
+        foreach ($sectionmods as $mod) {
+            $o.= html_writer::start_tag('span', array('class' => 'activity-count'));
+            $o.= $mod['name'].': '.$mod['count'];
+            $o.= html_writer::end_tag('span');
+        }
+        $o.= html_writer::end_tag('div');
+
+        $a = false;
+
+        // Output section completion data
+        if ($total > 0) {
+            $a = new stdClass;
+            $a->complete = $complete;
+            $a->total = $total;
+            $a->percentage = ($complete / $total) * 100;
+
+            $o.= html_writer::start_tag('div', array('class' => 'section-summary-activities mdl-right'));
+            $o.= html_writer::tag('span', get_string('progresstotal', 'completion', $a), array('class' => 'activity-count'));
+            $o.= html_writer::end_tag('div');
+        }
+
+        $retobj = (object) array (
+            'output'=>$o,
+            'progress'=>$a,
+            'complete'=>$complete,
+            'total'=>$total
+        );
+
+        return $retobj;
+    }
+
     private static function target_link_content($name, $arrow, $string) {
         $html = html_writer::div($arrow, 'nav_icon');
         $html .= html_writer::start_span('text');

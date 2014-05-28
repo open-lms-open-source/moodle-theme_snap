@@ -25,6 +25,56 @@ defined('MOODLE_INTERNAL') || die();
 
 class toc_renderer extends core_renderer {
 
+    /**
+     * table of contents link information
+     * @param string $label
+     * @return string
+     *
+     * @Author Guy Thomas
+     * @Date 2014-05-23
+     */
+    protected function toc_linkinfo($label) {
+        $linkinfo = '<em class="published-status"><small>'.$label.'</small></em>';
+        return ($linkinfo);
+    }
+
+    /**
+     * toc progress percentage
+     * @param stdClass $section
+     * @param stdClass $course
+     * @param boolean $perc - display as a percentage if true
+     * @return string
+     *
+     * @Author Guy Thomas
+     * @Date 2014-05-23
+     */
+    protected function toc_progress($section, $course, $perc = false) {
+        global $CFG, $USER;
+
+        require_once($CFG->libdir.'/completionlib.php');
+
+        $completioninfo = new completion_info($course);
+        if (!$completioninfo->is_enabled()) {
+            return ''; // completion tracking not enabled
+        }
+        // If you have the ability to manage grades then you should NOT be looking at your own progress!
+        if (has_capability('moodle/grade:manage', context_course::instance($course->id), $USER)){
+            return '';
+        }
+        $sac = snap_shared::section_activity_summary($section, $course, null);
+
+        if ($perc) {
+            $percentage = $sac->progress->percentage !=null ? round($sac->progress->percentage,0).'%' : '';
+            return ('<span class="completionstatus percentage">'.$percentage.'</span>');
+        } else {
+            if ($sac->progress->total>0) {
+                return ('<span class="completionstatus outoftotal">Progress:  '.$sac->progress->complete.'/'.$sac->progress->total.'</span>');
+            } else {
+                return ('');
+            }
+        }
+    }
+
 
     /**
      * Print  table of contents for a course
@@ -56,9 +106,9 @@ class toc_renderer extends core_renderer {
         if ($singlepage) {
             $search = get_string('search');
             $o .= '
-            <input class="pull-right" id="toc-search-input"  type="text" title="'.s($search).'" placeholder="'.s($search).'" />
+            <label class="sr-only" for="toc-search-input">Search</label><input id="toc-search-input"  type="text" title="'.s($search).'" placeholder="&#xe0d0;" />
             '.$this->modulesearch();
-        }
+        }// '.s($search).'
         $o .= '</div>';
 
         $toc = '<ol id="chapters" class="chapters" role="menu" start="0">';
@@ -67,10 +117,10 @@ class toc_renderer extends core_renderer {
 
         $modinfo = get_fast_modinfo($course);
         foreach ($modinfo->get_section_info_all() as $section => $thissection) {
-
             if ($section > $course->numsections) {
                 continue;
             }
+
             $linkinfo    = '';
             $showsection = $thissection->uservisible ||
                 ($thissection->visible && !$thissection->available && $thissection->showavailability
@@ -82,7 +132,7 @@ class toc_renderer extends core_renderer {
                 if (!$course->hiddensections && $thissection->available) {
                     // Section is hidden, but show that it is not available.
                     $outputlink = false; // Students don't get links for hidden sections.
-                    $linkinfo = '<em class="published-status"><small>'.get_string('notavailable').'</small></em>';
+                    $linkinfo = $this->toc_linkinfo(get_string('notavailable'));
                 } else {
                     continue; // Completely hidden section.
                 }
@@ -92,17 +142,13 @@ class toc_renderer extends core_renderer {
                 // students.
                 if (!$thissection->visible) {
                     if ($viewhiddensections) {
-                        $linkinfo = '<em class="published-status"><small>'.get_string('notpublished', 'theme_snap').'</small></em>';
+                        $linkinfo = $this->toc_linkinfo(get_string('notpublished', 'theme_snap'));
                     } else {
                         $outputlink = false; // Students don't get links for hidden sections.
-                        $linkinfo = '<em class="published-status"><small>'.get_string('notavailable').'</small></em>';
+                        $linkinfo = $this->toc_linkinfo(get_string('notavailable'));
                     }
                 } else if (!$thissection->available) {
-                    if (!$viewhiddensections) {
-                        // Note student still gets a link for conditionally unavailable sections so that they can see
-                        // conditional criteria by following link.
-                        $linkinfo = '<em class="published-status"><small>'.get_string('conditional', 'theme_snap').'</small></em>';
-                    }
+                    $linkinfo = $this->toc_linkinfo(get_string('conditional', 'theme_snap'));
                 }
             }
 
@@ -114,9 +160,10 @@ class toc_renderer extends core_renderer {
                 }
                 $link = html_writer::link($url, get_section_name($course, $section), array('role' => 'menuitem'));
             } else {
-                $link = get_section_name($course, $section);
+                $link = get_section_name($course, $section).' '.$this->toc_progress ($thissection, $course);
             }
-            $li   = '<li>'.$link.' '.$linkinfo.'</li>';
+            $progress = $this->toc_progress ($thissection, $course);
+            $li   = '<li>'.$link.$progress.' '.$linkinfo.'</li>';
             $toc .= $li;
         }
 
@@ -139,14 +186,15 @@ class toc_renderer extends core_renderer {
         global $CFG, $COURSE;
 
         $links = array();
+        $localplugins = core_component::get_plugin_list('local');
 
         $links[] = array(
             'link' => 'user/index.php?id='.$COURSE->id.'&mode=1',
             'title' => get_string('participants')
         );
 
-        // Only show if joule grader enabled.
-        if ($this->joulegraderenabled()) {
+        // Only show if joule grader is installed.
+        if (array_key_exists('joulegrader', $localplugins)) {
             $links[] = array(
                 'link' => 'local/joulegrader/view.php?courseid='.$COURSE->id,
                 'title' => get_string('pluginname', 'local_joulegrader')
@@ -158,8 +206,33 @@ class toc_renderer extends core_renderer {
             'title' => get_string('gradebook', 'grades')
         );
 
-        // Only show outcomes if enabled.
+        // Only show Norton grader if installed.
+        if (array_key_exists('nortongrader', $localplugins)) {
+            $links[] =array(
+                'link' => $CFG->wwwroot.'/local/nortongrader/view.php?courseid='.$COURSE->id,
+                'title' => get_string('pluginname', 'local_nortongrader')
+            );
+        }
+
+        // Only show Joule reports if installed.
+        if (array_key_exists('reports', core_component::get_plugin_list('block'))) {
+            $links[] = array(
+                'link' => $CFG->wwwroot.'/blocks/reports/view.php?action=dashboard&courseid='.$COURSE->id,
+                'title' => get_string('joulereports', 'block_reports')
+            );
+        }
+
+        // Only show legacy outcomes if enabled.
         if (!empty($CFG->enableoutcomes)) {
+            $links[] = array(
+                'link' => 'grade/edit/outcome/course.php?id='.$COURSE->id,
+                'title' => get_string('legacyoutcomes', 'outcome'),
+                'capability' => 'moodle/course:update' // Capability required to view this item.
+            );
+        }
+
+        // Only show core outcomes if enabled.
+        if (!empty($CFG->core_outcome_enable)) {
             $links[] = array(
                 'link' => 'outcome/course.php?contextid='.context_course::instance($COURSE->id)->id,
                 'title' => get_string('outcomes', 'outcome'),
@@ -332,14 +405,4 @@ class toc_renderer extends core_renderer {
         }
         return false;
     }
-
-
-    /**
-     * is joule grader enabled?
-     * @return bool
-     */
-    protected function joulegraderenabled() {
-        return (is_callable('mr_on') && mr_on('joulegrader', 'local'));
-    }
-
 }

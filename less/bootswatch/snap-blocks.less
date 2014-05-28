@@ -1,0 +1,147 @@
+//
+// Moodle Blocks
+// --------------------------------------------------
+
+
+
+@media screen and (min-width: @screen-sm) {
+    #moodle-blocks .block:not(.block_settings) {
+        clear: both;
+        border-top: 1px solid #eee;
+        padding:1em 0;
+        margin:1em 0;
+    }
+    #moodle-blocks .block:not(.block_settings) .header {
+        float: left;
+        width: 50%;
+        text-align: right;
+        padding-right: 1em;
+    }
+
+    #moodle-blocks .block:not(.block_settings) .content {
+        padding-top: .9em;
+        margin-left: 50%;
+    }
+}
+
+.block .header .title h2 {
+    font-size: @font-size-h2;
+}
+.block h3 {
+    font-size: @font-size-h3;
+}
+
+a.skip-block, a.skip {
+    display: none;
+}
+
+/* remove block actions, always display blocks when displayed */
+.block_action {
+    display: none;
+}
+.block.hidden .content {
+    display: block;
+}
+
+/* hide blocks by default */
+#blocks #moodle-blocks,
+#blocks #appendices,
+#blocks:target #chapters {
+    visibility: hidden;
+    height: 0px;
+    overflow: hidden;
+}
+
+/* show blocks on front page, quiz, book etc when clicked */
+#page-admin-index #moodle-blocks,
+#page-mod-quiz-attempt #moodle-blocks,
+#page-mod-book-view #moodle-blocks,
+#page-site-index #moodle-blocks,
+#page-user-profile #moodle-blocks,
+#page-my-index #moodle-blocks,
+#blocks:target #moodle-blocks,
+#blocks:target #appendices {
+    visibility: visible;
+    height: auto;
+    overflow: visible;
+}
+
+
+/* hide main content when blocks shown */
+#blocks:target #region-main {
+    display: none;
+}
+
+.block,
+.block-region .block {
+    margin: 0 auto 1em auto;
+    padding: 0 4%;
+    border: 0;
+    box-shadow: none;
+    border: 0px;
+    background-color: transparent;
+    max-width: 50.5em;
+}
+
+/* icons in blocks */
+.block_navigation .block_tree .tree_item.branch,
+.block_settings .block_tree .tree_item.branch {
+    background-position: 0 .5em;
+}
+.block_navigation .block_tree li.item_with_icon > p img,
+.block_settings .block_tree li.item_with_icon > p img {
+    top: .5em;
+    opacity: .7;
+}
+
+.block .icon.column {
+    width: 21px;
+    img {
+        vertical-align: baseline;
+    }
+}
+
+
+
+/* Calandar */
+.block .minicalendar {
+    max-width: 100%;
+}
+// hide this stuff from blocks when not viewing full page cal
+.eventskey,
+.block_calendar_month .calendar_filters {
+    display: none;
+}
+
+/* ADMIN BLOCK */
+.block_settings {
+    width: 320px;
+    height: 0;
+    visibility: hidden;
+    position: fixed;
+    background-color: #fff !important;
+    top: 0;
+    right: -100%;
+      .moodle-core-dragdrop-draghandle{
+        display:none;
+      }
+      .header {
+      	visibility:hidden;
+      	height:1.5em;
+      }
+}
+.block_settings.state-visible,
+.block_settings:target {
+    visibility: visible;
+    padding-top: 4em;
+    height: 100%;
+    overflow-y: scroll;
+    z-index: 2;
+    right:0;
+    border-left: 1px solid #eee;
+    -webkit-transition: right .33s cubic-bezier(.694, .0482, .335, 1);
+    -moz-transition: right .33s cubic-bezier(.694, .0482, .335, 1);
+    -o-transition: right .33s cubic-bezier(.694, .0482, .335, 1);
+    -ms-transition: right .33s cubic-bezier(.694, .0482, .335, 1);
+    transition: right .33s cubic-bezier(.694, .0482, .335, 1);
+}

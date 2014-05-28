@@ -11,7 +11,7 @@ function snapInit(){
      * master switch for logging
      * @type {boolean}
      */
-    var loggingenabled=false;
+    var loggingenabled = false;
 
     /**
      * console.log wrapper - copes with old browsers
@@ -38,18 +38,14 @@ function snapInit(){
      */
     var testAdminBlock = function(){
 
-        // GT MOD 2014-04-30 - do not get settings block using #inst5 - use class instead
+        // get admin block via class
         var settingsblock=$('.block.block_settings');
         if (!settingsblock.length){
             return;
         }
-        var settingsBlockHref= '#'+$(settingsblock).attr('id');
         // get settings block id
         // add as href
-        
-        
-        // GT MOD 2014-04-30 - made close button use lang strings
-        // if I replace href="#inst5" with something else then close doesn't work
+        var settingsBlockHref= '#'+$(settingsblock).attr('id');
         $(settingsblock).prepend("<a class='settings-button  snap-action-icon'><i class='icon icon-arrows-01'></i><small>"+M.util.get_string('close', 'theme_snap')+"</small></a>");
         $('.settings-button').css('display','inline-block').attr('href', settingsBlockHref);
     };
@@ -65,6 +61,53 @@ function snapInit(){
             $(href).toggleClass('state-visible');
             e.preventDefault();
         });
+    };
+
+    /**
+     * move PHP errors into header
+     *
+     * @author Guy Thomas
+     * @date 2014-05-19
+     * @return void
+     */
+    var movePHPErrorsToHeader = function() {
+        // Get messages using the different classes we want to use to target debug messages.
+        var msgs = $('.xdebug-error, .php-debug, .debuggingmessage');
+
+        if (msgs.length) {
+            // OK we have some errors - lets shove them in the footer.
+            $(msgs).addClass('php-debug-footer');
+            var errorcont = $('<div id="footer-error-cont"><h3>'+M.util.get_string('debugerrors', 'theme_snap')+'</h3><hr></div>');
+            $('#page-footer').append(errorcont);
+            $('#footer-error-cont').append(msgs);
+            // Add rulers
+            $('.php-debug-footer').after ($('<hr>'));
+            // Lets also add the error class to the header so we know there are some errors.
+            $('#mr-nav').addClass('errors-found');
+            // Lets add an error link to the header.
+            var errorlink = $('<a class="footer-error-link btn btn-danger" href="#footer-error-cont">' + M.util.get_string('problemsfound', 'theme_snap') + ' <span class="badge">' + (msgs.length) + '</span></a>');
+            $('#mr-nav').append(errorlink);
+            errorlink.click(function(e){
+                e.preventDefault();
+                // Scroll to footer error container but don't bother animating.
+                scrolltoElement($('#footer-error-cont'), false);
+            });
+        }
+    };
+
+    /**
+     * Set forum strings because there isn't a decent renderer for mod/forum
+     * It would be great if the official moodle forum module used a renderer for all output
+     *
+     * @author Guy Thomas
+     * @date 2014-05-20
+     * @return void
+     */
+    var setForumStrings = function() {
+        $('.path-mod-forum tr.discussion td.topic.starter').attr('data-cellname', M.util.get_string('forumtopic', 'theme_snap'));
+        $('.path-mod-forum tr.discussion td.picture').attr('data-cellname', M.util.get_string('forumauthor', 'theme_snap'));
+        $('.path-mod-forum tr.discussion td.replies').attr('data-cellname', M.util.get_string('forumreplies', 'theme_snap'));
+        $('.path-mod-forum tr.discussion td.lastpost').attr('data-cellname', M.util.get_string('forumlastpost', 'theme_snap'));
     };
 
     /**
@@ -118,10 +161,10 @@ function snapInit(){
      * @author Stuart Lamour
      */
     var showSection = function() {
+
         // check we are in a course
         if(window.location.href.indexOf("course/view.php?id") > -1) {
             $('.course-content ul li.section').removeClass('state-visible');
-
 
             // GT MOD 2014-04-30 - we can't do the following, it won't work if we have a module in the section too
             // $(window.location.hash).addClass('state-visible').focus();
@@ -134,15 +177,6 @@ function snapInit(){
                 $('#section-'+hbparams.section).addClass('state-visible').focus();
 
                 if (hbparams.modid==null){
-                    /*
-                    // scroll to top of section
-                    var navheight = $('#mr-nav').outerHeight();
-                    var scrtop = $('#section-'+hbparams.section).offset().top - navheight;
-                    $('html, body').animate({
-                        scrollTop: scrtop
-                    }, 100);
-                    */
-
                     // change of behaviour, just scroll to top of page with no animation
                     window.scrollTo(0,0);
                 }
@@ -219,6 +253,30 @@ function snapInit(){
     };
 
     /**
+     * Scroll to element on page.
+     *
+     * @param node el
+     * @param bool animate
+     * @param integer ms
+     * @return void
+     */
+    var scrolltoElement = function(el, animate, ms){
+        if (ms == null){
+            ms = 1000;
+        }
+        var navheight = $('#mr-nav').outerHeight();
+        var scrtop = el.offset().top - navheight;
+
+        if (animate){
+            $('html, body').animate({
+                scrollTop: scrtop
+            }, ms);
+        } else {
+            window.scrollTo(0, scrtop);
+        }
+    };
+
+    /**
      * focus Module on page
      *
      * @author Guy Thomas
@@ -260,24 +318,14 @@ function snapInit(){
         var targmod = 'module-' + hbparams.modid;
         // http://stackoverflow.com/questions/6677035/jquery-scroll-to-element
         var mod = $("#" + targmod);
-        var navheight = $('#mr-nav').outerHeight();
-        var scrtop = mod.offset().top - navheight;
-
-        if (animscroll){
-            $('html, body').animate({
-                scrollTop: scrtop
-            }, 1000);
-        } else {
-            window.scrollTo(0, scrtop);
-        }
+        scrolltoElement(mod, animscroll);
 
         var searchpin = $("#searchpin");
         if (!searchpin.length){
-            var searchpin = $('<i id="searchpin" class="icon-socialmedia-25"></i>');
+            var searchpin = $('<i id="searchpin" class="icon icon-office-01"></i>');
         }
 
-        $(mod).find('.activityinstance').prepend(searchpin);
-        //$(searchpin).css('margin-left','-1em'); // removed this to fix INT-5997
+        $(mod).find('.activityinstance .instancename').prepend(searchpin);
 
         // reset search value
         $('#toc-search-input').val('');
@@ -286,13 +334,42 @@ function snapInit(){
         $("#toc-search-results").html('');
     };
 
+    /**
+     * This is a temporary function
+     * It will be replaced by a render soon
+     * @author Stuart Lamour
+     * @date 2014-05-28
+     */
+    var addConditionalAsides = function() {
+        var conditional = "<aside class='conditional_info'>"+M.util.get_string('conditional', 'theme_snap')+"</aside>";
+        $('.snap-resource.conditional').each(function() {
+            $(this).append(conditional);
+            var conditionalInfo = $(this).find('.availabilityinfo');
+            $(this).find('.conditional_info').append(conditionalInfo);
+        });
+    };
+
+    /**
+     * Do things according to the current page hash.
+     *
+     * @author Guy Thomas
+     * @date 2014-05-21
+     */
+    var hashBehaviour = function(){
+        if (location.hash=='#primary-nav'){
+            // hide page and moodle footer or we will get double scroll bars
+            $('#page').hide();
+            $('#moodle-footer').hide();
+        }
+    }
+
 
     /**
      * add listeners
      *
      * just a wrapper for various snippets that add listeners
      */
-    var addListeners=function(){
+    var addListeners = function(){
 
         // listener for toc search //
         var dataList = $("#toc-searchables").find('a');
@@ -335,8 +412,6 @@ function snapInit(){
             $(this).val('');
         });
 
-
-
         // listener for clicking serach result //
         $(document).on("click", "#toc-search-results a", function(e){
             var href= this.getAttribute('href');
@@ -346,43 +421,61 @@ function snapInit(){
 
         // listen for popstate for back/fwd buttons //
         $(window).bind("popstate", function() {
+            logger('popstate triggered');
+            showSection();
+        });
+        $(window).bind("hashchange", function() {
+            logger('hashchange triggered');
             showSection();
         });
 
-        // listen for click on chapter links where chapter not being edited //
+
+        // Listen for click on chapter links where chapter not being edited.
         $(document).on("click", 'body:not(.editing) .chapters a', function(e){
-            var href= this.getAttribute('href');
+            var href = this.getAttribute('href');
             $('.course-content ul li.section').removeClass('state-visible');
             // for mobile remove state on click
             $('#chapters, #appendices').removeClass('state-visible');
             $(href).addClass('state-visible').focus();
-            if(history.pushState) {
+            if (window.history && window.history.pushState) {
                 history.pushState(null, null, href);
             } else {
                 location.hash = href;
             }
             e.preventDefault();
         });
-        
-        // listener for small screen showing of chapters & appendicies
+
+        // Listener for small screen showing of chapters & appendicies.
         $(document).on("click", '#course-toc div[role="menubar"] a', function(e){
         	$('#chapters, #appendices').addClass('state-visible');
         });
+
+        // listen for fixy trigger so we can sort out scroll bars (hide all page content)
+        $('.fixy-trigger').click(function(){
+            $('#page').hide();
+            $('#moodle-footer').hide();
+        });
+
+        // listen for close button so we can sort out scroll bars (show all page content)
+        $('#fixy-close').click(function(){
+            $('#page').show();
+            $('#moodle-footer').show();
+        });
     };
-
-
 
     // GO !!!!
     addListeners();
     testAdminBlock();
     setupSettingsButton();
     showPageSectionMod(true);
+    movePHPErrorsToHeader();
+    setForumStrings();
+    hashBehaviour();
+    addConditionalAsides();
 
     $(window).on('load' , function() {
         // note we need to call showPageSectionMod again on window load or the page will jump to the top of the page!
         // this does work, however is there a more elegant fix?
         showPageSectionMod(false);
     });
-
-
 }

@@ -1,0 +1,790 @@
+//
+// A Course page - The main content
+// --------------------------------------------------
+// Course page 
+// -------------------------
+
+/***************
+THE COURSE DOM LOOKS LIKE THIS :
+(n.b. i did not invent this dom structure)
+
+section#region-main
+	div role=main
+		div.coursecontent
+			ul.somestringfromtheformat e.g  topics/weeks etc
+
+ ****************************/
+
+
+
+// SHAME - do we need this?
+.singlebutton {
+    margin:0.5em 0;
+    text-align: center;
+}
+.section .filler {
+	display:none;
+}
+
+// -------------------------
+// Drag and drop upload message
+// -------------------------
+
+#dndupload-status {
+  display:none;
+}
+
+// only display drag and drop for devices that we think are desktop!
+@media screen and (min-width: @screen-md) {
+  #dndupload-status {
+    display:block;
+    border:0;
+    box-shadow:none;
+    width:100%;
+    padding:0;
+    margin:0 auto;
+    top:5em;
+    border-radius:0;
+    height:0;
+    background-color:transparent;
+    color:#ccc;
+  }
+}
+
+
+// -------------------------
+// Add numbers to sections
+// -------------------------
+
+.topics,
+.weeks {
+    counter-reset: annotation-list -1;
+}
+li.section .sectionname:before{
+    content: counter(annotation-list) ".\00a0";
+}
+#section-0 .sectionname:before {
+	content:" ";
+}
+li.section.main {
+	counter-increment: annotation-list;
+}
+
+
+// -------------------------
+// Course sections
+// -------------------------
+
+.course-content ul li.section.main {
+    border: 0;
+}
+.course-content .current {
+	background-color:transparent;
+}
+.course-content .current {
+	background-color:transparent;
+		.content:before {
+			content:"Current section";
+			display:block;
+			font-size: @font-size-h4;
+		}
+}
+
+.sectionname {
+    font-size: @font-size-h2;
+    padding-top: 0;
+    margin: 0;
+    white-space:normal !important;
+}
+
+
+.path-course-view .section .summary {
+    line-height: inherit;
+    position:relative;
+    font-size: 18px;
+    padding-bottom:2em;
+    .clearfix;
+}
+
+/* HACKING MOD INDENT */
+.mod-indent-outer {
+	display:block;
+}
+.mod-indent {
+	display:none;
+}
+
+
+
+// -------------------------
+// important! stuff so sections are not detected as visible by js
+// -------------------------
+
+.course-content ul li.section.main {
+    border: 0;
+    margin: 0;
+    padding: 0;
+}
+
+.course-content > ul li.section {
+    visibility: hidden;
+    height: 0;
+    width: 0;
+    overflow:hidden;
+}
+
+/* Show sections editing or clicked */
+
+.editing .course-content > ul li.section,
+.course-content > ul li.section.state-visible {
+    visibility: visible;
+    height: auto;
+    width: auto;
+}
+
+
+
+
+
+
+
+
+// -------------------------
+// Editing mess
+// -------------------------
+/* Add text to edit summary gear icon */
+.editing .summary a:last-of-type:before{
+	content: attr(title);
+	font-size:0.8em;
+}
+.increase-sections:before {
+	// needs to add text here
+}
+
+.section .modtype_label .actions {
+	position:absolute;
+	top:0;
+	right:0;
+}
+
+.editing .section .activity .actions {
+	display:block;
+	width:auto;
+	position:relative;
+	
+	.moodle-actionmenu {
+		float:right;
+	}
+	span.autocompletion {
+		display:block;
+		position:relative;
+		right:0;
+		float:right;
+	}
+}
+
+ul.menubar > li[role='presentation'] {
+	float:right;
+}
+
+.moodle-actionmenu[data-enhanced].show .menu a {
+	padding:1%;
+	color:#666665;
+}
+.moodle-actionmenu[data-enhanced].show .menu .iconsmall {
+	margin:0;
+	height:auto;
+	width:auto;
+}
+
+.editing .section .activity .activityinstance{
+	display:inline-block;
+	width:100%;
+}
+
+
+// THE EDIT BUTTON 
+
+.editing .summary a:last-of-type{
+	clear:both;
+	float:right;
+	margin-top:0.5em;
+}
+
+.toggle-display.textmenu,
+.editing .summary a:last-of-type
+{
+	text-transform:uppercase;
+	padding:0 0.5em !important;
+	display:inline-block;
+	font-weight:400;
+	background-color:#F1F0EE;
+	letter-spacing:1px;
+	border-radius:2px;
+	font-family: @font-family-base;
+}
+
+.editing .summary a:last-of-type:hover,
+.toggle-display.textmenu:hover,
+.toggle-display.textmenu:focus {
+	background-color:@brand-primary;
+	color:#fff;
+}
+
+// THE EDIT MENU 
+.moodle-actionmenu[data-enhanced].show .menu.align-tr-br {
+	border-radius:0;
+	padding:0;
+	box-shadow:5px 5px 0 #eee;
+	border:0;
+	top:2em;
+	margin-top:0;
+	min-width:210px;
+	
+}
+
+
+.section .moodle-actionmenu .iconsmall {
+	padding:0 4%;
+}
+.toggle-display.textmenu b.caret {
+	display:none;
+}
+
+@media screen and (min-width: @screen-xs) {
+	.editing .section .activity .activityinstance{
+		width:75%;
+	}
+	.section .activity .actions {
+		width:25%;
+		float:right;
+	}
+}
+
+/* EDITING MENU */
+/* overspecific */
+.moodle-actionmenu[data-enhanced] {
+    .editing_moveleft,
+    .editing_moveright {
+        display: none !important;
+    }
+}
+
+.section .moodle-actionmenu .iconsmall,
+.section .moodle-actionmenu[data-enhanced] .menu img {
+	width:auto;
+	height:auto;
+}
+.moodle-actionmenu {
+	color:#ccc;
+	font-family:"roboto";
+	font-size:0.9em;
+}
+.moodle-actionmenu[data-enhanced].show .menu a {
+    border-radius: 0 !important;
+}
+
+/* MODS & RESOURCES IN COURSE */
+/* MOD ON COURSE PAGE */
+/* fixes
+
+for moodle editing bugs */
+.editing .section .activity .contentwithoutlink,
+.editing .section .activity .activityinstance {
+    padding-right: 0;
+}
+
+.section .activity .activityinstance {
+    display: block;
+}
+
+/* hide progress label with odd z-indexing */
+#completionprogressid {
+    display: none;
+}
+
+.section .editing_title .iconsmall {
+    padding: 0;
+    margin: 0.3em;
+    height: 16px;
+    width: 16px;
+    vertical-align: top;
+}
+
+.togglecompletion,
+.autocompletion {
+    position: absolute;
+    right: 1em;
+}
+
+// all above dumped from bootswatch...
+
+
+
+
+#section_footer,
+.visibleifjs.addresourcemodchooser{
+	clear:both;
+	display:block;
+}
+.path-site li.activity>div,
+.path-course-view li.activity>div {
+	padding:0;
+}
+
+.section li.snap-resource{
+	background-image:url([[pix:theme|file]]);
+	background-size:142px;
+	background-repeat:no-repeat;
+	background-position:center 89%;
+	height:280px;
+	width:210px;
+	margin:0.5em 3%;
+	padding:0.3em 11px;
+	float:left;
+	display:inline-block;
+	position:relative;
+	clear:none;
+	box-shadow:5px 5px #ccc;
+	background-color:#999;
+	input.titleeditor {
+		margin-top:2em;
+		width:auto;
+		clear:both;
+	}
+	.activityinstance > a{
+		display:block;
+		width:100%;
+		margin:1.2em 1px;
+		padding:1em 11px;
+		color:#666665;
+	}
+	.activityinstance {
+		background-color:#fff;
+		line-height:1.2;
+		padding:0;
+		.iconlarge{
+			display:none;
+		}
+		.instancename {
+			font-family:@font-family-base;
+			display:inline-block;
+			-ms-word-break: break-all;
+			word-break: break-all;
+		// Non standard for webkit
+			word-break: break-word;
+			-webkit-hyphens: auto;
+			-moz-hyphens: auto;
+			hyphens: auto;
+		}
+	}
+	span.editinstructions {
+		margin-top: -1em;
+		margin-left: 0;
+		box-shadow: none;
+		border: 0;
+		font-family:@font-family-base;
+	}
+	.contentafterlink p{
+		font-size:0.8em;
+		line-height:1.3;
+		clear:both;
+		padding:0 4%;
+		color:white;
+		text-shadow:1px 1px 1px #666665;
+	}
+}
+
+@media screen and (max-width: @screen-xs) {
+	.section li.snap-resource{
+		// something to make it center //
+	}
+}
+
+
+
+.section li.snap-activity {
+	width:99%;
+	height:auto;
+	min-height:180px;
+	clear:both;
+	box-shadow:5px 5px #ccc,inset 0 0 10px #0f0;;
+	border:1px solid #ccc;
+	// border-top:0.5em solid @brand-primary;
+	display:inline-block;
+	position:relative;
+	float:none;
+	padding:1em 4%;
+	margin:1em 0;
+	.iconlarge {
+		width:48px;
+		height:48px;
+		vertical-align:middle;
+	}
+	.activityinstance a{
+		color:#666665;
+	}
+	.instancename {
+		font-family:@font-family-base;
+		margin:1em 0.75em;
+		font-size:1.5em;
+		
+	}
+	
+}
+@media screen and (min-width: @screen-xs) {
+	.section li.snap-activity .contentafterlink {
+		margin-left:11%;
+	}
+}
+
+	
+
+
+
+.section .activity.modtype_label.label {
+	height:auto;
+	width:100%;
+	background-color:white !important;
+	padding:1em 0;
+	text-align: left;
+	.clearfix;
+}
+
+
+.section li.snap-resource:before,
+.section li.snap-activity:before {
+	content:attr(data-type);
+	display:block;
+	position:absolute;
+	top:0;
+	right:0.5em;
+	padding:0 4%;
+	z-index:1;
+	background-color:#ccc;
+	font-family:@font-family-base;
+	font-size:0.75em;
+	color:white;
+	text-transform:uppercase;
+}
+
+
+
+
+
+
+/* CONTENT AFTER = DESCRIPTION */
+.resourcelinkdetails {
+	display:none;
+}
+
+
+
+
+
+
+
+
+
+/* all needs sorting out */
+
+.editing .actions {font-size:0.9em;};
+.editing 
+	.section li.snap-resource{
+		.actions {
+			margin-top:-1.7em;
+		}
+}
+
+
+.section .activity .mod-indent-outer {
+	padding:0;
+}
+.section .activity .editing_move {
+	left:0em;
+	top:-1.5em;
+}
+.section .activity.modtype_label .editing_move {
+	left:0;
+}
+.editing .section .activity .activityinstance,
+.section .activity .activityinstance{
+	display:block;
+	clear:both;
+	width:100%;
+}
+
+.toggle-display.textmenu {
+	background-color:white;
+}
+
+.editing .modtype_label{
+	padding-top:1em;
+}
+
+
+// MIME TYPEs //
+// MICROSOFT //
+li.snap-resource.snap-mime-document,
+li.snap-resource.snap-mime-writer,
+li.snap-resource.snap-mime-oth{
+		background-color:#42b4d6;
+		background-image:url([[pix:theme|doc]]);
+		&:before {
+			color:#42b4d6;
+			background-color:fade(#fff,68%);
+		}
+}
+li.snap-resource.snap-mime-powerpoint,
+li.snap-resource.snap-mime-impress {
+	background-color:#ff7954;
+	background-image:url([[pix:theme|powerpoint]]);
+		&:before {
+			color:#ff7954;
+			background-color:fade(#fff,68%);
+		}
+}
+li.snap-resource.snap-mime-spreadsheet,
+li.snap-resource.snap-mime-chart,
+li.snap-resource.snap-mime-database,
+li.snap-resource.snap-mime-calc{
+	background-color:#4abc96;
+	background-image:url([[pix:theme|spreadsheet]]);
+		&:before{
+			color:#4abc96;
+			background-color:fade(#fff, 68%);
+		}
+}
+
+// ADOBE //
+li.snap-resource.snap-mime-pdf,
+li.snap-resource.snap-mime-eps,
+li.snap-resource.snap-mime-flash,
+{
+	background-color:#e34947;
+	background-image:url([[pix:theme|pdf]]);
+		&:before {
+			color:#e34947;
+			background-color:fade(#fff, 68%);
+		}
+}
+li.snap-resource.snap-mime-flash{
+	background-image:url([[pix:theme|flash]]);
+}
+
+// MULTIMEDIA //
+// #67b8cb - audio?
+li.snap-resource.snap-mime-mp3,
+li.snap-resource.snap-mime-wav,
+li.snap-resource.snap-mime-audio{
+	background-color:#EDC92C;
+	background-image:url([[pix:theme|music]]);
+	&:before {
+			color:#EDC92C;
+			background-color:fade(#fff, 68%);
+	}
+}
+
+li.snap-resource.snap-mime-mov,
+li.snap-resource.snap-mime-wmv,
+li.snap-resource.snap-mime-video,
+li.snap-resource.snap-mime-quicktime,
+li.snap-resource.snap-mime-mpeg,
+li.snap-resource.snap-mime-avi{
+	background-color:#55B5CC;
+	background-image:url([[pix:theme|video]]);
+	&:before {
+			color:#55B5CC;
+			background-color:fade(#fff, 68%);
+	}
+}
+
+
+li.snap-resource.snap-mime-png,
+li.snap-resource.snap-mime-jpeg{
+	background-color:#67B8CB;
+	background-image:url([[pix:theme|image]]);
+	&:before {
+			color:#67B8CB;
+			background-color:fade(#fff, 68%);
+	}
+
+}
+
+// MOODLE MODS //
+li.snap-resource.modtype_url{
+	background-color:#999;
+	background-image:url([[pix:theme|link]]);
+	&:before {
+			color:#999;
+			background-color:fade(#fff, 68%);
+	}
+}
+
+li.snap-resource.modtype_book,
+li.snap-resource.modtype_page,
+li.snap-resource.modtype_imscp{
+	background-color:#70b29c;
+	background-image:url([[pix:theme|book]]);
+	&:before {
+			color:#70b29c;
+			background-color:fade(#fff, 68%);
+	}
+}
+
+li.snap-resource.modtype_page {
+	background-image:url([[pix:theme|page]]);
+}
+li.snap-resource.modtype_imscp{
+	background-image:url([[pix:theme|scorm]]);
+}
+
+li.snap-resource.modtype_folder {
+	background-color:#F9F29A;
+	background-image:url([[pix:theme|folder]]);
+	&:before {
+			color:#F6A2A3;
+			background-color:fade(#fff, 90%);
+	}
+}
+	
+// CODE & SYSTEM //
+li.snap-resource.snap-mime-archive{
+background-color:#F9F29A;
+	background-image:url([[pix:theme|zip]]);
+	&:before {
+			color:#F9F29A;
+			background-color:fade(#fff, 90%);
+	}
+}
+
+li.snap-resource.snap-mime-markup,
+li.snap-resource.snap-mime-html,
+li.snap-resource.snap-mime-sourcecode{
+	background-color:#e66665;
+	background-image:url([[pix:theme|code]]);
+		&:before {
+			color:#e66665;
+			background-color:fade(#fff, 68%);
+		}
+}
+
+
+li.snap-resource.snap-mime-text{
+	background-color:#f1bf26;
+		&:before {
+			color:#f1bf26;
+			background-color:fade(#fff, 68%);
+		}
+}
+
+
+
+
+
+/* PUBLISHED STATUS STUFF */
+
+.section li.activity.draft:after {
+	content:"DRAFT";
+	display:inline-block;
+	position:absolute;
+	bottom:0;
+	right:0.5em;
+	background-color:#FFCD35;
+	font-family:@font-family-base;
+	font-size:0.75em;
+	color:white;
+	padding:0 4%;
+}
+
+/* CONDITIONAL STATUS STUFF */
+
+.section li.snap-resource.conditional{
+	.conditional_info {
+		position:absolute;
+		bottom:0em;
+		left:0.5em;
+		z-index:2;
+		background-color:#FFCD35;
+		font-family:@font-family-base;
+		font-size:0.75em;
+		color:white;
+		padding:0 4%;
+		max-width:210px;
+			.availabilityinfo {
+				visibility:collapse;
+				height:0;
+				width:0;
+			}
+			&:hover .availabilityinfo{
+				visibility:visible;
+				height:100%;
+				width:auto;
+				overflow-y:scroll;
+			}
+	}
+	.activityinstance {
+		margin:1.2em 1px;
+		padding:1em 11px;
+		>a{
+			margin:0;
+			padding:0
+		}
+	}
+	
+}
+
+.availabilityinfo {
+	background-color:#FFCD35;
+	font-family:@font-family-base;
+	color:white;
+	clear:both;
+	padding:0 4% !important;
+}
+/* restore normal padding to activity instance when editing */
+.editing .section li.snap-resource.conditional{
+	.activityinstance{
+		margin:0;
+		padding:0;
+	}
+	.activityinstance>a{
+		margin:1.2em 1px;
+		padding:1em 11px;
+	}
+}
+/*
+&:after {
+	content:"\e153";
+	content:"conditional";
+	display:block;
+	position:absolute;
+	bottom:0.3em;
+	left:0.3em;
+	background-color:#fff;
+	z-index:1;
+	font-family:@font-family-base;
+	color:#FFCD35;
+	padding:0 4%;
+	border-radius:50%;
+	}
+*/
+
+.activity .unread{
+	clear:both;
+	display:inline-block;
+	margin-left:4em;
+	background-color:transparent;
+	a {
+		.btn;
+		color:#fff !important;
+	}
+}
+
+.togglecompletion, .autocompletion{
+	right: 0.1em;
+	top: 0em;
+}
+
+.section .editing_title .iconsmall {
+	vertical-align:middle;
+}

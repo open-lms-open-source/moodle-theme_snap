@@ -123,7 +123,7 @@ function theme_snap_get_bootswatch_variables(theme_config $theme) {
 function theme_snap_set_bootswatch($css, array $variables) {
     global $CFG;
 
-    $tag = '[[setting:web-bootswatch]]';
+    $tag = '[[setting:snap-user-bootswatch]]';
     if (strpos($css, $tag) === false) {
         return $css; // Avoid doing work when tag is not present.
     }
@@ -131,8 +131,8 @@ function theme_snap_set_bootswatch($css, array $variables) {
 
     try {
         $parser = new Less_Parser();
-        $parser->parseFile(__DIR__.'/less/bootswatch/web-variables.less', $CFG->wwwroot.'/');
-        $parser->parseFile(__DIR__.'/less/bootswatch/web-user-bootswatch.less', $CFG->wwwroot.'/');
+        $parser->parseFile(__DIR__.'/less/bootswatch/snap-variables.less', $CFG->wwwroot.'/');
+        $parser->parseFile(__DIR__.'/less/bootswatch/snap-user-bootswatch.less', $CFG->wwwroot.'/');
         if (!empty($variables)) {
             $parser->ModifyVars($variables);
         }

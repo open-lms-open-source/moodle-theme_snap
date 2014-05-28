@@ -327,7 +327,14 @@ M.snap_message_badge.get_messages_html = function(Y, onsuccess) {
                     }
                 }
             },
-            failure: function() {
+            failure: function(o) {
+                // Do not spit out an error message as it is highly likely that the user has just navigated away from
+                // the page as per the following article:
+                // http://stackoverflow.com/questions/6910291/change-page-in-the-middle-of-ajax-request
+                // exit function if no response headers present
+                if (!o.getAllResponseHeaders()){
+                    return;
+                }
                 alert(M.str.message_badge.genericasyncfail);
             }
         }

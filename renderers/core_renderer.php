@@ -69,13 +69,18 @@ class theme_snap_core_renderer extends toc_renderer {
     public function print_login() {
         global $CFG, $USER, $PAGE;
 
+        $logout = get_string('logout');
+
         try {
             /** @var theme_snap_message_badge_renderer|null $badgerend */
             $badgerend = $PAGE->get_renderer('message_badge');
         } catch (Exception $e) {
             $badgerend = null;
         }
-        if (!isloggedin() || isguestuser()) {
+
+        $isguest=isguestuser();
+
+        if (!isloggedin() || $isguest) {
             $loginurl = '#login';
             if (!empty($CFG->alternateloginurl)) {
                 $loginurl = $CFG->wwwroot.'/login/index.php';
@@ -85,23 +90,40 @@ class theme_snap_core_renderer extends toc_renderer {
             $username = get_string('username');
             $password = get_string('password');
             $loginform = get_string('loginform', 'theme_snap');
-            $helplink = '';
-            if (!empty($CFG->registerauth) or is_enabled_auth('none') or !empty($CFG->auth_instructions)) {
-                $help = get_string('help', 'theme_snap');
-                $helplink = "<a href='".s($CFG->wwwroot)."/login/index.php'>$help</a>";
+            $helpstr = '';
+
+            if (empty($CFG->forcelogin)
+                || $isguest
+                || !isloggedin()
+                || !empty($CFG->registerauth)
+                || is_enabled_auth('none')
+                || !empty($CFG->auth_instructions)
+            ) {
+                if ($isguest) {
+                    $helpstr = '<p class="text-center">'.get_string('loggedinasguest', 'theme_snap').'</p>';
+                    $helpstr .= '<p class="text-center"><a class="btn btn-primary" href="'.s($CFG->wwwroot).'/login/logout.php?sesskey='.sesskey().'">'.$logout.'</a></p>';
+                    $helpstr .= '<p class="text-center"><a href="'.s($CFG->wwwroot).'/login/index.php">'.get_string('helpwithloginandguest', 'theme_snap').'</a></p>';
+                } else {
+                    if (empty($CFG->forcelogin)) {
+                        $help = get_string('helpwithloginandguest', 'theme_snap');
+                    } else {
+                        $help = get_string('helpwithlogin', 'theme_snap');
+                    }
+                    $helpstr = "<p class='text-center'><a href='".s($CFG->wwwroot)."/login/index.php'>$help</a></p>";
+                }
             }
             echo "<a class='fixy-trigger btn btn-primary'  href='".s($loginurl)."'>$login</a>
         <form class=fixy action='$CFG->wwwroot/login/'  method='post' id='login'>
-        <a class='pull-right snap-action-icon' href='#'><i class='icon icon-office-52'></i><small>$cancel</small></a>
+        <a id='fixy-close' class='pull-right snap-action-icon' href='#'><i class='icon icon-office-52'></i><small>$cancel</small></a>
             <div class=fixy-inner>
             <legend>$loginform</legend>
             <label for='username'>$username</label>
-            <input type='text' name='username' id='username' placeholder='".s($username)."'>
+            <input type='text' name='username' id='username' autocorrect='off' autocapitalize='off' placeholder='".s($username)."'>
             <label for='password'>$password</label>
             <input type='password' name='password' id='password' placeholder='".s($password)."'>
             <br>
             <input type='submit' id='loginbtn' value='".s($login)."'>
-            $helplink
+            $helpstr
             </div>
         </form>";
         } else {
@@ -144,9 +166,8 @@ class theme_snap_core_renderer extends toc_renderer {
             $menu = get_string('menu', 'theme_snap');
             if ($badgerend) {
                 $badge = $badgerend->badge($USER->id);
-                echo "<a class=fixy-trigger href='#primary-nav'>$menu &nbsp;$badge $picture</a>";
+                echo "<a class=fixy-trigger href='#primary-nav'>$menu &nbsp; $picture.$badge</a>";
             }
-            $logout = get_string('logout');
             $close = get_string('close', 'theme_snap');
             $viewyourprofile = get_string('viewyourprofile', 'theme_snap');
             $realuserinfo = '';
@@ -159,16 +180,17 @@ class theme_snap_core_renderer extends toc_renderer {
 
             // Generate alert stream html if message/output/badge available.
             $alertstream = '';
-            if ($badgerend) {
+            if ($badgerend && $badgerend instanceof theme_snap_message_badge_renderer) {
                 $alertstream = '<div class="alert_stream">
                 '.$badgerend->messagestitle().'
+                    <hr />
                     <div class="message_badge_container"></div>
                     <hr />
                 </div>';
             }
 
             echo '<div class=fixy id="primary-nav" class="toggle-details" role="menu" aria-live="polite" tabindex="0">
-        <a class="pull-right snap-action-icon" href="#"><i class="icon icon-office-52"></i><small>'.$close.'</small></a>
+        <a id="fixy-close" class="pull-right snap-action-icon" href="#"><i class="icon icon-office-52"></i><small>'.$close.'</small></a>
         <div class=fixy-inner>
         <h1 id="fixy-profile-link">
             <a title="'.s($viewyourprofile).'" href="'.s($CFG->wwwroot).'/user/profile.php" >'.
@@ -371,14 +393,14 @@ class theme_snap_core_renderer extends toc_renderer {
                 if (!empty($imageurl)) {
                     $imageurl   = s($imageurl);
                     $imagestyle = " style=\"background-image:url('$imageurl')\"";
-                    
+
                 }
             }
             $name    = format_string($discussion->name, true, array('context' => $context));
             $date    = userdate($discussion->timemodified, get_string('strftimedatetime', 'langconfig'));
-            
+
             $readmorebtn = "<a class='btn btn-primary' href='".$CFG->wwwroot."/mod/forum/discuss.php?d=".$discussion->discussion."'>".get_string('readmore', 'theme_snap')."&nbsp;&#187;</a>";
-            
+
             $preview = '';
             if(!$imagestyle)
              {
@@ -386,7 +408,7 @@ class theme_snap_core_renderer extends toc_renderer {
              	$preview = "<p>".shorten_text($preview, 200)."</p>
              	<p class='text-right'>".$readmorebtn."</p>";
              }
-            
+
 
             $output .= <<<HTML
 <div class="news-article clearfix">
@@ -422,7 +444,7 @@ HTML;
                 $secondrow = $this->tabtree($tab->subtree);
             }
         }
-        return html_writer::tag('ul', $firstrow, array('class' => 'nav nav-pills nav-justified')) . $secondrow;
+        return html_writer::tag('ul', $firstrow, array('class' => 'nav nav-tabs nav-justified')) . $secondrow;
     }
 
     protected function render_tabobject(tabobject $tab) {
@@ -440,5 +462,74 @@ HTML;
             }
             return html_writer::tag('li', $link);
         }
+    }
+
+    /**
+     * get rid of YUI stuff so we can style it with bootstrap
+     *
+     * @param array $additionalclasses
+     * @return array|string
+     */
+    public function body_css_classes(array $additionalclasses = array()) {
+        global $PAGE;
+
+        $classes = parent::body_css_classes($additionalclasses);
+        $classes .= $classes == '' ? '' : ' ';
+        $classes .= 'device-type-'.$PAGE->devicetypeinuse;
+
+        // Define the page types we want to purge yui classes from the body  - e.g. local-joulegrader-view,
+        // local-pld-view, etc.
+        $killyuipages = array(
+            'local-pld-view',
+            'local-joulegrader-view',
+            'blocks-conduit-view',
+            'blocks-reports-view',
+        );
+        if (in_array($PAGE->pagetype, $killyuipages)) {
+
+            // Purge yui classes.
+            $classes = explode (' ', $classes);
+            $classes = array_diff ($classes, array('yui-skin-sam', 'yui3-skin-sam'));
+            // Add yui bootstrapped class so we know that we have got rid of the yui stuff and intend to style with
+            // bootstrap.
+            $classes [] = 'yui-bootstrapped';
+            $classes = implode(' ', $classes);
+
+        }
+
+        return ($classes);
+    }
+
+    /**
+     * Override to add a class to differentiate from other
+     * #notice.box.generalbox that have buttons after them,
+     * rather than inside them.
+     */
+    public function confirm($message, $continue, $cancel) {
+        if ($continue instanceof single_button) {
+            // ok
+        } else if (is_string($continue)) {
+            $continue = new single_button(new moodle_url($continue), get_string('continue'), 'post');
+        } else if ($continue instanceof moodle_url) {
+            $continue = new single_button($continue, get_string('continue'), 'post');
+        } else {
+            throw new coding_exception('The continue param to $OUTPUT->confirm() must be either a URL (string/moodle_url) or a single_button instance.');
+        }
+
+        if ($cancel instanceof single_button) {
+            // ok
+        } else if (is_string($cancel)) {
+            $cancel = new single_button(new moodle_url($cancel), get_string('cancel'), 'get');
+        } else if ($cancel instanceof moodle_url) {
+            $cancel = new single_button($cancel, get_string('cancel'), 'get');
+        } else {
+            throw new coding_exception('The cancel param to $OUTPUT->confirm() must be either a URL (string/moodle_url) or a single_button instance.');
+        }
+
+        $output = $this->box_start('generalbox snap-continue-cancel', 'notice');
+        $output .= html_writer::tag('p', $message);
+        $output .= html_writer::tag('div', $this->render($continue) . $this->render($cancel), array('class' => 'buttons'));
+        $output .= $this->box_end();
+        return $output;
     }
 }
