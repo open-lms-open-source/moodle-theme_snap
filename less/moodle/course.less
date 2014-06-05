@@ -735,8 +735,7 @@ span.editinstructions {
         .iconsmall {
             width: 12px;
             height: 12px;
-            margin: 8px 8px 0px 0;
-            padding: 4px 8px 0px 0;
+            margin: 12px 16px 0 0;
             vertical-align: text-bottom;
         }
     }
@@ -745,7 +744,7 @@ span.editinstructions {
             max-width: none !important; /** reset sets 100% !important which breaks on IE8 without this !important */
             width:16px;
             height:16px;
-            padding: 4px;
+            margin: 4px;
             vertical-align: text-bottom;
         }
     }
@@ -1057,10 +1056,6 @@ span.editinstructions {
     .detail-pair {
         border-bottom:1px solid #e1e1e8;
         margin:0 1rem;
-        > * {
-            display:inline-block;
-            line-height:2.2rem;
-        }
         .pair-key {
             font-weight:bold;
             vertical-align: top;
@@ -1103,6 +1098,11 @@ span.editinstructions {
     .select-a-category .notifymessage,
     .select-a-category .alert {
         margin: 1em;
+    }
+}
+@media (min-width: @screen-md-min) {
+    #course-category-listings .detail-pair .pair-key {
+        text-align: right;
     }
 }
 

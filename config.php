@@ -23,14 +23,14 @@
  */
 
 // Setup debugging html.
-// This allows javascript to target debug messages and move them to footer
-if (!function_exists('xdebug_break')){
-    ini_set('error_prepend_string','<div class="php-debug">');
-    ini_set('error_append_string','</div>');
+// This allows javascript to target debug messages and move them to footer.
+if (!function_exists('xdebug_break')) {
+    ini_set('error_prepend_string', '<div class="php-debug">');
+    ini_set('error_append_string', '</div>');
 }
 
 $THEME->doctype = 'html5';
-$THEME->yuicssmodules = array();
+$THEME->yuicssmodules = array('cssgrids'); // This is required for joule grader.
 $THEME->name = 'snap';
 $THEME->parents = array();
 $THEME->sheets = array('moodle', 'custom', 'lineicons');
@@ -46,15 +46,12 @@ $THEME->plugins_exclude_sheets = array(
 
 $THEME->rendererfactory = 'theme_overridden_renderer_factory';
 
-// flexpages
-// flexpage
-
 $THEME->layouts = array(
     'format_flexpage' => array(
         'file' => 'flexpage.php',
         'regions' => array('side-top', 'side-pre', 'main', 'side-post'),
         'defaultregion' => 'main',
-        'options' => array('langmenu'=>true),
+        'options' => array('langmenu' => true),
     ),
 
     // Most backwards compatible layout without the blocks - this is the layout used by default.
@@ -77,14 +74,14 @@ $THEME->layouts = array(
         'file' => 'course.php',
         'regions' => array('side-pre'),
         'defaultregion' => 'side-pre',
-        'options' => array('langmenu'=>true),
+        'options' => array('langmenu' => true),
     ),
     'coursecategory' => array(
         'file' => 'default.php',
         'regions' => array('side-pre'),
         'defaultregion' => 'side-pre',
     ),
-    // part of course, typical for modules - default page layout if $cm specified in require_login().
+    // Part of course, typical for modules - default page layout if $cm specified in require_login().
     'incourse' => array(
         'file' => 'default.php',
         'regions' => array('side-pre'),
@@ -95,11 +92,12 @@ $THEME->layouts = array(
         'file' => 'default.php',
         'regions' => array('side-pre'),
         'defaultregion' => 'side-pre',
-        'options' => array('nonavbar'=>true),
+        'options' => array('nonavbar' => true),
     ),
     // Server administration scripts.
     'admin' => array(
-        'file' => 'default.php',
+        // GT Mod 2014-06-02 - changed file to admin.php so we can take out edit blocks button.
+        'file' => 'admin.php',
         'regions' => array('side-pre'),
         'defaultregion' => 'side-pre',
     ),
@@ -108,7 +106,7 @@ $THEME->layouts = array(
         'file' => 'default.php',
         'regions' => array('side-pre'),
         'defaultregion' => 'side-pre',
-        'options' => array('langmenu'=>true),
+        'options' => array('langmenu' => true),
     ),
     // My public page.
     'mypublic' => array(
@@ -119,20 +117,20 @@ $THEME->layouts = array(
     'login' => array(
         'file' => 'default.php',
         'regions' => array(),
-        'options' => array('langmenu'=>true, 'nonavbar'=>true),
+        'options' => array('langmenu' => true, 'nonavbar' => true),
     ),
 
     // Pages that appear in pop-up windows - no navigation, no blocks, no header.
     'popup' => array(
         'file' => 'default.php',
         'regions' => array(),
-        'options' => array('nofooter'=>true, 'nonavbar'=>true),
+        'options' => array('nofooter' => true, 'nonavbar' => true),
     ),
     // No blocks and minimal footer - used for legacy frame layouts only!
     'frametop' => array(
         'file' => 'default.php',
         'regions' => array(),
-        'options' => array('nofooter'=>true, 'nocoursefooter'=>true),
+        'options' => array('nofooter' => true, 'nocoursefooter' => true),
     ),
     // Embeded pages, like iframe/object embeded in moodleform - it needs as much space as possible.
     'embedded' => array(
@@ -150,7 +148,7 @@ $THEME->layouts = array(
     'print' => array(
         'file' => 'default.php',
         'regions' => array(),
-        'options' => array('nofooter'=>true, 'nonavbar'=>false),
+        'options' => array('nofooter' => true, 'nonavbar' => false),
     ),
     // The pagelayout used when a redirection is occuring.
     'redirect' => array(
@@ -175,6 +173,7 @@ $THEME->javascripts = array(
 );
 $THEME->javascripts_footer = array(
     'bootstrap',
+    'headroom',
     'snap'
 );
 

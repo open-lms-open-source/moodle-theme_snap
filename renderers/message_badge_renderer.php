@@ -55,6 +55,14 @@ class theme_snap_message_badge_renderer extends message_badge_renderer {
     }
 
     /**
+     * Override parent function - we don't want inconsistency for mobile devices!
+     * @return bool
+     */
+    public function is_mobile() {
+        return false;
+    }
+
+    /**
      * Render the badge element (message count)
      *
      * @param null $userid
@@ -127,7 +135,9 @@ class theme_snap_message_badge_renderer extends message_badge_renderer {
 
         if ($this->is_mobile()) {
             return html_writer::link(
-                new moodle_url('/message/output/badge/view.php', array('action' => 'read', 'courseid' => $COURSE->id, 'messageid' => $message->id)),
+                new moodle_url('/message/output/badge/view.php',
+                    array('action' => 'read', 'courseid' => $COURSE->id, 'messageid' => $message->id)
+                ),
                 $pic.$text
             );
         }
@@ -136,7 +146,13 @@ class theme_snap_message_badge_renderer extends message_badge_renderer {
             $haslong = 'false';
         }
         $content = html_writer::tag('div', $text.$urls, array('class' => 'message_badge_message_content'));
-        return html_writer::tag('div', $pic.$content, array('id' => html_writer::random_id('message'), 'messageid' => $message->id, 'class' => 'message_badge_message', 'data-has-full-message' => $haslong));
+        return html_writer::tag('div', $pic.$content,
+            array('id' => html_writer::random_id('message'),
+                'messageid' => $message->id,
+                'class' => 'message_badge_message',
+                'data-has-full-message' => $haslong
+            )
+        );
     }
 
     /**
@@ -158,7 +174,7 @@ class theme_snap_message_badge_renderer extends message_badge_renderer {
         } else {
             $text = format_text($message->fullmessage, $message->fullmessageformat);
         }
-        $date = userdate($message->timecreated, get_string('strftimedatetimeshort','langconfig'));
+        $date = userdate($message->timecreated, get_string('strftimedatetimeshort', 'langconfig'));
         return html_writer::tag('div', $date . ' - ' . $text, array('class' => 'message_badge_message_text'));
     }
 

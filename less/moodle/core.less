@@ -173,11 +173,11 @@ img.icon {
     height: 16px;
     vertical-align: text-bottom;
     width: 16px;
-    padding-right: 6px;
+    margin-right: 6px;
 }
 .dir-rtl img.icon {
-    padding-left: 6px;
-    padding-right: 0;
+    margin-left: 6px;
+    margin-right: 0;
 }
 img.iconsmall {
     height: 12px;
@@ -187,7 +187,7 @@ img.iconsmall {
 }
 img.iconhelp, .helplink img {
     height: 16px;
-    padding-left: 3px;
+    margin-left: 3px;
     vertical-align: text-bottom;
     width: 16px;
 }
@@ -198,11 +198,11 @@ h4 img.iconhelp, h4 img.icon,
 h5 img.iconhelp, h5 img.icon,
 h6 img.iconhelp, h6 img.icon {
   vertical-align: middle;
-  padding: 4px;
+  margin: 4px;
 }
 .dir-rtl img.iconhelp, .dir-rtl .helplink img {
-    padding-right: 3px;
-    padding-left: 0;
+    margin-right: 3px;
+    margin-left: 0;
 }
 img.iconlarge {
     height: 24px;
@@ -211,12 +211,12 @@ img.iconlarge {
 }
 img.iconsort {
     vertical-align: text-bottom;
-    padding-left: .3em;
+    margin-left: .3em;
     margin-bottom: .15em;
 }
 .dir-rtl img.iconsort {
-    padding-right: .3em;
-    padding-left: 0;
+    margin-right: .3em;
+    margin-left: 0;
 }
 img.icontoggle {
     height: 17px;
@@ -228,12 +228,12 @@ img.iconkbhelp {
     width: 49px;
 }
 img.icon-pre, .dir-rtl img.icon-post {
-    padding-right: 3px;
-    padding-left: 0;
+    margin-right: 3px;
+    margin-left: 0;
 }
 img.icon-post, .dir-rtl img.icon-pre {
-    padding-left: 3px;
-    padding-right: 0;
+    margin-left: 3px;
+    margin-right: 0;
 }
 .boxaligncenter {
     margin-left: auto;
@@ -1127,6 +1127,15 @@ body#page-lib-editor-tinymce-plugins-moodlemedia-preview {
     min-width: 0;
     background: none;
 }
+
+// Overriding the tinycmce themes/advanced/skins/moodlu/ui.css
+// to cope with box-sizing: border-box set by Bootstrap 3
+.mceEditor.moodleSkin .mceToolbar a span.mceIcon {
+    padding: 7px;
+    img {
+        padding: 0px;
+    }
+}
 /** Fix YUI 2 Treeview for Right to left languages **/
 .dir-rtl .ygtvtn,
 .dir-rtl .ygtvtm,
@@ -1246,7 +1255,8 @@ body#page-lib-editor-tinymce-plugins-moodlemedia-preview {
 }
 /* Moodle Dialogue Settings (moodle-core-dialogue)  */
 .moodle-dialogue-base .moodle-dialogue-lightbox {
-    background-color: #AAA;
+    background-color: @modal-backdrop-bg;
+    .opacity(@modal-backdrop-opacity);
 }
 .moodle-dialogue-base .hidden,
 .moodle-dialogue-base .moodle-dialogue-hidden {
@@ -1281,67 +1291,63 @@ body#page-lib-editor-tinymce-plugins-moodlemedia-preview {
 .moodle-dialogue-base .moodle-dialogue-wrap {
     margin-top: -3px;
     margin-left: -3px;
-    background-color: #fff;
-    border: 1px solid #ccc;
-    border-radius: 10px;
-    .box-shadow(5px 5px 20px 0 #666);
+    background-color: @modal-content-bg;
+    border: 1px solid @modal-content-fallback-border-color; //old browsers fallback (ie8 etc)
+    border: 1px solid @modal-content-border-color;
+    border-radius: @border-radius-large;
+    .box-shadow(0 3px 9px rgba(0,0,0,.5));
 }
 .moodle-dialogue-base .moodle-dialogue-wrap .moodle-dialogue-hd,
 .moodle-dialogue-base .moodle-dialogue-wrap .moodle-dialogue-hd.yui3-widget-hd {
-    margin: 0;
-    padding: 5px;
-    font-size: 12px;
-    font-weight: normal;
-    letter-spacing: 1px;
-    color: #333;
-    text-align: center;
-    text-shadow: 1px 1px 1px #fff;
-    border-radius: 10px 10px 0 0;
-    border-bottom: 1px solid #bbb;
-    background: #ccc;
-    #gradient > .vertical(#fff, #ccc);
-    filter: 0;
+    background-image: none; //remove YUI gradients
+    color: @text-color;
+    .modal-header;
+    padding-right: 30px;
 }
 .moodle-dialogue-base .moodle-dialogue-wrap .moodle-dialogue-hd h1 {
-    margin: 0;
-    padding: 0;
-    display: inline;
-    font-size: 100%;
-    font-weight: bold;
 }
 .moodle-dialogue-base .moodle-dialogue-wrap .moodle-dialogue-hd .yui3-widget-buttons {
-    padding: 5px;
+    margin-top: 15px;
+    margin-right: 5px;
+    padding: 0;
+    background-image: none;
+    button.yui3-button.closebutton {
+        box-shadow: none;
+        background-color: @modal-content-bg;
+        .opacity(0.4);
+        &:hover {
+            .opacity(1);
+        }
+    }
 }
-.moodle-dialogue-base .closebutton {
-    width: 25px;
-    height: 15px;
+.moodle-dialogue-base button.yui3-button.closebutton {
+    width: 20px;
+    height: 20px;
     float: right;
     vertical-align: middle;
     display: inline-block;
     cursor: pointer;
     padding: 0;
-    background-image: url([[pix:theme|sprite]]);
+    background-image: url([[pix:theme|close_x]]);
     background-repeat: no-repeat;
     border-style: none;
+    &,
+    &:hover {
+        background-position: center center;
+    }
 }
 .dir-rtl .moodle-dialogue-base .moodle-dialogue-wrap .moodle-dialogue-hd .yui3-widget-buttons {
     left: 0;
     right: auto;
 }
 .moodle-dialogue-base .moodle-dialogue .moodle-dialogue-bd {
-    padding: 1em;
-    line-height: 2em;
-    color: #555;
-    font-size: 12px;
+    .modal-body;
 }
 .moodle-dialogue-base .moodle-dialogue-wrap .moodle-dialogue-content {
     padding: 0;
-    background: #FFF;
 }
 
 .moodle-dialogue-base .moodle-dialogue-fullscreen .moodle-dialogue-hd {
-    padding: 10px;
-    font-size: 16px;
 }
 
 .moodle-dialogue-base .moodle-dialogue-fullscreen .moodle-dialogue-content {
@@ -1393,11 +1399,10 @@ body#page-lib-editor-tinymce-plugins-moodlemedia-preview {
     border-bottom: 1px solid #eee;
 }
 .moodle-dialogue-base .moodle-dialogue .moodle-dialogue-content .moodle-dialogue-ft {
-    padding: 0;
-    margin: 0.7em 1em;
     text-align: right;
-    background-color: #FFF;
+    background-color: @modal-content-bg;
     font-size: 12px;
+    .modal-footer;
 }
 .moodle-dialogue-confirm .confirmation-message {
     margin: 0.5em 1em;
@@ -1480,9 +1485,11 @@ body#page-lib-editor-tinymce-plugins-moodlemedia-preview {
 .moodle-dialogue.chooserdialogue .moodle-dialogue-content .moodle-dialogue-ft {
     margin: 0;
 }
+.moodle-dialogue-ft:empty {
+    display: none;
+}
 .chooserdialogue .moodle-dialogue-wrap .moodle-dialogue-bd {
     padding: 0;
-    background: #F2F2F2;
     .border-bottom-radius(10px);
 }
 /* Center the submit buttons within the area */
@@ -1497,24 +1504,25 @@ body#page-lib-editor-tinymce-plugins-moodlemedia-preview {
 /* Various settings for the options area */
 .choosercontainer #chooseform .options {
     position: relative;
-    border-bottom: 1px solid #BBBBBB;
+    border-bottom: 1px solid @modal-footer-border-color;
 }
 /* Only set these options if we're showing the js container */
 .jsenabled .choosercontainer #chooseform .alloptions {
     overflow-x: hidden;
     overflow-y: auto;
-    max-width: 20.3em;
-    box-shadow: inset 0 0 30px 0px #ccc;
+    max-width: 50%;
+    max-height: calc(~"100vh - 15em") !important;
 }
 .dir-rtl.jsenabled .choosercontainer #chooseform .alloptions {
-    max-width: 18.3em;
+    max-width: 50%;
 }
 /* Settings for option rows and option subtypes */
 .choosercontainer #chooseform .moduletypetitle,
 .choosercontainer #chooseform .option,
 .choosercontainer #chooseform .nonoption {
     margin-bottom: 0;
-    padding: 0 1.6em 0 1.6em;
+    padding: 0 4px;
+    font-size: 12px;
 }
 .choosercontainer #chooseform .moduletypetitle {
     text-transform: uppercase;
@@ -1525,13 +1533,13 @@ body#page-lib-editor-tinymce-plugins-moodlemedia-preview {
 .choosercontainer #chooseform .option span.modicon img.icon,
 .choosercontainer #chooseform .nonoption .typename,
 .choosercontainer #chooseform .nonoption span.modicon img.icon {
-    padding: 0 0 0 0.5em;
+    margin: 0 0 0 0.5em;
 }
 .dir-rtl .choosercontainer #chooseform .option .typename,
 .dir-rtl .choosercontainer #chooseform .option span.modicon img.icon,
 .dir-rtl .choosercontainer #chooseform .nonoption .typename,
 .dir-rtl .choosercontainer #chooseform .nonoption span.modicon img.icon {
-    padding: 0 0.5em 0 0;
+    margin: 0 0.5em 0 0;
 }
 .choosercontainer #chooseform .option span.modicon img.icon,
 .choosercontainer #chooseform .nonoption span.modicon img.icon {
@@ -1547,6 +1555,7 @@ body#page-lib-editor-tinymce-plugins-moodlemedia-preview {
     display: block;
     padding: 0.3em 0 0.1em 0;
     border-bottom: 1px solid #FFFFFF;
+    font-weight: normal;
 }
 .choosercontainer #chooseform .nonoption {
     padding-left: 2.7em;
@@ -1578,13 +1587,12 @@ body#page-lib-editor-tinymce-plugins-moodlemedia-preview {
     top: 0;
     right: 0;
     bottom: 0;
-    left: 20.3em;
+    left: 50%;
     margin: 0;
     padding: 1.6em;
     background-color: @body-bg;
     overflow-x: hidden;
     overflow-y: auto;
-    line-height: 2em;
 }
 .dir-rtl.jsenabled .choosercontainer #chooseform .instruction,
 .dir-rtl.jsenabled .choosercontainer #chooseform .typesummary {
@@ -1599,7 +1607,6 @@ body#page-lib-editor-tinymce-plugins-moodlemedia-preview {
 }
 .choosercontainer #chooseform .selected {
     background-color: @body-bg;
-    box-shadow: 0px 0 10px 0 #ccc;
 }
 .section-modchooser-link img.smallicon {
     padding: 3px;
@@ -1879,8 +1886,7 @@ img#persona_signin {
             padding-right: 4px;
 
             .iconsmall {
-                margin: 4px 4px 4px 0px;
-                padding: 8px 4px 0px 2px;
+                margin: 12px 8px 4px 2px;
                 vertical-align: text-bottom;
             }
 

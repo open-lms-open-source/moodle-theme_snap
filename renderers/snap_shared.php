@@ -77,14 +77,14 @@ class snap_shared extends renderer_base {
     }
 
     /**
-    * Taken from /format/renderer.php
-    * Generate a summary of the activites in a section
-    *
-    * @param stdClass $section The course_section entry from DB
-    * @param stdClass $course the course record from DB
-    * @param array    $mods (argument not used)
-    * @return string HTML to output.
-    */
+     * Taken from /format/renderer.php
+     * Generate a summary of the activites in a section
+     *
+     * @param stdClass $section The course_section entry from DB
+     * @param stdClass $course the course record from DB
+     * @param array    $mods (argument not used)
+     * @return string HTML to output.
+     */
     public static function section_activity_summary($section, $course, $mods) {
         global $CFG;
 
@@ -95,7 +95,7 @@ class snap_shared extends renderer_base {
             return '';
         }
 
-        // Generate array with count of activities in this section:
+        // Generate array with count of activities in this section.
         $sectionmods = array();
         $total = 0;
         $complete = 0;
@@ -129,42 +129,98 @@ class snap_shared extends renderer_base {
         }
 
         if (empty($sectionmods)) {
-            // No sections
+            // No sections.
             return '';
         }
 
-        // Output section activities summary:
+        // Output section activities summary.
         $o = '';
-        $o.= html_writer::start_tag('div', array('class' => 'section-summary-activities mdl-right'));
+        $o .= html_writer::start_tag('div', array('class' => 'section-summary-activities mdl-right'));
         foreach ($sectionmods as $mod) {
-            $o.= html_writer::start_tag('span', array('class' => 'activity-count'));
-            $o.= $mod['name'].': '.$mod['count'];
-            $o.= html_writer::end_tag('span');
+            $o .= html_writer::start_tag('span', array('class' => 'activity-count'));
+            $o .= $mod['name'].': '.$mod['count'];
+            $o .= html_writer::end_tag('span');
         }
-        $o.= html_writer::end_tag('div');
+        $o .= html_writer::end_tag('div');
 
         $a = false;
 
-        // Output section completion data
+        // Output section completion data.
         if ($total > 0) {
             $a = new stdClass;
             $a->complete = $complete;
             $a->total = $total;
             $a->percentage = ($complete / $total) * 100;
 
-            $o.= html_writer::start_tag('div', array('class' => 'section-summary-activities mdl-right'));
-            $o.= html_writer::tag('span', get_string('progresstotal', 'completion', $a), array('class' => 'activity-count'));
-            $o.= html_writer::end_tag('div');
+            $o .= html_writer::start_tag('div', array('class' => 'section-summary-activities mdl-right'));
+            $o .= html_writer::tag('span', get_string('progresstotal', 'completion', $a), array('class' => 'activity-count'));
+            $o .= html_writer::end_tag('div');
         }
 
         $retobj = (object) array (
-            'output'=>$o,
-            'progress'=>$a,
-            'complete'=>$complete,
-            'total'=>$total
+            'output' => $o,
+            'progress' => $a,
+            'complete' => $complete,
+            'total' => $total
         );
 
         return $retobj;
+    }
+
+    /**
+     * Based on get_nav_links function in class format_section_renderer_base
+     * This function has been modified to provide a link to section 0
+     * Generate next/previous section links for naviation
+     *
+     * @param stdClass $course The course entry from DB
+     * @param array $sections The course_sections entries from the DB
+     * @param int $sectionno The section number in the coruse which is being dsiplayed
+     * @return array associative array with previous and next section link
+     */
+    public static function get_nav_links($course, $sections, $sectionno) {
+        global $OUTPUT;
+        // FIXME: This is really evil and should by using the navigation API.
+        $course = course_get_format($course)->get_course();
+        $canviewhidden = has_capability('moodle/course:viewhiddensections', context_course::instance($course->id))
+        or !$course->hiddensections;
+
+        $links = array('previous' => '', 'next' => '');
+        $back = $sectionno - 1;
+        while ($back > -1 and empty($links['previous'])) {
+            if ($canviewhidden || $sections[$back]->uservisible) {
+                $params = array();
+                if (!$sections[$back]->visible) {
+                    $params = array('class' => 'dimmed_text');
+                }
+
+                $previouslink = html_writer::tag('span', $OUTPUT->larrow(), array('class' => 'larrow'));
+                $previouslink .= get_section_name($course, $sections[$back]);
+                if ($back > 0 ) {
+                    $courseurl = course_get_url($course, $back);
+                } else {
+                    // We have to create the course section url manually if its 0.
+                    $courseurl = new moodle_url('/course/view.php', array('id' => $course->id, 'section' => $back));
+                }
+                $links['previous'] = html_writer::link($courseurl, $previouslink, $params);
+            }
+            $back--;
+        }
+
+        $forward = $sectionno + 1;
+        while ($forward <= $course->numsections and empty($links['next'])) {
+            if ($canviewhidden || $sections[$forward]->uservisible) {
+                $params = array();
+                if (!$sections[$forward]->visible) {
+                    $params = array('class' => 'dimmed_text');
+                }
+                $nextlink = get_section_name($course, $sections[$forward]);
+                $nextlink .= html_writer::tag('span', $OUTPUT->rarrow(), array('class' => 'rarrow'));
+                $links['next'] = html_writer::link(course_get_url($course, $forward), $nextlink, $params);
+            }
+            $forward++;
+        }
+
+        return $links;
     }
 
     private static function target_link_content($name, $arrow, $string) {

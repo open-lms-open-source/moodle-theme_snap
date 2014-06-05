@@ -27,7 +27,11 @@ if (!empty($custommenu) && !empty($PAGE->theme->settings->footnote)) {
 ?>
 <hr>
 <div class="helplink text-right">
-<small><?php print_string('poweredbyrunby', 'theme_snap') ?> · <a href="http://kb.moodlerooms.com/joule-2-manuals" target=_'blank'><?php print_string('manuals', 'theme_snap') ?></a> · <a href="http://kb.moodlerooms.com/" target='_blank'><?php print_string('knowledgebase', 'theme_snap') ?></a>
+<?php
+    // set moodle rooms package logo
+    $pwdby = isset($CFG->MR_PACKAGE) ? $CFG->MR_PACKAGE : 'power';
+?>
+<small><?php print_string('poweredbyrunby', 'theme_snap', (string) $OUTPUT->pix_url('poweredby'.$pwdby,'theme')) ?> · <a href="http://kb.moodlerooms.com/joule-2-manuals" target=_'blank'><?php print_string('manuals', 'theme_snap') ?></a> · <a href="http://kb.moodlerooms.com/" target='_blank'><?php print_string('knowledgebase', 'theme_snap') ?></a>
 <?php
 if ($OUTPUT->page_doc_link()) {
     echo " · ".$OUTPUT->page_doc_link();
@@ -36,9 +40,11 @@ if ($OUTPUT->page_doc_link()) {
 <br>© Copyright 2014 Moodlerooms Inc, All Rights Reserved.</small></div>
 
 <div id="page-footer">
+<?php echo $OUTPUT->lang_menu(); ?>
 <?php echo $OUTPUT->standard_footer_html(); ?>
 <div>
 </footer>
 <?php echo $OUTPUT->standard_end_of_body_html() ?>
+<!-- bye! -->
 </body>
 </html>

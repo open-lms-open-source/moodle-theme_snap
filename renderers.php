@@ -25,6 +25,7 @@
 require_once(__DIR__.'/renderers/snap_shared.php');
 require_once(__DIR__.'/renderers/core_renderer.php');
 require_once(__DIR__.'/renderers/course_renderer.php');
+require_once(__DIR__.'/renderers/course_management_renderer.php');
 require_once(__DIR__.'/renderers/course_format_topics_renderer.php');
 require_once(__DIR__.'/renderers/course_format_weeks_renderer.php');
 

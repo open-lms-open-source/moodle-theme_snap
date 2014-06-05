@@ -79,11 +79,11 @@ class theme_snap_core_course_renderer extends core_course_renderer {
      * @param array $displayoptions
      * @return String
      */
-public function course_section_cm_list_item($course,
-                                                &$completioninfo,
-                                                cm_info $mod,
-                                                $sectionreturn,
-                                                $displayoptions = array()
+    public function course_section_cm_list_item($course,
+        &$completioninfo,
+        cm_info $mod,
+        $sectionreturn,
+        $displayoptions = array()
     ) {
         $output = '';
         if ($modulehtml = $this->course_section_cm($course, $completioninfo, $mod, $sectionreturn, $displayoptions)) {

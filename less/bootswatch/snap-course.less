@@ -1,7 +1,7 @@
 //
 // A Course page - The main content
 // --------------------------------------------------
-// Course page 
+// Course page
 // -------------------------
 
 /***************
@@ -142,6 +142,11 @@ li.section.main {
     width: auto;
 }
 
+/* Flex page - align edit button right */
+body.format-flexpage .singlebutton{
+    text-align: right;
+}
+
 
 
 
@@ -171,7 +176,7 @@ li.section.main {
 	display:block;
 	width:auto;
 	position:relative;
-	
+
 	.moodle-actionmenu {
 		float:right;
 	}
@@ -188,13 +193,7 @@ ul.menubar > li[role='presentation'] {
 }
 
 .moodle-actionmenu[data-enhanced].show .menu a {
-	padding:1%;
 	color:#666665;
-}
-.moodle-actionmenu[data-enhanced].show .menu .iconsmall {
-	margin:0;
-	height:auto;
-	width:auto;
 }
 
 .editing .section .activity .activityinstance{
@@ -203,7 +202,7 @@ ul.menubar > li[role='presentation'] {
 }
 
 
-// THE EDIT BUTTON 
+// THE EDIT BUTTON
 
 .editing .summary a:last-of-type{
 	clear:both;
@@ -214,24 +213,14 @@ ul.menubar > li[role='presentation'] {
 .toggle-display.textmenu,
 .editing .summary a:last-of-type
 {
-	text-transform:uppercase;
 	padding:0 0.5em !important;
 	display:inline-block;
 	font-weight:400;
 	background-color:#F1F0EE;
-	letter-spacing:1px;
-	border-radius:2px;
 	font-family: @font-family-base;
 }
 
-.editing .summary a:last-of-type:hover,
-.toggle-display.textmenu:hover,
-.toggle-display.textmenu:focus {
-	background-color:@brand-primary;
-	color:#fff;
-}
-
-// THE EDIT MENU 
+// THE EDIT MENU
 .moodle-actionmenu[data-enhanced].show .menu.align-tr-br {
 	border-radius:0;
 	padding:0;
@@ -240,13 +229,10 @@ ul.menubar > li[role='presentation'] {
 	top:2em;
 	margin-top:0;
 	min-width:210px;
-	
+
 }
 
 
-.section .moodle-actionmenu .iconsmall {
-	padding:0 4%;
-}
 .toggle-display.textmenu b.caret {
 	display:none;
 }
@@ -334,12 +320,12 @@ for moodle editing bugs */
 
 .section li.snap-resource{
 	background-image:url([[pix:theme|file]]);
-	background-size:142px;
+	background-size:142px auto;
 	background-repeat:no-repeat;
 	background-position:center 89%;
 	height:280px;
 	width:210px;
-	margin:0.5em 3%;
+	margin:0.75em 1.7%;
 	padding:0.3em 11px;
 	float:left;
 	display:inline-block;
@@ -401,7 +387,11 @@ for moodle editing bugs */
 	}
 }
 
-
+@media screen and (min-width: @screen-md) {
+		.section li.snap-resource{
+				margin:0.5em 3%;
+		}
+}
 
 .section li.snap-activity {
 	width:99%;
@@ -428,9 +418,9 @@ for moodle editing bugs */
 		font-family:@font-family-base;
 		margin:1em 0.75em;
 		font-size:1.5em;
-		
+
 	}
-	
+
 }
 @media screen and (min-width: @screen-xs) {
 	.section li.snap-activity .contentafterlink {
@@ -438,7 +428,7 @@ for moodle editing bugs */
 	}
 }
 
-	
+
 
 
 
@@ -489,7 +479,7 @@ for moodle editing bugs */
 /* all needs sorting out */
 
 .editing .actions {font-size:0.9em;};
-.editing 
+.editing
 	.section li.snap-resource{
 		.actions {
 			margin-top:-1.7em;
@@ -501,7 +491,7 @@ for moodle editing bugs */
 	padding:0;
 }
 .section .activity .editing_move {
-	left:0em;
+	left:-2em;
 	top:-1.5em;
 }
 .section .activity.modtype_label .editing_move {
@@ -647,7 +637,7 @@ li.snap-resource.modtype_folder {
 			background-color:fade(#fff, 90%);
 	}
 }
-	
+
 // CODE & SYSTEM //
 li.snap-resource.snap-mime-archive{
 background-color:#F9F29A;
@@ -685,16 +675,16 @@ li.snap-resource.snap-mime-text{
 /* PUBLISHED STATUS STUFF */
 
 .section li.activity.draft:after {
-	content:"DRAFT";
+	content:"Draft";
 	display:inline-block;
 	position:absolute;
 	bottom:0;
-	right:0.5em;
-	background-color:#FFCD35;
+	right:0em;
+	background-color:#999;
+	color:#fff;
 	font-family:@font-family-base;
-	font-size:0.75em;
-	color:white;
-	padding:0 4%;
+	font-size:small;
+	padding:2px 4%;
 }
 
 /* CONDITIONAL STATUS STUFF */
@@ -702,8 +692,8 @@ li.snap-resource.snap-mime-text{
 .section li.snap-resource.conditional{
 	.conditional_info {
 		position:absolute;
-		bottom:0em;
-		left:0.5em;
+		bottom:0;
+		left:0;
 		z-index:2;
 		background-color:#FFCD35;
 		font-family:@font-family-base;
@@ -731,7 +721,7 @@ li.snap-resource.snap-mime-text{
 			padding:0
 		}
 	}
-	
+
 }
 
 .availabilityinfo {
@@ -771,7 +761,7 @@ li.snap-resource.snap-mime-text{
 
 .activity .unread{
 	clear:both;
-	display:inline-block;
+	display:block;
 	margin-left:4em;
 	background-color:transparent;
 	a {
@@ -787,4 +777,11 @@ li.snap-resource.snap-mime-text{
 
 .section .editing_title .iconsmall {
 	vertical-align:middle;
+}
+
+
+@media screen and (max-width: @screen-xs-min) {
+  .path-enrol #region-main .singlebutton.enrolusersbutton.enrol_manual_plugin {
+      display:block;
+  }
 }

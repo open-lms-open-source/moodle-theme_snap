@@ -55,22 +55,25 @@ class toc_renderer extends core_renderer {
 
         $completioninfo = new completion_info($course);
         if (!$completioninfo->is_enabled()) {
-            return ''; // completion tracking not enabled
+            return ''; // Completion tracking not enabled.
         }
         // If you have the ability to manage grades then you should NOT be looking at your own progress!
-        if (has_capability('moodle/grade:manage', context_course::instance($course->id), $USER)){
+        if (has_capability('moodle/grade:manage', context_course::instance($course->id), $USER)) {
             return '';
         }
         $sac = snap_shared::section_activity_summary($section, $course, null);
-
-        if ($perc) {
-            $percentage = $sac->progress->percentage !=null ? round($sac->progress->percentage,0).'%' : '';
-            return ('<span class="completionstatus percentage">'.$percentage.'</span>');
-        } else {
-            if ($sac->progress->total>0) {
-                return ('<span class="completionstatus outoftotal">Progress:  '.$sac->progress->complete.'/'.$sac->progress->total.'</span>');
+        if (!empty($sac->progress)) {
+            if ($perc) {
+                $percentage = $sac->progress->percentage != null ? round($sac->progress->percentage, 0).'%' : '';
+                return ('<span class="completionstatus percentage">'.$percentage.'</span>');
             } else {
-                return ('');
+                if ($sac->progress->total > 0) {
+                    return ('<span class="completionstatus outoftotal">Progress:  '.
+                        $sac->progress->complete.'/'.$sac->progress->total.'</span>'
+                    );
+                } else {
+                    return ('');
+                }
             }
         }
     }
@@ -106,9 +109,10 @@ class toc_renderer extends core_renderer {
         if ($singlepage) {
             $search = get_string('search');
             $o .= '
-            <label class="sr-only" for="toc-search-input">Search</label><input id="toc-search-input"  type="text" title="'.s($search).'" placeholder="&#xe0d0;" />
+            <label class="sr-only" for="toc-search-input">Search</label>
+            <input id="toc-search-input"  type="text" title="'.s($search).'" placeholder="&#xe0d0;" />
             '.$this->modulesearch();
-        }// '.s($search).'
+        }
         $o .= '</div>';
 
         $toc = '<ol id="chapters" class="chapters" role="menu" start="0">';
@@ -151,12 +155,16 @@ class toc_renderer extends core_renderer {
                     $linkinfo = $this->toc_linkinfo(get_string('conditional', 'theme_snap'));
                 }
             }
-
             if ($outputlink) {
                 if ($singlepage) {
                     $url = '#section-'.$section;
                 } else {
-                    $url = course_get_url($course, $section, array('navigation' => true, 'sr' => $section));
+                    if ($section > 0) {
+                        $url = course_get_url($course, $section, array('navigation' => true, 'sr' => $section));
+                    } else {
+                        // We need to create the url for section 0, or a hash will get returned.
+                        $url = new moodle_url('/course/view.php', array('id' => $course->id, 'section' => $section));
+                    }
                 }
                 $link = html_writer::link($url, get_section_name($course, $section), array('role' => 'menuitem'));
             } else {
@@ -208,7 +216,7 @@ class toc_renderer extends core_renderer {
 
         // Only show Norton grader if installed.
         if (array_key_exists('nortongrader', $localplugins)) {
-            $links[] =array(
+            $links[] = array(
                 'link' => $CFG->wwwroot.'/local/nortongrader/view.php?courseid='.$COURSE->id,
                 'title' => get_string('pluginname', 'local_nortongrader')
             );

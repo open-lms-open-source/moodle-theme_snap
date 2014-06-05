@@ -14,6 +14,18 @@ function snapInit(){
     var loggingenabled = false;
 
     /**
+     * height of navigation bar
+     * @type {*|jQuery}
+     */
+    var navheight = $('#mr-nav').outerHeight();
+
+    /**
+     * does an admin block exist
+     * @type {boolean |jQuery}
+     */
+    var adminblock = false;
+
+    /**
      * console.log wrapper - copes with old browsers
      * @param {string} msg
      * @param obj
@@ -43,6 +55,9 @@ function snapInit(){
         if (!settingsblock.length){
             return;
         }
+
+        adminblock = settingsblock[0];
+
         // get settings block id
         // add as href
         var settingsBlockHref= '#'+$(settingsblock).attr('id');
@@ -63,6 +78,8 @@ function snapInit(){
         });
     };
 
+
+
     /**
      * move PHP errors into header
      *
@@ -71,6 +88,17 @@ function snapInit(){
      * @return void
      */
     var movePHPErrorsToHeader = function() {
+        // remove <br> tags inserted before xdebug-error
+        var xdebugs = $('.xdebug-error');
+        if (xdebugs.length){
+            for (var x=0; x<xdebugs.length; x++){
+                var el=xdebugs[x];
+                var fontel=el.parentNode;
+                var br=$(fontel).prev('br');
+                $(br).remove();
+            }
+        }
+
         // Get messages using the different classes we want to use to target debug messages.
         var msgs = $('.xdebug-error, .php-debug, .debuggingmessage');
 
@@ -105,7 +133,8 @@ function snapInit(){
      */
     var setForumStrings = function() {
         $('.path-mod-forum tr.discussion td.topic.starter').attr('data-cellname', M.util.get_string('forumtopic', 'theme_snap'));
-        $('.path-mod-forum tr.discussion td.picture').attr('data-cellname', M.util.get_string('forumauthor', 'theme_snap'));
+        $('.path-mod-forum tr.discussion td.picture:not(\'.group\')').attr('data-cellname', M.util.get_string('forumauthor', 'theme_snap'));
+        $('.path-mod-forum tr.discussion td.picture.group').attr('data-cellname', M.util.get_string('forumpicturegroup', 'theme_snap'));
         $('.path-mod-forum tr.discussion td.replies').attr('data-cellname', M.util.get_string('forumreplies', 'theme_snap'));
         $('.path-mod-forum tr.discussion td.lastpost').attr('data-cellname', M.util.get_string('forumlastpost', 'theme_snap'));
     };
@@ -177,8 +206,14 @@ function snapInit(){
                 $('#section-'+hbparams.section).addClass('state-visible').focus();
 
                 if (hbparams.modid==null){
-                    // change of behaviour, just scroll to top of page with no animation
-                    window.scrollTo(0,0);
+                    if ((!$('body').hasClass('format-topics') && !$('body').hasClass('format-weeks'))
+                        || !$('body').hasClass('editing')) {
+                        // Scroll to top of page
+                        window.scrollTo(0,0);
+                    } else {
+                        // Srcoll to section taking into account navbar
+                        scrolltoElement ($('#section-'+hbparams.section), false, 0);
+                    }
                 }
             }
 
@@ -264,7 +299,7 @@ function snapInit(){
         if (ms == null){
             ms = 1000;
         }
-        var navheight = $('#mr-nav').outerHeight();
+        logger('scrolling to ', el);
         var scrtop = el.offset().top - navheight;
 
         if (animate){
@@ -371,6 +406,29 @@ function snapInit(){
      */
     var addListeners = function(){
 
+        // show fixed header on scroll down
+        // using headroom js - http://wicky.nillia.ms/headroom.js/
+        var myElement = document.querySelector("#mr-nav");
+        // construct an instance of Headroom, passing the element
+        var headroom = new Headroom(myElement, {
+          "tolerance": 5,
+          "offset": 205,
+          "classes": {
+            // when element is initialised
+                initial : "headroom",
+                // when scrolling up
+                pinned : "headroom--pinned",
+                // when scrolling down
+                unpinned : "headroom--unpinned",
+                // when above offset
+                top : "headroom--top",
+                // when below offset
+                notTop : "headroom--not-top"
+          }
+        });
+        // initialise
+        headroom.init();
+
         // listener for toc search //
         var dataList = $("#toc-searchables").find('a');
         $('#toc-search-input').keyup(function (e) {
@@ -476,6 +534,6 @@ function snapInit(){
     $(window).on('load' , function() {
         // note we need to call showPageSectionMod again on window load or the page will jump to the top of the page!
         // this does work, however is there a more elegant fix?
-        showPageSectionMod(false);
+        window.setTimeout(function(){showPageSectionMod(false);},100);
     });
 }

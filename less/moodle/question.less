@@ -22,6 +22,7 @@
 }
 #chooseqtype label {
     display: block;
+    font-weight: normal;
 }
 #chooseqtype .qtypename img {
     padding: 0 0.3em;
@@ -41,48 +42,54 @@
 #qtypechoicecontainer {
     display: none;
 }
+#qtypechoicecontainer_mask {
+    background-color: @modal-backdrop-bg;
+    .opacity(@modal-backdrop-opacity);
+}
 #qtypechoicecontainer_c.yui-panel-container.shadow .underlay {
     background: none;
 }
 #qtypechoicecontainer.yui-panel .hd {
-    color: #333;
-    letter-spacing: 1px;
-    text-shadow: 1px 1px 1px #fff;
-    .border-top-radius(10px);
-    border: 1px solid #ccc;
-    border-bottom: 1px solid #bbb;
-    #gradient > .vertical(#fff, #ccc);
+    border: none;
+    background-image: none; //remove YUI gradients
+    color: @text-color;
+    .modal-header;
 }
 #qtypechoicecontainer {
     font-size: 12px;
-    color: #333;
-    background: #F2F2F2;
-    border-radius: 10px;
-    border: 1px solid #ccc;
+    background-color: @modal-content-bg;
+    border-radius: @border-radius-large;
+    border: 1px solid @modal-content-fallback-border-color; //old browsers fallback (ie8 etc)
+    border: 1px solid @modal-content-border-color;
     border-top: 0 none;
-    box-shadow: 5px 5px 20px 0 #666;
+    .box-shadow(0 3px 9px rgba(0,0,0,.5));
+}
+#qtypechoicecontainer .container-close {
+    background-image: url([[pix:theme|close_x]]);
+    background-position: 0;
+    .opacity(0.4);
+    &:hover {
+        .opacity(0.8);
+    }
 }
 #qtypechoicecontainer #chooseqtype {
     width: 40em;
 }
 #chooseqtypehead h3 {
     margin: 0;
-    font-weight: normal;
+    font-weight: @headings-font-weight;
+    font-size: @font-size-base;
 }
 #chooseqtype .qtypes {
     position: relative;
-    border-bottom: 1px solid #bbb;
+    border-bottom: 1px solid @modal-footer-border-color;
     padding: 0.24em 0;
 }
 #chooseqtype .alloptions {
     overflow-x: hidden;
     overflow-y: auto;
     max-height: 400px;
-    max-height: calc(100vh - 15em);
- /* The next line is a workaround because recess is crap. Delete ththe following line once
-  * https://github.com/twitter/recess/issues/59 / https://github.com/twitter/recess/issues/75
-  * is fixed. The previous line is the right one. */
-    max-height: 60vh;
+    max-height: calc(~"100vh - 15em");
     width: 60%;
 }
 #chooseqtype .qtypeoption {
@@ -91,12 +98,8 @@
 }
 #chooseqtype .qtypeoption img {
     vertical-align: text-bottom;
-    padding-left: 1em;
-    padding-right: 0.5em;
 }
 #chooseqtype .selected {
-    background-color: #fff;
-    box-shadow: 0px 0 10px 0 #ccc;
 }
 #chooseqtype .instruction,
 #chooseqtype .qtypesummary {
@@ -110,8 +113,8 @@
     overflow-x: hidden;
     overflow-y: auto;
     padding: 1.5em 1.6em;
-    background-color: #fff;
     overflow-y: auto;
+    background-color: @modal-content-bg
 }
 #chooseqtype .instruction,
 #chooseqtype .selected .qtypesummary {
@@ -136,6 +139,18 @@
 }
 .questionbank .singleselect {
     margin: 0;
+}
+
+#randomquestiondialog {
+    .modal-content;
+    .hd {
+        background-image: none;
+        .modal-header;
+    }
+    .bd {
+        background-color: @modal-content-bg;
+        .modal-body;
+    }
 }
 /* Question editing form */
 #combinedfeedbackhdr div.fhtmleditor {

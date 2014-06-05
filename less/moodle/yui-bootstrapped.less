@@ -4,8 +4,8 @@
         .btn-default;
     }
     .mask {
-        background-color: #fff;
-        opacity: 0.75;
+        background-color: @modal-backdrop-bg;
+        opacity: @modal-backdrop-opacity;
     }
     .yui-dt > table {
         .table;
@@ -44,6 +44,20 @@
         margin-top: 60px;
         .yui-panel {
             .modal-content;
+            &> .container-close {
+                position: absolute;
+                top: 15px;
+                right: 15px;
+                width: 20px;
+                height: 20px;
+                background-image: url([[pix:theme|close_x]]);
+                background-repeat: no-repeat;
+                cursor: pointer;
+                .opacity(0.4);
+                &:hover {
+                    .opacity(0.8);
+                }
+            }
             .hd {
                 .modal-header;
             }
@@ -54,12 +68,40 @@
                 .modal-footer;
             }
         }
+        &#loading_c .yui-panel {
+            box-shadow: none;
+        }
     }
     .yui3-panel {
         .yui3-panel-content {
             .modal-content;
             .yui3-widget-hd {
                 .modal-header;
+                .yui3-widget-buttons {
+                    margin-top: 9px;
+                    margin-right: 5px;
+                    padding: 0;
+                    background-image: none;
+                    button.yui3-button {
+                        width: 25px;
+                        height: 15px;
+                        float: right;
+                        vertical-align: middle;
+                        display: inline-block;
+                        cursor: pointer;
+                        padding: 0;
+                        background-image: url([[pix:theme|close_x]]);
+                        font-size: 0;
+                        background-repeat: no-repeat;
+                        border-style: none;
+                        box-shadow: none;
+                        background-color: @modal-content-bg;
+                        .opacity(0.4);
+                        &:hover {
+                            .opacity(1);
+                        }
+                    }
+                }
             }
             .yui3-widget-bd {
                 .modal-body;
@@ -104,6 +146,9 @@
         // Special case this for now but need to find
         // general rule for when to show and hide
         // scrollbars.
+        &#row,
+        &#column_item,
+        &#column_total,
         &#pld_gear {
             overflow: hidden;
         }

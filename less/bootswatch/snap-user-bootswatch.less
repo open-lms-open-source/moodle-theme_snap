@@ -1,16 +1,16 @@
 // everything user customisable via less
 //
 // This needs to override CSS coming from three distinct places
-// 
+//
 //  1. Bootstrap 3 (less/bootstrap3/*.less)
 //  2. Moodle overrides of Bootstrap  (less/moodle/*.less)
 //  3. Snap theme (less/bootswatch/snap-*.less)
 //
-// And in that order, this file will try to follow the order  and 
-// general format of the sources that it overrides to make it 
+// And in that order, this file will try to follow the order  and
+// general format of the sources that it overrides to make it
 // easier to trace back.
 //.
-// Typography 
+// Typography
 // -------------------------
 
 blockquote {
@@ -21,7 +21,7 @@ hr {
     border-top: 1px solid @brand-primary;
 }
 
-a:not(.btn), 
+a:not(.btn),
 a:not(.btn):visited { color:@brand-primary;}
 a:not(.btn):hover { color:darken(@brand-primary, 8%); }
 
@@ -58,14 +58,8 @@ legend,
     }
   }
 }
-// Elements 
+// Elements
 // -------------------------
-
-.editing .summary a:last-of-type:hover,
-.toggle-display.textmenu:hover,
-.toggle-display.textmenu:focus {
-    background-color: @brand-primary;
-}
 
 .fixy-trigger {
     border: 1px solid @brand-primary;
@@ -75,7 +69,7 @@ legend,
     .message_badge_count{
     	background-color:darken(@brand-primary, 8%);
     }
-    
+
 }
 
 
@@ -156,6 +150,7 @@ input[type="reset"] {
     &:focus {
         background-color: darken(@brand-primary, 8%);
         border-color: darken(@brand-primary, 12%);
+        color:#fff;
     }
 }
 
@@ -213,7 +208,9 @@ a[href="#sections"] {
 		background-color:@brand-primary;
 	}
 }
-
+.current .sectionname{
+  color:@brand-primary;
+}
 
 // yui-bs overrides
 .yui-bootstrapped {
@@ -273,3 +270,14 @@ a[href="#sections"] {
     }
 }
 
+
+// -------------------------
+//  Moodle mods
+// -------------------------
+
+// -------------------------
+// Quiz
+// -------------------------
+.que {
+  border-bottom:1px solid @brand-primary;
+}

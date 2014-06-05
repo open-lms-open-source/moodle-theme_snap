@@ -72,13 +72,12 @@ class theme_snap_core_renderer extends toc_renderer {
         $logout = get_string('logout');
 
         try {
-            /** @var theme_snap_message_badge_renderer|null $badgerend */
             $badgerend = $PAGE->get_renderer('message_badge');
         } catch (Exception $e) {
             $badgerend = null;
         }
 
-        $isguest=isguestuser();
+        $isguest = isguestuser();
 
         if (!isloggedin() || $isguest) {
             $loginurl = '#login';
@@ -101,8 +100,12 @@ class theme_snap_core_renderer extends toc_renderer {
             ) {
                 if ($isguest) {
                     $helpstr = '<p class="text-center">'.get_string('loggedinasguest', 'theme_snap').'</p>';
-                    $helpstr .= '<p class="text-center"><a class="btn btn-primary" href="'.s($CFG->wwwroot).'/login/logout.php?sesskey='.sesskey().'">'.$logout.'</a></p>';
-                    $helpstr .= '<p class="text-center"><a href="'.s($CFG->wwwroot).'/login/index.php">'.get_string('helpwithloginandguest', 'theme_snap').'</a></p>';
+                    $helpstr .= '<p class="text-center">'.
+                        '<a class="btn btn-primary" href="'.
+                        s($CFG->wwwroot).'/login/logout.php?sesskey='.sesskey().'">'.$logout.'</a></p>';
+                    $helpstr .= '<p class="text-center">'.
+                        '<a href="'.s($CFG->wwwroot).'/login/index.php">'.
+                        get_string('helpwithloginandguest', 'theme_snap').'</a></p>';
                 } else {
                     if (empty($CFG->forcelogin)) {
                         $help = get_string('helpwithloginandguest', 'theme_snap');
@@ -114,7 +117,9 @@ class theme_snap_core_renderer extends toc_renderer {
             }
             echo "<a class='fixy-trigger btn btn-primary'  href='".s($loginurl)."'>$login</a>
         <form class=fixy action='$CFG->wwwroot/login/'  method='post' id='login'>
-        <a id='fixy-close' class='pull-right snap-action-icon' href='#'><i class='icon icon-office-52'></i><small>$cancel</small></a>
+        <a id='fixy-close' class='pull-right snap-action-icon' href='#'>
+            <i class='icon icon-office-52'></i><small>$cancel</small>
+        </a>
             <div class=fixy-inner>
             <legend>$loginform</legend>
             <label for='username'>$username</label>
@@ -166,7 +171,7 @@ class theme_snap_core_renderer extends toc_renderer {
             $menu = get_string('menu', 'theme_snap');
             if ($badgerend) {
                 $badge = $badgerend->badge($USER->id);
-                echo "<a class=fixy-trigger href='#primary-nav'>$menu &nbsp; $picture.$badge</a>";
+                echo "<a class=fixy-trigger href='#primary-nav'>$menu &nbsp; $picture $badge</a>";
             }
             $close = get_string('close', 'theme_snap');
             $viewyourprofile = get_string('viewyourprofile', 'theme_snap');
@@ -190,7 +195,9 @@ class theme_snap_core_renderer extends toc_renderer {
             }
 
             echo '<div class=fixy id="primary-nav" class="toggle-details" role="menu" aria-live="polite" tabindex="0">
-        <a id="fixy-close" class="pull-right snap-action-icon" href="#"><i class="icon icon-office-52"></i><small>'.$close.'</small></a>
+        <a id="fixy-close" class="pull-right snap-action-icon" href="#">
+            <i class="icon icon-office-52"></i><small>'.$close.'</small>
+        </a>
         <div class=fixy-inner>
         <h1 id="fixy-profile-link">
             <a title="'.s($viewyourprofile).'" href="'.s($CFG->wwwroot).'/user/profile.php" >'.
@@ -253,6 +260,8 @@ class theme_snap_core_renderer extends toc_renderer {
      * Uses bootstrap compatible html.
      */
     public function navbar() {
+        global $COURSE;
+
         $breadcrumbs = '';
         $courseitem = null;
         foreach ($this->page->navbar->get_items() as $item) {
@@ -269,7 +278,13 @@ class theme_snap_core_renderer extends toc_renderer {
                     $item->action = $courseitem->action;
                     $sectionnumber = $this->get_section_for_id($item->key);
 
-                    $url .= '#section-'.$sectionnumber;
+                    // Append section focus hash only for topics and weeks formats because we can
+                    // trust the behaviour of these formats.
+                    if (($COURSE->format) == 'topics' || ($COURSE->format) == 'weeks') {
+                        $url .= '#section-'.$sectionnumber;
+                    } else {
+                        $url .= '&section='.$sectionnumber;
+                    }
                     $item->action = new moodle_url($url);
                 }
             }
@@ -399,16 +414,16 @@ class theme_snap_core_renderer extends toc_renderer {
             $name    = format_string($discussion->name, true, array('context' => $context));
             $date    = userdate($discussion->timemodified, get_string('strftimedatetime', 'langconfig'));
 
-            $readmorebtn = "<a class='btn btn-primary' href='".$CFG->wwwroot."/mod/forum/discuss.php?d=".$discussion->discussion."'>".get_string('readmore', 'theme_snap')."&nbsp;&#187;</a>";
+            $readmorebtn = "<a class='btn btn-primary' href='".
+                $CFG->wwwroot."/mod/forum/discuss.php?d=".$discussion->discussion."'>".
+                get_string('readmore', 'theme_snap')."&nbsp;&#187;</a>";
 
             $preview = '';
-            if(!$imagestyle)
-             {
-             	$preview = html_to_text($message, 0, false);
-             	$preview = "<p>".shorten_text($preview, 200)."</p>
-             	<p class='text-right'>".$readmorebtn."</p>";
-             }
-
+            if (!$imagestyle) {
+                $preview = html_to_text($message, 0, false);
+                $preview = "<p>".shorten_text($preview, 200)."</p>
+                <p class='text-right'>".$readmorebtn."</p>";
+            }
 
             $output .= <<<HTML
 <div class="news-article clearfix">
@@ -484,6 +499,8 @@ HTML;
             'local-joulegrader-view',
             'blocks-conduit-view',
             'blocks-reports-view',
+            'grade-report-joulegrader-index',
+            'grade-report-nortongrader-index',
         );
         if (in_array($PAGE->pagetype, $killyuipages)) {
 
@@ -507,23 +524,27 @@ HTML;
      */
     public function confirm($message, $continue, $cancel) {
         if ($continue instanceof single_button) {
-            // ok
+            // OK.
         } else if (is_string($continue)) {
             $continue = new single_button(new moodle_url($continue), get_string('continue'), 'post');
         } else if ($continue instanceof moodle_url) {
             $continue = new single_button($continue, get_string('continue'), 'post');
         } else {
-            throw new coding_exception('The continue param to $OUTPUT->confirm() must be either a URL (string/moodle_url) or a single_button instance.');
+            throw new coding_exception(
+                'The continue param to $OUTPUT->confirm() must be either a URL (string/moodle_url) or a single_button instance.'
+            );
         }
 
         if ($cancel instanceof single_button) {
-            // ok
+            // OK.
         } else if (is_string($cancel)) {
             $cancel = new single_button(new moodle_url($cancel), get_string('cancel'), 'get');
         } else if ($cancel instanceof moodle_url) {
             $cancel = new single_button($cancel, get_string('cancel'), 'get');
         } else {
-            throw new coding_exception('The cancel param to $OUTPUT->confirm() must be either a URL (string/moodle_url) or a single_button instance.');
+            throw new coding_exception(
+                'The cancel param to $OUTPUT->confirm() must be either a URL (string/moodle_url) or a single_button instance.'
+            );
         }
 
         $output = $this->box_start('generalbox snap-continue-cancel', 'notice');

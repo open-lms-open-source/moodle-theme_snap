@@ -28,7 +28,8 @@ if ($ADMIN->fulltree) {
     $name = 'theme_snap/logo';
     $title = new lang_string('logo', 'theme_snap');
     $description = new lang_string('logodesc', 'theme_snap');
-    $setting = new admin_setting_configstoredfile($name, $title, $description, 'logo');
+    $opts = array('accepted_types' => array('.png', '.jpg', '.gif', '.webp', '.tiff', '.svg'));
+    $setting = new admin_setting_configstoredfile($name, $title, $description, 'logo', 0, $opts);
     $setting->set_updatedcallback('theme_reset_all_caches');
     $settings->add($setting);
 
@@ -36,7 +37,8 @@ if ($ADMIN->fulltree) {
     $name = 'theme_snap/favicon';
     $title = new lang_string('favicon', 'theme_snap');
     $description = new lang_string('favicondesc', 'theme_snap');
-    $setting = new admin_setting_configstoredfile($name, $title, $description, 'favicon');
+    $opts = array('accepted_types' => array('.ico'));
+    $setting = new admin_setting_configstoredfile($name, $title, $description, 'favicon', 0, $opts);
     $setting->set_updatedcallback('theme_reset_all_caches');
     $settings->add($setting);
 
@@ -54,7 +56,8 @@ if ($ADMIN->fulltree) {
     $name = 'theme_snap/poster';
     $title = new lang_string('poster', 'theme_snap');
     $description = new lang_string('posterdesc', 'theme_snap');
-    $setting = new admin_setting_configstoredfile($name, $title, $description, 'poster');
+    $opts = array('accepted_types' => array('.png', '.jpg', '.gif', '.webp', '.tiff', '.svg'));
+    $setting = new admin_setting_configstoredfile($name, $title, $description, 'poster', 0, $opts);
     $setting->set_updatedcallback('theme_reset_all_caches');
     $settings->add($setting);
 

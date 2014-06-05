@@ -7,6 +7,7 @@ $PAGE->requires->strings_for_js(array('close',
         'problemsfound',
         'forumtopic',
         'forumauthor',
+        'forumpicturegroup',
         'forumreplies',
         'forumlastpost'
         ),

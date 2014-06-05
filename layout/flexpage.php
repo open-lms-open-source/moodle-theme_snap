@@ -159,6 +159,9 @@ echo $OUTPUT->doctype() ?>
 <?php
 echo $OUTPUT->page_heading();
 echo $OUTPUT->course_header();
+if ($PAGE->user_allowed_editing()) {
+    echo $OUTPUT->edit_button($PAGE->url);
+}
 ?>
 </div>
 
