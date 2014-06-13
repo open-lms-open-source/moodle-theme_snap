@@ -139,6 +139,9 @@ td.submit input {
 
 .section-modchooser-link a,
 button,
+.yui-skin-sam .yui-button,
+.yui3-button,
+.yui-button  button,
 .btn,
 input.form-submit,
 input[type="button"],
@@ -162,7 +165,8 @@ input[type="reset"] {
     background-color: @brand-primary;
 }
 
-.news-article-image {
+.news-article-image,
+.news-article-preview {
     background-color: @brand-primary;
 }
 
@@ -270,6 +274,18 @@ a[href="#sections"] {
     }
 }
 
+img.iconhelp:hover {
+    background-color: @brand-primary;
+}
+
+.gradingform_rubric.editor .addlevel input,
+.gradingform_rubric.editor .addcriterion input {
+    background-color: @brand-primary;
+    &:hover {
+        background-color: darken(@brand-primary, 8%);
+        border-color: darken(@brand-primary, 12%);
+    }
+}
 
 // -------------------------
 //  Moodle mods

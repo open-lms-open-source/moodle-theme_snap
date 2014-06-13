@@ -17,14 +17,71 @@ table.flexible,
 .generaltable {
     .table-striped;
 }
+table#fixed_column tr.odd th,
+table#user-grades tr.odd th,
+table#user-grades tr.odd th.header,
+table#user-grades tr.odd td.cell {
+    background-color: @table-bg-accent;
+}
 
+.gradeparent #user-grades,
 #page-report-loglive-index .generaltable,
 #page-admin-report-log-index .generaltable,
+#page-report-log-index .generaltable,
 #page-report-log-user .generaltable,
 #page-admin-user table,
 .environmenttable,
 .category_subcategories,
 .rcs-results,
+#grade_edit_tree_table,
+table.user-grade,
 table#listdirectories {
-    .table-condensed
+    .table-condensed;
+}
+
+.path-grade-report-grader .gradestable th.user,
+.path-grade-report-grader .gradestable th.range,
+.path-grade-report-grader .flexible th,
+.path-grade-report-grader .flexible td,
+.path-grade-report-grader .flexible th a,
+.path-grade-report-grader .flexible td a,
+.path-grade-report-grader .gradestable th.range {
+    white-space: normal;
+}
+
+.path-grade-report-grader .gradestable tr.even th {
+    background-color: @body-bg;
+}
+.path-grade-report-grader .gradestable tr.odd th {
+    background-color: @table-bg-accent;
+}
+
+
+.path-grade-report-customgrader,
+.path-grade-report-grader {
+    th.user img.userpicture {
+        border: none;
+        height: 35px;
+        width: 35px;
+    }
+    tr:not(.heading) th.useridnumbercourse,
+    tr:not(.heading) th.useremail {
+        font-weight: normal;
+    }
+}
+#grade_edit_tree_table td {
+    vertical-align: middle;
+}
+
+div#cjcldsreporttbl.cjccontainer {
+    .left_scroller td {
+        text-align: right;
+        border-right: 1px solid @table-border-color;
+    }
+    .right_scroller td {
+    text-align: left;
+    }
+    table {
+        margin-bottom: 0;
+    }
 }

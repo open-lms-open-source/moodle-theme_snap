@@ -14,9 +14,6 @@
 #chooseqtype .instruction {
     display: none;
 }
-#chooseqtype .fakeqtypes {
-    border-top: 1px solid silver;
-}
 #chooseqtype .qtypeoption {
     margin-bottom: 0.5em;
 }
@@ -42,43 +39,12 @@
 #qtypechoicecontainer {
     display: none;
 }
-#qtypechoicecontainer_mask {
-    background-color: @modal-backdrop-bg;
-    .opacity(@modal-backdrop-opacity);
-}
-#qtypechoicecontainer_c.yui-panel-container.shadow .underlay {
-    background: none;
-}
-#qtypechoicecontainer.yui-panel .hd {
-    border: none;
-    background-image: none; //remove YUI gradients
-    color: @text-color;
-    .modal-header;
-}
-#qtypechoicecontainer {
-    font-size: 12px;
-    background-color: @modal-content-bg;
-    border-radius: @border-radius-large;
-    border: 1px solid @modal-content-fallback-border-color; //old browsers fallback (ie8 etc)
-    border: 1px solid @modal-content-border-color;
-    border-top: 0 none;
-    .box-shadow(0 3px 9px rgba(0,0,0,.5));
-}
-#qtypechoicecontainer .container-close {
-    background-image: url([[pix:theme|close_x]]);
-    background-position: 0;
-    .opacity(0.4);
-    &:hover {
-        .opacity(0.8);
-    }
-}
 #qtypechoicecontainer #chooseqtype {
     width: 40em;
 }
 #chooseqtypehead h3 {
     margin: 0;
-    font-weight: @headings-font-weight;
-    font-size: @font-size-base;
+    font-size: @font-size-h4;
 }
 #chooseqtype .qtypes {
     position: relative;
@@ -141,17 +107,6 @@
     margin: 0;
 }
 
-#randomquestiondialog {
-    .modal-content;
-    .hd {
-        background-image: none;
-        .modal-header;
-    }
-    .bd {
-        background-color: @modal-content-bg;
-        .modal-body;
-    }
-}
 /* Question editing form */
 #combinedfeedbackhdr div.fhtmleditor {
     padding: 0;
@@ -264,14 +219,14 @@ body.path-question-type .fitem_fgroup .accesshide {
 .que .correctness {
     .label;
     &.correct {
-        background-color: @state-success-text;
+        background-color: @label-success-bg;
     }
     &.partiallycorrect {
-        background-color: @orange;
+        background-color: @label-warning-bg;
     }
     &.notanswered,
     &.incorrect {
-        background-color: @state-danger-text;
+        background-color: @label-danger-bg;
     }
 }
 .que .validationerror {

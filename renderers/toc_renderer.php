@@ -86,7 +86,20 @@ class toc_renderer extends core_renderer {
      */
     public function print_course_toc() {
 
-        global $COURSE;
+        global $COURSE, $PAGE;
+
+        // A list of page body classes that are not appropriate for the toc.
+        // This is necessary for when a non-course page uses a course layout (e.g. messages).
+        $skippages = array (
+            'path-message'
+        );
+
+        // Cycle through each page body class we want to skip as not appropriate.
+        foreach ($skippages as $skippage) {
+            if (stripos($PAGE->bodyclasses, $skippage)) {
+                return; // Do not print the course toc for this page.
+            }
+        }
 
         $viewhiddensections = has_capability('moodle/course:viewhiddensections', context_course::instance($COURSE->id));
 
@@ -195,10 +208,12 @@ class toc_renderer extends core_renderer {
 
         $links = array();
         $localplugins = core_component::get_plugin_list('local');
+        $coursecontext = context_course::instance($COURSE->id);
 
+        // Gradebook.
         $links[] = array(
-            'link' => 'user/index.php?id='.$COURSE->id.'&mode=1',
-            'title' => get_string('participants')
+            'link' => 'grade/index.php?id='.$COURSE->id,
+            'title' => get_string('gradebook', 'grades')
         );
 
         // Only show if joule grader is installed.
@@ -209,11 +224,6 @@ class toc_renderer extends core_renderer {
             );
         }
 
-        $links[] = array(
-            'link' => 'grade/index.php?id='.$COURSE->id,
-            'title' => get_string('gradebook', 'grades')
-        );
-
         // Only show Norton grader if installed.
         if (array_key_exists('nortongrader', $localplugins)) {
             $links[] = array(
@@ -221,6 +231,38 @@ class toc_renderer extends core_renderer {
                 'title' => get_string('pluginname', 'local_nortongrader')
             );
         }
+
+        // Only show core outcomes if enabled.
+        if (!empty($CFG->core_outcome_enable)) {
+            $links[] = array(
+                'link' => 'outcome/course.php?contextid='.$coursecontext->id,
+                'title' => get_string('outcomes', 'outcome'),
+                'capability' => 'moodle/grade:edit' // Capability required to view this item.
+            );
+            if (!is_guest($coursecontext)) {
+                $links[] = array(
+                    'link' => 'outcome/course.php?contextid='.$coursecontext->id.'&action=report_course_user_performance_table',
+                    'title' => get_string('report:course_user_performance_table', 'outcome'),
+                    'capability' => '!moodle/course:update' // Capability required to view this item.
+                );
+            }
+        }
+
+        // Course badges.
+        $links[] = array(
+            // What is the 'type=2' bit ?? I'm not happy with this hardcoded but I don't know where it gets the type
+            // from yet.
+            'link' => 'badges/view.php?type=2&id='.$COURSE->id,
+            'title' => get_string('badgesview', 'badges'),
+            'capability' => '!moodle/course:update', // You must not have this capability to view this item.
+        );
+
+        // Personalised Learning Designer.
+        $links[] = array(
+            'link' => 'local/pld/view.php?courseid='.$COURSE->id,
+            'title' => get_string('pluginname', 'local_pld'),
+            'capability' => 'moodle/course:update', // Capability required to view this item.
+        );
 
         // Only show Joule reports if installed.
         if (array_key_exists('reports', core_component::get_plugin_list('block'))) {
@@ -230,49 +272,20 @@ class toc_renderer extends core_renderer {
             );
         }
 
-        // Only show legacy outcomes if enabled.
-        if (!empty($CFG->enableoutcomes)) {
-            $links[] = array(
-                'link' => 'grade/edit/outcome/course.php?id='.$COURSE->id,
-                'title' => get_string('legacyoutcomes', 'outcome'),
-                'capability' => 'moodle/course:update' // Capability required to view this item.
-            );
-        }
-
-        // Only show core outcomes if enabled.
-        if (!empty($CFG->core_outcome_enable)) {
-            $links[] = array(
-                'link' => 'outcome/course.php?contextid='.context_course::instance($COURSE->id)->id,
-                'title' => get_string('outcomes', 'outcome'),
-                'capability' => 'moodle/course:update' // Capability required to view this item.
-            );
-        }
-
+        // Participants.
         $links[] = array(
-            // What is the 'type=2' bit ?? I'm not happy with this hardcoded but I don't know where it gets the type
-            // from yet.
-            'link' => 'badges/view.php?type=2&id='.$COURSE->id,
-            'title' => get_string('badgesview', 'badges')
+            'link' => 'user/index.php?id='.$COURSE->id.'&mode=1',
+            'title' => get_string('participants')
         );
 
+        // Manage badges.
         $links[] = array(
             'link' => 'badges/index.php?type=2&id='.$COURSE->id,
             'title' => get_string('managebadges', 'badges'),
             'capability' => 'moodle/course:update', // Capability required to view this item.
         );
 
-        $links[] = array(
-            'link' => 'badges/newbadge.php?type=2&id='.$COURSE->id,
-            'title' => get_string('newbadge', 'badges'),
-            'capability' => 'moodle/course:update', // Capability required to view this item.
-        );
-
-        $links[] = array(
-            'link' => 'local/pld/view.php?courseid='.$COURSE->id,
-            'title' => get_string('pluginname', 'local_pld'),
-            'capability' => 'moodle/course:update', // Capability required to view this item.
-        );
-
+        // Output appendices.
         $o = html_writer::start_tag('ul', array('role' => 'menu', 'id' => 'appendices', 'class' => 'list-unstyled'));
         $o .= $this->render_appendices($links);
         $o .= html_writer::end_tag('ul');
@@ -313,9 +326,16 @@ class toc_renderer extends core_renderer {
 
             // Check if user has appropriate access to see this item.
             if (!empty($item->capability)) {
-                if (!has_capability($item->capability, $coursecontext)) {
-                    // Skip item - required capability not present.
-                    continue;
+                if (strpos($item->capability, '!') !== 0) {
+                    if (!has_capability($item->capability, $coursecontext)) {
+                        // Skip item - required capability not present.
+                        continue;
+                    }
+                } else {
+                    if (has_capability(substr($item->capability, 1), $coursecontext)) {
+                        // Skip item - not appropriate for people with this capability.
+                        continue;
+                    }
                 }
             }
 

@@ -56,36 +56,6 @@
 }
 
 @media (max-width: 480px) {
-    // make tabs act like nav-stacked
-    // (mostly) copied from bootstrap/navs.less
-    .nav-tabs > li {
-        float: none;
-    }
-    .nav-tabs > li > a {
-        margin-right: 0; // no need for the gap between nav items
-    }
-    .nav-tabs {
-        border-bottom: 0;
-    }
-    .nav-tabs > li > a {
-        border: 1px solid #ddd;
-        border-radius: 0;
-    }
-    .nav-tabs > .active > a,
-    .nav-tabs > .active > a:hover {
-        border: 1px solid #ddd;
-    }
-    .nav-tabs > li:first-child > a {
-        .border-top-radius(4px);
-    }
-    .nav-tabs > li:last-child > a {
-        .border-bottom-radius(4px);
-    }
-    .nav-tabs > li > a:hover,
-    .nav-tabs > li > a:focus {
-        border-color: #ddd;
-        z-index: 2;
-    }
     .fp-content-center {
         display: block;
         vertical-align: top;
@@ -140,7 +110,7 @@
 }
 
 
-@media (max-width: 768px) {
+@media (min-width: @grid-float-breakpoint) {
 // Resize, reflow file-picker on small devices
    #filesskin .yui3-panel,
    #filesskin .file-picker.fp-generallayout {
@@ -148,16 +118,16 @@
         left: 0;
     }
     .userprofile dl.list {
-    // copied from dl-horizontal in bootstrap/repsonsive.less
-        dt {
-          float: none;
-          clear: none;
-          width: auto;
-          text-align: left;
-        }
-        dd {
-          margin-left: 0;
-        }
+    dt {
+      float: left;
+      width: (@component-offset-horizontal - 20);
+      clear: left;
+      text-align: right;
+      .text-overflow();
     }
-
+    dd {
+      margin-left: @component-offset-horizontal;
+      &:extend(.clearfix all); // Clear the floated `dt` if an empty `dd` is present
+    }
+  }
 }

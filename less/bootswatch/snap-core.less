@@ -4,10 +4,7 @@
 // SHAME -  all that fun moodle reset css
 // -------------------------
 
-body.ie {
-    -ms-overflow-style: scrollbar;
-}
-
+// hide that classic 1px gif
 img.spacer {
     display: none;
 }
@@ -53,6 +50,13 @@ img.spacer {
     padding: 0;
     margin: 0 auto;
 }
+
+// Override the above for tables.
+table.boxwidthnormal,
+table.boxwidthwide {
+    width: 100%;
+}
+
 
 // Undo .well styles
 #page-course-index-category .generalbox.info,
@@ -134,8 +138,14 @@ img.spacer {
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
 }
+
 ::-moz-selection { background: #fe57a1; color: #fff; text-shadow: none; }
 ::selection { background: #fe57a1; color: #fff; text-shadow: none; }
+
+// scrollbars in ie
+body.ie {
+    -ms-overflow-style: scrollbar;
+}
 
 input:focus,
 textarea:focus,
@@ -143,6 +153,17 @@ select:focus,
 a:focus,
 :focus {
     outline:0;
+}
+label {
+    font-weight: 500;
+    color:#777;
+}
+select {
+    background-color: #FFF;
+}
+
+textarea{
+    max-width:100%;
 }
 
 body {
@@ -256,6 +277,9 @@ label,
 .form-description,
 .form-filemanager,
 .ffilemanager,
+.fdescription,
+.fstatic,
+.collapsible-actions,
 input,
 button,
 select,
@@ -270,7 +294,9 @@ select,
     font-family: @font-family-sans-serif;
 }
 
-@media screen and (min-width: @screen-sm) {
+
+
+@media screen and (min-width: @screen-sm-min) {
     .nav.nav-justified > li > a {
         padding-left: 0;
         padding-right: 0;
@@ -316,47 +342,20 @@ select,
 // -------------------------
 
 .published-status {
-	display: block;
-  line-height: 1;
-  opacity: 0.6;
-  margin-top:-0.1em;
-
-  small {
-    font-size:small;
-    font-style:normal;
-    margin-left: 1em;
-    padding: 2px 2%;
-    height:12px;
-    // background: #999;
-    // color: #fff;
-    border-bottom-right-radius: 2px;
-    border-top-right-radius: 2px;
-    position: relative;
-    /*&:before{
-      content: " ";
-      float: left;
-      position: absolute;
-      top: 0;
-      left: -11px;
-      width: 0;
-      height: 0;
-      border-color: rgba(0, 0, 0, 0) #999 rgba(0, 0, 0, 0) rgba(0, 0, 0, 0);
-      border-style: solid;
-      border-width: 11px 11px 11px 0;
+    display: block;
+    line-height: 1;
+    opacity: 0.6;
+    margin-top:-0.1em;
+    small {
+        font-size:small;
+        font-style:normal;
+        margin-left: 1em;
+        padding: 2px 2%;
+        height:12px;
+        border-bottom-right-radius: 2px;
+        border-top-right-radius: 2px;
+        position: relative;
     }
-    &:after{
-    	content: "";
-      position: absolute;
-      top: 45%;
-      left: 0;
-      float: left;
-      width: 3px;
-      height: 3px;
-      border-radius: 50%;
-      background: #FFF;
-    }
-    */
-}
 
 }
 .message_stream_user_picture_icon,
@@ -575,7 +574,7 @@ select,
 }
 
 
-@media screen and (min-width: @screen-xs) {
+@media screen and (min-width: @screen-xs-min) {
     #fixy-my-courses ul,
     #moodle-footer .list-unstyled{
         column-count: 2;
@@ -584,7 +583,7 @@ select,
     }
 }
 
-@media screen and (min-width: @screen-sm) {
+@media screen and (min-width: @screen-sm-min) {
     #fixy-username {
         display: inline;
     }
@@ -647,7 +646,6 @@ footer #moodle-footer
 
 #mr-nav {
     position: fixed;
-    // top: 0;
     width: 100%;
     z-index: 23;
     line-height: 2;
@@ -659,13 +657,17 @@ footer #moodle-footer
     animation-iteration-count: once;
     animation-timing-function: cubic-bezier(.694, .0482, .335, 1);
     animation-duration: 0.33s;
+
+    //headroom js http://wicky.nillia.ms/headroom.js/
+    &.headroom--unpinned {
+      display:none;
+    }
+
     &.errors-found{
       // make header pink
       // background-color: #fcc !important;
     }
-}
-#mr-nav.headroom--unpinned {
-  display:none;
+
 }
 
 #page {
@@ -735,6 +737,7 @@ header#page-header
 .breadcrumb-nav {
     margin-bottom: 0;
     float: none;
+    margin-top:-0.5em;
 }
 
 .breadcrumb {
@@ -742,6 +745,28 @@ header#page-header
     padding: 0;
     font-size: @font-size-small;
     display:block;
+}
+/*
+.breadcrumb a{
+    padding:0 4%;
+}
+.breadcrumb:hover{
+    li a{
+        background-color:white;
+        .alakazam;
+    }
+}
+*/
+@media screen and (max-width: @screen-sm) {
+    .breadcrumb li {
+        &:nth-last-child(n+4) {
+            display: none;
+        }
+        &:nth-last-child(3):before {
+            content: "";
+            padding: 0;
+        }
+    }
 }
 
 // SHAME - what is this?
@@ -826,7 +851,7 @@ a[href="#sections"] {
 }
 
 /* show selected menu  logic */
-@media screen and (min-width: @screen-xs) {
+@media screen and (min-width: @screen-xs-min) {
 #blocks:target #chapters,
 #appendices {
 	width:0;
@@ -875,7 +900,7 @@ a[href="#sections"] {
 }
 
 /* if > tablet size */
-@media screen and (min-width: @screen-xs) {
+@media screen and (min-width: @screen-sm-min) {
     #chapters,
     #appendices{
         column-count: 3;
@@ -978,26 +1003,6 @@ a[href="#sections"] {
 
 
 
-// -------------------------
-// Forms styling & resets
-// -------------------------
-
-legend,
-.mform legend a,
-.mform legend a:hover {
-    color: inherit;
-    font-family: @font-family-sans-serif;
-}
-
-label {
-    margin: 0 0.3em 0 0;
-}
-
-.form-item .form-description,
-.form-description {
-    clear: both;
-    padding: 1em;
-}
 
 
 
@@ -1015,7 +1020,7 @@ label {
 
 
 // -------------------------
-// Buttons, faux buttons styleing & resets
+// Buttons, faux buttons styling & resets
 // -------------------------
 
 .section-modchooser-link a,
@@ -1023,6 +1028,8 @@ label {
 a.btn,
 a.btn:visited,
 button,
+.yui3-button,
+.yui-button  button,
 .btn,
 input.form-submit,
 input[type="button"],
@@ -1117,17 +1124,6 @@ aside .settings-button{
 		cursor: e-resize;
 }
 
-table#form td.submit,
-.form-buttons,
-.path-admin .buttons,
-#fitem_id_submitbutton,
-.fp-content-center form+div,
-div.backup-section+form,
-#fgroup_id_buttonar {
-    background-color: transparent;
-    border-top: 1px solid #ccc;
-}
-
 
 
 
@@ -1164,14 +1160,55 @@ div.backup-section+form,
   width:auto;
   min-width:110px;
 }
-
-
+.form-label .form-shortname{
+    display:inline;
+}
 
 .course-content,
+.settingsform,
 .mform{
-    max-width: 44.5em;
+    max-width: 40.5em;
     margin: 0 auto;
 }
+.form-item,
+.mform .fcontainer .fitem {
+    margin-bottom: 0px;
+    padding-top: .5em;
+    padding-bottom: .5em;
+    &:hover {
+        background-color: #EFEFEF;
+    }
+}
+.mform .fcontainer .fitem {
+    &.fitem_fcheckbox {
+        .fitemtitle {
+            display: inline;
+            float: none;
+            width: auto;
+            padding-left: 0;
+        }
+        .fcheckbox {
+            width: auto;
+            padding-right: 0;
+        }
+    }
+}
+
+.form-item {
+    .form-label .form-shortname {
+        display: inline-block;
+        padding-left: 1em;
+    }
+    .form-checkbox.defaultsnext {
+        display: inline-block;
+    }
+    .form-defaultinfo,
+    .form-description pre {
+        font-size: @font-size-small;
+    }
+}
+
+
 
 
 .forumpost {
@@ -1218,12 +1255,12 @@ http://blog.rodneyrehm.de/archives/34-iOS7-Mobile-Safari-And-Viewport-Units.html
     margin: 0;
 }
 
-@media screen and (min-width: @screen-xs) {
+@media screen and (min-width: @screen-xs-min) {
 	#page-site-index #page-header {
 	min-height:500px;
 	}
 }
-@media screen and (min-width: @screen-sm) {
+@media screen and (min-width: @screen-sm-min) {
 	#page-site-index #page-header {
 	min-height:650px;
 	}
@@ -1237,7 +1274,7 @@ http://blog.rodneyrehm.de/archives/34-iOS7-Mobile-Safari-And-Viewport-Units.html
 }
 
 
-@media screen and (min-width: @screen-sm) {
+@media screen and (min-width: @screen-sm-min) {
     #page-site-index #page-mast {
         width: 54%;
         margin: 0 -0.75em;
@@ -1246,18 +1283,6 @@ http://blog.rodneyrehm.de/archives/34-iOS7-Mobile-Safari-And-Viewport-Units.html
 
 #page-site-index .breadcrumb-nav {
     display: none;
-}
-
-@media screen and (max-width: @screen-sm) {
-    .breadcrumb li {
-        &:nth-last-child(n+4) {
-            display: none;
-        }
-        &:nth-last-child(3):before {
-            content: "";
-            padding: 0;
-        }
-    }
 }
 
 #page-site-index .content-slide {
@@ -1315,29 +1340,36 @@ http://blog.rodneyrehm.de/archives/34-iOS7-Mobile-Safari-And-Viewport-Units.html
 .news-article-content h3 {
     font-size: @font-size-h2;
 }
-.news-article-image {
+.news-article-image,
+.news-article-preview{
 	color:#fff;
     height: 150px;
     //	background-color: @brand-primary; customisable
     padding:2em 4%;
     .bg-cover;
-    p {
-    	display:none;
-    }
+}
+.news-article-preview {
+    height:auto;
 }
 .news-article-date {
     font-size: 0.75em;
 }
 
 
-@media screen and (min-width: @screen-sm) {
+
+@media screen and (min-width: @screen-sm-min) {
     #news-articles div:nth-child(odd) .news-article-image {
         float: right;
         p:nth-of-type(2) {
           .text-left;
         }
     }
-    .news-article-image {
+    #news-articles div:nth-child(even) .news-article-inner{
+        float:right;
+    }
+
+    .news-article-image,
+    .news-article-preview{
           height: 100%;
           min-height:300px;
           	p {
@@ -1351,7 +1383,8 @@ http://blog.rodneyrehm.de/archives/34-iOS7-Mobile-Safari-And-Viewport-Units.html
           margin-bottom: 0;
     }
 }
-@media screen and (min-width: @screen-md) {
+
+@media screen and (min-width: @screen-lg-min) {
 	.news-article {
 		min-height:28vh;
 	}
@@ -1391,7 +1424,7 @@ http://blog.rodneyrehm.de/archives/34-iOS7-Mobile-Safari-And-Viewport-Units.html
     max-height: 100%;
 }
 
-@media screen and (min-width: @screen-sm) {
+@media screen and (min-width: @screen-sm-min) {
     .coursebox .info,
     .coursebox .content .summary,
     .coursebox .content .teachers {
@@ -1553,7 +1586,7 @@ http://blog.rodneyrehm.de/archives/34-iOS7-Mobile-Safari-And-Viewport-Units.html
 #page-mod-quiz-edit div.question div.content .questiontext{
   max-width:95%;
 }
-@media screen and (max-width: @screen-md) {
+@media screen and (max-width: @screen-md-max) {
   .questioncontentcontainer {
     width:100%;
     clear:both;
@@ -1726,7 +1759,7 @@ http://blog.rodneyrehm.de/archives/34-iOS7-Mobile-Safari-And-Viewport-Units.html
 // Forum responsive table
 // -------------------------
 
-@media screen and (max-width: @screen-sm) {
+@media screen and (max-width: @screen-sm-max) {
 .path-mod-forum .forumheaderlist .picture a {
 		display:inline;
 	}
@@ -1852,6 +1885,26 @@ table#user-grades tr.avg td.cell{
     background: none;
 }
 
+.gradingform_rubric.editor .addlevel input,
+.gradingform_rubric.editor .addcriterion input {
+    .btn;
+    .btn-default;
+    height: auto;
+    background-image: none;
+    color: #fff;
+    border: none;
+    margin-top: 0.5em;
+    //background-color: @brand-primary; User customisable.
+    &:hover {
+        color: #fff;
+        border: none;
+        //background-color: @brand-primary; User customisable.
+    }
+}
+.gradingform_rubric.editor .criterion .levels .level .delete {
+    position: relative;
+}
+
 .path-blocks-reports {
     .report-category-overlay,
     .report-course-overlay {
@@ -1959,7 +2012,7 @@ table#user-grades tr.avg td.cell{
     }
     table .header[scope="col"] {
         background-color: #fff;
-        font-size:small;
+        font-size: 13px;
     }
     table {
         margin: 0;
@@ -2058,24 +2111,6 @@ table#user-grades tr.avg td.cell{
     }
 
 }
-@media screen and (min-width: @screen-md-min) {
-    #page-blocks-conduit-view {
-        .mform .fitem {
-            .felement {
-                width: 58%;
-            }
-            .fitemtitle {
-                text-align: right;
-            }
-        }
-        .mform .fitem_actionbuttons {
-            padding-left: 41.667%;
-            .felement {
-                width: auto;
-            }
-        }
-    }
-}
 
 #page-admin-outcome-admin {
     .yui3-moodle-core_outcome-editoutcome-outcome {
@@ -2089,19 +2124,44 @@ table#user-grades tr.avg td.cell{
 	font-family:@font-family-base;
 }
 
-// make grade table larger on big screens experiment
-/*
-@media screen and (min-width: @screen-md) {
-.path-grade-report-grader .gradeparent{
-    margin-left:calc(-45vw + 10%);
-    margin-right:calc(-45vw + 10%);
+// make grade table larger, apply whitespace remover
+.path-grade-edit-tree,
+.path-grade-report-customgrader,
+.path-grade-report-grader {
+    #region-main {
+        width: 100%;
+        max-width: 100%
+    }
+    table.simple,
+    #gradetreesubmit,
+    ul.nav-tabs {
+        max-width: 60.5em;
+        margin: 0 auto 1em;
+    }
 }
-.path-grade-report-grader .flexible th a{
-  white-space:normal;
+.path-grade-report-customgrader,
+.path-grade-report-grader {
+    .gradeparent{
+        table#user-grades {
+            border: none;
+            th {
+                font-size: 13px !important;
+                &.header.userfield[scope="col"],
+                &.header#studentheader[scope="col"] {
+                    vertical-align: bottom;
+                    border-top: none;
+                }
+            }
+            th,
+            td {
+                border-color: @table-border-color #f5f5f5;
+            }
+            .topleft {
+                border: none;
+            }
+        }
+    }
 }
-}
-*/
-
 
 
 
@@ -2204,7 +2264,7 @@ table#user-grades tr.avg td.cell{
     float: left;
 }
 
-@media screen and (min-width: @screen-sm) {
+@media screen and (min-width: @screen-sm-min) {
 	#section_footer{
 		#previous_section,
 		#next_section {
@@ -2268,7 +2328,7 @@ table#user-grades tr.avg td.cell{
 .file-picker .fp-navbar{
   background-color:transparent;
 }
-@media screen and (min-width: @screen-sm) {
+@media screen and (min-width: @screen-sm-min) {
 .file-picker .fp-repo-area{
   width:32%;
 }
@@ -2278,6 +2338,9 @@ table#user-grades tr.avg td.cell{
 }
 
 /* add resources and activities dialogue */
+.jsenabled .choosercontainer #chooseform .alloptions{
+    padding:0 4%;
+}
 
 /* quiz thing dialogue */
 
@@ -2408,43 +2471,47 @@ table#user-grades tr.avg td.cell{
 }
 
 .alert_stream{
-  hr:first-of-type {
-    height:0.25em;
-  }
-  .message_badge_container {
-
-    .three-quarters {
-      display:block;
+    hr:first-of-type {
+        height:0.25em;
     }
-
-    .message_badge_empty:first-of-type, .message_badge_message:first-of-type {
-      border-top:none;
-    }
-
-    .messagematch{
-      font-family: @font-family-sans-serif;
-    }
-
-    .message_badge_overlay{
-      border:none;
-      width:auto;
-      max-height:inherit;
-    }
-    .message_badge_overlay,
-    .message_badge_message_overlay{
-      background-color:transparent;
-    }
-
-    .message_badge_message_text {
-      article{
-        max-width:55em;
+    #badge_moremessages{
         margin:1em 0;
-        header {
-          display:none;
-        }
-      }
+        text-align:center;
     }
-  }
+    .message_badge_container {
+
+        .three-quarters {
+            display:block;
+        }
+
+        .message_badge_empty:first-of-type, .message_badge_message:first-of-type {
+            border-top:none;
+        }
+
+        .messagematch{
+            font-family: @font-family-sans-serif;
+        }
+
+        .message_badge_overlay{
+            border:none;
+            width:auto;
+            max-height:inherit;
+        }
+        .message_badge_overlay,
+        .message_badge_message_overlay{
+            background-color:transparent;
+        }
+
+        .message_badge_message_text {
+            article{
+                max-width:55em;
+                margin:1em 0;
+                header {
+                    display:none;
+                }
+            }
+        }
+    }
 }
 
 
@@ -2686,4 +2753,52 @@ http://css-spinners.com/css/spinner/three-quarters.css
 // nicer positioning of fatal errors
 div[data-rel = fatalerror]{
   margin:1em 1em 1em 1em;
+}
+
+img.iconhelp {
+    background-color: #ddd;
+    height: 24px;
+    width: 24px;
+    border-radius: 50%;
+    border: 4px solid #ddd;
+    vertical-align: middle;
+    margin-bottom: 3px;
+    &:hover {
+        //background-color: @brand-primary; User customisable.
+        border-width: 0;
+    }
+}
+
+table th img.iconhelp {
+    height: 16px;
+    width: 16px;
+    border-width: 0;
+}
+
+#moodle-footer .helplink a img.iconhelp,
+#moodle-footer .helplink a:hover img.iconhelp {
+    background-color: #999;
+    border-color: #999;
+    &:hover {
+        border-width: 4px;
+    }
+}
+
+// Responsive video for iframes, objects, embeds.
+.videoiframe {
+  text-align:center;
+}
+.videoiframe iframe{
+  width: 92% !important;
+  margin:0 auto;
+}
+.mediaplugin object, .mediaplugin embed {
+  width: 92%;
+  margin: 0 auto;
+}
+
+// Responsive video for HTML5 only.
+video {
+  width: 92%    !important;
+  height: auto   !important;
 }

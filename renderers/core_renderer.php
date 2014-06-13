@@ -72,6 +72,7 @@ class theme_snap_core_renderer extends toc_renderer {
         $logout = get_string('logout');
 
         try {
+            /** @var theme_snap_message_badge_renderer|null $badgerend */
             $badgerend = $PAGE->get_renderer('message_badge');
         } catch (Exception $e) {
             $badgerend = null;
@@ -262,6 +263,8 @@ class theme_snap_core_renderer extends toc_renderer {
     public function navbar() {
         global $COURSE;
 
+        $course = course_get_format($COURSE)->get_course();
+
         $breadcrumbs = '';
         $courseitem = null;
         foreach ($this->page->navbar->get_items() as $item) {
@@ -280,10 +283,10 @@ class theme_snap_core_renderer extends toc_renderer {
 
                     // Append section focus hash only for topics and weeks formats because we can
                     // trust the behaviour of these formats.
-                    if (($COURSE->format) == 'topics' || ($COURSE->format) == 'weeks') {
+                    if ($course->coursedisplay != 1 && ($COURSE->format == 'topics' || $COURSE->format == 'weeks')) {
                         $url .= '#section-'.$sectionnumber;
                     } else {
-                        $url .= '&section='.$sectionnumber;
+                        $url = course_get_url($COURSE, $sectionnumber);
                     }
                     $item->action = new moodle_url($url);
                 }
@@ -419,21 +422,25 @@ class theme_snap_core_renderer extends toc_renderer {
                 get_string('readmore', 'theme_snap')."&nbsp;&#187;</a>";
 
             $preview = '';
+            $newsimage = '';
             if (!$imagestyle) {
                 $preview = html_to_text($message, 0, false);
-                $preview = "<p>".shorten_text($preview, 200)."</p>
-                <p class='text-right'>".$readmorebtn."</p>";
+                $preview = "<div class='news-article-preview col-md-6 col-sm-6'><p>".shorten_text($preview, 200)."</p>
+                <p class='text-right'>".$readmorebtn."</p></div>";
+            } else {
+                $newsimage = '<div class="news-article-image col-md-6 col-sm-6"'.$imagestyle.'></div>';
             }
 
             $output .= <<<HTML
 <div class="news-article clearfix">
-    <div class="news-article-image col-md-6 col-sm-6"$imagestyle>$preview</div>
+    $newsimage
     <div class="news-article-inner col-md-6 col-sm-6">
         <div class="news-article-content">
             <h3><a href="$CFG->wwwroot/mod/forum/discuss.php?d=$discussion->discussion">$name</a></h3>
             <em class="news-article-date">$date</em>
         </div>
     </div>
+    $preview
 </div>
 HTML;
         }

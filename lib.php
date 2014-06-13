@@ -106,7 +106,8 @@ function theme_snap_set_customcss($css, $customcss) {
 function theme_snap_get_bootswatch_variables(theme_config $theme) {
     $settings['brand-primary'] = !empty($theme->settings->themecolor) ? $theme->settings->themecolor : '#3bcedb';
     $settings['font-family-sans-serif'] = !empty($theme->settings->headingfont) ? $theme->settings->headingfont : 'Roboto';
-    $settings['font-family-sans-serif'] .= ',"Fira Sans","Segoe UI","HelveticaNeue-Light","Helvetica Neue Light","Helvetica Neue",Helvetica, Arial, sans-serif';
+    $settings['font-family-sans-serif'] .= ',"Fira Sans","Segoe UI","HelveticaNeue-Light","Helvetica Neue Light",' .
+        '"Helvetica Neue",Helvetica, Arial, sans-serif';
     $settings['font-family-serif'] = !empty($theme->settings->seriffont) ? $theme->settings->seriffont : 'Georgia';
     $settings['font-family-serif'] .= ',"Times New Roman", Times, serif';
     return $settings;

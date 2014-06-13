@@ -156,29 +156,6 @@ class theme_snap_message_badge_renderer extends message_badge_renderer {
     }
 
     /**
-     * Render message text
-     *
-     * @param message_output_badge_model_message $message
-     * @param bool $short
-     * @return string
-     */
-    public function message_text(message_output_badge_model_message $message, $short = true) {
-        if ($short and !empty($message->smallmessage) and $message->notification) {
-            $text = format_text($message->smallmessage);
-        } else if ($short) {
-            $text = format_string($message->subject);
-        } else if (!$message->notification) {
-            $text = format_text(s($message->smallmessage));
-        } else if (!empty($message->fullmessagehtml)) {
-            $text = format_text($message->fullmessagehtml, FORMAT_HTML);
-        } else {
-            $text = format_text($message->fullmessage, $message->fullmessageformat);
-        }
-        $date = userdate($message->timecreated, get_string('strftimedatetimeshort', 'langconfig'));
-        return html_writer::tag('div', $date . ' - ' . $text, array('class' => 'message_badge_message_text'));
-    }
-
-    /**
      * Render messages
      *
      * @param message_output_badge_model_message[] $messages

@@ -26,6 +26,12 @@ function snapInit(){
     var adminblock = false;
 
     /**
+     * timestamp for when window was last resized
+     * @type {null}
+     */
+    var resizestamp = null;
+
+    /**
      * console.log wrapper - copes with old browsers
      * @param {string} msg
      * @param obj
@@ -34,7 +40,7 @@ function snapInit(){
         if (!loggingenabled){
             return;
         }
-        if (console!=null && console.log!=null){
+        if (console != null && console.log != null){
             if (obj){
                 console.log(msg,obj);
             } else {
@@ -51,7 +57,7 @@ function snapInit(){
     var testAdminBlock = function(){
 
         // get admin block via class
-        var settingsblock=$('.block.block_settings');
+        var settingsblock = $('.block.block_settings');
         if (!settingsblock.length){
             return;
         }
@@ -60,8 +66,8 @@ function snapInit(){
 
         // get settings block id
         // add as href
-        var settingsBlockHref= '#'+$(settingsblock).attr('id');
-        $(settingsblock).prepend("<a class='settings-button  snap-action-icon'><i class='icon icon-arrows-01'></i><small>"+M.util.get_string('close', 'theme_snap')+"</small></a>");
+        var settingsBlockHref = '#' + $(settingsblock).attr('id');
+        $(settingsblock).prepend("<a class='settings-button  snap-action-icon'><i class='icon icon-arrows-01'></i><small>" + M.util.get_string('close', 'theme_snap') + "</small></a>");
         $('.settings-button').css('display','inline-block').attr('href', settingsBlockHref);
     };
 
@@ -78,8 +84,6 @@ function snapInit(){
         });
     };
 
-
-
     /**
      * move PHP errors into header
      *
@@ -91,10 +95,10 @@ function snapInit(){
         // remove <br> tags inserted before xdebug-error
         var xdebugs = $('.xdebug-error');
         if (xdebugs.length){
-            for (var x=0; x<xdebugs.length; x++){
-                var el=xdebugs[x];
-                var fontel=el.parentNode;
-                var br=$(fontel).prev('br');
+            for (var x = 0; x < xdebugs.length; x++){
+                var el = xdebugs[x];
+                var fontel = el.parentNode;
+                var br = $(fontel).prev('br');
                 $(br).remove();
             }
         }
@@ -105,7 +109,7 @@ function snapInit(){
         if (msgs.length) {
             // OK we have some errors - lets shove them in the footer.
             $(msgs).addClass('php-debug-footer');
-            var errorcont = $('<div id="footer-error-cont"><h3>'+M.util.get_string('debugerrors', 'theme_snap')+'</h3><hr></div>');
+            var errorcont = $('<div id="footer-error-cont"><h3>' + M.util.get_string('debugerrors', 'theme_snap') + '</h3><hr></div>');
             $('#page-footer').append(errorcont);
             $('#footer-error-cont').append(msgs);
             // Add rulers
@@ -121,6 +125,61 @@ function snapInit(){
                 scrolltoElement($('#footer-error-cont'), false);
             });
         }
+    };
+
+    /**
+     * Apply responsive video to non HTML5 video elements.
+     *
+     * @author Guy Thomas
+     * @date 2014-06-09
+     */
+    var applyResponsiveVideo = function () {
+        // Should we be targeting all elements of this type, or should we be more specific?
+        // E.g. for externally embedded video like youtube we have to go with iframes but what happens if there is
+        // an iframe and it isn't a video iframe - it still gets processed by this script.
+        $('.mediaplugin object, .mediaplugin embed, iframe').not( "[data-iframe-srcvideo='value']").each(function() {
+
+            var tagname = this.tagName.toLowerCase();
+            if (tagname == 'iframe') {
+                var supportedsites = ['youtube.com', 'youtu.be', 'vimeo.com'];
+                var supported = false;
+                for (var s in supportedsites) {
+                    if (this.src.indexOf(supportedsites[s]) > -1){
+                        supported = true;
+                        break;
+                    }
+                }
+                this.setAttribute('data-iframe-srcvideo', (supported ? '1' : '0'));
+                if (!supported){
+                    return true; // Skip as not supported.
+                }
+                // Set class.
+                $(this).parent().addClass('videoiframe');
+            }
+
+            var aspectratio = this.getAttribute('data-aspect-ratio');
+            if (aspectratio == null){
+                // calculate aspect ratio
+                var width = this.width || this.offsetWidth;
+                width = parseInt(width);
+                var height = this.height || this.offsetHeight;
+                height = parseInt(height);
+                var aspectratio = height / width;
+                this.setAttribute('data-aspect-ratio', aspectratio);
+            }
+
+            if (tagname == 'iframe'){
+                // Remove attributes.
+                $(this).removeAttr('width');
+                $(this).removeAttr('height');
+            }
+
+            // Get width again.
+            width = parseInt(this.offsetWidth);
+            // Set height based on width and aspectratio
+            var style = {height: (width * aspectratio) + 'px'};
+            $(this).css(style);
+        });
     };
 
     /**
@@ -151,7 +210,7 @@ function snapInit(){
      */
      var getHashBangParams = function(href){
         var ta = href.split('#');
-        if (ta.length<2){
+        if (ta.length < 2){
             return false; // invalid hashbang
         }
 
@@ -175,14 +234,13 @@ function snapInit(){
      * @date 2014-04-30
      */
     var showPageSectionMod = function(animscroll){
-        var hbparams=getHashBangParams(window.location.href);
+        var hbparams = getHashBangParams(window.location.href);
         if (!hbparams || !hbparams.modid){
             showSection();
         } else {
             focusModule(window.location.href, animscroll);
         }
     };
-
 
     /**
      * show and focus section
@@ -200,19 +258,19 @@ function snapInit(){
 
             var hbparams = getHashBangParams(window.location.href);
             // make sure params suit our needs
-            if (hbparams.section!=null){
+            if (hbparams.section != null){
                 // make desired section visible
-                logger('show section '+hbparams.section);
-                $('#section-'+hbparams.section).addClass('state-visible').focus();
+                logger('show section ' + hbparams.section);
+                $('#section-' + hbparams.section).addClass('state-visible').focus();
 
-                if (hbparams.modid==null){
+                if (hbparams.modid == null){
                     if ((!$('body').hasClass('format-topics') && !$('body').hasClass('format-weeks'))
                         || !$('body').hasClass('editing')) {
                         // Scroll to top of page
-                        window.scrollTo(0,0);
+                        window.scrollTo(0, 0);
                     } else {
                         // Srcoll to section taking into account navbar
-                        scrolltoElement ($('#section-'+hbparams.section), false, 0);
+                        scrolltoElement ($('#section-' + hbparams.section), false, 0);
                     }
                 }
             }
@@ -225,7 +283,6 @@ function snapInit(){
 
         }
     };
-
 
     /**
      * search course modules
@@ -245,7 +302,7 @@ function snapInit(){
             var matches_html = [];
             for (var i = 0; i < dataList.length; i++) {
                 var dataItem = dataList[i];
-                if(containsSearchString(processSearchString($(dataItem).text()),searchString)) {
+                if(containsSearchString(processSearchString($(dataItem).text()), searchString)) {
                     matches.push(dataItem);
                 }
             }
@@ -260,7 +317,6 @@ function snapInit(){
         }
     };
 
-
     /**
      * process toc search strings - trim, remove case sensitivity etc
      *
@@ -273,7 +329,6 @@ function snapInit(){
         searchString = searchString.toLowerCase();
         return (searchString);
     };
-
 
     /**
      * @author Stuart Lamour
@@ -321,19 +376,19 @@ function snapInit(){
 
         // hide search box in case we have clicked a module link (can also be called by page load)
         $('#toc-search-input').removeClass('state-visible');
-        var ta=href.split('#');
-        if (ta.length<1){
+        var ta = href.split('#');
+        if (ta.length < 1){
             return; // invalid hashbang
         }
 
-        var hbparams=getHashBangParams(href);
+        var hbparams = getHashBangParams(href);
         if (!hbparams.section || !hbparams.modid){
             // error - no sction or mod
             return;
         }
 
         // make sure we are on the sections tab (can't navigate to mods if on appendices)
-        location.hash='sections';
+        location.hash = 'sections';
 
         // set browser location and add to history
         if(history.pushState) {
@@ -347,7 +402,7 @@ function snapInit(){
 
         // make desired section visible
         var targsect = 'section-' + hbparams.section;
-        $('#'+targsect).addClass('state-visible');
+        $('#' + targsect).addClass('state-visible');
 
         // scroll to module
         var targmod = 'module-' + hbparams.modid;
@@ -370,34 +425,18 @@ function snapInit(){
     };
 
     /**
-     * This is a temporary function
-     * It will be replaced by a render soon
-     * @author Stuart Lamour
-     * @date 2014-05-28
-     */
-    var addConditionalAsides = function() {
-        var conditional = "<aside class='conditional_info'>"+M.util.get_string('conditional', 'theme_snap')+"</aside>";
-        $('.snap-resource.conditional').each(function() {
-            $(this).append(conditional);
-            var conditionalInfo = $(this).find('.availabilityinfo');
-            $(this).find('.conditional_info').append(conditionalInfo);
-        });
-    };
-
-    /**
      * Do things according to the current page hash.
      *
      * @author Guy Thomas
      * @date 2014-05-21
      */
     var hashBehaviour = function(){
-        if (location.hash=='#primary-nav'){
+        if (location.hash == '#primary-nav'){
             // hide page and moodle footer or we will get double scroll bars
             $('#page').hide();
             $('#moodle-footer').hide();
         }
     }
-
 
     /**
      * add listeners
@@ -472,7 +511,7 @@ function snapInit(){
 
         // listener for clicking serach result //
         $(document).on("click", "#toc-search-results a", function(e){
-            var href= this.getAttribute('href');
+            var href = this.getAttribute('href');
             focusModule(href, true);
             e.preventDefault();
         });
@@ -486,7 +525,6 @@ function snapInit(){
             logger('hashchange triggered');
             showSection();
         });
-
 
         // Listen for click on chapter links where chapter not being edited.
         $(document).on("click", 'body:not(.editing) .chapters a', function(e){
@@ -508,16 +546,32 @@ function snapInit(){
         	$('#chapters, #appendices').addClass('state-visible');
         });
 
-        // listen for fixy trigger so we can sort out scroll bars (hide all page content)
+        // Listen for fixy trigger so we can sort out scroll bars (hide all page content).
         $('.fixy-trigger').click(function(){
             $('#page').hide();
             $('#moodle-footer').hide();
         });
 
-        // listen for close button so we can sort out scroll bars (show all page content)
+        // Listen for close button so we can sort out scroll bars (show all page content).
         $('#fixy-close').click(function(){
             $('#page').show();
             $('#moodle-footer').show();
+        });
+
+        // Listen for window resize for videos.
+        $(window).resize(function(e) {
+            resizestamp = new Date().getTime();
+            (function(timestamp){
+                window.setTimeout(function() {
+                    logger ('checking ' + timestamp + ' against ' + resizestamp);
+                    if (timestamp == resizestamp) {
+                        logger('applying video resize');
+                        applyResponsiveVideo();
+                    } else {
+                        logger('skipping video resize - timestamp has changed from ' + timestamp + ' to ' + resizestamp);
+                    }
+                },200); // wait 1/20th of a second before resizing
+            })(resizestamp);
         });
     };
 
@@ -529,11 +583,14 @@ function snapInit(){
     movePHPErrorsToHeader();
     setForumStrings();
     hashBehaviour();
-    addConditionalAsides();
 
     $(window).on('load' , function() {
         // note we need to call showPageSectionMod again on window load or the page will jump to the top of the page!
         // this does work, however is there a more elegant fix?
-        window.setTimeout(function(){showPageSectionMod(false);},100);
+        window.setTimeout(function(){showPageSectionMod(false);}, 100);
+
+        // Make video responsive.
+        // Note, if you don't do this on load then FLV media gets wrong size.
+        applyResponsiveVideo();
     });
 }

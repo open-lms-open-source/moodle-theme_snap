@@ -41,6 +41,14 @@ M.snap_message_badge.activeMessageId = undefined;
  */
 M.snap_message_badge.forwardURL = undefined;
 
+M.snap_message_badge.perrequest = 5;
+
+M.snap_message_badge.offset = 0;
+
+M.snap_message_badge.totalmessages = 0;
+
+
+
 /**
  * Init Badge
  *
@@ -80,30 +88,7 @@ M.snap_message_badge.init_overlay = function(Y, callback) {
     }
     M.snap_message_badge.initDone = true;
 
-
-    M.snap_message_badge.get_messages_html(Y, function() {
-        var container   = Y.one('.message_badge_container');
-
-        // Remove loading status.
-        var loadingstat=container.one('.loadingstat').remove(true);
-
-        var overlayNode = Y.one('.message_badge_overlay');
-
-        // We must make visible before rendering - messes up positioning
-        overlayNode.removeClass('message_badge_hidden');
-
-        // Process all of the messages
-        overlayNode.all('.message_badge_message').each(function(node) {
-            M.snap_message_badge.init_message(Y, node);
-        });
-
-        // Activate help icons
-        M.snap_message_badge.init_help_icons(Y);
-
-        if (typeof callback == 'function') {
-            callback();
-        }
-    });
+    M.snap_message_badge.get_messages_html(Y, M.snap_message_badge.onresponse_messages_html);
 };
 
 /**
@@ -193,7 +178,7 @@ M.snap_message_badge.update_unread_count = function(Y, unreadCount) {
  */
 M.snap_message_badge.show_all_read = function(Y){
     // Show all messages read notice
-    if (Y.all('.message_badge_messages > .message_badge_message').size()==0){
+    if (Y.all('.message_badge_messages > .message_badge_message').size() == 0){
         Y.one('.message_badge_empty').removeClass('message_badge_hidden');
     }
 };
@@ -236,7 +221,7 @@ M.snap_message_badge.populate_messagebody = function(Y, messagenode, url, onsucc
     Y.io(url, {
         on: {
             start: function() {
-                var loadingstat=Y.Node.create('<div class="loadingstat three-quarters">'+Y.Escape.html(M.util.get_string('loading', 'theme_snap'))+'</div>');
+                var loadingstat = Y.Node.create('<div class="loadingstat three-quarters">' + Y.Escape.html(M.util.get_string('loading', 'theme_snap')) + '</div>');
                 messagenode.one('.message_badge_message_text').append(loadingstat);
             },
             success: function(id, o) {
@@ -250,36 +235,35 @@ M.snap_message_badge.populate_messagebody = function(Y, messagenode, url, onsucc
                 } else {
                     messagenode.one('.message_badge_message_text').removeClass('snap_spinner');
 
-                    var contentnode=messagenode.one('.message_badge_message_text');
+                    var contentnode = messagenode.one('.message_badge_message_text');
 
                     // Get rid of read action (its read now!).
                     messagenode.one('.message_badge_readurl').remove();
                     messagenode.one('.message_badge_url_separator').remove();
 
                     // Should we show a full message?
-                    var messagebody='';
-                    var showfull=messagenode.getAttribute('data-has-full-message')=='true';
+                    var messagebody = '';
+                    var showfull = messagenode.getAttribute('data-has-full-message') == 'true';
                     if (showfull){
-                        messagebody=response.body;
+                        messagebody = response.body;
                     } else {
-                        messagebody=Y.Escape.html(M.util.get_string('messageread', 'theme_snap'));
+                        messagebody = Y.Escape.html(M.util.get_string('messageread', 'theme_snap'));
                     }
 
-
-                    var articlehtml='';
+                    var articlehtml = '';
 
                     // Should I be using Y.Escape.html on the html that is getting returned?
                     if (response.header != undefined) {
-                        articlehtml+="<header>"+response.header+"</header>";
+                        articlehtml += "<header>" + response.header + "</header>";
                     }
                     if (response.body != undefined) {
-                        var classstr=!showfull ? ' class="messagematch"' : '';
-                        articlehtml+='<div'+classstr+'>'+messagebody+'</div>'
+                        var classstr = !showfull ? ' class="messagematch"' : '';
+                        articlehtml += '<div' + classstr + '>' + messagebody + '</div>'
                     }
                     if (response.footer != undefined) {
-                        articlehtml+='<footer>'+response.footer+'</footer>';
+                        articlehtml += '<footer>' + response.footer + '</footer>';
                     }
-                    var article = Y.Node.create('<article>'+articlehtml+'</article>');
+                    var article = Y.Node.create('<article>' + articlehtml + '</article>');
                     contentnode.appendChild(article);
                     article.addClass('slideInDown');
 
@@ -300,6 +284,76 @@ M.snap_message_badge.populate_messagebody = function(Y, messagenode, url, onsucc
 };
 
 /**
+ * Process message html
+ *
+ * @param response
+ */
+M.snap_message_badge.onresponse_messages_html = function(response) {
+
+    M.snap_message_badge.totalmessages = response.totalmessages;
+
+    if (M.snap_message_badge.offset === 0) {
+        Y.one('.message_badge_container').append(response.messages);
+    } else {
+        var tmpNode = Y.Node.create('<div></div>').append(response.messages);
+        Y.one('.alert_stream .message_badge_container .message_badge_container .message_badge_overlay .message_badge_messages').append(tmpNode.all('.message_badge_message'));
+    }
+
+    var container = Y.one('.message_badge_container');
+
+    // Remove loading status.
+    var loadingstat = container.one('.loadingstat').remove(true);
+
+    var overlayNode = Y.one('.message_badge_overlay');
+
+    // We must make visible before rendering - messes up positioning
+    overlayNode.removeClass('message_badge_hidden');
+
+    // Process all of the messages
+    overlayNode.all('.message_badge_message').each(function(node) {
+        M.snap_message_badge.init_message(Y, node);
+    });
+
+    // Activate help icons
+    M.snap_message_badge.init_help_icons(Y);
+
+    if (typeof callback == 'function') {
+        callback();
+    }
+
+    M.snap_message_badge.apply_moremessagesbutton();
+}
+
+M.snap_message_badge.apply_moremessagesbutton = function (){
+    var moremessages = Y.one('#badge_moremessages');
+    if (moremessages == null) {
+        var moremessages = Y.Node.create('<div id="badge_moremessages"><a href="#" class="btn btn-primary">' +
+            M.util.get_string('more', 'theme_snap') + '</a></div>');
+
+        Y.one('.message_badge_container').insert(moremessages, 'after');
+
+        Y.one('#badge_moremessages .btn').on('click', function(e){
+
+            // Increment offset by unmber of messages to get perrequest.
+            M.snap_message_badge.offset += M.snap_message_badge.perrequest;
+            if (M.snap_message_badge.offset > M.snap_message_badge.totalmessages) {
+                M.snap_message_badge.offset = M.snap_message_badge.totalmessages;
+            }
+
+            M.snap_message_badge.get_messages_html(Y, M.snap_message_badge.onresponse_messages_html);
+
+            e.preventDefault();
+            return false;
+        });
+
+    }
+    if ((M.snap_message_badge.offset + M.snap_message_badge.perrequest) >= M.snap_message_badge.totalmessages){
+        // hide moremessages button
+        Y.one(moremessages).hide();
+    }
+}
+
+/**
  * Fetch messages HTML and add it to the DOM
  *
  * @param Y
@@ -307,23 +361,19 @@ M.snap_message_badge.populate_messagebody = function(Y, messagenode, url, onsucc
 M.snap_message_badge.get_messages_html = function(Y, onsuccess) {
 
     // Lets have a loading status.
-    var container   = Y.one('.message_badge_container');
-    var loadingstat=Y.Node.create('<div class="loadingstat three-quarters">'+Y.Escape.html(M.util.get_string('loading', 'theme_snap'))+'</div>');
+    var container = Y.one('.message_badge_container');
+    var loadingstat = Y.Node.create('<div class="loadingstat three-quarters">' + Y.Escape.html(M.util.get_string('loading', 'theme_snap')) + '</div>');
     container.append(loadingstat);
 
-    Y.io(M.cfg.wwwroot + '/message/output/badge/view.php?controller=ajax&action=getmessages', {
+    Y.io(M.cfg.wwwroot + '/message/output/badge/view.php?controller=ajax&action=getmessages&maxmessages=' + M.snap_message_badge.perrequest + '&offset=' + M.snap_message_badge.offset, {
         on: {
             success: function(id, o) {
-
                 var response = Y.JSON.parse(o.responseText);
-
                 if (response.error != undefined) {
                     alert(response.error);
                 } else {
-                    Y.one('.message_badge_container').append(response.messages);
-
                     if (typeof onsuccess == 'function') {
-                        onsuccess();
+                        onsuccess(response);
                     }
                 }
             },

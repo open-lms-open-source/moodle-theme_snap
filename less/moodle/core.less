@@ -998,9 +998,6 @@ body.tag .managelink {
 #page-enrol-users.dir-rtl .col_userdetails .subfield_picture {
     float: right;
 }
-#page-enrol-users .user-enroller-panel .uep-search-results .user .details {
-    width: 237px;
-}
 /**
 * Overide for RTL layout
 **/
@@ -1303,6 +1300,8 @@ body#page-lib-editor-tinymce-plugins-moodlemedia-preview {
     color: @text-color;
     .modal-header;
     padding-right: 30px;
+    font-size: @font-size-h4;
+    min-height: @font-size-h4 + 2 * @modal-title-padding;
 }
 .moodle-dialogue-base .moodle-dialogue-wrap .moodle-dialogue-hd h1 {
 }
@@ -1318,11 +1317,14 @@ body#page-lib-editor-tinymce-plugins-moodlemedia-preview {
         &:hover {
             .opacity(1);
         }
+        &:focus {
+            outline: none;
+        }
     }
 }
 .moodle-dialogue-base button.yui3-button.closebutton {
-    width: 20px;
-    height: 20px;
+    width: 27px;
+    height: 27px;
     float: right;
     vertical-align: middle;
     display: inline-block;
@@ -1403,6 +1405,7 @@ body#page-lib-editor-tinymce-plugins-moodlemedia-preview {
     background-color: @modal-content-bg;
     font-size: 12px;
     .modal-footer;
+    margin-top: 0;
 }
 .moodle-dialogue-confirm .confirmation-message {
     margin: 0.5em 1em;
@@ -1449,7 +1452,7 @@ body#page-lib-editor-tinymce-plugins-moodlemedia-preview {
     height: 100%;
     top: 0;
     left: 0;
-    background-color: white;
+    background-color: @modal-content-bg;
     text-align: center;
     padding: 10% 0;
 }

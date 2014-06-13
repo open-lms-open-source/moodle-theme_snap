@@ -90,6 +90,10 @@ li.section.main {
 		}
 }
 
+.course-content .single-section ul.folderview li.section .content .summary {
+    margin-right: 20px;
+}
+
 .sectionname {
     font-size: @font-size-h2;
     padding-top: 0;
@@ -110,11 +114,6 @@ li.section.main {
 .mod-indent-outer {
 	display:block;
 }
-.mod-indent {
-	display:none;
-}
-
-
 
 // -------------------------
 // important! stuff so sections are not detected as visible by js
@@ -324,14 +323,15 @@ for moodle editing bugs */
 	background-repeat:no-repeat;
 	background-position:center 89%;
 	height:280px;
-	width:210px;
-	margin:0.75em 1.7%;
+	min-width:210px;
+    width:30%;
+	margin:0.75em 1.5%;
 	padding:0.3em 11px;
 	float:left;
 	display:inline-block;
 	position:relative;
 	clear:none;
-	box-shadow:5px 5px #ccc;
+	box-shadow:5px 5px #dadada;
 	background-color:#999;
 	input.titleeditor {
 		margin-top:2em;
@@ -341,7 +341,7 @@ for moodle editing bugs */
 	.activityinstance > a{
 		display:block;
 		width:100%;
-		margin:1.2em 1px;
+		margin:1.5em 1px 0 1px;
 		padding:1em 11px;
 		color:#666665;
 	}
@@ -384,28 +384,37 @@ for moodle editing bugs */
 @media screen and (max-width: @screen-xs) {
 	.section li.snap-resource{
 		// something to make it center //
+        display:block;
+        margin:0.5em 2%;
+        min-width:94%;
+        min-height:150px;
+        height:auto;
+        background-position:4% 90%;
+        background-size:60px auto;
 	}
 }
 
 @media screen and (min-width: @screen-md) {
 		.section li.snap-resource{
-				margin:0.5em 3%;
+				margin:0.5em 2%;
+                width:26%;
 		}
 }
+
 
 .section li.snap-activity {
 	width:99%;
 	height:auto;
 	min-height:180px;
 	clear:both;
-	box-shadow:5px 5px #ccc,inset 0 0 10px #0f0;;
-	border:1px solid #ccc;
+	border:1px solid #dadada;
 	// border-top:0.5em solid @brand-primary;
 	display:inline-block;
 	position:relative;
 	float:none;
 	padding:1em 4%;
 	margin:1em 0;
+    //background-image:linear-gradient(to right, #FFF 32%, #000 32%);
 	.iconlarge {
 		width:48px;
 		height:48px;
@@ -426,6 +435,11 @@ for moodle editing bugs */
 	.section li.snap-activity .contentafterlink {
 		margin-left:11%;
 	}
+}
+.section li.snap-activity{
+    &.modtype_forum{
+    // background-image:linear-gradient(to right,#71d5df 22%,#ffffff 22%);
+    }
 }
 
 
@@ -490,9 +504,20 @@ for moodle editing bugs */
 .section .activity .mod-indent-outer {
 	padding:0;
 }
-.section .activity .editing_move {
-	left:-2em;
-	top:-1.5em;
+.section {
+    .editing_move{
+        line-height:1;
+    }
+    .snap-resource .editing_move{
+	    top: -1.8em;
+        background-color: rgba(255, 255, 255, 0.5);
+    }
+    .snap-activity .editing_move{
+        left:-1.5em;
+    }
+    .modtype_label .editing_move {
+        top:-1em;
+    }
 }
 .section .activity.modtype_label .editing_move {
 	left:0;
@@ -503,6 +528,9 @@ for moodle editing bugs */
 	clear:both;
 	width:100%;
 }
+.editing .dndupload-preview .mod-indent{
+    display:block;
+}
 
 .toggle-display.textmenu {
 	background-color:white;
@@ -511,6 +539,33 @@ for moodle editing bugs */
 .editing .modtype_label{
 	padding-top:1em;
 }
+/*
+.editing .menu.align-tr-br li{
+    width:50%;
+    float:left;
+    a{
+        text-align:center;
+    }
+}
+
+.moodle-actionmenu[data-enhanced].show .menu a{
+    padding:0.3em 0;
+}
+.moodle-actionmenu[data-enhanced].show .menu .iconsmall{
+    display:block;
+    margin:0 auto;
+    width:20px;
+    height:20px;
+    margin-bottom:4px;
+}
+.jsenabled .moodle-actionmenu[data-enhanced] .menu-action-text {
+    display:block;
+    text-transform:uppercase;
+    font-size:small;
+    white-space:normal;
+    line-height:1.2;
+}
+*/
 
 
 // MIME TYPEs //
@@ -674,8 +729,7 @@ li.snap-resource.snap-mime-text{
 
 /* PUBLISHED STATUS STUFF */
 
-.section li.activity.draft:after {
-	content:"Draft";
+.section li.activity .draft_info{
 	display:inline-block;
 	position:absolute;
 	bottom:0;
@@ -688,8 +742,7 @@ li.snap-resource.snap-mime-text{
 }
 
 /* CONDITIONAL STATUS STUFF */
-
-.section li.snap-resource.conditional{
+.section li.activity.conditional{
 	.conditional_info {
 		position:absolute;
 		bottom:0;
@@ -710,7 +763,6 @@ li.snap-resource.snap-mime-text{
 				visibility:visible;
 				height:100%;
 				width:auto;
-				overflow-y:scroll;
 			}
 	}
 	.activityinstance {
@@ -780,8 +832,11 @@ li.snap-resource.snap-mime-text{
 }
 
 
-@media screen and (max-width: @screen-xs-min) {
-  .path-enrol #region-main .singlebutton.enrolusersbutton.enrol_manual_plugin {
-      display:block;
-  }
+@media screen and (max-width: @screen-sm-min) {
+    #page-enrol-users .enrol_user_buttons {
+        float: none;
+        .singlebutton.enrolusersbutton {
+            display:block;
+        }
+    }
 }

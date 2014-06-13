@@ -2,14 +2,14 @@
 $PAGE->set_popup_notification_allowed(false);
 $PAGE->requires->jquery(); // TODO: Might be a better place to put this (EG: in lib.php in a theme lifecycle function).
 $PAGE->requires->strings_for_js(array('close',
-        'conditional',
         'debugerrors',
         'problemsfound',
         'forumtopic',
         'forumauthor',
         'forumpicturegroup',
         'forumreplies',
-        'forumlastpost'
+        'forumlastpost',
+        'more'
         ),
     'theme_snap');
 
@@ -18,6 +18,12 @@ echo $OUTPUT->doctype();
 
 <html id="blocks" <?php echo $OUTPUT->htmlattributes(); ?>>
 <head>
+    <?php
+    if (stripos($PAGE->bodyclasses, 'path-blocks-reports')!==false){
+        // fix IE charting bug (flash stuff does not work correctly in IE)
+        echo ("\n".'<meta http-equiv="X-UA-Compatible" content="IE=8,9,10">'."\n");
+    }
+    ?>
 <title><?php echo $OUTPUT->page_title(); ?></title>
 <link rel="shortcut icon" href="<?php echo $OUTPUT->favicon() ?>"/>
 <?php echo $OUTPUT->standard_head_html() ?>
