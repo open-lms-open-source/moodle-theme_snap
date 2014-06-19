@@ -206,7 +206,10 @@ img[style*="float:right"]{
 }
 @media screen and (max-width: @screen-sm) {
 	// unfloat images for small screen
-	img[style] {
+	img[style*="float:left"],
+    img[style*="float: left"],
+    img[style*="float: right"],
+    img[style*="float:right"]{
 		float:none !important;
 		display: table-cell;
 		clear:both;
@@ -216,6 +219,25 @@ img[style*="float:right"]{
 img.icon {
 	padding: 0;
 	margin-right: 6px;
+}
+
+// Responsive video for iframes, objects, embeds.
+.videoiframe {
+  text-align:center;
+}
+.videoiframe iframe{
+  width: 92% !important;
+  margin:0 auto;
+}
+.mediaplugin object, .mediaplugin embed {
+  width: 92%;
+  margin: 0 auto;
+}
+
+// Responsive video for HTML5 only.
+video {
+  width: 92%    !important;
+  height: auto   !important;
 }
 
 /* mdl hide stuff icon - hide in bs has different meaning*/
@@ -284,6 +306,7 @@ input,
 button,
 select,
 .pagination,
+.alert,
 .nav-pills,
 .nav-tabs,
 .course-report-dashboard,
@@ -361,6 +384,10 @@ select,
 .message_stream_user_picture_icon,
 .userpicture {
     border-radius: 50%;
+}
+
+.userpicture.defaultuserpic {
+    border: 1px solid #e5e5e5;
 }
 
 
@@ -937,6 +964,18 @@ a[href="#sections"] {
 	width:23px;
 }
 
+#toc-search-input:-ms-input-placeholder {
+    font-family: "line-icons";
+    padding-top: 4px;
+    padding-bottom: 4px;
+}
+
+#toc-search-input.placeholder {
+    font-family: "line-icons";
+    min-width: 2em;
+    min-height: 2em;
+}
+
 #toc-search-input:focus,
 #toc-search-input.state-visible{
 	display:block;
@@ -1171,6 +1210,7 @@ aside .settings-button{
     margin: 0 auto;
 }
 .form-item,
+.path-backup .mform .grouped_settings .fitem,
 .mform .fcontainer .fitem {
     margin-bottom: 0px;
     padding-top: .5em;
@@ -1208,7 +1248,18 @@ aside .settings-button{
     }
 }
 
-
+.path-backup .mform .grouped_settings .backup_selector .felement {
+    width: 100%;
+}
+.path-backup .root_setting,
+.path-backup .normal_setting {
+    .fitem {
+        .fitemtitle,
+        .felement {
+            width: 50%;
+        }
+    }
+}
 
 
 .forumpost {
@@ -1935,7 +1986,7 @@ table#user-grades tr.avg td.cell{
         .box-shadow(inset 0 1px 1px rgba(0,0,0,.075));
         .transition(~"border-color ease-in-out .15s, box-shadow ease-in-out .15s");
     }
-    .yui3-widget-stdmod {
+    .yui3-widget-stdmod, .yui3-aclist-content {
         // copied from less/bootstrap3/dropdowns.less .dropdown-menu
         z-index: @zindex-dropdown;
         min-width: 160px;
@@ -2030,6 +2081,9 @@ table#user-grades tr.avg td.cell{
         }
         tr.odd td.cell {
             background-color: @table-bg-accent;
+            &.overridden {
+                background-color: #EFD9A4
+            }
         }
     }
     table.joule-grades td,
@@ -2046,6 +2100,7 @@ table#user-grades tr.avg td.cell{
     #joule-grades-leftcol-wrap {
         border-right: 1px solid @table-border-color;
     }
+    table.joule-grades th,
     table.joule-grades td {
         padding: @table-condensed-cell-padding;
     }
@@ -2194,7 +2249,14 @@ table#user-grades tr.avg td.cell{
         text-align: center;
         border-top: none;
     }
+
+    a, a:visited, a:link, a:hover {
+        color:#fff;
+        text-decoration: underline;
+    }
 }
+
+
 
 
 // hard code some specific uses here till MDL-45655 fixes them
@@ -2784,21 +2846,35 @@ table th img.iconhelp {
     }
 }
 
-// Responsive video for iframes, objects, embeds.
-.videoiframe {
-  text-align:center;
-}
-.videoiframe iframe{
-  width: 92% !important;
-  margin:0 auto;
-}
-.mediaplugin object, .mediaplugin embed {
-  width: 92%;
-  margin: 0 auto;
+
+.helplink{
+    img.moodlefooterlogo,
+    img.poweredbylogo {
+        width: inherit;
+        height: inherit;
+        margin-right: 0.5em;
+        margin-left: 0.5em;
+    }
+    img.moodlefooterlogo {
+        vertical-align: top;
+        margin-top: -2px;
+        margin-right: 0em;
+    }
+    img.poweredbylogo {
+        vertical-align: bottom;
+        margin-bottom: -2px;
+    }
+    .footerlinkdivider{
+        margin:0 0.5em;
+    }
 }
 
-// Responsive video for HTML5 only.
-video {
-  width: 92%    !important;
-  height: auto   !important;
+
+@media screen and (max-width: @screen-sm-min) {
+    #page-enrol-users .enrol_user_buttons {
+        float: none;
+        .singlebutton.enrolusersbutton {
+            display:block;
+        }
+    }
 }

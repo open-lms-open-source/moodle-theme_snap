@@ -170,9 +170,16 @@ table.message .searchresults td {
 .dir-rtl .messagesearchresults td span img {
     padding: 0 .45em 0 0;
 }
+
 #newmessageoverlay {
-    display: none;
+    background-color: @modal-content-bg;
+    border: 1px solid @modal-content-border-color;
+    padding: 20px;
+    position: fixed;
+    bottom: 0;
+    right: 0;
 }
+
 #newmessageoverlay #usermessage {
     padding: 10px;
 }

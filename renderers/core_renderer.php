@@ -71,10 +71,19 @@ class theme_snap_core_renderer extends toc_renderer {
 
         $logout = get_string('logout');
 
+        $badge = '';
         try {
             /** @var theme_snap_message_badge_renderer|null $badgerend */
             $badgerend = $PAGE->get_renderer('message_badge');
         } catch (Exception $e) {
+            $badgerend = null;
+        }
+
+        // Note: In certain circumstances the snap message badge render is not loaded and the original message badge
+        // render is loaded instead - e.g. when you initially switch to the snap theme.
+        // This results in the fixy menu button looking broken as it shows the badge in its original format as opposed
+        // to the overriden format provided by the snap message badge renderer.
+        if (!$badgerend instanceof theme_snap_message_badge_renderer) {
             $badgerend = null;
         }
 
@@ -172,8 +181,8 @@ class theme_snap_core_renderer extends toc_renderer {
             $menu = get_string('menu', 'theme_snap');
             if ($badgerend) {
                 $badge = $badgerend->badge($USER->id);
-                echo "<a class=fixy-trigger href='#primary-nav'>$menu &nbsp; $picture $badge</a>";
             }
+            echo "<a class=fixy-trigger href='#primary-nav'>$menu &nbsp; $picture $badge</a>";
             $close = get_string('close', 'theme_snap');
             $viewyourprofile = get_string('viewyourprofile', 'theme_snap');
             $realuserinfo = '';
@@ -261,8 +270,9 @@ class theme_snap_core_renderer extends toc_renderer {
      * Uses bootstrap compatible html.
      */
     public function navbar() {
-        global $COURSE;
+        global $COURSE, $CFG;
 
+        require_once($CFG->dirroot.'/course/lib.php');
         $course = course_get_format($COURSE)->get_course();
 
         $breadcrumbs = '';

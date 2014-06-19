@@ -5,6 +5,9 @@
  */
 require_once($CFG->dirroot.'/course/format/flexpage/locallib.php');
 
+// Require standard javascript libs
+snap_shared::page_requires_js();
+
 $hasheading = ($PAGE->heading);
 $hasnavbar = (empty($PAGE->layout_options['nonavbar']) && $PAGE->has_navbar());
 $hasfooter = (empty($PAGE->layout_options['nofooter']));
@@ -148,6 +151,7 @@ echo $OUTPUT->doctype() ?>
 <div id="page-content">
 
 
+
 <!--
 ////////////////////////// MAIN  ///////////////////////////////
 -->
@@ -157,6 +161,10 @@ echo $OUTPUT->doctype() ?>
 <nav class="breadcrumb-nav" role="navigation" aria-label="breadcrumb"><?php echo $OUTPUT->navbar(); ?></nav>
 <div id="page-mast">
 <?php
+// Output flex page front page warning if necessary.
+if ($PAGE->pagetype == 'site-index') {
+    echo snap_shared::flexpage_frontpage_warning(true);
+}
 echo $OUTPUT->page_heading();
 echo $OUTPUT->course_header();
 if ($PAGE->user_allowed_editing()) {

@@ -146,9 +146,17 @@ class theme_snap_core_course_renderer extends core_course_renderer {
                 $modulehtml .= html_writer::tag('aside', get_string('conditional', 'theme_snap').
                     $this->course_section_cm_availability($mod, $displayoptions), array('class' => 'conditional_info'));
             }
+
+            $draftmarker = html_writer::tag('aside', get_string('draft', 'theme_snap'), array('class' => 'draft_info'));
+
+            // Ugly workaround to integrate with existing JS.
+            $draftwrapperclass = "contentafterlink draftwrapperworkaround";
             if (!$mod->visible) {
-                $modulehtml .= html_writer::tag('aside', get_string('draft', 'theme_snap'), array('class' => 'draft_info'));
+                $draftwrapperclass .= " dimmed_text";
             }
+            $draftmarker = html_writer::div($draftmarker, $draftwrapperclass);
+
+            $modulehtml .= $draftmarker;
 
             $output .= html_writer::tag('li', $modulehtml, $attr);
         }

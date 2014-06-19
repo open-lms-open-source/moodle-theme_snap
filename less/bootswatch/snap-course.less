@@ -741,6 +741,25 @@ li.snap-resource.snap-mime-text{
 	padding:2px 4%;
 }
 
+.section li.activity .draftwrapperworkaround.contentafterlink {
+    position: absolute;
+    right: .5em;
+    bottom: 0;
+}
+.section li.activity .draftwrapperworkaround.contentafterlink .draft_info {
+    display: none;
+    padding: 2px 2em;
+}
+.section li.activity.snap-resource .draftwrapperworkaround.contentafterlink .draft_info {
+    padding: 2px .5em;
+}
+.section li.activity .draftwrapperworkaround.contentafterlink.dimmed_text .draft_info {
+    display: inline-block;
+}
+.section li.activity.modtype_label .draftwrapperworkaround.contentafterlink.dimmed_text .draft_info {
+    display: none;
+}
+
 /* CONDITIONAL STATUS STUFF */
 .section li.activity.conditional{
 	.conditional_info {
@@ -829,14 +848,4 @@ li.snap-resource.snap-mime-text{
 
 .section .editing_title .iconsmall {
 	vertical-align:middle;
-}
-
-
-@media screen and (max-width: @screen-sm-min) {
-    #page-enrol-users .enrol_user_buttons {
-        float: none;
-        .singlebutton.enrolusersbutton {
-            display:block;
-        }
-    }
 }

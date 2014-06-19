@@ -174,7 +174,9 @@ $THEME->javascripts = array(
 $THEME->javascripts_footer = array(
     'bootstrap',
     'headroom',
-    'snap'
+    'snap',
+    'modernizer',
+    'jquery.placeholder'
 );
 
 $THEME->csspostprocess = 'theme_snap_process_css';

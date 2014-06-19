@@ -1,17 +1,8 @@
 <?php
 $PAGE->set_popup_notification_allowed(false);
-$PAGE->requires->jquery(); // TODO: Might be a better place to put this (EG: in lib.php in a theme lifecycle function).
-$PAGE->requires->strings_for_js(array('close',
-        'debugerrors',
-        'problemsfound',
-        'forumtopic',
-        'forumauthor',
-        'forumpicturegroup',
-        'forumreplies',
-        'forumlastpost',
-        'more'
-        ),
-    'theme_snap');
+
+// Require standard page js.
+snap_shared::page_requires_js();
 
 echo $OUTPUT->doctype();
 ?>
@@ -19,8 +10,8 @@ echo $OUTPUT->doctype();
 <html id="blocks" <?php echo $OUTPUT->htmlattributes(); ?>>
 <head>
     <?php
-    if (stripos($PAGE->bodyclasses, 'path-blocks-reports')!==false){
-        // fix IE charting bug (flash stuff does not work correctly in IE)
+    if (stripos($PAGE->bodyclasses, 'path-blocks-reports') !== false) {
+        // Fix IE charting bug (flash stuff does not work correctly in IE).
         echo ("\n".'<meta http-equiv="X-UA-Compatible" content="IE=8,9,10">'."\n");
     }
     ?>

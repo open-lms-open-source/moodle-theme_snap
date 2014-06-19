@@ -1,5 +1,4 @@
 <footer id="moodle-footer" role="footer" class="clearfix">
-
 <div id="course-footer"><?php echo $OUTPUT->course_footer(); ?></div>
 <?php
 
@@ -31,7 +30,7 @@ if (!empty($custommenu) && !empty($PAGE->theme->settings->footnote)) {
     // set moodle rooms package logo
     $pwdby = isset($CFG->MR_PACKAGE) ? $CFG->MR_PACKAGE : 'power';
 ?>
-<small><?php print_string('poweredbyrunby', 'theme_snap', (string) $OUTPUT->pix_url('poweredby'.$pwdby,'theme')) ?> · <a href="http://kb.moodlerooms.com/joule-2-manuals" target=_'blank'><?php print_string('manuals', 'theme_snap') ?></a> · <a href="http://kb.moodlerooms.com/" target='_blank'><?php print_string('knowledgebase', 'theme_snap') ?></a>
+<small><?php print_string('poweredbyrunby', 'theme_snap', (string) $OUTPUT->pix_url('poweredby'.$pwdby,'theme')) ?><img class="moodlefooterlogo" src="<?php echo (string) $OUTPUT->pix_url('footermoodlelogo-w','theme'); ?>" alt="moodle" /><span class="footerlinkdivider">·</span><a href="http://kb.moodlerooms.com/joule-2-manuals" target=_'blank'><?php print_string('manuals', 'theme_snap') ?></a><span class="footerlinkdivider">·</span><a href="http://kb.moodlerooms.com/" target='_blank'><?php print_string('knowledgebase', 'theme_snap') ?></a>
 <?php
 if ($OUTPUT->page_doc_link()) {
     echo " · ".$OUTPUT->page_doc_link();

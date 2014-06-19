@@ -232,4 +232,54 @@ class snap_shared extends renderer_base {
         $html .= html_writer::end_tag('span');
         return $html;
     }
+
+    /**
+     * Javascript required by both flexpage layout and header layout
+     *
+     * @return void
+     */
+    public static function page_requires_js() {
+        global $PAGE;
+        $PAGE->requires->jquery();
+        $PAGE->requires->strings_for_js(array(
+            'close',
+            'debugerrors',
+            'problemsfound',
+            'forumtopic',
+            'forumauthor',
+            'forumpicturegroup',
+            'forumreplies',
+            'forumlastpost',
+            'more'
+        ), 'theme_snap');
+    }
+
+    /**
+     * Render a warning where flexpage is the course format for the front page.
+     *
+     * @author: Guy Thomas
+     * @date: 2014-07-17
+     * @param bool $adminsonly
+     * @return string
+     */
+    public static function flexpage_frontpage_warning($adminsonly = false) {
+        global $DB, $USER, $OUTPUT;
+
+        if ($adminsonly) {
+            if (!is_siteadmin()) {
+                // Only for admin users.
+                return '';
+            }
+        }
+
+        // Check to see if the front page course has a format of flexpage.
+        $fpage = get_site();
+        if ($fpage->format != 'flexpage') {
+            // Front page format is not flexpage.
+            return '';
+        }
+
+        // Output warning.
+        return ($OUTPUT->notification(get_string('warnsiteformatflexpage', 'theme_snap')));
+    }
 }

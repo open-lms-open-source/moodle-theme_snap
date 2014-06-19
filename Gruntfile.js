@@ -77,7 +77,7 @@ module.exports = function(grunt) {
         watch: {
             // Watch for any changes to less files and compile.
             files: ["less/**/*.less"],
-            tasks: ["less:moodle", "less:editor", "decache"],
+            tasks: ["compile"],
             options: {
                 spawn: false
             }
@@ -91,5 +91,6 @@ module.exports = function(grunt) {
 
     // Register tasks.
     grunt.registerTask("default", ["watch"]);
+    grunt.registerTask("compile", ["less", "decache"]);
     grunt.registerTask("decache", ["exec:decache"]);
 };

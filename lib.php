@@ -14,7 +14,6 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
-
 /**
  * CSS Processor
  *
@@ -23,7 +22,6 @@
  * @return string
  */
 function theme_snap_process_css($css, $theme) {
-
     // Set the background image for the logo.
     $logo = $theme->setting_file_url('logo', 'logo');
     $css = theme_snap_set_logo($css, $logo);
@@ -165,5 +163,3 @@ function theme_snap_pluginfile($course, $cm, $context, $filearea, $args, $forced
         send_file_not_found();
     }
 }
-
-

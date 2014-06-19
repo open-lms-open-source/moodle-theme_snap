@@ -16,7 +16,17 @@
 
 defined('MOODLE_INTERNAL') || die;
 
+require_once(__DIR__.'/renderers/snap_shared.php');
+
 if ($ADMIN->fulltree) {
+
+    // Output flex page front page warning if necessary.
+    $fpwarning = snap_shared::flexpage_frontpage_warning();
+    if (!empty($fpwarning)) {
+        $setting = new admin_setting_heading('flexpage_warning', '', $fpwarning);
+        $settings->add($setting);
+    }
+
 
     $name = 'theme_snap/brandingheading';
     $title = new lang_string('brandingheading', 'theme_snap');
