@@ -29,6 +29,7 @@ require_once(__DIR__.'/renderers/course_management_renderer.php');
 require_once(__DIR__.'/renderers/course_format_topics_renderer.php');
 require_once(__DIR__.'/renderers/course_format_weeks_renderer.php');
 
+// Include badge renderer if it should be.
 if (file_exists($CFG->dirroot.'/message/output/badge/renderer.php')) {
     require_once(__DIR__.'/renderers/message_badge_renderer.php');
 }

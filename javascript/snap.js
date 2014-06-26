@@ -600,20 +600,8 @@ function snapInit(){
     hashBehaviour();
     polyfills();
 
-    // This code is there for the sake of Firefox (seems to be a bug with nested fixed elements + animation).
-    // https://bugzil.la/649247
-    if (navigator.userAgent.toLowerCase().indexOf("firefox") != -1) {
-        $('#mr-nav').css('position', 'absolute');
-    }
 
     $(window).on('load' , function() {
-
-        // This code is there for the sake of Firefox 30 (seems to be a bug with nested fixed elements + animation).
-        // https://bugzil.la/649247
-        if (navigator.userAgent.toLowerCase().indexOf("firefox") != -1) {
-            $('#mr-nav').css('position', 'fixed');
-        }
-
         // note we need to call showPageSectionMod again on window load or the page will jump to the top of the page!
         // this does work, however is there a more elegant fix?
         window.setTimeout(function(){showPageSectionMod(false);}, 100);

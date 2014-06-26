@@ -95,4 +95,4 @@ $string['graderadviseuserreport'] = 'The "grader report" does not work well on m
 $string['graderadviseuserreport'] = 'The "grader report" does not work well on mobile devices. The "user report" is recommended instead';
 $string['graderadviseuserreport'] = 'The "grader report" does not work well on mobile devices. The "user report" is recommended instead';
 $string['draft'] = 'Draft';
-$string['warnsiteformatflexpage'] = 'Your site uses Flexpage on the Frontpage. Flexpage is not optimized for small screen devices. It is recommended that you disable the use of Flexpage in your Front Page settings if you would like your site to be mobile device friendly.';
+$string['warnsiteformatflexpage'] = 'Your site uses Flexpage on the front page. Flexpage is not optimized for small screen devices. It is recommended that you disable the use of Flexpage in your <a href="{$a}">front page settings</a> if you would like your site to be mobile device friendly.';

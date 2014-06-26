@@ -3,20 +3,23 @@ table.flexible,
     .table;
 }
 
-table#explaincaps,
-table#defineroletable,
-table.grading-report,
-table#listdirectories,
-table.rolecaps,
-table.userenrolment,
-table#form,
-form#movecourses table,
-#page-admin-course-index .editcourse,
-.forumheaderlist,
-table.flexible,
-.generaltable {
-    .table-striped;
+& when (@moodle-table-striped) {
+    table#explaincaps,
+    table#defineroletable,
+    table.grading-report,
+    table#listdirectories,
+    table.rolecaps,
+    table.userenrolment,
+    table#form,
+    form#movecourses table,
+    #page-admin-course-index .editcourse,
+    .forumheaderlist,
+    table.flexible,
+    .generaltable {
+        .table-striped;
+    }
 }
+
 table#fixed_column tr.odd th,
 table#user-grades tr.odd th,
 table#user-grades tr.odd th.header,
@@ -39,6 +42,16 @@ table#listdirectories {
     .table-condensed;
 }
 
+& when (@moodle-table-hover) {
+    .user-enroller-panel .uep-search-results .users,
+    table.grading-report,
+    .forumheaderlist,
+    .generaltable,
+    table.flexible,
+    table#permissions {
+        .table-hover;
+    }
+}
 .path-grade-report-grader .gradestable th.user,
 .path-grade-report-grader .gradestable th.range,
 .path-grade-report-grader .flexible th,

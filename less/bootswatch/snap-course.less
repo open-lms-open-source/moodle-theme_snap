@@ -157,7 +157,7 @@ body.format-flexpage .singlebutton{
 // Editing mess
 // -------------------------
 /* Add text to edit summary gear icon */
-.editing .summary a:last-of-type:before{
+.editing .summary>a:last-of-type:before{
 	content: attr(title);
 	font-size:0.8em;
 }
@@ -183,6 +183,7 @@ body.format-flexpage .singlebutton{
 		display:block;
 		position:relative;
 		right:0;
+        top:0;
 		float:right;
 	}
 }
@@ -203,14 +204,14 @@ ul.menubar > li[role='presentation'] {
 
 // THE EDIT BUTTON
 
-.editing .summary a:last-of-type{
+.editing .summary>a:last-of-type{
 	clear:both;
 	float:right;
 	margin-top:0.5em;
 }
 
 .toggle-display.textmenu,
-.editing .summary a:last-of-type
+.editing .summary>a:last-of-type
 {
 	padding:0 0.5em !important;
 	display:inline-block;
@@ -299,7 +300,8 @@ for moodle editing bugs */
 .togglecompletion,
 .autocompletion {
     position: absolute;
-    right: 1em;
+    right: 0.1em;
+    top:1em;
 }
 
 // all above dumped from bootswatch...
@@ -319,19 +321,19 @@ for moodle editing bugs */
 
 .section li.snap-resource{
 	background-image:url([[pix:theme|file]]);
-	background-size:142px auto;
+	background-size:100px auto;
 	background-repeat:no-repeat;
 	background-position:center 89%;
 	height:280px;
 	min-width:210px;
     width:30%;
-	margin:0.75em 1.5%;
+	margin:1em 1.5%;
 	padding:0.3em 11px;
 	float:left;
 	display:inline-block;
 	position:relative;
 	clear:none;
-	box-shadow:5px 5px #dadada;
+	box-shadow:0 2px 5px 0 rgba(0, 0, 0, 0.26); //5px 5px #dadada;
 	background-color:#999;
 	input.titleeditor {
 		margin-top:2em;
@@ -380,7 +382,7 @@ for moodle editing bugs */
 		text-shadow:1px 1px 1px #666665;
 	}
 }
-
+/*
 @media screen and (max-width: @screen-xs) {
 	.section li.snap-resource{
 		// something to make it center //
@@ -393,7 +395,7 @@ for moodle editing bugs */
         background-size:60px auto;
 	}
 }
-
+*/
 @media screen and (min-width: @screen-md) {
 		.section li.snap-resource{
 				margin:0.5em 2%;
@@ -406,27 +408,33 @@ for moodle editing bugs */
 	width:99%;
 	height:auto;
 	min-height:180px;
+    box-shadow:0 2px 5px 0 rgba(0, 0, 0, 0.26);
 	clear:both;
-	border:1px solid #dadada;
+	// border:1px solid #dadada;
 	// border-top:0.5em solid @brand-primary;
-	display:inline-block;
+	display:block;
+    clear:both;
+    float:none;
 	position:relative;
-	float:none;
-	padding:1em 4%;
-	margin:1em 0;
+	padding:1em 2%;
+	margin:1em auto;
     //background-image:linear-gradient(to right, #FFF 32%, #000 32%);
 	.iconlarge {
-		width:48px;
-		height:48px;
-		vertical-align:middle;
+		width:68px;
+		height:68px;
+		float:left;
 	}
+    .activityinstance {
+        padding-top:1em;
+    }
 	.activityinstance a{
 		color:#666665;
 	}
 	.instancename {
 		font-family:@font-family-base;
-		margin:1em 0.75em;
-		font-size:1.5em;
+		margin:1em 0em;
+		font-size:@font-size-large;
+        line-height:1;
 
 	}
 
@@ -450,7 +458,7 @@ for moodle editing bugs */
 	height:auto;
 	width:100%;
 	background-color:white !important;
-	padding:1em 0;
+	padding:1.5em 0;
 	text-align: left;
 	.clearfix;
 }
@@ -513,7 +521,8 @@ for moodle editing bugs */
         background-color: rgba(255, 255, 255, 0.5);
     }
     .snap-activity .editing_move{
-        left:-1.5em;
+        left:-2%;
+        top:-1em;
     }
     .modtype_label .editing_move {
         top:-1em;
@@ -724,6 +733,39 @@ li.snap-resource.snap-mime-text{
 }
 
 
+/* MOD TYPE STYLES */
+
+
+li.snap-activity {
+    border-left:3px solid #fff;
+    border-radius:3px 0 0 3px;
+}
+
+li.modtype_forum,
+li.modtype_chat,
+li.modtype_hsuforum {
+    border-color:#49A0AE;
+}
+
+li.modtype_assign,
+li.modtype_workshop {
+    border-color:#4ABC96;
+}
+li.modtype_lesson {
+    border-color:#6CC077;
+}
+li.modtype_choice,
+li.modtype_feedback,
+li.modtype_quiz,
+li.modtype_survey{
+    border-color:#A0BF19;
+}
+li.modtype_data,
+li.modtype_glossary,
+li.modtype_wiki{
+    border-color:#EDC92C;
+}
+
 
 
 
@@ -734,7 +776,7 @@ li.snap-resource.snap-mime-text{
 	position:absolute;
 	bottom:0;
 	right:0em;
-	background-color:#999;
+	background-color:#ccc;
 	color:#fff;
 	font-family:@font-family-base;
 	font-size:small;
@@ -841,11 +883,13 @@ li.snap-resource.snap-mime-text{
 	}
 }
 
-.togglecompletion, .autocompletion{
-	right: 0.1em;
-	top: 0em;
-}
+
 
 .section .editing_title .iconsmall {
 	vertical-align:middle;
+}
+.editing .course-content .section .activity{
+    border-bottom:0;
+    margin-bottom:0;
+    padding-bottom:0;
 }

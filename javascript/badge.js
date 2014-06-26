@@ -47,16 +47,19 @@ M.snap_message_badge.offset = 0;
 
 M.snap_message_badge.totalmessages = 0;
 
-
+M.snap_message_badge.courseid = null;
 
 /**
  * Init Badge
  *
  * @param {YUI} Y
  */
-M.snap_message_badge.init_badge = function(Y, forwardURL) {
+M.snap_message_badge.init_badge = function(Y, forwardURL, courseid) {
 
-    // Save for later
+    // Set course id.
+    M.snap_message_badge.courseid = courseid;
+
+    // Save for later.
     M.snap_message_badge.forwardURL = forwardURL;
 
     // Load messages when the primary nav is shown.
@@ -218,7 +221,7 @@ M.snap_message_badge.forward = function(Y, messageNode, e) {
  * @param url
  */
 M.snap_message_badge.populate_messagebody = function(Y, messagenode, url, onsuccess) {
-    Y.io(url, {
+    Y.io(url + '&courseid=' + M.snap_message_badge.courseid, {
         on: {
             start: function() {
                 var loadingstat = Y.Node.create('<div class="loadingstat three-quarters">' + Y.Escape.html(M.util.get_string('loading', 'theme_snap')) + '</div>');
@@ -365,7 +368,7 @@ M.snap_message_badge.get_messages_html = function(Y, onsuccess) {
     var loadingstat = Y.Node.create('<div class="loadingstat three-quarters">' + Y.Escape.html(M.util.get_string('loading', 'theme_snap')) + '</div>');
     container.append(loadingstat);
 
-    Y.io(M.cfg.wwwroot + '/message/output/badge/view.php?controller=ajax&action=getmessages&maxmessages=' + M.snap_message_badge.perrequest + '&offset=' + M.snap_message_badge.offset, {
+    Y.io(M.cfg.wwwroot + '/message/output/badge/view.php?controller=ajax&action=getmessages&courseid=' + M.snap_message_badge.courseid + '&maxmessages=' + M.snap_message_badge.perrequest + '&offset=' + M.snap_message_badge.offset, {
         on: {
             success: function(id, o) {
                 var response = Y.JSON.parse(o.responseText);

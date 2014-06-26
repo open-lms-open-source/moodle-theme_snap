@@ -1,30 +1,30 @@
 // Strip down core bootstrap for editor.
 
-// Core variables and mixins.
-@import "bootstrap3/variables.less"; // Modify this for custom colors, font-sizes, etc.
-@import "bootstrap3/mixins.less";
+@import "bootstrap3/variables";
+@import "bootstrap3/normalize";
+@import "bootstrap3/mixins";
+@import "bootstrap3/mixins";
 
 
-// Base CSS.
-@import "bootstrap3/scaffolding.less";
-@import "bootstrap3/type.less";
-@import "bootstrap3/code.less";
-@import "bootstrap3/tables.less";
+@import "bootstrap3/scaffolding";
+@import "bootstrap3/type";
+@import "bootstrap3/code";
+@import "bootstrap3/grid";
+@import "bootstrap3/tables";
 
-// Components: common.
-@iconSpritePath:          ~"[[pix:theme|glyphicons-halflings]]";
-@iconWhiteSpritePath:     ~"[[pix:theme|glyphicons-halflings-white]]";
-@import "bootstrap3/wells.less";
+@import "bootstrap3/wells";
 
-// Components: Buttons & Alerts.
-@import "bootstrap3/buttons.less";
-@import "bootstrap3/alerts.less"; // Note: alerts share common CSS with buttons and thus have styles in buttons.less.
+@import "bootstrap3/buttons";
+@import "bootstrap3/alerts";
 
-// Components: Misc.
-@import "bootstrap3/thumbnails.less";
+@import "bootstrap3/thumbnails";
 
-// Utility classes.
-@import "bootstrap3/utilities.less"; // Has to be last to override when necessary.
+@import "bootstrap3/utilities";
+@import "bootstrap3/responsive-utilities";
 
-// Moodle override.
-@import "moodle/editor.less"; // The final override.
+@import "moodle/variables";
+
+@import "bootswatch/snap-variables";
+@import "bootswatch/snap-bootswatch";
+
+@import "moodle/editor";

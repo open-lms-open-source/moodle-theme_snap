@@ -167,13 +167,21 @@ if ($PAGE->pagetype == 'site-index') {
 }
 echo $OUTPUT->page_heading();
 echo $OUTPUT->course_header();
-if ($PAGE->user_allowed_editing()) {
-    echo $OUTPUT->edit_button($PAGE->url);
-}
 ?>
 </div>
 
 </header>
+
+<?php
+    if ($PAGE->user_allowed_editing()) {
+        if ($COURSE->id == SITEID) {
+            $url=new moodle_url('/course/view.php', array('id'=>SITEID));
+            echo $OUTPUT->edit_button($url);
+        } else {
+            echo $OUTPUT->edit_button($PAGE->url);
+        }
+    }
+?>
 
 <!-- not sure what this does in flexpage if anything -->
 <?php echo $OUTPUT->print_settings_link(); ?>
@@ -189,7 +197,10 @@ if ($PAGE->user_allowed_editing()) {
 <!-- top box -->
 <?php if ($hassidetop) { ?>
 <div id="region-top" class="block-region">
-    <?php echo $OUTPUT->blocks('side-top'); ?>
+    <!-- This is bad - we have to have a region-content div for drag and drop to work! -->
+    <div class="region-content">
+        <?php echo $OUTPUT->blocks('side-top'); ?>
+    </div>
 </div>
 <?php } ?>
 
@@ -207,21 +218,27 @@ echo format_flexpage_next_button();
 <!-- blocks pre -->
 <?php if ($hassidepre) { ?>
 <div id="region-pre" class="block-region">
-<?php echo $OUTPUT->blocks('side-pre'); ?>
+    <div class="region-content">
+        <?php echo $OUTPUT->blocks('side-pre'); ?>
+    </div>
 </div>
 <?php } ?>
 
 
 <!-- actual main content -->
 <div id="region-main-box">
-<?php echo $OUTPUT->blocks('main'); ?>
+    <div class="region-content">
+        <?php echo $OUTPUT->blocks('main'); ?>
+    </div>
 </div>
 
 
 <!-- blocks post -->
 <?php if ($hassidepost) { ?>
 <div id="region-post" class="block-region">
-<?php echo $OUTPUT->blocks('side-post'); ?>
+    <div class="region-content">
+        <?php echo $OUTPUT->blocks('side-post'); ?>
+    </div>
 </div>
 <?php } ?>
 

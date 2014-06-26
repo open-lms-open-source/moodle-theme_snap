@@ -88,6 +88,11 @@ class toc_renderer extends core_renderer {
 
         global $COURSE, $PAGE;
 
+        // No access to course, return nothing.
+        if (!can_access_course($COURSE)) {
+            return '';
+        }
+
         // A list of page body classes that are not appropriate for the toc.
         // This is necessary for when a non-course page uses a course layout (e.g. messages).
         $skippages = array (
@@ -96,7 +101,7 @@ class toc_renderer extends core_renderer {
 
         // Cycle through each page body class we want to skip as not appropriate.
         foreach ($skippages as $skippage) {
-            if (stripos($PAGE->bodyclasses, $skippage)) {
+            if (stripos($PAGE->bodyclasses, $skippage) !== false) {
                 return; // Do not print the course toc for this page.
             }
         }
@@ -365,6 +370,8 @@ class toc_renderer extends core_renderer {
      * @return string
      */
     protected function modulesearch() {
+        global $COURSE;
+
         $o = '<div id="toc-search-results"></div>';
         $o .= '<div id="toc-searchables">';
         $format  = course_get_format($this->page->course);

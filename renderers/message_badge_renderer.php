@@ -33,6 +33,7 @@ class theme_snap_message_badge_renderer extends message_badge_renderer {
      * @return array
      */
     public function get_js_module() {
+        global $COURSE;
         return array(
             'name'     => 'message_badge',
             'fullpath' => '/theme/snap/javascript/badge.js',
@@ -92,7 +93,7 @@ class theme_snap_message_badge_renderer extends message_badge_renderer {
 
         $PAGE->requires->js_init_call(
             'M.snap_message_badge.init_badge',
-            array($forwardurl->out(false)),
+            array($forwardurl->out(false), $COURSE->id),
             false,
             $this->get_js_module()
         );

@@ -10,11 +10,17 @@
 }
 
 // Specific fix for odd HTML.
+.format-flexpage .ft .yui-button.yui-push-button,
+.format-flexpage .yui-button.yui-push-button,
+.format-flexpage .yui-button.yui-menu-button,
+.format-flexpage .yui-button.yui-link-button,
+.format-flexpage .yui-button.yui-radio-button,
 #message_stream_more_button.yui-button {
     background-image: none;
     border: none;
     .first-child {
         border: none;
+        a,
         button {
             border: none;
             color: inherit;
@@ -105,6 +111,7 @@
                 .modal-body;
             }
             .ft {
+                margin: 0;
                 border: none;
                 background-color: @modal-content-bg;
                 .modal-footer;
@@ -123,6 +130,8 @@
                 color: @headings-color;
                 line-height: @line-height-base;
                 font-family: @headings-font-family;
+                background: none;
+                text-align: left;
                 .modal-header;
                 .yui3-widget-buttons {
                     margin-top: 15px;
@@ -148,6 +157,9 @@
                             .opacity(1);
                         }
                     }
+                }
+                .yui3-button-close:before {
+                    content: "";
                 }
             }
             .yui3-widget-bd {
@@ -181,9 +193,9 @@
             white-space: nowrap; // prevent links from randomly breaking onto new lines
             &:hover,
             &:focus {
-            text-decoration: none;
-            color: @dropdown-link-hover-color;
-            background-color: @dropdown-link-hover-bg;
+                text-decoration: none;
+                color: @dropdown-link-hover-color;
+                background-color: @dropdown-link-hover-bg;
             }
         }
         &.show-scrollbars {

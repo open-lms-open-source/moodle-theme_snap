@@ -62,6 +62,26 @@ module.exports = function(grunt) {
                 }
             }
         },
+        autoprefixer: {
+          options: {
+            browsers: [
+              'Android 2.3',
+              'Android >= 4',
+              'Chrome >= 20',
+              'Firefox >= 24', // Firefox 24 is the latest ESR
+              'Explorer >= 8',
+              'iOS >= 6',
+              'Opera >= 12',
+              'Safari >= 6'
+            ]
+          },
+          core: {
+            options: {
+              map: false
+            },
+            src: ['style/moodle.css'],
+          },
+        },
         exec: {
             decache: {
                 cmd: "php -r '" + decachephp + "'",
@@ -85,12 +105,13 @@ module.exports = function(grunt) {
     });
 
     // Load contrib tasks.
+    grunt.loadNpmTasks("grunt-autoprefixer");
     grunt.loadNpmTasks("grunt-contrib-less");
     grunt.loadNpmTasks("grunt-contrib-watch");
     grunt.loadNpmTasks("grunt-exec");
 
     // Register tasks.
     grunt.registerTask("default", ["watch"]);
-    grunt.registerTask("compile", ["less", "decache"]);
+    grunt.registerTask("compile", ["less", "autoprefixer", "decache"]);
     grunt.registerTask("decache", ["exec:decache"]);
 };

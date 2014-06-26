@@ -263,7 +263,7 @@ class snap_shared extends renderer_base {
      * @return string
      */
     public static function flexpage_frontpage_warning($adminsonly = false) {
-        global $DB, $USER, $OUTPUT;
+        global $CFG, $DB, $USER, $OUTPUT;
 
         if ($adminsonly) {
             if (!is_siteadmin()) {
@@ -280,6 +280,6 @@ class snap_shared extends renderer_base {
         }
 
         // Output warning.
-        return ($OUTPUT->notification(get_string('warnsiteformatflexpage', 'theme_snap')));
+        return ($OUTPUT->notification(get_string('warnsiteformatflexpage', 'theme_snap', $CFG->wwwroot.'/admin/settings.php?section=frontpagesettings')));
     }
 }

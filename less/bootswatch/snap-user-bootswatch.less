@@ -206,17 +206,13 @@ a[href="#sections"] {
 }
 
 /* activities */
-.section li.snap-activity {
-	box-shadow:5px 5px #CCC;
-	&:before {
-		background-color:@brand-primary;
-	}
-}
+
 .current .sectionname{
   color:@brand-primary;
 }
 
 // yui-bs overrides
+.yui-skin-sam,
 .yui-bootstrapped {
     .yuimenu {
         a.yuimenuitemlabel {
@@ -278,6 +274,8 @@ img.iconhelp:hover {
     background-color: @brand-primary;
 }
 
+.gradingform_checklist.editor .addgroup input,
+.gradingform_checklist.editor .additem input,
 .gradingform_rubric.editor .addlevel input,
 .gradingform_rubric.editor .addcriterion input {
     background-color: @brand-primary;
