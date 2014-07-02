@@ -1,6 +1,6 @@
 <div id='mr-nav' class='clearfix moodle-has-zindex'>
 <div class="pull-right">
-<?php $OUTPUT->print_login(); ?>
+<?php $OUTPUT->print_fixed_menu(); ?>
 </div>
 
 <?php if (!empty($PAGE->theme->settings->logo)) { ?>

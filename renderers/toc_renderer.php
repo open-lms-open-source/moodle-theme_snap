@@ -93,23 +93,21 @@ class toc_renderer extends core_renderer {
             return '';
         }
 
-        // A list of page body classes that are not appropriate for the toc.
-        // This is necessary for when a non-course page uses a course layout (e.g. messages).
-        $skippages = array (
-            'path-message'
-        );
-
-        // Cycle through each page body class we want to skip as not appropriate.
-        foreach ($skippages as $skippage) {
-            if (stripos($PAGE->bodyclasses, $skippage) !== false) {
-                return; // Do not print the course toc for this page.
-            }
-        }
-
         $viewhiddensections = has_capability('moodle/course:viewhiddensections', context_course::instance($COURSE->id));
 
         $format     = course_get_format($this->page->course);
         $course     = $format->get_course();
+
+        // We don't want to display the toc if the current course is the site.
+        if ($COURSE->id == SITEID) {
+            return;
+        }
+
+        // If course does not have any sections then exit - it can't be a course without sections!!!
+        if (!isset($course->numsections)) {
+            return;
+        }
+
         $singlepage = (!property_exists($course, 'coursedisplay') || $course->coursedisplay == COURSE_DISPLAY_SINGLEPAGE);
         if ($COURSE->format === 'folderview') {
             // Folderview sets coursedisplay to COURSE_DISPLAY_SINGLEPAGE
@@ -376,6 +374,12 @@ class toc_renderer extends core_renderer {
         $o .= '<div id="toc-searchables">';
         $format  = course_get_format($this->page->course);
         $course  = $format->get_course();
+
+        // If course does not have any sections then exit - it can't be a course without sections!!!
+        if (!isset($course->numsections)) {
+            return;
+        }
+
         $modinfo = get_fast_modinfo($course);
 
         foreach ($modinfo->get_cms() as $cm) {

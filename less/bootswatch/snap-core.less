@@ -67,7 +67,6 @@ table.boxwidthwide {
     background-color: transparent;
     border: none;
     box-shadow: none;
-    -webkit-box-shadow: none;
     padding: 0;
 }
 
@@ -88,19 +87,12 @@ table.boxwidthwide {
 
 
 .alakazam() {
-    -webkit-transition: all .33s cubic-bezier(.694, .0482, .335, 1);
-    -moz-transition: all .33s cubic-bezier(.694, .0482, .335, 1);
-    -o-transition: all .33s cubic-bezier(.694, .0482, .335, 1);
-    -ms-transition: all .33s cubic-bezier(.694, .0482, .335, 1);
     transition: all .33s cubic-bezier(.694, .0482, .335, 1);
 }
 
 
 .bg-cover() {
     background-position:center center;
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
     background-size: cover;
 }
 
@@ -135,8 +127,6 @@ table.boxwidthwide {
 *,
 *:before,
 *:after {
-    -moz-box-sizing: border-box;
-    -webkit-box-sizing: border-box;
     box-sizing: border-box;
 }
 
@@ -249,14 +239,9 @@ img.icon.hide {
 ul, ol {
     list-style-position: inside;
 }
-/* for lis in colums, don't break */
+
 li{
-	-webkit-column-break-inside:avoid;
-	-moz-column-break-inside:avoid;
-	-o-column-break-inside:avoid;
-	-ms-column-break-inside:avoid;
-	column-break-inside:avoid;
-	page-break-inside: avoid;
+    break-inside: avoid-column;
 }
 
 hr {
@@ -412,8 +397,21 @@ select,
 // Snap theme componants
 // -------------------------
 
+#page-site-index #page-header {
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}
 
-
+#logo {
+    display:inline-block;
+    background-color: transparent;
+    background-repeat: no-repeat;
+    height: 38px;
+    width: 50%;
+    background-size: contain;
+    margin:-0.75em 0;
+}
 
 // Fixy - the hipster box with a brand colour that covers everything else, use with care!
 // -------------------------
@@ -565,15 +563,7 @@ select,
     background-color: rgba(255,255,255,1);
 }
 
-.fixy input::-webkit-input-placeholder{
-    color: #fff;
-    letter-spacing: 0.1em;
-}
-.fixy input::-moz-placeholder{
-    color: #fff;
-    letter-spacing: 0.1em;
-}
-.fixy input:-ms-input-placeholder {
+.fixy input::placeholder{
     color: #fff;
     letter-spacing: 0.1em;
 }
@@ -606,8 +596,6 @@ select,
     #fixy-my-courses ul,
     #moodle-footer .list-unstyled{
         column-count: 2;
-        -webkit-column-count: 2;
-        -moz-column-count: 2;
     }
 }
 
@@ -619,8 +607,6 @@ select,
     #fixy-my-courses .list-large,
      #moodle-footer .list-large{
         column-count: 3;
-        -webkit-column-count: 3;
-        -moz-column-count: 3;
     }
 }
 
@@ -880,8 +866,6 @@ a[href="#sections"] {
 #chapters,
 #appendices {
     column-count: 2;
-    -webkit-column-count: 2;
-    -moz-column-count: 2;
     list-style-position: inside;
     margin-bottom:0;
 }
@@ -920,8 +904,6 @@ a[href="#sections"] {
     #chapters,
     #appendices{
         column-count: 1;
-        -webkit-column-count: 1;
-        -moz-column-count: 1;
         display:none;
     }
     #chapters.state-visible,
@@ -945,8 +927,6 @@ a[href="#sections"] {
     #chapters,
     #appendices{
         column-count: 3;
-        -webkit-column-count: 3;
-        -moz-column-count: 3;
         list-style-position: inside;
     }
     #course-toc {
@@ -1196,14 +1176,11 @@ aside .settings-button{
     width: auto;
 }
 
-
-
 .forumpost .content .posting,
 .no-overflow {
     overflow: visible;
     padding: 0;
 }
-
 
 .userinfobox {
     border: 0;
@@ -1364,8 +1341,8 @@ http://blog.rodneyrehm.de/archives/34-iOS7-Mobile-Safari-And-Viewport-Units.html
 
 #page-site-index .sitetopic {
 	.clearfix;
-	max-width:44.5em;
 	padding:0 4%;
+    max-width:46.5em;
 }
 
 #site-news-forum h2,
@@ -1523,7 +1500,6 @@ http://blog.rodneyrehm.de/archives/34-iOS7-Mobile-Safari-And-Viewport-Units.html
     border: none;
     border-color: transparent;
     box-shadow: none;
-    -webkit-box-shadow: none;
     margin: 0;
 }
 .coursebox .info {
@@ -1557,6 +1533,15 @@ http://blog.rodneyrehm.de/archives/34-iOS7-Mobile-Safari-And-Viewport-Units.html
 // -------------------------
 
 // -------------------------
+// Assignments
+// -------------------------
+.path-mod-assignment {
+  .userpicture, .picture.user, .picture.teacher {
+    height: auto;
+  }
+}
+
+// -------------------------
 // Comments - this could be a block, but is in mods too?
 // -------------------------
 .comment-ctrl,
@@ -1566,6 +1551,7 @@ http://blog.rodneyrehm.de/archives/34-iOS7-Mobile-Safari-And-Viewport-Units.html
 .comment-area {
 	max-width:100%;
 }
+
 // -------------------------
 // Workshop
 // -------------------------
@@ -1668,8 +1654,37 @@ http://blog.rodneyrehm.de/archives/34-iOS7-Mobile-Safari-And-Viewport-Units.html
 }
 // start of code for when adding from a question bank
 #page-mod-quiz-edit div.quizcontents,
-.questionbankwindow.block{
-  width:50%;
+.questionbankwindow.block {
+    width: 100%;
+    padding-left: 0px;
+    padding-right: 0px;
+}
+
+// very long button text
+#page-mod-quiz-edit div.reorder .reordercontrols {
+    .moveselectedonpage,
+    .addnewpagesafterselected {
+        padding-right: 0;
+        input {
+            white-space: normal;
+        }
+    }
+}
+#page-mod-quiz-edit div.reorder {
+    div.question div.content {
+        width: calc(~"100% - 4.3em");
+    }
+}
+
+@media screen and (min-width: @screen-md-min) {
+    #page-mod-quiz-edit div.quizcontents,
+    .questionbankwindow.block{
+          width: 50%;
+    }
+    #page-mod-quiz-edit div.container div.generalbox {
+        padding-left: 8%;
+        padding-right: 0;
+    }
 }
 #page-mod-quiz-edit div.quizwhenbankcollapsed,
 #page-mod-quiz-edit .modulespecificbuttonscontainer{
@@ -2098,7 +2113,8 @@ table#user-grades tr.avg td.cell{
         }
         tr.odd td.cell {
             background-color: @table-bg-accent;
-            &.overridden {
+            &.overridden,
+            &.ajaxoverridden {
                 background-color: #EFD9A4
             }
         }
@@ -2196,7 +2212,8 @@ table#user-grades tr.avg td.cell{
 	font-family:@font-family-base;
 }
 
-// make grade table larger, apply whitespace remover
+// whitelist - make grade table larger, apply whitespace remover
+.path-mod-assign,
 .path-grade-edit-tree,
 .path-grade-report-customgrader,
 .path-grade-report-grader {
@@ -2210,6 +2227,15 @@ table#user-grades tr.avg td.cell{
         max-width: 60.5em;
         margin: 0 auto 1em;
     }
+}
+// whitelist - scroll bars for large data-tables //
+// - note they are already on .gradeparent
+
+// Edit categories and items: Full view
+.gradetreebox,
+// Mod assignment grading table
+.gradingtable .no-overflow{
+    overflow:auto;
 }
 .path-grade-report-customgrader,
 .path-grade-report-grader {
@@ -2230,7 +2256,8 @@ table#user-grades tr.avg td.cell{
             }
             tr.odd td.cell {
                 background-color: @table-bg-accent;
-                &.overridden {
+                &.overridden,
+                &.ajaxoverridden {
                     background-color: #EFD9A4
                 }
             }
@@ -2609,36 +2636,18 @@ table#user-grades tr.avg td.cell{
 
 
 /** SHAME **/
-@-webkit-keyframes slideInDown {
-  0% {
-    opacity: 0;
-    -webkit-transform: translateY(-2000px);
-    transform: translateY(-2000px);
-  }
-
-  100% {
-    -webkit-transform: translateY(0);
-    transform: translateY(0);
-  }
-}
-
 @keyframes slideInDown {
   0% {
     opacity: 0;
-    -webkit-transform: translateY(-2000px);
-    -ms-transform: translateY(-2000px);
     transform: translateY(-2000px);
   }
 
   100% {
-    -webkit-transform: translateY(0);
-    -ms-transform: translateY(0);
     transform: translateY(0);
   }
 }
 
 .slideInDown {
-  -webkit-animation-name: slideInDown;
   animation-name: slideInDown;
 }
 
@@ -2675,74 +2684,12 @@ read button has been removed and the message text is visible
 spinner, from
 http://css-spinners.com/css/spinner/three-quarters.css
 **/
-@-webkit-keyframes three-quarters {
-  0% {
-    -webkit-transform: rotate(0deg);
-    -moz-transform: rotate(0deg);
-    -ms-transform: rotate(0deg);
-    -o-transform: rotate(0deg);
-    transform: rotate(0deg);
-  }
-
-  100% {
-    -webkit-transform: rotate(360deg);
-    -moz-transform: rotate(360deg);
-    -ms-transform: rotate(360deg);
-    -o-transform: rotate(360deg);
-    transform: rotate(360deg);
-  }
-}
-
-@-moz-keyframes three-quarters {
-  0% {
-    -webkit-transform: rotate(0deg);
-    -moz-transform: rotate(0deg);
-    -ms-transform: rotate(0deg);
-    -o-transform: rotate(0deg);
-    transform: rotate(0deg);
-  }
-
-  100% {
-    -webkit-transform: rotate(360deg);
-    -moz-transform: rotate(360deg);
-    -ms-transform: rotate(360deg);
-    -o-transform: rotate(360deg);
-    transform: rotate(360deg);
-  }
-}
-
-@-o-keyframes three-quarters {
-  0% {
-    -webkit-transform: rotate(0deg);
-    -moz-transform: rotate(0deg);
-    -ms-transform: rotate(0deg);
-    -o-transform: rotate(0deg);
-    transform: rotate(0deg);
-  }
-
-  100% {
-    -webkit-transform: rotate(360deg);
-    -moz-transform: rotate(360deg);
-    -ms-transform: rotate(360deg);
-    -o-transform: rotate(360deg);
-    transform: rotate(360deg);
-  }
-}
-
 @keyframes three-quarters {
   0% {
-    -webkit-transform: rotate(0deg);
-    -moz-transform: rotate(0deg);
-    -ms-transform: rotate(0deg);
-    -o-transform: rotate(0deg);
     transform: rotate(0deg);
   }
 
   100% {
-    -webkit-transform: rotate(360deg);
-    -moz-transform: rotate(360deg);
-    -ms-transform: rotate(360deg);
-    -o-transform: rotate(360deg);
     transform: rotate(360deg);
   }
 }
@@ -2755,17 +2702,9 @@ http://css-spinners.com/css/spinner/three-quarters.css
 
 /* :not(:required) hides this rule from IE9 and below */
 .three-quarters:not(:required) {
-  -webkit-animation: three-quarters 1250ms infinite linear;
-  -moz-animation: three-quarters 1250ms infinite linear;
-  -ms-animation: three-quarters 1250ms infinite linear;
-  -o-animation: three-quarters 1250ms infinite linear;
   animation: three-quarters 1250ms infinite linear;
 
   // Start GT Mod - force gpu accelleration.
-  -webkit-transform: translateZ(0);
-  -moz-transform: translateZ(0);
-  -ms-transform: translateZ(0);
-  -o-transform: translateZ(0);
   transform: translateZ(0);
   // End GT Mod.
 

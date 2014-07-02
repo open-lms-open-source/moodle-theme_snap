@@ -62,16 +62,20 @@ class theme_snap_core_renderer extends toc_renderer {
         return $output;
     }
 
+
+
     /**
-     * Print  login or menu for signed in users
-     *
+     * Get badge renderer.
+     * @return null|theme_snap_message_badge_renderer
      */
-    public function print_login() {
-        global $CFG, $USER, $PAGE;
+    protected function get_badge_renderer() {
+        global $PAGE;
 
-        $logout = get_string('logout');
-
-        $badge = '';
+        $mprocs = get_message_processors(true);
+        if (!isset($mprocs['badge'])) {
+            // Badge message processor is not enabled - exit.
+            return null;
+        }
         try {
             /** @var theme_snap_message_badge_renderer|null $badgerend */
             $badgerend = $PAGE->get_renderer('message_badge');
@@ -86,6 +90,50 @@ class theme_snap_core_renderer extends toc_renderer {
         if (!$badgerend instanceof theme_snap_message_badge_renderer) {
             $badgerend = null;
         }
+
+        return ($badgerend);
+    }
+
+    /**
+     * Print message badge count.
+     * @return string
+     */
+    protected function render_badge_count() {
+        global $USER;
+        $badgerend = $this->get_badge_renderer();
+        if (empty($badgerend)) {
+            // No valid badge renderer so return null string.
+            return '';
+        }
+        return ($badgerend->badge($USER->id));
+    }
+
+    /**
+     * Render badges.
+     * @return string
+     */
+    protected function render_badges() {
+        $badgerend = $this->get_badge_renderer();
+        $badges = '';
+        if ($badgerend && $badgerend instanceof theme_snap_message_badge_renderer) {
+            $badges = '<div class="alert_stream">
+                '.$badgerend->messagestitle().'
+                    <hr />
+                    <div class="message_badge_container"></div>
+                    <hr />
+                </div>';
+        }
+        return ($badges);
+    }
+
+    /**
+     * Print fixy (login or menu for signed in users)
+     *
+     */
+    public function print_fixed_menu() {
+        global $CFG, $USER, $PAGE;
+
+        $logout = get_string('logout');
 
         $isguest = isguestuser();
 
@@ -179,10 +227,7 @@ class theme_snap_core_renderer extends toc_renderer {
             }
             $courselist .= '</div>'; // Close row.
             $menu = get_string('menu', 'theme_snap');
-            if ($badgerend) {
-                $badge = $badgerend->badge($USER->id);
-            }
-            echo "<a class=fixy-trigger href='#primary-nav'>$menu &nbsp; $picture $badge</a>";
+            echo '<a class=fixy-trigger href="#primary-nav">'.$menu. ' &nbsp; '. $picture. $this->render_badge_count(). '</a>';
             $close = get_string('close', 'theme_snap');
             $viewyourprofile = get_string('viewyourprofile', 'theme_snap');
             $realuserinfo = '';
@@ -191,17 +236,6 @@ class theme_snap_core_renderer extends toc_renderer {
                 $via = get_string('via', 'theme_snap');
                 $fullname = fullname($realuser, true);
                 $realuserinfo = html_writer::span($via.' '.html_writer::span($fullname, 'real-user-name'), 'real-user-info');
-            }
-
-            // Generate alert stream html if message/output/badge available.
-            $alertstream = '';
-            if ($badgerend && $badgerend instanceof theme_snap_message_badge_renderer) {
-                $alertstream = '<div class="alert_stream">
-                '.$badgerend->messagestitle().'
-                    <hr />
-                    <div class="message_badge_container"></div>
-                    <hr />
-                </div>';
             }
 
             echo '<div class=fixy id="primary-nav" class="toggle-details" role="menu" aria-live="polite" tabindex="0">
@@ -216,7 +250,7 @@ class theme_snap_core_renderer extends toc_renderer {
         </h1>'.$realuserinfo.'
         <h2>'.get_string('courses').'</h2>
         <hr> '.$courselist.' <hr>
-        '.$alertstream.'
+        '.$this->render_badges().'
         <div class="clearfix text-center">
         <a class="btn btn-primary" href="'.s($CFG->wwwroot).'/login/logout.php?sesskey='.sesskey().'">'.$logout.'</a>
     </div>

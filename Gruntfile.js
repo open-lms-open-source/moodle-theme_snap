@@ -69,9 +69,9 @@ module.exports = function(grunt) {
               'Android >= 4',
               'Chrome >= 20',
               'Firefox >= 24', // Firefox 24 is the latest ESR
-              'Explorer >= 8',
+              'Explorer >= 9',
               'iOS >= 6',
-              'Opera >= 12',
+              'Opera >= 12.1',
               'Safari >= 6'
             ]
           },

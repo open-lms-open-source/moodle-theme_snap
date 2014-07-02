@@ -156,11 +156,7 @@ body.format-flexpage .singlebutton{
 // -------------------------
 // Editing mess
 // -------------------------
-/* Add text to edit summary gear icon */
-.editing .summary>a:last-of-type:before{
-	content: attr(title);
-	font-size:0.8em;
-}
+
 .increase-sections:before {
 	// needs to add text here
 }
@@ -202,14 +198,32 @@ ul.menubar > li[role='presentation'] {
 }
 
 
-// THE EDIT BUTTON
+// THE EDIT BUTTONS
+/* */
+#page-site-index #page-header{
+    position:relative;
+}
+#page-site-index #page-header .btn-default{
+    position:absolute;
+    bottom:0.5em;
+    right:4%;
+    border:0;
+}
 
+/* Add text to edit summary gear icon */
+#page-site-index .sitetopic>a:last-of-type:before,
+.editing .summary>a:last-of-type:before{
+    content: attr(title);
+    font-size:0.8em;
+}
+
+#page-site-index .sitetopic>a:last-of-type
 .editing .summary>a:last-of-type{
 	clear:both;
 	float:right;
 	margin-top:0.5em;
 }
-
+#page-site-index .sitetopic>a:last-of-type:before,
 .toggle-display.textmenu,
 .editing .summary>a:last-of-type
 {
@@ -330,7 +344,7 @@ for moodle editing bugs */
 	margin:1em 1.5%;
 	padding:0.3em 11px;
 	float:left;
-	display:inline-block;
+	display:block;
 	position:relative;
 	clear:none;
 	box-shadow:0 2px 5px 0 rgba(0, 0, 0, 0.26); //5px 5px #dadada;
@@ -357,12 +371,7 @@ for moodle editing bugs */
 		.instancename {
 			font-family:@font-family-base;
 			display:inline-block;
-			-ms-word-break: break-all;
-			word-break: break-all;
-		// Non standard for webkit
 			word-break: break-word;
-			-webkit-hyphens: auto;
-			-moz-hyphens: auto;
 			hyphens: auto;
 		}
 	}
