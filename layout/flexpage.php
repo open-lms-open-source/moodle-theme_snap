@@ -137,6 +137,11 @@ echo $OUTPUT->doctype() ?>
          padding-left: 10px;
          padding-right: 10px;
     }
+
+    .smallicon {
+        width:24px;
+        height:24px;
+    }
     </style>
 </head>
 
