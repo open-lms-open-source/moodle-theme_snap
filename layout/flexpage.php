@@ -67,6 +67,7 @@ if ($showsidepre && !$showsidepost) {
 if ($hascustommenu) {
     $bodyclasses[] = 'has_custom_menu';
 }
+$bodyclasses[] = 'format-flexpage';
 
 echo $OUTPUT->doctype() ?>
 
@@ -139,8 +140,8 @@ echo $OUTPUT->doctype() ?>
     }
 
     .smallicon {
-        width:24px;
-        height:24px;
+        width: 16px;
+        height: 16px;
     }
     </style>
 </head>

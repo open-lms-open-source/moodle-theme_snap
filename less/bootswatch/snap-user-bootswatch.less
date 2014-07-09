@@ -157,6 +157,13 @@ input[type="reset"] {
     }
 }
 
+// flexpage yui button shame
+.format-flexpage .yui-button-checked button{
+    background-color: darken(@brand-primary, 8%);
+    border-color: darken(@brand-primary, 12%);
+    color:#fff;
+}
+
 .settings-button {
     background-color: @brand-primary;
 }
@@ -219,6 +226,22 @@ a[href="#sections"] {
             &:hover,
             &:focus {
                 background-color: @dropdown-link-hover-bg;
+            }
+        }
+    }
+    .yui-calcontainer {
+        .yui-calendar {
+            td.calcell {
+                a {
+                    color: @brand-primary;
+                }
+                &.selected {
+                    background-color: @brand-primary;
+                }
+                &.calcellhover,
+                &.calcellhover a {
+                    background: @brand-primary;
+                }
             }
         }
     }

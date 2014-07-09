@@ -141,7 +141,7 @@ function snapInit(){
 
             var tagname = this.tagName.toLowerCase();
             if (tagname == 'iframe') {
-                var supportedsites = ['youtube.com', 'youtu.be', 'vimeo.com'];
+                var supportedsites = ['youtube.com', 'youtu.be', 'vimeo.com', 'youtube-nocookie.com', 'embed.ted.com', 'kickstarter.com', 'video.html'];
                 var supported = false;
                 for (var s in supportedsites) {
                     if (this.src.indexOf(supportedsites[s]) > -1){
@@ -208,7 +208,7 @@ function snapInit(){
      * @param {String} href
      * @return boolean|array
      */
-     var getHashBangParams = function(href){
+    var getHashBangParams = function(href){
         var ta = href.split('#');
         if (ta.length < 2){
             return false; // invalid hashbang
@@ -280,6 +280,10 @@ function snapInit(){
                 // show chapter 0
                 $('#section-0').addClass('state-visible').focus();
             }
+
+            // Need to call this here as video could have been hidden at the point it was made responsive which means
+            // we need to reset width and height now its visible.
+            applyResponsiveVideo();
 
         }
     };
@@ -465,10 +469,10 @@ function snapInit(){
         var myElement = document.querySelector("#mr-nav");
         // construct an instance of Headroom, passing the element
         var headroom = new Headroom(myElement, {
-          "tolerance": 5,
-          "offset": 205,
-          "classes": {
-            // when element is initialised
+            "tolerance": 5,
+            "offset": 205,
+            "classes": {
+                // when element is initialised
                 initial : "headroom",
                 // when scrolling up
                 pinned : "headroom--pinned",
@@ -478,7 +482,7 @@ function snapInit(){
                 top : "headroom--top",
                 // when below offset
                 notTop : "headroom--not-top"
-          }
+            }
         });
         // initialise
         headroom.init();
@@ -553,12 +557,15 @@ function snapInit(){
             } else {
                 location.hash = href;
             }
+            // Need to call this here as video could have been hidden at the point it was made responsive which means
+            // we need to reset width and height now its visible.
+            applyResponsiveVideo();
             e.preventDefault();
         });
 
         // Listener for small screen showing of chapters & appendicies.
         $(document).on("click", '#course-toc div[role="menubar"] a', function(e) {
-        	$('#chapters, #appendices').addClass('state-visible');
+            $('#chapters, #appendices').addClass('state-visible');
         });
 
         // Listen for fixy trigger so we can sort out scroll bars (hide all page content).

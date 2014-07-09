@@ -182,7 +182,7 @@
         border: 1px solid @dropdown-fallback-border; // IE8 fallback
         border: 1px solid @dropdown-border;
         border-radius: @border-radius-base;
-        .box-shadow(0 6px 12px rgba(0,0,0,.175));
+        box-shadow: 0 6px 12px rgba(0,0,0,.175);
         a.yuimenuitemlabel {
             display: block;
             padding: 3px 20px;
@@ -210,6 +210,86 @@
         &#column_total,
         &#pld_gear {
             overflow: hidden;
+        }
+    }
+    #dateselector-calendar-panel {
+        background: none;
+        border: none;
+        .yui3-widget-stdmod {
+            overflow: auto;
+            box-shadow: 0 6px 12px rgba(0,0,0,.175);
+        }
+    }
+    #dateselector-calendar-content {
+        border: none;
+        margin: 0;
+    }
+    .yui-calcontainer {
+        background-color: @modal-backdrop-bg;
+        border: 1px solid red;
+        padding: 10px;
+        .yui-calendar {
+            font-family: @font-family-sans-serif;
+            font-size: 100%;
+            font-weight: @headings-font-weight;
+            .calheader {
+                padding: 0;
+                margin-bottom: 0.6em;
+            }
+            .calnavleft,
+            .calnavright{
+                width:25px;
+                height:15px;
+                top: 5px;
+                cursor:pointer
+            }
+            .calnavleft{
+                background:url(/theme/yui_image.php?file=2.9.0/sprite.png) no-repeat 0 -450px;
+                left: -10px;
+                margin-left:.4em;
+            }
+            .calnavright{
+                background:url(/theme/yui_image.php?file=2.9.0/sprite.png) no-repeat 0 -500px;
+                right: -10px;
+                margin-right:.4em;
+            }
+            td.calcell {
+               border: 1px solid #eee;
+               padding: 1px;
+               height: 1.6em;
+               line-height: 1.6em;
+               text-align: center;
+               vertical-align: middle;
+               white-space: nowrap;
+               a {
+                   color: @brand-primary;
+                   background-color: @modal-content-bg;
+                   display: block;
+                   text-decoration: none;
+               }
+                &.oom {
+                    background-color: @table-bg-accent;
+                    color: @text-muted;
+                    cursor:default
+                    a {
+                        color: @text-muted;
+                    }
+                }
+                &.selected {
+                    background-color: @brand-primary;
+                }
+                &.today {
+                    a {
+                        color: @text-color;
+                    }
+                }
+                &.calcellhover,
+                &.calcellhover a {
+                    color: #fff;
+                    background: @brand-primary;
+                    text-decoration: none;
+                }
+            }
         }
     }
     .yui-dt-paginator {
@@ -291,7 +371,7 @@
             .modal-footer;
             padding-bottom: 0;
         }
-        .yui3-widget-ft {
+        .yui3-widget-ft:empty {
             display: none;
         }
     }

@@ -833,9 +833,9 @@ header#page-header
     		> span {
     			margin-right:2%;
     			text-transform:uppercase;
+                a {text-decoration:none;}
     		}
     		> span a:hover {
-    			text-decoration:none;
     			border-bottom:0.3em solid @brand-primary;
                 .alakazam;
     		}
@@ -1199,6 +1199,10 @@ aside .settings-button{
 .mform{
     max-width: 40.5em;
     margin: 0 auto;
+}
+// Override the above for a table that is also a form
+.quickgradingform > .mform {
+    max-width: none;
 }
 .form-item,
 .path-backup .mform .grouped_settings .fitem,
@@ -2107,10 +2111,6 @@ table#user-grades tr.avg td.cell{
         border: none;
     }
     table.joule-grades {
-        tr.avg td,
-        td.grade {
-            padding-right: 22px;
-        }
         tr.odd td.cell {
             background-color: @table-bg-accent;
             &.overridden,
@@ -2153,9 +2153,6 @@ table#user-grades tr.avg td.cell{
     }
     #joule-grades-fthead {
         width: auto;
-        tr {
-        //    height: auto !important
-        }
     }
     #joule-grades-leftcol-wrap {
         border-bottom: none;
