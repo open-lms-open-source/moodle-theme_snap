@@ -1114,6 +1114,8 @@ a.btn:visited,
 	font-family: @font-family-base;
 }
 
+// I can only see paging-morelink class used twice - both times in the Moodle course renderer. Both times a hover color
+// of white makes the link invisible - should we remove the .paging.paging-morelink stuff from here?
 .paging.paging-morelink a:hover,
 .btn:hover {
 	color:#fff;
@@ -1969,6 +1971,10 @@ table#user-grades tr.avg td.cell{
     background: none;
 }
 
+.report-course-overlay .yui3-widget {
+    width: inherit !important;
+    min-width: 300px;
+}
 
 .gradingform_checklist.editor .addgroup input,
 .gradingform_checklist.editor .additem input,
@@ -2005,12 +2011,16 @@ table#user-grades tr.avg td.cell{
     }
     #course-search-box {
         background-image: none;
+        min-height: 60px;
     }
     #course-search-text {
         padding-top: 0;
+        margin: 0.5em 5%;
+        width: calc(~"84% - 13px");
     }
     #course-search-button {
         padding-top: 3px;
+        margin: 0.5em 1% 0.5em 0;
     }
     #course-search-input {
         // copied from less/bootstrap3/forms.less .form-control
@@ -2021,6 +2031,7 @@ table#user-grades tr.avg td.cell{
         border-radius: @input-border-radius;
         .box-shadow(inset 0 1px 1px rgba(0,0,0,.075));
         .transition(~"border-color ease-in-out .15s, box-shadow ease-in-out .15s");
+        width: 100%;
     }
     .yui3-widget-stdmod, .yui3-aclist-content {
         // copied from less/bootstrap3/dropdowns.less .dropdown-menu
@@ -2137,6 +2148,15 @@ table#user-grades tr.avg td.cell{
     table.joule-grades td {
         padding: @table-condensed-cell-padding;
     }
+
+    #joule-grades-fthead {
+        margin-top: -1px;
+    }
+
+    #joule-grades-leftcol {
+        margin-top: 0px;
+    }
+
     #joule-grades,
     #joule-grades-leftcol {
         .row {

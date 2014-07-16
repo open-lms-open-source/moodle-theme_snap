@@ -25,6 +25,11 @@ a:not(.btn),
 a:not(.btn):visited { color:@brand-primary;}
 a:not(.btn):hover { color:darken(@brand-primary, 8%); }
 
+// Make sure more links are visible on course page by giving them a darker version of brand primary color.
+.course_category_tree .paging.paging-morelink a:hover{
+    color: darken(@brand-primary, 8%);
+}
+
 #region-main,
 #region-main textarea {
     font-family: @font-family-serif;

@@ -208,7 +208,7 @@ function snapInit(){
      * @param {String} href
      * @return boolean|array
      */
-    var getHashBangParams = function(href){
+     var getHashBangParams = function(href){
         var ta = href.split('#');
         if (ta.length < 2){
             return false; // invalid hashbang
@@ -469,10 +469,10 @@ function snapInit(){
         var myElement = document.querySelector("#mr-nav");
         // construct an instance of Headroom, passing the element
         var headroom = new Headroom(myElement, {
-            "tolerance": 5,
-            "offset": 205,
-            "classes": {
-                // when element is initialised
+          "tolerance": 5,
+          "offset": 205,
+          "classes": {
+            // when element is initialised
                 initial : "headroom",
                 // when scrolling up
                 pinned : "headroom--pinned",
@@ -482,7 +482,7 @@ function snapInit(){
                 top : "headroom--top",
                 // when below offset
                 notTop : "headroom--not-top"
-            }
+          }
         });
         // initialise
         headroom.init();
@@ -565,7 +565,7 @@ function snapInit(){
 
         // Listener for small screen showing of chapters & appendicies.
         $(document).on("click", '#course-toc div[role="menubar"] a', function(e) {
-            $('#chapters, #appendices').addClass('state-visible');
+        	$('#chapters, #appendices').addClass('state-visible');
         });
 
         // Listen for fixy trigger so we can sort out scroll bars (hide all page content).
