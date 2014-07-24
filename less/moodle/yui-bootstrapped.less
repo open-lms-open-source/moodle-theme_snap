@@ -49,6 +49,26 @@
             }
         }
     }
+    .yui-navset {
+        .yui-nav {
+            .nav;
+            .nav-tabs;
+            .selected > a {
+                &,
+                &:hover,
+                &:focus {
+                    color: @nav-tabs-active-link-hover-color;
+                    background-color: @nav-tabs-active-link-hover-bg;
+                    border: 1px solid @nav-tabs-active-link-hover-border-color;
+                    border-bottom-color: transparent;
+                    cursor: default;
+                }
+            }
+        }
+        .yui-content {
+            padding-top: 0.5em;
+        }
+    }
     .yui3-tabview-list {
         .nav;
         .nav-tabs;
@@ -415,15 +435,15 @@
     }
 }
 
-.user-enroller-panel {
+.user-enroller-panel, .other-user-manager-panel {
     max-width: 100%;
     border: none;
     background: transparent;
-    .uep-wrap {
+    .uep-wrap, .oump-wrap {
         margin: 0;
         background-color: @modal-content-bg;
         .modal-content;
-        .uep-header {
+        .uep-header, .oump-header {
             background-color: @modal-content-bg;
             font-family: @headings-font-family;
             .modal-header;
@@ -432,7 +452,7 @@
                 margin: 0;
                 font-size: @font-size-h4;
             }
-            .close {
+            .close, .oump-panel-close {
                 background: url([[pix:theme|close_x]]);
                 width: 27px;
                 height:27px;
@@ -444,7 +464,7 @@
                 }
             }
         }
-        .uep-content {
+        .uep-content, .oump-content {
             background-color: @modal-content-bg;
             border: none;
             .modal-body;
@@ -457,15 +477,15 @@
                     padding-right: .5em;
                 }
             }
-            .uep-search-results {
-                .totalusers {
+            .uep-search-results, .oump-search-results {
+                .totalusers, .oump-total-users {
                     padding: 0;
                     border: 0;
                     font-size: @font-size-small;
                     font-weight: normal;
                     background-color: @modal-content-bg;
                 }
-                .users .user {
+                .users .user, .oump-users .oump-user {
                     border: none;
                     border-top: 1px solid @table-border-color;
                     &.odd {
@@ -476,17 +496,17 @@
                     }
                 }
             }
-            .uep-loading-lightbox {
+            .uep-loading-lightbox, .oump-loading-lightbox {
                 background-color: @modal-content-bg
             }
         }
-        .uep-footer {
+        .uep-footer, .oump-footer {
             background-color: @modal-content-bg;
             .modal-footer;
             .border-bottom-radius(@border-radius-large);
             margin-top: 0;
             text-align: center;
-            .uep-search {
+            .uep-search, .oump-search {
                 margin: 0 0 8px;
                 input {
                     width: auto;

@@ -31,7 +31,9 @@ a:not(.btn):hover { color:darken(@brand-primary, 8%); }
 }
 
 #region-main,
-#region-main textarea {
+#region-main textarea,
+.contentafterlink,
+.contentwithoutlink {
     font-family: @font-family-serif;
 }
 
@@ -44,7 +46,9 @@ h6,
 legend,
 .mform legend a,
 .mform legend a:hover,
-.coursebox .info .coursename {
+.coursebox .info .coursename,
+.availabilityinfo,
+.collapsibleregioncaption {
     font-family: @font-family-sans-serif;
 }
 
@@ -65,7 +69,9 @@ legend,
 }
 // Elements
 // -------------------------
-
+.snap-media-body p{
+    font-family: @font-family-serif;
+}
 .fixy-trigger {
     border: 1px solid @brand-primary;
     &:hover{
@@ -74,7 +80,6 @@ legend,
     .message_badge_count{
     	background-color:darken(@brand-primary, 8%);
     }
-
 }
 
 
@@ -85,6 +90,10 @@ legend,
     color: @brand-primary;
     }
 }
+.snap-unread-marker {
+    color: @brand-primary;
+}
+
 .courses>.paging.paging-morelink a {
     background-color: @brand-primary;
     border-color: @brand-primary;
@@ -96,52 +105,18 @@ legend,
         border-color: darken(@brand-primary, 12%);
     }
 }
+#page-site-index .sitetopic>a:last-of-type,
+.editing .summary>a:last-of-type,
+#changenumsections .increase-sections,
+#changenumsections .reduce-sections,
 input.form-submit,
 input#id_submitbutton,
 input#id_submitbutton2,
 .path-admin .buttons input[type="submit"],
-td.submit input {
-    background-color: @brand-primary;
-    border-color: #fff;
-    &:hover,
-    &:focus,
-    &:active,
-    &.active {
-        background-color: darken(@brand-primary, 8%);
-        border-color: darken(@brand-primary, 12%);
-        color:#fff;
-    }
-}
+td.submit input,
 #notice .singlebutton + .singlebutton input,
-.submit.buttons input[name="cancel"] {
-    background-color: @brand-primary;
-    border-color: #fff;
-    &:hover,
-    &:focus,
-    &:active,
-    &.active {
-        background-color: darken(@brand-primary, 8%);
-        border-color: darken(@brand-primary, 12%);
-        color:#fff;
-    }
-}
-
-#login.fixy input[type=submit] {
-    color: @brand-primary;
-}
-
-#show-toc {
-    color: @link-color;
-}
-
-#course-toc {
-    div[role="menubar"]{
-        > span a:hover {
-            border-bottom-color: @brand-primary;
-        }
-    }
-}
-
+#login.fixy input[type=submit],
+.submit.buttons input[name="cancel"],
 .section-modchooser-link a,
 button,
 .yui-skin-sam .yui-button,
@@ -153,12 +128,30 @@ input[type="button"],
 input[type="submit"],
 input[type="reset"] {
     background-color: @brand-primary;
+    border-color: #fff;
     color:#fff;
+    font-family: @font-family-base;
+    font-weight: 300;
     &:hover,
-    &:focus {
+    &:focus,
+    &:active,
+    &.active {
         background-color: darken(@brand-primary, 8%);
         border-color: darken(@brand-primary, 12%);
         color:#fff;
+        text-decoration:none;
+    }
+}
+
+#show-toc {
+    color: @link-color;
+}
+
+#course-toc {
+    div[role="menubar"]{
+        > span a:hover {
+            border-bottom-color: @brand-primary;
+        }
     }
 }
 
@@ -190,6 +183,7 @@ input[type="reset"] {
 #notice {
     background-color: @brand-primary;
 }
+
 // workaround for #notices with buttons outside the div#notice
 #page-course-loginas,
 #page-mod-survey-save,

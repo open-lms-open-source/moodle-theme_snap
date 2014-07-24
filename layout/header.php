@@ -23,15 +23,7 @@ echo $OUTPUT->doctype();
 <?php
 $snapcourseimage = $OUTPUT->get_course_image();
 if (!empty($snapcourseimage)) : ?>
-<style>
-#page-header {
-	background:transparent url(<?php echo $snapcourseimage; ?>) no-repeat top center;
-	-webkit-background-size: cover;
-	-moz-background-size: cover;
-	-o-background-size: cover;
-	background-size: cover;
-}
-</style>
+<style> #page-header{background-image:url(<?php echo $snapcourseimage; ?>);}</style>
 <?php endif; ?>
 
 </head>

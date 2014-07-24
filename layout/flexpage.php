@@ -143,6 +143,39 @@ echo $OUTPUT->doctype() ?>
         width: 16px;
         height: 16px;
     }
+
+    .groupinglabel {
+        display:inline;
+    }
+
+    .section .activity .actions {
+        display:block;
+        position:relative;
+        overflow:show;
+    }
+    .editing .block_flexpagemod_default li.activity .commands,
+    .editing .block_flexpagemod_commands .commands {
+        opacity:1 !important;
+    }
+    .toggle-display .caret {
+        display:inline;
+    }
+
+    .format-flexpage .moodle-actionmenu[data-enhanced].show {
+        width:100%;
+    }
+    .section li.activity {
+        min-height:0;
+        height:auto;
+        background-image:none;
+        box-shadow:none;
+    }
+    .snap-meta {
+        display:none !important;
+    }
+    .toggle-display.textmenu:after{
+        display:none;
+    }
     </style>
 </head>
 

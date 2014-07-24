@@ -87,12 +87,12 @@ table.boxwidthwide {
 
 
 .alakazam() {
-    transition: all .33s cubic-bezier(.694, .0482, .335, 1);
+    transition: all .3s cubic-bezier(.694, .0482, .335, 1);
 }
 
 
 .bg-cover() {
-    background-position:center center;
+    background-position: center top;
     background-size: cover;
 }
 
@@ -123,11 +123,15 @@ table.boxwidthwide {
 // Baseline boilerplate for snap
 // -------------------------
 
+// better border box layout
+html {
+    box-sizing: border-box;
+}
 
 *,
 *:before,
 *:after {
-    box-sizing: border-box;
+    box-sizing: inherit;
 }
 
 ::-moz-selection { background: #fe57a1; color: #fff; text-shadow: none; }
@@ -151,6 +155,7 @@ label {
 }
 select {
     background-color: #FFF;
+    max-width:100%;
 }
 
 textarea{
@@ -175,6 +180,7 @@ tbody>tr>th{
 */
 blockquote {
     //    border-left: 5px solid @brand-primary; customisable
+    font-size:1em;
 }
 img {
     max-width: 100%;
@@ -292,6 +298,8 @@ input,
 button,
 select,
 .pagination,
+.initialbar,
+.paging,
 .alert,
 .nav-pills,
 .nav-tabs,
@@ -331,6 +339,63 @@ select,
 }
 
 
+// -------------------------
+// Buttons, faux buttons styling & resets
+// -------------------------
+
+.section-modchooser-text,
+.section-modchooser-link a,
+#page-site-index .sitetopic>a:last-of-type,
+.editing .summary>a:last-of-type,
+#changenumsections .increase-sections,
+#changenumsections .reduce-sections,
+a.btn,
+button,
+.yui3-button,
+.yui-button  button,
+.btn,
+input.form-submit,
+input[type="button"],
+input[type="submit"],
+input[type="reset"] {
+    border-color: #fff;
+    color:#fff;
+    font-weight: 300;
+    font-family: @font-family-base;
+    // background-color: @brand-primary; customisable
+    &:hover,
+    &:focus {
+        // background-color: darken(@brand-primary, 8%); customisable
+        // border-color: darken(@brand-primary, 12%); customisable
+        text-decoration: none;
+  }
+}
+#page-mod-quiz-edit div.question div.content div.points input[type="submit"],
+.section-modchooser-link a,
+.btn,
+button,
+input.form-submit,
+input[type="button"],
+input[type="submit"],
+input[type="reset"],
+input[name="searchwikicontent"]+input[type="submit"],
+select+input[type="submit"],
+input[type="text"]+input[type="button"],
+input[type="password"]+input[type="submit"],
+input[type="text"]+button,
+input[type="text"]+input[type="submit"] {
+    padding: 0.25em 1em;
+    margin: 0em 0.4em;
+    vertical-align: initial;
+    line-height: 1.5;
+}
+.section-modchooser {
+    text-align:center;
+    padding:3em 0;
+    margin-bottom:8em;
+    border-bottom:1px solid #ccc;
+}
+
 
 
 
@@ -352,23 +417,12 @@ select,
 
 .published-status {
     display: block;
-    line-height: 1;
-    opacity: 0.6;
-    margin-top:-0.1em;
-    small {
-        font-size:small;
-        font-style:normal;
-        margin-left: 1em;
-        padding: 2px 2%;
-        height:12px;
-        border-bottom-right-radius: 2px;
-        border-top-right-radius: 2px;
-        position: relative;
-    }
-
+    opacity: 0.75;
+    font-size:small;
 }
-.message_stream_user_picture_icon,
-.userpicture {
+
+.userpicture,
+.message_stream_user_picture_icon {
     border-radius: 50%;
 }
 
@@ -394,13 +448,11 @@ select,
 
 
 // -------------------------
-// Snap theme componants
+// Snap theme elements n componants
 // -------------------------
 
-#page-site-index #page-header {
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: cover;
+#page-header {
+    .bg-cover;
 }
 
 #logo {
@@ -411,6 +463,63 @@ select,
     width: 50%;
     background-size: contain;
     margin:-0.75em 0;
+}
+
+.snap-media-object {
+    .clearfix;
+    margin-bottom:1em;
+    // media o can be a link
+    >a {
+        text-decoration:none;
+    }
+    // media o media
+    img{
+        float:left;
+        display:block;
+        margin-right:2%;
+        width:50px;
+        height:auto;
+        vertical-align:baseline;
+    }
+    // media o content
+    .snap-media-body {
+        overflow:hidden;
+        // for fixy - need to re-visit when we re-use more widley
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        // in the messaging system we ellispe text
+        p {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+    }
+    // media o heading
+    // currenty these are only in the fixy so safe to white, but...
+    h3, h3 small {
+        color:white;
+        font-size:1em;
+        margin:0;
+    }
+    // any meta-data that is part of the title
+    h3 small {
+        opacity:0.75;
+    }
+    // standard media o meta - status, date
+    .snap-media-meta {
+        display:block;
+        font-size:small;
+        opacity:0.75;
+        time {
+            margin-right:1em;
+        }
+    }
+    // unread tag
+    .snap-unread-marker{
+            background-color:white;
+            &:before {
+                border-right:0.89em solid white;
+            }
+    }
 }
 
 // Fixy - the hipster box with a brand colour that covers everything else, use with care!
@@ -424,7 +533,7 @@ select,
 
 .fixy-trigger {
     // border: 1px solid @brand-primary; customisable
-    padding: 0.5em;
+    padding:0.5em 1em;
     border-radius: 2px;
     position:relative;
     &:hover {
@@ -469,18 +578,19 @@ select,
     a, a:visited {
         color: #fff;
     }
-    a:hover {
+    a(not:.btn):hover {
     	color:#fff;
     	text-decoration:underline;
     }
     h2 {
-        color: #fff;
+        color: rgba(255,255,255,0.7);
         text-transform: uppercase;
         font-weight: 100;
         line-height: 1;
-        margin: 0;
-        padding: 0;
-        font-size: 1.3em;
+        margin:1em 0;
+        padding:.5em 0;
+        border-bottom: 1px solid rgba(255,255,255,0.7);
+        font-size: 1em;
     }
     .label-success {
         padding: 0 0.2em;
@@ -511,8 +621,19 @@ select,
     }
     .btn.moodle-browseallcourses {
         margin-top: 2.7em;
+        margin-left: 0;
+    }
+    .fixy-logout-footer {
+        border-top: 1px solid #fff;
+        padding-top: 1em;
+    }
+
+    .fixy-browse-search-courses {
+     //   margin-bottom: 1.5em;
     }
 }
+
+
 
 
 // i am the target, you shall see me
@@ -527,7 +648,7 @@ select,
     animation-name: snap-drop;
     animation-iteration-count: once;
     animation-timing-function: cubic-bezier(.694, .0482, .335, 1);
-    animation-duration: 0.33s;
+    animation-duration: 0.3s;
       legend{
            color: #fff;
             border-bottom: 1px solid #fff;
@@ -554,13 +675,8 @@ select,
     border-color: #fff;
 }
 #login.fixy input[type=submit] {
-    background-color: rgba(255,255,255,0.7);
-    //	color:@brand-primary; customisable
+    border: 1px solid  #fff;
     margin: 0 auto 0.5em;
-}
-#login.fixy input[type=submit]:hover,
-#login.fixy input[type=submit]:focus {
-    background-color: rgba(255,255,255,1);
 }
 
 .fixy input::placeholder{
@@ -583,9 +699,23 @@ select,
     margin-top: -50px;
 }
 #fixy-my-courses a{
+    width:100%;
     display: inline-block;
-    line-height: 1.7;
+    padding:0.3em 0;
+    .snap-media-body{
+        overflow:hidden;
+        line-height:1.7;
+    }
 }
+.fixy-course-image {
+    height: 50px;
+    width: 50px;
+    margin-right:2%;
+    float:left;
+    .bg-cover();
+    background-position: center center;
+}
+
 
 .fixy a {
 	color:#fff !important;
@@ -610,6 +740,115 @@ select,
     }
 }
 
+
+// Calls to action.
+.callstoaction {
+    .message_badge_user_picture{
+        margin-right:1em;
+    }
+    .no-cols{
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+}
+
+.message_badge_message,
+.message_badge_empty {
+    border-top: none;
+}
+
+.cta_footer {
+    margin: 1em 0;
+    text-align: left;
+    .btn {
+        margin-left: 0;
+    }
+}
+
+.alert_stream, .message_stream {
+
+    .message_badge_container {
+
+        .three-quarters {
+            display:block;
+        }
+
+        header.messagefrom span{
+            font-weight: 100;
+            line-height: 1;
+            margin: 0;
+            padding: 0;
+            font-size: 1.3em;
+            opacity:0.8;
+        }
+
+        footer .snapdate {
+            font-size: 1em !important;
+        }
+
+        .articlebody img {
+            display:inline-block;
+        }
+
+        .articlebody span {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: calc(~"100% - 55px");
+            display: inline-block;
+        }
+
+
+        .messagematch{
+            font-family: @font-family-sans-serif;
+        }
+
+        .message_badge_overlay{
+            border:none;
+            width:auto;
+            max-height:inherit;
+            padding:0 0;
+        }
+        .message_badge_overlay,
+        .message_badge_message_overlay{
+            background-color:transparent;
+        }
+
+
+    }
+}
+
+.callstoaction  a.article_link{
+    display:block;
+    padding:0.2em 0.2em 0.2em 0.2em;
+    margin-bottom:1em;
+
+    &:hover{
+        text-decoration:none;
+        background-color:rgba(255,255,255,0.2);
+    }
+
+    .userpicture {
+        margin-right:1em;
+    }
+
+    .snapdate {
+        font-weight: 100;
+        line-height: 1;
+        margin: 0;
+        padding: 0;
+        font-size: 1.3em;
+        opacity:0.8;
+    }
+
+    .snaptime {
+        margin-left:0.5em;
+    }
+
+    .eventcourse{
+        margin-right:2em;
+    }
+}
 
 
 
@@ -653,6 +892,7 @@ footer #moodle-footer
 #moodle-blocks {
     margin: 0 auto;
     padding: 0 4%;
+    font-size:1em;
 }
 
 // Mr.nav - he's there and fixed to the top of your page
@@ -667,14 +907,13 @@ footer #moodle-footer
     padding-bottom: 0.5em;
     background-color: #fff;
     border-bottom: 1px solid #ccc;
-
     //headroom js http://wicky.nillia.ms/headroom.js/
     &.headroom--unpinned {
-
+      will-change: transform;
       animation-name: snap-rise;
       animation-iteration-count: once;
       animation-timing-function: cubic-bezier(.694, .0482, .335, 1);
-      animation-duration: 0.33s;
+      animation-duration: 0.3s;
       animation-fill-mode: forwards;
 
     }
@@ -862,15 +1101,29 @@ a[href="#sections"] {
 	border-bottom:0.3em solid transparent;
 }
 
+// if the course has an image
+.mast-image #course-toc{
+    padding:0.75em 4% 1em;
+}
 
 #chapters,
 #appendices {
     column-count: 2;
-    list-style-position: inside;
     margin-bottom:0;
 }
-
-
+// specific styles for numbered chapters to improve readability
+ol#chapters {
+    list-style-position:outside;
+    li{
+        margin-left:2em;
+        &.current a{
+            color:#666665;
+            text-decoration:none;
+        }
+    }
+}
+// in moodle the first section does not get a number :(
+// moodlebug
 #chapters >:first-child {
 	list-style:none;
 }
@@ -927,7 +1180,6 @@ a[href="#sections"] {
     #chapters,
     #appendices{
         column-count: 3;
-        list-style-position: inside;
     }
     #course-toc {
         margin: 1em auto -.5em;
@@ -937,9 +1189,10 @@ a[href="#sections"] {
     	max-width:50.5em;
     }
 }
-.mast-image #course-toc{
-	padding:0.75em 4% 1em;
-}
+
+
+
+
 
 
 
@@ -1052,67 +1305,6 @@ a[href="#sections"] {
 
 
 
-// -------------------------
-// Buttons, faux buttons styling & resets
-// -------------------------
-
-.section-modchooser-link a,
-.section-modchooser-text,
-a.btn,
-a.btn:visited,
-button,
-.yui3-button,
-.yui-button  button,
-.btn,
-input.form-submit,
-input[type="button"],
-input[type="submit"],
-input[type="reset"] {
-    border-color: #fff;
-    color:#fff;
-    font-family: @font-family-base;
-    // background-color: @brand-primary; customisable
-    &:hover,
-    &:focus {
-        // background-color: darken(@brand-primary, 8%); customisable
-        // border-color: darken(@brand-primary, 12%); customisable
-        text-decoration: none;
-  }
-}
-#page-mod-quiz-edit div.question div.content div.points input[type="submit"],
-.section-modchooser-link a,
-.btn,
-button,
-input.form-submit,
-input[type="button"],
-input[type="submit"],
-input[type="reset"],
-input[name="searchwikicontent"]+input[type="submit"],
-select+input[type="submit"],
-input[type="text"]+input[type="button"],
-input[type="password"]+input[type="submit"],
-input[type="text"]+button,
-input[type="text"]+input[type="submit"] {
-    padding: 0.25em 1em;
-    margin: 0em 0.4em;
-    vertical-align: initial;
-    line-height: 1.5;
-}
-.section-modchooser {
-	text-align:center;
-	padding:3em 0;
-	margin-bottom:8em;
-	border-bottom:1px solid #ccc;
-}
-
-a.btn,
-a.btn:visited,
-.section-modchooser-link a,
-.section-modchooser-link a:hover,
-.section-modchooser-link a:visited{
-	color:#fff;
-	font-family: @font-family-base;
-}
 
 // I can only see paging-morelink class used twice - both times in the Moodle course renderer. Both times a hover color
 // of white makes the link invisible - should we remove the .paging.paging-morelink stuff from here?
@@ -1301,6 +1493,12 @@ http://blog.rodneyrehm.de/archives/34-iOS7-Mobile-Safari-And-Viewport-Units.html
     min-height:405px;
     border-bottom: 0px;
     margin: 0;
+    position:relative;
+    .btn {
+        position:absolute;
+        bottom:1em;
+        right:4%;
+    }
 }
 
 @media screen and (min-width: @screen-xs-min) {
@@ -1512,6 +1710,12 @@ http://blog.rodneyrehm.de/archives/34-iOS7-Mobile-Safari-And-Viewport-Units.html
     padding: 0;
 }
 
+/* Calandar */
+
+.path-calendar .maincalendar .eventlist .event{
+    border:0;
+}
+
 
 
 
@@ -1538,6 +1742,13 @@ http://blog.rodneyrehm.de/archives/34-iOS7-Mobile-Safari-And-Viewport-Units.html
 //  Moodle mods
 // -------------------------
 
+
+// -------------------------
+// Page
+// -------------------------
+#page-mod-page-view #region-main{
+    max-width:40.5em;
+}
 // -------------------------
 // Assignments
 // -------------------------
@@ -1566,6 +1777,7 @@ http://blog.rodneyrehm.de/archives/34-iOS7-Mobile-Safari-And-Viewport-Units.html
 }
 .path-mod-workshop .collapsibleregioncaption{
 	font-size:@font-size-h3;
+    font-weight:300;
 }
 
 // -------------------------
@@ -1841,6 +2053,7 @@ http://blog.rodneyrehm.de/archives/34-iOS7-Mobile-Safari-And-Viewport-Units.html
 	padding:1em;
   float:right;
 }
+
 // -------------------------
 // Forum responsive table
 // -------------------------
@@ -1911,6 +2124,9 @@ http://blog.rodneyrehm.de/archives/34-iOS7-Mobile-Safari-And-Viewport-Units.html
 	}
 }
 }
+
+
+
 
 
 
@@ -2224,6 +2440,12 @@ table#user-grades tr.avg td.cell{
     }
 }
 
+// Stop aclist-content from being rediculously big in  page-admin-report-outcome-index.
+.yui3-aclist-content {
+    overflow-y: auto;
+    max-height: 90vh;
+}
+
 .path-blocks-reports .report-title {
 	font-weight:normal;
 	font-family:@font-family-base;
@@ -2445,6 +2667,12 @@ table#user-grades tr.avg td.cell{
   }
 }
 
+/* assigning roles /enrol/otherusers.php */
+.other-user-manager-panel {
+  .moodle-dialogue-base .moodle-dialogue;
+}
+
+
 
 
 /* file picker dialogue */
@@ -2600,55 +2828,7 @@ table#user-grades tr.avg td.cell{
 
 
 
-/** badges stuff **/
-.message_badge_message,
-.message_badge_empty {
-    border-top-color: #fff;
-}
 
-.alert_stream{
-    hr:first-of-type {
-        height:0.25em;
-    }
-    #badge_moremessages{
-        margin:1em 0;
-        text-align:center;
-    }
-    .message_badge_container {
-
-        .three-quarters {
-            display:block;
-        }
-
-        .message_badge_empty:first-of-type, .message_badge_message:first-of-type {
-            border-top:none;
-        }
-
-        .messagematch{
-            font-family: @font-family-sans-serif;
-        }
-
-        .message_badge_overlay{
-            border:none;
-            width:auto;
-            max-height:inherit;
-        }
-        .message_badge_overlay,
-        .message_badge_message_overlay{
-            background-color:transparent;
-        }
-
-        .message_badge_message_text {
-            article{
-                max-width:55em;
-                margin:1em 0;
-                header {
-                    display:none;
-                }
-            }
-        }
-    }
-}
 
 
 

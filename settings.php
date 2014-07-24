@@ -84,6 +84,17 @@ if ($ADMIN->fulltree) {
     $setting = new admin_setting_heading($name, $title, $description);
     $settings->add($setting);
 
+    // Persnal menu deadlines on/off.
+    $name = 'theme_snap/deadlinestoggle';
+    $title = new lang_string('deadlinestoggle', 'theme_snap');
+    $description = new lang_string('deadlinestoggledesc', 'theme_snap');
+    $checked = '1';
+    $unchecked = '0';
+    $default = $checked;
+    $setting = new admin_setting_configcheckbox($name, $title, $description, $default, $checked, $unchecked);
+    $setting->set_updatedcallback('theme_reset_all_caches');
+    $settings->add($setting);
+
     // Custome footer setting.
     $name = 'theme_snap/footnote';
     $title = new lang_string('footnote', 'theme_snap');

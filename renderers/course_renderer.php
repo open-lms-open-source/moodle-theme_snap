@@ -68,6 +68,53 @@ class theme_snap_core_course_renderer extends core_course_renderer {
     }
 
     /**
+     * Is this module conditionally available?
+     * @param cm_info $mod
+     * @return bool
+     */
+    protected function mod_conditional(cm_info $mod) {
+        // Not we don't want to apply the conditional class using ->available as this will show a conditional
+        // notice for all activities that are inside a conditional section.
+        return (!empty($mod->conditionscompletion)
+            || !empty($mod->conditionsgrade)
+            || !empty($mod->conditionsfield)
+        );
+    }
+
+    /**
+     * Get module type
+     * Note, if module is a resource, get the actual file type
+     *
+     * @author Guy Thomas
+     * @date 2014-06-16
+     * @param cm_info $mod
+     * @return stdClass | string
+     */
+    protected function get_mod_type(cm_info $mod) {
+        if ($mod->modname === 'resource') {
+            // Get file type from icon
+            // (note, I also tried this using a combo of substr and strpos and preg_match was much faster!)
+            $matches = array();
+            preg_match ('#/(\w+)-#', $mod->icon, $matches);
+            $filetype = $matches[1];
+            $ext = $filetype;
+            $extension = array(
+                'powerpoint' => 'ppt',
+                'document' => 'doc',
+                'spreadsheet' => 'xls',
+                'archive' => 'zip',
+                'pdf' => 'pdf',
+            );
+            if (in_array($filetype, array_keys($extension))) {
+                $filetype = $extension[$filetype];
+            }
+            return ((object) array('type' => $filetype, 'extension' => $ext));
+        } else {
+            return ($mod->modfullname);
+        }
+    }
+
+    /**
      * override course render for course module list items
      * add additional classes to list item (see $modclass)
      *
@@ -86,26 +133,10 @@ class theme_snap_core_course_renderer extends core_course_renderer {
         $displayoptions = array()
     ) {
         $output = '';
-        $conditional = false;
         if ($modulehtml = $this->course_section_cm($course, $completioninfo, $mod, $sectionreturn, $displayoptions)) {
+            $modtype = $this->get_mod_type($mod);
             if ($mod->modname === 'resource') {
-                // Get file type from icon
-                // (note, I also tried this using a combo of substr and strpos and preg_match was much faster!)
-                $matches = array();
-                preg_match ('#/(\w+)-#', $mod->icon, $matches);
-                $filetype = $matches[1];
-                $modclasses = array('snap-resource', 'snap-mime-'.$filetype);
-                $extension = array(
-                    'powerpoint' => 'ppt',
-                    'document' => 'doc',
-                    'spreadsheet' => 'xls',
-                    'archive' => 'zip',
-                    'pdf' => 'pdf',
-                );
-                if (in_array($filetype, array_keys($extension))) {
-                    $filetype = $extension[$filetype];
-                }
-                $attr['data-type'] = $filetype;
+                $modclasses = array('snap-resource', 'snap-mime-'.$modtype->extension);
             } else if ($mod->modname === 'label') {
                 // Do nothing.
             } else if ($mod->modname === 'folder' && !$mod->get_url()) {
@@ -113,56 +144,42 @@ class theme_snap_core_course_renderer extends core_course_renderer {
                 $modclasses = array('snap-activity');
             } else if (plugin_supports('mod', $mod->modname, FEATURE_MOD_ARCHETYPE) === MOD_ARCHETYPE_RESOURCE) {
                 $modclasses = array('snap-resource');
-                $attr['data-type'] = $mod->modfullname;
             } else {
                 $modclasses = array('snap-activity');
-                $attr['data-type'] = $mod->modfullname;
             }
+
+            // Is this mod draft?
             if (!$mod->visible) {
                 $modclasses [] = 'draft';
             }
-            // Not we don't want to apply the conditional class using ->available as this will show a conditional
-            // notice for all activities that are inside a conditional section.
-            if (!empty($mod->conditionscompletion)
-                || !empty($mod->conditionsgrade)
-                || !empty($mod->conditionsfield)
-            ) {
-                $conditional = true;
+
+            // Is this mod conditional?
+            if ($this->mod_conditional($mod)) {
                 $modclasses [] = 'conditional';
             }
             if (!$mod->available && !$mod->uservisible) {
                 $modclasses [] = 'unavailable';
             }
+
+            // TODO - can we add completion data
+
+            $modclasses [] = 'snap-asset'; // added to stop conflicts in flexpage
             $modclasses [] = 'activity';
             $modclasses [] = $mod->modname;
             $modclasses [] = "modtype_$mod->modname";
             $modclasses [] = $mod->extraclasses;
 
+            $attr['data-type'] = $modtype->type;
             $attr['class'] = implode(' ', $modclasses);
             $attr['id'] = 'module-' . $mod->id;
-
-            if ($conditional) {
-                // Show availability info (if module is not available).
-                $modulehtml .= html_writer::tag('aside', get_string('conditional', 'theme_snap').
-                    $this->course_section_cm_availability($mod, $displayoptions), array('class' => 'conditional_info'));
+            if ($modurl = $mod->get_url()) {
+                $attr['data-href'] = $modurl;
             }
-
-            $draftmarker = html_writer::tag('aside', get_string('draft', 'theme_snap'), array('class' => 'draft_info'));
-
-            // Ugly workaround to integrate with existing JS.
-            $draftwrapperclass = "contentafterlink draftwrapperworkaround";
-            if (!$mod->visible) {
-                $draftwrapperclass .= " dimmed_text";
-            }
-            $draftmarker = html_writer::div($draftmarker, $draftwrapperclass);
-
-            $modulehtml .= $draftmarker;
 
             $output .= html_writer::tag('li', $modulehtml, $attr);
         }
         return $output;
     }
-
 
     /**
      * Renders HTML to display one course module in a course section
@@ -187,6 +204,8 @@ class theme_snap_core_course_renderer extends core_course_renderer {
      * @return string
      */
     public function course_section_cm($course, &$completioninfo, cm_info $mod, $sectionreturn, $displayoptions = array()) {
+        global $PAGE;
+
         $output = '';
         // We return empty string (because course module will not be displayed at all)
         // if:
@@ -204,76 +223,90 @@ class theme_snap_core_course_renderer extends core_course_renderer {
             return $output;
         }
 
-        $output .= html_writer::start_tag('div');
-
-        if ($this->page->user_is_editing()) {
-            $output .= course_get_cm_move($mod, $sectionreturn);
-        }
-
-        $output .= html_writer::start_tag('div', array('class' => 'mod-indent-outer'));
-
-        // Start a wrapper for the actual content to keep the indentation consistent.
-        $output .= html_writer::start_tag('div');
-
+        $output .= "<div class='clearfix'>";
+        // Start the div for the activity content
+        $output .= "<div class='activityinstance'>";
         // Display the link to the module (or do nothing if module has no url).
         $cmname = $this->course_section_cm_name($mod, $displayoptions);
+        if (!empty($cmname)) {
+            $output .= $cmname;
+        }
+        // Meta
+        $output .= "<div class='snap-meta'>";
+        // Activity/resource type
+        $modtype = $this->get_mod_type($mod);
+        $snapmodtype = is_string($modtype) ? format_string($modtype) : format_string($modtype->type);
+        $output.= "<span class='snap-assettype'>".$snapmodtype."</span>";
+
+        if (!empty($mod->groupingid) && has_capability('moodle/course:managegroups', context_course::instance($mod->course))) {
+            // Grouping label
+            $groupings = groups_get_all_groupings($mod->course);
+            $output.= "<span class='snap-groupinglabel'>".format_string($groupings[$mod->groupingid]->name)."</span>";
+
+            // TBD - add a title to show this is the Grouping...
+        }
+
+
+        // Draft status - always output, shown via css of parent
+            $output.= "<span class='draft_info'>".get_string('draft', 'theme_snap')."</span>";
+
+        // TBD! - add something to check if user has met conditions,
+        // if so - we probably hide this?
+
+        if ($this->mod_conditional($mod)){
+            // Conditional Status.
+            $output.= "<span class='conditional_info'>".get_string('conditional', 'theme_snap')."</span>";
+            $output.= "<div class='availabilityinfo'>".$this->course_section_cm_availability($mod, $displayoptions)."</div>";
+        }
+        $output.= "</div>"; // close snap-meta
+
+        $contentpart = $this->course_section_cm_text($mod, $displayoptions);
+        $output .= $contentpart;
 
         if (!empty($cmname)) {
-            // Start the div for the activity title, excluding the edit icons.
-            $output .= html_writer::start_tag('div', array('class' => 'activityinstance'));
-            $output .= $cmname;
-
-            if ($this->page->user_is_editing()) {
-                $output .= ' ' . course_get_cm_rename_action($mod, $sectionreturn);
-            }
-
             // Module can put text after the link (e.g. forum unread).
             $output .= $mod->get_after_link();
-
-            // Closing the tag which contains everything but edit icons. Content part of the module should not be part of this.
-            $output .= html_writer::end_tag('div');
         }
+        $output .= "</div>";
 
-        // If there is content but NO link (eg label), then display the
-        // content here (BEFORE any icons). In this case cons must be
-        // displayed after the content so that it makes more sense visually
-        // and for accessibility reasons, e.g. if you have a one-line label
-        // it should work similarly (at least in terms of ordering) to an
-        // activity.
-        $contentpart = $this->course_section_cm_text($mod, $displayoptions);
-        $url = $mod->get_url();
-        if (empty($url)) {
-            $output .= $contentpart;
-        }
-
+        // build up edit icons
         $modicons = '';
         if ($this->page->user_is_editing()) {
-            $editactions = course_get_cm_edit_actions($mod, $mod->indent, $sectionreturn);
-            $modicons .= ' '. $this->course_section_cm_edit_actions($editactions, $mod, $displayoptions);
+            $editactions = $this->course_get_cm_edit_actions($mod, $sectionreturn);
+            $modicons .= $this->course_section_cm_edit_actions($editactions, $mod, $displayoptions);
             $modicons .= $mod->get_after_edit_icons();
+            $modicons .= course_get_cm_move($mod, $sectionreturn);
         }
 
-        $modicons .= $this->course_section_cm_completion($course, $completioninfo, $mod, $displayoptions);
-
-        if (!empty($modicons)) {
-            $output .= html_writer::span($modicons, 'actions');
+        if (!$this->page->user_is_editing()) {
+            $modicons .= $this->course_section_cm_completion($course, $completioninfo, $mod, $displayoptions);
         }
 
-        // If there is content AND a link, then display the content here
-        // (AFTER any icons). Otherwise it was displayed before.
-        if (!empty($url)) {
-            $output .= $contentpart;
+        // add actions menu
+        if($modicons) {
+            $output .= "<div class='actions' role='region' aria-label='actions'>";
+            $output .= $modicons;
+            $output .= "</div>";
         }
-
-        $output .= html_writer::end_tag('div');
-
-        // End of indentation div.
-        $output .= html_writer::end_tag('div');
-
-        $output .= html_writer::end_tag('div');
+        $output .= "</div>";
+        // close clearfix
         return $output;
     }
 
+    /**
+     * Wrapper around course_get_cm_edit_actions
+     *
+     * @param cm_info $mod The module
+     * @param int $sr The section to link back to (used for creating the links)
+     * @return array Of action_link or pix_icon objects
+     */
+    protected function course_get_cm_edit_actions(cm_info $mod, $sr = null) {
+        $actions = course_get_cm_edit_actions($mod, -1, $sr);
+        $actions = array_filter($actions, function($action) {
+            return !($action instanceof action_menu_filler);
+        });
+        $actions['edit-rename'] = course_get_cm_rename_action($mod, $mod->indent, $sr);
 
+        return $actions;
+    }
 }
-

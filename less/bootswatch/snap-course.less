@@ -9,9 +9,9 @@ THE COURSE DOM LOOKS LIKE THIS :
 (n.b. i did not invent this dom structure)
 
 section#region-main
-	div role=main
-		div.coursecontent
-			ul.somestringfromtheformat e.g  topics/weeks etc
+    div role=main
+        div.coursecontent
+            ul.somestringfromtheformat e.g  topics/weeks etc
 
  ****************************/
 
@@ -23,7 +23,7 @@ section#region-main
     text-align: center;
 }
 .section .filler {
-	display:none;
+    display:none;
 }
 
 // -------------------------
@@ -64,10 +64,10 @@ li.section .sectionname:before{
     content: counter(annotation-list) ".\00a0";
 }
 #section-0 .sectionname:before {
-	content:" ";
+    content:" ";
 }
 li.section.main {
-	counter-increment: annotation-list;
+    counter-increment: annotation-list;
 }
 
 
@@ -79,15 +79,15 @@ li.section.main {
     border: 0;
 }
 .course-content .current {
-	background-color:transparent;
+    background-color:transparent;
 }
 .course-content .current {
-	background-color:transparent;
-		.content:before {
-			content:"Current section";
-			display:block;
-			font-size: @font-size-h4;
-		}
+    background-color:transparent;
+        .content:before {
+            // content:"Current section";
+            display:block;
+            font-size: @font-size-h4;
+        }
 }
 
 .course-content .single-section ul.folderview li.section .content .summary {
@@ -97,23 +97,33 @@ li.section.main {
 .sectionname {
     font-size: @font-size-h2;
     padding-top: 0;
-    margin: 0;
+    margin-top: 0;
     white-space:normal !important;
+}
+// overwrite moodle not showing title for section 0
+.sectionname.accesshide{
+    position:relative;
+    left:0;
+    font-weight:300;
+}
+// except in folder view where the name is spat out twice on single pages
+// this is a folderview bug....
+.folderview .sectionname.accesshide{
+    position: absolute;
+    left: -10000px;
 }
 
 
 .path-course-view .section .summary {
-    line-height: inherit;
     position:relative;
-    font-size: 18px;
-    padding-bottom:2em;
+    line-height: inherit;
+    padding-bottom:1.6em;
     .clearfix;
+    p {
+        margin-bottom:1.6em;
+    }
 }
 
-/* HACKING MOD INDENT */
-.mod-indent-outer {
-	display:block;
-}
 
 // -------------------------
 // important! stuff so sections are not detected as visible by js
@@ -141,6 +151,16 @@ li.section.main {
     width: auto;
 }
 
+/* hide progress label with odd z-indexing */
+#completionprogressid {
+    display: none;
+}
+#section_footer,
+.visibleifjs.addresourcemodchooser{
+    clear:both;
+    display:block;
+}
+
 /* Flex page - align edit button right */
 body.format-flexpage .singlebutton{
     text-align: right;
@@ -153,437 +173,261 @@ body.format-flexpage .singlebutton{
 
 
 
-// -------------------------
-// Editing mess
-// -------------------------
-
-.increase-sections:before {
-	// needs to add text here
-}
-
-.section .modtype_label .actions {
-	position:absolute;
-	top:0;
-	right:0;
-}
-
-.editing .section .activity .actions {
-	display:block;
-	width:auto;
-	position:relative;
-
-	.moodle-actionmenu {
-		float:right;
-	}
-	span.autocompletion {
-		display:block;
-		position:relative;
-		right:0;
-        top:0;
-		float:right;
-	}
-}
-
-ul.menubar > li[role='presentation'] {
-	float:right;
-}
-
-.moodle-actionmenu[data-enhanced].show .menu a {
-	color:#666665;
-}
-
-.editing .section .activity .activityinstance{
-	display:inline-block;
-	width:100%;
-}
 
 
-// THE EDIT BUTTONS
-/* */
-#page-site-index #page-header{
-    position:relative;
-}
-#page-site-index #page-header .btn-default{
-    position:absolute;
-    bottom:0.5em;
-    right:4%;
-    border:0;
-}
-
-/* Add text to edit summary gear icon */
-#page-site-index .sitetopic>a:last-of-type:before,
-.editing .summary>a:last-of-type:before{
-    content: attr(title);
-    font-size:0.8em;
-}
-
-#page-site-index .sitetopic>a:last-of-type
-.editing .summary>a:last-of-type{
-	clear:both;
-	float:right;
-	margin-top:0.5em;
-}
-#page-site-index .sitetopic>a:last-of-type:before,
-.toggle-display.textmenu,
-.editing .summary>a:last-of-type
-{
-	padding:0 0.5em !important;
-	display:inline-block;
-	font-weight:400;
-	background-color:#F1F0EE;
-	font-family: @font-family-base;
-}
-
-// THE EDIT MENU
-.moodle-actionmenu[data-enhanced].show .menu.align-tr-br {
-	border-radius:0;
-	padding:0;
-	box-shadow:5px 5px 0 #eee;
-	border:0;
-	top:2em;
-	margin-top:0;
-	min-width:210px;
-
-}
-
-
-.toggle-display.textmenu b.caret {
-	display:none;
-}
-
-@media screen and (min-width: @screen-xs) {
-	.editing .section .activity .activityinstance{
-		width:75%;
-	}
-	.section .activity .actions {
-		width:25%;
-		float:right;
-	}
-}
-
-/* EDITING MENU */
-/* overspecific */
-.moodle-actionmenu[data-enhanced] {
-    .editing_moveleft,
-    .editing_moveright {
-        display: none !important;
-    }
-}
-
-.section .moodle-actionmenu .iconsmall,
-.section .moodle-actionmenu[data-enhanced] .menu img {
-	width:auto;
-	height:auto;
-}
-.moodle-actionmenu {
-	color:#ccc;
-	font-family:"roboto";
-	font-size:0.9em;
-}
-.moodle-actionmenu[data-enhanced].show .menu a {
-    border-radius: 0 !important;
-}
 
 /* MODS & RESOURCES IN COURSE */
-/* MOD ON COURSE PAGE */
-/* fixes
 
-for moodle editing bugs */
+// -------------------------
+// Reset moodle css mess
+// -------------------------
+
 .editing .section .activity .contentwithoutlink,
-.editing .section .activity .activityinstance {
-    padding-right: 0;
+.editing .section .activity .activityinstance{
+        padding-right:0;
+
 }
-
-.section .activity .activityinstance {
-    display: block;
-}
-
-/* hide progress label with odd z-indexing */
-#completionprogressid {
-    display: none;
-}
-
-.section .editing_title .iconsmall {
-    padding: 0;
-    margin: 0.3em;
-    height: 16px;
-    width: 16px;
-    vertical-align: top;
-}
-
-.togglecompletion,
-.autocompletion {
-    position: absolute;
-    right: 0.1em;
-    top:1em;
-}
-
-// all above dumped from bootswatch...
-
-
-
-
-#section_footer,
-.visibleifjs.addresourcemodchooser{
-	clear:both;
-	display:block;
+.section .activity .activityinstance,
+.section .activity .activityinstance div {
+    display:block;
 }
 .path-site li.activity>div,
-.path-course-view li.activity>div {
-	padding:0;
-}
-
-.section li.snap-resource{
-	background-image:url([[pix:theme|file]]);
-	background-size:100px auto;
-	background-repeat:no-repeat;
-	background-position:center 89%;
-	height:280px;
-	min-width:210px;
-    width:30%;
-	margin:1em 1.5%;
-	padding:0.3em 11px;
-	float:left;
-	display:block;
-	position:relative;
-	clear:none;
-	box-shadow:0 2px 5px 0 rgba(0, 0, 0, 0.26); //5px 5px #dadada;
-	background-color:#999;
-	input.titleeditor {
-		margin-top:2em;
-		width:auto;
-		clear:both;
-	}
-	.activityinstance > a{
-		display:block;
-		width:100%;
-		margin:1.5em 1px 0 1px;
-		padding:1em 11px;
-		color:#666665;
-	}
-	.activityinstance {
-		background-color:#fff;
-		line-height:1.2;
-		padding:0;
-		.iconlarge{
-			display:none;
-		}
-		.instancename {
-			font-family:@font-family-base;
-			display:inline-block;
-			word-break: break-word;
-			hyphens: auto;
-		}
-	}
-	span.editinstructions {
-		margin-top: -1em;
-		margin-left: 0;
-		box-shadow: none;
-		border: 0;
-		font-family:@font-family-base;
-	}
-	.contentafterlink p{
-		font-size:0.8em;
-		line-height:1.3;
-		clear:both;
-		padding:0 4%;
-		color:white;
-		text-shadow:1px 1px 1px #666665;
-	}
-}
-/*
-@media screen and (max-width: @screen-xs) {
-	.section li.snap-resource{
-		// something to make it center //
-        display:block;
-        margin:0.5em 2%;
-        min-width:94%;
-        min-height:150px;
-        height:auto;
-        background-position:4% 90%;
-        background-size:60px auto;
-	}
-}
-*/
-@media screen and (min-width: @screen-md) {
-		.section li.snap-resource{
-				margin:0.5em 2%;
-                width:26%;
-		}
+.path-course-view li.activity>div{
+    padding:0;
 }
 
 
-.section li.snap-activity {
-	width:99%;
-	height:auto;
-	min-height:180px;
-    box-shadow:0 2px 5px 0 rgba(0, 0, 0, 0.26);
-	clear:both;
-	// border:1px solid #dadada;
-	// border-top:0.5em solid @brand-primary;
-	display:block;
-    clear:both;
-    float:none;
-	position:relative;
-	padding:1em 2%;
-	margin:1em auto;
-    //background-image:linear-gradient(to right, #FFF 32%, #000 32%);
-	.iconlarge {
-		width:68px;
-		height:68px;
-		float:left;
-	}
+// shame - moodle uses ul and li for sections. We have to overspecify and reset the basic dom element styles to account for this
+.section {
+    ul,
+    ol{
+        margin:1.6em 4%;
+        ul,
+        ol{
+            margin:0 4%;
+        }
+    }
     .activityinstance {
-        padding-top:1em;
-    }
-	.activityinstance a{
-		color:#666665;
-	}
-	.instancename {
-		font-family:@font-family-base;
-		margin:1em 0em;
-		font-size:@font-size-large;
-        line-height:1;
-
-	}
-
-}
-@media screen and (min-width: @screen-xs) {
-	.section li.snap-activity .contentafterlink {
-		margin-left:11%;
-	}
-}
-.section li.snap-activity{
-    &.modtype_forum{
-    // background-image:linear-gradient(to right,#71d5df 22%,#ffffff 22%);
+        ul,
+        ol{
+            margin:1.6em 4%;
+            ul,
+            ol{
+                margin:0 4%;
+            }
+        }
+        .contentafterlink p {
+            margin-bottom:1.6em;
+        }
     }
 }
 
 
 
 
+
+
+
+
+
+
+// -------------------------
+// Activity & Resource styleing
+// -------------------------
+
+
+// generic moodle activity - as asset in snap
+.section li.snap-asset{
+    display:block;
+    position:relative;
+    padding:0;
+    margin:1em auto;
+    padding-bottom:1em;
+    min-height:125px;
+    height:auto;
+    font-family:@font-family-base;
+    background-image:url([[pix:theme|file]]);
+    background-repeat:no-repeat;
+    background-position:50% 89%;
+    background-size:100px auto;
+    box-shadow:0 2px 5px 0 rgba(0, 0, 0, 0.26);
+    div.clearfix {
+        padding:1em 2%;
+        height:100%;
+        overflow-x:hidden;
+        overflow-y:auto;
+        position:initial;
+    }
+    .activityinstance{
+        padding:0.5em 2%;
+        background-color:#fff;
+        height:auto;
+        .clearfix;
+        .activityicon{
+            float:left;
+            width:75px;
+            height:75px;
+        }
+        a {
+            color:#666665;
+        }
+    }
+    .contentafterlink {
+        max-width:30em;
+    }
+}
+/* resourcelinkdetails = moodle putting filetype on screen if option selected
+we do this by default in snap, so hide moodle version */
+.resourcelinkdetails {
+    display:none;
+}
+/* snap has its own implimentation of these, so hide moodles */
+.activityinstance .accesshide,
+.groupinglabel {
+    display:none;
+}
+
+// asset type, draft, conditional and group
+.snap-meta {
+    font-family:@font-family-base;
+    font-size:small;
+}
+
+// mime/activity name
+.snap-assettype {
+    position:absolute;
+    top:0;
+    left:0;
+    display:inline-block;
+    padding:0 2%;
+    background-color:rgba(0,0,0,0.2);
+    color:white;
+    text-transform:uppercase;
+}
+
+// tag styles for draft/group/contitional meta data
+.draft_info,
+.activityinstance .conditional_info,
+.snap-groupinglabel,
+.snap-unread-marker {
+    font-family:@font-family-base;
+    display:inline-block;
+    background-color:#ccc;
+    color:#fff;
+    padding:0 2% 0 1%;
+    margin:1px 0.75em;
+    text-transform:lowercase;
+    position:relative;
+    border-radius:0 2px 2px 0;
+    line-height:1.75;
+    // add a little tab arrow to the right ;)
+    &:before {
+        content:"";
+        position:absolute;
+        right:100%;
+        top:0%; // this is necessary!!
+        border:0.85em solid transparent; // small font size
+        border-right:0.89em solid #ccc;
+    }
+}
+
+// hide draft tag, unless asset has class draft (can be added by js)
+.draft_info {
+    display:none;
+}
+// show draft tag if parent has draft class
+.draft .draft_info{
+    display:inline-block;
+}
+
+// conditional list of stuff you have to do before
+.availabilityinfo{
+    clear:both;
+    font-size:small;
+}
+
+
+
+
+// -------------------------
+// Snap label
+// -------------------------
+// hide asset type for labels
+.modtype_label .snap-assettype {
+    display:none;
+}
 
 .section .activity.modtype_label.label {
-	height:auto;
-	width:100%;
-	background-color:white !important;
-	padding:1.5em 0;
-	text-align: left;
-	.clearfix;
-}
-
-
-.section li.snap-resource:before,
-.section li.snap-activity:before {
-	content:attr(data-type);
-	display:block;
-	position:absolute;
-	top:0;
-	right:0.5em;
-	padding:0 4%;
-	z-index:1;
-	background-color:#ccc;
-	font-family:@font-family-base;
-	font-size:0.75em;
-	color:white;
-	text-transform:uppercase;
-}
-
-
-
-
-
-
-/* CONTENT AFTER = DESCRIPTION */
-.resourcelinkdetails {
-	display:none;
-}
-
-
-
-
-
-
-
-
-
-/* all needs sorting out */
-
-.editing .actions {font-size:0.9em;};
-.editing
-	.section li.snap-resource{
-		.actions {
-			margin-top:-1.7em;
-		}
-}
-
-
-.section .activity .mod-indent-outer {
-	padding:0;
-}
-.section {
-    .editing_move{
-        line-height:1;
-    }
-    .snap-resource .editing_move{
-	    top: -1.8em;
-        background-color: rgba(255, 255, 255, 0.5);
-    }
-    .snap-activity .editing_move{
-        left:-2%;
-        top:-1em;
-    }
-    .modtype_label .editing_move {
-        top:-1em;
-    }
-}
-.section .activity.modtype_label .editing_move {
-	left:0;
-}
-.editing .section .activity .activityinstance,
-.section .activity .activityinstance{
-	display:block;
-	clear:both;
-	width:100%;
-}
-.editing .dndupload-preview .mod-indent{
-    display:block;
-}
-
-.toggle-display.textmenu {
-	background-color:white;
-}
-
-.editing .modtype_label{
-	padding-top:1em;
-}
-/*
-.editing .menu.align-tr-br li{
-    width:50%;
-    float:left;
-    a{
-        text-align:center;
+    background-image:none;
+    height:auto;
+    width:100%;
+    background-color:white !important;
+    text-align: left;
+    font-weight:300;
+    padding:0.5em 0;
+    margin:0.5em 0;
+    box-shadow:none;
+    .clearfix;
+    div.clearfix,
+    .activityinstance{
+        padding:0;
     }
 }
 
-.moodle-actionmenu[data-enhanced].show .menu a{
-    padding:0.3em 0;
-}
-.moodle-actionmenu[data-enhanced].show .menu .iconsmall{
-    display:block;
-    margin:0 auto;
-    width:20px;
-    height:20px;
-    margin-bottom:4px;
-}
-.jsenabled .moodle-actionmenu[data-enhanced] .menu-action-text {
-    display:block;
-    text-transform:uppercase;
+
+
+
+
+
+
+// -------------------------
+// Snap resource
+// -------------------------
+
+.snap-resource .contentafterlink {
     font-size:small;
-    white-space:normal;
-    line-height:1.2;
 }
-*/
+.section li.snap-resource{
+        height:250px;
+        min-width:210px;
+        width:30%;
+        margin:1em 1.5%;
+        padding:0.3em 11px 1.5em 11px;
+        float:left;
+        display:block;
+        clear:none;
+        &:hover {
+            background-position:50% 75%;
+            background-size:120px auto;
+            .alakazam();
+        }
+
+        // resource cards are clickable with data-href, so add cursor pointer
+        div.clearfix{
+            cursor:pointer;
+        }
+        .activityinstance {
+            padding:0.5em 4%;
+        }
+        .activityicon {
+            display:none;
+        }
+        .instancename{
+            display:block;
+            line-height:1.3;
+        }
+        .snap-assettype {
+            padding:0 4%;
+        }
+
+}
+// resources to full width on tiny screen
+@media screen and (max-width: @screen-xs) {
+    .section li.snap-resource{
+            width:92%;
+            margin:1em 4%;
+    }
+}
 
 
 // MIME TYPEs //
@@ -591,32 +435,20 @@ for moodle editing bugs */
 li.snap-resource.snap-mime-document,
 li.snap-resource.snap-mime-writer,
 li.snap-resource.snap-mime-oth{
-		background-color:#42b4d6;
-		background-image:url([[pix:theme|doc]]);
-		&:before {
-			color:#42b4d6;
-			background-color:fade(#fff,68%);
-		}
+        background-color:#42b4d6;
+        background-image:url([[pix:theme|doc]]);
 }
 li.snap-resource.snap-mime-powerpoint,
 li.snap-resource.snap-mime-impress {
-	background-color:#ff7954;
-	background-image:url([[pix:theme|powerpoint]]);
-		&:before {
-			color:#ff7954;
-			background-color:fade(#fff,68%);
-		}
+    background-color:#ff7954;
+    background-image:url([[pix:theme|powerpoint]]);
 }
 li.snap-resource.snap-mime-spreadsheet,
 li.snap-resource.snap-mime-chart,
 li.snap-resource.snap-mime-database,
 li.snap-resource.snap-mime-calc{
-	background-color:#4abc96;
-	background-image:url([[pix:theme|spreadsheet]]);
-		&:before{
-			color:#4abc96;
-			background-color:fade(#fff, 68%);
-		}
+    background-color:#22C596;
+    background-image:url([[pix:theme|spreadsheet]]);
 }
 
 // ADOBE //
@@ -624,15 +456,11 @@ li.snap-resource.snap-mime-pdf,
 li.snap-resource.snap-mime-eps,
 li.snap-resource.snap-mime-flash,
 {
-	background-color:#e34947;
-	background-image:url([[pix:theme|pdf]]);
-		&:before {
-			color:#e34947;
-			background-color:fade(#fff, 68%);
-		}
+    background-color:#e34947;
+    background-image:url([[pix:theme|pdf]]);
 }
 li.snap-resource.snap-mime-flash{
-	background-image:url([[pix:theme|flash]]);
+    background-image:url([[pix:theme|flash]]);
 }
 
 // MULTIMEDIA //
@@ -640,12 +468,8 @@ li.snap-resource.snap-mime-flash{
 li.snap-resource.snap-mime-mp3,
 li.snap-resource.snap-mime-wav,
 li.snap-resource.snap-mime-audio{
-	background-color:#EDC92C;
-	background-image:url([[pix:theme|music]]);
-	&:before {
-			color:#EDC92C;
-			background-color:fade(#fff, 68%);
-	}
+    background-color:#EDC92C;
+    background-image:url([[pix:theme|music]]);
 }
 
 li.snap-resource.snap-mime-mov,
@@ -654,99 +478,90 @@ li.snap-resource.snap-mime-video,
 li.snap-resource.snap-mime-quicktime,
 li.snap-resource.snap-mime-mpeg,
 li.snap-resource.snap-mime-avi{
-	background-color:#55B5CC;
-	background-image:url([[pix:theme|video]]);
-	&:before {
-			color:#55B5CC;
-			background-color:fade(#fff, 68%);
-	}
+    background-color:#55B5CC;
+    background-image:url([[pix:theme|video]]);
 }
 
 
 li.snap-resource.snap-mime-png,
 li.snap-resource.snap-mime-jpeg{
-	background-color:#67B8CB;
-	background-image:url([[pix:theme|image]]);
-	&:before {
-			color:#67B8CB;
-			background-color:fade(#fff, 68%);
-	}
-
+    background-color:#67B8CB;
+    background-image:url([[pix:theme|image]]);
 }
 
 // MOODLE MODS //
 li.snap-resource.modtype_url{
-	background-color:#999;
-	background-image:url([[pix:theme|link]]);
-	&:before {
-			color:#999;
-			background-color:fade(#fff, 68%);
-	}
+    background-color:#999;
+    background-image:url([[pix:theme|link]]);
 }
 
 li.snap-resource.modtype_book,
 li.snap-resource.modtype_page,
 li.snap-resource.modtype_imscp{
-	background-color:#70b29c;
-	background-image:url([[pix:theme|book]]);
-	&:before {
-			color:#70b29c;
-			background-color:fade(#fff, 68%);
-	}
+    background-color:#6BC075;
+    background-image:url([[pix:theme|book]]);
 }
 
 li.snap-resource.modtype_page {
-	background-image:url([[pix:theme|page]]);
+    background-image:url([[pix:theme|page]]);
 }
 li.snap-resource.modtype_imscp{
-	background-image:url([[pix:theme|scorm]]);
+    background-image:url([[pix:theme|scorm]]);
 }
 
 li.snap-resource.modtype_folder {
-	background-color:#F9F29A;
-	background-image:url([[pix:theme|folder]]);
-	&:before {
-			color:#F6A2A3;
-			background-color:fade(#fff, 90%);
-	}
+    background-color:#F9F29A;
+    background-image:url([[pix:theme|folder]]);
 }
 
 // CODE & SYSTEM //
 li.snap-resource.snap-mime-archive{
 background-color:#F9F29A;
-	background-image:url([[pix:theme|zip]]);
-	&:before {
-			color:#F9F29A;
-			background-color:fade(#fff, 90%);
-	}
+    background-image:url([[pix:theme|zip]]);
 }
 
 li.snap-resource.snap-mime-markup,
 li.snap-resource.snap-mime-html,
 li.snap-resource.snap-mime-sourcecode{
-	background-color:#e66665;
-	background-image:url([[pix:theme|code]]);
-		&:before {
-			color:#e66665;
-			background-color:fade(#fff, 68%);
-		}
+    background-color:#f0652a;
+    background-image:url([[pix:theme|code]]);
 }
 
 
 li.snap-resource.snap-mime-text{
-	background-color:#f1bf26;
-		&:before {
-			color:#f1bf26;
-			background-color:fade(#fff, 68%);
-		}
+    background-color:#f1bf26;
 }
 
 
-/* MOD TYPE STYLES */
+
+
+
+// -------------------------
+// Snap Activity
+// -------------------------
+li.snap-activity {
+    background-image:none !important;
+    width:99%; // to allow for box-shadow faux border
+    .instancename {
+        font-size:@font-size-large;
+        display:block;
+        overflow:hidden;
+    }
+    .activityicon {
+        margin-right:3%;
+    }
+}
+
+// experimental code, not used bu keeping as may...
+.section li.snap-activity{
+    &.modtype_forum{
+    // background-image:linear-gradient(to right,#71d5df 22%,#ffffff 22%);
+    }
+}
 
 
 li.snap-activity {
-    border-left:3px solid #fff;
+    border-left:3px solid #ccc;
     border-radius:3px 0 0 3px;
 }
 
@@ -754,151 +569,314 @@ li.modtype_forum,
 li.modtype_chat,
 li.modtype_hsuforum {
     border-color:#49A0AE;
+    .snap-assettype{
+        background-color:#49A0AE;
+    }
 }
 
 li.modtype_assign,
+li.modtype_assignment,
 li.modtype_workshop {
     border-color:#4ABC96;
+    .snap-assettype{
+        background-color:#4ABC96;
+    }
 }
 li.modtype_lesson {
     border-color:#6CC077;
+    .snap-assettype{
+        background-color:#6CC077;
+    }
 }
 li.modtype_choice,
 li.modtype_feedback,
 li.modtype_quiz,
 li.modtype_survey{
     border-color:#A0BF19;
+    .snap-assettype{
+        background-color:#A0BF19;
+    }
+
 }
 li.modtype_data,
 li.modtype_glossary,
 li.modtype_wiki{
     border-color:#EDC92C;
+    .snap-assettype{
+        background-color:#EDC92C;
+    }
+}
+
+li.snap-activity.modtype_folder {
+    border-color:#F9F29A;
+    .snap-assettype{
+        background-color:#F9F29A;
+    }
 }
 
 
 
 
-/* PUBLISHED STATUS STUFF */
 
-.section li.activity .draft_info{
-	display:inline-block;
-	position:absolute;
-	bottom:0;
-	right:0em;
-	background-color:#ccc;
-	color:#fff;
-	font-family:@font-family-base;
-	font-size:small;
-	padding:2px 4%;
-}
 
-.section li.activity .draftwrapperworkaround.contentafterlink {
-    position: absolute;
-    right: .5em;
-    bottom: 0;
-}
-.section li.activity .draftwrapperworkaround.contentafterlink .draft_info {
-    display: none;
-    padding: 2px 2em;
-}
-.section li.activity.snap-resource .draftwrapperworkaround.contentafterlink .draft_info {
-    padding: 2px .5em;
-}
-.section li.activity .draftwrapperworkaround.contentafterlink.dimmed_text .draft_info {
-    display: inline-block;
-}
-.section li.activity.modtype_label .draftwrapperworkaround.contentafterlink.dimmed_text .draft_info {
-    display: none;
+
+
+
+
+
+// -------------------------
+// Editing resources/activites
+// -------------------------
+
+/* EDIT SUMMARY */
+
+/* Make it obvious that you can edit a summary - Add text and some styles to that gear thing */
+#page-site-index .sitetopic>a:last-of-type,
+.editing .summary>a:last-of-type{
+    .btn;
+    clear:both;
+    margin-bottom:1em;
+    float:right;
+    img {
+        display:none;
+    }
 }
 
-/* CONDITIONAL STATUS STUFF */
-.section li.activity.conditional{
-	.conditional_info {
-		position:absolute;
-		bottom:0;
-		left:0;
-		z-index:2;
-		background-color:#FFCD35;
-		font-family:@font-family-base;
-		font-size:0.75em;
-		color:white;
-		padding:0 4%;
-		max-width:210px;
-			.availabilityinfo {
-				visibility:collapse;
-				height:0;
-				width:0;
-			}
-			&:hover .availabilityinfo{
-				visibility:visible;
-				height:100%;
-				width:auto;
-			}
-	}
-	.activityinstance {
-		margin:1.2em 1px;
-		padding:1em 11px;
-		>a{
-			margin:0;
-			padding:0
-		}
-	}
-
+#page-site-index .sitetopic>a:last-of-type:before,
+.editing .summary>a:last-of-type:before {
+    content: attr(title);
+    display:inline-block;
+    font-weight:300;
+}
+#page-site-index .sitetopic>a:last-of-type:after,
+.editing .summary>a:last-of-type:after {
+    content: "\e12a";
+    font-family:"line-icons";
+    margin-left:11%;
+    vertical-align:bottom;
 }
 
-.availabilityinfo {
-	background-color:#FFCD35;
-	font-family:@font-family-base;
-	color:white;
-	clear:both;
-	padding:0 4% !important;
-}
-/* restore normal padding to activity instance when editing */
-.editing .section li.snap-resource.conditional{
-	.activityinstance{
-		margin:0;
-		padding:0;
-	}
-	.activityinstance>a{
-		margin:1.2em 1px;
-		padding:1em 11px;
-	}
-}
-/*
-&:after {
-	content:"\e153";
-	content:"conditional";
-	display:block;
-	position:absolute;
-	bottom:0.3em;
-	left:0.3em;
-	background-color:#fff;
-	z-index:1;
-	font-family:@font-family-base;
-	color:#FFCD35;
-	padding:0 4%;
-	border-radius:50%;
-	}
-*/
 
-.activity .unread{
-	clear:both;
-	display:block;
-	margin-left:4em;
-	background-color:transparent;
-	a {
-		.btn;
-		color:#fff !important;
-	}
+// -------------------------
+// Snap actions
+// -------------------------
+
+/* all the editing options and completion data in one region */
+
+/* reset some moodle shame */
+.moodle-actionmenu,
+.moodle-actionmenu>ul,
+.moodle-actionmenu>ul>li {
+    display:block;
+}
+.moodle-actionmenu>ul>li {
+    display:inline-block;
+}
+/*  actions at the footer of an element */
+.section .snap-asset .actions{
+    clear:both;
+    float:none;
+    width:100%;
+    position:absolute;
+    top:initial;
+    bottom:0;
+    left:0;
+    width:100%;
+    overflow:hidden;
+    .clearfix;
+}
+
+/* student completion actions */
+.togglecompletion,
+.autocompletion {
+    float:right;
+    padding:0 4%;
+}
+
+/* add bg colour for actions when editing */
+.editing .actions {
+    background-color:rgba(255,255,255,0.95);
+}
+/* remove bg colour for actions when menu shown */
+.action-menu-shown .actions {
+    background-color:transparent;
+}
+
+
+/* commands - moodle container for edit options */
+.snap-asset{
+    .commands {
+        // display:inline-block;
+        display:block;
+        float:right;
+        font-size:small;
+    }
+}
+
+// draghandle
+.section .snap-asset .editing_move{
+    padding:0 2%;
 }
 
 
 
-.section .editing_title .iconsmall {
-	vertical-align:middle;
+// -------------------------
+//  Edit button
+// -------------------------
+
+// that div with all the extraneous moodle editing code in.
+div.commands ul.menubar {
+    margin:0;
 }
-.editing .course-content .section .activity{
-    border-bottom:0;
-    margin-bottom:0;
-    padding-bottom:0;
+
+// i know. shame selector :(
+.jsenabled .snap-asset .moodle-actionmenu[data-enhance]
+.toggle-display.textmenu {
+    text-decoration:none;
+    padding:0.5em 1em;
+    margin:0;
+    text-align:right;
+    background-color:#fff;
+}
+// hide moodle caret
+.toggle-display .caret{
+    display:none;
+}
+.toggle-display.textmenu:after{
+    content: "☰";
+    margin-left:11%;
+    /*content: "t";
+    font-family: "line-icons";
+    text-transform:none;
+    font-size:2em;
+    margin-bottom:0.1em;
+    display: block;
+    text-align: center;
+    line-height: 1;
+    */
+    /*display: block;
+    text-align: center;
+    margin-bottom:0.1em;
+    content: "...";
+    font-weight:900;
+    font-size:3em;
+    font-family:"serif";
+    */
+}
+.action-menu-shown .toggle-display.textmenu{
+    &:after{
+        content: "\e126";
+        font-family:"line-icons" !important;
+    }
+}
+// last min css for marks code changes - make edit button block when editing...
+.action-menu-shown .moodle-actionmenu>ul>li{
+    display:block;
+}
+
+
+
+// -------------------------
+//  Editing menu
+// -------------------------
+
+// hide to start, and set some defaults
+.editing .snap-asset {
+    .actions .menu {
+        position:relative;
+        display:block;
+        visibility: hidden;
+        overflow: hidden;
+        z-index: 1;
+        width:0;
+        height:0;
+        border:0;
+        box-shadow:none;
+        border-radius:0;
+        background-color:#fff;
+        transform: scale(0);
+        transform-origin: 50% 0%;
+        transition: transform .3s;
+    }
+    // when menu shown
+    &.action-menu-shown .actions {
+        // hide move & groups
+        .editing_move,
+        [class*='group']{
+            display:none;
+        }
+        // ignore inline js styles
+        .menu[style] {
+            left:0 !important;
+            right:0 !important;
+        }
+        .menu{
+            visibility: visible;
+            transform: scale(1);
+            transition: transform .3s;
+            padding:0 0.5em;
+            margin:0;
+            width:auto;
+            max-width:320px;
+            height:auto;
+        }
+
+    }
+}
+
+/* add text to rename action in menu */
+.editing_title:after {
+    content:attr(title);
+}
+input.titleeditor {
+    max-width:100%;
+    padding:0.3em;
+    margin:0;
+}
+span.editinstructions {
+    box-shadow: none;
+    border: 0;
+    font-family:@font-family-base;
+}
+
+
+/* forum unread posts button */
+.snap-asset .unread{
+    clear:both;
+    display:block;
+    margin-left:4em;
+    background-color:transparent;
+    a {
+        .btn;
+        color:#fff !important;
+    }
+}
+
+.editing .dndupload-preview .mod-indent{
+    display:block;
+}
+
+// increase/decrease sections buttons
+
+// remove moodle padding
+
+.path-course-view a.reduce-sections {
+    padding-left:0;
+}
+
+#changenumsections{
+        .text-center;
+    .increase-sections,
+    .reduce-sections{
+        .btn;
+
+        img{
+            display:none;
+        }
+        .accesshide {
+            position:relative;
+            left:0;
+            font-weight:300;
+        }
+    }
 }

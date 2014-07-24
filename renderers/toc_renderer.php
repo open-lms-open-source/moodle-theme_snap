@@ -34,7 +34,7 @@ class toc_renderer extends core_renderer {
      * @Date 2014-05-23
      */
     protected function toc_linkinfo($label) {
-        $linkinfo = '<em class="published-status"><small>'.$label.'</small></em>';
+        $linkinfo = '<small class="published-status">'.$label.'</small>';
         return ($linkinfo);
     }
 
@@ -424,24 +424,6 @@ class toc_renderer extends core_renderer {
     public function get_course_image() {
         global $COURSE;
 
-        $fs      = get_file_storage();
-        $context = context_course::instance($COURSE->id);
-        $files   = $fs->get_area_files($context->id, 'course', 'overviewfiles', false, 'filename', false);
-
-        if (count($files) > 0) {
-            foreach ($files as $file) {
-                if ($file->is_valid_image()) {
-                    return moodle_url::make_pluginfile_url(
-                        $file->get_contextid(),
-                        $file->get_component(),
-                        $file->get_filearea(),
-                        false,
-                        $file->get_filepath(),
-                        $file->get_filename()
-                    );
-                }
-            }
-        }
-        return false;
+        return \theme_snap\local::get_course_image($COURSE->id);
     }
 }

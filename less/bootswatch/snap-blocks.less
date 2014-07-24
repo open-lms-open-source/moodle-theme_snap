@@ -25,10 +25,10 @@
 }
 
 .block .header .title h2 {
-    font-size: @font-size-h2;
+    font-size: @font-size-h5;
 }
 .block h3 {
-    font-size: @font-size-h3;
+    font-size: @font-size-h6;
 }
 
 a.skip-block, a.skip {
@@ -52,7 +52,7 @@ a.skip-block, a.skip {
     overflow: hidden;
 }
 
-/* show blocks on front page, quiz, book etc when clicked */
+/* show blocks on front page, quiz, book, cal etc and when clicked */
 
 #page-admin-index #moodle-blocks,
 #page-mod-quiz-attempt #moodle-blocks,
@@ -61,6 +61,7 @@ a.skip-block, a.skip {
 #page-site-index #moodle-blocks,
 #page-user-profile #moodle-blocks,
 #page-my-index #moodle-blocks,
+#page-calendar-view #moodle-blocks,
 #blocks:target #moodle-blocks,
 #blocks:target #appendices {
     visibility: visible;
@@ -101,6 +102,10 @@ a.skip-block, a.skip {
     img {
         vertical-align: baseline;
     }
+}
+.eventcontent .smallicon{
+    width: 50px;
+    margin-right:2%;
 }
 
 
@@ -144,4 +149,17 @@ a.skip-block, a.skip {
   right:0;
   border-left: 1px solid #eee;
   transition: right .33s cubic-bezier(.694, .0482, .335, 1);
+}
+
+.block .header .title .commands {
+    width:100%;
+    font-size:small;
+}
+
+.block_rss_client ul.list li{
+    border:0;
+    margin:1em 0;
+    .description{
+        font-size:small;
+    }
 }

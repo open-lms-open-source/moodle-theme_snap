@@ -245,7 +245,7 @@ function snapInit(){
     /**
      * show and focus section
      *
-     * @author Stuart Lamour
+     * @author Guy Thomas
      */
     var showSection = function() {
 
@@ -270,7 +270,7 @@ function snapInit(){
                         window.scrollTo(0, 0);
                     } else {
                         // Srcoll to section taking into account navbar
-                        scrolltoElement ($('#section-' + hbparams.section), false, 0);
+                        scrolltoElement($('#section-' + hbparams.section), false, 0);
                     }
                 }
             }
@@ -280,6 +280,11 @@ function snapInit(){
                 // show chapter 0
                 $('#section-0').addClass('state-visible').focus();
             }
+
+            // add current class to the relevant section in toc
+            $('#chapters li').removeClass('current');
+            var currentSectionId = $('.state-visible').attr('id');
+            $('#chapters a[href^="#'+currentSectionId+'"]').parent('li').addClass('current');
 
             // Need to call this here as video could have been hidden at the point it was made responsive which means
             // we need to reset width and height now its visible.
@@ -429,20 +434,6 @@ function snapInit(){
     };
 
     /**
-     * Do things according to the current page hash.
-     *
-     * @author Guy Thomas
-     * @date 2014-05-21
-     */
-    var hashBehaviour = function() {
-        if (location.hash == '#primary-nav') {
-            // hide page and moodle footer or we will get double scroll bars
-            $('#page').hide();
-            $('#moodle-footer').hide();
-        }
-    }
-
-    /**
      * Do polyfill stuff.
      *
      * NOTE - would be better to be using yep / nope to load just the scripts we need, however scripts in moodle
@@ -557,11 +548,37 @@ function snapInit(){
             } else {
                 location.hash = href;
             }
+            // add current class to the relevant section in toc
+            $('#chapters li').removeClass('current');
+            $(this).parent('li').addClass('current');
+
             // Need to call this here as video could have been hidden at the point it was made responsive which means
             // we need to reset width and height now its visible.
             applyResponsiveVideo();
             e.preventDefault();
         });
+
+        // Add toggle class for hide/show activities/resources
+        $(document).on("click", '[data-action=hide],[data-action=show]', function() {
+             $(this).closest('li.activity').toggleClass('draft');
+        });
+
+        // Make cards clickable - data-href for resources
+        $(document).on('click', '.snap-resource[data-href]', function(e){
+            // stash event trigger
+            var trigger = $(e.target),
+                hreftarget = '_self'; // assume web files
+            // excluse any clicks in the actions menu, on links or forms
+            if($(trigger).closest('.actions, form, a').length === 0) {
+                // TODO - add a class in the renderer to set target to blank for none-web docs or external links
+                if($(trigger).closest('.snap-resource').is('.target-blank')){
+                    hreftarget = '_blank';
+                }
+                window.open($(this).data('href'), hreftarget);
+                e.preventDefault();
+            }
+        });
+
 
         // Listener for small screen showing of chapters & appendicies.
         $(document).on("click", '#course-toc div[role="menubar"] a', function(e) {
@@ -604,7 +621,6 @@ function snapInit(){
     showPageSectionMod(true);
     movePHPErrorsToHeader();
     setForumStrings();
-    hashBehaviour();
     polyfills();
 
 

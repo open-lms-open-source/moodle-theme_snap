@@ -7,6 +7,10 @@
 
 // .label vs .label
 
+.other-user-manager-panel span.label {
+    color: @text-color;
+    font-size: inherit;
+}
 li.activity.label,
 .file-picker td.label {
   background: inherit;
@@ -172,3 +176,10 @@ img.hide {
     max-height: 500px;
     overflow-y: auto;
 }
+
+// Override the .show utulity class.
+
+.moodle-actionmenu[data-enhanced].show {
+    display: inline-block !important;
+}
+
