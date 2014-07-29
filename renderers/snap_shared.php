@@ -263,7 +263,7 @@ class snap_shared extends renderer_base {
      * @return string
      */
     public static function flexpage_frontpage_warning($adminsonly = false) {
-        global $CFG, $DB, $USER, $OUTPUT;
+        global $CFG, $OUTPUT;
 
         if ($adminsonly) {
             if (!is_siteadmin()) {

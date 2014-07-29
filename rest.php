@@ -24,6 +24,7 @@
 
 use theme_snap\controller\kernel;
 use theme_snap\controller\deadlines_controller;
+use theme_snap\controller\messages_controller;
 use theme_snap\controller\router;
 
 define('AJAX_SCRIPT', true);
@@ -45,7 +46,9 @@ $PAGE->set_context($context);
 $PAGE->set_url('/theme/snap/rest.php', array('action' => $action, 'contextid' => $context->id));
 
 $router = new router();
+
 $router->add_controller(new deadlines_controller());
+$router->add_controller(new messages_controller());
 
 $kernel = new kernel($router);
 $kernel->handle($action);

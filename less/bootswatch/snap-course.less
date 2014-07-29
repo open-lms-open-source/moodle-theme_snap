@@ -256,7 +256,7 @@ body.format-flexpage .singlebutton{
         height:100%;
         overflow-x:hidden;
         overflow-y:auto;
-        position:initial;
+        position:static;
     }
     .activityinstance{
         padding:0.5em 2%;
@@ -678,7 +678,7 @@ li.snap-activity.modtype_folder {
     float:none;
     width:100%;
     position:absolute;
-    top:initial;
+    top: auto;
     bottom:0;
     left:0;
     width:100%;
@@ -824,10 +824,6 @@ div.commands ul.menubar {
     }
 }
 
-/* add text to rename action in menu */
-.editing_title:after {
-    content:attr(title);
-}
 input.titleeditor {
     max-width:100%;
     padding:0.3em;

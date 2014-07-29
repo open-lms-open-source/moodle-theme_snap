@@ -78,7 +78,6 @@ class theme_snap_core_renderer extends toc_renderer {
         }
 
         try {
-            /** @var theme_snap_message_badge_renderer|null $badgerend */
             $badgerend = $PAGE->get_renderer('message_badge');
         } catch (Exception $e) {
             $badgerend = null;
@@ -92,7 +91,7 @@ class theme_snap_core_renderer extends toc_renderer {
             $badgerend = null;
         }
 
-        return ($badgerend);
+        return $badgerend;
     }
 
     /**
@@ -104,10 +103,29 @@ class theme_snap_core_renderer extends toc_renderer {
 
         $badgerend = $this->get_badge_renderer();
         if (empty($badgerend)) {
-            // No valid badge renderer so return null string.
-            return '';
+            return self::render_snap_badge_count();
         }
-        return ($badgerend->badge($USER->id));
+        return $badgerend->badge($USER->id);
+    }
+
+    /**
+     * Print Snap message badge count.
+     * @return string
+     */
+    protected function render_snap_badge_count() {
+        global $USER;
+
+        if ($this->page->theme->settings->messagestoggle == 1
+            && isloggedin()
+            && !isguestuser()
+        ) {
+            $count = theme_snap\local::get_user_unread_message_count($USER->id);
+            if ($count === 0) {
+                return  '';
+            }
+            return html_writer::span($count, 'message_badge_count');
+        }
+        return '';
     }
 
     /**
@@ -115,15 +133,20 @@ class theme_snap_core_renderer extends toc_renderer {
      * @return string
      */
     protected function render_badges() {
+        $mprocs = get_message_processors(true);
+        if (!isset($mprocs['badge'])) {
+            // Badge message processor is not enabled - exit.
+            return null;
+        }
         $badgerend = $this->get_badge_renderer();
         $badges = '';
         if ($badgerend && $badgerend instanceof theme_snap_message_badge_renderer) {
             $badges = '<div class="alert_stream">
                 '.$badgerend->messagestitle().'
-                    <div class="message_badge_container"></div>
+                    <div id="alert_badge_container"></div>
                 </div>';
         }
-        return ($badges);
+        return $badges;
     }
 
     /**
@@ -131,7 +154,7 @@ class theme_snap_core_renderer extends toc_renderer {
      * @return string
      */
     protected function render_messages() {
-        global $CFG, $USER, $OUTPUT, $DB;
+        global $CFG;
 
         if ($this->page->theme->settings->messagestoggle == 0) {
             return '';
@@ -140,67 +163,58 @@ class theme_snap_core_renderer extends toc_renderer {
         $o = '';
         $messagesheading = get_string('messages', 'theme_snap');
         $o = '<h2>'.$messagesheading.'</h2>
-                <div id="snap-personal-menu-messages">';
+                <div id="snap-personal-menu-messages"></div>';
 
-        $messages = \theme_snap\local::get_user_messages($USER->id);
-        if (!empty($messages)) {
-            foreach ($messages as $message) {
-                $url = new moodle_url('/message/index.php', array(
-                    'history' => 0,
-                    'user1' => $message->useridfrom,
-                    'user2' => $message->useridto,
-                ));
-
-                $fromuser = $message->get_fromuser();
-                $userpicture = new user_picture($fromuser);
-                $userpicture->link = false;
-                $userpicture->alttext = false;
-                $userpicture->size = 35;
-                $frompicture = $this->render($userpicture);
-
-                $fromname = format_string(fullname($fromuser));
-
-                $unreadclass = '';
-                if ($message->unread) {
-                    $unreadclass = " snap-unread";
-                }
-                $o .= "<div class=\"snap-media-object$unreadclass\">";
-                $o .= "<a href='$url'>";
-                $o .= $frompicture;
-                $o .= "<div class=\"snap-media-body\">";
-                $o .= "<h3>$fromname</h3>";
-                $o .= "<span class=snap-media-meta>";
-                $o .= $OUTPUT->relative_time($message->timecreated);
-                if ($message->unread) {
-                    $o .= " <span class=snap-unread-marker>".get_string('unread', 'theme_snap')."</span>";
-                }
-                $o .= "</span>";
-                $o .= '<p>'.format_string($message->smallmessage).'</p>';
-                $o .= "</div></a></div>";
-            }
-        } else {
-            $nomessages = get_string('nomessages', 'theme_snap');
-            $o .= "<p class=messages_empty>$nomessages</p>";
-        }
-            $o .= "</div>";
         $messagesbutton = get_string('messaging', 'theme_snap');
-        $o .= '<div class="cta_footer"><a class="btn btn-default" href="'.$CFG->wwwroot.'/message">'.$messagesbutton.'</a></div>
-            </div>';
+        $messageurl = "$CFG->wwwroot/message";
+        $o .= '<div class="text-center">';
+        $o .= '<a class="btn btn-default" href="'.$messageurl.'">'.$messagesbutton.'</a>';
+        $o .= '</div>';
         return $o;
     }
 
+    /**
+     * Return friendly relative time (e.g. "1 min ago", "1 year ago") in a <time> tag
+     * @return string
+     */
     public function relative_time($timeinpast) {
-        $timeago = time() - $timeinpast;
-        $timetext = get_string('ago', 'message', format_time($timeago));
+        $secondsago = time() - $timeinpast;
+        $secondsago = self::simpler_time($secondsago);
+
+        $relativetext = format_time($secondsago);
+        if ($secondsago != 0) {
+            $relativetext = get_string('ago', 'message', $relativetext);
+        }
         $datetime = date(DateTime::W3C, $timeinpast);
-        return '<time datetime="'.$datetime.'" is=relative-time>'.$timetext.'</time>';
+        return html_writer::tag('time', $relativetext, array(
+            'is' => 'relative-time',
+            'datetime' => $datetime)
+        );
     }
 
-    public function simple_time($time) {
+    /**
+     * Reduce the precision of the time e.g. 1 min 10 secs ago -> 1 min ago
+     * @return int
+     */
+    public static function simpler_time($seconds) {
+        if ($seconds > 59) {
+            return round($seconds / 60) * 60;
+        } else {
+            return $seconds;
+        }
+    }
+
+    /**
+     * Return friendly text date (e.g. "Today", "Tomorrow") in a <time> tag
+     * @return string
+     */
+    public function friendly_datetime($time) {
         $timetext = \calendar_day_representation($time);
         $timetext .= ', ' . \calendar_time_representation($time);
         $datetime = date(DateTime::W3C, $time);
-        return '<time datetime="'.$datetime.'">'.$timetext.'</time>';
+        return html_writer::tag('time', $timetext, array(
+            'datetime' => $datetime)
+        );
     }
 
     protected function render_callstoaction() {
@@ -221,13 +235,7 @@ class theme_snap_core_renderer extends toc_renderer {
         }
 
         $o = '<div class="row callstoaction">';
-        if (count($columns) == 3) {
-            $o .= '
-              <div class="col-md-4">'.$columns[0].'</div>
-              <div class="col-md-4">'.$columns[1].'</div>
-              <div class="col-md-4">'.$columns[2].'</div>
-            ';
-        } else if (count($columns) == 2) {
+        if (count($columns) == 2) {
             $o .= '
               <div class="col-md-6">'.$columns[0].'</div>
               <div class="col-md-6">'.$columns[1].'</div>
@@ -247,74 +255,24 @@ class theme_snap_core_renderer extends toc_renderer {
      * @return string
      */
     protected function render_deadlines() {
-        global $CFG, $DB, $OUTPUT;
+        global $CFG;
 
         if ($this->page->theme->settings->deadlinestoggle == 0) {
             return '';
         }
 
-        $o = '<div class="deadlines"><h2>'.get_string('deadlines', 'theme_snap').'</h2>';
+        $deadlinesheading = get_string('deadlines', 'theme_snap');
+        $o = "<h2>$deadlinesheading</h2>";
 
-        // Maximum events to show (note, there is NO maximum for today's events)
-        $maxevents = 5;
+        $o .= '<div id="snap-personal-menu-deadlines"></div>';
 
-        // Get ALL today's events.
-        $start = strtotime(date('Y-m-d'));
-        $end = strtotime(date('Y-m-d').' 23:59:59');
-        $events = \theme_snap\local::duedate_events($start, $end);
-
-        // Get all events from tomorrow onwards.
-        if (count($events)<$maxevents) {
-            $start = strtotime(date('Y-m-d', time()+(60*60*24))); // Tomorrow.
-            $end = time() + (60*60*24*365); // Finish one year from today.
-            $events2 = \theme_snap\local::duedate_events($start, $end);
-            if (!empty($events2)) {
-                // Work out how many events to show (maxevents - number of events for today).
-                $numevents = $maxevents - count($events);
-                // Limit number of events to show.
-                $events2 = array_slice($events2, 0, $numevents);
-            }
-            if (!empty($events)) {
-                // Merge future events with todays events.
-                $events = array_merge($events, $events2);
-            } else {
-                $events = $events2;
-            }
-        }
-
-
-
-        if (!empty($events)) {
-            foreach ($events as $event) {
-                if (!empty($event->modulename)) {
-                    $cm = get_coursemodule_from_instance($event->modulename, $event->instance, $event->courseid);
-                    $url = $CFG->wwwroot.'/mod/'.$event->modulename.'/view.php?id='.$cm->id;
-                    $eventcoursename = format_string($event->coursefullname);
-                    $eventname = format_string($event->name);
-                    $eventtitle = "<small>$eventcoursename / </small> $eventname";
-                    $modimageurl = $OUTPUT->pix_url('icon', $event->modulename);
-                    $modname = get_string('modulename', $event->modulename);
-                    $modimage = '<img src="'.$modimageurl.'" alt="'.s($modname).'" />';
-
-                    $o .= "<div class=\"snap-media-object\">";
-                    $o .= "<a href='$url'>";
-                    $o .= $modimage;
-                    $o .= "<div class=\"snap-media-body\">";
-                    $o .= "<h3>$eventtitle</h3>";
-                    $o .= "<span class=snap-media-meta>";
-                    $o .= $OUTPUT->simple_time($event->timestart);
-                    $o .= "</span></div>";
-                    $o .= "</a></div>";
-                }
-            }
-        } else {
-            $nodeadlines = get_string('nodeadlines', 'theme_snap');
-            $o .= "<div class=message_badge_empty>$nodeadlines</div>";
-        }
-        $o.='<div id="moredeadlines" class="cta_footer"><a class="btn btn-default" href="'.$CFG->wwwroot.'/calendar/view.php?view=month">'.get_string('calendar','calendar').'</a></div>';
-
+        $calurl = $CFG->wwwroot.'/calendar/view.php?view=month';
+        $calendar = get_string('calendar', 'calendar');
+        $o .= '<div class="text-center">';
+        $o .= '<a class="btn btn-default" href="'.$calurl.'">'.$calendar.'</a>';
         $o .= '</div>';
-        return ($o);
+
+        return $o;
     }
 
     /**
@@ -423,8 +381,9 @@ class theme_snap_core_renderer extends toc_renderer {
                 $courselist .= '</div>';
             }
             $courselist .= '</div>'; // Close row.
+
             $menu = get_string('menu', 'theme_snap');
-            echo '<a class=fixy-trigger href="#primary-nav">'.$menu. ' &nbsp; '. $picture. $this->render_badge_count(). '</a>';
+            echo '<a class=fixy-trigger id=js-personal-menu-trigger href="#primary-nav" data-key='.json_encode(sesskey()).'>'.$menu. ' &nbsp; '. $picture. $this->render_badge_count(). '</a>';
             $close = get_string('close', 'theme_snap');
             $viewyourprofile = get_string('viewyourprofile', 'theme_snap');
             $realuserinfo = '';
@@ -449,7 +408,7 @@ class theme_snap_core_renderer extends toc_renderer {
         .$courselist
         .$this->render_callstoaction().'
         <div class="fixy-logout-footer clearfix text-center">
-        <a class="btn btn-default" href="'.s($CFG->wwwroot).'/login/logout.php?sesskey='.sesskey().'">'.$logout.'</a>
+        <a class="btn btn-default logout" href="'.s($CFG->wwwroot).'/login/logout.php?sesskey='.sesskey().'">'.$logout.'</a>
     </div>
 </div>
 </div>';
@@ -490,7 +449,7 @@ class theme_snap_core_renderer extends toc_renderer {
         $modinfo = get_fast_modinfo($COURSE);
         foreach ($modinfo->get_section_info_all() as $section => $thissection) {
             if ($thissection->id == $sectionid) {
-                return ($section);
+                return $section;
             }
         }
         return false;
@@ -763,7 +722,7 @@ HTML;
 
         }
 
-        return ($classes);
+        return $classes;
     }
 
     /**

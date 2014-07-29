@@ -84,10 +84,21 @@ if ($ADMIN->fulltree) {
     $setting = new admin_setting_heading($name, $title, $description);
     $settings->add($setting);
 
-    // Persnal menu deadlines on/off.
+    // Personal menu deadlines on/off.
     $name = 'theme_snap/deadlinestoggle';
     $title = new lang_string('deadlinestoggle', 'theme_snap');
     $description = new lang_string('deadlinestoggledesc', 'theme_snap');
+    $checked = '1';
+    $unchecked = '0';
+    $default = $checked;
+    $setting = new admin_setting_configcheckbox($name, $title, $description, $default, $checked, $unchecked);
+    $setting->set_updatedcallback('theme_reset_all_caches');
+    $settings->add($setting);
+
+    // Personal menu messages on/off.
+    $name = 'theme_snap/messagestoggle';
+    $title = new lang_string('messagestoggle', 'theme_snap');
+    $description = new lang_string('messagestoggledesc', 'theme_snap');
     $checked = '1';
     $unchecked = '0';
     $default = $checked;

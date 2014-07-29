@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Deadlines Controller
+ * Messages Controller
  *
  * @package   theme_snap
  * @copyright Copyright (c) 2013 Moodlerooms Inc. (http://www.moodlerooms.com)
@@ -27,13 +27,13 @@ namespace theme_snap\controller;
 defined('MOODLE_INTERNAL') || die();
 
 /**
- * Handles requests regarding user deadlines.
+ * Handles requests regarding user messages
  *
  * @package   theme_snap
  * @copyright Copyright (c) 2013 Moodlerooms Inc. (http://www.moodlerooms.com)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class deadlines_controller extends controller_abstract {
+class messages_controller extends controller_abstract {
     /**
      * Do any security checks needed for the passed action
      *
@@ -47,9 +47,9 @@ class deadlines_controller extends controller_abstract {
      *
      * @return string
      */
-    public function get_deadlines_action() {
+    public function get_messages_action() {
         return json_encode(array(
-            'html' => \theme_snap\local::deadlines()
+            'html' => \theme_snap\local::messages()
         ));
     }
 }

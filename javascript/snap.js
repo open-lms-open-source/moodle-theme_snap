@@ -50,41 +50,6 @@ function snapInit(){
     }
 
     /**
-     * Test if admin block exists and show link
-     *
-     * @author Stuart Lamour
-     */
-    var testAdminBlock = function(){
-
-        // get admin block via class
-        var settingsblock = $('.block.block_settings');
-        if (!settingsblock.length){
-            return;
-        }
-
-        adminblock = settingsblock[0];
-
-        // get settings block id
-        // add as href
-        var settingsBlockHref = '#' + $(settingsblock).attr('id');
-        $(settingsblock).prepend("<a class='settings-button  snap-action-icon'><i class='icon icon-arrows-01'></i><small>" + M.util.get_string('close', 'theme_snap') + "</small></a>");
-        $('.settings-button').css('display','inline-block').attr('href', settingsBlockHref);
-    };
-
-    /**
-     * setup settings button
-     *
-     * @author Stuart Lamour
-     */
-    var setupSettingsButton = function(){
-        $(document).on("click", ".settings-button", function(e) {
-            var href = this.getAttribute('href');
-            $(href).toggleClass('state-visible');
-            e.preventDefault();
-        });
-    };
-
-    /**
      * move PHP errors into header
      *
      * @author Guy Thomas
@@ -126,6 +91,36 @@ function snapInit(){
             });
         }
     };
+
+
+
+    /**
+     * Convoluted code to add an internal link to the admin block & a close button
+     *
+     *
+     * @author Stuart Lamour (close button) & Mark Neilson (the rest)
+     */
+    var testAdminBlock = function(){
+
+        // get admin block via class
+        var settingsblock = $('.block.block_settings'),
+        adminblock = settingsblock[0];
+        if (!settingsblock.length){
+            return;
+        }
+
+        // add close button for admin block with close text/string from moodle lang file
+        $(settingsblock).prepend("<a class='settings-button  snap-action-icon'><i class='icon icon-arrows-01'></i><small>" + M.util.get_string('close', 'theme_snap') + "</small></a>");
+
+        // get settings block id
+        var settingsBlockHref = '#' + $(settingsblock).attr('id');
+        // add as href for link
+        $('.settings-button').css('display','inline-block').attr('href', settingsBlockHref);
+    };
+
+
+
+
 
     /**
      * Apply responsive video to non HTML5 video elements.
@@ -198,6 +193,7 @@ function snapInit(){
         $('.path-mod-forum tr.discussion td.lastpost').attr('data-cellname', M.util.get_string('forumlastpost', 'theme_snap'));
     };
 
+
     /**
      * get params from hash bang
      * e.g. http://joule2.dev/course/view.php?id=160#section-1&modid-6917 becomes
@@ -242,56 +238,7 @@ function snapInit(){
         }
     };
 
-    /**
-     * show and focus section
-     *
-     * @author Guy Thomas
-     */
-    var showSection = function() {
 
-        // check we are in a course
-        if(window.location.href.indexOf("course/view.php?id") > -1) {
-            $('.course-content ul li.section').removeClass('state-visible');
-
-            // GT MOD 2014-04-30 - we can't do the following, it won't work if we have a module in the section too
-            // $(window.location.hash).addClass('state-visible').focus();
-
-            var hbparams = getHashBangParams(window.location.href);
-            // make sure params suit our needs
-            if (hbparams.section != null){
-                // make desired section visible
-                logger('show section ' + hbparams.section);
-                $('#section-' + hbparams.section).addClass('state-visible').focus();
-
-                if (hbparams.modid == null){
-                    if ((!$('body').hasClass('format-topics') && !$('body').hasClass('format-weeks'))
-                        || !$('body').hasClass('editing')) {
-                        // Scroll to top of page
-                        window.scrollTo(0, 0);
-                    } else {
-                        // Srcoll to section taking into account navbar
-                        scrolltoElement($('#section-' + hbparams.section), false, 0);
-                    }
-                }
-            }
-
-            var visibleChapters = $('.course-content ul li.section').filter(':visible');
-            if (visibleChapters.length < 1) {
-                // show chapter 0
-                $('#section-0').addClass('state-visible').focus();
-            }
-
-            // add current class to the relevant section in toc
-            $('#chapters li').removeClass('current');
-            var currentSectionId = $('.state-visible').attr('id');
-            $('#chapters a[href^="#'+currentSectionId+'"]').parent('li').addClass('current');
-
-            // Need to call this here as video could have been hidden at the point it was made responsive which means
-            // we need to reset width and height now its visible.
-            applyResponsiveVideo();
-
-        }
-    };
 
     /**
      * search course modules
@@ -351,6 +298,7 @@ function snapInit(){
         return (result !== -1);
     };
 
+
     /**
      * Scroll to element on page.
      *
@@ -375,6 +323,7 @@ function snapInit(){
         }
     };
 
+
     /**
      * focus Module on page
      *
@@ -382,7 +331,6 @@ function snapInit(){
      * @param href
      */
     var focusModule = function(href, animscroll){
-
         // hide search box in case we have clicked a module link (can also be called by page load)
         $('#toc-search-input').removeClass('state-visible');
         var ta = href.split('#');
@@ -408,10 +356,12 @@ function snapInit(){
 
         // hide all sections
         $('.course-content ul li.section').removeClass('state-visible');
-
         // make desired section visible
         var targsect = 'section-' + hbparams.section;
         $('#' + targsect).addClass('state-visible');
+        // set as :current in toc
+        $('#chapters li').removeClass('current');
+        $('#chapters a[href="#'+targsect+'"]').parent('li').addClass('current');
 
         // scroll to module
         var targmod = 'module-' + hbparams.modid;
@@ -424,7 +374,7 @@ function snapInit(){
             var searchpin = $('<i id="searchpin" class="icon icon-office-01"></i>');
         }
 
-        $(mod).find('.activityinstance .instancename').prepend(searchpin);
+        $(mod).find('.instancename').prepend(searchpin);
 
         // reset search value
         $('#toc-search-input').val('');
@@ -449,11 +399,210 @@ function snapInit(){
     }
 
     /**
+     * Add deadlines, messages async'ly to the personal menu
+     *
+     * @param key - jsonencoded sesskey
+     *
+     * @author Stuart Lamour
+     */
+    var updatePersonalMenu = function(key){
+        // check if the primary nav is in the url..
+        // not triggering for some reason when you click personal menu button
+        // dosn't seem to be too bad leaving out
+        // if(window.location.href.indexOf("primary-nav") !== -1) {
+
+        // alert('in update personal menu');
+        // primary nav showing so hide the other dom parts
+        $('#page, #moodle-footer').hide(0);
+
+            var deadlinesContainer = $('#snap-personal-menu-deadlines');
+            if($(deadlinesContainer).length) {
+                var deadlines_key = key+"pmDeadlines";
+                var deadlines_key_time = deadlines_key+"time";
+                try {
+                    // Display old content while waiting, if not too old.
+                    var refreshbydate = new Date().getTime() - 1 * 60 * 60 * 1000;
+                    if(window.localStorage[deadlines_key]
+                        && window.localStorage[deadlines_key_time]
+                        && window.localStorage[deadlines_key_time] > refreshbydate) {
+                        logger("using locally stored deadlines");
+                        html = window.localStorage[deadlines_key];
+                        $(deadlinesContainer).html(html);
+                    }
+                    logger("fetching deadlines");
+                    $.ajax({
+                          type: "GET",
+                          async:  true,
+                          url: M.cfg.wwwroot + '/theme/snap/rest.php?action=get_deadlines',
+                          success: function(data){
+                            logger("fetched deadlines");
+                            window.localStorage[deadlines_key] = data.html;
+                            window.localStorage[deadlines_key_time] = new Date().getTime();
+                            $(deadlinesContainer).html(data.html);
+                          }
+                    });
+                } catch(err) {
+                    localStorage.clear();
+                    logger(err);
+                    // $(deadlinesContainer).html("");
+                }
+            } // end deadlines div exists check
+
+            var messagesContainer = $('#snap-personal-menu-messages');
+            if($(messagesContainer).length) {
+                var messages_key = key+"pmMessages";
+                var messages_key_time = messages_key+"time";
+                try {
+                    // Display old content while waiting, if not too old.
+                    var refreshbydate = new Date().getTime() - 10 * 60 * 1000;
+                    if(window.localStorage[messages_key]
+                        && window.localStorage[messages_key_time]
+                        && window.localStorage[messages_key_time] > refreshbydate) {
+                        logger("using locally stored messages");
+                        html = window.localStorage[messages_key];
+                        $(messagesContainer).html(html);
+                    }
+                    logger("fetching messages");
+                    $.ajax({
+                          type: "GET",
+                          async:  true,
+                          url: M.cfg.wwwroot + '/theme/snap/rest.php?action=get_messages',
+                          success: function(data){
+                            logger("fetched messages");
+                            window.localStorage[messages_key] = data.html;
+                            window.localStorage[messages_key_time] = new Date().getTime();
+                            $(messagesContainer).html(data.html);
+                          }
+                    });
+                } catch(err) {
+                    localStorage.clear();
+                    logger(err);
+                    // $(messagesContainer).html("");
+                }
+            } // end messages div exists check
+
+        // } // end primary nav shown check
+    }
+
+    /**
+     * show and focus section
+     *
+     * @author Guy Thomas
+     */
+    var showSection = function() {
+        // check we are in a course
+        if(window.location.href.indexOf("course/view.php?id") > -1) {
+            $('.course-content ul li.section').removeClass('state-visible'); // reset visible section
+            // check we are not searching
+            if(window.location.href.indexOf("modid") < 0) {
+                $(window.location.hash).addClass('state-visible').focus();
+                // or editing
+                if(!$('.editing').length){
+                    window.scrollTo(0, 0);
+                }
+            }
+            //
+            else{
+                var hbparams = getHashBangParams(window.location.href);
+                if (hbparams.section != null){
+                    $('#section-' + hbparams.section).addClass('state-visible').focus();
+                    // if ((!$('body').hasClass('format-topics') && !$('body').hasClass('format-weeks'))|| !$('body').hasClass('editing')) {
+                    if(!$('.editing, .format-topics, .format-weeks').length){
+                            window.scrollTo(0, 0);
+                    } else {
+                        // Scroll to section taking into account navbar
+                        scrolltoElement($('#section-' + hbparams.section), false, 0);
+                    }
+                }
+            }
+            // default niceties to perform
+            var visibleChapters = $('.course-content ul li.section').filter(':visible');
+            //if no visible chapter
+            if (!visibleChapters.length) {
+                // show chapter 0
+                $('#section-0').addClass('state-visible').focus();
+            }
+            // add :current class to the relevant section in toc
+            $('#chapters li').removeClass('current');
+            var currentSectionId = $('.state-visible').attr('id');
+            $('#chapters a[href="#'+currentSectionId+'"]').parent('li').addClass('current');
+
+            // Need to call this here as video could have been hidden at the point it was made responsive which means
+            // we need to reset width and height now its visible.
+            applyResponsiveVideo();
+        }
+    };
+
+    /**
      * Add listeners.
      *
      * just a wrapper for various snippets that add listeners
      */
     var addListeners = function() {
+
+        // be nice - tidy up after ourselves by clearing localstorage on login/logout
+        $(document).on('click','#loginbtn, .logout', function(){
+            localStorage.clear();
+        });
+
+        // Listen for click on chapter links when chapter not being edited.
+        $(document).on("click", 'body:not(.editing) .chapters a, #section_footer a', function(e) {
+            var href = this.getAttribute('href');
+            $('.course-content ul li.section').removeClass('state-visible');
+            // for mobile remove state on click
+            $('#chapters, #appendices').removeClass('state-visible');
+            $(href).addClass('state-visible').focus();
+            if (window.history && window.history.pushState) {
+                history.pushState(null, null, href);
+            } else {
+                location.hash = href;
+            }
+            // add :current class to the relevant section in toc
+            $('#chapters li').removeClass('current');
+            $(this).parent('li').addClass('current');
+
+            // Need to call this here as video could have been hidden at the point it was made responsive which means
+            // we need to reset width and height now its visible.
+            applyResponsiveVideo();
+            e.preventDefault();
+        });
+
+
+        // listen for popstates - back/fwd
+        //this is fragile
+        var lastHash = location.hash;
+        $(window).bind("hashchange popstate", function(e) {
+            var newHash = location.hash;
+            if(newHash !== lastHash){
+                if(window.location.href.indexOf("primary-nav") > -1) {
+                        updatePersonalMenu($('#js-personal-menu-trigger').data('key'));
+                }
+                else{
+                    $('#page, #moodle-footer').show(0);
+                    if(window.location.href.indexOf("course/view.php?id") > -1) {
+                        showSection();
+                    }
+                }
+            }
+            /*
+            if(newHash == lastHash){
+                alert("Same hash");
+            }
+            */
+            //At the end of the func:
+            lastHash = newHash;
+        });
+            /* $(window).bind("popstate", function(e) {
+                    alert(e.type+' triggered');
+                    showSection();
+            });
+            */
+
+
+
+
+
+
 
         // show fixed header on scroll down
         // using headroom js - http://wicky.nillia.ms/headroom.js/
@@ -475,8 +624,10 @@ function snapInit(){
                 notTop : "headroom--not-top"
           }
         });
-        // initialise
-        headroom.init();
+        // when not signed in always show mr-nav?
+        if(!$('.notloggedin').length) {
+            headroom.init();
+        }
 
         // listener for toc search //
         var dataList = $("#toc-searchables").find('a');
@@ -519,57 +670,33 @@ function snapInit(){
             $(this).val('');
         });
 
-        // listener for clicking serach result //
+
+
+        // listener for clicking search results //
         $(document).on("click", "#toc-search-results a", function(e){
             var href = this.getAttribute('href');
             focusModule(href, true);
             e.preventDefault();
         });
 
-        // listen for popstate for back/fwd buttons //
-        $(window).bind("popstate", function() {
-            logger('popstate triggered');
-            showSection();
-        });
-        $(window).bind("hashchange", function() {
-            logger('hashchange triggered');
-            showSection();
-        });
 
-        // Listen for click on chapter links where chapter not being edited.
-        $(document).on("click", 'body:not(.editing) .chapters a', function(e) {
-            var href = this.getAttribute('href');
-            $('.course-content ul li.section').removeClass('state-visible');
-            // for mobile remove state on click
-            $('#chapters, #appendices').removeClass('state-visible');
-            $(href).addClass('state-visible').focus();
-            if (window.history && window.history.pushState) {
-                history.pushState(null, null, href);
-            } else {
-                location.hash = href;
-            }
-            // add current class to the relevant section in toc
-            $('#chapters li').removeClass('current');
-            $(this).parent('li').addClass('current');
 
-            // Need to call this here as video could have been hidden at the point it was made responsive which means
-            // we need to reset width and height now its visible.
-            applyResponsiveVideo();
-            e.preventDefault();
-        });
 
-        // Add toggle class for hide/show activities/resources
+
+        // Add toggle class for hide/show activities/resources - additional to moodle adding dim
         $(document).on("click", '[data-action=hide],[data-action=show]', function() {
              $(this).closest('li.activity').toggleClass('draft');
         });
+
+
 
         // Make cards clickable - data-href for resources
         $(document).on('click', '.snap-resource[data-href]', function(e){
             // stash event trigger
             var trigger = $(e.target),
-                hreftarget = '_self'; // assume web files
+                hreftarget = '_self'; // assume browser can open resource
             // excluse any clicks in the actions menu, on links or forms
-            if($(trigger).closest('.actions, form, a').length === 0) {
+            if(!$(trigger).closest('.actions, form, a').length) {
                 // TODO - add a class in the renderer to set target to blank for none-web docs or external links
                 if($(trigger).closest('.snap-resource').is('.target-blank')){
                     hreftarget = '_blank';
@@ -585,17 +712,32 @@ function snapInit(){
         	$('#chapters, #appendices').addClass('state-visible');
         });
 
-        // Listen for fixy trigger so we can sort out scroll bars (hide all page content).
+        // onclick for toggle of state-visible of admin block
+        $(document).on("click", ".settings-button", function(e) {
+            var href = this.getAttribute('href');
+            $(href).toggleClass('state-visible');
+            e.preventDefault();
+        });
+        /*
+        // Listen for fixy trigger to hide other page content
         $('.fixy-trigger').click(function() {
             $('#page').hide();
             $('#moodle-footer').hide();
         });
+        */
 
-        // Listen for close button so we can sort out scroll bars (show all page content).
-        $('#fixy-close').click(function() {
-            $('#page').show();
-            $('#moodle-footer').show();
+        // Listen for close button to show all page content.
+        $(document).on("click", "#fixy-close", function() {
+            $('#page, #moodle-footer').show();
+
         });
+
+        /*$(document).ready(function () {
+            if(window.location.hash === "primary-nav") {
+                $('#page, #moodle-footer').hide();
+            }
+        });
+        */
 
         // Listen for window resize for videos.
         $(window).resize(function(e) {
@@ -615,22 +757,32 @@ function snapInit(){
     };
 
     // GO !!!!
-    addListeners();
-    testAdminBlock();
-    setupSettingsButton();
-    showPageSectionMod(true);
-    movePHPErrorsToHeader();
-    setForumStrings();
-    polyfills();
+    movePHPErrorsToHeader(); // boring
+    polyfills(); // for none evergreen
+    testAdminBlock(); // dull
+    setForumStrings(); // whatever
+    addListeners(); // essential
+
+    // SL - 24th july 2014 - check we are in a course
+    if(window.location.href.indexOf("course/view.php?id") > -1) {
+        showPageSectionMod(true);
+    }
+
+    // SL - 24th july 2014 - if are looking at the personal menu we need to "fire it up" (flipmode)
+    if(window.location.href.indexOf("primary-nav") > -1) {
+        updatePersonalMenu($('#js-personal-menu-trigger').data('key'));
+    }
+
 
 
     $(window).on('load' , function() {
-        // note we need to call showPageSectionMod again on window load or the page will jump to the top of the page!
-        // this does work, however is there a more elegant fix?
-        window.setTimeout(function(){showPageSectionMod(false);}, 100);
+        // TODO check with guy, unsure this is necessary except for reeeeeefreeeesh/back/fwd...
+        if(window.location.href.indexOf("modid") > -1) {
+            window.setTimeout(function(){showPageSectionMod(false);}, 100);
+        }
 
         // Make video responsive.
         // Note, if you don't do this on load then FLV media gets wrong size.
         applyResponsiveVideo();
     });
-}
+} // end snap init

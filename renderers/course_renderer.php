@@ -305,7 +305,10 @@ class theme_snap_core_course_renderer extends core_course_renderer {
         $actions = array_filter($actions, function($action) {
             return !($action instanceof action_menu_filler);
         });
-        $actions['edit-rename'] = course_get_cm_rename_action($mod, $mod->indent, $sr);
+        $rename = course_get_cm_rename_action($mod, $mod->indent, $sr);
+        $edittitle = get_string('edittitle');
+        $rename = str_replace('</a>', "$edittitle</a>", $rename);
+        $actions['edit-rename'] = $rename;
 
         return $actions;
     }
