@@ -90,7 +90,7 @@ if ($ADMIN->fulltree) {
     $description = new lang_string('deadlinestoggledesc', 'theme_snap');
     $checked = '1';
     $unchecked = '0';
-    $default = $checked;
+    $default = $unchecked;
     $setting = new admin_setting_configcheckbox($name, $title, $description, $default, $checked, $unchecked);
     $setting->set_updatedcallback('theme_reset_all_caches');
     $settings->add($setting);
@@ -101,7 +101,7 @@ if ($ADMIN->fulltree) {
     $description = new lang_string('messagestoggledesc', 'theme_snap');
     $checked = '1';
     $unchecked = '0';
-    $default = $checked;
+    $default = $unchecked;
     $setting = new admin_setting_configcheckbox($name, $title, $description, $default, $checked, $unchecked);
     $setting->set_updatedcallback('theme_reset_all_caches');
     $settings->add($setting);

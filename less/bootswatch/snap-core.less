@@ -370,6 +370,9 @@ input[type="reset"] {
         text-decoration: none;
   }
 }
+.editing .course-content ul.folderview .summary>a:last-of-type {
+    display: none;
+}
 #page-mod-quiz-edit div.question div.content div.points input[type="submit"],
 .section-modchooser-link a,
 .btn,
@@ -1384,10 +1387,11 @@ aside .settings-button{
 .userinfobox {
     border: 0;
 }
-.userinfobox .left,
-.userinfobox .side{
-  width:auto;
-  min-width:110px;
+.userinfobox .left.side {
+    width: 120px;
+}
+.userinfobox .links {
+    width: 20%;
 }
 .form-label .form-shortname{
     display:inline;
@@ -1426,6 +1430,10 @@ aside .settings-button{
             padding-right: 0;
         }
     }
+}
+// These checkboxes are unusual as they have two labels, so we hide one.
+#id_activitycompletionheader .fitem_fcheckbox .fitemtitle label {
+    display: none;
 }
 
 .form-item {

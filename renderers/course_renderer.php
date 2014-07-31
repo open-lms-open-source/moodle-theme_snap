@@ -161,7 +161,7 @@ class theme_snap_core_course_renderer extends core_course_renderer {
                 $modclasses [] = 'unavailable';
             }
 
-            // TODO - can we add completion data
+            // TODO - can we add completion data.
 
             $modclasses [] = 'snap-asset'; // added to stop conflicts in flexpage
             $modclasses [] = 'activity';
@@ -169,7 +169,8 @@ class theme_snap_core_course_renderer extends core_course_renderer {
             $modclasses [] = "modtype_$mod->modname";
             $modclasses [] = $mod->extraclasses;
 
-            $attr['data-type'] = $modtype->type;
+            $snapmodtype = is_string($modtype) ? $modtype : $modtype->type;
+            $attr['data-type'] = $snapmodtype;
             $attr['class'] = implode(' ', $modclasses);
             $attr['id'] = 'module-' . $mod->id;
             if ($modurl = $mod->get_url()) {

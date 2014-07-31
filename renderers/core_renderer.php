@@ -143,7 +143,7 @@ class theme_snap_core_renderer extends toc_renderer {
         if ($badgerend && $badgerend instanceof theme_snap_message_badge_renderer) {
             $badges = '<div class="alert_stream">
                 '.$badgerend->messagestitle().'
-                    <div id="alert_badge_container"></div>
+                    <div class="message_badge_container"></div>
                 </div>';
         }
         return $badges;
