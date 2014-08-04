@@ -15,15 +15,25 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Theme version info
+ * Theme upgrade
  *
  * @package   theme_snap
  * @copyright Copyright (c) 2009 Moodlerooms Inc. (http://www.moodlerooms.com)
  * @license   http://opensource.org/licenses/gpl-3.0.html GNU Public License
  */
 
-defined('MOODLE_INTERNAL') || die;
+function xmldb_theme_snap_upgrade($oldversion) {
+    global $DB;
 
-$plugin->version   = 2014080400;
-$plugin->requires  = 2013111803;
-$plugin->component = 'theme_snap';
+    $dbman = $DB->get_manager();
+
+    if ($oldversion < 2014080400) {
+        if (get_config('core', 'theme') == 'snap') {
+            set_config('deadlinestoggle', 0, 'theme_snap');
+            set_config('messagestoggle', 0, 'theme_snap');
+        }
+        upgrade_plugin_savepoint(true, 2014080400, 'theme', 'snap');
+    }
+
+    return true;
+}

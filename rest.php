@@ -23,8 +23,6 @@
  */
 
 use theme_snap\controller\kernel;
-use theme_snap\controller\deadlines_controller;
-use theme_snap\controller\messages_controller;
 use theme_snap\controller\router;
 
 define('AJAX_SCRIPT', true);
@@ -47,8 +45,24 @@ $PAGE->set_url('/theme/snap/rest.php', array('action' => $action, 'contextid' =>
 
 $router = new router();
 
-$router->add_controller(new deadlines_controller());
-$router->add_controller(new messages_controller());
+// Add controllers automatically.
+$controllerdir = $CFG->dirroot.'/theme/snap/classes/controller';
+$contfiles = scandir($controllerdir);
+foreach ($contfiles as $contfile) {
+    $pattern = '/_controller.php$/i';
+    if (preg_match($pattern, $contfile) !==1) {
+        continue;
+    } else {
+        $classname = '\\theme_snap\\controller\\'.str_ireplace('.php', '', $contfile);
+        if (class_exists($classname)) {
+            $rc = new ReflectionClass($classname);
+            if ($rc->isSubclassOf('\\theme_snap\\controller\\controller_abstract')) {
+                $router->add_controller(new $classname());
+            }
+        }
+    }
+}
+
 
 $kernel = new kernel($router);
 $kernel->handle($action);

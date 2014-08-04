@@ -236,17 +236,17 @@ class toc_renderer extends core_renderer {
         }
 
         // Only show core outcomes if enabled.
-        if (!empty($CFG->core_outcome_enable)) {
+        if (!empty($CFG->core_outcome_enable) && has_capability('moodle/grade:edit', $coursecontext)) {
             $links[] = array(
-                'link' => 'outcome/course.php?contextid='.$coursecontext->id,
+                'link'  => 'outcome/course.php?contextid='.$coursecontext->id,
                 'title' => get_string('outcomes', 'outcome'),
-                'capability' => 'moodle/grade:edit' // Capability required to view this item.
             );
-            if (!is_guest($coursecontext)) {
+        } else if (!empty($CFG->core_outcome_enable) && !is_guest($coursecontext)) {
+            $outcomesets = new \core_outcome\model\outcome_set_repository();
+            if ($outcomesets->course_has_any_outcome_sets($COURSE->id)) {
                 $links[] = array(
-                    'link' => 'outcome/course.php?contextid='.$coursecontext->id.'&action=report_course_user_performance_table',
+                    'link'  => 'outcome/course.php?contextid='.$coursecontext->id.'&action=report_course_user_performance_table',
                     'title' => get_string('report:course_user_performance_table', 'outcome'),
-                    'capability' => '!moodle/course:update' // Capability required to view this item.
                 );
             }
         }

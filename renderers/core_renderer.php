@@ -103,29 +103,9 @@ class theme_snap_core_renderer extends toc_renderer {
 
         $badgerend = $this->get_badge_renderer();
         if (empty($badgerend)) {
-            return self::render_snap_badge_count();
+            return '';
         }
         return $badgerend->badge($USER->id);
-    }
-
-    /**
-     * Print Snap message badge count.
-     * @return string
-     */
-    protected function render_snap_badge_count() {
-        global $USER;
-
-        if ($this->page->theme->settings->messagestoggle == 1
-            && isloggedin()
-            && !isguestuser()
-        ) {
-            $count = theme_snap\local::get_user_unread_message_count($USER->id);
-            if ($count === 0) {
-                return  '';
-            }
-            return html_writer::span($count, 'message_badge_count');
-        }
-        return '';
     }
 
     /**
@@ -235,15 +215,15 @@ class theme_snap_core_renderer extends toc_renderer {
         }
 
         $o = '<div class="row callstoaction">';
-        if (count($columns) == 2) {
+        if (empty($columns)) {
+             return '';
+        } else if (count($columns) == 1) {
+            $o .= '<div class="col-md-12">'.$columns[0].'</div>';
+        } else if (count($columns) == 2) {
             $o .= '
               <div class="col-md-6">'.$columns[0].'</div>
               <div class="col-md-6">'.$columns[1].'</div>
             ';
-        } else if (count($columns) == 1) {
-            $o .= '<div class="col-md-12">'.$columns[0].'</div>';
-        } else {
-             return '';
         }
 
         $o .= '</div>';

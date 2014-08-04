@@ -748,130 +748,61 @@ input[type="text"]+input[type="submit"] {
 }
 
 
-// Calls to action.
-.callstoaction {
-    .message_badge_user_picture{
-        margin-right:1em;
-    }
-    .no-cols{
-        padding-left: 15px;
-        padding-right: 15px;
-    }
-}
+
+// Message badge alerts
 
 .message_badge_message,
 .message_badge_empty {
     border-top: none;
 }
 
-.cta_footer {
-    margin: 1em 0;
-    text-align: left;
-    .btn {
-        margin-left: 0;
+.message_badge_message_subject {
+    padding-right: 0px;
+}
+
+.message_badge_message_close {
+    display: none;
+}
+
+.message_badge_message_text article{
+    font-size:0.9em;
+    font-family: @font-family-serif;
+}
+
+.message_badge_message_content {
+    margin-left: 65px;
+}
+
+/**
+Its pointless using a colour to visually show that the message is read as we can already tell this by the fact the
+read button has been removed and the message text is visible
+**/
+.message_badge_message.dimmed_text{
+    color:#FFFFFF;
+    .message_badge_message_text, .message_badge_message_text a{
+        color:#FFFFFF !important;
     }
 }
 
-.alert_stream, .message_stream {
+.message_badge_user_picture{
+    margin-right: 18px;
+    img {
+        width: 50px;
+    }
+}
 
+.alert_stream {
     .message_badge_container {
-
-        .three-quarters {
-            display:block;
-        }
-
-        header.messagefrom span{
-            font-weight: 100;
-            line-height: 1;
-            margin: 0;
-            padding: 0;
-            font-size: 1.3em;
-            opacity:0.8;
-        }
-
-        footer .snapdate {
-            font-size: 1em !important;
-        }
-
-        .articlebody img {
-            display:inline-block;
-        }
-
-        .articlebody span {
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            max-width: calc(~"100% - 55px");
-            display: inline-block;
-        }
-
-
-        .messagematch{
-            font-family: @font-family-sans-serif;
-        }
-
-        .message_badge_overlay{
-            border:none;
-            width:auto;
-            max-height:inherit;
-            padding:0 0;
-        }
         .message_badge_overlay,
-        .message_badge_message_overlay{
+        .message_badge_message_overlay {
             background-color:transparent;
+            border:none;
+            max-height: none;
         }
-
-
     }
 }
 
-.callstoaction  a.article_link{
-    display:block;
-    padding:0.2em 0.2em 0.2em 0.2em;
-    margin-bottom:1em;
-
-    &:hover{
-        text-decoration:none;
-        background-color:rgba(255,255,255,0.2);
-    }
-
-    .userpicture {
-        margin-right:1em;
-    }
-
-    .snapdate {
-        font-weight: 100;
-        line-height: 1;
-        margin: 0;
-        padding: 0;
-        font-size: 1.3em;
-        opacity:0.8;
-    }
-
-    .snaptime {
-        margin-left:0.5em;
-    }
-
-    .eventcourse{
-        margin-right:2em;
-    }
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+// End of message badge alerts
 
 // -------------------------
 // Layout of moodle/snap DOM structure
@@ -1384,15 +1315,6 @@ aside .settings-button{
     padding: 0;
 }
 
-.userinfobox {
-    border: 0;
-}
-.userinfobox .left.side {
-    width: 120px;
-}
-.userinfobox .links {
-    width: 20%;
-}
 .form-label .form-shortname{
     display:inline;
 }
@@ -2866,27 +2788,9 @@ table#user-grades tr.avg td.cell{
   padding-left:0.25em;
 }
 
-.message_badge_message_text article{
-  font-size:0.9em;
-  font-family: @font-family-serif;
-  padding-left:36px;
-}
-
-.message_badge_urls{
-  padding-left:36px;
-}
 
 
-/**
-Its pointless using a colour to visually show that the message is read as we can already tell this by the fact the
-read button has been removed and the message text is visible
-**/
-.message_badge_message.dimmed_text{
-  color:#dddddd;
-  .message_badge_message_text, .message_badge_message_text a{
-    color:#dddddd !important;
-  }
-}
+
 
 
 

@@ -22,25 +22,6 @@ class local {
 
 
     /**
-     * Get a user's unread message count.
-     *
-     * @param int $userid
-     * @return int
-     */
-
-    public static function get_user_unread_message_count($userid) {
-        global $DB;
-
-        return $DB->count_records_sql("
-            SELECT COUNT(*)
-              FROM {message} m
-        INNER JOIN {user} u ON u.id = m.useridfrom
-             WHERE m.useridto = ?
-               AND contexturl IS NULL
-        ", array($userid));
-    }
-
-    /**
      * Get a user's messages read and unread.
      *
      * @param int $userid
@@ -139,7 +120,8 @@ class local {
      */
     public static function upcoming_deadlines($userid, $maxdeadlines = 5) {
         $userdaystart = usergetmidnight(time());
-        $userdayend = $userdaystart + DAYSECS;
+        $tomorrowstart = $userdaystart + DAYSECS;
+        $userdayend = $tomorrowstart - 1;
         $yearfromnow = $userdaystart + YEARSECS;
 
         $courses = enrol_get_all_users_courses($userid);
@@ -169,7 +151,7 @@ class local {
             return $deadlines;
         }
 
-        $events = calendar_get_events($userdayend, $yearfromnow, $userid, true, $courseids, false);
+        $events = calendar_get_events($tomorrowstart, $yearfromnow, $userid, true, $courseids, false);
         foreach ($events as $key => $event) {
             if (isset($courses[$event->courseid])) {
                 if ($event->eventtype != $skipevent) {

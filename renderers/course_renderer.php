@@ -67,20 +67,7 @@ class theme_snap_core_course_renderer extends core_course_renderer {
         return $output;
     }
 
-    /**
-     * Is this module conditionally available?
-     * @param cm_info $mod
-     * @return bool
-     */
-    protected function mod_conditional(cm_info $mod) {
-        // Not we don't want to apply the conditional class using ->available as this will show a conditional
-        // notice for all activities that are inside a conditional section.
-        return (!empty($mod->conditionscompletion)
-            || !empty($mod->conditionsgrade)
-            || !empty($mod->conditionsfield)
-        );
-    }
-
+    
     /**
      * Get module type
      * Note, if module is a resource, get the actual file type
@@ -154,7 +141,7 @@ class theme_snap_core_course_renderer extends core_course_renderer {
             }
 
             // Is this mod conditional?
-            if ($this->mod_conditional($mod)) {
+            if ($this->is_cm_conditionally_hidden($mod)) {
                 $modclasses [] = 'conditional';
             }
             if (!$mod->available && !$mod->uservisible) {
@@ -254,7 +241,7 @@ class theme_snap_core_course_renderer extends core_course_renderer {
         // TBD! - add something to check if user has met conditions,
         // if so - we probably hide this?
 
-        if ($this->mod_conditional($mod)){
+        if ($this->is_cm_conditionally_hidden($mod)){
             // Conditional Status.
             $output.= "<span class='conditional_info'>".get_string('conditional', 'theme_snap')."</span>";
             $output.= "<div class='availabilityinfo'>".$this->course_section_cm_availability($mod, $displayoptions)."</div>";

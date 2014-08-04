@@ -50,13 +50,11 @@
 }
 .userinfobox {
     width: 100%;
-    border: 1px solid;
-    border-collapse: separate;
     padding: 10px;
 }
 .userinfobox .left,
 .userinfobox .side {
-    width: 100px;
+    width: 120px;
     vertical-align: top;
 }
 .userinfobox .userpicture {
@@ -67,7 +65,7 @@
     vertical-align: top;
 }
 .userinfobox .links {
-    width: 100px;
+    width: 20%;
     padding: 5px;
     vertical-align: bottom;
 }
@@ -86,6 +84,31 @@
     white-space: nowrap;
     vertical-align: top;
     font-weight: bold;
+}
+// Fake responsiveness for table.
+@media (max-width: @screen-xs-max) {
+    .userinfobox {
+        .left.side,
+         .content,
+        .links {
+            display: block;
+            width: 100%;
+        }
+        .username {
+            padding-bottom: 0;
+        }
+        .links {
+            a,
+            input {
+                display: inline-block;
+                margin-right: 1em;
+                margin-bottom: .8em;
+            }
+            br {
+                display: none;
+            }
+        }
+    }
 }
 .groupinfobox {
     .well
