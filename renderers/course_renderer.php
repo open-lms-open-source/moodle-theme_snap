@@ -161,7 +161,9 @@ class theme_snap_core_course_renderer extends core_course_renderer {
             $attr['class'] = implode(' ', $modclasses);
             $attr['id'] = 'module-' . $mod->id;
             if ($modurl = $mod->get_url()) {
-                $attr['data-href'] = $modurl;
+                if($mod->uservisible) {
+                    $attr['data-href'] = $modurl;
+                }
             }
 
             $output .= html_writer::tag('li', $modulehtml, $attr);

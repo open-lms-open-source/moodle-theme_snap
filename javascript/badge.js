@@ -112,6 +112,7 @@ M.snap_message_badge.init_message = function(Y, messageNode) {
         M.snap_message_badge.ignore_message(Y, messageNode.one('.message_badge_ignoreurl').get('href'));
         //messageNode.addClass('message_badge_hidden');
         messageNode.remove(true);
+        M.snap_message_badge.offset--;
         M.snap_message_badge.show_all_read(Y);
     });
     messageNode.one('.message_badge_readurl').on('click', function(e) {
@@ -121,9 +122,9 @@ M.snap_message_badge.init_message = function(Y, messageNode) {
             M.snap_message_badge.populate_messagebody(Y, messageNode, messageNode.one('.message_badge_readurl').get('href'), function(unreadCount) {
                 messageNode.addClass('dimmed_text message_badge_message_opened');
                 M.snap_message_badge.update_unread_count(Y, unreadCount);
-
                 M.snap_message_badge.activeMessageId = messageNode.get('id');
-
+                // decrement offset
+                M.snap_message_badge.offset--;
             });
         }
     });
@@ -182,7 +183,9 @@ M.snap_message_badge.update_unread_count = function(Y, unreadCount) {
 M.snap_message_badge.show_all_read = function(Y){
     // Show all messages read notice
     if (Y.all('.message_badge_messages > .message_badge_message').size() == 0){
-        Y.one('.message_badge_empty').removeClass('message_badge_hidden');
+        if (!Y.one('#badge_moremessages') || Y.one('#badge_moremessages').getStyle('display') == 'none') {
+            Y.one('.message_badge_empty').removeClass('message_badge_hidden');
+        }
     }
 };
 
@@ -295,11 +298,13 @@ M.snap_message_badge.onresponse_messages_html = function(response) {
 
     M.snap_message_badge.totalmessages = response.totalmessages;
 
-    if (M.snap_message_badge.offset === 0) {
+    var existingMessageContainer = Y.one('.alert_stream .message_badge_container .message_badge_container .message_badge_overlay .message_badge_messages');
+    if (!existingMessageContainer) {
         Y.one('.message_badge_container').append(response.messages);
     } else {
         var tmpNode = Y.Node.create('<div></div>').append(response.messages);
-        Y.one('.alert_stream .message_badge_container .message_badge_container .message_badge_overlay .message_badge_messages').append(tmpNode.all('.message_badge_message'));
+        var newMessages = tmpNode.all('.message_badge_message');
+        existingMessageContainer.append(newMessages);
     }
 
     var container = Y.one('.message_badge_container');
@@ -312,8 +317,15 @@ M.snap_message_badge.onresponse_messages_html = function(response) {
     // We must make visible before rendering - messes up positioning
     overlayNode.removeClass('message_badge_hidden');
 
-    // Process all of the messages
-    overlayNode.all('.message_badge_message').each(function(node) {
+    if (newMessages) {
+        // Process the new messages.
+        var procmessages=newMessages;
+    } else {
+        // Process all of the messages.
+        var procmessages=overlayNode.all('.message_badge_message');
+    }
+    // Process messages.
+    procmessages.each(function(node) {
         M.snap_message_badge.init_message(Y, node);
     });
 
