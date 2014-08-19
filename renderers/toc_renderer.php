@@ -49,7 +49,7 @@ class toc_renderer extends core_renderer {
      * @Date 2014-05-23
      */
     protected function toc_progress($section, $course, $perc = false) {
-        global $CFG, $USER;
+        global $CFG, $USER, $OUTPUT;
 
         require_once($CFG->libdir.'/completionlib.php');
 
@@ -68,9 +68,14 @@ class toc_renderer extends core_renderer {
                 return ('<span class="completionstatus percentage">'.$percentage.'</span>');
             } else {
                 if ($sac->progress->total > 0) {
-                    return ('<span class="completionstatus outoftotal">Progress:  '.
-                        $sac->progress->complete.'/'.$sac->progress->total.'</span>'
-                    );
+                    $progress = get_string('progresstotal', 'completion', $sac->progress);
+                    if ($sac->progress->complete === $sac->progress->total) {
+                        $winbadge = $OUTPUT->pix_url('i/completion-auto-y');
+                        $completedstr = s(get_string('completed', 'completion'));
+                        $completed = "<img class=snap-section-complete src='$winbadge' alt='$completedstr' />";
+                    }
+                    $printprogress = "<span class='completionstatus outoftotal'>$completed $progress</span>";
+                    return $printprogress;
                 } else {
                     return ('');
                 }
@@ -86,7 +91,7 @@ class toc_renderer extends core_renderer {
      */
     public function print_course_toc() {
 
-        global $COURSE, $PAGE;
+        global $COURSE, $PAGE, $OUTPUT;
 
         // No access to course, return nothing.
         if (!can_access_course($COURSE)) {
@@ -122,16 +127,18 @@ class toc_renderer extends core_renderer {
         <span><a href="#sections">'.$contents.'</a></span>
         <span><a href="#blocks">'.$appendices.'</a></span>';
 
-        if ($singlepage) {
             $search = get_string('search');
             $o .= '
             <label class="sr-only" for="toc-search-input">Search</label>
             <input id="toc-search-input"  type="text" title="'.s($search).'" placeholder="&#xe0d0;" />
             '.$this->modulesearch();
-        }
-        $o .= '</div>';
 
-        $toc = '<ol id="chapters" class="chapters" role="menu" start="0">';
+        $o .= '</div>';
+        $listlarge = '';
+        if ($course->numsections > 11) {
+            $listlarge = "list-large";
+        }
+        $toc = '<ol id="chapters" class="chapters '.$listlarge.'" role="menu" start="0">';
 
         course_create_sections_if_missing($course, range(0, $course->numsections));
 
@@ -171,6 +178,15 @@ class toc_renderer extends core_renderer {
                     $linkinfo = $this->toc_linkinfo(get_string('conditional', 'theme_snap'));
                 }
             }
+
+            $sectionstring = get_section_name($course, $section);
+            $sectionclass = '';
+            $highlight = '';
+            if (course_get_format($course)->is_section_current($section)) {
+                $sectionclass = 'current';
+                $highlight = ' <small class=highlight-tag>'.get_string('current', 'theme_snap').'</small>';
+            }
+
             if ($outputlink) {
                 if ($singlepage) {
                     $url = '#section-'.$section;
@@ -182,12 +198,13 @@ class toc_renderer extends core_renderer {
                         $url = new moodle_url('/course/view.php', array('id' => $course->id, 'section' => $section));
                     }
                 }
-                $link = html_writer::link($url, get_section_name($course, $section), array('role' => 'menuitem'));
+                $link = html_writer::link($url, $sectionstring, array('role' => 'menuitem', 'class' => $sectionclass));
             } else {
-                $link = get_section_name($course, $section).' '.$this->toc_progress ($thissection, $course);
+                $link = html_writer::tag('span', $sectionstring, array('class' => $sectionclass));
             }
             $progress = $this->toc_progress ($thissection, $course);
-            $li   = '<li>'.$link.$progress.' '.$linkinfo.'</li>';
+
+            $li   = '<li>'.$link.$highlight.$progress.' '.$linkinfo.'</li>';
             $toc .= $li;
         }
 
@@ -368,12 +385,14 @@ class toc_renderer extends core_renderer {
      * @return string
      */
     protected function modulesearch() {
-        global $COURSE;
+        global $CFG, $COURSE;
+
+        $format  = course_get_format($this->page->course);
+        $course  = $format->get_course();
+        $singlepage = (!property_exists($course, 'coursedisplay') || $course->coursedisplay == COURSE_DISPLAY_SINGLEPAGE);
 
         $o = '<div id="toc-search-results"></div>';
         $o .= '<div id="toc-searchables">';
-        $format  = course_get_format($this->page->course);
-        $course  = $format->get_course();
 
         // If course does not have any sections then exit - it can't be a course without sections!!!
         if (!isset($course->numsections)) {
@@ -407,7 +426,12 @@ class toc_renderer extends core_renderer {
             $img = html_writer::tag('img', '', array('src' => $cm->get_icon_url()));
 
             // Create link.
-            $url = '#section-'.$cm->sectionnum.'&modid-'.$cm->id;
+            if ($singlepage && $COURSE->format != 'folderview') {
+                $url = '#section-'.$cm->sectionnum.'&modid-'.$cm->id;
+            } else {
+
+                $url = $CFG->wwwroot.'/course/view.php?id='.$COURSE->id.'&section='.$cm->sectionnum.'#modid-'.$cm->id;
+            }
             $link = html_writer::link($url, $img.' '.$info.' '.$cm->get_formatted_name());
             $o .= $link;
         }

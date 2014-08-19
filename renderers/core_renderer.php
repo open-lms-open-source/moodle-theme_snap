@@ -484,6 +484,9 @@ class theme_snap_core_renderer extends toc_renderer {
         if ($this->page->pagelayout == 'frontpage') {
             $heading .= '<p>' . format_string($this->page->theme->settings->subtitle) . '</p>';
         }
+        if ($this->page->user_is_editing() && $this->page->pagelayout == 'frontpage') {
+            $heading .= '<a class="btn btn-default btn-sm" href="'.$CFG->wwwroot.'/admin/settings.php?section=themesettingsnap#admin-fullname">'.get_string('changefullname', 'theme_snap').'</a>';
+        }
         return $heading;
     }
 
@@ -667,17 +670,21 @@ HTML;
     }
 
     /**
+     * add in additional classes that are used for Snap
      * get rid of YUI stuff so we can style it with bootstrap
      *
      * @param array $additionalclasses
      * @return array|string
      */
     public function body_css_classes(array $additionalclasses = array()) {
-        global $PAGE;
+        global $PAGE, $COURSE;
 
         $classes = parent::body_css_classes($additionalclasses);
         $classes .= $classes == '' ? '' : ' ';
         $classes .= 'device-type-'.$PAGE->devicetypeinuse;
+        if (!empty($this->page->theme->settings->hidenavblock)) {
+            $classes .= ' hide-nav-block';
+        }
 
         // Define the page types we want to purge yui classes from the body  - e.g. local-joulegrader-view,
         // local-pld-view, etc.
@@ -699,7 +706,6 @@ HTML;
             // bootstrap.
             $classes [] = 'yui-bootstrapped';
             $classes = implode(' ', $classes);
-
         }
 
         return $classes;
@@ -740,5 +746,20 @@ HTML;
         $output .= html_writer::tag('div', $this->render($continue) . $this->render($cancel), array('class' => 'buttons'));
         $output .= $this->box_end();
         return $output;
+    }
+
+    /**
+     * Renders an action_menu_link item.
+     *
+     * @param action_menu_link $action
+     * @return string HTML fragment
+     */
+    protected function render_action_menu_link(action_menu_link $action) {
+        if (   stripos($action->url, 'bui_hideid') !== false
+            || stripos($action->url, 'bui_showid') !== false
+        ) {
+            $action->url->set_anchor('blocks');
+        }
+        return (parent::render_action_menu_link($action));
     }
 }

@@ -67,7 +67,7 @@ class theme_snap_core_course_renderer extends core_course_renderer {
         return $output;
     }
 
-    
+
     /**
      * Get module type
      * Note, if module is a resource, get the actual file type
@@ -131,6 +131,8 @@ class theme_snap_core_course_renderer extends core_course_renderer {
                 $modclasses = array('snap-activity');
             } else if (plugin_supports('mod', $mod->modname, FEATURE_MOD_ARCHETYPE) === MOD_ARCHETYPE_RESOURCE) {
                 $modclasses = array('snap-resource');
+            } else if ($mod->modname === 'scorm') {
+                $modclasses = array('snap-resource');
             } else {
                 $modclasses = array('snap-activity');
             }
@@ -150,7 +152,7 @@ class theme_snap_core_course_renderer extends core_course_renderer {
 
             // TODO - can we add completion data.
 
-            $modclasses [] = 'snap-asset'; // added to stop conflicts in flexpage
+            $modclasses [] = 'snap-asset'; // Added to stop conflicts in flexpage.
             $modclasses [] = 'activity';
             $modclasses [] = $mod->modname;
             $modclasses [] = "modtype_$mod->modname";
@@ -161,7 +163,7 @@ class theme_snap_core_course_renderer extends core_course_renderer {
             $attr['class'] = implode(' ', $modclasses);
             $attr['id'] = 'module-' . $mod->id;
             if ($modurl = $mod->get_url()) {
-                if($mod->uservisible) {
+                if ($mod->uservisible) {
                     $attr['data-href'] = $modurl;
                 }
             }
@@ -194,7 +196,6 @@ class theme_snap_core_course_renderer extends core_course_renderer {
      * @return string
      */
     public function course_section_cm($course, &$completioninfo, cm_info $mod, $sectionreturn, $displayoptions = array()) {
-        global $PAGE;
 
         $output = '';
         // We return empty string (because course module will not be displayed at all)
@@ -214,41 +215,40 @@ class theme_snap_core_course_renderer extends core_course_renderer {
         }
 
         $output .= "<div class='clearfix'>";
-        // Start the div for the activity content
+        // Start the div for the activity content.
         $output .= "<div class='activityinstance'>";
         // Display the link to the module (or do nothing if module has no url).
         $cmname = $this->course_section_cm_name($mod, $displayoptions);
         if (!empty($cmname)) {
             $output .= $cmname;
         }
-        // Meta
+        // Meta.
         $output .= "<div class='snap-meta'>";
-        // Activity/resource type
+        // Activity/resource type.
         $modtype = $this->get_mod_type($mod);
         $snapmodtype = is_string($modtype) ? format_string($modtype) : format_string($modtype->type);
-        $output.= "<span class='snap-assettype'>".$snapmodtype."</span>";
+        $output .= "<span class='snap-assettype'>".$snapmodtype."</span>";
 
         if (!empty($mod->groupingid) && has_capability('moodle/course:managegroups', context_course::instance($mod->course))) {
-            // Grouping label
+            // Grouping label.
             $groupings = groups_get_all_groupings($mod->course);
-            $output.= "<span class='snap-groupinglabel'>".format_string($groupings[$mod->groupingid]->name)."</span>";
+            $output .= "<span class='snap-groupinglabel'>".format_string($groupings[$mod->groupingid]->name)."</span>";
 
             // TBD - add a title to show this is the Grouping...
         }
 
-
-        // Draft status - always output, shown via css of parent
-            $output.= "<span class='draft_info'>".get_string('draft', 'theme_snap')."</span>";
+        // Draft status - always output, shown via css of parent.
+            $output .= "<span class='draft_info'>".get_string('draft', 'theme_snap')."</span>";
 
         // TBD! - add something to check if user has met conditions,
         // if so - we probably hide this?
 
-        if ($this->is_cm_conditionally_hidden($mod)){
+        if ($this->is_cm_conditionally_hidden($mod)) {
             // Conditional Status.
-            $output.= "<span class='conditional_info'>".get_string('conditional', 'theme_snap')."</span>";
-            $output.= "<div class='availabilityinfo'>".$this->course_section_cm_availability($mod, $displayoptions)."</div>";
+            $output .= "<span class='conditional_info'>".get_string('conditional', 'theme_snap')."</span>";
+            $output .= "<div class='availabilityinfo'>".$this->course_section_cm_availability($mod, $displayoptions)."</div>";
         }
-        $output.= "</div>"; // close snap-meta
+        $output .= "</div>"; // Close snap-meta.
 
         $contentpart = $this->course_section_cm_text($mod, $displayoptions);
         $output .= $contentpart;
@@ -259,7 +259,7 @@ class theme_snap_core_course_renderer extends core_course_renderer {
         }
         $output .= "</div>";
 
-        // build up edit icons
+        // Build up edit icons.
         $modicons = '';
         if ($this->page->user_is_editing()) {
             $editactions = $this->course_get_cm_edit_actions($mod, $sectionreturn);
@@ -272,14 +272,14 @@ class theme_snap_core_course_renderer extends core_course_renderer {
             $modicons .= $this->course_section_cm_completion($course, $completioninfo, $mod, $displayoptions);
         }
 
-        // add actions menu
-        if($modicons) {
+        // Add actions menu.
+        if ($modicons) {
             $output .= "<div class='actions' role='region' aria-label='actions'>";
             $output .= $modicons;
             $output .= "</div>";
         }
         $output .= "</div>";
-        // close clearfix
+        // Close clearfix.
         return $output;
     }
 

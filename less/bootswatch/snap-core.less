@@ -1,11 +1,19 @@
+// overwrite some global CSS from a turnitin mod
+// see https://github.com/jmcgettrick/MoodleDirectV2/issues/50
+html {
+    -webkit-font-smoothing: auto !important;
+}
+
 // Snap Layout yo...
 // -------------------------
 
 // SHAME -  all that fun moodle reset css
 // -------------------------
 
-// hide that classic 1px gif
-img.spacer {
+// hide that classic 1px & some other fun moodle stuff
+img.spacer,
+.noavailable,
+.clearfloat {
     display: none;
 }
 
@@ -35,10 +43,6 @@ img.spacer {
 .section .activity .contentafterlink,
 .course-content ul.topics li.section .content,
 .course-content ul.weeks li.section .content,
-.course-content ul.weeks li.section .left,
-.course-content ul.weeks li.section .right,
-.course-content ul.topics li.section .left,
-.course-content ul.topics li.section .right,
 #page-course-index-category .generalbox.info,
 .loginbox.onecolumn,
 .loginbox,
@@ -109,7 +113,37 @@ table.boxwidthwide {
 }
 
 
+// tag styles for draft/group/contitional/completion meta data
+.snap-tag(@colour: #ccc) {
+    font-family:@font-family-base;
+    display:inline-block;
+    background-color:@colour;
+    color:#fff;
+    padding:0 2% 0 1%;
+    margin:1px 0.75em;
+    text-transform:lowercase;
+    position:relative;
+    border-radius:0 2px 2px 0;
+    line-height:1.75;
+    // add a little tab arrow to the left ;)
+    &:before {
+        content:"";
+        position:absolute;
+        right:100%;
+        top:0%; // this is necessary!!
+        border:0.85em solid transparent;
+        border-right:0.89em solid @colour;
+    }
+}
 
+.highlight-tag {
+    background-color:#f56363;
+    color: #fff;
+    display:inline-block;
+    padding:0 0.5em;
+    border-radius:2px;
+    line-height:1.5;
+}
 
 
 
@@ -145,8 +179,7 @@ body.ie {
 input:focus,
 textarea:focus,
 select:focus,
-a:focus,
-:focus {
+a:focus{
     outline:0;
 }
 label {
@@ -168,16 +201,8 @@ body {
 table {
     width: 100%;
     font-family: @font-family-base;
-    font-size: initial !important;
+    font-size: @font-size-table;
 }
-/*
-tbody>tr>td,
-tbody>tr>th{
-  line-height:@line-height-base !important;
-  padding-top:4px;
-  padding-bottom:4px;
-}
-*/
 blockquote {
     //    border-left: 5px solid @brand-primary; customisable
     font-size:1em;
@@ -338,7 +363,6 @@ select,
     margin-bottom: 1em;
 }
 
-
 // -------------------------
 // Buttons, faux buttons styling & resets
 // -------------------------
@@ -389,7 +413,7 @@ input[type="text"]+button,
 input[type="text"]+input[type="submit"] {
     padding: 0.25em 1em;
     margin: 0em 0.4em;
-    vertical-align: initial;
+    vertical-align: baseline;
     line-height: 1.5;
 }
 .section-modchooser {
@@ -833,6 +857,9 @@ footer #moodle-footer
     font-size:1em;
 }
 
+
+
+
 // Mr.nav - he's there and fixed to the top of your page
 // -------------------------
 
@@ -1007,6 +1034,7 @@ header#page-header
     	div[role="menubar"]{
     		font-size:0.9em;
     		margin-bottom:0.5em;
+            margin-left:2em;
     		position:relative;
     		> span {
     			margin-right:2%;
@@ -1022,8 +1050,12 @@ header#page-header
     		display:block;
     		font-size:small;
     		color:#999;
-    		line-height:0.9;
+    		line-height:1;
     	}
+        .snap-section-complete {
+            width:1.5em;
+            height:auto;
+        }
 }
 
 
@@ -1041,14 +1073,23 @@ a[href="#sections"] {
 }
 
 // if the course has an image
-.mast-image #course-toc{
-    padding:0.75em 4% 1em;
+.mast-image{
+    > h1 {
+        color:white;
+        text-shadow:1px 1px 3px rgba(0,0,0,0.5);
+    }
+    #course-toc{
+        padding:0.75em 4% 1em;
+    }
 }
 
 #chapters,
 #appendices {
     column-count: 2;
     margin-bottom:0;
+}
+#appendices {
+    margin-left:2em; // to account for chapters numbering margin
 }
 // specific styles for numbered chapters to improve readability
 ol#chapters {
@@ -1092,7 +1133,10 @@ ol#chapters {
     #course-toc div[role="menubar"]>span a{
     	border-bottom:0 !important;
     }
-
+    #page-header {
+        padding-left:0;
+        padding-right:0;
+    }
     #chapters,
     #appendices{
         column-count: 1;
@@ -1101,6 +1145,13 @@ ol#chapters {
     #chapters.state-visible,
     #appendices.state-visible {
     	display:block;
+        position:absolute;
+        z-index:1;
+        background-color:white;
+        margin:0;
+        padding:0 4%;
+        width:100%;
+        padding-bottom:10%;
     }
     #appendices li,
     #chapters li{
@@ -1116,15 +1167,17 @@ ol#chapters {
 
 /* if > tablet size */
 @media screen and (min-width: @screen-sm-min) {
-    #chapters,
-    #appendices{
+    #chapters.list-large{
         column-count: 3;
     }
     #course-toc {
         margin: 1em auto -.5em;
     }
-    .mast-image #course-toc{
-    	margin-top:11%;
+    .mast-image {
+        min-height:32vh;
+        #course-toc{
+            margin-top:11%;
+        }
     }
 }
 
@@ -1188,10 +1241,19 @@ ol#chapters {
 }
 #toc-search-results a{
 	display:block;
+    padding-left: 1em;
 		img {
 			width:24px;
 			height:24px;
+            vertical-align:bottom;
 		}
+    &:first-child {
+        padding-top: .5em;
+    }
+    &:last-child {
+        padding-bottom: 2em;
+    }
+
 }
 
 // * need to handle focus */
@@ -1428,7 +1490,7 @@ http://blog.rodneyrehm.de/archives/34-iOS7-Mobile-Safari-And-Viewport-Units.html
     border-bottom: 0px;
     margin: 0;
     position:relative;
-    .btn {
+    &> .btn {
         position:absolute;
         bottom:1em;
         right:4%;
@@ -1451,6 +1513,9 @@ http://blog.rodneyrehm.de/archives/34-iOS7-Mobile-Safari-And-Viewport-Units.html
     display: inline-block;
     padding: 1em 0.75em;
     margin-top: 2em;
+    & .btn {
+        float: right;
+    }
 }
 
 
@@ -1584,7 +1649,7 @@ http://blog.rodneyrehm.de/archives/34-iOS7-Mobile-Safari-And-Viewport-Units.html
     // color: @brand-primary; customisable
 }
 .coursebox .info .coursename {
-    font-size: @font-size-h3;
+    font-size: @font-size-h4;
 }
 .coursebox .enrolmenticons,
 .coursebox .moreinfo {
@@ -1988,6 +2053,14 @@ http://blog.rodneyrehm.de/archives/34-iOS7-Mobile-Safari-And-Viewport-Units.html
   float:right;
 }
 
+// on front page the forum has extranious options //
+.course-1 {
+    .movediscussion,
+    .displaymode {
+    display:none;
+    }
+}
+
 // -------------------------
 // Forum responsive table
 // -------------------------
@@ -2270,6 +2343,7 @@ table#user-grades tr.avg td.cell{
     #joule-grades-leftcol-wrap,
     table.joule-grades {
         border: none;
+        font-size: @font-size-table;
     }
     table.joule-grades {
         tr.odd td.cell {
@@ -2415,6 +2489,7 @@ table#user-grades tr.avg td.cell{
     .gradeparent{
         table#user-grades {
             border: none;
+            font-size: @font-size-table;
             th {
                 font-size: 13px !important;
                 &.header.userfield[scope="col"],
@@ -2645,7 +2720,15 @@ table#user-grades tr.avg td.cell{
 
 
 
-
+// -------------------------
+// Show legacy file manager file icons with consistent sizes
+// -------------------------
+#page-files-index {
+    img.smallicon {
+        width:24px;
+        height:24px;
+    }
+}
 
 
 
@@ -2658,7 +2741,7 @@ table#user-grades tr.avg td.cell{
 
 // -------------------------
 // The site footer - moodle-footer
-// --------------------------------------------------
+// -------------------------
 
 #moodle-footer {
     margin-top: 2em;
@@ -2856,6 +2939,9 @@ http://css-spinners.com/css/spinner/three-quarters.css
         max-width: 100%;
       }
   }
+  .path-user .userlist .singleselect {
+      width: 100%;
+  }
 }
 
 
@@ -2883,10 +2969,11 @@ http://css-spinners.com/css/spinner/three-quarters.css
     top:100px !important;
     position:fixed !important;
     max-height: 70%;
-
-    @media (max-width: @screen-xs-min) { left:10% !important; width:80% !important; }
-
     overflow-y:auto;
+    @media (max-width: @screen-xs-max) {
+        left: 10% !important;
+        width: 80% !important;
+    }
     .yui-menu-body-scrolled{
       padding:0 0 0 0;
       margin:0 0 0 0;
@@ -2952,11 +3039,28 @@ table th img.iconhelp {
 }
 
 
-@media screen and (max-width: @screen-sm-min) {
+@media screen and (max-width: @screen-xs-max) {
     #page-enrol-users .enrol_user_buttons {
         float: none;
         .singlebutton.enrolusersbutton {
             display:block;
         }
     }
+}
+
+
+
+// -------------------------
+// Reduce font sizes on small screen
+// -------------------------
+
+
+@media screen and (max-width: @screen-xs-max) {
+        #region-main {font-size:0.9em;}
+        h1 {font-size:2.2em;}
+        h2 {font-size:2em;}
+        h3,.sectionname {font-size:1.8em;}
+        h4 {font-size:1.6em;}
+        h5 {font-size:1.4em;}
+        h6 {font-size:1.2em;}
 }

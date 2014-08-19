@@ -319,10 +319,10 @@ M.snap_message_badge.onresponse_messages_html = function(response) {
 
     if (newMessages) {
         // Process the new messages.
-        var procmessages=newMessages;
+        var procmessages = newMessages;
     } else {
         // Process all of the messages.
-        var procmessages=overlayNode.all('.message_badge_message');
+        var procmessages = overlayNode.all('.message_badge_message');
     }
     // Process messages.
     procmessages.each(function(node) {

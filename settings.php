@@ -71,6 +71,15 @@ if ($ADMIN->fulltree) {
     $setting->set_updatedcallback('theme_reset_all_caches');
     $settings->add($setting);
 
+    if (!during_initial_install() && !empty(get_site()->fullname)) {
+        // Site name setting.
+        $name = 'fullname';
+        $title = new lang_string('fullname', 'theme_snap');
+        $description = new lang_string('fullnamedesc', 'theme_snap');
+        $setting = new admin_setting_sitesettext($name, $title, $description, null);
+        $settings->add($setting);
+    }
+
     // Site description setting.
     $name = 'theme_snap/subtitle';
     $title = new lang_string('subtitle', 'theme_snap');
@@ -82,6 +91,16 @@ if ($ADMIN->fulltree) {
     $title = new lang_string('menusandnavheading', 'theme_snap');
     $description = new lang_string('menusandnavheadingdesc', 'theme_snap');
     $setting = new admin_setting_heading($name, $title, $description);
+    $settings->add($setting);
+
+    // Hide navigation block.
+    $name = 'theme_snap/hidenavblock';
+    $title = new lang_string('hidenavblock', 'theme_snap');
+    $description = new lang_string('hidenavblockdesc', 'theme_snap');
+    $checked = '1';
+    $unchecked = '0';
+    $default = $unchecked;
+    $setting = new admin_setting_configcheckbox($name, $title, $description, $default, $checked, $unchecked);
     $settings->add($setting);
 
     // Personal menu deadlines on/off.
@@ -149,4 +168,6 @@ if ($ADMIN->fulltree) {
     $setting = new admin_setting_configtextarea($name, $title, $description, $default);
     $setting->set_updatedcallback('theme_reset_all_caches');
     $settings->add($setting);
+
+
 }

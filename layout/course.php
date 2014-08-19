@@ -1,8 +1,8 @@
-<?php 
+<?php
 include(__DIR__.'/header.php'); ?>
 
 <!-- moodle js hooks -->
-<div id="page">
+<div id="page" class="snap-course-layoutfile">
 <div id="page-content">
 
 <!--
@@ -12,13 +12,13 @@ include(__DIR__.'/header.php'); ?>
 <header id="page-header" class="clearfix">
 <nav class="breadcrumb-nav" role="navigation" aria-label="breadcrumb"><?php echo $OUTPUT->navbar(); ?></nav>
 
-<div id="page-mast" 
-<?php if (!empty($snapcourseimage)) : ?> 
-class="mast-image" 
+<div id="page-mast"
+<?php if (!empty($snapcourseimage)) : ?>
+class="mast-image"
 <?php endif;?>
 >
-<?php 
-echo $OUTPUT->page_heading(); 
+<?php
+echo $OUTPUT->page_heading();
 echo $OUTPUT->course_header();
 echo $OUTPUT->print_course_toc();
 ?>

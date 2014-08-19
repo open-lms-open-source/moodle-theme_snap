@@ -101,11 +101,13 @@ li.section.main {
     white-space:normal !important;
 }
 // overwrite moodle not showing title for section 0
-.sectionname.accesshide{
+
+#section-0 .sectionname.accesshide{
     position:relative;
     left:0;
     font-weight:300;
 }
+
 // except in folder view where the name is spat out twice on single pages
 // this is a folderview bug....
 .folderview .sectionname.accesshide{
@@ -122,6 +124,41 @@ li.section.main {
     p {
         margin-bottom:1.6em;
     }
+}
+
+// the bulb, the eye and the dragything
+.course-content ul.weeks li.section .left,
+.course-content ul.weeks li.section .right,
+.course-content ul.topics li.section .left,
+.course-content ul.topics li.section .right {
+    &.snap-section-editing {
+        max-width: 100%;
+        min-width: 0;
+        width: auto;
+        padding: 0;
+        margin: 0 auto;
+        float:none;
+        display:block;
+        text-align:left;
+        margin-top:-1em;
+        a, span {
+            display:inline-block;
+            width:auto;
+            padding:0 0.3em;
+        }
+        img.icon {
+            margin:0;
+            padding:0;
+            vertical-align: baseline;
+        }
+        .section-handle {
+            float:left;
+        }
+}
+}
+// get rid of js cursor style applied to the whole commands area
+.snap-section-editing[style]{
+    cursor:default !important;
 }
 
 
@@ -141,8 +178,6 @@ li.section.main {
     width: 0;
     overflow:hidden;
 }
-
-/* Show sections editing or clicked */
 
 .editing .course-content > ul li.section,
 .course-content > ul li.section.state-visible {
@@ -182,8 +217,7 @@ body.format-flexpage .singlebutton{
 // Reset moodle css mess
 // -------------------------
 
-.editing .section .activity .contentwithoutlink,
-.editing .section .activity .activityinstance{
+.editing .section .activity .contentwithoutlink{
         padding-right:0;
 
 }
@@ -268,7 +302,7 @@ body.format-flexpage .singlebutton{
             width:75px;
             height:75px;
         }
-        a {
+        > a {
             color:#666665;
         }
     }
@@ -309,27 +343,14 @@ we do this by default in snap, so hide moodle version */
 .draft_info,
 .activityinstance .conditional_info,
 .snap-groupinglabel,
-.snap-unread-marker {
-    font-family:@font-family-base;
-    display:inline-block;
-    background-color:#ccc;
-    color:#fff;
-    padding:0 2% 0 1%;
-    margin:1px 0.75em;
-    text-transform:lowercase;
-    position:relative;
-    border-radius:0 2px 2px 0;
-    line-height:1.75;
-    // add a little tab arrow to the right ;)
-    &:before {
-        content:"";
-        position:absolute;
-        right:100%;
-        top:0%; // this is necessary!!
-        border:0.85em solid transparent; // small font size
-        border-right:0.89em solid #ccc;
-    }
+.snap-unread-marker,
+.sectiontag {
+    .snap-tag;
 }
+.sectiontag {
+    margin-left:1.4em;
+}
+
 
 // hide draft tag, unless asset has class draft (can be added by js)
 .draft_info {
@@ -373,10 +394,6 @@ we do this by default in snap, so hide moodle version */
         padding:0;
     }
 }
-
-
-
-
 
 
 
@@ -497,7 +514,8 @@ li.snap-resource.modtype_url{
 
 li.snap-resource.modtype_book,
 li.snap-resource.modtype_page,
-li.snap-resource.modtype_imscp{
+li.snap-resource.modtype_imscp,
+li.snap-resource.modtype_scorm{
     background-color:#6BC075;
     background-image:url([[pix:theme|book]]);
 }
@@ -505,7 +523,8 @@ li.snap-resource.modtype_imscp{
 li.snap-resource.modtype_page {
     background-image:url([[pix:theme|page]]);
 }
-li.snap-resource.modtype_imscp{
+li.snap-resource.modtype_imscp,
+li.snap-resource.modtype_scorm{
     background-image:url([[pix:theme|scorm]]);
 }
 
@@ -549,6 +568,16 @@ li.snap-activity {
     }
     .activityicon {
         margin-right:3%;
+    }
+    .activityinstance > a{
+        display:block;
+        .clearfix;
+        /*.instancename:after {
+            content: "s";
+            font-family: "line-icons";
+            float:right;
+
+        }*/
     }
 }
 
@@ -701,6 +730,22 @@ li.snap-activity.modtype_folder {
 .autocompletion {
     float:right;
     padding:0 4%;
+}
+span.autocompletion img,
+form.togglecompletion input {
+    width: 30px;
+    display: inline;
+    position: relative;
+    transform: scale(0.75);
+
+}
+form.togglecompletion input {
+    border-radius:50%;
+    box-shadow:0 2px 5px 0 rgba(0, 0, 0, 0.26);
+}
+form.togglecompletion input:hover {
+    transform: scale(1.04);
+    transition: transform .3s;
 }
 
 /* add bg colour for actions when editing */
@@ -883,6 +928,62 @@ span.editinstructions {
             position:relative;
             left:0;
             font-weight:300;
+        }
+    }
+}
+
+// -------------------------
+// Course completion settings page.
+// -------------------------
+#page-course-completion {
+    .mform .fcontainer .fitem_fcheckbox {
+        display:flex;
+
+        .fitemtitle {
+            order:2;
+        }
+        .fcheckbox {
+            order:1;
+            margin-right:1em;
+        }
+        .fcheckbox input {
+            margin:0 0;
+        }
+    }
+}
+
+// -------------------------
+// Course recent activity icons - set size to same as avatars.
+// -------------------------
+#page-course-recent {
+    img.icon.smallicon{
+        width:35px !important;
+        height:35px !important;
+    }
+
+    #region-main td.userpicture a{
+        margin-left:4px;
+    }
+}
+
+// -------------------------
+// Course participants page.
+// -------------------------
+@media screen and (max-width: @screen-sm-max) {
+    .userlist {
+        table.controls tr td.right {
+            text-align:left;
+        }
+        table.controls tr td {
+            padding:0 0 1em 0 !important;
+        }
+        table.controls tr td:empty {
+            display: none;
+        }
+        table.controls tr td,
+        .singleselect{
+            display:block;
+            width:auto;
         }
     }
 }

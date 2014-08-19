@@ -1,5 +1,3 @@
-$(document).ready(snapInit);
-
 /**
  * Main initialise function for snap theme
  *
@@ -92,7 +90,59 @@ function snapInit(){
         }
     };
 
+    var applyBlockHash = function(){
 
+        // Add block hash to add block form.
+        $('.block_adminblock form').each(function(){
+            $(this).attr('action', $(this).attr('action') + '#blocks');
+        });
+
+        if (location.hash != ''){
+            return;
+        }
+
+        var urlParams = getURLParams(location.href);
+
+        // If calendar navigation has been clicked then go back to calendar
+        if (typeof(urlParams['time']) != 'undefined'){
+            location.hash = 'blocks';
+            if ($('.block_calendar_month')) {
+                scrolltoElement($('.block_calendar_month'), true);
+            }
+        }
+
+        // If block configuration / deletion selected then add blocks hash to form action.
+        var paramchecks = ['bui_deleteid', 'bui_editid'];
+        var applyhashtoform = false;
+        for (var p in paramchecks){
+            var param = paramchecks[p];
+            if (typeof(urlParams[param]) != 'undefined'){
+                applyhashtoform = true;
+                break;
+            }
+        }
+        // URL whitelist for applying hash to form.
+        var urlstohash = [
+            'blocks/collect/view.php'
+        ];
+        for (var u in urlstohash){
+            var url = urlstohash[u];
+            if (location.href.indexOf(url) > -1){
+                applyhashtoform = true;
+            }
+        }
+
+        // If required, apply #blocks hash to form action - this is so that on submitting form it returns to course
+        // page on blocks tab.
+        if (applyhashtoform){
+            $('form').each(function(){
+                // Only apply the blocks hash if a hash is not already present in url.
+                if ($(this).attr('action').indexOf('#') == -1){
+                    $(this).attr('action', $(this).attr('action') + '#blocks');
+                }
+            });
+        }
+    }
 
     /**
      * Convoluted code to add an internal link to the admin block & a close button
@@ -117,10 +167,6 @@ function snapInit(){
         // add as href for link
         $('.settings-button').css('display','inline-block').attr('href', settingsBlockHref);
     };
-
-
-
-
 
     /**
      * Apply responsive video to non HTML5 video elements.
@@ -193,6 +239,30 @@ function snapInit(){
         $('.path-mod-forum tr.discussion td.lastpost').attr('data-cellname', M.util.get_string('forumlastpost', 'theme_snap'));
     };
 
+    /**
+     * Get all url parameters from href
+     * @param href
+     */
+    var getURLParams = function(href) {
+        var ta = href.split('?');
+        if (ta.length < 2) {
+            return false; // No url params
+        }
+        var href = ta[1];
+        var ta = href.split('#');
+        href = ta[0];
+        var items = href.split('&');
+        var params = [];
+        for (var i = 0; i < items.length; i++){
+            var item = items[i];
+
+            var ta = item.split('=');
+            var key = ta[0];
+            var val = ta[1];
+            params[key] = val;
+        }
+        return (params);
+    }
 
     /**
      * get params from hash bang
@@ -237,8 +307,6 @@ function snapInit(){
             focusModule(window.location.href, animscroll);
         }
     };
-
-
 
     /**
      * search course modules
@@ -298,7 +366,6 @@ function snapInit(){
         return (result !== -1);
     };
 
-
     /**
      * Scroll to element on page.
      *
@@ -308,6 +375,9 @@ function snapInit(){
      * @return void
      */
     var scrolltoElement = function(el, animate, ms){
+        if (!el.length){
+            return;
+        }
         if (ms == null){
             ms = 1000;
         }
@@ -323,6 +393,24 @@ function snapInit(){
         }
     };
 
+    /**
+     * Scroll to a module.
+     * @param modid
+     * @param animscroll
+     */
+    var scrollToModule = function(modid, animscroll) {
+        var targmod = 'module-' + modid;
+        // http://stackoverflow.com/questions/6677035/jquery-scroll-to-element
+        var mod = $("#" + targmod);
+        scrolltoElement(mod, animscroll);
+
+        var searchpin = $("#searchpin");
+        if (!searchpin.length){
+            var searchpin = $('<i id="searchpin" class="icon icon-office-01"></i>');
+        }
+
+        $(mod).find('.instancename').prepend(searchpin);
+    }
 
     /**
      * focus Module on page
@@ -339,8 +427,27 @@ function snapInit(){
         }
 
         var hbparams = getHashBangParams(href);
+        if (!hbparams.section){
+            var urlParams = getURLParams(href);
+            var section = null;
+            if (typeof(urlParams['section']) !== 'undefined'){
+                var section = urlParams.section;
+                if ($('body').hasClass('format-folderview')) {
+                    if (!$('#section-' + section).hasClass('expanded')) {
+                        $('#section-' + section + ' a.foldertoggle')[0].click();
+                    }
+                }
+                scrollToModule(hbparams.modid, animscroll);
+
+                $('#toc-search-input').val('');
+
+                $("#toc-search-results").html('');
+
+                return;
+            }
+        }
         if (!hbparams.section || !hbparams.modid){
-            // error - no sction or mod
+            // error - no section or mod
             return;
         }
 
@@ -361,20 +468,10 @@ function snapInit(){
         $('#' + targsect).addClass('state-visible');
         // set as :current in toc
         $('#chapters li').removeClass('current');
-        $('#chapters a[href="#'+targsect+'"]').parent('li').addClass('current');
+        $('#chapters a[href="#' + targsect + '"]').parent('li').addClass('current');
 
         // scroll to module
-        var targmod = 'module-' + hbparams.modid;
-        // http://stackoverflow.com/questions/6677035/jquery-scroll-to-element
-        var mod = $("#" + targmod);
-        scrolltoElement(mod, animscroll);
-
-        var searchpin = $("#searchpin");
-        if (!searchpin.length){
-            var searchpin = $('<i id="searchpin" class="icon icon-office-01"></i>');
-        }
-
-        $(mod).find('.instancename').prepend(searchpin);
+        scrollToModule(hbparams.modid, animscroll);
 
         // reset search value
         $('#toc-search-input').val('');
@@ -417,8 +514,8 @@ function snapInit(){
 
             var deadlinesContainer = $('#snap-personal-menu-deadlines');
             if($(deadlinesContainer).length) {
-                var deadlines_key = key+"pmDeadlines";
-                var deadlines_key_time = deadlines_key+"time";
+                var deadlines_key = key + "pmDeadlines";
+                var deadlines_key_time = deadlines_key + "time";
                 try {
                     // Display old content while waiting, if not too old.
                     var refreshbydate = new Date().getTime() - 1 * 60 * 60 * 1000;
@@ -433,7 +530,7 @@ function snapInit(){
                     $.ajax({
                           type: "GET",
                           async:  true,
-                          url: M.cfg.wwwroot + '/theme/snap/rest.php?action=get_deadlines',
+                          url: M.cfg.wwwroot + '/theme/snap/rest.php?action=get_deadlines&contextid=' + M.cfg.context,
                           success: function(data){
                             logger("fetched deadlines");
                             window.localStorage[deadlines_key] = data.html;
@@ -450,8 +547,8 @@ function snapInit(){
 
             var messagesContainer = $('#snap-personal-menu-messages');
             if($(messagesContainer).length) {
-                var messages_key = key+"pmMessages";
-                var messages_key_time = messages_key+"time";
+                var messages_key = key + "pmMessages";
+                var messages_key_time = messages_key + "time";
                 try {
                     // Display old content while waiting, if not too old.
                     var refreshbydate = new Date().getTime() - 10 * 60 * 1000;
@@ -466,7 +563,7 @@ function snapInit(){
                     $.ajax({
                           type: "GET",
                           async:  true,
-                          url: M.cfg.wwwroot + '/theme/snap/rest.php?action=get_messages',
+                          url: M.cfg.wwwroot + '/theme/snap/rest.php?action=get_messages&contextid=' + M.cfg.context,
                           success: function(data){
                             logger("fetched messages");
                             window.localStorage[messages_key] = data.html;
@@ -525,7 +622,7 @@ function snapInit(){
             // add :current class to the relevant section in toc
             $('#chapters li').removeClass('current');
             var currentSectionId = $('.state-visible').attr('id');
-            $('#chapters a[href="#'+currentSectionId+'"]').parent('li').addClass('current');
+            $('#chapters a[href="#' + currentSectionId + '"]').parent('li').addClass('current');
 
             // Need to call this here as video could have been hidden at the point it was made responsive which means
             // we need to reset width and height now its visible.
@@ -567,7 +664,6 @@ function snapInit(){
             e.preventDefault();
         });
 
-
         // listen for popstates - back/fwd
         //this is fragile
         var lastHash = location.hash;
@@ -584,25 +680,10 @@ function snapInit(){
                     }
                 }
             }
-            /*
-            if(newHash == lastHash){
-                alert("Same hash");
-            }
-            */
+
             //At the end of the func:
             lastHash = newHash;
         });
-            /* $(window).bind("popstate", function(e) {
-                    alert(e.type+' triggered');
-                    showSection();
-            });
-            */
-
-
-
-
-
-
 
         // show fixed header on scroll down
         // using headroom js - http://wicky.nillia.ms/headroom.js/
@@ -670,8 +751,6 @@ function snapInit(){
             $(this).val('');
         });
 
-
-
         // listener for clicking search results //
         $(document).on("click", "#toc-search-results a", function(e){
             var href = this.getAttribute('href');
@@ -679,16 +758,10 @@ function snapInit(){
             e.preventDefault();
         });
 
-
-
-
-
         // Add toggle class for hide/show activities/resources - additional to moodle adding dim
         $(document).on("click", '[data-action=hide],[data-action=show]', function() {
              $(this).closest('li.activity').toggleClass('draft');
         });
-
-
 
         // Make cards clickable - data-href for resources
         $(document).on('click', '.snap-resource[data-href]', function(e){
@@ -706,10 +779,9 @@ function snapInit(){
             }
         });
 
-
         // Listener for small screen showing of chapters & appendicies.
         $(document).on("click", '#course-toc div[role="menubar"] a', function(e) {
-        	$('#chapters, #appendices').addClass('state-visible');
+        	$('#chapters, #appendices').toggleClass('state-visible');
         });
 
         // onclick for toggle of state-visible of admin block
@@ -731,13 +803,6 @@ function snapInit(){
             $('#page, #moodle-footer').show();
 
         });
-
-        /*$(document).ready(function () {
-            if(window.location.hash === "primary-nav") {
-                $('#page, #moodle-footer').hide();
-            }
-        });
-        */
 
         // Listen for window resize for videos.
         $(window).resize(function(e) {
@@ -762,6 +827,7 @@ function snapInit(){
     testAdminBlock(); // dull
     setForumStrings(); // whatever
     addListeners(); // essential
+    applyBlockHash(); // change location hash if necessary
 
     // SL - 24th july 2014 - check we are in a course
     if(window.location.href.indexOf("course/view.php?id") > -1) {
@@ -773,8 +839,6 @@ function snapInit(){
         updatePersonalMenu($('#js-personal-menu-trigger').data('key'));
     }
 
-
-
     $(window).on('load' , function() {
         // TODO check with guy, unsure this is necessary except for reeeeeefreeeesh/back/fwd...
         if(window.location.href.indexOf("modid") > -1) {
@@ -785,4 +849,5 @@ function snapInit(){
         // Note, if you don't do this on load then FLV media gets wrong size.
         applyResponsiveVideo();
     });
+
 } // end snap init

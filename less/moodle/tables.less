@@ -1,5 +1,7 @@
 table.flexible,
-.generaltable {
+.generaltable,
+// Added .path-grade-export table to accommodate MDL-46806
+.path-grade-export table {
     .table;
 }
 
@@ -94,6 +96,13 @@ table#listdirectories {
             border: 1px solid #e5e5e5;
         }
     }
+}
+
+// This makes the table scrollable - it might be better to fix this with something like tablesaw.
+.path-grade-export table {
+    display:block;
+    max-width:100%;
+    overflow-y:auto;
 }
 
 #grade_edit_tree_table td {

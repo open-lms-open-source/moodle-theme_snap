@@ -239,7 +239,7 @@ class snap_shared extends renderer_base {
      * @return void
      */
     public static function page_requires_js() {
-        global $PAGE;
+        global $PAGE, $COURSE;
         $PAGE->requires->jquery();
         $PAGE->requires->strings_for_js(array(
             'close',
@@ -252,6 +252,13 @@ class snap_shared extends renderer_base {
             'forumlastpost',
             'more'
         ), 'theme_snap');
+
+        $module = array(
+            'name' => 'theme_snap_core',
+            'fullpath' => '/theme/snap/javascript/module.js'
+        );
+
+        $PAGE->requires->js_init_call('M.theme_snap.core.init', array('courseid' => $COURSE->id), false, $module);
     }
 
     /**

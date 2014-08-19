@@ -48,68 +48,70 @@
 .userlist table.controls .right {
     text-align: right;
 }
+
 .userinfobox {
-    width: 100%;
-    padding: 10px;
-}
-.userinfobox .left,
-.userinfobox .side {
-    width: 120px;
-    vertical-align: top;
-}
-.userinfobox .userpicture {
-    width: 100px;
-    height: 100px;
-}
-.userinfobox .content {
-    vertical-align: top;
-}
-.userinfobox .links {
-    width: 20%;
-    padding: 5px;
-    vertical-align: bottom;
-}
-.userinfobox .links a {
-    display: block;
-}
-.userinfobox .list td {
-    padding: 3px;
-}
-.userinfobox .username {
-    padding-bottom: 20px;
-    font-weight: bold;
-}
-.userinfobox td.label {
-    text-align: right;
-    white-space: nowrap;
-    vertical-align: top;
-    font-weight: bold;
-}
-// Fake responsiveness for table.
-@media (max-width: @screen-xs-max) {
-    .userinfobox {
-        .left.side,
-         .content,
-        .links {
-            display: block;
-            width: 100%;
+    border-bottom: 1px solid #eee;
+    margin-bottom: @table-cell-padding;
+    .left.side {
+        width: 60px;
+        display: inline-block;
+    }
+    .content {
+        width: ~"calc(100% - 70px)";
+        display: inline-block;
+    }
+    .links {
+        display: block;
+        padding-left: 64px;
+    }
+    .left.side {
+        vertical-align: top;
+    }
+    .userpicture {
+        width: 50px;
+        height: 50px;
+    }
+    .username {
+        font-size: @font-size-h5;
+    }
+    .content {
+        vertical-align: top;
+        padding-bottom: @table-cell-padding;
+    }
+    .links {
+        br {
+            display: none;
         }
-        .username {
-            padding-bottom: 0;
-        }
-        .links {
-            a,
-            input {
-                display: inline-block;
-                margin-right: 1em;
-                margin-bottom: .8em;
-            }
-            br {
-                display: none;
-            }
+        a {
+            display: inline-block;
+            margin-bottom: .8em;
+            margin-right: 1em;
         }
     }
 }
+// Increase the user image on bigger screens
+@media (min-width: @screen-xs-min) {
+    .userinfobox {
+        .left.side {
+            width: 120px;
+        }
+        .userpicture {
+            width: 100px;
+            height: 100px;
+            margin-top: @table-cell-padding;
+        }
+        .content {
+            width: ~"calc(100% - 130px)";
+        }
+        .username {
+            font-size: @font-size-h4;
+        }
+        .links {
+            padding-left: 124px;
+        }
+    }
+}
+
 .groupinfobox {
     .well
 }

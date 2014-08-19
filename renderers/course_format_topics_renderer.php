@@ -38,6 +38,92 @@ class theme_snap_format_topics_renderer extends format_topics_renderer {
         return (snap_shared::get_nav_links($course, $sections, $sectionno));
     }
 
+
+    /**
+     * WARNING DUPLICATED CODE: Duped in course_format_weeks_renderer.php - could be fixed with PHP traits when snap
+     * targets Moodle 2.7 (2.7 has a minimum requirement of PHP 5.4 which gives us the traits feature)
+     *
+     * Generate the display of the header part of a section before
+     * course modules are included
+     *
+     * @param stdClass $section The course_section entry from DB
+     * @param stdClass $course The course entry from DB
+     * @param bool $onsectionpage true if being printed on a single-section page
+     * @param int $sectionreturn The section to return to after an action
+     * @return string HTML to output.
+     */
+    protected function section_header($section, $course, $onsectionpage, $sectionreturn=null) {
+        global $PAGE;
+
+        $o = '';
+        $sectionstyle = '';
+        $iscurrent = false;
+
+        if ($section->section != 0) {
+            // Only in the non-general sections.
+            if (!$section->visible) {
+                $sectionstyle = ' hidden';
+            } else if (course_get_format($course)->is_section_current($section)) {
+                $sectionstyle = ' current';
+                $iscurrent = true;
+            }
+        }
+
+        $o .= html_writer::start_tag('li', array('id' => 'section-'.$section->section,
+            'class' => 'section main clearfix'.$sectionstyle, 'role' => 'region',
+            'aria-label' => get_section_name($course, $section)));
+
+        // Ok, in testing left content is actually empty...??
+        $leftcontent = $this->section_left_content($section, $course, $onsectionpage);
+        $rightcontent = $this->section_right_content($section, $course, $onsectionpage);
+        $rightcontent .= $leftcontent;
+        $rightcontent = preg_replace("/<br\W*\/?>/", "\n", $rightcontent);
+
+        $o .= html_writer::start_tag('div', array('class' => 'content'));
+
+        // When not on a section page, we display the section titles except the general section if null.
+
+        $hasnamenotsecpg = (!$onsectionpage && ($section->section != 0 || !is_null($section->name)));
+
+        // When on a section page, we only display the general section title, if title is not the default one.
+        $hasnamesecpg = ($onsectionpage && ($section->section == 0 && !is_null($section->name)));
+
+        $classes = ' accesshide';
+        if ($hasnamenotsecpg || $hasnamesecpg) {
+            $classes = '';
+        }
+
+        $sectiontitle = $this->section_title($section, $course);
+
+        $o .= $this->output->heading($sectiontitle, 3, 'sectionname' . $classes);
+
+        // Editing commands.
+        $o .= html_writer::tag('div', $rightcontent, array(
+                'class' => 'left right side snap-section-editing',
+                'role' => 'region',
+                'aria-label' => 'topic actions',
+            )
+        );
+
+        $o .= html_writer::start_tag('div', array('class' => 'summary'));
+        $o .= $this->format_summary_text($section);
+
+        $context = context_course::instance($course->id);
+        if ($PAGE->user_is_editing() && has_capability('moodle/course:update', $context)) {
+            $url = new moodle_url('/course/editsection.php', array('id' => $section->id, 'sr' => $sectionreturn));
+            $o .= html_writer::link($url,
+                html_writer::empty_tag('img', array('src' => $this->output->pix_url('i/settings'),
+                    'class' => 'iconsmall edit', 'alt' => get_string('edit'))),
+                array('title' => get_string('editsummary')));
+        }
+        $o .= html_writer::end_tag('div');
+
+        $o .= $this->section_availability_message($section,
+            has_capability('moodle/course:viewhiddensections', $context));
+
+        return $o;
+    }
+
     // Basically unchanged from the core version  but inserts calls to
     // theme_snap_next_previous to add some navigation .
     public function print_multiple_section_page($course, $sections, $mods, $modnames, $modnamesused) {
