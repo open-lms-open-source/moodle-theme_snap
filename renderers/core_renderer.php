@@ -256,6 +256,44 @@ class theme_snap_core_renderer extends toc_renderer {
     }
 
     /**
+     * Get course completion progress for specific course.
+     *
+     * @param $course
+     * @return string
+     */
+    protected function course_completion_progress($course){
+        if (!isloggedin() || isguestuser()){
+            return ''; // Can't get completion progress for users who aren't logged in.
+        }
+        $completioninfo = new completion_info($course);
+        $trackcount = 0;
+        $compcount = 0;
+        if ($completioninfo->is_enabled()) {
+            $modinfo = get_fast_modinfo($course);
+
+            foreach ($modinfo->cms as $thismod) {
+                $completioninfo->get_data($thismod, true);
+
+                if ($completioninfo->is_enabled($thismod) != COMPLETION_TRACKING_NONE) {
+                    $trackcount++;
+                    $completiondata = $completioninfo->get_data($thismod, true);
+                    if ($completiondata->completionstate == COMPLETION_COMPLETE ||
+                        $completiondata->completionstate == COMPLETION_COMPLETE_PASS) {
+                        $compcount++;
+                    }
+                }
+            }
+        }
+        $progressinfo = '';
+        if ($trackcount > 0){
+            $compobj = (object) array('complete' => $compcount, 'total' => $trackcount);
+            $progress = get_string('progresstotal', 'completion', $compobj);
+            $progressinfo = '<div class="completionstatus outoftotal">'.$progress.'</div>';
+        }
+        return ($progressinfo);
+    }
+
+    /**
      * Print fixy (login or menu for signed in users)
      *
      */
@@ -340,13 +378,14 @@ class theme_snap_core_renderer extends toc_renderer {
                     $notpublished = get_string('notpublished', 'theme_snap');
                     $pubstatus = "<small class='published-status'>".$notpublished."</small>";
                 }
+                $progressinfo = $this->course_completion_progress($c);
                 $bgcolor = \theme_snap\local::get_course_color($c->id);
                 $courseimagecss = "background-color: #$bgcolor;";
                 $bgimage = \theme_snap\local::get_course_image($c->id);
                 if (!empty($bgimage)) {
                     $courseimagecss .= "background-image: url($bgimage);";
                 }
-                $clink = "<li><a href='$CFG->wwwroot/course/view.php?id=$c->id'><div class=fixy-course-image style='$courseimagecss'></div><div class='snap-media-body'>".format_string($c->fullname)." ".$pubstatus."</div></a></li>";
+                $clink = '<li><a href="'.$CFG->wwwroot.'/course/view.php?id='.$c->id.'"><div class=fixy-course-image style="'.$courseimagecss.'"></div><div class="snap-media-body">'.format_string($c->fullname).' '.$pubstatus.$progressinfo.'</div></a></li>';
                 $courselist .= $clink;
             }
             $courselist .= "</ul></div>";
@@ -564,12 +603,12 @@ class theme_snap_core_renderer extends toc_renderer {
         $output  = html_writer::start_tag('div', array('id' => 'site-news-forum', 'class' => 'clearfix'));
         $output .= $this->heading(format_string($forum->name, true, array('context' => $context)));
 
+        $groupmode    = groups_get_activity_groupmode($cm, $SITE);
+        $currentgroup = groups_get_activity_group($cm);
+
         if (!$discussions = forum_get_discussions($cm,
             'p.modified DESC', true, null, $SITE->newsitems, false, -1, $SITE->newsitems)) {
             $output .= html_writer::tag('div', '('.get_string('nonews', 'forum').')', array('class' => 'forumnodiscuss'));
-
-            $groupmode    = groups_get_activity_groupmode($cm, $SITE);
-            $currentgroup = groups_get_activity_group($cm);
 
             if (forum_user_can_post_discussion($forum, $currentgroup, $groupmode, $cm, $context)) {
                 $output .= html_writer::link(
@@ -608,16 +647,16 @@ class theme_snap_core_renderer extends toc_renderer {
             $newsimage = '';
             if (!$imagestyle) {
                 $preview = html_to_text($message, 0, false);
-                $preview = "<div class='news-article-preview col-md-6 col-sm-6'><p>".shorten_text($preview, 200)."</p>
+                $preview = "<div class='news-article-preview'><p>".shorten_text($preview, 200)."</p>
                 <p class='text-right'>".$readmorebtn."</p></div>";
             } else {
-                $newsimage = '<div class="news-article-image col-md-6 col-sm-6"'.$imagestyle.'></div>';
+                $newsimage = '<div class="news-article-image"'.$imagestyle.'></div>';
             }
 
             $output .= <<<HTML
 <div class="news-article clearfix">
     $newsimage
-    <div class="news-article-inner col-md-6 col-sm-6">
+    <div class="news-article-inner">
         <div class="news-article-content">
             <h3><a href="$CFG->wwwroot/mod/forum/discuss.php?d=$discussion->discussion">$name</a></h3>
             <em class="news-article-date">$date</em>
@@ -627,13 +666,20 @@ class theme_snap_core_renderer extends toc_renderer {
 </div>
 HTML;
         }
-        $morelink = html_writer::link(
+        $actionlinks = html_writer::link(
             new moodle_url('/mod/forum/view.php', array('id' => $cm->id)),
             get_string('morenews', 'theme_snap'),
             array('class' => 'btn btn-default')
         );
+        if (forum_user_can_post_discussion($forum, $currentgroup, $groupmode, $cm, $context)) {
+            $actionlinks .= html_writer::link(
+                new moodle_url('/mod/forum/post.php', array('forum' => $forum->id)),
+                get_string('addanewtopic', 'forum'),
+                array('class' => 'btn btn-primary')
+            );
+        }
         $output .= html_writer::end_div();
-        $output .= "<br><div class='text-center'>$morelink</div>";
+        $output .= "<br><div class='text-center'>$actionlinks</div>";
         $output .= html_writer::end_tag('div');
 
         return $output;

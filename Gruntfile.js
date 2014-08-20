@@ -94,6 +94,14 @@ module.exports = function(grunt) {
                 }
             }
         },
+        jshint: {
+            files: ["javascript/*",
+                "!javascript/bootstrap.js",
+                "!javascript/headroom.js",
+                "!javascript/modernizer.js",
+                "!javascript/jquery.placeholder.js",
+            ],
+        },
         watch: {
             // Watch for any changes to less files and compile.
             files: ["less/**/*.less"],
@@ -106,6 +114,7 @@ module.exports = function(grunt) {
 
     // Load contrib tasks.
     grunt.loadNpmTasks("grunt-autoprefixer");
+    grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks("grunt-contrib-less");
     grunt.loadNpmTasks("grunt-contrib-watch");
     grunt.loadNpmTasks("grunt-exec");

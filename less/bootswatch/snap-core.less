@@ -1031,31 +1031,40 @@ header#page-header
     max-width: 100%;
     margin:0 auto -.5em;
     position:relative;
-    	div[role="menubar"]{
-    		font-size:0.9em;
-    		margin-bottom:0.5em;
-            margin-left:2em;
-    		position:relative;
-    		> span {
-    			margin-right:2%;
-    			text-transform:uppercase;
-                a {text-decoration:none;}
-    		}
-    		> span a:hover {
-    			border-bottom:0.3em solid @brand-primary;
-                .alakazam;
-    		}
-    	}
-    	.completionstatus {
-    		display:block;
-    		font-size:small;
-    		color:#999;
-    		line-height:1;
-    	}
-        .snap-section-complete {
-            width:1.5em;
-            height:auto;
+    div[role="menubar"]{
+        font-size:0.9em;
+        margin-bottom:0.5em;
+        margin-left:2em;
+        position:relative;
+        > span {
+            margin-right:2%;
+            text-transform:uppercase;
+            a {text-decoration:none;}
         }
+        > span a:hover {
+            border-bottom:0.3em solid @brand-primary;
+            .alakazam;
+        }
+    }
+    .snap-section-complete {
+        width:1.5em;
+        height:auto;
+    }
+}
+
+
+#fixy-my-courses .completionstatus, #course-toc .completionstatus {
+    display:block;
+    font-size:small;
+    line-height:1;
+}
+
+#course-toc .completionstatus {
+    color:#999;
+}
+
+#fixy-my-courses .completionstatus {
+    opacity:0.75;
 }
 
 
@@ -1578,8 +1587,7 @@ http://blog.rodneyrehm.de/archives/34-iOS7-Mobile-Safari-And-Viewport-Units.html
     background-color: #fff;
 }
 .news-article-content {
-    padding: 4%;
-    overflow: hidden;
+    padding: 0 4%;
     min-height: 150px;
 }
 .news-article-content h3 {
@@ -1588,7 +1596,7 @@ http://blog.rodneyrehm.de/archives/34-iOS7-Mobile-Safari-And-Viewport-Units.html
 .news-article-image,
 .news-article-preview{
 	color:#fff;
-    height: 150px;
+    min-height: 150px;
     //	background-color: @brand-primary; customisable
     padding:2em 4%;
     .bg-cover;
@@ -1600,34 +1608,56 @@ http://blog.rodneyrehm.de/archives/34-iOS7-Mobile-Safari-And-Viewport-Units.html
     font-size: 0.75em;
 }
 
-
-
 @media screen and (min-width: @screen-sm-min) {
+    .news-article {
+        margin-bottom: 0;
+        display: flex;
+    }
+    .news-article-content {
+        max-width: 100%;
+    }
+    .news-article-preview,
+    .news-article-image,
+    .news-article-inner{
+        width: 50%;
+        min-height: 300px;
+        flex: 1 1 auto;
+        p {
+            margin:1em 0;
+            display:block;
+        }
+    }
+    .news-article-image {
+        padding: 0;
+    }
+    #news-articles div:nth-child(odd) .news-article-preview,
     #news-articles div:nth-child(odd) .news-article-image {
-        float: right;
+        order:2;
         p:nth-of-type(2) {
-          .text-left;
+            .text-left;
         }
     }
     #news-articles div:nth-child(even) .news-article-inner{
-        float:right;
+        order:2;
     }
-
-    .news-article-image,
-    .news-article-preview{
-          height: 100%;
-          min-height:300px;
-          	p {
-          		margin:1em 0;
-          		display:block;
-          	}
-
-    }
-    .news-article {
-          min-height: 300px;
-          margin-bottom: 0;
+    .ie9 {
+        #news-articles div:nth-child(even) {
+            .news-article-preview,
+            .news-article-image,
+            .news-article-inner{
+                float: left;
+            }
+        }
+        #news-articles div:nth-child(odd) {
+            .news-article-preview,
+            .news-article-image,
+            .news-article-inner{
+                float: right;
+            }
+        }
     }
 }
+
 
 @media screen and (min-width: @screen-lg-min) {
 	.news-article {
@@ -3063,4 +3093,14 @@ table th img.iconhelp {
         h4 {font-size:1.6em;}
         h5 {font-size:1.4em;}
         h6 {font-size:1.2em;}
+}
+
+
+// Workaround for .labels inserted by some mechanism that is also fond of font tags
+.label:not(.activity) font {
+    color: @text-color;
+    font-weight: 300;
+}
+.label:not(.activity) b font {
+    font-weight: 500;
 }
