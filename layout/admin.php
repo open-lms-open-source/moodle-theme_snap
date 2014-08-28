@@ -10,9 +10,13 @@
 <main id="moodle-page" class="clearfix">
 <header id="page-header" class="clearfix">
 <nav class="breadcrumb-nav" role="navigation" aria-label="breadcrumb"><?php echo $OUTPUT->navbar(); ?></nav>
-<div id="page-mast">
-<?php 
-echo $OUTPUT->page_heading(); 
+<div id="page-mast"
+<?php if (!empty($snapcourseimage)) : ?>
+class="mast-image"
+<?php endif;?>
+>
+<?php
+echo $OUTPUT->page_heading();
 echo $OUTPUT->course_header();
 ?>
 </div>

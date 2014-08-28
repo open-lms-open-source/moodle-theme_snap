@@ -7,4 +7,4 @@ M.theme_snap.core = {
         M.theme_snap.courseid = courseid;
         $(document).ready(snapInit);
     }
-}
+};

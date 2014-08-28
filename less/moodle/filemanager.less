@@ -23,7 +23,6 @@
 .fp-content-center {
     height: 100%;
     width: 100%;
-    display: table-cell;
     vertical-align: middle;
 }
 .fp-content-hidden {
@@ -89,10 +88,10 @@
 }
 
 .file-picker .fp-content {
-    background: #FFFFFF;
+    background: @modal-content-bg;
     clear: both;
     overflow: auto;
-    height: 423px;
+    height: 455px;
 }
 .filepicker.moodle-dialogue-fullscreen .file-picker .fp-content {
     width: 100%;
@@ -100,7 +99,6 @@
 .file-picker .fp-content-loading {
     height: 100%;
     width: 100%;
-    display: table;
     text-align: center;
 }
 .file-picker .fp-content .fp-object-container {
@@ -198,7 +196,7 @@
     height: 27px;
 }
 .fp-toolbar .fp-tb-search input {
-    background: #FFFFFF url('[[pix:a/search]]') no-repeat 7px 7px;
+    background: @modal-content-bg url('[[pix:a/search]]') no-repeat 7px 7px;
     padding: 2px 6px 1px 27px;
     width: 200px;
     height: 27px;
@@ -207,10 +205,10 @@
 .fp-viewbar {
     float: right;
     height: 30px;
-    border: 1px solid #CCC;
-    border-bottom: 1px solid #B3B3B3;
+    border: 1px solid @modal-header-border-color;
+    border-bottom: 1px solid @modal-header-border-color;
     border-radius: 4px;
-    background: white;
+    background: @modal-content-bg;
 }
 .fp-repo-items fp-viewbar {
     margin: 4px;
@@ -225,7 +223,7 @@
 .fp-viewbar a {
     width: 30px;
     height: 30px;
-    border-right: 1px solid #CCC;
+    border-right: 1px solid @modal-header-border-color;
     display: block;
     float:left;
 }
@@ -269,25 +267,6 @@
 .dir-rtl .filemanager-toolbar .fp-vb-icons.checked a:hover {
     background: url('[[pix:theme|fp/view_icon_active]]') no-repeat 0 0;
 }
-.dir-rtl .fp-vb-details a:hover {
-    background: none;
-    border: 20px solid black;
-}
-.dir-rtl .fp-vb-details.checked a:hover {
-    background: none;
-    border: 40px solid black;
-}
-.dir-rtl .fp-vb-tree a:hover {
-    background: none;
-    border: 30px solid black;
-}
-.dir-rtl .fp-vb-tree.checked a:hover {
-    background: none;
-    border: 50px solid black;
-}
-.file-picker .fp-pathbar {
-    display: table-row;
-}
 .fp-pathbar.empty {
     display: none;
 }
@@ -328,19 +307,19 @@
     min-height: 110px;
     line-height: 110px;
     text-align: center;
-    border: 1px solid #FFFFFF;
+    border: 1px solid @modal-content-bg;
     display: block;
 }
 .fp-iconview .fp-thumbnail img {
-    border: 1px solid #ddd;
+    border: 1px solid @table-border-color;
     padding: 3px;
     vertical-align: middle;
-    box-shadow: 1px 1px 2px 0 #ccc;
+    box-shadow: 1px 1px 2px 0 rgba(0,0,0,0.2);
 }
 .fp-iconview .fp-thumbnail:hover {
-    background: #fff;
-    border: 1px solid #ddd;
-    box-shadow: inset 0 0 10px 0px #ccc;
+    background: @modal-content-bg;
+    border: 1px solid @table-border-color;
+    box-shadow: inset 0 0 10px 0px rgba(0,0,0,0.2);
 }
 .fp-iconview .fp-filename-field {
     height: 33px;
@@ -353,7 +332,7 @@
     z-index: 1000;
 }
 .fp-iconview .fp-filename-field .fp-filename {
-    background: #FFFFFF;
+    background: @modal-content-bg;
     padding-top: 5px;
     padding-bottom: 12px;
     min-width: 112px;
@@ -367,18 +346,18 @@
     width: 100%;
 }
 #filesskin .file-picker .yui3-datatable-header {
-    background: #FFFFFF;
+    background: @modal-content-bg;
     border-bottom: 1px solid #CCCCCC;
-    border-left: 0 solid #FFFFFF;
-    color: #555555;
+    border-left: 0 solid @modal-content-bg;
+    color: @text-color;
 }
 #filesskin .file-picker .yui3-datatable-odd .yui3-datatable-cell {
     background-color: #F6F6F6;
     border-left: 0 solid #F6F6F6;
 }
 #filesskin .file-picker .yui3-datatable-even .yui3-datatable-cell {
-    background-color: #FFFFFF;
-    border-left: 0 solid #FFFFFF;
+    background-color: @modal-content-bg;
+    border-left: 0 solid @modal-content-bg;
 }
 .dir-rtl .file-picker .yui3-datatable-header {
     text-align: right;
@@ -560,22 +539,10 @@ a.ygtvspacer:hover {
 
 .file-picker .fp-login-form {
     height: 100%;
-    width: 100%;
-    display: table;
-}
-.file-picker .fp-login-form table {
-    margin: 0 auto;
 }
 .file-picker .fp-login-form p {
     text-align: center;
     margin-top: 3em;
-}
-.file-picker .fp-login-form .fp-login-input label {
-    text-align: right;
-    display: block;
-}
-.file-picker .fp-login-form .fp-login-input .input {
-    text-align: left;
 }
 .file-picker .fp-login-form input[type="checkbox"]{
     width: 15px;
@@ -585,7 +552,6 @@ a.ygtvspacer:hover {
 .file-picker .fp-upload-form {
     height: 100%;
     width: 100%;
-    display: table;
 }
 .file-picker .fp-upload-form table {
     margin: 0 auto;
@@ -618,13 +584,11 @@ a.ygtvspacer:hover {
 .file-picker .fp-content-error {
     height: 100%;
     width: 100%;
-    display: table;
     text-align: center;
 }
 .file-picker .fp-content-error .fp-error {
     height: 100%;
     width: 100%;
-    display: table-cell;
     vertical-align: middle;
     padding: 40px 20px 10px 20px;
 }
@@ -655,7 +619,7 @@ a.ygtvspacer:hover {
 .fp-select .fp-hr {
     clear: both;
     height: 1px;
-    background-color: #FFFFFF;
+    background-color: @modal-content-bg;
     border-bottom: 1px solid #BBBBBB;
     width: auto;
     margin: 10px 0;
@@ -684,9 +648,9 @@ a.ygtvspacer:hover {
     line-height: 110px;
     text-align: center;
     margin: 10px 20px 0 0;
-    background: #fff;
+    background: @modal-content-bg;
     border: 1px solid #ddd;
-    box-shadow: inset 0 0 10px 0 #ccc;
+    box-shadow: inset 0 0 10px 0 rgba(0,0,0,0.2);
 }
 .fp-select .fp-thumbnail img {
     border: 1px solid #DDDDDD;

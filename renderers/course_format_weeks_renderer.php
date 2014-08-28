@@ -148,7 +148,8 @@ class theme_snap_format_weeks_renderer extends format_weeks_renderer {
         foreach ($modinfo->get_section_info_all() as $section => $thissection) {
             if ($section == 0) {
                 // Note: 0-section is displayed a little different then the others.
-                if ($thissection->summary or !empty($modinfo->sections[0]) or $PAGE->user_is_editing()) {
+                // If we remove this it just prints the general section and nav.
+                // if ($thissection->summary or !empty($modinfo->sections[0]) or $PAGE->user_is_editing()) {
                     echo $this->section_header($thissection, $course, false, 0);
                     echo $this->courserenderer->course_section_cm_list($course, $thissection, 0);
                     echo $this->courserenderer->course_section_add_cm_control($course, 0, 0);
@@ -156,7 +157,7 @@ class theme_snap_format_weeks_renderer extends format_weeks_renderer {
                         echo snap_shared::next_previous($course, $modinfo->get_section_info_all(), $section);
                     }
                     echo $this->section_footer();
-                }
+                // }
                 continue;
             }
             if ($section > $course->numsections) {

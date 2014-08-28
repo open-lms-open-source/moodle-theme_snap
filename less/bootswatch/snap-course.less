@@ -90,8 +90,13 @@ li.section.main {
         }
 }
 
-.course-content .single-section ul.folderview li.section .content .summary {
-    margin-right: 20px;
+.course-content .single-section ul.folderview li.section {
+    .right.side .editing_highlight img {
+        display: block;
+    }
+    .content .summary {
+        margin-right: 40px;
+    }
 }
 
 .sectionname {
@@ -190,7 +195,7 @@ li.section.main {
 #completionprogressid {
     display: none;
 }
-#section_footer,
+.section_footer,
 .visibleifjs.addresourcemodchooser{
     clear:both;
     display:block;
@@ -365,6 +370,7 @@ we do this by default in snap, so hide moodle version */
 .availabilityinfo{
     clear:both;
     font-size:small;
+    font-family:@font-family-base;
 }
 
 
@@ -500,6 +506,10 @@ li.snap-resource.snap-mime-avi{
 }
 
 
+li.snap-resource.snap-mime-bmp,
+li.snap-resource.snap-mime-svg,
+li.snap-resource.snap-mime-image,
+li.snap-resource.snap-mime-gif,
 li.snap-resource.snap-mime-png,
 li.snap-resource.snap-mime-jpeg{
     background-color:#67B8CB;
@@ -734,13 +744,15 @@ li.snap-activity.modtype_folder {
 span.autocompletion img,
 form.togglecompletion input {
     width: 30px;
+    height: 30px;
     display: inline;
     position: relative;
-    transform: scale(0.75);
 
 }
+
 form.togglecompletion input {
     border-radius:50%;
+    transform: scale(0.75);
     box-shadow:0 2px 5px 0 rgba(0, 0, 0, 0.26);
 }
 form.togglecompletion input:hover {
@@ -957,12 +969,19 @@ span.editinstructions {
 // -------------------------
 #page-course-recent {
     img.icon.smallicon{
-        width:35px !important;
-        height:35px !important;
+        width: 35px;
+        height: 35px;
+    }
+    h3 {
+        margin-bottom: 0;
     }
 
-    #region-main td.userpicture a{
-        margin-left:4px;
+    #region-main td.userpicture {
+        width: 70px;
+        vertical-align: middle;
+        img {
+            margin-left: 25px;
+        }
     }
 }
 

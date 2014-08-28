@@ -72,6 +72,7 @@ $string['hidenavblock'] = 'Hide default Moodle navigation block';
 $string['hidenavblockdesc'] = "In Snap we recommend hiding the default Moodle navigation block. ";
 $string['highlightedsection'] = 'highlighted';
 $string['home'] = 'home';
+$string['image'] = 'image';
 $string['knowledgebase'] = 'Moodlerooms Knowledge Base';
 $string['loading'] = 'Loading...';
 $string['loggedinasguest'] = 'You are logged in as guest';

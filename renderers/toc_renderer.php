@@ -49,17 +49,13 @@ class toc_renderer extends core_renderer {
      * @Date 2014-05-23
      */
     protected function toc_progress($section, $course, $perc = false) {
-        global $CFG, $USER, $OUTPUT;
+        global $CFG, $OUTPUT;
 
         require_once($CFG->libdir.'/completionlib.php');
 
         $completioninfo = new completion_info($course);
         if (!$completioninfo->is_enabled()) {
             return ''; // Completion tracking not enabled.
-        }
-        // If you have the ability to manage grades then you should NOT be looking at your own progress!
-        if (has_capability('moodle/grade:manage', context_course::instance($course->id), $USER)) {
-            return '';
         }
         $sac = snap_shared::section_activity_summary($section, $course, null);
         if (!empty($sac->progress)) {
@@ -69,8 +65,9 @@ class toc_renderer extends core_renderer {
             } else {
                 if ($sac->progress->total > 0) {
                     $progress = get_string('progresstotal', 'completion', $sac->progress);
+                    $completed = '';
                     if ($sac->progress->complete === $sac->progress->total) {
-                        $winbadge = $OUTPUT->pix_url('i/completion-auto-y');
+                        $winbadge = $OUTPUT->pix_url('i/completion-manual-y');
                         $completedstr = s(get_string('completed', 'completion'));
                         $completed = "<img class=snap-section-complete src='$winbadge' alt='$completedstr' />";
                     }
@@ -83,6 +80,29 @@ class toc_renderer extends core_renderer {
         }
     }
 
+    /**
+     * Is a section conditional
+     *
+     * @author Guy Thomas
+     * @param section_info $section
+     * @return bool
+     */
+    protected function is_section_conditional(section_info $section) {
+        // Are there any date restrictions on this section?
+        if (   !empty($section->availablefrom)
+            || !empty($section->availableuntil)) {
+            return true;
+        }
+        // Are there any conditional fields populated?
+        if (   !empty($section->conditionsgrade)
+            || !empty($section->conditionscompletion)
+            || !empty($section->conditionsfield)) {
+            return true;
+        }
+        // OK - this isn't conditional.
+        return false;
+    }
+
 
     /**
      * Print  table of contents for a course
@@ -91,7 +111,7 @@ class toc_renderer extends core_renderer {
      */
     public function print_course_toc() {
 
-        global $COURSE, $PAGE, $OUTPUT;
+        global $COURSE;
 
         // No access to course, return nothing.
         if (!can_access_course($COURSE)) {
@@ -174,7 +194,7 @@ class toc_renderer extends core_renderer {
                         $outputlink = false; // Students don't get links for hidden sections.
                         $linkinfo = $this->toc_linkinfo(get_string('notavailable'));
                     }
-                } else if (!$thissection->available) {
+                } else if ($this->is_section_conditional($thissection)) {
                     $linkinfo = $this->toc_linkinfo(get_string('conditional', 'theme_snap'));
                 }
             }
@@ -427,10 +447,10 @@ class toc_renderer extends core_renderer {
 
             // Create link.
             if ($singlepage && $COURSE->format != 'folderview') {
-                $url = '#section-'.$cm->sectionnum.'&modid-'.$cm->id;
+                $url = '#section-'.$cm->sectionnum.'&module-'.$cm->id;
             } else {
 
-                $url = $CFG->wwwroot.'/course/view.php?id='.$COURSE->id.'&section='.$cm->sectionnum.'#modid-'.$cm->id;
+                $url = $CFG->wwwroot.'/course/view.php?id='.$COURSE->id.'&section='.$cm->sectionnum.'#module-'.$cm->id;
             }
             $link = html_writer::link($url, $img.' '.$info.' '.$cm->get_formatted_name());
             $o .= $link;

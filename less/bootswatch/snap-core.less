@@ -248,17 +248,17 @@ img.icon {
   text-align:center;
 }
 .videoiframe iframe{
-  width: 92% !important;
+  width: 100% !important;
   margin:0 auto;
 }
 .mediaplugin object, .mediaplugin embed {
-  width: 92%;
+  width: 100%;
   margin: 0 auto;
 }
 
 // Responsive video for HTML5 only.
 video {
-  width: 92%    !important;
+  width: 100%    !important;
   height: auto   !important;
 }
 
@@ -373,6 +373,7 @@ select,
 .editing .summary>a:last-of-type,
 #changenumsections .increase-sections,
 #changenumsections .reduce-sections,
+.paging.paging-morelink a,
 a.btn,
 button,
 .yui3-button,
@@ -729,15 +730,15 @@ input[type="text"]+input[type="submit"] {
     text-align: center;
     margin-top: -50px;
 }
-#fixy-my-courses a{
-    width:100%;
-    display: inline-block;
+#fixy-my-courses li{
+    clear:left;
     padding:0.3em 0;
-    .snap-media-body{
-        overflow:hidden;
-        line-height:1.7;
-    }
 }
+#fixy-my-courses .snap-media-body{
+    overflow:hidden;
+    line-height:1.7;
+}
+
 .fixy-course-image {
     height: 50px;
     width: 50px;
@@ -1183,7 +1184,7 @@ ol#chapters {
         margin: 1em auto -.5em;
     }
     .mast-image {
-        min-height:32vh;
+        min-height:300px;
         #course-toc{
             margin-top:11%;
         }
@@ -1201,7 +1202,6 @@ ol#chapters {
 // -------------------------
 // Course search in toc*/
 // -------------------------
-
 
 /* search box apears on focus */
 #toc-search-input {
@@ -1315,12 +1315,6 @@ ol#chapters {
 
 
 
-// I can only see paging-morelink class used twice - both times in the Moodle course renderer. Both times a hover color
-// of white makes the link invisible - should we remove the .paging.paging-morelink stuff from here?
-.paging.paging-morelink a:hover,
-.btn:hover {
-	color:#fff;
-}
 
 .section-modchooser-link a img{
 	display:none;
@@ -1410,7 +1404,7 @@ aside .settings-button{
     }
 }
 .mform .fcontainer .fitem {
-    &.fitem_fcheckbox {
+    &.fitem_fcheckbox:not(#fitem_id_onlygraded) {
         .fitemtitle {
             display: inline;
             float: none;
@@ -1424,8 +1418,18 @@ aside .settings-button{
     }
 }
 // These checkboxes are unusual as they have two labels, so we hide one.
-#id_activitycompletionheader .fitem_fcheckbox .fitemtitle label {
-    display: none;
+#fgroup_id_completiondiscussionsgroup,
+#fgroup_id_completionpostsgroup,
+#fgroup_id_completionrepliesgroup,
+#fgroup_id_completionpostsgroup {
+    &.fitem_fgroup .fitemtitle label {
+        display: none;
+    }
+}
+#id_activitycompletionheader {
+     .fitem_fcheckbox .fitemtitle label {
+        display: none;
+    }
 }
 
 .form-item {
@@ -1439,6 +1443,16 @@ aside .settings-button{
     .form-defaultinfo,
     .form-description pre {
         font-size: @font-size-small;
+    }
+}
+
+.moodle-dialogue.filepicker .form-group {
+    margin-left: 0;
+    margin-right: 0;
+}
+@media screen and (min-width: @screen-sm-min) {
+    .form-horizontal .control-label {
+        padding-top: 4px;
     }
 }
 
@@ -1716,7 +1730,7 @@ http://blog.rodneyrehm.de/archives/34-iOS7-Mobile-Safari-And-Viewport-Units.html
         margin-top: -2.1em;
     }
 }
-.courses>.paging.paging-morelink {
+.paging.paging-morelink {
 	text-align:center;
 	a {
 		.btn;
@@ -2095,12 +2109,19 @@ http://blog.rodneyrehm.de/archives/34-iOS7-Mobile-Safari-And-Viewport-Units.html
 // Forum responsive table
 // -------------------------
 
+// Should the forum responsive stuff be moved to modules.less?
 @media screen and (max-width: @screen-sm-max) {
-.path-mod-forum .forumheaderlist .picture a {
-		display:inline;
-	}
 
-.forumheaderlist {
+    .path-mod-forum .forumheaderlist {
+        tbody td.topic {
+            width:100%;
+        }
+        .picture a {
+            display:inline;
+        }
+    }
+
+    .forumheaderlist {
 	thead{
 		display:none;
 	}
@@ -2632,12 +2653,12 @@ table#user-grades tr.avg td.cell{
 }
 
 // next / previous nav
-#section_footer {
+.section_footer {
 	margin-top:2em;
 	padding:1em 0;
 	border-top:1px solid #eee;
 }
-#section_footer a{
+.section_footer a{
     font-style:normal;
     text-decoration:none;
     display:block;
@@ -2645,19 +2666,19 @@ table#user-grades tr.avg td.cell{
     margin-top:1em;
 }
 
-#next_section {
+.next_section {
     text-align:right;
     float: right;
 }
 
-#previous_section {
+.previous_section {
     float: left;
 }
 
 @media screen and (min-width: @screen-sm-min) {
-	#section_footer{
-		#previous_section,
-		#next_section {
+	.section_footer{
+		.previous_section,
+		.next_section {
 			width: 50%;
 		}
 	}
@@ -2674,7 +2695,7 @@ table#user-grades tr.avg td.cell{
     text-align:center;
 }
 
-#next_section .nav_icon {
+.next_section .nav_icon {
     margin-left:0.3em;
     border-left:1px solid #eee;
     font-size:2em;
@@ -2682,7 +2703,7 @@ table#user-grades tr.avg td.cell{
     float: right;
 }
 
-#previous_section .nav_icon {
+.previous_section .nav_icon {
     float:left;
     margin-right:0.3em;
     border-right:1px solid #eee;

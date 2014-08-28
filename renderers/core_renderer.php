@@ -23,6 +23,7 @@
 
 defined('MOODLE_INTERNAL') || die();
 require_once('toc_renderer.php');
+require_once($CFG->libdir.'/completionlib.php');
 
 class theme_snap_core_renderer extends toc_renderer {
 
@@ -261,8 +262,8 @@ class theme_snap_core_renderer extends toc_renderer {
      * @param $course
      * @return string
      */
-    protected function course_completion_progress($course){
-        if (!isloggedin() || isguestuser()){
+    protected function course_completion_progress($course) {
+        if (!isloggedin() || isguestuser()) {
             return ''; // Can't get completion progress for users who aren't logged in.
         }
         $completioninfo = new completion_info($course);
@@ -285,7 +286,7 @@ class theme_snap_core_renderer extends toc_renderer {
             }
         }
         $progressinfo = '';
-        if ($trackcount > 0){
+        if ($trackcount > 0) {
             $compobj = (object) array('complete' => $compcount, 'total' => $trackcount);
             $progress = get_string('progresstotal', 'completion', $compobj);
             $progressinfo = '<div class="completionstatus outoftotal">'.$progress.'</div>';
@@ -385,7 +386,7 @@ class theme_snap_core_renderer extends toc_renderer {
                 if (!empty($bgimage)) {
                     $courseimagecss .= "background-image: url($bgimage);";
                 }
-                $clink = '<li><a href="'.$CFG->wwwroot.'/course/view.php?id='.$c->id.'"><div class=fixy-course-image style="'.$courseimagecss.'"></div><div class="snap-media-body">'.format_string($c->fullname).' '.$pubstatus.$progressinfo.'</div></a></li>';
+                $clink = '<li><a href="'.$CFG->wwwroot.'/course/view.php?id='.$c->id.'"><div class=fixy-course-image style="'.$courseimagecss.'"></div><div class="snap-media-body">'.format_string($c->fullname).'</a> '.$pubstatus.$progressinfo.'</div></li>';
                 $courselist .= $clink;
             }
             $courselist .= "</ul></div>";
@@ -519,6 +520,7 @@ class theme_snap_core_renderer extends toc_renderer {
 
 
     public function page_heading($tag = 'h1') {
+        global $CFG;
         $heading = parent::page_heading($tag);
         if ($this->page->pagelayout == 'frontpage') {
             $heading .= '<p>' . format_string($this->page->theme->settings->subtitle) . '</p>';
@@ -616,9 +618,14 @@ class theme_snap_core_renderer extends toc_renderer {
                     get_string('addanewtopic', 'forum'),
                     array('class' => 'btn btn-primary')
                 );
+            } else {
+                // No news and user cannot edit, so return nothing.
+                return '';
             }
-            return $output;
+
+            return $output.'</div>';
         }
+
         $output .= html_writer::start_div('', array('id' => 'news-articles'));
         foreach ($discussions as $discussion) {
             if (!forum_user_can_see_discussion($forum, $discussion, $context)) {
@@ -742,6 +749,7 @@ HTML;
             'grade-report-joulegrader-index',
             'grade-report-nortongrader-index',
             'admin-setting-modsettinglti',
+            'blocks-campusvue-view',
         );
         if (in_array($PAGE->pagetype, $killyuipages)) {
 
@@ -752,6 +760,15 @@ HTML;
             // bootstrap.
             $classes [] = 'yui-bootstrapped';
             $classes = implode(' ', $classes);
+        }
+
+        // Big course little course cardboard box.
+        $format = course_get_format($COURSE);
+        $course  = $format->get_course();
+        // 0 = course is set to show all sections.
+        // 1 = course is set to show single section.
+        if (!empty($course->coursedisplay)) {
+            $classes .= " moodle-single-section-format ";
         }
 
         return $classes;

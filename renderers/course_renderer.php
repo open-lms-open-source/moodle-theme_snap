@@ -91,6 +91,7 @@ class theme_snap_core_course_renderer extends core_course_renderer {
                 'spreadsheet' => 'xls',
                 'archive' => 'zip',
                 'pdf' => 'pdf',
+                'image' => get_string('image', 'theme_snap'),
             );
             if (in_array($filetype, array_keys($extension))) {
                 $filetype = $extension[$filetype];
@@ -238,15 +239,13 @@ class theme_snap_core_course_renderer extends core_course_renderer {
         }
 
         // Draft status - always output, shown via css of parent.
-            $output .= "<span class='draft_info'>".get_string('draft', 'theme_snap')."</span>";
+        $output .= "<span class='draft_info'>".get_string('draft', 'theme_snap')."</span>";
 
-        // TBD! - add something to check if user has met conditions,
-        // if so - we probably hide this?
-
-        if ($this->is_cm_conditionally_hidden($mod)) {
-            // Conditional Status.
-            $output .= "<span class='conditional_info'>".get_string('conditional', 'theme_snap')."</span>";
-            $output .= "<div class='availabilityinfo'>".$this->course_section_cm_availability($mod, $displayoptions)."</div>";
+        $availabilityinfo = $this->course_section_cm_availability($mod, $displayoptions);
+        if ($availabilityinfo !== '') {
+            $conditionalinfo = get_string('conditional', 'theme_snap');
+            $output .= "<span class='conditional_info'>$conditionalinfo</span>";
+            $output .= "<div class='availabilityinfo'>$availabilityinfo</div>";
         }
         $output .= "</div>"; // Close snap-meta.
 

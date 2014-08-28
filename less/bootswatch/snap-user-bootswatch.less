@@ -21,14 +21,10 @@ hr {
     border-top: 1px solid @brand-primary;
 }
 
-a:not(.btn),
-a:not(.btn):visited { color:@brand-primary;}
-a:not(.btn):hover { color:darken(@brand-primary, 8%); }
+a,
+a:visited { color:@brand-primary;}
+a:hover { color:darken(@brand-primary, 8%); }
 
-// Make sure more links are visible on course page by giving them a darker version of brand primary color.
-.course_category_tree .paging.paging-morelink a:hover{
-    color: darken(@brand-primary, 8%);
-}
 
 #region-main,
 #region-main textarea,
@@ -47,10 +43,10 @@ legend,
 .mform legend a,
 .mform legend a:hover,
 .coursebox .info .coursename,
-.availabilityinfo,
 .collapsibleregioncaption {
     font-family: @font-family-sans-serif;
 }
+
 
 // Pills
 // -------------------------
@@ -94,7 +90,7 @@ legend,
     color: @brand-primary;
 }
 
-.courses>.paging.paging-morelink a {
+.paging.paging-morelink a {
     background-color: @brand-primary;
     border-color: @brand-primary;
     &:hover,
@@ -105,6 +101,7 @@ legend,
         border-color: darken(@brand-primary, 12%);
     }
 }
+
 #page-site-index .sitetopic>a:last-of-type,
 .editing .summary>a:last-of-type,
 #changenumsections .increase-sections,
@@ -140,6 +137,9 @@ input[type="reset"] {
         border-color: darken(@brand-primary, 12%);
         color:#fff;
         text-decoration:none;
+    }
+    &:visited {
+        color: #fff;
     }
 }
 

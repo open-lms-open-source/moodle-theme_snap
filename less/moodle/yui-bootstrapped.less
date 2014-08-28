@@ -10,12 +10,13 @@
 }
 
 // Specific fix for odd HTML.
-.format-flexpage .ft .yui-button.yui-push-button,
-.format-flexpage .yui-button.yui-push-button,
-.format-flexpage .yui-button.yui-menu-button,
-.format-flexpage .yui-button.yui-link-button,
-.format-flexpage .yui-button.yui-radio-button,
-#message_stream_more_button.yui-button {
+.ft .yui-button.yui-push-button,
+.yui-button.yui-push-button,
+.yui-button.yui-push-button.default,
+.yui-button.yui-menu-button,
+.yui-button.yui-link-button,
+.yui-button.yui-radio-button,
+.yui-button.yui-submit-button {
     background-image: none;
     border: none;
     .first-child {
@@ -154,6 +155,7 @@
                 background-color: @modal-content-bg;
                 text-align: left;
                 .modal-header;
+                min-height: (@font-size-h4 + @modal-title-padding * 2);
                 .yui3-widget-buttons {
                     margin-top: 15px;
                     margin-right: 15px;
@@ -369,7 +371,6 @@
             &,
             &:hover,
             &:focus {
-                z-index: 2;
                 color: @pagination-active-color;
                 background-color: @pagination-active-bg;
                 border-color: @pagination-active-border;
@@ -416,6 +417,16 @@
         }
     }
 }
+#page-blocks-campusvue-view {
+    #fgroup_id_date_grp,
+    #fgroup_id_datesubmitted_grp {
+        .fgroup span {
+            display: block;
+        }
+    }
+}
+
+
 
 // JS error messages
 .yui3-skin-sam .yui3-widget-mask {

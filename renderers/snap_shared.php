@@ -46,7 +46,7 @@ class snap_shared extends renderer_base {
         $target = $sectionno - 1;
         while ($target >= 0 && empty($previous)) {
             if ($canviewhidden || $sections[$target]->uservisible) {
-                $attributes = array('id' => 'previous_section');
+                $attributes = array('class' => 'previous_section');
                 if (!$sections[$target]->visible) {
                     $attributes['class'] = 'dimmed_text';
                 }
@@ -62,7 +62,7 @@ class snap_shared extends renderer_base {
         $target = $sectionno + 1;
         while ($target <= $course->numsections && empty($next)) {
             if ($canviewhidden || $sections[$target]->uservisible) {
-                $attributes = array('id' => 'next_section');
+                $attributes = array('class' => 'next_section');
                 if (!$sections[$target]->visible) {
                     $attributes['class'] = 'dimmed_text';
                 }
@@ -73,7 +73,7 @@ class snap_shared extends renderer_base {
             }
             $target++;
         }
-        return html_writer::tag('nav', $previous.$next, array('id' => 'section_footer'));
+        return html_writer::tag('nav', $previous.$next, array('class' => 'section_footer'));
     }
 
     /**
@@ -103,12 +103,6 @@ class snap_shared extends renderer_base {
         $completioninfo = new completion_info($course);
         foreach ($modinfo->sections[$section->section] as $cmid) {
             $thismod = $modinfo->cms[$cmid];
-
-            if ($thismod->modname == 'label') {
-                // Labels are special (not interesting for students)!
-                continue;
-            }
-
             if ($thismod->uservisible) {
                 if (isset($sectionmods[$thismod->modname])) {
                     $sectionmods[$thismod->modname]['name'] = $thismod->modplural;
