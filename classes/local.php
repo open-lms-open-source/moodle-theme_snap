@@ -17,9 +17,118 @@
 namespace theme_snap;
 
 require_once($CFG->dirroot.'/calendar/lib.php');
+require_once($CFG->libdir.'/completionlib.php');
+require_once($CFG->libdir.'/coursecatlib.php');
+require_once($CFG->dirroot.'/grade/lib.php');
 
 class local {
 
+
+    /**
+     * Get overall grade for course.
+     *
+     * @param $course
+     * @return float|null
+     */
+    public static function course_overall_grade($course) {
+        global $CFG, $USER;
+
+        // Get course context.
+        $coursecontext = \context_course::instance($course->id);
+
+        // See if user can view hidden grades for this course.
+        $canviewhidden = has_capability('moodle/grade:viewhidden', $coursecontext);
+
+        // Get course grade_item.
+        $courseitem = \grade_item::fetch_course_item($course->id);
+
+        // Get the stored grade.
+        $coursegrade = new \grade_grade(array('itemid' => $courseitem->id, 'userid' => $USER->id));
+        $coursegrade->grade_item =& $courseitem;
+
+        // Return null if can't view.
+        if ($coursegrade->is_hidden() && !$canviewhidden) {
+            return null;
+        }
+
+        $finalgrade = grade_format_gradevalue($coursegrade->finalgrade, $coursegrade->grade_item);
+
+        // TODO - we should be putting our HTML in a renderer.
+        $gradehtml = '';
+        $finalgrade = $finalgrade == '-' ? '' : $finalgrade;
+        if (!empty($finalgrade)) {
+            $gradehtml = '<a class=coursegrade href="'.$CFG->wwwroot.'/grade/report/user/index.php?id='.$course->id.'">'.
+                get_string('grade').': '.$finalgrade.'</a>';
+        }
+
+        return ((object) array('grade' => $finalgrade, 'gradehtml' => $gradehtml));
+    }
+
+    /**
+     * Get course completion progress for specific course.
+     * NOTE: It is by design that even teachers get course completion progress, this is so that they see exactly the
+     * same as a student would in the personal menu.
+     *
+     * @param $course
+     * @return string
+     */
+    public static function course_completion_progress($course) {
+        if (!isloggedin() || isguestuser()) {
+            return ''; // Can't get completion progress for users who aren't logged in.
+        }
+        $completioninfo = new \completion_info($course);
+        $trackcount = 0;
+        $compcount = 0;
+        if ($completioninfo->is_enabled()) {
+            $modinfo = get_fast_modinfo($course);
+
+            foreach ($modinfo->cms as $thismod) {
+                $completioninfo->get_data($thismod, true);
+
+                if ($completioninfo->is_enabled($thismod) != COMPLETION_TRACKING_NONE) {
+                    $trackcount++;
+                    $completiondata = $completioninfo->get_data($thismod, true);
+                    if ($completiondata->completionstate == COMPLETION_COMPLETE ||
+                        $completiondata->completionstate == COMPLETION_COMPLETE_PASS) {
+                        $compcount++;
+                    }
+                }
+            }
+        }
+
+        $compobj = (object) array('complete' => $compcount, 'total' => $trackcount, 'progresshtml' => '');
+        if ($trackcount > 0) {
+            $progress = get_string('progresstotal', 'completion', $compobj);
+            // TODO - we should be putting our HTML in a renderer.
+            $progressinfo = '<div class="completionstatus outoftotal">'.$progress.'</div>';
+            $compobj->progresshtml = $progressinfo;
+        }
+
+        return ($compobj);
+    }
+
+    /**
+     * Get information for array of courseids
+     *
+     * @param $courseids
+     * @return bool | array
+     */
+    public static function courseinfo($courseids) {
+        global $DB;
+        if (empty($courseids)) {
+            return false;
+        }
+        $courseinfo = array();
+        foreach ($courseids as $courseid) {
+            $course = $DB->get_record('course', array('id' => $courseid));
+            $courseinfo[$courseid] = (object) array(
+                'courseid' => $courseid,
+                'progress' => self::course_completion_progress($course),
+                'grade' => self::course_overall_grade($course)
+            );
+        }
+        return ($courseinfo);
+    }
 
     /**
      * Get a user's messages read and unread.
@@ -62,6 +171,12 @@ class local {
         return $messages;
     }
 
+    /**
+     * Get message html for current user
+     * TODO: This should not be in here - HTML does not belong in this file!
+     *
+     * @return string
+     */
     public static function messages() {
         global $USER, $PAGE;
 

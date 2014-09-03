@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Snap AJAX handler
+ * Snap non-AJAX handler
  *
  * @package   theme_snap
  * @copyright Copyright (c) 2013 Moodlerooms Inc. (http://www.moodlerooms.com)
@@ -24,9 +24,7 @@
 
 use theme_snap\controller\kernel;
 use theme_snap\controller\router;
-
-define('AJAX_SCRIPT', true);
-define('NO_DEBUG_DISPLAY', true);
+use theme_snap\controller\addsection_controller;
 
 require_once(__DIR__.'/../../config.php');
 
@@ -41,31 +39,10 @@ require_login($course, false, $cm, false, true);
 
 /** @var $PAGE moodle_page */
 $PAGE->set_context($context);
-$PAGE->set_url('/theme/snap/rest.php', array('action' => $action, 'contextid' => $context->id));
+$PAGE->set_url('/theme/snap/index.php', array('action' => $action, 'contextid' => $context->id));
 
 $router = new router();
-
-// Add controllers automatically.
-$controllerdir = $CFG->dirroot.'/theme/snap/classes/controller';
-$contfiles = scandir($controllerdir);
-foreach ($contfiles as $contfile) {
-    if ($contfile === 'addsection_controller.php') {
-        continue;
-    }
-    $pattern = '/_controller.php$/i';
-    if (preg_match($pattern, $contfile) !== 1) {
-        continue;
-    } else {
-        $classname = '\\theme_snap\\controller\\'.str_ireplace('.php', '', $contfile);
-        if (class_exists($classname)) {
-            $rc = new ReflectionClass($classname);
-            if ($rc->isSubclassOf('\\theme_snap\\controller\\controller_abstract')) {
-                $router->add_controller(new $classname());
-            }
-        }
-    }
-}
-
+$router->add_controller(new addsection_controller());
 
 $kernel = new kernel($router);
 $kernel->handle($action);

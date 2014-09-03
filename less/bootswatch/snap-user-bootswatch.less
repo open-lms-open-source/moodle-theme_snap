@@ -29,7 +29,10 @@ a:hover { color:darken(@brand-primary, 8%); }
 #region-main,
 #region-main textarea,
 .contentafterlink,
-.contentwithoutlink {
+.contentwithoutlink,
+#course_about,
+// moodle applies to .text_to_html class for teachers description in the footer
+#course_teachers .text_to_html  {
     font-family: @font-family-serif;
 }
 
@@ -172,9 +175,6 @@ input[type="reset"] {
 
 
 
-.coursebox .info .coursename>a {
-    color: @brand-primary;
-}
 
 
 
@@ -299,6 +299,10 @@ img.iconhelp:hover {
         background-color: darken(@brand-primary, 8%);
         border-color: darken(@brand-primary, 12%);
     }
+}
+
+div[id^="progress_pbar_"] {
+    background-color: @brand-primary !important;
 }
 
 // -------------------------

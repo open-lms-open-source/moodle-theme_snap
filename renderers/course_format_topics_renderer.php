@@ -146,16 +146,13 @@ class theme_snap_format_topics_renderer extends format_topics_renderer {
         foreach ($modinfo->get_section_info_all() as $section => $thissection) {
             if ($section == 0) {
                 // Note: 0-section is displayed a little different then the others.
-                // If we remove this it just prints the general section and nav.
-                // if ($thissection->summary or !empty($modinfo->sections[0]) or $PAGE->user_is_editing()) {
-                    echo $this->section_header($thissection, $course, false, 0);
-                    echo $this->courserenderer->course_section_cm_list($course, $thissection, 0);
-                    echo $this->courserenderer->course_section_add_cm_control($course, 0, 0);
-                    if (!$PAGE->user_is_editing()) {
-                        echo snap_shared::next_previous($course, $modinfo->get_section_info_all(), $section);
-                    }
-                    echo $this->section_footer();
-                // }
+                echo $this->section_header($thissection, $course, false, 0);
+                echo $this->courserenderer->course_section_cm_list($course, $thissection, 0);
+                echo $this->courserenderer->course_section_add_cm_control($course, 0, 0);
+                if (!$PAGE->user_is_editing()) {
+                    echo snap_shared::next_previous($course, $modinfo->get_section_info_all(), $section);
+                }
+                echo $this->section_footer();
                 continue;
             }
             if ($section > $course->numsections) {
@@ -206,30 +203,8 @@ class theme_snap_format_topics_renderer extends format_topics_renderer {
             }
 
             echo $this->end_section_list();
+            echo snap_shared::change_num_sections($course);
 
-            echo html_writer::start_tag('div', array('id' => 'changenumsections', 'class' => 'mdl-right'));
-
-            // Increase number of sections.
-            $straddsection = get_string('increasesections', 'moodle');
-            $url = new moodle_url('/course/changenumsections.php',
-                array('courseid' => $course->id,
-                      'increase' => true,
-                      'sesskey' => sesskey()));
-            $icon = $this->output->pix_icon('t/switch_plus', $straddsection);
-            echo html_writer::link($url, $icon.get_accesshide($straddsection), array('class' => 'increase-sections'));
-
-            if ($course->numsections > 0) {
-                // Reduce number of sections sections.
-                $strremovesection = get_string('reducesections', 'moodle');
-                $url = new moodle_url('/course/changenumsections.php',
-                    array('courseid' => $course->id,
-                          'increase' => false,
-                          'sesskey' => sesskey()));
-                $icon = $this->output->pix_icon('t/switch_minus', $strremovesection);
-                echo html_writer::link($url, $icon.get_accesshide($strremovesection), array('class' => 'reduce-sections'));
-            }
-
-            echo html_writer::end_tag('div');
         } else {
             echo $this->end_section_list();
         }

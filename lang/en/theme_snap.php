@@ -23,9 +23,11 @@
  */
 
 $string['activity'] = 'Activity';
+$string['addanewsection'] = 'Add a new section';
 $string['admin'] = 'Admin';
 $string['advancedbrandingheading'] = 'Advanced branding';
 $string['advancedbrandingheadingdesc'] = '';
+$string['aboutcourse'] = 'About This Course';
 $string['ago'] = 'ago';
 $string['alerts'] = 'Alerts';
 $string['appendices'] = 'Tools';
@@ -40,7 +42,9 @@ $string['choosereadme'] = '<div class="clearfix"><div class="theme_screenshot"><
 $string['close'] = 'Close';
 $string['conditional'] = 'Conditional';
 $string['contents'] = 'Contents';
+$string['coursecontacts'] = 'Course Contacts';
 $string['coursenavigation'] = 'Course navigation';
+$string['createsection'] = 'Create section';
 $string['current'] = 'Current';
 $string['customcss'] = 'Custom CSS';
 $string['customcssdesc'] = 'You may customize the CSS across your entire site using this field.';
@@ -101,10 +105,12 @@ $string['poweredbyrunby'] = '<a href="http://www.moodlerooms.com/meet-joule-lms"
 $string['previoussection'] = 'Previous section';
 $string['problemsfound'] = 'Problems Found';
 $string['readmore'] = 'Read more';
+$string['recentactivity'] = 'Recent Activity';
 $string['region-main'] = 'Main';
 $string['region-side-post'] = 'Right';
 $string['region-side-pre'] = 'Left';
 $string['region-side-top'] = 'Top';
+$string['removethissection'] = 'Remove this section';
 $string['seriffont'] = 'Serif font';
 $string['seriffont_desc'] = 'This font is used for all other system and user generated content, other than heading.';
 $string['subtitle'] = 'Site description';

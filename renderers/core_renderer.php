@@ -23,9 +23,177 @@
 
 defined('MOODLE_INTERNAL') || die();
 require_once('toc_renderer.php');
-require_once($CFG->libdir.'/completionlib.php');
+require_once($CFG->libdir.'/coursecatlib.php');
+
 
 class theme_snap_core_renderer extends toc_renderer {
+
+    public function print_course_footer() {
+        global $DB, $COURSE, $CFG, $PAGE;
+        $context = context_course::instance($COURSE->id);
+        $courseteachers = '';
+        $coursesummary = '';
+
+        $clist = new course_in_list($COURSE);
+        $teachers = $clist->get_course_contacts();
+
+        if (!empty($teachers)) {
+
+            // Get all teacher user records in one go.
+            $teacherids = array();
+            foreach ($teachers as $teacher) {
+                $teacherids[] = $teacher['user']->id;
+            }
+            $teacherusers = $DB->get_records_list('user', 'id', $teacherids);
+
+            // Create string for teachers.
+            $courseteachers .= '<h6>'.get_string('coursecontacts', 'theme_snap').'</h6><div id=course_teachers>';
+            foreach ($teachers as $teacher) {
+                if (!isset($teacherusers[$teacher['user']->id])) {
+                    continue;
+                }
+                $teacheruser = $teacherusers [$teacher['user']->id];
+                $courseteachers .= $this->print_teacher_profile($teacheruser);
+            }
+            $courseteachers .= "</div>";
+        }
+        // If user can edit add link to manage users.
+        if (has_capability('enrol/accesskey:manage', $context)) {
+            if (empty($courseteachers)) {
+                $courseteachers = "<h6>".get_string('coursecontacts', 'theme_snap')."</h6>";
+            }
+            $courseteachers .= '<a class="btn btn-default btn-sm" href="'.$CFG->wwwroot.'/enrol/users.php?id='.
+                $COURSE->id.'">'.get_string('enrolledusers', 'enrol').'</a>';
+        }
+
+        if (!empty($COURSE->summary)) {
+            $coursesummary = '<h6>'.get_string('aboutcourse', 'theme_snap').'</h6>';
+            $coursesummary .= '<div id=course_about>'.format_text($COURSE->summary).'</div>';
+        }
+
+        // If able to edit add link to edit summary.
+        if (has_capability('enrol/accesskey:manage', $context)) {
+            if (empty($coursesummary)) {
+                $coursesummary = '<h6>'.get_string('aboutcourse', 'theme_snap').'</h6>';
+            }
+            $coursesummary .= '<a class="btn btn-default btn-sm" href="'.$CFG->wwwroot.'/course/edit.php?id='.
+                $COURSE->id.'#id_descriptionhdr">'.get_string('editsummary').'</a>';
+        }
+
+        // Get recent activities on mods in the course.
+        $courserecentactivities = $this->get_mod_recent_activity($context);
+        if ($courserecentactivities) {
+            $courserecentactivity = '<h6>'.get_string('recentactivity').'</h6>';
+            $courserecentactivity .= "<div id=course_recent_updates>";
+            if (!empty($courserecentactivities)) {
+                $courserecentactivity .= $courserecentactivities;
+            }
+            $courserecentactivity .= "</div>";
+        }
+        // If user can edit add link to moodle recent activity stuff.
+        if (has_capability('enrol/accesskey:manage', $context)) {
+            if (empty($courserecentactivities)) {
+                $courserecentactivity = '<h6>'.get_string('recentactivity').'</h6>';
+                $courserecentactivity .= get_string('norecentactivity');
+            }
+            $courserecentactivity .= '<div><a class="btn btn-default btn-sm" href="'.$CFG->wwwroot.'/course/recent.php?id='
+                .$COURSE->id.'">'.get_string('showmore', 'form').'</a></div>';
+        }
+
+        if (!empty($courserecentactivity)) {
+            $columns[] = $courserecentactivity;
+        }
+        if (!empty($courseteachers)) {
+            $columns[] = $courseteachers;
+        }
+        if (!empty($coursesummary)) {
+            $columns[] = $coursesummary;
+        }
+
+        // Logic for printing bootstrap grid.
+        if (empty($columns)) {
+            return '';
+        } else if (count($columns) == 1) {
+                $output  = '<div class="col-md-12">'.$columns[0].'</div>';
+        } else if (count($columns) >= 2 && !empty($courserecentactivity)) {
+            // Here we output recent updates any some other sections.
+            $output  = '<div class="col-md-8">'.$columns[0].'</div>';
+            $output .= '<div class="col-md-4">'.$columns[1].$columns[2].'</div>';
+        } else if (count($columns) == 2) {
+            $output  = '<div class="col-md-6">'.$columns[0].'</div>';
+            $output  .= '<div class="col-md-6">'.$columns[1].'</div>';
+        }
+
+        return $output;
+    }
+
+    /**
+     * Print teacher profile
+     * Prints a media object with the techers photo, name (links to profile) and desctiption.
+     *
+     * @param stdClass $user
+     * @return string
+     */
+    public function print_teacher_profile($user) {
+        global $CFG;
+
+        $userpicture = new user_picture($user);
+        $userpicture->link = false;
+        $userpicture->alttext = false;
+        $userpicture->size = 100;
+        $picture = $this->render($userpicture);
+
+        $fullname = '<a href="'.$CFG->wwwroot.'/user/profile.php?id='.$user->id.'">'.format_string(fullname($user)).'</a>';
+        $description = format_text($user->description);
+
+        return "<div class=snap-media-object>
+                $picture
+                <div class=snap-media-body>
+                $fullname
+                $description
+                </div>
+                </div>";
+    }
+
+
+    public function get_mod_recent_activity($context) {
+        global $COURSE, $OUTPUT;
+        $viewfullnames = has_capability('moodle/site:viewfullnames', $context);
+        $recentactivity = array();
+        $timestart = time() - (86400 * 7); // 7 days ago.
+        if (optional_param('testing', false, PARAM_BOOL)) {
+            $timestart = time() - (86400 * 700); // 700 days ago for testing purposes.
+        }
+        $modinfo = get_fast_modinfo($COURSE);
+        $usedmodules = $modinfo->get_used_module_names();
+        if (empty($usedmodules)) {
+            // No used modules so return null string.
+            return '';
+        }
+        foreach ($usedmodules as $modname => $modfullname) {
+            // Each module gets it's own logs and prints them.
+            ob_start();
+            $hascontent = component_callback('mod_'. $modname, 'print_recent_activity',
+                    array($COURSE, $viewfullnames, $timestart), false);
+            if ($hascontent) {
+                $recentactivity[$modname] = ob_get_contents();
+            }
+            ob_end_clean();
+        }
+
+        $output = '';
+        if (!empty($recentactivity)) {
+            foreach ($recentactivity as $modname => $moduleactivity) {
+                // Get mod icon - no point in alt as title already there.
+                $img = html_writer::tag('img', '', array('src' => $OUTPUT->pix_url('icon', $modname)));
+                // Create media object for module activity.
+                $output .= "<div class='snap-media-object course-footer-update-$modname'>$img".
+                    "<div class=snap-media-body>$moduleactivity</div></div>";
+            }
+        }
+
+        return $output;
+    }
 
     /**
      * Print  settings link
@@ -257,44 +425,6 @@ class theme_snap_core_renderer extends toc_renderer {
     }
 
     /**
-     * Get course completion progress for specific course.
-     *
-     * @param $course
-     * @return string
-     */
-    protected function course_completion_progress($course) {
-        if (!isloggedin() || isguestuser()) {
-            return ''; // Can't get completion progress for users who aren't logged in.
-        }
-        $completioninfo = new completion_info($course);
-        $trackcount = 0;
-        $compcount = 0;
-        if ($completioninfo->is_enabled()) {
-            $modinfo = get_fast_modinfo($course);
-
-            foreach ($modinfo->cms as $thismod) {
-                $completioninfo->get_data($thismod, true);
-
-                if ($completioninfo->is_enabled($thismod) != COMPLETION_TRACKING_NONE) {
-                    $trackcount++;
-                    $completiondata = $completioninfo->get_data($thismod, true);
-                    if ($completiondata->completionstate == COMPLETION_COMPLETE ||
-                        $completiondata->completionstate == COMPLETION_COMPLETE_PASS) {
-                        $compcount++;
-                    }
-                }
-            }
-        }
-        $progressinfo = '';
-        if ($trackcount > 0) {
-            $compobj = (object) array('complete' => $compcount, 'total' => $trackcount);
-            $progress = get_string('progresstotal', 'completion', $compobj);
-            $progressinfo = '<div class="completionstatus outoftotal">'.$progress.'</div>';
-        }
-        return ($progressinfo);
-    }
-
-    /**
      * Print fixy (login or menu for signed in users)
      *
      */
@@ -379,14 +509,18 @@ class theme_snap_core_renderer extends toc_renderer {
                     $notpublished = get_string('notpublished', 'theme_snap');
                     $pubstatus = "<small class='published-status'>".$notpublished."</small>";
                 }
-                $progressinfo = $this->course_completion_progress($c);
+
                 $bgcolor = \theme_snap\local::get_course_color($c->id);
                 $courseimagecss = "background-color: #$bgcolor;";
                 $bgimage = \theme_snap\local::get_course_image($c->id);
                 if (!empty($bgimage)) {
                     $courseimagecss .= "background-image: url($bgimage);";
                 }
-                $clink = '<li><a href="'.$CFG->wwwroot.'/course/view.php?id='.$c->id.'"><div class=fixy-course-image style="'.$courseimagecss.'"></div><div class="snap-media-body">'.format_string($c->fullname).'</a> '.$pubstatus.$progressinfo.'</div></li>';
+                $dynamicinfo = '<div data-courseid="'.$c->id.'" class=dynamicinfo></div>';
+                $clink = '<li class="courseinfo"><a href="'.$CFG->wwwroot.'/course/view.php?id='.$c->id.
+                    '"><div class=fixy-course-image style="'.$courseimagecss.
+                    '"></div></a><div class="snap-media-body"><a href="'.$CFG->wwwroot.'/course/view.php?id='.$c->id.'">'.
+                    format_string($c->fullname).'</a> '.$pubstatus.$dynamicinfo.'</div></li>';
                 $courselist .= $clink;
             }
             $courselist .= "</ul></div>";
@@ -403,7 +537,8 @@ class theme_snap_core_renderer extends toc_renderer {
             $courselist .= '</div>'; // Close row.
 
             $menu = get_string('menu', 'theme_snap');
-            echo '<a class=fixy-trigger id=js-personal-menu-trigger href="#primary-nav" data-key='.json_encode(sesskey()).'>'.$menu. ' &nbsp; '. $picture. $this->render_badge_count(). '</a>';
+            echo '<a class=fixy-trigger id=js-personal-menu-trigger href="#primary-nav">'.$menu. ' &nbsp; '. $picture.
+                $this->render_badge_count(). '</a>';
             $close = get_string('close', 'theme_snap');
             $viewyourprofile = get_string('viewyourprofile', 'theme_snap');
             $realuserinfo = '';
@@ -414,19 +549,19 @@ class theme_snap_core_renderer extends toc_renderer {
                 $realuserinfo = html_writer::span($via.' '.html_writer::span($fullname, 'real-user-name'), 'real-user-info');
             }
 
-            echo '<div class=fixy id="primary-nav" class="toggle-details" role="menu" aria-live="polite" tabindex="0">
+            echo '<div id="primary-nav" class="fixy toggle-details" role="menu" aria-live="polite" tabindex="0">
         <a id="fixy-close" class="pull-right snap-action-icon" href="#">
             <i class="icon icon-office-52"></i><small>'.$close.'</small>
         </a>
         <div class=fixy-inner>
         <h1 id="fixy-profile-link">
             <a title="'.s($viewyourprofile).'" href="'.s($CFG->wwwroot).'/user/profile.php" >'.
-                $picture.'<div id="fixy-username">'.format_string(fullname($USER)).'</div>
+                $picture.'<span id="fixy-username">'.format_string(fullname($USER)).'</span>
             </a>
         </h1>'.$realuserinfo.'
         <h2>'.get_string('courses').'</h2>'
-        .$courselist
-        .$this->render_callstoaction().'
+            .$courselist
+            .$this->render_callstoaction().'
         <div class="fixy-logout-footer clearfix text-center">
         <a class="btn btn-default logout" href="'.s($CFG->wwwroot).'/login/logout.php?sesskey='.sesskey().'">'.$logout.'</a>
     </div>
@@ -526,7 +661,9 @@ class theme_snap_core_renderer extends toc_renderer {
             $heading .= '<p>' . format_string($this->page->theme->settings->subtitle) . '</p>';
         }
         if ($this->page->user_is_editing() && $this->page->pagelayout == 'frontpage') {
-            $heading .= '<a class="btn btn-default btn-sm" href="'.$CFG->wwwroot.'/admin/settings.php?section=themesettingsnap#admin-fullname">'.get_string('changefullname', 'theme_snap').'</a>';
+            $heading .= '<a class="btn btn-default btn-sm" href="'.$CFG->wwwroot.
+                '/admin/settings.php?section=themesettingsnap#admin-fullname">'.
+                get_string('changefullname', 'theme_snap').'</a>';
         }
         return $heading;
     }
@@ -818,11 +955,22 @@ HTML;
      * @return string HTML fragment
      */
     protected function render_action_menu_link(action_menu_link $action) {
-        if (   stripos($action->url, 'bui_hideid') !== false
-            || stripos($action->url, 'bui_showid') !== false
-        ) {
-            $action->url->set_anchor('blocks');
+        global $COURSE;
+        if ($COURSE->id != SITEID) {
+            if (   stripos($action->url, 'bui_hideid') !== false
+                || stripos($action->url, 'bui_showid') !== false
+            ) {
+                $action->url->set_anchor('blocks');
+            }
         }
         return (parent::render_action_menu_link($action));
     }
+
+    public function pix_url($imagename, $component = 'moodle') {
+        // Strip -24, -64, -256  etc from the end of filetype icons so we
+        // only need to provide one SVG, see MDL-47082.
+        $imagename = \preg_replace('/-\d\d\d?$/', '', $imagename);
+        return $this->page->theme->pix_url($imagename, $component);
+    }
+
 }

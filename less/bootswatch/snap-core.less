@@ -395,9 +395,6 @@ input[type="reset"] {
         text-decoration: none;
   }
 }
-.editing .course-content ul.folderview .summary>a:last-of-type {
-    display: none;
-}
 #page-mod-quiz-edit div.question div.content div.points input[type="submit"],
 .section-modchooser-link a,
 .btn,
@@ -416,12 +413,6 @@ input[type="text"]+input[type="submit"] {
     margin: 0em 0.4em;
     vertical-align: baseline;
     line-height: 1.5;
-}
-.section-modchooser {
-    text-align:center;
-    padding:3em 0;
-    margin-bottom:8em;
-    border-bottom:1px solid #ccc;
 }
 
 
@@ -504,7 +495,8 @@ input[type="text"]+input[type="submit"] {
         text-decoration:none;
     }
     // media o media
-    img{
+    >a>img,
+    >img{
         float:left;
         display:block;
         margin-right:2%;
@@ -527,7 +519,7 @@ input[type="text"]+input[type="submit"] {
     // media o heading
     // currenty these are only in the fixy so safe to white, but...
     h3, h3 small {
-        color:white;
+        color:inherit;
         font-size:1em;
         margin:0;
     }
@@ -1054,18 +1046,21 @@ header#page-header
 }
 
 
-#fixy-my-courses .completionstatus, #course-toc .completionstatus {
+#fixy-my-courses .completionstatus, #fixy-my-courses .coursegrade, #course-toc .completionstatus {
     display:block;
     font-size:small;
-    line-height:1;
+    line-height:1.2em;
 }
 
 #course-toc .completionstatus {
     color:#999;
 }
 
-#fixy-my-courses .completionstatus {
-    opacity:0.75;
+#fixy-my-courses {
+    .completionstatus,
+    .coursegrade {
+        opacity:0.75;
+    }
 }
 
 
@@ -1688,9 +1683,6 @@ http://blog.rodneyrehm.de/archives/34-iOS7-Mobile-Safari-And-Viewport-Units.html
 .coursebox.clearfix {
     padding: 1em 4%;
     border-bottom: 1px solid #eee;
-}
-.coursebox .info .coursename>a {
-    // color: @brand-primary; customisable
 }
 .coursebox .info .coursename {
     font-size: @font-size-h4;
@@ -2795,7 +2787,6 @@ table#user-grades tr.avg td.cell{
 // -------------------------
 
 #moodle-footer {
-    margin-top: 2em;
     padding-top: 2em;
     padding-bottom: 1em;
     border-top: 1px solid #ccc;
@@ -3124,4 +3115,32 @@ table th img.iconhelp {
 }
 .label:not(.activity) b font {
     font-weight: 500;
+}
+
+// Progress bars need !important  because the styles are set in the HTML.
+// Should be fixed, or at least better in 2.7.
+div[id^="bar_pbar_"] {
+    overflow: hidden !important;
+    height: 22px !important;
+    margin-bottom: @line-height-base !important;
+    #gradient > .vertical(#f5f5f5, #f9f9f9) !important;
+    box-shadow: inset 0 1px 2px rgba(0,0,0,.1) !important;
+    border: none !important;
+}
+
+div[id^="progress_pbar_"] {
+    font-family: roboto;
+    height: 100% !important;
+    color: #fff !important;
+    float: left !important;
+    font-size: @font-size-small !important;
+    text-align: center !important;
+    box-shadow: inset 0 -1px 0 rgba(0,0,0,.15);
+    transition: width .6s ease;
+    padding-top: 0 !important;
+    border: none !important;
+}
+
+.path-backup .wibbler {
+    display: none;
 }

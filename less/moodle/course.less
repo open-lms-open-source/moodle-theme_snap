@@ -525,7 +525,9 @@ span.editinstructions {
           border-bottom: 1px solid transparent;
           .border-top-radius(@panel-border-radius - 1);
         .coursename {
-            .panel-title;
+            // This was setting color: inherit on linsk withinr
+            // and overriding a.dimmed
+            //.panel-title;
             display: inline-block;
         }
     }

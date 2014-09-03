@@ -1,5 +1,4 @@
 <footer id="moodle-footer" role="footer" class="clearfix">
-<div id="course-footer"><?php echo $OUTPUT->course_footer(); ?></div>
 <?php
 /* snap custom footer */
 
@@ -12,7 +11,7 @@ if ($this->page->user_is_editing() && $PAGE->pagetype == 'site-index') {
 /* custom menu edit button - only shown if menu exists */
 $custommenu = $OUTPUT->custom_menu();
 if (!empty($custommenu) && $this->page->user_is_editing() && $PAGE->pagetype == 'site-index') {
-    $custommenu.= '<p class="text-right"><a class="btn btn-default btn-sm" href="'.$CFG->wwwroot.'/admin/settings.php?section=themesettings#id_s__custommenuitems">'.get_string('editcustommenu', 'theme_snap').'</a></p>';
+    $custommenu .= '<p class="text-right"><a class="btn btn-default btn-sm" href="'.$CFG->wwwroot.'/admin/settings.php?section=themesettings#id_s__custommenuitems">'.get_string('editcustommenu', 'theme_snap').'</a></p>';
 }
 
 
@@ -44,7 +43,7 @@ if (!empty($custommenu) && !empty($footnote)) {
     // set moodle rooms package logo
     $pwdby = isset($CFG->MR_PACKAGE) ? $CFG->MR_PACKAGE : 'power';
 ?>
-<small><?php print_string('poweredbyrunby', 'theme_snap', (string) $OUTPUT->pix_url('poweredby'.$pwdby,'theme')) ?><img class="moodlefooterlogo" src="<?php echo (string) $OUTPUT->pix_url('footermoodlelogo-w','theme'); ?>" alt="moodle" /><span class="footerlinkdivider">·</span><a href="http://kb.moodlerooms.com/joule-2-manuals" target='_blank'><?php print_string('manuals', 'theme_snap') ?></a><span class="footerlinkdivider">·</span><a href="http://kb.moodlerooms.com/" target='_blank'><?php print_string('knowledgebase', 'theme_snap') ?></a>
+<small><?php print_string('poweredbyrunby', 'theme_snap', (string) $OUTPUT->pix_url('poweredby'.$pwdby, 'theme')) ?><img class="moodlefooterlogo" src="<?php echo (string) $OUTPUT->pix_url('footermoodlelogo-w', 'theme'); ?>" alt="moodle" /><span class="footerlinkdivider">·</span><a href="http://kb.moodlerooms.com/joule-2-manuals" target='_blank'><?php print_string('manuals', 'theme_snap') ?></a><span class="footerlinkdivider">·</span><a href="http://kb.moodlerooms.com/" target='_blank'><?php print_string('knowledgebase', 'theme_snap') ?></a>
 <?php
 if ($OUTPUT->page_doc_link()) {
     echo " · ".$OUTPUT->page_doc_link();
@@ -55,7 +54,7 @@ if ($OUTPUT->page_doc_link()) {
 <div id="page-footer">
 <?php echo $OUTPUT->lang_menu(); ?>
 <?php echo $OUTPUT->standard_footer_html(); ?>
-<div>
+</div>
 </footer>
 <?php echo $OUTPUT->standard_end_of_body_html() ?>
 

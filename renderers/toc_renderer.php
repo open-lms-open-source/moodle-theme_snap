@@ -443,9 +443,10 @@ class toc_renderer extends core_renderer {
             }
 
             // Create image.
-            $img = html_writer::tag('img', '', array('src' => $cm->get_icon_url()));
+            $img = html_writer::empty_tag('img', array('src' => $cm->get_icon_url(), 'alt' => 'icon for module '.$cm->name));
 
             // Create link.
+
             if ($singlepage && $COURSE->format != 'folderview') {
                 $url = '#section-'.$cm->sectionnum.'&module-'.$cm->id;
             } else {

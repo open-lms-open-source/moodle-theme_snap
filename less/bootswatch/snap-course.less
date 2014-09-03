@@ -206,8 +206,38 @@ body.format-flexpage .singlebutton{
     text-align: right;
 }
 
+.section-modchooser {
+    text-align:center;
+    padding:3em 0;
+}
+
+.editing .course-content ul li.section.main {
+    border-top: 1px solid #ccc;
+    &:first-child {
+        border-top: none;
+    }
+}
+
+.snap-section-remove {
+    text-align: right;
+    padding-bottom: 2em;
+    border-bottom: 1px solid #ccc;
+    &+ h3 + form label {
+        display: block;
+    }
+}
 
 
+.course-content ul li.section.hidden {
+    opacity: 1;
+    .content {
+        &> h3,
+        &> div,
+        &> ul {
+            opacity: 0.5;
+        }
+    }
+}
 
 
 
@@ -463,14 +493,14 @@ li.snap-resource.snap-mime-oth{
 }
 li.snap-resource.snap-mime-powerpoint,
 li.snap-resource.snap-mime-impress {
-    background-color:#ff7954;
+    background-color:#F37C2A;
     background-image:url([[pix:theme|powerpoint]]);
 }
 li.snap-resource.snap-mime-spreadsheet,
 li.snap-resource.snap-mime-chart,
 li.snap-resource.snap-mime-database,
 li.snap-resource.snap-mime-calc{
-    background-color:#22C596;
+    background-color:#7D9D3E;
     background-image:url([[pix:theme|spreadsheet]]);
 }
 
@@ -512,7 +542,7 @@ li.snap-resource.snap-mime-image,
 li.snap-resource.snap-mime-gif,
 li.snap-resource.snap-mime-png,
 li.snap-resource.snap-mime-jpeg{
-    background-color:#67B8CB;
+    background-color:#4ABC96;
     background-image:url([[pix:theme|image]]);
 }
 
@@ -526,7 +556,7 @@ li.snap-resource.modtype_book,
 li.snap-resource.modtype_page,
 li.snap-resource.modtype_imscp,
 li.snap-resource.modtype_scorm{
-    background-color:#6BC075;
+    background-color:#F7981D;
     background-image:url([[pix:theme|book]]);
 }
 
@@ -734,7 +764,10 @@ li.snap-activity.modtype_folder {
         }
 }
 }
-
+// labels get a bit more padding when editing
+.editing .section .activity.modtype_label.label{
+    padding-bottom:1em;
+}
 /* student completion actions */
 .togglecompletion,
 .autocompletion {
@@ -812,23 +845,6 @@ div.commands ul.menubar {
 .toggle-display.textmenu:after{
     content: "☰";
     margin-left:11%;
-    /*content: "t";
-    font-family: "line-icons";
-    text-transform:none;
-    font-size:2em;
-    margin-bottom:0.1em;
-    display: block;
-    text-align: center;
-    line-height: 1;
-    */
-    /*display: block;
-    text-align: center;
-    margin-bottom:0.1em;
-    content: "...";
-    font-weight:900;
-    font-size:3em;
-    font-family:"serif";
-    */
 }
 .action-menu-shown .toggle-display.textmenu{
     &:after{
@@ -920,9 +936,7 @@ span.editinstructions {
 }
 
 // increase/decrease sections buttons
-
 // remove moodle padding
-
 .path-course-view a.reduce-sections {
     padding-left:0;
 }
@@ -944,6 +958,55 @@ span.editinstructions {
     }
 }
 
+
+
+
+// -------------------------
+// Course footer.
+// -------------------------
+#snap-course-footer {
+    margin: 2em auto -2em auto; // pull the sitewide footer up if we have a course footer
+    padding:1em 4%;
+    background-color: #F1F0EE;
+}
+#course_recent_updates {
+    h3 {
+        font-size:1em;
+        clear:both;
+    }
+    .head {
+        .date, .name {
+            display:inline;
+        }
+        .date {
+            float:right;
+            font-size:small;
+        }
+    }
+    .info.bold {
+        font-weight:inherit;
+    }
+}
+
+@media screen and (min-width: @screen-sm-min) {
+    #course_recent_updates {
+        column-count: 2;
+        column-gap: 5%;
+        column-width: 45%;
+        // odd hack - without this the div isn't displaying correctly??
+        // is this something to do with also using bs cols?
+        border:1px solid transparent;
+    }
+    #course_recent_updates div[class*="course-footer-update"] {
+        display: inline-block;
+        width:100%;
+
+    }
+}
+
+
+
+
 // -------------------------
 // Course completion settings page.
 // -------------------------
@@ -963,6 +1026,8 @@ span.editinstructions {
         }
     }
 }
+
+
 
 // -------------------------
 // Course recent activity icons - set size to same as avatars.
@@ -984,6 +1049,10 @@ span.editinstructions {
         }
     }
 }
+
+
+
+
 
 // -------------------------
 // Course participants page.

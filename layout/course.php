@@ -1,8 +1,10 @@
 <?php
-include(__DIR__.'/header.php'); ?>
+include(__DIR__.'/header.php');
 
+$coursemainpage = strpos($PAGE->pagetype, 'course-view-') === 0;
+?>
 <!-- moodle js hooks -->
-<div id="page" class="snap-course-layoutfile">
+<div id="page">
 <div id="page-content">
 
 <!--
@@ -20,7 +22,9 @@ class="mast-image"
 <?php
 echo $OUTPUT->page_heading();
 echo $OUTPUT->course_header();
-echo $OUTPUT->print_course_toc();
+if ($coursemainpage) {
+    echo $OUTPUT->print_course_toc();
+}
 ?>
 </div>
 <?php echo $OUTPUT->print_settings_link(); ?>
@@ -35,7 +39,16 @@ echo $OUTPUT->course_content_footer();
 ?>
 </section>
 
-<?php include(__DIR__.'/moodle-blocks.php'); ?>
+<?php
+
+include(__DIR__.'/moodle-blocks.php');
+
+if ($coursemainpage) {
+    $coursefooter = $OUTPUT->print_course_footer();
+    if (!empty($coursefooter)) : ?>
+    <div id=snap-course-footer class=row><?php echo $coursefooter ?></div>
+    <?php endif;
+} ?>
 </main>
 
 </div>

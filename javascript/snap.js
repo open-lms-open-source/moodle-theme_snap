@@ -30,17 +30,44 @@ function snapInit(){
      * @param {string} msg
      * @param obj
      */
-    var logger = function(msg,obj){
+    var logmsg = function(msg, obj, logtype){
+        if (!logtype){
+            // Set default log type.
+            logtype = 'log';
+        }
+        // Make sure logtype is valid - i.e. log, warn or error and if not then just set it to log.
+        var logtypes = ['log', 'warn', 'error'];
+        if ($.inArray(logtype, logtypes) === -1){
+            logtype = 'log';
+        }
         if (!loggingenabled){
             return;
         }
-        if (console !== null && console.log !== null){
+        if (console !== null && console[logtype] !== null){
             if (obj){
-                console.log(msg,obj);
+                console[logtype](msg,obj);
             } else {
-                console.log(msg);
+                console[logtype](msg);
             }
         }
+    };
+
+    /**
+     * log error message
+     * @param msg
+     * @param obj
+     */
+    var logerror = function (msg, obj) {
+        logmsg (msg, obj, 'error');
+    };
+
+    /**
+     * log error message
+     * @param msg
+     * @param obj
+     */
+    var logwarn = function (msg, obj) {
+        logmsg (msg, obj, 'warn');
     };
 
     /**
@@ -346,24 +373,24 @@ function snapInit(){
             try {
                 // Display old content while waiting, if not too old.
                 if(window.sessionStorage[deadlines_key]) {
-                    logger("using locally stored deadlines");
+                    logmsg("using locally stored deadlines");
                     html = window.sessionStorage[deadlines_key];
                     $(deadlinesContainer).html(html);
                 }
-                logger("fetching deadlines");
+                logmsg("fetching deadlines");
                 $.ajax({
                       type: "GET",
                       async:  true,
                       url: M.cfg.wwwroot + '/theme/snap/rest.php?action=get_deadlines&contextid=' + M.cfg.context,
                       success: function(data){
-                        logger("fetched deadlines");
+                        logmsg("fetched deadlines");
                         window.sessionStorage[deadlines_key] = data.html;
                         $(deadlinesContainer).html(data.html);
                       }
                 });
             } catch(err) {
                 sessionStorage.clear();
-                logger(err);
+                logerror(err);
                 // $(deadlinesContainer).html("");
             }
         } // end deadlines div exists check
@@ -374,27 +401,75 @@ function snapInit(){
             try {
                 // Display old content while waiting, if not too old.
                 if(window.sessionStorage[messages_key]) {
-                    logger("using locally stored messages");
+                    logmsg("using locally stored messages");
                     html = window.sessionStorage[messages_key];
                     $(messagesContainer).html(html);
                 }
-                logger("fetching messages");
+                logmsg("fetching messages");
                 $.ajax({
                       type: "GET",
                       async:  true,
                       url: M.cfg.wwwroot + '/theme/snap/rest.php?action=get_messages&contextid=' + M.cfg.context,
                       success: function(data){
-                        logger("fetched messages");
+                        logmsg("fetched messages");
                         window.sessionStorage[messages_key] = data.html;
                         $(messagesContainer).html(data.html);
                       }
                 });
             } catch(err) {
                 sessionStorage.clear();
-                logger(err);
+                logerror(err);
                 // $(messagesContainer).html("");
             }
         } // end messages div exists check
+
+        // Load course information via ajax.
+        var courseids = [];
+        var courseinfo_key = key + 'courseinfo';
+        $('.courseinfo .dynamicinfo').each(function() {
+            courseids.push ($(this).attr('data-courseid'));
+        });
+        if (courseids.length > 0) {
+
+            /**
+             * Apply course information to courses in personal menu.
+             *
+             * @param crsinfo
+             */
+            var applycourseinfo = function(crsinfo){
+                for (var i in crsinfo){
+                    var info = crsinfo[i];
+                    logmsg('applying course data for courseid '+info.courseid);
+                    var courseinfohtml = info.progress.progresshtml + info.grade.gradehtml;
+                    $('li.courseinfo [data-courseid="'+info.courseid+'"]').html(courseinfohtml);
+                }
+            };
+
+            // OK - lets see if we have grades/progress in session storage we can use before ajax call.
+            if (window.sessionStorage[courseinfo_key]){
+                var courseinfo = JSON.parse(window.sessionStorage[courseinfo_key]);
+                applycourseinfo (courseinfo);
+            }
+
+            // Get course info via ajax.
+            var courseiddata = 'courseids='+courseids.join(',');
+            logmsg("fetching course data");
+            $.ajax({
+                type: "GET",
+                async:  true,
+                url: M.cfg.wwwroot + '/theme/snap/rest.php?action=get_courseinfo&contextid=' + M.cfg.context,
+                data: courseiddata,
+                success: function(data){
+                    if (data.info) {
+                        logmsg('fetched coursedata', data.info);
+                        window.sessionStorage[courseinfo_key] = JSON.stringify(data.info);
+                        applycourseinfo(data.info);
+                    } else {
+                        logwarn('fetched coursedata with error: JSON data object is missing info property', data);
+                    }
+                }
+            });
+        }
     };
 
     /**
@@ -545,7 +620,7 @@ function snapInit(){
         var lastHash = location.hash;
         $(window).on('popstate hashchange', function(e) {
             var newHash = location.hash;
-            logger('hashchange');
+            logmsg('hashchange');
             if(newHash !== lastHash){
                 if(location.hash === '#primary-nav') {
                     updatePersonalMenu();
@@ -554,7 +629,7 @@ function snapInit(){
                     $('#page, #moodle-footer').show(0);
                     if(onCoursePage()) {
                         // In folder view we sometimes get here - how?
-                        logger('show section', e.target);
+                        logmsg('show section', e.target);
                         if($('.moodle-single-section-format, .format-folderview').length){
                             // Check if we are searching for a mod
                             checkHashScrollToModule();
@@ -662,7 +737,7 @@ function snapInit(){
         });
 
         // Onclick for toggle of state-visible of admin block.
-        $(document).on("click", ".settings-button", function() {
+        $(document).on("click", ".settings-button", function(e) {
             var href = this.getAttribute('href');
             $(href).toggleClass('state-visible');
             e.preventDefault();
@@ -679,12 +754,12 @@ function snapInit(){
             resizestamp = new Date().getTime();
             (function(timestamp){
                 window.setTimeout(function() {
-                    logger ('checking ' + timestamp + ' against ' + resizestamp);
+                    logmsg ('checking ' + timestamp + ' against ' + resizestamp);
                     if (timestamp === resizestamp) {
-                        logger('applying video resize');
+                        logmsg('applying video resize');
                         applyResponsiveVideo();
                     } else {
-                        logger('skipping video resize - timestamp has changed from ' + timestamp + ' to ' + resizestamp);
+                        logmsg('skipping video resize - timestamp has changed from ' + timestamp + ' to ' + resizestamp);
                     }
                 },200); // wait 1/20th of a second before resizing
             })(resizestamp);

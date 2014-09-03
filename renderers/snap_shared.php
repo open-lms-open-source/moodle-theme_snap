@@ -48,7 +48,7 @@ class snap_shared extends renderer_base {
             if ($canviewhidden || $sections[$target]->uservisible) {
                 $attributes = array('class' => 'previous_section');
                 if (!$sections[$target]->visible) {
-                    $attributes['class'] = 'dimmed_text';
+                    $attributes['class'] .= ' dimmed_text';
                 }
                 $sectionname = get_section_name($course, $sections[$target]);
                 $previousstring = get_string('previoussection', 'theme_snap');
@@ -64,7 +64,7 @@ class snap_shared extends renderer_base {
             if ($canviewhidden || $sections[$target]->uservisible) {
                 $attributes = array('class' => 'next_section');
                 if (!$sections[$target]->visible) {
-                    $attributes['class'] = 'dimmed_text';
+                    $attributes['class'] .= ' dimmed_text';
                 }
                 $sectionname = get_section_name($course, $sections[$target]);
                 $nextstring = get_string('nextsection', 'theme_snap');
@@ -282,5 +282,64 @@ class snap_shared extends renderer_base {
 
         // Output warning.
         return ($OUTPUT->notification(get_string('warnsiteformatflexpage', 'theme_snap', $CFG->wwwroot.'/admin/settings.php?section=frontpagesettings')));
+    }
+
+    /**
+     * Render a form to create a new course section, prompting for basic info.
+     *
+     * @return string
+     */
+    public static function change_num_sections($course) {
+        $output = html_writer::start_div('', array('id' => 'changenumsections'));
+
+        if ($course->numsections > 0) {
+            $output = html_writer::start_div('snap-section-remove');
+            $strremovesection = get_string('removethissection', 'theme_snap');
+            $url = new moodle_url('/course/changenumsections.php',
+                array('courseid' => $course->id,
+                      'increase' => false,
+                      'sesskey' => sesskey()));
+            $output .= html_writer::link($url, $strremovesection, array('class' => 'btn btn-default'));
+            $output .= html_writer::end_div();
+        }
+
+        $context = \context_course::instance($course->id);
+        $contextid = $context->id;
+        $url = new moodle_url('/theme/snap/index.php', array(
+            'sesskey'  => sesskey(),
+            'action' => 'addsection',
+            'contextid' => $contextid,
+        ));
+
+        $heading = get_string('addanewsection', 'theme_snap');
+        $output .= "<h3>$heading</h3>";
+        $output .= html_writer::start_tag('form', array(
+            'method' => 'post',
+            'action' => $url->out_omit_querystring()
+        ));
+        $output .= html_writer::input_hidden_params($url);
+        $output .= '<div class="form-group">';
+        $output .= html_writer::label(get_string('sectionname'), 'newsection', true);
+        $output .= html_writer::empty_tag('input', array(
+            'id' => 'newsection',
+            'type' => 'text',
+            'size' => 50,
+            'name' => 'newsection',
+            'required' => 'required',
+        ));
+        $output .= '</div>';
+        $output .= '<div class="form-group">';
+        $output .= html_writer::label(get_string('summary'), 'summary', true);
+        $output .= print_textarea(true, 10, 150, "100%",
+                               "auto", "summary", '', $course->id, true);
+        $output .= '</div>';
+        $output .= html_writer::empty_tag('input', array(
+            'type' => 'submit',
+            'name' => 'addtopic',
+            'value' => get_string('createsection', 'theme_snap'),
+        ));
+        $output .= html_writer::end_tag('form');
+
+        return $output;
     }
 }
