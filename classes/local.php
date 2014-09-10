@@ -28,13 +28,18 @@ class local {
      * Get overall grade for course.
      *
      * @param $course
-     * @return float|null
+     * @return stdClass | null
      */
     public static function course_overall_grade($course) {
         global $CFG, $USER;
 
         // Get course context.
         $coursecontext = \context_course::instance($course->id);
+
+        // Security check - should they be allowed to see course grade?
+        if (!is_enrolled($coursecontext, $USER, 'moodle/grade:view')) {
+            return null;
+        }
 
         // See if user can view hidden grades for this course.
         $canviewhidden = has_capability('moodle/grade:viewhidden', $coursecontext);
@@ -70,11 +75,17 @@ class local {
      * same as a student would in the personal menu.
      *
      * @param $course
-     * @return string
+     * @return stdClass | null
      */
     public static function course_completion_progress($course) {
         if (!isloggedin() || isguestuser()) {
-            return ''; // Can't get completion progress for users who aren't logged in.
+            return null; // Can't get completion progress for users who aren't logged in.
+        }
+
+        // Security check - are they enrolled on course.
+        $context = \context_course::instance($course->id);
+        if (!is_enrolled($context)) {
+            return null;
         }
         $completioninfo = new \completion_info($course);
         $trackcount = 0;
@@ -107,6 +118,20 @@ class local {
         return ($compobj);
     }
 
+
+    /**
+     * Is a user a teacher?
+     *
+     * @param null|stdClass $user
+     * @param null|stdClass $course
+     */
+    public static function is_teacher($user = null, $course = null) {
+        global $USER, $COURSE;
+        $user = empty($user) ? $USER : $user;
+        $course = empty($course) ? $COURSE : $course;
+        return (has_capability('moodle/course:manageactivities', \context_course::instance($course->id), $user));
+    }
+
     /**
      * Get information for array of courseids
      *
@@ -121,6 +146,13 @@ class local {
         $courseinfo = array();
         foreach ($courseids as $courseid) {
             $course = $DB->get_record('course', array('id' => $courseid));
+
+            $context = \context_course::instance($courseid);
+            if (!is_enrolled($context)) {
+                // Skip this course, don't have permission to view.
+                continue;
+            }
+
             $courseinfo[$courseid] = (object) array(
                 'courseid' => $courseid,
                 'progress' => self::course_completion_progress($course),

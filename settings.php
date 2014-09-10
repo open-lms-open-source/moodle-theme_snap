@@ -125,12 +125,23 @@ if ($ADMIN->fulltree) {
     $setting->set_updatedcallback('theme_reset_all_caches');
     $settings->add($setting);
 
-    // Custome footer setting.
+    // Custom footer setting.
     $name = 'theme_snap/footnote';
     $title = new lang_string('footnote', 'theme_snap');
     $description = new lang_string('footnotedesc', 'theme_snap');
     $default = '';
     $setting = new admin_setting_confightmleditor($name, $title, $description, $default);
+    $setting->set_updatedcallback('theme_reset_all_caches');
+    $settings->add($setting);
+
+    // Course footer on/off. This will be removed in Moodle 2.7.
+    $name = 'theme_snap/coursefootertoggle';
+    $title = new lang_string('coursefootertoggle', 'theme_snap');
+    $description = new lang_string('coursefootertoggledesc', 'theme_snap');
+    $checked = '1';
+    $unchecked = '0';
+    $default = $checked;
+    $setting = new admin_setting_configcheckbox($name, $title, $description, $default, $checked, $unchecked);
     $setting->set_updatedcallback('theme_reset_all_caches');
     $settings->add($setting);
 

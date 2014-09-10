@@ -292,16 +292,16 @@ class snap_shared extends renderer_base {
     public static function change_num_sections($course) {
         $output = html_writer::start_div('', array('id' => 'changenumsections'));
 
+        $output = html_writer::start_div('snap-section-remove');
         if ($course->numsections > 0) {
-            $output = html_writer::start_div('snap-section-remove');
             $strremovesection = get_string('removethissection', 'theme_snap');
             $url = new moodle_url('/course/changenumsections.php',
                 array('courseid' => $course->id,
                       'increase' => false,
                       'sesskey' => sesskey()));
             $output .= html_writer::link($url, $strremovesection, array('class' => 'btn btn-default'));
-            $output .= html_writer::end_div();
         }
+        $output .= html_writer::end_div();
 
         $context = \context_course::instance($course->id);
         $contextid = $context->id;

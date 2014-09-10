@@ -85,14 +85,30 @@ class toc_renderer extends core_renderer {
      *
      * @author Guy Thomas
      * @param section_info $section
+     * @param bool $checkdates
      * @return bool
      */
-    protected function is_section_conditional(section_info $section) {
+    protected function is_section_conditional(section_info $section, $checkdates = false) {
         // Are there any date restrictions on this section?
         if (   !empty($section->availablefrom)
             || !empty($section->availableuntil)) {
-            return true;
+            if (!$checkdates) {
+                return true;
+            } else {
+                // Is current date outside of available range?
+                if (!empty($section->availablefrom)) {
+                    if (time() < usertime($section->availablefrom)) {
+                        return true;
+                    }
+                }
+                if (!empty($section->availableuntil)) {
+                    if (time() > usertime($section->availableuntil)) {
+                        return true;
+                    }
+                }
+            }
         }
+
         // Are there any conditional fields populated?
         if (   !empty($section->conditionsgrade)
             || !empty($section->conditionscompletion)
@@ -169,13 +185,18 @@ class toc_renderer extends core_renderer {
             }
 
             $linkinfo    = '';
-            $showsection = $thissection->uservisible ||
+
+            // Is this conditional (no checks for date restrictions).
+            $conditional = $this->is_section_conditional($thissection);
+            // Is this conditionally restricted by date?
+            $conditionaldates = $this->is_section_conditional($thissection, true);
+
+            $showsection = $conditional || ($thissection->uservisible ||
                 ($thissection->visible && !$thissection->available && $thissection->showavailability
-                    && !empty($thissection->availableinfo));
+                    && !empty($thissection->availableinfo)));
 
             $outputlink = true;
             if (!$showsection) {
-
                 if (!$course->hiddensections && $thissection->available) {
                     // Section is hidden, but show that it is not available.
                     $outputlink = false; // Students don't get links for hidden sections.
@@ -185,7 +206,7 @@ class toc_renderer extends core_renderer {
                 }
             } else {
                 // NOTE: $thissection->uservisible evaluates to true when the section is hidden but the user can
-                // view hidden sections but we stil need to let teachers see that the section is not published to
+                // view hidden sections but we still need to let teachers see that the section is not published to
                 // students.
                 if (!$thissection->visible) {
                     if ($viewhiddensections) {
@@ -194,8 +215,19 @@ class toc_renderer extends core_renderer {
                         $outputlink = false; // Students don't get links for hidden sections.
                         $linkinfo = $this->toc_linkinfo(get_string('notavailable'));
                     }
-                } else if ($this->is_section_conditional($thissection)) {
-                    $linkinfo = $this->toc_linkinfo(get_string('conditional', 'theme_snap'));
+                } else {
+                    if (\theme_snap\local::is_teacher()) {
+                        // For teachers, always consider conditional if it has conditional settings.
+                        if ($conditional) {
+                            $linkinfo = $this->toc_linkinfo(get_string('conditional', 'theme_snap'));
+                        }
+                    } else {
+                        // For students, do not consider conditional when restricted by date and current date within
+                        // restriction.
+                        if ($conditionaldates) {
+                            $linkinfo = $this->toc_linkinfo(get_string('conditional', 'theme_snap'));
+                        }
+                    }
                 }
             }
 

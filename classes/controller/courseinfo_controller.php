@@ -40,22 +40,7 @@ class courseinfo_controller extends controller_abstract {
      * @param string $action
      */
     public function require_capability($action) {
-
-        if ($action !== 'get_courseinfo') {
-            throw new \coding_exception("Missing capability check for $action action");
-        }
-
-        // Make sure user has capability to view own grades in ALL courses.
-        $courseids = optional_param('courseids', false, PARAM_SEQUENCE);
-        if (!empty($courseids)) {
-            $courseids = explode(',', $courseids);
-            if (!empty($courseids)) {
-                foreach ($courseids as $courseid) {
-                    $context = \context_course::instance($courseid, MUST_EXIST);
-                    require_capability('moodle/grade:view', $context);
-                }
-            }
-        }
+        // Don't check capabilities here as they are done on a course by course basis
     }
 
     /**

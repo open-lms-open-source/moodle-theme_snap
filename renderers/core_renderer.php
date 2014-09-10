@@ -30,6 +30,12 @@ class theme_snap_core_renderer extends toc_renderer {
 
     public function print_course_footer() {
         global $DB, $COURSE, $CFG, $PAGE;
+
+        // Note: This check will be removed for Snap 2.7.
+        if (empty($PAGE->theme->settings->coursefootertoggle)) {
+            return false;
+        }
+
         $context = context_course::instance($COURSE->id);
         $courseteachers = '';
         $coursesummary = '';
@@ -72,7 +78,7 @@ class theme_snap_core_renderer extends toc_renderer {
         }
 
         // If able to edit add link to edit summary.
-        if (has_capability('enrol/accesskey:manage', $context)) {
+        if ($this->page->user_is_editing() && has_capability('enrol/accesskey:manage', $context)) {
             if (empty($coursesummary)) {
                 $coursesummary = '<h6>'.get_string('aboutcourse', 'theme_snap').'</h6>';
             }
@@ -872,9 +878,6 @@ HTML;
         $classes = parent::body_css_classes($additionalclasses);
         $classes .= $classes == '' ? '' : ' ';
         $classes .= 'device-type-'.$PAGE->devicetypeinuse;
-        if (!empty($this->page->theme->settings->hidenavblock)) {
-            $classes .= ' hide-nav-block';
-        }
 
         // Define the page types we want to purge yui classes from the body  - e.g. local-joulegrader-view,
         // local-pld-view, etc.
@@ -965,6 +968,57 @@ HTML;
         }
         return (parent::render_action_menu_link($action));
     }
+
+    public function pix_url($imagename, $component = 'moodle') {
+        // Strip -24, -64, -256  etc from the end of filetype icons so we
+        // only need to provide one SVG, see MDL-47082.
+        $imagename = \preg_replace('/-\d\d\d?$/', '', $imagename);
+        return $this->page->theme->pix_url($imagename, $component);
+    }
+
+    /**
+     * Override parent to (optionally) remove the nav block.
+     *
+     * @todo For 2.7, when this will no longer be an option, we should
+     * automatically turn off the nav block to stop all this at the source.
+     */
+    public function blocks_for_region($region) {
+        $blockcontents = $this->page->blocks->get_content_for_region($region, $this);
+        if (!empty($this->page->theme->settings->hidenavblock)) {
+            $blockcontents = array_filter($blockcontents, function ($bc) {
+                if (!$bc instanceof block_contents) {
+                    return true;
+                }
+                $isnavblock = strpos($bc->attributes['class'], 'block_navigation') !== false;
+                return !$isnavblock;
+            });
+        }
+
+        $blocks = $this->page->blocks->get_blocks_for_region($region);
+
+        $lastblock = null;
+        $zones = array();
+        foreach ($blocks as $block) {
+            $zones[] = $block->title;
+        }
+        $output = '';
+
+        foreach ($blockcontents as $bc) {
+            if ($bc instanceof block_contents) {
+                    $output .= $this->block($bc, $region);
+                    $lastblock = $bc->title;
+            } else if ($bc instanceof block_move_target) {
+                $output .= $this->block_move_target($bc, $zones, $lastblock);
+            } else {
+                throw new coding_exception('Unexpected type of thing (' . get_class($bc) . ') found in list of block contents.');
+            }
+        }
+        return $output;
+    }
+
+}
+
+class theme_snap_core_renderer_ajax extends core_renderer_ajax {
 
     public function pix_url($imagename, $component = 'moodle') {
         // Strip -24, -64, -256  etc from the end of filetype icons so we
