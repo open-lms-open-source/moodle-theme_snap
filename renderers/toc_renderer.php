@@ -188,8 +188,14 @@ class toc_renderer extends core_renderer {
 
             // Is this conditional (no checks for date restrictions).
             $conditional = $this->is_section_conditional($thissection);
-            // Is this conditionally restricted by date?
+            // Is this conditionally restricted (also check dates)?
             $conditionaldates = $this->is_section_conditional($thissection, true);
+
+            // Make sure conditionally restricted section is skipped in toc if we aren't able to view hidden sections
+            // and restriction hides section completely.
+            if ($conditionaldates && !$thissection->uservisible && $thissection->showavailability !== '1') {
+                continue;
+            }
 
             $showsection = $conditional || ($thissection->uservisible ||
                 ($thissection->visible && !$thissection->available && $thissection->showavailability

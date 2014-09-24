@@ -170,12 +170,16 @@ echo $OUTPUT->doctype() ?>
         background-image:none;
         box-shadow:none;
     }
-    .snap-meta {
-        display:none !important;
+    .snap-assettype,
+    .draft_info,
+    .activityinstance .conditional_info,
+    .conditional_info {
+        display:none;
     }
     .toggle-display.textmenu:after{
         display:none;
     }
+
     </style>
 </head>
 

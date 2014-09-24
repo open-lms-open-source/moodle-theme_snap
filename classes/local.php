@@ -20,9 +20,25 @@ require_once($CFG->dirroot.'/calendar/lib.php');
 require_once($CFG->libdir.'/completionlib.php');
 require_once($CFG->libdir.'/coursecatlib.php');
 require_once($CFG->dirroot.'/grade/lib.php');
+require_once($CFG->dirroot.'/grade/report/user/lib.php');
 
 class local {
 
+
+    /**
+     * If debugging enabled in config then return reason for no grade (useful for json output).
+     *
+     * @param $warning
+     * @return null|object
+     */
+    protected static function skipgradewarning($warning){
+        global $CFG;
+        if (!empty($CFG->debugdisplay)) {
+            return (object) array ('skipgrade' => $warning);
+        } else {
+            return null;
+        }
+    }
 
     /**
      * Get overall grade for course.
@@ -38,11 +54,23 @@ class local {
 
         // Security check - should they be allowed to see course grade?
         if (!is_enrolled($coursecontext, $USER, 'moodle/grade:view')) {
-            return null;
+            return self::skipgradewarning('User not enrolled on course with capability moodle/grade:view');
+        }
+
+        // Security check - are they allowed to see the grade report for the course?
+        if (!has_capability('gradereport/user:view', $coursecontext)) {
+            return self::skipgradewarning('User does not have required course capability gradereport/user:view');
         }
 
         // See if user can view hidden grades for this course.
         $canviewhidden = has_capability('moodle/grade:viewhidden', $coursecontext);
+
+        // Do not show grade if grade book disabled for students.
+        // Note - moodle/grade:viewall is a capability held by teachers and thus used to exclude them from not getting
+        // the grade.
+        if (empty($course->showgrades) && !has_capability('moodle/grade:viewall', $coursecontext)) {
+            return self::skipgradewarning('Course set up to not show gradebook to students');
+        }
 
         // Get course grade_item.
         $courseitem = \grade_item::fetch_course_item($course->id);
@@ -53,10 +81,15 @@ class local {
 
         // Return null if can't view.
         if ($coursegrade->is_hidden() && !$canviewhidden) {
-            return null;
+            return self::skipgradewarning('Course grade is hidden from students');
         }
 
-        $finalgrade = grade_format_gradevalue($coursegrade->finalgrade, $coursegrade->grade_item);
+        // Use user grade report to get course total - this is to take hidden grade settings into account.
+        $gpr = new \grade_plugin_return(array('type'=>'report', 'plugin'=>'user', 'courseid'=>$course->id, 'userid'=>$USER->id));
+        $report = new \grade_report_user($course->id, $gpr, $coursecontext, $USER->id);
+        $report->fill_table();
+        $coursetotal = end($report->tabledata);
+        $finalgrade = $coursetotal['grade']['content'];
 
         // TODO - we should be putting our HTML in a renderer.
         $gradehtml = '';

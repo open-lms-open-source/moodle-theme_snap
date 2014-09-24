@@ -440,7 +440,10 @@ function snapInit(){
                 for (var i in crsinfo){
                     var info = crsinfo[i];
                     logmsg('applying course data for courseid '+info.courseid);
-                    var courseinfohtml = info.progress.progresshtml + info.grade.gradehtml;
+                    var courseinfohtml = info.progress.progresshtml;
+                    if (info.grade && info.grade.gradehtml){
+                        courseinfohtml += info.grade.gradehtml;
+                    }
                     $('li.courseinfo [data-courseid="'+info.courseid+'"]').html(courseinfohtml);
                 }
             };

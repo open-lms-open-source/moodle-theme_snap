@@ -410,7 +410,7 @@ input[type="password"]+input[type="submit"],
 input[type="text"]+button,
 input[type="text"]+input[type="submit"] {
     padding: 0.25em 1em;
-    margin: 0em 0.4em;
+    margin: 0 .4em;
     vertical-align: baseline;
     line-height: 1.5;
 }
@@ -953,7 +953,6 @@ header#page-header
 #page-header {
     padding-top: 4em;
     padding-bottom: 0.5em;
-    min-height: 11em;
 }
 
 // Breadcrumb - not really a breadcrumb like on the web, but some moodleything
@@ -1228,7 +1227,7 @@ ol#chapters {
 	text-transform:none;
 	padding:0 2%;
 	text-align:left;
-	top:0em;
+	top: 0;
 	.alakazam;
 }
 #toc-searchables {
@@ -2530,11 +2529,16 @@ table#user-grades tr.avg td.cell{
 .path-grade-report-customgrader,
 .path-grade-report-grader {
     .gradeparent{
+        .right_scroller table#user-grades {
+            th {
+                font-size: 10px;
+            }
+        }
         table#user-grades {
             border: none;
             font-size: @font-size-table;
             th {
-                font-size: 13px !important;
+                font-size: 13px;
                 &.header.userfield[scope="col"],
                 &.header#studentheader[scope="col"] {
                     vertical-align: bottom;
@@ -2615,6 +2619,13 @@ table#user-grades tr.avg td.cell{
     z-index: 13;
 }
 
+// Override for odd little notice when edeleting questions.
+#page-mod-quiz-edit div.container #notice.snap-continue-cancel {
+    color: @text-color;
+    background-color: @body-bg;
+    font-size: @font-size-base;
+    left: 0;
+}
 // the hardcodeded ones here have the button outside the div
 // remember to add any further additions to the user swatch
 // to ensure they pick up the brand color.
@@ -2793,6 +2804,7 @@ table#user-grades tr.avg td.cell{
     clear: both;
     color: #dadada;
     background-color: @text-color;
+    margin-top: 0;
 }
 #moodle-footer {
     h1,h2,h3,h4,h5,h6 {
@@ -2814,10 +2826,16 @@ table#user-grades tr.avg td.cell{
 }
 
 #page-site-index #moodle-footer {
-    margin-top: -1px; /* to cover strange line that i need to properly fix */
+    margin-top: 0;
 }
 
+#moodle-footer.nocoursefooter {
+    margin-top: 2em;
+}
 
+#site-news-forum + br {
+    display: none;
+}
 
 /* Moodle error, reports, all that stuff in the footer */
 
@@ -3069,7 +3087,7 @@ table th img.iconhelp {
     img.moodlefooterlogo {
         vertical-align: top;
         margin-top: -2px;
-        margin-right: 0em;
+        margin-right: 0;
     }
     img.poweredbylogo {
         vertical-align: bottom;

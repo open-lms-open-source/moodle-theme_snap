@@ -182,7 +182,10 @@ class theme_snap_core_renderer extends toc_renderer {
             $hascontent = component_callback('mod_'. $modname, 'print_recent_activity',
                     array($COURSE, $viewfullnames, $timestart), false);
             if ($hascontent) {
-                $recentactivity[$modname] = ob_get_contents();
+                $content = ob_get_contents();
+                if (!empty($content)) {
+                    $recentactivity[$modname] = $content;
+                }
             }
             ob_end_clean();
         }
