@@ -15,15 +15,26 @@
 
 blockquote {
     border-left: 5px solid @brand-primary;
+    &.blockquote-reverse {
+        border-left: 0;
+        border-right: 5px solid @brand-primary;
+    }
 }
+
 
 hr {
     border-top: 1px solid @brand-primary;
 }
 
 a,
-a:visited { color:@brand-primary;}
-a:hover { color:darken(@brand-primary, 8%); }
+a:visited {
+    color:@brand-primary;
+}
+
+a:focus,
+a:hover {
+    color: darken(@brand-primary, 8%);
+}
 
 
 #region-main,

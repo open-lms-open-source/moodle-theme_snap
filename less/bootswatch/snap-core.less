@@ -2366,6 +2366,9 @@ table#user-grades tr.avg td.cell{
 #local-nortongrader-resize {
     // display: none;
 }
+#page-grade-report-joulegrader-index #joule-grades-thead {
+    table-layout: fixed;
+}
 #page-grade-report-nortongrader-index,
 #page-grade-report-joulegrader-index {
     #gradereport-joulegrader-navbox,
@@ -2619,12 +2622,20 @@ table#user-grades tr.avg td.cell{
     z-index: 13;
 }
 
-// Override for odd little notice when edeleting questions.
+// Override for odd little notice when deleting questions.
+#page-blocks-conduit-view #notice.snap-continue-cancel,
 #page-mod-quiz-edit div.container #notice.snap-continue-cancel {
     color: @text-color;
     background-color: @body-bg;
     font-size: @font-size-base;
     left: 0;
+}
+
+#page-blocks-conduit-view #notice.snap-continue-cancel {
+    position: relative;
+    margin: 0;
+    padding: 0;
+    min-height: 0;
 }
 // the hardcodeded ones here have the button outside the div
 // remember to add any further additions to the user swatch

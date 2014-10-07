@@ -77,7 +77,7 @@ class addsection_controller extends controller_abstract {
         $section = $modinfo->get_section_info($course->numsections, MUST_EXIST);
         $DB->set_field('course_sections', 'name', $sectioname, array('id' => $section->id));
         $DB->set_field('course_sections', 'summary', $summary, array('id' => $section->id));
-        $DB->set_field('course_sections', 'summaryformat', 0, array('id' => $section->id));
+        $DB->set_field('course_sections', 'summaryformat', FORMAT_HTML, array('id' => $section->id));
         rebuild_course_cache($course->id);
 
         redirect(course_get_url($course, $section->section));

@@ -76,7 +76,6 @@ table#listdirectories {
 .path-grade-report-grader {
     th.user img.userpicture {
         border: none;
-        height: 100%;
         width: auto;
         &.defaultuserpic {
             border: 1px solid #e5e5e5;
@@ -85,6 +84,26 @@ table#listdirectories {
     tr:not(.heading) th.useridnumbercourse,
     tr:not(.heading) th.useremail {
         font-weight: normal;
+    }
+    div.left_scroller,
+    div.right_scroller {
+        tr,
+        th,
+        td {
+            height: 4.6em;
+
+        }
+        tr.avg,
+        tr.controls,
+        td.controls,
+        th.controls,
+        tr.groupavg,
+        tr.range,
+        th.range,
+        td.range,
+        tr.heading th.range {
+            height: 3.5em !important;
+        }
     }
 }
 .path-grade-report-joulegrader {

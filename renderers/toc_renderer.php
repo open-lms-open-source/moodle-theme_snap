@@ -273,6 +273,23 @@ class toc_renderer extends core_renderer {
         return $o;
     }
 
+    /**
+     * Is the gradebook accessible - i.e. are there any reports accessible to this user
+     * @return bool
+     */
+    protected function gradebook_accessible($context) {
+
+        /// find all accessible reports
+        $reports = grade_helper::get_enabled_plugins_reports(); // Get all enabled reports.
+
+        foreach ($reports as $plugin => $plugindir) {                      // Remove ones we can't see
+            if (!has_capability('gradereport/'.$plugin.':view', $context)) {
+                unset($reports[$plugin]);
+            }
+        }
+        return !empty($reports);
+    }
+
 
     /**
      * generate appendices string
@@ -288,26 +305,36 @@ class toc_renderer extends core_renderer {
         $localplugins = core_component::get_plugin_list('local');
         $coursecontext = context_course::instance($COURSE->id);
 
-        // Gradebook.
-        $links[] = array(
-            'link' => 'grade/index.php?id='.$COURSE->id,
-            'title' => get_string('gradebook', 'grades')
-        );
+        if ($this->gradebook_accessible($coursecontext)) {
+            // Gradebook.
+            $links[] = array(
+                'link' => 'grade/index.php?id='.$COURSE->id,
+                'title' => get_string('gradebook', 'grades')
+            );
+        }
 
         // Only show if joule grader is installed.
         if (array_key_exists('joulegrader', $localplugins)) {
-            $links[] = array(
-                'link' => 'local/joulegrader/view.php?courseid='.$COURSE->id,
-                'title' => get_string('pluginname', 'local_joulegrader')
-            );
+            if (has_capability('local/joulegrader:grade', $coursecontext)
+                || has_capability('local/joulegrader:view', $coursecontext)
+            ) {
+                $links[] = array(
+                    'link' => 'local/joulegrader/view.php?courseid='.$COURSE->id,
+                    'title' => get_string('pluginname', 'local_joulegrader'),
+                );
+            }
         }
 
         // Only show Norton grader if installed.
         if (array_key_exists('nortongrader', $localplugins)) {
-            $links[] = array(
-                'link' => $CFG->wwwroot.'/local/nortongrader/view.php?courseid='.$COURSE->id,
-                'title' => get_string('pluginname', 'local_nortongrader')
-            );
+            if (has_capability('local/nortongrader:grade', $coursecontext)
+                || has_capability('local/nortongrader:view', $coursecontext)
+            ) {
+                $links[] = array(
+                    'link' => $CFG->wwwroot.'/local/nortongrader/view.php?courseid='.$COURSE->id,
+                    'title' => get_string('pluginname', 'local_nortongrader')
+                );
+            }
         }
 
         // Only show core outcomes if enabled.
@@ -332,7 +359,7 @@ class toc_renderer extends core_renderer {
             // from yet.
             'link' => 'badges/view.php?type=2&id='.$COURSE->id,
             'title' => get_string('badgesview', 'badges'),
-            'capability' => '!moodle/course:update', // You must not have this capability to view this item.
+            'capability' => '!moodle/course:update' // You must not have this capability to view this item.
         );
 
         // Personalised Learning Designer.
@@ -344,23 +371,28 @@ class toc_renderer extends core_renderer {
 
         // Only show Joule reports if installed.
         if (array_key_exists('reports', core_component::get_plugin_list('block'))) {
-            $links[] = array(
-                'link' => $CFG->wwwroot.'/blocks/reports/view.php?action=dashboard&courseid='.$COURSE->id,
-                'title' => get_string('joulereports', 'block_reports')
-            );
+            if (has_capability('block/reports:viewown', $coursecontext, null, false)
+                || has_capability('block/reports:view', $coursecontext)
+            ) {
+                $links[] = array(
+                    'link' => $CFG->wwwroot.'/blocks/reports/view.php?action=dashboard&courseid='.$COURSE->id,
+                    'title' => get_string('joulereports', 'block_reports')
+                );
+            }
         }
 
         // Participants.
         $links[] = array(
             'link' => 'user/index.php?id='.$COURSE->id.'&mode=1',
-            'title' => get_string('participants')
+            'title' => get_string('participants'),
+            'capability' => 'moodle/course:viewparticipants' // Capability required to view this item.
         );
 
         // Manage badges.
         $links[] = array(
             'link' => 'badges/index.php?type=2&id='.$COURSE->id,
             'title' => get_string('managebadges', 'badges'),
-            'capability' => 'moodle/course:update', // Capability required to view this item.
+            'capability' => 'moodle/course:update' // Capability required to view this item.
         );
 
         // Output appendices.
