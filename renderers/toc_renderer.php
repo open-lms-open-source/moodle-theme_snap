@@ -354,13 +354,15 @@ class toc_renderer extends core_renderer {
         }
 
         // Course badges.
-        $links[] = array(
-            // What is the 'type=2' bit ?? I'm not happy with this hardcoded but I don't know where it gets the type
-            // from yet.
-            'link' => 'badges/view.php?type=2&id='.$COURSE->id,
-            'title' => get_string('badgesview', 'badges'),
-            'capability' => '!moodle/course:update' // You must not have this capability to view this item.
-        );
+        if (!is_guest($coursecontext)) {
+            $links[] = array(
+                // What is the 'type=2' bit ?? I'm not happy with this hardcoded but I don't know where it gets the type
+                // from yet.
+                'link' => 'badges/view.php?type=2&id='.$COURSE->id,
+                'title' => get_string('badgesview', 'badges'),
+                'capability' => '!moodle/course:update' // You must not have this capability to view this item.
+            );
+        }
 
         // Personalised Learning Designer.
         $links[] = array(
