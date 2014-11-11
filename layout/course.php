@@ -11,8 +11,8 @@ $coursemainpage = strpos($PAGE->pagetype, 'course-view-') === 0;
 ////////////////////////// MAIN  ///////////////////////////////
 -->
 <main id="moodle-page" class="clearfix">
-<header id="page-header" class="clearfix">
-<nav class="breadcrumb-nav" role="navigation" aria-label="breadcrumb"><?php echo $OUTPUT->navbar(); ?></nav>
+<div id="page-header" class="clearfix">
+<div class="breadcrumb-nav" aria-label="breadcrumb"><?php echo $OUTPUT->navbar(); ?></div>
 
 <div id="page-mast"
 <?php if (!empty($snapcourseimage)) : ?>
@@ -28,7 +28,7 @@ if ($coursemainpage) {
 ?>
 </div>
 <?php echo $OUTPUT->print_settings_link(); ?>
-</header>
+</div>
 
 <section id="region-main">
 <?php
@@ -46,7 +46,7 @@ include(__DIR__.'/moodle-blocks.php');
 if ($coursemainpage) {
     $coursefooter = $OUTPUT->print_course_footer();
     if (!empty($coursefooter)) : ?>
-    <div id=snap-course-footer class=row><?php echo $coursefooter ?></div>
+    <footer role=footer id=snap-course-footer class=row><?php echo $coursefooter ?></footer>
     <?php endif;
 } ?>
 </main>

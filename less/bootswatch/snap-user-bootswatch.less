@@ -13,6 +13,23 @@
 // Typography
 // -------------------------
 
+// Reset - overwrites inline style tags
+.snap-image-summary *[style],
+.summary-text *[style],
+.snap-activity .contentafterlink *[style]
+.signuppanel *[style]{
+    color:inherit !important;
+    font-size:inherit !important;
+    line-height:inherit !important;
+    margin:inherit !important;
+    padding:inherit !important;
+    font-family: inherit !important;
+    background-color:inherit !important;
+    max-width:100% !important;
+    border:inherit !important;
+    text-align:inherit !important;
+}
+
 blockquote {
     border-left: 5px solid @brand-primary;
     &.blockquote-reverse {
@@ -34,6 +51,29 @@ a:visited {
 a:focus,
 a:hover {
     color: darken(@brand-primary, 8%);
+}
+#fixy-my-courses .courseinfo {
+    a,
+    a:visited {
+        color:@brand-primary;
+    }
+    a:focus,
+    a:hover {
+        color: darken(@brand-primary, 8%);
+    }
+
+}
+
+.section li.snap-native .activityinstance>a:first-child,
+.section li.snap-native .activityinstance>a:first-child {
+    &,
+    &:visited {
+        color:@brand-primary;
+    }
+    &:focus,
+    &:hover {
+        color: darken(@brand-primary, 8%);
+    }
 }
 
 
@@ -57,7 +97,9 @@ legend,
 .mform legend a,
 .mform legend a:hover,
 .coursebox .info .coursename,
-.collapsibleregioncaption {
+.collapsibleregioncaption,
+.pagemod-readmore,
+.snap-action-icon {
     font-family: @font-family-sans-serif;
 }
 
@@ -165,7 +207,7 @@ input[type="reset"] {
 }
 
 #course-toc {
-    div[role="menubar"]{
+    div[role="tablist"]{
         > span a:hover {
             border-bottom-color: @brand-primary;
         }
@@ -185,6 +227,13 @@ input[type="reset"] {
 .news-article-preview,
 #notice {
     background-color: @brand-primary;
+}
+
+.toc-search-link {
+    background-color: @brand-primary;
+    &:hover{
+        background-color: darken(@brand-primary, 8%);
+    }
 }
 
 

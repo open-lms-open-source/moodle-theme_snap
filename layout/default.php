@@ -8,8 +8,8 @@
 ////////////////////////// MAIN  ///////////////////////////////
 -->
 <main id="moodle-page" class="clearfix">
-<header id="page-header" class="clearfix">
-<nav class="breadcrumb-nav" role="navigation" aria-label="breadcrumb"><?php echo $OUTPUT->navbar(); ?></nav>
+<div id="page-header" class="clearfix">
+<div class="breadcrumb-nav" aria-label="breadcrumb"><?php echo $OUTPUT->navbar(); ?></div>
 <div id="page-mast"
 <?php if (!empty($snapcourseimage)) : ?>
 class="mast-image"
@@ -26,7 +26,7 @@ if ($this->page->user_is_editing() && $PAGE->pagetype == 'site-index') {
     echo '<a class="btn btn-default btn-sm" href="'.$CFG->wwwroot.'/admin/settings.php?section=themesettingsnap#admin-poster">'.get_string('changecoverimage', 'theme_snap').'</a>';
 }
 ?>
-</header>
+</div>
 
 <section id="region-main">
 <?php

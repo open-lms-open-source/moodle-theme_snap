@@ -27,12 +27,40 @@ if ($ADMIN->fulltree) {
         $settings->add($setting);
     }
 
-
     $name = 'theme_snap/brandingheading';
     $title = new lang_string('brandingheading', 'theme_snap');
     $description = new lang_string('brandingheadingdesc', 'theme_snap');
     $setting = new admin_setting_heading($name, $title, $description);
     $settings->add($setting);
+
+    if (!during_initial_install() && !empty(get_site()->fullname)) {
+        // Site name setting.
+        $name = 'fullname';
+        $title = new lang_string('fullname', 'theme_snap');
+        $description = new lang_string('fullnamedesc', 'theme_snap');
+        $setting = new admin_setting_sitesettext($name, $title, $description, null);
+        $settings->add($setting);
+    }
+
+    // Site description setting.
+    $name = 'theme_snap/subtitle';
+    $title = new lang_string('subtitle', 'theme_snap');
+    $description = new lang_string('subtitle_desc', 'theme_snap');
+    $setting = new admin_setting_configtextarea($name, $title, $description, '');
+    $settings->add($setting);
+
+    // Main theme colour setting.
+    $name = 'theme_snap/themecolor';
+    $title = new lang_string('themecolor', 'theme_snap');
+    $description = new lang_string('themecolordesc', 'theme_snap');
+    $default = '#3bcedb';
+    $previewconfig = null;
+    $setting = new admin_setting_configcolourpicker($name, $title, $description, $default, $previewconfig);
+    $setting->set_updatedcallback('theme_reset_all_caches');
+    $settings->add($setting);
+
+
+
 
      // Logo file setting.
     $name = 'theme_snap/logo';
@@ -52,15 +80,7 @@ if ($ADMIN->fulltree) {
     $setting->set_updatedcallback('theme_reset_all_caches');
     $settings->add($setting);
 
-    // Main theme colour setting.
-    $name = 'theme_snap/themecolor';
-    $title = new lang_string('themecolor', 'theme_snap');
-    $description = new lang_string('themecolordesc', 'theme_snap');
-    $default = '#3bcedb';
-    $previewconfig = null;
-    $setting = new admin_setting_configcolourpicker($name, $title, $description, $default, $previewconfig);
-    $setting->set_updatedcallback('theme_reset_all_caches');
-    $settings->add($setting);
+
 
     // Cover image file setting.
     $name = 'theme_snap/poster';
@@ -71,21 +91,7 @@ if ($ADMIN->fulltree) {
     $setting->set_updatedcallback('theme_reset_all_caches');
     $settings->add($setting);
 
-    if (!during_initial_install() && !empty(get_site()->fullname)) {
-        // Site name setting.
-        $name = 'fullname';
-        $title = new lang_string('fullname', 'theme_snap');
-        $description = new lang_string('fullnamedesc', 'theme_snap');
-        $setting = new admin_setting_sitesettext($name, $title, $description, null);
-        $settings->add($setting);
-    }
 
-    // Site description setting.
-    $name = 'theme_snap/subtitle';
-    $title = new lang_string('subtitle', 'theme_snap');
-    $description = new lang_string('subtitle_desc', 'theme_snap');
-    $setting = new admin_setting_configtext($name, $title, $description, '');
-    $settings->add($setting);
 
     $name = 'theme_snap/menusandnavheading';
     $title = new lang_string('menusandnavheading', 'theme_snap');
@@ -99,7 +105,7 @@ if ($ADMIN->fulltree) {
     $description = new lang_string('hidenavblockdesc', 'theme_snap');
     $checked = '1';
     $unchecked = '0';
-    $default = $unchecked;
+    $default = $checked;
     $setting = new admin_setting_configcheckbox($name, $title, $description, $default, $checked, $unchecked);
     $settings->add($setting);
 
@@ -107,6 +113,17 @@ if ($ADMIN->fulltree) {
     $name = 'theme_snap/deadlinestoggle';
     $title = new lang_string('deadlinestoggle', 'theme_snap');
     $description = new lang_string('deadlinestoggledesc', 'theme_snap');
+    $checked = '1';
+    $unchecked = '0';
+    $default = $checked;
+    $setting = new admin_setting_configcheckbox($name, $title, $description, $default, $checked, $unchecked);
+    $setting->set_updatedcallback('theme_reset_all_caches');
+    $settings->add($setting);
+
+    // Personal menu recent feedback & grading  on/off.
+    $name = 'theme_snap/feedbacktoggle';
+    $title = new lang_string('feedbacktoggle', 'theme_snap');
+    $description = new lang_string('feedbacktoggledesc', 'theme_snap');
     $checked = '1';
     $unchecked = '0';
     $default = $checked;
@@ -125,16 +142,9 @@ if ($ADMIN->fulltree) {
     $setting->set_updatedcallback('theme_reset_all_caches');
     $settings->add($setting);
 
-    // Custom footer setting.
-    $name = 'theme_snap/footnote';
-    $title = new lang_string('footnote', 'theme_snap');
-    $description = new lang_string('footnotedesc', 'theme_snap');
-    $default = '';
-    $setting = new admin_setting_confightmleditor($name, $title, $description, $default);
-    $setting->set_updatedcallback('theme_reset_all_caches');
-    $settings->add($setting);
 
-    // Course footer on/off. This will be removed in Moodle 2.7.
+
+    // Course footer on/off.
     $name = 'theme_snap/coursefootertoggle';
     $title = new lang_string('coursefootertoggle', 'theme_snap');
     $description = new lang_string('coursefootertoggledesc', 'theme_snap');
@@ -142,6 +152,15 @@ if ($ADMIN->fulltree) {
     $unchecked = '0';
     $default = $checked;
     $setting = new admin_setting_configcheckbox($name, $title, $description, $default, $checked, $unchecked);
+    $setting->set_updatedcallback('theme_reset_all_caches');
+    $settings->add($setting);
+
+    // Custom footer setting.
+    $name = 'theme_snap/footnote';
+    $title = new lang_string('footnote', 'theme_snap');
+    $description = new lang_string('footnotedesc', 'theme_snap');
+    $default = '';
+    $setting = new admin_setting_confightmleditor($name, $title, $description, $default);
     $setting->set_updatedcallback('theme_reset_all_caches');
     $settings->add($setting);
 

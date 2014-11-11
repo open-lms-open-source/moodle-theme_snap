@@ -312,7 +312,6 @@ function snapInit(){
 
         if(searchString.length === 0) {
             $('#toc-search-results').html('');
-            $('#toc-search-input').removeClass('state-visible');
         } else {
             var matches = [];
             for (i = 0; i < dataList.length; i++) {
@@ -320,9 +319,6 @@ function snapInit(){
                 if(processSearchString($(dataItem).text()).indexOf(searchString) > -1 ) {
                     matches.push(dataItem);
                 }
-            }
-            if(matches.length) {
-                $('#toc-search-input').addClass('state-visible');
             }
             $('#toc-search-results').html(matches);
         }
@@ -356,76 +352,56 @@ function snapInit(){
     };
 
     /**
-     * Add deadlines, messages async'ly to the personal menu
-     *
-     * @param key - jsonencoded sesskey
+     * Add deadlines, messages, grades & grading,  async'ly to the personal menu
      *
      * @author Stuart Lamour
      */
     var updatePersonalMenu = function(){
-        var key = M.cfg.sesskey;
-
+        $('#primary-nav').focus();
         // primary nav showing so hide the other dom parts
         $('#page, #moodle-footer').hide(0);
-        var deadlinesContainer = $('#snap-personal-menu-deadlines');
-        if($(deadlinesContainer).length) {
-            var deadlines_key = key + "pmDeadlines";
-            try {
-                // Display old content while waiting, if not too old.
-                if(window.sessionStorage[deadlines_key]) {
-                    logmsg("using locally stored deadlines");
-                    html = window.sessionStorage[deadlines_key];
-                    $(deadlinesContainer).html(html);
-                }
-                logmsg("fetching deadlines");
-                $.ajax({
-                      type: "GET",
-                      async:  true,
-                      url: M.cfg.wwwroot + '/theme/snap/rest.php?action=get_deadlines&contextid=' + M.cfg.context,
-                      success: function(data){
-                        logmsg("fetched deadlines");
-                        window.sessionStorage[deadlines_key] = data.html;
-                        $(deadlinesContainer).html(data.html);
-                      }
-                });
-            } catch(err) {
-                sessionStorage.clear();
-                logerror(err);
-                // $(deadlinesContainer).html("");
-            }
-        } // end deadlines div exists check
 
-        var messagesContainer = $('#snap-personal-menu-messages');
-        if($(messagesContainer).length) {
-            var messages_key = key + "pmMessages";
-            try {
-                // Display old content while waiting, if not too old.
-                if(window.sessionStorage[messages_key]) {
-                    logmsg("using locally stored messages");
-                    html = window.sessionStorage[messages_key];
-                    $(messagesContainer).html(html);
+            /**
+             * Load ajax info into personal menu.
+             *
+             */
+            var loadajaxinfo = function(type){
+                var container = $('#snap-personal-menu-' + type);
+                if($(container).length) {
+                    var cache_key = M.cfg.sesskey + 'personal-menu-' + type;
+                    try {
+                        // Display old content while waiting
+                        if(window.sessionStorage[cache_key]) {
+                            logmsg('using locally stored ' + type);
+                            html = window.sessionStorage[cache_key];
+                            $(container).html(html);
+                        }
+                        logmsg('fetching ' + type);
+                        $.ajax({
+                              type: "GET",
+                              async:  true,
+                              url: M.cfg.wwwroot + '/theme/snap/rest.php?action=get_' + type +'&contextid=' + M.cfg.context,
+                              success: function(data){
+                                logmsg('fetched ' + type);
+                                window.sessionStorage[cache_key] = data.html;
+                                $(container).html(data.html);
+                              }
+                        });
+                    } catch(err) {
+                        sessionStorage.clear();
+                        logerror(err);
+                    }
                 }
-                logmsg("fetching messages");
-                $.ajax({
-                      type: "GET",
-                      async:  true,
-                      url: M.cfg.wwwroot + '/theme/snap/rest.php?action=get_messages&contextid=' + M.cfg.context,
-                      success: function(data){
-                        logmsg("fetched messages");
-                        window.sessionStorage[messages_key] = data.html;
-                        $(messagesContainer).html(data.html);
-                      }
-                });
-            } catch(err) {
-                sessionStorage.clear();
-                logerror(err);
-                // $(messagesContainer).html("");
-            }
-        } // end messages div exists check
+            };
+        loadajaxinfo('deadlines');
+        loadajaxinfo('graded');
+        loadajaxinfo('grading');
+        loadajaxinfo('messages');
+
 
         // Load course information via ajax.
         var courseids = [];
-        var courseinfo_key = key + 'courseinfo';
+        var courseinfo_key = M.cfg.sesskey + 'courseinfo';
         $('.courseinfo .dynamicinfo').each(function() {
             courseids.push ($(this).attr('data-courseid'));
         });
@@ -444,7 +420,7 @@ function snapInit(){
                     if (info.grade && info.grade.gradehtml){
                         courseinfohtml += info.grade.gradehtml;
                     }
-                    $('li.courseinfo [data-courseid="'+info.courseid+'"]').html(courseinfohtml);
+                    $('.courseinfo [data-courseid="'+info.courseid+'"]').html(courseinfohtml);
                 }
             };
 
@@ -493,7 +469,7 @@ function snapInit(){
         var scrtop = el.offset().top - navheight;
         $('html, body').animate({
             scrollTop: scrtop
-        }, 1000);
+        }, 600);
     };
 
     /**
@@ -627,6 +603,8 @@ function snapInit(){
             if(newHash !== lastHash){
                 if(location.hash === '#primary-nav') {
                     updatePersonalMenu();
+                    // GT - 2014-10-16 - Add ellipsis to long course titles
+                    $('.courseinfo-body h3 a').ellipsis();
                 }
                 else{
                     $('#page, #moodle-footer').show(0);
@@ -653,7 +631,7 @@ function snapInit(){
         // Construct an instance of Headroom, passing the element.
         var headroom = new Headroom(myElement, {
           "tolerance": 5,
-          "offset": 205,
+          "offset": 100,
           "classes": {
             // when element is initialised
                 initial : "headroom",
@@ -673,7 +651,7 @@ function snapInit(){
         }
 
         // Listener for toc search.
-        var dataList = $("#toc-searchables").find('a').clone(true);
+        var dataList = $("#toc-searchables").find('li').clone(true);
         $('#toc-search-input').keyup(function() {
             tocSearchCourse(dataList);
         });
@@ -693,7 +671,6 @@ function snapInit(){
 
                 // Register listener for exiting search result.
                 $('#toc-search-results a').last().blur(function () {
-                    $("#toc-search-input").removeClass('state-visible');
                     $("#toc-search-input").val('');
                     $(this).off('blur'); // unregister listener
                 });
@@ -702,6 +679,7 @@ function snapInit(){
         });
 
         // Listener for exiting search field.
+        /*
         $('#toc-search-input').blur(function () {
             if ($(this).hasClass('state-tabbed')) {
                 // We left on a tab event which means we should now be navigating the search results.
@@ -712,6 +690,7 @@ function snapInit(){
             $(this).removeClass('state-visible');
             $(this).val('');
         });
+        */
 
         // Add toggle class for hide/show activities/resources - additional to moodle adding dim.
         $(document).on("click", '[data-action=hide],[data-action=show]', function() {
@@ -742,7 +721,7 @@ function snapInit(){
         // Onclick for toggle of state-visible of admin block.
         $(document).on("click", ".settings-button", function(e) {
             var href = this.getAttribute('href');
-            $(href).toggleClass('state-visible');
+            $(href).toggleClass('state-visible').focus();
             e.preventDefault();
         });
 
@@ -750,6 +729,25 @@ function snapInit(){
         $(document).on("click", "#fixy-close", function() {
             $('#page, #moodle-footer').show();
 
+        });
+
+        // Page mod toggle content
+        $(document).on("click", ".modtype_page .instancename,.pagemod-readmore,.pagemod-content .snap-action-icon", function(e) {
+
+            $pagemod = $(this).closest('.modtype_page');
+            $pagemod.toggleClass('state-expanded');
+            $pagemod.find('.pagemod-content').slideToggle("fast", function() {
+                // Animation complete.
+                if($pagemod.is('.state-expanded')){
+                    $pagemod.find('.pagemod-content').focus();
+                }
+                else {
+                    $pagemod.focus();
+                }
+                scrollToElement($pagemod);
+            });
+            applyResponsiveVideo();
+            e.preventDefault();
         });
 
         // Listen for window resize for videos.
@@ -786,6 +784,9 @@ function snapInit(){
     if(location.href.indexOf("primary-nav") > -1) {
         updatePersonalMenu();
     }
+
+    // GT - 2014-10-16 - Add ellipsis to long course titles
+    $('.courseinfo-body h3 a').ellipsis();
 
     // SL - 19th aug 2014 - resposive video and snap search in exceptions.
     $(window).on('load' , function() {

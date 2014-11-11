@@ -100,6 +100,7 @@ module.exports = function(grunt) {
                 "!javascript/headroom.js",
                 "!javascript/modernizer.js",
                 "!javascript/jquery.placeholder.js",
+                "!javascript/jquery.mr_ellipsis.js",
             ],
         },
         watch: {

@@ -158,23 +158,28 @@ class toc_renderer extends core_renderer {
         $contents = get_string('contents', 'theme_snap');
         $appendices = get_string('appendices', 'theme_snap');
         $coursenavigation = get_string('coursenavigation', 'theme_snap');
+        $close = get_string('close', 'theme_snap');
+
         $o = '<nav id="course-toc" role="navigation" aria-label="'.s($coursenavigation).'">
-        <div role="menubar">
-        <span><a href="#sections">'.$contents.'</a></span>
-        <span><a href="#blocks">'.$appendices.'</a></span>';
+        <div role="tablist">
+        <span><a role="tab" href="#sections">'.$contents.'</a></span>
+        <span><a role="tab" href="#blocks">'.$appendices.'</a></span>
+        <a class="toc-search-link pull-right" role="tab" href="#toc-search"><span class="icon icon-multimedia-20"></span><span class="sr-only">'.get_string("search").'</span></a>
+        </div>';
 
-            $search = get_string('search');
-            $o .= '
-            <label class="sr-only" for="toc-search-input">Search</label>
-            <input id="toc-search-input"  type="text" title="'.s($search).'" placeholder="&#xe0d0;" />
-            '.$this->modulesearch();
+        $o .= '
+        <div id=toc-search role="tabpanel" class="moodle-has-zindex">
+        <label class="toc-search-link" for="toc-search-input"><span class="icon icon-multimedia-20"></span><span class="sr-only">Search with autocomplete</span></label>
+        <input autofocus id="toc-search-input" type="text" title="'.get_string("search").'" placeholder="'.get_string("search").'" role="textbox" aria-autocomplete="list" aria-activedescendant="toc-search-results" />
+        '.$this->modulesearch().'<a class="pull-right snap-action-icon" href="#">
+            <i class="icon icon-office-52"></i><small>'.$close.'</small>
+        </a></div>';
 
-        $o .= '</div>';
         $listlarge = '';
         if ($course->numsections > 11) {
             $listlarge = "list-large";
         }
-        $toc = '<ol id="chapters" class="chapters '.$listlarge.'" role="menu" start="0">';
+        $toc = '<ol id="chapters" class="chapters '.$listlarge.'" role="tabpanel" start="0">';
 
         course_create_sections_if_missing($course, range(0, $course->numsections));
 
@@ -256,9 +261,9 @@ class toc_renderer extends core_renderer {
                         $url = new moodle_url('/course/view.php', array('id' => $course->id, 'section' => $section));
                     }
                 }
-                $link = html_writer::link($url, $sectionstring, array('role' => 'menuitem', 'class' => $sectionclass));
+                $link = "<a class='$sectionclass' href='$url'>$sectionstring</a>";
             } else {
-                $link = html_writer::tag('span', $sectionstring, array('class' => $sectionclass));
+                $link = "<span class='$sectionclass' >$sectionstring</a>";
             }
             $progress = $this->toc_progress ($thissection, $course);
 
@@ -279,10 +284,11 @@ class toc_renderer extends core_renderer {
      */
     protected function gradebook_accessible($context) {
 
-        /// find all accessible reports
+        // Find all accessible reports.
         $reports = grade_helper::get_enabled_plugins_reports(); // Get all enabled reports.
 
-        foreach ($reports as $plugin => $plugindir) {                      // Remove ones we can't see
+        foreach ($reports as $plugin => $plugindir) {
+            // Remove ones we can't see.
             if (!has_capability('gradereport/'.$plugin.':view', $context)) {
                 unset($reports[$plugin]);
             }
@@ -398,9 +404,9 @@ class toc_renderer extends core_renderer {
         );
 
         // Output appendices.
-        $o = html_writer::start_tag('ul', array('role' => 'menu', 'id' => 'appendices', 'class' => 'list-unstyled'));
+        $o = "<ul role='tabpanel' id='appendices' class='list-unstyled'>";
         $o .= $this->render_appendices($links);
-        $o .= html_writer::end_tag('ul');
+        $o .= "</ul>";
         return ($o);
     }
 
@@ -434,7 +440,6 @@ class toc_renderer extends core_renderer {
         foreach ($links as $item) {
 
             $item = (object) $item;
-            $subtree = '';
 
             // Check if user has appropriate access to see this item.
             if (!empty($item->capability)) {
@@ -459,11 +464,11 @@ class toc_renderer extends core_renderer {
             // Generate linkhtml and add it to treestr.
             $linkhtml = '';
             if (!empty($item->link)) {
-                $linkhtml = html_writer::link($item->link, $item->title);
+                $linkhtml = "<a href='$item->link'>$item->title</a>";
             } else {
-                $linkhtml = html_writer::tag('span', $item->title);
+                $linkhtml = "<span>$item->title</span>";
             }
-            $o .= html_writer::tag('li', $linkhtml.$subtree);
+            $o .= "<li>$linkhtml</li>";
         }
         return ($o);
     }
@@ -483,8 +488,8 @@ class toc_renderer extends core_renderer {
         $course  = $format->get_course();
         $singlepage = (!property_exists($course, 'coursedisplay') || $course->coursedisplay == COURSE_DISPLAY_SINGLEPAGE);
 
-        $o = '<div id="toc-search-results"></div>';
-        $o .= '<div id="toc-searchables">';
+        $o = '<ul id="toc-search-results" class="list-unstyled" role="listbox"></ul>';
+        $o .= '<ul id="toc-searchables">';
 
         // If course does not have any sections then exit - it can't be a course without sections!!!
         if (!isset($course->numsections)) {
@@ -515,7 +520,7 @@ class toc_renderer extends core_renderer {
             }
 
             // Create image.
-            $img = html_writer::empty_tag('img', array('src' => $cm->get_icon_url(), 'alt' => 'icon for module '.$cm->name));
+            $img = "<img src='".$cm->get_icon_url()."' alt='' />";
 
             // Create link.
 
@@ -525,10 +530,9 @@ class toc_renderer extends core_renderer {
 
                 $url = $CFG->wwwroot.'/course/view.php?id='.$COURSE->id.'&section='.$cm->sectionnum.'#module-'.$cm->id;
             }
-            $link = html_writer::link($url, $img.' '.$info.' '.$cm->get_formatted_name());
-            $o .= $link;
+            $o .= "<li role='option'><a href='$url'>".$img.$info.$cm->get_formatted_name().$pubstat."</a></li>";
         }
-        $o .= '</div>';
+        $o .= '</ul>';
 
         return ($o);
     }

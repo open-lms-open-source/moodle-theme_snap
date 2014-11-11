@@ -42,28 +42,25 @@ if (!empty($custommenu) && !empty($footnote)) {
     echo '</div></div>';
 }
 ?>
-<hr>
-<div class="helplink text-right">
-<?php
-    // set moodle rooms package logo
-    $pwdby = isset($CFG->MR_PACKAGE) ? $CFG->MR_PACKAGE : 'power';
-?>
-<small><?php print_string('poweredbyrunby', 'theme_snap', (string) $OUTPUT->pix_url('poweredby'.$pwdby, 'theme')) ?><img class="moodlefooterlogo" src="<?php echo (string) $OUTPUT->pix_url('footermoodlelogo-w', 'theme'); ?>" alt="moodle" /><span class="footerlinkdivider">·</span><a href="http://kb.moodlerooms.com/joule-2-manuals" target='_blank'><?php print_string('manuals', 'theme_snap') ?></a><span class="footerlinkdivider">·</span><a href="http://kb.moodlerooms.com/" target='_blank'><?php print_string('knowledgebase', 'theme_snap') ?></a>
-<?php
-if ($OUTPUT->page_doc_link()) {
-    echo " · ".$OUTPUT->page_doc_link();
-}
-?>
-<br>© Copyright 2014 Moodlerooms Inc, All Rights Reserved.</small></div>
 
+<div id='mrooms-footer' class="helplink text-right">
+    <small>
+    <?php
+    if ($OUTPUT->page_doc_link()) {
+        echo $OUTPUT->page_doc_link();
+    }
+    ?>
+    <br/>Built with <a href="http://kb.moodlerooms.com/" target='_blank' title='Joule help guides'>Joule</a> from <a href="http://moodlerooms.com/" target='_blank'>Moodlerooms</a>, powered by <a href="http://www.moodle.com/" target='_blank'>Moodle</a>.
+    </small>
+<br>© Copyright 2014 Moodlerooms Inc, All Rights Reserved.</small>
+</div>
+<!-- close mrooms footer -->
 <div id="page-footer">
 <?php echo $OUTPUT->lang_menu(); ?>
 <?php echo $OUTPUT->standard_footer_html(); ?>
 </div>
 </footer>
 <?php echo $OUTPUT->standard_end_of_body_html() ?>
-
-
 <!-- bye! -->
 </body>
 </html>

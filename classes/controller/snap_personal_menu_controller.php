@@ -33,7 +33,7 @@ defined('MOODLE_INTERNAL') || die();
  * @copyright Copyright (c) 2013 Moodlerooms Inc. (http://www.moodlerooms.com)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class deadlines_controller extends controller_abstract {
+class snap_personal_menu_controller extends controller_abstract {
     /**
      * Do any security checks needed for the passed action
      *
@@ -50,6 +50,56 @@ class deadlines_controller extends controller_abstract {
     public function get_deadlines_action() {
         return json_encode(array(
             'html' => \theme_snap\local::deadlines()
+        ));
+    }
+
+    /**
+     * Get the user's graded work.
+     *
+     * @return string
+     */
+    public function get_graded_action() {
+        return json_encode(array(
+            'html' => \theme_snap\local::graded()
+        ));
+    }
+
+    /**
+     * Get the user's messages.
+     *
+     * @return string
+     */
+    public function get_messages_action() {
+        return json_encode(array(
+            'html' => \theme_snap\local::messages()
+        ));
+    }
+
+    /**
+     * Get the user's grading from courses they teach.
+     *
+     * @return string
+     */
+    public function get_grading_action() {
+        return json_encode(array(
+            'html' => \theme_snap\local::grading()
+        ));
+    }
+
+    /**
+     * Get course information - progress / grades, etc
+     *
+     * @return string
+     */
+    public function get_courseinfo_action() {
+        $courseids = optional_param('courseids', false, PARAM_SEQUENCE);
+        if (!empty($courseids)) {
+            $courseids = explode(',', $courseids);
+        }
+        $courseinfo = \theme_snap\local::courseinfo($courseids);
+
+        return json_encode(array(
+            'info' => $courseinfo
         ));
     }
 }

@@ -99,12 +99,12 @@ class theme_snap_format_weeks_renderer extends format_weeks_renderer {
         $o .= $this->output->heading($sectiontitle, 3, 'sectionname' . $classes);
 
         // Editing commands.
-        $o .= html_writer::tag('div', $rightcontent, array(
+        if ($PAGE->user_is_editing()) {
+            $o .= html_writer::tag('div', $rightcontent, array(
                 'class' => 'left right side snap-section-editing',
                 'role' => 'region',
-                'aria-label' => 'topic actions',
-            )
-        );
+                'aria-label' => 'topic actions',));
+        }
 
         $o .= html_writer::start_tag('div', array('class' => 'summary'));
         $o .= $this->format_summary_text($section);

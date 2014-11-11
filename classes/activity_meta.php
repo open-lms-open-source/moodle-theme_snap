@@ -14,16 +14,26 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
-/**
- * Theme version info
- *
- * @package   theme_snap
- * @copyright Copyright (c) 2009 Moodlerooms Inc. (http://www.moodlerooms.com)
- * @license   http://opensource.org/licenses/gpl-3.0.html GNU Public License
- */
+namespace theme_snap;
 
-defined('MOODLE_INTERNAL') || die;
+class activity_meta {
 
-$plugin->version   = 2014110400;
-$plugin->requires  = 2013111803;
-$plugin->component = 'theme_snap';
+    // Strings.
+    public $submittedstr;
+    public $notsubmittedstr;
+    public $submitstrkey;
+
+    // General meta data.
+    public $timeopen;
+    public $timeclose;
+    public $isteacher = false;
+
+    // Student meta data.
+    public $submitted = false;
+    public $timesubmitted;
+    public $grade;
+
+    // Teacher meta data.
+    public $numsubmissions = false;
+    public $numrequiregrading = false;
+}

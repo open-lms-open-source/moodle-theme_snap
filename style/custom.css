@@ -1,16 +1,9 @@
-/* Custom CSS
+/* Custom settings CSS
 -------------------------*/
-#page-site-index #page-header {
-    background-image: url([[setting:poster]]);
-}
+[[setting:poster]]
 
-#logo {
-    background-image: url([[setting:logo]]);
-}
+[[setting:logo]]
 
-
-/* Custom CSS Settings
--------------------------*/
 [[setting:snap-user-bootswatch]]
 
 [[setting:customcss]]

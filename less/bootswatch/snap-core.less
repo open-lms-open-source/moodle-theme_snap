@@ -488,7 +488,7 @@ input[type="text"]+input[type="submit"] {
 }
 
 .snap-media-object {
-    .clearfix;
+    .clearfix();
     margin-bottom:1em;
     // media o can be a link
     >a {
@@ -517,7 +517,6 @@ input[type="text"]+input[type="submit"] {
         }
     }
     // media o heading
-    // currenty these are only in the fixy so safe to white, but...
     h3, h3 small {
         color:inherit;
         font-size:1em;
@@ -598,7 +597,11 @@ input[type="text"]+input[type="submit"] {
         border-color: #fff;
         margin: 0.3em 0;
     }
-    a, a:visited {
+    a,
+    a:hover,
+    a:focus,
+    a:active,
+    a:visited {
         color: #fff;
     }
     a(not:.btn):hover {
@@ -708,8 +711,53 @@ input[type="text"]+input[type="submit"] {
     letter-spacing: 0.1em;
 }
 
-// Fixy course list
+// Personal menu course list
 // -------------------------
+
+#fixy-my-courses .courseinfo {
+    position:relative;
+    float:left;
+    width:100%;
+    min-height:200px;
+    background-repeat:no-repeat;
+    background-size:cover;
+    background-position:top center;
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
+    margin:0.5em 1%;
+    .courseinfo-body {
+        background-color:white;
+        color:#666;
+        position:absolute;
+        bottom:0;
+        width:100%;
+        padding:0 1em 1em 1em;
+    }
+    h3 {
+        font-size:1em;
+        font-weight:500;
+    }
+    .dynamicinfo{
+        max-width:50%;
+        float:left;
+    }
+    .completionstatus,
+    .coursegrade {
+        font-size:small;
+        line-height:0.5;
+    }
+    .userpicture{
+        border-radius:50%;
+        float:right;
+        margin-left:1%;
+        width:38px;
+        height:38px;
+        background-color:#ccc;
+    }
+    .published-status {
+        clear:both;
+        margin-bottom:-1em;
+    }
+}
 
 #fixy-profile-link {
     text-align: center;
@@ -722,34 +770,19 @@ input[type="text"]+input[type="submit"] {
     text-align: center;
     margin-top: -50px;
 }
-#fixy-my-courses li{
-    clear:left;
-    padding:0.3em 0;
-}
-#fixy-my-courses .snap-media-body{
-    overflow:hidden;
-    line-height:1.7;
-}
-
-.fixy-course-image {
-    height: 50px;
-    width: 50px;
-    margin-right:2%;
-    float:left;
-    .bg-cover();
-    background-position: center center;
-}
 
 
-.fixy a {
-	color:#fff !important;
+.fixy .label.label-info {
+    background-color: transparent;
+    border: thin solid #fff;
 }
-
 
 @media screen and (min-width: @screen-xs-min) {
-    #fixy-my-courses ul,
     #moodle-footer .list-unstyled{
         column-count: 2;
+    }
+    #fixy-my-courses .courseinfo {
+        width:100%;
     }
 }
 
@@ -758,9 +791,17 @@ input[type="text"]+input[type="submit"] {
         display: inline;
     }
 
-    #fixy-my-courses .list-large,
-     #moodle-footer .list-large{
+    #moodle-footer .list-large{
         column-count: 3;
+    }
+    #fixy-my-courses .courseinfo {
+        width:48%;
+    }
+}
+
+@media screen and (min-width: @screen-md-min) {
+    #fixy-my-courses .courseinfo {
+        width:31%;
     }
 }
 
@@ -914,7 +955,8 @@ footer #moodle-footer
 // aren't designed (yet) for small screens.
 #page-mod-quiz-edit,
 #page-course-management,
-#page-local-joulegrader-view {
+#page-local-joulegrader-view,
+#page-mod-quiz-report {
     #region-main {
         max-width: 100%;
     }
@@ -1017,48 +1059,34 @@ header#page-header
 // Course toc & Appendicies
 // -------------------------
 #course-toc {
-    background-color: #fff;
-    border-radius: 2px 2px 0 0;
-    padding:0;
+    padding:1em 0;
     max-width: 100%;
-    margin:0 auto -.5em;
+    // margin:0 auto -.5em;
     position:relative;
-    div[role="menubar"]{
+    div[role="tablist"]{
+        border-bottom:1px solid #fff;
         font-size:0.9em;
-        margin-bottom:0.5em;
-        margin-left:2em;
+        margin:0.5em 2em;
         position:relative;
         > span {
             margin-right:2%;
             text-transform:uppercase;
             a {text-decoration:none;}
-        }
-        > span a:hover {
-            border-bottom:0.3em solid @brand-primary;
-            .alakazam;
+            a:hover {
+                border-bottom:0.3em solid @brand-primary;
+                .alakazam;
+            }
         }
     }
     .snap-section-complete {
         width:1.5em;
         height:auto;
     }
-}
-
-
-#fixy-my-courses .completionstatus, #fixy-my-courses .coursegrade, #course-toc .completionstatus {
-    display:block;
-    font-size:small;
-    line-height:1.2em;
-}
-
-#course-toc .completionstatus {
-    color:#999;
-}
-
-#fixy-my-courses {
-    .completionstatus,
-    .coursegrade {
-        opacity:0.75;
+    .completionstatus {
+        display:block;
+        font-size:small;
+        line-height:1.2em;
+        color:#999;
     }
 }
 
@@ -1083,7 +1111,7 @@ a[href="#sections"] {
         text-shadow:1px 1px 3px rgba(0,0,0,0.5);
     }
     #course-toc{
-        padding:0.75em 4% 1em;
+        background-color:rgba(255,255,255,0.95);
     }
 }
 
@@ -1092,7 +1120,8 @@ a[href="#sections"] {
     column-count: 2;
     margin-bottom:0;
 }
-#appendices {
+#appendices,
+#toc-search {
     margin-left:2em; // to account for chapters numbering margin
 }
 // specific styles for numbered chapters to improve readability
@@ -1101,7 +1130,7 @@ ol#chapters {
     li{
         margin-left:2em;
         &.current a{
-            color:#666665;
+            color:#666;
             text-decoration:none;
         }
     }
@@ -1134,7 +1163,7 @@ ol#chapters {
     	content:"▼";
     	border-bottom:0 !important;
     }
-    #course-toc div[role="menubar"]>span a{
+    #course-toc span a{
     	border-bottom:0 !important;
     }
     #page-header {
@@ -1178,7 +1207,7 @@ ol#chapters {
         margin: 1em auto -.5em;
     }
     .mast-image {
-        min-height:300px;
+        // min-height:300px;
         #course-toc{
             margin-top:11%;
         }
@@ -1194,57 +1223,59 @@ ol#chapters {
 
 
 // -------------------------
-// Course search in toc*/
+// Course search in toc
 // -------------------------
+.toc-search-link {
+    display: inline-block;
+    width: 3em;
+    height: 3em;
+    border-radius: 50%;
+    text-align: center;
+    padding: 0.75em;
+    color:#fff;
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
+    &:hover,
+    &:visited {
+        color:#fff;
+        text-decoration:none;
+    }
+}
+#toc-search {
+    display:none;
+    z-index:3;
+    &:target {
+        display:block;
+        position:absolute;
+        top:0;
+        left:0;
+        right:0;
+        margin:0;
+        padding:1em;
+        background-color:rgba(255,255,255,0.9);
+    }
+    .snap-action-icon {
+        position: absolute;
+        top: 0.75em;
+        right: 1em;
+    }
+}
 
-/* search box apears on focus */
 #toc-search-input {
-	-webkit-appearance:none ;
-	border:0;
-	padding:0;
-	width:23px;
+    font-size:2em;
+    width:85.4%;
 }
 
-#toc-search-input:-ms-input-placeholder {
-    font-family: "line-icons";
-    padding-top: 4px;
-    padding-bottom: 4px;
-}
-
-#toc-search-input.placeholder {
-    font-family: "line-icons";
-    min-width: 2em;
-    min-height: 2em;
-}
-
-#toc-search-input:focus,
-#toc-search-input.state-visible{
-	display:block;
-	width:100%;
-	font-size:2em;
-	margin:0.5% 0;
-	float:none;
-	text-transform:none;
-	padding:0 2%;
-	text-align:left;
-	top: 0;
-	.alakazam;
-}
+// hidden list - always
 #toc-searchables {
 	display:none;
 }
-#toc-search-results {
-	z-index:13;
-	background-color:#fff;
-	position:absolute;
-	top:5.5em;
-	max-width:100%;
-	width:100%;
-	display:none;
+@media screen and (min-width: @screen-xs-min) {
+    #toc-search-results {
+        padding-left:3em;
+    }
 }
-#toc-search-results a{
+#toc-search-results li{
 	display:block;
-    padding-left: 1em;
 		img {
 			width:24px;
 			height:24px;
@@ -1259,13 +1290,13 @@ ol#chapters {
 
 }
 
-// * need to handle focus */
 #toc-search-input.state-visible + #toc-search-results,
 #toc-search-input:focus + #toc-search-results,
 #toc-search-results:hover,
 #toc-search-results:focus {
   display:block;
 }
+
 
 
 // a lovely pin showing the searched for item
@@ -1379,8 +1410,9 @@ aside .settings-button{
 
 .course-content,
 .settingsform,
-.mform{
-    max-width: 40.5em;
+.mform,
+#page-mod-page-view #region-main{
+    max-width: 43.5em;
     margin: 0 auto;
 }
 // Override the above for a table that is also a form
@@ -1521,7 +1553,7 @@ http://blog.rodneyrehm.de/archives/34-iOS7-Mobile-Safari-And-Viewport-Units.html
 }
 @media screen and (min-width: @screen-sm-min) {
 	#page-site-index #page-header {
-	min-height:650px;
+	min-height:87vh;
 	}
 }
 
@@ -1560,7 +1592,7 @@ http://blog.rodneyrehm.de/archives/34-iOS7-Mobile-Safari-And-Viewport-Units.html
 }
 
 #page-site-index .sitetopic {
-	.clearfix;
+	.clearfix();
 	padding:0 4%;
     max-width:46.5em;
 }
@@ -1581,7 +1613,7 @@ http://blog.rodneyrehm.de/archives/34-iOS7-Mobile-Safari-And-Viewport-Units.html
     padding: 0 4%;
     padding-bottom: 4em;
     background-color: #F1F0EE;
-    .clearfix;
+    .clearfix();
 }
 
 #news-articles {
@@ -1751,9 +1783,15 @@ http://blog.rodneyrehm.de/archives/34-iOS7-Mobile-Safari-And-Viewport-Units.html
 }
 
 
-
-
-
+/* USER PROFILE PAGE */
+.userprofile .userprofilebox{
+    .profilepicture {
+        .make-md-column(3);
+    }
+    .descriptionbox {
+        .make-md-column(9);
+    }
+}
 
 
 
@@ -1777,12 +1815,7 @@ http://blog.rodneyrehm.de/archives/34-iOS7-Mobile-Safari-And-Viewport-Units.html
 // -------------------------
 
 
-// -------------------------
-// Page
-// -------------------------
-#page-mod-page-view #region-main{
-    max-width:40.5em;
-}
+
 // -------------------------
 // Assignments
 // -------------------------
@@ -2015,7 +2048,7 @@ http://blog.rodneyrehm.de/archives/34-iOS7-Mobile-Safari-And-Viewport-Units.html
     .sr-only;
 }
 .questioncontainer{
-  .clearfix;
+  .clearfix();
 }
 #page-mod-quiz-edit .editq div.question div.content .singlequestion .questioneditbutton .questionname,
 #page-mod-quiz-edit .editq div.question div.content .singlequestion .questioneditbutton .questiontext{
@@ -2378,7 +2411,7 @@ table#user-grades tr.avg td.cell{
     }
     table .header[scope="col"] {
         background-color: #fff;
-        font-size: 13px;
+        font-size: 13px; // SHAME - magic number
     }
     table {
         margin: 0;
@@ -2395,7 +2428,7 @@ table#user-grades tr.avg td.cell{
             background-color: @table-bg-accent;
             &.overridden,
             &.ajaxoverridden {
-                background-color: #EFD9A4
+                background-color: #EFD9A4;
             }
         }
     }
@@ -2586,12 +2619,12 @@ table#user-grades tr.avg td.cell{
     //	background-color: @brand-primary; customisable
     font-size: 2em;
     width: 100%;
-    padding: 10% 4% 70px 4%;
+    padding: 1em 4% 4em 4%;
 
     // pull buttons up into the #notice when they are placed
     // after it, rather than inside it.
     &+ .continuebutton {
-        margin-top: -60px;
+        margin-top: -3em;
     }
     .buttons {
         text-align: center;
@@ -2754,7 +2787,7 @@ table#user-grades tr.avg td.cell{
     width: auto !important;
 }
 .file-picker {
-    .clearfix;
+    .clearfix();
 }
 .fp-filename {
     font-size:small;
@@ -2832,7 +2865,7 @@ table#user-grades tr.avg td.cell{
         color:#fff;
     }
     .langmenu{
-        color:#666665;
+        color:#666;
     }
 }
 
@@ -3172,4 +3205,9 @@ p[id^="time_"] + div[id^="bar_"] {
 
 .path-backup .wibbler {
     display: none;
+}
+
+// This is required for the jquery ellipsis plugin.
+.ellipsis_toobig:after {
+    content:'...';
 }

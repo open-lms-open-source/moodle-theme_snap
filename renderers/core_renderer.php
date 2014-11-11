@@ -44,7 +44,6 @@ class theme_snap_core_renderer extends toc_renderer {
         $teachers = $clist->get_course_contacts();
 
         if (!empty($teachers)) {
-
             // Get all teacher user records in one go.
             $teacherids = array();
             foreach ($teachers as $teacher) {
@@ -74,7 +73,13 @@ class theme_snap_core_renderer extends toc_renderer {
 
         if (!empty($COURSE->summary)) {
             $coursesummary = '<h6>'.get_string('aboutcourse', 'theme_snap').'</h6>';
-            $coursesummary .= '<div id=course_about>'.format_text($COURSE->summary).'</div>';
+            $formatoptions = new stdClass;
+            $formatoptions->noclean = true;
+            $formatoptions->overflowdiv = true;
+            $formatoptions->context = $context;
+            $coursesummarycontent = file_rewrite_pluginfile_urls($COURSE->summary, 'pluginfile.php', $context->id, 'course', 'summary', null);
+            $coursesummarycontent = format_text($coursesummarycontent, $COURSE->summaryformat, $formatoptions);
+            $coursesummary .= '<div id=course_about>'.$coursesummarycontent.'</div>';
         }
 
         // If able to edit add link to edit summary.
@@ -123,8 +128,8 @@ class theme_snap_core_renderer extends toc_renderer {
                 $output  = '<div class="col-md-12">'.$columns[0].'</div>';
         } else if (count($columns) >= 2 && !empty($courserecentactivity)) {
             // Here we output recent updates any some other sections.
-            $output  = '<div class="col-md-8">'.$columns[0].'</div>';
-            $output .= '<div class="col-md-4">'.$columns[1].$columns[2].'</div>';
+            $output  = '<div class="col-md-6">'.$columns[0].'</div>';
+            $output .= '<div class="col-md-6">'.$columns[1].$columns[2].'</div>';
         } else if (count($columns) == 2) {
             $output  = '<div class="col-md-6">'.$columns[0].'</div>';
             $output  .= '<div class="col-md-6">'.$columns[1].'</div>';
@@ -141,7 +146,7 @@ class theme_snap_core_renderer extends toc_renderer {
      * @return string
      */
     public function print_teacher_profile($user) {
-        global $CFG;
+        global $CFG, $COURSE;
 
         $userpicture = new user_picture($user);
         $userpicture->link = false;
@@ -150,7 +155,9 @@ class theme_snap_core_renderer extends toc_renderer {
         $picture = $this->render($userpicture);
 
         $fullname = '<a href="'.$CFG->wwwroot.'/user/profile.php?id='.$user->id.'">'.format_string(fullname($user)).'</a>';
-        $description = format_text($user->description);
+        $coursecontext = context_course::instance($COURSE->id);
+        $user->description = file_rewrite_pluginfile_urls($user->description, 'pluginfile.php', $coursecontext->id, 'user', 'profile', $user->id);
+        $description = format_text($user->description, $user->descriptionformat);
 
         return "<div class=snap-media-object>
                 $picture
@@ -210,7 +217,14 @@ class theme_snap_core_renderer extends toc_renderer {
      * @return string
      */
     public function print_settings_link() {
-        global $DB;
+        global $DB, $PAGE, $COURSE;
+
+        $isstudent = !has_capability('moodle/course:manageactivities', $PAGE->context)
+                        && !is_role_switched($COURSE->id);
+        if ($isstudent
+            && $PAGE->pagetype != 'user-profile') {
+            return '';
+        }
 
         if (!$instanceid = $DB->get_field('block_instances', 'id', array('blockname' => 'settings'))) {
             return '';
@@ -350,6 +364,21 @@ class theme_snap_core_renderer extends toc_renderer {
         );
     }
 
+    public function snap_media_object($url, $image, $title, $meta, $content, $extraclasses = '') {
+                    $formatoptions = new stdClass;
+                    $formatoptions->filter = false;
+                    $title = format_text($title, FORMAT_HTML, $formatoptions);
+                    $content = format_text($content, FORMAT_HTML, $formatoptions);
+                    return "<div class=\"snap-media-object$extraclasses\">"
+                        . "<a href=\"$url\">"
+                        . $image
+                        . '<div class="snap-media-body">'
+                        . "<h3>$title</h3>"
+                        . "<span class=\"snap-media-meta\">$meta</span>"
+                        . $content
+                        . '</div></a></div>';
+    }
+
     /**
      * Reduce the precision of the time e.g. 1 min 10 secs ago -> 1 min ago
      * @return int
@@ -382,6 +411,14 @@ class theme_snap_core_renderer extends toc_renderer {
             $columns[] = $deadlines;
         }
 
+        $graded = $this->render_graded();
+        $grading = $this->render_grading();
+        if (!empty($grading)) {
+            $columns[] = $grading;
+        } else if (!empty($graded)) {
+            $columns[] = $graded;
+        }
+
         $badges = $this->render_badges();
         if (!empty($badges)) {
             $columns[] = $badges;
@@ -396,16 +433,73 @@ class theme_snap_core_renderer extends toc_renderer {
         if (empty($columns)) {
              return '';
         } else if (count($columns) == 1) {
-            $o .= '<div class="col-md-12">'.$columns[0].'</div>';
+            $o .= '<section class="col-md-12">'.$columns[0].'</section>';
         } else if (count($columns) == 2) {
             $o .= '
-              <div class="col-md-6">'.$columns[0].'</div>
-              <div class="col-md-6">'.$columns[1].'</div>
+              <section class="col-md-6">'.$columns[0].'</section>
+              <section class="col-md-6">'.$columns[1].'</section>
+            ';
+        } else if (count($columns) == 3) {
+            $o .= '
+              <section class="col-md-4">'.$columns[0].'</section>
+              <section class="col-md-4">'.$columns[1].'</section>
+              <section class="col-md-4">'.$columns[2].'</section>
             ';
         }
 
         $o .= '</div>';
         return ($o);
+    }
+
+    /**
+     * Render all grading CTAs for markers
+     * @return string
+     */
+    protected function render_grading() {
+        global $USER;
+
+        if ($this->page->theme->settings->feedbacktoggle == 0) {
+            return '';
+        }
+
+        $courses = enrol_get_all_users_courses($USER->id);
+
+        $capability = 'gradereport/grader:view';
+
+        foreach ($courses as $course) {
+            if (has_capability($capability, \context_course::instance($course->id), $USER->id)) {
+                $courseids[] = $course->id;
+            }
+        }
+
+        if (empty($courseids)) {
+            return '';
+        }
+
+        $gradingheading = get_string('grading', 'theme_snap');
+        $o = "<h2>$gradingheading</h2>";
+
+        $o .= '<div id="snap-personal-menu-grading"></div>';
+
+        return $o;
+    }
+
+    /**
+     * Render all graded CTAs for students
+     * @return string
+     */
+    protected function render_graded() {
+
+        if ($this->page->theme->settings->feedbacktoggle == 0) {
+            return '';
+        }
+
+        $recentfeedback = get_string('recentfeedback', 'theme_snap');
+        $o = "<h2>$recentfeedback</h2>";
+
+        $o .= '<div id="snap-personal-menu-graded"></div>';
+
+        return $o;
     }
 
     /**
@@ -438,7 +532,7 @@ class theme_snap_core_renderer extends toc_renderer {
      *
      */
     public function print_fixed_menu() {
-        global $CFG, $USER, $PAGE;
+        global $CFG, $USER, $PAGE, $DB;
 
         $logout = get_string('logout');
 
@@ -480,7 +574,7 @@ class theme_snap_core_renderer extends toc_renderer {
                     $helpstr = "<p class='text-center'><a href='".s($CFG->wwwroot)."/login/index.php'>$help</a></p>";
                 }
             }
-            echo "<a class='fixy-trigger btn btn-primary'  href='".s($loginurl)."'>$login</a>
+            echo "<a class='fixy-trigger btn btn-primary'  href='".s($loginurl)."' aria-controls='login'>$login</a>
         <form class=fixy action='$CFG->wwwroot/login/'  method='post' id='login'>
         <a id='fixy-close' class='pull-right snap-action-icon' href='#'>
             <i class='icon icon-office-52'></i><small>$cancel</small>
@@ -503,15 +597,10 @@ class theme_snap_core_renderer extends toc_renderer {
             $userpicture->alttext = false;
             $userpicture->size = 100;
             $picture = $this->render($userpicture);
-            $mycourses = enrol_get_my_courses(null, 'visible DESC, fullname ASC');
+            $mycourses = enrol_get_my_courses(null, 'visible DESC, fullname ASC, id DESC');
 
-            $longlistclass = "";
-            if (count($mycourses) > 11) {
-                $longlistclass = "list-large";
-            }
+            $courselist .= "<section id='fixy-my-courses'><div class='clearfix'><h2>".get_string('courses')."</h2>";
 
-            $courselist .= "<div id='fixy-my-courses'>
-     <ul class='list-unstyled $longlistclass'>";
             foreach ($mycourses as $c) {
                 $pubstatus = "";
                 if (!$c->visible) {
@@ -526,13 +615,40 @@ class theme_snap_core_renderer extends toc_renderer {
                     $courseimagecss .= "background-image: url($bgimage);";
                 }
                 $dynamicinfo = '<div data-courseid="'.$c->id.'" class=dynamicinfo></div>';
-                $clink = '<li class="courseinfo"><a href="'.$CFG->wwwroot.'/course/view.php?id='.$c->id.
-                    '"><div class=fixy-course-image style="'.$courseimagecss.
-                    '"></div></a><div class="snap-media-body"><a href="'.$CFG->wwwroot.'/course/view.php?id='.$c->id.'">'.
-                    format_string($c->fullname).'</a> '.$pubstatus.$dynamicinfo.'</div></li>';
+
+                $teachers = '';
+                $courseteachers = '';
+
+                $clist = new course_in_list($c);
+                $teachers = $clist->get_course_contacts();
+
+                if (!empty($teachers)) {
+                    $courseteachers = "<div class='sr-only'>".get_string('coursecontacts', 'theme_snap')."</div>";
+                    // Get all teacher user records in one go.
+                    $teacherids = array();
+                    foreach ($teachers as $teacher) {
+                        $teacherids[] = $teacher['user']->id;
+                    }
+                    $teacherusers = $DB->get_records_list('user', 'id', $teacherids);
+                    foreach ($teachers as $teacher) {
+                        if (!isset($teacherusers[$teacher['user']->id])) {
+                            continue;
+                        }
+                        $teacheruser = $teacherusers [$teacher['user']->id];
+                        $userpicture = new user_picture($teacheruser);
+                        $userpicture->link = false;
+                        $userpicture->size = 100;
+                        $teacherpicture = $this->render($userpicture);
+                        $courseteachers .= $teacherpicture;
+                    }
+                }
+
+                $clink = '<div class="courseinfo" style="'.$courseimagecss.'">
+                <div class="courseinfo-body"><h3><a href="'.$CFG->wwwroot.'/course/view.php?id='.$c->id.'">'.format_string($c->fullname).'</a></h3>'.$dynamicinfo.$courseteachers.$pubstatus.'</div></div>';
                 $courselist .= $clink;
             }
-            $courselist .= "</ul></div>";
+            $courselist .= "</div>";
+
             $courselist .= '<div class="row fixy-browse-search-courses">';
             $courselist .= '<div class="col-md-6">';
             $courselist .= $this->print_view_all_courses();
@@ -543,11 +659,11 @@ class theme_snap_core_renderer extends toc_renderer {
                 $courselist .= $courserenderer->course_search_form(null, 'fixy');
                 $courselist .= '</div>';
             }
-            $courselist .= '</div>'; // Close row.
+            $courselist .= '</div></section>'; // Close row.
 
             $menu = get_string('menu', 'theme_snap');
-            echo '<a class=fixy-trigger id=js-personal-menu-trigger href="#primary-nav">'.$menu. ' &nbsp; '. $picture.
-                $this->render_badge_count(). '</a>';
+            echo '<a class=fixy-trigger id=js-personal-menu-trigger href="#primary-nav" aria-controls="primary-nav">'.$menu. ' &nbsp; '. $picture.
+            $this->render_badge_count(). '</a>';
             $close = get_string('close', 'theme_snap');
             $viewyourprofile = get_string('viewyourprofile', 'theme_snap');
             $realuserinfo = '';
@@ -558,7 +674,7 @@ class theme_snap_core_renderer extends toc_renderer {
                 $realuserinfo = html_writer::span($via.' '.html_writer::span($fullname, 'real-user-name'), 'real-user-info');
             }
 
-            echo '<div id="primary-nav" class="fixy toggle-details" role="menu" aria-live="polite" tabindex="0">
+            echo '<nav id="primary-nav" class="fixy toggle-details" tabindex="0">
         <a id="fixy-close" class="pull-right snap-action-icon" href="#">
             <i class="icon icon-office-52"></i><small>'.$close.'</small>
         </a>
@@ -567,15 +683,12 @@ class theme_snap_core_renderer extends toc_renderer {
             <a title="'.s($viewyourprofile).'" href="'.s($CFG->wwwroot).'/user/profile.php" >'.
                 $picture.'<span id="fixy-username">'.format_string(fullname($USER)).'</span>
             </a>
-        </h1>'.$realuserinfo.'
-        <h2>'.get_string('courses').'</h2>'
-            .$courselist
-            .$this->render_callstoaction().'
+        </h1>'.$realuserinfo.$courselist.$this->render_callstoaction().'
         <div class="fixy-logout-footer clearfix text-center">
-        <a class="btn btn-default logout" href="'.s($CFG->wwwroot).'/login/logout.php?sesskey='.sesskey().'">'.$logout.'</a>
-    </div>
-</div>
-</div>';
+            <a class="btn btn-default logout" href="'.s($CFG->wwwroot).'/login/logout.php?sesskey='.sesskey().'">'.$logout.'</a>
+        </div>
+        </div><!-- end fixy-inner -->
+        </nav><!-- end primary nav -->';
         }
 
     }

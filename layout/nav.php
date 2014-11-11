@@ -1,4 +1,4 @@
-<div id='mr-nav' class='clearfix moodle-has-zindex'>
+<header id='mr-nav' class='clearfix moodle-has-zindex'>
 <div class="pull-right">
 <?php $OUTPUT->print_fixed_menu(); ?>
 </div>
@@ -9,4 +9,4 @@
     <a href="<?php echo s($CFG->wwwroot);?>" id="logo" title="<?php echo s(format_string($SITE->fullname)); ?>"><?php echo format_string($SITE->fullname); ?> <span class="sr-only"><?php print_string('home', 'theme_snap'); ?></span></a>
 <?php } ?>
 
-</div>
+</header>

@@ -53,9 +53,10 @@ function theme_snap_process_css($css, $theme) {
  */
 function theme_snap_set_logo($css, $logo) {
     $tag = '[[setting:logo]]';
-    $replacement = $logo;
-    if (is_null($replacement)) {
+    if (is_null($logo)) {
         $replacement = '';
+    } else {
+        $replacement = "#logo {background-image: url($logo);}";
     }
     $css = str_replace($tag, $replacement, $css);
     return $css;
@@ -70,9 +71,10 @@ function theme_snap_set_logo($css, $logo) {
  */
 function theme_snap_set_poster($css, $poster) {
     $tag = '[[setting:poster]]';
-    $replacement = $poster;
-    if (is_null($replacement)) {
+    if (is_null($poster)) {
         $replacement = '';
+    } else {
+        $replacement = "#page-site-index #page-header {background-image: url($poster);}";
     }
     $css = str_replace($tag, $replacement, $css);
     return $css;
@@ -103,11 +105,25 @@ function theme_snap_set_customcss($css, $customcss) {
  */
 function theme_snap_get_bootswatch_variables(theme_config $theme) {
     $settings['brand-primary'] = !empty($theme->settings->themecolor) ? $theme->settings->themecolor : '#3bcedb';
-    $settings['font-family-sans-serif'] = !empty($theme->settings->headingfont) ? $theme->settings->headingfont : 'Roboto';
-    $settings['font-family-sans-serif'] .= ',"Fira Sans","Segoe UI","HelveticaNeue-Light","Helvetica Neue Light",' .
-        '"Helvetica Neue",Helvetica, Arial, sans-serif';
-    $settings['font-family-serif'] = !empty($theme->settings->seriffont) ? $theme->settings->seriffont : 'Georgia';
-    $settings['font-family-serif'] .= ',"Times New Roman", Times, serif';
+    $userfontsans  = $theme->settings->headingfont;
+    if (empty($userfontsans) || in_array($userfontsans, ['Roboto', '"Roboto"'])) {
+        $userfontsans = '';
+    } else {
+        $userfontsans .= ",";
+    }
+    $fallbacksans = 'Roboto,"Fira Sans","Segoe UI","HelveticaNeue-Light",'
+        . '"Helvetica Neue Light","Helvetica Neue",Helvetica, Arial, sans-serif';
+    $settings['font-family-sans-serif'] = $userfontsans . $fallbacksans;
+
+    $userfontserif = $theme->settings->seriffont;
+    if (empty($userfontserif) || in_array($userfontserif, ['Georgia', '"Georgia"'])) {
+        $userfontserif = '';
+    } else {
+        $userfontserif .= ",";
+    }
+    $fallbackserif = 'Georgia,"Times New Roman", Times, serif';
+    $settings['font-family-serif'] = $userfontserif . $fallbackserif;
+
     return $settings;
 }
 

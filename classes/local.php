@@ -31,7 +31,7 @@ class local {
      * @param $warning
      * @return null|object
      */
-    protected static function skipgradewarning($warning){
+    protected static function skipgradewarning($warning) {
         global $CFG;
         if (!empty($CFG->debugdisplay)) {
             return (object) array ('skipgrade' => $warning);
@@ -85,7 +85,12 @@ class local {
         }
 
         // Use user grade report to get course total - this is to take hidden grade settings into account.
-        $gpr = new \grade_plugin_return(array('type'=>'report', 'plugin'=>'user', 'courseid'=>$course->id, 'userid'=>$USER->id));
+        $gpr = new \grade_plugin_return(array(
+            'type' => 'report',
+            'plugin' => 'user',
+            'courseid' => $course->id,
+            'userid' => $USER->id)
+        );
         $report = new \grade_report_user($course->id, $gpr, $coursecontext, $USER->id);
         $report->fill_table();
         $coursetotal = end($report->tabledata);
@@ -99,7 +104,15 @@ class local {
                 get_string('grade').': '.$finalgrade.'</a>';
         }
 
-        return ((object) array('grade' => $finalgrade, 'gradehtml' => $gradehtml));
+        // If there is an error getting a grade then send back an empty string.
+        // Note: This is to handle an issue where a course is completely empty.
+        $end = end($report->tabledata);
+        if (stripos(($end['grade']['class']), 'gradingerror') !== false) {
+            $finalgrade = '';
+            $gradehtml = '';
+        }
+
+        return (object) array('grade' => $finalgrade, 'gradehtml' => $gradehtml);
     }
 
     /**
@@ -148,7 +161,7 @@ class local {
             $compobj->progresshtml = $progressinfo;
         }
 
-        return ($compobj);
+        return $compobj;
     }
 
 
@@ -162,7 +175,7 @@ class local {
         global $USER, $COURSE;
         $user = empty($user) ? $USER : $user;
         $course = empty($course) ? $COURSE : $course;
-        return (has_capability('moodle/course:manageactivities', \context_course::instance($course->id), $user));
+        return has_capability('moodle/course:manageactivities', \context_course::instance($course->id), $user);
     }
 
     /**
@@ -192,7 +205,58 @@ class local {
                 'grade' => self::course_overall_grade($course)
             );
         }
-        return ($courseinfo);
+        return $courseinfo;
+    }
+
+    /**
+     * Get module table row for module id
+     */
+    public static function moduletabrow($mod) {
+        global $DB;
+        $sql = "SELECT a.*
+                  FROM {course_modules} cm
+                  JOIN {".$mod->modname."} a ON a.id=cm.instance
+                 WHERE cm.id=?";
+        return $DB->get_record_sql($sql, array($mod->id));
+    }
+
+    /**
+     * Get total particpiant count for specific courseid.
+     *
+     * @param $courseid
+     * @return int
+     */
+    public static function course_participant_count($courseid) {
+        global $DB, $CFG;
+
+        static $participantcount = null;
+
+        if (!is_null($participantcount)) {
+            return $participantcount;
+        }
+        if (empty($CFG->gradebookroles)) {
+            $participantcount = 0;
+            return $partipantcount;
+        }
+        $studentroles = explode(',', $CFG->gradebookroles);
+        list($instudentroles, $params) = $DB->get_in_or_equal($studentroles, SQL_PARAMS_NAMED);
+
+        $context = \context_course::instance($courseid);
+        $params['contextid'] = $context->id;
+
+        $sql = "SELECT count(*) AS total
+                  FROM {role_assignments} a
+             LEFT JOIN {role} r ON r.id = a.roleid
+                 WHERE r.id $instudentroles
+                       AND a.contextid = :contextid
+                ";
+        $row = $DB->get_record_sql($sql, $params);
+        if (!($row)) {
+            $participantcount = 0;
+        } else {
+            $participantcount = $row->total;
+        }
+        return $participantcount;
     }
 
     /**
@@ -215,13 +279,13 @@ class local {
                   FROM {message} m
             INNER JOIN {user} u ON u.id = m.useridfrom
                  WHERE m.useridto = ?
-                   AND contexturl IS NULL
+                       AND contexturl IS NULL
         ) UNION ALL (
                 SELECT $select, 0 as 'unread'
                   FROM {message_read} m
             INNER JOIN {user} u ON u.id = m.useridfrom
                  WHERE m.useridto = ?
-                   AND contexturl IS NULL
+                       AND contexturl IS NULL
         )
           ORDER BY timecreated DESC
         ", array($userid, $userid), 0, 5);
@@ -247,44 +311,36 @@ class local {
 
         $output = $PAGE->get_renderer('theme_snap', 'core', RENDERER_TARGET_GENERAL);
         $messages = self::get_user_messages($USER->id);
+        if (empty($messages)) {
+            return '<p>' . get_string('nomessages', 'theme_snap') . '</p>';
+        }
         $o = '';
-        if (!empty($messages)) {
-            foreach ($messages as $message) {
-                $url = new \moodle_url('/message/index.php', array(
-                    'history' => 0,
-                    'user1' => $message->useridto,
-                    'user2' => $message->useridfrom,
-                ));
+        foreach ($messages as $message) {
+            $url = new \moodle_url('/message/index.php', array(
+                'history' => 0,
+                'user1' => $message->useridto,
+                'user2' => $message->useridfrom,
+            ));
 
-                $fromuser = $message->get_fromuser();
-                $userpicture = new \user_picture($fromuser);
-                $userpicture->link = false;
-                $userpicture->alttext = false;
-                $userpicture->size = 100;
-                $frompicture = $output->render($userpicture);
+            $fromuser = $message->get_fromuser();
+            $userpicture = new \user_picture($fromuser);
+            $userpicture->link = false;
+            $userpicture->alttext = false;
+            $userpicture->size = 100;
+            $frompicture = $output->render($userpicture);
 
-                $fromname = format_string(fullname($fromuser));
+            $fromname = format_string(fullname($fromuser));
 
-                $unreadclass = '';
-                if ($message->unread) {
-                    $unreadclass = " snap-unread";
-                }
-                $o .= "<div class=\"snap-media-object$unreadclass\">";
-                $o .= "<a href='$url'>";
-                $o .= $frompicture;
-                $o .= "<div class=\"snap-media-body\">";
-                $o .= "<h3>$fromname</h3>";
-                $o .= "<span class=snap-media-meta>";
-                $o .= $output->relative_time($message->timecreated);
-                if ($message->unread) {
-                    $o .= " <span class=snap-unread-marker>".get_string('unread', 'theme_snap')."</span>";
-                }
-                $o .= "</span>";
-                $o .= '<p>'.format_string($message->smallmessage).'</p>';
-                $o .= "</div></a></div>";
+            $meta = $output->relative_time($message->timecreated);
+            $unreadclass = '';
+            if ($message->unread) {
+                $unreadclass = ' snap-unread';
+                $meta .= " <span class=snap-unread-marker>".get_string('unread', 'theme_snap')."</span>";
             }
-        } else {
-            $o .= get_string('nomessages', 'theme_snap');
+
+            $info = '<p>'.format_string($message->smallmessage).'</p>';
+
+            $o .= $output->snap_media_object($url, $frompicture, $fromname, $meta, $info, $unreadclass);
         }
         return $o;
     }
@@ -348,41 +404,156 @@ class local {
     }
 
     public static function deadlines() {
-        global $USER, $PAGE, $CFG;
+        global $USER, $PAGE;
 
         $output = $PAGE->get_renderer('theme_snap', 'core', RENDERER_TARGET_GENERAL);
         $events = self::upcoming_deadlines($USER->id);
+        if (empty($events)) {
+            return '<p>' . get_string('nodeadlines', 'theme_snap') . '</p>';
+        }
         $o = '';
-        if (!empty($events)) {
-            foreach ($events as $event) {
-                if (!empty($event->modulename)) {
-                    $cm = get_coursemodule_from_instance($event->modulename, $event->instance, $event->courseid);
-                    $url = $CFG->wwwroot.'/mod/'.$event->modulename.'/view.php?id='.$cm->id;
+        foreach ($events as $event) {
+            if (!empty($event->modulename)) {
+                $modinfo = get_fast_modinfo($event->courseid);
+                $cm = $modinfo->instances[$event->modulename][$event->instance];
 
-                    $eventcoursename = format_string($event->coursefullname);
-                    $eventname = format_string($event->name);
-                    $eventtitle = "<small>$eventcoursename / </small> $eventname";
+                $eventtitle = "<small>$event->coursefullname / </small> $event->name";
 
-                    $modimageurl = $output->pix_url('icon', $event->modulename);
-                    $modname = get_string('modulename', $event->modulename);
-                    $modimage = '<img src="'.s($modimageurl).'" alt="'.s($modname).'" />';
+                $modimageurl = $output->pix_url('icon', $event->modulename);
+                $modname = get_string('modulename', $event->modulename);
+                $modimage = \html_writer::img($modimageurl, $modname);
 
-                    $o .= "<div class=\"snap-media-object\">";
-                    $o .= "<a href='$url'>";
-                    $o .= $modimage;
-                    $o .= "<div class=\"snap-media-body\">";
-                    $o .= "<h3>$eventtitle</h3>";
-                    $o .= "<span class=snap-media-meta>";
-                    $o .= $output->friendly_datetime($event->timestart);
-                    $o .= "</span></div>";
-                    $o .= "</a></div>";
-                }
+                $meta = $output->friendly_datetime($event->timestart);
+
+                $o .= $output->snap_media_object($cm->url, $modimage, $eventtitle, $meta, '');
             }
-        } else {
-            $o .= get_string('nodeadlines', 'theme_snap');
         }
         return $o;
     }
+
+    public static function graded() {
+        global $USER, $PAGE;
+
+        $output = $PAGE->get_renderer('theme_snap', 'core', RENDERER_TARGET_GENERAL);
+        $events = activity::events_graded();
+
+        $o = '';
+        foreach ($events as $event) {
+
+            $modinfo = get_fast_modinfo($event->courseid);
+            $course = $modinfo->get_course();
+
+            $modtype = $event->other['modulename'];
+            $cm = $modinfo->instances[$modtype][$event->other['instanceid']];
+
+            $coursecontext = \context_course::instance($event->courseid);
+            $canviewhiddengrade = has_capability('moodle/grade:viewhidden', $coursecontext);
+
+            $url = new \moodle_url('/grade/report/user/index.php', ['id' => $event->courseid]);
+            if (in_array($modtype, ['quiz', 'assign'])) {
+                $url = $cm->url;
+            }
+
+            $modimageurl = $output->pix_url('icon', $cm->modname);
+            $modname = get_string('modulename', 'mod_'.$cm->modname);
+            $modimage = \html_writer::img($modimageurl, $modname);
+
+            $eventtitle = "<small>$course->fullname / </small> $cm->name";
+
+            $meta = get_string('released', 'theme_snap', $output->friendly_datetime($event->timecreated));
+
+            $grade = new \grade_grade(array('itemid' => $event->other['itemid'], 'userid' => $USER->id));
+            if (!$grade->is_hidden() || $canviewhiddengrade) {
+                $o .= $output->snap_media_object($url, $modimage, $eventtitle, $meta, '');
+            }
+        }
+
+        if (empty($o)) {
+            return '<p>'. get_string('nograded', 'theme_snap') . '</p>';
+        }
+        return $o;
+    }
+
+    public static function grading() {
+        global $USER, $PAGE;
+
+        $grading = self::all_ungraded($USER->id);
+
+        if (empty($grading)) {
+            return '<p>' . get_string('nograding', 'theme_snap') . '</p>';
+        }
+
+        $output = $PAGE->get_renderer('theme_snap', 'core', RENDERER_TARGET_GENERAL);
+        $out = '';
+        foreach ($grading as $ungraded) {
+            $modinfo = get_fast_modinfo($ungraded->course);
+            $course = $modinfo->get_course();
+            $cm = $modinfo->get_cm($ungraded->coursemoduleid);
+
+            $modimageurl = $output->pix_url('icon', $cm->modname);
+            $modname = get_string('modulename', 'mod_'.$cm->modname);
+            $modimage = \html_writer::img($modimageurl, $modname);
+
+            $ungradedtitle = "<small>$course->fullname / </small> $cm->name";
+
+            $xungraded = get_string('xungraded', 'theme_snap', $ungraded->ungraded);
+
+            $function = '\theme_snap\activity::'.$cm->modname.'_num_submissions';
+
+            $a['completed'] = call_user_func($function, $ungraded->course, $ungraded->instanceid);
+            $a['participants'] = (self::course_participant_count($ungraded->course));
+            $xofysubmitted = get_string('xofysubmitted', 'theme_snap', $a);
+            $info = '<span class="label label-info">'.$xofysubmitted.', '.$xungraded.'</span>';
+
+            $meta = '';
+            if (!empty($ungraded->closetime)) {
+                $meta = $output->friendly_datetime($ungraded->closetime);
+            }
+
+            $out .= $output->snap_media_object($cm->url, $modimage, $ungradedtitle, $meta, $info);
+        }
+
+        return $out;
+    }
+
+    public static function all_ungraded($userid) {
+
+        $courses = enrol_get_all_users_courses($userid);
+
+        $capability = 'gradereport/grader:view';
+        foreach ($courses as $course) {
+            if (has_capability($capability, \context_course::instance($course->id), $userid)) {
+                $courseids[] = $course->id;
+            }
+        }
+
+        $mods = \core_plugin_manager::instance()->get_installed_plugins('mod');
+        $mods = array_keys($mods);
+
+        $grading = [];
+        foreach ($mods as $mod) {
+            $class = '\theme_snap\activity';
+            $method = $mod.'_ungraded';
+            if (method_exists($class, $method)) {
+                $grading = array_merge($grading, call_user_func([$class, $method], $courseids));
+            }
+        }
+
+        usort($grading, function($a, $b) {
+            $atime = empty($a->closetime) ? $a->opentime : $a->closetime;
+            $btime = empty($b->closetime) ? $b->opentime : $b->closetime;
+            if ($atime === $btime) {
+                if ($a->coursemoduleid === $b->coursemoduleid) {
+                    return 0;
+                }
+                return ($a->coursemoduleid < $b->coursemoduleid) ? -1 : 1;
+            }
+            return ($atime < $btime) ? -1 : 1;
+        }
+        );
+        return $grading;
+    }
+
 
 
     /**

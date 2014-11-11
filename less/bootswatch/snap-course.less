@@ -125,7 +125,7 @@ li.section.main {
     position:relative;
     line-height: inherit;
     padding-bottom:1.6em;
-    .clearfix;
+    .clearfix();
     p {
         margin-bottom:1.6em;
     }
@@ -301,7 +301,7 @@ body.format-flexpage .singlebutton{
 
 
 // -------------------------
-// Activity & Resource styleing
+// Activity & Resource styles
 // -------------------------
 
 
@@ -320,29 +320,31 @@ body.format-flexpage .singlebutton{
     background-position:50% 89%;
     background-size:100px auto;
     box-shadow:0 2px 5px 0 rgba(0, 0, 0, 0.26);
-    div.clearfix {
-        padding:1em 2%;
+    .asset-wrapper {
         height:100%;
         overflow-x:hidden;
         overflow-y:auto;
         position:static;
+        padding:1em 0;
     }
     .activityinstance{
         padding:0.5em 2%;
         background-color:#fff;
         height:auto;
-        .clearfix;
+        .clearfix();
         .activityicon{
-            float:left;
+            float:right;
             width:75px;
             height:75px;
         }
-        > a {
-            color:#666665;
+        // the link to the mod - moodle does not add a class :(
+        > a:first-child {
+            color:#666;
+            &:hover {
+                color:#333;
+                text-decoration:none;
+            }
         }
-    }
-    .contentafterlink {
-        max-width:30em;
     }
 }
 /* resourcelinkdetails = moodle putting filetype on screen if option selected
@@ -360,6 +362,7 @@ we do this by default in snap, so hide moodle version */
 .snap-meta {
     font-family:@font-family-base;
     font-size:small;
+    clear:both;
 }
 
 // mime/activity name
@@ -424,12 +427,167 @@ we do this by default in snap, so hide moodle version */
     padding:0.5em 0;
     margin:0.5em 0;
     box-shadow:none;
-    .clearfix;
-    div.clearfix,
+    .clearfix();
+    .asset-wrapper,
     .activityinstance{
         padding:0;
     }
 }
+
+// -------------------------
+// Snap native assets - books, page, images
+// -------------------------
+.section li.snap-native {
+    box-shadow:none;
+    height:auto;
+    margin:1em 0;
+    padding:0.3em 0;
+    background-image:none;
+    .activityinstance{
+        padding:1em 0;
+    }
+    .activityicon,
+    .snap-assettype {
+        display:none;
+    }
+    .instancename{
+        font-size: @font-size-h5;
+    }
+    .contentafterlink {
+        font-size:1em;
+        padding-bottom:1em;
+    }
+    .summary-figure {
+        text-align:center;
+    }
+    .pagemod-readmore {
+        display:inline-block;
+        padding:0.3em 3%;
+        padding: 0.25em 1em;
+        margin: 0 .4em;
+        border:1px solid;
+        border-radius:2px;
+    }
+    // some stuff for hide and show
+    .pagemod-content {
+        display:none;
+        clear:both;
+        padding:1em 0;
+            &:focus {
+                outline: 0;
+            }
+    }
+    &.state-expanded {
+        .summary-text,
+        .summary-figure{
+            display:none;
+        }
+    }
+}
+
+@media screen and (min-width: @screen-sm-min) {
+
+    .contentafterlink > ol:first-child,
+    .contentafterlink >.summary-text:first-child,
+    .contentafterlink .summary-figure {
+        width: 50%;
+        float: right;
+        padding-right:0;
+        margin: 0;
+    }
+    .summary-figure + .summary-text{
+        width: 50%;
+        float: left;
+        padding-right:3%;
+    }
+    // the title of the resource
+    .section li.snap-image,
+    .section li.modtype_book,
+    .section li.modtype_page {
+        .activityinstance{
+            >a:first-child{
+                width: 50%;
+                float:left;
+                padding:0;
+            }
+        }
+    }
+    // alternate stuff for pages
+    .section li.modtype_page + li.modtype_page:nth-of-type(odd) {
+
+        .contentafterlink > ol:first-child,
+        .contentafterlink >.summary-text:first-child,
+        .contentafterlink .summary-figure {
+            width: 50%;
+            float: left;
+            padding-left:0;
+            margin: 0;
+        }
+        .summary-figure + .summary-text{
+            width: 50%;
+            float: right;
+            padding-left:3%;
+        }
+        .activityinstance{
+            >a:first-child{
+                width: 50%;
+                float:right;
+                padding-left:3%;
+            }
+        }
+        &.state-expanded {
+            .activityinstance{
+                >a:first-child{
+                    width: 50%;
+                    float:left;
+                    padding:0;
+                }
+            }
+        }
+    }
+
+}
+// TODO - make better
+// title/link on images - css is shame
+.snap-native.snap-image .activityinstance>a:first-child {
+    display:none;
+}
+
+
+.modtype_book,
+.modtype_page {
+    border-top:1px solid #ccc;
+    border-bottom:1px solid #ccc;
+}
+
+.snap-native.modtype_book ol.bookmod-chapters{
+    margin:0;
+}
+
+.snap-image-image {
+    position:relative;
+    .snap-image-link{
+        display:block;
+        text-align:center;
+    }
+    .snap-image-summary,
+    .snap-image-title {
+        position:absolute;
+        bottom:0;
+        display:block;
+        width:100%;
+        background-color:rgba(255,255,255,0.9);
+        padding:0 4%;
+    }
+    .snap-image-summary{
+        position:relative;
+        margin-top:-3em;
+    }
+}
+
+
+
+
 
 
 
@@ -456,7 +614,9 @@ we do this by default in snap, so hide moodle version */
         }
 
         // resource cards are clickable with data-href, so add cursor pointer
-        div.clearfix{
+        .asset-wrapper{
+            padding:1em 2%;
+            .clearfix();
             cursor:pointer;
         }
         .activityinstance {
@@ -537,12 +697,7 @@ li.snap-resource.snap-mime-avi{
 
 
 li.snap-resource.modtype_lightboxgallery,
-li.snap-resource.snap-mime-bmp,
-li.snap-resource.snap-mime-svg,
-li.snap-resource.snap-mime-image,
-li.snap-resource.snap-mime-gif,
-li.snap-resource.snap-mime-png,
-li.snap-resource.snap-mime-jpeg{
+li.snap-resource.snap-mime-bmp{
     background-color:#4ABC96;
     background-image:url([[pix:theme|image]]);
 }
@@ -553,17 +708,15 @@ li.snap-resource.modtype_url{
     background-image:url([[pix:theme|link]]);
 }
 
-li.snap-resource.modtype_book,
-li.snap-resource.modtype_page,
+
 li.snap-resource.modtype_imscp,
 li.snap-resource.modtype_scorm{
     background-color:#F7981D;
     background-image:url([[pix:theme|book]]);
 }
 
-li.snap-resource.modtype_page {
-    background-image:url([[pix:theme|page]]);
-}
+
+
 li.snap-resource.modtype_imscp,
 li.snap-resource.modtype_scorm{
     background-image:url([[pix:theme|scorm]]);
@@ -599,8 +752,8 @@ li.snap-resource.snap-mime-text{
 // -------------------------
 // Snap Activity
 // -------------------------
-li.snap-activity {
-    background-image:none !important;
+.section li.snap-activity {
+    background-image:none;
     width:99%; // to allow for box-shadow faux border
     .instancename {
         font-size:@font-size-large;
@@ -608,17 +761,11 @@ li.snap-activity {
         overflow:hidden;
     }
     .activityicon {
-        margin-right:3%;
+        margin-left:3%;
     }
     .activityinstance > a{
         display:block;
-        .clearfix;
-        /*.instancename:after {
-            content: "s";
-            font-family: "line-icons";
-            float:right;
-
-        }*/
+        .clearfix();
     }
 }
 
@@ -753,7 +900,7 @@ li.snap-activity.modtype_folder {
     left:0;
     width:100%;
     overflow:hidden;
-    .clearfix;
+    .clearfix();
     .moodle-actionmenu {
         width: 100%;
         max-width: 230px;
@@ -924,7 +1071,6 @@ span.editinstructions {
 .snap-asset .unread{
     clear:both;
     display:block;
-    margin-left:4em;
     background-color:transparent;
     a {
         .btn;
@@ -1075,4 +1221,11 @@ span.editinstructions {
             width:auto;
         }
     }
+}
+
+// SHAME
+.module-meta .label{
+    margin-right:1%;
+    font-family: @font-family-base;
+    font-weight: bold;
 }
