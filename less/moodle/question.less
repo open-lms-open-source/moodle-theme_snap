@@ -90,10 +90,16 @@
     margin: 0;
 }
 
-#categoryquestions tbody tr {
+table#categoryquestions > tbody > tr {
     border-top: 1px solid @table-border-color;
-    &.r1 {
+    & > td {
+        vertical-align: middle;
+    }
+    &:nth-of-type(odd) {
         background-color: @table-bg-accent;
+    }
+    &:nth-of-type(even) {
+        background-color: @table-bg;
     }
 }
 
@@ -104,9 +110,6 @@
 #categoryquestions th {
     text-align: left;
     font-weight: normal;
-}
-#categoryquestions .checkbox {
-    padding-left: 20px;
 }
 .dir-rtl #categoryquestions th {
     text-align: right;

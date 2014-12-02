@@ -47,7 +47,7 @@ class local {
      * @return stdClass | null
      */
     public static function course_overall_grade($course) {
-        global $CFG, $USER;
+        global $USER;
 
         // Get course context.
         $coursecontext = \context_course::instance($course->id);
@@ -93,26 +93,30 @@ class local {
         );
         $report = new \grade_report_user($course->id, $gpr, $coursecontext, $USER->id);
         $report->fill_table();
-        $coursetotal = end($report->tabledata);
-        $finalgrade = $coursetotal['grade']['content'];
-
-        // TODO - we should be putting our HTML in a renderer.
-        $gradehtml = '';
-        $finalgrade = $finalgrade == '-' ? '' : $finalgrade;
-        if (!empty($finalgrade)) {
-            $gradehtml = '<a class=coursegrade href="'.$CFG->wwwroot.'/grade/report/user/index.php?id='.$course->id.'">'.
-                get_string('grade').': '.$finalgrade.'</a>';
+        $visiblegradefound = false;
+        foreach ($report->tabledata as $item){
+            if (!empty($item['grade']['content'])){
+                // Set grade content to null string if it contents - or a blank space.
+                $item['grade']['content'] = str_ireplace(array('-','&nbsp;'),'',$item['grade']['content']);
+            }
+            if (!empty($item['grade']['content'])
+                && stripos($item['grade']['class'], 'gradingerror') === false
+            ) {
+                $visiblegradefound = true;
+            }
         }
 
-        // If there is an error getting a grade then send back an empty string.
-        // Note: This is to handle an issue where a course is completely empty.
-        $end = end($report->tabledata);
-        if (stripos(($end['grade']['class']), 'gradingerror') !== false) {
-            $finalgrade = '';
-            $gradehtml = '';
+        $gradehtml='';
+        if ($visiblegradefound){
+            // Just output - feedback available.
+            $url = new \moodle_url('/grade/report/user/index.php', array('id' => $course->id));
+            $gradehtml = \html_writer::link($url,
+                get_string('feedbackavailable', 'theme_snap'),
+                array('class' => 'coursegrade')
+            );
         }
 
-        return (object) array('grade' => $finalgrade, 'gradehtml' => $gradehtml);
+        return (object) array('gradehtml' => $gradehtml);
     }
 
     /**

@@ -88,29 +88,10 @@ class toc_renderer extends core_renderer {
      * @param bool $checkdates
      * @return bool
      */
-    protected function is_section_conditional(section_info $section, $checkdates = false) {
-        // Are there any date restrictions on this section?
-        if (   !empty($section->availablefrom)
-            || !empty($section->availableuntil)) {
-            if (!$checkdates) {
-                return true;
-            } else {
-                // Is current date outside of available range?
-                if (!empty($section->availablefrom)) {
-                    if (time() < usertime($section->availablefrom)) {
-                        return true;
-                    }
-                }
-                if (!empty($section->availableuntil)) {
-                    if (time() > usertime($section->availableuntil)) {
-                        return true;
-                    }
-                }
-            }
-        }
-
+    protected function is_section_conditional(section_info $section) {
         // Are there any conditional fields populated?
-        if (   !empty($section->conditionsgrade)
+        if (   !empty($section->availableinfo)
+            || !empty($section->conditionsgrade)
             || !empty($section->conditionscompletion)
             || !empty($section->conditionsfield)) {
             return true;
@@ -149,37 +130,29 @@ class toc_renderer extends core_renderer {
             return;
         }
 
-        $singlepage = (!property_exists($course, 'coursedisplay') || $course->coursedisplay == COURSE_DISPLAY_SINGLEPAGE);
+        $singlepage = true;
         if ($COURSE->format === 'folderview') {
-            // Folderview sets coursedisplay to COURSE_DISPLAY_SINGLEPAGE
-            // but has multiple pages we want to navigate to.
             $singlepage = false;
         }
         $contents = get_string('contents', 'theme_snap');
-        $appendices = get_string('appendices', 'theme_snap');
-        $coursenavigation = get_string('coursenavigation', 'theme_snap');
-        $close = get_string('close', 'theme_snap');
 
-        $o = '<nav id="course-toc" role="navigation" aria-label="'.s($coursenavigation).'">
-        <div role="tablist">
-        <span><a role="tab" href="#sections">'.$contents.'</a></span>
-        <span><a role="tab" href="#blocks">'.$appendices.'</a></span>
-        <a class="toc-search-link pull-right" role="tab" href="#toc-search"><span class="icon icon-multimedia-20"></span><span class="sr-only">'.get_string("search").'</span></a>
+        $o = '<nav id="course-toc">
+        <div>
+        <h2 id="toc-desktop-menu-heading">
+        <span class=sr-only>Page</span>'.$contents.'</h2>
+        <form id="toc-search" onSubmit="return false;">
+        <input id="toc-search-input" type="search" title="'.get_string("search").'" placeholder="'.get_string("search").
+        '" aria-autocomplete="list" aria-haspopup="true" aria-activedescendant="toc-search-results" autocomplete="off" />
+        '.$this->modulesearch().'
+        </form>
+        <a id="toc-mobile-menu-toggle" title="'.$contents.'" href="#course-toc"><i class="icon icon-office-52"></i></a>
         </div>';
 
-        $o .= '
-        <div id=toc-search role="tabpanel" class="moodle-has-zindex">
-        <label class="toc-search-link" for="toc-search-input"><span class="icon icon-multimedia-20"></span><span class="sr-only">Search with autocomplete</span></label>
-        <input autofocus id="toc-search-input" type="text" title="'.get_string("search").'" placeholder="'.get_string("search").'" role="textbox" aria-autocomplete="list" aria-activedescendant="toc-search-results" />
-        '.$this->modulesearch().'<a class="pull-right snap-action-icon" href="#">
-            <i class="icon icon-office-52"></i><small>'.$close.'</small>
-        </a></div>';
-
         $listlarge = '';
-        if ($course->numsections > 11) {
+        if ($course->numsections > 9) {
             $listlarge = "list-large";
         }
-        $toc = '<ol id="chapters" class="chapters '.$listlarge.'" role="tabpanel" start="0">';
+        $toc = '<ol id="chapters" class="chapters '.$listlarge.'" start="0">';
 
         course_create_sections_if_missing($course, range(0, $course->numsections));
 
@@ -191,19 +164,17 @@ class toc_renderer extends core_renderer {
 
             $linkinfo    = '';
 
-            // Is this conditional (no checks for date restrictions).
+            // Is this conditional.
             $conditional = $this->is_section_conditional($thissection);
-            // Is this conditionally restricted (also check dates)?
-            $conditionaldates = $this->is_section_conditional($thissection, true);
 
             // Make sure conditionally restricted section is skipped in toc if we aren't able to view hidden sections
             // and restriction hides section completely.
-            if ($conditionaldates && !$thissection->uservisible && $thissection->showavailability !== '1') {
+            if (!$thissection->uservisible && empty($thissection->availableinfo)) {
                 continue;
             }
 
-            $showsection = $conditional || ($thissection->uservisible ||
-                ($thissection->visible && !$thissection->available && $thissection->showavailability
+            $showsection = $conditional || ($thissection->uservisible
+                || ($thissection->visible && !$thissection->available
                     && !empty($thissection->availableinfo)));
 
             $outputlink = true;
@@ -215,7 +186,7 @@ class toc_renderer extends core_renderer {
                 } else {
                     continue; // Completely hidden section.
                 }
-            } else {
+            } else if ($conditional) {
                 // NOTE: $thissection->uservisible evaluates to true when the section is hidden but the user can
                 // view hidden sections but we still need to let teachers see that the section is not published to
                 // students.
@@ -228,21 +199,17 @@ class toc_renderer extends core_renderer {
                     }
                 } else {
                     if (\theme_snap\local::is_teacher()) {
-                        // For teachers, always consider conditional if it has conditional settings.
-                        if ($conditional) {
-                            $linkinfo = $this->toc_linkinfo(get_string('conditional', 'theme_snap'));
-                        }
-                    } else {
-                        // For students, do not consider conditional when restricted by date and current date within
-                        // restriction.
-                        if ($conditionaldates) {
-                            $linkinfo = $this->toc_linkinfo(get_string('conditional', 'theme_snap'));
-                        }
+                        $linkinfo = $this->toc_linkinfo(get_string('conditional', 'theme_snap'));
+                    } else if (!empty($thissection->availableinfo)) {
+                        $linkinfo = $this->toc_linkinfo(get_string('notavailable'));
                     }
                 }
             }
 
             $sectionstring = get_section_name($course, $section);
+            if ($sectionstring == get_string('general')) {
+                $sectionstring = get_string('introduction', 'theme_snap');
+            }
             $sectionclass = '';
             $highlight = '';
             if (course_get_format($course)->is_section_current($section)) {
@@ -251,6 +218,7 @@ class toc_renderer extends core_renderer {
             }
 
             if ($outputlink) {
+
                 if ($singlepage) {
                     $url = '#section-'.$section;
                 } else {
@@ -261,217 +229,33 @@ class toc_renderer extends core_renderer {
                         $url = new moodle_url('/course/view.php', array('id' => $course->id, 'section' => $section));
                     }
                 }
+
                 $link = "<a class='$sectionclass' href='$url'>$sectionstring</a>";
+
             } else {
                 $link = "<span class='$sectionclass' >$sectionstring</a>";
             }
+
             $progress = $this->toc_progress ($thissection, $course);
 
             $li   = '<li>'.$link.$highlight.$progress.' '.$linkinfo.'</li>';
+
             $toc .= $li;
         }
+        $coursetools = get_string('coursetools', 'theme_snap');
+        $url = "#coursetools";
+        if ($COURSE->format == 'folderview') {
+            $url = new moodle_url('/course/view.php', ['id' => $course->id, 'section' => 0], 'coursetools');
+        }
+        $link = html_writer::link($url, $coursetools);
+        $toc .= "<li>$link</li>";
 
         $toc .= "</ol>";
-        $toc .= $this->appendices();
         $toc .= "</nav>";
         $o .= $toc;
         return $o;
     }
 
-    /**
-     * Is the gradebook accessible - i.e. are there any reports accessible to this user
-     * @return bool
-     */
-    protected function gradebook_accessible($context) {
-
-        // Find all accessible reports.
-        $reports = grade_helper::get_enabled_plugins_reports(); // Get all enabled reports.
-
-        foreach ($reports as $plugin => $plugindir) {
-            // Remove ones we can't see.
-            if (!has_capability('gradereport/'.$plugin.':view', $context)) {
-                unset($reports[$plugin]);
-            }
-        }
-        return !empty($reports);
-    }
-
-
-    /**
-     * generate appendices string
-     *
-     * @author Guy Thomas
-     * @date 2014-04-23
-     * @return string
-     */
-    protected function appendices() {
-        global $CFG, $COURSE;
-
-        $links = array();
-        $localplugins = core_component::get_plugin_list('local');
-        $coursecontext = context_course::instance($COURSE->id);
-
-        if ($this->gradebook_accessible($coursecontext)) {
-            // Gradebook.
-            $links[] = array(
-                'link' => 'grade/index.php?id='.$COURSE->id,
-                'title' => get_string('gradebook', 'grades')
-            );
-        }
-
-        // Only show if joule grader is installed.
-        if (array_key_exists('joulegrader', $localplugins)) {
-            if (has_capability('local/joulegrader:grade', $coursecontext)
-                || has_capability('local/joulegrader:view', $coursecontext)
-            ) {
-                $links[] = array(
-                    'link' => 'local/joulegrader/view.php?courseid='.$COURSE->id,
-                    'title' => get_string('pluginname', 'local_joulegrader'),
-                );
-            }
-        }
-
-        // Only show Norton grader if installed.
-        if (array_key_exists('nortongrader', $localplugins)) {
-            if (has_capability('local/nortongrader:grade', $coursecontext)
-                || has_capability('local/nortongrader:view', $coursecontext)
-            ) {
-                $links[] = array(
-                    'link' => $CFG->wwwroot.'/local/nortongrader/view.php?courseid='.$COURSE->id,
-                    'title' => get_string('pluginname', 'local_nortongrader')
-                );
-            }
-        }
-
-        // Only show core outcomes if enabled.
-        if (!empty($CFG->core_outcome_enable) && has_capability('moodle/grade:edit', $coursecontext)) {
-            $links[] = array(
-                'link'  => 'outcome/course.php?contextid='.$coursecontext->id,
-                'title' => get_string('outcomes', 'outcome'),
-            );
-        } else if (!empty($CFG->core_outcome_enable) && !is_guest($coursecontext)) {
-            $outcomesets = new \core_outcome\model\outcome_set_repository();
-            if ($outcomesets->course_has_any_outcome_sets($COURSE->id)) {
-                $links[] = array(
-                    'link'  => 'outcome/course.php?contextid='.$coursecontext->id.'&action=report_course_user_performance_table',
-                    'title' => get_string('report:course_user_performance_table', 'outcome'),
-                );
-            }
-        }
-
-        // Course badges.
-        if (!is_guest($coursecontext)) {
-            $links[] = array(
-                // What is the 'type=2' bit ?? I'm not happy with this hardcoded but I don't know where it gets the type
-                // from yet.
-                'link' => 'badges/view.php?type=2&id='.$COURSE->id,
-                'title' => get_string('badgesview', 'badges'),
-                'capability' => '!moodle/course:update' // You must not have this capability to view this item.
-            );
-        }
-
-        // Personalised Learning Designer.
-        $links[] = array(
-            'link' => 'local/pld/view.php?courseid='.$COURSE->id,
-            'title' => get_string('pluginname', 'local_pld'),
-            'capability' => 'moodle/course:update', // Capability required to view this item.
-        );
-
-        // Only show Joule reports if installed.
-        if (array_key_exists('reports', core_component::get_plugin_list('block'))) {
-            if (has_capability('block/reports:viewown', $coursecontext, null, false)
-                || has_capability('block/reports:view', $coursecontext)
-            ) {
-                $links[] = array(
-                    'link' => $CFG->wwwroot.'/blocks/reports/view.php?action=dashboard&courseid='.$COURSE->id,
-                    'title' => get_string('joulereports', 'block_reports')
-                );
-            }
-        }
-
-        // Participants.
-        $links[] = array(
-            'link' => 'user/index.php?id='.$COURSE->id.'&mode=1',
-            'title' => get_string('participants'),
-            'capability' => 'moodle/course:viewparticipants' // Capability required to view this item.
-        );
-
-        // Manage badges.
-        $links[] = array(
-            'link' => 'badges/index.php?type=2&id='.$COURSE->id,
-            'title' => get_string('managebadges', 'badges'),
-            'capability' => 'moodle/course:update' // Capability required to view this item.
-        );
-
-        // Output appendices.
-        $o = "<ul role='tabpanel' id='appendices' class='list-unstyled'>";
-        $o .= $this->render_appendices($links);
-        $o .= "</ul>";
-        return ($o);
-    }
-
-
-    /**
-     * generates a string list of links based on links array
-     * structure of links array should be
-     * array(
-     *      array(
-     *          'link'=>[url in a string]
-     *          'title'=>[mandatory - anyold string title],
-     *          'capability'=>[if you want to limit who can see link],
-     *      )
-     * )
-     * note - couldn't use html_writer::alist function as it does not support sub lists
-     *
-     * @author Guy Thomas
-     * @param array $links
-     * @return string;
-     */
-    protected function render_appendices(array $links) {
-        global $CFG, $COURSE;
-
-        $o = '';
-
-        $coursecontext = context_course::instance($COURSE->id);
-
-        if (empty($links)) {
-            return;
-        }
-        foreach ($links as $item) {
-
-            $item = (object) $item;
-
-            // Check if user has appropriate access to see this item.
-            if (!empty($item->capability)) {
-                if (strpos($item->capability, '!') !== 0) {
-                    if (!has_capability($item->capability, $coursecontext)) {
-                        // Skip item - required capability not present.
-                        continue;
-                    }
-                } else {
-                    if (has_capability(substr($item->capability, 1), $coursecontext)) {
-                        // Skip item - not appropriate for people with this capability.
-                        continue;
-                    }
-                }
-            }
-
-            // Make sure item link is the correct type of url.
-            if (stripos($item->link, 'http') !== 0) {
-                $item->link = $CFG->wwwroot.'/'.$item->link;
-            }
-
-            // Generate linkhtml and add it to treestr.
-            $linkhtml = '';
-            if (!empty($item->link)) {
-                $linkhtml = "<a href='$item->link'>$item->title</a>";
-            } else {
-                $linkhtml = "<span>$item->title</span>";
-            }
-            $o .= "<li>$linkhtml</li>";
-        }
-        return ($o);
-    }
 
 
     /**
@@ -486,15 +270,15 @@ class toc_renderer extends core_renderer {
 
         $format  = course_get_format($this->page->course);
         $course  = $format->get_course();
-        $singlepage = (!property_exists($course, 'coursedisplay') || $course->coursedisplay == COURSE_DISPLAY_SINGLEPAGE);
-
-        $o = '<ul id="toc-search-results" class="list-unstyled" role="listbox"></ul>';
-        $o .= '<ul id="toc-searchables">';
 
         // If course does not have any sections then exit - it can't be a course without sections!!!
         if (!isset($course->numsections)) {
             return;
         }
+
+        $o = '<ul id="toc-search-results" class="list-unstyled" role="listbox" aria-label="search results" '.
+             'aria-live="polite" aria-relevant="additions"></ul>';
+        $o .= '<ul role="listbox" id="toc-searchables" aria-hidden="true">';
 
         $modinfo = get_fast_modinfo($course);
 
@@ -505,7 +289,7 @@ class toc_renderer extends core_renderer {
             if ($cm->sectionnum > $course->numsections) {
                 continue; // Module outside of number of sections.
             }
-            if (!$cm->uservisible && (empty($cm->showavailability) || empty($cm->availableinfo))) {
+            if (!$cm->uservisible && (empty($cm->availableinfo))) {
                 continue; // Hidden completely.
             }
             $pubstat = '';
@@ -519,18 +303,17 @@ class toc_renderer extends core_renderer {
                 $info = '<span class="sr-only">'.get_string('pluginname', $cm->modname).'</span> ';
             }
 
-            // Create image.
             $img = "<img src='".$cm->get_icon_url()."' alt='' />";
 
-            // Create link.
-
-            if ($singlepage && $COURSE->format != 'folderview') {
-                $url = '#section-'.$cm->sectionnum.'&module-'.$cm->id;
-            } else {
-
+            // #section-1&module-7255.
+            $url = '#section-'.$cm->sectionnum.'&module-'.$cm->id;
+            if ($COURSE->format == 'folderview') {
                 $url = $CFG->wwwroot.'/course/view.php?id='.$COURSE->id.'&section='.$cm->sectionnum.'#module-'.$cm->id;
             }
-            $o .= "<li role='option'><a href='$url'>".$img.$info.$cm->get_formatted_name().$pubstat."</a></li>";
+
+            $linkcontent = $img.$info.$cm->get_formatted_name().$pubstat;
+            $link = html_writer::link($url, $linkcontent, ['tabindex' => 0]);
+            $o .= "<li role=option>$link</li>";
         }
         $o .= '</ul>';
 

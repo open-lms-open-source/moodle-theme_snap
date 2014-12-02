@@ -350,3 +350,108 @@ fieldset.coursesearchbox label {
         display: inline-block;
     }
 }
+
+/* Section and module editing forms contain special JS components for the
+   availability system (if enabled). */
+#fitem_id_availabilityconditionsjson {
+    *[aria-hidden=true] {
+        display: none;
+    }
+    select,
+    input[type=text] {
+        position:relative;
+        top: 4px;
+    }
+    label {
+        display: inline;
+    }
+    .availability-group {
+        margin-right: 8px;
+    }
+    .availability-item {
+        margin-bottom: 6px;
+    }
+    .availability-none {
+        margin-left: 20px;
+        margin-bottom: 4px;
+    }
+    .availability-plugincontrols {
+        padding: 2px 0px 0px 4px;
+        background: none repeat scroll 0% 0% @well-bg;
+        border: 1px solid @well-border;
+        border-radius: 4px;
+        display: inline-block;
+        margin-right: 8px;
+    }
+    /* Eye icon in front of an item and delete icon after it. */
+    .availability-eye,
+    .availability-delete {
+        margin-right: 8px;
+    }
+    /* Hidden eye icon still takes up space. */
+    .availability-eye[aria-hidden=true] {
+        display: inline;
+        visibility: hidden;
+    }
+    /* Eye icons in front of child lists are aligned specially. */
+    .availability-list > .availability-eye img {
+        vertical-align: top;
+        margin-top: 12px;
+    }
+    /* Add button lines up with child elements. */
+    .availability-button {
+        margin-left: 15px;
+    }
+    /* Nested section is grey. */
+    .availability-childlist > .availability-inner {
+        display: inline-block;
+        background: @well-bg;
+        border: 1px solid @well-border;
+        border-radius: 4px;
+        padding: 6px;
+        margin-bottom: 6px;
+    }
+    /* Second (and more) levels of nested sections are white. */
+    .availability-childlist .availability-childlist > .availability-inner {
+        background: #fff;
+    }
+    /* Connecting text needs to be indented. */
+    .availability-connector {
+        margin-left: 20px;
+        margin-bottom: 6px;
+    }
+}
+/* This dialogue is used to add an availability condition. */
+.availability-dialogue {
+    .moodle-dialogue .moodle-dialogue-bd {
+        padding-left: 0;
+        padding-right: 0;
+        padding-bottom: 2px;
+    }
+    ul {
+        display: block;
+        margin: 0;
+    }
+    li {
+        display: block;
+        list-style-type: none;
+        padding: 0 0 4px;
+        clear: both;
+        border-bottom: 1px solid @table-border-color;
+        margin-bottom: 4px;
+    }
+    ul button {
+        float: left;
+        min-width: 140px;
+        margin-top: 4px;
+    }
+    label {
+        margin-left: 170px;
+        margin-bottom: 0;
+    }
+    .availability-buttons button {
+        margin-left: 1em;
+        margin-right: 1em;
+        margin-top: 4px;
+    }
+}

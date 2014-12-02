@@ -28,6 +28,7 @@ require_once(__DIR__.'/renderers/course_renderer.php');
 require_once(__DIR__.'/renderers/course_management_renderer.php');
 require_once(__DIR__.'/renderers/course_format_topics_renderer.php');
 require_once(__DIR__.'/renderers/course_format_weeks_renderer.php');
+require_once(__DIR__.'/renderers/course_format_folderview_renderer.php');
 require_once(__DIR__.'/renderers/files_renderer.php');
 
 // Include badge renderer if it should be.

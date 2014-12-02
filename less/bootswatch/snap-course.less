@@ -20,7 +20,14 @@ section#region-main
 // SHAME - do we need this?
 .singlebutton {
     margin:0.5em 0;
-    text-align: center;
+    text-align:center;
+}
+
+@media screen and (min-width: @screen-md) {
+    .path-course-view .singlebutton {
+        float:right;
+        margin-right:-4%;
+    }
 }
 .section .filler {
     display:none;
@@ -51,6 +58,34 @@ section#region-main
   }
 }
 
+/* A SPECIAL SECTION IN SNAP FOR COURSE TOOLS */
+#coursetools-list{
+    a{
+        display:block;
+        .svg-icon {
+            width: 2em;
+            height: 2em;
+            display: inline-block;
+            vertical-align: middle;
+            margin-right: 4%;
+        }
+    }
+}
+@media screen and (min-width: @screen-md) {
+    #coursetools {
+        margin:0 -10%;
+        clear:both;
+    }
+    #coursetools-list{
+        padding:2em 1em;
+        a{
+            width:50%;
+            float:left;
+            padding:0.3em;
+            font-size:1.1em;
+        }
+    }
+}
 
 // -------------------------
 // Add numbers to sections
@@ -69,6 +104,10 @@ li.section .sectionname:before{
 li.section.main {
     counter-increment: annotation-list;
 }
+li.section:focus {
+    outline:none;
+}
+
 
 
 // -------------------------
@@ -100,7 +139,6 @@ li.section.main {
 }
 
 .sectionname {
-    font-size: @font-size-h2;
     padding-top: 0;
     margin-top: 0;
     white-space:normal !important;
@@ -111,6 +149,7 @@ li.section.main {
     position:relative;
     left:0;
     font-weight:300;
+    font-size:@font-size-h2;
 }
 
 // except in folder view where the name is spat out twice on single pages
@@ -177,7 +216,8 @@ li.section.main {
     padding: 0;
 }
 
-.course-content > ul li.section {
+.course-content > ul li.section,
+#coursetools {
     visibility: hidden;
     height: 0;
     width: 0;
@@ -185,10 +225,14 @@ li.section.main {
 }
 
 .editing .course-content > ul li.section,
-.course-content > ul li.section.state-visible {
+.course-content > ul li.section.state-visible,
+#coursetools.state-visible,
+.editing #coursetools,
+#page-course-view-folderview #coursetools {
     visibility: visible;
     height: auto;
     width: auto;
+    outline:0;
 }
 
 /* hide progress label with odd z-indexing */
@@ -218,12 +262,19 @@ body.format-flexpage .singlebutton{
     }
 }
 
+.folderview-single-section #coursetools {
+    display: none;
+}
+
 .snap-section-remove {
     text-align: right;
     padding-bottom: 2em;
     border-bottom: 1px solid #ccc;
-    &+ h3 + form label {
-        display: block;
+    &+ h3 + form {
+        padding-bottom: 2em;
+        label {
+            display: block;
+        }
     }
 }
 
@@ -304,6 +355,11 @@ body.format-flexpage .singlebutton{
 // Activity & Resource styles
 // -------------------------
 
+// heading link to asset
+.snap-asset-link {
+    margin:0;
+    padding:0;
+}
 
 // generic moodle activity - as asset in snap
 .section li.snap-asset{
@@ -338,7 +394,7 @@ body.format-flexpage .singlebutton{
             height:75px;
         }
         // the link to the mod - moodle does not add a class :(
-        > a:first-child {
+        .snap-asset-link a {
             color:#666;
             &:hover {
                 color:#333;
@@ -362,7 +418,12 @@ we do this by default in snap, so hide moodle version */
 .snap-meta {
     font-family:@font-family-base;
     font-size:small;
-    clear:both;
+}
+.conditional,
+.draft {
+    .snap-meta {
+        clear:both;
+    }
 }
 
 // mime/activity name
@@ -505,7 +566,7 @@ we do this by default in snap, so hide moodle version */
     .section li.modtype_book,
     .section li.modtype_page {
         .activityinstance{
-            >a:first-child{
+            .snap-asset-link a{
                 width: 50%;
                 float:left;
                 padding:0;
@@ -513,8 +574,7 @@ we do this by default in snap, so hide moodle version */
         }
     }
     // alternate stuff for pages
-    .section li.modtype_page + li.modtype_page:nth-of-type(odd) {
-
+    .section li.modtype_page + li.modtype_page:nth-of-type(even) {
         .contentafterlink > ol:first-child,
         .contentafterlink >.summary-text:first-child,
         .contentafterlink .summary-figure {
@@ -529,7 +589,7 @@ we do this by default in snap, so hide moodle version */
             padding-left:3%;
         }
         .activityinstance{
-            >a:first-child{
+            .snap-asset-link a{
                 width: 50%;
                 float:right;
                 padding-left:3%;
@@ -537,7 +597,7 @@ we do this by default in snap, so hide moodle version */
         }
         &.state-expanded {
             .activityinstance{
-                >a:first-child{
+                .snap-asset-link a{
                     width: 50%;
                     float:left;
                     padding:0;
@@ -549,7 +609,7 @@ we do this by default in snap, so hide moodle version */
 }
 // TODO - make better
 // title/link on images - css is shame
-.snap-native.snap-image .activityinstance>a:first-child {
+.snap-native.snap-image .activityinstance .snap-asset-link a {
     display:none;
 }
 
@@ -579,6 +639,9 @@ we do this by default in snap, so hide moodle version */
         background-color:rgba(255,255,255,0.9);
         padding:0 4%;
     }
+    .snap-image-title{
+        text-align:center;
+    }
     .snap-image-summary{
         position:relative;
         margin-top:-3em;
@@ -607,10 +670,11 @@ we do this by default in snap, so hide moodle version */
         float:left;
         display:block;
         clear:none;
+        .alakazam();
         &:hover {
             background-position:50% 75%;
             background-size:120px auto;
-            .alakazam();
+
         }
 
         // resource cards are clickable with data-href, so add cursor pointer
@@ -631,6 +695,9 @@ we do this by default in snap, so hide moodle version */
         }
         .snap-assettype {
             padding:0 4%;
+        }
+        .snap-asset-link {
+            font-size:1em;
         }
 
 }
@@ -763,7 +830,7 @@ li.snap-resource.snap-mime-text{
     .activityicon {
         margin-left:3%;
     }
-    .activityinstance > a{
+    .activityinstance .snap-asset-link a{
         display:block;
         .clearfix();
     }
@@ -849,7 +916,7 @@ li.snap-activity.modtype_folder {
 
 /* Make it obvious that you can edit a summary - Add text and some styles to that gear thing */
 #page-site-index .sitetopic>a:last-of-type,
-.editing .summary>a:last-of-type{
+.summary>a:last-of-type{
     .btn;
     clear:both;
     margin-bottom:1em;
@@ -860,13 +927,13 @@ li.snap-activity.modtype_folder {
 }
 
 #page-site-index .sitetopic>a:last-of-type:before,
-.editing .summary>a:last-of-type:before {
+.summary>a:last-of-type:before {
     content: attr(title);
     display:inline-block;
     font-weight:300;
 }
 #page-site-index .sitetopic>a:last-of-type:after,
-.editing .summary>a:last-of-type:after {
+.summary>a:last-of-type:after {
     content: "\e12a";
     font-family:"line-icons";
     margin-left:11%;
@@ -903,7 +970,7 @@ li.snap-activity.modtype_folder {
     .clearfix();
     .moodle-actionmenu {
         width: 100%;
-        max-width: 230px;
+        max-width: 320px;
         .menubar {
             text-align: right;
         }
@@ -920,7 +987,6 @@ li.snap-activity.modtype_folder {
 .togglecompletion,
 .autocompletion {
     float:right;
-    padding:0 4%;
 }
 span.autocompletion img,
 form.togglecompletion input {
@@ -1026,7 +1092,7 @@ div.commands ul.menubar {
         border-radius:0;
         background-color:#fff;
         transform: scale(0);
-        transform-origin: 50% 0%;
+        transform-origin: 100% 100%;
         transition: transform .3s;
     }
     // when menu shown

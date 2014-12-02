@@ -11,14 +11,13 @@ $coursemainpage = strpos($PAGE->pagetype, 'course-view-') === 0;
 ////////////////////////// MAIN  ///////////////////////////////
 -->
 <main id="moodle-page" class="clearfix">
-<div id="page-header" class="clearfix">
+<div id="page-header" class="clearfix
+<?php if (!empty($snapcourseimage)) : ?>
+ mast-image
+<?php endif;?>">
 <div class="breadcrumb-nav" aria-label="breadcrumb"><?php echo $OUTPUT->navbar(); ?></div>
 
-<div id="page-mast"
-<?php if (!empty($snapcourseimage)) : ?>
-class="mast-image"
-<?php endif;?>
->
+<div id="page-mast">
 <?php
 echo $OUTPUT->page_heading();
 echo $OUTPUT->course_header();
@@ -33,6 +32,7 @@ if ($coursemainpage) {
 <section id="region-main">
 <?php
 echo $OUTPUT->course_content_header();
+// Note, there is no blacklisting for the edit blocks button on course pages.
 echo $OUTPUT->page_heading_button();
 echo $OUTPUT->main_content();
 echo $OUTPUT->course_content_footer();

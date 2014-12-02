@@ -26,57 +26,6 @@ defined('MOODLE_INTERNAL') || die();
 class snap_shared extends renderer_base {
 
     /**
-     * Next and previous links for Snap theme sections
-     *
-     * Mostly a spruced up version of the get_nav_links logic, since that
-     * renderer mixes the logic of retrieving and building the link targets
-     * based on availability with creating the HTML to display them niceley.
-     * @return string
-     */
-    public static function next_previous($course, $sections, $sectionno) {
-        $course = course_get_format($course)->get_course();
-
-        $previousarrow = '<i class="icon-arrows-03"></i>';
-        $nextarrow = '<i class="icon-arrows-04"></i>';
-
-        $canviewhidden = has_capability('moodle/course:viewhiddensections', context_course::instance($course->id))
-            or !$course->hiddensections;
-
-        $previous = '';
-        $target = $sectionno - 1;
-        while ($target >= 0 && empty($previous)) {
-            if ($canviewhidden || $sections[$target]->uservisible) {
-                $attributes = array('class' => 'previous_section');
-                if (!$sections[$target]->visible) {
-                    $attributes['class'] .= ' dimmed_text';
-                }
-                $sectionname = get_section_name($course, $sections[$target]);
-                $previousstring = get_string('previoussection', 'theme_snap');
-                $linkcontent = self::target_link_content($sectionname, $previousarrow, $previousstring);
-                $previous = html_writer::link(course_get_url($course, $target), $linkcontent, $attributes);
-            }
-            $target--;
-        }
-
-        $next = '';
-        $target = $sectionno + 1;
-        while ($target <= $course->numsections && empty($next)) {
-            if ($canviewhidden || $sections[$target]->uservisible) {
-                $attributes = array('class' => 'next_section');
-                if (!$sections[$target]->visible) {
-                    $attributes['class'] .= ' dimmed_text';
-                }
-                $sectionname = get_section_name($course, $sections[$target]);
-                $nextstring = get_string('nextsection', 'theme_snap');
-                $linkcontent = self::target_link_content($sectionname, $nextarrow, $nextstring);
-                $next = html_writer::link(course_get_url($course, $target), $linkcontent, $attributes);
-            }
-            $target++;
-        }
-        return html_writer::tag('nav', $previous.$next, array('class' => 'section_footer'));
-    }
-
-    /**
      * Taken from /format/renderer.php
      * Generate a summary of the activites in a section
      *
@@ -129,13 +78,13 @@ class snap_shared extends renderer_base {
 
         // Output section activities summary.
         $o = '';
-        $o .= html_writer::start_tag('div', array('class' => 'section-summary-activities mdl-right'));
+        $o .= "<div class='section-summary-activities mdl-right'>";
         foreach ($sectionmods as $mod) {
-            $o .= html_writer::start_tag('span', array('class' => 'activity-count'));
+            $o .= "<span class='activity-count'>";
             $o .= $mod['name'].': '.$mod['count'];
-            $o .= html_writer::end_tag('span');
+            $o .= "</span>";
         }
-        $o .= html_writer::end_tag('div');
+        $o .= "</div>";
 
         $a = false;
 
@@ -146,9 +95,9 @@ class snap_shared extends renderer_base {
             $a->total = $total;
             $a->percentage = ($complete / $total) * 100;
 
-            $o .= html_writer::start_tag('div', array('class' => 'section-summary-activities mdl-right'));
-            $o .= html_writer::tag('span', get_string('progresstotal', 'completion', $a), array('class' => 'activity-count'));
-            $o .= html_writer::end_tag('div');
+            $o .= "<div class='section-summary-activities mdl-right'>";
+            $o .= "<span class='activity-count'>".get_string('progresstotal', 'completion', $a)."</span>";
+            $o .= "</div>";
         }
 
         $retobj = (object) array (
@@ -159,72 +108,6 @@ class snap_shared extends renderer_base {
         );
 
         return $retobj;
-    }
-
-    /**
-     * Based on get_nav_links function in class format_section_renderer_base
-     * This function has been modified to provide a link to section 0
-     * Generate next/previous section links for naviation
-     *
-     * @param stdClass $course The course entry from DB
-     * @param array $sections The course_sections entries from the DB
-     * @param int $sectionno The section number in the coruse which is being dsiplayed
-     * @return array associative array with previous and next section link
-     */
-    public static function get_nav_links($course, $sections, $sectionno) {
-        global $OUTPUT;
-        // FIXME: This is really evil and should by using the navigation API.
-        $course = course_get_format($course)->get_course();
-        $canviewhidden = has_capability('moodle/course:viewhiddensections', context_course::instance($course->id))
-        or !$course->hiddensections;
-
-        $links = array('previous' => '', 'next' => '');
-        $back = $sectionno - 1;
-        while ($back > -1 and empty($links['previous'])) {
-            if ($canviewhidden || $sections[$back]->uservisible) {
-                $params = array();
-                if (!$sections[$back]->visible) {
-                    $params = array('class' => 'dimmed_text');
-                }
-
-                $previouslink = html_writer::tag('span', $OUTPUT->larrow(), array('class' => 'larrow'));
-                $previouslink .= get_section_name($course, $sections[$back]);
-                if ($back > 0 ) {
-                    $courseurl = course_get_url($course, $back);
-                } else {
-                    // We have to create the course section url manually if its 0.
-                    $courseurl = new moodle_url('/course/view.php', array('id' => $course->id, 'section' => $back));
-                }
-                $links['previous'] = html_writer::link($courseurl, $previouslink, $params);
-            }
-            $back--;
-        }
-
-        $forward = $sectionno + 1;
-        while ($forward <= $course->numsections and empty($links['next'])) {
-            if ($canviewhidden || $sections[$forward]->uservisible) {
-                $params = array();
-                if (!$sections[$forward]->visible) {
-                    $params = array('class' => 'dimmed_text');
-                }
-                $nextlink = get_section_name($course, $sections[$forward]);
-                $nextlink .= html_writer::tag('span', $OUTPUT->rarrow(), array('class' => 'rarrow'));
-                $links['next'] = html_writer::link(course_get_url($course, $forward), $nextlink, $params);
-            }
-            $forward++;
-        }
-
-        return $links;
-    }
-
-    private static function target_link_content($name, $arrow, $string) {
-        $html = html_writer::div($arrow, 'nav_icon');
-        $html .= html_writer::start_span('text');
-        $html .= html_writer::span($string, 'nav_guide');
-        $html .= html_writer::empty_tag('br');
-        $html .= $name;
-        $html .= html_writer::end_tag('span');
-        return $html;
     }
 
     /**
@@ -281,65 +164,256 @@ class snap_shared extends renderer_base {
         }
 
         // Output warning.
-        return ($OUTPUT->notification(get_string('warnsiteformatflexpage', 'theme_snap', $CFG->wwwroot.'/admin/settings.php?section=frontpagesettings')));
+        return ($OUTPUT->notification(get_string('warnsiteformatflexpage',
+            'theme_snap', $CFG->wwwroot.'/admin/settings.php?section=frontpagesettings')));
     }
 
     /**
-     * Render a form to create a new course section, prompting for basic info.
+     * Is the gradebook accessible - i.e. are there any reports accessible to this user
+     * @return bool
+     */
+    public static function gradebook_accessible($context) {
+
+        // Find all accessible reports.
+        $reports = grade_helper::get_enabled_plugins_reports(); // Get all enabled reports.
+
+        foreach ($reports as $plugin => $plugindir) {
+            // Remove ones we can't see.
+            if (!has_capability('gradereport/'.$plugin.':view', $context)) {
+                unset($reports[$plugin]);
+            }
+        }
+        return !empty($reports);
+    }
+
+    /**
+     * generates a string list of links based on links array
+     * structure of links array should be
+     * array(
+     *      array(
+     *          'link'=>[url in a string]
+     *          'title'=>[mandatory - anyold string title],
+     *          'capability'=>[if you want to limit who can see link],
+     *      )
+     * )
+     * note - couldn't use html_writer::alist function as it does not support sub lists
+     *
+     * @author Guy Thomas
+     * @param array $links
+     * @return string;
+     */
+    public static function render_appendices(array $links) {
+        global $CFG, $COURSE;
+
+        $coursecontext = context_course::instance($COURSE->id);
+
+        $o = '';
+        foreach ($links as $item) {
+
+            $item = (object) $item;
+
+            // Check if user has appropriate access to see this item.
+            if (!empty($item->capability)) {
+                if (strpos($item->capability, '!') !== 0) {
+                    if (!has_capability($item->capability, $coursecontext)) {
+                        continue;
+                    }
+                } else {
+                    if (has_capability(substr($item->capability, 1), $coursecontext)) {
+                        continue;
+                    }
+                }
+            }
+
+            // Make sure item link is the correct type of url.
+            if (stripos($item->link, 'http') !== 0) {
+                $item->link = $CFG->wwwroot.'/'.$item->link;
+            }
+
+            // Generate linkhtml and add it to treestr.
+            $linkhtml = '';
+            if (!empty($item->link)) {
+                $linkhtml = html_writer::link($item->link, $item->title);
+            } else {
+                $linkhtml = "<span>$item->title</span>";
+            }
+            $o .= $linkhtml;
+        }
+        return $o;
+    }
+    /**
+     * Course tools svg icons
      *
      * @return string
      */
-    public static function change_num_sections($course) {
-        $output = html_writer::start_div('', array('id' => 'changenumsections'));
-
-        $output = html_writer::start_div('snap-section-remove');
-        if ($course->numsections > 0) {
-            $strremovesection = get_string('removethissection', 'theme_snap');
-            $url = new moodle_url('/course/changenumsections.php',
-                array('courseid' => $course->id,
-                      'increase' => false,
-                      'sesskey' => sesskey()));
-            $output .= html_writer::link($url, $strremovesection, array('class' => 'btn btn-default'));
-        }
-        $output .= html_writer::end_div();
-
-        $context = \context_course::instance($course->id);
-        $contextid = $context->id;
-        $url = new moodle_url('/theme/snap/index.php', array(
-            'sesskey'  => sesskey(),
-            'action' => 'addsection',
-            'contextid' => $contextid,
-        ));
-
-        $heading = get_string('addanewsection', 'theme_snap');
-        $output .= "<h3>$heading</h3>";
-        $output .= html_writer::start_tag('form', array(
-            'method' => 'post',
-            'action' => $url->out_omit_querystring()
-        ));
-        $output .= html_writer::input_hidden_params($url);
-        $output .= '<div class="form-group">';
-        $output .= html_writer::label(get_string('sectionname'), 'newsection', true);
-        $output .= html_writer::empty_tag('input', array(
-            'id' => 'newsection',
-            'type' => 'text',
-            'size' => 50,
-            'name' => 'newsection',
-            'required' => 'required',
-        ));
-        $output .= '</div>';
-        $output .= '<div class="form-group">';
-        $output .= html_writer::label(get_string('summary'), 'summary', true);
-        $output .= print_textarea(true, 10, 150, "100%",
-                               "auto", "summary", '', $course->id, true);
-        $output .= '</div>';
-        $output .= html_writer::empty_tag('input', array(
-            'type' => 'submit',
-            'name' => 'addtopic',
-            'value' => get_string('createsection', 'theme_snap'),
-        ));
-        $output .= html_writer::end_tag('form');
-
-        return $output;
+    public static function coursetools_svg_icons() {
+        return self::inline_svg('coursetools-icons.svg');
     }
+
+    /**
+     * Get inline svg icon.
+     * @param $filename
+     * @return string
+     */
+    public static function inline_svg($filename) {
+        global $CFG;
+        return file_get_contents($CFG->dirroot.'/theme/snap/pix/'.$filename);
+    }
+
+    /**
+     * generate list of course tools
+     *
+     * @author Guy Thomas
+     * @date 2014-04-23
+     * @return string
+     */
+    public static function appendices() {
+        global $CFG, $COURSE, $PAGE, $OUTPUT;
+
+        $links = array();
+        $localplugins = core_component::get_plugin_list('local');
+        $coursecontext = context_course::instance($COURSE->id);
+
+        // Turn editing on.
+        $iconsrc = $OUTPUT->pix_url('icon', 'label');
+        $editcourseicon = '<img class="svg-icon" alt="" title="" src="'.$iconsrc.'">';
+        $url = new moodle_url('/course/view.php', ['id' => $COURSE->id, 'sesskey' => sesskey()]);
+        if ($PAGE->user_is_editing()) {
+            $url->param('edit', 'off');
+            $editstring = get_string('turneditingoff');
+        } else {
+            $url->param('edit', 'on');
+            $editstring = get_string('editcoursecontent', 'theme_snap');
+        }
+        $links[] = array(
+            'link' => $url,
+            'title' => $editcourseicon.$editstring,
+            'capability' => 'moodle/course:update' // Capability required to view this item.
+        );
+
+        // Course settings.
+        $settingsicon = '<svg viewBox="0 0 100 100" class="svg-icon">
+        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#coursetools-settings"></use></svg>';
+        $links[] = array(
+            'link' => 'course/edit.php?id='.$COURSE->id,
+            'title' => $settingsicon.get_string('editcoursesettings', 'theme_snap'),
+            'capability' => 'moodle/course:update' // Capability required to view this item.
+        );
+
+        // Participants.
+        $participanticon = '<svg viewBox="0 0 100 100" class="svg-icon">
+        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#coursetools-participants"></use></svg>';
+        $links[] = array(
+            'link' => 'user/index.php?id='.$COURSE->id.'&mode=1',
+            'title' => $participanticon.get_string('participants'),
+            'capability' => 'moodle/course:viewparticipants' // Capability required to view this item.
+        );
+        // Gradebook.
+        $gradebookicon = '<svg viewBox="0 0 100 100" class="svg-icon">
+        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#coursetools-gradbook"></use></svg>';
+
+        if (self::gradebook_accessible($coursecontext)) {
+            // Gradebook.
+            $links[] = array(
+                'link' => 'grade/index.php?id='.$COURSE->id,
+                'title' => $gradebookicon.get_string('gradebook', 'grades')
+            );
+        }
+
+        // Only show if joule grader is installed.
+        if (array_key_exists('joulegrader', $localplugins)) {
+            if (has_capability('local/joulegrader:grade', $coursecontext)
+                || has_capability('local/joulegrader:view', $coursecontext)
+            ) {
+                $links[] = array(
+                    'link' => 'local/joulegrader/view.php?courseid='.$COURSE->id,
+                    'title' => $gradebookicon.get_string('pluginname', 'local_joulegrader'),
+                );
+            }
+        }
+
+        // Only show Norton grader if installed.
+        if (array_key_exists('nortongrader', $localplugins)) {
+            if (has_capability('local/nortongrader:grade', $coursecontext)
+                || has_capability('local/nortongrader:view', $coursecontext)
+            ) {
+                $links[] = array(
+                    'link' => $CFG->wwwroot.'/local/nortongrader/view.php?courseid='.$COURSE->id,
+                    'title' => $gradebookicon.get_string('pluginname', 'local_nortongrader')
+                );
+            }
+        }
+
+        // Only show core outcomes if enabled.
+        $outcomesicon = '<svg viewBox="0 0 100 100" class="svg-icon">
+        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#coursetools-outcomes"></use></svg>';
+        if (!empty($CFG->core_outcome_enable) && has_capability('moodle/grade:edit', $coursecontext)) {
+            $links[] = array(
+                'link'  => 'outcome/course.php?contextid='.$coursecontext->id,
+                'title' => $outcomesicon.get_string('outcomes', 'outcome'),
+            );
+        } else if (!empty($CFG->core_outcome_enable) && !is_guest($coursecontext)) {
+            $outcomesets = new \core_outcome\model\outcome_set_repository();
+            if ($outcomesets->course_has_any_outcome_sets($COURSE->id)) {
+                $links[] = array(
+                    'link'  => 'outcome/course.php?contextid='.$coursecontext->id.'&action=report_course_user_performance_table',
+                    'title' => $participanticon.get_string('report:course_user_performance_table', 'outcome'),
+                );
+            }
+        }
+
+        $badgesicon = '<svg viewBox="0 0 100 100" class="svg-icon">
+            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#coursetools-badges"></use></svg>';
+        // Course badges.
+        if (!is_guest($coursecontext)) {
+            $links[] = array(
+                // What is the 'type=2' bit ?? I'm not happy with this hardcoded but I don't know where it gets the type
+                // from yet.
+                'link' => 'badges/view.php?type=2&id='.$COURSE->id,
+                'title' => $badgesicon.get_string('badgesview', 'badges'),
+                'capability' => '!moodle/course:update' // You must not have this capability to view this item.
+            );
+        }
+        // Manage badges.
+        $links[] = array(
+            'link' => 'badges/index.php?type=2&id='.$COURSE->id,
+            'title' => $badgesicon.get_string('managebadges', 'badges'),
+            'capability' => 'moodle/course:update' // Capability required to view this item.
+        );
+
+        // Only show Joule reports if installed.
+        $reportsicon = '<svg viewBox="0 0 100 100" class="svg-icon">
+            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#coursetools-reports"></use></svg>';
+        if (array_key_exists('reports', core_component::get_plugin_list('block'))) {
+            if (has_capability('block/reports:viewown', $coursecontext, null, false)
+                || has_capability('block/reports:view', $coursecontext)
+            ) {
+                $links[] = array(
+                    'link' => $CFG->wwwroot.'/blocks/reports/view.php?action=dashboard&courseid='.$COURSE->id,
+                    'title' => $reportsicon.get_string('joulereports', 'block_reports')
+                );
+            }
+        }
+
+        // Personalised Learning Designer.
+        $pldicon = '<svg viewBox="0 0 100 100" class="svg-icon">
+        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#coursetools-pld"></use></svg>';
+        $pldname = get_string('pld', 'theme_snap');
+        $links[] = array(
+            'link' => 'local/pld/view.php?courseid='.$COURSE->id,
+            'title' => $pldicon.$pldname,
+            'capability' => 'moodle/course:update', // Capability required to view this item.
+        );
+
+        $toolssvg = self::inline_svg('tools.svg');
+        // Output course tools.
+        $coursetools = get_string('coursetools', 'theme_snap');
+        $o = "<h2>$coursetools</h2>";
+        $o .= "<div class='row'><div class='col-md-4 col-xs-4'>{$toolssvg}</div><div class='col-xs-8' id='coursetools-list'>".
+            self::render_appendices($links)."</div></div><hr>";
+
+        return $o;
+    }
+
+
 }

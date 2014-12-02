@@ -28,349 +28,6 @@ require_once($CFG->dirroot . "/mod/book/locallib.php");
 require_once($CFG->libdir . "/gradelib.php");
 
 class theme_snap_core_course_renderer extends core_course_renderer {
-
-    // TODO - should this be in core renderer ?
-    public function course_search_form($value = '', $format = 'plain') {
-
-        if ($format !== 'fixy') {
-            // For now only handle search in fixy menu.
-            return parent::course_search_form($value, $format);
-        }
-
-        static $count = 0;
-        $formid = 'coursesearch';
-        if ((++$count) > 1) {
-            $formid .= $count;
-        }
-        $inputid = 'coursesearchbox';
-        $inputsize = 30;
-
-        if ($format === 'navbar') {
-            $formid = 'coursesearchnavbar';
-            $inputid = 'navsearchbox';
-        }
-
-        $strsearchcourses = get_string("searchcourses");
-        $searchurl = new moodle_url('/course/search.php');
-
-        $form = array('id' => $formid, 'action' => $searchurl, 'method' => 'get', 'class' => "form-inline", 'role' => 'form');
-        $output = html_writer::start_tag('form', $form);
-        $output .= html_writer::tag('label', $strsearchcourses, array('for' => $inputid));
-        $output .= html_writer::start_div('input-group');
-        $search = array('type' => 'text', 'id' => $inputid, 'size' => $inputsize, 'name' => 'search',
-                        'class' => 'form-control', 'value' => s($value), 'placeholder' => $strsearchcourses);
-        $output .= html_writer::empty_tag('input', $search);
-        $button = array('type' => 'submit', 'class' => 'btn btn-default');
-        $output .= html_writer::start_span('input-group-btn');
-        $output .= html_writer::tag('button', get_string('go'), $button);
-        $output .= html_writer::end_span();
-        $output .= html_writer::end_div(); // Close form-group.
-        $output .= html_writer::end_tag('form');
-
-        return $output;
-    }
-
-
-    /**
-     * Get module type
-     * Note, if module is a resource, get the actual file type
-     *
-     * @author Guy Thomas
-     * @date 2014-06-16
-     * @param cm_info $mod
-     * @return stdClass | string
-     */
-    protected function get_mod_type(cm_info $mod) {
-        if ($mod->modname === 'resource') {
-            // Get file type from icon
-            // (note, I also tried this using a combo of substr and strpos and preg_match was much faster!)
-            $matches = array();
-            preg_match ('#/(\w+)-#', $mod->icon, $matches);
-            $filetype = $matches[1];
-            $ext = $filetype;
-            $extension = array(
-                'powerpoint' => 'ppt',
-                'document' => 'doc',
-                'spreadsheet' => 'xls',
-                'archive' => 'zip',
-                'pdf' => 'pdf',
-                'image' => get_string('image', 'theme_snap'),
-            );
-            if (in_array($filetype, array_keys($extension))) {
-                $filetype = $extension[$filetype];
-            }
-            return [$filetype, $ext];
-        } else {
-            return [$mod->modfullname, null];
-        }
-    }
-
-
-    protected function is_image_mod($mod) {
-        if ($mod->modname == 'resource') {
-            $matches = array();
-            preg_match ('#/(\w+)-#', $mod->icon, $matches);
-            $filetype = $matches[1];
-            $extension = array('jpg', 'jpeg', 'png', 'gif', 'svg', 'image');
-            if (in_array($filetype, $extension)) {
-                return true;
-            }
-            return false;
-        }
-        return false;
-    }
-
-    /**
-     * Get the module meta data for a specific module.
-     *
-     * @param stdClass $mod
-     *
-     * @return string
-     */
-    protected function module_meta_html($mod) {
-
-        global $COURSE, $CFG;
-
-        $content = '';
-
-        // Do we have an activity function for this module for returning meta data?
-        // @todo - check module lib.php for a meta function (won't work for core mods but will for ours if we wish).
-        $methodname = $mod->modname.'_meta';
-        if (method_exists('theme_snap\\activity', $methodname)) {
-            $meta = call_user_func('theme_snap\\activity::'.$methodname, $mod);
-        } else {
-            // Can't get meta data for this module.
-            return '';
-        }
-
-        $content .= '<div class="module-meta">';
-
-        if ($meta->isteacher) {
-            // Teacher - useful teacher meta data.
-            if (!empty($meta->timeclose)) {
-                $dueinfo = get_string('due', 'theme_snap');
-                $dueclass = 'label-info';
-                $content .= '<span class="label '.$dueclass.'">'.$dueinfo.' '.userdate($meta->timeclose, get_string('strftimedate', 'langconfig').'</span>');
-            }
-
-            $engagementmeta = array();
-
-            $gradedlabel = "info";
-            if ($meta->numsubmissions) {
-                $engagementmeta[] = get_string('xofy'.$meta->submitstrkey, 'theme_snap',
-                    (object) array('completed' => $meta->numsubmissions, 'participants' => \theme_snap\local::course_participant_count($COURSE->id)));
-            }
-
-            if ($meta->numrequiregrading) {
-                $gradedlabel = "warning";
-                $engagementmeta[] = get_string('xungraded', 'theme_snap', $meta->numrequiregrading);
-            }
-
-            $link = $CFG->wwwroot.'/mod/'.$mod->modname.'/view.php?action=grading&id='.$mod->id.'&tsort=timesubmitted&filter=require_grading';
-            $content .= '<a href="'.$link.'"><span class="label label-'.$gradedlabel.'">'.implode(', ', $engagementmeta).'</span></a>';
-        } else {
-            // Student - useful student meta data.
-            if (empty($meta->timeopen) || usertime($meta->timeopen) <= time()) {
-                // Note, due date is rendered seperately for students as it has a warning class if overdue.
-                if (!empty($meta->timeclose)) {
-                    if (empty($meta->timesubmitted) && time() > usertime($meta->timeclose)) {
-                        $dueinfo = get_string('overdue', 'theme_snap');
-                        $dueclass = 'label-danger';
-                    } else {
-                        $dueinfo = get_string('due', 'theme_snap');
-                        $dueclass = 'label-info';
-                    }
-                    $content .= '<span class="label '.$dueclass.'">'.$dueinfo.' '.userdate($meta->timeclose, get_string('strftimedate', 'langconfig').'</span>');
-                }
-
-                if (!empty($meta->grade)) {
-                    // Note - the link that a module takes you to would be better off defined by a function in
-                    // theme/snap/activity - for now its just hard coded.
-                    $url = new \moodle_url('/grade/report/user/index.php', [id => $COURSE->id]);
-                    if (in_array($mod->modname, ['quiz', 'assign'])) {
-                        $url = new \moodle_url('/mod/'.$mod->modname.'/view.php?id='.$mod->id);
-                    }
-                    $content .= '<a href="'.$url->out().'"><span class="label label-info">'.get_string('feedbackavailable', 'theme_snap').'</span></a>';
-                } else {
-                    if ($mod->modname != 'lesson') {
-                        // Exclude lesson from submission stage.
-                        $content .= '<a class="assignment_stage" href="'.$CFG->wwwroot.'/mod/'.$mod->modname.'/view.php?id='.$mod->id.'">';
-                        if ($meta->submitted) {
-                            if (empty($meta->timesubmitted)) {
-                                $submittedonstr = '';
-                            } else {
-                                $submittedonstr = ' '.userdate($meta->timesubmitted, get_string('strftimedate', 'langconfig'));
-                            }
-                            $content .= '<span class="label label-success">'.$meta->submittedstr.$submittedonstr.'</span>';
-                        } else {
-                            $content .= '<span class="label label-warning">'.$meta->notsubmittedstr.'</span>';
-                        }
-                        $content .= '</a>';
-                    }
-                }
-            }
-        }
-        $content .= '</div>';
-        return $content;
-    }
-
-
-    /**
-     * Get resource module image html
-     *
-     * @param stdClass $mod
-     * @return string
-     */
-    protected function mod_image_html($mod) {
-        $fs = get_file_storage();
-        $context = \context_module::instance($mod->id);
-        $files = $fs->get_area_files($context->id, 'mod_resource', 'content', 0, 'sortorder DESC, id ASC', false); // TODO: this is not very efficient!!
-        if (count($files) > 0) {
-            foreach ($files as $file) {
-                $imgsrc = \moodle_url::make_pluginfile_url(
-                        $file->get_contextid(),
-                        $file->get_component(),
-                        $file->get_filearea(),
-                        $file->get_itemid(),
-                        $file->get_filepath(),
-                        $file->get_filename()
-                );
-            }
-        }
-        $summary = $mod->get_formatted_content(array('overflowdiv' => false, 'noclean' => true));
-
-        $imglink = "<a class='snap-image-link' href='{$imgsrc}' target='_blank'><img src='{$imgsrc}' alt=''/></a>";
-
-        $modname = format_string($mod->name);
-
-        if (!empty($summary)) {
-            return "<div class='snap-image-image'>$imglink<div class='snap-image-summary'><h6>$modname</h6>$summary</div></div>";
-        }
-
-        return "<div class='snap-image-image'><div class='snap-image-title'><h6>$modname</h6></div>$imglink</div>";
-
-    }
-
-    /**
-     * Get page module html
-     * @param $mod
-     * @return string
-     */
-    protected function mod_page_html($mod) {
-        global $DB;
-        $sql = "SELECT * FROM {course_modules} cm
-                  JOIN {page} p ON p.id = cm.instance
-                WHERE cm.id = ?";
-        $page = $DB->get_record_sql($sql, array($mod->id));
-
-        $context = context_module::instance($mod->id);
-
-        $formatoptions = new stdClass;
-        $formatoptions->noclean = true;
-        $formatoptions->overflowdiv = true;
-        $formatoptions->context = $context;
-
-        // Make sure we have some summary/extract text for the course page.
-        if (!empty($page->intro)) {
-            $page->summary = file_rewrite_pluginfile_urls($page->intro, 'pluginfile.php', $context->id, 'mod_page', 'intro', null);
-            $page->summary = format_text($page->summary, $page->introformat, $formatoptions);
-        } else {
-            $preview = html_to_text($page->content, 0, false);
-            $page->summary = shorten_text($preview, 200);
-        }
-
-        $content = file_rewrite_pluginfile_urls($page->content, 'pluginfile.php', $context->id, 'mod_page', 'content', $page->revision);
-        $content = format_text($content, $page->contentformat, $formatoptions);
-
-        $doc = new DOMDocument();
-        $doc->loadHTML($content);
-        $imagetags = $doc->getElementsByTagName('img');
-        $thumbnail = '';
-        if ($imagetags->item(0)) {
-            $src = $imagetags->item(0)->getAttribute('src');
-            $alt = $imagetags->item(0)->getAttribute('alt');
-            $img = html_writer::img($src, $alt);
-            $thumbnail = "<div class=summary-figure>$img</div>";
-        }
-
-        $readmore = get_string('readmore', 'theme_snap');
-        $close = get_string('close', 'theme_snap');
-
-        $o = "
-        {$thumbnail}
-        <div class=summary-text>
-            {$page->summary}
-            <p><a class='pagemod-readmore' href='$mod->url'>$readmore</a></p>
-        </div>
-
-        <div class=pagemod-content tabindex='-1'>
-            {$content}
-            <p><hr><a  class='snap-action-icon' href='#'>
-            <i class='icon icon-office-52'></i><small>$close</small></a></p>
-        </div>";
-
-        return $o;
-    }
-
-    protected function mod_book_html($mod) {
-        global $DB;
-
-        $cm = get_coursemodule_from_id('book', $mod->id, 0, false, MUST_EXIST);
-        $book = $DB->get_record('book', array('id' => $cm->instance), '*', MUST_EXIST);
-        $chapters = book_preload_chapters($book);
-
-        if ($book->intro) {
-            $context = context_module::instance($mod->id);
-            $content = file_rewrite_pluginfile_urls($book->intro, 'pluginfile.php', $context->id, 'mod_book', 'intro', null);
-            $formatoptions = new stdClass;
-            $formatoptions->noclean = true;
-            $formatoptions->overflowdiv = true;
-            $formatoptions->context = $context;
-            $content = format_text($content, $book->introformat, $formatoptions);
-
-            return "<div class=summary-text>
-                    {$content}</div>".$this->book_get_toc($chapters, $book, $cm);
-        }
-        return $this->book_get_toc($chapters, $book, $cm);
-    }
-
-    /**
-     * Simplified book toc Get assignment module html (includes meta data);
-     *
-     * Based on the function of same name in mod/book/localib.php
-     * @param $mod
-     * @return string
-     */
-    public function book_get_toc($chapters, $book, $cm) {
-        $context = context_module::instance($cm->id);
-        $toc = "<h6>Chapters</h6>";
-        $toc .= "<ol class=bookmod-chapters>";
-        $closemeflag = false; // Control for indented lists.
-        $chapterlist = '';
-        foreach ($chapters as $ch) {
-            $title = trim(format_string($ch->title, true, array('context' => $context)));
-            if (!$ch->hidden) {
-                if ($closemeflag && !$ch->parent) {
-                    $chapterlist .= "</ul></li>";
-                    $closemeflag = false;
-                }
-                $chapterlist .= "<li>";
-                $chapterlist .= html_writer::link(new moodle_url('/mod/book/view.php', array('id' => $cm->id, 'chapterid' => $ch->id)), $title, array());
-                if ($ch->subchapters) {
-                    $chapterlist .= "<ul>";
-                    $closemeflag = true;
-                } else {
-                    $chapterlist .= "</li>";
-                }
-            }
-        }
-        $toc .= $chapterlist.'</ol>';
-        return $toc;
-    }
-
-
-
-
     /**
      * override course render for course module list items
      * add additional classes to list item (see $modclass)
@@ -384,10 +41,10 @@ class theme_snap_core_course_renderer extends core_course_renderer {
      * @return String
      */
     public function course_section_cm_list_item($course,
-        &$completioninfo,
-        cm_info $mod,
-        $sectionreturn,
-        $displayoptions = array()
+    &$completioninfo,
+    cm_info $mod,
+    $sectionreturn,
+    $displayoptions = array()
     ) {
         $output = '';
         if ($modulehtml = $this->course_section_cm($course, $completioninfo, $mod, $sectionreturn, $displayoptions)) {
@@ -416,6 +73,7 @@ class theme_snap_core_course_renderer extends core_course_renderer {
             // Special classes for native html elements.
             if (in_array($mod->modname, ['page', 'book'])) {
                 $modclasses = array('snap-native', 'snap-mime-'.$mod->modname);
+                $attr['aria-expanded'] = "false";
             } else if ($modurl = $mod->url) {
                 // For snap cards, js uses this to make the whole card clickable.
                 if ($mod->uservisible) {
@@ -428,8 +86,9 @@ class theme_snap_core_course_renderer extends core_course_renderer {
                 $modclasses [] = 'draft';
             }
 
-            // Is this mod conditional?
-            if ($this->is_cm_conditionally_hidden($mod)) {
+            // TODO - does not seem to be working.
+            $availabilityinfo = $this->course_section_cm_availability($mod, $displayoptions);
+            if ($availabilityinfo !== '') {
                 $modclasses [] = 'conditional';
             }
             if (!$mod->available && !$mod->uservisible) {
@@ -481,15 +140,11 @@ class theme_snap_core_course_renderer extends core_course_renderer {
         // if:
         // 1) The activity is not visible to users
         // and
-        // 2a) The 'showavailability' option is not set (if that is set,
-        //     we need to display the activity so we can show
-        //     availability info)
-        // or
-        // 2b) The 'availableinfo' is empty, i.e. the activity was
+        // 2) The 'availableinfo' is empty, i.e. the activity was
         //     hidden in a way that leaves no info, such as using the
         //     eye icon.
-        if (!$mod->uservisible &&
-            (empty($mod->showavailability) || empty($mod->availableinfo))) {
+        if (!$mod->uservisible
+            && (empty($mod->availableinfo))) {
             return $output;
         }
 
@@ -500,7 +155,7 @@ class theme_snap_core_course_renderer extends core_course_renderer {
         $cmname = $this->course_section_cm_name($mod, $displayoptions);
         $assetlink = '';
         if (!empty($cmname)) {
-            $assetlink = $cmname;
+            $assetlink = "<h4 class='snap-asset-link'>".$cmname."</h4>";
         }
         // Meta.
         $assetmeta = "<div class='snap-meta'>";
@@ -553,12 +208,12 @@ class theme_snap_core_course_renderer extends core_course_renderer {
         // Add actions menu.
         if ($modicons) {
             $output .= "<div class='actions' role='region' aria-label='actions'>";
-            $output .= $modicons;
-            $output .= "</div>";
+                $output .= $modicons;
+                $output .= "</div>";
         }
-        $output .= "</div>";
-        // Close clearfix.
-        return $output;
+            $output .= "</div>";
+            // Close clearfix.
+            return $output;
     }
 
     /**
@@ -591,8 +246,8 @@ class theme_snap_core_course_renderer extends core_course_renderer {
         if ($mod->uservisible) {
             $conditionalhidden = $this->is_cm_conditionally_hidden($mod);
             $accessiblebutdim = (!$mod->visible || $conditionalhidden) &&
-                has_capability('moodle/course:viewhiddenactivities',
-                    context_course::instance($mod->course));
+            has_capability('moodle/course:viewhiddenactivities',
+            context_course::instance($mod->course));
             if ($accessiblebutdim) {
                 if ($conditionalhidden) {
                     $textclasses .= ' conditionalhidden';
@@ -605,15 +260,383 @@ class theme_snap_core_course_renderer extends core_course_renderer {
             if ($content) {
                 // If specified, display extra content after link.
                 $output = html_writer::tag('div', $content, array('class' =>
-                    trim('contentafterlink ' . $textclasses)));
+                trim('contentafterlink ' . $textclasses)));
             }
         } else {
             // No link, so display only content.
             $output = html_writer::tag('div', $accesstext . $content,
-                array('class' => 'contentwithoutlink ' . $textclasses));
+            array('class' => 'contentwithoutlink ' . $textclasses));
         }
         return $output;
     }
+
+    /*
+    ***** SNAP SPECIFIC DISPLAY OF RESOURCES *******
+    */
+
+    /**
+     * Get module type
+     * Note, if module is a resource, get the actual file type
+     *
+     * @author Guy Thomas
+     * @date 2014-06-16
+     * @param cm_info $mod
+     * @return stdClass | string
+     */
+    protected function get_mod_type(cm_info $mod) {
+        if ($mod->modname === 'resource') {
+            // Get file type from icon
+            // (note, I also tried this using a combo of substr and strpos and preg_match was much faster!)
+            $matches = array();
+            preg_match ('#/(\w+)-#', $mod->icon, $matches);
+            $filetype = $matches[1];
+            $ext = $filetype;
+            $extension = array(
+                'powerpoint' => 'ppt',
+                'document' => 'doc',
+                'spreadsheet' => 'xls',
+                'archive' => 'zip',
+                'pdf' => 'pdf',
+                'image' => get_string('image', 'theme_snap'),
+            );
+            if (in_array($filetype, array_keys($extension))) {
+                $filetype = $extension[$filetype];
+            }
+            return [$filetype, $ext];
+        } else {
+            return [$mod->modfullname, null];
+        }
+    }
+
+    /**
+     * Is this an image module
+     * @param cm_info $mod
+     * @return bool
+     */
+    protected function is_image_mod(cm_info $mod) {
+        if ($mod->modname == 'resource') {
+            $matches = array();
+            preg_match ('#/(\w+)-#', $mod->icon, $matches);
+            $filetype = $matches[1];
+            $extension = array('jpg', 'jpeg', 'png', 'gif', 'svg', 'image');
+            if (in_array($filetype, $extension)) {
+                return true;
+            }
+            return false;
+        }
+        return false;
+    }
+
+    /**
+     * Get the module meta data for a specific module.
+     *
+     * @param cm_info $mod
+     *
+     * @return string
+     */
+    protected function module_meta_html(cm_info $mod) {
+
+        global $COURSE, $CFG;
+
+        $content = '';
+
+        // Do we have an activity function for this module for returning meta data?
+        // @todo - check module lib.php for a meta function (won't work for core mods but will for ours if we wish).
+        $methodname = $mod->modname.'_meta';
+        if (method_exists('theme_snap\\activity', $methodname)) {
+            $meta = call_user_func('theme_snap\\activity::'.$methodname, $mod);
+        } else {
+            // Can't get meta data for this module.
+            return '';
+        }
+
+        $content .= '<div class="module-meta">';
+
+        if ($meta->isteacher) {
+            // Teacher - useful teacher meta data.
+            if (!empty($meta->timeclose)) {
+                $dueinfo = get_string('due', 'theme_snap');
+                $dueclass = 'label-info';
+                $content .= '<span class="label '.$dueclass.'">'.$dueinfo.' '.
+                    userdate($meta->timeclose, get_string('strftimedate', 'langconfig').'</span>');
+            }
+
+            $engagementmeta = array();
+
+            $gradedlabel = "info";
+            if ($meta->numsubmissions) {
+                $engagementmeta[] = get_string('xofy'.$meta->submitstrkey, 'theme_snap',
+                    (object) array(
+                        'completed' => $meta->numsubmissions,
+                        'participants' => \theme_snap\local::course_participant_count($COURSE->id)
+                    )
+                );
+            }
+
+            if ($meta->numrequiregrading) {
+                $gradedlabel = "warning";
+                $engagementmeta[] = get_string('xungraded', 'theme_snap', $meta->numrequiregrading);
+            }
+
+            $link = $CFG->wwwroot.'/mod/'.$mod->modname.'/view.php?action=grading&id='.$mod->id.
+                '&tsort=timesubmitted&filter=require_grading';
+            $content .= '<a href="'.$link.'"><span class="label label-'.$gradedlabel.'">'.
+                implode(', ', $engagementmeta).'</span></a>';
+        } else {
+            // Student - useful student meta data.
+            if (empty($meta->timeopen) || usertime($meta->timeopen) <= time()) {
+                // Note, due date is rendered seperately for students as it has a warning class if overdue.
+                if (!empty($meta->timeclose)) {
+                    if (empty($meta->submissionnotrequired)
+                        && empty($meta->timesubmitted)
+                        && time() > usertime($meta->timeclose)
+                    ) {
+                        $dueinfo = get_string('overdue', 'theme_snap');
+                        $dueclass = 'label-danger';
+                    } else {
+                        $dueinfo = get_string('due', 'theme_snap');
+                        $dueclass = 'label-info';
+                    }
+                    $content .= '<span class="label '.$dueclass.'">'.$dueinfo.' '.
+                        userdate($meta->timeclose, get_string('strftimedate', 'langconfig').'</span>');
+                }
+
+                if (!empty($meta->grade)) {
+                    // Note - the link that a module takes you to would be better off defined by a function in
+                    // theme/snap/activity - for now its just hard coded.
+                    $url = new \moodle_url('/grade/report/user/index.php', [id => $COURSE->id]);
+                    if (in_array($mod->modname, ['quiz', 'assign'])) {
+                        $url = new \moodle_url('/mod/'.$mod->modname.'/view.php?id='.$mod->id);
+                    }
+                    $content .= '<a href="'.$url->out().'"><span class="label label-info">'.
+                        get_string('feedbackavailable', 'theme_snap').'</span></a>';
+                } else {
+                    if (empty($meta->submissionnotrequired)) {
+                        $content .= '<a class="assignment_stage" href="'.
+                            $CFG->wwwroot.'/mod/'.$mod->modname.'/view.php?id='.$mod->id.'">';
+
+                        if ($meta->submitted) {
+                            if (empty($meta->timesubmitted)) {
+                                $submittedonstr = '';
+                            } else {
+                                $submittedonstr = ' '.userdate($meta->timesubmitted, get_string('strftimedate', 'langconfig'));
+                            }
+                            $content .= '<span class="label label-success">'.$meta->submittedstr.$submittedonstr.'</span>';
+                        } else {
+                            $content .= '<span class="label label-warning">'.$meta->notsubmittedstr.'</span>';
+                        }
+                        $content .= '</a>';
+                    }
+                }
+            }
+        }
+        $content .= '</div>';
+        return $content;
+    }
+
+
+    /**
+     * Get resource module image html
+     *
+     * @param stdClass $mod
+     * @return string
+     */
+    protected function mod_image_html($mod) {
+        $fs = get_file_storage();
+        $context = \context_module::instance($mod->id);
+        // TODO: this is not very efficient!!
+        $files = $fs->get_area_files($context->id, 'mod_resource', 'content', 0, 'sortorder DESC, id ASC', false);
+        if (count($files) > 0) {
+            foreach ($files as $file) {
+                $imgsrc = \moodle_url::make_pluginfile_url(
+                        $file->get_contextid(),
+                        $file->get_component(),
+                        $file->get_filearea(),
+                        $file->get_itemid(),
+                        $file->get_filepath(),
+                        $file->get_filename()
+                );
+            }
+        }
+        $summary = $mod->get_formatted_content(array('overflowdiv' => false, 'noclean' => true));
+
+        $imglink = "<a class='snap-image-link' href='{$imgsrc}' target='_blank'><img src='{$imgsrc}' alt=''/></a>";
+
+        $modname = format_string($mod->name);
+
+        if (!empty($summary)) {
+            return "<div class='snap-image-image'>$imglink<div class='snap-image-summary'><h6>$modname</h6>$summary</div></div>";
+        }
+
+        return "<div class='snap-image-image'><div class='snap-image-title'><h6>$modname</h6></div>$imglink</div>";
+
+    }
+
+    /**
+     * Get page module html
+     * @param $mod
+     * @return string
+     */
+    protected function mod_page_html($mod) {
+        global $DB;
+        $sql = "SELECT * FROM {course_modules} cm
+                  JOIN {page} p ON p.id = cm.instance
+                WHERE cm.id = ?";
+        $page = $DB->get_record_sql($sql, array($mod->id));
+
+        $context = context_module::instance($mod->id);
+
+        $formatoptions = new stdClass;
+        $formatoptions->noclean = true;
+        $formatoptions->overflowdiv = true;
+        $formatoptions->context = $context;
+
+        // Make sure we have some summary/extract text for the course page.
+        if (!empty($page->intro)) {
+            $page->summary = file_rewrite_pluginfile_urls($page->intro,
+                'pluginfile.php', $context->id, 'mod_page', 'intro', null);
+            $page->summary = format_text($page->summary, $page->introformat, $formatoptions);
+        } else {
+            $preview = html_to_text($page->content, 0, false);
+            $page->summary = shorten_text($preview, 200);
+        }
+
+        $content = file_rewrite_pluginfile_urls($page->content,
+            'pluginfile.php', $context->id, 'mod_page', 'content', $page->revision);
+        $content = format_text($content, $page->contentformat, $formatoptions);
+
+        $doc = new DOMDocument();
+        $doc->loadHTML($content);
+        $imagetags = $doc->getElementsByTagName('img');
+        $thumbnail = '';
+        if ($imagetags->item(0)) {
+            $src = $imagetags->item(0)->getAttribute('src');
+            $alt = $imagetags->item(0)->getAttribute('alt');
+            $img = html_writer::img($src, $alt);
+            $thumbnail = "<div class=summary-figure>$img</div>";
+        }
+
+        $readmore = get_string('readmore', 'theme_snap');
+        $close = get_string('close', 'theme_snap');
+
+        $o = "
+        {$thumbnail}
+        <div class='summary-text'>
+            {$page->summary}
+            <p><a class='pagemod-readmore' href='$mod->url'>$readmore</a></p>
+        </div>
+
+        <div class=pagemod-content tabindex='-1'>
+            {$content}
+            <div><hr><a  class='snap-action-icon' href='#'>
+            <i class='icon icon-office-52'></i><small>$close</small></a></div>
+        </div>";
+
+        return $o;
+    }
+
+    protected function mod_book_html($mod) {
+        global $DB;
+
+        $cm = get_coursemodule_from_id('book', $mod->id, 0, false, MUST_EXIST);
+        $book = $DB->get_record('book', array('id' => $cm->instance), '*', MUST_EXIST);
+        $chapters = book_preload_chapters($book);
+
+        if ($book->intro) {
+            $context = context_module::instance($mod->id);
+            $content = file_rewrite_pluginfile_urls($book->intro, 'pluginfile.php', $context->id, 'mod_book', 'intro', null);
+            $formatoptions = new stdClass;
+            $formatoptions->noclean = true;
+            $formatoptions->overflowdiv = true;
+            $formatoptions->context = $context;
+            $content = format_text($content, $book->introformat, $formatoptions);
+
+            return "<div class=summary-text>
+                    {$content}</div>".$this->book_get_toc($chapters, $book, $cm);
+        }
+        return $this->book_get_toc($chapters, $book, $cm);
+    }
+
+    /**
+     * Simplified book toc Get assignment module html (includes meta data);
+     *
+     * Based on the function of same name in mod/book/localib.php
+     * @param $mod
+     * @return string
+     */
+    public function book_get_toc($chapters, $book, $cm) {
+        $context = context_module::instance($cm->id);
+
+        $toc = "<h6>".get_string('chapters', 'theme_snap')."</h6>";
+        $toc .= "<ol class=bookmod-chapters>";
+        $closemeflag = false; // Control for indented lists.
+        $chapterlist = '';
+        foreach ($chapters as $ch) {
+            $title = trim(format_string($ch->title, true, array('context' => $context)));
+            if (!$ch->hidden) {
+                if ($closemeflag && !$ch->parent) {
+                    $chapterlist .= "</ul></li>";
+                    $closemeflag = false;
+                }
+                $chapterlist .= "<li>";
+                $chapterlist .= html_writer::link(new moodle_url('/mod/book/view.php',
+                    array('id' => $cm->id, 'chapterid' => $ch->id)), $title, array());
+                if ($ch->subchapters) {
+                    $chapterlist .= "<ul>";
+                    $closemeflag = true;
+                } else {
+                    $chapterlist .= "</li>";
+                }
+            }
+        }
+        $toc .= $chapterlist.'</ol>';
+        return $toc;
+    }
+
+    /**
+     * Yes, this looks like it should be part of core renderer but moodles crazy ia means its part of course.
+     */
+    public function course_search_form($value = '', $format = 'plain') {
+        if ($format !== 'fixy') {
+            // For now only handle search in fixy menu.
+            return parent::course_search_form($value, $format);
+        }
+
+        static $count = 0;
+        $formid = 'coursesearch';
+        if ((++$count) > 1) {
+            $formid .= $count;
+        }
+        $inputid = 'coursesearchbox';
+        $inputsize = 30;
+
+        if ($format === 'navbar') {
+            $formid = 'coursesearchnavbar';
+            $inputid = 'navsearchbox';
+        }
+
+        $strsearchcourses = get_string("searchcourses");
+        $searchurl = new moodle_url('/course/search.php');
+
+        $form = array('id' => $formid, 'action' => $searchurl, 'method' => 'get', 'class' => "form-inline", 'role' => 'form');
+        $output = html_writer::start_tag('form', $form);
+        $output .= html_writer::tag('label', $strsearchcourses, array('for' => $inputid));
+        $output .= html_writer::start_div('input-group');
+        $search = array('type' => 'text', 'id' => $inputid, 'size' => $inputsize, 'name' => 'search',
+        'class' => 'form-control', 'value' => s($value), 'placeholder' => $strsearchcourses);
+        $output .= html_writer::empty_tag('input', $search);
+        $button = array('type' => 'submit', 'class' => 'btn btn-default');
+        $output .= html_writer::start_span('input-group-btn');
+        $output .= html_writer::tag('button', get_string('go'), $button);
+        $output .= html_writer::end_span();
+        $output .= html_writer::end_div(); // Close form-group.
+        $output .= html_writer::end_tag('form');
+
+        return $output;
+    }
+
+
+
 
     /**
      * Wrapper around course_get_cm_edit_actions

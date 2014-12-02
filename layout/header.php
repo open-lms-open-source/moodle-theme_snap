@@ -7,7 +7,7 @@ snap_shared::page_requires_js();
 echo $OUTPUT->doctype();
 ?>
 
-<html id="blocks" <?php echo $OUTPUT->htmlattributes(); ?>>
+<html <?php echo $OUTPUT->htmlattributes(); ?>>
 <head>
     <?php
     if (stripos($PAGE->bodyclasses, 'path-blocks-reports') !== false) {

@@ -27,6 +27,7 @@ class activity_meta {
     public $timeopen;
     public $timeclose;
     public $isteacher = false;
+    public $submissionnotrequired = false;
 
     // Student meta data.
     public $submitted = false;

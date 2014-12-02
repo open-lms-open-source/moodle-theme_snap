@@ -21,7 +21,7 @@
     font-size: @font-size-h6;
 }
 
-a.skip-block, a.skip {
+a.skip-block {
     display: none;
 }
 
@@ -34,9 +34,7 @@ a.skip-block, a.skip {
 }
 
 /* hide blocks by default */
-#blocks #moodle-blocks,
-#blocks #appendices,
-#blocks:target #chapters {
+#moodle-blocks {
     visibility: hidden;
     height: 0px;
     overflow: hidden;
@@ -52,18 +50,15 @@ a.skip-block, a.skip {
 #page-user-profile #moodle-blocks,
 #page-my-index #moodle-blocks,
 #page-calendar-view #moodle-blocks,
-#blocks:target #moodle-blocks,
-#blocks:target #appendices {
+#moodle-blocks.state-visible,
+.format-folderview:not(.folderview-single-section) #moodle-blocks,
+.format-weeks.path-course-view.editing #moodle-blocks,
+.format-topics.path-course-view.editing #moodle-blocks {
     visibility: visible;
     height: auto;
     overflow: visible;
 }
 
-
-/* hide main content when blocks shown */
-#blocks:target #region-main {
-    display: none;
-}
 
 .block,
 .block-region .block {

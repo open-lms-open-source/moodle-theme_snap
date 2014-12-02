@@ -51,7 +51,6 @@ if (!empty($custommenu) && !empty($footnote)) {
     }
     ?>
     <br/>Built with <a href="http://kb.moodlerooms.com/" target='_blank' title='Joule help guides'>Joule</a> from <a href="http://moodlerooms.com/" target='_blank'>Moodlerooms</a>, powered by <a href="http://www.moodle.com/" target='_blank'>Moodle</a>.
-    </small>
 <br>© Copyright 2014 Moodlerooms Inc, All Rights Reserved.</small>
 </div>
 <!-- close mrooms footer -->

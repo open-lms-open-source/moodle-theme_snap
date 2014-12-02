@@ -15,17 +15,23 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Snap format topics renderer
+ * Snap format folderview renderer
  *
  * @package    theme_snap
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-require_once($CFG->dirroot.'/course/format/topics/renderer.php');
-require_once('format_section_trait.php');
+require_once($CFG->dirroot.'/course/format/folderview/renderer.php');
 
-class theme_snap_format_topics_renderer extends format_topics_renderer {
+class theme_snap_format_folderview_renderer extends format_folderview_renderer {
 
-    use format_section_trait;
+    protected function end_section_list() {
+        $output = html_writer::end_tag('ul');
+        $output .= "<section id='coursetools' class='clearfix' tabindex='-1'>";
+        $output .= snap_shared::appendices();
+        $output .= "</section>";
+        $output .= snap_shared::coursetools_svg_icons();
+        return $output;
+    }
 
 }

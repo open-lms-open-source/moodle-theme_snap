@@ -14,10 +14,12 @@
 // -------------------------
 
 // Reset - overwrites inline style tags
+.news-article-message *[style],
 .snap-image-summary *[style],
 .summary-text *[style],
 .snap-activity .contentafterlink *[style]
-.signuppanel *[style]{
+.signuppanel *[style],
+.signuppanel .text_to_html *[style]{
     color:inherit !important;
     font-size:inherit !important;
     line-height:inherit !important;
@@ -99,7 +101,8 @@ legend,
 .coursebox .info .coursename,
 .collapsibleregioncaption,
 .pagemod-readmore,
-.snap-action-icon {
+.snap-action-icon,
+#coursetools-list a {
     font-family: @font-family-sans-serif;
 }
 
@@ -125,9 +128,8 @@ legend,
     font-family: @font-family-serif;
 }
 .fixy-trigger {
-    border: 1px solid @brand-primary;
     &:hover{
-    	background-color: @brand-primary;
+    	background-color: fade(@brand-primary, 75%);
     }
     .message_badge_count{
     	background-color:darken(@brand-primary, 8%);
@@ -159,7 +161,7 @@ legend,
 }
 
 #page-site-index .sitetopic>a:last-of-type,
-.editing .summary>a:last-of-type,
+.summary>a:last-of-type,
 #changenumsections .increase-sections,
 #changenumsections .reduce-sections,
 input.form-submit,
@@ -180,7 +182,7 @@ input.form-submit,
 input[type="button"],
 input[type="submit"],
 input[type="reset"] {
-    background-color: @brand-primary;
+    background-color:@brand-primary;
     border-color: #fff;
     color:#fff;
     font-family: @font-family-base;
@@ -220,20 +222,21 @@ input[type="reset"] {
     border-color: darken(@brand-primary, 12%);
     color:#fff;
 }
+.settings-button {
+    background-color: fade(@brand-primary, 80%);
+}
 
-.settings-button,
 #page-site-index #page-header,
 .news-article-image,
 .news-article-preview,
 #notice {
     background-color: @brand-primary;
 }
-
-.toc-search-link {
-    background-color: @brand-primary;
-    &:hover{
-        background-color: darken(@brand-primary, 8%);
-    }
+#toc-search:before {
+    color:@brand-primary;
+}
+#toc-search-input:focus {
+    border-bottom:1px solid @brand-primary;
 }
 
 
@@ -243,8 +246,7 @@ input[type="reset"] {
 
 // workaround for #notices with buttons outside the div#notice
 #page-course-loginas,
-#page-mod-survey-save,
-#page-enrol-index {
+#page-mod-survey-save {
     #region-main {
         background-color: @brand-primary;
     }
@@ -255,10 +257,6 @@ input[type="reset"] {
 
 /*default */
 a[href="#sections"] {
-	border-bottom:0.3em solid @brand-primary;
-}
-/* blocks & appendices */
-#blocks:target a[href="#blocks"] {
 	border-bottom:0.3em solid @brand-primary;
 }
 

@@ -74,6 +74,60 @@ table.boxwidthwide {
     padding: 0;
 }
 
+/* TODO - LOGIN PAGE - experimental code */
+@media screen and (min-width: @screen-sm) {
+    .twocolumns {
+        .signuppanel {
+            float:left;
+            left:0 !important;
+            width:50% !important;
+        }
+        .loginpanel{
+            float:right !important;
+            width:50% !important;
+        }
+    }
+}
+#page-login-index {
+    #region-main {
+        max-width:100%;
+        padding:0 4% 2em;
+    }
+    .loginpanel h2 {
+        text-indent: 100%;
+        white-space: nowrap;
+        overflow: hidden;
+        background:no-repeat center center;
+        background-size:contain;
+    }
+/*
+    #page-header,
+    #mr-nav {
+    display:none;
+    }
+    #region-main {
+    .bg-cover();
+    }
+
+    .signuppanel h2,
+    .loginpanel h2 {
+        text-indent: 100%;
+        white-space: nowrap;
+        overflow: hidden;
+        background:no-repeat center center;
+    }
+
+    .twocolumns .loginpanel h2 {
+        display:none;
+    }
+*/
+}
+
+
+
+
+
+
 
 
 
@@ -91,7 +145,7 @@ table.boxwidthwide {
 
 
 .alakazam() {
-    transition: all .3s cubic-bezier(.694, .0482, .335, 1);
+    transition: all .5s ease-in-out;
 }
 
 
@@ -114,13 +168,13 @@ table.boxwidthwide {
 
 
 // tag styles for draft/group/contitional/completion meta data
-.snap-tag(@colour: #ccc) {
+.snap-tag(@colour: #F98012) {
     font-family:@font-family-base;
     display:inline-block;
     background-color:@colour;
     color:#fff;
     padding:0 2% 0 1%;
-    margin:1px 0.75em;
+    margin:1px 1em;
     text-transform:lowercase;
     position:relative;
     border-radius:0 2px 2px 0;
@@ -366,6 +420,7 @@ select,
 // -------------------------
 // Buttons, faux buttons styling & resets
 // -------------------------
+select,input,textarea{max-width:100%;}
 
 .section-modchooser-text,
 .section-modchooser-link a,
@@ -474,7 +529,7 @@ input[type="text"]+input[type="submit"] {
 // -------------------------
 
 #page-header {
-    .bg-cover;
+    .bg-cover();
 }
 
 #logo {
@@ -486,7 +541,14 @@ input[type="text"]+input[type="submit"] {
     background-size: contain;
     margin:-0.75em 0;
 }
-
+.fixy .snap-media-object{
+    padding:0.5em 4%;
+    margin-bottom:0;
+    .alakazam();
+    &:hover {
+        background-color:rgba(0,0,0,0.07);
+    }
+}
 .snap-media-object {
     .clearfix();
     margin-bottom:1em;
@@ -499,8 +561,8 @@ input[type="text"]+input[type="submit"] {
     >img{
         float:left;
         display:block;
-        margin-right:2%;
-        width:50px;
+        margin-right:4%;
+        width:45px;
         height:auto;
         vertical-align:baseline;
     }
@@ -508,7 +570,6 @@ input[type="text"]+input[type="submit"] {
     .snap-media-body {
         overflow:hidden;
         // for fixy - need to re-visit when we re-use more widley
-        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         // in the messaging system we ellispe text
         p {
             white-space: nowrap;
@@ -555,34 +616,32 @@ input[type="text"]+input[type="submit"] {
 
 .fixy-trigger {
     // border: 1px solid @brand-primary; customisable
-    padding:0.5em 1em;
-    border-radius: 2px;
+    padding:1em 1em;
     position:relative;
+    .alakazam();
     &:hover {
     	color: #fff !important;
     	//	background-color: @brand-primary; customisable
     	text-decoration: none;
     }
-    .alakazam;
     .userpicture {
         height: 38px;
         width: 38px;
-        margin-bottom: 4px;
+        margin-left:1em;
     }
+    // mrooms alerts badge
     .message_badge_count{
-        display: inline-block;
+        position: absolute;
         padding-top: 0;
         background-image: none;
         border-radius: 50%;
-        left: auto;
-        right: 1.75em;
+        left: 90%;
         top: -0.75em;
-        float: right;
     }
 }
 
 .fixy {
-    padding: 0.5em 4%;
+    padding: 0 4%;
     margin: 0 auto;
     position: fixed;
     width: 100%;
@@ -671,10 +730,9 @@ input[type="text"]+input[type="submit"] {
 
 .fixy-inner {
     margin: 0 auto;
-    max-width: 90%;
     animation-name: snap-drop;
     animation-iteration-count: once;
-    animation-timing-function: cubic-bezier(.694, .0482, .335, 1);
+    animation-timing-function: ease-in-out;
     animation-duration: 0.3s;
       legend{
            color: #fff;
@@ -711,20 +769,32 @@ input[type="text"]+input[type="submit"] {
     letter-spacing: 0.1em;
 }
 
-// Personal menu course list
+// Course list - personal menu and other places
 // -------------------------
-
 #fixy-my-courses .courseinfo {
+    min-height:200px;
+}
+.courseinfo {
     position:relative;
     float:left;
     width:100%;
-    min-height:200px;
+    min-height:250px;
     background-repeat:no-repeat;
-    background-size:cover;
+    background-size:100% auto;
     background-position:top center;
     box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
     margin:0.5em 1%;
+    cursor:pointer;
+    .alakazam();
+    &:hover {
+        background-size:115% auto;
+        // transform:scale(1.03);
+        .courseinfo-body {
+            padding-bottom:0.5em;
+        }
+    }
     .courseinfo-body {
+        .alakazam();
         background-color:white;
         color:#666;
         position:absolute;
@@ -781,7 +851,7 @@ input[type="text"]+input[type="submit"] {
     #moodle-footer .list-unstyled{
         column-count: 2;
     }
-    #fixy-my-courses .courseinfo {
+    .courseinfo {
         width:100%;
     }
 }
@@ -794,13 +864,13 @@ input[type="text"]+input[type="submit"] {
     #moodle-footer .list-large{
         column-count: 3;
     }
-    #fixy-my-courses .courseinfo {
+    .courseinfo {
         width:48%;
     }
 }
 
 @media screen and (min-width: @screen-md-min) {
-    #fixy-my-courses .courseinfo {
+    .courseinfo {
         width:31%;
     }
 }
@@ -856,6 +926,7 @@ read button has been removed and the message text is visible
             background-color:transparent;
             border:none;
             max-height: none;
+            width:100%;
         }
     }
 }
@@ -904,15 +975,15 @@ footer #moodle-footer
     line-height: 2;
     padding-top: 0.5em;
     padding-bottom: 0.5em;
-    background-color: #fff;
-    border-bottom: 1px solid #ccc;
+    padding-right:0;
+    background-color: rgba(255,255,255,0.95);
     //headroom js http://wicky.nillia.ms/headroom.js/
     &.headroom--unpinned {
       will-change: transform;
       animation-name: snap-rise;
       animation-iteration-count: once;
-      animation-timing-function: cubic-bezier(.694, .0482, .335, 1);
-      animation-duration: 0.3s;
+      animation-timing-function: ease-in-out;
+      animation-duration: .3s;
       animation-fill-mode: forwards;
 
     }
@@ -997,6 +1068,7 @@ header#page-header
     padding-bottom: 0.5em;
 }
 
+
 // Breadcrumb - not really a breadcrumb like on the web, but some moodleything
 // -------------------------
 .breadcrumb-nav {
@@ -1011,17 +1083,7 @@ header#page-header
     font-size: @font-size-small;
     display:block;
 }
-/*
-.breadcrumb a{
-    padding:0 4%;
-}
-.breadcrumb:hover{
-    li a{
-        background-color:white;
-        .alakazam;
-    }
-}
-*/
+
 @media screen and (max-width: @screen-sm) {
     .breadcrumb li {
         &:nth-last-child(n+4) {
@@ -1047,9 +1109,7 @@ header#page-header
 /***************
 	div#page-mast
 		nav#course-toc
-			div role=menubar
-				ol role=menu #chapters
-				ul role=menu #appendices
+				ol #chapters
 				search stuff SHAME
 
  ****************************/
@@ -1059,24 +1119,15 @@ header#page-header
 // Course toc & Appendicies
 // -------------------------
 #course-toc {
-    padding:1em 0;
+    padding:0 0 1em 0;
     max-width: 100%;
-    // margin:0 auto -.5em;
     position:relative;
-    div[role="tablist"]{
-        border-bottom:1px solid #fff;
-        font-size:0.9em;
-        margin:0.5em 2em;
-        position:relative;
-        > span {
-            margin-right:2%;
-            text-transform:uppercase;
-            a {text-decoration:none;}
-            a:hover {
-                border-bottom:0.3em solid @brand-primary;
-                .alakazam;
-            }
-        }
+    h2 {
+        text-transform:uppercase;
+        font-size:1em;
+        padding:1em 2em 0;
+        display:inline-block;
+        margin:0;
     }
     .snap-section-complete {
         width:1.5em;
@@ -1091,44 +1142,37 @@ header#page-header
 }
 
 
-/* highlight selected menu iteam logic */
-/*default */
-a[href="#sections"] {
-	// border-bottom:0.3em solid @brand-primary; customisable
-}
-/* blocks & appendices */
-#blocks:target a[href="#blocks"] {
-	// border-bottom:0.3em solid @brand-primary; customisable
-}
-#blocks:target a[href="#sections"]{
-	border-bottom:0.3em solid transparent;
-}
-
 // if the course has an image
 .mast-image{
-    > h1 {
+    .breadcrumb {
+        li:before,
+        >li+li:before,
+        a, a:visited {
+            text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
+            color:white;
+        }
+    }
+    h1 {
         color:white;
-        text-shadow:1px 1px 3px rgba(0,0,0,0.5);
+        text-shadow:1px 1px 3px rgba(0, 0, 0, 0.5),0px 0px 1em rgba(0, 0, 0, 0.7);
     }
     #course-toc{
         background-color:rgba(255,255,255,0.95);
     }
+
 }
 
-#chapters,
-#appendices {
+#chapters {
     column-count: 2;
     margin-bottom:0;
 }
-#appendices,
-#toc-search {
-    margin-left:2em; // to account for chapters numbering margin
-}
+
 // specific styles for numbered chapters to improve readability
 ol#chapters {
     list-style-position:outside;
     li{
         margin-left:2em;
+        padding:0.1em;
         &.current a{
             color:#666;
             text-decoration:none;
@@ -1143,59 +1187,18 @@ ol#chapters {
 
 /* show selected menu  logic */
 @media screen and (min-width: @screen-xs-min) {
-#blocks:target #chapters,
-#appendices {
-	width:0;
-	text-indent:-50em; /* rediculous amount for unnecessary animation fun */
-}
-#blocks:target #appendices,
 #chapters {
 	width:100%;
 	text-indent:0;
-	.alakazam;
 }
 }
 
 /* special stuff for <320 */
 @media screen and (max-width: @screen-xs) {
-    a[href="#blocks"]:after,
-    a[href="#sections"]:after{
-    	content:"▼";
-    	border-bottom:0 !important;
-    }
-    #course-toc span a{
-    	border-bottom:0 !important;
-    }
     #page-header {
         padding-left:0;
         padding-right:0;
     }
-    #chapters,
-    #appendices{
-        column-count: 1;
-        display:none;
-    }
-    #chapters.state-visible,
-    #appendices.state-visible {
-    	display:block;
-        position:absolute;
-        z-index:1;
-        background-color:white;
-        margin:0;
-        padding:0 4%;
-        width:100%;
-        padding-bottom:10%;
-    }
-    #appendices li,
-    #chapters li{
-    	a{
-        	display: block;
-        	width: 98%;
-        }
-        border-bottom: 1px solid #eee;
-        line-height: 2.3;
-    }
-
 }
 
 /* if > tablet size */
@@ -1225,44 +1228,110 @@ ol#chapters {
 // -------------------------
 // Course search in toc
 // -------------------------
-.toc-search-link {
-    display: inline-block;
-    width: 3em;
-    height: 3em;
-    border-radius: 50%;
-    text-align: center;
-    padding: 0.75em;
-    color:#fff;
-    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
-    &:hover,
-    &:visited {
-        color:#fff;
-        text-decoration:none;
-    }
-}
+
 #toc-search {
-    display:none;
-    z-index:3;
-    &:target {
-        display:block;
-        position:absolute;
-        top:0;
-        left:0;
-        right:0;
-        margin:0;
-        padding:1em;
-        background-color:rgba(255,255,255,0.9);
-    }
-    .snap-action-icon {
-        position: absolute;
-        top: 0.75em;
-        right: 1em;
+    float:right;
+    padding:0.5em;
+    margin-bottom:-0.75em;
+    &:before {
+        margin-right:-2.3em; // magic number :(
+        content:"\e0d0";
+        font-family: "line-icons" !important;
+        font-style: normal !important;
+        font-weight: normal !important;
+        font-variant: normal !important;
+        text-transform: none !important;
+        speak: none;
+        line-height: 1;
+        -webkit-font-smoothing: antialiased;
+
     }
 }
 
 #toc-search-input {
-    font-size:2em;
-    width:85.4%;
+    webkit-appearance: textfield;
+    border: none;
+    border-radius:50%;
+    width:3em;
+    height:3em;
+    padding:0 1.5em;
+    box-shadow:0 2px 5px 0 rgba(0, 0, 0, 0.26);
+    background-color:transparent;
+    .alakazam();
+    &:hover {
+        box-shadow:0 6px 10px rgba(0, 0, 0, 0.23),0 10px 30px rgba(0, 0, 0, 0.19);
+    }
+    &.state-active,
+    &:focus {
+        width:100%;
+        border-radius:0;
+        padding:0 2.5em;
+        box-shadow:none;
+        width:300px;
+        background-color:rgba(255,255,255,0.3);
+    }
+}
+#toc-mobile-menu-toggle {
+    display:none;
+}
+// small screen
+@media screen and (max-width: @screen-xs-min) {
+    #toc-search,
+    #course-toc #toc-desktop-menu-heading {
+        display:none;
+    }
+    #toc-mobile-menu-toggle {
+        display:inline-block;
+        width: 2em;
+        height: 2em;
+        font-size: 1.5em;
+        box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
+        border-radius: 50%;
+        text-align: center;
+        padding: 0.3em;
+        margin: 0.3em;
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        transform:rotate(45deg);
+        text-decoration:none;
+        .alakazam();
+        background-color:rgba(255,255,255,0.9);
+        z-index:666;
+    }
+    #course-toc {
+        position: fixed;
+        bottom: 0;
+        right: 0;
+        z-index: 66;
+        width: 100%;
+        background-color:transparent !important;
+        .alakazam();
+    }
+    #chapters{
+        column-count: 1;
+        display:none;
+    }
+    #course-toc.state-visible{
+        padding: 0;
+        margin: 0;
+        width: 100%;
+        height: 100%;
+        left: 0;
+        bottom: 0;
+        background-color:white !important;
+        overflow-y: auto;
+        #toc-mobile-menu-toggle {
+            transform:rotate(0deg);
+            }
+        #chapters {
+            display:block;
+            margin:0;
+            padding:2em 4%;
+            width:100%;
+
+        }
+    }
 }
 
 // hidden list - always
@@ -1271,29 +1340,39 @@ ol#chapters {
 }
 @media screen and (min-width: @screen-xs-min) {
     #toc-search-results {
-        padding-left:3em;
+        padding-left:0.5em;
+        font-size:1em;
+        max-width:300px;
     }
 }
+#toc-search-results {
+    display:none;
+    position:absolute;
+    top:3.5em;
+    right:1.5em;
+    z-index:3;
+    background-color:rgba(255,255,255,0.9);
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.24);
+}
 #toc-search-results li{
-	display:block;
-		img {
-			width:24px;
-			height:24px;
-            vertical-align:bottom;
-		}
+    width:300px;
+    overflow:hidden;
+	img {
+		width:24px;
+		height:24px;
+        vertical-align:bottom;
+	}
     &:first-child {
         padding-top: .5em;
     }
     &:last-child {
-        padding-bottom: 2em;
+        padding-bottom: 1em;
     }
 
 }
 
-#toc-search-input.state-visible + #toc-search-results,
-#toc-search-input:focus + #toc-search-results,
-#toc-search-results:hover,
-#toc-search-results:focus {
+#toc-search-input.state-active + #toc-search-results,
+#toc-search-input:focus + #toc-search-results {
   display:block;
 }
 
@@ -1364,7 +1443,7 @@ ol#chapters {
 
 .settings-button {
 	display:none;
-	position:absolute;
+    position:absolute;
 	right:0;
 	top:2em;
 	border:0 !important;
@@ -1372,8 +1451,25 @@ ol#chapters {
 	padding:0.5em;
 	font-size:1.5em;
 	line-height:1;
+
 	color:white !important;
 	cursor: w-resize;
+    /*
+    // material design button, but wrong for admin block...
+    position:fixed;
+    bottom:2em;
+    right:4%;
+    font-size:1.2em;
+    width: 3em;
+    height: 3em;
+    border-radius: 50%;
+    text-align: center;
+    padding: 0.75em;
+    color:#fff;
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
+    z-index:666;
+    */
+
 }
 aside .settings-button{
 		cursor: e-resize;
@@ -1470,6 +1566,9 @@ aside .settings-button{
     .form-description pre {
         font-size: @font-size-small;
     }
+}
+#fitem_id_coursedisplay {
+    display: none;
 }
 
 .moodle-dialogue.filepicker .form-group {
@@ -1582,13 +1681,15 @@ http://blog.rodneyrehm.de/archives/34-iOS7-Mobile-Safari-And-Viewport-Units.html
 #page-site-index .content-slide {
     display: none;
 }
-
+#frontpage-course-list {
+    padding:1em 4%;
+}
 #page-site-index .sitetopic,
-#frontpage-course-list,
 #frontpage-category-names,
 #frontpage-category-combo {
     max-width: 50.5em;
     margin: 2em auto;
+    clear:both;
 }
 
 #page-site-index .sitetopic {
@@ -1610,8 +1711,7 @@ http://blog.rodneyrehm.de/archives/34-iOS7-Mobile-Safari-And-Viewport-Units.html
 /* FRONT PAGE SITE NEWS */
 #page-site-index #site-news-forum {
     margin: 0 auto;
-    padding: 0 4%;
-    padding-bottom: 4em;
+    padding: 0 4% 4em 4%;
     background-color: #F1F0EE;
     .clearfix();
 }
@@ -1633,13 +1733,16 @@ http://blog.rodneyrehm.de/archives/34-iOS7-Mobile-Safari-And-Viewport-Units.html
 .news-article-content h3 {
     font-size: @font-size-h2;
 }
+.news-article-image {
+    cursor:pointer;
+}
 .news-article-image,
 .news-article-preview{
 	color:#fff;
     min-height: 150px;
     //	background-color: @brand-primary; customisable
     padding:2em 4%;
-    .bg-cover;
+    .bg-cover();
 }
 .news-article-preview {
     height:auto;
@@ -1647,6 +1750,26 @@ http://blog.rodneyrehm.de/archives/34-iOS7-Mobile-Safari-And-Viewport-Units.html
 .news-article-date {
     font-size: 0.75em;
 }
+.news-article-message{
+    display:none;
+    padding:2em 4%;
+}
+
+.state-expanded {
+    .news-article-preview,
+    .news-article-image {
+        display:none;
+    }
+    .news-article-inner {
+    }
+    .news-article-message{
+        display:none;
+    }
+}
+.news-article-message:focus {
+    outline: 0;
+}
+
 
 @media screen and (min-width: @screen-sm-min) {
     .news-article {
@@ -1669,6 +1792,15 @@ http://blog.rodneyrehm.de/archives/34-iOS7-Mobile-Safari-And-Viewport-Units.html
     }
     .news-article-image {
         padding: 0;
+    }
+    .state-expanded {
+        .news-article-inner {
+            width:33%;
+            order:1 !important;
+        }
+        .news-article-message{
+            width:67%;
+        }
     }
     #news-articles div:nth-child(odd) .news-article-preview,
     #news-articles div:nth-child(odd) .news-article-image {
@@ -1701,7 +1833,7 @@ http://blog.rodneyrehm.de/archives/34-iOS7-Mobile-Safari-And-Viewport-Units.html
 
 @media screen and (min-width: @screen-lg-min) {
 	.news-article {
-		min-height:28vh;
+		min-height:33vh;
 	}
 
 }
@@ -2638,7 +2770,13 @@ table#user-grades tr.avg td.cell{
 }
 
 
-
+// when we display a continue cancel notice, we need the page contents to be the same height.
+// this is currently limitted to the front page.
+body.hascontinuecancel.path-site #page{
+    max-height: 750px;
+    height: 750px;
+    overflow: hidden;
+}
 
 // hard code some specific uses here till MDL-45655 fixes them
 // and allows us to add the snap-continue-cancel class
@@ -2674,8 +2812,7 @@ table#user-grades tr.avg td.cell{
 // remember to add any further additions to the user swatch
 // to ensure they pick up the brand color.
 #page-course-loginas,
-#page-mod-survey-save,
-#page-enrol-index {
+#page-mod-survey-save{
   #region-main {
     //	background-color: @brand-primary; customisable
     max-width:inherit;
@@ -2691,13 +2828,7 @@ table#user-grades tr.avg td.cell{
   }
 
 }
-// extra specific workarounds for div#notice
-#page-enrol-index {
-    #maincontent + h2,
-    #maincontent + h2 + .box.generalbox.info {
-        display: none;
-    }
-}
+
 
 // next / previous nav
 .section_footer {

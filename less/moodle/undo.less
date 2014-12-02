@@ -168,6 +168,16 @@ div.c1.btn {
     padding-left: 0;
     padding-right: 0;
 }
+/* .checkbox vs .checkbox
+ * 
+ * Bootstrap uses this to wrap checkbox inputs,
+ * this clashes with Quiz which uses .checkbox on 
+ * the td or th that contains a checkbox
+ */
+#categoryquestions .checkbox input[type="checkbox"] {
+    position: relative;
+    margin: 0;
+}
 // In Moodle .hide is the eye icon
 // In Bootstrap it hides things
 img.hide {

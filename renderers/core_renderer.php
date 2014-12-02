@@ -77,13 +77,14 @@ class theme_snap_core_renderer extends toc_renderer {
             $formatoptions->noclean = true;
             $formatoptions->overflowdiv = true;
             $formatoptions->context = $context;
-            $coursesummarycontent = file_rewrite_pluginfile_urls($COURSE->summary, 'pluginfile.php', $context->id, 'course', 'summary', null);
+            $coursesummarycontent = file_rewrite_pluginfile_urls($COURSE->summary,
+                'pluginfile.php', $context->id, 'course', 'summary', null);
             $coursesummarycontent = format_text($coursesummarycontent, $COURSE->summaryformat, $formatoptions);
             $coursesummary .= '<div id=course_about>'.$coursesummarycontent.'</div>';
         }
 
         // If able to edit add link to edit summary.
-        if ($this->page->user_is_editing() && has_capability('enrol/accesskey:manage', $context)) {
+        if (has_capability('enrol/accesskey:manage', $context)) {
             if (empty($coursesummary)) {
                 $coursesummary = '<h6>'.get_string('aboutcourse', 'theme_snap').'</h6>';
             }
@@ -128,11 +129,11 @@ class theme_snap_core_renderer extends toc_renderer {
                 $output  = '<div class="col-md-12">'.$columns[0].'</div>';
         } else if (count($columns) >= 2 && !empty($courserecentactivity)) {
             // Here we output recent updates any some other sections.
-            $output  = '<div class="col-md-6">'.$columns[0].'</div>';
-            $output .= '<div class="col-md-6">'.$columns[1].$columns[2].'</div>';
+            $output  = '<div class="col-md-6">'.$columns[1].$columns[2].'</div>';
+            $output .= '<div class="col-md-6">'.$columns[0].'</div>';
         } else if (count($columns) == 2) {
-            $output  = '<div class="col-md-6">'.$columns[0].'</div>';
-            $output  .= '<div class="col-md-6">'.$columns[1].'</div>';
+            $output  = '<div class="col-md-6">'.$columns[1].'</div>';
+            $output  .= '<div class="col-md-6">'.$columns[0].'</div>';
         }
 
         return $output;
@@ -156,7 +157,8 @@ class theme_snap_core_renderer extends toc_renderer {
 
         $fullname = '<a href="'.$CFG->wwwroot.'/user/profile.php?id='.$user->id.'">'.format_string(fullname($user)).'</a>';
         $coursecontext = context_course::instance($COURSE->id);
-        $user->description = file_rewrite_pluginfile_urls($user->description, 'pluginfile.php', $coursecontext->id, 'user', 'profile', $user->id);
+        $user->description = file_rewrite_pluginfile_urls($user->description,
+            'pluginfile.php', $coursecontext->id, 'user', 'profile', $user->id);
         $description = format_text($user->description, $user->descriptionformat);
 
         return "<div class=snap-media-object>
@@ -574,7 +576,7 @@ class theme_snap_core_renderer extends toc_renderer {
                     $helpstr = "<p class='text-center'><a href='".s($CFG->wwwroot)."/login/index.php'>$help</a></p>";
                 }
             }
-            echo "<a class='fixy-trigger btn btn-primary'  href='".s($loginurl)."' aria-controls='login'>$login</a>
+            echo "<a aria-haspopup='true' class='fixy-trigger'  href='".s($loginurl)."' >$login</a>
         <form class=fixy action='$CFG->wwwroot/login/'  method='post' id='login'>
         <a id='fixy-close' class='pull-right snap-action-icon' href='#'>
             <i class='icon icon-office-52'></i><small>$cancel</small>
@@ -582,7 +584,7 @@ class theme_snap_core_renderer extends toc_renderer {
             <div class=fixy-inner>
             <legend>$loginform</legend>
             <label for='username'>$username</label>
-            <input type='text' name='username' id='username' autocorrect='off' autocapitalize='off' placeholder='".s($username)."'>
+            <input autocapitalize='off' type='text' name='username' id='username' placeholder='".s($username)."'>
             <label for='password'>$password</label>
             <input type='password' name='password' id='password' placeholder='".s($password)."'>
             <br>
@@ -643,8 +645,10 @@ class theme_snap_core_renderer extends toc_renderer {
                     }
                 }
 
-                $clink = '<div class="courseinfo" style="'.$courseimagecss.'">
-                <div class="courseinfo-body"><h3><a href="'.$CFG->wwwroot.'/course/view.php?id='.$c->id.'">'.format_string($c->fullname).'</a></h3>'.$dynamicinfo.$courseteachers.$pubstatus.'</div></div>';
+                $clink = '<div data-href="'.$CFG->wwwroot.'/course/view.php?id='.$c->id.
+                    '" class="courseinfo" style="'.$courseimagecss.'">
+                    <div class="courseinfo-body"><h3><a href="'.$CFG->wwwroot.'/course/view.php?id='.$c->id.'">'.
+                    format_string($c->fullname).'</a></h3>'.$dynamicinfo.$courseteachers.$pubstatus.'</div></div>';
                 $courselist .= $clink;
             }
             $courselist .= "</div>";
@@ -662,7 +666,8 @@ class theme_snap_core_renderer extends toc_renderer {
             $courselist .= '</div></section>'; // Close row.
 
             $menu = get_string('menu', 'theme_snap');
-            echo '<a class=fixy-trigger id=js-personal-menu-trigger href="#primary-nav" aria-controls="primary-nav">'.$menu. ' &nbsp; '. $picture.
+            echo '<a aria-haspopup="true" class="fixy-trigger" id="js-personal-menu-trigger" href="#primary-nav" '.
+            'aria-controls="primary-nav" aria-label="'.get_string('sitenavigation', 'theme_snap').'">'.$menu.$picture.
             $this->render_badge_count(). '</a>';
             $close = get_string('close', 'theme_snap');
             $viewyourprofile = get_string('viewyourprofile', 'theme_snap');
@@ -760,7 +765,7 @@ class theme_snap_core_renderer extends toc_renderer {
 
                     // Append section focus hash only for topics and weeks formats because we can
                     // trust the behaviour of these formats.
-                    if ($course->coursedisplay != 1 && ($COURSE->format == 'topics' || $COURSE->format == 'weeks')) {
+                    if ($COURSE->format == 'topics' || $COURSE->format == 'weeks') {
                         $url .= '#section-'.$sectionnumber;
                     } else {
                         $url = course_get_url($COURSE, $sectionnumber);
@@ -905,7 +910,7 @@ class theme_snap_core_renderer extends toc_renderer {
             $name    = format_string($discussion->name, true, array('context' => $context));
             $date    = userdate($discussion->timemodified, get_string('strftimedatetime', 'langconfig'));
 
-            $readmorebtn = "<a class='btn btn-default' href='".
+            $readmorebtn = "<a class='btn btn-default toggle' href='".
                 $CFG->wwwroot."/mod/forum/discuss.php?d=".$discussion->discussion."'>".
                 get_string('readmore', 'theme_snap')."&nbsp;&#187;</a>";
 
@@ -916,19 +921,25 @@ class theme_snap_core_renderer extends toc_renderer {
                 $preview = "<div class='news-article-preview'><p>".shorten_text($preview, 200)."</p>
                 <p class='text-right'>".$readmorebtn."</p></div>";
             } else {
-                $newsimage = '<div class="news-article-image"'.$imagestyle.'></div>';
+                $newsimage = '<div class="news-article-image toggle"'.$imagestyle.' title="'.
+                    get_string('readmore', 'theme_snap').'"></div>';
             }
-
+            $close = get_string('close', 'theme_snap');
             $output .= <<<HTML
 <div class="news-article clearfix">
-    $newsimage
+    {$newsimage}
     <div class="news-article-inner">
         <div class="news-article-content">
-            <h3><a href="$CFG->wwwroot/mod/forum/discuss.php?d=$discussion->discussion">$name</a></h3>
-            <em class="news-article-date">$date</em>
+            <h3 class='toggle'><a href="$CFG->wwwroot/mod/forum/discuss.php?d=$discussion->discussion">{$name}</a></h3>
+            <em class="news-article-date">{$date}</em>
         </div>
     </div>
-    $preview
+    {$preview}
+    <div class="news-article-message" tabindex="-1">
+        {$message}
+        <div><hr><a class="snap-action-icon toggle" href="#">
+        <i class="icon icon-office-52"></i><small>{$close}</small></a></div>
+    </div>
 </div>
 HTML;
         }
@@ -992,8 +1003,9 @@ HTML;
         global $PAGE, $COURSE;
 
         $classes = parent::body_css_classes($additionalclasses);
-        $classes .= $classes == '' ? '' : ' ';
-        $classes .= 'device-type-'.$PAGE->devicetypeinuse;
+        $classes = explode (' ', $classes);
+
+        $classes[] = 'device-type-'.$PAGE->devicetypeinuse;
 
         // Define the page types we want to purge yui classes from the body  - e.g. local-joulegrader-view,
         // local-pld-view, etc.
@@ -1008,25 +1020,15 @@ HTML;
             'blocks-campusvue-view',
         );
         if (in_array($PAGE->pagetype, $killyuipages)) {
-
-            // Purge yui classes.
-            $classes = explode (' ', $classes);
-            $classes = array_diff ($classes, array('yui-skin-sam', 'yui3-skin-sam'));
-            // Add yui bootstrapped class so we know that we have got rid of the yui stuff and intend to style with
-            // bootstrap.
+            $classes = array_diff ($classes, ['yui-skin-sam', 'yui3-skin-sam']);
             $classes [] = 'yui-bootstrapped';
-            $classes = implode(' ', $classes);
         }
 
-        // Big course little course cardboard box.
-        $format = course_get_format($COURSE);
-        $course  = $format->get_course();
-        // 0 = course is set to show all sections.
-        // 1 = course is set to show single section.
-        if (!empty($course->coursedisplay)) {
-            $classes .= " moodle-single-section-format ";
+        if ($COURSE->format === 'folderview' && !empty($PAGE->url->param('section'))) {
+            $classes[] = 'folderview-single-section';
         }
 
+        $classes = implode(' ', $classes);
         return $classes;
     }
 

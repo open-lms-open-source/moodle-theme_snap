@@ -7,6 +7,8 @@
  */
 function snapInit(){
 
+    'use strict';
+
     /**
      * master switch for logging
      * @type {boolean}
@@ -125,7 +127,7 @@ function snapInit(){
         // Add block hash to add block form.
         if (onCoursePage()){
             $('.block_adminblock form').each(function(){
-                $(this).attr('action', $(this).attr('action') + '#blocks');
+                $(this).attr('action', $(this).attr('action') + '#coursetools');
             });
         }
 
@@ -159,7 +161,7 @@ function snapInit(){
             }
         }
 
-        // If required, apply #blocks hash to form action - this is so that on submitting form it returns to course
+        // If required, apply #coursetools hash to form action - this is so that on submitting form it returns to course
         // page on blocks tab.
         $(formselectors.join(', ')).each(function(){
             // Only apply the blocks hash if a hash is not already present in url.
@@ -167,7 +169,7 @@ function snapInit(){
             if (formurl.indexOf('#') === -1
                 && (formurl.indexOf('/course/view.php') > -1)
                 ){
-                $(this).attr('action', $(this).attr('action') + '#blocks');
+                $(this).attr('action', $(this).attr('action') + '#coursetools');
             }
         });
     };
@@ -305,14 +307,24 @@ function snapInit(){
      * @param {array} dataList
      */
     var tocSearchCourse = function(dataList) {
-        var i;
+        // keep search input open
+            var i;
+        var ua = window.navigator.userAgent;
+        if (ua.indexOf('MSIE ') || ua.indexOf('Trident/')){
+            // We have reclone datalist over again for IE, or the same search fails the second time round.
+            var dataList = $("#toc-searchables").find('li').clone(true);
+        }
+
         // TODO - for 2.7 process search string called too many times?
         var searchString = $("#toc-search-input").val();
         searchString = processSearchString(searchString);
 
         if(searchString.length === 0) {
             $('#toc-search-results').html('');
+            $("#toc-search-input").removeClass('state-active');
+
         } else {
+            $("#toc-search-input").addClass('state-active');
             var matches = [];
             for (i = 0; i < dataList.length; i++) {
                 var dataItem = dataList[i];
@@ -361,38 +373,39 @@ function snapInit(){
         // primary nav showing so hide the other dom parts
         $('#page, #moodle-footer').hide(0);
 
-            /**
-             * Load ajax info into personal menu.
-             *
-             */
-            var loadajaxinfo = function(type){
-                var container = $('#snap-personal-menu-' + type);
-                if($(container).length) {
-                    var cache_key = M.cfg.sesskey + 'personal-menu-' + type;
-                    try {
-                        // Display old content while waiting
-                        if(window.sessionStorage[cache_key]) {
-                            logmsg('using locally stored ' + type);
-                            html = window.sessionStorage[cache_key];
-                            $(container).html(html);
-                        }
-                        logmsg('fetching ' + type);
-                        $.ajax({
-                              type: "GET",
-                              async:  true,
-                              url: M.cfg.wwwroot + '/theme/snap/rest.php?action=get_' + type +'&contextid=' + M.cfg.context,
-                              success: function(data){
-                                logmsg('fetched ' + type);
-                                window.sessionStorage[cache_key] = data.html;
-                                $(container).html(data.html);
-                              }
-                        });
-                    } catch(err) {
-                        sessionStorage.clear();
-                        logerror(err);
+        /**
+         * Load ajax info into personal menu.
+         *
+         */
+        var loadajaxinfo = function(type){
+            var container = $('#snap-personal-menu-' + type);
+            if($(container).length) {
+                var cache_key = M.cfg.sesskey + 'personal-menu-' + type;
+                try {
+                    // Display old content while waiting
+                    if(window.sessionStorage[cache_key]) {
+                        logmsg('using locally stored ' + type);
+                        var html = window.sessionStorage[cache_key];
+                        $(container).html(html);
                     }
+                    logmsg('fetching ' + type);
+                    $.ajax({
+                          type: "GET",
+                          async:  true,
+                          url: M.cfg.wwwroot + '/theme/snap/rest.php?action=get_' + type +'&contextid=' + M.cfg.context,
+                          success: function(data){
+                            logmsg('fetched ' + type);
+                            window.sessionStorage[cache_key] = data.html;
+                            $(container).html(data.html);
+                          }
+                    });
+                } catch(err) {
+                    sessionStorage.clear();
+                    logerror(err);
                 }
-            };
+            }
+        };
+
         loadajaxinfo('deadlines');
         loadajaxinfo('graded');
         loadajaxinfo('grading');
@@ -501,6 +514,7 @@ function snapInit(){
         }
 
         $(targmod).find('.instancename').prepend(searchpin);
+        $(targmod).attr('tabindex','-1').focus();
     };
 
     /**
@@ -511,10 +525,10 @@ function snapInit(){
     var showSection = function() {
         // primary use case
         if(onCoursePage()) {
-            // check we are not in the moodle single section format
-            if(!$('.moodle-single-section-format, .format-folderview').length){
-                // reset visible section
-                $('.course-content ul li.section').removeClass('state-visible');
+            // check we are not in folder view
+            if(!$('.format-folderview').length){
+                // reset visible section & blocks
+                $('.course-content .main, #moodle-blocks,#coursetools').removeClass('state-visible');
                 // if the hash is just section, can we skip all this?
 
                 // we know the params at 0 is a section id
@@ -523,9 +537,15 @@ function snapInit(){
                 var urlParams = location.hash.split("&"),
                 section = urlParams[0],
                 mod = urlParams[1] || null;
+                // Course tools special section.
+
+                if(section == '#coursetools') {
+                    $('#moodle-blocks').addClass('state-visible');
+                }
+
                 // we know that if we have a search modid will be param 1
                 if(mod !== null) {
-                    $(section).addClass('state-visible').focus();
+                    $(section).addClass('state-visible');
                     scrollToModule(mod);
                 } else if(!$('.editing').length){
                     $(section).addClass('state-visible').focus();
@@ -538,31 +558,31 @@ function snapInit(){
             }
 
             // default niceties to perform
-            var visibleChapters = $('.course-content ul li.section').filter(':visible');
+            var visibleChapters = $('.course-content .main, #coursetools').filter(':visible');
             if (!visibleChapters.length) {
                 // show chapter 0
                 $('#section-0').addClass('state-visible').focus();
+                window.scrollTo(0, 0);
             }
 
             applyResponsiveVideo();
             // add faux :current class to the relevant section in toc
-            var currentSectionId = $('.section.state-visible').attr('id');
-            // do something special for moodle single page formats
-            if($('.moodle-single-section-format').length){
-                // if not on section0 use section id as there is only one section
-                if(!currentSectionId) {
-                    currentSectionId = $('.single-section .section').attr('id');
-                }
-
-                // in single section when editing there is no current section
-                if(currentSectionId) {
-                    // urls are section=x in single section mode
-                    currentSectionId = currentSectionId.replace('-','=');
-                }
-            }
+            var currentSectionId = $('.main.state-visible, #coursetools.state-visible').attr('id');
             $('#chapters li').removeClass('current');
             $('#chapters a[href$="' + currentSectionId + '"]').parent('li').addClass('current');
         }
+    };
+
+    /**
+     * Apply body classes which could not be set by renderers - e.g. when a notice was outputted.
+     * We could do this in plain CSS if there was such a think as a parent selector.
+     */
+    var bodyClasses = function() {
+        var extraclasses = [];
+        if ($('#notice.snap-continue-cancel').length) {
+            extraclasses.push('hascontinuecancel');
+        }
+        $('body').addClass(extraclasses.join(' '));
     };
 
     /**
@@ -573,16 +593,12 @@ function snapInit(){
     var addListeners = function() {
 
         var selectors = [
-            'body:not(.editing):not(.format-folderview):not(.moodle-single-section-format) .chapters a',
-            'body:not(.moodle-single-section-format):not(.format-folderview) .section_footer a',
-            'body:not(.moodle-single-section-format):not(.format-folderview) #toc-search-results a'
+            'body:not(.editing):not(.format-folderview) .chapters a',
+            'body:not(.format-folderview) .section_footer a',
+            'body:not(.format-folderview) #toc-search-results a'
         ];
 
         $(document).on('click', selectors.join(', '), function(e) {
-            // If we are in blocks, we need to not be.
-            if(location.hash === '#blocks') {
-                location.hash = 'sections';
-            }
             var href = this.getAttribute('href');
             if (window.history && window.history.pushState) {
                 history.pushState(null, null, href);
@@ -611,11 +627,10 @@ function snapInit(){
                     if(onCoursePage()) {
                         // In folder view we sometimes get here - how?
                         logmsg('show section', e.target);
-                        if($('.moodle-single-section-format, .format-folderview').length){
-                            // Check if we are searching for a mod
+                        if($('.format-folderview').length){
                             checkHashScrollToModule();
                         }
-                        else {
+                        else{
                             showSection();
                         }
                     }
@@ -656,50 +671,51 @@ function snapInit(){
             tocSearchCourse(dataList);
         });
 
-        $("#toc-search-input").focus(function() {
-            // Hide search results.
-            $('#toc-search-results').html('');
-        });
-
         // Handle keyboard navigation of search items.
         $("#toc-search-input").keydown(function(e) {
             var keyCode = e.keyCode || e.which;
             if (keyCode === 9) {
-                //e.preventDefault();
-                // call custom function here
-                $(this).addClass('state-tabbed');
-
+                // 9 tab
+                // 13 enter
+                // 40 down arrow
                 // Register listener for exiting search result.
                 $('#toc-search-results a').last().blur(function () {
-                    $("#toc-search-input").val('');
                     $(this).off('blur'); // unregister listener
+                    $("#toc-search-input").val('');
+                    $('#toc-search-results').html('');
+                    $("#toc-search-input").removeClass('state-active');
                 });
 
             }
         });
 
-        // Listener for exiting search field.
-        /*
-        $('#toc-search-input').blur(function () {
-            if ($(this).hasClass('state-tabbed')) {
-                // We left on a tab event which means we should now be navigating the search results.
-                // so don't close the search results.
-                $(this).removeClass('state-tabbed');
-                return;
-            }
-            $(this).removeClass('state-visible');
-            $(this).val('');
+        $(document).on("click",'#toc-search-results a', function(){
+            $("#toc-search-input").val('');
+            $('#toc-search-results').html('');
+            $("#toc-search-input").removeClass('state-active');
         });
-        */
+
+        /**
+         * When the document is clicked, if the closest object that was clicked was not the search input then close
+         * the search results.
+         * Note that this is triggered also when you click on a search result as the results should no longer be
+         * required at that point.
+         */
+        $(document).on('click', function(event) {
+            if (!$(event.target).closest('#toc-search-input').length) {
+                $("#toc-search-input").val('');
+                $('#toc-search-results').html('');
+                $("#toc-search-input").removeClass('state-active');
+            }
+        });
 
         // Add toggle class for hide/show activities/resources - additional to moodle adding dim.
         $(document).on("click", '[data-action=hide],[data-action=show]', function() {
              $(this).closest('li.activity').toggleClass('draft');
         });
 
-        // Make cards clickable - data-href for resources.
-        $(document).on('click', '.snap-resource[data-href]', function(e){
-            // Stash event trigger
+        // Make cards - in personal menu and on course - clickable, data-href for resources.
+        $(document).on('click', '.courseinfo[data-href], .snap-resource[data-href]', function(e){
             var trigger = $(e.target),
                 hreftarget = '_self'; // assume browser can open resource
             // Excludes any clicks in the actions menu, on links or forms.
@@ -713,13 +729,10 @@ function snapInit(){
             }
         });
 
-        // Listener for small screen showing of chapters & appendicies.
-        $(document).on("click", '#course-toc a', function() {
-            $('#chapters, #appendices').toggleClass('state-visible');
-        });
 
-        // Onclick for toggle of state-visible of admin block.
-        $(document).on("click", ".settings-button", function(e) {
+
+        // Onclick for toggle of state-visible of admin block and mobile menu.
+        $(document).on("click", ".settings-button, #toc-mobile-menu-toggle", function(e) {
             var href = this.getAttribute('href');
             $(href).toggleClass('state-visible').focus();
             e.preventDefault();
@@ -731,24 +744,57 @@ function snapInit(){
 
         });
 
+        // Mobile menu button
+        $(document).on("click", "#course-toc.state-visible a", function(e){
+            $('#course-toc').removeClass('state-visible');
+        });
+
         // Page mod toggle content
         $(document).on("click", ".modtype_page .instancename,.pagemod-readmore,.pagemod-content .snap-action-icon", function(e) {
-
-            $pagemod = $(this).closest('.modtype_page');
+            var $pagemod = $(this).closest('.modtype_page');
             $pagemod.toggleClass('state-expanded');
             $pagemod.find('.pagemod-content').slideToggle("fast", function() {
                 // Animation complete.
                 if($pagemod.is('.state-expanded')){
+                    $pagemod.attr('aria-expanded', 'true');
                     $pagemod.find('.pagemod-content').focus();
+
                 }
                 else {
+                    $pagemod.attr('aria-expanded', 'false');
                     $pagemod.focus();
+
                 }
                 scrollToElement($pagemod);
             });
             applyResponsiveVideo();
             e.preventDefault();
         });
+
+        $(document).on("click", ".news-article .toggle", function(e) {
+            var $news = $(this).closest('.news-article');
+            $(".news-article").not($news).removeClass('state-expanded');
+            $(".news-article-message").css('display','none');
+
+            $news.toggleClass('state-expanded');
+            $('.state-expanded').find('.news-article-message').slideDown("fast", function() {
+                // Animation complete.
+                if($news.is('.state-expanded')){
+                    $news.find('.news-article-message').focus();
+                    $news.attr('aria-expanded', 'true');
+                }
+                else {
+                    $news.focus();
+                    $news.attr('aria-expanded', 'false');
+                }
+            });
+            scrollToElement($news);
+            applyResponsiveVideo();
+            e.preventDefault();
+        });
+
+
+
 
         // Listen for window resize for videos.
         $(window).resize(function() {
@@ -774,6 +820,7 @@ function snapInit(){
     setForumStrings(); // whatever
     addListeners(); // essential
     applyBlockHash(); // change location hash if necessary
+    bodyClasses(); // add body classes
 
     // SL - 19th aug 2014 - check we are in a course
     if(onCoursePage()) {
@@ -794,8 +841,17 @@ function snapInit(){
         // Note, if you don't do this on load then FLV media gets wrong size.
         applyResponsiveVideo();
 
-        // When not in standard snap we need to do some things to enable search - post url load.
-        if($('.moodle-single-section-format, .format-folderview').length){
+        // SHAME - make section name creation mandatory
+        if($('#page-course-editsection.format-topics').length) {
+            var usedefaultname = document.getElementById('id_usedefaultname'),
+            sname = document.getElementById('id_name');
+            usedefaultname.value = '0';
+            usedefaultname.checked = false;
+            sname.required = "required";
+            sname.focus();
+            $('#id_name + span').css('display','none');
+        }
+        if($('.format-folderview').length){
             // Check if we are searching for a mod.
             checkHashScrollToModule();
         }

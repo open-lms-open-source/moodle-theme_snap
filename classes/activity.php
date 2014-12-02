@@ -26,7 +26,7 @@ class activity {
     /**
      * Return standard meta data for module
      *
-     * @param stdClass $mod
+     * @param cm_info $mod
      * @param string $timeopenfld
      * @param string $timeclosefld
      * @param string $keyfield
@@ -37,7 +37,7 @@ class activity {
      * @param string $submitselect - sql to further filter submission row select statement - e.g. st.status='finished'
      * @return bool | \theme_snap\activity_meta
      */
-    protected static function std_meta($mod,
+    protected static function std_meta(\cm_info $mod,
                                        $timeopenfld,
                                        $timeclosefld,
                                        $keyfield,
@@ -55,9 +55,9 @@ class activity {
         $meta->submittedstr = get_string($submitstrkey, 'theme_snap');
         $meta->notsubmittedstr = get_string('not'.$submitstrkey, 'theme_snap');
 
-        // If module is not available then don't bother getting meta data.
-        if (!$mod->available) {
-            return ($meta);
+        // If module is not visible to the user then don't bother getting meta data.
+        if (!$mod->uservisible){
+            return $meta;
         }
 
         $activitydates = self::instance_activity_dates($COURSE->id, $mod, $timeopenfld, $timeclosefld);
@@ -80,6 +80,7 @@ class activity {
         } else {
             // Student - useful student meta data - only display if activity is available.
             if (empty($activitydates->timeopen) || usertime($activitydates->timeopen) <= time()) {
+
                 $submissionrow = self::get_submission_row($COURSE->id, $mod, $submissiontable, $keyfield, $submitselect);
 
                 if (!empty($submissionrow)) {
@@ -93,29 +94,28 @@ class activity {
                             $meta->timesubmitted = $submissionrow->timecreated;
                         }
                     }
+                }
+            }
 
-                    $graderow = false;
-                    if ($isgradeable) {
-                        $graderow = self::grade_row($COURSE->id, $mod, $keyfield);
-                    }
+            $graderow = false;
+            if ($isgradeable) {
+                $graderow = self::grade_row($COURSE->id, $mod, $keyfield);
+            }
 
-                    if ($graderow) {
-                        $gradeitem = \grade_item::fetch(array(
-                            'itemtype' => 'mod',
-                            'itemmodule' => $mod->modname,
-                            'iteminstance' => $mod->instance,
-                        ));
+            if ($graderow) {
+                $gradeitem = \grade_item::fetch(array(
+                    'itemtype' => 'mod',
+                    'itemmodule' => $mod->modname,
+                    'iteminstance' => $mod->instance,
+                ));
 
-                        $grade = new \grade_grade(array('itemid' => $gradeitem->id, 'userid' => $USER->id));
+                $grade = new \grade_grade(array('itemid' => $gradeitem->id, 'userid' => $USER->id));
 
-                        $coursecontext = \context_course::instance($COURSE->id);
-                        $canviewhiddengrade = has_capability('moodle/grade:viewhidden', $coursecontext);
+                $coursecontext = \context_course::instance($COURSE->id);
+                $canviewhiddengrade = has_capability('moodle/grade:viewhidden', $coursecontext);
 
-                        if (!$grade->is_hidden() || $canviewhiddengrade) {
-                            $meta->grade = true;
-                        }
-
-                    }
+                if (!$grade->is_hidden() || $canviewhiddengrade) {
+                    $meta->grade = true;
                 }
             }
         }
@@ -125,61 +125,85 @@ class activity {
     /**
      * Get assignment meta data
      *
-     * @param stdClass $modinst - module instance
+     * @param cm_info $modinst - module instance
      * @return string
      */
-    public static function assign_meta($modinst) {
-        return self::std_meta($modinst, 'allowsubmissionsfromdate', 'duedate', 'assignment', 'submission',
+    public static function assign_meta(\cm_info $modinst) {
+        global $DB, $COURSE;
+        static $submissionsenabled;
+
+        // Get count of enabled submission plugins grouped by assignment id.
+        if (empty($submissionsenabled)){
+            $sql = "SELECT a.id, count(1) AS submissionsenabled
+                      FROM {assign} a
+                      JOIN {assign_plugin_config} ac ON ac.assignment = a.id
+                     WHERE a.course = ?
+                       AND ac.name='enabled'
+                       AND ac.value=1
+                       AND ac.subtype='assignsubmission'
+                       AND plugin!='comments'
+                  GROUP BY a.id;";
+            $submissionsenabled = $DB->get_records_sql($sql, array($COURSE->id));
+        }
+        $meta = self::std_meta($modinst, 'allowsubmissionsfromdate', 'duedate', 'assignment', 'submission',
             'timemodified', 'submitted', true);
+
+        // If there aren't any submission plugins enabled for this module, then submissions are not required.
+        if (empty($submissionsenabled[$modinst->instance])){
+            $meta->submissionnotrequired = true;
+        }
+        return ($meta);
     }
 
     /**
      * Get choice module meta data
      *
-     * @param stdClass $modinst - module instance
+     * @param cm_info $modinst - module instance
      * @return string
      */
-    public static function choice_meta($modinst) {
+    public static function choice_meta(\cm_info $modinst) {
         return  self::std_meta($modinst, 'timeopen', 'timeclose', 'choiceid', 'answers', 'timeseen', 'answered');
     }
 
     /**
      * Get database module meta data
      *
-     * @param stdClass $modinst - module instance
+     * @param cm_info $modinst - module instance
      * @return string
      */
-    public static function data_meta($modinst) {
+    public static function data_meta(\cm_info $modinst) {
         return self::std_meta($modinst, 'timeavailablefrom', 'timeavailableto', 'dataid', 'records', 'timemodified', 'contributed');
     }
 
     /**
      * Get feedback module meta data
      *
-     * @param stdClass $modinst - module instance
+     * @param cm_info $modinst - module instance
      * @return string
      */
-    public static function feedback_meta($modinst) {
+    public static function feedback_meta(\cm_info $modinst) {
         return self::std_meta($modinst, 'timeopen', 'timeclose', 'feedback', 'completed', 'timemodified', 'submitted');
     }
 
     /**
      * Get lesson module meta data
      *
-     * @param stdClass $modinst - module instance
+     * @param cm_info $modinst - module instance
      * @return string
      */
-    public static function lesson_meta($modinst) {
-        return self::std_meta($modinst, 'available', 'deadline', 'lessonid', 'attempts', 'timeseen', 'attempted', true);
+    public static function lesson_meta(\cm_info $modinst) {
+        $meta = self::std_meta($modinst, 'available', 'deadline', 'lessonid', 'attempts', 'timeseen', 'attempted', true);
+        $meta->submissionnotrequired = true;
+        return $meta;
     }
 
     /**
      * Get quiz module meta data
      *
-     * @param stdClass $modinst - module instance
+     * @param cm_info $modinst - module instance
      * @return string
      */
-    public static function quiz_meta($modinst) {
+    public static function quiz_meta(\cm_info $modinst) {
         return self::std_meta($modinst, 'timeopen', 'timeclose', 'quiz', 'attempts', 'timemodified', 'attempted', true, 'AND st.state=\'finished\'');
     }
 
