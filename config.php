@@ -94,10 +94,9 @@ $THEME->layouts = array(
         'defaultregion' => 'side-pre',
         'options' => array('nonavbar' => true),
     ),
-    // Server administration scripts.
+    // Server administration pages.
     'admin' => array(
-        // GT Mod 2014-06-02 - changed file to admin.php so we can take out edit blocks button.
-        'file' => 'admin.php',
+        'file' => 'default.php',
         'regions' => array('side-pre'),
         'defaultregion' => 'side-pre',
     ),

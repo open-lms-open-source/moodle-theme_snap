@@ -37,27 +37,31 @@ echo $OUTPUT->course_content_header();
 
 // Ensure edit blocks button is only shown for appropriate pages.
 $hasadminbutton = stripos($PAGE->button, '"adminedit"');
-// List paths to black list for 'turn editting on' button here.
-// Note, to use regexs start and end with a pipe symbol - e.g. |^/report/| .
-$editbuttonblacklist = array(
-    '/comment/',
-    '|^/report/|',
-    '/tag/manage.php'
-);
-$pagepath = $PAGE->url->get_path();
-foreach ($editbuttonblacklist as $blacklisted){
-    if ($blacklisted[0] == '|'
-        && $blacklisted[strlen($blacklisted)-1] == '|'
-    ) {
-        // Use regex to determine blacklisting.
-        if (preg_match ($blacklisted, $pagepath) === 1) {
+
+if($hasadminbutton) {
+    // List paths to black list for 'turn editting on' button here.
+    // Note, to use regexs start and end with a pipe symbol - e.g. |^/report/| .
+    $editbuttonblacklist = array(
+        '/comment/',
+        '|^/report/|',
+        '|^/admin/|',
+        '/tag/manage.php'
+    );
+    $pagepath = $PAGE->url->get_path();
+    foreach ($editbuttonblacklist as $blacklisted){
+        if ($blacklisted[0] == '|'
+            && $blacklisted[strlen($blacklisted)-1] == '|'
+        ) {
+            // Use regex to determine blacklisting.
+            if (preg_match ($blacklisted, $pagepath) === 1) {
+                // This url path is blacklisted, stop button from being displayed.
+                $PAGE->set_button('');
+            }
+
+        } else if ($pagepath== $blacklisted){
             // This url path is blacklisted, stop button from being displayed.
             $PAGE->set_button('');
         }
-
-    } else if ($pagepath== $blacklisted){
-        // This url path is blacklisted, stop button from being displayed.
-        $PAGE->set_button('');
     }
 }
 
