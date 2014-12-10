@@ -927,9 +927,11 @@ read button has been removed and the message text is visible
             border:none;
             max-height: none;
             width:100%;
+            overflow: visible;
         }
     }
 }
+
 
 // End of message badge alerts
 
@@ -1610,6 +1612,10 @@ aside .settings-button{
 
 .path-mod-book .book_toc_numbered {
     font-size: 1em;
+}
+/* hide show description option */
+#page-mod-book-mod #fitem_id_showdescription{
+    display:none;
 }
 
 
@@ -3341,4 +3347,22 @@ p[id^="time_"] + div[id^="bar_"] {
 // This is required for the jquery ellipsis plugin.
 .ellipsis_toobig:after {
     content:'...';
+}
+
+.atto_equation_library button {
+    background-color: #fff;
+    color: @text-color;
+    &:hover {
+        background-color: darken(#fff, 5%);
+        color: @text-color;
+    }
+}
+.atto_charmap_selector button {
+    width: 40px;
+    padding: 3px;
+    margin: 0;
+}
+.atto_equation_groups.yui3-tabview-panel {
+    border: none;
+    background: #fff;
 }

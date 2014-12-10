@@ -404,7 +404,7 @@ class theme_snap_core_course_renderer extends core_course_renderer {
                 if (!empty($meta->grade)) {
                     // Note - the link that a module takes you to would be better off defined by a function in
                     // theme/snap/activity - for now its just hard coded.
-                    $url = new \moodle_url('/grade/report/user/index.php', [id => $COURSE->id]);
+                    $url = new \moodle_url('/grade/report/user/index.php', ['id' => $COURSE->id]);
                     if (in_array($mod->modname, ['quiz', 'assign'])) {
                         $url = new \moodle_url('/mod/'.$mod->modname.'/view.php?id='.$mod->id);
                     }

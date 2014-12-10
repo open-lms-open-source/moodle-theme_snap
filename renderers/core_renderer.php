@@ -912,7 +912,7 @@ class theme_snap_core_renderer extends toc_renderer {
 
             $readmorebtn = "<a class='btn btn-default toggle' href='".
                 $CFG->wwwroot."/mod/forum/discuss.php?d=".$discussion->discussion."'>".
-                get_string('readmore', 'theme_snap')."&nbsp;&#187;</a>";
+                get_string('readmore', 'theme_snap')."</a>";
 
             $preview = '';
             $newsimage = '';
