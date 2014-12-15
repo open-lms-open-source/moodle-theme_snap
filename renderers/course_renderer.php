@@ -59,7 +59,7 @@ class theme_snap_core_course_renderer extends core_course_renderer {
                 }
             } else if ($mod->modname === 'label') {
                 // Do nothing.
-            } else if ($mod->modname === 'folder' && !$mod->get_url()) {
+            } else if ($mod->modname === 'folder' && !$mod->url) {
                 // Folder mod set to display on page.
                 $modclasses = array('snap-activity');
             } else if (plugin_supports('mod', $mod->modname, FEATURE_MOD_ARCHETYPE) === MOD_ARCHETYPE_RESOURCE) {
@@ -154,8 +154,9 @@ class theme_snap_core_course_renderer extends core_course_renderer {
         // Display the link to the module (or do nothing if module has no url).
         $cmname = $this->course_section_cm_name($mod, $displayoptions);
         $assetlink = '';
+        // SHAME - For moodles ajax show/hide call to work it needs activityinstance > a to add a class of dimmed to. This dimmed class is of course inaccessible junk.
         if (!empty($cmname)) {
-            $assetlink = "<h4 class='snap-asset-link'>".$cmname."</h4>";
+            $assetlink = "<a></a><h4 class='snap-asset-link'>".$cmname."</h4>";
         }
         // Meta.
         $assetmeta = "<div class='snap-meta'>";
@@ -442,6 +443,10 @@ class theme_snap_core_course_renderer extends core_course_renderer {
      * @return string
      */
     protected function mod_image_html($mod) {
+        if (!$mod->uservisible) {
+                return "";
+        }
+
         $fs = get_file_storage();
         $context = \context_module::instance($mod->id);
         // TODO: this is not very efficient!!
@@ -478,6 +483,9 @@ class theme_snap_core_course_renderer extends core_course_renderer {
      * @return string
      */
     protected function mod_page_html($mod) {
+        if (!$mod->uservisible) {
+            return "";
+        }
         global $DB;
         $sql = "SELECT * FROM {course_modules} cm
                   JOIN {page} p ON p.id = cm.instance
@@ -536,6 +544,9 @@ class theme_snap_core_course_renderer extends core_course_renderer {
     }
 
     protected function mod_book_html($mod) {
+        if (!$mod->uservisible) {
+            return "";
+        }
         global $DB;
 
         $cm = get_coursemodule_from_id('book', $mod->id, 0, false, MUST_EXIST);

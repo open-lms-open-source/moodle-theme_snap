@@ -40,7 +40,9 @@ trait format_section_trait {
         $links = array('previous' => '', 'next' => '');
         $back = $sectionno - 1;
         while ($back > -1 and empty($links['previous'])) {
-            if ($canviewhidden || $sections[$back]->uservisible) {
+            if ($canviewhidden
+            || $sections[$back]->uservisible
+            || $sections[$back]->availableinfo) {
                 $params = array();
                 if (!$sections[$back]->visible) {
                     $params = array('class' => 'dimmed_text');
@@ -61,7 +63,9 @@ trait format_section_trait {
 
         $forward = $sectionno + 1;
         while ($forward <= $course->numsections and empty($links['next'])) {
-            if ($canviewhidden || $sections[$forward]->uservisible) {
+            if ($canviewhidden
+            || $sections[$forward]->uservisible
+            || $sections[$forward]->availableinfo) {
                 $params = array();
                 if (!$sections[$forward]->visible) {
                     $params = array('class' => 'dimmed_text');
@@ -202,7 +206,9 @@ trait format_section_trait {
         $previous = '';
         $target = $sectionno - 1;
         while ($target >= 0 && empty($previous)) {
-            if ($canviewhidden || $sections[$target]->uservisible) {
+            if ($canviewhidden
+                || $sections[$target]->uservisible
+                || $sections[$target]->availableinfo) {
                 $attributes = array('class' => 'previous_section');
                 if (!$sections[$target]->visible) {
                     $attributes['class'] .= ' dimmed_text';
@@ -223,7 +229,9 @@ trait format_section_trait {
         $next = '';
         $target = $sectionno + 1;
         while ($target <= $course->numsections && empty($next)) {
-            if ($canviewhidden || $sections[$target]->uservisible) {
+            if ($canviewhidden
+                || $sections[$target]->uservisible
+                || $sections[$target]->availableinfo) {
                 $attributes = array('class' => 'next_section');
                 if (!$sections[$target]->visible) {
                     $attributes['class'] .= ' dimmed_text';

@@ -22,6 +22,8 @@ echo $OUTPUT->doctype();
 <link href='//fonts.googleapis.com/css?family=Roboto:500,100,400,300' rel='stylesheet' type='text/css'>
 <?php
 $snapcourseimage = $OUTPUT->get_course_image();
+// Remove double // to match the URL used on course listings.
+$snapcourseimage = str_replace('/course/overviewfiles//', '/course/overviewfiles/', $snapcourseimage);
 if (!empty($snapcourseimage)) : ?>
 <style> #page-header{background-image:url(<?php echo $snapcourseimage; ?>);}</style>
 <?php endif; ?>

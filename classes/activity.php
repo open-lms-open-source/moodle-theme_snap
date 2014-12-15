@@ -242,8 +242,17 @@ class activity {
                       JOIN {assign_submission} sb ON sb.assignment = a.id
                  LEFT JOIN {assign_grades} gd ON gd.assignment = sb.assignment
                            AND gd.userid = sb.userid
+                 LEFT JOIN {grade_items} gi ON gi.courseid = a.course
+                           AND gi.itemtype = 'mod'
+                           AND gi.itemmodule = 'assign'
+                           AND gi.itemnumber = 0
+                           AND gi.iteminstance = cm.instance
+                 LEFT JOIN {grade_grades} gg ON gg.itemid = gi.id AND gg.userid = sb.userid
+
                      WHERE sb.status='submitted'
-                           AND gd.id IS NULL AND a.course = :courseid
+                           AND gd.id IS NULL
+                           AND gg.finalgrade IS NULL
+                           AND a.course = :courseid
                            AND sb.userid NOT IN ($graderids)
                            AND (a.duedate = 0 OR a.duedate > $sixmonthsago)
                   GROUP BY instanceid, a.course, opentime, closetime, coursemoduleid ORDER BY a.duedate ASC";
@@ -630,17 +639,19 @@ class activity {
         // Event data + additional information (course name, module name, course module id).
         $eventdata = array();
 
-        // Add event data to moduleevents array hashed by module name.
-        $moduleevents = array();
         foreach ($events as $event) {
             $data = (object) $event->get_data();
             $instanceid = intval($data->other['instanceid']);
-            $eventdata[$instanceid] = $data;
-            $modname = $data->other['modulename'];
-            if (!isset($moduleevents[$modname])) {
-                $moduleevents[$modname] = [];
+            $assignment = ('assign' === $data->other['modulename']);
+            if ($assignment) {
+                if (isset($data->other['rawgrade'])) {
+                    // If no raw grade then don't use this event, as it comes
+                    // from gradebook not the assignment module.
+                    $eventdata[$instanceid] = $data;
+                }
+            } else {
+                $eventdata[$instanceid] = $data;
             }
-            $moduleevents[$modname][] = $data;
         }
 
         return $eventdata;

@@ -81,27 +81,6 @@ class toc_renderer extends core_renderer {
     }
 
     /**
-     * Is a section conditional
-     *
-     * @author Guy Thomas
-     * @param section_info $section
-     * @param bool $checkdates
-     * @return bool
-     */
-    protected function is_section_conditional(section_info $section) {
-        // Are there any conditional fields populated?
-        if (   !empty($section->availableinfo)
-            || !empty($section->conditionsgrade)
-            || !empty($section->conditionscompletion)
-            || !empty($section->conditionsfield)) {
-            return true;
-        }
-        // OK - this isn't conditional.
-        return false;
-    }
-
-
-    /**
      * Print  table of contents for a course
      *
      * @Author: Stuart Lamour
@@ -156,55 +135,46 @@ class toc_renderer extends core_renderer {
 
         course_create_sections_if_missing($course, range(0, $course->numsections));
 
+
+        $canviewhidden = has_capability('moodle/course:viewhiddensections', context_course::instance($course->id));
+
         $modinfo = get_fast_modinfo($course);
         foreach ($modinfo->get_section_info_all() as $section => $thissection) {
             if ($section > $course->numsections) {
                 continue;
             }
 
-            $linkinfo    = '';
-
-            // Is this conditional.
-            $conditional = $this->is_section_conditional($thissection);
-
-            // Make sure conditionally restricted section is skipped in toc if we aren't able to view hidden sections
-            // and restriction hides section completely.
-            if (!$thissection->uservisible && empty($thissection->availableinfo)) {
+            // Students - If course hidden sections completely invisible & section is hidden, and you cannot see hidden things, bale out.
+            if($course->hiddensections
+                && !$thissection->visible
+                && !$canviewhidden) {
                 continue;
             }
 
-            $showsection = $conditional || ($thissection->uservisible
-                || ($thissection->visible && !$thissection->available
-                    && !empty($thissection->availableinfo)));
-
+            $linkinfo    = '';
             $outputlink = true;
-            if (!$showsection) {
-                if (!$course->hiddensections && $thissection->available) {
-                    // Section is hidden, but show that it is not available.
-                    $outputlink = false; // Students don't get links for hidden sections.
-                    $linkinfo = $this->toc_linkinfo(get_string('notavailable'));
-                } else {
-                    continue; // Completely hidden section.
-                }
-            } else if ($conditional) {
-                // NOTE: $thissection->uservisible evaluates to true when the section is hidden but the user can
-                // view hidden sections but we still need to let teachers see that the section is not published to
-                // students.
+
+            // Does this section have conditional info?
+            $conditional = $thissection->availableinfo;
+            if($conditional) {
+                $linkinfo .= $this->toc_linkinfo(get_string('conditional', 'theme_snap'));
+            }
+
+            // Teachers - Set not published string for teachers
+            if ($canviewhidden){
                 if (!$thissection->visible) {
-                    if ($viewhiddensections) {
-                        $linkinfo = $this->toc_linkinfo(get_string('notpublished', 'theme_snap'));
-                    } else {
-                        $outputlink = false; // Students don't get links for hidden sections.
-                        $linkinfo = $this->toc_linkinfo(get_string('notavailable'));
-                    }
-                } else {
-                    if (\theme_snap\local::is_teacher()) {
-                        $linkinfo = $this->toc_linkinfo(get_string('conditional', 'theme_snap'));
-                    } else if (!empty($thissection->availableinfo)) {
-                        $linkinfo = $this->toc_linkinfo(get_string('notavailable'));
-                    }
+                    $linkinfo .= $this->toc_linkinfo(get_string('notpublished', 'theme_snap'));
                 }
             }
+            // Students - Show unlinked section title.
+            // If not conditional, and not visible - section title without link
+            else if(!$conditional && !$thissection->visible) {
+                    // This is a hidden section
+                    $outputlink = false;
+                    // Top trump - if not clickable, replace linkinfo.
+                    $linkinfo = $this->toc_linkinfo(get_string('notavailable'));
+            }
+            // Students - in 2.7 conditional stuff is shown with a link
 
             $sectionstring = get_section_name($course, $section);
             if ($sectionstring == get_string('general')) {

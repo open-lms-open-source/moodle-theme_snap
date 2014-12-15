@@ -129,7 +129,11 @@ class theme_snap_core_renderer extends toc_renderer {
                 $output  = '<div class="col-md-12">'.$columns[0].'</div>';
         } else if (count($columns) >= 2 && !empty($courserecentactivity)) {
             // Here we output recent updates any some other sections.
-            $output  = '<div class="col-md-6">'.$columns[1].$columns[2].'</div>';
+            if (count($columns) > 2){
+                $output  = '<div class="col-md-6">'.$columns[1].$columns[2].'</div>';
+            } else {
+                $output  = '<div class="col-md-6">'.$columns[1].'</div>';
+            }
             $output .= '<div class="col-md-6">'.$columns[0].'</div>';
         } else if (count($columns) == 2) {
             $output  = '<div class="col-md-6">'.$columns[1].'</div>';

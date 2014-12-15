@@ -55,6 +55,10 @@
             .nav;
             .nav-tabs;
             .selected > a {
+                em {
+                    border: none;
+                    padding: 0;
+                }
                 &,
                 &:hover,
                 &:focus {
@@ -63,11 +67,30 @@
                     border: 1px solid @nav-tabs-active-link-hover-border-color;
                     border-bottom-color: transparent;
                     cursor: default;
+                    background-image: none;
+                }
+            }
+            li > a {
+                em {
+                    border: none;
+                    padding: 0;
+                }
+                background-color: @body-bg;
+                color: @link-color;
+                border-bottom: 1px solid @nav-tabs-border-color;
+                background-image: none;
+                &:hover,
+                &:focus {
+                    background-image: none;
+                    background-color: @nav-link-hover-bg;
+                    color: @link-hover-color;
                 }
             }
         }
         .yui-content {
             padding-top: 0.5em;
+            border: none;
+            background-color: @body-bg;
         }
     }
     .yui3-tabview-list {

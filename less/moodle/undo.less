@@ -205,3 +205,28 @@ img.hide {
     display: inline-block !important;
 }
 
+// Carousel interference from course format CSS and .activityinstantce div.
+
+#page-site-index,
+.course-content ul.topics,
+.course-content ul.weeks {
+    .section,
+    .section .activityinstance {
+            ol.carousel-indicators {
+                margin-left: -30%;
+            }
+            .carousel-inner {
+                > .item {
+                    display: none;
+                }
+                > .item.next,
+                > .item.prev,
+                > .item.active {
+                    width: 100%;
+                    display: block;
+                    padding: 0;
+                }
+            }
+    }
+}
+
