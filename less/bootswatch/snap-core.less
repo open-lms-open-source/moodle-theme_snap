@@ -145,7 +145,7 @@ table.boxwidthwide {
 
 
 .alakazam() {
-    transition: all .5s ease-in-out;
+    transition: all .4s ease-in-out;
 }
 
 
@@ -698,15 +698,16 @@ input[type="text"]+input[type="submit"] {
     box-shadow:none;
     }
     form#coursesearch {
-        margin-top: 0;
+        margin:0 0 0.5em;
+        text-align:left;
         label {
             text-align: left;
             margin-left: 0;
         }
     }
     .btn.moodle-browseallcourses {
-        margin-top: 2.7em;
-        margin-left: 0;
+        margin-bottom:0.5em;
+        display:block;
     }
     .fixy-logout-footer {
         border-top: 1px solid #fff;
@@ -715,7 +716,10 @@ input[type="text"]+input[type="submit"] {
     }
 
     .fixy-browse-search-courses {
-     //   margin-bottom: 1.5em;
+        margin-left:0;
+        .col-md-6 {
+            padding-left:0;
+        }
     }
 }
 
@@ -985,7 +989,7 @@ footer #moodle-footer
       animation-name: snap-rise;
       animation-iteration-count: once;
       animation-timing-function: ease-in-out;
-      animation-duration: .3s;
+      animation-duration: .4s;
       animation-fill-mode: forwards;
 
     }
@@ -2469,7 +2473,7 @@ table#user-grades tr.avg td.cell{
         border: 1px solid @input-border;
         border-radius: @input-border-radius;
         .box-shadow(inset 0 1px 1px rgba(0,0,0,.075));
-        .transition(~"border-color ease-in-out .15s, box-shadow ease-in-out .15s");
+        .transition(~"border-color ease-in-out .4s, box-shadow ease-in-out .4s");
         width: 100%;
     }
     .yui3-widget-stdmod, .yui3-aclist-content {

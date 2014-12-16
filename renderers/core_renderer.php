@@ -657,16 +657,16 @@ class theme_snap_core_renderer extends toc_renderer {
             }
             $courselist .= "</div>";
 
-            $courselist .= '<div class="row fixy-browse-search-courses">';
-            $courselist .= '<div class="col-md-6">';
-            $courselist .= $this->print_view_all_courses();
-            $courselist .= '</div>';
+            $courselist .= '<div class="row fixy-browse-search-courses"><br>';
             if (has_capability('moodle/site:config', context_system::instance())) {
                 $courserenderer = $PAGE->get_renderer('core', 'course');
                 $courselist .= '<div class="col-md-6">';
                 $courselist .= $courserenderer->course_search_form(null, 'fixy');
                 $courselist .= '</div>';
             }
+            $courselist .= '<div class="col-md-6">';
+            $courselist .= $this->print_view_all_courses();
+            $courselist .= '</div>';
             $courselist .= '</div></section>'; // Close row.
 
             $menu = get_string('menu', 'theme_snap');

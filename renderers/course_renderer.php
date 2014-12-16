@@ -631,7 +631,7 @@ class theme_snap_core_course_renderer extends core_course_renderer {
 
         $form = array('id' => $formid, 'action' => $searchurl, 'method' => 'get', 'class' => "form-inline", 'role' => 'form');
         $output = html_writer::start_tag('form', $form);
-        $output .= html_writer::tag('label', $strsearchcourses, array('for' => $inputid));
+        $output .= html_writer::tag('label', $strsearchcourses, array('for' => $inputid, 'class' => 'sr-only'));
         $output .= html_writer::start_div('input-group');
         $search = array('type' => 'text', 'id' => $inputid, 'size' => $inputsize, 'name' => 'search',
         'class' => 'form-control', 'value' => s($value), 'placeholder' => $strsearchcourses);
