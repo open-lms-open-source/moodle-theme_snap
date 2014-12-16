@@ -771,6 +771,9 @@ class theme_snap_core_renderer extends toc_renderer {
                     // trust the behaviour of these formats.
                     if ($COURSE->format == 'topics' || $COURSE->format == 'weeks') {
                         $url .= '#section-'.$sectionnumber;
+                        if ($item->text == get_string('general')) {
+                            $item->text = get_string('introduction', 'theme_snap');
+                        }
                     } else {
                         $url = course_get_url($COURSE, $sectionnumber);
                     }
