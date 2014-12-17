@@ -286,6 +286,9 @@ class activity {
             list($graderids, $params) = get_enrolled_sql(\context_course::instance($courseid), 'moodle/grade:viewall');
             $params = array_merge(array('courseid' => $courseid), $params);
 
+            // Note, that unlike assessments we don't check the gradebook as the only time a quiz needs to be marked is
+            // when there are essay questions or other questions that require manual marking. As these questions need
+            // to be marked manually the operation should always take place via the module.
             $sql = "-- Snap sql
                     SELECT cm.id AS coursemoduleid, q.id AS instanceid, q.course,
                            q.timeopen AS opentime, q.timeclose AS closetime,
