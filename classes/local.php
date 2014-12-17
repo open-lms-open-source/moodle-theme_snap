@@ -439,22 +439,25 @@ class local {
         global $USER, $PAGE;
 
         $output = $PAGE->get_renderer('theme_snap', 'core', RENDERER_TARGET_GENERAL);
-        $events = activity::events_graded();
+        $grades = activity::events_graded();
 
         $o = '';
-        foreach ($events as $event) {
+        foreach ($grades as $grade) {
 
-            $modinfo = get_fast_modinfo($event->courseid);
+            $modinfo = get_fast_modinfo($grade->courseid);
             $course = $modinfo->get_course();
 
-            $modtype = $event->other['modulename'];
-            $cm = $modinfo->instances[$modtype][$event->other['instanceid']];
+            $modtype = $grade->itemmodule;
+            $cm = $modinfo->instances[$modtype][$grade->iteminstance];
 
-            $coursecontext = \context_course::instance($event->courseid);
+            $coursecontext = \context_course::instance($grade->courseid);
             $canviewhiddengrade = has_capability('moodle/grade:viewhidden', $coursecontext);
 
-            $url = new \moodle_url('/grade/report/user/index.php', ['id' => $event->courseid]);
-            if (in_array($modtype, ['quiz', 'assign'])) {
+            $url = new \moodle_url('/grade/report/user/index.php', ['id' => $grade->courseid]);
+            if (in_array($modtype, ['quiz', 'assign'])
+                && !empty($grade->rawgrade)
+            ) {
+                // Only use the course module url if the activity was graded in the module, not in the gradebook, etc.
                 $url = $cm->url;
             }
 
@@ -462,13 +465,14 @@ class local {
             $modname = get_string('modulename', 'mod_'.$cm->modname);
             $modimage = \html_writer::img($modimageurl, $modname);
 
-            $eventtitle = "<small>$course->fullname / </small> $cm->name";
+            $gradetitle = "<small>$course->fullname / </small> $cm->name";
 
-            $meta = get_string('released', 'theme_snap', $output->friendly_datetime($event->timecreated));
+            $releasedon = isset($grade->timemodified) ? $grade->timemodified : $grade->timecreated;
+            $meta = get_string('released', 'theme_snap', $output->friendly_datetime($releasedon));
 
-            $grade = new \grade_grade(array('itemid' => $event->other['itemid'], 'userid' => $USER->id));
+            $grade = new \grade_grade(array('itemid' => $grade->itemid, 'userid' => $USER->id));
             if (!$grade->is_hidden() || $canviewhiddengrade) {
-                $o .= $output->snap_media_object($url, $modimage, $eventtitle, $meta, '');
+                $o .= $output->snap_media_object($url, $modimage, $gradetitle, $meta, '');
             }
         }
 

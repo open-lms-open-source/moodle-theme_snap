@@ -618,39 +618,36 @@ class activity {
      * @return mixed
      */
     public static function events_graded($showfrom = null) {
-        global $USER;
+        global $DB, $USER;
 
-        $logmanger = \get_log_manager();
-        $readers = $logmanger->get_readers('\core\log\sql_select_reader');
-        $reader = reset($readers);
-
-        $select = "userid != :userid
-                   AND relateduserid = :relateduserid
-                   AND timecreated > :showfrom
-                   AND eventname LIKE '%event_course_module_graded'";
         $onemonthago = time() - (DAYSECS * 31);
         $showfrom = $showfrom !== null ? $showfrom : $onemonthago;
-        $params = array('userid' => $USER->id, 'relateduserid' => $USER->id, 'showfrom' => $showfrom);
-        $sort = 'timecreated DESC';
-        $limitfrom = 0;
-        $limitnum = 5;
-        $events = $reader->get_events_select($select, $params, $sort, $limitfrom, $limitnum);
 
-        // Event data + additional information (course name, module name, course module id).
+        $sql = "-- Snap sql
+                SELECT gg.*, gi.itemmodule, gi.iteminstance, gi.courseid, gi.itemtype
+                  FROM {grade_grades} gg
+                  JOIN {grade_items} gi
+                    ON gg.itemid = gi.id
+                 WHERE gg.userid = ?
+                   AND (gg.timemodified > ?
+                    OR gg.timecreated > ?)
+                   AND (gg.finalgrade IS NOT NULL
+                    OR gg.rawgrade IS NOT NULL
+                    OR gg.feedback IS NOT NULL)
+                   AND gi.itemtype = 'mod'";
+
+        $params = array($USER->id, $showfrom, $showfrom);
+        $grades = $DB->get_records_sql($sql, $params);
+
         $eventdata = array();
-
-        foreach ($events as $event) {
-            $data = (object) $event->get_data();
-            $instanceid = intval($data->other['instanceid']);
-            $assignment = ('assign' === $data->other['modulename']);
+        foreach ($grades as $grade) {
+            $assignment = 'assign' === $grade->itemmodule;
             if ($assignment) {
-                if (isset($data->other['rawgrade'])) {
-                    // If no raw grade then don't use this event, as it comes
-                    // from gradebook not the assignment module.
-                    $eventdata[$instanceid] = $data;
+                if (isset($grade->rawgrade) || isset($grade->feedback)){
+                    $eventdata[] = $grade;
                 }
             } else {
-                $eventdata[$instanceid] = $data;
+                $eventdata[] = $grade;
             }
         }
 
