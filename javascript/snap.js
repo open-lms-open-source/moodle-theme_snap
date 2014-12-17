@@ -430,8 +430,8 @@ function snapInit(){
                     var info = crsinfo[i];
                     logmsg('applying course data for courseid '+info.courseid);
                     var courseinfohtml = info.progress.progresshtml;
-                    if (info.grade && info.grade.gradehtml){
-                        courseinfohtml += info.grade.gradehtml;
+                    if (info.feedback && info.feedback.feedbackhtml){
+                        courseinfohtml += info.feedback.feedbackhtml;
                     }
                     $('.courseinfo [data-courseid="'+info.courseid+'"]').html(courseinfohtml);
                 }

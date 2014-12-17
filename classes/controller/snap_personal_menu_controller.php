@@ -97,7 +97,6 @@ class snap_personal_menu_controller extends controller_abstract {
             $courseids = explode(',', $courseids);
         }
         $courseinfo = \theme_snap\local::courseinfo($courseids);
-
         return json_encode(array(
             'info' => $courseinfo
         ));

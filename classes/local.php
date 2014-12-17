@@ -46,8 +46,8 @@ class local {
      * @param $course
      * @return stdClass | null
      */
-    public static function course_overall_grade($course) {
-        global $USER;
+    public static function course_feedback($course) {
+        global $USER, $DB;
 
         // Get course context.
         $coursecontext = \context_course::instance($course->id);
@@ -72,51 +72,30 @@ class local {
             return self::skipgradewarning('Course set up to not show gradebook to students');
         }
 
-        // Get course grade_item.
-        $courseitem = \grade_item::fetch_course_item($course->id);
+        $sql = "SELECT gg.id
+                  FROM {grade_grades} gg
+                  JOIN {grade_items} gi ON gi.id = gg.itemid
+                  WHERE gi.courseid = ?";
 
-        // Get the stored grade.
-        $coursegrade = new \grade_grade(array('itemid' => $courseitem->id, 'userid' => $USER->id));
-        $coursegrade->grade_item =& $courseitem;
-
-        // Return null if can't view.
-        if ($coursegrade->is_hidden() && !$canviewhidden) {
-            return self::skipgradewarning('Course grade is hidden from students');
+        if (!$canviewhidden){
+            $sql .= " AND gg.hidden != 1";
         }
 
-        // Use user grade report to get course total - this is to take hidden grade settings into account.
-        $gpr = new \grade_plugin_return(array(
-            'type' => 'report',
-            'plugin' => 'user',
-            'courseid' => $course->id,
-            'userid' => $USER->id)
-        );
-        $report = new \grade_report_user($course->id, $gpr, $coursecontext, $USER->id);
-        $report->fill_table();
-        $visiblegradefound = false;
-        foreach ($report->tabledata as $item){
-            if (!empty($item['grade']['content'])){
-                // Set grade content to null string if it contents - or a blank space.
-                $item['grade']['content'] = str_ireplace(array('-','&nbsp;'),'',$item['grade']['content']);
-            }
-            if (!empty($item['grade']['content'])
-                && stripos($item['grade']['class'], 'gradingerror') === false
-            ) {
-                $visiblegradefound = true;
-            }
-        }
+        $gradesincourse = $DB->get_records_sql($sql, array($course->id));
+        $visiblegradefound = !empty($gradesincourse);
+        unset($gradesincourse);
 
-        $gradehtml='';
+        $feedbackhtml='';
         if ($visiblegradefound){
             // Just output - feedback available.
             $url = new \moodle_url('/grade/report/user/index.php', array('id' => $course->id));
-            $gradehtml = \html_writer::link($url,
+            $feedbackhtml = \html_writer::link($url,
                 get_string('feedbackavailable', 'theme_snap'),
                 array('class' => 'coursegrade')
             );
         }
 
-        return (object) array('gradehtml' => $gradehtml);
+        return (object) array('feedbackhtml' => $feedbackhtml);
     }
 
     /**
@@ -206,7 +185,7 @@ class local {
             $courseinfo[$courseid] = (object) array(
                 'courseid' => $courseid,
                 'progress' => self::course_completion_progress($course),
-                'grade' => self::course_overall_grade($course)
+                'feedback' => self::course_feedback($course)
             );
         }
         return $courseinfo;
