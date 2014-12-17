@@ -249,7 +249,7 @@ class activity {
                            AND gi.iteminstance = cm.instance
                  LEFT JOIN {grade_grades} gg ON gg.itemid = gi.id AND gg.userid = sb.userid
 
-                     WHERE sb.status='submitted'
+                     WHERE sb.status = 'submitted'
                            AND gd.id IS NULL
                            AND gg.finalgrade IS NULL
                            AND a.course = :courseid
@@ -637,10 +637,11 @@ class activity {
                    AND (gg.finalgrade IS NOT NULL
                     OR gg.rawgrade IS NOT NULL
                     OR gg.feedback IS NOT NULL)
-                   AND gi.itemtype = 'mod'";
+                   AND gi.itemtype = 'mod'
+                 ORDER BY timemodified DESC";
 
         $params = array($USER->id, $showfrom, $showfrom);
-        $grades = $DB->get_records_sql($sql, $params);
+        $grades = $DB->get_records_sql($sql, $params, 0, 5);
 
         $eventdata = array();
         foreach ($grades as $grade) {
