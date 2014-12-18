@@ -529,6 +529,10 @@ class activity {
             }
         }
 
+        if ($mod->modname == 'assign'){
+            $extraselect.=" AND st.status='submitted'";
+        }
+
         $submissiontable = $mod->modname.'_'.$submissiontable;
         $sql = "-- Snap sql
                 SELECT a.id AS instanceid, st.*
