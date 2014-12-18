@@ -239,12 +239,12 @@ class theme_snap_core_course_renderer extends core_course_renderer {
             $content = call_user_func(array($this, $modmethod), $mod);
         } else {
             $content = $mod->get_formatted_content(array('overflowdiv' => false, 'noclean' => true));
-            $content .= $this->module_meta_html($mod);
         }
 
         $accesstext = '';
         $textclasses = '';
         if ($mod->uservisible) {
+            $content .= $this->module_meta_html($mod);
             $conditionalhidden = $this->is_cm_conditionally_hidden($mod);
             $accessiblebutdim = (!$mod->visible || $conditionalhidden) &&
             has_capability('moodle/course:viewhiddenactivities',
