@@ -607,9 +607,18 @@ class activity {
         $sql = "-- Snap sql
                 SELECT m.id AS instanceid, gt.*
                     FROM {".$gradetable."} gt
-                    LEFT JOIN {".$mod->modname."} m ON gt.$modfield = m.id
-                WHERE m.course = ? AND gt.userid = ?";
-        $grades[$courseid.'_'.$mod->modname] = $DB->get_records_sql($sql, array($courseid, $USER->id));
+                    JOIN {".$mod->modname."} m ON gt.$modfield = m.id
+                    JOIN {grade_items} gi
+                      ON gt.$modfield = gi.iteminstance
+                     AND gi.itemtype = 'mod'
+                     AND gi.itemmodule = ?
+                     AND gi.courseid = ?
+                    JOIN {grade_grades} gd ON gi.id = gd.itemid
+                   WHERE m.course = ?
+                     AND gt.userid = ?
+                     AND (gd.rawgrade IS NOT NULL OR gd.feedback IS NOT NULL)";
+        $params = array($mod->modname, $courseid, $courseid, $USER->id);
+        $grades[$courseid.'_'.$mod->modname] = $DB->get_records_sql($sql, $params);
 
         if (isset($grades[$courseid.'_'.$mod->modname][$mod->instance])) {
             return $grades[$courseid.'_'.$mod->modname][$mod->instance];
