@@ -45,7 +45,15 @@ if($hasadminbutton) {
         '/comment/',
         '|^/report/|',
         '|^/admin/|',
-        '/tag/manage.php'
+        '/tag/manage.php',
+        '/grade/edit/scale/index.php',
+        '/outcome/admin.php',
+        '/mod/assign/adminmanageplugins.php',
+        '/message/defaultoutputs.php',
+        '/theme/index.php',
+        '/my/indexsys.php',
+        '/mnet/service/enrol/index.php',
+        '/local/mrooms/view.php'
     );
     $pagepath = $PAGE->url->get_path();
     foreach ($editbuttonblacklist as $blacklisted){
