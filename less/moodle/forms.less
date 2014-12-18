@@ -357,14 +357,6 @@ fieldset.coursesearchbox label {
     *[aria-hidden=true] {
         display: none;
     }
-    select,
-    input[type=text] {
-        position:relative;
-        top: 4px;
-    }
-    label {
-        display: inline;
-    }
     .availability-group {
         margin-right: 8px;
     }
@@ -376,17 +368,22 @@ fieldset.coursesearchbox label {
         margin-bottom: 4px;
     }
     .availability-plugincontrols {
-        padding: 2px 0px 0px 4px;
+        padding: 6px;
         background: none repeat scroll 0% 0% @well-bg;
         border: 1px solid @well-border;
         border-radius: 4px;
         display: inline-block;
         margin-right: 8px;
+        max-width: 40em;
+        label {
+            margin-top: 2px;
+            margin-bottom: 2px;
+        }
     }
     /* Eye icon in front of an item and delete icon after it. */
     .availability-eye,
     .availability-delete {
-        margin-right: 8px;
+        margin-right: 4px;
     }
     /* Hidden eye icon still takes up space. */
     .availability-eye[aria-hidden=true] {
@@ -420,6 +417,13 @@ fieldset.coursesearchbox label {
         margin-left: 20px;
         margin-bottom: 6px;
     }
+    .label:not(.label-warning) {
+        .label-info;
+    }
+}
+
+.mform .error .availability-field {
+    color: @text-color;
 }
 /* This dialogue is used to add an availability condition. */
 .availability-dialogue {
@@ -427,10 +431,11 @@ fieldset.coursesearchbox label {
         border-bottom: 1px solid @modal-header-border-color;
     }
     ul button {
-        white-space: nowrap;
+        white-space: normal;
         width: 150px;
-        margin: 0;
-        margin-top: 4px;
+        margin: 4px 0;
+        padding-left: 0;
+        padding-right: 0;
     }
     label {
         float: right;
