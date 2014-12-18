@@ -341,6 +341,10 @@ class theme_snap_core_course_renderer extends core_course_renderer {
 
         $content = '';
 
+        if (is_guest(context_course::instance($COURSE->id))){
+            return '';
+        }
+
         // Do we have an activity function for this module for returning meta data?
         // @todo - check module lib.php for a meta function (won't work for core mods but will for ours if we wish).
         $methodname = $mod->modname.'_meta';
