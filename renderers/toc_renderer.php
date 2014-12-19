@@ -81,6 +81,20 @@ class toc_renderer extends core_renderer {
     }
 
     /**
+     * Section is conditional and is hidden
+     * @param section_info $section
+     */
+    protected function is_section_conditionally_hidden(section_info $section) {
+        $conditional = $this->is_section_conditional($section);
+        if (!$conditional) {
+            return false;
+        }
+        // OK this section is conditional, so is it also hidden when unavailable?
+        // We do this by checking availableinfo which will be empty if the section is hidden when conditions aren't met.
+        return empty($section->availableinfo);
+    }
+
+    /**
      * Is a section conditional
      *
      * @author Guy Thomas
@@ -160,8 +174,13 @@ class toc_renderer extends core_renderer {
                 continue;
             }
 
+            $conditional = $this->is_section_conditional($thissection);
+
             // If the user can't see this section then don't include in the TOC.
-            if (!$thissection->uservisible) {
+            // Note: To skip a conditional section it must also be hidden when not available.
+            if (!$thissection->uservisible && !$conditional
+                || $this->is_section_conditionally_hidden($thissection)
+            ) {
                 continue;
             }
 
@@ -169,7 +188,6 @@ class toc_renderer extends core_renderer {
             $outputlink = true;
 
             // Does this section have conditional info?
-            $conditional = $this->is_section_conditional($thissection);
             if($conditional) {
                 $linkinfo .= $this->toc_linkinfo(get_string('conditional', 'theme_snap'));
             }
