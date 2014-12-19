@@ -144,10 +144,8 @@ class toc_renderer extends core_renderer {
                 continue;
             }
 
-            // Students - If course hidden sections completely invisible & section is hidden, and you cannot see hidden things, bale out.
-            if($course->hiddensections
-                && !$thissection->visible
-                && !$canviewhidden) {
+            // If the user can't see this section then don't include in the TOC.
+            if (!$thissection->uservisible) {
                 continue;
             }
 
