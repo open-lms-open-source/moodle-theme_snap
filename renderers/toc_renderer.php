@@ -81,6 +81,24 @@ class toc_renderer extends core_renderer {
     }
 
     /**
+     * Is a section conditional
+     *
+     * @author Guy Thomas
+     * @param section_info $section
+     * @param bool $checkdates
+     * @return bool
+     */
+    protected function is_section_conditional(section_info $section) {
+        // Are there any conditional fields populated?
+        if (   !empty($section->availableinfo)
+            || !empty(json_decode($section->availability)->c)) {
+            return true;
+        }
+        // OK - this isn't conditional.
+        return false;
+    }
+
+    /**
      * Print  table of contents for a course
      *
      * @Author: Stuart Lamour
@@ -93,8 +111,6 @@ class toc_renderer extends core_renderer {
         if (!can_access_course($COURSE)) {
             return '';
         }
-
-        $viewhiddensections = has_capability('moodle/course:viewhiddensections', context_course::instance($COURSE->id));
 
         $format     = course_get_format($this->page->course);
         $course     = $format->get_course();
@@ -153,7 +169,7 @@ class toc_renderer extends core_renderer {
             $outputlink = true;
 
             // Does this section have conditional info?
-            $conditional = $thissection->availableinfo;
+            $conditional = $this->is_section_conditional($thissection);
             if($conditional) {
                 $linkinfo .= $this->toc_linkinfo(get_string('conditional', 'theme_snap'));
             }
