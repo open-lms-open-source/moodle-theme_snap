@@ -45,6 +45,7 @@ if($hasadminbutton) {
         '/comment/',
         '|^/report/|',
         '|^/admin/|',
+        '|^/mod/data/|',
         '/tag/manage.php',
         '/grade/edit/scale/index.php',
         '/outcome/admin.php',
