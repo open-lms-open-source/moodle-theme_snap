@@ -251,6 +251,38 @@ trait format_section_trait {
         return "<nav class='section_footer'>".$previous.$next."</nav>";
     }
 
+    /**
+     * Generate the html for a hidden section
+     *
+     * @param int $sectionno The section number in the coruse which is being dsiplayed
+     * @param int|stdClass $courseorid The course to get the section name for (object or just course id)
+     * @return string HTML to output.
+     */
+    protected function section_hidden_check_uservisible($section, $courseorid = null) {
+        $sectionno = $section->section;
+        if ($courseorid) {
+            $sectionname = get_section_name($courseorid, $sectionno);
+            $strnotavailable = get_string('notavailablecourse', '', $sectionname);
+        } else {
+            $strnotavailable = get_string('notavailable');
+        }
+
+        $extraclasses = ' ';
+        if (!$section->uservisible){
+            $extraclasses .= 'hiddentouser';
+        }
+
+        $o = '';
+        $o.= html_writer::start_tag('li', array('id' => 'section-'.$sectionno, 'class' => 'section main clearfix hidden'.$extraclasses));
+        $o.= html_writer::tag('div', '', array('class' => 'left side'));
+        $o.= html_writer::tag('div', '', array('class' => 'right side'));
+        $o.= html_writer::start_tag('div', array('class' => 'content'));
+        $o.= html_writer::tag('div', $strnotavailable);
+        $o.= html_writer::end_tag('div');
+        $o.= html_writer::end_tag('li');
+        return $o;
+    }
+
     // Basically unchanged from the core version  but inserts calls to
     // theme_snap_next_previous to add some navigation .
     public function print_multiple_section_page($course, $sections, $mods, $modnames, $modnamesused) {
@@ -281,7 +313,7 @@ trait format_section_trait {
             if (!$showsection) {
                 // Hidden section message is overridden by 'unavailable' control.
                 if (!$course->hiddensections && $thissection->available) {
-                    echo $this->section_hidden($section);
+                    echo $this->section_hidden_check_uservisible($thissection);
                 }
 
                 continue;
