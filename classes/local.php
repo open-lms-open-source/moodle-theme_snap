@@ -123,6 +123,10 @@ class local {
             $modinfo = get_fast_modinfo($course);
 
             foreach ($modinfo->cms as $thismod) {
+                if (!$thismod->uservisible){
+                    // Skip when mod is not user visible.
+                    continue;
+                }
                 $completioninfo->get_data($thismod, true);
 
                 if ($completioninfo->is_enabled($thismod) != COMPLETION_TRACKING_NONE) {
