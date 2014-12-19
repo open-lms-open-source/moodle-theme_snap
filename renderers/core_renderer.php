@@ -1025,6 +1025,7 @@ HTML;
             'grade-report-nortongrader-index',
             'admin-setting-modsettinglti',
             'blocks-campusvue-view',
+            'enrol-instances',
         );
         if (in_array($PAGE->pagetype, $killyuipages)) {
             $classes = array_diff ($classes, ['yui-skin-sam', 'yui3-skin-sam']);
