@@ -173,16 +173,23 @@ class toc_renderer extends core_renderer {
             if ($section > $course->numsections) {
                 continue;
             }
+            // Students - If course hidden sections completely invisible & section is hidden, and you cannot see hidden things, bale out.
+            if($course->hiddensections
+            && !$thissection->visible
+            && !$canviewhidden) {
+                continue;
+            }
 
             $conditional = $this->is_section_conditional($thissection);
-
+            /*
             // If the user can't see this section then don't include in the TOC.
             // Note: To skip a conditional section it must also be hidden when not available.
-            if (!$thissection->uservisible && !$conditional
+            if (!$canviewhidden && !$thissection->uservisible && !$conditional
                 || $this->is_section_conditionally_hidden($thissection)
             ) {
                 continue;
             }
+            */
 
             $linkinfo    = '';
             $outputlink = true;
@@ -194,19 +201,46 @@ class toc_renderer extends core_renderer {
 
             // Teachers - Set not published string for teachers
             if ($canviewhidden){
+                // Visible is only false when not published to students (via the eye)
                 if (!$thissection->visible) {
                     $linkinfo .= $this->toc_linkinfo(get_string('notpublished', 'theme_snap'));
                 }
             }
             // Students - Show unlinked section title.
             // If not conditional, and not visible - section title without link
-            else if(!$conditional && !$thissection->visible) {
-                    // This is a hidden section
+            else {
+                // HIDDEN SECTIONS - collapsed.
+                if(!$conditional && !$thissection->visible) {
+                    // This is a hidden section.
                     $outputlink = false;
                     // Top trump - if not clickable, replace linkinfo.
                     $linkinfo = $this->toc_linkinfo(get_string('notavailable'));
+                }
+                // CONDITIONAL SECTIONS - If its not visible to the user and we have no info why - don't print.
+                if($conditional && !$thissection->uservisible && !$thissection->availableinfo) {
+                    continue;
+                }
             }
-            // Students - in 2.7 conditional stuff is shown with a link
+            /*
+            // fun understanding what all these vars mean //
+            $linkinfo .= $course->hiddensections;
+            // visible - shows on conditionals when not completely hidden
+            if($thissection->visible){
+               $linkinfo .= " section->visible ";
+            }
+            // uservisible - shows while conditions are met?
+            if($thissection->uservisible){
+                $linkinfo .= " section->uservisible ";
+            }
+            // available - shown on hidden when 'colapsed'
+            if($thissection->available){
+                $linkinfo .= " section->available ";
+            }
+            // availability info - shown on conditional when not hidden or met
+            if($thissection->availableinfo){
+                $linkinfo .= " section->availableinfo ";
+            }
+            */
 
             $sectionstring = get_section_name($course, $section);
             if ($sectionstring == get_string('general')) {
