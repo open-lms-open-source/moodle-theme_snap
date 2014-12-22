@@ -187,26 +187,26 @@ class toc_renderer extends core_renderer {
             $conditional = $this->is_section_conditional($thissection);
 
             if ($canviewhidden){ // Teachers.
-                if($conditional) {
+                if ($conditional) {
                     $linkinfo .= $this->toc_linkinfo(get_string('conditional', 'theme_snap'));
                 }
                 if (!$thissection->visible) {
                     $linkinfo .= $this->toc_linkinfo(get_string('notpublished', 'theme_snap'));
                 }
             } else { // Students
-                if($conditional && $thissection->visible) {
+                if ($conditional && $thissection->availableinfo) {
+                    // Conditional section, with text explaining conditions.
                     $linkinfo .= $this->toc_linkinfo(get_string('conditional', 'theme_snap'));
                 }
-                // HIDDEN SECTIONS - collapsed.
-                if(!$conditional && !$thissection->visible) {
-                    // This is a hidden section.
+                if ($conditional && !$thissection->uservisible && !$thissection->availableinfo) {
+                    // Conditional section, totally hidden from user so skip.
+                    continue;
+                }
+                if (!$conditional && !$thissection->visible) {
+                    // Hidden section collapsed, so show as text in TOC.
                     $outputlink = false;
                     // Top trump - if not clickable, replace linkinfo.
                     $linkinfo = $this->toc_linkinfo(get_string('notavailable'));
-                }
-                // CONDITIONAL SECTIONS - If its not visible to the user and we have no info why - don't print.
-                if($conditional && !$thissection->uservisible && !$thissection->availableinfo) {
-                    continue;
                 }
             }
             /*
