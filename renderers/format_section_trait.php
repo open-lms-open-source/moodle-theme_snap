@@ -124,11 +124,18 @@ trait format_section_trait {
             }
         }
 
-        $o .= html_writer::start_tag('li', array('id' => 'section-'.$section->section,
-            'class' => 'section main clearfix'.$sectionstyle,
-            'tabindex' => '-1',
-            'role' => 'region',
-            'aria-label' => get_section_name($course, $section)));
+
+        // SHAME - the tabindex is intefering with moodle js.
+        // SHAME - Remove tabindex when editing menu is shown.
+        $sectionarrayvars = array('id' => 'section-'.$section->section,
+        'class' => 'section main clearfix'.$sectionstyle,
+        'role' => 'region',
+        'aria-label' => get_section_name($course, $section));
+        if (!$PAGE->user_is_editing()) {
+            $sectionarrayvars['tabindex'] = '-1';
+        }
+
+        $o .= html_writer::start_tag('li', $sectionarrayvars);
 
         // Ok, in testing left content is actually empty...??
         $leftcontent = $this->section_left_content($section, $course, $onsectionpage);
