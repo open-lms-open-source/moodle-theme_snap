@@ -438,7 +438,7 @@ class local {
 
             $url = new \moodle_url('/grade/report/user/index.php', ['id' => $grade->courseid]);
             if (in_array($modtype, ['quiz', 'assign'])
-                && !empty($grade->rawgrade)
+                && (!empty($grade->rawgrade) || !empty($grade->feedback))
             ) {
                 // Only use the course module url if the activity was graded in the module, not in the gradebook, etc.
                 $url = $cm->url;
