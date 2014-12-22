@@ -658,14 +658,7 @@ class activity {
 
         $eventdata = array();
         foreach ($grades as $grade) {
-            $assignment = 'assign' === $grade->itemmodule;
-            if ($assignment) {
-                if (isset($grade->rawgrade) || isset($grade->feedback)){
-                    $eventdata[] = $grade;
-                }
-            } else {
-                $eventdata[] = $grade;
-            }
+            $eventdata[] = $grade;
         }
 
         return $eventdata;
