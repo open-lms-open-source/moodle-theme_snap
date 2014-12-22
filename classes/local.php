@@ -75,13 +75,13 @@ class local {
         $sql = "SELECT gg.id
                   FROM {grade_grades} gg
                   JOIN {grade_items} gi ON gi.id = gg.itemid
-                  WHERE gi.courseid = ?";
+                  WHERE gi.courseid = ? AND gg.userid = ?";
 
         if (!$canviewhidden){
             $sql .= " AND gg.hidden != 1";
         }
 
-        $gradesincourse = $DB->get_records_sql($sql, array($course->id));
+        $gradesincourse = $DB->get_records_sql($sql, array($course->id, $USER->id));
         $visiblegradefound = !empty($gradesincourse);
         unset($gradesincourse);
 
