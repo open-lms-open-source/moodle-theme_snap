@@ -393,6 +393,7 @@ class activity {
                       JOIN {".$submittable."} sb ON m.id = sb.$mainkey
                      WHERE m.course = :courseid
                            AND sb.userid NOT IN ($graderids)
+                           $extraselect
                      GROUP by m.id";
             $modtotalsbyid[$maintable][$courseid] = $DB->get_records_sql($sql, $params);
         }
@@ -414,7 +415,7 @@ class activity {
      * @return int
      */
     public static function assign_num_submissions($courseid, $modid) {
-        $extraselect = "sb.status='submitted' AND";
+        $extraselect = "AND sb.status='submitted'";
         return self::std_num_submissions($courseid, $modid, 'assign', 'assignment', 'assign_submission', $extraselect);
     }
 
@@ -459,8 +460,7 @@ class activity {
      * @return int
      */
     public static function quiz_num_submissions($courseid, $modid) {
-        $extraselect = "sb.timefinish IS NOT NULL AND";
-        return self::std_num_submissions($courseid, $modid, 'quiz', 'quiz', 'quiz_attempts', $extraselect);
+        return self::std_num_submissions($courseid, $modid, 'quiz', 'quiz', 'quiz_attempts');
     }
 
     /**
