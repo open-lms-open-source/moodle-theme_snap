@@ -154,7 +154,8 @@ class theme_snap_core_course_renderer extends core_course_renderer {
         // Display the link to the module (or do nothing if module has no url).
         $cmname = $this->course_section_cm_name($mod, $displayoptions);
         $assetlink = '';
-        // SHAME - For moodles ajax show/hide call to work it needs activityinstance > a to add a class of dimmed to. This dimmed class is of course inaccessible junk.
+        // SHAME - For moodles ajax show/hide call to work it needs activityinstance > a to add a class of dimmed to.
+        // This dimmed class is of course inaccessible junk.
         if (!empty($cmname)) {
             $assetlink = "<a></a><h4 class='snap-asset-link'>".$cmname."</h4>";
         }
@@ -341,7 +342,7 @@ class theme_snap_core_course_renderer extends core_course_renderer {
 
         $content = '';
 
-        if (is_guest(context_course::instance($COURSE->id))){
+        if (is_guest(context_course::instance($COURSE->id))) {
             return '';
         }
 
@@ -369,7 +370,7 @@ class theme_snap_core_course_renderer extends core_course_renderer {
             $engagementmeta = array();
 
             $gradedlabel = "info";
-            if ($meta->numsubmissions) {
+            if (isset($meta->numsubmissions)) {
                 $engagementmeta[] = get_string('xofy'.$meta->submitstrkey, 'theme_snap',
                     (object) array(
                         'completed' => $meta->numsubmissions,
@@ -389,52 +390,58 @@ class theme_snap_core_course_renderer extends core_course_renderer {
                 implode(', ', $engagementmeta).'</span></a>';
         } else {
             // Student - useful student meta data.
-            if (empty($meta->timeopen) || usertime($meta->timeopen) <= time()) {
-                // Note, due date is rendered seperately for students as it has a warning class if overdue.
-                if (!empty($meta->timeclose)) {
-                    if (empty($meta->submissionnotrequired)
-                        && empty($meta->timesubmitted)
-                        && time() > usertime($meta->timeclose)
-                    ) {
-                        $dueinfo = get_string('overdue', 'theme_snap');
-                        $dueclass = 'label-danger';
-                    } else {
-                        $dueinfo = get_string('due', 'theme_snap');
-                        $dueclass = 'label-info';
-                    }
-                    $content .= '<span class="label '.$dueclass.'">'.$dueinfo.' '.
-                        userdate($meta->timeclose, get_string('strftimedate', 'langconfig').'</span>');
-                }
-
-                if (!empty($meta->grade)) {
-                    // Note - the link that a module takes you to would be better off defined by a function in
-                    // theme/snap/activity - for now its just hard coded.
-                    $url = new \moodle_url('/grade/report/user/index.php', ['id' => $COURSE->id]);
-                    if (in_array($mod->modname, ['quiz', 'assign'])) {
-                        $url = new \moodle_url('/mod/'.$mod->modname.'/view.php?id='.$mod->id);
-                    }
-                    $content .= '<a href="'.$url->out().'"><span class="label label-info">'.
-                        get_string('feedbackavailable', 'theme_snap').'</span></a>';
+            if (!empty($meta->timeopen) && $meta->timeopen > time()) {
+                // Todo - spit out a 'submissions allowed form' tag.
+                $content .= '</div>';
+                return $content;
+            }
+            // Note, due date is rendered seperately for students as it has a warning class if overdue.
+            if (!empty($meta->timeclose)) {
+                if (empty($meta->submissionnotrequired)
+                    && empty($meta->timesubmitted)
+                    && time() > usertime($meta->timeclose)
+                ) {
+                    $dueinfo = get_string('overdue', 'theme_snap');
+                    $dueclass = 'label-danger';
                 } else {
-                    if (empty($meta->submissionnotrequired)) {
-                        $content .= '<a class="assignment_stage" href="'.
-                            $CFG->wwwroot.'/mod/'.$mod->modname.'/view.php?id='.$mod->id.'">';
+                    $dueinfo = get_string('due', 'theme_snap');
+                    $dueclass = 'label-info';
+                }
+                $content .= '<span class="label '.$dueclass.'">'.$dueinfo.' '.
+                    userdate($meta->timeclose, get_string('strftimedate', 'langconfig').'</span>');
+            }
 
-                        if ($meta->submitted) {
-                            if (empty($meta->timesubmitted)) {
-                                $submittedonstr = '';
-                            } else {
-                                $submittedonstr = ' '.userdate($meta->timesubmitted, get_string('strftimedate', 'langconfig'));
-                            }
-                            $content .= '<span class="label label-success">'.$meta->submittedstr.$submittedonstr.'</span>';
+            if (!empty($meta->grade) && !$meta->reopened) {
+                // Note - the link that a module takes you to would be better off defined by a function in
+                // theme/snap/activity - for now its just hard coded.
+                $url = new \moodle_url('/grade/report/user/index.php', ['id' => $COURSE->id]);
+                if (in_array($mod->modname, ['quiz', 'assign'])) {
+                    $url = new \moodle_url('/mod/'.$mod->modname.'/view.php?id='.$mod->id);
+                }
+                $content .= '<a href="'.$url->out().'"><span class="label label-info">'.
+                    get_string('feedbackavailable', 'theme_snap').'</span></a>';
+            } else {
+                if (empty($meta->submissionnotrequired)) {
+                    $content .= '<a class="assignment_stage" href="'.
+                        $CFG->wwwroot.'/mod/'.$mod->modname.'/view.php?id='.$mod->id.'">';
+
+                    if ($meta->submitted) {
+                        if (empty($meta->timesubmitted)) {
+                            $submittedonstr = '';
                         } else {
-                            $content .= '<span class="label label-warning">'.$meta->notsubmittedstr.'</span>';
+                            $submittedonstr = ' '.userdate($meta->timesubmitted, get_string('strftimedate', 'langconfig'));
                         }
-                        $content .= '</a>';
+                        $content .= '<span class="label label-success">'.$meta->submittedstr.$submittedonstr.'</span>';
+                    } else {
+                        $warningstr = $meta->draft ? $meta->draftstr : $meta->notsubmittedstr;
+                        $warningstr = $meta->reopened ? $meta->reopenedstr : $warningstr;
+                        $content .= '<span class="label label-warning">'.$warningstr.'</span>';
                     }
+                    $content .= '</a>';
                 }
             }
         }
+
         $content .= '</div>';
         return $content;
     }

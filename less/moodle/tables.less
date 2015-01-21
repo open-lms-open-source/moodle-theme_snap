@@ -2,6 +2,8 @@ table.flexible,
 .generaltable,
 #categoryquestions,
 .ratingtable,
+.userenrolment,
+#report-eventlist-table table,
 // Added .path-grade-export table to accommodate MDL-46806
 .path-grade-export table {
     .table;
@@ -16,6 +18,7 @@ table.flexible,
     table.userenrolment,
     table#form,
     .ratingtable,
+    #report-eventlist-table table,
     form#movecourses table,
     #page-admin-course-index .editcourse,
     table#categoryquestions,
@@ -39,8 +42,10 @@ table#user-grades tr.odd td.cell {
 #page-admin-report-log-index .generaltable,
 #page-report-log-index .generaltable,
 #page-report-log-user .generaltable,
+#report-eventlist-table table,
 #page-admin-user table,
 .environmenttable,
+.userenrolment,
 .category_subcategories,
 .rcs-results,
 #grade_edit_tree_table,
@@ -144,4 +149,21 @@ div#cjcldsreporttbl.cjccontainer {
     table {
         margin-bottom: 0;
     }
+}
+
+#report-eventlist-table .yui3-datatable-sortable-column {
+    cursor: pointer;
+    &.yui3-datatable-sorted {
+        .yui3-datatable-sort-indicator:after {
+            content: " ▲";
+        }
+        &.yui3-datatable-sorted-desc .yui3-datatable-sort-indicator:after {
+            content: " ▼";
+        }
+    }
+}
+
+.userenrolment .col_enrol .enrolment {
+    padding: 0;
+    margin: 0;
 }

@@ -59,6 +59,9 @@ section#region-main
 }
 
 /* A SPECIAL SECTION IN SNAP FOR COURSE TOOLS */
+#coursetools-logo {
+    height: 100%;
+}
 #coursetools-list{
     a{
         display:block;
@@ -77,8 +80,8 @@ section#region-main
         clear:both;
     }
     #coursetools-list{
-        padding:2em 1em;
-        a{
+        padding: 1em 1em;
+        a {
             width:50%;
             float:left;
             padding:0.3em;
@@ -98,6 +101,11 @@ section#region-main
 li.section .sectionname:before{
     content: counter(annotation-list) ".\00a0";
 }
+// drag and drop yui hack
+.yui3-dd-proxy li.section .sectionname:before{
+    content: '';
+}
+
 #section-0 .sectionname:before {
     content:" ";
 }
@@ -1108,6 +1116,7 @@ div.commands ul.menubar {
         }
         // ignore inline js styles
         .menu[style] {
+            top:0 !important;
             left:0 !important;
             right:0 !important;
         }

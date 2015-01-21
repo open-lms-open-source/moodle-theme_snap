@@ -174,9 +174,15 @@ class snap_shared extends renderer_base {
      */
     public static function gradebook_accessible($context) {
 
-        // Find all accessible reports.
-        $reports = grade_helper::get_enabled_plugins_reports(); // Get all enabled reports.
+        // Find all enabled reports.
+        $reports = core_component::get_plugin_list('gradereport');
+        foreach (array_keys($reports) as $report) {
+            if (!component_callback('gradereport_'.$report, 'is_enabled', array(), true)) {
+                unset($reports[$report]);
+            }
+        }
 
+        // Reduce reports list down to just those accessible to user.
         foreach ($reports as $plugin => $plugindir) {
             // Remove ones we can't see.
             if (!has_capability('gradereport/'.$plugin.':view', $context)) {
@@ -409,8 +415,8 @@ class snap_shared extends renderer_base {
         // Output course tools.
         $coursetools = get_string('coursetools', 'theme_snap');
         $o = "<h2>$coursetools</h2>";
-        $o .= "<div class='row'><div class='col-md-4 col-xs-4'>{$toolssvg}</div><div class='col-xs-8' id='coursetools-list'>".
-            self::render_appendices($links)."</div></div><hr>";
+        $o .= "<div class='row'><div class='col-xs-4'>{$toolssvg}</div><div class='col-xs-8'><div id='coursetools-list'>".
+            self::render_appendices($links)."</div></div></div><hr>";
 
         return $o;
     }

@@ -165,7 +165,6 @@ class toc_renderer extends core_renderer {
 
         course_create_sections_if_missing($course, range(0, $course->numsections));
 
-
         $canviewhidden = has_capability('moodle/course:viewhiddensections', context_course::instance($course->id));
 
         $modinfo = get_fast_modinfo($course);
@@ -173,27 +172,27 @@ class toc_renderer extends core_renderer {
             if ($section > $course->numsections) {
                 continue;
             }
-            // Students - If course hidden sections completely invisible & section is hidden, and you cannot see hidden things, bale out.
-            if($course->hiddensections
+            // Students - If course hidden sections completely invisible & section is hidden, and you cannot
+            // see hidden things, bale out.
+            if ($course->hiddensections
             && !$thissection->visible
             && !$canviewhidden) {
                 continue;
             }
 
-
-            $linkinfo    = '';
+            $linkinfo = '';
             $outputlink = true;
 
             $conditional = $this->is_section_conditional($thissection);
 
-            if ($canviewhidden){ // Teachers.
+            if ($canviewhidden) { // Teachers.
                 if ($conditional) {
                     $linkinfo .= $this->toc_linkinfo(get_string('conditional', 'theme_snap'));
                 }
                 if (!$thissection->visible) {
                     $linkinfo .= $this->toc_linkinfo(get_string('notpublished', 'theme_snap'));
                 }
-            } else { // Students
+            } else { // Students.
                 if ($conditional && $thissection->availableinfo) {
                     // Conditional section, with text explaining conditions.
                     $linkinfo .= $this->toc_linkinfo(get_string('conditional', 'theme_snap'));
@@ -329,9 +328,10 @@ class toc_renderer extends core_renderer {
 
             $img = "<img src='".$cm->get_icon_url()."' alt='' />";
 
-            // #section-1&module-7255.
+            // Hash link #section-1&module-7255.
             $url = '#section-'.$cm->sectionnum.'&module-'.$cm->id;
             if ($COURSE->format == 'folderview') {
+                // For folder view we will need to add a regular link causing the page to reload.
                 $url = $CFG->wwwroot.'/course/view.php?id='.$COURSE->id.'&section='.$cm->sectionnum.'#module-'.$cm->id;
             }
 

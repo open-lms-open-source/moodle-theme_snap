@@ -74,10 +74,15 @@ class local {
 
         $sql = "SELECT gg.id
                   FROM {grade_grades} gg
-                  JOIN {grade_items} gi ON gi.id = gg.itemid
-                  WHERE gi.courseid = ? AND gg.userid = ?";
+                  JOIN {grade_items} gi
+                    ON gi.id = gg.itemid
+                 WHERE gi.courseid = ?
+                   AND gg.userid = ?
+                   AND gi.itemtype != 'course'
+                   AND gi.itemtype != 'category'
+               ";
 
-        if (!$canviewhidden){
+        if (!$canviewhidden) {
             $sql .= " AND gg.hidden != 1";
         }
 
@@ -85,8 +90,8 @@ class local {
         $visiblegradefound = !empty($gradesincourse);
         unset($gradesincourse);
 
-        $feedbackhtml='';
-        if ($visiblegradefound){
+        $feedbackhtml = '';
+        if ($visiblegradefound) {
             // Just output - feedback available.
             $url = new \moodle_url('/grade/report/user/index.php', array('id' => $course->id));
             $feedbackhtml = \html_writer::link($url,
@@ -94,7 +99,6 @@ class local {
                 array('class' => 'coursegrade')
             );
         }
-
         return (object) array('feedbackhtml' => $feedbackhtml);
     }
 
@@ -123,7 +127,7 @@ class local {
             $modinfo = get_fast_modinfo($course);
 
             foreach ($modinfo->cms as $thismod) {
-                if (!$thismod->uservisible){
+                if (!$thismod->uservisible) {
                     // Skip when mod is not user visible.
                     continue;
                 }
@@ -214,36 +218,23 @@ class local {
      * @return int
      */
     public static function course_participant_count($courseid) {
-        global $DB, $CFG;
-
         static $participantcount = null;
 
         if (!is_null($participantcount)) {
-            return $participantcount;
+            if (isset($participantcount[$courseid])) {
+                return $participantcount[$courseid];
+            }
         }
-        if (empty($CFG->gradebookroles)) {
-            $participantcount = 0;
-            return $partipantcount;
-        }
-        $studentroles = explode(',', $CFG->gradebookroles);
-        list($instudentroles, $params) = $DB->get_in_or_equal($studentroles, SQL_PARAMS_NAMED);
 
         $context = \context_course::instance($courseid);
-        $params['contextid'] = $context->id;
+        $onlyactive = true;
+        $allenrolled  = count_enrolled_users($context, null, null, $onlyactive);
+        $teachercapability = 'moodle/course:manageactivities';
+        $teachersenrolled = count_enrolled_users($context, $teachercapability, null, $onlyactive);
 
-        $sql = "SELECT count(*) AS total
-                  FROM {role_assignments} a
-             LEFT JOIN {role} r ON r.id = a.roleid
-                 WHERE r.id $instudentroles
-                       AND a.contextid = :contextid
-                ";
-        $row = $DB->get_record_sql($sql, $params);
-        if (!($row)) {
-            $participantcount = 0;
-        } else {
-            $participantcount = $row->total;
-        }
-        return $participantcount;
+        $participantcount[$courseid] = $allenrolled - $teachersenrolled;
+        return $participantcount[$courseid];
+
     }
 
     /**
@@ -529,7 +520,7 @@ class local {
                 $grading = array_merge($grading, call_user_func([$class, $method], $courseids));
             }
         }
-
+        // TODO break this out into own function and test it.
         usort($grading, function($a, $b) {
             $atime = empty($a->closetime) ? $a->opentime : $a->closetime;
             $btime = empty($b->closetime) ? $b->opentime : $b->closetime;

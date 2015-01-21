@@ -577,7 +577,11 @@ table.mod_index {
     vertical-align: bottom;
 }
 .completion-progresscell {
-    text-align: right;
+    img {
+        width: 16px;
+        height: 16px;
+    }
+    text-align: center;
 }
 .completion-expired .completion-expected {
     font-weight: bold;
@@ -1244,7 +1248,7 @@ body#page-lib-editor-tinymce-plugins-moodlemedia-preview {
 }
 
 .path-rating .ratingtable .c0 {
-    width: 35px;
+    width: 51px; // 35px image plus 8px cell padding each side.
 }
 
 .initialbar {

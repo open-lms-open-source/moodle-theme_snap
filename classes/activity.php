@@ -21,6 +21,8 @@
  */
 namespace theme_snap;
 
+require_once($CFG->dirroot.'/mod/assign/locallib.php');
+
 class activity {
 
     /**
@@ -54,9 +56,20 @@ class activity {
         $meta->submitstrkey = $submitstrkey;
         $meta->submittedstr = get_string($submitstrkey, 'theme_snap');
         $meta->notsubmittedstr = get_string('not'.$submitstrkey, 'theme_snap');
+        if (get_string_manager()->string_exists($mod->modname.'draft')) {
+            $meta->draftstr = get_string($mod->modname.'draft', 'theme_snap');
+        } else {
+            $meta->drafstr = get_string('draft', 'theme_snap');
+        }
+
+        if (get_string_manager()->string_exists($mod->modname.'reopened')) {
+            $meta->reopenedstr = get_string($mod->modname.'reopened', 'theme_snap');
+        } else {
+            $meta->reopenedstr = get_string('reopened', 'theme_snap');
+        }
 
         // If module is not visible to the user then don't bother getting meta data.
-        if (!$mod->uservisible){
+        if (!$mod->uservisible) {
             return $meta;
         }
 
@@ -84,8 +97,16 @@ class activity {
                 $submissionrow = self::get_submission_row($COURSE->id, $mod, $submissiontable, $keyfield, $submitselect);
 
                 if (!empty($submissionrow)) {
-                    $meta->submitted = true;
-                    $meta->timesubmitted = !empty($submissionrow->$submittedonfld) ? $submissionrow->$submittedonfld : null;
+                    if ($submissionrow->status) {
+                        switch ($submissionrow->status) {
+                            case 'draft' : $meta->draft = true; break;
+                            case 'reopened' : $meta->reopened = true; break;
+                            case 'submitted' : $meta->submitted = true; break;
+                        }
+                    } else {
+                        $meta->submitted = true;
+                        $meta->timesubmitted = !empty($submissionrow->$submittedonfld) ? $submissionrow->$submittedonfld : null;
+                    }
                     // If submitted on field uses modified field then fall back to timecreated if modified is 0.
                     if (empty($meta->timesubmitted) && $submittedonfld = 'timemodified') {
                         if (isset($submissionrow->timemodified)) {
@@ -133,7 +154,7 @@ class activity {
         static $submissionsenabled;
 
         // Get count of enabled submission plugins grouped by assignment id.
-        if (empty($submissionsenabled)){
+        if (empty($submissionsenabled)) {
             $sql = "SELECT a.id, count(1) AS submissionsenabled
                       FROM {assign} a
                       JOIN {assign_plugin_config} ac ON ac.assignment = a.id
@@ -145,11 +166,14 @@ class activity {
                   GROUP BY a.id;";
             $submissionsenabled = $DB->get_records_sql($sql, array($COURSE->id));
         }
+
+        $submitselect = '';
+
         $meta = self::std_meta($modinst, 'allowsubmissionsfromdate', 'duedate', 'assignment', 'submission',
-            'timemodified', 'submitted', true);
+            'timemodified', 'submitted', true, $submitselect);
 
         // If there aren't any submission plugins enabled for this module, then submissions are not required.
-        if (empty($submissionsenabled[$modinst->instance])){
+        if (empty($submissionsenabled[$modinst->instance])) {
             $meta->submissionnotrequired = true;
         }
         return ($meta);
@@ -204,7 +228,8 @@ class activity {
      * @return string
      */
     public static function quiz_meta(\cm_info $modinst) {
-        return self::std_meta($modinst, 'timeopen', 'timeclose', 'quiz', 'attempts', 'timemodified', 'attempted', true, 'AND st.state=\'finished\'');
+        return self::std_meta($modinst, 'timeopen', 'timeclose', 'quiz',
+            'attempts', 'timemodified', 'attempted', true, 'AND st.state=\'finished\'');
     }
 
     /**
@@ -230,6 +255,10 @@ class activity {
             list($graderids, $params) = get_enrolled_sql(\context_course::instance($courseid), 'moodle/grade:viewall');
             $params = array_merge(array('courseid' => $courseid), $params);
 
+            $submissionmaxattempt = 'SELECT mxs.assignment AS assignid, mxs.userid, MAX(mxs.attemptnumber) AS maxattempt
+                                 FROM {assign_submission} mxs
+                                 GROUP BY assignid, mxs.userid';
+
             $sql = "-- Snap sql
                     SELECT cm.id AS coursemoduleid, a.id AS instanceid, a.course,
                            a.allowsubmissionsfromdate AS opentime, a.duedate AS closetime,
@@ -240,8 +269,19 @@ class activity {
                       JOIN {course_modules} cm ON cm.module = m.id
                            AND cm.instance = a.id
                       JOIN {assign_submission} sb ON sb.assignment = a.id
-                 LEFT JOIN {assign_grades} gd ON gd.assignment = sb.assignment
-                           AND gd.userid = sb.userid
+
+                      JOIN ($submissionmaxattempt) smx
+                        ON sb.userid = smx.userid
+                       AND sb.assignment = smx.assignid
+                       AND sb.attemptnumber = smx.maxattempt
+
+ -- Start of join required to make assignments marked via gradebook not show as requiring grading
+ -- Note: This will lead to disparity between the assignment page (mod/assign/view.php[questionmark]id=[id])
+ -- and the module page will still say that 1 item requires grading.
+
+                 LEFT JOIN {assign_grades} ag ON ag.assignment = sb.assignment
+                           AND ag.userid = sb.userid
+
                  LEFT JOIN {grade_items} gi ON gi.courseid = a.course
                            AND gi.itemtype = 'mod'
                            AND gi.itemmodule = 'assign'
@@ -249,8 +289,10 @@ class activity {
                            AND gi.iteminstance = cm.instance
                  LEFT JOIN {grade_grades} gg ON gg.itemid = gi.id AND gg.userid = sb.userid
 
+-- End of join required to make assignments classed as graded when done via gradebook
+
                      WHERE sb.status = 'submitted'
-                           AND gd.id IS NULL
+                           AND ag.grade IS NULL
                            AND gg.finalgrade IS NULL
                            AND a.course = :courseid
                            AND sb.userid NOT IN ($graderids)
@@ -320,6 +362,7 @@ class activity {
 
     /**
      * Get number of ungraded submissions for specific assignment
+     * Based on count_submissions_need_grading() in mod/assign/locallib.php
      *
      * @param int $courseid
      * @param int $modid
@@ -330,33 +373,70 @@ class activity {
 
         static $totalsbyid;
 
-        // Get people who are typically not students (people who can view grader report) so that we can exclude them!
-        list($graderids, $params) = get_enrolled_sql(\context_course::instance($courseid), 'moodle/grade:viewall');
-        $params = array_merge(array('courseid' => $courseid), $params);
-
-        if (!isset($totalsbyid)) {
-            // Results are not cached, so lets get them.
-            // Get the number of submissions for all assignments in this course.
-            $sql = "-- Snap sql
-                    SELECT a.id, count(*) AS total
-                      FROM {assign} a
-                 LEFT JOIN {assign_submission} sb ON sb.assignment = a.id
-                 LEFT JOIN {assign_grades} gd ON gd.assignment = sb.assignment
-                           AND gd.userid = sb.userid
-                     WHERE sb.status='submitted'
-                           AND gd.id IS NULL
-                           AND course = :courseid
-                           AND sb.userid NOT IN ($graderids)
-                  GROUP BY a.id";
-            $totalsbyid = $DB->get_records_sql($sql, $params);
-        }
-
         if (!empty($totalsbyid)) {
             if (isset($totalsbyid[$modid])) {
                 return intval($totalsbyid[$modid]->total);
             }
         }
-        return 0;
+
+        list($esql, $params) = get_enrolled_sql(\context_course::instance($courseid), 'mod/assign:submit', 0, true);
+
+        $submissionmaxattempt = 'SELECT mxs.assignment AS assignid, mxs.userid, MAX(mxs.attemptnumber) AS maxattempt
+                                 FROM {assign_submission} mxs
+                                 GROUP BY assignid, mxs.userid';
+
+        $params['submitted'] = ASSIGN_SUBMISSION_STATUS_SUBMITTED;
+        $params['courseid'] = $courseid;
+
+        $sql = "-- Snap sql
+                 SELECT sb.assignment, count(sb.userid) AS total
+                   FROM {assign_submission} sb
+
+                   JOIN {assign} an
+                     ON sb.assignment = an.id
+
+                   JOIN ($submissionmaxattempt) smx
+                     ON sb.userid = smx.userid
+                    AND sb.assignment = smx.assignid
+                    AND sb.attemptnumber = smx.maxattempt
+
+              LEFT JOIN {assign_grades} ag
+                     ON sb.assignment = ag.assignment
+                    AND sb.userid = ag.userid
+
+-- Start of join required to make assignments marked via gradebook not show as requiring grading
+-- Note: This will lead to disparity between the assignment page (mod/assign/view.php[questionmark]id=[id])
+-- and the module page will still say that 1 item requires grading.
+
+              LEFT JOIN {grade_items} gi
+                     ON gi.courseid = an.course
+                    AND gi.itemtype = 'mod'
+                    AND gi.itemmodule = 'assign'
+                    AND gi.itemnumber = 0
+                    AND gi.iteminstance = an.id
+
+              LEFT JOIN {grade_grades} gg
+                     ON gg.itemid = gi.id
+                    AND gg.userid = sb.userid
+
+-- End of join required to make assignments classed as graded when done via gradebook
+
+                   JOIN ($esql) e
+                     ON e.id = sb.userid
+
+                  WHERE an.course = :courseid
+                    AND sb.timemodified IS NOT NULL
+                    AND sb.status = :submitted
+                    AND ag.grade IS NULL
+                    AND gg.finalgrade IS NULL
+
+                GROUP BY sb.assignment
+               ";
+        // Note AND g.grade IS NULL might need to have OR g.grade = -1.
+        // We suspect reverted submissions cause the grade to change to -1.
+
+        $totalsbyid = $DB->get_records_sql($sql, $params);
+        return isset($totalsbyid[$modid]) ? $totalsbyid[$modid]->total : 0;
     }
 
     /**
@@ -408,16 +488,55 @@ class activity {
     }
 
     /**
-     * Get number of submissions for specific assignment
+     * Assign module function for getting number of submissions
      *
      * @param int $courseid
-     * @param int $assignmentid
+     * @param int $modid
      * @return int
      */
     public static function assign_num_submissions($courseid, $modid) {
-        $extraselect = "AND sb.status='submitted'";
-        return self::std_num_submissions($courseid, $modid, 'assign', 'assignment', 'assign_submission', $extraselect);
+        global $DB;
+
+        static $modtotalsbyid = array();
+
+        if (!isset($modtotalsbyid['assign'][$courseid])) {
+            // Results are not cached, so lets get them.
+
+            // Get people who are typically not students (people who can view grader report) so that we can exclude them!
+            list($graderids, $params) = get_enrolled_sql(\context_course::instance($courseid), 'moodle/grade:viewall');
+            $params['courseid'] = $courseid;
+            $params['submitted'] = ASSIGN_SUBMISSION_STATUS_SUBMITTED;
+
+            $submissionmaxattempt = 'SELECT mxs.assignment AS assignid, mxs.userid, MAX(mxs.attemptnumber) AS maxattempt
+                                 FROM {assign_submission} mxs
+                                 GROUP BY assignid, mxs.userid';
+
+            // Get the number of submissions for all assign activities in this course.
+            $sql = "-- Snap sql
+                SELECT m.id, COUNT(sb.userid) as totalsubmitted
+                  FROM {assign} m
+                  JOIN {assign_submission} sb ON m.id = sb.assignment
+                  JOIN ($submissionmaxattempt) smx
+                 ON sb.userid = smx.userid
+                AND sb.assignment = smx.assignid
+
+                 WHERE m.course = :courseid
+                       AND sb.userid NOT IN ($graderids)
+                       AND sb.attemptnumber = smx.maxattempt
+                       AND sb.status = :submitted
+                 GROUP by m.id";
+            $modtotalsbyid['assign'][$courseid] = $DB->get_records_sql($sql, $params);
+        }
+        $totalsbyid = $modtotalsbyid['assign'][$courseid];
+
+        if (!empty($totalsbyid)) {
+            if (isset($totalsbyid[$modid])) {
+                return intval($totalsbyid[$modid]->totalsubmitted);
+            }
+        }
+        return 0;
     }
+
 
     /**
      * Get number of answers for specific choice
@@ -529,10 +648,6 @@ class activity {
             }
         }
 
-        if ($mod->modname == 'assign'){
-            $extraselect.=" AND st.status='submitted'";
-        }
-
         $submissiontable = $mod->modname.'_'.$submissiontable;
         $sql = "-- Snap sql
                 SELECT a.id AS instanceid, st.*
@@ -540,7 +655,7 @@ class activity {
                     LEFT JOIN {".$mod->modname."} a ON a.id = st.$modfield
                 WHERE a.course = ? AND userid = ? $extraselect ORDER BY $modfield DESC, st.id DESC";
         $submissions[$courseid.'_'.$mod->modname] = $DB->get_records_sql($sql,
-            array($courseid, $USER->id, 0, 1));
+            array($courseid, $USER->id), 0, 1);
 
         if (isset($submissions[$courseid.'_'.$mod->modname][$mod->instance])) {
             return $submissions[$courseid.'_'.$mod->modname][$mod->instance];

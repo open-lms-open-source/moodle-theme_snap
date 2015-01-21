@@ -5,7 +5,7 @@
  *
  * @author Stuart Lamour / Guy Thomas
  */
-function snapInit(){
+function snapInit() {
 
     'use strict';
 
@@ -836,24 +836,29 @@ function snapInit(){
     $('.courseinfo-body h3 a').ellipsis();
 
     // SL - 19th aug 2014 - resposive video and snap search in exceptions.
-    $(window).on('load' , function() {
-        // Make video responsive.
-        // Note, if you don't do this on load then FLV media gets wrong size.
-        applyResponsiveVideo();
-
+    $(document).ready(function() {
         // SHAME - make section name creation mandatory
         if($('#page-course-editsection.format-topics').length) {
             var usedefaultname = document.getElementById('id_usedefaultname'),
-            sname = document.getElementById('id_name');
+                sname = document.getElementById('id_name');
             usedefaultname.value = '0';
             usedefaultname.checked = false;
             sname.required = "required";
             sname.focus();
             $('#id_name + span').css('display','none');
         }
-        if($('.format-folderview').length){
+
+        if($('.format-folderview').length) {
             // Check if we are searching for a mod.
             checkHashScrollToModule();
         }
+    });
+
+    $(window).on('load' , function() {
+
+        // Make video responsive.
+        // Note, if you don't do this on load then FLV media gets wrong size.
+        applyResponsiveVideo();
+
     });
 } // End snap init

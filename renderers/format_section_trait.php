@@ -124,7 +124,6 @@ trait format_section_trait {
             }
         }
 
-
         // SHAME - the tabindex is intefering with moodle js.
         // SHAME - Remove tabindex when editing menu is shown.
         $sectionarrayvars = array('id' => 'section-'.$section->section,
@@ -284,24 +283,23 @@ trait format_section_trait {
 
             $canviewhidden = has_capability('moodle/course:viewhiddensections', context_course::instance($course->id));
 
-
-            // Student check
-            if (!$canviewhidden){
+            // Student check.
+            if (!$canviewhidden) {
                 $conditional = false;
-                if(!empty(json_decode($thissection->availability)->c)){
+                if (!empty(json_decode($thissection->availability)->c)) {
                     $conditional = true;
                 }
                 // HIDDEN SECTION - If nothing in show hidden sections, and course section is not visible - don't print.
-                if(!$conditional && $course->hiddensections && !$thissection->visible) {
+                if (!$conditional && $course->hiddensections && !$thissection->visible) {
                     continue;
                 }
                 // CONDITIONAL SECTIONS - If its not visible to the user and we have no info why - don't print.
-                if($conditional && !$thissection->uservisible && !$thissection->availableinfo) {
+                if ($conditional && !$thissection->uservisible && !$thissection->availableinfo) {
                     continue;
                 }
 
-                // If hidden sections are collapsed - print a fake li
-                if(!$conditional && !$course->hiddensections && !$thissection->visible) {
+                // If hidden sections are collapsed - print a fake li.
+                if (!$conditional && !$course->hiddensections && !$thissection->visible) {
                     echo $this->section_hidden($section);
                     continue;
                 }
@@ -338,9 +336,9 @@ trait format_section_trait {
         $output = html_writer::end_tag('ul');
         $output .= $this->change_num_sections($COURSE);
         $output .= "<section id='coursetools' class='clearfix' tabindex='-1'>";
+        $output .= snap_shared::coursetools_svg_icons();
         $output .= snap_shared::appendices();
         $output .= "</section>";
-        $output .= snap_shared::coursetools_svg_icons();
         return $output;
     }
 

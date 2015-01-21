@@ -43,6 +43,7 @@ if($hasadminbutton) {
     // Note, to use regexs start and end with a pipe symbol - e.g. |^/report/| .
     $editbuttonblacklist = array(
         '/comment/',
+        '/cohort/index.php',
         '|^/report/|',
         '|^/admin/|',
         '|^/mod/data/|',
@@ -52,6 +53,9 @@ if($hasadminbutton) {
         '/mod/assign/adminmanageplugins.php',
         '/message/defaultoutputs.php',
         '/theme/index.php',
+        '/user/editadvanced.php',
+        '/user/profile/index.php',
+
         '/my/indexsys.php',
         '/mnet/service/enrol/index.php',
         '/local/mrooms/view.php'

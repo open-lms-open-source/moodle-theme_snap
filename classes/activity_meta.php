@@ -22,6 +22,8 @@ class activity_meta {
     public $submittedstr;
     public $notsubmittedstr;
     public $submitstrkey;
+    public $draftstr;
+    public $reopenedstr;
 
     // General meta data.
     public $timeopen;
@@ -30,7 +32,9 @@ class activity_meta {
     public $submissionnotrequired = false;
 
     // Student meta data.
-    public $submitted = false;
+    public $submitted = false; // Consider collapsing this variable + draft variable into one 'status' variable?
+    public $draft = false;
+    public $reopened = false;
     public $timesubmitted;
     public $grade;
 

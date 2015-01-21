@@ -129,7 +129,7 @@ class theme_snap_core_renderer extends toc_renderer {
                 $output  = '<div class="col-md-12">'.$columns[0].'</div>';
         } else if (count($columns) >= 2 && !empty($courserecentactivity)) {
             // Here we output recent updates any some other sections.
-            if (count($columns) > 2){
+            if (count($columns) > 2) {
                 $output  = '<div class="col-md-6">'.$columns[1].$columns[2].'</div>';
             } else {
                 $output  = '<div class="col-md-6">'.$columns[1].'</div>';
@@ -1026,13 +1026,15 @@ HTML;
             'admin-setting-modsettinglti',
             'blocks-campusvue-view',
             'enrol-instances',
+            'admin-report-eventlist-index',
         );
         if (in_array($PAGE->pagetype, $killyuipages)) {
             $classes = array_diff ($classes, ['yui-skin-sam', 'yui3-skin-sam']);
             $classes [] = 'yui-bootstrapped';
         }
 
-        if ($COURSE->format === 'folderview' && !empty($PAGE->url->param('section'))) {
+        $section = $PAGE->url->param('section');
+        if ($COURSE->format === 'folderview' && !empty($section)) {
             $classes[] = 'folderview-single-section';
         }
 
