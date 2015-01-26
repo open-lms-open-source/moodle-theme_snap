@@ -78,6 +78,9 @@ class local {
                     ON gi.id = gg.itemid
                  WHERE gi.courseid = ?
                    AND gg.userid = ?
+                   AND (gg.rawgrade IS NOT NULL
+                    OR gg.finalgrade IS NOT NULL
+                    OR gg.feedback IS NOT NULL)
                    AND gi.itemtype != 'course'
                    AND gi.itemtype != 'category'
                ";
@@ -212,7 +215,7 @@ class local {
     }
 
     /**
-     * Get total particpiant count for specific courseid.
+     * Get total participant count for specific courseid.
      *
      * @param $courseid
      * @return int

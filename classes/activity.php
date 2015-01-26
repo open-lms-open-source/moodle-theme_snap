@@ -56,13 +56,13 @@ class activity {
         $meta->submitstrkey = $submitstrkey;
         $meta->submittedstr = get_string($submitstrkey, 'theme_snap');
         $meta->notsubmittedstr = get_string('not'.$submitstrkey, 'theme_snap');
-        if (get_string_manager()->string_exists($mod->modname.'draft')) {
+        if (get_string_manager()->string_exists($mod->modname.'draft', 'theme_snap')) {
             $meta->draftstr = get_string($mod->modname.'draft', 'theme_snap');
         } else {
             $meta->drafstr = get_string('draft', 'theme_snap');
         }
 
-        if (get_string_manager()->string_exists($mod->modname.'reopened')) {
+        if (get_string_manager()->string_exists($mod->modname.'reopened', 'theme_snap')) {
             $meta->reopenedstr = get_string($mod->modname.'reopened', 'theme_snap');
         } else {
             $meta->reopenedstr = get_string('reopened', 'theme_snap');

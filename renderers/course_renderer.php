@@ -525,7 +525,9 @@ class theme_snap_core_course_renderer extends core_course_renderer {
         $content = format_text($content, $page->contentformat, $formatoptions);
 
         $doc = new DOMDocument();
+        libxml_use_internal_errors(true); // Required for HTML5.
         $doc->loadHTML($content);
+        libxml_clear_errors(); // Required for HTML5.
         $imagetags = $doc->getElementsByTagName('img');
         $thumbnail = '';
         if ($imagetags->item(0)) {
