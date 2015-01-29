@@ -162,7 +162,7 @@ $THEME->layouts = array(
     ),
     // The pagelayout used for safebrowser and securewindow.
     'secure' => array(
-        'file' => 'secure.php',
+        'file' => 'default.php',
         'regions' => array('side-pre'),
         'defaultregion' => 'side-pre',
     ),

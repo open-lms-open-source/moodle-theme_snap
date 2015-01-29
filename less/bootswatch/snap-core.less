@@ -198,7 +198,6 @@ table.boxwidthwide {
 .highlight-tag {
     background-color:#f56363;
     color: #fff;
-    display:inline-block;
     padding:0 0.5em;
     border-radius:2px;
     line-height:1.5;
@@ -495,7 +494,6 @@ input[type="text"]+input[type="submit"] {
 // -------------------------
 
 .published-status {
-    display: block;
     opacity: 0.75;
     font-size:small;
 }
@@ -1145,10 +1143,12 @@ header#page-header
         height:auto;
     }
     .completionstatus {
-        display:block;
         font-size:small;
-        line-height:1.2em;
         color:#999;
+    }
+    .completionstatus + .published-status:before,
+    .published-status + .published-status:before {
+        content: " · ";
     }
 }
 
@@ -1165,7 +1165,7 @@ header#page-header
     }
     h1 {
         color:white;
-        text-shadow:1px 1px 3px rgba(0, 0, 0, 0.5),0px 0px 1em rgba(0, 0, 0, 0.7);
+        text-shadow:1px 1px 3px rgba(0, 0, 0, 0.5);
     }
     #course-toc{
         background-color:rgba(255,255,255,0.95);
@@ -1183,7 +1183,14 @@ ol#chapters {
     list-style-position:outside;
     li{
         margin-left:2em;
-        padding:0.1em;
+        padding-bottom:0.1em;
+        color:#999;
+        line-height:1;
+        a {
+            display:block;
+            margin-bottom:-0.3em;
+            line-height:1.75;
+        }
         &.current a{
             color:#666;
             text-decoration:none;
@@ -1221,9 +1228,8 @@ ol#chapters {
         margin: 1em auto -.5em;
     }
     .mast-image {
-        // min-height:300px;
         #course-toc{
-            margin-top:11%;
+            margin-top:6.6vh;
         }
     }
 }

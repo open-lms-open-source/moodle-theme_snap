@@ -86,7 +86,7 @@ class local {
                ";
 
         if (!$canviewhidden) {
-            $sql .= " AND gg.hidden != 1";
+            $sql .= " AND gg.hidden != 1 AND gi.hidden != 1";
         }
 
         $gradesincourse = $DB->get_records_sql($sql, array($course->id, $USER->id));

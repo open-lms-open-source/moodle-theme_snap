@@ -251,8 +251,7 @@ class activity {
 
         foreach ($courseids as $courseid) {
 
-            // Get people who are typically not students (people who can view grader report) so that we can exclude them!
-            list($graderids, $params) = get_enrolled_sql(\context_course::instance($courseid), 'moodle/grade:viewall');
+            list($esql, $params) = get_enrolled_sql(\context_course::instance($courseid), 'mod/assign:submit', 0, true);
             $params = array_merge(array('courseid' => $courseid), $params);
 
             $submissionmaxattempt = 'SELECT mxs.assignment AS assignid, mxs.userid, MAX(mxs.attemptnumber) AS maxattempt
@@ -266,36 +265,49 @@ class activity {
                       FROM {assign} a
                       JOIN {course} c ON c.id = a.course
                       JOIN {modules} m ON m.name = 'assign'
-                      JOIN {course_modules} cm ON cm.module = m.id
-                           AND cm.instance = a.id
-                      JOIN {assign_submission} sb ON sb.assignment = a.id
+
+                      JOIN {course_modules} cm
+                        ON cm.module = m.id
+                       AND cm.instance = a.id
+
+                      JOIN {assign_submission} sb
+                        ON sb.assignment = a.id
 
                       JOIN ($submissionmaxattempt) smx
-                        ON sb.userid = smx.userid
-                       AND sb.assignment = smx.assignid
-                       AND sb.attemptnumber = smx.maxattempt
+                        ON sb.assignment = smx.assignid
+
+                      JOIN ($esql) e
+                        ON e.id = sb.userid
 
  -- Start of join required to make assignments marked via gradebook not show as requiring grading
  -- Note: This will lead to disparity between the assignment page (mod/assign/view.php[questionmark]id=[id])
  -- and the module page will still say that 1 item requires grading.
 
-                 LEFT JOIN {assign_grades} ag ON ag.assignment = sb.assignment
-                           AND ag.userid = sb.userid
+                 LEFT JOIN {assign_grades} ag
+                        ON ag.assignment = sb.assignment
+                       AND ag.userid = sb.userid
 
-                 LEFT JOIN {grade_items} gi ON gi.courseid = a.course
-                           AND gi.itemtype = 'mod'
-                           AND gi.itemmodule = 'assign'
-                           AND gi.itemnumber = 0
-                           AND gi.iteminstance = cm.instance
-                 LEFT JOIN {grade_grades} gg ON gg.itemid = gi.id AND gg.userid = sb.userid
+                 LEFT JOIN {grade_items} gi
+                        ON gi.courseid = a.course
+                       AND gi.itemtype = 'mod'
+                       AND gi.itemmodule = 'assign'
+                       AND gi.itemnumber = 0
+                       AND gi.iteminstance = cm.instance
+
+                 LEFT JOIN {grade_grades} gg
+                        ON gg.itemid = gi.id
+                       AND gg.userid = sb.userid
 
 -- End of join required to make assignments classed as graded when done via gradebook
 
                      WHERE sb.status = 'submitted'
-                           AND ag.grade IS NULL
+                           AND (ag.grade IS NULL OR ag.grade < 0)
                            AND gg.finalgrade IS NULL
                            AND a.course = :courseid
-                           AND sb.userid NOT IN ($graderids)
+                           AND sb.assignment = smx.assignid
+                           AND sb.attemptnumber = smx.maxattempt
+                           AND ag.attemptnumber = smx.maxattempt
+                           AND sb.userid = smx.userid
                            AND (a.duedate = 0 OR a.duedate > $sixmonthsago)
                   GROUP BY instanceid, a.course, opentime, closetime, coursemoduleid ORDER BY a.duedate ASC";
             $rs = $DB->get_records_sql($sql, $params);
@@ -396,9 +408,7 @@ class activity {
                      ON sb.assignment = an.id
 
                    JOIN ($submissionmaxattempt) smx
-                     ON sb.userid = smx.userid
-                    AND sb.assignment = smx.assignid
-                    AND sb.attemptnumber = smx.maxattempt
+                     ON sb.assignment = smx.assignid
 
               LEFT JOIN {assign_grades} ag
                      ON sb.assignment = ag.assignment
@@ -427,13 +437,14 @@ class activity {
                   WHERE an.course = :courseid
                     AND sb.timemodified IS NOT NULL
                     AND sb.status = :submitted
-                    AND ag.grade IS NULL
+                    AND (ag.grade IS NULL OR ag.grade < 0)
                     AND gg.finalgrade IS NULL
+                    AND sb.userid = smx.userid
+                    AND sb.attemptnumber = smx.maxattempt
+                    AND ag.attemptnumber = smx.maxattempt
 
                 GROUP BY sb.assignment
                ";
-        // Note AND g.grade IS NULL might need to have OR g.grade = -1.
-        // We suspect reverted submissions cause the grade to change to -1.
 
         $totalsbyid = $DB->get_records_sql($sql, $params);
         return isset($totalsbyid[$modid]) ? $totalsbyid[$modid]->total : 0;
@@ -502,8 +513,7 @@ class activity {
         if (!isset($modtotalsbyid['assign'][$courseid])) {
             // Results are not cached, so lets get them.
 
-            // Get people who are typically not students (people who can view grader report) so that we can exclude them!
-            list($graderids, $params) = get_enrolled_sql(\context_course::instance($courseid), 'moodle/grade:viewall');
+            list($esql, $params) = get_enrolled_sql(\context_course::instance($courseid), 'mod/assign:submit', 0, true);
             $params['courseid'] = $courseid;
             $params['submitted'] = ASSIGN_SUBMISSION_STATUS_SUBMITTED;
 
@@ -520,8 +530,10 @@ class activity {
                  ON sb.userid = smx.userid
                 AND sb.assignment = smx.assignid
 
+                  JOIN ($esql) e
+                    ON e.id = sb.userid
+
                  WHERE m.course = :courseid
-                       AND sb.userid NOT IN ($graderids)
                        AND sb.attemptnumber = smx.maxattempt
                        AND sb.status = :submitted
                  GROUP by m.id";
