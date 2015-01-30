@@ -665,14 +665,15 @@ class activity {
                 SELECT a.id AS instanceid, st.*
                     FROM {".$submissiontable."} st
 
--- Get only the most recent submission.
-                    JOIN (SELECT $modfield, MAX(id) as maxattempt
-                            FROM {".$submissiontable."}
-                        GROUP BY $modfield) as smx
-                      ON smx.maxattempt = st.id
-
                     JOIN {".$mod->modname."} a
                       ON a.id = st.$modfield
+
+-- Get only the most recent submission.
+                    JOIN (SELECT $modfield as modid, MAX(id) as maxattempt
+                            FROM {".$submissiontable."}
+                        GROUP BY modid) as smx
+                      ON smx.modid = st.$modfield
+                     AND smx.maxattempt = st.id
 
                    WHERE a.course = ?
                      AND userid = ? $extraselect
