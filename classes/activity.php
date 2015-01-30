@@ -667,7 +667,7 @@ class activity {
                     LEFT JOIN {".$mod->modname."} a ON a.id = st.$modfield
                 WHERE a.course = ? AND userid = ? $extraselect ORDER BY $modfield DESC, st.id DESC";
         $submissions[$courseid.'_'.$mod->modname] = $DB->get_records_sql($sql,
-            array($courseid, $USER->id), 0, 1);
+            array($courseid, $USER->id));
 
         if (isset($submissions[$courseid.'_'.$mod->modname][$mod->instance])) {
             return $submissions[$courseid.'_'.$mod->modname][$mod->instance];
