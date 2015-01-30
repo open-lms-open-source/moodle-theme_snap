@@ -286,6 +286,7 @@ class activity {
                  LEFT JOIN {assign_grades} ag
                         ON ag.assignment = sb.assignment
                        AND ag.userid = sb.userid
+                       AND ag.attemptnumber = smx.maxattempt
 
                  LEFT JOIN {grade_items} gi
                         ON gi.courseid = a.course
@@ -306,7 +307,6 @@ class activity {
                            AND a.course = :courseid
                            AND sb.assignment = smx.assignid
                            AND sb.attemptnumber = smx.maxattempt
-                           AND ag.attemptnumber = smx.maxattempt
                            AND sb.userid = smx.userid
                            AND (a.duedate = 0 OR a.duedate > $sixmonthsago)
                   GROUP BY instanceid, a.course, opentime, closetime, coursemoduleid ORDER BY a.duedate ASC";
@@ -413,6 +413,7 @@ class activity {
               LEFT JOIN {assign_grades} ag
                      ON sb.assignment = ag.assignment
                     AND sb.userid = ag.userid
+                    AND ag.attemptnumber = smx.maxattempt
 
 -- Start of join required to make assignments marked via gradebook not show as requiring grading
 -- Note: This will lead to disparity between the assignment page (mod/assign/view.php[questionmark]id=[id])
@@ -441,7 +442,6 @@ class activity {
                     AND gg.finalgrade IS NULL
                     AND sb.userid = smx.userid
                     AND sb.attemptnumber = smx.maxattempt
-                    AND ag.attemptnumber = smx.maxattempt
 
                 GROUP BY sb.assignment
                ";

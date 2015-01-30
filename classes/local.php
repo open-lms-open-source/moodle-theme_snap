@@ -523,6 +523,7 @@ class local {
                 $grading = array_merge($grading, call_user_func([$class, $method], $courseids));
             }
         }
+
         // TODO break this out into own function and test it.
         usort($grading, function($a, $b) {
             $atime = empty($a->closetime) ? $a->opentime : $a->closetime;
