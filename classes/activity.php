@@ -671,6 +671,7 @@ class activity {
 -- Get only the most recent submission.
                     JOIN (SELECT $modfield as modid, MAX(id) as maxattempt
                             FROM {".$submissiontable."}
+                           WHERE userid = ?
                         GROUP BY modid) as smx
                       ON smx.modid = st.$modfield
                      AND smx.maxattempt = st.id
@@ -679,7 +680,7 @@ class activity {
                      AND userid = ? $extraselect
                 ORDER BY $modfield DESC, st.id DESC";
         $submissions[$courseid.'_'.$mod->modname] = $DB->get_records_sql($sql,
-            array($courseid, $USER->id));
+            array($USER->id, $courseid, $USER->id));
 
         if (isset($submissions[$courseid.'_'.$mod->modname][$mod->instance])) {
             return $submissions[$courseid.'_'.$mod->modname][$mod->instance];
