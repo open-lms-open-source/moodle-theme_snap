@@ -664,8 +664,19 @@ class activity {
         $sql = "-- Snap sql
                 SELECT a.id AS instanceid, st.*
                     FROM {".$submissiontable."} st
-                    LEFT JOIN {".$mod->modname."} a ON a.id = st.$modfield
-                WHERE a.course = ? AND userid = ? $extraselect ORDER BY $modfield DESC, st.id DESC";
+
+-- Get only the most recent submission.
+                    JOIN (SELECT $modfield, MAX(id) as maxattempt
+                            FROM {".$submissiontable."}
+                        GROUP BY $modfield) as smx
+                      ON smx.maxattempt = st.id
+
+                    JOIN {".$mod->modname."} a
+                      ON a.id = st.$modfield
+
+                   WHERE a.course = ?
+                     AND userid = ? $extraselect
+                ORDER BY $modfield DESC, st.id DESC";
         $submissions[$courseid.'_'.$mod->modname] = $DB->get_records_sql($sql,
             array($courseid, $USER->id));
 
