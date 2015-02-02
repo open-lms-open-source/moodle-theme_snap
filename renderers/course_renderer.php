@@ -370,7 +370,8 @@ class theme_snap_core_course_renderer extends core_course_renderer {
             $engagementmeta = array();
 
             $gradedlabel = "info";
-            if (isset($meta->numsubmissions)) {
+            // Below, !== false means we get 0 out of x submissions.
+            if ($meta->numsubmissions !== false) {
                 $engagementmeta[] = get_string('xofy'.$meta->submitstrkey, 'theme_snap',
                     (object) array(
                         'completed' => $meta->numsubmissions,
