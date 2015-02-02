@@ -753,7 +753,9 @@ class activity {
                      AND gi.itemtype = 'mod'
                      AND gi.itemmodule = ?
                      AND gi.courseid = ?
-                    JOIN {grade_grades} gd ON gi.id = gd.itemid
+                    JOIN {grade_grades} gd
+                      ON gi.id = gd.itemid
+                     AND gt.userid = gd.userid
                    WHERE m.course = ?
                      AND gt.userid = ?
                      AND (gd.rawgrade IS NOT NULL OR gd.feedback IS NOT NULL)";
