@@ -14,6 +14,12 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
+
+function theme_snap_process_poster_upload() {
+    \theme_snap\local::process_poster_image();
+    theme_reset_all_caches();
+}
+
 /**
  * CSS Processor
  *
@@ -21,13 +27,14 @@
  * @param theme_config $theme
  * @return string
  */
-function theme_snap_process_css($css, $theme) {
+function theme_snap_process_css($css, theme_config $theme) {
     // Set the background image for the logo.
     $logo = $theme->setting_file_url('logo', 'logo');
     $css = theme_snap_set_logo($css, $logo);
 
-    // Set the background image for the poster.
     $poster = $theme->setting_file_url('poster', 'poster');
+
+    // Set the background image for the poster.
     $css = theme_snap_set_poster($css, $poster);
 
     // Set the custom css.
@@ -70,12 +77,15 @@ function theme_snap_set_logo($css, $logo) {
  * @return string The parsed CSS
  */
 function theme_snap_set_poster($css, $poster) {
+
     $tag = '[[setting:poster]]';
+
     if (is_null($poster)) {
         $replacement = '';
     } else {
         $replacement = "#page-site-index #page-header {background-image: url($poster);}";
     }
+
     $css = str_replace($tag, $replacement, $css);
     return $css;
 }
@@ -172,7 +182,7 @@ function theme_snap_set_bootswatch($css, array $variables) {
  * @return bool
  */
 function theme_snap_pluginfile($course, $cm, $context, $filearea, $args, $forcedownload, array $options = array()) {
-    if ($context->contextlevel == CONTEXT_SYSTEM && ($filearea === 'poster' || $filearea === 'logo' || $filearea === 'favicon')) {
+    if ($context->contextlevel == CONTEXT_SYSTEM && in_array($filearea, ['poster', 'logo', 'favicon', 'resizedposter'])) {
         $theme = theme_config::load('snap');
         return $theme->setting_file_serve($filearea, $args, $forcedownload, $options);
     } else {

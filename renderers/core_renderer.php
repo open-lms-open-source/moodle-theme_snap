@@ -25,6 +25,7 @@ defined('MOODLE_INTERNAL') || die();
 require_once('toc_renderer.php');
 require_once($CFG->libdir.'/coursecatlib.php');
 
+use theme_snap\local;
 
 class theme_snap_core_renderer extends toc_renderer {
 
@@ -351,25 +352,6 @@ class theme_snap_core_renderer extends toc_renderer {
         return $o;
     }
 
-    /**
-     * Return friendly relative time (e.g. "1 min ago", "1 year ago") in a <time> tag
-     * @return string
-     */
-    public function relative_time($timeinpast) {
-        $secondsago = time() - $timeinpast;
-        $secondsago = self::simpler_time($secondsago);
-
-        $relativetext = format_time($secondsago);
-        if ($secondsago != 0) {
-            $relativetext = get_string('ago', 'message', $relativetext);
-        }
-        $datetime = date(DateTime::W3C, $timeinpast);
-        return html_writer::tag('time', $relativetext, array(
-            'is' => 'relative-time',
-            'datetime' => $datetime)
-        );
-    }
-
     public function snap_media_object($url, $image, $title, $meta, $content, $extraclasses = '') {
                     $formatoptions = new stdClass;
                     $formatoptions->filter = false;
@@ -383,18 +365,6 @@ class theme_snap_core_renderer extends toc_renderer {
                         . "<span class=\"snap-media-meta\">$meta</span>"
                         . $content
                         . '</div></a></div>';
-    }
-
-    /**
-     * Reduce the precision of the time e.g. 1 min 10 secs ago -> 1 min ago
-     * @return int
-     */
-    public static function simpler_time($seconds) {
-        if ($seconds > 59) {
-            return round($seconds / 60) * 60;
-        } else {
-            return $seconds;
-        }
     }
 
     /**
@@ -458,13 +428,27 @@ class theme_snap_core_renderer extends toc_renderer {
     }
 
     /**
+     * Is feedback toggle enabled?
+     * Note: If setting has never been set then default to enabled (return true).
+     *
+     * @return bool
+     */
+    protected function feedback_toggle_enabled() {
+        if (property_exists($this->page->theme->settings,'feedbacktoggle')
+            && $this->page->theme->settings->feedbacktoggle== 0) {
+            return false;
+        }
+        return true;
+    }
+
+    /**
      * Render all grading CTAs for markers
      * @return string
      */
     protected function render_grading() {
         global $USER;
 
-        if ($this->page->theme->settings->feedbacktoggle == 0) {
+        if (!$this->feedback_toggle_enabled()) {
             return '';
         }
 
@@ -496,7 +480,7 @@ class theme_snap_core_renderer extends toc_renderer {
      */
     protected function render_graded() {
 
-        if ($this->page->theme->settings->feedbacktoggle == 0) {
+        if (!$this->feedback_toggle_enabled()) {
             return '';
         }
 
@@ -614,9 +598,9 @@ class theme_snap_core_renderer extends toc_renderer {
                     $pubstatus = "<small class='published-status'>".$notpublished."</small>";
                 }
 
-                $bgcolor = \theme_snap\local::get_course_color($c->id);
+                $bgcolor = local::get_course_color($c->id);
                 $courseimagecss = "background-color: #$bgcolor;";
-                $bgimage = \theme_snap\local::get_course_image($c->id);
+                $bgimage = local::get_course_image($c->id);
                 if (!empty($bgimage)) {
                     $courseimagecss .= "background-image: url($bgimage);";
                 }
@@ -906,14 +890,13 @@ class theme_snap_core_renderer extends toc_renderer {
                           'pluginfile.php', $context->id, 'mod_forum', 'post', $discussion->id);
 
             $imagestyle = '';
-            if (preg_match_all('/<img.+src=[\'"]([^\'"]+)[\'"].*>/i', $message, $matches)) {
-                $imageurl = $matches[1][0];
-                if (!empty($imageurl)) {
-                    $imageurl   = s($imageurl);
-                    $imagestyle = " style=\"background-image:url('$imageurl')\"";
 
-                }
+            $imgarr = \theme_snap\local::extract_first_image($message);
+            if ($imgarr) {
+                $imageurl   = s($imgarr['src']);
+                $imagestyle = " style=\"background-image:url('$imageurl')\"";
             }
+
             $name    = format_string($discussion->name, true, array('context' => $context));
             $date    = userdate($discussion->timemodified, get_string('strftimedatetime', 'langconfig'));
 

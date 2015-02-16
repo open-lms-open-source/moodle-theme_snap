@@ -263,7 +263,7 @@ class snap_shared extends renderer_base {
      */
     public static function inline_svg($filename) {
         global $CFG;
-        return file_get_contents($CFG->dirroot.'/theme/snap/pix/'.$filename);
+        return file_get_contents(dirname(dirname(__DIR__)).'/snap/pix/'.$filename);
     }
 
     /**

@@ -49,7 +49,9 @@ class activity {
                                        $isgradeable = false,
                                        $submitselect = ''
     ) {
-        global $USER, $COURSE;
+        global $USER;
+
+        $courseid = $mod->course;
 
         // Create meta data object.
         $meta = new \theme_snap\activity_meta();
@@ -73,11 +75,12 @@ class activity {
             return $meta;
         }
 
-        $activitydates = self::instance_activity_dates($COURSE->id, $mod, $timeopenfld, $timeclosefld);
+        $activitydates = self::instance_activity_dates($courseid, $mod, $timeopenfld, $timeclosefld);
         $meta->timeopen = $activitydates->timeopen;
         $meta->timeclose = $activitydates->timeclose;
 
-        if (has_capability('moodle/course:manageactivities', \context_course::instance($COURSE->id))) {
+        // TODO: use activity specific "teacher" capabilities.
+        if (has_capability('mod/assign:grade', \context_course::instance($courseid))) {
             $meta->isteacher = true;
 
             // Teacher - useful teacher meta data.
@@ -85,16 +88,16 @@ class activity {
             $methodnungraded = $mod->modname.'_num_submissions_ungraded';
 
             if (method_exists('theme_snap\\activity', $methodnsubmissions)) {
-                $meta->numsubmissions = call_user_func('theme_snap\\activity::'.$methodnsubmissions, $COURSE->id, $mod->instance);
+                $meta->numsubmissions = call_user_func('theme_snap\\activity::'.$methodnsubmissions, $courseid, $mod->instance);
             }
             if (method_exists('theme_snap\\activity', $methodnungraded)) {
-                $meta->numrequiregrading = call_user_func('theme_snap\\activity::'.$methodnungraded, $COURSE->id, $mod->instance);
+                $meta->numrequiregrading = call_user_func('theme_snap\\activity::'.$methodnungraded, $courseid, $mod->instance);
             }
         } else {
             // Student - useful student meta data - only display if activity is available.
             if (empty($activitydates->timeopen) || usertime($activitydates->timeopen) <= time()) {
 
-                $submissionrow = self::get_submission_row($COURSE->id, $mod, $submissiontable, $keyfield, $submitselect);
+                $submissionrow = self::get_submission_row($courseid, $mod, $submissiontable, $keyfield, $submitselect);
 
                 if (!empty($submissionrow)) {
                     if ($submissionrow->status) {
@@ -120,7 +123,7 @@ class activity {
 
             $graderow = false;
             if ($isgradeable) {
-                $graderow = self::grade_row($COURSE->id, $mod, $keyfield);
+                $graderow = self::grade_row($courseid, $mod, $keyfield);
             }
 
             if ($graderow) {
@@ -132,7 +135,7 @@ class activity {
 
                 $grade = new \grade_grade(array('itemid' => $gradeitem->id, 'userid' => $USER->id));
 
-                $coursecontext = \context_course::instance($COURSE->id);
+                $coursecontext = \context_course::instance($courseid);
                 $canviewhiddengrade = has_capability('moodle/grade:viewhidden', $coursecontext);
 
                 if (!$grade->is_hidden() || $canviewhiddengrade) {
@@ -150,8 +153,10 @@ class activity {
      * @return string
      */
     public static function assign_meta(\cm_info $modinst) {
-        global $DB, $COURSE;
+        global $DB;
         static $submissionsenabled;
+
+        $courseid = $modinst->course;
 
         // Get count of enabled submission plugins grouped by assignment id.
         if (empty($submissionsenabled)) {
@@ -164,7 +169,7 @@ class activity {
                        AND ac.subtype='assignsubmission'
                        AND plugin!='comments'
                   GROUP BY a.id;";
-            $submissionsenabled = $DB->get_records_sql($sql, array($COURSE->id));
+            $submissionsenabled = $DB->get_records_sql($sql, array($courseid));
         }
 
         $submitselect = '';
@@ -252,7 +257,7 @@ class activity {
         foreach ($courseids as $courseid) {
 
             list($esql, $params) = get_enrolled_sql(\context_course::instance($courseid), 'mod/assign:submit', 0, true);
-            $params = array_merge(array('courseid' => $courseid), $params);
+            $params['courseid'] = $courseid;
 
             $submissionmaxattempt = 'SELECT mxs.assignment AS assignid, mxs.userid, MAX(mxs.attemptnumber) AS maxattempt
                                  FROM {assign_submission} mxs
@@ -302,13 +307,17 @@ class activity {
 -- End of join required to make assignments classed as graded when done via gradebook
 
                      WHERE sb.status = 'submitted'
-                           AND (ag.grade IS NULL OR ag.grade < 0)
-                           AND gg.finalgrade IS NULL
-                           AND a.course = :courseid
-                           AND sb.assignment = smx.assignid
-                           AND sb.attemptnumber = smx.maxattempt
-                           AND sb.userid = smx.userid
-                           AND (a.duedate = 0 OR a.duedate > $sixmonthsago)
+                       AND a.course = :courseid
+                       AND sb.assignment = smx.assignid
+                       AND sb.attemptnumber = smx.maxattempt
+
+                       AND (
+                           sb.timemodified > gg.timemodified
+                           OR gg.finalgrade IS NULL
+                       )
+
+                       AND sb.userid = smx.userid
+                       AND (a.duedate = 0 OR a.duedate > $sixmonthsago)
                   GROUP BY instanceid, a.course, opentime, closetime, coursemoduleid ORDER BY a.duedate ASC";
             $rs = $DB->get_records_sql($sql, $params);
             $ungraded = array_merge($ungraded, $rs);
@@ -338,7 +347,7 @@ class activity {
 
             // Get people who are typically not students (people who can view grader report) so that we can exclude them!
             list($graderids, $params) = get_enrolled_sql(\context_course::instance($courseid), 'moodle/grade:viewall');
-            $params = array_merge(array('courseid' => $courseid), $params);
+            $params['courseid'] = $courseid;
 
             // Note, that unlike assessments we don't check the gradebook as the only time a quiz needs to be marked is
             // when there are essay questions or other questions that require manual marking. As these questions need
@@ -388,10 +397,12 @@ class activity {
         if (!empty($totalsbyid)) {
             if (isset($totalsbyid[$modid])) {
                 return intval($totalsbyid[$modid]->total);
+            } else {
+                return 0;
             }
         }
-
-        list($esql, $params) = get_enrolled_sql(\context_course::instance($courseid), 'mod/assign:submit', 0, true);
+        $coursecontext = \context_course::instance($courseid);
+        list($esql, $params) = get_enrolled_sql($coursecontext, 'mod/assign:submit', 0, true);
 
         $submissionmaxattempt = 'SELECT mxs.assignment AS assignid, mxs.userid, MAX(mxs.attemptnumber) AS maxattempt
                                  FROM {assign_submission} mxs
@@ -438,16 +449,20 @@ class activity {
                   WHERE an.course = :courseid
                     AND sb.timemodified IS NOT NULL
                     AND sb.status = :submitted
-                    AND (ag.grade IS NULL OR ag.grade < 0)
-                    AND gg.finalgrade IS NULL
+
                     AND sb.userid = smx.userid
                     AND sb.attemptnumber = smx.maxattempt
+
+                    AND (
+                        sb.timemodified > gg.timemodified
+                        OR gg.finalgrade IS NULL
+                    )
 
                 GROUP BY sb.assignment
                ";
 
         $totalsbyid = $DB->get_records_sql($sql, $params);
-        return isset($totalsbyid[$modid]) ? $totalsbyid[$modid]->total : 0;
+        return isset($totalsbyid[$modid]) ? intval($totalsbyid[$modid]->total) : 0;
     }
 
     /**
@@ -475,7 +490,7 @@ class activity {
 
             // Get people who are typically not students (people who can view grader report) so that we can exclude them!
             list($graderids, $params) = get_enrolled_sql(\context_course::instance($courseid), 'moodle/grade:viewall');
-            $params = array_merge(array('courseid' => $courseid), $params);
+            $params['courseid'] = $courseid;
 
             // Get the number of submissions for all $maintable activities in this course.
             $sql = "-- Snap sql
@@ -606,9 +621,10 @@ class activity {
 
         static $totalsbyquizid;
 
+        $coursecontext = \context_course::instance($courseid);
         // Get people who are typically not students (people who can view grader report) so that we can exclude them!
-        list($graderids, $params) = get_enrolled_sql(\context_course::instance($courseid), 'moodle/grade:viewall');
-        $params = array_merge(array('courseid' => $courseid), $params);
+        list($graderids, $params) = get_enrolled_sql($coursecontext, 'moodle/grade:viewall');
+        $params['courseid'] = $courseid;
 
         if (!isset($totalsbyquizid)) {
             // Results are not cached.
@@ -705,22 +721,14 @@ class activity {
         // Note: Caches all moduledates to minimise database transactions.
         static $moddates = array();
 
-        if (isset($moddates[$courseid.'_'.$mod->modname])
-            && isset($moddates[$courseid.'_'.$mod->modname][$mod->instance])
-        ) {
-            return $moddates[$courseid.'_'.$mod->modname][$mod->instance];
+        if (!isset($moddates[$courseid.'_'.$mod->modname][$mod->instance])) {
+            $sql = "-- Snap sql
+                    SELECT id, $timeopenfld AS timeopen, $timeclosefld as timeclose
+                        FROM {".$mod->modname."}
+                    WHERE course = ?";
+            $moddates[$courseid.'_'.$mod->modname] = $DB->get_records_sql($sql, array($courseid));
+
         }
-
-        $sql = "-- Snap sql
-                SELECT id, $timeopenfld AS timeopen, $timeclosefld as timeclose
-                    FROM {".$mod->modname."}
-                WHERE course = ?";
-        $moddates[$courseid.'_'.$mod->modname] = $DB->get_records_sql($sql, array($courseid));
-
-        if (!$moddates || !isset($moddates[$courseid.'_'.$mod->modname][$mod->instance])) {
-            return false;
-        }
-
         return $moddates[$courseid.'_'.$mod->modname][$mod->instance];
     }
 
@@ -745,21 +753,33 @@ class activity {
 
         $gradetable = $mod->modname.'_grades';
         $sql = "-- Snap sql
-                SELECT m.id AS instanceid, gt.*
-                    FROM {".$gradetable."} gt
-                    JOIN {".$mod->modname."} m ON gt.$modfield = m.id
+                SELECT m.id AS instanceid, gg.*
+
+                    FROM {".$mod->modname."} m
+
                     JOIN {grade_items} gi
-                      ON gt.$modfield = gi.iteminstance
+                      ON m.id = gi.iteminstance
                      AND gi.itemtype = 'mod'
-                     AND gi.itemmodule = ?
-                     AND gi.courseid = ?
-                    JOIN {grade_grades} gd
-                      ON gi.id = gd.itemid
-                     AND gt.userid = gd.userid
-                   WHERE m.course = ?
-                     AND gt.userid = ?
-                     AND (gd.rawgrade IS NOT NULL OR gd.feedback IS NOT NULL)";
-        $params = array($mod->modname, $courseid, $courseid, $USER->id);
+                     AND gi.itemmodule = :modname
+                     AND gi.courseid = :courseid1
+
+                    JOIN {grade_grades} gg
+                      ON gi.id = gg.itemid
+
+                   WHERE m.course = :courseid2
+                     AND gg.userid = :userid
+                     AND (
+                         gg.rawgrade IS NOT NULL
+                         OR gg.finalgrade IS NOT NULL
+                         OR gg.feedback IS NOT NULL
+                     )
+                     ";
+        $params = array(
+            'modname' => $mod->modname,
+            'courseid1' => $courseid,
+            'courseid2' => $courseid,
+            'userid' => $USER->id
+        );
         $grades[$courseid.'_'.$mod->modname] = $DB->get_records_sql($sql, $params);
 
         if (isset($grades[$courseid.'_'.$mod->modname][$mod->instance])) {

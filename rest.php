@@ -46,7 +46,7 @@ $PAGE->set_url('/theme/snap/rest.php', array('action' => $action, 'contextid' =>
 $router = new router();
 
 // Add controllers automatically.
-$controllerdir = $CFG->dirroot.'/theme/snap/classes/controller';
+$controllerdir = __DIR__.'/classes/controller';
 $contfiles = scandir($controllerdir);
 foreach ($contfiles as $contfile) {
     if ($contfile === 'addsection_controller.php') {

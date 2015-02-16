@@ -371,7 +371,7 @@ class theme_snap_core_course_renderer extends core_course_renderer {
 
             $gradedlabel = "info";
             // Below, !== false means we get 0 out of x submissions.
-            if ($meta->numsubmissions !== false) {
+            if (!$meta->submissionnotrequired && $meta->numsubmissions !== false) {
                 $engagementmeta[] = get_string('xofy'.$meta->submitstrkey, 'theme_snap',
                     (object) array(
                         'completed' => $meta->numsubmissions,
@@ -412,7 +412,8 @@ class theme_snap_core_course_renderer extends core_course_renderer {
                     userdate($meta->timeclose, get_string('strftimedate', 'langconfig').'</span>');
             }
 
-            if (!empty($meta->grade) && !$meta->reopened) {
+            // Feedback meta.
+            if (!empty($meta->grade)) {
                 // Note - the link that a module takes you to would be better off defined by a function in
                 // theme/snap/activity - for now its just hard coded.
                 $url = new \moodle_url('/grade/report/user/index.php', ['id' => $COURSE->id]);
@@ -421,25 +422,26 @@ class theme_snap_core_course_renderer extends core_course_renderer {
                 }
                 $content .= '<a href="'.$url->out().'"><span class="label label-info">'.
                     get_string('feedbackavailable', 'theme_snap').'</span></a>';
-            } else {
-                if (empty($meta->submissionnotrequired)) {
-                    $content .= '<a class="assignment_stage" href="'.
-                        $CFG->wwwroot.'/mod/'.$mod->modname.'/view.php?id='.$mod->id.'">';
+            }
 
-                    if ($meta->submitted) {
-                        if (empty($meta->timesubmitted)) {
-                            $submittedonstr = '';
-                        } else {
-                            $submittedonstr = ' '.userdate($meta->timesubmitted, get_string('strftimedate', 'langconfig'));
-                        }
-                        $content .= '<span class="label label-success">'.$meta->submittedstr.$submittedonstr.'</span>';
+            // Submission CTA.
+            if (empty($meta->submissionnotrequired)) {
+                $content .= '<a class="assignment_stage" href="'.
+                    $CFG->wwwroot.'/mod/'.$mod->modname.'/view.php?id='.$mod->id.'">';
+
+                if ($meta->submitted) {
+                    if (empty($meta->timesubmitted)) {
+                        $submittedonstr = '';
                     } else {
-                        $warningstr = $meta->draft ? $meta->draftstr : $meta->notsubmittedstr;
-                        $warningstr = $meta->reopened ? $meta->reopenedstr : $warningstr;
-                        $content .= '<span class="label label-warning">'.$warningstr.'</span>';
+                        $submittedonstr = ' '.userdate($meta->timesubmitted, get_string('strftimedate', 'langconfig'));
                     }
-                    $content .= '</a>';
+                    $content .= '<span class="label label-success">'.$meta->submittedstr.$submittedonstr.'</span>';
+                } else {
+                    $warningstr = $meta->draft ? $meta->draftstr : $meta->notsubmittedstr;
+                    $warningstr = $meta->reopened ? $meta->reopenedstr : $warningstr;
+                    $content .= '<span class="label label-warning">'.$warningstr.'</span>';
                 }
+                $content .= '</a>';
             }
         }
 
@@ -525,16 +527,10 @@ class theme_snap_core_course_renderer extends core_course_renderer {
             'pluginfile.php', $context->id, 'mod_page', 'content', $page->revision);
         $content = format_text($content, $page->contentformat, $formatoptions);
 
-        $doc = new DOMDocument();
-        libxml_use_internal_errors(true); // Required for HTML5.
-        $doc->loadHTML($content);
-        libxml_clear_errors(); // Required for HTML5.
-        $imagetags = $doc->getElementsByTagName('img');
-        $thumbnail = '';
-        if ($imagetags->item(0)) {
-            $src = $imagetags->item(0)->getAttribute('src');
-            $alt = $imagetags->item(0)->getAttribute('alt');
-            $img = html_writer::img($src, $alt);
+        $imgarr = \theme_snap\local::extract_first_image($content);
+
+        if ($imgarr) {
+            $img = html_writer::img($imgarr['src'], $imgarr['alt']);
             $thumbnail = "<div class=summary-figure>$img</div>";
         }
 

@@ -105,27 +105,7 @@ table.boxwidthwide {
         padding:0 10%;
         width:100%;
     }
-/*
-    #page-header,
-    #mr-nav {
-    display:none;
-    }
-    #region-main {
-    .bg-cover();
-    }
 
-    .signuppanel h2,
-    .loginpanel h2 {
-        text-indent: 100%;
-        white-space: nowrap;
-        overflow: hidden;
-        background:no-repeat center center;
-    }
-
-    .twocolumns .loginpanel h2 {
-        display:none;
-    }
-*/
 }
 
 
@@ -247,6 +227,14 @@ label {
 select {
     background-color: #FFF;
     max-width:100%;
+}
+select:disabled,
+input:disabled,
+input:disabled+label {
+    opacity:0.5;
+}
+:disabled {
+    cursor: not-allowed;
 }
 
 textarea{
@@ -1650,7 +1638,6 @@ aside .settings-button{
 
 #page-site-index #page-header {
     // background-color: @brand-primary; customisable
-    padding-top: 11.3%;
     padding-bottom: 1.75em;
  /*
 BUG:
@@ -1683,7 +1670,7 @@ http://blog.rodneyrehm.de/archives/34-iOS7-Mobile-Safari-And-Viewport-Units.html
 #page-site-index #page-mast {
     background-color: rgba(255,255,255,0.9);
     display: inline-block;
-    padding: 1em 0.75em;
+    padding: 1em 2%;
     margin-top: 2em;
     & .btn {
         float: right;
@@ -1693,8 +1680,8 @@ http://blog.rodneyrehm.de/archives/34-iOS7-Mobile-Safari-And-Viewport-Units.html
 
 @media screen and (min-width: @screen-sm-min) {
     #page-site-index #page-mast {
-        width: 54%;
-        margin: 0 -0.75em;
+        width: 50%;
+        margin:11vh 0;
     }
 }
 
@@ -1932,11 +1919,173 @@ http://blog.rodneyrehm.de/archives/34-iOS7-Mobile-Safari-And-Viewport-Units.html
     padding: 0;
 }
 
+
+
+
+
+
+
 /* Calandar */
 
+.calendar_event_global {
+    background-color:@brand-success;
+}
+.calendar_event_course {
+    //salmon
+    background-color:salmon;
+
+}
+.calendar_event_group {
+    // yellow
+    background-color:#FDD652;
+}
+.calendar_event_user {
+    background-color:@brand-info;
+}
+
+/* Block cals */
+.block .minicalendar td,
+.block .minicalendar th {
+  border-radius: 100%;
+  height: 4em;
+  width: 4em;
+  padding: 1.2em;
+  display: inline-block;
+  &.hasevent > a{
+      color:#fff !important;
+  }
+  &.today {
+      border:1px solid #dadada;
+  }
+}
+// Minical hover box
+.calendar-event-panel {
+    border:0 !important;
+    background-color:white;
+
+    box-shadow:0 3px 9px rgba(0, 0, 0, 0.5);
+    .yui3-overlay-content{
+        border-color:#dadada;
+    }
+}
+.calendar_filters {
+    .smallicon{
+    display:none;
+    }
+    .calendar_event span[class*="_event_"]{
+        border-radius: 100%;
+        display: inline-block;
+        width: 1em;
+        height: 1em;
+        margin: -0.1em 2%;
+    }
+}
+
+
+.maincalendar .header {
+    font-weight:100;
+}
+.path-calendar{
+    .maincalendar .calendarmonth td,
+    .maincalendar .calendarmonth th {
+        border-color:white;
+        height:1em;
+        .calendar_event_course {
+            margin-top:0.5em;
+        }
+    }
+}
+
+
+.maincalendar .day .day {
+  border-radius: 100%;
+  width: 4em;
+  height: 4em;
+  padding: 1.2em;
+  border: 1px solid #FFF;
+  margin: 0 auto;
+}
+
+// Today
+.maincalendar .today .day{
+    border-color:#dadada;
+}
+// A day with events
+.maincalendar .day .day a{
+  border-radius: 100%;
+  color: #FFF;
+  display: block;
+  height: 4em;
+  width: 4em;
+  padding: 1.2em;
+  margin:-1em;
+
+}
 .path-calendar .maincalendar .eventlist .event{
     border:0;
 }
+.maincalendar ul{
+    text-align:left;
+    li {
+        background-color:transparent !important;
+    }
+}
+
+#dateselector-calendar-panel {
+    .calheader,
+    .calweekdaycell {
+        font-weight:100;
+        color:#666;
+    }
+    .calnavright,
+    .calnavleft {
+        width:1.127em;
+        height:1.127em;
+        top:0;
+        margin:0 4%;
+    }
+    .calnavright {
+        background:url([[pix:theme|right-arrow]]) no-repeat right 0;
+    }
+    .calnavleft {
+        background:url([[pix:theme|left-arrow]]) no-repeat left 0;
+    }
+    td.calcell {
+        border-color:white;
+        padding:0.62em;
+    }
+    .selected,
+    .calcellhover,
+    .today,
+    .oom {
+        background-color:white !important;
+    }
+    .selector {
+        width:1.38em;
+        height:1.38em;
+        border-radius:100%;
+        border:1px solid white;
+    }
+    .selected .selector,
+    .calcellhover .selector {
+        color:white;
+        .alakazam();
+    }
+    @media screen and (min-width: @screen-sm) {
+        left:33% !important;
+        top:50% !important;
+
+        .calheader{
+            font-size:@font-size-h4;
+        }
+        .selector {
+            width:2.38em;
+            height:2.38em;
+            padding:0.38em;
+        }
+    }
+}
+
 
 
 /* USER PROFILE PAGE */
@@ -1969,6 +2118,150 @@ http://blog.rodneyrehm.de/archives/34-iOS7-Mobile-Safari-And-Viewport-Units.html
 // -------------------------
 //  Moodle mods
 // -------------------------
+
+// EXPERIMENTING WITH MOODLE FORMS
+// -------------------------
+.moodleSkin table.mceLayout { border-color:#ccc; }
+
+input#id_name{ font-size:1.3em; padding:0.3em; width:100%; }
+
+.femptylabel {display:none;}
+.snap-form { max-width:100%; }
+
+// Hide toggle for required sections
+#id_generalhdr .ftoggler,
+#id_general .ftoggler,
+#id_contentsection .ftoggler {
+    display:none !important;
+}
+
+// Always display required content
+#id_generalhdr,
+#id_general,
+#id_contentsection {
+    &.collapsed .fcontainer {
+        display:block !important;
+    }
+
+}
+.snap-form-required.collapsed,
+.snap-form-required.collapsed .fcontainer {
+    display:block !important;
+}
+/* the submit buttons in moodle are in a div called hidden - SHAME */
+.mform #fgroup_id_buttonar {
+    padding:1.5em 0;
+    margin:1em 0;
+    &.fitem .felement {
+        margin:0;
+        padding:0;
+    }
+}
+
+.jsenabled .collapsible-actions,
+.availability-field .availability-none {
+    display:none;
+}
+.snap-form-advanced {
+    padding:2em 0;
+    label {
+        color:#999;
+        font-weight:400;
+    }
+    .ftoggler {
+        display:block;
+        .fheader:after {
+            content: "p";
+            font-family: "line-icons" !important;
+            font-style: normal !important;
+            font-weight: normal !important;
+            font-variant: normal !important;
+            text-transform: none !important;
+            line-height: 1;
+            float:right;
+        }
+    }
+
+    .collapsible-actions .collapseexpand{
+        background:none;
+    }
+    .collapsible .fheader{
+        background:none !important;
+        display:block;
+    }
+    fieldset{ padding:0.3em 0; }
+    .felement { padding:0; }
+}
+// Large screen edit form grid
+@media screen and (min-width: @screen-md-min) {
+    #id_generalhdr,
+    #id_general,
+    #id_contentsection,
+    #id_optionhdr,
+    #id_descriptionhdr,
+    #id_content {
+        &.snap-form-required{
+            display:block !important;
+            width:70%;
+            padding-right:4%;
+            float:left;
+        }
+    }
+    .snap-form-advanced {
+        float:right;
+        width:28%;
+        fieldset:not(.collapsed) {
+            padding-bottom:2em;
+            fieldset {
+                padding-bottom:1em;
+            }
+        }
+        .ftoggler{
+            font-size:1em;
+        }
+        input[type='text'],
+        .fselect>select,
+        .fselectyesno>select,
+        textarea {
+            width:100%;
+        }
+        .fitem_fcheckbox .fitemtitle,
+        .fcheckbox span label{
+            width:88% !important;
+            float:right !important;
+        }
+        .fitemtitle+.fcheckbox,
+        .fitem_fcheckbox+.fcheckbox input[type="checkbox"]{
+            width:10% !important;
+        }
+        #id_activitycompletionheader .fcheckbox{
+            width:100% !important;
+        }
+
+        span {
+            display:block;
+            width:100%;
+        }
+        .fcheckbox span{
+            display:inline;
+        }
+        .helptooltip {
+            float: right;
+            display: inline-block;
+            width: auto;
+            visibility:hidden;
+            margin-right:-12px;
+        }
+        .fitem:hover .helptooltip{
+            visibility:visible;
+        }
+    }
+}
+
+
+
+
+
 
 
 

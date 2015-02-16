@@ -16,6 +16,8 @@
 //
 namespace theme_snap;
 
+use html_writer;
+
 require_once($CFG->dirroot.'/calendar/lib.php');
 require_once($CFG->libdir.'/completionlib.php');
 require_once($CFG->libdir.'/coursecatlib.php');
@@ -41,58 +43,80 @@ class local {
     }
 
     /**
-     * Get overall grade for course.
+     * Is there a valid grade or feedback inside this grader report table item?
+     *
+     * @param $item
+     * @return bool
+     */
+    public static function item_has_grade_or_feedback($item) {
+        $typekeys = array ('grade', 'feedback');
+        foreach ($typekeys as $typekey) {
+            if (!empty($item[$typekey]['content'])) {
+                // Set grade content to null string if it contents - or a blank space.
+                $item[$typekey]['content'] = str_ireplace(array('-', '&nbsp;'), '', $item[$typekey]['content']);
+            }
+            // Is there an error message in the content (can't check on message as it is localized,
+            // so check on the class for gradingerror.
+            if (!empty($item[$typekey]['content'])
+                && stripos($item[$typekey]['class'], 'gradingerror') === false
+            ) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Does this course have any visible feedback for current user?.
      *
      * @param $course
      * @return stdClass | null
      */
     public static function course_feedback($course) {
-        global $USER, $DB;
-
+        global $USER;
         // Get course context.
         $coursecontext = \context_course::instance($course->id);
-
         // Security check - should they be allowed to see course grade?
         if (!is_enrolled($coursecontext, $USER, 'moodle/grade:view')) {
             return self::skipgradewarning('User not enrolled on course with capability moodle/grade:view');
         }
-
         // Security check - are they allowed to see the grade report for the course?
         if (!has_capability('gradereport/user:view', $coursecontext)) {
             return self::skipgradewarning('User does not have required course capability gradereport/user:view');
         }
-
         // See if user can view hidden grades for this course.
         $canviewhidden = has_capability('moodle/grade:viewhidden', $coursecontext);
-
         // Do not show grade if grade book disabled for students.
         // Note - moodle/grade:viewall is a capability held by teachers and thus used to exclude them from not getting
         // the grade.
         if (empty($course->showgrades) && !has_capability('moodle/grade:viewall', $coursecontext)) {
             return self::skipgradewarning('Course set up to not show gradebook to students');
         }
-
-        $sql = "SELECT gg.id
-                  FROM {grade_grades} gg
-                  JOIN {grade_items} gi
-                    ON gi.id = gg.itemid
-                 WHERE gi.courseid = ?
-                   AND gg.userid = ?
-                   AND (gg.rawgrade IS NOT NULL
-                    OR gg.finalgrade IS NOT NULL
-                    OR gg.feedback IS NOT NULL)
-                   AND gi.itemtype != 'course'
-                   AND gi.itemtype != 'category'
-               ";
-
-        if (!$canviewhidden) {
-            $sql .= " AND gg.hidden != 1 AND gi.hidden != 1";
+        // Get course grade_item.
+        $courseitem = \grade_item::fetch_course_item($course->id);
+        // Get the stored grade.
+        $coursegrade = new \grade_grade(array('itemid' => $courseitem->id, 'userid' => $USER->id));
+        $coursegrade->grade_item =& $courseitem;
+        // Return null if can't view.
+        if ($coursegrade->is_hidden() && !$canviewhidden) {
+            return self::skipgradewarning('Course grade is hidden from students');
         }
-
-        $gradesincourse = $DB->get_records_sql($sql, array($course->id, $USER->id));
-        $visiblegradefound = !empty($gradesincourse);
-        unset($gradesincourse);
-
+        // Use user grade report to get course total - this is to take hidden grade settings into account.
+        $gpr = new \grade_plugin_return(array(
+                'type' => 'report',
+                'plugin' => 'user',
+                'courseid' => $course->id,
+                'userid' => $USER->id)
+        );
+        $report = new \grade_report_user($course->id, $gpr, $coursecontext, $USER->id);
+        $report->fill_table();
+        $visiblegradefound = false;
+        foreach ($report->tabledata as $item) {
+            if (self::item_has_grade_or_feedback($item)) {
+                $visiblegradefound = true;
+                break;
+            }
+        }
         $feedbackhtml = '';
         if ($visiblegradefound) {
             // Just output - feedback available.
@@ -203,39 +227,22 @@ class local {
     }
 
     /**
-     * Get module table row for module id
-     */
-    public static function moduletabrow($mod) {
-        global $DB;
-        $sql = "SELECT a.*
-                  FROM {course_modules} cm
-                  JOIN {".$mod->modname."} a ON a.id=cm.instance
-                 WHERE cm.id=?";
-        return $DB->get_record_sql($sql, array($mod->id));
-    }
-
-    /**
      * Get total participant count for specific courseid.
      *
      * @param $courseid
      * @return int
      */
     public static function course_participant_count($courseid) {
-        static $participantcount = null;
+        static $participantcount = array();
 
-        if (!is_null($participantcount)) {
-            if (isset($participantcount[$courseid])) {
-                return $participantcount[$courseid];
-            }
+        if (!isset($participantcount[$courseid])) {
+            $context = \context_course::instance($courseid);
+            $onlyactive = true;
+            $capability = 'mod/assign:submit';
+            $enrolled = count_enrolled_users($context, $capability, null, $onlyactive);
+            $participantcount[$courseid] = $enrolled;
         }
 
-        $context = \context_course::instance($courseid);
-        $onlyactive = true;
-        $allenrolled  = count_enrolled_users($context, null, null, $onlyactive);
-        $teachercapability = 'moodle/course:manageactivities';
-        $teachersenrolled = count_enrolled_users($context, $teachercapability, null, $onlyactive);
-
-        $participantcount[$courseid] = $allenrolled - $teachersenrolled;
         return $participantcount[$courseid];
 
     }
@@ -290,11 +297,12 @@ class local {
     public static function messages() {
         global $USER, $PAGE;
 
-        $output = $PAGE->get_renderer('theme_snap', 'core', RENDERER_TARGET_GENERAL);
         $messages = self::get_user_messages($USER->id);
         if (empty($messages)) {
             return '<p>' . get_string('nomessages', 'theme_snap') . '</p>';
         }
+
+        $output = $PAGE->get_renderer('theme_snap', 'core', RENDERER_TARGET_GENERAL);
         $o = '';
         foreach ($messages as $message) {
             $url = new \moodle_url('/message/index.php', array(
@@ -312,7 +320,7 @@ class local {
 
             $fromname = format_string(fullname($fromuser));
 
-            $meta = $output->relative_time($message->timecreated);
+            $meta = self::relative_time($message->timecreated);
             $unreadclass = '';
             if ($message->unread) {
                 $unreadclass = ' snap-unread';
@@ -327,6 +335,41 @@ class local {
     }
 
     /**
+     * Return friendly relative time (e.g. "1 min ago", "1 year ago") in a <time> tag
+     * @return string
+     */
+    public static function relative_time($timeinpast, $relativeto = null) {
+        if ($relativeto === null) {
+            $relativeto = time();
+        }
+        $secondsago = $relativeto - $timeinpast;
+        $secondsago = self::simpler_time($secondsago);
+
+        $relativetext = format_time($secondsago);
+        if ($secondsago != 0) {
+            $relativetext = get_string('ago', 'message', $relativetext);
+        }
+        $datetime = date(\DateTime::W3C, $timeinpast);
+        return html_writer::tag('time', $relativetext, array(
+            'is' => 'relative-time',
+            'datetime' => $datetime)
+        );
+    }
+
+    /**
+     * Reduce the precision of the time e.g. 1 min 10 secs ago -> 1 min ago
+     * @return int
+     */
+    public static function simpler_time($seconds) {
+        if ($seconds > 59) {
+            return intval(round($seconds / 60)) * 60;
+        } else {
+            return $seconds;
+        }
+    }
+
+
+    /**
      * Return user's upcoming deadlines from the calendar.
      *
      * All deadlines from today, then any from the next 12 months up to the
@@ -336,62 +379,115 @@ class local {
      * @return array
      */
     public static function upcoming_deadlines($userid, $maxdeadlines = 5) {
-        $userdaystart = usergetmidnight(time());
-        $tomorrowstart = $userdaystart + DAYSECS;
-        $userdayend = $tomorrowstart - 1;
-        $yearfromnow = $userdaystart + YEARSECS;
 
         $courses = enrol_get_all_users_courses($userid);
+
         if (empty($courses)) {
-            return '';
+            return array();
         }
 
-        foreach ($courses as $course) {
-            $courseids[] = $course->id;
+        $courseids = array_keys($courses);
+
+        $events = self::get_todays_deadlines($courseids);
+
+        if (count($events) < $maxdeadlines) {
+            $maxaftercurrentday = $maxdeadlines - count($events);
+            $moreevents = self::get_upcoming_deadlines($courseids, $maxaftercurrentday);
+            $events = array_merge($events, $moreevents);
         }
 
-        $events = calendar_get_events($userdaystart, $userdayend, $userid, true, $courseids, false);
-
-        $deadlines = array();
-        $skipevent = 'course';
-        foreach ($events as $key => $event) {
+        foreach ($events as $event) {
             if (isset($courses[$event->courseid])) {
-                if ($event->eventtype != $skipevent) {
-                    $course = $courses[$event->courseid];
-                    $event->coursefullname = $course->fullname;
-                    $deadlines[] = $event;
-                }
+                $course = $courses[$event->courseid];
+                $event->coursefullname = $course->fullname;
             }
         }
+        return $events;
+    }
 
-        if (count($deadlines) >= $maxdeadlines) {
-            return $deadlines;
+    /**
+     * Return user's deadlines for today from the calendar.
+     *
+     * @param array $courses ids of all user's courses.
+     * @return array
+     */
+    private static function get_todays_deadlines($courses) {
+        // Get all deadlines for today, assume that will never be higher than 100.
+        return self::get_upcoming_deadlines($courses, 100, true);
+    }
+
+    /**
+     * Return user's deadlines from the calendar.
+     *
+     * Usually called twice, once for all deadlines from today, then any from the next 12 months up to the
+     * max requested.
+     *
+     * Based on the calender function calendar_get_upcoming.
+     *
+     * @param array $courses ids of all user's courses.
+     * @param int $maxevents to return
+     * @param bool $todayonly true if only the next 24 hours to be returned
+     * @return array
+     */
+    private static function get_upcoming_deadlines($courses, $maxevents, $todayonly=false) {
+
+        $now = time();
+
+        if ($todayonly === true) {
+            $starttime = usergetmidnight($now);
+            $daysinfuture = 1;
+        } else {
+            $starttime = usergetmidnight($now + DAYSECS + 3 * HOURSECS); // Avoid rare DST change issues.
+            $daysinfuture = 365;
         }
 
-        $events = calendar_get_events($tomorrowstart, $yearfromnow, $userid, true, $courseids, false);
-        foreach ($events as $key => $event) {
-            if (isset($courses[$event->courseid])) {
-                if ($event->eventtype != $skipevent) {
-                    $course = $courses[$event->courseid];
-                    $event->coursefullname = $course->fullname;
-                    $deadlines[] = $event;
-                    if (count($deadlines) >= $maxdeadlines) {
-                        return $deadlines;
+        $endtime = $starttime + ($daysinfuture * DAYSECS) - 1;
+
+        $userevents = false;
+        $groupevents = false;
+        $events = calendar_get_events($starttime, $endtime, $userevents, $groupevents, $courses);
+
+        $processed = 0;
+        $output = array();
+        foreach ($events as $event) {
+            if ($event->eventtype === 'course') {
+                // Not an activity deadline.
+                continue;
+            }
+            if (!empty($event->modulename)) {
+                $modinfo = get_fast_modinfo($event->courseid);
+                $mods = $modinfo->get_instances_of($event->modulename);
+                if (isset($mods[$event->instance])) {
+                    $cminfo = $mods[$event->instance];
+                    if (!$cminfo->uservisible) {
+                        continue;
                     }
                 }
             }
+
+            $output[] = $event;
+            ++$processed;
+
+            if ($processed >= $maxevents) {
+                break;
+            }
         }
-        return $deadlines;
+
+        return $output;
     }
+
+
+
 
     public static function deadlines() {
         global $USER, $PAGE;
 
-        $output = $PAGE->get_renderer('theme_snap', 'core', RENDERER_TARGET_GENERAL);
         $events = self::upcoming_deadlines($USER->id);
         if (empty($events)) {
             return '<p>' . get_string('nodeadlines', 'theme_snap') . '</p>';
         }
+
+        $output = $PAGE->get_renderer('theme_snap', 'core', RENDERER_TARGET_GENERAL);
         $o = '';
         foreach ($events as $event) {
             if (!empty($event->modulename)) {
@@ -511,6 +607,9 @@ class local {
                 $courseids[] = $course->id;
             }
         }
+        if (empty($courseids)) {
+            return array();
+        }
 
         $mods = \core_plugin_manager::instance()->get_installed_plugins('mod');
         $mods = array_keys($mods);
@@ -524,23 +623,46 @@ class local {
             }
         }
 
-        // TODO break this out into own function and test it.
-        usort($grading, function($a, $b) {
-            $atime = empty($a->closetime) ? $a->opentime : $a->closetime;
-            $btime = empty($b->closetime) ? $b->opentime : $b->closetime;
-            if ($atime === $btime) {
-                if ($a->coursemoduleid === $b->coursemoduleid) {
-                    return 0;
-                }
-                return ($a->coursemoduleid < $b->coursemoduleid) ? -1 : 1;
-            }
-            return ($atime < $btime) ? -1 : 1;
-        }
-        );
+        usort($grading, array('self', 'sort_graded'));
+
         return $grading;
     }
 
+    /**
+     * Sort function for ungraded items in the teachers personal menu.
+     *
+     * Compare on closetime, but fall back to openening time if not present.
+     * Finally, sort by unique coursemodule id when the dates match.
+     *
+     * @return int
+     */
+    public static function sort_graded($left, $right) {
+        if (empty($left->closetime)) {
+            $lefttime = $left->opentime;
+        } else {
+            $lefttime = $left->closetime;
+        }
 
+        if (empty($right->closetime)) {
+            $righttime = $right->opentime;
+        } else {
+            $righttime = $right->closetime;
+        }
+
+        if ($lefttime === $righttime) {
+            if ($left->coursemoduleid === $right->coursemoduleid) {
+                return 0;
+            } else if ($left->coursemoduleid < $right->coursemoduleid) {
+                return -1;
+            } else {
+                return 1;
+            }
+        } else if ($lefttime < $righttime) {
+            return  -1;
+        } else {
+            return 1;
+        }
+    }
 
     /**
      * get hex color based on hash of course id
@@ -550,6 +672,7 @@ class local {
     public static function get_course_color($id) {
         return substr(md5($id), 0, 6);
     }
+
     /**
      * get course image of course
      *
@@ -576,5 +699,96 @@ class local {
         } else {
             return false;
         }
+    }
+
+    /**
+     * Extract first image from html
+     *
+     * @param string $html (must be well formed)
+     * @return array | bool (false)
+     */
+    public static function extract_first_image($html) {
+        $doc = new \DOMDocument();
+        libxml_use_internal_errors(true); // Required for HTML5.
+        $doc->loadHTML($html);
+        libxml_clear_errors(); // Required for HTML5.
+        $imagetags = $doc->getElementsByTagName('img');
+        if ($imagetags->item(0)) {
+            $src = $imagetags->item(0)->getAttribute('src');
+            $alt = $imagetags->item(0)->getAttribute('alt');
+            return array('src' => $src, 'alt' => $alt);
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * Process theme poster image - rename, resize, etc.
+     */
+    public static function process_poster_image() {
+        $file = self::poster_file();
+        $finfo = $file->get_imageinfo();
+        // Restrict to jpegs for now.
+        if ($finfo['mimetype'] == 'image/jpeg' && $finfo['width'] > 1380) {
+            self::process_poster($file);
+        }
+    }
+
+    /**
+     * Get poster image file.
+     *
+     * @return stored_file | bool (false)
+     */
+    public static function poster_file() {
+        $theme = \theme_config::load('snap');
+        $themename = 'snap';
+        $filename = $theme->settings->poster;
+        if ($filename) {
+            $syscontextid = \context_system::instance()->id;
+            $fullpath = "/$syscontextid/theme_$themename/poster/0$filename";
+            $fs = \get_file_storage();
+            return $fs->get_file_by_hash(sha1($fullpath));
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * Copy poster file to standard location and name.
+     *
+     * @param stored_file $file
+     * @return string
+     */
+    private static function process_poster(\stored_file $file) {
+        $filename = $file->get_filename();
+        $finfo = pathinfo($filename);
+        $extension = $finfo['extension'];
+
+        $filespec = array(
+            'contextid' => \context_system::instance()->id,
+            'component' => 'theme_snap',
+            'filearea' => 'resizedposter',
+            'itemid' => 0,
+            'filepath' => '/',
+            'filename' => "site-image.$extension",
+        );
+        $fs = \get_file_storage();
+        //TODO: need to get the old extension, not reuse the new one.
+        //It won't create an error if you upload a jpg with .jpg and then another with .jpeg - it will leave
+        //trash behind - i.e. old resized versions with different flavor of jpg extension.
+        $oldfile = $fs->get_file($filespec['contextid'],
+                                $filespec['component'],
+                                $filespec['filearea'],
+                                $filespec['itemid'],
+                                $filespec['filepath'],
+                                $filespec['filename']
+        );
+        if ($oldfile) {
+            $oldfile->delete();
+        }
+
+        $file = $fs->create_file_from_storedfile($filespec, $file);
+
+        return image::resize($file, false, 1280);
     }
 }
