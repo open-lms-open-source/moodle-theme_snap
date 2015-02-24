@@ -3353,6 +3353,12 @@ li.modtype_glossary .snap-assettype,
 li.modtype_wiki .snap-assettype {
   background-color: #EDC92C;
 }
+li.modtype_collaborate {
+  border-color: #AA70B0;
+}
+li.modtype_collaborate .snap-assettype {
+  background-color: #AA70B0;
+}
 li.snap-activity.modtype_folder {
   border-color: #F9F29A;
 }
