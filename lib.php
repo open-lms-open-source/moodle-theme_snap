@@ -83,6 +83,20 @@ function theme_snap_set_poster($css, $poster) {
     if (is_null($poster)) {
         $replacement = '';
     } else {
+        $ext = pathinfo($poster, PATHINFO_EXTENSION);
+        if (strtolower($ext) == 'jpg'
+            || strtolower($ext) == 'jpeg'
+        ) {
+            // Use resized poster.
+            $poster = moodle_url::make_pluginfile_url(
+                context_system::instance()->id,
+                'theme_snap',
+                'resizedposter',
+                time(),
+                '/',
+                "site-image.$ext"
+            );
+        }
         $replacement = "#page-site-index #page-header {background-image: url($poster);}";
     }
 
