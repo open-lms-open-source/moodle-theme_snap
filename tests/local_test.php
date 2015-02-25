@@ -261,7 +261,7 @@ class theme_snap_local_test extends \advanced_testcase {
             // If the test file is greater than 1380 pixels width then a resize should occur.
             $resizefile = $this->get_poster_resize_file();
             $this->assertInstanceOf('stored_file', $resizefile);
-            // We also need to make sure that our poster css contains the rsized image url.
+            // We also need to make sure that our poster css contains the resized image url.
             $css = '[[setting:poster]]';
             $css = theme_snap_poster_css($css, $filepath);
             $this->assertContains('resizedposter', $css);
@@ -270,7 +270,7 @@ class theme_snap_local_test extends \advanced_testcase {
             // Either this is not a jpeg or its a jpeg that should not be resized.
             $resizefile = $this->get_poster_resize_file();
             $this->assertFalse($resizefile);
-            // We also need to make sure that our poster css doesn't contain the rsized image url.
+            // We also need to make sure that our poster css doesn't contain the resized image url.
             $css = '[[setting:poster]]';
             $css = theme_snap_poster_css($css, $filepath);
             $this->assertNotContains('resizedposter', $css);
