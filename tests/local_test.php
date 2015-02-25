@@ -208,12 +208,34 @@ class theme_snap_local_test extends \advanced_testcase {
         $this->assertSame($actual, $expected);
     }
 
-    public function test_poster_image_upload() {
+    /**
+     * Get poster resize file
+     *
+     * @return bool|\stored_file
+     * @throws \Exception
+     * @throws \dml_exception
+     */
+    protected function get_poster_resize_file() {
+        $fs = \get_file_storage();
+        $syscontextid = \context_system::instance()->id;
+        $fullpath = "/$syscontextid/theme_snap/resizedposter/0/site-image.jpg";
+        $resizefile = $fs->get_file_by_hash(sha1($fullpath));
+        return ($resizefile);
+    }
+
+    protected function assert_poster_image_resized($fixturename, $imgcount = 0) {
         global $CFG;
 
-        $this->resetAfterTest(true);
+        // Clean up previous resizes.
+        $oldresizefile = $this->get_poster_resize_file();
+        if ($oldresizefile) {
+            return $oldresizefile->delete();
+        }
 
         $syscontextid = \context_system::instance()->id;
+
+        $ext = strtolower(pathinfo ($fixturename, PATHINFO_EXTENSION));
+        $testimagename = 'testimage'.$imgcount.'.'.$ext;
 
         $filerecord = array(
             'contextid' => $syscontextid,
@@ -221,29 +243,45 @@ class theme_snap_local_test extends \advanced_testcase {
             'filearea'  => 'poster',
             'itemid'    => 0,
             'filepath'  => '/',
-            'filename'  => 'testimage.jpg',
+            'filename'  => $testimagename,
         );
 
-        $filepath = $CFG->dirroot.'/theme/snap/tests/fixtures/bpd_bikes.jpg';
+        $filepath = $CFG->dirroot.'/theme/snap/tests/fixtures/'.$fixturename;
 
         // Fake an upload of a poster image via the theme settings.
         $fs = \get_file_storage();
-        $fs->create_file_from_pathname($filerecord, $filepath);
-        \set_config('poster', '/testimage.jpg', 'theme_snap');
+        $testfile = $fs->create_file_from_pathname($filerecord, $filepath);
+        \set_config('poster', '/'.$testimagename, 'theme_snap');
         local::process_poster_image();
 
-        $fullpath = "/$syscontextid/theme_snap/resizedposter/0/site-image.jpg";
-        $this->assertInstanceOf('stored_file', $fs->get_file_by_hash(sha1($fullpath)));
+        $tfinfo = $testfile->get_imageinfo();
 
-        $filepath = $CFG->dirroot.'/theme/snap/tests/fixtures/bpd_bikes_small.jpg';
+        // Only jpgs will create a site-image.jpg file
+        if ($ext == 'jpg' && $tfinfo['width'] > 1380) {
+            // If the test file is greater than 1380 pixels width then a resize should occur.
+            $resizefile = $this->get_poster_resize_file();
+            $this->assertInstanceOf('stored_file', $resizefile);
+            if ($resizefile) {
+                // Delete this so that next test can test again.
+                $resizefile->delete();
+            }
+        } else {
+            // Either this is not a jpeg or its a jpeft that should not be resized.
+            $resizefile = $this->get_poster_resize_file();
+            $this->assertFalse($resizefile);
+        }
+    }
 
-        // Fake a second upload of a poster image via the theme settings.
-        $filerecord['filename'] = 'testimage2.jpg';
-        $fs->create_file_from_pathname($filerecord, $filepath);
-        \set_config('poster', '/testimage2.jpg', 'theme_snap');
-        local::process_poster_image();
+    public function test_poster_image_upload() {
 
-        $this->assertInstanceOf('stored_file', $fs->get_file_by_hash(sha1($fullpath)));
+        $this->resetAfterTest(true);
+
+        $this->assert_poster_image_resized('bpd_bikes.jpg', 1);
+        $this->assert_poster_image_resized('bpd_bikes_small.jpg', 2);
+        $this->assert_poster_image_resized('testpng.png', 1);
+        $this->assert_poster_image_resized('testpng_small.png', 2);
+        $this->assert_poster_image_resized('testgif.gif', 1);
+        $this->assert_poster_image_resized('testgif_small.gif', 2);
     }
 
 }
