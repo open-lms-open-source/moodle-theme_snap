@@ -35,7 +35,7 @@ function theme_snap_process_css($css, theme_config $theme) {
     $poster = $theme->setting_file_url('poster', 'poster');
 
     // Set the background image for the poster.
-    $css = theme_snap_set_poster($css, $poster);
+    $css = theme_snap_poster_css($css, $poster);
 
     // Set the custom css.
     if (!empty($theme->settings->customcss)) {
@@ -76,7 +76,7 @@ function theme_snap_set_logo($css, $logo) {
  * @param string $poster The URL of the poster.
  * @return string The parsed CSS
  */
-function theme_snap_set_poster($css, $poster) {
+function theme_snap_poster_css($css, $poster) {
 
     $tag = '[[setting:poster]]';
 
