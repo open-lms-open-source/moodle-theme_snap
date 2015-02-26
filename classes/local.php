@@ -204,9 +204,6 @@ class local {
      */
     public static function courseinfo($courseids) {
         global $DB;
-        if (empty($courseids)) {
-            return false;
-        }
         $courseinfo = array();
         foreach ($courseids as $courseid) {
             $course = $DB->get_record('course', array('id' => $courseid));

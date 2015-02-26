@@ -41,11 +41,7 @@ require_once($CFG->dirroot . '/mod/assign/tests/base_test.php');
 
 class theme_snap_assign_test extends mod_assign_base_testcase {
 
-    private $assignments = array();
-
-    protected function setUp() {
-        parent::setUp();
-
+    public function test_assign_reopened_and_resubmitted() {
         $this->setUser($this->editingteachers[0]);
         $this->create_instance();
         $assign = $this->create_instance(array('duedate' => time(),
@@ -53,8 +49,6 @@ class theme_snap_assign_test extends mod_assign_base_testcase {
                                                'maxattempts' => 3,
                                                'submissiondrafts' => 1,
                                                'assignsubmission_onlinetext_enabled' => 1));
-
-        $this->assignments[] = $assign;
 
         // Add a submission.
         $this->setUser($this->students[0]);
@@ -75,6 +69,8 @@ class theme_snap_assign_test extends mod_assign_base_testcase {
         $data = new stdClass();
         $data->grade = '50.0';
         $assign->testable_apply_grade_to_user($data, $this->students[0]->id, 0);
+        // TODO remove this next line when the above is fixed  to stop triggering debug messages.
+        $this->resetDebugging();
 
         // This is required so that the submissions timemodified > the grade timemodified.
         sleep(2);
@@ -105,16 +101,18 @@ class theme_snap_assign_test extends mod_assign_base_testcase {
         // And now submit it for marking (again).
         $submission->status = ASSIGN_SUBMISSION_STATUS_SUBMITTED;
         $assign->testable_update_submission($submission, $this->students[0]->id, true, false);
-    }
 
-    public function test_assign_reopened_and_resubmitted() {
         $modinfo = get_fast_modinfo($this->course);
-        $assign = $this->assignments[0];
         $assigncm = $modinfo->instances['assign'][$assign->get_instance()->id];
         $expnumsubmissions = 1;
         $expnumrequiregrading = 1;
 
         $this->setUser($this->editingteachers[0]);
+        $actual = activity::assign_meta($assigncm);
+        $this->assertSame($actual->numsubmissions, $expnumsubmissions);
+        $this->assertSame($actual->numrequiregrading, $expnumrequiregrading);
+        $this->assertTrue($actual->isteacher);
+
         $actual = activity::assign_meta($assigncm);
         $this->assertSame($actual->numsubmissions, $expnumsubmissions);
         $this->assertSame($actual->numrequiregrading, $expnumrequiregrading);
@@ -132,19 +130,39 @@ class theme_snap_assign_test extends mod_assign_base_testcase {
     }
 
     public function test_assign_upcoming_deadlines() {
-        global $USER;
-        // Check the overview as the different users.
+        $this->setUser($this->editingteachers[0]);
+        $this->create_instance(['duedate' => time()]);
+
+        $deadlines = local::upcoming_deadlines($this->editingteachers[0]->id);
+        $this->assertCount(1, $deadlines);
+
         $this->setUser($this->students[0]);
-        $deadlines = local::upcoming_deadlines($USER->id);
+        $deadlines = local::upcoming_deadlines($this->students[0]->id);
         $this->assertCount(1, $deadlines);
 
         $this->setUser($this->teachers[0]);
-        $deadlines = local::upcoming_deadlines($USER->id);
+        $deadlines = local::upcoming_deadlines($this->teachers[0]->id);
         $this->assertCount(1, $deadlines);
 
         $this->setUser($this->editingteachers[0]);
-        $deadlines = local::upcoming_deadlines($USER->id);
-        $this->assertCount(1, $deadlines);
+        $this->create_instance(['duedate' => time() + 3 * DAYSECS]);
+
+        $deadlines = local::upcoming_deadlines($this->editingteachers[0]->id);
+        $this->assertCount(2, $deadlines);
+
+        $this->setUser($this->students[0]);
+        $deadlines = local::upcoming_deadlines($this->students[0]->id);
+        $this->assertCount(2, $deadlines);
+
+        $this->setUser($this->teachers[0]);
+        $deadlines = local::upcoming_deadlines($this->teachers[0]->id);
+        $this->assertCount(2, $deadlines);
+
+        $this->create_instance(['duedate' => time() + 4 * DAYSECS]);
+        $max = 2;
+        $this->setUser($this->students[0]);
+        $deadlines = local::upcoming_deadlines($this->students[0]->id, $max);
+        $this->assertCount(2, $deadlines);
     }
 
     public function test_participant_count() {
@@ -161,14 +179,29 @@ class theme_snap_assign_test extends mod_assign_base_testcase {
 
     public function test_no_course_completion_progress() {
         $actual = local::course_completion_progress($this->course);
-        // TODO this is a rubbish test.
+        $this->assertNull($actual);
+
+        $this->setUser($this->students[0]);
+        $actual = local::course_completion_progress($this->course);
         $this->assertInstanceOf('stdClass', $actual);
     }
 
-    public function test_no_course_feedback() {
+    public function test_course_feedback() {
         $actual = local::course_feedback($this->course);
-        // TODO this is a rubbish test.
-        $this->assertInstanceOf('stdClass', $actual);
+        $this->assertObjectHasAttribute('skipgrade', $actual);
+
+        $this->setUser($this->students[0]);
+        $actual = local::course_feedback($this->course);
+        $this->assertObjectHasAttribute('feedbackhtml', $actual);
+        $this->assertSame('', $actual->feedbackhtml);
+
+        $assign = $this->create_one_ungraded_submission();
+        $this->grade_assignment($assign);
+
+        $this->setUser($this->students[0]);
+        $actual = local::course_feedback($this->course);
+        $this->assertObjectHasAttribute('feedbackhtml', $actual);
+        $this->assertNotSame('', $actual->feedbackhtml);
     }
 
     public function test_no_course_image() {
@@ -176,25 +209,90 @@ class theme_snap_assign_test extends mod_assign_base_testcase {
         $this->assertFalse($actual);
     }
 
-    public function test_assign_ungraded() {
-        $actual = activity::assign_ungraded([]);
-        $this->assertFalse($actual);
+    private function create_one_ungraded_submission() {
+        $this->setUser($this->editingteachers[0]);
+        $assign = $this->create_instance(['assignsubmission_onlinetext_enabled' => 1]);
 
-        $actual = activity::assign_ungraded([$this->course->id]);
+        // Add a submission.
+        $this->setUser($this->students[0]);
+        $submission = $assign->get_user_submission($this->students[0]->id, true);
+        $data = new stdClass();
+        $data->onlinetext_editor = array('itemid' => file_get_unused_draft_itemid(),
+                                         'text' => 'Submission text',
+                                         'format' => FORMAT_HTML);
+        $plugin = $assign->get_submission_plugin_by_type('onlinetext');
+        $plugin->save($submission, $data);
+        $submission->status = ASSIGN_SUBMISSION_STATUS_SUBMITTED;
+        $assign->testable_update_submission($submission, $this->students[0]->id, true, false);
+        return $assign;
+    }
+
+    private function grade_assignment($assign) {
+        $this->setUser($this->teachers[0]);
+        $data = new stdClass();
+        $data->grade = '50.0';
+        $assign->testable_apply_grade_to_user($data, $this->students[0]->id, 0);
+        // TODO remove this next line when the above is fixed  to stop triggering debug messages.
+        $this->resetDebugging();
+    }
+
+    public function test_assign_ungraded() {
+        $sixmonthsago = time() - YEARSECS / 2;
+
+        $actual = activity::assign_ungraded([], $sixmonthsago);
+        $this->assertCount(0, $actual);
+
+        $actual = activity::assign_ungraded([$this->course->id], $sixmonthsago);
+        $this->assertCount(0, $actual);
+
+        $this->create_one_ungraded_submission();
+
+        $actual = activity::assign_ungraded([$this->course->id], $sixmonthsago);
         $this->assertCount(1, $actual);
     }
 
     public function test_quiz_ungraded() {
-        $actual = activity::quiz_ungraded([]);
-        $this->assertFalse($actual);
+        $sixmonthsago = time() - YEARSECS / 2;
 
-        $actual = activity::quiz_ungraded([$this->course->id]);
+        $actual = activity::quiz_ungraded([], $sixmonthsago);
+        $this->assertCount(0, $actual);
+
+        $actual = activity::quiz_ungraded([$this->course->id], $sixmonthsago);
         $this->assertCount(0, $actual);
 
         // TODO need a test with actually generated quizzes.
     }
 
     public function test_events_graded() {
+        $this->setUser($this->editingteachers[0]);
+        $this->create_instance();
+        $assign = $this->create_instance(array('duedate' => time(),
+                                               'submissiondrafts' => 1,
+                                               'assignsubmission_onlinetext_enabled' => 1));
+
+        // Add a submission.
+        $this->setUser($this->students[0]);
+        $submission = $assign->get_user_submission($this->students[0]->id, true);
+        $data = new stdClass();
+        $data->onlinetext_editor = array('itemid' => file_get_unused_draft_itemid(),
+                                         'text' => 'Submission text',
+                                         'format' => FORMAT_HTML);
+        $plugin = $assign->get_submission_plugin_by_type('onlinetext');
+        $plugin->save($submission, $data);
+
+        // And now submit it for marking.
+        $submission->status = ASSIGN_SUBMISSION_STATUS_SUBMITTED;
+        $assign->testable_update_submission($submission, $this->students[0]->id, true, false);
+
+        // Mark the submission.
+        $this->setUser($this->teachers[0]);
+        $data = new stdClass();
+        $data->grade = '50.0';
+        $assign->testable_apply_grade_to_user($data, $this->students[0]->id, 0);
+
+        // TODO remove this next line when the above is fixed  to stop triggering debug messages.
+        $this->resetDebugging();
+
         $this->setUser($this->students[0]);
         $actual = activity::events_graded();
         $this->assertCount(1, $actual);
@@ -205,16 +303,56 @@ class theme_snap_assign_test extends mod_assign_base_testcase {
     }
 
     public function test_all_ungraded() {
+
+        $sixmonthsago = time() - YEARSECS / 2;
+        $expected = 0;
+
         $this->setUser($this->teachers[0]);
-        $actual = local::all_ungraded($this->teachers[0]->id);
-        $this->assertcount(1, $actual);
+        $actual = local::all_ungraded($this->teachers[0]->id, $sixmonthsago);
+        $this->assertcount($expected, $actual);
 
         $this->setUser($this->teachers[1]);
-        $actual = local::all_ungraded($this->teachers[1]->id);
-        $this->assertcount(1, $actual);
+        $actual = local::all_ungraded($this->teachers[1]->id, $sixmonthsago);
+        $this->assertcount($expected, $actual);
 
         $this->setUser($this->editingteachers[0]);
-        $actual = local::all_ungraded($this->editingteachers[0]->id);
-        $this->assertcount(1, $actual);
+        $actual = local::all_ungraded($this->editingteachers[0]->id, $sixmonthsago);
+        $this->assertcount($expected, $actual);
+
+        $this->create_one_ungraded_submission();
+        $expected = 1;
+
+        $this->setUser($this->teachers[0]);
+        $actual = local::all_ungraded($this->teachers[0]->id, $sixmonthsago);
+        $this->assertcount($expected, $actual);
+
+        $this->setUser($this->teachers[1]);
+        $actual = local::all_ungraded($this->teachers[1]->id, $sixmonthsago);
+        $this->assertcount($expected, $actual);
+
+        $this->setUser($this->editingteachers[0]);
+        $actual = local::all_ungraded($this->editingteachers[0]->id, $sixmonthsago);
+        $this->assertcount($expected, $actual);
+    }
+
+    public function test_courseinfo_empty() {
+        $actual = local::courseinfo([]);
+        $this->assertCount(0, $actual);
+
+        // Current user not enrolled in this course.
+        $actual = local::courseinfo([$this->course->id]);
+        $this->assertCount(0, $actual);
+    }
+
+    public function test_courseinfo_student() {
+        $this->setUser($this->students[0]);
+        $actual = local::courseinfo([$this->course->id]);
+        $this->assertCount(1, $actual);
+    }
+
+    public function test_courseinfo_teacher() {
+        $this->setUser($this->teachers[0]);
+        $actual = local::courseinfo([$this->course->id]);
+        $this->assertCount(1, $actual);
     }
 }

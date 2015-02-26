@@ -246,10 +246,6 @@ class activity {
     public static function assign_ungraded($courseids) {
         global $DB;
 
-        if (empty($courseids)) {
-            return false;
-        }
-
         $ungraded = array();
 
         $sixmonthsago = time() - YEARSECS / 2;
@@ -334,10 +330,6 @@ class activity {
      */
     public static function quiz_ungraded($courseids) {
         global $DB;
-
-        if (empty($courseids)) {
-            return false;
-        }
 
         $sixmonthsago = time() - YEARSECS / 2;
 
