@@ -731,6 +731,8 @@ class local {
         // Restrict to jpegs for now.
         if ($finfo['mimetype'] == 'image/jpeg' && $finfo['width'] > 1380) {
             self::process_poster($file);
+        } else {
+            self::delete_poster_file();
         }
     }
 
@@ -745,7 +747,7 @@ class local {
         if ($filename) {
             $syscontextid = \context_system::instance()->id;
             $fullpath = "/$syscontextid/theme_snap/poster/0$filename";
-            $fs = \get_file_storage();
+            $fs = get_file_storage();
             return $fs->get_file_by_hash(sha1($fullpath));
         } else {
             return false;
@@ -753,11 +755,11 @@ class local {
     }
 
     /**
-    * Adds the poster to CSS.
-    *
-    * @param string $css The CSS to process.
-    * @return string The parsed CSS
-    */
+     * Adds the poster to CSS.
+     *
+     * @param string $css The CSS to process.
+     * @return string The parsed CSS
+     */
     public static function theme_snap_poster_css($css) {
         $tag = '[[setting:poster]]';
 
@@ -790,7 +792,6 @@ class local {
                     $posterfilename
                 );
             }
-            file_put_contents('/vagrant/testlog.txt', var_export($poster->out(),true));
             $replacement = "#page-site-index #page-header {background-image: url($poster);}";
         }
 
@@ -798,29 +799,20 @@ class local {
         return $css;
     }
 
-    /**
-     * Copy poster file to standard location and name.
-     *
-     * @param stored_file $file
-     * @return string
-     */
-    private static function process_poster(\stored_file $file) {
-        $filename = $file->get_filename();
-        $finfo = pathinfo($filename);
-        $extension = $finfo['extension'];
-
-        $filespec = array(
+    private static function get_poster_filespec() {
+        return array(
             'contextid' => \context_system::instance()->id,
             'component' => 'theme_snap',
             'filearea' => 'resizedposter',
             'itemid' => 0,
             'filepath' => '/',
-            'filename' => "site-image.$extension",
+            'filename' => "site-image.jpg",
         );
-        $fs = \get_file_storage();
-        //TODO: need to get the old extension, not reuse the new one.
-        //It won't create an error if you upload a jpg with .jpg and then another with .jpeg - it will leave
-        //trash behind - i.e. old resized versions with different flavor of jpg extension.
+    }
+
+    private static function delete_poster_file() {
+        $filespec = self::get_poster_filespec();
+        $fs = get_file_storage();
         $oldfile = $fs->get_file($filespec['contextid'],
                                 $filespec['component'],
                                 $filespec['filearea'],
@@ -831,7 +823,18 @@ class local {
         if ($oldfile) {
             $oldfile->delete();
         }
+    }
 
+    /**
+     * Copy poster file to standard location and name, resize if necessary.
+     *
+     * @param stored_file $file a jpeg image
+     * @return stored_file
+     */
+    private static function process_poster(\stored_file $file) {
+        self::delete_poster_file();
+        $filespec = self::get_poster_filespec();
+        $fs = get_file_storage();
         $file = $fs->create_file_from_storedfile($filespec, $file);
 
         return image::resize($file, false, 1280);

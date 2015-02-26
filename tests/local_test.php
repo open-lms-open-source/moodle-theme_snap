@@ -216,37 +216,30 @@ class theme_snap_local_test extends \advanced_testcase {
      * @throws \dml_exception
      */
     protected function get_poster_resize_file() {
-        $fs = \get_file_storage();
+        $fs = get_file_storage();
         $syscontextid = \context_system::instance()->id;
         $fullpath = "/$syscontextid/theme_snap/resizedposter/0/site-image.jpg";
         $resizefile = $fs->get_file_by_hash(sha1($fullpath));
-        return ($resizefile);
+        return $resizefile;
     }
 
     /**
-     * Resizes a poster image.
+     * Imitates an admin setting the site cover image via the
+     * Snap theme settings page. Creates a file, sets a theme
+     * setting with the filname, then calls the callback triggered
+     * by submitting the form.
      *
      * @param $fixturename
-     * @param int $imgcount
-     * @return storedFile | bool
+     * @return array
      * @throws \Exception
      * @throws \dml_exception
      * @throws \file_exception
      * @throws \stored_file_creation_exception
      */
-    protected function resize_poster_image($fixturename, $imgcount = 0) {
+    protected function fake_site_image_setting_upload($filename) {
         global $CFG;
 
-        // Clean up previous resizes.
-        $oldresizefile = $this->get_poster_resize_file();
-        if ($oldresizefile) {
-            $oldresizefile->delete();
-        }
-
         $syscontextid = \context_system::instance()->id;
-
-        $ext = strtolower(pathinfo ($fixturename, PATHINFO_EXTENSION));
-        $testimagename = 'testimage'.$imgcount.'.'.$ext;
 
         $filerecord = array(
             'contextid' => $syscontextid,
@@ -254,26 +247,25 @@ class theme_snap_local_test extends \advanced_testcase {
             'filearea'  => 'poster',
             'itemid'    => 0,
             'filepath'  => '/',
-            'filename'  => $testimagename,
+            'filename'  => $filename,
         );
 
-        // Fake an upload of a poster image via the theme settings.
-        $filepath = $CFG->dirroot.'/theme/snap/tests/fixtures/'.$fixturename;
+        $filepath = $CFG->dirroot.'/theme/snap/tests/fixtures/'.$filename;
+
         $fs = \get_file_storage();
         $fs->create_file_from_pathname($filerecord, $filepath);
-
-        \set_config('poster', '/'.$testimagename, 'theme_snap');
+        \set_config('poster', '/'.$filename, 'theme_snap');
         local::process_poster_image();
-
-        return ($this->get_poster_resize_file());
     }
 
     public function test_poster_image_upload() {
-
         $this->resetAfterTest(true);
 
+        $beforeupload = local::poster_file();
+        $this->assertFalse($beforeupload);
+
         $fixtures = [
-            'bpd_bikes_3888px.jpg' => true , // true means SHOULD get resized.
+            'bpd_bikes_3888px.jpg' => true , // True means SHOULD get resized.
             'bpd_bikes_1381px.jpg' => true,
             'bpd_bikes_1380px.jpg' => false,
             'bpd_bikes_1379px.jpg' => false,
@@ -284,22 +276,20 @@ class theme_snap_local_test extends \advanced_testcase {
             'testgif_small.gif' => false,
         ];
 
-        $f = 0;
-        foreach ($fixtures as $fixture => $shouldberesized) {
-            $f ++;
+        foreach ($fixtures as $filename => $shouldberesized) {
 
-            $resizefile = $this->resize_poster_image($fixture, $f);
+            $this->fake_site_image_setting_upload($filename);
+            $resizedfile = $this->get_poster_resize_file();
 
             $css = '[[setting:poster]]';
             $css = local::theme_snap_poster_css($css);
 
-            // Only jpgs which aren't less than 1380px in width will create a resized site-image.jpg file
             if ($shouldberesized) {
-                $this->assertInstanceOf('stored_file', $resizefile);
+                $this->assertInstanceOf('stored_file', $resizedfile);
                 $this->assertContains('resizedposter', $css);
             } else {
-                // There should not be a resized file.
-                $this->assertFalse($resizefile);
+                $this->assertFalse($resizedfile);
+                $this->assertContains($filename, $css);
                 $this->assertNotContains('resizedposter', $css);
             }
         }
