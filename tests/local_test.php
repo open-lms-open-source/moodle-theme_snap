@@ -228,7 +228,7 @@ class theme_snap_local_test extends \advanced_testcase {
      *
      * @param $fixturename
      * @param int $imgcount
-     * @return array
+     * @return storedFile | bool
      * @throws \Exception
      * @throws \dml_exception
      * @throws \file_exception
@@ -257,22 +257,18 @@ class theme_snap_local_test extends \advanced_testcase {
             'filename'  => $testimagename,
         );
 
-        $filepath = $CFG->dirroot.'/theme/snap/tests/fixtures/'.$fixturename;
-
         // Fake an upload of a poster image via the theme settings.
+        $filepath = $CFG->dirroot.'/theme/snap/tests/fixtures/'.$fixturename;
         $fs = \get_file_storage();
-        $testfile = $fs->create_file_from_pathname($filerecord, $filepath);
+        $fs->create_file_from_pathname($filerecord, $filepath);
+
         \set_config('poster', '/'.$testimagename, 'theme_snap');
         local::process_poster_image();
 
-        return (
-            array($testfile,
-                  $this->get_poster_resize_file())
-        );
+        return ($this->get_poster_resize_file());
     }
 
     public function test_poster_image_upload() {
-        global $CFG;
 
         $this->resetAfterTest(true);
 
@@ -292,8 +288,7 @@ class theme_snap_local_test extends \advanced_testcase {
         foreach ($fixtures as $fixture => $shouldberesized) {
             $f ++;
 
-            $tarr = $this->resize_poster_image($fixture, $f);
-            list($testfile, $resizefile) = $tarr;
+            $resizefile = $this->resize_poster_image($fixture, $f);
 
             $css = '[[setting:poster]]';
             $css = local::theme_snap_poster_css($css);
