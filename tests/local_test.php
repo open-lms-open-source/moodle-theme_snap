@@ -275,19 +275,18 @@ class theme_snap_local_test extends \advanced_testcase {
         global $CFG;
 
         $this->resetAfterTest(true);
-        $theme = \theme_config::load('snap');
 
         $fixtures = [
-            'bpd_bikes.jpg',
-            'bpd_bikes_small.jpg',
-            'testpng.png',
-            'testpng_small.png',
-            'testgif.gif',
-            'testgif_small.gif',
+            'bpd_bikes.jpg' => true , // this is the only file that SHOULD get resized.
+            'bpd_bikes_small.jpg' => false,
+            'testpng.png' => false,
+            'testpng_small.png' => false,
+            'testgif.gif' => false,
+            'testgif_small.gif' => false,
         ];
 
         $f = 0;
-        foreach ($fixtures as $fixture) {
+        foreach ($fixtures as $fixture => $resize) {
             $f ++;
 
             $tarr = $this->resize_poster_image($fixture, $f);
