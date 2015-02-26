@@ -286,19 +286,17 @@ class theme_snap_local_test extends \advanced_testcase {
         ];
 
         $f = 0;
-        foreach ($fixtures as $fixture => $resize) {
+        foreach ($fixtures as $fixture => $shouldberesized) {
             $f ++;
 
             $tarr = $this->resize_poster_image($fixture, $f);
             list($testfile, $resizefile) = $tarr;
 
-            $tfinfo = $testfile->get_imageinfo();
-
             $css = '[[setting:poster]]';
             $css = local::theme_snap_poster_css($css);
 
             // Only jpgs which aren't less than 1380px in width will create a resized site-image.jpg file
-            if ($tfinfo['mimetype'] == 'image/jpeg' && $tfinfo['width'] > 1380) {
+            if ($shouldberesized) {
                 $this->assertInstanceOf('stored_file', $resizefile);
                 $this->assertContains('resizedposter', $css);
             } else {
