@@ -277,8 +277,11 @@ class theme_snap_local_test extends \advanced_testcase {
         $this->resetAfterTest(true);
 
         $fixtures = [
-            'bpd_bikes.jpg' => true , // this is the only file that SHOULD get resized.
-            'bpd_bikes_small.jpg' => false,
+            'bpd_bikes_3888px.jpg' => true , // true means SHOULD get resized.
+            'bpd_bikes_1381px.jpg' => true,
+            'bpd_bikes_1380px.jpg' => false,
+            'bpd_bikes_1379px.jpg' => false,
+            'bpd_bikes_1280px.jpg' => false,
             'testpng.png' => false,
             'testpng_small.png' => false,
             'testgif.gif' => false,
