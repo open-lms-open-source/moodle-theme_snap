@@ -32,10 +32,8 @@ function theme_snap_process_css($css, theme_config $theme) {
     $logo = $theme->setting_file_url('logo', 'logo');
     $css = theme_snap_set_logo($css, $logo);
 
-    $poster = $theme->setting_file_url('poster', 'poster');
-
     // Set the background image for the poster.
-    $css = theme_snap_poster_css($css, $poster);
+    $css = \theme_snap\local::theme_snap_poster_css($css);
 
     // Set the custom css.
     if (!empty($theme->settings->customcss)) {
@@ -65,41 +63,6 @@ function theme_snap_set_logo($css, $logo) {
     } else {
         $replacement = "#logo {background-image: url($logo);} #page-login-index .loginpanel h2{background-image: url($logo);}";
     }
-    $css = str_replace($tag, $replacement, $css);
-    return $css;
-}
-
-/**
- * Adds the poster to CSS.
- *
- * @param string $css The CSS.
- * @param string $poster The URL of the poster.
- * @return string The parsed CSS
- */
-function theme_snap_poster_css($css, $poster) {
-
-    $tag = '[[setting:poster]]';
-
-    if (is_null($poster)) {
-        $replacement = '';
-    } else {
-        $ext = pathinfo($poster, PATHINFO_EXTENSION);
-        if (strtolower($ext) == 'jpg'
-            || strtolower($ext) == 'jpeg'
-        ) {
-            // Use resized poster.
-            $poster = moodle_url::make_pluginfile_url(
-                context_system::instance()->id,
-                'theme_snap',
-                'resizedposter',
-                time(),
-                '/',
-                "site-image.$ext"
-            );
-        }
-        $replacement = "#page-site-index #page-header {background-image: url($poster);}";
-    }
-
     $css = str_replace($tag, $replacement, $css);
     return $css;
 }

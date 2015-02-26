@@ -741,16 +741,61 @@ class local {
      */
     public static function poster_file() {
         $theme = \theme_config::load('snap');
-        $themename = 'snap';
         $filename = $theme->settings->poster;
         if ($filename) {
             $syscontextid = \context_system::instance()->id;
-            $fullpath = "/$syscontextid/theme_$themename/poster/0$filename";
+            $fullpath = "/$syscontextid/theme_snap/poster/0$filename";
             $fs = \get_file_storage();
             return $fs->get_file_by_hash(sha1($fullpath));
         } else {
             return false;
         }
+    }
+
+    /**
+    * Adds the poster to CSS.
+    *
+    * @param string $css The CSS to process.
+    * @return string The parsed CSS
+    */
+    public static function theme_snap_poster_css($css) {
+        $tag = '[[setting:poster]]';
+
+        $posterfile = self::poster_file();
+
+        $replacement = '';
+
+        if ($posterfile) {
+            $posterfilename = $posterfile->get_filename();
+            $finfo = $posterfile->get_imageinfo();
+            $ext = pathinfo($posterfilename, PATHINFO_EXTENSION);
+            if ($finfo['mimetype'] == 'image/jpeg' && $finfo['width'] > 1380) {
+                // Use resized poster.
+                $poster = \moodle_url::make_pluginfile_url(
+                    \context_system::instance()->id,
+                    'theme_snap',
+                    'resizedposter',
+                    time(),
+                    '/',
+                    "site-image.$ext"
+                );
+            } else {
+                // Use regular poster.
+                $poster = \moodle_url::make_pluginfile_url(
+                    \context_system::instance()->id,
+                    'theme_snap',
+                    'poster',
+                    time(),
+                    '/',
+                    $posterfilename
+                );
+            }
+            file_put_contents('/vagrant/testlog.txt', var_export($poster->out(),true));
+            $replacement = "#page-site-index #page-header {background-image: url($poster);}";
+        }
+
+        $css = str_replace($tag, $replacement, $css);
+        return $css;
     }
 
     /**

@@ -223,13 +223,24 @@ class theme_snap_local_test extends \advanced_testcase {
         return ($resizefile);
     }
 
-    protected function assert_poster_image_resized($fixturename, $imgcount = 0) {
+    /**
+     * Resizes a poster image.
+     *
+     * @param $fixturename
+     * @param int $imgcount
+     * @return array
+     * @throws \Exception
+     * @throws \dml_exception
+     * @throws \file_exception
+     * @throws \stored_file_creation_exception
+     */
+    protected function resize_poster_image($fixturename, $imgcount = 0) {
         global $CFG;
 
         // Clean up previous resizes.
         $oldresizefile = $this->get_poster_resize_file();
         if ($oldresizefile) {
-            return $oldresizefile->delete();
+            $oldresizefile->delete();
         }
 
         $syscontextid = \context_system::instance()->id;
@@ -254,39 +265,48 @@ class theme_snap_local_test extends \advanced_testcase {
         \set_config('poster', '/'.$testimagename, 'theme_snap');
         local::process_poster_image();
 
-        $tfinfo = $testfile->get_imageinfo();
-
-        // Only jpgs will create a site-image.jpg file
-        if ($ext == 'jpg' && $tfinfo['width'] > 1380) {
-            // If the test file is greater than 1380 pixels width then a resize should occur.
-            $resizefile = $this->get_poster_resize_file();
-            $this->assertInstanceOf('stored_file', $resizefile);
-            // We also need to make sure that our poster css contains the resized image url.
-            $css = '[[setting:poster]]';
-            $css = theme_snap_poster_css($css, $filepath);
-            $this->assertContains('resizedposter', $css);
-
-        } else {
-            // Either this is not a jpeg or its a jpeg that should not be resized.
-            $resizefile = $this->get_poster_resize_file();
-            $this->assertFalse($resizefile);
-            // We also need to make sure that our poster css doesn't contain the resized image url.
-            $css = '[[setting:poster]]';
-            $css = theme_snap_poster_css($css, $filepath);
-            $this->assertNotContains('resizedposter', $css);
-        }
+        return (
+            array($testfile,
+                  $this->get_poster_resize_file())
+        );
     }
 
     public function test_poster_image_upload() {
+        global $CFG;
 
         $this->resetAfterTest(true);
+        $theme = \theme_config::load('snap');
 
-        $this->assert_poster_image_resized('bpd_bikes.jpg', 1);
-        $this->assert_poster_image_resized('bpd_bikes_small.jpg', 2);
-        $this->assert_poster_image_resized('testpng.png', 1);
-        $this->assert_poster_image_resized('testpng_small.png', 2);
-        $this->assert_poster_image_resized('testgif.gif', 1);
-        $this->assert_poster_image_resized('testgif_small.gif', 2);
+        $fixtures = [
+            'bpd_bikes.jpg',
+            'bpd_bikes_small.jpg',
+            'testpng.png',
+            'testpng_small.png',
+            'testgif.gif',
+            'testgif_small.gif',
+        ];
+
+        $f = 0;
+        foreach ($fixtures as $fixture) {
+            $f ++;
+
+            $tarr = $this->resize_poster_image($fixture, $f);
+            list($testfile, $resizefile) = $tarr;
+
+            $tfinfo = $testfile->get_imageinfo();
+
+            $css = '[[setting:poster]]';
+            $css = local::theme_snap_poster_css($css);
+
+            // Only jpgs which aren't less than 1380px in width will create a resized site-image.jpg file
+            if ($tfinfo['mimetype'] == 'image/jpeg' && $tfinfo['width'] > 1380) {
+                $this->assertInstanceOf('stored_file', $resizefile);
+                $this->assertContains('resizedposter', $css);
+            } else {
+                // There should not be a resized file.
+                $this->assertFalse($resizefile);
+                $this->assertNotContains('resizedposter', $css);
+            }
+        }
     }
-
 }
