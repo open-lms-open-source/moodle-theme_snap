@@ -529,6 +529,7 @@ class theme_snap_core_course_renderer extends core_course_renderer {
 
         $imgarr = \theme_snap\local::extract_first_image($content);
 
+        $thumbnail = '';
         if ($imgarr) {
             $img = html_writer::img($imgarr['src'], $imgarr['alt']);
             $thumbnail = "<div class=summary-figure>$img</div>";
