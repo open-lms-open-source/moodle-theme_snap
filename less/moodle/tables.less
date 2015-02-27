@@ -36,6 +36,12 @@ table#user-grades tr.odd th.header,
 table#user-grades tr.odd td.cell {
     background-color: @table-bg-accent;
 }
+table#fixed_column tr.even th {
+    background-color: @table-bg;
+}
+.path-grade-report-grader table#fixed_column tr th {
+    border-color: @table-border-color;
+}
 
 .gradeparent #user-grades,
 #page-report-loglive-index .generaltable,
@@ -100,7 +106,7 @@ table#listdirectories {
         tr,
         th,
         td {
-            height: 4.6em;
+            height: 5.2em;
 
         }
         tr.avg,
