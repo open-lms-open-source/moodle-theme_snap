@@ -35,6 +35,16 @@ defined('MOODLE_INTERNAL') || die();
  */
 class theme_snap_local_test extends \advanced_testcase {
 
+    public function test_grade_warning_debug_off() {
+        global $CFG;
+
+        $this->resetAfterTest();
+        $CFG->debugdisplay = 0;
+
+        $actual = local::skipgradewarning("warning text");
+        $this->assertNull($actual);
+    }
+
     public function test_get_course_color() {
         $actual = local::get_course_color(1);
         $this->assertSame('c4ca42', $actual);
@@ -259,7 +269,7 @@ class theme_snap_local_test extends \advanced_testcase {
     }
 
     public function test_poster_image_upload() {
-        $this->resetAfterTest(true);
+        $this->resetAfterTest();
 
         $beforeupload = local::poster_file();
         $this->assertFalse($beforeupload);

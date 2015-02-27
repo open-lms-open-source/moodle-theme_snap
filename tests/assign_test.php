@@ -158,6 +158,22 @@ class theme_snap_assign_test extends mod_assign_base_testcase {
         $deadlines = local::upcoming_deadlines($this->teachers[0]->id);
         $this->assertCount(2, $deadlines);
 
+        /* TODO create non visible deadline.
+        $this->setUser($this->editingteachers[0]);
+        $this->create_instance(['duedate' => time() + 3 * DAYSECSe]);
+        $deadlines = local::upcoming_deadlines($this->editingteachers[0]->id);
+        $this->assertCount(3, $deadlines);
+
+        $this->setUser($this->students[0]);
+        $deadlines = local::upcoming_deadlines($this->students[0]->id);
+        $this->assertCount(2, $deadlines);
+
+        $this->setUser($this->teachers[0]);
+        $deadlines = local::upcoming_deadlines($this->teachers[0]->id);
+        $this->assertCount(3, $deadlines);
+        */
+
+        $this->create_instance(['duedate' => time() + 4 * DAYSECS]);
         $this->create_instance(['duedate' => time() + 4 * DAYSECS]);
         $max = 2;
         $this->setUser($this->students[0]);
@@ -178,6 +194,11 @@ class theme_snap_assign_test extends mod_assign_base_testcase {
     }
 
     public function test_no_course_completion_progress() {
+        $actual = local::course_completion_progress($this->course);
+        $this->assertNull($actual);
+
+        $this->create_extra_users();
+        $this->setUser($this->extrasuspendedstudents[0]);
         $actual = local::course_completion_progress($this->course);
         $this->assertNull($actual);
 
@@ -202,6 +223,19 @@ class theme_snap_assign_test extends mod_assign_base_testcase {
         $actual = local::course_feedback($this->course);
         $this->assertObjectHasAttribute('feedbackhtml', $actual);
         $this->assertNotSame('', $actual->feedbackhtml);
+
+        $this->create_extra_users();
+        $this->setUser($this->extrasuspendedstudents[0]);
+        $actual = local::course_feedback($this->course);
+        $this->assertObjectHasAttribute('skipgrade', $actual);
+        $this->assertContains('not enrolled', $actual->skipgrade);
+
+        $this->setUser($this->students[0]);
+        $this->course->showgrades = 0;
+        $actual = local::course_feedback($this->course);
+        $this->assertObjectHasAttribute('skipgrade', $actual);
+        $this->assertContains('set up to not show gradebook to students', $actual->skipgrade);
+
     }
 
     public function test_no_course_image() {
@@ -340,6 +374,12 @@ class theme_snap_assign_test extends mod_assign_base_testcase {
         $this->assertCount(0, $actual);
 
         // Current user not enrolled in this course.
+        $actual = local::courseinfo([$this->course->id]);
+        $this->assertCount(0, $actual);
+
+        // Current user enrolled but inactive in this course.
+        $this->create_extra_users();
+        $this->setUser($this->extrasuspendedstudents[0]);
         $actual = local::courseinfo([$this->course->id]);
         $this->assertCount(0, $actual);
     }

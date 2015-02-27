@@ -33,7 +33,7 @@ class local {
      * @param $warning
      * @return null|object
      */
-    protected static function skipgradewarning($warning) {
+    public static function skipgradewarning($warning) {
         global $CFG;
         if (!empty($CFG->debugdisplay)) {
             return (object) array ('skipgrade' => $warning);
@@ -77,7 +77,8 @@ class local {
         // Get course context.
         $coursecontext = \context_course::instance($course->id);
         // Security check - should they be allowed to see course grade?
-        if (!is_enrolled($coursecontext, $USER, 'moodle/grade:view')) {
+        $onlyactive = true;
+        if (!is_enrolled($coursecontext, $USER, 'moodle/grade:view', $onlyactive)) {
             return self::skipgradewarning('User not enrolled on course with capability moodle/grade:view');
         }
         // Security check - are they allowed to see the grade report for the course?
@@ -144,7 +145,7 @@ class local {
 
         // Security check - are they enrolled on course.
         $context = \context_course::instance($course->id);
-        if (!is_enrolled($context)) {
+        if (!is_enrolled($context, null, '', true)) {
             return null;
         }
         $completioninfo = new \completion_info($course);
@@ -182,20 +183,6 @@ class local {
         return $compobj;
     }
 
-
-    /**
-     * Is a user a teacher?
-     *
-     * @param null|stdClass $user
-     * @param null|stdClass $course
-     */
-    public static function is_teacher($user = null, $course = null) {
-        global $USER, $COURSE;
-        $user = empty($user) ? $USER : $user;
-        $course = empty($course) ? $COURSE : $course;
-        return has_capability('moodle/course:manageactivities', \context_course::instance($course->id), $user);
-    }
-
     /**
      * Get information for array of courseids
      *
@@ -209,7 +196,7 @@ class local {
             $course = $DB->get_record('course', array('id' => $courseid));
 
             $context = \context_course::instance($courseid);
-            if (!is_enrolled($context)) {
+            if (!is_enrolled($context, null, '', true)) {
                 // Skip this course, don't have permission to view.
                 continue;
             }
