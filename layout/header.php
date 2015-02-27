@@ -21,12 +21,17 @@ echo $OUTPUT->doctype();
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link href='//fonts.googleapis.com/css?family=Roboto:500,100,400,300' rel='stylesheet' type='text/css'>
 <?php
-$snapcourseimage = $OUTPUT->get_course_image();
-// Remove double // to match the URL used on course listings.
-$snapcourseimage = str_replace('/course/overviewfiles//', '/course/overviewfiles/', $snapcourseimage);
-if (!empty($snapcourseimage)) : ?>
-<style> #page-header{background-image:url(<?php echo $snapcourseimage; ?>);}</style>
-<?php endif; ?>
+
+// Output course cover image?
+$coursemainpage = strpos($PAGE->pagetype, 'course-view-') === 0;
+$courseimagecss = '';
+if ($coursemainpage) {
+    $courseimagecss = \theme_snap\local::course_coverimage_css($COURSE->id);
+}
+if (!empty($courseimagecss)) {
+    echo "<style>$courseimagecss</style>";
+}
+?>
 
 </head>
 

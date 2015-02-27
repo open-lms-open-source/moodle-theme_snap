@@ -254,7 +254,7 @@ class theme_snap_local_test extends \advanced_testcase {
         $filerecord = array(
             'contextid' => $syscontextid,
             'component' => 'theme_snap',
-            'filearea'  => 'poster',
+            'filearea'  => 'coverimage',
             'itemid'    => 0,
             'filepath'  => '/',
             'filename'  => $filename,
@@ -264,8 +264,11 @@ class theme_snap_local_test extends \advanced_testcase {
 
         $fs = \get_file_storage();
         $fs->create_file_from_pathname($filerecord, $filepath);
-        \set_config('poster', '/'.$filename, 'theme_snap');
-        local::process_poster_image();
+
+        \set_config('poster', '/'.$testimagename, 'theme_snap');
+        local::process_coverimage($syscontext);
+
+        return ($this->get_poster_resize_file());
     }
 
     public function test_poster_image_upload() {

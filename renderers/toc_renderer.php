@@ -352,6 +352,6 @@ class toc_renderer extends core_renderer {
     public function get_course_image() {
         global $COURSE;
 
-        return \theme_snap\local::get_course_image($COURSE->id);
+        return \theme_snap\local::course_coverimage_url($COURSE->id);
     }
 }

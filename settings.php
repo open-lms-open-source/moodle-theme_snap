@@ -88,7 +88,7 @@ if ($ADMIN->fulltree) {
     $description = new lang_string('posterdesc', 'theme_snap');
     $opts = array('accepted_types' => array('.png', '.jpg', '.gif', '.webp', '.tiff', '.svg'));
     $setting = new admin_setting_configstoredfile($name, $title, $description, 'poster', 0, $opts);
-    $setting->set_updatedcallback('theme_snap_process_poster_upload');
+    $setting->set_updatedcallback('theme_snap_process_coverimage_upload');
     $settings->add($setting);
 
 

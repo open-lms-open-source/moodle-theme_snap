@@ -600,7 +600,7 @@ class theme_snap_core_renderer extends toc_renderer {
 
                 $bgcolor = local::get_course_color($c->id);
                 $courseimagecss = "background-color: #$bgcolor;";
-                $bgimage = local::get_course_image($c->id);
+                $bgimage = local::course_coverimage_url($c->id);
                 if (!empty($bgimage)) {
                     $courseimagecss .= "background-image: url($bgimage);";
                 }

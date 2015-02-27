@@ -657,12 +657,7 @@ class local {
         return substr(md5($id), 0, 6);
     }
 
-    /**
-     * get course image of course
-     *
-     * @return bool|moodle_url
-     */
-    public static function get_course_image($courseid) {
+    public static function get_course_firstimage($courseid) {
         $fs      = get_file_storage();
         $context = \context_course::instance($courseid);
         $files   = $fs->get_area_files($context->id, 'course', 'overviewfiles', false, 'filename', false);
@@ -670,20 +665,15 @@ class local {
         if (count($files) > 0) {
             foreach ($files as $file) {
                 if ($file->is_valid_image()) {
-                    return \moodle_url::make_pluginfile_url(
-                        $file->get_contextid(),
-                        $file->get_component(),
-                        $file->get_filearea(),
-                        false,
-                        $file->get_filepath(),
-                        $file->get_filename()
-                    );
+                    return $file;
                 }
             }
-        } else {
-            return false;
         }
+
+        return false;
     }
+
+
 
     /**
      * Extract first image from html
@@ -706,121 +696,186 @@ class local {
         }
     }
 
+
     /**
-     * Process theme poster image - rename, resize, etc.
+     * Make url based on file
+     *
+     * @param stored_file $file
+     * @return \moodle_url | bool
      */
-    public static function process_poster_image() {
-        $file = self::poster_file();
-        $finfo = $file->get_imageinfo();
-        // Restrict to jpegs for now.
-        if ($finfo['mimetype'] == 'image/jpeg' && $finfo['width'] > 1380) {
-            self::process_poster($file);
+    private static function pluginfile_url($file) {
+        if (!$file){
+            return false;
         } else {
-            self::delete_poster_file();
+            return \moodle_url::make_pluginfile_url(
+                $file->get_contextid(),
+                $file->get_component(),
+                $file->get_filearea(),
+                $file->get_timemodified(),
+                $file->get_filepath(),
+                $file->get_filename()
+            );
         }
     }
 
     /**
-     * Get poster image file.
+     * Get cover image for context
+     *
+     * @param $context
+     * @return bool|stored_file
+     * @throws \coding_exception
+     */
+    private static function coverimage($context) {
+        $contextid = $context->id;
+        $fs = \get_file_storage();
+
+        $files = $fs->get_area_files($contextid,'theme_snap','coverimage', 0, "itemid, filepath, filename", false);
+        if (!$files) {
+            return false;
+        }
+        if (count($files) > 1) {
+            throw new \coding_exception('Multiple files found in course coverimage area (context '.$contextid.')');
+        }
+        return (end($files));
+    }
+
+    /**
+     * Get processed course cover image
+     *
+     * @param $courseid
+     * @return stored_file|bool
+     */
+    public static function course_coverimage($courseid) {
+        $context = \context_course::instance($courseid);
+        return (self::coverimage($context));
+    }
+
+    /**
+     * get course image of course
+     *
+     * @return bool|moodle_url
+     */
+    public static function course_coverimage_url($courseid) {
+        $file = self::course_coverimage($courseid);
+        return self::pluginfile_url($file);
+    }
+
+    /**
+     * Get processed site cover image
+     *
+     * @return stored_file|bool
+     */
+    public static function site_coverimage() {
+        $context = \context_system::instance();
+        return (self::coverimage($context));
+    }
+
+    /**
+     * get course image of course
+     *
+     * @return bool|moodle_url
+     */
+    public static function site_coverimage_url() {
+        $file = self::site_coverimage();
+        return self::pluginfile_url($file);
+    }
+
+    /**
+     * Get original site cover image file.
      *
      * @return stored_file | bool (false)
      */
-    public static function poster_file() {
+    public static function site_coverimage_original() {
         $theme = \theme_config::load('snap');
         $filename = $theme->settings->poster;
         if ($filename) {
             $syscontextid = \context_system::instance()->id;
             $fullpath = "/$syscontextid/theme_snap/poster/0$filename";
-            $fs = get_file_storage();
+            $fs = \get_file_storage();
             return $fs->get_file_by_hash(sha1($fullpath));
         } else {
             return false;
         }
     }
 
+
     /**
-     * Adds the poster to CSS.
+     * Adds the course cover image to CSS.
      *
-     * @param string $css The CSS to process.
+     * @param int $courseid
      * @return string The parsed CSS
      */
-    public static function theme_snap_poster_css($css) {
+    public static function course_coverimage_css($courseid) {
+        $css = '';
+        $coverurl = self::course_coverimage_url($courseid);
+        if ($coverurl) {
+            $css = "#page-header {background-image: url($coverurl);}";
+        }
+        return $css;
+    }
+
+    /**
+    * Adds the site cover image to CSS.
+    *
+    * @param string $css The CSS to process.
+    * @return string The parsed CSS
+    */
+    public static function site_coverimage_css($css) {
         $tag = '[[setting:poster]]';
-
-        $posterfile = self::poster_file();
-
         $replacement = '';
 
-        if ($posterfile) {
-            $posterfilename = $posterfile->get_filename();
-            $finfo = $posterfile->get_imageinfo();
-            $ext = pathinfo($posterfilename, PATHINFO_EXTENSION);
-            if ($finfo['mimetype'] == 'image/jpeg' && $finfo['width'] > 1380) {
-                // Use resized poster.
-                $poster = \moodle_url::make_pluginfile_url(
-                    \context_system::instance()->id,
-                    'theme_snap',
-                    'resizedposter',
-                    time(),
-                    '/',
-                    "site-image.$ext"
-                );
-            } else {
-                // Use regular poster.
-                $poster = \moodle_url::make_pluginfile_url(
-                    \context_system::instance()->id,
-                    'theme_snap',
-                    'poster',
-                    time(),
-                    '/',
-                    $posterfilename
-                );
-            }
-            $replacement = "#page-site-index #page-header {background-image: url($poster);}";
+        $coverurl = self::site_coverimage_url();
+        if ($coverurl) {
+            $replacement = "#page-site-index #page-header {background-image: url($coverurl);}";
         }
 
         $css = str_replace($tag, $replacement, $css);
         return $css;
     }
 
-    private static function get_poster_filespec() {
-        return array(
-            'contextid' => \context_system::instance()->id,
+    /**
+     * Copy coverimage file to standard location and name.
+     *
+     * @param stored_file $file
+     * @return stored_file|bool
+     */
+    public static function process_coverimage($context) {
+        if ($context->contextlevel == CONTEXT_SYSTEM) {
+            $originalfile = self::site_coverimage_original($context);
+            $newfilename = "site-image";
+        } else if ($context->contextlevel == CONTEXT_COURSE) {
+            $originalfile= self::get_course_firstimage($context->instanceid);
+            $newfilename = "course-image";
+        } else {
+            throw new \coding_exception('Invalid context passed to process_coverimage');
+        }
+        if (!$originalfile){
+            return false;
+        }
+        $filename = $originalfile->get_filename();
+        $extension = pathinfo($filename, PATHINFO_EXTENSION);
+        $newfilename .= '.'.$extension;
+
+        $filespec = array(
+            'contextid' => $context->id,
             'component' => 'theme_snap',
-            'filearea' => 'resizedposter',
+            'filearea' => 'coverimage',
             'itemid' => 0,
             'filepath' => '/',
-            'filename' => "site-image.jpg",
+            'filename' => $newfilename,
         );
-    }
+        $fs = \get_file_storage();
 
-    private static function delete_poster_file() {
-        $filespec = self::get_poster_filespec();
-        $fs = get_file_storage();
-        $oldfile = $fs->get_file($filespec['contextid'],
-                                $filespec['component'],
-                                $filespec['filearea'],
-                                $filespec['itemid'],
-                                $filespec['filepath'],
-                                $filespec['filename']
-        );
-        if ($oldfile) {
-            $oldfile->delete();
+        // Delete old files.
+        $fs->delete_area_files($context->id, 'theme_snap', 'coverimage');
+
+        $newfile = $fs->create_file_from_storedfile($filespec, $originalfile);
+        $finfo = $newfile->get_imageinfo();
+
+        if ($finfo['mimetype'] == 'image/jpeg' && $finfo['width'] > 1380) {
+            return image::resize($newfile, false, 1280);
+        } else {
+            return $newfile;
         }
-    }
-
-    /**
-     * Copy poster file to standard location and name, resize if necessary.
-     *
-     * @param stored_file $file a jpeg image
-     * @return stored_file
-     */
-    private static function process_poster(\stored_file $file) {
-        self::delete_poster_file();
-        $filespec = self::get_poster_filespec();
-        $fs = get_file_storage();
-        $file = $fs->create_file_from_storedfile($filespec, $file);
-
-        return image::resize($file, false, 1280);
     }
 }

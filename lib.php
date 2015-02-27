@@ -15,8 +15,9 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 
-function theme_snap_process_poster_upload() {
-    \theme_snap\local::process_poster_image();
+function theme_snap_process_coverimage_upload() {
+    $context = \context_system::instance();
+    \theme_snap\local::process_coverimage($context);
     theme_reset_all_caches();
 }
 
@@ -33,7 +34,7 @@ function theme_snap_process_css($css, theme_config $theme) {
     $css = theme_snap_set_logo($css, $logo);
 
     // Set the background image for the poster.
-    $css = \theme_snap\local::theme_snap_poster_css($css);
+    $css = \theme_snap\local::site_coverimage_css($css);
 
     // Set the custom css.
     if (!empty($theme->settings->customcss)) {
@@ -159,9 +160,25 @@ function theme_snap_set_bootswatch($css, array $variables) {
  * @return bool
  */
 function theme_snap_pluginfile($course, $cm, $context, $filearea, $args, $forcedownload, array $options = array()) {
-    if ($context->contextlevel == CONTEXT_SYSTEM && in_array($filearea, ['poster', 'logo', 'favicon', 'resizedposter'])) {
-        $theme = theme_config::load('snap');
-        return $theme->setting_file_serve($filearea, $args, $forcedownload, $options);
+    if (($context->contextlevel == CONTEXT_SYSTEM || $context->contextlevel == CONTEXT_COURSE) && in_array($filearea, ['poster', 'logo', 'favicon', 'coverimage'])) {
+        if ($context->contextlevel == CONTEXT_SYSTEM) {
+            $theme = theme_config::load('snap');
+            return $theme->setting_file_serve($filearea, $args, $forcedownload, $options);
+        } else {
+            // @TO DO - should this code be modified to be more like the setting_file_serve function?
+            $filename = end($args);
+            $contextid = $context->id;
+            $fullpath = "/$contextid/theme_snap/$filearea/0/$filename";
+            $fs = \get_file_storage();
+            $file = $fs->get_file_by_hash(sha1($fullpath));
+            $cachelifespan = DAYSECS * 60;
+            if ($file) {
+                send_stored_file($file, $cachelifespan, 0, $forcedownload, $options);
+                return true;
+            } else {
+                send_file_not_found();
+            }
+        }
     } else {
         send_file_not_found();
     }

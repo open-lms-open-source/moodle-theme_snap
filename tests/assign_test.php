@@ -239,7 +239,7 @@ class theme_snap_assign_test extends mod_assign_base_testcase {
     }
 
     public function test_no_course_image() {
-        $actual = local::get_course_image($this->course->id);
+        $actual = local::course_coverimage_url($this->course->id);
         $this->assertFalse($actual);
     }
 
