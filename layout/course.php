@@ -12,7 +12,7 @@ $coursemainpage = strpos($PAGE->pagetype, 'course-view-') === 0;
 -->
 <main id="moodle-page" class="clearfix">
 <div id="page-header" class="clearfix
-<?php if (!empty($snapcourseimage)) : ?>
+<?php if (!empty($courseimagecss)) : ?>
  mast-image
 <?php endif;?>">
 <div class="breadcrumb-nav" aria-label="breadcrumb"><?php echo $OUTPUT->navbar(); ?></div>
