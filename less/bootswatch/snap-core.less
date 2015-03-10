@@ -2026,17 +2026,25 @@ li.calendar_event_user:before {
 .maincalendar .today .day{
     border-color:#dadada;
 }
+
 // A day with events
-.maincalendar .day .day a{
+.maincalendar .day .day a {
   border-radius: 100%;
-  color: #FFF;
   display: block;
   height: 4em;
   width: 4em;
   padding: 1.2em;
   margin:-1em;
-
 }
+
+.maincalendar .day.nottoday .day a {
+  color: #FFF;
+}
+
+.maincalendar .day.today .day a {
+    background-color: transparent;
+}
+
 .path-calendar .maincalendar .eventlist .event{
     border:0;
 }
