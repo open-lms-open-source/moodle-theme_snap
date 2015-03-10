@@ -377,9 +377,8 @@ class local {
         if (count($events) < $maxdeadlines) {
             $maxaftercurrentday = $maxdeadlines - count($events);
             $moreevents = self::get_upcoming_deadlines($courseids, $maxaftercurrentday);
-            $events = array_merge($events, $moreevents);
+            $events = $events + $moreevents;
         }
-
         foreach ($events as $event) {
             if (isset($courses[$event->courseid])) {
                 $course = $courses[$event->courseid];
@@ -449,7 +448,7 @@ class local {
                 }
             }
 
-            $output[] = $event;
+            $output[$event->id] = $event;
             ++$processed;
 
             if ($processed >= $maxevents) {
