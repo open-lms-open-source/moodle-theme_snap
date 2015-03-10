@@ -1927,20 +1927,36 @@ http://blog.rodneyrehm.de/archives/34-iOS7-Mobile-Safari-And-Viewport-Units.html
 
 /* Calandar */
 
+li.calendar_event_global:before,
 .calendar_event_global {
     background-color:@brand-success;
 }
+li.calendar_event_course:before,
 .calendar_event_course {
     //salmon
     background-color:salmon;
 
 }
+li.calendar_event_group:before,
 .calendar_event_group {
     // yellow
     background-color:#FDD652;
 }
+li.calendar_event_user:before,
 .calendar_event_user {
     background-color:@brand-info;
+}
+
+li.calendar_event_global:before,
+li.calendar_event_course:before,
+li.calendar_event_group:before,
+li.calendar_event_user:before {
+    content: " ";
+    width: 1em;
+    height: 1em;
+    border-radius: 100%;
+    display: inline-block;
+    margin: -0.1em 4%;
 }
 
 /* Block cals */
