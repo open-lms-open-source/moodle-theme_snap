@@ -25,10 +25,6 @@ if ($this->page->user_is_editing() && $PAGE->pagetype == 'site-index') {
     echo '<a class="btn btn-default btn-sm" href="'.$CFG->wwwroot.'/admin/settings.php?section=themesettingsnap#admin-poster">'.get_string('changecoverimage', 'theme_snap').'</a>';
 }
 ?>
-<!-- TODO
-if page is front page
-login button ?
--->
 </div>
 
 <section id="region-main">
@@ -80,7 +76,15 @@ if($hasadminbutton) {
 }
 
 echo $OUTPUT->page_heading_button();
-echo $OUTPUT->main_content();
+
+// On the front page, output some different content
+if($PAGE->pagetype == 'site-index') {
+    include(__DIR__.'/faux_site_index.php');
+}
+else {
+    echo $OUTPUT->main_content();
+}
+
 echo $OUTPUT->course_content_footer();
 ?>
 </section>
