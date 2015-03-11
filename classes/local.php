@@ -724,7 +724,7 @@ class local {
      * @return bool|stored_file
      * @throws \coding_exception
      */
-    private static function coverimage($context) {
+    public static function coverimage($context) {
         $contextid = $context->id;
         $fs = \get_file_storage();
 

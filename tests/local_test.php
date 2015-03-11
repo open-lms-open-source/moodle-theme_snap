@@ -219,21 +219,6 @@ class theme_snap_local_test extends \advanced_testcase {
     }
 
     /**
-     * Get poster resize file
-     *
-     * @return bool|\stored_file
-     * @throws \Exception
-     * @throws \dml_exception
-     */
-    protected function get_poster_resize_file() {
-        $fs = get_file_storage();
-        $syscontextid = \context_system::instance()->id;
-        $fullpath = "/$syscontextid/theme_snap/resizedposter/0/site-image.jpg";
-        $resizefile = $fs->get_file_by_hash(sha1($fullpath));
-        return $resizefile;
-    }
-
-    /**
      * Imitates an admin setting the site cover image via the
      * Snap theme settings page. Creates a file, sets a theme
      * setting with the filname, then calls the callback triggered
@@ -249,10 +234,10 @@ class theme_snap_local_test extends \advanced_testcase {
     protected function fake_site_image_setting_upload($filename) {
         global $CFG;
 
-        $syscontextid = \context_system::instance()->id;
+        $syscontext = \context_system::instance();
 
         $filerecord = array(
-            'contextid' => $syscontextid,
+            'contextid' => $syscontext->id,
             'component' => 'theme_snap',
             'filearea'  => 'coverimage',
             'itemid'    => 0,
@@ -265,16 +250,14 @@ class theme_snap_local_test extends \advanced_testcase {
         $fs = \get_file_storage();
         $fs->create_file_from_pathname($filerecord, $filepath);
 
-        \set_config('poster', '/'.$testimagename, 'theme_snap');
+        \set_config('poster', '/'.$filename, 'theme_snap');
         local::process_coverimage($syscontext);
-
-        return ($this->get_poster_resize_file());
     }
 
     public function test_poster_image_upload() {
         $this->resetAfterTest();
 
-        $beforeupload = local::poster_file();
+        $beforeupload = local::site_coverimage_original();
         $this->assertFalse($beforeupload);
 
         $fixtures = [
@@ -291,20 +274,17 @@ class theme_snap_local_test extends \advanced_testcase {
 
         foreach ($fixtures as $filename => $shouldberesized) {
 
+            $fs = \get_file_storage();
+            $syscontext = \context_system::instance();
+
+            $fs->delete_area_files($syscontext->id, 'theme_snap', 'coverimage');
+
             $this->fake_site_image_setting_upload($filename);
-            $resizedfile = $this->get_poster_resize_file();
 
             $css = '[[setting:poster]]';
-            $css = local::theme_snap_poster_css($css);
+            $css = local::site_coverimage_css($css);
 
-            if ($shouldberesized) {
-                $this->assertInstanceOf('stored_file', $resizedfile);
-                $this->assertContains('resizedposter', $css);
-            } else {
-                $this->assertFalse($resizedfile);
-                $this->assertContains($filename, $css);
-                $this->assertNotContains('resizedposter', $css);
-            }
+            $this->assertContains('coverimage', $css);
         }
     }
 }
