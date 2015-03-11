@@ -7,9 +7,8 @@
  **/
 
 $observers = array(
-    array(
-        'eventname'   => '\core\event\course_updated',
-        'includefile' => '/theme/snap/model/handler.php',
-        'callback'    => 'theme_snap_model_handler::course_updated',
+    array (
+        'eventname' => '\core\event\course_updated',
+        'callback'  => '\theme_snap\event_handlers::course_updated',
     )
 );

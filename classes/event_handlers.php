@@ -1,17 +1,17 @@
 <?php
 
+namespace theme_snap;
 use core\event\course_updated;
-use theme_snap\local;
 
 /**
- * Model Handler
+ * Event handlers
  *
  * This class contains all of our event handlers
  *
  * @package theme_snap
  * @author Guy Thomas
  */
-class theme_snap_model_handler {
+class event_handlers {
 
 
     /**
@@ -25,7 +25,7 @@ class theme_snap_model_handler {
     public static function course_updated(course_updated $event) {
 
         $course  = $event->get_record_snapshot('course', $event->objectid);
-        $context = context_course::instance($course->id);
+        $context = \context_course::instance($course->id);
 
         local::process_coverimage($context);
     }
