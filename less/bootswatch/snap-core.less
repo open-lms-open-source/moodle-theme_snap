@@ -1927,24 +1927,34 @@ http://blog.rodneyrehm.de/archives/34-iOS7-Mobile-Safari-And-Viewport-Units.html
 
 /* Calandar */
 
+span.calendar_event_global,
 li.calendar_event_global:before,
-.calendar_event_global {
+td.calendar_event_global > a {
     background-color:@brand-success;
 }
+span.calendar_event_course,
 li.calendar_event_course:before,
-.calendar_event_course {
+td.calendar_event_course > a {
     //salmon
     background-color:salmon;
 
 }
+span.calendar_event_group,
 li.calendar_event_group:before,
-.calendar_event_group {
+td.calendar_event_group > a {
     // yellow
     background-color:#FDD652;
 }
+span.calendar_event_user,
 li.calendar_event_user:before,
-.calendar_event_user {
+td.calendar_event_user > a {
     background-color:@brand-info;
+}
+td.calendar_event_global,
+td.calendar_event_course,
+td.calendar_event_group,
+td.calendar_event_user {
+    background-color: transparent;
 }
 
 li.calendar_event_global:before,
@@ -1960,19 +1970,30 @@ li.calendar_event_user:before {
 }
 
 /* Block cals */
-.block .minicalendar td,
-.block .minicalendar th {
-  border-radius: 100%;
-  height: 4em;
-  width: 4em;
-  padding: 1.2em;
-  display: inline-block;
-  &.hasevent > a{
-      color:#fff !important;
-  }
-  &.today {
-      border:1px solid #dadada;
-  }
+.block .minicalendar {
+    max-width: 500px;
+    th {
+        height: auto;
+        font-weight: @headings-font-weight;
+    }
+    td {
+          height: 4em;
+          vertical-align: middle;
+      > a {
+          border-radius: 100%;
+          height: 4em;
+          width: 4em;
+          padding: 1.2em;
+          display: block;
+          margin: auto;
+      }
+      &.hasevent > a {
+          color: #fff;
+      }
+      &.today > a {
+          border:1px solid #dadada;
+      }
+    }
 }
 // Minical hover box
 .calendar-event-panel {
@@ -1999,16 +2020,13 @@ li.calendar_event_user:before {
 
 
 .maincalendar .header {
-    font-weight:100;
+    font-weight: 100;
 }
 .path-calendar{
     .maincalendar .calendarmonth td,
     .maincalendar .calendarmonth th {
-        border-color:white;
+        border-color: #fff;
         height:1em;
-        .calendar_event_course {
-            margin-top:0.5em;
-        }
     }
 }
 
@@ -2018,7 +2036,7 @@ li.calendar_event_user:before {
   width: 4em;
   height: 4em;
   padding: 1.2em;
-  border: 1px solid #FFF;
+  border: 1px solid #fff;
   margin: 0 auto;
 }
 
@@ -2034,7 +2052,7 @@ li.calendar_event_user:before {
   height: 4em;
   width: 4em;
   padding: 1.2em;
-  margin:-1em;
+  margin: -1.2em;
 }
 
 .maincalendar .day.nottoday .day a {
@@ -2043,22 +2061,33 @@ li.calendar_event_user:before {
 
 .maincalendar .day.today .day a {
     background-color: transparent;
+    display: inline;
+    text-align: center;
+}
+
+ul.events-new,
+ul.events-underway {
+    padding-top: 0.5em;
+}
+ul.events-new + ul.events-underway {
+    padding-top: 0;
 }
 
 .path-calendar .maincalendar .eventlist .event{
     border:0;
 }
+
 .maincalendar ul{
     text-align:left;
     li {
-        background-color:transparent !important;
+        background-color: transparent;
     }
 }
 
 #dateselector-calendar-panel {
     .calheader,
     .calweekdaycell {
-        font-weight:100;
+        font-weight: 100;
         color:#666;
     }
     .calnavright,
