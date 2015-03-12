@@ -387,7 +387,7 @@ class theme_snap_core_course_renderer extends core_course_renderer {
 
             $link = $CFG->wwwroot.'/mod/'.$mod->modname.'/view.php?action=grading&id='.$mod->id.
                 '&tsort=timesubmitted&filter=require_grading';
-            $content .= '<a href="'.$link.'"><span class="label label-'.$gradedlabel.'">'.
+            $content .= '<a href="'.s($link).'"><span class="label label-'.$gradedlabel.'">'.
                 implode(', ', $engagementmeta).'</span></a>';
         } else {
             // Student - useful student meta data.

@@ -848,9 +848,14 @@ class local {
         } else {
             throw new \coding_exception('Invalid context passed to process_coverimage');
         }
+
+        $fs = \get_file_storage();
+        $fs->delete_area_files($context->id, 'theme_snap', 'coverimage');
+
         if (!$originalfile){
             return false;
         }
+
         $filename = $originalfile->get_filename();
         $extension = pathinfo($filename, PATHINFO_EXTENSION);
         $newfilename .= '.'.$extension;
@@ -863,10 +868,6 @@ class local {
             'filepath' => '/',
             'filename' => $newfilename,
         );
-        $fs = \get_file_storage();
-
-        // Delete old files.
-        $fs->delete_area_files($context->id, 'theme_snap', 'coverimage');
 
         $newfile = $fs->create_file_from_storedfile($filespec, $originalfile);
         $finfo = $newfile->get_imageinfo();

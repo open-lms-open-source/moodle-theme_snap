@@ -239,7 +239,7 @@ class theme_snap_local_test extends \advanced_testcase {
         $filerecord = array(
             'contextid' => $syscontext->id,
             'component' => 'theme_snap',
-            'filearea'  => 'coverimage',
+            'filearea'  => 'poster',
             'itemid'    => 0,
             'filepath'  => '/',
             'filename'  => $filename,
@@ -248,9 +248,35 @@ class theme_snap_local_test extends \advanced_testcase {
         $filepath = $CFG->dirroot.'/theme/snap/tests/fixtures/'.$filename;
 
         $fs = \get_file_storage();
-        $fs->create_file_from_pathname($filerecord, $filepath);
 
+        $fs->delete_area_files($syscontext->id, 'theme_snap', 'poster');
+
+        $fs->create_file_from_pathname($filerecord, $filepath);
         \set_config('poster', '/'.$filename, 'theme_snap');
+
+        local::process_coverimage($syscontext);
+    }
+
+    /**
+     * Imitates an admin deleting the site cover image via the
+     * Snap theme settings page. Deletes a file, sets a theme
+     * setting to blank, then calls the callback triggered
+     * by submitting the form.
+     *
+     * @param $fixturename
+     * @return array
+     * @throws \Exception
+     * @throws \dml_exception
+     * @throws \file_exception
+     * @throws \stored_file_creation_exception
+     */
+    protected function fake_site_image_setting_cleared() {
+        $syscontext = \context_system::instance();
+        $fs = \get_file_storage();
+
+        $fs->delete_area_files($syscontext->id, 'theme_snap', 'coverimage');
+
+        \set_config('poster', '', 'theme_snap');
         local::process_coverimage($syscontext);
     }
 
@@ -274,17 +300,29 @@ class theme_snap_local_test extends \advanced_testcase {
 
         foreach ($fixtures as $filename => $shouldberesized) {
 
-            $fs = \get_file_storage();
-            $syscontext = \context_system::instance();
-
-            $fs->delete_area_files($syscontext->id, 'theme_snap', 'coverimage');
-
             $this->fake_site_image_setting_upload($filename);
 
             $css = '[[setting:poster]]';
             $css = local::site_coverimage_css($css);
 
-            $this->assertContains('coverimage', $css);
+            $this->assertContains('/theme_snap/coverimage/', $css);
+
+            $ext = pathinfo($filename, PATHINFO_EXTENSION);
+            $this->assertContains("/site-image.$ext", $css);
+
+            if ($shouldberesized) {
+                $image = local::site_coverimage();
+                $finfo = $image->get_imageinfo();
+                $this->assertSame(1280, $finfo['width']);
+            }
         }
+
+        $this->fake_site_image_setting_cleared();
+
+        $css = '[[setting:poster]]';
+        $css = local::site_coverimage_css($css);
+
+        $this->assertSame('', $css);
+        $this->assertFalse(local::site_coverimage());
     }
 }
