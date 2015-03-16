@@ -703,7 +703,7 @@ class local {
      * @return \moodle_url | bool
      */
     private static function pluginfile_url($file, $cachebuster = true) {
-        if (!$file){
+        if (!$file) {
             return false;
         } else {
             if ($cachebuster) {
