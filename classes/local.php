@@ -703,7 +703,7 @@ class local {
      * @return \moodle_url | bool
      */
     private static function pluginfile_url($file) {
-        if (!$file){
+        if (!$file) {
             return false;
         } else {
             return \moodle_url::make_pluginfile_url(
@@ -726,9 +726,9 @@ class local {
      */
     public static function coverimage($context) {
         $contextid = $context->id;
-        $fs = \get_file_storage();
+        $fs = get_file_storage();
 
-        $files = $fs->get_area_files($contextid,'theme_snap','coverimage', 0, "itemid, filepath, filename", false);
+        $files = $fs->get_area_files($contextid, 'theme_snap', 'coverimage', 0, "itemid, filepath, filename", false);
         if (!$files) {
             return false;
         }
@@ -790,7 +790,7 @@ class local {
         if ($filename) {
             $syscontextid = \context_system::instance()->id;
             $fullpath = "/$syscontextid/theme_snap/poster/0$filename";
-            $fs = \get_file_storage();
+            $fs = get_file_storage();
             return $fs->get_file_by_hash(sha1($fullpath));
         } else {
             return false;
@@ -814,11 +814,11 @@ class local {
     }
 
     /**
-    * Adds the site cover image to CSS.
-    *
-    * @param string $css The CSS to process.
-    * @return string The parsed CSS
-    */
+     * Adds the site cover image to CSS.
+     *
+     * @param string $css The CSS to process.
+     * @return string The parsed CSS
+     */
     public static function site_coverimage_css($css) {
         $tag = '[[setting:poster]]';
         $replacement = '';
@@ -843,16 +843,16 @@ class local {
             $originalfile = self::site_coverimage_original($context);
             $newfilename = "site-image";
         } else if ($context->contextlevel == CONTEXT_COURSE) {
-            $originalfile= self::get_course_firstimage($context->instanceid);
+            $originalfile = self::get_course_firstimage($context->instanceid);
             $newfilename = "course-image";
         } else {
             throw new \coding_exception('Invalid context passed to process_coverimage');
         }
 
-        $fs = \get_file_storage();
+        $fs = get_file_storage();
         $fs->delete_area_files($context->id, 'theme_snap', 'coverimage');
 
-        if (!$originalfile){
+        if (!$originalfile) {
             return false;
         }
 
