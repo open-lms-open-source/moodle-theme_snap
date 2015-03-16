@@ -707,7 +707,7 @@ class local {
             return false;
         } else {
             if ($cachebuster) {
-                $cbts = time();
+                $cbts = $file->get_timemodified();
             } else {
                 $cbts = '';
             }
