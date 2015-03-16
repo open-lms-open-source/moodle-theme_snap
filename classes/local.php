@@ -709,7 +709,7 @@ class local {
             if ($cachebuster) {
                 $cbts = $file->get_timemodified();
             } else {
-                $cbts = '';
+                $cbts = null;
             }
             return \moodle_url::make_pluginfile_url(
                 $file->get_contextid(),
