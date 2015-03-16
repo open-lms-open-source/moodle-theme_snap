@@ -702,15 +702,20 @@ class local {
      * @param stored_file $file
      * @return \moodle_url | bool
      */
-    private static function pluginfile_url($file) {
-        if (!$file) {
+    private static function pluginfile_url($file, $cachebuster = true) {
+        if (!$file){
             return false;
         } else {
+            if ($cachebuster) {
+                $cbts = time();
+            } else {
+                $cbts = '';
+            }
             return \moodle_url::make_pluginfile_url(
                 $file->get_contextid(),
                 $file->get_component(),
                 $file->get_filearea(),
-                $file->get_timemodified(),
+                $cbts,
                 $file->get_filepath(),
                 $file->get_filename()
             );
@@ -756,7 +761,13 @@ class local {
      */
     public static function course_coverimage_url($courseid) {
         $file = self::course_coverimage($courseid);
-        return self::pluginfile_url($file);
+        if ($file) {
+            return self::pluginfile_url($file);
+        } else {
+            $file = self::get_course_firstimage($courseid);
+            return self::pluginfile_url($file, false);
+        }
+
     }
 
     /**
@@ -820,13 +831,24 @@ class local {
      * @return string The parsed CSS
      */
     public static function site_coverimage_css($css) {
+
+        $theme = \theme_config::load('snap');
+
         $tag = '[[setting:poster]]';
         $replacement = '';
 
         $coverurl = self::site_coverimage_url();
+        if (!$coverurl) {
+            // Fallback to original unprocessed cover image.
+            $coverurl = $theme->setting_file_url('poster', 'poster');
+        }
         if ($coverurl) {
             $replacement = "#page-site-index #page-header {background-image: url($coverurl);}";
         }
+
+
+
+
 
         $css = str_replace($tag, $replacement, $css);
         return $css;

@@ -29,6 +29,7 @@ function theme_snap_process_coverimage_upload() {
  * @return string
  */
 function theme_snap_process_css($css, theme_config $theme) {
+
     // Set the background image for the logo.
     $logo = $theme->setting_file_url('logo', 'logo');
     $css = theme_snap_set_logo($css, $logo);
