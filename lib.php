@@ -177,7 +177,7 @@ function send_snap_file($context, $filearea, $args, $forcedownload, $options) {
     $filename = end($args);
     $contextid = $context->id;
     $fullpath = "/$contextid/theme_snap/$filearea/0/$filename";
-    $fs = \get_file_storage();
+    $fs = get_file_storage();
     $file = $fs->get_file_by_hash(sha1($fullpath));
 
     if ($file) {

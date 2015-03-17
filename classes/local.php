@@ -750,7 +750,7 @@ class local {
     }
 
     /**
-     * Get cover image for course.
+     * Get cover image url for course.
      *
      * @return bool|moodle_url
      */
