@@ -59,9 +59,6 @@ if ($ADMIN->fulltree) {
     $setting->set_updatedcallback('theme_reset_all_caches');
     $settings->add($setting);
 
-
-
-
      // Logo file setting.
     $name = 'theme_snap/logo';
     $title = new lang_string('logo', 'theme_snap');
@@ -80,18 +77,14 @@ if ($ADMIN->fulltree) {
     $setting->set_updatedcallback('theme_reset_all_caches');
     $settings->add($setting);
 
-
-
     // Cover image file setting.
     $name = 'theme_snap/poster';
     $title = new lang_string('poster', 'theme_snap');
     $description = new lang_string('posterdesc', 'theme_snap');
     $opts = array('accepted_types' => array('.png', '.jpg', '.gif', '.webp', '.tiff', '.svg'));
     $setting = new admin_setting_configstoredfile($name, $title, $description, 'poster', 0, $opts);
-    $setting->set_updatedcallback('theme_snap_process_coverimage_upload');
+    $setting->set_updatedcallback('theme_snap_process_site_coverimage');
     $settings->add($setting);
-
-
 
     $name = 'theme_snap/menusandnavheading';
     $title = new lang_string('menusandnavheading', 'theme_snap');
@@ -142,8 +135,6 @@ if ($ADMIN->fulltree) {
     $setting->set_updatedcallback('theme_reset_all_caches');
     $settings->add($setting);
 
-
-
     // Course footer on/off.
     $name = 'theme_snap/coursefootertoggle';
     $title = new lang_string('coursefootertoggle', 'theme_snap');
@@ -189,7 +180,6 @@ if ($ADMIN->fulltree) {
     $setting->set_updatedcallback('theme_reset_all_caches');
     $settings->add($setting);
 
-
     // Custom CSS file.
     $name = 'theme_snap/customcss';
     $title = new lang_string('customcss', 'theme_snap');
@@ -198,6 +188,4 @@ if ($ADMIN->fulltree) {
     $setting = new admin_setting_configtextarea($name, $title, $description, $default);
     $setting->set_updatedcallback('theme_reset_all_caches');
     $settings->add($setting);
-
-
 }

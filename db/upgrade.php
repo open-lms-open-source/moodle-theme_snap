@@ -14,6 +14,8 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
+include_once($CFG->dirroot.'/theme/snap/lib.php');
+
 /**
  * Theme upgrade
  *
@@ -40,6 +42,11 @@ function xmldb_theme_snap_upgrade($oldversion) {
             set_config('coursefootertoggle', 0, 'theme_snap');
         }
         upgrade_plugin_savepoint(true, 2014090900, 'theme', 'snap');
+    }
+
+    if ($oldversion < 2014110404) {
+        theme_snap_process_site_coverimage();
+        upgrade_plugin_savepoint(true, 2014110404, 'theme', 'snap');
     }
 
     return true;

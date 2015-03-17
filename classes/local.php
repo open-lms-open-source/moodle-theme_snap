@@ -697,25 +697,20 @@ class local {
 
 
     /**
-     * Make url based on file
+     * Make url based on file for theme_snap components only.
      *
      * @param stored_file $file
      * @return \moodle_url | bool
      */
-    private static function pluginfile_url($file, $cachebuster = true) {
+    private static function snap_pluginfile_url($file) {
         if (!$file) {
             return false;
         } else {
-            if ($cachebuster) {
-                $cbts = $file->get_timemodified();
-            } else {
-                $cbts = null;
-            }
             return \moodle_url::make_pluginfile_url(
                 $file->get_contextid(),
                 $file->get_component(),
                 $file->get_filearea(),
-                $cbts,
+                $file->get_timemodified(), // Used as a cache buster
                 $file->get_filepath(),
                 $file->get_filename()
             );
@@ -744,7 +739,7 @@ class local {
     }
 
     /**
-     * Get processed course cover image
+     * Get processed course cover image.
      *
      * @param $courseid
      * @return stored_file|bool
@@ -755,23 +750,20 @@ class local {
     }
 
     /**
-     * get course image of course
+     * Get cover image for course.
      *
      * @return bool|moodle_url
      */
     public static function course_coverimage_url($courseid) {
         $file = self::course_coverimage($courseid);
-        if ($file) {
-            return self::pluginfile_url($file);
-        } else {
-            $file = self::get_course_firstimage($courseid);
-            return self::pluginfile_url($file, false);
+        if (!$file) {
+            $file = self::process_coverimage(\context_course::instance($courseid));
         }
-
+        return self::snap_pluginfile_url($file);
     }
 
     /**
-     * Get processed site cover image
+     * Get processed site cover image.
      *
      * @return stored_file|bool
      */
@@ -781,13 +773,13 @@ class local {
     }
 
     /**
-     * get course image of course
+     * Get cover image url for front page.
      *
      * @return bool|moodle_url
      */
     public static function site_coverimage_url() {
         $file = self::site_coverimage();
-        return self::pluginfile_url($file);
+        return self::snap_pluginfile_url($file);
     }
 
     /**
@@ -831,24 +823,13 @@ class local {
      * @return string The parsed CSS
      */
     public static function site_coverimage_css($css) {
-
-        $theme = \theme_config::load('snap');
-
         $tag = '[[setting:poster]]';
         $replacement = '';
 
         $coverurl = self::site_coverimage_url();
-        if (!$coverurl) {
-            // Fallback to original unprocessed cover image.
-            $coverurl = $theme->setting_file_url('poster', 'poster');
-        }
         if ($coverurl) {
             $replacement = "#page-site-index #page-header {background-image: url($coverurl);}";
         }
-
-
-
-
 
         $css = str_replace($tag, $replacement, $css);
         return $css;

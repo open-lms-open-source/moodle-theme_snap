@@ -15,7 +15,14 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 
-function theme_snap_process_coverimage_upload() {
+/**
+ * Process site cover image.
+ *
+ * @throws Exception
+ * @throws coding_exception
+ * @throws dml_exception
+ */
+function theme_snap_process_site_coverimage() {
     $context = \context_system::instance();
     \theme_snap\local::process_coverimage($context);
     theme_reset_all_caches();
