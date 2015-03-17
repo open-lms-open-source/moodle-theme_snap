@@ -156,6 +156,39 @@ function theme_snap_set_bootswatch($css, array $variables) {
 }
 
 /**
+ * Based on theme function setting_file_serve.
+ * Always sends item 0
+ *
+ * @param $context
+ * @param $filearea
+ * @param $args
+ * @param $forcedownload
+ * @param $options
+ * @return bool
+ */
+function send_snap_file($context, $filearea, $args, $forcedownload, $options) {
+    $revision = array_shift($args);
+    if ($revision < 0) {
+        $lifetime = 0;
+    } else {
+        $lifetime = DAYSECS * 60;
+    }
+
+    $filename = end($args);
+    $contextid = $context->id;
+    $fullpath = "/$contextid/theme_snap/$filearea/0/$filename";
+    $fs = \get_file_storage();
+    $file = $fs->get_file_by_hash(sha1($fullpath));
+
+    if ($file) {
+        send_stored_file($file, $lifetime, 0, $forcedownload, $options);
+        return true;
+    } else {
+        send_file_not_found();
+    }
+}
+
+/**
  * Serves any files associated with the theme settings.
  *
  * @param stdClass $course
@@ -168,27 +201,13 @@ function theme_snap_set_bootswatch($css, array $variables) {
  * @return bool
  */
 function theme_snap_pluginfile($course, $cm, $context, $filearea, $args, $forcedownload, array $options = array()) {
-    if (($context->contextlevel == CONTEXT_SYSTEM || $context->contextlevel == CONTEXT_COURSE)
-        && in_array($filearea, ['poster', 'logo', 'favicon', 'coverimage'])
-    ) {
-        if ($context->contextlevel == CONTEXT_SYSTEM) {
-            $theme = theme_config::load('snap');
-            return $theme->setting_file_serve($filearea, $args, $forcedownload, $options);
-        } else {
-            // TODO - should this code be modified to be more like the setting_file_serve function?
-            $filename = end($args);
-            $contextid = $context->id;
-            $fullpath = "/$contextid/theme_snap/$filearea/0/$filename";
-            $fs = \get_file_storage();
-            $file = $fs->get_file_by_hash(sha1($fullpath));
-            $cachelifespan = DAYSECS * 60;
-            if ($file) {
-                send_stored_file($file, $cachelifespan, 0, $forcedownload, $options);
-                return true;
-            } else {
-                send_file_not_found();
-            }
-        }
+
+    if ($context->contextlevel == CONTEXT_SYSTEM && in_array($filearea, ['logo', 'favicon'])) {
+        $theme = theme_config::load('snap');
+        return $theme->setting_file_serve($filearea, $args, $forcedownload, $options);
+    } else if (($context->contextlevel == CONTEXT_SYSTEM || $context->contextlevel == CONTEXT_COURSE)
+        && $filearea == 'coverimage') {
+        send_snap_file($context, $filearea, $args, $forcedownload, $options);
     } else {
         send_file_not_found();
     }
