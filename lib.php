@@ -166,7 +166,7 @@ function theme_snap_set_bootswatch($css, array $variables) {
  * @param $options
  * @return bool
  */
-function send_snap_file($context, $filearea, $args, $forcedownload, $options) {
+function theme_snap_send_file($context, $filearea, $args, $forcedownload, $options) {
     $revision = array_shift($args);
     if ($revision < 0) {
         $lifetime = 0;
@@ -207,7 +207,7 @@ function theme_snap_pluginfile($course, $cm, $context, $filearea, $args, $forced
         return $theme->setting_file_serve($filearea, $args, $forcedownload, $options);
     } else if (($context->contextlevel == CONTEXT_SYSTEM || $context->contextlevel == CONTEXT_COURSE)
         && $filearea == 'coverimage') {
-        send_snap_file($context, $filearea, $args, $forcedownload, $options);
+        theme_snap_send_file($context, $filearea, $args, $forcedownload, $options);
     } else {
         send_file_not_found();
     }
