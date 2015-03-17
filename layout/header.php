@@ -23,9 +23,7 @@ echo $OUTPUT->doctype();
 <?php
 
 // Output course cover image?
-$coursemainpage = strpos($PAGE->pagetype, 'course-view-') === 0;
-$courseimagecss = '';
-if ($coursemainpage) {
+if ($COURSE->id != SITEID) {
     $courseimagecss = \theme_snap\local::course_coverimage_css($COURSE->id);
 }
 if (!empty($courseimagecss)) {
