@@ -168,12 +168,14 @@ function theme_snap_set_bootswatch($css, array $variables) {
  * @return bool
  */
 function theme_snap_pluginfile($course, $cm, $context, $filearea, $args, $forcedownload, array $options = array()) {
-    if (($context->contextlevel == CONTEXT_SYSTEM || $context->contextlevel == CONTEXT_COURSE) && in_array($filearea, ['poster', 'logo', 'favicon', 'coverimage'])) {
+    if (($context->contextlevel == CONTEXT_SYSTEM || $context->contextlevel == CONTEXT_COURSE)
+        && in_array($filearea, ['poster', 'logo', 'favicon', 'coverimage'])
+    ) {
         if ($context->contextlevel == CONTEXT_SYSTEM) {
             $theme = theme_config::load('snap');
             return $theme->setting_file_serve($filearea, $args, $forcedownload, $options);
         } else {
-            // @TO DO - should this code be modified to be more like the setting_file_serve function?
+            // TODO - should this code be modified to be more like the setting_file_serve function?
             $filename = end($args);
             $contextid = $context->id;
             $fullpath = "/$contextid/theme_snap/$filearea/0/$filename";

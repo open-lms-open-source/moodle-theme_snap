@@ -710,7 +710,7 @@ class local {
                 $file->get_contextid(),
                 $file->get_component(),
                 $file->get_filearea(),
-                $file->get_timemodified(), // Used as a cache buster
+                $file->get_timemodified(), // Used as a cache buster.
                 $file->get_filepath(),
                 $file->get_filename()
             );
