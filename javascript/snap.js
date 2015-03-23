@@ -752,6 +752,7 @@ function snapInit() {
         // Page mod toggle content
         $(document).on("click", ".modtype_page .instancename,.pagemod-readmore,.pagemod-content .snap-action-icon", function(e) {
             var $pagemod = $(this).closest('.modtype_page');
+            scrollToElement($pagemod);
             $pagemod.toggleClass('state-expanded');
             $pagemod.find('.pagemod-content').slideToggle("fast", function() {
                 // Animation complete.
@@ -763,9 +764,8 @@ function snapInit() {
                 else {
                     $pagemod.attr('aria-expanded', 'false');
                     $pagemod.focus();
-
                 }
-                scrollToElement($pagemod);
+
             });
             applyResponsiveVideo();
             e.preventDefault();
@@ -773,6 +773,7 @@ function snapInit() {
 
         $(document).on("click", ".news-article .toggle", function(e) {
             var $news = $(this).closest('.news-article');
+            scrollToElement($news);
             $(".news-article").not($news).removeClass('state-expanded');
             $(".news-article-message").css('display','none');
 
@@ -788,7 +789,6 @@ function snapInit() {
                     $news.attr('aria-expanded', 'false');
                 }
             });
-            scrollToElement($news);
             applyResponsiveVideo();
             e.preventDefault();
         });
