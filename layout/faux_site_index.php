@@ -103,5 +103,5 @@ foreach (explode(',',$frontpagelayout) as $v) {
         echo $OUTPUT->box($courserenderer->course_search_form('', 'short'), 'mdl-align');
     break;
     }
-    echo $lastclosetag;
 }
+echo $lastclosetag;
