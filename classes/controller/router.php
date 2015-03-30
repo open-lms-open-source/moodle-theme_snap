@@ -14,14 +14,6 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
-/**
- * Controller Router
- *
- * @package   theme_snap
- * @copyright Copyright (c) 2013 Moodlerooms Inc. (http://www.moodlerooms.com)
- * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
- */
-
 namespace theme_snap\controller;
 
 use coding_exception;
@@ -29,8 +21,9 @@ use coding_exception;
 defined('MOODLE_INTERNAL') || die();
 
 /**
- * Matches an action to a controller method.
+ * Controller Router.
  *
+ * Matches an action to a controller method.
  * Can work with multiple controllers, first controller
  * that matches the action wins.
  *

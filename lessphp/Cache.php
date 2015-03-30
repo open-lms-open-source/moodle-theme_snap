@@ -1,4 +1,7 @@
 <?php
+// This file belongs to the 3rd party library less.php, licensed under the Apache 2 license.
+// This license can be obtained at https://www.apache.org/licenses/LICENSE-2.0.html
+// This 3rd party library can be obtained at // https://github.com/oyejorge/less.php
 
 require_once( dirname(__FILE__).'/Version.php');
 

@@ -20,8 +20,8 @@ include_once($CFG->dirroot.'/theme/snap/lib.php');
  * Theme upgrade
  *
  * @package   theme_snap
- * @copyright Copyright (c) 2009 Moodlerooms Inc. (http://www.moodlerooms.com)
- * @license   http://opensource.org/licenses/gpl-3.0.html GNU Public License
+ * @copyright Copyright (c) 2015 Moodlerooms Inc. (http://www.moodlerooms.com)
+ * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 function xmldb_theme_snap_upgrade($oldversion) {

@@ -1,5 +1,5 @@
 <?php
-// This file is part of the custom Moodle Snap theme
+// This file is part of Moodle - http://moodle.org/
 //
 // Moodle is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -13,15 +13,19 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
-//
 
-/**
- * Functions for dealing with activity modules.
- * Note, they have to be part of a class to facilitate auto loading.
- */
 namespace theme_snap;
 
 require_once($CFG->dirroot.'/mod/assign/locallib.php');
+
+/**
+ * Activity functions.
+ * These functions are in a class purely for auto loading convenience.
+ *
+ * @package   theme_snap
+ * @copyright Copyright (c) 2015 Moodlerooms Inc. (http://www.moodlerooms.com)
+ * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
 
 class activity {
 
