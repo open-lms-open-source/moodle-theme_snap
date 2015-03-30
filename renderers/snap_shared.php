@@ -135,7 +135,7 @@ class snap_shared extends renderer_base {
             'fullpath' => '/theme/snap/javascript/module.js'
         );
 
-        $PAGE->requires->js_init_call('M.theme_snap.core.init', array('courseid' => $COURSE->id), false, $module);
+        $PAGE->requires->js_init_call('M.theme_snap.core.init', array($COURSE->id, $PAGE->context->id), false, $module);
     }
 
     /**
