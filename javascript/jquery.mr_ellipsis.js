@@ -8,27 +8,110 @@
  */
 $.fn.ellipsis = function() {
 
-    if (!this[0]){
+    if (!this[0]) {
         return;
+    }
+
+    /**
+     * Is the last visual character in a string an html entity? If so return the entity else return false
+     * @param str
+     * @returns {bool | string}
+     */
+    var lastcharentity = function(str) {
+        var re = new RegExp("&([a-zA-Z]*?);");
+        var lastindex = 0;
+        while ((match = re.exec(str)) != null) {
+            if (match.index == lastindex) {
+                break;
+            }
+            lastindex = match.index + match[0].length;
+            if (lastindex == str.length) {
+                return match[0];
+            }
+            return false;
+        }
+    }
+
+    /**
+     * Get the character entity starting from a specific offset.
+     * @param str
+     *
+     * @returns {bool | string}
+     */
+    var charentity = function(str, offset) {
+        var re = new RegExp("&([a-zA-Z]*?);");
+        var lastindex = 0;
+        while ((match = re.exec(str)) != null) {
+            if (match.index == lastindex) {
+                break;
+            }
+            lastindex = match.index + match[0].length;
+            if (match.index == offset) {
+                return match[0];
+            }
+            return false;
+        }
+    }
+
+    /**
+     * Shrink string by one character or entity
+     *
+     * @param str
+     * @return string
+     */
+    var shrinkstring = function(str) {
+        // We need to grab the entire length of a html entity if its the last component of the string and
+        // use it as a decrementer.
+        // otherwise we will get a bug where we trim a portion of a html entity away - e.g. &amp; to &amp and then
+        // chrome will just automatically 'fix' the broken entity
+        var lastcharentitiy = lastcharentity(str);
+        var decrementer = 1;
+        if (lastcharentitiy) {
+            decrementer = lastcharentitiy.length;
+        }
+        return (str.substr(0, str.length - decrementer));
+    }
+
+    /**
+     * Expand a string by one character or entity by comparing it to its original string
+     *
+     * @param str
+     * @param originalstr
+     * @return string
+     */
+    var expandstring = function(str, originalstr) {
+        var nextchar = originalstr.substr(str.length, 1);
+        if (nextchar == '&') {
+            // The next char could be an entity
+            var entity = charentity(originalstr, str.length);
+            if (entity) {
+                // OK, it is an entity so lets add it to str
+                return str+entity;
+            } else {
+                // Looks like its just an unescaped ampersand
+                return str + '&';
+            }
+        }
+        return (str + nextchar);
     }
 
     this.each(function(){
         // log original text
-        if (typeof($(this).data('originaltxt'))=='undefined') {
+        if (typeof($(this).data('originaltxt')) == 'undefined') {
             $(this).data('originaltxt', this.innerHTML);
         }
 
         // log text line height
-        if (typeof($(this).data('emheight'))=='undefined') {
-            if ($(this).height()==0) {
+        if (typeof($(this).data('emheight')) == 'undefined') {
+            if ($(this).height() == 0) {
                 // I am hidden
                 return;
             }
-            this.innerHTML='M';
+            this.innerHTML = 'M';
             // Horrible bodge fix here, I'm adding 2 pixels on because its obviously not calculating the row height
             // correctly, or possibly my logic for working out ellipses is bad.
-            $(this).data('emheight', $(this).height()+2);
-            this.innerHTML=$(this).data('originaltxt');
+            $(this).data('emheight', $(this).height() + 2);
+            this.innerHTML = $(this).data('originaltxt');
         }
 
         var emheight = parseInt($(this).data('emheight'));
@@ -38,35 +121,46 @@ $.fn.ellipsis = function() {
         // Note - this is in here temporarilly - we need to make it so you can pass max rows into the function.
         maxrows = !maxrows ? 2 : maxrows;
 
-        var maxheight=$(this).data('maxheight');
+        var maxheight = $(this).data('maxheight');
         if (!maxheight && !maxrows){
             return this;
         } else if (!maxheight && maxrows){
             maxheight = maxrows * emheight;
         }
 
-        //console.log('maxheight: '+maxheight+' maxrows: '+maxrows);
-        //console.log('line height = '+emheight);
-
         if ($(this).height() > maxheight) {
+
             $(this).addClass('ellipsis_toobig');
             // Content is too big, lets shrink it (but never let it go less than 1 row height as that's pointless).
+            var l = 0;
             while ($(this).height() > maxheight && $(this).height() > emheight) {
-                this.innerHTML = this.innerHTML.substr(0, this.innerHTML.length-2);
-                if (this.innerHTML.length<2){
+                l++;
+                if (l > 1000) {
+                    console.log('possible infinite loop when shrinking "'+$(this).data('originaltxt')+'"');
+                    break;
+                }
+                this.innerHTML = shrinkstring(this.innerHTML);
+                if (this.innerHTML.length < 2) {
                     // we've gone too far here!
                     return;
                 }
             }
         } else {
-            while ($(this).height() <= maxheight  && this.innerHTML.length<$(this).data('originaltxt').length) {
-                //console.log('Making content bigger. My height '+$(this).height()+ ' v maxheight '+maxheight);
+            // OK, we might need to expand the string if it was previously ellipsed.
+            // Note: This is only going to be called if the ellipses is redone on window resize.
+            var l = 0;
+            while ($(this).height() <= maxheight  && this.innerHTML.length < $(this).data('originaltxt').length) {
+                l++;
+                if (l > 1000) {
+                    console.log('possible infinite loop when expanding "'+$(this).data('originaltxt')+'"');
+                    break;
+                }
                 // Make content bigger.
-                this.innerHTML = $(this).data('originaltxt').substr(0, this.innerHTML.length+2);
+                this.innerHTML = expandstring(this.innerHTML, $(this).data('originaltxt'));
             }
             // Take content back a notch
             if ($(this).height() > maxheight) {
-                this.innerHTML = $(this).data('originaltxt').substr(0, this.innerHTML.length-2);
+                this.innerHTML = shrinkstring(this.innerHTML);
             } else {
                 // Content fits now so get rid of ellipsis_toobig class
                 $(this).removeClass('ellipsis_toobig');
