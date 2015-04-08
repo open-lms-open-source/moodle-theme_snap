@@ -166,6 +166,49 @@ $.fn.ellipsis = function() {
                 $(this).removeClass('ellipsis_toobig');
             }
         }
+
+
     });
+
+    /**
+     * Test shrink and expand functions.
+     * @TODO - at some point consider adding to a javascript unit testing framework like QUNIT.
+     */
+    function test_functions() {
+        var tests = 0;
+        var passes = 0;
+        var fails = 0;
+
+        for (var c=0; c<teststrings.length; c++){
+
+            var originalstr = teststrings[c];
+            console.log('Testing string', originalstr);
+            str = originalstr;
+            var totallen = str.length;
+
+            // Shrink
+            for (var a=0; a<totallen; a++) {
+                str = shrinkstring(str);
+                console.log('Shrunk string by '+a+' chars', str);
+            }
+
+            // Expand
+            for (var a=0; a<totallen; a++) {
+                str = expandstring(str, originalstr);
+                console.log('Expanded string by '+a+' chars', str);
+            }
+
+            // Test back to normal
+            tests++;
+            if (str == originalstr) {
+                console.log('Test passed for', originalstr);
+                passes++;
+            } else {
+                console.log('Test failed for', originalstr);
+                fails++;
+            }
+        }
+        console.log(passes+' test passed and '+fails+' tests failed');
+    }
     return this;
 }
