@@ -107,19 +107,27 @@ $.fn.ellipsis = function() {
         }
 
         // Log text line height.
-        if (typeof($(this).data('emheight')) == 'undefined') {
+        if (typeof($(this).data('rowheight')) == 'undefined') {
             if ($(this).height() === 0) {
                 // I am hidden.
                 return;
             }
-            this.innerHTML = 'M';
-            // Horrible bodge fix here, I'm adding 2 pixels on because its obviously not calculating the row height
-            // correctly, or possibly my logic for working out ellipses is bad.
-            $(this).data('emheight', $(this).height() + 2);
+
+            // Make characters span two rows and then get row height from half of 2 rows.
+            this.innerHTML = '|';
+            var scheight = $(this).outerHeight();
+            var c=0;
+            while ($(this).outerHeight() < scheight*2 && c<1000) {
+                c++;
+                this.innerHTML += ' |';
+            }
+            var rowheight = $(this).outerHeight() / 2;
+
+            $(this).data('rowheight', rowheight);
             this.innerHTML = $(this).data('originaltxt');
         }
 
-        var emheight = parseInt($(this).data('emheight'));
+        rowheight = parseInt($(this).data('rowheight'));
 
         var maxrows = $(this).data('maxrows');
 
@@ -130,15 +138,18 @@ $.fn.ellipsis = function() {
         if (!maxheight && !maxrows){
             return this;
         } else if (!maxheight && maxrows){
-            maxheight = maxrows * emheight;
+            maxheight = maxrows * rowheight;
         }
 
-        if ($(this).height() > maxheight) {
+        if ($(this).outerHeight() > maxheight) {
 
             $(this).addClass('ellipsis_toobig');
             // Content is too big, lets shrink it (but never let it go less than 1 row height as that's pointless).
             l = 0;
-            while ($(this).height() > maxheight && $(this).height() > emheight) {
+            while ($(this).outerHeight() > maxheight && $(this).outerHeight() > rowheight) {
+
+                console.log('Comparing '+$(this).outerHeight()+' against maxheight '+maxheight);
+
                 l++;
                 if (l > 1000) {
                     console.log('possible infinite loop when shrinking "'+$(this).data('originaltxt')+'"');
