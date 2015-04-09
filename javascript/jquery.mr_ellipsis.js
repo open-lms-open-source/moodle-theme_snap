@@ -1,5 +1,10 @@
 /**
- * NOTE: you can make this work on a fluid width element (i.e. responsively) if you call it on window resize.
+ * NOTE: You can make this work on a fluid width element (i.e. responsively) if you call it on window resize.
+ * NOTE: You can run the tests on this library as follows:
+ *
+ * var test = $('*').ellipsis();
+ * test.test_functions();
+ *
  * jquery ellipsis plugin
  * author: Guy Thomas
  * date: 2014-10-16
@@ -30,7 +35,7 @@ $.fn.ellipsis = function() {
             }
         }
         return false;
-    }
+    };
 
     /**
      * Get the character entity starting from a specific offset.
@@ -49,9 +54,9 @@ $.fn.ellipsis = function() {
             if (match.index == offset) {
                 return match[0];
             }
-            return false;
         }
-    }
+        return false;
+    };
 
     /**
      * Shrink string by one character or entity
@@ -70,7 +75,7 @@ $.fn.ellipsis = function() {
             decrementer = lastcharentitiy.length;
         }
         return (str.substr(0, str.length - decrementer));
-    }
+    };
 
     /**
      * Expand a string by one character or entity by comparing it to its original string
@@ -93,18 +98,22 @@ $.fn.ellipsis = function() {
             }
         }
         return (str + nextchar);
-    }
+    };
 
     this.each(function() {
-        // log original text
+
+        // Loop counter.
+        var l = 0;
+
+        // Log original text.
         if (typeof($(this).data('originaltxt')) == 'undefined') {
             $(this).data('originaltxt', this.innerHTML);
         }
 
-        // log text line height
+        // Log text line height.
         if (typeof($(this).data('emheight')) == 'undefined') {
-            if ($(this).height() == 0) {
-                // I am hidden
+            if ($(this).height() === 0) {
+                // I am hidden.
                 return;
             }
             this.innerHTML = 'M';
@@ -132,7 +141,7 @@ $.fn.ellipsis = function() {
 
             $(this).addClass('ellipsis_toobig');
             // Content is too big, lets shrink it (but never let it go less than 1 row height as that's pointless).
-            var l = 0;
+            l = 0;
             while ($(this).height() > maxheight && $(this).height() > emheight) {
                 l++;
                 if (l > 1000) {
@@ -154,7 +163,7 @@ $.fn.ellipsis = function() {
         } else {
             // OK, we might need to expand the string if it was previously ellipsed.
             // Note: This is only going to be called if the ellipses is redone on window resize.
-            var l = 0;
+            l = 0;
             while ($(this).height() <= maxheight  && this.innerHTML.length < $(this).data('originaltxt').length) {
                 l++;
                 if (l > 1000) {
@@ -174,57 +183,68 @@ $.fn.ellipsis = function() {
         }
     });
 
-    /**
-     * Test shrink and expand functions.
-     * @TODO - at some point consider adding to a javascript unit testing framework like QUNIT.
-     */
-    function test_functions() {
-        var teststrings = [
-            "String test one - blah blah blah here we go and hope that this passes &amp;",
-            "&amp; small string",
-            "Large string with multiple entities &amp; and &nbsp; and &comma;",
-            "&comma; start with entity",
-            "end with entity &comma;",
-            "entity in &comma; middle",
-            "entity number &#160; in middle",
-            "&#160; entity number at start",
-            "entity number at end &#160;",
-            "A test with a really really really long name and &amp; an entity &nbsp;"
-        ];
-        var tests = 0;
-        var passes = 0;
-        var fails = 0;
+    return ({
+        /**
+         * Test shrink and expand functions.
+         * @TODO - at some point consider adding to a javascript unit testing framework like QUNIT.
+         */
+        test_functions : function() {
+            var a = 0;
+            var teststrings = [
+                "String test one - blah blah blah here we go and hope that this passes &amp;",
+                "&amp; small string",
+                "Large string with multiple entities &amp; and &nbsp; and &comma;",
+                "&comma; start with entity",
+                "end with entity &comma;",
+                "entity in &comma; middle",
+                "entity number &#160; in middle",
+                "&#160; entity number at start",
+                "entity number at end &#160;",
+                "A test with a really really really long name and &amp; an entity &nbsp;"
+            ];
+            var tests = 0;
+            var passes = 0;
+            var fails = 0;
 
-        for (var c=0; c<teststrings.length; c++){
+            for (var c = 0; c < teststrings.length; c++) {
 
-            var originalstr = teststrings[c];
-            console.log('Testing string', originalstr);
-            str = originalstr;
-            var totallen = str.length;
+                var originalstr = teststrings[c];
+                console.log('Testing string', originalstr);
+                str = originalstr;
+                var totallen = str.length;
 
-            // Shrink
-            for (var a=0; a<totallen; a++) {
-                str = shrinkstring(str);
-                console.log('Shrunk string by '+a+' chars', str);
+                // Shrink.
+                for (a = 0; a < totallen; a++) {
+                    str = shrinkstring(str);
+                    console.log('Shrunk string by ' + a + ' chars', str);
+                }
+
+                // Test shrinkage.
+                tests++;
+                if (str.length < totallen) {
+                    passes++;
+                } else {
+                    fails++;
+                }
+
+                // Expand.
+                for (a = 0; a < totallen; a++) {
+                    str = expandstring(str, originalstr);
+                    console.log('Expanded string by ' + a + ' chars', str);
+                }
+
+                // Test that all strings are now back to normal.
+                tests++;
+                if (str == originalstr) {
+                    console.log('Test passed for', originalstr);
+                    passes++;
+                } else {
+                    console.log('Test failed for', originalstr);
+                    fails++;
+                }
             }
-
-            // Expand
-            for (var a=0; a<totallen; a++) {
-                str = expandstring(str, originalstr);
-                console.log('Expanded string by '+a+' chars', str);
-            }
-
-            // Test back to normal
-            tests++;
-            if (str == originalstr) {
-                console.log('Test passed for', originalstr);
-                passes++;
-            } else {
-                console.log('Test failed for', originalstr);
-                fails++;
-            }
+            console.log(passes + ' test passed and ' + fails + ' tests failed');
         }
-        console.log(passes+' test passed and '+fails+' tests failed');
-    }
-    return this;
-}
+    });
+
+};
