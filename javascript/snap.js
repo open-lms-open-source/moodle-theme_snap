@@ -803,10 +803,12 @@ function snapInit() {
                 window.setTimeout(function() {
                     logmsg ('checking ' + timestamp + ' against ' + resizestamp);
                     if (timestamp === resizestamp) {
-                        logmsg('applying video resize');
+                        logmsg('running resize hook functions');
                         applyResponsiveVideo();
+                        // Apply another short delay for adding ellipsis.
+                        window.setTimeout(function() {$('.courseinfo-body h3 a').ellipsis();}, 200);
                     } else {
-                        logmsg('skipping video resize - timestamp has changed from ' + timestamp + ' to ' + resizestamp);
+                        logmsg('skipping resize hook functions - timestamp has changed from ' + timestamp + ' to ' + resizestamp);
                     }
                 },200); // wait 1/20th of a second before resizing
             })(resizestamp);
@@ -860,5 +862,11 @@ function snapInit() {
         // Note, if you don't do this on load then FLV media gets wrong size.
         applyResponsiveVideo();
 
+        // Add ellipsis to long course titles.
+        if (window.location.hash == '#primary-nav') {
+            $('.courseinfo-body h3 a').ellipsis();
+        }
+
     });
+
 } // End snap init
