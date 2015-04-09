@@ -860,5 +860,10 @@ function snapInit() {
         // Note, if you don't do this on load then FLV media gets wrong size.
         applyResponsiveVideo();
 
+        // Add ellipsis to long course titles.
+        if (window.location.hash == '#primary-nav') {
+            $('.courseinfo-body h3 a').ellipsis();
+        }
+
     });
 } // End snap init

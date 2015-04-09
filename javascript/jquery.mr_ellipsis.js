@@ -18,9 +18,9 @@ $.fn.ellipsis = function() {
      * @returns {bool | string}
      */
     var lastcharentity = function(str) {
-        var re = new RegExp("&([a-zA-Z]*?);");
+        var re = /&(\#\d+|\#x[A-F0-9]+|[a-zA-Z]+);$/;
         var lastindex = 0;
-        while ((match = re.exec(str)) != null) {
+        while ((match = re.exec(str)) !== null) {
             if (match.index == lastindex) {
                 break;
             }
@@ -28,8 +28,8 @@ $.fn.ellipsis = function() {
             if (lastindex == str.length) {
                 return match[0];
             }
-            return false;
         }
+        return false;
     }
 
     /**
@@ -39,9 +39,9 @@ $.fn.ellipsis = function() {
      * @returns {bool | string}
      */
     var charentity = function(str, offset) {
-        var re = new RegExp("&([a-zA-Z]*?);");
+        var re = /&(\#\d+|\#x[A-F0-9]+|[a-zA-Z]+);/g;
         var lastindex = 0;
-        while ((match = re.exec(str)) != null) {
+        while ((match = re.exec(str)) !== null) {
             if (match.index == lastindex) {
                 break;
             }
@@ -95,7 +95,7 @@ $.fn.ellipsis = function() {
         return (str + nextchar);
     }
 
-    this.each(function(){
+    this.each(function() {
         // log original text
         if (typeof($(this).data('originaltxt')) == 'undefined') {
             $(this).data('originaltxt', this.innerHTML);
@@ -145,6 +145,12 @@ $.fn.ellipsis = function() {
                     return;
                 }
             }
+
+            if (this.innerHTML.length >= 2) {
+                // Trim off one more character, just to be sure.
+                this.innerHTML = shrinkstring(this.innerHTML);
+            }
+
         } else {
             // OK, we might need to expand the string if it was previously ellipsed.
             // Note: This is only going to be called if the ellipses is redone on window resize.
@@ -166,8 +172,6 @@ $.fn.ellipsis = function() {
                 $(this).removeClass('ellipsis_toobig');
             }
         }
-
-
     });
 
     /**
@@ -175,6 +179,18 @@ $.fn.ellipsis = function() {
      * @TODO - at some point consider adding to a javascript unit testing framework like QUNIT.
      */
     function test_functions() {
+        var teststrings = [
+            "String test one - blah blah blah here we go and hope that this passes &amp;",
+            "&amp; small string",
+            "Large string with multiple entities &amp; and &nbsp; and &comma;",
+            "&comma; start with entity",
+            "end with entity &comma;",
+            "entity in &comma; middle",
+            "entity number &#160; in middle",
+            "&#160; entity number at start",
+            "entity number at end &#160;",
+            "A test with a really really really long name and &amp; an entity &nbsp;"
+        ];
         var tests = 0;
         var passes = 0;
         var fails = 0;
