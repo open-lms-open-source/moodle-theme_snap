@@ -45,8 +45,8 @@ $courserenderer = $PAGE->get_renderer('core', 'course');
 /* Duplicates code from index.php which outputs front page items
  * to allow us to override the front page news.
  * */
-foreach (explode(',',$frontpagelayout) as $v) {
-    switch ($v) {     /// Display the main part of the front page.
+foreach (explode(',', $frontpagelayout) as $section) {
+    switch ($section) {
         case FRONTPAGENEWS:
             if ($SITE->newsitems) { // Print forums only when needed
                 // Snap specific override.
@@ -54,79 +54,77 @@ foreach (explode(',',$frontpagelayout) as $v) {
             }
         break;
 
-    case FRONTPAGEENROLLEDCOURSELIST:
-        // echo "<a href='http://joule2.dev/#primary-nav'>My courses</a>";
+        case FRONTPAGEENROLLEDCOURSELIST:
+            $mycourseshtml = $courserenderer->frontpage_my_courses();
+            if (!empty($mycourseshtml)) {
+                echo html_writer::tag('a', get_string('skipa', 'access', core_text::strtolower(get_string('mycourses'))), array('href'=>'#skipmycourses', 'class'=>'skip-block'));
 
-        $mycourseshtml = $courserenderer->frontpage_my_courses();
-        if (!empty($mycourseshtml)) {
-            echo html_writer::tag('a', get_string('skipa', 'access', core_text::strtolower(get_string('mycourses'))), array('href'=>'#skipmycourses', 'class'=>'skip-block'));
+                // Wrap frontpage course list in div container.
+                echo html_writer::start_tag('div', array('id'=>'frontpage-course-list'));
 
-            //wrap frontpage course list in div container
-            echo html_writer::start_tag('div', array('id'=>'frontpage-course-list'));
+                echo $OUTPUT->heading(get_string('mycourses'));
+                echo $mycourseshtml;
 
-            echo $OUTPUT->heading(get_string('mycourses'));
-            echo $mycourseshtml;
+                // End frontpage course list div container.
+                echo html_writer::end_tag('div');
 
-            //end frontpage course list div container
+                echo html_writer::tag('span', '', array('class'=>'skip-block-to', 'id'=>'skipmycourses'));
+
+                break;
+            }
+            // No "break" here. If there are no enrolled courses - continue to 'Available courses'.
+
+        case FRONTPAGEALLCOURSELIST:
+            $availablecourseshtml = $courserenderer->frontpage_available_courses();
+            if (!empty($availablecourseshtml)) {
+                echo html_writer::tag('a', get_string('skipa', 'access', core_text::strtolower(get_string('availablecourses'))), array('href'=>'#skipavailablecourses', 'class'=>'skip-block'));
+
+                // Wrap frontpage course list in div container.
+                echo html_writer::start_tag('div', array('id'=>'frontpage-course-list'));
+
+                echo $OUTPUT->heading(get_string('availablecourses'));
+                echo $availablecourseshtml;
+
+                // End frontpage course list div container.
+                echo html_writer::end_tag('div');
+
+                echo html_writer::tag('span', '', array('class'=>'skip-block-to', 'id'=>'skipavailablecourses'));
+            }
+        break;
+
+        case FRONTPAGECATEGORYNAMES:
+            echo html_writer::tag('a', get_string('skipa', 'access', core_text::strtolower(get_string('categories'))), array('href'=>'#skipcategories', 'class'=>'skip-block'));
+
+            // Wrap frontpage category names in div container.
+            echo html_writer::start_tag('div', array('id'=>'frontpage-category-names'));
+
+            echo $OUTPUT->heading(get_string('categories'));
+            echo $courserenderer->frontpage_categories_list();
+
+            // End frontpage category names div container.
             echo html_writer::end_tag('div');
 
-            echo html_writer::tag('span', '', array('class'=>'skip-block-to', 'id'=>'skipmycourses'));
+            echo html_writer::tag('span', '', array('class'=>'skip-block-to', 'id'=>'skipcategories'));
+        break;
 
-            break;
-        }
-        // No "break" here. If there are no enrolled courses - continue to 'Available courses'.
+        case FRONTPAGECATEGORYCOMBO:
+            echo html_writer::tag('a', get_string('skipa', 'access', core_text::strtolower(get_string('courses'))), array('href'=>'#skipcourses', 'class'=>'skip-block'));
 
-    case FRONTPAGEALLCOURSELIST:
-        $availablecourseshtml = $courserenderer->frontpage_available_courses();
-        if (!empty($availablecourseshtml)) {
-            echo html_writer::tag('a', get_string('skipa', 'access', core_text::strtolower(get_string('availablecourses'))), array('href'=>'#skipavailablecourses', 'class'=>'skip-block'));
+            // Wrap frontpage category combo in div container.
+            echo html_writer::start_tag('div', array('id'=>'frontpage-category-combo'));
 
-            //wrap frontpage course list in div container
-            echo html_writer::start_tag('div', array('id'=>'frontpage-course-list'));
+            echo $OUTPUT->heading(get_string('courses'));
+            echo $courserenderer->frontpage_combo_list();
 
-            echo $OUTPUT->heading(get_string('availablecourses'));
-            echo $availablecourseshtml;
-
-            //end frontpage course list div container
+            // End frontpage category combo div container.
             echo html_writer::end_tag('div');
 
-            echo html_writer::tag('span', '', array('class'=>'skip-block-to', 'id'=>'skipavailablecourses'));
-        }
-    break;
+            echo html_writer::tag('span', '', array('class'=>'skip-block-to', 'id'=>'skipcourses'));
+        break;
 
-    case FRONTPAGECATEGORYNAMES:
-        echo html_writer::tag('a', get_string('skipa', 'access', core_text::strtolower(get_string('categories'))), array('href'=>'#skipcategories', 'class'=>'skip-block'));
-
-        //wrap frontpage category names in div container
-        echo html_writer::start_tag('div', array('id'=>'frontpage-category-names'));
-
-        echo $OUTPUT->heading(get_string('categories'));
-        echo $courserenderer->frontpage_categories_list();
-
-        //end frontpage category names div container
-        echo html_writer::end_tag('div');
-
-        echo html_writer::tag('span', '', array('class'=>'skip-block-to', 'id'=>'skipcategories'));
-    break;
-
-    case FRONTPAGECATEGORYCOMBO:
-        echo html_writer::tag('a', get_string('skipa', 'access', core_text::strtolower(get_string('courses'))), array('href'=>'#skipcourses', 'class'=>'skip-block'));
-
-        //wrap frontpage category combo in div container
-        echo html_writer::start_tag('div', array('id'=>'frontpage-category-combo'));
-
-        echo $OUTPUT->heading(get_string('courses'));
-        echo $courserenderer->frontpage_combo_list();
-
-        //end frontpage category combo div container
-        echo html_writer::end_tag('div');
-
-        echo html_writer::tag('span', '', array('class'=>'skip-block-to', 'id'=>'skipcourses'));
-    break;
-
-    case FRONTPAGECOURSESEARCH:
-        echo $OUTPUT->box($courserenderer->course_search_form('', 'short'), 'mdl-align');
-    break;
+        case FRONTPAGECOURSESEARCH:
+            echo $OUTPUT->box($courserenderer->course_search_form('', 'short'), 'mdl-align');
+        break;
     }
-    echo $lastclosetag;
 }
+echo $lastclosetag;
