@@ -14,21 +14,14 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
-/**
- * Controller Kernel
- *
- * @package   theme_snap
- * @copyright Copyright (c) 2013 Moodlerooms Inc. (http://www.moodlerooms.com)
- * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
- */
-
 namespace theme_snap\controller;
 
 defined('MOODLE_INTERNAL') || die();
 
 /**
- * Handles typical request lifecycle.
+ * Controller Kernel.
  *
+ * Handles typical request lifecycle. *
  * Given an action, route it to a controller method,
  * execute controller method and handle any return
  * values.

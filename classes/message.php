@@ -14,20 +14,14 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
-/*
- * @copyright Copyright (c) 2014 Moodlerooms Inc. (http://www.moodlerooms.com)
- * @license http://opensource.org/licenses/gpl-3.0.html GNU Public License
- * @package message_badge
- * @author Mark Nielsen
- */
-
 namespace theme_snap;
 
 /**
- * Message Model
+ * Message Model.
  *
- * @author Mark Nielsen
- * @package theme_snap
+ * @package   theme_snap
+ * @copyright Copyright (c) 2015 Moodlerooms Inc. (http://www.moodlerooms.com)
+ * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class message implements \renderable {
 

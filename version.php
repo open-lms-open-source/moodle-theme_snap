@@ -15,15 +15,16 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Theme version info
+ * Theme plugin version definition.
  *
  * @package   theme_snap
- * @copyright Copyright (c) 2009 Moodlerooms Inc. (http://www.moodlerooms.com)
- * @license   http://opensource.org/licenses/gpl-3.0.html GNU Public License
+ * @copyright Copyright (c) 2015 Moodlerooms Inc. (http://www.moodlerooms.com)
+ * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 defined('MOODLE_INTERNAL') || die;
 
 $plugin->version   = 2014110404;
 $plugin->requires  = 2013111803;
+$plugin->release   = 2015041000;
 $plugin->component = 'theme_snap';

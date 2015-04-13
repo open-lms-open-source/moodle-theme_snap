@@ -1,5 +1,5 @@
 <?php
-// This file is part of the custom Moodle Snap theme
+// This file is part of Moodle - http://moodle.org/
 //
 // Moodle is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -13,13 +13,22 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
-//
+
 namespace theme_snap;
 
 defined('MOODLE_INTERNAL') || die();
 
 require_once($CFG->libdir.'/gdlib.php');
 
+/**
+ * Image processing.
+ *
+ * Provides image resizing functionality.
+ *
+ * @package   theme_snap
+ * @copyright Copyright (c) 2015 Moodlerooms Inc. (http://www.moodlerooms.com)
+ * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
 class image {
     /**
      * Shame that this was nicked from gdlib.php and that there isn't a function I could have used from there.

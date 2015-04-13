@@ -14,20 +14,13 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
-/**
- * Deadlines Controller
- *
- * @package   theme_snap
- * @copyright Copyright (c) 2013 Moodlerooms Inc. (http://www.moodlerooms.com)
- * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
- */
-
 namespace theme_snap\controller;
 
 defined('MOODLE_INTERNAL') || die();
 
 /**
- * Handles requests regarding user deadlines.
+ * Deadlines Controller.
+ * Handles requests regarding user deadlines and other CTAs.
  *
  * @package   theme_snap
  * @copyright Copyright (c) 2013 Moodlerooms Inc. (http://www.moodlerooms.com)

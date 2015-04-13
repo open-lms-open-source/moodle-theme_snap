@@ -1,5 +1,5 @@
 <?php
-// This file is part of the custom Moodle Bootstrap theme
+// This file is part of Moodle - http://moodle.org/
 //
 // Moodle is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -18,9 +18,10 @@
  * Theme config
  *
  * @package   theme_snap
- * @copyright Copyright (c) 2009 Moodlerooms Inc. (http://www.moodlerooms.com)
- * @license   http://opensource.org/licenses/gpl-3.0.html GNU Public License
+ * @copyright Copyright (c) 2015 Moodlerooms Inc. (http://www.moodlerooms.com)
+ * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
+
 
 // Setup debugging html.
 // This allows javascript to target debug messages and move them to footer.
