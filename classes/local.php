@@ -257,13 +257,13 @@ class local {
 
         $records = $DB->get_records_sql("
         (
-                SELECT $select, 1 as 'unread'
+                SELECT $select, 1 unread
                   FROM {message} m
             INNER JOIN {user} u ON u.id = m.useridfrom
                  WHERE m.useridto = ?
                        AND contexturl IS NULL
         ) UNION ALL (
-                SELECT $select, 0 as 'unread'
+                SELECT $select, 0 unread
                   FROM {message_read} m
             INNER JOIN {user} u ON u.id = m.useridfrom
                  WHERE m.useridto = ?
