@@ -23,7 +23,7 @@ defined('MOODLE_INTERNAL') || die();
  * Handles requests regarding user deadlines and other CTAs.
  *
  * @package   theme_snap
- * @copyright Copyright (c) 2013 Moodlerooms Inc. (http://www.moodlerooms.com)
+ * @copyright Copyright (c) 2015 Moodlerooms Inc. (http://www.moodlerooms.com)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class snap_personal_menu_controller extends controller_abstract {

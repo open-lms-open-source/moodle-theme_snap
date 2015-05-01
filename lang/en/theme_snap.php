@@ -18,7 +18,7 @@
  * Language strings
  *
  * @package   theme_snap
- * @copyright Copyright (c) 2009 Moodlerooms Inc. (http://www.moodlerooms.com)
+ * @copyright Copyright (c) 2015 Moodlerooms Inc. (http://www.moodlerooms.com)
  * @license   http://opensource.org/licenses/gpl-3.0.html GNU Public License
  */
 
