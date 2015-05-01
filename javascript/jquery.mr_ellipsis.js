@@ -4,7 +4,7 @@
  * jquery ellipsis plugin
  * author: Guy Thomas
  * date: 2014-10-16
- * (c) Moodle Rooms 2014-10-16
+ * (c) Moodlerooms 2015
  * @returns {$.fn}
  */
 $.fn.ellipsis = function() {
