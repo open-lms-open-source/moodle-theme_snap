@@ -24,7 +24,7 @@ defined('MOODLE_INTERNAL') || die();
  * can be routed to via the URL.  See the router for how this happens.
  *
  * @package   theme_snap
- * @copyright Copyright (c) 2013 Moodlerooms Inc. (http://www.moodlerooms.com)
+ * @copyright Copyright (c) 2015 Moodlerooms Inc. (http://www.moodlerooms.com)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 abstract class controller_abstract {
