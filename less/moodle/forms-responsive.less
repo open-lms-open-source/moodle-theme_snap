@@ -1,0 +1,59 @@
+.mform {
+    .fcontainer,
+    fieldset {
+        .fitem {
+            .fitemtitle {
+                 .make-lg-column(4);
+            }
+            .felement {
+                .make-lg-column(8);
+            }
+        }
+    }
+}
+
+.form-item {
+    .form-label {
+        .make-lg-column(4);
+    }
+    .form-description,
+    .form-setting {
+        .make-lg-column(8);
+    }
+    .form-description {
+         .make-lg-column-offset(4);
+     }
+}
+
+.fdescription.required,
+.settingsform .form-buttons {
+    .make-lg-column(8);
+    .make-lg-column-offset(4);
+}
+.fitem_actionbuttons .felement.fgroup,
+.felement.fsubmit {
+    .make-lg-column-offset(4);
+}
+
+@media screen and (min-width: @screen-lg-min) {
+    .mform .fitemtitle {
+        text-align: right;
+        span.helptooltip {
+            margin-right: -24px;
+        }
+        label img.req {
+            margin-right: -16px;
+        }
+    }
+    .settingsform .form-label {
+        text-align: right;
+    }
+    .mform .fcontainer .fitem {
+        .fitemtitle {
+        padding-right: 30px;
+        }
+        .felement {
+        padding-left: 0;
+        }
+    }
+}

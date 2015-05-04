@@ -1,0 +1,3669 @@
+// This file is part of Moodle - http://moodle.org/
+//
+// Moodle is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// Moodle is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+
+/**
+ * Snap core swatch.
+ *
+ * @package   theme_snap
+ * @copyright Copyright (c) 2015 Moodlerooms Inc. (http://www.moodlerooms.com)
+ * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
+
+// overwrite some global CSS from a turnitin mod
+// see https://github.com/jmcgettrick/MoodleDirectV2/issues/50
+html {
+    -webkit-font-smoothing: auto !important;
+}
+
+// Snap Layout yo...
+// -------------------------
+
+// SHAME -  all that fun moodle reset css
+// -------------------------
+
+// hide that classic 1px & some other fun moodle stuff
+img.spacer,
+.noavailable,
+.clearfloat {
+    display: none;
+}
+
+#notice,
+.section.img-text,
+.boxwidthwide,
+.boxwidthnormal,
+.course-content ul.topics li.section .content,
+.course-content ul.topics li.section .summary,
+.site-topic ul.section,
+.course-content ul.section,
+.path-mod-choice .horizontal,
+.path-mod-choice .vertical,
+.path-mod-choice .anonymous,
+.path-mod-choice .names,
+.path-mod-choice .results.anonymous .graph.horizontal,
+.block_course_overview .content,
+.block .header .title h2,
+.block .content,
+.coursebox .content .coursecat,
+.coursebox .content .summary,
+.coursebox .content .courseimage,
+.coursebox .content .coursefile,
+.coursebox .content .teachers,
+.coursebox.remotecoursebox .remotecourseinfo,
+.section .activity .availabilityinfo,
+.section .activity .contentafterlink,
+.course-content ul.topics li.section .content,
+.course-content ul.weeks li.section .content,
+#page-course-index-category .generalbox.info,
+.loginbox.onecolumn,
+.loginbox,
+#page-report-outline-user .section,
+.path-admin #assignrole{
+    max-width: 100%;
+    min-width: 0;
+    width: auto;
+    padding: 0;
+    margin: 0 auto;
+}
+
+// Override the above for tables.
+table.boxwidthnormal,
+table.boxwidthwide {
+    width: 100%;
+}
+
+
+// Undo .well styles
+#page-course-index-category .generalbox.info,
+.courses .coursebox.collapsed,
+.loginbox,
+.loginbox.twocolumns .loginpanel,
+.loginbox.onecolumn {
+    background-color: transparent;
+    border: none;
+    box-shadow: none;
+    padding: 0;
+}
+
+/* TODO - LOGIN PAGE - experimental code */
+@media screen and (min-width: @screen-sm) {
+    .twocolumns {
+        .signuppanel {
+            float:left;
+            left:0 !important;
+            width:50% !important;
+        }
+        .loginpanel{
+            float:right !important;
+            width:50% !important;
+        }
+    }
+}
+#page-login-index {
+    #region-main {
+        max-width:100%;
+        padding:0 4% 2em;
+    }
+    .loginpanel h2 {
+        text-indent: 100%;
+        white-space: nowrap;
+        overflow: hidden;
+        background:no-repeat center center;
+        background-size:contain;
+    }
+    .loginbox.onecolumn {
+        left:0 !important;
+        padding:0 10%;
+        width:100%;
+    }
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// -------------------------
+// Mixins me up
+// -------------------------
+
+
+.alakazam() {
+    transition: all .4s ease-in-out;
+}
+
+
+.bg-cover() {
+    background-position: center top;
+    background-size: cover;
+}
+
+/* animations */
+@keyframes snap-drop {
+0% {    transform: matrix(1, 0, 0, 1, 0, -600); }
+100%{   transform: matrix(1, 0, 0, 1, 0, 0); }
+}
+
+
+@keyframes snap-rise {
+0%{     transform: matrix(1, 0, 0, 1, 0, 0); }
+100% {  transform: matrix(1, 0, 0, 1, 0, -600); }
+}
+
+
+// tag styles for draft/group/contitional/completion meta data
+.snap-tag(@colour: #F98012) {
+    font-family:@font-family-base;
+    display:inline-block;
+    background-color:@colour;
+    color:#fff;
+    padding:0 2% 0 1%;
+    margin:1px 1em;
+    text-transform:lowercase;
+    position:relative;
+    border-radius:0 2px 2px 0;
+    line-height:1.75;
+    // add a little tab arrow to the left ;)
+    &:before {
+        content:"";
+        position:absolute;
+        right:100%;
+        top:0%; // this is necessary!!
+        border:0.85em solid transparent;
+        border-right:0.89em solid @colour;
+    }
+}
+
+.highlight-tag {
+    background-color:#f56363;
+    color: #fff;
+    padding:0 0.5em;
+    border-radius:2px;
+    line-height:1.5;
+}
+
+
+
+
+
+
+
+
+
+// -------------------------
+// Baseline boilerplate for snap
+// -------------------------
+
+// better border box layout
+html {
+    box-sizing: border-box;
+}
+
+*,
+*:before,
+*:after {
+    box-sizing: inherit;
+}
+
+::-moz-selection { background: #fe57a1; color: #fff; text-shadow: none; }
+::selection { background: #fe57a1; color: #fff; text-shadow: none; }
+
+// scrollbars in ie
+body.ie {
+    -ms-overflow-style: scrollbar;
+}
+
+input:focus,
+textarea:focus,
+select:focus,
+a:focus{
+    outline:0;
+}
+label {
+    font-weight: 500;
+    color:#777;
+}
+select {
+    background-color: #FFF;
+    max-width:100%;
+}
+select:disabled,
+input:disabled,
+input:disabled+label {
+    opacity:0.5;
+}
+:disabled {
+    cursor: not-allowed;
+}
+
+textarea{
+    max-width:100%;
+}
+
+body {
+    font-weight: 300;
+}
+table {
+    width: 100%;
+    font-family: @font-family-base;
+    font-size: @font-size-table;
+}
+blockquote {
+    //    border-left: 5px solid @brand-primary; customisable
+    font-size:1em;
+}
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+// Stop images shrinking to nothing on Chrome
+table img {
+    min-width: 12px;
+}
+table.results td.graph>img {
+    min-width: 0;
+}
+
+img[style*="float:left"],
+img[style*="float: left"],
+img[style*="float: right"],
+img[style*="float:right"]{
+	margin:2%;
+}
+@media screen and (max-width: @screen-sm) {
+	// unfloat images for small screen
+	img[style*="float:left"],
+    img[style*="float: left"],
+    img[style*="float: right"],
+    img[style*="float:right"]{
+		float:none !important;
+		display: table-cell;
+		clear:both;
+	}
+}
+
+img.icon {
+	padding: 0;
+	margin-right: 6px;
+}
+
+// Responsive video for iframes, objects, embeds.
+.videoiframe {
+  text-align:center;
+}
+.videoiframe iframe{
+  width: 100% !important;
+  margin:0 auto;
+}
+.mediaplugin object, .mediaplugin embed {
+  width: 100%;
+  margin: 0 auto;
+}
+
+// Responsive video for HTML5 only.
+video {
+  width: 100%    !important;
+  height: auto   !important;
+}
+
+/* mdl hide stuff icon - hide in bs has different meaning*/
+img.icon.hide {
+	display: block !important;
+}
+
+ul, ol {
+    list-style-position: inside;
+}
+
+li{
+    break-inside: avoid-column;
+}
+
+hr {
+    margin-top: 0.75em;
+    margin-bottom: 0.75em;
+    height: 1.75em;
+    border: 0;
+    // border-top: 1px solid @brand-primary; customisable
+}
+
+.block .content hr {
+    margin: 0.3;
+    height: 1px;
+}
+
+h1,h2,h3,h4,h5,h6,legend {
+    line-height: 1.5;
+    margin: 0.5em 0;
+}
+
+h1 {
+    font-weight: 100;
+    margin: 0.25em 0;
+}
+
+#page-header h1 {
+    margin-top: 0;
+    line-height: 1;
+    font-weight: 100;
+}
+
+#region-main textarea {
+    font-family: @font-family-serif;
+}
+
+
+// Roboto robot voice for system text
+label,
+.form-label,
+.form-defaultinfo,
+.form-description,
+.form-filemanager,
+.ffilemanager,
+.fdescription,
+.fstatic,
+.collapsible-actions,
+input,
+button,
+select,
+.pagination,
+.initialbar,
+.paging,
+.alert,
+.nav-pills,
+.nav-tabs,
+.course-report-dashboard,
+.yui3-tabview-list,
+.yuimenu,
+#course-category-listings,
+.yui-dt-paginator {
+    font-family: @font-family-sans-serif;
+}
+
+
+
+@media screen and (min-width: @screen-sm-min) {
+    .nav.nav-justified > li > a {
+        padding-left: 0;
+        padding-right: 0;
+        white-space: nowrap;
+    }
+}
+
+.path-grade ul.nav.nav-tabs + ul.nav.nav-tabs {
+    // Fix for tabs that should be active but are marked
+    // as disabled instead.
+    li.disabled > a {
+      &,
+      &:hover,
+      &:focus {
+        color: @nav-tabs-active-link-hover-color;
+        background-color: @nav-tabs-active-link-hover-bg;
+        border: 1px solid @nav-tabs-active-link-hover-border-color;
+        border-bottom-color: transparent;
+        cursor: default;
+      }
+    }
+    margin-bottom: 1em;
+}
+
+// -------------------------
+// Buttons, faux buttons styling & resets
+// -------------------------
+select,input,textarea{max-width:100%;}
+
+.section-modchooser-text,
+.section-modchooser-link a,
+#page-site-index .sitetopic>a:last-of-type,
+.editing .summary>a:last-of-type,
+#changenumsections .increase-sections,
+#changenumsections .reduce-sections,
+.paging.paging-morelink a,
+a.btn,
+button,
+a.yui3-button,
+.yui-button  button,
+.btn,
+input.form-submit,
+input[type="button"],
+input[type="submit"],
+input[type="reset"] {
+    border-color: #fff;
+    color:#fff;
+    font-weight: 300;
+    font-family: @font-family-base;
+    // background-color: @brand-primary; customisable
+    &:hover,
+    &:focus {
+        // background-color: darken(@brand-primary, 8%); customisable
+        // border-color: darken(@brand-primary, 12%); customisable
+        text-decoration: none;
+  }
+}
+#page-mod-quiz-edit div.question div.content div.points input[type="submit"],
+.section-modchooser-link a,
+.btn,
+button,
+input.form-submit,
+input[type="button"],
+input[type="submit"],
+input[type="reset"],
+input[name="searchwikicontent"]+input[type="submit"],
+select+input[type="submit"],
+input[type="text"]+input[type="button"],
+input[type="password"]+input[type="submit"],
+input[type="text"]+button,
+input[type="text"]+input[type="submit"] {
+    padding: 0.25em 1em;
+    margin: 0 .4em;
+    vertical-align: baseline;
+    line-height: 1.5;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// -------------------------
+// Snap theme helper classes
+// -------------------------
+
+.published-status {
+    opacity: 0.75;
+    font-size:small;
+}
+
+.userpicture,
+.message_stream_user_picture_icon {
+    border-radius: 50%;
+}
+
+.userpicture.defaultuserpic {
+    border: 1px solid #e5e5e5;
+    .fixy & {
+        border: none;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// -------------------------
+// Snap theme elements n componants
+// -------------------------
+
+#page-header {
+    .bg-cover();
+}
+
+#logo {
+    display:inline-block;
+    background-color: transparent;
+    background-repeat: no-repeat;
+    height: 38px;
+    width: 50%;
+    background-size: contain;
+    margin:-0.75em 0;
+}
+.fixy .snap-media-object{
+    padding:0.5em 4%;
+    margin-bottom:0;
+    .alakazam();
+    &:hover {
+        background-color:rgba(0,0,0,0.07);
+    }
+}
+.snap-media-object {
+    .clearfix();
+    margin-bottom:1em;
+    // media o can be a link
+    >a {
+        text-decoration:none;
+    }
+    // media o media
+    >a>img,
+    >img{
+        float:left;
+        display:block;
+        margin-right:4%;
+        width:45px;
+        height:auto;
+        vertical-align:baseline;
+    }
+    // media o content
+    .snap-media-body {
+        overflow:hidden;
+        // for fixy - need to re-visit when we re-use more widley
+        // in the messaging system we ellispe text
+        p {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+    }
+    // media o heading
+    h3, h3 small {
+        color:inherit;
+        font-size:1em;
+        margin:0;
+    }
+    // any meta-data that is part of the title
+    h3 small {
+        opacity:0.75;
+    }
+    // standard media o meta - status, date
+    .snap-media-meta {
+        display:block;
+        font-size:small;
+        opacity:0.75;
+        time {
+            margin-right:1em;
+        }
+    }
+    // unread tag
+    .snap-unread-marker{
+            background-color:white;
+            &:before {
+                border-right:0.89em solid white;
+            }
+    }
+}
+
+// Fixy - the hipster box with a brand colour that covers everything else, use with care!
+// -------------------------
+
+// i do not apear until you trigger me
+
+.fixy {
+    display: none;
+}
+
+.fixy-trigger {
+    // border: 1px solid @brand-primary; customisable
+    padding:1em 1em;
+    position:relative;
+    .alakazam();
+    &:hover {
+    	color: #fff !important;
+    	//	background-color: @brand-primary; customisable
+    	text-decoration: none;
+    }
+    .userpicture {
+        height: 38px;
+        width: 38px;
+        margin-left:1em;
+    }
+    // mrooms alerts badge
+    .message_badge_count{
+        position: absolute;
+        padding-top: 0;
+        background-image: none;
+        border-radius: 50%;
+        left: 80%;
+        top: 0.5em;
+    }
+}
+
+.fixy {
+    padding: 0 4%;
+    margin: 0 auto;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    bottom: 0;
+    overflow-y: auto;
+    //	background-color: @brand-primary; customisable
+    color: #fff;
+    z-index: 1000000;
+    hr {
+        border-color: #fff;
+        margin: 0.3em 0;
+    }
+    a,
+    a:hover,
+    a:focus,
+    a:active,
+    a:visited {
+        color: #fff;
+    }
+    a(not:.btn):hover {
+    	color:#fff;
+    	text-decoration:underline;
+    }
+    h2 {
+        color: rgba(255,255,255,0.7);
+        text-transform: uppercase;
+        font-weight: 100;
+        line-height: 1;
+        margin:1em 0;
+        padding:.5em 0;
+        border-bottom: 1px solid rgba(255,255,255,0.7);
+        font-size: 1em;
+    }
+    .label-success {
+        padding: 0 0.2em;
+        font-size: 1em;
+        // color: @brand-primary; customisable
+        background-color: rgba(255,255,255,0.6);
+        border-radius: 2px;
+    }
+    input {
+    display: block;
+    padding: 0.1em;
+    margin: 0 auto 0.5em;
+    background-color: transparent;
+    font-size: inherit;
+    border: 0px;
+    color: #fff;
+    border-bottom: 2px solid rgba(255,255,255,0.3);
+    width: 90%;
+    font-size: @font-size-h5;
+    box-shadow:none;
+    }
+    form#coursesearch {
+        margin:0 0 0.5em;
+        text-align:left;
+        label {
+            text-align: left;
+            margin-left: 0;
+        }
+    }
+    .btn.moodle-browseallcourses {
+        margin-bottom:0.5em;
+        display:block;
+    }
+    .fixy-logout-footer {
+        border-top: 1px solid #fff;
+        padding-top: 1em;
+        margin: 1em 0;
+    }
+
+    .fixy-browse-search-courses {
+        margin-left:0;
+        .col-md-6 {
+            padding-left:0;
+        }
+    }
+}
+
+
+
+
+// i am the target, you shall see me
+#login:target,
+#primary-nav:target {
+	display: block;
+}
+
+.fixy-inner {
+    margin: 0 auto;
+    animation-name: snap-drop;
+    animation-iteration-count: once;
+    animation-timing-function: ease-in-out;
+    animation-duration: 0.3s;
+      legend{
+           color: #fff;
+            border-bottom: 1px solid #fff;
+      }
+      label {
+           color: #fff;
+           text-transform: uppercase;
+           font-size: 14px;
+           letter-spacing: 0.1em;
+           line-height: 1;
+           display: block;
+           padding-top: 1em;
+           font-weight: 100;
+           margin: 0.5em 5%;
+      }
+}
+
+// Fixy forms
+// -------------------------
+
+// gets a bit messey from here SHAME
+#login.fixy input:focus {
+    outline: none;
+    border-color: #fff;
+}
+#login.fixy input[type=submit] {
+    border: 1px solid  #fff;
+    margin: 0 auto 0.5em;
+}
+
+.fixy input::placeholder{
+    color: #fff;
+    letter-spacing: 0.1em;
+}
+
+// Course list - personal menu and other places
+// -------------------------
+#fixy-my-courses .courseinfo {
+    min-height:200px;
+}
+.courseinfo {
+    position:relative;
+    float:left;
+    width:100%;
+    min-height:250px;
+    background-repeat:no-repeat;
+    background-size:100% auto;
+    background-position:top center;
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
+    margin:0.5em 1%;
+    cursor:pointer;
+    .alakazam();
+    &:hover {
+        background-size:115% auto;
+        // transform:scale(1.03);
+        .courseinfo-body {
+            padding-bottom:0.5em;
+        }
+    }
+    .courseinfo-body {
+        .alakazam();
+        background-color:white;
+        color:#666;
+        position:absolute;
+        bottom:0;
+        width:100%;
+        padding:0 1em 1em 1em;
+    }
+    h3 {
+        font-size:1em;
+        font-weight:500;
+    }
+    .dynamicinfo{
+        max-width:50%;
+        float:left;
+    }
+    .completionstatus,
+    .coursegrade {
+        font-size:small;
+        line-height:0.5;
+    }
+    .userpicture{
+        border-radius:50%;
+        float:right;
+        margin-left:1%;
+        width:38px;
+        height:38px;
+        background-color:#ccc;
+    }
+    .published-status {
+        clear:both;
+        margin-bottom:-1em;
+    }
+}
+
+#fixy-profile-link {
+    text-align: center;
+    .userpicture {
+        margin-right: 10px;
+    }
+}
+.fixy .real-user-info {
+    display: block;
+    text-align: center;
+    margin-top: -50px;
+}
+
+
+.fixy .label.label-info {
+    background-color: transparent;
+    border: thin solid #fff;
+}
+
+@media screen and (min-width: @screen-xs-min) {
+    #moodle-footer .list-unstyled{
+        column-count: 2;
+    }
+    .courseinfo {
+        width:100%;
+    }
+}
+
+@media screen and (min-width: @screen-sm-min) {
+    #fixy-username {
+        display: inline;
+    }
+
+    #moodle-footer .list-large{
+        column-count: 3;
+    }
+    .courseinfo {
+        width:48%;
+    }
+}
+
+@media screen and (min-width: @screen-md-min) {
+    .courseinfo {
+        width:31%;
+    }
+}
+
+
+
+// Message badge alerts
+
+.message_badge_message,
+.message_badge_empty {
+    border-top: none;
+}
+
+.message_badge_message_subject {
+    padding-right: 0px;
+}
+
+.message_badge_message_close {
+    display: none;
+}
+
+.message_badge_message_text article{
+    font-size:0.9em;
+    font-family: @font-family-serif;
+}
+
+.message_badge_message_content {
+    margin-left: 65px;
+}
+
+/**
+Its pointless using a colour to visually show that the message is read as we can already tell this by the fact the
+read button has been removed and the message text is visible
+**/
+.message_badge_message.dimmed_text{
+    color:#FFFFFF;
+    .message_badge_message_text, .message_badge_message_text a{
+        color:#FFFFFF !important;
+    }
+}
+
+.message_badge_user_picture{
+    margin-right: 18px;
+    img {
+        width: 50px;
+    }
+}
+
+.alert_stream {
+    .message_badge_container {
+        .message_badge_overlay,
+        .message_badge_message_overlay {
+            background-color:transparent;
+            border:none;
+            max-height: none;
+            width:100%;
+            overflow: visible;
+        }
+    }
+}
+
+
+// End of message badge alerts
+
+// -------------------------
+// Layout of moodle/snap DOM structure
+// -------------------------
+
+
+/***************
+THE DOM LOOKS LIKE THIS :
+
+body
+nav #mr-nav
+#page (for mdl js)
+	#page-content (for mdl js)
+		main #moodle-page
+		header #page-header
+		section #region-main
+footer #moodle-footer
+
+ ****************************/
+
+#mr-nav,
+#page-header,
+#region-main,
+#moodle-footer,
+#moodle-blocks {
+    margin: 0 auto;
+    padding: 0 4%;
+    font-size:1em;
+}
+
+
+
+
+// Mr.nav - he's there and fixed to the top of your page
+// -------------------------
+
+#mr-nav {
+    position: fixed;
+    width: 100%;
+    z-index: 23;
+    line-height: 2;
+    padding-top: 0.5em;
+    padding-bottom: 0.5em;
+    padding-right:0;
+    background-color: rgba(255,255,255,0.95);
+    //headroom js http://wicky.nillia.ms/headroom.js/
+    &.headroom--unpinned {
+      will-change: transform;
+      animation-name: snap-rise;
+      animation-iteration-count: once;
+      animation-timing-function: ease-in-out;
+      animation-duration: .4s;
+      animation-fill-mode: forwards;
+
+    }
+    &.headroom--pinned {
+        // firefox no like this animation :(
+        /*
+        animation-name: snap-drop;
+        animation-iteration-count: once;
+        animation-timing-function: cubic-bezier(.694, .0482, .335, 1);
+        animation-duration: 0.33s;
+        */
+    }
+    &.errors-found{
+      // make header pink
+      // background-color: #fcc !important;
+    }
+}
+
+#page {
+    margin: 0;
+    padding: 0;
+     position: relative;
+    left: 0;
+}
+
+
+#moodle-blocks{
+    max-width: 60.5em;
+    clear: both;
+    position: relative;
+    float: none;
+}
+
+#region-main {
+    font-family: @font-family-serif;
+    max-width: 60.5em;
+    padding-top:1em;
+}
+// Pages that need as much width as they can get as they
+// aren't designed (yet) for small screens.
+#page-mod-quiz-edit,
+#page-course-management,
+#page-local-joulegrader-view,
+#page-mod-quiz-report {
+    #region-main {
+        max-width: 100%;
+    }
+}
+#page-mod-assign-view .flexible th {
+    white-space: normal;
+}
+
+// moodle span
+#maincontent {
+    height: 0;
+}
+
+aside {
+    position: relative;
+}
+
+// -------------------------
+//  Header - a head for your moodle
+// -------------------------
+
+/***************
+THE HEADER DOM LOOKS LIKE THIS :
+
+header#page-header
+	nav#breadcrumb-nav
+		ol#breadcrumb
+	div#page-mast
+		h1 - a hopefully useful name for this page
+
+ ****************************/
+
+
+// page-heaer - a big box with possibly useful stuff in it
+// -------------------------
+#page-header {
+    padding-top: 4em;
+    padding-bottom: 0.5em;
+}
+
+
+// Breadcrumb - not really a breadcrumb like on the web, but some moodleything
+// -------------------------
+.breadcrumb-nav {
+    margin-bottom: 0;
+    float: none;
+    margin-top:-0.5em;
+}
+
+.breadcrumb {
+    background-color: transparent;
+    padding: 0;
+    font-size: @font-size-small;
+    display:block;
+}
+
+@media screen and (max-width: @screen-sm) {
+    .breadcrumb li {
+        &:nth-last-child(n+4) {
+            display: none;
+        }
+        &:nth-last-child(3):before {
+            content: "";
+            padding: 0;
+        }
+    }
+}
+
+// SHAME - what is this?
+// -------------------------
+.breadcrumb-button {
+    margin-top: 0;
+}
+
+
+// -------------------------
+// Header in course layout (we have extra stuff)
+// -------------------------
+/***************
+	div#page-mast
+		nav#course-toc
+				ol #chapters
+				search stuff SHAME
+
+ ****************************/
+
+
+
+// Course toc & Appendicies
+// -------------------------
+#course-toc {
+    padding:0 0 1em 0;
+    max-width: 100%;
+    position:relative;
+    h2 {
+        text-transform:uppercase;
+        font-size:1em;
+        padding:1em 2em 0;
+        display:inline-block;
+        margin:0;
+    }
+    .snap-section-complete {
+        width:1.5em;
+        height:auto;
+    }
+    .completionstatus {
+        font-size:small;
+        color:#999;
+    }
+    .completionstatus + .published-status:before,
+    .published-status + .published-status:before {
+        content: " · ";
+    }
+}
+
+
+// if the course has an image
+.mast-image{
+    .breadcrumb {
+        li:before,
+        >li+li:before,
+        a, a:visited {
+            text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
+            color:white;
+        }
+    }
+    h1 {
+        color:white;
+        text-shadow:1px 1px 3px rgba(0, 0, 0, 0.5);
+    }
+    #course-toc{
+        background-color:rgba(255,255,255,0.95);
+    }
+
+}
+
+#chapters {
+    column-count: 2;
+    margin-bottom:0;
+}
+
+// specific styles for numbered chapters to improve readability
+ol#chapters {
+    list-style-position:outside;
+    li{
+        margin-left:2em;
+        padding-bottom:0.1em;
+        color:#999;
+        line-height:1;
+        a {
+            display:block;
+            margin-bottom:-0.3em;
+            line-height:1.75;
+        }
+        &.current a{
+            color:#666;
+            text-decoration:none;
+        }
+    }
+}
+// in moodle the first section does not get a number :(
+// moodlebug
+#chapters >:first-child {
+	list-style:none;
+}
+
+/* show selected menu  logic */
+@media screen and (min-width: @screen-xs-min) {
+#chapters {
+	width:100%;
+	text-indent:0;
+}
+}
+
+/* special stuff for <320 */
+@media screen and (max-width: @screen-xs) {
+    #page-header {
+        padding-left:0;
+        padding-right:0;
+    }
+}
+
+/* if > tablet size */
+@media screen and (min-width: @screen-sm-min) {
+    #chapters.list-large{
+        column-count: 3;
+    }
+    #course-toc {
+        margin: 1em auto -.5em;
+    }
+    .mast-image {
+        #course-toc{
+            margin-top:6.6vh;
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+// -------------------------
+// Course search in toc
+// -------------------------
+
+#toc-search {
+    float:right;
+    padding:0.5em;
+    margin-bottom:-0.75em;
+    &:before {
+        margin-right:-2.3em; // magic number :(
+        content:"\e0d0";
+        font-family: "line-icons" !important;
+        font-style: normal !important;
+        font-weight: normal !important;
+        font-variant: normal !important;
+        text-transform: none !important;
+        speak: none;
+        line-height: 1;
+        -webkit-font-smoothing: antialiased;
+
+    }
+}
+
+#toc-search-input {
+    webkit-appearance: textfield;
+    border: none;
+    border-radius:50%;
+    width:3em;
+    height:3em;
+    padding:0 1.5em;
+    box-shadow:0 2px 5px 0 rgba(0, 0, 0, 0.26);
+    background-color:transparent;
+    .alakazam();
+    &:hover {
+        box-shadow:0 6px 10px rgba(0, 0, 0, 0.23),0 10px 30px rgba(0, 0, 0, 0.19);
+    }
+    &.state-active,
+    &:focus {
+        width:100%;
+        border-radius:0;
+        padding:0 2.5em;
+        box-shadow:none;
+        width:300px;
+        background-color:rgba(255,255,255,0.3);
+    }
+}
+#toc-mobile-menu-toggle {
+    display:none;
+}
+// small screen
+@media screen and (max-width: @screen-xs-min) {
+    #toc-search,
+    #course-toc #toc-desktop-menu-heading {
+        display:none;
+    }
+    #toc-mobile-menu-toggle {
+        display:inline-block;
+        width: 2em;
+        height: 2em;
+        font-size: 1.5em;
+        box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
+        border-radius: 50%;
+        text-align: center;
+        padding: 0.3em;
+        margin: 0.3em;
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        transform:rotate(45deg);
+        text-decoration:none;
+        .alakazam();
+        background-color:rgba(255,255,255,0.9);
+        z-index:666;
+    }
+    #course-toc {
+        position: fixed;
+        bottom: 0;
+        right: 0;
+        z-index: 66;
+        width: 100%;
+        background-color:transparent !important;
+        .alakazam();
+    }
+    #chapters{
+        column-count: 1;
+        display:none;
+    }
+    #course-toc.state-visible{
+        padding: 0;
+        margin: 0;
+        width: 100%;
+        height: 100%;
+        left: 0;
+        bottom: 0;
+        background-color:white !important;
+        overflow-y: auto;
+        #toc-mobile-menu-toggle {
+            transform:rotate(0deg);
+            }
+        #chapters {
+            display:block;
+            margin:0;
+            padding:2em 4%;
+            width:100%;
+
+        }
+    }
+}
+
+// hidden list - always
+#toc-searchables {
+	display:none;
+}
+@media screen and (min-width: @screen-xs-min) {
+    #toc-search-results {
+        padding-left:0.5em;
+        font-size:1em;
+        max-width:300px;
+    }
+}
+#toc-search-results {
+    display:none;
+    position:absolute;
+    top:3.5em;
+    right:1.5em;
+    z-index:3;
+    background-color:rgba(255,255,255,0.9);
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.24);
+}
+#toc-search-results li{
+    width:300px;
+    overflow:hidden;
+	img {
+		width:24px;
+		height:24px;
+        vertical-align:bottom;
+	}
+    &:first-child {
+        padding-top: .5em;
+    }
+    &:last-child {
+        padding-bottom: 1em;
+    }
+
+}
+
+#toc-search-input.state-active + #toc-search-results,
+#toc-search-input:focus + #toc-search-results {
+  display:block;
+}
+
+
+
+// a lovely pin showing the searched for item
+#searchpin {
+	font-size:1.5em;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.section-modchooser-link a img{
+	display:none;
+}
+
+/* SHAME - button to toggle settings menu */
+.snap-action-icon {
+	padding:0.5em;
+	font-size:1.5em;
+	line-height:1;
+	text-decoration:none !important;
+	display:block;
+	text-align:center;
+		small{
+			display:block;
+			text-align:center;
+			line-height:1;
+			font-size:1rem;
+			text-transform:uppercase;
+		}
+}
+
+.settings-button {
+	display:none;
+    position:absolute;
+	right:0;
+	top:2em;
+	border:0 !important;
+	// background-color:@brand-primary; customisable
+	padding:0.5em;
+	font-size:1.5em;
+	line-height:1;
+
+	color:white !important;
+	cursor: w-resize;
+    /*
+    // material design button, but wrong for admin block...
+    position:fixed;
+    bottom:2em;
+    right:4%;
+    font-size:1.2em;
+    width: 3em;
+    height: 3em;
+    border-radius: 50%;
+    text-align: center;
+    padding: 0.75em;
+    color:#fff;
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
+    z-index:666;
+    */
+
+}
+aside .settings-button{
+		cursor: e-resize;
+}
+
+
+
+
+
+
+/// REFACTOTRING GOT TO HERE ///
+
+
+
+
+#page-report-outline-user .section {
+    border: 0;
+}
+
+.path-mod-feedback .generalbox div table tbody img {
+    height: auto;
+    width: auto;
+}
+
+.forumpost .content .posting,
+.no-overflow {
+    overflow: visible;
+    padding: 0;
+}
+
+.form-label .form-shortname{
+    display:inline;
+}
+
+.course-content,
+.settingsform,
+.mform,
+#page-mod-page-view #region-main{
+    max-width: 43.5em;
+    margin: 0 auto;
+}
+// Override the above for a table that is also a form
+.quickgradingform > .mform {
+    max-width: none;
+}
+.form-item,
+.path-backup .mform .grouped_settings .fitem,
+.mform .fcontainer .fitem {
+    margin-bottom: 0px;
+    padding-top: .5em;
+    padding-bottom: .5em;
+    &:hover {
+        background-color: #EFEFEF;
+    }
+}
+.mform .fitem {
+    &.fitem_fcheckbox:not(#fitem_id_onlygraded) {
+        .fitemtitle {
+            display: inline;
+            float: none;
+            width: auto;
+            padding-left: 0;
+        }
+        .fcheckbox {
+            width: auto;
+            padding-right: 0;
+        }
+    }
+}
+// These checkboxes are unusual as they have two labels, so we hide one.
+#fgroup_id_completiondiscussionsgroup,
+#fgroup_id_completionpostsgroup,
+#fgroup_id_completionrepliesgroup,
+#fgroup_id_completionpostsgroup {
+    &.fitem_fgroup .fitemtitle label {
+        display: none;
+    }
+}
+#id_activitycompletionheader {
+     .fitem_fcheckbox .fitemtitle label {
+        display: none;
+    }
+}
+
+.form-item {
+    .form-label .form-shortname {
+        display: inline-block;
+        padding-left: 1em;
+    }
+    .form-checkbox.defaultsnext {
+        display: inline-block;
+    }
+    .form-defaultinfo,
+    .form-description pre {
+        font-size: @font-size-small;
+    }
+}
+#fitem_id_coursedisplay {
+    display: none;
+}
+
+.moodle-dialogue.filepicker .form-group {
+    margin-left: 0;
+    margin-right: 0;
+}
+@media screen and (min-width: @screen-sm-min) {
+    .form-horizontal .control-label {
+        padding-top: 4px;
+    }
+}
+
+.path-backup .mform .grouped_settings .backup_selector .felement {
+    width: 100%;
+}
+.path-backup .root_setting,
+.path-backup .normal_setting {
+    .fitem {
+        .fitemtitle,
+        .felement {
+            width: 50%;
+        }
+    }
+}
+
+
+.forumpost {
+    background-color: transparent;
+    border: 0;
+    box-shadow: none;
+    padding: 0;
+}
+
+
+
+
+
+/* BOOK MOD FIX */
+
+.path-mod-book .book_toc_numbered {
+    font-size: 1em;
+}
+/* hide show description option */
+#page-mod-book-mod,
+#page-mod-page-mod {
+    #fitem_id_showdescription{
+        display:none;
+    }
+}
+
+
+
+
+
+/* FRONT PAGE ELEMENTS */
+
+#page-site-index #region-main {
+    max-width: 100%;
+    padding: 0;
+    margin: 0 auto;
+}
+
+#page-site-index #page-header {
+    // background-color: @brand-primary; customisable
+    padding-top: 12.7%;
+    padding-bottom: 1.75em;
+ /*
+BUG:
+mobile safari does not re-calculate vh on viewport change
+http://blog.rodneyrehm.de/archives/34-iOS7-Mobile-Safari-And-Viewport-Units.html
+*/
+
+    min-height:405px;
+    border-bottom: 0px;
+    margin: 0;
+    position:relative;
+    &> .btn {
+        position:absolute;
+        bottom:1em;
+        right:4%;
+    }
+}
+
+@media screen and (min-width: @screen-xs-min) {
+	#page-site-index #page-header {
+	min-height:500px;
+	}
+}
+@media screen and (min-width: @screen-sm-min) {
+	#page-site-index #page-header {
+	min-height:87vh;
+	}
+}
+
+#page-site-index #page-mast {
+    background-color: rgba(255,255,255,0.9);
+    display: inline-block;
+    padding: 1em 2%;
+    margin-top: 2em;
+    & .btn {
+        float: right;
+    }
+}
+
+
+@media screen and (min-width: @screen-sm-min) {
+    #page-site-index #page-mast {
+        width: 50%;
+        margin:11vh 0;
+    }
+}
+
+#page-site-index .breadcrumb-nav {
+    display: none;
+}
+
+#page-site-index .content-slide {
+    display: none;
+}
+#frontpage-course-list {
+    padding:1em 4%;
+}
+#page-site-index .sitetopic,
+#frontpage-category-names,
+#frontpage-category-combo {
+    max-width: 50.5em;
+    margin: 2em auto;
+    clear:both;
+}
+
+#page-site-index .sitetopic {
+	.clearfix();
+	padding:0 4%;
+}
+
+#site-news-forum h2,
+#frontpage-course-list h2,
+#frontpage-category-names h2,
+#frontpage-category-combo h2 {
+    font-weight: 100;
+    padding: 0.5em 0;
+    text-align: center;
+    font-size: @font-size-h1;
+}
+
+/* FRONT PAGE SITE NEWS */
+#page-site-index #site-news-forum {
+    margin: 0 auto;
+    padding: 0 4% 4em 4%;
+    background-color: #F1F0EE;
+    .clearfix();
+}
+
+#news-articles {
+    margin: 0 auto;
+}
+.news-article {
+    background-color: #fff;
+    margin-bottom: 0.5em;
+}
+.news-article-inner {
+    background-color: #fff;
+}
+.news-article-content {
+    padding: 0 4%;
+    min-height: 150px;
+}
+.news-article-content h3 {
+    font-size: @font-size-h2;
+}
+.news-article-image {
+    cursor:pointer;
+}
+.news-article-image,
+.news-article-preview{
+	color:#fff;
+    min-height: 150px;
+    //	background-color: @brand-primary; customisable
+    padding:2em 4%;
+    .bg-cover();
+}
+.news-article-preview {
+    height:auto;
+}
+.news-article-date {
+    font-size: 0.75em;
+}
+.news-article-message{
+    display:none;
+    padding:2em 4%;
+}
+
+.state-expanded {
+    .news-article-preview,
+    .news-article-image {
+        display:none;
+    }
+    .news-article-inner {
+    }
+    .news-article-message{
+        display:none;
+    }
+}
+.news-article-message:focus {
+    outline: 0;
+}
+
+
+@media screen and (min-width: @screen-sm-min) {
+    .news-article {
+        margin-bottom: 0;
+        display: flex;
+    }
+    .news-article-content {
+        max-width: 100%;
+    }
+    .news-article-preview,
+    .news-article-image,
+    .news-article-inner{
+        width: 50%;
+        min-height: 300px;
+        flex: 1 1 auto;
+        p {
+            margin:1em 0;
+            display:block;
+        }
+    }
+    .news-article-image {
+        padding: 0;
+    }
+    .state-expanded {
+        .news-article-inner {
+            width:33%;
+            order:1 !important;
+        }
+        .news-article-message{
+            width:67%;
+        }
+    }
+    #news-articles div:nth-child(odd) .news-article-preview,
+    #news-articles div:nth-child(odd) .news-article-image {
+        order:2;
+        p:nth-of-type(2) {
+            .text-left;
+        }
+    }
+    #news-articles div:nth-child(even) .news-article-inner{
+        order:2;
+    }
+    .ie9 {
+        #news-articles div:nth-child(even) {
+            .news-article-preview,
+            .news-article-image,
+            .news-article-inner{
+                float: left;
+            }
+        }
+        #news-articles div:nth-child(odd) {
+            .news-article-preview,
+            .news-article-image,
+            .news-article-inner{
+                float: right;
+            }
+        }
+    }
+}
+
+
+@media screen and (min-width: @screen-lg-min) {
+	.news-article {
+		min-height:33vh;
+	}
+
+}
+
+//
+// Front page - Course lists
+// --------------------------------------------------
+
+
+.coursebox.clearfix {
+    padding: 1em 4%;
+    border-bottom: 1px solid #eee;
+}
+.coursebox .info .coursename {
+    font-size: @font-size-h4;
+}
+.coursebox .enrolmenticons,
+.coursebox .moreinfo {
+    display: inline;
+    float: none;
+    padding: 0;
+}
+
+.coursebox .content .courseimage {
+    text-align: center;
+    height: 150px;
+    overflow: hidden;
+}
+
+.coursebox .content .courseimage img {
+    max-width: 100%;
+    max-height: 100%;
+}
+
+@media screen and (min-width: @screen-sm-min) {
+    .frontpage-course-list-all .coursebox {
+        width:50%;
+        display:inline-block;
+        vertical-align:top;
+        border:0px;
+    }
+    .coursebox .info,
+    .coursebox .content .summary,
+    .coursebox .content .teachers {
+        width: 62%;
+        float: right;
+    }
+    .coursebox .content .summary,
+    .coursebox .content .teachers {
+        float: right;
+    }
+    .coursebox .content .courseimage {
+        float: left;
+        width: 33%;
+        margin-top: -2.1em;
+    }
+}
+.paging.paging-morelink {
+	text-align:center;
+	a {
+		.btn;
+	}
+}
+
+
+/* COURE LISTINGS PAGES */
+
+.course_category_tree .category>.info,
+.coursebox .info,
+.coursebox {
+    background-color: transparent;
+    border: none;
+    border-color: transparent;
+    box-shadow: none;
+    margin: 0;
+}
+.coursebox .info {
+    padding: 0;
+}
+
+
+
+
+
+
+
+/* Calandar */
+
+span.calendar_event_global,
+li.calendar_event_global:before,
+td.calendar_event_global > a {
+    background-color:@brand-success;
+}
+span.calendar_event_course,
+li.calendar_event_course:before,
+td.calendar_event_course > a {
+    //salmon
+    background-color:salmon;
+
+}
+span.calendar_event_group,
+li.calendar_event_group:before,
+td.calendar_event_group > a {
+    // yellow
+    background-color:#FDD652;
+}
+span.calendar_event_user,
+li.calendar_event_user:before,
+td.calendar_event_user > a {
+    background-color:@brand-info;
+}
+td.calendar_event_global,
+td.calendar_event_course,
+td.calendar_event_group,
+td.calendar_event_user {
+    background-color: transparent;
+}
+
+li.calendar_event_global:before,
+li.calendar_event_course:before,
+li.calendar_event_group:before,
+li.calendar_event_user:before {
+    content: " ";
+    width: 1em;
+    height: 1em;
+    border-radius: 100%;
+    display: inline-block;
+    margin: -0.1em 4%;
+}
+
+/* Block cals */
+.block .minicalendar {
+    max-width: 500px;
+    th {
+        height: auto;
+        font-weight: @headings-font-weight;
+    }
+    td {
+          height: 4em;
+          vertical-align: middle;
+      > a {
+          border-radius: 100%;
+          height: 4em;
+          width: 4em;
+          padding: 1.2em;
+          display: block;
+          margin: auto;
+      }
+      &.hasevent > a {
+          color: #fff;
+      }
+      &.today > a {
+          border:1px solid #dadada;
+      }
+    }
+}
+// Minical hover box
+.calendar-event-panel {
+    border:0 !important;
+    background-color:white;
+
+    box-shadow:0 3px 9px rgba(0, 0, 0, 0.5);
+    .yui3-overlay-content{
+        border-color:#dadada;
+    }
+}
+.calendar_filters {
+    .smallicon{
+    display:none;
+    }
+    .calendar_event span[class*="_event_"]{
+        border-radius: 100%;
+        display: inline-block;
+        width: 1em;
+        height: 1em;
+        margin: -0.1em 2%;
+    }
+}
+
+
+.maincalendar .header {
+    font-weight: 100;
+}
+.path-calendar{
+    .maincalendar .calendarmonth td,
+    .maincalendar .calendarmonth th {
+        border-color: #fff;
+        height:1em;
+    }
+}
+
+
+.maincalendar .day .day {
+  border-radius: 100%;
+  width: 4em;
+  height: 4em;
+  padding: 1.2em;
+  border: 1px solid #fff;
+  margin: 0 auto;
+}
+
+// Today
+.maincalendar .today .day{
+    border-color:#dadada;
+}
+
+// A day with events
+.maincalendar .day .day a {
+  border-radius: 100%;
+  display: block;
+  height: 4em;
+  width: 4em;
+  padding: 1.2em;
+  margin: -1.2em;
+}
+
+.maincalendar .day.nottoday .day a {
+  color: #FFF;
+}
+
+.maincalendar .day.today .day a {
+    background-color: transparent;
+    display: inline;
+    text-align: center;
+}
+
+ul.events-new,
+ul.events-underway {
+    padding-top: 0.5em;
+}
+ul.events-new + ul.events-underway {
+    padding-top: 0;
+}
+
+.path-calendar .maincalendar .eventlist .event{
+    border:0;
+}
+
+.maincalendar ul{
+    text-align:left;
+    li {
+        background-color: transparent;
+    }
+}
+
+#dateselector-calendar-panel {
+    .calheader,
+    .calweekdaycell {
+        font-weight: 100;
+        color:#666;
+    }
+    .calnavright,
+    .calnavleft {
+        width:1.127em;
+        height:1.127em;
+        top:0;
+        margin:0 4%;
+    }
+    .calnavright {
+        background:url([[pix:theme|right-arrow]]) no-repeat right 0;
+    }
+    .calnavleft {
+        background:url([[pix:theme|left-arrow]]) no-repeat left 0;
+    }
+    td.calcell {
+        border-color:white;
+        padding:0.62em;
+    }
+    .selected,
+    .calcellhover,
+    .today,
+    .oom {
+        background-color:white !important;
+    }
+    .selector {
+        width:1.38em;
+        height:1.38em;
+        border-radius:100%;
+        border:1px solid white;
+    }
+    .selected .selector,
+    .calcellhover .selector {
+        color:white;
+        .alakazam();
+    }
+    @media screen and (min-width: @screen-sm) {
+        left:33% !important;
+        top:50% !important;
+
+        .calheader{
+            font-size:@font-size-h4;
+        }
+        .selector {
+            width:2.38em;
+            height:2.38em;
+            padding:0.38em;
+        }
+    }
+}
+
+
+
+/* USER PROFILE PAGE */
+.userprofile .userprofilebox{
+    .profilepicture {
+        .make-md-column(3);
+    }
+    .descriptionbox {
+        .make-md-column(9);
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// -------------------------
+//  Moodle mods
+// -------------------------
+
+// -------------------------
+// Choice
+// -------------------------
+.path-mod-choice .results.names .user {
+    clear:both;
+}
+
+// -------------------------
+// Assignments
+// -------------------------
+.path-mod-assignment {
+  .userpicture, .picture.user, .picture.teacher {
+    height: auto;
+  }
+}
+
+// -------------------------
+// Comments - this could be a block, but is in mods too?
+// -------------------------
+.comment-ctrl,
+.comment-list{
+	font-size:1em;
+}
+.comment-area {
+	max-width:100%;
+}
+
+// -------------------------
+// Workshop
+// -------------------------
+.path-mod-workshop .userplan {
+	width:100%;
+}
+.path-mod-workshop .collapsibleregioncaption{
+	font-size:@font-size-h3;
+    font-weight:300;
+}
+
+// -------------------------
+// Chat
+// -------------------------
+
+#chat-input-area,
+#chat-input-area table.generaltable,
+#chat-input-area table.generaltable td.cell,
+#chat-userlist{
+	background-color:transparent !important;
+}
+.yui-skin-sam .yui-layout.path-mod-chat-gui_ajax #chat-input-area table.generaltable,
+.yui-skin-sam .yui-layout.path-mod-chat-gui_ajax #chat-input-area table.generaltable td.cell{
+	padding:0;
+}
+
+#page-mod-chat-gui_basic-index {
+	#mr-nav,
+	#moodle-footer,
+	#page-header{
+		display:none;
+	}
+}
+
+
+// -------------------------
+// Quiz
+// -------------------------
+
+// Quiz setup form //
+#page-mod-quiz-mod #id_reviewoptionshdr .fitem{
+  width:100%;
+  float:none;
+}
+#page-mod-quiz-mod #id_reviewoptionshdr fieldset.fgroup{
+  margin:1em 0;
+}
+#page-mod-quiz-edit div.question div.qnum {
+  color:inherit;
+  width:5%;
+}
+#page-mod-quiz-edit div.editq div.question div.content{
+  border-radius:0;
+    width:95%;
+}
+#page-mod-quiz-edit div.question div.content {
+  div.points,
+  div.questioncontrols {
+    position:relative;
+    float:right;
+    width:30%;
+    right:auto;
+    &:empty{
+      display:none; // not working as there is some eroneous space in the div
+    }
+  }
+  div.questioncontrols{
+    width:55px;
+  }
+}
+
+.questioncontentcontainer {
+  width:68%;
+}
+.questioncontainer.random .questioncontentcontainer{
+  width:100%;
+}
+#page-mod-quiz-edit .questioncontentcontainer div.randomquestionqlist{
+  clear:both;
+  background-color:transparent;
+  width:100%;
+}
+#page-mod-quiz-edit div.question div.content .questionname,
+#page-mod-quiz-edit div.question div.content .questiontext{
+  max-width:95%;
+}
+@media screen and (max-width: @screen-md-max) {
+  .questioncontentcontainer {
+    width:100%;
+    clear:both;
+  }
+  #page-mod-quiz-edit div.question div.content div.questioncontrols,
+  #page-mod-quiz-edit div.question div.content div.points {
+    position:relative;
+    float:left;
+    width:50%;
+    max-width:50%;
+    text-align:left;
+    right:auto;
+  }
+}
+// start of code for when adding from a question bank
+#page-mod-quiz-edit div.quizcontents,
+.questionbankwindow.block {
+    width: 100%;
+    padding-left: 0px;
+    padding-right: 0px;
+}
+
+// very long button text
+#page-mod-quiz-edit div.reorder .reordercontrols {
+    .moveselectedonpage,
+    .addnewpagesafterselected {
+        padding-right: 0;
+        input {
+            white-space: normal;
+        }
+    }
+}
+#page-mod-quiz-edit div.reorder {
+    div.question div.content {
+        width: calc(~"100% - 4.3em");
+    }
+}
+
+@media screen and (min-width: @screen-md-min) {
+    #page-mod-quiz-edit div.quizcontents,
+    .questionbankwindow.block{
+          width: 50%;
+    }
+    #page-mod-quiz-edit div.container div.generalbox {
+        padding-left: 8%;
+        padding-right: 0;
+    }
+}
+#page-mod-quiz-edit div.quizwhenbankcollapsed,
+#page-mod-quiz-edit .modulespecificbuttonscontainer{
+  width:100%;
+}
+#page-mod-quiz-edit .categoryinfo{
+  display:none;
+}
+#categoryquestions .checkbox{
+  // overwite bootstrap checkbox class
+  display:table-cell;
+}
+#categoryquestions .iconcol{
+  width:22px;
+}
+#categoryquestions label,
+#page-mod-quiz-edit #categoryquestions .questiontext,
+.questioncontentcontainer label,
+#page-mod-quiz-edit div.question div.content .questiontext{
+  font-weight:300;
+}
+
+// quiz itself //
+.que {
+  border-bottom:1px solid #999;
+  padding:1.5em 0;
+  margin:1em 0 1em 0;
+}
+.que .info,
+.que .content{
+  background-color:transparent;
+  border:0;
+  width:100%;
+  margin:0;
+  padding:0;
+  float:none;
+}
+.que h3.no {
+  margin-top:1em;
+}
+.que h3.no,
+.que span.qno{
+  font-size:@font-size-h2;
+  font-weight:300;
+}
+.que .info>div{
+  display:inline-block;
+  font-size:small;
+  color:#999;
+  padding-right:2%;
+}
+.que .formulation,
+.formulation .incorrect,
+.formulation .correct{
+  border:0;
+  background-color:transparent;
+  width:100%;
+  margin:0;
+  padding:0;
+}
+.que .qtext{
+  font-size:1.3em;
+}
+.que.multichoice .answer .specificfeedback {
+  display:block;
+}
+#page-mod-quiz-edit .editq div.question{
+  border-bottom:1px solid #eee;
+  border-top:1px solid #ccc;
+}
+#categoryquestions td,
+#categoryquestions th{
+  padding:4px 0.2em;
+}
+.singlequestion .questioneditbutton img {
+    .sr-only;
+}
+.questioncontainer{
+  .clearfix();
+}
+#page-mod-quiz-edit .editq div.question div.content .singlequestion .questioneditbutton .questionname,
+#page-mod-quiz-edit .editq div.question div.content .singlequestion .questioneditbutton .questiontext{
+  float:none;
+  display:block;
+  font-weight:normal;
+  text-decoration:none;
+  padding:0;
+  margin:0;
+}
+#page-mod-quiz-edit .questioncontentcontainer div.singlequestion a{
+  text-decoration:none;
+}
+#page-mod-quiz-edit .paging,
+#page-mod-quiz-edit div.question div.content .singlequestion .questionpreview,
+#page-mod-quiz-edit div.question div.content .questionpreview a{
+  background-color:transparent;
+}
+#page-mod-quiz-edit div.question div.content .questiontype{
+  float:left;
+  font-style:normal;
+  font-size:small;
+}
+#page-mod-quiz-edit div.editq div.question div.content{
+  border:0;
+}
+#page-mod-quiz-edit div.quizpage span.pagetitle,
+#page-mod-quiz-edit div.quizpage .pagecontent{
+  float:none;
+}
+#page-mod-quiz-edit .questionbankwindow.block div.header {
+  background-color:transparent;
+  font-weight:normal;
+}
+#page-mod-quiz-edit div.quizpage span.pagetitle,
+#page-mod-quiz-edit .questionbankwindow.block div.header div.title h2,
+#page-mod-quiz-edit .questionbankwindow a#showbankcmd,
+#page-mod-quiz-edit .questionbankwindow a#hidebankcmd,
+#page-mod-quiz-edit .questioncontentcontainer div.randomquestionqlist .totalquestionsinrandomqcategory {
+  color:inherit;
+}
+#page-mod-quiz-edit div.quizpage .pagecontent{
+  width:100%;
+  margin:0;
+  padding:0;
+  border:0;
+  background-color:tranparent;
+}
+#page-mod-quiz-edit div.quizpage .pagecontent,
+#page-mod-quiz-edit div.question div.questioncontainer{
+  background-color:transparent;
+}
+#page-mod-quiz-edit .invisiblefieldset br{
+  display:none;
+}
+#page-mod-quiz-edit .modulespecificbuttonscontainer br{
+  display:block;
+}
+#page-mod-quiz-edit div.question div.content div.points input{
+  width:auto;
+}
+
+
+
+// -------------------------
+// Forum
+// -------------------------
+.forumsearch {
+	padding:1em;
+  float:right;
+}
+
+// on front page the forum has extranious options //
+.course-1 {
+    .movediscussion,
+    .displaymode {
+    display:none;
+    }
+}
+
+// -------------------------
+// Forum responsive table
+// -------------------------
+
+// Should the forum responsive stuff be moved to modules.less?
+@media screen and (max-width: @screen-sm-max) {
+
+    .path-mod-forum .forumheaderlist {
+        tbody td.topic {
+            width:100%;
+        }
+        .picture a {
+            display:inline;
+        }
+    }
+
+    .forumheaderlist {
+	thead{
+		display:none;
+	}
+	tbody{
+		width:100%;
+		display:block;
+	}
+	tbody tr.discussion{
+		display:block;
+		padding:1em 0;
+		border-bottom:3px solid #CCC;
+		width:100%;
+	}
+	tbody tr td,
+	td.picture.group{
+		display:block;
+		clear:both;
+		text-align:left !important;
+		background-color:transparent !important;
+		width:100%;
+	}
+	td.topic {
+		font-size:1.3em;
+	}
+	td:before {
+		font-size:0.9em;
+		color:#999;
+		font-weight:bold;
+	}
+	td.topic:before {
+		content: attr(data-cellname);
+	}
+	td.picture:before {
+		content: attr(data-cellname);
+	}
+	td.replies:before {
+		content: attr(data-cellname);
+	}
+	td.lastpost:before {
+		content: attr(data-cellname);
+	}
+	td:before {
+		display:inline-block;
+		margin-right:4%;
+	}
+	td.author,
+	td.picture{
+		clear:none;
+	}
+	td.picture {
+		width:32%;
+		display:inline;
+		margin-right:2%;
+	}
+	td.author{
+		width:68%;
+		display:inline;
+	}
+}
+}
+
+
+
+
+
+
+// -------------------------
+// Grade table
+// -------------------------
+table.boxaligncenter.generaltable.user-grade {
+    background-color:#fff;
+    th{
+        font-weight:500;
+    }
+    thead {
+        border-bottom:1px solid #eee;
+    }
+    img.icon {
+        width:1.3em;
+        height:1.3em;
+    }
+    td.feedbacktext {
+        font-size:1.3em;
+    }
+    th a {
+        font-size:1.2em;
+    }
+    th {
+        padding:0.75em !important;
+        border-color:#fff !important;
+    }
+    td {
+        border-color:#fff !important;
+    }
+    // Kill ridiculously unprofessional colour scheme
+    * {
+        background-color:#fff !important;
+    }
+
+}
+
+// -------------------------
+// Joule mods
+// -------------------------
+
+// Reports
+// SHAME - stop overlap with footer
+.path-blocks-reports #report-content {
+    min-height: 750px; // magic number
+}
+
+.mr_html_tabs {
+    margin-bottom: 1em;
+}
+.user-grade{
+	border:0;
+}
+.user-grade td.b1l,
+.user-grade td.b2l,
+.user-grade th.b1l,
+.user-grade th.b2l,
+.user-grade td.b1b,
+.user-grade td.b2b,
+.user-grade th.b1b,
+.user-grade th.b2b,
+.user-grade thead{
+	border-color:#ccc;
+	border-left:0 !important;
+	border-right:0 !important;
+}
+.user-grade td.evend2,
+.user-grade th.evend2,
+.user-grade td.oddd1,
+.user-grade th.oddd1,
+table#user-grades td.controls,
+.path-grade-report-grader table tr.avg .cell,
+.path-grade-report-grader table tr.range .cell,
+table#user-grades tr.avg td.cell,
+.user-grade td.oddd2,
+.user-grade th.oddd2,
+.user-grade td.oddd3,
+.user-grade th.oddd3,
+.user-grade td.evend3,
+.user-grade th.evend3,
+.user-grade td.oddd3,
+.user-grade th.oddd3{
+	background-color:transparent;
+}
+table#user-grades tr.avg td.cell{
+	color:#66666f;
+}
+
+
+#page-blocks-reports-view .mr_html_filter,
+#block-reports-filterbutton,
+.blocks_reports_useractions,
+.blocks_reports_jouleadmin  {
+    border: none;
+    background: none;
+}
+
+.report-course-overlay .yui3-widget {
+    width: inherit !important;
+    min-width: 300px;
+}
+
+.gradingform_checklist.editor .addgroup input,
+.gradingform_checklist.editor .additem input,
+.gradingform_rubric.editor .addlevel input,
+.gradingform_rubric.editor .addcriterion input {
+    .btn;
+    .btn-default;
+    height: auto;
+    background-image: none;
+    color: #fff;
+    border: none;
+    margin-top: 0.5em;
+    //background-color: @brand-primary; User customisable.
+    &:hover {
+        color: #fff;
+        border: none;
+        //background-color: @brand-primary; User customisable.
+    }
+}
+.gradingform_rubric.editor .criterion .levels .level .delete {
+    position: relative;
+}
+
+.path-blocks-reports {
+    .report-category-overlay,
+    .report-course-overlay {
+        .yui3-widget {
+            z-index: 1 !important;
+        }
+    }
+    #course-search-left,
+    #course-search-right {
+        display: none;
+    }
+    #course-search-box {
+        background-image: none;
+        min-height: 60px;
+    }
+    #course-search-text {
+        padding-top: 0;
+        margin: 0.5em 5%;
+        width: calc(~"84% - 13px");
+    }
+    #course-search-button {
+        padding-top: 3px;
+        margin: 0.5em 1% 0.5em 0;
+    }
+    #course-search-input {
+        // copied from less/bootstrap3/forms.less .form-control
+        color: @input-color;
+        background-color: @input-bg;
+        background-image: none; // Reset unusual Firefox-on-Android default style; see https://github.com/necolas/normalize.css/issues/214
+        border: 1px solid @input-border;
+        border-radius: @input-border-radius;
+        .box-shadow(inset 0 1px 1px rgba(0,0,0,.075));
+        .transition(~"border-color ease-in-out .4s, box-shadow ease-in-out .4s");
+        width: 100%;
+    }
+    .yui3-widget-stdmod, .yui3-aclist-content {
+        // copied from less/bootstrap3/dropdowns.less .dropdown-menu
+        z-index: @zindex-dropdown;
+        min-width: 160px;
+        padding: 5px 0;
+        margin: 2px 0 0; // override default ul
+        list-style: none;
+        font-size: @font-size-base;
+        background-color: @dropdown-bg;
+        border: 1px solid @dropdown-border;
+        border-radius: @border-radius-base;
+        .box-shadow(0 6px 12px rgba(0,0,0,.175));
+        background-clip: padding-box;
+        .report-overlay-bd {
+            padding: 0;
+        }
+        div.report-nav-item {
+            border-bottom: none;
+            width: 100%;
+            a.nav-item {
+                display: block;
+                padding: 3px 20px;
+                font-weight: normal;
+                line-height: @line-height-base;
+                color: @dropdown-link-color;
+                white-space: nowrap; // prevent links from randomly breaking onto new lines
+                width: 100%;
+                &:hover,
+                &:focus {
+                    text-decoration: none;
+                    color: @dropdown-link-hover-color;
+                    background-color: @dropdown-link-hover-bg;
+                }
+            }
+        }
+        div.report-nav-item-left,
+        div.report-nav-item-right {
+            a.nav-paginate {
+                display: block;
+                padding: 3px 20px;
+                font-weight: normal;
+                line-height: @line-height-base;
+                color: @dropdown-link-color;
+                white-space: nowrap; // prevent links from randomly breaking onto new lines
+                &:hover,
+                &:focus {
+                    text-decoration: none;
+                    color: @dropdown-link-hover-color;
+                    background-color: @dropdown-link-hover-bg;
+                }
+            }
+        }
+        #report-overlay-course div.report-nav-item a.nav-item {
+            // Allow long course title search results to wrap
+            white-space: normal;
+        }
+    }
+}
+
+#local-nortongrader-navigation {
+    background-color: transparent;
+    text-align: right;
+}
+
+#local-joulegrader-resize,
+#local-nortongrader-resize {
+    // display: none;
+}
+#page-grade-report-joulegrader-index #joule-grades-thead {
+    table-layout: fixed;
+}
+#page-grade-report-nortongrader-index,
+#page-grade-report-joulegrader-index {
+    #gradereport-joulegrader-navbox,
+    #gradereport-nortongrader-navbox {
+        border: 0;
+        background: none;
+    }
+    table .header[scope="col"] {
+        background-color: #fff;
+        font-size: 13px; // SHAME - magic number
+    }
+    table {
+        margin: 0;
+        text-align: right;
+    }
+    #joule-grades-thead-wrap,
+    #joule-grades-leftcol-wrap,
+    table.joule-grades {
+        border: none;
+        font-size: @font-size-table;
+    }
+    table.joule-grades {
+        tr.odd td.cell {
+            background-color: @table-bg-accent;
+            &.overridden,
+            &.ajaxoverridden {
+                background-color: #EFD9A4;
+            }
+        }
+    }
+    table.joule-grades td,
+    table.joule-grades th {
+        border-right: none;
+        border-left: none;
+        border-width: 1px;
+    }
+    table.joule-grades th.item,
+    table.joule-grades th.categoryitem,
+    table.joule-grades th.courseitem {
+        border-bottom-color: @table-border-color;
+    }
+    #joule-grades-leftcol-wrap {
+        border-right: 1px solid @table-border-color;
+    }
+    table.joule-grades th,
+    table.joule-grades td {
+        padding: @table-condensed-cell-padding;
+    }
+
+    #joule-grades-fthead {
+        margin-top: -1px;
+    }
+
+    #joule-grades-leftcol {
+        margin-top: 0px;
+    }
+
+    #joule-grades,
+    #joule-grades-leftcol {
+        .row {
+            &.nortongraderactionmenu,
+            &.joulegraderactionmenu {
+                margin-left: 0;
+                margin-right: 0;
+                &:before,
+                &:after {
+                    display: none;
+                }
+            }
+        }
+    }
+    #joule-grades-fthead {
+        width: auto;
+    }
+    #joule-grades-leftcol-wrap {
+        border-bottom: none;
+    }
+}
+
+#page-local-joulegrader-view {
+    #local-joulegrader-navigation {
+        border-bottom: thin solid #e5e5e5;
+        background-color: transparent;
+        .helptooltip {
+            display: none;
+        }
+        .action-icon img.smallicon {
+            vertical-align: middle;
+        }
+    }
+    fieldset.fieldset {
+        border-color: #e5e5e5;
+        legend {
+            width: auto;
+            border: none;
+            padding: 0 0.5em;
+        }
+    }
+}
+
+#page-blocks-conduit-view .mform .fitem .felement.fgroup span {
+    display: inline-block;
+}
+
+.path-blocks-conduit .widgets {
+    white-space: normal;
+    input {
+        display: block;
+        margin: 8px 0 0 5px;
+    }
+    a {
+        display: block;
+        margin-top: -1.5em;
+    }
+
+}
+
+#page-admin-outcome-admin {
+    .yui3-moodle-core_outcome-editoutcome-outcome {
+        margin: 0;
+        background-position: left center;
+    }
+}
+
+// Stop aclist-content from being rediculously big in  page-admin-report-outcome-index.
+.yui3-aclist-content {
+    overflow-y: auto;
+    max-height: 90vh;
+}
+
+.path-blocks-reports .report-title {
+	font-weight:normal;
+	font-family:@font-family-base;
+}
+
+// whitelist - make grade table larger, apply whitespace remover
+.path-mod-assign,
+.path-grade-edit-tree,
+.path-grade-report-customgrader,
+.path-grade-report-grader {
+    #region-main {
+        width: 100%;
+        max-width: 100%
+    }
+    table.simple,
+    #gradetreesubmit,
+    ul.nav-tabs {
+        max-width: 60.5em;
+        margin: 0 auto 1em;
+    }
+}
+// whitelist - scroll bars for large data-tables //
+// - note they are already on .gradeparent
+
+// Edit categories and items: Full view
+.gradetreebox,
+// Mod assignment grading table
+.gradingtable .no-overflow{
+    overflow:auto;
+}
+.path-grade-report-customgrader,
+.path-grade-report-grader {
+    .gradeparent{
+        .right_scroller table#user-grades {
+            th {
+                font-size: 10px;
+            }
+        }
+        table#user-grades {
+            border: none;
+            font-size: @font-size-table;
+            th {
+                font-size: 13px;
+                &.header.userfield[scope="col"],
+                &.header#studentheader[scope="col"] {
+                    vertical-align: bottom;
+                    border-top: none;
+                }
+            }
+            th,
+            td {
+                border-color: @table-border-color #f5f5f5;
+            }
+            tr.odd td.cell {
+                background-color: @table-bg-accent;
+                &.overridden,
+                &.ajaxoverridden {
+                    background-color: #EFD9A4
+                }
+            }
+            .topleft {
+                border: none;
+            }
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+// -------------------------
+// Moodle notice/alerts etc
+// -------------------------
+
+// bootstrap alerts
+.alert{
+    clear:both;
+    border:0;
+    border-left:3em solid;
+}
+
+#notice {
+    color: #fff;
+    //	background-color: @brand-primary; customisable
+    font-size: 2em;
+    width: 100%;
+    padding: 1em 4% 4em 4%;
+
+    // pull buttons up into the #notice when they are placed
+    // after it, rather than inside it.
+    &+ .continuebutton {
+        margin-top: -3em;
+    }
+    .buttons {
+        text-align: center;
+        border-top: none;
+    }
+
+    a, a:visited, a:link, a:hover {
+        color:#fff;
+        text-decoration: underline;
+    }
+}
+
+
+// when we display a continue cancel notice, we need the page contents to be the same height.
+// this is currently limitted to the front page.
+body.hascontinuecancel.path-site #page{
+    max-height: 750px;
+    height: 750px;
+    overflow: hidden;
+}
+
+// hard code some specific uses here till MDL-45655 fixes them
+// and allows us to add the snap-continue-cancel class
+
+// the hardcodeded ones here have the button inside the div
+#page-admin-purgecaches #notice,
+#notice.snap-continue-cancel {
+    min-height: 750px;
+    position: absolute;
+    padding: 10% 4%;
+    top: 1.5em;
+    left: 50%;
+    margin-left: -50%;
+    z-index: 13;
+}
+
+// Override for odd little notice when deleting questions.
+#page-user-policy #notice,
+#page-blocks-conduit-view #notice.snap-continue-cancel,
+#page-mod-quiz-edit div.container #notice.snap-continue-cancel {
+    color: @text-color;
+    background-color: @body-bg;
+    font-size: @font-size-base;
+    left: 0;
+}
+
+#page-user-policy #notice,
+#page-blocks-conduit-view #notice.snap-continue-cancel {
+    position: relative;
+    margin: 0;
+    padding: 0;
+    min-height: 0;
+}
+// the hardcodeded ones here have the button outside the div
+// remember to add any further additions to the user swatch
+// to ensure they pick up the brand color.
+#page-course-loginas,
+#page-mod-survey-save{
+  #region-main {
+    //	background-color: @brand-primary; customisable
+    max-width:inherit;
+    min-height: 750px;
+  }
+
+  #moodle-footer{
+    margin-top:0;
+  }
+
+  #page-header{
+    display:none;
+  }
+
+}
+
+
+// next / previous nav
+.section_footer {
+	margin-top:2em;
+	padding:1em 0;
+	border-top:1px solid #eee;
+}
+.section_footer a{
+    font-style:normal;
+    text-decoration:none;
+    display:block;
+    width:100%;
+    margin-top:1em;
+}
+
+.next_section {
+    text-align:right;
+    float: right;
+}
+
+.previous_section {
+    float: left;
+}
+
+@media screen and (min-width: @screen-sm-min) {
+	.section_footer{
+		.previous_section,
+		.next_section {
+			width: 50%;
+		}
+	}
+}
+
+.nav_guide {
+    letter-spacing:0.1em;
+    text-transform:uppercase;
+    font-style:normal;
+    color: @text-color;
+}
+.nav_icon {
+    padding:0.3em;
+    text-align:center;
+}
+
+.next_section .nav_icon {
+    margin-left:0.3em;
+    border-left:1px solid #eee;
+    font-size:2em;
+    width: 50px;
+    float: right;
+}
+
+.previous_section .nav_icon {
+    float:left;
+    margin-right:0.3em;
+    border-right:1px solid #eee;
+    font-size:2em;
+}
+
+
+
+
+
+/* moodle dialogues */
+/* standard size */
+.moodle-dialogue-base .moodle-dialogue{
+  min-width:32%;
+  padding:0;
+  /* large size */
+  &.chooserdialogue,
+  &.filepicker{
+     min-width:89%;
+     height:100%;
+  }
+}
+
+/* assigning roles /enrol/otherusers.php */
+.other-user-manager-panel {
+  .moodle-dialogue-base .moodle-dialogue;
+}
+
+
+
+
+/* file picker dialogue */
+#filesskin .file-picker.fp-generallayout {
+    width: auto !important;
+}
+.file-picker {
+    .clearfix();
+}
+.fp-filename {
+    font-size:small;
+}
+.filepicker .yui3-widget-content-expanded{
+    height:110%;
+}
+
+.file-picker .fp-navbar{
+  background-color:transparent;
+}
+@media screen and (min-width: @screen-md-min) {
+    .file-picker .fp-repo-area{
+      width:32%;
+    }
+    .file-picker .fp-repo-items{
+      width:68%;
+    }
+}
+
+/* add resources and activities dialogue */
+.jsenabled .choosercontainer #chooseform .alloptions{
+    padding:0 4%;
+}
+
+/* quiz thing dialogue */
+
+
+
+
+// -------------------------
+// Show legacy file manager file icons with consistent sizes
+// -------------------------
+#page-files-index {
+    img.smallicon {
+        width:24px;
+        height:24px;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+// -------------------------
+// The site footer - moodle-footer
+// -------------------------
+
+#moodle-footer {
+    padding-top: 2em;
+    padding-bottom: 1em;
+    border-top: 1px solid #ccc;
+    clear: both;
+    color: #dadada;
+    background-color: @text-color;
+    margin-top: 0;
+}
+#moodle-footer {
+    h1,h2,h3,h4,h5,h6 {
+        color: #dadada;
+    }
+    .helplink img.poweredbylogo{
+        max-width:inherit;
+        max-height:inherit;
+        height:inherit;
+        width:inherit;
+        vertical-align:middle;
+    }
+    a,a:hover{
+        color:#fff;
+    }
+    .langmenu{
+        color:#666;
+    }
+}
+
+#page-site-index #moodle-footer {
+    margin-top: 0;
+}
+
+#moodle-footer.nocoursefooter {
+    margin-top: 2em;
+}
+
+#site-news-forum + br {
+    display: none;
+}
+
+/* Moodle error, reports, all that stuff in the footer */
+
+#page-footer {
+    border-top: none;
+    .langmenu {
+        text-align:right;
+    }
+}
+#page-footer .performanceinfo{
+	margin:4%;
+	text-align:left;
+}
+#page-footer .performanceinfo .cachesused .cache-definition-stats {
+    background-color: transparent;
+}
+
+.cache-store-stats.lowhits {
+    background-color: orange;
+}
+.cache-store-stats.nohits {
+    background-color: red;
+}
+.cache-store-stats.hihits {
+    background-color: #323232;
+}
+
+.nav-justified + .nav-justified {
+    margin-top: 1em;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* NB */
+
+
+
+/* PLEASE DON'T JUST DUMP CSS ANYWHERE BELOW HERE */
+/* LOOK UP AND YOU'LL FIND THE CSS PRETTY MUCH FOLLOWS THE DOM STRUCTURE */
+/* ADD YOUR CSS IN THE SAME PLACE AS IT IS IN THE DOM */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/** SHAME **/
+@keyframes slideInDown {
+  0% {
+    opacity: 0;
+    transform: translateY(-2000px);
+  }
+
+  100% {
+    transform: translateY(0);
+  }
+}
+
+.slideInDown {
+  animation-name: slideInDown;
+}
+
+.snap_spinner:after{
+  content: url([[pix:theme|loading-bubbles]]);
+  padding-left:0.25em;
+}
+
+
+
+
+
+
+
+/**
+spinner, from
+http://css-spinners.com/css/spinner/three-quarters.css
+**/
+@keyframes three-quarters {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* Styles for old versions of IE */
+.three-quarters {
+  font-family: sans-serif;
+  font-weight: 100;
+}
+
+/* :not(:required) hides this rule from IE9 and below */
+.three-quarters:not(:required) {
+  animation: three-quarters 1250ms infinite linear;
+
+  // Start GT Mod - force gpu accelleration.
+  transform: translateZ(0);
+  // End GT Mod.
+
+  border: 6px solid #ffffff;
+  border-right-color: transparent;
+  border-radius: 16px;
+  box-sizing: border-box;
+  display: inline-block;
+  position: relative;
+  overflow: hidden;
+  text-indent: -9999px;
+  width: 32px;
+  height: 32px;
+}
+
+/** folderview format **/
+
+#page-course-view-folderview {
+    &.jsenabled #tab_addBlock,
+    .section-navigation  .jumpmenu {
+        display: none;
+    }
+}
+
+/** fix feedback field sizes on mobile devices **/
+@media screen and (max-width: @screen-xs-max) {
+  .mform {
+      .ftags select,
+      .fselect > select,
+      .fselectyesno > select,
+      .ftext > input[type="text"],
+      textarea {
+        width: 100%;
+      }
+      input[type="text"]{
+        max-width: 100%;
+      }
+  }
+  .path-user .userlist .singleselect {
+      width: 100%;
+  }
+}
+
+
+#footer-error-cont{
+  margin-top:1em;
+  border:3px solid red;
+  background-color:#fff;
+  color:#000;
+  padding:2em 2em 2em 2em;
+  h3 {
+    color:#000;
+  }
+  hr {
+    margin-top:3em;
+  }
+}
+
+
+
+// yui-bs overrides (note SNAP specific)
+.yui-bootstrapped {
+  // stop yui menu from being completely unusable on mobile device
+  // note: it still isn't that great and a select box would be way better
+  #pld_tokenselector.yuimenu {
+    top:100px !important;
+    position:fixed !important;
+    max-height: 70%;
+    overflow-y:auto;
+    @media (max-width: @screen-xs-max) {
+        left: 10% !important;
+        width: 80% !important;
+    }
+    .yui-menu-body-scrolled{
+      padding:0 0 0 0;
+      margin:0 0 0 0;
+    }
+  }
+}
+
+// nicer positioning of fatal errors
+div[data-rel = fatalerror]{
+  margin:1em 1em 1em 1em;
+}
+
+img.iconhelp {
+    background-color: #ddd;
+    height: 24px;
+    width: 24px;
+    border-radius: 50%;
+    border: 4px solid #ddd;
+    vertical-align: middle;
+    margin-bottom: 3px;
+    &:hover {
+        //background-color: @brand-primary; User customisable.
+        border-width: 0;
+    }
+}
+
+table th img.iconhelp {
+    height: 16px;
+    width: 16px;
+    border-width: 0;
+}
+
+#moodle-footer .helplink a img.iconhelp,
+#moodle-footer .helplink a:hover img.iconhelp {
+    background-color: #999;
+    border-color: #999;
+    &:hover {
+        border-width: 4px;
+    }
+}
+
+
+.helplink{
+    img.moodlefooterlogo,
+    img.poweredbylogo {
+        width: inherit;
+        height: inherit;
+        margin-right: 0.5em;
+        margin-left: 0.5em;
+    }
+    img.moodlefooterlogo {
+        vertical-align: top;
+        margin-top: -2px;
+        margin-right: 0;
+    }
+    img.poweredbylogo {
+        vertical-align: bottom;
+        margin-bottom: -2px;
+    }
+    .footerlinkdivider{
+        margin:0 0.5em;
+    }
+}
+
+
+@media screen and (max-width: @screen-xs-max) {
+    #page-enrol-users .enrol_user_buttons {
+        float: none;
+        .singlebutton.enrolusersbutton {
+            display:block;
+        }
+    }
+}
+
+
+
+// -------------------------
+// Reduce font sizes on small screen
+// -------------------------
+
+
+@media screen and (max-width: @screen-xs-max) {
+        #region-main {font-size:0.9em;}
+        h1 {font-size:2.2em;}
+        h2 {font-size:2em;}
+        h3,.sectionname {font-size:1.8em;}
+        h4 {font-size:1.6em;}
+        h5 {font-size:1.4em;}
+        h6 {font-size:1.2em;}
+}
+
+
+// Workaround for .labels inserted by some mechanism that is also fond of font tags
+.label:not(.activity) font {
+    color: @text-color;
+    font-weight: 300;
+}
+.label:not(.activity) b font {
+    font-weight: 500;
+}
+
+// Progress bars need !important  because the styles are set in the HTML.
+// Should be fixed, or at least better in 2.7.
+p[id^="time_"] + div[id^="bar_"] {
+    overflow: hidden !important;
+    height: 22px !important;
+    margin-bottom: @line-height-base !important;
+    #gradient > .vertical(#f5f5f5, #f9f9f9) !important;
+    box-shadow: inset 0 1px 2px rgba(0,0,0,.1) !important;
+    border: none !important;
+    div[id^="progress_"] {
+        font-family: roboto;
+        height: 100% !important;
+        color: #fff !important;
+        float: left !important;
+        font-size: @font-size-small !important;
+        text-align: center !important;
+        box-shadow: inset 0 -1px 0 rgba(0,0,0,.15);
+        transition: width .6s ease;
+        padding-top: 0 !important;
+        border: none !important;
+    }
+}
+
+
+.path-backup .wibbler {
+    display: none;
+}
+
+// This is required for the jquery ellipsis plugin.
+.ellipsis_toobig:after {
+    content:'...';
+}
+
+.atto_equation_library button {
+    background-color: #fff;
+    color: @text-color;
+    &:hover {
+        background-color: darken(#fff, 5%);
+        color: @text-color;
+    }
+}
+.atto_charmap_selector button {
+    width: 40px;
+    padding: 3px;
+    margin: 0;
+}
+.atto_equation_groups.yui3-tabview-panel {
+    border: none;
+    background: #fff;
+}

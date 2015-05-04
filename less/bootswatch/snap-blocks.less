@@ -1,0 +1,199 @@
+// This file is part of Moodle - http://moodle.org/
+//
+// Moodle is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// Moodle is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+
+/**
+ * Moodle blocks.
+ *
+ * @package   theme_snap
+ * @copyright Copyright (c) 2015 Moodlerooms Inc. (http://www.moodlerooms.com)
+ * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
+
+@media screen and (min-width: @screen-sm-min) {
+    #moodle-blocks {
+        column-count: 2;
+        column-gap: 5%;
+        column-width: 45%;
+    }
+    #moodle-blocks .block:not(.block_settings) {
+        display: inline-block;
+        width: 100%;
+    }
+}
+
+.block .header .title h2 {
+    font-size: @font-size-h5;
+}
+.block h3 {
+    font-size: @font-size-h6;
+}
+
+a.skip-block {
+    display: none;
+}
+
+/* remove block actions, always display blocks when displayed */
+.block_action {
+    display: none;
+}
+.block.hidden .content {
+    display: block;
+}
+
+/* hide blocks by default */
+#moodle-blocks {
+    visibility: hidden;
+    height: 0px;
+    overflow: hidden;
+}
+
+/* show blocks on front page, quiz, book, cal etc and when clicked */
+
+#page-admin-index #moodle-blocks,
+#page-mod-quiz-attempt #moodle-blocks,
+#page-mod-quiz-review #moodle-blocks,
+#page-mod-book-view #moodle-blocks,
+#page-site-index #moodle-blocks,
+#page-user-profile #moodle-blocks,
+#page-my-index #moodle-blocks,
+#page-calendar-view #moodle-blocks,
+#page-mod-lesson-view #moodle-blocks,
+#moodle-blocks.state-visible,
+.format-folderview.path-course-view:not(.folderview-single-section) #moodle-blocks,
+.format-weeks.path-course-view.editing #moodle-blocks,
+.format-topics.path-course-view.editing #moodle-blocks {
+    visibility: visible;
+    height: auto;
+    overflow: visible;
+}
+
+
+.block,
+.block-region .block {
+    margin: 0 auto 1em auto;
+    padding: 0 4%;
+    border: 0;
+    box-shadow: none;
+    border: 0px;
+    background-color: transparent;
+    max-width: 50.5em;
+}
+
+body.path-site .block-region .block {
+    margin: 2em auto;
+}
+
+.block.block_settings,
+body.path-site .block.block_settings{
+    margin-top: 0;
+    margin-bottom: 1em;
+}
+
+/* icons in blocks */
+.block_navigation .block_tree .tree_item.branch,
+.block_settings .block_tree .tree_item.branch {
+    background-position: 0 .5em;
+}
+.block_navigation .block_tree li.item_with_icon > p img,
+.block_settings .block_tree li.item_with_icon > p img {
+    top: .5em;
+    opacity: .7;
+}
+
+.block .icon.column {
+    width: 21px;
+    img {
+        vertical-align: baseline;
+    }
+}
+.eventcontent .smallicon{
+    width: 50px;
+    margin-right:2%;
+}
+
+
+
+
+/* Calandar */
+.eventtitle {
+    font-size:1em;
+}
+.calendar-event-panel .eventcontent{
+        text-align:left;
+        padding:0.5em;
+}
+.block .minicalendar {
+    max-width: 100%;
+}
+
+// hide this stuff from blocks when not viewing full page cal
+.eventskey,
+.block_calendar_month .calendar_filters {
+    display: none;
+}
+
+/* ADMIN BLOCK */
+#page-content .block_settings {
+    width: 320px;
+    height: 0;
+    visibility: hidden;
+    position: fixed;
+    background-color: #fff !important;
+    top: 0;
+    right: -100%;
+      .moodle-core-dragdrop-draghandle{
+        display:none;
+      }
+      .header {
+      	visibility:hidden;
+      	height:1.5em;
+      }
+}
+
+#page-content .block_settings.state-visible,
+.block_settings:target {
+  visibility: visible;
+  padding-top: 4em;
+  height: 100%;
+  overflow-y: auto;
+  overflow-x:hidden;
+  z-index: 2;
+  right:0;
+  border-left: 1px solid #eee;
+  transition: right .4s ease-in-out;
+}
+
+.block .header .title .commands {
+    width:100%;
+    font-size:small;
+}
+
+.block_rss_client ul.list li{
+    border:0;
+    margin:1em 0;
+    .description{
+        font-size:small;
+    }
+}
+
+
+/* BLOCKS EDITING */
+.block .moodle-actionmenu[data-enhanced].show .menu,
+.block .moodle-actionmenu[data-enhanced].show .menu[style]{
+    left:0 !important; // overwrite moodle js
+}
+.block .commands.show .moodle-core-dragdrop-draghandle {
+    display:none;
+}

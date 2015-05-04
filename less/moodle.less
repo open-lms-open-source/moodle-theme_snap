@@ -1,0 +1,49 @@
+// Import the bootstrap variables.
+@import "bootstrap3/variables.less";
+
+@import "moodle/variables";
+// Old Moodle stuff from base theme.
+// Massive, needs broken up.
+
+@import "moodle/core";
+@import "moodle/admin";
+@import "moodle/calendar";
+@import "moodle/course";
+@import "moodle/filemanager";
+@import "moodle/message";
+@import "moodle/question";
+@import "moodle/user";
+@import "moodle/login";
+@import "moodle/new";
+
+
+// Upstream Bootstrap.
+@import "bootstrap3/bootstrap";
+
+// Override Bootstrap defaults.
+@import "moodle/bootstrapoverride";
+
+// Roll back nameclashes.
+@import "moodle/undo";
+
+@import "bootswatch/snap-variables";
+
+// New Moodle stuff that builds on Bootstrap.
+@import "moodle/blocks";
+@import "moodle/forms";
+//@import "moodle/forms-responsive";
+@import "moodle/modules";
+@import "moodle/chat";
+@import "moodle/reports";
+@import "moodle/backup-restore";
+@import "moodle/tables";
+@import "moodle/buttons";
+@import "moodle/yui-bootstrapped";
+
+@import "moodle/responsive";
+
+@import "moodle/joule";
+@import "moodle/debug";
+@import "moodle/expendable";
+
+@import "bootswatch/snap-bootswatch";

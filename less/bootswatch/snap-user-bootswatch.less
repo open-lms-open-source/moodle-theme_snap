@@ -1,0 +1,439 @@
+// This file is part of Moodle - http://moodle.org/
+//
+// Moodle is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// Moodle is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+
+/**
+ * Snap user swatch.
+ *
+ * @package   theme_snap
+ * @copyright Copyright (c) 2015 Moodlerooms Inc. (http://www.moodlerooms.com)
+ * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
+
+
+// everything user customisable via less
+//
+// This needs to override CSS coming from three distinct places
+//
+//  1. Bootstrap 3 (less/bootstrap3/*.less)
+//  2. Moodle overrides of Bootstrap  (less/moodle/*.less)
+//  3. Snap theme (less/bootswatch/snap-*.less)
+//
+// And in that order, this file will try to follow the order  and
+// general format of the sources that it overrides to make it
+// easier to trace back.
+//.
+// Typography
+// -------------------------
+
+// Reset - overwrites inline style tags
+.news-article-message *[style],
+.snap-image-summary *[style],
+.summary-text *[style],
+.snap-activity .contentafterlink *[style],
+.signuppanel *[style],
+.signuppanel .text_to_html *[style]{
+    color:inherit !important;
+    font-size:inherit !important;
+    line-height:inherit !important;
+    margin:inherit !important;
+    padding:inherit !important;
+    font-family: inherit !important;
+    background-color:inherit !important;
+    max-width:100% !important;
+    border:inherit !important;
+    text-align:inherit !important;
+}
+
+blockquote {
+    border-left: 5px solid @brand-primary;
+    &.blockquote-reverse {
+        border-left: 0;
+        border-right: 5px solid @brand-primary;
+    }
+}
+
+
+hr {
+    border-top: 1px solid @brand-primary;
+}
+
+a,
+a:visited {
+    color:@brand-primary;
+}
+
+a:focus,
+a:hover {
+    color: darken(@brand-primary, 8%);
+}
+#fixy-my-courses .courseinfo {
+    a,
+    a:visited {
+        color:@brand-primary;
+    }
+    a:focus,
+    a:hover {
+        color: darken(@brand-primary, 8%);
+    }
+
+}
+
+.section li.snap-native .activityinstance .snap-asset-link a {
+    color:@brand-primary;
+    &:visited {
+        color:@brand-primary;
+    }
+    &:focus,
+    &:hover {
+        color: darken(@brand-primary, 8%);
+    }
+}
+
+// Calendar
+#dateselector-calendar-panel .selected .selector{
+    background-color:@brand-primary;
+}
+#dateselector-calendar-panel .calcellhover .selector {
+    border-color:@brand-primary !important;
+    background-color:white;
+    color:@brand-primary;
+}
+
+.day .day a{
+    background-color:@brand-primary;
+}
+
+#region-main,
+#region-main textarea,
+.contentafterlink,
+.contentwithoutlink,
+#course_about,
+.user-grade td.feedbacktext,
+// moodle applies to .text_to_html class for teachers description in the footer
+#course_teachers .text_to_html  {
+    font-family: @font-family-serif;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+legend,
+.mform legend a,
+.mform legend a:hover,
+.coursebox .info .coursename,
+.collapsibleregioncaption,
+.pagemod-readmore,
+.snap-action-icon,
+#coursetools-list a {
+    font-family: @font-family-sans-serif;
+}
+
+
+// Pills
+// -------------------------
+.nav-pills {
+  > li {
+    // Links rendered as pills
+    // Active state
+    &.active > a {
+      &,
+      &:hover,
+      &:focus {
+        background-color: @brand-primary;
+      }
+    }
+  }
+}
+// Elements
+// -------------------------
+.snap-media-body p{
+    font-family: @font-family-serif;
+}
+.fixy-trigger {
+    &:hover{
+    	background-color: fade(@brand-primary, 75%);
+    }
+    .message_badge_count{
+    	background-color:darken(@brand-primary, 8%);
+    }
+}
+
+
+
+.fixy{
+    background-color: @brand-primary;
+    .label-success {
+    color: @brand-primary;
+    }
+}
+.snap-unread-marker {
+    color: @brand-primary;
+}
+
+// course management page pagination yui buttons
+#course-category-listings .listing-pagination .yui3-button,
+.paging.paging-morelink a {
+    background-color: @brand-primary;
+    border-color: @brand-primary;
+    &:hover,
+    &:focus,
+    &:active,
+    &.active {
+        background-color: darken(@brand-primary, 8%);
+        border-color: darken(@brand-primary, 12%);
+    }
+}
+
+#page-site-index .sitetopic>a:last-of-type,
+.summary>a:last-of-type,
+#changenumsections .increase-sections,
+#changenumsections .reduce-sections,
+input.form-submit,
+input#id_submitbutton,
+input#id_submitbutton2,
+.path-admin .buttons input[type="submit"],
+td.submit input,
+#notice .singlebutton + .singlebutton input,
+#login.fixy input[type=submit],
+.submit.buttons input[name="cancel"],
+.section-modchooser-link a,
+button,
+.yui-skin-sam .yui-button,
+.yui3-button,
+.yui-button  button,
+.btn,
+input.form-submit,
+input[type="button"],
+input[type="submit"],
+input[type="reset"] {
+    background-color:@brand-primary;
+    border-color: #fff;
+    color:#fff;
+    font-family: @font-family-base;
+    font-weight: 300;
+    &:hover,
+    &:focus,
+    &:active,
+    &.active {
+        background-color: darken(@brand-primary, 8%);
+        border-color: darken(@brand-primary, 12%);
+        color:#fff;
+        text-decoration:none;
+    }
+    &:visited {
+        color: #fff;
+    }
+    &[disabled] {
+        background-color: @brand-primary;
+    }
+}
+
+#show-toc {
+    color: @link-color;
+}
+
+#course-toc {
+    div[role="tablist"]{
+        > span a:hover {
+            border-bottom-color: @brand-primary;
+        }
+    }
+}
+
+// flexpage yui button shame
+.format-flexpage .yui-button-checked button{
+    background-color: darken(@brand-primary, 8%);
+    border-color: darken(@brand-primary, 12%);
+    color:#fff;
+}
+.settings-button {
+    background-color: fade(@brand-primary, 80%);
+}
+
+#page-site-index #page-header,
+.news-article-image,
+.news-article-preview,
+#notice {
+    background-color: @brand-primary;
+}
+#toc-search:before {
+    color:@brand-primary;
+}
+#toc-search-input:focus {
+    border-bottom:1px solid @brand-primary;
+}
+
+
+
+
+
+
+// workaround for #notices with buttons outside the div#notice
+#page-course-loginas,
+#page-mod-survey-save {
+    #region-main {
+        background-color: @brand-primary;
+    }
+}
+
+
+/* highlight selected menu iteam logic */
+
+/*default */
+a[href="#sections"] {
+	border-bottom:0.3em solid @brand-primary;
+}
+
+/* moodle edit menus */
+.moodle-actionmenu[data-enhanced].show .menu a:hover, .moodle-actionmenu[data-enhanced].show .menu a:focus {
+	color:@brand-primary;
+	background-color:transparent;
+}
+
+/* activities */
+
+.current .sectionname{
+  color:@brand-primary;
+}
+
+// yui-bs overrides
+.yui-skin-sam,
+.yui-bootstrapped {
+    .yuimenu {
+        a.yuimenuitemlabel {
+            &:hover,
+            &:focus {
+                background-color: @dropdown-link-hover-bg;
+            }
+        }
+    }
+    .yui-calcontainer {
+        .yui-calendar {
+            td.calcell {
+                a {
+                    color: @brand-primary;
+                }
+                &.selected {
+                    background-color: @brand-primary;
+                }
+                &.calcellhover,
+                &.calcellhover a {
+                    background: @brand-primary;
+                }
+            }
+        }
+    }
+    .yui-dt-paginator {
+        a {
+            &.yui-pg-previous,
+            &.yui-pg-first,
+            &.yui-pg-next,
+            &.yui-pg-last,
+            &.yui-pg-page {
+                color: @pagination-color;
+                &:hover,
+                &:focus {
+                  color: @pagination-hover-color;
+                }
+            }
+        }
+        span.yui-pg-current-page {
+            &,
+            &:hover,
+            &:focus {
+                color: @pagination-active-color;
+                background-color: @pagination-active-bg;
+                border-color: @pagination-active-border;
+            }
+        }
+    }
+}
+
+.path-blocks-reports {
+    .yui3-widget-stdmod {
+        div.report-nav-item {
+            a.nav-item {
+                &:hover,
+                &:focus {
+                    background-color: @dropdown-link-hover-bg;
+                }
+            }
+        }
+        div.report-nav-item-left,
+        div.report-nav-item-right {
+            a.nav-paginate {
+                &:hover,
+                &:focus {
+                    background-color: @dropdown-link-hover-bg;
+                }
+            }
+        }
+    }
+}
+.yui-skin-sam {
+    .yui3-tabview-list {
+        .yui3-tab-label {
+            color: @brand-primary;
+          &:hover,
+          &:focus {
+            color: darken(@brand-primary, 8%);
+          }
+        }
+    }
+    .yui-navset {
+        .yui-nav {
+            li > a {
+                color: @brand-primary;
+                &:hover,
+                &:focus {
+                    color: darken(@brand-primary, 8%);
+                }
+            }
+        }
+    }
+}
+
+img.iconhelp:hover {
+    background-color: @brand-primary;
+}
+
+.gradingform_checklist.editor .addgroup input,
+.gradingform_checklist.editor .additem input,
+.gradingform_rubric.editor .addlevel input,
+.gradingform_rubric.editor .addcriterion input {
+    background-color: @brand-primary;
+    &:hover {
+        background-color: darken(@brand-primary, 8%);
+        border-color: darken(@brand-primary, 12%);
+    }
+}
+
+div[id^="bar_"] > div[id^="progress_"] {
+    background-color: @brand-primary !important;
+}
+
+// -------------------------
+//  Moodle mods
+// -------------------------
+
+// -------------------------
+// Quiz
+// -------------------------
+.que {
+  border-bottom:1px solid @brand-primary;
+}
