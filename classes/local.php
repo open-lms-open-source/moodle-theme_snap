@@ -224,21 +224,42 @@ class local {
      * Get total participant count for specific courseid.
      *
      * @param $courseid
+     * @param $modname the name of the module, used to build a capability check
      * @return int
      */
-    public static function course_participant_count($courseid) {
+    public static function course_participant_count($courseid, $modname = null) {
         static $participantcount = array();
 
-        if (!isset($participantcount[$courseid])) {
+        // Incorporate the modname in the static cache index.
+        $idx = $courseid . $modname;
+
+        if (!isset($participantcount[$idx])) {
+            // Use the modname to determine the best capability.
+            switch ($modname) {
+                case 'assign':
+                    $capability = 'mod/assign:submit';
+                    break;
+                case 'quiz':
+                    $capability = 'mod/quiz:attempt';
+                    break;
+                case 'choice':
+                    $capability = 'mod/choice:choose';
+                    break;
+                case 'feedback':
+                    $capability = 'mod/feedback:complete';
+                    break;
+                default:
+                    // If no modname is specified, assume a count of all users is required
+                    $capability = '';
+            }
+
             $context = \context_course::instance($courseid);
             $onlyactive = true;
-            $capability = 'mod/assign:submit';
             $enrolled = count_enrolled_users($context, $capability, null, $onlyactive);
-            $participantcount[$courseid] = $enrolled;
+            $participantcount[$idx] = $enrolled;
         }
 
-        return $participantcount[$courseid];
-
+        return $participantcount[$idx];
     }
 
     /**

@@ -377,7 +377,7 @@ class theme_snap_core_course_renderer extends core_course_renderer {
                 $engagementmeta[] = get_string('xofy'.$meta->submitstrkey, 'theme_snap',
                     (object) array(
                         'completed' => $meta->numsubmissions,
-                        'participants' => \theme_snap\local::course_participant_count($COURSE->id)
+                        'participants' => \theme_snap\local::course_participant_count($COURSE->id, $mod->modname)
                     )
                 );
             }
