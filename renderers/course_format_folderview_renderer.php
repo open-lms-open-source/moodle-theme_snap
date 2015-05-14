@@ -29,9 +29,9 @@ class theme_snap_format_folderview_renderer extends format_folderview_renderer {
     protected function end_section_list() {
         $output = html_writer::end_tag('ul');
         $output .= "<section id='coursetools' class='clearfix' tabindex='-1'>";
+        $output .= snap_shared::coursetools_svg_icons();
         $output .= snap_shared::appendices();
         $output .= "</section>";
-        $output .= snap_shared::coursetools_svg_icons();
         return $output;
     }
 
