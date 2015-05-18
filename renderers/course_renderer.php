@@ -502,34 +502,10 @@ class theme_snap_core_course_renderer extends core_course_renderer {
         if (!$mod->uservisible) {
             return "";
         }
-        global $DB;
-        $sql = "SELECT * FROM {course_modules} cm
-                  JOIN {page} p ON p.id = cm.instance
-                WHERE cm.id = ?";
-        $page = $DB->get_record_sql($sql, array($mod->id));
 
-        $context = context_module::instance($mod->id);
+        $page = \theme_snap\local::get_page_mod($mod);
 
-        $formatoptions = new stdClass;
-        $formatoptions->noclean = true;
-        $formatoptions->overflowdiv = true;
-        $formatoptions->context = $context;
-
-        // Make sure we have some summary/extract text for the course page.
-        if (!empty($page->intro)) {
-            $page->summary = file_rewrite_pluginfile_urls($page->intro,
-                'pluginfile.php', $context->id, 'mod_page', 'intro', null);
-            $page->summary = format_text($page->summary, $page->introformat, $formatoptions);
-        } else {
-            $preview = html_to_text($page->content, 0, false);
-            $page->summary = shorten_text($preview, 200);
-        }
-
-        $content = file_rewrite_pluginfile_urls($page->content,
-            'pluginfile.php', $context->id, 'mod_page', 'content', $page->revision);
-        $content = format_text($content, $page->contentformat, $formatoptions);
-
-        $imgarr = \theme_snap\local::extract_first_image($content);
+        $imgarr = \theme_snap\local::extract_first_image($page->content);
 
         $thumbnail = '';
         if ($imgarr) {
@@ -544,11 +520,10 @@ class theme_snap_core_course_renderer extends core_course_renderer {
         {$thumbnail}
         <div class='summary-text'>
             {$page->summary}
-            <p><a class='pagemod-readmore' href='$mod->url'>$readmore</a></p>
+            <p><a class='pagemod-readmore' href='$mod->url' data-pagecmid='$mod->id'>$readmore</a></p>
         </div>
 
         <div class=pagemod-content tabindex='-1'>
-            {$content}
             <div><hr><a  class='snap-action-icon' href='#'>
             <i class='icon icon-office-52'></i><small>$close</small></a></div>
         </div>";

@@ -603,6 +603,28 @@ function snapInit() {
     };
 
     /**
+     * Reveal pagemod.
+     *
+     * @param $pagemod
+     */
+    var revealPageMod = function($pagemod) {
+        $pagemod.find('.pagemod-content').slideToggle("fast", function() {
+            // Animation complete.
+            if($pagemod.is('.state-expanded')){
+                $pagemod.attr('aria-expanded', 'true');
+                $pagemod.find('.pagemod-content').focus();
+
+            }
+            else {
+                $pagemod.attr('aria-expanded', 'false');
+                $pagemod.focus();
+            }
+
+        });
+        applyResponsiveVideo();
+    }
+
+    /**
      * Add listeners.
      *
      * just a wrapper for various snippets that add listeners
@@ -771,20 +793,27 @@ function snapInit() {
             var $pagemod = $(this).closest('.modtype_page');
             scrollToElement($pagemod);
             $pagemod.toggleClass('state-expanded');
-            $pagemod.find('.pagemod-content').slideToggle("fast", function() {
-                // Animation complete.
-                if($pagemod.is('.state-expanded')){
-                    $pagemod.attr('aria-expanded', 'true');
-                    $pagemod.find('.pagemod-content').focus();
 
-                }
-                else {
-                    $pagemod.attr('aria-expanded', 'false');
-                    $pagemod.focus();
-                }
+            var $pagemodcontent = $pagemod.find('.pagemod-content');
+            if ($pagemodcontent.data('content-loaded') == 1) {
+                // Content is already available so reveal it immediately.
+                revealPageMod($pagemod);
+            } else {
+                // Content is not available so request it.
+                $pagemod.find('.contentafterlink').prepend('<div class="ajaxstatus">' + M.str.theme_snap.loading + '</div>');
+                $.ajax({
+                    type: "GET",
+                    async:  true,
+                    url: M.cfg.wwwroot + '/theme/snap/rest.php?action=get_page&pagecmid=' + $(this).data('pagecmid'),
+                    success: function(data){
+                        $pagemodcontent.prepend(data.html);
+                        $pagemodcontent.data('content-loaded', 1);
+                        $pagemod.find('.contentafterlink .ajaxstatus').remove();
+                        revealPageMod($pagemod);
+                    }
+                });
+            }
 
-            });
-            applyResponsiveVideo();
             e.preventDefault();
         });
 
