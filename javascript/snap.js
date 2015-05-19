@@ -795,15 +795,16 @@ function snapInit() {
 
         });
 
-        // Mobile menu button
+        // Mobile menu button.
         $(document).on("click", "#course-toc.state-visible a", function(e){
             $('#course-toc').removeClass('state-visible');
         });
 
-        // Page mod toggle content
+        // Page mod toggle content.
         $(document).on("click", ".modtype_page .instancename,.pagemod-readmore,.pagemod-content .snap-action-icon", function(e) {
             var $pagemod = $(this).closest('.modtype_page');
             scrollToElement($pagemod);
+            var isexpanded =  $pagemod.hasClass('state-expanded');
             $pagemod.toggleClass('state-expanded');
 
             var readmore = $pagemod.find('.pagemod-readmore');
@@ -812,26 +813,33 @@ function snapInit() {
             if ($pagemodcontent.data('content-loaded') == 1) {
                 // Content is already available so reveal it immediately.
                 revealPageMod($pagemod);
-                $.ajax({
-                    type: "GET",
-                    async:  true,
-                    url: M.cfg.wwwroot + '/theme/snap/rest.php?action=read_page&pagecmid=' + readmore.data('pagecmid')
-                });
+                if (!isexpanded) {
+                    $.ajax({
+                        type: "GET",
+                        async: true,
+                        url: M.cfg.wwwroot + '/theme/snap/rest.php?action=read_page&pagecmid=' + readmore.data('pagecmid')
+                    });
+                }
             } else {
-                // Content is not available so request it.
-                $pagemod.find('.contentafterlink').prepend('<div class="ajaxstatus">' + M.str.theme_snap.loading + '</div>');
-                $.ajax({
-                    type: "GET",
-                    async:  true,
-                    url: M.cfg.wwwroot + '/theme/snap/rest.php?action=get_page&pagecmid=' + readmore.data('pagecmid'),
-                    success: function(data){
-                        $pagemodcontent.prepend(data.html);
-                        $pagemodcontent.data('content-loaded', 1);
-                        $pagemod.find('.contentafterlink .ajaxstatus').remove();
-                        revealPageMod($pagemod);
-                    }
-                });
+                if (!isexpanded) {
+                    // Content is not available so request it.
+                    $pagemod.find('.contentafterlink').prepend('<div class="ajaxstatus">' + M.str.theme_snap.loading + '</div>');
+                    $.ajax({
+                        type: "GET",
+                        async: true,
+                        url: M.cfg.wwwroot + '/theme/snap/rest.php?action=get_page&pagecmid=' + readmore.data('pagecmid'),
+                        success: function (data) {
+                            $pagemodcontent.prepend(data.html);
+                            $pagemodcontent.data('content-loaded', 1);
+                            $pagemod.find('.contentafterlink .ajaxstatus').remove();
+                            revealPageMod($pagemod);
+                        }
+                    });
+                } else {
+                    revealPageMod($pagemod);
+                }
             }
+
 
             e.preventDefault();
         });
