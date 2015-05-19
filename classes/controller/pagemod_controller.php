@@ -50,18 +50,19 @@ class pagemod_controller extends controller_abstract {
     }
 
     /**
-     * Get the user's deadlines.
+     * Read page
      *
-     * @return string
+     * @throws \coding_exception
+     * @return stdClass
      */
-    public function get_page_action() {
+    private function read_page() {
         $pagecmid = required_param('pagecmid', PARAM_INT);
         $cm = get_coursemodule_from_id('page', $pagecmid);
         $course = get_course($cm->course);
         $page = \theme_snap\local::get_page_mod($cm);
         $context = \context_module::instance($cm->id);
 
-        // Trigger module viewed event.
+        // Trigger module instance viewed event.
         $event = \mod_page\event\course_module_viewed::create(array(
             'objectid' => $page->id,
             'context' => $context
@@ -71,8 +72,32 @@ class pagemod_controller extends controller_abstract {
         $event->add_record_snapshot('page', $page);
         $event->trigger();
 
+        return $page;
+    }
+
+    /**
+     * Get the user's deadlines.
+     *
+     * @return string
+     */
+    public function get_page_action() {
+        $page = $this->read_page();
+
         return json_encode(array(
             'html' => $page->content
+        ));
+    }
+
+    /**
+     * Mark page as read
+     *
+     * @return string
+     */
+    public function read_page_action() {
+        $page = $this->read_page();
+
+        return json_encode(array(
+            'id' => $page->id
         ));
     }
 

@@ -516,6 +516,18 @@ class theme_snap_core_course_renderer extends core_course_renderer {
         $readmore = get_string('readmore', 'theme_snap');
         $close = get_string('close', 'theme_snap');
 
+        // Identify content elements which should force an AJAX lazy load.
+        $elcontentblist = ['iframe', 'video', 'object', 'embed'];
+        $content = $page->content;
+        $lazyload = false;
+        foreach ($elcontentblist as $el) {
+            if (stripos($content, '<'.$el) !== false) {
+                $content = ''; // Don't include the content as it is likely to slow the page load down considerably.
+                $lazyload = true;
+            }
+        }
+        $contentloaded = !$lazyload ? 1 : 0;
+
         $o = "
         {$thumbnail}
         <div class='summary-text'>
@@ -523,7 +535,8 @@ class theme_snap_core_course_renderer extends core_course_renderer {
             <p><a class='pagemod-readmore' href='$mod->url' data-pagecmid='$mod->id'>$readmore</a></p>
         </div>
 
-        <div class=pagemod-content tabindex='-1'>
+        <div class=pagemod-content tabindex='-1' data-content-loaded={$contentloaded}>
+            {$content}
             <div><hr><a  class='snap-action-icon' href='#'>
             <i class='icon icon-office-52'></i><small>$close</small></a></div>
         </div>";

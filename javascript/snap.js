@@ -230,7 +230,19 @@ function snapInit() {
 
             var tagname = this.tagName.toLowerCase();
             if (tagname === 'iframe') {
-                var supportedsites = ['youtube.com', 'youtu.be', 'vimeo.com', 'youtube-nocookie.com', 'embed.ted.com', 'kickstarter.com', 'video.html'];
+                var supportedsites = [
+                    'youtube.com',
+                    'youtu.be',
+                    'vimeo.com',
+                    'archive.org/embed',
+                    'youtube-nocookie.com',
+                    'embed.ted.com',
+                    'embed-ssl.ted.com',
+                    'kickstarter.com',
+                    'video.html',
+                    'simmons.tegrity.com',
+                    'dailymotion.com'
+                ];
                 var supported = false;
                 for (var s in supportedsites) {
                     if (this.src.indexOf(supportedsites[s]) > -1){
@@ -794,17 +806,24 @@ function snapInit() {
             scrollToElement($pagemod);
             $pagemod.toggleClass('state-expanded');
 
+            var readmore = $pagemod.find('.pagemod-readmore');
+
             var $pagemodcontent = $pagemod.find('.pagemod-content');
             if ($pagemodcontent.data('content-loaded') == 1) {
                 // Content is already available so reveal it immediately.
                 revealPageMod($pagemod);
+                $.ajax({
+                    type: "GET",
+                    async:  true,
+                    url: M.cfg.wwwroot + '/theme/snap/rest.php?action=read_page&pagecmid=' + readmore.data('pagecmid')
+                });
             } else {
                 // Content is not available so request it.
                 $pagemod.find('.contentafterlink').prepend('<div class="ajaxstatus">' + M.str.theme_snap.loading + '</div>');
                 $.ajax({
                     type: "GET",
                     async:  true,
-                    url: M.cfg.wwwroot + '/theme/snap/rest.php?action=get_page&pagecmid=' + $(this).data('pagecmid'),
+                    url: M.cfg.wwwroot + '/theme/snap/rest.php?action=get_page&pagecmid=' + readmore.data('pagecmid'),
                     success: function(data){
                         $pagemodcontent.prepend(data.html);
                         $pagemodcontent.data('content-loaded', 1);
