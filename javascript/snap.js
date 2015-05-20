@@ -823,7 +823,7 @@ function snapInit() {
             } else {
                 if (!isexpanded) {
                     // Content is not available so request it.
-                    $pagemod.find('.contentafterlink').prepend('<div class="ajaxstatus">' + M.str.theme_snap.loading + '</div>');
+                    $pagemod.find('.contentafterlink').prepend('<div class="ajaxstatus alert alert-info">' + M.str.theme_snap.loading + '</div>');
                     $.ajax({
                         type: "GET",
                         async: true,
