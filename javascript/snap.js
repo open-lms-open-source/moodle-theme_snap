@@ -865,6 +865,12 @@ function snapInit() {
             sname.required = "required";
             sname.focus();
             $('#id_name + span').css('display','none');
+
+            // Enable the cancel button.
+            $('#id_cancel').on('click', function(e) {
+                $('#id_name').removeAttr('required');
+                $('#mform1').submit();
+            });
         }
 
         if($('.format-folderview').length) {
