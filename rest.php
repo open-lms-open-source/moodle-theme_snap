@@ -41,7 +41,6 @@ require_login($course, false, $cm, false, true);
 
 /** @var $PAGE moodle_page */
 $PAGE->set_context($context);
-$PAGE->set_cm($cm);
 $PAGE->set_url('/theme/snap/rest.php', array('action' => $action, 'contextid' => $context->id));
 
 $router = new router();

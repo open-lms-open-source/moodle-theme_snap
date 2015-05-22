@@ -36,7 +36,7 @@ class pagemod_controller extends controller_abstract {
         global $PAGE;
 
         if (empty($PAGE->cm->id)) {
-            error('Context did not refer to a module');
+            throw new \invalid_parameter_exception('Context did not refer to a module');
         }
 
         switch($action) {
@@ -55,12 +55,11 @@ class pagemod_controller extends controller_abstract {
      * @return stdClass
      */
     private function read_page() {
-        global $PAGE;
+        global $PAGE, $COURSE;
 
         $cm = $PAGE->cm;
-        $course = get_course($cm->course);
         $page = \theme_snap\local::get_page_mod($cm);
-        $context = \context_module::instance($cm->id);
+        $context = $PAGE->context;
 
         // Trigger module instance viewed event.
         $event = \mod_page\event\course_module_viewed::create(array(
@@ -68,7 +67,7 @@ class pagemod_controller extends controller_abstract {
             'context' => $context
         ));
         $event->add_record_snapshot('course_modules', $cm);
-        $event->add_record_snapshot('course', $course);
+        $event->add_record_snapshot('course', $COURSE);
         $event->add_record_snapshot('page', $page);
         $event->trigger();
 
