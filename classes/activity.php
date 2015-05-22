@@ -691,8 +691,18 @@ class activity {
                    WHERE a.course = ?
                      AND userid = ? $extraselect
                 ORDER BY $modfield DESC, st.id DESC";
-        $submissions[$courseid.'_'.$mod->modname] = $DB->get_records_sql($sql,
-            array($USER->id, $courseid, $USER->id));
+
+        // Not every activity has a status field...
+        // Add one if it is missing so code assuming there is a status property doesn't explode.
+        $result = $DB->get_records_sql($sql, array($USER->id, $courseid, $USER->id));
+
+        foreach ($result as $r) {
+            if (!isset($r->status)) {
+                $r->status = null;
+            }
+        }
+
+        $submissions[$courseid.'_'.$mod->modname] = $result;
 
         if (isset($submissions[$courseid.'_'.$mod->modname][$mod->instance])) {
             return $submissions[$courseid.'_'.$mod->modname][$mod->instance];
