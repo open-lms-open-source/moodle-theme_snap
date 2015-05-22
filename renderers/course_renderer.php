@@ -495,10 +495,10 @@ class theme_snap_core_course_renderer extends core_course_renderer {
 
     /**
      * Get page module html
-     * @param $mod
+     * @param cm_info $mod
      * @return string
      */
-    protected function mod_page_html($mod) {
+    protected function mod_page_html(cm_info $mod) {
         if (!$mod->uservisible) {
             return "";
         }
@@ -532,7 +532,7 @@ class theme_snap_core_course_renderer extends core_course_renderer {
         {$thumbnail}
         <div class='summary-text'>
             {$page->summary}
-            <p><a class='pagemod-readmore' href='$mod->url' data-pagecmid='$mod->id'>$readmore</a></p>
+            <p><a class='pagemod-readmore' href='{$mod->url}' data-pagemodcontext='{$mod->context->id}'>{$readmore}</a></p>
         </div>
 
         <div class=pagemod-content tabindex='-1' data-content-loaded={$contentloaded}>

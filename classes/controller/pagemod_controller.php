@@ -33,19 +33,18 @@ class pagemod_controller extends controller_abstract {
      * @param string $action
      */
     public function require_capability($action) {
-        $pagecmid = required_param('pagecmid', PARAM_INT);
-        $cm = get_coursemodule_from_id('page', $pagecmid);
-        if (!$cm) {
-            error('Invalid pageid '.$pagecmid);
+        global $PAGE;
+
+        if (empty($PAGE->cm->id)) {
+            error('Context did not refer to a module');
         }
-        $context = \context_module::instance($cm->id);
 
         switch($action) {
             case 'get_page':
-                require_capability('mod/page:view', $context);
+                require_capability('mod/page:view', $PAGE->context);
                 break;
-             default:
-                require_capability('mod/page:view', $context);
+            default:
+                require_capability('mod/page:view', $PAGE->context);
         }
     }
 
@@ -56,8 +55,9 @@ class pagemod_controller extends controller_abstract {
      * @return stdClass
      */
     private function read_page() {
-        $pagecmid = required_param('pagecmid', PARAM_INT);
-        $cm = get_coursemodule_from_id('page', $pagecmid);
+        global $PAGE;
+
+        $cm = $PAGE->cm;
         $course = get_course($cm->course);
         $page = \theme_snap\local::get_page_mod($cm);
         $context = \context_module::instance($cm->id);

@@ -817,7 +817,7 @@ function snapInit() {
                     $.ajax({
                         type: "GET",
                         async: true,
-                        url: M.cfg.wwwroot + '/theme/snap/rest.php?action=read_page&pagecmid=' + readmore.data('pagecmid')
+                        url: M.cfg.wwwroot + '/theme/snap/rest.php?action=read_page&contextid=' + readmore.data('pagemodcontext')
                     });
                 }
             } else {
@@ -827,7 +827,7 @@ function snapInit() {
                     $.ajax({
                         type: "GET",
                         async: true,
-                        url: M.cfg.wwwroot + '/theme/snap/rest.php?action=get_page&pagecmid=' + readmore.data('pagecmid'),
+                        url: M.cfg.wwwroot + '/theme/snap/rest.php?action=get_page&contextid=' + readmore.data('pagemodcontext'),
                         success: function (data) {
                             $pagemodcontent.prepend(data.html);
                             $pagemodcontent.data('content-loaded', 1);
