@@ -388,8 +388,15 @@ class activity {
     public static function assign_num_submissions_ungraded($courseid, $modid) {
         global $DB;
 
+        static $hasgrades = null;
         static $totalsbyid;
 
+        // Use cache to see if assign has grades.
+        if ($hasgrades != null && !isset($hasgrades[$modid])) {
+            return 0;
+        }
+
+        // Use cache to return number of assigns yet to be graded.
         if (!empty($totalsbyid)) {
             if (isset($totalsbyid[$modid])) {
                 return intval($totalsbyid[$modid]->total);
@@ -397,6 +404,29 @@ class activity {
                 return 0;
             }
         }
+
+        // Check to see if this assign is graded.
+        $params = array(
+            'courseid'     => $courseid,
+            'itemtype'     => 'mod',
+            'itemmodule'   => 'assign',
+            'gradetype'    => GRADE_TYPE_NONE,
+        );
+
+        $sql = 'SELECT iteminstance
+                FROM {grade_items}
+                WHERE courseid = ?
+                AND itemtype = ?
+                AND itemmodule = ?
+                AND gradetype <> ?';
+
+        $hasgrades = $DB->get_records_sql($sql, $params);
+
+        if (!isset($hasgrades[$modid])) {
+            return 0;
+        }
+
+        // Get grading information for remaining of assigns.
         $coursecontext = \context_course::instance($courseid);
         list($esql, $params) = get_enrolled_sql($coursecontext, 'mod/assign:submit', 0, true);
 
