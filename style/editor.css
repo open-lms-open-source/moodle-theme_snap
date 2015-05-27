@@ -1353,7 +1353,7 @@ pre code {
   }
 }
 table {
-  background-color: transparent;
+  background-color: #ffffff;
 }
 th {
   text-align: left;
@@ -6557,6 +6557,9 @@ fieldset[disabled] .gradingform_rubric.editor .addcriterion input.active {
 #local-nortongrader-navigation {
   background-color: transparent;
   text-align: right;
+}
+#page-grade-report-grader-index header#mr-nav {
+  animation-name: none;
 }
 #page-grade-report-joulegrader-index #joule-grades-thead {
   table-layout: fixed;
