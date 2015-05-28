@@ -413,6 +413,41 @@ class snap_shared extends renderer_base {
             'capability' => 'moodle/course:update', // Capability required to view this item.
         );
 
+        // Course enrolment link.
+        $plugins   = enrol_get_plugins(true);
+        $instances = enrol_get_instances($COURSE->id, true);
+        $selfenrol = false;
+        foreach ($instances as $instance) { // Need to check enrolment methods for self enrol.
+            if ($instance->enrol === 'self') {
+                $plugin = $plugins[$instance->enrol];
+                if (is_enrolled($coursecontext)) {
+                    // Prepare unenrolment link.
+                    $enrolurl = $plugin->get_unenrolself_link($instance);
+                    if ($enrolurl) {
+                        $selfenrol = true;
+                        $enrolstr = get_string('unenrolme', 'theme_snap');
+                        break;
+                    }
+                } else {
+                    if ($plugin->show_enrolme_link($instance)) {
+                        // Prepare enrolment link.
+                        $selfenrol = true;
+                        $enrolurl = new moodle_url('/enrol/index.php', array('id'=>$COURSE->id));
+                        $enrolstr = get_string('enrolme', 'core_enrol');
+                        break;
+                    }
+                }
+            }
+        }
+        if ($selfenrol) {
+            $enrolicon = '<svg viewBox="0 0 100 100" class="svg-icon">
+            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#coursetools-settings"></use></svg>';
+            $links[] = array(
+                'link' => $enrolurl,
+                'title' => $enrolicon.$enrolstr
+            );
+        }
+
         $toolssvg = self::inline_svg('tools.svg');
         // Output course tools.
         $coursetools = get_string('coursetools', 'theme_snap');

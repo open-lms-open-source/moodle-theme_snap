@@ -148,6 +148,7 @@ $string['subtitle_desc'] = 'A brief tag line about your site, about 240 characte
 $string['themecolor'] = 'Brand color';
 $string['themecolordesc'] = 'The primary color for your site which is used in links, buttons and menu backgrounds. Bright colours work best and will give your site a modern feel.';
 $string['togglenavigation'] = 'Toggle navigation';
+$string['unenrolme'] = 'Unenrol me';
 $string['unread'] = 'unread';
 $string['via'] = 'via';
 $string['viewcourse'] = 'View Course';
