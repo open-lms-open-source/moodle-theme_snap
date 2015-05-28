@@ -66,6 +66,5 @@ foreach ($contfiles as $contfile) {
     }
 }
 
-
 $kernel = new kernel($router);
 $kernel->handle($action);

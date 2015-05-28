@@ -128,6 +128,7 @@ class snap_shared extends renderer_base {
             'forumpicturegroup',
             'forumreplies',
             'forumlastpost',
+            'loading',
             'more'
         ), 'theme_snap');
 

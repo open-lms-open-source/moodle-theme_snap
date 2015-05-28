@@ -230,7 +230,19 @@ function snapInit() {
 
             var tagname = this.tagName.toLowerCase();
             if (tagname === 'iframe') {
-                var supportedsites = ['youtube.com', 'youtu.be', 'vimeo.com', 'youtube-nocookie.com', 'embed.ted.com', 'kickstarter.com', 'video.html'];
+                var supportedsites = [
+                    'youtube.com',
+                    'youtu.be',
+                    'vimeo.com',
+                    'archive.org/embed',
+                    'youtube-nocookie.com',
+                    'embed.ted.com',
+                    'embed-ssl.ted.com',
+                    'kickstarter.com',
+                    'video.html',
+                    'simmons.tegrity.com',
+                    'dailymotion.com'
+                ];
                 var supported = false;
                 for (var s in supportedsites) {
                     if (this.src.indexOf(supportedsites[s]) > -1){
@@ -603,6 +615,28 @@ function snapInit() {
     };
 
     /**
+     * Reveal pagemod.
+     *
+     * @param $pagemod
+     */
+    var revealPageMod = function($pagemod) {
+        $pagemod.find('.pagemod-content').slideToggle("fast", function() {
+            // Animation complete.
+            if($pagemod.is('.state-expanded')){
+                $pagemod.attr('aria-expanded', 'true');
+                $pagemod.find('.pagemod-content').focus();
+
+            }
+            else {
+                $pagemod.attr('aria-expanded', 'false');
+                $pagemod.focus();
+            }
+
+        });
+        applyResponsiveVideo();
+    }
+
+    /**
      * Add listeners.
      *
      * just a wrapper for various snippets that add listeners
@@ -761,30 +795,52 @@ function snapInit() {
 
         });
 
-        // Mobile menu button
+        // Mobile menu button.
         $(document).on("click", "#course-toc.state-visible a", function(e){
             $('#course-toc').removeClass('state-visible');
         });
 
-        // Page mod toggle content
+        // Page mod toggle content.
         $(document).on("click", ".modtype_page .instancename,.pagemod-readmore,.pagemod-content .snap-action-icon", function(e) {
             var $pagemod = $(this).closest('.modtype_page');
             scrollToElement($pagemod);
+            var isexpanded =  $pagemod.hasClass('state-expanded');
             $pagemod.toggleClass('state-expanded');
-            $pagemod.find('.pagemod-content').slideToggle("fast", function() {
-                // Animation complete.
-                if($pagemod.is('.state-expanded')){
-                    $pagemod.attr('aria-expanded', 'true');
-                    $pagemod.find('.pagemod-content').focus();
 
-                }
-                else {
-                    $pagemod.attr('aria-expanded', 'false');
-                    $pagemod.focus();
-                }
+            var readmore = $pagemod.find('.pagemod-readmore');
 
-            });
-            applyResponsiveVideo();
+            var $pagemodcontent = $pagemod.find('.pagemod-content');
+            if ($pagemodcontent.data('content-loaded') == 1) {
+                // Content is already available so reveal it immediately.
+                revealPageMod($pagemod);
+                if (!isexpanded) {
+                    $.ajax({
+                        type: "GET",
+                        async: true,
+                        url: M.cfg.wwwroot + '/theme/snap/rest.php?action=read_page&contextid=' + readmore.data('pagemodcontext')
+                    });
+                }
+            } else {
+                if (!isexpanded) {
+                    // Content is not available so request it.
+                    $pagemod.find('.contentafterlink').prepend('<div class="ajaxstatus alert alert-info">' + M.str.theme_snap.loading + '</div>');
+                    $.ajax({
+                        type: "GET",
+                        async: true,
+                        url: M.cfg.wwwroot + '/theme/snap/rest.php?action=get_page&contextid=' + readmore.data('pagemodcontext'),
+                        success: function (data) {
+                            $pagemodcontent.prepend(data.html);
+                            $pagemodcontent.data('content-loaded', 1);
+                            $pagemod.find('.contentafterlink .ajaxstatus').remove();
+                            revealPageMod($pagemod);
+                        }
+                    });
+                } else {
+                    revealPageMod($pagemod);
+                }
+            }
+
+
             e.preventDefault();
         });
 
