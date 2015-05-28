@@ -577,243 +577,6 @@ table.mod_index {
   font-weight: bold;
 }
 /**
-* Tags
-*/
-#page-tag-coursetags_edit .coursetag_edit_centered {
-  position: relative;
-  width: 600px;
-  margin: 20px auto;
-}
-#page-tag-coursetags_edit .coursetag_edit_row {
-  clear: both;
-}
-#page-tag-coursetags_edit .coursetag_edit_row .coursetag_edit_left {
-  float: left;
-  width: 50%;
-  text-align: right;
-}
-#page-tag-coursetags_edit .coursetag_edit_row .coursetag_edit_right {
-  margin-left: 50%;
-}
-#page-tag-coursetags_edit .coursetag_edit_input3 {
-  display: none;
-}
-#page-tag-coursetags_more .coursetag_more_large {
-  font-size: 120%;
-}
-#page-tag-coursetags_more .coursetag_more_small {
-  font-size: 80%;
-}
-#page-tag-coursetags_more .coursetag_more_link {
-  font-size: 80%;
-}
-#tag-description,
-#tag-blogs {
-  width: 100%;
-}
-#tag-management-box {
-  margin-bottom: 10px;
-  line-height: 20px;
-}
-#tag-user-table {
-  padding: 3px;
-  clear: both;
-  width: 100%;
-}
-#tag-user-table:before,
-#tag-user-table:after {
-  content: " ";
-  display: table;
-}
-#tag-user-table:after {
-  clear: both;
-}
-#tag-user-table:before,
-#tag-user-table:after {
-  content: " ";
-  display: table;
-}
-#tag-user-table:after {
-  clear: both;
-}
-img.user-image {
-  height: 100px;
-  width: 100px;
-}
-#small-tag-cloud-box {
-  width: 300px;
-  margin: 0 auto;
-}
-#big-tag-cloud-box {
-  width: 600px;
-  margin: 0 auto;
-  float: none;
-}
-ul#tag-cloud-list {
-  list-style: none;
-  padding: 5px;
-  margin: 0;
-}
-ul#tag-cloud-list li {
-  margin: 0;
-  display: inline;
-  list-style-type: none;
-}
-#tag-search-box {
-  text-align: center;
-  margin: 10px auto;
-}
-#tag-search-results-container {
-  padding: 0;
-  width: 100%;
-}
-#tag-search-results {
-  padding: 0;
-  margin: 15px 20% 0 20%;
-  float: left;
-  width: 60%;
-  display: block;
-}
-#tag-search-results li {
-  width: 30%;
-  float: left;
-  padding-left: 1%;
-  text-align: left;
-  line-height: 20px;
-  padding-right: 1%;
-  list-style: none;
-}
-span.flagged-tag,
-span.flagged-tag a {
-  color: #e91e63;
-}
-table#tag-management-list {
-  text-align: left;
-  width: 100%;
-}
-table#tag-management-list td,
-table#tag-management-list th {
-  vertical-align: middle;
-  text-align: left;
-  padding: 4px;
-}
-.tag-management-form {
-  text-align: center;
-}
-#relatedtags-autocomplete-container {
-  margin-left: auto;
-  margin-right: auto;
-  min-height: 4.6em;
-  width: 100%;
-}
-#relatedtags-autocomplete {
-  position: relative;
-  display: block;
-  width: 60%;
-  margin-left: auto;
-  margin-right: auto;
-}
-#relatedtags-autocomplete .yui-ac-content {
-  position: absolute;
-  width: 420px;
-  left: 20%;
-  border: 1px solid #404040;
-  background: #fff;
-  overflow: hidden;
-  z-index: 9050;
-}
-#relatedtags-autocomplete .ysearchquery {
-  position: absolute;
-  right: 10px;
-  color: #808080;
-  z-index: 10;
-}
-#relatedtags-autocomplete .yui-ac-shadow {
-  position: absolute;
-  margin: .3em;
-  width: 100%;
-  background: #a0a0a0;
-  z-index: 9049;
-}
-#relatedtags-autocomplete ul {
-  padding: 0;
-  width: 100%;
-  margin: 0;
-  list-style-type: none;
-}
-#relatedtags-autocomplete li {
-  padding: 0 5px;
-  cursor: default;
-  white-space: nowrap;
-}
-#relatedtags-autocomplete li.yui-ac-highlight {
-  background: #FFFFCC;
-}
-h2.tag-heading,
-div#tag-description,
-div#tag-blogs,
-body.tag .managelink {
-  padding: 5px;
-}
-.tag_cloud .s20 {
-  font-size: 1.5em;
-  font-weight: bold;
-}
-.tag_cloud .s19 {
-  font-size: 1.5em;
-}
-.tag_cloud .s18 {
-  font-size: 1.4em;
-  font-weight: bold;
-}
-.tag_cloud .s17 {
-  font-size: 1.4em;
-}
-.tag_cloud .s16 {
-  font-size: 1.3em;
-  font-weight: bold;
-}
-.tag_cloud .s15 {
-  font-size: 1.3em;
-}
-.tag_cloud .s14 {
-  font-size: 1.2em;
-  font-weight: bold;
-}
-.tag_cloud .s13 {
-  font-size: 1.2em;
-}
-.tag_cloud .s12,
-.tag_cloud .s11 {
-  font-size: 1.1em;
-  font-weight: bold;
-}
-.tag_cloud .s10,
-.tag_cloud .s9 {
-  font-size: 1.1em;
-}
-.tag_cloud .s8,
-.tag_cloud .s7 {
-  font-size: 1em;
-  font-weight: bold;
-}
-.tag_cloud .s6,
-.tag_cloud .s5 {
-  font-size: 1em;
-}
-.tag_cloud .s4,
-.tag_cloud .s3 {
-  font-size: 0.9em;
-  font-weight: bold;
-}
-.tag_cloud .s2,
-.tag_cloud .s1 {
-  font-size: 0.9em;
-}
-.tag_cloud .s0 {
-  font-size: 0.8em;
-}
-/**
 * Web Service
 */
 #webservice-doc-generator td {
@@ -908,137 +671,6 @@ body.tag .managelink {
 */
 #page-admin-registration-register .registration_textfield {
   width: 300px;
-}
-/**
-* Enrol
-*/
-.userenrolment {
-  width: 100%;
-  border-collapse: collapse;
-}
-.userenrolment td {
-  padding: 0;
-  height: 41px;
-}
-.userenrolment .subfield {
-  margin-right: 5px;
-}
-.userenrolment .col_userdetails .subfield_picture {
-  float: left;
-}
-.userenrolment .col_lastseen {
-  width: 150px;
-}
-.userenrolment .col_role {
-  width: 262px;
-}
-.userenrolment .col_role .roles {
-  margin-right: 30px;
-}
-.userenrolment .col_role .role {
-  float: left;
-  padding: 3px;
-  margin: 3px;
-}
-.dir-rtl .userenrolment .col_role .role {
-  float: right;
-}
-.userenrolment .col_role .role a {
-  margin-left: 3px;
-  cursor: pointer;
-}
-.userenrolment .col_role .addrole {
-  float: right;
-  width: 18px;
-  height: 18px;
-  margin: 3px;
-  text-align: center;
-  background-color: rgba(139, 195, 74, 0.1);
-  border: 1px solid rgba(139, 195, 74, 0.1);
-}
-.userenrolment .col_role .addrole img {
-  vertical-align: baseline;
-}
-.userenrolment .hasAllRoles .col_role .addrole {
-  display: none;
-}
-.userenrolment .col_group .groups {
-  margin-right: 30px;
-}
-.userenrolment .col_group .group {
-  float: left;
-  padding: 3px;
-  margin: 3px;
-  white-space: nowrap;
-}
-.userenrolment .col_group .group a {
-  margin-left: 3px;
-  cursor: pointer;
-}
-.userenrolment .col_group .addgroup {
-  float: right;
-  width: 18px;
-  margin: 3px;
-  height: 18px;
-  text-align: center;
-}
-.userenrolment .col_group .addgroup a img {
-  vertical-align: bottom;
-}
-.userenrolment .col_enrol .enrolment {
-  float: left;
-  padding: 3px;
-  margin: 3px;
-}
-.userenrolment .col_enrol .enrolment a {
-  float: right;
-  margin-left: 3px;
-}
-#page-enrol-users .enrol_user_buttons {
-  float: right;
-}
-#page-enrol-users.dir-rtl .enrol_user_buttons {
-  float: left;
-}
-#page-enrol-users .enrol_user_buttons .enrolusersbutton {
-  margin-left: 1em;
-  display: inline;
-}
-#page-enrol-users .enrol_user_buttons .enrolusersbutton div,
-#page-enrol-users .enrol_user_buttons .enrolusersbutton form {
-  display: inline;
-}
-#page-enrol-users .enrol_user_buttons .enrolusersbutton input {
-  padding-left: 6px;
-  padding-right: 6px;
-}
-#page-enrol-users.dir-rtl .col_userdetails .subfield_picture {
-  float: right;
-}
-/**
-* Overide for RTL layout
-**/
-.dir-rtl .headermain {
-  float: right;
-}
-.dir-rtl .headermenu {
-  float: left;
-}
-.dir-rtl .loginbox .loginform .form-label {
-  float: right;
-  text-align: left;
-}
-.dir-rtl .loginbox .loginform .form-input {
-  text-align: right;
-}
-.dir-rtl .yui3-menu-hidden {
-  left: 0;
-}
-#page-admin-roles-define.dir-rtl #rolesform .felement {
-  margin-right: 180px;
-}
-#page-message-edit.dir-rtl table.generaltable th.c0 {
-  text-align: right;
 }
 .corelightbox {
   background-color: #CCC;
@@ -1689,211 +1321,6 @@ body.jsenabled .formlistingradio {
 }
 body.jsenabled .formlisting {
   display: block;
-}
-/* Badges styles */
-table.collection {
-  width: 100%;
-  max-width: 100%;
-  margin-bottom: 28px;
-  border: 1px solid #dddddd;
-}
-table.collection > thead > tr > th,
-table.collection > tbody > tr > th,
-table.collection > tfoot > tr > th,
-table.collection > thead > tr > td,
-table.collection > tbody > tr > td,
-table.collection > tfoot > tr > td {
-  padding: 8px;
-  line-height: 1.6;
-  vertical-align: top;
-  border-top: 1px solid #dddddd;
-}
-table.collection > thead > tr > th {
-  vertical-align: bottom;
-  border-bottom: 2px solid #dddddd;
-}
-table.collection > caption + thead > tr:first-child > th,
-table.collection > colgroup + thead > tr:first-child > th,
-table.collection > thead:first-child > tr:first-child > th,
-table.collection > caption + thead > tr:first-child > td,
-table.collection > colgroup + thead > tr:first-child > td,
-table.collection > thead:first-child > tr:first-child > td {
-  border-top: 0;
-}
-table.collection > tbody + tbody {
-  border-top: 2px solid #dddddd;
-}
-table.collection .table {
-  background-color: #ffffff;
-}
-table.collection > thead > tr > th,
-table.collection > tbody > tr > th,
-table.collection > tfoot > tr > th,
-table.collection > thead > tr > td,
-table.collection > tbody > tr > td,
-table.collection > tfoot > tr > td {
-  border: 1px solid #dddddd;
-}
-table.collection > thead > tr > th,
-table.collection > thead > tr > td {
-  border-bottom-width: 2px;
-}
-table.collection > tbody > tr:nth-child(odd) > td,
-table.collection > tbody > tr:nth-child(odd) > th {
-  background-color: #f9f9f9;
-}
-table.collection .name {
-  text-align: left;
-  vertical-align: middle;
-}
-table.collection .awards {
-  width: 10%;
-  text-align: center;
-  vertical-align: middle;
-}
-table.collection .criteria {
-  width: 40%;
-  text-align: left;
-  vertical-align: top;
-}
-table.collection .badgeimage,
-table.collection .status {
-  width: 15%;
-  text-align: center;
-  vertical-align: middle;
-}
-table.collection .description {
-  width: 25%;
-  text-align: left;
-}
-table.collection .actions {
-  width: 11em;
-  text-align: center;
-  vertical-align: middle;
-}
-a.criteria-action {
-  padding: 0px 3px;
-  float: right;
-}
-table.issuedbadgebox {
-  width: 750px;
-  background-color: #FFFFFF;
-}
-table.badgeissuedimage {
-  width: 150px;
-  text-align: center;
-}
-table.badgeissuedinfo {
-  width: 600px;
-}
-table.badgeissuedinfo .bvalue {
-  text-align: left;
-  vertical-align: middle;
-}
-table.badgeissuedinfo .bfield {
-  width: 125px;
-  text-align: left;
-  font-style: italic;
-}
-.dir-rtl table.badgeissuedinfo .bvalue,
-.dir-rtl table.badgeissuedinfo .bfield {
-  text-align: right;
-}
-ul.badges {
-  margin: 0;
-  list-style: none;
-}
-.badges li {
-  position: relative;
-  display: inline-block;
-  padding-bottom: 2em;
-  text-align: center;
-  vertical-align: top;
-  width: 150px;
-}
-.badges li .badge-name {
-  display: block;
-  padding: 5px;
-}
-.badges li > img {
-  position: absolute;
-}
-.badges li .badge-image {
-  width: 90px;
-  height: 90px;
-  left: 10px;
-  top: 0px;
-  z-index: 1;
-}
-.badges li .badge-actions {
-  position: relative;
-}
-div.badge {
-  position: relative;
-  display: block;
-}
-div.badge .expireimage {
-  width: 100px;
-  height: 100px;
-  left: 20px;
-  top: 0px;
-}
-.expireimage {
-  opacity: 85;
-  filter: alpha(opacity=8500);
-  width: 90px;
-  height: 90px;
-  left: 30px;
-  top: 0px;
-  position: absolute;
-  z-index: 10;
-}
-.badge-profile {
-  vertical-align: top;
-}
-.connected {
-  color: #8bc34a;
-}
-.notconnected {
-  color: #e91e63;
-}
-.connecting {
-  color: #ff9800;
-}
-#page-badges-award .recipienttable tr td {
-  vertical-align: top;
-}
-#page-badges-award .recipienttable tr td.actions .actionbutton {
-  margin: 0.3em 0;
-  padding: 0.5em 0;
-  width: 100%;
-}
-#page-badges-award .recipienttable tr td.existing,
-#page-badges-award .recipienttable tr td.potential {
-  width: 42%;
-}
-.statustable {
-  margin-bottom: 0px;
-}
-.statusbox.active {
-  background-color: rgba(139, 195, 74, 0.1);
-}
-.statusbox.inactive {
-  background-color: rgba(255, 152, 0, 0.1);
-}
-.activatebadge {
-  margin: 0px;
-  text-align: left;
-  vertical-align: middle;
-}
-.dir-rtl .activatebadge {
-  text-align: right;
-}
-img#persona_signin {
-  cursor: pointer;
-}
-.addcourse {
-  float: right;
 }
 .invisiblefieldset {
   display: inline;
@@ -6651,47 +6078,6 @@ textarea.loginbox .loginform .form-input input[type="password"] {
 }
 .loginbox .subcontent .desc {
   display: none;
-}
-ul,
-ol {
-  padding: 0;
-}
-.container .moodleSkin img.mceIcon {
-  display: block;
-  height: auto;
-  width: auto;
-}
-#region-bs-main-and-pre #region-main {
-  padding-left: 0px;
-}
-/* Enrolment page */
-.userenrolment .col_role {
-  width: auto;
-}
-.dropdown-menu .userpicture {
-  margin-left: -10px;
-  margin-right: 7px;
-}
-.dropdown-menu .msg-body {
-  display: inline-block;
-  line-height: 20px;
-  max-width: 175px;
-  vertical-align: middle;
-}
-.dropdown-menu .msg-title {
-  display: inline-block;
-  line-height: 14px;
-}
-.dropdown-menu .msg-sender {
-  color: #478FCA;
-}
-.dropdown-menu .msg-time {
-  color: #777777;
-  display: block;
-  font-size: 11px;
-}
-.dropdown-menu [title="new"] {
-  background-color: #a4e2fe;
 }
 /*! normalize.css v3.0.1 | MIT License | git.io/normalize */
 html {
@@ -15172,6 +14558,872 @@ input.fp-btn-choose {
   line-height: 1;
   border-radius: 0px;
 }
+.gradetreebox h4 {
+  font-size: 18px;
+}
+.gradetreebox th.cell,
+.gradetreebox input[type=text] {
+  width: auto;
+}
+.gradetreebox input[type=text],
+.gradetreebox select {
+  margin-bottom: 0;
+}
+#page-grade-grading-manage #activemethodselector label {
+  display: inline-block;
+}
+#page-grade-grading-manage #activemethodselector .helptooltip {
+  margin-right: 0.5em;
+}
+#page-grade-grading-manage .actions {
+  display: block;
+  text-align: center;
+  margin-bottom: 1em;
+}
+#page-grade-grading-manage .actions .action {
+  margin-bottom: 0;
+  font-weight: normal;
+  vertical-align: middle;
+  cursor: pointer;
+  background-image: none;
+  border: 1px solid transparent;
+  white-space: nowrap;
+  padding: 8px 12px;
+  font-size: 18px;
+  line-height: 1.6;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  padding: 0.25em 1em;
+  margin: 0 .4em;
+  vertical-align: baseline;
+  line-height: 1.5;
+  background-color: #03a9f4;
+  border-color: #fff;
+  color: #fff;
+  font-family: "Roboto", "Fira Sans", "Segoe UI", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif, "line-icons";
+  font-weight: 300;
+  padding: 14px 16px;
+  font-size: 23px;
+  line-height: 1.33;
+  border-radius: 0px;
+  display: inline-block;
+  position: relative;
+  vertical-align: top;
+  width: 150px;
+  text-align: center;
+  overflow: hidden;
+  margin: 0.5em;
+  padding: 1em;
+  border: 1px solid #aaa;
+}
+#page-grade-grading-manage .actions .action:focus,
+#page-grade-grading-manage .actions .action:active:focus,
+#page-grade-grading-manage .actions .action.active:focus {
+  outline: thin dotted;
+  outline: 5px auto -webkit-focus-ring-color;
+  outline-offset: -2px;
+}
+#page-grade-grading-manage .actions .action:hover,
+#page-grade-grading-manage .actions .action:focus {
+  color: #ffffff;
+  text-decoration: none;
+}
+#page-grade-grading-manage .actions .action:active,
+#page-grade-grading-manage .actions .action.active {
+  outline: 0;
+  background-image: none;
+  -webkit-box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+  box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+}
+#page-grade-grading-manage .actions .action.disabled,
+#page-grade-grading-manage .actions .action[disabled],
+fieldset[disabled] #page-grade-grading-manage .actions .action {
+  cursor: not-allowed;
+  pointer-events: none;
+  opacity: 0.65;
+  filter: alpha(opacity=65);
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+#page-grade-grading-manage .actions .action:hover,
+#page-grade-grading-manage .actions .action:focus {
+  text-decoration: none;
+}
+#page-grade-grading-manage .actions .action:hover,
+#page-grade-grading-manage .actions .action:focus,
+#page-grade-grading-manage .actions .action:active,
+#page-grade-grading-manage .actions .action.active {
+  background-color: #038dcc;
+  border-color: #027fb8;
+  color: #fff;
+  text-decoration: none;
+}
+#page-grade-grading-manage .actions .action:visited {
+  color: #fff;
+}
+#page-grade-grading-manage .actions .action[disabled] {
+  background-color: #03a9f4;
+}
+#page-grade-grading-manage .actions .action .action-icon {
+  display: inline-block;
+  position: relative;
+  height: 64px;
+  width: 64px;
+}
+#page-grade-grading-manage .actions .action .action-text {
+  position: relative;
+  top: 0.4em;
+  font-size: 14px;
+}
+#page-grade-grading-form-rubric-edit .gradingform_rubric_editform .status {
+  font-size: 70%;
+}
+.mform.gradingform_rubric_editform .fitem .felement .hiddenelement {
+  display: none;
+}
+.mform.gradingform_rubric_editform .fitem .felement .pseudotablink {
+  background-color: transparent;
+  border: 0 solid;
+  height: 1px;
+  width: 1px;
+  color: transparent;
+  padding: 0;
+  margin: 0;
+  position: relative;
+  float: right;
+}
+#rubric-rubric.gradingform_rubric.even {
+  background-color: #f9f9f9;
+}
+#rubric-rubric.gradingform_rubric #rubric-criteria {
+  margin-bottom: 1em;
+}
+#rubric-rubric.gradingform_rubric #rubric-criteria .criterion .description {
+  vertical-align: top;
+  padding: 6px;
+}
+#rubric-rubric.gradingform_rubric #rubric-criteria .criterion .description textarea {
+  margin-bottom: 0px;
+  height: 115px;
+}
+#rubric-rubric.gradingform_rubric #rubric-criteria .criterion .definition textarea {
+  width: 80%;
+  margin-bottom: 0px;
+}
+#rubric-rubric.gradingform_rubric #rubric-criteria .criterion .score {
+  position: relative;
+  float: left;
+  margin-right: 28px;
+}
+#rubric-rubric.gradingform_rubric #rubric-criteria .criterion .score input {
+  margin-bottom: 0px;
+}
+#rubric-rubric.gradingform_rubric #rubric-criteria .criterion .level {
+  vertical-align: top;
+  padding: 6px;
+}
+#rubric-rubric.gradingform_rubric #rubric-criteria .criterion .level .delete {
+  position: relative;
+  width: 32px;
+  height: 32px;
+  margin-top: -32px;
+  clear: both;
+  float: right;
+}
+#rubric-rubric.gradingform_rubric #rubric-criteria .criterion .level .delete input {
+  display: block;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  height: 24px;
+  width: 24px;
+  margin: 0px;
+}
+#rubric-rubric.gradingform_rubric #rubric-criteria .criterion .level .delete input:hover {
+  background-color: #ddd;
+}
+#rubric-rubric.gradingform_rubric #rubric-criteria .criterion .scorevalue input {
+  float: none;
+  width: 3em;
+  display: inline;
+}
+#rubric-rubric.gradingform_rubric #rubric-criteria .criterion .scorevalue input.hiddenelement,
+#rubric-rubric.gradingform_rubric #rubric-criteria .criterion .scorevalue input.pseudotablink {
+  width: 0 !important;
+}
+#rubric-rubric.gradingform_rubric #rubric-criteria .criterion .addlevel {
+  vertical-align: middle;
+}
+#rubric-rubric.gradingform_rubric #rubric-criteria .criterion .addlevel input {
+  background-position: 0px 0px;
+  height: 30px;
+  margin-right: 5px;
+}
+#rubric-rubric.gradingform_rubric .addcriterion {
+  margin-top: -0.75em;
+  margin-bottom: 0.5em;
+}
+#rubric-rubric.gradingform_rubric .options {
+  clear: both;
+}
+#rubric-rubric.gradingform_rubric .options .option label {
+  margin: 0;
+  padding: 0;
+  font-size: inherit;
+  font-weight: normal;
+  line-height: 2em;
+  color: inherit;
+  text-shadow: none;
+  background-color: transparent;
+}
+#rubric-rubric.gradingform_rubric .options .option input {
+  margin-left: 5px;
+  margin-right: 12px;
+}
+.path-grade-report-grader .grade_icons {
+  display: inline;
+}
+.userenrolment {
+  width: 100%;
+  border-collapse: collapse;
+}
+.userenrolment .col_userdetails .subfield_picture {
+  float: left;
+  margin: 0 5px;
+}
+.userenrolment .col_role a,
+.userenrolment .col_role span {
+  display: inline-block;
+  vertical-align: middle;
+}
+.userenrolment .col_role a {
+  float: right;
+}
+.userenrolment .col_role .addrole {
+  text-align: center;
+}
+.userenrolment .hasAllRoles .col_role .addrole {
+  display: none;
+}
+.userenrolment .col_group .group {
+  float: left;
+  white-space: nowrap;
+}
+.userenrolment .col_group .group a {
+  margin-left: 3px;
+  cursor: pointer;
+}
+.userenrolment .col_group .addgroup {
+  text-align: center;
+}
+.userenrolment .col_group .addgroup a img {
+  vertical-align: bottom;
+}
+.enrolpanel.roleassign.visible {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1010;
+  display: none;
+  max-width: 276px;
+  padding: 1px;
+  text-align: left;
+  background-color: #ffffff;
+  -webkit-background-clip: padding-box;
+          background-clip: padding-box;
+  border: 1px solid #cccccc;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: 0px;
+  -webkit-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+  white-space: normal;
+  width: 276px;
+  display: block;
+}
+.enrolpanel.roleassign.visible.top {
+  margin-top: -10px;
+}
+.enrolpanel.roleassign.visible.right {
+  margin-left: 10px;
+}
+.enrolpanel.roleassign.visible.bottom {
+  margin-top: 10px;
+}
+.enrolpanel.roleassign.visible.left {
+  margin-left: -10px;
+}
+.enrolpanel.roleassign.visible.top > .arrow {
+  left: 50%;
+  margin-left: -11px;
+  border-bottom-width: 0;
+  border-top-color: #999999;
+  border-top-color: rgba(0, 0, 0, 0.25);
+  bottom: -11px;
+}
+.enrolpanel.roleassign.visible.top > .arrow:after {
+  content: " ";
+  bottom: 1px;
+  margin-left: -10px;
+  border-bottom-width: 0;
+  border-top-color: #ffffff;
+}
+.enrolpanel.roleassign.visible.right > .arrow {
+  top: 50%;
+  left: -11px;
+  margin-top: -11px;
+  border-left-width: 0;
+  border-right-color: #999999;
+  border-right-color: rgba(0, 0, 0, 0.25);
+}
+.enrolpanel.roleassign.visible.right > .arrow:after {
+  content: " ";
+  left: 1px;
+  bottom: -10px;
+  border-left-width: 0;
+  border-right-color: #ffffff;
+}
+.enrolpanel.roleassign.visible.bottom > .arrow {
+  left: 50%;
+  margin-left: -11px;
+  border-top-width: 0;
+  border-bottom-color: #999999;
+  border-bottom-color: rgba(0, 0, 0, 0.25);
+  top: -11px;
+}
+.enrolpanel.roleassign.visible.bottom > .arrow:after {
+  content: " ";
+  top: 1px;
+  margin-left: -10px;
+  border-top-width: 0;
+  border-bottom-color: #ffffff;
+}
+.enrolpanel.roleassign.visible.left > .arrow {
+  top: 50%;
+  right: -11px;
+  margin-top: -11px;
+  border-right-width: 0;
+  border-left-color: #999999;
+  border-left-color: rgba(0, 0, 0, 0.25);
+}
+.enrolpanel.roleassign.visible.left > .arrow:after {
+  content: " ";
+  right: 1px;
+  border-right-width: 0;
+  border-left-color: #ffffff;
+  bottom: -10px;
+}
+.enrolpanel.roleassign.visible .container {
+  content: inherit;
+  display: block;
+  padding: 0;
+  border: 0;
+}
+.enrolpanel.roleassign.visible a {
+  text-decoration: underline;
+}
+.enrolpanel.roleassign.visible .header {
+  margin: 0;
+  padding: 8px 14px;
+  font-size: 18px;
+  font-weight: normal;
+  line-height: 18px;
+  background-color: #f7f7f7;
+  border-bottom: 1px solid #ebebeb;
+  border-radius: -1px -1px 0 0;
+}
+.enrolpanel.roleassign.visible .header .close {
+  position: relative;
+  top: 1px;
+  display: inline-block;
+  font-family: 'Glyphicons Halflings';
+  font-style: normal;
+  font-weight: normal;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color: #03a9f4;
+  background: inherit;
+  font-size: 20px;
+  margin-bottom: 10px;
+  margin-top: 5px;
+  opacity: 1;
+  width: auto;
+  top: 5px;
+  right: 10px;
+  height: auto;
+  position: absolute;
+}
+.enrolpanel.roleassign.visible .header .close:before {
+  content: "\e014";
+}
+.enrolpanel.roleassign.visible .content {
+  padding: 9px 14px;
+  margin-top: 5px;
+  background-color: #ffffff;
+}
+#page-enrol-users .enrol_user_buttons {
+  text-align: right;
+}
+#page-enrol-users .enrol_user_buttons .enrolusersbutton {
+  display: inline;
+}
+#page-enrol-users .enrol_user_buttons .enrolusersbutton div,
+#page-enrol-users .enrol_user_buttons .enrolusersbutton form {
+  display: inline;
+  margin-right: 0;
+}
+#page-enrol-users #filterform {
+  min-height: 20px;
+  padding: 19px;
+  margin-bottom: 20px;
+  background-color: #f5f5f5;
+  border: 1px solid #e3e3e3;
+  border-radius: 0px;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
+}
+#page-enrol-users #filterform blockquote {
+  border-color: #ddd;
+  border-color: rgba(0, 0, 0, 0.15);
+}
+#page-enrol-users #filterform .fitem {
+  display: inline-block;
+  margin-right: .3em;
+  white-space: nowrap;
+}
+#page-enrol-users #filterform .fitem label {
+  display: inline;
+  line-height: 1.6;
+  padding-right: .3em;
+}
+#page-enrol-users #filterform .fitem :before,
+#page-enrol-users #filterform .fitem :after {
+  display: inline;
+}
+#page-enrol-users #filterform div,
+#page-enrol-users #filterform fieldset {
+  display: table;
+  float: none;
+  clear: none;
+  width: auto;
+  margin: 0;
+}
+#page-enrol-users #filterform select,
+#page-enrol-users #filterform .ftext input {
+  width: 7em;
+}
+#page-enrol-users #filterform input,
+#page-enrol-users #filterform select {
+  margin-bottom: 0;
+}
+#page-enrol-users .user-enroller-panel .uep-search-results .user .details {
+  width: 237px;
+}
+table.collection {
+  width: 100%;
+  max-width: 100%;
+  margin-bottom: 28px;
+  border: 1px solid #dddddd;
+}
+table.collection > thead > tr > th,
+table.collection > tbody > tr > th,
+table.collection > tfoot > tr > th,
+table.collection > thead > tr > td,
+table.collection > tbody > tr > td,
+table.collection > tfoot > tr > td {
+  padding: 8px;
+  line-height: 1.6;
+  vertical-align: top;
+  border-top: 1px solid #dddddd;
+}
+table.collection > thead > tr > th {
+  vertical-align: bottom;
+  border-bottom: 2px solid #dddddd;
+}
+table.collection > caption + thead > tr:first-child > th,
+table.collection > colgroup + thead > tr:first-child > th,
+table.collection > thead:first-child > tr:first-child > th,
+table.collection > caption + thead > tr:first-child > td,
+table.collection > colgroup + thead > tr:first-child > td,
+table.collection > thead:first-child > tr:first-child > td {
+  border-top: 0;
+}
+table.collection > tbody + tbody {
+  border-top: 2px solid #dddddd;
+}
+table.collection .table {
+  background-color: #ffffff;
+}
+table.collection > thead > tr > th,
+table.collection > tbody > tr > th,
+table.collection > tfoot > tr > th,
+table.collection > thead > tr > td,
+table.collection > tbody > tr > td,
+table.collection > tfoot > tr > td {
+  border: 1px solid #dddddd;
+}
+table.collection > thead > tr > th,
+table.collection > thead > tr > td {
+  border-bottom-width: 2px;
+}
+table.collection > tbody > tr:nth-child(odd) > td,
+table.collection > tbody > tr:nth-child(odd) > th {
+  background-color: #f9f9f9;
+}
+table.collection .name {
+  text-align: left;
+  vertical-align: middle;
+}
+table.collection .awards {
+  width: 10%;
+  text-align: center;
+  vertical-align: middle;
+}
+table.collection .criteria {
+  width: 40%;
+  text-align: left;
+  vertical-align: top;
+}
+table.collection .badgeimage,
+table.collection .status {
+  width: 15%;
+  text-align: center;
+  vertical-align: middle;
+}
+table.collection .description {
+  width: 25%;
+  text-align: left;
+}
+table.collection .actions {
+  width: 11em;
+  text-align: center;
+  vertical-align: middle;
+}
+a.criteria-action {
+  padding: 0px 3px;
+  float: right;
+}
+table.issuedbadgebox {
+  width: 750px;
+  background-color: #fff;
+}
+table.badgeissuedimage {
+  width: 150px;
+  text-align: center;
+}
+table.badgeissuedinfo {
+  width: 600px;
+}
+table.badgeissuedinfo .bvalue {
+  text-align: left;
+  vertical-align: middle;
+}
+table.badgeissuedinfo .bfield {
+  width: 125px;
+  text-align: left;
+  font-style: italic;
+}
+ul.badges {
+  margin: 0;
+  list-style: none;
+}
+.badges li {
+  position: relative;
+  display: inline-block;
+  padding-bottom: 2em;
+  text-align: center;
+  vertical-align: top;
+  width: 150px;
+}
+.badges li .badge-name {
+  display: block;
+  padding: 5px;
+}
+.badges li > img {
+  position: absolute;
+}
+.badges li .badge-image {
+  width: 90px;
+  height: 90px;
+  left: 10px;
+  top: 0px;
+  z-index: 1;
+}
+.badges li .badge-actions {
+  position: relative;
+}
+div.badge {
+  position: relative;
+  display: block;
+}
+div.badge .expireimage {
+  width: 100px;
+  height: 100px;
+  left: 20px;
+  top: 0px;
+}
+.expireimage {
+  opacity: 0.85;
+  filter: alpha(opacity=85);
+  width: 90px;
+  height: 90px;
+  left: 30px;
+  top: 0px;
+  position: absolute;
+  z-index: 10;
+}
+.badge-profile {
+  vertical-align: top;
+}
+.connected {
+  color: #8bc34a;
+}
+.notconnected {
+  color: #e91e63;
+}
+.connecting {
+  color: #ff9800;
+}
+#page-badges-award .recipienttable tr td {
+  vertical-align: top;
+}
+#page-badges-award .recipienttable tr td.actions .actionbutton {
+  margin: 0.3em 0;
+  padding: 0.5em 0;
+  width: 100%;
+}
+#page-badges-award .recipienttable tr td.existing,
+#page-badges-award .recipienttable tr td.potential {
+  width: 42%;
+}
+.statustable {
+  margin-bottom: 0px;
+}
+.statusbox.active {
+  background-color: rgba(139, 195, 74, 0.1);
+}
+.statusbox.inactive {
+  background-color: rgba(255, 152, 0, 0.1);
+}
+.activatebadge {
+  margin: 0px;
+  text-align: left;
+  vertical-align: middle;
+}
+img#persona_signin {
+  cursor: pointer;
+}
+.addcourse {
+  float: right;
+}
+#page-tag-coursetags_edit .coursetag_edit_centered {
+  position: relative;
+  width: 600px;
+  margin: 20px auto;
+}
+#page-tag-coursetags_edit .coursetag_edit_row {
+  clear: both;
+}
+#page-tag-coursetags_edit .coursetag_edit_row .coursetag_edit_left {
+  float: left;
+  width: 50%;
+  text-align: right;
+}
+#page-tag-coursetags_edit .coursetag_edit_row .coursetag_edit_right {
+  margin-left: 50%;
+}
+#page-tag-coursetags_edit .coursetag_edit_input3 {
+  display: none;
+}
+#page-tag-coursetags_more .coursetag_more_large {
+  font-size: 120%;
+}
+#page-tag-coursetags_more .coursetag_more_small {
+  font-size: 80%;
+}
+#page-tag-coursetags_more .coursetag_more_link {
+  font-size: 80%;
+}
+#tag-description,
+#tag-blogs {
+  width: 100%;
+}
+#tag-management-box {
+  margin-bottom: 10px;
+  line-height: 20px;
+}
+img.user-image {
+  height: 100px;
+  width: 100px;
+}
+#small-tag-cloud-box {
+  width: 300px;
+  margin: 0 auto;
+}
+#big-tag-cloud-box {
+  width: 600px;
+  margin: 0 auto;
+  float: none;
+}
+ul#tag-cloud-list {
+  list-style: none;
+  padding: 5px;
+  margin: 0;
+}
+ul#tag-cloud-list li {
+  margin: 0;
+  display: inline;
+  list-style-type: none;
+}
+#tag-search-box {
+  text-align: center;
+  margin: 10px auto;
+}
+#tag-search-results-container {
+  padding: 0;
+  width: 100%;
+}
+#tag-search-results {
+  padding: 0;
+  margin: 15px 20% 0 20%;
+  float: left;
+  width: 60%;
+  display: block;
+}
+#tag-search-results li {
+  width: 30%;
+  float: left;
+  padding-left: 1%;
+  text-align: left;
+  line-height: 20px;
+  padding-right: 1%;
+  list-style: none;
+}
+span.flagged-tag,
+span.flagged-tag a {
+  color: #e91e63;
+}
+.tag-management-form {
+  text-align: center;
+}
+table#tag-management-list {
+  text-align: left;
+}
+#relatedtags-autocomplete-container {
+  margin-left: auto;
+  margin-right: auto;
+  min-height: 4.6em;
+  width: 100%;
+}
+#relatedtags-autocomplete {
+  position: relative;
+  display: block;
+  width: 60%;
+  margin-left: auto;
+  margin-right: auto;
+}
+#relatedtags-autocomplete .yui-ac-content {
+  position: absolute;
+  width: 420px;
+  left: 20%;
+  border: 1px solid #404040;
+  background: #fff;
+  overflow: hidden;
+  z-index: 9050;
+}
+#relatedtags-autocomplete .ysearchquery {
+  position: absolute;
+  right: 10px;
+  color: #808080;
+  z-index: 10;
+}
+#relatedtags-autocomplete .yui-ac-shadow {
+  position: absolute;
+  margin: .3em;
+  width: 100%;
+  background: #a0a0a0;
+  z-index: 9049;
+}
+#relatedtags-autocomplete ul {
+  padding: 0;
+  width: 100%;
+  margin: 0;
+  list-style-type: none;
+}
+#relatedtags-autocomplete li {
+  padding: 0 5px;
+  cursor: default;
+  white-space: nowrap;
+}
+#relatedtags-autocomplete li.yui-ac-highlight {
+  background: #ffc;
+}
+h2.tag-heading,
+div#tag-description,
+div#tag-blogs,
+body.tag .managelink {
+  padding: 5px;
+}
+.tag_cloud .s20 {
+  font-size: 1.5em;
+  font-weight: bold;
+}
+.tag_cloud .s19 {
+  font-size: 1.5em;
+}
+.tag_cloud .s18 {
+  font-size: 1.4em;
+  font-weight: bold;
+}
+.tag_cloud .s17 {
+  font-size: 1.4em;
+}
+.tag_cloud .s16 {
+  font-size: 1.3em;
+  font-weight: bold;
+}
+.tag_cloud .s15 {
+  font-size: 1.3em;
+}
+.tag_cloud .s14 {
+  font-size: 1.2em;
+  font-weight: bold;
+}
+.tag_cloud .s13 {
+  font-size: 1.2em;
+}
+.tag_cloud .s12,
+.tag_cloud .s11 {
+  font-size: 1.1em;
+  font-weight: bold;
+}
+.tag_cloud .s10,
+.tag_cloud .s9 {
+  font-size: 1.1em;
+}
+.tag_cloud .s8,
+.tag_cloud .s7 {
+  font-size: 1em;
+  font-weight: bold;
+}
+.tag_cloud .s6,
+.tag_cloud .s5 {
+  font-size: 1em;
+}
+.tag_cloud .s4,
+.tag_cloud .s3 {
+  font-size: 0.9em;
+  font-weight: bold;
+}
+.tag_cloud .s2,
+.tag_cloud .s1 {
+  font-size: 0.9em;
+}
+.tag_cloud .s0 {
+  font-size: 0.8em;
+}
 .yui3-button,
 .yui-button button {
   -webkit-box-shadow: none;
@@ -16947,338 +17199,6 @@ fieldset[disabled] .yui-button button.active {
 #page-footer .purgecaches,
 #page-footer .performanceinfo {
   text-align: center;
-}
-.dir-rtl table#explaincaps td,
-.dir-rtl table#defineroletable td,
-.dir-rtl table.grading-report td,
-.dir-rtl table#listdirectories td,
-.dir-rtl table.rolecaps td,
-.dir-rtl table.userenrolment td,
-.dir-rtl table#form td,
-.dir-rtl form#movecourses table td,
-.dir-rtl .forumheaderlist td,
-.dir-rtl table.flexible td,
-.dir-rtl .generaltable td,
-.dir-rtl .generaltable thead:first-child tr:first-child td,
-.dir-rtl table#explaincaps th,
-.dir-rtl table#defineroletable th,
-.dir-rtl table.grading-report th,
-.dir-rtl table#listdirectories th,
-.dir-rtl table.rolecaps th,
-.dir-rtl table.userenrolment th,
-.dir-rtl table#form th,
-.dir-rtl form#movecourses table th,
-.dir-rtl .forumheaderlist th,
-.dir-rtl table.flexible th,
-.dir-rtl .generaltable th,
-.dir-rtl .generaltable thead:first-child tr:first-child th {
-  text-align: right;
-}
-#page-admin-course-index.dir-rtl .editcourse td,
-#page-admin-course-index.dir-rtl .editcourse th {
-  text-align: right;
-}
-input.form-submit,
-input#id_submitbutton,
-input#id_submitbutton2,
-.path-admin .buttons input[type="submit"],
-td.submit input {
-  color: #ffffff;
-  background-color: #03a9f4;
-  border-color: #03a9f4;
-}
-input.form-submit:hover,
-input#id_submitbutton:hover,
-input#id_submitbutton2:hover,
-.path-admin .buttons input[type="submit"]:hover,
-td.submit input:hover,
-input.form-submit:focus,
-input#id_submitbutton:focus,
-input#id_submitbutton2:focus,
-.path-admin .buttons input[type="submit"]:focus,
-td.submit input:focus,
-input.form-submit:active,
-input#id_submitbutton:active,
-input#id_submitbutton2:active,
-.path-admin .buttons input[type="submit"]:active,
-td.submit input:active,
-input.form-submit.active,
-input#id_submitbutton.active,
-input#id_submitbutton2.active,
-.path-admin .buttons input[type="submit"].active,
-td.submit input.active,
-.open > .dropdown-toggleinput.form-submit,
-.open > .dropdown-toggleinput#id_submitbutton,
-.open > .dropdown-toggleinput#id_submitbutton2,
-.open > .dropdown-toggle.path-admin .buttons input[type="submit"],
-.open > .dropdown-toggletd.submit input {
-  color: #ffffff;
-  background-color: #0286c2;
-  border-color: #027fb8;
-}
-input.form-submit:active,
-input#id_submitbutton:active,
-input#id_submitbutton2:active,
-.path-admin .buttons input[type="submit"]:active,
-td.submit input:active,
-input.form-submit.active,
-input#id_submitbutton.active,
-input#id_submitbutton2.active,
-.path-admin .buttons input[type="submit"].active,
-td.submit input.active,
-.open > .dropdown-toggleinput.form-submit,
-.open > .dropdown-toggleinput#id_submitbutton,
-.open > .dropdown-toggleinput#id_submitbutton2,
-.open > .dropdown-toggle.path-admin .buttons input[type="submit"],
-.open > .dropdown-toggletd.submit input {
-  background-image: none;
-}
-input.form-submit.disabled,
-input#id_submitbutton.disabled,
-input#id_submitbutton2.disabled,
-.path-admin .buttons input[type="submit"].disabled,
-td.submit input.disabled,
-input.form-submit[disabled],
-input#id_submitbutton[disabled],
-input#id_submitbutton2[disabled],
-.path-admin .buttons input[type="submit"][disabled],
-td.submit input[disabled],
-fieldset[disabled] input.form-submit,
-fieldset[disabled] input#id_submitbutton,
-fieldset[disabled] input#id_submitbutton2,
-fieldset[disabled] .path-admin .buttons input[type="submit"],
-fieldset[disabled] td.submit input,
-input.form-submit.disabled:hover,
-input#id_submitbutton.disabled:hover,
-input#id_submitbutton2.disabled:hover,
-.path-admin .buttons input[type="submit"].disabled:hover,
-td.submit input.disabled:hover,
-input.form-submit[disabled]:hover,
-input#id_submitbutton[disabled]:hover,
-input#id_submitbutton2[disabled]:hover,
-.path-admin .buttons input[type="submit"][disabled]:hover,
-td.submit input[disabled]:hover,
-fieldset[disabled] input.form-submit:hover,
-fieldset[disabled] input#id_submitbutton:hover,
-fieldset[disabled] input#id_submitbutton2:hover,
-fieldset[disabled] .path-admin .buttons input[type="submit"]:hover,
-fieldset[disabled] td.submit input:hover,
-input.form-submit.disabled:focus,
-input#id_submitbutton.disabled:focus,
-input#id_submitbutton2.disabled:focus,
-.path-admin .buttons input[type="submit"].disabled:focus,
-td.submit input.disabled:focus,
-input.form-submit[disabled]:focus,
-input#id_submitbutton[disabled]:focus,
-input#id_submitbutton2[disabled]:focus,
-.path-admin .buttons input[type="submit"][disabled]:focus,
-td.submit input[disabled]:focus,
-fieldset[disabled] input.form-submit:focus,
-fieldset[disabled] input#id_submitbutton:focus,
-fieldset[disabled] input#id_submitbutton2:focus,
-fieldset[disabled] .path-admin .buttons input[type="submit"]:focus,
-fieldset[disabled] td.submit input:focus,
-input.form-submit.disabled:active,
-input#id_submitbutton.disabled:active,
-input#id_submitbutton2.disabled:active,
-.path-admin .buttons input[type="submit"].disabled:active,
-td.submit input.disabled:active,
-input.form-submit[disabled]:active,
-input#id_submitbutton[disabled]:active,
-input#id_submitbutton2[disabled]:active,
-.path-admin .buttons input[type="submit"][disabled]:active,
-td.submit input[disabled]:active,
-fieldset[disabled] input.form-submit:active,
-fieldset[disabled] input#id_submitbutton:active,
-fieldset[disabled] input#id_submitbutton2:active,
-fieldset[disabled] .path-admin .buttons input[type="submit"]:active,
-fieldset[disabled] td.submit input:active,
-input.form-submit.disabled.active,
-input#id_submitbutton.disabled.active,
-input#id_submitbutton2.disabled.active,
-.path-admin .buttons input[type="submit"].disabled.active,
-td.submit input.disabled.active,
-input.form-submit[disabled].active,
-input#id_submitbutton[disabled].active,
-input#id_submitbutton2[disabled].active,
-.path-admin .buttons input[type="submit"][disabled].active,
-td.submit input[disabled].active,
-fieldset[disabled] input.form-submit.active,
-fieldset[disabled] input#id_submitbutton.active,
-fieldset[disabled] input#id_submitbutton2.active,
-fieldset[disabled] .path-admin .buttons input[type="submit"].active,
-fieldset[disabled] td.submit input.active {
-  background-color: #03a9f4;
-  border-color: #03a9f4;
-}
-input.form-submit .badge,
-input#id_submitbutton .badge,
-input#id_submitbutton2 .badge,
-.path-admin .buttons input[type="submit"] .badge,
-td.submit input .badge {
-  color: #03a9f4;
-  background-color: #ffffff;
-}
-#notice .singlebutton + .singlebutton input,
-.submit.buttons input[name="cancel"] {
-  display: inline-block;
-  margin-bottom: 0;
-  font-weight: normal;
-  text-align: center;
-  vertical-align: middle;
-  cursor: pointer;
-  background-image: none;
-  border: 1px solid transparent;
-  white-space: nowrap;
-  padding: 8px 12px;
-  font-size: 18px;
-  line-height: 1.6;
-  border-radius: 0px;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-  padding: 0.25em 1em;
-  margin: 0 .4em;
-  vertical-align: baseline;
-  line-height: 1.5;
-  background-color: #03a9f4;
-  border-color: #fff;
-  color: #fff;
-  font-family: "Roboto", "Fira Sans", "Segoe UI", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif, "line-icons";
-  font-weight: 300;
-}
-#notice .singlebutton + .singlebutton input:focus,
-.submit.buttons input[name="cancel"]:focus,
-#notice .singlebutton + .singlebutton input:active:focus,
-.submit.buttons input[name="cancel"]:active:focus,
-#notice .singlebutton + .singlebutton input.active:focus,
-.submit.buttons input[name="cancel"].active:focus {
-  outline: thin dotted;
-  outline: 5px auto -webkit-focus-ring-color;
-  outline-offset: -2px;
-}
-#notice .singlebutton + .singlebutton input:hover,
-.submit.buttons input[name="cancel"]:hover,
-#notice .singlebutton + .singlebutton input:focus,
-.submit.buttons input[name="cancel"]:focus {
-  color: #ffffff;
-  text-decoration: none;
-}
-#notice .singlebutton + .singlebutton input:active,
-.submit.buttons input[name="cancel"]:active,
-#notice .singlebutton + .singlebutton input.active,
-.submit.buttons input[name="cancel"].active {
-  outline: 0;
-  background-image: none;
-  -webkit-box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
-  box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
-}
-#notice .singlebutton + .singlebutton input.disabled,
-.submit.buttons input[name="cancel"].disabled,
-#notice .singlebutton + .singlebutton input[disabled],
-.submit.buttons input[name="cancel"][disabled],
-fieldset[disabled] #notice .singlebutton + .singlebutton input,
-fieldset[disabled] .submit.buttons input[name="cancel"] {
-  cursor: not-allowed;
-  pointer-events: none;
-  opacity: 0.65;
-  filter: alpha(opacity=65);
-  -webkit-box-shadow: none;
-  box-shadow: none;
-}
-#notice .singlebutton + .singlebutton input:hover,
-.submit.buttons input[name="cancel"]:hover,
-#notice .singlebutton + .singlebutton input:focus,
-.submit.buttons input[name="cancel"]:focus {
-  text-decoration: none;
-}
-#notice .singlebutton + .singlebutton input:hover,
-.submit.buttons input[name="cancel"]:hover,
-#notice .singlebutton + .singlebutton input:focus,
-.submit.buttons input[name="cancel"]:focus,
-#notice .singlebutton + .singlebutton input:active,
-.submit.buttons input[name="cancel"]:active,
-#notice .singlebutton + .singlebutton input.active,
-.submit.buttons input[name="cancel"].active {
-  background-color: #038dcc;
-  border-color: #027fb8;
-  color: #fff;
-  text-decoration: none;
-}
-#notice .singlebutton + .singlebutton input:visited,
-.submit.buttons input[name="cancel"]:visited {
-  color: #fff;
-}
-#notice .singlebutton + .singlebutton input[disabled],
-.submit.buttons input[name="cancel"][disabled] {
-  background-color: #03a9f4;
-}
-input[id$="_clearbutton"],
-input[type="reset"] {
-  color: #ffffff;
-  background-color: #ff9800;
-  border-color: #ff9800;
-}
-input[id$="_clearbutton"]:hover,
-input[type="reset"]:hover,
-input[id$="_clearbutton"]:focus,
-input[type="reset"]:focus,
-input[id$="_clearbutton"]:active,
-input[type="reset"]:active,
-input[id$="_clearbutton"].active,
-input[type="reset"].active,
-.open > .dropdown-toggleinput[id$="_clearbutton"],
-.open > .dropdown-toggleinput[type="reset"] {
-  color: #ffffff;
-  background-color: #cc7a00;
-  border-color: #c27400;
-}
-input[id$="_clearbutton"]:active,
-input[type="reset"]:active,
-input[id$="_clearbutton"].active,
-input[type="reset"].active,
-.open > .dropdown-toggleinput[id$="_clearbutton"],
-.open > .dropdown-toggleinput[type="reset"] {
-  background-image: none;
-}
-input[id$="_clearbutton"].disabled,
-input[type="reset"].disabled,
-input[id$="_clearbutton"][disabled],
-input[type="reset"][disabled],
-fieldset[disabled] input[id$="_clearbutton"],
-fieldset[disabled] input[type="reset"],
-input[id$="_clearbutton"].disabled:hover,
-input[type="reset"].disabled:hover,
-input[id$="_clearbutton"][disabled]:hover,
-input[type="reset"][disabled]:hover,
-fieldset[disabled] input[id$="_clearbutton"]:hover,
-fieldset[disabled] input[type="reset"]:hover,
-input[id$="_clearbutton"].disabled:focus,
-input[type="reset"].disabled:focus,
-input[id$="_clearbutton"][disabled]:focus,
-input[type="reset"][disabled]:focus,
-fieldset[disabled] input[id$="_clearbutton"]:focus,
-fieldset[disabled] input[type="reset"]:focus,
-input[id$="_clearbutton"].disabled:active,
-input[type="reset"].disabled:active,
-input[id$="_clearbutton"][disabled]:active,
-input[type="reset"][disabled]:active,
-fieldset[disabled] input[id$="_clearbutton"]:active,
-fieldset[disabled] input[type="reset"]:active,
-input[id$="_clearbutton"].disabled.active,
-input[type="reset"].disabled.active,
-input[id$="_clearbutton"][disabled].active,
-input[type="reset"][disabled].active,
-fieldset[disabled] input[id$="_clearbutton"].active,
-fieldset[disabled] input[type="reset"].active {
-  background-color: #ff9800;
-  border-color: #ff9800;
-}
-input[id$="_clearbutton"] .badge,
-input[type="reset"] .badge {
-  color: #ff9800;
-  background-color: #ffffff;
 }
 /**
  * Main swatch - includes all snap swatch files.
