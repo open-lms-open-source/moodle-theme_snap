@@ -636,8 +636,6 @@ function snapInit() {
             if(newHash !== lastHash){
                 if(location.hash === '#primary-nav') {
                     updatePersonalMenu();
-                    // GT - 2014-10-16 - Add ellipsis to long course titles
-                    $('.courseinfo-body h3 a').ellipsis();
                 }
                 else{
                     $('#page, #moodle-footer').show(0);
@@ -822,8 +820,6 @@ function snapInit() {
                     if (timestamp === resizestamp) {
                         logmsg('running resize hook functions');
                         applyResponsiveVideo();
-                        // Apply another short delay for adding ellipsis.
-                        window.setTimeout(function() {$('.courseinfo-body h3 a').ellipsis();}, 200);
                     } else {
                         logmsg('skipping resize hook functions - timestamp has changed from ' + timestamp + ' to ' + resizestamp);
                     }
@@ -850,9 +846,6 @@ function snapInit() {
     if(location.href.indexOf("primary-nav") > -1) {
         updatePersonalMenu();
     }
-
-    // GT - 2014-10-16 - Add ellipsis to long course titles
-    $('.courseinfo-body h3 a').ellipsis();
 
     // SL - 19th aug 2014 - resposive video and snap search in exceptions.
     $(document).ready(function() {
@@ -884,11 +877,6 @@ function snapInit() {
         // Make video responsive.
         // Note, if you don't do this on load then FLV media gets wrong size.
         applyResponsiveVideo();
-
-        // Add ellipsis to long course titles.
-        if (window.location.hash == '#primary-nav') {
-            $('.courseinfo-body h3 a').ellipsis();
-        }
 
     });
 

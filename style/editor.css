@@ -4530,6 +4530,17 @@ input[type="text"] + input[type="submit"] {
   width: 100%;
   padding: 0 1em 1em 1em;
 }
+.courseinfo .courseinfo-body h3 a {
+  display: block;
+  display: -webkit-box;
+  max-height: 3em;
+  width: 100%;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: normal !important;
+}
 .courseinfo h3 {
   font-size: 1em;
   font-weight: 500;
@@ -7201,9 +7212,6 @@ p[id^="time_"] + div[id^="bar_"] div[id^="progress_"] {
 }
 .path-backup .wibbler {
   display: none;
-}
-.ellipsis_toobig:after {
-  content: '...';
 }
 .atto_equation_library button {
   background-color: #fff;
