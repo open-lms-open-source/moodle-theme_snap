@@ -596,7 +596,7 @@ class local {
             $function = '\theme_snap\activity::'.$cm->modname.'_num_submissions';
 
             $a['completed'] = call_user_func($function, $ungraded->course, $ungraded->instanceid);
-            $a['participants'] = (self::course_participant_count($ungraded->course));
+            $a['participants'] = (self::course_participant_count($ungraded->course, $cm->modname));
             $xofysubmitted = get_string('xofysubmitted', 'theme_snap', $a);
             $info = '<span class="label label-info">'.$xofysubmitted.', '.$xungraded.'</span>';
 
