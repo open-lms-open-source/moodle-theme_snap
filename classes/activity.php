@@ -256,6 +256,32 @@ class activity {
 
         foreach ($courseids as $courseid) {
 
+            // Identify any assignments in this course which are not graded.
+            $params = array(
+                'courseid'   => $courseid,
+                'itemtype'   => 'mod',
+                'itemmodule' => 'assign',
+                'gradetype'  => GRADE_TYPE_NONE,
+            );
+
+            $sql = 'SELECT iteminstance
+                    FROM {grade_items}
+                    WHERE courseid = ?
+                    AND itemtype = ?
+                    AND itemmodule = ?
+                    AND gradetype = ?';
+
+            $nogrades = $DB->get_records_sql($sql, $params);
+
+            if (!empty($nogrades)) {
+                list($nogradessql, $nogradesparams) = $DB->get_in_or_equal(
+                    array_keys($nogrades),
+                    SQL_PARAMS_NAMED,
+                    'param',
+                    false);
+            }
+
+            // Get the assignments that need grading.
             list($esql, $params) = get_enrolled_sql(\context_course::instance($courseid), 'mod/assign:submit', 0, true);
             $params['courseid'] = $courseid;
 
@@ -317,8 +343,15 @@ class activity {
                        )
 
                        AND sb.userid = smx.userid
-                       AND (a.duedate = 0 OR a.duedate > $sixmonthsago)
-                  GROUP BY instanceid, a.course, opentime, closetime, coursemoduleid ORDER BY a.duedate ASC";
+                       AND (a.duedate = 0 OR a.duedate > $sixmonthsago)";
+
+            // Add filter for assignments that do not need grading.
+            if (!empty($nogradessql)) {
+                $sql .= ' AND a.id ' . $nogradessql;
+                $params = array_merge($params, $nogradesparams);
+            }
+
+            $sql .= " GROUP BY instanceid, a.course, opentime, closetime, coursemoduleid ORDER BY a.duedate ASC";
             $rs = $DB->get_records_sql($sql, $params);
             $ungraded = array_merge($ungraded, $rs);
         }
