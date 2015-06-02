@@ -55,7 +55,7 @@ module.exports = function(grunt) {
             // Compile editor styles.
             editor: {
                 options: {
-                    compress: true
+                    compress: false
                 },
                 files: {
                     "style/editor.css": "less/editor.less"
