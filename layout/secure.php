@@ -51,7 +51,15 @@ echo $OUTPUT->doctype() ?>
             <?php echo $OUTPUT->custom_menu(); ?>
             <ul class="nav pull-right">
                 <li><?php echo $OUTPUT->page_heading_menu(); ?></li>
-                <li class="navbar-text"><?php echo $OUTPUT->login_info() ?></li>
+                <li class="navbar-text">
+                    <?php
+                        if (method_exists($OUTPUT, 'user_menu')) {
+                            echo $OUTPUT->user_menu(); // user_menu, for Moodle 2.8
+                        } else {
+                            echo $OUTPUT->login_info(); // login_info, Moodle 2.7 and before
+                        }
+                     ?>
+                </li>
             </ul>
         </div>
     </div>
