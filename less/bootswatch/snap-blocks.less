@@ -53,7 +53,9 @@ a.skip-block {
 }
 
 /* hide blocks by default */
-#moodle-blocks {
+#moodle-blocks,
+/* workaround for participant list pretending to be course view MDL-50492 */
+.path-user.path-course.path-course-view.editing #moodle-blocks {
     visibility: hidden;
     height: 0px;
     overflow: hidden;

@@ -17308,7 +17308,8 @@ a.skip-block {
   display: block;
 }
 /* hide blocks by default */
-#moodle-blocks {
+#moodle-blocks,
+.path-user.path-course.path-course-view.editing #moodle-blocks {
   visibility: hidden;
   height: 0px;
   overflow: hidden;
