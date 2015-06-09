@@ -65,7 +65,7 @@ class theme_snap_core_renderer extends toc_renderer {
             $courseteachers .= "</div>";
         }
         // If user can edit add link to manage users.
-        if (has_capability('enrol/accesskey:manage', $context)) {
+        if (has_capability('moodle/course:enrolreview', $context)) {
             if (empty($courseteachers)) {
                 $courseteachers = "<h6>".get_string('coursecontacts', 'theme_snap')."</h6>";
             }
@@ -86,7 +86,7 @@ class theme_snap_core_renderer extends toc_renderer {
         }
 
         // If able to edit add link to edit summary.
-        if (has_capability('enrol/accesskey:manage', $context)) {
+        if (has_capability('moodle/course:update', $context)) {
             if (empty($coursesummary)) {
                 $coursesummary = '<h6>'.get_string('aboutcourse', 'theme_snap').'</h6>';
             }
@@ -105,7 +105,7 @@ class theme_snap_core_renderer extends toc_renderer {
             $courserecentactivity .= "</div>";
         }
         // If user can edit add link to moodle recent activity stuff.
-        if (has_capability('enrol/accesskey:manage', $context)) {
+        if (has_capability('moodle/course:update', $context)) {
             if (empty($courserecentactivities)) {
                 $courserecentactivity = '<h6>'.get_string('recentactivity').'</h6>';
                 $courserecentactivity .= get_string('norecentactivity');
