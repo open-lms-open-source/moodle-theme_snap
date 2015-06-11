@@ -46,7 +46,7 @@ module.exports = function(grunt) {
             // Compile moodle styles.
             moodle: {
                 options: {
-                    compress: true
+                    compress: false
                 },
                 files: {
                     "style/moodle.css": "less/moodle.less",
@@ -55,7 +55,7 @@ module.exports = function(grunt) {
             // Compile editor styles.
             editor: {
                 options: {
-                    compress: true
+                    compress: false
                 },
                 files: {
                     "style/editor.css": "less/editor.less"
