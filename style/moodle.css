@@ -19362,6 +19362,9 @@ input[type="text"] + input[type="submit"] {
 .snap-media-object .snap-unread-marker:before {
   border-right: 0.89em solid white;
 }
+.callstoaction .snap-media-object .snap-media-body {
+  overflow: visible;
+}
 .fixy {
   display: none;
 }
