@@ -20680,7 +20680,7 @@ li.calendar_event_user:before {
 }
 .calendar-event-panel {
   border: 0 !important;
-  background-color: white;
+  background-color: #fff;
   -webkit-box-shadow: 0 3px 9px rgba(0, 0, 0, 0.5);
           box-shadow: 0 3px 9px rgba(0, 0, 0, 0.5);
 }
@@ -20748,58 +20748,81 @@ ul.events-new + ul.events-underway {
 .maincalendar ul li {
   background-color: transparent;
 }
-#dateselector-calendar-panel .calheader,
-#dateselector-calendar-panel .calweekdaycell {
+#dateselector-calendar-panel .yui3-calendarbase {
+  width: 350px !important;
+}
+#dateselector-calendar-panel .yui3-calendar-header-label,
+#dateselector-calendar-panel .yui3-calendar-day,
+#dateselector-calendar-panel .yui3-calendar-previousmonth-day,
+#dateselector-calendar-panel .yui3-calendar-nextmonth-day,
+#dateselector-calendar-panel .yui3-calendar-weekday {
+  font-family: "Roboto", "Fira Sans", "Segoe UI", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif, "line-icons";
+  color: #666666;
+  border-color: #ffffff;
+  text-align: center;
+  font-weight: normal;
+}
+#dateselector-calendar-panel .yui3-calendar-previousmonth-day,
+#dateselector-calendar-panel .yui3-calendar-nextmonth-day,
+#dateselector-calendar-panel .yui3-calendar-weekday {
   font-weight: 100;
-  color: #666;
 }
-#dateselector-calendar-panel .calnavright,
-#dateselector-calendar-panel .calnavleft {
-  width: 1.127em;
-  height: 1.127em;
-  top: 0;
-  margin: 0 4%;
+#dateselector-calendar-panel .yui3-calendar-previousmonth-day,
+#dateselector-calendar-panel .yui3-calendar-nextmonth-day {
+  color: #999999;
 }
-#dateselector-calendar-panel .calnavright {
-  background: url([[pix:theme|right-arrow]]) no-repeat right 0;
+#dateselector-calendar-panel .yui3-calendar-content {
+  background: #ffffff;
 }
-#dateselector-calendar-panel .calnavleft {
-  background: url([[pix:theme|left-arrow]]) no-repeat left 0;
+#dateselector-calendar-panel .yui3-calendarnav-nextmonth,
+#dateselector-calendar-panel .yui3-calendarnav-prevmonth {
+  border: 0;
+  margin: 0;
+  height: 30px;
+  width: 30px;
+  background-repeat: no-repeat;
+  background-position: center;
 }
-#dateselector-calendar-panel td.calcell {
-  border-color: white;
-  padding: 0.62em;
+#dateselector-calendar-panel .yui3-calendarnav-nextmonth {
+  background-image: url([[pix:theme|right-arrow]]);
 }
-#dateselector-calendar-panel .selected,
-#dateselector-calendar-panel .calcellhover,
-#dateselector-calendar-panel .today,
-#dateselector-calendar-panel .oom {
-  background-color: white !important;
+#dateselector-calendar-panel .yui3-calendarnav-prevmonth {
+  background-image: url([[pix:theme|left-arrow]]);
 }
-#dateselector-calendar-panel .selector {
-  width: 1.38em;
-  height: 1.38em;
-  border-radius: 100%;
-  border: 1px solid white;
+#dateselector-calendar-panel .yui3-calendar-day,
+#dateselector-calendar-panel .yui3-calendar-prevmonth-day,
+#dateselector-calendar-panel .yui3-calendar-nextmonth-day {
+  width: 14%;
+  border: 0;
+  height: 47px;
 }
-#dateselector-calendar-panel .selected .selector,
-#dateselector-calendar-panel .calcellhover .selector {
-  color: white;
+#dateselector-calendar-panel .yui3-calendar-day:hover,
+#dateselector-calendar-panel .yui3-calendar-prevmonth-day,
+#dateselector-calendar-panel .yui3-calendar-nextmonth-day {
+  background-color: #ffffff;
+}
+#dateselector-calendar-panel .yui3-calendar-day-selected,
+#dateselector-calendar-panel .yui3-calendar-day:hover {
   -webkit-transition: all 0.4s ease-in-out;
           transition: all 0.4s ease-in-out;
+  color: #fff;
+  border-radius: 100%;
 }
 @media screen and (min-width: 768px) {
   #dateselector-calendar-panel {
     left: 33% !important;
     top: 50% !important;
   }
-  #dateselector-calendar-panel .calheader {
+  #dateselector-calendar-panel .yui3-calendar-base {
+    width: 100%;
+  }
+  #dateselector-calendar-panel .yui3-calendar-header-label {
+    font-weight: 100;
     font-size: 36px;
   }
-  #dateselector-calendar-panel .selector {
-    width: 2.38em;
-    height: 2.38em;
-    padding: 0.38em;
+  #dateselector-calendar-panel .yui3-calendarnav-nextmonth,
+  #dateselector-calendar-panel .yui3-calendarnav-prevmonth {
+    height: 55px;
   }
 }
 /* USER PROFILE PAGE */
@@ -22434,15 +22457,15 @@ a:hover {
 .section li.snap-native .activityinstance .snap-asset-link a:hover {
   color: #038dcc;
 }
-#dateselector-calendar-panel .selected .selector {
-  background-color: #03a9f4;
-}
-#dateselector-calendar-panel .calcellhover .selector {
-  border-color: #03a9f4 !important;
-  background-color: white;
+#dateselector-calendar-panel .yui3-calendar-day {
   color: #03a9f4;
 }
-.day .day a {
+#dateselector-calendar-panel .yui3-calendar-day:hover {
+  color: #038dcc;
+}
+#dateselector-calendar-panel .yui3-calendar-day-selected,
+#dateselector-calendar-panel .yui3-calendar-day:hover {
+  color: #fff;
   background-color: #03a9f4;
 }
 #region-main,

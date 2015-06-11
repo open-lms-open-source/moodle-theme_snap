@@ -101,32 +101,32 @@ table.boxwidthwide {
 @media screen and (min-width: @screen-sm) {
     .twocolumns {
         .signuppanel {
-            float:left;
-            left:0 !important;
-            width:50% !important;
+            float: left;
+            left: 0 !important;
+            width: 50% !important;
         }
         .loginpanel{
-            float:right !important;
-            width:50% !important;
+            float: right !important;
+            width: 50% !important;
         }
     }
 }
 #page-login-index {
     #region-main {
-        max-width:100%;
-        padding:0 4% 2em;
+        max-width: 100%;
+        padding: 0 4% 2em;
     }
     .loginpanel h2 {
         text-indent: 100%;
         white-space: nowrap;
         overflow: hidden;
-        background:no-repeat center center;
-        background-size:contain;
+        background: no-repeat center center;
+        background-size: contain;
     }
     .loginbox.onecolumn {
-        left:0 !important;
-        padding:0 10%;
-        width:100%;
+        left: 0 !important;
+        padding: 0 10%;
+        width: 100%;
     }
 
 }
@@ -1959,25 +1959,25 @@ http://blog.rodneyrehm.de/archives/34-iOS7-Mobile-Safari-And-Viewport-Units.html
 span.calendar_event_global,
 li.calendar_event_global:before,
 td.calendar_event_global > a {
-    background-color:@brand-success;
+    background-color: @brand-success;
 }
 span.calendar_event_course,
 li.calendar_event_course:before,
 td.calendar_event_course > a {
     //salmon
-    background-color:salmon;
+    background-color: salmon;
 
 }
 span.calendar_event_group,
 li.calendar_event_group:before,
 td.calendar_event_group > a {
     // yellow
-    background-color:#FDD652;
+    background-color: #FDD652;
 }
 span.calendar_event_user,
 li.calendar_event_user:before,
 td.calendar_event_user > a {
-    background-color:@brand-info;
+    background-color: @brand-info;
 }
 td.calendar_event_global,
 td.calendar_event_course,
@@ -2027,11 +2027,11 @@ li.calendar_event_user:before {
 // Minical hover box
 .calendar-event-panel {
     border:0 !important;
-    background-color:white;
+    background-color: #fff;
 
     box-shadow:0 3px 9px rgba(0, 0, 0, 0.5);
     .yui3-overlay-content{
-        border-color:#dadada;
+        border-color: #dadada;
     }
 }
 .calendar_filters {
@@ -2055,7 +2055,7 @@ li.calendar_event_user:before {
     .maincalendar .calendarmonth td,
     .maincalendar .calendarmonth th {
         border-color: #fff;
-        height:1em;
+        height: 1em;
     }
 }
 
@@ -2071,7 +2071,7 @@ li.calendar_event_user:before {
 
 // Today
 .maincalendar .today .day{
-    border-color:#dadada;
+    border-color: #dadada;
 }
 
 // A day with events
@@ -2103,67 +2103,91 @@ ul.events-new + ul.events-underway {
 }
 
 .path-calendar .maincalendar .eventlist .event{
-    border:0;
+    border: 0;
 }
 
 .maincalendar ul{
-    text-align:left;
+    text-align: left;
     li {
         background-color: transparent;
     }
 }
 
 #dateselector-calendar-panel {
-    .calheader,
-    .calweekdaycell {
+    .yui3-calendarbase {
+        width: 350px !important;
+    }
+    .yui3-calendar-header-label,
+    .yui3-calendar-day,
+    .yui3-calendar-previousmonth-day,
+    .yui3-calendar-nextmonth-day,
+    .yui3-calendar-weekday {
+        font-family: @font-family-sans-serif;
+        color: @text-color;
+        border-color: @modal-content-bg;
+        text-align: center;
+        font-weight: normal;
+    }
+    .yui3-calendar-previousmonth-day,
+    .yui3-calendar-nextmonth-day,
+    .yui3-calendar-weekday {
         font-weight: 100;
-        color:#666;
     }
-    .calnavright,
-    .calnavleft {
-        width:1.127em;
-        height:1.127em;
-        top:0;
-        margin:0 4%;
+    .yui3-calendar-previousmonth-day,
+    .yui3-calendar-nextmonth-day {
+        color: @text-muted;
     }
-    .calnavright {
-        background:url([[pix:theme|right-arrow]]) no-repeat right 0;
+    .yui3-calendar-content {
+        background: @body-bg;
     }
-    .calnavleft {
-        background:url([[pix:theme|left-arrow]]) no-repeat left 0;
+    .yui3-calendarnav-nextmonth,
+    .yui3-calendarnav-prevmonth {
+        border: 0;
+        margin: 0;
+        height: 30px;
+        width: 30px;
+        background-repeat: no-repeat;
+        background-position: center;
     }
-    td.calcell {
-        border-color:white;
-        padding:0.62em;
+    .yui3-calendarnav-nextmonth {
+        background-image: url([[pix:theme|right-arrow]]);
     }
-    .selected,
-    .calcellhover,
-    .today,
-    .oom {
-        background-color:white !important;
+    .yui3-calendarnav-prevmonth {
+        background-image: url([[pix:theme|left-arrow]]);
     }
-    .selector {
-        width:1.38em;
-        height:1.38em;
-        border-radius:100%;
-        border:1px solid white;
+    .yui3-calendar-day,
+    .yui3-calendar-prevmonth-day,
+    .yui3-calendar-nextmonth-day {
+        width: 14%;
+        border: 0;
+        height: 47px;
     }
-    .selected .selector,
-    .calcellhover .selector {
-        color:white;
+    .yui3-calendar-day:hover,
+    .yui3-calendar-prevmonth-day,
+    .yui3-calendar-nextmonth-day {
+        background-color: @modal-content-bg;
+    }
+    .yui3-calendar-day-selected,
+    .yui3-calendar-day:hover {
         .alakazam();
+        color: #fff;
+        // background-color: @link-color; in user swatch
+        border-radius: 100%;
     }
-    @media screen and (min-width: @screen-sm) {
-        left:33% !important;
-        top:50% !important;
+    @media screen and (min-width: @screen-sm-min) {
+        left: 33% !important;
+        top: 50% !important;
 
-        .calheader{
-            font-size:@font-size-h4;
+        .yui3-calendar-base {
+            width: 100%;
         }
-        .selector {
-            width:2.38em;
-            height:2.38em;
-            padding:0.38em;
+        .yui3-calendar-header-label {
+            font-weight: 100;
+            font-size: @font-size-h4;
+        }
+        .yui3-calendarnav-nextmonth,
+        .yui3-calendarnav-prevmonth {
+            height: 55px;
         }
     }
 }
@@ -2171,7 +2195,7 @@ ul.events-new + ul.events-underway {
 
 
 /* USER PROFILE PAGE */
-.userprofile .userprofilebox{
+.userprofile .userprofilebox {
     .profilepicture {
         .make-md-column(3);
     }
