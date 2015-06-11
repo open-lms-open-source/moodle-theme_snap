@@ -400,10 +400,6 @@ class activity {
         $coursecontext = \context_course::instance($courseid);
         list($esql, $params) = get_enrolled_sql($coursecontext, 'mod/assign:submit', 0, true);
 
-        $submissionmaxattempt = 'SELECT mxs.assignment AS assignid, mxs.userid, MAX(mxs.attemptnumber) AS maxattempt
-                                 FROM {assign_submission} mxs
-                                 GROUP BY assignid, mxs.userid';
-
         $params['submitted'] = ASSIGN_SUBMISSION_STATUS_SUBMITTED;
         $params['courseid'] = $courseid;
 
@@ -414,13 +410,15 @@ class activity {
                    JOIN {assign} an
                      ON sb.assignment = an.id
 
-                   JOIN ($submissionmaxattempt) smx
-                     ON sb.assignment = smx.assignid
+                   JOIN {assign_submission} smx
+                     ON smx.latest = 1
+                    AND sb.assignment = smx.assignment
+                    AND sb.userid = smx.userid
 
               LEFT JOIN {assign_grades} ag
                      ON sb.assignment = ag.assignment
                     AND sb.userid = ag.userid
-                    AND ag.attemptnumber = smx.maxattempt
+                    AND ag.attemptnumber = smx.attemptnumber
 
 -- Start of join required to make assignments marked via gradebook not show as requiring grading
 -- Note: This will lead to disparity between the assignment page (mod/assign/view.php[questionmark]id=[id])
@@ -445,9 +443,7 @@ class activity {
                   WHERE an.course = :courseid
                     AND sb.timemodified IS NOT NULL
                     AND sb.status = :submitted
-
-                    AND sb.userid = smx.userid
-                    AND sb.attemptnumber = smx.maxattempt
+                    AND sb.attemptnumber = smx.attemptnumber
 
                     AND (
                         sb.timemodified > gg.timemodified
