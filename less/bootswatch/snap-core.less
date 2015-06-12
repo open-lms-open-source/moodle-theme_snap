@@ -590,6 +590,10 @@ input[type="text"]+input[type="submit"] {
             overflow: hidden;
             text-overflow: ellipsis;
         }
+        // Shrink label size to support iPads
+        .label {
+            font-size: 0.7em;
+        }
     }
     // media o heading
     h3, h3 small {
@@ -616,6 +620,14 @@ input[type="text"]+input[type="submit"] {
             &:before {
                 border-right:0.89em solid white;
             }
+    }
+}
+
+.callstoaction {
+    .snap-media-object {
+        .snap-media-body {
+            overflow: visible;
+        }
     }
 }
 

@@ -4335,6 +4335,9 @@ input[type="text"] + input[type="submit"] {
   overflow: hidden;
   text-overflow: ellipsis;
 }
+.snap-media-object .snap-media-body .label {
+  font-size: 0.7em;
+}
 .snap-media-object h3,
 .snap-media-object h3 small {
   color: inherit;
@@ -4357,6 +4360,9 @@ input[type="text"] + input[type="submit"] {
 }
 .snap-media-object .snap-unread-marker:before {
   border-right: 0.89em solid white;
+}
+.callstoaction .snap-media-object .snap-media-body {
+  overflow: visible;
 }
 .fixy {
   display: none;
