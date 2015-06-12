@@ -345,27 +345,32 @@ class activity {
             list($graderids, $params) = get_enrolled_sql(\context_course::instance($courseid), 'moodle/grade:viewall');
             $params['courseid'] = $courseid;
 
-            // Note, that unlike assessments we don't check the gradebook as the only time a quiz needs to be marked is
-            // when there are essay questions or other questions that require manual marking. As these questions need
-            // to be marked manually the operation should always take place via the module.
-            $sql = "-- Snap sql
-                    SELECT cm.id AS coursemoduleid, q.id AS instanceid, q.course,
-                           q.timeopen AS opentime, q.timeclose AS closetime,
-                           count(DISTINCT qa.userid) AS ungraded
-                      FROM {quiz} q
-                      JOIN {course} c ON c.id = q.course
-                      JOIN {modules} m ON m.name = 'quiz'
-                      JOIN {course_modules} cm ON cm.module = m.id
-                           AND cm.instance = q.id
-                      JOIN {quiz_attempts} qa ON qa.quiz = q.id
-                 LEFT JOIN {quiz_grades} gd ON gd.quiz = qa.quiz
-                           AND gd.userid = qa.userid
-                     WHERE gd.id IS NULL
-                           AND q.course = :courseid
-                           AND qa.userid NOT IN ($graderids)
-                           AND qa.state = 'finished'
-                           AND (q.timeclose = 0 OR q.timeclose > $sixmonthsago)
-                  GROUP BY instanceid, q.course, opentime, closetime, coursemoduleid ORDER BY q.timeclose ASC";
+            /*
+             * Use the last attempt table to ensure the latest attempt is always graded.
+             *
+             * In normal operationg, only quizzes requiring manual grading will have an
+             * entry in the last attempt table that is finished with a null grade.
+             */
+            $sql = "-- Snap SQL
+                    SELECT cm.id AS coursemoduleid, q.id AS instanceid, q.course, q.timeopen AS opentime,
+                           q.timeclose AS closetime, count(la.userid) AS ungraded
+                    FROM {quiz} q
+                    JOIN {course} c ON c.id = q.course AND q.course = :courseid
+                    JOIN {modules} m ON m.name = 'quiz'
+                    JOIN {course_modules} cm ON cm.module = m.id AND cm.instance = q.id
+                    -- Find the latest ungraded attempt
+                    JOIN (SELECT qa1.*
+                          FROM {quiz_attempts} qa1
+                          LEFT OUTER JOIN {quiz_attempts} qa2
+                              ON qa1.userid = qa2.userid AND qa1.attempt < qa2.attempt
+                              WHERE qa2.userid IS NULL
+                              AND qa1.sumgrades IS NULL
+                              AND qa1.state = 'finished') as la ON q.id = la.quiz
+                    -- Exclude those people who can grade quizzes
+                    WHERE la.userid NOT IN ($graderids)
+                    AND (q.timeclose = 0 OR q.timeclose > $sixmonthsago)
+                    GROUP BY instanceid, q.course, opentime, closetime, coursemoduleid
+                    ORDER BY q.timeclose ASC";
 
             $rs = $DB->get_records_sql($sql, $params);
             $ungraded = array_merge($ungraded, $rs);
