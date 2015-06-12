@@ -255,7 +255,7 @@ class activity {
         $sixmonthsago = time() - YEARSECS / 2;
 
         // Limit to assignments with grades.
-        $gradetypelimit = 'AND gi.gradetype <> ' . GRADE_TYPE_NONE;
+        $gradetypelimit = 'AND gi.gradetype NOT IN (' . GRADE_TYPE_NONE . ',' . GRADE_TYPE_TEXT . ')';
 
         foreach ($courseids as $courseid) {
 
@@ -412,10 +412,11 @@ class activity {
 
         // Check to see if this assign is graded.
         $params = array(
-            'courseid'     => $courseid,
-            'itemtype'     => 'mod',
-            'itemmodule'   => 'assign',
-            'gradetype'    => GRADE_TYPE_NONE,
+            'courseid'      => $courseid,
+            'itemtype'      => 'mod',
+            'itemmodule'    => 'assign',
+            'gradetypenone' => GRADE_TYPE_NONE,
+            'gradetypetext' => GRADE_TYPE_TEXT,
         );
 
         $sql = 'SELECT iteminstance
@@ -423,6 +424,7 @@ class activity {
                 WHERE courseid = ?
                 AND itemtype = ?
                 AND itemmodule = ?
+                AND gradetype <> ?
                 AND gradetype <> ?';
 
         $hasgrades = $DB->get_records_sql($sql, $params);
