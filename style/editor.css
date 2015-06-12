@@ -5087,6 +5087,9 @@ aside .settings-button {
   width: auto;
   padding-right: 0;
 }
+.femptylabel > .fitemtitle {
+  display: none;
+}
 #fgroup_id_completiondiscussionsgroup.fitem_fgroup .fitemtitle label,
 #fgroup_id_completionpostsgroup.fitem_fgroup .fitemtitle label,
 #fgroup_id_completionrepliesgroup.fitem_fgroup .fitemtitle label,
