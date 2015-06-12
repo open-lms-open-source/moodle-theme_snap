@@ -629,18 +629,24 @@ class activity {
 
         if (!isset($totalsbyquizid)) {
             // Results are not cached.
-            // Get the number of attempts that requiring marking for all quizes in this course.
-            $sql = "-- Snap sql
-                    SELECT q.id, count(*) as total
-                      FROM {quiz_attempts} sb
-                 LEFT JOIN {quiz} q ON q.id=sb.quiz
-                 LEFT JOIN {quiz_grades} gd ON gd.quiz = sb.quiz
-                           AND gd.userid = sb.userid
-                     WHERE sb.timefinish IS NOT NULL
-                           AND gd.id IS NULL
-                           AND q.course = :courseid
-                           AND sb.userid NOT IN ($graderids)
-                  GROUP BY q.id";
+            /*
+             * Use the last attempt table to ensure the latest attempt is always graded.
+             *
+             * In normal operationg, only quizzes requiring manual grading will have an
+             * entry in the last attempt table that is finished with a null grade.
+             */
+            $sql = "SELECT q.id, count(*) as total
+                    FROM mdl_quiz q
+                    JOIN (SELECT qa1.*
+                          FROM mdl_quiz_attempts qa1
+                          LEFT OUTER JOIN mdl_quiz_attempts qa2
+                          ON qa1.userid = qa2.userid AND qa1.attempt < qa2.attempt
+                          WHERE qa2.userid IS NULL
+                          AND qa1.sumgrades IS NULL
+                          AND qa1.state = 'finished') AS la ON q.id = la.quiz
+                    WHERE la.userid NOT IN ($graderids)
+                    AND q.course = :courseid
+                    GROUP BY q.id";
             $totalsbyquizid = $DB->get_records_sql($sql, $params);
         }
 
