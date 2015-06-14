@@ -127,7 +127,7 @@ class activity {
 
             $graderow = false;
             if ($isgradeable) {
-                $graderow = self::grade_row($courseid, $mod, $keyfield);
+                $graderow = self::grade_row($courseid, $mod);
             }
 
             if ($graderow) {
@@ -745,7 +745,7 @@ class activity {
      * @param $modfield
      * @return bool
      */
-    public static function grade_row($courseid, $mod, $modfield) {
+    public static function grade_row($courseid, $mod) {
         global $DB, $USER;
 
         static $grades = array();
@@ -756,7 +756,6 @@ class activity {
             return $grades[$courseid.'_'.$mod->modname][$mod->instance];
         }
 
-        $gradetable = $mod->modname.'_grades';
         $sql = "-- Snap sql
                 SELECT m.id AS instanceid, gg.*
 
