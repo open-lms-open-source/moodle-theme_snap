@@ -287,7 +287,7 @@ class activity {
                  LEFT JOIN {assign_grades} ag
                         ON ag.assignment = sb.assignment
                        AND ag.userid = sb.userid
-                       AND ag.attemptnumber = sb.maxattempt
+                       AND ag.attemptnumber = sb.attemptnumber
 
                  LEFT JOIN {grade_items} gi
                         ON gi.courseid = a.course
