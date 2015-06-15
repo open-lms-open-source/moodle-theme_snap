@@ -169,7 +169,7 @@ class activity {
                       JOIN {assign_plugin_config} ac ON ac.assignment = a.id
                      WHERE a.course = ?
                        AND ac.name='enabled'
-                       AND ac.value=1
+                       AND ac.value = '1'
                        AND ac.subtype='assignsubmission'
                        AND plugin!='comments'
                   GROUP BY a.id;";
