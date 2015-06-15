@@ -6260,6 +6260,20 @@ a#hidebankcmd {
 .userprofile .description {
   margin-bottom: 20px;
 }
+@media (min-width: 768px) {
+  .userprofile dl.list dt {
+    float: left;
+    width: 160px;
+    clear: left;
+    text-align: right;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .userprofile dl.list dd {
+    margin-left: 180px;
+  }
+}
 .user-box {
   margin: 8px;
   width: 115px;
@@ -12551,6 +12565,8 @@ button.close {
 .clearfix:after,
 .moodle-dialogue-base .moodle-dialogue .moodle-dialogue-content .moodle-dialogue-ft:before,
 .moodle-dialogue-base .moodle-dialogue .moodle-dialogue-content .moodle-dialogue-ft:after,
+.userprofile dl.list dd:before,
+.userprofile dl.list dd:after,
 .dl-horizontal dd:before,
 .dl-horizontal dd:after,
 .container:before,
@@ -12634,6 +12650,7 @@ button.close {
 }
 .clearfix:after,
 .moodle-dialogue-base .moodle-dialogue .moodle-dialogue-content .moodle-dialogue-ft:after,
+.userprofile dl.list dd:after,
 .dl-horizontal dd:after,
 .container:after,
 .container-fluid:after,
@@ -20447,6 +20464,7 @@ http://blog.rodneyrehm.de/archives/34-iOS7-Mobile-Safari-And-Viewport-Units.html
 }
 .coursebox.clearfix,
 .coursebox.moodle-dialogue-base .moodle-dialogue .moodle-dialogue-content .moodle-dialogue-ft,
+.coursebox.userprofile dl.list dd,
 .coursebox.dl-horizontal dd,
 .coursebox.container,
 .coursebox.container-fluid,
