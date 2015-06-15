@@ -426,8 +426,11 @@ class activity {
 
 -- End of join required to make assignments classed as graded when done via gradebook
 
+-- Start of enrolment join to make sure we only include students that are allowed to submit. Note this causes an ALL
+-- join on mysql!
                    JOIN ($esql) e
                      ON e.id = sb.userid
+-- End of enrolment join
 
                   WHERE an.course = :courseid
                     AND sb.timemodified IS NOT NULL
