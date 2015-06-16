@@ -278,7 +278,7 @@ class activity {
                         ON sb.assignment = a.id
                        AND sb.latest = 1
 
-                        JOIN ($esql) e
+                      JOIN ($esql) e
                         ON e.id = sb.userid
 
  -- Start of join required to make assignments marked via gradebook not show as requiring grading
@@ -680,10 +680,10 @@ class activity {
                       ON a.id = st.$modfield
 
                     -- Get only the most recent submission.
-                    JOIN (SELECT $modfield as modid, MAX(id) as maxattempt
-                    FROM {".$submissiontable."}
-                   WHERE userid = ?
-                   GROUP BY modid) as smx
+                    JOIN (SELECT $modfield AS modid, MAX(id) AS maxattempt
+                           FROM {".$submissiontable."}
+                          WHERE userid = ?
+                          GROUP BY modid) AS smx
                       ON smx.modid = st.$modfield
                      AND smx.maxattempt = st.id
 
