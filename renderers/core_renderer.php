@@ -227,26 +227,28 @@ class theme_snap_core_renderer extends toc_renderer {
     public function print_settings_link() {
         global $DB, $PAGE, $COURSE;
 
-        $notteacher = !has_capability('moodle/course:manageactivities', $PAGE->context)
-                        && !is_role_switched($COURSE->id);
 
-        $display = !$notteacher; // Teachers will get to see the block by default.
+        $isteacher = has_capability('moodle/course:manageactivities', $PAGE->context);
 
-        if (!$display) {
-            if ($PAGE->pagetype == 'user-profile') {
-                // Test to see if this is a user profile page, if so display admin block.
-                $display = true;
-            }
-            if ($PAGE->url->get_path() === '/user/view.php') {
-                // Similar to user-profile but different page type - course-view-topics.
-                // Test to see if we have a mentor viewing this page, if so we need to display the admin block.
-                $userid = optional_param('id', false, PARAM_INT);
-                if ($userid) {
-                    if (has_capability('moodle/user:viewdetails', CONTEXT_USER::instance($userid))) {
-                        $display = true;
-                    }
-                }
-            }
+        $display = false;
+
+        $userid = optional_param('id', false, PARAM_INT);
+
+        if ($isteacher) {
+            $display = true;
+        } elseif (is_role_switched($COURSE->id)) {
+            // IF a teacher or admin switch their role to a student then they still need to be able to see the admin
+            // menu in order to be able to switch back to their original role!
+            $display = true;
+        } elseif ($PAGE->pagetype === 'user-profile') {
+            // The admin block needs to be shown on user profile pages as it contains the edit profile link.
+            $display = true;
+        } elseif ($PAGE->url->get_path() === '/user/view.php'
+            && $userid
+            && has_capability('moodle/user:viewdetails', CONTEXT_USER::instance($userid))
+        ) {
+            // Test to see if we have a mentor viewing this page, if so we need to display the admin block.
+            $display = true;
         }
 
         if (!$display) {
@@ -254,11 +256,9 @@ class theme_snap_core_renderer extends toc_renderer {
         }
 
         if (!$instanceid = $DB->get_field('block_instances', 'id', array('blockname' => 'settings'))) {
-            // There isn't a settings block! This shouldn't happen!
             $msg = "Moodle appears to be missing a settings block.
             This shouldn't happen!
             Please speak to your Moodle administrator";
-
             throw new coding_exception($msg);
         }
 
