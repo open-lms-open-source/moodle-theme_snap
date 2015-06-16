@@ -227,16 +227,41 @@ class theme_snap_core_renderer extends toc_renderer {
     public function print_settings_link() {
         global $DB, $PAGE, $COURSE;
 
-        $isstudent = !has_capability('moodle/course:manageactivities', $PAGE->context)
+        $notteacher = !has_capability('moodle/course:manageactivities', $PAGE->context)
                         && !is_role_switched($COURSE->id);
-        if ($isstudent
-            && $PAGE->pagetype != 'user-profile') {
+
+        $display = !$notteacher; // Teachers will get to see the block by default.
+
+        if (!$display) {
+            if ($PAGE->pagetype == 'user-profile') {
+                // Test to see if this is a user profile page, if so display admin block.
+                $display = true;
+            }
+            if ($PAGE->url->get_path() === '/user/view.php') {
+                // Similar to user-profile but different page type - course-view-topics.
+                // Test to see if we have a mentor viewing this page, if so we need to display the admin block.
+                $userid = optional_param('id', false, PARAM_INT);
+                if ($userid) {
+                    if (has_capability('moodle/user:viewdetails', CONTEXT_USER::instance($userid))) {
+                        $display = true;
+                    }
+                }
+            }
+        }
+
+        if (!$display) {
             return '';
         }
 
         if (!$instanceid = $DB->get_field('block_instances', 'id', array('blockname' => 'settings'))) {
-            return '';
+            // There isn't a settings block! This shouldn't happen!
+            $msg = "Moodle appears to be missing a settings block.
+            This shouldn't happen!
+            Please speak to your Moodle administrator";
+
+            throw new coding_exception($msg);
         }
+
         if (!has_capability('moodle/block:view', context_block::instance($instanceid))) {
             return '';
         }
