@@ -7213,6 +7213,29 @@ p[id^="time_"] + div[id^="bar_"] div[id^="progress_"] {
 .path-backup .wibbler {
   display: none;
 }
+div.editor_atto_toolbar {
+  background-color: transparent;
+  border-color: #eee;
+  padding-bottom: 0;
+}
+.editor_atto_content_wrap {
+  border-color: #eee;
+}
+.editor_atto_toolbar button:active,
+.editor_atto_toolbar button.highlight,
+.editor_atto_toolbar button:hover {
+  background-image: none;
+  background-color: #eee;
+}
+div.editor_atto_toolbar button + button {
+  border-color: #fff;
+}
+div.editor_atto_toolbar div.atto_group {
+  border: 0;
+  border-radius: 0;
+  margin: 0.3em;
+  margin-left: 0;
+}
 .atto_equation_library button {
   background-color: #fff;
   color: #666666;
@@ -7685,6 +7708,10 @@ img.iconhelp:hover {
 }
 div[id^="bar_"] > div[id^="progress_"] {
   background-color: #03a9f4 !important;
+}
+.dropdown-menu > li > a:hover,
+.dropdown-menu > li > a:focus {
+  background-color: #03a9f4;
 }
 .que {
   border-bottom: 1px solid #03a9f4;
