@@ -683,7 +683,7 @@ class activity {
                     JOIN (SELECT $modfield AS modid, MAX(id) AS maxattempt
                             FROM {".$submissiontable."}
                            WHERE userid = ?
-                           GROUP BY modid) AS smx
+                        GROUP BY modid) AS smx
                       ON smx.modid = st.$modfield
                      AND smx.maxattempt = st.id
 
