@@ -106,9 +106,12 @@ class activity {
                 if (!empty($submissionrow)) {
                     if ($submissionrow->status) {
                         switch ($submissionrow->status) {
-                            case 'draft' : $meta->draft = true; break;
-                            case 'reopened' : $meta->reopened = true; break;
-                            case 'submitted' : $meta->submitted = true; break;
+                            case 'draft' : $meta->draft = true;
+                                break;
+                            case 'reopened' : $meta->reopened = true;
+                                break;
+                            case 'submitted' : $meta->submitted = true;
+                                break;
                         }
                     } else {
                         $meta->submitted = true;
@@ -259,8 +262,6 @@ class activity {
             list($esql, $params) = get_enrolled_sql(\context_course::instance($courseid), 'mod/assign:submit', 0, true);
             $params['courseid'] = $courseid;
 
-
-
             $sql = "-- Snap sql
                     SELECT cm.id AS coursemoduleid, a.id AS instanceid, a.course,
                            a.allowsubmissionsfromdate AS opentime, a.duedate AS closetime,
@@ -304,7 +305,6 @@ class activity {
 
                      WHERE sb.status = 'submitted'
                        AND a.course = :courseid
-
 
                        AND (
                            sb.timemodified > gg.timemodified
@@ -691,8 +691,6 @@ class activity {
                      AND st.userid = ? $extraselect
                 ORDER BY $modfield DESC, st.id DESC";
         }
-
-
 
         // Not every activity has a status field...
         // Add one if it is missing so code assuming there is a status property doesn't explode.
