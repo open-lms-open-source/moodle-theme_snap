@@ -7222,6 +7222,9 @@ p[id^="time_"] + div[id^="bar_"] div[id^="progress_"] {
   border: none;
   background: #fff;
 }
+#page-message-index div.singleselect {
+  max-width: 100%;
+}
 /**
  * Snap user swatch.
  *
