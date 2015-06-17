@@ -354,23 +354,23 @@ class activity {
             $sql = "-- Snap SQL
                     SELECT cm.id AS coursemoduleid, q.id AS instanceid, q.course, q.timeopen AS opentime,
                            q.timeclose AS closetime, count(la.userid) AS ungraded
-                    FROM {quiz} q
-                    JOIN {course} c ON c.id = q.course AND q.course = :courseid
-                    JOIN {modules} m ON m.name = 'quiz'
-                    JOIN {course_modules} cm ON cm.module = m.id AND cm.instance = q.id
-                    -- Find the latest ungraded attempt
-                    JOIN (SELECT qa1.*
-                          FROM {quiz_attempts} qa1
-                          LEFT OUTER JOIN {quiz_attempts} qa2
-                              ON qa1.userid = qa2.userid AND qa1.attempt < qa2.attempt
-                              WHERE qa2.userid IS NULL
-                              AND qa1.sumgrades IS NULL
-                              AND qa1.state = 'finished') as la ON q.id = la.quiz
-                    -- Exclude those people who can grade quizzes
-                    WHERE la.userid NOT IN ($graderids)
-                    AND (q.timeclose = 0 OR q.timeclose > $sixmonthsago)
-                    GROUP BY instanceid, q.course, opentime, closetime, coursemoduleid
-                    ORDER BY q.timeclose ASC";
+                      FROM {quiz} q
+                      JOIN {course} c ON c.id = q.course AND q.course = :courseid
+                      JOIN {modules} m ON m.name = 'quiz'
+                      JOIN {course_modules} cm ON cm.module = m.id AND cm.instance = q.id
+                      -- Find the latest ungraded attempt
+                      JOIN (SELECT qa1.*
+                              FROM {quiz_attempts} qa1
+                              LEFT OUTER JOIN {quiz_attempts} qa2
+                                ON qa1.userid = qa2.userid AND qa1.attempt < qa2.attempt
+                             WHERE qa2.userid IS NULL
+                               AND qa1.sumgrades IS NULL
+                               AND qa1.state = 'finished') as la ON q.id = la.quiz
+                      -- Exclude those people who can grade quizzes
+                     WHERE la.userid NOT IN ($graderids)
+                       AND (q.timeclose = 0 OR q.timeclose > $sixmonthsago)
+                  GROUP BY instanceid, q.course, opentime, closetime, coursemoduleid
+                  ORDER BY q.timeclose ASC";
 
             $rs = $DB->get_records_sql($sql, $params);
             $ungraded = array_merge($ungraded, $rs);
@@ -632,21 +632,24 @@ class activity {
             /*
              * Use the last attempt table to ensure the latest attempt is always graded.
              *
-             * In normal operationg, only quizzes requiring manual grading will have an
+             * In normal operation, only quizzes requiring manual grading will have an
              * entry in the last attempt table that is finished with a null grade.
              */
-            $sql = "SELECT q.id, count(*) as total
-                    FROM mdl_quiz q
-                    JOIN (SELECT qa1.*
-                          FROM mdl_quiz_attempts qa1
-                          LEFT OUTER JOIN mdl_quiz_attempts qa2
-                          ON qa1.userid = qa2.userid AND qa1.attempt < qa2.attempt
-                          WHERE qa2.userid IS NULL
-                          AND qa1.sumgrades IS NULL
-                          AND qa1.state = 'finished') AS la ON q.id = la.quiz
-                    WHERE la.userid NOT IN ($graderids)
-                    AND q.course = :courseid
-                    GROUP BY q.id";
+            $sql = "-- Snap sql
+                    SELECT q.id, count(*) as total
+                      FROM {quiz} q
+                      -- Find the latest ungraded attempt
+                      JOIN (SELECT qa1.*
+                              FROM {quiz_attempts} qa1
+                              LEFT OUTER JOIN {quiz_attempts} qa2
+                                ON qa1.userid = qa2.userid AND qa1.attempt < qa2.attempt
+                             WHERE qa2.userid IS NULL
+                               AND qa1.sumgrades IS NULL
+                               AND qa1.state = 'finished') AS la ON q.id = la.quiz
+	             -- Exclude those people who can grade quizzes
+                     WHERE la.userid NOT IN ($graderids)
+                       AND q.course = :courseid
+                  GROUP BY q.id";
             $totalsbyquizid = $DB->get_records_sql($sql, $params);
         }
 
