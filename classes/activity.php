@@ -345,12 +345,6 @@ class activity {
             list($graderids, $params) = get_enrolled_sql(\context_course::instance($courseid), 'moodle/grade:viewall');
             $params['courseid'] = $courseid;
 
-            /*
-             * Use the last attempt table to ensure the latest attempt is always graded.
-             *
-             * In normal operationg, only quizzes requiring manual grading will have an
-             * entry in the last attempt table that is finished with a null grade.
-             */
             $sql = "-- Snap SQL
                     SELECT cm.id AS coursemoduleid, q.id AS instanceid, q.course, q.timeopen AS opentime,
                            q.timeclose AS closetime, count(la.userid) AS ungraded
@@ -359,9 +353,9 @@ class activity {
                       JOIN {modules} m ON m.name = 'quiz'
                       JOIN {course_modules} cm ON cm.module = m.id AND cm.instance = q.id
                       -- Find the latest ungraded attempt
-                      JOIN (SELECT qa1.*
+                      JOIN (SELECT qa1.quiz, qa1.userid
                               FROM {quiz_attempts} qa1
-                              LEFT OUTER JOIN {quiz_attempts} qa2
+                              LEFT JOIN {quiz_attempts} qa2
                                 ON qa1.userid = qa2.userid AND qa1.attempt < qa2.attempt
                              WHERE qa2.userid IS NULL
                                AND qa1.sumgrades IS NULL
@@ -629,19 +623,13 @@ class activity {
 
         if (!isset($totalsbyquizid)) {
             // Results are not cached.
-            /*
-             * Use the last attempt table to ensure the latest attempt is always graded.
-             *
-             * In normal operation, only quizzes requiring manual grading will have an
-             * entry in the last attempt table that is finished with a null grade.
-             */
             $sql = "-- Snap sql
                     SELECT q.id, count(*) as total
                       FROM {quiz} q
                       -- Find the latest ungraded attempt
-                      JOIN (SELECT qa1.*
+                      JOIN (SELECT qa1.quiz, qa1.userid
                               FROM {quiz_attempts} qa1
-                              LEFT OUTER JOIN {quiz_attempts} qa2
+                              LEFT JOIN {quiz_attempts} qa2
                                 ON qa1.userid = qa2.userid AND qa1.attempt < qa2.attempt
                              WHERE qa2.userid IS NULL
                                AND qa1.sumgrades IS NULL
