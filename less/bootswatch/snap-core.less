@@ -3266,13 +3266,25 @@ body.hascontinuecancel.path-site #page{
     border:none;
 }
 .filemanager-container {
-    border:1px dashed @brand-primary;
+    border: none;
 }
 .fp-restrictions {
     display:none;
 }
+
+
 .dndupload-arrow {
-    cursor:pointer; background:transparent url([[pix:theme|file]]) 50% 50% no-repeat;
+    cursor:pointer; background:transparent url([[pix:resource|icon]]) 50% 50% no-repeat;
+    top:10px !important;
+}
+.filemanager-container .dndupload-target  {
+    display: block !important;
+    padding-top: 100px !important;
+    top: 0px !important;
+    bottom: 0px !important;
+    right: 0px !important;
+    left: 0px !important;
+    border-color: @gr
 }
 
 /* file picker dialogue */
