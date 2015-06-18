@@ -99,9 +99,8 @@ module.exports = function(grunt) {
                 "!javascript/bootstrap.js",
                 "!javascript/headroom.js",
                 "!javascript/modernizer.js",
-                "!javascript/jquery.placeholder.js",
-                "!javascript/jquery.mr_ellipsis.js",
-            ],
+                "!javascript/jquery.placeholder.js"
+            ]
         },
         watch: {
             // Watch for any changes to less files and compile.
