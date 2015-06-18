@@ -17408,6 +17408,32 @@ section#region-main
   margin: 0.5em 0;
   text-align: center;
 }
+.path-course-view section#region-main > .singlebutton input[type="submit"] {
+  background-image: url([[pix:label|icon]]);
+  background-repeat: no-repeat;
+  background-color: transparent;
+  font-size: small;
+  border: none;
+  padding-left: 2.5em;
+  color: #ccc;
+}
+.path-course-view section#region-main > .singlebutton input[type="submit"]:active {
+  -webkit-box-shadow: none;
+          box-shadow: none;
+}
+@media screen and (max-width: 1199px) {
+  .path-course-view:not(.editing) section#region-main > .singlebutton input[type="submit"],
+  .path-course-view:not(.editing) section#region-main > .singlebutton input[type="submit"]:hover {
+    color: transparent;
+    background-position: center;
+  }
+}
+.editing.path-course-view section#region-main > .singlebutton input[type="submit"],
+.path-course-view section#region-main > .singlebutton input[type="submit"]:hover {
+  color: #03a9f4;
+  border: none;
+  background-position: left;
+}
 @media screen and (min-width: 992px) {
   .path-course-view .singlebutton {
     float: right;
