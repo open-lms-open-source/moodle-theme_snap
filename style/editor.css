@@ -6906,6 +6906,23 @@ body.hascontinuecancel.path-site #page {
   min-width: 89%;
   height: 100%;
 }
+/* file picker dropzone */
+.fp-navbar {
+  display: none;
+}
+.filemanager.fm-noitems .fm-empty-container {
+  border: none;
+}
+.filemanager-container {
+  border: 1px dashed #03a9f4;
+}
+.fp-restrictions {
+  display: none;
+}
+.dndupload-arrow {
+  cursor: pointer;
+  background: transparent url([[pix:theme|file]]) 50% 50% no-repeat;
+}
 /* file picker dialogue */
 #filesskin .file-picker.fp-generallayout {
   width: auto !important;
