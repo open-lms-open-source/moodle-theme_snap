@@ -254,8 +254,12 @@ class activity {
 
         $sixmonthsago = time() - YEARSECS / 2;
 
+        // Limit to assignments with grades.
+        $gradetypelimit = 'AND gi.gradetype NOT IN (' . GRADE_TYPE_NONE . ',' . GRADE_TYPE_TEXT . ')';
+
         foreach ($courseids as $courseid) {
 
+            // Get the assignments that need grading.
             list($esql, $params) = get_enrolled_sql(\context_course::instance($courseid), 'mod/assign:submit', 0, true);
             $params['courseid'] = $courseid;
 
@@ -318,7 +322,8 @@ class activity {
 
                        AND sb.userid = smx.userid
                        AND (a.duedate = 0 OR a.duedate > $sixmonthsago)
-                  GROUP BY instanceid, a.course, opentime, closetime, coursemoduleid ORDER BY a.duedate ASC";
+                 $gradetypelimit
+                 GROUP BY instanceid, a.course, opentime, closetime, coursemoduleid ORDER BY a.duedate ASC";
             $rs = $DB->get_records_sql($sql, $params);
             $ungraded = array_merge($ungraded, $rs);
         }
@@ -388,8 +393,15 @@ class activity {
     public static function assign_num_submissions_ungraded($courseid, $modid) {
         global $DB;
 
+        static $hasgrades = null;
         static $totalsbyid;
 
+        // Use cache to see if assign has grades.
+        if ($hasgrades != null && !isset($hasgrades[$modid])) {
+            return 0;
+        }
+
+        // Use cache to return number of assigns yet to be graded.
         if (!empty($totalsbyid)) {
             if (isset($totalsbyid[$modid])) {
                 return intval($totalsbyid[$modid]->total);
@@ -397,6 +409,31 @@ class activity {
                 return 0;
             }
         }
+
+        // Check to see if this assign is graded.
+        $params = array(
+            'courseid'      => $courseid,
+            'itemtype'      => 'mod',
+            'itemmodule'    => 'assign',
+            'gradetypenone' => GRADE_TYPE_NONE,
+            'gradetypetext' => GRADE_TYPE_TEXT,
+        );
+
+        $sql = 'SELECT iteminstance
+                FROM {grade_items}
+                WHERE courseid = ?
+                AND itemtype = ?
+                AND itemmodule = ?
+                AND gradetype <> ?
+                AND gradetype <> ?';
+
+        $hasgrades = $DB->get_records_sql($sql, $params);
+
+        if (!isset($hasgrades[$modid])) {
+            return 0;
+        }
+
+        // Get grading information for remaining of assigns.
         $coursecontext = \context_course::instance($courseid);
         list($esql, $params) = get_enrolled_sql($coursecontext, 'mod/assign:submit', 0, true);
 
