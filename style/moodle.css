@@ -22043,30 +22043,35 @@ body.hascontinuecancel.path-site #page {
   height: 100%;
 }
 /* file picker dropzone */
-.fp-navbar {
+.fp-navbar,
+.fp-restrictions {
   display: none;
-}
-.filemanager.fm-noitems .fm-empty-container {
-  border: none;
 }
 .filemanager-container {
   border: none;
 }
-.fp-restrictions {
-  display: none;
-}
 .dndupload-arrow {
   cursor: pointer;
-  background: transparent url([[pix:resource|icon]]) 50% 50% no-repeat;
-  top: 10px !important;
+  background-image: url([[pix:resource|icon]]);
+  margin-top: 10px;
 }
+.filemanager .filemanager-container .fm-empty-container,
+.filemanager-container.dndupload-over .dndupload-target,
 .filemanager-container .dndupload-target {
-  display: block !important;
-  padding-top: 100px !important;
-  top: 0px !important;
-  bottom: 0px !important;
-  right: 0px !important;
-  left: 0px !important;
+  top: 0px;
+  bottom: 0px;
+  right: 0px;
+  left: 0px;
+  padding-top: 100px;
+}
+.filemanager-loading {
+  border: 2px dashed #bbb;
+  padding-top: 45px;
+  min-height: 130px;
+  background-color: #ffffff;
+}
+.jsenabled .filemanager-loading {
+  margin-top: 0;
 }
 /* file picker dialogue */
 #filesskin .file-picker.fp-generallayout {
