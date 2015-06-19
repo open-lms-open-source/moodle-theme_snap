@@ -22555,6 +22555,26 @@ div.editor_atto_toolbar div.atto_group {
 #page-message-index div.singleselect {
   max-width: 100%;
 }
+#page-admin-setting-themesettingsnap .admin_colourpicker {
+  display: block;
+  float: left;
+  height: 40px;
+  width: 30px;
+  margin: 1px 4px;
+}
+#page-admin-setting-themesettingsnap .admin_colourpicker .loadingicon,
+#page-admin-setting-themesettingsnap .admin_colourpicker .colourdialogue,
+#page-admin-setting-themesettingsnap .admin_colourpicker .previewcolour {
+  display: none;
+}
+#page-admin-setting-themesettingsnap .admin_colourpicker .currentcolour {
+  /* size is set with a style tag so need to !important to override */
+  height: 30px !important;
+  width: 30px !important;
+  border-radius: 100%;
+  border: none;
+  margin-left: 0;
+}
 /**
  * Snap user swatch.
  *
