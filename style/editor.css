@@ -2481,7 +2481,7 @@ body.path-site .block.block_settings {
   height: 100%;
   overflow-y: auto;
   overflow-x: hidden;
-  z-index: 2;
+  z-index: 13;
   right: 0;
   padding-top: 2em;
   border-left: 1px solid #eee;
@@ -5031,10 +5031,13 @@ ol#chapters li.current a {
   font-size: 1rem;
   text-transform: uppercase;
 }
-.settings-button {
+#adim-menu-trigger {
   background-color: transparent;
   position: relative;
   margin: -0.3em 0;
+  padding: 0.5em;
+  font-size: 1.5em;
+  line-height: 1;
   top: 0;
   width: 2.2em;
   height: 2em;
@@ -6843,12 +6846,11 @@ body.hascontinuecancel.path-site #page {
 }
 #page-admin-purgecaches #notice,
 #notice.snap-continue-cancel {
-  min-height: 750px;
+  min-height: 800px;
   position: absolute;
   padding: 10% 4%;
   top: 1.5em;
-  left: 50%;
-  margin-left: -50%;
+  left: 0;
   z-index: 13;
 }
 #page-user-policy #notice,
@@ -7634,14 +7636,14 @@ input[type="reset"][disabled] {
   border-color: #027fb8;
   color: #fff;
 }
-.settings-button .lines {
+#adim-menu-trigger .lines {
   background-color: #03a9f4;
 }
-.settings-button .lines:after,
-.settings-button .lines:before {
+#adim-menu-trigger .lines:after,
+#adim-menu-trigger .lines:before {
   background-color: #03a9f4;
 }
-.active .lines {
+#adim-menu-trigger.active .lines {
   background: transparent;
 }
 #page-site-index #page-header,

@@ -264,7 +264,7 @@ input[type="reset"] {
     color:#fff;
 }
 
-.settings-button{
+#adim-menu-trigger{
    .lines {
     background-color: @brand-primary;
     &:after,
@@ -272,10 +272,11 @@ input[type="reset"] {
       background-color: @brand-primary;
       }
     }
+    &.active .lines {
+      background:transparent;
+    }
 }
-.active .lines {
-  background:transparent;
-}
+
 
 #page-site-index #page-header,
 .news-article-image,

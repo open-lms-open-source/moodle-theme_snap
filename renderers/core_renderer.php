@@ -266,7 +266,7 @@ class theme_snap_core_renderer extends toc_renderer {
         }
         // User can view admin block - return the link
         $admin = get_string('admin', 'theme_snap');
-        return '<a id="settings-button" class="pull-right settings-button snap-action-icon" href="#inst'.$instanceid.'" data-toggle="tooltip" data-placement="bottom" title="'.$admin.'" >
+        return '<a id="adim-menu-trigger" class="pull-right" href="#inst'.$instanceid.'" data-toggle="tooltip" data-placement="bottom" title="'.$admin.'" >
         <span class="lines"></span></a>';
 
     }
