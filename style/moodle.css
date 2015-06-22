@@ -17537,16 +17537,19 @@ section#region-main
 .weeks {
   counter-reset: annotation-list -1;
 }
-li.section .sectionname:before {
+.format-weeks #chapters {
+  list-style: none;
+}
+.format-topics li.section .sectionname:before {
   content: counter(annotation-list) ".\00a0";
 }
-.yui3-dd-proxy li.section .sectionname:before {
-  content: '';
+.format-topics .yui3-dd-proxy li.section .sectionname:before {
+  content: ' ';
 }
-#section-0 .sectionname:before {
+.format-topics #section-0 .sectionname:before {
   content: " ";
 }
-li.section.main {
+.format-topics li.section.main {
   counter-increment: annotation-list;
 }
 li.section:focus {
