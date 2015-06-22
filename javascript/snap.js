@@ -124,7 +124,7 @@ function snapInit() {
             // Lets add an error link to the header.
             var errorlink = $('<a class="footer-error-link btn btn-danger" href="#footer-error-cont">' +
             M.util.get_string('problemsfound', 'theme_snap') + ' <span class="badge">' + (msgs.length) + '</span></a>');
-            $('#mr-nav').append(errorlink);
+            $('#page-header').append(errorlink);
         }
     };
 
@@ -191,27 +191,7 @@ function snapInit() {
         });
     };
 
-    /**
-     * Code to add an internal link to the admin block & a close button
-     * @author Mark Neilson & Sam Chaffee
-     */
-    var testAdminBlock = function(){
-        // Get admin block via class.
-        var settingsblock = $('.block.block_settings');
-        if (!settingsblock.length){
-            return;
-        }
 
-        // Add close button for admin block with close text/string from moodle lang file.
-        $(settingsblock).prepend("<a class='settings-button  snap-action-icon'><i class='icon icon-arrows-01'></i><small>" +
-        M.util.get_string('close', 'theme_snap') + "</small></a>");
-
-        // Get settings block id.
-        var settingsBlockHref = '#' + $(settingsblock).attr('id');
-
-        // Add as href for link.
-        $('.settings-button').css('display','inline-block').attr('href', settingsBlockHref);
-    };
 
     /**
      * Apply responsive video to non HTML5 video elements.
@@ -783,6 +763,11 @@ function snapInit() {
         // Onclick for toggle of state-visible of admin block and mobile menu.
         $(document).on("click", ".settings-button, #toc-mobile-menu-toggle", function(e) {
             var href = this.getAttribute('href');
+            // Make this only happen for settings button
+            if(this.getAttribute('id') == 'settings-button') {
+              $('.settings-button').toggleClass('active');
+              $('#page').toggleClass('offcanvas');
+            }
             $(href).toggleClass('state-visible').focus();
             e.preventDefault();
         });
@@ -864,9 +849,6 @@ function snapInit() {
             e.preventDefault();
         });
 
-
-
-
         // Listen for window resize for videos.
         $(window).resize(function() {
             resizestamp = new Date().getTime();
@@ -882,12 +864,18 @@ function snapInit() {
                 },200); // wait 1/20th of a second before resizing
             })(resizestamp);
         });
+
+
+        // Bootstrap js elements
+        // Iniitalise core bootsrtap tooltip js
+        $(function () {
+          $('[data-toggle="tooltip"]').tooltip()
+        });
     };
 
     // GO !!!!
     movePHPErrorsToHeader(); // boring
     polyfills(); // for none evergreen
-    testAdminBlock(); // dull
     setForumStrings(); // whatever
     addListeners(); // essential
     applyBlockHash(); // change location hash if necessary
