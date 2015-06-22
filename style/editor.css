@@ -7219,6 +7219,10 @@ table th img.iconhelp {
 .label:not(.activity) b font {
   font-weight: 500;
 }
+#newmessageoverlay {
+  left: 0;
+  padding: 1em;
+}
 p[id^="time_"] + div[id^="bar_"] {
   overflow: hidden !important;
   height: 22px !important;
