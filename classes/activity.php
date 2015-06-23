@@ -349,8 +349,9 @@ class activity {
             $params['courseid'] = $courseid;
 
             $sql = "-- Snap SQL
-                    SELECT cm.id AS coursemoduleid, q.id AS instanceid, q.course, q.timeopen AS opentime,
-                           q.timeclose AS closetime, count(qa.userid) AS ungraded
+                    SELECT cm.id AS coursemoduleid, q.id AS instanceid, q.course,
+                           q.timeopen AS opentime, q.timeclose AS closetime,
+                           count(qa.userid) AS ungraded
                       FROM {quiz} q
                       JOIN {course} c ON c.id = q.course AND q.course = :courseid
                       JOIN {modules} m ON m.name = 'quiz'
