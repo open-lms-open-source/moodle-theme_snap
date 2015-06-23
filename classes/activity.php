@@ -359,7 +359,7 @@ class activity {
 
 -- Get ALL ungraded attempts for this quiz
 
-					  JOIN mdl_quiz_attempts qa ON qa.quiz = q.id
+					  JOIN {quiz_attempts} qa ON qa.quiz = q.id
 					   AND qa.sumgrades IS NULL
 
 -- Exclude those people who can grade quizzes
@@ -633,7 +633,7 @@ class activity {
 
 -- Get ALL ungraded attempts for this quiz
 
-					  JOIN mdl_quiz_attempts qa ON qa.quiz = q.id
+					  JOIN {quiz_attempts} qa ON qa.quiz = q.id
 					   AND qa.sumgrades IS NULL
 
 -- Exclude those people who can grade quizzes
