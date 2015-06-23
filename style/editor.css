@@ -5626,7 +5626,7 @@ li.calendar_event_user:before {
   color: #fff;
 }
 .block .minicalendar td.today > a {
-  border: 1px solid ;
+  border: 1px solid #dadada;
 }
 .calendar-event-panel {
   border: 0 !important;
