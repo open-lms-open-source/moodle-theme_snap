@@ -106,9 +106,12 @@ class activity {
                 if (!empty($submissionrow)) {
                     if ($submissionrow->status) {
                         switch ($submissionrow->status) {
-                            case 'draft' : $meta->draft = true; break;
-                            case 'reopened' : $meta->reopened = true; break;
-                            case 'submitted' : $meta->submitted = true; break;
+                            case 'draft' : $meta->draft = true;
+                                break;
+                            case 'reopened' : $meta->reopened = true;
+                                break;
+                            case 'submitted' : $meta->submitted = true;
+                                break;
                         }
                     } else {
                         $meta->submitted = true;
@@ -347,21 +350,21 @@ class activity {
 
             $sql = "-- Snap SQL
                     SELECT cm.id AS coursemoduleid, q.id AS instanceid, q.course, q.timeopen AS opentime,
-                           q.timeclose AS closetime, count(la.userid) AS ungraded
+                           q.timeclose AS closetime, count(qa.userid) AS ungraded
                       FROM {quiz} q
                       JOIN {course} c ON c.id = q.course AND q.course = :courseid
                       JOIN {modules} m ON m.name = 'quiz'
                       JOIN {course_modules} cm ON cm.module = m.id AND cm.instance = q.id
-                      -- Find the latest ungraded attempt
-                      JOIN (SELECT qa1.quiz, qa1.userid
-                              FROM {quiz_attempts} qa1
-                              LEFT JOIN {quiz_attempts} qa2
-                                ON qa1.userid = qa2.userid AND qa1.attempt < qa2.attempt
-                             WHERE qa2.userid IS NULL
-                               AND qa1.sumgrades IS NULL
-                               AND qa1.state = 'finished') as la ON q.id = la.quiz
-                      -- Exclude those people who can grade quizzes
-                     WHERE la.userid NOT IN ($graderids)
+
+-- Get ALL ungraded attempts for this quiz
+
+					  JOIN mdl_quiz_attempts qa ON qa.quiz = q.id
+					   AND qa.sumgrades IS NULL
+
+-- Exclude those people who can grade quizzes
+
+                     WHERE qa.userid NOT IN ($graderids)
+                       AND qa.state = 'finished'
                        AND (q.timeclose = 0 OR q.timeclose > $sixmonthsago)
                   GROUP BY instanceid, q.course, opentime, closetime, coursemoduleid
                   ORDER BY q.timeclose ASC";
@@ -495,7 +498,7 @@ class activity {
                      WHERE m.course = :courseid
                            AND sb.userid NOT IN ($graderids)
                            $extraselect
-                     GROUP by m.id";
+                     GROUP BY m.id";
             $modtotalsbyid[$maintable][$courseid] = $DB->get_records_sql($sql, $params);
         }
         $totalsbyid = $modtotalsbyid[$maintable][$courseid];
@@ -626,18 +629,18 @@ class activity {
             $sql = "-- Snap sql
                     SELECT q.id, count(*) as total
                       FROM {quiz} q
-                      -- Find the latest ungraded attempt
-                      JOIN (SELECT qa1.quiz, qa1.userid
-                              FROM {quiz_attempts} qa1
-                              LEFT JOIN {quiz_attempts} qa2
-                                ON qa1.userid = qa2.userid AND qa1.attempt < qa2.attempt
-                             WHERE qa2.userid IS NULL
-                               AND qa1.sumgrades IS NULL
-                               AND qa1.state = 'finished') AS la ON q.id = la.quiz
-	             -- Exclude those people who can grade quizzes
-                     WHERE la.userid NOT IN ($graderids)
+
+-- Get ALL ungraded attempts for this quiz
+
+					  JOIN mdl_quiz_attempts qa ON qa.quiz = q.id
+					   AND qa.sumgrades IS NULL
+
+-- Exclude those people who can grade quizzes
+
+                     WHERE qa.userid NOT IN ($graderids)
+                       AND qa.state = 'finished'
                        AND q.course = :courseid
-                  GROUP BY q.id";
+                     GROUP BY q.id";
             $totalsbyquizid = $DB->get_records_sql($sql, $params);
         }
 
