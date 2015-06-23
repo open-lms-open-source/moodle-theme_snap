@@ -19617,6 +19617,7 @@ input[type="text"] + input[type="submit"] {
 .courseinfo .published-status {
   clear: both;
   margin-bottom: -1em;
+  float: left;
 }
 #fixy-profile-link {
   text-align: center;
@@ -20769,7 +20770,7 @@ li.calendar_event_user:before {
           box-shadow: 0 3px 9px rgba(0, 0, 0, 0.5);
 }
 .calendar-event-panel .yui3-overlay-content {
-  border-color: ;
+  border-color: #dadada;
 }
 .calendar_filters .smallicon {
   display: none;
@@ -20798,7 +20799,7 @@ li.calendar_event_user:before {
   margin: 0 auto;
 }
 .maincalendar .today .day {
-  border-color: ;
+  border-color: #dadada;
 }
 .maincalendar .day .day a {
   border-radius: 100%;
@@ -22149,7 +22150,7 @@ body.hascontinuecancel.path-site #page {
   padding-bottom: 1em;
   border-top: 1px solid #ccc;
   clear: both;
-  color: ;
+  color: #dadada;
   background-color: #666666;
   margin-top: 0;
 }
@@ -22159,7 +22160,7 @@ body.hascontinuecancel.path-site #page {
 #moodle-footer h4,
 #moodle-footer h5,
 #moodle-footer h6 {
-  color: ;
+  color: #dadada;
 }
 #moodle-footer .helplink img.poweredbylogo {
   max-width: inherit;
