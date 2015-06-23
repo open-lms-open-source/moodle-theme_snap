@@ -27,7 +27,7 @@
 <header id='mr-nav' class='clearfix moodle-has-zindex'>
 <div class="pull-right">
 <?php $OUTPUT->print_fixed_menu(); ?>
-<?php echo $OUTPUT->get_settings_link(); ?>
+<?php $OUTPUT->print_settings_link(); ?>
 </div>
 
 <?php

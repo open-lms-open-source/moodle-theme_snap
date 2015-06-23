@@ -1017,7 +1017,7 @@ footer #moodle-footer
     z-index: 23;
     line-height: 2;
     padding-top: 0.5em;
-    padding-bottom: 0.5em;
+    padding-bottom: 0.4em;
     padding-right:0;
     background-color: rgba(255,255,255,0.95);
     //headroom js http://wicky.nillia.ms/headroom.js/
@@ -1499,7 +1499,7 @@ ol#chapters {
 }
 
 // Admin block link
-#adim-menu-trigger {
+#admin-menu-trigger {
   background-color:transparent;
   position:relative;
   margin:-0.3em 0;
@@ -1510,7 +1510,7 @@ ol#chapters {
   width:2.2em;
   height:2em;
   cursor:pointer;
-  border-left:1px solid #dadada;
+  border-left:1px solid ;
     /*
     // material design button, but wrong for admin block?
     position:fixed;
@@ -1557,9 +1557,11 @@ ol#chapters {
 }
 .active .lines:before{
   transform: rotate3d(0, 0, 1, -45deg);
+  height:1px;
 }
 .active .lines:after {
   transform: rotate3d(0, 0, 1, 45deg);
+  height:1px;
 }
 
 
@@ -2085,7 +2087,7 @@ li.calendar_event_user:before {
           color: #fff;
       }
       &.today > a {
-          border:1px solid #dadada;
+          border:1px solid ;
       }
     }
 }
@@ -2096,7 +2098,7 @@ li.calendar_event_user:before {
 
     box-shadow:0 3px 9px rgba(0, 0, 0, 0.5);
     .yui3-overlay-content{
-        border-color: #dadada;
+        border-color: ;
     }
 }
 .calendar_filters {
@@ -2136,7 +2138,7 @@ li.calendar_event_user:before {
 
 // Today
 .maincalendar .today .day{
-    border-color: #dadada;
+    border-color: ;
 }
 
 // A day with events
@@ -3372,13 +3374,13 @@ body.hascontinuecancel.path-site #page{
     padding-bottom: 1em;
     border-top: 1px solid #ccc;
     clear: both;
-    color: #dadada;
+    color: ;
     background-color: @text-color;
     margin-top: 0;
 }
 #moodle-footer {
     h1,h2,h3,h4,h5,h6 {
-        color: #dadada;
+        color: ;
     }
     .helplink img.poweredbylogo{
         max-width:inherit;

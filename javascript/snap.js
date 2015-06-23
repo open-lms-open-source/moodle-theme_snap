@@ -761,11 +761,11 @@ function snapInit() {
 
 
         // Onclick for toggle of state-visible of admin block and mobile menu.
-        $(document).on("click", "#adim-menu-trigger, #toc-mobile-menu-toggle", function(e) {
+        $(document).on("click", "#admin-menu-trigger, #toc-mobile-menu-toggle", function(e) {
             var href = this.getAttribute('href');
             // Make this only happen for settings button
-            if(this.getAttribute('id') == 'adim-menu-trigger') {
-              $('#adim-menu-trigger').toggleClass('active');
+            if(this.getAttribute('id') == 'admin-menu-trigger') {
+              $(this).toggleClass('active');
               $('#page').toggleClass('offcanvas');
             }
             $(href).toggleClass('state-visible').focus();

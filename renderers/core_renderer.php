@@ -224,10 +224,8 @@ class theme_snap_core_renderer extends toc_renderer {
      *
      * @return string
      */
-    public function get_settings_link() {
+    public function print_settings_link() {
         global $DB, $PAGE, $COURSE;
-
-
         $isteacher = has_capability('moodle/course:manageactivities', $PAGE->context);
 
         $display = false;
@@ -266,7 +264,7 @@ class theme_snap_core_renderer extends toc_renderer {
         }
         // User can view admin block - return the link
         $admin = get_string('admin', 'theme_snap');
-        return '<a id="adim-menu-trigger" class="pull-right" href="#inst'.$instanceid.'" data-toggle="tooltip" data-placement="bottom" title="'.$admin.'" >
+        echo '<a id="admin-menu-trigger" class="pull-right" href="#inst'.$instanceid.'" data-toggle="tooltip" data-placement="bottom" title="'.$admin.'" >
         <span class="lines"></span></a>';
 
     }
