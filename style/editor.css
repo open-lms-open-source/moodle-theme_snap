@@ -7410,7 +7410,9 @@ legend,
 .mform legend a,
 .mform legend a:hover,
 .coursebox .info .coursename,
-.collapsibleregioncaption,
+.collapsibleregioncaption {
+  font-family: "Roboto", "Fira Sans", "Segoe UI", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif, "line-icons";
+}
 .pagemod-readmore,
 .snap-action-icon,
 #coursetools-list a {
