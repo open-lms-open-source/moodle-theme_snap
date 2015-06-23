@@ -351,7 +351,7 @@ class activity {
             $sql = "-- Snap SQL
                     SELECT cm.id AS coursemoduleid, q.id AS instanceid, q.course,
                            q.timeopen AS opentime, q.timeclose AS closetime,
-                           count(qa.userid) AS ungraded
+                           count(DISTINCT qa.userid) AS ungraded
                       FROM {quiz} q
                       JOIN {course} c ON c.id = q.course AND q.course = :courseid
                       JOIN {modules} m ON m.name = 'quiz'
@@ -628,7 +628,7 @@ class activity {
         if (!isset($totalsbyquizid)) {
             // Results are not cached.
             $sql = "-- Snap sql
-                    SELECT q.id, count(*) as total
+                    SELECT q.id, count(DISTINCT qa.userid) as total
                       FROM {quiz} q
 
 -- Get ALL ungraded attempts for this quiz
