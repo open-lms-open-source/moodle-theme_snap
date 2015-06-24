@@ -226,6 +226,9 @@ class theme_snap_core_renderer extends toc_renderer {
      */
     public function print_settings_link() {
         global $DB, $PAGE, $COURSE;
+        if(!$PAGE->blocks->is_block_present('settings')) {
+          return '';
+        }
         $isteacher = has_capability('moodle/course:manageactivities', $PAGE->context);
 
         $display = false;
@@ -266,7 +269,6 @@ class theme_snap_core_renderer extends toc_renderer {
         $admin = get_string('admin', 'theme_snap');
         echo '<a id="admin-menu-trigger" class="pull-right" href="#inst'.$instanceid.'" data-toggle="tooltip" data-placement="bottom" title="'.$admin.'" >
         <span class="lines"></span></a>';
-
     }
 
     /**

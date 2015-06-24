@@ -867,9 +867,20 @@ function snapInit() {
 
 
         // Bootstrap js elements
+
         // Iniitalise core bootsrtap tooltip js
         $(function () {
-          $('[data-toggle="tooltip"]').tooltip()
+          var supportsTouch = false;
+          if ('ontouchstart' in window) {
+              //iOS & android
+              supportsTouch = true;
+          } else if(window.navigator.msPointerEnabled) {
+              //Win8
+              supportsTouch = true;
+          }
+          if(!supportsTouch){
+            $('[data-toggle="tooltip"]').tooltip();
+          }
         });
     };
 
