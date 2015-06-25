@@ -263,9 +263,20 @@ input[type="reset"] {
     border-color: darken(@brand-primary, 12%);
     color:#fff;
 }
-.settings-button {
-    background-color: fade(@brand-primary, 80%);
+
+#admin-menu-trigger{
+   .lines {
+    background-color: @brand-primary;
+    &:after,
+    &:before {
+      background-color: @brand-primary;
+      }
+    }
+    &.active .lines {
+      background:transparent;
+    }
 }
+
 
 #page-site-index #page-header,
 .news-article-image,

@@ -49,7 +49,6 @@ if ($coursemainpage) {
 }
 ?>
 </div>
-<?php echo $OUTPUT->print_settings_link(); ?>
 </div>
 
 <section id="region-main">

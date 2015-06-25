@@ -226,8 +226,9 @@ class theme_snap_core_renderer extends toc_renderer {
      */
     public function print_settings_link() {
         global $DB, $PAGE, $COURSE;
-
-
+        if(!$PAGE->blocks->is_block_present('settings')) {
+          return '';
+        }
         $isteacher = has_capability('moodle/course:manageactivities', $PAGE->context);
 
         $display = false;
@@ -254,7 +255,6 @@ class theme_snap_core_renderer extends toc_renderer {
         if (!$display) {
             return '';
         }
-
         if (!$instanceid = $DB->get_field('block_instances', 'id', array('blockname' => 'settings'))) {
             $msg = "Moodle appears to be missing a settings block.
             This shouldn't happen!
@@ -265,9 +265,10 @@ class theme_snap_core_renderer extends toc_renderer {
         if (!has_capability('moodle/block:view', context_block::instance($instanceid))) {
             return '';
         }
+        // User can view admin block - return the link
         $admin = get_string('admin', 'theme_snap');
-        return '<div><a class="settings-button snap-action-icon" href="#inst'.$instanceid.'">
-                <i class="icon icon-arrows-02"></i><small>'.$admin.'</small></a></div>';
+        echo '<a id="admin-menu-trigger" class="pull-right" href="#inst'.$instanceid.'" data-toggle="tooltip" data-placement="bottom" title="'.$admin.'" >
+        <span class="lines"></span></a>';
     }
 
     /**
@@ -680,8 +681,8 @@ class theme_snap_core_renderer extends toc_renderer {
             $courselist .= '</div></section>'; // Close row.
 
             $menu = get_string('menu', 'theme_snap');
-            echo '<a aria-haspopup="true" class="fixy-trigger" id="js-personal-menu-trigger" href="#primary-nav" '.
-            'aria-controls="primary-nav" aria-label="'.get_string('sitenavigation', 'theme_snap').'">'.$menu.$picture.
+            echo '<a href="#primary-nav" aria-haspopup="true" class="fixy-trigger" id="js-personal-menu-trigger" '.
+            'aria-controls="primary-nav" title="'.get_string('sitenavigation', 'theme_snap').'" data-toggle="tooltip" data-placement="bottom">'.$menu.$picture.
             $this->render_badge_count(). '</a>';
             $close = get_string('close', 'theme_snap');
             $viewyourprofile = get_string('viewyourprofile', 'theme_snap');

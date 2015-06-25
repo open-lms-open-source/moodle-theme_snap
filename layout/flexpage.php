@@ -246,8 +246,6 @@ echo $OUTPUT->course_header();
     }
 ?>
 
-<!-- not sure what this does in flexpage if anything -->
-<?php echo $OUTPUT->print_settings_link(); ?>
 <!-- flexpage tab bar -->
 <?php echo format_flexpage_tabs(); ?>
 
