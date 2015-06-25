@@ -344,27 +344,27 @@ class activity {
             list($graderids, $params) = get_enrolled_sql(\context_course::instance($courseid), 'moodle/grade:viewall');
             $params['courseid'] = $courseid;
 
-            // Note, that unlike assessments we don't check the gradebook as the only time a quiz needs to be marked is
-            // when there are essay questions or other questions that require manual marking. As these questions need
-            // to be marked manually the operation should always take place via the module.
-            $sql = "-- Snap sql
+            $sql = "-- Snap SQL
                     SELECT cm.id AS coursemoduleid, q.id AS instanceid, q.course,
                            q.timeopen AS opentime, q.timeclose AS closetime,
                            count(DISTINCT qa.userid) AS ungraded
                       FROM {quiz} q
-                      JOIN {course} c ON c.id = q.course
+                      JOIN {course} c ON c.id = q.course AND q.course = :courseid
                       JOIN {modules} m ON m.name = 'quiz'
-                      JOIN {course_modules} cm ON cm.module = m.id
-                           AND cm.instance = q.id
-                      JOIN {quiz_attempts} qa ON qa.quiz = q.id
-                 LEFT JOIN {quiz_grades} gd ON gd.quiz = qa.quiz
-                           AND gd.userid = qa.userid
-                     WHERE gd.id IS NULL
-                           AND q.course = :courseid
-                           AND qa.userid NOT IN ($graderids)
-                           AND qa.state = 'finished'
-                           AND (q.timeclose = 0 OR q.timeclose > $sixmonthsago)
-                  GROUP BY instanceid, q.course, opentime, closetime, coursemoduleid ORDER BY q.timeclose ASC";
+                      JOIN {course_modules} cm ON cm.module = m.id AND cm.instance = q.id
+
+-- Get ALL ungraded attempts for this quiz
+
+					  JOIN {quiz_attempts} qa ON qa.quiz = q.id
+					   AND qa.sumgrades IS NULL
+
+-- Exclude those people who can grade quizzes
+
+                     WHERE qa.userid NOT IN ($graderids)
+                       AND qa.state = 'finished'
+                       AND (q.timeclose = 0 OR q.timeclose > $sixmonthsago)
+                  GROUP BY instanceid, q.course, opentime, closetime, coursemoduleid
+                  ORDER BY q.timeclose ASC";
 
             $rs = $DB->get_records_sql($sql, $params);
             $ungraded = array_merge($ungraded, $rs);
@@ -521,7 +521,7 @@ class activity {
                      WHERE m.course = :courseid
                            AND sb.userid NOT IN ($graderids)
                            $extraselect
-                     GROUP by m.id";
+                     GROUP BY m.id";
             $modtotalsbyid[$maintable][$courseid] = $DB->get_records_sql($sql, $params);
         }
         $totalsbyid = $modtotalsbyid[$maintable][$courseid];
@@ -643,18 +643,21 @@ class activity {
 
         if (!isset($totalsbyquizid)) {
             // Results are not cached.
-            // Get the number of attempts that requiring marking for all quizes in this course.
             $sql = "-- Snap sql
-                    SELECT q.id, count(*) as total
-                      FROM {quiz_attempts} sb
-                 LEFT JOIN {quiz} q ON q.id=sb.quiz
-                 LEFT JOIN {quiz_grades} gd ON gd.quiz = sb.quiz
-                           AND gd.userid = sb.userid
-                     WHERE sb.timefinish IS NOT NULL
-                           AND gd.id IS NULL
-                           AND q.course = :courseid
-                           AND sb.userid NOT IN ($graderids)
-                  GROUP BY q.id";
+                    SELECT q.id, count(DISTINCT qa.userid) as total
+                      FROM {quiz} q
+
+-- Get ALL ungraded attempts for this quiz
+
+					  JOIN {quiz_attempts} qa ON qa.quiz = q.id
+					   AND qa.sumgrades IS NULL
+
+-- Exclude those people who can grade quizzes
+
+                     WHERE qa.userid NOT IN ($graderids)
+                       AND qa.state = 'finished'
+                       AND q.course = :courseid
+                     GROUP BY q.id";
             $totalsbyquizid = $DB->get_records_sql($sql, $params);
         }
 
