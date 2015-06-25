@@ -5833,7 +5833,7 @@ table#categoryquestions > tbody > tr:nth-of-type(odd) {
   background-color: #f9f9f9;
 }
 table#categoryquestions > tbody > tr:nth-of-type(even) {
-  background-color: transparent;
+  background-color: #ffffff;
 }
 #categoryquestions td,
 #categoryquestions th {
@@ -8742,7 +8742,7 @@ pre code {
   }
 }
 table {
-  background-color: transparent;
+  background-color: #ffffff;
 }
 th {
   text-align: left;
@@ -14747,10 +14747,19 @@ table#user-grades tr.odd td.cell {
   background-color: #f9f9f9;
 }
 table#fixed_column tr.even th {
-  background-color: transparent;
+  background-color: #ffffff;
 }
 .path-grade-report-grader table#fixed_column tr th {
   border-color: #dddddd;
+}
+.path-grade-report-grader .gradeparent .floater .cell {
+  border-color: #dddddd;
+}
+.path-grade-report-grader .gradeparent .floater.sideonly .cell:nth-child(odd):not(.header) {
+  background-color: #ffffff;
+}
+.path-grade-report-grader .gradeparent .floater.sideonly .cell:nth-child(even) {
+  background-color: #f9f9f9;
 }
 .gradeparent #user-grades > thead > tr > th,
 #page-report-loglive-index .generaltable > thead > tr > th,
@@ -21738,6 +21747,10 @@ fieldset[disabled] .gradingform_rubric.editor .addcriterion input.active {
 #local-nortongrader-navigation {
   background-color: transparent;
   text-align: right;
+}
+#page-grade-report-grader-index header#mr-nav {
+  -webkit-animation-name: none;
+          animation-name: none;
 }
 #page-grade-report-joulegrader-index #joule-grades-thead {
   table-layout: fixed;
