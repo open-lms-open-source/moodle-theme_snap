@@ -34,6 +34,7 @@
         .action {
             .btn();
             .btn-lg();
+            white-space: normal;
             display: inline-block;
             position: relative;
             vertical-align: top;
@@ -41,7 +42,7 @@
             text-align: center;
             overflow: hidden;
             margin: 0.5em;
-            padding: 1em;
+            padding: 1em 0.5em;
             border: 1px solid #aaa;
             .action-icon {
                 display: inline-block;
@@ -143,6 +144,8 @@
                             // Zero out the width if it's still in the block flow for some reason
                             // when hidden
                             width: 0 !important;
+                            border: 0;
+                            padding: 0;
                         }
                     }
                 }

@@ -14608,6 +14608,7 @@ input.fp-btn-choose {
   font-size: 23px;
   line-height: 1.33;
   border-radius: 0px;
+  white-space: normal;
   display: inline-block;
   position: relative;
   vertical-align: top;
@@ -14615,7 +14616,7 @@ input.fp-btn-choose {
   text-align: center;
   overflow: hidden;
   margin: 0.5em;
-  padding: 1em;
+  padding: 1em 0.5em;
   border: 1px solid #aaa;
 }
 #page-grade-grading-manage .actions .action:focus,
@@ -14752,6 +14753,8 @@ fieldset[disabled] #page-grade-grading-manage .actions .action {
 #rubric-rubric.gradingform_rubric #rubric-criteria .criterion .scorevalue input.hiddenelement,
 #rubric-rubric.gradingform_rubric #rubric-criteria .criterion .scorevalue input.pseudotablink {
   width: 0 !important;
+  border: 0;
+  padding: 0;
 }
 #rubric-rubric.gradingform_rubric #rubric-criteria .criterion .addlevel {
   vertical-align: middle;
