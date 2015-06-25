@@ -122,19 +122,24 @@ section#region-main
 .weeks {
     counter-reset: annotation-list -1;
 }
-li.section .sectionname:before{
-    content: counter(annotation-list) ".\00a0";
+.format-weeks #chapters {
+  list-style:none;
 }
-// drag and drop yui hack
-.yui3-dd-proxy li.section .sectionname:before{
-    content: '';
-}
+.format-topics{
+  li.section .sectionname:before{
+      content: counter(annotation-list) ".\00a0";
+  }
+  // drag and drop yui hack
+  .yui3-dd-proxy li.section .sectionname:before{
+      content: ' ';
+  }
 
-#section-0 .sectionname:before {
-    content:" ";
-}
-li.section.main {
-    counter-increment: annotation-list;
+  #section-0 .sectionname:before {
+      content:" ";
+  }
+  li.section.main {
+      counter-increment: annotation-list;
+  }
 }
 li.section:focus {
     outline:none;
