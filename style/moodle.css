@@ -22481,7 +22481,6 @@ table th img.iconhelp {
 #newmessageoverlay {
   left: 0;
   padding: 1em;
-  right: inherit;
 }
 p[id^="time_"] + div[id^="bar_"] {
   overflow: hidden !important;
