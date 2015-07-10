@@ -267,7 +267,8 @@ textarea{
 body {
     font-weight: 300;
 }
-table {
+// GT Mod - 2015-07-09 - add .floater .cell to accommodate fixed col and header in gradebook
+table, .floater .cell{
     width: 100%;
     font-family: @font-family-base;
     font-size: @font-size-table;
@@ -3849,3 +3850,42 @@ div.editor_atto_toolbar div.atto_group {
         margin-left: 0;
     }
 }
+
+// Scrolling gradebook fixes
+.path-grade-report-grader .gradeparent .heading.floating {
+    border-top: 1px solid #ddd;
+}
+
+.path-grade-report-grader .gradeparent table#user-grades {
+    border: none;
+    font-size: 16px;
+}
+
+.path-grade-report-grader .gradeparent table#user-grades tr.heading th {
+    border-top:1px solid #ddd !important;
+}
+
+.path-grade-report-grader .gradeparent table#user-grades tr:nth-child(1) th {
+    // This stops what looks like a double top border two cells in on the grade column.
+    border-bottom-width:0;
+}
+
+.path-grade-report-grader .gradeparent .floating {
+    // This makes the floating header have the same top border as when its not floated.
+    border-top-width: 0px;
+}
+
+.path-grade-report-grader .gradeparent *,
+.path-grade-report-grader .gradeparent *:before,
+.path-grade-report-grader .gradeparent *:after {
+    // Without this, IE totally screws up the header and column cell sizes.
+    box-sizing: content-box !important;
+}
+.path-grade-report-grader .gradeparent .heading .cell,
+.path-grade-report-grader .gradeparent .avg .cell,
+.path-grade-report-grader .gradeparent .cell.user {
+    // Having the font sizes match is really important - if not the floating left header can end up
+    // too large!
+    font-size: 13px // SHAME - No variable for this;
+}
+// End Scrolling gradebook fixes
