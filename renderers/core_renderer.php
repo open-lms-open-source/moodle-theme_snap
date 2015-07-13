@@ -544,6 +544,23 @@ class theme_snap_core_renderer extends toc_renderer {
         return $o;
     }
 
+
+    /**
+     * Print login button
+     *
+     */
+    public function print_login_button() {
+      global $CFG;
+      $loginurl = '#login';
+      if (!empty($CFG->alternateloginurl)) {
+              $loginurl = $CFG->wwwroot.'/login/index.php';
+      }
+      $login = get_string('login');
+      // This check is here for the front page login
+      if (!isloggedin() || isguestuser()) {
+        return "<a aria-haspopup='true' class='snap-login-button fixy-trigger'  href='".s($loginurl)."' >$login</a>";
+      }
+    }
     /**
      * Print fixy (login or menu for signed in users)
      *
@@ -552,14 +569,9 @@ class theme_snap_core_renderer extends toc_renderer {
         global $CFG, $USER, $PAGE, $DB;
 
         $logout = get_string('logout');
-
         $isguest = isguestuser();
 
         if (!isloggedin() || $isguest) {
-            $loginurl = '#login';
-            if (!empty($CFG->alternateloginurl)) {
-                $loginurl = $CFG->wwwroot.'/login/index.php';
-            }
             $login = get_string('login');
             $cancel = get_string('cancel');
             $username = get_string('username');
@@ -591,7 +603,8 @@ class theme_snap_core_renderer extends toc_renderer {
                     $helpstr = "<p class='text-center'><a href='".s($CFG->wwwroot)."/login/index.php'>$help</a></p>";
                 }
             }
-            echo "<a aria-haspopup='true' class='fixy-trigger'  href='".s($loginurl)."' >$login</a>
+            $loginbtn = $this->print_login_button();
+            echo $loginbtn."
         <form class=fixy action='$CFG->wwwroot/login/'  method='post' id='login'>
         <a id='fixy-close' class='pull-right snap-action-icon' href='#'>
             <i class='icon icon-office-52'></i><small>$cancel</small>

@@ -20261,6 +20261,11 @@ http://blog.rodneyrehm.de/archives/34-iOS7-Mobile-Safari-And-Viewport-Units.html
 #page-site-index #page-mast .btn {
   float: right;
 }
+#page-mast .snap-login-button {
+  display: inline-block;
+  padding: 0.25em 2em;
+  margin-top: 1em;
+}
 @media screen and (min-width: 768px) {
   #page-site-index #page-mast {
     width: 50%;
@@ -22656,7 +22661,8 @@ button,
 input.form-submit,
 input[type="button"],
 input[type="submit"],
-input[type="reset"] {
+input[type="reset"],
+#page-mast .snap-login-button {
   background-color: #03a9f4;
   border-color: #fff;
   color: #fff;
@@ -22685,6 +22691,7 @@ input.form-submit:hover,
 input[type="button"]:hover,
 input[type="submit"]:hover,
 input[type="reset"]:hover,
+#page-mast .snap-login-button:hover,
 #page-site-index .sitetopic > a:last-of-type:focus,
 .summary > a:last-of-type:focus,
 #changenumsections .increase-sections:focus,
@@ -22707,6 +22714,7 @@ input.form-submit:focus,
 input[type="button"]:focus,
 input[type="submit"]:focus,
 input[type="reset"]:focus,
+#page-mast .snap-login-button:focus,
 #page-site-index .sitetopic > a:last-of-type:active,
 .summary > a:last-of-type:active,
 #changenumsections .increase-sections:active,
@@ -22729,6 +22737,7 @@ input.form-submit:active,
 input[type="button"]:active,
 input[type="submit"]:active,
 input[type="reset"]:active,
+#page-mast .snap-login-button:active,
 #page-site-index .sitetopic > a:last-of-type.active,
 .summary > a:last-of-type.active,
 #changenumsections .increase-sections.active,
@@ -22750,7 +22759,8 @@ button.active,
 input.form-submit.active,
 input[type="button"].active,
 input[type="submit"].active,
-input[type="reset"].active {
+input[type="reset"].active,
+#page-mast .snap-login-button.active {
   background-color: #038dcc;
   border-color: #027fb8;
   color: #fff;
@@ -22777,7 +22787,8 @@ button:visited,
 input.form-submit:visited,
 input[type="button"]:visited,
 input[type="submit"]:visited,
-input[type="reset"]:visited {
+input[type="reset"]:visited,
+#page-mast .snap-login-button:visited {
   color: #fff;
 }
 #page-site-index .sitetopic > a:last-of-type[disabled],
@@ -22801,7 +22812,8 @@ button[disabled],
 input.form-submit[disabled],
 input[type="button"][disabled],
 input[type="submit"][disabled],
-input[type="reset"][disabled] {
+input[type="reset"][disabled],
+#page-mast .snap-login-button[disabled] {
   background-color: #03a9f4;
 }
 #show-toc {
