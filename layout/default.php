@@ -40,7 +40,7 @@ include(__DIR__.'/header.php');
 <?php
 echo $OUTPUT->page_heading();
 echo $OUTPUT->course_header();
-if($PAGE->pagetype == 'site-index'){
+if($PAGE->pagetype == 'site-index') {
   echo $OUTPUT->print_login_button();
 }
 ?>

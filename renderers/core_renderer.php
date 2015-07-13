@@ -603,9 +603,8 @@ class theme_snap_core_renderer extends toc_renderer {
                     $helpstr = "<p class='text-center'><a href='".s($CFG->wwwroot)."/login/index.php'>$help</a></p>";
                 }
             }
-            $loginbtn = $this->print_login_button();
-            echo $loginbtn."
-        <form class=fixy action='$CFG->wwwroot/login/'  method='post' id='login'>
+            echo $this->print_login_button();
+            echo "<form class=fixy action='$CFG->wwwroot/login/'  method='post' id='login'>
         <a id='fixy-close' class='pull-right snap-action-icon' href='#'>
             <i class='icon icon-office-52'></i><small>$cancel</small>
         </a>
