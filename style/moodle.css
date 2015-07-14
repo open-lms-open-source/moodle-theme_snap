@@ -19541,6 +19541,10 @@ input[type="text"] + input[type="submit"] {
   font-size: small;
   line-height: 0.5;
 }
+.courseinfo .completionstatus {
+  white-space: nowrap;
+  margin-bottom: 1em;
+}
 .courseinfo .userpicture {
   border-radius: 50%;
   float: right;

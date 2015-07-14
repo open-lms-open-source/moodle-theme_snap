@@ -656,6 +656,7 @@ class theme_snap_core_renderer extends toc_renderer {
                         $userpicture->link = false;
                         $userpicture->size = 100;
                         $teacherpicture = $this->render($userpicture);
+
                         $courseteachers .= $teacherpicture;
                     }
                 }
