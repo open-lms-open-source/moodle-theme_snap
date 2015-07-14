@@ -4599,7 +4599,7 @@ input[type="text"] + input[type="submit"] {
   padding-top: 0.35em;
   border: 2px solid #fff;
   color: #fff !important;
-  text-underline: none !important;
+  text-decoration: none !important;
 }
 .courseinfo .published-status {
   clear: both;
