@@ -662,9 +662,9 @@ class theme_snap_core_renderer extends toc_renderer {
                 }
 
                 $clink = '<div data-href="'.$CFG->wwwroot.'/course/view.php?id='.$c->id.
-                    '" class="courseinfo" style="'.$courseimagecss.'">
+                    '" class="courseinfo" style="'.$courseimagecss.'"><div class="courseinfo-teachers">'.$courseteachers.'</div>
                     <div class="courseinfo-body"><h3><a href="'.$CFG->wwwroot.'/course/view.php?id='.$c->id.'">'.
-                    format_string($c->fullname).'</a></h3>'.$dynamicinfo.$courseteachers.$pubstatus.'</div></div>';
+                    format_string($c->fullname).'</a></h3>'.$dynamicinfo.$pubstatus.'</div></div>';
                 $courselist .= $clink;
             }
             $courselist .= "</div>";

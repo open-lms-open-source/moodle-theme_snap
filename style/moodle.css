@@ -19507,6 +19507,10 @@ input[type="text"] + input[type="submit"] {
 .courseinfo:hover .courseinfo-body {
   padding-bottom: 0.5em;
 }
+.courseinfo .courseinfo-teachers {
+  width: 100%;
+  padding: 0 1em 1em 1em;
+}
 .courseinfo .courseinfo-body {
   -webkit-transition: all 0.4s ease-in-out;
           transition: all 0.4s ease-in-out;
