@@ -19497,6 +19497,7 @@ input[type="text"] + input[type="submit"] {
           box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
   margin: 0.5em 1%;
   cursor: pointer;
+  overflow: hidden;
   -webkit-transition: all 0.4s ease-in-out;
           transition: all 0.4s ease-in-out;
 }
@@ -19512,13 +19513,15 @@ input[type="text"] + input[type="submit"] {
   padding: 1em 1em 1em 1em;
 }
 .courseinfo .courseinfo-teachers-extra {
-  display: none;
+  -webkit-transition: all 0.4s ease-in-out;
+          transition: all 0.4s ease-in-out;
+  opacity: 0;
 }
 .courseinfo.show-all .courseinfo-teachers-extra {
-  display: block;
+  opacity: 1;
 }
 .courseinfo.show-all .courseinfo-body {
-  display: none;
+  bottom: -100%;
 }
 .courseinfo .courseinfo-body {
   -webkit-transition: all 0.4s ease-in-out;
@@ -19526,9 +19529,9 @@ input[type="text"] + input[type="submit"] {
   background-color: white;
   color: #666;
   position: absolute;
-  bottom: 0;
   width: 100%;
   padding: 0 1em 1em 1em;
+  bottom: 0;
 }
 .courseinfo .courseinfo-body h3 a {
   display: block;
@@ -19574,6 +19577,7 @@ input[type="text"] + input[type="submit"] {
   padding-top: 0.35em;
   border: 2px solid #fff;
   color: #fff !important;
+  text-underline: none !important;
 }
 .courseinfo .published-status {
   clear: both;

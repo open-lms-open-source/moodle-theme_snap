@@ -815,6 +815,7 @@ input[type="text"]+input[type="submit"] {
     box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
     margin:0.5em 1%;
     cursor:pointer;
+    overflow:hidden;
     .alakazam();
     &:hover {
         background-size:115% auto;
@@ -831,16 +832,17 @@ input[type="text"]+input[type="submit"] {
 
 
     .courseinfo-teachers-extra {
-        display: none;
+        .alakazam();
+        opacity: 0;
     }
 
 
     &.show-all {
         .courseinfo-teachers-extra {
-            display: block;
+            opacity: 1;
         }
         .courseinfo-body {
-            display: none;
+            bottom: -100%;
         }
     }
 
@@ -852,6 +854,7 @@ input[type="text"]+input[type="submit"] {
         bottom:0;
         width:100%;
         padding:0 1em 1em 1em;
+        bottom:0;
         h3 a {
             display:block;
             display: -webkit-box;
@@ -897,6 +900,7 @@ input[type="text"]+input[type="submit"] {
         padding-top: 0.35em;
         border:2px solid #fff;
         color:#fff !important;
+        text-underline:none !important;
     }
 
     .published-status {
