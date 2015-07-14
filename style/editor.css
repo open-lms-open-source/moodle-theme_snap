@@ -4533,7 +4533,16 @@ input[type="text"] + input[type="submit"] {
 }
 .courseinfo .courseinfo-teachers {
   width: 100%;
-  padding: 0 1em 1em 1em;
+  padding: 1em 1em 1em 1em;
+}
+.courseinfo .courseinfo-teachers-extra {
+  display: none;
+}
+.courseinfo.show-all .courseinfo-teachers-extra {
+  display: block;
+}
+.courseinfo.show-all .courseinfo-body {
+  display: none;
 }
 .courseinfo .courseinfo-body {
   transition: all 0.4s ease-in-out;
@@ -4560,8 +4569,8 @@ input[type="text"] + input[type="submit"] {
   font-weight: 500;
 }
 .courseinfo .dynamicinfo {
-  max-width: 50%;
   float: left;
+  max-width: 50%;
 }
 .courseinfo .completionstatus,
 .courseinfo .coursegrade {
@@ -4572,13 +4581,22 @@ input[type="text"] + input[type="submit"] {
   white-space: nowrap;
   margin-bottom: 1em;
 }
-.courseinfo .userpicture {
+.courseinfo .userpicture,
+.courseinfo .courseinfo-teachers-more {
   border-radius: 50%;
   float: right;
   margin-left: 1%;
   width: 38px;
   height: 38px;
   background-color: #ccc;
+}
+.courseinfo .courseinfo-teachers-more {
+  background-color: transparent;
+  font-size: .8em;
+  text-align: center;
+  padding-top: 0.35em;
+  border: 2px solid #fff;
+  color: #fff !important;
 }
 .courseinfo .published-status {
   clear: both;

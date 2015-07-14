@@ -640,6 +640,8 @@ class theme_snap_core_renderer extends toc_renderer {
                 $teachers = $clist->get_course_contacts();
 
                 if (!empty($teachers)) {
+                    $avatars = [];
+                    $blankavatars = [];
                     $courseteachers = "<div class='sr-only'>".get_string('coursecontacts', 'theme_snap')."</div>";
                     // Get all teacher user records in one go.
                     $teacherids = array();
@@ -657,12 +659,30 @@ class theme_snap_core_renderer extends toc_renderer {
                         $userpicture->size = 100;
                         $teacherpicture = $this->render($userpicture);
 
-                        $courseteachers .= $teacherpicture;
+                        if (stripos($teacherpicture, 'defaultuserpic') === false) {
+                            $avatars[] = $teacherpicture;
+                        } else {
+                            $blankavatars[] = $teacherpicture;
+                        }
                     }
+                    // Let's put the interesting avatars first!
+                    $avatars = array_merge($avatars, $blankavatars);
+                    // Limit visible to 4.
+                    if (count($avatars)>3) {
+                        $hiddenavatars = array_slice($avatars, 4);
+                        $avatars = array_slice($avatars, 0, 4);
+                        $extralink = '<a class="courseinfo-teachers-more state-visible" href="#">+'.count($hiddenavatars).'</a>';
+                    } else {
+                        $hiddenavatars = [];
+                        $extralink = '';
+                    }
+                    $vcourseteachers = '<div class="courseinfo-teachers-visible">'.$extralink.implode('', $avatars).'</div>';
+                    $ecourseteachers = '<div class="courseinfo-teachers-extra">'.implode('', $hiddenavatars).'</div>';
                 }
 
                 $clink = '<div data-href="'.$CFG->wwwroot.'/course/view.php?id='.$c->id.
-                    '" class="courseinfo" style="'.$courseimagecss.'"><div class="courseinfo-teachers">'.$courseteachers.'</div>
+                    '" class="courseinfo" style="'.$courseimagecss.'">
+                    <div class="courseinfo-teachers">'.$vcourseteachers.$ecourseteachers.'</div>
                     <div class="courseinfo-body"><h3><a href="'.$CFG->wwwroot.'/course/view.php?id='.$c->id.'">'.
                     format_string($c->fullname).'</a></h3>'.$dynamicinfo.$pubstatus.'</div></div>';
                 $courselist .= $clink;

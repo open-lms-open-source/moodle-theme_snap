@@ -829,6 +829,21 @@ input[type="text"]+input[type="submit"] {
         padding:1em 1em 1em 1em;
     }
 
+
+    .courseinfo-teachers-extra {
+        display: none;
+    }
+
+
+    &.show-all {
+        .courseinfo-teachers-extra {
+            display: block;
+        }
+        .courseinfo-body {
+            display: none;
+        }
+    }
+
     .courseinfo-body {
         .alakazam();
         background-color:white;
@@ -854,8 +869,8 @@ input[type="text"]+input[type="submit"] {
         font-weight:500;
     }
     .dynamicinfo{
-        max-width:50%;
         float:left;
+        max-width:50%;
     }
     .completionstatus,
     .coursegrade {
@@ -866,7 +881,7 @@ input[type="text"]+input[type="submit"] {
         white-space:nowrap;
         margin-bottom:1em;
     }
-    .userpicture{
+    .userpicture, .courseinfo-teachers-more{
         border-radius:50%;
         float:right;
         margin-left:1%;
@@ -874,11 +889,25 @@ input[type="text"]+input[type="submit"] {
         height:38px;
         background-color:#ccc;
     }
+
+    .courseinfo-teachers-more {
+        background-color: transparent;
+        font-size: .8em;
+        text-align:center;
+        padding-top: 0.35em;
+        border:2px solid #fff;
+        color:#fff !important;
+    }
+
     .published-status {
         clear:both;
         margin-bottom:-1em;
         float:left;
     }
+}
+
+.courseinfo-teachers.show-all{
+
 }
 
 #fixy-profile-link {
