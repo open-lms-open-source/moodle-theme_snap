@@ -67,11 +67,11 @@ a.skip-block {
 #page-mod-quiz-attempt #moodle-blocks,
 #page-mod-quiz-review #moodle-blocks,
 #page-mod-book-view #moodle-blocks,
+#page-mod-lesson-view #moodle-blocks,
 #page-site-index #moodle-blocks,
 #page-user-profile #moodle-blocks,
 #page-my-index #moodle-blocks,
 #page-calendar-view #moodle-blocks,
-#page-mod-lesson-view #moodle-blocks,
 #moodle-blocks.state-visible,
 .format-folderview.path-course-view:not(.folderview-single-section) #moodle-blocks,
 .format-weeks.path-course-view.editing #moodle-blocks,
@@ -79,6 +79,28 @@ a.skip-block {
     visibility: visible;
     height: auto;
     overflow: visible;
+}
+
+/* Some mods have faux blocks - but we want to hide all the other blocks */
+#page-mod-lesson-view,
+#page-mod-book-view,
+#page-mod-quiz-review,
+#page-mod-quiz-attempt {
+  #moodle-blocks {
+    -webkit-column-count: 1;
+    -moz-column-count: 1;
+    column-count: 1;
+      .block{
+        display:none;
+      }
+      .block_fake,
+      .block_settings{
+        display:block;
+      }
+      .block_fake {
+        margin-top:2em;
+      }
+    }
 }
 
 
