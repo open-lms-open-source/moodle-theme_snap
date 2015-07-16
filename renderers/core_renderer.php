@@ -668,7 +668,7 @@ class theme_snap_core_renderer extends toc_renderer {
                     // Let's put the interesting avatars first!
                     $avatars = array_merge($avatars, $blankavatars);
                     // Limit visible to 4.
-                    if (count($avatars)>3) {
+                    if (count($avatars)>4) {
                         $hiddenavatars = array_slice($avatars, 4);
                         $avatars = array_slice($avatars, 0, 4);
                         $extralink = '<a class="courseinfo-teachers-more state-visible" href="#">+'.count($hiddenavatars).'</a>';

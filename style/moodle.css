@@ -19561,6 +19561,13 @@ input[type="text"] + input[type="submit"] {
   white-space: nowrap;
   margin-bottom: 1em;
 }
+.courseinfo .courseinfo-teachers {
+  max-height: 200px;
+  overflow: hidden;
+}
+.courseinfo.show-all .courseinfo-teachers {
+  overflow: auto;
+}
 .courseinfo .userpicture,
 .courseinfo .courseinfo-teachers-more {
   border-radius: 50%;

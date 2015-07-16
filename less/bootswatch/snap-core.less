@@ -884,6 +884,16 @@ input[type="text"]+input[type="submit"] {
         white-space:nowrap;
         margin-bottom:1em;
     }
+
+    .courseinfo-teachers {
+        max-height: 200px;
+        overflow: hidden;
+    }
+
+    &.show-all .courseinfo-teachers {
+        overflow: auto;
+    }
+
     .userpicture, .courseinfo-teachers-more{
         border-radius:50%;
         float:right;
