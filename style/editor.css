@@ -3358,7 +3358,7 @@ li.snap-activity.modtype_folder .snap-assettype {
   font-weight: 300;
   clear: both;
   margin-bottom: 1em;
-  float: right;
+  margin-left: 0;
 }
 #page-site-index .sitetopic > a:last-of-type:focus,
 .summary > a:last-of-type:focus,
@@ -3943,7 +3943,6 @@ table.boxwidthwide {
   box-shadow: none;
   padding: 0;
 }
-/* TODO - LOGIN PAGE - experimental code */
 @media screen and (min-width: 768px) {
   .twocolumns .signuppanel {
     float: left;
@@ -4264,6 +4263,12 @@ input[type="text"] + input[type="submit"] {
   vertical-align: baseline;
   line-height: 1.5;
 }
+.section-modchooser-link a {
+  display: inline-block;
+}
+.section-modchooser-link a img {
+  display: none;
+}
 .published-status {
   opacity: 0.75;
   font-size: small;
@@ -4370,8 +4375,11 @@ input[type="text"] + input[type="submit"] {
 .fixy {
   display: none;
 }
+.notloggedin .fixy-trigger {
+  padding: 0.9em 1em;
+}
 .fixy-trigger {
-  padding: 1em 1em;
+  padding: 1em;
   position: relative;
   transition: all 0.4s ease-in-out;
 }
@@ -4685,9 +4693,7 @@ footer #moodle-footer
   width: 100%;
   z-index: 23;
   line-height: 2;
-  padding-top: 0.5em;
-  padding-bottom: 0.4em;
-  padding-right: 0;
+  padding: 0.5em 0 0.5em 4%;
   background-color: rgba(255, 255, 255, 0.95);
 }
 #mr-nav.headroom--unpinned {
@@ -5015,9 +5021,6 @@ ol#chapters li.current a {
 }
 #searchpin {
   font-size: 1.5em;
-}
-.section-modchooser-link a img {
-  display: none;
 }
 /* SHAME - button to toggle actions, e.g. close */
 .snap-action-icon {

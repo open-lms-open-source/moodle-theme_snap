@@ -97,7 +97,12 @@ table.boxwidthwide {
     padding: 0;
 }
 
-/* TODO - LOGIN PAGE - experimental code */
+
+
+// -------------------------
+// Login page
+// -------------------------
+
 @media screen and (min-width: @screen-sm) {
     .twocolumns {
         .signuppanel {
@@ -486,6 +491,12 @@ input[type="text"]+input[type="submit"] {
 }
 
 
+.section-modchooser-link a{
+  display:inline-block;
+  img{
+	   display:none;
+   }
+ }
 
 
 
@@ -639,10 +650,12 @@ input[type="text"]+input[type="submit"] {
 .fixy {
     display: none;
 }
-
+.notloggedin .fixy-trigger{
+  padding:0.9em 1em; // SHAME - something odd where login overlaps mr-nav
+}
 .fixy-trigger {
     // border: 1px solid @brand-primary; customisable
-    padding:1em 1em;
+    padding:1em;
     position:relative;
     .alakazam();
     &:hover {
@@ -1017,9 +1030,7 @@ footer #moodle-footer
     width: 100%;
     z-index: 23;
     line-height: 2;
-    padding-top: 0.5em;
-    padding-bottom: 0.4em;
-    padding-right:0;
+    padding:0.5em 0 0.5em 4%;
     background-color: rgba(255,255,255,0.95);
     //headroom js http://wicky.nillia.ms/headroom.js/
     &.headroom--unpinned {
@@ -1478,9 +1489,6 @@ ol#chapters {
 
 
 
-.section-modchooser-link a img{
-	display:none;
-}
 
 /* SHAME - button to toggle actions, e.g. close */
 .snap-action-icon {
