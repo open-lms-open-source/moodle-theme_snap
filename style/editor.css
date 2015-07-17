@@ -4163,6 +4163,8 @@ select,
 .yui3-tabview-list,
 .yuimenu,
 #course-category-listings,
+.progress .bar,
+.progress-bar,
 .yui-dt-paginator {
   font-family: "Roboto", "Fira Sans", "Segoe UI", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif, "line-icons";
 }
@@ -7850,8 +7852,9 @@ img.iconhelp:hover {
   background-color: #038dcc;
   border-color: #027fb8;
 }
-div[id^="bar_"] > div[id^="progress_"] {
-  background-color: #03a9f4 !important;
+.progress .bar,
+.progress-bar:not(progress-bar-info):not(.progress-bar-success):not(.progress-bar-warning):not(.progress-bar-danger) {
+  background-color: #03a9f4;
 }
 .dropdown-menu > li > a:hover,
 .dropdown-menu > li > a:focus {
