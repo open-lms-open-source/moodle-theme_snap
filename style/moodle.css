@@ -20915,6 +20915,15 @@ ul.events-new + ul.events-underway {
 #page-mod-chat-gui_basic-index #page-header {
   display: none;
 }
+#quiz-timer {
+  position: fixed;
+  bottom: 0;
+  left: 1%;
+  background-color: #000;
+  color: #eee;
+  padding: .1em 1%;
+  z-index: 1030;
+}
 #page-mod-quiz-mod #id_reviewoptionshdr .fitem {
   width: 100%;
   float: none;
