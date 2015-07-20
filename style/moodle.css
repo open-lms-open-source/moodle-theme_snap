@@ -18220,13 +18220,15 @@ li.modtype_lesson .snap-assettype {
 li.modtype_choice,
 li.modtype_feedback,
 li.modtype_quiz,
-li.modtype_survey {
+li.modtype_survey,
+li.modtype_questionnaire {
   border-color: #A0BF19;
 }
 li.modtype_choice .snap-assettype,
 li.modtype_feedback .snap-assettype,
 li.modtype_quiz .snap-assettype,
-li.modtype_survey .snap-assettype {
+li.modtype_survey .snap-assettype,
+li.modtype_questionnaire .snap-assettype {
   background-color: #A0BF19;
 }
 li.modtype_data,
