@@ -4076,7 +4076,8 @@ textarea {
 body {
   font-weight: 300;
 }
-table {
+table,
+.floater .cell {
   width: 100%;
   font-family: "Roboto", "Fira Sans", "Segoe UI", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif, "line-icons";
   font-size: 16px;
@@ -7440,6 +7441,32 @@ div.editor_atto_toolbar div.atto_group {
   border-radius: 100%;
   border: none;
   margin-left: 0;
+}
+.path-grade-report-grader .gradeparent .heading.floating {
+  border-top: 1px solid #ddd;
+}
+.path-grade-report-grader .gradeparent table#user-grades {
+  border: none;
+  font-size: 16px;
+}
+.path-grade-report-grader .gradeparent table#user-grades tr.heading th {
+  border-top: 1px solid #ddd !important;
+}
+.path-grade-report-grader .gradeparent table#user-grades tr:nth-child(1) th {
+  border-bottom-width: 0;
+}
+.path-grade-report-grader .gradeparent .floating {
+  border-top-width: 0px;
+}
+.path-grade-report-grader .gradeparent *,
+.path-grade-report-grader .gradeparent *:before,
+.path-grade-report-grader .gradeparent *:after {
+  box-sizing: content-box !important;
+}
+.path-grade-report-grader .gradeparent .heading .cell,
+.path-grade-report-grader .gradeparent .avg .cell,
+.path-grade-report-grader .gradeparent .cell.user {
+  font-size: 13px;
 }
 /**
  * Snap user swatch.
