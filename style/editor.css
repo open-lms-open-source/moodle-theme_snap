@@ -2539,6 +2539,11 @@ section#region-main
 .path-course-view section#region-main > .singlebutton input[type="submit"]:active {
   box-shadow: none;
 }
+.ie.path-course-view section#region-main > .singlebutton input[type="submit"] {
+  background-image: url([[pix:theme|edit_for_ie]]);
+  background-size: 23px;
+  background-position: left center;
+}
 @media screen and (max-width: 1199px) {
   .path-course-view:not(.editing) section#region-main > .singlebutton input[type="submit"],
   .path-course-view:not(.editing) section#region-main > .singlebutton input[type="submit"]:hover {

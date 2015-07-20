@@ -17421,6 +17421,12 @@ section#region-main
   -webkit-box-shadow: none;
           box-shadow: none;
 }
+.ie.path-course-view section#region-main > .singlebutton input[type="submit"] {
+  background-image: url([[pix:theme|edit_for_ie]]);
+  -webkit-background-size: 23px 23px;
+          background-size: 23px;
+  background-position: left center;
+}
 @media screen and (max-width: 1199px) {
   .path-course-view:not(.editing) section#region-main > .singlebutton input[type="submit"],
   .path-course-view:not(.editing) section#region-main > .singlebutton input[type="submit"]:hover {
