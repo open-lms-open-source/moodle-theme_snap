@@ -1,0 +1,40 @@
+language: php
+
+php:
+ - 5.4
+ - 5.5
+ - 5.6
+ - 7.0
+
+matrix:
+ allow_failures:
+  - php: 7.0
+
+env:
+ global:
+  - MOODLE_BRANCH=MOODLE_28_STABLE
+ matrix:
+  - DB=pgsql
+  - DB=mysqli
+
+sudo: false
+
+before_install:
+- composer config -g github-oauth.github.com $GITHUB_API_TOKEN
+
+install:
+  - cd ../..
+  - git clone git://github.com/moodlerooms/moodle-plugin-ci helper
+  - composer install --working-dir helper
+  - helper/bin/phing -f helper/install.xml
+
+script:
+  - helper/bin/phing -f helper/script.xml PHPLint
+  - helper/bin/phing -f helper/script.xml PHPCopyPasteDetector
+  - helper/bin/phing -f helper/script.xml PHPMessDetector
+  - helper/bin/phing -f helper/script.xml CodeChecker
+  - helper/bin/phing -f helper/script.xml CSSLint
+  - helper/bin/phing -f helper/script.xml Shifter
+  - helper/bin/phing -f helper/script.xml JSHint
+  - helper/bin/phing -f helper/script.xml PHPUnit
+  - helper/bin/phing -f helper/script.xml Behat
