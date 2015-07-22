@@ -124,7 +124,7 @@ function snapInit() {
             // Lets add an error link to the header.
             var errorlink = $('<a class="footer-error-link btn btn-danger" href="#footer-error-cont">' +
             M.util.get_string('problemsfound', 'theme_snap') + ' <span class="badge">' + (msgs.length) + '</span></a>');
-            $('#mr-nav').append(errorlink);
+            $('#page-header').append(errorlink);
         }
     };
 
@@ -191,27 +191,7 @@ function snapInit() {
         });
     };
 
-    /**
-     * Code to add an internal link to the admin block & a close button
-     * @author Mark Neilson & Sam Chaffee
-     */
-    var testAdminBlock = function(){
-        // Get admin block via class.
-        var settingsblock = $('.block.block_settings');
-        if (!settingsblock.length){
-            return;
-        }
 
-        // Add close button for admin block with close text/string from moodle lang file.
-        $(settingsblock).prepend("<a class='settings-button  snap-action-icon'><i class='icon icon-arrows-01'></i><small>" +
-        M.util.get_string('close', 'theme_snap') + "</small></a>");
-
-        // Get settings block id.
-        var settingsBlockHref = '#' + $(settingsblock).attr('id');
-
-        // Add as href for link.
-        $('.settings-button').css('display','inline-block').attr('href', settingsBlockHref);
-    };
 
     /**
      * Apply responsive video to non HTML5 video elements.
@@ -230,7 +210,19 @@ function snapInit() {
 
             var tagname = this.tagName.toLowerCase();
             if (tagname === 'iframe') {
-                var supportedsites = ['youtube.com', 'youtu.be', 'vimeo.com', 'youtube-nocookie.com', 'embed.ted.com', 'kickstarter.com', 'video.html'];
+                var supportedsites = [
+                    'youtube.com',
+                    'youtu.be',
+                    'vimeo.com',
+                    'archive.org/embed',
+                    'youtube-nocookie.com',
+                    'embed.ted.com',
+                    'embed-ssl.ted.com',
+                    'kickstarter.com',
+                    'video.html',
+                    'simmons.tegrity.com',
+                    'dailymotion.com'
+                ];
                 var supported = false;
                 for (var s in supportedsites) {
                     if (this.src.indexOf(supportedsites[s]) > -1){
@@ -603,6 +595,28 @@ function snapInit() {
     };
 
     /**
+     * Reveal pagemod.
+     *
+     * @param $pagemod
+     */
+    var revealPageMod = function($pagemod) {
+        $pagemod.find('.pagemod-content').slideToggle("fast", function() {
+            // Animation complete.
+            if($pagemod.is('.state-expanded')){
+                $pagemod.attr('aria-expanded', 'true');
+                $pagemod.find('.pagemod-content').focus();
+
+            }
+            else {
+                $pagemod.attr('aria-expanded', 'false');
+                $pagemod.focus();
+            }
+
+        });
+        applyResponsiveVideo();
+    }
+
+    /**
      * Add listeners.
      *
      * just a wrapper for various snippets that add listeners
@@ -636,8 +650,6 @@ function snapInit() {
             if(newHash !== lastHash){
                 if(location.hash === '#primary-nav') {
                     updatePersonalMenu();
-                    // GT - 2014-10-16 - Add ellipsis to long course titles
-                    $('.courseinfo-body h3 a').ellipsis();
                 }
                 else{
                     $('#page, #moodle-footer').show(0);
@@ -749,8 +761,13 @@ function snapInit() {
 
 
         // Onclick for toggle of state-visible of admin block and mobile menu.
-        $(document).on("click", ".settings-button, #toc-mobile-menu-toggle", function(e) {
+        $(document).on("click", "#admin-menu-trigger, #toc-mobile-menu-toggle", function(e) {
             var href = this.getAttribute('href');
+            // Make this only happen for settings button
+            if(this.getAttribute('id') == 'admin-menu-trigger') {
+              $(this).toggleClass('active');
+              $('#page').toggleClass('offcanvas');
+            }
             $(href).toggleClass('state-visible').focus();
             e.preventDefault();
         });
@@ -761,30 +778,52 @@ function snapInit() {
 
         });
 
-        // Mobile menu button
+        // Mobile menu button.
         $(document).on("click", "#course-toc.state-visible a", function(e){
             $('#course-toc').removeClass('state-visible');
         });
 
-        // Page mod toggle content
+        // Page mod toggle content.
         $(document).on("click", ".modtype_page .instancename,.pagemod-readmore,.pagemod-content .snap-action-icon", function(e) {
             var $pagemod = $(this).closest('.modtype_page');
             scrollToElement($pagemod);
+            var isexpanded =  $pagemod.hasClass('state-expanded');
             $pagemod.toggleClass('state-expanded');
-            $pagemod.find('.pagemod-content').slideToggle("fast", function() {
-                // Animation complete.
-                if($pagemod.is('.state-expanded')){
-                    $pagemod.attr('aria-expanded', 'true');
-                    $pagemod.find('.pagemod-content').focus();
 
-                }
-                else {
-                    $pagemod.attr('aria-expanded', 'false');
-                    $pagemod.focus();
-                }
+            var readmore = $pagemod.find('.pagemod-readmore');
 
-            });
-            applyResponsiveVideo();
+            var $pagemodcontent = $pagemod.find('.pagemod-content');
+            if ($pagemodcontent.data('content-loaded') == 1) {
+                // Content is already available so reveal it immediately.
+                revealPageMod($pagemod);
+                if (!isexpanded) {
+                    $.ajax({
+                        type: "GET",
+                        async: true,
+                        url: M.cfg.wwwroot + '/theme/snap/rest.php?action=read_page&contextid=' + readmore.data('pagemodcontext')
+                    });
+                }
+            } else {
+                if (!isexpanded) {
+                    // Content is not available so request it.
+                    $pagemod.find('.contentafterlink').prepend('<div class="ajaxstatus alert alert-info">' + M.str.theme_snap.loading + '</div>');
+                    $.ajax({
+                        type: "GET",
+                        async: true,
+                        url: M.cfg.wwwroot + '/theme/snap/rest.php?action=get_page&contextid=' + readmore.data('pagemodcontext'),
+                        success: function (data) {
+                            $pagemodcontent.prepend(data.html);
+                            $pagemodcontent.data('content-loaded', 1);
+                            $pagemod.find('.contentafterlink .ajaxstatus').remove();
+                            revealPageMod($pagemod);
+                        }
+                    });
+                } else {
+                    revealPageMod($pagemod);
+                }
+            }
+
+
             e.preventDefault();
         });
 
@@ -810,9 +849,6 @@ function snapInit() {
             e.preventDefault();
         });
 
-
-
-
         // Listen for window resize for videos.
         $(window).resize(function() {
             resizestamp = new Date().getTime();
@@ -822,20 +858,35 @@ function snapInit() {
                     if (timestamp === resizestamp) {
                         logmsg('running resize hook functions');
                         applyResponsiveVideo();
-                        // Apply another short delay for adding ellipsis.
-                        window.setTimeout(function() {$('.courseinfo-body h3 a').ellipsis();}, 200);
                     } else {
                         logmsg('skipping resize hook functions - timestamp has changed from ' + timestamp + ' to ' + resizestamp);
                     }
                 },200); // wait 1/20th of a second before resizing
             })(resizestamp);
         });
+
+
+        // Bootstrap js elements
+
+        // Iniitalise core bootsrtap tooltip js
+        $(function () {
+          var supportsTouch = false;
+          if ('ontouchstart' in window) {
+              //iOS & android
+              supportsTouch = true;
+          } else if(window.navigator.msPointerEnabled) {
+              //Win8
+              supportsTouch = true;
+          }
+          if(!supportsTouch){
+            $('[data-toggle="tooltip"]').tooltip();
+          }
+        });
     };
 
     // GO !!!!
     movePHPErrorsToHeader(); // boring
     polyfills(); // for none evergreen
-    testAdminBlock(); // dull
     setForumStrings(); // whatever
     addListeners(); // essential
     applyBlockHash(); // change location hash if necessary
@@ -851,9 +902,6 @@ function snapInit() {
         updatePersonalMenu();
     }
 
-    // GT - 2014-10-16 - Add ellipsis to long course titles
-    $('.courseinfo-body h3 a').ellipsis();
-
     // SL - 19th aug 2014 - resposive video and snap search in exceptions.
     $(document).ready(function() {
         // SHAME - make section name creation mandatory
@@ -865,6 +913,12 @@ function snapInit() {
             sname.required = "required";
             sname.focus();
             $('#id_name + span').css('display','none');
+
+            // Enable the cancel button.
+            $('#id_cancel').on('click', function(e) {
+                $('#id_name').removeAttr('required');
+                $('#mform1').submit();
+            });
         }
 
         if($('.format-folderview').length) {
@@ -878,11 +932,6 @@ function snapInit() {
         // Make video responsive.
         // Note, if you don't do this on load then FLV media gets wrong size.
         applyResponsiveVideo();
-
-        // Add ellipsis to long course titles.
-        if (window.location.hash == '#primary-nav') {
-            $('.courseinfo-body h3 a').ellipsis();
-        }
 
     });
 

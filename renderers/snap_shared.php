@@ -128,6 +128,7 @@ class snap_shared extends renderer_base {
             'forumpicturegroup',
             'forumreplies',
             'forumlastpost',
+            'loading',
             'more'
         ), 'theme_snap');
 
@@ -372,21 +373,36 @@ class snap_shared extends renderer_base {
         $badgesicon = '<svg viewBox="0 0 100 100" class="svg-icon">
             <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#coursetools-badges"></use></svg>';
         // Course badges.
-        if (!is_guest($coursecontext)) {
-            $links[] = array(
-                // What is the 'type=2' bit ?? I'm not happy with this hardcoded but I don't know where it gets the type
-                // from yet.
-                'link' => 'badges/view.php?type=2&id='.$COURSE->id,
-                'title' => $badgesicon.get_string('badgesview', 'badges'),
-                'capability' => '!moodle/course:update' // You must not have this capability to view this item.
+        if (!empty($CFG->enablebadges) && !empty($CFG->badges_allowcoursebadges)) {
+            // Match capabilities used by badges subsystem.
+            $studentcaps = array(
+                'moodle/badges:earnbadge',
+                'moodle/badges:viewbadges',
             );
+            $teachercaps = array(
+                'moodle/badges:viewawarded',
+                'moodle/badges:createbadge',
+                'moodle/badges:awardbadge',
+                'moodle/badges:configuremessages',
+                'moodle/badges:configuredetails',
+                'moodle/badges:deletebadge',
+            );
+            // Show link for students.
+            if (!is_guest($coursecontext) && has_any_capability($studentcaps, $coursecontext)) {
+                $links[] = array(
+                    'link' => 'badges/view.php?type=' . BADGE_TYPE_COURSE . '&id=' . $COURSE->id,
+                    'title' => $badgesicon.get_string('badgesview', 'badges'),
+                    'capability' => '!moodle/course:update' // You must not have this capability to view this item.
+                );
+            }
+            // Show link for trachers / admin staff.
+            if (!is_guest($coursecontext) && has_any_capability($teachercaps, $coursecontext)) {
+                $links[] = array(
+                    'link' => 'badges/index.php?type=' . BADGE_TYPE_COURSE . '&id=' . $COURSE->id,
+                    'title' => $badgesicon.get_string('managebadges', 'badges'),
+                );
+            }
         }
-        // Manage badges.
-        $links[] = array(
-            'link' => 'badges/index.php?type=2&id='.$COURSE->id,
-            'title' => $badgesicon.get_string('managebadges', 'badges'),
-            'capability' => 'moodle/course:update' // Capability required to view this item.
-        );
 
         // Only show Joule reports if installed.
         $reportsicon = '<svg viewBox="0 0 100 100" class="svg-icon">
@@ -411,6 +427,41 @@ class snap_shared extends renderer_base {
             'title' => $pldicon.$pldname,
             'capability' => 'moodle/course:update', // Capability required to view this item.
         );
+
+        // Course enrolment link.
+        $plugins   = enrol_get_plugins(true);
+        $instances = enrol_get_instances($COURSE->id, true);
+        $selfenrol = false;
+        foreach ($instances as $instance) { // Need to check enrolment methods for self enrol.
+            if ($instance->enrol === 'self') {
+                $plugin = $plugins[$instance->enrol];
+                if (is_enrolled($coursecontext)) {
+                    // Prepare unenrolment link.
+                    $enrolurl = $plugin->get_unenrolself_link($instance);
+                    if ($enrolurl) {
+                        $selfenrol = true;
+                        $enrolstr = get_string('unenrolme', 'theme_snap');
+                        break;
+                    }
+                } else {
+                    if ($plugin->show_enrolme_link($instance)) {
+                        // Prepare enrolment link.
+                        $selfenrol = true;
+                        $enrolurl = new moodle_url('/enrol/index.php', array('id'=>$COURSE->id));
+                        $enrolstr = get_string('enrolme', 'core_enrol');
+                        break;
+                    }
+                }
+            }
+        }
+        if ($selfenrol) {
+            $enrolicon = '<svg viewBox="0 0 100 100" class="svg-icon">
+            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#coursetools-settings"></use></svg>';
+            $links[] = array(
+                'link' => $enrolurl,
+                'title' => $enrolicon.$enrolstr
+            );
+        }
 
         $toolssvg = self::inline_svg('tools.svg');
         // Output course tools.

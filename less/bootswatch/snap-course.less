@@ -122,19 +122,24 @@ section#region-main
 .weeks {
     counter-reset: annotation-list -1;
 }
-li.section .sectionname:before{
-    content: counter(annotation-list) ".\00a0";
+.format-weeks #chapters {
+  list-style:none;
 }
-// drag and drop yui hack
-.yui3-dd-proxy li.section .sectionname:before{
-    content: '';
-}
+.format-topics{
+  li.section .sectionname:before{
+      content: counter(annotation-list) ".\00a0";
+  }
+  // drag and drop yui hack
+  .yui3-dd-proxy li.section .sectionname:before{
+      content: ' ';
+  }
 
-#section-0 .sectionname:before {
-    content:" ";
-}
-li.section.main {
-    counter-increment: annotation-list;
+  #section-0 .sectionname:before {
+      content:" ";
+  }
+  li.section.main {
+      counter-increment: annotation-list;
+  }
 }
 li.section:focus {
     outline:none;
@@ -911,7 +916,8 @@ li.modtype_lesson {
 li.modtype_choice,
 li.modtype_feedback,
 li.modtype_quiz,
-li.modtype_survey{
+li.modtype_survey,
+li.modtype_questionnaire{
     border-color:#A0BF19;
     .snap-assettype{
         background-color:#A0BF19;
@@ -956,7 +962,7 @@ li.snap-activity.modtype_folder {
     .btn;
     clear:both;
     margin-bottom:1em;
-    float:right;
+    margin-left:0;
     img {
         display:none;
     }

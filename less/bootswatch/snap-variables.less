@@ -25,11 +25,11 @@
 //
 //## Gray and brand colors for use across Bootstrap.
 
-@gray-darker:            lighten(#000, 13.5%); // #222
-@gray-dark:              lighten(#000, 20%);   // #333
-@gray:                   lighten(#000, 33.5%); // #555
-@gray-light:             lighten(#000, 60%);   // #999
-@gray-lighter:           lighten(#000, 93.5%); // #eee
+@gray-darker:            #222;
+@gray-dark:              #333;
+@gray:                   #666;
+@gray-light:             #999;
+@gray-lighter:           #dadada;
 
 @brand-primary:         #03A9F4;
 @brand-success:         #8BC34A;
@@ -53,12 +53,17 @@
 // Typography
 // -------------------------
 
+// Snap guidelines
+// Snap uses :
+// base or system font for things like buttons etc..
+// user definable sans serif for headings
+// user definable serif for human text
+// we don't really use font family feature, but could do in future for headings... 
 
-
-@font-family-sans-serif: "Roboto", "Fira Sans", "Segoe UI", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif, "line-icons";
+@font-family-base:        "Roboto", "Fira Sans", "Segoe UI", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif, "line-icons";
+@font-family-sans-serif: @font-family-base;
 @font-family-serif:       Georgia, "Times New Roman", Times, serif;
 @font-family-monospace:   Monaco, Menlo, Consolas, "Courier New", monospace;
-@font-family-base:        @font-family-sans-serif;
 
 @font-family-feature: @font-family-sans-serif;
 
@@ -126,7 +131,7 @@
 @table-condensed-cell-padding:  4px;
 
 //** Default background color used for all tables.
-@table-bg:                      transparent;
+@table-bg:                      @body-bg;
 //** Background color used for `.table-striped`.
 @table-bg-accent:               #f9f9f9;
 //** Background color used for `.table-hover`.
@@ -182,11 +187,11 @@
 //** Text color for `<input>`s
 @input-color:                    @text-color;
 //** `<input>` border color
-@input-border:                   #ccc;
+@input-border:                   @gray-lighter;
 //** `<input>` border radius
 @input-border-radius:            @border-radius-base;
 //** Border color for inputs on focus
-@input-border-focus:             #66afe9;
+@input-border-focus:             @gray;
 
 //** Placeholder text color
 @input-color-placeholder:        @gray-light;
@@ -403,15 +408,15 @@
 @nav-open-link-hover-color:                 #fff;
 
 //== Tabs
-@nav-tabs-border-color:                     #ddd;
+@nav-tabs-border-color:                     @gray-light;
 
 @nav-tabs-link-hover-border-color:          @gray-lighter;
 
 @nav-tabs-active-link-hover-bg:             @body-bg;
 @nav-tabs-active-link-hover-color:          @gray;
-@nav-tabs-active-link-hover-border-color:   #ddd;
+@nav-tabs-active-link-hover-border-color:   @gray-lighter;
 
-@nav-tabs-justified-link-border-color:            #ddd;
+@nav-tabs-justified-link-border-color:            @gray-lighter;
 @nav-tabs-justified-active-link-border-color:     @body-bg;
 
 //== Pills
@@ -430,7 +435,7 @@
 
 @pagination-hover-color:               @link-hover-color;
 @pagination-hover-bg:                  @gray-lighter;
-@pagination-hover-border:              #ddd;
+@pagination-hover-border:              @gray-light;
 
 @pagination-active-color:              #fff;
 @pagination-active-bg:                 @brand-primary;
@@ -438,7 +443,7 @@
 
 @pagination-disabled-color:            @gray-light;
 @pagination-disabled-bg:               #fff;
-@pagination-disabled-border:           #ddd;
+@pagination-disabled-border:           @gray-lighter;
 
 
 //== Pager
@@ -473,20 +478,20 @@
 //## Define colors for form feedback states and, by default, alerts.
 
 @state-success-text:             @brand-success;
-@state-success-bg:               fade(@brand-success, 1%);
-@state-success-border:           fade(@brand-success, 1%);
+@state-success-bg:               fade(@brand-success, 10%);
+@state-success-border:           fade(@brand-success, 10%);
 
 @state-info-text:                @brand-info;
-@state-info-bg:                  fade(@brand-info, 1%);
-@state-info-border:              fade(@brand-info, 1%);
+@state-info-bg:                  fade(@brand-info, 10%);
+@state-info-border:              fade(@brand-info, 10%);
 
 @state-warning-text:             @brand-warning;
-@state-warning-bg:               fade(@brand-warning, 1%);
-@state-warning-border:           fade(@brand-warning, 1%);
+@state-warning-bg:               fade(@brand-warning, 10%);
+@state-warning-border:           fade(@brand-warning, 10%);
 
 @state-danger-text:              @brand-danger;
-@state-danger-bg:                fade(@brand-danger, 1%);
-@state-danger-border:            fade(@brand-danger, 1%);
+@state-danger-bg:                fade(@brand-danger, 10%);
+@state-danger-border:            fade(@brand-danger, 10%);
 
 
 //== Tooltips
@@ -498,8 +503,8 @@
 //** Tooltip text color
 @tooltip-color:               #fff;
 //** Tooltip background color
-@tooltip-bg:                  rgba(0,0,0,.9);
-@tooltip-opacity:             .9;
+@tooltip-bg:                  @gray-light;
+@tooltip-opacity:             1;
 
 //** Tooltip arrow width
 @tooltip-arrow-width:         5px;

@@ -46,7 +46,7 @@ module.exports = function(grunt) {
             // Compile moodle styles.
             moodle: {
                 options: {
-                    compress: true
+                    compress: false
                 },
                 files: {
                     "style/moodle.css": "less/moodle.less",
@@ -55,7 +55,7 @@ module.exports = function(grunt) {
             // Compile editor styles.
             editor: {
                 options: {
-                    compress: true
+                    compress: false
                 },
                 files: {
                     "style/editor.css": "less/editor.less"
@@ -99,9 +99,8 @@ module.exports = function(grunt) {
                 "!javascript/bootstrap.js",
                 "!javascript/headroom.js",
                 "!javascript/modernizer.js",
-                "!javascript/jquery.placeholder.js",
-                "!javascript/jquery.mr_ellipsis.js",
-            ],
+                "!javascript/jquery.placeholder.js"
+            ]
         },
         watch: {
             // Watch for any changes to less files and compile.

@@ -102,18 +102,20 @@ a:hover {
 }
 
 // Calendar
-#dateselector-calendar-panel .selected .selector{
-    background-color:@brand-primary;
-}
-#dateselector-calendar-panel .calcellhover .selector {
-    border-color:@brand-primary !important;
-    background-color:white;
-    color:@brand-primary;
+#dateselector-calendar-panel {
+    .yui3-calendar-day {
+        color: @brand-primary;
+    }
+    .yui3-calendar-day:hover {
+        color: darken(@brand-primary, 8%);
+    }
+    .yui3-calendar-day-selected,
+    .yui3-calendar-day:hover {
+        color: #fff;
+        background-color: @brand-primary;
+    }
 }
 
-.day .day a{
-    background-color:@brand-primary;
-}
 
 #region-main,
 #region-main textarea,
@@ -136,11 +138,14 @@ legend,
 .mform legend a,
 .mform legend a:hover,
 .coursebox .info .coursename,
-.collapsibleregioncaption,
+.collapsibleregioncaption {
+    font-family: @font-family-sans-serif;
+}
+
 .pagemod-readmore,
 .snap-action-icon,
 #coursetools-list a {
-    font-family: @font-family-sans-serif;
+  font-family: @font-family-base;
 }
 
 
@@ -220,7 +225,8 @@ button,
 input.form-submit,
 input[type="button"],
 input[type="submit"],
-input[type="reset"] {
+input[type="reset"],
+#page-mast .snap-login-button {
     background-color:@brand-primary;
     border-color: #fff;
     color:#fff;
@@ -261,9 +267,20 @@ input[type="reset"] {
     border-color: darken(@brand-primary, 12%);
     color:#fff;
 }
-.settings-button {
-    background-color: fade(@brand-primary, 80%);
+
+#admin-menu-trigger{
+   .lines {
+    background-color: @brand-primary;
+    &:after,
+    &:before {
+      background-color: @brand-primary;
+      }
+    }
+    &.active .lines {
+      background:transparent;
+    }
 }
+
 
 #page-site-index #page-header,
 .news-article-image,
@@ -425,6 +442,11 @@ img.iconhelp:hover {
 
 div[id^="bar_"] > div[id^="progress_"] {
     background-color: @brand-primary !important;
+}
+
+.dropdown-menu > li > a:hover,
+.dropdown-menu > li > a:focus {
+    background-color: @brand-primary;
 }
 
 // -------------------------

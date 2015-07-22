@@ -53,7 +53,9 @@ a.skip-block {
 }
 
 /* hide blocks by default */
-#moodle-blocks {
+#moodle-blocks,
+/* workaround for participant list pretending to be course view MDL-50492 */
+.path-user.path-course.path-course-view.editing #moodle-blocks {
     visibility: hidden;
     height: 0px;
     overflow: hidden;
@@ -65,11 +67,11 @@ a.skip-block {
 #page-mod-quiz-attempt #moodle-blocks,
 #page-mod-quiz-review #moodle-blocks,
 #page-mod-book-view #moodle-blocks,
+#page-mod-lesson-view #moodle-blocks,
 #page-site-index #moodle-blocks,
 #page-user-profile #moodle-blocks,
 #page-my-index #moodle-blocks,
 #page-calendar-view #moodle-blocks,
-#page-mod-lesson-view #moodle-blocks,
 #moodle-blocks.state-visible,
 .format-folderview.path-course-view:not(.folderview-single-section) #moodle-blocks,
 .format-weeks.path-course-view.editing #moodle-blocks,
@@ -79,11 +81,33 @@ a.skip-block {
     overflow: visible;
 }
 
+/* Some mods have faux blocks - but we want to hide all the other blocks */
+#page-mod-lesson-view,
+#page-mod-book-view,
+#page-mod-quiz-review,
+#page-mod-quiz-attempt {
+  #moodle-blocks {
+    -webkit-column-count: 1;
+    -moz-column-count: 1;
+    column-count: 1;
+      .block{
+        display:none;
+      }
+      .block_fake,
+      .block_settings{
+        display:block;
+      }
+      .block_fake {
+        margin-top:2em;
+      }
+    }
+}
+
 
 .block,
 .block-region .block {
     margin: 0 auto 1em auto;
-    padding: 0 4%;
+    padding: 0 2%;
     border: 0;
     box-shadow: none;
     border: 0px;
@@ -165,12 +189,12 @@ body.path-site .block.block_settings{
 #page-content .block_settings.state-visible,
 .block_settings:target {
   visibility: visible;
-  padding-top: 4em;
   height: 100%;
   overflow-y: auto;
   overflow-x:hidden;
-  z-index: 2;
+  z-index: 13;
   right:0;
+  padding-top:2em;
   border-left: 1px solid #eee;
   transition: right .4s ease-in-out;
 }

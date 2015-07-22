@@ -106,9 +106,12 @@ class activity {
                 if (!empty($submissionrow)) {
                     if ($submissionrow->status) {
                         switch ($submissionrow->status) {
-                            case 'draft' : $meta->draft = true; break;
-                            case 'reopened' : $meta->reopened = true; break;
-                            case 'submitted' : $meta->submitted = true; break;
+                            case 'draft' : $meta->draft = true;
+                                break;
+                            case 'reopened' : $meta->reopened = true;
+                                break;
+                            case 'submitted' : $meta->submitted = true;
+                                break;
                         }
                     } else {
                         $meta->submitted = true;
@@ -127,7 +130,7 @@ class activity {
 
             $graderow = false;
             if ($isgradeable) {
-                $graderow = self::grade_row($courseid, $mod, $keyfield);
+                $graderow = self::grade_row($courseid, $mod);
             }
 
             if ($graderow) {
@@ -169,7 +172,7 @@ class activity {
                       JOIN {assign_plugin_config} ac ON ac.assignment = a.id
                      WHERE a.course = ?
                        AND ac.name='enabled'
-                       AND ac.value=1
+                       AND ac.value = '1'
                        AND ac.subtype='assignsubmission'
                        AND plugin!='comments'
                   GROUP BY a.id;";
@@ -254,14 +257,14 @@ class activity {
 
         $sixmonthsago = time() - YEARSECS / 2;
 
+        // Limit to assignments with grades.
+        $gradetypelimit = 'AND gi.gradetype NOT IN (' . GRADE_TYPE_NONE . ',' . GRADE_TYPE_TEXT . ')';
+
         foreach ($courseids as $courseid) {
 
+            // Get the assignments that need grading.
             list($esql, $params) = get_enrolled_sql(\context_course::instance($courseid), 'mod/assign:submit', 0, true);
             $params['courseid'] = $courseid;
-
-            $submissionmaxattempt = 'SELECT mxs.assignment AS assignid, mxs.userid, MAX(mxs.attemptnumber) AS maxattempt
-                                 FROM {assign_submission} mxs
-                                 GROUP BY assignid, mxs.userid';
 
             $sql = "-- Snap sql
                     SELECT cm.id AS coursemoduleid, a.id AS instanceid, a.course,
@@ -277,9 +280,7 @@ class activity {
 
                       JOIN {assign_submission} sb
                         ON sb.assignment = a.id
-
-                      JOIN ($submissionmaxattempt) smx
-                        ON sb.assignment = smx.assignid
+                       AND sb.latest = 1
 
                       JOIN ($esql) e
                         ON e.id = sb.userid
@@ -291,7 +292,7 @@ class activity {
                  LEFT JOIN {assign_grades} ag
                         ON ag.assignment = sb.assignment
                        AND ag.userid = sb.userid
-                       AND ag.attemptnumber = smx.maxattempt
+                       AND ag.attemptnumber = sb.attemptnumber
 
                  LEFT JOIN {grade_items} gi
                         ON gi.courseid = a.course
@@ -308,17 +309,15 @@ class activity {
 
                      WHERE sb.status = 'submitted'
                        AND a.course = :courseid
-                       AND sb.assignment = smx.assignid
-                       AND sb.attemptnumber = smx.maxattempt
 
                        AND (
                            sb.timemodified > gg.timemodified
                            OR gg.finalgrade IS NULL
                        )
 
-                       AND sb.userid = smx.userid
                        AND (a.duedate = 0 OR a.duedate > $sixmonthsago)
-                  GROUP BY instanceid, a.course, opentime, closetime, coursemoduleid ORDER BY a.duedate ASC";
+                 $gradetypelimit
+                 GROUP BY instanceid, a.course, opentime, closetime, coursemoduleid ORDER BY a.duedate ASC";
             $rs = $DB->get_records_sql($sql, $params);
             $ungraded = array_merge($ungraded, $rs);
         }
@@ -345,27 +344,27 @@ class activity {
             list($graderids, $params) = get_enrolled_sql(\context_course::instance($courseid), 'moodle/grade:viewall');
             $params['courseid'] = $courseid;
 
-            // Note, that unlike assessments we don't check the gradebook as the only time a quiz needs to be marked is
-            // when there are essay questions or other questions that require manual marking. As these questions need
-            // to be marked manually the operation should always take place via the module.
-            $sql = "-- Snap sql
+            $sql = "-- Snap SQL
                     SELECT cm.id AS coursemoduleid, q.id AS instanceid, q.course,
                            q.timeopen AS opentime, q.timeclose AS closetime,
                            count(DISTINCT qa.userid) AS ungraded
                       FROM {quiz} q
-                      JOIN {course} c ON c.id = q.course
+                      JOIN {course} c ON c.id = q.course AND q.course = :courseid
                       JOIN {modules} m ON m.name = 'quiz'
-                      JOIN {course_modules} cm ON cm.module = m.id
-                           AND cm.instance = q.id
-                      JOIN {quiz_attempts} qa ON qa.quiz = q.id
-                 LEFT JOIN {quiz_grades} gd ON gd.quiz = qa.quiz
-                           AND gd.userid = qa.userid
-                     WHERE gd.id IS NULL
-                           AND q.course = :courseid
-                           AND qa.userid NOT IN ($graderids)
-                           AND qa.state = 'finished'
-                           AND (q.timeclose = 0 OR q.timeclose > $sixmonthsago)
-                  GROUP BY instanceid, q.course, opentime, closetime, coursemoduleid ORDER BY q.timeclose ASC";
+                      JOIN {course_modules} cm ON cm.module = m.id AND cm.instance = q.id
+
+-- Get ALL ungraded attempts for this quiz
+
+					  JOIN {quiz_attempts} qa ON qa.quiz = q.id
+					   AND qa.sumgrades IS NULL
+
+-- Exclude those people who can grade quizzes
+
+                     WHERE qa.userid NOT IN ($graderids)
+                       AND qa.state = 'finished'
+                       AND (q.timeclose = 0 OR q.timeclose > $sixmonthsago)
+                  GROUP BY instanceid, q.course, opentime, closetime, coursemoduleid
+                  ORDER BY q.timeclose ASC";
 
             $rs = $DB->get_records_sql($sql, $params);
             $ungraded = array_merge($ungraded, $rs);
@@ -388,8 +387,15 @@ class activity {
     public static function assign_num_submissions_ungraded($courseid, $modid) {
         global $DB;
 
+        static $hasgrades = null;
         static $totalsbyid;
 
+        // Use cache to see if assign has grades.
+        if ($hasgrades != null && !isset($hasgrades[$modid])) {
+            return 0;
+        }
+
+        // Use cache to return number of assigns yet to be graded.
         if (!empty($totalsbyid)) {
             if (isset($totalsbyid[$modid])) {
                 return intval($totalsbyid[$modid]->total);
@@ -397,12 +403,33 @@ class activity {
                 return 0;
             }
         }
+
+        // Check to see if this assign is graded.
+        $params = array(
+            'courseid'      => $courseid,
+            'itemtype'      => 'mod',
+            'itemmodule'    => 'assign',
+            'gradetypenone' => GRADE_TYPE_NONE,
+            'gradetypetext' => GRADE_TYPE_TEXT,
+        );
+
+        $sql = 'SELECT iteminstance
+                FROM {grade_items}
+                WHERE courseid = ?
+                AND itemtype = ?
+                AND itemmodule = ?
+                AND gradetype <> ?
+                AND gradetype <> ?';
+
+        $hasgrades = $DB->get_records_sql($sql, $params);
+
+        if (!isset($hasgrades[$modid])) {
+            return 0;
+        }
+
+        // Get grading information for remaining of assigns.
         $coursecontext = \context_course::instance($courseid);
         list($esql, $params) = get_enrolled_sql($coursecontext, 'mod/assign:submit', 0, true);
-
-        $submissionmaxattempt = 'SELECT mxs.assignment AS assignid, mxs.userid, MAX(mxs.attemptnumber) AS maxattempt
-                                 FROM {assign_submission} mxs
-                                 GROUP BY assignid, mxs.userid';
 
         $params['submitted'] = ASSIGN_SUBMISSION_STATUS_SUBMITTED;
         $params['courseid'] = $courseid;
@@ -414,13 +441,10 @@ class activity {
                    JOIN {assign} an
                      ON sb.assignment = an.id
 
-                   JOIN ($submissionmaxattempt) smx
-                     ON sb.assignment = smx.assignid
-
               LEFT JOIN {assign_grades} ag
                      ON sb.assignment = ag.assignment
                     AND sb.userid = ag.userid
-                    AND ag.attemptnumber = smx.maxattempt
+                    AND sb.attemptnumber = ag.attemptnumber
 
 -- Start of join required to make assignments marked via gradebook not show as requiring grading
 -- Note: This will lead to disparity between the assignment page (mod/assign/view.php[questionmark]id=[id])
@@ -439,15 +463,16 @@ class activity {
 
 -- End of join required to make assignments classed as graded when done via gradebook
 
+-- Start of enrolment join to make sure we only include students that are allowed to submit. Note this causes an ALL
+-- join on mysql!
                    JOIN ($esql) e
                      ON e.id = sb.userid
+-- End of enrolment join
 
                   WHERE an.course = :courseid
                     AND sb.timemodified IS NOT NULL
                     AND sb.status = :submitted
-
-                    AND sb.userid = smx.userid
-                    AND sb.attemptnumber = smx.maxattempt
+                    AND sb.latest = 1
 
                     AND (
                         sb.timemodified > gg.timemodified
@@ -496,7 +521,7 @@ class activity {
                      WHERE m.course = :courseid
                            AND sb.userid NOT IN ($graderids)
                            $extraselect
-                     GROUP by m.id";
+                     GROUP BY m.id";
             $modtotalsbyid[$maintable][$courseid] = $DB->get_records_sql($sql, $params);
         }
         $totalsbyid = $modtotalsbyid[$maintable][$courseid];
@@ -528,24 +553,18 @@ class activity {
             $params['courseid'] = $courseid;
             $params['submitted'] = ASSIGN_SUBMISSION_STATUS_SUBMITTED;
 
-            $submissionmaxattempt = 'SELECT mxs.assignment AS assignid, mxs.userid, MAX(mxs.attemptnumber) AS maxattempt
-                                 FROM {assign_submission} mxs
-                                 GROUP BY assignid, mxs.userid';
-
             // Get the number of submissions for all assign activities in this course.
             $sql = "-- Snap sql
                 SELECT m.id, COUNT(sb.userid) as totalsubmitted
                   FROM {assign} m
-                  JOIN {assign_submission} sb ON m.id = sb.assignment
-                  JOIN ($submissionmaxattempt) smx
-                 ON sb.userid = smx.userid
-                AND sb.assignment = smx.assignid
+                  JOIN {assign_submission} sb
+                    ON m.id = sb.assignment
+                   AND sb.latest = 1
 
                   JOIN ($esql) e
                     ON e.id = sb.userid
 
                  WHERE m.course = :courseid
-                       AND sb.attemptnumber = smx.maxattempt
                        AND sb.status = :submitted
                  GROUP by m.id";
             $modtotalsbyid['assign'][$courseid] = $DB->get_records_sql($sql, $params);
@@ -624,18 +643,21 @@ class activity {
 
         if (!isset($totalsbyquizid)) {
             // Results are not cached.
-            // Get the number of attempts that requiring marking for all quizes in this course.
             $sql = "-- Snap sql
-                    SELECT q.id, count(*) as total
-                      FROM {quiz_attempts} sb
-                 LEFT JOIN {quiz} q ON q.id=sb.quiz
-                 LEFT JOIN {quiz_grades} gd ON gd.quiz = sb.quiz
-                           AND gd.userid = sb.userid
-                     WHERE sb.timefinish IS NOT NULL
-                           AND gd.id IS NULL
-                           AND q.course = :courseid
-                           AND sb.userid NOT IN ($graderids)
-                  GROUP BY q.id";
+                    SELECT q.id, count(DISTINCT qa.userid) as total
+                      FROM {quiz} q
+
+-- Get ALL ungraded attempts for this quiz
+
+					  JOIN {quiz_attempts} qa ON qa.quiz = q.id
+					   AND qa.sumgrades IS NULL
+
+-- Exclude those people who can grade quizzes
+
+                     WHERE qa.userid NOT IN ($graderids)
+                       AND qa.state = 'finished'
+                       AND q.course = :courseid
+                     GROUP BY q.id";
             $totalsbyquizid = $DB->get_records_sql($sql, $params);
         }
 
@@ -673,26 +695,54 @@ class activity {
         }
 
         $submissiontable = $mod->modname.'_'.$submissiontable;
-        $sql = "-- Snap sql
+
+        if ($mod->modname === 'assign') {
+            $params = [$courseid, $USER->id];
+            $sql = "-- Snap sql
                 SELECT a.id AS instanceid, st.*
                     FROM {".$submissiontable."} st
 
                     JOIN {".$mod->modname."} a
                       ON a.id = st.$modfield
 
--- Get only the most recent submission.
-                    JOIN (SELECT $modfield as modid, MAX(id) as maxattempt
+                   WHERE a.course = ?
+                     AND st.latest = 1
+                     AND st.userid = ? $extraselect
+                ORDER BY $modfield DESC, st.id DESC";
+        } else {
+            // Less effecient general purpose for other module types.
+            $params = [$USER->id, $courseid, $USER->id];
+            $sql = "-- Snap sql
+                SELECT a.id AS instanceid, st.*
+                    FROM {".$submissiontable."} st
+
+                    JOIN {".$mod->modname."} a
+                      ON a.id = st.$modfield
+
+                    -- Get only the most recent submission.
+                    JOIN (SELECT $modfield AS modid, MAX(id) AS maxattempt
                             FROM {".$submissiontable."}
                            WHERE userid = ?
-                        GROUP BY modid) as smx
+                        GROUP BY modid) AS smx
                       ON smx.modid = st.$modfield
                      AND smx.maxattempt = st.id
 
                    WHERE a.course = ?
-                     AND userid = ? $extraselect
+                     AND st.userid = ? $extraselect
                 ORDER BY $modfield DESC, st.id DESC";
-        $submissions[$courseid.'_'.$mod->modname] = $DB->get_records_sql($sql,
-            array($USER->id, $courseid, $USER->id));
+        }
+
+        // Not every activity has a status field...
+        // Add one if it is missing so code assuming there is a status property doesn't explode.
+        $result = $DB->get_records_sql($sql, $params);
+
+        foreach ($result as $r) {
+            if (!isset($r->status)) {
+                $r->status = null;
+            }
+        }
+
+        $submissions[$courseid.'_'.$mod->modname] = $result;
 
         if (isset($submissions[$courseid.'_'.$mod->modname][$mod->instance])) {
             return $submissions[$courseid.'_'.$mod->modname][$mod->instance];
@@ -736,7 +786,7 @@ class activity {
      * @param $modfield
      * @return bool
      */
-    public static function grade_row($courseid, $mod, $modfield) {
+    public static function grade_row($courseid, $mod) {
         global $DB, $USER;
 
         static $grades = array();
@@ -747,7 +797,6 @@ class activity {
             return $grades[$courseid.'_'.$mod->modname][$mod->instance];
         }
 
-        $gradetable = $mod->modname.'_grades';
         $sql = "-- Snap sql
                 SELECT m.id AS instanceid, gg.*
 

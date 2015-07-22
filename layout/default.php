@@ -40,10 +40,12 @@ include(__DIR__.'/header.php');
 <?php
 echo $OUTPUT->page_heading();
 echo $OUTPUT->course_header();
+if($PAGE->pagetype == 'site-index') {
+  echo $OUTPUT->print_login_button();
+}
 ?>
 </div>
 <?php
-echo $OUTPUT->print_settings_link();
 if ($this->page->user_is_editing() && $PAGE->pagetype == 'site-index') {
     echo '<a class="btn btn-default btn-sm" href="'.$CFG->wwwroot.'/admin/settings.php?section=themesettingsnap#admin-poster">'.get_string('changecoverimage', 'theme_snap').'</a>';
 }

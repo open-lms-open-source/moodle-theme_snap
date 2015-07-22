@@ -65,7 +65,7 @@ class theme_snap_core_renderer extends toc_renderer {
             $courseteachers .= "</div>";
         }
         // If user can edit add link to manage users.
-        if (has_capability('enrol/accesskey:manage', $context)) {
+        if (has_capability('moodle/course:enrolreview', $context)) {
             if (empty($courseteachers)) {
                 $courseteachers = "<h6>".get_string('coursecontacts', 'theme_snap')."</h6>";
             }
@@ -86,7 +86,7 @@ class theme_snap_core_renderer extends toc_renderer {
         }
 
         // If able to edit add link to edit summary.
-        if (has_capability('enrol/accesskey:manage', $context)) {
+        if (has_capability('moodle/course:update', $context)) {
             if (empty($coursesummary)) {
                 $coursesummary = '<h6>'.get_string('aboutcourse', 'theme_snap').'</h6>';
             }
@@ -105,7 +105,7 @@ class theme_snap_core_renderer extends toc_renderer {
             $courserecentactivity .= "</div>";
         }
         // If user can edit add link to moodle recent activity stuff.
-        if (has_capability('enrol/accesskey:manage', $context)) {
+        if (has_capability('moodle/course:update', $context)) {
             if (empty($courserecentactivities)) {
                 $courserecentactivity = '<h6>'.get_string('recentactivity').'</h6>';
                 $courserecentactivity .= get_string('norecentactivity');
@@ -226,23 +226,49 @@ class theme_snap_core_renderer extends toc_renderer {
      */
     public function print_settings_link() {
         global $DB, $PAGE, $COURSE;
+        if(!$PAGE->blocks->is_block_present('settings')) {
+          return '';
+        }
+        $isteacher = has_capability('moodle/course:manageactivities', $PAGE->context);
 
-        $isstudent = !has_capability('moodle/course:manageactivities', $PAGE->context)
-                        && !is_role_switched($COURSE->id);
-        if ($isstudent
-            && $PAGE->pagetype != 'user-profile') {
-            return '';
+        $display = false;
+
+        $userid = optional_param('id', false, PARAM_INT);
+
+        if ($isteacher) {
+            $display = true;
+        } elseif (is_role_switched($COURSE->id)) {
+            // IF a teacher or admin switch their role to a student then they still need to be able to see the admin
+            // menu in order to be able to switch back to their original role!
+            $display = true;
+        } elseif ($PAGE->pagetype === 'user-profile') {
+            // The admin block needs to be shown on user profile pages as it contains the edit profile link.
+            $display = true;
+        } elseif ($PAGE->url->get_path() === '/user/view.php'
+            && $userid
+            && has_capability('moodle/user:viewdetails', CONTEXT_USER::instance($userid))
+        ) {
+            // Test to see if we have a mentor viewing this page, if so we need to display the admin block.
+            $display = true;
         }
 
+        if (!$display) {
+            return '';
+        }
         if (!$instanceid = $DB->get_field('block_instances', 'id', array('blockname' => 'settings'))) {
-            return '';
+            $msg = "Moodle appears to be missing a settings block.
+            This shouldn't happen!
+            Please speak to your Moodle administrator";
+            throw new coding_exception($msg);
         }
+
         if (!has_capability('moodle/block:view', context_block::instance($instanceid))) {
             return '';
         }
+        // User can view admin block - return the link
         $admin = get_string('admin', 'theme_snap');
-        return '<div><a class="settings-button snap-action-icon" href="#inst'.$instanceid.'">
-                <i class="icon icon-arrows-02"></i><small>'.$admin.'</small></a></div>';
+        echo '<a id="admin-menu-trigger" class="pull-right" href="#inst'.$instanceid.'" data-toggle="tooltip" data-placement="bottom" title="'.$admin.'" >
+        <span class="lines"></span></a>';
     }
 
     /**
@@ -518,6 +544,23 @@ class theme_snap_core_renderer extends toc_renderer {
         return $o;
     }
 
+
+    /**
+     * Print login button
+     *
+     */
+    public function print_login_button() {
+      global $CFG;
+      $loginurl = '#login';
+      if (!empty($CFG->alternateloginurl)) {
+              $loginurl = $CFG->wwwroot.'/login/index.php';
+      }
+      $login = get_string('login');
+      // This check is here for the front page login
+      if (!isloggedin() || isguestuser()) {
+        return "<a aria-haspopup='true' class='snap-login-button fixy-trigger'  href='".s($loginurl)."' >$login</a>";
+      }
+    }
     /**
      * Print fixy (login or menu for signed in users)
      *
@@ -526,14 +569,9 @@ class theme_snap_core_renderer extends toc_renderer {
         global $CFG, $USER, $PAGE, $DB;
 
         $logout = get_string('logout');
-
         $isguest = isguestuser();
 
         if (!isloggedin() || $isguest) {
-            $loginurl = '#login';
-            if (!empty($CFG->alternateloginurl)) {
-                $loginurl = $CFG->wwwroot.'/login/index.php';
-            }
             $login = get_string('login');
             $cancel = get_string('cancel');
             $username = get_string('username');
@@ -565,8 +603,8 @@ class theme_snap_core_renderer extends toc_renderer {
                     $helpstr = "<p class='text-center'><a href='".s($CFG->wwwroot)."/login/index.php'>$help</a></p>";
                 }
             }
-            echo "<a aria-haspopup='true' class='fixy-trigger'  href='".s($loginurl)."' >$login</a>
-        <form class=fixy action='$CFG->wwwroot/login/'  method='post' id='login'>
+            echo $this->print_login_button();
+            echo "<form class=fixy action='$CFG->wwwroot/login/'  method='post' id='login'>
         <a id='fixy-close' class='pull-right snap-action-icon' href='#'>
             <i class='icon icon-office-52'></i><small>$cancel</small>
         </a>
@@ -655,8 +693,8 @@ class theme_snap_core_renderer extends toc_renderer {
             $courselist .= '</div></section>'; // Close row.
 
             $menu = get_string('menu', 'theme_snap');
-            echo '<a aria-haspopup="true" class="fixy-trigger" id="js-personal-menu-trigger" href="#primary-nav" '.
-            'aria-controls="primary-nav" aria-label="'.get_string('sitenavigation', 'theme_snap').'">'.$menu.$picture.
+            echo '<a href="#primary-nav" aria-haspopup="true" class="fixy-trigger" id="js-personal-menu-trigger" '.
+            'aria-controls="primary-nav" title="'.get_string('sitenavigation', 'theme_snap').'" data-toggle="tooltip" data-placement="bottom">'.$menu.$picture.
             $this->render_badge_count(). '</a>';
             $close = get_string('close', 'theme_snap');
             $viewyourprofile = get_string('viewyourprofile', 'theme_snap');

@@ -377,7 +377,7 @@ class theme_snap_core_course_renderer extends core_course_renderer {
                 $engagementmeta[] = get_string('xofy'.$meta->submitstrkey, 'theme_snap',
                     (object) array(
                         'completed' => $meta->numsubmissions,
-                        'participants' => \theme_snap\local::course_participant_count($COURSE->id)
+                        'participants' => \theme_snap\local::course_participant_count($COURSE->id, $mod->modname)
                     )
                 );
             }
@@ -495,41 +495,17 @@ class theme_snap_core_course_renderer extends core_course_renderer {
 
     /**
      * Get page module html
-     * @param $mod
+     * @param cm_info $mod
      * @return string
      */
-    protected function mod_page_html($mod) {
+    protected function mod_page_html(cm_info $mod) {
         if (!$mod->uservisible) {
             return "";
         }
-        global $DB;
-        $sql = "SELECT * FROM {course_modules} cm
-                  JOIN {page} p ON p.id = cm.instance
-                WHERE cm.id = ?";
-        $page = $DB->get_record_sql($sql, array($mod->id));
 
-        $context = context_module::instance($mod->id);
+        $page = \theme_snap\local::get_page_mod($mod);
 
-        $formatoptions = new stdClass;
-        $formatoptions->noclean = true;
-        $formatoptions->overflowdiv = true;
-        $formatoptions->context = $context;
-
-        // Make sure we have some summary/extract text for the course page.
-        if (!empty($page->intro)) {
-            $page->summary = file_rewrite_pluginfile_urls($page->intro,
-                'pluginfile.php', $context->id, 'mod_page', 'intro', null);
-            $page->summary = format_text($page->summary, $page->introformat, $formatoptions);
-        } else {
-            $preview = html_to_text($page->content, 0, false);
-            $page->summary = shorten_text($preview, 200);
-        }
-
-        $content = file_rewrite_pluginfile_urls($page->content,
-            'pluginfile.php', $context->id, 'mod_page', 'content', $page->revision);
-        $content = format_text($content, $page->contentformat, $formatoptions);
-
-        $imgarr = \theme_snap\local::extract_first_image($content);
+        $imgarr = \theme_snap\local::extract_first_image($page->content);
 
         $thumbnail = '';
         if ($imgarr) {
@@ -540,14 +516,26 @@ class theme_snap_core_course_renderer extends core_course_renderer {
         $readmore = get_string('readmore', 'theme_snap');
         $close = get_string('close', 'theme_snap');
 
+        // Identify content elements which should force an AJAX lazy load.
+        $elcontentblist = ['iframe', 'video', 'object', 'embed'];
+        $content = $page->content;
+        $lazyload = false;
+        foreach ($elcontentblist as $el) {
+            if (stripos($content, '<'.$el) !== false) {
+                $content = ''; // Don't include the content as it is likely to slow the page load down considerably.
+                $lazyload = true;
+            }
+        }
+        $contentloaded = !$lazyload ? 1 : 0;
+
         $o = "
         {$thumbnail}
         <div class='summary-text'>
             {$page->summary}
-            <p><a class='pagemod-readmore' href='$mod->url'>$readmore</a></p>
+            <p><a class='pagemod-readmore' href='{$mod->url}' data-pagemodcontext='{$mod->context->id}'>{$readmore}</a></p>
         </div>
 
-        <div class=pagemod-content tabindex='-1'>
+        <div class=pagemod-content tabindex='-1' data-content-loaded={$contentloaded}>
             {$content}
             <div><hr><a  class='snap-action-icon' href='#'>
             <i class='icon icon-office-52'></i><small>$close</small></a></div>

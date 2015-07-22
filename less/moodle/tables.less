@@ -42,6 +42,15 @@ table#fixed_column tr.even th {
 .path-grade-report-grader table#fixed_column tr th {
     border-color: @table-border-color;
 }
+.path-grade-report-grader .gradeparent .floater .cell {
+    border-color: @table-border-color;
+}
+.path-grade-report-grader .gradeparent .floater.sideonly .cell:nth-child(odd):not(.header) {
+    background-color: @table-bg;
+}
+.path-grade-report-grader .gradeparent .floater.sideonly .cell:nth-child(even) {
+    background-color: @table-bg-accent;
+}
 
 .gradeparent #user-grades,
 #page-report-loglive-index .generaltable,
