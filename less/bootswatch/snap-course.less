@@ -47,14 +47,48 @@ section#region-main
     text-align:center;
 }
 
-@media screen and (min-width: @screen-md) {
+.path-course-view section#region-main > .singlebutton input[type="submit"] {
+    background-image: url([[pix:label|icon]]);
+    background-repeat: no-repeat;
+    background-color: transparent;
+    font-size: small;
+    border: none;
+    padding-left: 2.5em;
+    color: #ccc;
+    &:active {
+        box-shadow: none;
+    }
+}
+
+.ie.path-course-view section#region-main > .singlebutton input[type="submit"] {
+    background-image: url([[pix:theme|edit_for_ie]]);
+    background-size: 23px;
+    background-position: left center;
+}
+
+@media screen and (max-width: @screen-md-max) {
+    .path-course-view:not(.editing) section#region-main > .singlebutton input[type="submit"],
+    .path-course-view:not(.editing) section#region-main > .singlebutton input[type="submit"]:hover {
+        color: transparent;
+        background-position: center;
+    }
+}
+
+.editing.path-course-view section#region-main > .singlebutton input[type="submit"],
+.path-course-view section#region-main > .singlebutton input[type="submit"]:hover {
+        color: @brand-primary;
+        border: none;
+        background-position: left;
+}
+
+@media screen and (min-width: @screen-md-min) {
     .path-course-view .singlebutton {
-        float:right;
-        margin-right:-4%;
+        float: right;
+        margin-right: -4%;
     }
 }
 .section .filler {
-    display:none;
+    display: none;
 }
 
 // -------------------------
