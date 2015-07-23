@@ -440,8 +440,9 @@ img.iconhelp:hover {
     }
 }
 
-div[id^="bar_"] > div[id^="progress_"] {
-    background-color: @brand-primary !important;
+.progress .bar,
+.progress-bar:not(progress-bar-info):not(.progress-bar-success):not(.progress-bar-warning):not(.progress-bar-danger) {
+    background-color: @brand-primary;
 }
 
 .dropdown-menu > li > a:hover,
