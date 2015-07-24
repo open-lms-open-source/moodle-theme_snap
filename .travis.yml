@@ -20,12 +20,12 @@ env:
 sudo: false
 
 before_install:
+- composer selfupdate
 - composer config -g github-oauth.github.com $GITHUB_API_TOKEN
 
 install:
   - cd ../..
-  - git clone git://github.com/moodlerooms/moodle-plugin-ci helper
-  - composer install --working-dir helper
+  - composer create-project -n moodlerooms/moodle-plugin-ci helper dev-master
   - helper/bin/phing -f helper/install.xml
 
 script:
@@ -34,7 +34,5 @@ script:
   - helper/bin/phing -f helper/script.xml PHPMessDetector
   - helper/bin/phing -f helper/script.xml CodeChecker
   - helper/bin/phing -f helper/script.xml CSSLint
-  - helper/bin/phing -f helper/script.xml Shifter
   - helper/bin/phing -f helper/script.xml JSHint
   - helper/bin/phing -f helper/script.xml PHPUnit
-  - helper/bin/phing -f helper/script.xml Behat
