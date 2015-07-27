@@ -215,7 +215,6 @@ input#id_submitbutton2,
 td.submit input,
 #notice .singlebutton + .singlebutton input,
 #login.fixy input[type=submit],
-.submit.buttons input[name="cancel"],
 .section-modchooser-link a,
 button,
 .yui-skin-sam .yui-button,
@@ -227,19 +226,21 @@ input[type="button"],
 input[type="submit"],
 input[type="reset"],
 #page-mast .snap-login-button {
-    background-color:@brand-primary;
-    border-color: #fff;
-    color:#fff;
-    font-family: @font-family-base;
-    font-weight: 300;
+  background-color:darken(@brand-primary, 5%);
+  border:0;
+  color:#fff;
+  font-family: @font-family-base;
+  font-weight: 300;
+  box-shadow: 0 3px 0 0 darken(@brand-primary, 8%);
+  transition: all .4s ease-in-out;
     &:hover,
     &:focus,
     &:active,
     &.active {
-        background-color: darken(@brand-primary, 8%);
-        border-color: darken(@brand-primary, 12%);
-        color:#fff;
-        text-decoration:none;
+      background-color: darken(@brand-primary, 8%);
+      color:#fff;
+      text-decoration:none;
+      box-shadow: 0 3px 0 0 darken(@brand-primary, 12%);
     }
     &:visited {
         color: #fff;
@@ -247,6 +248,12 @@ input[type="reset"],
     &[disabled] {
         background-color: @brand-primary;
     }
+}
+
+// None standard buttons - e.g. atto
+.editing.path-course-view section#region-main > .singlebutton input[type="submit"],
+.editor_atto_toolbar button{
+  box-shadow:none;
 }
 
 #show-toc {

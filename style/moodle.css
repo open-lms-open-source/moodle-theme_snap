@@ -14448,15 +14448,20 @@ input[type="reset"] {
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
+  border-color: #fff;
   padding: 0.25em 1em;
   margin: 0 .4em;
   vertical-align: baseline;
   line-height: 1.5;
-  background-color: #03a9f4;
-  border-color: #fff;
+  background-color: #0398db;
+  border: 0;
   color: #fff;
   font-family: "Roboto", "Fira Sans", "Segoe UI", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif, "line-icons";
   font-weight: 300;
+  -webkit-box-shadow: 0 3px 0 0 #038dcc;
+          box-shadow: 0 3px 0 0 #038dcc;
+  -webkit-transition: all 0.4s ease-in-out;
+          transition: all 0.4s ease-in-out;
   margin: 0 0 10px 5px;
 }
 button:focus,
@@ -14561,9 +14566,10 @@ input[type="button"].active,
 input[type="submit"].active,
 input[type="reset"].active {
   background-color: #038dcc;
-  border-color: #027fb8;
   color: #fff;
   text-decoration: none;
+  -webkit-box-shadow: 0 3px 0 0 #027fb8;
+          box-shadow: 0 3px 0 0 #027fb8;
 }
 button:visited,
 input.form-submit:visited,
@@ -14632,15 +14638,20 @@ input.fp-btn-choose {
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
+  border-color: #fff;
   padding: 0.25em 1em;
   margin: 0 .4em;
   vertical-align: baseline;
   line-height: 1.5;
-  background-color: #03a9f4;
-  border-color: #fff;
+  background-color: #0398db;
+  border: 0;
   color: #fff;
   font-family: "Roboto", "Fira Sans", "Segoe UI", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif, "line-icons";
   font-weight: 300;
+  -webkit-box-shadow: 0 3px 0 0 #038dcc;
+          box-shadow: 0 3px 0 0 #038dcc;
+  -webkit-transition: all 0.4s ease-in-out;
+          transition: all 0.4s ease-in-out;
   padding: 14px 16px;
   font-size: 23px;
   line-height: 1.33;
@@ -14694,9 +14705,10 @@ fieldset[disabled] #page-grade-grading-manage .actions .action {
 #page-grade-grading-manage .actions .action:active,
 #page-grade-grading-manage .actions .action.active {
   background-color: #038dcc;
-  border-color: #027fb8;
   color: #fff;
   text-decoration: none;
+  -webkit-box-shadow: 0 3px 0 0 #027fb8;
+          box-shadow: 0 3px 0 0 #027fb8;
 }
 #page-grade-grading-manage .actions .action:visited {
   color: #fff;
@@ -15485,14 +15497,20 @@ body.tag .managelink {
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
+  border-color: #fff;
   padding: 0.25em 1em;
   margin: 0 .4em;
   vertical-align: baseline;
   line-height: 1.5;
-  border-color: #fff;
+  background-color: #0398db;
+  border: 0;
   color: #fff;
   font-family: "Roboto", "Fira Sans", "Segoe UI", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif, "line-icons";
   font-weight: 300;
+  -webkit-box-shadow: 0 3px 0 0 #038dcc;
+          box-shadow: 0 3px 0 0 #038dcc;
+  -webkit-transition: all 0.4s ease-in-out;
+          transition: all 0.4s ease-in-out;
   color: #ffffff;
   background-color: #03a9f4;
   border-color: rgba(0, 0, 0, 0.5);
@@ -15551,9 +15569,10 @@ fieldset[disabled] .yui-button button {
 .yui3-button.active,
 .yui-button button.active {
   background-color: #038dcc;
-  border-color: #027fb8;
   color: #fff;
   text-decoration: none;
+  -webkit-box-shadow: 0 3px 0 0 #027fb8;
+          box-shadow: 0 3px 0 0 #027fb8;
 }
 .yui3-button:visited,
 .yui-button button:visited {
@@ -18328,15 +18347,20 @@ li.snap-activity.modtype_folder .snap-assettype {
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
+  border-color: #fff;
   padding: 0.25em 1em;
   margin: 0 .4em;
   vertical-align: baseline;
   line-height: 1.5;
-  background-color: #03a9f4;
-  border-color: #fff;
+  background-color: #0398db;
+  border: 0;
   color: #fff;
   font-family: "Roboto", "Fira Sans", "Segoe UI", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif, "line-icons";
   font-weight: 300;
+  -webkit-box-shadow: 0 3px 0 0 #038dcc;
+          box-shadow: 0 3px 0 0 #038dcc;
+  -webkit-transition: all 0.4s ease-in-out;
+          transition: all 0.4s ease-in-out;
   clear: both;
   margin-bottom: 1em;
   margin-left: 0;
@@ -18395,9 +18419,10 @@ fieldset[disabled] .summary > a:last-of-type {
 #page-site-index .sitetopic > a:last-of-type.active,
 .summary > a:last-of-type.active {
   background-color: #038dcc;
-  border-color: #027fb8;
   color: #fff;
   text-decoration: none;
+  -webkit-box-shadow: 0 3px 0 0 #027fb8;
+          box-shadow: 0 3px 0 0 #027fb8;
 }
 #page-site-index .sitetopic > a:last-of-type:visited,
 .summary > a:last-of-type:visited {
@@ -18621,15 +18646,20 @@ span.editinstructions {
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
+  border-color: #fff;
   padding: 0.25em 1em;
   margin: 0 .4em;
   vertical-align: baseline;
   line-height: 1.5;
-  background-color: #03a9f4;
-  border-color: #fff;
+  background-color: #0398db;
+  border: 0;
   color: #fff;
   font-family: "Roboto", "Fira Sans", "Segoe UI", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif, "line-icons";
   font-weight: 300;
+  -webkit-box-shadow: 0 3px 0 0 #038dcc;
+          box-shadow: 0 3px 0 0 #038dcc;
+  -webkit-transition: all 0.4s ease-in-out;
+          transition: all 0.4s ease-in-out;
   color: #fff !important;
 }
 .snap-asset .unread a:focus,
@@ -18670,9 +18700,10 @@ fieldset[disabled] .snap-asset .unread a {
 .snap-asset .unread a:active,
 .snap-asset .unread a.active {
   background-color: #038dcc;
-  border-color: #027fb8;
   color: #fff;
   text-decoration: none;
+  -webkit-box-shadow: 0 3px 0 0 #027fb8;
+          box-shadow: 0 3px 0 0 #027fb8;
 }
 .snap-asset .unread a:visited {
   color: #fff;
@@ -18708,15 +18739,20 @@ fieldset[disabled] .snap-asset .unread a {
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
+  border-color: #fff;
   padding: 0.25em 1em;
   margin: 0 .4em;
   vertical-align: baseline;
   line-height: 1.5;
-  background-color: #03a9f4;
-  border-color: #fff;
+  background-color: #0398db;
+  border: 0;
   color: #fff;
   font-family: "Roboto", "Fira Sans", "Segoe UI", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif, "line-icons";
   font-weight: 300;
+  -webkit-box-shadow: 0 3px 0 0 #038dcc;
+          box-shadow: 0 3px 0 0 #038dcc;
+  -webkit-transition: all 0.4s ease-in-out;
+          transition: all 0.4s ease-in-out;
 }
 #changenumsections .increase-sections:focus,
 #changenumsections .reduce-sections:focus,
@@ -18772,9 +18808,10 @@ fieldset[disabled] #changenumsections .reduce-sections {
 #changenumsections .increase-sections.active,
 #changenumsections .reduce-sections.active {
   background-color: #038dcc;
-  border-color: #027fb8;
   color: #fff;
   text-decoration: none;
+  -webkit-box-shadow: 0 3px 0 0 #027fb8;
+          box-shadow: 0 3px 0 0 #027fb8;
 }
 #changenumsections .increase-sections:visited,
 #changenumsections .reduce-sections:visited {
@@ -20666,15 +20703,20 @@ http://blog.rodneyrehm.de/archives/34-iOS7-Mobile-Safari-And-Viewport-Units.html
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
+  border-color: #fff;
   padding: 0.25em 1em;
   margin: 0 .4em;
   vertical-align: baseline;
   line-height: 1.5;
-  background-color: #03a9f4;
-  border-color: #fff;
+  background-color: #0398db;
+  border: 0;
   color: #fff;
   font-family: "Roboto", "Fira Sans", "Segoe UI", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif, "line-icons";
   font-weight: 300;
+  -webkit-box-shadow: 0 3px 0 0 #038dcc;
+          box-shadow: 0 3px 0 0 #038dcc;
+  -webkit-transition: all 0.4s ease-in-out;
+          transition: all 0.4s ease-in-out;
 }
 .paging.paging-morelink a:focus,
 .paging.paging-morelink a:active:focus,
@@ -20714,9 +20756,10 @@ fieldset[disabled] .paging.paging-morelink a {
 .paging.paging-morelink a:active,
 .paging.paging-morelink a.active {
   background-color: #038dcc;
-  border-color: #027fb8;
   color: #fff;
   text-decoration: none;
+  -webkit-box-shadow: 0 3px 0 0 #027fb8;
+          box-shadow: 0 3px 0 0 #027fb8;
 }
 .paging.paging-morelink a:visited {
   color: #fff;
@@ -21443,13 +21486,19 @@ table#user-grades tr.avg td.cell {
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
+  border-color: #fff;
   padding: 0.25em 1em;
   margin: 0 .4em;
   vertical-align: baseline;
   line-height: 1.5;
-  border-color: #fff;
+  background-color: #0398db;
+  border: 0;
   font-family: "Roboto", "Fira Sans", "Segoe UI", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif, "line-icons";
   font-weight: 300;
+  -webkit-box-shadow: 0 3px 0 0 #038dcc;
+          box-shadow: 0 3px 0 0 #038dcc;
+  -webkit-transition: all 0.4s ease-in-out;
+          transition: all 0.4s ease-in-out;
   color: #ffffff;
   background-color: #03a9f4;
   border-color: rgba(0, 0, 0, 0.5);
@@ -21545,9 +21594,10 @@ fieldset[disabled] .gradingform_rubric.editor .addcriterion input {
 .gradingform_rubric.editor .addlevel input.active,
 .gradingform_rubric.editor .addcriterion input.active {
   background-color: #038dcc;
-  border-color: #027fb8;
   color: #fff;
   text-decoration: none;
+  -webkit-box-shadow: 0 3px 0 0 #027fb8;
+          box-shadow: 0 3px 0 0 #027fb8;
 }
 .gradingform_checklist.editor .addgroup input:visited,
 .gradingform_checklist.editor .additem input:visited,
@@ -22790,7 +22840,6 @@ input#id_submitbutton2,
 td.submit input,
 #notice .singlebutton + .singlebutton input,
 #login.fixy input[type=submit],
-.submit.buttons input[name="cancel"],
 .section-modchooser-link a,
 button,
 .yui-skin-sam .yui-button,
@@ -22802,11 +22851,15 @@ input[type="button"],
 input[type="submit"],
 input[type="reset"],
 #page-mast .snap-login-button {
-  background-color: #03a9f4;
-  border-color: #fff;
+  background-color: #0398db;
+  border: 0;
   color: #fff;
   font-family: "Roboto", "Fira Sans", "Segoe UI", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif, "line-icons";
   font-weight: 300;
+  -webkit-box-shadow: 0 3px 0 0 #038dcc;
+          box-shadow: 0 3px 0 0 #038dcc;
+  -webkit-transition: all 0.4s ease-in-out;
+          transition: all 0.4s ease-in-out;
 }
 #page-site-index .sitetopic > a:last-of-type:hover,
 .summary > a:last-of-type:hover,
@@ -22819,7 +22872,6 @@ input#id_submitbutton2:hover,
 td.submit input:hover,
 #notice .singlebutton + .singlebutton input:hover,
 #login.fixy input[type=submit]:hover,
-.submit.buttons input[name="cancel"]:hover,
 .section-modchooser-link a:hover,
 button:hover,
 .yui-skin-sam .yui-button:hover,
@@ -22842,7 +22894,6 @@ input#id_submitbutton2:focus,
 td.submit input:focus,
 #notice .singlebutton + .singlebutton input:focus,
 #login.fixy input[type=submit]:focus,
-.submit.buttons input[name="cancel"]:focus,
 .section-modchooser-link a:focus,
 button:focus,
 .yui-skin-sam .yui-button:focus,
@@ -22865,7 +22916,6 @@ input#id_submitbutton2:active,
 td.submit input:active,
 #notice .singlebutton + .singlebutton input:active,
 #login.fixy input[type=submit]:active,
-.submit.buttons input[name="cancel"]:active,
 .section-modchooser-link a:active,
 button:active,
 .yui-skin-sam .yui-button:active,
@@ -22888,7 +22938,6 @@ input#id_submitbutton2.active,
 td.submit input.active,
 #notice .singlebutton + .singlebutton input.active,
 #login.fixy input[type=submit].active,
-.submit.buttons input[name="cancel"].active,
 .section-modchooser-link a.active,
 button.active,
 .yui-skin-sam .yui-button.active,
@@ -22901,9 +22950,10 @@ input[type="submit"].active,
 input[type="reset"].active,
 #page-mast .snap-login-button.active {
   background-color: #038dcc;
-  border-color: #027fb8;
   color: #fff;
   text-decoration: none;
+  -webkit-box-shadow: 0 3px 0 0 #027fb8;
+          box-shadow: 0 3px 0 0 #027fb8;
 }
 #page-site-index .sitetopic > a:last-of-type:visited,
 .summary > a:last-of-type:visited,
@@ -22916,7 +22966,6 @@ input#id_submitbutton2:visited,
 td.submit input:visited,
 #notice .singlebutton + .singlebutton input:visited,
 #login.fixy input[type=submit]:visited,
-.submit.buttons input[name="cancel"]:visited,
 .section-modchooser-link a:visited,
 button:visited,
 .yui-skin-sam .yui-button:visited,
@@ -22941,7 +22990,6 @@ input#id_submitbutton2[disabled],
 td.submit input[disabled],
 #notice .singlebutton + .singlebutton input[disabled],
 #login.fixy input[type=submit][disabled],
-.submit.buttons input[name="cancel"][disabled],
 .section-modchooser-link a[disabled],
 button[disabled],
 .yui-skin-sam .yui-button[disabled],
@@ -22954,6 +23002,11 @@ input[type="submit"][disabled],
 input[type="reset"][disabled],
 #page-mast .snap-login-button[disabled] {
   background-color: #03a9f4;
+}
+.editing.path-course-view section#region-main > .singlebutton input[type="submit"],
+.editor_atto_toolbar button {
+  -webkit-box-shadow: none;
+          box-shadow: none;
 }
 #show-toc {
   color: #03a9f4;
