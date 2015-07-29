@@ -671,20 +671,22 @@ class theme_snap_core_renderer extends toc_renderer {
                     if (count($avatars)>4) {
                         $hiddenavatars = array_slice($avatars, 4);
                         $avatars = array_slice($avatars, 0, 4);
-                        $extralink = '<a class="courseinfo-teachers-more state-visible" href="#">+'.count($hiddenavatars).'</a>';
+                        $extralink = '<a class="courseinfo-teachers-more state-visible" title="'.count($hiddenavatars).'" href="#">+'.count($hiddenavatars).'</a>';
                     } else {
                         $hiddenavatars = [];
                         $extralink = '';
                     }
-                    $vcourseteachers = '<div class="courseinfo-teachers-visible">'.$extralink.implode('', $avatars).'</div>';
+                    $vcourseteachers = '<div class="courseinfo-teachers-visible">'.implode('', $avatars).$extralink.'</div>';
                     $ecourseteachers = '<div class="courseinfo-teachers-extra">'.implode('', $hiddenavatars).'</div>';
                 }
 
                 $clink = '<div data-href="'.$CFG->wwwroot.'/course/view.php?id='.$c->id.
                     '" class="courseinfo" style="'.$courseimagecss.'">
-                    <div class="courseinfo-teachers">'.$vcourseteachers.$ecourseteachers.'</div>
+
                     <div class="courseinfo-body"><h3><a href="'.$CFG->wwwroot.'/course/view.php?id='.$c->id.'">'.
-                    format_string($c->fullname).'</a></h3>'.$dynamicinfo.$pubstatus.'</div></div>';
+                    format_string($c->fullname).'</a></h3>'.$dynamicinfo.$pubstatus.'</div>
+                    <div class="courseinfo-teachers">'.$courseteachers.$vcourseteachers.$ecourseteachers.'</div>
+                    </div>';
                 $courselist .= $clink;
             }
             $courselist .= "</div>";

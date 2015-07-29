@@ -4528,6 +4528,7 @@ input[type="text"] + input[type="submit"] {
 }
 .courseinfo:hover {
   background-size: 115% auto;
+  transform: scale(1.03);
 }
 .courseinfo:hover .courseinfo-body {
   padding-bottom: 0.5em;
@@ -4548,12 +4549,13 @@ input[type="text"] + input[type="submit"] {
 }
 .courseinfo .courseinfo-body {
   transition: all 0.4s ease-in-out;
-  background-color: white;
+  background-color: rgba(255, 255, 255, 0.9);
   color: #666;
   position: absolute;
   width: 100%;
   padding: 0 1em 1em 1em;
   bottom: 0;
+  min-height: 50%;
 }
 .courseinfo .courseinfo-body h3 a {
   display: block;
@@ -4586,6 +4588,7 @@ input[type="text"] + input[type="submit"] {
 .courseinfo .courseinfo-teachers {
   max-height: 200px;
   overflow: hidden;
+  text-align: right;
 }
 .courseinfo.show-all .courseinfo-teachers {
   overflow: auto;
@@ -4593,7 +4596,6 @@ input[type="text"] + input[type="submit"] {
 .courseinfo .userpicture,
 .courseinfo .courseinfo-teachers-more {
   border-radius: 50%;
-  float: right;
   margin-left: 1%;
   width: 38px;
   height: 38px;
@@ -4602,6 +4604,7 @@ input[type="text"] + input[type="submit"] {
 .courseinfo .courseinfo-teachers-more {
   background-color: transparent;
   font-size: .8em;
+  float: right;
   text-align: center;
   padding-top: 0.35em;
   border: 2px solid #fff;
