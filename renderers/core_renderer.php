@@ -633,16 +633,16 @@ class theme_snap_core_renderer extends toc_renderer {
                 }
                 $dynamicinfo = '<div data-courseid="'.$c->id.'" class=dynamicinfo></div>';
 
-                $teachers = '';
-                $courseteachers = '';
-
                 $clist = new course_in_list($c);
                 $teachers = $clist->get_course_contacts();
+
+                $vcourseteachers = '';
+                $ecourseteachers = '';
 
                 if (!empty($teachers)) {
                     $avatars = [];
                     $blankavatars = [];
-                    $courseteachers = "<div class='sr-only'>".get_string('coursecontacts', 'theme_snap')."</div>";
+
                     // Get all teacher user records in one go.
                     $teacherids = array();
                     foreach ($teachers as $teacher) {
