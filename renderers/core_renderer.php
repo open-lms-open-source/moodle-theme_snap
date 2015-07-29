@@ -642,7 +642,7 @@ class theme_snap_core_renderer extends toc_renderer {
                 if (!empty($teachers)) {
                     $avatars = [];
                     $blankavatars = [];
-
+                    $courseteachers .= '<h4 class="sr-only">'.get_string('coursecontacts', 'theme_snap').'</h4>';
                     // Get all teacher user records in one go.
                     $teacherids = array();
                     foreach ($teachers as $teacher) {
@@ -671,7 +671,7 @@ class theme_snap_core_renderer extends toc_renderer {
                     if (count($avatars)>4) {
                         $hiddenavatars = array_slice($avatars, 4);
                         $avatars = array_slice($avatars, 0, 4);
-                        $extralink = '<a class="courseinfo-teachers-more state-visible" title="'.count($hiddenavatars).'" href="#">+'.count($hiddenavatars).'</a>';
+                        $extralink = '<a class="courseinfo-teachers-more state-visible" href=#>+'.count($hiddenavatars).'</a>';
                     } else {
                         $hiddenavatars = [];
                         $extralink = '';
