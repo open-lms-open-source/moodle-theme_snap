@@ -14595,6 +14595,10 @@ input.fp-btn-choose {
   line-height: 1;
   border-radius: 0px;
 }
+#page-course-view-flexpage .singlebutton {
+  float: none;
+  margin-right: 0px;
+}
 .gradetreebox h4 {
   font-size: 18px;
 }
