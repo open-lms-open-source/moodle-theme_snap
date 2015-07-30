@@ -645,14 +645,16 @@ class theme_snap_core_renderer extends toc_renderer {
                 }
                 $dynamicinfo = '<div data-courseid="'.$c->id.'" class=dynamicinfo></div>';
 
-                $teachers = '';
-                $courseteachers = '';
-
                 $clist = new course_in_list($c);
                 $teachers = $clist->get_course_contacts();
 
+                $vcourseteachers = '';
+                $ecourseteachers = '';
+
                 if (!empty($teachers)) {
-                    $courseteachers = "<div class='sr-only'>".get_string('coursecontacts', 'theme_snap')."</div>";
+                    $avatars = [];
+                    $blankavatars = [];
+                    $courseteachers .= '<h4 class="sr-only">'.get_string('coursecontacts', 'theme_snap').'</h4>';
                     // Get all teacher user records in one go.
                     $teacherids = array();
                     foreach ($teachers as $teacher) {
@@ -668,14 +670,35 @@ class theme_snap_core_renderer extends toc_renderer {
                         $userpicture->link = false;
                         $userpicture->size = 100;
                         $teacherpicture = $this->render($userpicture);
-                        $courseteachers .= $teacherpicture;
+
+                        if (stripos($teacherpicture, 'defaultuserpic') === false) {
+                            $avatars[] = $teacherpicture;
+                        } else {
+                            $blankavatars[] = $teacherpicture;
+                        }
                     }
+                    // Let's put the interesting avatars first!
+                    $avatars = array_merge($avatars, $blankavatars);
+                    // Limit visible to 4.
+                    if (count($avatars)>4) {
+                        $hiddenavatars = array_slice($avatars, 4);
+                        $avatars = array_slice($avatars, 0, 4);
+                        $extralink = '<a class="courseinfo-teachers-more state-visible" href=#>+'.count($hiddenavatars).'</a>';
+                    } else {
+                        $hiddenavatars = [];
+                        $extralink = '';
+                    }
+                    $vcourseteachers = '<div class="courseinfo-teachers-visible">'.implode('', $avatars).$extralink.'</div>';
+                    $ecourseteachers = '<div class="courseinfo-teachers-extra">'.implode('', $hiddenavatars).'</div>';
                 }
 
                 $clink = '<div data-href="'.$CFG->wwwroot.'/course/view.php?id='.$c->id.
                     '" class="courseinfo" style="'.$courseimagecss.'">
+
                     <div class="courseinfo-body"><h3><a href="'.$CFG->wwwroot.'/course/view.php?id='.$c->id.'">'.
-                    format_string($c->fullname).'</a></h3>'.$dynamicinfo.$courseteachers.$pubstatus.'</div></div>';
+                    format_string($c->fullname).'</a></h3>'.$dynamicinfo.$pubstatus.'</div>
+                    <div class="courseinfo-teachers">'.$courseteachers.$vcourseteachers.$ecourseteachers.'</div>
+                    </div>';
                 $courselist .= $clink;
             }
             $courselist .= "</div>";

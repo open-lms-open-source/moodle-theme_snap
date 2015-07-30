@@ -831,22 +831,47 @@ input[type="text"]+input[type="submit"] {
     box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
     margin:0.5em 1%;
     cursor:pointer;
+    overflow:hidden;
     .alakazam();
     &:hover {
         background-size:115% auto;
-        // transform:scale(1.03);
+        transform:scale(1.03);
         .courseinfo-body {
             padding-bottom:0.5em;
         }
     }
+
+    .courseinfo-teachers {
+        width:100%;
+        padding:1em 1em 1em 1em;
+    }
+
+
+    .courseinfo-teachers-extra {
+        .alakazam();
+        opacity: 0;
+    }
+
+
+    &.show-all {
+        .courseinfo-teachers-extra {
+            opacity: 1;
+        }
+        .courseinfo-body {
+            bottom: -100%;
+        }
+    }
+
     .courseinfo-body {
         .alakazam();
-        background-color:white;
+        background-color:rgba(255,255,255,0.9);
         color:#666;
         position:absolute;
         bottom:0;
         width:100%;
         padding:0 1em 1em 1em;
+        bottom:0;
+        min-height:50%;
         h3 a {
             display:block;
             display: -webkit-box;
@@ -864,22 +889,49 @@ input[type="text"]+input[type="submit"] {
         font-weight:500;
     }
     .dynamicinfo{
-        max-width:50%;
         float:left;
+        max-width:50%;
     }
     .completionstatus,
     .coursegrade {
         font-size:small;
         line-height:0.5;
     }
-    .userpicture{
+    .completionstatus {
+        white-space:nowrap;
+        margin-bottom:1em;
+    }
+
+    .courseinfo-teachers {
+        max-height: 200px;
+        overflow: hidden;
+        text-align:right;
+    }
+
+    &.show-all .courseinfo-teachers {
+        overflow: auto;
+    }
+
+    .userpicture,
+    .courseinfo-teachers-more{
         border-radius:50%;
-        float:right;
         margin-left:1%;
         width:38px;
         height:38px;
         background-color:#ccc;
     }
+
+    .courseinfo-teachers-more {
+        background-color: transparent;
+        font-size: .8em;
+        float:right;
+        text-align:center;
+        padding-top: 0.35em;
+        border:2px solid #fff;
+        color:#fff !important;
+        text-decoration:none !important;
+    }
+
     .published-status {
         clear:both;
         margin-bottom:-1em;

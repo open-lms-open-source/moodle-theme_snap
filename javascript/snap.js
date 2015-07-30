@@ -865,6 +865,18 @@ function snapInit() {
             })(resizestamp);
         });
 
+        // Reveal more teachers.
+        $('#fixy-my-courses').on('click hover', '.courseinfo-teachers-more', null, function(e) {
+            e.preventDefault();
+            var nowhtml = $(this).html();
+            if (nowhtml.indexOf('+')>-1){
+                $(this).html(nowhtml.replace('+','-'));
+            } else {
+                $(this).html(nowhtml.replace('-','+'));
+            }
+            $(this).parents('.courseinfo').toggleClass('show-all');
+        });
+
 
         // Bootstrap js elements
 
