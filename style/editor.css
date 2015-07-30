@@ -7419,6 +7419,9 @@ div.editor_atto_toolbar {
 .editor_atto_content_wrap {
   border-color: #eee;
 }
+.editor_atto_content .img-responsive {
+  display: inline;
+}
 .editor_atto_toolbar button:active,
 .editor_atto_toolbar button.highlight,
 .editor_atto_toolbar button:hover {
