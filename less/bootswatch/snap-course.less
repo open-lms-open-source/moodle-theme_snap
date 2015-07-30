@@ -597,9 +597,8 @@ we do this by default in snap, so hide moodle version */
     }
     .pagemod-readmore {
         display:inline-block;
-        padding:0.3em 3%;
-        padding: 0.25em 1em;
-        margin: 0 .4em;
+        padding: 0.25em 4%;
+        margin: 0 4% 0 0;
         border:1px solid;
         border-radius:2px;
     }
@@ -691,9 +690,9 @@ we do this by default in snap, so hide moodle version */
 
 .modtype_book,
 .modtype_page {
-    border-top:1px solid #ccc;
     border-bottom:1px solid #ccc;
 }
+
 
 .snap-native.modtype_book ol.bookmod-chapters{
     margin:0;
@@ -1365,10 +1364,22 @@ span.editinstructions {
         }
     }
 }
+// TODO - snap-mime-page
+// experiment with pulling images left and right on large screens
 
-// SHAME
-.module-meta .label{
+
+// SHAME - metadata labels about handing stuff in
+.module-meta {
+  a{
+    text-decoration:none !important;
+    .alakazam();
+    &:hover {
+      opacity:0.7;
+    }
+  }
+  .label{
     margin-right:1%;
     font-family: @font-family-base;
     font-weight: bold;
+  }
 }
