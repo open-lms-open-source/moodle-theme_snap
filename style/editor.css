@@ -2558,41 +2558,25 @@ section#region-main
   margin: 0.5em 0;
   text-align: center;
 }
-.path-course-view section#region-main > .singlebutton input[type="submit"] {
-  background-image: url([[pix:label|icon]]);
-  background-repeat: no-repeat;
-  background-color: transparent;
-  font-size: small;
-  border: none;
-  padding-left: 2.5em;
-  color: #ccc;
+#page-mast .singlebutton {
+  float: right;
+  margin-top: -3.2em;
+  margin-right: -4%;
+  display: none;
 }
-.path-course-view section#region-main > .singlebutton input[type="submit"]:active {
-  box-shadow: none;
+#page-mast .singlebutton input[type="submit"] {
+  background-color: #999999 !important;
+  box-shadow: 0;
+}
+@media screen and (min-width: 992px) {
+  #page-mast .singlebutton {
+    display: block;
+  }
 }
 .ie.path-course-view section#region-main > .singlebutton input[type="submit"] {
   background-image: url([[pix:theme|edit_for_ie]]);
   background-size: 23px;
   background-position: left center;
-}
-@media screen and (max-width: 1199px) {
-  .path-course-view:not(.editing) section#region-main > .singlebutton input[type="submit"],
-  .path-course-view:not(.editing) section#region-main > .singlebutton input[type="submit"]:hover {
-    color: transparent;
-    background-position: center;
-  }
-}
-.editing.path-course-view section#region-main > .singlebutton input[type="submit"],
-.path-course-view section#region-main > .singlebutton input[type="submit"]:hover {
-  color: #03a9f4;
-  border: none;
-  background-position: left;
-}
-@media screen and (min-width: 992px) {
-  .path-course-view .singlebutton {
-    float: right;
-    margin-right: -4%;
-  }
 }
 .section .filler {
   display: none;
@@ -3399,121 +3383,31 @@ li.snap-activity.modtype_folder .snap-assettype {
 /* Make it obvious that you can edit a summary - Add text and some styles to that gear thing */
 #page-site-index .sitetopic > a:last-of-type,
 .summary > a:last-of-type {
-  display: inline-block;
-  margin-bottom: 0;
-  font-weight: normal;
-  text-align: center;
-  vertical-align: middle;
-  cursor: pointer;
-  background-image: none;
-  border: 1px solid transparent;
-  white-space: nowrap;
-  padding: 8px 12px;
-  font-size: 18px;
-  line-height: 1.6;
-  border-radius: 0px;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-  border-color: #fff;
-  padding: 0.25em 1em;
-  margin: 0 .4em;
-  vertical-align: baseline;
-  line-height: 1.5;
-  background-color: #0398db;
-  border: 0;
-  color: #fff;
-  font-family: "Roboto", "Fira Sans", "Segoe UI", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif, "line-icons";
-  font-weight: 300;
-  box-shadow: 0 3px 0 0 #038dcc;
-  transition: all 0.4s ease-in-out;
   clear: both;
-  margin-bottom: 1em;
-  margin-left: 0;
-}
-#page-site-index .sitetopic > a:last-of-type:focus,
-.summary > a:last-of-type:focus,
-#page-site-index .sitetopic > a:last-of-type:active:focus,
-.summary > a:last-of-type:active:focus,
-#page-site-index .sitetopic > a:last-of-type.active:focus,
-.summary > a:last-of-type.active:focus {
-  outline: thin dotted;
-  outline: 5px auto -webkit-focus-ring-color;
-  outline-offset: -2px;
-}
-#page-site-index .sitetopic > a:last-of-type:hover,
-.summary > a:last-of-type:hover,
-#page-site-index .sitetopic > a:last-of-type:focus,
-.summary > a:last-of-type:focus {
-  color: #ffffff;
-  text-decoration: none;
-}
-#page-site-index .sitetopic > a:last-of-type:active,
-.summary > a:last-of-type:active,
-#page-site-index .sitetopic > a:last-of-type.active,
-.summary > a:last-of-type.active {
-  outline: 0;
-  background-image: none;
-  -webkit-box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
-  box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
-}
-#page-site-index .sitetopic > a:last-of-type.disabled,
-.summary > a:last-of-type.disabled,
-#page-site-index .sitetopic > a:last-of-type[disabled],
-.summary > a:last-of-type[disabled],
-fieldset[disabled] #page-site-index .sitetopic > a:last-of-type,
-fieldset[disabled] .summary > a:last-of-type {
-  cursor: not-allowed;
-  pointer-events: none;
-  opacity: 0.65;
-  filter: alpha(opacity=65);
-  -webkit-box-shadow: none;
-  box-shadow: none;
-}
-#page-site-index .sitetopic > a:last-of-type:hover,
-.summary > a:last-of-type:hover,
-#page-site-index .sitetopic > a:last-of-type:focus,
-.summary > a:last-of-type:focus {
-  text-decoration: none;
-}
-#page-site-index .sitetopic > a:last-of-type:hover,
-.summary > a:last-of-type:hover,
-#page-site-index .sitetopic > a:last-of-type:focus,
-.summary > a:last-of-type:focus,
-#page-site-index .sitetopic > a:last-of-type:active,
-.summary > a:last-of-type:active,
-#page-site-index .sitetopic > a:last-of-type.active,
-.summary > a:last-of-type.active {
-  background-color: #038dcc;
-  color: #fff;
-  text-decoration: none;
-  box-shadow: 0 3px 0 0 #027fb8;
-}
-#page-site-index .sitetopic > a:last-of-type:visited,
-.summary > a:last-of-type:visited {
-  color: #fff;
-}
-#page-site-index .sitetopic > a:last-of-type[disabled],
-.summary > a:last-of-type[disabled] {
-  background-color: #03a9f4;
+  display: block;
+  text-align: center;
+  margin: 1em 0;
+  background-color: transparent;
+  font-family: "Roboto", "Fira Sans", "Segoe UI", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif, "line-icons";
 }
 #page-site-index .sitetopic > a:last-of-type img,
 .summary > a:last-of-type img {
   display: none;
 }
-#page-site-index .sitetopic > a:last-of-type:before,
-.summary > a:last-of-type:before {
-  content: attr(title);
-  display: inline-block;
-  font-weight: 300;
-}
 #page-site-index .sitetopic > a:last-of-type:after,
 .summary > a:last-of-type:after {
-  content: "\e12a";
-  font-family: "line-icons";
-  margin-left: 11%;
-  vertical-align: bottom;
+  content: attr(title);
+  display: block;
+  font-weight: 300;
+}
+#page-site-index .sitetopic > a:last-of-type:before,
+.summary > a:last-of-type:before {
+  content: " ";
+  background: transparent url([[pix:theme|pencil]]) no-repeat 50% 50%;
+  display: block;
+  height: 3em;
+  width: 3em;
+  margin: 0.5em auto;
 }
 /* all the editing options and completion data in one region */
 /* reset some moodle shame */
@@ -3621,8 +3515,11 @@ div.commands ul.menubar {
   margin-left: 11%;
 }
 .action-menu-shown .toggle-display.textmenu:after {
-  content: "\e126";
-  font-family: "line-icons" !important;
+  content: " ";
+  background: transparent url(/theme/image.php/snap/theme/1438339823/close_x) repeat;
+  display: inline-block;
+  width: 1em;
+  height: 1em;
 }
 .action-menu-shown .moodle-actionmenu > ul > li {
   display: block;
@@ -4272,8 +4169,6 @@ textarea {
 }
 .section-modchooser-text,
 .section-modchooser-link a,
-#page-site-index .sitetopic > a:last-of-type,
-.editing .summary > a:last-of-type,
 #changenumsections .increase-sections,
 #changenumsections .reduce-sections,
 .paging.paging-morelink a,
@@ -4293,8 +4188,6 @@ input[type="reset"] {
 }
 .section-modchooser-text:hover,
 .section-modchooser-link a:hover,
-#page-site-index .sitetopic > a:last-of-type:hover,
-.editing .summary > a:last-of-type:hover,
 #changenumsections .increase-sections:hover,
 #changenumsections .reduce-sections:hover,
 .paging.paging-morelink a:hover,
@@ -4309,8 +4202,6 @@ input[type="submit"]:hover,
 input[type="reset"]:hover,
 .section-modchooser-text:focus,
 .section-modchooser-link a:focus,
-#page-site-index .sitetopic > a:last-of-type:focus,
-.editing .summary > a:last-of-type:focus,
 #changenumsections .increase-sections:focus,
 #changenumsections .reduce-sections:focus,
 .paging.paging-morelink a:focus,
@@ -4363,6 +4254,29 @@ input[type="text"] + input[type="submit"] {
 }
 .fixy .userpicture.defaultuserpic {
   border: none;
+}
+.icon-close:before {
+  content: '';
+  background: transparent url([[pix:theme|close_x]]) no-repeat 50% 50%;
+  display: block;
+  height: 1em;
+  width: 1em;
+  margin: 0.1em auto;
+}
+.fixy .icon-close:before {
+  background: transparent url([[pix:theme|close_x_white]]) no-repeat 50% 50%;
+}
+.icon-arrow-left:before,
+.icon-arrow-right:before {
+  content: '';
+  background: transparent url([[pix:theme|right-arrow]]) no-repeat 50% 50%;
+  display: block;
+  height: 1em;
+  width: 1em;
+  margin: 0.1em auto;
+}
+.icon-arrow-left:before {
+  background: transparent url([[pix:theme|left-arrow]]) no-repeat 50% 50%;
 }
 #page-header {
   background-position: center top;
@@ -5007,16 +4921,13 @@ ol#chapters li.current a {
   margin-bottom: -0.75em;
 }
 #toc-search:before {
-  margin-right: -2.3em;
-  content: "\e0d0";
-  font-family: "line-icons" !important;
-  font-style: normal !important;
-  font-weight: normal !important;
-  font-variant: normal !important;
-  text-transform: none !important;
-  speak: none;
-  line-height: 1;
-  -webkit-font-smoothing: antialiased;
+  content: '';
+  background: transparent url([[pix:theme|search]]) no-repeat 50% 50%;
+  display: inline-block;
+  height: 1.5em;
+  width: 1.5em;
+  margin-right: -2.5em;
+  margin-bottom: -0.3em;
 }
 #toc-search-input {
   webkit-appearance: textfield;
@@ -5140,7 +5051,11 @@ ol#chapters li.current a {
   display: block;
 }
 #searchpin {
-  font-size: 1.5em;
+  background: transparent url([[pix:theme|searchpin]]) no-repeat 50% 50%;
+  display: inline-block;
+  height: 1em;
+  width: 1em;
+  margin: 0.1em;
 }
 /* SHAME - button to toggle actions, e.g. close */
 .snap-action-icon {
@@ -7698,8 +7613,6 @@ legend,
   background-color: #038dcc;
   border-color: #027fb8;
 }
-#page-site-index .sitetopic > a:last-of-type,
-.summary > a:last-of-type,
 #changenumsections .increase-sections,
 #changenumsections .reduce-sections,
 input.form-submit,
@@ -7728,8 +7641,6 @@ input[type="reset"],
   box-shadow: 0 3px 0 0 #038dcc;
   transition: all 0.4s ease-in-out;
 }
-#page-site-index .sitetopic > a:last-of-type:hover,
-.summary > a:last-of-type:hover,
 #changenumsections .increase-sections:hover,
 #changenumsections .reduce-sections:hover,
 input.form-submit:hover,
@@ -7750,8 +7661,6 @@ input[type="button"]:hover,
 input[type="submit"]:hover,
 input[type="reset"]:hover,
 #page-mast .snap-login-button:hover,
-#page-site-index .sitetopic > a:last-of-type:focus,
-.summary > a:last-of-type:focus,
 #changenumsections .increase-sections:focus,
 #changenumsections .reduce-sections:focus,
 input.form-submit:focus,
@@ -7772,8 +7681,6 @@ input[type="button"]:focus,
 input[type="submit"]:focus,
 input[type="reset"]:focus,
 #page-mast .snap-login-button:focus,
-#page-site-index .sitetopic > a:last-of-type:active,
-.summary > a:last-of-type:active,
 #changenumsections .increase-sections:active,
 #changenumsections .reduce-sections:active,
 input.form-submit:active,
@@ -7794,8 +7701,6 @@ input[type="button"]:active,
 input[type="submit"]:active,
 input[type="reset"]:active,
 #page-mast .snap-login-button:active,
-#page-site-index .sitetopic > a:last-of-type.active,
-.summary > a:last-of-type.active,
 #changenumsections .increase-sections.active,
 #changenumsections .reduce-sections.active,
 input.form-submit.active,
@@ -7821,8 +7726,6 @@ input[type="reset"].active,
   text-decoration: none;
   box-shadow: 0 3px 0 0 #027fb8;
 }
-#page-site-index .sitetopic > a:last-of-type:visited,
-.summary > a:last-of-type:visited,
 #changenumsections .increase-sections:visited,
 #changenumsections .reduce-sections:visited,
 input.form-submit:visited,
@@ -7845,8 +7748,6 @@ input[type="reset"]:visited,
 #page-mast .snap-login-button:visited {
   color: #fff;
 }
-#page-site-index .sitetopic > a:last-of-type[disabled],
-.summary > a:last-of-type[disabled],
 #changenumsections .increase-sections[disabled],
 #changenumsections .reduce-sections[disabled],
 input.form-submit[disabled],
@@ -7870,7 +7771,8 @@ input[type="reset"][disabled],
   background-color: #03a9f4;
 }
 .editing.path-course-view section#region-main > .singlebutton input[type="submit"],
-.editor_atto_toolbar button {
+.editor_atto_toolbar button,
+#page-mast .singlebutton input[type="submit"] {
   box-shadow: none;
 }
 #show-toc {
