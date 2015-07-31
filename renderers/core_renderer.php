@@ -606,7 +606,7 @@ class theme_snap_core_renderer extends toc_renderer {
             echo $this->print_login_button();
             echo "<form class=fixy action='$CFG->wwwroot/login/'  method='post' id='login'>
         <a id='fixy-close' class='pull-right snap-action-icon' href='#'>
-            <i class='icon icon-office-52'></i><small>$cancel</small>
+            <i class='icon icon-close'></i><small>$cancel</small>
         </a>
             <div class=fixy-inner>
             <legend>$loginform</legend>
@@ -731,7 +731,7 @@ class theme_snap_core_renderer extends toc_renderer {
 
             echo '<nav id="primary-nav" class="fixy toggle-details" tabindex="0">
         <a id="fixy-close" class="pull-right snap-action-icon" href="#">
-            <i class="icon icon-office-52"></i><small>'.$close.'</small>
+            <i class="icon icon-close"></i><small>'.$close.'</small>
         </a>
         <div class=fixy-inner>
         <h1 id="fixy-profile-link">
@@ -990,7 +990,7 @@ class theme_snap_core_renderer extends toc_renderer {
     <div class="news-article-message" tabindex="-1">
         {$message}
         <div><hr><a class="snap-action-icon toggle" href="#">
-        <i class="icon icon-office-52"></i><small>{$close}</small></a></div>
+        <i class="icon icon-close"></i><small>{$close}</small></a></div>
     </div>
 </div>
 HTML;

@@ -209,8 +209,8 @@ trait format_section_trait {
     protected function next_previous($course, $sections, $sectionno) {
         $course = course_get_format($course)->get_course();
 
-        $previousarrow = '<i class="icon-arrows-03"></i>';
-        $nextarrow = '<i class="icon-arrows-04"></i>';
+        $previousarrow = '<i class="icon-arrow-left"></i>';
+        $nextarrow = '<i class="icon-arrow-right"></i>';
 
         $canviewhidden = has_capability('moodle/course:viewhiddensections', context_course::instance($course->id))
         or !$course->hiddensections;

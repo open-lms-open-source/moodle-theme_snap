@@ -538,7 +538,7 @@ class theme_snap_core_course_renderer extends core_course_renderer {
         <div class=pagemod-content tabindex='-1' data-content-loaded={$contentloaded}>
             {$content}
             <div><hr><a  class='snap-action-icon' href='#'>
-            <i class='icon icon-office-52'></i><small>$close</small></a></div>
+            <i class='icon icon-close'></i><small>$close</small></a></div>
         </div>";
 
         return $o;

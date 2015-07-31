@@ -447,8 +447,6 @@ select,input,textarea{max-width:100%;}
 
 .section-modchooser-text,
 .section-modchooser-link a,
-#page-site-index .sitetopic>a:last-of-type,
-.editing .summary>a:last-of-type,
 #changenumsections .increase-sections,
 #changenumsections .reduce-sections,
 .paging.paging-morelink a,
@@ -537,9 +535,34 @@ input[type="text"]+input[type="submit"] {
 
 
 
+// -------------------------
+// Replacing font icon with svgs
+// -------------------------
 
-
-
+.icon-close:before {
+  content: '';
+  background: transparent url([[pix:theme|close_x]]) no-repeat 50% 50%;
+  display: block;
+  height: 1em;
+  width:1em;
+  margin:0.1em auto;
+}
+.fixy .icon-close:before {
+  -webkit-filter: grayscale(100%) brightness(5);
+    filter: grayscale(100%) brightness(5);
+}
+.icon-arrow-left:before,
+.icon-arrow-right:before {
+  content: '';
+  background: transparent url([[pix:theme|right-arrow]]) no-repeat 50% 50%;
+  display: block;
+  height: 1em;
+  width:1em;
+  margin:0.1em auto;
+}
+.icon-arrow-left:before {
+  background: transparent url([[pix:theme|left-arrow]]) no-repeat 50% 50%;
+}
 
 
 
@@ -1358,16 +1381,14 @@ ol#chapters {
     padding:0.5em;
     margin-bottom:-0.75em;
     &:before {
-        margin-right:-2.3em; // magic number :(
-        content:"\e0d0";
-        font-family: "line-icons" !important;
-        font-style: normal !important;
-        font-weight: normal !important;
-        font-variant: normal !important;
-        text-transform: none !important;
-        speak: none;
-        line-height: 1;
-        -webkit-font-smoothing: antialiased;
+      content: '';
+      background: transparent url([[pix:theme|search]]) no-repeat 50% 50%;
+      display: inline-block;
+      height: 1.5em;
+      width: 1.5em;
+      // Magin numbers for positioning
+      margin-right: -2.5em;
+      margin-bottom: -0.3em;
 
     }
 }
@@ -1504,7 +1525,11 @@ ol#chapters {
 
 // a lovely pin showing the searched for item
 #searchpin {
-	font-size:1.5em;
+  background: transparent url([[pix:theme|searchpin]]) no-repeat 50% 50%;
+  display: inline-block;
+  height: 1em;
+  width:1em;
+  margin:0.1em;
 }
 
 
