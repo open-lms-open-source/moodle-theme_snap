@@ -1631,7 +1631,7 @@ a.disabled {
   box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.15);
   -webkit-transition: width 0.6s ease;
   transition: width 0.6s ease;
-  font-family: "Roboto", "Fira Sans", "Segoe UI", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif, "line-icons";
+  font-family: "Roboto", "Fira Sans", "Segoe UI", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 .progress .bar[aria-valuenow="1"],
 .progress .bar[aria-valuenow="2"] {
@@ -2354,7 +2354,7 @@ img.iconsmall {
   margin-bottom: 28px;
   border: 1px solid transparent;
   border-radius: 0px;
-  font-family: "Roboto", "Fira Sans", "Segoe UI", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif, "line-icons";
+  font-family: "Roboto", "Fira Sans", "Segoe UI", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif;
   clear: both;
   border: 0;
   border-left: 3em solid;
@@ -3015,7 +3015,7 @@ span.editinstructions {
   box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.15);
   -webkit-transition: width 0.6s ease;
   transition: width 0.6s ease;
-  font-family: "Roboto", "Fira Sans", "Segoe UI", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif, "line-icons";
+  font-family: "Roboto", "Fira Sans", "Segoe UI", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 .dndupload-progress-inner[aria-valuenow="1"],
 .dndupload-progress-inner[aria-valuenow="2"] {
@@ -5375,7 +5375,7 @@ body.path-question-type .fitem_fgroup .accesshide {
   margin-bottom: 28px;
   border: 1px solid transparent;
   border-radius: 0px;
-  font-family: "Roboto", "Fira Sans", "Segoe UI", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif, "line-icons";
+  font-family: "Roboto", "Fira Sans", "Segoe UI", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif;
   clear: both;
   border: 0;
   border-left: 3em solid;
@@ -6994,7 +6994,7 @@ html {
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
 body {
-  font-family: "Roboto", "Fira Sans", "Segoe UI", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif, "line-icons";
+  font-family: "Roboto", "Fira Sans", "Segoe UI", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 18px;
   line-height: 1.6;
   color: #666666;
@@ -7094,7 +7094,7 @@ h6,
 .h4,
 .h5,
 .h6 {
-  font-family: "Roboto", "Fira Sans", "Segoe UI", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif, "line-icons";
+  font-family: "Roboto", "Fira Sans", "Segoe UI", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-weight: 300;
   line-height: 1.5;
   color: #666666;
@@ -14456,7 +14456,7 @@ input[type="reset"] {
   background-color: #0398db;
   border: 0;
   color: #fff;
-  font-family: "Roboto", "Fira Sans", "Segoe UI", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif, "line-icons";
+  font-family: "Roboto", "Fira Sans", "Segoe UI", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-weight: 300;
   -webkit-box-shadow: 0 3px 0 0 #038dcc;
           box-shadow: 0 3px 0 0 #038dcc;
@@ -14650,7 +14650,7 @@ input.fp-btn-choose {
   background-color: #0398db;
   border: 0;
   color: #fff;
-  font-family: "Roboto", "Fira Sans", "Segoe UI", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif, "line-icons";
+  font-family: "Roboto", "Fira Sans", "Segoe UI", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-weight: 300;
   -webkit-box-shadow: 0 3px 0 0 #038dcc;
           box-shadow: 0 3px 0 0 #038dcc;
@@ -15509,7 +15509,7 @@ body.tag .managelink {
   background-color: #0398db;
   border: 0;
   color: #fff;
-  font-family: "Roboto", "Fira Sans", "Segoe UI", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif, "line-icons";
+  font-family: "Roboto", "Fira Sans", "Segoe UI", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-weight: 300;
   -webkit-box-shadow: 0 3px 0 0 #038dcc;
           box-shadow: 0 3px 0 0 #038dcc;
@@ -15764,7 +15764,7 @@ fieldset[disabled] .yui-button button.active {
   padding-left: 0;
   list-style: none;
   border-bottom: 1px solid #999999;
-  font-family: "Roboto", "Fira Sans", "Segoe UI", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif, "line-icons";
+  font-family: "Roboto", "Fira Sans", "Segoe UI", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 .yui-skin-sam .yui-navset .yui-nav > li,
 .yui-bootstrapped .yui-navset .yui-nav > li {
@@ -15953,7 +15953,7 @@ fieldset[disabled] .yui-button button.active {
   padding-left: 0;
   list-style: none;
   border-bottom: 1px solid #999999;
-  font-family: "Roboto", "Fira Sans", "Segoe UI", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif, "line-icons";
+  font-family: "Roboto", "Fira Sans", "Segoe UI", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 .yui-skin-sam .yui3-tabview-list > li,
 .yui-bootstrapped .yui3-tabview-list > li {
@@ -16178,7 +16178,7 @@ fieldset[disabled] .yui-button button.active {
   font-weight: 300;
   color: #666666;
   line-height: 1.6;
-  font-family: "Roboto", "Fira Sans", "Segoe UI", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif, "line-icons";
+  font-family: "Roboto", "Fira Sans", "Segoe UI", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif;
   padding: 15px;
   border-bottom: 1px solid #f5f5f5;
   min-height: 16.6px;
@@ -16237,7 +16237,7 @@ fieldset[disabled] .yui-button button.active {
   font-weight: 300;
   color: #666666;
   line-height: 1.6;
-  font-family: "Roboto", "Fira Sans", "Segoe UI", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif, "line-icons";
+  font-family: "Roboto", "Fira Sans", "Segoe UI", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif;
   background: none;
   background-color: #ffffff;
   text-align: left;
@@ -16396,7 +16396,7 @@ fieldset[disabled] .yui-button button.active {
 }
 .yui-skin-sam .yui-calcontainer .yui-calendar,
 .yui-bootstrapped .yui-calcontainer .yui-calendar {
-  font-family: "Roboto", "Fira Sans", "Segoe UI", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif, "line-icons";
+  font-family: "Roboto", "Fira Sans", "Segoe UI", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 100%;
   font-weight: 300;
 }
@@ -16699,7 +16699,7 @@ fieldset[disabled] .yui-button button.active {
 .user-enroller-panel .oump-wrap .oump-header,
 .other-user-manager-panel .oump-wrap .oump-header {
   background-color: #ffffff;
-  font-family: "Roboto", "Fira Sans", "Segoe UI", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif, "line-icons";
+  font-family: "Roboto", "Fira Sans", "Segoe UI", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif;
   padding: 15px;
   border-bottom: 1px solid #f5f5f5;
   min-height: 16.6px;
@@ -17803,7 +17803,7 @@ body.format-flexpage .singlebutton {
   padding-bottom: 1em;
   min-height: 125px;
   height: auto;
-  font-family: "Roboto", "Fira Sans", "Segoe UI", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif, "line-icons";
+  font-family: "Roboto", "Fira Sans", "Segoe UI", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif;
   background-image: url([[pix:theme|file]]);
   background-repeat: no-repeat;
   background-position: 50% 89%;
@@ -17863,7 +17863,7 @@ we do this by default in snap, so hide moodle version */
   display: none;
 }
 .snap-meta {
-  font-family: "Roboto", "Fira Sans", "Segoe UI", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif, "line-icons";
+  font-family: "Roboto", "Fira Sans", "Segoe UI", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: small;
 }
 .conditional .snap-meta,
@@ -17885,7 +17885,7 @@ we do this by default in snap, so hide moodle version */
 .snap-groupinglabel,
 .snap-unread-marker,
 .sectiontag {
-  font-family: "Roboto", "Fira Sans", "Segoe UI", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif, "line-icons";
+  font-family: "Roboto", "Fira Sans", "Segoe UI", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif;
   display: inline-block;
   background-color: #f98012;
   color: #fff;
@@ -17920,7 +17920,7 @@ we do this by default in snap, so hide moodle version */
 .availabilityinfo {
   clear: both;
   font-size: small;
-  font-family: "Roboto", "Fira Sans", "Segoe UI", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif, "line-icons";
+  font-family: "Roboto", "Fira Sans", "Segoe UI", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 .modtype_label .snap-assettype {
   display: none;
@@ -18329,7 +18329,7 @@ li.snap-activity.modtype_folder .snap-assettype {
   text-align: center;
   margin: 1em 0;
   background-color: transparent;
-  font-family: "Roboto", "Fira Sans", "Segoe UI", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif, "line-icons";
+  font-family: "Roboto", "Fira Sans", "Segoe UI", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 #page-site-index .sitetopic > a:last-of-type img,
 .summary > a:last-of-type img {
@@ -18524,7 +18524,7 @@ span.editinstructions {
   -webkit-box-shadow: none;
           box-shadow: none;
   border: 0;
-  font-family: "Roboto", "Fira Sans", "Segoe UI", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif, "line-icons";
+  font-family: "Roboto", "Fira Sans", "Segoe UI", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 /* forum unread posts button */
 .snap-asset .unread {
@@ -18558,7 +18558,7 @@ span.editinstructions {
   background-color: #0398db;
   border: 0;
   color: #fff;
-  font-family: "Roboto", "Fira Sans", "Segoe UI", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif, "line-icons";
+  font-family: "Roboto", "Fira Sans", "Segoe UI", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-weight: 300;
   -webkit-box-shadow: 0 3px 0 0 #038dcc;
           box-shadow: 0 3px 0 0 #038dcc;
@@ -18651,7 +18651,7 @@ fieldset[disabled] .snap-asset .unread a {
   background-color: #0398db;
   border: 0;
   color: #fff;
-  font-family: "Roboto", "Fira Sans", "Segoe UI", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif, "line-icons";
+  font-family: "Roboto", "Fira Sans", "Segoe UI", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-weight: 300;
   -webkit-box-shadow: 0 3px 0 0 #038dcc;
           box-shadow: 0 3px 0 0 #038dcc;
@@ -18827,7 +18827,7 @@ fieldset[disabled] #changenumsections .reduce-sections {
 }
 .module-meta .label {
   margin-right: 1%;
-  font-family: "Roboto", "Fira Sans", "Segoe UI", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif, "line-icons";
+  font-family: "Roboto", "Fira Sans", "Segoe UI", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-weight: bold;
 }
 /**
@@ -19029,7 +19029,7 @@ body {
 table,
 .floater .cell {
   width: 100%;
-  font-family: "Roboto", "Fira Sans", "Segoe UI", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif, "line-icons";
+  font-family: "Roboto", "Fira Sans", "Segoe UI", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 16px;
 }
 blockquote {
@@ -19151,7 +19151,7 @@ select,
 .progress .bar,
 .progress-bar,
 .yui-dt-paginator {
-  font-family: "Roboto", "Fira Sans", "Segoe UI", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif, "line-icons";
+  font-family: "Roboto", "Fira Sans", "Segoe UI", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 @media screen and (min-width: 768px) {
   .nav.nav-justified > li > a {
@@ -19194,7 +19194,7 @@ input[type="reset"] {
   border-color: #fff;
   color: #fff;
   font-weight: 300;
-  font-family: "Roboto", "Fira Sans", "Segoe UI", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif, "line-icons";
+  font-family: "Roboto", "Fira Sans", "Segoe UI", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 .section-modchooser-text:hover,
 .section-modchooser-link a:hover,
@@ -20675,7 +20675,7 @@ http://blog.rodneyrehm.de/archives/34-iOS7-Mobile-Safari-And-Viewport-Units.html
   background-color: #0398db;
   border: 0;
   color: #fff;
-  font-family: "Roboto", "Fira Sans", "Segoe UI", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif, "line-icons";
+  font-family: "Roboto", "Fira Sans", "Segoe UI", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-weight: 300;
   -webkit-box-shadow: 0 3px 0 0 #038dcc;
           box-shadow: 0 3px 0 0 #038dcc;
@@ -20887,7 +20887,7 @@ ul.events-new + ul.events-underway {
 #dateselector-calendar-panel .yui3-calendar-previousmonth-day,
 #dateselector-calendar-panel .yui3-calendar-nextmonth-day,
 #dateselector-calendar-panel .yui3-calendar-weekday {
-  font-family: "Roboto", "Fira Sans", "Segoe UI", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif, "line-icons";
+  font-family: "Roboto", "Fira Sans", "Segoe UI", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif;
   color: #666666;
   border-color: #ffffff;
   text-align: center;
@@ -21457,7 +21457,7 @@ table#user-grades tr.avg td.cell {
   line-height: 1.5;
   background-color: #0398db;
   border: 0;
-  font-family: "Roboto", "Fira Sans", "Segoe UI", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif, "line-icons";
+  font-family: "Roboto", "Fira Sans", "Segoe UI", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-weight: 300;
   -webkit-box-shadow: 0 3px 0 0 #038dcc;
           box-shadow: 0 3px 0 0 #038dcc;
@@ -21957,7 +21957,7 @@ fieldset[disabled] .gradingform_rubric.editor .addcriterion input.active {
 }
 .path-blocks-reports .report-title {
   font-weight: normal;
-  font-family: "Roboto", "Fira Sans", "Segoe UI", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif, "line-icons";
+  font-family: "Roboto", "Fira Sans", "Segoe UI", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 .path-mod-assign #region-main,
 .path-grade-edit-tree #region-main,
@@ -22747,12 +22747,12 @@ legend,
 .mform legend a:hover,
 .coursebox .info .coursename,
 .collapsibleregioncaption {
-  font-family: "Roboto", "Fira Sans", "Segoe UI", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif, "line-icons";
+  font-family: "Roboto", "Fira Sans", "Segoe UI", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 .pagemod-readmore,
 .snap-action-icon,
 #coursetools-list a {
-  font-family: "Roboto", "Fira Sans", "Segoe UI", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif, "line-icons";
+  font-family: "Roboto", "Fira Sans", "Segoe UI", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 .nav-pills > li.active > a,
 .nav-pills > li.active > a:hover,
@@ -22816,7 +22816,7 @@ input[type="reset"],
   background-color: #0398db;
   border: 0;
   color: #fff;
-  font-family: "Roboto", "Fira Sans", "Segoe UI", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif, "line-icons";
+  font-family: "Roboto", "Fira Sans", "Segoe UI", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-weight: 300;
   -webkit-box-shadow: 0 3px 0 0 #038dcc;
           box-shadow: 0 3px 0 0 #038dcc;
