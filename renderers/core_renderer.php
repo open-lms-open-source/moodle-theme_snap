@@ -648,13 +648,14 @@ class theme_snap_core_renderer extends toc_renderer {
                 $clist = new course_in_list($c);
                 $teachers = $clist->get_course_contacts();
 
+                $courseteachers = '';
                 $vcourseteachers = '';
                 $ecourseteachers = '';
 
                 if (!empty($teachers)) {
                     $avatars = [];
                     $blankavatars = [];
-                    $courseteachers .= '<h4 class="sr-only">'.get_string('coursecontacts', 'theme_snap').'</h4>';
+                    $courseteachers = '<h4 class="sr-only">'.get_string('coursecontacts', 'theme_snap').'</h4>';
                     // Get all teacher user records in one go.
                     $teacherids = array();
                     foreach ($teachers as $teacher) {
