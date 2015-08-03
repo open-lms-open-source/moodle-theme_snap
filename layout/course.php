@@ -44,6 +44,8 @@ $coursemainpage = strpos($PAGE->pagetype, 'course-view-') === 0;
 <?php
 echo $OUTPUT->page_heading();
 echo $OUTPUT->course_header();
+// Note, there is no blacklisting for the edit blocks button on course pages.
+echo $OUTPUT->page_heading_button();
 if ($coursemainpage) {
     echo $OUTPUT->print_course_toc();
 }
@@ -54,8 +56,6 @@ if ($coursemainpage) {
 <section id="region-main">
 <?php
 echo $OUTPUT->course_content_header();
-// Note, there is no blacklisting for the edit blocks button on course pages.
-echo $OUTPUT->page_heading_button();
 echo $OUTPUT->main_content();
 echo $OUTPUT->course_content_footer();
 ?>

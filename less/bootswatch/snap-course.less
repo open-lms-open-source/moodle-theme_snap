@@ -47,17 +47,23 @@ section#region-main
     text-align:center;
 }
 
-.path-course-view section#region-main > .singlebutton input[type="submit"] {
-    background-image: url([[pix:label|icon]]);
-    background-repeat: no-repeat;
-    background-color: transparent;
-    font-size: small;
-    border: none;
-    padding-left: 2.5em;
-    color: #ccc;
-    &:active {
-        box-shadow: none;
-    }
+// Course page  - turn editing on button
+#page-mast .singlebutton {
+  float:right;
+  margin-top:-3.2em; // MAGIC NUMBER
+  margin-right:-4%; // MAGIC NUMBER
+  input[type="submit"] {
+    background-color:@gray-light !important;
+    box-shadow:0;
+  }
+  // hide on small screen
+  display:none;
+}
+
+@media screen and (min-width: @screen-md) {
+  #page-mast .singlebutton {
+      display:block;
+  }
 }
 
 .ie.path-course-view section#region-main > .singlebutton input[type="submit"] {
@@ -66,27 +72,8 @@ section#region-main
     background-position: left center;
 }
 
-@media screen and (max-width: @screen-md-max) {
-    .path-course-view:not(.editing) section#region-main > .singlebutton input[type="submit"],
-    .path-course-view:not(.editing) section#region-main > .singlebutton input[type="submit"]:hover {
-        color: transparent;
-        background-position: center;
-    }
-}
 
-.editing.path-course-view section#region-main > .singlebutton input[type="submit"],
-.path-course-view section#region-main > .singlebutton input[type="submit"]:hover {
-        color: @brand-primary;
-        border: none;
-        background-position: left;
-}
 
-@media screen and (min-width: @screen-md-min) {
-    .path-course-view .singlebutton {
-        float: right;
-        margin-right: -4%;
-    }
-}
 .section .filler {
     display: none;
 }
@@ -998,28 +985,33 @@ li.snap-activity.modtype_folder {
 /* Make it obvious that you can edit a summary - Add text and some styles to that gear thing */
 #page-site-index .sitetopic>a:last-of-type,
 .summary>a:last-of-type{
-    .btn;
     clear:both;
-    margin-bottom:1em;
-    margin-left:0;
+    display:block;
+    text-align:center;
+    margin:1em 0;
+    background-color:transparent;
+    font-family:@font-family-base;
     img {
         display:none;
     }
 }
 
-#page-site-index .sitetopic>a:last-of-type:before,
-.summary>a:last-of-type:before {
-    content: attr(title);
-    display:inline-block;
-    font-weight:300;
-}
 #page-site-index .sitetopic>a:last-of-type:after,
 .summary>a:last-of-type:after {
-    content: "\e12a";
-    font-family:"line-icons";
-    margin-left:11%;
-    vertical-align:bottom;
+    content: attr(title);
+    display:block;
+    font-weight:300;
 }
+#page-site-index .sitetopic>a:last-of-type:before,
+.summary>a:last-of-type:before {
+    content: " ";
+    background: transparent url([[pix:theme|pencil]]) no-repeat 50% 50%;
+    display: block;
+    height: 3em;
+    width: 3em;
+    margin:0.5em auto;
+}
+
 
 
 // -------------------------
@@ -1124,7 +1116,7 @@ div.commands ul.menubar {
     margin:0;
 }
 
-// i know. shame selector :(
+// i know. SHAME selector :(
 .jsenabled .snap-asset .moodle-actionmenu[data-enhance]
 .toggle-display.textmenu {
     text-decoration:none;
@@ -1143,8 +1135,11 @@ div.commands ul.menubar {
 }
 .action-menu-shown .toggle-display.textmenu{
     &:after{
-        content: "\e126";
-        font-family:"line-icons" !important;
+      content: " ";
+      background: transparent url([[pix:theme|close_x]]) repeat;
+      display: inline-block;
+      width: 1em;
+      height: 1em;
     }
 }
 // last min css for marks code changes - make edit button block when editing...

@@ -34,7 +34,7 @@ $THEME->doctype = 'html5';
 $THEME->yuicssmodules = array('cssgrids'); // This is required for joule grader.
 $THEME->name = 'snap';
 $THEME->parents = array();
-$THEME->sheets = array('moodle', 'custom', 'lineicons');
+$THEME->sheets = array('moodle', 'custom');
 $THEME->supportscssoptimisation = false;
 
 $THEME->editor_sheets = array('editor');

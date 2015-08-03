@@ -155,7 +155,7 @@ class toc_renderer extends core_renderer {
         '" aria-autocomplete="list" aria-haspopup="true" aria-activedescendant="toc-search-results" autocomplete="off" />
         '.$this->modulesearch().'
         </form>
-        <a id="toc-mobile-menu-toggle" title="'.$contents.'" href="#course-toc"><i class="icon icon-office-52"></i></a>
+        <a id="toc-mobile-menu-toggle" title="'.$contents.'" href="#course-toc"><i class="icon icon-close"></i></a>
         </div>';
 
         $listlarge = '';

@@ -519,7 +519,7 @@ function snapInit() {
 
         var searchpin = $("#searchpin");
         if (!searchpin.length){
-            searchpin = $('<i id="searchpin" class="icon icon-office-01"></i>');
+            searchpin = $('<i id="searchpin"></i>');
         }
 
         $(targmod).find('.instancename').prepend(searchpin);
