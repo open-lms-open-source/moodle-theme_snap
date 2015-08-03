@@ -105,14 +105,13 @@ table.boxwidthwide {
 
 @media screen and (min-width: @screen-sm) {
     .twocolumns {
-        .signuppanel {
-            float: left;
-            left: 0 !important;
-            width: 50% !important;
-        }
-        .loginpanel{
-            float: right !important;
-            width: 50% !important;
+        // override bs grids
+        .signuppanel,
+        .loginpanel {
+          float:none !important;
+          width:100% !important;
+          left:0 !important;
+          padding:0 !important;
         }
     }
 }
@@ -127,11 +126,27 @@ table.boxwidthwide {
         overflow: hidden;
         background: no-repeat center center;
         background-size: contain;
+        margin:0;
     }
-    .loginbox.onecolumn {
-        left: 0 !important;
-        padding: 0 10%;
-        width: 100%;
+    .loginbox {
+      float: none;
+      padding: 1em 4%;
+      width: 100%;
+      background-color: rgba(255,255,255,0.9);
+      margin: 2em auto;
+      max-width: 30em;
+    }
+    #loginbtn {
+      display: block;
+      width: 100%;
+      margin: 1em 0;
+    }
+    // Remove first time here?
+    .signuppanel > h2 {
+      display: none;
+    }
+    #moodle-footer {
+      margin-top: 0;
     }
 
 }
@@ -578,7 +593,8 @@ input[type="text"]+input[type="submit"] {
 // Snap theme elements n componants
 // -------------------------
 
-#page-header {
+#page-header,
+#page-login-index #page {
     .bg-cover();
 }
 
