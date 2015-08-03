@@ -3061,9 +3061,8 @@ we do this by default in snap, so hide moodle version */
 }
 .section li.snap-native .pagemod-readmore {
   display: inline-block;
-  padding: 0.3em 3%;
-  padding: 0.25em 1em;
-  margin: 0 .4em;
+  padding: 0.25em 4%;
+  margin: 0 4% 0 0;
   border: 1px solid;
   border-radius: 2px;
 }
@@ -3132,7 +3131,6 @@ we do this by default in snap, so hide moodle version */
 }
 .modtype_book,
 .modtype_page {
-  border-top: 1px solid #ccc;
   border-bottom: 1px solid #ccc;
 }
 .snap-native.modtype_book ol.bookmod-chapters {
@@ -3949,6 +3947,13 @@ fieldset[disabled] #changenumsections .reduce-sections {
     display: block;
     width: auto;
   }
+}
+.module-meta a {
+  text-decoration: none !important;
+  transition: all 0.4s ease-in-out;
+}
+.module-meta a:hover {
+  opacity: 0.7;
 }
 .module-meta .label {
   margin-right: 1%;
