@@ -3080,7 +3080,6 @@ we do this by default in snap, so hide moodle version */
     padding-right: 3%;
   }
   .section li.snap-image .activityinstance .snap-asset-link a,
-  .section li.modtype_book .activityinstance .snap-asset-link a,
   .section li.modtype_page .activityinstance .snap-asset-link a {
     width: 50%;
     float: left;
@@ -3116,6 +3115,10 @@ we do this by default in snap, so hide moodle version */
 .modtype_book,
 .modtype_page {
   border-bottom: 1px solid #ccc;
+}
+.modtype_book .contentafterlink > .summary-text:first-child {
+  width: auto;
+  float: none;
 }
 .snap-native.modtype_book ol.bookmod-chapters {
   margin: 0;
