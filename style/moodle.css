@@ -21113,6 +21113,13 @@ ul.events-new + ul.events-underway {
   width: -webkit-calc(100% - 4.3em);
   width: calc(100% - 4.3em);
 }
+#page-mod-quiz-edit .menu-action-text,
+#page-mod-quiz-edit .toggle-display.textmenu {
+  white-space: nowrap;
+}
+#page-mod-quiz-edit ul.slots .activityinstance span.instancename {
+  overflow: visible;
+}
 @media screen and (min-width: 992px) {
   #page-mod-quiz-edit div.quizcontents,
   .questionbankwindow.block {
