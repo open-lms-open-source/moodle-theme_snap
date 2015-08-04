@@ -859,7 +859,7 @@ class local {
 
         $coverurl = self::site_coverimage_url();
         if ($coverurl) {
-            $replacement = "#page-site-index #page-header {background-image: url($coverurl);}";
+            $replacement = "#page-site-index #page-header, #page-login-index #page {background-image: url($coverurl);}";
         }
 
         $css = str_replace($tag, $replacement, $css);

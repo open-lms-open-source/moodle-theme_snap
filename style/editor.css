@@ -3924,14 +3924,12 @@ table.boxwidthwide {
   padding: 0;
 }
 @media screen and (min-width: 768px) {
-  .twocolumns .signuppanel {
-    float: left;
-    left: 0 !important;
-    width: 50% !important;
-  }
+  .twocolumns .signuppanel,
   .twocolumns .loginpanel {
-    float: right !important;
-    width: 50% !important;
+    float: none !important;
+    width: 100% !important;
+    left: 0 !important;
+    padding: 0 !important;
   }
 }
 #page-login-index #region-main {
@@ -3944,11 +3942,26 @@ table.boxwidthwide {
   overflow: hidden;
   background: no-repeat center center;
   background-size: contain;
+  margin: 0;
 }
-#page-login-index .loginbox.onecolumn {
-  left: 0 !important;
-  padding: 0 10%;
+#page-login-index .loginbox {
+  float: none;
+  padding: 1em 4%;
   width: 100%;
+  background-color: rgba(255, 255, 255, 0.9);
+  margin: 2em auto;
+  max-width: 30em;
+}
+#page-login-index #loginbtn {
+  display: block;
+  width: 100%;
+  margin: 1em 0;
+}
+#page-login-index .signuppanel > h2 {
+  display: none;
+}
+#page-login-index #moodle-footer {
+  margin-top: 0;
 }
 /* animations */
 @keyframes snap-drop {
@@ -4283,7 +4296,8 @@ input[type="text"] + input[type="submit"] {
 .icon-arrow-left:before {
   background: transparent url([[pix:theme|left-arrow]]) no-repeat 50% 50%;
 }
-#page-header {
+#page-header,
+#page-login-index #page {
   background-position: center top;
   background-size: cover;
 }
@@ -7805,6 +7819,7 @@ input[type="reset"][disabled],
   background: transparent;
 }
 #page-site-index #page-header,
+#page-login-index #page,
 .news-article-image,
 .news-article-preview,
 #notice {
