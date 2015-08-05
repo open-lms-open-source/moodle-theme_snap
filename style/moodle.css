@@ -18932,6 +18932,7 @@ table.boxwidthwide {
   background-color: rgba(255, 255, 255, 0.9);
   margin: 2em auto;
   max-width: 30em;
+  left: 0;
 }
 #page-login-index #loginbtn {
   display: block;
