@@ -624,7 +624,6 @@ we do this by default in snap, so hide moodle version */
     }
     // the title of the resource
     .section li.snap-image,
-    .section li.modtype_book,
     .section li.modtype_page {
         .activityinstance{
             .snap-asset-link a{
@@ -680,6 +679,10 @@ we do this by default in snap, so hide moodle version */
     border-bottom:1px solid #ccc;
 }
 
+.modtype_book .contentafterlink > .summary-text:first-child {
+    width:auto;
+    float:none;
+}
 
 .snap-native.modtype_book ol.bookmod-chapters{
     margin:0;
