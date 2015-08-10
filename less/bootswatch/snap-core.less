@@ -2571,6 +2571,17 @@ ul.events-new + ul.events-underway {
     }
 }
 
+// Push text onto a single line in quiz edit action menus
+#page-mod-quiz-edit .menu-action-text,
+#page-mod-quiz-edit .toggle-display.textmenu {
+    white-space: nowrap;
+}
+
+// Stop quiz instance name from being cuttoff
+#page-mod-quiz-edit ul.slots .activityinstance span.instancename {
+    overflow: visible;
+}
+
 @media screen and (min-width: @screen-md-min) {
     #page-mod-quiz-edit div.quizcontents,
     .questionbankwindow.block{
