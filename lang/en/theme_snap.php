@@ -133,6 +133,7 @@ $string['readmore'] = 'Read more&nbsp;»';
 $string['recentactivity'] = 'Recent Activity';
 $string['recentfeedback'] = 'Recent Feedback';
 $string['region-main'] = 'Main';
+$string['region-side-main-box'] = 'Main';
 $string['region-side-post'] = 'Right';
 $string['region-side-pre'] = 'Left';
 $string['region-side-top'] = 'Top';
