@@ -7516,13 +7516,13 @@ div.editor_atto_toolbar div.atto_group {
  * @copyright Copyright (c) 2015 Moodlerooms Inc. (http://www.moodlerooms.com)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-#id_general .fcontainer,
-#id_generalhdr .fcontainer {
-  display: block;
-}
 #id_generalhdr .ftoggler,
 #id_general .ftoggler {
   display: none;
+}
+#id_general .fcontainer,
+#id_generalhdr .fcontainer {
+  display: block;
 }
 /**
  * Snap user swatch.

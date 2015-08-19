@@ -21,13 +21,13 @@
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-// Hide meaningless 'General' ledgend on forms
+ // Hide meaningless 'General' ledgend on forms
+ #id_generalhdr .ftoggler,
+ #id_general .ftoggler {
+   display: none;
+ }
+// Prevent toggler colapse on required section
 #id_general .fcontainer,
 #id_generalhdr .fcontainer {
   display: block;
-}
-// Prevent toggler colapse on required section
-#id_generalhdr .ftoggler,
-#id_general .ftoggler {
-  display: none;
 }
