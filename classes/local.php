@@ -132,8 +132,12 @@ class local {
         if ($visiblegradefound) {
             // Just output - feedback available.
             $url = new \moodle_url('/grade/report/user/index.php', array('id' => $course->id));
+            // TODO - svg is only included on course page...
+            $feebackicon = '<svg viewBox="0 0 100 100" class="svg-icon">
+        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#coursetools-gradbook"></use></svg>';
+            $feebackstring = get_string('feedbackavailable', 'theme_snap').$feebackicon;
             $feedbackhtml = \html_writer::link($url,
-                get_string('feedbackavailable', 'theme_snap'),
+                $feebackstring,
                 array('class' => 'coursegrade')
             );
         }
@@ -186,7 +190,11 @@ class local {
         if ($trackcount > 0) {
             $progress = get_string('progresstotal', 'completion', $compobj);
             // TODO - we should be putting our HTML in a renderer.
-            $progressinfo = '<div class="completionstatus outoftotal">'.$progress.'</div>';
+            $progresspercent = ceil(($compcount/$trackcount)*100);
+            $progressinfo = '<div class="completionstatus outoftotal">'.$progress.'<span class="pull-right">'.$progresspercent.'%</span></div>
+            <div class="completion-line" style="width:'.$progresspercent.'%"></div>
+            <div class="completion-pie" style="animation-delay: -'.$progresspercent.'s"></div>
+            ';
             $compobj->progresshtml = $progressinfo;
         }
 
