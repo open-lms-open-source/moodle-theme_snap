@@ -133,9 +133,7 @@ class local {
             // Just output - feedback available.
             $url = new \moodle_url('/grade/report/user/index.php', array('id' => $course->id));
             // TODO - svg is only included on course page...
-            $feebackicon = '<svg viewBox="0 0 100 100" class="svg-icon">
-        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#coursetools-gradbook"></use></svg>';
-            $feebackstring = get_string('feedbackavailable', 'theme_snap').$feebackicon;
+            $feebackstring = get_string('feedbackavailable', 'theme_snap');
             $feedbackhtml = \html_writer::link($url,
                 $feebackstring,
                 array('class' => 'coursegrade')
