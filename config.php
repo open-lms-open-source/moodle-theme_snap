@@ -50,7 +50,7 @@ $THEME->rendererfactory = 'theme_overridden_renderer_factory';
 $THEME->layouts = array(
     'format_flexpage' => array(
         'file' => 'flexpage.php',
-        'regions' => array('side-top', 'side-pre', 'main', 'side-post', 'side-main-box'),
+        'regions' => array('side-top', 'side-pre', 'main', 'side-main-box', 'side-post'),
         'defaultregion' => 'main',
         'options' => array('langmenu' => true),
     ),
