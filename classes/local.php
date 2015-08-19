@@ -132,10 +132,9 @@ class local {
         if ($visiblegradefound) {
             // Just output - feedback available.
             $url = new \moodle_url('/grade/report/user/index.php', array('id' => $course->id));
-            // TODO - svg is only included on course page...
-            $feebackstring = get_string('feedbackavailable', 'theme_snap');
+            $feedbackstring = get_string('feedbackavailable', 'theme_snap');
             $feedbackhtml = \html_writer::link($url,
-                $feebackstring,
+                $feedbackstring,
                 array('class' => 'coursegrade')
             );
         }
