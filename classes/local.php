@@ -193,7 +193,6 @@ class local {
             $progresspercent = ceil(($compcount/$trackcount)*100);
             $progressinfo = '<div class="completionstatus outoftotal">'.$progress.'<span class="pull-right">'.$progresspercent.'%</span></div>
             <div class="completion-line" style="width:'.$progresspercent.'%"></div>
-            <div class="completion-pie" style="animation-delay: -'.$progresspercent.'s"></div>
             ';
             $compobj->progresshtml = $progressinfo;
         }

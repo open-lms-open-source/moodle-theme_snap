@@ -991,38 +991,7 @@ input[type="text"]+input[type="submit"] {
       height: 0.3em;
       margin-top: -0.3em;
     }
-    .completion-pie {
-      display:none;
-      width: 1em;
-      height: 1em;
-      border-radius: 50%;
-      background: @gray-lighter;
-      background-image: linear-gradient(to right, transparent 50%, currentColor 0);
-      color:@brand-success;
-      &:before {
-          content: '';
-          display: block;
-          margin-left: 50%;
-          height: 100%;
-          border-top-left-radius: 0px 50%;
-          border-top-right-radius: 100% 50%;
-          border-bottom-right-radius: 100% 50%;
-          border-bottom-left-radius: 0% 50%;
-          background-color: inherit;
-          transform-origin: left;
-          animation: spin 50s linear infinite, bg 100s step-end infinite;
-          animation-play-state: paused;
-          animation-delay: inherit;
-      }
-    }
 }
-@keyframes spin {
-	to { transform: rotate(.5turn); }
-}
-@keyframes bg {
-	50% { background: currentColor; }
-}
-
 #fixy-profile-link {
     text-align: center;
     .userpicture {
