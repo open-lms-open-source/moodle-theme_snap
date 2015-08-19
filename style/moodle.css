@@ -17566,6 +17566,8 @@ section#region-main
 .topics,
 .weeks {
   counter-reset: annotation-list -1;
+  margin: 0;
+  padding: 0;
 }
 .format-weeks #chapters {
   list-style: none;
@@ -19692,59 +19694,6 @@ input[type="text"] + input[type="submit"] {
   background-color: #8bc34a;
   height: 0.3em;
   margin-top: -0.3em;
-}
-.courseinfo .completion-pie {
-  display: none;
-  width: 1em;
-  height: 1em;
-  border-radius: 50%;
-  background: #dadada;
-  background-image: -webkit-gradient(linear, left top, right top, color-stop(50%, transparent), color-stop(0, currentColor));
-  background-image: -webkit-linear-gradient(left, transparent 50%, currentColor 0);
-  background-image: linear-gradient(to right, transparent 50%, currentColor 0);
-  color: #8bc34a;
-}
-.courseinfo .completion-pie:before {
-  content: '';
-  display: block;
-  margin-left: 50%;
-  height: 100%;
-  border-top-left-radius: 0px 50%;
-  border-top-right-radius: 100% 50%;
-  border-bottom-right-radius: 100% 50%;
-  border-bottom-left-radius: 0% 50%;
-  background-color: inherit;
-  -webkit-transform-origin: left;
-      -ms-transform-origin: left;
-          transform-origin: left;
-  -webkit-animation: spin 50s linear infinite, bg 100s step-end infinite;
-          animation: spin 50s linear infinite, bg 100s step-end infinite;
-  -webkit-animation-play-state: paused;
-          animation-play-state: paused;
-  -webkit-animation-delay: inherit;
-          animation-delay: inherit;
-}
-@-webkit-keyframes spin {
-  to {
-    -webkit-transform: rotate(0.5turn);
-            transform: rotate(0.5turn);
-  }
-}
-@keyframes spin {
-  to {
-    -webkit-transform: rotate(0.5turn);
-            transform: rotate(0.5turn);
-  }
-}
-@-webkit-keyframes bg {
-  50% {
-    background: currentColor;
-  }
-}
-@keyframes bg {
-  50% {
-    background: currentColor;
-  }
 }
 #fixy-profile-link {
   text-align: center;
