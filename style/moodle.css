@@ -19687,7 +19687,6 @@ input[type="text"] + input[type="submit"] {
   float: left;
 }
 .courseinfo .completionstatus {
-  white-space: nowrap;
   border-bottom: 0.5em solid #dadada;
 }
 .courseinfo .completion-line {
