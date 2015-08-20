@@ -19652,8 +19652,8 @@ input[type="text"] + input[type="submit"] {
   background-image: url([[pix:theme|gradebook]]);
   background-repeat: no-repeat;
   background-position: 100% 50%;
-  -webkit-background-size: 2.5em auto;
-          background-size: 2.5em auto;
+  -webkit-background-size: 2.5em 2.5em;
+          background-size: 2.5em 2.5em;
 }
 .courseinfo .courseinfo-teachers {
   max-height: 200px;
