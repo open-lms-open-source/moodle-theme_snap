@@ -287,9 +287,10 @@ echo format_flexpage_next_button();
 
 
 <!-- actual main content -->
-<div id="region-main-box">
+<div id="region-main-box" class="block-region">
     <div class="region-content">
         <?php echo $OUTPUT->blocks('main'); ?>
+        <?php echo $OUTPUT->blocks('side-main-box'); ?>
     </div>
 </div>
 
