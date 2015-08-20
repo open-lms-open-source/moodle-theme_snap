@@ -255,16 +255,27 @@ class theme_snap_core_renderer extends toc_renderer {
         if (!$display) {
             return '';
         }
-        if (!$instanceid = $DB->get_field('block_instances', 'id', array('blockname' => 'settings'))) {
-            $msg = "Moodle appears to be missing a settings block.
-            This shouldn't happen!
-            Please speak to your Moodle administrator";
-            throw new coding_exception($msg);
+
+        // Find the settings block.
+        // Core Moodle API appears to be missing a 'get block by name' function.
+        if (!$PAGE->blocks->is_block_present('settings')) {
+            debugging('Settings block was not found on this page', DEBUG_DEVELOPER);
+            return '';
+        }
+
+        foreach ($PAGE->blocks->get_regions() as $region) {
+            foreach ($PAGE->blocks->get_blocks_for_region($region) as $block) {
+                if (isset($block->instance) && $block->instance->blockname == 'settings') {
+                    $instanceid = $block->instance->id;
+                    continue 2;
+                }
+            }
         }
 
         if (!has_capability('moodle/block:view', context_block::instance($instanceid))) {
             return '';
         }
+
         // User can view admin block - return the link
         $admin = get_string('admin', 'theme_snap');
         echo '<a id="admin-menu-trigger" class="pull-right" href="#inst'.$instanceid.'" data-toggle="tooltip" data-placement="bottom" title="'.$admin.'" >
