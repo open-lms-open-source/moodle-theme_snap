@@ -14,14 +14,20 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Main swatch - includes all snap swatch files.
+ * Snap core swatch.
  *
  * @package   theme_snap
  * @copyright Copyright (c) 2015 Moodlerooms Inc. (http://www.moodlerooms.com)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-@import "bootswatch/snap-blocks";
-@import "bootswatch/snap-course";
-@import "bootswatch/snap-core";
-@import "bootswatch/snap-forms";
-@import "bootswatch/snap-user-bootswatch";
+
+ // Hide meaningless 'General' ledgend on forms
+ #id_generalhdr .ftoggler,
+ #id_general .ftoggler {
+   display: none;
+ }
+// Prevent toggler colapse on required section
+#id_general .fcontainer,
+#id_generalhdr .fcontainer {
+  display: block;
+}
