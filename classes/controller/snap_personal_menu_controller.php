@@ -47,6 +47,17 @@ class snap_personal_menu_controller extends controller_abstract {
     }
 
     /**
+     * Get forum posts for forums current user is enrolled on.
+     *
+     * @return string
+     */
+    public function get_forumposts_action() {
+        return json_encode(array(
+            'html' => \theme_snap\local::print_recent_forum_activity()
+        ));
+    }
+
+    /**
      * Get the user's graded work.
      *
      * @return string

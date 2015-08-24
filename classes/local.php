@@ -24,6 +24,7 @@ require_once($CFG->libdir.'/completionlib.php');
 require_once($CFG->libdir.'/coursecatlib.php');
 require_once($CFG->dirroot.'/grade/lib.php');
 require_once($CFG->dirroot.'/grade/report/user/lib.php');
+require_once($CFG->dirroot.'/mod/forum/lib.php');
 
 /**
  * General local snap functions.
@@ -955,5 +956,63 @@ class local {
         $page->content = format_text($page->content, $page->contentformat, $formatoptions);
 
         return ($page);
+    }
+
+    private static function sort_timestamp($a, $b) {
+        return ($a->timestamp < $b->timestamp);
+    }
+
+
+
+    /**
+     * Get recent forum activity for all accessible forums across all courses.
+     * @param bool $userid
+     * @return array
+     * @throws \coding_exception
+     */
+    public static function recent_forum_activity($userid = false) {
+        global $USER, $CFG;
+
+        if (file_exists($CFG->dirroot.'/mod/hsuforum')) {
+            require_once($CFG->dirroot.'/mod/hsuforum/lib.php');
+        }
+
+        if (empty($userid)) {
+            $userid = $USER->id;
+        }
+
+        $activities = [];
+        $idx = 0;
+
+        $courses = enrol_get_my_courses();
+        foreach ($courses as $course) {
+            $forums = forum_get_readable_forums($userid, $course->id);
+            foreach ($forums as $forum) {
+                $cm = get_coursemodule_from_instance('forum', $forum->id);
+                // Do not filter by user - we want all posts.
+                forum_get_recent_mod_activity($activities, $idx, time() - YEARSECS, $course->id, $cm->id);
+            }
+            if (function_exists('hsuforum_get_readable_forums')) {
+                $hsuforums = hsuforum_get_readable_forums($userid, $course->id);
+                foreach ($hsuforums as $forum) {
+                    $cm = get_coursemodule_from_instance('hsuforum', $forum->id);
+                    // Do not filter by user - we want all posts.
+                    hsuforum_get_recent_mod_activity($activities, $idx, time() - YEARSECS, $course->id, $cm->id);
+                }
+            }
+
+        }
+
+        usort($activities, array('\theme_snap\local','sort_timestamp'));
+
+        return $activities;
+    }
+
+    public static function print_recent_forum_activity() {
+        global $PAGE;
+        $activities = self::recent_forum_activity();
+        $activities = array_slice($activities, 0, 10);
+        $renderer = $PAGE->get_renderer('theme_snap', 'core', RENDERER_TARGET_GENERAL);
+        return $renderer->recent_forum_activity($activities);
     }
 }

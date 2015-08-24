@@ -377,7 +377,6 @@ class theme_snap_core_renderer extends toc_renderer {
             return '';
         }
 
-        $o = '';
         $messagesheading = get_string('messages', 'theme_snap');
         $o = '<h2>'.$messagesheading.'</h2>
                 <div id="snap-personal-menu-messages"></div>';
@@ -387,6 +386,18 @@ class theme_snap_core_renderer extends toc_renderer {
         $o .= '<div class="text-center">';
         $o .= '<a class="btn btn-default" href="'.$messageurl.'">'.$messagesbutton.'</a>';
         $o .= '</div>';
+        return $o;
+    }
+
+    protected function render_forumposts() {
+        if ($this->page->theme->settings->forumpoststoggle == 0) {
+            return '';
+        }
+
+        $messagesheading = get_string('forumposts', 'theme_snap');
+        $o = '<h2>'.$messagesheading.'</h2>'.
+            '<div id="snap-personal-menu-forumposts"></div>';
+
         return $o;
     }
 
@@ -443,6 +454,12 @@ class theme_snap_core_renderer extends toc_renderer {
             }
         }
 
+
+        $forumposts = $this->render_forumposts();
+        if (!empty($forumposts)) {
+            $columns[] = $forumposts;
+        }
+
         $o = '<div class="row callstoaction">';
         if (empty($columns)) {
              return '';
@@ -458,6 +475,13 @@ class theme_snap_core_renderer extends toc_renderer {
               <section class="col-md-4">'.$columns[0].'</section>
               <section class="col-md-4">'.$columns[1].'</section>
               <section class="col-md-4">'.$columns[2].'</section>
+            ';
+        } else if (count($columns) == 4) {
+            $o .= '
+              <section class="col-md-3">'.$columns[0].'</section>
+              <section class="col-md-3">'.$columns[1].'</section>
+              <section class="col-md-3">'.$columns[2].'</section>
+              <section class="col-md-3">'.$columns[3].'</section>
             ';
         }
 
@@ -1197,6 +1221,25 @@ HTML;
             } else {
                 throw new coding_exception('Unexpected type of thing (' . get_class($bc) . ') found in list of block contents.');
             }
+        }
+        return $output;
+    }
+
+    public function recent_forum_activity($activities) {
+        global $OUTPUT;
+        $output = '';
+        foreach ($activities as $activity) {
+            $output .= '<div>';
+            $userpicture = new user_picture($activity->user);
+            $userpicture->link = false;
+            $userpicture->alttext = false;
+            $userpicture->size = 32;
+            $picture = $OUTPUT->render($userpicture);
+            $url = '';
+            $output .= $this->snap_media_object($url, $picture, fullname($activity->user), $this->friendly_datetime($activity->timestamp), format_text($activity->content->subject));
+
+
+            $output .= '</div>';
         }
         return $output;
     }

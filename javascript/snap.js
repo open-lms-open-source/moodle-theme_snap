@@ -419,6 +419,7 @@ function snapInit() {
         loadajaxinfo('graded');
         loadajaxinfo('grading');
         loadajaxinfo('messages');
+        loadajaxinfo('forumposts');
 
 
         // Load course information via ajax.

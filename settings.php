@@ -143,6 +143,17 @@ if ($ADMIN->fulltree) {
     $setting->set_updatedcallback('theme_reset_all_caches');
     $settings->add($setting);
 
+    // Personal menu forum posts on/off.
+    $name = 'theme_snap/forumpoststoggle';
+    $title = new lang_string('forumpoststoggle', 'theme_snap');
+    $description = new lang_string('forumpoststoggledesc', 'theme_snap');
+    $checked = '1';
+    $unchecked = '0';
+    $default = $unchecked;
+    $setting = new admin_setting_configcheckbox($name, $title, $description, $default, $checked, $unchecked);
+    $setting->set_updatedcallback('theme_reset_all_caches');
+    $settings->add($setting);
+
     // Course footer on/off.
     $name = 'theme_snap/coursefootertoggle';
     $title = new lang_string('coursefootertoggle', 'theme_snap');
