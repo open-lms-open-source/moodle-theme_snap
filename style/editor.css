@@ -7427,6 +7427,14 @@ div.editor_atto_toolbar {
   height: auto !important;
   max-height: 75vh !important;
   min-height: 100px !important;
+  resize: none;
+}
+textarea {
+  border-color: #dadada;
+}
+.feditor textarea {
+  height: 5em;
+  width: 100%;
 }
 .editor_atto_content_wrap {
   border-color: #eee;
