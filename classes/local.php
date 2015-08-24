@@ -959,10 +959,11 @@ class local {
     }
 
     private static function sort_timestamp($a, $b) {
-        return ($a->timestamp < $b->timestamp);
+        if ($a->timestamp === $b->timestamp) {
+            return 0;
+        }
+        return ($a->timestamp > $b->timestamp ? -1 : 1);
     }
-
-
 
     /**
      * Get recent forum activity for all accessible forums across all courses.
