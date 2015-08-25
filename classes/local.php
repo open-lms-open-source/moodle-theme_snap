@@ -985,20 +985,22 @@ class local {
         $activities = [];
         $idx = 0;
 
+        $fourweeksago = time() - (WEEKSECS*4);
+
         $courses = enrol_get_my_courses();
         foreach ($courses as $course) {
             $forums = forum_get_readable_forums($userid, $course->id);
             foreach ($forums as $forum) {
                 $cm = get_coursemodule_from_instance('forum', $forum->id);
                 // Do not filter by user - we want all posts.
-                forum_get_recent_mod_activity($activities, $idx, time() - YEARSECS, $course->id, $cm->id);
+                forum_get_recent_mod_activity($activities, $idx, $fourweeksago, $course->id, $cm->id);
             }
             if (function_exists('hsuforum_get_readable_forums')) {
                 $hsuforums = hsuforum_get_readable_forums($userid, $course->id);
                 foreach ($hsuforums as $forum) {
                     $cm = get_coursemodule_from_instance('hsuforum', $forum->id);
                     // Do not filter by user - we want all posts.
-                    hsuforum_get_recent_mod_activity($activities, $idx, time() - YEARSECS, $course->id, $cm->id);
+                    hsuforum_get_recent_mod_activity($activities, $idx, $fourweeksago, $course->id, $cm->id);
                 }
             }
 
