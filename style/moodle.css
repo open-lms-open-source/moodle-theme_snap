@@ -22610,9 +22610,6 @@ div.editor_atto_toolbar {
 }
 textarea {
   border-color: #dadada;
-}
-.feditor textarea {
-  height: 5em;
   width: 100%;
 }
 .editor_atto_content_wrap {
