@@ -965,6 +965,30 @@ class local {
         return ($a->timestamp > $b->timestamp ? -1 : 1);
     }
 
+
+    /**
+     * Get courses for specific user
+     *
+     * @param null $user
+     * @param null $fields
+     * @param string $sort
+     * @param int $limit
+     * @return array
+     * @throws \coding_exception
+     */
+    public static function enrol_get_courses($user = NULL, $fields = NULL, $sort = 'visible DESC,sortorder ASC', $limit = 0) {
+        global $USER;
+        if (!empty($user)) {
+            $olduser = $USER;
+            $USER = $user;
+        }
+        $ret = enrol_get_my_courses($fields = NULL, $sort = 'visible DESC,sortorder ASC', $limit = 0);
+        if (!empty($olduser)) {
+            $USER = $olduser;
+        }
+        return $ret;
+    }
+
     /**
      * Get recent forum activity for all accessible forums across all courses.
      * @param bool $userid
@@ -972,7 +996,7 @@ class local {
      * @throws \coding_exception
      */
     public static function recent_forum_activity($userid = false) {
-        global $USER, $CFG;
+        global $USER, $CFG, $DB;
 
         if (file_exists($CFG->dirroot.'/mod/hsuforum')) {
             require_once($CFG->dirroot.'/mod/hsuforum/lib.php');
@@ -987,7 +1011,8 @@ class local {
 
         $fourweeksago = time() - (WEEKSECS*4);
 
-        $courses = enrol_get_my_courses();
+        $user = $DB->get_record('user', ['id' => $userid]);
+        $courses = self::enrol_get_courses($user);
         foreach ($courses as $course) {
             $forums = forum_get_readable_forums($userid, $course->id);
             foreach ($forums as $forum) {
@@ -1003,8 +1028,16 @@ class local {
                     hsuforum_get_recent_mod_activity($activities, $idx, $fourweeksago, $course->id, $cm->id);
                 }
             }
-
         }
+
+        // Remove activity entries that don't have a content object (typically anonymous entries).
+        $tmpacts = [];
+        foreach ($activities as $val) {
+            if (is_object($val->content)){
+                $tmpacts[] = $val;
+            }
+        }
+        $activities = $tmpacts;
 
         usort($activities, array('\theme_snap\local','sort_timestamp'));
 
@@ -1014,6 +1047,9 @@ class local {
     public static function print_recent_forum_activity() {
         global $PAGE;
         $activities = self::recent_forum_activity();
+        if (empty($activities)) {
+            return '';
+        }
         $activities = array_slice($activities, 0, 10);
         $renderer = $PAGE->get_renderer('theme_snap', 'core', RENDERER_TARGET_GENERAL);
         return $renderer->recent_forum_activity($activities);

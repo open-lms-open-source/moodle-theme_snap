@@ -1230,11 +1230,15 @@ HTML;
         $output = '';
         foreach ($activities as $activity) {
             $output .= '<div>';
-            $userpicture = new user_picture($activity->user);
-            $userpicture->link = false;
-            $userpicture->alttext = false;
-            $userpicture->size = 32;
-            $picture = $OUTPUT->render($userpicture);
+            if (!empty($activity->user)) {
+                $userpicture = new user_picture($activity->user);
+                $userpicture->link = false;
+                $userpicture->alttext = false;
+                $userpicture->size = 32;
+                $picture = $OUTPUT->render($userpicture);
+            } else {
+                $picture = '';
+            }
             $url = '';
             $output .= $this->snap_media_object($url, $picture, fullname($activity->user), $this->friendly_datetime($activity->timestamp), format_text($activity->content->subject));
 
