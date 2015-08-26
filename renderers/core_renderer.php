@@ -30,7 +30,7 @@ use theme_snap\local;
 
 class theme_snap_core_renderer extends toc_renderer {
 
-    public function print_course_footer() {
+    public function course_footer() {
         global $DB, $COURSE, $CFG, $PAGE;
 
         // Note: This check will be removed for Snap 2.7.
@@ -220,14 +220,14 @@ class theme_snap_core_renderer extends toc_renderer {
     }
 
     /**
-     * Print  settings link
+     * Settings link for opening the Administration menu, only shown if needed.
      *
      * @return string
      */
-    public function print_settings_link() {
-        global $DB, $PAGE, $COURSE;
-        if(!$PAGE->blocks->is_block_present('settings')) {
-          return '';
+    public function settings_link() {
+        global $PAGE, $COURSE;
+        if (!$PAGE->blocks->is_block_present('settings')) {
+            return '';
         }
         $isteacher = has_capability('moodle/course:manageactivities', $PAGE->context);
 
@@ -237,14 +237,14 @@ class theme_snap_core_renderer extends toc_renderer {
 
         if ($isteacher) {
             $display = true;
-        } elseif (is_role_switched($COURSE->id)) {
+        } else if (is_role_switched($COURSE->id)) {
             // IF a teacher or admin switch their role to a student then they still need to be able to see the admin
             // menu in order to be able to switch back to their original role!
             $display = true;
-        } elseif ($PAGE->pagetype === 'user-profile') {
+        } else if ($PAGE->pagetype === 'user-profile') {
             // The admin block needs to be shown on user profile pages as it contains the edit profile link.
             $display = true;
-        } elseif ($PAGE->url->get_path() === '/user/view.php'
+        } else if ($PAGE->url->get_path() === '/user/view.php'
             && $userid
             && has_capability('moodle/user:viewdetails', CONTEXT_USER::instance($userid))
         ) {
@@ -276,25 +276,32 @@ class theme_snap_core_renderer extends toc_renderer {
             return '';
         }
 
-        // User can view admin block - return the link
-        $admin = get_string('admin', 'theme_snap');
-        echo '<a id="admin-menu-trigger" class="pull-right" href="#inst'.$instanceid.'" data-toggle="tooltip" data-placement="bottom" title="'.$admin.'" >
-        <span class="lines"></span></a>';
+        $burgericon = '<span class="lines"></span>';
+        $url = '#inst' . $instanceid;
+        $attributes = array(
+            'id' => 'admin-menu-trigger',
+            'class' => 'pull-right',
+            'data-toggle' => 'tooltip',
+            'data-placement' => 'bottom',
+            'title' => get_string('admin', 'theme_snap'),
+        );
+
+        return html_writer::link($url, $burgericon, $attributes);
     }
 
     /**
-     * Print link to browse all courses
+     * Link to browse all courses, shown to admins in the fixy menu.
      *
      * @return string
      */
-    public function print_view_all_courses() {
+    public function browse_all_courses_button() {
         global $CFG;
 
         $output = '';
         if (!empty($CFG->navshowallcourses) || has_capability('moodle/site:config', context_system::instance())) {
             $browse = get_string('browseallcourses', 'theme_snap');
-            $output = '<a class="btn btn-default moodle-browseallcourses" href="'.$CFG->wwwroot.
-                      '/course/index.php">'.$browse.'</a>';
+            $url = new moodle_url('/course/index.php');
+            $output = html_writer::link($url, $browse, ['class' => 'btn btn-default moodle-browseallcourses']);
         }
         return $output;
     }
@@ -332,7 +339,7 @@ class theme_snap_core_renderer extends toc_renderer {
     }
 
     /**
-     * Print message badge count.
+     * Badge counter for new messages.
      * @return string
      */
     protected function render_badge_count() {
@@ -472,8 +479,8 @@ class theme_snap_core_renderer extends toc_renderer {
      * @return bool
      */
     protected function feedback_toggle_enabled() {
-        if (property_exists($this->page->theme->settings,'feedbacktoggle')
-            && $this->page->theme->settings->feedbacktoggle== 0) {
+        if (property_exists($this->page->theme->settings, 'feedbacktoggle')
+            && $this->page->theme->settings->feedbacktoggle == 0) {
             return false;
         }
         return true;
@@ -561,22 +568,24 @@ class theme_snap_core_renderer extends toc_renderer {
      *
      */
     public function print_login_button() {
-      global $CFG;
-      $loginurl = '#login';
-      if (!empty($CFG->alternateloginurl)) {
-              $loginurl = $CFG->wwwroot.'/login/index.php';
-      }
-      $login = get_string('login');
-      // This check is here for the front page login
-      if (!isloggedin() || isguestuser()) {
-        return "<a aria-haspopup='true' class='snap-login-button fixy-trigger'  href='".s($loginurl)."' >$login</a>";
-      }
+        global $CFG;
+
+        $loginurl = '#login';
+        if (!empty($CFG->alternateloginurl)) {
+            $loginurl = $CFG->wwwroot.'/login/index.php';
+        }
+        $login = get_string('login');
+        // This check is here for the front page login.
+        if (!isloggedin() || isguestuser()) {
+            return "<a aria-haspopup='true' class='snap-login-button fixy-trigger'  href='".s($loginurl)."' >$login</a>";
+        }
     }
     /**
-     * Print fixy (login or menu for signed in users)
+     * The "fixy" overlay that drops down when the link in the top right corner is clicked. It will say either
+     * "login" or "menu" (for signed in users).
      *
      */
-    public function print_fixed_menu() {
+    public function fixed_menu() {
         global $CFG, $USER, $PAGE, $DB;
 
         $logout = get_string('logout');
@@ -692,7 +701,7 @@ class theme_snap_core_renderer extends toc_renderer {
                     // Let's put the interesting avatars first!
                     $avatars = array_merge($avatars, $blankavatars);
                     // Limit visible to 4.
-                    if (count($avatars)>4) {
+                    if (count($avatars) > 4) {
                         $hiddenavatars = array_slice($avatars, 4);
                         $avatars = array_slice($avatars, 0, 4);
                         $extralink = '<a class="courseinfo-teachers-more state-visible" href=#>+'.count($hiddenavatars).'</a>';
@@ -716,21 +725,32 @@ class theme_snap_core_renderer extends toc_renderer {
             $courselist .= "</div>";
 
             $courselist .= '<div class="row fixy-browse-search-courses"><br>';
+
             if (has_capability('moodle/site:config', context_system::instance())) {
                 $courserenderer = $PAGE->get_renderer('core', 'course');
-                $courselist .= '<div class="col-md-6">';
-                $courselist .= $courserenderer->course_search_form(null, 'fixy');
-                $courselist .= '</div>';
+                $coursesearch = $courserenderer->course_search_form(null, 'fixy');
+                $courselist .= '<div class="col-md-6">'.$coursesearch.'</div>';
             }
-            $courselist .= '<div class="col-md-6">';
-            $courselist .= $this->print_view_all_courses();
-            $courselist .= '</div>';
+
+            $browseallcoursesbutton = $this->browse_all_courses_button();
+            $courselist .= '<div class="col-md-6">'.$browseallcoursesbutton.'</div>';
             $courselist .= '</div></section>'; // Close row.
 
             $menu = get_string('menu', 'theme_snap');
-            echo '<a href="#primary-nav" aria-haspopup="true" class="fixy-trigger" id="js-personal-menu-trigger" '.
-            'aria-controls="primary-nav" title="'.get_string('sitenavigation', 'theme_snap').'" data-toggle="tooltip" data-placement="bottom">'.$menu.$picture.
-            $this->render_badge_count(). '</a>';
+            $badge = $this->render_badge_count();
+            $linkcontent = $menu.$picture.$badge;
+            $attributes = array(
+                'aria-haspopup' => 'true',
+                'class' => 'fixy-trigger',
+                'id' => 'js-personal-menu-trigger',
+                'aria-controls' => 'primary-nav',
+                'title' => get_string('sitenavigation', 'theme_snap'),
+                'data-toggle' => 'tooltip',
+                'data-placement' => 'bottom',
+            );
+
+            echo html_writer::link("#primary-nav", $linkcontent, $attributes);
+
             $close = get_string('close', 'theme_snap');
             $viewyourprofile = get_string('viewyourprofile', 'theme_snap');
             $realuserinfo = '';
@@ -807,7 +827,6 @@ class theme_snap_core_renderer extends toc_renderer {
         global $COURSE, $CFG;
 
         require_once($CFG->dirroot.'/course/lib.php');
-        $course = course_get_format($COURSE)->get_course();
 
         $breadcrumbs = '';
         $courseitem = null;
@@ -915,8 +934,8 @@ class theme_snap_core_renderer extends toc_renderer {
     }
 
     /**
-     * Custom hook that requires a patch to /index.php
-     * for customized rendering of front page news.
+     * Alternative rendering of front page news, called from layout/faux_site_index.php which
+     * replaces the standard news output with this.
      *
      * @return string
      */
@@ -1105,25 +1124,21 @@ HTML;
      * rather than inside them.
      */
     public function confirm($message, $continue, $cancel) {
-        if ($continue instanceof single_button) {
-            // OK.
-        } else if (is_string($continue)) {
+        if (is_string($continue)) {
             $continue = new single_button(new moodle_url($continue), get_string('continue'), 'post');
         } else if ($continue instanceof moodle_url) {
             $continue = new single_button($continue, get_string('continue'), 'post');
-        } else {
+        } else if (!$continue instanceof single_button) {
             throw new coding_exception(
                 'The continue param to $OUTPUT->confirm() must be either a URL (string/moodle_url) or a single_button instance.'
             );
         }
 
-        if ($cancel instanceof single_button) {
-            // OK.
-        } else if (is_string($cancel)) {
+        if (is_string($cancel)) {
             $cancel = new single_button(new moodle_url($cancel), get_string('cancel'), 'get');
         } else if ($cancel instanceof moodle_url) {
             $cancel = new single_button($cancel, get_string('cancel'), 'get');
-        } else {
+        } else if (!$cancel instanceof single_button) {
             throw new coding_exception(
                 'The cancel param to $OUTPUT->confirm() must be either a URL (string/moodle_url) or a single_button instance.'
             );

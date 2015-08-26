@@ -114,11 +114,11 @@ class toc_renderer extends core_renderer {
     }
 
     /**
-     * Print  table of contents for a course
+     * Table of contents for a course
      *
      * @Author: Stuart Lamour
      */
-    public function print_course_toc() {
+    public function course_toc() {
 
         global $COURSE;
 
