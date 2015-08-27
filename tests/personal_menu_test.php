@@ -42,7 +42,7 @@ class theme_snap_personal_menu_test extends \advanced_testcase {
     }
 
     public function tearDown() {
-        // We must clear the subscription caches. This has to be done both before each test, and after in case of other
+        // We must clear the subscription caches. This has to be done both before each test, and after in case of other.
         // tests using these functions.
         \mod_forum\subscriptions::reset_forum_cache();
     }
@@ -66,7 +66,7 @@ class theme_snap_personal_menu_test extends \advanced_testcase {
 
         $sturole = $DB->get_record('role', array('shortname'=>'student'));
 
-        // Enrol user1 to both courses but user2 only to course2
+        // Enrol user1 to both courses but user2 only to course2.
         $this->getDataGenerator()->enrol_user($user1->id,
             $course1->id,
             $sturole->id);
@@ -133,9 +133,85 @@ class theme_snap_personal_menu_test extends \advanced_testcase {
         $record->discussion = $discussion2->id;
         $this->getDataGenerator()->get_plugin_generator('mod_forum')->create_post($record);
 
+        // Note: In testing number of posts, discussions are counted too as there is a post for each discussion created.
+
+        // Test user1 viewable posts.
         $activity = local::recent_forum_activity($user1->id);
-        // Should be 6 posts (a discussion is also a post).
+        // Should be 6 posts.
         $this->assertEquals(6, count($activity));
 
+        // Test user2 viewable posts.
+        $activity = local::recent_forum_activity($user2->id);
+        // Should be 4 posts - user2 is not enrolled on course1.
+        $this->assertEquals(4, count($activity));
+
+        // Add 2 groups to course2.
+        $groupA = $this->getDataGenerator()->create_group([
+            'courseid' => $course2->id,
+            'name' => 'A'
+        ]);
+        $groupB = $this->getDataGenerator()->create_group([
+            'courseid' => $course2->id,
+            'name' => 'B'
+        ]);
+
+        // Add user1 to both groups but user2 to just groupA.
+        groups_add_member($groupA->id, $user1);
+        groups_add_member($groupB->id, $user1);
+        groups_add_member($groupA->id, $user2);
+
+        // Create a forum with group mode enabled.
+        $record = new \stdClass();
+        $record->course = $course2->id;
+        $forum3 = $this->getDataGenerator()->create_module('forum', $record, ['groupmode' => SEPARATEGROUPS]);
+
+        // Add a discussion and 2 posts for groupA users.
+        $record = new \stdClass();
+        $record->course = $course2->id;
+        $record->userid = $user1->id;
+        $record->forum = $forum3->id;
+        $record->groupid = $groupA->id;
+        $discussion4 = $this->getDataGenerator()->get_plugin_generator('mod_forum')->create_discussion($record);
+
+        // (At this point - 7 posts for user1, 5 for user2).
+
+        for ($p=1; $p<=2; $p++) {
+            // Create 1 post by user1 and user2.
+            $user = $p==1 ? $user1 : $user2;
+            $record = new \stdClass();
+            $record->course = $course2->id;
+            $record->userid = $user->id;
+            $record->forum = $forum3->id;
+            $record->discussion = $discussion4->id;
+            $this->getDataGenerator()->get_plugin_generator('mod_forum')->create_post($record);
+        }
+
+        // (At this point - 9 posts for user1, 7 for user2).
+
+        // Add a discussion and 1 post for groupB users.
+        $record = new \stdClass();
+        $record->course = $course2->id;
+        $record->userid = $user1->id;
+        $record->forum = $forum3->id;
+        $record->groupid = $groupB->id;
+        $discussion5 = $this->getDataGenerator()->get_plugin_generator('mod_forum')->create_discussion($record);
+        $record = new \stdClass();
+        $record->course = $course2->id;
+        $record->userid = $user1->id;
+        $record->forum = $forum3->id;
+        $record->discussion = $discussion5->id;
+        $this->getDataGenerator()->get_plugin_generator('mod_forum')->create_post($record);
+
+        // (At this point - 11 posts for user1, 7 for user2).
+
+        // Check user1.
+        $activity = local::recent_forum_activity($user1->id);
+        // Should be 11 posts.
+        $this->assertEquals(11, count($activity));
+
+        // Check user2.
+        $activity = local::recent_forum_activity($user2->id);
+        // Should be 7 posts.
+        $this->assertEquals(7, count($activity));
     }
 }

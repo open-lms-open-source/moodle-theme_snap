@@ -991,19 +991,34 @@ class local {
 
     /**
      * Get recent forum activity for all accessible forums across all courses.
-     * @param bool $userid
+     * @param bool $userorid
      * @return array
      * @throws \coding_exception
      */
-    public static function recent_forum_activity($userid = false) {
+    public static function recent_forum_activity($userorid = false) {
         global $USER, $CFG, $DB;
 
         if (file_exists($CFG->dirroot.'/mod/hsuforum')) {
             require_once($CFG->dirroot.'/mod/hsuforum/lib.php');
         }
 
+        if (is_object($userorid)) {
+            $userid = $userorid->id;
+        } else {
+            $userid = $userorid;
+        }
+
+        $origuser = false;
         if (empty($userid)) {
             $userid = $USER->id;
+        } else if ($userid !== $USER->id) {
+            // Need to swap USER variable arround for forum_get_recent_mod_activity to work with specific userid
+            $origuser = $USER;
+            if (!is_object($userorid)) {
+                $USER = $DB->get_record('user', ['id' => $userid]);
+            } else {
+                $USER = $userorid;
+            }
         }
 
         $activities = [];
@@ -1028,6 +1043,10 @@ class local {
                     hsuforum_get_recent_mod_activity($activities, $idx, $fourweeksago, $course->id, $cm->id);
                 }
             }
+        }
+
+        if ($origuser) {
+            $USER = $origuser;
         }
 
         // Remove activity entries that don't have a content object (typically anonymous entries).
