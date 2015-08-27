@@ -37,6 +37,7 @@ class theme_snap_personal_menu_test extends \advanced_testcase {
 
     protected $user1;
     protected $user2;
+    protected $teacher;
     protected $course1;
     protected $course2;
     protected $groupA;
@@ -54,15 +55,15 @@ class theme_snap_personal_menu_test extends \advanced_testcase {
 
         $this->resetAfterTest();
 
-        $this->user1 = $this->getDataGenerator()->create_user();
-        $this->user2 = $this->getDataGenerator()->create_user();
-
         $this->course1 = $this->getDataGenerator()->create_course();
         $this->course2 = $this->getDataGenerator()->create_course();
 
-        $sturole = $DB->get_record('role', array('shortname'=>'student'));
+        $this->user1 = $this->getDataGenerator()->create_user();
+        $this->user2 = $this->getDataGenerator()->create_user();
+        $this->teacher = $this->getDataGenerator()->create_user();
 
-        // Enrol user1 to both courses but user2 only to course2.
+        // Enrol (as students) user1 to both courses but user2 only to course2.
+        $sturole = $DB->get_record('role', array('shortname'=>'student'));
         $this->getDataGenerator()->enrol_user($this->user1->id,
             $this->course1->id,
             $sturole->id);
@@ -72,6 +73,15 @@ class theme_snap_personal_menu_test extends \advanced_testcase {
         $this->getDataGenerator()->enrol_user($this->user2->id,
             $this->course2->id,
             $sturole->id);
+
+        // Enrol teacher on both courses.
+        $teacherrole = $DB->get_record('role', array('shortname'=>'teacher'));
+        $this->getDataGenerator()->enrol_user($this->teacher->id,
+            $this->course1->id,
+            $teacherrole->id);
+        $this->getDataGenerator()->enrol_user($this->teacher->id,
+            $this->course2->id,
+            $teacherrole->id);
 
         // Add 2 groups to course2.
         $this->groupA = $this->getDataGenerator()->create_group([
@@ -172,8 +182,25 @@ class theme_snap_personal_menu_test extends \advanced_testcase {
         $record->course = $this->course2->id;
         $forum2 = $this->getDataGenerator()->create_module($ftype, $record);
 
+        // Create a date restricted forum - won't be available to students until one week from now.
+        $record = new \stdClass();
+        $record->course = $this->course2->id;
+        $opts = ['availability'] = '{"op":"&","c":[{"type":"date","d":">=","t":'.(time()+WEEKSECS).'}],"showc":[true]}';
+        $forum3 = $this->getDataGenerator()->create_module($ftype, $record, $opts);
+
         // Add discussion to course 1 started by user1.
         $discussion1 = $this->create_discussion($ftype, $this->course1->id, $this->user1->id, $forum1->id);
+
+        // Make sure teacher & user1 has a count of 1 post and user2 has a count of 0 posts
+        $activity = local::recent_forum_activity($this->teacher->id);
+        // Should be 1 post.
+        $this->assertEquals($u1offset+1, count($activity));
+        $activity = local::recent_forum_activity($this->user1->id);
+        // Should be 1 post.
+        $this->assertEquals($u1offset+1, count($activity));
+        $activity = local::recent_forum_activity($this->user2->id);
+        // Should be 0 posts.
+        $this->assertEquals($u1offset, count($activity));
 
         // Add discussion to course 2 started by user1.
         $discussion2 = $this->create_discussion($ftype, $this->course2->id, $this->user1->id, $forum2->id);
@@ -203,26 +230,26 @@ class theme_snap_personal_menu_test extends \advanced_testcase {
         // Create a forum with group mode enabled.
         $record = new \stdClass();
         $record->course = $this->course2->id;
-        $forum3 = $this->getDataGenerator()->create_module($ftype, $record, ['groupmode' => SEPARATEGROUPS]);
+        $forum4 = $this->getDataGenerator()->create_module($ftype, $record, ['groupmode' => SEPARATEGROUPS]);
 
         // Add a discussion and 2 posts for groupA users.
         $discussion4 = $this->create_discussion($ftype,
-            $this->course2->id, $this->user1->id, $forum3->id,  $this->groupA->id);
+            $this->course2->id, $this->user1->id, $forum4->id,  $this->groupA->id);
 
         // (At this point - 7 posts for user1, 5 for user2).
 
         for ($p=1; $p<=2; $p++) {
             // Create 1 post by user1 and user2.
             $user = $p==1 ? $this->user1 : $this->user2;
-            $this->create_post($ftype, $this->course2->id, $user->id, $forum3->id, $discussion4->id);
+            $this->create_post($ftype, $this->course2->id, $user->id, $forum4->id, $discussion4->id);
         }
 
         // (At this point - 9 posts for user1, 7 for user2).
 
         // Add a discussion and 1 post for groupB users.
         $discussion5 = $this->create_discussion($ftype,
-            $this->course2->id, $this->user1->id, $forum3->id,  $this->groupB->id);
-        $this->create_post($ftype, $this->course2->id, $this->user1->id, $forum3->id, $discussion5->id);
+            $this->course2->id, $this->user1->id, $forum4->id,  $this->groupB->id);
+        $this->create_post($ftype, $this->course2->id, $this->user1->id, $forum4->id, $discussion5->id);
 
         // (At this point - 11 posts for user1, 7 for user2).
 
