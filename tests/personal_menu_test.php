@@ -108,12 +108,54 @@ class theme_snap_personal_menu_test extends \advanced_testcase {
     }
 
     /**
+     * Create a discussion.
+     *
+     * @param $ftype
+     * @param $courseid
+     * @param $userid
+     * @param $forumid
+     * @return mixed
+     * @throws \coding_exception
+     */
+    protected function create_discussion($ftype, $courseid, $userid, $forumid, $groupid = null) {
+        // Add discussion to course 1 started by user1.
+        $record = new \stdClass();
+        $record->course = $courseid;
+        $record->userid = $userid;
+        $record->forum = $forumid;
+        if ($groupid !== null) {
+            $record->groupid = $groupid;
+        }
+        return ($this->getDataGenerator()->get_plugin_generator('mod_'.$ftype)->create_discussion($record));
+    }
+
+    /**
+     * Create a post.
+     *
+     * @param $ftype
+     * @param $courseid
+     * @param $userid
+     * @param $forumid
+     * @param $discussionid
+     * @return mixed
+     * @throws \coding_exception
+     */
+    protected function create_post($ftype, $courseid, $userid, $forumid, $discussionid){
+        $record = new \stdClass();
+        $record->course = $courseid;
+        $record->userid = $userid;
+        $record->forum = $forumid;
+        $record->discussion = $discussionid;
+        return ($this->getDataGenerator()->get_plugin_generator('mod_'.$ftype)->create_post($record));
+    }
+
+    /**
      * @param string $ftype - forum or hsuforum
      * @param int $u1offset
      * @param int $u2offset
      * @throws \coding_exception
      */
-    public function do_forum_type($ftype, $u1offset =0, $u2offset = 0) {
+    protected function do_forum_type($ftype, $u1offset =0, $u2offset = 0) {
 
         if ($u1offset === 0 && $u2offset ===0) {
             // There are no forums to start with, check activity array is empty.
@@ -131,47 +173,20 @@ class theme_snap_personal_menu_test extends \advanced_testcase {
         $forum2 = $this->getDataGenerator()->create_module($ftype, $record);
 
         // Add discussion to course 1 started by user1.
-        $record = new \stdClass();
-        $record->course = $this->course1->id;
-        $record->userid = $this->user1->id;
-        $record->forum = $forum1->id;
-        $discussion1 = $this->getDataGenerator()->get_plugin_generator('mod_'.$ftype)->create_discussion($record);
+        $discussion1 = $this->create_discussion($ftype, $this->course1->id, $this->user1->id, $forum1->id);
 
         // Add discussion to course 2 started by user1.
-        $record = new \stdClass();
-        $record->course = $this->course2->id;
-        $record->userid = $this->user1->id;
-        $record->forum = $forum2->id;
-        $discussion2 = $this->getDataGenerator()->get_plugin_generator('mod_'.$ftype)->create_discussion($record);
+        $discussion2 = $this->create_discussion($ftype, $this->course2->id, $this->user1->id, $forum2->id);
 
         // Add discussions to course2 started by user2.
-        $record = new \stdClass();
-        $record->course = $this->course2->id;
-        $record->userid = $this->user2->id;
-        $record->forum = $forum2->id;
-        $discussion3 = $this->getDataGenerator()->get_plugin_generator('mod_'.$ftype)->create_discussion($record);
+        $discussion3 = $this->create_discussion($ftype, $this->course2->id, $this->user2->id, $forum2->id);
 
-        // Add post to forum1 and 2 by user1.
-        $record = new \stdClass();
-        $record->course = $this->course1->id;
-        $record->userid = $this->user1->id;
-        $record->forum = $forum1->id;
-        $record->discussion = $discussion1->id;
-        $this->getDataGenerator()->get_plugin_generator('mod_'.$ftype)->create_post($record);
-        $record = new \stdClass();
-        $record->course = $this->course2->id;
-        $record->userid = $this->user2->id;
-        $record->forum = $forum2->id;
-        $record->discussion = $discussion2->id;
-        $this->getDataGenerator()->get_plugin_generator('mod_'.$ftype)->create_post($record);
+        // Add post to forum1 and 2 by user1 and user2.
+        $this->create_post($ftype, $this->course1->id, $this->user1->id, $forum1->id, $discussion1->id);
+        $this->create_post($ftype, $this->course2->id, $this->user2->id, $forum2->id, $discussion2->id);
 
         // Add post to forum2 by user1.
-        $record = new \stdClass();
-        $record->course = $this->course2->id;
-        $record->userid = $this->user2->id;
-        $record->forum = $forum2->id;
-        $record->discussion = $discussion2->id;
-        $this->getDataGenerator()->get_plugin_generator('mod_'.$ftype)->create_post($record);
+        $this->create_post($ftype, $this->course2->id, $this->user2->id, $forum2->id, $discussion2->id);
 
         // Note: In testing number of posts, discussions are counted too as there is a post for each discussion created.
 
@@ -191,41 +206,23 @@ class theme_snap_personal_menu_test extends \advanced_testcase {
         $forum3 = $this->getDataGenerator()->create_module($ftype, $record, ['groupmode' => SEPARATEGROUPS]);
 
         // Add a discussion and 2 posts for groupA users.
-        $record = new \stdClass();
-        $record->course = $this->course2->id;
-        $record->userid = $this->user1->id;
-        $record->forum = $forum3->id;
-        $record->groupid = $this->groupA->id;
-        $discussion4 = $this->getDataGenerator()->get_plugin_generator('mod_'.$ftype)->create_discussion($record);
+        $discussion4 = $this->create_discussion($ftype,
+            $this->course2->id, $this->user1->id, $forum3->id,  $this->groupA->id);
 
         // (At this point - 7 posts for user1, 5 for user2).
 
         for ($p=1; $p<=2; $p++) {
             // Create 1 post by user1 and user2.
             $user = $p==1 ? $this->user1 : $this->user2;
-            $record = new \stdClass();
-            $record->course = $this->course2->id;
-            $record->userid = $user->id;
-            $record->forum = $forum3->id;
-            $record->discussion = $discussion4->id;
-            $this->getDataGenerator()->get_plugin_generator('mod_'.$ftype)->create_post($record);
+            $this->create_post($ftype, $this->course2->id, $user->id, $forum3->id, $discussion4->id);
         }
 
         // (At this point - 9 posts for user1, 7 for user2).
 
         // Add a discussion and 1 post for groupB users.
-        $record = new \stdClass();
-        $record->course = $this->course2->id;
-        $record->userid = $this->user1->id;
-        $record->forum = $forum3->id;
-        $record->groupid = $this->groupB->id;
-        $discussion5 = $this->getDataGenerator()->get_plugin_generator('mod_'.$ftype)->create_discussion($record);
-        $record = new \stdClass();
-        $record->course = $this->course2->id;
-        $record->userid = $this->user1->id;
-        $record->forum = $forum3->id;
-        $record->discussion = $discussion5->id;
-        $this->getDataGenerator()->get_plugin_generator('mod_'.$ftype)->create_post($record);
+        $discussion5 = $this->create_discussion($ftype,
+            $this->course2->id, $this->user1->id, $forum3->id,  $this->groupB->id);
+        $this->create_post($ftype, $this->course2->id, $this->user1->id, $forum3->id, $discussion5->id);
 
         // (At this point - 11 posts for user1, 7 for user2).
 
