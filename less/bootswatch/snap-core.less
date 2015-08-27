@@ -406,6 +406,7 @@ label,
 .form-defaultinfo,
 .form-description,
 .form-filemanager,
+.ffilepicker,
 .ffilemanager,
 .fdescription,
 .fstatic,
@@ -3462,13 +3463,36 @@ body.hascontinuecancel.path-site #page{
 }
 
 /* file picker dropzone */
-.fp-navbar,
-.fp-restrictions {
-    display : none;
+.ffilemanager .fp-pathbar,
+.ffilemanager .fp-viewbar,
+.ffilemanager .fp-restrictions {
+    display: none;
 }
 
+.ffilepicker .fp-btn-choose {
+    margin: 0 0 10px 0;
+}
+
+.fitem_filepicker .fitemtitle label {
+    margin-bottom: 0;
+}
+
+.felement.ffilepicker {
+    margin-top: 0;
+}
+
+.filepicker-filelist,
 .filemanager-container {
     border: none;
+}
+
+.filemanager .fp-navbar {
+    background-color: transparent;
+    border: none;
+}
+
+.filemanager-toolbar {
+    padding: 0 0 8px 0;
 }
 
 .dndupload-arrow {
@@ -3477,6 +3501,7 @@ body.hascontinuecancel.path-site #page{
     margin-top: 10px;
 }
 
+.filepicker-filelist .filepicker-container,
 .filemanager .filemanager-container .fm-empty-container,
 .filemanager-container.dndupload-over .dndupload-target,
 .filemanager-container .dndupload-target {
