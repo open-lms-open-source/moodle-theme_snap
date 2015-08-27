@@ -50,7 +50,6 @@ class theme_snap_personal_menu_test extends \advanced_testcase {
         // tests using these functions.
         \mod_forum\subscriptions::reset_forum_cache();
 
-
         require_once($CFG->dirroot . '/mod/forum/lib.php');
 
         $this->resetAfterTest();
@@ -97,7 +96,6 @@ class theme_snap_personal_menu_test extends \advanced_testcase {
         groups_add_member($this->groupA->id, $this->user1);
         groups_add_member($this->groupB->id, $this->user1);
         groups_add_member($this->groupA->id, $this->user2);
-
     }
 
     public function tearDown() {
@@ -110,11 +108,9 @@ class theme_snap_personal_menu_test extends \advanced_testcase {
      *
      * @throws \coding_exception
      */
-    public function test_forums() {
-
+    public function test_forum_recent_activity() {
         $this->do_forum_type('forum');
-        $this->do_forum_type('hsuforum', 11, 7);
-
+        $this->do_forum_type('hsuforum', 13, 11, 7);
     }
 
     /**
@@ -165,8 +161,8 @@ class theme_snap_personal_menu_test extends \advanced_testcase {
      * @param int $u2offset
      * @throws \coding_exception
      */
-    protected function do_forum_type($ftype, $u1offset =0, $u2offset = 0) {
-
+    protected function do_forum_type($ftype, $toffset = 0, $u1offset = 0, $u2offset = 0) {
+        global $DB, $CFG;
         if ($u1offset === 0 && $u2offset ===0) {
             // There are no forums to start with, check activity array is empty.
             $activity = local::recent_forum_activity($this->user1->id);
@@ -182,25 +178,19 @@ class theme_snap_personal_menu_test extends \advanced_testcase {
         $record->course = $this->course2->id;
         $forum2 = $this->getDataGenerator()->create_module($ftype, $record);
 
-        // Create a date restricted forum - won't be available to students until one week from now.
-        $record = new \stdClass();
-        $record->course = $this->course2->id;
-        $opts = ['availability'] = '{"op":"&","c":[{"type":"date","d":">=","t":'.(time()+WEEKSECS).'}],"showc":[true]}';
-        $forum3 = $this->getDataGenerator()->create_module($ftype, $record, $opts);
-
         // Add discussion to course 1 started by user1.
         $discussion1 = $this->create_discussion($ftype, $this->course1->id, $this->user1->id, $forum1->id);
 
-        // Make sure teacher & user1 has a count of 1 post and user2 has a count of 0 posts
+        // Check teacher & user1 has a count of 1 post and user2 has a count of 0 posts
         $activity = local::recent_forum_activity($this->teacher->id);
-        // Should be 1 post.
-        $this->assertEquals($u1offset+1, count($activity));
+        // Should be 1 post for teacher.
+        $this->assertEquals($toffset+1, count($activity));
         $activity = local::recent_forum_activity($this->user1->id);
-        // Should be 1 post.
+        // Should be 1 post for user1.
         $this->assertEquals($u1offset+1, count($activity));
         $activity = local::recent_forum_activity($this->user2->id);
-        // Should be 0 posts.
-        $this->assertEquals($u1offset, count($activity));
+        // Should be 0 posts for user2.
+        $this->assertEquals($u2offset, count($activity));
 
         // Add discussion to course 2 started by user1.
         $discussion2 = $this->create_discussion($ftype, $this->course2->id, $this->user1->id, $forum2->id);
@@ -217,15 +207,44 @@ class theme_snap_personal_menu_test extends \advanced_testcase {
 
         // Note: In testing number of posts, discussions are counted too as there is a post for each discussion created.
 
-        // Test user1 viewable posts.
+        // Check teacher viewable posts is 6
+        $activity = local::recent_forum_activity($this->teacher->id);
+        $this->assertEquals($toffset+6, count($activity));
+
+        // Check user1 viewable posts is 6.
         $activity = local::recent_forum_activity($this->user1->id);
-        // Should be 6 posts.
         $this->assertEquals($u1offset+6, count($activity));
 
-        // Test user2 viewable posts.
+        // Check user2 viewable posts is 4 (user2 is not enrolled on course1).
         $activity = local::recent_forum_activity($this->user2->id);
-        // Should be 4 posts - user2 is not enrolled on course1.
         $this->assertEquals($u2offset+4, count($activity));
+
+        // This is crucial - without this you can't make a conditionally accsesed forum.
+        $CFG->enableavailability = true;
+
+        // Create a date restricted forum - won't be available to students until one week from now.
+        $record = new \stdClass();
+        $record->course = $this->course2->id;
+        $opts = ['availability' => '{"op":"&","c":[{"type":"date","d":">=","t":'.(time()+WEEKSECS).'}],"showc":[true]}'];
+        $record->availability=$opts['availability'];
+        $forum3 = $this->getDataGenerator()->create_module($ftype, $record, $opts);
+
+        // Add discussion to date restricted forum
+        $discussion4 = $this->create_discussion($ftype, $this->course2->id, $this->teacher->id, $forum3->id);
+        $this->create_post($ftype, $this->course2->id, $this->teacher->id, $forum3->id, $discussion4->id);
+
+        // Check teacher viewable posts is 8
+        $activity = local::recent_forum_activity($this->teacher->id);
+        $this->assertEquals($toffset+8, count($activity));
+
+        // Check user1 viewable posts is 6 - can't see anything in restricted forum, so same as before.
+        $activity = local::recent_forum_activity($this->user1->id);
+        $this->assertEquals($u1offset+6, count($activity));
+
+        // Check user2 viewable posts is 4 - can't see anything in restricted forum, so same as before.
+        $activity = local::recent_forum_activity($this->user2->id);
+        $this->assertEquals($u2offset+4, count($activity));
+
 
         // Create a forum with group mode enabled.
         $record = new \stdClass();
@@ -233,7 +252,7 @@ class theme_snap_personal_menu_test extends \advanced_testcase {
         $forum4 = $this->getDataGenerator()->create_module($ftype, $record, ['groupmode' => SEPARATEGROUPS]);
 
         // Add a discussion and 2 posts for groupA users.
-        $discussion4 = $this->create_discussion($ftype,
+        $discussion5 = $this->create_discussion($ftype,
             $this->course2->id, $this->user1->id, $forum4->id,  $this->groupA->id);
 
         // (At this point - 7 posts for user1, 5 for user2).
@@ -241,17 +260,22 @@ class theme_snap_personal_menu_test extends \advanced_testcase {
         for ($p=1; $p<=2; $p++) {
             // Create 1 post by user1 and user2.
             $user = $p==1 ? $this->user1 : $this->user2;
-            $this->create_post($ftype, $this->course2->id, $user->id, $forum4->id, $discussion4->id);
+            $this->create_post($ftype, $this->course2->id, $user->id, $forum4->id, $discussion5->id);
         }
 
         // (At this point - 9 posts for user1, 7 for user2).
 
         // Add a discussion and 1 post for groupB users.
-        $discussion5 = $this->create_discussion($ftype,
+        $discussion6 = $this->create_discussion($ftype,
             $this->course2->id, $this->user1->id, $forum4->id,  $this->groupB->id);
-        $this->create_post($ftype, $this->course2->id, $this->user1->id, $forum4->id, $discussion5->id);
+        $this->create_post($ftype, $this->course2->id, $this->user1->id, $forum4->id, $discussion6->id);
 
         // (At this point - 11 posts for user1, 7 for user2).
+
+        // Check teacher.
+        $activity = local::recent_forum_activity($this->teacher->id);
+        // Should be offset + 13 posts.
+        $this->assertEquals($toffset+13, count($activity));
 
         // Check user1.
         $activity = local::recent_forum_activity($this->user1->id);
