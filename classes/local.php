@@ -982,7 +982,7 @@ class local {
             $olduser = $USER;
             $USER = $user;
         }
-        $ret = enrol_get_my_courses($fields = NULL, $sort = 'visible DESC,sortorder ASC', $limit = 0);
+        $ret = enrol_get_my_courses($fields, $sort, $limit);
         if (!empty($olduser)) {
             $USER = $olduser;
         }
