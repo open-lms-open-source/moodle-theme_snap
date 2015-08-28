@@ -35,17 +35,48 @@ defined('MOODLE_INTERNAL') || die();
  */
 class theme_snap_personal_menu_test extends \advanced_testcase {
 
+    /**
+     * @var stdClass
+     */
     protected $user1;
+
+    /**
+     * @var stdClass
+     */
     protected $user2;
+
+    /**
+     * @var stdClass
+     */
     protected $teacher;
+
+    /**
+     * @var stdClass
+     */
     protected $course1;
+
+    /**
+     * @var stdClass
+     */
     protected $course2;
-    protected $groupA;
-    protected $groupB;
-    
+
+    /**
+     * @var stdClass
+     */
+    protected $group1;
+
+    /**
+     * @var stdClass
+     */
+    protected $group2;
+
+    /**
+     * Pre-requisites for tests.
+     * @throws \coding_exception
+     */
     public function setUp() {
         global $CFG, $DB;
-        
+
         // We must clear the subscription caches. This has to be done both before each test, and after in case of other
         // tests using these functions.
         \mod_forum\subscriptions::reset_forum_cache();
@@ -62,7 +93,7 @@ class theme_snap_personal_menu_test extends \advanced_testcase {
         $this->teacher = $this->getDataGenerator()->create_user();
 
         // Enrol (as students) user1 to both courses but user2 only to course2.
-        $sturole = $DB->get_record('role', array('shortname'=>'student'));
+        $sturole = $DB->get_record('role', array('shortname' => 'student'));
         $this->getDataGenerator()->enrol_user($this->user1->id,
             $this->course1->id,
             $sturole->id);
@@ -74,7 +105,7 @@ class theme_snap_personal_menu_test extends \advanced_testcase {
             $sturole->id);
 
         // Enrol teacher on both courses.
-        $teacherrole = $DB->get_record('role', array('shortname'=>'teacher'));
+        $teacherrole = $DB->get_record('role', array('shortname' => 'teacher'));
         $this->getDataGenerator()->enrol_user($this->teacher->id,
             $this->course1->id,
             $teacherrole->id);
@@ -83,21 +114,24 @@ class theme_snap_personal_menu_test extends \advanced_testcase {
             $teacherrole->id);
 
         // Add 2 groups to course2.
-        $this->groupA = $this->getDataGenerator()->create_group([
+        $this->group1 = $this->getDataGenerator()->create_group([
             'courseid' => $this->course2->id,
-            'name' => 'A'
+            'name' => 'Group 1'
         ]);
-        $this->groupB = $this->getDataGenerator()->create_group([
+        $this->group2 = $this->getDataGenerator()->create_group([
             'courseid' => $this->course2->id,
-            'name' => 'B'
+            'name' => 'Group 2'
         ]);
 
-        // Add user1 to both groups but user2 to just groupA.
-        groups_add_member($this->groupA->id, $this->user1);
-        groups_add_member($this->groupB->id, $this->user1);
-        groups_add_member($this->groupA->id, $this->user2);
+        // Add user1 to both groups but user2 to just group1.
+        groups_add_member($this->group1->id, $this->user1);
+        groups_add_member($this->group2->id, $this->user1);
+        groups_add_member($this->group1->id, $this->user2);
     }
 
+    /**
+     * Clean up on test completion.
+     */
     public function tearDown() {
         // We must clear the subscription caches. This has to be done both before each test, and after in case of other.
         // tests using these functions.
@@ -146,7 +180,7 @@ class theme_snap_personal_menu_test extends \advanced_testcase {
      * @return mixed
      * @throws \coding_exception
      */
-    protected function create_post($ftype, $courseid, $userid, $forumid, $discussionid){
+    protected function create_post($ftype, $courseid, $userid, $forumid, $discussionid) {
         $record = new \stdClass();
         $record->course = $courseid;
         $record->userid = $userid;
@@ -174,7 +208,7 @@ class theme_snap_personal_menu_test extends \advanced_testcase {
      */
     protected function do_forum_type($ftype, $toffset = 0, $u1offset = 0, $u2offset = 0) {
         global $CFG;
-        if ($u1offset === 0 && $u2offset ===0) {
+        if ($u1offset === 0 && $u2offset === 0) {
             // There are no forums to start with, check activity array is empty.
             $activity = local::recent_forum_activity($this->user1->id);
             $this->assertEmpty($activity);
@@ -190,15 +224,14 @@ class theme_snap_personal_menu_test extends \advanced_testcase {
         $forum2 = $this->getDataGenerator()->create_module($ftype, $record);
 
         // Add discussion to course 1 started by user1.
+        // Note: In testing number of posts, discussions are counted too as there is a post for each discussion created.
         $discussion1 = $this->create_discussion($ftype, $this->course1->id, $this->user1->id, $forum1->id);
 
-        // Check teacher & user1 has a count of 1 post and user2 has a count of 0 posts
-
         // Check teacher viewable posts is 1.
-        $this->assert_user_activity($this->teacher, $toffset+1);
+        $this->assert_user_activity($this->teacher, $toffset + 1);
 
         // Check user1 viewable posts is 1.
-        $this->assert_user_activity($this->user1, $u1offset+1);
+        $this->assert_user_activity($this->user1, $u1offset + 1);
 
         // Check user2 viewable posts is 0 (user1 is not enrolled in course1).
         $this->assert_user_activity($this->user2, $u2offset);
@@ -216,16 +249,14 @@ class theme_snap_personal_menu_test extends \advanced_testcase {
         // Add post to forum2 by user1.
         $this->create_post($ftype, $this->course2->id, $this->user2->id, $forum2->id, $discussion3->id);
 
-        // Note: In testing number of posts, discussions are counted too as there is a post for each discussion created.
-
-        // Check teacher viewable posts is 6
-        $this->assert_user_activity($this->teacher, $toffset+6);
+        // Check teacher viewable posts is 6.
+        $this->assert_user_activity($this->teacher, $toffset + 6);
 
         // Check user1 viewable posts is 6.
-        $this->assert_user_activity($this->user1, $u1offset+6);
+        $this->assert_user_activity($this->user1, $u1offset + 6);
 
         // Check user2 viewable posts is 4 (user2 is not enrolled on course1).
-        $this->assert_user_activity($this->user2, $u2offset+4);
+        $this->assert_user_activity($this->user2, $u2offset + 4);
 
         // This is crucial - without this you can't make a conditionally accsesed forum.
         $CFG->enableavailability = true;
@@ -233,57 +264,57 @@ class theme_snap_personal_menu_test extends \advanced_testcase {
         // Create a date restricted forum - won't be available to students until one week from now.
         $record = new \stdClass();
         $record->course = $this->course2->id;
-        $opts = ['availability' => '{"op":"&","c":[{"type":"date","d":">=","t":'.(time()+WEEKSECS).'}],"showc":[true]}'];
-        $record->availability=$opts['availability'];
+        $opts = ['availability' => '{"op":"&","c":[{"type":"date","d":">=","t":'.(time() + WEEKSECS).'}],"showc":[true]}'];
+        $record->availability = $opts['availability'];
         $forum3 = $this->getDataGenerator()->create_module($ftype, $record, $opts);
 
-        // Add discussion to date restricted forum
+        // Add discussion to date restricted forum.
         $discussion4 = $this->create_discussion($ftype, $this->course2->id, $this->teacher->id, $forum3->id);
         $this->create_post($ftype, $this->course2->id, $this->teacher->id, $forum3->id, $discussion4->id);
 
-        // Check teacher viewable posts is 8
-        $this->assert_user_activity($this->teacher, $toffset+8);
+        // Check teacher viewable posts is 8.
+        $this->assert_user_activity($this->teacher, $toffset + 8);
 
         // Check user1 viewable posts is 6 - can't see anything in restricted forum, so same as before.
-        $this->assert_user_activity($this->user1, $u1offset+6);
+        $this->assert_user_activity($this->user1, $u1offset + 6);
 
         // Check user2 viewable posts is 4 - can't see anything in restricted forum, so same as before.
-        $this->assert_user_activity($this->user2, $u2offset+4);
+        $this->assert_user_activity($this->user2, $u2offset + 4);
 
         // Create a forum with group mode enabled.
         $record = new \stdClass();
         $record->course = $this->course2->id;
         $forum4 = $this->getDataGenerator()->create_module($ftype, $record, ['groupmode' => SEPARATEGROUPS]);
 
-        // Add a discussion and 2 posts for groupA users.
+        // Add a discussion and 2 posts for group1 users.
         $discussion5 = $this->create_discussion($ftype,
-            $this->course2->id, $this->user1->id, $forum4->id,  $this->groupA->id);
+            $this->course2->id, $this->user1->id, $forum4->id,  $this->group1->id);
 
-        // (At this point - 7 posts for user1, 5 for user2).
+        // At this point - 9 posts for teacher, 7 posts for user1, 5 for user2.
 
-        for ($p=1; $p<=2; $p++) {
+        for ($p = 1; $p <= 2; $p++) {
             // Create 1 post by user1 and user2.
-            $user = $p==1 ? $this->user1 : $this->user2;
+            $user = $p == 1 ? $this->user1 : $this->user2;
             $this->create_post($ftype, $this->course2->id, $user->id, $forum4->id, $discussion5->id);
         }
 
-        // (At this point - 9 posts for user1, 7 for user2).
+        // At this point - 11 posts for teacher, 9 posts for user1, 7 for user2.
 
-        // Add a discussion and 1 post for groupB users.
+        // Add a discussion and 1 post for group2 users.
         $discussion6 = $this->create_discussion($ftype,
-            $this->course2->id, $this->user1->id, $forum4->id,  $this->groupB->id);
+            $this->course2->id, $this->user1->id, $forum4->id,  $this->group2->id);
         $this->create_post($ftype, $this->course2->id, $this->user1->id, $forum4->id, $discussion6->id);
 
-        // (At this point - 13 posts for teacher, 11 posts for user1, 7 for user2).
+        // At this point - 13 posts for teacher, 11 posts for user1, 7 for user2.
 
         // Check teacher viewable posts is 13.
-        $this->assert_user_activity($this->teacher, $toffset+13);
+        $this->assert_user_activity($this->teacher, $toffset + 13);
 
         // Check user1 viewable posts is 11 (can see all with exception of restricted access forum).
-        $this->assert_user_activity($this->user1, $u1offset+11);
+        $this->assert_user_activity($this->user1, $u1offset + 11);
 
         // Check user2 viewable posts is 7 (activity restriction, course enrolment and group membership affect count).
-        $this->assert_user_activity($this->user2, $u2offset+7);
+        $this->assert_user_activity($this->user2, $u2offset + 7);
 
     }
 }
