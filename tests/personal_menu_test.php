@@ -194,13 +194,13 @@ class theme_snap_personal_menu_test extends \advanced_testcase {
 
         // Check teacher & user1 has a count of 1 post and user2 has a count of 0 posts
 
-        // Should be 1 post for teacher.
+        // Check teacher viewable posts is 1.
         $this->assert_user_activity($this->teacher, $toffset+1);
 
-        // Should be 1 post for user1.
+        // Check user1 viewable posts is 1.
         $this->assert_user_activity($this->user1, $u1offset+1);
 
-        // Should be 0 posts for user2.
+        // Check user2 viewable posts is 0 (user1 is not enrolled in course1).
         $this->assert_user_activity($this->user2, $u2offset);
 
         // Add discussion to course 2 started by user1.
@@ -276,13 +276,13 @@ class theme_snap_personal_menu_test extends \advanced_testcase {
 
         // (At this point - 13 posts for teacher, 11 posts for user1, 7 for user2).
 
-        // Check teacher.
+        // Check teacher viewable posts is 13.
         $this->assert_user_activity($this->teacher, $toffset+13);
 
-        // Check user1.
+        // Check user1 viewable posts is 11 (can see all with exception of restricted access forum).
         $this->assert_user_activity($this->user1, $u1offset+11);
 
-        // Check user2.
+        // Check user2 viewable posts is 7 (activity restriction, course enrolment and group membership affect count).
         $this->assert_user_activity($this->user2, $u2offset+7);
 
     }
