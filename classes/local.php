@@ -1012,7 +1012,9 @@ class local {
         if (empty($userid)) {
             $userid = $USER->id;
         } else if ($userid !== $USER->id) {
-            // Need to swap USER variable arround for forum_get_recent_mod_activity to work with specific userid
+            // Need to swap USER variable arround for forum_get_recent_mod_activity to work with specific userid.
+            // Also, there is a bug with forum_get_readable_forums which requires this hack.
+            // https://tracker.moodle.org/browse/MDL-51243.
             $origuser = $USER;
             if (!is_object($userorid)) {
                 $USER = $DB->get_record('user', ['id' => $userid]);
