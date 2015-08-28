@@ -999,7 +999,7 @@ class local {
             $userid = $USER->id;
         }
 
-        $courses = self::enrol_get_my_courses($userid);
+        $courses = self::enrol_get_courses($userid);
         $forumids = [];
         $aforumids = [];
         foreach ($courses as $course) {
