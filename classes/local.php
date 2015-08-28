@@ -958,14 +958,6 @@ class local {
         return ($page);
     }
 
-    private static function sort_timestamp($a, $b) {
-        if ($a->timestamp === $b->timestamp) {
-            return 0;
-        }
-        return ($a->timestamp > $b->timestamp ? -1 : 1);
-    }
-
-
     /**
      * Get courses for specific user
      *
@@ -989,78 +981,120 @@ class local {
         return $ret;
     }
 
+
     /**
      * Get recent forum activity for all accessible forums across all courses.
-     * @param bool $userorid
+     * @param bool $userid
      * @return array
      * @throws \coding_exception
      */
-    public static function recent_forum_activity($userorid = false) {
+    public static function recent_forum_activity($userid = false) {
         global $USER, $CFG, $DB;
 
         if (file_exists($CFG->dirroot.'/mod/hsuforum')) {
             require_once($CFG->dirroot.'/mod/hsuforum/lib.php');
         }
 
-        if (is_object($userorid)) {
-            $userid = $userorid->id;
-        } else {
-            $userid = $userorid;
-        }
-
-        $origuser = false;
         if (empty($userid)) {
             $userid = $USER->id;
-        } else if ($userid !== $USER->id) {
-            // Need to swap USER variable arround for forum_get_recent_mod_activity to work with specific userid.
-            // Also, there is a bug with forum_get_readable_forums which requires this hack.
-            // https://tracker.moodle.org/browse/MDL-51243.
-            $origuser = $USER;
-            if (!is_object($userorid)) {
-                $USER = $DB->get_record('user', ['id' => $userid]);
-            } else {
-                $USER = $userorid;
-            }
         }
 
-        $activities = [];
-        $idx = 0;
-
-        $fourweeksago = time() - (WEEKSECS*4);
-
-        $user = $DB->get_record('user', ['id' => $userid]);
-        $courses = self::enrol_get_courses($user);
+        $courses = self::enrol_get_my_courses($userid);
+        $forumids = [];
+        $aforumids = [];
         foreach ($courses as $course) {
             $forums = forum_get_readable_forums($userid, $course->id);
-            foreach ($forums as $forum) {
-                $cm = get_coursemodule_from_instance('forum', $forum->id);
-                // Do not filter by user - we want all posts.
-                forum_get_recent_mod_activity($activities, $idx, $fourweeksago, $course->id, $cm->id);
-            }
+            $forumids = array_merge($forumids, array_keys($forums));
             if (function_exists('hsuforum_get_readable_forums')) {
-                $hsuforums = hsuforum_get_readable_forums($userid, $course->id);
-                foreach ($hsuforums as $forum) {
-                    $cm = get_coursemodule_from_instance('hsuforum', $forum->id);
-                    // Do not filter by user - we want all posts.
-                    hsuforum_get_recent_mod_activity($activities, $idx, $fourweeksago, $course->id, $cm->id);
-                }
+                $aforums = hsuforum_get_readable_forums($userid, $course->id);
+                $aforumids = array_merge($aforumids, array_keys($aforums));
             }
         }
 
-        if ($origuser) {
-            $USER = $origuser;
+        if (empty($forumids) && empty($aforumids)) {
+            return [];
         }
 
-        // Remove activity entries that don't have a content object (typically anonymous entries).
-        $tmpacts = [];
-        foreach ($activities as $val) {
-            if (is_object($val->content)){
-                $tmpacts[] = $val;
-            }
-        }
-        $activities = $tmpacts;
+        $sqls = [];
+        $params = [];
 
-        usort($activities, array('\theme_snap\local','sort_timestamp'));
+        // TODO Groups, including view all groups capability.
+        // Q & A forums
+
+        $limitsql = self::limit_sql(0, 10); // Note, this is here for performance optimisations only.
+
+        if (!empty($forumids)) {
+            list($finsql, $finparams) = $DB->get_in_or_equal($forumids);
+            $params = $finparams;
+            $sqls []= "(SELECT ".$DB->sql_concat("'F'", 'fp1.id')." AS id, 'forum' as type, fp1.id AS postid, fp1.discussion, fp1.parent,
+                               fp1.userid, fp1.modified, fp1.subject, fp1.message, cm1.id as cmid,
+                               u1.firstnamephonetic, u1.lastnamephonetic, u1.middlename, u1.alternatename, u1.firstname,
+                               u1.lastname, u1.picture, u1.imagealt, u1.email
+	                      FROM {forum_posts} fp1
+	                      JOIN {user} u1 ON u1.id = fp1.userid
+                          JOIN {forum_discussions} fd1 ON fd1.id = fp1.discussion
+	                      JOIN {forum} f1 ON f1.id = fd1.forum AND f1.id $finsql
+	                      JOIN {course_modules} cm1 on cm1.instance = f1.id
+	                      JOIN {modules} m1 on m1.name = 'forum' AND cm1.module = m1.id
+                      ORDER BY fp1.modified DESC
+                               $limitsql
+                        )
+	                     ";
+            // TODO - when moodle gets private reply (anonymous) forums, we need to handle this here.
+        }
+
+        if (!empty($aforumids)) {
+            list($afinsql, $afinparams) = $DB->get_in_or_equal($aforumids);
+            $params = array_merge($params, $afinparams);
+            $params = array_merge($params, [$userid, $userid]);
+            $sqls []= "(SELECT ".$DB->sql_concat("'A'", 'fp2.id')." AS id, 'hsuforum' as type, fp2.id AS postid, fp2.discussion, fp2.parent,
+                               fp2.userid,fp2.modified,fp2.subject,fp2.message, cm2.id as cmid,
+                               u2.firstnamephonetic, u2.lastnamephonetic, u2.middlename, u2.alternatename, u2.firstname,
+                               u2.lastname, u2.picture, u2.imagealt, u2.email
+                          FROM {hsuforum_posts} fp2
+                          JOIN {user} u2 ON u2.id = fp2.userid
+                          JOIN {hsuforum_discussions} fd2 ON fd2.id = fp2.discussion
+                          JOIN {hsuforum} f2 ON f2.id = fd2.forum AND f2.id $afinsql
+	                      JOIN {course_modules} cm2 on cm2.instance = f2.id
+	                      JOIN {modules} m2 on m2.name = 'hsuforum' AND cm2.module = m2.id
+                         WHERE (fp2.privatereply = 0 OR fp2.privatereply = ? OR fp2.userid = ?)
+                      ORDER BY fp2.modified DESC
+                               $limitsql
+                        )
+                         ";
+        }
+
+        $sql = '-- Snap sql'. "\n".implode ("\n".' UNION ALL '."\n", $sqls) . "\n".' ORDER BY modified DESC';
+        $posts = $DB->get_records_sql($sql, $params, 0, 10);
+
+        $activities = [];
+        foreach ($posts as $post) {
+            $activities[] = (object)[
+                'type' => $post->type,
+                'cmid' => $post->cmid,
+                'name' => $post->subject,
+                'sectionnum' => null,
+                'timestamp' => $post->modified,
+                'content' => (object) [
+                    'id' => $post->postid,
+                    'discussion' => $post->discussion,
+                    'subject' => $post->subject,
+                    'parent' => $post->parent
+                ],
+                'user' => (object) [
+                    'id' => $post->userid,
+                    'firstnamephonetic' => $post->firstnamephonetic,
+                    'lastnamephonetic' => $post->lastnamephonetic,
+                    'middlename' => $post->middlename,
+                    'alternatename' => $post->alternatename,
+                    'firstname' => $post->firstname,
+                    'lastname' => $post->lastname,
+                    'picture' => $post->picture,
+                    'imagealt' => $post->imagealt,
+                    'email' => $post->email
+                ]
+            ];
+        }
 
         return $activities;
     }
