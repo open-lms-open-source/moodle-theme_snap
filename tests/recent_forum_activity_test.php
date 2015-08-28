@@ -77,10 +77,6 @@ class theme_snap_recent_forum_activity_test extends \advanced_testcase {
     public function setUp() {
         global $CFG, $DB;
 
-        // We must clear the subscription caches. This has to be done both before each test, and after in case of other
-        // tests using these functions.
-        \mod_forum\subscriptions::reset_forum_cache();
-
         require_once($CFG->dirroot . '/mod/forum/lib.php');
 
         $this->resetAfterTest();
@@ -127,15 +123,6 @@ class theme_snap_recent_forum_activity_test extends \advanced_testcase {
         groups_add_member($this->group1->id, $this->user1);
         groups_add_member($this->group2->id, $this->user1);
         groups_add_member($this->group1->id, $this->user2);
-    }
-
-    /**
-     * Clean up on test completion.
-     */
-    public function tearDown() {
-        // We must clear the subscription caches. This has to be done both before each test, and after in case of other.
-        // tests using these functions.
-        \mod_forum\subscriptions::reset_forum_cache();
     }
 
     /**
