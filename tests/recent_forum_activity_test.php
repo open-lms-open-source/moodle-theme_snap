@@ -211,7 +211,7 @@ class theme_snap_recent_forum_activity_test extends \advanced_testcase {
         // Check user2 viewable posts is 0 (user2 is not enrolled in course1).
         $this->assert_user_activity($this->user2, $u2offset + 0);
 
-        // Create a forum and discussion in course2 so that user2 can see it
+        // Create a forum and discussion in course2 so that user2 can see it.
         $record = new \stdClass();
         $record->course = $this->course2->id;
         $forum2 = $this->getDataGenerator()->create_module($ftype, $record);
@@ -387,7 +387,6 @@ class theme_snap_recent_forum_activity_test extends \advanced_testcase {
      */
     protected function assert_user_activity($user, $expected) {
         $activity = local::recent_forum_activity($user->id);
-        // Should be 1 post for teacher.
         $this->assertEquals($expected, count($activity));
     }
 
