@@ -17707,6 +17707,7 @@ li.section:focus {
 .course-content > ul li.section.state-visible,
 #coursetools.state-visible,
 .editing #coursetools,
+.format-singleactivity #coursetools,
 #page-course-view-folderview #coursetools {
   visibility: visible;
   height: auto;
