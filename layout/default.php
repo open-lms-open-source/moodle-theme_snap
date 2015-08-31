@@ -40,8 +40,8 @@ include(__DIR__.'/header.php');
 <?php
 echo $OUTPUT->page_heading();
 echo $OUTPUT->course_header();
-if($PAGE->pagetype == 'site-index') {
-  echo $OUTPUT->print_login_button();
+if ($PAGE->pagetype == 'site-index') {
+    echo $OUTPUT->print_login_button();
 }
 ?>
 </div>
@@ -59,7 +59,7 @@ echo $OUTPUT->course_content_header();
 // Ensure edit blocks button is only shown for appropriate pages.
 $hasadminbutton = stripos($PAGE->button, '"adminedit"') || stripos($PAGE->button, '"edit"');
 
-if($hasadminbutton) {
+if ($hasadminbutton) {
     // List paths to black list for 'turn editting on' button here.
     // Note, to use regexs start and end with a pipe symbol - e.g. |^/report/| .
     $editbuttonblacklist = array(
@@ -83,17 +83,14 @@ if($hasadminbutton) {
     );
     $pagepath = $PAGE->url->get_path();
 
-    foreach ($editbuttonblacklist as $blacklisted){
-        if ($blacklisted[0] == '|'
-            && $blacklisted[strlen($blacklisted)-1] == '|'
-        ) {
+    foreach ($editbuttonblacklist as $blacklisted) {
+        if ($blacklisted[0] == '|' && $blacklisted[strlen($blacklisted) - 1] == '|') {
             // Use regex to determine blacklisting.
             if (preg_match ($blacklisted, $pagepath) === 1) {
                 // This url path is blacklisted, stop button from being displayed.
                 $PAGE->set_button('');
             }
-
-        } else if ($pagepath== $blacklisted){
+        } else if ($pagepath == $blacklisted) {
             // This url path is blacklisted, stop button from being displayed.
             $PAGE->set_button('');
         }
@@ -102,11 +99,10 @@ if($hasadminbutton) {
 
 echo $OUTPUT->page_heading_button();
 
-// On the front page, output some different content
-if($PAGE->pagetype == 'site-index') {
+// On the front page, output some different content.
+if ($PAGE->pagetype == 'site-index') {
     include(__DIR__.'/faux_site_index.php');
-}
-else {
+} else {
     echo $OUTPUT->main_content();
 }
 
@@ -125,6 +121,8 @@ if (stripos($PAGE->bodyclasses, 'format-singleactivity') !== false ) {
 }
 
 ?>
+
+
 </section>
 
 <?php include(__DIR__.'/moodle-blocks.php'); ?>
