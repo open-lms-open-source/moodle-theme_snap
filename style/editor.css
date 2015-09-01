@@ -2618,6 +2618,9 @@ section#region-main
     margin: 0 -10%;
     clear: both;
   }
+  .format-singleactivity #coursetools {
+    margin: 0;
+  }
   #coursetools-list {
     padding: 1em 1em;
   }
