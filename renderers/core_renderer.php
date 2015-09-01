@@ -567,9 +567,10 @@ class theme_snap_core_renderer extends toc_renderer {
      * Print login button
      *
      */
-    public function print_login_button() {
+    public function login_button() {
         global $CFG;
 
+        $output = '';
         $loginurl = '#login';
         if (!empty($CFG->alternateloginurl)) {
             $loginurl = $CFG->wwwroot.'/login/index.php';
@@ -577,8 +578,9 @@ class theme_snap_core_renderer extends toc_renderer {
         $login = get_string('login');
         // This check is here for the front page login.
         if (!isloggedin() || isguestuser()) {
-            return "<a aria-haspopup='true' class='snap-login-button fixy-trigger'  href='".s($loginurl)."' >$login</a>";
+            $output .= "<a aria-haspopup='true' class='snap-login-button fixy-trigger'  href='".s($loginurl)."' >$login</a>";
         }
+        return $output;
     }
     /**
      * The "fixy" overlay that drops down when the link in the top right corner is clicked. It will say either
@@ -591,6 +593,7 @@ class theme_snap_core_renderer extends toc_renderer {
         $logout = get_string('logout');
         $isguest = isguestuser();
 
+        $output = '';
         if (!isloggedin() || $isguest) {
             $login = get_string('login');
             $cancel = get_string('cancel');
@@ -623,8 +626,8 @@ class theme_snap_core_renderer extends toc_renderer {
                     $helpstr = "<p class='text-center'><a href='".s($CFG->wwwroot)."/login/index.php'>$help</a></p>";
                 }
             }
-            echo $this->print_login_button();
-            echo "<form class=fixy action='$CFG->wwwroot/login/'  method='post' id='login'>
+            $output .= $this->login_button();
+            $output .= "<form class=fixy action='$CFG->wwwroot/login/'  method='post' id='login'>
         <a id='fixy-close' class='pull-right snap-action-icon' href='#'>
             <i class='icon icon-close'></i><small>$cancel</small>
         </a>
@@ -749,7 +752,7 @@ class theme_snap_core_renderer extends toc_renderer {
                 'data-placement' => 'bottom',
             );
 
-            echo html_writer::link("#primary-nav", $linkcontent, $attributes);
+            $output .= html_writer::link("#primary-nav", $linkcontent, $attributes);
 
             $close = get_string('close', 'theme_snap');
             $viewyourprofile = get_string('viewyourprofile', 'theme_snap');
@@ -761,7 +764,7 @@ class theme_snap_core_renderer extends toc_renderer {
                 $realuserinfo = html_writer::span($via.' '.html_writer::span($fullname, 'real-user-name'), 'real-user-info');
             }
 
-            echo '<nav id="primary-nav" class="fixy toggle-details" tabindex="0">
+            $output .= '<nav id="primary-nav" class="fixy toggle-details" tabindex="0">
         <a id="fixy-close" class="pull-right snap-action-icon" href="#">
             <i class="icon icon-close"></i><small>'.$close.'</small>
         </a>
@@ -777,7 +780,7 @@ class theme_snap_core_renderer extends toc_renderer {
         </div><!-- end fixy-inner -->
         </nav><!-- end primary nav -->';
         }
-
+        return $output;
     }
 
 
