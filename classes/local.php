@@ -959,28 +959,62 @@ class local {
     }
 
     /**
-     * Get courses for specific user
+     * Moodle does not provide a helper function to generate limit sql (it's baked into get_records_sql).
+     * This function is useful - e.g. improving performance of UNION statements.
+     * Note, it will return empty strings for unsupported databases.
      *
-     * @param null $user
-     * @param null $fields
-     * @param string $sort
-     * @param int $limit
-     * @return array
-     * @throws \coding_exception
+     * @param int $from
+     * @param int $to
+     *
+     * @return string
      */
-    public static function enrol_get_courses($user = NULL, $fields = NULL, $sort = 'visible DESC,sortorder ASC', $limit = 0) {
-        global $USER;
-        if (!empty($user)) {
-            $olduser = $USER;
-            $USER = $user;
+    public static function limit_sql($from, $num) {
+        global $DB;
+        switch ($DB->get_dbfamily()) {
+            case 'mysql' : $sql = "LIMIT $from, $num"; break;
+            case 'postgres' : $sql = "LIMIT $num OFFSET $from"; break;
+            case 'mssql' : $sql = ''; break; // Not supported.
+            case 'oracle' : $sql = ''; break; // Not supported.
+            default : $sql = ''; // Not supported.
         }
-        $ret = enrol_get_my_courses($fields, $sort, $limit);
-        if (!empty($olduser)) {
-            $USER = $olduser;
-        }
-        return $ret;
+        return $sql;
     }
 
+    /**
+     * Get forumids where current user has accessallgroups capability
+     */
+    public static function forumids_accessallgroups($forums, $type = 'forum') {
+        $forumidsallgroups = [];
+        foreach ($forums as $forum) {
+            $cm = get_coursemodule_from_instance($type, $forum->id);
+            if (intval($cm->groupmode) === SEPARATEGROUPS) {
+                $cm_context = \context_module::instance($cm->id);
+                $allgroups = has_capability('moodle/site:accessallgroups', $cm_context);
+                if ($allgroups) {
+                    $forumidsallgroups[] = $forum->id;
+                }
+            }
+        }
+        return $forumidsallgroups;
+    }
+
+    public static function swap_global_user($userorid) {
+        global $USER;
+        $origuser = false;
+        if (empty($userid)) {
+            $userid = $USER->id;
+        } else if ($userid !== $USER->id) {
+            // Need to swap USER variable arround for enrol_get_my_courses() to work with specific userid.
+            // Also, there is a bug with forum_get_readable_forums which requires this hack.
+            // https://tracker.moodle.org/browse/MDL-51243.
+            $origuser = $USER;
+            if (!is_object($userorid)) {
+                $USER = $DB->get_record('user', ['id' => $userid]);
+            } else {
+                $USER = $userorid;
+            }
+        }
+    }
 
     /**
      * Get recent forum activity for all accessible forums across all courses.
@@ -988,27 +1022,54 @@ class local {
      * @return array
      * @throws \coding_exception
      */
-    public static function recent_forum_activity($userid = false) {
+    public static function recent_forum_activity($userorid = false) {
         global $USER, $CFG, $DB;
 
         if (file_exists($CFG->dirroot.'/mod/hsuforum')) {
             require_once($CFG->dirroot.'/mod/hsuforum/lib.php');
         }
 
-        if (empty($userid)) {
-            $userid = $USER->id;
+        if (is_object($userorid)) {
+            $userid = $userorid->id;
+        } else {
+            $userid = $userorid;
         }
 
-        $courses = self::enrol_get_courses($userid);
+        $origuser = false;
+        if (empty($userid)) {
+            $userid = $USER->id;
+        } else if ($userid !== $USER->id) {
+            // Need to swap USER variable arround for enrol_get_my_courses() to work with specific userid.
+            // Also, there is a bug with forum_get_readable_forums which requires this hack.
+            // https://tracker.moodle.org/browse/MDL-51243.
+            $origuser = $USER;
+            if (!is_object($userorid)) {
+                $USER = $DB->get_record('user', ['id' => $userid]);
+            } else {
+                $USER = $userorid;
+            }
+        }
+
+        $courses = enrol_get_my_courses();
         $forumids = [];
         $aforumids = [];
+        $forumidsallgroups = [];
+        $aforumidsallgroups = [];
+
         foreach ($courses as $course) {
             $forums = forum_get_readable_forums($userid, $course->id);
             $forumids = array_merge($forumids, array_keys($forums));
+            $forumidsallgroups = array_merge($forumidsallgroups, self::forumids_accessallgroups($forums));
+
             if (function_exists('hsuforum_get_readable_forums')) {
                 $aforums = hsuforum_get_readable_forums($userid, $course->id);
                 $aforumids = array_merge($aforumids, array_keys($aforums));
+                $aforumidsallgroups = array_merge($aforumidsallgroups, self::forumids_accessallgroups($aforums, 'hsuforum'));
             }
+        }
+
+        if ($origuser) {
+            $USER = $origuser;
         }
 
         if (empty($forumids) && empty($aforumids)) {
@@ -1026,6 +1087,15 @@ class local {
         if (!empty($forumids)) {
             list($finsql, $finparams) = $DB->get_in_or_equal($forumids);
             $params = $finparams;
+            $params = array_merge($params, [SEPARATEGROUPS, $userid, SEPARATEGROUPS]);
+
+            $fgpsql = '';
+            if (!empty($forumidsallgroups)) {
+                list($fgpsql, $fgpparams) = $DB->get_in_or_equal($forumidsallgroups);
+                $fgpsql = ' OR f1.id '.$fgpsql;
+                $params = array_merge($params, $fgpparams);
+            }
+
             $sqls []= "(SELECT ".$DB->sql_concat("'F'", 'fp1.id')." AS id, 'forum' as type, fp1.id AS postid, fp1.discussion, fp1.parent,
                                fp1.userid, fp1.modified, fp1.subject, fp1.message, cm1.id as cmid,
                                u1.firstnamephonetic, u1.lastnamephonetic, u1.middlename, u1.alternatename, u1.firstname,
@@ -1034,8 +1104,13 @@ class local {
 	                      JOIN {user} u1 ON u1.id = fp1.userid
                           JOIN {forum_discussions} fd1 ON fd1.id = fp1.discussion
 	                      JOIN {forum} f1 ON f1.id = fd1.forum AND f1.id $finsql
-	                      JOIN {course_modules} cm1 on cm1.instance = f1.id
+	                      JOIN {course_modules} cm1 ON cm1.instance = f1.id
 	                      JOIN {modules} m1 on m1.name = 'forum' AND cm1.module = m1.id
+	                      LEFT JOIN {groups_members} gm1
+                            ON cm1.groupmode = ?
+                           AND gm1.groupid = fd1.groupid
+                           AND gm1.userid = ?
+	                     WHERE cm1.groupmode <> ? OR (gm1.userid IS NOT NULL $fgpsql)
                       ORDER BY fp1.modified DESC
                                $limitsql
                         )
@@ -1046,7 +1121,17 @@ class local {
         if (!empty($aforumids)) {
             list($afinsql, $afinparams) = $DB->get_in_or_equal($aforumids);
             $params = array_merge($params, $afinparams);
+            $params = array_merge($params, [SEPARATEGROUPS, $userid, SEPARATEGROUPS]);
+
+            $afgpsql = '';
+            if (!empty($aforumidsallgroups)) {
+                list($afgpsql, $afgpparams) = $DB->get_in_or_equal($aforumidsallgroups);
+                $afgpsql = ' OR f2.id '.$afgpsql;
+                $params = array_merge($params, $afgpparams);
+            }
+
             $params = array_merge($params, [$userid, $userid]);
+
             $sqls []= "(SELECT ".$DB->sql_concat("'A'", 'fp2.id')." AS id, 'hsuforum' as type, fp2.id AS postid, fp2.discussion, fp2.parent,
                                fp2.userid,fp2.modified,fp2.subject,fp2.message, cm2.id as cmid,
                                u2.firstnamephonetic, u2.lastnamephonetic, u2.middlename, u2.alternatename, u2.firstname,
@@ -1057,7 +1142,12 @@ class local {
                           JOIN {hsuforum} f2 ON f2.id = fd2.forum AND f2.id $afinsql
 	                      JOIN {course_modules} cm2 on cm2.instance = f2.id
 	                      JOIN {modules} m2 on m2.name = 'hsuforum' AND cm2.module = m2.id
-                         WHERE (fp2.privatereply = 0 OR fp2.privatereply = ? OR fp2.userid = ?)
+	                      LEFT JOIN {groups_members} gm2
+	                        ON cm2.groupmode = ?
+	                       AND gm2.groupid = fd2.groupid
+	                       AND gm2.userid = ?
+                         WHERE (cm2.groupmode <> ? OR (gm2.userid IS NOT NULL $afgpsql))
+                           AND (fp2.privatereply = 0 OR fp2.privatereply = ? OR fp2.userid = ?)
                       ORDER BY fp2.modified DESC
                                $limitsql
                         )
