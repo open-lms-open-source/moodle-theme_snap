@@ -230,6 +230,36 @@ class theme_snap_recent_forum_activity_test extends \advanced_testcase {
         $this->test_forum_post_simple('hsuforum', 4, 4, 2);
     }
 
+
+    /**
+     * Test an anonymous forum with one anonymous and one revealed reply.
+     * @throws \coding_exception
+     */
+    public function test_hsuforum_anonymous() {
+
+        $record = new \stdClass();
+        $record->course = $this->course1->id;
+        $record->anonymous = 1;
+
+        $forum1 = $this->getDataGenerator()->create_module('hsuforum', $record);
+
+        // Add discussion to course 1 started by user1.
+        // Note: In testing number of posts, discussions are counted too as there is a post for each discussion created.
+        $discussion1 = $this->create_discussion('hsuforum', $this->course1->id, $this->user1->id, $forum1->id);
+        $this->create_post('hsuforum', $this->course1->id, $this->user1->id, $forum1->id, $discussion1->id);
+
+        // Note - even though a forum is anonymous, everyone can still see the posts - just not the author name.
+
+        // Check teacher viewable posts is 2.
+        $this->assert_user_activity($this->teacher, 2);
+
+        // Check user1 viewable posts is 2.
+        $this->assert_user_activity($this->user1, 2);
+
+        // Check user2 viewable posts is 0 (user2 is not enrolled in course1).
+        $this->assert_user_activity($this->user2, 0);
+    }
+
     /**
      * Test a date restricted forum
      */
@@ -287,7 +317,7 @@ class theme_snap_recent_forum_activity_test extends \advanced_testcase {
 
         // Add a discussion and 2 posts for group1 users.
         $discussion1 = $this->create_discussion($ftype,
-            $this->course2->id, $this->user1->id, $forum->id,  $this->group1->id);
+            $this->course2->id, $this->user1->id, $forum->id,  ['groupid' => $this->group1->id]);
 
         for ($p = 1; $p <= 2; $p++) {
             // Create 1 post by user1 and user2.
@@ -297,7 +327,7 @@ class theme_snap_recent_forum_activity_test extends \advanced_testcase {
 
         // Add a discussion and 1 post for group2 users.
         $discussion2 = $this->create_discussion($ftype,
-            $this->course2->id, $this->user1->id, $forum->id,  $this->group2->id);
+            $this->course2->id, $this->user1->id, $forum->id,  ['groupid' => $this->group2->id]);
         $this->create_post($ftype, $this->course2->id, $this->user1->id, $forum->id, $discussion2->id);
 
         // Check teacher viewable posts is 5 (can view all posts).
@@ -335,14 +365,16 @@ class theme_snap_recent_forum_activity_test extends \advanced_testcase {
      * @return mixed
      * @throws \coding_exception
      */
-    protected function create_discussion($ftype, $courseid, $userid, $forumid, $groupid = null) {
+    protected function create_discussion($ftype, $courseid, $userid, $forumid, Array $opts = []) {
         // Add discussion to course 1 started by user1.
         $record = new \stdClass();
         $record->course = $courseid;
         $record->userid = $userid;
         $record->forum = $forumid;
-        if ($groupid !== null) {
-            $record->groupid = $groupid;
+        if (!empty($opts)) {
+            foreach ($opts as $key => $val) {
+                $record->$key = $val;
+            }
         }
         return ($this->getDataGenerator()->get_plugin_generator('mod_'.$ftype)->create_discussion($record));
     }
