@@ -1003,8 +1003,12 @@ class local {
      * @param $userorid
      * @return array|bool|\BrowserIDUser|false|\flase|\GPRAUser|\LiveUser|mixed|null|object|\stdClass|string|\turnitintooltwo_user|\user
      */
-    public static function get_user($userorid) {
+    public static function get_user($userorid = false) {
         global $USER, $DB;
+
+        if ($userorid === false) {
+            return $USER;
+        }
 
         if (is_object($userorid)) {
             return $userorid;
@@ -1024,13 +1028,12 @@ class local {
      *
      * Temporarily swaps global USER variable.
      * @param $userorid
-     * @param bool $swapback
      */
-    public static function swap_global_user($userorid, $swapback = false) {
+    public static function swap_global_user($userorid = false) {
         global $USER;
         static $origuser = null;
         $user = self::get_user($userorid);
-        if (!$swapback) {
+        if ($userorid !== false) {
             if ($origuser === null) {
                 $origuser = $USER;
             }
@@ -1046,7 +1049,7 @@ class local {
      * @throws \coding_exception
      */
     public static function forum_ids($user) {
-        // Need to swap USER variable arround for enrol_get_my_courses() to work with specific userid.
+        // Need to swap USER variable around for enrol_get_my_courses() to work with specific userid.
         // Also, there is a bug with forum_get_readable_forums which requires this hack.
         // https://tracker.moodle.org/browse/MDL-51243.
         self::swap_global_user($user);
@@ -1069,7 +1072,7 @@ class local {
             }
         }
 
-        self::swap_global_user($user, true);
+        self::swap_global_user(false);
         return [$forumids, $forumidsallgroups, $aforumids, $aforumidsallgroups];
     }
 
@@ -1087,6 +1090,9 @@ class local {
         }
 
         $user = self::get_user($userorid);
+        if (!$user) {
+            return [];
+        }
 
         // Get all relevant forum ids for SQL in statement.
         list ($forumids, $forumidsallgroups, $aforumids, $aforumidsallgroups) = self::forum_ids($user);
