@@ -1225,6 +1225,12 @@ HTML;
         return $output;
     }
 
+    /**
+     * Render recent forum activity.
+     *
+     * @param $activities
+     * @return string
+     */
     public function recent_forum_activity($activities) {
         global $OUTPUT;
         $output = '';
@@ -1239,7 +1245,9 @@ HTML;
             } else {
                 $picture = '';
             }
-            $url = '';
+
+            $url = new moodle_url('/mod/'.$activity->type.'/discuss.php', ['d' => $activity->content->discussion], 'p'.$activity->content->id);
+
             $output .= $this->snap_media_object($url, $picture, fullname($activity->user), $this->friendly_datetime($activity->timestamp), format_text($activity->content->subject));
 
 
