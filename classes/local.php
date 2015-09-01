@@ -998,22 +998,79 @@ class local {
         return $forumidsallgroups;
     }
 
-    public static function swap_global_user($userorid) {
+    /**
+     * Get user by id.
+     * @param $userorid
+     * @return array|bool|\BrowserIDUser|false|\flase|\GPRAUser|\LiveUser|mixed|null|object|\stdClass|string|\turnitintooltwo_user|\user
+     */
+    public static function get_user($userorid) {
+        global $USER, $DB;
+
+        if (is_object($userorid)) {
+            return $userorid;
+        }
+
+        if ($userorid == $USER->id) {
+            $user = $USER;
+        } else {
+            $user = $DB->get_record('user', ['id' => $userorid]);
+        }
+
+        return $user;
+    }
+
+    /**
+     * Some moodle functions don't work correctly with specic userids and this provides a hacky workaround.
+     *
+     * Temporarily swaps global USER variable.
+     * @param $userorid
+     * @param bool $swapback
+     */
+    public static function swap_global_user($userorid, $swapback = false) {
         global $USER;
-        $origuser = false;
-        if (empty($userid)) {
-            $userid = $USER->id;
-        } else if ($userid !== $USER->id) {
-            // Need to swap USER variable arround for enrol_get_my_courses() to work with specific userid.
-            // Also, there is a bug with forum_get_readable_forums which requires this hack.
-            // https://tracker.moodle.org/browse/MDL-51243.
-            $origuser = $USER;
-            if (!is_object($userorid)) {
-                $USER = $DB->get_record('user', ['id' => $userid]);
-            } else {
-                $USER = $userorid;
+        static $origuser = null;
+        $user = self::get_user($userorid);
+        if (!$swapback) {
+            if ($origuser === null) {
+                $origuser = $USER;
+            }
+            $USER = $user;
+        } else {
+            $USER = $origuser;
+        }
+    }
+
+    /**
+     * Get readable forum id arrays and ids of forums with access to all groups.
+     * @param $user
+     * @throws \coding_exception
+     */
+    public static function forum_ids($user) {
+        // Need to swap USER variable arround for enrol_get_my_courses() to work with specific userid.
+        // Also, there is a bug with forum_get_readable_forums which requires this hack.
+        // https://tracker.moodle.org/browse/MDL-51243.
+        self::swap_global_user($user);
+
+        $courses = enrol_get_my_courses();
+        $forumids = [];
+        $aforumids = [];
+        $forumidsallgroups = [];
+        $aforumidsallgroups = [];
+
+        foreach ($courses as $course) {
+            $forums = forum_get_readable_forums($user->id, $course->id);
+            $forumids = array_merge($forumids, array_keys($forums));
+            $forumidsallgroups = array_merge($forumidsallgroups, self::forumids_accessallgroups($forums));
+
+            if (function_exists('hsuforum_get_readable_forums')) {
+                $aforums = hsuforum_get_readable_forums($user->id, $course->id);
+                $aforumids = array_merge($aforumids, array_keys($aforums));
+                $aforumidsallgroups = array_merge($aforumidsallgroups, self::forumids_accessallgroups($aforums, 'hsuforum'));
             }
         }
+
+        self::swap_global_user($user, true);
+        return [$forumids, $forumidsallgroups, $aforumids, $aforumidsallgroups];
     }
 
     /**
@@ -1023,54 +1080,16 @@ class local {
      * @throws \coding_exception
      */
     public static function recent_forum_activity($userorid = false) {
-        global $USER, $CFG, $DB;
+        global $CFG, $DB;
 
         if (file_exists($CFG->dirroot.'/mod/hsuforum')) {
             require_once($CFG->dirroot.'/mod/hsuforum/lib.php');
         }
 
-        if (is_object($userorid)) {
-            $userid = $userorid->id;
-        } else {
-            $userid = $userorid;
-        }
+        $user = self::get_user($userorid);
 
-        $origuser = false;
-        if (empty($userid)) {
-            $userid = $USER->id;
-        } else if ($userid !== $USER->id) {
-            // Need to swap USER variable arround for enrol_get_my_courses() to work with specific userid.
-            // Also, there is a bug with forum_get_readable_forums which requires this hack.
-            // https://tracker.moodle.org/browse/MDL-51243.
-            $origuser = $USER;
-            if (!is_object($userorid)) {
-                $USER = $DB->get_record('user', ['id' => $userid]);
-            } else {
-                $USER = $userorid;
-            }
-        }
-
-        $courses = enrol_get_my_courses();
-        $forumids = [];
-        $aforumids = [];
-        $forumidsallgroups = [];
-        $aforumidsallgroups = [];
-
-        foreach ($courses as $course) {
-            $forums = forum_get_readable_forums($userid, $course->id);
-            $forumids = array_merge($forumids, array_keys($forums));
-            $forumidsallgroups = array_merge($forumidsallgroups, self::forumids_accessallgroups($forums));
-
-            if (function_exists('hsuforum_get_readable_forums')) {
-                $aforums = hsuforum_get_readable_forums($userid, $course->id);
-                $aforumids = array_merge($aforumids, array_keys($aforums));
-                $aforumidsallgroups = array_merge($aforumidsallgroups, self::forumids_accessallgroups($aforums, 'hsuforum'));
-            }
-        }
-
-        if ($origuser) {
-            $USER = $origuser;
-        }
+        // Get all relevant forum ids for SQL in statement.
+        list ($forumids, $forumidsallgroups, $aforumids, $aforumidsallgroups) = self::forum_ids($user);
 
         if (empty($forumids) && empty($aforumids)) {
             return [];
@@ -1079,15 +1098,14 @@ class local {
         $sqls = [];
         $params = [];
 
-        // TODO Groups, including view all groups capability.
-        // Q & A forums
+        // TODO Q & A forums
 
         $limitsql = self::limit_sql(0, 10); // Note, this is here for performance optimisations only.
 
         if (!empty($forumids)) {
             list($finsql, $finparams) = $DB->get_in_or_equal($forumids);
             $params = $finparams;
-            $params = array_merge($params, [SEPARATEGROUPS, $userid, SEPARATEGROUPS]);
+            $params = array_merge($params, [SEPARATEGROUPS, $user->id, SEPARATEGROUPS]);
 
             $fgpsql = '';
             if (!empty($forumidsallgroups)) {
@@ -1121,7 +1139,7 @@ class local {
         if (!empty($aforumids)) {
             list($afinsql, $afinparams) = $DB->get_in_or_equal($aforumids);
             $params = array_merge($params, $afinparams);
-            $params = array_merge($params, [SEPARATEGROUPS, $userid, SEPARATEGROUPS]);
+            $params = array_merge($params, [SEPARATEGROUPS, $user->id, SEPARATEGROUPS]);
 
             $afgpsql = '';
             if (!empty($aforumidsallgroups)) {
@@ -1130,7 +1148,7 @@ class local {
                 $params = array_merge($params, $afgpparams);
             }
 
-            $params = array_merge($params, [$userid, $userid]);
+            $params = array_merge($params, [$user->id, $user->id]);
 
             $sqls []= "(SELECT ".$DB->sql_concat("'A'", 'fp2.id')." AS id, 'hsuforum' as type, fp2.id AS postid, fp2.discussion, fp2.parent,
                                fp2.userid,fp2.modified,fp2.subject,fp2.message, cm2.id as cmid,
