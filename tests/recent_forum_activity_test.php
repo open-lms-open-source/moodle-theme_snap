@@ -232,7 +232,7 @@ class theme_snap_recent_forum_activity_test extends \advanced_testcase {
 
 
     /**
-     * Test an anonymous forum with one anonymous and one revealed reply.
+     * Test an anonymous advanced forum with one anonymous discussion & reply.
      * @throws \coding_exception
      */
     public function test_hsuforum_anonymous() {
@@ -258,6 +258,38 @@ class theme_snap_recent_forum_activity_test extends \advanced_testcase {
 
         // Check user2 viewable posts is 0 (user2 is not enrolled in course1).
         $this->assert_user_activity($this->user2, 0);
+    }
+
+    /**
+     * Test an advanced forum with one private reply.
+     * @throws \coding_exception
+     */
+    public function test_hsuforum_private() {
+
+        $record = new \stdClass();
+        $record->course = $this->course2->id; // Use course 2 so that both user1 and user2 can access it.
+        $record->allowprivatereplies = 1;
+
+        $forum1 = $this->getDataGenerator()->create_module('hsuforum', $record);
+
+        // Add discussion to course 1 started by user1.
+        // Note: In testing number of posts, discussions are counted too as there is a post for each discussion created.
+        $discussion1 = $this->create_discussion('hsuforum', $this->course2->id, $this->teacher->id, $forum1->id);
+
+        // Make a regular post by teacher.
+        $parent = $this->create_post('hsuforum', $this->course2->id, $this->teacher->id, $forum1->id, $discussion1->id);
+
+        // Make a private reply from user1 to teacher.
+        $this->create_reply('hsuforum', $this->user1->id, $parent, ['privatereply' => $this->teacher->id]);
+
+        // Check teacher viewable posts is 3.
+        $this->assert_user_activity($this->teacher, 3);
+
+        // Check user1 viewable posts is 3.
+        $this->assert_user_activity($this->user1, 3);
+
+        // Check user2 viewable posts is 2 (user2 can see the discussion and first post but not the private reply).
+        $this->assert_user_activity($this->user2, 2);
     }
 
     /**
@@ -390,13 +422,30 @@ class theme_snap_recent_forum_activity_test extends \advanced_testcase {
      * @return mixed
      * @throws \coding_exception
      */
-    protected function create_post($ftype, $courseid, $userid, $forumid, $discussionid) {
+    protected function create_post($ftype, $courseid, $userid, $forumid, $discussionid, Array $opts = []) {
         $record = new \stdClass();
         $record->course = $courseid;
         $record->userid = $userid;
         $record->forum = $forumid;
         $record->discussion = $discussionid;
+        if (!empty($opts)) {
+            foreach ($opts as $key => $val) {
+                $record->$key = $val;
+            }
+        }
         return ($this->getDataGenerator()->get_plugin_generator('mod_'.$ftype)->create_post($record));
+    }
+
+    /**
+     * Create a reply to a post.
+     * @param string $ftype
+     * @param int $userid
+     * @param stdClass $parent
+     */
+    protected function create_reply($ftype, $userid, $parent, Array $opts = []) {
+        $opts = array_merge($opts, ['parent' => $parent->id]);
+        $this->create_post($ftype, $parent->course, $userid, $parent->forum, $parent->discussion,
+            $opts);
     }
 
     /**
