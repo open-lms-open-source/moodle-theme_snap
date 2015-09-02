@@ -248,16 +248,20 @@ class theme_snap_recent_forum_activity_test extends \advanced_testcase {
         $discussion1 = $this->create_discussion('hsuforum', $this->course1->id, $this->user1->id, $forum1->id);
         $this->create_post('hsuforum', $this->course1->id, $this->user1->id, $forum1->id, $discussion1->id);
 
-        // Note - even though a forum is anonymous, everyone can still see the posts - just not the author name.
+        // Note - with an anonymous forum, none of the posts should be included in recent activity.
 
-        // Check teacher viewable posts is 2.
-        $this->assert_user_activity($this->teacher, 2);
+        // Check teacher viewable posts is 0.
+        $this->assert_user_activity($this->teacher, 0);
 
-        // Check user1 viewable posts is 2.
-        $this->assert_user_activity($this->user1, 2);
+        // Check user1 viewable posts is 0.
+        $this->assert_user_activity($this->user1, 0);
 
         // Check user2 viewable posts is 0 (user2 is not enrolled in course1).
         $this->assert_user_activity($this->user2, 0);
+    }
+
+    public function test_forum_qanda() {
+
     }
 
     /**
@@ -454,6 +458,8 @@ class theme_snap_recent_forum_activity_test extends \advanced_testcase {
      * @param $expected
      */
     protected function assert_user_activity($user, $expected) {
+        $activity = local::non_sql_recent_forum_activity($user->id);
+        $this->assertEquals($expected, count($activity));
         $activity = local::recent_forum_activity($user->id);
         $this->assertEquals($expected, count($activity));
     }

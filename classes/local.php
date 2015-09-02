@@ -1066,7 +1066,7 @@ class local {
             $forumidsallgroups = array_merge($forumidsallgroups, self::forumids_accessallgroups($forums));
 
             if (function_exists('hsuforum_get_readable_forums')) {
-                $aforums = hsuforum_get_readable_forums($user->id, $course->id);
+                $aforums = hsuforum_get_readable_forums($user->id, $course->id, true);
                 $aforumids = array_merge($aforumids, array_keys($aforums));
                 $aforumidsallgroups = array_merge($aforumidsallgroups, self::forumids_accessallgroups($aforums, 'hsuforum'));
             }
@@ -1074,6 +1074,82 @@ class local {
 
         self::swap_global_user(false);
         return [$forumids, $forumidsallgroups, $aforumids, $aforumidsallgroups];
+    }
+
+    /**
+     * Sort recent forum activity by timestamp.
+     *
+     * @param $a
+     * @param $b
+     * @return int
+     */
+    private static function sort_timestamp($a, $b) {
+        if ($a->timestamp === $b->timestamp) {
+            return 0;
+        }
+        return ($a->timestamp > $b->timestamp ? -1 : 1);
+    }
+
+    /**
+     * Get recent forum activity for all accessible forums across all courses.
+     * (Without custom SQL method).
+     * @param bool $userorid
+     * @return array
+     * @throws \coding_exception
+     */
+    public static function non_sql_recent_forum_activity($userorid = false) {
+        global $CFG;
+
+        if (file_exists($CFG->dirroot.'/mod/hsuforum')) {
+            require_once($CFG->dirroot.'/mod/hsuforum/lib.php');
+        }
+
+        $user = self::get_user($userorid);
+        if (!$user) {
+            return [];
+        }
+
+        self::swap_global_user($user);
+
+        $userid = $user->id;
+
+        $activities = [];
+        $idx = 0;
+
+        $fourweeksago = time() - (WEEKSECS*4);
+
+        $courses = enrol_get_my_courses();
+        foreach ($courses as $course) {
+            $forums = forum_get_readable_forums($userid, $course->id);
+            foreach ($forums as $forum) {
+                $cm = get_coursemodule_from_instance('forum', $forum->id);
+                // Do not filter by user - we want all posts.
+                forum_get_recent_mod_activity($activities, $idx, $fourweeksago, $course->id, $cm->id);
+            }
+            if (function_exists('hsuforum_get_readable_forums')) {
+                $hsuforums = hsuforum_get_readable_forums($userid, $course->id);
+                foreach ($hsuforums as $forum) {
+                    $cm = get_coursemodule_from_instance('hsuforum', $forum->id);
+                    // Do not filter by user - we want all posts.
+                    hsuforum_get_recent_mod_activity($activities, $idx, $fourweeksago, $course->id, $cm->id);
+                }
+            }
+        }
+
+        self::swap_global_user(false);
+
+        // Remove activity entries that don't have a content object (typically anonymous entries).
+        $tmpacts = [];
+        foreach ($activities as $val) {
+            if (is_object($val->content)){
+                $tmpacts[] = $val;
+            }
+        }
+        $activities = $tmpacts;
+
+        usort($activities, array('\theme_snap\local','sort_timestamp'));
+
+        return $activities;
     }
 
     /**
@@ -1120,8 +1196,9 @@ class local {
                 $params = array_merge($params, $fgpparams);
             }
 
-            $sqls []= "(SELECT ".$DB->sql_concat("'F'", 'fp1.id')." AS id, 'forum' as type, fp1.id AS postid, fp1.discussion, fp1.parent,
-                               fp1.userid, fp1.modified, fp1.subject, fp1.message, cm1.id as cmid,
+            $sqls []= "(SELECT ".$DB->sql_concat("'F'", 'fp1.id')." AS id, 'forum' as type, fp1.id AS postid,
+                               fd1.forum, 0 AS forumanonymous, f1.course, fp1.discussion, fp1.parent,
+                               fp1.userid, fp1.modified, fp1.subject, fp1.message, 0 AS reveal, cm1.id as cmid,
                                u1.firstnamephonetic, u1.lastnamephonetic, u1.middlename, u1.alternatename, u1.firstname,
                                u1.lastname, u1.picture, u1.imagealt, u1.email
 	                      FROM {forum_posts} fp1
@@ -1156,8 +1233,9 @@ class local {
 
             $params = array_merge($params, [$user->id, $user->id]);
 
-            $sqls []= "(SELECT ".$DB->sql_concat("'A'", 'fp2.id')." AS id, 'hsuforum' as type, fp2.id AS postid, fp2.discussion, fp2.parent,
-                               fp2.userid,fp2.modified,fp2.subject,fp2.message, cm2.id as cmid,
+            $sqls []= "(SELECT ".$DB->sql_concat("'A'", 'fp2.id')." AS id, 'hsuforum' as type, fp2.id AS postid,
+                               fd2.forum, f2.anonymous AS forumanonymous, f2.course, fp2.discussion, fp2.parent,
+                               fp2.userid,fp2.modified,fp2.subject,fp2.message, fp2.reveal, cm2.id as cmid,
                                u2.firstnamephonetic, u2.lastnamephonetic, u2.middlename, u2.alternatename, u2.firstname,
                                u2.lastname, u2.picture, u2.imagealt, u2.email
                           FROM {hsuforum_posts} fp2
@@ -1183,6 +1261,25 @@ class local {
 
         $activities = [];
         foreach ($posts as $post) {
+            $postuser = (object) [
+                'id' => $post->userid,
+                'firstnamephonetic' => $post->firstnamephonetic,
+                'lastnamephonetic' => $post->lastnamephonetic,
+                'middlename' => $post->middlename,
+                'alternatename' => $post->alternatename,
+                'firstname' => $post->firstname,
+                'lastname' => $post->lastname,
+                'picture' => $post->picture,
+                'imagealt' => $post->imagealt,
+                'email' => $post->email
+            ];
+
+            $postuser = hsuforum_anonymize_user($postuser, (object) array(
+                'id'        => $post->forum,
+                'course'    => $post->course,
+                'anonymous' => $post->forumanonymous
+            ), $post);
+
             $activities[] = (object)[
                 'type' => $post->type,
                 'cmid' => $post->cmid,
@@ -1195,18 +1292,7 @@ class local {
                     'subject' => $post->subject,
                     'parent' => $post->parent
                 ],
-                'user' => (object) [
-                    'id' => $post->userid,
-                    'firstnamephonetic' => $post->firstnamephonetic,
-                    'lastnamephonetic' => $post->lastnamephonetic,
-                    'middlename' => $post->middlename,
-                    'alternatename' => $post->alternatename,
-                    'firstname' => $post->firstname,
-                    'lastname' => $post->lastname,
-                    'picture' => $post->picture,
-                    'imagealt' => $post->imagealt,
-                    'email' => $post->email
-                ]
+                'user' => $postuser
             ];
         }
 
