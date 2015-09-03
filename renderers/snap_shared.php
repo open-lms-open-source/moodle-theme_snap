@@ -264,7 +264,6 @@ class snap_shared extends renderer_base {
      * @return string
      */
     public static function inline_svg($filename) {
-        global $CFG;
         return file_get_contents(dirname(dirname(__DIR__)).'/snap/pix/'.$filename);
     }
 
@@ -447,7 +446,7 @@ class snap_shared extends renderer_base {
                     if ($plugin->show_enrolme_link($instance)) {
                         // Prepare enrolment link.
                         $selfenrol = true;
-                        $enrolurl = new moodle_url('/enrol/index.php', array('id'=>$COURSE->id));
+                        $enrolurl = new moodle_url('/enrol/index.php', ['id' => $COURSE->id]);
                         $enrolstr = get_string('enrolme', 'core_enrol');
                         break;
                     }
