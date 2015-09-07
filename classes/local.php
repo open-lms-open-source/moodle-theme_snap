@@ -18,6 +18,7 @@
 namespace theme_snap;
 
 use html_writer;
+use theme_snap\user_forums;
 
 require_once($CFG->dirroot.'/calendar/lib.php');
 require_once($CFG->libdir.'/completionlib.php');
@@ -981,24 +982,6 @@ class local {
     }
 
     /**
-     * Get forumids where current user has accessallgroups capability
-     */
-    public static function forumids_accessallgroups($forums, $type = 'forum') {
-        $forumidsallgroups = [];
-        foreach ($forums as $forum) {
-            $cm = get_coursemodule_from_instance($type, $forum->id);
-            if (intval($cm->groupmode) === SEPARATEGROUPS) {
-                $cm_context = \context_module::instance($cm->id);
-                $allgroups = has_capability('moodle/site:accessallgroups', $cm_context);
-                if ($allgroups) {
-                    $forumidsallgroups[] = $forum->id;
-                }
-            }
-        }
-        return $forumidsallgroups;
-    }
-
-    /**
      * Get user by id.
      * @param $userorid
      * @return array|bool|\BrowserIDUser|false|\flase|\GPRAUser|\LiveUser|mixed|null|object|\stdClass|string|\turnitintooltwo_user|\user
@@ -1044,36 +1027,17 @@ class local {
     }
 
     /**
-     * Get readable forum id arrays and ids of forums with access to all groups.
-     * @param $user
-     * @throws \coding_exception
+     * Remove qanda forums from forums array.
+     * @param $forums
+     * @return array
      */
-    public static function forum_ids($user) {
-        // Need to swap USER variable around for enrol_get_my_courses() to work with specific userid.
-        // Also, there is a bug with forum_get_readable_forums which requires this hack.
-        // https://tracker.moodle.org/browse/MDL-51243.
-        self::swap_global_user($user);
-
-        $courses = enrol_get_my_courses();
-        $forumids = [];
-        $aforumids = [];
-        $forumidsallgroups = [];
-        $aforumidsallgroups = [];
-
-        foreach ($courses as $course) {
-            $forums = forum_get_readable_forums($user->id, $course->id);
-            $forumids = array_merge($forumids, array_keys($forums));
-            $forumidsallgroups = array_merge($forumidsallgroups, self::forumids_accessallgroups($forums));
-
-            if (function_exists('hsuforum_get_readable_forums')) {
-                $aforums = hsuforum_get_readable_forums($user->id, $course->id, true);
-                $aforumids = array_merge($aforumids, array_keys($aforums));
-                $aforumidsallgroups = array_merge($aforumidsallgroups, self::forumids_accessallgroups($aforums, 'hsuforum'));
-            }
+    private static function purge_qa_forums(Array $forums) {
+        if (empty($forums)) {
+            return $forums;
         }
-
-        self::swap_global_user(false);
-        return [$forumids, $forumidsallgroups, $aforumids, $aforumidsallgroups];
+        return array_filter($forums, function($forum) {
+            return $forum->type !== 'qanda';
+        });
     }
 
     /**
@@ -1097,7 +1061,7 @@ class local {
      * @return array
      * @throws \coding_exception
      */
-    public static function non_sql_recent_forum_activity($userorid = false) {
+    public static function non_sql_recent_forum_activity($userorid = false, $limit = 10) {
         global $CFG;
 
         if (file_exists($CFG->dirroot.'/mod/hsuforum')) {
@@ -1121,6 +1085,8 @@ class local {
         $courses = enrol_get_my_courses();
         foreach ($courses as $course) {
             $forums = forum_get_readable_forums($userid, $course->id);
+            // Remove Q&A forums from array
+            $forums = self::purge_qa_forums($forums);
             foreach ($forums as $forum) {
                 $cm = get_coursemodule_from_instance('forum', $forum->id);
                 // Do not filter by user - we want all posts.
@@ -1128,6 +1094,8 @@ class local {
             }
             if (function_exists('hsuforum_get_readable_forums')) {
                 $hsuforums = hsuforum_get_readable_forums($userid, $course->id);
+                // Remove Q&A forums from array
+                $hsuforums = self::purge_qa_forums($hsuforums);
                 foreach ($hsuforums as $forum) {
                     $cm = get_coursemodule_from_instance('hsuforum', $forum->id);
                     // Do not filter by user - we want all posts.
@@ -1149,6 +1117,10 @@ class local {
 
         usort($activities, array('\theme_snap\local','sort_timestamp'));
 
+        if ($limit > 0) {
+            $activities = array_slice($activities, 0, $limit);
+        }
+
         return $activities;
     }
 
@@ -1158,7 +1130,7 @@ class local {
      * @return array
      * @throws \coding_exception
      */
-    public static function recent_forum_activity($userorid = false) {
+    public static function recent_forum_activity($userorid = false, $limit = 10) {
         global $CFG, $DB;
 
         if (file_exists($CFG->dirroot.'/mod/hsuforum')) {
@@ -1171,7 +1143,11 @@ class local {
         }
 
         // Get all relevant forum ids for SQL in statement.
-        list ($forumids, $forumidsallgroups, $aforumids, $aforumidsallgroups) = self::forum_ids($user);
+        $userforums = new user_forums($user);
+        $forumids = $userforums->forumids();
+        $forumidsallgroups = $userforums->forumidsallgroups();
+        $aforumids = $userforums->aforumids();
+        $aforumidsallgroups = $userforums->aforumidsallgroups();
 
         if (empty($forumids) && empty($aforumids)) {
             return [];
@@ -1182,7 +1158,11 @@ class local {
 
         // TODO Q & A forums
 
-        $limitsql = self::limit_sql(0, 10); // Note, this is here for performance optimisations only.
+        if ($limit > 0) {
+            $limitsql = self::limit_sql(0, $limit); // Note, this is here for performance optimisations only.
+        } else {
+            $limitsql = '';
+        }
 
         if (!empty($forumids)) {
             list($finsql, $finparams) = $DB->get_in_or_equal($forumids);
@@ -1257,7 +1237,7 @@ class local {
         }
 
         $sql = '-- Snap sql'. "\n".implode ("\n".' UNION ALL '."\n", $sqls) . "\n".' ORDER BY modified DESC';
-        $posts = $DB->get_records_sql($sql, $params, 0, 10);
+        $posts = $DB->get_records_sql($sql, $params, 0, $limit);
 
         $activities = [];
         foreach ($posts as $post) {

@@ -230,6 +230,148 @@ class theme_snap_recent_forum_activity_test extends \advanced_testcase {
         $this->test_forum_post_simple('hsuforum', 4, 4, 2);
     }
 
+    public function test_forum_high_volume_posts($ftype = 'forum') {
+        global $DB;
+
+        $forums = [];
+
+        // Teacher count
+        $teacherc = 0;
+
+        // User 1 count
+        $user1c = 0;
+
+        // User 2 count
+        $user2c = 0;
+
+        $sturole = $DB->get_record('role', array('shortname' => 'student'));
+        $teacherrole = $DB->get_record('role', array('shortname' => 'teacher'));
+
+        $totalcourses = 20;
+        $totalforums = 0;
+        $forumspercourse = 40;
+        $discussionsperforum = 60;
+
+        for ($c = 0; $c < $totalcourses; $c++) {
+
+            // Create course.
+            $tmpcourse = $this->getDataGenerator()->create_course();
+
+            // Enrol user1 as student.
+            $this->getDataGenerator()->enrol_user($this->user1->id,
+                $tmpcourse->id,
+                $sturole->id);
+
+            // Enrol user2 as student to the first 10 courses.
+            if ($c < 10) {
+                $this->getDataGenerator()->enrol_user($this->user2->id,
+                    $tmpcourse->id,
+                    $sturole->id);
+            }
+
+            // Enrol teacher.
+            $this->getDataGenerator()->enrol_user($this->teacher->id,
+                $tmpcourse->id,
+                $teacherrole->id);
+
+            // Log user visited course for each user.
+            $users = [$this->teacher, $this->user1, $this->user2];
+            foreach ($users as $user) {
+                $eventparams = [
+                    'userid' => $user->id,
+                    'context' => \context_course::instance($tmpcourse->id)
+                ];
+                $event = \core\event\course_viewed::create($eventparams);
+                $event->trigger();
+            }
+
+
+            for ($f = 0; $f < $forumspercourse; $f++) {
+                $totalforums++;
+                $record = new \stdClass();
+                $record->course = $tmpcourse->id;
+                $forums[$f] = $this->getDataGenerator()->create_module($ftype, $record);
+                for ($d = 0; $d < $discussionsperforum / 3; $d++) {
+                    $discussion = $this->create_discussion($ftype, $tmpcourse->id, $this->user1->id, $forums[$f]->id);
+                    $teacherc++;
+                    $user1c++;
+                    if ($c < 10) {
+                        $user2c++;
+                    }
+                    $post = $this->create_post($ftype, $tmpcourse->id, $this->user1->id, $forums[$f]->id, $discussion->id);
+                    $teacherc++;
+                    $user1c++;
+                    if ($c < 10) {
+                        $user2c++;
+                    }
+                    $this->create_reply($ftype, $this->user1->id, $post);
+                    $teacherc++;
+                    $user1c++;
+                    if ($c < 10) {
+                        $user2c++;
+                    }
+                }
+            }
+        }
+
+        $start = microtime(true);
+
+        // Check teacher viewable posts.
+        $starttchl10 = microtime(true);
+        $this->assert_user_activity($this->teacher, 10);
+        $timetchl10 = microtime(true) - $starttchl10;
+
+        // Check user1 viewable posts.
+        $startu1l10 = microtime(true);
+        $this->assert_user_activity($this->user1, 10);
+        $timeu1l10 = microtime(true) - $startu1l10;
+
+        // Check user2 viewable posts.
+        $startu2l10 = microtime(true);
+        $this->assert_user_activity($this->user2, 10);
+        $timeu2l10 = microtime(true) - $startu2l10;
+
+        // Check teacher viewable posts.
+        // actual number of posts would be 48000 - however, limit is 12000 due to forum count being too high -
+        // limited to 200 forums.
+        $starttchnl = microtime(true);
+        $this->assert_user_activity($this->teacher, 12000, 0);
+        $timetchnl = microtime(true) - $starttchnl;
+
+        // Check user1 viewable posts.
+        // actual number of posts would be 48000 - however, limit is 12000 due to forum count being too high -
+        // limited to 200 forums.
+        $startu1nl = microtime(true);
+        $this->assert_user_activity($this->user1, 12000, 0);
+        $timeu1nl = microtime(true) - $startu1nl;
+
+        // Check user2 viewable posts.
+        // actual number of posts would be 48000 - however, limit is 12000 due to forum count being too high -
+        // limited to 200 forums.
+        $startu2nl = microtime(true);
+        $this->assert_user_activity($this->user2, 12000, 0);
+        $timeu2nl = microtime(true) - $startu2nl;
+
+        $end = microtime(true);
+
+        if (get_class($this) === "theme_snap\tests\theme_snap_recent_forum_activity_test") {
+            mtrace('Recent '.$ftype.' activity test - sql mode');
+        } else {
+            mtrace('Recent '.$ftype.' activity test - non-sql mode');
+        }
+        mtrace('Teacher (limited to 10 posts) time = '.round($timetchl10, 2).' seconds');
+        mtrace('User1 (limited to 10 posts) time = '.round($timeu1l10, 2).' seconds');
+        mtrace('User2 (limited to 10 posts) time = '.round($timeu2l10, 2).' seconds');
+        mtrace('Teacher (no limit) time = '.round($timetchnl, 2).' seconds');
+        mtrace('User1 (no limit) time = '.round($timeu1nl, 2).' seconds');
+        mtrace('User2 (no limit) time = '.round($timeu2nl, 2).' seconds');
+        mtrace('High volume time = '.round(($end - $start), 2).' seconds');
+        mtrace('Total posts made = '.$teacherc);
+    }
+
+    public function test_hsuforum_high_volume_posts() {
+        self::test_forum_high_volume_posts('hsuforum');
+    }
 
     /**
      * Test an anonymous advanced forum with one anonymous discussion & reply.
@@ -260,8 +402,49 @@ class theme_snap_recent_forum_activity_test extends \advanced_testcase {
         $this->assert_user_activity($this->user2, 0);
     }
 
-    public function test_forum_qanda() {
+    /**
+     * Test qanda forum.
+     */
+    public function test_forum_qanda($ftype = 'forum') {
 
+        $record = new \stdClass();
+        $record->course = $this->course1->id;
+        $record->type = 'qanda';
+
+        $forum1 = $this->getDataGenerator()->create_module($ftype, $record);
+
+        // Add discussion to course 1 started by teacjer.
+        // Note: In testing number of posts, discussions are counted too as there is a post for each discussion created.
+        $discussion1 = $this->create_discussion($ftype, $this->course1->id, $this->teacher->id, $forum1->id);
+
+        // Make a post by user1.
+        $this->create_post($ftype, $this->course1->id, $this->user1->id, $forum1->id, $discussion1->id);
+
+        // Nobody should see any forum activity if the forum is a qanda forum.
+
+        // Check teacher viewable posts is 0.
+        $this->assert_user_activity($this->teacher, 0);
+
+        // Check user1 viewable posts is 0.
+        $this->assert_user_activity($this->user1, 0);
+
+        // Check user2 viewable posts is 0.
+        $this->assert_user_activity($this->user2, 0);
+    }
+
+    /**
+     * Test qanda advanced forum.
+     */
+    public function test_hsuforum_qanda() {
+        self::test_forum_qanda('hsuforum');
+    }
+
+    /**
+     * Test qanda forum & advanced forum combined.
+     */
+    public function test_combined_qanda() {
+        self::test_forum_qanda('forum');
+        self::test_forum_qanda('hsuforum');
     }
 
     /**
@@ -276,7 +459,7 @@ class theme_snap_recent_forum_activity_test extends \advanced_testcase {
 
         $forum1 = $this->getDataGenerator()->create_module('hsuforum', $record);
 
-        // Add discussion to course 1 started by user1.
+        // Add discussion to course 2 started by teacjer.
         // Note: In testing number of posts, discussions are counted too as there is a post for each discussion created.
         $discussion1 = $this->create_discussion('hsuforum', $this->course2->id, $this->teacher->id, $forum1->id);
 
@@ -457,10 +640,8 @@ class theme_snap_recent_forum_activity_test extends \advanced_testcase {
      * @param $user
      * @param $expected
      */
-    protected function assert_user_activity($user, $expected) {
-        $activity = local::non_sql_recent_forum_activity($user->id);
-        $this->assertEquals($expected, count($activity));
-        $activity = local::recent_forum_activity($user->id);
+    protected function assert_user_activity($user, $expected, $limit = 10) {
+        $activity = local::recent_forum_activity($user->id, $limit);
         $this->assertEquals($expected, count($activity));
     }
 
