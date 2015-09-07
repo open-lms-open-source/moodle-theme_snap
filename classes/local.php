@@ -1027,20 +1027,6 @@ class local {
     }
 
     /**
-     * Remove qanda forums from forums array.
-     * @param $forums
-     * @return array
-     */
-    private static function purge_qa_forums(Array $forums) {
-        if (empty($forums)) {
-            return $forums;
-        }
-        return array_filter($forums, function($forum) {
-            return $forum->type !== 'qanda';
-        });
-    }
-
-    /**
      * Sort recent forum activity by timestamp.
      *
      * @param $a
@@ -1073,35 +1059,27 @@ class local {
             return [];
         }
 
+        // We need to do this so that we can get recent mod activity for a specific user.
         self::swap_global_user($user);
-
-        $userid = $user->id;
 
         $activities = [];
         $idx = 0;
 
         $fourweeksago = time() - (WEEKSECS*4);
 
-        $courses = enrol_get_my_courses();
-        foreach ($courses as $course) {
-            $forums = forum_get_readable_forums($userid, $course->id);
-            // Remove Q&A forums from array
-            $forums = self::purge_qa_forums($forums);
-            foreach ($forums as $forum) {
-                $cm = get_coursemodule_from_instance('forum', $forum->id);
-                // Do not filter by user - we want all posts.
-                forum_get_recent_mod_activity($activities, $idx, $fourweeksago, $course->id, $cm->id);
-            }
-            if (function_exists('hsuforum_get_readable_forums')) {
-                $hsuforums = hsuforum_get_readable_forums($userid, $course->id);
-                // Remove Q&A forums from array
-                $hsuforums = self::purge_qa_forums($hsuforums);
-                foreach ($hsuforums as $forum) {
-                    $cm = get_coursemodule_from_instance('hsuforum', $forum->id);
-                    // Do not filter by user - we want all posts.
-                    hsuforum_get_recent_mod_activity($activities, $idx, $fourweeksago, $course->id, $cm->id);
-                }
-            }
+        $userforums = new user_forums($user);
+        $forums = $userforums->forums();
+        foreach ($forums as $forum) {
+            $cm = get_coursemodule_from_instance('forum', $forum->id);
+            // Do not filter by user - we want all posts.
+            forum_get_recent_mod_activity($activities, $idx, $fourweeksago, $forum->course, $cm->id);
+        }
+
+        $hsuforums = $userforums->aforums();
+        foreach ($hsuforums as $forum) {
+            $cm = get_coursemodule_from_instance('hsuforum', $forum->id);
+            // Do not filter by user - we want all posts.
+            hsuforum_get_recent_mod_activity($activities, $idx, $fourweeksago, $forum->course, $cm->id);
         }
 
         self::swap_global_user(false);

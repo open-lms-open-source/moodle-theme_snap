@@ -34,7 +34,17 @@ class user_forums {
     /**
      * @var array
      */
+    protected $forums = [];
+
+    /**
+     * @var array
+     */
     protected $forumids = [];
+
+    /**
+     * @var array
+     */
+    protected $aforums = [];
 
     /**
      * @var array
@@ -52,6 +62,11 @@ class user_forums {
     protected $aforumidsallgroups = [];
 
     /**
+     * @var int
+     */
+    static $forumlimit = 200;
+
+    /**
      * @param null $userorid
      */
     function __construct($userorid = null){
@@ -60,10 +75,21 @@ class user_forums {
     }
 
     /**
+     * @return mixed
+     */
+    public function forums() {
+        return $this->forums;
+    }
+
+    /**
      * @return array
      */
     public function forumids() {
         return $this->forumids;
+    }
+
+    public function aforums() {
+        return $this->aforums;
     }
 
     /**
@@ -120,67 +146,51 @@ class user_forums {
     }
 
     /**
-     * When was a specific course last accessed?
-     * @param int $courseorid
-     * @param int|null $userid
-     * @param int|null $timestart
-     * @return int|bool
+     * Forums by lastpost with most recently posted at the top.
+     *
+     * @return array
      */
-    protected function course_last_accessed($courseorid, $userid = null, $timestart = null) {
+    protected function forumids_by_lastpost($limit) {
+        global $DB;
 
-        $courseid = is_object($courseorid) ? $courseorid->id : $courseorid;
+        $params = [$this->user->id];
 
-        $logmanger = get_log_manager();
-        $readers = $logmanger->get_readers('\core\log\sql_select_reader');
-        $reader = reset($readers);
-        if (empty($reader)) {
-            return false; // No log reader found.
-        }
+        $sql = 'SELECT fd.forum, MAX(fp.modified) lastpost
+                  FROM {forum_posts} fp
+                  JOIN {forum_discussions} fd
+                    ON fd.id = fp.discussion
+                  JOIN {enrol} e
+                    ON e.courseid = fd.course
+                  JOIN {user_enrolments} ue ON ue.enrolid = e.id
+                 WHERE ue.userid = ?
+              GROUP BY fd.forum
+              ORDER BY lastpost desc';
 
-        $select = "courseid = :courseid AND eventname = :eventname";
-        $params = array(
-            'courseid'     => $courseid,
-            'eventname'    => '\mod_collaborate\event\session_launched'
-        );
-
-        if (!empty($timestart)) {
-            $params['since'] = $timestart;
-        }
-
-        if (!empty($userid)) {
-            $select .= ' AND userid = :userid';
-            $params['userid'] = $userid;
-        }
-
-        $events = $reader->get_events_select($select, $params, 'timecreated DESC', 0, 1);
-        if (!empty($events)) {
-            return reset($events)->timecreated;
-        } else {
-            return false;
-        }
+        return $DB->get_records_sql($sql, $params, 0, $limit);
     }
 
     /**
-     * Remove forums which are in stale courses.
-     * @param array $forums
-     * @param array $stalecourseids
-     * @param int $limit
-     * @return mixed
+     * Forums by lastpost with most recently posted at the top.
+     *
+     * @return array
      */
-    protected function remove_stale_forums(Array $forums, Array $stalecourseids, $limit = 200) {
-        if (!empty($stalecourseids)) {
-            $tmpforums = $forums;
-            foreach ($forums as $id => $forum) {
-                if (in_array($forum->course, $stalecourseids)) {
-                    unset ($tmpforums[$id]);
-                }
-                if (count($tmpforums) <= $limit) {
-                    break;
-                }
-            }
-            $forums = $tmpforums;
-        }
-        return ($forums);
+    protected function hsuforumids_by_lastpost($limit) {
+        global $DB;
+
+        $params = [$this->user->id];
+
+        $sql = 'SELECT fd.forum, MAX(fp.modified) lastpost
+                  FROM {hsuforum_posts} fp
+                  JOIN {hsuforum_discussions} fd
+                    ON fd.id = fp.discussion
+                  JOIN {enrol} e
+                    ON e.courseid = fd.course
+                  JOIN {user_enrolments} ue ON ue.enrolid = e.id
+                 WHERE ue.userid = ?
+              GROUP BY fd.forum
+              ORDER BY lastpost desc';
+
+        return $DB->get_records_sql($sql, $params, 0, $limit);
     }
 
     /**
@@ -191,41 +201,33 @@ class user_forums {
      * @param $forums
      * @return mixed
      */
-    protected function process_stale_forums(Array $forums) {
-        // Pass 1 on removing forums from stale courses.
-        if (count($forums) > 200) {
-            // Attempt to remove stale forums by courses not accessed by anyone in one month.
-            $stalecourseids = [];
-            foreach ($this->courses as $course) {
-                if ($this->course_last_accessed($course->id, null, time() - (WEEKSECS * 4)) === false) {
-                    $stalecourseids[] = $course->id;
+    protected function process_stale_forums(Array $forums, $hsuforum = false) {
+
+        if (count($forums) > self::$forumlimit) {
+            // Get forum ids by postid (ordered by most recently posted).
+            if (!$hsuforum) {
+                $forumidsbypost = $this->forumids_by_lastpost(self::$forumlimit);
+            } else {
+                $forumidsbypost = $this->hsuforumids_by_lastpost(self::$forumlimit);
+            }
+
+            $tmpforums = [];
+
+            // Re-order forums by most recently posted.
+            foreach ($forumidsbypost as $id => $postdate) {
+                if (isset($forums[$id])) {
+                    $tmpforums[$id] = $forums[$id];
                 }
             }
-            $forums = $this->remove_stale_forums($forums, $stalecourseids);
+            $forums = $tmpforums;
+
+            // Cut off the less recently active forums.
+            $forums = array_slice($forums, 0, self::$forumlimit, true);
         }
 
-        // Pass 2 on removing forums from stale courses.
-        if (count($forums) > 200) {
-            // Attempt to remove stale forums by courses not accessed by current user in half a year.
-            $stalecourseids = [];
-            foreach ($this->courses as $course) {
-                if ($this->course_last_accessed($course->id, $this->user->id, time() - (YEARSECS / 2)) === false) {
-                    $stalecourseids[] = $course->id;
-                }
-            }
-            $forums = $this->remove_stale_forums($forums, $stalecourseids);
-        }
         return $forums;
     }
 
-    protected function forums_by_lastpost() {
-        $sql = 'SELECT mfd.forum, MAX(created) lastpost
-                  FROM {forum_posts} mfp
-                  JOIN {forum_discussions} mfd
-                    ON mfd.id = mfp.discussion
-              GROUP BY mfd.forum
-              ORDER BY lastpost DESC';
-    }
 
     /**
      * Populate forum id arrays.
@@ -253,17 +255,10 @@ class user_forums {
 
         // Rmove forums in courses not accessed for a long time.
         $forums = $this->process_stale_forums($forums);
-        $aforums = $this->process_stale_forums($aforums);
+        $aforums = $this->process_stale_forums($aforums, true);
 
-        /*
-        // Limit the number of forums to work with.
-        if (count($forums) > 200) {
-            $forums = array_slice($forums, 0, 200);
-        }
-        if (count($aforums) > 200) {
-            $aforums = array_slice($aforums, 0, 200);
-        }*/
-
+        $this->forums = $forums;
+        $this->aforums = $aforums;
         $this->forumids = array_keys($forums);
         $this->forumidsallgroups = $this->forumids_accessallgroups($forums);
         $this->aforumids = array_keys($aforums);

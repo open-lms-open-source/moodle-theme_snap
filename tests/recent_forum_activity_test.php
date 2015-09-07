@@ -25,6 +25,7 @@
 namespace theme_snap\tests;
 
 use theme_snap\local;
+use theme_snap\user_forums;
 
 defined('MOODLE_INTERNAL') || die();
 
@@ -250,7 +251,7 @@ class theme_snap_recent_forum_activity_test extends \advanced_testcase {
         $totalcourses = 20;
         $totalforums = 0;
         $forumspercourse = 40;
-        $discussionsperforum = 60;
+        $discussionsperforum = 20;
 
         for ($c = 0; $c < $totalcourses; $c++) {
 
@@ -291,23 +292,23 @@ class theme_snap_recent_forum_activity_test extends \advanced_testcase {
                 $record = new \stdClass();
                 $record->course = $tmpcourse->id;
                 $forums[$f] = $this->getDataGenerator()->create_module($ftype, $record);
-                for ($d = 0; $d < $discussionsperforum / 3; $d++) {
+                for ($d = 0; $d < $discussionsperforum; $d++) {
                     $discussion = $this->create_discussion($ftype, $tmpcourse->id, $this->user1->id, $forums[$f]->id);
                     $teacherc++;
                     $user1c++;
-                    if ($c < 10) {
+                    if ($c < $discussionsperforum/2) {
                         $user2c++;
                     }
                     $post = $this->create_post($ftype, $tmpcourse->id, $this->user1->id, $forums[$f]->id, $discussion->id);
                     $teacherc++;
                     $user1c++;
-                    if ($c < 10) {
+                    if ($c < $discussionsperforum/2) {
                         $user2c++;
                     }
                     $this->create_reply($ftype, $this->user1->id, $post);
                     $teacherc++;
                     $user1c++;
-                    if ($c < 10) {
+                    if ($c < $discussionsperforum/2) {
                         $user2c++;
                     }
                 }
@@ -331,30 +332,34 @@ class theme_snap_recent_forum_activity_test extends \advanced_testcase {
         $this->assert_user_activity($this->user2, 10);
         $timeu2l10 = microtime(true) - $startu2l10;
 
+        // Forum limit when getting recent activity.
+        $maxforums = user_forums::$forumlimit;
+        $xforums = $totalforums > $maxforums ? $maxforums : $totalforums;
+        $maxposts = ($xforums * $discussionsperforum) * 3; // 3 posts per discussion.
+
+        $xteacherc = $teacherc > $maxposts ? $maxposts : $teacherc;
+        $xuser1c = $user1c > $maxposts ? $maxposts : $user1c;
+        $xuser2c = $user2c > $maxposts ? $maxposts : $user2c;
+
+
         // Check teacher viewable posts.
-        // actual number of posts would be 48000 - however, limit is 12000 due to forum count being too high -
-        // limited to 200 forums.
         $starttchnl = microtime(true);
-        $this->assert_user_activity($this->teacher, 12000, 0);
+        $this->assert_user_activity($this->teacher, $xteacherc, 0);
         $timetchnl = microtime(true) - $starttchnl;
 
         // Check user1 viewable posts.
-        // actual number of posts would be 48000 - however, limit is 12000 due to forum count being too high -
-        // limited to 200 forums.
         $startu1nl = microtime(true);
-        $this->assert_user_activity($this->user1, 12000, 0);
+        $this->assert_user_activity($this->user1, $xuser1c, 0);
         $timeu1nl = microtime(true) - $startu1nl;
 
         // Check user2 viewable posts.
-        // actual number of posts would be 48000 - however, limit is 12000 due to forum count being too high -
-        // limited to 200 forums.
         $startu2nl = microtime(true);
-        $this->assert_user_activity($this->user2, 12000, 0);
+        $this->assert_user_activity($this->user2, $xuser2c, 0);
         $timeu2nl = microtime(true) - $startu2nl;
 
         $end = microtime(true);
 
-        if (get_class($this) === "theme_snap\tests\theme_snap_recent_forum_activity_test") {
+        if (get_class($this) === "theme_snap\\tests\\theme_snap_recent_forum_activity_test") {
             mtrace('Recent '.$ftype.' activity test - sql mode');
         } else {
             mtrace('Recent '.$ftype.' activity test - non-sql mode');
@@ -362,9 +367,9 @@ class theme_snap_recent_forum_activity_test extends \advanced_testcase {
         mtrace('Teacher (limited to 10 posts) time = '.round($timetchl10, 2).' seconds');
         mtrace('User1 (limited to 10 posts) time = '.round($timeu1l10, 2).' seconds');
         mtrace('User2 (limited to 10 posts) time = '.round($timeu2l10, 2).' seconds');
-        mtrace('Teacher (no limit) time = '.round($timetchnl, 2).' seconds');
-        mtrace('User1 (no limit) time = '.round($timeu1nl, 2).' seconds');
-        mtrace('User2 (no limit) time = '.round($timeu2nl, 2).' seconds');
+        mtrace('Teacher (limited to '.$xteacherc.' posts) time = '.round($timetchnl, 2).' seconds');
+        mtrace('User1 (limited to '.$xuser1c.' posts) time = '.round($timeu1nl, 2).' seconds');
+        mtrace('User2 (limited to '.$xuser2c.' posts) time = '.round($timeu2nl, 2).' seconds');
         mtrace('High volume time = '.round(($end - $start), 2).' seconds');
         mtrace('Total posts made = '.$teacherc);
     }
