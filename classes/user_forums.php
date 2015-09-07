@@ -64,7 +64,7 @@ class user_forums {
     /**
      * @var int
      */
-    static $forumlimit = 200;
+    static $forumlimit = 100;
 
     /**
      * @param null $userorid
@@ -183,8 +183,10 @@ class user_forums {
                   FROM {hsuforum_posts} fp
                   JOIN {hsuforum_discussions} fd
                     ON fd.id = fp.discussion
+                  JOIN {hsuforum} f
+                    ON f.id = fd.forum
                   JOIN {enrol} e
-                    ON e.courseid = fd.course
+                    ON e.courseid = f.course
                   JOIN {user_enrolments} ue ON ue.enrolid = e.id
                  WHERE ue.userid = ?
               GROUP BY fd.forum
