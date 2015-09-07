@@ -4256,13 +4256,119 @@ input[type="text"] + input[type="submit"] {
   vertical-align: baseline;
   line-height: 1.5;
 }
-.snap-modechooser {
+.snap-modechooser,
+#page-site-index .section-modchooser-link {
   clear: both;
   margin: 3em 0;
   padding: 0.5em;
   display: block;
 }
-.snap-modechooser a {
+.snap-modechooser img,
+#page-site-index .section-modchooser-link img {
+  display: none;
+}
+.snap-modechooser .section-modchooser-text,
+#page-site-index .section-modchooser-link .section-modchooser-text {
+  display: inline-block;
+  margin-bottom: 0;
+  font-weight: normal;
+  text-align: center;
+  vertical-align: middle;
+  cursor: pointer;
+  background-image: none;
+  border: 1px solid transparent;
+  white-space: nowrap;
+  padding: 8px 12px;
+  font-size: 18px;
+  line-height: 1.6;
+  border-radius: 0px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  border-color: #fff;
+  padding: 0.25em 1em;
+  margin: 0 .4em;
+  vertical-align: baseline;
+  line-height: 1.5;
+  background-color: #0398db;
+  border: 0;
+  color: #fff;
+  font-family: "Roboto", "Fira Sans", "Segoe UI", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-weight: 300;
+  box-shadow: 0 3px 0 0 #038dcc;
+  transition: all 0.4s ease-in-out;
+}
+.snap-modechooser .section-modchooser-text:focus,
+#page-site-index .section-modchooser-link .section-modchooser-text:focus,
+.snap-modechooser .section-modchooser-text:active:focus,
+#page-site-index .section-modchooser-link .section-modchooser-text:active:focus,
+.snap-modechooser .section-modchooser-text.active:focus,
+#page-site-index .section-modchooser-link .section-modchooser-text.active:focus {
+  outline: thin dotted;
+  outline: 5px auto -webkit-focus-ring-color;
+  outline-offset: -2px;
+}
+.snap-modechooser .section-modchooser-text:hover,
+#page-site-index .section-modchooser-link .section-modchooser-text:hover,
+.snap-modechooser .section-modchooser-text:focus,
+#page-site-index .section-modchooser-link .section-modchooser-text:focus {
+  color: #ffffff;
+  text-decoration: none;
+}
+.snap-modechooser .section-modchooser-text:active,
+#page-site-index .section-modchooser-link .section-modchooser-text:active,
+.snap-modechooser .section-modchooser-text.active,
+#page-site-index .section-modchooser-link .section-modchooser-text.active {
+  outline: 0;
+  background-image: none;
+  -webkit-box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+  box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+}
+.snap-modechooser .section-modchooser-text.disabled,
+#page-site-index .section-modchooser-link .section-modchooser-text.disabled,
+.snap-modechooser .section-modchooser-text[disabled],
+#page-site-index .section-modchooser-link .section-modchooser-text[disabled],
+fieldset[disabled] .snap-modechooser .section-modchooser-text,
+fieldset[disabled] #page-site-index .section-modchooser-link .section-modchooser-text {
+  cursor: not-allowed;
+  pointer-events: none;
+  opacity: 0.65;
+  filter: alpha(opacity=65);
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+.snap-modechooser .section-modchooser-text:hover,
+#page-site-index .section-modchooser-link .section-modchooser-text:hover,
+.snap-modechooser .section-modchooser-text:focus,
+#page-site-index .section-modchooser-link .section-modchooser-text:focus {
+  text-decoration: none;
+}
+.snap-modechooser .section-modchooser-text:hover,
+#page-site-index .section-modchooser-link .section-modchooser-text:hover,
+.snap-modechooser .section-modchooser-text:focus,
+#page-site-index .section-modchooser-link .section-modchooser-text:focus,
+.snap-modechooser .section-modchooser-text:active,
+#page-site-index .section-modchooser-link .section-modchooser-text:active,
+.snap-modechooser .section-modchooser-text.active,
+#page-site-index .section-modchooser-link .section-modchooser-text.active {
+  background-color: #038dcc;
+  color: #fff;
+  text-decoration: none;
+  box-shadow: 0 3px 0 0 #027fb8;
+}
+.snap-modechooser .section-modchooser-text:visited,
+#page-site-index .section-modchooser-link .section-modchooser-text:visited {
+  color: #fff;
+}
+.snap-modechooser .section-modchooser-text[disabled],
+#page-site-index .section-modchooser-link .section-modchooser-text[disabled] {
+  background-color: #03a9f4;
+}
+.snap-modechooser a,
+#page-site-index .section-modchooser-link a,
+.snap-modechooser .section-modchooser-text,
+#page-site-index .section-modchooser-link .section-modchooser-text {
   display: block;
   width: 100%;
   text-align: center;
@@ -7725,7 +7831,8 @@ input.form-submit,
 input[type="button"],
 input[type="submit"],
 input[type="reset"],
-#page-mast .snap-login-button {
+#page-mast .snap-login-button,
+#page-site-index .section-modchooser-link .section-modchooser-text {
   background-color: #0398db;
   border: 0;
   color: #fff;
@@ -7753,6 +7860,7 @@ input[type="button"]:hover,
 input[type="submit"]:hover,
 input[type="reset"]:hover,
 #page-mast .snap-login-button:hover,
+#page-site-index .section-modchooser-link .section-modchooser-text:hover,
 #changenumsections .increase-sections:focus,
 #changenumsections .reduce-sections:focus,
 input.form-submit:focus,
@@ -7772,6 +7880,7 @@ input[type="button"]:focus,
 input[type="submit"]:focus,
 input[type="reset"]:focus,
 #page-mast .snap-login-button:focus,
+#page-site-index .section-modchooser-link .section-modchooser-text:focus,
 #changenumsections .increase-sections:active,
 #changenumsections .reduce-sections:active,
 input.form-submit:active,
@@ -7791,6 +7900,7 @@ input[type="button"]:active,
 input[type="submit"]:active,
 input[type="reset"]:active,
 #page-mast .snap-login-button:active,
+#page-site-index .section-modchooser-link .section-modchooser-text:active,
 #changenumsections .increase-sections.active,
 #changenumsections .reduce-sections.active,
 input.form-submit.active,
@@ -7809,7 +7919,8 @@ input.form-submit.active,
 input[type="button"].active,
 input[type="submit"].active,
 input[type="reset"].active,
-#page-mast .snap-login-button.active {
+#page-mast .snap-login-button.active,
+#page-site-index .section-modchooser-link .section-modchooser-text.active {
   background-color: #038dcc;
   color: #fff;
   text-decoration: none;
@@ -7833,7 +7944,8 @@ input.form-submit:visited,
 input[type="button"]:visited,
 input[type="submit"]:visited,
 input[type="reset"]:visited,
-#page-mast .snap-login-button:visited {
+#page-mast .snap-login-button:visited,
+#page-site-index .section-modchooser-link .section-modchooser-text:visited {
   color: #fff;
 }
 #changenumsections .increase-sections[disabled],
@@ -7854,7 +7966,8 @@ input.form-submit[disabled],
 input[type="button"][disabled],
 input[type="submit"][disabled],
 input[type="reset"][disabled],
-#page-mast .snap-login-button[disabled] {
+#page-mast .snap-login-button[disabled],
+#page-site-index .section-modchooser-link .section-modchooser-text[disabled] {
   background-color: #03a9f4;
 }
 .editing.path-course-view section#region-main > .singlebutton input[type="submit"],

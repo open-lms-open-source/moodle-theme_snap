@@ -502,13 +502,22 @@ input[type="text"]+input[type="submit"] {
     line-height: 1.5;
 }
 
-
-.snap-modechooser{
+// Shame - the front page uses a different renderer for add asset.
+.snap-modechooser,
+#page-site-index .section-modchooser-link{
   clear: both;
   margin: 3em 0;
   padding: 0.5em;
   display: block;
-  a{
+  img {
+    display:none;
+  }
+  .section-modchooser-text {
+     .btn;
+  }
+
+  a,
+  .section-modchooser-text{
     display: block;
     width:100%;
     text-align: center;
@@ -516,16 +525,6 @@ input[type="text"]+input[type="submit"] {
     text-decoration: none;
   }
  }
-
-
-
-
-
-
-
-
-
-
 
 
 
