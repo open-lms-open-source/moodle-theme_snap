@@ -454,7 +454,6 @@ class theme_snap_core_renderer extends toc_renderer {
             }
         }
 
-
         $forumposts = $this->render_forumposts();
         if (!empty($forumposts)) {
             $columns[] = $forumposts;
