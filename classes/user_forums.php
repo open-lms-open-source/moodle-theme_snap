@@ -51,12 +51,12 @@ class user_forums {
     /**
      * @var array
      */
-    protected $aforums = [];
+    protected $hsuforums = [];
 
     /**
      * @var array
      */
-    protected $aforumids = [];
+    protected $hsuforumids = [];
 
     /**
      * @var array
@@ -66,7 +66,7 @@ class user_forums {
     /**
      * @var array
      */
-    protected $aforumidsallgroups = [];
+    protected $hsuforumidsallgroups = [];
 
     /**
      * @var int
@@ -102,15 +102,15 @@ class user_forums {
         return $this->forumids;
     }
 
-    public function aforums() {
-        return $this->aforums;
+    public function hsuforums() {
+        return $this->hsuforums;
     }
 
     /**
      * @return array
      */
-    public function aforumids() {
-        return $this->aforumids;
+    public function hsuforumids() {
+        return $this->hsuforumids;
     }
 
     /**
@@ -123,8 +123,8 @@ class user_forums {
     /**
      * @return array
      */
-    public function aforumidsallgroups() {
-        return $this->aforumidsallgroups;
+    public function hsuforumidsallgroups() {
+        return $this->hsuforumidsallgroups;
     }
 
     /**
@@ -263,29 +263,29 @@ class user_forums {
         $this->courses = enrol_get_my_courses();
 
         $forums = [];
-        $aforums = [];
+        $hsuforums = [];
 
         foreach ($this->courses as $course) {
             $forums = $forums + forum_get_readable_forums($this->user->id, $course->id);
             if (function_exists('hsuforum_get_readable_forums')) {
-                $aforums = $aforums + hsuforum_get_readable_forums($this->user->id, $course->id, true);
+                $hsuforums = $hsuforums + hsuforum_get_readable_forums($this->user->id, $course->id, true);
             }
         }
 
         // Remove Q&A forums from array.
         $forums = $this->purge_qa_forums($forums);
-        $aforums = $this->purge_qa_forums($aforums);
+        $hsuforums = $this->purge_qa_forums($hsuforums);
 
         // Rmove forums in courses not accessed for a long time.
         $forums = $this->process_stale_forums($forums);
-        $aforums = $this->process_stale_forums($aforums, true);
+        $hsuforums = $this->process_stale_forums($hsuforums, true);
 
         $this->forums = $forums;
-        $this->aforums = $aforums;
+        $this->hsuforums = $hsuforums;
         $this->forumids = array_keys($forums);
         $this->forumidsallgroups = $this->forumids_accessallgroups($forums);
-        $this->aforumids = array_keys($aforums);
-        $this->aforumidsallgroups = $this->forumids_accessallgroups($aforums, 'hsuforum');
+        $this->hsuforumids = array_keys($hsuforums);
+        $this->hsuforumidsallgroups = $this->forumids_accessallgroups($hsuforums, 'hsuforum');
 
         local::swap_global_user(false);
     }

@@ -1234,7 +1234,6 @@ HTML;
         global $OUTPUT;
         $output = '';
         foreach ($activities as $activity) {
-            $output .= '<div>';
             if (!empty($activity->user)) {
                 $userpicture = new user_picture($activity->user);
                 $userpicture->link = false;
@@ -1246,8 +1245,10 @@ HTML;
             }
 
             $url = new moodle_url('/mod/'.$activity->type.'/discuss.php', ['d' => $activity->content->discussion], 'p'.$activity->content->id);
-            $output .= $this->snap_media_object($url, $picture, fullname($activity->user), $this->friendly_datetime($activity->timestamp), format_text($activity->content->subject));
-            $output .= '</div>';
+            $fullname = fullname($activity->user);
+            $friendlydate = $this->friendly_datetime($activity->timestamp);
+            $formattedsubject = format_text($activity->content->subject);
+            $output .= $this->snap_media_object($url, $picture, $fullname, $friendlydate, $formattedsubject);
         }
         return $output;
     }

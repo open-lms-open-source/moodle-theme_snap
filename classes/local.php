@@ -1088,7 +1088,7 @@ class local {
             forum_get_recent_mod_activity($activities, $idx, $fourweeksago, $forum->course, $cm->id);
         }
 
-        $hsuforums = $userforums->aforums();
+        $hsuforums = $userforums->hsuforums();
         foreach ($hsuforums as $forum) {
             $cm = get_coursemodule_from_instance('hsuforum', $forum->id);
             // Do not filter by user - we want all posts.
@@ -1140,10 +1140,10 @@ class local {
         $userforums = new user_forums($user, $limit);
         $forumids = $userforums->forumids();
         $forumidsallgroups = $userforums->forumidsallgroups();
-        $aforumids = $userforums->aforumids();
-        $aforumidsallgroups = $userforums->aforumidsallgroups();
+        $hsuforumids = $userforums->hsuforumids();
+        $hsuforumidsallgroups = $userforums->hsuforumidsallgroups();
 
-        if (empty($forumids) && empty($aforumids)) {
+        if (empty($forumids) && empty($hsuforumids)) {
             return [];
         }
 
@@ -1194,17 +1194,17 @@ class local {
             // TODO - when moodle gets private reply (anonymous) forums, we need to handle this here.
         }
 
-        if (!empty($aforumids)) {
-            list($afinsql, $afinparams) = $DB->get_in_or_equal($aforumids);
+        if (!empty($hsuforumids)) {
+            list($afinsql, $afinparams) = $DB->get_in_or_equal($hsuforumids);
             $params = array_merge($params, $afinparams);
             $params = array_merge($params, [SEPARATEGROUPS, $user->id, SEPARATEGROUPS]);
 
             $afgpsql = '';
-            if (!empty($aforumidsallgroups)) {
+            if (!empty($hsuforumidsallgroups)) {
                 // Where a forum has a group mode of SEPARATEGROUPS we need a list of those forums where the current
                 // user has the ability to access all groups.
                 // This will be used in SQL later on to ensure they can see things in any groups.
-                list($afgpsql, $afgpparams) = $DB->get_in_or_equal($aforumidsallgroups);
+                list($afgpsql, $afgpparams) = $DB->get_in_or_equal($hsuforumidsallgroups);
                 $afgpsql = ' OR f2.id '.$afgpsql;
                 $params = array_merge($params, $afgpparams);
             }
