@@ -71,6 +71,9 @@ class user_forums {
      */
     public function __construct($userorid = null) {
         $this->user = local::get_user($userorid);
+        if (empty($this->user) || empty($this->user->id)) {
+            throw new coding_exception('Failed to get user from '.var_export($userorid, true));
+        }
         $this->populate_forums();
     }
 
@@ -238,9 +241,8 @@ class user_forums {
      * @throws \coding_exception
      */
     protected function populate_forums() {
-        if ($this->user->id !== null) {
-            local::swap_global_user($this->user->id);
-        }
+        local::swap_global_user($this->user->id);
+
         $this->courses = enrol_get_my_courses();
 
         $forums = [];
