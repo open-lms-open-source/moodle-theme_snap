@@ -164,10 +164,6 @@ trait format_section_trait {
 
         $context = context_course::instance($course->id);
 
-        // TODO - if no title and description,
-        // put form on page - make it abvious what to do.
-        // and save button.
-
         $sectiontitle = get_section_name($course, $section);
         // Better first section title.
         if ($sectiontitle == get_string('general') && $section->section == 0) {
@@ -177,7 +173,6 @@ trait format_section_trait {
         $testenptytitle = get_string('topic').' '.$section->section;
         if($sectiontitle == $testenptytitle && has_capability('moodle/course:update', $context)){
           $url = new moodle_url('/course/editsection.php', array('id' => $section->id, 'sr' => $sectionreturn));
-          // TODO - think about adding to toc renderer
           $o .= "<h2><a href='$url' title='".get_string('editcoursetopic', 'theme_snap')."'>".get_string('defaulttopictitle', 'theme_snap')."</a></h2>";
         }
         else {
@@ -201,7 +196,6 @@ trait format_section_trait {
 
         // Welcome message when no summary text.
         if(!$summarytext && has_capability('moodle/course:update', $context)) {
-          // TODO - localise
           $summarytext = "<p>".get_string('defaultsummary', 'theme_snap')."</p>";
           if($section->section == 0) {
               $editorname = $USER->firstname." ".$USER->lastname;
@@ -210,11 +204,8 @@ trait format_section_trait {
         }
 
         $o .= $summarytext;
-        // TODO - edit section not summary, write better html for snap
         if (has_capability('moodle/course:update', $context)) {
             $url = new moodle_url('/course/editsection.php', array('id' => $section->id, 'sr' => $sectionreturn));
-            // TODO - localise string, clean up css since we have a class :)
-            // TODO - make look more conected to section...
             $o .= "<a href='$url' class='edit-summary'>".get_string('editcoursetopic', 'theme_snap')."</a>";
         }
         $o .= "</div>";
@@ -465,7 +456,6 @@ trait format_section_trait {
         $modules = get_module_metadata($course, $modnames, $sectionreturn);
         $urlparams = array('section' => $section);
             // S Lamour Aug 2015 - show activity picker
-            // TODO - hack for clearfix, needs to be on ul...
             // moodle is adding a link around the span in a span with js - yay!! go moodle...
             $modchooser = "<div class='snap-modechooser btn'>
               <span class='section-modchooser-link'><span>".get_string('addresourceoractivity', 'theme_snap')."</span></span>
