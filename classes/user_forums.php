@@ -216,14 +216,16 @@ class user_forums {
             $tmpforums = [];
 
             // Re-order forums by most recently posted.
-            foreach ($forumidsbypost as $id => $postdate) {
-                if (isset($forums[$id])) {
-                    $tmpforums[$id] = $forums[$id];
+            if (!empty($forumidsbypost)) {
+                foreach ($forumidsbypost as $id => $postdate) {
+                    if (isset($forums[$id])) {
+                        $tmpforums[$id] = $forums[$id];
+                    }
                 }
+                $forums = $tmpforums;
             }
-            $forums = $tmpforums;
 
-            // Cut off the less recently active forums.
+            // Cut off the less recently active forums (most stale).
             $forums = array_slice($forums, 0, self::$forumlimit, true);
         }
 
