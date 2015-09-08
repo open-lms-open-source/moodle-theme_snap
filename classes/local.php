@@ -980,7 +980,9 @@ class local {
                 break;
             case 'mssql' :
             case 'oracle' :
-            default : $sql = ''; // Not supported.
+            default :
+                // Not supported.
+                $sql = '';
         }
         return $sql;
     }
