@@ -999,12 +999,14 @@ class local {
 
         if (is_object($userorid)) {
             return $userorid;
-        }
-
-        if ($userorid == $USER->id) {
-            $user = $USER;
+        } else if (is_number($userorid)) {
+            if (intval($userorid) === $USER->id) {
+                $user = $USER;
+            } else {
+                $user = $DB->get_record('user', ['id' => $userorid]);
+            }
         } else {
-            $user = $DB->get_record('user', ['id' => $userorid]);
+            throw new coding_exception('paramater $userorid must be an object or an integer or a numeric string');
         }
 
         return $user;
