@@ -972,14 +972,14 @@ class local {
     public static function limit_sql($from, $num) {
         global $DB;
         switch ($DB->get_dbfamily()) {
-            case 'mysql' : $sql = "LIMIT $from, $num";
+            case 'mysql' :
+                $sql = "LIMIT $from, $num";
                 break;
-            case 'postgres' : $sql = "LIMIT $num OFFSET $from";
+            case 'postgres' :
+                $sql = "LIMIT $num OFFSET $from";
                 break;
-            case 'mssql' : $sql = '';
-                break; // Not supported.
-            case 'oracle' : $sql = '';
-                break; // Not supported.
+            case 'mssql' :
+            case 'oracle' :
             default : $sql = ''; // Not supported.
         }
         return $sql;
