@@ -140,8 +140,13 @@ class user_forums {
     /**
      * Get forumids where current user has accessallgroups capability
      */
-    private function forumids_accessallgroups($forums, $type = 'forum') {
+    private function forumids_accessallgroups(Array $forums, $type = 'forum') {
         $forumidsallgroups = [];
+
+        if (empty($forums)) {
+            return $forums;
+        }
+
         foreach ($forums as $forum) {
             $cm = get_coursemodule_from_instance($type, $forum->id);
             if (intval($cm->groupmode) === SEPARATEGROUPS) {
