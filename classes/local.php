@@ -1013,7 +1013,7 @@ class local {
     }
 
     /**
-     * Some moodle functions don't work correctly with specic userids and this provides a hacky workaround.
+     * Some moodle functions don't work correctly with specific userids and this provides a hacky workaround.
      *
      * Temporarily swaps global USER variable.
      * @param $userorid
