@@ -1246,10 +1246,7 @@ HTML;
             }
 
             $url = new moodle_url('/mod/'.$activity->type.'/discuss.php', ['d' => $activity->content->discussion], 'p'.$activity->content->id);
-
             $output .= $this->snap_media_object($url, $picture, fullname($activity->user), $this->friendly_datetime($activity->timestamp), format_text($activity->content->subject));
-
-
             $output .= '</div>';
         }
         return $output;

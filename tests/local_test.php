@@ -325,6 +325,4 @@ class theme_snap_local_test extends \advanced_testcase {
         $this->assertSame('', $css);
         $this->assertFalse(local::site_coverimage());
     }
-
 }
-
