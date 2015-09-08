@@ -972,10 +972,14 @@ class local {
     public static function limit_sql($from, $num) {
         global $DB;
         switch ($DB->get_dbfamily()) {
-            case 'mysql' : $sql = "LIMIT $from, $num"; break;
-            case 'postgres' : $sql = "LIMIT $num OFFSET $from"; break;
-            case 'mssql' : $sql = ''; break; // Not supported.
-            case 'oracle' : $sql = ''; break; // Not supported.
+            case 'mysql' : $sql = "LIMIT $from, $num";
+                break;
+            case 'postgres' : $sql = "LIMIT $num OFFSET $from";
+                break;
+            case 'mssql' : $sql = '';
+                break; // Not supported.
+            case 'oracle' : $sql = '';
+                break; // Not supported.
             default : $sql = ''; // Not supported.
         }
         return $sql;
@@ -984,7 +988,7 @@ class local {
     /**
      * Get user by id.
      * @param $userorid
-     * @return array|bool|\BrowserIDUser|false|\flase|\GPRAUser|\LiveUser|mixed|null|object|\stdClass|string|\turnitintooltwo_user|\user
+     * @return stdclass|int
      */
     public static function get_user($userorid = false) {
         global $USER, $DB;
@@ -1065,7 +1069,7 @@ class local {
         $activities = [];
         $idx = 0;
 
-        $fourweeksago = time() - (WEEKSECS*4);
+        $fourweeksago = time() - (WEEKSECS * 4);
 
         $userforums = new user_forums($user);
         $forums = $userforums->forums();
@@ -1087,13 +1091,13 @@ class local {
         // Remove activity entries that don't have a content object (typically anonymous entries).
         $tmpacts = [];
         foreach ($activities as $val) {
-            if (is_object($val->content)){
+            if (is_object($val->content)) {
                 $tmpacts[] = $val;
             }
         }
         $activities = $tmpacts;
 
-        usort($activities, array('\theme_snap\local','sort_timestamp'));
+        usort($activities, array('\theme_snap\local', 'sort_timestamp'));
 
         if ($limit > 0) {
             $activities = array_slice($activities, 0, $limit);
@@ -1134,8 +1138,6 @@ class local {
         $sqls = [];
         $params = [];
 
-        // TODO Q & A forums
-
         if ($limit > 0) {
             $limitsql = self::limit_sql(0, $limit); // Note, this is here for performance optimisations only.
         } else {
@@ -1154,7 +1156,7 @@ class local {
                 $params = array_merge($params, $fgpparams);
             }
 
-            $sqls []= "(SELECT ".$DB->sql_concat("'F'", 'fp1.id')." AS id, 'forum' as type, fp1.id AS postid,
+            $sqls[] = "(SELECT ".$DB->sql_concat("'F'", 'fp1.id')." AS id, 'forum' as type, fp1.id AS postid,
                                fd1.forum, 0 AS forumanonymous, f1.course, fp1.discussion, fp1.parent,
                                fp1.userid, fp1.modified, fp1.subject, fp1.message, 0 AS reveal, cm1.id as cmid,
                                u1.firstnamephonetic, u1.lastnamephonetic, u1.middlename, u1.alternatename, u1.firstname,
@@ -1191,7 +1193,7 @@ class local {
 
             $params = array_merge($params, [$user->id, $user->id]);
 
-            $sqls []= "(SELECT ".$DB->sql_concat("'A'", 'fp2.id')." AS id, 'hsuforum' as type, fp2.id AS postid,
+            $sqls[] = "(SELECT ".$DB->sql_concat("'A'", 'fp2.id')." AS id, 'hsuforum' as type, fp2.id AS postid,
                                fd2.forum, f2.anonymous AS forumanonymous, f2.course, fp2.discussion, fp2.parent,
                                fp2.userid,fp2.modified,fp2.subject,fp2.message, fp2.reveal, cm2.id as cmid,
                                u2.firstnamephonetic, u2.lastnamephonetic, u2.middlename, u2.alternatename, u2.firstname,

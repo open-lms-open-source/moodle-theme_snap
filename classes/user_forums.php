@@ -22,7 +22,7 @@ use theme_snap\local;
 class user_forums {
 
     /**
-     * @var stdClass;
+     * @var stdclass
      */
     protected $user;
 
@@ -64,12 +64,12 @@ class user_forums {
     /**
      * @var int
      */
-    static $forumlimit = 100;
+    public static $forumlimit = 100;
 
     /**
      * @param null $userorid
      */
-    function __construct($userorid = null){
+    public function __construct($userorid = null) {
         $this->user = local::get_user($userorid);
         $this->populate_forums();
     }
@@ -135,8 +135,8 @@ class user_forums {
         foreach ($forums as $forum) {
             $cm = get_coursemodule_from_instance($type, $forum->id);
             if (intval($cm->groupmode) === SEPARATEGROUPS) {
-                $cm_context = \context_module::instance($cm->id);
-                $allgroups = has_capability('moodle/site:accessallgroups', $cm_context);
+                $cmcontext = \context_module::instance($cm->id);
+                $allgroups = has_capability('moodle/site:accessallgroups', $cmcontext);
                 if ($allgroups) {
                     $forumidsallgroups[] = $forum->id;
                 }
@@ -236,7 +236,7 @@ class user_forums {
      * @throws \coding_exception
      */
     protected function populate_forums() {
-        if ($this->user->id !==null) {
+        if ($this->user->id !== null) {
             local::swap_global_user($this->user->id);
         }
         $this->courses = enrol_get_my_courses();

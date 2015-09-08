@@ -236,13 +236,13 @@ class theme_snap_recent_forum_activity_test extends \advanced_testcase {
 
         $forums = [];
 
-        // Teacher count
+        // Teacher count.
         $teacherc = 0;
 
-        // User 1 count
+        // User 1 count.
         $user1c = 0;
 
-        // User 2 count
+        // User 2 count.
         $user2c = 0;
 
         $sturole = $DB->get_record('role', array('shortname' => 'student'));
@@ -286,7 +286,6 @@ class theme_snap_recent_forum_activity_test extends \advanced_testcase {
                 $event->trigger();
             }
 
-
             for ($f = 0; $f < $forumspercourse; $f++) {
                 $totalforums++;
                 $record = new \stdClass();
@@ -296,19 +295,19 @@ class theme_snap_recent_forum_activity_test extends \advanced_testcase {
                     $discussion = $this->create_discussion($ftype, $tmpcourse->id, $this->user1->id, $forums[$f]->id);
                     $teacherc++;
                     $user1c++;
-                    if ($c < $discussionsperforum/2) {
+                    if ($c < $discussionsperforum / 2) {
                         $user2c++;
                     }
                     $post = $this->create_post($ftype, $tmpcourse->id, $this->user1->id, $forums[$f]->id, $discussion->id);
                     $teacherc++;
                     $user1c++;
-                    if ($c < $discussionsperforum/2) {
+                    if ($c < $discussionsperforum / 2) {
                         $user2c++;
                     }
                     $this->create_reply($ftype, $this->user1->id, $post);
                     $teacherc++;
                     $user1c++;
-                    if ($c < $discussionsperforum/2) {
+                    if ($c < $discussionsperforum / 2) {
                         $user2c++;
                     }
                 }
@@ -340,7 +339,6 @@ class theme_snap_recent_forum_activity_test extends \advanced_testcase {
         $xteacherc = $teacherc > $maxposts ? $maxposts : $teacherc;
         $xuser1c = $user1c > $maxposts ? $maxposts : $user1c;
         $xuser2c = $user2c > $maxposts ? $maxposts : $user2c;
-
 
         // Check teacher viewable posts.
         $starttchnl = microtime(true);
