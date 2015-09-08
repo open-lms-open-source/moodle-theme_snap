@@ -19,6 +19,13 @@ namespace theme_snap;
 
 use theme_snap\local;
 
+/**
+ * Provides information on all forums a user has access to.
+ *
+ * @package   theme_snap
+ * @copyright Copyright (c) 2015 Moodlerooms Inc. (http://www.moodlerooms.com)
+ * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
 class user_forums {
 
     /**
