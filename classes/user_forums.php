@@ -260,6 +260,7 @@ class user_forums {
     protected function populate_forums() {
         local::swap_global_user($this->user->id);
 
+        // Currently we are using local::swap_global_user as a hack for the following function (MDL-51353) :
         $this->courses = enrol_get_my_courses();
 
         $forums = [];
