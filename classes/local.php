@@ -1153,6 +1153,9 @@ class local {
 
             $fgpsql = '';
             if (!empty($forumidsallgroups)) {
+                // Where a forum has a group mode of SEPARATEGROUPS we need a list of those forums where the current
+                // user has the ability to access all groups.
+                // This will be used in SQL later on to ensure they can see things in any groups.
                 list($fgpsql, $fgpparams) = $DB->get_in_or_equal($forumidsallgroups);
                 $fgpsql = ' OR f1.id '.$fgpsql;
                 $params = array_merge($params, $fgpparams);
@@ -1188,6 +1191,9 @@ class local {
 
             $afgpsql = '';
             if (!empty($aforumidsallgroups)) {
+                // Where a forum has a group mode of SEPARATEGROUPS we need a list of those forums where the current
+                // user has the ability to access all groups.
+                // This will be used in SQL later on to ensure they can see things in any groups.
                 list($afgpsql, $afgpparams) = $DB->get_in_or_equal($aforumidsallgroups);
                 $afgpsql = ' OR f2.id '.$afgpsql;
                 $params = array_merge($params, $afgpparams);
