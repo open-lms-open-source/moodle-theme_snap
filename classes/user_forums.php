@@ -74,9 +74,9 @@ class user_forums {
     public static $forumlimit = 100;
 
     /**
-     * @param null $userorid
+     * @param bool|int|stdclass $userorid
      */
-    public function __construct($userorid = null) {
+    public function __construct($userorid = false) {
         $this->user = local::get_user($userorid);
         if (empty($this->user) || empty($this->user->id)) {
             throw new coding_exception('Failed to get user from '.var_export($userorid, true));
