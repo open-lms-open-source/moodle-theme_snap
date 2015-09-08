@@ -53,7 +53,7 @@ class snap_personal_menu_controller extends controller_abstract {
      */
     public function get_forumposts_action() {
         return json_encode(array(
-            'html' => \theme_snap\local::print_recent_forum_activity()
+            'html' => \theme_snap\local::render_recent_forum_activity()
         ));
     }
 

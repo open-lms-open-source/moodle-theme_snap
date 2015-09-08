@@ -1259,7 +1259,11 @@ class local {
         return $activities;
     }
 
-    public static function print_recent_forum_activity() {
+    /**
+     * Render recent forum activity.
+     * @return string
+     */
+    public static function render_recent_forum_activity() {
         global $PAGE;
         $activities = self::recent_forum_activity();
         if (empty($activities)) {
