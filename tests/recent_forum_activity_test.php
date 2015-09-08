@@ -234,6 +234,11 @@ class theme_snap_recent_forum_activity_test extends \advanced_testcase {
     public function test_forum_high_volume_posts($ftype = 'forum') {
         global $DB;
 
+        // Disabled for general use.
+        $this->markTestIncomplete(
+            'This test has to be enabled manually in code.'
+        );
+
         $forums = [];
 
         // Teacher count.
