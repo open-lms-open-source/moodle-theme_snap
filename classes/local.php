@@ -1049,6 +1049,9 @@ class local {
     /**
      * Get recent forum activity for all accessible forums across all courses.
      * (Without custom SQL method).
+     * Note - this function is here simply so that the sql version can be checked against core moodles functions for
+     * getting activity on a forum by forum basis.
+     * 
      * @param bool $userorid
      * @return array
      * @throws \coding_exception
