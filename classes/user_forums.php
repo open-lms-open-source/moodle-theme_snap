@@ -215,7 +215,8 @@ class user_forums {
      * This is necessary when there are a large number of forums to query - for performance reasons and also because
      * there are query parameter limits in mssql and oracle.
      *
-     * @param $forums
+     * @param array $forums
+     * @param bool $hsufourm - is this a collection of advanced forums?
      * @return mixed
      */
     protected function process_stale_forums(Array $forums, $hsuforum = false) {
