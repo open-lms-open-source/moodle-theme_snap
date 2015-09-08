@@ -75,11 +75,15 @@ class user_forums {
 
     /**
      * @param bool|int|stdclass $userorid
+     * @param bool|int $forumlimit
      */
-    public function __construct($userorid = false) {
+    public function __construct($userorid = false, $forumlimit = false) {
         $this->user = local::get_user($userorid);
         if (empty($this->user) || empty($this->user->id)) {
             throw new coding_exception('Failed to get user from '.var_export($userorid, true));
+        }
+        if (!empty($forumlimit)) {
+            self::$forumlimit = $forumlimit;
         }
         $this->populate_forums();
     }

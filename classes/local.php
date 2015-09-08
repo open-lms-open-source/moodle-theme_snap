@@ -1080,7 +1080,7 @@ class local {
 
         $fourweeksago = time() - (WEEKSECS * 4);
 
-        $userforums = new user_forums($user);
+        $userforums = new user_forums($user, $limit);
         $forums = $userforums->forums();
         foreach ($forums as $forum) {
             $cm = get_coursemodule_from_instance('forum', $forum->id);
@@ -1135,7 +1135,9 @@ class local {
         }
 
         // Get all relevant forum ids for SQL in statement.
-        $userforums = new user_forums($user);
+        // We use the post limit for the number of forums we are interested in too -
+        // as they are ordered by most recent post.
+        $userforums = new user_forums($user, $limit);
         $forumids = $userforums->forumids();
         $forumidsallgroups = $userforums->forumidsallgroups();
         $aforumids = $userforums->aforumids();
