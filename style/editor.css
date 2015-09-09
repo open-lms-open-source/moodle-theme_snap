@@ -4256,18 +4256,18 @@ input[type="text"] + input[type="submit"] {
   vertical-align: baseline;
   line-height: 1.5;
 }
-.snap-modechooser,
+.snap-modchooser,
 #page-site-index .section-modchooser-link {
   clear: both;
   margin: 3em 0;
   padding: 0.5em;
   display: block;
 }
-.snap-modechooser img,
+.snap-modchooser img,
 #page-site-index .section-modchooser-link img {
   display: none;
 }
-.snap-modechooser .section-modchooser-text,
+.snap-modchooser .section-modchooser-text,
 #page-site-index .section-modchooser-link .section-modchooser-text {
   display: inline-block;
   margin-bottom: 0;
@@ -4299,37 +4299,37 @@ input[type="text"] + input[type="submit"] {
   box-shadow: 0 3px 0 0 #038dcc;
   transition: all 0.4s ease-in-out;
 }
-.snap-modechooser .section-modchooser-text:focus,
+.snap-modchooser .section-modchooser-text:focus,
 #page-site-index .section-modchooser-link .section-modchooser-text:focus,
-.snap-modechooser .section-modchooser-text:active:focus,
+.snap-modchooser .section-modchooser-text:active:focus,
 #page-site-index .section-modchooser-link .section-modchooser-text:active:focus,
-.snap-modechooser .section-modchooser-text.active:focus,
+.snap-modchooser .section-modchooser-text.active:focus,
 #page-site-index .section-modchooser-link .section-modchooser-text.active:focus {
   outline: thin dotted;
   outline: 5px auto -webkit-focus-ring-color;
   outline-offset: -2px;
 }
-.snap-modechooser .section-modchooser-text:hover,
+.snap-modchooser .section-modchooser-text:hover,
 #page-site-index .section-modchooser-link .section-modchooser-text:hover,
-.snap-modechooser .section-modchooser-text:focus,
+.snap-modchooser .section-modchooser-text:focus,
 #page-site-index .section-modchooser-link .section-modchooser-text:focus {
   color: #ffffff;
   text-decoration: none;
 }
-.snap-modechooser .section-modchooser-text:active,
+.snap-modchooser .section-modchooser-text:active,
 #page-site-index .section-modchooser-link .section-modchooser-text:active,
-.snap-modechooser .section-modchooser-text.active,
+.snap-modchooser .section-modchooser-text.active,
 #page-site-index .section-modchooser-link .section-modchooser-text.active {
   outline: 0;
   background-image: none;
   -webkit-box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
   box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
 }
-.snap-modechooser .section-modchooser-text.disabled,
+.snap-modchooser .section-modchooser-text.disabled,
 #page-site-index .section-modchooser-link .section-modchooser-text.disabled,
-.snap-modechooser .section-modchooser-text[disabled],
+.snap-modchooser .section-modchooser-text[disabled],
 #page-site-index .section-modchooser-link .section-modchooser-text[disabled],
-fieldset[disabled] .snap-modechooser .section-modchooser-text,
+fieldset[disabled] .snap-modchooser .section-modchooser-text,
 fieldset[disabled] #page-site-index .section-modchooser-link .section-modchooser-text {
   cursor: not-allowed;
   pointer-events: none;
@@ -4338,36 +4338,36 @@ fieldset[disabled] #page-site-index .section-modchooser-link .section-modchooser
   -webkit-box-shadow: none;
   box-shadow: none;
 }
-.snap-modechooser .section-modchooser-text:hover,
+.snap-modchooser .section-modchooser-text:hover,
 #page-site-index .section-modchooser-link .section-modchooser-text:hover,
-.snap-modechooser .section-modchooser-text:focus,
+.snap-modchooser .section-modchooser-text:focus,
 #page-site-index .section-modchooser-link .section-modchooser-text:focus {
   text-decoration: none;
 }
-.snap-modechooser .section-modchooser-text:hover,
+.snap-modchooser .section-modchooser-text:hover,
 #page-site-index .section-modchooser-link .section-modchooser-text:hover,
-.snap-modechooser .section-modchooser-text:focus,
+.snap-modchooser .section-modchooser-text:focus,
 #page-site-index .section-modchooser-link .section-modchooser-text:focus,
-.snap-modechooser .section-modchooser-text:active,
+.snap-modchooser .section-modchooser-text:active,
 #page-site-index .section-modchooser-link .section-modchooser-text:active,
-.snap-modechooser .section-modchooser-text.active,
+.snap-modchooser .section-modchooser-text.active,
 #page-site-index .section-modchooser-link .section-modchooser-text.active {
   background-color: #038dcc;
   color: #fff;
   text-decoration: none;
   box-shadow: 0 3px 0 0 #027fb8;
 }
-.snap-modechooser .section-modchooser-text:visited,
+.snap-modchooser .section-modchooser-text:visited,
 #page-site-index .section-modchooser-link .section-modchooser-text:visited {
   color: #fff;
 }
-.snap-modechooser .section-modchooser-text[disabled],
+.snap-modchooser .section-modchooser-text[disabled],
 #page-site-index .section-modchooser-link .section-modchooser-text[disabled] {
   background-color: #03a9f4;
 }
-.snap-modechooser a,
+.snap-modchooser a,
 #page-site-index .section-modchooser-link a,
-.snap-modechooser .section-modchooser-text,
+.snap-modchooser .section-modchooser-text,
 #page-site-index .section-modchooser-link .section-modchooser-text {
   display: block;
   width: 100%;
