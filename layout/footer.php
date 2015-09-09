@@ -69,6 +69,7 @@ if (!empty($custommenu) && !empty($footnote)) {
     echo $custommenu;
     echo '</div></div>';
 }
+$poweredbyrunby = get_string('poweredbyrunby', 'theme_snap');
 ?>
 
 <div id='mrooms-footer' class="helplink text-right">
@@ -78,7 +79,7 @@ if (!empty($custommenu) && !empty($footnote)) {
         echo $OUTPUT->page_doc_link();
     }
     ?>
-    <br/>Built with <a href="http://kb.moodlerooms.com/" target='_blank' title='Joule help guides'>Joule</a> from <a href="http://moodlerooms.com/" target='_blank'>Moodlerooms</a>, powered by <a href="http://www.moodle.com/" target='_blank'>Moodle</a>.
+    <br/><?php echo $poweredbyrunby ?>
 <br>© Copyright 2015 Moodlerooms Inc, All Rights Reserved.</small>
 </div>
 <!-- close mrooms footer -->
