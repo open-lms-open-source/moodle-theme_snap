@@ -4105,10 +4105,6 @@ video {
 img.icon.hide {
   display: block !important;
 }
-ul,
-ol {
-  list-style-position: outside;
-}
 li {
   break-inside: avoid-column;
 }
