@@ -62,6 +62,33 @@ module.exports = function(grunt) {
                 }
             }
         },
+        csslint: {
+            src: "style/moodle.css",
+            options: {
+                "adjoining-classes": false,
+                "box-sizing": false,
+                "box-model": false,
+                "overqualified-elements": false,
+                "bulletproof-font-face": false,
+                "compatible-vendor-prefixes": false,
+                "selector-max-approaching": false,
+                "fallback-colors": false,
+                "floats": false,
+                "ids": false,
+                "qualified-headings": false,
+                "selector-max": false,
+                "unique-headings": false,
+                "gradients": false,
+                "important": false,
+                "font-sizes": false,
+            }
+        },
+        lesslint: {
+            src: "less/moodle.less",
+            options: {
+                imports: "less/**/*.less"
+            }
+        },
         autoprefixer: {
           options: {
             browsers: [
@@ -115,7 +142,9 @@ module.exports = function(grunt) {
     // Load contrib tasks.
     grunt.loadNpmTasks("grunt-autoprefixer");
     grunt.loadNpmTasks('grunt-contrib-jshint');
+    grunt.loadNpmTasks('grunt-contrib-csslint');
     grunt.loadNpmTasks("grunt-contrib-less");
+    grunt.loadNpmTasks("grunt-lesslint");
     grunt.loadNpmTasks("grunt-contrib-watch");
     grunt.loadNpmTasks("grunt-exec");
 
