@@ -151,7 +151,6 @@ trait format_section_trait {
         $o .= html_writer::start_tag('div', array('class' => 'content'));
 
         // When not on a section page, we display the section titles except the general section if null.
-
         $hasnamenotsecpg = (!$onsectionpage && ($section->section != 0 || !is_null($section->name)));
 
         // When on a section page, we only display the general section title, if title is not the default one.
@@ -169,11 +168,11 @@ trait format_section_trait {
         if ($sectiontitle == get_string('general') && $section->section == 0) {
             $sectiontitle = get_string('introduction', 'theme_snap');
         }
-        // Untitled section title.
-        $testenptytitle = get_string('topic').' '.$section->section;
-        if($sectiontitle == $testenptytitle && has_capability('moodle/course:update', $context)){
+        // Untitled topic title.
+        $testemptytitle = get_string('topic').' '.$section->section;
+        if ($sectiontitle == $testemptytitle && has_capability('moodle/course:update', $context)) {
           $url = new moodle_url('/course/editsection.php', array('id' => $section->id, 'sr' => $sectionreturn));
-          $o .= "<h2><a href='$url' title='".get_string('editcoursetopic', 'theme_snap')."'>".get_string('defaulttopictitle', 'theme_snap')."</a></h2>";
+          $o .= "<h2><a href='$url' title='".s(get_string('editcoursetopic', 'theme_snap'))."'>".get_string('defaulttopictitle', 'theme_snap')."</a></h2>";
         }
         else {
           $o .= $this->output->heading($sectiontitle, 2, 'sectionname' . $classes);
@@ -195,10 +194,10 @@ trait format_section_trait {
         $summarytext = $this->format_summary_text($section);
 
         // Welcome message when no summary text.
-        if(!$summarytext && has_capability('moodle/course:update', $context)) {
+        if (empty($summarytext) && has_capability('moodle/course:update', $context)) {
           $summarytext = "<p>".get_string('defaultsummary', 'theme_snap')."</p>";
-          if($section->section == 0) {
-              $editorname = $USER->firstname." ".$USER->lastname;
+          if ($section->section == 0) {
+              $editorname = format_string(fullname($USER));
               $summarytext = "<p>".get_string('defaultintrosummary', 'theme_snap', $editorname)."</p>";
           }
         }
@@ -463,7 +462,4 @@ trait format_section_trait {
            $output = $this->courserenderer->course_modchooser($modules, $course) . $modchooser;
            return $output;
     }
-
-
-
 }
