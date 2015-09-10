@@ -1018,7 +1018,7 @@ class local {
      * Some moodle functions don't work correctly with specific userids and this provides a hacky workaround.
      *
      * Temporarily swaps global USER variable.
-     * @param bool|int|stdclass $userorid
+     * @param bool|int|stdClass $userorid
      */
     public static function swap_global_user($userorid = false) {
         global $USER;
@@ -1082,17 +1082,21 @@ class local {
 
         $userforums = new user_forums($user, $limit);
         $forums = $userforums->forums();
-        foreach ($forums as $forum) {
-            $cm = get_coursemodule_from_instance('forum', $forum->id);
-            // Do not filter by user - we want all posts.
-            forum_get_recent_mod_activity($activities, $idx, $fourweeksago, $forum->course, $cm->id);
+        if (!empty($forums)) {
+            foreach ($forums as $forum) {
+                $cm = get_coursemodule_from_instance('forum', $forum->id);
+                // Do not filter by user - we want all posts.
+                forum_get_recent_mod_activity($activities, $idx, $fourweeksago, $forum->course, $cm->id);
+            }
         }
 
         $hsuforums = $userforums->hsuforums();
-        foreach ($hsuforums as $forum) {
-            $cm = get_coursemodule_from_instance('hsuforum', $forum->id);
-            // Do not filter by user - we want all posts.
-            hsuforum_get_recent_mod_activity($activities, $idx, $fourweeksago, $forum->course, $cm->id);
+        if (!empty($hsuforums)) {
+            foreach ($hsuforums as $forum) {
+                $cm = get_coursemodule_from_instance('hsuforum', $forum->id);
+                // Do not filter by user - we want all posts.
+                hsuforum_get_recent_mod_activity($activities, $idx, $fourweeksago, $forum->course, $cm->id);
+            }
         }
 
         self::swap_global_user(false);
