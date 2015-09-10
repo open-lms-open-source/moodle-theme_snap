@@ -181,18 +181,65 @@ class theme_snap_assign_test extends mod_assign_base_testcase {
         $this->assertCount(2, $deadlines);
     }
 
-    public function test_participant_count() {
+    public function test_participant_count_all() {
         $courseid = $this->course->id;
         $actual = local::course_participant_count($courseid);
-        $expected = count($this->students);
+        $expected = count($this->students) + count($this->teachers) + count($this->editingteachers);
         $this->assertSame($expected, $actual);
 
         $this->create_extra_users();
         $actual = local::course_participant_count($courseid);
+        $expected = count($this->students) + count($this->teachers) + count($this->editingteachers);
+        $this->assertSame($expected, $actual);
+    }
+
+    public function test_participant_count_assign() {
+        $courseid = $this->course->id;
+        $actual = local::course_participant_count($courseid, 'assign');
+        $expected = count($this->students);
+        $this->assertSame($expected, $actual);
+
+        $this->create_extra_users();
+        $actual = local::course_participant_count($courseid, 'assign');
         $expected = count($this->students);
         $this->assertSame($expected, $actual);
     }
 
+    public function test_participant_count_quiz() {
+        $courseid = $this->course->id;
+        $actual = local::course_participant_count($courseid, 'quiz');
+        $expected = count($this->students);
+        $this->assertSame($expected, $actual);
+
+        $this->create_extra_users();
+        $actual = local::course_participant_count($courseid, 'quiz');
+        $expected = count($this->students);
+        $this->assertSame($expected, $actual);
+    }
+
+    public function test_participant_count_choice() {
+        $courseid = $this->course->id;
+        $actual = local::course_participant_count($courseid, 'choice');
+        $expected = count($this->students) + count($this->teachers) + count($this->editingteachers);
+        $this->assertSame($expected, $actual);
+
+        $this->create_extra_users();
+        $actual = local::course_participant_count($courseid, 'choice');
+        $expected = count($this->students) + count($this->teachers) + count($this->editingteachers);
+        $this->assertSame($expected, $actual);
+    }
+
+    public function test_participant_count_feedback() {
+        $courseid = $this->course->id;
+        $actual = local::course_participant_count($courseid, 'feedback');
+        $expected = count($this->students);
+        $this->assertSame($expected, $actual);
+
+        $this->create_extra_users();
+        $actual = local::course_participant_count($courseid, 'feedback');
+        $expected = count($this->students);
+        $this->assertSame($expected, $actual);
+    }
     public function test_no_course_completion_progress() {
         $actual = local::course_completion_progress($this->course);
         $this->assertNull($actual);
