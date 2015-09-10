@@ -22214,8 +22214,11 @@ body.hascontinuecancel.path-site #page {
 }
 /* file picker dropzone */
 .ffilemanager .fp-pathbar,
+.form-filemanager .fp-pathbar,
 .ffilemanager .fp-viewbar,
-.ffilemanager .fp-restrictions {
+.form-filemanager .fp-viewbar,
+.ffilemanager .fp-restrictions,
+.form-filemanager .fp-restrictions {
   display: none;
 }
 .ffilepicker .fp-btn-choose {
