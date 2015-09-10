@@ -1238,44 +1238,50 @@ class local {
                          ";
         }
 
-        $sql = '-- Snap sql'. "\n".implode ("\n".' UNION ALL '."\n", $sqls) . "\n".' ORDER BY modified DESC';
+        $sql = '-- Snap sql'. "\n".implode ("\n".' UNION ALL '."\n", $sqls);
+        if (count($sqls)>1) {
+            $sql .= "\n".' ORDER BY modified DESC';
+        }
         $posts = $DB->get_records_sql($sql, $params, 0, $limit);
 
         $activities = [];
-        foreach ($posts as $post) {
-            $postuser = (object) [
-                'id' => $post->userid,
-                'firstnamephonetic' => $post->firstnamephonetic,
-                'lastnamephonetic' => $post->lastnamephonetic,
-                'middlename' => $post->middlename,
-                'alternatename' => $post->alternatename,
-                'firstname' => $post->firstname,
-                'lastname' => $post->lastname,
-                'picture' => $post->picture,
-                'imagealt' => $post->imagealt,
-                'email' => $post->email
-            ];
 
-            $postuser = hsuforum_anonymize_user($postuser, (object) array(
-                'id'        => $post->forum,
-                'course'    => $post->course,
-                'anonymous' => $post->forumanonymous
-            ), $post);
+        if (!empty($posts)) {
+            foreach ($posts as $post) {
+                $postuser = (object)[
+                    'id' => $post->userid,
+                    'firstnamephonetic' => $post->firstnamephonetic,
+                    'lastnamephonetic' => $post->lastnamephonetic,
+                    'middlename' => $post->middlename,
+                    'alternatename' => $post->alternatename,
+                    'firstname' => $post->firstname,
+                    'lastname' => $post->lastname,
+                    'picture' => $post->picture,
+                    'imagealt' => $post->imagealt,
+                    'email' => $post->email
+                ];
 
-            $activities[] = (object)[
-                'type' => $post->type,
-                'cmid' => $post->cmid,
-                'name' => $post->subject,
-                'sectionnum' => null,
-                'timestamp' => $post->modified,
-                'content' => (object) [
-                    'id' => $post->postid,
-                    'discussion' => $post->discussion,
-                    'subject' => $post->subject,
-                    'parent' => $post->parent
-                ],
-                'user' => $postuser
-            ];
+                $postuser = hsuforum_anonymize_user($postuser, (object)array(
+                    'id' => $post->forum,
+                    'course' => $post->course,
+                    'anonymous' => $post->forumanonymous
+                ), $post);
+
+                $activities[] = (object)[
+                    'type' => $post->type,
+                    'cmid' => $post->cmid,
+                    'name' => $post->subject,
+                    'sectionnum' => null,
+                    'timestamp' => $post->modified,
+                    'content' => (object)[
+                        'id' => $post->postid,
+                        'discussion' => $post->discussion,
+                        'subject' => $post->subject,
+                        'parent' => $post->parent
+                    ],
+                    'user' => $postuser
+                ];
+            }
         }
 
         return $activities;
