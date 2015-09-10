@@ -389,6 +389,11 @@ class theme_snap_core_renderer extends toc_renderer {
         return $o;
     }
 
+    /**
+     * Render forumposts.
+     *
+     * @return string
+     */
     protected function render_forumposts() {
         if ($this->page->theme->settings->forumpoststoggle == 0) {
             return '';
@@ -1227,12 +1232,15 @@ HTML;
     /**
      * Render recent forum activity.
      *
-     * @param $activities
+     * @param array $activities
      * @return string
      */
-    public function recent_forum_activity($activities) {
+    public function recent_forum_activity(Array $activities) {
         global $OUTPUT;
         $output = '';
+        if (empty($activities)) {
+            return '';
+        }
         foreach ($activities as $activity) {
             if (!empty($activity->user)) {
                 $userpicture = new user_picture($activity->user);

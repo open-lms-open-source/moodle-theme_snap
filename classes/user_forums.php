@@ -74,7 +74,7 @@ class user_forums {
     public static $forumlimit = 100;
 
     /**
-     * @param bool|int|stdclass $userorid
+     * @param bool|stdClass|int $userorid
      * @param bool|int $forumlimit
      */
     public function __construct($userorid = false, $forumlimit = false) {
@@ -89,7 +89,7 @@ class user_forums {
     }
 
     /**
-     * @return mixed
+     * @return array
      */
     public function forums() {
         return $this->forums;
@@ -129,7 +129,7 @@ class user_forums {
 
     /**
      * Remove qanda forums from forums array.
-     * @param $forums
+     * @param array $forums
      * @return array
      */
     private function purge_qa_forums(Array $forums) {
@@ -143,6 +143,10 @@ class user_forums {
 
     /**
      * Get forumids where current user has accessallgroups capability
+     *
+     * @param array $forums
+     * @param string $type
+     * @return array
      */
     private function forumids_accessallgroups(Array $forums, $type = 'forum') {
         $forumidsallgroups = [];
@@ -167,6 +171,7 @@ class user_forums {
     /**
      * Forums by lastpost with most recently posted at the top.
      *
+     * @param int $limit
      * @return array
      */
     protected function forumids_by_lastpost($limit) {
@@ -191,6 +196,7 @@ class user_forums {
     /**
      * Forums by lastpost with most recently posted at the top.
      *
+     * @param int $limit
      * @return array
      */
     protected function hsuforumids_by_lastpost($limit) {

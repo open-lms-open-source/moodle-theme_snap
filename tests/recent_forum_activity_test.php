@@ -156,7 +156,7 @@ class theme_snap_recent_forum_activity_test extends \advanced_testcase {
         // Check user1 viewable posts is 1.
         $this->assert_user_activity($this->user1, $u1offset + 1);
 
-        // Check user2 viewable posts is 0 (user1 is not enrolled in course1).
+        // Check user2 viewable posts is 0 (user2 is not enrolled in course1).
         $this->assert_user_activity($this->user2, $u2offset + 0);
     }
 
@@ -177,6 +177,11 @@ class theme_snap_recent_forum_activity_test extends \advanced_testcase {
 
     /**
      * Test single discussion + post.
+     *
+     * @param string $ftype
+     * @param int $toffset
+     * @param int $u1offset
+     * @param int $u2offset
      * @throws \coding_exception
      */
     public function test_forum_post_simple($ftype = 'forum', $toffset = 0, $u1offset = 0, $u2offset = 0) {
@@ -212,7 +217,7 @@ class theme_snap_recent_forum_activity_test extends \advanced_testcase {
         // Check user1 viewable posts is 4.
         $this->assert_user_activity($this->user1, $u1offset + 4);
 
-        // Check user2 viewable posts is 2 (user2 can only see posts in course1).
+        // Check user2 viewable posts is 2 (user2 can only see posts in course2).
         $this->assert_user_activity($this->user2, $u2offset + 2);
     }
 
@@ -231,6 +236,11 @@ class theme_snap_recent_forum_activity_test extends \advanced_testcase {
         $this->test_forum_post_simple('hsuforum', 4, 4, 2);
     }
 
+    /**
+     * @param string $ftype
+     *
+     * @throws \coding_exception
+     */
     public function test_forum_high_volume_posts($ftype = 'forum') {
         global $DB;
 
@@ -412,6 +422,8 @@ class theme_snap_recent_forum_activity_test extends \advanced_testcase {
 
     /**
      * Test qanda forum.
+     *
+     * @param string $ftype
      */
     public function test_forum_qanda($ftype = 'forum') {
 
@@ -489,6 +501,11 @@ class theme_snap_recent_forum_activity_test extends \advanced_testcase {
 
     /**
      * Test a date restricted forum
+     *
+     * @param string $ftype
+     * @param int $toffset
+     * @param int $u1offset
+     * @param int $u2offset
      */
     public function test_forum_restricted($ftype = 'forum', $toffset = 0, $u1offset = 0, $u2offset = 0) {
         global $CFG;
@@ -534,7 +551,11 @@ class theme_snap_recent_forum_activity_test extends \advanced_testcase {
 
     /**
      * Test forum posts restricted by group.
+     *
      * @param string $ftype
+     * @param int $toffset
+     * @param int $u1offset
+     * @param int $u2offset
      */
     public function test_forum_group_posts($ftype = 'forum', $toffset = 0, $u1offset = 0, $u2offset = 0) {
         // Create a forum with group mode enabled.
@@ -636,6 +657,7 @@ class theme_snap_recent_forum_activity_test extends \advanced_testcase {
      * @param string $ftype
      * @param int $userid
      * @param stdClass $parent
+     * @param array $opts
      */
     protected function create_reply($ftype, $userid, $parent, Array $opts = []) {
         $opts = array_merge($opts, ['parent' => $parent->id]);
@@ -645,8 +667,9 @@ class theme_snap_recent_forum_activity_test extends \advanced_testcase {
 
     /**
      * Assert user activity.
-     * @param $user
-     * @param $expected
+     * @param stdClass $user
+     * @param int $expected
+     * @param int $limit
      */
     protected function assert_user_activity($user, $expected, $limit = 10) {
         $activity = local::recent_forum_activity($user->id, $limit);

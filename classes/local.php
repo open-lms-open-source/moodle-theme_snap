@@ -990,7 +990,7 @@ class local {
     /**
      * Get user by id.
      * @param $userorid
-     * @return bool|stdclass|int
+     * @return bool|stdClass|int
      */
     public static function get_user($userorid = false) {
         global $USER, $DB;
@@ -1018,7 +1018,7 @@ class local {
      * Some moodle functions don't work correctly with specific userids and this provides a hacky workaround.
      *
      * Temporarily swaps global USER variable.
-     * @param bool|int|stdClass $userorid
+     * @param bool|stdClass|int $userorid
      */
     public static function swap_global_user($userorid = false) {
         global $USER;
@@ -1037,8 +1037,8 @@ class local {
     /**
      * Sort recent forum activity by timestamp.
      *
-     * @param $a
-     * @param $b
+     * @param int $a
+     * @param int $b
      * @return int
      */
     private static function sort_timestamp($a, $b) {
