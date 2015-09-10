@@ -200,6 +200,10 @@ echo $OUTPUT->doctype() ?>
         display:none;
     }
 
+    .block-region {
+        min-height: 150px;
+    }
+
     </style>
 </head>
 
