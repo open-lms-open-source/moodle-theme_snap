@@ -20364,11 +20364,6 @@ ol#chapters li.current a {
 #page-site-index #page-header {
   padding-top: 12.7%;
   padding-bottom: 1.75em;
-  /*
-BUG:
-mobile safari does not re-calculate vh on viewport change
-http://blog.rodneyrehm.de/archives/34-iOS7-Mobile-Safari-And-Viewport-Units.html
-*/
   min-height: 405px;
   border-bottom: 0px;
   margin: 0;
@@ -20379,12 +20374,12 @@ http://blog.rodneyrehm.de/archives/34-iOS7-Mobile-Safari-And-Viewport-Units.html
   bottom: 1em;
   right: 4%;
 }
-@media screen and (min-width: 480px) {
-  #page-site-index #page-header {
-    min-height: 500px;
-  }
-}
-@media screen and (min-width: 768px) {
+/*
+BUG:
+mobile safari does not re-calculate vh on viewport change
+http://blog.rodneyrehm.de/archives/34-iOS7-Mobile-Safari-And-Viewport-Units.html
+*/
+@media screen and (min-width: 1200px) {
   #page-site-index #page-header {
     min-height: 87vh;
   }

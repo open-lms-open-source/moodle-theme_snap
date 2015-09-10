@@ -1843,32 +1843,26 @@ ol#chapters {
     // background-color: @brand-primary; customisable
     padding-top: 12.7%;
     padding-bottom: 1.75em;
- /*
+    min-height: 405px;
+    border-bottom: 0px;
+    margin: 0;
+    position: relative;
+    &> .btn {
+        position: absolute;
+        bottom: 1em;
+        right: 4%;
+    }
+}
+
+/*
 BUG:
 mobile safari does not re-calculate vh on viewport change
 http://blog.rodneyrehm.de/archives/34-iOS7-Mobile-Safari-And-Viewport-Units.html
 */
-
-    min-height:405px;
-    border-bottom: 0px;
-    margin: 0;
-    position:relative;
-    &> .btn {
-        position:absolute;
-        bottom:1em;
-        right:4%;
+@media screen and (min-width: @screen-lg-min) {
+    #page-site-index #page-header {
+        min-height: 87vh;
     }
-}
-
-@media screen and (min-width: @screen-xs-min) {
-	#page-site-index #page-header {
-	min-height:500px;
-	}
-}
-@media screen and (min-width: @screen-sm-min) {
-	#page-site-index #page-header {
-	min-height:87vh;
-	}
 }
 
 #page-site-index #page-mast {
