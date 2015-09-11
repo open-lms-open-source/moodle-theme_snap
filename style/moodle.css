@@ -21414,6 +21414,12 @@ table.boxaligncenter.generaltable.user-grade * {
 .path-blocks-reports #report-content {
   min-height: 750px;
 }
+.path-blocks-reports .course-report-dashboard {
+  display: block;
+  width: auto;
+  height: auto;
+  overflow: visible;
+}
 .mr_html_tabs {
   margin-bottom: 1em;
 }
