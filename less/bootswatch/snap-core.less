@@ -459,7 +459,6 @@ select,
 select,input,textarea{max-width:100%;}
 
 .section-modchooser-text,
-.section-modchooser-link a,
 #changenumsections .increase-sections,
 #changenumsections .reduce-sections,
 .paging.paging-morelink a,
@@ -485,7 +484,6 @@ input[type="reset"] {
   }
 }
 #page-mod-quiz-edit div.question div.content div.points input[type="submit"],
-.section-modchooser-link a,
 .btn,
 button,
 input.form-submit,
@@ -504,23 +502,29 @@ input[type="text"]+input[type="submit"] {
     line-height: 1.5;
 }
 
+// Shame - the front page uses a different renderer for add asset.
+.snap-modchooser,
+#page-site-index .section-modchooser-link{
+  clear: both;
+  margin: 3em 0;
+  padding: 0.5em;
+  display: block;
+  img {
+    display:none;
+  }
+  .section-modchooser-text {
+     .btn;
+  }
 
-.section-modchooser-link a{
-  display:inline-block;
-  img{
-	   display:none;
-   }
+  a,
+  .section-modchooser-text{
+    display: block;
+    width:100%;
+    text-align: center;
+    color: #fff !important;
+    text-decoration: none;
+  }
  }
-
-
-
-
-
-
-
-
-
-
 
 
 

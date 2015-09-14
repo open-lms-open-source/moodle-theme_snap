@@ -18262,8 +18262,8 @@ li.snap-resource.snap-mime-text {
   clear: both;
 }
 li.snap-activity {
-  border-left: 3px solid #ccc;
-  border-radius: 3px 0 0 3px;
+  border-left: 0.3em solid #ccc;
+  border-radius: 3px;
 }
 li.modtype_forum,
 li.modtype_chat,
@@ -19186,7 +19186,6 @@ textarea {
   max-width: 100%;
 }
 .section-modchooser-text,
-.section-modchooser-link a,
 #changenumsections .increase-sections,
 #changenumsections .reduce-sections,
 .paging.paging-morelink a,
@@ -19205,7 +19204,6 @@ input[type="reset"] {
   font-family: "Roboto", "Fira Sans", "Segoe UI", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 .section-modchooser-text:hover,
-.section-modchooser-link a:hover,
 #changenumsections .increase-sections:hover,
 #changenumsections .reduce-sections:hover,
 .paging.paging-morelink a:hover,
@@ -19219,7 +19217,6 @@ input[type="button"]:hover,
 input[type="submit"]:hover,
 input[type="reset"]:hover,
 .section-modchooser-text:focus,
-.section-modchooser-link a:focus,
 #changenumsections .increase-sections:focus,
 #changenumsections .reduce-sections:focus,
 .paging.paging-morelink a:focus,
@@ -19235,7 +19232,6 @@ input[type="reset"]:focus {
   text-decoration: none;
 }
 #page-mod-quiz-edit div.question div.content div.points input[type="submit"],
-.section-modchooser-link a,
 .btn,
 button,
 input.form-submit,
@@ -19253,11 +19249,127 @@ input[type="text"] + input[type="submit"] {
   vertical-align: baseline;
   line-height: 1.5;
 }
-.section-modchooser-link a {
-  display: inline-block;
+.snap-modchooser,
+#page-site-index .section-modchooser-link {
+  clear: both;
+  margin: 3em 0;
+  padding: 0.5em;
+  display: block;
 }
-.section-modchooser-link a img {
+.snap-modchooser img,
+#page-site-index .section-modchooser-link img {
   display: none;
+}
+.snap-modchooser .section-modchooser-text,
+#page-site-index .section-modchooser-link .section-modchooser-text {
+  display: inline-block;
+  margin-bottom: 0;
+  font-weight: normal;
+  text-align: center;
+  vertical-align: middle;
+  cursor: pointer;
+  background-image: none;
+  border: 1px solid transparent;
+  white-space: nowrap;
+  padding: 8px 12px;
+  font-size: 18px;
+  line-height: 1.6;
+  border-radius: 0px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  border-color: #fff;
+  padding: 0.25em 1em;
+  margin: 0 .4em;
+  vertical-align: baseline;
+  line-height: 1.5;
+  background-color: #0398db;
+  border: 0;
+  color: #fff;
+  font-family: "Roboto", "Fira Sans", "Segoe UI", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-weight: 300;
+  -webkit-box-shadow: 0 3px 0 0 #038dcc;
+          box-shadow: 0 3px 0 0 #038dcc;
+  -webkit-transition: all 0.4s ease-in-out;
+          transition: all 0.4s ease-in-out;
+}
+.snap-modchooser .section-modchooser-text:focus,
+#page-site-index .section-modchooser-link .section-modchooser-text:focus,
+.snap-modchooser .section-modchooser-text:active:focus,
+#page-site-index .section-modchooser-link .section-modchooser-text:active:focus,
+.snap-modchooser .section-modchooser-text.active:focus,
+#page-site-index .section-modchooser-link .section-modchooser-text.active:focus {
+  outline: thin dotted;
+  outline: 5px auto -webkit-focus-ring-color;
+  outline-offset: -2px;
+}
+.snap-modchooser .section-modchooser-text:hover,
+#page-site-index .section-modchooser-link .section-modchooser-text:hover,
+.snap-modchooser .section-modchooser-text:focus,
+#page-site-index .section-modchooser-link .section-modchooser-text:focus {
+  color: #ffffff;
+  text-decoration: none;
+}
+.snap-modchooser .section-modchooser-text:active,
+#page-site-index .section-modchooser-link .section-modchooser-text:active,
+.snap-modchooser .section-modchooser-text.active,
+#page-site-index .section-modchooser-link .section-modchooser-text.active {
+  outline: 0;
+  background-image: none;
+  -webkit-box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+  box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+}
+.snap-modchooser .section-modchooser-text.disabled,
+#page-site-index .section-modchooser-link .section-modchooser-text.disabled,
+.snap-modchooser .section-modchooser-text[disabled],
+#page-site-index .section-modchooser-link .section-modchooser-text[disabled],
+fieldset[disabled] .snap-modchooser .section-modchooser-text,
+fieldset[disabled] #page-site-index .section-modchooser-link .section-modchooser-text {
+  cursor: not-allowed;
+  pointer-events: none;
+  opacity: 0.65;
+  filter: alpha(opacity=65);
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+.snap-modchooser .section-modchooser-text:hover,
+#page-site-index .section-modchooser-link .section-modchooser-text:hover,
+.snap-modchooser .section-modchooser-text:focus,
+#page-site-index .section-modchooser-link .section-modchooser-text:focus {
+  text-decoration: none;
+}
+.snap-modchooser .section-modchooser-text:hover,
+#page-site-index .section-modchooser-link .section-modchooser-text:hover,
+.snap-modchooser .section-modchooser-text:focus,
+#page-site-index .section-modchooser-link .section-modchooser-text:focus,
+.snap-modchooser .section-modchooser-text:active,
+#page-site-index .section-modchooser-link .section-modchooser-text:active,
+.snap-modchooser .section-modchooser-text.active,
+#page-site-index .section-modchooser-link .section-modchooser-text.active {
+  background-color: #038dcc;
+  color: #fff;
+  text-decoration: none;
+  -webkit-box-shadow: 0 3px 0 0 #027fb8;
+          box-shadow: 0 3px 0 0 #027fb8;
+}
+.snap-modchooser .section-modchooser-text:visited,
+#page-site-index .section-modchooser-link .section-modchooser-text:visited {
+  color: #fff;
+}
+.snap-modchooser .section-modchooser-text[disabled],
+#page-site-index .section-modchooser-link .section-modchooser-text[disabled] {
+  background-color: #03a9f4;
+}
+.snap-modchooser a,
+#page-site-index .section-modchooser-link a,
+.snap-modchooser .section-modchooser-text,
+#page-site-index .section-modchooser-link .section-modchooser-text {
+  display: block;
+  width: 100%;
+  text-align: center;
+  color: #fff !important;
+  text-decoration: none;
 }
 .published-status {
   opacity: 0.75;
@@ -22741,6 +22853,7 @@ div.editor_atto_toolbar div.atto_group {
 .news-article-message *[style],
 .snap-image-summary *[style],
 .summary-text *[style],
+.summary *[style],
 .snap-activity .contentafterlink *[style],
 .signuppanel *[style],
 .signuppanel .text_to_html *[style] {
@@ -22877,7 +22990,6 @@ input#id_submitbutton2,
 td.submit input,
 #notice .singlebutton + .singlebutton input,
 #login.fixy input[type=submit],
-.section-modchooser-link a,
 button,
 .yui-skin-sam .yui-button,
 .yui3-button,
@@ -22887,7 +22999,8 @@ input.form-submit,
 input[type="button"],
 input[type="submit"],
 input[type="reset"],
-#page-mast .snap-login-button {
+#page-mast .snap-login-button,
+#page-site-index .section-modchooser-link .section-modchooser-text {
   background-color: #0398db;
   border: 0;
   color: #fff;
@@ -22907,7 +23020,6 @@ input#id_submitbutton2:hover,
 td.submit input:hover,
 #notice .singlebutton + .singlebutton input:hover,
 #login.fixy input[type=submit]:hover,
-.section-modchooser-link a:hover,
 button:hover,
 .yui-skin-sam .yui-button:hover,
 .yui3-button:hover,
@@ -22918,6 +23030,7 @@ input[type="button"]:hover,
 input[type="submit"]:hover,
 input[type="reset"]:hover,
 #page-mast .snap-login-button:hover,
+#page-site-index .section-modchooser-link .section-modchooser-text:hover,
 #changenumsections .increase-sections:focus,
 #changenumsections .reduce-sections:focus,
 input.form-submit:focus,
@@ -22927,7 +23040,6 @@ input#id_submitbutton2:focus,
 td.submit input:focus,
 #notice .singlebutton + .singlebutton input:focus,
 #login.fixy input[type=submit]:focus,
-.section-modchooser-link a:focus,
 button:focus,
 .yui-skin-sam .yui-button:focus,
 .yui3-button:focus,
@@ -22938,6 +23050,7 @@ input[type="button"]:focus,
 input[type="submit"]:focus,
 input[type="reset"]:focus,
 #page-mast .snap-login-button:focus,
+#page-site-index .section-modchooser-link .section-modchooser-text:focus,
 #changenumsections .increase-sections:active,
 #changenumsections .reduce-sections:active,
 input.form-submit:active,
@@ -22947,7 +23060,6 @@ input#id_submitbutton2:active,
 td.submit input:active,
 #notice .singlebutton + .singlebutton input:active,
 #login.fixy input[type=submit]:active,
-.section-modchooser-link a:active,
 button:active,
 .yui-skin-sam .yui-button:active,
 .yui3-button:active,
@@ -22958,6 +23070,7 @@ input[type="button"]:active,
 input[type="submit"]:active,
 input[type="reset"]:active,
 #page-mast .snap-login-button:active,
+#page-site-index .section-modchooser-link .section-modchooser-text:active,
 #changenumsections .increase-sections.active,
 #changenumsections .reduce-sections.active,
 input.form-submit.active,
@@ -22967,7 +23080,6 @@ input#id_submitbutton2.active,
 td.submit input.active,
 #notice .singlebutton + .singlebutton input.active,
 #login.fixy input[type=submit].active,
-.section-modchooser-link a.active,
 button.active,
 .yui-skin-sam .yui-button.active,
 .yui3-button.active,
@@ -22977,7 +23089,8 @@ input.form-submit.active,
 input[type="button"].active,
 input[type="submit"].active,
 input[type="reset"].active,
-#page-mast .snap-login-button.active {
+#page-mast .snap-login-button.active,
+#page-site-index .section-modchooser-link .section-modchooser-text.active {
   background-color: #038dcc;
   color: #fff;
   text-decoration: none;
@@ -22993,7 +23106,6 @@ input#id_submitbutton2:visited,
 td.submit input:visited,
 #notice .singlebutton + .singlebutton input:visited,
 #login.fixy input[type=submit]:visited,
-.section-modchooser-link a:visited,
 button:visited,
 .yui-skin-sam .yui-button:visited,
 .yui3-button:visited,
@@ -23003,7 +23115,8 @@ input.form-submit:visited,
 input[type="button"]:visited,
 input[type="submit"]:visited,
 input[type="reset"]:visited,
-#page-mast .snap-login-button:visited {
+#page-mast .snap-login-button:visited,
+#page-site-index .section-modchooser-link .section-modchooser-text:visited {
   color: #fff;
 }
 #changenumsections .increase-sections[disabled],
@@ -23015,7 +23128,6 @@ input#id_submitbutton2[disabled],
 td.submit input[disabled],
 #notice .singlebutton + .singlebutton input[disabled],
 #login.fixy input[type=submit][disabled],
-.section-modchooser-link a[disabled],
 button[disabled],
 .yui-skin-sam .yui-button[disabled],
 .yui3-button[disabled],
@@ -23025,7 +23137,8 @@ input.form-submit[disabled],
 input[type="button"][disabled],
 input[type="submit"][disabled],
 input[type="reset"][disabled],
-#page-mast .snap-login-button[disabled] {
+#page-mast .snap-login-button[disabled],
+#page-site-index .section-modchooser-link .section-modchooser-text[disabled] {
   background-color: #03a9f4;
 }
 .editing.path-course-view section#region-main > .singlebutton input[type="submit"],
