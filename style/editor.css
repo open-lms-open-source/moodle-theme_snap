@@ -3799,18 +3799,6 @@ fieldset[disabled] #changenumsections .reduce-sections {
 #course_recent_updates .info.bold {
   font-weight: inherit;
 }
-@media screen and (min-width: 768px) {
-  #course_recent_updates {
-    column-count: 2;
-    column-gap: 5%;
-    column-width: 45%;
-    border: 1px solid transparent;
-  }
-  #course_recent_updates div[class*="course-footer-update"] {
-    display: inline-block;
-    width: 100%;
-  }
-}
 #page-course-completion .mform .fcontainer .fitem_fcheckbox {
   display: flex;
 }
@@ -4344,7 +4332,7 @@ input[type="text"] + input[type="submit"] {
 .snap-media-object:after {
   clear: both;
 }
-.snap-media-object > a {
+.snap-media-object a {
   text-decoration: none;
 }
 .snap-media-object > a > img,
@@ -4389,9 +4377,6 @@ input[type="text"] + input[type="submit"] {
 }
 .snap-media-object .snap-unread-marker:before {
   border-right: 0.89em solid white;
-}
-.callstoaction .snap-media-object .snap-media-body {
-  overflow: visible;
 }
 .fixy {
   display: none;
