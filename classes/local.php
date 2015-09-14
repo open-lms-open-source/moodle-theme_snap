@@ -1261,11 +1261,13 @@ class local {
                     'email' => $post->email
                 ];
 
-                $postuser = hsuforum_anonymize_user($postuser, (object)array(
-                    'id' => $post->forum,
-                    'course' => $post->course,
-                    'anonymous' => $post->forumanonymous
-                ), $post);
+                if ($post->type === 'hsuforum') {
+                    $postuser = hsuforum_anonymize_user($postuser, (object)array(
+                        'id' => $post->forum,
+                        'course' => $post->course,
+                        'anonymous' => $post->forumanonymous
+                    ), $post);
+                }
 
                 $activities[] = (object)[
                     'type' => $post->type,
