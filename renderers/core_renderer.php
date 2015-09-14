@@ -395,7 +395,7 @@ class theme_snap_core_renderer extends toc_renderer {
      * @return string
      */
     protected function render_forumposts() {
-        if ($this->page->theme->settings->forumpoststoggle == 0) {
+        if (empty($this->page->theme->settings->forumpoststoggle)) {
             return '';
         }
 
