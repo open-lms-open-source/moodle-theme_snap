@@ -18814,18 +18814,12 @@ fieldset[disabled] #changenumsections .reduce-sections {
     width: auto;
   }
 }
-.module-meta a {
-  text-decoration: none !important;
-  -webkit-transition: all 0.4s ease-in-out;
-          transition: all 0.4s ease-in-out;
-}
-.module-meta a:hover {
-  opacity: 0.7;
-}
 .module-meta .label {
   margin-right: 1%;
   font-family: "Roboto", "Fira Sans", "Segoe UI", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif;
-  font-weight: bold;
+}
+.module-meta a:visited {
+  color: #fff;
 }
 /**
  * Snap core swatch.
