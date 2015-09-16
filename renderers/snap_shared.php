@@ -169,7 +169,7 @@ class snap_shared extends renderer_base {
 
         // Output warning.
         return ($OUTPUT->notification(get_string('warnsiteformatflexpage',
-                'theme_snap', $url)));
+                'theme_snap', $url->out())));
     }
 
     /**
