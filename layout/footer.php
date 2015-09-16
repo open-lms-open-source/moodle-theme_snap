@@ -36,7 +36,7 @@ $footnote = empty($PAGE->theme->settings->footnote) ? '' : $PAGE->theme->setting
 if ($this->page->user_is_editing() && $PAGE->pagetype == 'site-index') {
     $url = new moodle_url('/admin/settings.php', ['section' => 'themesettingsnap'], 'admin-footnote');
     $link = html_writer::link($url, get_string('editcustomfooter', 'theme_snap'), ['class' => 'btn btn-default btn-sm']);
-    $footnote .= '<p class="text-right">'.$link.'</a></p>';
+    $footnote .= '<p class="text-right">'.$link.'</p>';
 }
 
 /* custom menu edit button - only shown if menu exists */
