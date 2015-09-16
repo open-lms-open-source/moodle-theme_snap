@@ -267,7 +267,10 @@ class user_forums {
         local::swap_global_user($this->user->id);
 
         // Currently we are using local::swap_global_user as a hack for the following function (MDL-51353) :
-        $this->courses = enrol_get_my_courses();
+        $mycourses = enrol_get_my_courses();
+
+        $sitecourse = [get_course(SITEID)];
+        $this->courses = $mycourses + $sitecourse;
 
         $forums = [];
         $hsuforums = [];
