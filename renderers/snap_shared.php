@@ -165,9 +165,11 @@ class snap_shared extends renderer_base {
             return '';
         }
 
+        $url = new moodle_url('/admin/settings.php', ['section' => 'frontpagesettings']);
+
         // Output warning.
         return ($OUTPUT->notification(get_string('warnsiteformatflexpage',
-            'theme_snap', $CFG->wwwroot.'/admin/settings.php?section=frontpagesettings')));
+            'theme_snap', $url)));
     }
 
     /**
