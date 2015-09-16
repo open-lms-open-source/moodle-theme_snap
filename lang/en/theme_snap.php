@@ -116,6 +116,7 @@ $string['more'] = 'More';
 $string['morenews'] = 'More news';
 $string['nextsection'] = 'Next section';
 $string['nodeadlines'] = 'You have no upcoming deadlines.';
+$string['noforumposts'] = 'You have no relevant forum posts.';
 $string['nograded'] = 'You have no recent feedback.';
 $string['nograding'] = 'You have no submissions to grade.';
 $string['nomessages'] = 'You have no messages.';

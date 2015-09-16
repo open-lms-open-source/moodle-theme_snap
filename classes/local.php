@@ -1297,7 +1297,7 @@ class local {
         global $PAGE;
         $activities = self::recent_forum_activity();
         if (empty($activities)) {
-            return '';
+            return '<p>' . get_string('noforumposts', 'theme_snap') . '</p>';
         }
         $activities = array_slice($activities, 0, 10);
         $renderer = $PAGE->get_renderer('theme_snap', 'core', RENDERER_TARGET_GENERAL);
