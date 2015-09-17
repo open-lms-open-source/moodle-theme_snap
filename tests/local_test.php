@@ -212,27 +212,31 @@ class theme_snap_local_test extends \advanced_testcase {
     protected function create_assignment($courseid, $duedate, $opts = []) {
         global $USER;
 
-        $modgenerator = $this->getDataGenerator()->get_plugin_generator('mod_assign');
-        $assign = [
+        $generator = $this->getDataGenerator();
+        $assign = (object) [
             'course' => $courseid,
             'duedate' => $duedate
         ];
-        foreach ($opts as $key => $val) {
-            $assign[$key] = $val;
+
+        if (isset($opts['availability'])) {
+            $assign->availability = $opts['availability'];
         }
-        $assign = (object) $assign;
 
         // Hack - without this the calendar library trips up when trying to give an assignment a duedate.
         // lib.php line 2234 - nopermissiontoupdatecalendar.
         $origuser = $USER;
         $USER = get_admin();
 
-        $ret = $modgenerator->create_instance($assign);
+        if (isset($opts['availability'])) {
+            $assign->availability = $opts['availability'];
+        }
+        $instance = $generator->create_module('assign', $assign, $opts);
+
 
         // Restore user.
         $USER = $origuser;
 
-        return $ret;
+        return $instance;
     }
 
     /**
@@ -342,9 +346,19 @@ class theme_snap_local_test extends \advanced_testcase {
 
         // Create assign instance.
         $this->create_assignment($course->id, time() + (DAYSECS*2));
+        $actual = local::upcoming_deadlines($student->id);
+        $expected = 1;
+        $this->assertCount($expected, $actual);
 
         // Create restricted assign instance.
-        $opts = ['availability' => '{"op":"&","c":[{"type":"date","d":">=","t":'.(time() + WEEKSECS).'}],"showc":[true]}'];
+        $opts = ['availability' =>
+            json_encode(
+                \core_availability\tree::get_root_json(
+                    [\availability_date\condition::get_json('>=', time() + WEEKSECS)
+                    ]
+                )
+            )
+        ];
         $this->create_assignment($course->id, time() + (DAYSECS*2), $opts);
 
         // Student should see 1 deadlines as the second assignment is restricted until next week.
