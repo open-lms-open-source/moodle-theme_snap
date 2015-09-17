@@ -386,11 +386,17 @@ class theme_snap_core_course_renderer extends core_course_renderer {
                 $gradedlabel = "warning";
                 $engagementmeta[] = get_string('xungraded', 'theme_snap', $meta->numrequiregrading);
             }
+            $engagementstr = implode(', ', $engagementmeta);
 
-            $link = $CFG->wwwroot.'/mod/'.$mod->modname.'/view.php?action=grading&id='.$mod->id.
-                '&tsort=timesubmitted&filter=require_grading';
-            $content .= '<a href="'.s($link).'"><span class="label label-'.$gradedlabel.'">'.
-                implode(', ', $engagementmeta).'</span></a>';
+            $params = array(
+                'action' => 'grading',
+                'id' => $mod->id,
+                'tsort' => 'timesubmitted',
+                'filter' => 'require_grading'
+            );
+            $url = new moodle_url("/mod/{$mod->modname}/view.php", $params);
+
+            $content .= html_writer::link($url, $engagementstr, ['class' => "label label-$gradedlabel"]);
         } else {
             // Student - useful student meta data.
             if (!empty($meta->timeopen) && $meta->timeopen > time()) {
@@ -422,14 +428,15 @@ class theme_snap_core_course_renderer extends core_course_renderer {
                 if (in_array($mod->modname, ['quiz', 'assign'])) {
                     $url = new \moodle_url('/mod/'.$mod->modname.'/view.php?id='.$mod->id);
                 }
-                $content .= '<a href="'.$url->out().'"><span class="label label-info">'.
-                    get_string('feedbackavailable', 'theme_snap').'</span></a>';
+                $feedbackavailable = get_string('feedbackavailable', 'theme_snap');
+                $content .= html_writer::link($url, $feedbackavailable, ['class' => 'label label-info']);
             }
 
             // Submission CTA.
             if (empty($meta->submissionnotrequired)) {
-                $content .= '<a class="assignment_stage" href="'.
-                    $CFG->wwwroot.'/mod/'.$mod->modname.'/view.php?id='.$mod->id.'">';
+                $class = 'snap-assignment-stage';
+                $url = $CFG->wwwroot.'/mod/'.$mod->modname.'/view.php?id='.$mod->id;
+                $message = '';
 
                 if ($meta->submitted) {
                     if (empty($meta->timesubmitted)) {
@@ -437,13 +444,15 @@ class theme_snap_core_course_renderer extends core_course_renderer {
                     } else {
                         $submittedonstr = ' '.userdate($meta->timesubmitted, get_string('strftimedate', 'langconfig'));
                     }
-                    $content .= '<span class="label label-success">'.$meta->submittedstr.$submittedonstr.'</span>';
+                    $class .= ' label label-success';
+                    $message = $meta->submittedstr.$submittedonstr;
                 } else {
                     $warningstr = $meta->draft ? $meta->draftstr : $meta->notsubmittedstr;
                     $warningstr = $meta->reopened ? $meta->reopenedstr : $warningstr;
-                    $content .= '<span class="label label-warning">'.$warningstr.'</span>';
+                    $class .= ' label label-warning';
+                    $message = $warningstr;
                 }
-                $content .= '</a>';
+                $content .= html_writer::link($url, $message, ['class' => $class]);
             }
         }
 
