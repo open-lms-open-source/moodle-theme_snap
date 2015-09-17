@@ -399,16 +399,11 @@ class local {
      */
     public static function upcoming_deadlines($userid, $maxdeadlines = 5) {
 
-        $courses = enrol_get_all_users_courses($userid, true);
+        $courses = enrol_get_users_courses($userid, true);
 
         if (empty($courses)) {
             return [];
         }
-
-        // Remove hidden courses.
-        $courses = array_filter($courses, function($v) {
-            return !empty($v->visible);
-        });
 
         $courseids = array_keys($courses);
 
