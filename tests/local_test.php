@@ -200,6 +200,159 @@ class theme_snap_local_test extends \advanced_testcase {
         $this->assertSame($actual, $expected);
     }
 
+    /**
+     * Crete an assign module instance.
+     *
+     * @param int $courseid
+     * @param int $duedate
+     * @param array $opts - an array of field values to go into the assign record.
+     * @return mixed
+     * @throws \coding_exception
+     */
+    protected function create_assignment($courseid, $duedate, $opts = []) {
+        global $USER;
+
+        $modgenerator = $this->getDataGenerator()->get_plugin_generator('mod_assign');
+        $assign = [
+            'course' => $courseid,
+            'duedate' => $duedate
+        ];
+        foreach ($opts as $key => $val) {
+            $assign[$key] = $val;
+        }
+        $assign = (object) $assign;
+
+        // Hack - without this the calendar library trips up when trying to give an assignment a duedate.
+        // lib.php line 2234 - nopermissiontoupdatecalendar.
+        $origuser = $USER;
+        $USER = get_admin();
+
+        $ret = $modgenerator->create_instance($assign);
+
+        // Restore user.
+        $USER = $origuser;
+
+        return $ret;
+    }
+
+    /**
+     * Test upcoming deadlines
+     *
+     * @throws \coding_exception
+     */
+    public function test_upcoming_deadlines_hidden() {
+        global $DB;
+
+        $this->resetAfterTest();
+
+        $generator = $this->getDataGenerator();
+        $course1 = $generator->create_course();
+        $course2 = $generator->create_course((object) ['visible' => 0, 'oldvisible' => 0]);
+        $teacher = $generator->create_user();
+        $student = $generator->create_user();
+
+        $courses = [$course1, $course2];
+
+        // Enrol teacher on both courses.
+        $teacherrole = $DB->get_record('role', array('shortname' => 'teacher'));
+        foreach ([$course1, $course2] as $course) {
+            $this->getDataGenerator()->enrol_user($teacher->id,
+                $course->id,
+                $teacherrole->id);
+        }
+
+        // Enrol student on both courses.
+        $studentrole = $DB->get_record('role', array('shortname' => 'student'));
+        foreach ($courses as $course) {
+            $generator->enrol_user($student->id,
+                $course->id,
+                $studentrole->id);
+        }
+
+        // Create an assignment in each course.
+        foreach ($courses as $course) {
+            $this->create_assignment($course->id, time() + (DAYSECS*2));
+        }
+
+        // Student should see 1 deadline as course2 is hidden.
+        $actual = local::upcoming_deadlines($student->id);
+        $expected = 1;
+        $this->assertCount($expected, $actual);
+
+        // Teacher should see 2 deadlines as they can see hidden courses
+        $actual = local::upcoming_deadlines($teacher->id);
+        $expected = 2;
+        $this->assertCount($expected, $actual);
+
+    }
+
+    /**
+     * Test upcoming deadlines where enrolment has expired.
+     *
+     * @throws \coding_exception
+     */
+    public function test_upcoming_deadlines_enrolment_expired() {
+        global $DB;
+
+        $this->resetAfterTest();
+
+        $generator = $this->getDataGenerator();
+        $course = $generator->create_course();
+        $student = $generator->create_user();
+
+        // Enrol student on with an expired enrolment.
+        $studentrole = $DB->get_record('role', array('shortname' => 'student'));
+        $generator->enrol_user($student->id,
+            $course->id,
+            $studentrole->id,
+            'manual',
+            time() - (DAYSECS*2),
+            time() - DAYSECS
+        );
+
+        // Create assign instance.
+        $this->create_assignment($course->id, time() + (DAYSECS*2));
+
+        // Student should see 0 deadlines as their enrollments have expired.
+        $actual = local::upcoming_deadlines($student->id);
+        $expected = 0;
+        $this->assertCount($expected, $actual);
+    }
+
+    /**
+     * Test upcoming deadlines with assignmetn activity restricted to future date.
+     *
+     * @throws \coding_exception
+     */
+    public function test_upcoming_deadlines_restricted() {
+        global $DB;
+
+        $this->resetAfterTest();
+
+        $generator = $this->getDataGenerator();
+        $course = $generator->create_course();
+        $student = $generator->create_user();
+
+        // Enrol student.
+        $studentrole = $DB->get_record('role', array('shortname' => 'student'));
+        $generator->enrol_user($student->id,
+            $course->id,
+            $studentrole->id
+        );
+
+        // Create assign instance.
+        $this->create_assignment($course->id, time() + (DAYSECS*2));
+
+        // Create restricted assign instance.
+        $opts = ['availability' => '{"op":"&","c":[{"type":"date","d":">=","t":'.(time() + WEEKSECS).'}],"showc":[true]}'];
+        $this->create_assignment($course->id, time() + (DAYSECS*2), $opts);
+
+        // Student should see 1 deadlines as the second assignment is restricted until next week.
+        $actual = local::upcoming_deadlines($student->id);
+        $expected = 1;
+        $this->assertCount($expected, $actual);
+    }
+
     public function test_no_messages() {
         global $USER;
 
