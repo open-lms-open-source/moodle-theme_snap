@@ -363,10 +363,13 @@ class theme_snap_core_course_renderer extends core_course_renderer {
         if ($meta->isteacher) {
             // Teacher - useful teacher meta data.
             if (!empty($meta->timeclose)) {
-                $dueinfo = get_string('due', 'theme_snap');
-                $dueclass = 'label-info';
-                $content .= '<span class="label '.$dueclass.'">'.$dueinfo.' '.
-                    userdate($meta->timeclose, get_string('strftimedate', 'langconfig').'</span>');
+                $due = get_string('due', 'theme_snap');
+                $dateformat = get_string('strftimedate', 'langconfig');
+                $labeltext = $due . ' ' . userdate($meta->timeclose, $dateformat);
+
+                $labelclass = 'label label-info';
+                $url = new \moodle_url("/mod/{$mod->modname}/view.php", ['id' => $mod->id]);
+                $content .= html_writer::link($url, $labeltext, ['class' => $labelclass]);
             }
 
             $engagementmeta = array();
@@ -400,7 +403,7 @@ class theme_snap_core_course_renderer extends core_course_renderer {
         } else {
             // Student - useful student meta data.
             if (!empty($meta->timeopen) && $meta->timeopen > time()) {
-                // Todo - spit out a 'submissions allowed form' tag.
+                // TODO - spit out a 'submissions allowed form' tag.
                 $content .= '</div>';
                 return $content;
             }
@@ -411,13 +414,16 @@ class theme_snap_core_course_renderer extends core_course_renderer {
                     && time() > usertime($meta->timeclose)
                 ) {
                     $dueinfo = get_string('overdue', 'theme_snap');
-                    $dueclass = 'label-danger';
+                    $status = 'danger';
                 } else {
                     $dueinfo = get_string('due', 'theme_snap');
-                    $dueclass = 'label-info';
+                    $status = 'info';
                 }
-                $content .= '<span class="label '.$dueclass.'">'.$dueinfo.' '.
-                    userdate($meta->timeclose, get_string('strftimedate', 'langconfig').'</span>');
+                $url = new \moodle_url("/mod/{$mod->modname}/view.php", ['id' => $mod->id]);
+                $dateformat = get_string('strftimedate', 'langconfig');
+                $labeltext = $dueinfo . ' ' . userdate($meta->timeclose, $dateformat);
+                $labelclass = "label label-$status";
+                $content .= html_writer::link($url, $labeltext, ['class' => $labelclass]);
             }
 
             // Feedback meta.
