@@ -225,7 +225,7 @@ class theme_snap_local_test extends \advanced_testcase {
 
         $generator = $this->getDataGenerator()->get_plugin_generator('mod_assign');
 
-        $params =  [
+        $params = [
             'course' => $courseid,
             'duedate' => $duedate,
             'grade' => 100
@@ -277,7 +277,7 @@ class theme_snap_local_test extends \advanced_testcase {
 
         // Create an assignment in each course.
         foreach ($courses as $course) {
-            $this->create_assignment($course->id, time() + (DAYSECS*2));
+            $this->create_assignment($course->id, time() + (DAYSECS * 2));
         }
 
         // Student should see 1 deadline as course2 is hidden.
@@ -285,7 +285,7 @@ class theme_snap_local_test extends \advanced_testcase {
         $expected = 1;
         $this->assertCount($expected, $actual);
 
-        // Teacher should see 2 deadlines as they can see hidden courses
+        // Teacher should see 2 deadlines as they can see hidden courses.
         $actual = local::upcoming_deadlines($teacher->id);
         $expected = 2;
         $this->assertCount($expected, $actual);
@@ -312,12 +312,12 @@ class theme_snap_local_test extends \advanced_testcase {
             $course->id,
             $studentrole->id,
             'manual',
-            time() - (DAYSECS*2),
+            time() - (DAYSECS * 2),
             time() - DAYSECS
         );
 
         // Create assign instance.
-        $this->create_assignment($course->id, time() + (DAYSECS*2));
+        $this->create_assignment($course->id, time() + (DAYSECS * 2));
 
         // Student should see 0 deadlines as their enrollments have expired.
         $actual = local::upcoming_deadlines($student->id);
@@ -347,7 +347,7 @@ class theme_snap_local_test extends \advanced_testcase {
         );
 
         // Create assign instance.
-        $this->create_assignment($course->id, time() + (DAYSECS*2));
+        $this->create_assignment($course->id, time() + (DAYSECS * 2));
         $actual = local::upcoming_deadlines($student->id);
         $expected = 1;
         $this->assertCount($expected, $actual);
@@ -361,7 +361,7 @@ class theme_snap_local_test extends \advanced_testcase {
                 )
             )
         ];
-        $this->create_assignment($course->id, time() + (DAYSECS*2), $opts);
+        $this->create_assignment($course->id, time() + (DAYSECS * 2), $opts);
 
         // Student should see 1 deadlines as the second assignment is restricted until next week.
         $actual = local::upcoming_deadlines($student->id);
