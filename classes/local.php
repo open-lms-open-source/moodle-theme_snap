@@ -494,9 +494,10 @@ class local {
         return $output;
     }
 
-
-
-
+    /**
+     * Get deadlines string.
+     * @return string
+     */
     public static function deadlines() {
         global $USER, $PAGE;
 

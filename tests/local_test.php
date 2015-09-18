@@ -188,6 +188,9 @@ class theme_snap_local_test extends \advanced_testcase {
         $this->assertSame('example image', $actual['alt']);
     }
 
+    /**
+     * Test no upcoming deadlines.
+     */
     public function test_no_upcoming_deadlines() {
         global $USER;
 
@@ -210,32 +213,31 @@ class theme_snap_local_test extends \advanced_testcase {
      * @throws \coding_exception
      */
     protected function create_assignment($courseid, $duedate, $opts = []) {
-        global $USER;
+        global $USER, $CFG;
 
-        $generator = $this->getDataGenerator();
-        $assign = (object) [
-            'course' => $courseid,
-            'duedate' => $duedate
-        ];
-
-        if (isset($opts['availability'])) {
-            $assign->availability = $opts['availability'];
-        }
+        // This is crucial - without this you can't make a conditionally accsesed forum.
+        $CFG->enableavailability = true;
 
         // Hack - without this the calendar library trips up when trying to give an assignment a duedate.
         // lib.php line 2234 - nopermissiontoupdatecalendar.
         $origuser = $USER;
         $USER = get_admin();
 
-        if (isset($opts['availability'])) {
-            $assign->availability = $opts['availability'];
-        }
-        $instance = $generator->create_module('assign', $assign, $opts);
+        $generator = $this->getDataGenerator()->get_plugin_generator('mod_assign');
 
+        $params =  [
+            'course' => $courseid,
+            'duedate' => $duedate,
+            'grade' => 100
+        ];
+        foreach ($opts as $key => $val) {
+            // Overwrite or add opt vals to params.
+            $params[$key] = $val;
+        }
+        $instance = $generator->create_instance($params);
 
         // Restore user.
         $USER = $origuser;
-
         return $instance;
     }
 
