@@ -399,10 +399,10 @@ class local {
      */
     public static function upcoming_deadlines($userid, $maxdeadlines = 5) {
 
-        $courses = enrol_get_all_users_courses($userid);
+        $courses = enrol_get_users_courses($userid, true);
 
         if (empty($courses)) {
-            return array();
+            return [];
         }
 
         $courseids = array_keys($courses);
@@ -494,9 +494,10 @@ class local {
         return $output;
     }
 
-
-
-
+    /**
+     * Get deadlines string.
+     * @return string
+     */
     public static function deadlines() {
         global $USER, $PAGE;
 
