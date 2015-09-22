@@ -837,11 +837,23 @@ class activity {
     /**
      * Get everything graded from a specific date to the current date.
      *
+     * @param bool $onlyactive - only show grades in courses actively enrolled on if true.
      * @param null|int $showfrom - timestamp to show grades from. Note if not set defaults to 1 month ago.
      * @return mixed
      */
-    public static function events_graded($showfrom = null) {
+    public static function events_graded($onlyactive = true, $showfrom = null) {
         global $DB, $USER;
+
+        $params = [];
+        $coursesql = '';
+        if ($onlyactive) {
+            $courses = enrol_get_my_courses();
+            $courseids = array_keys($courses);
+            $courseids[] = SITEID;
+            list ($coursesql, $params) = $DB->get_in_or_equal($courseids);
+            $coursesql = 'AND gi.courseid '.$coursesql;
+        }
+
 
         $onemonthago = time() - (DAYSECS * 31);
         $showfrom = $showfrom !== null ? $showfrom : $onemonthago;
@@ -850,7 +862,7 @@ class activity {
                 SELECT gg.*, gi.itemmodule, gi.iteminstance, gi.courseid, gi.itemtype
                   FROM {grade_grades} gg
                   JOIN {grade_items} gi
-                    ON gg.itemid = gi.id
+                    ON gg.itemid = gi.id $coursesql
                  WHERE gg.userid = ?
                    AND (gg.timemodified > ?
                     OR gg.timecreated > ?)
@@ -860,7 +872,7 @@ class activity {
                    AND gi.itemtype = 'mod'
                  ORDER BY timemodified DESC";
 
-        $params = array($USER->id, $showfrom, $showfrom);
+        $params = array_merge($params, [$USER->id, $showfrom, $showfrom]);
         $grades = $DB->get_records_sql($sql, $params, 0, 5);
 
         $eventdata = array();
