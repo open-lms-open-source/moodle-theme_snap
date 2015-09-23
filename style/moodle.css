@@ -1749,6 +1749,7 @@ a.environmenttable .ok:focus {
   display: none;
 }
 .statusok,
+.statusinfo,
 .statuswarning,
 .statusserious,
 .statuscritical {
@@ -1767,10 +1768,12 @@ a.environmenttable .ok:focus {
   font-weight: normal;
 }
 a.statusok:hover,
+a.statusinfo:hover,
 a.statuswarning:hover,
 a.statusserious:hover,
 a.statuscritical:hover,
 a.statusok:focus,
+a.statusinfo:focus,
 a.statuswarning:focus,
 a.statusserious:focus,
 a.statuscritical:focus {
@@ -1779,12 +1782,14 @@ a.statuscritical:focus {
   cursor: pointer;
 }
 .statusok:empty,
+.statusinfo:empty,
 .statuswarning:empty,
 .statusserious:empty,
 .statuscritical:empty {
   display: none;
 }
 .btn .statusok,
+.btn .statusinfo,
 .btn .statuswarning,
 .btn .statusserious,
 .btn .statuscritical {
@@ -1792,6 +1797,7 @@ a.statuscritical:focus {
   top: -1px;
 }
 .statusok[href]:visited,
+.statusinfo[href]:visited,
 .statuswarning[href]:visited,
 .statusserious[href]:visited,
 .statuscritical[href]:visited {
@@ -1799,6 +1805,9 @@ a.statuscritical:focus {
 }
 .statusok {
   background-color: #8bc34a;
+}
+.statusinfo {
+  background-color: #03a9f4;
 }
 .statuswarning {
   background-color: #ff9800;
