@@ -854,7 +854,6 @@ class activity {
             $coursesql = 'AND gi.courseid '.$coursesql;
         }
 
-
         $onemonthago = time() - (DAYSECS * 31);
         $showfrom = $showfrom !== null ? $showfrom : $onemonthago;
 
