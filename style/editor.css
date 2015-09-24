@@ -3602,7 +3602,8 @@ span.editinstructions {
   user-select: none;
   border-color: #fff;
   padding: 0.25em 1em;
-  margin: 0 .4em;
+  margin-left: 0;
+  margin-right: 0.8em;
   vertical-align: baseline;
   line-height: 1.5;
   background-color: #0398db;
@@ -3692,7 +3693,8 @@ fieldset[disabled] .snap-asset .unread a {
   user-select: none;
   border-color: #fff;
   padding: 0.25em 1em;
-  margin: 0 .4em;
+  margin-left: 0;
+  margin-right: 0.8em;
   vertical-align: baseline;
   line-height: 1.5;
   background-color: #0398db;
@@ -4232,7 +4234,8 @@ input[type="password"] + input[type="submit"],
 input[type="text"] + button,
 input[type="text"] + input[type="submit"] {
   padding: 0.25em 1em;
-  margin: 0 .4em;
+  margin-left: 0;
+  margin-right: 0.8em;
   vertical-align: baseline;
   line-height: 1.5;
 }
@@ -4268,7 +4271,8 @@ input[type="text"] + input[type="submit"] {
   user-select: none;
   border-color: #fff;
   padding: 0.25em 1em;
-  margin: 0 .4em;
+  margin-left: 0;
+  margin-right: 0.8em;
   vertical-align: baseline;
   line-height: 1.5;
   background-color: #0398db;
@@ -5663,7 +5667,8 @@ http://blog.rodneyrehm.de/archives/34-iOS7-Mobile-Safari-And-Viewport-Units.html
   user-select: none;
   border-color: #fff;
   padding: 0.25em 1em;
-  margin: 0 .4em;
+  margin-left: 0;
+  margin-right: 0.8em;
   vertical-align: baseline;
   line-height: 1.5;
   background-color: #0398db;
@@ -6451,7 +6456,8 @@ table#user-grades tr.avg td.cell {
   user-select: none;
   border-color: #fff;
   padding: 0.25em 1em;
-  margin: 0 .4em;
+  margin-left: 0;
+  margin-right: 0.8em;
   vertical-align: baseline;
   line-height: 1.5;
   background-color: #0398db;
