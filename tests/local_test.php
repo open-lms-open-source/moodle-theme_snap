@@ -494,4 +494,34 @@ class theme_snap_local_test extends \advanced_testcase {
         $this->assertSame('', $css);
         $this->assertFalse(local::site_coverimage());
     }
+
+    /**
+     * Test gradeable_courseids function - i.e. courses where user is allowed to view the grade book.
+     */
+    public function test_gradeable_courseids() {
+        global $DB;
+
+        $this->resetAfterTest();
+        $generator = $this->getDataGenerator();
+        $course1 = $generator->create_course();
+        $course2 = $generator->create_course((object) ['visible' => 0, 'oldvisible' => 0]);
+        $teacher = $generator->create_user();
+
+        // Enrol teacher as teacher on course1.
+        $teacherrole = $DB->get_record('role', array('shortname' => 'teacher'));
+        $this->getDataGenerator()->enrol_user($teacher->id,
+            $course1->id,
+            $teacherrole->id);
+
+        // Enrol teacher as student on course2.
+        $studentrole = $DB->get_record('role', array('shortname' => 'student'));
+        $this->getDataGenerator()->enrol_user($teacher->id,
+            $course2->id,
+            $studentrole->id);
+
+        // Check teacher can only grade 1 course (not a teacher on course2).
+        $gradeable_courses = local::gradeable_courseids($teacher->id);
+        $this->assertCount(1, $gradeable_courses);
+    }
+
 }
