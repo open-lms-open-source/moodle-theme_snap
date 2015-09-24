@@ -395,7 +395,7 @@ class local {
      *
      * All deadlines from today, then any from the next 12 months up to the
      * max requested.
-     * @param stdClass|integer $userorid
+     * @param \stdClass|integer $userorid
      * @param integer $maxdeadlines
      * @return array
      */
@@ -433,7 +433,7 @@ class local {
     /**
      * Return user's deadlines for today from the calendar.
      *
-     * @param stdClass|int $userorid
+     * @param \stdClass|int $userorid
      * @param array $courses ids of all user's courses.
      * @return array
      */
@@ -450,7 +450,7 @@ class local {
      *
      * Based on the calender function calendar_get_upcoming.
      *
-     * @param stdClass|int $userorid
+     * @param \stdClass|int $userorid
      * @param array $courses ids of all user's courses.
      * @param int $maxevents to return
      * @param bool $todayonly true if only the next 24 hours to be returned
