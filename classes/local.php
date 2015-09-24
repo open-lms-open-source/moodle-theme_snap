@@ -395,7 +395,7 @@ class local {
      *
      * All deadlines from today, then any from the next 12 months up to the
      * max requested.
-     * @param stdClass}integer $useorid
+     * @param stdClass|integer $userorid
      * @param integer $maxdeadlines
      * @return array
      */
