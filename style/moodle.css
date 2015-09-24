@@ -4044,6 +4044,13 @@ span.editinstructions {
   overflow: auto;
   height: 415px;
 }
+.repository_upload.file-picker .fp-content,
+.repository_dropbox.file-picker .fp-content,
+.repository_flickr_public.file-picker .fp-content,
+.repository_onenote.file-picker .fp-content,
+.repository_recent.file-picker .fp-content {
+  height: 445px;
+}
 .filepicker.moodle-dialogue-fullscreen .file-picker .fp-content {
   width: 100%;
 }
