@@ -25,7 +25,6 @@
 namespace theme_snap\tests;
 
 use theme_snap\local;
-use core_availability\mock_info;
 
 defined('MOODLE_INTERNAL') || die();
 
@@ -35,12 +34,6 @@ defined('MOODLE_INTERNAL') || die();
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class theme_snap_local_test extends \advanced_testcase {
-
-    public function setUp() {
-        global $CFG;
-        require_once($CFG->dirroot.'/availability/tests/fixtures/mock_info.php');
-        require_once($CFG->dirroot.'/availability/classes/tree.php');
-    }
 
     public function test_grade_warning_debug_off() {
         global $CFG;
