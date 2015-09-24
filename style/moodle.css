@@ -4015,7 +4015,7 @@ span.editinstructions {
   overflow: auto;
   display: inline-block;
   float: left;
-  height: 495px;
+  height: 485px;
   border-right: 1px solid #f5f5f5;
 }
 .dir-rtl .file-picker .fp-repo-area {
@@ -4042,7 +4042,7 @@ span.editinstructions {
   background: #ffffff;
   clear: both;
   overflow: auto;
-  height: 455px;
+  height: 415px;
 }
 .filepicker.moodle-dialogue-fullscreen .file-picker .fp-content {
   width: 100%;
