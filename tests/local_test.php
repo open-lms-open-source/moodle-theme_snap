@@ -533,16 +533,16 @@ class theme_snap_local_test extends \advanced_testcase {
         $teacherrole = $DB->get_record('role', array('shortname' => 'teacher'));
         foreach ([$course1, $course2] as $course) {
             $this->getDataGenerator()->enrol_user($teacher->id,
-                $course->id,
-                $teacherrole->id);
+                    $course->id,
+                    $teacherrole->id);
         }
 
         // Enrol student on both courses.
         $studentrole = $DB->get_record('role', array('shortname' => 'student'));
         foreach ($courses as $course) {
             $generator->enrol_user($student->id,
-                $course->id,
-                $studentrole->id);
+                    $course->id,
+                    $studentrole->id);
         }
 
         // Create an assignment in each course and mark it.
