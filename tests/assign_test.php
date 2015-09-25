@@ -193,7 +193,6 @@ class theme_snap_assign_test extends mod_assign_base_testcase {
         ]);
 
         $this->setUser($this->students[0]);
-        course_modinfo::clear_instance_cache($this->course);
         $modinfo = get_fast_modinfo($this->course);
         $assigncm = $modinfo->instances['assign'][$assign->get_instance()->id];
         $meta = activity::assign_meta($assigncm);
@@ -205,12 +204,10 @@ class theme_snap_assign_test extends mod_assign_base_testcase {
         $PAGE->set_url('/a_url');
         // View the assignment
         $assign->view();
-        course_modinfo::clear_instance_cache($this->course);
         $modinfo = get_fast_modinfo($this->course);
         $assigncm = $modinfo->instances['assign'][$assign->get_instance()->id];
         $meta = activity::assign_meta($assigncm);
         $this->assertTrue($meta->overdue);
-
     }
 
     public function test_participant_count_all() {
