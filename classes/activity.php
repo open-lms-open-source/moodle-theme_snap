@@ -188,7 +188,7 @@ class activity {
      * @param cm_info $modinst - module instance
      * @return activity_meta
      */
-    public static function assign_meta(\cm_info $modinst, $die = false) {
+    public static function assign_meta(\cm_info $modinst) {
         global $DB;
         static $submissionsenabled;
 
