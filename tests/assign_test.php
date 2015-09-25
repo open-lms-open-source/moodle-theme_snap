@@ -181,6 +181,38 @@ class theme_snap_assign_test extends mod_assign_base_testcase {
         $this->assertCount(2, $deadlines);
     }
 
+    public function test_assign_overdue() {
+        global $PAGE;
+
+        // Create one month overdue assignment.
+        $this->setUser($this->teachers[0]);
+        $assign = $this->create_instance([
+            'duedate' => time() - 4 * DAYSECS,
+            'assignsubmission_onlinetext_enabled' => 1,
+            'name' => 'Overdue Assignment Test'
+        ]);
+
+        $this->setUser($this->students[0]);
+        course_modinfo::clear_instance_cache($this->course);
+        $modinfo = get_fast_modinfo($this->course);
+        $assigncm = $modinfo->instances['assign'][$assign->get_instance()->id];
+        $meta = activity::assign_meta($assigncm);
+        $this->assertTrue($meta->overdue);
+
+        // At one time there was an issue where the overdue status would flip after viewing the module.
+        // Make sure this isn't happening still.
+        // Code taken from assign/tests/events_test.php test_submission_status_viewed.
+        $PAGE->set_url('/a_url');
+        // View the assignment
+        $assign->view();
+        course_modinfo::clear_instance_cache($this->course);
+        $modinfo = get_fast_modinfo($this->course);
+        $assigncm = $modinfo->instances['assign'][$assign->get_instance()->id];
+        $meta = activity::assign_meta($assigncm);
+        $this->assertTrue($meta->overdue);
+
+    }
+
     public function test_participant_count_all() {
         $courseid = $this->course->id;
         $actual = local::course_participant_count($courseid);
