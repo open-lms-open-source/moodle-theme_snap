@@ -202,7 +202,7 @@ class theme_snap_assign_test extends mod_assign_base_testcase {
         // Make sure this isn't happening still.
         // Code taken from assign/tests/events_test.php test_submission_status_viewed.
         $PAGE->set_url('/a_url');
-        // View the assignment
+        // View the assignment.
         $assign->view();
         $modinfo = get_fast_modinfo($this->course);
         $assigncm = $modinfo->instances['assign'][$assign->get_instance()->id];

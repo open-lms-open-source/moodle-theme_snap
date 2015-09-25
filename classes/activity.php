@@ -122,7 +122,7 @@ class activity {
                             }
                         } else {
                             switch ($submissionrow->status) {
-                                case 'assign' :
+                                case 'draft' :
                                     $meta->draft = true;
                                     break;
                                 case 'reopened' :
@@ -177,7 +177,6 @@ class activity {
 
             // Overdue?
             $meta->overdue = $subreqd && empty($meta->submitted) && time() > usertime($meta->timeclose);
-
         }
 
         return $meta;
