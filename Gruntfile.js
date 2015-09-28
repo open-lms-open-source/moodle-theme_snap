@@ -39,7 +39,11 @@ module.exports = function(grunt) {
 
     decachephp += "define(\"CLI_SCRIPT\", true);";
     decachephp += "require(" + configfile  + ");";
-    decachephp += "theme_reset_all_caches();";
+
+    // The previously used theme_reset_all_caches() stopped working for us, we investigated but couldn't figure out why.
+    // Using purge_all_caches() is a bit of a nuclear option, as it clears more than we should need to
+    // but it gets the job done.
+    decachephp += "purge_all_caches();";
 
     grunt.initConfig({
         less: {
