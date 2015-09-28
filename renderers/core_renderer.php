@@ -418,12 +418,21 @@ class theme_snap_core_renderer extends toc_renderer {
                     $formatoptions->filter = false;
                     $title = format_text($title, FORMAT_HTML, $formatoptions);
                     $content = format_text($content, FORMAT_HTML, $formatoptions);
+                    if (is_array($meta)) {
+                        $metastr = '';
+                        foreach ($meta as $metaitem) {
+                            $metastr .= "<span class=\"snap-media-meta\">$metaitem</span>";
+                        }
+                    } else {
+                        $metastr = "<span class=\"snap-media-meta\">$meta</span>";
+                    }
+
                     return "<div class=\"snap-media-object$extraclasses\">"
                         . "<a href=\"$url\">"
                         . $image
                         . '<div class="snap-media-body">'
                         . "<h3>$title</h3>"
-                        . "<span class=\"snap-media-meta\">$meta</span>"
+                        . $metastr
                         . $content
                         . '</div></a></div>';
     }
@@ -1273,8 +1282,9 @@ HTML;
             $url = new moodle_url('/mod/'.$activity->type.'/discuss.php', ['d' => $activity->content->discussion], 'p'.$activity->content->id);
             $fullname = fullname($activity->user);
             $friendlydate = $this->friendly_datetime($activity->timestamp);
+            $meta = [$friendlydate, $activity->courseshortname.' / '.$activity->forumname];
             $formattedsubject = format_text($activity->content->subject);
-            $output .= $this->snap_media_object($url, $picture, $fullname, $friendlydate, $formattedsubject);
+            $output .= $this->snap_media_object($url, $picture, $fullname, $meta, $formattedsubject);
         }
         return $output;
     }
