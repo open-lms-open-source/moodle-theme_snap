@@ -710,9 +710,9 @@ class activity {
 
         // Pull from cache?
         if (!PHPUNIT_TEST) {
-            if (isset($submissions[$courseid . '_' . $mod->modname])) {
-                if (isset($submissions[$courseid . '_' . $mod->modname][$mod->instance])) {
-                    return $submissions[$courseid . '_' . $mod->modname][$mod->instance];
+            if (isset($submissions[$courseid.'_'.$mod->modname])) {
+                if (isset($submissions[$courseid.'_'.$mod->modname][$mod->instance])) {
+                    return $submissions[$courseid.'_'.$mod->modname][$mod->instance];
                 } else {
                     return false;
                 }
