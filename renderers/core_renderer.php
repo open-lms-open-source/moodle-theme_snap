@@ -413,7 +413,16 @@ class theme_snap_core_renderer extends toc_renderer {
         return $o;
     }
 
-    public function snap_media_object($url, $image, $title, $meta, $content, $extraclasses = '', $intro = '') {
+    /**
+     * @param moodle_url|string $url
+     * @param string $image
+     * @param string $title
+     * @param array|string $meta
+     * @param string $content
+     * @param string $extraclasses
+     * @return string
+     */
+    public function snap_media_object($url, $image, $title, $meta, $content, $extraclasses = '') {
                     $formatoptions = new stdClass;
                     $formatoptions->filter = false;
                     $title = format_text($title, FORMAT_HTML, $formatoptions);
@@ -428,7 +437,6 @@ class theme_snap_core_renderer extends toc_renderer {
                     }
 
                     return "<div class=\"snap-media-object$extraclasses\">"
-                        . $intro
                         . "<a href=\"$url\">"
                         . $image
                         . '<div class="snap-media-body">'
@@ -1280,12 +1288,18 @@ HTML;
                 $picture = '';
             }
 
-            $url = new moodle_url('/mod/'.$activity->type.'/discuss.php', ['d' => $activity->content->discussion], 'p'.$activity->content->id);
+            $url = new moodle_url(
+                    '/mod/'.$activity->type.'/discuss.php',
+                    ['d' => $activity->content->discussion],
+                    'p'.$activity->content->id
+            );
             $fullname = fullname($activity->user);
-            $meta = $this->friendly_datetime($activity->timestamp);
-            $intro = '<span class="snap-media-meta">'.$activity->courseshortname.' / '.$activity->forumname.'</span>';
+            $meta = [
+                $this->friendly_datetime($activity->timestamp),
+                $activity->courseshortname.' / '.$activity->forumname
+            ];
             $formattedsubject = format_text($activity->content->subject);
-            $output .= $this->snap_media_object($url, $picture, $fullname, $meta, $formattedsubject, '', $intro);
+            $output .= $this->snap_media_object($url, $picture, $fullname, $meta, $formattedsubject);
         }
         return $output;
     }

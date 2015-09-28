@@ -19499,7 +19499,7 @@ fieldset[disabled] #page-site-index .section-modchooser-link .section-modchooser
   opacity: 0.75;
 }
 .snap-media-object .snap-media-meta {
-  display: inline-block;
+  display: block;
   font-size: small;
   opacity: 0.75;
 }
