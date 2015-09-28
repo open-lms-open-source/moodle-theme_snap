@@ -673,7 +673,21 @@ class theme_snap_recent_forum_activity_test extends \advanced_testcase {
      */
     protected function assert_user_activity($user, $expected, $limit = 10) {
         $activity = local::recent_forum_activity($user->id, $limit);
+        // Ensure number of activity items matched.
         $this->assertEquals($expected, count($activity));
+        if (!empty($activity)) {
+            // Ensure first activity item contains expected fields.
+            $activityitem = $activity[0];
+            $this->assertNotEmpty($activityitem->user);
+            $this->assertNotEmpty($activityitem->type);
+            $this->assertNotEmpty($activityitem->content);
+            $this->assertNotEmpty($activityitem->content->discussion);
+            $this->assertNotEmpty($activityitem->content->id);
+            $this->assertNotEmpty($activityitem->timestamp);
+            $this->assertNotEmpty($activityitem->courseshortname);
+            $this->assertNotEmpty($activityitem->forumname);
+            $this->assertNotEmpty($activityitem->content->subject);
+        }
     }
 
 }
