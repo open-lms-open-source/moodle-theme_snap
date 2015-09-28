@@ -525,15 +525,7 @@ class theme_snap_core_renderer extends toc_renderer {
             return '';
         }
 
-        $courses = enrol_get_all_users_courses($USER->id);
-
-        $capability = 'gradereport/grader:view';
-
-        foreach ($courses as $course) {
-            if (has_capability($capability, \context_course::instance($course->id), $USER->id)) {
-                $courseids[] = $course->id;
-            }
-        }
+        $courseids = local::gradeable_courseids($USER->id);
 
         if (empty($courseids)) {
             return '';

@@ -618,16 +618,33 @@ class local {
         return $out;
     }
 
-    public static function all_ungraded($userid) {
-
+    /**
+     * Get courses where user has the ability to view the gradebook.
+     *
+     * @param int $userid
+     * @return array
+     * @throws \coding_exception
+     */
+    public static function gradeable_courseids($userid) {
         $courses = enrol_get_all_users_courses($userid);
-
+        $courseids = [];
         $capability = 'gradereport/grader:view';
         foreach ($courses as $course) {
             if (has_capability($capability, \context_course::instance($course->id), $userid)) {
                 $courseids[] = $course->id;
             }
         }
+        return $courseids;
+    }
+
+    /**
+     * Get all ungraded items.
+     * @param int $userid
+     * @return array
+     */
+    public static function all_ungraded($userid) {
+        $courseids = self::gradeable_courseids($userid);
+
         if (empty($courseids)) {
             return array();
         }
