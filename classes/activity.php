@@ -107,31 +107,17 @@ class activity {
                 $submissionrow = self::get_submission_row($courseid, $mod, $submissiontable, $keyfield, $submitselect);
 
                 if (!empty($submissionrow)) {
-                    if ($submissionrow->status) {
-                        if ($mod->modname === 'assign') {
-                            switch ($submissionrow->status) {
-                                case ASSIGN_SUBMISSION_STATUS_DRAFT :
-                                    $meta->draft = true;
-                                    break;
-                                case ASSIGN_SUBMISSION_STATUS_REOPENED :
-                                    $meta->reopened = true;
-                                    break;
-                                case ASSIGN_SUBMISSION_STATUS_SUBMITTED :
-                                    $meta->submitted = true;
-                                    break;
-                            }
-                        } else {
-                            switch ($submissionrow->status) {
-                                case 'draft' :
-                                    $meta->draft = true;
-                                    break;
-                                case 'reopened' :
-                                    $meta->reopened = true;
-                                    break;
-                                case 'submitted' :
-                                    $meta->submitted = true;
-                                    break;
-                            }
+                    if ($mod->modname === 'assign' && !empty($submissionrow->status)) {
+                        switch ($submissionrow->status) {
+                            case ASSIGN_SUBMISSION_STATUS_DRAFT :
+                                $meta->draft = true;
+                                break;
+                            case ASSIGN_SUBMISSION_STATUS_REOPENED :
+                                $meta->reopened = true;
+                                break;
+                            case ASSIGN_SUBMISSION_STATUS_SUBMITTED :
+                                $meta->submitted = true;
+                                break;
                         }
                     } else {
                         $meta->submitted = true;
