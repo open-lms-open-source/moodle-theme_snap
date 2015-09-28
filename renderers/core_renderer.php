@@ -889,15 +889,16 @@ class theme_snap_core_renderer extends toc_renderer {
 
 
     public function page_heading($tag = 'h1') {
-        global $CFG;
         $heading = parent::page_heading($tag);
         if ($this->page->pagelayout == 'frontpage') {
             $heading .= '<p>' . format_string($this->page->theme->settings->subtitle) . '</p>';
         }
         if ($this->page->user_is_editing() && $this->page->pagelayout == 'frontpage') {
-            $heading .= '<a class="btn btn-default btn-sm" href="'.$CFG->wwwroot.
-                '/admin/settings.php?section=themesettingsnap#admin-fullname">'.
-                get_string('changefullname', 'theme_snap').'</a>';
+            $url = new moodle_url('/admin/settings.php', ['section' => 'themesettingsnap'], 'admin-fullname');
+            $link = html_writer::link($url,
+                            get_string('changefullname', 'theme_snap'),
+                            ['class' => 'btn btn-default btn-sm']);
+            $heading .= $link;
         }
         return $heading;
     }

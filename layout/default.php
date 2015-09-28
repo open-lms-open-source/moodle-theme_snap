@@ -47,7 +47,8 @@ if ($PAGE->pagetype == 'site-index') {
 </div>
 <?php
 if ($this->page->user_is_editing() && $PAGE->pagetype == 'site-index') {
-    echo '<a class="btn btn-default btn-sm" href="'.$CFG->wwwroot.'/admin/settings.php?section=themesettingsnap#admin-poster">'.get_string('changecoverimage', 'theme_snap').'</a>';
+    $url = new moodle_url('/admin/settings.php', ['section' => 'themesettingsnap'], 'admin-poster');
+    echo html_writer::link($url, get_string('changecoverimage', 'theme_snap'), ['class' => 'btn btn-default btn-sm']);
 }
 ?>
 </div>
