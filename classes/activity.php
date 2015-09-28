@@ -18,6 +18,9 @@ namespace theme_snap;
 
 require_once($CFG->dirroot.'/mod/assign/locallib.php');
 
+// Note: PHP Storm is reporting this unused but it is!
+use \theme_snap\activity_meta;
+
 /**
  * Activity functions.
  * These functions are in a class purely for auto loading convenience.
@@ -42,7 +45,7 @@ class activity {
      * @param bool $isgradeable
      * @param string $submitselect - sql to further filter submission row select statement - e.g. st.status='finished'
      * @param bool $submissionnotrequired
-     * @return bool | \theme_snap\activity_meta
+     * @return activity_meta
      */
     protected static function std_meta(\cm_info $mod,
                                        $timeopenfld,
@@ -60,7 +63,7 @@ class activity {
         $courseid = $mod->course;
 
         // Create meta data object.
-        $meta = new \theme_snap\activity_meta();
+        $meta = new activity_meta();
         $meta->submissionnotrequired = $submissionnotrequired;
         $meta->submitstrkey = $submitstrkey;
         $meta->submittedstr = get_string($submitstrkey, 'theme_snap');
