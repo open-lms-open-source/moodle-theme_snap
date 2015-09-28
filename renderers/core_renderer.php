@@ -1295,8 +1295,8 @@ HTML;
             );
             $fullname = fullname($activity->user);
             $meta = [
-                $this->friendly_datetime($activity->timestamp),
-                $activity->courseshortname.' / '.$activity->forumname
+                $activity->courseshortname.' / '.$activity->forumname,
+                $this->friendly_datetime($activity->timestamp)
             ];
             $formattedsubject = format_text($activity->content->subject);
             $output .= $this->snap_media_object($url, $picture, $fullname, $meta, $formattedsubject);
