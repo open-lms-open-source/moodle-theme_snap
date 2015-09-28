@@ -198,15 +198,23 @@ class theme_snap_assign_test extends mod_assign_base_testcase {
         $meta = activity::assign_meta($assigncm);
         $this->assertTrue($meta->overdue);
 
+        // Make sure a submission record does not exist.
+        $submission = activity::get_submission_row($this->course->id, $assigncm, 'submission', 'assignment');
+        $this->assertEmpty($submission);
+
         // At one time there was an issue where the overdue status would flip after viewing the module.
-        // Make sure this isn't happening still.
+        // Make sure this isn't happening by viewing the assignment.
         // Code taken from assign/tests/events_test.php test_submission_status_viewed.
         $PAGE->set_url('/a_url');
         // View the assignment.
         $assign->view();
-        $modinfo = get_fast_modinfo($this->course);
-        $assigncm = $modinfo->instances['assign'][$assign->get_instance()->id];
+        // Viewing an assignment creates a submission record with a status of new.
+        // Make sure a submission record now exists with a status of new.
+        $submission = activity::get_submission_row($this->course->id, $assigncm, 'submission', 'assignment');
+        $this->assertNotEmpty($submission);
+        $this->assertEquals(ASSIGN_SUBMISSION_STATUS_NEW, $submission->status);
         $meta = activity::assign_meta($assigncm);
+        // Ensure that assignment is still classed as overdue.
         $this->assertTrue($meta->overdue);
     }
 
