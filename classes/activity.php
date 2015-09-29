@@ -112,13 +112,15 @@ class activity {
                 if (!empty($submissionrow)) {
                     if ($mod->modname === 'assign' && !empty($submissionrow->status)) {
                         switch ($submissionrow->status) {
-                            case ASSIGN_SUBMISSION_STATUS_DRAFT :
+                            case ASSIGN_SUBMISSION_STATUS_DRAFT:
                                 $meta->draft = true;
                                 break;
-                            case ASSIGN_SUBMISSION_STATUS_REOPENED :
+
+                            case ASSIGN_SUBMISSION_STATUS_REOPENED:
                                 $meta->reopened = true;
                                 break;
-                            case ASSIGN_SUBMISSION_STATUS_SUBMITTED :
+
+                            case ASSIGN_SUBMISSION_STATUS_SUBMITTED:
                                 $meta->submitted = true;
                                 break;
                         }
