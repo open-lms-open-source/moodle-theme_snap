@@ -4015,7 +4015,7 @@ span.editinstructions {
   overflow: auto;
   display: inline-block;
   float: left;
-  height: 485px;
+  height: 495px;
   border-right: 1px solid #f5f5f5;
 }
 .dir-rtl .file-picker .fp-repo-area {
@@ -4042,14 +4042,7 @@ span.editinstructions {
   background: #ffffff;
   clear: both;
   overflow: auto;
-  height: 415px;
-}
-.repository_upload.file-picker .fp-content,
-.repository_dropbox.file-picker .fp-content,
-.repository_flickr_public.file-picker .fp-content,
-.repository_onenote.file-picker .fp-content,
-.repository_recent.file-picker .fp-content {
-  height: 445px;
+  height: 455px;
 }
 .filepicker.moodle-dialogue-fullscreen .file-picker .fp-content {
   width: 100%;
@@ -22426,6 +22419,17 @@ body.hascontinuecancel.path-site #page {
   .file-picker .fp-repo-items {
     width: 68%;
   }
+}
+.file-picker .fp-repo-area {
+  height: 475px;
+}
+.file-picker .fp-content {
+  height: 400px;
+}
+.repository_upload.file-picker .fp-content,
+.repository_flickr_public.file-picker .fp-content,
+.repository_recent.file-picker .fp-content {
+  height: 435px;
 }
 /* add resources and activities dialogue */
 .jsenabled .choosercontainer #chooseform .alloptions {
