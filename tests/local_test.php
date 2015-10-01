@@ -25,6 +25,7 @@
 namespace theme_snap\tests;
 
 use theme_snap\local;
+use theme_snap\activity;
 
 defined('MOODLE_INTERNAL') || die();
 
@@ -34,6 +35,11 @@ defined('MOODLE_INTERNAL') || die();
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class theme_snap_local_test extends \advanced_testcase {
+
+    public function setUp() {
+        global $CFG;
+        require_once($CFG->dirroot.'/mod/assign/tests/base_test.php');
+    }
 
     public function test_grade_warning_debug_off() {
         global $CFG;
@@ -238,7 +244,10 @@ class theme_snap_local_test extends \advanced_testcase {
 
         // Restore user.
         $USER = $origuser;
-        return $instance;
+
+        $cm = get_coursemodule_from_instance('assign', $instance->id);
+        $context = \context_module::instance($cm->id);
+        return new \testable_assign($context, $cm, get_course($courseid));
     }
 
     /**
@@ -263,16 +272,18 @@ class theme_snap_local_test extends \advanced_testcase {
         $teacherrole = $DB->get_record('role', array('shortname' => 'teacher'));
         foreach ([$course1, $course2] as $course) {
             $this->getDataGenerator()->enrol_user($teacher->id,
-                $course->id,
-                $teacherrole->id);
+                    $course->id,
+                    $teacherrole->id
+            );
         }
 
         // Enrol student on both courses.
         $studentrole = $DB->get_record('role', array('shortname' => 'student'));
         foreach ($courses as $course) {
             $generator->enrol_user($student->id,
-                $course->id,
-                $studentrole->id);
+                    $course->id,
+                    $studentrole->id
+            );
         }
 
         // Create an assignment in each course.
@@ -309,11 +320,11 @@ class theme_snap_local_test extends \advanced_testcase {
         // Enrol student on with an expired enrolment.
         $studentrole = $DB->get_record('role', array('shortname' => 'student'));
         $generator->enrol_user($student->id,
-            $course->id,
-            $studentrole->id,
-            'manual',
-            time() - (DAYSECS * 2),
-            time() - DAYSECS
+                $course->id,
+                $studentrole->id,
+                'manual',
+                time() - (DAYSECS * 2),
+                time() - DAYSECS
         );
 
         // Create assign instance.
@@ -323,6 +334,22 @@ class theme_snap_local_test extends \advanced_testcase {
         $actual = local::upcoming_deadlines($student->id);
         $expected = 0;
         $this->assertCount($expected, $actual);
+    }
+
+    /**
+     * Get date condition for module availability.
+     * @param $time
+     * @param string $comparator
+     * @return string
+     * @throws \coding_exception
+     */
+    protected function get_date_condition_json($time, $comparator = '>=') {
+        return json_encode(
+            \core_availability\tree::get_root_json(
+                [\availability_date\condition::get_json($comparator, $time)
+                ]
+            )
+        );
     }
 
     /**
@@ -342,8 +369,8 @@ class theme_snap_local_test extends \advanced_testcase {
         // Enrol student.
         $studentrole = $DB->get_record('role', array('shortname' => 'student'));
         $generator->enrol_user($student->id,
-            $course->id,
-            $studentrole->id
+                $course->id,
+                $studentrole->id
         );
 
         // Create assign instance.
@@ -353,18 +380,193 @@ class theme_snap_local_test extends \advanced_testcase {
         $this->assertCount($expected, $actual);
 
         // Create restricted assign instance.
-        $opts = ['availability' =>
-            json_encode(
-                \core_availability\tree::get_root_json(
-                    [\availability_date\condition::get_json('>=', time() + WEEKSECS)
-                    ]
-                )
-            )
-        ];
+        $opts = ['availability' => $this->get_date_condition_json(time() + WEEKSECS)];
         $this->create_assignment($course->id, time() + (DAYSECS * 2), $opts);
 
         // Student should see 1 deadlines as the second assignment is restricted until next week.
         $actual = local::upcoming_deadlines($student->id);
+        $expected = 1;
+        $this->assertCount($expected, $actual);
+    }
+
+
+    /**
+     * General feedback test.
+     *
+     * @throws \coding_exception
+     */
+    public function test_feedback() {
+        global $DB;
+
+        $this->resetAfterTest();
+
+        $generator = $this->getDataGenerator();
+        $course = $generator->create_course();
+        $teacher = $generator->create_user();
+        $student = $generator->create_user();
+
+        // Enrol teacher.
+        $teacherrole = $DB->get_record('role', array('shortname' => 'teacher'));
+        $this->getDataGenerator()->enrol_user($teacher->id,
+                $course->id,
+                $teacherrole->id
+        );
+
+        // Enrol student.
+        $studentrole = $DB->get_record('role', array('shortname' => 'student'));
+        $generator->enrol_user($student->id,
+                $course->id,
+                $studentrole->id
+        );
+
+        // Create an assignment and mark with a regular grade.
+        $assign = $this->create_assignment($course->id, time() + (DAYSECS * 2));
+        $data = $assign->get_user_grade($student->id, true);
+        $data->grade = '50.5';
+        $assign->update_grade($data);
+
+        // Create an assignment and mark a zero grade (should still count as feedback).
+        $assign = $this->create_assignment($course->id, time() + (DAYSECS * 2));
+        $data = $assign->get_user_grade($student->id, true);
+        $data->grade = '0';
+        $assign->update_grade($data);
+
+        // Student should see 2 feedback availables.
+        $this->setUser($student);
+        $actual = activity::events_graded();
+        $expected = 2;
+        $this->assertCount($expected, $actual);
+    }
+
+    /**
+     * Test feedback where course is hidden.
+     *
+     * @throws \coding_exception
+     */
+    public function test_feedback_hidden() {
+        global $DB;
+
+        $this->resetAfterTest();
+
+        $generator = $this->getDataGenerator();
+        $course1 = $generator->create_course();
+        $course2 = $generator->create_course((object) ['visible' => 0, 'oldvisible' => 0]);
+        $teacher = $generator->create_user();
+        $student = $generator->create_user();
+
+        $courses = [$course1, $course2];
+
+        // Enrol teacher on both courses.
+        $teacherrole = $DB->get_record('role', array('shortname' => 'teacher'));
+        foreach ([$course1, $course2] as $course) {
+            $this->getDataGenerator()->enrol_user($teacher->id,
+                    $course->id,
+                    $teacherrole->id);
+        }
+
+        // Enrol student on both courses.
+        $studentrole = $DB->get_record('role', array('shortname' => 'student'));
+        foreach ($courses as $course) {
+            $generator->enrol_user($student->id,
+                    $course->id,
+                    $studentrole->id);
+        }
+
+        // Create an assignment in each course and mark it.
+        foreach ($courses as $course) {
+            $assign = $this->create_assignment($course->id, time() + (DAYSECS * 2));
+
+            // Mark the assignment.
+            $data = $assign->get_user_grade($student->id, true);
+            $data->grade = '50.5';
+            $assign->update_grade($data);
+        }
+
+        // Student should see 1 feedback available as course2 is hidden.
+        $this->setUser($student);
+        $actual = activity::events_graded();
+        $expected = 1;
+        $this->assertCount($expected, $actual);
+    }
+
+    /**
+     * Test feedback where enrolment has expired.
+     *
+     * @throws \coding_exception
+     */
+    public function test_feedback_enrolment_expired() {
+        global $DB;
+
+        $this->resetAfterTest();
+
+        $generator = $this->getDataGenerator();
+        $course = $generator->create_course();
+        $student = $generator->create_user();
+
+        // Enrol student on with an expired enrolment.
+        $studentrole = $DB->get_record('role', array('shortname' => 'student'));
+        $generator->enrol_user($student->id,
+                $course->id,
+                $studentrole->id,
+                'manual',
+                time() - (DAYSECS * 2),
+                time() - DAYSECS
+        );
+
+        // Create assign instance.
+        $assign = $this->create_assignment($course->id, time() + (DAYSECS * 2));
+
+        // Mark assignment.
+        $data = $assign->get_user_grade($student->id, true);
+        $data->grade = '50.5';
+        $assign->update_grade($data);
+
+        // Student should see 0 feedback items as their enrollments have expired.
+        $this->setUser($student);
+        $actual = activity::events_graded();
+        $expected = 0;
+        $this->assertCount($expected, $actual);
+    }
+
+    /**
+     * Test feedback with assignment restricted to future date.
+     *
+     * @throws \coding_exception
+     */
+    public function test_feedback_restricted() {
+        global $DB;
+
+        $this->resetAfterTest();
+
+        $generator = $this->getDataGenerator();
+        $course = $generator->create_course();
+        $student = $generator->create_user();
+
+        // Enrol student.
+        $studentrole = $DB->get_record('role', array('shortname' => 'student'));
+        $generator->enrol_user($student->id,
+                $course->id,
+                $studentrole->id
+        );
+
+        // Create assign instance.
+        $this->create_assignment($course->id, time() + (DAYSECS * 2));
+        $actual = local::upcoming_deadlines($student->id);
+        $expected = 1;
+        $this->assertCount($expected, $actual);
+
+        // Create restricted assign instance.
+        $opts = ['availability' => $this->get_date_condition_json(time() + WEEKSECS)];
+        $assign = $this->create_assignment($course->id, time() + (DAYSECS * 2), $opts);
+
+        // Mark restricted assign instasnce.
+        $data = $assign->get_user_grade($student->id, true);
+        $data->grade = '50.5';
+        $assign->update_grade($data);
+
+        // Student should only see 1 feedback item as one is normal and one is restricted until next week.
+        $this->setUser($student);
+        $actual = activity::events_graded();
         $expected = 1;
         $this->assertCount($expected, $actual);
     }

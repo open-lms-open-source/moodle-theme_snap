@@ -529,11 +529,18 @@ class local {
         return $o;
     }
 
-    public static function graded() {
+    /**
+     * Get items which have been graded.
+     *
+     * @param bool $onlyactive - only show grades in courses actively enrolled on if true.
+     * @return string
+     * @throws \coding_exception
+     */
+    public static function graded($onlyactive = true) {
         global $USER, $PAGE;
 
         $output = $PAGE->get_renderer('theme_snap', 'core', RENDERER_TARGET_GENERAL);
-        $grades = activity::events_graded();
+        $grades = activity::events_graded($onlyactive);
 
         $o = '';
         foreach ($grades as $grade) {
