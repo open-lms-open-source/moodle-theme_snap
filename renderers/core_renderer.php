@@ -430,10 +430,12 @@ class theme_snap_core_renderer extends toc_renderer {
                     if (is_array($meta)) {
                         $metastr = '';
                         foreach ($meta as $metaitem) {
-                            $metastr .= '<span class="snap-media-meta">'.format_text($metaitem).'</span>';
+                            $metastr .= '<span class="snap-media-meta">'.
+                                    format_text($metaitem, FORMAT_HTML, $formatoptions).'</span>';
                         }
                     } else {
-                        $metastr = '<span class="snap-media-meta">'.format_text($meta).'</span>';
+                        $metastr = '<span class="snap-media-meta">'.
+                                format_text($meta, FORMAT_HTML, $formatoptions).'</span>';
                     }
 
                     return "<div class=\"snap-media-object$extraclasses\">"
