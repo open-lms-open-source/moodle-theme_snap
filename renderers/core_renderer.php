@@ -572,7 +572,15 @@ class theme_snap_core_renderer extends toc_renderer {
         $recentfeedback = get_string('recentfeedback', 'theme_snap');
         $o = "<h2>$recentfeedback</h2>";
 
-        $o .= '<div id="snap-personal-menu-graded"></div>';
+        $mygradesurl = new moodle_url('/grade/report/mygrades.php');
+        $mygradesbutton = html_writer::link($mygradesurl,
+                                            get_string('mygrades', 'theme_snap'),
+                                            ['class' => 'btn btn-default']);
+
+        $o .= '<div id="snap-personal-menu-graded"></div>
+               <div class="text-center">
+               '.$mygradesbutton.'
+               </div>';
 
         return $o;
     }

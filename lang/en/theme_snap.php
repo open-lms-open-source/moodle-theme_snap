@@ -120,6 +120,7 @@ $string['messagestoggledesc'] = 'Messages shows the most recent messages from ot
 $string['messaging'] = 'Messaging';
 $string['more'] = 'More';
 $string['morenews'] = 'More news';
+$string['mygrades'] = 'My grades';
 $string['nextsection'] = 'Next section';
 $string['nodeadlines'] = 'You have no upcoming deadlines.';
 $string['noforumposts'] = 'You have no relevant forum posts.';
