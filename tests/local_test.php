@@ -389,6 +389,79 @@ class theme_snap_local_test extends \advanced_testcase {
         $this->assertCount($expected, $actual);
     }
 
+    /**
+     * Test upcoming deadlines restricted by group
+     *
+     * @throws \coding_exception
+     */
+    public function test_upcoming_deadlines_group() {
+        global $DB;
+
+        $this->resetAfterTest();
+
+        $generator = $this->getDataGenerator();
+        $course = $generator->create_course();
+        $student1 = $generator->create_user();
+        $student2 = $generator->create_user();
+        $teacher = $generator->create_user();
+        $group1 = $this->create_group($course->id, 'group1');
+        $group2 = $this->create_group($course->id, 'group2');
+
+        // Enrol students.
+        $studentrole = $DB->get_record('role', array('shortname' => 'student'));
+        foreach ([$student1, $student2] as $student) {
+            $generator->enrol_user($student->id,
+                $course->id,
+                $studentrole->id
+            );
+        }
+
+        // Enrol teacher.
+        $teacherrole = $DB->get_record('role', array('shortname' => 'teacher'));
+        $generator->enrol_user($teacher->id,
+            $course->id,
+            $teacherrole->id);
+
+        // Add students to groups.
+        groups_add_member($group1, $student1);
+        groups_add_member($group2, $student2);
+
+        // Create assignment restricted to group1.
+        $opts = ['availability' =>
+            json_encode(
+                \core_availability\tree::get_root_json(
+                    [\availability_group\condition::get_json($group1->id)]
+                )
+            )
+        ];
+        $duedate1 = time() + (DAYSECS * 2);
+        $this->create_assignment($course->id, $duedate1, $opts);
+
+        // Create assignment restricted to group2.
+        $opts = ['availability' =>
+            json_encode(
+                \core_availability\tree::get_root_json(
+                    [\availability_group\condition::get_json($group2->id)]
+                )
+            )
+        ];
+        $duedate2 = time() + (DAYSECS * 3);
+        $this->create_assignment($course->id, $duedate2, $opts);
+
+        // Ensure student1 only has 1 deadline and that it is for group1.
+        $stu1deadlines = local::upcoming_deadlines($student1->id);
+        $this->assertCount(1, $stu1deadlines);
+        $this->assertEquals($duedate1, reset($stu1deadlines)->timestart);
+
+        // Ensure student2 only has 1 deadline and that it is for group2.
+        $stu2deadlines = local::upcoming_deadlines($student2->id);
+        $this->assertCount(1, $stu2deadlines);
+        $this->assertEquals($duedate2, reset($stu2deadlines)->timestart);
+
+        // Ensure teacher can see both deadlines.
+        $tchdeadlines = local::upcoming_deadlines($teacher->id);
+        $this->assertCount(2, $tchdeadlines);
+    }
 
     /**
      * General feedback test.
@@ -487,6 +560,23 @@ class theme_snap_local_test extends \advanced_testcase {
         $actual = activity::events_graded();
         $expected = 1;
         $this->assertCount($expected, $actual);
+    }
+
+    /**
+     * Create group for specific course.
+     *
+     * @param int $courseid
+     * @param str $name
+     * @return \stdClass
+     * @throws \coding_exception
+     */
+    protected function create_group($courseid, $name) {
+        $generator = $this->getDataGenerator();
+        $group = [
+            'courseid' => $courseid,
+            'name' => $name
+        ];
+        return $generator->create_group($group);
     }
 
     /**

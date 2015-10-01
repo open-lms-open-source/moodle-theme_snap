@@ -395,13 +395,18 @@ class local {
      *
      * All deadlines from today, then any from the next 12 months up to the
      * max requested.
-     * @param integer $userid
+     * @param \stdClass|integer $userorid
      * @param integer $maxdeadlines
      * @return array
      */
-    public static function upcoming_deadlines($userid, $maxdeadlines = 5) {
+    public static function upcoming_deadlines($userorid, $maxdeadlines = 5) {
 
-        $courses = enrol_get_users_courses($userid, true);
+        $user = self::get_user($userorid);
+        if (!$user) {
+            return [];
+        }
+
+        $courses = enrol_get_users_courses($user->id, true);
 
         if (empty($courses)) {
             return [];
@@ -409,11 +414,11 @@ class local {
 
         $courseids = array_keys($courses);
 
-        $events = self::get_todays_deadlines($courseids);
+        $events = self::get_todays_deadlines($user, $courseids);
 
         if (count($events) < $maxdeadlines) {
             $maxaftercurrentday = $maxdeadlines - count($events);
-            $moreevents = self::get_upcoming_deadlines($courseids, $maxaftercurrentday);
+            $moreevents = self::get_upcoming_deadlines($user, $courseids, $maxaftercurrentday);
             $events = $events + $moreevents;
         }
         foreach ($events as $event) {
@@ -428,12 +433,13 @@ class local {
     /**
      * Return user's deadlines for today from the calendar.
      *
+     * @param \stdClass|int $userorid
      * @param array $courses ids of all user's courses.
      * @return array
      */
-    private static function get_todays_deadlines($courses) {
+    private static function get_todays_deadlines($userorid, $courses) {
         // Get all deadlines for today, assume that will never be higher than 100.
-        return self::get_upcoming_deadlines($courses, 100, true);
+        return self::get_upcoming_deadlines($userorid, $courses, 100, true);
     }
 
     /**
@@ -444,12 +450,21 @@ class local {
      *
      * Based on the calender function calendar_get_upcoming.
      *
+     * @param \stdClass|int $userorid
      * @param array $courses ids of all user's courses.
      * @param int $maxevents to return
      * @param bool $todayonly true if only the next 24 hours to be returned
      * @return array
      */
-    private static function get_upcoming_deadlines($courses, $maxevents, $todayonly=false) {
+    private static function get_upcoming_deadlines($userorid, $courses, $maxevents, $todayonly=false) {
+
+        $user = self::get_user($userorid);
+        if (!$user) {
+            return [];
+        }
+
+        // We need to do this so that we can calendar events and mod visibility for a specific user.
+        self::swap_global_user($user);
 
         $now = time();
 
@@ -492,6 +507,8 @@ class local {
                 break;
             }
         }
+
+        self::swap_global_user(false);
 
         return $output;
     }
