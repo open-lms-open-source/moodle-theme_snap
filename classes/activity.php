@@ -18,6 +18,9 @@ namespace theme_snap;
 
 require_once($CFG->dirroot.'/mod/assign/locallib.php');
 
+// Note: PHP Storm is reporting this unused but it is!
+use \theme_snap\activity_meta;
+
 /**
  * Activity functions.
  * These functions are in a class purely for auto loading convenience.
@@ -41,7 +44,8 @@ class activity {
      * @param string $submitstrkey
      * @param bool $isgradeable
      * @param string $submitselect - sql to further filter submission row select statement - e.g. st.status='finished'
-     * @return bool | \theme_snap\activity_meta
+     * @param bool $submissionnotrequired
+     * @return activity_meta
      */
     protected static function std_meta(\cm_info $mod,
                                        $timeopenfld,
@@ -51,14 +55,16 @@ class activity {
                                        $submittedonfld,
                                        $submitstrkey,
                                        $isgradeable = false,
-                                       $submitselect = ''
+                                       $submitselect = '',
+                                       $submissionnotrequired = false
     ) {
         global $USER;
 
         $courseid = $mod->course;
 
         // Create meta data object.
-        $meta = new \theme_snap\activity_meta();
+        $meta = new activity_meta();
+        $meta->submissionnotrequired = $submissionnotrequired;
         $meta->submitstrkey = $submitstrkey;
         $meta->submittedstr = get_string($submitstrkey, 'theme_snap');
         $meta->notsubmittedstr = get_string('not'.$submitstrkey, 'theme_snap');
@@ -104,13 +110,18 @@ class activity {
                 $submissionrow = self::get_submission_row($courseid, $mod, $submissiontable, $keyfield, $submitselect);
 
                 if (!empty($submissionrow)) {
-                    if ($submissionrow->status) {
+                    if ($mod->modname === 'assign' && !empty($submissionrow->status)) {
                         switch ($submissionrow->status) {
-                            case 'draft' : $meta->draft = true;
+                            case ASSIGN_SUBMISSION_STATUS_DRAFT:
+                                $meta->draft = true;
                                 break;
-                            case 'reopened' : $meta->reopened = true;
+
+                            case ASSIGN_SUBMISSION_STATUS_REOPENED:
+                                $meta->reopened = true;
                                 break;
-                            case 'submitted' : $meta->submitted = true;
+
+                            case ASSIGN_SUBMISSION_STATUS_SUBMITTED:
+                                $meta->submitted = true;
                                 break;
                         }
                     } else {
@@ -150,6 +161,15 @@ class activity {
                 }
             }
         }
+
+        if (!empty($meta->timeclose)) {
+            // Submission required?
+            $subreqd = empty($meta->submissionnotrequired);
+
+            // Overdue?
+            $meta->overdue = $subreqd && empty($meta->submitted) && time() > usertime($meta->timeclose);
+        }
+
         return $meta;
     }
 
@@ -157,7 +177,7 @@ class activity {
      * Get assignment meta data
      *
      * @param cm_info $modinst - module instance
-     * @return string
+     * @return activity_meta
      */
     public static function assign_meta(\cm_info $modinst) {
         global $DB;
@@ -166,7 +186,9 @@ class activity {
         $courseid = $modinst->course;
 
         // Get count of enabled submission plugins grouped by assignment id.
-        if (empty($submissionsenabled)) {
+        // Note, under normal circumstances we only run this once but with PHP unit tests, assignments are being
+        // created one after the other and so this needs to be run each time during a PHP unit test.
+        if (empty($submissionsenabled) || PHPUNIT_TEST) {
             $sql = "SELECT a.id, count(1) AS submissionsenabled
                       FROM {assign} a
                       JOIN {assign_plugin_config} ac ON ac.assignment = a.id
@@ -181,13 +203,16 @@ class activity {
 
         $submitselect = '';
 
-        $meta = self::std_meta($modinst, 'allowsubmissionsfromdate', 'duedate', 'assignment', 'submission',
-            'timemodified', 'submitted', true, $submitselect);
-
         // If there aren't any submission plugins enabled for this module, then submissions are not required.
         if (empty($submissionsenabled[$modinst->instance])) {
-            $meta->submissionnotrequired = true;
+            $submissionnotrequired = true;
+        } else {
+            $submissionnotrequired = false;
         }
+
+        $meta = self::std_meta($modinst, 'allowsubmissionsfromdate', 'duedate', 'assignment', 'submission',
+            'timemodified', 'submitted', true, $submitselect, $submissionnotrequired);
+
         return ($meta);
     }
 
@@ -686,11 +711,13 @@ class activity {
         static $submissions = array();
 
         // Pull from cache?
-        if (isset($submissions[$courseid.'_'.$mod->modname])) {
-            if (isset($submissions[$courseid.'_'.$mod->modname][$mod->instance])) {
-                return $submissions[$courseid.'_'.$mod->modname][$mod->instance];
-            } else {
-                return false;
+        if (!PHPUNIT_TEST) {
+            if (isset($submissions[$courseid.'_'.$mod->modname])) {
+                if (isset($submissions[$courseid.'_'.$mod->modname][$mod->instance])) {
+                    return $submissions[$courseid.'_'.$mod->modname][$mod->instance];
+                } else {
+                    return false;
+                }
             }
         }
 
@@ -735,6 +762,10 @@ class activity {
         // Not every activity has a status field...
         // Add one if it is missing so code assuming there is a status property doesn't explode.
         $result = $DB->get_records_sql($sql, $params);
+        if (!$result) {
+            unset($submissions[$courseid.'_'.$mod->modname]);
+            return false;
+        }
 
         foreach ($result as $r) {
             if (!isset($r->status)) {
@@ -767,7 +798,7 @@ class activity {
         // Note: Caches all moduledates to minimise database transactions.
         static $moddates = array();
 
-        if (!isset($moddates[$courseid.'_'.$mod->modname][$mod->instance])) {
+        if (!isset($moddates[$courseid.'_'.$mod->modname][$mod->instance]) || PHPUNIT_TEST) {
             $sql = "-- Snap sql
                     SELECT id, $timeopenfld AS timeopen, $timeclosefld as timeclose
                         FROM {".$mod->modname."}

@@ -31,6 +31,8 @@ class activity_meta {
     public $submitstrkey;
     public $draftstr;
     public $reopenedstr;
+    public $duestr;
+    public $overduestr;
 
     // General meta data.
     public $timeopen;
@@ -44,8 +46,15 @@ class activity_meta {
     public $reopened = false;
     public $timesubmitted;
     public $grade;
+    public $overdue = false;
 
     // Teacher meta data.
     public $numsubmissions = false;
     public $numrequiregrading = false;
+
+    function __construct() {
+        // Set default strings.
+        $this->overduestr = get_string('overdue', 'theme_snap');
+        $this->duestr = get_string('due', 'theme_snap');
+    }
 }

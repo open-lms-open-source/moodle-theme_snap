@@ -409,14 +409,11 @@ class theme_snap_core_course_renderer extends core_course_renderer {
             }
             // Note, due date is rendered seperately for students as it has a warning class if overdue.
             if (!empty($meta->timeclose)) {
-                if (empty($meta->submissionnotrequired)
-                    && empty($meta->timesubmitted)
-                    && time() > usertime($meta->timeclose)
-                ) {
-                    $dueinfo = get_string('overdue', 'theme_snap');
+                if ($meta->overdue) {
+                    $dueinfo = $meta->overduestr;
                     $status = 'danger';
                 } else {
-                    $dueinfo = get_string('due', 'theme_snap');
+                    $dueinfo = $meta->duestr;
                     $status = 'info';
                 }
                 $url = new \moodle_url("/mod/{$mod->modname}/view.php", ['id' => $mod->id]);
