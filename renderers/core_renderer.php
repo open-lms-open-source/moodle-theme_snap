@@ -413,17 +413,37 @@ class theme_snap_core_renderer extends toc_renderer {
         return $o;
     }
 
+    /**
+     * @param moodle_url|string $url
+     * @param string $image
+     * @param string $title
+     * @param array|string $meta
+     * @param string $content
+     * @param string $extraclasses
+     * @return string
+     */
     public function snap_media_object($url, $image, $title, $meta, $content, $extraclasses = '') {
                     $formatoptions = new stdClass;
                     $formatoptions->filter = false;
                     $title = format_text($title, FORMAT_HTML, $formatoptions);
                     $content = format_text($content, FORMAT_HTML, $formatoptions);
+                    if (is_array($meta)) {
+                        $metastr = '';
+                        foreach ($meta as $metaitem) {
+                            $metastr .= '<span class="snap-media-meta">'.
+                                    format_text($metaitem, FORMAT_HTML, $formatoptions).'</span>';
+                        }
+                    } else {
+                        $metastr = '<span class="snap-media-meta">'.
+                                format_text($meta, FORMAT_HTML, $formatoptions).'</span>';
+                    }
+
                     return "<div class=\"snap-media-object$extraclasses\">"
                         . "<a href=\"$url\">"
                         . $image
                         . '<div class="snap-media-body">'
                         . "<h3>$title</h3>"
-                        . "<span class=\"snap-media-meta\">$meta</span>"
+                        . $metastr
                         . $content
                         . '</div></a></div>';
     }
@@ -1263,11 +1283,18 @@ HTML;
                 $picture = '';
             }
 
-            $url = new moodle_url('/mod/'.$activity->type.'/discuss.php', ['d' => $activity->content->discussion], 'p'.$activity->content->id);
+            $url = new moodle_url(
+                    '/mod/'.$activity->type.'/discuss.php',
+                    ['d' => $activity->content->discussion],
+                    'p'.$activity->content->id
+            );
             $fullname = fullname($activity->user);
-            $friendlydate = $this->friendly_datetime($activity->timestamp);
+            $meta = [
+                $activity->courseshortname.' / '.$activity->forumname,
+                $this->friendly_datetime($activity->timestamp)
+            ];
             $formattedsubject = format_text($activity->content->subject);
-            $output .= $this->snap_media_object($url, $picture, $fullname, $friendlydate, $formattedsubject);
+            $output .= $this->snap_media_object($url, $picture, $fullname, $meta, $formattedsubject);
         }
         return $output;
     }

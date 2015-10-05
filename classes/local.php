@@ -1217,17 +1217,20 @@ class local {
                 $params = array_merge($params, $fgpparams);
             }
 
-            $sqls[] = "(SELECT ".$DB->sql_concat("'F'", 'fp1.id')." AS id, 'forum' as type, fp1.id AS postid,
-                               fd1.forum, 0 AS forumanonymous, f1.course, fp1.discussion, fp1.parent,
-                               fp1.userid, fp1.modified, fp1.subject, fp1.message, 0 AS reveal, cm1.id as cmid,
+            $sqls[] = "(SELECT ".$DB->sql_concat("'F'", 'fp1.id')." AS id, 'forum' AS type, fp1.id AS postid,
+                               fd1.forum, fp1.discussion, fp1.parent, fp1.userid, fp1.modified, fp1.subject,
+                               fp1.message, 0 AS reveal, cm1.id AS cmid,
+                               0 AS forumanonymous, f1.course, f1.name AS forumname,
                                u1.firstnamephonetic, u1.lastnamephonetic, u1.middlename, u1.alternatename, u1.firstname,
-                               u1.lastname, u1.picture, u1.imagealt, u1.email
+                               u1.lastname, u1.picture, u1.imagealt, u1.email,
+                               c.shortname AS courseshortname, c.fullname AS coursefullname
 	                      FROM {forum_posts} fp1
 	                      JOIN {user} u1 ON u1.id = fp1.userid
                           JOIN {forum_discussions} fd1 ON fd1.id = fp1.discussion
 	                      JOIN {forum} f1 ON f1.id = fd1.forum AND f1.id $finsql
 	                      JOIN {course_modules} cm1 ON cm1.instance = f1.id
-	                      JOIN {modules} m1 on m1.name = 'forum' AND cm1.module = m1.id
+	                      JOIN {modules} m1 ON m1.name = 'forum' AND cm1.module = m1.id
+	                      JOIN {course} c ON c.id = f1.course
 	                      LEFT JOIN {groups_members} gm1
                             ON cm1.groupmode = ?
                            AND gm1.groupid = fd1.groupid
@@ -1257,17 +1260,20 @@ class local {
 
             $params = array_merge($params, [$user->id, $user->id]);
 
-            $sqls[] = "(SELECT ".$DB->sql_concat("'A'", 'fp2.id')." AS id, 'hsuforum' as type, fp2.id AS postid,
-                               fd2.forum, f2.anonymous AS forumanonymous, f2.course, fp2.discussion, fp2.parent,
-                               fp2.userid,fp2.modified,fp2.subject,fp2.message, fp2.reveal, cm2.id as cmid,
+            $sqls[] = "(SELECT ".$DB->sql_concat("'A'", 'fp2.id')." AS id, 'hsuforum' AS type, fp2.id AS postid,
+                               fd2.forum, fp2.discussion, fp2.parent, fp2.userid, fp2.modified, fp2.subject,
+                               fp2.message, fp2.reveal, cm2.id AS cmid,
+                               f2.anonymous AS forumanonymous, f2.course, f2.name AS forumname,
                                u2.firstnamephonetic, u2.lastnamephonetic, u2.middlename, u2.alternatename, u2.firstname,
-                               u2.lastname, u2.picture, u2.imagealt, u2.email
+                               u2.lastname, u2.picture, u2.imagealt, u2.email,
+                               c.shortname AS courseshortname, c.fullname AS coursefullname
                           FROM {hsuforum_posts} fp2
                           JOIN {user} u2 ON u2.id = fp2.userid
                           JOIN {hsuforum_discussions} fd2 ON fd2.id = fp2.discussion
                           JOIN {hsuforum} f2 ON f2.id = fd2.forum AND f2.id $afinsql
-	                      JOIN {course_modules} cm2 on cm2.instance = f2.id
-	                      JOIN {modules} m2 on m2.name = 'hsuforum' AND cm2.module = m2.id
+	                      JOIN {course_modules} cm2 ON cm2.instance = f2.id
+	                      JOIN {modules} m2 ON m2.name = 'hsuforum' AND cm2.module = m2.id
+	                      JOIN {course} c ON c.id = f2.course
 	                      LEFT JOIN {groups_members} gm2
 	                        ON cm2.groupmode = ?
 	                       AND gm2.groupid = fd2.groupid
@@ -1315,6 +1321,9 @@ class local {
                     'type' => $post->type,
                     'cmid' => $post->cmid,
                     'name' => $post->subject,
+                    'courseshortname' => $post->courseshortname,
+                    'coursefullname' => $post->coursefullname,
+                    'forumname' => $post->forumname,
                     'sectionnum' => null,
                     'timestamp' => $post->modified,
                     'content' => (object)[
