@@ -7260,6 +7260,17 @@ body.hascontinuecancel.path-site #page {
     width: 68%;
   }
 }
+.file-picker .fp-repo-area {
+  height: 475px;
+}
+.file-picker .fp-content {
+  height: 400px;
+}
+.repository_upload.file-picker .fp-content,
+.repository_flickr_public.file-picker .fp-content,
+.repository_recent.file-picker .fp-content {
+  height: 435px;
+}
 /* add resources and activities dialogue */
 .jsenabled .choosercontainer #chooseform .alloptions {
   padding: 0 4%;
