@@ -149,8 +149,7 @@ class theme_snap_core_course_renderer extends core_course_renderer {
             && (empty($mod->availableinfo))) {
             return $output;
         }
-
-        $output .= "<div class='asset-wrapper'>";
+        $output .= '<div class="asset-wrapper">';
         // Start the div for the activity content.
         $output .= "<div class='activityinstance'>";
         // Display the link to the module (or do nothing if module has no url).
@@ -159,7 +158,7 @@ class theme_snap_core_course_renderer extends core_course_renderer {
         // SHAME - For moodles ajax show/hide call to work it needs activityinstance > a to add a class of dimmed to.
         // This dimmed class is of course inaccessible junk.
         if (!empty($cmname)) {
-            $assetlink = "<a></a><h4 class='snap-asset-link'>".$cmname."</h4>";
+            $assetlink = '<a></a><h4 class="snap-asset-link">'.$cmname.'</h4>';
         }
         // Meta.
         $assetmeta = "<div class='snap-meta'>";
@@ -215,9 +214,9 @@ class theme_snap_core_course_renderer extends core_course_renderer {
                 $output .= $modicons;
                 $output .= "</div>";
         }
-            $output .= "</div>";
-            // Close clearfix.
-            return $output;
+        // Close clearfix.
+        $output .= "</div>";
+        return $output;
     }
 
     /**

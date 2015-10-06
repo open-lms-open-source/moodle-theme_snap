@@ -423,29 +423,38 @@ class theme_snap_core_renderer extends toc_renderer {
      * @return string
      */
     public function snap_media_object($url, $image, $title, $meta, $content, $extraclasses = '') {
-                    $formatoptions = new stdClass;
-                    $formatoptions->filter = false;
-                    $title = format_text($title, FORMAT_HTML, $formatoptions);
-                    $content = format_text($content, FORMAT_HTML, $formatoptions);
-                    if (is_array($meta)) {
-                        $metastr = '';
-                        foreach ($meta as $metaitem) {
-                            $metastr .= '<span class="snap-media-meta">'.
-                                    format_text($metaitem, FORMAT_HTML, $formatoptions).'</span>';
-                        }
-                    } else {
-                        $metastr = '<span class="snap-media-meta">'.
-                                format_text($meta, FORMAT_HTML, $formatoptions).'</span>';
-                    }
+        $formatoptions = new stdClass;
+        $formatoptions->filter = false;
+        $title = format_text($title, FORMAT_HTML, $formatoptions);
+        $content = format_text($content, FORMAT_HTML, $formatoptions);
 
-                    return "<div class=\"snap-media-object$extraclasses\">"
-                        . "<a href=\"$url\">"
-                        . $image
-                        . '<div class="snap-media-body">'
-                        . "<h3>$title</h3>"
-                        . $metastr
-                        . $content
-                        . '</div></a></div>';
+        if (is_array($meta)) {
+            $metastr = '';
+            foreach ($meta as $metaitem) {
+                $metastr .= '<span class="snap-media-meta">'.
+                    format_text($metaitem, FORMAT_HTML, $formatoptions).'</span>';
+            }
+        } else {
+            $metastr = '<span class="snap-media-meta">'.
+                format_text($meta, FORMAT_HTML, $formatoptions).'</span>';
+        }
+
+        $linkclasses = [];
+        if (BEHAT_SITE_RUNNING){
+            $linkclasses['title'] = strip_tags($title); // Title attribute required by Behat.
+        }
+
+        $linkcontent = $image
+            . '<div class="snap-media-body">'
+            . "<h3>$title</h3>"
+            . $metastr
+            . $content
+            . '</div>';
+
+        $link = html_writer::link($url, $linkcontent, $linkclasses);
+
+        return '<div class="snap-media-object'.$extraclasses.'">'.$link.'</div>';
+
     }
 
     /**
@@ -623,10 +632,19 @@ class theme_snap_core_renderer extends toc_renderer {
         if (!empty($CFG->alternateloginurl)) {
             $loginurl = $CFG->wwwroot.'/login/index.php';
         }
-        $login = get_string('login');
         // This check is here for the front page login.
         if (!isloggedin() || isguestuser()) {
-            $output .= "<a aria-haspopup='true' class='snap-login-button fixy-trigger'  href='".s($loginurl)."' >$login</a>";
+            $loginatts = [
+                'aria-haspopup' => 'true',
+                'class' => 'snap-login-button fixy-trigger'
+            ];
+            $link = html_writer::link($loginurl, get_string('login'), $loginatts);
+
+            if (BEHAT_SITE_RUNNING){
+                $output = '<span class="logininfo">'.$link.'</span>';
+            } else {
+                $output = $link;
+            }
         }
         return $output;
     }
