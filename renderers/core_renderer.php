@@ -445,16 +445,15 @@ class theme_snap_core_renderer extends toc_renderer {
         }
 
         $linkcontent = $image
-            . '<div class="snap-media-body">'
-            . "<h3>$title</h3>"
-            . $metastr
-            . $content
-            . '</div>';
+                . '<div class="snap-media-body">'
+                . "<h3>$title</h3>"
+                . '<span class="snap-media-meta">'.$metastr.'</span>'
+                . $content
+                . '</div>';
 
         $link = html_writer::link($url, $linkcontent, $linkclasses);
 
         return '<div class="snap-media-object'.$extraclasses.'">'.$link.'</div>';
-
     }
 
     /**
