@@ -12,7 +12,6 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
-
 /**
  * Moodle blocks.
  *
@@ -20,13 +19,13 @@
  * @copyright Copyright (c) 2015 Moodlerooms Inc. (http://www.moodlerooms.com)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
- 
 @media screen and (min-width: @screen-sm-min) {
     #moodle-blocks {
         column-count: 2;
         column-gap: 5%;
         column-width: 45%;
     }
+    
     #moodle-blocks .block:not(.block_settings) {
         display: inline-block;
         width: 100%;
@@ -36,6 +35,7 @@
 .block .header .title h2 {
     font-size: @font-size-h5;
 }
+
 .block h3 {
     font-size: @font-size-h6;
 }
@@ -48,21 +48,21 @@ a.skip-block {
 .block_action {
     display: none;
 }
+
 .block.hidden .content {
     display: block;
 }
 
 /* hide blocks by default */
-#moodle-blocks,
 /* workaround for participant list pretending to be course view MDL-50492 */
+#moodle-blocks,
 .path-user.path-course.path-course-view.editing #moodle-blocks {
     visibility: hidden;
-    height: 0px;
+    height: 0;
     overflow: hidden;
 }
 
 /* show blocks on front page, quiz, book, cal etc and when clicked */
-
 #page-admin-index #moodle-blocks,
 #page-mod-quiz-attempt #moodle-blocks,
 #page-mod-quiz-review #moodle-blocks,
@@ -86,31 +86,33 @@ a.skip-block {
 #page-mod-book-view,
 #page-mod-quiz-review,
 #page-mod-quiz-attempt {
-  #moodle-blocks {
-    -webkit-column-count: 1;
-    -moz-column-count: 1;
-    column-count: 1;
-      .block{
-        display:none;
-      }
-      .block_fake,
-      .block_settings{
-        display:block;
-      }
-      .block_fake {
-        margin-top:2em;
-      }
+    #moodle-blocks {
+        -webkit-column-count: 1;
+        -moz-column-count: 1;
+        column-count: 1;
+        
+        .block {
+            display: none;
+        }
+        
+        .block_fake,
+        .block_settings {
+            display: block;
+        }
+        
+        .block_fake {
+            margin-top: 2em;
+        }
     }
 }
 
-
 .block,
 .block-region .block {
-    margin: 0 auto 1em auto;
+    margin: 0 auto 1em;
     padding: 0 2%;
     border: 0;
     box-shadow: none;
-    border: 0px;
+    border: 0;
     background-color: transparent;
     max-width: 50.5em;
 }
@@ -120,7 +122,7 @@ body.path-site .block-region .block {
 }
 
 .block.block_settings,
-body.path-site .block.block_settings{
+body.path-site .block.block_settings {
     margin-top: 0;
     margin-bottom: 1em;
 }
@@ -128,36 +130,38 @@ body.path-site .block.block_settings{
 /* icons in blocks */
 .block_navigation .block_tree .tree_item.branch,
 .block_settings .block_tree .tree_item.branch {
-    background-position: 0 .5em;
+    background-position: 0 0.5em;
 }
+
 .block_navigation .block_tree li.item_with_icon > p img,
 .block_settings .block_tree li.item_with_icon > p img {
-    top: .5em;
-    opacity: .7;
+    top: 0.5em;
+    opacity: 0.7;
 }
 
 .block .icon.column {
     width: 21px;
+    
     img {
         vertical-align: baseline;
     }
 }
-.eventcontent .smallicon{
+
+.eventcontent .smallicon {
     width: 50px;
-    margin-right:2%;
+    margin-right: 2%;
 }
-
-
-
 
 /* Calandar */
 .eventtitle {
-    font-size:1em;
+    font-size: 1em;
 }
-.calendar-event-panel .eventcontent{
-        text-align:left;
-        padding:0.5em;
+
+.calendar-event-panel .eventcontent {
+    text-align: left;
+    padding: 0.5em;
 }
+
 .block .minicalendar {
     max-width: 100%;
 }
@@ -177,47 +181,50 @@ body.path-site .block.block_settings{
     background-color: #fff !important;
     top: 0;
     right: -100%;
-      .moodle-core-dragdrop-draghandle{
-        display:none;
-      }
-      .header {
-      	visibility:hidden;
-      	height:1.5em;
-      }
+    
+    .moodle-core-dragdrop-draghandle {
+        display: none;
+    }
+    
+    .header {
+        visibility: hidden;
+        height: 1.5em;
+    }
 }
 
 #page-content .block_settings.state-visible,
 .block_settings:target {
-  visibility: visible;
-  height: 100%;
-  overflow-y: auto;
-  overflow-x:hidden;
-  z-index: 13;
-  right:0;
-  padding-top:2em;
-  border-left: 1px solid #eee;
-  transition: right .4s ease-in-out;
+    visibility: visible;
+    height: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
+    z-index: 13;
+    right: 0;
+    padding-top: 2em;
+    border-left: 1px solid #eee;
+    transition: right 0.4s ease-in-out;
 }
 
 .block .header .title .commands {
-    width:100%;
-    font-size:small;
+    width: 100%;
+    font-size: small;
 }
 
-.block_rss_client ul.list li{
-    border:0;
-    margin:1em 0;
-    .description{
-        font-size:small;
+.block_rss_client ul.list li {
+    border: 0;
+    margin: 1em 0;
+    
+    .description {
+        font-size: small;
     }
 }
 
-
 /* BLOCKS EDITING */
 .block .moodle-actionmenu[data-enhanced].show .menu,
-.block .moodle-actionmenu[data-enhanced].show .menu[style]{
-    left:0 !important; // overwrite moodle js
+.block .moodle-actionmenu[data-enhanced].show .menu[style] {
+    left: 0 !important; // overwrite moodle js
 }
+
 .block .commands.show .moodle-core-dragdrop-draghandle {
-    display:none;
+    display: none;
 }
