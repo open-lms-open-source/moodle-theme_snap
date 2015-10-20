@@ -46,9 +46,7 @@ class behat_theme_snap extends behat_base {
      */
     public function i_log_in_with_snap_as($username) {
 
-        // Running this step using the API rather than a chained step because
-        // we need to see if the 'Log in' link is available or we need to click
-        // the dropdown to expand the navigation bar before.
+        // Go back to front page.
         $this->getSession()->visit($this->locate_path('/'));
 
         // Generic steps (we will prefix them later expanding the navigation dropdown if necessary).
