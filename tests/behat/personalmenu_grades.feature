@@ -46,11 +46,11 @@ Feature: When the moodle theme is set to Snap, students and teachers can open a 
       | activity | course | idnumber | name                 | intro                       | assignsubmission_onlinetext_enabled |
       | assign   | C1     | assign1  | Test assignment1 | Test assignment description 1 | 1 |
       | assign   | C1     | assign2  | Test assignment2 | Test assignment description 2 | 1 |
-    And I log in as "teacher1"
+    And I log in with snap as "teacher1"
     And I follow "Menu"
    Then I should see "You have no submissions to grade."
     And I follow "Log out"
-    And I log in as "student1"
+    And I log in with snap as "student1"
     And I follow "Menu"
     And I should see "You have no recent feedback."
     And I should see "My grades"
@@ -62,7 +62,7 @@ Feature: When the moodle theme is set to Snap, students and teachers can open a 
       | assign   | C1     | assign1  | Test assignment1 | Test assignment description 1 | 1 | 1 | 1 |
       | assign   | C1     | assign2  | Test assignment2 | Test assignment description 2 | 1 | 1 | 1 |
 
-    And I log in as "student1"
+    And I log in with snap as "student1"
     And I follow "Menu"
     And I should see "My grades"
     And I follow "Course"
@@ -89,7 +89,7 @@ Feature: When the moodle theme is set to Snap, students and teachers can open a 
     And I press "Continue"
     And I follow "Menu"
     And I follow "Log out"
-    And I log in as "teacher1"
+    And I log in with snap as "teacher1"
     And I follow "Menu"
     And I wait "2" seconds
    Then I should see "1 of 1 Submitted, 1 Ungraded"
@@ -104,7 +104,7 @@ Feature: When the moodle theme is set to Snap, students and teachers can open a 
     And I wait "2" seconds
    Then I should see "You have no submissions to grade."
     And I follow "Log out"
-    And I log in as "student1"
+    And I log in with snap as "student1"
     And I follow "Menu"
     And I should see "Test assignment1" in the "#snap-personal-menu-graded" "css_element"
     And I should see "My grades"

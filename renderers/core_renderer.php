@@ -439,11 +439,6 @@ class theme_snap_core_renderer extends toc_renderer {
                 format_text($meta, FORMAT_HTML, $formatoptions).'</span>';
         }
 
-        $linkclasses = [];
-        if (BEHAT_SITE_RUNNING){
-            $linkclasses['title'] = strip_tags($title); // Title attribute required by Behat.
-        }
-
         $linkcontent = $image
                 . '<div class="snap-media-body">'
                 . "<h3>$title</h3>"
@@ -451,7 +446,7 @@ class theme_snap_core_renderer extends toc_renderer {
                 . $content
                 . '</div>';
 
-        $link = html_writer::link($url, $linkcontent, $linkclasses);
+        $link = html_writer::link($url, $linkcontent);
 
         return '<div class="snap-media-object'.$extraclasses.'">'.$link.'</div>';
     }
@@ -637,13 +632,7 @@ class theme_snap_core_renderer extends toc_renderer {
                 'aria-haspopup' => 'true',
                 'class' => 'snap-login-button fixy-trigger'
             ];
-            $link = html_writer::link($loginurl, get_string('login'), $loginatts);
-
-            if (BEHAT_SITE_RUNNING){
-                $output = '<span class="logininfo">'.$link.'</span>';
-            } else {
-                $output = $link;
-            }
+            $output = html_writer::link($loginurl, get_string('login'), $loginatts);
         }
         return $output;
     }
