@@ -848,29 +848,6 @@ class theme_snap_core_renderer extends toc_renderer {
         return $output;
     }
 
-
-
-    /*
-     * This renders a notification message.
-     * Uses bootstrap compatible html.
-     */
-    public function notification($message, $classes = 'notifyproblem') {
-        $classes = renderer_base::prepare_classes($classes);
-        $classes = str_replace(array(
-            'notifyproblem',
-            'notifysuccess',
-            'notifymessage',
-            'redirectmessage',
-        ), array(
-            'alert alert-danger',
-            'alert alert-success',
-            'alert alert-info',
-            'alert alert-block alert-info',
-        ), $classes);
-
-        return parent::notification($message, $classes);
-    }
-
     /**
      * get section number by section id
      * @param int $sectionid
