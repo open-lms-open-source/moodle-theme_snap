@@ -1,4 +1,4 @@
-/*! normalize.css v3.0.1 | MIT License | git.io/normalize */
+/*! normalize.css v3.0.3 | MIT License | github.com/necolas/normalize.css */
 html {
   font-family: sans-serif;
   -ms-text-size-adjust: 100%;
@@ -16,6 +16,7 @@ footer,
 header,
 hgroup,
 main,
+menu,
 nav,
 section,
 summary {
@@ -37,7 +38,7 @@ template {
   display: none;
 }
 a {
-  background: transparent;
+  background-color: transparent;
 }
 a:active,
 a:hover {
@@ -87,7 +88,6 @@ figure {
   margin: 1em 40px;
 }
 hr {
-  -moz-box-sizing: content-box;
   box-sizing: content-box;
   height: 0;
 }
@@ -147,8 +147,6 @@ input[type="number"]::-webkit-outer-spin-button {
 }
 input[type="search"] {
   -webkit-appearance: textfield;
-  -moz-box-sizing: content-box;
-  -webkit-box-sizing: content-box;
   box-sizing: content-box;
 }
 input[type="search"]::-webkit-search-cancel-button,
@@ -232,7 +230,6 @@ img {
 .thumbnail > img,
 .thumbnail a > img {
   display: block;
-  width: 100% \9;
   max-width: 100%;
   height: auto;
 }
@@ -249,7 +246,6 @@ img {
   -o-transition: all 0.2s ease-in-out;
   transition: all 0.2s ease-in-out;
   display: inline-block;
-  width: 100% \9;
   max-width: 100%;
   height: auto;
 }
@@ -280,6 +276,9 @@ hr {
   margin: 0;
   overflow: visible;
   clip: auto;
+}
+[role="button"] {
+  cursor: pointer;
 }
 h1,
 h2,
@@ -414,9 +413,6 @@ small,
 .small {
   font-size: 72%;
 }
-cite {
-  font-style: normal;
-}
 mark,
 .mark {
   background-color: rgba(255, 152, 0, 0.1);
@@ -452,62 +448,72 @@ mark,
 .text-primary {
   color: #03a9f4;
 }
-a.text-primary:hover {
+a.text-primary:hover,
+a.text-primary:focus {
   color: #0286c2;
 }
 .text-success {
   color: #8bc34a;
 }
-a.text-success:hover {
+a.text-success:hover,
+a.text-success:focus {
   color: #71a436;
 }
 .text-info {
   color: #03a9f4;
 }
-a.text-info:hover {
+a.text-info:hover,
+a.text-info:focus {
   color: #0286c2;
 }
 .text-warning {
   color: #ff9800;
 }
-a.text-warning:hover {
+a.text-warning:hover,
+a.text-warning:focus {
   color: #cc7a00;
 }
 .text-danger {
   color: #e91e63;
 }
-a.text-danger:hover {
+a.text-danger:hover,
+a.text-danger:focus {
   color: #c1134e;
 }
 .bg-primary {
   color: #fff;
   background-color: #03a9f4;
 }
-a.bg-primary:hover {
+a.bg-primary:hover,
+a.bg-primary:focus {
   background-color: #0286c2;
 }
 .bg-success {
   background-color: rgba(139, 195, 74, 0.1);
 }
-a.bg-success:hover {
+a.bg-success:hover,
+a.bg-success:focus {
   background-color: rgba(113, 164, 54, 0.1);
 }
 .bg-info {
   background-color: rgba(3, 169, 244, 0.1);
 }
-a.bg-info:hover {
+a.bg-info:hover,
+a.bg-info:focus {
   background-color: rgba(2, 134, 194, 0.1);
 }
 .bg-warning {
   background-color: rgba(255, 152, 0, 0.1);
 }
-a.bg-warning:hover {
+a.bg-warning:hover,
+a.bg-warning:focus {
   background-color: rgba(204, 122, 0, 0.1);
 }
 .bg-danger {
   background-color: rgba(233, 30, 99, 0.1);
 }
-a.bg-danger:hover {
+a.bg-danger:hover,
+a.bg-danger:focus {
   background-color: rgba(193, 19, 78, 0.1);
 }
 .page-header {
@@ -625,10 +631,6 @@ blockquote.pull-right small:after,
 blockquote.pull-right .small:after {
   content: '\00A0 \2014';
 }
-blockquote:before,
-blockquote:after {
-  content: "";
-}
 address {
   margin-bottom: 28px;
   font-style: normal;
@@ -658,6 +660,7 @@ kbd {
 kbd kbd {
   padding: 0;
   font-size: 100%;
+  font-weight: bold;
   box-shadow: none;
 }
 pre {
@@ -1355,6 +1358,12 @@ pre code {
 table {
   background-color: #ffffff;
 }
+caption {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  color: #999999;
+  text-align: left;
+}
 th {
   text-align: left;
 }
@@ -1415,12 +1424,10 @@ th {
 .table-bordered > thead > tr > td {
   border-bottom-width: 2px;
 }
-.table-striped > tbody > tr:nth-child(odd) > td,
-.table-striped > tbody > tr:nth-child(odd) > th {
+.table-striped > tbody > tr:nth-of-type(odd) {
   background-color: #f9f9f9;
 }
-.table-hover > tbody > tr:hover > td,
-.table-hover > tbody > tr:hover > th {
+.table-hover > tbody > tr:hover {
   background-color: #f5f5f5;
 }
 table col[class*="col-"] {
@@ -1539,15 +1546,17 @@ table th[class*="col-"] {
 .table-hover > tbody > tr.danger:hover > th {
   background-color: rgba(216, 21, 88, 0.1);
 }
+.table-responsive {
+  overflow-x: auto;
+  min-height: 0.01%;
+}
 @media screen and (max-width: 767px) {
   .table-responsive {
     width: 100%;
     margin-bottom: 21px;
     overflow-y: hidden;
-    overflow-x: auto;
     -ms-overflow-style: -ms-autohiding-scrollbar;
     border: 1px solid #dddddd;
-    -webkit-overflow-scrolling: touch;
   }
   .table-responsive > .table {
     margin-bottom: 0;
@@ -1614,6 +1623,7 @@ table th[class*="col-"] {
   font-weight: normal;
   text-align: center;
   vertical-align: middle;
+  touch-action: manipulation;
   cursor: pointer;
   background-image: none;
   border: 1px solid transparent;
@@ -1629,13 +1639,17 @@ table th[class*="col-"] {
 }
 .btn:focus,
 .btn:active:focus,
-.btn.active:focus {
+.btn.active:focus,
+.btn.focus,
+.btn:active.focus,
+.btn.active.focus {
   outline: thin dotted;
   outline: 5px auto -webkit-focus-ring-color;
   outline-offset: -2px;
 }
 .btn:hover,
-.btn:focus {
+.btn:focus,
+.btn.focus {
   color: #ffffff;
   text-decoration: none;
 }
@@ -1650,24 +1664,49 @@ table th[class*="col-"] {
 .btn[disabled],
 fieldset[disabled] .btn {
   cursor: not-allowed;
-  pointer-events: none;
   opacity: 0.65;
   filter: alpha(opacity=65);
   -webkit-box-shadow: none;
   box-shadow: none;
+}
+a.btn.disabled,
+fieldset[disabled] a.btn {
+  pointer-events: none;
 }
 .btn-default {
   color: #ffffff;
   background-color: #03a9f4;
   border-color: rgba(0, 0, 0, 0.5);
 }
-.btn-default:hover,
 .btn-default:focus,
+.btn-default.focus {
+  color: #ffffff;
+  background-color: #0286c2;
+  border-color: rgba(0, 0, 0, 0.5);
+}
+.btn-default:hover {
+  color: #ffffff;
+  background-color: #0286c2;
+  border-color: rgba(0, 0, 0, 0.5);
+}
 .btn-default:active,
 .btn-default.active,
 .open > .dropdown-toggle.btn-default {
   color: #ffffff;
   background-color: #0286c2;
+  border-color: rgba(0, 0, 0, 0.5);
+}
+.btn-default:active:hover,
+.btn-default.active:hover,
+.open > .dropdown-toggle.btn-default:hover,
+.btn-default:active:focus,
+.btn-default.active:focus,
+.open > .dropdown-toggle.btn-default:focus,
+.btn-default:active.focus,
+.btn-default.active.focus,
+.open > .dropdown-toggle.btn-default.focus {
+  color: #ffffff;
+  background-color: #026e9e;
   border-color: rgba(0, 0, 0, 0.5);
 }
 .btn-default:active,
@@ -1684,6 +1723,9 @@ fieldset[disabled] .btn-default:hover,
 .btn-default.disabled:focus,
 .btn-default[disabled]:focus,
 fieldset[disabled] .btn-default:focus,
+.btn-default.disabled.focus,
+.btn-default[disabled].focus,
+fieldset[disabled] .btn-default.focus,
 .btn-default.disabled:active,
 .btn-default[disabled]:active,
 fieldset[disabled] .btn-default:active,
@@ -1702,14 +1744,36 @@ fieldset[disabled] .btn-default.active {
   background-color: #03a9f4;
   border-color: #03a9f4;
 }
-.btn-primary:hover,
 .btn-primary:focus,
+.btn-primary.focus {
+  color: #ffffff;
+  background-color: #0286c2;
+  border-color: #015276;
+}
+.btn-primary:hover {
+  color: #ffffff;
+  background-color: #0286c2;
+  border-color: #027fb8;
+}
 .btn-primary:active,
 .btn-primary.active,
 .open > .dropdown-toggle.btn-primary {
   color: #ffffff;
   background-color: #0286c2;
   border-color: #027fb8;
+}
+.btn-primary:active:hover,
+.btn-primary.active:hover,
+.open > .dropdown-toggle.btn-primary:hover,
+.btn-primary:active:focus,
+.btn-primary.active:focus,
+.open > .dropdown-toggle.btn-primary:focus,
+.btn-primary:active.focus,
+.btn-primary.active.focus,
+.open > .dropdown-toggle.btn-primary.focus {
+  color: #ffffff;
+  background-color: #026e9e;
+  border-color: #015276;
 }
 .btn-primary:active,
 .btn-primary.active,
@@ -1725,6 +1789,9 @@ fieldset[disabled] .btn-primary:hover,
 .btn-primary.disabled:focus,
 .btn-primary[disabled]:focus,
 fieldset[disabled] .btn-primary:focus,
+.btn-primary.disabled.focus,
+.btn-primary[disabled].focus,
+fieldset[disabled] .btn-primary.focus,
 .btn-primary.disabled:active,
 .btn-primary[disabled]:active,
 fieldset[disabled] .btn-primary:active,
@@ -1743,14 +1810,36 @@ fieldset[disabled] .btn-primary.active {
   background-color: #8bc34a;
   border-color: #8bc34a;
 }
-.btn-success:hover,
 .btn-success:focus,
+.btn-success.focus {
+  color: #ffffff;
+  background-color: #71a436;
+  border-color: #496a23;
+}
+.btn-success:hover {
+  color: #ffffff;
+  background-color: #71a436;
+  border-color: #6c9c34;
+}
 .btn-success:active,
 .btn-success.active,
 .open > .dropdown-toggle.btn-success {
   color: #ffffff;
   background-color: #71a436;
   border-color: #6c9c34;
+}
+.btn-success:active:hover,
+.btn-success.active:hover,
+.open > .dropdown-toggle.btn-success:hover,
+.btn-success:active:focus,
+.btn-success.active:focus,
+.open > .dropdown-toggle.btn-success:focus,
+.btn-success:active.focus,
+.btn-success.active.focus,
+.open > .dropdown-toggle.btn-success.focus {
+  color: #ffffff;
+  background-color: #5f892d;
+  border-color: #496a23;
 }
 .btn-success:active,
 .btn-success.active,
@@ -1766,6 +1855,9 @@ fieldset[disabled] .btn-success:hover,
 .btn-success.disabled:focus,
 .btn-success[disabled]:focus,
 fieldset[disabled] .btn-success:focus,
+.btn-success.disabled.focus,
+.btn-success[disabled].focus,
+fieldset[disabled] .btn-success.focus,
 .btn-success.disabled:active,
 .btn-success[disabled]:active,
 fieldset[disabled] .btn-success:active,
@@ -1784,14 +1876,36 @@ fieldset[disabled] .btn-success.active {
   background-color: #03a9f4;
   border-color: #03a9f4;
 }
-.btn-info:hover,
 .btn-info:focus,
+.btn-info.focus {
+  color: #ffffff;
+  background-color: #0286c2;
+  border-color: #015276;
+}
+.btn-info:hover {
+  color: #ffffff;
+  background-color: #0286c2;
+  border-color: #027fb8;
+}
 .btn-info:active,
 .btn-info.active,
 .open > .dropdown-toggle.btn-info {
   color: #ffffff;
   background-color: #0286c2;
   border-color: #027fb8;
+}
+.btn-info:active:hover,
+.btn-info.active:hover,
+.open > .dropdown-toggle.btn-info:hover,
+.btn-info:active:focus,
+.btn-info.active:focus,
+.open > .dropdown-toggle.btn-info:focus,
+.btn-info:active.focus,
+.btn-info.active.focus,
+.open > .dropdown-toggle.btn-info.focus {
+  color: #ffffff;
+  background-color: #026e9e;
+  border-color: #015276;
 }
 .btn-info:active,
 .btn-info.active,
@@ -1807,6 +1921,9 @@ fieldset[disabled] .btn-info:hover,
 .btn-info.disabled:focus,
 .btn-info[disabled]:focus,
 fieldset[disabled] .btn-info:focus,
+.btn-info.disabled.focus,
+.btn-info[disabled].focus,
+fieldset[disabled] .btn-info.focus,
 .btn-info.disabled:active,
 .btn-info[disabled]:active,
 fieldset[disabled] .btn-info:active,
@@ -1825,14 +1942,36 @@ fieldset[disabled] .btn-info.active {
   background-color: #ff9800;
   border-color: #ff9800;
 }
-.btn-warning:hover,
 .btn-warning:focus,
+.btn-warning.focus {
+  color: #ffffff;
+  background-color: #cc7a00;
+  border-color: #804c00;
+}
+.btn-warning:hover {
+  color: #ffffff;
+  background-color: #cc7a00;
+  border-color: #c27400;
+}
 .btn-warning:active,
 .btn-warning.active,
 .open > .dropdown-toggle.btn-warning {
   color: #ffffff;
   background-color: #cc7a00;
   border-color: #c27400;
+}
+.btn-warning:active:hover,
+.btn-warning.active:hover,
+.open > .dropdown-toggle.btn-warning:hover,
+.btn-warning:active:focus,
+.btn-warning.active:focus,
+.open > .dropdown-toggle.btn-warning:focus,
+.btn-warning:active.focus,
+.btn-warning.active.focus,
+.open > .dropdown-toggle.btn-warning.focus {
+  color: #ffffff;
+  background-color: #a86400;
+  border-color: #804c00;
 }
 .btn-warning:active,
 .btn-warning.active,
@@ -1848,6 +1987,9 @@ fieldset[disabled] .btn-warning:hover,
 .btn-warning.disabled:focus,
 .btn-warning[disabled]:focus,
 fieldset[disabled] .btn-warning:focus,
+.btn-warning.disabled.focus,
+.btn-warning[disabled].focus,
+fieldset[disabled] .btn-warning.focus,
 .btn-warning.disabled:active,
 .btn-warning[disabled]:active,
 fieldset[disabled] .btn-warning:active,
@@ -1866,14 +2008,36 @@ fieldset[disabled] .btn-warning.active {
   background-color: #e91e63;
   border-color: #e91e63;
 }
-.btn-danger:hover,
 .btn-danger:focus,
+.btn-danger.focus {
+  color: #ffffff;
+  background-color: #c1134e;
+  border-color: #7b0c32;
+}
+.btn-danger:hover {
+  color: #ffffff;
+  background-color: #c1134e;
+  border-color: #b8124a;
+}
 .btn-danger:active,
 .btn-danger.active,
 .open > .dropdown-toggle.btn-danger {
   color: #ffffff;
   background-color: #c1134e;
   border-color: #b8124a;
+}
+.btn-danger:active:hover,
+.btn-danger.active:hover,
+.open > .dropdown-toggle.btn-danger:hover,
+.btn-danger:active:focus,
+.btn-danger.active:focus,
+.open > .dropdown-toggle.btn-danger:focus,
+.btn-danger:active.focus,
+.btn-danger.active.focus,
+.open > .dropdown-toggle.btn-danger.focus {
+  color: #ffffff;
+  background-color: #a11041;
+  border-color: #7b0c32;
 }
 .btn-danger:active,
 .btn-danger.active,
@@ -1889,6 +2053,9 @@ fieldset[disabled] .btn-danger:hover,
 .btn-danger.disabled:focus,
 .btn-danger[disabled]:focus,
 fieldset[disabled] .btn-danger:focus,
+.btn-danger.disabled.focus,
+.btn-danger[disabled].focus,
+fieldset[disabled] .btn-danger.focus,
 .btn-danger.disabled:active,
 .btn-danger[disabled]:active,
 fieldset[disabled] .btn-danger:active,
@@ -1905,11 +2072,11 @@ fieldset[disabled] .btn-danger.active {
 .btn-link {
   color: #03a9f4;
   font-weight: normal;
-  cursor: pointer;
   border-radius: 0;
 }
 .btn-link,
 .btn-link:active,
+.btn-link.active,
 .btn-link[disabled],
 fieldset[disabled] .btn-link {
   background-color: transparent;
@@ -2048,9 +2215,9 @@ input[type="button"].btn-block {
   background-color: #ffffff;
   border: 1px solid #dddddd;
   border-radius: 0px;
-  -webkit-transition: all 0.2s ease-in-out;
-  -o-transition: all 0.2s ease-in-out;
-  transition: all 0.2s ease-in-out;
+  -webkit-transition: border 0.2s ease-in-out;
+  -o-transition: border 0.2s ease-in-out;
+  transition: border 0.2s ease-in-out;
 }
 .thumbnail > img,
 .thumbnail a > img {
@@ -2115,12 +2282,9 @@ a.thumbnail.active {
 }
 .hidden {
   display: none !important;
-  visibility: hidden !important;
 }
 .affix {
   position: fixed;
-  -webkit-transform: translate3d(0, 0, 0);
-  transform: translate3d(0, 0, 0);
 }
 @-ms-viewport {
   width: device-width;
@@ -2150,7 +2314,7 @@ a.thumbnail.active {
     display: block !important;
   }
   table.visible-xs {
-    display: table;
+    display: table !important;
   }
   tr.visible-xs {
     display: table-row !important;
@@ -2180,7 +2344,7 @@ a.thumbnail.active {
     display: block !important;
   }
   table.visible-sm {
-    display: table;
+    display: table !important;
   }
   tr.visible-sm {
     display: table-row !important;
@@ -2210,7 +2374,7 @@ a.thumbnail.active {
     display: block !important;
   }
   table.visible-md {
-    display: table;
+    display: table !important;
   }
   tr.visible-md {
     display: table-row !important;
@@ -2240,7 +2404,7 @@ a.thumbnail.active {
     display: block !important;
   }
   table.visible-lg {
-    display: table;
+    display: table !important;
   }
   tr.visible-lg {
     display: table-row !important;
@@ -2293,7 +2457,7 @@ a.thumbnail.active {
     display: block !important;
   }
   table.visible-print {
-    display: table;
+    display: table !important;
   }
   tr.visible-print {
     display: table-row !important;
@@ -3588,6 +3752,7 @@ span.editinstructions {
   font-weight: normal;
   text-align: center;
   vertical-align: middle;
+  touch-action: manipulation;
   cursor: pointer;
   background-image: none;
   border: 1px solid transparent;
@@ -3617,13 +3782,17 @@ span.editinstructions {
 }
 .snap-asset .unread a:focus,
 .snap-asset .unread a:active:focus,
-.snap-asset .unread a.active:focus {
+.snap-asset .unread a.active:focus,
+.snap-asset .unread a.focus,
+.snap-asset .unread a:active.focus,
+.snap-asset .unread a.active.focus {
   outline: thin dotted;
   outline: 5px auto -webkit-focus-ring-color;
   outline-offset: -2px;
 }
 .snap-asset .unread a:hover,
-.snap-asset .unread a:focus {
+.snap-asset .unread a:focus,
+.snap-asset .unread a.focus {
   color: #ffffff;
   text-decoration: none;
 }
@@ -3638,11 +3807,14 @@ span.editinstructions {
 .snap-asset .unread a[disabled],
 fieldset[disabled] .snap-asset .unread a {
   cursor: not-allowed;
-  pointer-events: none;
   opacity: 0.65;
   filter: alpha(opacity=65);
   -webkit-box-shadow: none;
   box-shadow: none;
+}
+a.snap-asset .unread a.disabled,
+fieldset[disabled] a.snap-asset .unread a {
+  pointer-events: none;
 }
 .snap-asset .unread a:hover,
 .snap-asset .unread a:focus {
@@ -3679,6 +3851,7 @@ fieldset[disabled] .snap-asset .unread a {
   font-weight: normal;
   text-align: center;
   vertical-align: middle;
+  touch-action: manipulation;
   cursor: pointer;
   background-image: none;
   border: 1px solid transparent;
@@ -3710,7 +3883,13 @@ fieldset[disabled] .snap-asset .unread a {
 #changenumsections .increase-sections:active:focus,
 #changenumsections .reduce-sections:active:focus,
 #changenumsections .increase-sections.active:focus,
-#changenumsections .reduce-sections.active:focus {
+#changenumsections .reduce-sections.active:focus,
+#changenumsections .increase-sections.focus,
+#changenumsections .reduce-sections.focus,
+#changenumsections .increase-sections:active.focus,
+#changenumsections .reduce-sections:active.focus,
+#changenumsections .increase-sections.active.focus,
+#changenumsections .reduce-sections.active.focus {
   outline: thin dotted;
   outline: 5px auto -webkit-focus-ring-color;
   outline-offset: -2px;
@@ -3718,7 +3897,9 @@ fieldset[disabled] .snap-asset .unread a {
 #changenumsections .increase-sections:hover,
 #changenumsections .reduce-sections:hover,
 #changenumsections .increase-sections:focus,
-#changenumsections .reduce-sections:focus {
+#changenumsections .reduce-sections:focus,
+#changenumsections .increase-sections.focus,
+#changenumsections .reduce-sections.focus {
   color: #ffffff;
   text-decoration: none;
 }
@@ -3738,11 +3919,16 @@ fieldset[disabled] .snap-asset .unread a {
 fieldset[disabled] #changenumsections .increase-sections,
 fieldset[disabled] #changenumsections .reduce-sections {
   cursor: not-allowed;
-  pointer-events: none;
   opacity: 0.65;
   filter: alpha(opacity=65);
   -webkit-box-shadow: none;
   box-shadow: none;
+}
+a#changenumsections .increase-sections.disabled,
+a#changenumsections .reduce-sections.disabled,
+fieldset[disabled] a#changenumsections .increase-sections,
+fieldset[disabled] a#changenumsections .reduce-sections {
+  pointer-events: none;
 }
 #changenumsections .increase-sections:hover,
 #changenumsections .reduce-sections:hover,
@@ -4257,6 +4443,7 @@ input[type="text"] + input[type="submit"] {
   font-weight: normal;
   text-align: center;
   vertical-align: middle;
+  touch-action: manipulation;
   cursor: pointer;
   background-image: none;
   border: 1px solid transparent;
@@ -4288,7 +4475,13 @@ input[type="text"] + input[type="submit"] {
 .snap-modchooser .section-modchooser-text:active:focus,
 #page-site-index .section-modchooser-link .section-modchooser-text:active:focus,
 .snap-modchooser .section-modchooser-text.active:focus,
-#page-site-index .section-modchooser-link .section-modchooser-text.active:focus {
+#page-site-index .section-modchooser-link .section-modchooser-text.active:focus,
+.snap-modchooser .section-modchooser-text.focus,
+#page-site-index .section-modchooser-link .section-modchooser-text.focus,
+.snap-modchooser .section-modchooser-text:active.focus,
+#page-site-index .section-modchooser-link .section-modchooser-text:active.focus,
+.snap-modchooser .section-modchooser-text.active.focus,
+#page-site-index .section-modchooser-link .section-modchooser-text.active.focus {
   outline: thin dotted;
   outline: 5px auto -webkit-focus-ring-color;
   outline-offset: -2px;
@@ -4296,7 +4489,9 @@ input[type="text"] + input[type="submit"] {
 .snap-modchooser .section-modchooser-text:hover,
 #page-site-index .section-modchooser-link .section-modchooser-text:hover,
 .snap-modchooser .section-modchooser-text:focus,
-#page-site-index .section-modchooser-link .section-modchooser-text:focus {
+#page-site-index .section-modchooser-link .section-modchooser-text:focus,
+.snap-modchooser .section-modchooser-text.focus,
+#page-site-index .section-modchooser-link .section-modchooser-text.focus {
   color: #ffffff;
   text-decoration: none;
 }
@@ -4316,11 +4511,16 @@ input[type="text"] + input[type="submit"] {
 fieldset[disabled] .snap-modchooser .section-modchooser-text,
 fieldset[disabled] #page-site-index .section-modchooser-link .section-modchooser-text {
   cursor: not-allowed;
-  pointer-events: none;
   opacity: 0.65;
   filter: alpha(opacity=65);
   -webkit-box-shadow: none;
   box-shadow: none;
+}
+a.snap-modchooser .section-modchooser-text.disabled,
+a#page-site-index .section-modchooser-link .section-modchooser-text.disabled,
+fieldset[disabled] a.snap-modchooser .section-modchooser-text,
+fieldset[disabled] a#page-site-index .section-modchooser-link .section-modchooser-text {
+  pointer-events: none;
 }
 .snap-modchooser .section-modchooser-text:hover,
 #page-site-index .section-modchooser-link .section-modchooser-text:hover,
@@ -5653,6 +5853,7 @@ http://blog.rodneyrehm.de/archives/34-iOS7-Mobile-Safari-And-Viewport-Units.html
   font-weight: normal;
   text-align: center;
   vertical-align: middle;
+  touch-action: manipulation;
   cursor: pointer;
   background-image: none;
   border: 1px solid transparent;
@@ -5681,13 +5882,17 @@ http://blog.rodneyrehm.de/archives/34-iOS7-Mobile-Safari-And-Viewport-Units.html
 }
 .paging.paging-morelink a:focus,
 .paging.paging-morelink a:active:focus,
-.paging.paging-morelink a.active:focus {
+.paging.paging-morelink a.active:focus,
+.paging.paging-morelink a.focus,
+.paging.paging-morelink a:active.focus,
+.paging.paging-morelink a.active.focus {
   outline: thin dotted;
   outline: 5px auto -webkit-focus-ring-color;
   outline-offset: -2px;
 }
 .paging.paging-morelink a:hover,
-.paging.paging-morelink a:focus {
+.paging.paging-morelink a:focus,
+.paging.paging-morelink a.focus {
   color: #ffffff;
   text-decoration: none;
 }
@@ -5702,11 +5907,14 @@ http://blog.rodneyrehm.de/archives/34-iOS7-Mobile-Safari-And-Viewport-Units.html
 .paging.paging-morelink a[disabled],
 fieldset[disabled] .paging.paging-morelink a {
   cursor: not-allowed;
-  pointer-events: none;
   opacity: 0.65;
   filter: alpha(opacity=65);
   -webkit-box-shadow: none;
   box-shadow: none;
+}
+a.paging.paging-morelink a.disabled,
+fieldset[disabled] a.paging.paging-morelink a {
+  pointer-events: none;
 }
 .paging.paging-morelink a:hover,
 .paging.paging-morelink a:focus {
@@ -6443,6 +6651,7 @@ table#user-grades tr.avg td.cell {
   font-weight: normal;
   text-align: center;
   vertical-align: middle;
+  touch-action: manipulation;
   cursor: pointer;
   border: 1px solid transparent;
   white-space: nowrap;
@@ -6486,7 +6695,19 @@ table#user-grades tr.avg td.cell {
 .gradingform_checklist.editor .addgroup input.active:focus,
 .gradingform_checklist.editor .additem input.active:focus,
 .gradingform_rubric.editor .addlevel input.active:focus,
-.gradingform_rubric.editor .addcriterion input.active:focus {
+.gradingform_rubric.editor .addcriterion input.active:focus,
+.gradingform_checklist.editor .addgroup input.focus,
+.gradingform_checklist.editor .additem input.focus,
+.gradingform_rubric.editor .addlevel input.focus,
+.gradingform_rubric.editor .addcriterion input.focus,
+.gradingform_checklist.editor .addgroup input:active.focus,
+.gradingform_checklist.editor .additem input:active.focus,
+.gradingform_rubric.editor .addlevel input:active.focus,
+.gradingform_rubric.editor .addcriterion input:active.focus,
+.gradingform_checklist.editor .addgroup input.active.focus,
+.gradingform_checklist.editor .additem input.active.focus,
+.gradingform_rubric.editor .addlevel input.active.focus,
+.gradingform_rubric.editor .addcriterion input.active.focus {
   outline: thin dotted;
   outline: 5px auto -webkit-focus-ring-color;
   outline-offset: -2px;
@@ -6498,7 +6719,11 @@ table#user-grades tr.avg td.cell {
 .gradingform_checklist.editor .addgroup input:focus,
 .gradingform_checklist.editor .additem input:focus,
 .gradingform_rubric.editor .addlevel input:focus,
-.gradingform_rubric.editor .addcriterion input:focus {
+.gradingform_rubric.editor .addcriterion input:focus,
+.gradingform_checklist.editor .addgroup input.focus,
+.gradingform_checklist.editor .additem input.focus,
+.gradingform_rubric.editor .addlevel input.focus,
+.gradingform_rubric.editor .addcriterion input.focus {
   color: #ffffff;
   text-decoration: none;
 }
@@ -6528,11 +6753,20 @@ fieldset[disabled] .gradingform_checklist.editor .additem input,
 fieldset[disabled] .gradingform_rubric.editor .addlevel input,
 fieldset[disabled] .gradingform_rubric.editor .addcriterion input {
   cursor: not-allowed;
-  pointer-events: none;
   opacity: 0.65;
   filter: alpha(opacity=65);
   -webkit-box-shadow: none;
   box-shadow: none;
+}
+a.gradingform_checklist.editor .addgroup input.disabled,
+a.gradingform_checklist.editor .additem input.disabled,
+a.gradingform_rubric.editor .addlevel input.disabled,
+a.gradingform_rubric.editor .addcriterion input.disabled,
+fieldset[disabled] a.gradingform_checklist.editor .addgroup input,
+fieldset[disabled] a.gradingform_checklist.editor .additem input,
+fieldset[disabled] a.gradingform_rubric.editor .addlevel input,
+fieldset[disabled] a.gradingform_rubric.editor .addcriterion input {
+  pointer-events: none;
 }
 .gradingform_checklist.editor .addgroup input:hover,
 .gradingform_checklist.editor .additem input:hover,
@@ -6577,14 +6811,26 @@ fieldset[disabled] .gradingform_rubric.editor .addcriterion input {
 .gradingform_rubric.editor .addcriterion input[disabled] {
   background-color: #03a9f4;
 }
-.gradingform_checklist.editor .addgroup input:hover,
-.gradingform_checklist.editor .additem input:hover,
-.gradingform_rubric.editor .addlevel input:hover,
-.gradingform_rubric.editor .addcriterion input:hover,
 .gradingform_checklist.editor .addgroup input:focus,
 .gradingform_checklist.editor .additem input:focus,
 .gradingform_rubric.editor .addlevel input:focus,
 .gradingform_rubric.editor .addcriterion input:focus,
+.gradingform_checklist.editor .addgroup input.focus,
+.gradingform_checklist.editor .additem input.focus,
+.gradingform_rubric.editor .addlevel input.focus,
+.gradingform_rubric.editor .addcriterion input.focus {
+  color: #ffffff;
+  background-color: #0286c2;
+  border-color: rgba(0, 0, 0, 0.5);
+}
+.gradingform_checklist.editor .addgroup input:hover,
+.gradingform_checklist.editor .additem input:hover,
+.gradingform_rubric.editor .addlevel input:hover,
+.gradingform_rubric.editor .addcriterion input:hover {
+  color: #ffffff;
+  background-color: #0286c2;
+  border-color: rgba(0, 0, 0, 0.5);
+}
 .gradingform_checklist.editor .addgroup input:active,
 .gradingform_checklist.editor .additem input:active,
 .gradingform_rubric.editor .addlevel input:active,
@@ -6599,6 +6845,46 @@ fieldset[disabled] .gradingform_rubric.editor .addcriterion input {
 .open > .dropdown-toggle.gradingform_rubric.editor .addcriterion input {
   color: #ffffff;
   background-color: #0286c2;
+  border-color: rgba(0, 0, 0, 0.5);
+}
+.gradingform_checklist.editor .addgroup input:active:hover,
+.gradingform_checklist.editor .additem input:active:hover,
+.gradingform_rubric.editor .addlevel input:active:hover,
+.gradingform_rubric.editor .addcriterion input:active:hover,
+.gradingform_checklist.editor .addgroup input.active:hover,
+.gradingform_checklist.editor .additem input.active:hover,
+.gradingform_rubric.editor .addlevel input.active:hover,
+.gradingform_rubric.editor .addcriterion input.active:hover,
+.open > .dropdown-toggle.gradingform_checklist.editor .addgroup input:hover,
+.open > .dropdown-toggle.gradingform_checklist.editor .additem input:hover,
+.open > .dropdown-toggle.gradingform_rubric.editor .addlevel input:hover,
+.open > .dropdown-toggle.gradingform_rubric.editor .addcriterion input:hover,
+.gradingform_checklist.editor .addgroup input:active:focus,
+.gradingform_checklist.editor .additem input:active:focus,
+.gradingform_rubric.editor .addlevel input:active:focus,
+.gradingform_rubric.editor .addcriterion input:active:focus,
+.gradingform_checklist.editor .addgroup input.active:focus,
+.gradingform_checklist.editor .additem input.active:focus,
+.gradingform_rubric.editor .addlevel input.active:focus,
+.gradingform_rubric.editor .addcriterion input.active:focus,
+.open > .dropdown-toggle.gradingform_checklist.editor .addgroup input:focus,
+.open > .dropdown-toggle.gradingform_checklist.editor .additem input:focus,
+.open > .dropdown-toggle.gradingform_rubric.editor .addlevel input:focus,
+.open > .dropdown-toggle.gradingform_rubric.editor .addcriterion input:focus,
+.gradingform_checklist.editor .addgroup input:active.focus,
+.gradingform_checklist.editor .additem input:active.focus,
+.gradingform_rubric.editor .addlevel input:active.focus,
+.gradingform_rubric.editor .addcriterion input:active.focus,
+.gradingform_checklist.editor .addgroup input.active.focus,
+.gradingform_checklist.editor .additem input.active.focus,
+.gradingform_rubric.editor .addlevel input.active.focus,
+.gradingform_rubric.editor .addcriterion input.active.focus,
+.open > .dropdown-toggle.gradingform_checklist.editor .addgroup input.focus,
+.open > .dropdown-toggle.gradingform_checklist.editor .additem input.focus,
+.open > .dropdown-toggle.gradingform_rubric.editor .addlevel input.focus,
+.open > .dropdown-toggle.gradingform_rubric.editor .addcriterion input.focus {
+  color: #ffffff;
+  background-color: #026e9e;
   border-color: rgba(0, 0, 0, 0.5);
 }
 .gradingform_checklist.editor .addgroup input:active,
@@ -6651,6 +6937,18 @@ fieldset[disabled] .gradingform_checklist.editor .addgroup input:focus,
 fieldset[disabled] .gradingform_checklist.editor .additem input:focus,
 fieldset[disabled] .gradingform_rubric.editor .addlevel input:focus,
 fieldset[disabled] .gradingform_rubric.editor .addcriterion input:focus,
+.gradingform_checklist.editor .addgroup input.disabled.focus,
+.gradingform_checklist.editor .additem input.disabled.focus,
+.gradingform_rubric.editor .addlevel input.disabled.focus,
+.gradingform_rubric.editor .addcriterion input.disabled.focus,
+.gradingform_checklist.editor .addgroup input[disabled].focus,
+.gradingform_checklist.editor .additem input[disabled].focus,
+.gradingform_rubric.editor .addlevel input[disabled].focus,
+.gradingform_rubric.editor .addcriterion input[disabled].focus,
+fieldset[disabled] .gradingform_checklist.editor .addgroup input.focus,
+fieldset[disabled] .gradingform_checklist.editor .additem input.focus,
+fieldset[disabled] .gradingform_rubric.editor .addlevel input.focus,
+fieldset[disabled] .gradingform_rubric.editor .addcriterion input.focus,
 .gradingform_checklist.editor .addgroup input.disabled:active,
 .gradingform_checklist.editor .additem input.disabled:active,
 .gradingform_rubric.editor .addlevel input.disabled:active,
