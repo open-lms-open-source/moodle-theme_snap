@@ -12,7 +12,6 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
-
 /**
  * Snap course swatch.
  *
@@ -20,14 +19,11 @@
  * @copyright Copyright (c) 2015 Moodlerooms Inc. (http://www.moodlerooms.com)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-
-
 //
 // A Course page - The main content
 // --------------------------------------------------
 // Course page
 // -------------------------
-
 /***************
 THE COURSE DOM LOOKS LIKE THIS :
 (n.b. i did not invent this dom structure)
@@ -38,41 +34,39 @@ section#region-main
             ul.somestringfromtheformat e.g  topics/weeks etc
 
  ****************************/
-
-
-
 // SHAME - do we need this?
+
 .singlebutton {
-    margin:0.5em 0;
-    text-align:center;
+    margin: 0.5em 0;
+    text-align: center;
 }
 
 // Course page  - turn editing on button
 #page-mast .singlebutton {
-  float:right;
-  margin-top:-3.2em; // MAGIC NUMBER
-  margin-right:-4%; // MAGIC NUMBER
-  input[type="submit"] {
-    background-color:@gray-light !important;
-    box-shadow:0;
-  }
-  // hide on small screen
-  display:none;
+    float: right;
+    margin-top: -3.2em; // MAGIC NUMBER
+    margin-right: -4%; // MAGIC NUMBER
+    
+    input[type="submit"] {
+        background-color: @gray-light !important;
+        box-shadow: 0;
+    }
+
+    // hide on small screen
+    display: none;
 }
 
 @media screen and (min-width: @screen-md) {
-  #page-mast .singlebutton {
-      display:block;
-  }
+    #page-mast .singlebutton {
+        display: block;
+    }
 }
 
 .ie.path-course-view section#region-main > .singlebutton input[type="submit"] {
-    background-image: url([[pix:theme|edit_for_ie]]);
+    background-image: url("[[pix:theme|edit_for_ie]]");
     background-size: 23px;
     background-position: left center;
 }
-
-
 
 .section .filler {
     display: none;
@@ -83,33 +77,35 @@ section#region-main
 // -------------------------
 
 #dndupload-status {
-  display:none;
+    display: none;
 }
 
 // only display drag and drop for devices that we think are desktop!
 @media screen and (min-width: @screen-md) {
-  #dndupload-status {
-    display:block;
-    border:0;
-    box-shadow:none;
-    width:100%;
-    padding:0;
-    margin:0 auto;
-    top:5em;
-    border-radius:0;
-    height:0;
-    background-color:transparent;
-    color:#ccc;
-  }
+    #dndupload-status {
+        display: block;
+        border: 0;
+        box-shadow: none;
+        width: 100%;
+        padding: 0;
+        margin: 0 auto;
+        top: 5em;
+        border-radius: 0;
+        height: 0;
+        background-color: transparent;
+        color: #ccc;
+    }
 }
 
 /* A SPECIAL SECTION IN SNAP FOR COURSE TOOLS */
 #coursetools-logo {
     height: 100%;
 }
-#coursetools-list{
-    a{
-        display:block;
+
+#coursetools-list {
+    a {
+        display: block;
+        
         .svg-icon {
             width: 2em;
             height: 2em;
@@ -119,21 +115,25 @@ section#region-main
         }
     }
 }
+
 @media screen and (min-width: @screen-md) {
     #coursetools {
-        margin:0 -10%;
-        clear:both;
+        margin: 0 -10%;
+        clear: both;
     }
+
     .format-singleactivity #coursetools {
         margin: 0;
     }
-    #coursetools-list{
-        padding: 1em 1em;
+
+    #coursetools-list {
+        padding: 1em;
+        
         a {
-            width:50%;
-            float:left;
-            padding:0.3em;
-            font-size:1.1em;
+            width: 50%;
+            float: left;
+            padding: 0.3em;
+            font-size: 1.1em;
         }
     }
 }
@@ -141,36 +141,40 @@ section#region-main
 // -------------------------
 // Add numbers to sections
 // -------------------------
+
 .topics,
 .weeks {
     counter-reset: annotation-list -1;
-    margin:0;
-    padding:0;
+    margin: 0;
+    padding: 0;
 }
+
 .format-weeks #chapters {
-  list-style:none;
+    list-style: none;
 }
-.format-topics{
-  li.section .sectionname:before{
-      content: counter(annotation-list) ".\00a0";
-  }
-  // drag and drop yui hack
-  .yui3-dd-proxy li.section .sectionname:before{
-      content: ' ';
-  }
 
-  #section-0 .sectionname:before {
-      content:" ";
-  }
-  li.section.main {
-      counter-increment: annotation-list;
-  }
+.format-topics {
+    li.section .sectionname:before {
+        content: counter(annotation-list) ".\00a0";
+    }
+
+    // drag and drop yui hack
+    .yui3-dd-proxy li.section .sectionname:before {
+        content: ' ';
+    }
+
+    #section-0 .sectionname:before {
+        content: " ";
+    }
+
+    li.section.main {
+        counter-increment: annotation-list;
+    }
 }
+
 li.section:focus {
-    outline:none;
+    outline: none;
 }
-
-
 
 // -------------------------
 // Course sections
@@ -179,59 +183,66 @@ li.section:focus {
 .course-content ul li.section.main {
     border: 0;
 }
+
 .course-content .current {
-    background-color:transparent;
+    background-color: transparent;
 }
+
 .course-content .current {
-    background-color:transparent;
-        .content:before {
-            // content:"Current section";
-            display:block;
-            font-size: @font-size-h4;
-        }
+    background-color: transparent;
+    
+    .content:before {
+        
+        // content:"Current section";
+        display: block;
+        font-size: @font-size-h4;
+    }
 }
 
 .course-content .single-section ul.folderview li.section {
     .right.side .editing_highlight img {
         display: block;
     }
+
     .content .summary {
         margin-right: 40px;
     }
 }
-#page-course-view-folderview .content > h3{
-    display:inline;
+
+#page-course-view-folderview .content > h3 {
+    display: inline;
 }
 
 .sectionname {
     padding-top: 0;
     margin-top: 0;
-    white-space:normal !important;
+    white-space: normal !important;
 }
-// overwrite moodle not showing title for section 0
 
-#section-0 .sectionname.accesshide{
-    position:relative;
-    left:0;
-    font-weight:300;
-    font-size:@font-size-h2;
+// overwrite moodle not showing title for section 0
+#section-0 .sectionname.accesshide {
+    position: relative;
+    left: 0;
+    font-weight: 300;
+    font-size: @font-size-h2;
 }
 
 // except in folder view where the name is spat out twice on single pages
 // this is a folderview bug....
-.folderview .sectionname.accesshide{
+
+.folderview .sectionname.accesshide {
     position: absolute;
     left: -10000px;
 }
 
-
 .path-course-view .section .summary {
-    position:relative;
+    position: relative;
     line-height: inherit;
-    padding-bottom:1.6em;
+    padding-bottom: 1.6em;
     .clearfix();
+    
     p {
-        margin-bottom:1.6em;
+        margin-bottom: 1.6em;
     }
 }
 
@@ -246,30 +257,34 @@ li.section:focus {
         width: auto;
         padding: 0;
         margin: 0 auto;
-        float:none;
-        display:block;
-        text-align:left;
-        margin-top:-1em;
-        a, span {
-            display:inline-block;
-            width:auto;
-            padding:0 0.3em;
+        float: none;
+        display: block;
+        text-align: left;
+        margin-top: -1em;
+        
+        a,
+        span {
+            display: inline-block;
+            width: auto;
+            padding: 0 0.3em;
         }
+
         img.icon {
-            margin:0;
-            padding:0;
+            margin: 0;
+            padding: 0;
             vertical-align: baseline;
         }
+
         .section-handle {
-            float:left;
+            float: left;
         }
-}
-}
-// get rid of js cursor style applied to the whole commands area
-.snap-section-editing[style]{
-    cursor:default !important;
+    }
 }
 
+// get rid of js cursor style applied to the whole commands area
+.snap-section-editing[style] {
+    cursor: default !important;
+}
 
 // -------------------------
 // important! stuff so sections are not detected as visible by js
@@ -286,7 +301,7 @@ li.section:focus {
     visibility: hidden;
     height: 0;
     width: 0;
-    overflow:hidden;
+    overflow: hidden;
 }
 
 .editing .course-content > ul li.section,
@@ -305,24 +320,26 @@ li.section:focus {
 #completionprogressid {
     display: none;
 }
+
 .section_footer,
-.visibleifjs.addresourcemodchooser{
-    clear:both;
-    display:block;
+.visibleifjs.addresourcemodchooser {
+    clear: both;
+    display: block;
 }
 
 /* Flex page - align edit button right */
-body.format-flexpage .singlebutton{
+body.format-flexpage .singlebutton {
     text-align: right;
 }
 
 .section-modchooser {
-    text-align:center;
-    padding:3em 0;
+    text-align: center;
+    padding: 3em 0;
 }
 
 .editing .course-content ul li.section.main {
     border-top: 1px solid #ccc;
+    
     &:first-child {
         border-top: none;
     }
@@ -336,17 +353,19 @@ body.format-flexpage .singlebutton{
     text-align: right;
     padding-bottom: 2em;
     border-bottom: 1px solid #ccc;
+    
     &+ h3 + form {
         padding-bottom: 2em;
+        
         label {
             display: block;
         }
     }
 }
 
-
 .course-content ul li.section.hidden {
     opacity: 1;
+    
     .content {
         &> h3,
         &> div,
@@ -356,115 +375,107 @@ body.format-flexpage .singlebutton{
     }
 }
 
-
-
-
-
-
-
-
 /* MODS & RESOURCES IN COURSE */
-
 // -------------------------
 // Reset moodle css mess
 // -------------------------
 
-.editing .section .activity .contentwithoutlink{
-        padding-right:0;
-
+.editing .section .activity .contentwithoutlink {
+    padding-right: 0;
 }
+
 .section .activity .activityinstance,
 .section .activity .activityinstance div {
-    display:block;
-}
-.path-site li.activity>div,
-.path-course-view li.activity>div{
-    padding:0;
+    display: block;
 }
 
+.path-site li.activity>div,
+.path-course-view li.activity>div {
+    padding: 0;
+}
 
 // shame - moodle uses ul and li for sections. We have to overspecify and reset the basic dom element styles to account for this
 .section {
     ul,
-    ol{
-        margin:1.6em 4%;
+    ol {
+        margin: 1.6em 4%;
+        
         ul,
-        ol{
-            margin:0 4%;
+        ol {
+            margin: 0 4%;
         }
     }
+
     .activityinstance {
         ul,
-        ol{
-            margin:1.6em 4%;
+        ol {
+            margin: 1.6em 4%;
+            
             ul,
-            ol{
-                margin:0 4%;
+            ol {
+                margin: 0 4%;
             }
         }
+
         .contentafterlink p {
-            margin-bottom:1.6em;
+            margin-bottom: 1.6em;
         }
     }
 }
-
-
-
-
-
-
-
-
-
 
 // -------------------------
 // Activity & Resource styles
 // -------------------------
-
 // heading link to asset
+
 .snap-asset-link {
-    margin:0;
-    padding:0;
+    margin: 0;
+    padding: 0;
 }
 
 // generic moodle activity - as asset in snap
-.section li.snap-asset{
-    display:block;
-    position:relative;
-    padding:0;
-    margin:1em auto;
-    padding-bottom:1em;
-    min-height:125px;
-    height:auto;
-    font-family:@font-family-base;
-    background-image:url([[pix:theme|file]]);
-    background-repeat:no-repeat;
-    background-position:50% 89%;
-    background-size:100px auto;
-    box-shadow:0 2px 5px 0 rgba(0, 0, 0, 0.26);
+.section li.snap-asset {
+    display: block;
+    position: relative;
+    padding: 0;
+    margin: 1em auto;
+    padding-bottom: 1em;
+    min-height: 125px;
+    height: auto;
+    font-family: @font-family-base;
+    background-image: url("[[pix:theme|file]]");
+    background-repeat: no-repeat;
+    background-position: 50% 89%;
+    background-size: 100px auto;
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
+    
     .asset-wrapper {
-        height:100%;
-        overflow-x:hidden;
-        overflow-y:auto;
-        position:static;
-        padding:1em 0;
+        height: 100%;
+        overflow-x: hidden;
+        overflow-y: auto;
+        position: static;
+        padding: 1em 0;
     }
-    .activityinstance{
-        padding:0.5em 2%;
-        background-color:#fff;
-        height:auto;
+
+    .activityinstance {
+        padding: 0.5em 2%;
+        background-color: #fff;
+        height: auto;
         .clearfix();
-        .activityicon{
-            float:right;
-            width:75px;
-            height:75px;
+        
+        .activityicon {
+            float: right;
+            width: 75px;
+            height: 75px;
         }
+
         // the link to the mod - moodle does not add a class :(
         .snap-asset-link a {
-            color:#666;
+            color: #666;
+            
             &:hover {
-                color:#333;
-                text-decoration:none;
+                color: #333;
+                text-decoration: none;
             }
         }
     }
@@ -472,36 +483,37 @@ body.format-flexpage .singlebutton{
 /* resourcelinkdetails = moodle putting filetype on screen if option selected
 we do this by default in snap, so hide moodle version */
 .resourcelinkdetails {
-    display:none;
+    display: none;
 }
 /* snap has its own implimentation of these, so hide moodles */
 .activityinstance .accesshide,
 .groupinglabel {
-    display:none;
+    display: none;
 }
 
 // asset type, draft, conditional and group
 .snap-meta {
-    font-family:@font-family-base;
-    font-size:small;
+    font-family: @font-family-base;
+    font-size: small;
 }
+
 .conditional,
 .draft {
     .snap-meta {
-        clear:both;
+        clear: both;
     }
 }
 
 // mime/activity name
 .snap-assettype {
-    position:absolute;
-    top:0;
-    left:0;
-    display:inline-block;
-    padding:0 2%;
-    background-color:rgba(0,0,0,0.2);
-    color:white;
-    text-transform:uppercase;
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: inline-block;
+    padding: 0 2%;
+    background-color: rgba(0,0,0,0.2);
+    color: white;
+    text-transform: uppercase;
 }
 
 // tag styles for draft/group/contitional meta data
@@ -512,132 +524,147 @@ we do this by default in snap, so hide moodle version */
 .sectiontag {
     .snap-tag;
 }
-.sectiontag {
-    margin-left:1.4em;
-}
 
+.sectiontag {
+    margin-left: 1.4em;
+}
 
 // hide draft tag, unless asset has class draft (can be added by js)
 .draft_info {
-    display:none;
+    display: none;
 }
+
 // show draft tag if parent has draft class
-.draft .draft_info{
-    display:inline-block;
+.draft .draft_info {
+    display: inline-block;
 }
 
 // conditional list of stuff you have to do before
-.availabilityinfo{
-    clear:both;
-    font-size:small;
-    font-family:@font-family-base;
+.availabilityinfo {
+    clear: both;
+    font-size: small;
+    font-family: @font-family-base;
 }
-
-
-
 
 // -------------------------
 // Snap label
 // -------------------------
 // hide asset type for labels
+
 .modtype_label .snap-assettype {
-    display:none;
+    display: none;
 }
 
 .section .activity.modtype_label.label {
-    background-image:none;
-    height:auto;
-    width:100%;
-    background-color:white !important;
+    background-image: none;
+    height: auto;
+    width: 100%;
+    background-color: white !important;
     text-align: left;
-    font-weight:300;
-    padding:0.5em 0;
-    margin:0.5em 0;
-    box-shadow:none;
+    font-weight: 300;
+    padding: 0.5em 0;
+    margin: 0.5em 0;
+    box-shadow: none;
     .clearfix();
+    
     .asset-wrapper,
-    .activityinstance{
-        padding:0;
+    .activityinstance {
+        padding: 0;
     }
 }
 
 // -------------------------
 // Snap native assets - books, page, images
 // -------------------------
+
 .section li.snap-native {
-    box-shadow:none;
-    height:auto;
-    margin:1em 0;
-    padding:0.3em 0;
-    background-image:none;
-    .activityinstance{
-        padding:1em 0;
+    box-shadow: none;
+    height: auto;
+    margin: 1em 0;
+    padding: 0.3em 0;
+    background-image: none;
+    
+    .activityinstance {
+        padding: 1em 0;
     }
+
     .activityicon,
     .snap-assettype {
-        display:none;
+        display: none;
     }
-    .instancename{
+
+    .instancename {
         font-size: @font-size-h5;
     }
+
     .contentafterlink {
-        font-size:1em;
-        padding-bottom:1em;
+        font-size: 1em;
+        padding-bottom: 1em;
     }
+
     .summary-figure {
-        text-align:center;
+        text-align: center;
     }
+
     .pagemod-readmore {
-        display:inline-block;
+        display: inline-block;
         padding: 0.25em 4%;
         margin: 0 4% 0 0;
-        border:1px solid;
-        border-radius:2px;
+        border: 1px solid;
+        border-radius: 2px;
     }
+
     // some stuff for hide and show
     .pagemod-content {
-        display:none;
-        clear:both;
-        padding:1em 0;
-            &:focus {
-                outline: 0;
-            }
+        display: none;
+        clear: both;
+        padding: 1em 0;
+        
+        &:focus {
+            outline: 0;
+        }
     }
-    .summary-text + h6{clear:left;}
+
+    .summary-text + h6 {
+        clear: left;
+    }
+
     &.state-expanded {
         .summary-text,
-        .summary-figure{
-            display:none;
+        .summary-figure {
+            display: none;
         }
     }
 }
 
 @media screen and (min-width: @screen-sm-min) {
-
     .contentafterlink > ol:first-child,
     .contentafterlink >.summary-text:first-child,
     .contentafterlink .summary-figure {
         width: 50%;
         float: right;
-        padding-right:0;
+        padding-right: 0;
         margin: 0;
     }
-    .summary-figure + .summary-text{
+
+    .summary-figure + .summary-text {
         width: 50%;
         float: left;
-        padding-right:3%;
+        padding-right: 3%;
     }
+
     // the title of the resource
     .section li.snap-image,
     .section li.modtype_page {
-        .activityinstance{
-            .snap-asset-link a{
+        .activityinstance {
+            .snap-asset-link a {
                 width: 50%;
-                float:left;
-                padding:0;
+                float: left;
+                padding: 0;
             }
         }
     }
+
     // alternate stuff for pages
     .section li.modtype_page + li.modtype_page:nth-of-type(even) {
         .contentafterlink > ol:first-child,
@@ -645,180 +672,191 @@ we do this by default in snap, so hide moodle version */
         .contentafterlink .summary-figure {
             width: 50%;
             float: left;
-            padding-left:0;
+            padding-left: 0;
             margin: 0;
         }
-        .summary-figure + .summary-text{
+
+        .summary-figure + .summary-text {
             width: 50%;
             float: right;
-            padding-left:3%;
+            padding-left: 3%;
         }
-        .activityinstance{
-            .snap-asset-link a{
+
+        .activityinstance {
+            .snap-asset-link a {
                 width: 50%;
-                float:right;
-                padding-left:3%;
+                float: right;
+                padding-left: 3%;
             }
         }
+
         &.state-expanded {
-            .activityinstance{
-                .snap-asset-link a{
+            .activityinstance {
+                .snap-asset-link a {
                     width: 50%;
-                    float:left;
-                    padding:0;
+                    float: left;
+                    padding: 0;
                 }
             }
         }
     }
-
 }
+
 // TODO - make better
 // title/link on images - css is shame
-.snap-native.snap-image .activityinstance .snap-asset-link a {
-    display:none;
-}
 
+.snap-native.snap-image .activityinstance .snap-asset-link a {
+    display: none;
+}
 
 .modtype_book,
 .modtype_page {
-    border-bottom:1px solid #ccc;
+    border-bottom: 1px solid #ccc;
 }
 
 .modtype_book .contentafterlink > .summary-text:first-child {
-    width:auto;
-    float:none;
+    width: auto;
+    float: none;
 }
 
-.snap-native.modtype_book ol.bookmod-chapters{
-    margin:0;
+.snap-native.modtype_book ol.bookmod-chapters {
+    margin: 0;
 }
 
 .snap-image-image {
-    position:relative;
-    .snap-image-link{
-        display:block;
-        text-align:center;
+    position: relative;
+    
+    .snap-image-link {
+        display: block;
+        text-align: center;
     }
+
     .snap-image-summary,
     .snap-image-title {
-        position:absolute;
-        bottom:0;
-        display:block;
-        width:100%;
-        background-color:rgba(255,255,255,0.9);
-        padding:0 4%;
+        position: absolute;
+        bottom: 0;
+        display: block;
+        width: 100%;
+        background-color: rgba(255,255,255,0.9);
+        padding: 0 4%;
     }
-    .snap-image-title{
-        text-align:center;
+
+    .snap-image-title {
+        text-align: center;
     }
-    .snap-image-summary{
-        position:relative;
-        margin-top:-3em;
+
+    .snap-image-summary {
+        position: relative;
+        margin-top: -3em;
     }
 }
-
-
-
-
-
-
 
 // -------------------------
 // Snap resource
 // -------------------------
 
 .snap-resource .contentafterlink {
-    font-size:small;
+    font-size: small;
 }
-.section li.snap-resource{
-        height:250px;
-        min-width:210px;
-        width:30%;
-        margin:1em 1.5%;
-        padding:0.3em 1px 1.5em 1px;
-        float:left;
-        display:block;
-        clear:none;
-        .alakazam();
-        &:hover {
-            background-position:50% 75%;
-            background-size:120px auto;
 
-        }
+.section li.snap-resource {
+    height: 250px;
+    min-width: 210px;
+    width: 30%;
+    margin: 1em 1.5%;
+    padding: 0.3em 1px 1.5em;
+    float: left;
+    display: block;
+    clear: none;
+    .alakazam();
+    
+    &:hover {
+        background-position: 50% 75%;
+        background-size: 120px auto;
+    }
 
-        // resource cards are clickable with data-href, so add cursor pointer
-        .asset-wrapper{
-            padding:1em 2%;
-            .clearfix();
-            cursor:pointer;
-        }
-        .activityinstance {
-            padding:0.5em 4%;
-        }
-        .activityicon {
-            display:none;
-        }
-        .instancename{
-            display:block;
-            line-height:1.3;
-        }
-        .snap-assettype {
-            padding:0 4%;
-        }
-        .snap-asset-link {
-            font-size:1em;
-        }
+    // resource cards are clickable with data-href, so add cursor pointer
+    .asset-wrapper {
+        padding: 1em 2%;
+        .clearfix();
+        cursor: pointer;
+    }
 
-}
-// resources to full width on tiny screen
-@media screen and (max-width: @screen-xs) {
-    .section li.snap-resource{
-            width:92%;
-            margin:1em 4%;
+    .activityinstance {
+        padding: 0.5em 4%;
+    }
+
+    .activityicon {
+        display: none;
+    }
+
+    .instancename {
+        display: block;
+        line-height: 1.3;
+    }
+
+    .snap-assettype {
+        padding: 0 4%;
+    }
+
+    .snap-asset-link {
+        font-size: 1em;
     }
 }
 
+// resources to full width on tiny screen
+@media screen and (max-width: @screen-xs) {
+    .section li.snap-resource {
+        width: 92%;
+        margin: 1em 4%;
+    }
+}
 
 // MIME TYPEs //
 // MICROSOFT //
+
 li.snap-resource.snap-mime-document,
 li.snap-resource.snap-mime-writer,
-li.snap-resource.snap-mime-oth{
-        background-color:#42b4d6;
-        background-image:url([[pix:theme|doc]]);
+li.snap-resource.snap-mime-oth {
+    background-color: #42b4d6;
+    background-image: url("[[pix:theme|doc]]");
 }
+
 li.snap-resource.snap-mime-powerpoint,
 li.snap-resource.snap-mime-impress {
-    background-color:#F37C2A;
-    background-image:url([[pix:theme|powerpoint]]);
+    background-color: #f37c2a;
+    background-image: url("[[pix:theme|powerpoint]]");
 }
+
 li.snap-resource.snap-mime-spreadsheet,
 li.snap-resource.snap-mime-chart,
 li.snap-resource.snap-mime-database,
-li.snap-resource.snap-mime-calc{
-    background-color:#7D9D3E;
-    background-image:url([[pix:theme|spreadsheet]]);
+li.snap-resource.snap-mime-calc {
+    background-color: #7d9d3e;
+    background-image: url("[[pix:theme|spreadsheet]]");
 }
 
 // ADOBE //
 li.snap-resource.snap-mime-pdf,
 li.snap-resource.snap-mime-eps,
 li.snap-resource.snap-mime-flash,
-{
-    background-color:#e34947;
-    background-image:url([[pix:theme|pdf]]);
+ {
+    background-color: #e34947;
+    background-image: url("[[pix:theme|pdf]]");
 }
-li.snap-resource.snap-mime-flash{
-    background-image:url([[pix:theme|flash]]);
+
+li.snap-resource.snap-mime-flash {
+    background-image: url("[[pix:theme|flash]]");
 }
 
 // MULTIMEDIA //
 // #67b8cb - audio?
+
 li.snap-resource.snap-mime-mp3,
 li.snap-resource.snap-mime-wav,
-li.snap-resource.snap-mime-audio{
-    background-color:#EDC92C;
-    background-image:url([[pix:theme|music]]);
+li.snap-resource.snap-mime-audio {
+    background-color: #edc92c;
+    background-image: url("[[pix:theme|music]]");
 }
 
 li.snap-resource.snap-mime-mov,
@@ -826,496 +864,505 @@ li.snap-resource.snap-mime-wmv,
 li.snap-resource.snap-mime-video,
 li.snap-resource.snap-mime-quicktime,
 li.snap-resource.snap-mime-mpeg,
-li.snap-resource.snap-mime-avi{
-    background-color:#55B5CC;
-    background-image:url([[pix:theme|video]]);
+li.snap-resource.snap-mime-avi {
+    background-color: #55b5cc;
+    background-image: url("[[pix:theme|video]]");
 }
 
-
 li.snap-resource.modtype_lightboxgallery,
-li.snap-resource.snap-mime-bmp{
-    background-color:#4ABC96;
-    background-image:url([[pix:theme|image]]);
+li.snap-resource.snap-mime-bmp {
+    background-color: #4abc96;
+    background-image: url("[[pix:theme|image]]");
 }
 
 // MOODLE MODS //
-li.snap-resource.modtype_url{
-    background-color:#999;
-    background-image:url([[pix:theme|link]]);
+li.snap-resource.modtype_url {
+    background-color: #999;
+    background-image: url("[[pix:theme|link]]");
 }
 
-
 li.snap-resource.modtype_imscp,
-li.snap-resource.modtype_scorm{
-    background-color:#F7981D;
-    background-image:url([[pix:theme|book]]);
+li.snap-resource.modtype_scorm {
+    background-color: #f7981d;
+    background-image: url("[[pix:theme|book]]");
 }
 
-
-
 li.snap-resource.modtype_imscp,
-li.snap-resource.modtype_scorm{
-    background-image:url([[pix:theme|scorm]]);
+li.snap-resource.modtype_scorm {
+    background-image: url("[[pix:theme|scorm]]");
 }
 
 li.snap-resource.modtype_folder {
-    background-color:#F9F29A;
-    background-image:url([[pix:theme|folder]]);
+    background-color: #f9f29a;
+    background-image: url("[[pix:theme|folder]]");
 }
 
 // CODE & SYSTEM //
-li.snap-resource.snap-mime-archive{
-background-color:#F9F29A;
-    background-image:url([[pix:theme|zip]]);
+li.snap-resource.snap-mime-archive {
+    background-color: #f9f29a;
+    background-image: url("[[pix:theme|zip]]");
 }
 
 li.snap-resource.snap-mime-markup,
 li.snap-resource.snap-mime-html,
-li.snap-resource.snap-mime-sourcecode{
-    background-color:#f0652a;
-    background-image:url([[pix:theme|code]]);
+li.snap-resource.snap-mime-sourcecode {
+    background-color: #f0652a;
+    background-image: url("[[pix:theme|code]]");
 }
 
-
-li.snap-resource.snap-mime-text{
-    background-color:#f1bf26;
+li.snap-resource.snap-mime-text {
+    background-color: #f1bf26;
 }
-
-
-
-
 
 // -------------------------
 // Snap Activity
 // -------------------------
+
 .section li.snap-activity {
-    background-image:none;
-    width:99%; // to allow for box-shadow faux border
+    background-image: none;
+    width: 99%; // to allow for box-shadow faux border
+    
     .instancename {
-        font-size:@font-size-large;
-        display:block;
-        overflow:hidden;
+        font-size: @font-size-large;
+        display: block;
+        overflow: hidden;
     }
+
     .activityicon {
-        margin-left:3%;
+        margin-left: 3%;
     }
-    .activityinstance .snap-asset-link a{
-        display:block;
+
+    .activityinstance .snap-asset-link a {
+        display: block;
         .clearfix();
     }
 }
 
 // experimental code, not used bu keeping as may...
-.section li.snap-activity{
-    &.modtype_forum{
-    // background-image:linear-gradient(to right,#71d5df 22%,#ffffff 22%);
+.section li.snap-activity {
+    &.modtype_forum {
+        
+        // background-image:linear-gradient(to right,#71d5df 22%,#ffffff 22%);
     }
 }
 
-
 li.snap-activity {
-    border-left:0.3em solid #ccc;
-    border-radius:3px;
+    border-left: 0.3em solid #ccc;
+    border-radius: 3px;
 }
 
 li.modtype_forum,
 li.modtype_chat,
 li.modtype_hsuforum {
-    border-color:#49A0AE;
-    .snap-assettype{
-        background-color:#49A0AE;
+    border-color: #49a0ae;
+    
+    .snap-assettype {
+        background-color: #49a0ae;
     }
 }
 
 li.modtype_assign,
 li.modtype_assignment,
 li.modtype_workshop {
-    border-color:#4ABC96;
-    .snap-assettype{
-        background-color:#4ABC96;
+    border-color: #4abc96;
+    
+    .snap-assettype {
+        background-color: #4abc96;
     }
 }
+
 li.modtype_lesson {
-    border-color:#6CC077;
-    .snap-assettype{
-        background-color:#6CC077;
+    border-color: #6cc077;
+    
+    .snap-assettype {
+        background-color: #6cc077;
     }
 }
+
 li.modtype_choice,
 li.modtype_feedback,
 li.modtype_quiz,
 li.modtype_survey,
-li.modtype_questionnaire{
-    border-color:#A0BF19;
-    .snap-assettype{
-        background-color:#A0BF19;
+li.modtype_questionnaire {
+    border-color: #a0bf19;
+    
+    .snap-assettype {
+        background-color: #a0bf19;
     }
-
 }
+
 li.modtype_data,
 li.modtype_glossary,
-li.modtype_wiki{
-    border-color:#EDC92C;
-    .snap-assettype{
-        background-color:#EDC92C;
+li.modtype_wiki {
+    border-color: #edc92c;
+    
+    .snap-assettype {
+        background-color: #edc92c;
     }
 }
-li.modtype_collaborate{
-    border-color:#AA70B0;
-    .snap-assettype{
-        background-color:#AA70B0;
+
+li.modtype_collaborate {
+    border-color: #aa70b0;
+    
+    .snap-assettype {
+        background-color: #aa70b0;
     }
 }
 
 li.snap-activity.modtype_folder {
-    border-color:#F9F29A;
-    .snap-assettype{
-        background-color:#F9F29A;
+    border-color: #f9f29a;
+    
+    .snap-assettype {
+        background-color: #f9f29a;
     }
 }
-
-
-
-
-
-
-
-
-
-
 
 // -------------------------
 // Editing resources/activites
 // -------------------------
-
 /* EDIT SUMMARY */
-
 /* Make it obvious that you can edit a summary - Add text and some styles to that gear thing */
 #page-site-index .sitetopic>a:last-of-type,
-.summary>a:last-of-type{
-    clear:both;
-    display:block;
-    text-align:center;
-    margin:1em 0;
-    background-color:transparent;
-    font-family:@font-family-base;
+.summary>a:last-of-type {
+    clear: both;
+    display: block;
+    text-align: center;
+    margin: 1em 0;
+    background-color: transparent;
+    font-family: @font-family-base;
+    
     img {
-        display:none;
+        display: none;
     }
 }
 
 #page-site-index .sitetopic>a:last-of-type:after,
 .summary>a:last-of-type:after {
     content: attr(title);
-    display:block;
-    font-weight:300;
+    display: block;
+    font-weight: 300;
 }
+
 #page-site-index .sitetopic>a:last-of-type:before,
 .summary>a:last-of-type:before {
     content: " ";
-    background: transparent url([[pix:theme|pencil]]) no-repeat 50% 50%;
+    background: transparent url("[[pix:theme|pencil]]") no-repeat 50% 50%;
     display: block;
     height: 3em;
     width: 3em;
-    margin:0.5em auto;
+    margin: 0.5em auto;
 }
-
-
 
 // -------------------------
 // Snap actions
 // -------------------------
-
 /* all the editing options and completion data in one region */
-
 /* reset some moodle shame */
 .moodle-actionmenu,
 .moodle-actionmenu>ul,
 .moodle-actionmenu>ul>li {
-    display:block;
+    display: block;
 }
+
 .moodle-actionmenu>ul>li {
-    display:inline-block;
+    display: inline-block;
 }
 /*  actions at the footer of an element */
-.section .snap-asset .actions{
-    clear:both;
-    float:none;
-    width:100%;
-    position:absolute;
+.section .snap-asset .actions {
+    clear: both;
+    float: none;
+    width: 100%;
+    position: absolute;
     top: auto;
-    bottom:0;
-    left:0;
-    width:100%;
-    overflow:hidden;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    overflow: hidden;
     .clearfix();
+    
     .moodle-actionmenu {
         width: 100%;
         max-width: 320px;
+        
         .menubar {
             text-align: right;
         }
+
         &>ul {
             margin: 0;
         }
+    }
 }
-}
+
 // labels get a bit more padding when editing
-.editing .section .activity.modtype_label.label{
-    padding-bottom:1em;
+.editing .section .activity.modtype_label.label {
+    padding-bottom: 1em;
 }
 /* student completion actions */
 .togglecompletion,
 .autocompletion {
-    float:right;
+    float: right;
 }
+
 span.autocompletion img,
 form.togglecompletion input {
     width: 30px;
     height: 30px;
     display: inline;
     position: relative;
-
 }
 
 form.togglecompletion input {
-    border-radius:50%;
+    border-radius: 50%;
     transform: scale(0.75);
-    box-shadow:0 2px 5px 0 rgba(0, 0, 0, 0.26);
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
 }
+
 form.togglecompletion input:hover {
     transform: scale(1.04);
-    transition: transform .3s;
+    transition: transform 0.3s;
 }
 
 /* add bg colour for actions when editing */
 .editing .actions {
-    background-color:rgba(255,255,255,0.95);
+    background-color: rgba(255,255,255,0.95);
 }
 /* remove bg colour for actions when menu shown */
 .action-menu-shown .actions {
-    background-color:transparent;
+    background-color: transparent;
 }
 
-
 /* commands - moodle container for edit options */
-.snap-asset{
+.snap-asset {
     .commands {
+        
         // display:inline-block;
-        display:block;
-        float:right;
-        font-size:small;
+        display: block;
+        float: right;
+        font-size: small;
     }
 }
 
 // draghandle
-.section .snap-asset .editing_move{
-    padding:0 2%;
+.section .snap-asset .editing_move {
+    padding: 0 2%;
 }
-
-
 
 // -------------------------
 //  Edit button
 // -------------------------
-
 // that div with all the extraneous moodle editing code in.
+
 div.commands ul.menubar {
-    margin:0;
+    margin: 0;
 }
 
 // i know. SHAME selector :(
-.jsenabled .snap-asset .moodle-actionmenu[data-enhance]
-.toggle-display.textmenu {
-    text-decoration:none;
-    padding:0.5em 1em;
-    margin:0;
-    text-align:right;
-    background-color:#fff;
+.jsenabled .snap-asset .moodle-actionmenu[data-enhance] .toggle-display.textmenu {
+    text-decoration: none;
+    padding: 0.5em 1em;
+    margin: 0;
+    text-align: right;
+    background-color: #fff;
 }
+
 // hide moodle caret
-.toggle-display .caret{
-    display:none;
+.toggle-display .caret {
+    display: none;
 }
-.toggle-display.textmenu:after{
+
+.toggle-display.textmenu:after {
     content: "☰";
-    margin-left:11%;
+    margin-left: 11%;
 }
-.action-menu-shown .toggle-display.textmenu{
-    &:after{
-      content: " ";
-      background: transparent url([[pix:theme|close_x]]) repeat;
-      display: inline-block;
-      width: 1em;
-      height: 1em;
+
+.action-menu-shown .toggle-display.textmenu {
+    &:after {
+        content: " ";
+        background: transparent url("[[pix:theme|close_x]]") repeat;
+        display: inline-block;
+        width: 1em;
+        height: 1em;
     }
 }
+
 // last min css for marks code changes - make edit button block when editing...
-.action-menu-shown .moodle-actionmenu>ul>li{
-    display:block;
+.action-menu-shown .moodle-actionmenu>ul>li {
+    display: block;
 }
-
-
 
 // -------------------------
 //  Editing menu
 // -------------------------
-
 // hide to start, and set some defaults
+
 .editing .snap-asset {
     .actions .menu {
-        position:relative;
-        display:block;
+        position: relative;
+        display: block;
         visibility: hidden;
         overflow: hidden;
         z-index: 1;
-        width:0;
-        height:0;
-        border:0;
-        box-shadow:none;
-        border-radius:0;
-        background-color:#fff;
+        width: 0;
+        height: 0;
+        border: 0;
+        box-shadow: none;
+        border-radius: 0;
+        background-color: #fff;
         transform: scale(0);
         transform-origin: 100% 100%;
-        transition: transform .3s;
+        transition: transform 0.3s;
     }
+
     // when menu shown
     &.action-menu-shown .actions {
+        
         // hide move & groups
         .editing_move,
-        [class*='group']{
-            display:none;
-        }
-        // ignore inline js styles
-        .menu[style] {
-            top:0 !important;
-            left:0 !important;
-            right:0 !important;
-        }
-        .menu{
-            visibility: visible;
-            transform: scale(1);
-            transition: transform .3s;
-            padding:0 0.5em;
-            margin:0;
-            width:auto;
-            max-width:320px;
-            height:auto;
+        [class*='group'] {
+            display: none;
         }
 
+        // ignore inline js styles
+        .menu[style] {
+            top: 0 !important;
+            left: 0 !important;
+            right: 0 !important;
+        }
+
+        .menu {
+            visibility: visible;
+            transform: scale(1);
+            transition: transform 0.3s;
+            padding: 0 0.5em;
+            margin: 0;
+            width: auto;
+            max-width: 320px;
+            height: auto;
+        }
     }
 }
 
 input.titleeditor {
-    max-width:100%;
-    padding:0.3em;
-    margin:0;
+    max-width: 100%;
+    padding: 0.3em;
+    margin: 0;
 }
+
 span.editinstructions {
     box-shadow: none;
     border: 0;
-    font-family:@font-family-base;
+    font-family: @font-family-base;
 }
 
-
 /* forum unread posts button */
-.snap-asset .unread{
-    clear:both;
-    display:block;
-    background-color:transparent;
+.snap-asset .unread {
+    clear: both;
+    display: block;
+    background-color: transparent;
+    
     a {
         .btn;
-        color:#fff !important;
+        color: #fff !important;
     }
 }
 
-.editing .dndupload-preview .mod-indent{
-    display:block;
+.editing .dndupload-preview .mod-indent {
+    display: block;
 }
 
 // increase/decrease sections buttons
 // remove moodle padding
+
 .path-course-view a.reduce-sections {
-    padding-left:0;
+    padding-left: 0;
 }
 
-#changenumsections{
-        .text-center;
+#changenumsections {
+    .text-center;
+    
     .increase-sections,
-    .reduce-sections{
+    .reduce-sections {
         .btn;
-
-        img{
-            display:none;
+        
+        img {
+            display: none;
         }
+
         .accesshide {
-            position:relative;
-            left:0;
-            font-weight:300;
+            position: relative;
+            left: 0;
+            font-weight: 300;
         }
     }
 }
-
-
-
 
 // -------------------------
 // Course footer.
 // -------------------------
+
 #snap-course-footer {
-    margin: 2em auto -2em auto; // pull the sitewide footer up if we have a course footer
-    padding:1em 4%;
-    background-color: #F1F0EE;
+    margin: 2em auto -2em; // pull the sitewide footer up if we have a course footer
+    padding: 1em 4%;
+    background-color: #f1f0ee;
 }
+
 #course_recent_updates {
     h3 {
-        font-size:1em;
-        clear:both;
+        font-size: 1em;
+        clear: both;
     }
+
     .head {
-        .date, .name {
-            display:inline;
+        .date,
+        .name {
+            display: inline;
         }
+
         .date {
-            float:right;
-            font-size:small;
+            float: right;
+            font-size: small;
         }
     }
+
     .info.bold {
-        font-weight:inherit;
+        font-weight: inherit;
     }
 }
 
 // -------------------------
 // Course completion settings page.
 // -------------------------
+
 #page-course-completion {
     .mform .fcontainer .fitem_fcheckbox {
-        display:flex;
-
+        display: flex;
+        
         .fitemtitle {
-            order:2;
+            order: 2;
         }
+
         .fcheckbox {
-            order:1;
-            margin-right:1em;
+            order: 1;
+            margin-right: 1em;
         }
+
         .fcheckbox input {
-            margin:0 0;
+            margin: 0;
         }
     }
 }
 
-
-
 // -------------------------
 // Course recent activity icons - set size to same as avatars.
 // -------------------------
+
 #page-course-recent {
-    img.icon.smallicon{
+    img.icon.smallicon {
         width: 35px;
         height: 35px;
     }
+
     h3 {
         margin-bottom: 0;
     }
@@ -1323,37 +1370,39 @@ span.editinstructions {
     #region-main td.userpicture {
         width: 70px;
         vertical-align: middle;
+        
         img {
             margin-left: 25px;
         }
     }
 }
 
-
-
-
-
 // -------------------------
 // Course participants page.
 // -------------------------
+
 @media screen and (max-width: @screen-sm-max) {
     .userlist {
         table.controls tr td.right {
-            text-align:left;
+            text-align: left;
         }
+
         table.controls tr td {
-            padding:0 0 1em 0 !important;
+            padding: 0 0 1em !important;
         }
+
         table.controls tr td:empty {
             display: none;
         }
+
         table.controls tr td,
-        .singleselect{
-            display:block;
-            width:auto;
+        .singleselect {
+            display: block;
+            width: auto;
         }
     }
 }
+
 // TODO - snap-mime-page
 // experiment with pulling images left and right on large screens
 
@@ -1362,3 +1411,4 @@ span.editinstructions {
         margin-right: 1%;
     }
 }
+

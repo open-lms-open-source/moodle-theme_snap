@@ -12,7 +12,6 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
-
 /**
  * Snap core swatch.
  *
@@ -20,20 +19,19 @@
  * @copyright Copyright (c) 2015 Moodlerooms Inc. (http://www.moodlerooms.com)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-
 // overwrite some global CSS from a turnitin mod
 // see https://github.com/jmcgettrick/MoodleDirectV2/issues/50
+
 html {
     -webkit-font-smoothing: auto !important;
 }
 
 // Snap Layout yo...
 // -------------------------
-
 // SHAME -  all that fun moodle reset css
 // -------------------------
-
 // hide that classic 1px & some other fun moodle stuff
+
 img.spacer,
 .noavailable,
 .clearfloat {
@@ -70,7 +68,7 @@ img.spacer,
 .loginbox.onecolumn,
 .loginbox,
 #page-report-outline-user .section,
-.path-admin #assignrole{
+.path-admin #assignrole {
     max-width: 100%;
     min-width: 0;
     width: auto;
@@ -84,7 +82,6 @@ table.boxwidthwide {
     width: 100%;
 }
 
-
 // Undo .well styles
 #page-course-index-category .generalbox.info,
 .courses .coursebox.collapsed,
@@ -97,86 +94,72 @@ table.boxwidthwide {
     padding: 0;
 }
 
-
-
 // -------------------------
 // Login page
 // -------------------------
 
 @media screen and (min-width: @screen-sm) {
     .twocolumns {
+        
         // override bs grids
         .signuppanel,
         .loginpanel {
-          float:none !important;
-          width:100% !important;
-          left:0 !important;
-          padding:0 !important;
+            float: none !important;
+            width: 100% !important;
+            left: 0 !important;
+            padding: 0 !important;
         }
     }
 }
+
 #page-login-index {
     #region-main {
         max-width: 100%;
         padding: 0 4% 2em;
     }
+    
     .loginpanel h2 {
         text-indent: 100%;
         white-space: nowrap;
         overflow: hidden;
         background: no-repeat center center;
         background-size: contain;
-        margin:0;
+        margin: 0;
     }
+    
     .loginbox {
-      float: none;
-      padding: 1em 4%;
-      width: 100%;
-      background-color: rgba(255,255,255,0.9);
-      margin: 2em auto;
-      max-width: 30em;
-      left:0;
+        float: none;
+        padding: 1em 4%;
+        width: 100%;
+        background-color: rgba(255,255,255,0.9);
+        margin: 2em auto;
+        max-width: 30em;
+        left: 0;
     }
+    
     #loginbtn {
-      display: block;
-      width: 100%;
-      margin: 1em 0;
+        display: block;
+        width: 100%;
+        margin: 1em 0;
     }
+    
     // Remove first time here?
     .signuppanel > h2 {
-      display: none;
+        display: none;
     }
+    
     #moodle-footer {
-      margin-top: 0;
+        margin-top: 0;
     }
-
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 // -------------------------
 // Mixins me up
 // -------------------------
 
-
 .alakazam() {
-    transition: all .4s ease-in-out;
+    transition: all 0.4s ease-in-out;
 }
-
 
 .bg-cover() {
     background-position: center top;
@@ -185,61 +168,62 @@ table.boxwidthwide {
 
 /* animations */
 @keyframes snap-drop {
-0% {    transform: matrix(1, 0, 0, 1, 0, -600); }
-100%{   transform: matrix(1, 0, 0, 1, 0, 0); }
+    0% {
+        transform: matrix(1, 0, 0, 1, 0, -600);
+    }
+    
+    100% {
+        transform: matrix(1, 0, 0, 1, 0, 0);
+    }
 }
-
 
 @keyframes snap-rise {
-0%{     transform: matrix(1, 0, 0, 1, 0, 0); }
-100% {  transform: matrix(1, 0, 0, 1, 0, -600); }
+    0% {
+        transform: matrix(1, 0, 0, 1, 0, 0);
+    }
+    
+    100% {
+        transform: matrix(1, 0, 0, 1, 0, -600);
+    }
 }
-
 
 // tag styles for draft/group/contitional/completion meta data
 .snap-tag(@colour: #F98012) {
-    font-family:@font-family-base;
-    display:inline-block;
-    background-color:@colour;
-    color:#fff;
-    padding:0 2% 0 1%;
-    margin:1px 1em;
-    text-transform:lowercase;
-    position:relative;
-    border-radius:0 2px 2px 0;
-    line-height:1.75;
+    font-family: @font-family-base;
+    display: inline-block;
+    background-color: @colour;
+    color: #fff;
+    padding: 0 2% 0 1%;
+    margin: 1px 1em;
+    text-transform: lowercase;
+    position: relative;
+    border-radius: 0 2px 2px 0;
+    line-height: 1.75;
+    
     // add a little tab arrow to the left ;)
     &:before {
-        content:"";
-        position:absolute;
-        right:100%;
-        top:0%; // this is necessary!!
-        border:0.85em solid transparent;
-        border-right:0.89em solid @colour;
+        content: "";
+        position: absolute;
+        right: 100%;
+        top: 0; // this is necessary!!
+        border: 0.85em solid transparent;
+        border-right: 0.89em solid @colour;
     }
 }
 
 .highlight-tag {
-    background-color:#f56363;
+    background-color: #f56363;
     color: #fff;
-    padding:0 0.5em;
-    border-radius:2px;
-    line-height:1.5;
+    padding: 0 0.5em;
+    border-radius: 2px;
+    line-height: 1.5;
 }
-
-
-
-
-
-
-
-
 
 // -------------------------
 // Baseline boilerplate for snap
 // -------------------------
-
 // better border box layout
+
 html {
     box-sizing: border-box;
 }
@@ -250,8 +234,17 @@ html {
     box-sizing: inherit;
 }
 
-::-moz-selection { background: #fe57a1; color: #fff; text-shadow: none; }
-::selection { background: #fe57a1; color: #fff; text-shadow: none; }
+ ::-moz-selection {
+    background: #fe57a1;
+    color: #fff;
+    text-shadow: none;
+}
+
+ ::selection {
+    background: #fe57a1;
+    color: #fff;
+    text-shadow: none;
+}
 
 // scrollbars in ie
 body.ie {
@@ -261,43 +254,52 @@ body.ie {
 input:focus,
 textarea:focus,
 select:focus,
-a:focus{
-    outline:0;
+a:focus {
+    outline: 0;
 }
+
 label {
     font-weight: 500;
-    color:#777;
+    color: #777;
 }
+
 select {
-    background-color: #FFF;
-    max-width:100%;
+    background-color: #fff;
+    max-width: 100%;
 }
+
 select:disabled,
 input:disabled,
 input:disabled+label {
-    opacity:0.5;
+    opacity: 0.5;
 }
-:disabled {
+
+ :disabled {
     cursor: not-allowed;
 }
 
-textarea{
-    max-width:100%;
+textarea {
+    max-width: 100%;
 }
 
 body {
     font-weight: 300;
 }
+
 // GT Mod - 2015-07-09 - add .floater .cell to accommodate fixed col and header in gradebook
-table, .floater .cell{
+table,
+.floater .cell {
     width: 100%;
     font-family: @font-family-base;
     font-size: @font-size-table;
 }
+
 blockquote {
+    
     //    border-left: 5px solid @brand-primary; customisable
-    font-size:1em;
+    font-size: 1em;
 }
+
 img {
     max-width: 100%;
     height: auto;
@@ -307,6 +309,7 @@ img {
 table img {
     min-width: 12px;
 }
+
 table.results td.graph>img {
     min-width: 0;
 }
@@ -314,51 +317,56 @@ table.results td.graph>img {
 img[style*="float:left"],
 img[style*="float: left"],
 img[style*="float: right"],
-img[style*="float:right"]{
-	margin:2%;
+img[style*="float:right"] {
+    margin: 2%;
 }
+
 @media screen and (max-width: @screen-sm) {
-	// unfloat images for small screen
-	img[style*="float:left"],
+    
+    // unfloat images for small screen
+    img[style*="float:left"],
     img[style*="float: left"],
     img[style*="float: right"],
-    img[style*="float:right"]{
-		float:none !important;
-		display: table-cell;
-		clear:both;
-	}
+    img[style*="float:right"] {
+        float: none !important;
+        display: table-cell;
+        clear: both;
+    }
 }
 
 img.icon {
-	padding: 0;
-	margin-right: 6px;
+    padding: 0;
+    margin-right: 6px;
 }
 
 // Responsive video for iframes, objects, embeds.
 .videoiframe {
-  text-align:center;
+    text-align: center;
 }
-.videoiframe iframe{
-  width: 100% !important;
-  margin:0 auto;
+
+.videoiframe iframe {
+    width: 100% !important;
+    margin: 0 auto;
 }
-.mediaplugin object, .mediaplugin embed {
-  width: 100%;
-  margin: 0 auto;
+
+.mediaplugin object,
+.mediaplugin embed {
+    width: 100%;
+    margin: 0 auto;
 }
 
 // Responsive video for HTML5 only.
 video {
-  width: 100%    !important;
-  height: auto   !important;
+    width: 100% !important;
+    height: auto !important;
 }
 
 /* mdl hide stuff icon - hide in bs has different meaning*/
 img.icon.hide {
-	display: block !important;
+    display: block !important;
 }
 
-li{
+li {
     break-inside: avoid-column;
 }
 
@@ -367,6 +375,7 @@ hr {
     margin-bottom: 0.75em;
     height: 1.75em;
     border: 0;
+    
     // border-top: 1px solid @brand-primary; customisable
 }
 
@@ -375,7 +384,13 @@ hr {
     height: 1px;
 }
 
-h1,h2,h3,h4,h5,h6,legend {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+legend {
     line-height: 1.5;
     margin: 0.5em 0;
 }
@@ -394,7 +409,6 @@ h1 {
 #region-main textarea {
     font-family: @font-family-serif;
 }
-
 
 // Roboto robot voice for system text
 label,
@@ -427,8 +441,6 @@ select,
     font-family: @font-family-sans-serif;
 }
 
-
-
 @media screen and (min-width: @screen-sm-min) {
     .nav.nav-justified > li > a {
         padding-left: 0;
@@ -438,18 +450,20 @@ select,
 }
 
 .path-grade ul.nav.nav-tabs + ul.nav.nav-tabs {
+    
     // Fix for tabs that should be active but are marked
     // as disabled instead.
+    
     li.disabled > a {
-      &,
-      &:hover,
-      &:focus {
-        color: @nav-tabs-active-link-hover-color;
-        background-color: @nav-tabs-active-link-hover-bg;
-        border: 1px solid @nav-tabs-active-link-hover-border-color;
-        border-bottom-color: transparent;
-        cursor: default;
-      }
+        &,
+        &:hover,
+        &:focus {
+            color: @nav-tabs-active-link-hover-color;
+            background-color: @nav-tabs-active-link-hover-bg;
+            border: 1px solid @nav-tabs-active-link-hover-border-color;
+            border-bottom-color: transparent;
+            cursor: default;
+        }
     }
     margin-bottom: 1em;
 }
@@ -457,7 +471,12 @@ select,
 // -------------------------
 // Buttons, faux buttons styling & resets
 // -------------------------
-select,input,textarea{max-width:100%;}
+
+select,
+input,
+textarea {
+    max-width: 100%;
+}
 
 .section-modchooser-text,
 #changenumsections .increase-sections,
@@ -466,24 +485,27 @@ select,input,textarea{max-width:100%;}
 a.btn,
 button,
 a.yui3-button,
-.yui-button  button,
+.yui-button button,
 .btn,
 input.form-submit,
 input[type="button"],
 input[type="submit"],
 input[type="reset"] {
     border-color: #fff;
-    color:#fff;
+    color: #fff;
     font-weight: 300;
     font-family: @font-family-base;
+    
     // background-color: @brand-primary; customisable
     &:hover,
     &:focus {
+        
         // background-color: darken(@brand-primary, 8%); customisable
         // border-color: darken(@brand-primary, 12%); customisable
         text-decoration: none;
-  }
+    }
 }
+
 #page-mod-quiz-edit div.question div.content div.points input[type="submit"],
 .btn,
 button,
@@ -506,30 +528,29 @@ input[type="text"]+input[type="submit"] {
 
 // Shame - the front page uses a different renderer for add asset.
 .snap-modchooser,
-#page-site-index .section-modchooser-link{
-  clear: both;
-  margin: 3em 0;
-  padding: 0.5em;
-  display: block;
-  img {
-    display:none;
-  }
-  .section-modchooser-text {
-     .btn;
-  }
-
-  a,
-  .section-modchooser-text{
+#page-site-index .section-modchooser-link {
+    clear: both;
+    margin: 3em 0;
+    padding: 0.5em;
     display: block;
-    width:100%;
-    text-align: center;
-    color: #fff !important;
-    text-decoration: none;
-  }
- }
-
-
-
+    
+    img {
+        display: none;
+    }
+    
+    .section-modchooser-text {
+        .btn;
+    }
+    
+    a,
+    .section-modchooser-text {
+        display: block;
+        width: 100%;
+        text-align: center;
+        color: #fff !important;
+        text-decoration: none;
+    }
+}
 
 // -------------------------
 // Snap theme helper classes
@@ -537,7 +558,7 @@ input[type="text"]+input[type="submit"] {
 
 .published-status {
     opacity: 0.75;
-    font-size:small;
+    font-size: small;
 }
 
 .userpicture,
@@ -547,51 +568,42 @@ input[type="text"]+input[type="submit"] {
 
 .userpicture.defaultuserpic {
     border: 1px solid #e5e5e5;
+    
     .fixy & {
         border: none;
     }
 }
-
-
 
 // -------------------------
 // Replacing font icon with svgs
 // -------------------------
 
 .icon-close:before {
-  content: '';
-  background: transparent url([[pix:theme|close_x]]) no-repeat 50% 50%;
-  display: block;
-  height: 1em;
-  width:1em;
-  margin:0.1em auto;
+    content: '';
+    background: transparent url("[[pix:theme|close_x]]") no-repeat 50% 50%;
+    display: block;
+    height: 1em;
+    width: 1em;
+    margin: 0.1em auto;
 }
+
 .fixy .icon-close:before {
-    background: transparent url([[pix:theme|close_x_white]]) no-repeat 50% 50%;
+    background: transparent url("[[pix:theme|close_x_white]]") no-repeat 50% 50%;
 }
+
 .icon-arrow-left:before,
 .icon-arrow-right:before {
-  content: '';
-  background: transparent url([[pix:theme|right-arrow]]) no-repeat 50% 50%;
-  display: block;
-  height: 1em;
-  width:1em;
-  margin:0.1em auto;
+    content: '';
+    background: transparent url("[[pix:theme|right-arrow]]") no-repeat 50% 50%;
+    display: block;
+    height: 1em;
+    width: 1em;
+    margin: 0.1em auto;
 }
+
 .icon-arrow-left:before {
-  background: transparent url([[pix:theme|left-arrow]]) no-repeat 50% 50%;
+    background: transparent url("[[pix:theme|left-arrow]]") no-repeat 50% 50%;
 }
-
-
-
-
-
-
-
-
-
-
-
 
 // -------------------------
 // Snap theme elements n componants
@@ -603,111 +615,132 @@ input[type="text"]+input[type="submit"] {
 }
 
 #logo {
-    display:inline-block;
+    display: inline-block;
     background-color: transparent;
     background-repeat: no-repeat;
     height: 38px;
     width: 38%;
     background-size: contain;
-    margin:-0.75em 0;
+    margin: -0.75em 0;
 }
-.fixy .snap-media-object{
-    padding:0.5em 4%;
-    margin-bottom:0;
+
+.fixy .snap-media-object {
+    padding: 0.5em 4%;
+    margin-bottom: 0;
     .alakazam();
+    
     &:hover {
-        background-color:rgba(0,0,0,0.07);
+        background-color: rgba(0,0,0,0.07);
     }
 }
+
 .snap-media-object {
     .clearfix();
-    margin-bottom:1em;
+    margin-bottom: 1em;
+    
     // media o can be a link
     a {
-        text-decoration:none;
+        text-decoration: none;
     }
+    
     // media o media
     >a>img,
-    >img{
-        float:left;
-        display:block;
-        margin-right:4%;
-        width:45px;
-        height:auto;
-        vertical-align:baseline;
+    >img {
+        float: left;
+        display: block;
+        margin-right: 4%;
+        width: 45px;
+        height: auto;
+        vertical-align: baseline;
     }
+    
     // media o content
     .snap-media-body {
-        overflow:hidden;
+        overflow: hidden;
+        
         // for fixy - need to re-visit when we re-use more widley
         // in the messaging system we ellispe text
+        
         p {
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
         }
+        
         // Shrink label size to support iPads
         .label {
             font-size: 0.7em;
         }
     }
+    
     // media o heading
-    h3, h3 small {
-        color:inherit;
-        font-size:1em;
-        margin:0;
+    h3,
+    h3 small {
+        color: inherit;
+        font-size: 1em;
+        margin: 0;
     }
+    
     // any meta-data that is part of the title
     h3 small {
-        opacity:0.75;
+        opacity: 0.75;
     }
+    
     // standard media o meta - status, date
     .snap-media-meta {
-        display:block;
-        font-size:small;
-        opacity:0.75;
+        display: block;
+        font-size: small;
+        opacity: 0.75;
+        
         time {
-            margin-right:1em;
+            margin-right: 1em;
         }
     }
+    
     // unread tag
-    .snap-unread-marker{
-            background-color:white;
-            &:before {
-                border-right:0.89em solid white;
-            }
+    .snap-unread-marker {
+        background-color: white;
+        
+        &:before {
+            border-right: 0.89em solid white;
+        }
     }
 }
 
-
 // Fixy - the hipster box with a brand colour that covers everything else, use with care!
 // -------------------------
-
 // i do not apear until you trigger me
 
 .fixy {
     display: none;
 }
-.notloggedin .fixy-trigger{
-  padding:0.9em 1em; // SHAME - something odd where login overlaps mr-nav
+
+.notloggedin .fixy-trigger {
+    padding: 0.9em 1em; // SHAME - something odd where login overlaps mr-nav
 }
+
 .fixy-trigger {
+    
     // border: 1px solid @brand-primary; customisable
-    padding:1em;
-    position:relative;
+    padding: 1em;
+    position: relative;
     .alakazam();
+    
     &:hover {
-    	color: #fff !important;
-    	//	background-color: @brand-primary; customisable
-    	text-decoration: none;
+        color: #fff !important;
+        
+        //	background-color: @brand-primary; customisable
+        text-decoration: none;
     }
+    
     .userpicture {
         height: 38px;
         width: 38px;
-        margin-left:1em;
+        margin-left: 1em;
     }
+    
     // mrooms alerts badge
-    .message_badge_count{
+    .message_badge_count {
         position: absolute;
         padding-top: 0;
         background-image: none;
@@ -726,13 +759,16 @@ input[type="text"]+input[type="submit"] {
     left: 0;
     bottom: 0;
     overflow-y: auto;
+    
     //	background-color: @brand-primary; customisable
     color: #fff;
     z-index: 1000000;
+    
     hr {
         border-color: #fff;
         margin: 0.3em 0;
     }
+    
     a,
     a:hover,
     a:focus,
@@ -740,69 +776,75 @@ input[type="text"]+input[type="submit"] {
     a:visited {
         color: #fff;
     }
+    
     h2 {
         color: rgba(255,255,255,0.7);
         text-transform: uppercase;
         font-weight: 100;
         line-height: 1;
-        margin:1em 0;
-        padding:.5em 0;
+        margin: 1em 0;
+        padding: 0.5em 0;
         border-bottom: 1px solid rgba(255,255,255,0.7);
         font-size: 1em;
     }
+    
     .label-success {
         padding: 0 0.2em;
         font-size: 1em;
+        
         // color: @brand-primary; customisable
         background-color: rgba(255,255,255,0.6);
         border-radius: 2px;
     }
+    
     input {
-    display: block;
-    padding: 0.1em;
-    margin: 0 auto 0.5em;
-    background-color: transparent;
-    font-size: inherit;
-    border: 0px;
-    color: #fff;
-    border-bottom: 2px solid rgba(255,255,255,0.3);
-    width: 90%;
-    font-size: @font-size-h5;
-    box-shadow:none;
+        display: block;
+        padding: 0.1em;
+        margin: 0 auto 0.5em;
+        background-color: transparent;
+        font-size: inherit;
+        border: 0;
+        color: #fff;
+        border-bottom: 2px solid rgba(255,255,255,0.3);
+        width: 90%;
+        font-size: @font-size-h5;
+        box-shadow: none;
     }
+    
     form#coursesearch {
-        margin:0 0 0.5em;
-        text-align:left;
+        margin: 0 0 0.5em;
+        text-align: left;
+        
         label {
             text-align: left;
             margin-left: 0;
         }
     }
+    
     .btn.moodle-browseallcourses {
-        margin-bottom:0.5em;
-        display:block;
+        margin-bottom: 0.5em;
+        display: block;
     }
+    
     .fixy-logout-footer {
         border-top: 1px solid #fff;
         padding-top: 1em;
         margin: 1em 0;
     }
-
+    
     .fixy-browse-search-courses {
-        margin-left:0;
+        margin-left: 0;
+        
         .col-md-6 {
-            padding-left:0;
+            padding-left: 0;
         }
     }
 }
 
-
-
-
 // i am the target, you shall see me
 #login:target,
 #primary-nav:target {
-	display: block;
+    display: block;
 }
 
 .fixy-inner {
@@ -811,103 +853,110 @@ input[type="text"]+input[type="submit"] {
     animation-iteration-count: once;
     animation-timing-function: ease-in-out;
     animation-duration: 0.3s;
-      legend{
-           color: #fff;
-            border-bottom: 1px solid #fff;
-      }
-      label {
-           color: #fff;
-           text-transform: uppercase;
-           font-size: 14px;
-           letter-spacing: 0.1em;
-           line-height: 1;
-           display: block;
-           padding-top: 1em;
-           font-weight: 100;
-           margin: 0.5em 5%;
-      }
+    
+    legend {
+        color: #fff;
+        border-bottom: 1px solid #fff;
+    }
+    
+    label {
+        color: #fff;
+        text-transform: uppercase;
+        font-size: 14px;
+        letter-spacing: 0.1em;
+        line-height: 1;
+        display: block;
+        padding-top: 1em;
+        font-weight: 100;
+        margin: 0.5em 5%;
+    }
 }
 
 // Fixy forms
 // -------------------------
-
 // gets a bit messey from here SHAME
+
 #login.fixy input:focus {
     outline: none;
     border-color: #fff;
 }
+
 #login.fixy input[type=submit] {
-    border: 1px solid  #fff;
+    border: 1px solid #fff;
     margin: 0 auto 0.5em;
 }
 
-.fixy input::placeholder{
+.fixy input::placeholder {
     color: #fff;
     letter-spacing: 0.1em;
 }
 
 // Course list - personal menu and other places
 // -------------------------
+
 #fixy-my-courses .courseinfo {
-    min-height:200px;
+    min-height: 200px;
 }
+
 .courseinfo {
-    position:relative;
-    float:left;
-    width:100%;
-    min-height:250px;
-    background-repeat:no-repeat;
-    background-size:100% auto;
-    background-position:top center;
+    position: relative;
+    float: left;
+    width: 100%;
+    min-height: 250px;
+    background-repeat: no-repeat;
+    background-size: 100% auto;
+    background-position: top center;
     box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
-    margin:0.5em 1%;
-    cursor:pointer;
-    overflow:hidden;
+    margin: 0.5em 1%;
+    cursor: pointer;
+    overflow: hidden;
     .alakazam();
+    
     &:hover {
-        background-size:115% auto;
-        transform:scale(1.03);
+        background-size: 115% auto;
+        transform: scale(1.03);
+        
         .courseinfo-body {
-            padding-bottom:0.5em;
+            padding-bottom: 0.5em;
         }
     }
-
+    
     .courseinfo-teachers {
-        width:100%;
-        padding:1em 1em 1em 1em;
+        width: 100%;
+        padding: 1em;
     }
-
-
+    
     .courseinfo-teachers-extra {
         .alakazam();
         opacity: 0;
     }
-
-
+    
     &.show-all {
         .courseinfo-teachers-extra {
             opacity: 1;
         }
+        
         .courseinfo-body {
             bottom: -100%;
         }
     }
-
+    
     .courseinfo-body {
         .alakazam();
-        background-color:rgba(255,255,255,0.9);
-        color:#666;
-        position:absolute;
-        bottom:0;
-        width:100%;
-        padding:0 1em 1em 1em;
-        bottom:0;
-        min-height:50%;
+        background-color: rgba(255,255,255,0.9);
+        color: #666;
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        padding: 0 1em 1em;
+        bottom: 0;
+        min-height: 50%;
+        
         h3 a {
-            display:block;
+            display: block;
             display: -webkit-box;
             max-height: 3em; // 1em font-size * 1.5 line height * 2 lines to show.
-            width:100%;
+            width: 100%;
             -webkit-line-clamp: 2;
             -webkit-box-orient: vertical;
             overflow: hidden;
@@ -915,47 +964,50 @@ input[type="text"]+input[type="submit"] {
             white-space: normal !important;
         }
     }
+    
     h3 {
         font-size: 1em;
         font-weight: 500;
     }
+    
     .completionstatus,
     .coursegrade {
         font-size: small;
     }
+    
     .coursegrade {
-      text-align: right;
-      display: block;
-      line-height: 2.5em;
-      padding-right: 2.75em;
-      background-image: url([[pix:theme|gradebook]]);
-      background-repeat: no-repeat;
-      background-position: 100% 50%;
-      background-size: 2.5em 2.5em;
-
+        text-align: right;
+        display: block;
+        line-height: 2.5em;
+        padding-right: 2.75em;
+        background-image: url("[[pix:theme|gradebook]]");
+        background-repeat: no-repeat;
+        background-position: 100% 50%;
+        background-size: 2.5em 2.5em;
     }
+    
     .courseinfo-teachers {
         max-height: 200px;
         overflow: hidden;
-        text-align:right;
+        text-align: right;
     }
-
+    
     &.show-all .courseinfo-teachers {
         overflow: auto;
     }
-
+    
     .userpicture,
-    .courseinfo-teachers-more{
+    .courseinfo-teachers-more {
         border-radius: 50%;
         margin-left: 1%;
         width: 38px;
         height: 38px;
         background-color: #ccc;
     }
-
+    
     .courseinfo-teachers-more {
         background-color: transparent;
-        font-size: .8em;
+        font-size: 0.8em;
         float: right;
         text-align: center;
         padding-top: 0.35em;
@@ -963,25 +1015,27 @@ input[type="text"]+input[type="submit"] {
         color: #fff !important;
         text-decoration: none !important;
     }
-
+    
     .published-status {
         clear: both;
         margin-bottom: -1em;
         float: left;
     }
-
+    
     .completionstatus {
         border-bottom: 0.5em solid @gray-lighter;
     }
+    
     .completion-line {
-      background-color: @brand-success;
-      height: 0.3em;
-      margin-top: -0.3em;
+        background-color: @brand-success;
+        height: 0.3em;
+        margin-top: -0.3em;
     }
 }
 
 #fixy-profile-link {
     text-align: center;
+    
     .userpicture {
         margin-right: 10px;
     }
@@ -993,16 +1047,16 @@ input[type="text"]+input[type="submit"] {
     margin-top: -50px;
 }
 
-
 .fixy .label.label-info {
     background-color: transparent;
     border: thin solid #fff;
 }
 
 @media screen and (min-width: @screen-xs-min) {
-    #moodle-footer .list-unstyled{
+    #moodle-footer .list-unstyled {
         column-count: 2;
     }
+    
     .courseinfo {
         width: 100%;
     }
@@ -1012,40 +1066,38 @@ input[type="text"]+input[type="submit"] {
     #fixy-username {
         display: inline;
     }
-
-    #moodle-footer .list-large{
+    
+    #moodle-footer .list-large {
         column-count: 3;
     }
+    
     .courseinfo {
-        width:48%;
+        width: 48%;
     }
 }
 
 @media screen and (min-width: @screen-md-min) {
     .courseinfo {
-        width:31%;
+        width: 31%;
     }
 }
 
-
-
 // Message badge alerts
-
 .message_badge_message,
 .message_badge_empty {
     border-top: none;
 }
 
 .message_badge_message_subject {
-    padding-right: 0px;
+    padding-right: 0;
 }
 
 .message_badge_message_close {
     display: none;
 }
 
-.message_badge_message_text article{
-    font-size:0.9em;
+.message_badge_message_text article {
+    font-size: 0.9em;
     font-family: @font-family-serif;
 }
 
@@ -1057,15 +1109,18 @@ input[type="text"]+input[type="submit"] {
 Its pointless using a colour to visually show that the message is read as we can already tell this by the fact the
 read button has been removed and the message text is visible
 **/
-.message_badge_message.dimmed_text{
-    color:#FFFFFF;
-    .message_badge_message_text, .message_badge_message_text a{
-        color:#FFFFFF !important;
+.message_badge_message.dimmed_text {
+    color: #fff;
+    
+    .message_badge_message_text,
+    .message_badge_message_text a {
+        color: #fff !important;
     }
 }
 
-.message_badge_user_picture{
+.message_badge_user_picture {
     margin-right: 18px;
+    
     img {
         width: 50px;
     }
@@ -1075,23 +1130,19 @@ read button has been removed and the message text is visible
     .message_badge_container {
         .message_badge_overlay,
         .message_badge_message_overlay {
-            background-color:transparent;
-            border:none;
+            background-color: transparent;
+            border: none;
             max-height: none;
-            width:100%;
+            width: 100%;
             overflow: visible;
         }
     }
 }
 
-
 // End of message badge alerts
-
 // -------------------------
 // Layout of moodle/snap DOM structure
 // -------------------------
-
-
 /***************
 THE DOM LOOKS LIKE THIS :
 
@@ -1105,7 +1156,6 @@ nav #mr-nav
 footer #moodle-footer
 
  ****************************/
-
 #mr-nav,
 #page-header,
 #region-main,
@@ -1113,7 +1163,7 @@ footer #moodle-footer
 #moodle-blocks {
     margin: 0 auto;
     padding: 0 4%;
-    font-size:1em;
+    font-size: 1em;
 }
 
 @media (max-width: 375px) {
@@ -1135,19 +1185,21 @@ footer #moodle-footer
     width: 100%;
     z-index: 23;
     line-height: 2;
-    padding:0.5em 0 0.5em 4%;
+    padding: 0.5em 0 0.5em 4%;
     background-color: rgba(255,255,255,0.95);
+    
     //headroom js http://wicky.nillia.ms/headroom.js/
     &.headroom--unpinned {
-      will-change: transform;
-      animation-name: snap-rise;
-      animation-iteration-count: once;
-      animation-timing-function: ease-in-out;
-      animation-duration: .4s;
-      animation-fill-mode: forwards;
-
+        will-change: transform;
+        animation-name: snap-rise;
+        animation-iteration-count: once;
+        animation-timing-function: ease-in-out;
+        animation-duration: 0.4s;
+        animation-fill-mode: forwards;
     }
+    
     &.headroom--pinned {
+        
         // firefox no like this animation :(
         /*
         animation-name: snap-drop;
@@ -1156,9 +1208,11 @@ footer #moodle-footer
         animation-duration: 0.33s;
         */
     }
-    &.errors-found{
-      // make header pink
-      // background-color: #fcc !important;
+    
+    &.errors-found {
+        
+        // make header pink
+        // background-color: #fcc !important;
     }
 }
 
@@ -1167,16 +1221,15 @@ footer #moodle-footer
     padding: 0;
     position: relative;
     left: 0;
-    transition: all .4s 0s ease;
+    transition: all 0.4s 0s ease;
+    
     // When admin block is open
     &.offcanvas {
-      left:-200px;
+        left: -200px;
     }
 }
 
-
-
-#moodle-blocks{
+#moodle-blocks {
     max-width: 60.5em;
     clear: both;
     position: relative;
@@ -1186,10 +1239,12 @@ footer #moodle-footer
 #region-main {
     font-family: @font-family-serif;
     max-width: 60.5em;
-    padding-top:1em;
+    padding-top: 1em;
 }
+
 // Pages that need as much width as they can get as they
 // aren't designed (yet) for small screens.
+
 #page-mod-quiz-edit,
 #page-course-management,
 #page-local-joulegrader-view,
@@ -1198,6 +1253,7 @@ footer #moodle-footer
         max-width: 100%;
     }
 }
+
 #page-mod-assign-view .flexible th {
     white-space: normal;
 }
@@ -1214,7 +1270,6 @@ aside {
 // -------------------------
 //  Header - a head for your moodle
 // -------------------------
-
 /***************
 THE HEADER DOM LOOKS LIKE THIS :
 
@@ -1225,29 +1280,28 @@ header#page-header
 		h1 - a hopefully useful name for this page
 
  ****************************/
-
-
 // page-heaer - a big box with possibly useful stuff in it
 // -------------------------
+
 #page-header {
     padding-top: 4em;
     padding-bottom: 0.5em;
 }
 
-
 // Breadcrumb - not really a breadcrumb like on the web, but some moodleything
 // -------------------------
+
 .breadcrumb-nav {
     margin-bottom: 0;
     float: none;
-    margin-top:-0.5em;
+    margin-top: -0.5em;
 }
 
 .breadcrumb {
     background-color: transparent;
     padding: 0;
     font-size: @font-size-small;
-    display:block;
+    display: block;
 }
 
 @media screen and (max-width: @screen-sm) {
@@ -1255,6 +1309,7 @@ header#page-header
         &:nth-last-child(n+4) {
             display: none;
         }
+        
         &:nth-last-child(3):before {
             content: "";
             padding: 0;
@@ -1264,10 +1319,10 @@ header#page-header
 
 // SHAME - what is this?
 // -------------------------
+
 .breadcrumb-button {
     margin-top: 0;
 }
-
 
 // -------------------------
 // Header in course layout (we have extra stuff)
@@ -1279,181 +1334,189 @@ header#page-header
 				search stuff SHAME
 
  ****************************/
-
-
-
 // Course toc & Appendicies
 // -------------------------
+
 #course-toc {
-    padding:0 0 1em 0;
+    padding: 0 0 1em;
     max-width: 100%;
-    position:relative;
+    position: relative;
+    
     h2 {
-        text-transform:uppercase;
-        font-size:1em;
-        padding:1em 2em 0;
-        display:inline-block;
-        margin:0;
+        text-transform: uppercase;
+        font-size: 1em;
+        padding: 1em 2em 0;
+        display: inline-block;
+        margin: 0;
     }
+    
     .snap-section-complete {
-        width:1.5em;
-        height:auto;
+        width: 1.5em;
+        height: auto;
     }
+    
     .completionstatus {
-        font-size:small;
-        color:#999;
+        font-size: small;
+        color: #999;
     }
+    
     .completionstatus + .published-status:before,
     .published-status + .published-status:before {
         content: " · ";
     }
 }
 
-
 // if the course has an image
-.mast-image{
+.mast-image {
     .breadcrumb {
         li:before,
         >li+li:before,
-        a, a:visited {
+        a,
+        a:visited {
             text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
-            color:white;
+            color: white;
         }
     }
+    
     h1 {
-        color:white;
-        text-shadow:1px 1px 3px rgba(0, 0, 0, 0.5);
+        color: white;
+        text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
     }
-    #course-toc{
-        background-color:rgba(255,255,255,0.95);
+    
+    #course-toc {
+        background-color: rgba(255,255,255,0.95);
     }
-
 }
 
 #chapters {
     column-count: 2;
-    margin-bottom:0;
+    margin-bottom: 0;
 }
 
 // specific styles for numbered chapters to improve readability
 ol#chapters {
-    list-style-position:outside;
-    li{
-        margin-left:2em;
-        padding-bottom:0.1em;
-        color:#999;
-        line-height:1;
+    list-style-position: outside;
+    
+    li {
+        margin-left: 2em;
+        padding-bottom: 0.1em;
+        color: #999;
+        line-height: 1;
+        
         a {
-            display:block;
-            margin-bottom:-0.3em;
-            line-height:1.75;
+            display: block;
+            margin-bottom: -0.3em;
+            line-height: 1.75;
         }
-        &.current a{
-            color:#666;
-            text-decoration:none;
+        
+        &.current a {
+            color: #666;
+            text-decoration: none;
         }
     }
 }
+
 // in moodle the first section does not get a number :(
 // moodlebug
+
 #chapters >:first-child {
-	list-style:none;
+    list-style: none;
 }
 
 /* show selected menu  logic */
 @media screen and (min-width: @screen-xs-min) {
-#chapters {
-	width:100%;
-	text-indent:0;
-}
+    #chapters {
+        width: 100%;
+        text-indent: 0;
+    }
 }
 
 /* special stuff for <320 */
 @media screen and (max-width: @screen-xs) {
     #page-header {
-        padding-left:0;
-        padding-right:0;
+        padding-left: 0;
+        padding-right: 0;
     }
 }
 
 /* if > tablet size */
 @media screen and (min-width: @screen-sm-min) {
-    #chapters.list-large{
+    #chapters.list-large {
         column-count: 3;
     }
+    
     #course-toc {
         margin: 1em auto -.5em;
     }
+    
     .mast-image {
-        #course-toc{
-            margin-top:6.6vh;
+        #course-toc {
+            margin-top: 6.6vh;
         }
     }
 }
-
-
-
-
-
-
-
-
 
 // -------------------------
 // Course search in toc
 // -------------------------
 
 #toc-search {
-    float:right;
-    padding:0.5em;
-    margin-bottom:-0.75em;
+    float: right;
+    padding: 0.5em;
+    margin-bottom: -0.75em;
+    
     &:before {
-      content: '';
-      background: transparent url([[pix:theme|search]]) no-repeat 50% 50%;
-      display: inline-block;
-      height: 1.5em;
-      width: 1.5em;
-      // Magin numbers for positioning
-      margin-right: -2.5em;
-      margin-bottom: -0.3em;
-
+        content: '';
+        background: transparent url("[[pix:theme|search]]") no-repeat 50% 50%;
+        display: inline-block;
+        height: 1.5em;
+        width: 1.5em;
+        
+        // Magin numbers for positioning
+        margin-right: -2.5em;
+        margin-bottom: -0.3em;
     }
 }
 
 #toc-search-input {
     webkit-appearance: textfield;
     border: none;
-    border-radius:50%;
-    width:3em;
-    height:3em;
-    padding:0 1.5em;
-    box-shadow:0 2px 5px 0 rgba(0, 0, 0, 0.26);
-    background-color:transparent;
+    border-radius: 50%;
+    width: 3em;
+    height: 3em;
+    padding: 0 1.5em;
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
+    background-color: transparent;
     .alakazam();
+    
     &:hover {
-        box-shadow:0 6px 10px rgba(0, 0, 0, 0.23),0 10px 30px rgba(0, 0, 0, 0.19);
+        box-shadow: 0 6px 10px rgba(0, 0, 0, 0.23),0 10px 30px rgba(0, 0, 0, 0.19);
     }
+    
     &.state-active,
     &:focus {
-        width:100%;
-        border-radius:0;
-        padding:0 2.5em;
-        box-shadow:none;
-        width:300px;
-        background-color:rgba(255,255,255,0.3);
+        width: 100%;
+        border-radius: 0;
+        padding: 0 2.5em;
+        box-shadow: none;
+        width: 300px;
+        background-color: rgba(255,255,255,0.3);
     }
 }
+
 #toc-mobile-menu-toggle {
-    display:none;
+    display: none;
 }
+
 // small screen
 @media screen and (max-width: @screen-xs-min) {
     #toc-search,
     #course-toc #toc-desktop-menu-heading {
-        display:none;
+        display: none;
     }
+    
     #toc-mobile-menu-toggle {
-        display:inline-block;
+        display: inline-block;
         width: 2em;
         height: 2em;
         font-size: 1.5em;
@@ -1465,168 +1528,138 @@ ol#chapters {
         position: absolute;
         bottom: 0;
         right: 0;
-        transform:rotate(45deg);
-        text-decoration:none;
+        transform: rotate(45deg);
+        text-decoration: none;
         .alakazam();
-        background-color:rgba(255,255,255,0.9);
-        z-index:666;
+        background-color: rgba(255,255,255,0.9);
+        z-index: 666;
     }
+    
     #course-toc {
         position: fixed;
         bottom: 0;
         right: 0;
         z-index: 66;
         width: 100%;
-        background-color:transparent !important;
+        background-color: transparent !important;
         .alakazam();
     }
-    #chapters{
+    
+    #chapters {
         column-count: 1;
-        display:none;
+        display: none;
     }
-    #course-toc.state-visible{
+    
+    #course-toc.state-visible {
         padding: 0;
         margin: 0;
         width: 100%;
         height: 100%;
         left: 0;
         bottom: 0;
-        background-color:white !important;
+        background-color: white !important;
         overflow-y: auto;
+        
         #toc-mobile-menu-toggle {
-            transform:rotate(0deg);
-            }
+            transform: rotate(0deg);
+        }
+        
         #chapters {
-            display:block;
-            margin:0;
-            padding:2em 4%;
-            width:100%;
-
+            display: block;
+            margin: 0;
+            padding: 2em 4%;
+            width: 100%;
         }
     }
 }
 
 // hidden list - always
 #toc-searchables {
-	display:none;
+    display: none;
 }
+
 @media screen and (min-width: @screen-xs-min) {
     #toc-search-results {
-        padding-left:0.5em;
-        font-size:1em;
-        max-width:300px;
+        padding-left: 0.5em;
+        font-size: 1em;
+        max-width: 300px;
     }
 }
+
 #toc-search-results {
-    display:none;
-    position:absolute;
-    top:3.5em;
-    right:1.5em;
-    z-index:3;
-    background-color:rgba(255,255,255,0.9);
+    display: none;
+    position: absolute;
+    top: 3.5em;
+    right: 1.5em;
+    z-index: 3;
+    background-color: rgba(255,255,255,0.9);
     box-shadow: 0 1px 4px rgba(0, 0, 0, 0.24);
 }
-#toc-search-results li{
-    width:300px;
-    overflow:hidden;
-	img {
-		width:24px;
-		height:24px;
-        vertical-align:bottom;
-	}
-    &:first-child {
-        padding-top: .5em;
+
+#toc-search-results li {
+    width: 300px;
+    overflow: hidden;
+    
+    img {
+        width: 24px;
+        height: 24px;
+        vertical-align: bottom;
     }
+    
+    &:first-child {
+        padding-top: 0.5em;
+    }
+    
     &:last-child {
         padding-bottom: 1em;
     }
-
 }
 
 #toc-search-input.state-active + #toc-search-results,
 #toc-search-input:focus + #toc-search-results {
-  display:block;
+    display: block;
 }
-
-
 
 // a lovely pin showing the searched for item
 #searchpin {
-  background: transparent url([[pix:theme|searchpin]]) no-repeat 50% 50%;
-  display: inline-block;
-  height: 1em;
-  width:1em;
-  margin:0.1em;
+    background: transparent url("[[pix:theme|searchpin]]") no-repeat 50% 50%;
+    display: inline-block;
+    height: 1em;
+    width: 1em;
+    margin: 0.1em;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 /* SHAME - button to toggle actions, e.g. close */
 .snap-action-icon {
-	padding:0.5em;
-	font-size:1.5em;
-	line-height:1;
-	text-decoration:none !important;
-	display:block;
-	text-align:center;
-		small{
-			display:block;
-			text-align:center;
-			line-height:1;
-			font-size:1rem;
-			text-transform:uppercase;
-		}
+    padding: 0.5em;
+    font-size: 1.5em;
+    line-height: 1;
+    text-decoration: none !important;
+    display: block;
+    text-align: center;
+    
+    small {
+        display: block;
+        text-align: center;
+        line-height: 1;
+        font-size: 1rem;
+        text-transform: uppercase;
+    }
 }
 
 // Admin block link
 #admin-menu-trigger {
-  background-color:transparent;
-  position:relative;
-  margin:-0.3em 0;
-  padding:0.5em;
-	font-size:1.5em;
-	line-height:1;
-  top:0;
-  width:2.2em;
-  height:2em;
-  cursor:pointer;
-  border-left:1px solid ;
+    background-color: transparent;
+    position: relative;
+    margin: -0.3em 0;
+    padding: 0.5em;
+    font-size: 1.5em;
+    line-height: 1;
+    top: 0;
+    width: 2.2em;
+    height: 2em;
+    cursor: pointer;
+    border-left: 1px solid;
     /*
     // material design button, but wrong for admin block?
     position:fixed;
@@ -1643,54 +1676,52 @@ ol#chapters {
     z-index:666;
     */
 }
+
 // Burger in the settings button
 .lines {
-  display:block;
-  height:3px;
-  transition: all 0.4s 0s ease;
-  position:relative;
+    display: block;
+    height: 3px;
+    transition: all 0.4s 0s ease;
+    position: relative;
 }
+
 .lines:after {
-  top:0.5em;
+    top: 0.5em;
 }
+
 .lines:before {
-  top:1em;
+    top: 1em;
 }
+
 .lines:after,
 .lines:before {
-  content:' ';
-  display:block;
-  position:absolute;
-  width:100%;
-  height:3px;
-  transform-origin: 20% 50%; /* 20% magic number */
-  transition: top .4s ease, transform .4s .4s ease;
+    content: ' ';
+    display: block;
+    position: absolute;
+    width: 100%;
+    height: 3px;
+    transform-origin: 20% 50%;
+    /* 20% magic number */
+    transition: top 0.4s ease, transform 0.4s 0.4s ease;
 }
+
 .active .lines {
-  background:transparent;
-  transform: scale3d(1.1, 1.1, 1.1);
-  margin-top:-0.5em;
+    background: transparent;
+    transform: scale3d(1.1, 1.1, 1.1);
+    margin-top: -0.5em;
 }
-.active .lines:before{
-  transform: rotate3d(0, 0, 1, -45deg);
-  height:1px;
+
+.active .lines:before {
+    transform: rotate3d(0, 0, 1, -45deg);
+    height: 1px;
 }
+
 .active .lines:after {
-  transform: rotate3d(0, 0, 1, 45deg);
-  height:1px;
+    transform: rotate3d(0, 0, 1, 45deg);
+    height: 1px;
 }
-
-
-
-
-
-
 
 /// REFACTOTRING GOT TO HERE ///
-
-
-
-
 #page-report-outline-user .section {
     border: 0;
 }
@@ -1706,31 +1737,35 @@ ol#chapters {
     padding: 0;
 }
 
-.form-label .form-shortname{
-    display:inline;
+.form-label .form-shortname {
+    display: inline;
 }
 
 .course-content,
 .settingsform,
 .mform,
-#page-mod-page-view #region-main{
+#page-mod-page-view #region-main {
     max-width: 43.5em;
     margin: 0 auto;
 }
+
 // Override the above for a table that is also a form
 .quickgradingform > .mform {
     max-width: none;
 }
+
 .form-item,
 .path-backup .mform .grouped_settings .fitem,
 .mform .fcontainer .fitem {
-    margin-bottom: 0px;
-    padding-top: .5em;
-    padding-bottom: .5em;
+    margin-bottom: 0;
+    padding-top: 0.5em;
+    padding-bottom: 0.5em;
+    
     &:hover {
-        background-color: #EFEFEF;
+        background-color: #efefef;
     }
 }
+
 .mform .fitem {
     &.fitem_fcheckbox:not(#fitem_id_onlygraded) {
         .fitemtitle {
@@ -1739,6 +1774,7 @@ ol#chapters {
             width: auto;
             padding-left: 0;
         }
+        
         .fcheckbox {
             width: auto;
             padding-right: 0;
@@ -1759,8 +1795,9 @@ ol#chapters {
         display: none;
     }
 }
+
 #id_activitycompletionheader {
-     .fitem_fcheckbox .fitemtitle label {
+    .fitem_fcheckbox .fitemtitle label {
         display: none;
     }
 }
@@ -1770,14 +1807,17 @@ ol#chapters {
         display: inline-block;
         padding-left: 1em;
     }
+    
     .form-checkbox.defaultsnext {
         display: inline-block;
     }
+    
     .form-defaultinfo,
     .form-description pre {
         font-size: @font-size-small;
     }
 }
+
 #fitem_id_coursedisplay {
     display: none;
 }
@@ -1786,6 +1826,7 @@ ol#chapters {
     margin-left: 0;
     margin-right: 0;
 }
+
 @media screen and (min-width: @screen-sm-min) {
     .form-horizontal .control-label {
         padding-top: 4px;
@@ -1795,6 +1836,7 @@ ol#chapters {
 .path-backup .mform .grouped_settings .backup_selector .felement {
     width: 100%;
 }
+
 .path-backup .root_setting,
 .path-backup .normal_setting {
     .fitem {
@@ -1805,7 +1847,6 @@ ol#chapters {
     }
 }
 
-
 .forumpost {
     background-color: transparent;
     border: 0;
@@ -1813,29 +1854,19 @@ ol#chapters {
     padding: 0;
 }
 
-
-
-
-
 /* BOOK MOD FIX */
-
 .path-mod-book .book_toc_numbered {
     font-size: 1em;
 }
 /* hide show description option */
 #page-mod-book-mod,
 #page-mod-page-mod {
-    #fitem_id_showdescription{
-        display:none;
+    #fitem_id_showdescription {
+        display: none;
     }
 }
 
-
-
-
-
 /* FRONT PAGE ELEMENTS */
-
 #page-site-index #region-main {
     max-width: 100%;
     padding: 0;
@@ -1843,13 +1874,15 @@ ol#chapters {
 }
 
 #page-site-index #page-header {
+    
     // background-color: @brand-primary; customisable
     padding-top: 12.7%;
     padding-bottom: 1.75em;
     min-height: 405px;
-    border-bottom: 0px;
+    border-bottom: 0;
     margin: 0;
     position: relative;
+    
     &> .btn {
         position: absolute;
         bottom: 1em;
@@ -1873,21 +1906,22 @@ http://blog.rodneyrehm.de/archives/34-iOS7-Mobile-Safari-And-Viewport-Units.html
     display: inline-block;
     padding: 1em 2%;
     margin-top: 2em;
+    
     & .btn {
         float: right;
     }
 }
-#page-mast .snap-login-button {
-  display:inline-block;
-  padding: 0.25em 2em;
-  margin-top:1em;
-}
 
+#page-mast .snap-login-button {
+    display: inline-block;
+    padding: 0.25em 2em;
+    margin-top: 1em;
+}
 
 @media screen and (min-width: @screen-sm-min) {
     #page-site-index #page-mast {
         width: 50%;
-        margin:11vh 0;
+        margin: 11vh 0;
     }
 }
 
@@ -1898,20 +1932,22 @@ http://blog.rodneyrehm.de/archives/34-iOS7-Mobile-Safari-And-Viewport-Units.html
 #page-site-index .content-slide {
     display: none;
 }
+
 #frontpage-course-list {
-    padding:1em 4%;
+    padding: 1em 4%;
 }
+
 #page-site-index .sitetopic,
 #frontpage-category-names,
 #frontpage-category-combo {
     max-width: 50.5em;
     margin: 2em auto;
-    clear:both;
+    clear: both;
 }
 
 #page-site-index .sitetopic {
-	.clearfix();
-	padding:0 4%;
+    .clearfix();
+    padding: 0 4%;
 }
 
 #site-news-forum h2,
@@ -1927,145 +1963,168 @@ http://blog.rodneyrehm.de/archives/34-iOS7-Mobile-Safari-And-Viewport-Units.html
 /* FRONT PAGE SITE NEWS */
 #page-site-index #site-news-forum {
     margin: 0 auto;
-    padding: 0 4% 4em 4%;
-    background-color: #F1F0EE;
+    padding: 0 4% 4em;
+    background-color: #f1f0ee;
     .clearfix();
 }
 
 #news-articles {
     margin: 0 auto;
 }
+
 .news-article {
     background-color: #fff;
     margin-bottom: 0.5em;
 }
+
 .news-article-inner {
     background-color: #fff;
 }
+
 .news-article-content {
     padding: 0 4%;
     min-height: 150px;
 }
+
 .news-article-content h3 {
     font-size: @font-size-h2;
 }
+
 .news-article-image {
-    cursor:pointer;
+    cursor: pointer;
 }
+
 .news-article-image,
-.news-article-preview{
-	color:#fff;
+.news-article-preview {
+    color: #fff;
     min-height: 150px;
+    
     //	background-color: @brand-primary; customisable
-    padding:2em 4%;
+    padding: 2em 4%;
     .bg-cover();
 }
+
 .news-article-preview {
-    height:auto;
+    height: auto;
 }
+
 .news-article-date {
     font-size: 0.75em;
 }
-.news-article-message{
-    display:none;
-    padding:2em 4%;
+
+.news-article-message {
+    display: none;
+    padding: 2em 4%;
 }
 
 .state-expanded {
     .news-article-preview,
     .news-article-image {
-        display:none;
+        display: none;
     }
+    
     .news-article-inner {
+        
     }
-    .news-article-message{
-        display:none;
+    
+    .news-article-message {
+        display: none;
     }
 }
+
 .news-article-message:focus {
     outline: 0;
 }
-
 
 @media screen and (min-width: @screen-sm-min) {
     .news-article {
         margin-bottom: 0;
         display: flex;
     }
+    
     .news-article-content {
         max-width: 100%;
     }
+    
     .news-article-preview,
     .news-article-image,
-    .news-article-inner{
+    .news-article-inner {
         width: 50%;
         min-height: 300px;
         flex: 1 1 auto;
+        
         p {
-            margin:1em 0;
-            display:block;
+            margin: 1em 0;
+            display: block;
         }
     }
+    
     .news-article-image {
         padding: 0;
     }
+    
     .state-expanded {
         .news-article-inner {
-            width:33%;
-            order:1 !important;
+            width: 33%;
+            order: 1 !important;
         }
-        .news-article-message{
-            width:67%;
+        
+        .news-article-message {
+            width: 67%;
         }
     }
+    
     #news-articles div:nth-child(odd) .news-article-preview,
     #news-articles div:nth-child(odd) .news-article-image {
-        order:2;
+        order: 2;
+        
         p:nth-of-type(2) {
             .text-left;
         }
     }
-    #news-articles div:nth-child(even) .news-article-inner{
-        order:2;
+    
+    #news-articles div:nth-child(even) .news-article-inner {
+        order: 2;
     }
+    
     .ie9 {
         #news-articles div:nth-child(even) {
             .news-article-preview,
             .news-article-image,
-            .news-article-inner{
+            .news-article-inner {
                 float: left;
             }
         }
+        
         #news-articles div:nth-child(odd) {
             .news-article-preview,
             .news-article-image,
-            .news-article-inner{
+            .news-article-inner {
                 float: right;
             }
         }
     }
 }
 
-
 @media screen and (min-width: @screen-lg-min) {
-	.news-article {
-		min-height:33vh;
-	}
-
+    .news-article {
+        min-height: 33vh;
+    }
 }
 
 //
 // Front page - Course lists
 // --------------------------------------------------
 
-
 .coursebox.clearfix {
     padding: 1em 4%;
     border-bottom: 1px solid #eee;
 }
+
 .coursebox .info .coursename {
     font-size: @font-size-h4;
 }
+
 .coursebox .enrolmenticons,
 .coursebox .moreinfo {
     display: inline;
@@ -2086,37 +2145,40 @@ http://blog.rodneyrehm.de/archives/34-iOS7-Mobile-Safari-And-Viewport-Units.html
 
 @media screen and (min-width: @screen-sm-min) {
     .frontpage-course-list-all .coursebox {
-        width:50%;
-        display:inline-block;
-        vertical-align:top;
-        border:0px;
+        width: 50%;
+        display: inline-block;
+        vertical-align: top;
+        border: 0;
     }
+    
     .coursebox .info,
     .coursebox .content .summary,
     .coursebox .content .teachers {
         width: 62%;
         float: right;
     }
+    
     .coursebox .content .summary,
     .coursebox .content .teachers {
         float: right;
     }
+    
     .coursebox .content .courseimage {
         float: left;
         width: 33%;
         margin-top: -2.1em;
     }
 }
+
 .paging.paging-morelink {
-	text-align:center;
-	a {
-		.btn;
-	}
+    text-align: center;
+    
+    a {
+        .btn;
+    }
 }
 
-
 /* COURE LISTINGS PAGES */
-
 .course_category_tree .category>.info,
 .coursebox .info,
 .coursebox {
@@ -2126,41 +2188,40 @@ http://blog.rodneyrehm.de/archives/34-iOS7-Mobile-Safari-And-Viewport-Units.html
     box-shadow: none;
     margin: 0;
 }
+
 .coursebox .info {
     padding: 0;
 }
 
-
-
-
-
-
-
 /* Calandar */
-
 span.calendar_event_global,
 li.calendar_event_global:before,
 td.calendar_event_global > a {
     background-color: @brand-success;
 }
+
 span.calendar_event_course,
 li.calendar_event_course:before,
 td.calendar_event_course > a {
+    
     //salmon
     background-color: salmon;
-
 }
+
 span.calendar_event_group,
 li.calendar_event_group:before,
 td.calendar_event_group > a {
+    
     // yellow
-    background-color: #FDD652;
+    background-color: #fdd652;
 }
+
 span.calendar_event_user,
 li.calendar_event_user:before,
 td.calendar_event_user > a {
     background-color: @brand-info;
 }
+
 td.calendar_event_global,
 td.calendar_event_course,
 td.calendar_event_group,
@@ -2183,44 +2244,52 @@ li.calendar_event_user:before {
 /* Block cals */
 .block .minicalendar {
     max-width: 500px;
+    
     th {
         height: auto;
         font-weight: @headings-font-weight;
     }
+    
     td {
-          height: 4em;
-          vertical-align: middle;
-      > a {
-          border-radius: 100%;
-          height: 4em;
-          width: 4em;
-          padding: 1.2em;
-          display: block;
-          margin: auto;
-      }
-      &.hasevent > a {
-          color: #fff;
-      }
-      &.today > a {
-          border:1px solid @gray-lighter;
-      }
+        height: 4em;
+        vertical-align: middle;
+        
+        > a {
+            border-radius: 100%;
+            height: 4em;
+            width: 4em;
+            padding: 1.2em;
+            display: block;
+            margin: auto;
+        }
+        
+        &.hasevent > a {
+            color: #fff;
+        }
+        
+        &.today > a {
+            border: 1px solid @gray-lighter;
+        }
     }
 }
+
 // Minical hover box
 .calendar-event-panel {
-    border:0 !important;
+    border: 0 !important;
     background-color: #fff;
-
-    box-shadow:0 3px 9px rgba(0, 0, 0, 0.5);
-    .yui3-overlay-content{
+    box-shadow: 0 3px 9px rgba(0, 0, 0, 0.5);
+    
+    .yui3-overlay-content {
         border-color: @gray-lighter;
     }
 }
+
 .calendar_filters {
-    .smallicon{
-    display:none;
+    .smallicon {
+        display: none;
     }
-    .calendar_event span[class*="_event_"]{
+    
+    .calendar_event span[class*="_event_"] {
         border-radius: 100%;
         display: inline-block;
         width: 1em;
@@ -2229,11 +2298,11 @@ li.calendar_event_user:before {
     }
 }
 
-
 .maincalendar .header {
     font-weight: 100;
 }
-.path-calendar{
+
+.path-calendar {
     .maincalendar .calendarmonth td,
     .maincalendar .calendarmonth th {
         border-color: #fff;
@@ -2241,33 +2310,32 @@ li.calendar_event_user:before {
     }
 }
 
-
 .maincalendar .day .day {
-  border-radius: 100%;
-  width: 4em;
-  height: 4em;
-  padding: 1.2em;
-  border: 1px solid #fff;
-  margin: 0 auto;
+    border-radius: 100%;
+    width: 4em;
+    height: 4em;
+    padding: 1.2em;
+    border: 1px solid #fff;
+    margin: 0 auto;
 }
 
 // Today
-.maincalendar .today .day{
+.maincalendar .today .day {
     border-color: @gray-lighter;
 }
 
 // A day with events
 .maincalendar .day .day a {
-  border-radius: 100%;
-  display: block;
-  height: 4em;
-  width: 4em;
-  padding: 1.2em;
-  margin: -1.2em;
+    border-radius: 100%;
+    display: block;
+    height: 4em;
+    width: 4em;
+    padding: 1.2em;
+    margin: -1.2em;
 }
 
 .maincalendar .day.nottoday .day a {
-  color: #FFF;
+    color: #fff;
 }
 
 .maincalendar .day.today .day a {
@@ -2280,16 +2348,18 @@ ul.events-new,
 ul.events-underway {
     padding-top: 0.5em;
 }
+
 ul.events-new + ul.events-underway {
     padding-top: 0;
 }
 
-.path-calendar .maincalendar .eventlist .event{
+.path-calendar .maincalendar .eventlist .event {
     border: 0;
 }
 
-.maincalendar ul{
+.maincalendar ul {
     text-align: left;
+    
     li {
         background-color: transparent;
     }
@@ -2299,6 +2369,7 @@ ul.events-new + ul.events-underway {
     .yui3-calendarbase {
         width: 350px !important;
     }
+    
     .yui3-calendar-header-label,
     .yui3-calendar-day,
     .yui3-calendar-previousmonth-day,
@@ -2310,18 +2381,22 @@ ul.events-new + ul.events-underway {
         text-align: center;
         font-weight: normal;
     }
+    
     .yui3-calendar-previousmonth-day,
     .yui3-calendar-nextmonth-day,
     .yui3-calendar-weekday {
         font-weight: 100;
     }
+    
     .yui3-calendar-previousmonth-day,
     .yui3-calendar-nextmonth-day {
         color: @text-muted;
     }
+    
     .yui3-calendar-content {
         background: @body-bg;
     }
+    
     .yui3-calendarnav-nextmonth,
     .yui3-calendarnav-prevmonth {
         border: 0;
@@ -2331,12 +2406,15 @@ ul.events-new + ul.events-underway {
         background-repeat: no-repeat;
         background-position: center;
     }
+    
     .yui3-calendarnav-nextmonth {
-        background-image: url([[pix:theme|right-arrow]]);
+        background-image: url("[[pix:theme|right-arrow]]");
     }
+    
     .yui3-calendarnav-prevmonth {
-        background-image: url([[pix:theme|left-arrow]]);
+        background-image: url("[[pix:theme|left-arrow]]");
     }
+    
     .yui3-calendar-day,
     .yui3-calendar-prevmonth-day,
     .yui3-calendar-nextmonth-day {
@@ -2344,29 +2422,35 @@ ul.events-new + ul.events-underway {
         border: 0;
         height: 47px;
     }
+    
     .yui3-calendar-day:hover,
     .yui3-calendar-prevmonth-day,
     .yui3-calendar-nextmonth-day {
         background-color: @modal-content-bg;
     }
+    
     .yui3-calendar-day-selected,
     .yui3-calendar-day:hover {
         .alakazam();
         color: #fff;
+        
         // background-color: @link-color; in user swatch
         border-radius: 100%;
     }
+    
     @media screen and (min-width: @screen-sm-min) {
         left: 33% !important;
         top: 50% !important;
-
+        
         .yui3-calendar-base {
             width: 100%;
         }
+        
         .yui3-calendar-header-label {
             font-weight: 100;
             font-size: @font-size-h4;
         }
+        
         .yui3-calendarnav-nextmonth,
         .yui3-calendarnav-prevmonth {
             height: 55px;
@@ -2374,75 +2458,64 @@ ul.events-new + ul.events-underway {
     }
 }
 
-
-
 /* USER PROFILE PAGE */
 .userprofile .userprofilebox {
     .profilepicture {
         .make-md-column(3);
     }
+    
     .descriptionbox {
         .make-md-column(9);
     }
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 // -------------------------
 //  Moodle mods
 // -------------------------
-
 // -------------------------
 // Choice
 // -------------------------
+
 .path-mod-choice .results.names .user {
-    clear:both;
+    clear: both;
 }
 
 // -------------------------
 // Assignments
 // -------------------------
+
 .path-mod-assignment {
-  .userpicture, .picture.user, .picture.teacher {
-    height: auto;
-  }
+    .userpicture,
+    .picture.user,
+    .picture.teacher {
+        height: auto;
+    }
 }
 
 // -------------------------
 // Comments - this could be a block, but is in mods too?
 // -------------------------
+
 .comment-ctrl,
-.comment-list{
-	font-size:1em;
+.comment-list {
+    font-size: 1em;
 }
+
 .comment-area {
-	max-width:100%;
+    max-width: 100%;
 }
 
 // -------------------------
 // Workshop
 // -------------------------
+
 .path-mod-workshop .userplan {
-	width:100%;
+    width: 100%;
 }
-.path-mod-workshop .collapsibleregioncaption{
-	font-size:@font-size-h3;
-    font-weight:300;
+
+.path-mod-workshop .collapsibleregioncaption {
+    font-size: @font-size-h3;
+    font-weight: 300;
 }
 
 // -------------------------
@@ -2452,30 +2525,30 @@ ul.events-new + ul.events-underway {
 #chat-input-area,
 #chat-input-area table.generaltable,
 #chat-input-area table.generaltable td.cell,
-#chat-userlist{
-	background-color:transparent !important;
+#chat-userlist {
+    background-color: transparent !important;
 }
+
 .yui-skin-sam .yui-layout.path-mod-chat-gui_ajax #chat-input-area table.generaltable,
-.yui-skin-sam .yui-layout.path-mod-chat-gui_ajax #chat-input-area table.generaltable td.cell{
-	padding:0;
+.yui-skin-sam .yui-layout.path-mod-chat-gui_ajax #chat-input-area table.generaltable td.cell {
+    padding: 0;
 }
 
 #page-mod-chat-gui_basic-index {
-	#mr-nav,
-	#moodle-footer,
-	#page-header{
-		display:none;
-	}
+    #mr-nav,
+    #moodle-footer,
+    #page-header {
+        display: none;
+    }
 }
 
 // -------------------------
 // Lesson
 // -------------------------
-
 // Space on buttons
 
 .branchbuttoncontainer {
-  margin:2em 0;
+    margin: 2em 0;
 }
 
 // -------------------------
@@ -2488,77 +2561,90 @@ ul.events-new + ul.events-underway {
     left: 1%;
     background-color: #000;
     color: #eee;
-    padding: .1em 1%;
+    padding: 0.1em 1%;
     z-index: @zindex-navbar-fixed;
 }
+
 // Quiz setup form //
-#page-mod-quiz-mod #id_reviewoptionshdr .fitem{
-  width:100%;
-  float:none;
+#page-mod-quiz-mod #id_reviewoptionshdr .fitem {
+    width: 100%;
+    float: none;
 }
-#page-mod-quiz-mod #id_reviewoptionshdr fieldset.fgroup{
-  margin:1em 0;
+
+#page-mod-quiz-mod #id_reviewoptionshdr fieldset.fgroup {
+    margin: 1em 0;
 }
+
 #page-mod-quiz-edit div.question div.qnum {
-  color:inherit;
-  width:5%;
+    color: inherit;
+    width: 5%;
 }
-#page-mod-quiz-edit div.editq div.question div.content{
-  border-radius:0;
-    width:95%;
+
+#page-mod-quiz-edit div.editq div.question div.content {
+    border-radius: 0;
+    width: 95%;
 }
+
 #page-mod-quiz-edit div.question div.content {
-  div.points,
-  div.questioncontrols {
-    position:relative;
-    float:right;
-    width:30%;
-    right:auto;
-    &:empty{
-      display:none; // not working as there is some eroneous space in the div
+    div.points,
+    div.questioncontrols {
+        position: relative;
+        float: right;
+        width: 30%;
+        right: auto;
+        
+        &:empty {
+            display: none; // not working as there is some eroneous space in the div
+        }
     }
-  }
-  div.questioncontrols{
-    width:55px;
-  }
+    
+    div.questioncontrols {
+        width: 55px;
+    }
 }
 
 .questioncontentcontainer {
-  width:68%;
+    width: 68%;
 }
-.questioncontainer.random .questioncontentcontainer{
-  width:100%;
+
+.questioncontainer.random .questioncontentcontainer {
+    width: 100%;
 }
-#page-mod-quiz-edit .questioncontentcontainer div.randomquestionqlist{
-  clear:both;
-  background-color:transparent;
-  width:100%;
+
+#page-mod-quiz-edit .questioncontentcontainer div.randomquestionqlist {
+    clear: both;
+    background-color: transparent;
+    width: 100%;
 }
+
 #page-mod-quiz-edit div.question div.content .questionname,
-#page-mod-quiz-edit div.question div.content .questiontext{
-  max-width:95%;
+#page-mod-quiz-edit div.question div.content .questiontext {
+    max-width: 95%;
 }
+
 @media screen and (max-width: @screen-md-max) {
-  .questioncontentcontainer {
-    width:100%;
-    clear:both;
-  }
-  #page-mod-quiz-edit div.question div.content div.questioncontrols,
-  #page-mod-quiz-edit div.question div.content div.points {
-    position:relative;
-    float:left;
-    width:50%;
-    max-width:50%;
-    text-align:left;
-    right:auto;
-  }
+    .questioncontentcontainer {
+        width: 100%;
+        clear: both;
+    }
+    
+    #page-mod-quiz-edit div.question div.content div.questioncontrols,
+    #page-mod-quiz-edit div.question div.content div.points {
+        position: relative;
+        float: left;
+        width: 50%;
+        max-width: 50%;
+        text-align: left;
+        right: auto;
+    }
 }
+
 // start of code for when adding from a question bank
 #page-mod-quiz-edit div.quizcontents,
 .questionbankwindow.block {
     width: 100%;
-    padding-left: 0px;
-    padding-right: 0px;
+    padding-left: 0;
+    padding-right: 0;
 }
 
 // very long button text
@@ -2566,11 +2652,13 @@ ul.events-new + ul.events-underway {
     .moveselectedonpage,
     .addnewpagesafterselected {
         padding-right: 0;
+        
         input {
             white-space: normal;
         }
     }
 }
+
 #page-mod-quiz-edit div.reorder {
     div.question div.content {
         width: calc(~"100% - 4.3em");
@@ -2590,296 +2678,342 @@ ul.events-new + ul.events-underway {
 
 @media screen and (min-width: @screen-md-min) {
     #page-mod-quiz-edit div.quizcontents,
-    .questionbankwindow.block{
-          width: 50%;
+    .questionbankwindow.block {
+        width: 50%;
     }
+    
     #page-mod-quiz-edit div.container div.generalbox {
         padding-left: 8%;
         padding-right: 0;
     }
 }
+
 #page-mod-quiz-edit div.quizwhenbankcollapsed,
-#page-mod-quiz-edit .modulespecificbuttonscontainer{
-  width:100%;
+#page-mod-quiz-edit .modulespecificbuttonscontainer {
+    width: 100%;
 }
-#page-mod-quiz-edit .categoryinfo{
-  display:none;
+
+#page-mod-quiz-edit .categoryinfo {
+    display: none;
 }
-#categoryquestions .checkbox{
-  // overwite bootstrap checkbox class
-  display:table-cell;
+
+#categoryquestions .checkbox {
+    
+    // overwite bootstrap checkbox class
+    display: table-cell;
 }
-#categoryquestions .iconcol{
-  width:22px;
+
+#categoryquestions .iconcol {
+    width: 22px;
 }
+
 #categoryquestions label,
 #page-mod-quiz-edit #categoryquestions .questiontext,
 .questioncontentcontainer label,
-#page-mod-quiz-edit div.question div.content .questiontext{
-  font-weight:300;
+#page-mod-quiz-edit div.question div.content .questiontext {
+    font-weight: 300;
 }
 
 // quiz itself //
 .que {
-  border-bottom:1px solid #999;
-  padding:1.5em 0;
-  margin:1em 0 1em 0;
+    border-bottom: 1px solid #999;
+    padding: 1.5em 0;
+    margin: 1em 0;
 }
+
 .que .info,
-.que .content{
-  background-color:transparent;
-  border:0;
-  width:100%;
-  margin:0;
-  padding:0;
-  float:none;
+.que .content {
+    background-color: transparent;
+    border: 0;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    float: none;
 }
+
 .que h3.no {
-  margin-top:1em;
+    margin-top: 1em;
 }
+
 .que h3.no,
-.que span.qno{
-  font-size:@font-size-h2;
-  font-weight:300;
+.que span.qno {
+    font-size: @font-size-h2;
+    font-weight: 300;
 }
-.que .info>div{
-  display:inline-block;
-  font-size:small;
-  color:#999;
-  padding-right:2%;
+
+.que .info>div {
+    display: inline-block;
+    font-size: small;
+    color: #999;
+    padding-right: 2%;
 }
+
 .que .formulation,
 .formulation .incorrect,
-.formulation .correct{
-  border:0;
-  background-color:transparent;
-  width:100%;
-  margin:0;
-  padding:0;
+.formulation .correct {
+    border: 0;
+    background-color: transparent;
+    width: 100%;
+    margin: 0;
+    padding: 0;
 }
-.que .qtext{
-  font-size:1.3em;
+
+.que .qtext {
+    font-size: 1.3em;
 }
+
 .que.multichoice .answer .specificfeedback {
-  display:block;
+    display: block;
 }
-#page-mod-quiz-edit .editq div.question{
-  border-bottom:1px solid #eee;
-  border-top:1px solid #ccc;
+
+#page-mod-quiz-edit .editq div.question {
+    border-bottom: 1px solid #eee;
+    border-top: 1px solid #ccc;
 }
+
 #categoryquestions td,
-#categoryquestions th{
-  padding:4px 0.2em;
+#categoryquestions th {
+    padding: 4px 0.2em;
 }
+
 .singlequestion .questioneditbutton img {
     .sr-only;
 }
-.questioncontainer{
-  .clearfix();
+
+.questioncontainer {
+    .clearfix();
 }
+
 #page-mod-quiz-edit .editq div.question div.content .singlequestion .questioneditbutton .questionname,
-#page-mod-quiz-edit .editq div.question div.content .singlequestion .questioneditbutton .questiontext{
-  float:none;
-  display:block;
-  font-weight:normal;
-  text-decoration:none;
-  padding:0;
-  margin:0;
+#page-mod-quiz-edit .editq div.question div.content .singlequestion .questioneditbutton .questiontext {
+    float: none;
+    display: block;
+    font-weight: normal;
+    text-decoration: none;
+    padding: 0;
+    margin: 0;
 }
-#page-mod-quiz-edit .questioncontentcontainer div.singlequestion a{
-  text-decoration:none;
+
+#page-mod-quiz-edit .questioncontentcontainer div.singlequestion a {
+    text-decoration: none;
 }
+
 #page-mod-quiz-edit .paging,
 #page-mod-quiz-edit div.question div.content .singlequestion .questionpreview,
-#page-mod-quiz-edit div.question div.content .questionpreview a{
-  background-color:transparent;
+#page-mod-quiz-edit div.question div.content .questionpreview a {
+    background-color: transparent;
 }
-#page-mod-quiz-edit div.question div.content .questiontype{
-  float:left;
-  font-style:normal;
-  font-size:small;
+
+#page-mod-quiz-edit div.question div.content .questiontype {
+    float: left;
+    font-style: normal;
+    font-size: small;
 }
-#page-mod-quiz-edit div.editq div.question div.content{
-  border:0;
+
+#page-mod-quiz-edit div.editq div.question div.content {
+    border: 0;
 }
+
 #page-mod-quiz-edit div.quizpage span.pagetitle,
-#page-mod-quiz-edit div.quizpage .pagecontent{
-  float:none;
+#page-mod-quiz-edit div.quizpage .pagecontent {
+    float: none;
 }
+
 #page-mod-quiz-edit .questionbankwindow.block div.header {
-  background-color:transparent;
-  font-weight:normal;
+    background-color: transparent;
+    font-weight: normal;
 }
+
 #page-mod-quiz-edit div.quizpage span.pagetitle,
 #page-mod-quiz-edit .questionbankwindow.block div.header div.title h2,
 #page-mod-quiz-edit .questionbankwindow a#showbankcmd,
 #page-mod-quiz-edit .questionbankwindow a#hidebankcmd,
 #page-mod-quiz-edit .questioncontentcontainer div.randomquestionqlist .totalquestionsinrandomqcategory {
-  color:inherit;
+    color: inherit;
 }
-#page-mod-quiz-edit div.quizpage .pagecontent{
-  width:100%;
-  margin:0;
-  padding:0;
-  border:0;
-  background-color:transparent;
+
+#page-mod-quiz-edit div.quizpage .pagecontent {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background-color: transparent;
 }
+
 #page-mod-quiz-edit div.quizpage .pagecontent,
-#page-mod-quiz-edit div.question div.questioncontainer{
-  background-color:transparent;
-}
-#page-mod-quiz-edit .invisiblefieldset br{
-  display:none;
-}
-#page-mod-quiz-edit .modulespecificbuttonscontainer br{
-  display:block;
-}
-#page-mod-quiz-edit div.question div.content div.points input{
-  width:auto;
+#page-mod-quiz-edit div.question div.questioncontainer {
+    background-color: transparent;
 }
 
+#page-mod-quiz-edit .invisiblefieldset br {
+    display: none;
+}
 
+#page-mod-quiz-edit .modulespecificbuttonscontainer br {
+    display: block;
+}
+
+#page-mod-quiz-edit div.question div.content div.points input {
+    width: auto;
+}
 
 // -------------------------
 // Forum
 // -------------------------
+
 .forumsearch {
-	padding:1em;
-  float:right;
+    padding: 1em;
+    float: right;
 }
 
 // on front page the forum has extranious options //
 .course-1 {
     .movediscussion,
     .displaymode {
-    display:none;
+        display: none;
     }
 }
 
 // -------------------------
 // Forum responsive table
 // -------------------------
-
 // Should the forum responsive stuff be moved to modules.less?
-@media screen and (max-width: @screen-sm-max) {
 
+@media screen and (max-width: @screen-sm-max) {
     .path-mod-forum .forumheaderlist {
         tbody td.topic {
-            width:100%;
+            width: 100%;
         }
+        
         .picture a {
-            display:inline;
+            display: inline;
         }
     }
-
+    
     .forumheaderlist {
-	thead{
-		display:none;
-	}
-	tbody{
-		width:100%;
-		display:block;
-	}
-	tbody tr.discussion{
-		display:block;
-		padding:1em 0;
-		border-bottom:3px solid #CCC;
-		width:100%;
-	}
-	tbody tr td,
-	td.picture.group{
-		display:block;
-		clear:both;
-		text-align:left !important;
-		background-color:transparent !important;
-		width:100%;
-	}
-	td.topic {
-		font-size:1.3em;
-	}
-	td:before {
-		font-size:0.9em;
-		color:#999;
-		font-weight:bold;
-	}
-	td.topic:before {
-		content: attr(data-cellname);
-	}
-	td.picture:before {
-		content: attr(data-cellname);
-	}
-	td.replies:before {
-		content: attr(data-cellname);
-	}
-	td.lastpost:before {
-		content: attr(data-cellname);
-	}
-	td:before {
-		display:inline-block;
-		margin-right:4%;
-	}
-	td.author,
-	td.picture{
-		clear:none;
-	}
-	td.picture {
-		width:32%;
-		display:inline;
-		margin-right:2%;
-	}
-	td.author{
-		width:68%;
-		display:inline;
-	}
+        thead {
+            display: none;
+        }
+        
+        tbody {
+            width: 100%;
+            display: block;
+        }
+        
+        tbody tr.discussion {
+            display: block;
+            padding: 1em 0;
+            border-bottom: 3px solid #ccc;
+            width: 100%;
+        }
+        
+        tbody tr td,
+        td.picture.group {
+            display: block;
+            clear: both;
+            text-align: left !important;
+            background-color: transparent !important;
+            width: 100%;
+        }
+        
+        td.topic {
+            font-size: 1.3em;
+        }
+        
+        td:before {
+            font-size: 0.9em;
+            color: #999;
+            font-weight: bold;
+        }
+        
+        td.topic:before {
+            content: attr(data-cellname);
+        }
+        
+        td.picture:before {
+            content: attr(data-cellname);
+        }
+        
+        td.replies:before {
+            content: attr(data-cellname);
+        }
+        
+        td.lastpost:before {
+            content: attr(data-cellname);
+        }
+        
+        td:before {
+            display: inline-block;
+            margin-right: 4%;
+        }
+        
+        td.author,
+        td.picture {
+            clear: none;
+        }
+        
+        td.picture {
+            width: 32%;
+            display: inline;
+            margin-right: 2%;
+        }
+        
+        td.author {
+            width: 68%;
+            display: inline;
+        }
+    }
 }
-}
-
-
-
-
-
 
 // -------------------------
 // Grade table
 // -------------------------
+
 table.boxaligncenter.generaltable.user-grade {
-    background-color:#fff;
-    th{
-        font-weight:500;
-    }
-    thead {
-        border-bottom:1px solid #eee;
-    }
-    img.icon {
-        width:1.3em;
-        height:1.3em;
-    }
-    td.feedbacktext {
-        font-size:1.3em;
-    }
-    th a {
-        font-size:1.2em;
-    }
+    background-color: #fff;
+    
     th {
-        padding:0.75em !important;
-        border-color:#fff !important;
+        font-weight: 500;
     }
+    
+    thead {
+        border-bottom: 1px solid #eee;
+    }
+    
+    img.icon {
+        width: 1.3em;
+        height: 1.3em;
+    }
+    
+    td.feedbacktext {
+        font-size: 1.3em;
+    }
+    
+    th a {
+        font-size: 1.2em;
+    }
+    
+    th {
+        padding: 0.75em !important;
+        border-color: #fff !important;
+    }
+    
     td {
-        border-color:#fff !important;
+        border-color: #fff !important;
     }
+    
     // Kill ridiculously unprofessional colour scheme
     * {
-        background-color:#fff !important;
+        background-color: #fff !important;
     }
-
 }
 
 // -------------------------
 // Joule mods
 // -------------------------
-
 // Reports
 // SHAME - stop overlap with footer
+
 .path-blocks-reports #report-content {
     min-height: 750px; // magic number
 }
@@ -2894,9 +3028,11 @@ table.boxaligncenter.generaltable.user-grade {
 .mr_html_tabs {
     margin-bottom: 1em;
 }
-.user-grade{
-	border:0;
+
+.user-grade {
+    border: 0;
 }
+
 .user-grade td.b1l,
 .user-grade td.b2l,
 .user-grade th.b1l,
@@ -2905,11 +3041,12 @@ table.boxaligncenter.generaltable.user-grade {
 .user-grade td.b2b,
 .user-grade th.b1b,
 .user-grade th.b2b,
-.user-grade thead{
-	border-color:#ccc;
-	border-left:0 !important;
-	border-right:0 !important;
+.user-grade thead {
+    border-color: #ccc;
+    border-left: 0 !important;
+    border-right: 0 !important;
 }
+
 .user-grade td.evend2,
 .user-grade th.evend2,
 .user-grade td.oddd1,
@@ -2925,18 +3062,18 @@ table#user-grades tr.avg td.cell,
 .user-grade td.evend3,
 .user-grade th.evend3,
 .user-grade td.oddd3,
-.user-grade th.oddd3{
-	background-color:transparent;
-}
-table#user-grades tr.avg td.cell{
-	color:#66666f;
+.user-grade th.oddd3 {
+    background-color: transparent;
 }
 
+table#user-grades tr.avg td.cell {
+    color: #66666f;
+}
 
 #page-blocks-reports-view .mr_html_filter,
 #block-reports-filterbutton,
 .blocks_reports_useractions,
-.blocks_reports_jouleadmin  {
+.blocks_reports_jouleadmin {
     border: none;
     background: none;
 }
@@ -2957,13 +3094,16 @@ table#user-grades tr.avg td.cell{
     color: #fff;
     border: none;
     margin-top: 0.5em;
+    
     //background-color: @brand-primary; User customisable.
     &:hover {
         color: #fff;
         border: none;
+        
         //background-color: @brand-primary; User customisable.
     }
 }
+
 .gradingform_rubric.editor .criterion .levels .level .delete {
     position: relative;
 }
@@ -2975,24 +3115,30 @@ table#user-grades tr.avg td.cell{
             z-index: 1 !important;
         }
     }
+    
     #course-search-left,
     #course-search-right {
         display: none;
     }
+    
     #course-search-box {
         background-image: none;
         min-height: 60px;
     }
+    
     #course-search-text {
         padding-top: 0;
         margin: 0.5em 5%;
         width: calc(~"84% - 13px");
     }
+    
     #course-search-button {
         padding-top: 3px;
         margin: 0.5em 1% 0.5em 0;
     }
+    
     #course-search-input {
+        
         // copied from less/bootstrap3/forms.less .form-control
         color: @input-color;
         background-color: @input-bg;
@@ -3003,7 +3149,10 @@ table#user-grades tr.avg td.cell{
         .transition(~"border-color ease-in-out .4s, box-shadow ease-in-out .4s");
         width: 100%;
     }
-    .yui3-widget-stdmod, .yui3-aclist-content {
+    
+    .yui3-widget-stdmod,
+    .yui3-aclist-content {
+        
         // copied from less/bootstrap3/dropdowns.less .dropdown-menu
         z-index: @zindex-dropdown;
         min-width: 160px;
@@ -3016,12 +3165,15 @@ table#user-grades tr.avg td.cell{
         border-radius: @border-radius-base;
         .box-shadow(0 6px 12px rgba(0,0,0,.175));
         background-clip: padding-box;
+        
         .report-overlay-bd {
             padding: 0;
         }
+        
         div.report-nav-item {
             border-bottom: none;
             width: 100%;
+            
             a.nav-item {
                 display: block;
                 padding: 3px 20px;
@@ -3030,6 +3182,7 @@ table#user-grades tr.avg td.cell{
                 color: @dropdown-link-color;
                 white-space: nowrap; // prevent links from randomly breaking onto new lines
                 width: 100%;
+                
                 &:hover,
                 &:focus {
                     text-decoration: none;
@@ -3038,6 +3191,7 @@ table#user-grades tr.avg td.cell{
                 }
             }
         }
+        
         div.report-nav-item-left,
         div.report-nav-item-right {
             a.nav-paginate {
@@ -3047,6 +3201,7 @@ table#user-grades tr.avg td.cell{
                 line-height: @line-height-base;
                 color: @dropdown-link-color;
                 white-space: nowrap; // prevent links from randomly breaking onto new lines
+                
                 &:hover,
                 &:focus {
                     text-decoration: none;
@@ -3055,7 +3210,9 @@ table#user-grades tr.avg td.cell{
                 }
             }
         }
+        
         #report-overlay-course div.report-nav-item a.nav-item {
+            
             // Allow long course title search results to wrap
             white-space: normal;
         }
@@ -3069,15 +3226,19 @@ table#user-grades tr.avg td.cell{
 
 #local-joulegrader-resize,
 #local-nortongrader-resize {
+    
     // display: none;
 }
+
 // TODO short term fix for Snap disappearing header interfering with scrolling Gradebook
 #page-grade-report-grader-index header#mr-nav {
     animation-name: none;
 }
+
 #page-grade-report-joulegrader-index #joule-grades-thead {
     table-layout: fixed;
 }
+
 #page-grade-report-nortongrader-index,
 #page-grade-report-joulegrader-index {
     #gradereport-joulegrader-navbox,
@@ -3085,56 +3246,65 @@ table#user-grades tr.avg td.cell{
         border: 0;
         background: none;
     }
+    
     table .header[scope="col"] {
         background-color: #fff;
         font-size: 13px; // SHAME - magic number
     }
+    
     table {
         margin: 0;
         text-align: right;
     }
+    
     #joule-grades-thead-wrap,
     #joule-grades-leftcol-wrap,
     table.joule-grades {
         border: none;
         font-size: @font-size-table;
     }
+    
     table.joule-grades {
         tr.odd td.cell {
             background-color: @table-bg-accent;
+            
             &.overridden,
             &.ajaxoverridden {
-                background-color: #EFD9A4;
+                background-color: #efd9a4;
             }
         }
     }
+    
     table.joule-grades td,
     table.joule-grades th {
         border-right: none;
         border-left: none;
         border-width: 1px;
     }
+    
     table.joule-grades th.item,
     table.joule-grades th.categoryitem,
     table.joule-grades th.courseitem {
         border-bottom-color: @table-border-color;
     }
+    
     #joule-grades-leftcol-wrap {
         border-right: 1px solid @table-border-color;
     }
+    
     table.joule-grades th,
     table.joule-grades td {
         padding: @table-condensed-cell-padding;
     }
-
+    
     #joule-grades-fthead {
         margin-top: -1px;
     }
-
+    
     #joule-grades-leftcol {
-        margin-top: 0px;
+        margin-top: 0;
     }
-
+    
     #joule-grades,
     #joule-grades-leftcol {
         .row {
@@ -3142,6 +3312,7 @@ table#user-grades tr.avg td.cell{
             &.joulegraderactionmenu {
                 margin-left: 0;
                 margin-right: 0;
+                
                 &:before,
                 &:after {
                     display: none;
@@ -3149,9 +3320,11 @@ table#user-grades tr.avg td.cell{
             }
         }
     }
+    
     #joule-grades-fthead {
         width: auto;
     }
+    
     #joule-grades-leftcol-wrap {
         border-bottom: none;
     }
@@ -3161,15 +3334,19 @@ table#user-grades tr.avg td.cell{
     #local-joulegrader-navigation {
         border-bottom: thin solid #e5e5e5;
         background-color: transparent;
+        
         .helptooltip {
             display: none;
         }
+        
         .action-icon img.smallicon {
             vertical-align: middle;
         }
     }
+    
     fieldset.fieldset {
         border-color: #e5e5e5;
+        
         legend {
             width: auto;
             border: none;
@@ -3184,15 +3361,16 @@ table#user-grades tr.avg td.cell{
 
 .path-blocks-conduit .widgets {
     white-space: normal;
+    
     input {
         display: block;
         margin: 8px 0 0 5px;
     }
+    
     a {
         display: block;
         margin-top: -1.5em;
     }
-
 }
 
 #page-admin-outcome-admin {
@@ -3209,8 +3387,8 @@ table#user-grades tr.avg td.cell{
 }
 
 .path-blocks-reports .report-title {
-	font-weight:normal;
-	font-family:@font-family-base;
+    font-weight: normal;
+    font-family: @font-family-base;
 }
 
 // whitelist - make grade table larger, apply whitespace remover
@@ -3220,8 +3398,9 @@ table#user-grades tr.avg td.cell{
 .path-grade-report-grader {
     #region-main {
         width: 100%;
-        max-width: 100%
+        max-width: 100%;
     }
+    
     table.simple,
     #gradetreesubmit,
     ul.nav-tabs {
@@ -3229,45 +3408,54 @@ table#user-grades tr.avg td.cell{
         margin: 0 auto 1em;
     }
 }
+
 // whitelist - scroll bars for large data-tables //
 // - note they are already on .gradeparent
-
 // Edit categories and items: Full view
-.gradetreebox,
 // Mod assignment grading table
-.gradingtable .no-overflow{
-    overflow:auto;
+
+.gradetreebox,
+.gradingtable .no-overflow {
+    overflow: auto;
 }
+
 .path-grade-report-customgrader,
 .path-grade-report-grader {
-    .gradeparent{
+    .gradeparent {
         .right_scroller table#user-grades {
             th {
                 font-size: 10px;
             }
         }
+        
         table#user-grades {
             border: none;
             font-size: @font-size-table;
+            
             th {
                 font-size: 13px;
+                
                 &.header.userfield[scope="col"],
                 &.header#studentheader[scope="col"] {
                     vertical-align: bottom;
                     border-top: none;
                 }
             }
+            
             th,
             td {
                 border-color: @table-border-color #f5f5f5;
             }
+            
             tr.odd td.cell {
                 background-color: @table-bg-accent;
+                
                 &.overridden,
                 &.ajaxoverridden {
-                    background-color: #EFD9A4
+                    background-color: #efd9a4;
                 }
             }
+            
             .topleft {
                 border: none;
             }
@@ -3275,56 +3463,51 @@ table#user-grades tr.avg td.cell{
     }
 }
 
-
-
-
-
-
-
-
-
-
-
-
 // -------------------------
 // Moodle notice/alerts etc
 // -------------------------
-
 // bootstrap alerts
-.alert{
-    clear:both;
-    border:0;
-    border-left:3em solid;
+
+.alert {
+    clear: both;
+    border: 0;
+    border-left: 3em solid;
 }
 
 #notice {
     color: #fff;
+    
     //	background-color: @brand-primary; customisable
     font-size: 2em;
     width: 100%;
-    padding: 1em 4% 4em 4%;
-
+    padding: 1em 4% 4em;
+    
     // pull buttons up into the #notice when they are placed
     // after it, rather than inside it.
+    
     &+ .continuebutton {
         margin-top: -3em;
     }
+    
     .buttons {
         text-align: center;
         border-top: none;
     }
-
-    a, a:visited, a:link, a:hover {
-        color:#fff;
+    
+    a,
+    a:visited,
+    a:link,
+    a:hover {
+        color: #fff;
         text-decoration: underline;
     }
 }
 
 // bootstrap labels
-
 .label {
     border-radius: 0;
     font-weight: normal;
+    
     &[href]:visited {
         color: #fff;
     }
@@ -3332,7 +3515,8 @@ table#user-grades tr.avg td.cell{
 
 // when we display a continue cancel notice, we need the page contents to be the same height.
 // this is currently limitted to the front page.
-body.hascontinuecancel.path-site #page{
+
+body.hascontinuecancel.path-site #page {
     max-height: 750px;
     height: 750px;
     overflow: hidden;
@@ -3340,15 +3524,15 @@ body.hascontinuecancel.path-site #page{
 
 // hard code some specific uses here till MDL-45655 fixes them
 // and allows us to add the snap-continue-cancel class
-
 // the hardcodeded ones here have the button inside the div
+
 #page-admin-purgecaches #notice,
 #notice.snap-continue-cancel {
     min-height: 800px;
     position: absolute;
     padding: 10% 4%;
     top: 1.5em;
-    left:0;
+    left: 0;
     z-index: 13;
 }
 
@@ -3369,44 +3553,46 @@ body.hascontinuecancel.path-site #page{
     padding: 0;
     min-height: 0;
 }
+
 // the hardcodeded ones here have the button outside the div
 // remember to add any further additions to the user swatch
 // to ensure they pick up the brand color.
+
 #page-course-loginas,
-#page-mod-survey-save{
-  #region-main {
-    //	background-color: @brand-primary; customisable
-    max-width:inherit;
-    min-height: 750px;
-  }
-
-  #moodle-footer{
-    margin-top:0;
-  }
-
-  #page-header{
-    display:none;
-  }
-
+#page-mod-survey-save {
+    #region-main {
+        
+        //	background-color: @brand-primary; customisable
+        max-width: inherit;
+        min-height: 750px;
+    }
+    
+    #moodle-footer {
+        margin-top: 0;
+    }
+    
+    #page-header {
+        display: none;
+    }
 }
-
 
 // next / previous nav
 .section_footer {
-	margin-top:2em;
-	padding:1em 0;
-	border-top:1px solid #eee;
+    margin-top: 2em;
+    padding: 1em 0;
+    border-top: 1px solid #eee;
 }
-.section_footer a{
-    font-style:normal;
-    text-decoration:none;
-    display:block;
-    width:100%;
-    margin-top:1em;
+
+.section_footer a {
+    font-style: normal;
+    text-decoration: none;
+    display: block;
+    width: 100%;
+    margin-top: 1em;
 }
 
 .next_section {
-    text-align:right;
+    text-align: right;
     float: right;
 }
 
@@ -3415,60 +3601,57 @@ body.hascontinuecancel.path-site #page{
 }
 
 @media screen and (min-width: @screen-sm-min) {
-	.section_footer{
-		.previous_section,
-		.next_section {
-			width: 50%;
-		}
-	}
+    .section_footer {
+        .previous_section,
+        .next_section {
+            width: 50%;
+        }
+    }
 }
 
 .nav_guide {
-    letter-spacing:0.1em;
-    text-transform:uppercase;
-    font-style:normal;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    font-style: normal;
     color: @text-color;
 }
+
 .nav_icon {
-    padding:0.3em;
-    text-align:center;
+    padding: 0.3em;
+    text-align: center;
 }
 
 .next_section .nav_icon {
-    margin-left:0.3em;
-    border-left:1px solid #eee;
-    font-size:2em;
+    margin-left: 0.3em;
+    border-left: 1px solid #eee;
+    font-size: 2em;
     width: 50px;
     float: right;
 }
 
 .previous_section .nav_icon {
-    float:left;
-    margin-right:0.3em;
-    border-right:1px solid #eee;
-    font-size:2em;
+    float: left;
+    margin-right: 0.3em;
+    border-right: 1px solid #eee;
+    font-size: 2em;
 }
-
-
-
-
 
 /* moodle dialogues */
 /* standard size */
-.moodle-dialogue-base .moodle-dialogue{
-  min-width:32%;
-  padding:0;
-  /* large size */
-  &.chooserdialogue,
-  &.filepicker{
-     min-width:89%;
-     height:100%;
-  }
+.moodle-dialogue-base .moodle-dialogue {
+    min-width: 32%;
+    padding: 0;
+    /* large size */
+    &.chooserdialogue,
+    &.filepicker {
+        min-width: 89%;
+        height: 100%;
+    }
 }
 
 /* assigning roles /enrol/otherusers.php */
 .other-user-manager-panel {
-  .moodle-dialogue-base .moodle-dialogue;
+    .moodle-dialogue-base .moodle-dialogue;
 }
 
 /* file picker dropzone */
@@ -3482,7 +3665,7 @@ body.hascontinuecancel.path-site #page{
 }
 
 .ffilepicker .fp-btn-choose {
-    margin: 0 0 10px 0;
+    margin: 0 0 10px;
 }
 
 .fitem_filepicker .fitemtitle label {
@@ -3504,12 +3687,12 @@ body.hascontinuecancel.path-site #page{
 }
 
 .filemanager-toolbar {
-    padding: 0 0 8px 0;
+    padding: 0 0 8px;
 }
 
 .dndupload-arrow {
     cursor: pointer;
-    background-image: url([[pix:resource|icon]]);
+    background-image: url("[[pix:resource|icon]]");
     margin-top: 10px;
 }
 
@@ -3517,10 +3700,10 @@ body.hascontinuecancel.path-site #page{
 .filemanager .filemanager-container .fm-empty-container,
 .filemanager-container.dndupload-over .dndupload-target,
 .filemanager-container .dndupload-target {
-    top: 0px;
-    bottom: 0px;
-    right: 0px;
-    left: 0px;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
     padding-top: 100px;
 }
 
@@ -3530,6 +3713,7 @@ body.hascontinuecancel.path-site #page{
     min-height: 130px;
     background-color: @body-bg;
 }
+
 .jsenabled .filemanager-loading {
     margin-top: 0;
 }
@@ -3538,25 +3722,30 @@ body.hascontinuecancel.path-site #page{
 #filesskin .file-picker.fp-generallayout {
     width: auto !important;
 }
+
 .file-picker {
     .clearfix();
 }
+
 .fp-filename {
-    font-size:small;
-}
-.filepicker .yui3-widget-content-expanded{
-    height:110%;
+    font-size: small;
 }
 
-.file-picker .fp-navbar{
-  background-color:transparent;
+.filepicker .yui3-widget-content-expanded {
+    height: 110%;
 }
+
+.file-picker .fp-navbar {
+    background-color: transparent;
+}
+
 @media screen and (min-width: @screen-md-min) {
-    .file-picker .fp-repo-area{
-      width:32%;
+    .file-picker .fp-repo-area {
+        width: 32%;
     }
-    .file-picker .fp-repo-items{
-      width:68%;
+    
+    .file-picker .fp-repo-items {
+        width: 68%;
     }
 }
 
@@ -3576,33 +3765,21 @@ body.hascontinuecancel.path-site #page{
     }
 }
 /* add resources and activities dialogue */
-.jsenabled .choosercontainer #chooseform .alloptions{
-    padding:0 4%;
+.jsenabled .choosercontainer #chooseform .alloptions {
+    padding: 0 4%;
 }
 
 /* quiz thing dialogue */
-
-
-
-
 // -------------------------
 // Show legacy file manager file icons with consistent sizes
 // -------------------------
+
 #page-files-index {
     img.smallicon {
-        width:24px;
-        height:24px;
+        width: 24px;
+        height: 24px;
     }
 }
-
-
-
-
-
-
-
-
-
 
 // -------------------------
 // The site footer - moodle-footer
@@ -3617,22 +3794,32 @@ body.hascontinuecancel.path-site #page{
     background-color: @text-color;
     margin-top: 0;
 }
+
 #moodle-footer {
-    h1,h2,h3,h4,h5,h6 {
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
         color: @gray-lighter;
     }
-    .helplink img.poweredbylogo{
-        max-width:inherit;
-        max-height:inherit;
-        height:inherit;
-        width:inherit;
-        vertical-align:middle;
+    
+    .helplink img.poweredbylogo {
+        max-width: inherit;
+        max-height: inherit;
+        height: inherit;
+        width: inherit;
+        vertical-align: middle;
     }
-    a,a:hover{
-        color:#fff;
+    
+    a,
+    a:hover {
+        color: #fff;
     }
-    .langmenu{
-        color:#666;
+    
+    .langmenu {
+        color: #666;
     }
 }
 
@@ -3649,17 +3836,19 @@ body.hascontinuecancel.path-site #page{
 }
 
 /* Moodle error, reports, all that stuff in the footer */
-
 #page-footer {
     border-top: none;
+    
     .langmenu {
-        text-align:right;
+        text-align: right;
     }
 }
-#page-footer .performanceinfo{
-	margin:4%;
-	text-align:left;
+
+#page-footer .performanceinfo {
+    margin: 4%;
+    text-align: left;
 }
+
 #page-footer .performanceinfo .cachesused .cache-definition-stats {
     background-color: transparent;
 }
@@ -3667,9 +3856,11 @@ body.hascontinuecancel.path-site #page{
 .cache-store-stats.lowhits {
     background-color: orange;
 }
+
 .cache-store-stats.nohits {
     background-color: red;
 }
+
 .cache-store-stats.hihits {
     background-color: #323232;
 }
@@ -3678,183 +3869,143 @@ body.hascontinuecancel.path-site #page{
     margin-top: 1em;
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 /* NB */
-
-
-
 /* PLEASE DON'T JUST DUMP CSS ANYWHERE BELOW HERE */
 /* LOOK UP AND YOU'LL FIND THE CSS PRETTY MUCH FOLLOWS THE DOM STRUCTURE */
 /* ADD YOUR CSS IN THE SAME PLACE AS IT IS IN THE DOM */
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 /** SHAME **/
 @keyframes slideInDown {
-  0% {
-    opacity: 0;
-    transform: translateY(-2000px);
-  }
-
-  100% {
-    transform: translateY(0);
-  }
+    0% {
+        opacity: 0;
+        transform: translateY(-2000px);
+    }
+    
+    100% {
+        transform: translateY(0);
+    }
 }
 
 .slideInDown {
-  animation-name: slideInDown;
+    animation-name: slideInDown;
 }
 
-.snap_spinner:after{
-  content: url([[pix:theme|loading-bubbles]]);
-  padding-left:0.25em;
+.snap_spinner:after {
+    content: url("[[pix:theme|loading-bubbles]]");
+    padding-left: 0.25em;
 }
-
-
-
-
-
-
 
 /**
 spinner, from
 http://css-spinners.com/css/spinner/three-quarters.css
 **/
 @keyframes three-quarters {
-  0% {
-    transform: rotate(0deg);
-  }
-
-  100% {
-    transform: rotate(360deg);
-  }
+    0% {
+        transform: rotate(0deg);
+    }
+    
+    100% {
+        transform: rotate(360deg);
+    }
 }
 
 /* Styles for old versions of IE */
 .three-quarters {
-  font-family: sans-serif;
-  font-weight: 100;
+    font-family: sans-serif;
+    font-weight: 100;
 }
 
 /* :not(:required) hides this rule from IE9 and below */
 .three-quarters:not(:required) {
-  animation: three-quarters 1250ms infinite linear;
-
-  // Start GT Mod - force gpu accelleration.
-  transform: translateZ(0);
-  // End GT Mod.
-
-  border: 6px solid #ffffff;
-  border-right-color: transparent;
-  border-radius: 16px;
-  box-sizing: border-box;
-  display: inline-block;
-  position: relative;
-  overflow: hidden;
-  text-indent: -9999px;
-  width: 32px;
-  height: 32px;
+    animation: three-quarters 1250ms infinite linear;
+    
+    // Start GT Mod - force gpu accelleration.
+    transform: translateZ(0);
+    
+    // End GT Mod.
+    border: 6px solid #fff;
+    border-right-color: transparent;
+    border-radius: 16px;
+    box-sizing: border-box;
+    display: inline-block;
+    position: relative;
+    overflow: hidden;
+    text-indent: -9999px;
+    width: 32px;
+    height: 32px;
 }
 
 /** folderview format **/
-
 #page-course-view-folderview {
     &.jsenabled #tab_addBlock,
-    .section-navigation  .jumpmenu {
+    .section-navigation .jumpmenu {
         display: none;
     }
 }
 
 /** fix feedback field sizes on mobile devices **/
 @media screen and (max-width: @screen-xs-max) {
-  .mform {
-      .ftags select,
-      .fselect > select,
-      .fselectyesno > select,
-      .ftext > input[type="text"],
-      textarea {
+    .mform {
+        .ftags select,
+        .fselect > select,
+        .fselectyesno > select,
+        .ftext > input[type="text"],
+        textarea {
+            width: 100%;
+        }
+        
+        input[type="text"] {
+            max-width: 100%;
+        }
+    }
+    
+    .path-user .userlist .singleselect {
         width: 100%;
-      }
-      input[type="text"]{
-        max-width: 100%;
-      }
-  }
-  .path-user .userlist .singleselect {
-      width: 100%;
-  }
+    }
 }
 
-
-#footer-error-cont{
-  margin-top:1em;
-  border:3px solid red;
-  background-color:#fff;
-  color:#000;
-  padding:2em 2em 2em 2em;
-  h3 {
-    color:#000;
-  }
-  hr {
-    margin-top:3em;
-  }
+#footer-error-cont {
+    margin-top: 1em;
+    border: 3px solid red;
+    background-color: #fff;
+    color: #000;
+    padding: 2em;
+    
+    h3 {
+        color: #000;
+    }
+    
+    hr {
+        margin-top: 3em;
+    }
 }
-
-
 
 // yui-bs overrides (note SNAP specific)
 .yui-bootstrapped {
-  // stop yui menu from being completely unusable on mobile device
-  // note: it still isn't that great and a select box would be way better
-  #pld_tokenselector.yuimenu {
-    top:100px !important;
-    position:fixed !important;
-    max-height: 70%;
-    overflow-y:auto;
-    @media (max-width: @screen-xs-max) {
-        left: 10% !important;
-        width: 80% !important;
+    
+    // stop yui menu from being completely unusable on mobile device
+    // note: it still isn't that great and a select box would be way better
+    
+    #pld_tokenselector.yuimenu {
+        top: 100px !important;
+        position: fixed !important;
+        max-height: 70%;
+        overflow-y: auto;
+        
+        @media (max-width: @screen-xs-max) {
+            left: 10% !important;
+            width: 80% !important;
+        }
+        
+        .yui-menu-body-scrolled {
+            padding: 0;
+            margin: 0;
+        }
     }
-    .yui-menu-body-scrolled{
-      padding:0 0 0 0;
-      margin:0 0 0 0;
-    }
-  }
 }
 
 // nicer positioning of fatal errors
-div[data-rel = fatalerror]{
-  margin:1em 1em 1em 1em;
+div[data-rel = fatalerror] {
+    margin: 1em;
 }
 
 img.iconhelp {
@@ -3865,7 +4016,9 @@ img.iconhelp {
     border: 4px solid #ddd;
     vertical-align: middle;
     margin-bottom: 3px;
+    
     &:hover {
+        
         //background-color: @brand-primary; User customisable.
         border-width: 0;
     }
@@ -3881,13 +4034,13 @@ table th img.iconhelp {
 #moodle-footer .helplink a:hover img.iconhelp {
     background-color: #999;
     border-color: #999;
+    
     &:hover {
         border-width: 4px;
     }
 }
 
-
-.helplink{
+.helplink {
     img.moodlefooterlogo,
     img.poweredbylogo {
         width: inherit;
@@ -3895,61 +4048,82 @@ table th img.iconhelp {
         margin-right: 0.5em;
         margin-left: 0.5em;
     }
+    
     img.moodlefooterlogo {
         vertical-align: top;
         margin-top: -2px;
         margin-right: 0;
     }
+    
     img.poweredbylogo {
         vertical-align: bottom;
         margin-bottom: -2px;
     }
-    .footerlinkdivider{
-        margin:0 0.5em;
+    
+    .footerlinkdivider {
+        margin: 0 0.5em;
     }
 }
-
 
 @media screen and (max-width: @screen-xs-max) {
     #page-enrol-users .enrol_user_buttons {
         float: none;
+        
         .singlebutton.enrolusersbutton {
-            display:block;
+            display: block;
         }
     }
 }
-
-
 
 // -------------------------
 // Reduce font sizes on small screen
 // -------------------------
 
-
 @media screen and (max-width: @screen-xs-max) {
-        #region-main {font-size:0.9em;}
-        h1 {font-size:2.2em;}
-        h2 {font-size:2em;}
-        h3,.sectionname {font-size:1.8em;}
-        h4 {font-size:1.6em;}
-        h5 {font-size:1.4em;}
-        h6 {font-size:1.2em;}
+    #region-main {
+        font-size: 0.9em;
+    }
+    
+    h1 {
+        font-size: 2.2em;
+    }
+    
+    h2 {
+        font-size: 2em;
+    }
+    
+    h3,
+    .sectionname {
+        font-size: 1.8em;
+    }
+    
+    h4 {
+        font-size: 1.6em;
+    }
+    
+    h5 {
+        font-size: 1.4em;
+    }
+    
+    h6 {
+        font-size: 1.2em;
+    }
 }
-
 
 // Workaround for .labels inserted by some mechanism that is also fond of font tags
 .label:not(.activity) font {
     color: @text-color;
     font-weight: 300;
 }
+
 .label:not(.activity) b font {
     font-weight: 500;
 }
 
 // moodle thing that tells you you have a new message
 #newmessageoverlay {
-  left:0;
-  padding:1em;
+    left: 0;
+    padding: 1em;
 }
 
 .path-backup .wibbler {
@@ -3963,16 +4137,16 @@ div.editor_atto_toolbar {
 }
 
 .editor_atto_content {
-  padding:1em 2%;
-  height: auto !important;
-  max-height:75vh !important;
-  min-height:100px !important;
-  resize: none;
+    padding: 1em 2%;
+    height: auto !important;
+    max-height: 75vh !important;
+    min-height: 100px !important;
+    resize: none;
 }
 
 textarea {
-  border-color: @gray-lighter;
-  width: 100%;
+    border-color: @gray-lighter;
+    width: 100%;
 }
 
 .editor_atto_content_wrap {
@@ -3998,23 +4172,25 @@ div.editor_atto_toolbar button + button {
 div.editor_atto_toolbar div.atto_group {
     border: 0;
     border-radius: 0;
-    margin: 0.3em;
-    margin-left: 0;
+    margin: 0.3em 0.3em 0.3em 0;
 }
 
 .atto_equation_library button {
     background-color: #fff;
     color: @text-color;
+    
     &:hover {
         background-color: darken(#fff, 5%);
         color: @text-color;
     }
 }
+
 .atto_charmap_selector button {
     width: 40px;
     padding: 3px;
     margin: 0;
 }
+
 .atto_equation_groups.yui3-tabview-panel {
     border: none;
     background: #fff;
@@ -4030,11 +4206,13 @@ div.editor_atto_toolbar div.atto_group {
     height: 40px;
     width: 30px;
     margin: 1px 4px;
+    
     .loadingicon,
     .colourdialogue,
     .previewcolour {
         display: none;
     }
+    
     .currentcolour {
         /* size is set with a style tag so need to !important to override */
         height: 30px !important;
@@ -4056,30 +4234,36 @@ div.editor_atto_toolbar div.atto_group {
 }
 
 .path-grade-report-grader .gradeparent table#user-grades tr.heading th {
-    border-top:1px solid #ddd !important;
+    border-top: 1px solid #ddd !important;
 }
 
 .path-grade-report-grader .gradeparent table#user-grades tr:nth-child(1) th {
+    
     // This stops what looks like a double top border two cells in on the grade column.
-    border-bottom-width:0;
+    border-bottom-width: 0;
 }
 
 .path-grade-report-grader .gradeparent .floating {
+    
     // This makes the floating header have the same top border as when its not floated.
-    border-top-width: 0px;
+    border-top-width: 0;
 }
 
 .path-grade-report-grader .gradeparent *,
 .path-grade-report-grader .gradeparent *:before,
 .path-grade-report-grader .gradeparent *:after {
+    
     // Without this, IE totally screws up the header and column cell sizes.
     box-sizing: content-box !important;
 }
+
 .path-grade-report-grader .gradeparent .heading .cell,
 .path-grade-report-grader .gradeparent .avg .cell,
 .path-grade-report-grader .gradeparent .cell.user {
+    
     // Having the font sizes match is really important - if not the floating left header can end up
     // too large!
-    font-size: 13px // SHAME - No variable for this;
+    font-size: 13px; // SHAME - No variable for this;
 }
+
 // End Scrolling gradebook fixes
