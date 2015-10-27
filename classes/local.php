@@ -1101,7 +1101,7 @@ class local {
      * @throws \coding_exception
      */
     public static function non_sql_recent_forum_activity($userorid = false, $limit = 10) {
-        global $CFG, $USER;
+        global $CFG;
 
         if (file_exists($CFG->dirroot.'/mod/hsuforum')) {
             require_once($CFG->dirroot.'/mod/hsuforum/lib.php');
