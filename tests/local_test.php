@@ -816,4 +816,32 @@ class theme_snap_local_test extends \advanced_testcase {
         $this->assertCount(1, $gradeable_courses);
     }
 
+    /**
+     * Test swap global user.
+     */
+    public function test_swap_global_user() {
+        global $USER;
+
+        $this->resetAfterTest();
+        $generator = $this->getDataGenerator();
+        $originaluserid = $USER->id;
+
+        $user1 = $generator->create_user();
+        $user2 = $generator->create_user();
+        $user3 = $generator->create_user();
+
+        local::swap_global_user($user1);
+        $this->assertEquals($user1->id, $USER->id);
+        local::swap_global_user($user2);
+        $this->assertEquals($user2->id, $USER->id);
+        local::swap_global_user($user3);
+        $this->assertEquals($user3->id, $USER->id);
+        local::swap_global_user(false);
+        $this->assertEquals($user2->id, $USER->id);
+        local::swap_global_user(false);
+        $this->assertEquals($user1->id, $USER->id);
+        local::swap_global_user(false);
+        $this->assertEquals($originaluserid, $USER->id);
+    }
+
 }

@@ -1064,15 +1064,13 @@ class local {
      */
     public static function swap_global_user($userorid = false) {
         global $USER;
-        static $origuser = null;
+        static $origuser = [];
         $user = self::get_user($userorid);
         if ($userorid !== false) {
-            if ($origuser === null) {
-                $origuser = $USER;
-            }
+            $origuser[] = $USER;
             $USER = $user;
         } else {
-            $USER = $origuser;
+            $USER = array_pop($origuser);
         }
     }
 
@@ -1103,7 +1101,7 @@ class local {
      * @throws \coding_exception
      */
     public static function non_sql_recent_forum_activity($userorid = false, $limit = 10) {
-        global $CFG;
+        global $CFG, $USER;
 
         if (file_exists($CFG->dirroot.'/mod/hsuforum')) {
             require_once($CFG->dirroot.'/mod/hsuforum/lib.php');
@@ -1123,6 +1121,7 @@ class local {
         $fourweeksago = time() - (WEEKSECS * 4);
 
         $userforums = new user_forums($user, $limit);
+
         $forums = $userforums->forums();
         if (!empty($forums)) {
             foreach ($forums as $forum) {
