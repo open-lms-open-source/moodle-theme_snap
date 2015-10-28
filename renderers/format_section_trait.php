@@ -263,17 +263,19 @@ trait format_section_trait {
         // Section editing commands.
         $sectiontoolsarray = $this->section_edit_controls($course, $section, false);
 
-        if (!empty($sectiontoolsarray)) {
-            $sectiontools = implode(' ', $sectiontoolsarray);
-        }
         // TODO - look at whats needed in the classes for js
         // TODO - remove redundent stuff, add snap move etc
         if (has_capability('moodle/course:update', $context)) {
-            $o .= html_writer::tag('div', $sectiontools, array(
-                'class' => 'left right side snap-section-editing',
-                'role' => 'region',
-                'aria-label' => 'topic actions',
-            ));
+            if (!empty($sectiontoolsarray)) {
+              $sectiontools = implode(' ', $sectiontoolsarray);
+              $o .= html_writer::tag('div', $sectiontools, array(
+                  // TODO - what are all these classes for?
+                  'class' => 'left right side snap-section-editing',
+                  'role' => 'region',
+                  // TODO - lang string this
+                  'aria-label' => 'topic actions',
+              ));
+            }
         }
 
         // Availabiliy message.
