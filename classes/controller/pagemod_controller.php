@@ -21,8 +21,8 @@ defined('MOODLE_INTERNAL') || die();
 require_once($CFG->libdir . '/completionlib.php');
 
 /**
- * Deadlines Controller.
- * Handles requests regarding user deadlines and other CTAs.
+ * Page module controller.
+ * Handles page module requests.
  *
  * @package   theme_snap
  * @copyright Copyright (c) 2015 Moodlerooms Inc. (http://www.moodlerooms.com)
@@ -79,7 +79,6 @@ class pagemod_controller extends controller_abstract {
         $renderer = $PAGE->get_renderer('core','course');
         $compinfo = null;
         $page->completionhtml = $renderer->course_section_cm_completion($COURSE, $compinfo, $cm);
-
 
         return $page;
     }
