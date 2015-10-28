@@ -954,6 +954,40 @@ function snapInit() {
             // Check if we are searching for a mod.
             checkHashScrollToModule();
         }
+
+        var on_mod_settings = location.href.indexOf("modedit") > -1;
+        var on_course_settings = location.href.indexOf("course/edit.php") > -1;
+        var on_section_settings = location.href.indexOf("editsection.php") > -1;
+
+        if(on_mod_settings || on_course_settings || on_section_settings){
+          // Wrap advanced options in a div
+          $("#mform1 .collapsed").wrapAll('<div class="snap-form-advanced col-md-4" />');
+
+          // Add expand all to advanced column
+          $(".snap-form-advanced").append($(".collapsible-actions"));
+
+          // Sanitize required input into a single fieldset
+          var main_form = $("#mform1 fieldset:first");
+          var append_to = $("#mform1 fieldset:first .fcontainer");
+          var required = $("#mform1 > fieldset:not(.collapsed)").not("#mform1 fieldset:first").not('.hidden');
+          for(var i = 0; i < required.length; i++){
+            var content = $(required[i]).find('.fcontainer');
+            $(append_to).append(content);
+            $(required[i]).remove();
+          }
+          $(main_form).wrap('<div class="snap-form-required col-md-8" />');
+
+          var description = $("#mform1 fieldset:first .fitem_feditor:not(.required)");
+          var editingassignment = $("#page-mod-assign-mod").length > 0;
+
+          if(on_mod_settings && description && !editingassignment) {
+            $(append_to).append(description);
+            $(append_to).append($('#fitem_id_showdescription'));
+          }
+
+          var savebuttons = $("#mform1 #fgroup_id_buttonar");
+          $(main_form).append(savebuttons);
+        }
     });
 
     $(window).on('load' , function() {
