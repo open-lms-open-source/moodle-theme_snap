@@ -47,7 +47,7 @@ class settings_link implements \renderable {
         }
         $canmanageacts = has_capability('moodle/course:manageactivities', $PAGE->context);
         $isstudent = !$canmanageacts && !is_role_switched($COURSE->id);
-        if ($isstudent && $PAGE->pagetype != 'user-profile') {
+        if ($isstudent) {
             return;
         }
 
