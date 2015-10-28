@@ -651,7 +651,7 @@ class snap_shared extends renderer_base {
             );
         }
 
-        $toolssvg = self::inline_svg('tools.svg');
+        $toolssvg = '<img src="'.$OUTPUT->pix_url('tools', 'theme').'" alt="" />';
         // Output course tools.
         $coursetools = get_string('coursetools', 'theme_snap');
         $o = "<h2>$coursetools</h2>";

@@ -450,9 +450,10 @@ trait format_section_trait {
 
     protected function end_section_list() {
         global $COURSE;
+
         $output = html_writer::end_tag('ul');
         $output .= $this->change_num_sections($COURSE);
-        $output .= "<section id='coursetools' class='clearfix' tabindex='-1'>";
+        $output .= "<section id='coursetools' class='clearfix'>";
         $output .= snap_shared::coursetools_svg_icons();
         $output .= snap_shared::appendices();
         $output .= "</section>";
@@ -470,8 +471,7 @@ trait format_section_trait {
 
         $course = course_get_format($course)->get_course();
         $context = context_course::instance($course->id);
-        if (!$PAGE->user_is_editing()
-                || !has_capability('moodle/course:update', $context)) {
+        if (!has_capability('moodle/course:update', $context)) {
             return '';
         }
 
@@ -481,25 +481,25 @@ trait format_section_trait {
             'contextid' => $context->id,
         ));
 
+        $required = '';
+        if ($course->format === 'topics') {
+            $required = 'required';
+        }
+
         $heading = get_string('addanewsection', 'theme_snap');
-        $output = "<h3>$heading</h3>";
+        $output = "<section id='snap-add-new-section' class='clearfix' tabindex='-1'>
+        <h3>$heading</h3>";
         $output .= html_writer::start_tag('form', array(
             'method' => 'post',
             'action' => $url->out_omit_querystring()
         ));
         $output .= html_writer::input_hidden_params($url);
         $output .= '<div class="form-group">';
-        $output .= html_writer::label(get_string('sectionname'), 'newsection', true);
-        $output .= html_writer::empty_tag('input', array(
-            'id' => 'newsection',
-            'type' => 'text',
-            'size' => 50,
-            'name' => 'newsection',
-            'required' => 'required',
-        ));
+        $output .= "<label for='newsection' class='sr-only'>".get_string('title', 'theme_snap')."</label>";
+        $output .= "<input class='h3' id='newsection' type='text' name='newsection' $required placeholder='".get_string('title', 'theme_snap')."'>";
         $output .= '</div>';
         $output .= '<div class="form-group">';
-        $output .= html_writer::label(get_string('summary'), 'summary', true);
+        $output .= "<label for='summary'>".get_string('contents', 'theme_snap')."</label>";
         $output .= print_textarea(true, 10, 150, "100%",
             "auto", "summary", '', $course->id, true);
         $output .= '</div>';
@@ -509,7 +509,7 @@ trait format_section_trait {
             'value' => get_string('createsection', 'theme_snap'),
         ));
         $output .= html_writer::end_tag('form');
-
+        $output .= '</section>';
         return $output;
     }
 

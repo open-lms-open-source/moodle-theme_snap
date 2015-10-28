@@ -2935,7 +2935,8 @@ li.section:focus {
   padding: 0;
 }
 .course-content > ul li.section,
-#coursetools {
+#coursetools,
+#snap-add-new-section {
   visibility: hidden;
   height: 0;
   width: 0;
@@ -2943,6 +2944,8 @@ li.section:focus {
 }
 .editing .course-content > ul li.section,
 .course-content > ul li.section.state-visible,
+#snap-add-new-section.state-visible,
+.editing #snap-add-new-section,
 #coursetools.state-visible,
 .editing #coursetools,
 .format-singleactivity #coursetools,
@@ -3379,8 +3382,8 @@ we do this by default in snap, so hide moodle version */
 }
 @media screen and (max-width: 480px) {
   .section li.snap-resource {
-    width: 92%;
-    margin: 1em 4%;
+    width: 99%;
+    margin: 1em 0;
   }
 }
 li.snap-resource.snap-mime-document,
@@ -4039,6 +4042,7 @@ fieldset[disabled] a#changenumsections .reduce-sections {
 }
 .module-meta .label {
   margin-right: 1%;
+  padding: 0.75em;
 }
 /**
  * Snap core swatch.
@@ -4258,6 +4262,12 @@ img[style*="float:right"] {
 img.icon {
   padding: 0;
   margin-right: 6px;
+}
+img.svg-icon {
+  width: 2rem;
+  height: 2rem;
+  margin: 0 0.3rem;
+  vertical-align: middle;
 }
 .videoiframe {
   text-align: center;
@@ -5188,6 +5198,13 @@ header#page-header
 #course-toc .published-status + .published-status:before {
   content: " · ";
 }
+#course-toc .toc-footer {
+  margin-right: 4%;
+  text-align: right;
+}
+#course-toc .toc-footer a {
+  margin-left: 0.5em;
+}
 .mast-image .breadcrumb li:before,
 .mast-image .breadcrumb > li + li:before,
 .mast-image .breadcrumb a,
@@ -5295,7 +5312,8 @@ ol#chapters li.current a {
 }
 @media screen and (max-width: 480px) {
   #toc-search,
-  #course-toc #toc-desktop-menu-heading {
+  #course-toc #toc-desktop-menu-heading,
+  #course-toc .toc-footer {
     display: none;
   }
   #toc-mobile-menu-toggle {
@@ -5348,6 +5366,15 @@ ol#chapters li.current a {
     margin: 0;
     padding: 2em 4%;
     width: 100%;
+  }
+  #course-toc.state-visible .toc-footer {
+    display: block;
+    text-align: left;
+    margin-left: 4%;
+    padding-bottom: 2em;
+  }
+  #course-toc.state-visible .toc-footer a {
+    display: block;
   }
 }
 #toc-searchables {
@@ -7979,6 +8006,23 @@ div.editor_atto_toolbar div.atto_group {
   background: transparent url("[[pix:resource|icon]]") 0 50% no-repeat;
   padding-left: 2em;
   background-size: 1.5em auto;
+}
+#newsection {
+  width: 100%;
+  margin: 0;
+}
+#snap-add-new-section .editor_atto_content {
+  min-height: 250px !important;
+}
+#snap-add-new-section .editor_atto_wrap {
+  margin-bottom: 1em;
+}
+.editor_atto_notification {
+  bottom: 1em;
+}
+.editor_atto_notification .atto_info,
+.editor_atto_notification .atto_warning {
+  border-radius: 0;
 }
 .pagelayout-admin .mform,
 #page-course-editsection .mform {

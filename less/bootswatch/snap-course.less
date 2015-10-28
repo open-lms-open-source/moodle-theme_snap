@@ -305,7 +305,8 @@ li.section:focus {
 }
 
 .course-content > ul li.section,
-#coursetools {
+#coursetools,
+#snap-add-new-section {
     visibility: hidden;
     height: 0;
     width: 0;
@@ -314,6 +315,8 @@ li.section:focus {
 
 .editing .course-content > ul li.section,
 .course-content > ul li.section.state-visible,
+#snap-add-new-section.state-visible,
+.editing #snap-add-new-section,
 #coursetools.state-visible,
 .editing #coursetools,
 .format-singleactivity #coursetools,
@@ -813,12 +816,12 @@ we do this by default in snap, so hide moodle version */
     }
 }
 
-// resources to full width on tiny screen
+// Resources to full width on tiny screen
 @media screen and (max-width: @screen-xs) {
     .section li.snap-resource {
-        width: 92%;
-        margin: 1em 4%;
-    }
+            width: 99%;
+            margin: 1em 0;
+        }
 }
 
 // MIME TYPEs //
@@ -1412,12 +1415,10 @@ span.editinstructions {
     }
 }
 
-// TODO - snap-mime-page
-// experiment with pulling images left and right on large screens
-
 .module-meta {
     .label {
         margin-right: 1%;
+        padding: 0.75em;
     }
 }
 

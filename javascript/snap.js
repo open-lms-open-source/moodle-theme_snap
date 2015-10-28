@@ -540,7 +540,7 @@ function snapInit() {
             // check we are not in folder view
             if(!$('.format-folderview').length){
                 // reset visible section & blocks
-                $('.course-content .main, #moodle-blocks,#coursetools').removeClass('state-visible');
+                $('.course-content .main, #moodle-blocks,#coursetools, #snap-add-new-section').removeClass('state-visible');
                 // if the hash is just section, can we skip all this?
 
                 // we know the params at 0 is a section id
@@ -570,7 +570,7 @@ function snapInit() {
             }
 
             // default niceties to perform
-            var visibleChapters = $('.course-content .main, #coursetools').filter(':visible');
+            var visibleChapters = $('.course-content .main, #coursetools, #snap-add-new-section').filter(':visible');
             if (!visibleChapters.length) {
                 // show chapter 0
                 $('#section-0').addClass('state-visible').focus();
@@ -579,7 +579,7 @@ function snapInit() {
 
             applyResponsiveVideo();
             // add faux :current class to the relevant section in toc
-            var currentSectionId = $('.main.state-visible, #coursetools.state-visible').attr('id');
+            var currentSectionId = $('.main.state-visible, #coursetools.state-visible, #snap-add-new-section.state-visible').attr('id');
             $('#chapters li').removeClass('current');
             $('#chapters a[href$="' + currentSectionId + '"]').parent('li').addClass('current');
         }
