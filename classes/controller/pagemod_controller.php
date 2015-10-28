@@ -18,6 +18,8 @@ namespace theme_snap\controller;
 
 defined('MOODLE_INTERNAL') || die();
 
+require_once($CFG->libdir . '/completionlib.php');
+
 /**
  * Deadlines Controller.
  * Handles requests regarding user deadlines and other CTAs.
@@ -55,7 +57,7 @@ class pagemod_controller extends controller_abstract {
      * @return stdClass
      */
     private function read_page() {
-        global $PAGE, $COURSE;
+        global $PAGE, $COURSE, $USER;
 
         $cm = $PAGE->cm;
         $page = \theme_snap\local::get_page_mod($cm);
@@ -71,6 +73,14 @@ class pagemod_controller extends controller_abstract {
         $event->add_record_snapshot('page', $page);
         $event->trigger();
 
+        // Update 'viewed' state if required by completion system
+        $completion = new \completion_info($COURSE);
+        $completion->set_module_viewed($cm);
+        $renderer = $PAGE->get_renderer('core','course');
+        $compinfo = null;
+        $page->completionhtml = $renderer->course_section_cm_completion($COURSE, $compinfo, $cm);
+
+
         return $page;
     }
 
@@ -83,7 +93,9 @@ class pagemod_controller extends controller_abstract {
         $page = $this->read_page();
 
         return json_encode(array(
-            'html' => $page->content
+            'html' => $page->content,
+            'cmid' => $page->cmid,
+            'completionhtml' => $page->completionhtml
         ));
     }
 
@@ -96,7 +108,9 @@ class pagemod_controller extends controller_abstract {
         $page = $this->read_page();
 
         return json_encode(array(
-            'id' => $page->id
+            'id' => $page->id,
+            'cmid' => $page->cmid,
+            'completionhtml' => $page->completionhtml
         ));
     }
 

@@ -976,6 +976,7 @@ class local {
                   JOIN {page} p ON p.id = cm.instance
                 WHERE cm.id = ?";
         $page = $DB->get_record_sql($sql, array($mod->id));
+        $page->cmid = $mod->id;
 
         $context = \context_module::instance($mod->id);
         $formatoptions = new \stdClass;
