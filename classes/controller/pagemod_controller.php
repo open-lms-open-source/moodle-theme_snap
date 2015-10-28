@@ -57,7 +57,7 @@ class pagemod_controller extends controller_abstract {
      * @return stdClass
      */
     private function read_page() {
-        global $PAGE, $COURSE, $USER;
+        global $PAGE, $COURSE;
 
         $cm = $PAGE->cm;
         $page = \theme_snap\local::get_page_mod($cm);
@@ -73,10 +73,10 @@ class pagemod_controller extends controller_abstract {
         $event->add_record_snapshot('page', $page);
         $event->trigger();
 
-        // Update 'viewed' state if required by completion system
+        // Update 'viewed' state if required by completion system.
         $completion = new \completion_info($COURSE);
         $completion->set_module_viewed($cm);
-        $renderer = $PAGE->get_renderer('core','course');
+        $renderer = $PAGE->get_renderer('core', 'course');
         $compinfo = null;
         $page->completionhtml = $renderer->course_section_cm_completion($COURSE, $compinfo, $cm);
 

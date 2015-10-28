@@ -621,7 +621,6 @@ function snapInit() {
 
         });
 
-
         if (completionhtml) {
             updatePageModCompletion($pagemod, completionhtml);
         }
