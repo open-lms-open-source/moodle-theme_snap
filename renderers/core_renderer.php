@@ -27,6 +27,7 @@ require_once('toc_renderer.php');
 require_once($CFG->libdir.'/coursecatlib.php');
 
 use theme_snap\local;
+use theme_snap\renderables;
 
 class theme_snap_core_renderer extends toc_renderer {
 
@@ -221,63 +222,18 @@ class theme_snap_core_renderer extends toc_renderer {
 
     /**
      * Settings link for opening the Administration menu, only shown if needed.
+     * @param renderables\settings_link $settingslink
      *
      * @return string
      */
-    public function settings_link() {
-        global $PAGE, $COURSE;
-        if (!$PAGE->blocks->is_block_present('settings')) {
-            return '';
-        }
-        $isteacher = has_capability('moodle/course:manageactivities', $PAGE->context);
+    public function render_settings_link(renderables\settings_link $settingslink) {
 
-        $display = false;
-
-        $userid = optional_param('id', false, PARAM_INT);
-
-        if ($isteacher) {
-            $display = true;
-        } else if (is_role_switched($COURSE->id)) {
-            // IF a teacher or admin switch their role to a student then they still need to be able to see the admin
-            // menu in order to be able to switch back to their original role!
-            $display = true;
-        } else if ($PAGE->pagetype === 'user-profile') {
-            // The admin block needs to be shown on user profile pages as it contains the edit profile link.
-            $display = true;
-        } else if ($PAGE->url->get_path() === '/user/view.php'
-            && $userid
-            && has_capability('moodle/user:viewdetails', CONTEXT_USER::instance($userid))
-        ) {
-            // Test to see if we have a mentor viewing this page, if so we need to display the admin block.
-            $display = true;
-        }
-
-        if (!$display) {
-            return '';
-        }
-
-        // Find the settings block.
-        // Core Moodle API appears to be missing a 'get block by name' function.
-        if (!$PAGE->blocks->is_block_present('settings')) {
-            debugging('Settings block was not found on this page', DEBUG_DEVELOPER);
-            return '';
-        }
-
-        foreach ($PAGE->blocks->get_regions() as $region) {
-            foreach ($PAGE->blocks->get_blocks_for_region($region) as $block) {
-                if (isset($block->instance) && $block->instance->blockname == 'settings') {
-                    $instanceid = $block->instance->id;
-                    continue 2;
-                }
-            }
-        }
-
-        if (!has_capability('moodle/block:view', context_block::instance($instanceid))) {
+        if (!$settingslink->output) {
             return '';
         }
 
         $burgericon = '<span class="lines"></span>';
-        $url = '#inst' . $instanceid;
+        $url = '#inst' . $settingslink->instanceid;
         $attributes = array(
             'id' => 'admin-menu-trigger',
             'class' => 'pull-right',

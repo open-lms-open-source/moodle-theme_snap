@@ -1354,4 +1354,6 @@ class local {
         $renderer = $PAGE->get_renderer('theme_snap', 'core', RENDERER_TARGET_GENERAL);
         return $renderer->recent_forum_activity($activities);
     }
+
+
 }
