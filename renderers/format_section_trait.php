@@ -388,9 +388,9 @@ trait format_section_trait {
             'action' => 'addsection',
             'contextid' => $context->id,
         ));
-
+        
         $heading = get_string('addanewsection', 'theme_snap');
-        $output .= "<h3>$heading</h3>";
+        $output = "<h3>$heading</h3>";
         $output .= html_writer::start_tag('form', array(
             'method' => 'post',
             'action' => $url->out_omit_querystring()
