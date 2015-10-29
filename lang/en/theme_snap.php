@@ -149,7 +149,6 @@ $string['region-side-pre'] = 'Left';
 $string['region-side-top'] = 'Top';
 $string['released'] = 'Released: {$a}';
 $string['reopened'] = 'Reopened';
-$string['removethissection'] = 'Remove this section';
 $string['seriffont'] = 'Serif font';
 $string['seriffont_desc'] = 'This font is used for most user generated content. Using a serif font makes user generated content more readable, and feel like it is written by a human.';
 $string['sitenavigation'] = 'Site navigation';
