@@ -77,8 +77,7 @@ class pagemod_controller extends controller_abstract {
         $completion = new \completion_info($COURSE);
         $completion->set_module_viewed($cm);
         $renderer = $PAGE->get_renderer('core', 'course');
-        $compinfo = null;
-        $page->completionhtml = $renderer->course_section_cm_completion($COURSE, $compinfo, $cm);
+        $page->completionhtml = $renderer->course_section_cm_completion($COURSE, $completion, $cm);
 
         return $page;
     }
