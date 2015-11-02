@@ -114,7 +114,10 @@ trait format_section_trait {
      * @return array of links with edit controls
      */
     protected function section_edit_controls($course, $section, $onsectionpage = false) {
-        global $PAGE;
+
+        if ($section->section === 0) {
+            return [];
+        }
 
         $coursecontext = context_course::instance($course->id);
         $isstealth = isset($course->numsections) && ($section->section > $course->numsections);
