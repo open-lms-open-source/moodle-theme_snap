@@ -139,7 +139,8 @@ class snap_shared extends renderer_base {
 
         $PAGE->requires->js_init_call('M.theme_snap.core.init', array($COURSE->id, $PAGE->context->id), false, $module);
 
-        if (!$PAGE->user_is_editing()) {
+        $canupdatecourse = has_capability('moodle/course:manageactivities', context_course::instance($COURSE->id));
+        if ($canupdatecourse && !$PAGE->user_is_editing()) {
             // This already gets added by core moodle when in edit mode.
             // So we only want to add this if we are not in edit mode or it will happen twice.
 
