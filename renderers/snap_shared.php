@@ -138,6 +138,43 @@ class snap_shared extends renderer_base {
         );
 
         $PAGE->requires->js_init_call('M.theme_snap.core.init', array($COURSE->id, $PAGE->context->id), false, $module);
+
+        if (!$PAGE->user_is_editing()) {
+            // This already gets added by core moodle when in edit mode.
+            // So we only want to add this if we are not in edit mode or it will happen twice.
+
+            // Note - to include all edit js - include_course_ajax($COURSE, $modnamesused);
+
+            $config = new stdClass();
+            $course = $COURSE;
+
+            // The URL to use for section changes.
+            $config->sectionurl = '/course/rest.php';
+
+            $config->pageparams = array();
+
+            // The URL to use for resource changes.
+            $config->resourceurl = '/course/rest.php';
+
+            // Include toolboxes
+            $PAGE->requires->yui_module('moodle-course-toolboxes',
+                'M.course.init_resource_toolbox',
+                array(array(
+                    'courseid' => $course->id,
+                    'ajaxurl' => $config->resourceurl,
+                    'config' => $config,
+                ))
+            );
+            $PAGE->requires->yui_module('moodle-course-toolboxes',
+                'M.course.init_section_toolbox',
+                array(array(
+                    'courseid' => $course->id,
+                    'format' => $course->format,
+                    'ajaxurl' => $config->sectionurl,
+                    'config' => $config,
+                ))
+            );
+        }
     }
 
     /**
