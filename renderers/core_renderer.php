@@ -27,7 +27,7 @@ require_once('toc_renderer.php');
 require_once($CFG->libdir.'/coursecatlib.php');
 
 use theme_snap\local;
-use theme_snap\renderables;
+use theme_snap\renderables\settings_link;
 
 class theme_snap_core_renderer extends toc_renderer {
 
@@ -222,11 +222,11 @@ class theme_snap_core_renderer extends toc_renderer {
 
     /**
      * Settings link for opening the Administration menu, only shown if needed.
-     * @param renderables\settings_link $settingslink
+     * @param settings_link $settingslink
      *
      * @return string
      */
-    public function render_settings_link(renderables\settings_link $settingslink) {
+    public function render_settings_link(settings_link $settingslink) {
 
         if (!$settingslink->output) {
             return '';

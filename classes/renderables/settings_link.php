@@ -42,7 +42,9 @@ class settings_link implements \renderable {
      */
     function __construct() {
         global $PAGE, $COURSE;
+        // Find the settings block.
         if (!$PAGE->blocks->is_block_present('settings')) {
+            debugging('Settings block was not found on this page', DEBUG_DEVELOPER);
             return;
         }
         $canmanageacts = has_capability('moodle/course:manageactivities', $PAGE->context);
@@ -51,18 +53,13 @@ class settings_link implements \renderable {
             return;
         }
 
-        // Find the settings block.
         // Core Moodle API appears to be missing a 'get block by name' function.
-        if (!$PAGE->blocks->is_block_present('settings')) {
-            debugging('Settings block was not found on this page', DEBUG_DEVELOPER);
-            return;
-        }
-
+        // Cycle through all regions and block instances until we find settings.
         foreach ($PAGE->blocks->get_regions() as $region) {
             foreach ($PAGE->blocks->get_blocks_for_region($region) as $block) {
                 if (isset($block->instance) && $block->instance->blockname == 'settings') {
                     $this->instanceid = $block->instance->id;
-                    continue 2;
+                    break 2;
                 }
             }
         }
