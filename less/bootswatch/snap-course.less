@@ -534,7 +534,8 @@ we do this by default in snap, so hide moodle version */
     display: none;
 }
 
-// show draft tag if parent has draft class
+// show draft tag if parent has draft or hidden class
+.hidden .draft_info,
 .draft .draft_info {
     display: inline-block;
 }
