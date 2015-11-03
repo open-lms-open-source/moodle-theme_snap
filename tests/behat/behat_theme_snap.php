@@ -40,6 +40,18 @@ use Behat\Behat\Context\Step\Given as Given;
 class behat_theme_snap extends behat_base {
 
     /**
+     * Waits until the provided element selector is visible.
+     *
+     * @Given /^I wait until "(?P<element_string>(?:[^"]|\\")*)" "(?P<selector_string>[^"]*)" is visible$/
+     * @param string $element
+     * @param string $selector
+     * @return void
+     */
+    public function i_wait_until_is_visible($element, $selectortype) {
+        $this->ensure_element_is_visible($element, $selectortype);
+    }
+
+    /**
      * Logs in the user. There should exist a user with the same value as username and password.
      *
      * @Given /^I log in with snap as "(?P<username_string>(?:[^"]|\\")*)"$/
@@ -52,7 +64,7 @@ class behat_theme_snap extends behat_base {
         // Generic steps (we will prefix them later expanding the navigation dropdown if necessary).
         $steps = array(
             new Given('I click on "' . get_string('login') . '" "link"'),
-            new Given('I wait "2" seconds'),
+            new Given('I wait until "#loginbtn" "css_element" is visible'),
             new Given('I set the field "' . get_string('username') . '" to "' . $this->escape($username) . '"'),
             new Given('I set the field "' . get_string('password') . '" to "'. $this->escape($username) . '"'),
             new Given('I press "' . get_string('login') . '"')
