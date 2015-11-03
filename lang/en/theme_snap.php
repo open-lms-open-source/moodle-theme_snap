@@ -67,6 +67,7 @@ $string['defaultintrosummary'] = 'Welcome to your new course {$a}.
 $string['defaulttopictitle'] = 'Untitled Topic';
 $string['debugerrors'] = 'Debug Errors';
 $string['draft'] = 'Draft';
+$string['dropzonelabel'] = 'Drop files to attach, or browse';
 $string['due'] = 'Due';
 $string['editcoursecontent'] = 'Edit course content';
 $string['editcoursesettings'] = 'Edit course settings';

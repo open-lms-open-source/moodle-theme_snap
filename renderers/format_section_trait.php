@@ -544,8 +544,8 @@ trait format_section_trait {
 
            // Add zone for quick uploading of files.
            $upload = "<form class='snap-dropzone' id='snap-course-dropzone'>
-              <label for='snap-drop-file' class='snap-dropzone-label h6'>Drop files to attatch, or <a href='#'>browse</a></label>
-              <input type='file' name='snap-drop-file' id='snap-drop-file'/>
+              <label for='snap-drop-file' class='snap-dropzone-label h6'>".get_string('dropzonelabel', 'theme_snap')."</label>
+              <input type='file' multiple name='snap-drop-file' id='snap-drop-file' class='sr-only'/>
 
               </form>";
            return $output.$upload;
