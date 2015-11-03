@@ -383,25 +383,14 @@ trait format_section_trait {
             return '';
         }
 
-        $output = "<div class='snap-section-remove'>";
-        if ($course->numsections > 0) {
-            $strremovesection = get_string('removethissection', 'theme_snap');
-            $url = new moodle_url('/course/changenumsections.php',
-                array('courseid' => $course->id,
-                    'increase' => false,
-                    'sesskey' => sesskey()));
-            $output .= html_writer::link($url, $strremovesection, array('class' => 'btn btn-default'));
-        }
-        $output .= "</div>";
-
         $url = new moodle_url('/theme/snap/index.php', array(
             'sesskey'  => sesskey(),
             'action' => 'addsection',
             'contextid' => $context->id,
         ));
-
+        
         $heading = get_string('addanewsection', 'theme_snap');
-        $output .= "<h3>$heading</h3>";
+        $output = "<h3>$heading</h3>";
         $output .= html_writer::start_tag('form', array(
             'method' => 'post',
             'action' => $url->out_omit_querystring()
