@@ -117,7 +117,10 @@ class snap_shared extends renderer_base {
      * @return void
      */
     public static function page_requires_js() {
-        global $PAGE, $COURSE;
+        global $PAGE, $COURSE, $USER;
+
+        $course = $COURSE;
+
         $PAGE->requires->jquery();
         $PAGE->requires->strings_for_js(array(
             'close',
@@ -143,38 +146,13 @@ class snap_shared extends renderer_base {
         if ($canupdatecourse && !$PAGE->user_is_editing()) {
             // This already gets added by core moodle when in edit mode.
             // So we only want to add this if we are not in edit mode or it will happen twice.
+            // Include course AJAX.
+            $modinfo = get_fast_modinfo($course);
+            $modnamesused = $modinfo->get_used_module_names();
+            $USER->editing = true; // Temporarilly change edit mode to on for course ajax to be included.
+            include_course_ajax($course, $modnamesused);
+            $USER->editing = false; // Switch edit mode back.
 
-            // Note - to include all edit js - include_course_ajax($COURSE, $modnamesused);
-
-            $config = new stdClass();
-            $course = $COURSE;
-
-            // The URL to use for section changes.
-            $config->sectionurl = '/course/rest.php';
-
-            $config->pageparams = array();
-
-            // The URL to use for resource changes.
-            $config->resourceurl = '/course/rest.php';
-
-            // Include toolboxes
-            $PAGE->requires->yui_module('moodle-course-toolboxes',
-                'M.course.init_resource_toolbox',
-                array(array(
-                    'courseid' => $course->id,
-                    'ajaxurl' => $config->resourceurl,
-                    'config' => $config,
-                ))
-            );
-            $PAGE->requires->yui_module('moodle-course-toolboxes',
-                'M.course.init_section_toolbox',
-                array(array(
-                    'courseid' => $course->id,
-                    'format' => $course->format,
-                    'ajaxurl' => $config->sectionurl,
-                    'config' => $config,
-                ))
-            );
         }
     }
 
