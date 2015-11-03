@@ -480,7 +480,7 @@ trait format_section_trait {
             'action' => 'addsection',
             'contextid' => $context->id,
         ));
-        
+
         $heading = get_string('addanewsection', 'theme_snap');
         $output = "<h3>$heading</h3>";
         $output .= html_writer::start_tag('form', array(
@@ -541,6 +541,13 @@ trait format_section_trait {
               <span class='section-modchooser-link'><span>".get_string('addresourceoractivity', 'theme_snap')."</span></span>
             </div>";
            $output = $this->courserenderer->course_modchooser($modules, $course) . $modchooser;
-           return $output;
+
+           // Add zone for quick uploading of files.
+           $upload = "<form class='snap-dropzone' id='snap-course-dropzone'>
+              <label for='snap-drop-file' class='snap-dropzone-label h6'>Drop files to attatch, or <a href='#'>browse</a></label>
+              <input type='file' name='snap-drop-file' id='snap-drop-file'/>
+
+              </form>";
+           return $output.$upload;
     }
 }
