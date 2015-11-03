@@ -595,12 +595,18 @@ function snapInit() {
         $('body').addClass(extraclasses.join(' '));
     };
 
+    var updatePageModCompletion = function($pagemod, completionhtml) {
+        // Update completion tracking icon.
+        $pagemod.find('.autocompletion').replaceWith(completionhtml);
+    };
+
     /**
      * Reveal pagemod.
      *
      * @param $pagemod
+     * @param string completionhtml - updated completionhtml
      */
-    var revealPageMod = function($pagemod) {
+    var revealPageMod = function($pagemod, completionhtml) {
         $pagemod.find('.pagemod-content').slideToggle("fast", function() {
             // Animation complete.
             if($pagemod.is('.state-expanded')){
@@ -614,6 +620,12 @@ function snapInit() {
             }
 
         });
+
+        if (completionhtml) {
+            updatePageModCompletion($pagemod, completionhtml);
+        }
+
+        // If there is any video in the new content then we need to make it responsive.
         applyResponsiveVideo();
     }
 
@@ -801,7 +813,11 @@ function snapInit() {
                     $.ajax({
                         type: "GET",
                         async: true,
-                        url: M.cfg.wwwroot + '/theme/snap/rest.php?action=read_page&contextid=' + readmore.data('pagemodcontext')
+                        url: M.cfg.wwwroot + '/theme/snap/rest.php?action=read_page&contextid=' + readmore.data('pagemodcontext'),
+                        success: function (data) {
+                            // Update completion html for this page mod instance.
+                            updatePageModCompletion($pagemod, data.completionhtml);
+                        }
                     });
                 }
             } else {
@@ -816,7 +832,7 @@ function snapInit() {
                             $pagemodcontent.prepend(data.html);
                             $pagemodcontent.data('content-loaded', 1);
                             $pagemod.find('.contentafterlink .ajaxstatus').remove();
-                            revealPageMod($pagemod);
+                            revealPageMod($pagemod, data.completionhtml);
                         }
                     });
                 } else {
