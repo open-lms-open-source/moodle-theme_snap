@@ -112,6 +112,180 @@ class snap_shared extends renderer_base {
     }
 
     /**
+     * Add the Javascript to enable drag and drop upload to a course page
+     *
+     * @param object $course The currently displayed course
+     * @param array $modnames The list of enabled (visible) modules on this site
+     * @return void
+     */
+    protected static function dndupload_add_to_course($course, $modnames) {
+        global $CFG, $PAGE;
+
+        $showstatus = optional_param('notifyeditingon', false, PARAM_BOOL);
+
+        // Get all handlers.
+        $handler = new dndupload_handler($course, $modnames);
+        $jsdata = $handler->get_js_data();
+        if (empty($jsdata->types) && empty($jsdata->filehandlers)) {
+            return; // No valid handlers - don't enable drag and drop.
+        }
+
+        // Add the javascript to the page.
+        $jsmodule = array(
+            'name' => 'coursedndupload',
+            'fullpath' => '/theme/snap/javascript/dndupload.js',
+            'strings' => array(
+                array('addfilehere', 'moodle'),
+                array('dndworkingfiletextlink', 'moodle'),
+                array('dndworkingfilelink', 'moodle'),
+                array('dndworkingfiletext', 'moodle'),
+                array('dndworkingfile', 'moodle'),
+                array('dndworkingtextlink', 'moodle'),
+                array('dndworkingtext', 'moodle'),
+                array('dndworkinglink', 'moodle'),
+                array('filetoolarge', 'moodle'),
+                array('actionchoice', 'moodle'),
+                array('servererror', 'moodle'),
+                array('upload', 'moodle'),
+                array('cancel', 'moodle')
+            ),
+            'requires' => array('node', 'event', 'json', 'anim')
+        );
+        $vars = array(
+            array('courseid' => $course->id,
+                'maxbytes' => get_max_upload_file_size($CFG->maxbytes, $course->maxbytes),
+                'handlers' => $handler->get_js_data(),
+                'showstatus' => $showstatus)
+        );
+
+        $PAGE->requires->js('/course/dndupload.js');
+        $PAGE->requires->js_init_call('M.theme_snap.dndupload.init', $vars, true, $jsmodule);
+    }
+
+
+    /**
+     * Include the relevant javascript and language strings for the resource
+     * toolbox YUI module
+     *
+     * @param integer $id The ID of the course being applied to
+     * @param array $usedmodules An array containing the names of the modules in use on the page
+     * @param array $enabledmodules An array containing the names of the enabled (visible) modules on this site
+     * @param stdClass $config An object containing configuration parameters for ajax modules including:
+     *          * resourceurl   The URL to post changes to for resource changes
+     *          * sectionurl    The URL to post changes to for section changes
+     *          * pageparams    Additional parameters to pass through in the post
+     * @return bool
+     */
+    protected static function include_course_ajax($course, $usedmodules = array(), $enabledmodules = null, $config = null) {
+        global $CFG, $PAGE, $SITE;
+
+        // Ensure that ajax should be included
+        if (!course_ajax_enabled($course)) {
+            return false;
+        }
+
+        if (!$config) {
+            $config = new stdClass();
+        }
+
+        // The URL to use for resource changes
+        if (!isset($config->resourceurl)) {
+            $config->resourceurl = '/course/rest.php';
+        }
+
+        // The URL to use for section changes
+        if (!isset($config->sectionurl)) {
+            $config->sectionurl = '/course/rest.php';
+        }
+
+        // Any additional parameters which need to be included on page submission
+        if (!isset($config->pageparams)) {
+            $config->pageparams = array();
+        }
+
+        // Include toolboxes
+        $PAGE->requires->yui_module('moodle-course-toolboxes',
+            'M.course.init_resource_toolbox',
+            array(array(
+                'courseid' => $course->id,
+                'ajaxurl' => $config->resourceurl,
+                'config' => $config,
+            ))
+        );
+        $PAGE->requires->yui_module('moodle-course-toolboxes',
+            'M.course.init_section_toolbox',
+            array(array(
+                'courseid' => $course->id,
+                'format' => $course->format,
+                'ajaxurl' => $config->sectionurl,
+                'config' => $config,
+            ))
+        );
+
+        // Include course dragdrop
+        if (course_format_uses_sections($course->format)) {
+            $PAGE->requires->yui_module('moodle-course-dragdrop', 'M.course.init_section_dragdrop',
+                array(array(
+                    'courseid' => $course->id,
+                    'ajaxurl' => $config->sectionurl,
+                    'config' => $config,
+                )), null, true);
+
+            $PAGE->requires->yui_module('moodle-course-dragdrop', 'M.course.init_resource_dragdrop',
+                array(array(
+                    'courseid' => $course->id,
+                    'ajaxurl' => $config->resourceurl,
+                    'config' => $config,
+                )), null, true);
+        }
+
+        // Require various strings for the command toolbox
+        $PAGE->requires->strings_for_js(array(
+            'moveleft',
+            'deletechecktype',
+            'deletechecktypename',
+            'edittitle',
+            'edittitleinstructions',
+            'show',
+            'hide',
+            'groupsnone',
+            'groupsvisible',
+            'groupsseparate',
+            'clicktochangeinbrackets',
+            'markthistopic',
+            'markedthistopic',
+            'movesection',
+            'movecoursemodule',
+            'movecoursesection',
+            'movecontent',
+            'tocontent',
+            'emptydragdropregion',
+            'afterresource',
+            'aftersection',
+            'totopofsection',
+        ), 'moodle');
+
+        // Include section-specific strings for formats which support sections.
+        if (course_format_uses_sections($course->format)) {
+            $PAGE->requires->strings_for_js(array(
+                'showfromothers',
+                'hidefromothers',
+            ), 'format_' . $course->format);
+        }
+
+        // For confirming resource deletion we need the name of the module in question
+        foreach ($usedmodules as $module => $modname) {
+            $PAGE->requires->string_for_js('pluginname', $module);
+        }
+
+        // Load drag and drop upload AJAX.
+        require_once($CFG->dirroot.'/course/dnduploadlib.php');
+        self::dndupload_add_to_course($course, $enabledmodules);
+
+        return true;
+    }
+
+    /**
      * Javascript required by both flexpage layout and header layout
      *
      * @return void
@@ -148,7 +322,7 @@ class snap_shared extends renderer_base {
             $modinfo = get_fast_modinfo($COURSE);
             $modnamesused = $modinfo->get_used_module_names();
             $USER->editing = true; // Temporarilly change edit mode to on for course ajax to be included.
-            include_course_ajax($COURSE, $modnamesused);
+            self::include_course_ajax($COURSE, $modnamesused);
             $USER->editing = false; // Switch edit mode back.
         }
     }
