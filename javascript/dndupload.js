@@ -9,7 +9,7 @@ M.theme_snap.dndupload.init = function(Y, options) {
 
     this.init(Y, options);
 
-    $('#snap-drop-file').change(function(){
+    $('#snap-drop-file').change(function() {
         var currentSectionId = $('.main.state-visible, #coursetools.state-visible').attr('id');
         if (currentSectionId === 'coursetools') {
             return;
