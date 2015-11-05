@@ -116,7 +116,7 @@ trait format_section_trait {
      * @return string HTML to output.
      */
     protected function section_header($section, $course, $onsectionpage, $sectionreturn=null) {
-        global $PAGE, $USER;
+        global $PAGE, $USER, $CFG;
 
         $o = '';
         $sectionstyle = '';
@@ -168,9 +168,12 @@ trait format_section_trait {
         if ($sectiontitle == get_string('general') && $section->section == 0) {
             $sectiontitle = get_string('introduction', 'theme_snap');
         }
+
+        $showeditorhints = empty($CFG->theme_snap_disableeditorhints);
+
         // Untitled topic title.
         $testemptytitle = get_string('topic').' '.$section->section;
-        if ($sectiontitle == $testemptytitle && has_capability('moodle/course:update', $context)) {
+        if ($showeditorhints && $sectiontitle == $testemptytitle && has_capability('moodle/course:update', $context)) {
           $url = new moodle_url('/course/editsection.php', array('id' => $section->id, 'sr' => $sectionreturn));
           $o .= "<h2><a href='$url' title='".s(get_string('editcoursetopic', 'theme_snap'))."'>".get_string('defaulttopictitle', 'theme_snap')."</a></h2>";
         }
@@ -194,7 +197,7 @@ trait format_section_trait {
         $summarytext = $this->format_summary_text($section);
 
         // Welcome message when no summary text.
-        if (empty($summarytext) && has_capability('moodle/course:update', $context)) {
+        if ($showeditorhints && empty($summarytext) && has_capability('moodle/course:update', $context)) {
           $summarytext = "<p>".get_string('defaultsummary', 'theme_snap')."</p>";
           if ($section->section == 0) {
               $editorname = format_string(fullname($USER));
