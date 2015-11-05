@@ -105,7 +105,7 @@ class activity {
             }
         } else {
             // Student - useful student meta data - only display if activity is available.
-            if (empty($activitydates->timeopen) || usertime($activitydates->timeopen) <= time()) {
+            if (empty($activitydates->timeopen) || $activitydates->timeopen <= time()) {
 
                 $submissionrow = self::get_submission_row($courseid, $mod, $submissiontable, $keyfield, $submitselect);
 
@@ -167,7 +167,7 @@ class activity {
             $subreqd = empty($meta->submissionnotrequired);
 
             // Overdue?
-            $meta->overdue = $subreqd && empty($meta->submitted) && time() > usertime($meta->timeclose);
+            $meta->overdue = $subreqd && empty($meta->submitted) && (time() > $meta->timeclose);
         }
 
         return $meta;
