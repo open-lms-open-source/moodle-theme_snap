@@ -23,11 +23,18 @@
  * @copyright Copyright (c) 2015 Moodlerooms Inc. (http://www.moodlerooms.com)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
+
+defined('MOODLE_INTERNAL') || die();
+
+use theme_snap\renderables\settings_link;
+
 ?>
 <header id='mr-nav' class='clearfix moodle-has-zindex'>
 <div class="pull-right">
-<?php echo $OUTPUT->fixed_menu(); ?>
-<?php echo $OUTPUT->settings_link(); ?>
+<?php echo $OUTPUT->fixed_menu();
+$settingslink = new settings_link();
+echo $OUTPUT->render($settingslink);
+?>
 </div>
 
 <?php
