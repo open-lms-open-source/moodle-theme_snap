@@ -2751,6 +2751,9 @@ section#region-main
 .dndupload-preview {
   display: none !important;
 }
+.dndupload-over .snap-dropzone {
+  background-color: #fafafa;
+}
 @media screen and (min-width: 992px) {
   #dndupload-status {
     display: block;
