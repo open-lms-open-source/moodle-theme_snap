@@ -543,11 +543,10 @@ trait format_section_trait {
            $output = $this->courserenderer->course_modchooser($modules, $course) . $modchooser;
 
            // Add zone for quick uploading of files.
-           $upload = "<form class='snap-dropzone' id='snap-course-dropzone'>
-              <label for='snap-drop-file' class='snap-dropzone-label h6'>".get_string('dropzonelabel', 'theme_snap')."</label>
-              <input type='file' multiple name='snap-drop-file' id='snap-drop-file' class='sr-only'/>
-
-              </form>";
+           $upload = '<form class="snap-dropzone">
+              <label for="snap-drop-file-'.$section.'" class="snap-dropzone-label h6">'.get_string('dropzonelabel', 'theme_snap').'</label>
+              <input type="file" multiple name="snap-drop-file-'.$section.'" id="snap-drop-file-'.$section.'" class="js-snap-drop-file sr-only"/>
+              </form>';
            return $output.$upload;
     }
 }

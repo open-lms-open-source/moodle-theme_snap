@@ -80,4 +80,19 @@ class behat_theme_snap extends behat_base {
 
         return $steps;
     }
+
+    /**
+     * @param string $fixturefilename this is a filename relative to the snap fixtures folder.
+     * @param string $input
+     *
+     * @Given /^I upload file "(?P<fixturefilename_string>(?:[^"]|\\")*)" using input "(?P<input_string>(?:[^"]|\\")*)"$/
+     */
+    public function i_upload_file_using_input($fixturefilename, $input) {
+        global $CFG;
+        $fixturefilename = clean_param($fixturefilename, PARAM_FILE);
+        //$filepath = $CFG->themedir.'/snap/tests/fixtures/'.$fixturefilename;
+        $filepath = $CFG->dirroot.'/theme/snap/tests/fixtures/'.$fixturefilename;
+        $file = $this->find('css', $input);
+        $file->attachFile($filepath);
+    }
 }

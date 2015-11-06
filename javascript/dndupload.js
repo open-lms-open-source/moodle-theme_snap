@@ -9,13 +9,10 @@ M.theme_snap.dndupload.init = function(Y, options) {
 
     this.init(Y, options);
 
-    $('#snap-drop-file').change(function() {
-        var currentSectionId = $('.main.state-visible, #coursetools.state-visible').attr('id');
-        if (currentSectionId === 'coursetools') {
-            return;
-        }
-        var section = Y.one('#'+currentSectionId);
-        var sectionnumber = parseInt(currentSectionId.replace('section-'));
+    $('.js-snap-drop-file').change(function() {
+        var sectionnumber = $(this).attr('id').replace('snap-drop-file-', '');
+        var section = Y.one('#section-'+sectionnumber);
+
         var file;
         for (var i = 0; i < this.files.length; i++) {
             // Get file and trigger upload.
