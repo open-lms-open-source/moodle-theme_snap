@@ -1170,12 +1170,15 @@ HTML;
     /**
      * Override parent to (optionally) remove the nav block.
      *
+     * Always show when Behat tests are running as it is used by core
+     * tests to navigate around the site.
+     *
      * @todo For 2.7, when this will no longer be an option, we should
      * automatically turn off the nav block to stop all this at the source.
      */
     public function blocks_for_region($region) {
         $blockcontents = $this->page->blocks->get_content_for_region($region, $this);
-        if (!empty($this->page->theme->settings->hidenavblock)) {
+        if (!empty($this->page->theme->settings->hidenavblock) && !defined('BEHAT_SITE_RUNNING')) {
             $blockcontents = array_filter($blockcontents, function ($bc) {
                 if (!$bc instanceof block_contents) {
                     return true;
