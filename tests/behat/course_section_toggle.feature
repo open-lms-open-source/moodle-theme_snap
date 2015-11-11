@@ -51,7 +51,7 @@ Feature: When the moodle theme is set to Snap, teachers can toggle the visibilit
     And I follow "Topic 2"
    Then "#section-2" "css_element" should exist
     And "#section-2.hidden" "css_element" should not exist
-    And I follow "Hide topic"
+    And I click on "#section-2 .editing_showhide" "css_element"
    Then "#section-2.hidden" "css_element" should exist
 
   @javascript

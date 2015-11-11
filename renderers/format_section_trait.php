@@ -266,17 +266,13 @@ trait format_section_trait {
         // Section editing commands.
         $sectiontoolsarray = $this->section_edit_controls($course, $section, false);
 
-        // TODO - look at whats needed in the classes for js
-        // TODO - remove redundent stuff, add snap move etc
         if (has_capability('moodle/course:update', $context)) {
             if (!empty($sectiontoolsarray)) {
               $sectiontools = implode(' ', $sectiontoolsarray);
               $o .= html_writer::tag('div', $sectiontools, array(
-                  // TODO - what are all these classes for?
                   'class' => 'left right side snap-section-editing',
                   'role' => 'region',
-                  // TODO - lang string this
-                  'aria-label' => 'topic actions',
+                  'aria-label' => get_string('topicactions', 'theme_snap')
               ));
             }
         }
@@ -289,8 +285,10 @@ trait format_section_trait {
         $o .= "<div class='summary'>";
         $summarytext = $this->format_summary_text($section);
 
+        $canupdatecourse = has_capability('moodle/course:update', $context);
+
         // Welcome message when no summary text.
-        if ($showeditorhints && empty($summarytext) && has_capability('moodle/course:update', $context)) {
+        if (empty($summarytext) && $canupdatecourse) {
           $summarytext = "<p>".get_string('defaultsummary', 'theme_snap')."</p>";
           if ($section->section == 0) {
               $editorname = format_string(fullname($USER));
@@ -299,13 +297,11 @@ trait format_section_trait {
         }
 
         $o .= $summarytext;
-        if (has_capability('moodle/course:update', $context)) {
+        if ($canupdatecourse) {
             $url = new moodle_url('/course/editsection.php', array('id' => $section->id, 'sr' => $sectionreturn));
             $o .= "<a href='$url' class='edit-summary'>".get_string('editcoursetopic', 'theme_snap')."</a>";
         }
         $o .= "</div>";
-
-
 
         return $o;
     }

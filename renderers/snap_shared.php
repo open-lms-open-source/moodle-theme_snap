@@ -119,8 +119,6 @@ class snap_shared extends renderer_base {
     public static function page_requires_js() {
         global $PAGE, $COURSE, $USER;
 
-        $course = $COURSE;
-
         $PAGE->requires->jquery();
         $PAGE->requires->strings_for_js(array(
             'close',
@@ -142,17 +140,16 @@ class snap_shared extends renderer_base {
 
         $PAGE->requires->js_init_call('M.theme_snap.core.init', array($COURSE->id, $PAGE->context->id), false, $module);
 
-        $canupdatecourse = has_capability('moodle/course:manageactivities', context_course::instance($COURSE->id));
-        if ($canupdatecourse && !$PAGE->user_is_editing()) {
+        $canmanageacts = has_capability('moodle/course:manageactivities', context_course::instance($COURSE->id));
+        if ($canmanageacts && !$PAGE->user_is_editing()) {
             // This already gets added by core moodle when in edit mode.
             // So we only want to add this if we are not in edit mode or it will happen twice.
             // Include course AJAX.
-            $modinfo = get_fast_modinfo($course);
+            $modinfo = get_fast_modinfo($COURSE);
             $modnamesused = $modinfo->get_used_module_names();
             $USER->editing = true; // Temporarilly change edit mode to on for course ajax to be included.
-            include_course_ajax($course, $modnamesused);
+            include_course_ajax($COURSE, $modnamesused);
             $USER->editing = false; // Switch edit mode back.
-
         }
     }
 
