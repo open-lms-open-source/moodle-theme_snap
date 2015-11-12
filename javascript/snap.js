@@ -90,6 +90,62 @@ function snapInit() {
     };
 
     /**
+     * Ensure lightbox container exists.
+     *
+     * @param appendto
+     * @param onclose
+     * @returns {*|jQuery|HTMLElement}
+     */
+    var lightbox = function(appendto, onclose) {
+        var lbox = $('#snap-light-box');
+        if (lbox.length === 0) {
+            $(appendto).append('<div id="snap-light-box" tabindex="-1">' +
+                '<div id="snap-light-box-content"></div>' +
+                '<a id="snap-light-box-close" class="pull-right snap-action-icon" href="#">' +
+                    '<i class="icon icon-close"></i><small>Close</small>' +
+                '</a>' +
+            '</div>');
+            $('#snap-light-box-close').click(function(e){
+                e.preventDefault();
+                e.stopPropagation();
+                lightboxclose();
+                if (typeof(onclose) === 'function') {
+                    onclose();
+                }
+            });
+            lbox = $('#snap-light-box');
+        }
+        return lbox;
+    };
+
+    /**
+     * Close lightbox.
+     */
+    var lightboxclose = function() {
+        var lbox = lightbox();
+        $('#snap-light-box-content').html('');
+        lbox.removeClass('state-visible');
+    };
+
+    /**
+     * Open lightbox and set content if necessary.
+     *
+     * @param content
+     * @param appendto
+     * @param onclose
+     */
+    var lightboxopen = function(content, appendto, onclose) {
+        var appendto = appendto ? appendto : $('body');
+        var lbox = lightbox(appendto, onclose);
+        if (content) {
+            var contentdiv = $('#snap-light-box-content');
+            contentdiv.html('');
+            contentdiv.append(content);
+        }
+        lbox.addClass('state-visible');
+    };
+
+    /**
      * move PHP errors into header
      *
      * @author Guy Thomas
@@ -629,6 +685,66 @@ function snapInit() {
         applyResponsiveVideo();
     }
 
+    var lightboxMedia = function(resourcemod) {
+        var appendto = $('body');
+        var spinner = '<div class="loadingstat three-quarters">' +
+                Y.Escape.html(M.util.get_string('loading', 'theme_snap')) +
+                '</div>';
+        lightboxopen(spinner, appendto, function(){
+            $(resourcemod).attr('tabindex','-1').focus();
+            $(resourcemod).removeAttr('tabindex');
+        });
+
+        $.ajax({
+            type: "GET",
+            async: true,
+            url: M.cfg.wwwroot + '/theme/snap/rest.php?action=get_media&contextid=' + $(resourcemod).data('modcontext'),
+            success: function (data) {
+                lightboxopen(data.html, appendto);
+
+                // Execute scripts - necessary for flv to work.
+                var hasflowplayerscript = false;
+                $('#snap-light-box script').each(function(){
+                    var script = $(this).text();
+
+                    // Remove cdata from script.
+                    script = script.replace( /^(?:\s*)\/\/<!\[CDATA\[/, '').replace(/\/\/\]\](?:\s*)$/, '');
+
+                    // Check for flv video scripts.
+                    if (script.indexOf('M.util.add_video_player') >-1 ) {
+                        hasflowplayerscript = true;
+                        // This is really important - we have to reset this or it will try to apply flow player to all
+                        // the video players it has already initialised and even ones that no longer exist because
+                        // they have been wiped from the DOM.
+                        M.util.video_players = [];
+                    }
+
+                    // Execute script.
+                    eval (script);
+                });
+                if (hasflowplayerscript) {
+                    if (M.cfg.jsrev == -1) {
+                        var jsurl = M.cfg.wwwroot + '/lib/flowplayer/flowplayer-3.2.13.js';
+                    } else {
+                        var jsurl = M.cfg.wwwroot + '/lib/javascript.php?jsfile=/lib/flowplayer/flowplayer-3.2.13.min.js&rev=' + M.cfg.jsrev;
+                    }
+                    $('head script[src="'+jsurl+'"]').remove();
+                    // This is so hacky it's untrue, we need to load flow player again but it won't do so unless we make flowplayer undefined.
+                    // Note, we can't use flowplayer.delete in strict mode, hence "= undefined".
+                    if (typeof(flowplayer) !== 'undefined') {
+                        flowplayer = undefined;
+                    }
+                    M.util.load_flowplayer();
+                    $('head script[src="'+jsurl+'"]').trigger( "onreadystatechange" );
+                }
+                // Apply responsive video after 1 second. Note: 1 second is just to give crappy flow player time to sort itself out.
+                window.setTimeout(function(){applyResponsiveVideo();}, 1000);
+                $('#snap-light-box').focus();
+            }
+        });
+
+    };
+
     /**
      * Add listeners.
      *
@@ -763,15 +879,16 @@ function snapInit() {
             // Excludes any clicks in the actions menu, on links or forms.
             if(!$(trigger).closest('.snap-asset-actions, form, a, input').length) {
                 // TODO - add a class in the renderer to set target to blank for none-web docs or external links
-                if($(trigger).closest('.snap-resource').is('.target-blank')){
+                if ($(this).hasClass('js-snap-media')) {
+                    // Media element detected, lightbox it's ass.
+                    lightboxMedia(this);
+                } else  if($(trigger).closest('.snap-resource').is('.target-blank')){
                     hreftarget = '_blank';
+                    window.open($(this).data('href'), hreftarget);
                 }
-                window.open($(this).data('href'), hreftarget);
                 e.preventDefault();
             }
         });
-
-
 
         // Onclick for toggle of state-visible of admin block and mobile menu.
         $(document).on("click", "#admin-menu-trigger, #toc-mobile-menu-toggle", function(e) {

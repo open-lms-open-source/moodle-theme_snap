@@ -38,10 +38,12 @@
 .news-article-message *[style],
 .snap-image-summary *[style],
 .summary-text *[style],
-.summary *[style],
+.summary p[style],
+.summary div[style],
 .snap-activity .contentafterlink *[style],
 .signuppanel *[style],
-.signuppanel .text_to_html *[style] {
+.signuppanel .text_to_html *[style],
+.snap-lightbox-description *[style] {
     color: inherit !important;
     font-size: inherit !important;
     line-height: inherit !important;
@@ -125,7 +127,9 @@ a:hover {
 .contentwithoutlink,
 #course_about,
 .user-grade td.feedbacktext,
-#course_teachers .text_to_html {
+// moodle applies to .text_to_html class for teachers description in the footer
+#course_teachers .text_to_html,
+.snap-lightbox-description  {
     font-family: @font-family-serif;
 }
 

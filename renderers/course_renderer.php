@@ -55,6 +55,9 @@ class theme_snap_core_course_renderer extends core_course_renderer {
             if ($mod->modname === 'resource') {
                 // Default for resources/attatchments e.g. pdf, doc, etc.
                 $modclasses = array('snap-resource', 'snap-mime-'.$extension);
+                if (in_array($extension, $this->snap_multimedia())) {
+                    $modclasses[] = 'js-snap-media';
+                }
                 // For images we overwrite with the native class.
                 if ($this->is_image_mod($mod)) {
                     $modclasses = array('snap-native', 'snap-image', 'snap-mime-'.$extension);
@@ -106,6 +109,7 @@ class theme_snap_core_course_renderer extends core_course_renderer {
             $attr['data-type'] = $snapmodtype;
             $attr['class'] = implode(' ', $modclasses);
             $attr['id'] = 'module-' . $mod->id;
+            $attr['data-modcontext'] = $mod->context->id;
 
             $output .= html_writer::tag('li', $modulehtml, $attr);
         }
@@ -780,8 +784,82 @@ class theme_snap_core_course_renderer extends core_course_renderer {
         return $output;
     }
 
+    /**
+     * Every mime type we consider to be multimedia.
+     * @return array
+     */
+    protected function snap_multimedia() {
+        return ['mp3', 'wav', 'audio', 'mov', 'wmv', 'video', 'mpeg', 'avi', 'quicktime', 'flash'];
+    }
 
+    /**
+     * Renders html to display a name with the link to the course module on a course page
+     *
+     * If module is unavailable for user but still needs to be displayed
+     * in the list, just the name is returned without a link
+     *
+     * Note, that for course modules that never have separate pages (i.e. labels)
+     * this function return an empty string
+     *
+     * @param cm_info $mod
+     * @param array $displayoptions
+     * @return string
+     */
+    public function course_section_cm_name(cm_info $mod, $displayoptions = array()) {
 
+        $output = '';
+
+        // Nothing to be displayed to the user.
+        if (!$mod->uservisible && empty($mod->availableinfo)) {
+            return $output;
+        }
+
+        // Is this for labels or something with no other page url to point to?
+        $url = $mod->url;
+        if (!$url) {
+            return $output;
+        }
+
+        // Get asset name.
+        $instancename = $mod->get_formatted_name();
+        $groupinglabel = $mod->get_grouping_label();
+
+        $target = '';
+
+        $activityimg = "<img class='iconlarge activityicon' aria-role='hidden' src='".$mod->get_icon_url()."' />";
+
+        // Multimedia mods we want to open in the same window.
+        $snapmultimedia = $this->snap_multimedia();
+
+        if ($mod->modname === 'resource') {
+            $extension = $this->get_mod_type($mod)[1];
+            if (in_array($extension, $snapmultimedia) ) {
+                // For multimedia we need to handle the popup setting.
+                // If popup add a redirect param to prevent the intermediate page.
+                if ($mod->onclick) {
+                    $url .= "&amp;redirect=1";
+                }
+            } else {
+                $url .= "&amp;redirect=1";
+                $target = "target='_blank'";
+            }
+        }
+        if ($mod->modname === 'url') {
+            // Set the url to redirect 1 to avoid intermediate pages.
+            $url .= "&amp;redirect=1";
+            $target = "target='_blank'";
+        }
+
+        if ($mod->uservisible) {
+            $output .= "<a $target  href='$url'>$activityimg<span class='instancename'>$instancename</span></a>" . $groupinglabel;
+        } else {
+            // We may be displaying this just in order to show information
+            // about visibility, without the actual link ($mod->uservisible).
+            $output .= "<div>$instancename</div> $groupinglabel";
+        }
+
+        return $output;
+    }
 
     /**
      * Wrapper around course_get_cm_edit_actions

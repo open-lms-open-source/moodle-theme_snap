@@ -1836,3 +1836,45 @@ span.editinstructions {
   }
 }
 
+#snap-light-box {
+    display: none;
+    position: fixed;
+    box-sizing: border-box;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: @modal-backdrop-bg;
+    z-index: 1000000;
+    overflow-y:scroll;
+
+    &.state-visible {
+        display: block;
+    }
+
+    #snap-light-box-close {
+        position: absolute;
+        z-index: 2;
+        top: 0.5em;
+        right: 0.5em;
+    }
+
+    .icon-close:before {
+        background: transparent url([[pix:theme|close_x]]) no-repeat 50% 50%;
+    }
+    .resourcecontent audio {
+       margin: 1em auto;
+    }
+}
+
+#snap-light-box-content {
+    width: 100%;
+    padding: 1em 4%;
+}
+
+@media screen and (min-width: @screen-sm) {
+  .snap-lightbox-description {
+      overflow-y: auto;
+      max-height: 80vh;
+  }
+}
