@@ -251,11 +251,9 @@ trait format_section_trait {
             $sectiontitle = get_string('introduction', 'theme_snap');
         }
 
-        $showeditorhints = empty($CFG->theme_snap_disableeditorhints);
-
         // Untitled topic title.
         $testemptytitle = get_string('topic').' '.$section->section;
-        if ($showeditorhints && $sectiontitle == $testemptytitle && has_capability('moodle/course:update', $context)) {
+        if ($sectiontitle == $testemptytitle && has_capability('moodle/course:update', $context)) {
           $url = new moodle_url('/course/editsection.php', array('id' => $section->id, 'sr' => $sectionreturn));
           $o .= "<h2><a href='$url' title='".s(get_string('editcoursetopic', 'theme_snap'))."'>".get_string('defaulttopictitle', 'theme_snap')."</a></h2>";
         }
@@ -480,7 +478,7 @@ trait format_section_trait {
             'action' => 'addsection',
             'contextid' => $context->id,
         ));
-        
+
         $heading = get_string('addanewsection', 'theme_snap');
         $output = "<h3>$heading</h3>";
         $output .= html_writer::start_tag('form', array(
