@@ -402,14 +402,19 @@ class theme_snap_core_renderer extends toc_renderer {
      * @return string
      */
     protected function render_forumposts() {
+        global $USER;
         if (empty($this->page->theme->settings->forumpoststoggle)) {
             return '';
         }
 
         $messagesheading = get_string('forumposts', 'theme_snap');
-        $o = '<h2>'.$messagesheading.'</h2>'.
-            '<div id="snap-personal-menu-forumposts"></div>';
 
+        $o = '<h2>'.$messagesheading.'</h2>
+        <div id="snap-personal-menu-forumposts"></div>';
+        $messageurl = "$CFG->wwwroot/mod/forum/user.php?id=$USER->id";
+        $o .= '<div class="text-center">';
+        $o .= '<a class="btn btn-default" href="'.$messageurl.'">'.$messagesheading.'</a>';
+        $o .= '</div>';
         return $o;
     }
 
