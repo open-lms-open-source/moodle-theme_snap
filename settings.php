@@ -98,7 +98,7 @@ if ($ADMIN->fulltree) {
     // Personal menu settings
     $name = 'theme_snap/personalmenu';
     $title = new lang_string('personalmenu', 'theme_snap');
-    $description = new lang_string('menusandnavheadingdesc', 'theme_snap');
+    $description = new lang_string('footerheadingdesc', 'theme_snap');
     $setting = new admin_setting_heading($name, $title, $description);
     $settings->add($setting);
 
@@ -147,9 +147,9 @@ if ($ADMIN->fulltree) {
     $settings->add($setting);
 
 
-    $name = 'theme_snap/menusandnavheading';
-    $title = new lang_string('menusandnavheading', 'theme_snap');
-    $description = new lang_string('menusandnavheadingdesc', 'theme_snap');
+    $name = 'theme_snap/footerheading';
+    $title = new lang_string('footerheading', 'theme_snap');
+    $description = new lang_string('footerheadingdesc', 'theme_snap');
     $setting = new admin_setting_heading($name, $title, $description);
     $settings->add($setting);
 
