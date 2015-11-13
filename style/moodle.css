@@ -22331,8 +22331,7 @@ table.boxaligncenter.generaltable.user-grade * {
   margin-bottom: 1em;
 }
 .user-grade {
-  border: 0;
-  border-color: white;
+  border: 0 !important;
 }
 .user-grade td.b1l,
 .user-grade td.b2l,
