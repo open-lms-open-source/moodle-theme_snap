@@ -6596,6 +6596,7 @@ table.boxaligncenter.generaltable.user-grade * {
 }
 .user-grade {
   border: 0;
+  border-color: white;
 }
 .user-grade td.b1l,
 .user-grade td.b2l,
