@@ -126,6 +126,9 @@ module.exports = function(grunt) {
             }
         },
         jshint: {
+            options: {
+              jshintrc: true,
+            },
             files: ["javascript/*",
                 "!javascript/bootstrap.js",
                 "!javascript/headroom.js",

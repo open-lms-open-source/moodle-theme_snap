@@ -19,6 +19,8 @@
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+/* exported snapInit */
+
 /**
  * Main snap initialising function.
  */
@@ -627,7 +629,7 @@ function snapInit() {
 
         // If there is any video in the new content then we need to make it responsive.
         applyResponsiveVideo();
-    }
+    };
 
     /**
      * Add listeners.
@@ -955,9 +957,10 @@ function snapInit() {
             checkHashScrollToModule();
         }
 
-        var on_mod_settings = location.href.indexOf("modedit") > -1;
-        var on_course_settings = location.href.indexOf("course/edit.php") > -1;
-        var on_section_settings = location.href.indexOf("editsection.php") > -1;
+        var mod_settings_id_re = /^page-mod-.*-mod$/; // e.g. #page-mod-resource-mod or #page-mod-forum-mod
+        var on_mod_settings = mod_settings_id_re.test($('body').attr('id')) && location.href.indexOf("modedit") > -1;
+        var on_course_settings = $('body').attr('id') === 'page-course-edit';
+        var on_section_settings = $('body').attr('id') === 'page-course-editsection';
 
         if(on_mod_settings || on_course_settings || on_section_settings){
           // Wrap advanced options in a div
