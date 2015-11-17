@@ -402,7 +402,7 @@ class theme_snap_core_renderer extends toc_renderer {
      * @return string
      */
     protected function render_forumposts() {
-        global $USER;
+        global $USER, $CFG;
         if (empty($this->page->theme->settings->forumpoststoggle)) {
             return '';
         }
