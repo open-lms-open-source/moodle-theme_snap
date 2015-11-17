@@ -402,7 +402,7 @@ class theme_snap_core_renderer extends toc_renderer {
      * @return string
      */
     protected function render_forumposts() {
-        global $USER, $CFG;
+        global $USER;
         if (empty($this->page->theme->settings->forumpoststoggle)) {
             return '';
         }
@@ -411,7 +411,7 @@ class theme_snap_core_renderer extends toc_renderer {
 
         $o = '<h2>'.$messagesheading.'</h2>
         <div id="snap-personal-menu-forumposts"></div>';
-        $messageurl = "$CFG->wwwroot/mod/forum/user.php?id=$USER->id";
+        $messageurl = new moodle_url('/mod/forum/user.php', ['id' => $USER->id]);
         $o .= '<div class="text-center">';
         $o .= '<a class="btn btn-default" href="'.$messageurl.'">'.$messagesheading.'</a>';
         $o .= '</div>';
