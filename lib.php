@@ -220,3 +220,14 @@ function theme_snap_pluginfile($course, $cm, $context, $filearea, $args, $forced
         send_file_not_found();
     }
 }
+
+function theme_snap_myprofile_navigation(core_user\output\myprofile\tree $tree, $user, $iscurrentuser, $course) {
+    if ($iscurrentuser) {
+        $str = get_strings(['preferences']);
+        $after = 'editprofile';
+        $url = new moodle_url('/user/preferences.php');
+        $prefnode = new core_user\output\myprofile\node('contact', 'userpreferences', $str->preferences, $after, $url);
+
+        $tree->add_node($prefnode);
+    }
+}
