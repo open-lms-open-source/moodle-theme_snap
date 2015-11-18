@@ -321,9 +321,11 @@ class snap_shared extends renderer_base {
             // Include course AJAX.
             $modinfo = get_fast_modinfo($COURSE);
             $modnamesused = $modinfo->get_used_module_names();
-            $USER->editing = true; // Temporarilly change edit mode to on for course ajax to be included.
+
+            $originalediting = $USER->editing;
+            $USER->editing = true; // Temporarily change edit mode to on for course ajax to be included.
             self::include_course_ajax($COURSE, $modnamesused);
-            $USER->editing = false; // Switch edit mode back.
+            $USER->editing = $originalediting;
         }
     }
 
