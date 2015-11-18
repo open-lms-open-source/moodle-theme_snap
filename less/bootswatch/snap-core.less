@@ -100,7 +100,7 @@ table.boxwidthwide {
 
 @media screen and (min-width: @screen-sm) {
     .twocolumns {
-        
+
         // override bs grids
         .signuppanel,
         .loginpanel {
@@ -117,7 +117,7 @@ table.boxwidthwide {
         max-width: 100%;
         padding: 0 4% 2em;
     }
-    
+
     .loginpanel h2 {
         text-indent: 100%;
         white-space: nowrap;
@@ -126,7 +126,7 @@ table.boxwidthwide {
         background-size: contain;
         margin: 0;
     }
-    
+
     .loginbox {
         float: none;
         padding: 1em 4%;
@@ -136,18 +136,18 @@ table.boxwidthwide {
         max-width: 30em;
         left: 0;
     }
-    
+
     #loginbtn {
         display: block;
         width: 100%;
         margin: 1em 0;
     }
-    
+
     // Remove first time here?
     .signuppanel > h2 {
         display: none;
     }
-    
+
     #moodle-footer {
         margin-top: 0;
     }
@@ -171,7 +171,7 @@ table.boxwidthwide {
     0% {
         transform: matrix(1, 0, 0, 1, 0, -600);
     }
-    
+
     100% {
         transform: matrix(1, 0, 0, 1, 0, 0);
     }
@@ -181,7 +181,7 @@ table.boxwidthwide {
     0% {
         transform: matrix(1, 0, 0, 1, 0, 0);
     }
-    
+
     100% {
         transform: matrix(1, 0, 0, 1, 0, -600);
     }
@@ -199,7 +199,7 @@ table.boxwidthwide {
     position: relative;
     border-radius: 0 2px 2px 0;
     line-height: 1.75;
-    
+
     // add a little tab arrow to the left ;)
     &:before {
         content: "";
@@ -295,7 +295,7 @@ table,
 }
 
 blockquote {
-    
+
     //    border-left: 5px solid @brand-primary; customisable
     font-size: 1em;
 }
@@ -322,7 +322,7 @@ img[style*="float:right"] {
 }
 
 @media screen and (max-width: @screen-sm) {
-    
+
     // unfloat images for small screen
     img[style*="float:left"],
     img[style*="float: left"],
@@ -375,7 +375,7 @@ hr {
     margin-bottom: 0.75em;
     height: 1.75em;
     border: 0;
-    
+
     // border-top: 1px solid @brand-primary; customisable
 }
 
@@ -450,10 +450,10 @@ select,
 }
 
 .path-grade ul.nav.nav-tabs + ul.nav.nav-tabs {
-    
+
     // Fix for tabs that should be active but are marked
     // as disabled instead.
-    
+
     li.disabled > a {
         &,
         &:hover,
@@ -495,11 +495,11 @@ input[type="reset"] {
     color: #fff;
     font-weight: 300;
     font-family: @font-family-base;
-    
+
     // background-color: @brand-primary; customisable
     &:hover,
     &:focus {
-        
+
         // background-color: darken(@brand-primary, 8%); customisable
         // border-color: darken(@brand-primary, 12%); customisable
         text-decoration: none;
@@ -533,15 +533,15 @@ input[type="text"]+input[type="submit"] {
     margin: 3em 0;
     padding: 0.5em;
     display: block;
-    
+
     img {
         display: none;
     }
-    
+
     .section-modchooser-text {
         .btn;
     }
-    
+
     a,
     .section-modchooser-text {
         display: block;
@@ -568,7 +568,7 @@ input[type="text"]+input[type="submit"] {
 
 .userpicture.defaultuserpic {
     border: 1px solid #e5e5e5;
-    
+
     .fixy & {
         border: none;
     }
@@ -628,7 +628,7 @@ input[type="text"]+input[type="submit"] {
     padding: 0.5em 4%;
     margin-bottom: 0;
     .alakazam();
-    
+
     &:hover {
         background-color: rgba(0,0,0,0.07);
     }
@@ -637,12 +637,12 @@ input[type="text"]+input[type="submit"] {
 .snap-media-object {
     .clearfix();
     margin-bottom: 1em;
-    
+
     // media o can be a link
     a {
         text-decoration: none;
     }
-    
+
     // media o media
     >a>img,
     >img {
@@ -653,26 +653,26 @@ input[type="text"]+input[type="submit"] {
         height: auto;
         vertical-align: baseline;
     }
-    
+
     // media o content
     .snap-media-body {
         overflow: hidden;
-        
+
         // for fixy - need to re-visit when we re-use more widley
         // in the messaging system we ellispe text
-        
+
         p {
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
         }
-        
+
         // Shrink label size to support iPads
         .label {
             font-size: 0.7em;
         }
     }
-    
+
     // media o heading
     h3,
     h3 small {
@@ -680,27 +680,27 @@ input[type="text"]+input[type="submit"] {
         font-size: 1em;
         margin: 0;
     }
-    
+
     // any meta-data that is part of the title
     h3 small {
         opacity: 0.75;
     }
-    
+
     // standard media o meta - status, date
     .snap-media-meta {
         display: block;
         font-size: small;
         opacity: 0.75;
-        
+
         time {
             margin-right: 1em;
         }
     }
-    
+
     // unread tag
     .snap-unread-marker {
         background-color: white;
-        
+
         &:before {
             border-right: 0.89em solid white;
         }
@@ -720,25 +720,25 @@ input[type="text"]+input[type="submit"] {
 }
 
 .fixy-trigger {
-    
+
     // border: 1px solid @brand-primary; customisable
     padding: 1em;
     position: relative;
     .alakazam();
-    
+
     &:hover {
         color: #fff !important;
-        
+
         //	background-color: @brand-primary; customisable
         text-decoration: none;
     }
-    
+
     .userpicture {
         height: 38px;
         width: 38px;
         margin-left: 1em;
     }
-    
+
     // mrooms alerts badge
     .message_badge_count {
         position: absolute;
@@ -759,16 +759,16 @@ input[type="text"]+input[type="submit"] {
     left: 0;
     bottom: 0;
     overflow-y: auto;
-    
+
     //	background-color: @brand-primary; customisable
     color: #fff;
     z-index: 1000000;
-    
+
     hr {
         border-color: #fff;
         margin: 0.3em 0;
     }
-    
+
     a,
     a:hover,
     a:focus,
@@ -776,7 +776,7 @@ input[type="text"]+input[type="submit"] {
     a:visited {
         color: #fff;
     }
-    
+
     h2 {
         color: rgba(255,255,255,0.7);
         text-transform: uppercase;
@@ -787,16 +787,16 @@ input[type="text"]+input[type="submit"] {
         border-bottom: 1px solid rgba(255,255,255,0.7);
         font-size: 1em;
     }
-    
+
     .label-success {
         padding: 0 0.2em;
         font-size: 1em;
-        
+
         // color: @brand-primary; customisable
         background-color: rgba(255,255,255,0.6);
         border-radius: 2px;
     }
-    
+
     input {
         display: block;
         padding: 0.1em;
@@ -810,31 +810,31 @@ input[type="text"]+input[type="submit"] {
         font-size: @font-size-h5;
         box-shadow: none;
     }
-    
+
     form#coursesearch {
         margin: 0 0 0.5em;
         text-align: left;
-        
+
         label {
             text-align: left;
             margin-left: 0;
         }
     }
-    
+
     .btn.moodle-browseallcourses {
         margin-bottom: 0.5em;
         display: block;
     }
-    
+
     .fixy-logout-footer {
         border-top: 1px solid #fff;
         padding-top: 1em;
         margin: 1em 0;
     }
-    
+
     .fixy-browse-search-courses {
         margin-left: 0;
-        
+
         .col-md-6 {
             padding-left: 0;
         }
@@ -853,12 +853,12 @@ input[type="text"]+input[type="submit"] {
     animation-iteration-count: once;
     animation-timing-function: ease-in-out;
     animation-duration: 0.3s;
-    
+
     legend {
         color: #fff;
         border-bottom: 1px solid #fff;
     }
-    
+
     label {
         color: #fff;
         text-transform: uppercase;
@@ -911,36 +911,36 @@ input[type="text"]+input[type="submit"] {
     cursor: pointer;
     overflow: hidden;
     .alakazam();
-    
+
     &:hover {
         background-size: 115% auto;
         transform: scale(1.03);
-        
+
         .courseinfo-body {
             padding-bottom: 0.5em;
         }
     }
-    
+
     .courseinfo-teachers {
         width: 100%;
         padding: 1em;
     }
-    
+
     .courseinfo-teachers-extra {
         .alakazam();
         opacity: 0;
     }
-    
+
     &.show-all {
         .courseinfo-teachers-extra {
             opacity: 1;
         }
-        
+
         .courseinfo-body {
             bottom: -100%;
         }
     }
-    
+
     .courseinfo-body {
         .alakazam();
         background-color: rgba(255,255,255,0.9);
@@ -951,7 +951,7 @@ input[type="text"]+input[type="submit"] {
         padding: 0 1em 1em;
         bottom: 0;
         min-height: 50%;
-        
+
         h3 a {
             display: block;
             display: -webkit-box;
@@ -964,17 +964,17 @@ input[type="text"]+input[type="submit"] {
             white-space: normal !important;
         }
     }
-    
+
     h3 {
         font-size: 1em;
         font-weight: 500;
     }
-    
+
     .completionstatus,
     .coursegrade {
         font-size: small;
     }
-    
+
     .coursegrade {
         text-align: right;
         display: block;
@@ -985,17 +985,17 @@ input[type="text"]+input[type="submit"] {
         background-position: 100% 50%;
         background-size: 2.5em 2.5em;
     }
-    
+
     .courseinfo-teachers {
         max-height: 200px;
         overflow: hidden;
         text-align: right;
     }
-    
+
     &.show-all .courseinfo-teachers {
         overflow: auto;
     }
-    
+
     .userpicture,
     .courseinfo-teachers-more {
         border-radius: 50%;
@@ -1004,7 +1004,7 @@ input[type="text"]+input[type="submit"] {
         height: 38px;
         background-color: #ccc;
     }
-    
+
     .courseinfo-teachers-more {
         background-color: transparent;
         font-size: 0.8em;
@@ -1015,17 +1015,17 @@ input[type="text"]+input[type="submit"] {
         color: #fff !important;
         text-decoration: none !important;
     }
-    
+
     .published-status {
         clear: both;
         margin-bottom: -1em;
         float: left;
     }
-    
+
     .completionstatus {
         border-bottom: 0.5em solid @gray-lighter;
     }
-    
+
     .completion-line {
         background-color: @brand-success;
         height: 0.3em;
@@ -1035,7 +1035,7 @@ input[type="text"]+input[type="submit"] {
 
 #fixy-profile-link {
     text-align: center;
-    
+
     .userpicture {
         margin-right: 10px;
     }
@@ -1056,7 +1056,7 @@ input[type="text"]+input[type="submit"] {
     #moodle-footer .list-unstyled {
         column-count: 2;
     }
-    
+
     .courseinfo {
         width: 100%;
     }
@@ -1066,11 +1066,11 @@ input[type="text"]+input[type="submit"] {
     #fixy-username {
         display: inline;
     }
-    
+
     #moodle-footer .list-large {
         column-count: 3;
     }
-    
+
     .courseinfo {
         width: 48%;
     }
@@ -1111,7 +1111,7 @@ read button has been removed and the message text is visible
 **/
 .message_badge_message.dimmed_text {
     color: #fff;
-    
+
     .message_badge_message_text,
     .message_badge_message_text a {
         color: #fff !important;
@@ -1120,7 +1120,7 @@ read button has been removed and the message text is visible
 
 .message_badge_user_picture {
     margin-right: 18px;
-    
+
     img {
         width: 50px;
     }
@@ -1187,7 +1187,7 @@ footer #moodle-footer
     line-height: 2;
     padding: 0.5em 0 0.5em 4%;
     background-color: rgba(255,255,255,0.95);
-    
+
     //headroom js http://wicky.nillia.ms/headroom.js/
     &.headroom--unpinned {
         will-change: transform;
@@ -1197,9 +1197,9 @@ footer #moodle-footer
         animation-duration: 0.4s;
         animation-fill-mode: forwards;
     }
-    
+
     &.headroom--pinned {
-        
+
         // firefox no like this animation :(
         /*
         animation-name: snap-drop;
@@ -1208,9 +1208,9 @@ footer #moodle-footer
         animation-duration: 0.33s;
         */
     }
-    
+
     &.errors-found {
-        
+
         // make header pink
         // background-color: #fcc !important;
     }
@@ -1222,7 +1222,7 @@ footer #moodle-footer
     position: relative;
     left: 0;
     transition: all 0.4s 0s ease;
-    
+
     // When admin block is open
     &.offcanvas {
         left: -200px;
@@ -1309,7 +1309,7 @@ header#page-header
         &:nth-last-child(n+4) {
             display: none;
         }
-        
+
         &:nth-last-child(3):before {
             content: "";
             padding: 0;
@@ -1341,7 +1341,7 @@ header#page-header
     padding: 0 0 1em;
     max-width: 100%;
     position: relative;
-    
+
     h2 {
         text-transform: uppercase;
         font-size: 1em;
@@ -1349,17 +1349,17 @@ header#page-header
         display: inline-block;
         margin: 0;
     }
-    
+
     .snap-section-complete {
         width: 1.5em;
         height: auto;
     }
-    
+
     .completionstatus {
         font-size: small;
         color: #999;
     }
-    
+
     .completionstatus + .published-status:before,
     .published-status + .published-status:before {
         content: " · ";
@@ -1377,12 +1377,12 @@ header#page-header
             color: white;
         }
     }
-    
+
     h1 {
         color: white;
         text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
     }
-    
+
     #course-toc {
         background-color: rgba(255,255,255,0.95);
     }
@@ -1396,19 +1396,19 @@ header#page-header
 // specific styles for numbered chapters to improve readability
 ol#chapters {
     list-style-position: outside;
-    
+
     li {
         margin-left: 2em;
         padding-bottom: 0.1em;
         color: #999;
         line-height: 1;
-        
+
         a {
             display: block;
             margin-bottom: -0.3em;
             line-height: 1.75;
         }
-        
+
         &.current a {
             color: #666;
             text-decoration: none;
@@ -1444,11 +1444,11 @@ ol#chapters {
     #chapters.list-large {
         column-count: 3;
     }
-    
+
     #course-toc {
         margin: 1em auto -.5em;
     }
-    
+
     .mast-image {
         #course-toc {
             margin-top: 6.6vh;
@@ -1464,14 +1464,14 @@ ol#chapters {
     float: right;
     padding: 0.5em;
     margin-bottom: -0.75em;
-    
+
     &:before {
         content: '';
         background: transparent url("[[pix:theme|search]]") no-repeat 50% 50%;
         display: inline-block;
         height: 1.5em;
         width: 1.5em;
-        
+
         // Magin numbers for positioning
         margin-right: -2.5em;
         margin-bottom: -0.3em;
@@ -1488,11 +1488,11 @@ ol#chapters {
     box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
     background-color: transparent;
     .alakazam();
-    
+
     &:hover {
         box-shadow: 0 6px 10px rgba(0, 0, 0, 0.23),0 10px 30px rgba(0, 0, 0, 0.19);
     }
-    
+
     &.state-active,
     &:focus {
         width: 100%;
@@ -1514,7 +1514,7 @@ ol#chapters {
     #course-toc #toc-desktop-menu-heading {
         display: none;
     }
-    
+
     #toc-mobile-menu-toggle {
         display: inline-block;
         width: 2em;
@@ -1534,7 +1534,7 @@ ol#chapters {
         background-color: rgba(255,255,255,0.9);
         z-index: 666;
     }
-    
+
     #course-toc {
         position: fixed;
         bottom: 0;
@@ -1544,12 +1544,12 @@ ol#chapters {
         background-color: transparent !important;
         .alakazam();
     }
-    
+
     #chapters {
         column-count: 1;
         display: none;
     }
-    
+
     #course-toc.state-visible {
         padding: 0;
         margin: 0;
@@ -1559,11 +1559,11 @@ ol#chapters {
         bottom: 0;
         background-color: white !important;
         overflow-y: auto;
-        
+
         #toc-mobile-menu-toggle {
             transform: rotate(0deg);
         }
-        
+
         #chapters {
             display: block;
             margin: 0;
@@ -1599,17 +1599,17 @@ ol#chapters {
 #toc-search-results li {
     width: 300px;
     overflow: hidden;
-    
+
     img {
         width: 24px;
         height: 24px;
         vertical-align: bottom;
     }
-    
+
     &:first-child {
         padding-top: 0.5em;
     }
-    
+
     &:last-child {
         padding-bottom: 1em;
     }
@@ -1637,7 +1637,7 @@ ol#chapters {
     text-decoration: none !important;
     display: block;
     text-align: center;
-    
+
     small {
         display: block;
         text-align: center;
@@ -1760,7 +1760,7 @@ ol#chapters {
     margin-bottom: 0;
     padding-top: 0.5em;
     padding-bottom: 0.5em;
-    
+
     &:hover {
         background-color: #efefef;
     }
@@ -1774,7 +1774,7 @@ ol#chapters {
             width: auto;
             padding-left: 0;
         }
-        
+
         .fcheckbox {
             width: auto;
             padding-right: 0;
@@ -1807,11 +1807,11 @@ ol#chapters {
         display: inline-block;
         padding-left: 1em;
     }
-    
+
     .form-checkbox.defaultsnext {
         display: inline-block;
     }
-    
+
     .form-defaultinfo,
     .form-description pre {
         font-size: @font-size-small;
@@ -1874,7 +1874,7 @@ ol#chapters {
 }
 
 #page-site-index #page-header {
-    
+
     // background-color: @brand-primary; customisable
     padding-top: 12.7%;
     padding-bottom: 1.75em;
@@ -1882,7 +1882,7 @@ ol#chapters {
     border-bottom: 0;
     margin: 0;
     position: relative;
-    
+
     &> .btn {
         position: absolute;
         bottom: 1em;
@@ -1906,7 +1906,7 @@ http://blog.rodneyrehm.de/archives/34-iOS7-Mobile-Safari-And-Viewport-Units.html
     display: inline-block;
     padding: 1em 2%;
     margin-top: 2em;
-    
+
     & .btn {
         float: right;
     }
@@ -1998,7 +1998,7 @@ http://blog.rodneyrehm.de/archives/34-iOS7-Mobile-Safari-And-Viewport-Units.html
 .news-article-preview {
     color: #fff;
     min-height: 150px;
-    
+
     //	background-color: @brand-primary; customisable
     padding: 2em 4%;
     .bg-cover();
@@ -2022,11 +2022,11 @@ http://blog.rodneyrehm.de/archives/34-iOS7-Mobile-Safari-And-Viewport-Units.html
     .news-article-image {
         display: none;
     }
-    
+
     .news-article-inner {
-        
+
     }
-    
+
     .news-article-message {
         display: none;
     }
@@ -2041,52 +2041,52 @@ http://blog.rodneyrehm.de/archives/34-iOS7-Mobile-Safari-And-Viewport-Units.html
         margin-bottom: 0;
         display: flex;
     }
-    
+
     .news-article-content {
         max-width: 100%;
     }
-    
+
     .news-article-preview,
     .news-article-image,
     .news-article-inner {
         width: 50%;
         min-height: 300px;
         flex: 1 1 auto;
-        
+
         p {
             margin: 1em 0;
             display: block;
         }
     }
-    
+
     .news-article-image {
         padding: 0;
     }
-    
+
     .state-expanded {
         .news-article-inner {
             width: 33%;
             order: 1 !important;
         }
-        
+
         .news-article-message {
             width: 67%;
         }
     }
-    
+
     #news-articles div:nth-child(odd) .news-article-preview,
     #news-articles div:nth-child(odd) .news-article-image {
         order: 2;
-        
+
         p:nth-of-type(2) {
             .text-left;
         }
     }
-    
+
     #news-articles div:nth-child(even) .news-article-inner {
         order: 2;
     }
-    
+
     .ie9 {
         #news-articles div:nth-child(even) {
             .news-article-preview,
@@ -2095,7 +2095,7 @@ http://blog.rodneyrehm.de/archives/34-iOS7-Mobile-Safari-And-Viewport-Units.html
                 float: left;
             }
         }
-        
+
         #news-articles div:nth-child(odd) {
             .news-article-preview,
             .news-article-image,
@@ -2150,19 +2150,19 @@ http://blog.rodneyrehm.de/archives/34-iOS7-Mobile-Safari-And-Viewport-Units.html
         vertical-align: top;
         border: 0;
     }
-    
+
     .coursebox .info,
     .coursebox .content .summary,
     .coursebox .content .teachers {
         width: 62%;
         float: right;
     }
-    
+
     .coursebox .content .summary,
     .coursebox .content .teachers {
         float: right;
     }
-    
+
     .coursebox .content .courseimage {
         float: left;
         width: 33%;
@@ -2172,7 +2172,7 @@ http://blog.rodneyrehm.de/archives/34-iOS7-Mobile-Safari-And-Viewport-Units.html
 
 .paging.paging-morelink {
     text-align: center;
-    
+
     a {
         .btn;
     }
@@ -2203,7 +2203,7 @@ td.calendar_event_global > a {
 span.calendar_event_course,
 li.calendar_event_course:before,
 td.calendar_event_course > a {
-    
+
     //salmon
     background-color: salmon;
 }
@@ -2211,7 +2211,7 @@ td.calendar_event_course > a {
 span.calendar_event_group,
 li.calendar_event_group:before,
 td.calendar_event_group > a {
-    
+
     // yellow
     background-color: #fdd652;
 }
@@ -2244,16 +2244,16 @@ li.calendar_event_user:before {
 /* Block cals */
 .block .minicalendar {
     max-width: 500px;
-    
+
     th {
         height: auto;
         font-weight: @headings-font-weight;
     }
-    
+
     td {
         height: 4em;
         vertical-align: middle;
-        
+
         > a {
             border-radius: 100%;
             height: 4em;
@@ -2262,11 +2262,11 @@ li.calendar_event_user:before {
             display: block;
             margin: auto;
         }
-        
+
         &.hasevent > a {
             color: #fff;
         }
-        
+
         &.today > a {
             border: 1px solid @gray-lighter;
         }
@@ -2278,7 +2278,7 @@ li.calendar_event_user:before {
     border: 0 !important;
     background-color: #fff;
     box-shadow: 0 3px 9px rgba(0, 0, 0, 0.5);
-    
+
     .yui3-overlay-content {
         border-color: @gray-lighter;
     }
@@ -2288,7 +2288,7 @@ li.calendar_event_user:before {
     .smallicon {
         display: none;
     }
-    
+
     .calendar_event span[class*="_event_"] {
         border-radius: 100%;
         display: inline-block;
@@ -2359,7 +2359,7 @@ ul.events-new + ul.events-underway {
 
 .maincalendar ul {
     text-align: left;
-    
+
     li {
         background-color: transparent;
     }
@@ -2369,7 +2369,7 @@ ul.events-new + ul.events-underway {
     .yui3-calendarbase {
         width: 350px !important;
     }
-    
+
     .yui3-calendar-header-label,
     .yui3-calendar-day,
     .yui3-calendar-previousmonth-day,
@@ -2381,22 +2381,22 @@ ul.events-new + ul.events-underway {
         text-align: center;
         font-weight: normal;
     }
-    
+
     .yui3-calendar-previousmonth-day,
     .yui3-calendar-nextmonth-day,
     .yui3-calendar-weekday {
         font-weight: 100;
     }
-    
+
     .yui3-calendar-previousmonth-day,
     .yui3-calendar-nextmonth-day {
         color: @text-muted;
     }
-    
+
     .yui3-calendar-content {
         background: @body-bg;
     }
-    
+
     .yui3-calendarnav-nextmonth,
     .yui3-calendarnav-prevmonth {
         border: 0;
@@ -2406,15 +2406,15 @@ ul.events-new + ul.events-underway {
         background-repeat: no-repeat;
         background-position: center;
     }
-    
+
     .yui3-calendarnav-nextmonth {
         background-image: url("[[pix:theme|right-arrow]]");
     }
-    
+
     .yui3-calendarnav-prevmonth {
         background-image: url("[[pix:theme|left-arrow]]");
     }
-    
+
     .yui3-calendar-day,
     .yui3-calendar-prevmonth-day,
     .yui3-calendar-nextmonth-day {
@@ -2422,35 +2422,35 @@ ul.events-new + ul.events-underway {
         border: 0;
         height: 47px;
     }
-    
+
     .yui3-calendar-day:hover,
     .yui3-calendar-prevmonth-day,
     .yui3-calendar-nextmonth-day {
         background-color: @modal-content-bg;
     }
-    
+
     .yui3-calendar-day-selected,
     .yui3-calendar-day:hover {
         .alakazam();
         color: #fff;
-        
+
         // background-color: @link-color; in user swatch
         border-radius: 100%;
     }
-    
+
     @media screen and (min-width: @screen-sm-min) {
         left: 33% !important;
         top: 50% !important;
-        
+
         .yui3-calendar-base {
             width: 100%;
         }
-        
+
         .yui3-calendar-header-label {
             font-weight: 100;
             font-size: @font-size-h4;
         }
-        
+
         .yui3-calendarnav-nextmonth,
         .yui3-calendarnav-prevmonth {
             height: 55px;
@@ -2463,7 +2463,7 @@ ul.events-new + ul.events-underway {
     .profilepicture {
         .make-md-column(3);
     }
-    
+
     .descriptionbox {
         .make-md-column(9);
     }
@@ -2592,12 +2592,12 @@ ul.events-new + ul.events-underway {
         float: right;
         width: 30%;
         right: auto;
-        
+
         &:empty {
             display: none; // not working as there is some eroneous space in the div
         }
     }
-    
+
     div.questioncontrols {
         width: 55px;
     }
@@ -2627,7 +2627,7 @@ ul.events-new + ul.events-underway {
         width: 100%;
         clear: both;
     }
-    
+
     #page-mod-quiz-edit div.question div.content div.questioncontrols,
     #page-mod-quiz-edit div.question div.content div.points {
         position: relative;
@@ -2652,7 +2652,7 @@ ul.events-new + ul.events-underway {
     .moveselectedonpage,
     .addnewpagesafterselected {
         padding-right: 0;
-        
+
         input {
             white-space: normal;
         }
@@ -2681,7 +2681,7 @@ ul.events-new + ul.events-underway {
     .questionbankwindow.block {
         width: 50%;
     }
-    
+
     #page-mod-quiz-edit div.container div.generalbox {
         padding-left: 8%;
         padding-right: 0;
@@ -2698,7 +2698,7 @@ ul.events-new + ul.events-underway {
 }
 
 #categoryquestions .checkbox {
-    
+
     // overwite bootstrap checkbox class
     display: table-cell;
 }
@@ -2884,29 +2884,29 @@ ul.events-new + ul.events-underway {
         tbody td.topic {
             width: 100%;
         }
-        
+
         .picture a {
             display: inline;
         }
     }
-    
+
     .forumheaderlist {
         thead {
             display: none;
         }
-        
+
         tbody {
             width: 100%;
             display: block;
         }
-        
+
         tbody tr.discussion {
             display: block;
             padding: 1em 0;
             border-bottom: 3px solid #ccc;
             width: 100%;
         }
-        
+
         tbody tr td,
         td.picture.group {
             display: block;
@@ -2915,49 +2915,49 @@ ul.events-new + ul.events-underway {
             background-color: transparent !important;
             width: 100%;
         }
-        
+
         td.topic {
             font-size: 1.3em;
         }
-        
+
         td:before {
             font-size: 0.9em;
             color: #999;
             font-weight: bold;
         }
-        
+
         td.topic:before {
             content: attr(data-cellname);
         }
-        
+
         td.picture:before {
             content: attr(data-cellname);
         }
-        
+
         td.replies:before {
             content: attr(data-cellname);
         }
-        
+
         td.lastpost:before {
             content: attr(data-cellname);
         }
-        
+
         td:before {
             display: inline-block;
             margin-right: 4%;
         }
-        
+
         td.author,
         td.picture {
             clear: none;
         }
-        
+
         td.picture {
             width: 32%;
             display: inline;
             margin-right: 2%;
         }
-        
+
         td.author {
             width: 68%;
             display: inline;
@@ -2971,37 +2971,37 @@ ul.events-new + ul.events-underway {
 
 table.boxaligncenter.generaltable.user-grade {
     background-color: #fff;
-    
+
     th {
         font-weight: 500;
     }
-    
+
     thead {
         border-bottom: 1px solid #eee;
     }
-    
+
     img.icon {
         width: 1.3em;
         height: 1.3em;
     }
-    
+
     td.feedbacktext {
         font-size: 1.3em;
     }
-    
+
     th a {
         font-size: 1.2em;
     }
-    
+
     th {
         padding: 0.75em !important;
         border-color: #fff !important;
     }
-    
+
     td {
         border-color: #fff !important;
     }
-    
+
     // Kill ridiculously unprofessional colour scheme
     * {
         background-color: #fff !important;
@@ -3029,7 +3029,7 @@ table.boxaligncenter.generaltable.user-grade {
     margin-bottom: 1em;
 }
 
-.user-grade {
+.path-grade-report-user .user-grade {
     border: 0;
 }
 
@@ -3094,12 +3094,12 @@ table#user-grades tr.avg td.cell {
     color: #fff;
     border: none;
     margin-top: 0.5em;
-    
+
     //background-color: @brand-primary; User customisable.
     &:hover {
         color: #fff;
         border: none;
-        
+
         //background-color: @brand-primary; User customisable.
     }
 }
@@ -3115,30 +3115,30 @@ table#user-grades tr.avg td.cell {
             z-index: 1 !important;
         }
     }
-    
+
     #course-search-left,
     #course-search-right {
         display: none;
     }
-    
+
     #course-search-box {
         background-image: none;
         min-height: 60px;
     }
-    
+
     #course-search-text {
         padding-top: 0;
         margin: 0.5em 5%;
         width: calc(~"84% - 13px");
     }
-    
+
     #course-search-button {
         padding-top: 3px;
         margin: 0.5em 1% 0.5em 0;
     }
-    
+
     #course-search-input {
-        
+
         // copied from less/bootstrap3/forms.less .form-control
         color: @input-color;
         background-color: @input-bg;
@@ -3149,10 +3149,10 @@ table#user-grades tr.avg td.cell {
         .transition(~"border-color ease-in-out .4s, box-shadow ease-in-out .4s");
         width: 100%;
     }
-    
+
     .yui3-widget-stdmod,
     .yui3-aclist-content {
-        
+
         // copied from less/bootstrap3/dropdowns.less .dropdown-menu
         z-index: @zindex-dropdown;
         min-width: 160px;
@@ -3165,15 +3165,15 @@ table#user-grades tr.avg td.cell {
         border-radius: @border-radius-base;
         .box-shadow(0 6px 12px rgba(0,0,0,.175));
         background-clip: padding-box;
-        
+
         .report-overlay-bd {
             padding: 0;
         }
-        
+
         div.report-nav-item {
             border-bottom: none;
             width: 100%;
-            
+
             a.nav-item {
                 display: block;
                 padding: 3px 20px;
@@ -3182,7 +3182,7 @@ table#user-grades tr.avg td.cell {
                 color: @dropdown-link-color;
                 white-space: nowrap; // prevent links from randomly breaking onto new lines
                 width: 100%;
-                
+
                 &:hover,
                 &:focus {
                     text-decoration: none;
@@ -3191,7 +3191,7 @@ table#user-grades tr.avg td.cell {
                 }
             }
         }
-        
+
         div.report-nav-item-left,
         div.report-nav-item-right {
             a.nav-paginate {
@@ -3201,7 +3201,7 @@ table#user-grades tr.avg td.cell {
                 line-height: @line-height-base;
                 color: @dropdown-link-color;
                 white-space: nowrap; // prevent links from randomly breaking onto new lines
-                
+
                 &:hover,
                 &:focus {
                     text-decoration: none;
@@ -3210,9 +3210,9 @@ table#user-grades tr.avg td.cell {
                 }
             }
         }
-        
+
         #report-overlay-course div.report-nav-item a.nav-item {
-            
+
             // Allow long course title search results to wrap
             white-space: normal;
         }
@@ -3226,7 +3226,7 @@ table#user-grades tr.avg td.cell {
 
 #local-joulegrader-resize,
 #local-nortongrader-resize {
-    
+
     // display: none;
 }
 
@@ -3246,65 +3246,65 @@ table#user-grades tr.avg td.cell {
         border: 0;
         background: none;
     }
-    
+
     table .header[scope="col"] {
         background-color: #fff;
         font-size: 13px; // SHAME - magic number
     }
-    
+
     table {
         margin: 0;
         text-align: right;
     }
-    
+
     #joule-grades-thead-wrap,
     #joule-grades-leftcol-wrap,
     table.joule-grades {
         border: none;
         font-size: @font-size-table;
     }
-    
+
     table.joule-grades {
         tr.odd td.cell {
             background-color: @table-bg-accent;
-            
+
             &.overridden,
             &.ajaxoverridden {
                 background-color: #efd9a4;
             }
         }
     }
-    
+
     table.joule-grades td,
     table.joule-grades th {
         border-right: none;
         border-left: none;
         border-width: 1px;
     }
-    
+
     table.joule-grades th.item,
     table.joule-grades th.categoryitem,
     table.joule-grades th.courseitem {
         border-bottom-color: @table-border-color;
     }
-    
+
     #joule-grades-leftcol-wrap {
         border-right: 1px solid @table-border-color;
     }
-    
+
     table.joule-grades th,
     table.joule-grades td {
         padding: @table-condensed-cell-padding;
     }
-    
+
     #joule-grades-fthead {
         margin-top: -1px;
     }
-    
+
     #joule-grades-leftcol {
         margin-top: 0;
     }
-    
+
     #joule-grades,
     #joule-grades-leftcol {
         .row {
@@ -3312,7 +3312,7 @@ table#user-grades tr.avg td.cell {
             &.joulegraderactionmenu {
                 margin-left: 0;
                 margin-right: 0;
-                
+
                 &:before,
                 &:after {
                     display: none;
@@ -3320,11 +3320,11 @@ table#user-grades tr.avg td.cell {
             }
         }
     }
-    
+
     #joule-grades-fthead {
         width: auto;
     }
-    
+
     #joule-grades-leftcol-wrap {
         border-bottom: none;
     }
@@ -3334,19 +3334,19 @@ table#user-grades tr.avg td.cell {
     #local-joulegrader-navigation {
         border-bottom: thin solid #e5e5e5;
         background-color: transparent;
-        
+
         .helptooltip {
             display: none;
         }
-        
+
         .action-icon img.smallicon {
             vertical-align: middle;
         }
     }
-    
+
     fieldset.fieldset {
         border-color: #e5e5e5;
-        
+
         legend {
             width: auto;
             border: none;
@@ -3361,12 +3361,12 @@ table#user-grades tr.avg td.cell {
 
 .path-blocks-conduit .widgets {
     white-space: normal;
-    
+
     input {
         display: block;
         margin: 8px 0 0 5px;
     }
-    
+
     a {
         display: block;
         margin-top: -1.5em;
@@ -3400,7 +3400,7 @@ table#user-grades tr.avg td.cell {
         width: 100%;
         max-width: 100%;
     }
-    
+
     table.simple,
     #gradetreesubmit,
     ul.nav-tabs {
@@ -3427,35 +3427,35 @@ table#user-grades tr.avg td.cell {
                 font-size: 10px;
             }
         }
-        
+
         table#user-grades {
             border: none;
             font-size: @font-size-table;
-            
+
             th {
                 font-size: 13px;
-                
+
                 &.header.userfield[scope="col"],
                 &.header#studentheader[scope="col"] {
                     vertical-align: bottom;
                     border-top: none;
                 }
             }
-            
+
             th,
             td {
                 border-color: @table-border-color #f5f5f5;
             }
-            
+
             tr.odd td.cell {
                 background-color: @table-bg-accent;
-                
+
                 &.overridden,
                 &.ajaxoverridden {
                     background-color: #efd9a4;
                 }
             }
-            
+
             .topleft {
                 border: none;
             }
@@ -3476,24 +3476,24 @@ table#user-grades tr.avg td.cell {
 
 #notice {
     color: #fff;
-    
+
     //	background-color: @brand-primary; customisable
     font-size: 2em;
     width: 100%;
     padding: 1em 4% 4em;
-    
+
     // pull buttons up into the #notice when they are placed
     // after it, rather than inside it.
-    
+
     &+ .continuebutton {
         margin-top: -3em;
     }
-    
+
     .buttons {
         text-align: center;
         border-top: none;
     }
-    
+
     a,
     a:visited,
     a:link,
@@ -3507,7 +3507,7 @@ table#user-grades tr.avg td.cell {
 .label {
     border-radius: 0;
     font-weight: normal;
-    
+
     &[href]:visited {
         color: #fff;
     }
@@ -3561,16 +3561,16 @@ body.hascontinuecancel.path-site #page {
 #page-course-loginas,
 #page-mod-survey-save {
     #region-main {
-        
+
         //	background-color: @brand-primary; customisable
         max-width: inherit;
         min-height: 750px;
     }
-    
+
     #moodle-footer {
         margin-top: 0;
     }
-    
+
     #page-header {
         display: none;
     }
@@ -3743,7 +3743,7 @@ body.hascontinuecancel.path-site #page {
     .file-picker .fp-repo-area {
         width: 32%;
     }
-    
+
     .file-picker .fp-repo-items {
         width: 68%;
     }
@@ -3804,7 +3804,7 @@ body.hascontinuecancel.path-site #page {
     h6 {
         color: @gray-lighter;
     }
-    
+
     .helplink img.poweredbylogo {
         max-width: inherit;
         max-height: inherit;
@@ -3812,12 +3812,12 @@ body.hascontinuecancel.path-site #page {
         width: inherit;
         vertical-align: middle;
     }
-    
+
     a,
     a:hover {
         color: #fff;
     }
-    
+
     .langmenu {
         color: #666;
     }
@@ -3838,7 +3838,7 @@ body.hascontinuecancel.path-site #page {
 /* Moodle error, reports, all that stuff in the footer */
 #page-footer {
     border-top: none;
-    
+
     .langmenu {
         text-align: right;
     }
@@ -3879,7 +3879,7 @@ body.hascontinuecancel.path-site #page {
         opacity: 0;
         transform: translateY(-2000px);
     }
-    
+
     100% {
         transform: translateY(0);
     }
@@ -3902,7 +3902,7 @@ http://css-spinners.com/css/spinner/three-quarters.css
     0% {
         transform: rotate(0deg);
     }
-    
+
     100% {
         transform: rotate(360deg);
     }
@@ -3917,10 +3917,10 @@ http://css-spinners.com/css/spinner/three-quarters.css
 /* :not(:required) hides this rule from IE9 and below */
 .three-quarters:not(:required) {
     animation: three-quarters 1250ms infinite linear;
-    
+
     // Start GT Mod - force gpu accelleration.
     transform: translateZ(0);
-    
+
     // End GT Mod.
     border: 6px solid #fff;
     border-right-color: transparent;
@@ -3952,12 +3952,12 @@ http://css-spinners.com/css/spinner/three-quarters.css
         textarea {
             width: 100%;
         }
-        
+
         input[type="text"] {
             max-width: 100%;
         }
     }
-    
+
     .path-user .userlist .singleselect {
         width: 100%;
     }
@@ -3969,11 +3969,11 @@ http://css-spinners.com/css/spinner/three-quarters.css
     background-color: #fff;
     color: #000;
     padding: 2em;
-    
+
     h3 {
         color: #000;
     }
-    
+
     hr {
         margin-top: 3em;
     }
@@ -3981,21 +3981,21 @@ http://css-spinners.com/css/spinner/three-quarters.css
 
 // yui-bs overrides (note SNAP specific)
 .yui-bootstrapped {
-    
+
     // stop yui menu from being completely unusable on mobile device
     // note: it still isn't that great and a select box would be way better
-    
+
     #pld_tokenselector.yuimenu {
         top: 100px !important;
         position: fixed !important;
         max-height: 70%;
         overflow-y: auto;
-        
+
         @media (max-width: @screen-xs-max) {
             left: 10% !important;
             width: 80% !important;
         }
-        
+
         .yui-menu-body-scrolled {
             padding: 0;
             margin: 0;
@@ -4016,9 +4016,9 @@ img.iconhelp {
     border: 4px solid #ddd;
     vertical-align: middle;
     margin-bottom: 3px;
-    
+
     &:hover {
-        
+
         //background-color: @brand-primary; User customisable.
         border-width: 0;
     }
@@ -4034,7 +4034,7 @@ table th img.iconhelp {
 #moodle-footer .helplink a:hover img.iconhelp {
     background-color: #999;
     border-color: #999;
-    
+
     &:hover {
         border-width: 4px;
     }
@@ -4048,18 +4048,18 @@ table th img.iconhelp {
         margin-right: 0.5em;
         margin-left: 0.5em;
     }
-    
+
     img.moodlefooterlogo {
         vertical-align: top;
         margin-top: -2px;
         margin-right: 0;
     }
-    
+
     img.poweredbylogo {
         vertical-align: bottom;
         margin-bottom: -2px;
     }
-    
+
     .footerlinkdivider {
         margin: 0 0.5em;
     }
@@ -4068,7 +4068,7 @@ table th img.iconhelp {
 @media screen and (max-width: @screen-xs-max) {
     #page-enrol-users .enrol_user_buttons {
         float: none;
-        
+
         .singlebutton.enrolusersbutton {
             display: block;
         }
@@ -4083,28 +4083,28 @@ table th img.iconhelp {
     #region-main {
         font-size: 0.9em;
     }
-    
+
     h1 {
         font-size: 2.2em;
     }
-    
+
     h2 {
         font-size: 2em;
     }
-    
+
     h3,
     .sectionname {
         font-size: 1.8em;
     }
-    
+
     h4 {
         font-size: 1.6em;
     }
-    
+
     h5 {
         font-size: 1.4em;
     }
-    
+
     h6 {
         font-size: 1.2em;
     }
@@ -4178,7 +4178,7 @@ div.editor_atto_toolbar div.atto_group {
 .atto_equation_library button {
     background-color: #fff;
     color: @text-color;
-    
+
     &:hover {
         background-color: darken(#fff, 5%);
         color: @text-color;
@@ -4206,13 +4206,13 @@ div.editor_atto_toolbar div.atto_group {
     height: 40px;
     width: 30px;
     margin: 1px 4px;
-    
+
     .loadingicon,
     .colourdialogue,
     .previewcolour {
         display: none;
     }
-    
+
     .currentcolour {
         /* size is set with a style tag so need to !important to override */
         height: 30px !important;
@@ -4238,13 +4238,13 @@ div.editor_atto_toolbar div.atto_group {
 }
 
 .path-grade-report-grader .gradeparent table#user-grades tr:nth-child(1) th {
-    
+
     // This stops what looks like a double top border two cells in on the grade column.
     border-bottom-width: 0;
 }
 
 .path-grade-report-grader .gradeparent .floating {
-    
+
     // This makes the floating header have the same top border as when its not floated.
     border-top-width: 0;
 }
@@ -4252,7 +4252,7 @@ div.editor_atto_toolbar div.atto_group {
 .path-grade-report-grader .gradeparent *,
 .path-grade-report-grader .gradeparent *:before,
 .path-grade-report-grader .gradeparent *:after {
-    
+
     // Without this, IE totally screws up the header and column cell sizes.
     box-sizing: content-box !important;
 }
@@ -4260,7 +4260,7 @@ div.editor_atto_toolbar div.atto_group {
 .path-grade-report-grader .gradeparent .heading .cell,
 .path-grade-report-grader .gradeparent .avg .cell,
 .path-grade-report-grader .gradeparent .cell.user {
-    
+
     // Having the font sizes match is really important - if not the floating left header can end up
     // too large!
     font-size: 13px; // SHAME - No variable for this;

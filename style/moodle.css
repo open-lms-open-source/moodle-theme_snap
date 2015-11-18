@@ -21410,7 +21410,7 @@ table.boxaligncenter.generaltable.user-grade * {
 .mr_html_tabs {
   margin-bottom: 1em;
 }
-.user-grade {
+.path-grade-report-user .user-grade {
   border: 0;
 }
 .user-grade td.b1l,
