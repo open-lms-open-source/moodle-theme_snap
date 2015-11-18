@@ -4657,6 +4657,9 @@ fieldset[disabled] a#page-site-index .section-modchooser-link .section-modchoose
   overflow: hidden;
   text-overflow: ellipsis;
 }
+.snap-media-object .snap-media-body .text_to_html {
+  line-height: 1.3em;
+}
 .snap-media-object .snap-media-body .label {
   font-size: 0.7em;
 }
