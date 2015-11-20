@@ -165,29 +165,11 @@ trait format_section_trait {
         }
 
         if (!$isstealth && !$onsectionpage && has_capability('moodle/course:movesections', $coursecontext)) {
-            $url = clone($baseurl);
-            if ($section->section > 1) { // Add a arrow to move section up.
-                $url->param('section', $section->section);
-                $url->param('move', -1);
-                $strmoveup = get_string('moveup');
-
-                $controls[] = html_writer::link($url,
-                    html_writer::empty_tag('img', array('src' => $this->output->pix_url('i/up'),
-                    'class' => 'icon up', 'alt' => $strmoveup)),
-                    array('title' => $strmoveup, 'class' => 'moveup'));
-            }
-
-            $url = clone($baseurl);
-            if ($section->section < $course->numsections) { // Add a arrow to move section down.
-                $url->param('section', $section->section);
-                $url->param('move', 1);
-                $strmovedown =  get_string('movedown');
-
-                $controls[] = html_writer::link($url,
-                    html_writer::empty_tag('img', array('src' => $this->output->pix_url('i/down'),
-                    'class' => 'icon down', 'alt' => $strmovedown)),
-                    array('title' => $strmovedown, 'class' => 'movedown'));
-            }
+            $url = '#section-'.$section->section;
+            $snap_move_section = "<img class='svg-icon' src='".$this->output->pix_url('move', 'theme')."'>";
+            $movestring = get_string('movesection', 'theme_snap');
+            $controls[] = html_writer::link($url, $snap_move_section ,
+            array('title' => $movestring, 'class' => 'snap-move', 'data-id' => $section->section));
         }
 
         return $controls;
@@ -223,7 +205,7 @@ trait format_section_trait {
         // SHAME - Remove tabindex when editing menu is shown.
         $sectionarrayvars = array('id' => 'section-'.$section->section,
         'class' => 'section main clearfix'.$sectionstyle,
-        'role' => 'region',
+        'role' => 'article',
         'aria-label' => get_section_name($course, $section));
         if (!$PAGE->user_is_editing()) {
             $sectionarrayvars['tabindex'] = '-1';
@@ -257,10 +239,17 @@ trait format_section_trait {
         $testemptytitle = get_string('topic').' '.$section->section;
         if ($showeditorhints && $sectiontitle == $testemptytitle && has_capability('moodle/course:update', $context)) {
           $url = new moodle_url('/course/editsection.php', array('id' => $section->id, 'sr' => $sectionreturn));
-          $o .= "<h2><a href='$url' title='".s(get_string('editcoursetopic', 'theme_snap'))."'>".get_string('defaulttopictitle', 'theme_snap')."</a></h2>";
+          $o .= "<h2 class='sectionname'><a href='$url' title='".s(get_string('editcoursetopic', 'theme_snap'))."'>".get_string('defaulttopictitle', 'theme_snap')."</a></h2>";
         }
         else {
           $o .= $this->output->heading($sectiontitle, 2, 'sectionname' . $classes);
+        }
+
+        // Section drop zone.
+        $caneditcourse = has_capability('moodle/course:update', $context);
+        if ($caneditcourse && $section->section != 0) {
+            $o .= "<a class='snap-drop section-drop' data-id='$section->section' data-title='".
+                    s($sectiontitle)."' href='#'>_</a>";
         }
 
         // Section editing commands.
@@ -270,7 +259,7 @@ trait format_section_trait {
             if (!empty($sectiontoolsarray)) {
               $sectiontools = implode(' ', $sectiontoolsarray);
               $o .= html_writer::tag('div', $sectiontools, array(
-                  'class' => 'left right side snap-section-editing',
+                  'class' => 'snap-section-editing actions',
                   'role' => 'region',
                   'aria-label' => get_string('topicactions', 'theme_snap')
               ));

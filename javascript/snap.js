@@ -557,7 +557,7 @@ function snapInit() {
                 if(mod !== null) {
                     $(section).addClass('state-visible');
                     scrollToModule(mod);
-                } else if(!$('.editing').length){
+                } else {
                     $(section).addClass('state-visible').focus();
                     // faux link click behaviour - scroll to page top
                     window.scrollTo(0, 0);

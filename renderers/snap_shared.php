@@ -177,7 +177,7 @@ class snap_shared extends renderer_base {
      * @return bool
      */
     protected static function include_course_ajax($course, $usedmodules = array(), $enabledmodules = null, $config = null) {
-        global $CFG, $PAGE, $SITE;
+        global $CFG, $PAGE;
 
         // Ensure that ajax should be included
         if (!course_ajax_enabled($course)) {
@@ -304,15 +304,41 @@ class snap_shared extends renderer_base {
             'forumreplies',
             'forumlastpost',
             'loading',
-            'more'
+            'more',
+            'moving',
+            'movehere',
+            'movefailed',
+            'movingdropsectionhelp',
+            'movingstartedhelp'
         ), 'theme_snap');
+
+        $courseconfig = new stdClass();
+        $courseconfig->ajaxurl = '/course/rest.php';
+        // These never appear to get set in lib.php include_course_ajax - config can be passed into that function with
+        // the param set but that never seems to happen.
+        $courseconfig->pageparams = array();
 
         $module = array(
             'name' => 'theme_snap_core',
             'fullpath' => '/theme/snap/javascript/module.js'
         );
 
-        $PAGE->requires->js_init_call('M.theme_snap.core.init', array($COURSE->id, $PAGE->context->id), false, $module);
+        $PAGE->requires->js_init_call('M.theme_snap.core.init',
+          [$COURSE->id, $PAGE->context->id, $courseconfig],
+          false,
+          $module
+        );
+
+        $module = array(
+          'name' => 'theme_snap_course',
+          'fullpath' => '/theme/snap/javascript/course.js'
+        );
+
+        $PAGE->requires->js_init_call('M.theme_snap.course.init',
+          null,
+          true,
+          $module
+        );
 
         $canmanageacts = has_capability('moodle/course:manageactivities', context_course::instance($COURSE->id));
         if ($canmanageacts) {

@@ -269,7 +269,7 @@ li.section:focus {
         display: block;
         text-align: left;
         margin-top: -1em;
-        
+
         a,
         span {
             display: inline-block;
@@ -287,6 +287,11 @@ li.section:focus {
             float: left;
         }
     }
+}
+
+// Do not show the editing options to people who turn javascript off.
+.jsenabled .snap-section-editing {
+    visibility: visible;
 }
 
 // get rid of js cursor style applied to the whole commands area
@@ -816,112 +821,110 @@ we do this by default in snap, so hide moodle version */
 // resources to full width on tiny screen
 @media screen and (max-width: @screen-xs) {
     .section li.snap-resource {
-        width: 92%;
-        margin: 1em 4%;
-    }
+            width: 99%;
+            margin: 1em 0;
+        }
 }
 
 // MIME TYPEs //
 // MICROSOFT //
+li.snap-resource,
+#snap-move-message{
+    &.snap-mime-document,
+    &.snap-mime-writer,
+    &.snap-mime-oth {
+        background-color: #42b4d6;
+        background-image: url([[pix:theme|doc]]);
+    }
+    &.snap-mime-powerpoint,
+    &.snap-mime-impress {
+        background-color: #F37C2A;
+        background-image: url([[pix:theme|powerpoint]]);
+    }
+    &.snap-mime-spreadsheet,
+    &.snap-mime-chart,
+    &.snap-mime-database,
+    &.snap-mime-calc {
+        background-color: #7D9D3E;
+        background-image: url([[pix:theme|spreadsheet]]);
+    }
 
-li.snap-resource.snap-mime-document,
-li.snap-resource.snap-mime-writer,
-li.snap-resource.snap-mime-oth {
-    background-color: #42b4d6;
-    background-image: url("[[pix:theme|doc]]");
+    // ADOBE //
+    &.snap-mime-pdf,
+    &.snap-mime-eps,
+    &.snap-mime-flash {
+        background-color: #e34947;
+        background-image: url([[pix:theme|pdf]]);
+    }
+    &.snap-mime-flash {
+        background-image: url([[pix:theme|flash]]);
+    }
+
+    // MULTIMEDIA //
+    // #67b8cb - audio?
+    &.snap-mime-mp3,
+    &.snap-mime-wav,
+    &.snap-mime-audio {
+        background-color: #EDC92C;
+        background-image: url([[pix:theme|music]]);
+    }
+
+    &.snap-mime-mov,
+    &.snap-mime-wmv,
+    &.snap-mime-video,
+    &.snap-mime-quicktime,
+    &.snap-mime-mpeg,
+    &.snap-mime-avi {
+        background-color: #55B5CC;
+        background-image: url([[pix:theme|video]]);
+    }
+
+    &.modtype_lightboxgallery,
+    &.snap-mime-bmp {
+        background-color: #4ABC96;
+        background-image: url([[pix:theme|image]]);
+    }
+
+    // MOODLE MODS //
+    &.modtype_url {
+        background-color: #999;
+        background-image: url([[pix:theme|link]]);
+    }
+
+    &.modtype_imscp,
+    &.modtype_scorm {
+        background-color: #F7981D;
+        background-image: url([[pix:theme|book]]);
+    }
+
+    &.modtype_imscp,
+    &.modtype_scorm {
+        background-image: url([[pix:theme|scorm]]);
+    }
+
+    &.modtype_folder {
+        background-color: #F9F29A;
+        background-image: url([[pix:theme|folder]]);
+    }
+
+    // CODE & SYSTEM //
+    &.snap-mime-archive {
+        background-color: #F9F29A;
+        background-image: url([[pix:theme|zip]]);
+    }
+
+    &.snap-mime-markup,
+    &.snap-mime-html,
+    &.snap-mime-sourcecode {
+        background-color: #f0652a;
+        background-image: url([[pix:theme|code]]);
+    }
+
+    &.snap-mime-text {
+        background-color: #f1bf26;
+    }
 }
 
-li.snap-resource.snap-mime-powerpoint,
-li.snap-resource.snap-mime-impress {
-    background-color: #f37c2a;
-    background-image: url("[[pix:theme|powerpoint]]");
-}
-
-li.snap-resource.snap-mime-spreadsheet,
-li.snap-resource.snap-mime-chart,
-li.snap-resource.snap-mime-database,
-li.snap-resource.snap-mime-calc {
-    background-color: #7d9d3e;
-    background-image: url("[[pix:theme|spreadsheet]]");
-}
-
-// ADOBE //
-li.snap-resource.snap-mime-pdf,
-li.snap-resource.snap-mime-eps,
-li.snap-resource.snap-mime-flash,
- {
-    background-color: #e34947;
-    background-image: url("[[pix:theme|pdf]]");
-}
-
-li.snap-resource.snap-mime-flash {
-    background-image: url("[[pix:theme|flash]]");
-}
-
-// MULTIMEDIA //
-// #67b8cb - audio?
-
-li.snap-resource.snap-mime-mp3,
-li.snap-resource.snap-mime-wav,
-li.snap-resource.snap-mime-audio {
-    background-color: #edc92c;
-    background-image: url("[[pix:theme|music]]");
-}
-
-li.snap-resource.snap-mime-mov,
-li.snap-resource.snap-mime-wmv,
-li.snap-resource.snap-mime-video,
-li.snap-resource.snap-mime-quicktime,
-li.snap-resource.snap-mime-mpeg,
-li.snap-resource.snap-mime-avi {
-    background-color: #55b5cc;
-    background-image: url("[[pix:theme|video]]");
-}
-
-li.snap-resource.modtype_lightboxgallery,
-li.snap-resource.snap-mime-bmp {
-    background-color: #4abc96;
-    background-image: url("[[pix:theme|image]]");
-}
-
-// MOODLE MODS //
-li.snap-resource.modtype_url {
-    background-color: #999;
-    background-image: url("[[pix:theme|link]]");
-}
-
-li.snap-resource.modtype_imscp,
-li.snap-resource.modtype_scorm {
-    background-color: #f7981d;
-    background-image: url("[[pix:theme|book]]");
-}
-
-li.snap-resource.modtype_imscp,
-li.snap-resource.modtype_scorm {
-    background-image: url("[[pix:theme|scorm]]");
-}
-
-li.snap-resource.modtype_folder {
-    background-color: #f9f29a;
-    background-image: url("[[pix:theme|folder]]");
-}
-
-// CODE & SYSTEM //
-li.snap-resource.snap-mime-archive {
-    background-color: #f9f29a;
-    background-image: url("[[pix:theme|zip]]");
-}
-
-li.snap-resource.snap-mime-markup,
-li.snap-resource.snap-mime-html,
-li.snap-resource.snap-mime-sourcecode {
-    background-color: #f0652a;
-    background-image: url("[[pix:theme|code]]");
-}
-
-li.snap-resource.snap-mime-text {
-    background-color: #f1bf26;
-}
 
 // -------------------------
 // Snap Activity
@@ -1421,3 +1424,251 @@ span.editinstructions {
     }
 }
 
+// -------------------------
+// Moving things in snap
+// -------------------------
+@keyframes fadeup {
+   0%{
+     min-height:100vh;
+     opacity:0.1;
+   }
+   100%{
+     min-height:0;
+     opacity:1;
+   }
+}
+.path-course-view {
+  li.state-visible,
+  #page-header,
+  #region-main {
+    animation-name: fadeup;
+    animation-iteration-count: 1;
+    animation-timing-function: linear;
+    animation-duration: 0.68s;
+  }
+}
+
+@keyframes movefail {
+    0% {
+        box-shadow: inset 0 0 1px rgba(255, 255, 255, 0.5);
+    }
+    50% {
+        box-shadow: inset 0 0 300px rgba(255, 255, 255, 0.5);
+    }
+    100% {
+        box-shadow: inset 0 0 1px rgba(255, 255, 255, 0.5);
+    }
+}
+
+
+@keyframes resourceinsert {
+    0%   {
+        width: 0;
+        min-width: 0;
+        max-width:0;
+        height: 0;
+        min-height: 0;
+        max-height:0
+    }
+    100% {
+        width: 30%;
+        min-width: 210px;
+        max-width: inherit;
+        height: 250px;
+        min-height: inherit;
+        max-height: inherit;
+    }
+}
+
+@keyframes activityinsert {
+    0%   {
+        width: 0;
+        min-width: 0;
+        max-width:0;
+        height: 0;
+        min-height: 0;
+        max-height:0
+    }
+    100% {
+        width: 100%;
+        min-width: 100%;
+        max-width: 100%;
+        height: auto;
+        min-height: 125px;
+        max-height: inherit;
+    }
+}
+
+@keyframes fadein {
+    0%   {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+// -------------------------
+// Moving sections.
+// -------------------------
+#course-toc .section-moving {
+  border-left: 0.3em solid;
+  padding-left: 0.3em;
+}
+
+// Hide section drop on moving section, the following section and when not moving.
+.section-drop,
+.section-moving a.section-drop,
+.section-moving + .section .section-drop {
+  display: none;
+}
+
+// Section moving drop zone.
+.section-drop {
+  height: 125px;
+  margin: 1em 0;
+  clear: both;
+  border: 2px dashed @gray-lighter;
+  font-family: @font-family-base;
+  text-align: center;
+  display:none;
+}
+
+.section-drop,
+.snap-move-note {
+  background: transparent url("[[pix:theme|move_here]]") no-repeat 50% 80%;
+  background-size: 70px auto;
+}
+
+.snap-move-section {
+    .section-drop {
+        display: block;
+        &:hover {
+          border-color: @state-success-text;
+        }
+    }
+}
+
+#snap-move-message {
+    position: fixed;
+    z-index:1;
+    bottom:0;
+    left:0;
+    width:100%;
+    background-color:#000;
+    color:#fff;
+    background-image:none !important;
+    outline:none !important;
+    // for animation..
+    max-height: 0;
+    overflow: hidden;
+    .alakazam();
+    .snap-move-message-title{
+        text-transform: capitalize;
+        color: #fff !important;
+        display: inline-block;
+        background-size: 1.5em 1.5em;
+        background-position: 0 center;
+        background-repeat: no-repeat;
+        padding-left: 1.7em; // Magic number for icon
+        margin-left: 4%;
+        width: 68.2%;
+    }
+    .spinner-three-quarters {
+        margin-left: 1em;
+        width: 1em;
+        height: 1em;
+    }
+}
+
+.snap-move-cancel {
+    float:right;
+    margin-right:4%; // TODO - 15% on small screen, for fab?
+    color: #fff !important;
+    opacity:0.8;
+    visibility: hidden;
+    &:hover {
+        color: #fff;
+        opacity: 1;
+    }
+}
+
+// Body class when moving
+.snap-move-inprogress {
+    // The asset we are moving
+    .snap-moving,
+    .snap-modchooser,
+    .edit-summary,
+    .asset-moving,
+    .snap-asset-actions,
+    .snap-section-editing,
+    .snap-modchooser,
+    .snap-dropzone {
+      display:none !important;
+    }
+    #snap-move-message {
+      padding:0.5em 0;
+      max-height: 200px;
+    }
+    .snap-move-cancel {
+      visibility: visible;
+    }
+    .actions {
+        display: none;
+    }
+}
+
+.snap-asset {
+    &.movefinished {
+        & + li.snap-resource {
+
+        }
+        animation: fadein 0.5s;
+        animation-iteration-count: 1;
+        animation-fill-mode: forwards;
+    }
+}
+
+.snap-move-notice.movefail{
+    animation: movefail 0.25s;
+    animation-iteration-count: 16;
+}
+
+.snap-activity.clonedropstatus {
+    animation: activityinsert 1s;
+}
+
+.snap-resource.clonedropstatus {
+    animation: resourceinsert 1s;
+}
+
+.snap-move-note {
+    display: none;
+}
+// Show when moving
+// Asset dropzones.
+.snap-move-asset {
+  .snap-resource {
+      border: 2px dashed white;
+  }
+  .snap-activity,
+  .snap-native,
+  li.modtype_label {
+      border: 2px dashed @gray-light;
+  }
+  .snap-asset {
+      opacity: 0.7;
+  }
+  .snap-asset .snap-move-note {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background-color: rgba(255,255,255,0.7);
+      cursor: pointer;
+      text-align: center;
+      padding: 1em;
+      display: block;
+  }
+}
