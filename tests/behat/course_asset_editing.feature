@@ -52,7 +52,7 @@ Feature: When the moodle theme is set to Snap, teachers can upload files as reso
     And I follow "Course"
     And I wait until the page is ready
     And I follow "Topic 1"
-   Then ".snap-activity[data-type='Assignment'] a.dropdown-toggle" "css_element" should not exist
+    Then ".snap-activity[data-type='Assignment'] a.dropdown-toggle" "css_element" should not exist
 
   @javascript
   Scenario: In read mode, teacher hides then shows activity.
@@ -86,22 +86,21 @@ Feature: When the moodle theme is set to Snap, teachers can upload files as reso
     And I click on "#admin-menu-trigger" "css_element"
     And I follow "Turn editing on"
     And I follow "Menu"
-    And I wait until the page is ready
     And I follow "Course"
     And I wait until the page is ready
     And I follow "Topic 1"
-   Then "#section-1" "css_element" should exist
+    Then "#section-1" "css_element" should exist
     And ".snap-activity[data-type='Assignment']" "css_element" should exist
     And I click on ".snap-activity[data-type='Assignment'] a.dropdown-toggle" "css_element"
     And I click on ".snap-activity[data-type='Assignment'] a.js_snap_hide" "css_element"
     #TODO - instead of 2 second magic number, wait for ajax to complete by using classes.
     And I wait "2" seconds
-   Then ".snap-activity[data-type='Assignment'].draft" "css_element" should exist
+    Then ".snap-activity[data-type='Assignment'].draft" "css_element" should exist
     And I click on ".snap-activity[data-type='Assignment'] a.dropdown-toggle" "css_element"
     And I click on ".snap-activity[data-type='Assignment'] a.js_snap_show" "css_element"
     #TODO - instead of 2 second magic number, wait for ajax to complete by using classes.
     And I wait "2" seconds
-   Then ".snap-activity[data-type='Assignment'].draft" "css_element" should not exist
+    Then ".snap-activity[data-type='Assignment'].draft" "css_element" should not exist
 
   @javascript
   Scenario: In read mode, teacher hides then shows resource.
@@ -119,12 +118,12 @@ Feature: When the moodle theme is set to Snap, teachers can upload files as reso
     And I click on ".snap-resource[data-type='text'] a.js_snap_hide" "css_element"
     #TODO - instead of 2 second magic number, wait for ajax to complete by using classes.
     And I wait "2" seconds
-   Then ".snap-resource[data-type='text'].draft" "css_element" should exist
+    Then ".snap-resource[data-type='text'].draft" "css_element" should exist
     And I click on ".snap-resource[data-type='text'] a.dropdown-toggle" "css_element"
     And I click on ".snap-resource[data-type='text'] a.js_snap_show" "css_element"
     #TODO - instead of 2 second magic number, wait for ajax to complete by using classes.
     And I wait "2" seconds
-   Then ".snap-resource[data-type='text'].draft" "css_element" should not exist
+    Then ".snap-resource[data-type='text'].draft" "css_element" should not exist
 
   @javascript
   Scenario: In edit mode, admin hides then shows resource.
@@ -135,7 +134,6 @@ Feature: When the moodle theme is set to Snap, teachers can upload files as reso
     And I click on "#admin-menu-trigger" "css_element"
     And I follow "Turn editing on"
     And I follow "Menu"
-    And I wait until the page is ready
     And I follow "Course"
     And I wait until the page is ready
     And I follow "Topic 1"
@@ -165,13 +163,13 @@ Feature: When the moodle theme is set to Snap, teachers can upload files as reso
     And I follow "Course"
     And I wait until the page is ready
     And I follow "Topic 1"
-   Then "#section-1" "css_element" should exist
+    Then "#section-1" "css_element" should exist
     And ".snap-activity[data-type='Assignment']" "css_element" should exist
     And I click on ".snap-activity[data-type='Assignment'] a.dropdown-toggle" "css_element"
     And I click on ".snap-activity[data-type='Assignment'] a.js_snap_duplicate" "css_element"
     #TODO - instead of 2 second magic number, wait for ajax to complete by using classes.
     And I wait "2" seconds
-   Then ".snap-activity[data-type='Assignment']:nth-of-type(2)" "css_element" should appear after ".snap-activity[data-type='Assignment']:nth-of-type(1)" "css_element"
+    Then ".snap-activity[data-type='Assignment']:nth-of-type(2)" "css_element" should appear after ".snap-activity[data-type='Assignment']:nth-of-type(1)" "css_element"
 
   @javascript
   Scenario: In edit mode, admin duplicates activity.
@@ -184,17 +182,16 @@ Feature: When the moodle theme is set to Snap, teachers can upload files as reso
     And I click on "#admin-menu-trigger" "css_element"
     And I follow "Turn editing on"
     And I follow "Menu"
-    And I wait until the page is ready
     And I follow "Course"
     And I wait until the page is ready
     And I follow "Topic 1"
-   Then "#section-1" "css_element" should exist
+    Then "#section-1" "css_element" should exist
     And ".snap-activity[data-type='Assignment']" "css_element" should exist
     And I click on ".snap-activity[data-type='Assignment'] a.dropdown-toggle" "css_element"
     And I click on ".snap-activity[data-type='Assignment'] a.js_snap_duplicate" "css_element"
     #TODO - instead of 2 second magic number, wait for ajax to complete by using classes.
     And I wait "2" seconds
-   Then ".snap-activity[data-type='Assignment']:nth-of-type(2)" "css_element" should appear after ".snap-activity[data-type='Assignment']:nth-of-type(1)" "css_element"
+    Then ".snap-activity[data-type='Assignment']:nth-of-type(2)" "css_element" should appear after ".snap-activity[data-type='Assignment']:nth-of-type(1)" "css_element"
 
 
   @javascript
@@ -204,15 +201,15 @@ Feature: When the moodle theme is set to Snap, teachers can upload files as reso
     And I follow "Course"
     And I wait until the page is ready
     And I follow "Topic 1"
-   Then "#section-1" "css_element" should exist
+    Then "#section-1" "css_element" should exist
     And "#snap-drop-file-1" "css_element" should exist
     And I upload file "test_text_file.txt" using input "#snap-drop-file-1"
-   Then ".snap-resource[data-type='text']" "css_element" should exist
+    Then ".snap-resource[data-type='text']" "css_element" should exist
     And I click on ".snap-resource[data-type='text'] a.dropdown-toggle" "css_element"
     And I click on ".snap-resource[data-type='text'] a.js_snap_duplicate" "css_element"
     #TODO - instead of 2 second magic number, wait for ajax to complete by using classes.
     And I wait "2" seconds
-   Then ".snap-resource[data-type='text']:nth-of-type(2)" "css_element" should appear after ".snap-resource[data-type='text']:nth-of-type(1)" "css_element"
+    Then ".snap-resource[data-type='text']:nth-of-type(2)" "css_element" should appear after ".snap-resource[data-type='text']:nth-of-type(1)" "css_element"
 
   @javascript
   Scenario: In edit mode, admin duplicates resource.
@@ -222,18 +219,15 @@ Feature: When the moodle theme is set to Snap, teachers can upload files as reso
     And I click on "#admin-menu-trigger" "css_element"
     And I follow "Turn editing on"
     And I follow "Menu"
-    And I wait until the page is ready
     And I follow "Course"
     And I wait until the page is ready
     And I follow "Topic 1"
-   Then "#section-1" "css_element" should exist
+    Then "#section-1" "css_element" should exist
     And "#snap-drop-file-1" "css_element" should exist
     And I upload file "test_text_file.txt" using input "#snap-drop-file-1"
-   Then ".snap-resource[data-type='text']" "css_element" should exist
+    Then ".snap-resource[data-type='text']" "css_element" should exist
     And I click on ".snap-resource[data-type='text'] a.dropdown-toggle" "css_element"
     And I click on ".snap-resource[data-type='text'] a.js_snap_duplicate" "css_element"
     #TODO - instead of 2 second magic number, wait for ajax to complete by using classes.
     And I wait "2" seconds
-   Then ".snap-resource[data-type='text']:nth-of-type(2)" "css_element" should appear after ".snap-resource[data-type='text']:nth-of-type(1)" "css_element"
-
-
+    Then ".snap-resource[data-type='text']:nth-of-type(2)" "css_element" should appear after ".snap-resource[data-type='text']:nth-of-type(1)" "css_element"
