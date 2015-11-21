@@ -199,31 +199,96 @@ class theme_snap_core_course_renderer extends core_course_renderer {
         }
         $output .= "</div>"; // Close activity instance.
 
-        // Build up edit icons.
-        $modicons = '';
-        if ($this->page->user_is_editing()) {
-            $editactions = $this->course_get_cm_edit_actions($mod, $sectionreturn);
-            $modicons .= $this->course_section_cm_edit_actions($editactions, $mod, $displayoptions);
-            $modicons .= $mod->afterediticons;
-            $modicons .= course_get_cm_move($mod, $sectionreturn);
-        } else {
-            // I'm adding these in in none edit mode so that hiding sections will work.
-            // Stuart will be rewriting this as part of ticket INT-8449.
-            $editactions = $this->course_get_cm_edit_actions($mod, $sectionreturn);
-            $modicons .= '<div style="display:none">';
-            $modicons .= $this->course_section_cm_edit_actions($editactions, $mod, $displayoptions);
-            $modicons .= $mod->afterediticons;
-            $modicons .= '</div>';
+
+        // Build up edit actions.
+        $actions = '';
+        $actionsadvanced = array();
+        $modcontext = context_course::instance($mod->course);
+        $baseurl =  new moodle_url('/course/mod.php', array('sesskey' => sesskey()));
+
+        if (has_capability('moodle/course:update', $modcontext)) {
+            $str = get_strings(array('delete', 'move', 'duplicate', 'hide', 'show'), 'moodle');
+            // TODO - add snap strings here.
+
+            // TODO - do we need the rename or replace with quickedit (modal) with advanced settings link?
+
+            // Move, Edit, Delete.
+            if(has_capability('moodle/course:manageactivities', $modcontext)){
+              $actions .= "<a href='".new moodle_url($baseurl, array('move' => $mod->id))."'>".get_string('move')."</a>";
+              $actions .= "<a href='".new moodle_url($baseurl, array('update' => $mod->id))."'>".get_string('edit')."</a>";
+              $actionsadvanced[] = "<a href='".new moodle_url($baseurl, array('delete' => $mod->id))."'>$str->delete</a>";
         }
 
-        if (!$this->page->user_is_editing()) {
-            $modicons .= $this->course_section_cm_completion($course, $completioninfo, $mod, $displayoptions);
+            // Hide/Show.
+            if (has_capability('moodle/course:activityvisibility', $modcontext)){
+              $actionsadvanced[] = "<a href='".new moodle_url($baseurl, array('hide' => $mod->id))."' class='editing_hide js_snap_hide'>$str->hide</a>";
+              $actionsadvanced[] = "<a href='".new moodle_url($baseurl, array('show' => $mod->id))."' class='editing_show js_snap_show'>$str->show</a>";
+              // ax click to change
+            }
+
+            // Duplicate.
+            $dupecaps = array('moodle/backup:backuptargetimport', 'moodle/restore:restoretargetimport');
+            if (has_all_capabilities($dupecaps, $modcontext) &&
+            plugin_supports('mod', $mod->modname, FEATURE_BACKUP_MOODLE2) &&
+            plugin_supports('mod', $mod->modname, 'duplicate', true)) {
+              $actionsadvanced[] = "<a href='".new moodle_url($baseurl, array('duplicate' => $mod->id))."' class='js_snap_duplicate'>$str->duplicate</a>";
+            }
+
+
+            // TODO - groups are in the form, do we need this toggle??
+            /*
+            // Group toggle.
+            if ($hasmanageactivities && !$mod->coursegroupmodeforce) {
+            if (plugin_supports('mod', $mod->modname, FEATURE_GROUPS, 0)) {
+            new moodle_url($baseurl, array('id' => $mod->id, 'groupmode' => $nextgroupmode))
+            // ax click to change
+            */
+
+            // Asign roles.
+            if (has_capability('moodle/role:assign', $modcontext)) {
+              $actionsadvanced[] = "<a href='".new moodle_url('/admin/roles/assign.php', array('contextid' => $modcontext->id))."'>Roles</a>";
+            }
+
+            // Give local plugins a chance to add icons.
+            $localplugins = array();
+            foreach (get_plugin_list_with_function('local', 'extend_module_editing_buttons') as $function) {
+              $localplugins = array_merge($localplugins, $function($mod));
+            }
+
+            // TODO - pld string is far too long....
+            $locallinks = '';
+            foreach ($localplugins as $localplugin) {
+              $url = $localplugin->url;
+              $text = $localplugin->text;
+              $class = $localplugin->attributes['class'];
+              $actionsadvanced[] = "<a href='$url' class=$class>$text</a>";
+            }
+
+            // TODO - what is this?
+            // $actionsadvanced .= $mod->afterediticons;
+            // GT note to SL - I think its html that the module can specify it needs after the edit icons.
+            // I need to point out that it looks strange that it's concatonated with .= when $actionsadvanced is an
+            // array - I'm guessing that's a recent change so if we decide to include $mod->afterediticons (which
+            // we probably should) then we need to do it as
+            // $actionsadvanced[] = $mod->afterediticons;
+
+        }
+
+        $advancedactions = '';
+        if (!empty($actionsadvanced)) {
+          $advancedactions = "<div class='dropdown' style='display:inline-block'>
+                      <a href='#' class='dropdown-toggle' data-toggle='dropdown' aria-expanded='false' aria-haspopup='true'>more</a>
+                      <ul class='dropdown-menu'>";
+          foreach ($actionsadvanced as $action) {
+            $advancedactions .= "<li>$action</li>";
+          }
+          $advancedactions .= "</ul></div>";
         }
 
         // Add actions menu.
-        if ($modicons) {
-            $output .= "<div class='actions' role='region' aria-label='actions'>";
-                $output .= $modicons;
+        if ($actions) {
+            $output .= "<div class='snap-asset-actions' role='region' aria-label='actions'>";
+            $output .= $actions.$advancedactions;
                 $output .= "</div>";
         }
         // Close clearfix.

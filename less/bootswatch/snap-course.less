@@ -1101,6 +1101,32 @@ li.snap-activity.modtype_folder {
 // Snap actions
 // -------------------------
 /* all the editing options and completion data in one region */
+.snap-asset-actions {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 250px;
+  padding: 0.3em 2%;
+  font-size: 0.8em;
+  & > a{
+    display: inline-block;
+    width: 33%;
+    padding: 0 2%;
+  }
+  .dropdown-menu {
+    box-shadow: 0 2px 5px 0 rgba(0,0,0,.26);
+    top: 0;
+    border: 0;
+    padding: 0;
+  }
+  .dropdown-menu>li>a {
+    font-weight: inherit;
+    font-size: 0.8em;
+    // TODO - set color to brand
+  }
+}
+
+
 /* reset some moodle shame */
 .moodle-actionmenu,
 .moodle-actionmenu>ul,

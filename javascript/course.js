@@ -97,6 +97,62 @@ M.theme_snap.course = {
         };
 
         /**
+         * Add ajax loading to meta
+         * @param snapmeta
+         */
+        var meta_ajax_loading = function(snapmeta){
+            $(snapmeta).append('<div class="loadingstat three-quarters spinner-dark">' + Y.Escape.html(M.util.get_string('loading', 'theme_snap')) + '</div>');
+        }
+
+        /**
+         * Show or hide an asset
+         *
+         * @param e
+         * @param el
+         * @param show
+         */
+        var asset_show_hide = function(e, el, show) {
+            e.preventDefault();
+            var courserest = M.cfg.wwwroot+'/course/rest.php';
+            var parent = $($(el).parents('.snap-asset')[0]);
+
+            var id = parent.attr('id').replace('module-', '');
+
+            meta_ajax_loading($(parent).find('.snap-meta'));
+
+            var courseid = M.theme_snap.courseid;
+
+            $.ajax({
+                type: "GET",
+                async:  true,
+                url:  courserest,
+                dataType: 'html',
+                complete : function() {
+                    parent.find('.snap-meta .loadingstat').remove();
+                },
+                error : function(xhr,status,error) {
+                    // TODO - localise.
+                    alert('Failed to hide/show asset');
+                },
+                success : function(data){
+                    if (show) {
+                        parent.removeClass('draft');
+                    } else {
+                        parent.addClass('draft');
+                    }
+                },
+                data: {
+                    id : id,
+                    'class' : 'resource',
+                    field : 'visible',
+                    sesskey : M.cfg.sesskey,
+                    value : show ? 1 : 0,
+                    courseId : courseid
+                }
+            });
+        };
+
+        /**
          * Ajax request to move asset to target.
          * @param target
          */
@@ -141,6 +197,55 @@ M.theme_snap.course = {
                 // Don't pass in target, we want to abort the move!
                 stop_moving(false);
             }, 2000);
+        };
+
+        /**
+         * Listen for edit action clicks, hide, show, duplicate, etc..
+         */
+        var asset_edit_listeners = function() {
+            $(document).on('click', '.snap-asset-actions .js_snap_hide', function(e) {
+                asset_show_hide(e, this, false);
+            });
+
+            $(document).on('click', '.snap-asset-actions .js_snap_show', function(e) {
+                asset_show_hide(e, this, true);
+            });
+
+            $(document).on('click', '.snap-asset-actions .js_snap_duplicate', function(e) {
+                e.preventDefault();
+                var parent = $($(this).parents('.snap-asset')[0]);
+                var id = parent.attr('id').replace('module-', '');
+                meta_ajax_loading($(parent).find('.snap-meta'));
+
+                var courseid = M.theme_snap.courseid;
+
+                var courserest = M.cfg.wwwroot+'/course/rest.php';
+
+                $.ajax({
+                    type: "POST",
+                    async:  true,
+                    url:  courserest,
+                    dataType: 'json',
+                    complete : function() {
+                        parent.find('.snap-meta .loadingstat').remove();
+                    },
+                    error : function(xhr,status,error) {
+                        // TODO - localise.
+                        alert('Failed to duplicate');
+                    },
+                    success : function(data){
+                        $(data.fullcontent).insertAfter(parent);
+                    },
+                    data: {
+                        'class' : 'resource',
+                        field : 'duplicate',
+                        id : id,
+                        sr : 0,
+                        sesskey : M.cfg.sesskey,
+                        courseId : courseid
+                    }
+                });
+            });
         };
 
         /**
@@ -298,6 +403,8 @@ M.theme_snap.course = {
             move_asset_listener();
             move_cancel_listener();
             move_place_listener();
+
+            asset_edit_listeners();
         };
         initialise();
     }
