@@ -1112,7 +1112,6 @@ li.snap-activity.modtype_folder {
         display: inline-block;
         width: 33%;
         padding: 0 2%;
-        color: #fff;
     }
     .dropdown-menu {
         box-shadow: 0 2px 5px 0 rgba(0,0,0,.26);
@@ -1124,6 +1123,17 @@ li.snap-activity.modtype_folder {
         font-weight: inherit;
         font-size: 0.8em;
         // TODO - set color to brand
+    }
+}
+
+.snap-resource {
+    .snap-asset-actions {
+        & > a,
+        & > a:hover,
+        & div > a,
+        & div > a:hover {
+            color: #fff;
+        }
     }
 }
 
