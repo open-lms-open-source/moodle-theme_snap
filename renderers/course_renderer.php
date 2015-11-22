@@ -277,7 +277,7 @@ class theme_snap_core_course_renderer extends core_course_renderer {
         $advancedactions = '';
         if (!empty($actionsadvanced)) {
           $advancedactions = "<div class='dropdown' style='display:inline-block'>
-                      <a href='#' class='dropdown-toggle' data-toggle='dropdown' aria-expanded='false' aria-haspopup='true'>more</a>
+                      <a href='#' class='dropdown-toggle' data-toggle='dropdown' aria-expanded='false' aria-haspopup='true'>'.get_string('more', 'theme_snap').'</a>
                       <ul class='dropdown-menu'>";
           foreach ($actionsadvanced as $action) {
             $advancedactions .= "<li>$action</li>";
