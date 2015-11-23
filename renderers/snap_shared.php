@@ -316,13 +316,10 @@ class snap_shared extends renderer_base {
 
         $canmanageacts = has_capability('moodle/course:manageactivities', context_course::instance($COURSE->id));
         if ($canmanageacts) {
-            // This already gets added by core moodle when in edit mode.
-            // So we only want to add this if we are not in edit mode or it will happen twice.
-            // Include course AJAX.
             $modinfo = get_fast_modinfo($COURSE);
             $modnamesused = $modinfo->get_used_module_names();
 
-            $originalediting = $USER->editing;
+            $originalediting = property_exists($USER, 'editing') ? $USER->editing : false;
             $USER->editing = true; // Temporarily change edit mode to on for course ajax to be included.
             self::include_course_ajax($COURSE, $modnamesused);
             $USER->editing = $originalediting;
