@@ -2953,7 +2953,7 @@ li.section:focus {
   margin: 0;
   padding: 0;
 }
-.jsenabled .snap-section-editing {
+.snap-js-loaded .snap-section-editing {
   visibility: visible;
 }
 .snap-section-editing[style] {
