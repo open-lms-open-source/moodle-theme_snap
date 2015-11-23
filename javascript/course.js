@@ -253,7 +253,7 @@ M.theme_snap.course = {
          */
         var move_section_listener = function() {
             // Listen clicks on move links.
-            $("#region-main").on('click', '.snap-section-editing.actions .snap-move', function (e) {
+            $("#region-main").on('click', '.snap-section-editing.actions .snap-move', function(e) {
                 e.stopPropagation();
                 e.preventDefault();
 
@@ -297,7 +297,9 @@ M.theme_snap.course = {
         var move_asset_listener = function() {
             // TODO - implement asset move listener (current selector is wrong, requires merge of
             // INT-8449_Asset_editing_tools
-            $("#region-main").on('click', '.snap-asset-actions .js-snap-move', function (e) {
+            $("#region-main").on('click', '.snap-asset-actions .js_snap_move', function (e) {
+                e.stopPropagation();
+                e.preventDefault();
                 // Moving asset - activity or resource.
                 var asset = $(this).parents('.snap-asset')[0];
                 var assetname = $(asset).find('.snap-asset-link .instancename').html();
@@ -314,7 +316,7 @@ M.theme_snap.course = {
                 log('Moving this class', classes);
                 movingobject = asset;
 
-
+                $('body').addClass('snap-move-inprogress');
                 $('body').addClass('snap-move-asset');
                 $(asset).addClass('asset-moving');
                 var title = M.util.get_string('moving', 'theme_snap', assetname);
