@@ -46,7 +46,7 @@ section#region-main
     float: right;
     margin-top: -3.2em; // MAGIC NUMBER
     margin-right: -4%; // MAGIC NUMBER
-    
+
     input[type="submit"] {
         background-color: @gray-light !important;
         box-shadow: 0;
@@ -113,7 +113,7 @@ section#region-main
 #coursetools-list {
     a {
         display: block;
-        
+
         .svg-icon {
             width: 2em;
             height: 2em;
@@ -136,7 +136,7 @@ section#region-main
 
     #coursetools-list {
         padding: 1em;
-        
+
         a {
             width: 50%;
             float: left;
@@ -198,9 +198,9 @@ li.section:focus {
 
 .course-content .current {
     background-color: transparent;
-    
+
     .content:before {
-        
+
         // content:"Current section";
         display: block;
         font-size: @font-size-h4;
@@ -248,51 +248,49 @@ li.section:focus {
     line-height: inherit;
     padding-bottom: 1.6em;
     .clearfix();
-    
+
     p {
         margin-bottom: 1.6em;
     }
 }
 
 // the bulb, the eye and the dragything
-.course-content ul.weeks li.section .left.side,
-.course-content ul.weeks li.section .right.side,
-.course-content ul.topics li.section .left.side,
-.course-content ul.topics li.section .right.side {
-    &.snap-section-editing {
-        max-width: 100%;
-        min-width: 0;
-        width: auto;
-        padding: 0;
-        margin: 0 auto;
-        float: none;
-        display: block;
-        text-align: left;
-        margin-top: -1em;
+.snap-section-editing {
+      visibility: hidden;
+      max-width: 100%;
+      min-width: 0;
+      width: auto;
+      padding: 0;
+      margin: 0 auto;
+      float: none;
+      display: block;
+      text-align: left;
+      margin-top: -1em;
 
-        a,
-        span {
+
+      a {
             display: inline-block;
-            width: auto;
-            padding: 0 0.3em;
+            border-radius: 100%;
+            width: 2em;
+            height: 2em;
+            padding: 0.1em 0.3em;
+            text-align: center;
+            &:hover {
+              background-color: @gray-lighter;
+            }
         }
 
-        img.icon {
-            margin: 0;
-            padding: 0;
-            vertical-align: baseline;
-        }
-
-        .section-handle {
-            float: left;
-        }
+      img.icon {
+          margin: 0;
+          padding: 0;
     }
 }
 
-// Do not show the editing options to people who turn javascript off.
-.jsenabled .snap-section-editing {
+// Show editing options once snap js is loaded.
+.snap-js-loaded .snap-section-editing {
     visibility: visible;
 }
+
 
 // get rid of js cursor style applied to the whole commands area
 .snap-section-editing[style] {
@@ -352,7 +350,7 @@ body.format-flexpage .singlebutton {
 
 .editing .course-content ul li.section.main {
     border-top: 1px solid #ccc;
-    
+
     &:first-child {
         border-top: none;
     }
@@ -366,10 +364,10 @@ body.format-flexpage .singlebutton {
     text-align: right;
     padding-bottom: 2em;
     border-bottom: 1px solid #ccc;
-    
+
     &+ h3 + form {
         padding-bottom: 2em;
-        
+
         label {
             display: block;
         }
@@ -378,7 +376,7 @@ body.format-flexpage .singlebutton {
 
 .course-content ul li.section.hidden {
     opacity: 1;
-    
+
     .content {
         &> h3,
         &> div,
@@ -412,7 +410,7 @@ body.format-flexpage .singlebutton {
     ul,
     ol {
         margin: 1.6em 4%;
-        
+
         ul,
         ol {
             margin: 0 4%;
@@ -423,7 +421,7 @@ body.format-flexpage .singlebutton {
         ul,
         ol {
             margin: 1.6em 4%;
-            
+
             ul,
             ol {
                 margin: 0 4%;
@@ -461,7 +459,7 @@ body.format-flexpage .singlebutton {
     background-position: 50% 89%;
     background-size: 100px auto;
     box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
-    
+
     .asset-wrapper {
         height: 100%;
         overflow-x: hidden;
@@ -475,7 +473,7 @@ body.format-flexpage .singlebutton {
         background-color: #fff;
         height: auto;
         .clearfix();
-        
+
         .activityicon {
             float: right;
             width: 75px;
@@ -485,7 +483,7 @@ body.format-flexpage .singlebutton {
         // the link to the mod - moodle does not add a class :(
         .snap-asset-link a {
             color: #666;
-            
+
             &:hover {
                 color: #333;
                 text-decoration: none;
@@ -580,7 +578,7 @@ we do this by default in snap, so hide moodle version */
     margin: 0.5em 0;
     box-shadow: none;
     .clearfix();
-    
+
     .asset-wrapper,
     .activityinstance {
         padding: 0;
@@ -597,7 +595,7 @@ we do this by default in snap, so hide moodle version */
     margin: 1em 0;
     padding: 0.3em 0;
     background-image: none;
-    
+
     .activityinstance {
         padding: 1em 0;
     }
@@ -633,7 +631,7 @@ we do this by default in snap, so hide moodle version */
         display: none;
         clear: both;
         padding: 1em 0;
-        
+
         &:focus {
             outline: 0;
         }
@@ -739,7 +737,7 @@ we do this by default in snap, so hide moodle version */
 
 .snap-image-image {
     position: relative;
-    
+
     .snap-image-link {
         display: block;
         text-align: center;
@@ -783,7 +781,7 @@ we do this by default in snap, so hide moodle version */
     display: block;
     clear: none;
     .alakazam();
-    
+
     &:hover {
         background-position: 50% 75%;
         background-size: 120px auto;
@@ -933,7 +931,7 @@ li.snap-resource,
 .section li.snap-activity {
     background-image: none;
     width: 99%; // to allow for box-shadow faux border
-    
+
     .instancename {
         font-size: @font-size-large;
         display: block;
@@ -953,7 +951,7 @@ li.snap-resource,
 // experimental code, not used bu keeping as may...
 .section li.snap-activity {
     &.modtype_forum {
-        
+
         // background-image:linear-gradient(to right,#71d5df 22%,#ffffff 22%);
     }
 }
@@ -967,7 +965,7 @@ li.modtype_forum,
 li.modtype_chat,
 li.modtype_hsuforum {
     border-color: #49a0ae;
-    
+
     .snap-assettype {
         background-color: #49a0ae;
     }
@@ -977,7 +975,7 @@ li.modtype_assign,
 li.modtype_assignment,
 li.modtype_workshop {
     border-color: #4abc96;
-    
+
     .snap-assettype {
         background-color: #4abc96;
     }
@@ -985,7 +983,7 @@ li.modtype_workshop {
 
 li.modtype_lesson {
     border-color: #6cc077;
-    
+
     .snap-assettype {
         background-color: #6cc077;
     }
@@ -997,7 +995,7 @@ li.modtype_quiz,
 li.modtype_survey,
 li.modtype_questionnaire {
     border-color: #a0bf19;
-    
+
     .snap-assettype {
         background-color: #a0bf19;
     }
@@ -1007,7 +1005,7 @@ li.modtype_data,
 li.modtype_glossary,
 li.modtype_wiki {
     border-color: #edc92c;
-    
+
     .snap-assettype {
         background-color: #edc92c;
     }
@@ -1015,7 +1013,7 @@ li.modtype_wiki {
 
 li.modtype_collaborate {
     border-color: #aa70b0;
-    
+
     .snap-assettype {
         background-color: #aa70b0;
     }
@@ -1023,7 +1021,7 @@ li.modtype_collaborate {
 
 li.snap-activity.modtype_folder {
     border-color: #f9f29a;
-    
+
     .snap-assettype {
         background-color: #f9f29a;
     }
@@ -1042,7 +1040,7 @@ li.snap-activity.modtype_folder {
     margin: 1em 0;
     background-color: transparent;
     font-family: @font-family-base;
-    
+
     img {
         display: none;
     }
@@ -1091,11 +1089,11 @@ li.snap-activity.modtype_folder {
     width: 100%;
     overflow: hidden;
     .clearfix();
-    
+
     .moodle-actionmenu {
         width: 100%;
         max-width: 320px;
-        
+
         .menubar {
             text-align: right;
         }
@@ -1147,7 +1145,7 @@ form.togglecompletion input:hover {
 /* commands - moodle container for edit options */
 .snap-asset {
     .commands {
-        
+
         // display:inline-block;
         display: block;
         float: right;
@@ -1228,7 +1226,7 @@ div.commands ul.menubar {
 
     // when menu shown
     &.action-menu-shown .actions {
-        
+
         // hide move & groups
         .editing_move,
         [class*='group'] {
@@ -1272,7 +1270,7 @@ span.editinstructions {
     clear: both;
     display: block;
     background-color: transparent;
-    
+
     a {
         .btn;
         color: #fff !important;
@@ -1292,11 +1290,11 @@ span.editinstructions {
 
 #changenumsections {
     .text-center;
-    
+
     .increase-sections,
     .reduce-sections {
         .btn;
-        
+
         img {
             display: none;
         }
@@ -1349,7 +1347,7 @@ span.editinstructions {
 #page-course-completion {
     .mform .fcontainer .fitem_fcheckbox {
         display: flex;
-        
+
         .fitemtitle {
             order: 2;
         }
@@ -1382,7 +1380,7 @@ span.editinstructions {
     #region-main td.userpicture {
         width: 70px;
         vertical-align: middle;
-        
+
         img {
             margin-left: 25px;
         }
