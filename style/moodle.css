@@ -17540,6 +17540,33 @@ li.section:focus {
 .course-content ul.topics li.section .right.side.snap-section-editing .section-handle {
   float: left;
 }
+.snap-section-editing {
+  visibility: hidden;
+  max-width: 100%;
+  min-width: 0;
+  width: auto;
+  padding: 0;
+  margin: 0 auto;
+  float: none;
+  display: block;
+  text-align: left;
+  margin-top: -1em;
+}
+.snap-section-editing a {
+  display: inline-block;
+  border-radius: 100%;
+  width: 2em;
+  height: 2em;
+  padding: 0.1em 0.3em;
+  text-align: center;
+}
+.snap-section-editing a:hover {
+  background-color: #dadada;
+}
+.snap-section-editing img.icon {
+  margin: 0;
+  padding: 0;
+}
 .jsenabled .snap-section-editing {
   visibility: visible;
 }
