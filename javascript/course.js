@@ -292,6 +292,13 @@ M.theme_snap.course = {
         };
 
         /**
+         * Add drop zones at the end of sections.
+         */
+        var add_after_drops = function() {
+            $('li.section .content ul.section').append('<li class="snap-drop"><div class="asset-wrapper">Move Here</div></li>');
+        }
+
+        /**
          * When assett move link is clicked, initiate the move.
          */
         var move_asset_listener = function() {
@@ -407,6 +414,8 @@ M.theme_snap.course = {
             move_place_listener();
 
             asset_edit_listeners();
+
+            add_after_drops();
         };
         initialise();
     }

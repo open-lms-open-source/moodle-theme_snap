@@ -153,7 +153,7 @@ class theme_snap_core_course_renderer extends core_course_renderer {
 
         // TODO - add if can edit.
         // Drop asset notice.
-        $output .= "<a class='snap-move-note' href='#'>move thing here</a>";
+        $output .= '<a class="snap-move-note" href="#">'.get_string('movehere', 'theme_snap').'</a>';
         // Start the div for the activity content.
         $output .= "<div class='activityinstance'>";
         // Display the link to the module (or do nothing if module has no url).
