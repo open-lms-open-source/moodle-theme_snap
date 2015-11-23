@@ -1799,7 +1799,7 @@ span.editinstructions {
     animation: resourceinsert 1s;
 }
 
-.snap-move-note {
+.snap-move-note, .snap-drop.asset-drop {
     display: none;
 }
 // Show when moving
@@ -1827,5 +1827,15 @@ span.editinstructions {
       text-align: center;
       padding: 1em;
       display: block;
+  }
+  .snap-drop.asset-drop {
+      display: block;
+      clear: both;
+      border:3px dashed @gray;
+      font-size: 2em;
+      font-color: @gray;
+      font-family: @font-family-base;
+      text-align: center;
+      cursor: pointer;
   }
 }

@@ -62,7 +62,7 @@ M.theme_snap.course = {
             }
 
             // Add spinner.
-            $('#snap-move-notice .snap-move-notice-title').append('<span class="spinner-three-quarters"></span>');
+            $('#snap-move-message .snap-move-message-title').append('<span class="spinner-three-quarters"></span>');
 
             // Set common params.
             params.sesskey = M.cfg.sesskey;
@@ -91,8 +91,9 @@ M.theme_snap.course = {
             req.fail(function () {
                 move_failed();
             });
-            req.always(function () {
+            req.complete(function () {
                 ajaxing = false;
+                $('#snap-move-message-title .spinner-three-quarters').remove();
             });
         };
 
@@ -101,7 +102,7 @@ M.theme_snap.course = {
          * @param snapmeta
          */
         var meta_ajax_loading = function(snapmeta){
-            $(snapmeta).append('<div class="loadingstat three-quarters spinner-dark">' + Y.Escape.html(M.util.get_string('loading', 'theme_snap')) + '</div>');
+            $(snapmeta).append('<div class="loadingstat spinner-three-quarters spinner-dark">' + Y.Escape.html(M.util.get_string('loading', 'theme_snap')) + '</div>');
         }
 
         /**
@@ -163,6 +164,9 @@ M.theme_snap.course = {
             params['class'] = 'resource';
             params.id = Number(movingobject.id.replace('module-', ''));
 
+            log('drop target', target);
+            log ($(target).hasClass('snap-drop'));
+
             if (target && !$(target).hasClass('snap-drop')) {
                 params.beforeId = Number($(target)[0].id.replace('module-', ''));
             } else {
@@ -174,12 +178,9 @@ M.theme_snap.course = {
             } else {
                 params.sectionId = Number($(movingobject).parents('li.section.main')[0].id.replace('section-', ''));
             }
-            log('asset move - moving', movingobject);
-            log('asset move - target', target);
-            $(target).before($(movingobject));
 
             ajax_req_move_general(params, target, function () {
-                // TODO - action move here.
+                $(target).before($(movingobject));
             });
         }
 
@@ -295,7 +296,7 @@ M.theme_snap.course = {
          * Add drop zones at the end of sections.
          */
         var add_after_drops = function() {
-            $('li.section .content ul.section').append('<li class="snap-drop"><div class="asset-wrapper">Move Here</div></li>');
+            $('li.section .content ul.section').append('<li class="snap-drop asset-drop"><div class="asset-wrapper">'+M.util.get_string('movehere', 'theme_snap')+'</div></li>');
         }
 
         /**
@@ -344,7 +345,12 @@ M.theme_snap.course = {
                     if ($('body').hasClass('snap-move-section')) {
                         ajax_req_move_section(this);
                     } else {
-                        var target = $(this).closest('.snap-asset');
+                        var target;
+                        if ($(this).hasClass('snap-drop')) {
+                            target = this;
+                        } else {
+                            target = $(this).closest('.snap-asset');
+                        }
                         ajax_req_move_asset(target);
                     }
                 }
