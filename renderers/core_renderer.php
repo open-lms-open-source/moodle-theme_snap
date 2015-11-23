@@ -663,6 +663,10 @@ class theme_snap_core_renderer extends toc_renderer {
 
             $courselist .= "<section id='fixy-my-courses'><div class='clearfix'><h2>".get_string('courses')."</h2>";
 
+            // Default text when no courses.
+            if (!$mycourses) {
+                $courselist .= "<p>".get_string('coursefixydefaulttext', 'theme_snap')."</p>";
+            }
             foreach ($mycourses as $c) {
                 $pubstatus = "";
                 if (!$c->visible) {
