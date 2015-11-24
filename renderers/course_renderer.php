@@ -210,12 +210,14 @@ class theme_snap_core_course_renderer extends core_course_renderer {
             $str = get_strings(array('delete', 'move', 'duplicate', 'hide', 'show'), 'moodle');
             // TODO - add snap strings here.
 
-            // TODO - do we need the rename or replace with quickedit (modal) with advanced settings link?
-
             // Move, Edit, Delete.
             if(has_capability('moodle/course:manageactivities', $modcontext)){
-              $actions .= "<a href='".new moodle_url($baseurl, array('move' => $mod->id))."'>".get_string('move')."</a>";
-              $actions .= "<a href='".new moodle_url($baseurl, array('update' => $mod->id))."'>".get_string('edit')."</a>";
+              $moveicon = "<img title='".get_string('move')."' class='svg-icon' src='".$this->output->pix_url('move', 'theme')."'/>";
+              $editicon = "<img title='".get_string('edit')."' class='svg-icon' src='".$this->output->pix_url('edit', 'theme')."'/>";
+              $actions .= " <label><input class='snap-move-asset' type='checkbox'>$moveicon</label>";
+
+              // $actions .= "<a class='snap-move-asset' href='".new moodle_url($baseurl, array('move' => $mod->id))."'>$moveicon</a>";
+              $actions .= "<a class='snap-edit-asset' href='".new moodle_url($baseurl, array('update' => $mod->id))."'>$editicon</a>";
               $actionsadvanced[] = "<a href='".new moodle_url($baseurl, array('delete' => $mod->id))."'>$str->delete</a>";
         }
 
@@ -276,8 +278,9 @@ class theme_snap_core_course_renderer extends core_course_renderer {
 
         $advancedactions = '';
         if (!empty($actionsadvanced)) {
-          $advancedactions = "<div class='dropdown' style='display:inline-block'>
-                      <a href='#' class='dropdown-toggle' data-toggle='dropdown' aria-expanded='false' aria-haspopup='true'>".get_string('more', 'theme_snap')."</a>
+          $moreicon = "<img title='".get_string('more', 'theme_snap')."' class='svg-icon' src='".$this->output->pix_url('more', 'theme')."'/>";
+          $advancedactions = "<div class='dropdown snap-edit-more-dropdown'>
+                      <a href='#' class='dropdown-toggle snap-edit-asset-more' data-toggle='dropdown' aria-expanded='false' aria-haspopup='true'>$moreicon</a>
                       <ul class='dropdown-menu'>";
           foreach ($actionsadvanced as $action) {
             $advancedactions .= "<li>$action</li>";
@@ -289,7 +292,7 @@ class theme_snap_core_course_renderer extends core_course_renderer {
         if ($actions) {
             $output .= "<div class='snap-asset-actions' role='region' aria-label='actions'>";
             $output .= $actions.$advancedactions;
-                $output .= "</div>";
+            $output .= "</div>";
         }
         // Close clearfix.
         $output .= "</div>";
