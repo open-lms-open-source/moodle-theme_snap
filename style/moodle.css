@@ -17334,20 +17334,22 @@ section#region-main
   text-align: center;
 }
 #page-mast .singlebutton {
+  display: none;
+}
+.editing #course-toc,
+.editing #region-main {
+  display: none;
+}
+.editing #page-mast .singlebutton {
   float: right;
   margin-top: -3.2em;
   margin-right: -4%;
-  display: none;
+  display: block;
 }
-#page-mast .singlebutton input[type="submit"] {
+.editing #page-mast .singlebutton input[type="submit"] {
   background-color: #999999 !important;
   -webkit-box-shadow: 0;
           box-shadow: 0;
-}
-@media screen and (min-width: 992px) {
-  #page-mast .singlebutton {
-    display: block;
-  }
 }
 .ie.path-course-view section#region-main > .singlebutton input[type="submit"] {
   background-image: url("[[pix:theme|edit_for_ie]]");
@@ -17360,28 +17362,6 @@ section#region-main
 }
 #dndupload-status {
   display: none;
-}
-.dndupload-preview {
-  display: none !important;
-}
-.dndupload-over .snap-dropzone {
-  background-color: #fafafa;
-}
-@media screen and (min-width: 992px) {
-  #dndupload-status {
-    display: block;
-    border: 0;
-    -webkit-box-shadow: none;
-            box-shadow: none;
-    width: 100%;
-    padding: 0;
-    margin: 0 auto;
-    top: 5em;
-    border-radius: 0;
-    height: 0;
-    background-color: transparent;
-    color: #ccc;
-  }
 }
 /* A SPECIAL SECTION IN SNAP FOR COURSE TOOLS */
 #coursetools-logo {
@@ -17585,7 +17565,6 @@ li.section:focus {
   width: 0;
   overflow: hidden;
 }
-.editing .course-content > ul li.section,
 .course-content > ul li.section.state-visible,
 #coursetools.state-visible,
 .editing #coursetools,
@@ -17613,12 +17592,6 @@ body.format-flexpage .singlebutton {
   text-align: center;
   padding: 3em 0;
 }
-.editing .course-content ul li.section.main {
-  border-top: 1px solid #ccc;
-}
-.editing .course-content ul li.section.main:first-child {
-  border-top: none;
-}
 .folderview-single-section #coursetools {
   display: none;
 }
@@ -17642,9 +17615,6 @@ body.format-flexpage .singlebutton {
   opacity: 0.5;
 }
 /* MODS & RESOURCES IN COURSE */
-.editing .section .activity .contentwithoutlink {
-  padding-right: 0;
-}
 .section .activity .activityinstance,
 .section .activity .activityinstance div {
   display: block;

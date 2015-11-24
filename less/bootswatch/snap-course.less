@@ -41,24 +41,31 @@ section#region-main
     text-align: center;
 }
 
-// Course page  - turn editing on button
+// Course page  - turn editing on button.
 #page-mast .singlebutton {
-    float: right;
-    margin-top: -3.2em; // MAGIC NUMBER
-    margin-right: -4%; // MAGIC NUMBER
-
-    input[type="submit"] {
-        background-color: @gray-light !important;
-        box-shadow: 0;
-    }
-
-    // hide on small screen
     display: none;
+}
+// SLamour Nov 2015 - editing only shows blocks.
+.editing {
+    #course-toc,
+    #region-main {
+        display: none;
+    }
+    #page-mast .singlebutton {
+        float: right;
+        margin-top: -3.2em; // MAGIC NUMBER
+        margin-right: -4%; // MAGIC NUMBER
+        display: block;
+        input[type="submit"] {
+            background-color: @gray-light !important;
+            box-shadow: 0;
+        }
+    }
 }
 
 @media screen and (min-width: @screen-md) {
     #page-mast .singlebutton {
-        display: block;
+        // display: block;
     }
 }
 
@@ -88,22 +95,6 @@ section#region-main
     }
 }
 
-// only display drag and drop for devices that we think are desktop!
-@media screen and (min-width: @screen-md) {
-    #dndupload-status {
-        display: block;
-        border: 0;
-        box-shadow: none;
-        width: 100%;
-        padding: 0;
-        margin: 0 auto;
-        top: 5em;
-        border-radius: 0;
-        height: 0;
-        background-color: transparent;
-        color: #ccc;
-    }
-}
 
 /* A SPECIAL SECTION IN SNAP FOR COURSE TOOLS */
 #coursetools-logo {
@@ -349,7 +340,7 @@ li.section:focus {
     overflow: hidden;
 }
 
-.editing .course-content > ul li.section,
+
 .course-content > ul li.section.state-visible,
 #coursetools.state-visible,
 .editing #coursetools,
@@ -380,14 +371,6 @@ body.format-flexpage .singlebutton {
 .section-modchooser {
     text-align: center;
     padding: 3em 0;
-}
-
-.editing .course-content ul li.section.main {
-    border-top: 1px solid #ccc;
-
-    &:first-child {
-        border-top: none;
-    }
 }
 
 .folderview-single-section #coursetools {
@@ -425,9 +408,7 @@ body.format-flexpage .singlebutton {
 // Reset moodle css mess
 // -------------------------
 
-.editing .section .activity .contentwithoutlink {
-    padding-right: 0;
-}
+
 
 .section .activity .activityinstance,
 .section .activity .activityinstance div {

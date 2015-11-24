@@ -496,22 +496,7 @@ class snap_shared extends renderer_base {
         $localplugins = core_component::get_plugin_list('local');
         $coursecontext = context_course::instance($COURSE->id);
 
-        // Turn editing on.
-        $iconsrc = $OUTPUT->pix_url('icon', 'label');
-        $editcourseicon = '<img class="svg-icon" alt="" title="" src="'.$iconsrc.'">';
-        $url = new moodle_url('/course/view.php', ['id' => $COURSE->id, 'sesskey' => sesskey()]);
-        if ($PAGE->user_is_editing()) {
-            $url->param('edit', 'off');
-            $editstring = get_string('turneditingoff');
-        } else {
-            $url->param('edit', 'on');
-            $editstring = get_string('editcoursecontent', 'theme_snap');
-        }
-        $links[] = array(
-            'link' => $url,
-            'title' => $editcourseicon.$editstring,
-            'capability' => 'moodle/course:update' // Capability required to view this item.
-        );
+        
 
         // Course settings.
         $settingsicon = '<svg viewBox="0 0 100 100" class="svg-icon">
@@ -583,6 +568,8 @@ class snap_shared extends renderer_base {
                 );
             }
         }
+        
+        
 
         $badgesicon = '<svg viewBox="0 0 100 100" class="svg-icon">
             <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#coursetools-badges"></use></svg>';
@@ -676,6 +663,23 @@ class snap_shared extends renderer_base {
                 'title' => $enrolicon.$enrolstr
             );
         }
+        
+        // Turn editing on.
+        $iconsrc = $OUTPUT->pix_url('icon', 'label');
+        $editcourseicon = '<img class="svg-icon" alt="" title="" src="'.$iconsrc.'">';
+        $url = new moodle_url('/course/view.php', ['id' => $COURSE->id, 'sesskey' => sesskey()]);
+        if ($PAGE->user_is_editing()) {
+            $url->param('edit', 'off');
+            $editstring = get_string('turneditingoff');
+        } else {
+            $url->param('edit', 'on');
+            $editstring = get_string('editcoursecontent', 'theme_snap');
+        }
+        $links[] = array(
+            'link' => $url,
+            'title' => $editcourseicon.$editstring,
+            'capability' => 'moodle/course:update' // Capability required to view this item.
+        );
 
         $toolssvg = self::inline_svg('tools.svg');
         // Output course tools.

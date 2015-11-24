@@ -69,7 +69,7 @@ $string['debugerrors'] = 'Debug Errors';
 $string['draft'] = 'Draft';
 $string['dropzonelabel'] = 'Drop files to attach, or <span class="btn-link">browse</span>';
 $string['due'] = 'Due';
-$string['editcoursecontent'] = 'Edit course content';
+$string['editcoursecontent'] = 'Edit course blocks';
 $string['editcoursesettings'] = 'Edit course settings';
 $string['editcoursetopic'] = 'Edit Topic';
 $string['editcustomfooter'] = 'Edit footer';
