@@ -170,12 +170,14 @@ class theme_snap_core_course_renderer extends core_course_renderer {
         // Activity/resource type.
         $snapmodtype = $this->get_mod_type($mod)[0];
         $assetmeta .= "<span class='snap-assettype'>".$snapmodtype."</span>";
+
         if (!empty($cmname)) {
           // Tracking for most assets.
           $assetmeta .= $completiontracking;
         }
-        
-        if (!empty($mod->groupingid) && has_capability('moodle/course:managegroups', context_course::instance($mod->course))) {
+
+        $canmanagegroups = has_capability('moodle/course:managegroups', context_course::instance($mod->course));
+        if (!empty($mod->groupingid) && $canmanagegroups) {
             // Grouping label.
             $groupings = groups_get_all_groupings($mod->course);
             $assetmeta .= "<span class='snap-groupinglabel'>".format_string($groupings[$mod->groupingid]->name)."</span>";
@@ -192,6 +194,16 @@ class theme_snap_core_course_renderer extends core_course_renderer {
             $assetmeta .= "<span class='conditional_info'>$conditionalinfo</span>";
             $assetmeta .= "<div class='availabilityinfo'>$availabilityinfo</div>";
         }
+
+        if ($canmanagegroups && $mod->effectivegroupmode != NOGROUPS) {
+            if ($mod->effectivegroupmode == VISIBLEGROUPS) {
+                $groupinfo = get_string('groupsvisible');
+            } else if ($mod->effectivegroupmode == SEPARATEGROUPS) {
+                $groupinfo = get_string('groupsseparate');
+            }
+            $assetmeta .= "<div class='snap-group-info'>$groupinfo</div>";
+        }
+
         $assetmeta .= "</div>"; // Close asset-meta.
 
         $contentpart = $this->course_section_cm_text($mod, $displayoptions);
