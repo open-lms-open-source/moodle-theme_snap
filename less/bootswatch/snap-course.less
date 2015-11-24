@@ -1220,13 +1220,20 @@ li.draft {
 .editing .section .activity.modtype_label.label {
     padding-bottom: 1em;
 }
-/* student completion actions */
+/* Completion actions */
 .togglecompletion,
 .autocompletion {
     float: left;
     clear: both;
-    padding-bottom: 1em;
 }
+/* Add padding for labels */
+.modtype_label {
+    .togglecompletion,
+    .autocompletion{
+        padding-bottom: 1em;
+    }
+}
+/* Hide if editing it on */
 .editing {
     .togglecompletion,
     .autocompletion {

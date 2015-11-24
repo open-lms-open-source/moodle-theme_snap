@@ -18392,13 +18392,18 @@ li.draft .editing_show {
 .editing .section .activity.modtype_label.label {
   padding-bottom: 1em;
 }
-/* student completion actions */
+/* Completion actions */
 .togglecompletion,
 .autocompletion {
   float: left;
   clear: both;
+}
+/* Add padding for labels */
+.modtype_label .togglecompletion,
+.modtype_label .autocompletion {
   padding-bottom: 1em;
 }
+/* Hide if editing it on */
 .editing .togglecompletion,
 .editing .autocompletion {
   display: none;
