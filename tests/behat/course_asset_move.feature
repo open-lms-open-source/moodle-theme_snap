@@ -51,11 +51,11 @@ Feature: When the moodle theme is set to Snap, teachers can move course resource
     And I follow "Course"
     And I wait until the page is ready
     And I follow "Topic 1"
-   Then "#section-1" "css_element" should exist
-    And I click on ".snap-activity.modtype_assign .snap-asset-move img[title='Move \"Test assignment1']\"" "css_element"
-   Then I should see "Moving Test assignment1"
+    Then "#section-1" "css_element" should exist
+    And I click on ".snap-activity.modtype_assign .snap-asset-move img[title='Move \"Test assignment1\"']" "css_element"
+    Then I should see "Moving \"Test assignment1\""
     And I click on "li#section-1 li.snap-drop.asset-drop div.asset-wrapper" "css_element"
-   Then ".snap-activity.modtype_assign" "css_element" should appear after ".snap-activity.modtype_assign .snap-asset-move img[title='Move \"Test assignment2']\"" "css_element"
+    Then ".snap-activity.modtype_assign" "css_element" should appear after ".snap-activity.modtype_assign .snap-asset-move img[title='Move \"Test assignment2\"']" "css_element"
 
   @javascript
   Scenario: In read mode, teacher moves activity to a different section.
@@ -65,8 +65,8 @@ Feature: When the moodle theme is set to Snap, teachers can move course resource
     And I wait until the page is ready
     And I follow "Topic 1"
     Then "#section-1" "css_element" should exist
-    And I click on ".snap-activity.modtype_assign .snap-asset-move img[title='Move \"Test assignment1']\"" "css_element"
-    Then I should see "Moving Test assignment1"
+    And I click on ".snap-activity.modtype_assign .snap-asset-move img[title='Move \"Test assignment1\"']" "css_element"
+    Then I should see "Moving \"Test assignment1\""
     And I follow "Topic 2"
     And I click on "li#section-2 li.snap-drop.asset-drop div.asset-wrapper" "css_element"
     Then "li#section-2 .snap-activity.modtype_assign" "css_element" should appear before "li.snap-drop.asset-drop" "css_element"
@@ -78,4 +78,4 @@ Feature: When the moodle theme is set to Snap, teachers can move course resource
     And I follow "Course"
     And I wait until the page is ready
     And I follow "Topic 1"
-   Then ".snap-activity.modtype_assign .js-snap-asset-move" "css_element" should not exist
+    Then ".snap-activity.modtype_assign .js-snap-asset-move" "css_element" should not exist
