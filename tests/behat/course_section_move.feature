@@ -21,7 +21,8 @@
 
 
 @theme @theme_snap
-Feature: When the moodle theme is set to Snap, teachers can move course sections without using drag and drop.
+Feature: When the moodle theme is set to Snap, teachers can move course sections without using drag and drop and without
+  having to enter edit mode.
 
   Background:
     Given the following config values are set as admin:
@@ -37,7 +38,6 @@ Feature: When the moodle theme is set to Snap, teachers can move course sections
       | student1 | Student | 1 | student1@example.com |
     And the following "course enrolments" exist:
       | user | course | role |
-      | admin | C1 | editingteacher |
       | teacher1 | C1 | editingteacher |
       | student1 | C1 | student |
 
@@ -45,28 +45,6 @@ Feature: When the moodle theme is set to Snap, teachers can move course sections
   Scenario: In read mode, teacher moves section 1 to section 2.
     Given I log in with snap as "teacher1"
     And I follow "Menu"
-    And I follow "Course"
-    And I wait until the page is ready
-    And I follow "Topic 1"
-    And I follow "Untitled Topic"
-    And I set the following fields to these values:
-      | name | My topic |
-    And I press "Save changes"
-    And I wait until the page is ready
-    And I follow "Move section"
-   Then I should see "Moving My topic" in the "#snap-move-message" "css_element"
-    And I follow "Topic 4"
-   Then I should see "Place section \"My topic\" before section \"Topic 4\""
-    And I wait until the page is ready
-    And I should see "My topic" in the "#section-4" "css_element"
-
-  @javascript
-  Scenario: In edit mode, admin moves section 1 to section 2.
-    Given I log in with snap as "admin"
-    And I click on "#admin-menu-trigger" "css_element"
-    And I follow "Turn editing on"
-    And I follow "Menu"
-    And I wait until the page is ready
     And I follow "Course"
     And I wait until the page is ready
     And I follow "Topic 1"
