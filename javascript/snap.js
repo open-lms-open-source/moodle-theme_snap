@@ -761,7 +761,7 @@ function snapInit() {
             var trigger = $(e.target),
                 hreftarget = '_self'; // assume browser can open resource
             // Excludes any clicks in the actions menu, on links or forms.
-            if(!$(trigger).closest('.actions, form, a').length) {
+            if(!$(trigger).closest('.snap-asset-actions, form, a, input').length) {
                 // TODO - add a class in the renderer to set target to blank for none-web docs or external links
                 if($(trigger).closest('.snap-resource').is('.target-blank')){
                     hreftarget = '_blank';

@@ -4566,7 +4566,8 @@ fieldset[disabled] a#changenumsections .reduce-sections {
 .snap-move-inprogress .snap-moving,
 .snap-move-inprogress .snap-modchooser,
 .snap-move-inprogress .edit-summary,
-.snap-move-inprogress .snap-asset-actions,
+.snap-move-inprogress .snap-asset-actions .snap-edit-asset,
+.snap-move-inprogress .snap-asset-actions .snap-edit-more-dropdown,
 .snap-move-inprogress .snap-section-editing,
 .snap-move-inprogress .snap-modchooser,
 .snap-move-inprogress .snap-dropzone {
@@ -4634,18 +4635,12 @@ fieldset[disabled] a#changenumsections .reduce-sections {
   text-align: center;
   cursor: pointer;
 }
-.snap-move-asset input.snap-asset-move {
-  position: absolute;
-  display: inline-block;
-  right: 0;
-  margin-top: 0px;
-  margin-right: 3px;
-  width: 0.75em;
-  height: 0.75em;
-  z-index: 2;
-}
-input.snap-asset-move {
+label.snap-asset-move,
+label.snap-asset-move input {
   display: none;
+}
+body.listening-assett-move label.snap-asset-move {
+  display: inline-block;
 }
 /**
  * Snap core swatch.

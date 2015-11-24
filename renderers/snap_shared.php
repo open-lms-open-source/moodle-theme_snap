@@ -306,6 +306,7 @@ class snap_shared extends renderer_base {
             'loading',
             'more',
             'moving',
+            'movingcount',
             'movehere',
             'movefailed',
             'movingdropsectionhelp',

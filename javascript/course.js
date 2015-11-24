@@ -14,12 +14,6 @@ M.theme_snap.course = {
         var movingobjects = [];
 
         /**
-         * Name of item being moved.
-         * @type {string|null}
-         */
-        var moving = null;
-
-        /**
          * @type {boolean}
          */
         var ajaxing = false;
@@ -321,10 +315,26 @@ M.theme_snap.course = {
             $('li.section .content ul.section').append('<li class="snap-drop asset-drop"><div class="asset-wrapper">'+M.util.get_string('movehere', 'theme_snap')+'</div></li>');
         }
 
+        /**
+         * Update moving message.
+         */
         var update_moving_message = function() {
-            snap_move_message.find('.snap-move-message-title').html('Moving '+movingobjects.length+' objects.');
+            if (movingobjects.length === 1) {
+                var assetname = $(movingobjects[0]).find('.snap-asset-link .instancename').html();
+                var title = M.util.get_string('moving', 'theme_snap', assetname);
+                snap_move_message.find('.snap-move-message-title').html(title);
+            } else {
+                snap_move_message.find('.snap-move-message-title').html(
+                    M.util.get_string('movingcount', 'theme_snap', movingobjects.length)
+                );
+            }
+            snap_move_message.focus();
         }
 
+        /**
+         * Remove moving object from moving objects array.
+         * @param obj
+         */
         var remove_moving_object = function(obj) {
             var index = movingobjects.indexOf(obj);
             if (index > -1) {
@@ -333,18 +343,42 @@ M.theme_snap.course = {
             update_moving_message();
         };
 
-        var move_cbox_listener = function() {
+        /**
+         * Add listener for move checkbox.
+         */
+        var asett_move_listener = function() {
             $("#region-main").on('change', '.js-snap-asset-move', function(e) {
                 e.stopPropagation();
 
                 var asset = $(this).parents('.snap-asset')[0];
 
+
+                if (movingobjects.length === 0) {
+                    // Moving asset - activity or resource.
+                    // Initiate move.
+                    var assetname = $(asset).find('.snap-asset-link .instancename').html();
+
+                    log('Moving this asset', assetname);
+
+                    var classes = $(asset).attr('class');
+                    var regex = /(?=snap-mime)([a-z0-9\-]*)/;
+                    var assetclasses = regex.exec(classes);
+                    var classes = '';
+                    if (assetclasses) {
+                        classes = assetclasses.join(' ');
+                    }
+                    log('Moving this class', classes);
+                    $(asset).addClass('asset-moving');
+                    $(asset).find('.js-snap-asset-move').prop('checked', 'checked');
+
+                    $('body').addClass('snap-move-inprogress');
+                    $('body').addClass('snap-move-asset');
+                }
+
                 if ($(this).prop('checked')) {
                     // Add asset to moving array.
                     movingobjects.push(asset);
                     $(asset).addClass('asset-moving');
-                    // TODO - localise
-                    snap_move_message.find('.snap-move-message-title').html('Moving '+movingobjects.length+' objects.');
                 } else {
                     // Remove from moving array.
                     remove_moving_object(asset);
@@ -355,44 +389,10 @@ M.theme_snap.course = {
                         stop_moving();
                     }
                 }
+                update_moving_message();
             });
-
+            $('body').addClass('listening-assett-move');
         }
-
-        /**
-         * When assett move link is clicked, initiate the move.
-         */
-        var move_asset_listener = function() {
-            // TODO - implement asset move listener (current selector is wrong, requires merge of
-            // INT-8449_Asset_editing_tools
-            $("#region-main").on('click', '.snap-asset-actions .js_snap_move', function(e) {
-                e.stopPropagation();
-                e.preventDefault();
-                // Moving asset - activity or resource.
-                var asset = $(this).parents('.snap-asset')[0];
-                var assetname = $(asset).find('.snap-asset-link .instancename').html();
-                log('Moving this asset', assetname);
-
-                // TODO - snap-mine does not exists for activities
-                var classes = $(asset).attr('class');
-                var regex = /(?=snap-mime)([a-z0-9\-]*)/;
-                var assetclasses = regex.exec(classes);
-                var classes = '';
-                if (assetclasses) {
-                    classes = assetclasses.join(' ');
-                }
-                log('Moving this class', classes);
-                movingobjects.push(asset);
-                $(asset).addClass('asset-moving');
-                $(asset).find('.js-snap-asset-move').prop('checked', 'checked');
-
-                $('body').addClass('snap-move-inprogress');
-                $('body').addClass('snap-move-asset');
-                var title = M.util.get_string('moving', 'theme_snap', assetname);
-                snap_move_message.find('.snap-move-message-title').html(title);
-                snap_move_message.focus();
-            });
-        };
 
         /**
          * When an asset or drop zone is clicked, execute move.
@@ -477,8 +477,7 @@ M.theme_snap.course = {
         var initialise = function() {
             // Add listeners.
             move_section_listener();
-            move_asset_listener();
-            move_cbox_listener();
+            asett_move_listener();
             move_cancel_listener();
             move_place_listener();
 

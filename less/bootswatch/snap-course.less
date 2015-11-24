@@ -1756,7 +1756,8 @@ span.editinstructions {
     .snap-moving,
     .snap-modchooser,
     .edit-summary,
-    .snap-asset-actions,
+    .snap-asset-actions .snap-edit-asset,
+    .snap-asset-actions .snap-edit-more-dropdown,
     .snap-section-editing,
     .snap-modchooser,
     .snap-dropzone {
@@ -1837,19 +1838,17 @@ span.editinstructions {
       text-align: center;
       cursor: pointer;
   }
+}
 
-    input.snap-asset-move {
-        position: absolute;
+label.snap-asset-move,
+label.snap-asset-move input{
+    display: none;
+}
+
+// Only show this action once its listener is registered.
+body.listening-assett-move {
+    label.snap-asset-move {
         display: inline-block;
-        right: 0;
-        margin-top: 0px;
-        margin-right: 3px;
-        width: 0.75em;
-        height: 0.75em;
-        z-index: 2;
     }
 }
 
-input.snap-asset-move {
-    display: none;
-}
