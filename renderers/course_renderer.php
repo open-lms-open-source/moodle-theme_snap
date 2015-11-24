@@ -149,6 +149,7 @@ class theme_snap_core_course_renderer extends core_course_renderer {
             && (empty($mod->availableinfo))) {
             return $output;
         }
+        $output .= '<form><input class="snap-asset-move js-snap-asset-move" type="checkbox"/></form>';
         $output .= '<div class="asset-wrapper">';
 
         // TODO - add if can edit.
@@ -235,7 +236,7 @@ class theme_snap_core_course_renderer extends core_course_renderer {
               // $actions .= "<a class='snap-move-asset' href='".new moodle_url($baseurl, array('move' => $mod->id))."'>$moveicon</a>";
               $actions .= "<a class='snap-edit-asset' href='".new moodle_url($baseurl, array('update' => $mod->id))."'>$editicon</a>";
               $actionsadvanced[] = "<a href='".new moodle_url($baseurl, array('delete' => $mod->id))."'>$str->delete</a>";
-        }
+            }
 
             // Hide/Show.
             if (has_capability('moodle/course:activityvisibility', $modcontext)){

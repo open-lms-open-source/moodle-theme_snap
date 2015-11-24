@@ -9,9 +9,9 @@ M.theme_snap.course = {
 
         /**
          * Item being moved - actual dom element.
-         * @type {object|boolean}
+         * @type {array}
          */
-        var movingobject = false;
+        var movingobjects = [];
 
         /**
          * Name of item being moved.
@@ -54,7 +54,7 @@ M.theme_snap.course = {
          * @param actionclass
          * @param onsuccess
          */
-        var ajax_req_move_general = function (params, target, onsuccess) {
+        var ajax_req_move_general = function (params, target, onsuccess, finalitem) {
             if (ajaxing) {
                 // Request already made.
                 log('Skipping ajax request, one already in progress');
@@ -62,7 +62,7 @@ M.theme_snap.course = {
             }
 
             // Add spinner.
-            $('#snap-move-message .snap-move-message-title').append('<span class="spinner-three-quarters"></span>');
+            add_ajax_loading($('#snap-move-message .snap-move-message-title'));
 
             // Set common params.
             params.sesskey = M.cfg.sesskey;
@@ -85,24 +85,33 @@ M.theme_snap.course = {
                     if (onsuccess) {
                         onsuccess();
                     }
-                    stop_moving();
+                    if (finalitem) {
+                        stop_moving();
+                    }
                 }
             });
             req.fail(function () {
                 move_failed();
             });
-            req.complete(function () {
-                ajaxing = false;
-                $('#snap-move-message-title .spinner-three-quarters').remove();
-            });
+
+            if (finalitem) {
+                req.complete(function () {
+                    ajaxing = false;
+                    $('#snap-move-message-title .spinner-three-quarters').remove();
+                });
+            }
         };
 
         /**
-         * Add ajax loading to meta
+         * Add ajax loading to container
          * @param snapmeta
          */
-        var meta_ajax_loading = function(snapmeta){
-            $(snapmeta).append('<div class="loadingstat spinner-three-quarters spinner-dark">' + Y.Escape.html(M.util.get_string('loading', 'theme_snap')) + '</div>');
+        var add_ajax_loading = function(container, dark){
+            if ($(container).find('.loadingstat').length === 0) {
+                var darkclass = dark ? ' spinner-dark' : '';
+                $(container).append('<div class="loadingstat spinner-three-quarters' + darkclass +
+                '">' + Y.Escape.html(M.util.get_string('loading', 'theme_snap')) + '</div>');
+            }
         }
 
         /**
@@ -119,7 +128,7 @@ M.theme_snap.course = {
 
             var id = parent.attr('id').replace('module-', '');
 
-            meta_ajax_loading($(parent).find('.snap-meta'));
+            add_ajax_loading($(parent).find('.snap-meta'), true);
 
             var courseid = M.theme_snap.courseid;
 
@@ -160,12 +169,16 @@ M.theme_snap.course = {
         var ajax_req_move_asset = function (target) {
             var params = {};
 
+            log('Move objects', movingobjects);
+
             // Prepare request parameters
             params['class'] = 'resource';
-            params.id = Number(movingobject.id.replace('module-', ''));
 
-            log('drop target', target);
-            log ($(target).hasClass('snap-drop'));
+            update_moving_message();
+
+            var movingobject = movingobjects.shift();
+
+            params.id = Number(movingobject.id.replace('module-', ''));
 
             if (target && !$(target).hasClass('snap-drop')) {
                 params.beforeId = Number($(target)[0].id.replace('module-', ''));
@@ -179,9 +192,18 @@ M.theme_snap.course = {
                 params.sectionId = Number($(movingobject).parents('li.section.main')[0].id.replace('section-', ''));
             }
 
-            ajax_req_move_general(params, target, function () {
-                $(target).before($(movingobject));
-            });
+            if (movingobjects.length > 0) {
+                ajax_req_move_general(params, target, function () {
+                    $(target).before($(movingobject));
+                    // recurse
+                    ajax_req_move_asset (target);
+                }, false);
+            } else {
+                ajax_req_move_general(params, target, function () {
+                    $(target).before($(movingobject));
+                }, true);
+            }
+
         }
 
         /**
@@ -216,7 +238,7 @@ M.theme_snap.course = {
                 e.preventDefault();
                 var parent = $($(this).parents('.snap-asset')[0]);
                 var id = parent.attr('id').replace('module-', '');
-                meta_ajax_loading($(parent).find('.snap-meta'));
+                add_ajax_loading($(parent).find('.snap-meta'), true);
 
                 var courseid = M.theme_snap.courseid;
 
@@ -267,7 +289,7 @@ M.theme_snap.course = {
                 var sectionname = section.find('.sectionname').text();
 
                 log('Moving this section', sectionname);
-                movingobject = section;
+                movingobjects = [section];
 
                 // This should never happen, but just in case...
                 $('.section-moving').removeClass('section-moving');
@@ -299,13 +321,51 @@ M.theme_snap.course = {
             $('li.section .content ul.section').append('<li class="snap-drop asset-drop"><div class="asset-wrapper">'+M.util.get_string('movehere', 'theme_snap')+'</div></li>');
         }
 
+        var update_moving_message = function() {
+            snap_move_message.find('.snap-move-message-title').html('Moving '+movingobjects.length+' objects.');
+        }
+
+        var remove_moving_object = function(obj) {
+            var index = movingobjects.indexOf(obj);
+            if (index > -1) {
+                movingobjects.splice(index, 1);
+            }
+            update_moving_message();
+        };
+
+        var move_cbox_listener = function() {
+            $("#region-main").on('change', '.js-snap-asset-move', function(e) {
+                e.stopPropagation();
+
+                var asset = $(this).parents('.snap-asset')[0];
+
+                if ($(this).prop('checked')) {
+                    // Add asset to moving array.
+                    movingobjects.push(asset);
+                    $(asset).addClass('asset-moving');
+                    // TODO - localise
+                    snap_move_message.find('.snap-move-message-title').html('Moving '+movingobjects.length+' objects.');
+                } else {
+                    // Remove from moving array.
+                    remove_moving_object(asset);
+                    // Remove moving class
+                    $(asset).removeClass('asset-moving');
+                    if (movingobjects.length === 0) {
+                        // Nothing is ticked for moving, cancel the move.
+                        stop_moving();
+                    }
+                }
+            });
+
+        }
+
         /**
          * When assett move link is clicked, initiate the move.
          */
         var move_asset_listener = function() {
             // TODO - implement asset move listener (current selector is wrong, requires merge of
             // INT-8449_Asset_editing_tools
-            $("#region-main").on('click', '.snap-asset-actions .js_snap_move', function (e) {
+            $("#region-main").on('click', '.snap-asset-actions .js_snap_move', function(e) {
                 e.stopPropagation();
                 e.preventDefault();
                 // Moving asset - activity or resource.
@@ -322,11 +382,12 @@ M.theme_snap.course = {
                     classes = assetclasses.join(' ');
                 }
                 log('Moving this class', classes);
-                movingobject = asset;
+                movingobjects.push(asset);
+                $(asset).addClass('asset-moving');
+                $(asset).find('.js-snap-asset-move').prop('checked', 'checked');
 
                 $('body').addClass('snap-move-inprogress');
                 $('body').addClass('snap-move-asset');
-                $(asset).addClass('asset-moving');
                 var title = M.util.get_string('moving', 'theme_snap', assetname);
                 snap_move_message.find('.snap-move-message-title').html(title);
                 snap_move_message.focus();
@@ -339,7 +400,7 @@ M.theme_snap.course = {
         var move_place_listener = function() {
             $(document).on('click', '.snap-move-note, .snap-drop', function (e) {
                 log('Snap drop clicked', e);
-                if (movingobject) {
+                if (movingobjects) {
                     e.stopPropagation();
                     e.preventDefault();
                     if ($('body').hasClass('snap-move-section')) {
@@ -364,7 +425,7 @@ M.theme_snap.course = {
         var ajax_req_move_section = function (dropzone) {
             var targetsection = $(dropzone).data('id');
             var target = $('#section-' + targetsection);
-            var currentsection = $(movingobject).attr('id').replace('section-', '');
+            var currentsection = $(movingobjects[0]).attr('id').replace('section-', '');
 
             if (currentsection < targetsection) {
                 targetsection -=1;
@@ -382,7 +443,7 @@ M.theme_snap.course = {
                 // TODO - INT-8670 - ok, here we can do a page redirect / reload but should probably ajax if we have time!
                 location.href = location.href.replace(location.hash, '')+'#section-'+targetsection;
                 location.reload(true);
-            });
+            }, true);
         };
 
         /**
@@ -394,7 +455,8 @@ M.theme_snap.course = {
             $('body').removeClass('snap-move-asset');
             $('.section-moving').removeClass('section-moving');
             $('.asset-moving').removeClass('asset-moving');
-            movingobject = '';
+            $('.js-snap-asset-move').removeAttr('checked');
+            movingobjects = [];
         }
 
         /**
@@ -416,6 +478,7 @@ M.theme_snap.course = {
             // Add listeners.
             move_section_listener();
             move_asset_listener();
+            move_cbox_listener();
             move_cancel_listener();
             move_place_listener();
 

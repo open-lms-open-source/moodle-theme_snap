@@ -19384,7 +19384,6 @@ fieldset[disabled] a#changenumsections .reduce-sections {
 .snap-move-inprogress .snap-moving,
 .snap-move-inprogress .snap-modchooser,
 .snap-move-inprogress .edit-summary,
-.snap-move-inprogress .asset-moving,
 .snap-move-inprogress .snap-asset-actions,
 .snap-move-inprogress .snap-section-editing,
 .snap-move-inprogress .snap-modchooser,
@@ -19423,21 +19422,22 @@ fieldset[disabled] a#changenumsections .reduce-sections {
   -webkit-animation: resourceinsert 1s;
           animation: resourceinsert 1s;
 }
-.snap-move-note {
+.snap-move-note,
+.snap-drop.asset-drop {
   display: none;
 }
-.snap-move-asset .snap-resource {
+.snap-move-asset .snap-resource:not(.asset-moving) {
   border: 2px dashed white;
 }
-.snap-move-asset .snap-activity,
+.snap-move-asset .snap-activity:not(.asset-moving),
 .snap-move-asset .snap-native,
-.snap-move-asset li.modtype_label {
+.snap-move-asset li.modtype_label:not(.asset-moving) {
   border: 2px dashed #999999;
 }
-.snap-move-asset .snap-asset {
+.snap-move-asset .snap-asset:not(.asset-moving) {
   opacity: 0.7;
 }
-.snap-move-asset .snap-asset .snap-move-note {
+.snap-move-asset .snap-asset:not(.asset-moving) .snap-move-note {
   position: absolute;
   top: 0;
   bottom: 0;
@@ -19448,6 +19448,29 @@ fieldset[disabled] a#changenumsections .reduce-sections {
   text-align: center;
   padding: 1em;
   display: block;
+}
+.snap-move-asset .snap-drop.asset-drop {
+  display: block;
+  clear: both;
+  border: 3px dashed #666666;
+  font-size: 2em;
+  font-color: #666666;
+  font-family: "Roboto", "Fira Sans", "Segoe UI", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  text-align: center;
+  cursor: pointer;
+}
+.snap-move-asset input.snap-asset-move {
+  position: absolute;
+  display: inline-block;
+  right: 0;
+  margin-top: 0px;
+  margin-right: 3px;
+  width: 0.75em;
+  height: 0.75em;
+  z-index: 2;
+}
+input.snap-asset-move {
+  display: none;
 }
 /**
  * Snap core swatch.
@@ -23281,7 +23304,7 @@ body.hascontinuecancel.path-site #page {
 spinner, from
 http://css-spinners.com/css/spinner/three-quarters.css
 **/
-@-webkit-keyframes three-quarters {
+@-webkit-keyframes spinner-three-quarters {
   0% {
     -webkit-transform: rotate(0deg);
             transform: rotate(0deg);
@@ -23291,7 +23314,7 @@ http://css-spinners.com/css/spinner/three-quarters.css
             transform: rotate(360deg);
   }
 }
-@keyframes three-quarters {
+@keyframes spinner-three-quarters {
   0% {
     -webkit-transform: rotate(0deg);
             transform: rotate(0deg);
@@ -23302,14 +23325,14 @@ http://css-spinners.com/css/spinner/three-quarters.css
   }
 }
 /* Styles for old versions of IE */
-.three-quarters {
+.spinner-three-quarters {
   font-family: sans-serif;
   font-weight: 100;
 }
 /* :not(:required) hides this rule from IE9 and below */
-.three-quarters:not(:required) {
-  -webkit-animation: three-quarters 1250ms infinite linear;
-          animation: three-quarters 1250ms infinite linear;
+.spinner-three-quarters:not(:required) {
+  -webkit-animation: spinner-three-quarters 1250ms infinite linear;
+          animation: spinner-three-quarters 1250ms infinite linear;
   -webkit-transform: translateZ(0);
           transform: translateZ(0);
   border: 6px solid #fff;
@@ -23325,7 +23348,7 @@ http://css-spinners.com/css/spinner/three-quarters.css
   width: 32px;
   height: 32px;
 }
-.three-quarters:not(:required).spinner-dark {
+.spinner-three-quarters:not(:required).spinner-dark {
   border-color: #03a9f4;
   border-right-color: transparent;
 }

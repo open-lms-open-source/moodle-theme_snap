@@ -1756,7 +1756,6 @@ span.editinstructions {
     .snap-moving,
     .snap-modchooser,
     .edit-summary,
-    .asset-moving,
     .snap-asset-actions,
     .snap-section-editing,
     .snap-modchooser,
@@ -1805,18 +1804,18 @@ span.editinstructions {
 // Show when moving
 // Asset dropzones.
 .snap-move-asset {
-  .snap-resource {
+  .snap-resource:not(.asset-moving) {
       border: 2px dashed white;
   }
-  .snap-activity,
+  .snap-activity:not(.asset-moving),
   .snap-native,
-  li.modtype_label {
+  li.modtype_label:not(.asset-moving) {
       border: 2px dashed @gray-light;
   }
-  .snap-asset {
+  .snap-asset:not(.asset-moving) {
       opacity: 0.7;
   }
-  .snap-asset .snap-move-note {
+  .snap-asset:not(.asset-moving) .snap-move-note {
       position: absolute;
       top: 0;
       bottom: 0;
@@ -1838,4 +1837,19 @@ span.editinstructions {
       text-align: center;
       cursor: pointer;
   }
+
+    input.snap-asset-move {
+        position: absolute;
+        display: inline-block;
+        right: 0;
+        margin-top: 0px;
+        margin-right: 3px;
+        width: 0.75em;
+        height: 0.75em;
+        z-index: 2;
+    }
+}
+
+input.snap-asset-move {
+    display: none;
 }
