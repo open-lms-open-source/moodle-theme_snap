@@ -18041,6 +18041,10 @@ we do this by default in snap, so hide moodle version */
   .section li.snap-resource:hover .activityinstance {
     width: 75%;
   }
+  .section li.snap-resource .snap-asset-actions,
+  .section li.snap-resource:hover .snap-asset-actions {
+    width: 250px;
+  }
   .section li.snap-resource .snap-asset-actions label,
   .section li.snap-resource:hover .snap-asset-actions label,
   .section li.snap-resource .snap-asset-actions .snap-edit-more-dropdown,
@@ -18050,6 +18054,9 @@ we do this by default in snap, so hide moodle version */
     width: 25%;
     text-align: left;
     padding: 0;
+  }
+  .dropdown-menu {
+    left: -125px;
   }
 }
 li.snap-resource.snap-mime-document,
@@ -18313,11 +18320,6 @@ li.snap-activity.modtype_folder .snap-assettype {
   width: 25%;
   cursor: pointer;
 }
-.snap-asset-actions > a:hover .svg-icon,
-.snap-asset-actions .snap-edit-more-dropdown:hover .svg-icon,
-.snap-asset-actions label:hover .svg-icon {
-  background-color: #dadada;
-}
 .snap-asset-actions .svg-icon {
   border-radius: 100%;
   background-color: white;
@@ -18337,6 +18339,17 @@ li.snap-activity.modtype_folder .snap-assettype {
   font-weight: inherit;
   font-size: 0.8em;
 }
+.modtype_label .snap-asset-actions .snap-edit-more-dropdown:hover .svg-icon,
+.snap-native .snap-asset-actions .snap-edit-more-dropdown:hover .svg-icon,
+.snap-activity .snap-asset-actions .snap-edit-more-dropdown:hover .svg-icon,
+.modtype_label .snap-asset-actions label:hover .svg-icon,
+.snap-native .snap-asset-actions label:hover .svg-icon,
+.snap-activity .snap-asset-actions label:hover .svg-icon,
+.modtype_label .snap-asset-actions > a:hover .svg-icon,
+.snap-native .snap-asset-actions > a:hover .svg-icon,
+.snap-activity .snap-asset-actions > a:hover .svg-icon {
+  background-color: #dadada;
+}
 .snap-resource .snap-asset-actions {
   width: 100%;
 }
@@ -18349,7 +18362,7 @@ li.snap-activity.modtype_folder .snap-assettype {
 .snap-resource .snap-asset-actions > a,
 .snap-resource .snap-asset-actions .snap-edit-more-dropdown,
 .snap-resource .snap-asset-actions label {
-  padding: 0.5em 7%;
+  padding: 0.3em 7%;
   text-align: center;
   width: 33%;
 }
@@ -18411,13 +18424,10 @@ li.draft .editing_show {
 .section .snap-asset .actions .moodle-actionmenu > ul {
   margin: 0;
 }
-.editing .section .activity.modtype_label.label {
-  padding-bottom: 1em;
-}
 /* Completion actions */
 .togglecompletion,
 .autocompletion {
-  float: left;
+  display: block;
   clear: both;
 }
 /* Add padding for labels */

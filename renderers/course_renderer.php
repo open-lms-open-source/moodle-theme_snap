@@ -165,22 +165,16 @@ class theme_snap_core_course_renderer extends core_course_renderer {
             $assetlink = '<a></a><h4 class="snap-asset-link">'.$cmname.'</h4>';
         }
         // Meta.
-        $completiontracking = $this->course_section_cm_completion($course, $completioninfo, $mod, $displayoptions);
         $assetmeta = "<div class='snap-meta'>";
         // Activity/resource type.
         $snapmodtype = $this->get_mod_type($mod)[0];
         $assetmeta .= "<span class='snap-assettype'>".$snapmodtype."</span>";
 
-        if (!empty($cmname)) {
-          // Tracking for most assets.
-          $assetmeta .= $completiontracking;
-        }
-
         $canmanagegroups = has_capability('moodle/course:managegroups', context_course::instance($mod->course));
         if (!empty($mod->groupingid) && $canmanagegroups) {
             // Grouping label.
             $groupings = groups_get_all_groupings($mod->course);
-            $assetmeta .= "<span class='snap-groupinglabel'>".format_string($groupings[$mod->groupingid]->name)."</span>";
+            $assetmeta .= "<div class='snap-groupinglabel'>".format_string($groupings[$mod->groupingid]->name)."</div>";
 
             // TBD - add a title to show this is the Grouping...
         }
@@ -203,10 +197,11 @@ class theme_snap_core_course_renderer extends core_course_renderer {
             }
             $assetmeta .= "<div class='snap-group-info'>$groupinfo</div>";
         }
-
+        
         $assetmeta .= "</div>"; // Close asset-meta.
 
         $contentpart = $this->course_section_cm_text($mod, $displayoptions);
+
         // Build output.
         $output .= $assetlink.$assetmeta.$contentpart;
 
@@ -214,10 +209,10 @@ class theme_snap_core_course_renderer extends core_course_renderer {
             // Module can put text after the link (e.g. forum unread).
             $output .= $mod->afterlink;
         }
-        else {
-          // Add completion tracking for labels...
-          $output .= $completiontracking;
-        }
+        
+        // Add completion tracking.
+        $completiontracking = $this->course_section_cm_completion($course, $completioninfo, $mod, $displayoptions);
+        $output .= $completiontracking;
         $output .= "</div>"; // Close activity instance.
 
 

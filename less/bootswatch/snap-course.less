@@ -863,6 +863,7 @@ we do this by default in snap, so hide moodle version */
             width: 75%;
         }
         .snap-asset-actions {
+            width: 250px;
             label,
             .snap-edit-more-dropdown,
             > a {
@@ -871,6 +872,9 @@ we do this by default in snap, so hide moodle version */
                 padding: 0;
             }
         }
+    }
+    .dropdown-menu {
+        left: -125px; // magic number so dropdown does not go off the edge of the screen on small screen.
     }
 }
 
@@ -1136,9 +1140,6 @@ li.snap-activity.modtype_folder {
         display: inline-block;
         width: 25%;
         cursor: pointer;
-        &:hover .svg-icon {
-            background-color: @gray-lighter;
-        }
     }
     .svg-icon {
         border-radius: 100%;
@@ -1162,6 +1163,19 @@ li.snap-activity.modtype_folder {
     }
 }
 
+.modtype_label .snap-asset-actions,
+.snap-native .snap-asset-actions,
+.snap-activity .snap-asset-actions {
+    .snap-edit-more-dropdown,
+    label,
+    & > a {
+        &:hover .svg-icon {
+            background-color: @gray-lighter;
+        }
+    }
+}
+
+
 .snap-resource {
     .snap-asset-actions {
         width: 100%;
@@ -1174,7 +1188,7 @@ li.snap-activity.modtype_folder {
         & > a,
         .snap-edit-more-dropdown,
         label {
-            padding: 0.5em 7%;
+            padding: 0.3em 7%;
             text-align: center;
             width: 33%;
         }
@@ -1237,15 +1251,12 @@ li.draft {
     }
 }
 
-// labels get a bit more padding when editing
-.editing .section .activity.modtype_label.label {
-    padding-bottom: 1em;
-}
+
 /* Completion actions */
 .togglecompletion,
 .autocompletion {
-    float: left;
-    clear: both;
+    display:block;
+    clear:both;
 }
 /* Add padding for labels */
 .modtype_label {
