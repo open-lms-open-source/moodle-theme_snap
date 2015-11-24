@@ -165,11 +165,16 @@ class theme_snap_core_course_renderer extends core_course_renderer {
             $assetlink = '<a></a><h4 class="snap-asset-link">'.$cmname.'</h4>';
         }
         // Meta.
+        $completiontracking = $this->course_section_cm_completion($course, $completioninfo, $mod, $displayoptions);
         $assetmeta = "<div class='snap-meta'>";
         // Activity/resource type.
         $snapmodtype = $this->get_mod_type($mod)[0];
         $assetmeta .= "<span class='snap-assettype'>".$snapmodtype."</span>";
-
+        if (!empty($cmname)) {
+          // Tracking for most assets.
+          $assetmeta .= $completiontracking;
+        }
+        
         if (!empty($mod->groupingid) && has_capability('moodle/course:managegroups', context_course::instance($mod->course))) {
             // Grouping label.
             $groupings = groups_get_all_groupings($mod->course);
@@ -196,6 +201,10 @@ class theme_snap_core_course_renderer extends core_course_renderer {
         if (!empty($cmname)) {
             // Module can put text after the link (e.g. forum unread).
             $output .= $mod->afterlink;
+        }
+        else {
+          // Add completion tracking for labels...
+          $output .= $completiontracking;
         }
         $output .= "</div>"; // Close activity instance.
 
