@@ -1101,42 +1101,84 @@ li.snap-activity.modtype_folder {
 // Snap actions
 // -------------------------
 /* all the editing options and completion data in one region */
+.snap-js-loaded .snap-asset-actions {
+    visibility: visible;
+}
 .snap-asset-actions {
+    visibility: hidden;
     position: absolute;
     bottom: 0;
     left: 0;
     width: 250px;
     padding: 0.3em 2%;
     font-size: 0.8em;
-    & > a{
+    label input {
+        display: none;
+    }
+    & > a,
+    .snap-edit-more-dropdown,
+    label {
         display: inline-block;
-        width: 33%;
-        padding: 0 2%;
+        width: 25%;
+        cursor: pointer;
+        &:hover .svg-icon {
+            background-color: @gray-lighter;
+        }
+    }
+    .svg-icon {
+        border-radius: 100%;
+        background-color: white;
+        width: 1.75em;
+        height: 1.75em;
     }
     .dropdown-menu {
         box-shadow: 0 2px 5px 0 rgba(0,0,0,.26);
-        top: 0;
         border: 0;
         padding: 0;
     }
-    .dropdown-menu>li>a {
+    .dropdown-menu a {
         font-weight: inherit;
         font-size: 0.8em;
-        // TODO - set color to brand
     }
 }
 
 .snap-resource {
     .snap-asset-actions {
+        width: 100%;
         & > a,
         & > a:hover,
         & div > a,
         & div > a:hover {
             color: #fff;
         }
+        & > a,
+        .snap-edit-more-dropdown,
+        label {
+            padding: 0.5em 7%;
+            text-align: center;
+            width: 33%;
+        }
+        .dropdown-menu {
+            left: -165px;
+        }
     }
 }
 
+// Draft hide/show.
+.dropdown-menu {
+    .editing_show {
+        display: none;
+    }
+}
+li.draft {
+    .editing_hide {
+        display: none;
+
+    }
+    .editing_show {
+        display: block;
+    }
+}
 
 /* reset some moodle shame */
 .moodle-actionmenu,
