@@ -488,10 +488,10 @@ body.format-flexpage .singlebutton {
     min-height: 125px;
     height: auto;
     font-family: @font-family-base;
-    background-image: url("[[pix:theme|file]]");
+    background-image: url([[pix:theme|file]]);
     background-repeat: no-repeat;
-    background-position: 50% 89%;
-    background-size: 100px auto;
+    background-position: 50% 75%;
+    background-size: 70px auto;
     box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
 
     .asset-wrapper {
@@ -510,8 +510,8 @@ body.format-flexpage .singlebutton {
 
         .activityicon {
             float: right;
-            width: 75px;
-            height: 75px;
+            width: 60px;
+            height: 60px;
         }
 
         // the link to the mod - moodle does not add a class :(
@@ -817,8 +817,8 @@ we do this by default in snap, so hide moodle version */
     .alakazam();
 
     &:hover {
-        background-position: 50% 75%;
-        background-size: 120px auto;
+        background-size: 85px auto;
+        background-position: 50% 70%;
     }
 
     // resource cards are clickable with data-href, so add cursor pointer
@@ -852,10 +852,26 @@ we do this by default in snap, so hide moodle version */
 
 // resources to full width on tiny screen
 @media screen and (max-width: @screen-xs) {
-    .section li.snap-resource {
-            width: 99%;
-            margin: 1em 0;
+    .section li.snap-resource,
+    .section li.snap-resource:hover {
+        width: 99%;
+        margin: 1em auto;
+        height: auto;
+        background-position: 95% 25%;
+        background-size: 60px;
+        .activityinstance {
+            width: 75%;
         }
+        .snap-asset-actions {
+            label,
+            .snap-edit-more-dropdown,
+            > a {
+                width: 25%;
+                text-align: left;
+                padding: 0;
+            }
+        }
+    }
 }
 
 // MIME TYPEs //
@@ -1130,6 +1146,11 @@ li.snap-activity.modtype_folder {
         width: 1.75em;
         height: 1.75em;
     }
+    // When checkbox for moving is checked
+    input[type=checkbox]:checked + .svg-icon {
+        background-color: @brand-success !important;
+    }
+    
     .dropdown-menu {
         box-shadow: 0 2px 5px 0 rgba(0,0,0,.26);
         border: 0;

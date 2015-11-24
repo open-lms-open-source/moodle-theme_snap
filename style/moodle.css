@@ -17689,11 +17689,11 @@ body.format-flexpage .singlebutton {
   min-height: 125px;
   height: auto;
   font-family: "Roboto", "Fira Sans", "Segoe UI", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif;
-  background-image: url("[[pix:theme|file]]");
+  background-image: url([[pix:theme|file]]);
   background-repeat: no-repeat;
-  background-position: 50% 89%;
-  -webkit-background-size: 100px auto;
-          background-size: 100px auto;
+  background-position: 50% 75%;
+  -webkit-background-size: 70px auto;
+          background-size: 70px auto;
   -webkit-box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
           box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
 }
@@ -17727,8 +17727,8 @@ body.format-flexpage .singlebutton {
 }
 .section li.snap-asset .activityinstance .activityicon {
   float: right;
-  width: 75px;
-  height: 75px;
+  width: 60px;
+  height: 60px;
 }
 .section li.snap-asset .activityinstance .snap-asset-link a {
   color: #666;
@@ -17987,9 +17987,9 @@ we do this by default in snap, so hide moodle version */
           transition: all 0.4s ease-in-out;
 }
 .section li.snap-resource:hover {
-  background-position: 50% 75%;
-  -webkit-background-size: 120px auto;
-          background-size: 120px auto;
+  -webkit-background-size: 85px auto;
+          background-size: 85px auto;
+  background-position: 50% 70%;
 }
 .section li.snap-resource .asset-wrapper {
   padding: 1em 2%;
@@ -18028,9 +18028,28 @@ we do this by default in snap, so hide moodle version */
   font-size: 1em;
 }
 @media screen and (max-width: 480px) {
-  .section li.snap-resource {
+  .section li.snap-resource,
+  .section li.snap-resource:hover {
     width: 99%;
-    margin: 1em 0;
+    margin: 1em auto;
+    height: auto;
+    background-position: 95% 25%;
+    -webkit-background-size: 60px 60px;
+            background-size: 60px;
+  }
+  .section li.snap-resource .activityinstance,
+  .section li.snap-resource:hover .activityinstance {
+    width: 75%;
+  }
+  .section li.snap-resource .snap-asset-actions label,
+  .section li.snap-resource:hover .snap-asset-actions label,
+  .section li.snap-resource .snap-asset-actions .snap-edit-more-dropdown,
+  .section li.snap-resource:hover .snap-asset-actions .snap-edit-more-dropdown,
+  .section li.snap-resource .snap-asset-actions > a,
+  .section li.snap-resource:hover .snap-asset-actions > a {
+    width: 25%;
+    text-align: left;
+    padding: 0;
   }
 }
 li.snap-resource.snap-mime-document,
@@ -18304,6 +18323,9 @@ li.snap-activity.modtype_folder .snap-assettype {
   background-color: white;
   width: 1.75em;
   height: 1.75em;
+}
+.snap-asset-actions input[type=checkbox]:checked + .svg-icon {
+  background-color: #8bc34a !important;
 }
 .snap-asset-actions .dropdown-menu {
   -webkit-box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
