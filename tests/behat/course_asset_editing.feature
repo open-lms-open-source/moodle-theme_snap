@@ -21,8 +21,7 @@
 
 
 @theme @theme_snap
-Feature: When the moodle theme is set to Snap, teachers can upload files as resources directly to the current
-  course section from a simple file input element in either read or edit mode.
+Feature: When the moodle theme is set to Snap, teachers edit assets without entering edit mode.
 
   Background:
     Given the following config values are set as admin:
@@ -52,7 +51,7 @@ Feature: When the moodle theme is set to Snap, teachers can upload files as reso
     And I follow "Course"
     And I wait until the page is ready
     And I follow "Topic 1"
-    Then ".snap-activity[data-type='Assignment'] a.dropdown-toggle" "css_element" should not exist
+    Then ".snap-activity[data-type='Assignment'] a.snap-edit-asset-more" "css_element" should not exist
 
   @javascript
   Scenario: In read mode, teacher hides then shows activity.
@@ -66,37 +65,12 @@ Feature: When the moodle theme is set to Snap, teachers can upload files as reso
     And I follow "Topic 1"
     Then "#section-1" "css_element" should exist
     And ".snap-activity[data-type='Assignment']" "css_element" should exist
-    And I click on ".snap-activity[data-type='Assignment'] a.dropdown-toggle" "css_element"
+    And I click on ".snap-activity[data-type='Assignment'] a.snap-edit-asset-more" "css_element"
     And I click on ".snap-activity[data-type='Assignment'] a.js_snap_hide" "css_element"
     #TODO - instead of 2 second magic number, wait for ajax to complete by using classes.
     And I wait "2" seconds
     Then ".snap-activity[data-type='Assignment'].draft" "css_element" should exist
-    And I click on ".snap-activity[data-type='Assignment'] a.dropdown-toggle" "css_element"
-    And I click on ".snap-activity[data-type='Assignment'] a.js_snap_show" "css_element"
-    #TODO - instead of 2 second magic number, wait for ajax to complete by using classes.
-    And I wait "2" seconds
-    Then ".snap-activity[data-type='Assignment'].draft" "css_element" should not exist
-
-  @javascript
-  Scenario: In edit mode, admin hides then shows activity.
-    Given the following "activities" exist:
-      | activity | course | idnumber | name            | intro           | section | assignsubmission_onlinetext_enabled |
-      | assign   | C1     | assign1  | Test assignment | Test assignment | 1       | 1 |
-    And I log in with snap as "admin"
-    And I click on "#admin-menu-trigger" "css_element"
-    And I follow "Turn editing on"
-    And I follow "Menu"
-    And I follow "Course"
-    And I wait until the page is ready
-    And I follow "Topic 1"
-    Then "#section-1" "css_element" should exist
-    And ".snap-activity[data-type='Assignment']" "css_element" should exist
-    And I click on ".snap-activity[data-type='Assignment'] a.dropdown-toggle" "css_element"
-    And I click on ".snap-activity[data-type='Assignment'] a.js_snap_hide" "css_element"
-    #TODO - instead of 2 second magic number, wait for ajax to complete by using classes.
-    And I wait "2" seconds
-    Then ".snap-activity[data-type='Assignment'].draft" "css_element" should exist
-    And I click on ".snap-activity[data-type='Assignment'] a.dropdown-toggle" "css_element"
+    And I click on ".snap-activity[data-type='Assignment'] a.snap-edit-asset-more" "css_element"
     And I click on ".snap-activity[data-type='Assignment'] a.js_snap_show" "css_element"
     #TODO - instead of 2 second magic number, wait for ajax to complete by using classes.
     And I wait "2" seconds
@@ -114,40 +88,12 @@ Feature: When the moodle theme is set to Snap, teachers can upload files as reso
     And I upload file "test_text_file.txt" using input "#snap-drop-file-1"
     Then ".snap-resource[data-type='text']" "css_element" should exist
     And ".snap-resource[data-type='text'].draft" "css_element" should not exist
-    And I click on ".snap-resource[data-type='text'] a.dropdown-toggle" "css_element"
+    And I click on ".snap-resource[data-type='text'] a.snap-edit-asset-more" "css_element"
     And I click on ".snap-resource[data-type='text'] a.js_snap_hide" "css_element"
     #TODO - instead of 2 second magic number, wait for ajax to complete by using classes.
     And I wait "2" seconds
     Then ".snap-resource[data-type='text'].draft" "css_element" should exist
-    And I click on ".snap-resource[data-type='text'] a.dropdown-toggle" "css_element"
-    And I click on ".snap-resource[data-type='text'] a.js_snap_show" "css_element"
-    #TODO - instead of 2 second magic number, wait for ajax to complete by using classes.
-    And I wait "2" seconds
-    Then ".snap-resource[data-type='text'].draft" "css_element" should not exist
-
-  @javascript
-  Scenario: In edit mode, admin hides then shows resource.
-    Given the following "activities" exist:
-      | activity | course | idnumber | name            | intro           | section | assignsubmission_onlinetext_enabled |
-      | assign   | C1     | assign1  | Test assignment | Test assignment | 1       | 1 |
-    And I log in with snap as "admin"
-    And I click on "#admin-menu-trigger" "css_element"
-    And I follow "Turn editing on"
-    And I follow "Menu"
-    And I follow "Course"
-    And I wait until the page is ready
-    And I follow "Topic 1"
-    Then "#section-1" "css_element" should exist
-    And "#snap-drop-file-1" "css_element" should exist
-    And I upload file "test_text_file.txt" using input "#snap-drop-file-1"
-    Then ".snap-resource[data-type='text']" "css_element" should exist
-    And ".snap-resource[data-type='text'].draft" "css_element" should not exist
-    And I click on ".snap-resource[data-type='text'] a.dropdown-toggle" "css_element"
-    And I click on ".snap-resource[data-type='text'] a.js_snap_hide" "css_element"
-    #TODO - instead of 2 second magic number, wait for ajax to complete by using classes.
-    And I wait "2" seconds
-    Then ".snap-resource[data-type='text'].draft" "css_element" should exist
-    And I click on ".snap-resource[data-type='text'] a.dropdown-toggle" "css_element"
+    And I click on ".snap-resource[data-type='text'] a.snap-edit-asset-more" "css_element"
     And I click on ".snap-resource[data-type='text'] a.js_snap_show" "css_element"
     #TODO - instead of 2 second magic number, wait for ajax to complete by using classes.
     And I wait "2" seconds
@@ -165,34 +111,11 @@ Feature: When the moodle theme is set to Snap, teachers can upload files as reso
     And I follow "Topic 1"
     Then "#section-1" "css_element" should exist
     And ".snap-activity[data-type='Assignment']" "css_element" should exist
-    And I click on ".snap-activity[data-type='Assignment'] a.dropdown-toggle" "css_element"
+    And I click on ".snap-activity[data-type='Assignment'] a.snap-edit-asset-more" "css_element"
     And I click on ".snap-activity[data-type='Assignment'] a.js_snap_duplicate" "css_element"
     #TODO - instead of 2 second magic number, wait for ajax to complete by using classes.
     And I wait "2" seconds
     Then ".snap-activity[data-type='Assignment']:nth-of-type(2)" "css_element" should appear after ".snap-activity[data-type='Assignment']:nth-of-type(1)" "css_element"
-
-  @javascript
-  Scenario: In edit mode, admin duplicates activity.
-  Note - this has to be done as admin because we are switching to edit mode by turning edit mode on from the front
-  page.
-    Given the following "activities" exist:
-      | activity | course | idnumber | name            | intro           | section | assignsubmission_onlinetext_enabled |
-      | assign   | C1     | assign1  | Test assignment | Test assignment | 1       | 1 |
-    And I log in with snap as "admin"
-    And I click on "#admin-menu-trigger" "css_element"
-    And I follow "Turn editing on"
-    And I follow "Menu"
-    And I follow "Course"
-    And I wait until the page is ready
-    And I follow "Topic 1"
-    Then "#section-1" "css_element" should exist
-    And ".snap-activity[data-type='Assignment']" "css_element" should exist
-    And I click on ".snap-activity[data-type='Assignment'] a.dropdown-toggle" "css_element"
-    And I click on ".snap-activity[data-type='Assignment'] a.js_snap_duplicate" "css_element"
-    #TODO - instead of 2 second magic number, wait for ajax to complete by using classes.
-    And I wait "2" seconds
-    Then ".snap-activity[data-type='Assignment']:nth-of-type(2)" "css_element" should appear after ".snap-activity[data-type='Assignment']:nth-of-type(1)" "css_element"
-
 
   @javascript
   Scenario: In read mode, teacher duplicates resource.
@@ -205,28 +128,7 @@ Feature: When the moodle theme is set to Snap, teachers can upload files as reso
     And "#snap-drop-file-1" "css_element" should exist
     And I upload file "test_text_file.txt" using input "#snap-drop-file-1"
     Then ".snap-resource[data-type='text']" "css_element" should exist
-    And I click on ".snap-resource[data-type='text'] a.dropdown-toggle" "css_element"
-    And I click on ".snap-resource[data-type='text'] a.js_snap_duplicate" "css_element"
-    #TODO - instead of 2 second magic number, wait for ajax to complete by using classes.
-    And I wait "2" seconds
-    Then ".snap-resource[data-type='text']:nth-of-type(2)" "css_element" should appear after ".snap-resource[data-type='text']:nth-of-type(1)" "css_element"
-
-  @javascript
-  Scenario: In edit mode, admin duplicates resource.
-  Note - this has to be done as admin because we are switching to edit mode by turning edit mode on from the front
-  page.
-    Given I log in with snap as "admin"
-    And I click on "#admin-menu-trigger" "css_element"
-    And I follow "Turn editing on"
-    And I follow "Menu"
-    And I follow "Course"
-    And I wait until the page is ready
-    And I follow "Topic 1"
-    Then "#section-1" "css_element" should exist
-    And "#snap-drop-file-1" "css_element" should exist
-    And I upload file "test_text_file.txt" using input "#snap-drop-file-1"
-    Then ".snap-resource[data-type='text']" "css_element" should exist
-    And I click on ".snap-resource[data-type='text'] a.dropdown-toggle" "css_element"
+    And I click on ".snap-resource[data-type='text'] a.snap-edit-asset-more" "css_element"
     And I click on ".snap-resource[data-type='text'] a.js_snap_duplicate" "css_element"
     #TODO - instead of 2 second magic number, wait for ajax to complete by using classes.
     And I wait "2" seconds
