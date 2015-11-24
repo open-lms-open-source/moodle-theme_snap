@@ -18399,6 +18399,10 @@ li.draft .editing_show {
   clear: both;
   padding-bottom: 1em;
 }
+.editing .togglecompletion,
+.editing .autocompletion {
+  display: none;
+}
 span.autocompletion img,
 form.togglecompletion input {
   width: 30px;
