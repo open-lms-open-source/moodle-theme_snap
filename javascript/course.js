@@ -8,10 +8,16 @@ M.theme_snap.course = {
     init : function () {
 
         /**
-         * Item being moved - actual dom element.
+         * Items being moved - actual dom elements.
          * @type {array}
          */
         var movingobjects = [];
+
+        /**
+         * Item being moved - actual dom element.
+         * @type {object}
+         */
+        var movingobject;
 
         /**
          * @type {boolean}
@@ -26,8 +32,8 @@ M.theme_snap.course = {
         /**
          * Logging function.
          *
-         * @param msg
-         * @param object
+         * @param {string} msg
+         * @param {object} object
          */
         var log = function (msg, object) {
             if (!M.cfg.developerdebug) {
@@ -43,10 +49,10 @@ M.theme_snap.course = {
         /**
          * General move request
          *
-         * @param srcid
-         * @param targetid
-         * @param actionclass
-         * @param onsuccess
+         * @param {object}   params
+         * @param {object}   target
+         * @param {function} onsuccess
+         * @param {bool}     finaltime
          */
         var ajax_req_move_general = function (params, target, onsuccess, finalitem) {
             if (ajaxing) {
@@ -98,7 +104,8 @@ M.theme_snap.course = {
 
         /**
          * Add ajax loading to container
-         * @param snapmeta
+         * @param {object} container
+         * @param {bool}   dark
          */
         var add_ajax_loading = function(container, dark){
             if ($(container).find('.loadingstat').length === 0) {
@@ -111,9 +118,9 @@ M.theme_snap.course = {
         /**
          * Show or hide an asset
          *
-         * @param e
-         * @param el
-         * @param show
+         * @param {object} e
+         * @param {object} el
+         * @param {bool}   show
          */
         var asset_show_hide = function(e, el, show) {
             e.preventDefault();
@@ -158,7 +165,7 @@ M.theme_snap.course = {
 
         /**
          * Ajax request to move asset to target.
-         * @param target
+         * @param {object} target
          */
         var ajax_req_move_asset = function (target) {
             var params = {};
@@ -170,7 +177,7 @@ M.theme_snap.course = {
 
             update_moving_message();
 
-            var movingobject = movingobjects.shift();
+            movingobject = movingobjects.shift();
 
             params.id = Number(movingobject.id.replace('module-', ''));
 
@@ -205,10 +212,10 @@ M.theme_snap.course = {
          */
         var move_failed = function () {
             $('.snap-move-notice').addClass('movefail');
-            $('.snap-move-notice .spinner-three-quarters').remove();
-            var actname = $(moving).find('.instancename').html();
+            $('.snap-move-notice .three-quarters').remove();
+            var actname = $(movingobject).find('.instancename').html();
 
-            $('.snap-move-notice-title').html(M.util.get_string('movefailed', 'theme_snap', actname));
+            $('#snap-move-message h5').html(M.util.get_string('movefailed', 'theme_snap', actname));
             // Stop moving in 2 seconds so that the user has time to see the failed moving notice.
             window.setTimeout(function () {
                 // Don't pass in target, we want to abort the move!
@@ -333,7 +340,7 @@ M.theme_snap.course = {
 
         /**
          * Remove moving object from moving objects array.
-         * @param obj
+         * @param {object} obj
          */
         var remove_moving_object = function(obj) {
             var index = movingobjects.indexOf(obj);
