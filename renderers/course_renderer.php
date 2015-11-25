@@ -202,6 +202,14 @@ class theme_snap_core_course_renderer extends core_course_renderer {
             $modicons .= $this->course_section_cm_edit_actions($editactions, $mod, $displayoptions);
             $modicons .= $mod->afterediticons;
             $modicons .= course_get_cm_move($mod, $sectionreturn);
+        } else {
+            // I'm adding these in in none edit mode so that hiding sections will work.
+            // Stuart will be rewriting this as part of ticket INT-8449.
+            $editactions = $this->course_get_cm_edit_actions($mod, $sectionreturn);
+            $modicons .= '<div style="display:none">';
+            $modicons .= $this->course_section_cm_edit_actions($editactions, $mod, $displayoptions);
+            $modicons .= $mod->afterediticons;
+            $modicons .= '</div>';
         }
 
         if (!$this->page->user_is_editing()) {

@@ -67,6 +67,7 @@ $string['defaultintrosummary'] = 'Welcome to your new course {$a}.
 $string['defaulttopictitle'] = 'Untitled Topic';
 $string['debugerrors'] = 'Debug Errors';
 $string['draft'] = 'Draft';
+$string['dropzonelabel'] = 'Drop files to attach, or <span class="btn-link">browse</span>';
 $string['due'] = 'Due';
 $string['editcoursecontent'] = 'Edit course content';
 $string['editcoursesettings'] = 'Edit course settings';
@@ -158,6 +159,7 @@ $string['subtitle_desc'] = 'A brief tag line about your site, about 240 characte
 $string['themecolor'] = 'Brand color';
 $string['themecolordesc'] = 'The primary color for your site which is used in links, buttons and menu backgrounds. Bright colours work best and will give your site a modern feel.';
 $string['togglenavigation'] = 'Toggle navigation';
+$string['topicactions'] = 'Topic actions';
 $string['unenrolme'] = 'Unenrol me';
 $string['unread'] = 'unread';
 $string['via'] = 'via';

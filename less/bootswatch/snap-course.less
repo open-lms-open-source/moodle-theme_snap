@@ -79,6 +79,14 @@ section#region-main
 #dndupload-status {
     display: none;
 }
+.dndupload-preview {
+    display: none !important;
+}
+.dndupload-over {
+    .snap-dropzone {
+        background-color:#fafafa;
+    }
+}
 
 // only display drag and drop for devices that we think are desktop!
 @media screen and (min-width: @screen-md) {
@@ -534,7 +542,8 @@ we do this by default in snap, so hide moodle version */
     display: none;
 }
 
-// show draft tag if parent has draft class
+// show draft tag if parent has draft or hidden class
+.hidden .draft_info,
 .draft .draft_info {
     display: inline-block;
 }

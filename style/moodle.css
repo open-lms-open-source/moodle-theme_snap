@@ -17361,6 +17361,12 @@ section#region-main
 #dndupload-status {
   display: none;
 }
+.dndupload-preview {
+  display: none !important;
+}
+.dndupload-over .snap-dropzone {
+  background-color: #fafafa;
+}
 @media screen and (min-width: 992px) {
   #dndupload-status {
     display: block;
@@ -17763,6 +17769,7 @@ we do this by default in snap, so hide moodle version */
 .draft_info {
   display: none;
 }
+.hidden .draft_info,
 .draft .draft_info {
   display: inline-block;
 }
@@ -22819,6 +22826,19 @@ div.editor_atto_toolbar div.atto_group {
 #id_general .fcontainer,
 #id_generalhdr .fcontainer {
   display: block;
+}
+.snap-dropzone {
+  text-align: center;
+  padding: 1em 4%;
+  margin: 1em 0;
+  border: 3px dashed #dadada;
+}
+.snap-dropzone .snap-dropzone-label {
+  cursor: pointer;
+  background: transparent url("[[pix:resource|icon]]") 0 50% no-repeat;
+  padding-left: 2em;
+  -webkit-background-size: 1.5em auto;
+          background-size: 1.5em auto;
 }
 /**
  * Snap user swatch.
