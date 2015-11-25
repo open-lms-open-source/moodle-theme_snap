@@ -99,7 +99,7 @@ class theme_snap_core_course_renderer extends core_course_renderer {
             // TODO - can we add completion data.
 
             $modclasses [] = 'snap-asset'; // Added to stop conflicts in flexpage.
-            $modclasses [] = 'activity'; // Moodle needs this.
+            $modclasses [] = 'activity'; // Moodle needs this for drag n drop.
             $modclasses [] = $mod->modname;
             $modclasses [] = "modtype_$mod->modname";
             $modclasses [] = $mod->extraclasses;
@@ -150,6 +150,10 @@ class theme_snap_core_course_renderer extends core_course_renderer {
             return $output;
         }
         $output .= '<div class="asset-wrapper">';
+
+        // TODO - add if can edit.
+        // Drop asset notice.
+        $output .= "<a class='snap-move-note' href='#'>move thing here</a>";
         // Start the div for the activity content.
         $output .= "<div class='activityinstance'>";
         // Display the link to the module (or do nothing if module has no url).
@@ -687,5 +691,16 @@ class theme_snap_core_course_renderer extends core_course_renderer {
         $actions['edit-rename'] = $rename;
 
         return $actions;
+    }
+
+    public function snap_move_notice() {
+        $o = '<div id="snap-move-message" tabindex="-1">
+              <h5 class="snap-move-message-title"></h5>
+              <p class="sr-only">-</p>
+              <a class="snap-move-cancel snap-action-icon" href="#">
+              <i class="icon icon-close"></i><small>'.get_string('cancel').'</small>
+              </a>
+        </div>';
+        return $o;
     }
 }

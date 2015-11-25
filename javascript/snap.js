@@ -557,7 +557,7 @@ function snapInit() {
                 if(mod !== null) {
                     $(section).addClass('state-visible');
                     scrollToModule(mod);
-                } else if(!$('.editing').length){
+                } else {
                     $(section).addClass('state-visible').focus();
                     // faux link click behaviour - scroll to page top
                     window.scrollTo(0, 0);
@@ -957,7 +957,8 @@ function snapInit() {
     });
 
     $(window).on('load' , function() {
-
+        // Add a class to the body to show js is loaded.
+        $('body').addClass('snap-js-loaded');
         // Make video responsive.
         // Note, if you don't do this on load then FLV media gets wrong size.
         applyResponsiveVideo();

@@ -42,14 +42,18 @@ class settings_link implements \renderable {
      */
     function __construct() {
         global $PAGE, $COURSE;
-        // Find the settings block.
-        if (!$PAGE->blocks->is_block_present('settings')) {
-            debugging('Settings block was not found on this page', DEBUG_DEVELOPER);
-            return;
-        }
         $canmanageacts = has_capability('moodle/course:manageactivities', $PAGE->context);
         $isstudent = !$canmanageacts && !is_role_switched($COURSE->id);
         if ($isstudent) {
+            return;
+        }
+
+        if (!$PAGE->blocks->is_block_present('settings')) {
+            // Throw error if on front page or course page.
+            // (There are pages that don't have a settings block so we shouldn't throw an error on those pages).
+            if (strpos($PAGE->pagetype, 'course-view') === 0 || $PAGE->pagetype === 'site-index') {
+                debugging('Settings block was not found on this page', DEBUG_DEVELOPER);
+            }
             return;
         }
 
