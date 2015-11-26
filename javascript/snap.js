@@ -19,6 +19,8 @@
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+/* exported snapInit */
+
 /**
  * Main snap initialising function.
  */
@@ -594,7 +596,7 @@ function snapInit() {
             // check we are not in folder view
             if(!$('.format-folderview').length){
                 // reset visible section & blocks
-                $('.course-content .main, #moodle-blocks,#coursetools').removeClass('state-visible');
+                $('.course-content .main, #moodle-blocks,#coursetools, #snap-add-new-section').removeClass('state-visible');
                 // if the hash is just section, can we skip all this?
 
                 // we know the params at 0 is a section id
@@ -624,7 +626,7 @@ function snapInit() {
             }
 
             // default niceties to perform
-            var visibleChapters = $('.course-content .main, #coursetools').filter(':visible');
+            var visibleChapters = $('.course-content .main, #coursetools, #snap-add-new-section').filter(':visible');
             if (!visibleChapters.length) {
                 // show chapter 0
                 $('#section-0').addClass('state-visible').focus();
@@ -633,7 +635,7 @@ function snapInit() {
 
             applyResponsiveVideo();
             // add faux :current class to the relevant section in toc
-            var currentSectionId = $('.main.state-visible, #coursetools.state-visible').attr('id');
+            var currentSectionId = $('.main.state-visible, #coursetools.state-visible, #snap-add-new-section.state-visible').attr('id');
             $('#chapters li').removeClass('current');
             $('#chapters a[href$="' + currentSectionId + '"]').parent('li').addClass('current');
         }
@@ -683,7 +685,7 @@ function snapInit() {
 
         // If there is any video in the new content then we need to make it responsive.
         applyResponsiveVideo();
-    }
+    };
 
     var lightboxMedia = function(resourcemod) {
         var appendto = $('body');
@@ -1070,6 +1072,41 @@ function snapInit() {
         if($('.format-folderview').length) {
             // Check if we are searching for a mod.
             checkHashScrollToModule();
+        }
+
+        var mod_settings_id_re = /^page-mod-.*-mod$/; // e.g. #page-mod-resource-mod or #page-mod-forum-mod
+        var on_mod_settings = mod_settings_id_re.test($('body').attr('id')) && location.href.indexOf("modedit") > -1;
+        var on_course_settings = $('body').attr('id') === 'page-course-edit';
+        var on_section_settings = $('body').attr('id') === 'page-course-editsection';
+
+        if(on_mod_settings || on_course_settings || on_section_settings){
+          // Wrap advanced options in a div
+          $("#mform1 .collapsed").wrapAll('<div class="snap-form-advanced col-md-4" />');
+
+          // Add expand all to advanced column
+          $(".snap-form-advanced").append($(".collapsible-actions"));
+
+          // Sanitize required input into a single fieldset
+          var main_form = $("#mform1 fieldset:first");
+          var append_to = $("#mform1 fieldset:first .fcontainer");
+          var required = $("#mform1 > fieldset:not(.collapsed)").not("#mform1 fieldset:first").not('.hidden');
+          for(var i = 0; i < required.length; i++){
+            var content = $(required[i]).find('.fcontainer');
+            $(append_to).append(content);
+            $(required[i]).remove();
+          }
+          $(main_form).wrap('<div class="snap-form-required col-md-8" />');
+
+          var description = $("#mform1 fieldset:first .fitem_feditor:not(.required)");
+          var editingassignment = $("#page-mod-assign-mod").length > 0;
+
+          if(on_mod_settings && description && !editingassignment) {
+            $(append_to).append(description);
+            $(append_to).append($('#fitem_id_showdescription'));
+          }
+
+          var savebuttons = $("#mform1 #fgroup_id_buttonar");
+          $(main_form).append(savebuttons);
         }
     });
 

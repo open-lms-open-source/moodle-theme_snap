@@ -24,7 +24,7 @@
 
 $string['aboutcourse'] = 'About This Course';
 $string['activity'] = 'Activity';
-$string['addanewsection'] = 'Add a new section';
+$string['addanewsection'] = 'Create a new section';
 $string['addresourceoractivity'] = 'Create learning activity or resource';
 $string['admin'] = 'Admin';
 $string['advancedbrandingheading'] = 'Advanced branding';
@@ -166,6 +166,7 @@ $string['subtitle'] = 'Site description';
 $string['subtitle_desc'] = 'A brief tag line about your site, about 240 characters in length. Your site description will be displayed on the site front page.';
 $string['themecolor'] = 'Brand color';
 $string['themecolordesc'] = 'The primary color for your site which is used in links, buttons and menu backgrounds. Bright colours work best and will give your site a modern feel.';
+$string['title'] = 'Title';
 $string['togglenavigation'] = 'Toggle navigation';
 $string['topicactions'] = 'Topic actions';
 $string['unenrolme'] = 'Unenrol me';

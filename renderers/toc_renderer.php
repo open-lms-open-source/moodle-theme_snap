@@ -266,21 +266,28 @@ class toc_renderer extends core_renderer {
 
             $toc .= $li;
         }
+        $toc .= "</ol>";
+
+        $toc .= "<div class='toc-footer'>";
+
+        $context = context_course::instance($course->id);
+        if (has_capability('moodle/course:update', $context)) {
+            $addanewsection = get_string('addanewsection', 'theme_snap');
+            $addicon = '<img src="'.$this->pix_url('pencil', 'theme').'" class="svg-icon" alt="" />';
+            $toc .= "<a href='#snap-add-new-section'>$addicon$addanewsection</a>";
+        }
+
         $coursetools = get_string('coursetools', 'theme_snap');
-        $url = "#coursetools";
         if ($COURSE->format == 'folderview') {
             $url = new moodle_url('/course/view.php', ['id' => $course->id, 'section' => 0], 'coursetools');
         }
-        $link = html_writer::link($url, $coursetools);
-        $toc .= "<li>$link</li>";
+        $toolsicon = '<img src="'.$this->pix_url('tools', 'theme').'" class="svg-icon" alt="" />';
+        $toc .= "<a href='#coursetools'>$toolsicon$coursetools</a>";
 
-        $toc .= "</ol>";
-        $toc .= "</nav>";
+        $toc .= "</div></nav>";
         $o .= $toc;
         return $o;
     }
-
-
 
     /**
      * provide search function for all modules on page

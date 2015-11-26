@@ -342,6 +342,12 @@ img.icon {
     padding: 0;
     margin-right: 6px;
 }
+img.svg-icon {
+  width: 2rem;
+  height: 2rem;
+  margin: 0 0.3rem;
+  vertical-align: middle;
+}
 
 // Responsive video for iframes, objects, embeds.
 .videoiframe {
@@ -1375,6 +1381,15 @@ header#page-header
     .published-status + .published-status:before {
         content: " · ";
     }
+
+    .toc-footer {
+        margin-right: 4%;
+        text-align: right;
+
+        a {
+            margin-left: 0.5em;
+        }
+    }
 }
 
 // if the course has an image
@@ -1522,7 +1537,8 @@ ol#chapters {
 // small screen
 @media screen and (max-width: @screen-xs-min) {
     #toc-search,
-    #course-toc #toc-desktop-menu-heading {
+    #course-toc #toc-desktop-menu-heading,
+    #course-toc .toc-footer {
         display: none;
     }
 
@@ -1580,6 +1596,17 @@ ol#chapters {
             margin: 0;
             padding: 2em 4%;
             width: 100%;
+        }
+        
+        .toc-footer {
+            display: block;
+            text-align: left;
+            margin-left: 4%;
+            padding-bottom: 2em;
+
+            a {
+                display: block;
+            }
         }
     }
 }

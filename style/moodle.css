@@ -17571,13 +17571,16 @@ li.section:focus {
   padding: 0;
 }
 .course-content > ul li.section,
-#coursetools {
+#coursetools,
+#snap-add-new-section {
   visibility: hidden;
   height: 0;
   width: 0;
   overflow: hidden;
 }
 .course-content > ul li.section.state-visible,
+#snap-add-new-section.state-visible,
+.editing #snap-add-new-section,
 #coursetools.state-visible,
 .editing #coursetools,
 .format-singleactivity #coursetools,
@@ -18857,6 +18860,7 @@ fieldset[disabled] a#changenumsections .reduce-sections {
 }
 .module-meta .label {
   margin-right: 1%;
+  padding: 0.75em;
 }
 @-webkit-keyframes fadeup {
   0% {
@@ -19450,6 +19454,12 @@ img[style*="float:right"] {
 img.icon {
   padding: 0;
   margin-right: 6px;
+}
+img.svg-icon {
+  width: 2rem;
+  height: 2rem;
+  margin: 0 0.3rem;
+  vertical-align: middle;
 }
 .videoiframe {
   text-align: center;
@@ -20432,6 +20442,13 @@ header#page-header
 #course-toc .published-status + .published-status:before {
   content: " · ";
 }
+#course-toc .toc-footer {
+  margin-right: 4%;
+  text-align: right;
+}
+#course-toc .toc-footer a {
+  margin-left: 0.5em;
+}
 .mast-image .breadcrumb li:before,
 .mast-image .breadcrumb > li + li:before,
 .mast-image .breadcrumb a,
@@ -20547,7 +20564,8 @@ ol#chapters li.current a {
 }
 @media screen and (max-width: 480px) {
   #toc-search,
-  #course-toc #toc-desktop-menu-heading {
+  #course-toc #toc-desktop-menu-heading,
+  #course-toc .toc-footer {
     display: none;
   }
   #toc-mobile-menu-toggle {
@@ -20609,6 +20627,15 @@ ol#chapters li.current a {
     margin: 0;
     padding: 2em 4%;
     width: 100%;
+  }
+  #course-toc.state-visible .toc-footer {
+    display: block;
+    text-align: left;
+    margin-left: 4%;
+    padding-bottom: 2em;
+  }
+  #course-toc.state-visible .toc-footer a {
+    display: block;
   }
 }
 #toc-searchables {
@@ -23343,6 +23370,9 @@ div.editor_atto_toolbar div.atto_group {
 #id_general .ftoggler {
   display: none;
 }
+.fdescription.required {
+  display: none;
+}
 #id_general .fcontainer,
 #id_generalhdr .fcontainer {
   display: block;
@@ -23359,6 +23389,168 @@ div.editor_atto_toolbar div.atto_group {
   padding-left: 2em;
   -webkit-background-size: 1.5em auto;
           background-size: 1.5em auto;
+}
+#newsection {
+  width: 100%;
+  margin: 0;
+}
+#snap-add-new-section .editor_atto_content {
+  min-height: 250px !important;
+}
+#snap-add-new-section .editor_atto_wrap {
+  margin-bottom: 1em;
+}
+.editor_atto_notification {
+  bottom: 1em;
+}
+.editor_atto_notification .atto_info,
+.editor_atto_notification .atto_warning {
+  border-radius: 0;
+}
+.pagelayout-admin .mform,
+#page-course-editsection .mform {
+  max-width: 100%;
+}
+#page-mod-url-mod #id_submitbutton,
+#page-mod-page-mod #id_submitbutton,
+#page-mod-resource-mod #id_submitbutton {
+  display: none;
+}
+#fitem_id_externalurl .filemanager-loading {
+  display: none;
+}
+#page-course-edit #maincontent + h2,
+#page-course-editsection #maincontent + h2,
+.pagelayout-admin.path-mod #maincontent + h2 {
+  font-family: "Roboto", "Fira Sans", "Segoe UI", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-weight: 300;
+  line-height: 1.5;
+  color: #666666;
+  margin-top: 14px;
+  margin-bottom: 14px;
+  font-size: 24px;
+}
+#page-course-edit #maincontent + h2 small,
+#page-course-editsection #maincontent + h2 small,
+.pagelayout-admin.path-mod #maincontent + h2 small,
+#page-course-edit #maincontent + h2 .small,
+#page-course-editsection #maincontent + h2 .small,
+.pagelayout-admin.path-mod #maincontent + h2 .small {
+  font-weight: normal;
+  line-height: 1;
+  color: #999999;
+}
+#page-course-edit #maincontent + h2 small,
+#page-course-editsection #maincontent + h2 small,
+.pagelayout-admin.path-mod #maincontent + h2 small,
+#page-course-edit #maincontent + h2 .small,
+#page-course-editsection #maincontent + h2 .small,
+.pagelayout-admin.path-mod #maincontent + h2 .small {
+  font-size: 75%;
+}
+#id_cancel {
+  color: #03a9f4;
+  font-weight: normal;
+  border-radius: 0;
+  margin-left: 2em;
+}
+#id_cancel,
+#id_cancel:active,
+#id_cancel.active,
+#id_cancel[disabled],
+fieldset[disabled] #id_cancel {
+  background-color: transparent;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+#id_cancel,
+#id_cancel:hover,
+#id_cancel:focus,
+#id_cancel:active {
+  border-color: transparent;
+}
+#id_cancel:hover,
+#id_cancel:focus {
+  color: #0275a8;
+  text-decoration: underline;
+  background-color: transparent;
+}
+#id_cancel[disabled]:hover,
+fieldset[disabled] #id_cancel:hover,
+#id_cancel[disabled]:focus,
+fieldset[disabled] #id_cancel:focus {
+  color: #999999;
+  text-decoration: none;
+}
+#fitem_id_outcomes .yui3-moodle-core_outcome-mapoutcome-content-wrapper ul {
+  padding-left: 4%;
+  margin-left: 0;
+}
+.snap-form-required #id_name,
+.snap-form-required #id_externalurl {
+  width: 100%;
+}
+.snap-form-required .editor_atto_content {
+  min-height: 250px !important;
+}
+@media (min-width: 992px) {
+  #id_name {
+    font-family: "Roboto", "Fira Sans", "Segoe UI", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-weight: 300;
+    line-height: 1.5;
+    color: #666666;
+    margin-top: 14px;
+    margin-bottom: 14px;
+    font-size: 36px;
+    margin-top: 0;
+  }
+  #id_name small,
+  #id_name .small {
+    font-weight: normal;
+    line-height: 1;
+    color: #999999;
+  }
+  #id_name small,
+  #id_name .small {
+    font-size: 75%;
+  }
+  .snap-form-required #fgroup_id_buttonar {
+    margin-top: 25px;
+  }
+  .snap-form-advanced fieldset.collapsible legend a.fheader {
+    margin-left: -6px;
+  }
+  .snap-form-advanced legend {
+    font-size: 1em;
+  }
+  .snap-form-advanced .collapsible-actions {
+    text-align: left;
+  }
+  .snap-form-advanced .collapsible-actions .collapseexpand {
+    margin-left: -6px;
+  }
+}
+@media (max-width: 991px) {
+  .snap-form-required #fgroup_id_buttonar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    margin: 0;
+    padding: 0.5em;
+    background-color: #ffffff;
+    z-index: 25;
+    border-top: 1px solid #eee;
+    text-align: center;
+  }
+}
+@media (max-width: 767px) {
+  #id_cancel {
+    margin-left: 0;
+  }
+  #id_submitbutton {
+    display: none;
+  }
 }
 /**
  * Snap user swatch.
@@ -23662,6 +23854,12 @@ input[type="reset"][disabled],
 #page-mast .snap-login-button[disabled],
 #page-site-index .section-modchooser-link .section-modchooser-text[disabled] {
   background-color: #03a9f4;
+}
+#id_cancel {
+  color: #03a9f4;
+}
+#id_cancel:hover {
+  color: #038dcc;
 }
 .editing.path-course-view section#region-main > .singlebutton input[type="submit"],
 .editor_atto_toolbar button,
