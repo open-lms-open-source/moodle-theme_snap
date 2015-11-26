@@ -328,6 +328,7 @@ M.theme_snap.course = {
         var update_moving_message = function() {
             if (movingobjects.length === 1) {
                 var assetname = $(movingobjects[0]).find('.snap-asset-link .instancename').html();
+                assetname = assetname || M.util.get_string('modulename', 'mod_label');
                 var title = M.util.get_string('moving', 'theme_snap', assetname);
                 snap_move_message.find('.snap-move-message-title').html(title);
             } else {

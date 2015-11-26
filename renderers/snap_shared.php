@@ -147,7 +147,8 @@ class snap_shared extends renderer_base {
                 array('actionchoice', 'moodle'),
                 array('servererror', 'moodle'),
                 array('upload', 'moodle'),
-                array('cancel', 'moodle')
+                array('cancel', 'moodle'),
+                array('modulename', 'mod_label'),
             ),
             'requires' => array('node', 'event', 'json', 'anim')
         );
