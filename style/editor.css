@@ -8449,11 +8449,13 @@ hr {
   border-top: 1px solid #03a9f4;
 }
 a,
-a:visited {
+a:visited,
+.btn-link {
   color: #03a9f4;
 }
 a:focus,
-a:hover {
+a:hover,
+.btn-link:hover {
   color: #038dcc;
 }
 #fixy-my-courses .courseinfo a,
