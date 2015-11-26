@@ -23449,9 +23449,9 @@ div.editor_atto_toolbar div.atto_group {
   font-size: 75%;
 }
 #id_cancel {
-  color: #03a9f4;
   font-weight: normal;
   border-radius: 0;
+  color: #03a9f4;
   margin-left: 2em;
 }
 #id_cancel,
