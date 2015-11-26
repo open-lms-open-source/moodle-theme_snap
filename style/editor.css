@@ -2943,10 +2943,10 @@ li.section:focus {
 .snap-dropzone {
   visibility: hidden;
 }
-.snap-js-loaded .snap-section-editing {
+.snap_course_listening .snap-section-editing {
   visibility: visible;
 }
-.snap-js-loaded .snap-dropzone {
+.snap_course_listening .snap-dropzone {
   visibility: visible;
 }
 .snap-section-editing[style] {
