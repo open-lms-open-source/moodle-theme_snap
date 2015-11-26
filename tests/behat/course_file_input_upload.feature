@@ -27,8 +27,6 @@ Feature: When the moodle theme is set to Snap, teachers can upload files as reso
   Background:
     Given the following config values are set as admin:
       | theme | snap |
-      | thememobile | snap |
-      | defaulthomepage | 0 |
     And the following "courses" exist:
       | fullname | shortname | category | format |
       | Course 1 | C1 | 0 | topics |
@@ -46,25 +44,6 @@ Feature: When the moodle theme is set to Snap, teachers can upload files as reso
   Scenario: In read mode, teacher uploads file.
     Given I log in with snap as "teacher1"
     And I follow "Menu"
-    And I follow "Course"
-    And I wait until the page is ready
-    And I follow "Topic 1"
-    Then "#section-1" "css_element" should exist
-    And "#snap-drop-file-1" "css_element" should exist
-    And I upload file "test_text_file.txt" using input "#snap-drop-file-1"
-    And I upload file "test_mp3_file.mp3" using input "#snap-drop-file-1"
-    Then ".snap-resource[data-type='text']" "css_element" should exist
-    And ".snap-resource[data-type='mp3']" "css_element" should exist
-
-  @javascript
-  Scenario: In edit mode, admin uploads file.
-    Note - this has to be done as admin because we are switching to edit mode by turning edit mode on from the front
-    page.
-    Given I log in with snap as "admin"
-    And I click on "#admin-menu-trigger" "css_element"
-    And I follow "Turn editing on"
-    And I follow "Menu"
-    And I wait until the page is ready
     And I follow "Course"
     And I wait until the page is ready
     And I follow "Topic 1"

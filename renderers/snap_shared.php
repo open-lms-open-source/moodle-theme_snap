@@ -342,14 +342,13 @@ class snap_shared extends renderer_base {
         );
 
         $canmanageacts = has_capability('moodle/course:manageactivities', context_course::instance($COURSE->id));
-        if ($canmanageacts) {
+        if ($canmanageacts && empty($USER->editing)) {
             $modinfo = get_fast_modinfo($COURSE);
             $modnamesused = $modinfo->get_used_module_names();
 
-            $originalediting = property_exists($USER, 'editing') ? $USER->editing : false;
             $USER->editing = true; // Temporarily change edit mode to on for course ajax to be included.
             self::include_course_ajax($COURSE, $modnamesused);
-            $USER->editing = $originalediting;
+            $USER->editing = false;
         }
     }
 
@@ -496,7 +495,7 @@ class snap_shared extends renderer_base {
         $localplugins = core_component::get_plugin_list('local');
         $coursecontext = context_course::instance($COURSE->id);
 
-        
+
 
         // Course settings.
         $settingsicon = '<svg viewBox="0 0 100 100" class="svg-icon">
@@ -568,8 +567,8 @@ class snap_shared extends renderer_base {
                 );
             }
         }
-        
-        
+
+
 
         $badgesicon = '<svg viewBox="0 0 100 100" class="svg-icon">
             <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#coursetools-badges"></use></svg>';
@@ -663,7 +662,7 @@ class snap_shared extends renderer_base {
                 'title' => $enrolicon.$enrolstr
             );
         }
-        
+
         // Turn editing on.
         $iconsrc = $OUTPUT->pix_url('icon', 'label');
         $editcourseicon = '<img class="svg-icon" alt="" title="" src="'.$iconsrc.'">';

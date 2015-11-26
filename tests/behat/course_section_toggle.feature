@@ -27,8 +27,6 @@ Feature: When the moodle theme is set to Snap, teachers can toggle the visibilit
   Background:
     Given the following config values are set as admin:
       | theme | snap |
-      | thememobile | snap |
-      | defaulthomepage | 0 |
     And the following "courses" exist:
       | fullname | shortname | category | format |
       | Course 1 | C1 | 0 | topics |
@@ -53,23 +51,6 @@ Feature: When the moodle theme is set to Snap, teachers can toggle the visibilit
     And "#section-2.hidden" "css_element" should not exist
     And I click on "#section-2 .editing_showhide" "css_element"
    Then "#section-2.hidden" "css_element" should exist
-
-  @javascript
-  Scenario: In edit mode, admin hides section.
-    #Note - this has to be done as admin because we are switching to edit mode by turning edit mode on from the front
-    #page.
-    Given I log in with snap as "admin"
-    And I click on "#admin-menu-trigger" "css_element"
-    And I follow "Turn editing on"
-    And I follow "Menu"
-    And I wait until the page is ready
-    And I follow "Course"
-    And I wait until the page is ready
-    And I follow "Topic 2"
-    Then "#section-2" "css_element" should exist
-    And "#section-2.hidden" "css_element" should not exist
-    And I click on "#section-2 .editing_showhide" "css_element"
-    Then "#section-2.hidden" "css_element" should exist
 
   @javascript
   Scenario: In read mode, student cannot hide section.

@@ -26,28 +26,26 @@ Feature: When the moodle theme is set to Snap, teachers only see block edit cont
   Background:
     Given the following config values are set as admin:
       | theme | snap |
-      | thememobile | snap |
-      | defaulthomepage | 0 |
     And the following "courses" exist:
       | fullname | shortname | category | format |
-      | Course 1 | C1 | 0 | topics |
+      | Course 1 | C1        | 0        | topics |
     And the following "users" exist:
       | username | firstname | lastname | email |
-      | teacher1 | Teacher | 1 | teacher1@example.com |
-      | student1 | Student | 1 | student1@example.com |
+      | teacher1 | Teacher   | 1        | teacher1@example.com |
+      | student1 | Student   | 1        | student1@example.com |
     And the following "course enrolments" exist:
-      | user | course | role |
-      | teacher1 | C1 | editingteacher |
-      | student1 | C1 | student |
+      | user     | course | role |
+      | teacher1 | C1     | editingteacher |
+      | student1 | C1     | student |
     And the following "activities" exist:
-      | activity | course | idnumber | name                 | intro                       | assignsubmission_onlinetext_enabled | section |
-      | assign   | C1     | assign1  | Test assignment1 | Test assignment description 1 | 1 | 1 |
+      | activity | course | idnumber | name             | intro                         | section |
+      | assign   | C1     | assign1  | Test assignment1 | Test assignment description 1 | 1       |
 
   @javascript
   Scenario: In read mode, teacher clicks edit blocks and can edit blocks.
     Given I log in with snap as "teacher1"
     And I follow "Menu"
-    And I follow "Course"
+    And I follow "Course 1"
     And I wait until the page is ready
     And I follow "Topic 1"
    Then "#section-1" "css_element" should exist
