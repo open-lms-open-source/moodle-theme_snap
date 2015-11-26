@@ -17791,9 +17791,7 @@ we do this by default in snap, so hide moodle version */
   font-family: "Roboto", "Fira Sans", "Segoe UI", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif;
   display: block;
 }
-.section.hidden .activity .activityinstance .availabilityinfo {
-  display: none;
-}
+.section.hidden .activity .activityinstance .availabilityinfo,
 .section .activity.draft .activityinstance .availabilityinfo {
   display: none;
 }

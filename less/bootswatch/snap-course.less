@@ -577,11 +577,12 @@ we do this by default in snap, so hide moodle version */
     display: block;
 }
 
-.section.hidden .activity .activityinstance .availabilityinfo {
-    display:none;
-}
-.section .activity.draft .activityinstance .availabilityinfo {
-    display:none;
+// When section or activity is hidden or draft, don't display conditional availability info
+.section.hidden .activity,
+.section .activity.draft  {
+    .activityinstance .availabilityinfo {
+        display:none;
+    }
 }
 
 // -------------------------
