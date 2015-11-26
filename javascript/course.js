@@ -496,7 +496,7 @@ M.theme_snap.course = {
             move_place_listener();
             asset_edit_listeners();
             add_after_drops();
-            $('body').addClass('snap_course_listening');
+            $('body').addClass('snap-course-listening');
         }
 
         /**

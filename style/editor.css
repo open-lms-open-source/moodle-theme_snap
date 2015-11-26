@@ -2943,10 +2943,10 @@ li.section:focus {
 .snap-dropzone {
   visibility: hidden;
 }
-.snap_course_listening .snap-section-editing {
+.snap-course-listening .snap-section-editing {
   visibility: visible;
 }
-.snap_course_listening .snap-dropzone {
+.snap-course-listening .snap-dropzone {
   visibility: visible;
 }
 .snap-section-editing[style] {
@@ -3702,7 +3702,7 @@ li.snap-activity.modtype_folder .snap-assettype {
   font-weight: inherit;
   font-size: 0.8em;
 }
-.snap_course_listening .snap-asset-actions {
+.snap-course-listening .snap-asset-actions {
   visibility: visible;
 }
 .modtype_label .snap-asset-actions .snap-edit-more-dropdown:hover .svg-icon,
