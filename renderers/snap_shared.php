@@ -330,25 +330,28 @@ class snap_shared extends renderer_base {
           $module
         );
 
-        $module = array(
-          'name' => 'theme_snap_course',
-          'fullpath' => '/theme/snap/javascript/course.js'
-        );
+        if ($PAGE->pagetype === 'site-index' || $PAGE->url->get_path() === '/course/view.php') {
+            $module = array(
+              'name' => 'theme_snap_course',
+              'fullpath' => '/theme/snap/javascript/course.js'
+            );
 
-        $PAGE->requires->js_init_call('M.theme_snap.course.init',
-          null,
-          true,
-          $module
-        );
+            $PAGE->requires->js_init_call('M.theme_snap.course.init',
+              null,
+              true,
+              $module
+            );
 
-        $canmanageacts = has_capability('moodle/course:manageactivities', context_course::instance($COURSE->id));
-        if ($canmanageacts && empty($USER->editing)) {
-            $modinfo = get_fast_modinfo($COURSE);
-            $modnamesused = $modinfo->get_used_module_names();
+            $canmanageacts = has_capability('moodle/course:manageactivities', context_course::instance($COURSE->id));
+            if ($canmanageacts && empty($USER->editing)) {
+                $modinfo = get_fast_modinfo($COURSE);
+                $modnamesused = $modinfo->get_used_module_names();
 
-            $USER->editing = true; // Temporarily change edit mode to on for course ajax to be included.
-            self::include_course_ajax($COURSE, $modnamesused);
-            $USER->editing = false;
+                // Temporarily change edit mode to on for course ajax to be included.
+                $USER->editing = true;
+                self::include_course_ajax($COURSE, $modnamesused);
+                $USER->editing = false;
+            }
         }
     }
 
