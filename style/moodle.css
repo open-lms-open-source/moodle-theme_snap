@@ -22986,7 +22986,7 @@ body.hascontinuecancel.path-site #page {
 spinner, from
 http://css-spinners.com/css/spinner/three-quarters.css
 **/
-@-webkit-keyframes three-quarters {
+@-webkit-keyframes spinner-three-quarters {
   0% {
     -webkit-transform: rotate(0deg);
             transform: rotate(0deg);
@@ -22996,7 +22996,7 @@ http://css-spinners.com/css/spinner/three-quarters.css
             transform: rotate(360deg);
   }
 }
-@keyframes three-quarters {
+@keyframes spinner-three-quarters {
   0% {
     -webkit-transform: rotate(0deg);
             transform: rotate(0deg);
@@ -23007,14 +23007,14 @@ http://css-spinners.com/css/spinner/three-quarters.css
   }
 }
 /* Styles for old versions of IE */
-.three-quarters {
+.spinner-three-quarters {
   font-family: sans-serif;
   font-weight: 100;
 }
 /* :not(:required) hides this rule from IE9 and below */
-.three-quarters:not(:required) {
-  -webkit-animation: three-quarters 1250ms infinite linear;
-          animation: three-quarters 1250ms infinite linear;
+.spinner-three-quarters:not(:required) {
+  -webkit-animation: spinner-three-quarters 1250ms infinite linear;
+          animation: spinner-three-quarters 1250ms infinite linear;
   -webkit-transform: translateZ(0);
           transform: translateZ(0);
   border: 6px solid #fff;
@@ -23030,7 +23030,7 @@ http://css-spinners.com/css/spinner/three-quarters.css
   width: 32px;
   height: 32px;
 }
-.three-quarters:not(:required).spinner-dark {
+.spinner-three-quarters:not(:required).spinner-dark {
   border-color: #03a9f4;
   border-right-color: transparent;
 }

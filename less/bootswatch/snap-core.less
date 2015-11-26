@@ -3907,7 +3907,7 @@ body.hascontinuecancel.path-site #page {
 spinner, from
 http://css-spinners.com/css/spinner/three-quarters.css
 **/
-@keyframes three-quarters {
+@keyframes spinner-three-quarters {
     0% {
         transform: rotate(0deg);
     }
@@ -3918,14 +3918,14 @@ http://css-spinners.com/css/spinner/three-quarters.css
 }
 
 /* Styles for old versions of IE */
-.three-quarters {
+.spinner-three-quarters {
     font-family: sans-serif;
     font-weight: 100;
 }
 
 /* :not(:required) hides this rule from IE9 and below */
-.three-quarters:not(:required) {
-    animation: three-quarters 1250ms infinite linear;
+.spinner-three-quarters:not(:required) {
+    animation: spinner-three-quarters 1250ms infinite linear;
 
     // Start GT Mod - force gpu accelleration.
     transform: translateZ(0);
@@ -3943,7 +3943,7 @@ http://css-spinners.com/css/spinner/three-quarters.css
     height: 32px;
 }
 
-.three-quarters:not(:required).spinner-dark {
+.spinner-three-quarters:not(:required).spinner-dark {
     border-color: @brand-primary;
     border-right-color: transparent;
 }
