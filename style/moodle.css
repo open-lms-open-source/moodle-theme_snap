@@ -19137,9 +19137,6 @@ fieldset[disabled] a#changenumsections .reduce-sections {
 .snap-move-asset li.modtype_label:not(.asset-moving) {
   border: 2px dashed #999999;
 }
-.snap-move-asset .snap-asset:not(.asset-moving) {
-  opacity: 0.7;
-}
 .snap-move-asset .snap-asset:not(.asset-moving) .snap-move-note {
   position: absolute;
   top: 0;
