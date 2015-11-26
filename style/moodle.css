@@ -19089,6 +19089,10 @@ fieldset[disabled] a#changenumsections .reduce-sections {
 .snap-move-inprogress .snap-dropzone {
   display: none !important;
 }
+.snap-move-inprogress.snap-move-section .snap-asset-actions,
+.snap-move-inprogress.snap-move-section .snap-asset .togglecompletion {
+  display: none !important;
+}
 .snap-move-inprogress #snap-move-message {
   padding: 0.5em 0;
   max-height: 200px;
