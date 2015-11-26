@@ -311,7 +311,7 @@ li.section:focus {
 }
 
 // Do not show elements requiring js until js is classed as loaded.
-.snap-js-loaded {
+.snap_course_listening {
     .snap-section-editing {
         visibility: visible;
     }
@@ -1113,9 +1113,6 @@ li.snap-activity.modtype_folder {
 // Snap actions
 // -------------------------
 /* all the editing options and completion data in one region */
-.snap-js-loaded .snap-asset-actions {
-    visibility: visible;
-}
 .snap-asset-actions {
     visibility: hidden;
     position: absolute;
@@ -1152,6 +1149,12 @@ li.snap-activity.modtype_folder {
     .dropdown-menu a {
         font-weight: inherit;
         font-size: 0.8em;
+    }
+}
+// Only show these actions once all listeners applied.
+.snap_course_listening {
+    .snap-asset-actions {
+        visibility: visible;
     }
 }
 
@@ -1830,17 +1833,5 @@ span.editinstructions {
       text-align: center;
       cursor: pointer;
   }
-}
-
-label.snap-asset-move,
-label.snap-asset-move input{
-    display: none;
-}
-
-// Only show this action once its listener is registered.
-body.listening-assett-move {
-    label.snap-asset-move {
-        display: inline-block;
-    }
 }
 

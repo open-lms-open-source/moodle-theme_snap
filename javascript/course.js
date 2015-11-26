@@ -398,7 +398,6 @@ M.theme_snap.course = {
                 }
                 update_moving_message();
             });
-            $('body').addClass('listening-assett-move');
         }
 
         /**
@@ -488,16 +487,24 @@ M.theme_snap.course = {
         }
 
         /**
-         * Initialise script.
+         * Add listeners.
          */
-        var initialise = function() {
-            // Add listeners.
+        var add_listeners = function() {
             move_section_listener();
             asett_move_listener();
             move_cancel_listener();
             move_place_listener();
             asset_edit_listeners();
             add_after_drops();
+            $('body').addClass('snap_course_listening');
+        }
+
+        /**
+         * Initialise script.
+         */
+        var initialise = function() {
+            // Add listeners.
+            add_listeners();
 
             // Override core functions
             override_core();

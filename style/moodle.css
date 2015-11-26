@@ -18288,9 +18288,6 @@ li.snap-activity.modtype_folder .snap-assettype {
   margin: 0.5em auto;
 }
 /* all the editing options and completion data in one region */
-.snap-js-loaded .snap-asset-actions {
-  visibility: visible;
-}
 .snap-asset-actions {
   visibility: hidden;
   position: absolute;
@@ -18327,6 +18324,9 @@ li.snap-activity.modtype_folder .snap-assettype {
 .snap-asset-actions .dropdown-menu a {
   font-weight: inherit;
   font-size: 0.8em;
+}
+.snap_course_listening .snap-asset-actions {
+  visibility: visible;
 }
 .modtype_label .snap-asset-actions .snap-edit-more-dropdown:hover .svg-icon,
 .snap-native .snap-asset-actions .snap-edit-more-dropdown:hover .svg-icon,
@@ -19159,13 +19159,6 @@ fieldset[disabled] a#changenumsections .reduce-sections {
   font-family: "Roboto", "Fira Sans", "Segoe UI", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif;
   text-align: center;
   cursor: pointer;
-}
-label.snap-asset-move,
-label.snap-asset-move input {
-  display: none;
-}
-body.listening-assett-move label.snap-asset-move {
-  display: inline-block;
 }
 /**
  * Snap core swatch.
