@@ -2750,6 +2750,12 @@ section#region-main
 #dndupload-status {
   display: none;
 }
+.dndupload-preview {
+  display: none !important;
+}
+.dndupload-over .snap-dropzone {
+  background-color: #fafafa;
+}
 /* A SPECIAL SECTION IN SNAP FOR COURSE TOOLS */
 #coursetools-logo {
   height: 100%;

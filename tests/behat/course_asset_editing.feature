@@ -111,11 +111,12 @@ Feature: When the moodle theme is set to Snap, teachers edit assets without ente
     And I follow "Topic 1"
     Then "#section-1" "css_element" should exist
     And ".snap-activity[data-type='Assignment']" "css_element" should exist
+    And ".snap-activity[data-type='Assignment'] + .snap-activity[data-type='Assignment']" "css_element" should not exist
     And I click on ".snap-activity[data-type='Assignment'] a.snap-edit-asset-more" "css_element"
     And I click on ".snap-activity[data-type='Assignment'] a.js_snap_duplicate" "css_element"
     #TODO - instead of 2 second magic number, wait for ajax to complete by using classes.
     And I wait "2" seconds
-    Then ".snap-activity[data-type='Assignment']:nth-of-type(2)" "css_element" should appear after ".snap-activity[data-type='Assignment']:nth-of-type(1)" "css_element"
+    Then ".snap-activity[data-type='Assignment'] + .snap-activity[data-type='Assignment']" "css_element" should exist
 
   @javascript
   Scenario: In read mode, teacher duplicates resource.
@@ -126,10 +127,11 @@ Feature: When the moodle theme is set to Snap, teachers edit assets without ente
     And I follow "Topic 1"
     Then "#section-1" "css_element" should exist
     And "#snap-drop-file-1" "css_element" should exist
-    And I upload file "test_text_file.txt" using input "#snap-drop-file-1"
+    When I upload file "test_text_file.txt" using input "#snap-drop-file-1"
     Then ".snap-resource[data-type='text']" "css_element" should exist
+    And ".snap-resource[data-type='text'] + .snap-resource[data-type='text']" "css_element" should not exist
     And I click on ".snap-resource[data-type='text'] a.snap-edit-asset-more" "css_element"
     And I click on ".snap-resource[data-type='text'] a.js_snap_duplicate" "css_element"
     #TODO - instead of 2 second magic number, wait for ajax to complete by using classes.
     And I wait "2" seconds
-    Then ".snap-resource[data-type='text']:nth-of-type(2)" "css_element" should appear after ".snap-resource[data-type='text']:nth-of-type(1)" "css_element"
+    Then ".snap-resource[data-type='text'] + .snap-resource[data-type='text']" "css_element" should exist
