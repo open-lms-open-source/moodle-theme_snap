@@ -3174,6 +3174,13 @@ we do this by default in snap, so hide moodle version */
   clear: both;
   font-size: small;
   font-family: "Roboto", "Fira Sans", "Segoe UI", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  display: block;
+}
+.section.hidden .activity .activityinstance .availabilityinfo {
+  display: none;
+}
+.section .activity.draft .activityinstance .availabilityinfo {
+  display: none;
 }
 .modtype_label .snap-assettype {
   display: none;

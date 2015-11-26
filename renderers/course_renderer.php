@@ -88,7 +88,6 @@ class theme_snap_core_course_renderer extends core_course_renderer {
                 $modclasses [] = 'draft';
             }
 
-            // TODO - does not seem to be working.
             $availabilityinfo = $this->course_section_cm_availability($mod, $displayoptions);
             if ($availabilityinfo !== '') {
                 $modclasses [] = 'conditional';
@@ -111,6 +110,33 @@ class theme_snap_core_course_renderer extends core_course_renderer {
             $output .= html_writer::tag('li', $modulehtml, $attr);
         }
         return $output;
+    }
+
+
+    /**
+     * Renders HTML to show course module availability information
+     *
+     * @param cm_info $mod
+     * @param array $displayoptions
+     * @return string
+     */
+    public function course_section_cm_availability(cm_info $mod, $displayoptions = array()) {
+
+        // If we have available info, always spit it out.
+        if (!empty($mod->availableinfo)) {
+            $availinfo = $mod->availableinfo;
+        } else {
+            $ci = new \core_availability\info_module($mod);
+            $availinfo = $ci->get_full_information();
+        }
+
+        if ($availinfo) {
+            $formattedinfo = \core_availability\info::format_info(
+                $availinfo, $mod->get_course());
+            return html_writer::div($formattedinfo, 'availabilityinfo');
+        }
+
+        return '';
     }
 
     /**
@@ -186,7 +212,7 @@ class theme_snap_core_course_renderer extends core_course_renderer {
         if ($availabilityinfo !== '') {
             $conditionalinfo = get_string('conditional', 'theme_snap');
             $assetmeta .= "<span class='conditional_info'>$conditionalinfo</span>";
-            $assetmeta .= "<div class='availabilityinfo'>$availabilityinfo</div>";
+            $assetmeta .= $availabilityinfo;
         }
 
         if ($canmanagegroups && $mod->effectivegroupmode != NOGROUPS) {

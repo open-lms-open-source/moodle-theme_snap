@@ -479,6 +479,15 @@ M.theme_snap.course = {
         };
 
         /**
+         * Override core functions.
+         */
+        var override_core = function() {
+            M.course.resource_toolbox.handle_resource_dim = function(button, activity, action) {
+                return (action === 'hide') ? 0: 1;
+            }
+        }
+
+        /**
          * Initialise script.
          */
         var initialise = function() {
@@ -487,10 +496,11 @@ M.theme_snap.course = {
             asett_move_listener();
             move_cancel_listener();
             move_place_listener();
-
             asset_edit_listeners();
-
             add_after_drops();
+
+            // Override core functions
+            override_core();
         };
         initialise();
     }
