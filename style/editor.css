@@ -2940,7 +2940,13 @@ li.section:focus {
   margin: 0;
   padding: 0;
 }
+.snap-dropzone {
+  visibility: hidden;
+}
 .snap-js-loaded .snap-section-editing {
+  visibility: visible;
+}
+.snap-js-loaded .snap-dropzone {
   visibility: visible;
 }
 .snap-section-editing[style] {

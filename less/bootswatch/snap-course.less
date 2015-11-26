@@ -306,9 +306,18 @@ li.section:focus {
     }
 }
 
-// Do not show the editing options to people who turn javascript off.
-.snap-js-loaded .snap-section-editing {
-    visibility: visible;
+.snap-dropzone {
+    visibility: hidden;
+}
+
+// Do not show elements requiring js until js is classed as loaded.
+.snap-js-loaded {
+    .snap-section-editing {
+        visibility: visible;
+    }
+    .snap-dropzone {
+        visibility: visible;
+    }
 }
 
 // get rid of js cursor style applied to the whole commands area
