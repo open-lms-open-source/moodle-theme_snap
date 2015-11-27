@@ -873,19 +873,32 @@ function snapInit() {
              $(this).closest('li.activity').toggleClass('draft');
         });
 
-        // Make cards - in personal menu and on course - clickable, data-href for resources.
-        $(document).on('click', '.courseinfo[data-href], .snap-resource[data-href]', function(e){
+        // Personal menu course card clickable.
+        $(document).on('click', '.courseinfo[data-href]', function(e){
+              var trigger = $(e.target),
+              hreftarget = '_self';
+              // Excludes any clicks in the card deeplinks.
+              if(!$(trigger).closest('a').length) {
+                window.open($(this).data('href'), hreftarget);
+                e.preventDefault();
+              }
+        });
+
+        // Resource cards clickable.
+        $(document).on('click', '.snap-resource', function(e){
             var trigger = $(e.target),
-                hreftarget = '_self'; // assume browser can open resource
+                hreftarget = '_self',
+                link = $(trigger).closest('.snap-resource').find('.snap-asset-link a'),
+                href = $(link).attr('href');
             // Excludes any clicks in the actions menu, on links or forms.
             if(!$(trigger).closest('.snap-asset-actions, form, a, input').length) {
-                // TODO - add a class in the renderer to set target to blank for none-web docs or external links
                 if ($(this).hasClass('js-snap-media')) {
-                    // Media element detected, lightbox it's ass.
                     lightboxMedia(this);
-                } else  if($(trigger).closest('.snap-resource').is('.target-blank')){
-                    hreftarget = '_blank';
-                    window.open($(this).data('href'), hreftarget);
+                } else {
+                    if($(link).attr('target') === '_blank'){
+                        hreftarget = '_blank';
+                    }
+                    window.open(href, hreftarget);
                 }
                 e.preventDefault();
             }
