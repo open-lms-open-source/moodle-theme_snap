@@ -134,7 +134,7 @@ M.theme_snap.course = {
             var courseid = M.theme_snap.courseid;
 
             $.ajax({
-                type: "GET",
+                type: "POST",
                 async:  true,
                 url:  courserest,
                 dataType: 'html',
