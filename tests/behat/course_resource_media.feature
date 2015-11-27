@@ -47,23 +47,12 @@ Feature: When the moodle theme is set to Snap, clicking on a resource with a med
     And I follow "Course"
     And I wait until the page is ready
     And I follow "Topic 1"
-   Then "#section-1" "css_element" should exist
-    #TODO - use the following when the snap file upload behat step function is available.
-    #And "#snap-drop-file-1" "css_element" should exist
-    #And I upload file "test_mp3_file.mp3" using input "#snap-drop-file-1"
-    #TODO - remove core file add code
-    And I add a "File" to section "1"
-    And I set the following fields to these values:
-      | Name        | test_mp3_file.mp3 |
-      | Description | File description                   |
-    And I upload "theme/snap/tests/fixtures/test_mp3_file.mp3" file to "Select files" filemanager
-    And I expand all fieldsets
-    And I set the field "Show type" to "1"
-    And I press "Save and return to course"
-    #End of core file add code
-
-   Then ".snap-resource[data-type='mp3']" "css_element" should exist
+    Then "#section-1" "css_element" should exist
+    And "#snap-drop-file-1" "css_element" should exist
+    And I upload file "test_mp3_file.mp3" using input "#snap-drop-file-1"
+    Then ".snap-resource[data-type='mp3']" "css_element" should exist
     And I click on ".snap-resource[data-type='mp3']" "css_element"
-   Then "#snap-light-box" "css_element" should exist
+    And I wait until "#snap-light-box" "css_element" is visible
+    Then "#snap-light-box" "css_element" should exist
     And I click on "#snap-light-box-close" "css_element"
-   Then "#snap-light-box" "css_element" should not exist
+    Then "#snap-light-box" "css_element" should not exist

@@ -125,8 +125,7 @@ function snapInit() {
      */
     var lightboxclose = function() {
         var lbox = lightbox();
-        $('#snap-light-box-content').html('');
-        lbox.removeClass('state-visible');
+        lbox.remove();
     };
 
     /**
