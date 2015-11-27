@@ -331,7 +331,9 @@ class snap_shared extends renderer_base {
           $module
         );
 
-        if ($PAGE->pagetype === 'site-index' || $PAGE->url->get_path() === '/course/view.php') {
+        $pagehascoursecontent = ($PAGE->pagetype === 'site-index' || $PAGE->url->get_path() === '/course/view.php');
+        // Does the page have editable course content?
+        if ($pagehascoursecontent && $PAGE->user_allowed_editing()) {
             $module = array(
               'name' => 'theme_snap_course',
               'fullpath' => '/theme/snap/javascript/course.js'
