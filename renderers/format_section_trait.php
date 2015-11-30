@@ -267,8 +267,10 @@ trait format_section_trait {
         }
 
         // Availabiliy message.
-        $o .= $this->section_availability_message($section,
-            has_capability('moodle/course:viewhiddensections', $context));
+        $o .= "<div class='snap-restrictions-meta'>
+        <div class='text text-danger'>".$this->section_availability_message($section,
+            has_capability('moodle/course:viewhiddensections', $context))."</div>
+        </div>";
 
         // Section summary/body text.
         $o .= "<div class='summary'>";
@@ -412,7 +414,7 @@ trait format_section_trait {
                  echo $this->courserenderer->course_section_cm_list($course, $thissection, 0);
                  // SLamour Aug 2015 - make add asset visible without turning editing on
                  // N.B. this function handles the can edit permissions.
-                  echo $this->course_section_add_cm_control($course, $section, 0);
+                 echo $this->course_section_add_cm_control($course, $section, 0);
 
                 if (!$PAGE->user_is_editing()) {
                     echo $this->next_previous($course, $modinfo->get_section_info_all(), $section);

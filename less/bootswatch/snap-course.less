@@ -62,6 +62,12 @@ section#region-main
         }
     }
 }
+// Blocks config pages when editing.
+.editing.pagelayout-admin {
+    #region-main {
+        display: block;
+    }
+}
 
 .ie.path-course-view section#region-main > .singlebutton input[type="submit"] {
     background-image: url("[[pix:theme|edit_for_ie]]");
@@ -401,10 +407,9 @@ body.format-flexpage .singlebutton {
     opacity: 1;
 
     .content {
-        &> h3,
-        &> div,
-        &> ul {
-            opacity: 0.5;
+        .summary,
+        .section {
+            opacity: 0.7;
         }
     }
 }
@@ -416,10 +421,7 @@ body.format-flexpage .singlebutton {
 
 
 
-.section .activity .activityinstance,
-.section .activity .activityinstance div {
-    display: block;
-}
+
 
 .path-site li.activity>div,
 .path-course-view li.activity>div {
@@ -438,7 +440,8 @@ body.format-flexpage .singlebutton {
         }
     }
 
-    .activityinstance {
+    .activityinstance .contentafterlink,
+    .activityinstance .contentwithoutlink {
         ul,
         ol {
             margin: 1.6em 4%;
@@ -522,18 +525,8 @@ we do this by default in snap, so hide moodle version */
 .groupinglabel {
     display: none;
 }
-
-// asset type, draft, conditional and group
-.snap-meta {
-    font-family: @font-family-base;
+.snap-assettype {
     font-size: small;
-}
-
-.conditional,
-.draft {
-    .snap-meta {
-        clear: both;
-    }
 }
 
 // mime/activity name
@@ -549,8 +542,6 @@ we do this by default in snap, so hide moodle version */
 }
 
 // tag styles for draft/group/contitional meta data
-.draft_info,
-.activityinstance .conditional_info,
 .snap-groupinglabel,
 .snap-unread-marker,
 .sectiontag {
@@ -561,16 +552,7 @@ we do this by default in snap, so hide moodle version */
     margin-left: 1.4em;
 }
 
-// hide draft tag, unless asset has class draft (can be added by js)
-.draft_info {
-    display: none;
-}
 
-// show draft tag if parent has draft or hidden class
-.hidden .draft_info,
-.draft .draft_info {
-    display: inline-block;
-}
 
 // conditional list of stuff you have to do before
 .availabilityinfo {
@@ -869,7 +851,7 @@ we do this by default in snap, so hide moodle version */
             }
         }
     }
-    .dropdown-menu {
+    .section .snap-asset-actions ul.dropdown-menu {
         left: -125px; // magic number so dropdown does not go off the edge of the screen on small screen.
     }
 }
@@ -1114,6 +1096,89 @@ li.snap-activity.modtype_folder {
 }
 
 // -------------------------
+// Activity & Resource metadata
+// -------------------------
+.snap-asset-meta {
+    clear: both;
+}
+// Give the editing options a bit of space for mod labels.
+.modtype_label .snap-asset-meta{
+    margin-bottom: 2em;
+}
+
+/* Activity data - e.g. Due date */
+.snap-completion-meta {
+    padding-bottom: 0.5em;
+    /* Completion actions */
+    .togglecompletion,
+    .autocompletion {
+        display: inline-block;
+        clear: left;
+        float: left;
+    }
+
+    span.autocompletion img,
+    form.togglecompletion input {
+        width: 30px;
+        height: 30px;
+        display: inline;
+        position: relative;
+    }
+
+    form.togglecompletion input {
+        border-radius: 50%;
+        transform: scale(0.75);
+        box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
+    }
+
+    form.togglecompletion input:hover {
+        transform: scale(1.04);
+        transition: transform 0.3s;
+    }
+    
+    .label {
+        margin: 0 1%;
+        padding: 0.75em;
+        display: inline-block;
+    }
+}
+// Restriciton e.g. groups, draft, conditional
+.snap-restrictions-meta {
+    clear: both;
+    margin: 0;
+    .text {
+        font-size: small;
+        margin: 0.3em 0;
+        padding-left: 0.3em;
+        border-left: 0.5em solid;
+        font-weight: 500;
+    }
+}
+
+// hide draft tag, unless asset has class draft (can be added by js)
+.snap-asset-meta .draft-tag {
+    display: none;
+}
+
+// show draft tag if parent has draft or hidden class
+.hidden .snap-asset-meta .draft-tag,
+.draft .snap-asset-meta .draft-tag {
+    display: block;
+}
+
+// Dim assets with draft tag.
+li.draft {
+    .snap-asset-link,
+    .contentwithoutlink,
+    .contentafterlink,
+    .snap-assettype {
+        opacity: 0.6;
+    }
+}
+
+
+
+// -------------------------
 // Snap actions
 // -------------------------
 /* all the editing options and completion data in one region */
@@ -1130,7 +1195,7 @@ li.snap-activity.modtype_folder {
     & > a,
     .snap-edit-more-dropdown,
     label {
-        display: inline-block;
+        display: inline-block !important;
         width: 25%;
         cursor: pointer;
     }
@@ -1251,45 +1316,7 @@ li.draft {
 }
 
 
-/* Completion actions */
-.togglecompletion,
-.autocompletion {
-    display:block;
-    clear:both;
-}
-/* Add padding for labels */
-.modtype_label {
-    .togglecompletion,
-    .autocompletion{
-        padding-bottom: 1em;
-    }
-}
-/* Hide if editing it on */
-.editing {
-    .togglecompletion,
-    .autocompletion {
-        display: none;
-    }
-}
 
-span.autocompletion img,
-form.togglecompletion input {
-    width: 30px;
-    height: 30px;
-    display: inline;
-    position: relative;
-}
-
-form.togglecompletion input {
-    border-radius: 50%;
-    transform: scale(0.75);
-    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
-}
-
-form.togglecompletion input:hover {
-    transform: scale(1.04);
-    transition: transform 0.3s;
-}
 
 /* add bg colour for actions when editing */
 .editing .actions {
@@ -1303,7 +1330,6 @@ form.togglecompletion input:hover {
 /* commands - moodle container for edit options */
 .snap-asset {
     .commands {
-
         // display:inline-block;
         display: block;
         float: right;
@@ -1571,12 +1597,7 @@ span.editinstructions {
     }
 }
 
-.module-meta {
-    .label {
-        margin-right: 1%;
-        padding: 0.75em;
-    }
-}
+
 
 // -------------------------
 // Moving things in snap
@@ -1808,13 +1829,11 @@ span.editinstructions {
 // Show when moving
 // Asset dropzones.
 .snap-move-asset {
+  .snap-asset:not(.asset-moving) {
+      border: 2px dashed @gray-light;
+  }
   .snap-resource:not(.asset-moving) {
       border: 2px dashed white;
-  }
-  .snap-activity:not(.asset-moving),
-  .snap-native,
-  li.modtype_label:not(.asset-moving) {
-      border: 2px dashed @gray-light;
   }
   .snap-asset:not(.asset-moving) .snap-move-note {
       position: absolute;
@@ -1831,7 +1850,7 @@ span.editinstructions {
   .snap-drop.asset-drop {
       display: block;
       clear: both;
-      border:3px dashed @gray;
+      border: 2px dashed @gray-light;
       font-size: 2em;
       font-color: @gray;
       font-family: @font-family-base;

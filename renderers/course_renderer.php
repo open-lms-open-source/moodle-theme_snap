@@ -182,7 +182,7 @@ class theme_snap_core_course_renderer extends core_course_renderer {
         $output .= '<div class="asset-wrapper">';
 
         // TODO - add if can edit.
-        // Drop asset notice.
+        // Drop section notice.
         $output .= '<a class="snap-move-note" href="#">'.get_string('movehere', 'theme_snap').'</a>';
         // Start the div for the activity content.
         $output .= "<div class='activityinstance'>";
@@ -194,57 +194,56 @@ class theme_snap_core_course_renderer extends core_course_renderer {
         if (!empty($cmname)) {
             $assetlink = '<a></a><h4 class="snap-asset-link">'.$cmname.'</h4>';
         }
-        // Meta.
-        $assetmeta = "<div class='snap-meta'>";
+
+        // Asset content.
+        $contentpart = $this->course_section_cm_text($mod, $displayoptions);
+
         // Activity/resource type.
         $snapmodtype = $this->get_mod_type($mod)[0];
-        $assetmeta .= "<span class='snap-assettype'>".$snapmodtype."</span>";
+        $assetmeta = "<span class='snap-assettype'>".$snapmodtype."</span>";
 
-        $canmanagegroups = has_capability('moodle/course:managegroups', context_course::instance($mod->course));
-        if (!empty($mod->groupingid) && $canmanagegroups) {
-            // Grouping label.
-            $groupings = groups_get_all_groupings($mod->course);
-            $assetmeta .= "<div class='snap-groupinglabel'>".format_string($groupings[$mod->groupingid]->name)."</div>";
+        // Groups, Restriction and all that jazz metadata.
+        // Completion tracking.
+        $completiontracking = $this->course_section_cm_completion($course, $completioninfo, $mod, $displayoptions);
+        // Due date, feedback available and all the nice snap things.
+        $snapcompletiondata = $this->module_meta_html($mod);
+        $assetcompletionmeta = "<div class='snap-completion-meta'>".$completiontracking.$snapcompletiondata."</div>";
 
-            // TBD - add a title to show this is the Grouping...
-        }
 
         // Draft status - always output, shown via css of parent.
-        $assetmeta .= "<span class='draft_info'>".get_string('draft', 'theme_snap')."</span>";
+        $assetrestrictions = "<div class='draft-tag text text-warning'>".get_string('draft', 'theme_snap')."</div>";
 
-        $availabilityinfo = $this->course_section_cm_availability($mod, $displayoptions);
-        if ($availabilityinfo !== '') {
-            $conditionalinfo = get_string('conditional', 'theme_snap');
-            $assetmeta .= "<span class='conditional_info'>$conditionalinfo</span>";
-            $assetmeta .= $availabilityinfo;
-        }
-
+        $canmanagegroups = has_capability('moodle/course:managegroups', context_course::instance($mod->course));
         if ($canmanagegroups && $mod->effectivegroupmode != NOGROUPS) {
             if ($mod->effectivegroupmode == VISIBLEGROUPS) {
                 $groupinfo = get_string('groupsvisible');
             } else if ($mod->effectivegroupmode == SEPARATEGROUPS) {
                 $groupinfo = get_string('groupsseparate');
             }
-            $assetmeta .= "<div class='snap-group-info'>$groupinfo</div>";
+            $assetrestrictions .= "<div class='text'>$groupinfo</div>";
         }
         
-        $assetmeta .= "</div>"; // Close asset-meta.
+        // TODO - ask what this is...
+        if (!empty($mod->groupingid) && $canmanagegroups) {
+            // Grouping label.
+            $groupings = groups_get_all_groupings($mod->course);
+            $assetrestrictions .= "<div class='text text-danger'>".format_string($groupings[$mod->groupingid]->name)."</div>";
 
-        $contentpart = $this->course_section_cm_text($mod, $displayoptions);
+            // TBD - add a title to show this is the Grouping...
+        }
 
+        $availabilityinfo = $this->course_section_cm_availability($mod, $displayoptions);
+        if ($availabilityinfo !== '') {
+            $conditionalinfo = get_string('conditional', 'theme_snap');
+            $assetrestrictions .= "<div class='text text-danger'>$conditionalinfo.$availabilityinfo</div>";
+        }
+        $assetrestrictions = "<div class='snap-restrictions-meta'>$assetrestrictions</div>";
+        
+        $assetmeta .= $assetcompletionmeta.$assetrestrictions; // Close asset-meta.
+        
         // Build output.
-        $output .= $assetlink.$assetmeta.$contentpart;
-
-        if (!empty($cmname)) {
-            // Module can put text after the link (e.g. forum unread).
-            $output .= $mod->afterlink;
-        }
-        
-        // Add completion tracking.
-        $completiontracking = $this->course_section_cm_completion($course, $completioninfo, $mod, $displayoptions);
-        $output .= $completiontracking;
-        $output .= "</div>"; // Close activity instance.
-
+        $postcontent = "<div class='snap-asset-meta'>".$mod->afterlink.$assetmeta."</div>";
+        $output .= $assetlink.$contentpart.$postcontent;
 
         // Build up edit actions.
         $actions = '';
@@ -372,7 +371,6 @@ class theme_snap_core_course_renderer extends core_course_renderer {
         $accesstext = '';
         $textclasses = '';
         if ($mod->uservisible) {
-            $content .= $this->module_meta_html($mod);
             $conditionalhidden = $this->is_cm_conditionally_hidden($mod);
             $accessiblebutdim = (!$mod->visible || $conditionalhidden) &&
             has_capability('moodle/course:viewhiddenactivities',
@@ -483,7 +481,7 @@ class theme_snap_core_course_renderer extends core_course_renderer {
             return '';
         }
 
-        $content .= '<div class="module-meta">';
+        $content .= '';
 
         if ($meta->isteacher) {
             // Teacher - useful teacher meta data.
@@ -529,7 +527,6 @@ class theme_snap_core_course_renderer extends core_course_renderer {
             // Student - useful student meta data.
             if (!empty($meta->timeopen) && $meta->timeopen > time()) {
                 // TODO - spit out a 'submissions allowed form' tag.
-                $content .= '</div>';
                 return $content;
             }
             // Note, due date is rendered seperately for students as it has a warning class if overdue.
@@ -584,7 +581,6 @@ class theme_snap_core_course_renderer extends core_course_renderer {
             }
         }
 
-        $content .= '</div>';
         return $content;
     }
 

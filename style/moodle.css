@@ -2345,10 +2345,6 @@ img.iconsmall {
   margin-right: 6px;
   vertical-align: text-bottom;
 }
-.section .activity .activityinstance,
-.section .activity .activityinstance div {
-  display: inline-block;
-}
 .editing .contentwithoutlink,
 .editing .activityinstance {
   padding-right: 200px;
@@ -12764,8 +12760,7 @@ img.hide {
   margin-bottom: 1em;
 }
 .block.invisible {
-  opacity: 50;
-  filter: alpha(opacity=5000);
+  opacity: 0.7;
 }
 .block .block-hider-show,
 .block .block-hider-hide {
@@ -17351,6 +17346,9 @@ section#region-main
   -webkit-box-shadow: 0;
           box-shadow: 0;
 }
+.editing.pagelayout-admin #region-main {
+  display: block;
+}
 .ie.path-course-view section#region-main > .singlebutton input[type="submit"] {
   background-image: url("[[pix:theme|edit_for_ie]]");
   -webkit-background-size: 23px 23px;
@@ -17624,16 +17622,11 @@ body.format-flexpage .singlebutton {
 .course-content ul li.section.hidden {
   opacity: 1;
 }
-.course-content ul li.section.hidden .content > h3,
-.course-content ul li.section.hidden .content > div,
-.course-content ul li.section.hidden .content > ul {
-  opacity: 0.5;
+.course-content ul li.section.hidden .content .summary,
+.course-content ul li.section.hidden .content .section {
+  opacity: 0.7;
 }
 /* MODS & RESOURCES IN COURSE */
-.section .activity .activityinstance,
-.section .activity .activityinstance div {
-  display: block;
-}
 .path-site li.activity > div,
 .path-course-view li.activity > div {
   padding: 0;
@@ -17648,17 +17641,24 @@ body.format-flexpage .singlebutton {
 .section ol ol {
   margin: 0 4%;
 }
-.section .activityinstance ul,
-.section .activityinstance ol {
+.section .activityinstance .contentafterlink ul,
+.section .activityinstance .contentwithoutlink ul,
+.section .activityinstance .contentafterlink ol,
+.section .activityinstance .contentwithoutlink ol {
   margin: 1.6em 4%;
 }
-.section .activityinstance ul ul,
-.section .activityinstance ol ul,
-.section .activityinstance ul ol,
-.section .activityinstance ol ol {
+.section .activityinstance .contentafterlink ul ul,
+.section .activityinstance .contentwithoutlink ul ul,
+.section .activityinstance .contentafterlink ol ul,
+.section .activityinstance .contentwithoutlink ol ul,
+.section .activityinstance .contentafterlink ul ol,
+.section .activityinstance .contentwithoutlink ul ol,
+.section .activityinstance .contentafterlink ol ol,
+.section .activityinstance .contentwithoutlink ol ol {
   margin: 0 4%;
 }
-.section .activityinstance .contentafterlink p {
+.section .activityinstance .contentafterlink .contentafterlink p,
+.section .activityinstance .contentwithoutlink .contentafterlink p {
   margin-bottom: 1.6em;
 }
 .snap-asset-link {
@@ -17732,13 +17732,8 @@ we do this by default in snap, so hide moodle version */
 .groupinglabel {
   display: none;
 }
-.snap-meta {
-  font-family: "Roboto", "Fira Sans", "Segoe UI", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif;
+.snap-assettype {
   font-size: small;
-}
-.conditional .snap-meta,
-.draft .snap-meta {
-  clear: both;
 }
 .snap-assettype {
   position: absolute;
@@ -17750,8 +17745,6 @@ we do this by default in snap, so hide moodle version */
   color: white;
   text-transform: uppercase;
 }
-.draft_info,
-.activityinstance .conditional_info,
 .snap-groupinglabel,
 .snap-unread-marker,
 .sectiontag {
@@ -17766,8 +17759,6 @@ we do this by default in snap, so hide moodle version */
   border-radius: 0 2px 2px 0;
   line-height: 1.75;
 }
-.draft_info:before,
-.activityinstance .conditional_info:before,
 .snap-groupinglabel:before,
 .snap-unread-marker:before,
 .sectiontag:before {
@@ -17780,13 +17771,6 @@ we do this by default in snap, so hide moodle version */
 }
 .sectiontag {
   margin-left: 1.4em;
-}
-.draft_info {
-  display: none;
-}
-.hidden .draft_info,
-.draft .draft_info {
-  display: inline-block;
 }
 .availabilityinfo {
   clear: both;
@@ -18045,7 +18029,7 @@ we do this by default in snap, so hide moodle version */
     text-align: left;
     padding: 0;
   }
-  .dropdown-menu {
+  .section .snap-asset-actions ul.dropdown-menu {
     left: -125px;
   }
 }
@@ -18288,6 +18272,74 @@ li.snap-activity.modtype_folder .snap-assettype {
   width: 3em;
   margin: 0.5em auto;
 }
+.snap-asset-meta {
+  clear: both;
+}
+.modtype_label .snap-asset-meta {
+  margin-bottom: 2em;
+}
+/* Activity data - e.g. Due date */
+.snap-completion-meta {
+  padding-bottom: 0.5em;
+  /* Completion actions */
+}
+.snap-completion-meta .togglecompletion,
+.snap-completion-meta .autocompletion {
+  display: inline-block;
+  clear: left;
+  float: left;
+}
+.snap-completion-meta span.autocompletion img,
+.snap-completion-meta form.togglecompletion input {
+  width: 30px;
+  height: 30px;
+  display: inline;
+  position: relative;
+}
+.snap-completion-meta form.togglecompletion input {
+  border-radius: 50%;
+  -webkit-transform: scale(0.75);
+      -ms-transform: scale(0.75);
+          transform: scale(0.75);
+  -webkit-box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
+          box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
+}
+.snap-completion-meta form.togglecompletion input:hover {
+  -webkit-transform: scale(1.04);
+      -ms-transform: scale(1.04);
+          transform: scale(1.04);
+  -webkit-transition: -webkit-transform 0.3s;
+          transition: transform 0.3s;
+}
+.snap-completion-meta .label {
+  margin: 0 1%;
+  padding: 0.75em;
+  display: inline-block;
+}
+.snap-restrictions-meta {
+  clear: both;
+  margin: 0;
+}
+.snap-restrictions-meta .text {
+  font-size: small;
+  margin: 0.3em 0;
+  padding-left: 0.3em;
+  border-left: 0.5em solid;
+  font-weight: 500;
+}
+.snap-asset-meta .draft-tag {
+  display: none;
+}
+.hidden .snap-asset-meta .draft-tag,
+.draft .snap-asset-meta .draft-tag {
+  display: block;
+}
+li.draft .snap-asset-link,
+li.draft .contentwithoutlink,
+li.draft .contentafterlink,
+li.draft .snap-assettype {
+  opacity: 0.6;
+}
 /* all the editing options and completion data in one region */
 .snap-asset-actions {
   visibility: hidden;
@@ -18303,7 +18355,7 @@ li.snap-activity.modtype_folder .snap-assettype {
 .snap-asset-actions > a,
 .snap-asset-actions .snap-edit-more-dropdown,
 .snap-asset-actions label {
-  display: inline-block;
+  display: inline-block !important;
   width: 25%;
   cursor: pointer;
 }
@@ -18413,44 +18465,6 @@ li.draft .editing_show {
 }
 .section .snap-asset .actions .moodle-actionmenu > ul {
   margin: 0;
-}
-/* Completion actions */
-.togglecompletion,
-.autocompletion {
-  display: block;
-  clear: both;
-}
-/* Add padding for labels */
-.modtype_label .togglecompletion,
-.modtype_label .autocompletion {
-  padding-bottom: 1em;
-}
-/* Hide if editing it on */
-.editing .togglecompletion,
-.editing .autocompletion {
-  display: none;
-}
-span.autocompletion img,
-form.togglecompletion input {
-  width: 30px;
-  height: 30px;
-  display: inline;
-  position: relative;
-}
-form.togglecompletion input {
-  border-radius: 50%;
-  -webkit-transform: scale(0.75);
-      -ms-transform: scale(0.75);
-          transform: scale(0.75);
-  -webkit-box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
-          box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
-}
-form.togglecompletion input:hover {
-  -webkit-transform: scale(1.04);
-      -ms-transform: scale(1.04);
-          transform: scale(1.04);
-  -webkit-transition: -webkit-transform 0.3s;
-          transition: transform 0.3s;
 }
 /* add bg colour for actions when editing */
 .editing .actions {
@@ -18858,10 +18872,6 @@ fieldset[disabled] a#changenumsections .reduce-sections {
     width: auto;
   }
 }
-.module-meta .label {
-  margin-right: 1%;
-  padding: 0.75em;
-}
 @-webkit-keyframes fadeup {
   0% {
     min-height: 100vh;
@@ -19133,13 +19143,11 @@ fieldset[disabled] a#changenumsections .reduce-sections {
 .snap-drop.asset-drop {
   display: none;
 }
+.snap-move-asset .snap-asset:not(.asset-moving) {
+  border: 2px dashed #999999;
+}
 .snap-move-asset .snap-resource:not(.asset-moving) {
   border: 2px dashed white;
-}
-.snap-move-asset .snap-activity:not(.asset-moving),
-.snap-move-asset .snap-native,
-.snap-move-asset li.modtype_label:not(.asset-moving) {
-  border: 2px dashed #999999;
 }
 .snap-move-asset .snap-asset:not(.asset-moving) .snap-move-note {
   position: absolute;
@@ -19156,7 +19164,7 @@ fieldset[disabled] a#changenumsections .reduce-sections {
 .snap-move-asset .snap-drop.asset-drop {
   display: block;
   clear: both;
-  border: 3px dashed #666666;
+  border: 2px dashed #999999;
   font-size: 2em;
   font-color: #666666;
   font-family: "Roboto", "Fira Sans", "Segoe UI", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif;

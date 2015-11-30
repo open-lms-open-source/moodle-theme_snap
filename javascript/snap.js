@@ -875,15 +875,15 @@ function snapInit() {
 
         // Personal menu course card clickable.
         $(document).on('click', '.courseinfo[data-href]', function(e){
-              var trigger = $(e.target),
-              hreftarget = '_self';
-              // Excludes any clicks in the card deeplinks.
-              if(!$(trigger).closest('a').length) {
+            var trigger = $(e.target),
+            hreftarget = '_self';
+            // Excludes any clicks in the card deeplinks.
+            if(!$(trigger).closest('a').length) {
                 window.open($(this).data('href'), hreftarget);
                 e.preventDefault();
-              }
+            }
         });
-
+       
         // Resource cards clickable.
         $(document).on('click', '.snap-resource', function(e){
             var trigger = $(e.target),
@@ -891,7 +891,7 @@ function snapInit() {
                 link = $(trigger).closest('.snap-resource').find('.snap-asset-link a'),
                 href = $(link).attr('href');
             // Excludes any clicks in the actions menu, on links or forms.
-            if(!$(trigger).closest('.snap-asset-actions, form, a, input').length) {
+            if(!$(trigger).closest('form, a, input, label').length) {
                 if ($(this).hasClass('js-snap-media')) {
                     lightboxMedia(this);
                 } else {

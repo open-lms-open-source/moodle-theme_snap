@@ -188,15 +188,15 @@ class toc_renderer extends core_renderer {
 
             if ($canviewhidden) { // Teachers.
                 if ($conditional) {
-                    $linkinfo .= $this->toc_linkinfo(get_string('conditional', 'theme_snap'));
+                    $linkinfo .= "<span class='text text-danger'>".$this->toc_linkinfo(get_string('conditional', 'theme_snap'))."</span>";
                 }
                 if (!$thissection->visible) {
-                    $linkinfo .= $this->toc_linkinfo(get_string('notpublished', 'theme_snap'));
+                    $linkinfo .= "<span class='text text-warning'>".$this->toc_linkinfo(get_string('notpublished', 'theme_snap'))."</span>";
                 }
             } else { // Students.
                 if ($conditional && $thissection->availableinfo) {
                     // Conditional section, with text explaining conditions.
-                    $linkinfo .= $this->toc_linkinfo(get_string('conditional', 'theme_snap'));
+                    $linkinfo .= "<span class='text text-danger'>".$this->toc_linkinfo(get_string('conditional', 'theme_snap'))."</span>";
                 }
                 if ($conditional && !$thissection->uservisible && !$thissection->availableinfo) {
                     // Conditional section, totally hidden from user so skip.
@@ -206,7 +206,7 @@ class toc_renderer extends core_renderer {
                     // Hidden section collapsed, so show as text in TOC.
                     $outputlink = false;
                     // Top trump - if not clickable, replace linkinfo.
-                    $linkinfo = $this->toc_linkinfo(get_string('notavailable'));
+                    $linkinfo = "<br><span class='text text-warning'>".$this->toc_linkinfo(get_string('notavailable'))."</span>";
                 }
             }
             /*
@@ -238,7 +238,7 @@ class toc_renderer extends core_renderer {
             $highlight = '';
             if (course_get_format($course)->is_section_current($section)) {
                 $sectionclass = 'current';
-                $highlight = ' <small class=highlight-tag>'.get_string('current', 'theme_snap').'</small>';
+                $highlight = "<span class='text text-success'>".get_string('current', 'theme_snap')."</span>";
             }
 
             if ($outputlink) {
