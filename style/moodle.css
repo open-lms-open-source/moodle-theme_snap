@@ -17331,17 +17331,17 @@ section#region-main
 #page-mast .singlebutton {
   display: none;
 }
-.editing #course-toc,
-.editing #region-main {
+.editing.pagelayout-course #course-toc,
+.editing.pagelayout-course #region-main {
   display: none;
 }
-.editing #page-mast .singlebutton {
+.editing.pagelayout-course #page-mast .singlebutton {
   float: right;
   margin-top: -3.2em;
   margin-right: -4%;
   display: block;
 }
-.editing #page-mast .singlebutton input[type="submit"] {
+.editing.pagelayout-course #page-mast .singlebutton input[type="submit"] {
   background-color: #999999 !important;
   -webkit-box-shadow: 0;
           box-shadow: 0;
