@@ -94,20 +94,12 @@ if ($ADMIN->fulltree) {
     $setting->set_updatedcallback('theme_snap_process_site_coverimage');
     $settings->add($setting);
 
-    $name = 'theme_snap/menusandnavheading';
-    $title = new lang_string('menusandnavheading', 'theme_snap');
-    $description = new lang_string('menusandnavheadingdesc', 'theme_snap');
-    $setting = new admin_setting_heading($name, $title, $description);
-    $settings->add($setting);
 
-    // Hide navigation block.
-    $name = 'theme_snap/hidenavblock';
-    $title = new lang_string('hidenavblock', 'theme_snap');
-    $description = new lang_string('hidenavblockdesc', 'theme_snap');
-    $checked = '1';
-    $unchecked = '0';
-    $default = $checked;
-    $setting = new admin_setting_configcheckbox($name, $title, $description, $default, $checked, $unchecked);
+    // Personal menu settings
+    $name = 'theme_snap/personalmenu';
+    $title = new lang_string('personalmenu', 'theme_snap');
+    $description = new lang_string('footerheadingdesc', 'theme_snap');
+    $setting = new admin_setting_heading($name, $title, $description);
     $settings->add($setting);
 
     // Personal menu deadlines on/off.
@@ -149,9 +141,26 @@ if ($ADMIN->fulltree) {
     $description = new lang_string('forumpoststoggledesc', 'theme_snap');
     $checked = '1';
     $unchecked = '0';
-    $default = $unchecked;
+    $default = $checked;
     $setting = new admin_setting_configcheckbox($name, $title, $description, $default, $checked, $unchecked);
     $setting->set_updatedcallback('theme_reset_all_caches');
+    $settings->add($setting);
+
+
+    $name = 'theme_snap/footerheading';
+    $title = new lang_string('footerheading', 'theme_snap');
+    $description = new lang_string('footerheadingdesc', 'theme_snap');
+    $setting = new admin_setting_heading($name, $title, $description);
+    $settings->add($setting);
+
+    // Hide navigation block.
+    $name = 'theme_snap/hidenavblock';
+    $title = new lang_string('hidenavblock', 'theme_snap');
+    $description = new lang_string('hidenavblockdesc', 'theme_snap');
+    $checked = '1';
+    $unchecked = '0';
+    $default = $checked;
+    $setting = new admin_setting_configcheckbox($name, $title, $description, $default, $checked, $unchecked);
     $settings->add($setting);
 
     // Course footer on/off.
