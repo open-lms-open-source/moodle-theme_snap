@@ -3695,8 +3695,11 @@ li.snap-activity.modtype_folder .snap-assettype {
   padding: 0.75em;
   display: inline-block;
 }
+.snap-completion-meta,
 .snap-restrictions-meta {
-  clear: both;
+  width: 100%;
+}
+.snap-restrictions-meta {
   margin: 0;
 }
 .snap-restrictions-meta .text {
@@ -3707,11 +3710,11 @@ li.snap-activity.modtype_folder .snap-assettype {
   font-weight: 500;
 }
 .snap-asset-meta .draft-tag {
-  display: none;
+  display: none !important;
 }
 .hidden .snap-asset-meta .draft-tag,
 .draft .snap-asset-meta .draft-tag {
-  display: block;
+  display: block !important;
 }
 li.draft .snap-asset-link,
 li.draft .contentwithoutlink,
