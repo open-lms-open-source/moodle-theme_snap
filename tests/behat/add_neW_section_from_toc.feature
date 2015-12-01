@@ -13,50 +13,35 @@
 # You should have received a copy of the GNU General Public License
 # along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 #
-# Tests for toggle course section visibility in non edit mode in snap.
 #
 # @package    theme_snap
-# @copyright  2015 Guy Thomas <gthomas@moodlerooms.com>
+# @copyright Copyright (c) 2015 Moodlerooms Inc. (http://www.moodlerooms.com)
 # @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
 
 
 @theme @theme_snap
-Feature: When the moodle theme is set to Snap, teachers can toggle the visibility of course sections in read mode and
-  edit mode.
+Feature: In the Snap theme you can add a new section by clicking on a link in the TOC which reveals a form
 
   Background:
     Given the following config values are set as admin:
       | theme | snap |
     And the following "courses" exist:
-      | fullname | shortname | category | format |
-      | Course 1 | C1 | 0 | topics |
+      | fullname | shortname | category | groupmode |
+      | Course 1 | C1 | 0 | 1 |
     And the following "users" exist:
       | username | firstname | lastname | email |
       | teacher1 | Teacher | 1 | teacher1@example.com |
-      | student1 | Student | 1 | student1@example.com |
     And the following "course enrolments" exist:
       | user | course | role |
-      | admin | C1 | editingteacher |
       | teacher1 | C1 | editingteacher |
-      | student1 | C1 | student |
 
   @javascript
-  Scenario: In read mode, teacher hides section.
+  Scenario: Add a new section via the TOC
     Given I log in with snap as "teacher1"
     And I follow "Menu"
-    And I follow "Course"
-    And I wait until the page is ready
-    And I follow "Topic 2"
-   Then "#section-2" "css_element" should exist
-    And "#section-2.hidden" "css_element" should not exist
-    And I click on "#section-2 .editing_showhide" "css_element"
-   Then "#section-2.hidden" "css_element" should exist
+    And I follow "Course 1"
+    And I follow "Create a new section"
+    And I set the field "Title" to "New section title"
+    And I click on "Create section" "button"
+    Then I should see "New section title" in the "#section-6 .sectionname" "css_element"
 
-  @javascript
-  Scenario: In read mode, student cannot hide section.
-    Given I log in with snap as "student1"
-    And I follow "Menu"
-    And I follow "Course"
-    And I wait until the page is ready
-    And I follow "Topic 2"
-    Then ".section-2 .editing_showhide" "css_element" should not exist

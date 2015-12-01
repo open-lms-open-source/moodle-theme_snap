@@ -304,6 +304,10 @@ img {
     max-width: 100%;
     height: auto;
 }
+.svg-icon {
+  width: 1.5em;
+  height: 1.5em;
+}
 
 // Stop images shrinking to nothing on Chrome
 table img {
@@ -338,6 +342,12 @@ img.icon {
     padding: 0;
     margin-right: 6px;
 }
+img.svg-icon {
+  width: 2rem;
+  height: 2rem;
+  margin: 0 0.3rem;
+  vertical-align: middle;
+}
 
 // Responsive video for iframes, objects, embeds.
 .videoiframe {
@@ -350,9 +360,11 @@ img.icon {
 }
 
 .mediaplugin object,
+.mediaplugin_flv,
 .mediaplugin embed {
-    width: 100%;
-    margin: 0 auto;
+  width: 100%;
+  margin: 0 auto;
+  max-height: 90vh;
 }
 
 // Responsive video for HTML5 only.
@@ -363,7 +375,7 @@ video {
 
 /* mdl hide stuff icon - hide in bs has different meaning*/
 img.icon.hide {
-    display: block !important;
+    display: inline-block !important;
 }
 
 li {
@@ -587,6 +599,7 @@ input[type="text"]+input[type="submit"] {
     margin: 0.1em auto;
 }
 
+#snap-move-message .icon-close:before,
 .fixy .icon-close:before {
     background: transparent url("[[pix:theme|close_x_white]]") no-repeat 50% 50%;
 }
@@ -1368,6 +1381,15 @@ header#page-header
     .published-status + .published-status:before {
         content: " · ";
     }
+
+    .toc-footer {
+        margin-right: 4%;
+        text-align: right;
+
+        a {
+            margin-left: 0.5em;
+        }
+    }
 }
 
 // if the course has an image
@@ -1515,7 +1537,8 @@ ol#chapters {
 // small screen
 @media screen and (max-width: @screen-xs-min) {
     #toc-search,
-    #course-toc #toc-desktop-menu-heading {
+    #course-toc #toc-desktop-menu-heading,
+    #course-toc .toc-footer {
         display: none;
     }
 
@@ -1573,6 +1596,17 @@ ol#chapters {
             margin: 0;
             padding: 2em 4%;
             width: 100%;
+        }
+        
+        .toc-footer {
+            display: block;
+            text-align: left;
+            margin-left: 4%;
+            padding-bottom: 2em;
+
+            a {
+                display: block;
+            }
         }
     }
 }
@@ -3902,7 +3936,7 @@ body.hascontinuecancel.path-site #page {
 spinner, from
 http://css-spinners.com/css/spinner/three-quarters.css
 **/
-@keyframes three-quarters {
+@keyframes spinner-three-quarters {
     0% {
         transform: rotate(0deg);
     }
@@ -3913,14 +3947,14 @@ http://css-spinners.com/css/spinner/three-quarters.css
 }
 
 /* Styles for old versions of IE */
-.three-quarters {
+.spinner-three-quarters {
     font-family: sans-serif;
     font-weight: 100;
 }
 
 /* :not(:required) hides this rule from IE9 and below */
-.three-quarters:not(:required) {
-    animation: three-quarters 1250ms infinite linear;
+.spinner-three-quarters:not(:required) {
+    animation: spinner-three-quarters 1250ms infinite linear;
 
     // Start GT Mod - force gpu accelleration.
     transform: translateZ(0);
@@ -3936,6 +3970,11 @@ http://css-spinners.com/css/spinner/three-quarters.css
     text-indent: -9999px;
     width: 32px;
     height: 32px;
+}
+
+.spinner-three-quarters:not(:required).spinner-dark {
+    border-color: @brand-primary;
+    border-right-color: transparent;
 }
 
 /** folderview format **/

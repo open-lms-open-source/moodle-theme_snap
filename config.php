@@ -175,6 +175,7 @@ $THEME->javascripts_footer = array(
     'bootstrap',
     'headroom',
     'snap',
+    'course',
     'modernizer',
     'jquery.placeholder'
 );

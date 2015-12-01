@@ -13,7 +13,7 @@
 # You should have received a copy of the GNU General Public License
 # along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 #
-# Tests for toggle course section visibility in non edit mode in snap.
+# Tests for html5 file upload direct to course.
 #
 # @package    theme_snap
 # @copyright  2015 Guy Thomas <gthomas@moodlerooms.com>
@@ -21,8 +21,8 @@
 
 
 @theme @theme_snap
-Feature: When the moodle theme is set to Snap, teachers can toggle the visibility of course sections in read mode and
-  edit mode.
+Feature: When the moodle theme is set to Snap, teachers can upload files as resources directly to the current
+  course section from a simple file input element in either read or edit mode.
 
   Background:
     Given the following config values are set as admin:
@@ -41,22 +41,24 @@ Feature: When the moodle theme is set to Snap, teachers can toggle the visibilit
       | student1 | C1 | student |
 
   @javascript
-  Scenario: In read mode, teacher hides section.
+  Scenario: In read mode, teacher uploads file.
     Given I log in with snap as "teacher1"
     And I follow "Menu"
     And I follow "Course"
     And I wait until the page is ready
-    And I follow "Topic 2"
-   Then "#section-2" "css_element" should exist
-    And "#section-2.hidden" "css_element" should not exist
-    And I click on "#section-2 .editing_showhide" "css_element"
-   Then "#section-2.hidden" "css_element" should exist
+    And I follow "Topic 1"
+    Then "#section-1" "css_element" should exist
+    And "#snap-drop-file-1" "css_element" should exist
+    And I upload file "test_text_file.txt" using input "#snap-drop-file-1"
+    And I upload file "test_mp3_file.mp3" using input "#snap-drop-file-1"
+    Then ".snap-resource[data-type='text']" "css_element" should exist
+    And ".snap-resource[data-type='mp3']" "css_element" should exist
 
   @javascript
-  Scenario: In read mode, student cannot hide section.
+  Scenario: Student cannot upload file.
     Given I log in with snap as "student1"
     And I follow "Menu"
     And I follow "Course"
     And I wait until the page is ready
-    And I follow "Topic 2"
-    Then ".section-2 .editing_showhide" "css_element" should not exist
+    And I follow "Topic 1"
+    Then "#snap-drop-file" "css_element" should not exist

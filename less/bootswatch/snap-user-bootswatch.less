@@ -38,10 +38,12 @@
 .news-article-message *[style],
 .snap-image-summary *[style],
 .summary-text *[style],
-.summary *[style],
+.summary p[style],
+.summary div[style],
 .snap-activity .contentafterlink *[style],
 .signuppanel *[style],
-.signuppanel .text_to_html *[style] {
+.signuppanel .text_to_html *[style],
+.snap-lightbox-description *[style] {
     color: inherit !important;
     font-size: inherit !important;
     line-height: inherit !important;
@@ -68,12 +70,14 @@ hr {
 }
 
 a,
-a:visited {
+a:visited,
+.btn-link {
     color: @brand-primary;
 }
 
 a:focus,
-a:hover {
+a:hover,
+.btn-link:hover {
     color: darken(@brand-primary, 8%);
 }
 
@@ -125,7 +129,9 @@ a:hover {
 .contentwithoutlink,
 #course_about,
 .user-grade td.feedbacktext,
-#course_teachers .text_to_html {
+// moodle applies to .text_to_html class for teachers description in the footer
+#course_teachers .text_to_html,
+.snap-lightbox-description  {
     font-family: @font-family-serif;
 }
 
@@ -259,6 +265,14 @@ input[type="reset"],
     }
 }
 
+#id_cancel {
+    color: @brand-primary;
+
+    &:hover {
+        color: darken(@brand-primary, 8%);
+    }
+}
+
 // None standard buttons - e.g. atto
 .editing.path-course-view section#region-main > .singlebutton input[type="submit"],
 .editor_atto_toolbar button,
@@ -304,7 +318,8 @@ input[type="reset"],
 #page-login-index #page,
 .news-article-image,
 .news-article-preview,
-#notice {
+#notice,
+#snap-move-message {
     background-color: @brand-primary;
 }
 

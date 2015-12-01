@@ -188,15 +188,15 @@ class toc_renderer extends core_renderer {
 
             if ($canviewhidden) { // Teachers.
                 if ($conditional) {
-                    $linkinfo .= $this->toc_linkinfo(get_string('conditional', 'theme_snap'));
+                    $linkinfo .= "<span class='text text-danger'>".$this->toc_linkinfo(get_string('conditional', 'theme_snap'))."</span>";
                 }
                 if (!$thissection->visible) {
-                    $linkinfo .= $this->toc_linkinfo(get_string('notpublished', 'theme_snap'));
+                    $linkinfo .= "<span class='text text-warning'>".$this->toc_linkinfo(get_string('notpublished', 'theme_snap'))."</span>";
                 }
             } else { // Students.
                 if ($conditional && $thissection->availableinfo) {
                     // Conditional section, with text explaining conditions.
-                    $linkinfo .= $this->toc_linkinfo(get_string('conditional', 'theme_snap'));
+                    $linkinfo .= "<span class='text text-danger'>".$this->toc_linkinfo(get_string('conditional', 'theme_snap'))."</span>";
                 }
                 if ($conditional && !$thissection->uservisible && !$thissection->availableinfo) {
                     // Conditional section, totally hidden from user so skip.
@@ -206,7 +206,7 @@ class toc_renderer extends core_renderer {
                     // Hidden section collapsed, so show as text in TOC.
                     $outputlink = false;
                     // Top trump - if not clickable, replace linkinfo.
-                    $linkinfo = $this->toc_linkinfo(get_string('notavailable'));
+                    $linkinfo = "<br><span class='text text-warning'>".$this->toc_linkinfo(get_string('notavailable'))."</span>";
                 }
             }
             /*
@@ -238,7 +238,7 @@ class toc_renderer extends core_renderer {
             $highlight = '';
             if (course_get_format($course)->is_section_current($section)) {
                 $sectionclass = 'current';
-                $highlight = ' <small class=highlight-tag>'.get_string('current', 'theme_snap').'</small>';
+                $highlight = "<span class='text text-success'>".get_string('current', 'theme_snap')."</span>";
             }
 
             if ($outputlink) {
@@ -266,21 +266,28 @@ class toc_renderer extends core_renderer {
 
             $toc .= $li;
         }
+        $toc .= "</ol>";
+
+        $toc .= "<div class='toc-footer'>";
+
+        $context = context_course::instance($course->id);
+        if (has_capability('moodle/course:update', $context)) {
+            $addanewsection = get_string('addanewsection', 'theme_snap');
+            $addicon = '<img src="'.$this->pix_url('pencil', 'theme').'" class="svg-icon" alt="" />';
+            $toc .= "<a href='#snap-add-new-section'>$addicon$addanewsection</a>";
+        }
+
         $coursetools = get_string('coursetools', 'theme_snap');
-        $url = "#coursetools";
         if ($COURSE->format == 'folderview') {
             $url = new moodle_url('/course/view.php', ['id' => $course->id, 'section' => 0], 'coursetools');
         }
-        $link = html_writer::link($url, $coursetools);
-        $toc .= "<li>$link</li>";
+        $toolsicon = '<img src="'.$this->pix_url('tools', 'theme').'" class="svg-icon" alt="" />';
+        $toc .= "<a href='#coursetools'>$toolsicon$coursetools</a>";
 
-        $toc .= "</ol>";
-        $toc .= "</nav>";
+        $toc .= "</div></nav>";
         $o .= $toc;
         return $o;
     }
-
-
 
     /**
      * provide search function for all modules on page

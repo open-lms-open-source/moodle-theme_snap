@@ -165,29 +165,11 @@ trait format_section_trait {
         }
 
         if (!$isstealth && !$onsectionpage && has_capability('moodle/course:movesections', $coursecontext)) {
-            $url = clone($baseurl);
-            if ($section->section > 1) { // Add a arrow to move section up.
-                $url->param('section', $section->section);
-                $url->param('move', -1);
-                $strmoveup = get_string('moveup');
-
-                $controls[] = html_writer::link($url,
-                    html_writer::empty_tag('img', array('src' => $this->output->pix_url('i/up'),
-                    'class' => 'icon up', 'alt' => $strmoveup)),
-                    array('title' => $strmoveup, 'class' => 'moveup'));
-            }
-
-            $url = clone($baseurl);
-            if ($section->section < $course->numsections) { // Add a arrow to move section down.
-                $url->param('section', $section->section);
-                $url->param('move', 1);
-                $strmovedown =  get_string('movedown');
-
-                $controls[] = html_writer::link($url,
-                    html_writer::empty_tag('img', array('src' => $this->output->pix_url('i/down'),
-                    'class' => 'icon down', 'alt' => $strmovedown)),
-                    array('title' => $strmovedown, 'class' => 'movedown'));
-            }
+            $url = '#section-'.$section->section;
+            $snap_move_section = "<img class='svg-icon' src='".$this->output->pix_url('move', 'theme')."'>";
+            $movestring = get_string('movesection', 'theme_snap');
+            $controls[] = html_writer::link($url, $snap_move_section ,
+            array('title' => $movestring, 'class' => 'snap-move', 'data-id' => $section->section));
         }
 
         return $controls;
@@ -223,7 +205,7 @@ trait format_section_trait {
         // SHAME - Remove tabindex when editing menu is shown.
         $sectionarrayvars = array('id' => 'section-'.$section->section,
         'class' => 'section main clearfix'.$sectionstyle,
-        'role' => 'region',
+        'role' => 'article',
         'aria-label' => get_section_name($course, $section));
         if (!$PAGE->user_is_editing()) {
             $sectionarrayvars['tabindex'] = '-1';
@@ -255,10 +237,17 @@ trait format_section_trait {
         $testemptytitle = get_string('topic').' '.$section->section;
         if ($sectiontitle == $testemptytitle && has_capability('moodle/course:update', $context)) {
           $url = new moodle_url('/course/editsection.php', array('id' => $section->id, 'sr' => $sectionreturn));
-          $o .= "<h2><a href='$url' title='".s(get_string('editcoursetopic', 'theme_snap'))."'>".get_string('defaulttopictitle', 'theme_snap')."</a></h2>";
+          $o .= "<h2 class='sectionname'><a href='$url' title='".s(get_string('editcoursetopic', 'theme_snap'))."'>".get_string('defaulttopictitle', 'theme_snap')."</a></h2>";
         }
         else {
           $o .= $this->output->heading($sectiontitle, 2, 'sectionname' . $classes);
+        }
+
+        // Section drop zone.
+        $caneditcourse = has_capability('moodle/course:update', $context);
+        if ($caneditcourse && $section->section != 0) {
+            $o .= "<a class='snap-drop section-drop' data-id='$section->section' data-title='".
+                    s($sectiontitle)."' href='#'>_</a>";
         }
 
         // Section editing commands.
@@ -268,7 +257,7 @@ trait format_section_trait {
             if (!empty($sectiontoolsarray)) {
               $sectiontools = implode(' ', $sectiontoolsarray);
               $o .= html_writer::tag('div', $sectiontools, array(
-                  'class' => 'left right side snap-section-editing',
+                  'class' => 'snap-section-editing actions',
                   'role' => 'region',
                   'aria-label' => get_string('topicactions', 'theme_snap')
               ));
@@ -276,8 +265,10 @@ trait format_section_trait {
         }
 
         // Availabiliy message.
-        $o .= $this->section_availability_message($section,
-            has_capability('moodle/course:viewhiddensections', $context));
+        $o .= "<div class='snap-restrictions-meta'>
+        <div class='text text-danger'>".$this->section_availability_message($section,
+            has_capability('moodle/course:viewhiddensections', $context))."</div>
+        </div>";
 
         // Section summary/body text.
         $o .= "<div class='summary'>";
@@ -421,7 +412,7 @@ trait format_section_trait {
                  echo $this->courserenderer->course_section_cm_list($course, $thissection, 0);
                  // SLamour Aug 2015 - make add asset visible without turning editing on
                  // N.B. this function handles the can edit permissions.
-                  echo $this->course_section_add_cm_control($course, $section, 0);
+                 echo $this->course_section_add_cm_control($course, $section, 0);
 
                 if (!$PAGE->user_is_editing()) {
                     echo $this->next_previous($course, $modinfo->get_section_info_all(), $section);
@@ -448,9 +439,10 @@ trait format_section_trait {
 
     protected function end_section_list() {
         global $COURSE;
+
         $output = html_writer::end_tag('ul');
         $output .= $this->change_num_sections($COURSE);
-        $output .= "<section id='coursetools' class='clearfix' tabindex='-1'>";
+        $output .= "<section id='coursetools' class='clearfix'>";
         $output .= snap_shared::coursetools_svg_icons();
         $output .= snap_shared::appendices();
         $output .= "</section>";
@@ -468,8 +460,7 @@ trait format_section_trait {
 
         $course = course_get_format($course)->get_course();
         $context = context_course::instance($course->id);
-        if (!$PAGE->user_is_editing()
-                || !has_capability('moodle/course:update', $context)) {
+        if (!has_capability('moodle/course:update', $context)) {
             return '';
         }
 
@@ -479,25 +470,25 @@ trait format_section_trait {
             'contextid' => $context->id,
         ));
 
+        $required = '';
+        if ($course->format === 'topics') {
+            $required = 'required';
+        }
+
         $heading = get_string('addanewsection', 'theme_snap');
-        $output = "<h3>$heading</h3>";
+        $output = "<section id='snap-add-new-section' class='clearfix' tabindex='-1'>
+        <h3>$heading</h3>";
         $output .= html_writer::start_tag('form', array(
             'method' => 'post',
             'action' => $url->out_omit_querystring()
         ));
         $output .= html_writer::input_hidden_params($url);
         $output .= '<div class="form-group">';
-        $output .= html_writer::label(get_string('sectionname'), 'newsection', true);
-        $output .= html_writer::empty_tag('input', array(
-            'id' => 'newsection',
-            'type' => 'text',
-            'size' => 50,
-            'name' => 'newsection',
-            'required' => 'required',
-        ));
+        $output .= "<label for='newsection' class='sr-only'>".get_string('title', 'theme_snap')."</label>";
+        $output .= "<input class='h3' id='newsection' type='text' name='newsection' $required placeholder='".get_string('title', 'theme_snap')."'>";
         $output .= '</div>';
         $output .= '<div class="form-group">';
-        $output .= html_writer::label(get_string('summary'), 'summary', true);
+        $output .= "<label for='summary'>".get_string('contents', 'theme_snap')."</label>";
         $output .= print_textarea(true, 10, 150, "100%",
             "auto", "summary", '', $course->id, true);
         $output .= '</div>';
@@ -507,7 +498,7 @@ trait format_section_trait {
             'value' => get_string('createsection', 'theme_snap'),
         ));
         $output .= html_writer::end_tag('form');
-
+        $output .= '</section>';
         return $output;
     }
 
@@ -539,6 +530,12 @@ trait format_section_trait {
               <span class='section-modchooser-link'><span>".get_string('addresourceoractivity', 'theme_snap')."</span></span>
             </div>";
            $output = $this->courserenderer->course_modchooser($modules, $course) . $modchooser;
-           return $output;
+
+           // Add zone for quick uploading of files.
+           $upload = '<form class="snap-dropzone">
+              <label for="snap-drop-file-'.$section.'" class="snap-dropzone-label h6">'.get_string('dropzonelabel', 'theme_snap').'</label>
+              <input type="file" multiple name="snap-drop-file-'.$section.'" id="snap-drop-file-'.$section.'" class="js-snap-drop-file sr-only"/>
+              </form>';
+           return $output.$upload;
     }
 }
