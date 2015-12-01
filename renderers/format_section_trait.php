@@ -104,6 +104,95 @@ trait format_section_trait {
         return $html;
     }
 
+
+    /**
+     * Generate the edit controls of a section
+     *
+     * @param stdClass $course The course entry from DB
+     * @param stdClass $section The course_section entry from DB
+     * @param bool $onsectionpage true if being printed on a section page
+     * @return array of links with edit controls
+     */
+    protected function section_edit_controls($course, $section, $onsectionpage = false) {
+
+        if ($section->section === 0) {
+            return [];
+        }
+
+        $coursecontext = context_course::instance($course->id);
+        $isstealth = isset($course->numsections) && ($section->section > $course->numsections);
+
+        if ($onsectionpage) {
+            $baseurl = course_get_url($course, $section->section);
+        } else {
+            $baseurl = course_get_url($course);
+        }
+        $baseurl->param('sesskey', sesskey());
+
+        $controls = array();
+
+        $url = clone($baseurl);
+        if (!$isstealth && has_capability('moodle/course:sectionvisibility', $coursecontext)) {
+            if ($section->visible) { // Show the hide/show eye.
+                $strhidefromothers = get_string('hidefromothers', 'format_'.$course->format);
+                $url->param('hide', $section->section);
+                $controls[] = html_writer::link($url,
+                    html_writer::empty_tag('img', array('src' => $this->output->pix_url('i/hide'),
+                    'class' => 'icon hide', 'alt' => $strhidefromothers)),
+                    array('title' => $strhidefromothers, 'class' => 'editing_showhide'));
+            } else {
+                $strshowfromothers = get_string('showfromothers', 'format_'.$course->format);
+                $url->param('show',  $section->section);
+                $controls[] = html_writer::link($url,
+                    html_writer::empty_tag('img', array('src' => $this->output->pix_url('i/show'),
+                    'class' => 'icon hide', 'alt' => $strshowfromothers)),
+                    array('title' => $strshowfromothers, 'class' => 'editing_showhide'));
+            }
+        }
+
+        if (course_can_delete_section($course, $section)) {
+            if (get_string_manager()->string_exists('deletesection', 'format_'.$course->format)) {
+                $strdelete = get_string('deletesection', 'format_'.$course->format);
+            } else {
+                $strdelete = get_string('deletesection');
+            }
+            $url = new moodle_url('/course/editsection.php', array('id' => $section->id,
+                'sr' => $onsectionpage ? $section->section : 0, 'delete' => 1));
+            $controls[] = html_writer::link($url,
+                html_writer::empty_tag('img', array('src' => $this->output->pix_url('t/delete'),
+                    'class' => 'icon delete', 'alt' => $strdelete)),
+                array('title' => $strdelete));
+        }
+
+        if (!$isstealth && !$onsectionpage && has_capability('moodle/course:movesections', $coursecontext)) {
+            $url = clone($baseurl);
+            if ($section->section > 1) { // Add a arrow to move section up.
+                $url->param('section', $section->section);
+                $url->param('move', -1);
+                $strmoveup = get_string('moveup');
+
+                $controls[] = html_writer::link($url,
+                    html_writer::empty_tag('img', array('src' => $this->output->pix_url('i/up'),
+                    'class' => 'icon up', 'alt' => $strmoveup)),
+                    array('title' => $strmoveup, 'class' => 'moveup'));
+            }
+
+            $url = clone($baseurl);
+            if ($section->section < $course->numsections) { // Add a arrow to move section down.
+                $url->param('section', $section->section);
+                $url->param('move', 1);
+                $strmovedown =  get_string('movedown');
+
+                $controls[] = html_writer::link($url,
+                    html_writer::empty_tag('img', array('src' => $this->output->pix_url('i/down'),
+                    'class' => 'icon down', 'alt' => $strmovedown)),
+                    array('title' => $strmovedown, 'class' => 'movedown'));
+            }
+        }
+
+        return $controls;
+    }
+
     /**
      *
      * Generate the display of the header part of a section before
@@ -141,13 +230,6 @@ trait format_section_trait {
         }
 
         $o .= html_writer::start_tag('li', $sectionarrayvars);
-
-        // Ok, in testing left content is actually empty...??
-        $leftcontent = $this->section_left_content($section, $course, $onsectionpage);
-        $rightcontent = $this->section_right_content($section, $course, $onsectionpage);
-        $rightcontent .= $leftcontent;
-        $rightcontent = preg_replace("/<br\W*\/?>/", "\n", $rightcontent);
-
         $o .= html_writer::start_tag('div', array('class' => 'content'));
 
         // When not on a section page, we display the section titles except the general section if null.
@@ -169,25 +251,30 @@ trait format_section_trait {
             $sectiontitle = get_string('introduction', 'theme_snap');
         }
 
-        $showeditorhints = empty($CFG->theme_snap_disableeditorhints);
-
         // Untitled topic title.
         $testemptytitle = get_string('topic').' '.$section->section;
-        if ($showeditorhints && $sectiontitle == $testemptytitle && has_capability('moodle/course:update', $context)) {
+        if ($sectiontitle == $testemptytitle && has_capability('moodle/course:update', $context)) {
           $url = new moodle_url('/course/editsection.php', array('id' => $section->id, 'sr' => $sectionreturn));
           $o .= "<h2><a href='$url' title='".s(get_string('editcoursetopic', 'theme_snap'))."'>".get_string('defaulttopictitle', 'theme_snap')."</a></h2>";
         }
         else {
           $o .= $this->output->heading($sectiontitle, 2, 'sectionname' . $classes);
         }
-        // Editing commands.
-        if ($PAGE->user_is_editing()) {
-            $o .= html_writer::tag('div', $rightcontent, array(
-                'class' => 'left right side snap-section-editing',
-                'role' => 'region',
-                'aria-label' => 'topic actions',
-            ));
+
+        // Section editing commands.
+        $sectiontoolsarray = $this->section_edit_controls($course, $section, false);
+
+        if (has_capability('moodle/course:update', $context)) {
+            if (!empty($sectiontoolsarray)) {
+              $sectiontools = implode(' ', $sectiontoolsarray);
+              $o .= html_writer::tag('div', $sectiontools, array(
+                  'class' => 'left right side snap-section-editing',
+                  'role' => 'region',
+                  'aria-label' => get_string('topicactions', 'theme_snap')
+              ));
+            }
         }
+
         // Availabiliy message.
         $o .= $this->section_availability_message($section,
             has_capability('moodle/course:viewhiddensections', $context));
@@ -196,8 +283,10 @@ trait format_section_trait {
         $o .= "<div class='summary'>";
         $summarytext = $this->format_summary_text($section);
 
+        $canupdatecourse = has_capability('moodle/course:update', $context);
+
         // Welcome message when no summary text.
-        if ($showeditorhints && empty($summarytext) && has_capability('moodle/course:update', $context)) {
+        if (empty($summarytext) && $canupdatecourse) {
           $summarytext = "<p>".get_string('defaultsummary', 'theme_snap')."</p>";
           if ($section->section == 0) {
               $editorname = format_string(fullname($USER));
@@ -206,13 +295,11 @@ trait format_section_trait {
         }
 
         $o .= $summarytext;
-        if (has_capability('moodle/course:update', $context)) {
+        if ($canupdatecourse) {
             $url = new moodle_url('/course/editsection.php', array('id' => $section->id, 'sr' => $sectionreturn));
             $o .= "<a href='$url' class='edit-summary'>".get_string('editcoursetopic', 'theme_snap')."</a>";
         }
         $o .= "</div>";
-
-
 
         return $o;
     }
@@ -391,7 +478,7 @@ trait format_section_trait {
             'action' => 'addsection',
             'contextid' => $context->id,
         ));
-        
+
         $heading = get_string('addanewsection', 'theme_snap');
         $output = "<h3>$heading</h3>";
         $output .= html_writer::start_tag('form', array(

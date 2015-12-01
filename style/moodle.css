@@ -17763,6 +17763,7 @@ we do this by default in snap, so hide moodle version */
 .draft_info {
   display: none;
 }
+.hidden .draft_info,
 .draft .draft_info {
   display: inline-block;
 }
