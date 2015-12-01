@@ -42,26 +42,29 @@ section#region-main
 }
 
 // Course page  - turn editing on button.
-#page-mast .singlebutton {
-    display: none;
-}
-// SLamour Nov 2015 - editing only shows blocks.
-.editing.pagelayout-course {
-    #course-toc,
-    #region-main {
+.format-topics, .format-weeks {
+    #page-mast .singlebutton {
         display: none;
     }
-    #page-mast .singlebutton {
-        float: right;
-        margin-top: -3.2em; // MAGIC NUMBER
-        margin-right: -4%; // MAGIC NUMBER
-        display: block;
-        input[type="submit"] {
-            background-color: @gray-light !important;
-            box-shadow: 0;
+    // SLamour Nov 2015 - editing only shows blocks.
+    &.editing.pagelayout-course {
+        #course-toc,
+        #region-main {
+            display: none;
+        }
+        #page-mast .singlebutton {
+            float: right;
+            margin-top: -3.2em; // MAGIC NUMBER
+            margin-right: -4%; // MAGIC NUMBER
+            display: block;
+            input[type="submit"] {
+                background-color: @gray-light !important;
+                box-shadow: 0;
+            }
         }
     }
 }
+
 // Blocks config pages when editing.
 .editing.pagelayout-admin {
     #region-main {

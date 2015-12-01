@@ -29,6 +29,8 @@ Feature: When the moodle theme is set to Snap, teachers only see block edit cont
     And the following "courses" exist:
       | fullname | shortname | category | format |
       | Course 1 | C1        | 0        | topics |
+      | Course 2 | C2        | 0        | weeks  |
+      | Course 3 | C3        | 0        | folderview  |
     And the following "users" exist:
       | username | firstname | lastname | email |
       | teacher1 | Teacher   | 1        | teacher1@example.com |
@@ -37,12 +39,16 @@ Feature: When the moodle theme is set to Snap, teachers only see block edit cont
       | user     | course | role |
       | teacher1 | C1     | editingteacher |
       | student1 | C1     | student |
+      | teacher1 | C2     | editingteacher |
+      | student1 | C2     | student |
+      | teacher1 | C3     | editingteacher |
+      | student1 | C3     | student |
     And the following "activities" exist:
       | activity | course | idnumber | name             | intro                         | section |
       | assign   | C1     | assign1  | Test assignment1 | Test assignment description 1 | 1       |
 
   @javascript
-  Scenario: In read mode, teacher clicks edit blocks and can edit blocks.
+  Scenario: In read mode on a topics course, teacher clicks edit blocks and can edit blocks.
     Given I log in with snap as "teacher1"
     And I follow "Menu"
     And I follow "Course 1"
@@ -57,4 +63,39 @@ Feature: When the moodle theme is set to Snap, teachers only see block edit cont
     And I should not see "Test assignment1" in the "#section-1" "css_element"
     And ".block_news_items a.toggle-display" "css_element" should exist
 
+  @javascript
+  Scenario: In read mode on a topics course, teacher doesn't have turn editing on button.
+    Given I log in with snap as "teacher1"
+    And I follow "Menu"
+    And I follow "Course 1"
+    And I wait until the page is ready
+    And I should not see "Turn editing on" in the "#page-mast .singlebutton" "css_element"
 
+  @javascript
+  Scenario: In read mode on a weekly course, teacher doesn't have turn editing on button.
+    Given I log in with snap as "teacher1"
+    And I follow "Menu"
+    And I follow "Course 2"
+    And I wait until the page is ready
+    And I should not see "Turn editing on" in the "#page-mast .singlebutton" "css_element"
+
+  @javascript
+  Scenario: In read mode on a folderview course, teacher has an editing on button.
+    Given I log in with snap as "teacher1"
+    And I follow "Menu"
+    And I follow "Course 3"
+    And I wait until the page is ready
+    And I should see "Turn editing on" in the "#page-mast .singlebutton" "css_element"
+
+  @javascript
+  Scenario: In edit mode on a folderview course, teacher can see sections whilst editting on.
+    Given I log in with snap as "teacher1"
+    And I follow "Menu"
+    And I follow "Course 3"
+    And I wait until the page is ready
+    And I click on "#page-mast .singlebutton input[type=\"submit\"]" "css_element"
+    And I wait until the page is ready
+    And I should see "Add Topic"
+    And I should see "Add Resource"
+    And I should see "Topic Settings"
+    And I should see "Topic 1" in the "#section-1 .content" "css_element"
