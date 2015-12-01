@@ -64,30 +64,6 @@ Feature: When the moodle theme is set to Snap, teachers only see block edit cont
     And ".block_news_items a.toggle-display" "css_element" should exist
 
   @javascript
-  Scenario: In read mode on a topics course, teacher doesn't have turn editing on button.
-    Given I log in with snap as "teacher1"
-    And I follow "Menu"
-    And I follow "Course 1"
-    And I wait until the page is ready
-    And I should not see "Turn editing on" in the "#page-mast .singlebutton" "css_element"
-
-  @javascript
-  Scenario: In read mode on a weekly course, teacher doesn't have turn editing on button.
-    Given I log in with snap as "teacher1"
-    And I follow "Menu"
-    And I follow "Course 2"
-    And I wait until the page is ready
-    And I should not see "Turn editing on" in the "#page-mast .singlebutton" "css_element"
-
-  @javascript
-  Scenario: In read mode on a folderview course, teacher has an editing on button.
-    Given I log in with snap as "teacher1"
-    And I follow "Menu"
-    And I follow "Course 3"
-    And I wait until the page is ready
-    And I should see "Turn editing on" in the "#page-mast .singlebutton" "css_element"
-
-  @javascript
   Scenario: In edit mode on a folderview course, teacher can see sections whilst editting on.
     Given I log in with snap as "teacher1"
     And I follow "Menu"
