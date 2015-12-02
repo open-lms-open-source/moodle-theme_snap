@@ -19445,6 +19445,9 @@ img {
   width: 1.5em;
   height: 1.5em;
 }
+a {
+  word-break: break-word;
+}
 table img {
   min-width: 12px;
 }
