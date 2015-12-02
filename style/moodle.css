@@ -17354,6 +17354,13 @@ section#region-main
 .editing.pagelayout-admin #region-main {
   display: block;
 }
+#page-site-index.pagelayout-admin #region-main {
+  max-width: 43.5em;
+}
+#page-site-index.pagelayout-admin #moodle-frontpage-elements,
+#page-site-index.pagelayout-admin #moodle-blocks {
+  display: none;
+}
 .ie.path-course-view section#region-main > .singlebutton input[type="submit"] {
   background-image: url("[[pix:theme|edit_for_ie]]");
   -webkit-background-size: 23px 23px;

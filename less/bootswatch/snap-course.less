@@ -72,6 +72,17 @@ section#region-main
     }
 }
 
+// Block config pages for the front page when editing.
+#page-site-index.pagelayout-admin{
+    #region-main {
+        max-width: 43.5em;
+    }
+    #moodle-frontpage-elements,
+    #moodle-blocks {
+        display: none;
+    }
+}
+
 .ie.path-course-view section#region-main > .singlebutton input[type="submit"] {
     background-image: url("[[pix:theme|edit_for_ie]]");
     background-size: 23px;
