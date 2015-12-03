@@ -173,6 +173,12 @@ echo $OUTPUT->doctype() ?>
         position:relative;
         overflow:show;
     }
+
+    .section .activity .actions .menu {
+        min-width: 16em;
+        max-width: 360px;
+    }
+
     .editing .block_flexpagemod_default li.activity .commands,
     .editing .block_flexpagemod_commands .commands {
         opacity:1 !important;

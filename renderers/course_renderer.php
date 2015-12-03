@@ -167,6 +167,8 @@ class theme_snap_core_course_renderer extends core_course_renderer {
      */
     public function course_section_cm($course, &$completioninfo, cm_info $mod, $sectionreturn, $displayoptions = array()) {
 
+        global $COURSE;
+
         $output = '';
         // We return empty string (because course module will not be displayed at all)
         // if:
@@ -244,6 +246,12 @@ class theme_snap_core_course_renderer extends core_course_renderer {
         // Build output.
         $postcontent = "<div class='snap-asset-meta'>".$mod->afterlink.$assetmeta."</div>";
         $output .= $assetlink.$contentpart.$postcontent;
+
+        // Bail at this point if we aren't using a supported format. (Folder view is only partially supported)
+        $supported = ['folderview', 'topics', 'weeks'];
+        if (!in_array($COURSE->format, $supported)) {
+            return parent::course_section_cm($course, $completioninfo, $mod, $sectionreturn, $displayoptions).$assetmeta;
+        }
 
         // Build up edit actions.
         $actions = '';
