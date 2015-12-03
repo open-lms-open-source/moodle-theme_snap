@@ -65,6 +65,15 @@ section#region-main
     }
 }
 
+// Course page  - hide turn editing on link in admin block.
+.pagelayout-course .type_course ul > li:first-child{
+    display: none;
+}
+// Do something different to support folderview...
+#page-course-view-folderview  .type_course ul > li:first-child{
+    display: list-item;
+}
+
 // Blocks config pages when editing.
 .editing.pagelayout-admin {
     #region-main {

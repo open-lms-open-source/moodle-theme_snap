@@ -22,6 +22,13 @@
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+ // SL - dec 2015 - Make sure editing sessions are not carried over between courses.
+global $SESSION, $COURSE, $USER; 
+if (empty($SESSION->theme_snap_last_course) 
+|| $SESSION->theme_snap_last_course != $COURSE->id) {
+    $USER->editing = 0;
+    $SESSION->theme_snap_last_course = $COURSE->id;
+}
 
 // Setup debugging html.
 // This allows javascript to target debug messages and move them to footer.
