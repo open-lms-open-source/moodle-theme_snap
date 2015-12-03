@@ -24,8 +24,7 @@
 
  // SL - dec 2015 - Make sure editing sessions are not carried over between courses.
 global $SESSION, $COURSE, $USER; 
-if (empty($SESSION->theme_snap_last_course) 
-|| $SESSION->theme_snap_last_course != $COURSE->id) {
+if (empty($SESSION->theme_snap_last_course) || $SESSION->theme_snap_last_course != $COURSE->id) {
     $USER->editing = 0;
     $SESSION->theme_snap_last_course = $COURSE->id;
 }
