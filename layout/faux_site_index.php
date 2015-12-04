@@ -42,6 +42,8 @@ if (substr_compare($maincontent, $lastclosetag, -strlen($lastclosetag)) !== 0) {
 echo substr($maincontent, 0, -strlen($lastclosetag));
 $courserenderer = $PAGE->get_renderer('core', 'course');
 
+// Wrapper for moodle front page elements.
+echo "<div id='moodle-frontpage-elements'>";
 /* Duplicates code from index.php which outputs front page items
  * to allow us to override the front page news.
  * */
@@ -127,4 +129,5 @@ foreach (explode(',', $frontpagelayout) as $section) {
         break;
     }
 }
+echo "</div>";
 echo $lastclosetag;

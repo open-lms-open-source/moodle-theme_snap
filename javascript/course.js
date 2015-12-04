@@ -5,7 +5,7 @@ M.theme_snap = M.theme_snap || {
     courseid : false
 };
 M.theme_snap.course = {
-    init : function () {
+    init : function (Y, movenoticehtml) {
 
         /**
          * Items being moved - actual dom elements.
@@ -187,10 +187,14 @@ M.theme_snap.course = {
                 params.beforeId = 0;
             }
 
-            if (target) {
-                params.sectionId = Number($(target).parents('li.section.main')[0].id.replace('section-', ''));
+            if (document.body.id === "page-site-index") {
+                params.sectionId = 1;
             } else {
-                params.sectionId = Number($(movingobject).parents('li.section.main')[0].id.replace('section-', ''));
+                if (target) {
+                    params.sectionId = Number($(target).parents('li.section.main')[0].id.replace('section-', ''));
+                } else {
+                    params.sectionId = Number($(movingobject).parents('li.section.main')[0].id.replace('section-', ''));
+                }
             }
 
             if (movingobjects.length > 0) {
@@ -319,7 +323,11 @@ M.theme_snap.course = {
          * Add drop zones at the end of sections.
          */
         var add_after_drops = function() {
-            $('li.section .content ul.section').append('<li class="snap-drop asset-drop"><div class="asset-wrapper">'+M.util.get_string('movehere', 'theme_snap')+'</div></li>');
+            if (document.body.id === "page-site-index") {
+                $('#region-main .sitetopic ul.section').append('<li class="snap-drop asset-drop"><div class="asset-wrapper">' + M.util.get_string('movehere', 'theme_snap') + '</div></li>');
+            } else {
+                $('li.section .content ul.section').append('<li class="snap-drop asset-drop"><div class="asset-wrapper">' + M.util.get_string('movehere', 'theme_snap') + '</div></li>');
+            }
         }
 
         /**
@@ -504,6 +512,13 @@ M.theme_snap.course = {
          * Initialise script.
          */
         var initialise = function() {
+            // If the move notice html was not output to the dom via php, then we need to add it here via js.
+            // This is necessary for the front page which does not have a renderer that we can override.
+            if (movenoticehtml) {
+                $('#region-main').append(movenoticehtml);
+                snap_move_message = $('#snap-move-message');
+            }
+
             // Add listeners.
             add_listeners();
 

@@ -339,8 +339,14 @@ class snap_shared extends renderer_base {
               'fullpath' => '/theme/snap/javascript/course.js'
             );
 
+            $movenoticehtml = '';
+            if ($PAGE->pagetype === 'site-index') {
+                $courserenderer = $PAGE->get_renderer('core', 'course');
+                $movenoticehtml = $courserenderer->snap_move_notice();
+            }
+
             $PAGE->requires->js_init_call('M.theme_snap.course.init',
-              null,
+              [$movenoticehtml],
               true,
               $module
             );

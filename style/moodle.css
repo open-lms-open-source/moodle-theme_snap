@@ -17351,8 +17351,21 @@ section#region-main
   -webkit-box-shadow: 0;
           box-shadow: 0;
 }
+.pagelayout-course .type_course ul > li:first-child {
+  display: none;
+}
+#page-course-view-folderview .type_course ul > li:first-child {
+  display: list-item;
+}
 .editing.pagelayout-admin #region-main {
   display: block;
+}
+#page-site-index.pagelayout-admin #region-main {
+  max-width: 43.5em;
+}
+#page-site-index.pagelayout-admin #moodle-frontpage-elements,
+#page-site-index.pagelayout-admin #moodle-blocks {
+  display: none;
 }
 .ie.path-course-view section#region-main > .singlebutton input[type="submit"] {
   background-image: url("[[pix:theme|edit_for_ie]]");
@@ -19444,6 +19457,9 @@ img {
 .svg-icon {
   width: 1.5em;
   height: 1.5em;
+}
+a {
+  word-break: break-word;
 }
 table img {
   min-width: 12px;
@@ -23509,6 +23525,9 @@ fieldset[disabled] #id_cancel:focus {
 .snap-form-required #id_externalurl {
   width: 100%;
 }
+.snap-form-required select {
+  max-width: 30em;
+}
 .snap-form-required .editor_atto_content {
   min-height: 250px !important;
 }
@@ -23541,6 +23560,9 @@ fieldset[disabled] #id_cancel:focus {
   }
   .snap-form-advanced legend {
     font-size: 1em;
+  }
+  .snap-form-advanced select {
+    max-width: 300px;
   }
   .snap-form-advanced .collapsible-actions {
     text-align: left;

@@ -43,9 +43,29 @@ Feature: When the moodle theme is set to Snap, teachers can move course resource
       | activity | course | idnumber | name                 | intro                       | assignsubmission_onlinetext_enabled | section |
       | assign   | C1     | assign1  | Test assignment1 | Test assignment description 1 | 1 | 1 |
       | assign   | C1     | assign2  | Test assignment2 | Test assignment description 2 | 1 | 1 |
+      | assign   | Acceptance test site | assign1  | Test assignment1 | Test assignment description 1 | 1 | 1 |
+      | assign   | Acceptance test site | assign2  | Test assignment2 | Test assignment description 2 | 1 | 1 |
+    And I log in with snap as "admin"
+    And I click on "#admin-menu-trigger" "css_element"
+    And I navigate to "Front page settings" node in "Site administration > Front page"
+    And I set the following fields to these values:
+      | Include a topic section | 1 |
+    And I click on ".fixy-trigger" "css_element"
+    And I wait until ".btn.logout" "css_element" is visible
+    And I click on ".btn.logout" "css_element"
+    And I wait until the page is ready
 
   @javascript
-  Scenario: In read mode, teacher moves activity.
+  Scenario: In read mode, on front page, admin moves activity.
+    Given I log in with snap as "admin"
+    And I wait until the page is ready
+    And I click on ".snap-activity.modtype_assign .snap-asset-move img[title='Move \"Test assignment1\"']" "css_element"
+    Then I should see "Moving \"Test assignment1\""
+    And I click on "#region-main .sitetopic ul.section li.snap-drop.asset-drop div.asset-wrapper" "css_element"
+    Then ".snap-activity.modtype_assign" "css_element" should appear after ".snap-activity.modtype_assign .snap-asset-move img[title='Move \"Test assignment2\"']" "css_element"
+
+  @javascript
+  Scenario: In read mode, on course, teacher moves activity.
     Given I log in with snap as "teacher1"
     And I follow "Menu"
     And I follow "Course"
@@ -58,7 +78,7 @@ Feature: When the moodle theme is set to Snap, teachers can move course resource
     Then ".snap-activity.modtype_assign" "css_element" should appear after ".snap-activity.modtype_assign .snap-asset-move img[title='Move \"Test assignment2\"']" "css_element"
 
   @javascript
-  Scenario: In read mode, teacher moves activity to a different section.
+  Scenario: In read mode, on course, teacher moves activity to a different section.
     Given I log in with snap as "teacher1"
     And I follow "Menu"
     And I follow "Course"
@@ -72,7 +92,7 @@ Feature: When the moodle theme is set to Snap, teachers can move course resource
     Then "li#section-2 .snap-activity.modtype_assign" "css_element" should appear before "li.snap-drop.asset-drop" "css_element"
 
   @javascript
-  Scenario: In read mode, teacher moves two activities to a different section.
+  Scenario: In read mode, on course, teacher moves two activities to a different section.
     Given I log in with snap as "teacher1"
     And I follow "Menu"
     And I follow "Course"

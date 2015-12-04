@@ -134,6 +134,10 @@
     #id_externalurl {
         width: 100%;
     }
+    // FF select elements don't respect % max width.
+    select {
+        max-width: 30em;
+    }
 
     .editor_atto_content {
         // Need !important to override the style tag set by JS.
@@ -164,6 +168,12 @@
         legend {
             font-size: 1em;
         }
+        
+        // FF select elements don't respect % max width.
+        select {
+            max-width: 300px;
+        }
+
 
         .collapsible-actions {
             text-align: left;
