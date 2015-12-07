@@ -224,7 +224,7 @@ class theme_snap_core_course_renderer extends core_course_renderer {
             }
             $assetrestrictions .= "<div class='text'>$groupinfo</div>";
         }
-        
+
         // TODO - ask what this is...
         if (!empty($mod->groupingid) && $canmanagegroups) {
             // Grouping label.
@@ -240,9 +240,9 @@ class theme_snap_core_course_renderer extends core_course_renderer {
             $assetrestrictions .= "<div class='text text-danger'>$conditionalinfo.$availabilityinfo</div>";
         }
         $assetrestrictions = "<div class='snap-restrictions-meta'>$assetrestrictions</div>";
-        
+
         $assetmeta .= $assetcompletionmeta.$assetrestrictions; // Close asset-meta.
-        
+
         // Build output.
         $postcontent = "<div class='snap-asset-meta'>".$mod->afterlink.$assetmeta."</div>";
         $output .= $assetlink.$contentpart.$postcontent;
@@ -520,17 +520,19 @@ class theme_snap_core_course_renderer extends core_course_renderer {
                 $gradedlabel = "warning";
                 $engagementmeta[] = get_string('xungraded', 'theme_snap', $meta->numrequiregrading);
             }
-            $engagementstr = implode(', ', $engagementmeta);
+            if (!empty($engagementmeta)) {
+                $engagementstr = implode(', ', $engagementmeta);
 
-            $params = array(
-                'action' => 'grading',
-                'id' => $mod->id,
-                'tsort' => 'timesubmitted',
-                'filter' => 'require_grading'
-            );
-            $url = new moodle_url("/mod/{$mod->modname}/view.php", $params);
+                $params = array(
+                    'action' => 'grading',
+                    'id' => $mod->id,
+                    'tsort' => 'timesubmitted',
+                    'filter' => 'require_grading'
+                );
+                $url = new moodle_url("/mod/{$mod->modname}/view.php", $params);
 
-            $content .= html_writer::link($url, $engagementstr, ['class' => "label label-$gradedlabel"]);
+                $content .= html_writer::link($url, $engagementstr, ['class' => "label label-$gradedlabel"]);
+            }
         } else {
             // Student - useful student meta data.
             if (!empty($meta->timeopen) && $meta->timeopen > time()) {
