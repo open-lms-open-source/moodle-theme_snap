@@ -18336,7 +18336,8 @@ li.snap-activity.modtype_folder .snap-assettype {
 }
 .snap-completion-meta,
 .snap-restrictions-meta {
-  width: 100%;
+  display: block !important;
+  clear: both;
 }
 .snap-restrictions-meta {
   margin: 0;
