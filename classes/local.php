@@ -1217,6 +1217,8 @@ class local {
                 $params = array_merge($params, $fgpparams);
             }
 
+            $params[] = $user->id;
+
             $sqls[] = "(SELECT ".$DB->sql_concat("'F'", 'fp1.id')." AS id, 'forum' AS type, fp1.id AS postid,
                                fd1.forum, fp1.discussion, fp1.parent, fp1.userid, fp1.modified, fp1.subject,
                                fp1.message, 0 AS reveal, cm1.id AS cmid,
@@ -1235,7 +1237,8 @@ class local {
                             ON cm1.groupmode = ?
                            AND gm1.groupid = fd1.groupid
                            AND gm1.userid = ?
-	                     WHERE cm1.groupmode <> ? OR (gm1.userid IS NOT NULL $fgpsql)
+	                     WHERE (cm1.groupmode <> ? OR (gm1.userid IS NOT NULL $fgpsql))
+	                       AND fp1.userid <> ?
                       ORDER BY fp1.modified DESC
                                $limitsql
                         )
@@ -1260,6 +1263,8 @@ class local {
 
             $params = array_merge($params, [$user->id, $user->id]);
 
+            $params[] = $user->id;
+
             $sqls[] = "(SELECT ".$DB->sql_concat("'A'", 'fp2.id')." AS id, 'hsuforum' AS type, fp2.id AS postid,
                                fd2.forum, fp2.discussion, fp2.parent, fp2.userid, fp2.modified, fp2.subject,
                                fp2.message, fp2.reveal, cm2.id AS cmid,
@@ -1280,6 +1285,7 @@ class local {
 	                       AND gm2.userid = ?
                          WHERE (cm2.groupmode <> ? OR (gm2.userid IS NOT NULL $afgpsql))
                            AND (fp2.privatereply = 0 OR fp2.privatereply = ? OR fp2.userid = ?)
+                           AND fp2.userid <> ?
                       ORDER BY fp2.modified DESC
                                $limitsql
                         )
