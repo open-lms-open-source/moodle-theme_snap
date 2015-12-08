@@ -69,7 +69,16 @@ if (!empty($custommenu) && !empty($footnote)) {
     echo $custommenu;
     echo '</div></div>';
 }
-$poweredbyrunby = get_string('poweredbyrunby', 'theme_snap');
+
+if (core_component::get_component_directory('local_mrooms') !== null) {
+    $langkey   = \local_mrooms\kb_link::resolve_language_key();
+    $builtwith = html_writer::link("https://$langkey.help.blackboard.com/Moodlerooms", get_string('joule', 'theme_snap'),
+        ['target' => '_blank', 'title' => get_string('joulehelpguides', 'theme_snap')]);
+} else {
+    $builtwith = get_string('joule', 'theme_snap');
+}
+
+$poweredbyrunby = get_string('poweredbyrunby', 'theme_snap', $builtwith);
 ?>
 
 <div id='mrooms-footer' class="helplink text-right">
