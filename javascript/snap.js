@@ -652,7 +652,7 @@ function snapInit() {
         $('body').addClass(extraclasses.join(' '));
     };
 
-    var updatePageModCompletion = function($pagemod, completionhtml) {
+    var updateModCompletion = function($pagemod, completionhtml) {
         // Update completion tracking icon.
         $pagemod.find('.autocompletion').replaceWith(completionhtml);
     };
@@ -679,7 +679,7 @@ function snapInit() {
         });
 
         if (completionhtml) {
-            updatePageModCompletion($pagemod, completionhtml);
+            updateModCompletion($pagemod, completionhtml);
         }
 
         // If there is any video in the new content then we need to make it responsive.
@@ -702,6 +702,8 @@ function snapInit() {
             url: M.cfg.wwwroot + '/theme/snap/rest.php?action=get_media&contextid=' + $(resourcemod).data('modcontext'),
             success: function (data) {
                 lightboxopen(data.html, appendto);
+
+                updateModCompletion($(resourcemod), data.completionhtml);
 
                 // Execute scripts - necessary for flv to work.
                 var hasflowplayerscript = false;
@@ -947,7 +949,7 @@ function snapInit() {
                         url: M.cfg.wwwroot + '/theme/snap/rest.php?action=read_page&contextid=' + readmore.data('pagemodcontext'),
                         success: function (data) {
                             // Update completion html for this page mod instance.
-                            updatePageModCompletion($pagemod, data.completionhtml);
+                            updateModCompletion($pagemod, data.completionhtml);
                         }
                     });
                 }
