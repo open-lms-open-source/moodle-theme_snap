@@ -292,13 +292,16 @@ class theme_snap_recent_forum_activity_test extends \advanced_testcase {
                     $sturole->id);
             }
 
-            // Enrol teacher.
+            // Enrol teacher 1 and teacher 2.
+            $this->getDataGenerator()->enrol_user($this->teacher1->id,
+                $tmpcourse->id,
+                $teacherrole->id);
             $this->getDataGenerator()->enrol_user($this->teacher2->id,
                 $tmpcourse->id,
                 $teacherrole->id);
 
             // Log user visited course for each user.
-            $users = [$this->teacher2, $this->user1, $this->user2];
+            $users = [$this->teacher1, $this->teacher2, $this->user1, $this->user2];
             foreach ($users as $user) {
                 $eventparams = [
                     'userid' => $user->id,
@@ -308,25 +311,27 @@ class theme_snap_recent_forum_activity_test extends \advanced_testcase {
                 $event->trigger();
             }
 
+            // All discussions and posts are made by teacher2, so that the count for teacher1, user1
+            // and user2 are not affected by not being able to see their own posts.
             for ($f = 0; $f < $forumspercourse; $f++) {
                 $totalforums++;
                 $record = new \stdClass();
                 $record->course = $tmpcourse->id;
                 $forums[$f] = $this->getDataGenerator()->create_module($ftype, $record);
                 for ($d = 0; $d < $discussionsperforum; $d++) {
-                    $discussion = $this->create_discussion($ftype, $tmpcourse->id, $this->user1->id, $forums[$f]->id);
+                    $discussion = $this->create_discussion($ftype, $tmpcourse->id, $this->teacher2->id, $forums[$f]->id);
                     $teacherc++;
                     $user1c++;
                     if ($c < $discussionsperforum / 2) {
                         $user2c++;
                     }
-                    $post = $this->create_post($ftype, $tmpcourse->id, $this->user1->id, $forums[$f]->id, $discussion->id);
+                    $post = $this->create_post($ftype, $tmpcourse->id, $this->teacher2->id, $forums[$f]->id, $discussion->id);
                     $teacherc++;
                     $user1c++;
                     if ($c < $discussionsperforum / 2) {
                         $user2c++;
                     }
-                    $this->create_reply($ftype, $this->user1->id, $post);
+                    $this->create_reply($ftype, $this->teacher2->id, $post);
                     $teacherc++;
                     $user1c++;
                     if ($c < $discussionsperforum / 2) {
@@ -340,7 +345,7 @@ class theme_snap_recent_forum_activity_test extends \advanced_testcase {
 
         // Check teacher viewable posts.
         $starttchl10 = microtime(true);
-        $this->assert_user_activity($this->teacher2, 10);
+        $this->assert_user_activity($this->teacher1, 10);
         $timetchl10 = microtime(true) - $starttchl10;
 
         // Check user1 viewable posts.
@@ -364,7 +369,7 @@ class theme_snap_recent_forum_activity_test extends \advanced_testcase {
 
         // Check teacher viewable posts.
         $starttchnl = microtime(true);
-        $this->assert_user_activity($this->teacher2, $xteacherc, 0);
+        $this->assert_user_activity($this->teacher1, $xteacherc, 0);
         $timetchnl = microtime(true) - $starttchnl;
 
         // Check user1 viewable posts.
