@@ -17572,6 +17572,19 @@ li.section:focus {
 .snap-dropzone {
   visibility: hidden;
 }
+.snap-dropzone {
+  text-align: center;
+  padding: 1em 4%;
+  margin: 1em 0;
+  border: 3px dashed #dadada;
+}
+.snap-dropzone .snap-dropzone-label {
+  cursor: pointer;
+  background: transparent url("[[pix:resource|icon]]") 0 50% no-repeat;
+  padding-left: 2em;
+  -webkit-background-size: 1.5em 1.5em;
+          background-size: 1.5em 1.5em;
+}
 .snap-course-listening .snap-section-editing {
   visibility: visible;
 }
@@ -19063,8 +19076,8 @@ fieldset[disabled] a#changenumsections .reduce-sections {
 .section-drop,
 .snap-move-note {
   background: transparent url("[[pix:theme|move_here]]") no-repeat 50% 80%;
-  -webkit-background-size: 70px auto;
-          background-size: 70px auto;
+  -webkit-background-size: 70px 70px;
+          background-size: 70px 70px;
 }
 .snap-move-section .section-drop {
   display: block;
@@ -19454,10 +19467,6 @@ blockquote {
 img {
   max-width: 100%;
   height: auto;
-}
-.svg-icon {
-  width: 1.5em;
-  height: 1.5em;
 }
 a {
   word-break: break-word;
@@ -23412,19 +23421,6 @@ div.editor_atto_toolbar div.atto_group {
 #id_general .fcontainer,
 #id_generalhdr .fcontainer {
   display: block;
-}
-.snap-dropzone {
-  text-align: center;
-  padding: 1em 4%;
-  margin: 1em 0;
-  border: 3px dashed #dadada;
-}
-.snap-dropzone .snap-dropzone-label {
-  cursor: pointer;
-  background: transparent url("[[pix:resource|icon]]") 0 50% no-repeat;
-  padding-left: 2em;
-  -webkit-background-size: 1.5em auto;
-          background-size: 1.5em auto;
 }
 #newsection {
   width: 100%;
