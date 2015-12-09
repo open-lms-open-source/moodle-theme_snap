@@ -1093,15 +1093,16 @@ function snapInit() {
 
         if(on_mod_settings || on_course_settings || on_section_settings){
           // Wrap advanced options in a div
-          $("#mform1 .collapsed").wrapAll('<div class="snap-form-advanced col-md-4" />');
-
+          $("#mform1 .collapsed, #id_availabilityconditionsheader, #id_courseformathdr, #id_availabilityconditions").wrapAll('<div class="snap-form-advanced col-md-4" />');
+          
           // Add expand all to advanced column
           $(".snap-form-advanced").append($(".collapsible-actions"));
 
           // Sanitize required input into a single fieldset
           var main_form = $("#mform1 fieldset:first");
           var append_to = $("#mform1 fieldset:first .fcontainer");
-          var required = $("#mform1 > fieldset:not(.collapsed)").not("#mform1 fieldset:first").not('.hidden');
+          
+          var required = $("#mform1 > fieldset:not(.collapsed)").not("#mform1 fieldset:first").not('.hidden').not('#id_availabilityconditionsheader, #id_availabilityconditions, #id_courseformathdr');
           for(var i = 0; i < required.length; i++){
             var content = $(required[i]).find('.fcontainer');
             $(append_to).append(content);
