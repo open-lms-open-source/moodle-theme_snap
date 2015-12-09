@@ -496,8 +496,8 @@ class theme_snap_recent_forum_activity_test extends \advanced_testcase {
         // Make a private reply from user1 to teacher1.
         $this->create_reply('hsuforum', $this->user1->id, $parent, ['privatereply' => $this->teacher1->id]);
 
-        // Check teacher1 viewable posts is 2.
-        $this->assert_user_activity($this->teacher1, 2);
+        // Check teacher1 viewable posts is 1 (can see private reply but not their own post).
+        $this->assert_user_activity($this->teacher1, 1);
 
         // Check user1 viewable posts is 2 (user 1 can see the private reply but not their own post).
         $this->assert_user_activity($this->user1, 2);
@@ -528,10 +528,10 @@ class theme_snap_recent_forum_activity_test extends \advanced_testcase {
         $forum = $this->getDataGenerator()->create_module($ftype, $record, $opts);
 
         // Add discussion to date restricted forum.
-        $discussion = $this->create_discussion($ftype, $this->course2->id, $this->teacher2->id, $forum->id);
-        $this->create_post($ftype, $this->course2->id, $this->teacher2->id, $forum->id, $discussion->id);
+        $discussion = $this->create_discussion($ftype, $this->course2->id, $this->teacher1->id, $forum->id);
+        $this->create_post($ftype, $this->course2->id, $this->teacher1->id, $forum->id, $discussion->id);
 
-        // Check teacher viewable posts is 2.
+        // Check teacher2 viewable posts is 2.
         $this->assert_user_activity($this->teacher2, $toffset + 2);
 
         // Check user1 viewable posts is 0 - can't see anything in restricted forum.
@@ -572,7 +572,7 @@ class theme_snap_recent_forum_activity_test extends \advanced_testcase {
 
         // Add a discussion and 2 posts for group1 users.
         $discussion1 = $this->create_discussion($ftype,
-            $this->course2->id, $this->user1->id, $forum->id,  ['groupid' => $this->group1->id]);
+            $this->course2->id, $this->teacher1->id, $forum->id,  ['groupid' => $this->group1->id]);
 
         for ($p = 1; $p <= 2; $p++) {
             // Create 1 post by user1 and user2.
@@ -582,17 +582,17 @@ class theme_snap_recent_forum_activity_test extends \advanced_testcase {
 
         // Add a discussion and 1 post for group2 users.
         $discussion2 = $this->create_discussion($ftype,
-            $this->course2->id, $this->user1->id, $forum->id,  ['groupid' => $this->group2->id]);
-        $this->create_post($ftype, $this->course2->id, $this->user1->id, $forum->id, $discussion2->id);
+            $this->course2->id, $this->teacher1->id, $forum->id,  ['groupid' => $this->group2->id]);
+        $this->create_post($ftype, $this->course2->id, $this->teacher1->id, $forum->id, $discussion2->id);
 
         // Check teacher viewable posts is 5 (can view all posts).
         $this->assert_user_activity($this->teacher2, $toffset + 5);
 
-        // Check user1 viewable posts is 5 (in all groups, can view all posts).
-        $this->assert_user_activity($this->user1, $u1offset + 5);
+        // Check user1 viewable posts is 4 (in all groups, can view all posts except their own).
+        $this->assert_user_activity($this->user1, $u1offset + 4);
 
-        // Check user2 viewable posts is 3 (only in group2).
-        $this->assert_user_activity($this->user2, $u2offset + 3);
+        // Check user2 viewable posts is 2 (only in group2 and can't see their own posts).
+        $this->assert_user_activity($this->user2, $u2offset + 2);
     }
 
     /**
@@ -607,7 +607,7 @@ class theme_snap_recent_forum_activity_test extends \advanced_testcase {
      */
     public function test_combined_group_posts() {
         $this->test_forum_group_posts('forum');
-        $this->test_forum_group_posts('hsuforum', 5, 5, 3);
+        $this->test_forum_group_posts('hsuforum', 5, 4, 2);
     }
 
     /**
