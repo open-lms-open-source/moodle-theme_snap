@@ -63,7 +63,7 @@ $string['deadlinestoggle'] = 'Deadlines';
 $string['deadlinestoggledesc'] = 'Deadlines show any upcoming activity deadlines from courses you are enrolled on.';
 $string['defaultsummary'] = 'Use this area to describe what this topic is about - with text, images, audio & video.';
 $string['defaultintrosummary'] = 'Welcome to your new course {$a}.
-<p>Start by describing what your course is about using text, images, audio & video.</p>';
+<br>Start by describing what your course is about using text, images, audio & video.';
 $string['defaulttopictitle'] = 'Untitled Topic';
 $string['debugerrors'] = 'Debug Errors';
 $string['draft'] = 'Draft';
