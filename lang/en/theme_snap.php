@@ -52,6 +52,7 @@ $string['contributed'] = 'Contributed';
 $string['coursecontacts'] = 'Course Contacts';
 $string['coursefootertoggle'] = 'Show Course Footer';
 $string['coursefootertoggledesc'] = 'The Course Footer shows useful information to users on a course page including course contacts, course description and recent activity in the course.';
+$string['coursefixydefaulttext'] = 'You are currently not enrolled in any courses.<br>Courses you are enrolled in will be shown here.';
 $string['coursenavigation'] = 'Course navigation';
 $string['coursetools'] = 'Course Tools';
 $string['createsection'] = 'Create section';
