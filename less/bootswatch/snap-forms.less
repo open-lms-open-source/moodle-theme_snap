@@ -20,15 +20,22 @@
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-#page-mod-resource-mod #id_optionssection,
-#page-mod-url-mod #id_optionssection {
-    display: none;
-}
+// Exclude hidden form elements from being hidden when behat is running or it breaks
+// "I set the following fields to these values". More specifically, the error is because expand_all_fields in
+// behat_forms.php doesn't handle errors with .moreless-toggler not being visible (it handles it not being there but
+// not hidden).
+body:not(.behat-site-running) {
+    // Hide form elements.
+    &#page-mod-resource-mod #id_optionssection,
+    &#page-mod-url-mod #id_optionssection {
+        display: none;
+    }
 
-// Hide meaningless 'General' legend on forms
-#id_generalhdr .ftoggler,
-#id_general .ftoggler {
-    display: none;
+    // Hide meaningless 'General' legend on forms
+    &#id_generalhdr .ftoggler,
+    &#id_general .ftoggler {
+        display: none;
+    }
 }
 
 // Hide "There are required fields in this form marked *" message.

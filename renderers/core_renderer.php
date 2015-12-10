@@ -1110,6 +1110,11 @@ HTML;
             $classes[] = 'folderview-single-section';
         }
 
+        if (defined('BEHAT_SITE_RUNNING')) {
+            // Required for revealing elements that behat requires in order to run.
+            $classes[] = 'behat-site-running';
+        }
+
         $classes = implode(' ', $classes);
         return $classes;
     }

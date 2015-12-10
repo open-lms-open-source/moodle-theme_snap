@@ -23407,12 +23407,12 @@ div.editor_atto_toolbar div.atto_group {
  * @copyright Copyright (c) 2015 Moodlerooms Inc. (http://www.moodlerooms.com)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-#page-mod-resource-mod #id_optionssection,
-#page-mod-url-mod #id_optionssection {
+body:not(.behat-site-running)#page-mod-resource-mod #id_optionssection,
+body:not(.behat-site-running)#page-mod-url-mod #id_optionssection {
   display: none;
 }
-#id_generalhdr .ftoggler,
-#id_general .ftoggler {
+body:not(.behat-site-running)#id_generalhdr .ftoggler,
+body:not(.behat-site-running)#id_general .ftoggler {
   display: none;
 }
 .fdescription.required {
