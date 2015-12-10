@@ -211,7 +211,6 @@ class theme_snap_core_course_renderer extends core_course_renderer {
         $snapcompletiondata = $this->module_meta_html($mod);
         $assetcompletionmeta = "<div class='snap-completion-meta'>".$completiontracking.$snapcompletiondata."</div>";
 
-
         // Draft status - always output, shown via css of parent.
         $assetrestrictions = "<div class='draft-tag text text-warning'>".get_string('draft', 'theme_snap')."</div>";
 
@@ -241,7 +240,7 @@ class theme_snap_core_course_renderer extends core_course_renderer {
         }
         $assetrestrictions = "<div class='snap-restrictions-meta'>$assetrestrictions</div>";
 
-        $assetmeta .= $assetcompletionmeta.$assetrestrictions; // Close asset-meta.
+        $assetmeta .= $assetcompletionmeta.$assetrestrictions;
 
         // Build output.
         $postcontent = "<div class='snap-asset-meta'>".$mod->afterlink.$assetmeta."</div>";
@@ -256,11 +255,12 @@ class theme_snap_core_course_renderer extends core_course_renderer {
         // Build up edit actions.
         $actions = '';
         $actionsadvanced = array();
-        $modcontext = context_course::instance($mod->course);
+        $coursecontext = context_course::instance($mod->course);
+        $modcontext = context_module::instance($mod->id);
         $baseurl =  new moodle_url('/course/mod.php', array('sesskey' => sesskey()));
 
         if (has_capability('moodle/course:update', $modcontext)) {
-            $str = get_strings(array('delete', 'move', 'duplicate', 'hide', 'show'), 'moodle');
+            $str = get_strings(array('delete', 'move', 'duplicate', 'hide', 'show', 'roles'), 'moodle');
             // TODO - add snap strings here.
 
             // Move, Edit, Delete.
@@ -283,25 +283,15 @@ class theme_snap_core_course_renderer extends core_course_renderer {
 
             // Duplicate.
             $dupecaps = array('moodle/backup:backuptargetimport', 'moodle/restore:restoretargetimport');
-            if (has_all_capabilities($dupecaps, $modcontext) &&
+            if (has_all_capabilities($dupecaps, $coursecontext) &&
             plugin_supports('mod', $mod->modname, FEATURE_BACKUP_MOODLE2) &&
             plugin_supports('mod', $mod->modname, 'duplicate', true)) {
               $actionsadvanced[] = "<a href='".new moodle_url($baseurl, array('duplicate' => $mod->id))."' class='js_snap_duplicate'>$str->duplicate</a>";
             }
 
-
-            // TODO - groups are in the form, do we need this toggle??
-            /*
-            // Group toggle.
-            if ($hasmanageactivities && !$mod->coursegroupmodeforce) {
-            if (plugin_supports('mod', $mod->modname, FEATURE_GROUPS, 0)) {
-            new moodle_url($baseurl, array('id' => $mod->id, 'groupmode' => $nextgroupmode))
-            // ax click to change
-            */
-
             // Asign roles.
             if (has_capability('moodle/role:assign', $modcontext)) {
-              $actionsadvanced[] = "<a href='".new moodle_url('/admin/roles/assign.php', array('contextid' => $modcontext->id))."'>Roles</a>";
+              $actionsadvanced[] = "<a href='".new moodle_url('/admin/roles/assign.php', array('contextid' => $modcontext->id))."'>$str->roles</a>";
             }
 
             // Give local plugins a chance to add icons.
@@ -316,16 +306,9 @@ class theme_snap_core_course_renderer extends core_course_renderer {
               $url = $localplugin->url;
               $text = $localplugin->text;
               $class = $localplugin->attributes['class'];
-              $actionsadvanced[] = "<a href='$url' class=$class>$text</a>";
+              $actionsadvanced[] = "<a href='$url' class='$class'>$text</a>";
             }
 
-            // TODO - what is this?
-            // $actionsadvanced .= $mod->afterediticons;
-            // GT note to SL - I think its html that the module can specify it needs after the edit icons.
-            // I need to point out that it looks strange that it's concatonated with .= when $actionsadvanced is an
-            // array - I'm guessing that's a recent change so if we decide to include $mod->afterediticons (which
-            // we probably should) then we need to do it as
-            // $actionsadvanced[] = $mod->afterediticons;
 
         }
 
@@ -347,8 +330,8 @@ class theme_snap_core_course_renderer extends core_course_renderer {
             $output .= $actions.$advancedactions;
             $output .= "</div>";
         }
-        // Close clearfix.
-        $output .= "</div>";
+        $output .= "</div>"; // Close .activityinstance.
+        $output .= "</div>"; // Close .asset-wrapper.
         return $output;
     }
 
