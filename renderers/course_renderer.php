@@ -265,8 +265,10 @@ class theme_snap_core_course_renderer extends core_course_renderer {
 
             // Move, Edit, Delete.
             if(has_capability('moodle/course:manageactivities', $modcontext)){
-              $moveicon = "<img title='".get_string('move', 'theme_snap', $mod->get_formatted_name())."' class='svg-icon' src='".$this->output->pix_url('move', 'theme')."'/>";
-              $editicon = "<img title='".get_string('edit')."' class='svg-icon' src='".$this->output->pix_url('edit', 'theme')."'/>";
+              $movealt = get_string('move', 'theme_snap', $mod->get_formatted_name());
+              $moveicon = "<img title='$movealt' alt='$movealt' class='svg-icon' src='".$this->output->pix_url('move', 'theme')."'/>";
+              $editalt = get_string('edit').$mod->get_formatted_name();
+              $editicon = "<img title='$editalt' alt='$editalt' class='svg-icon' src='".$this->output->pix_url('edit', 'theme')."'/>";
               $actions .= "<label class='snap-asset-move'><input class='js-snap-asset-move' type='checkbox'>$moveicon</label>";
 
               // $actions .= "<a class='snap-move-asset' href='".new moodle_url($baseurl, array('move' => $mod->id))."'>$moveicon</a>";
@@ -314,7 +316,7 @@ class theme_snap_core_course_renderer extends core_course_renderer {
 
         $advancedactions = '';
         if (!empty($actionsadvanced)) {
-          $moreicon = "<img title='".get_string('more', 'theme_snap')."' class='svg-icon' src='".$this->output->pix_url('more', 'theme')."'/>";
+          $moreicon = "<img title='".get_string('more', 'theme_snap')."' alt='".get_string('more', 'theme_snap')."' class='svg-icon' src='".$this->output->pix_url('more', 'theme')."'/>";
           $advancedactions = "<div class='dropdown snap-edit-more-dropdown'>
                       <a href='#' class='dropdown-toggle snap-edit-asset-more' data-toggle='dropdown' aria-expanded='false' aria-haspopup='true'>$moreicon</a>
                       <ul class='dropdown-menu'>";
