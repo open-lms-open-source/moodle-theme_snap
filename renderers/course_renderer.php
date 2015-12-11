@@ -267,7 +267,7 @@ class theme_snap_core_course_renderer extends core_course_renderer {
             if(has_capability('moodle/course:manageactivities', $modcontext)){
               $movealt = get_string('move', 'theme_snap', $mod->get_formatted_name());
               $moveicon = "<img title='$movealt' alt='$movealt' class='svg-icon' src='".$this->output->pix_url('move', 'theme')."'/>";
-              $editalt = get_string('edit').$mod->get_formatted_name();
+              $editalt = get_string('edit', 'theme_snap', $mod->get_formatted_name());
               $editicon = "<img title='$editalt' alt='$editalt' class='svg-icon' src='".$this->output->pix_url('edit', 'theme')."'/>";
               $actions .= "<label class='snap-asset-move'><input class='js-snap-asset-move' type='checkbox'>$moveicon</label>";
 

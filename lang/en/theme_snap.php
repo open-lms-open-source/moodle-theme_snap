@@ -69,6 +69,7 @@ $string['debugerrors'] = 'Debug Errors';
 $string['draft'] = 'Draft';
 $string['dropzonelabel'] = 'Drop files to attach, or <span class="btn-link">browse</span>';
 $string['due'] = 'Due';
+$string['edit'] = 'Edit "{$a}"';
 $string['editcoursecontent'] = 'Edit course blocks';
 $string['editcoursesettings'] = 'Edit course settings';
 $string['editcoursetopic'] = 'Edit Topic';

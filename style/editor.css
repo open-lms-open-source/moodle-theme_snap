@@ -8468,8 +8468,8 @@ body:not(.behat-site-running)#page-mod-resource-mod #id_optionssection,
 body:not(.behat-site-running)#page-mod-url-mod #id_optionssection {
   display: none;
 }
-body:not(.behat-site-running)#id_generalhdr .ftoggler,
-body:not(.behat-site-running)#id_general .ftoggler {
+body:not(.behat-site-running) #id_generalhdr .ftoggler,
+body:not(.behat-site-running) #id_general .ftoggler {
   display: none;
 }
 .fdescription.required {
