@@ -2849,9 +2849,6 @@ span.editinstructions {
   color: #f5f5f5;
   background-color: #666666;
 }
-.coursebox .info .coursename {
-  display: inline-block;
-}
 .coursebox.remotehost > .info > .categoryname a {
   background-image: url([[pix:moodle|i/mnethost]]);
 }
@@ -19460,7 +19457,8 @@ img {
   height: 1.5em;
 }
 a {
-  word-break: break-word;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
 }
 table img {
   min-width: 12px;
@@ -21214,7 +21212,7 @@ http://blog.rodneyrehm.de/archives/34-iOS7-Mobile-Safari-And-Viewport-Units.html
   max-width: 100%;
   max-height: 100%;
 }
-@media screen and (min-width: 768px) {
+@media screen and (min-width: 992px) {
   .frontpage-course-list-all .coursebox {
     width: 50%;
     display: inline-block;
