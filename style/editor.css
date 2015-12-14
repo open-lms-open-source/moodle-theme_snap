@@ -3287,60 +3287,18 @@ we do this by default in snap, so hide moodle version */
   .contentafterlink > .summary-text:first-child,
   .contentafterlink .summary-figure {
     width: 50%;
-    float: right;
-    padding-right: 0;
+    float: left;
+    padding-right: 3%;
     margin: 0;
   }
   .summary-figure + .summary-text {
     width: 50%;
-    float: left;
-    padding-right: 3%;
+    float: right;
   }
   .section li.snap-image .activityinstance .snap-asset-link a,
   .section li.modtype_page .activityinstance .snap-asset-link a {
     width: 50%;
-    float: left;
-    padding: 0;
-  }
-  .section li.modtype_page + li.modtype_page:nth-of-type(even) .contentafterlink > ol:first-child,
-  .section li.modtype_page + li.modtype_page:nth-of-type(even) .contentafterlink > .summary-text:first-child,
-  .section li.modtype_page + li.modtype_page:nth-of-type(even) .contentafterlink .summary-figure {
-    width: 50%;
-    float: left;
-    padding-left: 0;
-    margin: 0;
-  }
-  .section li.modtype_page + li.modtype_page:nth-of-type(even) .summary-figure + .summary-text {
-    width: 50%;
     float: right;
-    padding-left: 3%;
-  }
-  .section li.modtype_page + li.modtype_page:nth-of-type(even) .activityinstance .snap-asset-link a {
-    width: 50%;
-    float: right;
-    padding-left: 3%;
-  }
-  .section li.modtype_page + li.modtype_page:nth-of-type(even).state-expanded .activityinstance .snap-asset-link a {
-    width: 50%;
-    float: left;
-    padding: 0;
-  }
-  .section li:not(.modtype_page) + li.modtype_page:nth-of-type(even) .contentafterlink .summary-figure {
-    float: left;
-  }
-  .section li:not(.modtype_page) + li.modtype_page:nth-of-type(even) .contentafterlink .summary-figure + .summary-text,
-  .section li:not(.modtype_page) + li.modtype_page:nth-of-type(even) .activityinstance .snap-asset-link a {
-    float: right;
-    padding-left: 3%;
-    padding-right: 0%;
-  }
-  .section li:not(.modtype_page) + li.modtype_page:nth-of-type(odd) .contentafterlink .summary-figure {
-    float: right;
-  }
-  .section li:not(.modtype_page) + li.modtype_page:nth-of-type(odd) .contentafterlink .summary-figure + .summary-text,
-  .section li:not(.modtype_page) + li.modtype_page:nth-of-type(odd) .activityinstance .snap-asset-link a {
-    float: left;
-    padding-left: 0%;
     padding-right: 3%;
   }
 }
