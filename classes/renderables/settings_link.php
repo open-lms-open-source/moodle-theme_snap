@@ -42,6 +42,15 @@ class settings_link implements \renderable {
      */
     function __construct() {
         global $PAGE, $COURSE;
+
+        // Add paths to this variable for only sowing admin menu when admin user.
+        if (!is_siteadmin()) {
+            $adminonly = ['/user/profile.php'];
+            if (in_array($PAGE->url->get_path(), $adminonly)) {
+                return;
+            }
+        }
+
         $canmanageacts = has_capability('moodle/course:manageactivities', $PAGE->context);
         $isstudent = !$canmanageacts && !is_role_switched($COURSE->id);
         if ($isstudent) {

@@ -239,7 +239,7 @@ class theme_snap_core_renderer extends toc_renderer {
             'class' => 'pull-right',
             'data-toggle' => 'tooltip',
             'data-placement' => 'bottom',
-            'title' => get_string('admin', 'theme_snap'),
+            'title' => get_string('admin', 'theme_snap')
         );
 
         return html_writer::link($url, $burgericon, $attributes);
