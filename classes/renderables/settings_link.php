@@ -43,19 +43,24 @@ class settings_link implements \renderable {
     function __construct() {
         global $PAGE, $COURSE;
 
-        // Add paths to this variable for only sowing admin menu when admin user.
+        // Admin users always see the admin menu.
+        // The admin menu shows up for other users if they are a teacher in the current course.
         if (!is_siteadmin()) {
+            // Add paths to this variable for only sowing admin menu when admin user.
             $adminonly = ['/user/profile.php'];
             if (in_array($PAGE->url->get_path(), $adminonly)) {
                 return;
             }
+
+            // We don't want students to see the admin menu ever.
+            $canmanageacts = has_capability('moodle/course:manageactivities', $PAGE->context);
+            $isstudent = !$canmanageacts && !is_role_switched($COURSE->id);
+            if ($isstudent) {
+                return;
+            }
         }
 
-        $canmanageacts = has_capability('moodle/course:manageactivities', $PAGE->context);
-        $isstudent = !$canmanageacts && !is_role_switched($COURSE->id);
-        if ($isstudent) {
-            return;
-        }
+
 
         if (!$PAGE->blocks->is_block_present('settings')) {
             // Throw error if on front page or course page.
@@ -76,7 +81,7 @@ class settings_link implements \renderable {
                 }
             }
         }
-
+        
         if (!has_capability('moodle/block:view', \context_block::instance($this->instanceid))) {
             return;
         }
