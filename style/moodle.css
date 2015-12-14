@@ -19503,9 +19503,6 @@ img.svg-icon {
   margin: 0 0.3rem;
   vertical-align: middle;
 }
-.videoiframe {
-  text-align: center;
-}
 .videoiframe iframe {
   width: 100% !important;
   margin: 0 auto;
