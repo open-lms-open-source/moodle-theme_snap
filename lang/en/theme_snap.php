@@ -148,6 +148,9 @@ $string['pld'] = 'PLD';
 $string['pluginname'] = 'Snap';
 $string['poster'] = 'Cover image';
 $string['posterdesc'] = 'A large image for the front page of your site. The image should exclude text. Images of 1280px width by 500px height or larger (up to 2000px in width) work best. Optimising your image for the web will speed up the page load time.';
+$string['poweredbyrunby'] = 'Built with <a href="http://kb.moodlerooms.com/" target="_blank" '
+    .'title="Joule help guides">Joule</a> from <a href="http://moodlerooms.com/" target="_blank">Moodlerooms</a>'
+    .', powered by <a href="http://www.moodle.com/" target="_blank">Moodle</a>.';
 $string['previoussection'] = 'Previous section';
 $string['problemsfound'] = 'Problems Found';
 $string['readmore'] = 'Read more&nbsp;»';
