@@ -726,7 +726,8 @@ we do this by default in snap, so hide moodle version */
     }
 
     // alternate stuff for pages
-    .section li.modtype_page + li.modtype_page:nth-of-type(even) {
+    .section li.modtype_page + li.modtype_page:nth-of-type(even)
+    {
         .contentafterlink > ol:first-child,
         .contentafterlink >.summary-text:first-child,
         .contentafterlink .summary-figure {
@@ -757,6 +758,33 @@ we do this by default in snap, so hide moodle version */
                     float: left;
                     padding: 0;
                 }
+            }
+        }
+    }
+    .section li:not(.modtype_page) {
+        & + li.modtype_page:nth-of-type(even) {
+            .contentafterlink .summary-figure {
+                float: left;
+            }
+
+            .contentafterlink .summary-figure + .summary-text,
+            .activityinstance .snap-asset-link a {
+                float: right;
+                padding-left: 3%;
+                padding-right: 0%;
+            }
+        }
+
+        & + li.modtype_page:nth-of-type(odd) {
+            .contentafterlink .summary-figure {
+                float: right;
+            }
+
+            .contentafterlink .summary-figure + .summary-text,
+            .activityinstance .snap-asset-link a {
+                float: left;
+                padding-left: 0%;
+                padding-right: 3%;
             }
         }
     }
