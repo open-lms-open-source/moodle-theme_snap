@@ -8576,7 +8576,9 @@ fieldset[disabled] #id_cancel:focus {
   margin-left: 0;
 }
 .snap-form-required #id_name,
-.snap-form-required #id_externalurl {
+.snap-form-required #id_externalurl,
+.snap-form-required #id_toolurl,
+.snap-form-required #id_sessionname {
   width: 100%;
 }
 .snap-form-required select {

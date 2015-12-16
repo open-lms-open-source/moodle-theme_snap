@@ -126,9 +126,12 @@ body:not(.behat-site-running) {
 .snap-form-required {
 
     #id_name,
-    #id_externalurl {
+    #id_externalurl,
+    #id_toolurl,
+    #id_sessionname {
         width: 100%;
     }
+
     // FF select elements don't respect % max width.
     select {
         max-width: 30em;

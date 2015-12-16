@@ -885,7 +885,7 @@ function snapInit() {
                 e.preventDefault();
             }
         });
-       
+
         // Resource cards clickable.
         $(document).on('click', '.snap-resource', function(e){
             var trigger = $(e.target),
@@ -1095,16 +1095,32 @@ function snapInit() {
 
         if(on_mod_settings || on_course_settings || on_section_settings){
           // Wrap advanced options in a div
-          $("#mform1 .collapsed, #id_availabilityconditionsheader, #id_courseformathdr, #id_availabilityconditions").wrapAll('<div class="snap-form-advanced col-md-4" />');
-          
+          var vital = [
+            ':first',
+            '#page-course-edit #id_descriptionhdr',
+            '#id_contentsection',
+            '#id_general + #id_general', // Turnitin duplicate ID bug.
+            '#id_content',
+            '#page-mod-choice-mod #id_optionhdr',
+            '#page-mod-assign-mod #id_availability',
+            '#page-mod-assign-mod #id_submissiontypes',
+            '#page-mod-workshop-mod #id_gradingsettings',
+            '#page-mod-choicegroup-mod #id_miscellaneoussettingshdr',
+            '#page-mod-choicegroup-mod #id_groups',
+            '#page-mod-scorm-mod #id_packagehdr',
+          ];
+          vital = vital.join();
+
+          $('#mform1 > fieldset').not(vital).wrapAll('<div class="snap-form-advanced col-md-4" />');
+
           // Add expand all to advanced column
           $(".snap-form-advanced").append($(".collapsible-actions"));
 
           // Sanitize required input into a single fieldset
           var main_form = $("#mform1 fieldset:first");
           var append_to = $("#mform1 fieldset:first .fcontainer");
-          
-          var required = $("#mform1 > fieldset:not(.collapsed)").not("#mform1 fieldset:first").not('.hidden').not('#id_availabilityconditionsheader, #id_availabilityconditions, #id_courseformathdr');
+
+          var required = $("#mform1 > fieldset").not("#mform1 > fieldset:first");
           for(var i = 0; i < required.length; i++){
             var content = $(required[i]).find('.fcontainer');
             $(append_to).append(content);
@@ -1113,11 +1129,16 @@ function snapInit() {
           $(main_form).wrap('<div class="snap-form-required col-md-8" />');
 
           var description = $("#mform1 fieldset:first .fitem_feditor:not(.required)");
-          var editingassignment = $("#page-mod-assign-mod").length > 0;
 
-          if(on_mod_settings && description && !editingassignment) {
-            $(append_to).append(description);
-            $(append_to).append($('#fitem_id_showdescription'));
+          if (on_mod_settings && description) {
+            var editingassignment = $('body').attr('id') == 'page-mod-assign-mod';
+            var editingchoice = $('body').attr('id') == 'page-mod-choice-mod';
+            var editingturnitin = $('body').attr('id') == 'page-mod-turnitintool-mod';
+            var editingworkshop = $('body').attr('id') == 'page-mod-workshop-mod';
+            if (!editingchoice  && !editingassignment && !editingturnitin && !editingworkshop) {
+                $(append_to).append(description);
+                $(append_to).append($('#fitem_id_showdescription'));
+            }
           }
 
           var savebuttons = $("#mform1 #fgroup_id_buttonar");
