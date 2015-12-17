@@ -4259,11 +4259,9 @@ fieldset[disabled] a#changenumsections .reduce-sections {
 }
 @keyframes fadeup {
   0% {
-    min-height: 100vh;
     opacity: 0.1;
   }
   100% {
-    min-height: 0;
     opacity: 1;
   }
 }
