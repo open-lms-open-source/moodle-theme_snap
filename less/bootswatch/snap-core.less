@@ -305,9 +305,9 @@ img {
     height: auto;
 }
 
-// Wrap words.
 a {
-    word-break: break-word;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
 }
 
 // Stop images shrinking to nothing on Chrome
@@ -2188,7 +2188,7 @@ http://blog.rodneyrehm.de/archives/34-iOS7-Mobile-Safari-And-Viewport-Units.html
     max-height: 100%;
 }
 
-@media screen and (min-width: @screen-sm-min) {
+@media screen and (min-width: @screen-md-min) {
     .frontpage-course-list-all .coursebox {
         width: 50%;
         display: inline-block;
