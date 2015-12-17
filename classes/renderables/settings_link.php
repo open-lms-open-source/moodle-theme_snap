@@ -43,15 +43,15 @@ class settings_link implements \renderable {
     function __construct() {
         global $PAGE, $COURSE;
 
-        // Admin users always see the admin menu.
+        // Page path blacklist for admin menu.
+        $adminblockblacklist = ['/user/profile.php'];
+        if (in_array($PAGE->url->get_path(), $adminblockblacklist)) {
+            return;
+        }
+
+        // Admin users always see the admin menu with the exception of blacklisted pages.
         // The admin menu shows up for other users if they are a teacher in the current course.
         if (!is_siteadmin()) {
-            // Add paths to this variable for only sowing admin menu when admin user.
-            $adminonly = ['/user/profile.php'];
-            if (in_array($PAGE->url->get_path(), $adminonly)) {
-                return;
-            }
-
             // We don't want students to see the admin menu ever.
             $canmanageacts = has_capability('moodle/course:manageactivities', $PAGE->context);
             $isstudent = !$canmanageacts && !is_role_switched($COURSE->id);
@@ -59,8 +59,6 @@ class settings_link implements \renderable {
                 return;
             }
         }
-
-
 
         if (!$PAGE->blocks->is_block_present('settings')) {
             // Throw error if on front page or course page.
