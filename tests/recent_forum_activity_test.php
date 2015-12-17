@@ -87,7 +87,8 @@ class theme_snap_recent_forum_activity_test extends \advanced_testcase {
 
         $this->user1 = $this->getDataGenerator()->create_user();
         $this->user2 = $this->getDataGenerator()->create_user();
-        $this->teacher = $this->getDataGenerator()->create_user();
+        $this->teacher1 = $this->getDataGenerator()->create_user();
+        $this->teacher2 = $this->getDataGenerator()->create_user();
 
         // Enrol (as students) user1 to both courses but user2 only to course2.
         $sturole = $DB->get_record('role', array('shortname' => 'student'));
@@ -101,14 +102,17 @@ class theme_snap_recent_forum_activity_test extends \advanced_testcase {
             $this->course2->id,
             $sturole->id);
 
-        // Enrol teacher on both courses.
+        // Enrol teachers on both courses.
         $teacherrole = $DB->get_record('role', array('shortname' => 'teacher'));
-        $this->getDataGenerator()->enrol_user($this->teacher->id,
-            $this->course1->id,
-            $teacherrole->id);
-        $this->getDataGenerator()->enrol_user($this->teacher->id,
-            $this->course2->id,
-            $teacherrole->id);
+        $teachers = [$this->teacher2, $this->teacher1];
+        foreach ($teachers as $teacher) {
+            $this->getDataGenerator()->enrol_user($teacher->id,
+                $this->course1->id,
+                $teacherrole->id);
+            $this->getDataGenerator()->enrol_user($teacher->id,
+                $this->course2->id,
+                $teacherrole->id);
+        }
 
         // Add 2 groups to course2.
         $this->group1 = $this->getDataGenerator()->create_group([
@@ -134,7 +138,7 @@ class theme_snap_recent_forum_activity_test extends \advanced_testcase {
 
         // If this is not a combined test then check and make sure there is no activity (nothing done yet).
         if ($toffset === 0 && $u1offset === 0 && $u2offset === 0) {
-            $activity = local::recent_forum_activity($this->teacher->id);
+            $activity = local::recent_forum_activity($this->teacher2->id);
             $this->assertEmpty($activity);
             $activity = local::recent_forum_activity($this->user1->id);
             $this->assertEmpty($activity);
@@ -146,12 +150,15 @@ class theme_snap_recent_forum_activity_test extends \advanced_testcase {
         $record->course = $this->course1->id;
         $forum = $this->getDataGenerator()->create_module($ftype, $record);
 
-        // Add discussion to course 1 started by user1.
+        // Add discussion to course 1 started by teacher1.
         // Note: In testing number of posts, discussions are counted too as there is a post for each discussion created.
-        $this->create_discussion($ftype, $this->course1->id, $this->user1->id, $forum->id);
+        $this->create_discussion($ftype, $this->course1->id, $this->teacher1->id, $forum->id);
 
-        // Check teacher viewable posts is 1.
-        $this->assert_user_activity($this->teacher, $toffset + 1);
+        // Check teacher1 viewable posts is 0 as no point seeing your own posts.
+        $this->assert_user_activity($this->teacher1, 0);
+        
+        // Check teacher2 viewable posts is 1.
+        $this->assert_user_activity($this->teacher2, $toffset + 1);
 
         // Check user1 viewable posts is 1.
         $this->assert_user_activity($this->user1, $u1offset + 1);
@@ -192,11 +199,11 @@ class theme_snap_recent_forum_activity_test extends \advanced_testcase {
 
         // Add discussion to course 1 started by user1.
         // Note: In testing number of posts, discussions are counted too as there is a post for each discussion created.
-        $discussion1 = $this->create_discussion($ftype, $this->course1->id, $this->user1->id, $forum1->id);
-        $this->create_post($ftype, $this->course1->id, $this->user1->id, $forum1->id, $discussion1->id);
+        $discussion1 = $this->create_discussion($ftype, $this->course1->id, $this->teacher1->id, $forum1->id);
+        $this->create_post($ftype, $this->course1->id, $this->teacher1->id, $forum1->id, $discussion1->id);
 
         // Check teacher viewable posts is 2.
-        $this->assert_user_activity($this->teacher, $toffset + 2);
+        $this->assert_user_activity($this->teacher2, $toffset + 2);
 
         // Check user1 viewable posts is 2.
         $this->assert_user_activity($this->user1, $u1offset + 2);
@@ -208,11 +215,11 @@ class theme_snap_recent_forum_activity_test extends \advanced_testcase {
         $record = new \stdClass();
         $record->course = $this->course2->id;
         $forum2 = $this->getDataGenerator()->create_module($ftype, $record);
-        $discussion2 = $this->create_discussion($ftype, $this->course2->id, $this->user2->id, $forum2->id);
-        $this->create_post($ftype, $this->course2->id, $this->user2->id, $forum2->id, $discussion2->id);
+        $discussion2 = $this->create_discussion($ftype, $this->course2->id, $this->teacher1->id, $forum2->id);
+        $this->create_post($ftype, $this->course2->id, $this->teacher1->id, $forum2->id, $discussion2->id);
 
         // Check teacher viewable posts is 4.
-        $this->assert_user_activity($this->teacher, $toffset + 4);
+        $this->assert_user_activity($this->teacher2, $toffset + 4);
 
         // Check user1 viewable posts is 4.
         $this->assert_user_activity($this->user1, $u1offset + 4);
@@ -285,13 +292,16 @@ class theme_snap_recent_forum_activity_test extends \advanced_testcase {
                     $sturole->id);
             }
 
-            // Enrol teacher.
-            $this->getDataGenerator()->enrol_user($this->teacher->id,
+            // Enrol teacher 1 and teacher 2.
+            $this->getDataGenerator()->enrol_user($this->teacher1->id,
+                $tmpcourse->id,
+                $teacherrole->id);
+            $this->getDataGenerator()->enrol_user($this->teacher2->id,
                 $tmpcourse->id,
                 $teacherrole->id);
 
             // Log user visited course for each user.
-            $users = [$this->teacher, $this->user1, $this->user2];
+            $users = [$this->teacher1, $this->teacher2, $this->user1, $this->user2];
             foreach ($users as $user) {
                 $eventparams = [
                     'userid' => $user->id,
@@ -301,25 +311,27 @@ class theme_snap_recent_forum_activity_test extends \advanced_testcase {
                 $event->trigger();
             }
 
+            // All discussions and posts are made by teacher2, so that the count for teacher1, user1
+            // and user2 are not affected by not being able to see their own posts.
             for ($f = 0; $f < $forumspercourse; $f++) {
                 $totalforums++;
                 $record = new \stdClass();
                 $record->course = $tmpcourse->id;
                 $forums[$f] = $this->getDataGenerator()->create_module($ftype, $record);
                 for ($d = 0; $d < $discussionsperforum; $d++) {
-                    $discussion = $this->create_discussion($ftype, $tmpcourse->id, $this->user1->id, $forums[$f]->id);
+                    $discussion = $this->create_discussion($ftype, $tmpcourse->id, $this->teacher2->id, $forums[$f]->id);
                     $teacherc++;
                     $user1c++;
                     if ($c < $discussionsperforum / 2) {
                         $user2c++;
                     }
-                    $post = $this->create_post($ftype, $tmpcourse->id, $this->user1->id, $forums[$f]->id, $discussion->id);
+                    $post = $this->create_post($ftype, $tmpcourse->id, $this->teacher2->id, $forums[$f]->id, $discussion->id);
                     $teacherc++;
                     $user1c++;
                     if ($c < $discussionsperforum / 2) {
                         $user2c++;
                     }
-                    $this->create_reply($ftype, $this->user1->id, $post);
+                    $this->create_reply($ftype, $this->teacher2->id, $post);
                     $teacherc++;
                     $user1c++;
                     if ($c < $discussionsperforum / 2) {
@@ -333,7 +345,7 @@ class theme_snap_recent_forum_activity_test extends \advanced_testcase {
 
         // Check teacher viewable posts.
         $starttchl10 = microtime(true);
-        $this->assert_user_activity($this->teacher, 10);
+        $this->assert_user_activity($this->teacher1, 10);
         $timetchl10 = microtime(true) - $starttchl10;
 
         // Check user1 viewable posts.
@@ -357,7 +369,7 @@ class theme_snap_recent_forum_activity_test extends \advanced_testcase {
 
         // Check teacher viewable posts.
         $starttchnl = microtime(true);
-        $this->assert_user_activity($this->teacher, $xteacherc, 0);
+        $this->assert_user_activity($this->teacher1, $xteacherc, 0);
         $timetchnl = microtime(true) - $starttchnl;
 
         // Check user1 viewable posts.
@@ -403,15 +415,15 @@ class theme_snap_recent_forum_activity_test extends \advanced_testcase {
 
         $forum1 = $this->getDataGenerator()->create_module('hsuforum', $record);
 
-        // Add discussion to course 1 started by user1.
+        // Add discussion to course 1 started by teacher1.
         // Note: In testing number of posts, discussions are counted too as there is a post for each discussion created.
-        $discussion1 = $this->create_discussion('hsuforum', $this->course1->id, $this->user1->id, $forum1->id);
-        $this->create_post('hsuforum', $this->course1->id, $this->user1->id, $forum1->id, $discussion1->id);
+        $discussion1 = $this->create_discussion('hsuforum', $this->course1->id, $this->teacher1->id, $forum1->id);
+        $this->create_post('hsuforum', $this->course1->id, $this->teacher1->id, $forum1->id, $discussion1->id);
 
         // Note - with an anonymous forum, none of the posts should be included in recent activity.
 
-        // Check teacher viewable posts is 0.
-        $this->assert_user_activity($this->teacher, 0);
+        // Check teacher2 viewable posts is 0.
+        $this->assert_user_activity($this->teacher2, 0);
 
         // Check user1 viewable posts is 0.
         $this->assert_user_activity($this->user1, 0);
@@ -433,17 +445,17 @@ class theme_snap_recent_forum_activity_test extends \advanced_testcase {
 
         $forum1 = $this->getDataGenerator()->create_module($ftype, $record);
 
-        // Add discussion to course 1 started by teacjer.
+        // Add discussion to course 1 started by teacher.
         // Note: In testing number of posts, discussions are counted too as there is a post for each discussion created.
-        $discussion1 = $this->create_discussion($ftype, $this->course1->id, $this->teacher->id, $forum1->id);
+        $discussion1 = $this->create_discussion($ftype, $this->course1->id, $this->teacher1->id, $forum1->id);
 
-        // Make a post by user1.
-        $this->create_post($ftype, $this->course1->id, $this->user1->id, $forum1->id, $discussion1->id);
+        // Make a post by teacher1.
+        $this->create_post($ftype, $this->course1->id, $this->teacher1->id, $forum1->id, $discussion1->id);
 
         // Nobody should see any forum activity if the forum is a qanda forum.
 
-        // Check teacher viewable posts is 0.
-        $this->assert_user_activity($this->teacher, 0);
+        // Check teacher2 viewable posts is 0.
+        $this->assert_user_activity($this->teacher2, 0);
 
         // Check user1 viewable posts is 0.
         $this->assert_user_activity($this->user1, 0);
@@ -479,21 +491,21 @@ class theme_snap_recent_forum_activity_test extends \advanced_testcase {
 
         $forum1 = $this->getDataGenerator()->create_module('hsuforum', $record);
 
-        // Add discussion to course 2 started by teacjer.
+        // Add discussion to course 2 started by teacher1.
         // Note: In testing number of posts, discussions are counted too as there is a post for each discussion created.
-        $discussion1 = $this->create_discussion('hsuforum', $this->course2->id, $this->teacher->id, $forum1->id);
+        $discussion1 = $this->create_discussion('hsuforum', $this->course2->id, $this->teacher1->id, $forum1->id);
 
         // Make a regular post by teacher.
-        $parent = $this->create_post('hsuforum', $this->course2->id, $this->teacher->id, $forum1->id, $discussion1->id);
+        $parent = $this->create_post('hsuforum', $this->course2->id, $this->teacher1->id, $forum1->id, $discussion1->id);
 
-        // Make a private reply from user1 to teacher.
-        $this->create_reply('hsuforum', $this->user1->id, $parent, ['privatereply' => $this->teacher->id]);
+        // Make a private reply from user1 to teacher1.
+        $this->create_reply('hsuforum', $this->user1->id, $parent, ['privatereply' => $this->teacher1->id]);
 
-        // Check teacher viewable posts is 3.
-        $this->assert_user_activity($this->teacher, 3);
+        // Check teacher1 viewable posts is 1 (can see private reply but not their own post).
+        $this->assert_user_activity($this->teacher1, 1);
 
-        // Check user1 viewable posts is 3.
-        $this->assert_user_activity($this->user1, 3);
+        // Check user1 viewable posts is 2 (user 1 can see the private reply but not their own post).
+        $this->assert_user_activity($this->user1, 2);
 
         // Check user2 viewable posts is 2 (user2 can see the discussion and first post but not the private reply).
         $this->assert_user_activity($this->user2, 2);
@@ -521,11 +533,11 @@ class theme_snap_recent_forum_activity_test extends \advanced_testcase {
         $forum = $this->getDataGenerator()->create_module($ftype, $record, $opts);
 
         // Add discussion to date restricted forum.
-        $discussion = $this->create_discussion($ftype, $this->course2->id, $this->teacher->id, $forum->id);
-        $this->create_post($ftype, $this->course2->id, $this->teacher->id, $forum->id, $discussion->id);
+        $discussion = $this->create_discussion($ftype, $this->course2->id, $this->teacher1->id, $forum->id);
+        $this->create_post($ftype, $this->course2->id, $this->teacher1->id, $forum->id, $discussion->id);
 
-        // Check teacher viewable posts is 2.
-        $this->assert_user_activity($this->teacher, $toffset + 2);
+        // Check teacher2 viewable posts is 2.
+        $this->assert_user_activity($this->teacher2, $toffset + 2);
 
         // Check user1 viewable posts is 0 - can't see anything in restricted forum.
         $this->assert_user_activity($this->user1, $u1offset + 0);
@@ -565,7 +577,7 @@ class theme_snap_recent_forum_activity_test extends \advanced_testcase {
 
         // Add a discussion and 2 posts for group1 users.
         $discussion1 = $this->create_discussion($ftype,
-            $this->course2->id, $this->user1->id, $forum->id,  ['groupid' => $this->group1->id]);
+            $this->course2->id, $this->teacher1->id, $forum->id,  ['groupid' => $this->group1->id]);
 
         for ($p = 1; $p <= 2; $p++) {
             // Create 1 post by user1 and user2.
@@ -575,17 +587,17 @@ class theme_snap_recent_forum_activity_test extends \advanced_testcase {
 
         // Add a discussion and 1 post for group2 users.
         $discussion2 = $this->create_discussion($ftype,
-            $this->course2->id, $this->user1->id, $forum->id,  ['groupid' => $this->group2->id]);
-        $this->create_post($ftype, $this->course2->id, $this->user1->id, $forum->id, $discussion2->id);
+            $this->course2->id, $this->teacher1->id, $forum->id,  ['groupid' => $this->group2->id]);
+        $this->create_post($ftype, $this->course2->id, $this->teacher1->id, $forum->id, $discussion2->id);
 
         // Check teacher viewable posts is 5 (can view all posts).
-        $this->assert_user_activity($this->teacher, $toffset + 5);
+        $this->assert_user_activity($this->teacher2, $toffset + 5);
 
-        // Check user1 viewable posts is 5 (in all groups, can view all posts).
-        $this->assert_user_activity($this->user1, $u1offset + 5);
+        // Check user1 viewable posts is 4 (in all groups, can view all posts except their own).
+        $this->assert_user_activity($this->user1, $u1offset + 4);
 
-        // Check user2 viewable posts is 3 (only in group2).
-        $this->assert_user_activity($this->user2, $u2offset + 3);
+        // Check user2 viewable posts is 2 (only in group2 and can't see their own posts).
+        $this->assert_user_activity($this->user2, $u2offset + 2);
     }
 
     /**
@@ -600,7 +612,7 @@ class theme_snap_recent_forum_activity_test extends \advanced_testcase {
      */
     public function test_combined_group_posts() {
         $this->test_forum_group_posts('forum');
-        $this->test_forum_group_posts('hsuforum', 5, 5, 3);
+        $this->test_forum_group_posts('hsuforum', 5, 4, 2);
     }
 
     /**

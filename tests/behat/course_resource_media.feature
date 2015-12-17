@@ -28,9 +28,10 @@ Feature: When the moodle theme is set to Snap, clicking on a resource with a med
     Given the following config values are set as admin:
       | theme | snap |
       | thememobile | snap |
+      | enablecompletion | 1 |
     And the following "courses" exist:
-      | fullname | shortname | category | groupmode |
-      | Course 1 | C1 | 0 | 1 |
+      | fullname | shortname | category | groupmode | enablecompletion |
+      | Course 1 | C1 | 0 | 1 | 1 |
     And the following "users" exist:
       | username | firstname | lastname | email |
       | teacher1 | Teacher | 1 | teacher1@example.com |
@@ -41,7 +42,7 @@ Feature: When the moodle theme is set to Snap, clicking on a resource with a med
       | student1 | C1 | student |
 
   @javascript
-  Scenario: MP3 opens inline.
+  Scenario: MP3 opens inline and marked as completed.
     Given I log in with snap as "teacher1"
     And I follow "Menu"
     And I follow "Course"
@@ -51,8 +52,18 @@ Feature: When the moodle theme is set to Snap, clicking on a resource with a med
     And "#snap-drop-file-1" "css_element" should exist
     And I upload file "test_mp3_file.mp3" using input "#snap-drop-file-1"
     Then ".snap-resource[data-type='mp3']" "css_element" should exist
+    And I click on ".snap-edit-asset" "css_element"
+    And I wait until the page is ready
+    And I set the following fields to these values:
+      | Completion tracking | 2 |
+      | Student must view this activity to complete it | 1 |
+    And I click on "#id_submitbutton2" "css_element"
+    And I wait until the page is ready
+    And "span.autocompletion img[title='Not completed: test mp3 file']" "css_element" should exist
     And I click on ".snap-resource[data-type='mp3']" "css_element"
     And I wait until "#snap-light-box" "css_element" is visible
-    Then "#snap-light-box" "css_element" should exist
+   Then "#snap-light-box" "css_element" should exist
     And I click on "#snap-light-box-close" "css_element"
-    Then "#snap-light-box" "css_element" should not exist
+   Then "#snap-light-box" "css_element" should not exist
+    And "span.autocompletion img[title='Not completed: test mp3 file']" "css_element" should not exist
+    And "span.autocompletion img[title='Completed: test mp3 file']" "css_element" should exist

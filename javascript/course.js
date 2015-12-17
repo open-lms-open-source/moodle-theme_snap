@@ -368,6 +368,10 @@ M.theme_snap.course = {
 
                 var asset = $(this).parents('.snap-asset')[0];
 
+                // Make sure after drop is at the end of section.
+                var section = $(asset).parents('ul.section')[0];
+                var afterdrop = $(section).find('li.snap-drop.asset-drop');
+                $(section).append(afterdrop);
 
                 if (movingobjects.length === 0) {
                     // Moving asset - activity or resource.

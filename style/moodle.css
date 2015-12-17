@@ -17782,6 +17782,19 @@ li.section:focus {
 .snap-dropzone {
   visibility: hidden;
 }
+.snap-dropzone {
+  text-align: center;
+  padding: 1em 4%;
+  margin: 1em 0;
+  border: 3px dashed #dadada;
+}
+.snap-dropzone .snap-dropzone-label {
+  cursor: pointer;
+  background: transparent url("[[pix:resource|icon]]") 0 50% no-repeat;
+  padding-left: 2em;
+  -webkit-background-size: 1.5em 1.5em;
+          background-size: 1.5em 1.5em;
+}
 .snap-course-listening .snap-section-editing {
   visibility: visible;
 }
@@ -19273,8 +19286,8 @@ fieldset[disabled] a#changenumsections .reduce-sections {
 .section-drop,
 .snap-move-note {
   background: transparent url("[[pix:theme|move_here]]") no-repeat 50% 80%;
-  -webkit-background-size: 70px auto;
-          background-size: 70px auto;
+  -webkit-background-size: 70px 70px;
+          background-size: 70px 70px;
 }
 .snap-move-section .section-drop {
   display: block;
@@ -19664,10 +19677,6 @@ blockquote {
 img {
   max-width: 100%;
   height: auto;
-}
-.svg-icon {
-  width: 1.5em;
-  height: 1.5em;
 }
 a {
   word-break: break-word;
@@ -23610,12 +23619,12 @@ div.editor_atto_toolbar div.atto_group {
  * @copyright Copyright (c) 2015 Moodlerooms Inc. (http://www.moodlerooms.com)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-#page-mod-resource-mod #id_optionssection,
-#page-mod-url-mod #id_optionssection {
+body:not(.behat-site-running)#page-mod-resource-mod #id_optionssection,
+body:not(.behat-site-running)#page-mod-url-mod #id_optionssection {
   display: none;
 }
-#id_generalhdr .ftoggler,
-#id_general .ftoggler {
+body:not(.behat-site-running) #id_generalhdr .ftoggler,
+body:not(.behat-site-running) #id_general .ftoggler {
   display: none;
 }
 .fdescription.required {
@@ -23624,19 +23633,6 @@ div.editor_atto_toolbar div.atto_group {
 #id_general .fcontainer,
 #id_generalhdr .fcontainer {
   display: block;
-}
-.snap-dropzone {
-  text-align: center;
-  padding: 1em 4%;
-  margin: 1em 0;
-  border: 3px dashed #dadada;
-}
-.snap-dropzone .snap-dropzone-label {
-  cursor: pointer;
-  background: transparent url("[[pix:resource|icon]]") 0 50% no-repeat;
-  padding-left: 2em;
-  -webkit-background-size: 1.5em auto;
-          background-size: 1.5em auto;
 }
 #newsection {
   width: 100%;
@@ -23735,7 +23731,9 @@ fieldset[disabled] #id_cancel:focus {
   margin-left: 0;
 }
 .snap-form-required #id_name,
-.snap-form-required #id_externalurl {
+.snap-form-required #id_externalurl,
+.snap-form-required #id_toolurl,
+.snap-form-required #id_sessionname {
   width: 100%;
 }
 .snap-form-required select {

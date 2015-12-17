@@ -20,15 +20,22 @@
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-#page-mod-resource-mod #id_optionssection,
-#page-mod-url-mod #id_optionssection {
-    display: none;
-}
+// Exclude hidden form elements from being hidden when behat is running or it breaks
+// "I set the following fields to these values". More specifically, the error is because expand_all_fields in
+// behat_forms.php doesn't handle errors with .moreless-toggler not being visible (it handles it not being there but
+// not hidden).
+body:not(.behat-site-running) {
+    // Hide form elements.
+    &#page-mod-resource-mod #id_optionssection,
+    &#page-mod-url-mod #id_optionssection {
+        display: none;
+    }
 
-// Hide meaningless 'General' legend on forms
-#id_generalhdr .ftoggler,
-#id_general .ftoggler {
-    display: none;
+    // Hide meaningless 'General' legend on forms
+    #id_generalhdr .ftoggler,
+    #id_general .ftoggler {
+        display: none;
+    }
 }
 
 // Hide "There are required fields in this form marked *" message.
@@ -42,18 +49,6 @@
     display: block;
 }
 
-.snap-dropzone {
-    text-align:center;
-    padding: 1em 4%;
-    margin: 1em 0;
-    border: 3px dashed #dadada;
-    .snap-dropzone-label {
-      cursor: pointer;
-      background: transparent url("[[pix:resource|icon]]") 0 50% no-repeat;
-      padding-left: 2em;
-      background-size: 1.5em auto;
-    }
-}
 
 // -------------------------
 // Snap add new section form
@@ -131,9 +126,12 @@
 .snap-form-required {
 
     #id_name,
-    #id_externalurl {
+    #id_externalurl,
+    #id_toolurl,
+    #id_sessionname {
         width: 100%;
     }
+
     // FF select elements don't respect % max width.
     select {
         max-width: 30em;

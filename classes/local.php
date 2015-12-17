@@ -1091,78 +1091,6 @@ class local {
 
     /**
      * Get recent forum activity for all accessible forums across all courses.
-     * (Without custom SQL method).
-     * Note - this function is here simply so that the sql version can be checked against core moodles functions for
-     * getting activity on a forum by forum basis.
-     *
-     * @param bool|int|stdclass $userorid
-     * @param int $limit
-     *
-     * @return array
-     * @throws \coding_exception
-     */
-    public static function non_sql_recent_forum_activity($userorid = false, $limit = 10) {
-        global $CFG;
-
-        if (file_exists($CFG->dirroot.'/mod/hsuforum')) {
-            require_once($CFG->dirroot.'/mod/hsuforum/lib.php');
-        }
-
-        $user = self::get_user($userorid);
-        if (!$user) {
-            return [];
-        }
-
-        // We need to do this so that we can get recent mod activity for a specific user.
-        self::swap_global_user($user);
-
-        $activities = [];
-        $idx = 0;
-
-        $fourweeksago = time() - (WEEKSECS * 4);
-
-        $userforums = new user_forums($user, $limit);
-
-        $forums = $userforums->forums();
-        if (!empty($forums)) {
-            foreach ($forums as $forum) {
-                $cm = get_coursemodule_from_instance('forum', $forum->id);
-                // Do not filter by user - we want all posts.
-                forum_get_recent_mod_activity($activities, $idx, $fourweeksago, $forum->course, $cm->id);
-            }
-        }
-
-        $hsuforums = $userforums->hsuforums();
-        if (!empty($hsuforums)) {
-            foreach ($hsuforums as $forum) {
-                $cm = get_coursemodule_from_instance('hsuforum', $forum->id);
-                // Do not filter by user - we want all posts.
-                hsuforum_get_recent_mod_activity($activities, $idx, $fourweeksago, $forum->course, $cm->id);
-            }
-        }
-
-        self::swap_global_user(false);
-
-        // Remove activity entries that don't have a content object (typically anonymous entries).
-        $tmpacts = [];
-        foreach ($activities as $val) {
-            if (is_object($val->content)) {
-                $tmpacts[] = $val;
-            }
-        }
-        $activities = $tmpacts;
-
-        usort($activities, array('\theme_snap\local', 'sort_timestamp'));
-
-        if ($limit > 0) {
-            $activities = array_slice($activities, 0, $limit);
-        }
-
-        return $activities;
-    }
-
-    /**
-     * Get recent forum activity for all accessible forums across all courses.
      * @param bool|int|stdclass $userorid
      * @param int $limit
      * @return array
@@ -1203,19 +1131,29 @@ class local {
         }
 
         if (!empty($forumids)) {
-            list($finsql, $finparams) = $DB->get_in_or_equal($forumids);
+            list($finsql, $finparams) = $DB->get_in_or_equal($forumids, SQL_PARAMS_NAMED, 'fina');
             $params = $finparams;
-            $params = array_merge($params, [SEPARATEGROUPS, $user->id, SEPARATEGROUPS]);
+            $params = array_merge($params,
+                                 [
+                                     'sepgps1a' => SEPARATEGROUPS,
+                                     'sepgps2a' => SEPARATEGROUPS,
+                                     'user1a'   => $user->id,
+                                     'user2a'   => $user->id
+
+                                 ]
+            );
 
             $fgpsql = '';
             if (!empty($forumidsallgroups)) {
                 // Where a forum has a group mode of SEPARATEGROUPS we need a list of those forums where the current
                 // user has the ability to access all groups.
                 // This will be used in SQL later on to ensure they can see things in any groups.
-                list($fgpsql, $fgpparams) = $DB->get_in_or_equal($forumidsallgroups);
+                list($fgpsql, $fgpparams) = $DB->get_in_or_equal($forumidsallgroups, SQL_PARAMS_NAMED, 'allgpsa');
                 $fgpsql = ' OR f1.id '.$fgpsql;
                 $params = array_merge($params, $fgpparams);
             }
+
+            $params['user2a'] = $user->id;
 
             $sqls[] = "(SELECT ".$DB->sql_concat("'F'", 'fp1.id')." AS id, 'forum' AS type, fp1.id AS postid,
                                fd1.forum, fp1.discussion, fp1.parent, fp1.userid, fp1.modified, fp1.subject,
@@ -1232,10 +1170,11 @@ class local {
 	                      JOIN {modules} m1 ON m1.name = 'forum' AND cm1.module = m1.id
 	                      JOIN {course} c ON c.id = f1.course
 	                      LEFT JOIN {groups_members} gm1
-                            ON cm1.groupmode = ?
+                            ON cm1.groupmode = :sepgps1a
                            AND gm1.groupid = fd1.groupid
-                           AND gm1.userid = ?
-	                     WHERE cm1.groupmode <> ? OR (gm1.userid IS NOT NULL $fgpsql)
+                           AND gm1.userid = :user1a
+	                     WHERE (cm1.groupmode <> :sepgps2a OR (gm1.userid IS NOT NULL $fgpsql))
+	                       AND fp1.userid <> :user2a
                       ORDER BY fp1.modified DESC
                                $limitsql
                         )
@@ -1244,21 +1183,28 @@ class local {
         }
 
         if (!empty($hsuforumids)) {
-            list($afinsql, $afinparams) = $DB->get_in_or_equal($hsuforumids);
+            list($afinsql, $afinparams) = $DB->get_in_or_equal($hsuforumids, SQL_PARAMS_NAMED, 'finb');
             $params = array_merge($params, $afinparams);
-            $params = array_merge($params, [SEPARATEGROUPS, $user->id, SEPARATEGROUPS]);
+            $params = array_merge($params,
+                                  [
+                                      'sepgps1b' => SEPARATEGROUPS,
+                                      'sepgps2b' => SEPARATEGROUPS,
+                                      'user1b'   => $user->id,
+                                      'user2b'   => $user->id,
+                                      'user3b'   => $user->id,
+                                      'user4b'   => $user->id
+                                  ]
+            );
 
             $afgpsql = '';
             if (!empty($hsuforumidsallgroups)) {
                 // Where a forum has a group mode of SEPARATEGROUPS we need a list of those forums where the current
                 // user has the ability to access all groups.
                 // This will be used in SQL later on to ensure they can see things in any groups.
-                list($afgpsql, $afgpparams) = $DB->get_in_or_equal($hsuforumidsallgroups);
+                list($afgpsql, $afgpparams) = $DB->get_in_or_equal($hsuforumidsallgroups, SQL_PARAMS_NAMED, 'allgpsb');
                 $afgpsql = ' OR f2.id '.$afgpsql;
                 $params = array_merge($params, $afgpparams);
             }
-
-            $params = array_merge($params, [$user->id, $user->id]);
 
             $sqls[] = "(SELECT ".$DB->sql_concat("'A'", 'fp2.id')." AS id, 'hsuforum' AS type, fp2.id AS postid,
                                fd2.forum, fp2.discussion, fp2.parent, fp2.userid, fp2.modified, fp2.subject,
@@ -1275,11 +1221,12 @@ class local {
 	                      JOIN {modules} m2 ON m2.name = 'hsuforum' AND cm2.module = m2.id
 	                      JOIN {course} c ON c.id = f2.course
 	                      LEFT JOIN {groups_members} gm2
-	                        ON cm2.groupmode = ?
+	                        ON cm2.groupmode = :sepgps1b
 	                       AND gm2.groupid = fd2.groupid
-	                       AND gm2.userid = ?
-                         WHERE (cm2.groupmode <> ? OR (gm2.userid IS NOT NULL $afgpsql))
-                           AND (fp2.privatereply = 0 OR fp2.privatereply = ? OR fp2.userid = ?)
+	                       AND gm2.userid = :user1b
+                         WHERE (cm2.groupmode <> :sepgps2b OR (gm2.userid IS NOT NULL $afgpsql))
+                           AND (fp2.privatereply = 0 OR fp2.privatereply = :user2b OR fp2.userid = :user3b)
+                           AND fp2.userid <> :user4b
                       ORDER BY fp2.modified DESC
                                $limitsql
                         )

@@ -134,9 +134,9 @@ trait format_section_trait {
         if (!$isstealth && !$onsectionpage && has_capability('moodle/course:movesections', $coursecontext)) {
             $url = '#section-'.$section->section;
             $snap_move_section = "<img class='svg-icon' src='".$this->output->pix_url('move', 'theme')."'>";
-            $movestring = get_string('movesection', 'theme_snap');
+            $movestring = get_string('move', 'theme_snap', format_string($section->name));
             $controls[] = html_writer::link($url, $snap_move_section ,
-            array('title' => $movestring, 'class' => 'snap-move', 'data-id' => $section->section));
+            array('title' => $movestring, 'alt' => $movestring, 'class' => 'snap-move', 'data-id' => $section->section));
         }
 
         $url = clone($baseurl);
@@ -183,7 +183,7 @@ trait format_section_trait {
                         array('title' => get_string('markedthistopic'), 'class' => 'editing_highlight'));
                 } else {
                     $url->param('marker', $section->section);
-                        $controls[] = html_writer::link($url,
+                    $controls[] = html_writer::link($url,
                         html_writer::empty_tag('img', array('src' => $this->output->pix_url('i/marker'),
                         'class' => 'icon', 'alt' => get_string('markthistopic'))),
                         array('title' => get_string('markthistopic'), 'class' => 'editing_highlight'));

@@ -339,6 +339,19 @@ li.section:focus {
     visibility: hidden;
 }
 
+.snap-dropzone {
+    text-align:center;
+    padding: 1em 4%;
+    margin: 1em 0;
+    border: 3px dashed #dadada;
+    .snap-dropzone-label {
+      cursor: pointer;
+      background: transparent url("[[pix:resource|icon]]") 0 50% no-repeat;
+      padding-left: 2em;
+      background-size: 1.5em 1.5em;
+    }
+}
+
 // Do not show elements requiring js until js is classed as loaded.
 .snap-course-listening {
     .snap-section-editing {
@@ -1742,7 +1755,7 @@ span.editinstructions {
 .section-drop,
 .snap-move-note {
   background: transparent url("[[pix:theme|move_here]]") no-repeat 50% 80%;
-  background-size: 70px auto;
+  background-size: 70px 70px;
 }
 
 .snap-move-section {
