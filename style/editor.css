@@ -2744,7 +2744,7 @@ section#region-main
   background-color: #999999 !important;
   box-shadow: 0;
 }
-.pagelayout-course .type_course ul > li:first-child {
+.pagelayout-course .type_course > ul > li:first-child {
   display: none;
 }
 #page-course-view-folderview .type_course ul > li:first-child {
