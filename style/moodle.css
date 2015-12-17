@@ -23797,10 +23797,10 @@ fieldset[disabled] #id_cancel:focus {
   }
 }
 @media (max-width: 767px) {
-  #id_cancel {
+  .snap-form-required #id_cancel {
     margin-left: 0;
   }
-  #id_submitbutton {
+  .snap-form-required #id_submitbutton2 + #id_submitbutton {
     display: none;
   }
 }

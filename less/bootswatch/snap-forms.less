@@ -202,12 +202,14 @@ body:not(.behat-site-running) {
 
 @media (max-width: @screen-xs-max) {
 
-    #id_cancel {
-        margin-left: 0;
-    }
+    .snap-form-required {
+        #id_cancel {
+            margin-left: 0;
+        }
 
-    // Only have enough width for one submit button and cancel.
-    #id_submitbutton {
-        display: none;
+        // Only have enough width for one submit button and cancel.
+        #id_submitbutton2 + #id_submitbutton {
+            display: none;
+        }
     }
 }
