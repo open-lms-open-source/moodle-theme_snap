@@ -27,7 +27,7 @@ Feature: When the moodle theme is set to Snap, the admin block will only be show
     Given the following config values are set as admin:
       | theme | snap |
       | thememobile | snap |
-      | defaulthomepage | 0 |
+      | defaulthomepage | 1 |
     And the following "courses" exist:
       | fullname | shortname | category | format |
       | Course 1 | C1 | 0 | topics |
@@ -42,58 +42,49 @@ Feature: When the moodle theme is set to Snap, the admin block will only be show
       | student1 | C1 | student |
 
   @javascript
-  Scenario: Student does not see admin block on site page.
+  Scenario: Student does not see admin block on any page.
     Given I log in with snap as "student1"
+    # Check site page.
+    And I am on site homepage
    Then "#admin-menu-trigger" "css_element" should not exist
-
-  @javascript
-  Scenario: Teacher does not see admin block on site page.
-    Given I log in with snap as "teacher1"
+    # Check dashboard page.
+    And I am on homepage
    Then "#admin-menu-trigger" "css_element" should not exist
-
-  @javascript
-  Scenario: Admin sees admin block on site page.
-    Given I log in with snap as "admin"
-   Then "#admin-menu-trigger" "css_element" should exist
-
-  @javascript
-  Scenario: Student does not see admin block on course page.
-    Given I log in with snap as "student1"
     And I follow "Menu"
-    And I follow "Course"
+    And I follow "Course 1"
    Then "#admin-menu-trigger" "css_element" should not exist
-
-  @javascript
-  Scenario: Teacher sees admin block on course page.
-    Given I log in with snap as "teacher1"
-    And I follow "Menu"
-    And I follow "Course"
-   Then "#admin-menu-trigger" "css_element" should exist
-
-  @javascript
-  Scenario: Admin sees admin block on course page.
-    Given I log in with snap as "admin"
-    And I follow "Menu"
-    And I follow "Course"
-   Then "#admin-menu-trigger" "css_element" should exist
-
-  @javascript
-  Scenario: Student does not see admin block on profile page.
-    Given I log in with snap as "student1"
     And I follow "Menu"
     And I follow "View your profile"
    Then "#admin-menu-trigger" "css_element" should not exist
 
   @javascript
-  Scenario: Teacher does not see admin block on profile page.
+  Scenario: Teacher does not see admin block on any page, except course page.
     Given I log in with snap as "teacher1"
+    # Check site page.
+    And I am on site homepage
+    Then "#admin-menu-trigger" "css_element" should not exist
+    # Check dashboard page.
+    And I am on homepage
+    Then "#admin-menu-trigger" "css_element" should not exist
+    And I follow "Menu"
+    And I follow "Course 1"
+    Then "#admin-menu-trigger" "css_element" should exist
     And I follow "Menu"
     And I follow "View your profile"
     Then "#admin-menu-trigger" "css_element" should not exist
 
   @javascript
-  Scenario: Admin does not see admin block on profile page.
+  Scenario: Admin sees admin block on all pages, except profile page.
     Given I log in with snap as "admin"
+    # Check site page.
+    And I am on site homepage
+    Then "#admin-menu-trigger" "css_element" should exist
+    # Check dashboard page.
+    And I am on homepage
+    Then "#admin-menu-trigger" "css_element" should exist
+    And I follow "Menu"
+    And I follow "Course 1"
+    Then "#admin-menu-trigger" "css_element" should exist
     And I follow "Menu"
     And I follow "View your profile"
     Then "#admin-menu-trigger" "css_element" should not exist
