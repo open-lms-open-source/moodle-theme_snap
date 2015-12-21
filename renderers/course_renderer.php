@@ -92,7 +92,8 @@ class theme_snap_core_course_renderer extends core_course_renderer {
             }
 
             $availabilityinfo = $this->course_section_cm_availability($mod, $displayoptions);
-            if ($availabilityinfo !== '') {
+            $canviewhidden = has_capability('moodle/course:viewhiddenactivities', $mod->context);
+            if ($availabilityinfo !== '' && !$mod->uservisible || $canviewhidden) {
                 $modclasses [] = 'conditional';
             }
             if (!$mod->available && !$mod->uservisible) {
@@ -125,7 +126,6 @@ class theme_snap_core_course_renderer extends core_course_renderer {
      * @return string
      */
     public function course_section_cm_availability(cm_info $mod, $displayoptions = array()) {
-
         // If we have available info, always spit it out.
         if (!empty($mod->availableinfo)) {
             $availinfo = $mod->availableinfo;

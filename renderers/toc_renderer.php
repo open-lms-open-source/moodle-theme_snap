@@ -23,8 +23,11 @@
  */
 
 defined('MOODLE_INTERNAL') || die();
+include_once('general_section_trait.php');
 
 class toc_renderer extends core_renderer {
+
+    use general_section_trait;
 
     /**
      * table of contents link information
@@ -79,38 +82,6 @@ class toc_renderer extends core_renderer {
                 }
             }
         }
-    }
-
-    /**
-     * Section is conditional and is hidden
-     * @param section_info $section
-     */
-    protected function is_section_conditionally_hidden(section_info $section) {
-        $conditional = $this->is_section_conditional($section);
-        if (!$conditional) {
-            return false;
-        }
-        // OK this section is conditional, so is it also hidden when unavailable?
-        // We do this by checking availableinfo which will be empty if the section is hidden when conditions aren't met.
-        return empty($section->availableinfo);
-    }
-
-    /**
-     * Is a section conditional
-     *
-     * @author Guy Thomas
-     * @param section_info $section
-     * @param bool $checkdates
-     * @return bool
-     */
-    protected function is_section_conditional(section_info $section) {
-        // Are there any conditional fields populated?
-        if (   !empty($section->availableinfo)
-            || !empty(json_decode($section->availability)->c)) {
-            return true;
-        }
-        // OK - this isn't conditional.
-        return false;
     }
 
     /**
