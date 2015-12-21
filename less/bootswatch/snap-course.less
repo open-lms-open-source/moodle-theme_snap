@@ -698,19 +698,19 @@ we do this by default in snap, so hide moodle version */
 }
 
 @media screen and (min-width: @screen-sm-min) {
+    
     .contentafterlink > ol:first-child,
     .contentafterlink >.summary-text:first-child,
     .contentafterlink .summary-figure {
         width: 50%;
-        float: right;
-        padding-right: 0;
+        float: left;
+        padding-right: 3%;
         margin: 0;
     }
 
     .summary-figure + .summary-text {
         width: 50%;
-        float: left;
-        padding-right: 3%;
+        float: right;
     }
 
     // the title of the resource
@@ -719,44 +719,8 @@ we do this by default in snap, so hide moodle version */
         .activityinstance {
             .snap-asset-link a {
                 width: 50%;
-                float: left;
-                padding: 0;
-            }
-        }
-    }
-
-    // alternate stuff for pages
-    .section li.modtype_page + li.modtype_page:nth-of-type(even) {
-        .contentafterlink > ol:first-child,
-        .contentafterlink >.summary-text:first-child,
-        .contentafterlink .summary-figure {
-            width: 50%;
-            float: left;
-            padding-left: 0;
-            margin: 0;
-        }
-
-        .summary-figure + .summary-text {
-            width: 50%;
-            float: right;
-            padding-left: 3%;
-        }
-
-        .activityinstance {
-            .snap-asset-link a {
-                width: 50%;
                 float: right;
-                padding-left: 3%;
-            }
-        }
-
-        &.state-expanded {
-            .activityinstance {
-                .snap-asset-link a {
-                    width: 50%;
-                    float: left;
-                    padding: 0;
-                }
+                padding-right: 3%;
             }
         }
     }
