@@ -3283,23 +3283,10 @@ we do this by default in snap, so hide moodle version */
   display: none;
 }
 @media screen and (min-width: 768px) {
-  .contentafterlink > ol:first-child,
-  .contentafterlink > .summary-text:first-child,
-  .contentafterlink .summary-figure {
+  li.modtype_page .summary-figure {
     width: 50%;
     float: left;
-    padding-right: 3%;
-    margin: 0;
-  }
-  .summary-figure + .summary-text {
-    width: 50%;
-    float: right;
-  }
-  .section li.snap-image .activityinstance .snap-asset-link a,
-  .section li.modtype_page .activityinstance .snap-asset-link a {
-    width: 50%;
-    float: right;
-    padding-right: 3%;
+    padding-right: 4%;
   }
 }
 .snap-native.snap-image .activityinstance .snap-asset-link a {
@@ -3308,10 +3295,6 @@ we do this by default in snap, so hide moodle version */
 .modtype_book,
 .modtype_page {
   border-bottom: 1px solid #ccc;
-}
-.modtype_book .contentafterlink > .summary-text:first-child {
-  width: auto;
-  float: none;
 }
 .snap-native.modtype_book ol.bookmod-chapters {
   margin: 0;
