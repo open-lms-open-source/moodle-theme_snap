@@ -348,7 +348,7 @@ trait format_section_trait {
                 }
                 $previousstring = get_string('previoussection', 'theme_snap');
                 $linkcontent = $this->target_link_content($sectionname, $previousarrow, $previousstring);
-                $url = course_get_url($course)."#section-$target";
+                $url = "#section-$target";
                 $previous = html_writer::link($url, $linkcontent, $attributes);
             }
             $target--;
@@ -371,7 +371,7 @@ trait format_section_trait {
                 }
                 $nextstring = get_string('nextsection', 'theme_snap');
                 $linkcontent = $this->target_link_content($sectionname, $nextarrow, $nextstring);
-                $url = course_get_url($course)."#section-$target";
+                $url = "#section-$target";
                 $next = html_writer::link($url, $linkcontent, $attributes);
             }
             $target++;
