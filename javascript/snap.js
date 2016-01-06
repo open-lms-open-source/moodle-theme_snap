@@ -914,6 +914,7 @@ function snapInit() {
               $(this).toggleClass('active');
               $('#page').toggleClass('offcanvas');
             }
+            $(href).attr('tabindex','0');
             $(href).toggleClass('state-visible').focus();
             e.preventDefault();
         });
