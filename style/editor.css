@@ -3693,7 +3693,8 @@ li.snap-activity.modtype_folder .snap-assettype {
   transform: scale(0.75);
   box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
 }
-.snap-completion-meta form.togglecompletion input:hover {
+.snap-completion-meta form.togglecompletion input:hover,
+.snap-completion-meta form.togglecompletion input:focus {
   transform: scale(1.04);
   transition: transform 0.3s;
 }
