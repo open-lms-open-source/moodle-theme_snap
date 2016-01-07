@@ -18563,12 +18563,13 @@ li.snap-activity.modtype_folder .snap-assettype {
   display: inline-block;
 }
 .snap-completion-meta,
-.snap-restrictions-meta {
+.conditional .snap-restrictions-meta {
   display: block !important;
   clear: both;
 }
 .snap-restrictions-meta {
   margin: 0;
+  display: none;
 }
 .snap-restrictions-meta .text {
   font-size: small;

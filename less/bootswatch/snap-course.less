@@ -1118,7 +1118,7 @@ li.snap-activity.modtype_folder {
     }
 }
 .snap-completion-meta,
-.snap-restrictions-meta {
+.conditional .snap-restrictions-meta {
     // SHAME - hsuforum sets div inline block to overcome other themes moodle css...
     // We need to counteract this for snap for hsu forum for the moment.
     display: block !important;
@@ -1128,6 +1128,7 @@ li.snap-activity.modtype_folder {
 // Restriciton e.g. groups, draft, conditional
 .snap-restrictions-meta {
     margin: 0;
+    display: none;
     .text {
         font-size: small;
         margin: 0.3em 0;

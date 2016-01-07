@@ -24,7 +24,11 @@
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+include_once('general_section_trait.php');
+
 trait format_section_trait {
+
+    use general_section_trait;
 
     /**
      * Based on get_nav_links function in class format_section_renderer_base
@@ -220,6 +224,16 @@ trait format_section_trait {
             }
         }
 
+        if ($this->is_section_conditional($section)) {
+            $canviewhiddensections = has_capability(
+                'moodle/course:viewhiddensections',
+                context_course::instance($course->id)
+            );
+            if (!$section->uservisible || $canviewhiddensections) {
+                $sectionstyle .= ' conditional';
+            }
+        }
+
         // SHAME - the tabindex is intefering with moodle js.
         // SHAME - Remove tabindex when editing menu is shown.
         $sectionarrayvars = array('id' => 'section-'.$section->section,
@@ -407,10 +421,7 @@ trait format_section_trait {
 
             // Student check.
             if (!$canviewhidden) {
-                $conditional = false;
-                if (!empty(json_decode($thissection->availability)->c)) {
-                    $conditional = true;
-                }
+                $conditional = $this->is_section_conditional($thissection);
                 // HIDDEN SECTION - If nothing in show hidden sections, and course section is not visible - don't print.
                 if (!$conditional && $course->hiddensections && !$thissection->visible) {
                     continue;
@@ -427,7 +438,11 @@ trait format_section_trait {
             }
 
             echo $this->section_header($thissection, $course, false, 0);
-            if ($thissection->uservisible || !empty($thissection->availableinfo)) {
+
+            // GThomas 21st Dec 2015 - Only output assets inside section if the section is user visible.
+            // Otherwise you can see them, click on them and it takes you to an error page complaining that they
+            // are restricted!
+            if ($thissection->uservisible) {
                  echo $this->courserenderer->course_section_cm_list($course, $thissection, 0);
                  // SLamour Aug 2015 - make add asset visible without turning editing on
                  // N.B. this function handles the can edit permissions.
