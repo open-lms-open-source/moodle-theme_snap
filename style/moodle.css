@@ -21151,6 +21151,7 @@ ol#chapters li.current a {
 #page-mod-page-mod #fitem_id_showdescription {
   display: none;
 }
+
 /* Hide not so useful images and exit book option */
 .navimages img,
 .navimages .bookexit {
@@ -21159,6 +21160,21 @@ ol#chapters li.current a {
 .navimages a img {
   display: inline;
 }
+
+#page-mod-book-view #region-main {
+  width: 70%;
+  float: right;
+}
+#page-mod-book-view #moodle-blocks {
+  clear: none;
+  width: 30%;
+  float: left;
+}
+#page-mod-book-print {
+  font-size: 18px !important;
+  font-family: Georgia, "Times New Roman", Times, serif !important;
+}
+
 /* FRONT PAGE ELEMENTS */
 #page-site-index #region-main {
   max-width: 100%;
@@ -23926,7 +23942,8 @@ a:hover,
 #course_about,
 .user-grade td.feedbacktext,
 #course_teachers .text_to_html,
-.snap-lightbox-description {
+.snap-lightbox-description,
+#page-mod-book-print {
   font-family: Georgia, "Times New Roman", Times, serif;
 }
 h1,
