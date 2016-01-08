@@ -311,7 +311,8 @@ class snap_shared extends renderer_base {
             'movehere',
             'movefailed',
             'movingdropsectionhelp',
-            'movingstartedhelp'
+            'movingstartedhelp',
+            'printbook'
         ), 'theme_snap');
 
         $courseconfig = new stdClass();

@@ -154,6 +154,7 @@ $string['posterdesc'] = 'A large image for the front page of your site. The imag
 $string['poweredbyrunby'] = 'Built with {$a} from <a href="http://moodlerooms.com/" target="_blank">Moodlerooms</a>'
     .', powered by <a href="http://www.moodle.com/" target="_blank">Moodle</a>.';
 $string['previoussection'] = 'Previous section';
+$string['printbook'] = 'Print book';
 $string['problemsfound'] = 'Problems Found';
 $string['readmore'] = 'Read more&nbsp;»';
 $string['recentactivity'] = 'Recent Activity';
