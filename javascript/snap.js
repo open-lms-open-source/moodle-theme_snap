@@ -1094,7 +1094,7 @@ function snapInit() {
             var urlParams = getURLParams(location.href);
             $('.block_book_toc').append('<p>' +
                 '<hr><a target="_blank" href="/mod/book/tool/print/index.php?id='+urlParams.id+'">' +
-                M.util.get_string('printbook', 'theme_snap') +
+                M.util.get_string('printbook', 'booktool_print') +
             '</a></p>');
         }
 

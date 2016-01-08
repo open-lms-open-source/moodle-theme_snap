@@ -311,9 +311,12 @@ class snap_shared extends renderer_base {
             'movehere',
             'movefailed',
             'movingdropsectionhelp',
-            'movingstartedhelp',
-            'printbook'
+            'movingstartedhelp'
         ), 'theme_snap');
+
+        $PAGE->requires->strings_for_js([
+            'printbook'
+        ], 'booktool_print');
 
         $courseconfig = new stdClass();
         $courseconfig->ajaxurl = '/course/rest.php';
