@@ -27,7 +27,8 @@
 
 require_once(__DIR__ . '/../../../../lib/behat/behat_base.php');
 
-use Behat\Behat\Context\Step\Given;
+use Behat\Behat\Context\Step\Given,
+    Behat\Mink\Exception\ExpectationException as ExpectationException;
 
 /**
  * Choice activity definitions.
@@ -94,5 +95,35 @@ class behat_theme_snap extends behat_base {
         $filepath = $CFG->dirroot.'/theme/snap/tests/fixtures/'.$fixturefilename;
         $file = $this->find('css', $input);
         $file->attachFile($filepath);
+    }
+
+    /**
+     * Bypass javascript attributed to link and just go straight to href.
+     * @param string $link
+     *
+     * @Given /^Snap I follow link "(?P<link>(?:[^"]|\\")*)"$/
+     */
+    public function i_follow_href($link) {
+        $el = $this->find_link($link);
+        $href = $el->getAttribute('href');
+        $this->getSession()->visit($href);
+    }
+
+    /**
+     * @param string $section
+     * @Given /^I go to course section (\d+)$/
+     */
+    public function i_go_to_course_section($section) {
+        $currenturl = $this->getSession()->getCurrentUrl();
+        if (stripos($currenturl, 'course/view.php') === false) {
+            throw new ExpectationException('Current page is not a course page!', $this->getSession());
+        }
+        if (strpos($currenturl, '?') !== false) {
+            $glue = '&';
+        } else {
+            $glue = '?';
+        }
+        $newurl = $currenturl.$glue.'section='.$section;
+        $this->getSession()->visit($newurl);
     }
 }
