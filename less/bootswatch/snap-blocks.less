@@ -29,6 +29,8 @@
     #moodle-blocks .block:not(.block_settings) {
         display: inline-block;
         width: 100%;
+        // Added for yui overlays which use position absolute, so parent needs to be relative.
+        position: relative;
     }
 }
 

@@ -75,6 +75,18 @@ a:visited,
     color: @brand-primary;
 }
 
+// Focus outline for keyboard tab users
+a,
+.dropdown-toggle,
+.snap-asset-move img {
+    &:focus{
+        outline: 3px solid @brand-primary;
+    }
+    &:active, &:hover {
+        outline: 0;
+    }
+}
+
 a:focus,
 a:hover,
 .btn-link:hover {
@@ -284,13 +296,6 @@ input[type="reset"],
     color: @link-color;
 }
 
-#course-toc {
-    div[role="tablist"] {
-        > span a:hover {
-            border-bottom-color: @brand-primary;
-        }
-    }
-}
 
 // flexpage yui button shame
 .format-flexpage .yui-button-checked button {

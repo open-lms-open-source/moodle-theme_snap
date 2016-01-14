@@ -17386,6 +17386,7 @@ fieldset[disabled] .yui-button button.active {
   #moodle-blocks .block:not(.block_settings) {
     display: inline-block;
     width: 100%;
+    position: relative;
   }
 }
 .block .header .title h2 {
@@ -18550,7 +18551,8 @@ li.snap-activity.modtype_folder .snap-assettype {
   -webkit-box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
           box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
 }
-.snap-completion-meta form.togglecompletion input:hover {
+.snap-completion-meta form.togglecompletion input:hover,
+.snap-completion-meta form.togglecompletion input:focus {
   -webkit-transform: scale(1.04);
       -ms-transform: scale(1.04);
           transform: scale(1.04);
@@ -21132,6 +21134,14 @@ ol#chapters li.current a {
 #page-mod-book-mod #fitem_id_showdescription,
 #page-mod-page-mod #fitem_id_showdescription {
   display: none;
+}
+/* Hide not so useful images and exit book option */
+.navimages img,
+.navimages .bookexit {
+  display: none;
+}
+.navimages a img {
+  display: inline;
 }
 /* FRONT PAGE ELEMENTS */
 #page-site-index #region-main {
@@ -23847,6 +23857,19 @@ a:visited,
   color: #03a9f4;
 }
 a:focus,
+.dropdown-toggle:focus,
+.snap-asset-move img:focus {
+  outline: 3px solid #03a9f4;
+}
+a:active,
+.dropdown-toggle:active,
+.snap-asset-move img:active,
+a:hover,
+.dropdown-toggle:hover,
+.snap-asset-move img:hover {
+  outline: 0;
+}
+a:focus,
 a:hover,
 .btn-link:hover {
   color: #038dcc;
@@ -24121,9 +24144,6 @@ input[type="reset"][disabled],
 }
 #show-toc {
   color: #03a9f4;
-}
-#course-toc div[role="tablist"] > span a:hover {
-  border-bottom-color: #03a9f4;
 }
 .format-flexpage .yui-button-checked button {
   background-color: #038dcc;

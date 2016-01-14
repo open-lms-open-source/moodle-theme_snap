@@ -266,12 +266,10 @@ class theme_snap_core_course_renderer extends core_course_renderer {
             // Move, Edit, Delete.
             if(has_capability('moodle/course:manageactivities', $modcontext)){
               $movealt = get_string('move', 'theme_snap', $mod->get_formatted_name());
-              $moveicon = "<img title='$movealt' alt='$movealt' class='svg-icon' src='".$this->output->pix_url('move', 'theme')."'/>";
+              $moveicon = "<img title='$movealt' alt='$movealt' class='svg-icon' src='".$this->output->pix_url('move', 'theme')."' tabindex='0'/>";
               $editalt = get_string('edit', 'theme_snap', $mod->get_formatted_name());
               $editicon = "<img title='$editalt' alt='$editalt' class='svg-icon' src='".$this->output->pix_url('edit', 'theme')."'/>";
               $actions .= "<label class='snap-asset-move'><input class='js-snap-asset-move' type='checkbox'>$moveicon</label>";
-
-              // $actions .= "<a class='snap-move-asset' href='".new moodle_url($baseurl, array('move' => $mod->id))."'>$moveicon</a>";
               $actions .= "<a class='snap-edit-asset' href='".new moodle_url($baseurl, array('update' => $mod->id))."'>$editicon</a>";
               $actionsadvanced[] = "<a href='".new moodle_url($baseurl, array('delete' => $mod->id))."'>$str->delete</a>";
             }
