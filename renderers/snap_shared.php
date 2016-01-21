@@ -314,6 +314,10 @@ class snap_shared extends renderer_base {
             'movingstartedhelp'
         ), 'theme_snap');
 
+        $PAGE->requires->strings_for_js([
+            'printbook'
+        ], 'booktool_print');
+
         $courseconfig = new stdClass();
         $courseconfig->ajaxurl = '/course/rest.php';
         // These never appear to get set in lib.php include_course_ajax - config can be passed into that function with

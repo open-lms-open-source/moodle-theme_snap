@@ -1088,6 +1088,15 @@ function snapInit() {
             // Check if we are searching for a mod.
             checkHashScrollToModule();
         }
+        
+        // Book mod print button.
+        if($('#page-mod-book-view').length) {
+            var urlParams = getURLParams(location.href);
+            $('.block_book_toc').append('<p>' +
+                '<hr><a target="_blank" href="/mod/book/tool/print/index.php?id='+urlParams.id+'">' +
+                M.util.get_string('printbook', 'booktool_print') +
+            '</a></p>');
+        }
 
         var mod_settings_id_re = /^page-mod-.*-mod$/; // e.g. #page-mod-resource-mod or #page-mod-forum-mod
         var on_mod_settings = mod_settings_id_re.test($('body').attr('id')) && location.href.indexOf("modedit") > -1;
