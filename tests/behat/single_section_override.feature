@@ -27,24 +27,41 @@ Feature: When the moodle theme is set to Snap, courses in single section per pag
   Background:
     Given the following config values are set as admin:
       | theme | snap |
+    And the following "users" exist:
+      | username | firstname | lastname | email |
+      | teacher1 | Teacher | 1 | teacher1@example.com |
+      | teacher2 | Teacher | 2 | teacher2@example.com |
+      | student1 | Student | 1 | student1@example.com |
     And the following "courses" exist:
       | fullname | shortname | category | format | coursedisplay |
       | Course 1 | C1        | 0        | topics | 1             |
     # In the above, coursedisplay 1 means that the course will display single section at a time.
     And the following "course enrolments" exist:
-      | user  | course | role           |
-      | admin | C1     | editingteacher |
+      | user     | course | role           |
+      | admin    | C1     | editingteacher |
+      | teacher1 | C1     | editingteacher |
+      | teacher2 | C1     | teacher        |
+      | student1 | C1     | student        |
 
   @javascript
-  Scenario: Admin opens course with single section per page mode but sees the page rendered in regular mode.
+  Scenario: All users see course pages rendered in regular mode even when course single section per page mode set.
+
+    # Test with admin user.
     Given I log in with snap as "admin"
-    And I follow "Menu"
-    And Snap I follow link "Course 1"
-    And I wait until the page is ready
-    And I go to course section 1
-    And ".section-navigation.navigationtitle" "css_element" should not exist
-    # In the above, .section-navigation.navigationtitle relates to the element on the page which contains the single
-    # section at a time navigation. Visually you would see a link on the left entitled "General" and a link on the right
-    # enitled "Topic 2"
-    # This test ensures you do not see those elements. If you swap to clean theme in a single section mode at a time
-    # course you will see that navigation after clicking on topic 1.
+   Then I can see course "Course 1" in all sections mode
+    And Snap I log out
+
+    # Test with editing teacher.
+    And I log in with snap as "teacher1"
+    Then I can see course "Course 1" in all sections mode
+    And Snap I log out
+
+    # Test widh non editing teacher.
+    And I log in with snap as "teacher2"
+    Then I can see course "Course 1" in all sections mode
+    And Snap I log out
+
+    # Test with student.
+    And I log in with snap as "student1"
+    Then I can see course "Course 1" in all sections mode
+    And Snap I log out
