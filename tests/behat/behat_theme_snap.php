@@ -86,16 +86,18 @@ class behat_theme_snap extends behat_base {
      * @param string $fixturefilename this is a filename relative to the snap fixtures folder.
      * @param string $input
      *
-     * @Given /^I upload file "(?P<fixturefilename_string>(?:[^"]|\\")*)" using input "(?P<input_string>(?:[^"]|\\")*)"$/
+     * @Given /^I upload file "(?P<fixturefilename_string>(?:[^"]|\\")*)" to section "(?P<section>(?:[^"]|\\")*)"$/
      */
-    public function i_upload_file_using_input($fixturefilename, $input) {
+    public function i_upload_file($fixturefilename, $section = 1) {
         global $CFG;
         $fixturefilename = clean_param($fixturefilename, PARAM_FILE);
         //$filepath = $CFG->themedir.'/snap/tests/fixtures/'.$fixturefilename;
         $filepath = $CFG->dirroot.'/theme/snap/tests/fixtures/'.$fixturefilename;
+        $input = '#snap-drop-file-'.$section;
         $file = $this->find('css', $input);
         $file->attachFile($filepath);
     }
+
 
     /**
      * Bypass javascript attributed to link and just go straight to href.
