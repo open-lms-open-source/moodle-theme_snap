@@ -67,9 +67,8 @@ Feature: When the moodle theme is set to Snap, students and teachers can open a 
     And I should see "My grades"
     And I follow "Course"
     And I wait until the page is ready
-    And I wait "1" seconds
     And I follow "Topic 1"
-    And I wait "1" seconds
+    And I wait until "#section-1" "css_element" is visible
     And I should see "Test assignment1"
 
     # Note - we can not follow assignments or anything that is searchable using the course quick search tool.
@@ -91,7 +90,8 @@ Feature: When the moodle theme is set to Snap, students and teachers can open a 
     And I follow "Log out"
     And I log in with snap as "teacher1"
     And I follow "Menu"
-    And I wait "2" seconds
+    And I wait until "#snap-personal-menu-grading[data-content-loaded=\"1\"]" "css_element" is visible
+    # The above waits until the snap personal menu column is loaded.
    Then I should see "1 of 1 Submitted, 1 Ungraded"
     And I follow "Course 1 / Test assignment1"
     And I follow "View/grade all submissions"
@@ -101,7 +101,8 @@ Feature: When the moodle theme is set to Snap, students and teachers can open a 
       | Feedback comments | I'm the teacher feedback |
     And I press "Save changes"
     And I follow "Menu"
-    And I wait "2" seconds
+    And I wait until "#snap-personal-menu-grading[data-content-loaded=\"1\"]" "css_element" is visible
+    # The above waits until the snap personal menu column is loaded.
    Then I should see "You have no submissions to grade."
     And I follow "Log out"
     And I log in with snap as "student1"

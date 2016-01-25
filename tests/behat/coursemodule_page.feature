@@ -50,7 +50,8 @@ Feature: Open page module inline
     And I follow "Course"
     And I should not see "page content1"
     And I follow "Read more&nbsp;»"
-    And I wait "2" seconds
+    And I wait until ".pagemod-content[data-content-loaded=\"1\"]" "css_element" is visible
+    # The above step basically waits for the page content to load up.
     And I should see "page content1"
 
 
@@ -65,7 +66,8 @@ Feature: Open page module inline
     And I should not see "page content2"
     And "span.autocompletion img[title='Not completed: Test page2']" "css_element" should exist
     And I follow "Read more&nbsp;»"
-    And I wait "2" seconds
+    And I wait until ".pagemod-content[data-content-loaded=\"1\"]" "css_element" is visible
+    # The above step basically waits for the page content to load up.
     And I should see "page content2"
     And "span.autocompletion img[title='Not completed: Test page2']" "css_element" should not exist
     And "span.autocompletion img[title='Completed: Test page2']" "css_element" should exist
