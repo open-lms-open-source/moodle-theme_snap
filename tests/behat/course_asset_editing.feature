@@ -13,7 +13,7 @@
 # You should have received a copy of the GNU General Public License
 # along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 #
-# Tests for html5 file upload direct to course.
+# Tests for course resource and activity editing features.
 #
 # @package    theme_snap
 # @copyright  2015 Guy Thomas <gthomas@moodlerooms.com>
@@ -24,28 +24,28 @@
 Feature: When the moodle theme is set to Snap, teachers edit assets without entering edit mode.
 
   Background:
-    Given the following config values are set as admin:
+   Given the following config values are set as admin:
       | theme | snap |
       | thememobile | snap |
       | defaulthomepage | 0 |
     And the following "courses" exist:
       | fullname | shortname | category | format |
-      | Course 1 | C1 | 0 | topics |
+      | Course 1 | C1        | 0        | topics |
     And the following "users" exist:
-      | username | firstname | lastname | email |
-      | teacher1 | Teacher | 1 | teacher1@example.com |
-      | student1 | Student | 1 | student1@example.com |
+      | username | firstname | lastname | email                |
+      | teacher1 | Teacher   | 1        | teacher1@example.com |
+      | student1 | Student   | 1        | student1@example.com |
     And the following "course enrolments" exist:
-      | user | course | role |
-      | admin | C1 | editingteacher |
-      | teacher1 | C1 | editingteacher |
-      | student1 | C1 | student |
+      | user     | course | role           |
+      | admin    | C1     | editingteacher |
+      | teacher1 | C1     | editingteacher |
+      | student1 | C1     | student        |
 
   @javascript
   Scenario: Student cannot access edit actions.
     Given the following "activities" exist:
       | activity | course | idnumber | name            | intro           | section | assignsubmission_onlinetext_enabled |
-      | assign   | C1     | assign1  | Test assignment | Test assignment | 1       | 1 |
+      | assign   | C1     | assign1  | Test assignment | Test assignment | 1       | 1                                   |
     And I log in with snap as "student1"
     And I follow "Menu"
     And I follow "Course"
@@ -55,83 +55,72 @@ Feature: When the moodle theme is set to Snap, teachers edit assets without ente
 
   @javascript
   Scenario: In read mode, teacher hides then shows activity.
-    Given the following "activities" exist:
+  Given the following "activities" exist:
       | activity | course | idnumber | name            | intro           | section | assignsubmission_onlinetext_enabled |
-      | assign   | C1     | assign1  | Test assignment | Test assignment | 1       | 1 |
+      | assign   | C1     | assign1  | Test assignment | Test assignment | 1       | 1                                   |
     And I log in with snap as "teacher1"
     And I follow "Menu"
     And I follow "Course"
     And I wait until the page is ready
     And I follow "Topic 1"
-    Then "#section-1" "css_element" should exist
+   Then "#section-1" "css_element" should exist
     And ".snap-activity[data-type='Assignment']" "css_element" should exist
     And I click on ".snap-activity[data-type='Assignment'] a.snap-edit-asset-more" "css_element"
     And I click on ".snap-activity[data-type='Assignment'] a.js_snap_hide" "css_element"
-    #TODO - instead of 2 second magic number, wait for ajax to complete by using classes.
-    And I wait "2" seconds
-    Then ".snap-activity[data-type='Assignment'].draft" "css_element" should exist
+   Then I wait until ".snap-activity[data-type='Assignment'].draft" "css_element" exists
     And I click on ".snap-activity[data-type='Assignment'] a.snap-edit-asset-more" "css_element"
     And I click on ".snap-activity[data-type='Assignment'] a.js_snap_show" "css_element"
-    #TODO - instead of 2 second magic number, wait for ajax to complete by using classes.
-    And I wait "2" seconds
-    Then ".snap-activity[data-type='Assignment'].draft" "css_element" should not exist
+   Then I wait until ".snap-activity[data-type='Assignment'].draft" "css_element" does not exist
 
   @javascript
   Scenario: In read mode, teacher hides then shows resource.
-    Given I log in with snap as "teacher1"
+  Given I log in with snap as "teacher1"
     And I follow "Menu"
     And I follow "Course"
     And I wait until the page is ready
     And I follow "Topic 1"
-    Then "#section-1" "css_element" should exist
+   Then "#section-1" "css_element" should exist
     And "#snap-drop-file-1" "css_element" should exist
     And I upload file "test_text_file.txt" to section "1"
     Then ".snap-resource[data-type='text']" "css_element" should exist
     And ".snap-resource[data-type='text'].draft" "css_element" should not exist
     And I click on ".snap-resource[data-type='text'] a.snap-edit-asset-more" "css_element"
     And I click on ".snap-resource[data-type='text'] a.js_snap_hide" "css_element"
-    #TODO - instead of 2 second magic number, wait for ajax to complete by using classes.
-    And I wait "2" seconds
-    Then ".snap-resource[data-type='text'].draft" "css_element" should exist
+   Then I wait until ".snap-resource[data-type='text'].draft" "css_element" exists
     And I click on ".snap-resource[data-type='text'] a.snap-edit-asset-more" "css_element"
     And I click on ".snap-resource[data-type='text'] a.js_snap_show" "css_element"
-    #TODO - instead of 2 second magic number, wait for ajax to complete by using classes.
-    And I wait "2" seconds
-    Then ".snap-resource[data-type='text'].draft" "css_element" should not exist
+   Then I wait until ".snap-resource[data-type='text'].draft" "css_element" does not exist
 
   @javascript
   Scenario: In read mode, teacher duplicates activity.
-    Given the following "activities" exist:
+  Given the following "activities" exist:
       | activity | course | idnumber | name            | intro           | section | assignsubmission_onlinetext_enabled |
-      | assign   | C1     | assign1  | Test assignment | Test assignment | 1       | 1 |
+      | assign   | C1     | assign1  | Test assignment | Test assignment | 1       | 1                                   |
     And I log in with snap as "teacher1"
     And I follow "Menu"
     And I follow "Course"
     And I wait until the page is ready
     And I follow "Topic 1"
-    Then "#section-1" "css_element" should exist
+   Then "#section-1" "css_element" should exist
     And ".snap-activity[data-type='Assignment']" "css_element" should exist
     And ".snap-activity[data-type='Assignment'] + .snap-activity[data-type='Assignment']" "css_element" should not exist
     And I click on ".snap-activity[data-type='Assignment'] a.snap-edit-asset-more" "css_element"
     And I click on ".snap-activity[data-type='Assignment'] a.js_snap_duplicate" "css_element"
-    #TODO - instead of 2 second magic number, wait for ajax to complete by using classes.
-    And I wait "2" seconds
-    Then ".snap-activity[data-type='Assignment'] + .snap-activity[data-type='Assignment']" "css_element" should exist
+   Then I wait until ".snap-activity[data-type='Assignment'] + .snap-activity[data-type='Assignment']" "css_element" exists
 
   @javascript
   Scenario: In read mode, teacher duplicates resource.
-    Given  I log in with snap as "teacher1"
+  Given I log in with snap as "teacher1"
     And I follow "Menu"
     And I follow "Course"
     And I wait until the page is ready
     And I follow "Topic 1"
-    Then "#section-1" "css_element" should exist
+   Then "#section-1" "css_element" should exist
     And "#snap-drop-file-1" "css_element" should exist
     When I upload file "test_text_file.txt" to section "1"
     Then ".snap-resource[data-type='text']" "css_element" should exist
     And ".snap-resource[data-type='text'] + .snap-resource[data-type='text']" "css_element" should not exist
     And I click on ".snap-resource[data-type='text'] a.snap-edit-asset-more" "css_element"
     And I click on ".snap-resource[data-type='text'] a.js_snap_duplicate" "css_element"
-    #TODO - instead of 2 second magic number, wait for ajax to complete by using classes.
-    And I wait "2" seconds
-    Then ".snap-resource[data-type='text'] + .snap-resource[data-type='text']" "css_element" should exist
+   Then I wait until ".snap-resource[data-type='text'] + .snap-resource[data-type='text']" "css_element" exists
+
