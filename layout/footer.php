@@ -89,7 +89,7 @@ $poweredbyrunby = get_string('poweredbyrunby', 'theme_snap', $builtwith);
     }
     ?>
     <br/><?php echo $poweredbyrunby ?>
-<br>© Copyright 2015 Moodlerooms Inc, All Rights Reserved.</small>
+<br>© Copyright 2016 Moodlerooms Inc, All Rights Reserved.</small>
 </div>
 <!-- close mrooms footer -->
 <div id="page-footer">

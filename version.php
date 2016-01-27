@@ -24,8 +24,8 @@
 
 defined('MOODLE_INTERNAL') || die;
 
-$plugin->version   = 2015061700;
-$plugin->requires  = 2014111006;
-$plugin->release   = 2015061700;
+$plugin->version   = 2016012600;
+$plugin->requires  = 2015051103; // Requires this Moodle version (2.9.3).
+$plugin->release   = '2.9.3 (Build: 20160204)';
 $plugin->maturity  = MATURITY_STABLE;
 $plugin->component = 'theme_snap';
