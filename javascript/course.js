@@ -322,13 +322,13 @@ M.theme_snap.course = {
         /**
          * Add drop zones at the end of sections.
          */
-        var add_after_drops = function() {
-            if (document.body.id === "page-site-index") {
-                $('#region-main .sitetopic ul.section').append('<li class="snap-drop asset-drop"><div class="asset-wrapper">' + M.util.get_string('movehere', 'theme_snap') + '</div></li>');
-            } else {
-                $('li.section .content ul.section').append('<li class="snap-drop asset-drop"><div class="asset-wrapper">' + M.util.get_string('movehere', 'theme_snap') + '</div></li>');
-            }
-        }
+         var add_after_drops = function() {
+             if (document.body.id === "page-site-index") {
+                 $('#region-main .sitetopic ul.section').append('<li class="snap-drop asset-drop"><div class="asset-wrapper"><a href="#">' + M.util.get_string('movehere', 'theme_snap') + '</a></div></li>');
+             } else {
+                 $('li.section .content ul.section').append('<li class="snap-drop asset-drop"><div class="asset-wrapper"><a href="#">' + M.util.get_string('movehere', 'theme_snap') + '</a></div></li>');
+             }
+         }
 
         /**
          * Update moving message.
