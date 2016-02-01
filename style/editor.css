@@ -5063,6 +5063,9 @@ fieldset[disabled] a#page-site-index .section-modchooser-link .section-modchoose
 .fixy .snap-media-object:hover {
   background-color: rgba(0, 0, 0, 0.07);
 }
+.fixy .snap-media-object > a:focus {
+  background-color: rgba(0, 0, 0, 0.07);
+}
 .snap-media-object {
   margin-bottom: 1em;
 }
@@ -5082,8 +5085,8 @@ fieldset[disabled] a#page-site-index .section-modchooser-link .section-modchoose
 .snap-media-object:after {
   clear: both;
 }
-.snap-media-object a {
-  text-decoration: none;
+.snap-media-object > a:focus {
+  display: block;
 }
 .snap-media-object > a > img,
 .snap-media-object > img {
@@ -5104,6 +5107,10 @@ fieldset[disabled] a#page-site-index .section-modchooser-link .section-modchoose
 }
 .snap-media-object .snap-media-body .text_to_html {
   line-height: 1.3em;
+}
+.snap-media-object .snap-media-body a:hover,
+.snap-media-object .snap-media-body a:focus {
+  text-decoration: underline;
 }
 .snap-media-object .snap-media-body .label {
   font-size: 0.7em;
@@ -6050,7 +6057,6 @@ ol#chapters li.current a {
 .navimages a img {
   display: inline;
 }
-
 #page-mod-book-view #region-main {
   width: 70%;
   float: right;
@@ -6064,7 +6070,6 @@ ol#chapters li.current a {
   font-size: 18px !important;
   font-family: Georgia, "Times New Roman", Times, serif !important;
 }
-
 /* FRONT PAGE ELEMENTS */
 #page-site-index #region-main {
   max-width: 100%;

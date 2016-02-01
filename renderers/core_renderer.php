@@ -168,9 +168,9 @@ class theme_snap_core_renderer extends toc_renderer {
             'pluginfile.php', $coursecontext->id, 'user', 'profile', $user->id);
         $description = format_text($user->description, $user->descriptionformat);
 
-        return "<div class=snap-media-object>
+        return "<div class='snap-media-object'>
                 $picture
-                <div class=snap-media-body>
+                <div class='snap-media-body'>
                 $fullname
                 $description
                 </div>
@@ -409,7 +409,7 @@ class theme_snap_core_renderer extends toc_renderer {
 
         $link = html_writer::link($url, $linkcontent);
 
-        return '<div class="snap-media-object'.$extraclasses.'">'.$link.'</div>';
+        return '<div class="snap-media-object '.$extraclasses.'">'.$link.'</div>';
     }
 
     /**
