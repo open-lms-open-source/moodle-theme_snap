@@ -128,4 +128,46 @@ class behat_theme_snap extends behat_base {
         $newurl = $currenturl.$glue.'section='.$section;
         $this->getSession()->visit($newurl);
     }
+
+    /**
+     * @param string
+     * @return array
+     * @Given  /^I can see course "(?P<course>(?:[^"]|\\")*)" in all sections mode$/
+     */
+    public function i_can_see_course_in_all_sections_mode($course) {
+        $givens = [
+            'I follow "Menu"',
+            'Snap I follow link "'.$course.'"',
+            'I wait until the page is ready',
+            'I go to course section 1',
+            '".section-navigation.navigationtitle" "css_element" should not exist',
+            # In the above, .section-navigation.navigationtitle relates to the element on the page which contains the single
+            # section at a time navigation. Visually you would see a link on the left entitled "General" and a link on the right
+            # enitled "Topic 2"
+            # This test ensures you do not see those elements. If you swap to clean theme in a single section mode at a time
+            # course you will see that navigation after clicking on topic 1.
+        ];
+        $givens = array_map(function($given){
+            return new Given($given);
+        }, $givens);
+        return $givens;
+    }
+
+    /**
+     * @param string
+     * @return array
+     * @Given  /^Snap I log out$/
+     */
+    public function i_log_out() {
+        $givens = [
+            'I follow "Menu"',
+            'I follow "Log out"',
+            'I wait until the page is ready'
+        ];
+        $givens = array_map(function($given){
+            return new Given($given);
+        }, $givens);
+        return $givens;
+    }
+
 }
