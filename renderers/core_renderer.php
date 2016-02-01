@@ -724,7 +724,7 @@ class theme_snap_core_renderer extends toc_renderer {
                     // Let's put the interesting avatars first!
                     $avatars = array_merge($avatars, $blankavatars);
                     // Limit visible to 4.
-                    if (count($avatars) > 4) {
+                    if (count($avatars) > 5) {
                         // Show 4 avatars and link to show more.
                         $hiddenavatars = array_slice($avatars, 4);
                         $avatars = array_slice($avatars, 0, 4);
