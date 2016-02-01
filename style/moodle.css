@@ -20304,6 +20304,10 @@ fieldset[disabled] a#page-site-index .section-modchooser-link .section-modchoose
   border: 1px solid #fff;
   margin: 0 auto 0.5em;
 }
+#login.fixy .fixy-inner {
+  max-width: 50.5em;
+  padding-top: 4%;
+}
 .fixy input::-webkit-input-placeholder {
   color: #fff;
   letter-spacing: 0.1em;
@@ -20363,7 +20367,7 @@ fieldset[disabled] a#page-site-index .section-modchooser-link .section-modchoose
   opacity: 1;
 }
 .courseinfo.show-all .courseinfo-body {
-  bottom: -100%;
+  visibility: hidden;
 }
 .courseinfo .courseinfo-body {
   -webkit-transition: all 0.4s ease-in-out;
@@ -21135,7 +21139,6 @@ ol#chapters li.current a {
 #page-mod-page-mod #fitem_id_showdescription {
   display: none;
 }
-
 /* Hide not so useful images and exit book option */
 .navimages img,
 .navimages .bookexit {
@@ -21144,7 +21147,6 @@ ol#chapters li.current a {
 .navimages a img {
   display: inline;
 }
-
 #page-mod-book-view #region-main {
   width: 70%;
   float: right;
@@ -21158,7 +21160,6 @@ ol#chapters li.current a {
   font-size: 18px !important;
   font-family: Georgia, "Times New Roman", Times, serif !important;
 }
-
 /* FRONT PAGE ELEMENTS */
 #page-site-index #region-main {
   max-width: 100%;

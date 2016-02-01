@@ -31,9 +31,10 @@ use theme_snap\renderables\settings_link;
 ?>
 <header id='mr-nav' class='clearfix moodle-has-zindex'>
 <div class="pull-right">
-<?php echo $OUTPUT->fixed_menu();
-$settingslink = new settings_link();
-echo $OUTPUT->render($settingslink);
+<?php 
+    echo $OUTPUT->fixed_menu();
+    $settingslink = new settings_link();
+    echo $OUTPUT->render($settingslink);
 ?>
 </div>
 

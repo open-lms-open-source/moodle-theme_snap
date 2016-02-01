@@ -642,7 +642,8 @@ class theme_snap_core_renderer extends toc_renderer {
                 }
             }
             $output .= $this->login_button();
-            $output .= "<form class=fixy action='$CFG->wwwroot/login/'  method='post' id='login'>
+            $output .= "<div class='fixy' id='login' role='dialog' aria-label='$loginform' tabindex='0'>
+            <form action='$CFG->wwwroot/login/'  method='post'>
         <a id='fixy-close' class='pull-right snap-action-icon' href='#'>
             <i class='icon icon-close'></i><small>$cancel</small>
         </a>
@@ -656,7 +657,7 @@ class theme_snap_core_renderer extends toc_renderer {
             <input type='submit' id='loginbtn' value='".s($login)."'>
             $helpstr
             </div>
-        </form>";
+        </form></div>";
         } else {
             $courselist = "";
             $userpicture = new user_picture($USER);
@@ -724,9 +725,10 @@ class theme_snap_core_renderer extends toc_renderer {
                     $avatars = array_merge($avatars, $blankavatars);
                     // Limit visible to 4.
                     if (count($avatars) > 4) {
+                        // Show 4 avatars and link to show more.
                         $hiddenavatars = array_slice($avatars, 4);
                         $avatars = array_slice($avatars, 0, 4);
-                        $extralink = '<a class="courseinfo-teachers-more state-visible" href=#>+'.count($hiddenavatars).'</a>';
+                        $extralink = '<a class="courseinfo-teachers-more state-visible" href="#">+'.count($hiddenavatars).'</a>';
                     } else {
                         $hiddenavatars = [];
                         $extralink = '';
