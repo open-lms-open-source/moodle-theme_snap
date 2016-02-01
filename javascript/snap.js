@@ -462,6 +462,10 @@ function snapInit() {
                           success: function(data){
                             logmsg('fetched ' + type);
                             window.sessionStorage[cache_key] = data.html;
+                            // Note: we can't use .data because that does not manipulate the dom, we need the data
+                            // attribute populated immediately so things like behat can utilise it.
+                            // .data just sets the value in memory, not the dom.
+                            $(container).attr('data-content-loaded', '1');
                             $(container).html(data.html);
                           }
                     });
