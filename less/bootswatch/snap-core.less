@@ -638,7 +638,7 @@ input[type="text"]+input[type="submit"] {
     padding: 0.5em 4%;
     margin-bottom: 0;
     .alakazam();
-
+    > a:focus,
     &:hover {
         background-color: rgba(0,0,0,0.07);
     }
@@ -647,10 +647,9 @@ input[type="text"]+input[type="submit"] {
 .snap-media-object {
     .clearfix();
     margin-bottom: 1em;
-
-    // media o can be a link
-    a {
-        text-decoration: none;
+    // Block display for keyboard user focus.
+    > a:focus {
+         display:block;
     }
 
     // media o media
@@ -679,6 +678,13 @@ input[type="text"]+input[type="submit"] {
 
         .text_to_html {
             line-height: 1.3em;
+        }
+        
+        a {
+            &:hover,
+            &:focus {
+                text-decoration: underline;
+            }
         }
 
         // Shrink label size to support iPads
