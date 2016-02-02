@@ -7,5 +7,9 @@ Snap’s easy to use navigation gives users an elegant way to perform frequent t
 
 Working seamlessly across every device - from desktop to mobile, Snap’s responsive Twitter Bootstrap based framework provides a consistent, professional experience for learning whenever and wherever you want to learn.
 
+#Technology
+
+Built with Bootstrap 3 and jQuery
+
 #Moodlerooms
 This plugin was contributed by the Moodlerooms Product Development team.  Moodlerooms is an education technology company dedicated to bringing excellent online teaching to institutions across the globe.  We serve colleges and universities, schools and organizations by supporting the software that educators use to manage and deliver instructional content to learners in virtual classrooms.  Moodlerooms is headquartered in Baltimore, MD.  We are proud to be a Moodle Partner company.

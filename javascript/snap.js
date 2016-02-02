@@ -19,6 +19,8 @@
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+/* exported snapInit */
+
 /**
  * Main snap initialising function.
  */
@@ -87,6 +89,61 @@ function snapInit() {
      */
     var logwarn = function (msg, obj) {
         logmsg (msg, obj, 'warn');
+    };
+
+    /**
+     * Ensure lightbox container exists.
+     *
+     * @param appendto
+     * @param onclose
+     * @returns {*|jQuery|HTMLElement}
+     */
+    var lightbox = function(appendto, onclose) {
+        var lbox = $('#snap-light-box');
+        if (lbox.length === 0) {
+            $(appendto).append('<div id="snap-light-box" tabindex="-1">' +
+                '<div id="snap-light-box-content"></div>' +
+                '<a id="snap-light-box-close" class="pull-right snap-action-icon" href="#">' +
+                    '<i class="icon icon-close"></i><small>Close</small>' +
+                '</a>' +
+            '</div>');
+            $('#snap-light-box-close').click(function(e){
+                e.preventDefault();
+                e.stopPropagation();
+                lightboxclose();
+                if (typeof(onclose) === 'function') {
+                    onclose();
+                }
+            });
+            lbox = $('#snap-light-box');
+        }
+        return lbox;
+    };
+
+    /**
+     * Close lightbox.
+     */
+    var lightboxclose = function() {
+        var lbox = lightbox();
+        lbox.remove();
+    };
+
+    /**
+     * Open lightbox and set content if necessary.
+     *
+     * @param content
+     * @param appendto
+     * @param onclose
+     */
+    var lightboxopen = function(content, appendto, onclose) {
+        var appendto = appendto ? appendto : $('body');
+        var lbox = lightbox(appendto, onclose);
+        if (content) {
+            var contentdiv = $('#snap-light-box-content');
+            contentdiv.html('');
+            contentdiv.append(content);
+        }
+        lbox.addClass('state-visible');
     };
 
     /**
@@ -405,6 +462,10 @@ function snapInit() {
                           success: function(data){
                             logmsg('fetched ' + type);
                             window.sessionStorage[cache_key] = data.html;
+                            // Note: we can't use .data because that does not manipulate the dom, we need the data
+                            // attribute populated immediately so things like behat can utilise it.
+                            // .data just sets the value in memory, not the dom.
+                            $(container).attr('data-content-loaded', '1');
                             $(container).html(data.html);
                           }
                     });
@@ -419,6 +480,7 @@ function snapInit() {
         loadajaxinfo('graded');
         loadajaxinfo('grading');
         loadajaxinfo('messages');
+        loadajaxinfo('forumposts');
 
 
         // Load course information via ajax.
@@ -519,7 +581,7 @@ function snapInit() {
 
         var searchpin = $("#searchpin");
         if (!searchpin.length){
-            searchpin = $('<i id="searchpin" class="icon icon-office-01"></i>');
+            searchpin = $('<i id="searchpin"></i>');
         }
 
         $(targmod).find('.instancename').prepend(searchpin);
@@ -537,7 +599,7 @@ function snapInit() {
             // check we are not in folder view
             if(!$('.format-folderview').length){
                 // reset visible section & blocks
-                $('.course-content .main, #moodle-blocks,#coursetools').removeClass('state-visible');
+                $('.course-content .main, #moodle-blocks,#coursetools, #snap-add-new-section').removeClass('state-visible');
                 // if the hash is just section, can we skip all this?
 
                 // we know the params at 0 is a section id
@@ -556,7 +618,7 @@ function snapInit() {
                 if(mod !== null) {
                     $(section).addClass('state-visible');
                     scrollToModule(mod);
-                } else if(!$('.editing').length){
+                } else {
                     $(section).addClass('state-visible').focus();
                     // faux link click behaviour - scroll to page top
                     window.scrollTo(0, 0);
@@ -567,7 +629,7 @@ function snapInit() {
             }
 
             // default niceties to perform
-            var visibleChapters = $('.course-content .main, #coursetools').filter(':visible');
+            var visibleChapters = $('.course-content .main, #coursetools, #snap-add-new-section').filter(':visible');
             if (!visibleChapters.length) {
                 // show chapter 0
                 $('#section-0').addClass('state-visible').focus();
@@ -576,7 +638,7 @@ function snapInit() {
 
             applyResponsiveVideo();
             // add faux :current class to the relevant section in toc
-            var currentSectionId = $('.main.state-visible, #coursetools.state-visible').attr('id');
+            var currentSectionId = $('.main.state-visible, #coursetools.state-visible, #snap-add-new-section.state-visible').attr('id');
             $('#chapters li').removeClass('current');
             $('#chapters a[href$="' + currentSectionId + '"]').parent('li').addClass('current');
         }
@@ -594,12 +656,18 @@ function snapInit() {
         $('body').addClass(extraclasses.join(' '));
     };
 
+    var updateModCompletion = function($pagemod, completionhtml) {
+        // Update completion tracking icon.
+        $pagemod.find('.autocompletion').replaceWith(completionhtml);
+    };
+
     /**
      * Reveal pagemod.
      *
      * @param $pagemod
+     * @param string completionhtml - updated completionhtml
      */
-    var revealPageMod = function($pagemod) {
+    var revealPageMod = function($pagemod, completionhtml) {
         $pagemod.find('.pagemod-content').slideToggle("fast", function() {
             // Animation complete.
             if($pagemod.is('.state-expanded')){
@@ -613,8 +681,76 @@ function snapInit() {
             }
 
         });
+
+        if (completionhtml) {
+            updateModCompletion($pagemod, completionhtml);
+        }
+
+        // If there is any video in the new content then we need to make it responsive.
         applyResponsiveVideo();
-    }
+    };
+
+    var lightboxMedia = function(resourcemod) {
+        var appendto = $('body');
+        var spinner = '<div class="loadingstat three-quarters">' +
+                Y.Escape.html(M.util.get_string('loading', 'theme_snap')) +
+                '</div>';
+        lightboxopen(spinner, appendto, function(){
+            $(resourcemod).attr('tabindex','-1').focus();
+            $(resourcemod).removeAttr('tabindex');
+        });
+
+        $.ajax({
+            type: "GET",
+            async: true,
+            url: M.cfg.wwwroot + '/theme/snap/rest.php?action=get_media&contextid=' + $(resourcemod).data('modcontext'),
+            success: function (data) {
+                lightboxopen(data.html, appendto);
+
+                updateModCompletion($(resourcemod), data.completionhtml);
+
+                // Execute scripts - necessary for flv to work.
+                var hasflowplayerscript = false;
+                $('#snap-light-box script').each(function(){
+                    var script = $(this).text();
+
+                    // Remove cdata from script.
+                    script = script.replace( /^(?:\s*)\/\/<!\[CDATA\[/, '').replace(/\/\/\]\](?:\s*)$/, '');
+
+                    // Check for flv video scripts.
+                    if (script.indexOf('M.util.add_video_player') >-1 ) {
+                        hasflowplayerscript = true;
+                        // This is really important - we have to reset this or it will try to apply flow player to all
+                        // the video players it has already initialised and even ones that no longer exist because
+                        // they have been wiped from the DOM.
+                        M.util.video_players = [];
+                    }
+
+                    // Execute script.
+                    eval (script);
+                });
+                if (hasflowplayerscript) {
+                    if (M.cfg.jsrev == -1) {
+                        var jsurl = M.cfg.wwwroot + '/lib/flowplayer/flowplayer-3.2.13.js';
+                    } else {
+                        var jsurl = M.cfg.wwwroot + '/lib/javascript.php?jsfile=/lib/flowplayer/flowplayer-3.2.13.min.js&rev=' + M.cfg.jsrev;
+                    }
+                    $('head script[src="'+jsurl+'"]').remove();
+                    // This is so hacky it's untrue, we need to load flow player again but it won't do so unless we make flowplayer undefined.
+                    // Note, we can't use flowplayer.delete in strict mode, hence "= undefined".
+                    if (typeof(flowplayer) !== 'undefined') {
+                        flowplayer = undefined;
+                    }
+                    M.util.load_flowplayer();
+                    $('head script[src="'+jsurl+'"]').trigger( "onreadystatechange" );
+                }
+                // Apply responsive video after 1 second. Note: 1 second is just to give crappy flow player time to sort itself out.
+                window.setTimeout(function(){applyResponsiveVideo();}, 1000);
+                $('#snap-light-box').focus();
+            }
+        });
+
+    };
 
     /**
      * Add listeners.
@@ -743,22 +879,43 @@ function snapInit() {
              $(this).closest('li.activity').toggleClass('draft');
         });
 
-        // Make cards - in personal menu and on course - clickable, data-href for resources.
-        $(document).on('click', '.courseinfo[data-href], .snap-resource[data-href]', function(e){
+        // Personal menu course card clickable.
+        $(document).on('click', '.courseinfo[data-href]', function(e){
             var trigger = $(e.target),
-                hreftarget = '_self'; // assume browser can open resource
-            // Excludes any clicks in the actions menu, on links or forms.
-            if(!$(trigger).closest('.actions, form, a').length) {
-                // TODO - add a class in the renderer to set target to blank for none-web docs or external links
-                if($(trigger).closest('.snap-resource').is('.target-blank')){
-                    hreftarget = '_blank';
-                }
+            hreftarget = '_self';
+            // Excludes any clicks in the card deeplinks.
+            if(!$(trigger).closest('a').length) {
                 window.open($(this).data('href'), hreftarget);
                 e.preventDefault();
             }
         });
 
+        // Resource cards clickable.
+        $(document).on('click', '.snap-resource', function(e){
+            var trigger = $(e.target),
+                hreftarget = '_self',
+                link = $(trigger).closest('.snap-resource').find('.snap-asset-link a'),
+                href = '';
+            if (link.length > 0) {
+                href = $(link).attr('href');
+            }
 
+            // Excludes any clicks in the actions menu, on links or forms.
+            if(!$(trigger).closest('form, a, input, label').length) {
+                if ($(this).hasClass('js-snap-media')) {
+                    lightboxMedia(this);
+                } else {
+                    if (href === '') {
+                        return;
+                    }
+                    if($(link).attr('target') === '_blank'){
+                        hreftarget = '_blank';
+                    }
+                    window.open(href, hreftarget);
+                }
+                e.preventDefault();
+            }
+        });
 
         // Onclick for toggle of state-visible of admin block and mobile menu.
         $(document).on("click", "#admin-menu-trigger, #toc-mobile-menu-toggle", function(e) {
@@ -768,6 +925,7 @@ function snapInit() {
               $(this).toggleClass('active');
               $('#page').toggleClass('offcanvas');
             }
+            $(href).attr('tabindex','0');
             $(href).toggleClass('state-visible').focus();
             e.preventDefault();
         });
@@ -800,7 +958,11 @@ function snapInit() {
                     $.ajax({
                         type: "GET",
                         async: true,
-                        url: M.cfg.wwwroot + '/theme/snap/rest.php?action=read_page&contextid=' + readmore.data('pagemodcontext')
+                        url: M.cfg.wwwroot + '/theme/snap/rest.php?action=read_page&contextid=' + readmore.data('pagemodcontext'),
+                        success: function (data) {
+                            // Update completion html for this page mod instance.
+                            updateModCompletion($pagemod, data.completionhtml);
+                        }
                     });
                 }
             } else {
@@ -815,7 +977,7 @@ function snapInit() {
                             $pagemodcontent.prepend(data.html);
                             $pagemodcontent.data('content-loaded', 1);
                             $pagemod.find('.contentafterlink .ajaxstatus').remove();
-                            revealPageMod($pagemod);
+                            revealPageMod($pagemod, data.completionhtml);
                         }
                     });
                 } else {
@@ -863,6 +1025,18 @@ function snapInit() {
                     }
                 },200); // wait 1/20th of a second before resizing
             })(resizestamp);
+        });
+
+        // Reveal more teachers.
+        $('#fixy-my-courses').on('click hover', '.courseinfo-teachers-more', null, function(e) {
+            e.preventDefault();
+            var nowhtml = $(this).html();
+            if (nowhtml.indexOf('+')>-1){
+                $(this).html(nowhtml.replace('+','-'));
+            } else {
+                $(this).html(nowhtml.replace('-','+'));
+            }
+            $(this).parents('.courseinfo').toggleClass('show-all');
         });
 
 
@@ -925,10 +1099,77 @@ function snapInit() {
             // Check if we are searching for a mod.
             checkHashScrollToModule();
         }
+        
+        // Book mod print button.
+        if($('#page-mod-book-view').length) {
+            var urlParams = getURLParams(location.href);
+            $('.block_book_toc').append('<p>' +
+                '<hr><a target="_blank" href="/mod/book/tool/print/index.php?id='+urlParams.id+'">' +
+                M.util.get_string('printbook', 'booktool_print') +
+            '</a></p>');
+        }
+
+        var mod_settings_id_re = /^page-mod-.*-mod$/; // e.g. #page-mod-resource-mod or #page-mod-forum-mod
+        var on_mod_settings = mod_settings_id_re.test($('body').attr('id')) && location.href.indexOf("modedit") > -1;
+        var on_course_settings = $('body').attr('id') === 'page-course-edit';
+        var on_section_settings = $('body').attr('id') === 'page-course-editsection';
+
+        if(on_mod_settings || on_course_settings || on_section_settings){
+          // Wrap advanced options in a div
+          var vital = [
+            ':first',
+            '#page-course-edit #id_descriptionhdr',
+            '#id_contentsection',
+            '#id_general + #id_general', // Turnitin duplicate ID bug.
+            '#id_content',
+            '#page-mod-choice-mod #id_optionhdr',
+            '#page-mod-assign-mod #id_availability',
+            '#page-mod-assign-mod #id_submissiontypes',
+            '#page-mod-workshop-mod #id_gradingsettings',
+            '#page-mod-choicegroup-mod #id_miscellaneoussettingshdr',
+            '#page-mod-choicegroup-mod #id_groups',
+            '#page-mod-scorm-mod #id_packagehdr',
+          ];
+          vital = vital.join();
+
+          $('#mform1 > fieldset').not(vital).wrapAll('<div class="snap-form-advanced col-md-4" />');
+
+          // Add expand all to advanced column
+          $(".snap-form-advanced").append($(".collapsible-actions"));
+
+          // Sanitize required input into a single fieldset
+          var main_form = $("#mform1 fieldset:first");
+          var append_to = $("#mform1 fieldset:first .fcontainer");
+
+          var required = $("#mform1 > fieldset").not("#mform1 > fieldset:first");
+          for(var i = 0; i < required.length; i++){
+            var content = $(required[i]).find('.fcontainer');
+            $(append_to).append(content);
+            $(required[i]).remove();
+          }
+          $(main_form).wrap('<div class="snap-form-required col-md-8" />');
+
+          var description = $("#mform1 fieldset:first .fitem_feditor:not(.required)");
+
+          if (on_mod_settings && description) {
+            var editingassignment = $('body').attr('id') == 'page-mod-assign-mod';
+            var editingchoice = $('body').attr('id') == 'page-mod-choice-mod';
+            var editingturnitin = $('body').attr('id') == 'page-mod-turnitintool-mod';
+            var editingworkshop = $('body').attr('id') == 'page-mod-workshop-mod';
+            if (!editingchoice  && !editingassignment && !editingturnitin && !editingworkshop) {
+                $(append_to).append(description);
+                $(append_to).append($('#fitem_id_showdescription'));
+            }
+          }
+
+          var savebuttons = $("#mform1 #fgroup_id_buttonar");
+          $(main_form).append(savebuttons);
+        }
     });
 
     $(window).on('load' , function() {
-
+        // Add a class to the body to show js is loaded.
+        $('body').addClass('snap-js-loaded');
         // Make video responsive.
         // Note, if you don't do this on load then FLV media gets wrong size.
         applyResponsiveVideo();

@@ -22,6 +22,14 @@
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+ // SL - dec 2015 - Make sure editing sessions are not carried over between courses.
+global $SESSION, $COURSE, $USER;
+if (!defined('AJAX_SCRIPT')) {
+    if (empty($SESSION->theme_snap_last_course) || $SESSION->theme_snap_last_course != $COURSE->id) {
+        $USER->editing = 0;
+        $SESSION->theme_snap_last_course = $COURSE->id;
+    }
+}
 
 // Setup debugging html.
 // This allows javascript to target debug messages and move them to footer.
@@ -34,7 +42,7 @@ $THEME->doctype = 'html5';
 $THEME->yuicssmodules = array('cssgrids'); // This is required for joule grader.
 $THEME->name = 'snap';
 $THEME->parents = array();
-$THEME->sheets = array('moodle', 'custom', 'lineicons');
+$THEME->sheets = array('moodle', 'custom');
 $THEME->supportscssoptimisation = false;
 
 $THEME->editor_sheets = array('editor');
@@ -50,7 +58,7 @@ $THEME->rendererfactory = 'theme_overridden_renderer_factory';
 $THEME->layouts = array(
     'format_flexpage' => array(
         'file' => 'flexpage.php',
-        'regions' => array('side-top', 'side-pre', 'main', 'side-post'),
+        'regions' => array('side-top', 'side-pre', 'main', 'side-main-box', 'side-post'),
         'defaultregion' => 'main',
         'options' => array('langmenu' => true),
     ),
@@ -79,8 +87,7 @@ $THEME->layouts = array(
     ),
     'coursecategory' => array(
         'file' => 'default.php',
-        'regions' => array('side-pre'),
-        'defaultregion' => 'side-pre',
+        'regions' => array(),
     ),
     // Part of course, typical for modules - default page layout if $cm specified in require_login().
     'incourse' => array(
@@ -115,7 +122,7 @@ $THEME->layouts = array(
         'defaultregion' => 'side-pre',
     ),
     'login' => array(
-        'file' => 'default.php',
+        'file' => 'login.php',
         'regions' => array(),
         'options' => array('langmenu' => true, 'nonavbar' => true),
     ),
@@ -175,6 +182,7 @@ $THEME->javascripts_footer = array(
     'bootstrap',
     'headroom',
     'snap',
+    'course',
     'modernizer',
     'jquery.placeholder'
 );

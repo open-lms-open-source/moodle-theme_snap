@@ -23,8 +23,11 @@
  */
 
 defined('MOODLE_INTERNAL') || die();
+include_once('general_section_trait.php');
 
 class toc_renderer extends core_renderer {
+
+    use general_section_trait;
 
     /**
      * table of contents link information
@@ -82,43 +85,11 @@ class toc_renderer extends core_renderer {
     }
 
     /**
-     * Section is conditional and is hidden
-     * @param section_info $section
-     */
-    protected function is_section_conditionally_hidden(section_info $section) {
-        $conditional = $this->is_section_conditional($section);
-        if (!$conditional) {
-            return false;
-        }
-        // OK this section is conditional, so is it also hidden when unavailable?
-        // We do this by checking availableinfo which will be empty if the section is hidden when conditions aren't met.
-        return empty($section->availableinfo);
-    }
-
-    /**
-     * Is a section conditional
-     *
-     * @author Guy Thomas
-     * @param section_info $section
-     * @param bool $checkdates
-     * @return bool
-     */
-    protected function is_section_conditional(section_info $section) {
-        // Are there any conditional fields populated?
-        if (   !empty($section->availableinfo)
-            || !empty(json_decode($section->availability)->c)) {
-            return true;
-        }
-        // OK - this isn't conditional.
-        return false;
-    }
-
-    /**
-     * Print  table of contents for a course
+     * Table of contents for a course
      *
      * @Author: Stuart Lamour
      */
-    public function print_course_toc() {
+    public function course_toc() {
 
         global $COURSE;
 
@@ -155,7 +126,7 @@ class toc_renderer extends core_renderer {
         '" aria-autocomplete="list" aria-haspopup="true" aria-activedescendant="toc-search-results" autocomplete="off" />
         '.$this->modulesearch().'
         </form>
-        <a id="toc-mobile-menu-toggle" title="'.$contents.'" href="#course-toc"><i class="icon icon-office-52"></i></a>
+        <a id="toc-mobile-menu-toggle" title="'.$contents.'" href="#course-toc"><i class="icon icon-close"></i></a>
         </div>';
 
         $listlarge = '';
@@ -188,15 +159,15 @@ class toc_renderer extends core_renderer {
 
             if ($canviewhidden) { // Teachers.
                 if ($conditional) {
-                    $linkinfo .= $this->toc_linkinfo(get_string('conditional', 'theme_snap'));
+                    $linkinfo .= "<span class='text text-danger'>".$this->toc_linkinfo(get_string('conditional', 'theme_snap'))."</span>";
                 }
                 if (!$thissection->visible) {
-                    $linkinfo .= $this->toc_linkinfo(get_string('notpublished', 'theme_snap'));
+                    $linkinfo .= "<span class='text text-warning'>".$this->toc_linkinfo(get_string('notpublished', 'theme_snap'))."</span>";
                 }
             } else { // Students.
                 if ($conditional && $thissection->availableinfo) {
                     // Conditional section, with text explaining conditions.
-                    $linkinfo .= $this->toc_linkinfo(get_string('conditional', 'theme_snap'));
+                    $linkinfo .= "<span class='text text-danger'>".$this->toc_linkinfo(get_string('conditional', 'theme_snap'))."</span>";
                 }
                 if ($conditional && !$thissection->uservisible && !$thissection->availableinfo) {
                     // Conditional section, totally hidden from user so skip.
@@ -206,7 +177,7 @@ class toc_renderer extends core_renderer {
                     // Hidden section collapsed, so show as text in TOC.
                     $outputlink = false;
                     // Top trump - if not clickable, replace linkinfo.
-                    $linkinfo = $this->toc_linkinfo(get_string('notavailable'));
+                    $linkinfo = "<br><span class='text text-warning'>".$this->toc_linkinfo(get_string('notavailable'))."</span>";
                 }
             }
             /*
@@ -238,7 +209,7 @@ class toc_renderer extends core_renderer {
             $highlight = '';
             if (course_get_format($course)->is_section_current($section)) {
                 $sectionclass = 'current';
-                $highlight = ' <small class=highlight-tag>'.get_string('current', 'theme_snap').'</small>';
+                $highlight = "<span class='text text-success'>".get_string('current', 'theme_snap')."</span>";
             }
 
             if ($outputlink) {
@@ -266,21 +237,28 @@ class toc_renderer extends core_renderer {
 
             $toc .= $li;
         }
+        $toc .= "</ol>";
+
+        $toc .= "<div class='toc-footer'>";
+
+        $context = context_course::instance($course->id);
+        if (has_capability('moodle/course:update', $context)) {
+            $addanewsection = get_string('addanewsection', 'theme_snap');
+            $addicon = '<img src="'.$this->pix_url('pencil', 'theme').'" class="svg-icon" alt="" />';
+            $toc .= "<a href='#snap-add-new-section'>$addicon$addanewsection</a>";
+        }
+
         $coursetools = get_string('coursetools', 'theme_snap');
-        $url = "#coursetools";
         if ($COURSE->format == 'folderview') {
             $url = new moodle_url('/course/view.php', ['id' => $course->id, 'section' => 0], 'coursetools');
         }
-        $link = html_writer::link($url, $coursetools);
-        $toc .= "<li>$link</li>";
+        $toolsicon = '<img src="'.$this->pix_url('tools', 'theme').'" class="svg-icon" alt="" />';
+        $toc .= "<a href='#coursetools'>$toolsicon$coursetools</a>";
 
-        $toc .= "</ol>";
-        $toc .= "</nav>";
+        $toc .= "</div></nav>";
         $o .= $toc;
         return $o;
     }
-
-
 
     /**
      * provide search function for all modules on page

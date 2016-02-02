@@ -39,7 +39,11 @@ module.exports = function(grunt) {
 
     decachephp += "define(\"CLI_SCRIPT\", true);";
     decachephp += "require(" + configfile  + ");";
-    decachephp += "theme_reset_all_caches();";
+
+    // The previously used theme_reset_all_caches() stopped working for us, we investigated but couldn't figure out why.
+    // Using purge_all_caches() is a bit of a nuclear option, as it clears more than we should need to
+    // but it gets the job done.
+    decachephp += "purge_all_caches();";
 
     grunt.initConfig({
         less: {
@@ -60,6 +64,33 @@ module.exports = function(grunt) {
                 files: {
                     "style/editor.css": "less/editor.less"
                 }
+            }
+        },
+        csslint: {
+            src: "style/moodle.css",
+            options: {
+                "adjoining-classes": false,
+                "box-sizing": false,
+                "box-model": false,
+                "overqualified-elements": false,
+                "bulletproof-font-face": false,
+                "compatible-vendor-prefixes": false,
+                "selector-max-approaching": false,
+                "fallback-colors": false,
+                "floats": false,
+                "ids": false,
+                "qualified-headings": false,
+                "selector-max": false,
+                "unique-headings": false,
+                "gradients": false,
+                "important": false,
+                "font-sizes": false,
+            }
+        },
+        lesslint: {
+            src: "less/moodle.less",
+            options: {
+                imports: "less/**/*.less"
             }
         },
         autoprefixer: {
@@ -95,6 +126,9 @@ module.exports = function(grunt) {
             }
         },
         jshint: {
+            options: {
+              jshintrc: true,
+            },
             files: ["javascript/*",
                 "!javascript/bootstrap.js",
                 "!javascript/headroom.js",
@@ -115,7 +149,9 @@ module.exports = function(grunt) {
     // Load contrib tasks.
     grunt.loadNpmTasks("grunt-autoprefixer");
     grunt.loadNpmTasks('grunt-contrib-jshint');
+    grunt.loadNpmTasks('grunt-contrib-csslint');
     grunt.loadNpmTasks("grunt-contrib-less");
+    grunt.loadNpmTasks("grunt-lesslint");
     grunt.loadNpmTasks("grunt-contrib-watch");
     grunt.loadNpmTasks("grunt-exec");
 

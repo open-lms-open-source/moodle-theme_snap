@@ -18,9 +18,11 @@ namespace theme_snap\controller;
 
 defined('MOODLE_INTERNAL') || die();
 
+require_once($CFG->libdir . '/completionlib.php');
+
 /**
- * Deadlines Controller.
- * Handles requests regarding user deadlines and other CTAs.
+ * Page module controller.
+ * Handles page module requests.
  *
  * @package   theme_snap
  * @copyright Copyright (c) 2015 Moodlerooms Inc. (http://www.moodlerooms.com)
@@ -71,6 +73,12 @@ class pagemod_controller extends controller_abstract {
         $event->add_record_snapshot('page', $page);
         $event->trigger();
 
+        // Update 'viewed' state if required by completion system.
+        $completion = new \completion_info($COURSE);
+        $completion->set_module_viewed($cm);
+        $renderer = $PAGE->get_renderer('core', 'course');
+        $page->completionhtml = $renderer->course_section_cm_completion($COURSE, $completion, $cm);
+
         return $page;
     }
 
@@ -83,7 +91,9 @@ class pagemod_controller extends controller_abstract {
         $page = $this->read_page();
 
         return json_encode(array(
-            'html' => $page->content
+            'html' => $page->content,
+            'cmid' => $page->cmid,
+            'completionhtml' => $page->completionhtml
         ));
     }
 
@@ -96,7 +106,9 @@ class pagemod_controller extends controller_abstract {
         $page = $this->read_page();
 
         return json_encode(array(
-            'id' => $page->id
+            'id' => $page->id,
+            'cmid' => $page->cmid,
+            'completionhtml' => $page->completionhtml
         ));
     }
 

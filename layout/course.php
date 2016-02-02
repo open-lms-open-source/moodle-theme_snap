@@ -44,8 +44,10 @@ $coursemainpage = strpos($PAGE->pagetype, 'course-view-') === 0;
 <?php
 echo $OUTPUT->page_heading();
 echo $OUTPUT->course_header();
+// Note, there is no blacklisting for the edit blocks button on course pages.
+echo $OUTPUT->page_heading_button();
 if ($coursemainpage) {
-    echo $OUTPUT->print_course_toc();
+    echo $OUTPUT->course_toc();
 }
 ?>
 </div>
@@ -54,8 +56,8 @@ if ($coursemainpage) {
 <section id="region-main">
 <?php
 echo $OUTPUT->course_content_header();
-// Note, there is no blacklisting for the edit blocks button on course pages.
-echo $OUTPUT->page_heading_button();
+$output = $PAGE->get_renderer('core', 'course');
+echo $output->snap_move_notice();
 echo $OUTPUT->main_content();
 echo $OUTPUT->course_content_footer();
 ?>
@@ -66,7 +68,7 @@ echo $OUTPUT->course_content_footer();
 include(__DIR__.'/moodle-blocks.php');
 
 if ($coursemainpage) {
-    $coursefooter = $OUTPUT->print_course_footer();
+    $coursefooter = $OUTPUT->course_footer();
     if (!empty($coursefooter)) : ?>
     <footer role=footer id=snap-course-footer class=row><?php echo $coursefooter ?></footer>
     <?php endif;

@@ -34,13 +34,17 @@ $inccoursefooterclass = ($PAGE->theme->settings->coursefootertoggle && strpos($P
 /* custom footer edit button - always shown */
 $footnote = empty($PAGE->theme->settings->footnote) ? '' : $PAGE->theme->settings->footnote;
 if ($this->page->user_is_editing() && $PAGE->pagetype == 'site-index') {
-    $footnote .= '<p class="text-right"><a class="btn btn-default btn-sm" href="'.$CFG->wwwroot.'/admin/settings.php?section=themesettingsnap#admin-footnote">'.get_string('editcustomfooter', 'theme_snap').'</a></p>';
+    $url = new moodle_url('/admin/settings.php', ['section' => 'themesettingsnap'], 'admin-footnote');
+    $link = html_writer::link($url, get_string('editcustomfooter', 'theme_snap'), ['class' => 'btn btn-default btn-sm']);
+    $footnote .= '<p class="text-right">'.$link.'</p>';
 }
 
 /* custom menu edit button - only shown if menu exists */
 $custommenu = $OUTPUT->custom_menu();
 if (!empty($custommenu) && $this->page->user_is_editing() && $PAGE->pagetype == 'site-index') {
-    $custommenu .= '<p class="text-right"><a class="btn btn-default btn-sm" href="'.$CFG->wwwroot.'/admin/settings.php?section=themesettings#id_s__custommenuitems">'.get_string('editcustommenu', 'theme_snap').'</a></p>';
+    $url = new moodle_url('/admin/settings.php', ['section' => 'themesettings'], 'id_s__custommenuitems');
+    $link = html_writer::link($url, get_string('editcustommenu', 'theme_snap'), ['class' => 'btn btn-default btn-sm']);
+    $custommenu .= '<p class="text-right">'.$link.'</p>';
 }
 
 
@@ -65,6 +69,16 @@ if (!empty($custommenu) && !empty($footnote)) {
     echo $custommenu;
     echo '</div></div>';
 }
+
+if (core_component::get_component_directory('local_mrooms') !== null) {
+    $langkey   = \local_mrooms\kb_link::resolve_language_key();
+    $builtwith = html_writer::link("https://$langkey.help.blackboard.com/Moodlerooms", get_string('joule', 'theme_snap'),
+        ['target' => '_blank', 'title' => get_string('joulehelpguides', 'theme_snap')]);
+} else {
+    $builtwith = get_string('joule', 'theme_snap');
+}
+
+$poweredbyrunby = get_string('poweredbyrunby', 'theme_snap', $builtwith);
 ?>
 
 <div id='mrooms-footer' class="helplink text-right">
@@ -74,8 +88,8 @@ if (!empty($custommenu) && !empty($footnote)) {
         echo $OUTPUT->page_doc_link();
     }
     ?>
-    <br/>Built with <a href="http://kb.moodlerooms.com/" target='_blank' title='Joule help guides'>Joule</a> from <a href="http://moodlerooms.com/" target='_blank'>Moodlerooms</a>, powered by <a href="http://www.moodle.com/" target='_blank'>Moodle</a>.
-<br>© Copyright 2015 Moodlerooms Inc, All Rights Reserved.</small>
+    <br/><?php echo $poweredbyrunby ?>
+<br>© Copyright 2016 Moodlerooms Inc, All Rights Reserved.</small>
 </div>
 <!-- close mrooms footer -->
 <div id="page-footer">

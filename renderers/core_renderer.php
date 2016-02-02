@@ -27,10 +27,11 @@ require_once('toc_renderer.php');
 require_once($CFG->libdir.'/coursecatlib.php');
 
 use theme_snap\local;
+use theme_snap\renderables\settings_link;
 
 class theme_snap_core_renderer extends toc_renderer {
 
-    public function print_course_footer() {
+    public function course_footer() {
         global $DB, $COURSE, $CFG, $PAGE;
 
         // Note: This check will be removed for Snap 2.7.
@@ -167,9 +168,9 @@ class theme_snap_core_renderer extends toc_renderer {
             'pluginfile.php', $coursecontext->id, 'user', 'profile', $user->id);
         $description = format_text($user->description, $user->descriptionformat);
 
-        return "<div class=snap-media-object>
+        return "<div class='snap-media-object'>
                 $picture
-                <div class=snap-media-body>
+                <div class='snap-media-body'>
                 $fullname
                 $description
                 </div>
@@ -220,70 +221,43 @@ class theme_snap_core_renderer extends toc_renderer {
     }
 
     /**
-     * Print  settings link
+     * Settings link for opening the Administration menu, only shown if needed.
+     * @param settings_link $settingslink
      *
      * @return string
      */
-    public function print_settings_link() {
-        global $DB, $PAGE, $COURSE;
-        if(!$PAGE->blocks->is_block_present('settings')) {
-          return '';
-        }
-        $isteacher = has_capability('moodle/course:manageactivities', $PAGE->context);
+    public function render_settings_link(settings_link $settingslink) {
 
-        $display = false;
-
-        $userid = optional_param('id', false, PARAM_INT);
-
-        if ($isteacher) {
-            $display = true;
-        } elseif (is_role_switched($COURSE->id)) {
-            // IF a teacher or admin switch their role to a student then they still need to be able to see the admin
-            // menu in order to be able to switch back to their original role!
-            $display = true;
-        } elseif ($PAGE->pagetype === 'user-profile') {
-            // The admin block needs to be shown on user profile pages as it contains the edit profile link.
-            $display = true;
-        } elseif ($PAGE->url->get_path() === '/user/view.php'
-            && $userid
-            && has_capability('moodle/user:viewdetails', CONTEXT_USER::instance($userid))
-        ) {
-            // Test to see if we have a mentor viewing this page, if so we need to display the admin block.
-            $display = true;
-        }
-
-        if (!$display) {
+        if (!$settingslink->output) {
             return '';
         }
-        if (!$instanceid = $DB->get_field('block_instances', 'id', array('blockname' => 'settings'))) {
-            $msg = "Moodle appears to be missing a settings block.
-            This shouldn't happen!
-            Please speak to your Moodle administrator";
-            throw new coding_exception($msg);
-        }
 
-        if (!has_capability('moodle/block:view', context_block::instance($instanceid))) {
-            return '';
-        }
-        // User can view admin block - return the link
-        $admin = get_string('admin', 'theme_snap');
-        echo '<a id="admin-menu-trigger" class="pull-right" href="#inst'.$instanceid.'" data-toggle="tooltip" data-placement="bottom" title="'.$admin.'" >
-        <span class="lines"></span></a>';
+        $burgericon = '<span class="lines"></span>';
+        $url = '#inst' . $settingslink->instanceid;
+        $attributes = array(
+            'id' => 'admin-menu-trigger',
+            'class' => 'pull-right',
+            'data-toggle' => 'tooltip',
+            'data-placement' => 'bottom',
+            'title' => get_string('admin', 'theme_snap')
+        );
+
+        return html_writer::link($url, $burgericon, $attributes);
     }
 
     /**
-     * Print link to browse all courses
+     * Link to browse all courses, shown to admins in the fixy menu.
      *
      * @return string
      */
-    public function print_view_all_courses() {
+    public function browse_all_courses_button() {
         global $CFG;
 
         $output = '';
         if (!empty($CFG->navshowallcourses) || has_capability('moodle/site:config', context_system::instance())) {
             $browse = get_string('browseallcourses', 'theme_snap');
-            $output = '<a class="btn btn-default moodle-browseallcourses" href="'.$CFG->wwwroot.
-                      '/course/index.php">'.$browse.'</a>';
+            $url = new moodle_url('/course/index.php');
+            $output = html_writer::link($url, $browse, ['class' => 'btn btn-default moodle-browseallcourses']);
         }
         return $output;
     }
@@ -321,7 +295,7 @@ class theme_snap_core_renderer extends toc_renderer {
     }
 
     /**
-     * Print message badge count.
+     * Badge counter for new messages.
      * @return string
      */
     protected function render_badge_count() {
@@ -366,7 +340,6 @@ class theme_snap_core_renderer extends toc_renderer {
             return '';
         }
 
-        $o = '';
         $messagesheading = get_string('messages', 'theme_snap');
         $o = '<h2>'.$messagesheading.'</h2>
                 <div id="snap-personal-menu-messages"></div>';
@@ -379,19 +352,64 @@ class theme_snap_core_renderer extends toc_renderer {
         return $o;
     }
 
+    /**
+     * Render forumposts.
+     *
+     * @return string
+     */
+    protected function render_forumposts() {
+        global $USER;
+        if (empty($this->page->theme->settings->forumpoststoggle)) {
+            return '';
+        }
+
+        $messagesheading = get_string('forumposts', 'theme_snap');
+
+        $o = '<h2>'.$messagesheading.'</h2>
+        <div id="snap-personal-menu-forumposts"></div>';
+        $messageurl = new moodle_url('/mod/forum/user.php', ['id' => $USER->id]);
+        $o .= '<div class="text-center">';
+        $o .= '<a class="btn btn-default" href="'.$messageurl.'">'.$messagesheading.'</a>';
+        $o .= '</div>';
+        return $o;
+    }
+
+    /**
+     * @param moodle_url|string $url
+     * @param string $image
+     * @param string $title
+     * @param array|string $meta
+     * @param string $content
+     * @param string $extraclasses
+     * @return string
+     */
     public function snap_media_object($url, $image, $title, $meta, $content, $extraclasses = '') {
-                    $formatoptions = new stdClass;
-                    $formatoptions->filter = false;
-                    $title = format_text($title, FORMAT_HTML, $formatoptions);
-                    $content = format_text($content, FORMAT_HTML, $formatoptions);
-                    return "<div class=\"snap-media-object$extraclasses\">"
-                        . "<a href=\"$url\">"
-                        . $image
-                        . '<div class="snap-media-body">'
-                        . "<h3>$title</h3>"
-                        . "<span class=\"snap-media-meta\">$meta</span>"
-                        . $content
-                        . '</div></a></div>';
+        $formatoptions = new stdClass;
+        $formatoptions->filter = false;
+        $title = format_text($title, FORMAT_HTML, $formatoptions);
+        $content = format_text($content, FORMAT_HTML, $formatoptions);
+
+        if (is_array($meta)) {
+            $metastr = '';
+            foreach ($meta as $metaitem) {
+                $metastr .= '<span class="snap-media-meta">'.
+                    format_text($metaitem, FORMAT_HTML, $formatoptions).'</span>';
+            }
+        } else {
+            $metastr = '<span class="snap-media-meta">'.
+                format_text($meta, FORMAT_HTML, $formatoptions).'</span>';
+        }
+
+        $linkcontent = $image
+                . '<div class="snap-media-body">'
+                . "<h3>$title</h3>"
+                . '<span class="snap-media-meta">'.$metastr.'</span>'
+                . $content
+                . '</div>';
+
+        $link = html_writer::link($url, $linkcontent);
+
+        return '<div class="snap-media-object '.$extraclasses.'">'.$link.'</div>';
     }
 
     /**
@@ -432,6 +450,11 @@ class theme_snap_core_renderer extends toc_renderer {
             }
         }
 
+        $forumposts = $this->render_forumposts();
+        if (!empty($forumposts)) {
+            $columns[] = $forumposts;
+        }
+
         $o = '<div class="row callstoaction">';
         if (empty($columns)) {
              return '';
@@ -448,6 +471,13 @@ class theme_snap_core_renderer extends toc_renderer {
               <section class="col-md-4">'.$columns[1].'</section>
               <section class="col-md-4">'.$columns[2].'</section>
             ';
+        } else if (count($columns) == 4) {
+            $o .= '
+              <section class="col-md-3">'.$columns[0].'</section>
+              <section class="col-md-3">'.$columns[1].'</section>
+              <section class="col-md-3">'.$columns[2].'</section>
+              <section class="col-md-3">'.$columns[3].'</section>
+            ';
         }
 
         $o .= '</div>';
@@ -461,8 +491,8 @@ class theme_snap_core_renderer extends toc_renderer {
      * @return bool
      */
     protected function feedback_toggle_enabled() {
-        if (property_exists($this->page->theme->settings,'feedbacktoggle')
-            && $this->page->theme->settings->feedbacktoggle== 0) {
+        if (property_exists($this->page->theme->settings, 'feedbacktoggle')
+            && $this->page->theme->settings->feedbacktoggle == 0) {
             return false;
         }
         return true;
@@ -479,15 +509,7 @@ class theme_snap_core_renderer extends toc_renderer {
             return '';
         }
 
-        $courses = enrol_get_all_users_courses($USER->id);
-
-        $capability = 'gradereport/grader:view';
-
-        foreach ($courses as $course) {
-            if (has_capability($capability, \context_course::instance($course->id), $USER->id)) {
-                $courseids[] = $course->id;
-            }
-        }
+        $courseids = local::gradeable_courseids($USER->id);
 
         if (empty($courseids)) {
             return '';
@@ -514,7 +536,15 @@ class theme_snap_core_renderer extends toc_renderer {
         $recentfeedback = get_string('recentfeedback', 'theme_snap');
         $o = "<h2>$recentfeedback</h2>";
 
-        $o .= '<div id="snap-personal-menu-graded"></div>';
+        $mygradesurl = new moodle_url('/grade/report/mygrades.php');
+        $mygradesbutton = html_writer::link($mygradesurl,
+                                            get_string('mygrades', 'theme_snap'),
+                                            ['class' => 'btn btn-default']);
+
+        $o .= '<div id="snap-personal-menu-graded"></div>
+               <div class="text-center">
+               '.$mygradesbutton.'
+               </div>';
 
         return $o;
     }
@@ -549,28 +579,36 @@ class theme_snap_core_renderer extends toc_renderer {
      * Print login button
      *
      */
-    public function print_login_button() {
-      global $CFG;
-      $loginurl = '#login';
-      if (!empty($CFG->alternateloginurl)) {
-              $loginurl = $CFG->wwwroot.'/login/index.php';
-      }
-      $login = get_string('login');
-      // This check is here for the front page login
-      if (!isloggedin() || isguestuser()) {
-        return "<a aria-haspopup='true' class='snap-login-button fixy-trigger'  href='".s($loginurl)."' >$login</a>";
-      }
+    public function login_button() {
+        global $CFG;
+
+        $output = '';
+        $loginurl = '#login';
+        if (!empty($CFG->alternateloginurl)) {
+            $loginurl = $CFG->wwwroot.'/login/index.php';
+        }
+        // This check is here for the front page login.
+        if (!isloggedin() || isguestuser()) {
+            $loginatts = [
+                'aria-haspopup' => 'true',
+                'class' => 'snap-login-button fixy-trigger'
+            ];
+            $output = html_writer::link($loginurl, get_string('login'), $loginatts);
+        }
+        return $output;
     }
     /**
-     * Print fixy (login or menu for signed in users)
+     * The "fixy" overlay that drops down when the link in the top right corner is clicked. It will say either
+     * "login" or "menu" (for signed in users).
      *
      */
-    public function print_fixed_menu() {
+    public function fixed_menu() {
         global $CFG, $USER, $PAGE, $DB;
 
         $logout = get_string('logout');
         $isguest = isguestuser();
 
+        $output = '';
         if (!isloggedin() || $isguest) {
             $login = get_string('login');
             $cancel = get_string('cancel');
@@ -603,10 +641,10 @@ class theme_snap_core_renderer extends toc_renderer {
                     $helpstr = "<p class='text-center'><a href='".s($CFG->wwwroot)."/login/index.php'>$help</a></p>";
                 }
             }
-            echo $this->print_login_button();
-            echo "<form class=fixy action='$CFG->wwwroot/login/'  method='post' id='login'>
+            $output .= $this->login_button();
+            $output .= "<form class=fixy action='$CFG->wwwroot/login/'  method='post' id='login'>
         <a id='fixy-close' class='pull-right snap-action-icon' href='#'>
-            <i class='icon icon-office-52'></i><small>$cancel</small>
+            <i class='icon icon-close'></i><small>$cancel</small>
         </a>
             <div class=fixy-inner>
             <legend>$loginform</legend>
@@ -630,6 +668,10 @@ class theme_snap_core_renderer extends toc_renderer {
 
             $courselist .= "<section id='fixy-my-courses'><div class='clearfix'><h2>".get_string('courses')."</h2>";
 
+            // Default text when no courses.
+            if (!$mycourses) {
+                $courselist .= "<p>".get_string('coursefixydefaulttext', 'theme_snap')."</p>";
+            }
             foreach ($mycourses as $c) {
                 $pubstatus = "";
                 if (!$c->visible) {
@@ -645,14 +687,17 @@ class theme_snap_core_renderer extends toc_renderer {
                 }
                 $dynamicinfo = '<div data-courseid="'.$c->id.'" class=dynamicinfo></div>';
 
-                $teachers = '';
-                $courseteachers = '';
-
                 $clist = new course_in_list($c);
                 $teachers = $clist->get_course_contacts();
 
+                $courseteachers = '';
+                $vcourseteachers = '';
+                $ecourseteachers = '';
+
                 if (!empty($teachers)) {
-                    $courseteachers = "<div class='sr-only'>".get_string('coursecontacts', 'theme_snap')."</div>";
+                    $avatars = [];
+                    $blankavatars = [];
+                    $courseteachers = '<h4 class="sr-only">'.get_string('coursecontacts', 'theme_snap').'</h4>';
                     // Get all teacher user records in one go.
                     $teacherids = array();
                     foreach ($teachers as $teacher) {
@@ -668,34 +713,66 @@ class theme_snap_core_renderer extends toc_renderer {
                         $userpicture->link = false;
                         $userpicture->size = 100;
                         $teacherpicture = $this->render($userpicture);
-                        $courseteachers .= $teacherpicture;
+
+                        if (stripos($teacherpicture, 'defaultuserpic') === false) {
+                            $avatars[] = $teacherpicture;
+                        } else {
+                            $blankavatars[] = $teacherpicture;
+                        }
                     }
+                    // Let's put the interesting avatars first!
+                    $avatars = array_merge($avatars, $blankavatars);
+                    // Limit visible to 4.
+                    if (count($avatars) > 4) {
+                        $hiddenavatars = array_slice($avatars, 4);
+                        $avatars = array_slice($avatars, 0, 4);
+                        $extralink = '<a class="courseinfo-teachers-more state-visible" href=#>+'.count($hiddenavatars).'</a>';
+                    } else {
+                        $hiddenavatars = [];
+                        $extralink = '';
+                    }
+                    $vcourseteachers = '<div class="courseinfo-teachers-visible">'.implode('', $avatars).$extralink.'</div>';
+                    $ecourseteachers = '<div class="courseinfo-teachers-extra">'.implode('', $hiddenavatars).'</div>';
                 }
 
                 $clink = '<div data-href="'.$CFG->wwwroot.'/course/view.php?id='.$c->id.
                     '" class="courseinfo" style="'.$courseimagecss.'">
+
                     <div class="courseinfo-body"><h3><a href="'.$CFG->wwwroot.'/course/view.php?id='.$c->id.'">'.
-                    format_string($c->fullname).'</a></h3>'.$dynamicinfo.$courseteachers.$pubstatus.'</div></div>';
+                    format_string($c->fullname).'</a></h3>'.$dynamicinfo.$pubstatus.'</div>
+                    <div class="courseinfo-teachers">'.$courseteachers.$vcourseteachers.$ecourseteachers.'</div>
+                    </div>';
                 $courselist .= $clink;
             }
             $courselist .= "</div>";
 
             $courselist .= '<div class="row fixy-browse-search-courses"><br>';
+
             if (has_capability('moodle/site:config', context_system::instance())) {
                 $courserenderer = $PAGE->get_renderer('core', 'course');
-                $courselist .= '<div class="col-md-6">';
-                $courselist .= $courserenderer->course_search_form(null, 'fixy');
-                $courselist .= '</div>';
+                $coursesearch = $courserenderer->course_search_form(null, 'fixy');
+                $courselist .= '<div class="col-md-6">'.$coursesearch.'</div>';
             }
-            $courselist .= '<div class="col-md-6">';
-            $courselist .= $this->print_view_all_courses();
-            $courselist .= '</div>';
+
+            $browseallcoursesbutton = $this->browse_all_courses_button();
+            $courselist .= '<div class="col-md-6">'.$browseallcoursesbutton.'</div>';
             $courselist .= '</div></section>'; // Close row.
 
             $menu = get_string('menu', 'theme_snap');
-            echo '<a href="#primary-nav" aria-haspopup="true" class="fixy-trigger" id="js-personal-menu-trigger" '.
-            'aria-controls="primary-nav" title="'.get_string('sitenavigation', 'theme_snap').'" data-toggle="tooltip" data-placement="bottom">'.$menu.$picture.
-            $this->render_badge_count(). '</a>';
+            $badge = $this->render_badge_count();
+            $linkcontent = $menu.$picture.$badge;
+            $attributes = array(
+                'aria-haspopup' => 'true',
+                'class' => 'fixy-trigger',
+                'id' => 'js-personal-menu-trigger',
+                'aria-controls' => 'primary-nav',
+                'title' => get_string('sitenavigation', 'theme_snap'),
+                'data-toggle' => 'tooltip',
+                'data-placement' => 'bottom',
+            );
+
+            $output .= html_writer::link("#primary-nav", $linkcontent, $attributes);
+
             $close = get_string('close', 'theme_snap');
             $viewyourprofile = get_string('viewyourprofile', 'theme_snap');
             $realuserinfo = '';
@@ -706,9 +783,9 @@ class theme_snap_core_renderer extends toc_renderer {
                 $realuserinfo = html_writer::span($via.' '.html_writer::span($fullname, 'real-user-name'), 'real-user-info');
             }
 
-            echo '<nav id="primary-nav" class="fixy toggle-details" tabindex="0">
+            $output .= '<nav id="primary-nav" class="fixy toggle-details" tabindex="0">
         <a id="fixy-close" class="pull-right snap-action-icon" href="#">
-            <i class="icon icon-office-52"></i><small>'.$close.'</small>
+            <i class="icon icon-close"></i><small>'.$close.'</small>
         </a>
         <div class=fixy-inner>
         <h1 id="fixy-profile-link">
@@ -722,30 +799,7 @@ class theme_snap_core_renderer extends toc_renderer {
         </div><!-- end fixy-inner -->
         </nav><!-- end primary nav -->';
         }
-
-    }
-
-
-
-    /*
-     * This renders a notification message.
-     * Uses bootstrap compatible html.
-     */
-    public function notification($message, $classes = 'notifyproblem') {
-        $classes = renderer_base::prepare_classes($classes);
-        $classes = str_replace(array(
-            'notifyproblem',
-            'notifysuccess',
-            'notifymessage',
-            'redirectmessage',
-        ), array(
-            'alert alert-danger',
-            'alert alert-success',
-            'alert alert-info',
-            'alert alert-block alert-info',
-        ), $classes);
-
-        return parent::notification($message, $classes);
+        return $output;
     }
 
     /**
@@ -772,7 +826,6 @@ class theme_snap_core_renderer extends toc_renderer {
         global $COURSE, $CFG;
 
         require_once($CFG->dirroot.'/course/lib.php');
-        $course = course_get_format($COURSE)->get_course();
 
         $breadcrumbs = '';
         $courseitem = null;
@@ -812,15 +865,16 @@ class theme_snap_core_renderer extends toc_renderer {
 
 
     public function page_heading($tag = 'h1') {
-        global $CFG;
         $heading = parent::page_heading($tag);
         if ($this->page->pagelayout == 'frontpage') {
             $heading .= '<p>' . format_string($this->page->theme->settings->subtitle) . '</p>';
         }
         if ($this->page->user_is_editing() && $this->page->pagelayout == 'frontpage') {
-            $heading .= '<a class="btn btn-default btn-sm" href="'.$CFG->wwwroot.
-                '/admin/settings.php?section=themesettingsnap#admin-fullname">'.
-                get_string('changefullname', 'theme_snap').'</a>';
+            $url = new moodle_url('/admin/settings.php', ['section' => 'themesettingsnap'], 'admin-fullname');
+            $link = html_writer::link($url,
+                            get_string('changefullname', 'theme_snap'),
+                            ['class' => 'btn btn-default btn-sm']);
+            $heading .= $link;
         }
         return $heading;
     }
@@ -880,8 +934,8 @@ class theme_snap_core_renderer extends toc_renderer {
     }
 
     /**
-     * Custom hook that requires a patch to /index.php
-     * for customized rendering of front page news.
+     * Alternative rendering of front page news, called from layout/faux_site_index.php which
+     * replaces the standard news output with this.
      *
      * @return string
      */
@@ -967,7 +1021,7 @@ class theme_snap_core_renderer extends toc_renderer {
     <div class="news-article-message" tabindex="-1">
         {$message}
         <div><hr><a class="snap-action-icon toggle" href="#">
-        <i class="icon icon-office-52"></i><small>{$close}</small></a></div>
+        <i class="icon icon-close"></i><small>{$close}</small></a></div>
     </div>
 </div>
 HTML;
@@ -1060,6 +1114,11 @@ HTML;
             $classes[] = 'folderview-single-section';
         }
 
+        if (defined('BEHAT_SITE_RUNNING')) {
+            // Required for revealing elements that behat requires in order to run.
+            $classes[] = 'behat-site-running';
+        }
+
         $classes = implode(' ', $classes);
         return $classes;
     }
@@ -1070,25 +1129,21 @@ HTML;
      * rather than inside them.
      */
     public function confirm($message, $continue, $cancel) {
-        if ($continue instanceof single_button) {
-            // OK.
-        } else if (is_string($continue)) {
+        if (is_string($continue)) {
             $continue = new single_button(new moodle_url($continue), get_string('continue'), 'post');
         } else if ($continue instanceof moodle_url) {
             $continue = new single_button($continue, get_string('continue'), 'post');
-        } else {
+        } else if (!$continue instanceof single_button) {
             throw new coding_exception(
                 'The continue param to $OUTPUT->confirm() must be either a URL (string/moodle_url) or a single_button instance.'
             );
         }
 
-        if ($cancel instanceof single_button) {
-            // OK.
-        } else if (is_string($cancel)) {
+        if (is_string($cancel)) {
             $cancel = new single_button(new moodle_url($cancel), get_string('cancel'), 'get');
         } else if ($cancel instanceof moodle_url) {
             $cancel = new single_button($cancel, get_string('cancel'), 'get');
-        } else {
+        } else if (!$cancel instanceof single_button) {
             throw new coding_exception(
                 'The cancel param to $OUTPUT->confirm() must be either a URL (string/moodle_url) or a single_button instance.'
             );
@@ -1129,12 +1184,15 @@ HTML;
     /**
      * Override parent to (optionally) remove the nav block.
      *
+     * Always show when Behat tests are running as it is used by core
+     * tests to navigate around the site.
+     *
      * @todo For 2.7, when this will no longer be an option, we should
      * automatically turn off the nav block to stop all this at the source.
      */
     public function blocks_for_region($region) {
         $blockcontents = $this->page->blocks->get_content_for_region($region, $this);
-        if (!empty($this->page->theme->settings->hidenavblock)) {
+        if (!empty($this->page->theme->settings->hidenavblock) && !defined('BEHAT_SITE_RUNNING')) {
             $blockcontents = array_filter($blockcontents, function ($bc) {
                 if (!$bc instanceof block_contents) {
                     return true;
@@ -1158,10 +1216,49 @@ HTML;
                     $output .= $this->block($bc, $region);
                     $lastblock = $bc->title;
             } else if ($bc instanceof block_move_target) {
-                $output .= $this->block_move_target($bc, $zones, $lastblock);
+                $output .= $this->block_move_target($bc, $zones, $lastblock, $region);
             } else {
                 throw new coding_exception('Unexpected type of thing (' . get_class($bc) . ') found in list of block contents.');
             }
+        }
+        return $output;
+    }
+
+    /**
+     * Render recent forum activity.
+     *
+     * @param array $activities
+     * @return string
+     */
+    public function recent_forum_activity(Array $activities) {
+        global $OUTPUT;
+        $output = '';
+        if (empty($activities)) {
+            return '';
+        }
+        foreach ($activities as $activity) {
+            if (!empty($activity->user)) {
+                $userpicture = new user_picture($activity->user);
+                $userpicture->link = false;
+                $userpicture->alttext = false;
+                $userpicture->size = 32;
+                $picture = $OUTPUT->render($userpicture);
+            } else {
+                $picture = '';
+            }
+
+            $url = new moodle_url(
+                    '/mod/'.$activity->type.'/discuss.php',
+                    ['d' => $activity->content->discussion],
+                    'p'.$activity->content->id
+            );
+            $fullname = fullname($activity->user);
+            $meta = [
+                $activity->courseshortname.' / '.$activity->forumname,
+                $this->friendly_datetime($activity->timestamp)
+            ];
+            $formattedsubject = format_text($activity->content->subject);
+            $output .= $this->snap_media_object($url, $picture, $fullname, $meta, $formattedsubject);
         }
         return $output;
     }

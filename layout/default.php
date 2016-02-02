@@ -40,14 +40,15 @@ include(__DIR__.'/header.php');
 <?php
 echo $OUTPUT->page_heading();
 echo $OUTPUT->course_header();
-if($PAGE->pagetype == 'site-index') {
-  echo $OUTPUT->print_login_button();
+if ($PAGE->pagetype == 'site-index') {
+    echo $OUTPUT->login_button();
 }
 ?>
 </div>
 <?php
 if ($this->page->user_is_editing() && $PAGE->pagetype == 'site-index') {
-    echo '<a class="btn btn-default btn-sm" href="'.$CFG->wwwroot.'/admin/settings.php?section=themesettingsnap#admin-poster">'.get_string('changecoverimage', 'theme_snap').'</a>';
+    $url = new moodle_url('/admin/settings.php', ['section' => 'themesettingsnap'], 'admin-poster');
+    echo html_writer::link($url, get_string('changecoverimage', 'theme_snap'), ['class' => 'btn btn-default btn-sm']);
 }
 ?>
 </div>
@@ -59,7 +60,7 @@ echo $OUTPUT->course_content_header();
 // Ensure edit blocks button is only shown for appropriate pages.
 $hasadminbutton = stripos($PAGE->button, '"adminedit"') || stripos($PAGE->button, '"edit"');
 
-if($hasadminbutton) {
+if ($hasadminbutton) {
     // List paths to black list for 'turn editting on' button here.
     // Note, to use regexs start and end with a pipe symbol - e.g. |^/report/| .
     $editbuttonblacklist = array(
@@ -83,17 +84,14 @@ if($hasadminbutton) {
     );
     $pagepath = $PAGE->url->get_path();
 
-    foreach ($editbuttonblacklist as $blacklisted){
-        if ($blacklisted[0] == '|'
-            && $blacklisted[strlen($blacklisted)-1] == '|'
-        ) {
+    foreach ($editbuttonblacklist as $blacklisted) {
+        if ($blacklisted[0] == '|' && $blacklisted[strlen($blacklisted) - 1] == '|') {
             // Use regex to determine blacklisting.
             if (preg_match ($blacklisted, $pagepath) === 1) {
                 // This url path is blacklisted, stop button from being displayed.
                 $PAGE->set_button('');
             }
-
-        } else if ($pagepath== $blacklisted){
+        } else if ($pagepath == $blacklisted) {
             // This url path is blacklisted, stop button from being displayed.
             $PAGE->set_button('');
         }
@@ -102,16 +100,30 @@ if($hasadminbutton) {
 
 echo $OUTPUT->page_heading_button();
 
-// On the front page, output some different content
-if($PAGE->pagetype == 'site-index') {
+// On the front page, output some different content.
+if ($PAGE->pagetype == 'site-index') {
     include(__DIR__.'/faux_site_index.php');
-}
-else {
+} else {
     echo $OUTPUT->main_content();
 }
 
 echo $OUTPUT->course_content_footer();
+
+if (stripos($PAGE->bodyclasses, 'format-singleactivity') !== false ) {
+    // Display course tools in single activity mode, but only on main page.
+    // Current test for main page is based on the pagetype matching a regex.
+    // Would be nice if there was something more direct to test.
+    if (preg_match('/^mod-.*-view$/', $PAGE->pagetype)) {
+        echo "<section id='coursetools' class='clearfix' tabindex='-1'>";
+        echo snap_shared::coursetools_svg_icons();
+        echo snap_shared::appendices();
+        echo "</section>";
+    }
+}
+
 ?>
+
+
 </section>
 
 <?php include(__DIR__.'/moodle-blocks.php'); ?>

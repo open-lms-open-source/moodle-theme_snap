@@ -173,6 +173,12 @@ echo $OUTPUT->doctype() ?>
         position:relative;
         overflow:show;
     }
+
+    .section .activity .actions .menu {
+        min-width: 16em;
+        max-width: 360px;
+    }
+
     .editing .block_flexpagemod_default li.activity .commands,
     .editing .block_flexpagemod_commands .commands {
         opacity:1 !important;
@@ -198,6 +204,10 @@ echo $OUTPUT->doctype() ?>
     }
     .toggle-display.textmenu:after{
         display:none;
+    }
+
+    .block-region {
+        min-height: 150px;
     }
 
     </style>
@@ -287,9 +297,10 @@ echo format_flexpage_next_button();
 
 
 <!-- actual main content -->
-<div id="region-main-box">
+<div id="region-main-box" class="block-region">
     <div class="region-content">
         <?php echo $OUTPUT->blocks('main'); ?>
+        <?php echo $OUTPUT->blocks('side-main-box'); ?>
     </div>
 </div>
 

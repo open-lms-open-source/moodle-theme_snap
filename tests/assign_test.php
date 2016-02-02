@@ -181,18 +181,102 @@ class theme_snap_assign_test extends mod_assign_base_testcase {
         $this->assertCount(2, $deadlines);
     }
 
-    public function test_participant_count() {
+    public function test_assign_overdue() {
+        global $PAGE;
+
+        // Create one month overdue assignment.
+        $this->setUser($this->teachers[0]);
+        $assign = $this->create_instance([
+            'duedate' => time() - 4 * DAYSECS,
+            'assignsubmission_onlinetext_enabled' => 1,
+            'name' => 'Overdue Assignment Test'
+        ]);
+
+        $this->setUser($this->students[0]);
+        $modinfo = get_fast_modinfo($this->course);
+        $assigncm = $modinfo->instances['assign'][$assign->get_instance()->id];
+        $meta = activity::assign_meta($assigncm);
+        $this->assertTrue($meta->overdue);
+
+        // Make sure a submission record does not exist.
+        $submission = activity::get_submission_row($this->course->id, $assigncm, 'submission', 'assignment');
+        $this->assertEmpty($submission);
+
+        // At one time there was an issue where the overdue status would flip after viewing the module.
+        // Make sure this isn't happening by viewing the assignment.
+        // Code taken from assign/tests/events_test.php test_submission_status_viewed.
+        $PAGE->set_url('/a_url');
+        // View the assignment.
+        $assign->view();
+        // Viewing an assignment creates a submission record with a status of new.
+        // Make sure a submission record now exists with a status of new.
+        $submission = activity::get_submission_row($this->course->id, $assigncm, 'submission', 'assignment');
+        $this->assertNotEmpty($submission);
+        $this->assertEquals(ASSIGN_SUBMISSION_STATUS_NEW, $submission->status);
+        $meta = activity::assign_meta($assigncm);
+        // Ensure that assignment is still classed as overdue.
+        $this->assertTrue($meta->overdue);
+    }
+
+    public function test_participant_count_all() {
         $courseid = $this->course->id;
         $actual = local::course_participant_count($courseid);
-        $expected = count($this->students);
+        $expected = count($this->students) + count($this->teachers) + count($this->editingteachers);
         $this->assertSame($expected, $actual);
 
         $this->create_extra_users();
         $actual = local::course_participant_count($courseid);
+        $expected = count($this->students) + count($this->teachers) + count($this->editingteachers);
+        $this->assertSame($expected, $actual);
+    }
+
+    public function test_participant_count_assign() {
+        $courseid = $this->course->id;
+        $actual = local::course_participant_count($courseid, 'assign');
+        $expected = count($this->students);
+        $this->assertSame($expected, $actual);
+
+        $this->create_extra_users();
+        $actual = local::course_participant_count($courseid, 'assign');
         $expected = count($this->students);
         $this->assertSame($expected, $actual);
     }
 
+    public function test_participant_count_quiz() {
+        $courseid = $this->course->id;
+        $actual = local::course_participant_count($courseid, 'quiz');
+        $expected = count($this->students);
+        $this->assertSame($expected, $actual);
+
+        $this->create_extra_users();
+        $actual = local::course_participant_count($courseid, 'quiz');
+        $expected = count($this->students);
+        $this->assertSame($expected, $actual);
+    }
+
+    public function test_participant_count_choice() {
+        $courseid = $this->course->id;
+        $actual = local::course_participant_count($courseid, 'choice');
+        $expected = count($this->students) + count($this->teachers) + count($this->editingteachers);
+        $this->assertSame($expected, $actual);
+
+        $this->create_extra_users();
+        $actual = local::course_participant_count($courseid, 'choice');
+        $expected = count($this->students) + count($this->teachers) + count($this->editingteachers);
+        $this->assertSame($expected, $actual);
+    }
+
+    public function test_participant_count_feedback() {
+        $courseid = $this->course->id;
+        $actual = local::course_participant_count($courseid, 'feedback');
+        $expected = count($this->students);
+        $this->assertSame($expected, $actual);
+
+        $this->create_extra_users();
+        $actual = local::course_participant_count($courseid, 'feedback');
+        $expected = count($this->students);
+        $this->assertSame($expected, $actual);
+    }
     public function test_no_course_completion_progress() {
         $actual = local::course_completion_progress($this->course);
         $this->assertNull($actual);

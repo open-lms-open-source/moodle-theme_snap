@@ -13,13 +13,10 @@
 /** Page layout CSS ends **/
 
 .dir-ltr,
-.mdl-left,
-.dir-rtl .mdl-right {
+.mdl-left {
     text-align: left;
 }
-.dir-rtl,
-.mdl-right,
-.dir-rtl .mdl-left {
+.mdl-right {
     text-align: right;
 }
 #add,
@@ -114,9 +111,6 @@ a.autolink.glossary:hover {
     display: none;
     text-align: right;
 }
-.dir-rtl .collapsible-actions {
-    text-align: left;
-}
 .jsenabled .collapsible-actions {
     display: block;
 }
@@ -124,13 +118,7 @@ a.autolink.glossary:hover {
     padding-left: 20px;
     background: url([[pix:t/collapsed]]) 2px center no-repeat;
 }
-.dir-rtl .collapsible-actions .collapseexpand {
-    padding-right: 20px;
-    padding-left: 0;
-    background: url([[pix:t/collapsed_rtl]]) right center no-repeat;
-}
-.collapsible-actions .collapse-all,
-.dir-rtl .collapsible-actions .collapse-all {
+.collapsible-actions .collapse-all {
     background-image: url([[pix:t/expanded]]);
 }
 .yui-overlay .yui-widget-bd {
@@ -185,10 +173,6 @@ img.icon {
     width: 16px;
     margin-right: 6px;
 }
-.dir-rtl img.icon {
-    margin-left: 6px;
-    margin-right: 0;
-}
 img.iconsmall {
     height: 12px;
     margin-right: 3px;
@@ -210,10 +194,6 @@ h6 img.iconhelp, h6 img.icon {
   vertical-align: middle;
   margin: 4px;
 }
-.dir-rtl img.iconhelp, .dir-rtl .helplink img {
-    margin-right: 3px;
-    margin-left: 0;
-}
 img.iconlarge {
     height: 24px;
     width: 24px;
@@ -224,10 +204,6 @@ img.iconsort {
     margin-left: .3em;
     margin-bottom: .15em;
 }
-.dir-rtl img.iconsort {
-    margin-right: .3em;
-    margin-left: 0;
-}
 img.icontoggle {
     height: 17px;
     vertical-align: middle;
@@ -237,11 +213,11 @@ img.iconkbhelp {
     height: 17px;
     width: 49px;
 }
-img.icon-pre, .dir-rtl img.icon-post {
+img.icon-pre {
     margin-right: 3px;
     margin-left: 0;
 }
-img.icon-post, .dir-rtl img.icon-pre {
+img.icon-post {
     margin-left: 3px;
     margin-right: 0;
 }
@@ -324,10 +300,6 @@ form.popupform div {
     font-weight: normal;
     font-size: 1em;
 }
-.dir-rtl .accesshide {
-    top: -30000px;
-    left: auto;
-}
 span.hide,
 div.hide {
     display: none;
@@ -407,9 +379,6 @@ a.skip:active {
 .groupmanagementtable #removeselect_wrapper label,
 .groupmanagementtable #addselect_wrapper label {
     font-weight: normal;
-}
-.dir-rtl .groupmanagementtable p {
-    text-align: right;
 }
 #group-usersummary {
     width: 14em;
@@ -514,9 +483,6 @@ table.mod_index {
     width: 20px;
     float: left;
 }
-.dir-rtl .comment-message .picture {
-    float: right;
-}
 .comment-message .text {
     margin: 0;
     padding: 0;
@@ -529,12 +495,6 @@ table.mod_index {
     position: absolute;
     top: 0;
     right: 0;
-    margin: .3em;
-}
-.dir-rtl .comment-delete {
-    position: absolute;
-    left: 0;
-    right: auto;
     margin: .3em;
 }
 .comment-delete-confirm {
@@ -793,105 +753,6 @@ body#page-lib-editor-tinymce-plugins-moodlemedia-preview {
         padding: 0px;
     }
 }
-/** Fix YUI 2 Treeview for Right to left languages **/
-.dir-rtl .ygtvtn,
-.dir-rtl .ygtvtm,
-.dir-rtl .ygtvtmh,
-.dir-rtl .ygtvtmhh,
-.dir-rtl .ygtvtp,
-.dir-rtl .ygtvtph,
-.dir-rtl .ygtvtphh,
-.dir-rtl .ygtvln,
-.dir-rtl .ygtvlm,
-.dir-rtl .ygtvlmh,
-.dir-rtl .ygtvlmhh,
-.dir-rtl .ygtvlp,
-.dir-rtl .ygtvlph,
-.dir-rtl .ygtvlphh,
-.dir-rtl .ygtvdepthcell,
-.dir-rtl .ygtvok,
-.dir-rtl .ygtvok:hover,
-.dir-rtl .ygtvcancel,
-.dir-rtl .ygtvcancel:hover {
-    width: 18px;
-    height: 22px;
-    background-image: url([[pix:theme|yui2-treeview-sprite-rtl]]);
-    background-repeat: no-repeat;
-    cursor: pointer;
-}
-.dir-rtl .ygtvtn {
-    background-position: 0 -5600px;
-}
-.dir-rtl .ygtvtm {
-    background-position: 0 -4000px;
-}
-.dir-rtl .ygtvtmh,
-.dir-rtl .ygtvtmhh {
-    background-position: 0 -4800px;
-}
-.dir-rtl .ygtvtp {
-    background-position: 0 -6400px;
-}
-.dir-rtl .ygtvtph,
-.dir-rtl .ygtvtphh {
-    background-position: 0 -7200px;
-}
-.dir-rtl .ygtvln {
-    background-position: 0 -1600px;
-}
-.dir-rtl .ygtvlm {
-    background-position: 0 0;
-}
-.dir-rtl .ygtvlmh,
-.dir-rtl .ygtvlmhh {
-    background-position: 0 -800px;
-}
-.dir-rtl .ygtvlp {
-    background-position: 0 -2400px;
-}
-.dir-rtl .ygtvlph,
-.dir-rtl .ygtvlphh {
-    background-position: 0 -3200px
-}
-.dir-rtl .ygtvdepthcell {
-    background-position: 0 -8000px;
-}
-.dir-rtl .ygtvok {
-    background-position: 0 -8800px;
-}
-.dir-rtl .ygtvok:hover {
-    background-position: 0 -8844px;
-}
-.dir-rtl .ygtvcancel {
-    background-position: 0 -8822px;
-}
-.dir-rtl .ygtvcancel:hover {
-    background-position: 0 -8866px;
-}
-.dir-rtl.yui-skin-sam .yui-panel .hd {
-    text-align: right;
-}
-.dir-rtl .yui-skin-sam .yui-layout .yui-layout-unit div.yui-layout-bd {
-    text-align: right;
-}
-/** Fix TinyMCE editor right to left **/
-.dir-rtl .clearlooks2.ie9 .mceAlert .mceMiddle span,.dir-rtl .clearlooks2 .mceConfirm .mceMiddle span {
-    top: 44px;
-}
-.dir-rtl .o2k7Skin table,
-.dir-rtl .o2k7Skin tbody,
-.dir-rtl .o2k7Skin a,
-.dir-rtl .o2k7Skin img,
-.dir-rtl .o2k7Skin tr,
-.dir-rtl .o2k7Skin div,
-.dir-rtl .o2k7Skin td,
-.dir-rtl .o2k7Skin iframe,
-.dir-rtl .o2k7Skin span,
-.dir-rtl .o2k7Skin *,
-.dir-rtl .o2k7Skin .mceText,
-.dir-rtl .o2k7Skin .mceListBox .mceText {
-    text-align: right;
-}
 
 .path-rating .ratingtable .c0 {
     width: 51px; // 35px image plus 8px cell padding each side.
@@ -991,10 +852,6 @@ body#page-lib-editor-tinymce-plugins-moodlemedia-preview {
     &:hover {
         background-position: center center;
     }
-}
-.dir-rtl .moodle-dialogue-base .moodle-dialogue-wrap .moodle-dialogue-hd .yui3-widget-buttons {
-    left: 0;
-    right: auto;
 }
 .moodle-dialogue-base .moodle-dialogue .moodle-dialogue-bd {
     .modal-body;
@@ -1123,11 +980,6 @@ body#page-lib-editor-tinymce-plugins-moodlemedia-preview {
     }
 }
 
-/* Question Bank - Question Chooser "Close" button */
-#page-question-edit.dir-rtl a.container-close {
-    right: auto;
-    left: 6px;
-}
 /**
 * Chooser Dialogues (moodle-core-chooserdialogue)
 *
@@ -1170,9 +1022,6 @@ body#page-lib-editor-tinymce-plugins-moodlemedia-preview {
     max-width: 50%;
     max-height: calc(~"100vh - 15em") !important;
 }
-.dir-rtl.jsenabled .choosercontainer #chooseform .alloptions {
-    max-width: 50%;
-}
 /* Settings for option rows and option subtypes */
 .choosercontainer #chooseform .moduletypetitle,
 .choosercontainer #chooseform .option,
@@ -1191,12 +1040,6 @@ body#page-lib-editor-tinymce-plugins-moodlemedia-preview {
 .choosercontainer #chooseform .nonoption .typename,
 .choosercontainer #chooseform .nonoption span.modicon img.icon {
     margin: 0 0 0 0.5em;
-}
-.dir-rtl .choosercontainer #chooseform .option .typename,
-.dir-rtl .choosercontainer #chooseform .option span.modicon img.icon,
-.dir-rtl .choosercontainer #chooseform .nonoption .typename,
-.dir-rtl .choosercontainer #chooseform .nonoption span.modicon img.icon {
-    margin: 0 0.5em 0 0;
 }
 .choosercontainer #chooseform .option span.modicon img.icon,
 .choosercontainer #chooseform .nonoption span.modicon img.icon {
@@ -1219,22 +1062,12 @@ body#page-lib-editor-tinymce-plugins-moodlemedia-preview {
     padding-top: 0.3em;
     padding-bottom: 0.1em;
 }
-.dir-rtl .choosercontainer #chooseform .nonoption {
-    padding-right: 2.7em;
-    padding-left: 0;
-}
 .choosercontainer #chooseform .subtype {
     margin-bottom: 0;
     padding: 0 1.6em 0 3.2em;
 }
-.dir-rtl .choosercontainer #chooseform .subtype {
-    padding: 0 3.2em 0 1.6em;
-}
 .choosercontainer #chooseform .subtype .typename {
     margin: 0 0 0 0.2em;
-}
-.dir-rtl .choosercontainer #chooseform .subtype .typename {
-    margin: 0 0.2em 0 0;
 }
 /* The instruction/help area */
 .jsenabled .choosercontainer #chooseform .instruction,
@@ -1250,12 +1083,6 @@ body#page-lib-editor-tinymce-plugins-moodlemedia-preview {
     background-color: @body-bg;
     overflow-x: hidden;
     overflow-y: auto;
-}
-.dir-rtl.jsenabled .choosercontainer #chooseform .instruction,
-.dir-rtl.jsenabled .choosercontainer #chooseform .typesummary {
-    left: 0;
-    right: 18.5em;
-    border-right: 1px solid grey;
 }
 /* Selected option settings */
 .jsenabled .choosercontainer #chooseform .instruction,
@@ -1337,9 +1164,6 @@ body.jsenabled .formlisting {
     float: left;
     margin-bottom: 10px;
 }
-.dir-rtl .breadcrumb-nav {
-    float: right;
-}
 .breadcrumb-button .singlebutton div {
     margin-right: 0;
 }
@@ -1403,20 +1227,6 @@ body.jsenabled .formlisting {
         }
         .menu-action-text  {
             display:inline;
-        }
-    }
-
-    &.dir-rtl {
-        .moodle-actionmenu[data-enhance] {
-            .toggle-display.textmenu {
-                margin-left: initial;
-                margin-right: 4px;
-
-                .caret {
-                    margin-left: initial;
-                    margin-right: 2px;
-                }
-            }
         }
     }
 }
@@ -1492,44 +1302,6 @@ body.jsenabled .formlisting {
     text-align: right;
 }
 
-.dir-rtl {
-    .moodle-actionmenu[data-enhanced].show  {
-        .menu {
-            text-align: right;
-            left: 0;
-            right: auto;
-            .iconsmall {
-                margin-right:0;
-                margin-left:8px;
-            }
-
-            /** bottom left of button **/
-            &.align-tl-bl {left: auto; right: 0;}
-            &.align-tr-bl {right: auto; left: 100%;}
-            &.align-bl-bl {left: auto; right: 0;}
-            &.align-br-bl {right: auto; left: 100%;}
-            /** bottom right of button **/
-            &.align-tl-br {left: auto; right: 100%;}
-            &.align-tr-br {right: auto; left: 0;}
-            &.align-bl-br {left: auto; right: 100%;}
-            &.align-br-br {right: auto; left: 0;}
-            /** top left of button **/
-            &.align-tl-tl {left: auto; right: 0;}
-            &.align-tr-tl {right: auto; left: 100%;}
-            &.align-bl-tl {left: auto; right: 0;}
-            &.align-br-tl {right: auto; left: 100%;}
-            /** top right of button **/
-            &.align-tl-tr {left: auto; right: 100%;}
-            &.align-tr-tr {right: auto; left: 0;}
-            &.align-bl-tr {left: auto; right: 100%;}
-            &.align-br-tr {right: auto; left: 0;}
-        }
-    }
-    .block .moodle-actionmenu {
-        text-align: right;
-    }
-}
-
 ul.dragdrop-keyboard-drag li {
     list-style-type: none;
 }
@@ -1545,4 +1317,8 @@ a.disabled {
     cursor: default;
     font-style: italic;
     color: #808080;
+}
+
+.progress .bar {
+    .progress-bar;
 }

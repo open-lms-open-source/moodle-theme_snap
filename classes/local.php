@@ -18,12 +18,14 @@
 namespace theme_snap;
 
 use html_writer;
+use theme_snap\user_forums;
 
 require_once($CFG->dirroot.'/calendar/lib.php');
 require_once($CFG->libdir.'/completionlib.php');
 require_once($CFG->libdir.'/coursecatlib.php');
 require_once($CFG->dirroot.'/grade/lib.php');
 require_once($CFG->dirroot.'/grade/report/user/lib.php');
+require_once($CFG->dirroot.'/mod/forum/lib.php');
 
 /**
  * General local snap functions.
@@ -132,8 +134,9 @@ class local {
         if ($visiblegradefound) {
             // Just output - feedback available.
             $url = new \moodle_url('/grade/report/user/index.php', array('id' => $course->id));
+            $feedbackstring = get_string('feedbackavailable', 'theme_snap');
             $feedbackhtml = \html_writer::link($url,
-                get_string('feedbackavailable', 'theme_snap'),
+                $feedbackstring,
                 array('class' => 'coursegrade')
             );
         }
@@ -186,7 +189,10 @@ class local {
         if ($trackcount > 0) {
             $progress = get_string('progresstotal', 'completion', $compobj);
             // TODO - we should be putting our HTML in a renderer.
-            $progressinfo = '<div class="completionstatus outoftotal">'.$progress.'</div>';
+            $progresspercent = ceil(($compcount/$trackcount)*100);
+            $progressinfo = '<div class="completionstatus outoftotal">'.$progress.'<span class="pull-right">'.$progresspercent.'%</span></div>
+            <div class="completion-line" style="width:'.$progresspercent.'%"></div>
+            ';
             $compobj->progresshtml = $progressinfo;
         }
 
@@ -389,25 +395,30 @@ class local {
      *
      * All deadlines from today, then any from the next 12 months up to the
      * max requested.
-     * @param integer $userid
+     * @param \stdClass|integer $userorid
      * @param integer $maxdeadlines
      * @return array
      */
-    public static function upcoming_deadlines($userid, $maxdeadlines = 5) {
+    public static function upcoming_deadlines($userorid, $maxdeadlines = 5) {
 
-        $courses = enrol_get_all_users_courses($userid);
+        $user = self::get_user($userorid);
+        if (!$user) {
+            return [];
+        }
+
+        $courses = enrol_get_users_courses($user->id, true);
 
         if (empty($courses)) {
-            return array();
+            return [];
         }
 
         $courseids = array_keys($courses);
 
-        $events = self::get_todays_deadlines($courseids);
+        $events = self::get_todays_deadlines($user, $courseids);
 
         if (count($events) < $maxdeadlines) {
             $maxaftercurrentday = $maxdeadlines - count($events);
-            $moreevents = self::get_upcoming_deadlines($courseids, $maxaftercurrentday);
+            $moreevents = self::get_upcoming_deadlines($user, $courseids, $maxaftercurrentday);
             $events = $events + $moreevents;
         }
         foreach ($events as $event) {
@@ -422,12 +433,13 @@ class local {
     /**
      * Return user's deadlines for today from the calendar.
      *
+     * @param \stdClass|int $userorid
      * @param array $courses ids of all user's courses.
      * @return array
      */
-    private static function get_todays_deadlines($courses) {
+    private static function get_todays_deadlines($userorid, $courses) {
         // Get all deadlines for today, assume that will never be higher than 100.
-        return self::get_upcoming_deadlines($courses, 100, true);
+        return self::get_upcoming_deadlines($userorid, $courses, 100, true);
     }
 
     /**
@@ -438,12 +450,21 @@ class local {
      *
      * Based on the calender function calendar_get_upcoming.
      *
+     * @param \stdClass|int $userorid
      * @param array $courses ids of all user's courses.
      * @param int $maxevents to return
      * @param bool $todayonly true if only the next 24 hours to be returned
      * @return array
      */
-    private static function get_upcoming_deadlines($courses, $maxevents, $todayonly=false) {
+    private static function get_upcoming_deadlines($userorid, $courses, $maxevents, $todayonly=false) {
+
+        $user = self::get_user($userorid);
+        if (!$user) {
+            return [];
+        }
+
+        // We need to do this so that we can calendar events and mod visibility for a specific user.
+        self::swap_global_user($user);
 
         $now = time();
 
@@ -487,12 +508,15 @@ class local {
             }
         }
 
+        self::swap_global_user(false);
+
         return $output;
     }
 
-
-
-
+    /**
+     * Get deadlines string.
+     * @return string
+     */
     public static function deadlines() {
         global $USER, $PAGE;
 
@@ -522,11 +546,18 @@ class local {
         return $o;
     }
 
-    public static function graded() {
+    /**
+     * Get items which have been graded.
+     *
+     * @param bool $onlyactive - only show grades in courses actively enrolled on if true.
+     * @return string
+     * @throws \coding_exception
+     */
+    public static function graded($onlyactive = true) {
         global $USER, $PAGE;
 
         $output = $PAGE->get_renderer('theme_snap', 'core', RENDERER_TARGET_GENERAL);
-        $grades = activity::events_graded();
+        $grades = activity::events_graded($onlyactive);
 
         $o = '';
         foreach ($grades as $grade) {
@@ -552,7 +583,7 @@ class local {
             $modname = get_string('modulename', 'mod_'.$cm->modname);
             $modimage = \html_writer::img($modimageurl, $modname);
 
-            $gradetitle = "<small>$course->fullname / </small> $cm->name";
+            $gradetitle = "<small>$course->fullname / </small>$cm->name";
 
             $releasedon = isset($grade->timemodified) ? $grade->timemodified : $grade->timecreated;
             $meta = get_string('released', 'theme_snap', $output->friendly_datetime($releasedon));
@@ -611,16 +642,33 @@ class local {
         return $out;
     }
 
-    public static function all_ungraded($userid) {
-
+    /**
+     * Get courses where user has the ability to view the gradebook.
+     *
+     * @param int $userid
+     * @return array
+     * @throws \coding_exception
+     */
+    public static function gradeable_courseids($userid) {
         $courses = enrol_get_all_users_courses($userid);
-
+        $courseids = [];
         $capability = 'gradereport/grader:view';
         foreach ($courses as $course) {
             if (has_capability($capability, \context_course::instance($course->id), $userid)) {
                 $courseids[] = $course->id;
             }
         }
+        return $courseids;
+    }
+
+    /**
+     * Get all ungraded items.
+     * @param int $userid
+     * @return array
+     */
+    public static function all_ungraded($userid) {
+        $courseids = self::gradeable_courseids($userid);
+
         if (empty($courseids)) {
             return array();
         }
@@ -859,7 +907,7 @@ class local {
 
         $coverurl = self::site_coverimage_url();
         if ($coverurl) {
-            $replacement = "#page-site-index #page-header {background-image: url($coverurl);}";
+            $replacement = "#page-site-index #page-header, #page-login-index #page {background-image: url($coverurl);}";
         }
 
         $css = str_replace($tag, $replacement, $css);
@@ -928,6 +976,7 @@ class local {
                   JOIN {page} p ON p.id = cm.instance
                 WHERE cm.id = ?";
         $page = $DB->get_record_sql($sql, array($mod->id));
+        $page->cmid = $mod->id;
 
         $context = \context_module::instance($mod->id);
         $formatoptions = new \stdClass;
@@ -951,5 +1000,305 @@ class local {
         $page->content = format_text($page->content, $page->contentformat, $formatoptions);
 
         return ($page);
+    }
+
+    /**
+     * Moodle does not provide a helper function to generate limit sql (it's baked into get_records_sql).
+     * This function is useful - e.g. improving performance of UNION statements.
+     * Note, it will return empty strings for unsupported databases.
+     *
+     * @param int $from
+     * @param int $to
+     *
+     * @return string
+     */
+    public static function limit_sql($from, $num) {
+        global $DB;
+        switch ($DB->get_dbfamily()) {
+            case 'mysql' :
+                $sql = "LIMIT $from, $num";
+                break;
+            case 'postgres' :
+                $sql = "LIMIT $num OFFSET $from";
+                break;
+            case 'mssql' :
+            case 'oracle' :
+            default :
+                // Not supported.
+                $sql = '';
+        }
+        return $sql;
+    }
+
+    /**
+     * Get user by id.
+     * @param $userorid
+     * @return bool|stdClass|int
+     */
+    public static function get_user($userorid = false) {
+        global $USER, $DB;
+
+        if ($userorid === false) {
+            return $USER;
+        }
+
+        if (is_object($userorid)) {
+            return $userorid;
+        } else if (is_number($userorid)) {
+            if (intval($userorid) === $USER->id) {
+                $user = $USER;
+            } else {
+                $user = $DB->get_record('user', ['id' => $userorid]);
+            }
+        } else {
+            throw new coding_exception('paramater $userorid must be an object or an integer or a numeric string');
+        }
+
+        return $user;
+    }
+
+    /**
+     * Some moodle functions don't work correctly with specific userids and this provides a hacky workaround.
+     *
+     * Temporarily swaps global USER variable.
+     * @param bool|stdClass|int $userorid
+     */
+    public static function swap_global_user($userorid = false) {
+        global $USER;
+        static $origuser = [];
+        $user = self::get_user($userorid);
+        if ($userorid !== false) {
+            $origuser[] = $USER;
+            $USER = $user;
+        } else {
+            $USER = array_pop($origuser);
+        }
+    }
+
+    /**
+     * Sort recent forum activity by timestamp.
+     *
+     * @param int $a
+     * @param int $b
+     * @return int
+     */
+    private static function sort_timestamp($a, $b) {
+        if ($a->timestamp === $b->timestamp) {
+            return 0;
+        }
+        return ($a->timestamp > $b->timestamp ? -1 : 1);
+    }
+
+    /**
+     * Get recent forum activity for all accessible forums across all courses.
+     * @param bool|int|stdclass $userorid
+     * @param int $limit
+     * @return array
+     * @throws \coding_exception
+     */
+    public static function recent_forum_activity($userorid = false, $limit = 10) {
+        global $CFG, $DB;
+
+        if (file_exists($CFG->dirroot.'/mod/hsuforum')) {
+            require_once($CFG->dirroot.'/mod/hsuforum/lib.php');
+        }
+
+        $user = self::get_user($userorid);
+        if (!$user) {
+            return [];
+        }
+
+        // Get all relevant forum ids for SQL in statement.
+        // We use the post limit for the number of forums we are interested in too -
+        // as they are ordered by most recent post.
+        $userforums = new user_forums($user, $limit);
+        $forumids = $userforums->forumids();
+        $forumidsallgroups = $userforums->forumidsallgroups();
+        $hsuforumids = $userforums->hsuforumids();
+        $hsuforumidsallgroups = $userforums->hsuforumidsallgroups();
+
+        if (empty($forumids) && empty($hsuforumids)) {
+            return [];
+        }
+
+        $sqls = [];
+        $params = [];
+
+        if ($limit > 0) {
+            $limitsql = self::limit_sql(0, $limit); // Note, this is here for performance optimisations only.
+        } else {
+            $limitsql = '';
+        }
+
+        if (!empty($forumids)) {
+            list($finsql, $finparams) = $DB->get_in_or_equal($forumids, SQL_PARAMS_NAMED, 'fina');
+            $params = $finparams;
+            $params = array_merge($params,
+                                 [
+                                     'sepgps1a' => SEPARATEGROUPS,
+                                     'sepgps2a' => SEPARATEGROUPS,
+                                     'user1a'   => $user->id,
+                                     'user2a'   => $user->id
+
+                                 ]
+            );
+
+            $fgpsql = '';
+            if (!empty($forumidsallgroups)) {
+                // Where a forum has a group mode of SEPARATEGROUPS we need a list of those forums where the current
+                // user has the ability to access all groups.
+                // This will be used in SQL later on to ensure they can see things in any groups.
+                list($fgpsql, $fgpparams) = $DB->get_in_or_equal($forumidsallgroups, SQL_PARAMS_NAMED, 'allgpsa');
+                $fgpsql = ' OR f1.id '.$fgpsql;
+                $params = array_merge($params, $fgpparams);
+            }
+
+            $params['user2a'] = $user->id;
+
+            $sqls[] = "(SELECT ".$DB->sql_concat("'F'", 'fp1.id')." AS id, 'forum' AS type, fp1.id AS postid,
+                               fd1.forum, fp1.discussion, fp1.parent, fp1.userid, fp1.modified, fp1.subject,
+                               fp1.message, 0 AS reveal, cm1.id AS cmid,
+                               0 AS forumanonymous, f1.course, f1.name AS forumname,
+                               u1.firstnamephonetic, u1.lastnamephonetic, u1.middlename, u1.alternatename, u1.firstname,
+                               u1.lastname, u1.picture, u1.imagealt, u1.email,
+                               c.shortname AS courseshortname, c.fullname AS coursefullname
+	                      FROM {forum_posts} fp1
+	                      JOIN {user} u1 ON u1.id = fp1.userid
+                          JOIN {forum_discussions} fd1 ON fd1.id = fp1.discussion
+	                      JOIN {forum} f1 ON f1.id = fd1.forum AND f1.id $finsql
+	                      JOIN {course_modules} cm1 ON cm1.instance = f1.id
+	                      JOIN {modules} m1 ON m1.name = 'forum' AND cm1.module = m1.id
+	                      JOIN {course} c ON c.id = f1.course
+	                      LEFT JOIN {groups_members} gm1
+                            ON cm1.groupmode = :sepgps1a
+                           AND gm1.groupid = fd1.groupid
+                           AND gm1.userid = :user1a
+	                     WHERE (cm1.groupmode <> :sepgps2a OR (gm1.userid IS NOT NULL $fgpsql))
+	                       AND fp1.userid <> :user2a
+                      ORDER BY fp1.modified DESC
+                               $limitsql
+                        )
+	                     ";
+            // TODO - when moodle gets private reply (anonymous) forums, we need to handle this here.
+        }
+
+        if (!empty($hsuforumids)) {
+            list($afinsql, $afinparams) = $DB->get_in_or_equal($hsuforumids, SQL_PARAMS_NAMED, 'finb');
+            $params = array_merge($params, $afinparams);
+            $params = array_merge($params,
+                                  [
+                                      'sepgps1b' => SEPARATEGROUPS,
+                                      'sepgps2b' => SEPARATEGROUPS,
+                                      'user1b'   => $user->id,
+                                      'user2b'   => $user->id,
+                                      'user3b'   => $user->id,
+                                      'user4b'   => $user->id
+                                  ]
+            );
+
+            $afgpsql = '';
+            if (!empty($hsuforumidsallgroups)) {
+                // Where a forum has a group mode of SEPARATEGROUPS we need a list of those forums where the current
+                // user has the ability to access all groups.
+                // This will be used in SQL later on to ensure they can see things in any groups.
+                list($afgpsql, $afgpparams) = $DB->get_in_or_equal($hsuforumidsallgroups, SQL_PARAMS_NAMED, 'allgpsb');
+                $afgpsql = ' OR f2.id '.$afgpsql;
+                $params = array_merge($params, $afgpparams);
+            }
+
+            $sqls[] = "(SELECT ".$DB->sql_concat("'A'", 'fp2.id')." AS id, 'hsuforum' AS type, fp2.id AS postid,
+                               fd2.forum, fp2.discussion, fp2.parent, fp2.userid, fp2.modified, fp2.subject,
+                               fp2.message, fp2.reveal, cm2.id AS cmid,
+                               f2.anonymous AS forumanonymous, f2.course, f2.name AS forumname,
+                               u2.firstnamephonetic, u2.lastnamephonetic, u2.middlename, u2.alternatename, u2.firstname,
+                               u2.lastname, u2.picture, u2.imagealt, u2.email,
+                               c.shortname AS courseshortname, c.fullname AS coursefullname
+                          FROM {hsuforum_posts} fp2
+                          JOIN {user} u2 ON u2.id = fp2.userid
+                          JOIN {hsuforum_discussions} fd2 ON fd2.id = fp2.discussion
+                          JOIN {hsuforum} f2 ON f2.id = fd2.forum AND f2.id $afinsql
+	                      JOIN {course_modules} cm2 ON cm2.instance = f2.id
+	                      JOIN {modules} m2 ON m2.name = 'hsuforum' AND cm2.module = m2.id
+	                      JOIN {course} c ON c.id = f2.course
+	                      LEFT JOIN {groups_members} gm2
+	                        ON cm2.groupmode = :sepgps1b
+	                       AND gm2.groupid = fd2.groupid
+	                       AND gm2.userid = :user1b
+                         WHERE (cm2.groupmode <> :sepgps2b OR (gm2.userid IS NOT NULL $afgpsql))
+                           AND (fp2.privatereply = 0 OR fp2.privatereply = :user2b OR fp2.userid = :user3b)
+                           AND fp2.userid <> :user4b
+                      ORDER BY fp2.modified DESC
+                               $limitsql
+                        )
+                         ";
+        }
+
+        $sql = '-- Snap sql'. "\n".implode ("\n".' UNION ALL '."\n", $sqls);
+        if (count($sqls)>1) {
+            $sql .= "\n".' ORDER BY modified DESC';
+        }
+        $posts = $DB->get_records_sql($sql, $params, 0, $limit);
+
+        $activities = [];
+
+        if (!empty($posts)) {
+            foreach ($posts as $post) {
+                $postuser = (object)[
+                    'id' => $post->userid,
+                    'firstnamephonetic' => $post->firstnamephonetic,
+                    'lastnamephonetic' => $post->lastnamephonetic,
+                    'middlename' => $post->middlename,
+                    'alternatename' => $post->alternatename,
+                    'firstname' => $post->firstname,
+                    'lastname' => $post->lastname,
+                    'picture' => $post->picture,
+                    'imagealt' => $post->imagealt,
+                    'email' => $post->email
+                ];
+
+                if ($post->type === 'hsuforum') {
+                    $postuser = hsuforum_anonymize_user($postuser, (object)array(
+                        'id' => $post->forum,
+                        'course' => $post->course,
+                        'anonymous' => $post->forumanonymous
+                    ), $post);
+                }
+
+                $activities[] = (object)[
+                    'type' => $post->type,
+                    'cmid' => $post->cmid,
+                    'name' => $post->subject,
+                    'courseshortname' => $post->courseshortname,
+                    'coursefullname' => $post->coursefullname,
+                    'forumname' => $post->forumname,
+                    'sectionnum' => null,
+                    'timestamp' => $post->modified,
+                    'content' => (object)[
+                        'id' => $post->postid,
+                        'discussion' => $post->discussion,
+                        'subject' => $post->subject,
+                        'parent' => $post->parent
+                    ],
+                    'user' => $postuser
+                ];
+            }
+        }
+
+        return $activities;
+    }
+
+    /**
+     * Render recent forum activity.
+     * @return string
+     */
+    public static function render_recent_forum_activity() {
+        global $PAGE;
+        $activities = self::recent_forum_activity();
+        if (empty($activities)) {
+            return '<p>' . get_string('noforumposts', 'theme_snap') . '</p>';
+        }
+        $activities = array_slice($activities, 0, 10);
+        $renderer = $PAGE->get_renderer('theme_snap', 'core', RENDERER_TARGET_GENERAL);
+        return $renderer->recent_forum_activity($activities);
     }
 }
