@@ -895,12 +895,19 @@ function snapInit() {
             var trigger = $(e.target),
                 hreftarget = '_self',
                 link = $(trigger).closest('.snap-resource').find('.snap-asset-link a'),
+                href = '';
+            if (link.length > 0) {
                 href = $(link).attr('href');
+            }
+
             // Excludes any clicks in the actions menu, on links or forms.
             if(!$(trigger).closest('form, a, input, label').length) {
                 if ($(this).hasClass('js-snap-media')) {
                     lightboxMedia(this);
                 } else {
+                    if (href === '') {
+                        return;
+                    }
                     if($(link).attr('target') === '_blank'){
                         hreftarget = '_blank';
                     }
