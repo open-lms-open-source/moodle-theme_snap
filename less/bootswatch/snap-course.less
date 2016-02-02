@@ -817,7 +817,7 @@ we do this by default in snap, so hide moodle version */
         }
         .snap-asset-actions {
             width: 250px;
-            label,
+            .snap-asset-move,
             .snap-edit-more-dropdown,
             > a {
                 width: 25%;
@@ -1173,12 +1173,12 @@ li.draft {
     left: 0;
     width: 250px;
     padding: 0 2%;
-    label input {
+    .js-snap-asset-move {
         .sr-only;
     }
     & > a,
     .snap-edit-more-dropdown,
-    label {
+    .snap-asset-move {
         display: inline-block !important;
         width: 25%;
         cursor: pointer;
