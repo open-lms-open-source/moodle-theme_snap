@@ -5273,6 +5273,10 @@ fieldset[disabled] a#page-site-index .section-modchooser-link .section-modchoose
   border: 1px solid #fff;
   margin: 0 auto 0.5em;
 }
+#login.fixy .fixy-inner {
+  max-width: 50.5em;
+  padding-top: 4%;
+}
 .fixy input::placeholder {
   color: #fff;
   letter-spacing: 0.1em;
@@ -5313,7 +5317,7 @@ fieldset[disabled] a#page-site-index .section-modchooser-link .section-modchoose
   opacity: 1;
 }
 .courseinfo.show-all .courseinfo-body {
-  bottom: -100%;
+  visibility: hidden;
 }
 .courseinfo .courseinfo-body {
   transition: all 0.4s ease-in-out;
