@@ -494,8 +494,11 @@ M.theme_snap.course = {
          * Override core functions.
          */
         var override_core = function() {
-            M.course.resource_toolbox.handle_resource_dim = function(button, activity, action) {
-                return (action === 'hide') ? 0: 1;
+            // Check M.course exists (doesn't exist in social format).
+            if (M.course && M.course.resource_toolbox) {
+                M.course.resource_toolbox.handle_resource_dim = function (button, activity, action) {
+                    return (action === 'hide') ? 0 : 1;
+                }
             }
         }
 

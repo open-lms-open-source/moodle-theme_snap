@@ -98,7 +98,6 @@ class behat_theme_snap extends behat_base {
         $file->attachFile($filepath);
     }
 
-
     /**
      * Bypass javascript attributed to link and just go straight to href.
      * @param string $link
@@ -112,7 +111,7 @@ class behat_theme_snap extends behat_base {
     }
 
     /**
-     * @param string $section
+     * @param int $section
      * @Given /^I go to course section (\d+)$/
      */
     public function i_go_to_course_section($section) {
@@ -161,6 +160,7 @@ class behat_theme_snap extends behat_base {
     public function i_log_out() {
         $givens = [
             'I follow "Menu"',
+            'I wait until ".btn.logout" "css_element" is visible',
             'I follow "Log out"',
             'I wait until the page is ready'
         ];
@@ -170,4 +170,36 @@ class behat_theme_snap extends behat_base {
         return $givens;
     }
 
+    /**
+     * @param string $coursename
+     * @Given /^I create a new section in course "(?P<coursename>(?:[^"]|\\")*)"$/
+     * @return array
+     */
+    public function i_create_a_new_section_in_course($coursename) {
+        $givens = [
+            'I open the personal menu',
+            'Snap I follow link "'.$coursename.'"',
+            'I follow "Create a new section"',
+            'I set the field "Title" to "New section title"',
+            'I click on "Create section" "button"'
+        ];
+        $givens = array_map(function($a) {return new Given($a);}, $givens);
+        return $givens;
+    }
+
+    /**
+     * I follow "Menu" fails randomly on occasions, this custom step is an alternative to resolve that issue.
+     * It also avoids a failure if the menu is already open.
+     * @Given /^I open the personal menu$/
+     */
+    public function i_open_the_personal_menu() {
+        $node = $this->find('css', '#primary-nav');
+        $this->getSession()->executeScript("window.scrollTo(0, 0);");
+        if (!$node->isVisible()) {
+            return [new Given('I click on "#js-personal-menu-trigger" "css_element"')];
+        } else {
+            // Already open.
+            return null;
+        }
+    }
 }
