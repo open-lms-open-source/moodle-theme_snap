@@ -77,14 +77,16 @@ a:visited,
 
 // Focus outline for keyboard tab users
 a,
-.dropdown-toggle,
-.snap-asset-move img {
+.dropdown-toggle{
     &:focus{
         outline: 3px solid @brand-primary;
     }
     &:active, &:hover {
         outline: 0;
     }
+}
+.js-snap-asset-move:focus + label .svg-icon {
+    outline: 3px solid @brand-primary;
 }
 
 a:focus,

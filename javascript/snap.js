@@ -437,7 +437,7 @@ function snapInit() {
     var updatePersonalMenu = function(){
         $('#primary-nav').focus();
         // primary nav showing so hide the other dom parts
-        $('#page, #moodle-footer').hide(0);
+        $('#page, #moodle-footer, #js-personal-menu-trigger, #logo, .skiplinks').hide(0);
 
         /**
          * Load ajax info into personal menu.
@@ -788,7 +788,7 @@ function snapInit() {
                     updatePersonalMenu();
                 }
                 else{
-                    $('#page, #moodle-footer').show(0);
+                    $('#page, #moodle-footer, #js-personal-menu-trigger, #logo, .skiplinks').css('display', '');
                     if(onCoursePage()) {
                         // In folder view we sometimes get here - how?
                         logmsg('show section', e.target);
@@ -932,7 +932,7 @@ function snapInit() {
 
         // Listen for close button to show page content.
         $(document).on("click", "#fixy-close", function() {
-            $('#page, #moodle-footer').show();
+            $('#page, #moodle-footer, #js-personal-menu-trigger, #logo, .skiplinks').css('display', '');
 
         });
 

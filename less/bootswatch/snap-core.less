@@ -740,7 +740,6 @@ input[type="text"]+input[type="submit"] {
 }
 
 .fixy-trigger {
-
     // border: 1px solid @brand-primary; customisable
     padding: 1em;
     position: relative;
@@ -896,15 +895,21 @@ input[type="text"]+input[type="submit"] {
 // -------------------------
 // gets a bit messey from here SHAME
 
-#login.fixy input:focus {
-    outline: none;
-    border-color: #fff;
+#login.fixy {
+    input:focus {
+        outline: none;
+        border-color: #fff;
+    }
+    input[type=submit] {
+        border: 1px solid #fff;
+        margin: 0 auto 0.5em;
+    }
+    .fixy-inner {
+        max-width: 50.5em;
+        padding-top: 4%;
+    }
 }
 
-#login.fixy input[type=submit] {
-    border: 1px solid #fff;
-    margin: 0 auto 0.5em;
-}
 
 .fixy input::placeholder {
     color: #fff;
@@ -950,14 +955,14 @@ input[type="text"]+input[type="submit"] {
         .alakazam();
         opacity: 0;
     }
-
+    // When showing more course contacts, hide courseinfo.
     &.show-all {
         .courseinfo-teachers-extra {
             opacity: 1;
         }
 
         .courseinfo-body {
-            bottom: -100%;
+            visibility: hidden;
         }
     }
 
@@ -4159,35 +4164,44 @@ table th img.iconhelp {
 // -------------------------
 // Reduce font sizes on small screen
 // -------------------------
-
 @media screen and (max-width: @screen-xs-max) {
     #region-main {
         font-size: 0.9em;
     }
-
-    h1 {
-        font-size: 2.2em;
+    
+    #fixy-profile-link .userpicture {
+        width: 1.5em;
     }
 
-    h2 {
-        font-size: 2em;
+    h1, 
+    .h1 {
+        font-size: 1.5em;
     }
 
-    h3,
-    .sectionname {
-        font-size: 1.8em;
-    }
-
-    h4 {
-        font-size: 1.6em;
-    }
-
-    h5 {
+    h2,
+    .h2 {
         font-size: 1.4em;
     }
 
-    h6 {
+    h3,
+    .h3,
+    .sectionname {
+        font-size: 1.3em;
+    }
+
+    h4,
+    .h4 {
         font-size: 1.2em;
+    }
+
+    h5,
+    .h5 {
+        font-size: 1.1em;
+    }
+
+    h6,
+    .h6 {
+        font-size: 1em;
     }
 }
 

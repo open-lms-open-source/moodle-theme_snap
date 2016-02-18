@@ -335,7 +335,12 @@ class snap_shared extends renderer_base {
           $module
         );
 
-        $pagehascoursecontent = ($PAGE->pagetype === 'site-index' || $PAGE->url->get_path() === '/course/view.php');
+        // Are we viewing /course/view.php - note, this is different from just checking the page type.
+        // We only ever want to load course.js when on site page or view.php - no point in loading it when on
+        // course settings page, etc.
+        $courseviewpage = stripos($PAGE->url->out_as_local_url(), '/course/view.php') === 0;
+        $pagehascoursecontent = ($PAGE->pagetype === 'site-index' || $courseviewpage);
+
         // Does the page have editable course content?
         if ($pagehascoursecontent && $PAGE->user_allowed_editing()) {
             $module = array(
