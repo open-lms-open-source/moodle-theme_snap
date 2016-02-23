@@ -18601,7 +18601,8 @@ li.draft .snap-assettype {
   width: 250px;
   padding: 0 2%;
 }
-.snap-asset-actions > a .snap-edit-more-dropdown,
+.snap-asset-actions > a,
+.snap-asset-actions .snap-edit-more-dropdown,
 .snap-asset-actions .snap-asset-move {
   display: inline-block !important;
   width: 25%;
