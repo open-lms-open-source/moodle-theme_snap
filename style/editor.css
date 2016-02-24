@@ -4619,7 +4619,6 @@ body.ie {
 }
 input:focus,
 textarea:focus,
-select:focus,
 a:focus {
   outline: 0;
 }
