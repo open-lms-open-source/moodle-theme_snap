@@ -540,11 +540,13 @@ class snap_shared extends renderer_base {
         <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#coursetools-gradbook"></use></svg>';
 
         if (self::gradebook_accessible($coursecontext)) {
-            // Gradebook.
-            $links[] = array(
+            // Gradebook. Can user view grades?
+            if (has_capability('gradereport/grader:view', $coursecontext)){
+                $links[] = array(
                 'link' => 'grade/index.php?id='.$COURSE->id,
-                'title' => $gradebookicon.get_string('gradebook', 'grades')
-            );
+                'title' => $gradebookicon.get_string('gradebook', 'grades')  
+                );
+            }
         }
 
         // Only show if joule grader is installed.
