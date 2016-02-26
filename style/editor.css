@@ -5051,6 +5051,12 @@ fieldset[disabled] a#page-site-index .section-modchooser-link .section-modchoose
   background-size: contain;
   margin: -0.75em 0;
 }
+@media screen and (max-width: 991px) {
+  #logo {
+    max-width: 20%;
+    margin: 3% 0;
+  }
+}
 .fixy .snap-media-object {
   padding: 0.5em 4%;
   margin-bottom: 0;

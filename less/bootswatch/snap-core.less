@@ -632,6 +632,13 @@ input[type="text"]+input[type="submit"] {
     background-size: contain;
     margin: -0.75em 0;
 }
+// Reduce logo size on smallscreen
+@media screen and (max-width: @screen-sm-max) {
+    #logo {
+        max-width: 20%;
+        vertical-align: bottom;
+    }
+}
 
 .fixy .snap-media-object {
     padding: 0.5em 4%;
