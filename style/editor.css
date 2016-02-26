@@ -195,7 +195,7 @@ body {
   font-family: "Roboto", "Fira Sans", "Segoe UI", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 18px;
   line-height: 1.6;
-  color: #666;
+  color: #565656;
   background-color: #fff;
 }
 input,
@@ -295,7 +295,7 @@ h6,
   font-family: "Roboto", "Fira Sans", "Segoe UI", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-weight: 300;
   line-height: 1.5;
-  color: #666;
+  color: #565656;
 }
 h1 small,
 h2 small,
@@ -2231,7 +2231,7 @@ a.thumbnail.active {
 }
 .thumbnail .caption {
   padding: 9px;
-  color: #666;
+  color: #565656;
 }
 .clearfix:before,
 .clearfix:after,
@@ -4423,7 +4423,7 @@ fieldset[disabled] a#changenumsections .reduce-sections {
   clear: both;
   border: 2px dashed #999;
   font-size: 2em;
-  font-color: #666;
+  font-color: #565656;
   font-family: "Roboto", "Fira Sans", "Segoe UI", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif;
   text-align: center;
   cursor: pointer;
@@ -4789,7 +4789,7 @@ select,
 .path-grade ul.nav.nav-tabs + ul.nav.nav-tabs li.disabled > a,
 .path-grade ul.nav.nav-tabs + ul.nav.nav-tabs li.disabled > a:hover,
 .path-grade ul.nav.nav-tabs + ul.nav.nav-tabs li.disabled > a:focus {
-  color: #666;
+  color: #565656;
   background-color: #fff;
   border: 1px solid #dadada;
   border-bottom-color: transparent;
@@ -6584,7 +6584,7 @@ ul.events-new + ul.events-underway {
 #dateselector-calendar-panel .yui3-calendar-nextmonth-day,
 #dateselector-calendar-panel .yui3-calendar-weekday {
   font-family: "Roboto", "Fira Sans", "Segoe UI", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif;
-  color: #666;
+  color: #565656;
   border-color: #fff;
   text-align: center;
   font-weight: normal;
@@ -7508,7 +7508,7 @@ fieldset[disabled] .gradingform_rubric.editor .addcriterion input.active {
   margin: 0.5em 1% 0.5em 0;
 }
 .path-blocks-reports #course-search-input {
-  color: #666;
+  color: #565656;
   background-color: #fff;
   background-image: none;
   border: 1px solid #dadada;
@@ -7865,7 +7865,7 @@ body.hascontinuecancel.path-site #page {
 #page-user-policy #notice,
 #page-blocks-conduit-view #notice.snap-continue-cancel,
 #page-mod-quiz-edit div.container #notice.snap-continue-cancel {
-  color: #666;
+  color: #565656;
   background-color: #fff;
   font-size: 18px;
   left: 0;
@@ -7919,7 +7919,7 @@ body.hascontinuecancel.path-site #page {
   letter-spacing: 0.1em;
   text-transform: uppercase;
   font-style: normal;
-  color: #666;
+  color: #565656;
 }
 .nav_icon {
   padding: 0.3em;
@@ -8077,7 +8077,7 @@ body.hascontinuecancel.path-site #page {
   border-top: 1px solid #ccc;
   clear: both;
   color: #dadada;
-  background-color: #666;
+  background-color: #565656;
   margin-top: 0;
 }
 #moodle-footer h1,
@@ -8334,7 +8334,7 @@ table th img.iconhelp {
   }
 }
 .label:not(.activity) font {
-  color: #666;
+  color: #565656;
   font-weight: 300;
 }
 .label:not(.activity) b font {
@@ -8385,11 +8385,11 @@ div.editor_atto_toolbar div.atto_group {
 }
 .atto_equation_library button {
   background-color: #fff;
-  color: #666;
+  color: #565656;
 }
 .atto_equation_library button:hover {
   background-color: #f2f2f2;
-  color: #666;
+  color: #565656;
 }
 .atto_charmap_selector button {
   width: 40px;
@@ -8506,7 +8506,7 @@ body:not(.behat-site-running) #id_general .ftoggler {
   font-family: "Roboto", "Fira Sans", "Segoe UI", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-weight: 300;
   line-height: 1.5;
-  color: #666;
+  color: #565656;
   margin-top: 14px;
   margin-bottom: 14px;
   font-size: 24px;
@@ -8584,7 +8584,7 @@ fieldset[disabled] #id_cancel:focus {
     font-family: "Roboto", "Fira Sans", "Segoe UI", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-weight: 300;
     line-height: 1.5;
-    color: #666;
+    color: #565656;
     margin-top: 14px;
     margin-bottom: 14px;
     font-size: 36px;
