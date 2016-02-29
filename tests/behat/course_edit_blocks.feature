@@ -34,22 +34,19 @@ Feature: When the moodle theme is set to Snap, teachers only see block edit cont
     And the following "users" exist:
       | username | firstname | lastname | email |
       | teacher1 | Teacher   | 1        | teacher1@example.com |
-      | student1 | Student   | 1        | student1@example.com |
     And the following "course enrolments" exist:
-      | user     | course | role |
+      | user     | course | role           |
+      | admin    | C1     | editingteacher |
       | teacher1 | C1     | editingteacher |
-      | student1 | C1     | student |
       | teacher1 | C2     | editingteacher |
-      | student1 | C2     | student |
       | teacher1 | C3     | editingteacher |
-      | student1 | C3     | student |
-    And the following "activities" exist:
-      | activity | course | idnumber | name             | intro                         | section |
-      | assign   | C1     | assign1  | Test assignment1 | Test assignment description 1 | 1       |
 
   @javascript
   Scenario: In read mode on a topics course, teacher clicks edit blocks and can edit blocks.
-    Given I log in with snap as "teacher1"
+    Given the following "activities" exist:
+      | activity | course | idnumber | name             | intro                         | section |
+      | assign   | C1     | assign1  | Test assignment1 | Test assignment description 1 | 1       |
+    And I log in with snap as "teacher1"
     And I follow "Menu"
     And I follow "Course 1"
     And I wait until the page is ready
@@ -62,6 +59,37 @@ Feature: When the moodle theme is set to Snap, teachers only see block edit cont
     And I wait until the page is ready
     And I should not see "Test assignment1" in the "#section-1" "css_element"
     And ".block_news_items a.toggle-display" "css_element" should exist
+    # edit mode does not persist between courses
+    Then I follow "Menu"
+    And I follow "Course 2"
+    And I wait until the page is ready
+    And I follow "Course Tools"
+    And I should see "Edit course blocks"
+
+
+  @javascript
+  Scenario: If edit mode is on for a course, it should not carry over to site homepage
+    Given I log in with snap as "admin"
+    And I follow "Menu"
+    And I follow "Course 1"
+    And I wait until the page is ready
+    And I follow "Course Tools"
+    And I follow "Edit course blocks"
+    When I am on site homepage
+    Then I should not see "Change site name"
+    Then I should not see "Add a block"
+
+  @javascript
+  Scenario: If edit mode is on for site homepage, it should not carry over to courses
+    Given I log in with snap as "admin"
+    And I am on site homepage
+    And I click on "#admin-menu-trigger" "css_element"
+    And I follow "Turn editing on"
+    When I follow "Menu"
+    And I follow "Course 1"
+    And I wait until the page is ready
+    And I follow "Course Tools"
+    Then I should see "Edit course blocks"
 
   @javascript
   Scenario: In edit mode on a folderview course, teacher can see sections whilst editting on.
