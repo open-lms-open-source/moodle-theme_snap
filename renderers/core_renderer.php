@@ -28,6 +28,7 @@ require_once($CFG->libdir.'/coursecatlib.php');
 
 use theme_snap\local;
 use theme_snap\renderables\settings_link;
+use theme_snap\renderables\bb_dashboard_link;
 
 class theme_snap_core_renderer extends toc_renderer {
 
@@ -243,6 +244,25 @@ class theme_snap_core_renderer extends toc_renderer {
         );
 
         return html_writer::link($url, $burgericon, $attributes);
+    }
+
+    /**
+     * Settings link for opening the Administration menu, only shown if needed.
+     * @param bb_dashboard_link $bblink
+     *
+     * @return string
+     */
+    public function render_bb_dashboard_link(bb_dashboard_link $bblink) {
+        if (!$bblink->output) {
+            return '';
+        }
+        $url = new \moodle_url('/local/geniusws/login.php');
+
+        $linkcontent = $this->render(new pix_icon('sso', get_string('geniussso', 'local_geniusws'), 'local_geniusws')).
+                get_string('dashboard', 'local_geniusws');
+        $html = html_writer::link($url, $linkcontent, ['class' => 'bb_dashboard_link']);
+
+        return $html;
     }
 
     /**
