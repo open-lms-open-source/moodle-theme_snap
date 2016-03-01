@@ -868,8 +868,14 @@ class theme_snap_core_renderer extends toc_renderer {
 
     public function page_heading($tag = 'h1') {
         $heading = parent::page_heading($tag);
+        
+        // For the user profile page message button we need to call 2.9 content_header.
+        if($this->page->pagelayout == 'mypublic') {
+            $heading = parent::context_header();
+        }
+        // For the front page we add the site strapline.
         if ($this->page->pagelayout == 'frontpage') {
-            $heading .= '<p>' . format_string($this->page->theme->settings->subtitle) . '</p>';
+            $heading .= '<p class="snap-site-description">' . format_string($this->page->theme->settings->subtitle) . '</p>';
         }
         if ($this->page->user_is_editing() && $this->page->pagelayout == 'frontpage') {
             $url = new moodle_url('/admin/settings.php', ['section' => 'themesettingsnap'], 'admin-fullname');
