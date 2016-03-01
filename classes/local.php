@@ -1301,4 +1301,18 @@ class local {
         $renderer = $PAGE->get_renderer('theme_snap', 'core', RENDERER_TARGET_GENERAL);
         return $renderer->recent_forum_activity($activities);
     }
+
+    /**
+     * Get the local url path for current page.
+     * NOTE: This is not a duplciate of $PAGE->get_path();
+     * $PAGE->get_path() includes the moodle subpath if accessed via sub path of url, which is not what we want.
+     * e.g. - $PAGE->get_path on http://testing.local/apps/moodle/user/profile.php would return
+     * apps/moodle/user/profile.php but we just want /user/profile.php
+     * @return mixed
+     * @throws \coding_exception
+     */
+    public static function current_url_path() {
+        global $PAGE;
+        return parse_url($PAGE->url->out_as_local_url())['path'];
+    }
 }

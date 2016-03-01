@@ -22,6 +22,9 @@
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 include(__DIR__.'/header.php');
+
+use theme_snap\local;
+
 ?>
 <!-- moodle js hooks -->
 <div id="page">
@@ -82,7 +85,7 @@ if ($hasadminbutton) {
         '/mnet/service/enrol/index.php',
         '/local/mrooms/view.php'
     );
-    $pagepath = $PAGE->url->get_path();
+    $pagepath = local::current_url_path();
 
     foreach ($editbuttonblacklist as $blacklisted) {
         if ($blacklisted[0] == '|' && $blacklisted[strlen($blacklisted) - 1] == '|') {
