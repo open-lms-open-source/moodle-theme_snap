@@ -1057,6 +1057,43 @@ function snapInit() {
             }
             $(this).parents('.courseinfo').toggleClass('show-all');
         });
+        
+        
+        // Personal menu small screen behaviour.
+        $(document).on("click", '#fixy-mobile-menu a', function(e) {
+                var href = this.getAttribute('href');
+                var sections = $("#fixy-content section");
+                var sectionWidth = $(sections).outerWidth();
+                // Num of sections * width of section ...
+                var sectionsWidth = sections.length * sectionWidth;
+                var section = $(href);
+                var targetSection = $("#fixy-content section > div").index(section);
+                var position = sectionWidth*targetSection;
+                
+                
+                // Course lists is at position 0.
+                if (href == '#fixy-my-courses'){
+                    position = 0;
+                }
+                
+                // Set the window height.
+                var sectionHeight = $(href).outerHeight() + 100;
+                var winHeight = $(window).height();
+                if(sectionHeight <  winHeight) {
+                    sectionHeight = winHeight;
+                }
+                
+                $('#fixy-content').animate({
+                    left: '-'+position+'px',
+                    height: sectionHeight+'px'
+                }, "fast", "swing" , 
+                function(){
+                    // Animation complete.
+                    // TODO - add tab index & focus 
+                    
+                });
+                e.preventDefault();
+        });
 
 
         // Bootstrap js elements

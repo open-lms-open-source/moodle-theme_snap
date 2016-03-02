@@ -18032,30 +18032,6 @@ we do this by default in snap, so hide moodle version */
   color: white;
   text-transform: uppercase;
 }
-.snap-groupinglabel,
-.snap-unread-marker,
-.sectiontag {
-  font-family: "Roboto", "Fira Sans", "Segoe UI", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif;
-  display: inline-block;
-  background-color: #F98012;
-  color: #fff;
-  padding: 0 2% 0 1%;
-  margin: 1px 1em;
-  text-transform: lowercase;
-  position: relative;
-  border-radius: 0 2px 2px 0;
-  line-height: 1.75;
-}
-.snap-groupinglabel:before,
-.snap-unread-marker:before,
-.sectiontag:before {
-  content: "";
-  position: absolute;
-  right: 100%;
-  top: 0;
-  border: 0.85em solid transparent;
-  border-right: 0.89em solid #F98012;
-}
 .sectiontag {
   margin-left: 1.4em;
 }
@@ -19621,6 +19597,7 @@ html {
   -webkit-box-sizing: border-box;
      -moz-box-sizing: border-box;
           box-sizing: border-box;
+  font-size: 18px;
 }
 *,
 *:before,
@@ -19660,7 +19637,7 @@ input:disabled,
 input:disabled + label {
   opacity: 0.5;
 }
-:disabled {
+::disabled {
   cursor: not-allowed;
 }
 textarea {
@@ -19697,6 +19674,10 @@ img[style*="float: left"],
 img[style*="float: right"],
 img[style*="float:right"] {
   margin: 2%;
+}
+small,
+.small {
+  font-size: small !important;
 }
 @media screen and (max-width: 768px) {
   img[style*="float:left"],
@@ -20090,18 +20071,9 @@ fieldset[disabled] a#page-site-index .section-modchooser-link .section-modchoose
     vertical-align: bottom;
   }
 }
-.fixy .snap-media-object {
-  padding: 0.5em 4%;
-  margin-bottom: 0;
-  -webkit-transition: all 0.4s ease-in-out;
-          transition: all 0.4s ease-in-out;
-}
-.fixy .snap-media-object > a:focus,
-.fixy .snap-media-object:hover {
-  background-color: rgba(0, 0, 0, 0.07);
-}
 .snap-media-object {
-  margin-bottom: 1em;
+  font-weight: 500;
+  padding: 0.5em 0;
 }
 .snap-media-object:before,
 .snap-media-object:after {
@@ -20126,8 +20098,8 @@ fieldset[disabled] a#page-site-index .section-modchooser-link .section-modchoose
 .snap-media-object > img {
   float: left;
   display: block;
-  margin-right: 4%;
-  width: 45px;
+  width: 36px;
+  margin: 0.5em 1em 0 0.5em;
   height: auto;
   vertical-align: baseline;
 }
@@ -20138,6 +20110,7 @@ fieldset[disabled] a#page-site-index .section-modchooser-link .section-modchoose
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  margin: 0;
 }
 .snap-media-object .snap-media-body .text_to_html {
   line-height: 1.3em;
@@ -20147,331 +20120,31 @@ fieldset[disabled] a#page-site-index .section-modchooser-link .section-modchoose
   text-decoration: underline;
 }
 .snap-media-object .snap-media-body .label {
-  font-size: 0.7em;
+  font-size: small;
 }
-.snap-media-object h3,
-.snap-media-object h3 small {
+.snap-media-object h3 {
   color: inherit;
-  font-size: 1em;
+  font-size: 1rem;
+  font-weight: 500;
   margin: 0;
 }
 .snap-media-object h3 small {
-  opacity: 0.75;
+  color: inherit;
+  opacity: 0.9;
 }
 .snap-media-object .snap-media-meta {
   display: block;
   font-size: small;
-  opacity: 0.75;
-}
-.snap-media-object .snap-media-meta time {
-  margin-right: 1em;
+  color: #999;
 }
 .snap-media-object .snap-unread-marker {
-  background-color: white;
+  color: #FF9800;
 }
-.snap-media-object .snap-unread-marker:before {
-  border-right: 0.89em solid white;
-}
-.fixy {
-  display: none;
-}
-.notloggedin .fixy-trigger {
-  padding: 0.9em 1em;
-}
-.fixy-trigger {
-  padding: 1em;
-  position: relative;
-  -webkit-transition: all 0.4s ease-in-out;
-          transition: all 0.4s ease-in-out;
-}
-.fixy-trigger:hover {
-  color: #fff !important;
-  text-decoration: none;
-}
-.fixy-trigger .userpicture {
-  height: 38px;
-  width: 38px;
-  margin-left: 1em;
-}
-.fixy-trigger .message_badge_count {
-  position: absolute;
-  padding-top: 0;
-  background-image: none;
-  border-radius: 50%;
-  left: 80%;
-  top: 0.5em;
-}
-.fixy {
-  padding: 0 4%;
-  margin: 0 auto;
-  position: fixed;
-  width: 100%;
-  height: 100%;
-  left: 0;
-  bottom: 0;
-  overflow-y: auto;
-  color: #fff;
-  z-index: 1000000;
-}
-.fixy hr {
-  border-color: #fff;
-  margin: 0.3em 0;
-}
-.fixy a,
-.fixy a:hover,
-.fixy a:focus,
-.fixy a:active,
-.fixy a:visited {
-  color: #fff;
-}
-.fixy h2 {
-  color: rgba(255, 255, 255, 0.7);
-  text-transform: uppercase;
-  font-weight: 100;
-  line-height: 1;
-  margin: 1em 0;
-  padding: 0.5em 0;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.7);
-  font-size: 1em;
-}
-.fixy .label-success {
+.snap-media-object .label-success {
   padding: 0 0.2em;
   font-size: 1em;
   background-color: rgba(255, 255, 255, 0.6);
   border-radius: 2px;
-}
-.fixy input {
-  display: block;
-  padding: 0.1em;
-  margin: 0 auto 0.5em;
-  background-color: transparent;
-  font-size: inherit;
-  border: 0;
-  color: #fff;
-  border-bottom: 2px solid rgba(255, 255, 255, 0.3);
-  width: 90%;
-  font-size: 29px;
-  -webkit-box-shadow: none;
-          box-shadow: none;
-}
-.fixy form#coursesearch {
-  margin: 0 0 0.5em;
-  text-align: left;
-}
-.fixy form#coursesearch label {
-  text-align: left;
-  margin-left: 0;
-}
-.fixy .btn.moodle-browseallcourses {
-  margin-bottom: 0.5em;
-  display: block;
-}
-.fixy .fixy-logout-footer {
-  border-top: 1px solid #fff;
-  padding-top: 1em;
-  margin: 1em 0;
-}
-.fixy .fixy-browse-search-courses {
-  margin-left: 0;
-}
-.fixy .fixy-browse-search-courses .col-md-6 {
-  padding-left: 0;
-}
-#login:target,
-#primary-nav:target {
-  display: block;
-}
-.fixy-inner {
-  margin: 0 auto;
-  -webkit-animation-name: snap-drop;
-          animation-name: snap-drop;
-  -webkit-animation-timing-function: ease-in-out;
-          animation-timing-function: ease-in-out;
-  -webkit-animation-duration: 0.3s;
-          animation-duration: 0.3s;
-}
-.fixy-inner legend {
-  color: #fff;
-  border-bottom: 1px solid #fff;
-}
-.fixy-inner label {
-  color: #fff;
-  text-transform: uppercase;
-  font-size: 14px;
-  letter-spacing: 0.1em;
-  line-height: 1;
-  display: block;
-  padding-top: 1em;
-  font-weight: 100;
-  margin: 0.5em 5%;
-}
-#login.fixy input:focus {
-  outline: none;
-  border-color: #fff;
-}
-#login.fixy input[type=submit] {
-  border: 1px solid #fff;
-  margin: 0 auto 0.5em;
-}
-#login.fixy .fixy-inner {
-  max-width: 50.5em;
-  padding-top: 4%;
-}
-.fixy input::-webkit-input-placeholder {
-  color: #fff;
-  letter-spacing: 0.1em;
-}
-.fixy input::-moz-placeholder {
-  color: #fff;
-  letter-spacing: 0.1em;
-}
-.fixy input:-ms-input-placeholder {
-  color: #fff;
-  letter-spacing: 0.1em;
-}
-.fixy input::placeholder {
-  color: #fff;
-  letter-spacing: 0.1em;
-}
-#fixy-my-courses .courseinfo {
-  min-height: 200px;
-}
-.courseinfo {
-  position: relative;
-  float: left;
-  width: 100%;
-  min-height: 250px;
-  background-repeat: no-repeat;
-  -webkit-background-size: 100% auto;
-          background-size: 100% auto;
-  background-position: top center;
-  -webkit-box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
-          box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
-  margin: 0.5em 1%;
-  cursor: pointer;
-  overflow: hidden;
-  -webkit-transition: all 0.4s ease-in-out;
-          transition: all 0.4s ease-in-out;
-}
-.courseinfo:hover {
-  -webkit-background-size: 115% auto;
-          background-size: 115% auto;
-  -webkit-transform: scale(1.03);
-      -ms-transform: scale(1.03);
-          transform: scale(1.03);
-}
-.courseinfo:hover .courseinfo-body {
-  padding-bottom: 0.5em;
-}
-.courseinfo .courseinfo-teachers {
-  width: 100%;
-  padding: 1em;
-}
-.courseinfo .courseinfo-teachers-extra {
-  -webkit-transition: all 0.4s ease-in-out;
-          transition: all 0.4s ease-in-out;
-  opacity: 0;
-}
-.courseinfo.show-all .courseinfo-teachers-extra {
-  opacity: 1;
-}
-.courseinfo.show-all .courseinfo-body {
-  visibility: hidden;
-}
-.courseinfo .courseinfo-body {
-  -webkit-transition: all 0.4s ease-in-out;
-          transition: all 0.4s ease-in-out;
-  background-color: rgba(255, 255, 255, 0.9);
-  color: #666;
-  position: absolute;
-  width: 100%;
-  padding: 0 1em 1em;
-  bottom: 0;
-  min-height: 50%;
-}
-.courseinfo .courseinfo-body h3 a {
-  display: block;
-  display: -webkit-box;
-  max-height: 3em;
-  width: 100%;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: normal !important;
-}
-.courseinfo h3 {
-  font-size: 1em;
-  font-weight: 500;
-}
-.courseinfo .completionstatus,
-.courseinfo .coursegrade {
-  font-size: small;
-}
-.courseinfo .coursegrade {
-  text-align: right;
-  display: block;
-  line-height: 2.5em;
-  padding-right: 2.75em;
-  background-image: url("[[pix:theme|gradebook]]");
-  background-repeat: no-repeat;
-  background-position: 100% 50%;
-  -webkit-background-size: 2.5em 2.5em;
-          background-size: 2.5em 2.5em;
-}
-.courseinfo .courseinfo-teachers {
-  max-height: 200px;
-  overflow: hidden;
-  text-align: right;
-}
-.courseinfo.show-all .courseinfo-teachers {
-  overflow: auto;
-}
-.courseinfo .userpicture,
-.courseinfo .courseinfo-teachers-more {
-  border-radius: 50%;
-  margin-left: 1%;
-  width: 38px;
-  height: 38px;
-  background-color: #ccc;
-}
-.courseinfo .courseinfo-teachers-more {
-  background-color: transparent;
-  font-size: 0.8em;
-  float: right;
-  text-align: center;
-  padding-top: 0.35em;
-  border: 2px solid #fff;
-  color: #fff !important;
-  text-decoration: none !important;
-}
-.courseinfo .published-status {
-  clear: both;
-  margin-bottom: -1em;
-  float: left;
-}
-.courseinfo .completionstatus {
-  border-bottom: 0.5em solid #dadada;
-}
-.courseinfo .completion-line {
-  background-color: #8BC34A;
-  height: 0.3em;
-  margin-top: -0.3em;
-}
-#fixy-profile-link {
-  text-align: center;
-}
-#fixy-profile-link .userpicture {
-  margin-right: 10px;
-}
-.fixy .real-user-info {
-  display: block;
-  text-align: center;
-  margin-top: -50px;
-}
-.fixy .label.label-info {
-  background-color: transparent;
-  border: thin solid #fff;
 }
 @media screen and (min-width: 480px) {
   #moodle-footer .list-unstyled {
@@ -20479,26 +20152,12 @@ fieldset[disabled] a#page-site-index .section-modchooser-link .section-modchoose
        -moz-column-count: 2;
             column-count: 2;
   }
-  .courseinfo {
-    width: 100%;
-  }
 }
 @media screen and (min-width: 768px) {
-  #fixy-username {
-    display: inline;
-  }
   #moodle-footer .list-large {
     -webkit-column-count: 3;
        -moz-column-count: 3;
             column-count: 3;
-  }
-  .courseinfo {
-    width: 48%;
-  }
-}
-@media screen and (min-width: 992px) {
-  .courseinfo {
-    width: 31%;
   }
 }
 .message_badge_message,
@@ -20523,11 +20182,11 @@ Its pointless using a colour to visually show that the message is read as we can
 read button has been removed and the message text is visible
 **/
 .message_badge_message.dimmed_text {
-  color: #fff;
+  color: #565656;
 }
 .message_badge_message.dimmed_text .message_badge_message_text,
 .message_badge_message.dimmed_text .message_badge_message_text a {
-  color: #fff !important;
+  color: #565656 !important;
 }
 .message_badge_user_picture {
   margin-right: 18px;
@@ -23555,11 +23214,9 @@ table th img.iconhelp {
   }
 }
 @media screen and (max-width: 767px) {
+  html,
   #region-main {
-    font-size: 0.9em;
-  }
-  #fixy-profile-link .userpicture {
-    width: 1.5em;
+    font-size: 14.4px;
   }
   h1,
   .h1 {
@@ -23752,6 +23409,460 @@ body.gecko td.mceToolbar {
 #page-mod-quiz-edit .activityinstance {
   overflow: hidden;
   max-width: 81%;
+}
+.fixy {
+  display: none;
+}
+#login:target,
+#primary-nav:target {
+  display: block;
+}
+.notloggedin .fixy-trigger {
+  padding: 0.9em 1em;
+}
+.fixy-trigger {
+  padding: 1em;
+  position: relative;
+  -webkit-transition: all 0.4s ease-in-out;
+          transition: all 0.4s ease-in-out;
+}
+.fixy-trigger:hover {
+  color: #fff !important;
+  text-decoration: none;
+}
+.fixy-trigger .userpicture {
+  height: 38px;
+  width: 38px;
+  margin-left: 1em;
+}
+.fixy-trigger .message_badge_count {
+  position: absolute;
+  padding-top: 0;
+  background-image: none;
+  border-radius: 50%;
+  left: 80%;
+  top: 0.5em;
+}
+.fixy {
+  margin: 0 auto;
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  bottom: 0;
+  overflow-y: auto;
+  z-index: 1000000;
+}
+.fixy #fixy-close {
+  color: #fff;
+}
+.fixy h2 {
+  font-weight: 500;
+  line-height: 1;
+  margin: 1em 0;
+  padding: 0.5em 0;
+  font-size: 1rem;
+}
+.fixy .label-success {
+  padding: 0 0.2em;
+  font-size: 1em;
+  background-color: rgba(255, 255, 255, 0.6);
+  border-radius: 2px;
+}
+.fixy-inner {
+  margin: 0 auto;
+  -webkit-animation-name: snap-drop;
+          animation-name: snap-drop;
+  -webkit-animation-iteration-count: once;
+          animation-iteration-count: once;
+  -webkit-animation-timing-function: ease-in-out;
+          animation-timing-function: ease-in-out;
+  -webkit-animation-duration: 0.3s;
+          animation-duration: 0.3s;
+}
+#fixy-user {
+  margin: 1em 4%;
+}
+#fixy-user:before,
+#fixy-user:after {
+  content: " ";
+  display: table;
+}
+#fixy-user:after {
+  clear: both;
+}
+#fixy-user:before,
+#fixy-user:after {
+  content: " ";
+  display: table;
+}
+#fixy-user:after {
+  clear: both;
+}
+#fixy-user a,
+#fixy-user a .h1 {
+  color: white;
+}
+#fixy-user .userpicture {
+  float: left;
+  margin-right: 2%;
+}
+#fixy-user #fixy-user-details {
+  float: left;
+}
+#fixy-user #fixy-logout {
+  display: block;
+  line-height: 0;
+}
+#fixy-content {
+  background-color: #eee;
+  padding: 0 2%;
+}
+#fixy-content:before,
+#fixy-content:after {
+  content: " ";
+  display: table;
+}
+#fixy-content:after {
+  clear: both;
+}
+#fixy-content:before,
+#fixy-content:after {
+  content: " ";
+  display: table;
+}
+#fixy-content:after {
+  clear: both;
+}
+#login.fixy input {
+  display: block;
+  padding: 0.1em;
+  margin: 0 auto 0.5em;
+  background-color: transparent;
+  font-size: inherit;
+  border: 0;
+  color: #fff;
+  border-bottom: 2px solid rgba(255, 255, 255, 0.3);
+  width: 90%;
+  -webkit-box-shadow: none;
+          box-shadow: none;
+}
+#login.fixy input:focus {
+  outline: none;
+  border-color: #fff;
+}
+#login.fixy input[type=submit] {
+  border: 1px solid #fff;
+  margin: 0 auto 0.5em;
+}
+#login.fixy legend {
+  color: #fff;
+  border-bottom: 1px solid #fff;
+}
+#login.fixy label {
+  color: #fff;
+  text-transform: uppercase;
+  font-size: 14px;
+  letter-spacing: 0.1em;
+  line-height: 1;
+  display: block;
+  padding-top: 1em;
+  font-weight: 100;
+  margin: 0.5em 5%;
+}
+#login.fixy .fixy-inner {
+  max-width: 50.5em;
+  padding-top: 4%;
+}
+.fixy input::-webkit-input-placeholder {
+  color: #fff;
+  letter-spacing: 0.1em;
+}
+.fixy input::-moz-placeholder {
+  color: #fff;
+  letter-spacing: 0.1em;
+}
+.fixy input:-ms-input-placeholder {
+  color: #fff;
+  letter-spacing: 0.1em;
+}
+.fixy input::placeholder {
+  color: #fff;
+  letter-spacing: 0.1em;
+}
+@media only screen and (min-width: 1200px) {
+  #fixy-my-courses {
+    position: relative;
+    min-height: 1px;
+    padding-left: 15px;
+    padding-right: 15px;
+    margin-bottom: 2em;
+  }
+  .callstoaction {
+    position: relative;
+    min-height: 1px;
+    padding-left: 15px;
+    padding-right: 15px;
+    margin-bottom: 2em;
+  }
+  .callstoaction section {
+    width: 100%;
+    padding: 0;
+    padding-bottom: 0.5em;
+    border-bottom: 1px dotted #999;
+  }
+}
+@media only screen and (min-width: 1200px) and (min-width: 1200px) {
+  #fixy-my-courses {
+    float: left;
+    width: 75%;
+  }
+}
+@media only screen and (min-width: 1200px) and (min-width: 1200px) {
+  .callstoaction {
+    float: left;
+    width: 25%;
+  }
+}
+@media only screen and (min-width: 768px) and (max-width: 1200px) {
+  .callstoaction {
+    -webkit-column-count: 2;
+       -moz-column-count: 2;
+            column-count: 2;
+  }
+  .callstoaction section {
+    width: 100%;
+    float: none;
+    display: inline-block;
+  }
+}
+#fixy-mobile-menu {
+  display: none;
+}
+@media only screen and (max-width: 480px) {
+  #fixy-user .userpicture {
+    width: 60px;
+  }
+  #primary-nav section {
+    width: 96vw !important;
+    float: left;
+    padding: 1em;
+    -webkit-transition: all 0.4s ease-in-out;
+            transition: all 0.4s ease-in-out;
+  }
+  #fixy-content {
+    position: relative;
+    width: 700vw;
+    overflow: hidden;
+  }
+  .fixy-inner {
+    overflow: hidden;
+    width: 100vw;
+  }
+  #fixy-mobile-menu {
+    display: block;
+    position: fixed;
+    bottom: 0px;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: 60px;
+    text-align: center;
+    background-color: #fff;
+    border-top: 1px solir #eee;
+  }
+  #fixy-mobile-menu a {
+    display: inline-block;
+    margin: 2%;
+    width: 15%;
+    outline: 0px;
+  }
+  #fixy-mobile-menu a .svg-icon {
+    border-radius: 50%;
+    height: 40px;
+    width: 40px;
+  }
+  .courseinfo-body {
+    width: 61.8% !important;
+    height: auto;
+    padding: 0.5em !important;
+  }
+}
+.callstoaction section,
+#fixy-my-courses {
+  position: relative;
+}
+.callstoaction section .snap-personal-menu-more,
+#fixy-my-courses .snap-personal-menu-more {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+.callstoaction section .snap-personal-menu-more:hover .svg-icon,
+#fixy-my-courses .snap-personal-menu-more:hover .svg-icon,
+.callstoaction section .snap-personal-menu-more:focus .svg-icon,
+#fixy-my-courses .snap-personal-menu-more:focus .svg-icon {
+  border: 1px solid #fff;
+  -webkit-transform: scale(1.1);
+      -ms-transform: scale(1.1);
+          transform: scale(1.1);
+}
+.callstoaction section .svg-icon,
+#fixy-my-courses .svg-icon {
+  -webkit-transition: all 0.4s ease-in-out;
+          transition: all 0.4s ease-in-out;
+  border-radius: 100%;
+  margin-right: 0;
+  width: 36px;
+  height: 36px;
+}
+#fixy-my-courses .snap-personal-menu-more {
+  top: 1em;
+  right: 1em;
+}
+@media screen and (min-width: 768px) {
+  #fixy-my-courses .courseinfo {
+    width: -webkit-calc(30.33333333%);
+    width: calc(30.33333333%);
+    min-height: 250px;
+  }
+}
+.courseinfo {
+  position: relative;
+  float: left;
+  width: 100%;
+  margin: 0.5em 3% 0.5em 0;
+  min-height: 150px;
+  background-repeat: no-repeat;
+  -webkit-background-size: cover;
+          background-size: cover;
+  background-position: top center;
+  -webkit-box-shadow: 0 1px 2px 0 #dadada;
+          box-shadow: 0 1px 2px 0 #dadada;
+  cursor: pointer;
+  overflow: hidden;
+  -webkit-transition: all 0.4s ease-in-out;
+          transition: all 0.4s ease-in-out;
+}
+.courseinfo:hover {
+  -webkit-transform: scale(1.06);
+      -ms-transform: scale(1.06);
+          transform: scale(1.06);
+  -webkit-box-shadow: 0 8px 17px 0 #999, 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+          box-shadow: 0 8px 17px 0 #999, 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+.courseinfo:hover .courseinfo-teachers {
+  -webkit-transform: scale(1.2);
+      -ms-transform: scale(1.2);
+          transform: scale(1.2);
+}
+.courseinfo .courseinfo-teachers {
+  -webkit-transition: all 0.4s ease-in-out;
+          transition: all 0.4s ease-in-out;
+  position: absolute;
+  top: -1em;
+  left: -1%;
+  width: 100%;
+  overflow: hidden;
+  text-align: center;
+}
+.courseinfo .userpicture,
+.courseinfo .courseinfo-teachers-more {
+  border-radius: 50%;
+  margin-right: 1%;
+  width: 38px;
+  height: 38px;
+  background-color: white;
+  padding: 2px;
+}
+.courseinfo .courseinfo-teachers-more {
+  -webkit-transition: all 0.4s ease-in-out;
+          transition: all 0.4s ease-in-out;
+  display: inline-block;
+  background-color: white;
+  font-size: 0.7em;
+  text-align: center;
+  padding-top: 0.32em;
+  margin: 1%;
+  color: #565656 !important;
+  text-decoration: none !important;
+  border: 3px solid #dadada;
+}
+.courseinfo .courseinfo-teachers-extra {
+  -webkit-transition: all 0.4s ease-in-out;
+          transition: all 0.4s ease-in-out;
+  opacity: 0;
+  height: 0;
+}
+.courseinfo.show-all .courseinfo-teachers-extra {
+  opacity: 1;
+  height: 40px;
+}
+.courseinfo.show-all .courseinfo-teachers {
+  overflow: auto;
+  top: -5em;
+  -webkit-transition: all 0.4s ease-in-out;
+          transition: all 0.4s ease-in-out;
+}
+.courseinfo .courseinfo-body {
+  -webkit-transition: all 0.4s ease-in-out;
+          transition: all 0.4s ease-in-out;
+  background-color: white;
+  color: #666;
+  position: absolute;
+  width: 100%;
+  padding: 1.5em 0.5em 1em 0.5em;
+  bottom: 0;
+  min-height: 50%;
+}
+.courseinfo .courseinfo-body h3 a {
+  display: block;
+  display: -webkit-box;
+  max-height: 3em;
+  width: 100%;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: normal !important;
+}
+.courseinfo h3 {
+  font-size: 1em;
+  font-weight: 300;
+  margin: 0;
+}
+.courseinfo .completionstatus,
+.courseinfo .coursegrade {
+  font-size: small;
+}
+.courseinfo .coursegrade {
+  text-align: right;
+  display: block;
+  line-height: 2.5em;
+  padding-right: 2.75em;
+  background-image: url("[[pix:theme|gradebook]]");
+  background-repeat: no-repeat;
+  background-position: 100% 50%;
+  -webkit-background-size: 2.5em 2.5em;
+          background-size: 2.5em 2.5em;
+}
+.courseinfo .published-status {
+  clear: both;
+  float: left;
+  margin-bottom: -1em;
+}
+.courseinfo .completionstatus {
+  border-bottom: 0.5em solid #dadada;
+}
+.courseinfo .completion-line {
+  background-color: #8BC34A;
+  height: 0.3em;
+  margin-top: -0.3em;
+}
+@media only screen and (max-width: 767px) {
+  .courseinfo-teachers {
+    display: none;
+  }
 }
 /**
  * Snap core swatch.
@@ -24077,11 +24188,17 @@ legend,
 .fixy-trigger .message_badge_count {
   background-color: #038dcc;
 }
+.courseinfo-teachers-more:hover {
+  border-color: #03A9F4;
+}
 .fixy {
   background-color: #03A9F4;
 }
 .fixy .label-success {
   color: #03A9F4;
+}
+#fixy-mobile-menu .svg-icon {
+  border: 1px solid #03A9F4;
 }
 .snap-unread-marker {
   color: #03A9F4;
