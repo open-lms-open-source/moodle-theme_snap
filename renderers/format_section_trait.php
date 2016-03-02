@@ -518,10 +518,6 @@ trait format_section_trait {
         ));
         $output .= html_writer::input_hidden_params($url);
         $output .= '<div class="form-group">';
-        $output .= "<label for='newsection' class='sr-only'>".get_string('title', 'theme_snap')."</label>";
-        $output .= "<input class='h3' id='newsection' type='text' maxlength='250' name='newsection' $required placeholder='".get_string('title', 'theme_snap')."'>";
-        $output .= '</div>';
-        $output .= '<div class="form-group">';
         $output .= "<label for='summary'>".get_string('contents', 'theme_snap')."</label>";
         $output .= print_textarea(true, 10, 150, "100%",
             "auto", "summary", '', $course->id, true);
