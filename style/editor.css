@@ -6676,6 +6676,50 @@ ul.events-new + ul.events-underway {
     width: 75%;
   }
 }
+/* MESSAGING PAGE */
+#message_user_pictures .box.user {
+  position: relative;
+  min-height: 1px;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+@media (min-width: 768px) {
+  #message_user_pictures .box.user {
+    float: left;
+    width: 41.66666667%;
+  }
+}
+#message_user_pictures .box.between {
+  position: relative;
+  min-height: 1px;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+@media (min-width: 768px) {
+  #message_user_pictures .box.between {
+    float: left;
+    width: 16.66666667%;
+  }
+}
+#message_user_pictures .box {
+  text-align: center;
+}
+/* Message contaacts list */
+.message-contacts {
+  list-style: none;
+  padding: 0;
+}
+.message-contacts .pix,
+.message-contacts .link,
+.message-contacts .contact {
+  display: inline;
+}
+.message-contacts .pix {
+  margin-right: 0.5em;
+}
+.message-contacts .link {
+  float: right;
+}
 .path-mod-choice .results.names .user {
   clear: both;
 }
