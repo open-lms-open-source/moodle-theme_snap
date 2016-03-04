@@ -505,10 +505,17 @@ trait format_section_trait {
         ));
 
         $required = '';
+        $defaulttitle = get_string('title', 'theme_snap');
         if ($course->format === 'topics') {
             $required = 'required';
+        }else{
+            $datestartcourse = date($course->startdate);  
+            $numnewsection = $course->numsections;
+            $starnewsection = $numnewsection*7;
+            $endnewsection = $starnewsection+6;
+            $defaulttitle = date(('M d'),strtotime('+ '.$starnewsection.' day',$datestartcourse));
+            $defaulttitle .= '-'.date(('M d'),strtotime('+ '.$endnewsection.' day',$datestartcourse));            
         }
-
         $heading = get_string('addanewsection', 'theme_snap');
         $output = "<section id='snap-add-new-section' class='clearfix' tabindex='-1'>
         <h3>$heading</h3>";
@@ -518,6 +525,10 @@ trait format_section_trait {
         ));
         $output .= html_writer::input_hidden_params($url);
         $output .= '<div class="form-group">';
+        $output .= "<label for='newsection' class='sr-only'>".get_string('title', 'theme_snap')."</label>";
+        $output .= "<input class='h3' id='newsection' type='text' maxlength='250' name='newsection' $required placeholder='".$defaulttitle."'>";
+        $output .= '</div>';
+        $output .= '<div class="form-group">';        
         $output .= "<label for='summary'>".get_string('contents', 'theme_snap')."</label>";
         $output .= print_textarea(true, 10, 150, "100%",
             "auto", "summary", '', $course->id, true);
