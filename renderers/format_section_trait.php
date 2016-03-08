@@ -134,7 +134,7 @@ trait format_section_trait {
         $baseurl->param('sesskey', sesskey());
 
         $controls = array();
-        
+
         if (!$isstealth && !$onsectionpage && has_capability('moodle/course:movesections', $coursecontext)) {
             $url = '#section-'.$section->section;
             $snap_move_section = "<img class='svg-icon' src='".$this->output->pix_url('move', 'theme')."'>";
@@ -175,7 +175,7 @@ trait format_section_trait {
                     'class' => 'icon delete', 'alt' => $strdelete)),
                 array('title' => $strdelete));
         }
-        
+
         if ($course->format === 'topics') {
             if (!$isstealth && has_capability('moodle/course:setcurrentsection', $coursecontext)) {
                 $url = clone($baseurl);
@@ -506,15 +506,23 @@ trait format_section_trait {
 
         $required = '';
         $defaulttitle = get_string('title', 'theme_snap');
+        $sectionnum = $course->numsections;
         if ($course->format === 'topics') {
-            $required = 'required';
-        }else{
-            $datestartcourse = date($course->startdate);  
-            $numnewsection = $course->numsections;
-            $starnewsection = $numnewsection*7;
-            $endnewsection = $starnewsection+6;
-            $defaulttitle = date(('M d'),strtotime('+ '.$starnewsection.' day',$datestartcourse));
-            $defaulttitle .= '-'.date(('M d'),strtotime('+ '.$endnewsection.' day',$datestartcourse));            
+            $defaulttitle = 'Topic ' . ($sectionnum + 1);
+        } else {
+            $oneweekseconds = 60*60*24*7;
+            // Hack alert. We add 2 hours to avoid possible DST problems. (e.g. we go into daylight
+            // savings and the date changes.
+            $startdate = $course->startdate + (60 * 60 *2);
+            $dates = new stdClass();
+            $dates->start = $startdate + ($oneweekseconds * $sectionnum);
+            $dates->end = $dates->start + $oneweekseconds;
+            // We subtract 24 hours for display purposes.
+            $dates->end = ($dates->end - (60* 60 * 24));
+            $dateformat = get_string('strftimedateshort');
+            $weekday = userdate($dates->start, $dateformat);
+            $endweekday = userdate($dates->end, $dateformat);
+            $defaulttitle = $weekday.'-'.$endweekday;
         }
         $heading = get_string('addanewsection', 'theme_snap');
         $output = "<section id='snap-add-new-section' class='clearfix' tabindex='-1'>
@@ -526,9 +534,9 @@ trait format_section_trait {
         $output .= html_writer::input_hidden_params($url);
         $output .= '<div class="form-group">';
         $output .= "<label for='newsection' class='sr-only'>".get_string('title', 'theme_snap')."</label>";
-        $output .= "<input class='h3' id='newsection' type='text' maxlength='250' name='newsection' $required placeholder='".$defaulttitle."'>";
+        $output .= "<input class='h3' id='newsection' type='text' maxlength='250' name='newsection' $required placeholder='".$defaulttitle."'value='".$defaulttitle."'>";
         $output .= '</div>';
-        $output .= '<div class="form-group">';        
+        $output .= '<div class="form-group">';
         $output .= "<label for='summary'>".get_string('contents', 'theme_snap')."</label>";
         $output .= print_textarea(true, 10, 150, "100%",
             "auto", "summary", '', $course->id, true);
