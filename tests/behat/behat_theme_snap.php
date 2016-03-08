@@ -163,15 +163,7 @@ class behat_theme_snap extends behat_base {
             throw new ExpectationException('Current page is not a course page!', $session);
         }
         $session->executeScript('location.hash = "'.'section-'.$section.'";');
-
-        $givens = [
-            'I wait until the page is ready',
-            'I wait until "#section-'.$section.'" "css_element" is visible'
-        ];
-        $givens = array_map(function($given){
-            return new Given($given);
-        }, $givens);
-        return $givens;
+        $this->i_wait_until_is_visible('#section-'.$section, 'css_element');
     }
 
     /**
@@ -615,5 +607,24 @@ EOF;
 
         // Hurray, we found a visible link - let's click it!
         $node->click();
+    }
+
+    /**
+     * @param string $title
+     * @Given /^I can see an input with the value "(?P<value>(?:[^"]|\\")*)"$/
+     */
+    public function i_can_see_input_with_value($value) {
+        $this->i_wait_until_is_visible('input[value="'.$value.'"]', 'css_element');
+    }
+
+    /**
+     * @Given /^course page should be in edit mode$/
+     */
+    public function course_page_should_be_in_edit_mode() {
+        /* @var $generalcontext behat_general */
+        $generalcontext = behat_context_helper::get('behat_general');
+        $generalcontext->assert_element_not_contains_text('Test assignment1', '#section-1', 'css_element');
+        $generalcontext->ensure_element_exists('.block_news_items a.toggle-display', 'css_element');
+        $this->i_can_see_input_with_value('Turn editing off');
     }
 }
