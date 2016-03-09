@@ -508,7 +508,7 @@ trait format_section_trait {
         $defaulttitle = get_string('title', 'theme_snap');
         $sectionnum = $course->numsections;
         if ($course->format === 'topics') {
-            $defaulttitle = 'Topic ' . ($sectionnum + 1);
+            $required = 'required';
         } else {
             $oneweekseconds = 60*60*24*7;
             // Hack alert. We add 2 hours to avoid possible DST problems. (e.g. we go into daylight
@@ -534,7 +534,11 @@ trait format_section_trait {
         $output .= html_writer::input_hidden_params($url);
         $output .= '<div class="form-group">';
         $output .= "<label for='newsection' class='sr-only'>".get_string('title', 'theme_snap')."</label>";
-        $output .= "<input class='h3' id='newsection' type='text' maxlength='250' name='newsection' $required placeholder='".$defaulttitle."'value='".$defaulttitle."'>";
+        if($course->format === 'topics'){
+            $output .= "<input class='h3' id='newsection' type='text' maxlength='250' name='newsection' $required placeholder='".get_string('title', 'theme_snap')."'>";
+        } else {
+            $output .= "<h3>".$defaulttitle."</h3>";
+        }
         $output .= '</div>';
         $output .= '<div class="form-group">';
         $output .= "<label for='summary'>".get_string('contents', 'theme_snap')."</label>";
