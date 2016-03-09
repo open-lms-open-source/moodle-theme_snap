@@ -412,9 +412,9 @@ class snap_shared extends renderer_base {
     public static function gradebook_accessible($context) {
         global $COURSE;
 
-        //Ask if user has not capabilities and course is set to not show grades to students.
+        // Ask if user has not capabilities and if course is set to not to show the grades to students.
         if ((!has_capability('gradereport/grader:view', $context)) && ($COURSE->showgrades == 0)){
-            return null;
+            return false;
         }
         // Find all enabled reports.
         $reports = core_component::get_plugin_list('gradereport');
@@ -548,7 +548,7 @@ class snap_shared extends renderer_base {
             // Gradebook.
             $links[] = array(
                 'link' => 'grade/index.php?id='.$COURSE->id,
-                'title' => $gradebookicon.get_string('gradebook', 'grades')  
+                'title' => $gradebookicon.get_string('gradebook', 'grades')
             );
         }
 
