@@ -40,12 +40,12 @@ Feature: When the moodle theme is set to Snap, students and teachers can open a 
 
   @javascript
   Scenario: A message displays when no courses are enrolled
-    Given I log in with snap as "student1"
-    And I follow "Menu"
+    Given I log in as "student1" (theme_snap)
+    And I open the personal menu
    Then I should see "Course 1"
     And I should not see "Courses you are enrolled in will be shown here"
     And I follow "Log out"
-    And I log in with snap as "student2"
-    And I follow "Menu"
+    And I log in as "student2" (theme_snap)
+    And I open the personal menu
     And I should see "Courses you are enrolled in will be shown here"
 

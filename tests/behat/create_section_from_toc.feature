@@ -55,46 +55,53 @@ Feature: In the Snap theme, within a course, editing teachers can create a new s
   @javascript
   Scenario: For editing teachers, ensure new section creation is available and works for topic courses but
     not single activity or social course formats.
-  Given I log in with snap as "teacher1"
+  Given I log in as "teacher1" (theme_snap)
     And I create a new section in course "Topics course"
    Then I should see "New section title" in the "#course-toc" "css_element"
     And I open the personal menu
     # Negative test - the single activity course should not allow for section creation via the toc.
-    And Snap I follow link "Single activity course"
+    And I follow "Single activity course"
    Then I should not see "Create a new section" in the "#page-header" "css_element"
     # Negative test - the social course should not allow for section creation via the toc.
-    And Snap I follow link "Social course"
+    And I open the personal menu
+    And I follow "Social course"
    Then I should not see "Create a new section" in the "#page-header" "css_element"
     # Make sure student can see the sections created by the teacher in Topics and Weeks format courses.
-    And Snap I log out
-    And I log in with snap as "student1"
+    And I log out (theme_snap)
+    And I log in as "student1" (theme_snap)
     And I open the personal menu
-    And Snap I follow link "Topics course"
+    And I follow "Topics course"
    Then I should see "New section title" in the "#course-toc" "css_element"
     And I open the personal menu
 
   @javascript
   Scenario: For non editing teachers and students, ensure new section creation is not available for any course formats.
-  Given I log in with snap as "teacher2"
+  Given I log in as "teacher2" (theme_snap)
     And I open the personal menu
-    And Snap I follow link "Topics course"
-   Then I should not see "Create a new section" in the "#page-header" "css_element"
-    And I open the personal menu
-    And Snap I follow link "Weeks course"
-   Then I should not see "Create a new section" in the "#page-header" "css_element"
-    And Snap I follow link "Single activity course"
-   Then I should not see "Create a new section" in the "#page-header" "css_element"
-    And Snap I follow link "Social course"
-   Then I should not see "Create a new section" in the "#page-header" "css_element"
-    And Snap I log out
-    And I log in with snap as "student1"
-    And I open the personal menu
-    And Snap I follow link "Topics course"
+    And I follow "Topics course"
    Then I should not see "Create a new section" in the "#page-header" "css_element"
     And I open the personal menu
-    And Snap I follow link "Weeks course"
+    And I follow "Weeks course"
    Then I should not see "Create a new section" in the "#page-header" "css_element"
-    And Snap I follow link "Single activity course"
+    And I open the personal menu
+    And I follow "Single activity course"
+   Then I should not see "Create a new section" in the "#page-header" "css_element"
+    And I open the personal menu
+    And I follow "Social course"
+   Then I should not see "Create a new section" in the "#page-header" "css_element"
+    And I log out (theme_snap)
+    And I log in as "student1" (theme_snap)
+    And I open the personal menu
+    And I follow "Topics course"
+   Then I should not see "Create a new section" in the "#page-header" "css_element"
+    And I open the personal menu
+    And I follow "Weeks course"
+   Then I should not see "Create a new section" in the "#page-header" "css_element"
+    And I open the personal menu
+    And I follow "Single activity course"
+   Then I should not see "Create a new section" in the "#page-header" "css_element"
+    And I open the personal menu
+    And I follow "Social course"
    Then I should not see "Create a new section" in the "#page-header" "css_element"
     And Snap I follow link "Social course"
    Then I should not see "Create a new section" in the "#page-header" "css_element"

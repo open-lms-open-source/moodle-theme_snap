@@ -868,7 +868,7 @@ class theme_snap_core_renderer extends toc_renderer {
 
     public function page_heading($tag = 'h1') {
         $heading = parent::page_heading($tag);
-        
+
         // For the user profile page message button we need to call 2.9 content_header.
         if($this->page->pagelayout == 'mypublic') {
             $heading = parent::context_header();
@@ -1123,8 +1123,8 @@ HTML;
         }
 
         if (defined('BEHAT_SITE_RUNNING')) {
-            // Required for revealing elements that behat requires in order to run.
-            $classes[] = 'behat-site-running';
+            // TODO not needed after 2.9.4, as core will do the same automatically.
+            $classes[] = 'behat-site';
         }
 
         $classes = implode(' ', $classes);

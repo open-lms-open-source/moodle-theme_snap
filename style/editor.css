@@ -4346,6 +4346,10 @@ fieldset[disabled] a#changenumsections .reduce-sections {
   width: 1em;
   height: 1em;
 }
+.behat-site #snap-move-message {
+  position: relative;
+  transition-property: none;
+}
 .snap-move-cancel {
   float: right;
   margin-right: 4%;
@@ -5242,7 +5246,6 @@ fieldset[disabled] a#page-site-index .section-modchooser-link .section-modchoose
 .fixy-inner {
   margin: 0 auto;
   animation-name: snap-drop;
-  animation-iteration-count: once;
   animation-timing-function: ease-in-out;
   animation-duration: 0.3s;
 }
@@ -5517,7 +5520,6 @@ footer #moodle-footer
 #mr-nav.headroom--unpinned {
   will-change: transform;
   animation-name: snap-rise;
-  animation-iteration-count: once;
   animation-timing-function: ease-in-out;
   animation-duration: 0.4s;
   animation-fill-mode: forwards;
@@ -5525,7 +5527,6 @@ footer #moodle-footer
 #mr-nav.headroom--pinned {
   /*
         animation-name: snap-drop;
-        animation-iteration-count: once;
         animation-timing-function: cubic-bezier(.694, .0482, .335, 1);
         animation-duration: 0.33s;
         */
@@ -8493,6 +8494,15 @@ div.editor_atto_toolbar div.atto_group {
 .path-grade-report-grader .gradeparent .cell.user {
   font-size: 13px;
 }
+.behat-site #mr-nav {
+  position: absolute;
+}
+.behat-site #mr-nav.headroom--unpinned {
+  animation-name: none;
+}
+.behat-site .fixy-inner {
+  animation-name: none;
+}
 /**
  * Snap core swatch.
  *
@@ -8500,12 +8510,12 @@ div.editor_atto_toolbar div.atto_group {
  * @copyright Copyright (c) 2015 Moodlerooms Inc. (http://www.moodlerooms.com)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-body:not(.behat-site-running)#page-mod-resource-mod #id_optionssection,
-body:not(.behat-site-running)#page-mod-url-mod #id_optionssection {
+body:not(.behat-site)#page-mod-resource-mod #id_optionssection,
+body:not(.behat-site)#page-mod-url-mod #id_optionssection {
   display: none;
 }
-body:not(.behat-site-running) #id_generalhdr .ftoggler,
-body:not(.behat-site-running) #id_general .ftoggler {
+body:not(.behat-site) #id_generalhdr .ftoggler,
+body:not(.behat-site) #id_general .ftoggler {
   display: none;
 }
 .fdescription.required {

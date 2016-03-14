@@ -46,9 +46,9 @@ Feature: When the moodle theme is set to Snap, teachers edit assets without ente
     Given the following "activities" exist:
       | activity | course | idnumber | name            | intro           | section | assignsubmission_onlinetext_enabled |
       | assign   | C1     | assign1  | Test assignment | Test assignment | 1       | 1                                   |
-    And I log in with snap as "student1"
-    And I follow "Menu"
-    And I follow "Course"
+    And I log in as "student1" (theme_snap)
+    And I open the personal menu
+    And I follow "Course 1"
     And I wait until the page is ready
     And I follow "Topic 1"
     Then ".snap-activity[data-type='Assignment'] a.snap-edit-asset-more" "css_element" should not exist
@@ -58,9 +58,9 @@ Feature: When the moodle theme is set to Snap, teachers edit assets without ente
   Given the following "activities" exist:
       | activity | course | idnumber | name            | intro           | section | assignsubmission_onlinetext_enabled |
       | assign   | C1     | assign1  | Test assignment | Test assignment | 1       | 1                                   |
-    And I log in with snap as "teacher1"
-    And I follow "Menu"
-    And I follow "Course"
+    And I log in as "teacher1" (theme_snap)
+    And I open the personal menu
+    And I follow "Course 1"
     And I wait until the page is ready
     And I follow "Topic 1"
    Then "#section-1" "css_element" should exist
@@ -74,9 +74,9 @@ Feature: When the moodle theme is set to Snap, teachers edit assets without ente
 
   @javascript
   Scenario: In read mode, teacher hides then shows resource.
-  Given I log in with snap as "teacher1"
-    And I follow "Menu"
-    And I follow "Course"
+  Given I log in as "teacher1" (theme_snap)
+    And I open the personal menu
+    And I follow "Course 1"
     And I wait until the page is ready
     And I follow "Topic 1"
    Then "#section-1" "css_element" should exist
@@ -96,9 +96,9 @@ Feature: When the moodle theme is set to Snap, teachers edit assets without ente
   Given the following "activities" exist:
       | activity | course | idnumber | name            | intro           | section | assignsubmission_onlinetext_enabled |
       | assign   | C1     | assign1  | Test assignment | Test assignment | 1       | 1                                   |
-    And I log in with snap as "teacher1"
-    And I follow "Menu"
-    And I follow "Course"
+    And I log in as "teacher1" (theme_snap)
+    And I open the personal menu
+    And I follow "Course 1"
     And I wait until the page is ready
     And I follow "Topic 1"
    Then "#section-1" "css_element" should exist
@@ -110,9 +110,9 @@ Feature: When the moodle theme is set to Snap, teachers edit assets without ente
 
   @javascript
   Scenario: In read mode, teacher duplicates resource.
-  Given I log in with snap as "teacher1"
-    And I follow "Menu"
-    And I follow "Course"
+  Given I log in as "teacher1" (theme_snap)
+    And I open the personal menu
+    And I follow "Course 1"
     And I wait until the page is ready
     And I follow "Topic 1"
    Then "#section-1" "css_element" should exist

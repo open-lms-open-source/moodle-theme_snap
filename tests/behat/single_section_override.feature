@@ -47,21 +47,21 @@ Feature: When the moodle theme is set to Snap, courses in single section per pag
   Scenario: All users see course pages rendered in regular mode even when course single section per page mode set.
 
     # Test with admin user.
-    Given I log in with snap as "admin"
+    Given I log in as "admin" (theme_snap)
    Then I can see course "Course 1" in all sections mode
-    And Snap I log out
+    And I log out (theme_snap)
 
     # Test with editing teacher.
-    And I log in with snap as "teacher1"
+    And I log in as "teacher1" (theme_snap)
     Then I can see course "Course 1" in all sections mode
-    And Snap I log out
+    And I log out (theme_snap)
 
     # Test widh non editing teacher.
-    And I log in with snap as "teacher2"
+    And I log in as "teacher2" (theme_snap)
     Then I can see course "Course 1" in all sections mode
-    And Snap I log out
+    And I log out (theme_snap)
 
     # Test with student.
-    And I log in with snap as "student1"
+    And I log in as "student1" (theme_snap)
     Then I can see course "Course 1" in all sections mode
-    And Snap I log out
+    And I log out (theme_snap)

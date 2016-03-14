@@ -40,14 +40,14 @@ Feature: When the moodle theme is set to Snap, only teachers should see an admin
 
   @javascript
   Scenario: Teacher visits course.
-    Given I log in with snap as "teacher1"
-    And I follow "Menu"
-    And I follow "Course"
+    Given I log in as "teacher1" (theme_snap)
+    And I open the personal menu
+    And I follow "Course 1"
    Then "#admin-menu-trigger" "css_element" should exist
 
   @javascript
   Scenario: Student visits course.
-    Given I log in with snap as "student1"
-    And I follow "Menu"
-    And I follow "Course"
+    Given I log in as "student1" (theme_snap)
+    And I open the personal menu
+    And I follow "Course 1"
    Then "#admin-menu-trigger" "css_element" should not exist
