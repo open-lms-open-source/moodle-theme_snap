@@ -53,12 +53,10 @@ Feature: In the Snap theme, within a course, editing teachers can create a new s
       | student1 | course_social | student        |
 
   @javascript
-  Scenario: For editing teachers, ensure new section creation is available and works for topic and week courses but
-    not other formats.
+  Scenario: For editing teachers, ensure new section creation is available and works for topic courses but
+    not single activity or social course formats.
   Given I log in with snap as "teacher1"
     And I create a new section in course "Topics course"
-   Then I should see "New section title" in the "#course-toc" "css_element"
-    And I create a new section in course "Weeks course"
    Then I should see "New section title" in the "#course-toc" "css_element"
     And I open the personal menu
     # Negative test - the single activity course should not allow for section creation via the toc.
@@ -74,8 +72,6 @@ Feature: In the Snap theme, within a course, editing teachers can create a new s
     And Snap I follow link "Topics course"
    Then I should see "New section title" in the "#course-toc" "css_element"
     And I open the personal menu
-    And Snap I follow link "Weeks course"
-   Then I should see "New section title" in the "#course-toc" "css_element"
 
   @javascript
   Scenario: For non editing teachers and students, ensure new section creation is not available for any course formats.
@@ -102,3 +98,14 @@ Feature: In the Snap theme, within a course, editing teachers can create a new s
    Then I should not see "Create a new section" in the "#page-header" "css_element"
     And Snap I follow link "Social course"
    Then I should not see "Create a new section" in the "#page-header" "css_element"
+
+
+   @javascript
+   Scenario: For editing teachers, ensure new section creation is available for week format and creates the section with a default title.
+   Given I log in with snap as "teacher1"
+    And I create a new section in weekly course "Weeks course"
+    And Snap I log out
+    And I log in with snap as "student1"
+    And I open the personal menu
+    And Snap I follow link "Weeks course"
+   Then section "6" should be visible

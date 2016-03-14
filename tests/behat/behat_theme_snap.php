@@ -232,6 +232,23 @@ class behat_theme_snap extends behat_base {
     }
 
     /**
+     * @param string $coursename
+     * @Given /^I create a new section in weekly course "(?P<coursename>(?:[^"]|\\")*)"$/
+     * @return array
+     */
+    public function i_create_a_new_section_in_weekly_course($coursename) {
+        $givens = [
+            'I open the personal menu',
+            'Snap I follow link "'.$coursename.'"',
+            'I follow "Create a new section"',
+            'I should see "Title: "',
+            'I click on "Create section" "button"'
+        ];
+        $givens = array_map(function($a) {return new Given($a);}, $givens);
+        return $givens;
+    }
+
+    /**
      * I follow "Menu" fails randomly on occasions, this custom step is an alternative to resolve that issue.
      * It also avoids a failure if the menu is already open.
      * @Given /^I open the personal menu$/

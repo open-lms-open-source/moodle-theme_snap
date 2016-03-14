@@ -522,7 +522,7 @@ trait format_section_trait {
             $dateformat = get_string('strftimedateshort');
             $weekday = userdate($dates->start, $dateformat);
             $endweekday = userdate($dates->end, $dateformat);
-            $defaulttitle = $weekday.'-'.$endweekday;
+            $datesection = $weekday.'-'.$endweekday;
         }
         $heading = get_string('addanewsection', 'theme_snap');
         $output = "<section id='snap-add-new-section' class='clearfix' tabindex='-1'>
@@ -537,7 +537,7 @@ trait format_section_trait {
         if($course->format === 'topics'){
             $output .= "<input class='h3' id='newsection' type='text' maxlength='250' name='newsection' $required placeholder='".get_string('title', 'theme_snap')."'>";
         } else {
-            $output .= "<h3>".$defaulttitle."</h3>";
+            $output .= "<h3>".$defaulttitle.': '.$datesection."</h3>";
         }
         $output .= '</div>';
         $output .= '<div class="form-group">';
