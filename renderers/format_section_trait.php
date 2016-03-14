@@ -534,7 +534,7 @@ trait format_section_trait {
         $output .= html_writer::input_hidden_params($url);
         $output .= '<div class="form-group">';
         $output .= "<label for='newsection' class='sr-only'>".get_string('title', 'theme_snap')."</label>";
-        if($course->format === 'topics'){
+        if ($course->format === 'topics') {
             $output .= "<input class='h3' id='newsection' type='text' maxlength='250' name='newsection' $required placeholder='".get_string('title', 'theme_snap')."'>";
         } else {
             $output .= "<h3>".$defaulttitle.': '.$datesection."</h3>";

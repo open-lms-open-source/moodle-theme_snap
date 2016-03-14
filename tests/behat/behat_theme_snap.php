@@ -241,7 +241,7 @@ class behat_theme_snap extends behat_base {
             'I open the personal menu',
             'Snap I follow link "'.$coursename.'"',
             'I follow "Create a new section"',
-            'I should see "Title: "',
+            'I should see "Title: 8 April-14 April"',
             'I click on "Create section" "button"'
         ];
         $givens = array_map(function($a) {return new Given($a);}, $givens);

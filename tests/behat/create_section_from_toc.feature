@@ -27,11 +27,11 @@ Feature: In the Snap theme, within a course, editing teachers can create a new s
     Given the following config values are set as admin:
       | theme | snap |
     And the following "courses" exist:
-      | fullname               | shortname     | category | groupmode | format         |
-      | Topics course          | course_topics | 0        | 1         | topics         |
-      | Weeks course           | course_weeks  | 0        | 1         | weeks          |
-      | Single activity course | course_single | 0        | 1         | singleactivity |
-      | Social course          | course_social | 0        | 1         | social         |
+      | fullname               | shortname     | category | groupmode | format         | startdate  |
+      | Topics course          | course_topics | 0        | 1         | topics         |            |
+      | Weeks course           | course_weeks  | 0        | 1         | weeks          | 1457078400 |
+      | Single activity course | course_single | 0        | 1         | singleactivity |            |
+      | Social course          | course_social | 0        | 1         | social         |            |
     And the following "users" exist:
       | username | firstname | lastname | email                |
       | teacher1 | Teacher   | 1        | teacher1@example.com |
@@ -108,4 +108,4 @@ Feature: In the Snap theme, within a course, editing teachers can create a new s
     And I log in with snap as "student1"
     And I open the personal menu
     And Snap I follow link "Weeks course"
-   Then section "6" should be visible
+    Then I should see "8 April - 14 April" in the "#course-toc" "css_element"
