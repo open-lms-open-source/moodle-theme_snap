@@ -510,6 +510,8 @@ trait format_section_trait {
         if ($course->format === 'topics') {
             $required = 'required';
         } else {
+            // Take this part of code from /course/format/weeks/lib.php on functions
+            // get_section_name($section) and get_section_dates($section).
             $oneweekseconds = 60*60*24*7;
             // Hack alert. We add 2 hours to avoid possible DST problems. (e.g. we go into daylight
             // savings and the date changes.
