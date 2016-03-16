@@ -518,11 +518,11 @@ trait format_section_trait {
             $dates->start = $startdate + ($oneweekseconds * $sectionnum);
             $dates->end = $dates->start + $oneweekseconds;
             // We subtract 24 hours for display purposes.
-            $dates->end = ($dates->end - (60* 60 * 24));
+            $dates->end = ($dates->end - (60 * 60 * 24));
             $dateformat = get_string('strftimedateshort');
             $weekday = userdate($dates->start, $dateformat);
             $endweekday = userdate($dates->end, $dateformat);
-            $datesection = $weekday.'-'.$endweekday;
+            $datesection = $weekday.' - '.$endweekday;
         }
         $heading = get_string('addanewsection', 'theme_snap');
         $output = "<section id='snap-add-new-section' class='clearfix' tabindex='-1'>

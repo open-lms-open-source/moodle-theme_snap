@@ -103,9 +103,13 @@ Feature: In the Snap theme, within a course, editing teachers can create a new s
    @javascript
    Scenario: For editing teachers, ensure new section creation is available for week format and creates the section with a default title.
    Given I log in with snap as "teacher1"
-    And I create a new section in weekly course "Weeks course"
-    And Snap I log out
-    And I log in with snap as "student1"
-    And I open the personal menu
-    And Snap I follow link "Weeks course"
+    Then I open the personal menu
+     And Snap I follow link "Weeks course"
+     And I follow "Create a new section"
+    Then I should see "Title: 8 April - 14 April"
+     And I click on "Create section" "button"
+     And Snap I log out
+     And I log in with snap as "student1"
+     And I open the personal menu
+     And Snap I follow link "Weeks course"
     Then I should see "8 April - 14 April" in the "#course-toc" "css_element"
