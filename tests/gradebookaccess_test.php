@@ -46,34 +46,29 @@ class theme_snap_gradebookaccess_testcase extends advanced_testcase {
         // Get the id for the necessary roles.
         $studentrole = $DB->get_field('role', 'id', array('shortname' => 'student'));
         $editteacherrole = $DB->get_field('role', 'id', array('shortname' => 'editingteacher'));
-        $this->assertEquals(5, $studentrole);
-        $this->assertEquals(3, $editteacherrole);
+        $this->assertNotEquals($editteacherrole, $studentrole);
 
         // Create a course with grades enabled to students.
-        $course1 = $this->getDataGenerator()->create_course(array('showgrades'=>1));
-        $this->course = $course1;
-        $PAGE->set_course($this->course);
-        $courseid = $course1->id;
-        $this->assertEquals(1, $COURSE->showgrades);
+        $course1 = $this->getDataGenerator()->create_course(array('showgrades' => 1));
+        $PAGE->set_course($course1); // This becomes necessary because gradebook_accessible depends on $COURSE.
+        $this->assertEquals(1, $course1->showgrades);
 
         // Create two users.
-        $studentuser = $this->getDataGenerator()->create_user(array('username'=>'stud1', 'firstname'=>'Wayne'));
-        $studentuserid = $studentuser->id;
-        $teacheruser = $this->getDataGenerator()->create_user(array('username'=>'teach1', 'firstname'=>'Jamie'));
-        $teacheruserid = $teacheruser->id;
+        $student = $this->getDataGenerator()->create_user();
+        $teacher = $this->getDataGenerator()->create_user();
 
         // Enrol users to created course.
-        $this->getDataGenerator()->enrol_user($studentuserid, $courseid, $studentrole);
-        $this->getDataGenerator()->enrol_user($teacheruserid, $courseid, $editteacherrole);
+        $this->getDataGenerator()->enrol_user($student->id, $course1->id, $studentrole);
+        $this->getDataGenerator()->enrol_user($teacher->id, $course1->id, $editteacherrole);
 
-        $this->setUser($teacheruser); // Set the teacher as active user.
+        $this->setUser($teacher); // Set the teacher as active user.
 
         // Check functionality of gradebook_accessible.
-        $coursecontext = context_course::instance($COURSE->id);
+        $coursecontext = context_course::instance($course1->id);
         $isavailable = snap_shared::gradebook_accessible($coursecontext);
-        $this->assertTrue($isavailable); // Always accessible for teachers.
+        $this->assertTrue($isavailable);
 
-        $this->setUser($studentuser); // Set the student as active user.
+        $this->setUser($student); // Set the student as active user.
         $isavailable = snap_shared::gradebook_accessible($coursecontext);
         $this->assertTrue($isavailable); // As long as showgrades is active, must be available for studs.
     }
@@ -86,34 +81,29 @@ class theme_snap_gradebookaccess_testcase extends advanced_testcase {
         // Get the id for the necessary roles.
         $studentrole = $DB->get_field('role', 'id', array('shortname' => 'student'));
         $editteacherrole = $DB->get_field('role', 'id', array('shortname' => 'editingteacher'));
-        $this->assertEquals(5, $studentrole);
-        $this->assertEquals(3, $editteacherrole);
+        $this->assertNotEquals($editteacherrole, $studentrole);
 
         // Create a course with grades disabled to students.
-        $course2 = $this->getDataGenerator()->create_course(array('showgrades'=>0));
-        $this->course = $course2;
-        $PAGE->set_course($this->course);
-        $courseid = $course2->id;
-        $this->assertEquals(0, $COURSE->showgrades);
+        $course2 = $this->getDataGenerator()->create_course(array('showgrades' => 0));
+        $PAGE->set_course($course2); // This becomes necessary because gradebook_accessible depends on $COURSE.
+        $this->assertEquals(0, $course2->showgrades);
 
         // Create two users.
-        $studentuser = $this->getDataGenerator()->create_user(array('username'=>'stud2', 'firstname'=>'Mike'));
-        $studentuserid = $studentuser->id;
-        $teacheruser = $this->getDataGenerator()->create_user(array('username'=>'teach2', 'firstname'=>'John'));
-        $teacheruserid = $teacheruser->id;
+        $student = $this->getDataGenerator()->create_user();
+        $teacher = $this->getDataGenerator()->create_user();
 
         // Enrol users to created course.
-        $this->getDataGenerator()->enrol_user($studentuserid, $courseid, $studentrole);
-        $this->getDataGenerator()->enrol_user($teacheruserid, $courseid, $editteacherrole);
+        $this->getDataGenerator()->enrol_user($student->id, $course2->id, $studentrole);
+        $this->getDataGenerator()->enrol_user($teacher->id, $course2->id, $editteacherrole);
 
-        $this->setUser($teacheruser); // Set the teacher as active user.
+        $this->setUser($teacher); // Set the teacher as active user.
 
         // Check functionality of gradebook_accessible.
-        $coursecontext = context_course::instance($COURSE->id);
+        $coursecontext = context_course::instance($course2->id);
         $isavailable = snap_shared::gradebook_accessible($coursecontext);
-        $this->assertTrue($isavailable); // Always accessible for teachers.
+        $this->assertTrue($isavailable);
 
-        $this->setUser($studentuser); // Set the student as active user.
+        $this->setUser($student); // Set the student as active user.
         $isavailable = snap_shared::gradebook_accessible($coursecontext);
         $this->assertFalse($isavailable); // As long as showgrades is not active, mustn't be available for studs.
     }
