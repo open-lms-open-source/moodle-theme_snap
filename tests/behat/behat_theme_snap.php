@@ -74,7 +74,7 @@ class behat_theme_snap extends behat_base {
     /**
      * Logs in the user. There should exist a user with the same value as username and password.
      *
-     * @Given /^I log in with snap as "(?P<username_string>(?:[^"]|\\")*)"$/
+     * @Given /^I log in as "(?P<username_string>(?:[^"]|\\")*)" \(theme_snap\)$/
      */
     public function i_log_in_with_snap_as($username) {
 
@@ -85,7 +85,6 @@ class behat_theme_snap extends behat_base {
         $steps = array(
             new Given('I click on "' . get_string('login') . '" "link"'),
             new Given('I should not see "Log out"'),
-            new Given('I wait until "#loginbtn" "css_element" is visible'),
             new Given('I set the field "' . get_string('username') . '" to "' . $this->escape($username) . '"'),
             new Given('I set the field "' . get_string('password') . '" to "'. $this->escape($username) . '"'),
             new Given('I press "' . get_string('login') . '"')
@@ -116,18 +115,6 @@ class behat_theme_snap extends behat_base {
         $input = '#snap-drop-file-'.$section;
         $file = $this->find('css', $input);
         $file->attachFile($filepath);
-    }
-
-    /**
-     * Bypass javascript attributed to link and just go straight to href.
-     * @param string $link
-     *
-     * @Given /^Snap I follow link "(?P<link>(?:[^"]|\\")*)"$/
-     */
-    public function i_follow_href($link) {
-        $el = $this->find_link($link);
-        $href = $el->getAttribute('href');
-        $this->getSession()->visit($href);
     }
 
     /**
@@ -173,8 +160,8 @@ class behat_theme_snap extends behat_base {
      */
     public function i_can_see_course_in_all_sections_mode($course) {
         $givens = [
-            'I follow "Menu"',
-            'Snap I follow link "'.$course.'"',
+            'I open the personal menu',
+            'I follow "'.$course.'"',
             'I wait until the page is ready',
             'I go to single course section 1',
             '".section-navigation.navigationtitle" "css_element" should not exist',
@@ -193,12 +180,11 @@ class behat_theme_snap extends behat_base {
     /**
      * @param string
      * @return array
-     * @Given  /^Snap I log out$/
+     * @Given  /^I log out \(theme_snap\)$/
      */
     public function i_log_out() {
-        $this->getSession()->executeScript("window.scrollTo(0, 0);");
         $givens = [
-            'I follow "Menu"',
+            'I open the personal menu',
             'I wait until ".btn.logout" "css_element" is visible',
             'I follow "Log out"',
             'I wait until the page is ready'
@@ -214,7 +200,7 @@ class behat_theme_snap extends behat_base {
     public function i_create_a_new_section_in_course($coursename) {
         $givens = [
             'I open the personal menu',
-            'Snap I follow link "'.$coursename.'"',
+            'I follow "'.$coursename.'"',
             'I follow "Create a new section"',
             'I set the field "Title" to "New section title"',
             'I click on "Create section" "button"'
@@ -230,7 +216,6 @@ class behat_theme_snap extends behat_base {
      */
     public function i_open_the_personal_menu() {
         $node = $this->find('css', '#primary-nav');
-        $this->getSession()->executeScript("window.scrollTo(0, 0);");
         if (!$node->isVisible()) {
             return [new Given('I click on "#js-personal-menu-trigger" "css_element"')];
         } else {
@@ -333,66 +318,10 @@ class behat_theme_snap extends behat_base {
             throw new ExpectationException($msg, $this->getSession());
         }
 
-        // Let's also scroll to the node and make sure its in the viewport.
-        $this->scroll_to_node($node);
-
         // Hurray, we found a visible link - let's click it!
         $node->click();
     }
 
-    /**
-     * Scroll to node
-     * @param NodeElement $node
-     */
-    protected function scroll_to_node(NodeElement $node) {
-        $nodexpath = str_replace('"', '\"', $node->getXpath());
-        $script =
-            <<<EOF
-                        var el = document.evaluate("$nodexpath",
-                                       document,
-                                       null,
-                                       XPathResult.FIRST_ORDERED_NODE_TYPE,
-                                       null
-                                       ).singleNodeValue;
-
-            var rect = el.getBoundingClientRect();
-            var height = rect.bottom - rect.top;
-            window.scrollTo(0, rect.top-(height/2));
-EOF;
-
-        $this->getSession()->executeScript($script);
-    }
-
-    /**
-     * Make sure element is within viewport
-     *
-     * @param string $element
-     * @param string $selectortype
-     * @Given /^I scroll until "(?P<element_string>(?:[^"]|\\")*)" "(?P<selector_string>[^"]*)" is visible$/
-     */
-    public function i_scroll_to_element($element, $selectortype) {
-        // Getting Mink selector and locator.
-        list($selector, $locator) = $this->transform_selector($selectortype, $element);
-
-        // Get node.
-        $node = $this->find($selector, $locator);
-        $this->scroll_to_node($node);
-    }
-
-    /**
-     * Presses button with specified id|name|title|alt|value.
-     *
-     * @When /^I press "(?P<button_string>(?:[^"]|\\")*)" \(theme_snap\)$/
-     * @throws ElementNotFoundException Thrown by behat_base::find
-     * @param string $button
-     */
-    public function snap_press_button($button) {
-        // Ensures the button is present.
-        $buttonnode = $this->find_button($button);
-        $this->scroll_to_node($buttonnode);
-        $this->ensure_node_is_visible($buttonnode);
-        $buttonnode->press();
-    }
 
     /**
      * List steps required for adding a date restriction
@@ -414,7 +343,7 @@ EOF;
             'I set the field "day" to "'.$day.'"',
             'I set the field "Month" to "'.$month.'"',
             'I set the field "year" to "'.$year.'"',
-            'I press "'.$savestr.'" (theme_snap)',
+            'I press "'.$savestr.'"',
             'I wait until the page is ready'
         ];
 

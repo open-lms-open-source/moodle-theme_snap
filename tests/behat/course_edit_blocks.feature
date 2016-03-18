@@ -46,9 +46,9 @@ Feature: When the moodle theme is set to Snap, teachers only see block edit cont
     Given the following "activities" exist:
       | activity | course | idnumber | name             | intro                         | section |
       | assign   | C1     | assign1  | Test assignment1 | Test assignment description 1 | 1       |
-    And I log in with snap as "teacher1"
+    And I log in as "teacher1" (theme_snap)
     And I open the personal menu
-    And Snap I follow link "Course 1"
+    And I follow "Course 1"
     And I wait until the page is ready
     And I follow "Topic 1"
     Then "#section-1" "css_element" should exist
@@ -61,21 +61,21 @@ Feature: When the moodle theme is set to Snap, teachers only see block edit cont
     # edit mode persists if course accessed directly via menu
     # (this is basically to check it works without the &notifyeditingon parameter
     Given I open the personal menu
-    And Snap I follow link "Course 1"
+    And I follow "Course 1"
     Then course page should be in edit mode
 
     # edit mode does not persist between courses
     Given I open the personal menu
-    And Snap I follow link "Course 2"
+    And I follow "Course 2"
     And I wait until the page is ready
     And I follow "Course Tools"
     Then I should see "Edit course blocks"
 
   @javascript
   Scenario: If edit mode is on for a course, it should not carry over to site homepage
-    Given I log in with snap as "admin"
+    Given I log in as "admin" (theme_snap)
     And I open the personal menu
-    And Snap I follow link "Course 1"
+    And I follow "Course 1"
     And I wait until the page is ready
     And I follow "Course Tools"
     And I follow "Edit course blocks"
@@ -85,21 +85,21 @@ Feature: When the moodle theme is set to Snap, teachers only see block edit cont
 
   @javascript
   Scenario: If edit mode is on for site homepage, it should not carry over to courses
-    Given I log in with snap as "admin"
+    Given I log in as "admin" (theme_snap)
     And I am on site homepage
     And I click on "#admin-menu-trigger" "css_element"
     And I follow "Turn editing on"
     When I open the personal menu
-    And Snap I follow link "Course 1"
+    And I follow "Course 1"
     And I wait until the page is ready
     And I follow "Course Tools"
     Then I should see "Edit course blocks"
 
   @javascript
   Scenario: In edit mode on a folderview course, teacher can see sections whilst editting on.
-    Given I log in with snap as "teacher1"
+    Given I log in as "teacher1" (theme_snap)
     And I open the personal menu
-    And Snap I follow link "Course 3"
+    And I follow "Course 3"
     And I wait until the page is ready
     And I click on "#page-mast .singlebutton input[type=\"submit\"]" "css_element"
     And I wait until the page is ready

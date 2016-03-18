@@ -49,9 +49,9 @@ Feature: When the moodle theme is set to Snap, conditional restrictions work as 
 
   @javascript
   Scenario: Conditionally restricted section notices show for students only when restrictions not met but always show for teachers.
-  Given I log in with snap as "teacher1"
+  Given I log in as "teacher1" (theme_snap)
     And I open the personal menu
-    And Snap I follow link "Course 1"
+    And I follow "Course 1"
     And I wait until the page is ready
     And I go to course section 1
     And I restrict course asset "S1 Restricted - date past" by date to "yesterday"
@@ -72,10 +72,10 @@ Feature: When the moodle theme is set to Snap, conditional restrictions work as 
     And I should see available from date of "yesterday" in section 1
     And I go to course section 2
     And I should see available from date of "tomorrow" in section 2
-    And Snap I log out
-    And I log in with snap as "student1"
+    And I log out (theme_snap)
+    And I log in as "student1" (theme_snap)
     And I open the personal menu
-    And Snap I follow link "Course 1"
+    And I follow "Course 1"
     And I wait until the page is ready
     And I should not see "Conditional" in TOC item 1
     And I should see "Conditional" in TOC item 2

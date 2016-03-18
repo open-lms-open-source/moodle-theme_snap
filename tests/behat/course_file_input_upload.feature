@@ -42,9 +42,9 @@ Feature: When the moodle theme is set to Snap, teachers can upload files as reso
 
   @javascript
   Scenario: In read mode, teacher uploads file.
-    Given I log in with snap as "teacher1"
-    And I follow "Menu"
-    And I follow "Course"
+    Given I log in as "teacher1" (theme_snap)
+    And I open the personal menu
+    And I follow "Course 1"
     And I wait until the page is ready
     And I follow "Topic 1"
     Then "#section-1" "css_element" should exist
@@ -56,9 +56,9 @@ Feature: When the moodle theme is set to Snap, teachers can upload files as reso
 
   @javascript
   Scenario: Student cannot upload file.
-    Given I log in with snap as "student1"
-    And I follow "Menu"
-    And I follow "Course"
+    Given I log in as "student1" (theme_snap)
+    And I open the personal menu
+    And I follow "Course 1"
     And I wait until the page is ready
     And I follow "Topic 1"
     Then "#snap-drop-file" "css_element" should not exist

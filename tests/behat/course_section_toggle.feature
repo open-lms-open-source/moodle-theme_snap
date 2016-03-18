@@ -42,9 +42,9 @@ Feature: When the moodle theme is set to Snap, teachers can toggle the visibilit
 
   @javascript
   Scenario: In read mode, teacher hides section.
-    Given I log in with snap as "teacher1"
-    And I follow "Menu"
-    And I follow "Course"
+    Given I log in as "teacher1" (theme_snap)
+    And I open the personal menu
+    And I follow "Course 1"
     And I wait until the page is ready
     And I follow "Topic 2"
    Then "#section-2" "css_element" should exist
@@ -54,9 +54,9 @@ Feature: When the moodle theme is set to Snap, teachers can toggle the visibilit
 
   @javascript
   Scenario: In read mode, student cannot hide section.
-    Given I log in with snap as "student1"
-    And I follow "Menu"
-    And I follow "Course"
+    Given I log in as "student1" (theme_snap)
+    And I open the personal menu
+    And I follow "Course 1"
     And I wait until the page is ready
     And I follow "Topic 2"
     Then ".section-2 .editing_showhide" "css_element" should not exist

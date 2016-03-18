@@ -43,48 +43,48 @@ Feature: When the moodle theme is set to Snap, the admin block will only be show
 
   @javascript
   Scenario: Student does not see admin block on any page.
-    Given I log in with snap as "student1"
+    Given I log in as "student1" (theme_snap)
     # Check site page.
     And I am on site homepage
    Then "#admin-menu-trigger" "css_element" should not exist
     # Check dashboard page.
     And I am on homepage
    Then "#admin-menu-trigger" "css_element" should not exist
-    And I follow "Menu"
+    And I open the personal menu
     And I follow "Course 1"
    Then "#admin-menu-trigger" "css_element" should not exist
-    And I follow "Menu"
+    And I open the personal menu
     And I follow "View your profile"
    Then "#admin-menu-trigger" "css_element" should not exist
 
   @javascript
   Scenario: Teacher does not see admin block on any page, except course page.
-    Given I log in with snap as "teacher1"
+    Given I log in as "teacher1" (theme_snap)
     # Check site page.
     And I am on site homepage
     Then "#admin-menu-trigger" "css_element" should not exist
     # Check dashboard page.
     And I am on homepage
     Then "#admin-menu-trigger" "css_element" should not exist
-    And I follow "Menu"
+    And I open the personal menu
     And I follow "Course 1"
     Then "#admin-menu-trigger" "css_element" should exist
-    And I follow "Menu"
+    And I open the personal menu
     And I follow "View your profile"
     Then "#admin-menu-trigger" "css_element" should not exist
 
   @javascript
   Scenario: Admin sees admin block on all pages, except profile page.
-    Given I log in with snap as "admin"
+    Given I log in as "admin" (theme_snap)
     # Check site page.
     And I am on site homepage
     Then "#admin-menu-trigger" "css_element" should exist
     # Check dashboard page.
     And I am on homepage
     Then "#admin-menu-trigger" "css_element" should exist
-    And I follow "Menu"
+    And I open the personal menu
     And I follow "Course 1"
     Then "#admin-menu-trigger" "css_element" should exist
-    And I follow "Menu"
+    And I open the personal menu
     And I follow "View your profile"
     Then "#admin-menu-trigger" "css_element" should not exist

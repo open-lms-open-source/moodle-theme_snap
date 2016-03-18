@@ -29,6 +29,6 @@ Feature: When the moodle theme is set to Snap, behat tests that navigate via the
       | theme | snap |
 
   Scenario: Log in as admin and always see the navigation block in behat
-    Given I log in with snap as "admin"
+    Given I log in as "admin" (theme_snap)
     Then ".block_navigation" "css_element" should exist
 
