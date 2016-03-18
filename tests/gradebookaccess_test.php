@@ -31,13 +31,6 @@ require_once($CFG->dirroot.'/theme/snap/renderers/snap_shared.php');
 
 class theme_snap_gradebookaccess_testcase extends advanced_testcase {
 
-    protected function setUp() {
-        global $USER;
-        // The user we are going to test this on.
-        $this->setAdminUser();
-        $this->user = $USER;
-    }
-
     public function test_gradebookaccess_gradesavailableforstuds() {
         global $DB, $COURSE, $PAGE;
 
@@ -46,12 +39,10 @@ class theme_snap_gradebookaccess_testcase extends advanced_testcase {
         // Get the id for the necessary roles.
         $studentrole = $DB->get_field('role', 'id', array('shortname' => 'student'));
         $editteacherrole = $DB->get_field('role', 'id', array('shortname' => 'editingteacher'));
-        $this->assertNotEquals($editteacherrole, $studentrole);
 
         // Create a course with grades enabled to students.
         $course1 = $this->getDataGenerator()->create_course(array('showgrades' => 1));
         $PAGE->set_course($course1); // This becomes necessary because gradebook_accessible depends on $COURSE.
-        $this->assertEquals(1, $course1->showgrades);
 
         // Create two users.
         $student = $this->getDataGenerator()->create_user();
@@ -81,12 +72,10 @@ class theme_snap_gradebookaccess_testcase extends advanced_testcase {
         // Get the id for the necessary roles.
         $studentrole = $DB->get_field('role', 'id', array('shortname' => 'student'));
         $editteacherrole = $DB->get_field('role', 'id', array('shortname' => 'editingteacher'));
-        $this->assertNotEquals($editteacherrole, $studentrole);
 
         // Create a course with grades disabled to students.
         $course2 = $this->getDataGenerator()->create_course(array('showgrades' => 0));
         $PAGE->set_course($course2); // This becomes necessary because gradebook_accessible depends on $COURSE.
-        $this->assertEquals(0, $course2->showgrades);
 
         // Create two users.
         $student = $this->getDataGenerator()->create_user();
