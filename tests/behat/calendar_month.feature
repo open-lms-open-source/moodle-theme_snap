@@ -41,7 +41,7 @@ Feature: When a user clicks on next or previous month link in the calendar block
     or in the previous month link
   Given I log in with snap as "teacher1"
    Then I open the personal menu
-    And Snap I follow link "Course 1"
+    And I follow "Course 1"
     And I wait until the page is ready
    Then I follow "Course Tools"
     And I follow "Edit course blocks"
@@ -57,7 +57,7 @@ Feature: When a user clicks on next or previous month link in the calendar block
     or in the previous month link
   Given I log in with snap as "teacher1"
    Then I open the personal menu
-    And Snap I follow link "Course 1"
+    And I follow "Course 1"
     And I wait until the page is ready
    Then I follow "Course Tools"
     And I follow "Edit course blocks"
