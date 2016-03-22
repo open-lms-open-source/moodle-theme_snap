@@ -412,6 +412,12 @@ class snap_shared extends renderer_base {
      * @return bool
      */
     public static function gradebook_accessible($context) {
+        global $COURSE;
+
+        // Ask if user has not capabilities and if course is set to not to show the grades to students.
+        if ((!has_capability('gradereport/grader:view', $context)) && ($COURSE->showgrades == 0)) {
+            return false;
+        }
 
         // Find all enabled reports.
         $reports = core_component::get_plugin_list('gradereport');
