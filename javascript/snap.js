@@ -213,7 +213,7 @@ function snapInit() {
 
         // If calendar navigation has been clicked then go back to calendar
         if (onCoursePage() && typeof(urlParams.time) !== 'undefined'){
-            location.hash = 'blocks';
+            location.hash = 'coursetools';
             if ($('.block_calendar_month')) {
                 scrollToElement($('.block_calendar_month'));
             }
@@ -1099,7 +1099,7 @@ function snapInit() {
             // Check if we are searching for a mod.
             checkHashScrollToModule();
         }
-        
+
         // Book mod print button.
         if($('#page-mod-book-view').length) {
             var urlParams = getURLParams(location.href);
