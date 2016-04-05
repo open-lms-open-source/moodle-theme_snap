@@ -341,7 +341,9 @@ class behat_theme_snap extends behat_base {
             '"Add restriction..." "dialogue" should be visible',
             'I click on "Date" "button" in the "Add restriction..." "dialogue"',
             'I set the field "day" to "'.$day.'"',
-            'I set the field "Month" to "'.$month.'"',
+            // Need to be extra-specific about the month select as there's
+            // other selects with that same label on the page.
+            'I set the field with xpath "//select[@name=\'x[month]\']" to "'.$month.'"',
             'I set the field "year" to "'.$year.'"',
             'I press "'.$savestr.'"',
             'I wait until the page is ready'
