@@ -612,7 +612,21 @@ class theme_snap_core_renderer extends toc_renderer {
         if (!isloggedin() || $isguest) {
             $login = get_string('login');
             $cancel = get_string('cancel');
-            $username = get_string('username');
+            if (!empty($CFG->loginpasswordautocomplete)) {
+                $autocomplete = 'autocomplete="off"';
+            } else {
+                $autocomplete = '';
+            }
+            if (empty($CFG->authloginviaemail)) {
+                $username = get_string('username');
+            } else {
+                $username = get_string('usernameemail');
+            }
+            if (empty($CFG->loginhttps)) {
+                $wwwroot = $CFG->wwwroot;
+            } else {
+                $wwwroot = str_replace("http://", "https://", $CFG->wwwroot);
+            }
             $password = get_string('password');
             $loginform = get_string('loginform', 'theme_snap');
             $helpstr = '';
@@ -630,7 +644,7 @@ class theme_snap_core_renderer extends toc_renderer {
                         '<a class="btn btn-primary" href="'.
                         s($CFG->wwwroot).'/login/logout.php?sesskey='.sesskey().'">'.$logout.'</a></p>';
                     $helpstr .= '<p class="text-center">'.
-                        '<a href="'.s($CFG->wwwroot).'/login/index.php">'.
+                        '<a href="'.s($wwwroot).'/login/index.php">'.
                         get_string('helpwithloginandguest', 'theme_snap').'</a></p>';
                 } else {
                     if (empty($CFG->forcelogin)) {
@@ -638,12 +652,12 @@ class theme_snap_core_renderer extends toc_renderer {
                     } else {
                         $help = get_string('helpwithlogin', 'theme_snap');
                     }
-                    $helpstr = "<p class='text-center'><a href='".s($CFG->wwwroot)."/login/index.php'>$help</a></p>";
+                    $helpstr = "<p class='text-center'><a href='".s($wwwroot)."/login/index.php'>$help</a></p>";
                 }
             }
             $output .= $this->login_button();
             $output .= "<div class='fixy' id='login' role='dialog' aria-label='$loginform' tabindex='0'>
-            <form action='$CFG->wwwroot/login/'  method='post'>
+            <form action='$wwwroot/login/index.php' method='post'>
         <a id='fixy-close' class='pull-right snap-action-icon' href='#'>
             <i class='icon icon-close'></i><small>$cancel</small>
         </a>
@@ -652,7 +666,7 @@ class theme_snap_core_renderer extends toc_renderer {
             <label for='username'>$username</label>
             <input autocapitalize='off' type='text' name='username' id='username' placeholder='".s($username)."'>
             <label for='password'>$password</label>
-            <input type='password' name='password' id='password' placeholder='".s($password)."'>
+            <input type='password' name='password' id='password' placeholder='".s($password)."' $autocomplete>
             <br>
             <input type='submit' id='loginbtn' value='".s($login)."'>
             $helpstr
@@ -870,7 +884,7 @@ class theme_snap_core_renderer extends toc_renderer {
         $heading = parent::page_heading($tag);
 
         // For the user profile page message button we need to call 2.9 content_header.
-        if($this->page->pagelayout == 'mypublic') {
+        if ($this->page->pagelayout == 'mypublic') {
             $heading = parent::context_header();
         }
         // For the front page we add the site strapline.
