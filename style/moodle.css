@@ -3419,6 +3419,9 @@ span.editinstructions {
     background-color: #FFF;
   }
 }
+#id_introeditor_ifr {
+  max-width: 100%;
+}
 .filemanager a,
 .file-picker a,
 .filemanager a:hover,
@@ -20087,7 +20090,7 @@ fieldset[disabled] a#page-site-index .section-modchooser-link .section-modchoose
 @media screen and (max-width: 991px) {
   #logo {
     max-width: 20%;
-    margin: 3% 0;
+    vertical-align: bottom;
   }
 }
 .fixy .snap-media-object {
