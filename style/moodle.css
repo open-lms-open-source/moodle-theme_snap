@@ -3419,9 +3419,6 @@ span.editinstructions {
     background-color: #FFF;
   }
 }
-#id_introeditor_ifr {
-  max-width: 100%;
-}
 .filemanager a,
 .file-picker a,
 .filemanager a:hover,
@@ -23710,6 +23707,9 @@ div.editor_atto_toolbar div.atto_group {
 .behat-site .fixy-inner {
   -webkit-animation-name: none;
           animation-name: none;
+}
+#id_introeditor_ifr {
+  max-width: 100%;
 }
 /**
  * Snap core swatch.
