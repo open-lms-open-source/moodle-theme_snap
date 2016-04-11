@@ -37,12 +37,13 @@ class bb_dashboard_link implements \renderable {
      * @throws coding_exception
      */
     function __construct() {
+        global $USER;
 
         if (!class_exists('local_geniusws\navigation')) {
             return;
         }
 
-        if (!navigation::dashboard_link_viewable()) {
+        if (!navigation::dashboard_link_viewable($USER)) {
             return;
         }
 
