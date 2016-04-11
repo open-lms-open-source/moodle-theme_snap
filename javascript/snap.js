@@ -436,7 +436,6 @@ function snapInit() {
      */
     var updatePersonalMenu = function(){
 
-
         /**
          * Check if the browser supports localstorage.
          * Safari on private mode does not support write on this object
