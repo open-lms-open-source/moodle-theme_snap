@@ -435,6 +435,21 @@ function snapInit() {
      * @author Stuart Lamour
      */
     var updatePersonalMenu = function(){
+
+        /**
+         * Check if the browser supports localstorage.
+         * Safari on private mode does not support write on this object
+        */
+        var supportlocalstorage = true;
+        if (typeof localStorage === 'object') {
+            try {
+                localStorage.setItem('localStorage', 1);
+                localStorage.removeItem('localStorage');
+            } catch (e) {
+                supportlocalstorage = false;
+            }
+        }
+
         $('#primary-nav').focus();
         // primary nav showing so hide the other dom parts
         $('#page, #moodle-footer, #js-personal-menu-trigger, #logo, .skiplinks').hide(0);
@@ -461,7 +476,9 @@ function snapInit() {
                           url: M.cfg.wwwroot + '/theme/snap/rest.php?action=get_' + type +'&contextid=' + M.cfg.context,
                           success: function(data){
                             logmsg('fetched ' + type);
-                            window.sessionStorage[cache_key] = data.html;
+                            if (supportlocalstorage) {
+                                window.sessionStorage[cache_key] = data.html;
+                            }
                             // Note: we can't use .data because that does not manipulate the dom, we need the data
                             // attribute populated immediately so things like behat can utilise it.
                             // .data just sets the value in memory, not the dom.
@@ -525,7 +542,9 @@ function snapInit() {
                 success: function(data){
                     if (data.info) {
                         logmsg('fetched coursedata', data.info);
-                        window.sessionStorage[courseinfo_key] = JSON.stringify(data.info);
+                        if (supportlocalstorage) {
+                            window.sessionStorage[courseinfo_key] = JSON.stringify(data.info);
+                        }
                         applycourseinfo(data.info);
                     } else {
                         logwarn('fetched coursedata with error: JSON data object is missing info property', data);
