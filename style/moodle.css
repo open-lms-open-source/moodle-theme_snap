@@ -17607,7 +17607,7 @@ section#region-main
   -webkit-box-shadow: 0;
           box-shadow: 0;
 }
-.pagelayout-course .type_course > ul > li:first-child {
+.pagelayout-course #settingsnav .type_course > ul > li:first-child {
   display: none;
 }
 #page-course-view-folderview .type_course ul > li:first-child {
@@ -20594,6 +20594,11 @@ footer #moodle-footer
         animation-timing-function: cubic-bezier(.694, .0482, .335, 1);
         animation-duration: 0.33s;
         */
+}
+.bb_dashboard_link img {
+  width: 1em;
+  height: 1em;
+  margin-right: 0.25em;
 }
 #page {
   margin: 0;
@@ -23690,6 +23695,10 @@ div.editor_atto_toolbar div.atto_group {
 .path-grade-report-grader .gradeparent .avg .cell,
 .path-grade-report-grader .gradeparent .cell.user {
   font-size: 13px;
+}
+.behat-site #moodle-blocks {
+  visibility: visible;
+  height: inherit;
 }
 .behat-site #mr-nav {
   position: absolute;
