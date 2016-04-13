@@ -5663,7 +5663,10 @@ body:not(.format-topics):not(.format-weeks) .toc-footer {
   text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
   color: white;
 }
-.mast-image h1 {
+.mast-image #page-mast h1,
+.mast-image #page-mast a,
+.mast-image #page-mast a:visited,
+.mast-image #page-mast a:hover {
   color: white;
   text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
 }
@@ -8543,6 +8546,7 @@ body.gecko td.mceToolbar {
   position: relative;
   display: inline-block;
   margin: 0px;
+}
 #page-mod-quiz-edit .instancename {
   max-width: 16px;
 }

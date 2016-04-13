@@ -558,4 +558,21 @@ class behat_theme_snap extends behat_base {
         $generalcontext->ensure_element_exists('.block_news_items a.toggle-display', 'css_element');
         $this->i_can_see_input_with_value('Turn editing off');
     }
+
+    /**
+     * @Given /^I follow the page heading course link$/
+     */
+    public function i_follow_the_page_heading_course_link() {
+        /** @var behat_general $helper */
+        $helper = behat_context_helper::get('behat_general');
+        $helper->i_click_on('#page-mast a', 'css_element');
+    }
+
+    /**
+     * @Given /^I cannot follow the page heading$/
+     */
+    public function i_cannot_follow_the_page_heading() {
+        $this->ensure_element_exists('#page-mast', 'css_element');
+        $this->ensure_element_does_not_exist('#page-mast a', 'css_element');
+    }
 }

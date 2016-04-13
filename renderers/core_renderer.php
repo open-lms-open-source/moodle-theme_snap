@@ -898,10 +898,30 @@ class theme_snap_core_renderer extends toc_renderer {
         return "<ol class=breadcrumb>$breadcrumbs</ol>";
     }
 
-
-
+    /**
+     * Get page heading.
+     *
+     * @param string $tag
+     * @return string
+     */
     public function page_heading($tag = 'h1') {
-        $heading = parent::page_heading($tag);
+        global $COURSE;
+
+        $heading = $this->page->heading;
+
+        if ($COURSE->id != SITEID && stripos($heading, $COURSE->fullname) === 0) {
+            $courseurl = new moodle_url('/course/view.php', ['id' => $COURSE->id]);
+            // Set heading to course fullname - ditch anything else that's in it.
+            // This will make huge page headings like:
+            // My course: View: Preferences: Grader report
+            // simply show -
+            // My course
+            // This is intentional.
+            $heading = $COURSE->fullname;
+            $heading = html_writer::link($courseurl, $heading);
+        }
+
+        $heading = html_writer::tag($tag, $heading);
 
         // For the user profile page message button we need to call 2.9 content_header.
         if ($this->page->pagelayout == 'mypublic') {
