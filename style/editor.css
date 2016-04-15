@@ -8521,6 +8521,13 @@ div.editor_atto_toolbar div.atto_group {
 #id_introeditor_ifr {
   max-width: 100%;
 }
+#page-mod-quiz-edit .instancename {
+  max-width: 16px;
+}
+#page-mod-quiz-edit .activityinstance {
+  overflow: hidden;
+  max-width: 81%;
+}
 /**
  * Snap core swatch.
  *
