@@ -8518,8 +8518,31 @@ div.editor_atto_toolbar div.atto_group {
 .behat-site .fixy-inner {
   animation-name: none;
 }
-#id_introeditor_ifr {
+#id_introeditor_ifr,
+#id_description_ifr {
   max-width: 100%;
+}
+body.gecko fieldset#id_generalhdr,
+body.gecko fieldset#id_general {
+  display: table-cell;
+  max-width: 100%;
+}
+body.gecko .felement.feditor,
+body.gecko table.mceLayout,
+body.gecko table.mceLayout tr,
+body.gecko td.mceIframeContainer,
+body.gecko td.mceStatusbar {
+  display: block;
+  max-width: 100%;
+}
+body.gecko table.mceLayout tbody {
+  display: block;
+}
+body.gecko td.mceToolbar {
+  width: 100%;
+  position: relative;
+  display: inline-block;
+  margin: 0px;
 }
 /**
  * Snap core swatch.

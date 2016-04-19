@@ -1194,24 +1194,4 @@ function snapInit() {
         applyResponsiveVideo();
     });
 
-    var timer = 0;
-    /**
-     *  Function to control the resize of tinyMCE editor.
-     *
-     */
-    var checkExist = setInterval(function() {
-        timer += 1;
-        // The functions stops after 1 minute or when it finds the editor container
-        if(timer == 120){
-            clearInterval(checkExist);
-        }else{
-            if ($('#id_introeditor_ifr').length && $('#id_generalhdr').length) {
-              var container = $('#id_introeditor_ifr').parent();
-              var maxwidth = $('#id_generalhdr').parent().width();
-              container.css('max-width',maxwidth+'px');
-              clearInterval(checkExist);
-            }
-        }
-    }, 500); // check every 500ms
-
 } // End snap init
