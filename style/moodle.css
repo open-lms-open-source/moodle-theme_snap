@@ -23796,7 +23796,7 @@ body.gecko td.mceToolbar {
 }
 .courseinfo.show-all .courseinfo-teachers-extra {
   opacity: 1;
-  height: 40px;
+  height: auto;
 }
 .courseinfo.show-all .courseinfo-teachers {
   overflow: auto;
