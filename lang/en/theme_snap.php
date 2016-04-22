@@ -49,6 +49,7 @@ $string['close'] = 'Close';
 $string['conditional'] = 'Conditional';
 $string['contents'] = 'Contents';
 $string['contributed'] = 'Contributed';
+$string['courses'] = 'Courses';
 $string['coursecontacts'] = 'Course Contacts';
 $string['coursefootertoggle'] = 'Show Course Footer';
 $string['coursefootertoggledesc'] = 'The Course Footer shows useful information to users on a course page including course contacts, course description and recent activity in the course.';

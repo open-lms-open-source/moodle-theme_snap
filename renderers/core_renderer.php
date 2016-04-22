@@ -179,6 +179,57 @@ class theme_snap_core_renderer extends toc_renderer {
     }
 
 
+
+
+
+
+
+    /**
+     * Print links to more information for personal menu colums.
+     *
+     * @author: SL
+     * @param string $langstring
+     * @param string $iconname
+     * @param string $url
+     * @return string
+     */
+    public function column_header_icon_link($langstring, $iconname, $url) {
+        global $OUTPUT;
+        $text = get_string($langstring, 'theme_snap');
+        $iconurl = $OUTPUT->pix_url($iconname, 'theme');
+        $icon = '<img class="svg-icon" role="presentation" src="' .$iconurl. '">';
+        $link = '<a class="snap-personal-menu-more" href="' .$url. '"><small>' .$text. '</small>' .$icon. '</a>';
+        return $link;
+    }
+
+
+
+
+
+    /**
+     * Print links for personal menu on mobile.
+     *
+     * @author: SL
+     * @param string $langstring
+     * @param string $iconname
+     * @param string $url
+     * @return string
+     */
+    public function mobile_menu_link($langstring, $iconname, $url) {
+        global $OUTPUT;
+        $alt = get_string($langstring, 'theme_snap');
+        $iconurl = $OUTPUT->pix_url($iconname, 'theme');
+        $icon = '<img class="svg-icon" alt="' .$alt. '" src="' .$iconurl. '">';
+        $link = '<a href="' .$url. '">'.$icon.'</a>';
+        return $link;
+    }
+
+
+
+
+
+
+
     public function get_mod_recent_activity($context) {
         global $COURSE, $OUTPUT;
         $viewfullnames = has_capability('moodle/site:viewfullnames', $context);
@@ -264,27 +315,7 @@ class theme_snap_core_renderer extends toc_renderer {
 
         return $html;
     }
-
-    /**
-     * Link to browse all courses, shown to admins in the fixy menu.
-     *
-     * @return string
-     */
-    public function browse_all_courses_button() {
-        global $CFG, $OUTPUT;
-
-        $output = '';
-        if (!empty($CFG->navshowallcourses) || has_capability('moodle/site:config', context_system::instance())) {
-            $text = get_string('browseallcourses', 'theme_snap');
-            $url = new moodle_url('/course/');
-            $icon = '<img class="svg-icon" role="presentation" src="' .$OUTPUT->pix_url('courses', 'theme'). '">';
-            $output = '<a class="snap-personal-menu-more" href="' .$url. '"><small>' .$text. '</small>' .$icon. '</a>';
-        }
-        return $output;
-    }
-
-
-
+    
     /**
      * Get badge renderer.
      * @return null|theme_snap_message_badge_renderer
@@ -351,6 +382,26 @@ class theme_snap_core_renderer extends toc_renderer {
     }
 
     /**
+     * Link to browse all courses, shown to admins in the fixy menu.
+     *
+     * @return string
+     */
+    public function browse_all_courses_button() {
+        global $CFG, $OUTPUT;
+
+        $output = '';
+        if (!empty($CFG->navshowallcourses) || has_capability('moodle/site:config', context_system::instance())) {
+            $url = new moodle_url('/course/');
+            $output = $this->column_header_icon_link('browseallcourses', 'courses', $url);
+        }
+        return $output;
+    }
+
+
+
+    
+
+    /**
      * Render messages from users
      * @return string
      */
@@ -365,12 +416,8 @@ class theme_snap_core_renderer extends toc_renderer {
         $o = '<h2>'.$messagesheading.'</h2>';
         $o .= '<div id="snap-personal-menu-messages"></div>';
         
-        $messagesbutton = get_string('viewmessaging', 'theme_snap');
         $messagseurl = new moodle_url('/message/');
-        $messagesicon = $OUTPUT->pix_url('messages', 'theme');
-        $messagesimage = '<img class="svg-icon" role="presentation" src="' .$messagesicon. '">';
-        $o .= '<a class="snap-personal-menu-more" href="' .$messagseurl. '"><small>' .$messagesbutton. '</small>' .$messagesimage. '</a>';
-        
+        $o .= $this->column_header_icon_link('viewmessaging', 'messages', $messagseurl);
         return $o;
     }
 
@@ -380,23 +427,16 @@ class theme_snap_core_renderer extends toc_renderer {
      * @return string
      */
     protected function render_forumposts() {
-        global $USER, $OUTPUT;
+        global $USER;
         if (empty($this->page->theme->settings->forumpoststoggle)) {
             return '';
         }
 
         $forumpostsheading = get_string('forumposts', 'theme_snap');
-
         $o = '<h2>'.$forumpostsheading.'</h2>
         <div id="snap-personal-menu-forumposts"></div>';
-        
-        
-        $viewforumposts = get_string('viewforumposts', 'theme_snap');
         $forumurl = new moodle_url('/mod/forum/user.php', ['id' => $USER->id]);
-        $forumicon = $OUTPUT->pix_url('forumposts', 'theme');
-        $forumimage = '<img class="svg-icon" role="presentation" src="' .$forumicon. '">';
-        $o .= '<a class="snap-personal-menu-more" href="' .$forumurl. '"><small>' .$viewforumposts. '</small>' .$forumimage. '</a>';
-
+        $o .= $this->column_header_icon_link('viewforumposts', 'forumposts', $forumurl);
         return $o;
     }
 
@@ -456,31 +496,25 @@ class theme_snap_core_renderer extends toc_renderer {
     }
 
     protected function render_callstoaction() {
-        global $OUTPUT;
-        $alt = get_string('courses');
-        $icon = '<img class="svg-icon" alt="' .$alt. '" src="' .$OUTPUT->pix_url('courses', 'theme'). '">';
-        $mobilemenu = '<div id="fixy-mobile-menu">
-        <a href="#fixy-my-courses">' .$icon. '</a>';
+
+        $mobilemenu = '<div id="fixy-mobile-menu">';
+        $mobilemenu .= $this->mobile_menu_link('courses', 'courses', '#fixy-my-courses');
         $deadlines = $this->render_deadlines();
         if (!empty($deadlines)) {
             $columns[] = $deadlines;
-            $alt = get_string('deadlines', 'theme_snap');
-            $icon = '<img class="svg-icon" alt="' .$alt. '" src="' .$OUTPUT->pix_url('calendar', 'theme'). '">';
-            $mobilemenu .= '<a href="#snap-personal-menu-deadlines">'.$icon.'</a>';
-           
+            $mobilemenu .= $this->mobile_menu_link('deadlines', 'calendar', '#snap-personal-menu-deadlines');
         }
 
         $graded = $this->render_graded();
         $grading = $this->render_grading();
-        $alt = get_string('grading', 'theme_snap');
-        $icon = '<img class="svg-icon" alt="'. $alt. '" src="' .$OUTPUT->pix_url('gradebook', 'theme'). '">';
+        $gradebookmenulink = $this->mobile_menu_link('grading', 'gradebook', '#snap-personal-menu-grading');
 
         if (!empty($grading)) {
             $columns[] = $grading;
-            $mobilemenu .= '<a href="#snap-personal-menu-grading">' .$icon. '</a>';
+            $mobilemenu .= $gradebookmenulink;
         } else if (!empty($graded)) {
             $columns[] = $graded;
-            $mobilemenu .= '<a href="#snap-personal-menu-grading">' .$icon. '</a>';
+            $mobilemenu .= $gradebookmenulink;
         }
 
         $badges = $this->render_badges();
@@ -490,19 +524,15 @@ class theme_snap_core_renderer extends toc_renderer {
         
         $messages = $this->render_messages();
         if (!empty($messages)) {
-                $columns[] = $messages;
-                $alt = get_string('messages', 'theme_snap');
-                $icon = '<img class="svg-icon" alt="' .$alt. '" src="' .$OUTPUT->pix_url('messages', 'theme'). '">';
-                $mobilemenu .= '<a href="#snap-personal-menu-messages">'.$icon.'</a>'; 
+            $columns[] = $messages;
+            $mobilemenu .= $this->mobile_menu_link('messages', 'messages', '#snap-personal-menu-messages');
         }
 
 
         $forumposts = $this->render_forumposts();
         if (!empty($forumposts)) {
             $columns[] = $forumposts;
-            $alt = get_string('forumposts', 'theme_snap');
-            $icon = '<img class="svg-icon" alt="' .$alt. '" src="' .$OUTPUT->pix_url('forumposts', 'theme'). '">';
-            $mobilemenu .= '<a href="#snap-personal-menu-forumposts">'.$icon.'</a>';
+            $mobilemenu .= $this->mobile_menu_link('forumposts', 'forumposts', '#snap-personal-menu-forumposts');
         }
         $mobilemenu .= '</div>';
 
@@ -512,8 +542,8 @@ class theme_snap_core_renderer extends toc_renderer {
         } 
         else {
             $o = '<div class="callstoaction">';
-            foreach ($columns as $colum) {
-                $o .= '<section>' .$colum. '</section>';
+            foreach ($columns as $column) {
+                $o .= '<section>' .$column. '</section>';
             }
             $o .= '</div>'.$mobilemenu;
         }
@@ -570,14 +600,9 @@ class theme_snap_core_renderer extends toc_renderer {
 
         $recentfeedback = get_string('recentfeedback', 'theme_snap');
         $o = "<h2>$recentfeedback</h2>";
-        
-        $text = get_string('viewmyfeedback', 'theme_snap');
+        $o .= '<div id="snap-personal-menu-graded"></div>';
         $url = new moodle_url('/grade/report/mygrades.php');
-        $icon = '<img class="svg-icon" role="presentation" src="' .$OUTPUT->pix_url('gradebook', 'theme'). '">';
-        $link = '<a class="snap-personal-menu-more" href="' .$url. '"><small>' .$text. '</small>' .$icon. '</a>';
-
-        $o .= '<div id="snap-personal-menu-graded"></div>'.$link;
-
+        $o .= $this->column_header_icon_link('viewmyfeedback', 'gradebook', $url);
         return $o;
     }
 
@@ -594,15 +619,9 @@ class theme_snap_core_renderer extends toc_renderer {
 
         $deadlinesheading = get_string('deadlines', 'theme_snap');
         $o = "<h2>$deadlinesheading</h2>";
-        
         $o .= '<div id="snap-personal-menu-deadlines"></div>';
-        
         $calurl = $CFG->wwwroot.'/calendar/view.php?view=month';
-        $calendarlink = get_string('viewcalendar', 'theme_snap');
-        $calendaricon = $OUTPUT->pix_url('calendar', 'theme');
-        $calendarimage = '<img class="svg-icon"  role="presentation" src="' .$calendaricon. '">';
-        $o .= '<a class="snap-personal-menu-more" href="' .$calurl. '"><small>' .$calendarlink. '</small>' .$calendarimage. '</a>';
-        
+        $o .= $this->column_header_icon_link('viewcalendar', 'calendar', $calurl);
         return $o;
     }
 
