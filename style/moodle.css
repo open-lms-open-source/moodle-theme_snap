@@ -23729,22 +23729,22 @@ body.gecko fieldset#id_general {
   display: table-cell;
   max-width: 100%;
 }
-body.gecko .felement.feditor,
-body.gecko table.mceLayout,
-body.gecko table.mceLayout tr,
-body.gecko td.mceIframeContainer,
-body.gecko td.mceStatusbar {
+.felement.feditor,
+table.mceLayout,
+table.mceLayout tr,
+td.mceIframeContainer,
+td.mceStatusbar {
   display: block;
   max-width: 100%;
 }
-body.gecko table.mceLayout tbody {
+table.mceLayout tbody {
   display: block;
 }
-body.gecko td.mceToolbar {
-  width: 100%;
+td.mceToolbar {
+  width: 100% !important;
   position: relative;
   display: inline-block;
-  margin: 0px;
+  margin: 0px !important;
 }
 #page-mod-quiz-edit .instancename {
   max-width: 16px;
@@ -23752,6 +23752,13 @@ body.gecko td.mceToolbar {
 #page-mod-quiz-edit .activityinstance {
   overflow: hidden;
   max-width: 81%;
+}
+@media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+  fieldset#id_generalhdr,
+  fieldset#id_general {
+    table-layout: fixed;
+    max-width: 100%;
+  }
 }
 /**
  * Snap core swatch.
