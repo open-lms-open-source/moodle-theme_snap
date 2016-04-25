@@ -709,7 +709,7 @@ class theme_snap_core_renderer extends toc_renderer {
             $output .= $this->login_button();
             
             $output .= "<div class='fixy' id='login' role='dialog' aria-label='$loginform' tabindex='-1'>
-            <form action='$CFG->wwwroot/login/'  method='post'>
+            <form action='$wwwroot/login/index.php'  method='post'>
             <div class=fixy-inner>
             <a id='fixy-close' class='pull-right snap-action-icon' href='#'>
                 <i class='icon icon-close'></i><small>$cancel</small>

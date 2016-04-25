@@ -8476,7 +8476,7 @@ body.gecko td.mceToolbar {
     height: 60px;
     text-align: center;
     background-color: #fff;
-    border-top: 1px solir #eee;
+    border-top: 1px solid #eee;
   }
   #fixy-mobile-menu a {
     display: inline-block;
