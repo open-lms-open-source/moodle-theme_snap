@@ -8530,6 +8530,11 @@ body.gecko fieldset#id_general {
   display: table-cell;
   max-width: 100%;
 }
+body.ie fieldset#id_generalhdr,
+body.ie fieldset#id_general {
+  table-layout: fixed;
+  max-width: 100%;
+}
 .felement.feditor,
 table.mceLayout,
 table.mceLayout tr,
@@ -8553,13 +8558,6 @@ td.mceToolbar {
 #page-mod-quiz-edit .activityinstance {
   overflow: hidden;
   max-width: 81%;
-}
-@media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
-  fieldset#id_generalhdr,
-  fieldset#id_general {
-    table-layout: fixed;
-    max-width: 100%;
-  }
 }
 /**
  * Snap core swatch.

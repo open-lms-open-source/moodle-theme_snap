@@ -4430,13 +4430,23 @@ animation-name: none;
     max-width:100%;
 }
 
-body.gecko fieldset#id_generalhdr, body.gecko fieldset#id_general {
+body.gecko fieldset#id_generalhdr,
+body.gecko fieldset#id_general {
     display: table-cell;
     max-width:100%;
 }
 
- .felement.feditor, table.mceLayout,
-table.mceLayout tr, td.mceIframeContainer, td.mceStatusbar {
+body.ie fieldset#id_generalhdr,
+body.ie fieldset#id_general {
+    table-layout: fixed;
+    max-width:100%;
+}
+
+.felement.feditor,
+table.mceLayout,
+table.mceLayout tr,
+td.mceIframeContainer,
+td.mceStatusbar {
     display: block;
     max-width:100%;
 }
@@ -4461,10 +4471,3 @@ td.mceToolbar {
     max-width: 81%;
 }
 
-@media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
-
-    fieldset#id_generalhdr, fieldset#id_general {
-        table-layout: fixed;
-        max-width:100%;
-    }
-}
