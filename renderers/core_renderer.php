@@ -147,6 +147,7 @@ class theme_snap_core_renderer extends toc_renderer {
         return $output;
     }
 
+
     /**
      * Print teacher profile
      * Prints a media object with the techers photo, name (links to profile) and desctiption.
@@ -179,11 +180,6 @@ class theme_snap_core_renderer extends toc_renderer {
     }
 
 
-
-
-
-
-
     /**
      * Print links to more information for personal menu colums.
      *
@@ -203,9 +199,6 @@ class theme_snap_core_renderer extends toc_renderer {
     }
 
 
-
-
-
     /**
      * Print links for personal menu on mobile.
      *
@@ -223,12 +216,6 @@ class theme_snap_core_renderer extends toc_renderer {
         $link = '<a href="' .$url. '">'.$icon.'</a>';
         return $link;
     }
-
-
-
-
-
-
 
     public function get_mod_recent_activity($context) {
         global $COURSE, $OUTPUT;
@@ -272,6 +259,7 @@ class theme_snap_core_renderer extends toc_renderer {
         return $output;
     }
 
+
     /**
      * Settings link for opening the Administration menu, only shown if needed.
      * @param settings_link $settingslink
@@ -297,6 +285,7 @@ class theme_snap_core_renderer extends toc_renderer {
         return html_writer::link($url, $burgericon, $attributes);
     }
 
+
     /**
      * Settings link for opening the Administration menu, only shown if needed.
      * @param bb_dashboard_link $bblink
@@ -315,7 +304,8 @@ class theme_snap_core_renderer extends toc_renderer {
 
         return $html;
     }
-    
+
+
     /**
      * Get badge renderer.
      * @return null|theme_snap_message_badge_renderer
@@ -346,6 +336,7 @@ class theme_snap_core_renderer extends toc_renderer {
         return $badgerend;
     }
 
+
     /**
      * Badge counter for new messages.
      * @return string
@@ -359,6 +350,7 @@ class theme_snap_core_renderer extends toc_renderer {
         }
         return $badgerend->badge($USER->id);
     }
+
 
     /**
      * Render badges.
@@ -381,6 +373,7 @@ class theme_snap_core_renderer extends toc_renderer {
         return $badges;
     }
 
+
     /**
      * Link to browse all courses, shown to admins in the fixy menu.
      *
@@ -397,9 +390,6 @@ class theme_snap_core_renderer extends toc_renderer {
         return $output;
     }
 
-
-
-    
 
     /**
      * Render messages from users
@@ -421,6 +411,7 @@ class theme_snap_core_renderer extends toc_renderer {
         return $o;
     }
 
+
     /**
      * Render forumposts.
      *
@@ -439,6 +430,7 @@ class theme_snap_core_renderer extends toc_renderer {
         $o .= $this->column_header_icon_link('viewforumposts', 'forumposts', $forumurl);
         return $o;
     }
+
 
     /**
      * @param moodle_url|string $url
@@ -482,6 +474,7 @@ class theme_snap_core_renderer extends toc_renderer {
         return '<div class="snap-media-object '.$extraclasses.'">'.$object.'</div>';
     }
 
+
     /**
      * Return friendly text date (e.g. "Today", "Tomorrow") in a <time> tag
      * @return string
@@ -494,6 +487,7 @@ class theme_snap_core_renderer extends toc_renderer {
             'datetime' => $datetime)
         );
     }
+
 
     protected function render_callstoaction() {
 
@@ -550,6 +544,7 @@ class theme_snap_core_renderer extends toc_renderer {
         return ($o);
     }
 
+
     /**
      * Is feedback toggle enabled?
      * Note: If setting has never been set then default to enabled (return true).
@@ -563,6 +558,7 @@ class theme_snap_core_renderer extends toc_renderer {
         }
         return true;
     }
+
 
     /**
      * Render all grading CTAs for markers
@@ -587,6 +583,7 @@ class theme_snap_core_renderer extends toc_renderer {
 
         return $o;
     }
+
 
     /**
      * Render all graded CTAs for students
@@ -648,6 +645,8 @@ class theme_snap_core_renderer extends toc_renderer {
         }
         return $output;
     }
+
+
     /**
      * The "fixy" overlay that drops down when the link in the top right corner is clicked. It will say either
      * "login" or "menu" (for signed in users).
@@ -867,6 +866,7 @@ class theme_snap_core_renderer extends toc_renderer {
         return $output;
     }
 
+
     /**
      * get section number by section id
      * @param int $sectionid
@@ -882,6 +882,7 @@ class theme_snap_core_renderer extends toc_renderer {
         }
         return false;
     }
+
 
     /*
      * This renders the navbar.
@@ -927,6 +928,7 @@ class theme_snap_core_renderer extends toc_renderer {
         return "<ol class=breadcrumb>$breadcrumbs</ol>";
     }
 
+
     /**
      * Get page heading.
      *
@@ -970,11 +972,13 @@ class theme_snap_core_renderer extends toc_renderer {
         return $heading;
     }
 
+
     public function favicon() {
         // Allow customized favicon from settings.
         $url = $this->page->theme->setting_file_url('favicon', 'favicon');
         return empty($url) ? parent::favicon() : $url;
     }
+
 
     /**
      * Renders custom menu as a simple list.
@@ -1000,6 +1004,7 @@ class theme_snap_core_renderer extends toc_renderer {
         return $content;
     }
 
+
     /**
      * Output custom menu items as flat list.
      *
@@ -1023,6 +1028,7 @@ class theme_snap_core_renderer extends toc_renderer {
         }
         return $content;
     }
+
 
     /**
      * Alternative rendering of front page news, called from layout/faux_site_index.php which

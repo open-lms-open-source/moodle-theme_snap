@@ -1089,7 +1089,7 @@ function snapInit() {
                 }, "fast", "swing" , 
                 function(){
                     // Animation complete.
-                    // TODO - add tab index & focus 
+                    // TODO - add tab index & focus INT-8988
                     
                 });
                 e.preventDefault();
