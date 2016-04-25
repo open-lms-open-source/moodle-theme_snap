@@ -387,7 +387,7 @@ class theme_snap_core_renderer extends toc_renderer {
      * @return string
      */
     public function browse_all_courses_button() {
-        global $CFG, $OUTPUT;
+        global $CFG;
 
         $output = '';
         if (!empty($CFG->navshowallcourses) || has_capability('moodle/site:config', context_system::instance())) {
@@ -406,7 +406,7 @@ class theme_snap_core_renderer extends toc_renderer {
      * @return string
      */
     protected function render_messages() {
-        global $CFG, $OUTPUT;
+        global $CFG;
 
         if ($this->page->theme->settings->messagestoggle == 0) {
             return '';
@@ -611,7 +611,7 @@ class theme_snap_core_renderer extends toc_renderer {
      * @return string
      */
     protected function render_deadlines() {
-        global $CFG, $OUTPUT;
+        global $CFG;
 
         if ($this->page->theme->settings->deadlinestoggle == 0) {
             return '';
