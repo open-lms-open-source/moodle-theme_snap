@@ -20388,9 +20388,9 @@ body:not(.format-topics):not(.format-weeks) .toc-footer {
   color: white;
 }
 .mast-image #page-mast h1,
-.mast-image #page-mast a,
-.mast-image #page-mast a:visited,
-.mast-image #page-mast a:hover {
+.mast-image #page-mast h1 a,
+.mast-image #page-mast h1 a:visited,
+.mast-image #page-mast h1 a:hover {
   color: white;
   text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
 }
