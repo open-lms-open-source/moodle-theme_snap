@@ -1045,6 +1045,16 @@ function snapInit() {
                 },200); // wait 1/20th of a second before resizing
             })(resizestamp);
         });
+        
+        
+        // Hidden course toggle function.
+        $(document).on("click", '#js-toggle-hidden-courses', function(e) {
+            $('#fixy-hidden-courses').slideToggle( "fast", function() {
+                // Animation complete.
+                $('#fixy-hidden-courses').focus();
+            });
+            e.preventDefault();
+        });
 
         // Reveal more teachers.
         $('#fixy-my-courses').on('click hover', '.courseinfo-teachers-more', null, function(e) {
