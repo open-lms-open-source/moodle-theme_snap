@@ -717,7 +717,7 @@ input[type="text"]+input[type="submit"] {
     }
 }
 
-@media screen and (min-width: @screen-sm-min) {    
+@media screen and (min-width: @screen-sm-min) {
     #moodle-footer .list-large {
         column-count: 3;
     }
@@ -4035,19 +4035,16 @@ animation-name: none;
 .behat-site .fixy-inner {
 animation-name: none;
 }
-
-#id_introeditor_ifr, #id_description_ifr {
+td.mceIframeContainer > iframe {
     max-width:100%;
 }
 
-body.gecko fieldset#id_generalhdr,
-body.gecko fieldset#id_general {
+body.gecko div.snap-form-required > fieldset {
     display: table-cell;
     max-width:100%;
 }
 
-body.ie fieldset#id_generalhdr,
-body.ie fieldset#id_general {
+body.ie div.snap-form-required  > fieldset {
     table-layout: fixed;
     max-width:100%;
 }

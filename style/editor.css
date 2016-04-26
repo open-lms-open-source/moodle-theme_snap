@@ -8205,31 +8205,33 @@ div.editor_atto_toolbar div.atto_group {
 .behat-site .fixy-inner {
   animation-name: none;
 }
-#id_introeditor_ifr,
-#id_description_ifr {
+td.mceIframeContainer > iframe {
   max-width: 100%;
 }
-body.gecko fieldset#id_generalhdr,
-body.gecko fieldset#id_general {
+body.gecko div.snap-form-required > fieldset {
   display: table-cell;
   max-width: 100%;
 }
-body.gecko .felement.feditor,
-body.gecko table.mceLayout,
-body.gecko table.mceLayout tr,
-body.gecko td.mceIframeContainer,
-body.gecko td.mceStatusbar {
+body.ie div.snap-form-required > fieldset {
+  table-layout: fixed;
+  max-width: 100%;
+}
+.felement.feditor,
+table.mceLayout,
+table.mceLayout tr,
+td.mceIframeContainer,
+td.mceStatusbar {
   display: block;
   max-width: 100%;
 }
-body.gecko table.mceLayout tbody {
+table.mceLayout tbody {
   display: block;
 }
-body.gecko td.mceToolbar {
-  width: 100%;
+td.mceToolbar {
+  width: 100% !important;
   position: relative;
   display: inline-block;
-  margin: 0px;
+  margin: 0px !important;
 }
 #page-mod-quiz-edit .instancename {
   max-width: 16px;
@@ -8625,19 +8627,6 @@ body.gecko td.mceToolbar {
 .courseinfo .coursegrade {
   font-size: small;
 }
-body.ie fieldset#id_generalhdr,
-body.ie fieldset#id_general {
-  table-layout: fixed;
-  max-width: 100%;
-}
-.felement.feditor,
-table.mceLayout,
-table.mceLayout tr,
-td.mceIframeContainer,
-td.mceStatusbar {
-  display: block;
-  max-width: 100%;
-}
 .courseinfo .coursegrade {
   text-align: right;
   display: block;
@@ -8647,15 +8636,6 @@ td.mceStatusbar {
   background-repeat: no-repeat;
   background-position: 100% 50%;
   background-size: 2.5em 2.5em;
-}
-table.mceLayout tbody {
-  display: block;
-}
-td.mceToolbar {
-  width: 100% !important;
-  position: relative;
-  display: inline-block;
-  margin: 0px !important;
 }
 .courseinfo .published-status {
   clear: both;
