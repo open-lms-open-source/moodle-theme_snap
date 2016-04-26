@@ -23724,6 +23724,10 @@ td.mceToolbar {
   top: 1em;
   right: 1em;
 }
+#fixy-hidden-courses {
+  display: none;
+  outline: none;
+}
 @media screen and (min-width: 768px) {
   #fixy-my-courses .courseinfo {
     width: -webkit-calc(30.33333333%);

@@ -105,6 +105,7 @@ $string['helpwithlogin'] = 'Help with login';
 $string['helpwithloginandguest'] = 'Help with login / guest access';
 $string['hidenavblock'] = 'Hide default Moodle navigation block';
 $string['hidenavblockdesc'] = "In Snap we recommend hiding the default Moodle navigation block. ";
+$string['hiddencoursestoggle'] = "Hidden courses";
 $string['highlightedsection'] = 'highlighted';
 $string['home'] = 'home';
 $string['image'] = 'image';
