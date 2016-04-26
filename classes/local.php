@@ -532,7 +532,7 @@ class local {
                 $modinfo = get_fast_modinfo($event->courseid);
                 $cm = $modinfo->instances[$event->modulename][$event->instance];
 
-                $eventtitle = "<small>$event->coursefullname / </small> $event->name";
+                $eventtitle = $event->name .'<small><br>' .$event->coursefullname. '</small>';
 
                 $modimageurl = $output->pix_url('icon', $event->modulename);
                 $modname = get_string('modulename', $event->modulename);
@@ -583,7 +583,7 @@ class local {
             $modname = get_string('modulename', 'mod_'.$cm->modname);
             $modimage = \html_writer::img($modimageurl, $modname);
 
-            $gradetitle = "<small>$course->fullname / </small>$cm->name";
+            $gradetitle = $cm->name. '<small><br>' .$course->fullname. '</small>';
 
             $releasedon = isset($grade->timemodified) ? $grade->timemodified : $grade->timecreated;
             $meta = get_string('released', 'theme_snap', $output->friendly_datetime($releasedon));
@@ -620,7 +620,7 @@ class local {
             $modname = get_string('modulename', 'mod_'.$cm->modname);
             $modimage = \html_writer::img($modimageurl, $modname);
 
-            $ungradedtitle = "<small>$course->fullname / </small> $cm->name";
+            $ungradedtitle = $cm->name. '<small><br>' .$course->fullname. '</small>';
 
             $xungraded = get_string('xungraded', 'theme_snap', $ungraded->ungraded);
 

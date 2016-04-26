@@ -187,30 +187,6 @@ table.boxwidthwide {
     }
 }
 
-// tag styles for draft/group/contitional/completion meta data
-.snap-tag(@colour: #F98012) {
-    font-family: @font-family-base;
-    display: inline-block;
-    background-color: @colour;
-    color: #fff;
-    padding: 0 2% 0 1%;
-    margin: 1px 1em;
-    text-transform: lowercase;
-    position: relative;
-    border-radius: 0 2px 2px 0;
-    line-height: 1.75;
-
-    // add a little tab arrow to the left ;)
-    &:before {
-        content: "";
-        position: absolute;
-        right: 100%;
-        top: 0; // this is necessary!!
-        border: 0.85em solid transparent;
-        border-right: 0.89em solid @colour;
-    }
-}
-
 .highlight-tag {
     background-color: #f56363;
     color: #fff;
@@ -226,6 +202,7 @@ table.boxwidthwide {
 
 html {
     box-sizing: border-box;
+    font-size: @font-size-base;
 }
 
 *,
@@ -240,7 +217,7 @@ html {
     text-shadow: none;
 }
 
- ::selection {
+::selection {
     background: #fe57a1;
     color: #fff;
     text-shadow: none;
@@ -273,7 +250,7 @@ input:disabled+label {
     opacity: 0.5;
 }
 
- :disabled {
+::disabled {
     cursor: not-allowed;
 }
 
@@ -294,7 +271,6 @@ table,
 }
 
 blockquote {
-
     //    border-left: 5px solid @brand-primary; customisable
     font-size: 1em;
 }
@@ -323,6 +299,10 @@ img[style*="float: left"],
 img[style*="float: right"],
 img[style*="float:right"] {
     margin: 2%;
+}
+
+small, .small {
+    font-size: small !important;
 }
 
 @media screen and (max-width: @screen-sm) {
@@ -640,22 +620,14 @@ input[type="text"]+input[type="submit"] {
     }
 }
 
-.fixy .snap-media-object {
-    padding: 0.5em 4%;
-    margin-bottom: 0;
-    .alakazam();
-    > a:focus,
-    &:hover {
-        background-color: rgba(0,0,0,0.07);
-    }
-}
 
 .snap-media-object {
     .clearfix();
-    margin-bottom: 1em;
+    font-weight: 500;
+    padding: 0.5em 0;
     // Block display for keyboard user focus.
     > a:focus {
-         display:block;
+         display: block;
     }
 
     // media o media
@@ -663,8 +635,8 @@ input[type="text"]+input[type="submit"] {
     >img {
         float: left;
         display: block;
-        margin-right: 4%;
-        width: 45px;
+        width: 36px;
+        margin: 0.5em 1em 0 0.5em;
         height: auto;
         vertical-align: baseline;
     }
@@ -675,11 +647,11 @@ input[type="text"]+input[type="submit"] {
 
         // for fixy - need to re-visit when we re-use more widley
         // in the messaging system we ellispe text
-
         p {
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
+            margin: 0;
         }
 
         .text_to_html {
@@ -695,422 +667,63 @@ input[type="text"]+input[type="submit"] {
 
         // Shrink label size to support iPads
         .label {
-            font-size: 0.7em;
+            font-size: small;
         }
     }
 
     // media o heading
-    h3,
-    h3 small {
+    h3 {
         color: inherit;
-        font-size: 1em;
+        font-size: 1rem;
+        font-weight: 500;
         margin: 0;
     }
 
     // any meta-data that is part of the title
     h3 small {
-        opacity: 0.75;
+        color: inherit;
+        opacity: 0.9;
     }
 
     // standard media o meta - status, date
     .snap-media-meta {
         display: block;
         font-size: small;
-        opacity: 0.75;
-
-        time {
-            margin-right: 1em;
-        }
+        color: @gray-light;
     }
 
     // unread tag
     .snap-unread-marker {
-        background-color: white;
-
-        &:before {
-            border-right: 0.89em solid white;
-        }
-    }
-}
-
-// Fixy - the hipster box with a brand colour that covers everything else, use with care!
-// -------------------------
-// i do not apear until you trigger me
-
-.fixy {
-    display: none;
-}
-
-.notloggedin .fixy-trigger {
-    padding: 0.9em 1em; // SHAME - something odd where login overlaps mr-nav
-}
-
-.fixy-trigger {
-    // border: 1px solid @brand-primary; customisable
-    padding: 1em;
-    position: relative;
-    .alakazam();
-
-    &:hover {
-        color: #fff !important;
-
-        //	background-color: @brand-primary; customisable
-        text-decoration: none;
-    }
-
-    .userpicture {
-        height: 38px;
-        width: 38px;
-        margin-left: 1em;
-    }
-
-    // mrooms alerts badge
-    .message_badge_count {
-        position: absolute;
-        padding-top: 0;
-        background-image: none;
-        border-radius: 50%;
-        left: 80%;
-        top: 0.5em;
-    }
-}
-
-.fixy {
-    padding: 0 4%;
-    margin: 0 auto;
-    position: fixed;
-    width: 100%;
-    height: 100%;
-    left: 0;
-    bottom: 0;
-    overflow-y: auto;
-
-    //	background-color: @brand-primary; customisable
-    color: #fff;
-    z-index: 1000000;
-
-    hr {
-        border-color: #fff;
-        margin: 0.3em 0;
-    }
-
-    a,
-    a:hover,
-    a:focus,
-    a:active,
-    a:visited {
-        color: #fff;
-    }
-
-    h2 {
-        color: rgba(255,255,255,0.7);
-        text-transform: uppercase;
-        font-weight: 100;
-        line-height: 1;
-        margin: 1em 0;
-        padding: 0.5em 0;
-        border-bottom: 1px solid rgba(255,255,255,0.7);
-        font-size: 1em;
+        color: @brand-warning;
     }
 
     .label-success {
         padding: 0 0.2em;
         font-size: 1em;
-
         // color: @brand-primary; customisable
         background-color: rgba(255,255,255,0.6);
         border-radius: 2px;
     }
 
-    input {
-        display: block;
-        padding: 0.1em;
-        margin: 0 auto 0.5em;
-        background-color: transparent;
-        font-size: inherit;
-        border: 0;
-        color: #fff;
-        border-bottom: 2px solid rgba(255,255,255,0.3);
-        width: 90%;
-        font-size: @font-size-h5;
-        box-shadow: none;
-    }
-
-    form#coursesearch {
-        margin: 0 0 0.5em;
-        text-align: left;
-
-        label {
-            text-align: left;
-            margin-left: 0;
-        }
-    }
-
-    .btn.moodle-browseallcourses {
-        margin-bottom: 0.5em;
-        display: block;
-    }
-
-    .fixy-logout-footer {
-        border-top: 1px solid #fff;
-        padding-top: 1em;
-        margin: 1em 0;
-    }
-
-    .fixy-browse-search-courses {
-        margin-left: 0;
-
-        .col-md-6 {
-            padding-left: 0;
-        }
-    }
-}
-
-// i am the target, you shall see me
-#login:target,
-#primary-nav:target {
-    display: block;
-}
-
-.fixy-inner {
-    margin: 0 auto;
-    animation-name: snap-drop;
-    animation-timing-function: ease-in-out;
-    animation-duration: 0.3s;
-
-    legend {
-        color: #fff;
-        border-bottom: 1px solid #fff;
-    }
-
-    label {
-        color: #fff;
-        text-transform: uppercase;
-        font-size: 14px;
-        letter-spacing: 0.1em;
-        line-height: 1;
-        display: block;
-        padding-top: 1em;
-        font-weight: 100;
-        margin: 0.5em 5%;
-    }
-}
-
-// Fixy forms
-// -------------------------
-// gets a bit messey from here SHAME
-
-#login.fixy {
-    input:focus {
-        outline: none;
-        border-color: #fff;
-    }
-    input[type=submit] {
-        border: 1px solid #fff;
-        margin: 0 auto 0.5em;
-    }
-    .fixy-inner {
-        max-width: 50.5em;
-        padding-top: 4%;
-    }
 }
 
 
-.fixy input::placeholder {
-    color: #fff;
-    letter-spacing: 0.1em;
-}
 
-// Course list - personal menu and other places
-// -------------------------
 
-#fixy-my-courses .courseinfo {
-    min-height: 200px;
-}
-
-.courseinfo {
-    position: relative;
-    float: left;
-    width: 100%;
-    min-height: 250px;
-    background-repeat: no-repeat;
-    background-size: 100% auto;
-    background-position: top center;
-    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
-    margin: 0.5em 1%;
-    cursor: pointer;
-    overflow: hidden;
-    .alakazam();
-
-    &:hover {
-        background-size: 115% auto;
-        transform: scale(1.03);
-
-        .courseinfo-body {
-            padding-bottom: 0.5em;
-        }
-    }
-
-    .courseinfo-teachers {
-        width: 100%;
-        padding: 1em;
-    }
-
-    .courseinfo-teachers-extra {
-        .alakazam();
-        opacity: 0;
-    }
-    // When showing more course contacts, hide courseinfo.
-    &.show-all {
-        .courseinfo-teachers-extra {
-            opacity: 1;
-        }
-
-        .courseinfo-body {
-            visibility: hidden;
-        }
-    }
-
-    .courseinfo-body {
-        .alakazam();
-        background-color: rgba(255,255,255,0.9);
-        color: #666;
-        position: absolute;
-        bottom: 0;
-        width: 100%;
-        padding: 0 1em 1em;
-        bottom: 0;
-        min-height: 50%;
-
-        h3 a {
-            display: block;
-            display: -webkit-box;
-            max-height: 3em; // 1em font-size * 1.5 line height * 2 lines to show.
-            width: 100%;
-            -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: normal !important;
-        }
-    }
-
-    h3 {
-        font-size: 1em;
-        font-weight: 500;
-    }
-
-    .completionstatus,
-    .coursegrade {
-        font-size: small;
-    }
-
-    .coursegrade {
-        text-align: right;
-        display: block;
-        line-height: 2.5em;
-        padding-right: 2.75em;
-        background-image: url("[[pix:theme|gradebook]]");
-        background-repeat: no-repeat;
-        background-position: 100% 50%;
-        background-size: 2.5em 2.5em;
-    }
-
-    .courseinfo-teachers {
-        max-height: 200px;
-        overflow: hidden;
-        text-align: right;
-    }
-
-    &.show-all .courseinfo-teachers {
-        overflow: auto;
-    }
-
-    .userpicture,
-    .courseinfo-teachers-more {
-        border-radius: 50%;
-        margin-left: 1%;
-        width: 38px;
-        height: 38px;
-        background-color: #ccc;
-    }
-
-    .courseinfo-teachers-more {
-        background-color: transparent;
-        font-size: 0.8em;
-        float: right;
-        text-align: center;
-        padding-top: 0.35em;
-        border: 2px solid #fff;
-        color: #fff !important;
-        text-decoration: none !important;
-    }
-
-    .published-status {
-        clear: both;
-        margin-bottom: -1em;
-        float: left;
-    }
-
-    .completionstatus {
-        border-bottom: 0.5em solid @gray-lighter;
-    }
-
-    .completion-line {
-        background-color: @brand-success;
-        height: 0.3em;
-        margin-top: -0.3em;
-    }
-}
-
-#fixy-profile-link {
-    text-align: center;
-
-    .userpicture {
-        margin-right: 10px;
-    }
-}
-
-.fixy .real-user-info {
-    display: block;
-    text-align: center;
-    margin-top: -50px;
-}
-
-.fixy .label.label-info {
-    background-color: transparent;
-    border: thin solid #fff;
-}
 
 @media screen and (min-width: @screen-xs-min) {
     #moodle-footer .list-unstyled {
         column-count: 2;
     }
-
-    .courseinfo {
-        width: 100%;
-    }
 }
 
-@media screen and (min-width: @screen-sm-min) {
-    #fixy-username {
-        display: inline;
-    }
-
+@media screen and (min-width: @screen-sm-min) {    
     #moodle-footer .list-large {
         column-count: 3;
     }
-
-    .courseinfo {
-        width: 48%;
-    }
 }
 
-@media screen and (min-width: @screen-md-min) {
-    .courseinfo {
-        width: 31%;
-    }
-}
+
 
 // Message badge alerts
 .message_badge_message,
@@ -1140,11 +753,11 @@ Its pointless using a colour to visually show that the message is read as we can
 read button has been removed and the message text is visible
 **/
 .message_badge_message.dimmed_text {
-    color: #fff;
+    color: @text-color;
 
     .message_badge_message_text,
     .message_badge_message_text a {
-        color: #fff !important;
+        color: @text-color !important;
     }
 }
 
@@ -4206,12 +3819,9 @@ table th img.iconhelp {
 // Reduce font sizes on small screen
 // -------------------------
 @media screen and (max-width: @screen-xs-max) {
+    html,
     #region-main {
-        font-size: 0.9em;
-    }
-
-    #fixy-profile-link .userpicture {
-        width: 1.5em;
+        font-size: 14.4px;
     }
 
     h1,

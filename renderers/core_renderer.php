@@ -147,6 +147,7 @@ class theme_snap_core_renderer extends toc_renderer {
         return $output;
     }
 
+
     /**
      * Print teacher profile
      * Prints a media object with the techers photo, name (links to profile) and desctiption.
@@ -178,6 +179,43 @@ class theme_snap_core_renderer extends toc_renderer {
                 </div>";
     }
 
+
+    /**
+     * Print links to more information for personal menu colums.
+     *
+     * @author: SL
+     * @param string $langstring
+     * @param string $iconname
+     * @param string $url
+     * @return string
+     */
+    public function column_header_icon_link($langstring, $iconname, $url) {
+        global $OUTPUT;
+        $text = get_string($langstring, 'theme_snap');
+        $iconurl = $OUTPUT->pix_url($iconname, 'theme');
+        $icon = '<img class="svg-icon" role="presentation" src="' .$iconurl. '">';
+        $link = '<a class="snap-personal-menu-more" href="' .$url. '"><small>' .$text. '</small>' .$icon. '</a>';
+        return $link;
+    }
+
+
+    /**
+     * Print links for personal menu on mobile.
+     *
+     * @author: SL
+     * @param string $langstring
+     * @param string $iconname
+     * @param string $url
+     * @return string
+     */
+    public function mobile_menu_link($langstring, $iconname, $url) {
+        global $OUTPUT;
+        $alt = get_string($langstring, 'theme_snap');
+        $iconurl = $OUTPUT->pix_url($iconname, 'theme');
+        $icon = '<img class="svg-icon" alt="' .$alt. '" src="' .$iconurl. '">';
+        $link = '<a href="' .$url. '">'.$icon.'</a>';
+        return $link;
+    }
 
     public function get_mod_recent_activity($context) {
         global $COURSE, $OUTPUT;
@@ -221,6 +259,7 @@ class theme_snap_core_renderer extends toc_renderer {
         return $output;
     }
 
+
     /**
      * Settings link for opening the Administration menu, only shown if needed.
      * @param settings_link $settingslink
@@ -246,6 +285,7 @@ class theme_snap_core_renderer extends toc_renderer {
         return html_writer::link($url, $burgericon, $attributes);
     }
 
+
     /**
      * Settings link for opening the Administration menu, only shown if needed.
      * @param bb_dashboard_link $bblink
@@ -264,24 +304,6 @@ class theme_snap_core_renderer extends toc_renderer {
 
         return $html;
     }
-
-    /**
-     * Link to browse all courses, shown to admins in the fixy menu.
-     *
-     * @return string
-     */
-    public function browse_all_courses_button() {
-        global $CFG;
-
-        $output = '';
-        if (!empty($CFG->navshowallcourses) || has_capability('moodle/site:config', context_system::instance())) {
-            $browse = get_string('browseallcourses', 'theme_snap');
-            $url = new moodle_url('/course/index.php');
-            $output = html_writer::link($url, $browse, ['class' => 'btn btn-default moodle-browseallcourses']);
-        }
-        return $output;
-    }
-
 
 
     /**
@@ -314,6 +336,7 @@ class theme_snap_core_renderer extends toc_renderer {
         return $badgerend;
     }
 
+
     /**
      * Badge counter for new messages.
      * @return string
@@ -327,6 +350,7 @@ class theme_snap_core_renderer extends toc_renderer {
         }
         return $badgerend->badge($USER->id);
     }
+
 
     /**
      * Render badges.
@@ -349,6 +373,24 @@ class theme_snap_core_renderer extends toc_renderer {
         return $badges;
     }
 
+
+    /**
+     * Link to browse all courses, shown to admins in the fixy menu.
+     *
+     * @return string
+     */
+    public function browse_all_courses_button() {
+        global $CFG;
+
+        $output = '';
+        if (!empty($CFG->navshowallcourses) || has_capability('moodle/site:config', context_system::instance())) {
+            $url = new moodle_url('/course/');
+            $output = $this->column_header_icon_link('browseallcourses', 'courses', $url);
+        }
+        return $output;
+    }
+
+
     /**
      * Render messages from users
      * @return string
@@ -361,16 +403,14 @@ class theme_snap_core_renderer extends toc_renderer {
         }
 
         $messagesheading = get_string('messages', 'theme_snap');
-        $o = '<h2>'.$messagesheading.'</h2>
-                <div id="snap-personal-menu-messages"></div>';
-
-        $messagesbutton = get_string('messaging', 'theme_snap');
-        $messageurl = "$CFG->wwwroot/message";
-        $o .= '<div class="text-center">';
-        $o .= '<a class="btn btn-default" href="'.$messageurl.'">'.$messagesbutton.'</a>';
-        $o .= '</div>';
+        $o = '<h2>'.$messagesheading.'</h2>';
+        $o .= '<div id="snap-personal-menu-messages"></div>';
+        
+        $messagseurl = new moodle_url('/message/');
+        $o .= $this->column_header_icon_link('viewmessaging', 'messages', $messagseurl);
         return $o;
     }
+
 
     /**
      * Render forumposts.
@@ -383,16 +423,14 @@ class theme_snap_core_renderer extends toc_renderer {
             return '';
         }
 
-        $messagesheading = get_string('forumposts', 'theme_snap');
-
-        $o = '<h2>'.$messagesheading.'</h2>
+        $forumpostsheading = get_string('forumposts', 'theme_snap');
+        $o = '<h2>'.$forumpostsheading.'</h2>
         <div id="snap-personal-menu-forumposts"></div>';
-        $messageurl = new moodle_url('/mod/forum/user.php', ['id' => $USER->id]);
-        $o .= '<div class="text-center">';
-        $o .= '<a class="btn btn-default" href="'.$messageurl.'">'.$messagesheading.'</a>';
-        $o .= '</div>';
+        $forumurl = new moodle_url('/mod/forum/user.php', ['id' => $USER->id]);
+        $o .= $this->column_header_icon_link('viewforumposts', 'forumposts', $forumurl);
         return $o;
     }
+
 
     /**
      * @param moodle_url|string $url
@@ -408,29 +446,34 @@ class theme_snap_core_renderer extends toc_renderer {
         $formatoptions->filter = false;
         $title = format_text($title, FORMAT_HTML, $formatoptions);
         $content = format_text($content, FORMAT_HTML, $formatoptions);
-
+        
+        
+        $metastr = '';
+        // For forum posts meta is an array with the course title / forum name.
         if (is_array($meta)) {
-            $metastr = '';
+            $metastr = '<span class="snap-media-meta">';
             foreach ($meta as $metaitem) {
-                $metastr .= '<span class="snap-media-meta">'.
-                    format_text($metaitem, FORMAT_HTML, $formatoptions).'</span>';
+                $metastr .= $metaitem.'<br>';
             }
-        } else {
-            $metastr = '<span class="snap-media-meta">'.
-                format_text($meta, FORMAT_HTML, $formatoptions).'</span>';
+            $metastr .= '</span>';
+        } elseif($meta) {
+            $metastr = '<span class="snap-media-meta">' .$meta.'</span>';
         }
-
-        $linkcontent = $image
+        
+        $title = '<h3>' .$title. '</h3>' .$content;
+        $link = html_writer::link($url, $title);
+        
+        $object = $image
                 . '<div class="snap-media-body">'
-                . "<h3>$title</h3>"
-                . '<span class="snap-media-meta">'.$metastr.'</span>'
-                . $content
+                . '<h3>' .$link. '</h3>'
+                . $metastr
                 . '</div>';
 
-        $link = html_writer::link($url, $linkcontent);
+        
 
-        return '<div class="snap-media-object '.$extraclasses.'">'.$link.'</div>';
+        return '<div class="snap-media-object '.$extraclasses.'">'.$object.'</div>';
     }
+
 
     /**
      * Return friendly text date (e.g. "Today", "Tomorrow") in a <time> tag
@@ -445,64 +488,62 @@ class theme_snap_core_renderer extends toc_renderer {
         );
     }
 
+
     protected function render_callstoaction() {
 
+        $mobilemenu = '<div id="fixy-mobile-menu">';
+        $mobilemenu .= $this->mobile_menu_link('courses', 'courses', '#fixy-my-courses');
         $deadlines = $this->render_deadlines();
         if (!empty($deadlines)) {
             $columns[] = $deadlines;
+            $mobilemenu .= $this->mobile_menu_link('deadlines', 'calendar', '#snap-personal-menu-deadlines');
         }
 
         $graded = $this->render_graded();
         $grading = $this->render_grading();
+        $gradebookmenulink = $this->mobile_menu_link('grading', 'gradebook', '#snap-personal-menu-grading');
+
         if (!empty($grading)) {
             $columns[] = $grading;
+            $mobilemenu .= $gradebookmenulink;
         } else if (!empty($graded)) {
             $columns[] = $graded;
+            $mobilemenu .= $gradebookmenulink;
         }
 
         $badges = $this->render_badges();
         if (!empty($badges)) {
             $columns[] = $badges;
-        } else {
-            $messages = $this->render_messages();
-            if (!empty($messages)) {
-                $columns[] = $messages;
-            }
         }
+        
+        $messages = $this->render_messages();
+        if (!empty($messages)) {
+            $columns[] = $messages;
+            $mobilemenu .= $this->mobile_menu_link('messages', 'messages', '#snap-personal-menu-messages');
+        }
+
 
         $forumposts = $this->render_forumposts();
         if (!empty($forumposts)) {
             $columns[] = $forumposts;
+            $mobilemenu .= $this->mobile_menu_link('forumposts', 'forumposts', '#snap-personal-menu-forumposts');
         }
+        $mobilemenu .= '</div>';
 
-        $o = '<div class="row callstoaction">';
+        
         if (empty($columns)) {
              return '';
-        } else if (count($columns) == 1) {
-            $o .= '<section class="col-md-12">'.$columns[0].'</section>';
-        } else if (count($columns) == 2) {
-            $o .= '
-              <section class="col-md-6">'.$columns[0].'</section>
-              <section class="col-md-6">'.$columns[1].'</section>
-            ';
-        } else if (count($columns) == 3) {
-            $o .= '
-              <section class="col-md-4">'.$columns[0].'</section>
-              <section class="col-md-4">'.$columns[1].'</section>
-              <section class="col-md-4">'.$columns[2].'</section>
-            ';
-        } else if (count($columns) == 4) {
-            $o .= '
-              <section class="col-md-3">'.$columns[0].'</section>
-              <section class="col-md-3">'.$columns[1].'</section>
-              <section class="col-md-3">'.$columns[2].'</section>
-              <section class="col-md-3">'.$columns[3].'</section>
-            ';
+        } 
+        else {
+            $o = '<div class="callstoaction">';
+            foreach ($columns as $column) {
+                $o .= '<section>' .$column. '</section>';
+            }
+            $o .= '</div>'.$mobilemenu;
         }
-
-        $o .= '</div>';
         return ($o);
     }
+
 
     /**
      * Is feedback toggle enabled?
@@ -518,12 +559,13 @@ class theme_snap_core_renderer extends toc_renderer {
         return true;
     }
 
+
     /**
      * Render all grading CTAs for markers
      * @return string
      */
     protected function render_grading() {
-        global $USER;
+        global $USER, $OUTPUT;
 
         if (!$this->feedback_toggle_enabled()) {
             return '';
@@ -537,35 +579,27 @@ class theme_snap_core_renderer extends toc_renderer {
 
         $gradingheading = get_string('grading', 'theme_snap');
         $o = "<h2>$gradingheading</h2>";
-
         $o .= '<div id="snap-personal-menu-grading"></div>';
 
         return $o;
     }
+
 
     /**
      * Render all graded CTAs for students
      * @return string
      */
     protected function render_graded() {
-
+        global $OUTPUT;
         if (!$this->feedback_toggle_enabled()) {
             return '';
         }
 
         $recentfeedback = get_string('recentfeedback', 'theme_snap');
         $o = "<h2>$recentfeedback</h2>";
-
-        $mygradesurl = new moodle_url('/grade/report/mygrades.php');
-        $mygradesbutton = html_writer::link($mygradesurl,
-                                            get_string('mygrades', 'theme_snap'),
-                                            ['class' => 'btn btn-default']);
-
-        $o .= '<div id="snap-personal-menu-graded"></div>
-               <div class="text-center">
-               '.$mygradesbutton.'
-               </div>';
-
+        $o .= '<div id="snap-personal-menu-graded"></div>';
+        $url = new moodle_url('/grade/report/mygrades.php');
+        $o .= $this->column_header_icon_link('viewmyfeedback', 'gradebook', $url);
         return $o;
     }
 
@@ -582,15 +616,9 @@ class theme_snap_core_renderer extends toc_renderer {
 
         $deadlinesheading = get_string('deadlines', 'theme_snap');
         $o = "<h2>$deadlinesheading</h2>";
-
         $o .= '<div id="snap-personal-menu-deadlines"></div>';
-
         $calurl = $CFG->wwwroot.'/calendar/view.php?view=month';
-        $calendar = get_string('calendar', 'calendar');
-        $o .= '<div class="text-center">';
-        $o .= '<a class="btn btn-default" href="'.$calurl.'">'.$calendar.'</a>';
-        $o .= '</div>';
-
+        $o .= $this->column_header_icon_link('viewcalendar', 'calendar', $calurl);
         return $o;
     }
 
@@ -617,6 +645,8 @@ class theme_snap_core_renderer extends toc_renderer {
         }
         return $output;
     }
+
+
     /**
      * The "fixy" overlay that drops down when the link in the top right corner is clicked. It will say either
      * "login" or "menu" (for signed in users).
@@ -676,12 +706,13 @@ class theme_snap_core_renderer extends toc_renderer {
                 }
             }
             $output .= $this->login_button();
-            $output .= "<div class='fixy' id='login' role='dialog' aria-label='$loginform' tabindex='0'>
-            <form action='$wwwroot/login/index.php' method='post'>
-        <a id='fixy-close' class='pull-right snap-action-icon' href='#'>
-            <i class='icon icon-close'></i><small>$cancel</small>
-        </a>
+            
+            $output .= "<div class='fixy' id='login' role='dialog' aria-label='$loginform' tabindex='-1'>
+            <form action='$wwwroot/login/index.php'  method='post'>
             <div class=fixy-inner>
+            <a id='fixy-close' class='pull-right snap-action-icon' href='#'>
+                <i class='icon icon-close'></i><small>$cancel</small>
+            </a>
             <legend>$loginform</legend>
             <label for='username'>$username</label>
             <input autocapitalize='off' type='text' name='username' id='username' placeholder='".s($username)."'>
@@ -701,7 +732,7 @@ class theme_snap_core_renderer extends toc_renderer {
             $picture = $this->render($userpicture);
             $mycourses = enrol_get_my_courses(null, 'visible DESC, fullname ASC, id DESC');
 
-            $courselist .= "<section id='fixy-my-courses'><div class='clearfix'><h2>".get_string('courses')."</h2>";
+            $courselist .= '<section id="fixy-my-courses" class="clearfix"><div><h2>' .get_string('courses'). '</h2>';
 
             // Default text when no courses.
             if (!$mycourses) {
@@ -711,7 +742,7 @@ class theme_snap_core_renderer extends toc_renderer {
                 $pubstatus = "";
                 if (!$c->visible) {
                     $notpublished = get_string('notpublished', 'theme_snap');
-                    $pubstatus = "<small class='published-status'>".$notpublished."</small>";
+                    $pubstatus = "<small class='published-status text-warning'>".$notpublished."</small>";
                 }
 
                 $bgcolor = local::get_course_color($c->id);
@@ -728,7 +759,7 @@ class theme_snap_core_renderer extends toc_renderer {
                 $courseteachers = '';
                 $vcourseteachers = '';
                 $ecourseteachers = '';
-
+                $coursecontacts = '';
                 if (!empty($teachers)) {
                     $avatars = [];
                     $blankavatars = [];
@@ -769,31 +800,21 @@ class theme_snap_core_renderer extends toc_renderer {
                     }
                     $vcourseteachers = '<div class="courseinfo-teachers-visible">'.implode('', $avatars).$extralink.'</div>';
                     $ecourseteachers = '<div class="courseinfo-teachers-extra">'.implode('', $hiddenavatars).'</div>';
+                    
+                    $coursecontacts = '<div class="courseinfo-teachers">' .$courseteachers.$vcourseteachers.$ecourseteachers. '</div>';
                 }
-
-                $clink = '<div data-href="'.$CFG->wwwroot.'/course/view.php?id='.$c->id.
-                    '" class="courseinfo" style="'.$courseimagecss.'">
-
-                    <div class="courseinfo-body"><h3><a href="'.$CFG->wwwroot.'/course/view.php?id='.$c->id.'">'.
-                    format_string($c->fullname).'</a></h3>'.$dynamicinfo.$pubstatus.'</div>
-                    <div class="courseinfo-teachers">'.$courseteachers.$vcourseteachers.$ecourseteachers.'</div>
-                    </div>';
+                
+                $clink = '<div data-href="' .$CFG->wwwroot.'/course/view.php?id='.$c->id. '" class="courseinfo" style="' .$courseimagecss. '">
+                    <div class="courseinfo-body">
+                    <h3><a href="'.$CFG->wwwroot.'/course/view.php?id='.$c->id.'">' .format_string($c->fullname). '</a></h3>'
+                    .$dynamicinfo.$coursecontacts.$pubstatus.
+                    '</div></div>';
                 $courselist .= $clink;
             }
-            $courselist .= "</div>";
+            $courselist .= $this->browse_all_courses_button();
+            $courselist .= '</div></section>';
 
-            $courselist .= '<div class="row fixy-browse-search-courses"><br>';
-
-            if (has_capability('moodle/site:config', context_system::instance())) {
-                $courserenderer = $PAGE->get_renderer('core', 'course');
-                $coursesearch = $courserenderer->course_search_form(null, 'fixy');
-                $courselist .= '<div class="col-md-6">'.$coursesearch.'</div>';
-            }
-
-            $browseallcoursesbutton = $this->browse_all_courses_button();
-            $courselist .= '<div class="col-md-6">'.$browseallcoursesbutton.'</div>';
-            $courselist .= '</div></section>'; // Close row.
-
+            
             $menu = get_string('menu', 'theme_snap');
             $badge = $this->render_badge_count();
             $linkcontent = $menu.$picture.$badge;
@@ -819,24 +840,32 @@ class theme_snap_core_renderer extends toc_renderer {
                 $realuserinfo = html_writer::span($via.' '.html_writer::span($fullname, 'real-user-name'), 'real-user-info');
             }
 
-            $output .= '<nav id="primary-nav" class="fixy toggle-details" tabindex="0">
-        <a id="fixy-close" class="pull-right snap-action-icon" href="#">
-            <i class="icon icon-close"></i><small>'.$close.'</small>
-        </a>
-        <div class=fixy-inner>
-        <h1 id="fixy-profile-link">
-            <a title="'.s($viewyourprofile).'" href="'.s($CFG->wwwroot).'/user/profile.php" >'.
-                $picture.'<span id="fixy-username">'.format_string(fullname($USER)).'</span>
+            $output .= '<nav id="primary-nav" class="fixy toggle-details" tabindex="-1">
+            <div class="fixy-inner">
+            <a id="fixy-close" class="pull-right snap-action-icon" href="#">
+                <i class="icon icon-close"></i><small>'.$close.'</small>
             </a>
-        </h1>'.$realuserinfo.$courselist.$this->render_callstoaction().'
-        <div class="fixy-logout-footer clearfix text-center">
-            <a class="btn btn-default logout" href="'.s($CFG->wwwroot).'/login/logout.php?sesskey='.sesskey().'">'.$logout.'</a>
-        </div>
+            
+            <div id="fixy-user">'.$picture.'
+            <div id="fixy-user-details">
+                <a title="'.s($viewyourprofile).'" href="'.s($CFG->wwwroot).'/user/profile.php" >'.
+                    '<span class="h1" role="heading" aria-level="1">'.format_string(fullname($USER)).'</span>
+                </a> '.$realuserinfo.'
+                <a id="fixy-logout" href="'.s($CFG->wwwroot).'/login/logout.php?sesskey='.sesskey().'">'.$logout.'</a>
+            </div>
+            </div>
+            
+            
+            
+        <div id="fixy-content">'
+        .$courselist.$this->render_callstoaction().'
+        </div><!-- end fixy-content -->
         </div><!-- end fixy-inner -->
         </nav><!-- end primary nav -->';
         }
         return $output;
     }
+
 
     /**
      * get section number by section id
@@ -853,6 +882,7 @@ class theme_snap_core_renderer extends toc_renderer {
         }
         return false;
     }
+
 
     /*
      * This renders the navbar.
@@ -898,6 +928,7 @@ class theme_snap_core_renderer extends toc_renderer {
         return "<ol class=breadcrumb>$breadcrumbs</ol>";
     }
 
+
     /**
      * Get page heading.
      *
@@ -941,11 +972,13 @@ class theme_snap_core_renderer extends toc_renderer {
         return $heading;
     }
 
+
     public function favicon() {
         // Allow customized favicon from settings.
         $url = $this->page->theme->setting_file_url('favicon', 'favicon');
         return empty($url) ? parent::favicon() : $url;
     }
+
 
     /**
      * Renders custom menu as a simple list.
@@ -971,6 +1004,7 @@ class theme_snap_core_renderer extends toc_renderer {
         return $content;
     }
 
+
     /**
      * Output custom menu items as flat list.
      *
@@ -994,6 +1028,7 @@ class theme_snap_core_renderer extends toc_renderer {
         }
         return $content;
     }
+
 
     /**
      * Alternative rendering of front page news, called from layout/faux_site_index.php which
@@ -1315,11 +1350,12 @@ HTML;
                     'p'.$activity->content->id
             );
             $fullname = fullname($activity->user);
+            $forum_path = $activity->courseshortname. ' / ' .$activity->forumname;
             $meta = [
-                $activity->courseshortname.' / '.$activity->forumname,
-                $this->friendly_datetime($activity->timestamp)
+                local::relative_time($activity->timestamp),
+                format_text($forum_path, FORMAT_HTML, $formatoptions)
             ];
-            $formattedsubject = format_text($activity->content->subject);
+            $formattedsubject = '<p>' .format_text($activity->content->subject, FORMAT_HTML, $formatoptions). '</p>';
             $output .= $this->snap_media_object($url, $picture, $fullname, $meta, $formattedsubject);
         }
         return $output;
