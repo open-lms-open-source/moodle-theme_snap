@@ -30,9 +30,6 @@ $notajaxscript = !defined('AJAX_SCRIPT') || AJAX_SCRIPT == false;
 // workaround.
 if ($themeissnap && $notajaxscript) {
 
-    // Add theme-snap class so modules can customise css for snap.
-    $PAGE->add_body_class('theme-snap');
-
     // Setup debugging html.
     // This allows javascript to target debug messages and move them to footer.
     if (!function_exists('xdebug_break')) {
