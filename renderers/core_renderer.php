@@ -732,19 +732,19 @@ class theme_snap_core_renderer extends toc_renderer {
             $picture = $this->render($userpicture);
             $mycourses = enrol_get_my_courses(null, 'visible DESC, fullname ASC, id DESC');
 
-            $courselist .= '<section id="fixy-my-courses" class="clearfix"><div><h2>' .get_string('courses'). '</h2>';
+            $courselist .= '<section id="fixy-my-courses"><div class="clearfix"><h2>' .get_string('courses'). '</h2>';
 
             // Default text when no courses.
             if (!$mycourses) {
                 $courselist .= "<p>".get_string('coursefixydefaulttext', 'theme_snap')."</p>";
             }
+            
+            // Hidden course vars.
+            $hiddencoursecount = 0;
+            $hvisiblecoursecount = 0;
+            $hiddencourselist = '';
+            $visiblecoursecount = '';
             foreach ($mycourses as $c) {
-                $pubstatus = "";
-                if (!$c->visible) {
-                    $notpublished = get_string('notpublished', 'theme_snap');
-                    $pubstatus = "<small class='published-status text-warning'>".$notpublished."</small>";
-                }
-
                 $bgcolor = local::get_course_color($c->id);
                 $courseimagecss = "background-color: #$bgcolor;";
                 $bgimage = local::course_coverimage_url($c->id);
@@ -804,15 +804,45 @@ class theme_snap_core_renderer extends toc_renderer {
                     $coursecontacts = '<div class="courseinfo-teachers">' .$courseteachers.$vcourseteachers.$ecourseteachers. '</div>';
                 }
                 
-                $clink = '<div data-href="' .$CFG->wwwroot.'/course/view.php?id='.$c->id. '" class="courseinfo" style="' .$courseimagecss. '">
+                $notpublished = get_string('notpublished', 'theme_snap');
+                $pubstatus = '<small class="published-status text-warning">' .$notpublished. '</small>';
+                // If course is not visible.
+                if (!$c->visible) {
+                    $hiddencoursecount ++;
+                    $hiddencoursecard = '<div data-href="' .$CFG->wwwroot.'/course/view.php?id='.$c->id. '" class="courseinfo" style="' .$courseimagecss. '">
                     <div class="courseinfo-body">
                     <h3><a href="'.$CFG->wwwroot.'/course/view.php?id='.$c->id.'">' .format_string($c->fullname). '</a></h3>'
                     .$dynamicinfo.$coursecontacts.$pubstatus.
                     '</div></div>';
-                $courselist .= $clink;
+                    $hiddencourselist .= $hiddencoursecard;
+                }
+                // If course is visible.
+                else {
+                    $visiblecoursecount ++;
+                    $coursescard = '<div data-href="' .$CFG->wwwroot.'/course/view.php?id='.$c->id. '" class="courseinfo" style="' .$courseimagecss. '">
+                    <div class="courseinfo-body">
+                    <h3><a href="'.$CFG->wwwroot.'/course/view.php?id='.$c->id.'">' .format_string($c->fullname). '</a></h3>'
+                    .$dynamicinfo.$coursecontacts.
+                    '</div></div>';
+                    $courselist .= $coursescard;
+                }
             }
             $courselist .= $this->browse_all_courses_button();
-            $courselist .= '</div></section>';
+            $courselist .= '</div>';
+            
+            // Output hidden courses toggle when there are visible courses.
+            if ($hiddencoursecount && $visiblecoursecount) {
+                $hiddencourses = '<div class="clearfix"><h2><a id="js-toggle-hidden-courses" href="#">'. get_string('hiddencoursestoggle', 'theme_snap'). ' (' .$hiddencoursecount. ')</a></h2>';
+                $hiddencourses .= '<div id="fixy-hidden-courses" class="clearfix" tabindex="-1">' .$hiddencourselist. '</div>';
+                $hiddencourses .= '</div>';
+                $courselist .= $hiddencourses;
+            }
+            // Output hidden courses when no visible courses.
+            elseif ($hiddencoursecount) {
+                $hiddencourses = '<div class="clearfix">' .$hiddencourselist. '</div>';
+                $courselist .= $hiddencourses;
+            }
+            $courselist .= '</section>';
 
             
             $menu = get_string('menu', 'theme_snap');
