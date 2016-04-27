@@ -19303,11 +19303,6 @@ fieldset[disabled] a#changenumsections .reduce-sections {
   width: 1em;
   height: 1em;
 }
-.behat-site #snap-move-message {
-  position: relative;
-  -webkit-transition-property: none;
-          transition-property: none;
-}
 .snap-move-cancel {
   float: right;
   margin-right: 4%;
@@ -24564,4 +24559,25 @@ img.iconhelp:hover {
 }
 .que {
   border-bottom: 1px solid #03A9F4;
+}
+.behat-site #fixy-user #fixy-logout {
+  line-height: 1em;
+}
+.behat-site #moodle-blocks {
+  visibility: visible;
+  height: inherit;
+}
+.behat-site #mr-nav {
+  position: absolute;
+}
+.behat-site * {
+  -webkit-transition: none !important;
+          transition: none !important;
+  -webkit-animation-name: none !important;
+          animation-name: none !important;
+}
+.behat-site #snap-move-message {
+  position: relative;
+  -webkit-transition-property: none;
+          transition-property: none;
 }

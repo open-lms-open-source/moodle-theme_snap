@@ -53,7 +53,7 @@ Feature: When the moodle theme is set to Snap, students and teachers can open a 
     And I log in as "student1" (theme_snap)
     And I open the personal menu
     And I should see "You have no recent feedback."
-    And I should see "My grades"
+    And I should see "Feedback"
 
   @javascript
   Scenario: 1 out of 2 assignments are submitted by student and graded by teacher.
@@ -64,7 +64,7 @@ Feature: When the moodle theme is set to Snap, students and teachers can open a 
 
     And I log in as "student1" (theme_snap)
     And I open the personal menu
-    And I should see "My grades"
+    And I should see "Feedback"
     And I follow "Course 1"
     And I wait until the page is ready
     And I follow "Topic 1"
@@ -92,7 +92,7 @@ Feature: When the moodle theme is set to Snap, students and teachers can open a 
     And I wait until "#snap-personal-menu-grading[data-content-loaded=\"1\"]" "css_element" is visible
     # The above waits until the snap personal menu column is loaded.
    Then I should see "1 of 1 Submitted, 1 Ungraded"
-    And I follow "Course 1 / Test assignment1"
+    And I follow "Test assignment1"
     And I follow "View/grade all submissions"
     And I click on "Grade Student 1" "link" in the "Student 1" "table_row"
    When I set the following fields to these values:
@@ -107,4 +107,4 @@ Feature: When the moodle theme is set to Snap, students and teachers can open a 
     And I log in as "student1" (theme_snap)
     And I open the personal menu
     And I should see "Test assignment1" in the "#snap-personal-menu-graded" "css_element"
-    And I should see "My grades"
+    And I should see "Feedback"

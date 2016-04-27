@@ -183,13 +183,11 @@ class behat_theme_snap extends behat_base {
      * @Given  /^I log out \(theme_snap\)$/
      */
     public function i_log_out() {
-        $givens = [
-            'I open the personal menu',
-            'I wait until ".btn.logout" "css_element" is visible',
-            'I follow "Log out"',
-            'I wait until the page is ready'
-        ];
-        return $this->process_givens_array($givens);
+        $this->i_open_the_personal_menu();
+
+        /** @var behat_general $general */
+        $general = behat_context_helper::get('behat_general');
+        $general->i_click_on('#fixy-logout', 'css_element');
     }
 
     /**
@@ -216,11 +214,11 @@ class behat_theme_snap extends behat_base {
      */
     public function i_open_the_personal_menu() {
         $node = $this->find('css', '#primary-nav');
+        // Only attempt to open the personal menu if its not already open.
         if (!$node->isVisible()) {
-            return [new Given('I click on "#js-personal-menu-trigger" "css_element"')];
-        } else {
-            // Already open.
-            return null;
+            /* @var $generalcontext behat_general */
+            $generalcontext = behat_context_helper::get('behat_general');
+            $generalcontext->i_click_on('#js-personal-menu-trigger', 'css_element');
         }
     }
 
