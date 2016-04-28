@@ -9,6 +9,7 @@
     "grunt-contrib-less": "^1.0.1",
     "grunt-contrib-watch": "^0.6.1",
     "grunt-exec": "~0.4.2",
-    "grunt-lesslint": "^2.0.0"
+    "grunt-lesslint": "^2.0.0",
+    "grunt-load-gruntfile" : "^0.0.2"
   }
 }
