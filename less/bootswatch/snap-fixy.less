@@ -8,17 +8,25 @@
     display: none;
 }
 
-// when the fixy is open
-#login:target,
-#primary-nav:target {
-    display: block;
+.snap-fixy-open {
+    #primary-nav,
+    #snap-login {
+        display: block;
+    }
+    #page,
+    #moodle-footer,
+    #fixy-trigger,
+    #logo,
+    .skiplinks {
+        display: none;
+    }
 }
 
-.notloggedin .fixy-trigger {
+.notloggedin #fixy-trigger {
     padding: 0.9em 1em; // SHAME - something odd where login overlaps mr-nav
 }
 
-.fixy-trigger {
+#fixy-trigger {
     // border: 1px solid @brand-primary; customisable
     padding: 1em;
     position: relative;
@@ -135,7 +143,7 @@
 // -------------------------
 // gets a bit messey from here SHAME
 
-#login.fixy {
+#snap-login.fixy {
     input {
         display: block;
         padding: 0.1em;

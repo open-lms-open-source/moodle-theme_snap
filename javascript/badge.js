@@ -61,15 +61,18 @@ M.snap_message_badge.init_badge = function(Y, forwardURL, courseid) {
     M.snap_message_badge.forwardURL = forwardURL;
 
     // Load messages when the primary nav is shown.
-    var triggerNode = Y.one('.fixy-trigger');
+    var triggerNode = Y.one('#fixy-trigger');
     if (triggerNode) {
         triggerNode.on('click', function() {
-            M.snap_message_badge.init_overlay(Y);
+            var navOpen = Y.one('.snap-fixy-open #primary-nav');
+            if (navOpen) {
+                M.snap_message_badge.init_overlay(Y);
+            }
         });
     }
 
     // Load messages if primary nav is already showing.
-    var navNode = Y.one('#primary-nav:target');
+    var navNode = Y.one('.snap-fixy-open #primary-nav');
     if (navNode) {
         M.snap_message_badge.init_overlay(Y);
     }

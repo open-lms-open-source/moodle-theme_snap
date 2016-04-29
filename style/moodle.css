@@ -23415,29 +23415,36 @@ td.mceToolbar {
 .fixy {
   display: none;
 }
-#login:target,
-#primary-nav:target {
+.snap-fixy-open #primary-nav,
+.snap-fixy-open #snap-login {
   display: block;
 }
-.notloggedin .fixy-trigger {
+.snap-fixy-open #page,
+.snap-fixy-open #moodle-footer,
+.snap-fixy-open #fixy-trigger,
+.snap-fixy-open #logo,
+.snap-fixy-open .skiplinks {
+  display: none;
+}
+.notloggedin #fixy-trigger {
   padding: 0.9em 1em;
 }
-.fixy-trigger {
+#fixy-trigger {
   padding: 1em;
   position: relative;
   -webkit-transition: all 0.4s ease-in-out;
           transition: all 0.4s ease-in-out;
 }
-.fixy-trigger:hover {
+#fixy-trigger:hover {
   color: #fff !important;
   text-decoration: none;
 }
-.fixy-trigger .userpicture {
+#fixy-trigger .userpicture {
   height: 38px;
   width: 38px;
   margin-left: 1em;
 }
-.fixy-trigger .message_badge_count {
+#fixy-trigger .message_badge_count {
   position: absolute;
   padding-top: 0;
   background-image: none;
@@ -23536,7 +23543,7 @@ td.mceToolbar {
 #fixy-content:after {
   clear: both;
 }
-#login.fixy input {
+#snap-login.fixy input {
   display: block;
   padding: 0.1em;
   margin: 0 auto 0.5em;
@@ -23549,19 +23556,19 @@ td.mceToolbar {
   -webkit-box-shadow: none;
           box-shadow: none;
 }
-#login.fixy input:focus {
+#snap-login.fixy input:focus {
   outline: none;
   border-color: #fff;
 }
-#login.fixy input[type=submit] {
+#snap-login.fixy input[type=submit] {
   border: 1px solid #fff;
   margin: 0 auto 0.5em;
 }
-#login.fixy legend {
+#snap-login.fixy legend {
   color: #fff;
   border-bottom: 1px solid #fff;
 }
-#login.fixy label {
+#snap-login.fixy label {
   color: #fff;
   text-transform: uppercase;
   font-size: 14px;
@@ -23572,7 +23579,7 @@ td.mceToolbar {
   font-weight: 100;
   margin: 0.5em 5%;
 }
-#login.fixy .fixy-inner {
+#snap-login.fixy .fixy-inner {
   max-width: 50.5em;
   padding-top: 4%;
 }
@@ -24188,10 +24195,10 @@ legend,
 .snap-media-body p {
   font-family: Georgia, "Times New Roman", Times, serif;
 }
-.fixy-trigger:hover {
+#fixy-trigger:hover {
   background-color: rgba(3, 169, 244, 0.75);
 }
-.fixy-trigger .message_badge_count {
+#fixy-trigger .message_badge_count {
   background-color: #038dcc;
 }
 .courseinfo-teachers-more:hover {
@@ -24233,7 +24240,7 @@ input#id_submitbutton2,
 .path-admin .buttons input[type="submit"],
 td.submit input,
 #notice .singlebutton + .singlebutton input,
-#login.fixy input[type=submit],
+#snap-login.fixy input[type=submit],
 button,
 .yui-skin-sam .yui-button,
 .yui3-button,
@@ -24263,7 +24270,7 @@ input#id_submitbutton2:hover,
 .path-admin .buttons input[type="submit"]:hover,
 td.submit input:hover,
 #notice .singlebutton + .singlebutton input:hover,
-#login.fixy input[type=submit]:hover,
+#snap-login.fixy input[type=submit]:hover,
 button:hover,
 .yui-skin-sam .yui-button:hover,
 .yui3-button:hover,
@@ -24283,7 +24290,7 @@ input#id_submitbutton2:focus,
 .path-admin .buttons input[type="submit"]:focus,
 td.submit input:focus,
 #notice .singlebutton + .singlebutton input:focus,
-#login.fixy input[type=submit]:focus,
+#snap-login.fixy input[type=submit]:focus,
 button:focus,
 .yui-skin-sam .yui-button:focus,
 .yui3-button:focus,
@@ -24303,7 +24310,7 @@ input#id_submitbutton2:active,
 .path-admin .buttons input[type="submit"]:active,
 td.submit input:active,
 #notice .singlebutton + .singlebutton input:active,
-#login.fixy input[type=submit]:active,
+#snap-login.fixy input[type=submit]:active,
 button:active,
 .yui-skin-sam .yui-button:active,
 .yui3-button:active,
@@ -24323,7 +24330,7 @@ input#id_submitbutton2.active,
 .path-admin .buttons input[type="submit"].active,
 td.submit input.active,
 #notice .singlebutton + .singlebutton input.active,
-#login.fixy input[type=submit].active,
+#snap-login.fixy input[type=submit].active,
 button.active,
 .yui-skin-sam .yui-button.active,
 .yui3-button.active,
@@ -24349,7 +24356,7 @@ input#id_submitbutton2:visited,
 .path-admin .buttons input[type="submit"]:visited,
 td.submit input:visited,
 #notice .singlebutton + .singlebutton input:visited,
-#login.fixy input[type=submit]:visited,
+#snap-login.fixy input[type=submit]:visited,
 button:visited,
 .yui-skin-sam .yui-button:visited,
 .yui3-button:visited,
@@ -24371,7 +24378,7 @@ input#id_submitbutton2[disabled],
 .path-admin .buttons input[type="submit"][disabled],
 td.submit input[disabled],
 #notice .singlebutton + .singlebutton input[disabled],
-#login.fixy input[type=submit][disabled],
+#snap-login.fixy input[type=submit][disabled],
 button[disabled],
 .yui-skin-sam .yui-button[disabled],
 .yui3-button[disabled],
