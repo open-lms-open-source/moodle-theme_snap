@@ -27,8 +27,10 @@ require_once('toc_renderer.php');
 require_once($CFG->libdir.'/coursecatlib.php');
 
 use theme_snap\local;
+use theme_snap\services\course;
 use theme_snap\renderables\settings_link;
 use theme_snap\renderables\bb_dashboard_link;
+use theme_snap\renderables\course_card;
 
 class theme_snap_core_renderer extends toc_renderer {
 
@@ -655,6 +657,13 @@ class theme_snap_core_renderer extends toc_renderer {
         return $output;
     }
 
+    /**
+     * @param course_card $card
+     * @throws moodle_exception
+     */
+    public function render_course_card(course_card $card) {
+        return $this->render_from_template('theme_snap/course_cards', $card);
+    }
 
     /**
      * The "fixy" overlay that drops down when the link in the top right corner is clicked. It will say either
@@ -666,6 +675,8 @@ class theme_snap_core_renderer extends toc_renderer {
 
         $logout = get_string('logout');
         $isguest = isguestuser();
+
+        $courseservice = course::service();
 
         $output = '';
         if (!isloggedin() || $isguest) {
@@ -741,7 +752,11 @@ class theme_snap_core_renderer extends toc_renderer {
             $userpicture->alttext = false;
             $userpicture->size = 100;
             $picture = $this->render($userpicture);
-            $mycourses = enrol_get_my_courses(null, 'visible DESC, fullname ASC, id DESC');
+
+            list($favorited, $notfavorited) = $courseservice->my_courses_split_by_favorites();
+
+            // Create courses array with favorites first.
+            $mycourses = $favorited + $notfavorited;
 
             $courselist .= '<section id="fixy-my-courses"><div class="clearfix"><h2>' .get_string('courses'). '</h2>';
 
@@ -749,93 +764,26 @@ class theme_snap_core_renderer extends toc_renderer {
             if (!$mycourses) {
                 $courselist .= "<p>".get_string('coursefixydefaulttext', 'theme_snap')."</p>";
             }
-
-            // Hidden course vars.
+            
+            // Visible / hidden course vars.
+            $visiblecoursecount = 0;
             $hiddencoursecount = 0;
-            $hvisiblecoursecount = 0;
             $hiddencourselist = '';
-            $visiblecoursecount = '';
-            foreach ($mycourses as $c) {
-                $bgcolor = local::get_course_color($c->id);
-                $courseimagecss = "background-color: #$bgcolor;";
-                $bgimage = local::course_coverimage_url($c->id);
-                if (!empty($bgimage)) {
-                    $courseimagecss .= "background-image: url($bgimage);";
-                }
-                $dynamicinfo = '<div data-courseid="'.$c->id.'" class=dynamicinfo></div>';
 
-                $clist = new course_in_list($c);
-                $teachers = $clist->get_course_contacts();
+            foreach ($mycourses as $course) {
 
-                $courseteachers = '';
-                $vcourseteachers = '';
-                $ecourseteachers = '';
-                $coursecontacts = '';
-                if (!empty($teachers)) {
-                    $avatars = [];
-                    $blankavatars = [];
-                    $courseteachers = '<h4 class="sr-only">'.get_string('coursecontacts', 'theme_snap').'</h4>';
-                    // Get all teacher user records in one go.
-                    $teacherids = array();
-                    foreach ($teachers as $teacher) {
-                        $teacherids[] = $teacher['user']->id;
-                    }
-                    $teacherusers = $DB->get_records_list('user', 'id', $teacherids);
-                    foreach ($teachers as $teacher) {
-                        if (!isset($teacherusers[$teacher['user']->id])) {
-                            continue;
-                        }
-                        $teacheruser = $teacherusers [$teacher['user']->id];
-                        $userpicture = new user_picture($teacheruser);
-                        $userpicture->link = false;
-                        $userpicture->size = 100;
-                        $teacherpicture = $this->render($userpicture);
+                $ccard = new course_card($course->id);
+                $coursecard =  $this->render($ccard);
 
-                        if (stripos($teacherpicture, 'defaultuserpic') === false) {
-                            $avatars[] = $teacherpicture;
-                        } else {
-                            $blankavatars[] = $teacherpicture;
-                        }
-                    }
-                    // Let's put the interesting avatars first!
-                    $avatars = array_merge($avatars, $blankavatars);
-                    // Limit visible to 4.
-                    if (count($avatars) > 5) {
-                        // Show 4 avatars and link to show more.
-                        $hiddenavatars = array_slice($avatars, 4);
-                        $avatars = array_slice($avatars, 0, 4);
-                        $extralink = '<a class="courseinfo-teachers-more state-visible" href="#">+'.count($hiddenavatars).'</a>';
-                    } else {
-                        $hiddenavatars = [];
-                        $extralink = '';
-                    }
-                    $vcourseteachers = '<div class="courseinfo-teachers-visible">'.implode('', $avatars).$extralink.'</div>';
-                    $ecourseteachers = '<div class="courseinfo-teachers-extra">'.implode('', $hiddenavatars).'</div>';
-
-                    $coursecontacts = '<div class="courseinfo-teachers">' .$courseteachers.$vcourseteachers.$ecourseteachers. '</div>';
-                }
-
-                $notpublished = get_string('notpublished', 'theme_snap');
-                $pubstatus = '<small class="published-status text-warning">' .$notpublished. '</small>';
-                // If course is not visible.
-                if (!$c->visible) {
+                // If course is not visible and not favorited.
+                if (!$course->visible && !isset($favorited[$course->id])) {
                     $hiddencoursecount ++;
-                    $hiddencoursecard = '<div data-href="' .$CFG->wwwroot.'/course/view.php?id='.$c->id. '" class="courseinfo" style="' .$courseimagecss. '">
-                    <div class="courseinfo-body">
-                    <h3><a href="'.$CFG->wwwroot.'/course/view.php?id='.$c->id.'">' .format_string($c->fullname). '</a></h3>'
-                    .$dynamicinfo.$coursecontacts.$pubstatus.
-                    '</div></div>';
-                    $hiddencourselist .= $hiddencoursecard;
+                    $hiddencourselist .= $coursecard;
                 }
-                // If course is visible.
+                // If course is visible or favorited.
                 else {
                     $visiblecoursecount ++;
-                    $coursescard = '<div data-href="' .$CFG->wwwroot.'/course/view.php?id='.$c->id. '" class="courseinfo" style="' .$courseimagecss. '">
-                    <div class="courseinfo-body">
-                    <h3><a href="'.$CFG->wwwroot.'/course/view.php?id='.$c->id.'">' .format_string($c->fullname). '</a></h3>'
-                    .$dynamicinfo.$coursecontacts.
-                    '</div></div>';
-                    $courselist .= $coursescard;
+                    $courselist .= $coursecard;
                 }
             }
             $courselist .= $this->browse_all_courses_button();
@@ -854,7 +802,6 @@ class theme_snap_core_renderer extends toc_renderer {
                 $courselist .= $hiddencourses;
             }
             $courselist .= '</section>';
-
 
             $menu = get_string('menu', 'theme_snap');
             $badge = $this->render_badge_count();

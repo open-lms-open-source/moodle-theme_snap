@@ -24,9 +24,12 @@
 /**
  * Main snap initialising function.
  */
-function snapInit() {
+define(['jquery', 'snap_bootstrap', 'core/log', 'theme_snap/course_favorites'], function(jq, $, log, course_favorites) {
 
     'use strict';
+
+    // Use jquery with bootstrap functions.
+    $ = snap_bootstrap;
 
     /**
      * master switch for logging
@@ -35,9 +38,9 @@ function snapInit() {
     var loggingenabled = false;
 
     /**
-    * height of navigation bar
-    * @type {number}
-    */
+     * height of navigation bar
+     * @type {number}
+     */
     var navheight = $('#mr-nav').outerHeight();
 
     /**
@@ -46,50 +49,11 @@ function snapInit() {
      */
     var resizestamp = null;
 
-    /**
-     * console.log wrapper
-     * @param {string} msg
-     * @param obj
-     */
-    var logmsg = function(msg, obj, logtype){
-        if (!logtype){
-            // Set default log type.
-            logtype = 'log';
-        }
-        // Make sure logtype is valid - i.e. log, warn or error and if not then just set it to log.
-        var logtypes = ['log', 'warn', 'error'];
-        if ($.inArray(logtype, logtypes) === -1){
-            logtype = 'log';
-        }
-        if (!loggingenabled){
-            return;
-        }
-        if (console !== null && console[logtype] !== null){
-            if (obj){
-                console[logtype](msg,obj);
-            } else {
-                console[logtype](msg);
-            }
-        }
-    };
-
-    /**
-     * log error message
-     * @param msg
-     * @param obj
-     */
-    var logerror = function (msg, obj) {
-        logmsg (msg, obj, 'error');
-    };
-
-    /**
-     * log error message
-     * @param msg
-     * @param obj
-     */
-    var logwarn = function (msg, obj) {
-        logmsg (msg, obj, 'warn');
-    };
+    if (!loggingenabled) {
+        log.disableAll(true);
+    } else {
+        log.enableAll(true);
+    }
 
     /**
      * Ensure lightbox container exists.
@@ -102,12 +66,12 @@ function snapInit() {
         var lbox = $('#snap-light-box');
         if (lbox.length === 0) {
             $(appendto).append('<div id="snap-light-box" tabindex="-1">' +
-                '<div id="snap-light-box-content"></div>' +
-                '<a id="snap-light-box-close" class="pull-right snap-action-icon" href="#">' +
-                    '<i class="icon icon-close"></i><small>Close</small>' +
-                '</a>' +
+            '<div id="snap-light-box-content"></div>' +
+            '<a id="snap-light-box-close" class="pull-right snap-action-icon" href="#">' +
+            '<i class="icon icon-close"></i><small>Close</small>' +
+            '</a>' +
             '</div>');
-            $('#snap-light-box-close').click(function(e){
+            $('#snap-light-box-close').click(function(e) {
                 e.preventDefault();
                 e.stopPropagation();
                 lightboxclose();
@@ -156,8 +120,8 @@ function snapInit() {
     var movePHPErrorsToHeader = function() {
         // Remove <br> tags inserted before xdebug-error.
         var xdebugs = $('.xdebug-error');
-        if (xdebugs.length){
-            for (var x = 0; x < xdebugs.length; x++){
+        if (xdebugs.length) {
+            for (var x = 0; x < xdebugs.length; x++) {
                 var el = xdebugs[x];
                 var fontel = el.parentNode;
                 var br = $(fontel).prev('br');
@@ -175,7 +139,7 @@ function snapInit() {
             $('#page-footer').append(errorcont);
             $('#footer-error-cont').append(msgs);
             // Add rulers
-            $('.php-debug-footer').after ($('<hr>'));
+            $('.php-debug-footer').after($('<hr>'));
             // Lets also add the error class to the header so we know there are some errors.
             $('#mr-nav').addClass('errors-found');
             // Lets add an error link to the header.
@@ -190,36 +154,36 @@ function snapInit() {
      * Note: This doesn't mean that we are in a course - Being in a course could mean that you are on a module page.
      * This means that you are actually on the course page.
      */
-    var onCoursePage = function () {
+    var onCoursePage = function() {
         return $('body').attr('id').indexOf('page-course-view-') === 0;
     };
 
     /**
      * Apply block hash to form actions etc if necessary.
      */
-    var applyBlockHash = function(){
+    var applyBlockHash = function() {
         // Add block hash to add block form.
-        if (onCoursePage()){
-            $('.block_adminblock form').each(function(){
+        if (onCoursePage()) {
+            $('.block_adminblock form').each(function() {
                 $(this).attr('action', $(this).attr('action') + '#coursetools');
             });
         }
 
-        if (location.hash !== ''){
+        if (location.hash !== '') {
             return;
         }
 
         var urlParams = getURLParams(location.href);
 
-        // If calendar navigation has been clicked then go back to calendar
-        if (onCoursePage() && typeof(urlParams.time) !== 'undefined'){
+        // If calendar navigation has been clicked then go back to calendar.
+        if (onCoursePage() && typeof(urlParams.time) !== 'undefined') {
             location.hash = 'coursetools';
             if ($('.block_calendar_month')) {
                 scrollToElement($('.block_calendar_month'));
             }
         }
 
-        // Form selectors for applying blocks hash
+        // Form selectors for applying blocks hash.
         var formselectors = [
             'body.path-blocks-collect #notice form'
         ];
@@ -227,9 +191,9 @@ function snapInit() {
         // There is no decent selector for block deletion so we have to add the selector if the current url has the
         // appropriate parameters.
         var paramchecks = ['bui_deleteid', 'bui_editid'];
-        for (var p in paramchecks){
+        for (var p in paramchecks) {
             var param = paramchecks[p];
-            if (typeof(urlParams[param]) !== 'undefined'){
+            if (typeof(urlParams[param]) !== 'undefined') {
                 formselectors.push('#notice form');
                 break;
             }
@@ -237,18 +201,16 @@ function snapInit() {
 
         // If required, apply #coursetools hash to form action - this is so that on submitting form it returns to course
         // page on blocks tab.
-        $(formselectors.join(', ')).each(function(){
+        $(formselectors.join(', ')).each(function() {
             // Only apply the blocks hash if a hash is not already present in url.
             var formurl = $(this).attr('action');
             if (formurl.indexOf('#') === -1
                 && (formurl.indexOf('/course/view.php') > -1)
-                ){
+            ) {
                 $(this).attr('action', $(this).attr('action') + '#coursetools');
             }
         });
     };
-
-
 
     /**
      * Apply responsive video to non HTML5 video elements.
@@ -256,11 +218,11 @@ function snapInit() {
      * @author Guy Thomas
      * @date 2014-06-09
      */
-    var applyResponsiveVideo = function () {
+    var applyResponsiveVideo = function() {
         // Should we be targeting all elements of this type, or should we be more specific?
         // E.g. for externally embedded video like youtube we have to go with iframes but what happens if there is
         // an iframe and it isn't a video iframe - it still gets processed by this script.
-        $('.mediaplugin object, .mediaplugin embed, iframe').not( "[data-iframe-srcvideo='value']").each(function() {
+        $('.mediaplugin object, .mediaplugin embed, iframe').not("[data-iframe-srcvideo='value']").each(function() {
             var width,
                 height,
                 aspectratio;
@@ -282,13 +244,13 @@ function snapInit() {
                 ];
                 var supported = false;
                 for (var s in supportedsites) {
-                    if (this.src.indexOf(supportedsites[s]) > -1){
+                    if (this.src.indexOf(supportedsites[s]) > -1) {
                         supported = true;
                         break;
                     }
                 }
                 this.setAttribute('data-iframe-srcvideo', (supported ? '1' : '0'));
-                if (!supported){
+                if (!supported) {
                     return true; // Skip as not supported.
                 }
                 // Set class.
@@ -296,7 +258,7 @@ function snapInit() {
             }
 
             aspectratio = this.getAttribute('data-aspect-ratio');
-            if (aspectratio === null){ // Note, an empty attribute should evaluate to === null.
+            if (aspectratio === null) { // Note, an empty attribute should evaluate to === null.
                 // Calculate aspect ratio.
                 width = this.width || this.offsetWidth;
                 width = parseInt(width);
@@ -306,7 +268,7 @@ function snapInit() {
                 this.setAttribute('data-aspect-ratio', aspectratio);
             }
 
-            if (tagname === 'iframe'){
+            if (tagname === 'iframe') {
                 // Remove attributes.
                 $(this).removeAttr('width');
                 $(this).removeAttr('height');
@@ -357,7 +319,7 @@ function snapInit() {
 
         // Create params array of values hashed by key.
         var params = [];
-        for (var i = 0; i < items.length; i++){
+        for (var i = 0; i < items.length; i++) {
             var item = items[i].split('=');
             var key = item[0];
             var val = item[1];
@@ -374,9 +336,9 @@ function snapInit() {
      */
     var tocSearchCourse = function(dataList) {
         // keep search input open
-            var i;
+        var i;
         var ua = window.navigator.userAgent;
-        if (ua.indexOf('MSIE ') || ua.indexOf('Trident/')){
+        if (ua.indexOf('MSIE ') || ua.indexOf('Trident/')) {
             // We have reclone datalist over again for IE, or the same search fails the second time round.
             var dataList = $("#toc-searchables").find('li').clone(true);
         }
@@ -385,7 +347,7 @@ function snapInit() {
         var searchString = $("#toc-search-input").val();
         searchString = processSearchString(searchString);
 
-        if(searchString.length === 0) {
+        if (searchString.length === 0) {
             $('#toc-search-results').html('');
             $("#toc-search-input").removeClass('state-active');
 
@@ -394,7 +356,7 @@ function snapInit() {
             var matches = [];
             for (i = 0; i < dataList.length; i++) {
                 var dataItem = dataList[i];
-                if(processSearchString($(dataItem).text()).indexOf(searchString) > -1 ) {
+                if (processSearchString($(dataItem).text()).indexOf(searchString) > -1) {
                     matches.push(dataItem);
                 }
             }
@@ -409,7 +371,7 @@ function snapInit() {
      * @param string searchString
      * @returns {string}
      */
-    var processSearchString = function(searchString){
+    var processSearchString = function(searchString) {
         searchString = searchString.trim().toLowerCase();
         return (searchString);
     };
@@ -424,7 +386,7 @@ function snapInit() {
      * @date 2014-06-19
      */
     var polyfills = function() {
-        if(!Modernizr.input.placeholder) {
+        if (!Modernizr.input.placeholder) {
             $('input, textarea').placeholder();
         }
     };
@@ -434,12 +396,12 @@ function snapInit() {
      *
      * @author Stuart Lamour
      */
-    var updatePersonalMenu = function(){
+    var updatePersonalMenu = function() {
 
         /**
          * Check if the browser supports localstorage.
          * Safari on private mode does not support write on this object
-        */
+         */
         var supportlocalstorage = true;
         if (typeof localStorage === 'object') {
             try {
@@ -456,24 +418,24 @@ function snapInit() {
          * Load ajax info into personal menu.
          *
          */
-        var loadajaxinfo = function(type){
+        var loadajaxinfo = function(type) {
             var container = $('#snap-personal-menu-' + type);
-            if($(container).length) {
+            if ($(container).length) {
                 var cache_key = M.cfg.sesskey + 'personal-menu-' + type;
                 try {
                     // Display old content while waiting
-                    if(window.sessionStorage[cache_key]) {
-                        logmsg('using locally stored ' + type);
+                    if (window.sessionStorage[cache_key]) {
+                        log.info('using locally stored ' + type);
                         var html = window.sessionStorage[cache_key];
                         $(container).html(html);
                     }
-                    logmsg('fetching ' + type);
+                    log.info('fetching ' + type);
                     $.ajax({
-                          type: "GET",
-                          async:  true,
-                          url: M.cfg.wwwroot + '/theme/snap/rest.php?action=get_' + type +'&contextid=' + M.cfg.context,
-                          success: function(data){
-                            logmsg('fetched ' + type);
+                        type: "GET",
+                        async: true,
+                        url: M.cfg.wwwroot + '/theme/snap/rest.php?action=get_' + type + '&contextid=' + M.cfg.context,
+                        success: function(data) {
+                            log.info('fetched ' + type);
                             if (supportlocalstorage) {
                                 window.sessionStorage[cache_key] = data.html;
                             }
@@ -482,11 +444,11 @@ function snapInit() {
                             // .data just sets the value in memory, not the dom.
                             $(container).attr('data-content-loaded', '1');
                             $(container).html(data.html);
-                          }
+                        }
                     });
-                } catch(err) {
+                } catch (err) {
                     sessionStorage.clear();
-                    logerror(err);
+                    log.error(err);
                 }
             }
         };
@@ -497,12 +459,11 @@ function snapInit() {
         loadajaxinfo('messages');
         loadajaxinfo('forumposts');
 
-
         // Load course information via ajax.
         var courseids = [];
         var courseinfo_key = M.cfg.sesskey + 'courseinfo';
         $('.courseinfo .dynamicinfo').each(function() {
-            courseids.push ($(this).attr('data-courseid'));
+            courseids.push($(this).attr('data-courseid'));
         });
         if (courseids.length > 0) {
 
@@ -511,41 +472,41 @@ function snapInit() {
              *
              * @param crsinfo
              */
-            var applycourseinfo = function(crsinfo){
-                for (var i in crsinfo){
+            var applycourseinfo = function(crsinfo) {
+                for (var i in crsinfo) {
                     var info = crsinfo[i];
-                    logmsg('applying course data for courseid '+info.courseid);
+                    log.info('applying course data for courseid ' + info.courseid);
                     var courseinfohtml = info.progress.progresshtml;
-                    if (info.feedback && info.feedback.feedbackhtml){
+                    if (info.feedback && info.feedback.feedbackhtml) {
                         courseinfohtml += info.feedback.feedbackhtml;
                     }
-                    $('.courseinfo [data-courseid="'+info.courseid+'"]').html(courseinfohtml);
+                    $('.courseinfo [data-courseid="' + info.courseid + '"]').html(courseinfohtml);
                 }
             };
 
             // OK - lets see if we have grades/progress in session storage we can use before ajax call.
-            if (window.sessionStorage[courseinfo_key]){
+            if (window.sessionStorage[courseinfo_key]) {
                 var courseinfo = JSON.parse(window.sessionStorage[courseinfo_key]);
-                applycourseinfo (courseinfo);
+                applycourseinfo(courseinfo);
             }
 
             // Get course info via ajax.
-            var courseiddata = 'courseids='+courseids.join(',');
-            logmsg("fetching course data");
+            var courseiddata = 'courseids=' + courseids.join(',');
+            log.info("fetching course data");
             $.ajax({
                 type: "GET",
-                async:  true,
+                async: true,
                 url: M.cfg.wwwroot + '/theme/snap/rest.php?action=get_courseinfo&contextid=' + M.cfg.context,
                 data: courseiddata,
-                success: function(data){
+                success: function(data) {
                     if (data.info) {
-                        logmsg('fetched coursedata', data.info);
+                        log.info('fetched coursedata', data.info);
                         if (supportlocalstorage) {
                             window.sessionStorage[courseinfo_key] = JSON.stringify(data.info);
                         }
                         applycourseinfo(data.info);
                     } else {
-                        logwarn('fetched coursedata with error: JSON data object is missing info property', data);
+                        log.warn('fetched coursedata with error: JSON data object is missing info property', data);
                     }
                 }
             });
@@ -558,7 +519,7 @@ function snapInit() {
      * @param jqueryCollection el
      * @return void
      */
-    var scrollToElement = function(el){
+    var scrollToElement = function(el) {
         if (!el.length) {
             // Element does not exist so exit.
             return;
@@ -576,8 +537,8 @@ function snapInit() {
     /**
      * Check hash and see if we should scroll to the module
      */
-    var checkHashScrollToModule = function(){
-        if(location.hash.indexOf("#module") === 0) {
+    var checkHashScrollToModule = function() {
+        if (location.hash.indexOf("#module") === 0) {
             // we know the hash here is the modid
             scrollToModule(location.hash);
         }
@@ -592,17 +553,17 @@ function snapInit() {
         // sometimes we have a hash, sometimes we don't
         // strip hash then add just in case
         $('#toc-search-results').html('');
-        var targmod = $("#" + modid.replace('#',''));
+        var targmod = $("#" + modid.replace('#', ''));
         // http://stackoverflow.com/questions/6677035/jquery-scroll-to-element
         scrollToElement(targmod);
 
         var searchpin = $("#searchpin");
-        if (!searchpin.length){
+        if (!searchpin.length) {
             searchpin = $('<i id="searchpin"></i>');
         }
 
         $(targmod).find('.instancename').prepend(searchpin);
-        $(targmod).attr('tabindex','-1').focus();
+        $(targmod).attr('tabindex', '-1').focus();
     };
 
     /**
@@ -612,9 +573,9 @@ function snapInit() {
      */
     var showSection = function() {
         // primary use case
-        if(onCoursePage()) {
+        if (onCoursePage()) {
             // check we are not in folder view
-            if(!$('.format-folderview').length){
+            if (!$('.format-folderview').length) {
                 // reset visible section & blocks
                 $('.course-content .main, #moodle-blocks,#coursetools, #snap-add-new-section').removeClass('state-visible');
                 // if the hash is just section, can we skip all this?
@@ -623,16 +584,16 @@ function snapInit() {
                 // params will be in the format
                 // #section-1&module-7255
                 var urlParams = location.hash.split("&"),
-                section = urlParams[0],
-                mod = urlParams[1] || null;
+                    section = urlParams[0],
+                    mod = urlParams[1] || null;
                 // Course tools special section.
 
-                if(section == '#coursetools') {
+                if (section == '#coursetools') {
                     $('#moodle-blocks').addClass('state-visible');
                 }
 
                 // we know that if we have a search modid will be param 1
-                if(mod !== null) {
+                if (mod !== null) {
                     $(section).addClass('state-visible');
                     scrollToModule(mod);
                 } else {
@@ -687,7 +648,7 @@ function snapInit() {
     var revealPageMod = function($pagemod, completionhtml) {
         $pagemod.find('.pagemod-content').slideToggle("fast", function() {
             // Animation complete.
-            if($pagemod.is('.state-expanded')){
+            if ($pagemod.is('.state-expanded')) {
                 $pagemod.attr('aria-expanded', 'true');
                 $pagemod.find('.pagemod-content').focus();
 
@@ -710,10 +671,10 @@ function snapInit() {
     var lightboxMedia = function(resourcemod) {
         var appendto = $('body');
         var spinner = '<div class="loadingstat three-quarters">' +
-                Y.Escape.html(M.util.get_string('loading', 'theme_snap')) +
-                '</div>';
-        lightboxopen(spinner, appendto, function(){
-            $(resourcemod).attr('tabindex','-1').focus();
+            Y.Escape.html(M.util.get_string('loading', 'theme_snap')) +
+            '</div>';
+        lightboxopen(spinner, appendto, function() {
+            $(resourcemod).attr('tabindex', '-1').focus();
             $(resourcemod).removeAttr('tabindex');
         });
 
@@ -721,21 +682,21 @@ function snapInit() {
             type: "GET",
             async: true,
             url: M.cfg.wwwroot + '/theme/snap/rest.php?action=get_media&contextid=' + $(resourcemod).data('modcontext'),
-            success: function (data) {
+            success: function(data) {
                 lightboxopen(data.html, appendto);
 
                 updateModCompletion($(resourcemod), data.completionhtml);
 
                 // Execute scripts - necessary for flv to work.
                 var hasflowplayerscript = false;
-                $('#snap-light-box script').each(function(){
+                $('#snap-light-box script').each(function() {
                     var script = $(this).text();
 
                     // Remove cdata from script.
-                    script = script.replace( /^(?:\s*)\/\/<!\[CDATA\[/, '').replace(/\/\/\]\](?:\s*)$/, '');
+                    script = script.replace(/^(?:\s*)\/\/<!\[CDATA\[/, '').replace(/\/\/\]\](?:\s*)$/, '');
 
                     // Check for flv video scripts.
-                    if (script.indexOf('M.util.add_video_player') >-1 ) {
+                    if (script.indexOf('M.util.add_video_player') > -1) {
                         hasflowplayerscript = true;
                         // This is really important - we have to reset this or it will try to apply flow player to all
                         // the video players it has already initialised and even ones that no longer exist because
@@ -744,7 +705,7 @@ function snapInit() {
                     }
 
                     // Execute script.
-                    eval (script);
+                    eval(script);
                 });
                 if (hasflowplayerscript) {
                     if (M.cfg.jsrev == -1) {
@@ -752,17 +713,19 @@ function snapInit() {
                     } else {
                         var jsurl = M.cfg.wwwroot + '/lib/javascript.php?jsfile=/lib/flowplayer/flowplayer-3.2.13.min.js&rev=' + M.cfg.jsrev;
                     }
-                    $('head script[src="'+jsurl+'"]').remove();
+                    $('head script[src="' + jsurl + '"]').remove();
                     // This is so hacky it's untrue, we need to load flow player again but it won't do so unless we make flowplayer undefined.
                     // Note, we can't use flowplayer.delete in strict mode, hence "= undefined".
                     if (typeof(flowplayer) !== 'undefined') {
                         flowplayer = undefined;
                     }
                     M.util.load_flowplayer();
-                    $('head script[src="'+jsurl+'"]').trigger( "onreadystatechange" );
+                    $('head script[src="' + jsurl + '"]').trigger("onreadystatechange");
                 }
                 // Apply responsive video after 1 second. Note: 1 second is just to give crappy flow player time to sort itself out.
-                window.setTimeout(function(){applyResponsiveVideo();}, 1000);
+                window.setTimeout(function() {
+                    applyResponsiveVideo();
+                }, 1000);
                 $('#snap-light-box').focus();
             }
         });
@@ -799,16 +762,22 @@ function snapInit() {
         var lastHash = location.hash;
         $(window).on('popstate hashchange', function(e) {
             var newHash = location.hash;
-            logmsg('hashchange');
-            if (newHash !== lastHash){
-                if(onCoursePage()) {
-                    // In folder view we sometimes get here - how?
-                    logmsg('show section', e.target);
-                    if($('.format-folderview').length){
-                        checkHashScrollToModule();
-                    }
-                    else{
-                        showSection();
+            log.info('hashchange');
+            if (newHash !== lastHash) {
+                if (location.hash === '#primary-nav') {
+                    updatePersonalMenu();
+                }
+                else {
+                    $('#page, #moodle-footer, #js-personal-menu-trigger, #logo, .skiplinks').css('display', '');
+                    if (onCoursePage()) {
+                        // In folder view we sometimes get here - how?
+                        log.info('show section', e.target);
+                        if ($('.format-folderview').length) {
+                            checkHashScrollToModule();
+                        }
+                        else {
+                            showSection();
+                        }
                     }
                 }
             }
@@ -821,23 +790,23 @@ function snapInit() {
         var myElement = document.querySelector("#mr-nav");
         // Construct an instance of Headroom, passing the element.
         var headroom = new Headroom(myElement, {
-          "tolerance": 5,
-          "offset": 100,
-          "classes": {
-            // when element is initialised
-                initial : "headroom",
+            "tolerance": 5,
+            "offset": 100,
+            "classes": {
+                // when element is initialised
+                initial: "headroom",
                 // when scrolling up
-                pinned : "headroom--pinned",
+                pinned: "headroom--pinned",
                 // when scrolling down
-                unpinned : "headroom--unpinned",
+                unpinned: "headroom--unpinned",
                 // when above offset
-                top : "headroom--top",
+                top: "headroom--top",
                 // when below offset
-                notTop : "headroom--not-top"
-          }
+                notTop: "headroom--not-top"
+            }
         });
         // When not signed in always show mr-nav?
-        if(!$('.notloggedin').length) {
+        if (!$('.notloggedin').length) {
             headroom.init();
         }
 
@@ -855,7 +824,7 @@ function snapInit() {
                 // 13 enter
                 // 40 down arrow
                 // Register listener for exiting search result.
-                $('#toc-search-results a').last().blur(function () {
+                $('#toc-search-results a').last().blur(function() {
                     $(this).off('blur'); // unregister listener
                     $("#toc-search-input").val('');
                     $('#toc-search-results').html('');
@@ -865,7 +834,7 @@ function snapInit() {
             }
         });
 
-        $(document).on("click",'#toc-search-results a', function(){
+        $(document).on("click", '#toc-search-results a', function() {
             $("#toc-search-input").val('');
             $('#toc-search-results').html('');
             $("#toc-search-input").removeClass('state-active');
@@ -887,22 +856,22 @@ function snapInit() {
 
         // Add toggle class for hide/show activities/resources - additional to moodle adding dim.
         $(document).on("click", '[data-action=hide],[data-action=show]', function() {
-             $(this).closest('li.activity').toggleClass('draft');
+            $(this).closest('li.activity').toggleClass('draft');
         });
 
         // Personal menu course card clickable.
-        $(document).on('click', '.courseinfo[data-href]', function(e){
+        $(document).on('click', '.courseinfo[data-href]', function(e) {
             var trigger = $(e.target),
-            hreftarget = '_self';
+                hreftarget = '_self';
             // Excludes any clicks in the card deeplinks.
-            if(!$(trigger).closest('a').length) {
+            if (!$(trigger).closest('a').length) {
                 window.open($(this).data('href'), hreftarget);
                 e.preventDefault();
             }
         });
 
         // Resource cards clickable.
-        $(document).on('click', '.snap-resource', function(e){
+        $(document).on('click', '.snap-resource', function(e) {
             var trigger = $(e.target),
                 hreftarget = '_self',
                 link = $(trigger).closest('.snap-resource').find('.snap-asset-link a'),
@@ -912,14 +881,14 @@ function snapInit() {
             }
 
             // Excludes any clicks in the actions menu, on links or forms.
-            if(!$(trigger).closest('form, a, input, label').length) {
+            if (!$(trigger).closest('form, a, input, label').length) {
                 if ($(this).hasClass('js-snap-media')) {
                     lightboxMedia(this);
                 } else {
                     if (href === '') {
                         return;
                     }
-                    if($(link).attr('target') === '_blank'){
+                    if ($(link).attr('target') === '_blank') {
                         hreftarget = '_blank';
                     }
                     window.open(href, hreftarget);
@@ -932,11 +901,11 @@ function snapInit() {
         $(document).on("click", "#admin-menu-trigger, #toc-mobile-menu-toggle", function(e) {
             var href = this.getAttribute('href');
             // Make this only happen for settings button
-            if(this.getAttribute('id') == 'admin-menu-trigger') {
-              $(this).toggleClass('active');
-              $('#page').toggleClass('offcanvas');
+            if (this.getAttribute('id') == 'admin-menu-trigger') {
+                $(this).toggleClass('active');
+                $('#page').toggleClass('offcanvas');
             }
-            $(href).attr('tabindex','0');
+            $(href).attr('tabindex', '0');
             $(href).toggleClass('state-visible').focus();
             e.preventDefault();
         });
@@ -950,7 +919,7 @@ function snapInit() {
         });
 
         // Mobile menu button.
-        $(document).on("click", "#course-toc.state-visible a", function(e){
+        $(document).on("click", "#course-toc.state-visible a", function(e) {
             $('#course-toc').removeClass('state-visible');
         });
 
@@ -958,7 +927,7 @@ function snapInit() {
         $(document).on("click", ".modtype_page .instancename,.pagemod-readmore,.pagemod-content .snap-action-icon", function(e) {
             var $pagemod = $(this).closest('.modtype_page');
             scrollToElement($pagemod);
-            var isexpanded =  $pagemod.hasClass('state-expanded');
+            var isexpanded = $pagemod.hasClass('state-expanded');
             $pagemod.toggleClass('state-expanded');
 
             var readmore = $pagemod.find('.pagemod-readmore');
@@ -972,7 +941,7 @@ function snapInit() {
                         type: "GET",
                         async: true,
                         url: M.cfg.wwwroot + '/theme/snap/rest.php?action=read_page&contextid=' + readmore.data('pagemodcontext'),
-                        success: function (data) {
+                        success: function(data) {
                             // Update completion html for this page mod instance.
                             updateModCompletion($pagemod, data.completionhtml);
                         }
@@ -986,7 +955,7 @@ function snapInit() {
                         type: "GET",
                         async: true,
                         url: M.cfg.wwwroot + '/theme/snap/rest.php?action=get_page&contextid=' + readmore.data('pagemodcontext'),
-                        success: function (data) {
+                        success: function(data) {
                             $pagemodcontent.prepend(data.html);
                             $pagemodcontent.data('content-loaded', 1);
                             $pagemod.find('.contentafterlink .ajaxstatus').remove();
@@ -998,7 +967,6 @@ function snapInit() {
                 }
             }
 
-
             e.preventDefault();
         });
 
@@ -1006,12 +974,12 @@ function snapInit() {
             var $news = $(this).closest('.news-article');
             scrollToElement($news);
             $(".news-article").not($news).removeClass('state-expanded');
-            $(".news-article-message").css('display','none');
+            $(".news-article-message").css('display', 'none');
 
             $news.toggleClass('state-expanded');
             $('.state-expanded').find('.news-article-message').slideDown("fast", function() {
                 // Animation complete.
-                if($news.is('.state-expanded')){
+                if ($news.is('.state-expanded')) {
                     $news.find('.news-article-message').focus();
                     $news.attr('aria-expanded', 'true');
                 }
@@ -1027,23 +995,22 @@ function snapInit() {
         // Listen for window resize for videos.
         $(window).resize(function() {
             resizestamp = new Date().getTime();
-            (function(timestamp){
+            (function(timestamp) {
                 window.setTimeout(function() {
-                    logmsg ('checking ' + timestamp + ' against ' + resizestamp);
+                    log.info('checking ' + timestamp + ' against ' + resizestamp);
                     if (timestamp === resizestamp) {
-                        logmsg('running resize hook functions');
+                        log.info('running resize hook functions');
                         applyResponsiveVideo();
                     } else {
-                        logmsg('skipping resize hook functions - timestamp has changed from ' + timestamp + ' to ' + resizestamp);
+                        log.info('skipping resize hook functions - timestamp has changed from ' + timestamp + ' to ' + resizestamp);
                     }
-                },200); // wait 1/20th of a second before resizing
+                }, 200); // wait 1/20th of a second before resizing
             })(resizestamp);
         });
 
-
         // Hidden course toggle function.
         $(document).on("click", '#js-toggle-hidden-courses', function(e) {
-            $('#fixy-hidden-courses').slideToggle( "fast", function() {
+            $('#fixy-hidden-courses').slideToggle("fast", function() {
                 // Animation complete.
                 $('#fixy-hidden-courses').focus();
             });
@@ -1054,184 +1021,199 @@ function snapInit() {
         $('#fixy-my-courses').on('click hover', '.courseinfo-teachers-more', null, function(e) {
             e.preventDefault();
             var nowhtml = $(this).html();
-            if (nowhtml.indexOf('+')>-1){
-                $(this).html(nowhtml.replace('+','-'));
+            if (nowhtml.indexOf('+') > -1) {
+                $(this).html(nowhtml.replace('+', '-'));
             } else {
-                $(this).html(nowhtml.replace('-','+'));
+                $(this).html(nowhtml.replace('-', '+'));
             }
             $(this).parents('.courseinfo').toggleClass('show-all');
         });
 
-
         // Personal menu small screen behaviour.
         $(document).on("click", '#fixy-mobile-menu a', function(e) {
-                var href = this.getAttribute('href');
-                var sections = $("#fixy-content section");
-                var sectionWidth = $(sections).outerWidth();
-                // Num of sections * width of section ...
-                var sectionsWidth = sections.length * sectionWidth;
-                var section = $(href);
-                var targetSection = $("#fixy-content section > div").index(section);
-                var position = sectionWidth*targetSection;
+            var href = this.getAttribute('href');
+            var sections = $("#fixy-content section");
+            var sectionWidth = $(sections).outerWidth();
+            // Num of sections * width of section ...
+            var sectionsWidth = sections.length * sectionWidth;
+            var section = $(href);
+            var targetSection = $("#fixy-content section > div").index(section);
+            var position = sectionWidth * targetSection;
 
+            // Course lists is at position 0.
+            if (href == '#fixy-my-courses') {
+                position = 0;
+            }
 
-                // Course lists is at position 0.
-                if (href == '#fixy-my-courses'){
-                    position = 0;
-                }
+            // Set the window height.
+            var sectionHeight = $(href).outerHeight() + 100;
+            var winHeight = $(window).height();
+            if (sectionHeight < winHeight) {
+                sectionHeight = winHeight;
+            }
 
-                // Set the window height.
-                var sectionHeight = $(href).outerHeight() + 100;
-                var winHeight = $(window).height();
-                if(sectionHeight <  winHeight) {
-                    sectionHeight = winHeight;
-                }
-
-                $('#fixy-content').animate({
-                    left: '-'+position+'px',
-                    height: sectionHeight+'px'
-                }, "fast", "swing" ,
-                function(){
+            $('#fixy-content').animate({
+                    left: '-' + position + 'px',
+                    height: sectionHeight + 'px'
+                }, "fast", "swing",
+                function() {
                     // Animation complete.
                     // TODO - add tab index & focus INT-8988
 
                 });
-                e.preventDefault();
+            e.preventDefault();
         });
-
 
         // Bootstrap js elements
 
         // Iniitalise core bootsrtap tooltip js
-        $(function () {
-          var supportsTouch = false;
-          if ('ontouchstart' in window) {
-              //iOS & android
-              supportsTouch = true;
-          } else if(window.navigator.msPointerEnabled) {
-              //Win8
-              supportsTouch = true;
-          }
-          if(!supportsTouch){
-            $('[data-toggle="tooltip"]').tooltip();
-          }
+        $(function() {
+            var supportsTouch = false;
+            if ('ontouchstart' in window) {
+                //iOS & android
+                supportsTouch = true;
+            } else if (window.navigator.msPointerEnabled) {
+                //Win8
+                supportsTouch = true;
+            }
+            if (!supportsTouch) {
+                $('[data-toggle="tooltip"]').tooltip();
+            }
         });
     };
 
-    // GO !!!!
-    movePHPErrorsToHeader(); // boring
-    polyfills(); // for none evergreen
-    setForumStrings(); // whatever
-    addListeners(); // essential
-    applyBlockHash(); // change location hash if necessary
-    bodyClasses(); // add body classes
+    /**
+     * Initialise.
+     */
+    return {
+        snapInit: function(courseid, contextid, courseconfig) {
 
-    // SL - 19th aug 2014 - check we are in a course
-    if(onCoursePage()) {
-        showSection();
-    }
+            // Set up
+            M.theme_snap = M.theme_snap || {};
+            M.theme_snap.courseid = courseid;
+            M.theme_snap.courseconfig = courseconfig;
+            M.cfg.context = contextid;
 
-    if ($('body').hasClass('snap-fixy-open')) {
-        updatePersonalMenu();
-    }
+            // When document has loaded.
+            $(document).ready(function() {
+                movePHPErrorsToHeader(); // boring
+                polyfills(); // for none evergreen
+                setForumStrings(); // whatever
+                addListeners(); // essential
+                applyBlockHash(); // change location hash if necessary
+                bodyClasses(); // add body classes
 
-    // SL - 19th aug 2014 - resposive video and snap search in exceptions.
-    $(document).ready(function() {
-        // SHAME - make section name creation mandatory
-        if($('#page-course-editsection.format-topics').length) {
-            var usedefaultname = document.getElementById('id_usedefaultname'),
-                sname = document.getElementById('id_name');
-            usedefaultname.value = '0';
-            usedefaultname.checked = false;
-            sname.required = "required";
-            sname.focus();
-            $('#id_name + span').css('display','none');
+                // AMD modules
+                course_favorites();
 
-            // Enable the cancel button.
-            $('#id_cancel').on('click', function(e) {
-                $('#id_name').removeAttr('required');
-                $('#mform1').submit();
+                // SL - 19th aug 2014 - check we are in a course
+                if (onCoursePage()) {
+                    showSection();
+                }
+
+                if ($('body').hasClass('snap-fixy-open')) {
+                    updatePersonalMenu();
+                }
+
+                // SL - 19th aug 2014 - resposive video and snap search in exceptions.
+                $(document).ready(function() {
+                    // SHAME - make section name creation mandatory
+                    if ($('#page-course-editsection.format-topics').length) {
+                        var usedefaultname = document.getElementById('id_usedefaultname'),
+                            sname = document.getElementById('id_name');
+                        usedefaultname.value = '0';
+                        usedefaultname.checked = false;
+                        sname.required = "required";
+                        sname.focus();
+                        $('#id_name + span').css('display', 'none');
+
+                        // Enable the cancel button.
+                        $('#id_cancel').on('click', function(e) {
+                            $('#id_name').removeAttr('required');
+                            $('#mform1').submit();
+                        });
+                    }
+
+                    if ($('.format-folderview').length) {
+                        // Check if we are searching for a mod.
+                        checkHashScrollToModule();
+                    }
+
+                    // Book mod print button.
+                    if ($('#page-mod-book-view').length) {
+                        var urlParams = getURLParams(location.href);
+                        $('.block_book_toc').append('<p>' +
+                        '<hr><a target="_blank" href="/mod/book/tool/print/index.php?id=' + urlParams.id + '">' +
+                        M.util.get_string('printbook', 'booktool_print') +
+                        '</a></p>');
+                    }
+
+                    var mod_settings_id_re = /^page-mod-.*-mod$/; // e.g. #page-mod-resource-mod or #page-mod-forum-mod
+                    var on_mod_settings = mod_settings_id_re.test($('body').attr('id')) && location.href.indexOf("modedit") > -1;
+                    var on_course_settings = $('body').attr('id') === 'page-course-edit';
+                    var on_section_settings = $('body').attr('id') === 'page-course-editsection';
+
+                    if (on_mod_settings || on_course_settings || on_section_settings) {
+                        // Wrap advanced options in a div
+                        var vital = [
+                            ':first',
+                            '#page-course-edit #id_descriptionhdr',
+                            '#id_contentsection',
+                            '#id_general + #id_general', // Turnitin duplicate ID bug.
+                            '#id_content',
+                            '#page-mod-choice-mod #id_optionhdr',
+                            '#page-mod-assign-mod #id_availability',
+                            '#page-mod-assign-mod #id_submissiontypes',
+                            '#page-mod-workshop-mod #id_gradingsettings',
+                            '#page-mod-choicegroup-mod #id_miscellaneoussettingshdr',
+                            '#page-mod-choicegroup-mod #id_groups',
+                            '#page-mod-scorm-mod #id_packagehdr',
+                        ];
+                        vital = vital.join();
+
+                        $('#mform1 > fieldset').not(vital).wrapAll('<div class="snap-form-advanced col-md-4" />');
+
+                        // Add expand all to advanced column
+                        $(".snap-form-advanced").append($(".collapsible-actions"));
+
+                        // Sanitize required input into a single fieldset
+                        var main_form = $("#mform1 fieldset:first");
+                        var append_to = $("#mform1 fieldset:first .fcontainer");
+
+                        var required = $("#mform1 > fieldset").not("#mform1 > fieldset:first");
+                        for (var i = 0; i < required.length; i++) {
+                            var content = $(required[i]).find('.fcontainer');
+                            $(append_to).append(content);
+                            $(required[i]).remove();
+                        }
+                        $(main_form).wrap('<div class="snap-form-required col-md-8" />');
+
+                        var description = $("#mform1 fieldset:first .fitem_feditor:not(.required)");
+
+                        if (on_mod_settings && description) {
+                            var editingassignment = $('body').attr('id') == 'page-mod-assign-mod';
+                            var editingchoice = $('body').attr('id') == 'page-mod-choice-mod';
+                            var editingturnitin = $('body').attr('id') == 'page-mod-turnitintool-mod';
+                            var editingworkshop = $('body').attr('id') == 'page-mod-workshop-mod';
+                            if (!editingchoice && !editingassignment && !editingturnitin && !editingworkshop) {
+                                $(append_to).append(description);
+                                $(append_to).append($('#fitem_id_showdescription'));
+                            }
+                        }
+
+                        var savebuttons = $("#mform1 #fgroup_id_buttonar");
+                        $(main_form).append(savebuttons);
+                    }
+                });
+
+                $(window).on('load', function() {
+                    // Add a class to the body to show js is loaded.
+                    $('body').addClass('snap-js-loaded');
+                    // Make video responsive.
+                    // Note, if you don't do this on load then FLV media gets wrong size.
+                    applyResponsiveVideo();
+                });
             });
         }
-
-        if($('.format-folderview').length) {
-            // Check if we are searching for a mod.
-            checkHashScrollToModule();
-        }
-
-        // Book mod print button.
-        if($('#page-mod-book-view').length) {
-            var urlParams = getURLParams(location.href);
-            $('.block_book_toc').append('<p>' +
-                '<hr><a target="_blank" href="/mod/book/tool/print/index.php?id='+urlParams.id+'">' +
-                M.util.get_string('printbook', 'booktool_print') +
-            '</a></p>');
-        }
-
-        var mod_settings_id_re = /^page-mod-.*-mod$/; // e.g. #page-mod-resource-mod or #page-mod-forum-mod
-        var on_mod_settings = mod_settings_id_re.test($('body').attr('id')) && location.href.indexOf("modedit") > -1;
-        var on_course_settings = $('body').attr('id') === 'page-course-edit';
-        var on_section_settings = $('body').attr('id') === 'page-course-editsection';
-
-        if(on_mod_settings || on_course_settings || on_section_settings){
-          // Wrap advanced options in a div
-          var vital = [
-            ':first',
-            '#page-course-edit #id_descriptionhdr',
-            '#id_contentsection',
-            '#id_general + #id_general', // Turnitin duplicate ID bug.
-            '#id_content',
-            '#page-mod-choice-mod #id_optionhdr',
-            '#page-mod-assign-mod #id_availability',
-            '#page-mod-assign-mod #id_submissiontypes',
-            '#page-mod-workshop-mod #id_gradingsettings',
-            '#page-mod-choicegroup-mod #id_miscellaneoussettingshdr',
-            '#page-mod-choicegroup-mod #id_groups',
-            '#page-mod-scorm-mod #id_packagehdr',
-          ];
-          vital = vital.join();
-
-          $('#mform1 > fieldset').not(vital).wrapAll('<div class="snap-form-advanced col-md-4" />');
-
-          // Add expand all to advanced column
-          $(".snap-form-advanced").append($(".collapsible-actions"));
-
-          // Sanitize required input into a single fieldset
-          var main_form = $("#mform1 fieldset:first");
-          var append_to = $("#mform1 fieldset:first .fcontainer");
-
-          var required = $("#mform1 > fieldset").not("#mform1 > fieldset:first");
-          for(var i = 0; i < required.length; i++){
-            var content = $(required[i]).find('.fcontainer');
-            $(append_to).append(content);
-            $(required[i]).remove();
-          }
-          $(main_form).wrap('<div class="snap-form-required col-md-8" />');
-
-          var description = $("#mform1 fieldset:first .fitem_feditor:not(.required)");
-
-          if (on_mod_settings && description) {
-            var editingassignment = $('body').attr('id') == 'page-mod-assign-mod';
-            var editingchoice = $('body').attr('id') == 'page-mod-choice-mod';
-            var editingturnitin = $('body').attr('id') == 'page-mod-turnitintool-mod';
-            var editingworkshop = $('body').attr('id') == 'page-mod-workshop-mod';
-            if (!editingchoice  && !editingassignment && !editingturnitin && !editingworkshop) {
-                $(append_to).append(description);
-                $(append_to).append($('#fitem_id_showdescription'));
-            }
-          }
-
-          var savebuttons = $("#mform1 #fgroup_id_buttonar");
-          $(main_form).append(savebuttons);
-        }
-    });
-
-    $(window).on('load' , function() {
-        // Add a class to the body to show js is loaded.
-        $('body').addClass('snap-js-loaded');
-        // Make video responsive.
-        // Note, if you don't do this on load then FLV media gets wrong size.
-        applyResponsiveVideo();
-    });
-
-} // End snap init
+    };
+});

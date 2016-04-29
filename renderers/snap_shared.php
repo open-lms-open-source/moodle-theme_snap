@@ -326,16 +326,8 @@ class snap_shared extends renderer_base {
         // the param set but that never seems to happen.
         $courseconfig->pageparams = array();
 
-        $module = array(
-            'name' => 'theme_snap_core',
-            'fullpath' => '/theme/snap/javascript/module.js'
-        );
-
-        $PAGE->requires->js_init_call('M.theme_snap.core.init',
-          [$COURSE->id, $PAGE->context->id, $courseconfig],
-          false,
-          $module
-        );
+        $PAGE->requires->js('/theme/snap/javascript/bootstrapshim.js');
+        $PAGE->requires->js_call_amd('theme_snap/snap', 'snapInit', [$COURSE->id, $PAGE->context->id, $courseconfig]);
 
         // Are we viewing /course/view.php - note, this is different from just checking the page type.
         // We only ever want to load course.js when on site page or view.php - no point in loading it when on

@@ -1,0 +1,39 @@
+<div data-href="{{{url}}}" data-shortname="{{{shortname}}}" class="courseinfo{{#favorited}} favorited{{/favorited}}" style="{{{imagecss}}}">
+    <div class="courseinfo-body">
+        <h3><a href="{{{url}}}">{{fullname}}</a></h3>
+        <div data-courseid="{{courseid}}" class=dynamicinfo></div>
+
+        <div class="courseinfo-teachers">
+            <h4 class="sr-only">{{# str }} coursecontacts, theme_snap {{/ str }}</h4>
+            <div class="courseinfo-teachers-visible">
+                {{#visibleavatars}}
+                    {{{.}}}
+                {{/visibleavatars}}
+                {{#showextralink}}
+                    <a class="courseinfo-teachers-more state-visible" href="#">{{hiddenavatarcount}}</a>
+                {{/showextralink}}
+
+            </div>
+            <div class="courseinfo-teachers-extra">
+                {{#hiddenavatars}}
+                    {{{.}}}
+                {{/hiddenavatars}}
+            </div>
+        </div>
+
+        {{^published}}
+        <small class="published-status text-warning">
+            {{# str }} notpublished, theme_snap {{/ str }}
+        </small>
+        {{/published}}
+
+        <button aria-pressed="{{#favorited}}true{{/favorited}}{{^favorited}}false{{/favorited}}" class="favoritetoggle">
+            {{#favorited}}
+                {{# str }} favorited, theme_snap {{/ str}}
+            {{/favorited}}
+            {{^favorited}}
+                {{# str }} makefavorite, theme_snap {{/str}}
+            {{/favorited}}
+        </button>
+    </div>
+</div>

@@ -13,19 +13,24 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
-
+ 
 /**
- * Theme plugin version definition.
- *
- * @package   theme_snap
- * @copyright Copyright (c) 2015 Moodlerooms Inc. (http://www.moodlerooms.com)
+ * Services
+ * @author    gthomas2
+ * @copyright Copyright (c) 2016 Moodlerooms Inc. (http://www.moodlerooms.com)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-defined('MOODLE_INTERNAL') || die;
+defined('MOODLE_INTERNAL') || die();
 
-$plugin->version   = 2016042902;
-$plugin->requires  = 2015051103; // Requires this Moodle version (2.9.3).
-$plugin->release   = '2.9.3 (Build: 20160204)';
-$plugin->maturity  = MATURITY_STABLE;
-$plugin->component = 'theme_snap';
+$functions = [
+    'theme_snap_course_card' => [
+        'classname'     => 'theme_snap\\webservice\\ws_course_card',
+        'methodname'    => 'service',
+        'description'   => 'Course card renderable data',
+        'type'          => 'read',
+        'ajax'          => true,
+        'loginrequired' => true
+    ]
+];
+
