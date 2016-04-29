@@ -49,7 +49,9 @@ module.exports = function(grunt) {
     // but it gets the job done.
     decachephp += "purge_all_caches();";
 
-    grunt.initConfig({
+    grunt.mergeConfig = grunt.config.merge;
+
+    grunt.mergeConfig({
         less: {
             // Compile moodle styles.
             moodle: {
