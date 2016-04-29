@@ -26,8 +26,6 @@
  */
 define(['jquery', 'snapBootstrap', 'core/log', 'theme_snap/course_favorites'], function($, bsjq, log, courseFavorites) {
 
-    'use strict';
-
     // Use bootstrap modified jquery (tooltips).
     $ = bsjq;
 
@@ -1113,12 +1111,6 @@ define(['jquery', 'snapBootstrap', 'core/log', 'theme_snap/course_favorites'], f
 
                 if ($('body').hasClass('snap-fixy-open')) {
                     updatePersonalMenu();
-                }
-
-                // TODO - this will be removed once the TOC is removed from folderview.
-                if($('.format-folderview').length) {
-                    // Check if we are searching for a mod.
-                    checkHashScrollToModule();
                 }
 
                 // SL - 19th aug 2014 - resposive video and snap search in exceptions.
