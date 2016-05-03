@@ -22853,6 +22853,9 @@ body.hascontinuecancel.path-site #page {
 .form-filemanager .fp-restrictions {
   display: none;
 }
+#page-backup-backupfilesedit .ffilemanager .fp-viewbar {
+  display: block;
+}
 .ffilepicker .fp-btn-choose {
   margin: 0 0 10px;
 }
