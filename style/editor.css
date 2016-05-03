@@ -5023,7 +5023,7 @@ fieldset[disabled] a#page-site-index .section-modchooser-link .section-modchoose
   background-position: center top;
   background-size: cover;
 }
-#logo {
+#snap-home.logo {
   display: inline-block;
   background-color: transparent;
   background-repeat: no-repeat;
@@ -5033,7 +5033,7 @@ fieldset[disabled] a#page-site-index .section-modchooser-link .section-modchoose
   margin: -0.75em 0;
 }
 @media screen and (max-width: 991px) {
-  #logo {
+  #snap-home.logo {
     max-width: 20%;
     vertical-align: bottom;
   }
@@ -5803,7 +5803,7 @@ http://blog.rodneyrehm.de/archives/34-iOS7-Mobile-Safari-And-Viewport-Units.html
 #page-site-index #page-mast .btn {
   float: right;
 }
-#page-mast .snap-login-button {
+#page-mast #fixy-trigger {
   display: inline-block;
   padding: 0.25em 2em;
   margin-top: 1em;
@@ -8251,7 +8251,7 @@ td.mceToolbar {
 .snap-fixy-open #page,
 .snap-fixy-open #moodle-footer,
 .snap-fixy-open #fixy-trigger,
-.snap-fixy-open #logo,
+.snap-fixy-open #snap-home,
 .snap-fixy-open .skiplinks {
   display: none;
 }
@@ -8292,6 +8292,7 @@ td.mceToolbar {
 }
 .fixy #fixy-close {
   color: #fff;
+  margin-top: 1rem;
 }
 .fixy h2 {
   font-weight: 500;
@@ -8314,7 +8315,7 @@ td.mceToolbar {
   animation-duration: 0.3s;
 }
 #fixy-user {
-  margin: 1em 4%;
+  padding: 1em 4%;
 }
 #fixy-user:before,
 #fixy-user:after {
@@ -8347,8 +8348,10 @@ td.mceToolbar {
   display: block;
   line-height: 0;
 }
-#fixy-content {
+#fixy {
   background-color: #eee;
+}
+#fixy-content {
   padding: 0 2%;
 }
 #fixy-content:before,
@@ -8369,45 +8372,60 @@ td.mceToolbar {
 }
 #snap-login.fixy input {
   display: block;
-  padding: 0.1em;
   margin: 0 auto 0.5em;
-  background-color: transparent;
+  padding: 0 0.5em;
+  background-color: #fff;
   font-size: inherit;
   border: 0;
-  color: #fff;
-  border-bottom: 2px solid rgba(255, 255, 255, 0.3);
-  width: 90%;
+  width: 92%;
   box-shadow: none;
+  max-width: 23rem;
 }
 #snap-login.fixy input:focus {
   outline: none;
-  border-color: #fff;
 }
 #snap-login.fixy input[type=submit] {
-  border: 1px solid #fff;
-  margin: 0 auto 0.5em;
+  margin: 0 auto 3.5em;
 }
 #snap-login.fixy legend {
+  font-family: "Roboto", "Fira Sans", "Segoe UI", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-weight: 300;
+  line-height: 1.5;
+  color: #565656;
+  margin-top: 28px;
+  margin-bottom: 14px;
+  font-size: 54px;
   color: #fff;
-  border-bottom: 1px solid #fff;
+  margin-top: 0;
+  padding: .3em 4%;
+}
+#snap-login.fixy legend small,
+#snap-login.fixy legend .small {
+  font-weight: normal;
+  line-height: 1;
+  color: #999;
+}
+#snap-login.fixy legend small,
+#snap-login.fixy legend .small {
+  font-size: 65%;
 }
 #snap-login.fixy label {
-  color: #fff;
   text-transform: uppercase;
   font-size: 14px;
   letter-spacing: 0.1em;
   line-height: 1;
   display: block;
   padding-top: 1em;
-  font-weight: 100;
-  margin: 0.5em 5%;
+  font-weight: 300;
+  margin: 0.5em auto;
+  width: 92%;
+  max-width: 23rem;
 }
 #snap-login.fixy .fixy-inner {
-  max-width: 50.5em;
-  padding-top: 4%;
+  background-color: #eee;
+  min-height: 100vh;
 }
 .fixy input::placeholder {
-  color: #fff;
   letter-spacing: 0.1em;
 }
 @media only screen and (min-width: 1200px) {
@@ -8994,11 +9012,14 @@ legend,
 .courseinfo-teachers-more:hover {
   border-color: #03A9F4;
 }
-.fixy {
+#fixy-user {
   background-color: #03A9F4;
 }
 .fixy .label-success {
   color: #03A9F4;
+}
+#snap-login form legend {
+  background-color: #03A9F4;
 }
 #fixy-mobile-menu .svg-icon {
   border: 1px solid #03A9F4;

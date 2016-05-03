@@ -634,11 +634,15 @@ class theme_snap_core_renderer extends toc_renderer {
         $loginurl = '#';
         $loginatts = [
             'aria-haspopup' => 'true',
-            'class' => 'snap-login-button js-personal-menu-trigger'
+            'id' => 'fixy-trigger',
+            'class' => 'snap-login-button js-personal-menu-trigger',
         ];
         if (!empty($CFG->alternateloginurl)) {
             $loginurl = $CFG->wwwroot.'/login/index.php';
-            $loginatts = ['class' => 'snap-login-button'];
+            $loginatts = [
+                'id' => 'fixy-trigger',
+                'class' => 'snap-login-button',
+            ];
         }
         // This check is here for the front page login.
         if (!isloggedin() || isguestuser()) {
@@ -720,7 +724,7 @@ class theme_snap_core_renderer extends toc_renderer {
             <label for='password'>$password</label>
             <input type='password' name='password' id='password' placeholder='".s($password)."' $autocomplete>
             <br>
-            <input type='submit' id='loginbtn' value='".s($login)."'>
+            <input type='submit' value='".s($login)."'>
             $helpstr
             </div>
         </form></div>";
@@ -1218,8 +1222,9 @@ HTML;
 
         $classes[] = 'device-type-'.$PAGE->devicetypeinuse;
 
-        if (isset($SESSION->justloggedin)
-                && !empty($PAGE->theme->settings->personalmenulogintoggle)) {
+        $openfixyafterlogin = !empty($PAGE->theme->settings->personalmenulogintoggle);
+
+        if (isset($SESSION->justloggedin) && $openfixyafterlogin) {
             unset($SESSION->justloggedin);
             $classes[] = 'snap-fixy-open';
         }

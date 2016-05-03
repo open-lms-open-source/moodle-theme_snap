@@ -43,9 +43,16 @@ use theme_snap\renderables\bb_dashboard_link;
 
 <?php
     $sitefullname = format_string($SITE->fullname);
+    $attrs = array(
+        'aria-label' => get_string('home', 'theme_snap'),
+        'id' => 'snap-home',
+        'title' => $sitefullname,
+    );
     if (!empty($PAGE->theme->settings->logo)) {
         $sitefullname = '<span class="sr-only">'.format_string($SITE->fullname).'</span>';
+        $attrs['class'] = 'logo';
     }
-    echo '<a aria-label="'.get_string('home', 'theme_snap').'" href="'. s($CFG->wwwroot).'" id="logo" title="'.s(format_string($SITE->fullname)).'">'.$sitefullname.'</a>';
+
+    echo html_writer::link($CFG->wwwroot, $sitefullname, $attrs);
 ?>
 </header>
