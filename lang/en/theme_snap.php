@@ -120,7 +120,6 @@ $string['loggedinasguest'] = 'You are logged in as guest';
 $string['loginform'] = 'Login';
 $string['logo'] = 'Logo';
 $string['logodesc'] = 'Please upload your custom logo here. The logo will be displayed in the header across the entire site.';
-$string['makefavorite'] = 'Make favorite';
 $string['manuals'] = 'Joule 2 Manuals';
 $string['menu'] = 'My Courses';
 $string['messageread'] = 'Message Read';
