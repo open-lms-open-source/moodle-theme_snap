@@ -19,7 +19,6 @@
 # @copyright  Copyright (c) 2015 Moodlerooms Inc. (http://www.moodlerooms.com)
 # @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
 
-
 @theme @theme_snap
 Feature: When the moodle theme is set to Snap, students and teachers favorite courses in the personal menu.
 
@@ -45,17 +44,33 @@ Feature: When the moodle theme is set to Snap, students and teachers favorite co
       | teacher1 | C3     | editingteacher |
 
   @javascript
-  Scenario: User can favorite course.
+  Scenario: User can favorite / unfavorite courses.
     Given I log in as "student1" (theme_snap)
     And I open the personal menu
-    Then I should see "Course 1"
-    And ".courseinfo[data-shortname=\"C1\"] .favoritetoggle[aria-pressed=\"false\"]" "css_element" should exist
-    And ".courseinfo[data-shortname=\"C2\"] .favoritetoggle[aria-pressed=\"false\"]" "css_element" should exist
-    And ".courseinfo[data-shortname=\"C3\"] .favoritetoggle[aria-pressed=\"false\"]" "css_element" should exist
-    And ".courseinfo[data-shortname=\"C1\"]" "css_element" should appear before ".courseinfo[data-shortname=\"C3\"]" "css_element"
-    And I click on ".courseinfo[data-shortname=\"C3\"] button.favoritetoggle" "css_element"
-    Then ".courseinfo[data-shortname=\"C3\"] .favoritetoggle[aria-pressed=\"true\"]" "css_element" should exist
+    Then Favorite toggle exists for course "C1"
+    And Favorite toggle exists for course "C2"
+    And Favorite toggle exists for course "C3"
+    And Course card "C1" appears before "C2"
+    And Course card "C2" appears before "C3"
+    And I toggle course card favorite "C3"
+    Then Course card "C3" is favorited
     And I reload the page
     And I open the personal menu
-    Then ".courseinfo[data-shortname=\"C3\"]" "css_element" should appear before ".courseinfo[data-shortname=\"C1\"]" "css_element"
+    Then Course card "C3" appears before "C1"
+    And Course card "C1" appears before "C2"
+    # Log out and log in as teacher (make sure they can't see students favorites)
+    And I log out (theme_snap)
+    And I log in as "teacher1" (theme_snap)
+    And I open the personal menu
+    Then Favorite toggle exists for course "C1"
+    And Favorite toggle exists for course "C2"
+    And Favorite toggle exists for course "C3"
+    And Course card "C1" is not favorited
+    And Course card "C2" is not favorited
+    And Course card "C3" is not favorited
+    # Test favoriting / unfavoriting
+    And I toggle course card favorite "C2"
+    Then Course card "C2" is favorited
+    And I toggle course card favorite "C2"
+    Then Course card "C2" is not favorited
 

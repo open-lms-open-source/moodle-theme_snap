@@ -574,4 +574,59 @@ class behat_theme_snap extends behat_base {
         $this->ensure_element_exists('#page-mast', 'css_element');
         $this->ensure_element_does_not_exist('#page-mast a', 'css_element');
     }
+
+    /**
+     * @param string $shortname
+     * @Given /^Favorite toggle exists for course "(?P<shortname>(?:[^"]|\\")*)"$/
+     */
+    public function favorite_toggle_exists_for_course($shortname) {
+        /* @var behat_general $general */
+        $general = behat_context_helper::get('behat_general');
+        $general->should_exist('.courseinfo[data-shortname="'.$shortname.'"] .favoritetoggle[aria-pressed="false"]', 'css_element');
+    }
+
+    /**
+     * @param string $shortname1
+     * @param string $shortname2
+     * @Given /^Course card "(?P<shortname1>(?:[^"]|\\")*)" appears before "(?P<shortname2>(?:[^"]|\\")*)"$/
+     */
+    public function course_card_appears_before($shortname1, $shortname2) {
+        /* @var behat_general $general */
+        $general = behat_context_helper::get('behat_general');
+
+        $preelement = '.courseinfo[data-shortname="'.$shortname1.'"]';
+        $postelement = '.courseinfo[data-shortname="'.$shortname2.'"]';
+
+        $general->should_appear_before($preelement, 'css_element', $postelement, 'css_element');
+    }
+
+    /**
+     * @param string $shortname
+     * @Given /^Course card "(?P<shortname>(?:[^"]|\\")*)" is favorited$/
+     */
+    public function course_is_favorited($shortname) {
+        /* @var behat_general $general */
+        $general = behat_context_helper::get('behat_general');
+        $general->should_exist('.courseinfo[data-shortname="'.$shortname.'"] .favoritetoggle[aria-pressed="true"]', 'css_element');
+    }
+
+    /**
+     * @param string $shortname
+     * @Given /^Course card "(?P<shortname>(?:[^"]|\\")*)" is not favorited$/
+     */
+    public function course_is_not_favorited($shortname) {
+        /* @var behat_general $general */
+        $general = behat_context_helper::get('behat_general');
+        $general->should_not_exist('.courseinfo[data-shortname="'.$shortname.'"] .favoritetoggle[aria-pressed="true"]', 'css_element');
+    }
+
+    /**
+     * @param string $shortname
+     * @Given /^I toggle course card favorite "(?P<shortname>(?:[^"]|\\")*)"$/
+     */
+    public function i_toggle_course_card_favorite($shortname) {
+        /* @var behat_general $general */
+        $general = behat_context_helper::get('behat_general');
+        $general->i_click_on('.courseinfo[data-shortname="'.$shortname.'"] button.favoritetoggle', 'css_element');
+    }
 }
