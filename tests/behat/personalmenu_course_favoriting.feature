@@ -49,12 +49,12 @@ Feature: When the moodle theme is set to Snap, students and teachers favorite co
     Given I log in as "student1" (theme_snap)
     And I open the personal menu
     Then I should see "Course 1"
-    And I should see "Make favorite" in the ".courseinfo[data-shortname=\"C1\"]" "css_element"
-    And I should see "Make favorite" in the ".courseinfo[data-shortname=\"C2\"]" "css_element"
-    And I should see "Make favorite" in the ".courseinfo[data-shortname=\"C3\"]" "css_element"
+    And ".courseinfo[data-shortname=\"C1\"] .favoritetoggle[aria-pressed=\"false\"]" "css_element" should exist
+    And ".courseinfo[data-shortname=\"C2\"] .favoritetoggle[aria-pressed=\"false\"]" "css_element" should exist
+    And ".courseinfo[data-shortname=\"C3\"] .favoritetoggle[aria-pressed=\"false\"]" "css_element" should exist
     And ".courseinfo[data-shortname=\"C1\"]" "css_element" should appear before ".courseinfo[data-shortname=\"C3\"]" "css_element"
     And I click on ".courseinfo[data-shortname=\"C3\"] button.favoritetoggle" "css_element"
-    Then I should see "Favorited" in the ".courseinfo[data-shortname=\"C3\"]" "css_element"
+    Then ".courseinfo[data-shortname=\"C3\"] .favoritetoggle[aria-pressed=\"true\"]" "css_element" should exist
     And I reload the page
     And I open the personal menu
     Then ".courseinfo[data-shortname=\"C3\"]" "css_element" should appear before ".courseinfo[data-shortname=\"C1\"]" "css_element"

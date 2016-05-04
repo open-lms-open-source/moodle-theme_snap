@@ -4441,6 +4441,27 @@ fieldset[disabled] a#changenumsections .reduce-sections {
     max-height: 80vh;
   }
 }
+.courseinfo .favoritetoggle {
+  width: 2em;
+  height: 2em;
+  padding: 0;
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin: 0.25em;
+}
+.courseinfo .favoritetoggle:after {
+  background: url("[[pix:theme|fav_unchecked]]");
+  backgrounr-repeat: none;
+  content: ' ';
+  width: 1.6em;
+  height: 1.6em;
+  display: block;
+  margin: .2em;
+}
+.courseinfo.favorited .favoritetoggle:after {
+  background: url("[[pix:theme|fav_checked]]");
+}
 /**
  * Snap core swatch.
  *
@@ -8749,9 +8770,9 @@ body:not(.behat-site) #id_general .ftoggler {
   font-size: 75%;
 }
 #id_cancel {
+  color: #03A9F4;
   font-weight: normal;
   border-radius: 0;
-  color: #03A9F4;
   margin-left: 2em;
 }
 #id_cancel,
@@ -8898,9 +8919,17 @@ hr {
   border-top: 1px solid #03A9F4;
 }
 a,
-a:visited,
-.btn-link {
+a:visited {
   color: #03A9F4;
+}
+.btn.btn-link,
+.btn.btn-link:hover,
+.btn.btn-link:visited,
+.btn.btn-link:link {
+  color: #03A9F4;
+  background: none;
+  border: none;
+  box-shadow: none;
 }
 a:focus,
 .dropdown-toggle:focus {
