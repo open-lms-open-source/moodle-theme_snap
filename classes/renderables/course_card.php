@@ -13,7 +13,7 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
- 
+
 /**
  * Course card renderable
  * @author    gthomas2
@@ -22,12 +22,13 @@
  */
 
 namespace theme_snap\renderables;
+
 use theme_snap\services\course;
 use theme_snap\local;
 
 defined('MOODLE_INTERNAL') || die();
 
-require_once($CFG->libdir.'/coursecatlib.php');
+require_once($CFG->libdir . '/coursecatlib.php');
 
 class course_card implements \renderable {
 
@@ -111,10 +112,10 @@ class course_card implements \renderable {
     private function apply_properties() {
         global $DB;
         $this->course = $DB->get_record('course', ['id' => $this->courseid]);
-        $this->url = new \moodle_url('/course/view.php', ['id' => $this->course->id]).'';
+        $this->url = new \moodle_url('/course/view.php', ['id' => $this->course->id]) . '';
         $this->shortname = $this->course->shortname;
         $this->fullname = $this->course->fullname;
-        $this->published = (bool) $this->course->visible;
+        $this->published = (bool)$this->course->visible;
         $this->favorited = $this->service->favorited($this->courseid);
         $this->apply_contact_avatars();
         $this->apply_image_css();
@@ -142,25 +143,27 @@ class course_card implements \renderable {
         $avatars = [];
         $blankavatars = [];
 
-        foreach ($teachers as $teacher) {
-            $teacherids[] = $teacher['user']->id;
-        }
-        $teacherusers = $DB->get_records_list('user', 'id', $teacherids);
-
-        foreach ($teachers as $teacher) {
-            if (!isset($teacherusers[$teacher['user']->id])) {
-                continue;
+        if (!empty($teachers)) {
+            foreach ($teachers as $teacher) {
+                $teacherids[] = $teacher['user']->id;
             }
-            $teacheruser = $teacherusers [$teacher['user']->id];
-            $userpicture = new \user_picture($teacheruser);
-            $userpicture->link = false;
-            $userpicture->size = 100;
-            $teacherpicture = $OUTPUT->render($userpicture);
+            $teacherusers = $DB->get_records_list('user', 'id', $teacherids);
 
-            if (stripos($teacherpicture, 'defaultuserpic') === false) {
-                $avatars[] = $teacherpicture;
-            } else {
-                $blankavatars[] = $teacherpicture;
+            foreach ($teachers as $teacher) {
+                if (!isset($teacherusers[$teacher['user']->id])) {
+                    continue;
+                }
+                $teacheruser = $teacherusers [$teacher['user']->id];
+                $userpicture = new \user_picture($teacheruser);
+                $userpicture->link = false;
+                $userpicture->size = 100;
+                $teacherpicture = $OUTPUT->render($userpicture);
+
+                if (stripos($teacherpicture, 'defaultuserpic') === false) {
+                    $avatars[] = $teacherpicture;
+                } else {
+                    $blankavatars[] = $teacherpicture;
+                }
             }
         }
 

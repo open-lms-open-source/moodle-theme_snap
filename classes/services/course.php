@@ -74,7 +74,7 @@ class course {
         static $favorites = [];
 
         if (!$fromcache) {
-            $favorites = [];
+            unset($favorites[$userid]);
         }
 
         if (!isset($favorites[$userid])) {
@@ -115,13 +115,15 @@ class course {
      * @param string $courseshortname
      * @param bool $on
      * @param null | int $userid
+     * @return bool
      */
     public function setfavorite($courseshortname, $on = true, $userid = null) {
         global $USER, $DB;
 
         $course = $this->coursebyshortname($courseshortname);
         $userid = $userid !== null ? $userid : $USER->id;
-        $favorited = $this->favorited($course->id, $userid, false);
+
+        $favorited = $this->favorited($course->id, $userid);
         if ($on) {
             if (!$favorited) {
                 $data = (object) [
@@ -140,6 +142,8 @@ class course {
                 $DB->delete_records('theme_snap_course_favorites', $select);
             }
         }
+        // Kill favorited cache and return if favorited.
+        return $this->favorited($course->id, $userid, false);
     }
 
     /**
@@ -147,9 +151,9 @@ class course {
      * @param string $shortname
      * @return mixed
      */
-    public function coursebyshortname($shortname) {
+    public function coursebyshortname($shortname, $fields = '*') {
         global $DB;
-        $course = $DB->get_record('course', ['shortname' => $shortname], 'id', MUST_EXIST);
+        $course = $DB->get_record('course', ['shortname' => $shortname], $fields, MUST_EXIST);
         return $course;
     }
 
@@ -159,7 +163,7 @@ class course {
      * @return course_card (renderable)
      */
     public function cardbyshortname($shortname) {
-        $course = $this->coursebyshortname($shortname);
+        $course = $this->coursebyshortname($shortname, 'id');
         return new course_card($course->id);
     }
 }

@@ -15,11 +15,12 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 namespace theme_snap\webservice;
+
 use theme_snap\services\course;
 
 defined('MOODLE_INTERNAL') || die();
 
-require_once(__DIR__.'/../../../../lib/externallib.php');
+require_once(__DIR__ . '/../../../../lib/externallib.php');
 
 /**
  * Course card web service
@@ -34,7 +35,7 @@ class ws_course_card extends \external_api {
     public static function service_parameters() {
         $parameters = [
             'courseshortname' => new \external_value(PARAM_TEXT, 'Course shortname', VALUE_REQUIRED),
-            'favorited' => new \external_value(PARAM_TEXT, 'Course shortname', VALUE_OPTIONAL),
+            'favorited' => new \external_value(PARAM_TEXT, 'Course shortname', VALUE_DEFAULT),
         ];
         return new \external_function_parameters($parameters);
     }
@@ -44,7 +45,7 @@ class ws_course_card extends \external_api {
      */
     public static function service_returns() {
         $keys = [
-            'courseid'        => new \external_value(PARAM_INT, 'Course ID', VALUE_REQUIRED),
+            'courseid' => new \external_value(PARAM_INT, 'Course ID', VALUE_REQUIRED),
             'shortname' => new \external_value(PARAM_TEXT, 'Course shortname', VALUE_REQUIRED),
             'fullname' => new \external_value(PARAM_TEXT, 'Full name of course', VALUE_REQUIRED),
             // Note PARAM_URL returns an object which wont work with a template
@@ -77,6 +78,6 @@ class ws_course_card extends \external_api {
         }
         $coursecard = $service->cardbyshortname($courseshortname);
         // Convert renderable to array and skip protected / private - casting with (array) includes protected / private.
-        return json_decode(json_encode($coursecard));
+        return (array)json_decode(json_encode($coursecard));
     }
 }
