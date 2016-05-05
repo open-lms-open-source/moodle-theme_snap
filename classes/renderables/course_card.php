@@ -102,13 +102,13 @@ class course_card implements \renderable {
     public function __construct($courseid) {
         $this->courseid = $courseid;
         $this->service = course::service();
-        $this->set_properties();
+        $this->apply_properties();
     }
 
     /**
      * Set props.
      */
-    private function set_properties() {
+    private function apply_properties() {
         global $DB;
         $this->course = $DB->get_record('course', ['id' => $this->courseid]);
         $this->url = new \moodle_url('/course/view.php', ['id' => $this->course->id]).'';
@@ -116,14 +116,14 @@ class course_card implements \renderable {
         $this->fullname = $this->course->fullname;
         $this->published = (bool) $this->course->visible;
         $this->favorited = $this->service->favorited($this->courseid);
-        $this->set_contact_avatars();
-        $this->set_image_css();
+        $this->apply_contact_avatars();
+        $this->apply_image_css();
     }
 
     /**
      * Set image css for course card (cover image, etc).
      */
-    private function set_image_css() {
+    private function apply_image_css() {
         $bgcolor = local::get_course_color($this->courseid);
         $this->imagecss = "background-color: #$bgcolor;";
         $bgimage = local::course_coverimage_url($this->courseid);
@@ -135,7 +135,7 @@ class course_card implements \renderable {
     /**
      * Set course contact avatars;
      */
-    private function set_contact_avatars() {
+    private function apply_contact_avatars() {
         global $DB, $OUTPUT;
         $clist = new \course_in_list($this->course);
         $teachers = $clist->get_course_contacts();

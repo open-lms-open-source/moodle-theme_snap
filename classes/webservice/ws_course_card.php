@@ -17,8 +17,9 @@
 namespace theme_snap\webservice;
 use theme_snap\services\course;
 
-
 defined('MOODLE_INTERNAL') || die();
+
+require_once(__DIR__.'/../../../../lib/externallib.php');
 
 /**
  * Course card web service
@@ -26,9 +27,6 @@ defined('MOODLE_INTERNAL') || die();
  * @copyright Copyright (c) 2016 Moodlerooms Inc. (http://www.moodlerooms.com)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-
-require_once(__DIR__.'/../../../../lib/externallib.php');
-
 class ws_course_card extends \external_api {
     /**
      * @return \external_function_parameters
@@ -69,7 +67,7 @@ class ws_course_card extends \external_api {
 
     /**
      * @param string $courseshortname
-     * @param null $favorited
+     * @param null|int $favorited
      * @return array
      */
     public static function service($courseshortname, $favorited = null) {
