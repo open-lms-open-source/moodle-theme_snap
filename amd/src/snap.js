@@ -1106,17 +1106,6 @@ define(['jquery', 'theme_snap/bootstrap', 'core/log', 'theme_snap/personal_menu'
                     updatePersonalMenu();
                 }
 
-                // TODO - this will be removed once the TOC is removed from folderview.
-                if($('.format-folderview').length) {
-                    // Check if we are searching for a mod.
-                    checkHashScrollToModule();
-                }
-
-                // SL - 24th july 2014 - if are looking at the personal menu we need to load data
-                if (location.href.indexOf("primary-nav") > -1) {
-                    updatePersonalMenu();
-                }
-
                 // SL - 19th aug 2014 - resposive video and snap search in exceptions.
                 // SHAME - make section name creation mandatory
                 if ($('#page-course-editsection.format-topics').length) {
@@ -1133,6 +1122,11 @@ define(['jquery', 'theme_snap/bootstrap', 'core/log', 'theme_snap/personal_menu'
                         $('#id_name').removeAttr('required');
                         $('#mform1').submit();
                     });
+                }
+
+                if ($('.format-folderview').length) {
+                    // Check if we are searching for a mod.
+                    checkHashScrollToModule();
                 }
 
                 // Book mod print button.

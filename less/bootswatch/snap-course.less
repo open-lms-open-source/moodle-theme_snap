@@ -1876,3 +1876,45 @@ span.editinstructions {
   }
 }
 
+/* Course favoriting */
+.courseinfo .favoritetoggle {
+    width: 2em;
+    height: 2em;
+    padding: 0;
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 0.25em;
+}
+.courseinfo .favoritetoggle:after {
+    background: url("[[pix:theme|fav_unchecked]]");
+    backgrounr-repeat: none;
+    content: ' ';
+    width: 1.6em;
+    height: 1.6em;
+    display: block;
+    margin: .2em;
+}
+.courseinfo.favorited .favoritetoggle:after {
+    background: url("[[pix:theme|fav_checked]]");
+}
+
+@keyframes spinnerrotate
+{
+    from{transform:rotate(0deg);}
+    to{transform:rotate(360deg);}
+}
+.courseinfo .favoritetoggle.ajaxing {
+    animation-name: spinnerrotate;
+    animation-duration: 2s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+}
+
+.header-hidden-courses {
+    display: none;
+}
+
+.header-hidden-courses.state-visible {
+    display: inherit;
+}

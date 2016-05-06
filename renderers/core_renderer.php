@@ -789,9 +789,11 @@ class theme_snap_core_renderer extends toc_renderer {
                         $visiblecoursecount ++;
                         $courselist .= $coursecard;
                     }
-                }
-                // If course is visible or favorited.
-                else {
+
+                    // Always increment hidden course count.
+                    $hiddencoursecount++;
+                } else {
+                    // If course is visible or favorited.
                     $visiblecoursecount ++;
                     $courselist .= $coursecard;
                 }
@@ -801,7 +803,7 @@ class theme_snap_core_renderer extends toc_renderer {
             $courselist .= '</div>';
 
             // Output hidden courses toggle when there are visible courses.
-            if ($actualhiddencount && $visiblecoursecount) {
+            if ($hiddencoursecount && $visiblecoursecount) {
                 $togglevisstate = !empty($hiddencourselist) ? ' state-visible' : '';
                 $hiddencourses = '<div class="clearfix"><h2 class="header-hidden-courses'.$togglevisstate.'"><a id="js-toggle-hidden-courses" href="#">'. get_string('hiddencoursestoggle', 'theme_snap', $hiddencoursecount).'</a></h2>';
                 $hiddencourses .= '<div id="fixy-hidden-courses" class="clearfix" tabindex="-1">' .$hiddencourselist. '</div>';
@@ -809,7 +811,7 @@ class theme_snap_core_renderer extends toc_renderer {
                 $courselist .= $hiddencourses;
             }
             // Output hidden courses when no visible courses.
-            elseif ($hiddencoursecount) {
+            else if ($hiddencoursecount) {
                 $hiddencourses = '<div id="fixy-hidden-courses" class="clearfix">' .$hiddencourselist. '</div>';
                 $courselist .= $hiddencourses;
             }
