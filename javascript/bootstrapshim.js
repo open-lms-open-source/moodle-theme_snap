@@ -1,11 +1,11 @@
 requirejs.config({
     shim: {
-        snap_bootstrap: {
+        snapBootstrap: {
             deps: [ "jquery" ],
-            exports : 'snap_bootstrap'
+            exports : 'snapBootstrap'
         }
     },
     paths: {
-        snap_bootstrap: "../javascript/bootstrap.js"
+        snapBootstrap: "../javascript/bootstrap.js"
     }
 });

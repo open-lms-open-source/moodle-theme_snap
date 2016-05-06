@@ -124,7 +124,8 @@ class theme_snap_services_course_test extends \advanced_testcase {
     }
 
     public function test_setfavorite() {
-        $this->courseservice->setfavorite($this->courses[0]->shortname, true, $this->user1->id);
+        $returned = $this->courseservice->setfavorite($this->courses[0]->shortname, true, $this->user1->id);
+        $this->assertTrue($returned);
     }
 
     public function test_coursebyshortname() {

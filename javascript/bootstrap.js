@@ -2362,4 +2362,4 @@ if (typeof jQuery === 'undefined') {
 
 }(jQuery);
 
-var snap_bootstrap = $;
+var snapBootstrap = $;

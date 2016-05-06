@@ -70,7 +70,8 @@ function xmldb_theme_snap_upgrade($oldversion) {
         $table->add_key('primary', XMLDB_KEY_PRIMARY, array('id'));
 
         // Adding indexes to table theme_snap_course_favorites.
-        $table->add_index('course_user_id', XMLDB_INDEX_UNIQUE, array('courseid', 'userid'));
+        $table->add_index('courseid-userid', XMLDB_INDEX_UNIQUE, array('courseid', 'userid'));
+        $table->add_index('userid', XMLDB_INDEX_NOTUNIQUE, array('userid'));
 
         // Conditionally launch create table for theme_snap_course_favorites.
         if (!$dbman->table_exists($table)) {

@@ -33,12 +33,12 @@ require_once($CFG->libdir . '/coursecatlib.php');
 class course_card implements \renderable {
 
     /**
-     * @var stdClass $course
+     * @var \stdClass $course
      */
     private $course;
 
     /**
-     * @var course_cards service
+     * @var course service
      */
     private $service;
 
@@ -99,10 +99,11 @@ class course_card implements \renderable {
 
     /**
      * @param int $courseid
+     * @param course | null $service
      */
-    public function __construct($courseid) {
+    public function __construct($courseid, course $service = null) {
         $this->courseid = $courseid;
-        $this->service = course::service();
+        $this->service = $service ? : course::service();
         $this->apply_properties();
     }
 

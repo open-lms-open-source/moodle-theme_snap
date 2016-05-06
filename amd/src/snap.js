@@ -24,12 +24,12 @@
 /**
  * Main snap initialising function.
  */
-define(['jquery', 'snap_bootstrap', 'core/log', 'theme_snap/course_favorites'], function(jq, $, log, course_favorites) {
+define(['jquery', 'snapBootstrap', 'core/log', 'theme_snap/course_favorites'], function($, bsjq, log, courseFavorites) {
 
     'use strict';
 
-    // Use jquery with bootstrap functions.
-    $ = snap_bootstrap;
+    // Use bootstrap modified jquery (tooltips).
+    $ = bsjq;
 
     /**
      * master switch for logging
@@ -1104,7 +1104,7 @@ define(['jquery', 'snap_bootstrap', 'core/log', 'theme_snap/course_favorites'], 
                 bodyClasses(); // add body classes
 
                 // AMD modules
-                course_favorites();
+                courseFavorites();
 
                 // SL - 19th aug 2014 - check we are in a course
                 if (onCoursePage()) {
@@ -1115,96 +1115,100 @@ define(['jquery', 'snap_bootstrap', 'core/log', 'theme_snap/course_favorites'], 
                     updatePersonalMenu();
                 }
 
+                // TODO - this will be removed once the TOC is removed from folderview.
+                if($('.format-folderview').length) {
+                    // Check if we are searching for a mod.
+                    checkHashScrollToModule();
+                }
+
                 // SL - 19th aug 2014 - resposive video and snap search in exceptions.
-                $(document).ready(function() {
-                    // SHAME - make section name creation mandatory
-                    if ($('#page-course-editsection.format-topics').length) {
-                        var usedefaultname = document.getElementById('id_usedefaultname'),
-                            sname = document.getElementById('id_name');
-                        usedefaultname.value = '0';
-                        usedefaultname.checked = false;
-                        sname.required = "required";
-                        sname.focus();
-                        $('#id_name + span').css('display', 'none');
+                // SHAME - make section name creation mandatory
+                if ($('#page-course-editsection.format-topics').length) {
+                    var usedefaultname = document.getElementById('id_usedefaultname'),
+                        sname = document.getElementById('id_name');
+                    usedefaultname.value = '0';
+                    usedefaultname.checked = false;
+                    sname.required = "required";
+                    sname.focus();
+                    $('#id_name + span').css('display', 'none');
 
-                        // Enable the cancel button.
-                        $('#id_cancel').on('click', function(e) {
-                            $('#id_name').removeAttr('required');
-                            $('#mform1').submit();
-                        });
+                    // Enable the cancel button.
+                    $('#id_cancel').on('click', function(e) {
+                        $('#id_name').removeAttr('required');
+                        $('#mform1').submit();
+                    });
+                }
+
+                if ($('.format-folderview').length) {
+                    // Check if we are searching for a mod.
+                    checkHashScrollToModule();
+                }
+
+                // Book mod print button.
+                if ($('#page-mod-book-view').length) {
+                    var urlParams = getURLParams(location.href);
+                    $('.block_book_toc').append('<p>' +
+                    '<hr><a target="_blank" href="/mod/book/tool/print/index.php?id=' + urlParams.id + '">' +
+                    M.util.get_string('printbook', 'booktool_print') +
+                    '</a></p>');
+                }
+
+                var mod_settings_id_re = /^page-mod-.*-mod$/; // e.g. #page-mod-resource-mod or #page-mod-forum-mod
+                var on_mod_settings = mod_settings_id_re.test($('body').attr('id')) && location.href.indexOf("modedit") > -1;
+                var on_course_settings = $('body').attr('id') === 'page-course-edit';
+                var on_section_settings = $('body').attr('id') === 'page-course-editsection';
+
+                if (on_mod_settings || on_course_settings || on_section_settings) {
+                    // Wrap advanced options in a div
+                    var vital = [
+                        ':first',
+                        '#page-course-edit #id_descriptionhdr',
+                        '#id_contentsection',
+                        '#id_general + #id_general', // Turnitin duplicate ID bug.
+                        '#id_content',
+                        '#page-mod-choice-mod #id_optionhdr',
+                        '#page-mod-assign-mod #id_availability',
+                        '#page-mod-assign-mod #id_submissiontypes',
+                        '#page-mod-workshop-mod #id_gradingsettings',
+                        '#page-mod-choicegroup-mod #id_miscellaneoussettingshdr',
+                        '#page-mod-choicegroup-mod #id_groups',
+                        '#page-mod-scorm-mod #id_packagehdr',
+                    ];
+                    vital = vital.join();
+
+                    $('#mform1 > fieldset').not(vital).wrapAll('<div class="snap-form-advanced col-md-4" />');
+
+                    // Add expand all to advanced column
+                    $(".snap-form-advanced").append($(".collapsible-actions"));
+
+                    // Sanitize required input into a single fieldset
+                    var main_form = $("#mform1 fieldset:first");
+                    var append_to = $("#mform1 fieldset:first .fcontainer");
+
+                    var required = $("#mform1 > fieldset").not("#mform1 > fieldset:first");
+                    for (var i = 0; i < required.length; i++) {
+                        var content = $(required[i]).find('.fcontainer');
+                        $(append_to).append(content);
+                        $(required[i]).remove();
                     }
+                    $(main_form).wrap('<div class="snap-form-required col-md-8" />');
 
-                    if ($('.format-folderview').length) {
-                        // Check if we are searching for a mod.
-                        checkHashScrollToModule();
-                    }
+                    var description = $("#mform1 fieldset:first .fitem_feditor:not(.required)");
 
-                    // Book mod print button.
-                    if ($('#page-mod-book-view').length) {
-                        var urlParams = getURLParams(location.href);
-                        $('.block_book_toc').append('<p>' +
-                        '<hr><a target="_blank" href="/mod/book/tool/print/index.php?id=' + urlParams.id + '">' +
-                        M.util.get_string('printbook', 'booktool_print') +
-                        '</a></p>');
-                    }
-
-                    var mod_settings_id_re = /^page-mod-.*-mod$/; // e.g. #page-mod-resource-mod or #page-mod-forum-mod
-                    var on_mod_settings = mod_settings_id_re.test($('body').attr('id')) && location.href.indexOf("modedit") > -1;
-                    var on_course_settings = $('body').attr('id') === 'page-course-edit';
-                    var on_section_settings = $('body').attr('id') === 'page-course-editsection';
-
-                    if (on_mod_settings || on_course_settings || on_section_settings) {
-                        // Wrap advanced options in a div
-                        var vital = [
-                            ':first',
-                            '#page-course-edit #id_descriptionhdr',
-                            '#id_contentsection',
-                            '#id_general + #id_general', // Turnitin duplicate ID bug.
-                            '#id_content',
-                            '#page-mod-choice-mod #id_optionhdr',
-                            '#page-mod-assign-mod #id_availability',
-                            '#page-mod-assign-mod #id_submissiontypes',
-                            '#page-mod-workshop-mod #id_gradingsettings',
-                            '#page-mod-choicegroup-mod #id_miscellaneoussettingshdr',
-                            '#page-mod-choicegroup-mod #id_groups',
-                            '#page-mod-scorm-mod #id_packagehdr',
-                        ];
-                        vital = vital.join();
-
-                        $('#mform1 > fieldset').not(vital).wrapAll('<div class="snap-form-advanced col-md-4" />');
-
-                        // Add expand all to advanced column
-                        $(".snap-form-advanced").append($(".collapsible-actions"));
-
-                        // Sanitize required input into a single fieldset
-                        var main_form = $("#mform1 fieldset:first");
-                        var append_to = $("#mform1 fieldset:first .fcontainer");
-
-                        var required = $("#mform1 > fieldset").not("#mform1 > fieldset:first");
-                        for (var i = 0; i < required.length; i++) {
-                            var content = $(required[i]).find('.fcontainer');
-                            $(append_to).append(content);
-                            $(required[i]).remove();
+                    if (on_mod_settings && description) {
+                        var editingassignment = $('body').attr('id') == 'page-mod-assign-mod';
+                        var editingchoice = $('body').attr('id') == 'page-mod-choice-mod';
+                        var editingturnitin = $('body').attr('id') == 'page-mod-turnitintool-mod';
+                        var editingworkshop = $('body').attr('id') == 'page-mod-workshop-mod';
+                        if (!editingchoice && !editingassignment && !editingturnitin && !editingworkshop) {
+                            $(append_to).append(description);
+                            $(append_to).append($('#fitem_id_showdescription'));
                         }
-                        $(main_form).wrap('<div class="snap-form-required col-md-8" />');
-
-                        var description = $("#mform1 fieldset:first .fitem_feditor:not(.required)");
-
-                        if (on_mod_settings && description) {
-                            var editingassignment = $('body').attr('id') == 'page-mod-assign-mod';
-                            var editingchoice = $('body').attr('id') == 'page-mod-choice-mod';
-                            var editingturnitin = $('body').attr('id') == 'page-mod-turnitintool-mod';
-                            var editingworkshop = $('body').attr('id') == 'page-mod-workshop-mod';
-                            if (!editingchoice && !editingassignment && !editingturnitin && !editingworkshop) {
-                                $(append_to).append(description);
-                                $(append_to).append($('#fitem_id_showdescription'));
-                            }
-                        }
-
-                        var savebuttons = $("#mform1 #fgroup_id_buttonar");
-                        $(main_form).append(savebuttons);
                     }
-                });
+
+                    var savebuttons = $("#mform1 #fgroup_id_buttonar");
+                    $(main_form).append(savebuttons);
+                }
 
                 $(window).on('load', function() {
                     // Add a class to the body to show js is loaded.
