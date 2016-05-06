@@ -5974,6 +5974,26 @@ fieldset[disabled] a#changenumsections .reduce-sections {
 .courseinfo.favorited .favoritetoggle:after {
   background: url("[[pix:theme|fav_checked]]");
 }
+@keyframes spinnerrotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+.courseinfo .favoritetoggle.ajaxing {
+  animation-name: spinnerrotate;
+  animation-duration: 2s;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+}
+.header-hidden-courses {
+  display: none;
+}
+.header-hidden-courses.state-visible {
+  display: inherit;
+}
 /**
  * Snap core swatch.
  *
@@ -10450,11 +10470,14 @@ a:visited {
 .btn.btn-link,
 .btn.btn-link:hover,
 .btn.btn-link:visited,
-.btn.btn-link:link {
+.btn.btn-link:link,
+.btn.btn-link:active,
+.btn.btn-link:focus {
   color: #03A9F4;
   background: none;
   border: none;
   box-shadow: none;
+  outline: none;
 }
 a:focus,
 .dropdown-toggle:focus {

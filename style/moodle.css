@@ -19475,6 +19475,42 @@ fieldset[disabled] a#changenumsections .reduce-sections {
 .courseinfo.favorited .favoritetoggle:after {
   background: url("[[pix:theme|fav_checked]]");
 }
+@-webkit-keyframes spinnerrotate {
+  from {
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+  }
+  to {
+    -webkit-transform: rotate(360deg);
+            transform: rotate(360deg);
+  }
+}
+@keyframes spinnerrotate {
+  from {
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+  }
+  to {
+    -webkit-transform: rotate(360deg);
+            transform: rotate(360deg);
+  }
+}
+.courseinfo .favoritetoggle.ajaxing {
+  -webkit-animation-name: spinnerrotate;
+          animation-name: spinnerrotate;
+  -webkit-animation-duration: 2s;
+          animation-duration: 2s;
+  -webkit-animation-iteration-count: infinite;
+          animation-iteration-count: infinite;
+  -webkit-animation-timing-function: linear;
+          animation-timing-function: linear;
+}
+.header-hidden-courses {
+  display: none;
+}
+.header-hidden-courses.state-visible {
+  display: inherit;
+}
 /**
  * Snap core swatch.
  *
@@ -24161,12 +24197,15 @@ a:visited {
 .btn.btn-link,
 .btn.btn-link:hover,
 .btn.btn-link:visited,
-.btn.btn-link:link {
+.btn.btn-link:link,
+.btn.btn-link:active,
+.btn.btn-link:focus {
   color: #03A9F4;
   background: none;
   border: none;
   -webkit-box-shadow: none;
           box-shadow: none;
+  outline: none;
 }
 a:focus,
 .dropdown-toggle:focus {

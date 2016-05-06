@@ -306,6 +306,7 @@ class snap_shared extends renderer_base {
             'forumpicturegroup',
             'forumreplies',
             'forumlastpost',
+            'hiddencoursestoggle',
             'loading',
             'more',
             'moving',

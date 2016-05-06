@@ -759,6 +759,7 @@ class theme_snap_core_renderer extends toc_renderer {
             $mycourses = $favorited + $notfavorited;
 
             $courselist .= '<section id="fixy-my-courses"><div class="clearfix"><h2>' .get_string('courses'). '</h2>';
+            $courselist .= '<div id="fixy-visible-courses">';
 
             // Default text when no courses.
             if (!$mycourses) {
@@ -775,10 +776,18 @@ class theme_snap_core_renderer extends toc_renderer {
                 $ccard = new course_card($course->id);
                 $coursecard =  $this->render($ccard);
 
-                // If course is not visible and not favorited.
-                if (!$course->visible && !isset($favorited[$course->id])) {
-                    $hiddencoursecount ++;
-                    $hiddencourselist .= $coursecard;
+                // If course is not visible.
+                if (!$course->visible ) {
+                    // Only add to list of hidden courses if not favorited.
+                    if (!isset($favorited[$course->id])) {
+                        $hiddencourselist .= $coursecard;
+                    } else {
+                        // OK, this is hidden but it's favorited, so technically visible.
+                        $visiblecoursecount ++;
+                        $courselist .= $coursecard;
+                    }
+                    // Always increment hidden course count.
+                    $hiddencoursecount++;
                 }
                 // If course is visible or favorited.
                 else {
@@ -786,19 +795,21 @@ class theme_snap_core_renderer extends toc_renderer {
                     $courselist .= $coursecard;
                 }
             }
+            $courselist .= '</div>';
             $courselist .= $this->browse_all_courses_button();
             $courselist .= '</div>';
 
             // Output hidden courses toggle when there are visible courses.
             if ($hiddencoursecount && $visiblecoursecount) {
-                $hiddencourses = '<div class="clearfix"><h2><a id="js-toggle-hidden-courses" href="#">'. get_string('hiddencoursestoggle', 'theme_snap'). ' (' .$hiddencoursecount. ')</a></h2>';
+                $togglevisstate = !empty($hiddencourselist) ? ' state-visible' : '';
+                $hiddencourses = '<div class="clearfix"><h2 class="header-hidden-courses'.$togglevisstate.'"><a id="js-toggle-hidden-courses" href="#">'. get_string('hiddencoursestoggle', 'theme_snap', $hiddencoursecount).'</a></h2>';
                 $hiddencourses .= '<div id="fixy-hidden-courses" class="clearfix" tabindex="-1">' .$hiddencourselist. '</div>';
                 $hiddencourses .= '</div>';
                 $courselist .= $hiddencourses;
             }
             // Output hidden courses when no visible courses.
             elseif ($hiddencoursecount) {
-                $hiddencourses = '<div class="clearfix">' .$hiddencourselist. '</div>';
+                $hiddencourses = '<div id="fixy-hidden-courses" class="clearfix">' .$hiddencourselist. '</div>';
                 $courselist .= $hiddencourses;
             }
             $courselist .= '</section>';
