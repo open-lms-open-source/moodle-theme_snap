@@ -1246,6 +1246,9 @@ HTML;
             $classes[] = 'behat-site';
         }
 
+        // Add theme-snap class so modules can customise css for snap.
+        $classes[] = 'theme-snap';
+
         $classes = implode(' ', $classes);
         return $classes;
     }
