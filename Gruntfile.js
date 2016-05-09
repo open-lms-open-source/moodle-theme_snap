@@ -163,6 +163,6 @@ module.exports = function(grunt) {
 
     // Register tasks.
     grunt.registerTask("default", ["watch"]);
-    grunt.registerTask("compile", ["less", "autoprefixer", "decache"]);
+    grunt.registerTask("compile", ["less:moodle", "less:editor", "autoprefixer", "decache"]);
     grunt.registerTask("decache", ["exec:decache"]);
 };
