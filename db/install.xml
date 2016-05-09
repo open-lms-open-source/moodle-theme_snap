@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<XMLDB PATH="theme/snap/db" VERSION="20160506" COMMENT="XMLDB file for Moodle theme/snap"
+<XMLDB PATH="theme/snap/db" VERSION="20160509" COMMENT="XMLDB file for Moodle theme/snap"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:noNamespaceSchemaLocation="../../../lib/xmldb/xmldb.xsd"
 >
@@ -15,8 +15,7 @@
         <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
       </KEYS>
       <INDEXES>
-        <INDEX NAME="courseid-userid" UNIQUE="true" FIELDS="courseid, userid"/>
-        <INDEX NAME="userid" UNIQUE="false" FIELDS="userid"/>
+        <INDEX NAME="userid-courseid" UNIQUE="true" FIELDS="userid, courseid"/>
       </INDEXES>
     </TABLE>
   </TABLES>
