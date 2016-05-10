@@ -272,32 +272,48 @@ class local {
      * Get a user's messages read and unread.
      *
      * @param int $userid
+     * @param int $since optional timestamp, only return newer messages
      * @return message[]
      */
 
-    public static function get_user_messages($userid) {
+    public static function get_user_messages($userid, $since = null) {
         global $DB;
+
+        if ($since === null) {
+            $since = time() - (12 * WEEKSECS);
+        }
 
         $select  = 'm.id, m.useridfrom, m.useridto, m.subject, m.fullmessage, m.fullmessageformat, m.fullmessagehtml, '.
                    'm.smallmessage, m.timecreated, m.notification, m.contexturl, m.contexturlname, '.
                    \user_picture::fields('u', null, 'useridfrom', 'fromuser');
 
-        $records = $DB->get_records_sql("
+        $sql  = "
         (
                 SELECT $select, 1 unread
                   FROM {message} m
             INNER JOIN {user} u ON u.id = m.useridfrom
-                 WHERE m.useridto = ?
+                 WHERE m.useridto = :userid1
                        AND contexturl IS NULL
+                       AND m.timecreated > :fromdate1
         ) UNION ALL (
                 SELECT $select, 0 unread
                   FROM {message_read} m
             INNER JOIN {user} u ON u.id = m.useridfrom
-                 WHERE m.useridto = ?
+                 WHERE m.useridto = :userid2
                        AND contexturl IS NULL
+                       AND m.timecreated > :fromdate2
         )
-          ORDER BY timecreated DESC
-        ", array($userid, $userid), 0, 5);
+          ORDER BY timecreated DESC";
+
+
+        $params = array(
+            'userid1' => $userid,
+            'userid2' => $userid,
+            'fromdate1' => $since,
+            'fromdate2' => $since,
+        );
+
+        $records = $DB->get_records_sql($sql, $params, 0, 5);
 
         $messages = array();
         foreach ($records as $record) {
