@@ -23564,27 +23564,10 @@ td.mceToolbar {
 #snap-login.fixy input[type=submit] {
   margin: 0 auto 3.5em;
 }
-#snap-login.fixy legend {
-  font-family: "Roboto", "Fira Sans", "Segoe UI", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif;
-  font-weight: 300;
-  line-height: 1.5;
-  color: #565656;
-  margin-top: 28px;
-  margin-bottom: 14px;
-  font-size: 54px;
+#snap-login.fixy h1 {
   color: #fff;
-  margin-top: 0;
-  padding: .3em 4%;
-}
-#snap-login.fixy legend small,
-#snap-login.fixy legend .small {
-  font-weight: normal;
-  line-height: 1;
-  color: #999;
-}
-#snap-login.fixy legend small,
-#snap-login.fixy legend .small {
-  font-size: 65%;
+  padding: 1rem 4%;
+  margin: 0;
 }
 #snap-login.fixy label {
   text-transform: uppercase;
@@ -24225,7 +24208,7 @@ legend,
 .fixy .label-success {
   color: #03A9F4;
 }
-#snap-login form legend {
+.fixy .fixy-header {
   background-color: #03A9F4;
 }
 #fixy-mobile-menu .svg-icon {
