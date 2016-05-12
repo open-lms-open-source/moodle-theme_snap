@@ -156,7 +156,7 @@ class theme_snap_recent_forum_activity_test extends \advanced_testcase {
 
         // Check teacher1 viewable posts is 0 as no point seeing your own posts.
         $this->assert_user_activity($this->teacher1, 0);
-        
+
         // Check teacher2 viewable posts is 1.
         $this->assert_user_activity($this->teacher2, $toffset + 1);
 
@@ -201,6 +201,7 @@ class theme_snap_recent_forum_activity_test extends \advanced_testcase {
         // Note: In testing number of posts, discussions are counted too as there is a post for each discussion created.
         $discussion1 = $this->create_discussion($ftype, $this->course1->id, $this->teacher1->id, $forum1->id);
         $this->create_post($ftype, $this->course1->id, $this->teacher1->id, $forum1->id, $discussion1->id);
+        $this->create_post($ftype, $this->course1->id, $this->teacher1->id, $forum1->id, $discussion1->id, ['modified' => time() - (13 * WEEKSECS)]);
 
         // Check teacher viewable posts is 2.
         $this->assert_user_activity($this->teacher2, $toffset + 2);

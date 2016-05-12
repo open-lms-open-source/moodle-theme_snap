@@ -1093,10 +1093,11 @@ class local {
      * Get recent forum activity for all accessible forums across all courses.
      * @param bool|int|stdclass $userorid
      * @param int $limit
+     * @param int|null $since timestamp, only return posts from after this
      * @return array
      * @throws \coding_exception
      */
-    public static function recent_forum_activity($userorid = false, $limit = 10) {
+    public static function recent_forum_activity($userorid = false, $limit = 10, $since = null) {
         global $CFG, $DB;
 
         if (file_exists($CFG->dirroot.'/mod/hsuforum')) {
@@ -1106,6 +1107,10 @@ class local {
         $user = self::get_user($userorid);
         if (!$user) {
             return [];
+        }
+
+        if ($since === null) {
+            $since = time() - (12 * WEEKSECS);
         }
 
         // Get all relevant forum ids for SQL in statement.
@@ -1175,6 +1180,7 @@ class local {
                            AND gm1.userid = :user1a
 	                     WHERE (cm1.groupmode <> :sepgps2a OR (gm1.userid IS NOT NULL $fgpsql))
 	                       AND fp1.userid <> :user2a
+                           AND fp1.modified > $since
                       ORDER BY fp1.modified DESC
                                $limitsql
                         )
@@ -1227,6 +1233,7 @@ class local {
                          WHERE (cm2.groupmode <> :sepgps2b OR (gm2.userid IS NOT NULL $afgpsql))
                            AND (fp2.privatereply = 0 OR fp2.privatereply = :user2b OR fp2.userid = :user3b)
                            AND fp2.userid <> :user4b
+                           AND fp2.modified > $since
                       ORDER BY fp2.modified DESC
                                $limitsql
                         )
