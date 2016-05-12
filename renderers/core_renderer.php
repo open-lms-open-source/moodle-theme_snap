@@ -248,8 +248,11 @@ class theme_snap_core_renderer extends toc_renderer {
         $output = '';
         if (!empty($recentactivity)) {
             foreach ($recentactivity as $modname => $moduleactivity) {
-                // Get mod icon - no point in alt as title already there.
-                $img = html_writer::tag('img', '', array('src' => $OUTPUT->pix_url('icon', $modname)));
+                // Get mod icon, empty alt as title already there.
+                $img = html_writer::tag('img', '', array(
+                    'src' => $OUTPUT->pix_url('icon', $modname),
+                    'alt' => '',
+                ));
                 // Create media object for module activity.
                 $output .= "<div class='snap-media-object course-footer-update-$modname'>$img".
                     "<div class=snap-media-body>$moduleactivity</div></div>";
@@ -279,7 +282,8 @@ class theme_snap_core_renderer extends toc_renderer {
             'class' => 'pull-right',
             'data-toggle' => 'tooltip',
             'data-placement' => 'bottom',
-            'title' => get_string('admin', 'theme_snap')
+            'title' => get_string('admin', 'theme_snap'),
+            'aria-label' => get_string('admin', 'theme_snap'),
         );
 
         return html_writer::link($url, $burgericon, $attributes);

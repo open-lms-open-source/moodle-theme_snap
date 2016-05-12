@@ -70,7 +70,7 @@ include(__DIR__.'/moodle-blocks.php');
 if ($coursemainpage) {
     $coursefooter = $OUTPUT->course_footer();
     if (!empty($coursefooter)) : ?>
-    <footer role=footer id=snap-course-footer class=row><?php echo $coursefooter ?></footer>
+    <footer role=contentinfo id=snap-course-footer class=row><?php echo $coursefooter ?></footer>
     <?php endif;
 } ?>
 </main>

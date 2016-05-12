@@ -137,7 +137,7 @@ trait format_section_trait {
 
         if (!$isstealth && !$onsectionpage && has_capability('moodle/course:movesections', $coursecontext)) {
             $url = '#section-'.$section->section;
-            $snap_move_section = "<img class='svg-icon' src='".$this->output->pix_url('move', 'theme')."'>";
+            $snap_move_section = "<img class='svg-icon' alt='' role='presentation' src='".$this->output->pix_url('move', 'theme')."'>";
             $movestring = get_string('move', 'theme_snap', format_string($section->name));
             $controls[] = html_writer::link($url, $snap_move_section ,
             array('title' => $movestring, 'alt' => $movestring, 'class' => 'snap-move', 'data-id' => $section->section));
