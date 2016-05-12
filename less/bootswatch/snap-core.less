@@ -98,7 +98,7 @@ table.boxwidthwide {
 // Login page
 // -------------------------
 
-@media screen and (min-width: @screen-sm) {
+@media screen and (min-width: @screen-sm-min) {
     .twocolumns {
 
         // override bs grids
@@ -305,7 +305,7 @@ small, .small {
     font-size: small !important;
 }
 
-@media screen and (max-width: @screen-sm) {
+@media screen and (max-width: @screen-sm-max) {
 
     // unfloat images for small screen
     img[style*="float:left"],
@@ -470,29 +470,101 @@ textarea {
 #changenumsections .increase-sections,
 #changenumsections .reduce-sections,
 .paging.paging-morelink a,
-a.btn,
-button,
+button#local-joulegrader-preview-button,
 a.yui3-button,
 .yui-button button,
-.btn,
+.btn.btn-primary,
+.btn.btn-default,
 input.form-submit,
 input[type="button"],
 input[type="submit"],
 input[type="reset"] {
-    border-color: #fff;
-    color: #fff;
-    font-weight: 300;
     font-family: @font-family-base;
+    background: transparent;
 
-    // background-color: @brand-primary; customisable
     &:hover,
     &:focus {
 
-        // background-color: darken(@brand-primary, 8%); customisable
-        // border-color: darken(@brand-primary, 12%); customisable
         text-decoration: none;
+        color: #fff;
+        background: @brand-primary;
     }
 }
+
+.btn.btn-success {
+
+    &:visited {
+        color: @brand-success;
+    }
+
+    &:hover,
+    &:active,
+    &:focus {
+        color: #fff;
+        background: @brand-success;
+    }
+}
+
+.btn.btn-info {
+
+    &:visited {
+        color: @brand-info;
+    }
+
+    &:hover,
+    &:active,
+    &:focus {
+        color: #fff;
+        background: @brand-info;
+    }
+}
+
+.btn.btn-warning {
+
+    &:visited {
+        color: @brand-warning;
+    }
+
+    &:hover,
+    &:active,
+    &:focus {
+        color: #fff;
+        background: @brand-warning;
+    }
+}
+
+.btn.btn-danger {
+
+    &:visited {
+        color: @brand-danger;
+    }
+
+    &:hover,
+    &:active,
+    &:focus {
+        color: #fff;
+        background: @brand-danger;
+    }
+}
+
+// Snap specific, for white buttons on brand color backgrounds.
+.btn.btn-inverse {
+
+    &,
+    &:visited {
+        color: #fff;
+        border-color: #fff;
+    }
+
+    &:hover,
+    &:active,
+    &:focus {
+        color: @brand-primary;
+        background: #fff;
+        border-color: @brand-primary;
+    }
+}
+
 
 #page-mod-quiz-edit div.question div.content div.points input[type="submit"],
 .btn,
@@ -508,14 +580,30 @@ input[type="password"]+input[type="submit"],
 input[type="text"]+button,
 input[type="text"]+input[type="submit"] {
     padding: 0.25em 1em;
-    margin-left: 0;
-    margin-right: 0.8em;
+    margin: 0;
     vertical-align: baseline;
     line-height: 1.5;
 }
 
-// Shame - the front page uses a different renderer for add asset.
-.snap-modchooser,
+// This a tag gets created by JS after page load so we can't fix it in the renderer.
+.snap-modchooser {
+    clear: both;
+    margin: 3em 0;
+    padding: 0.5em;
+    display: block;
+
+    a {
+        display: block;
+        width: 100%;
+        text-align: center;
+    }
+
+    a:hover {
+        color: #fff;
+        text-decoration: none;
+    }
+}
+
 #page-site-index .section-modchooser-link {
     clear: both;
     margin: 3em 0;
@@ -528,6 +616,7 @@ input[type="text"]+input[type="submit"] {
 
     .section-modchooser-text {
         .btn;
+        .btn-default;
     }
 
     a,
@@ -535,7 +624,6 @@ input[type="text"]+input[type="submit"] {
         display: block;
         width: 100%;
         text-align: center;
-        color: #fff !important;
         text-decoration: none;
     }
 }
@@ -951,7 +1039,7 @@ header#page-header
     display: block;
 }
 
-@media screen and (max-width: @screen-sm) {
+@media screen and (max-width: @screen-sm-max) {
     .breadcrumb li {
         &:nth-last-child(n+4) {
             display: none;
@@ -1327,7 +1415,7 @@ ol#chapters {
 #admin-menu-trigger {
     background-color: transparent;
     position: relative;
-    margin: -0.3em 0;
+    margin: -0.2em 0;
     padding: 0.5em;
     font-size: 1.5em;
     line-height: 1;
@@ -1336,21 +1424,6 @@ ol#chapters {
     height: 2em;
     cursor: pointer;
     border-left: 1px solid;
-    /*
-    // material design button, but wrong for admin block?
-    position:fixed;
-    bottom:2em;
-    right:4%;
-    font-size:1.2em;
-    width: 3em;
-    height: 3em;
-    border-radius: 50%;
-    text-align: center;
-    padding: 0.75em;
-    color:#fff;
-    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
-    z-index:666;
-    */
 }
 
 // Burger in the settings button
@@ -1611,10 +1684,6 @@ http://blog.rodneyrehm.de/archives/34-iOS7-Mobile-Safari-And-Viewport-Units.html
     display: inline-block;
     padding: 1em 2%;
     margin-top: 2em;
-
-    & .btn {
-        float: right;
-    }
 }
 
 #page-mast #fixy-trigger {
@@ -3209,9 +3278,7 @@ table#user-grades tr.avg td.cell {
 }
 
 #notice {
-    color: #fff;
-
-    //	background-color: @brand-primary; customisable
+    background-color: #eee;
     font-size: 2em;
     width: 100%;
     padding: 1em 4% 4em;
@@ -3226,14 +3293,6 @@ table#user-grades tr.avg td.cell {
     .buttons {
         text-align: center;
         border-top: none;
-    }
-
-    a,
-    a:visited,
-    a:link,
-    a:hover {
-        color: #fff;
-        text-decoration: underline;
     }
 }
 
@@ -3551,8 +3610,8 @@ body.hascontinuecancel.path-site #page {
         vertical-align: middle;
     }
 
-    a,
-    a:hover {
+    a:not(.btn),
+    a:not(.btn):hover {
         color: #fff;
     }
 

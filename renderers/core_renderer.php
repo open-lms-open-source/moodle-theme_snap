@@ -641,7 +641,7 @@ class theme_snap_core_renderer extends toc_renderer {
         $loginatts = [
             'aria-haspopup' => 'true',
             'id' => 'fixy-trigger',
-            'class' => 'snap-login-button js-personal-menu-trigger',
+            'class' => 'btn btn-default js-personal-menu-trigger',
         ];
         if (!empty($CFG->alternateloginurl)) {
             $loginurl = $CFG->wwwroot.'/login/index.php';
@@ -808,8 +808,8 @@ class theme_snap_core_renderer extends toc_renderer {
             $linkcontent = $menu.$picture.$badge;
             $attributes = array(
                 'aria-haspopup' => 'true',
-                'id' => 'fixy-trigger',
-                'class' => 'js-personal-menu-trigger',
+                'class' => 'fixy-trigger btn btn-default snap-my-courses-menu',
+                'id' => 'js-personal-menu-trigger',
                 'aria-controls' => 'primary-nav',
                 'title' => get_string('sitenavigation', 'theme_snap'),
                 'data-toggle' => 'tooltip',
