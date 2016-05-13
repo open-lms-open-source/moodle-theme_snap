@@ -64,6 +64,7 @@ define(['jquery', 'core/ajax', 'core/notification', 'core/templates', 'core/log'
             var favorited = $(button).attr('aria-pressed') === 'true' ? 0 : 1;
             var cardEl = $($(button).parents('.courseinfo')[0]);
             var shortname = $(cardEl).data('shortname');
+
             var doAjax = function() {
                 ajax.call([
                     {
@@ -79,6 +80,7 @@ define(['jquery', 'core/ajax', 'core/notification', 'core/templates', 'core/log'
                     }
                 ], true, true);
             };
+
             if (favorited === 1) {
                 // Move to favorites.
                 moveCard (cardEl, '#fixy-visible-courses .courseinfo.favorited', '#fixy-visible-courses', true, doAjax);
