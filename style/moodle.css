@@ -23448,7 +23448,6 @@ button.snap-icon-toggle:focus {
 }
 button.snap-icon-toggle:focus {
   border: 2px solid #03A9F4;
-  border-radius: 50%;
 }
 .fixy {
   display: none;
@@ -23977,6 +23976,19 @@ button.snap-icon-toggle:focus {
 }
 .header-hidden-courses.state-visible {
   display: inherit;
+}
+button.snap-icon-toggle.favoritetoggle,
+button.snap-icon-toggle.favoritetoggle:hover,
+button.snap-icon-toggle.favoritetoggle:visited,
+button.snap-icon-toggle.favoritetoggle:link,
+button.snap-icon-toggle.favoritetoggle:active,
+button.snap-icon-toggle.favoritetoggle:focus {
+  border: transparent;
+  border-radius: 50%;
+}
+button.snap-icon-toggle.favoritetoggle:focus {
+  border: 2px solid #FEC111;
+  border-radius: 50%;
 }
 /**
  * Snap core swatch.
