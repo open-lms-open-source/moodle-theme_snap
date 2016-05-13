@@ -34,11 +34,14 @@ Feature: When the moodle theme is set to Snap, teachers edit assets without ente
     And the following "users" exist:
       | username | firstname | lastname | email                |
       | teacher1 | Teacher   | 1        | teacher1@example.com |
+      | teacher2 | Teacher2  | 1        | teacher2@example.com |
       | student1 | Student   | 1        | student1@example.com |
+
     And the following "course enrolments" exist:
       | user     | course | role           |
       | admin    | C1     | editingteacher |
       | teacher1 | C1     | editingteacher |
+      | teacher2 | C1     | teacher        |
       | student1 | C1     | student        |
 
   @javascript
@@ -51,7 +54,22 @@ Feature: When the moodle theme is set to Snap, teachers edit assets without ente
     And I follow "Course 1"
     And I wait until the page is ready
     And I follow "Topic 1"
-    Then ".snap-activity[data-type='Assignment'] a.snap-edit-asset-more" "css_element" should not exist
+    And ".snap-activity[data-type='Assignment']" "css_element" should exist
+   Then "div.dropdown snap-edit-more-dropdown" "css_element" should not exist
+
+  @javascript
+  Scenario: In read mode, non-editing teacher can see teacher's actions.
+  Given the following "activities" exist:
+      | activity | course | idnumber | name            | intro           | section | assignsubmission_onlinetext_enabled |
+      | assign   | C1     | assign1  | Test assignment | Test assignment | 1       | 1                                   |
+    And I log in as "teacher2" (theme_snap)
+    And I open the personal menu
+    And I follow "Course 1"
+    And I wait until the page is ready
+    And I follow "Topic 1"
+   Then "#section-1" "css_element" should exist
+    And ".snap-activity[data-type='Assignment']" "css_element" should exist
+   Then "div.dropdown snap-edit-more-dropdown" "css_element" should not exist
 
   @javascript
   Scenario: In read mode, teacher hides then shows activity.
