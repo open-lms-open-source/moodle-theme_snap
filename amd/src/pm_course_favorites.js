@@ -38,7 +38,12 @@ define(['jquery', 'core/ajax', 'core/notification', 'core/templates', 'core/log'
         var reloadCourseCardTemplate = function(renderable, cardEl) {
             templates.render('theme_snap/course_cards', renderable)
                 .done(function(result) {
-                    $(cardEl).replaceWith(result);
+                    // Using replaceWith can be jerky as you are taking the element out of the dom instead of replacing
+                    // its content. So instead of $(cardEl).replaceWith(result); we parse the html from the template and
+                    // update the html of the card.
+                    var tempEl = $($.parseHTML(result));
+                    $(cardEl).html(tempEl.html());
+                    $(cardEl).attr('class', $(tempEl).attr('class'));
                 }).fail(notification.exception);
         };
 
@@ -56,27 +61,30 @@ define(['jquery', 'core/ajax', 'core/notification', 'core/templates', 'core/log'
             var favorited = $(button).attr('aria-pressed') === 'true' ? 0 : 1;
             var cardEl = $($(button).parents('.courseinfo')[0]);
             var shortname = $(cardEl).data('shortname');
+            var doAjax = function() {
+                ajax.call([
+                    {
+                        methodname: 'theme_snap_course_card',
+                        args: {courseshortname: shortname, favorited: favorited},
+                        done: function(response) {
+                            reloadCourseCardTemplate(response, cardEl);
+                            button = cardEl.find('.favoritetoggle');
+                            $(button).removeClass('ajaxing');
+                            $(button).focus();
+                        },
+                        fail: function(response) {
+                            $(button).removeClass('ajaxing');
+                            notification.exception(response);
+                        }
+                    }
+                ], true, true);
+            };
             if (favorited === 1) {
                 // Move to favorites.
-                moveCard (cardEl, '#fixy-visible-courses .courseinfo.favorited', '#fixy-visible-courses', true);
+                moveCard (cardEl, '#fixy-visible-courses .courseinfo.favorited', '#fixy-visible-courses', true, doAjax);
             } else {
-                moveOutOfFavorites(cardEl);
+                moveOutOfFavorites(cardEl, doAjax);
             }
-
-            ajax.call([
-                {
-                    methodname: 'theme_snap_course_card',
-                    args: {courseshortname: shortname, favorited: favorited},
-                    done: function(response) {
-                        reloadCourseCardTemplate(response, cardEl);
-                        $(button).removeClass('ajaxing');
-                    },
-                    fail: function(response) {
-                        $(button).removeClass('ajaxing');
-                        notification.exception(response);
-                    }
-                }
-            ], true, true);
         };
 
         /**
@@ -150,8 +158,10 @@ define(['jquery', 'core/ajax', 'core/notification', 'core/templates', 'core/log'
          * @param {jQuery} cardEl
          * @param {string} listSelector
          * @param {string} listSelectorWhenEmpty
+         * @param {bool} prependWhenEmpty
+         * @param {function} onMoveComplete
          */
-        var moveCard = function(cardEl, listSelector, listSelectorWhenEmpty, prependWhenEmpty) {
+        var moveCard = function(cardEl, listSelector, listSelectorWhenEmpty, prependWhenEmpty, onMoveComplete) {
 
             var cardEls = $(listSelector);
             var idx = getCardIndex(cardEl, cardEls);
@@ -179,14 +189,18 @@ define(['jquery', 'core/ajax', 'core/notification', 'core/templates', 'core/log'
             }
 
             cardsHidden.updateToggleCount();
+            if (typeof(onMoveComplete) === 'function') {
+                onMoveComplete();
+            }
         };
 
         /**
          * Move card element out of favorites.
          * @param {jQuery} cardEl
+         * @param {function} onMoveComplete
          * @returns {void}
          */
-        var moveOutOfFavorites = function(cardEl) {
+        var moveOutOfFavorites = function(cardEl, onMoveComplete) {
             var container;
             if ($(cardEl).data('hidden') === true) {
                 container = '#fixy-hidden-courses';
@@ -194,12 +208,12 @@ define(['jquery', 'core/ajax', 'core/notification', 'core/templates', 'core/log'
                 $('.header-hidden-courses').addClass('state-visible');
                 // Auto toggle visibility of hidden courses if currently hidden.
                 if (!$('#fixy-hidden-courses').is(':visible')) {
-                    cardsHidden.toggleHidden();
+                    cardsHidden.toggleHidden(false);
                 }
             } else {
                 container = '#fixy-visible-courses';
             }
-            moveCard(cardEl, container + ' .courseinfo:not(.favorited)', container, false)
+            moveCard(cardEl, container + ' .courseinfo:not(.favorited)', container, false, onMoveComplete)
         };
 
         /**

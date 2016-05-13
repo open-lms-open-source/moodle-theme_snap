@@ -27,6 +27,9 @@ define(['jquery'], function($) {
 
         var self = this;
 
+        /**
+         * Initialise.
+         */
         var init = function() {
             // Hidden course toggle function.
             $(document).on("click", '#js-toggle-hidden-courses', function(e) {
@@ -35,13 +38,24 @@ define(['jquery'], function($) {
             });
         };
 
-        this.toggleHidden = function() {
+        /**
+         * Toggle hidden section.
+         * @param {undefined|bool} focusOnComplete
+         */
+        this.toggleHidden = function(focusOnComplete) {
+            // Default behaviour is to focus on the expanded area when the animation is complete.
+            focusOnComplete = typeof(focusOnComplete) === 'undefined' ? true : focusOnComplete;
             $('#fixy-hidden-courses').slideToggle("fast", function() {
-                // Animation complete.
-                $('#fixy-hidden-courses').focus();
+                if (focusOnComplete) {
+                    // Animation complete.
+                    $('#fixy-hidden-courses').focus();
+                }
             });
         };
 
+        /**
+         * Update count of hidden courses within toggblable hidden section.
+         */
         this.updateToggleCount = function() {
             var count = $('#fixy-hidden-courses .courseinfo').length;
             var hiddenCourseStr = M.util.get_string('hiddencoursestoggle', 'theme_snap', count);

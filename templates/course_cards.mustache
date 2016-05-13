@@ -1,5 +1,5 @@
-<div data-hidden="{{^published}}true{{/published}}{{#published}}false{{/published}}" data-href="{{{url}}}" data-shortname="{{{shortname}}}" class="courseinfo{{#favorited}} favorited{{/favorited}}" style="{{{imagecss}}}">
-    <button title="{{#str}} favorite, theme_snap {{/str}}"aria-pressed="{{#favorited}}true{{/favorited}}{{^favorited}}false{{/favorited}}" class="favoritetoggle btn btn-link"></button>
+<div data-hidden="{{^published}}true{{/published}}{{#published}}false{{/published}}" data-href="{{{url}}}" data-shortname="{{{shortname}}}" class="courseinfo{{#favorited}} favorited{{/favorited}}" style="{{{imagecss}}}" tab-index="-1">
+    <button class="snap-icon-toggle favoritetoggle" title="{{toggletitle}}"aria-pressed="{{#favorited}}true{{/favorited}}{{^favorited}}false{{/favorited}}"></button>
     <div class="courseinfo-body">
         <h3><a class="coursefullname" href="{{{url}}}">{{fullname}}</a></h3>
         <div data-courseid="{{courseid}}" class=dynamicinfo></div>

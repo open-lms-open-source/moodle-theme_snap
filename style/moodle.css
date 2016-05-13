@@ -19453,64 +19453,6 @@ fieldset[disabled] a#changenumsections .reduce-sections {
     max-height: 80vh;
   }
 }
-/* Course favoriting */
-.courseinfo .favoritetoggle {
-  width: 2em;
-  height: 2em;
-  padding: 0;
-  position: absolute;
-  top: 0;
-  right: 0;
-  margin: 0.25em;
-}
-.courseinfo .favoritetoggle:after {
-  background: url("[[pix:theme|fav_unchecked]]");
-  backgrounr-repeat: none;
-  content: ' ';
-  width: 1.6em;
-  height: 1.6em;
-  display: block;
-  margin: .2em;
-}
-.courseinfo.favorited .favoritetoggle:after {
-  background: url("[[pix:theme|fav_checked]]");
-}
-@-webkit-keyframes spinnerrotate {
-  from {
-    -webkit-transform: rotate(0deg);
-            transform: rotate(0deg);
-  }
-  to {
-    -webkit-transform: rotate(360deg);
-            transform: rotate(360deg);
-  }
-}
-@keyframes spinnerrotate {
-  from {
-    -webkit-transform: rotate(0deg);
-            transform: rotate(0deg);
-  }
-  to {
-    -webkit-transform: rotate(360deg);
-            transform: rotate(360deg);
-  }
-}
-.courseinfo .favoritetoggle.ajaxing {
-  -webkit-animation-name: spinnerrotate;
-          animation-name: spinnerrotate;
-  -webkit-animation-duration: 2s;
-          animation-duration: 2s;
-  -webkit-animation-iteration-count: infinite;
-          animation-iteration-count: infinite;
-  -webkit-animation-timing-function: linear;
-          animation-timing-function: linear;
-}
-.header-hidden-courses {
-  display: none;
-}
-.header-hidden-courses.state-visible {
-  display: inherit;
-}
 /**
  * Snap core swatch.
  *
@@ -23491,6 +23433,23 @@ td.mceToolbar {
   overflow: hidden;
   max-width: 81%;
 }
+button.snap-icon-toggle,
+button.snap-icon-toggle:hover,
+button.snap-icon-toggle:visited,
+button.snap-icon-toggle:link,
+button.snap-icon-toggle:active,
+button.snap-icon-toggle:focus {
+  color: #03A9F4;
+  background: none;
+  border: none;
+  -webkit-box-shadow: none;
+          box-shadow: none;
+  outline: none;
+}
+button.snap-icon-toggle:focus {
+  border: 2px solid #03A9F4;
+  border-radius: 50%;
+}
 .fixy {
   display: none;
 }
@@ -23961,6 +23920,64 @@ td.mceToolbar {
     display: none;
   }
 }
+/* Course favoriting */
+.courseinfo .favoritetoggle {
+  width: 2em;
+  height: 2em;
+  padding: 0;
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin: 0.25em;
+}
+.courseinfo .favoritetoggle:after {
+  background: url("[[pix:theme|fav_unchecked]]");
+  background-repeat: none;
+  content: ' ';
+  width: 80%;
+  height: 80%;
+  display: block;
+  margin: 0 10% 5%;
+}
+.courseinfo.favorited .favoritetoggle:after {
+  background: url("[[pix:theme|fav_checked]]");
+}
+@-webkit-keyframes spinnerrotate {
+  from {
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+  }
+  to {
+    -webkit-transform: rotate(360deg);
+            transform: rotate(360deg);
+  }
+}
+@keyframes spinnerrotate {
+  from {
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+  }
+  to {
+    -webkit-transform: rotate(360deg);
+            transform: rotate(360deg);
+  }
+}
+.courseinfo .favoritetoggle.ajaxing {
+  -webkit-animation-name: spinnerrotate;
+          animation-name: spinnerrotate;
+  -webkit-animation-duration: 2s;
+          animation-duration: 2s;
+  -webkit-animation-iteration-count: infinite;
+          animation-iteration-count: infinite;
+  -webkit-animation-timing-function: linear;
+          animation-timing-function: linear;
+}
+.header-hidden-courses {
+  display: none;
+}
+.header-hidden-courses.state-visible {
+  display: inherit;
+}
 /**
  * Snap core swatch.
  *
@@ -24193,19 +24210,6 @@ hr {
 a,
 a:visited {
   color: #03A9F4;
-}
-.btn.btn-link,
-.btn.btn-link:hover,
-.btn.btn-link:visited,
-.btn.btn-link:link,
-.btn.btn-link:active,
-.btn.btn-link:focus {
-  color: #03A9F4;
-  background: none;
-  border: none;
-  -webkit-box-shadow: none;
-          box-shadow: none;
-  outline: none;
 }
 a:focus,
 .dropdown-toggle:focus {
