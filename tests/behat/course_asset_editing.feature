@@ -54,8 +54,8 @@ Feature: When the moodle theme is set to Snap, teachers edit assets without ente
     And I follow "Course 1"
     And I wait until the page is ready
     And I follow "Topic 1"
-    And ".snap-activity[data-type='Assignment']" "css_element" should exist
-   Then "div.dropdown snap-edit-more-dropdown" "css_element" should not exist
+   Then ".snap-activity[data-type='Assignment']" "css_element" should exist
+    And "div.dropdown snap-edit-more-dropdown" "css_element" should not exist
 
   @javascript
   Scenario: In read mode, non-editing teacher can see teacher's actions.
@@ -69,7 +69,7 @@ Feature: When the moodle theme is set to Snap, teachers edit assets without ente
     And I follow "Topic 1"
    Then "#section-1" "css_element" should exist
     And ".snap-activity[data-type='Assignment']" "css_element" should exist
-   Then "div.dropdown snap-edit-more-dropdown" "css_element" should not exist
+    And "div.dropdown snap-edit-more-dropdown" "css_element" should not exist
 
   @javascript
   Scenario: In read mode, teacher hides then shows activity.
