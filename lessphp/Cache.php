@@ -5,6 +5,8 @@
 
 require_once( dirname(__FILE__).'/Version.php');
 
+defined('MOODLE_INTERNAL') || die();
+
 /**
  * Utility for handling the generation and caching of css files
  *

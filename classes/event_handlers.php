@@ -17,6 +17,8 @@
 namespace theme_snap;
 use core\event\course_updated;
 
+defined('MOODLE_INTERNAL') || die();
+
 /**
  * Event handlers.
  *
@@ -44,5 +46,8 @@ class event_handlers {
         $context = \context_course::instance($course->id);
 
         local::process_coverimage($context);
+        echo('Hola Mundo');
     }
 }
+
+echo 'Hola Mundo 2';

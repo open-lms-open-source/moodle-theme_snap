@@ -16,6 +16,8 @@
 
 namespace theme_snap;
 
+defined('MOODLE_INTERNAL') || die();
+
 require_once($CFG->dirroot.'/mod/assign/locallib.php');
 
 // Note: PHP Storm is reporting this unused but it is!
@@ -29,6 +31,10 @@ use \theme_snap\activity_meta;
  * @copyright Copyright (c) 2015 Moodlerooms Inc. (http://www.moodlerooms.com)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
+
+echo('a');
+defined('MOODLE_INTERNAL') || die();
+echo('b');
 
 class activity {
 

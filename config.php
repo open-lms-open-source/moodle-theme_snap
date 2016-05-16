@@ -21,6 +21,8 @@
  * @copyright Copyright (c) 2015 Moodlerooms Inc. (http://www.moodlerooms.com)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
+defined('MOODLE_INTERNAL') || die();
+
 global $SESSION, $COURSE, $USER, $PAGE;
 $themeissnap = isset($PAGE->theme->name) && $PAGE->theme->name === 'snap';
 $notajaxscript = !defined('AJAX_SCRIPT') || AJAX_SCRIPT == false;
