@@ -26,7 +26,6 @@ Feature: When the moodle theme is set to Snap, teachers edit assets without ente
   Background:
    Given the following config values are set as admin:
       | theme | snap |
-      | thememobile | snap |
       | defaulthomepage | 0 |
     And the following "courses" exist:
       | fullname | shortname | category | format |

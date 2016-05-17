@@ -27,7 +27,6 @@ Feature: When the moodle theme is set to Snap, teachers can move course sections
   Background:
     Given the following config values are set as admin:
       | theme | snap |
-      | thememobile | snap |
       | defaulthomepage | 0 |
     And the following "courses" exist:
       | fullname | shortname | category | format |
