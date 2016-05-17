@@ -3,8 +3,6 @@
 // This license can be obtained at https://www.apache.org/licenses/LICENSE-2.0.html
 // This 3rd party library can be obtained at // https://github.com/oyejorge/less.php
 
-defined('MOODLE_INTERNAL') || die();
-
 /**
  * Release numbers
  *

@@ -46,8 +46,5 @@ class event_handlers {
         $context = \context_course::instance($course->id);
 
         local::process_coverimage($context);
-        echo('Hola Mundo');
     }
 }
-
-echo 'Hola Mundo 2';

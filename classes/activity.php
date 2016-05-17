@@ -31,11 +31,6 @@ use \theme_snap\activity_meta;
  * @copyright Copyright (c) 2015 Moodlerooms Inc. (http://www.moodlerooms.com)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-
-echo('a');
-defined('MOODLE_INTERNAL') || die();
-echo('b');
-
 class activity {
 
     /**

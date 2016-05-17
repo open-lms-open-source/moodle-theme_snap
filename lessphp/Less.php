@@ -5,8 +5,6 @@
 
 require_once( dirname(__FILE__).'/Cache.php');
 
-defined('MOODLE_INTERNAL') || die();
-
 /**
  * Class for parsing and compiling less files into css
  *
