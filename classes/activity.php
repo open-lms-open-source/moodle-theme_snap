@@ -16,8 +16,6 @@
 
 namespace theme_snap;
 
-defined('MOODLE_INTERNAL') || die();
-
 require_once($CFG->dirroot.'/mod/assign/locallib.php');
 
 // Note: PHP Storm is reporting this unused but it is!

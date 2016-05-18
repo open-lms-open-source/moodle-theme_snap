@@ -20,8 +20,6 @@ namespace theme_snap;
 use html_writer;
 use theme_snap\user_forums;
 
-defined('MOODLE_INTERNAL') || die();
-
 require_once($CFG->dirroot.'/calendar/lib.php');
 require_once($CFG->libdir.'/completionlib.php');
 require_once($CFG->libdir.'/coursecatlib.php');
