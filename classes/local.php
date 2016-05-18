@@ -1475,6 +1475,7 @@ class local {
         if (count($sqls) > 1) {
             $sql .= "\n".' ORDER BY modified DESC';
         }
+        $sql = "SELECT * FROM ($sql) x";
         $posts = $DB->get_records_sql($sql, $params, 0, $limit);
 
         $activities = [];
