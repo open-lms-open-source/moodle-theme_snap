@@ -815,7 +815,7 @@ class theme_snap_core_course_renderer extends core_course_renderer {
 
         $target = '';
 
-        $activityimg = "<img class='iconlarge activityicon' aria-role='hidden' src='".$mod->get_icon_url()."' />";
+        $activityimg = "<img class='iconlarge activityicon' alt='' role='presentation'  src='".$mod->get_icon_url()."' />";
 
         // Multimedia mods we want to open in the same window.
         $snapmultimedia = $this->snap_multimedia();

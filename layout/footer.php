@@ -27,7 +27,7 @@ $inccoursefooterclass = ($PAGE->theme->settings->coursefootertoggle && strpos($P
     ? ' hascoursefooter'
     : ' nocoursefooter';
 ?>
-<footer id="moodle-footer" role="footer" class="clearfix<?php echo ($inccoursefooterclass)?>">
+<footer id="moodle-footer" role="contentinfo" class="clearfix<?php echo ($inccoursefooterclass)?>">
 <?php
 /* snap custom footer */
 
