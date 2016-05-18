@@ -16,7 +16,7 @@
     #page,
     #moodle-footer,
     #fixy-trigger,
-    #logo,
+    #snap-home,
     .skiplinks {
         display: none;
     }
@@ -55,8 +55,6 @@
     }
 }
 
-
-
 .fixy {
     margin: 0 auto;
     position: fixed;
@@ -69,6 +67,7 @@
 
     #fixy-close {
         color: #fff;
+        margin-top: 1rem;
     }
 
     h2 {
@@ -79,7 +78,7 @@
         padding: 0.5em 0;
         font-size: 1rem;
     }
-        
+
     // Alerts sucess message ????.
     .label-success {
         padding: 0 0.2em;
@@ -108,7 +107,7 @@
 // -------------------------
 
 #fixy-user {
-    margin: 1em 4%;
+    padding: 1em 4%;
     .clearfix();
     a, 
     a .h1 {
@@ -127,11 +126,11 @@
     }
 }
 
-
-
+#fixy {
+    background-color: #eee;
+}
 
 #fixy-content {
-    background-color: #eee;
     padding: 0 2%;
     .clearfix();
 }
@@ -144,54 +143,54 @@
 // gets a bit messey from here SHAME
 
 #snap-login.fixy {
+
     input {
         display: block;
-        padding: 0.1em;
         margin: 0 auto 0.5em;
-        background-color: transparent;
+        padding: 0 0.5em;
+        background-color: #fff;
         font-size: inherit;
         border: 0;
-        color: #fff;
-        border-bottom: 2px solid rgba(255,255,255,0.3);
-        width: 90%;
+        width: 92%;
         box-shadow: none;
+        max-width: 23rem;
     }
+
     input:focus {
         outline: none;
-        border-color: #fff;
     }
+
     input[type=submit] {
-        border: 1px solid #fff;
-        margin: 0 auto 0.5em;
+        margin: 0 auto 3.5em;
     }
-    
-    legend {
+
+    h1 {
         color: #fff;
-        border-bottom: 1px solid #fff;
+        padding: 1rem 4%;
+        margin: 0;
     }
 
     label {
-        color: #fff;
         text-transform: uppercase;
         font-size: 14px;
         letter-spacing: 0.1em;
         line-height: 1;
         display: block;
         padding-top: 1em;
-        font-weight: 100;
-        margin: 0.5em 5%;
+        font-weight: 300;
+        margin: 0.5em auto;
+        width: 92%;
+        max-width: 23rem;
     }
 
-    
     .fixy-inner {
-        max-width: 50.5em;
-        padding-top: 4%;
+        background-color: #eee;
+        min-height: 100vh;
     }
 }
 
 
 .fixy input::placeholder {
-    color: #fff;
     letter-spacing: 0.1em;
 }
 

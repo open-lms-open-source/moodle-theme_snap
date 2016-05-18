@@ -638,11 +638,15 @@ class theme_snap_core_renderer extends toc_renderer {
         $loginurl = '#';
         $loginatts = [
             'aria-haspopup' => 'true',
-            'class' => 'snap-login-button js-personal-menu-trigger'
+            'id' => 'fixy-trigger',
+            'class' => 'snap-login-button js-personal-menu-trigger',
         ];
         if (!empty($CFG->alternateloginurl)) {
             $loginurl = $CFG->wwwroot.'/login/index.php';
-            $loginatts = ['class' => 'snap-login-button'];
+            $loginatts = [
+                'id' => 'fixy-trigger',
+                'class' => 'snap-login-button',
+            ];
         }
         // This check is here for the front page login.
         if (!isloggedin() || isguestuser()) {
@@ -715,16 +719,18 @@ class theme_snap_core_renderer extends toc_renderer {
             $output .= "<div class='fixy' id='snap-login' role='dialog' aria-label='$loginform' tabindex='-1'>
             <form action='$wwwroot/login/index.php'  method='post'>
             <div class=fixy-inner>
+            <div class=fixy-header>
             <a id='fixy-close' class='js-personal-menu-trigger pull-right snap-action-icon' href='#'>
                 <i class='icon icon-close'></i><small>$cancel</small>
             </a>
-            <legend>$loginform</legend>
+            <h1>$login</h1>
+            </div>
             <label for='username'>$username</label>
             <input autocapitalize='off' type='text' name='username' id='username' placeholder='".s($username)."'>
             <label for='password'>$password</label>
             <input type='password' name='password' id='password' placeholder='".s($password)."' $autocomplete>
             <br>
-            <input type='submit' id='loginbtn' value='".s($login)."'>
+            <input type='submit' value='".s($login)."'>
             $helpstr
             </div>
         </form></div>";
@@ -877,6 +883,7 @@ class theme_snap_core_renderer extends toc_renderer {
 
             $output .= '<nav id="primary-nav" class="fixy toggle-details" tabindex="-1">
             <div class="fixy-inner">
+            <div class="fixy-header">
             <a id="fixy-close" class="js-personal-menu-trigger pull-right snap-action-icon" href="#">
                 <i class="icon icon-close"></i><small>'.$close.'</small>
             </a>
@@ -887,6 +894,7 @@ class theme_snap_core_renderer extends toc_renderer {
                     '<span class="h1" role="heading" aria-level="1">'.format_string(fullname($USER)).'</span>
                 </a> '.$realuserinfo.'
                 <a id="fixy-logout" href="'.s($CFG->wwwroot).'/login/logout.php?sesskey='.sesskey().'">'.$logout.'</a>
+            </div>
             </div>
             </div>
 
@@ -1222,8 +1230,9 @@ HTML;
 
         $classes[] = 'device-type-'.$PAGE->devicetypeinuse;
 
-        if (isset($SESSION->justloggedin)
-                && !empty($PAGE->theme->settings->personalmenulogintoggle)) {
+        $openfixyafterlogin = !empty($PAGE->theme->settings->personalmenulogintoggle);
+
+        if (isset($SESSION->justloggedin) && $openfixyafterlogin) {
             unset($SESSION->justloggedin);
             $classes[] = 'snap-fixy-open';
         }
