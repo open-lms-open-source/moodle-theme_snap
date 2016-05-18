@@ -102,6 +102,16 @@ if ($ADMIN->fulltree) {
     $setting = new admin_setting_heading($name, $title, $description);
     $settings->add($setting);
 
+    // Personal menu display on login on/off.
+    $name = 'theme_snap/personalmenulogintoggle';
+    $title = new lang_string('personalmenulogintoggle', 'theme_snap');
+    $description = new lang_string('personalmenulogintoggledesc', 'theme_snap');
+    $checked = '1';
+    $unchecked = '0';
+    $default = $checked;
+    $setting = new admin_setting_configcheckbox($name, $title, $description, $default, $checked, $unchecked);
+    $settings->add($setting);
+
     // Personal menu deadlines on/off.
     $name = 'theme_snap/deadlinestoggle';
     $title = new lang_string('deadlinestoggle', 'theme_snap');
@@ -145,7 +155,6 @@ if ($ADMIN->fulltree) {
     $setting = new admin_setting_configcheckbox($name, $title, $description, $default, $checked, $unchecked);
     $setting->set_updatedcallback('theme_reset_all_caches');
     $settings->add($setting);
-
 
     $name = 'theme_snap/footerheading';
     $title = new lang_string('footerheading', 'theme_snap');

@@ -49,5 +49,11 @@ function xmldb_theme_snap_upgrade($oldversion) {
         upgrade_plugin_savepoint(true, 2014110404, 'theme', 'snap');
     }
 
+    if ($oldversion < 2016042900) {
+        if (get_config('core', 'theme') == 'snap') {
+            set_config('personalmenulogintoggle', 0, 'theme_snap');
+        }
+        upgrade_plugin_savepoint(true, 2016042900, 'theme', 'snap');
+    }
     return true;
 }

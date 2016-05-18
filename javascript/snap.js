@@ -451,8 +451,6 @@ function snapInit() {
         }
 
         $('#primary-nav').focus();
-        // primary nav showing so hide the other dom parts
-        $('#page, #moodle-footer, #js-personal-menu-trigger, #logo, .skiplinks').hide(0);
 
         /**
          * Load ajax info into personal menu.
@@ -802,21 +800,15 @@ function snapInit() {
         $(window).on('popstate hashchange', function(e) {
             var newHash = location.hash;
             logmsg('hashchange');
-            if(newHash !== lastHash){
-                if(location.hash === '#primary-nav') {
-                    updatePersonalMenu();
-                }
-                else{
-                    $('#page, #moodle-footer, #js-personal-menu-trigger, #logo, .skiplinks').css('display', '');
-                    if(onCoursePage()) {
-                        // In folder view we sometimes get here - how?
-                        logmsg('show section', e.target);
-                        if($('.format-folderview').length){
-                            checkHashScrollToModule();
-                        }
-                        else{
-                            showSection();
-                        }
+            if (newHash !== lastHash){
+                if(onCoursePage()) {
+                    // In folder view we sometimes get here - how?
+                    logmsg('show section', e.target);
+                    if($('.format-folderview').length){
+                        checkHashScrollToModule();
+                    }
+                    else{
+                        showSection();
                     }
                 }
             }
@@ -949,10 +941,12 @@ function snapInit() {
             e.preventDefault();
         });
 
-        // Listen for close button to show page content.
-        $(document).on("click", "#fixy-close", function() {
-            $('#page, #moodle-footer, #js-personal-menu-trigger, #logo, .skiplinks').css('display', '');
-
+        $(document).on("click", ".js-personal-menu-trigger", function(event) {
+            $('body').toggleClass('snap-fixy-open');
+            if ($('.snap-fixy-open #primary-nav').is(':visible')) {
+                updatePersonalMenu();
+            }
+            event.preventDefault();
         });
 
         // Mobile menu button.
@@ -1045,8 +1039,8 @@ function snapInit() {
                 },200); // wait 1/20th of a second before resizing
             })(resizestamp);
         });
-        
-        
+
+
         // Hidden course toggle function.
         $(document).on("click", '#js-toggle-hidden-courses', function(e) {
             $('#fixy-hidden-courses').slideToggle( "fast", function() {
@@ -1067,8 +1061,8 @@ function snapInit() {
             }
             $(this).parents('.courseinfo').toggleClass('show-all');
         });
-        
-        
+
+
         // Personal menu small screen behaviour.
         $(document).on("click", '#fixy-mobile-menu a', function(e) {
                 var href = this.getAttribute('href');
@@ -1079,28 +1073,28 @@ function snapInit() {
                 var section = $(href);
                 var targetSection = $("#fixy-content section > div").index(section);
                 var position = sectionWidth*targetSection;
-                
-                
+
+
                 // Course lists is at position 0.
                 if (href == '#fixy-my-courses'){
                     position = 0;
                 }
-                
+
                 // Set the window height.
                 var sectionHeight = $(href).outerHeight() + 100;
                 var winHeight = $(window).height();
                 if(sectionHeight <  winHeight) {
                     sectionHeight = winHeight;
                 }
-                
+
                 $('#fixy-content').animate({
                     left: '-'+position+'px',
                     height: sectionHeight+'px'
-                }, "fast", "swing" , 
+                }, "fast", "swing" ,
                 function(){
                     // Animation complete.
                     // TODO - add tab index & focus INT-8988
-                    
+
                 });
                 e.preventDefault();
         });
@@ -1137,8 +1131,7 @@ function snapInit() {
         showSection();
     }
 
-    // SL - 24th july 2014 - if are looking at the personal menu we need to load data
-    if(location.href.indexOf("primary-nav") > -1) {
+    if ($('body').hasClass('snap-fixy-open')) {
         updatePersonalMenu();
     }
 

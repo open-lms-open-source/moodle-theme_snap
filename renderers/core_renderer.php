@@ -409,7 +409,7 @@ class theme_snap_core_renderer extends toc_renderer {
         $messagesheading = get_string('messages', 'theme_snap');
         $o = '<h2>'.$messagesheading.'</h2>';
         $o .= '<div id="snap-personal-menu-messages"></div>';
-        
+
         $messagseurl = new moodle_url('/message/');
         $o .= $this->column_header_icon_link('viewmessaging', 'messages', $messagseurl);
         return $o;
@@ -450,8 +450,8 @@ class theme_snap_core_renderer extends toc_renderer {
         $formatoptions->filter = false;
         $title = format_text($title, FORMAT_HTML, $formatoptions);
         $content = format_text($content, FORMAT_HTML, $formatoptions);
-        
-        
+
+
         $metastr = '';
         // For forum posts meta is an array with the course title / forum name.
         if (is_array($meta)) {
@@ -463,17 +463,17 @@ class theme_snap_core_renderer extends toc_renderer {
         } elseif($meta) {
             $metastr = '<span class="snap-media-meta">' .$meta.'</span>';
         }
-        
+
         $title = '<h3>' .$title. '</h3>' .$content;
         $link = html_writer::link($url, $title);
-        
+
         $object = $image
                 . '<div class="snap-media-body">'
                 . '<h3>' .$link. '</h3>'
                 . $metastr
                 . '</div>';
 
-        
+
 
         return '<div class="snap-media-object '.$extraclasses.'">'.$object.'</div>';
     }
@@ -519,7 +519,7 @@ class theme_snap_core_renderer extends toc_renderer {
         if (!empty($badges)) {
             $columns[] = $badges;
         }
-        
+
         $messages = $this->render_messages();
         if (!empty($messages)) {
             $columns[] = $messages;
@@ -534,10 +534,10 @@ class theme_snap_core_renderer extends toc_renderer {
         }
         $mobilemenu .= '</div>';
 
-        
+
         if (empty($columns)) {
              return '';
-        } 
+        }
         else {
             $o = '<div class="callstoaction">';
             foreach ($columns as $column) {
@@ -635,16 +635,17 @@ class theme_snap_core_renderer extends toc_renderer {
         global $CFG;
 
         $output = '';
-        $loginurl = '#login';
+        $loginurl = '#';
+        $loginatts = [
+            'aria-haspopup' => 'true',
+            'class' => 'snap-login-button js-personal-menu-trigger'
+        ];
         if (!empty($CFG->alternateloginurl)) {
             $loginurl = $CFG->wwwroot.'/login/index.php';
+            $loginatts = ['class' => 'snap-login-button'];
         }
         // This check is here for the front page login.
         if (!isloggedin() || isguestuser()) {
-            $loginatts = [
-                'aria-haspopup' => 'true',
-                'class' => 'snap-login-button fixy-trigger'
-            ];
             $output = html_writer::link($loginurl, get_string('login'), $loginatts);
         }
         return $output;
@@ -710,11 +711,11 @@ class theme_snap_core_renderer extends toc_renderer {
                 }
             }
             $output .= $this->login_button();
-            
-            $output .= "<div class='fixy' id='login' role='dialog' aria-label='$loginform' tabindex='-1'>
+
+            $output .= "<div class='fixy' id='snap-login' role='dialog' aria-label='$loginform' tabindex='-1'>
             <form action='$wwwroot/login/index.php'  method='post'>
             <div class=fixy-inner>
-            <a id='fixy-close' class='pull-right snap-action-icon' href='#'>
+            <a id='fixy-close' class='js-personal-menu-trigger pull-right snap-action-icon' href='#'>
                 <i class='icon icon-close'></i><small>$cancel</small>
             </a>
             <legend>$loginform</legend>
@@ -742,7 +743,7 @@ class theme_snap_core_renderer extends toc_renderer {
             if (!$mycourses) {
                 $courselist .= "<p>".get_string('coursefixydefaulttext', 'theme_snap')."</p>";
             }
-            
+
             // Hidden course vars.
             $hiddencoursecount = 0;
             $hvisiblecoursecount = 0;
@@ -804,10 +805,10 @@ class theme_snap_core_renderer extends toc_renderer {
                     }
                     $vcourseteachers = '<div class="courseinfo-teachers-visible">'.implode('', $avatars).$extralink.'</div>';
                     $ecourseteachers = '<div class="courseinfo-teachers-extra">'.implode('', $hiddenavatars).'</div>';
-                    
+
                     $coursecontacts = '<div class="courseinfo-teachers">' .$courseteachers.$vcourseteachers.$ecourseteachers. '</div>';
                 }
-                
+
                 $notpublished = get_string('notpublished', 'theme_snap');
                 $pubstatus = '<small class="published-status text-warning">' .$notpublished. '</small>';
                 // If course is not visible.
@@ -833,7 +834,7 @@ class theme_snap_core_renderer extends toc_renderer {
             }
             $courselist .= $this->browse_all_courses_button();
             $courselist .= '</div>';
-            
+
             // Output hidden courses toggle when there are visible courses.
             if ($hiddencoursecount && $visiblecoursecount) {
                 $hiddencourses = '<div class="clearfix"><h2><a id="js-toggle-hidden-courses" href="#">'. get_string('hiddencoursestoggle', 'theme_snap'). ' (' .$hiddencoursecount. ')</a></h2>';
@@ -848,21 +849,21 @@ class theme_snap_core_renderer extends toc_renderer {
             }
             $courselist .= '</section>';
 
-            
+
             $menu = get_string('menu', 'theme_snap');
             $badge = $this->render_badge_count();
             $linkcontent = $menu.$picture.$badge;
             $attributes = array(
                 'aria-haspopup' => 'true',
-                'class' => 'fixy-trigger',
-                'id' => 'js-personal-menu-trigger',
+                'id' => 'fixy-trigger',
+                'class' => 'js-personal-menu-trigger',
                 'aria-controls' => 'primary-nav',
                 'title' => get_string('sitenavigation', 'theme_snap'),
                 'data-toggle' => 'tooltip',
                 'data-placement' => 'bottom',
             );
 
-            $output .= html_writer::link("#primary-nav", $linkcontent, $attributes);
+            $output .= html_writer::link('#', $linkcontent, $attributes);
 
             $close = get_string('close', 'theme_snap');
             $viewyourprofile = get_string('viewyourprofile', 'theme_snap');
@@ -876,10 +877,10 @@ class theme_snap_core_renderer extends toc_renderer {
 
             $output .= '<nav id="primary-nav" class="fixy toggle-details" tabindex="-1">
             <div class="fixy-inner">
-            <a id="fixy-close" class="pull-right snap-action-icon" href="#">
+            <a id="fixy-close" class="js-personal-menu-trigger pull-right snap-action-icon" href="#">
                 <i class="icon icon-close"></i><small>'.$close.'</small>
             </a>
-            
+
             <div id="fixy-user">'.$picture.'
             <div id="fixy-user-details">
                 <a title="'.s($viewyourprofile).'" href="'.s($CFG->wwwroot).'/user/profile.php" >'.
@@ -888,9 +889,9 @@ class theme_snap_core_renderer extends toc_renderer {
                 <a id="fixy-logout" href="'.s($CFG->wwwroot).'/login/logout.php?sesskey='.sesskey().'">'.$logout.'</a>
             </div>
             </div>
-            
-            
-            
+
+
+
         <div id="fixy-content">'
         .$courselist.$this->render_callstoaction().'
         </div><!-- end fixy-content -->
@@ -1214,12 +1215,18 @@ HTML;
      * @return array|string
      */
     public function body_css_classes(array $additionalclasses = array()) {
-        global $PAGE, $COURSE;
+        global $PAGE, $COURSE, $SESSION;
 
         $classes = parent::body_css_classes($additionalclasses);
         $classes = explode (' ', $classes);
 
         $classes[] = 'device-type-'.$PAGE->devicetypeinuse;
+
+        if (isset($SESSION->justloggedin)
+                && !empty($PAGE->theme->settings->personalmenulogintoggle)) {
+            unset($SESSION->justloggedin);
+            $classes[] = 'snap-fixy-open';
+        }
 
         // Define the page types we want to purge yui classes from the body  - e.g. local-joulegrader-view,
         // local-pld-view, etc.
@@ -1243,11 +1250,6 @@ HTML;
         $section = $PAGE->url->param('section');
         if ($COURSE->format === 'folderview' && !empty($section)) {
             $classes[] = 'folderview-single-section';
-        }
-
-        if (defined('BEHAT_SITE_RUNNING')) {
-            // TODO not needed after 2.9.4, as core will do the same automatically.
-            $classes[] = 'behat-site';
         }
 
         // Add theme-snap class so modules can customise css for snap.

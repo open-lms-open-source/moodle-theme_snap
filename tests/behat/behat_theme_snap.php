@@ -87,7 +87,8 @@ class behat_theme_snap extends behat_base {
             new Given('I should not see "Log out"'),
             new Given('I set the field "' . get_string('username') . '" to "' . $this->escape($username) . '"'),
             new Given('I set the field "' . get_string('password') . '" to "'. $this->escape($username) . '"'),
-            new Given('I press "' . get_string('login') . '"')
+            new Given('I press "' . get_string('login') . '"'),
+            new Given('I click on "#fixy-close" "css_element"'),
         );
 
         // If Javascript is disabled we have enough with these steps.
@@ -218,7 +219,7 @@ class behat_theme_snap extends behat_base {
         if (!$node->isVisible()) {
             /* @var $generalcontext behat_general */
             $generalcontext = behat_context_helper::get('behat_general');
-            $generalcontext->i_click_on('#js-personal-menu-trigger', 'css_element');
+            $generalcontext->i_click_on('#fixy-trigger', 'css_element');
         }
     }
 
