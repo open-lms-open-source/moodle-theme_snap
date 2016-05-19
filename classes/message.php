@@ -16,6 +16,8 @@
 
 namespace theme_snap;
 
+defined('MOODLE_INTERNAL') || die();
+
 /**
  * Message Model.
  *

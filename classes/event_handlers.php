@@ -17,6 +17,8 @@
 namespace theme_snap;
 use core\event\course_updated;
 
+defined('MOODLE_INTERNAL') || die();
+
 /**
  * Event handlers.
  *

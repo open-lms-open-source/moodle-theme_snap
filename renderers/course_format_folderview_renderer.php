@@ -21,7 +21,6 @@
  * @copyright Copyright (c) 2015 Moodlerooms Inc. (http://www.moodlerooms.com)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-
 require_once($CFG->dirroot.'/course/format/folderview/renderer.php');
 
 class theme_snap_format_folderview_renderer extends format_folderview_renderer {
