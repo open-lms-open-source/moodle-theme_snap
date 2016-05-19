@@ -337,22 +337,14 @@ class snap_shared extends renderer_base {
 
         // Does the page have editable course content?
         if ($pagehascoursecontent && $PAGE->user_allowed_editing()) {
-            $module = array(
-              'name' => 'theme_snap_course',
-              'fullpath' => '/theme/snap/javascript/course.js'
-            );
 
             $movenoticehtml = '';
             if ($PAGE->pagetype === 'site-index') {
                 $courserenderer = $PAGE->get_renderer('core', 'course');
                 $movenoticehtml = $courserenderer->snap_move_notice();
             }
-
-            $PAGE->requires->js_init_call('M.theme_snap.course.init',
-              [$movenoticehtml],
-              true,
-              $module
-            );
+            
+            $PAGE->requires->js_call_amd('theme_snap/course', 'init', [$movenoticehtml]);
 
             $canmanageacts = has_capability('moodle/course:manageactivities', context_course::instance($COURSE->id));
             if ($canmanageacts && empty($USER->editing)) {

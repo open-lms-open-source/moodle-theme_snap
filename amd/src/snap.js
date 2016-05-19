@@ -24,7 +24,7 @@
 /**
  * Main snap initialising function.
  */
-define(['jquery', 'theme_snap/bootstrap', 'core/log', 'theme_snap/personal_menu'], function($, bsjq, log, personalMenu) {
+define(['jquery', 'theme_snap/bootstrap', 'core/log', 'theme_snap/personal_menu', 'theme_snap/responsive_video'], function($, bsjq, log, personalMenu, responsiveVideo) {
 
     'use strict';
 
@@ -212,75 +212,6 @@ define(['jquery', 'theme_snap/bootstrap', 'core/log', 'theme_snap/personal_menu'
         });
     };
 
-    /**
-     * Apply responsive video to non HTML5 video elements.
-     *
-     * @author Guy Thomas
-     * @date 2014-06-09
-     */
-    var applyResponsiveVideo = function() {
-        // Should we be targeting all elements of this type, or should we be more specific?
-        // E.g. for externally embedded video like youtube we have to go with iframes but what happens if there is
-        // an iframe and it isn't a video iframe - it still gets processed by this script.
-        $('.mediaplugin object, .mediaplugin embed, iframe').not("[data-iframe-srcvideo='value']").each(function() {
-            var width,
-                height,
-                aspectratio;
-
-            var tagname = this.tagName.toLowerCase();
-            if (tagname === 'iframe') {
-                var supportedsites = [
-                    'youtube.com',
-                    'youtu.be',
-                    'vimeo.com',
-                    'archive.org/embed',
-                    'youtube-nocookie.com',
-                    'embed.ted.com',
-                    'embed-ssl.ted.com',
-                    'kickstarter.com',
-                    'video.html',
-                    'simmons.tegrity.com',
-                    'dailymotion.com'
-                ];
-                var supported = false;
-                for (var s in supportedsites) {
-                    if (this.src.indexOf(supportedsites[s]) > -1) {
-                        supported = true;
-                        break;
-                    }
-                }
-                this.setAttribute('data-iframe-srcvideo', (supported ? '1' : '0'));
-                if (!supported) {
-                    return true; // Skip as not supported.
-                }
-                // Set class.
-                $(this).parent().addClass('videoiframe');
-            }
-
-            aspectratio = this.getAttribute('data-aspect-ratio');
-            if (aspectratio === null) { // Note, an empty attribute should evaluate to === null.
-                // Calculate aspect ratio.
-                width = this.width || this.offsetWidth;
-                width = parseInt(width);
-                height = this.height || this.offsetHeight;
-                height = parseInt(height);
-                aspectratio = height / width;
-                this.setAttribute('data-aspect-ratio', aspectratio);
-            }
-
-            if (tagname === 'iframe') {
-                // Remove attributes.
-                $(this).removeAttr('width');
-                $(this).removeAttr('height');
-            }
-
-            // Get width again.
-            width = parseInt(this.offsetWidth);
-            // Set height based on width and aspectratio
-            var style = {height: (width * aspectratio) + 'px'};
-            $(this).css(style);
-        });
-    };
 
     /**
      * Set forum strings because there isn't a decent renderer for mod/forum
@@ -392,128 +323,6 @@ define(['jquery', 'theme_snap/bootstrap', 'core/log', 'theme_snap/personal_menu'
     };
 
     /**
-     * Add deadlines, messages, grades & grading,  async'ly to the personal menu
-     *
-     * @author Stuart Lamour
-     */
-    var updatePersonalMenu = function() {
-
-        /**
-         * Check if the browser supports localstorage.
-         * Safari on private mode does not support write on this object
-         */
-        var supportlocalstorage = true;
-        if (typeof localStorage === 'object') {
-            try {
-                localStorage.setItem('localStorage', 1);
-                localStorage.removeItem('localStorage');
-            } catch (e) {
-                supportlocalstorage = false;
-            }
-        }
-
-        $('#primary-nav').focus();
-
-        /**
-         * Load ajax info into personal menu.
-         *
-         */
-        var loadajaxinfo = function(type) {
-            var container = $('#snap-personal-menu-' + type);
-            if ($(container).length) {
-                var cache_key = M.cfg.sesskey + 'personal-menu-' + type;
-                try {
-                    // Display old content while waiting
-                    if (window.sessionStorage[cache_key]) {
-                        log.info('using locally stored ' + type);
-                        var html = window.sessionStorage[cache_key];
-                        $(container).html(html);
-                    }
-                    log.info('fetching ' + type);
-                    $.ajax({
-                        type: "GET",
-                        async: true,
-                        url: M.cfg.wwwroot + '/theme/snap/rest.php?action=get_' + type + '&contextid=' + M.cfg.context,
-                        success: function(data) {
-                            log.info('fetched ' + type);
-                            if (supportlocalstorage) {
-                                window.sessionStorage[cache_key] = data.html;
-                            }
-                            // Note: we can't use .data because that does not manipulate the dom, we need the data
-                            // attribute populated immediately so things like behat can utilise it.
-                            // .data just sets the value in memory, not the dom.
-                            $(container).attr('data-content-loaded', '1');
-                            $(container).html(data.html);
-                        }
-                    });
-                } catch (err) {
-                    sessionStorage.clear();
-                    log.error(err);
-                }
-            }
-        };
-
-        loadajaxinfo('deadlines');
-        loadajaxinfo('graded');
-        loadajaxinfo('grading');
-        loadajaxinfo('messages');
-        loadajaxinfo('forumposts');
-
-        // Load course information via ajax.
-        var courseids = [];
-        var courseinfo_key = M.cfg.sesskey + 'courseinfo';
-        $('.courseinfo .dynamicinfo').each(function() {
-            courseids.push($(this).attr('data-courseid'));
-        });
-        if (courseids.length > 0) {
-
-            /**
-             * Apply course information to courses in personal menu.
-             *
-             * @param crsinfo
-             */
-            var applycourseinfo = function(crsinfo) {
-                for (var i in crsinfo) {
-                    var info = crsinfo[i];
-                    log.info('applying course data for courseid ' + info.courseid);
-                    var courseinfohtml = info.progress.progresshtml;
-                    if (info.feedback && info.feedback.feedbackhtml) {
-                        courseinfohtml += info.feedback.feedbackhtml;
-                    }
-                    $('.courseinfo [data-courseid="' + info.courseid + '"]').html(courseinfohtml);
-                }
-            };
-
-            // OK - lets see if we have grades/progress in session storage we can use before ajax call.
-            if (window.sessionStorage[courseinfo_key]) {
-                var courseinfo = JSON.parse(window.sessionStorage[courseinfo_key]);
-                applycourseinfo(courseinfo);
-            }
-
-            // Get course info via ajax.
-            var courseiddata = 'courseids=' + courseids.join(',');
-            log.info("fetching course data");
-            $.ajax({
-                type: "GET",
-                async: true,
-                url: M.cfg.wwwroot + '/theme/snap/rest.php?action=get_courseinfo&contextid=' + M.cfg.context,
-                data: courseiddata,
-                success: function(data) {
-                    if (data.info) {
-                        log.info('fetched coursedata', data.info);
-                        if (supportlocalstorage) {
-                            window.sessionStorage[courseinfo_key] = JSON.stringify(data.info);
-                        }
-                        applycourseinfo(data.info);
-                    } else {
-                        log.warn('fetched coursedata with error: JSON data object is missing info property', data);
-                    }
-                }
-            });
-        }
-    };
-
-    /**
      * Scroll to an element on page.
      * Only ever called by scrollToModule
      * @param jqueryCollection el
@@ -614,7 +423,7 @@ define(['jquery', 'theme_snap/bootstrap', 'core/log', 'theme_snap/personal_menu'
                 window.scrollTo(0, 0);
             }
 
-            applyResponsiveVideo();
+            responsiveVideo.apply();
             // add faux :current class to the relevant section in toc
             var currentSectionId = $('.main.state-visible, #coursetools.state-visible, #snap-add-new-section.state-visible').attr('id');
             $('#chapters li').removeClass('current');
@@ -665,7 +474,7 @@ define(['jquery', 'theme_snap/bootstrap', 'core/log', 'theme_snap/personal_menu'
         }
 
         // If there is any video in the new content then we need to make it responsive.
-        applyResponsiveVideo();
+        responsiveVideo.apply();
     };
 
     var lightboxMedia = function(resourcemod) {
@@ -724,7 +533,7 @@ define(['jquery', 'theme_snap/bootstrap', 'core/log', 'theme_snap/personal_menu'
                 }
                 // Apply responsive video after 1 second. Note: 1 second is just to give crappy flow player time to sort itself out.
                 window.setTimeout(function() {
-                    applyResponsiveVideo();
+                    responsiveVideo.apply();
                 }, 1000);
                 $('#snap-light-box').focus();
             }
@@ -765,7 +574,7 @@ define(['jquery', 'theme_snap/bootstrap', 'core/log', 'theme_snap/personal_menu'
             log.info('hashchange');
             if (newHash !== lastHash) {
                 if (location.hash === '#primary-nav') {
-                    updatePersonalMenu();
+                    personalMenu.update();
                 }
                 else {
                     $('#page, #moodle-footer, #js-personal-menu-trigger, #logo, .skiplinks').css('display', '');
@@ -859,17 +668,6 @@ define(['jquery', 'theme_snap/bootstrap', 'core/log', 'theme_snap/personal_menu'
             $(this).closest('li.activity').toggleClass('draft');
         });
 
-        // Personal menu course card clickable.
-        $(document).on('click', '.courseinfo[data-href]', function(e) {
-            var trigger = $(e.target),
-                hreftarget = '_self';
-            // Excludes any clicks in the card deeplinks.
-            if (!$(trigger).closest('a').length) {
-                window.open($(this).data('href'), hreftarget);
-                e.preventDefault();
-            }
-        });
-
         // Resource cards clickable.
         $(document).on('click', '.snap-resource', function(e) {
             var trigger = $(e.target),
@@ -908,14 +706,6 @@ define(['jquery', 'theme_snap/bootstrap', 'core/log', 'theme_snap/personal_menu'
             $(href).attr('tabindex', '0');
             $(href).toggleClass('state-visible').focus();
             e.preventDefault();
-        });
-
-        $(document).on("click", ".js-personal-menu-trigger", function(event) {
-            $('body').toggleClass('snap-fixy-open');
-            if ($('.snap-fixy-open #primary-nav').is(':visible')) {
-                updatePersonalMenu();
-            }
-            event.preventDefault();
         });
 
         // Mobile menu button.
@@ -988,7 +778,7 @@ define(['jquery', 'theme_snap/bootstrap', 'core/log', 'theme_snap/personal_menu'
                     $news.attr('aria-expanded', 'false');
                 }
             });
-            applyResponsiveVideo();
+            responsiveVideo.apply();
             e.preventDefault();
         });
 
@@ -1000,7 +790,7 @@ define(['jquery', 'theme_snap/bootstrap', 'core/log', 'theme_snap/personal_menu'
                     log.info('checking ' + timestamp + ' against ' + resizestamp);
                     if (timestamp === resizestamp) {
                         log.info('running resize hook functions');
-                        applyResponsiveVideo();
+                        responsiveVideo.apply();
                     } else {
                         log.info('skipping resize hook functions - timestamp has changed from ' + timestamp + ' to ' + resizestamp);
                     }
@@ -1008,56 +798,8 @@ define(['jquery', 'theme_snap/bootstrap', 'core/log', 'theme_snap/personal_menu'
             })(resizestamp);
         });
 
-        // Reveal more teachers.
-        $('#fixy-my-courses').on('click hover', '.courseinfo-teachers-more', null, function(e) {
-            e.preventDefault();
-            var nowhtml = $(this).html();
-            if (nowhtml.indexOf('+') > -1) {
-                $(this).html(nowhtml.replace('+', '-'));
-            } else {
-                $(this).html(nowhtml.replace('-', '+'));
-            }
-            $(this).parents('.courseinfo').toggleClass('show-all');
-        });
-
-        // Personal menu small screen behaviour.
-        $(document).on("click", '#fixy-mobile-menu a', function(e) {
-            var href = this.getAttribute('href');
-            var sections = $("#fixy-content section");
-            var sectionWidth = $(sections).outerWidth();
-            // Num of sections * width of section ...
-            var sectionsWidth = sections.length * sectionWidth;
-            var section = $(href);
-            var targetSection = $("#fixy-content section > div").index(section);
-            var position = sectionWidth * targetSection;
-
-            // Course lists is at position 0.
-            if (href == '#fixy-my-courses') {
-                position = 0;
-            }
-
-            // Set the window height.
-            var sectionHeight = $(href).outerHeight() + 100;
-            var winHeight = $(window).height();
-            if (sectionHeight < winHeight) {
-                sectionHeight = winHeight;
-            }
-
-            $('#fixy-content').animate({
-                    left: '-' + position + 'px',
-                    height: sectionHeight + 'px'
-                }, "fast", "swing",
-                function() {
-                    // Animation complete.
-                    // TODO - add tab index & focus INT-8988
-
-                });
-            e.preventDefault();
-        });
-
-        // Bootstrap js elements
-
-        // Iniitalise core bootsrtap tooltip js
+        // Bootstrap js elements.
+        // Iniitalise core bootsrtap tooltip js.
         $(function() {
             var supportsTouch = false;
             if ('ontouchstart' in window) {
@@ -1094,16 +836,13 @@ define(['jquery', 'theme_snap/bootstrap', 'core/log', 'theme_snap/personal_menu'
                 applyBlockHash(); // change location hash if necessary
                 bodyClasses(); // add body classes
 
-                // AMD modules
-                personalMenu();
-
                 // SL - 19th aug 2014 - check we are in a course
                 if (onCoursePage()) {
                     showSection();
                 }
 
                 if ($('body').hasClass('snap-fixy-open')) {
-                    updatePersonalMenu();
+                    personalMenu.update();
                 }
 
                 // SL - 19th aug 2014 - resposive video and snap search in exceptions.
@@ -1200,7 +939,7 @@ define(['jquery', 'theme_snap/bootstrap', 'core/log', 'theme_snap/personal_menu'
                     $('body').addClass('snap-js-loaded');
                     // Make video responsive.
                     // Note, if you don't do this on load then FLV media gets wrong size.
-                    applyResponsiveVideo();
+                    responsiveVideo.apply();
                 });
             });
         }

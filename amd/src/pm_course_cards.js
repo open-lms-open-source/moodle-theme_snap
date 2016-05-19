@@ -20,14 +20,37 @@
  */
 
 /**
- * Course card favoriting.
+ * Personal menu course cards.
  */
 define(['jquery', 'theme_snap/pm_course_cards_hidden', 'theme_snap/pm_course_favorites'], function($, cardsHidden, courseFavorites) {
-    return function() {
+    return (function() {
 
         $(document).ready(function() {
             courseFavorites(cardsHidden);
         });
+        
+        // Reveal more teachers on click or hover teachers more icon.
+        $('#fixy-my-courses').on('click hover', '.courseinfo-teachers-more', null, function(e) {
+            e.preventDefault();
+            var nowhtml = $(this).html();
+            if (nowhtml.indexOf('+') > -1) {
+                $(this).html(nowhtml.replace('+', '-'));
+            } else {
+                $(this).html(nowhtml.replace('-', '+'));
+            }
+            $(this).parents('.courseinfo').toggleClass('show-all');
+        });
 
-    };
+        // Personal menu course card clickable.
+        $(document).on('click', '.courseinfo[data-href]', function(e) {
+            var trigger = $(e.target),
+                hreftarget = '_self';
+            // Excludes any clicks in the card deeplinks.
+            if (!$(trigger).closest('a').length) {
+                window.open($(this).data('href'), hreftarget);
+                e.preventDefault();
+            }
+        });
+        
+    })();
 });
