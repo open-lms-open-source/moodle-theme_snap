@@ -1232,7 +1232,7 @@ HTML;
 
         $openfixyafterlogin = !empty($PAGE->theme->settings->personalmenulogintoggle);
 
-        if (isset($SESSION->justloggedin) && $openfixyafterlogin) {
+        if (!isguestuser() && isset($SESSION->justloggedin) && $openfixyafterlogin) {
             unset($SESSION->justloggedin);
             $classes[] = 'snap-fixy-open';
         }
