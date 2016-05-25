@@ -57,6 +57,11 @@ function xmldb_theme_snap_upgrade($oldversion) {
             set_config('personalmenulogintoggle', 0, 'theme_snap');
         }
 
+        // Snap savepoint reached.
+        upgrade_plugin_savepoint(true, 2016042900, 'theme', 'snap');
+    }
+
+    if ($oldversion < 2016042904) {
         // Define table theme_snap_course_favorites to be created.
         $table = new xmldb_table('theme_snap_course_favorites');
 
@@ -78,7 +83,7 @@ function xmldb_theme_snap_upgrade($oldversion) {
         }
 
         // Snap savepoint reached.
-        upgrade_plugin_savepoint(true, 2016042900, 'theme', 'snap');
+        upgrade_plugin_savepoint(true, 2016042904, 'theme', 'snap');
     }
 
     return true;
