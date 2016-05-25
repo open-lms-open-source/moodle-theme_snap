@@ -1179,7 +1179,7 @@ HTML;
 
         $openfixyafterlogin = !empty($PAGE->theme->settings->personalmenulogintoggle);
 
-        if (isset($SESSION->justloggedin) && $openfixyafterlogin) {
+        if (!isguestuser() && isset($SESSION->justloggedin) && $openfixyafterlogin) {
             unset($SESSION->justloggedin);
             $classes[] = 'snap-fixy-open';
         }
@@ -1203,9 +1203,11 @@ HTML;
             $classes [] = 'yui-bootstrapped';
         }
 
-        $section = $PAGE->url->param('section');
-        if ($COURSE->format === 'folderview' && !empty($section)) {
-            $classes[] = 'folderview-single-section';
+        if (!empty($PAGE->url)) {
+            $section = $PAGE->url->param('section');
+            if ($COURSE->format === 'folderview' && !empty($section)) {
+                $classes[] = 'folderview-single-section';
+            }
         }
 
         // Add theme-snap class so modules can customise css for snap.
@@ -1328,6 +1330,8 @@ HTML;
         if (empty($activities)) {
             return '';
         }
+        $formatoptions = new stdClass;
+        $formatoptions->filter = false;
         foreach ($activities as $activity) {
             if (!empty($activity->user)) {
                 $userpicture = new user_picture($activity->user);
