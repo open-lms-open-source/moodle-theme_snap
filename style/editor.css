@@ -8272,6 +8272,9 @@ td.mceToolbar {
 .snap-fixy-open #page,
 .snap-fixy-open #moodle-footer,
 .snap-fixy-open #fixy-trigger,
+.snap-fixy-open .bb_dashboard_link,
+.snap-fixy-open #admin-menu-trigger,
+.snap-fixy-open #newmessageoverlay,
 .snap-fixy-open #snap-home,
 .snap-fixy-open .skiplinks {
   display: none;
@@ -8313,7 +8316,6 @@ td.mceToolbar {
 }
 .fixy #fixy-close {
   color: #fff;
-  margin-top: 1rem;
 }
 .fixy h2 {
   font-weight: 500;
@@ -8327,6 +8329,11 @@ td.mceToolbar {
   font-size: 1em;
   background-color: rgba(255, 255, 255, 0.6);
   border-radius: 2px;
+}
+@media only screen and (min-width: 768px) {
+  .fixy #fixy-close {
+    margin-top: 1rem;
+  }
 }
 .fixy-inner {
   margin: 0 auto;

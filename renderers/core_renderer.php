@@ -737,9 +737,9 @@ class theme_snap_core_renderer extends toc_renderer {
             <h1>$login</h1>
             </div>
             <label for='username'>$username</label>
-            <input autocapitalize='off' type='text' name='username' id='username' placeholder='".s($username)."'>
+            <input autocapitalize='off' type='text' name='username' id='username'>
             <label for='password'>$password</label>
-            <input type='password' name='password' id='password' placeholder='".s($password)."' $autocomplete>
+            <input type='password' name='password' id='password' $autocomplete>
             <br>
             <input type='submit' value='".s($login)."'>
             $helpstr
