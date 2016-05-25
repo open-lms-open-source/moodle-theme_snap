@@ -329,7 +329,10 @@ class theme_snap_assign_test extends mod_assign_base_testcase {
 
     private function create_one_ungraded_submission() {
         $this->setUser($this->editingteachers[0]);
-        $assign = $this->create_instance(['assignsubmission_onlinetext_enabled' => 1]);
+        $assign = $this->create_instance([
+            'assignsubmission_onlinetext_enabled' => 1,
+            'duedate' => time() - WEEKSECS,
+        ]);
 
         // Add a submission.
         $this->setUser($this->students[0]);
@@ -451,6 +454,21 @@ class theme_snap_assign_test extends mod_assign_base_testcase {
         $this->setUser($this->editingteachers[0]);
         $actual = local::all_ungraded($this->editingteachers[0]->id, $sixmonthsago);
         $this->assertcount($expected, $actual);
+
+        // Limit time to after the assignment is due
+        $afterduedate = time() - WEEKSECS;
+
+        $this->setUser($this->teachers[0]);
+        $actual = local::all_ungraded($this->teachers[0]->id, $afterduedate);
+        $this->assertcount(0, $actual);
+
+        $this->setUser($this->teachers[1]);
+        $actual = local::all_ungraded($this->teachers[1]->id, $afterduedate);
+        $this->assertcount(0, $actual);
+
+        $this->setUser($this->editingteachers[0]);
+        $actual = local::all_ungraded($this->editingteachers[0]->id, $afterduedate);
+        $this->assertcount(0, $actual);
     }
 
     public function test_courseinfo_empty() {

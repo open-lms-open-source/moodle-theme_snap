@@ -664,13 +664,18 @@ class local {
     /**
      * Get all ungraded items.
      * @param int $userid
+     * @param null|int $since
      * @return array
      */
-    public static function all_ungraded($userid) {
+    public static function all_ungraded($userid, $since = null) {
         $courseids = self::gradeable_courseids($userid);
 
         if (empty($courseids)) {
             return array();
+        }
+
+        if ($since === null) {
+            $since = time() - (12 * WEEKSECS);
         }
 
         $mods = \core_plugin_manager::instance()->get_installed_plugins('mod');
@@ -681,7 +686,7 @@ class local {
             $class = '\theme_snap\activity';
             $method = $mod.'_ungraded';
             if (method_exists($class, $method)) {
-                $grading = array_merge($grading, call_user_func([$class, $method], $courseids));
+                $grading = array_merge($grading, call_user_func([$class, $method], $courseids, $since));
             }
         }
 
