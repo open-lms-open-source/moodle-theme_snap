@@ -295,11 +295,9 @@ form.popupform div {
 
 // Accessibility: text 'seen' by screen readers but not visual users.
 .accesshide {
-    position: absolute;
-    z-index: -1;
-    font-weight: normal;
-    font-size: 1em;
+    .sr-only;
 }
+
 span.hide,
 div.hide {
     display: none;

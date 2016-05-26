@@ -2861,15 +2861,35 @@ li.section:focus {
   margin-top: 0;
   white-space: normal !important;
 }
-#section-0 .sectionname.accesshide {
+.reset-sr-only {
   position: relative;
-  left: 0;
+  width: auto;
+  height: auto;
+  margin: initial;
+  overflow: visible;
+  clip: auto;
+  border: initial;
+}
+#section-0 .sectionname.accesshide {
   font-weight: 300;
   font-size: 46px;
+  position: relative;
+  width: auto;
+  height: auto;
+  margin: initial;
+  overflow: visible;
+  clip: auto;
+  border: initial;
 }
 .folderview .sectionname.accesshide {
   position: absolute;
-  left: -10000px;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
 }
 .path-course-view .section .summary {
   position: relative;
@@ -4126,7 +4146,12 @@ fieldset[disabled] a#changenumsections .reduce-sections {
 #changenumsections .increase-sections .accesshide,
 #changenumsections .reduce-sections .accesshide {
   position: relative;
-  left: 0;
+  width: auto;
+  height: auto;
+  margin: initial;
+  overflow: visible;
+  clip: auto;
+  border: initial;
   font-weight: 300;
 }
 #snap-course-footer {
@@ -4441,6 +4466,7 @@ fieldset[disabled] a#changenumsections .reduce-sections {
     max-height: 80vh;
   }
 }
+/* Course favoriting */
 .courseinfo .favoritetoggle {
   width: 2em;
   height: 2em;

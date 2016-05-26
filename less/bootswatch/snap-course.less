@@ -242,20 +242,28 @@ li.section:focus {
     white-space: normal !important;
 }
 
+// Make sr-only item visible to non screen reader users.
+.reset-sr-only {
+    position: relative;
+    width: auto;
+    height: auto;
+    margin: initial;
+    overflow: visible;
+    clip: auto;
+    border: initial;
+}
+
 // overwrite moodle not showing title for section 0
 #section-0 .sectionname.accesshide {
-    position: relative;
-    left: 0;
     font-weight: 300;
     font-size: @font-size-h2;
+    .reset-sr-only;
 }
 
 // except in folder view where the name is spat out twice on single pages
 // this is a folderview bug....
-
 .folderview .sectionname.accesshide {
-    position: absolute;
-    left: -10000px;
+    .sr-only;
 }
 
 .path-course-view .section .summary {
@@ -1447,6 +1455,9 @@ span.editinstructions {
     padding-left: 0;
 }
 
+// TODO - audit for usage. A div with the id changenumsections seems to only show when the course page is in edit mode.
+// Snap no longer has an edit mode so this CSS is likely to be redundant.
+// See core format/renderer.php for markup with id of changenumsections.
 #changenumsections {
     .text-center;
 
@@ -1459,8 +1470,7 @@ span.editinstructions {
         }
 
         .accesshide {
-            position: relative;
-            left: 0;
+            .reset-sr-only;
             font-weight: 300;
         }
     }
