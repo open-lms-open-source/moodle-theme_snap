@@ -253,7 +253,9 @@ li.section:focus {
     border: initial;
 }
 
-// overwrite moodle not showing title for section 0
+// Overwrite moodle not showing title for section 0.
+// Note: This is only relevant to course formats other than topics/weeks as we always spit the sectionname out without
+// the accesshide class in Snap for topics and weeks.
 #section-0 .sectionname.accesshide {
     font-weight: 300;
     font-size: @font-size-h2;
