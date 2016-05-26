@@ -44,6 +44,9 @@ define(['jquery', 'core/ajax', 'core/notification', 'core/templates', 'core/log'
                     var tempEl = $($.parseHTML(result));
                     $(cardEl).html(tempEl.html());
                     $(cardEl).attr('class', $(tempEl).attr('class'));
+                    var button = $(cardEl).find('.favoritetoggle');
+                    $(button).removeClass('ajaxing');
+                    $(button).focus();
                 }).fail(notification.exception);
         };
 
@@ -68,9 +71,6 @@ define(['jquery', 'core/ajax', 'core/notification', 'core/templates', 'core/log'
                         args: {courseshortname: shortname, favorited: favorited},
                         done: function(response) {
                             reloadCourseCardTemplate(response, cardEl);
-                            button = cardEl.find('.favoritetoggle');
-                            $(button).removeClass('ajaxing');
-                            $(button).focus();
                         },
                         fail: function(response) {
                             $(button).removeClass('ajaxing');
