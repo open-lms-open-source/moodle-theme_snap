@@ -780,7 +780,7 @@ class theme_snap_core_renderer extends toc_renderer {
                 $coursecard =  $this->render($ccard);
 
                 // If course is not visible.
-                if (!$course->visible ) {
+                if (!$course->visible) {
                     $actualhiddencount++;
                     // Only add to list of hidden courses if not favorited.
                     if (!isset($favorited[$course->id])) {
