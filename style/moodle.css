@@ -301,6 +301,15 @@ form.popupform div {
   clip: rect(0, 0, 0, 0);
   border: 0;
 }
+.reset-sr-only {
+  position: relative;
+  width: auto;
+  height: auto;
+  margin: initial;
+  overflow: visible;
+  clip: auto;
+  border: initial;
+}
 span.hide,
 div.hide {
   display: none;
@@ -4698,8 +4707,13 @@ table#categoryquestions > tbody > tr:nth-of-type(even) {
 }
 body.path-question-type .fitem_fgroup .accesshide {
   font: inherit;
-  left: 0;
-  position: static;
+  position: relative;
+  width: auto;
+  height: auto;
+  margin: initial;
+  overflow: visible;
+  clip: auto;
+  border: initial;
   padding-right: .3em;
 }
 .que {
@@ -13226,18 +13240,6 @@ form {
   float: none;
   width: auto;
 }
-.mform .ftags label.accesshide {
-  display: block;
-  position: static;
-}
-.mform .ftags select {
-  margin-bottom: 0.7em;
-}
-@media screen and (min-width: 768px) {
-  .mform .ftags select {
-    min-width: 22em;
-  }
-}
 .mform .helplink img {
   margin: 0 .45em;
   padding: 0;
@@ -17727,15 +17729,6 @@ li.section:focus {
   padding-top: 0;
   margin-top: 0;
   white-space: normal !important;
-}
-.reset-sr-only {
-  position: relative;
-  width: auto;
-  height: auto;
-  margin: initial;
-  overflow: visible;
-  clip: auto;
-  border: initial;
 }
 #section-0 .sectionname.accesshide {
   font-weight: 300;
@@ -23163,7 +23156,6 @@ http://css-spinners.com/css/spinner/three-quarters.css
 }
 /** fix feedback field sizes on mobile devices **/
 @media screen and (max-width: 767px) {
-  .mform .ftags select,
   .mform .fselect > select,
   .mform .fselectyesno > select,
   .mform .ftext > input[type="text"],
