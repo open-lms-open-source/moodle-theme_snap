@@ -7322,7 +7322,7 @@ http://blog.rodneyrehm.de/archives/34-iOS7-Mobile-Safari-And-Viewport-Units.html
   padding: 1em 2%;
   margin-top: 2em;
 }
-#page-mast #fixy-trigger {
+#page-mast .snap-login-button {
   display: inline-block;
   padding: 0.25em 2em;
   margin-top: 1em;
@@ -9747,7 +9747,7 @@ td.mceToolbar {
     margin-top: 1rem;
   }
 }
-.notloggedin header .fixy-trigger {
+.notloggedin header .snap-login-button {
   margin-right: 4%;
 }
 .fixy-inner {
