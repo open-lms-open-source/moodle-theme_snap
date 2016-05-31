@@ -25,7 +25,9 @@
 define(['jquery', 'core/log', 'theme_snap/pm_course_cards'], function($, log, courseCards) {
 
     return new (function() {
-    
+
+        var self = this;
+
         /**
          * Add deadlines, messages, grades & grading,  async'ly to the personal menu
          *
@@ -154,6 +156,15 @@ define(['jquery', 'core/log', 'theme_snap/pm_course_cards'], function($, log, co
          * Apply personal menu listeners.
          */
         var applyListeners = function() {
+            // On clicking personal menu trigger.
+            $(document).on("click", ".js-personal-menu-trigger", function(event) {
+                $('body').toggleClass('snap-fixy-open');
+                if ($('.snap-fixy-open #primary-nav').is(':visible')) {
+                        self.update();
+                    }
+                event.preventDefault();
+            });
+
             // Personal menu small screen behaviour.
             $(document).on("click", '#fixy-mobile-menu a', function(e) {
                 var href = this.getAttribute('href');

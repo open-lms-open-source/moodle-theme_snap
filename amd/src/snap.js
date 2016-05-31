@@ -24,12 +24,14 @@
 /**
  * Main snap initialising function.
  */
-define(['jquery', 'theme_snap/bootstrap', 'core/log', 'theme_snap/personal_menu', 'theme_snap/responsive_video'], function($, bsjq, log, personalMenu, responsiveVideo) {
+define(['jquery', 'theme_snap/bootstrap', 'core/log', 'theme_snap/headroom', 'theme_snap/personal_menu', 'theme_snap/responsive_video'], function($, bsjq, log, Headroom, personalMenu, responsiveVideo) {
 
     'use strict';
 
     // Use bootstrap modified jquery (tooltips).
     $ = bsjq;
+
+    M.theme_snap = M.theme_snap || {};
 
     /**
      * master switch for logging
@@ -305,21 +307,6 @@ define(['jquery', 'theme_snap/bootstrap', 'core/log', 'theme_snap/personal_menu'
     var processSearchString = function(searchString) {
         searchString = searchString.trim().toLowerCase();
         return (searchString);
-    };
-
-    /**
-     * Do polyfill stuff.
-     *
-     * NOTE - would be better to be using yep / nope to load just the scripts we need, however scripts in moodle are
-     * typically grouped together and compressed based on the javascript arrays in config.php.
-     *
-     * @author Guy Thomas
-     * @date 2014-06-19
-     */
-    var polyfills = function() {
-        if (!Modernizr.input.placeholder) {
-            $('input, textarea').placeholder();
-        }
     };
 
     /**
@@ -822,7 +809,6 @@ define(['jquery', 'theme_snap/bootstrap', 'core/log', 'theme_snap/personal_menu'
         snapInit: function(courseid, contextid, courseconfig) {
 
             // Set up
-            M.theme_snap = M.theme_snap || {};
             M.theme_snap.courseid = courseid;
             M.theme_snap.courseconfig = courseconfig;
             M.cfg.context = contextid;
@@ -830,7 +816,6 @@ define(['jquery', 'theme_snap/bootstrap', 'core/log', 'theme_snap/personal_menu'
             // When document has loaded.
             $(document).ready(function() {
                 movePHPErrorsToHeader(); // boring
-                polyfills(); // for none evergreen
                 setForumStrings(); // whatever
                 addListeners(); // essential
                 applyBlockHash(); // change location hash if necessary
