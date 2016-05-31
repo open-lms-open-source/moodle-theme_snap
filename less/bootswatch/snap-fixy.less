@@ -16,6 +16,9 @@
     #page,
     #moodle-footer,
     #fixy-trigger,
+    .bb_dashboard_link,
+    #admin-menu-trigger,
+    #newmessageoverlay,
     #snap-home,
     .skiplinks {
         display: none;
@@ -67,7 +70,6 @@
 
     #fixy-close {
         color: #fff;
-        margin-top: 1rem;
     }
 
     h2 {
@@ -90,6 +92,11 @@
     }
 }
 
+@media only screen and (min-width: @screen-sm-min) {
+    .fixy #fixy-close {
+        margin-top: 1rem;
+    }
+}
 
 
 .fixy-inner {
