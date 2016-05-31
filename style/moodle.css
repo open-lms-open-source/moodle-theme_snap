@@ -23157,21 +23157,6 @@ div.editor_atto_toolbar div.atto_group {
 .path-grade-report-grader .gradeparent .cell.user {
   font-size: 13px;
 }
-.behat-site #moodle-blocks {
-  visibility: visible;
-  height: inherit;
-}
-.behat-site #mr-nav {
-  position: absolute;
-}
-.behat-site #mr-nav.headroom--unpinned {
-  -webkit-animation-name: none;
-          animation-name: none;
-}
-.behat-site .fixy-inner {
-  -webkit-animation-name: none;
-          animation-name: none;
-}
 td.mceIframeContainer > iframe {
   max-width: 100%;
 }

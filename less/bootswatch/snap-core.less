@@ -4075,27 +4075,6 @@ div.editor_atto_toolbar div.atto_group {
 
 // End Scrolling gradebook fixes
 
-// We need to be able to see the navigation block in Snap or we can't fo things like follow the participants link and
-// log in as another user.
-.behat-site #moodle-blocks {
-    visibility: visible;
-    height: inherit;
-}
-
-// Stop header from overlapping links and causing intermittent behat failures.
-.behat-site #mr-nav {
-position: absolute;
-}
-
-// Also stop it disappearing.
-.behat-site #mr-nav.headroom--unpinned {
-animation-name: none;
-}
-
-// Stop fixy animation as it makes Behat sometimes miss buttons and links within the menu
-.behat-site .fixy-inner {
-animation-name: none;
-}
 td.mceIframeContainer > iframe {
     max-width:100%;
 }
