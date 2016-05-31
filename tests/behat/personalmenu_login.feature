@@ -33,7 +33,7 @@ Feature: When the moodle theme is set to Snap,
     And I am on site homepage
 
   @javascript
-  Scenario: User opens and closes login menu on site homepage
+  Scenario: User opens and closes login menu using call-to-action button on site homepage
     Given I click on "#page-mast .js-personal-menu-trigger" "css_element"
     Then "#snap-login" "css_element" should be visible
     And I follow "Cancel"
