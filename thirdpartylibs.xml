@@ -7,12 +7,6 @@
     <version>3.2.0</version>
   </library>
   <library>
-    <location>javascript/bootstrap.js</location>
-    <name>Twitter Bootstrap (.js files)</name>
-    <license>MIT</license>
-    <version>3.2.0</version>
-  </library>
-  <library>
     <location>lessphp</location>
     <name>Less.php (https://github.com/oyejorge/less.php)</name>
     <license>Apache</license>
