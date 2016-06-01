@@ -44,10 +44,12 @@ Feature: When the moodle theme is set to Snap, students and teachers can open a 
     Given I change window size to "320x480"
     And I log in as "<user>" (theme_snap)
     And I open the personal menu
-    And I follow "Courses" in the mobile personal menu
-    Then I should see "Course 1"
     And I follow "Deadlines" in the mobile personal menu
     Then I should see "You have no upcoming deadlines."
+    # This is deliberately not in the order of the icons as the default pane shows courses so we need to switch to
+    # something else first.
+    And I follow "Courses" in the mobile personal menu
+    Then I should see "Course 1"
     And I follow "<gradealt>" in the mobile personal menu
     Then I should see "<gradenotice>"
     And I follow "Messages" in the mobile personal menu
