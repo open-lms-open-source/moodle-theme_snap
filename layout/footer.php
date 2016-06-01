@@ -74,7 +74,7 @@ if (!empty($custommenu) && !empty($footnote)) {
 
 if (core_component::get_component_directory('local_mrooms') !== null) {
     $langkey   = \local_mrooms\kb_link::resolve_language_key();
-    $builtwith = html_writer::link("https://$langkey.help.blackboard.com/Moodlerooms", get_string('joule', 'theme_snap'),
+    $builtwith = html_writer::link('https://redirects.blackboard.com/005_000'.$langkey, get_string('joule', 'theme_snap'),
         ['target' => '_blank', 'title' => get_string('joulehelpguides', 'theme_snap')]);
 } else {
     $builtwith = get_string('joule', 'theme_snap');
