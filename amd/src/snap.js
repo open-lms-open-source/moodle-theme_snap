@@ -24,7 +24,7 @@
 /**
  * Main snap initialising function.
  */
-define(['jquery', 'snapBootstrap', 'core/log', 'theme_snap/personal_menu'], function($, bsjq, log, personalMenu) {
+define(['jquery', 'theme_snap/bootstrap', 'core/log', 'theme_snap/personal_menu'], function($, bsjq, log, personalMenu) {
 
     // Use bootstrap modified jquery (tooltips).
     $ = bsjq;

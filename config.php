@@ -187,7 +187,6 @@ $THEME->layouts = array(
 $THEME->javascripts = array(
 );
 $THEME->javascripts_footer = array(
-    'bootstrap',
     'headroom',
     'snap',
     'course',
