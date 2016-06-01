@@ -510,8 +510,11 @@ class theme_snap_core_renderer extends toc_renderer {
 
         $graded = $this->render_graded();
         $grading = $this->render_grading();
-        $gradebookmenulink = $this->mobile_menu_link('grading', 'gradebook', '#snap-personal-menu-grading');
-
+        if (empty($grading)) {
+            $gradebookmenulink = $this->mobile_menu_link('recentfeedback', 'gradebook', '#snap-personal-menu-graded');
+        } else {
+            $gradebookmenulink = $this->mobile_menu_link('grading', 'gradebook', '#snap-personal-menu-grading');
+        }
         if (!empty($grading)) {
             $columns[] = $grading;
             $mobilemenu .= $gradebookmenulink;
