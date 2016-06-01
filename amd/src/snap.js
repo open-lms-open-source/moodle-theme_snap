@@ -24,9 +24,7 @@
 /**
  * Main snap initialising function.
  */
-define(['jquery', 'snapBootstrap', 'core/log', 'theme_snap/course_favorites'], function($, bsjq, log, courseFavorites) {
-
-    'use strict';
+define(['jquery', 'snapBootstrap', 'core/log', 'theme_snap/personal_menu'], function($, bsjq, log, personalMenu) {
 
     // Use bootstrap modified jquery (tooltips).
     $ = bsjq;
@@ -1008,15 +1006,6 @@ define(['jquery', 'snapBootstrap', 'core/log', 'theme_snap/course_favorites'], f
             })(resizestamp);
         });
 
-        // Hidden course toggle function.
-        $(document).on("click", '#js-toggle-hidden-courses', function(e) {
-            $('#fixy-hidden-courses').slideToggle("fast", function() {
-                // Animation complete.
-                $('#fixy-hidden-courses').focus();
-            });
-            e.preventDefault();
-        });
-
         // Reveal more teachers.
         $('#fixy-my-courses').on('click hover', '.courseinfo-teachers-more', null, function(e) {
             e.preventDefault();
@@ -1104,7 +1093,7 @@ define(['jquery', 'snapBootstrap', 'core/log', 'theme_snap/course_favorites'], f
                 bodyClasses(); // add body classes
 
                 // AMD modules
-                courseFavorites();
+                personalMenu();
 
                 // SL - 19th aug 2014 - check we are in a course
                 if (onCoursePage()) {
@@ -1113,12 +1102,6 @@ define(['jquery', 'snapBootstrap', 'core/log', 'theme_snap/course_favorites'], f
 
                 if ($('body').hasClass('snap-fixy-open')) {
                     updatePersonalMenu();
-                }
-
-                // TODO - this will be removed once the TOC is removed from folderview.
-                if($('.format-folderview').length) {
-                    // Check if we are searching for a mod.
-                    checkHashScrollToModule();
                 }
 
                 // SL - 19th aug 2014 - resposive video and snap search in exceptions.

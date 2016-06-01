@@ -98,6 +98,11 @@ class course_card implements \renderable {
     public $published = true;
 
     /**
+     * @var string
+     */
+    public $toggletitle = '';
+
+    /**
      * @param int $courseid
      * @param course | null $service
      */
@@ -118,6 +123,8 @@ class course_card implements \renderable {
         $this->fullname = $this->course->fullname;
         $this->published = (bool)$this->course->visible;
         $this->favorited = $this->service->favorited($this->courseid);
+        $togglestrkey = !$this->favorited ? 'favorite' : 'favorited';
+        $this->toggletitle = get_string($togglestrkey, 'theme_snap', $this->fullname);
         $this->apply_contact_avatars();
         $this->apply_image_css();
     }

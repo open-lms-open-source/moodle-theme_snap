@@ -73,4 +73,3 @@ Feature: When the moodle theme is set to Snap, students and teachers favorite co
     Then Course card "C2" is favorited
     And I toggle course card favorite "C2"
     Then Course card "C2" is not favorited
-
