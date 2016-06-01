@@ -196,10 +196,6 @@ legend,
 }
 
 #fixy-trigger {
-    &:hover {
-        background-color: fade(@brand-primary, 75%);
-    }
-
     .message_badge_count {
         background-color: darken(@brand-primary, 8%);
     }
@@ -257,44 +253,67 @@ input#id_submitbutton2,
 .path-admin .buttons input[type="submit"],
 td.submit input,
 #notice .singlebutton + .singlebutton input,
-#snap-login.fixy input[type=submit],
-button,
+#login.fixy input[type=submit],
+button#local-joulegrader-preview-button,
 .yui-skin-sam .yui-button,
 .yui3-button,
 .yui-button button,
-.btn,
+.btn.btn-primary,
+.btn.btn-default,
 input.form-submit,
 input[type="button"],
 input[type="submit"],
 input[type="reset"],
-#page-mast .snap-login-button,
 #page-site-index .section-modchooser-link .section-modchooser-text {
-    background-color: darken(@brand-primary, 5%);
-    border: 0;
-    color: #fff;
     font-family: @font-family-base;
-    font-weight: 300;
-    box-shadow: 0 3px 0 0 darken(@brand-primary, 8%);
     transition: all 0.4s ease-in-out;
+    color: @brand-primary;
+    border-color: @brand-primary;
+    border-radius: 4px;
+
+    &:visited {
+        color: @brand-primary;
+    }
 
     &:hover,
     &:focus,
     &:active,
     &.active {
-        background-color: darken(@brand-primary, 8%);
+        background-color: @brand-primary;
         color: #fff;
+        border-color: @brand-primary;
         text-decoration: none;
-        box-shadow: 0 3px 0 0 darken(@brand-primary, 12%);
     }
 
-    &:visited {
-        color: #fff;
-    }
 
     &[disabled] {
-        background-color: @brand-primary;
+        opacity: 0.65;
     }
 }
+
+.btn.btn-inverse {
+    background-color: @brand-primary;
+
+    &:hover,
+    &:focus,
+    &:active,
+    &.active {
+        color: @brand-primary;
+        border-color: @brand-primary;
+    }
+}
+
+.btn.btn-success,
+.btn.btn-info,
+.btn.btn-warning,
+.btn.btn-danger,
+.btn.btn-inverse,
+.btn.btn-link {
+    font-family: @font-family-base;
+    transition: all 0.4s ease-in-out;
+    border-radius: 4px;
+}
+
 
 #id_cancel {
     color: @brand-primary;
@@ -342,11 +361,11 @@ input[type="reset"],
 #page-login-index #page,
 .news-article-image,
 .news-article-preview,
-#notice,
 #snap-move-message {
     background-color: @brand-primary;
 }
 
+#notice,
 #toc-search:before {
     color: @brand-primary;
 }
@@ -463,6 +482,7 @@ a[href="#sections"] {
     }
 }
 
+.yui-bootstrapped,
 .yui-skin-sam {
     .yui3-tabview-list {
         .yui3-tab-label {

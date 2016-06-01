@@ -219,7 +219,7 @@ class behat_theme_snap extends behat_base {
         if (!$node->isVisible()) {
             /* @var $generalcontext behat_general */
             $generalcontext = behat_context_helper::get('behat_general');
-            $generalcontext->i_click_on('#fixy-trigger', 'css_element');
+            $generalcontext->i_click_on('.snap-my-courses-menu', 'css_element');
         }
     }
 

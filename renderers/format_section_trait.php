@@ -583,7 +583,7 @@ trait format_section_trait {
         $urlparams = array('section' => $section);
             // S Lamour Aug 2015 - show activity picker
             // moodle is adding a link around the span in a span with js - yay!! go moodle...
-            $modchooser = "<div class='snap-modchooser btn section_add_menus'>
+            $modchooser = "<div class='snap-modchooser btn btn-default section_add_menus'>
               <span class='section-modchooser-link'><span>".get_string('addresourceoractivity', 'theme_snap')."</span></span>
             </div>";
            $output = $this->courserenderer->course_modchooser($modules, $course) . $modchooser;

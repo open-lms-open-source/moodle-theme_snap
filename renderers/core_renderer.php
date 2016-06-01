@@ -640,14 +640,12 @@ class theme_snap_core_renderer extends toc_renderer {
         $loginurl = '#';
         $loginatts = [
             'aria-haspopup' => 'true',
-            'id' => 'fixy-trigger',
-            'class' => 'snap-login-button js-personal-menu-trigger',
+            'class' => 'btn btn-default snap-login-button js-personal-menu-trigger',
         ];
         if (!empty($CFG->alternateloginurl)) {
             $loginurl = $CFG->wwwroot.'/login/index.php';
             $loginatts = [
-                'id' => 'fixy-trigger',
-                'class' => 'snap-login-button',
+                'class' => 'btn btn-default snap-login-button',
             ];
         }
         // This check is here for the front page login.
@@ -765,7 +763,7 @@ class theme_snap_core_renderer extends toc_renderer {
             if (!$mycourses) {
                 $courselist .= "<p>".get_string('coursefixydefaulttext', 'theme_snap')."</p>";
             }
-            
+
             // Visible / hidden course vars.
             $visiblecoursecount = 0;
             // How many courses are in the hidden section (hidden and not favorited).
@@ -822,8 +820,8 @@ class theme_snap_core_renderer extends toc_renderer {
             $linkcontent = $menu.$picture.$badge;
             $attributes = array(
                 'aria-haspopup' => 'true',
+                'class' => 'js-personal-menu-trigger btn btn-default snap-my-courses-menu',
                 'id' => 'fixy-trigger',
-                'class' => 'js-personal-menu-trigger',
                 'aria-controls' => 'primary-nav',
                 'title' => get_string('sitenavigation', 'theme_snap'),
                 'data-toggle' => 'tooltip',

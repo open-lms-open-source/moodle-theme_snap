@@ -13,6 +13,7 @@
     #snap-login {
         display: block;
     }
+
     #page,
     #moodle-footer,
     #fixy-trigger,
@@ -25,21 +26,10 @@
     }
 }
 
-.notloggedin #fixy-trigger {
-    padding: 0.9em 1em; // SHAME - something odd where login overlaps mr-nav
-}
-
-#fixy-trigger {
-    // border: 1px solid @brand-primary; customisable
-    padding: 1em;
-    position: relative;
-    .alakazam();
-
-    &:hover {
-        color: #fff !important;
-        //	background-color: @brand-primary; customisable
-        text-decoration: none;
-    }
+.snap-my-courses-menu {
+    display: inline;
+    padding: 0.89rem 0.9rem 1.3rem;
+    border: none;
 
     .userpicture {
         height: 38px;
@@ -98,6 +88,9 @@
     }
 }
 
+.notloggedin header .snap-login-button {
+    margin-right: 4%;
+}
 
 .fixy-inner {
     margin: 0 auto;
@@ -105,7 +98,6 @@
     animation-iteration-count: once;
     animation-timing-function: ease-in-out;
     animation-duration: 0.3s;
-    //	background-color: @brand-primary; customisable
 }
 
 
@@ -153,21 +145,25 @@
 
     input {
         display: block;
+        width: 92%;
+        max-width: 23rem;
+    }
+
+    input[type='text'],
+    input[type='password'] {
         margin: 0 auto 0.5em;
         padding: 0 0.5em;
         background-color: #fff;
         font-size: inherit;
         border: 0;
-        width: 92%;
         box-shadow: none;
-        max-width: 23rem;
     }
 
     input:focus {
         outline: none;
     }
 
-    input[type=submit] {
+    input[type='submit'] {
         margin: 0 auto 3.5em;
     }
 
@@ -310,7 +306,7 @@
 .callstoaction section,
 #fixy-my-courses {
     position: relative;
-    
+
     .snap-personal-menu-more {
         position: absolute;
         top: 0;
@@ -331,6 +327,15 @@
         width: 36px;
         height: 36px;
         // box-shadow: 0 2px 2.5px 0 @gray-lighter, 0 1.5px 5px 0 rgba(0, 0, 0, 0.19);
+    }
+}
+
+.fixy .callstoaction {
+    #snap-personal-menu-deadlines,
+    #snap-personal-menu-graded,
+    #snap-personal-menu-grading,
+    #snap-personal-menu-messages {
+        min-height: 50px;
     }
 }
 
