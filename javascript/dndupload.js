@@ -20,4 +20,4 @@ M.theme_snap.dndupload.init = function(Y, options) {
             self.handle_file(file, section, sectionnumber);
         }
     });
-}
+};
