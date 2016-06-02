@@ -20,7 +20,7 @@
     <licenseversion>2.0</licenseversion>
   </library>
   <library>
-    <location>javascript/headroom.js</location>
+    <location>amd/src/headroom.js</location>
     <name>Headroom.js (https://github.com/WickyNilliams/headroom.js)</name>
     <license>MIT</license>
     <version>0.7.0</version>
