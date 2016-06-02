@@ -880,4 +880,30 @@ class theme_snap_core_course_renderer extends core_course_renderer {
         </div>';
         return $o;
     }
+
+    /**
+     * Generates a notification if course format is not topics or weeks the user is editing and is a teacher/mananger.
+     *
+     * @return string
+     * @throws coding_exception
+     */
+    public function course_format_warning() {
+        global $COURSE, $PAGE, $OUTPUT;
+
+        $format = $COURSE->format;
+        if (in_array($format, ['weeks', 'topics'])) {
+            return '';
+        }
+
+        if (!$PAGE->user_is_editing()) {
+            return '';
+        }
+
+        if (!has_capability('moodle/course:manageactivities', context_course::instance($COURSE->id))) {
+            return '';
+        }
+
+        $url = new moodle_url('/course/edit.php', ['id' => $COURSE->id]);
+        return $OUTPUT->notification(get_string('courseformatnotification', 'theme_snap', $url->out()));
+    }
 }

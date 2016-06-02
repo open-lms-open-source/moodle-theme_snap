@@ -44,6 +44,10 @@ $coursemainpage = strpos($PAGE->pagetype, 'course-view-') === 0;
 
 <div id="page-mast">
 <?php
+if ($coursemainpage) {
+    $output = $PAGE->get_renderer('core', 'course');
+    echo $output->course_format_warning();
+}
 echo $OUTPUT->page_heading();
 echo $OUTPUT->course_header();
 // Note, there is no blacklisting for the edit blocks button on course pages.
