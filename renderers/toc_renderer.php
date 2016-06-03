@@ -28,6 +28,8 @@ include_once('general_section_trait.php');
 class toc_renderer extends core_renderer {
 
     use general_section_trait;
+    
+    // return('');
 
     /**
      * table of contents link information
@@ -96,6 +98,11 @@ class toc_renderer extends core_renderer {
         // No access to course, return nothing.
         if (!can_access_course($COURSE)) {
             return '';
+        }
+
+        // Only print TOC in topics and weeks format.
+        if($COURSE->format !== 'weeks' AND $COURSE->format !== 'topics') {
+            return;
         }
 
         $format     = course_get_format($this->page->course);
