@@ -28,8 +28,6 @@ include_once('general_section_trait.php');
 class toc_renderer extends core_renderer {
 
     use general_section_trait;
-    
-    // return('');
 
     /**
      * table of contents link information
