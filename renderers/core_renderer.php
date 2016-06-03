@@ -525,7 +525,9 @@ class theme_snap_core_renderer extends toc_renderer {
 
         $badges = $this->render_badges();
         if (!empty($badges)) {
-            $columns[] = $badges;
+            $columns[] = '<div id="snap-personal-menu-badges">' .$badges. '</div>';
+            $mobilemenu .= $this->mobile_menu_link('alerts', 'alerts', '#snap-personal-menu-badges');
+
         }
 
         $messages = $this->render_messages();
@@ -534,14 +536,13 @@ class theme_snap_core_renderer extends toc_renderer {
             $mobilemenu .= $this->mobile_menu_link('messages', 'messages', '#snap-personal-menu-messages');
         }
 
-
         $forumposts = $this->render_forumposts();
         if (!empty($forumposts)) {
             $columns[] = $forumposts;
             $mobilemenu .= $this->mobile_menu_link('forumposts', 'forumposts', '#snap-personal-menu-forumposts');
         }
-        $mobilemenu .= '</div>';
 
+        $mobilemenu .= '</div>';
 
         if (empty($columns)) {
              return '';
@@ -839,7 +840,7 @@ class theme_snap_core_renderer extends toc_renderer {
             $linkcontent = $menu.$picture.$badge;
             $attributes = array(
                 'aria-haspopup' => 'true',
-                'class' => 'js-personal-menu-trigger btn btn-default snap-my-courses-menu',
+                'class' => 'js-personal-menu-trigger snap-my-courses-menu',
                 'id' => 'fixy-trigger',
                 'aria-controls' => 'primary-nav',
                 'title' => get_string('sitenavigation', 'theme_snap'),

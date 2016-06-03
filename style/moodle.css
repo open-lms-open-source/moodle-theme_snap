@@ -20693,6 +20693,9 @@ http://blog.rodneyrehm.de/archives/34-iOS7-Mobile-Safari-And-Viewport-Units.html
   padding: 0.25em 2em;
   margin-top: 1em;
 }
+#mr-nav .snap-login-button {
+  margin-right: 1em;
+}
 @media screen and (min-width: 768px) {
   #page-site-index #page-mast {
     width: 50%;
@@ -23145,6 +23148,7 @@ button.snap-icon-toggle:focus {
 }
 .fixy {
   display: none;
+  background-color: #eee;
 }
 .snap-fixy-open #primary-nav,
 .snap-fixy-open #snap-login {
@@ -23194,8 +23198,9 @@ button.snap-icon-toggle:focus {
 .fixy h2 {
   font-weight: 500;
   line-height: 1;
-  margin: 1em 0;
   padding: 0.5em 0;
+  margin: 0;
+  margin-bottom: 1em;
   font-size: 1rem;
 }
 .fixy .label-success {
@@ -23257,9 +23262,6 @@ button.snap-icon-toggle:focus {
   display: block;
   line-height: 0;
 }
-#fixy {
-  background-color: #eee;
-}
 #fixy-content {
   padding: 0 2%;
 }
@@ -23278,6 +23280,9 @@ button.snap-icon-toggle:focus {
 }
 #fixy-content:after {
   clear: both;
+}
+#fixy-content section {
+  padding: 1em 0;
 }
 #snap-login.fixy input {
   display: block;
@@ -23318,7 +23323,6 @@ button.snap-icon-toggle:focus {
   max-width: 23rem;
 }
 #snap-login.fixy .fixy-inner {
-  background-color: #eee;
   min-height: 100vh;
 }
 #snap-login.fixy .subcontent.potentialidps {
@@ -23354,7 +23358,6 @@ button.snap-icon-toggle:focus {
   }
   .callstoaction section {
     width: 100%;
-    padding: 0;
     padding-bottom: 0.5em;
     border-bottom: 1px dotted #999;
   }
@@ -23401,6 +23404,7 @@ button.snap-icon-toggle:focus {
     position: relative;
     width: 700vw;
     overflow: hidden;
+    padding-bottom: 2em;
   }
   .fixy-inner {
     overflow: hidden;
@@ -23421,7 +23425,7 @@ button.snap-icon-toggle:focus {
   #fixy-mobile-menu a {
     display: inline-block;
     margin: 2%;
-    width: 15%;
+    width: 12%;
     outline: 0px;
   }
   #fixy-mobile-menu a .svg-icon {
@@ -23442,7 +23446,7 @@ button.snap-icon-toggle:focus {
 .callstoaction section .snap-personal-menu-more,
 #fixy-my-courses .snap-personal-menu-more {
   position: absolute;
-  top: 0;
+  top: 1em;
   right: 0;
 }
 .callstoaction section .snap-personal-menu-more:hover .svg-icon,
@@ -23679,18 +23683,12 @@ button.snap-icon-toggle:focus {
 .header-hidden-courses.state-visible {
   display: inherit;
 }
-button.snap-icon-toggle.favoritetoggle,
-button.snap-icon-toggle.favoritetoggle:hover,
-button.snap-icon-toggle.favoritetoggle:visited,
-button.snap-icon-toggle.favoritetoggle:link,
-button.snap-icon-toggle.favoritetoggle:active,
-button.snap-icon-toggle.favoritetoggle:focus {
-  border: transparent;
-  border-radius: 50%;
+button.snap-icon-toggle.favoritetoggle {
+  border-radius: 100%;
+  border: 2px solid transparent;
 }
 button.snap-icon-toggle.favoritetoggle:focus {
-  border: 2px solid #FEC111;
-  border-radius: 50%;
+  border-color: #FEC111;
 }
 /**
  * Snap core swatch.

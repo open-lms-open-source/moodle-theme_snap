@@ -47,6 +47,13 @@ define(['jquery'], function($) {
             focusOnComplete = typeof(focusOnComplete) === 'undefined' ? true : focusOnComplete;
             $('#fixy-hidden-courses').slideToggle("fast", function() {
                 if (focusOnComplete) {
+                    // Small screen height
+                    var winHeight = $(window).height();
+                    var sectionHeight = $('#fixy-my-courses').outerHeight() + 100;
+                    if (sectionHeight < winHeight) {
+                        sectionHeight = winHeight;
+                    }
+                    $('#fixy-content').css('height',sectionHeight);
                     // Animation complete.
                     $('#fixy-hidden-courses').focus();
                 }
@@ -63,11 +70,6 @@ define(['jquery'], function($) {
             if (count === 0) {
                 $('.header-hidden-courses').removeClass('state-visible');
                 $('#fixy-hidden-courses').css('display', 'none');
-            } else {
-                $('.header-hidden-courses').addClass('state-visible');
-                if (!$('#fixy-hidden-courses').is(':visible')) {
-                    self.toggleHidden();
-                }
             }
         };
 

@@ -6,6 +6,7 @@
 
 .fixy {
     display: none;
+    background-color: #eee;
 }
 
 .snap-fixy-open {
@@ -66,8 +67,9 @@
         // color: rgba(255,255,255,0.7);
         font-weight: 500;
         line-height: 1;
-        margin: 1em 0;
         padding: 0.5em 0;
+        margin: 0;
+        margin-bottom: 1em;
         font-size: 1rem;
     }
 
@@ -75,7 +77,6 @@
     .label-success {
         padding: 0 0.2em;
         font-size: 1em;
-
         // color: @brand-primary; customisable
         background-color: rgba(255,255,255,0.6);
         border-radius: 2px;
@@ -125,13 +126,14 @@
     }
 }
 
-#fixy {
-    background-color: #eee;
-}
+
 
 #fixy-content {
     padding: 0 2%;
     .clearfix();
+    section {
+        padding: 1em 0;
+    }
 }
 
 
@@ -187,7 +189,6 @@
     }
 
     .fixy-inner {
-        background-color: #eee;
         min-height: 100vh;
     }
 
@@ -219,7 +220,6 @@
         // Overwrite bs cols for large screen.
         section {
             width: 100%;
-            padding: 0;
             padding-bottom: 0.5em;
             border-bottom: 1px dotted @gray-light;
         }
@@ -267,6 +267,7 @@
         position: relative;
         width: 700vw;
         overflow: hidden;
+        padding-bottom: 2em;
     }
 
     .fixy-inner {
@@ -289,7 +290,7 @@
         a{
             display: inline-block;
             margin:2%;
-            width:15%;
+            width:12%;
             outline: 0px;
             
             .svg-icon {
@@ -315,7 +316,7 @@
 
     .snap-personal-menu-more {
         position: absolute;
-        top: 0;
+        top: 1em;
         right: 0;
         &:hover,
         &:focus {
@@ -531,6 +532,7 @@
     top: 0;
     right: 0;
     margin: 0.25em;
+    z-index: 1;
 }
 .courseinfo .favoritetoggle:after {
     background: url("[[pix:theme|fav_unchecked]]");
@@ -563,21 +565,18 @@
 
 .header-hidden-courses {
     display: none;
-}
-
-.header-hidden-courses.state-visible {
-    display: inherit;
-}
-
-
-// General toggle icons.
-button.snap-icon-toggle.favoritetoggle {
-    &, &:hover, &:visited, &:link, &:active, &:focus {
-        border: transparent;
-        border-radius:50%;
+    
+    &.state-visible {
+        display: inherit;
     }
+}
+
+// Favorite toggle icons.
+button.snap-icon-toggle.favoritetoggle {
+    border-radius: 100%;
+    border: 2px solid transparent;
+    
     &:focus {
-        border:2px solid #FEC111;
-        border-radius:50%;
+        border-color: #FEC111;
     }
 }
