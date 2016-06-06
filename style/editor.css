@@ -7090,53 +7090,9 @@ ol#chapters li.current a {
   text-transform: uppercase;
 }
 #admin-menu-trigger {
-  background-color: transparent;
-  position: relative;
-  margin: -0.2em 0;
-  padding: 0.5em;
-  font-size: 1.5em;
-  line-height: 1;
-  top: 0;
-  width: 2.2em;
+  width: 2em;
   height: 2em;
-  cursor: pointer;
-  border-left: 1px solid;
-}
-.lines {
-  display: block;
-  height: 3px;
-  transition: all 0.4s 0s ease;
-  position: relative;
-}
-.lines:after {
-  top: 0.5em;
-}
-.lines:before {
-  top: 1em;
-}
-.lines:after,
-.lines:before {
-  content: ' ';
-  display: block;
-  position: absolute;
-  width: 100%;
-  height: 3px;
-  transform-origin: 20% 50%;
-  /* 20% magic number */
-  transition: top 0.4s ease, transform 0.4s 0.4s ease;
-}
-.active .lines {
-  background: transparent;
-  transform: scale3d(1.1, 1.1, 1.1);
-  margin-top: -0.5em;
-}
-.active .lines:before {
-  transform: rotate3d(0, 0, 1, -45deg);
-  height: 1px;
-}
-.active .lines:after {
-  transform: rotate3d(0, 0, 1, 45deg);
-  height: 1px;
+  margin-right: 0.25em;
 }
 #page-report-outline-user .section {
   border: 0;

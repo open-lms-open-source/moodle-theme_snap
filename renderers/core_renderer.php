@@ -272,12 +272,12 @@ class theme_snap_core_renderer extends toc_renderer {
      * @return string
      */
     public function render_settings_link(settings_link $settingslink) {
-
+        global $OUTPUT;
         if (!$settingslink->output) {
             return '';
         }
-
-        $burgericon = '<span class="lines"></span>';
+        $iconurl = $OUTPUT->pix_url('gear', 'theme');
+        $gearicon = '<img src="' .$iconurl. '">';
         $url = '#inst' . $settingslink->instanceid;
         $attributes = array(
             'id' => 'admin-menu-trigger',
@@ -288,7 +288,7 @@ class theme_snap_core_renderer extends toc_renderer {
             'aria-label' => get_string('admin', 'theme_snap'),
         );
 
-        return html_writer::link($url, $burgericon, $attributes);
+        return html_writer::link($url, $gearicon, $attributes);
     }
 
 
