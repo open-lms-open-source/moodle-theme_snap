@@ -239,6 +239,9 @@ echo $OUTPUT->doctype() ?>
 // Output flex page front page warning if necessary.
 if ($PAGE->pagetype == 'site-index') {
     echo snap_shared::flexpage_frontpage_warning(true);
+} else if (strpos($PAGE->pagetype, 'course-view-') === 0) {
+    $output = $PAGE->get_renderer('core', 'course');
+    echo $output->course_format_warning();
 }
 echo $OUTPUT->page_heading();
 echo $OUTPUT->course_header();
