@@ -30,14 +30,21 @@ class login_alternative_methods implements \renderable {
     public $potentialidps = [];
 
     function __construct() {
-        global $SESSION, $OUTPUT;
+        global $CFG, $SESSION, $OUTPUT;
 
         // Get all alternative login methods and add to potentialipds array.
         $authsequence = get_enabled_auth_plugins(true);
         $potentialidps = [];
         foreach($authsequence as $authname) {
+            if (isset($SESSION->snapwantsurl)) {
+                $urltogo = $SESSION->snapwantsurl;
+            } else {
+                $urltogo = $CFG->wwwroot.'/';
+            }
+            unset($SESSION->snapwantsurl);
+
             $authplugin = get_auth_plugin($authname);
-            $potentialidps = array_merge($potentialidps, $authplugin->loginpage_idp_list($SESSION->wantsurl));
+            $potentialidps = array_merge($potentialidps, $authplugin->loginpage_idp_list($urltogo));
         }
 
         if (!empty($potentialidps)) {
