@@ -24234,16 +24234,6 @@ input[type="reset"][disabled],
   border-color: #027fb8;
   color: #fff;
 }
-#admin-menu-trigger .lines {
-  background-color: #03A9F4;
-}
-#admin-menu-trigger .lines:after,
-#admin-menu-trigger .lines:before {
-  background-color: #03A9F4;
-}
-#admin-menu-trigger.active .lines {
-  background: transparent;
-}
 #page-site-index #page-header,
 #page-login-index #page,
 .news-article-image,
