@@ -5359,72 +5359,6 @@ body.path-admin-roles .userselector {
 .userprofile .header-button-group {
   float: right !important;
 }
-.userprofile .header-button-group .btn {
-  color: #03A9F4;
-  background-color: transparent;
-  border-color: #03A9F4;
-}
-.userprofile .header-button-group .btn:focus,
-.userprofile .header-button-group .btn.focus {
-  color: #03A9F4;
-  background-color: rgba(0, 0, 0, 0);
-  border-color: #015276;
-}
-.userprofile .header-button-group .btn:hover {
-  color: #03A9F4;
-  background-color: rgba(0, 0, 0, 0);
-  border-color: #027fb8;
-}
-.userprofile .header-button-group .btn:active,
-.userprofile .header-button-group .btn.active,
-.open > .dropdown-toggle.userprofile .header-button-group .btn {
-  color: #03A9F4;
-  background-color: rgba(0, 0, 0, 0);
-  border-color: #027fb8;
-}
-.userprofile .header-button-group .btn:active:hover,
-.userprofile .header-button-group .btn.active:hover,
-.open > .dropdown-toggle.userprofile .header-button-group .btn:hover,
-.userprofile .header-button-group .btn:active:focus,
-.userprofile .header-button-group .btn.active:focus,
-.open > .dropdown-toggle.userprofile .header-button-group .btn:focus,
-.userprofile .header-button-group .btn:active.focus,
-.userprofile .header-button-group .btn.active.focus,
-.open > .dropdown-toggle.userprofile .header-button-group .btn.focus {
-  color: #03A9F4;
-  background-color: rgba(0, 0, 0, 0);
-  border-color: #015276;
-}
-.userprofile .header-button-group .btn:active,
-.userprofile .header-button-group .btn.active,
-.open > .dropdown-toggle.userprofile .header-button-group .btn {
-  background-image: none;
-}
-.userprofile .header-button-group .btn.disabled,
-.userprofile .header-button-group .btn[disabled],
-fieldset[disabled] .userprofile .header-button-group .btn,
-.userprofile .header-button-group .btn.disabled:hover,
-.userprofile .header-button-group .btn[disabled]:hover,
-fieldset[disabled] .userprofile .header-button-group .btn:hover,
-.userprofile .header-button-group .btn.disabled:focus,
-.userprofile .header-button-group .btn[disabled]:focus,
-fieldset[disabled] .userprofile .header-button-group .btn:focus,
-.userprofile .header-button-group .btn.disabled.focus,
-.userprofile .header-button-group .btn[disabled].focus,
-fieldset[disabled] .userprofile .header-button-group .btn.focus,
-.userprofile .header-button-group .btn.disabled:active,
-.userprofile .header-button-group .btn[disabled]:active,
-fieldset[disabled] .userprofile .header-button-group .btn:active,
-.userprofile .header-button-group .btn.disabled.active,
-.userprofile .header-button-group .btn[disabled].active,
-fieldset[disabled] .userprofile .header-button-group .btn.active {
-  background-color: transparent;
-  border-color: #03A9F4;
-}
-.userprofile .header-button-group .btn .badge {
-  color: transparent;
-  background-color: #03A9F4;
-}
 .userprofile a {
   text-decoration: none;
 }
@@ -19633,6 +19567,7 @@ textarea {
 button#local-joulegrader-preview-button,
 a.yui3-button,
 .yui-button button,
+.header-button-group .btn,
 .btn.btn-primary,
 .btn.btn-default,
 input.form-submit,
@@ -19649,6 +19584,7 @@ input[type="reset"] {
 button#local-joulegrader-preview-button:hover,
 a.yui3-button:hover,
 .yui-button button:hover,
+.header-button-group .btn:hover,
 .btn.btn-primary:hover,
 .btn.btn-default:hover,
 input.form-submit:hover,
@@ -19662,6 +19598,7 @@ input[type="reset"]:hover,
 button#local-joulegrader-preview-button:focus,
 a.yui3-button:focus,
 .yui-button button:focus,
+.header-button-group .btn:focus,
 .btn.btn-primary:focus,
 .btn.btn-default:focus,
 input.form-submit:focus,
@@ -24048,6 +23985,7 @@ button#local-joulegrader-preview-button,
 .yui-skin-sam .yui-button,
 .yui3-button,
 .yui-button button,
+.header-button-group .btn,
 .btn.btn-primary,
 .btn.btn-default,
 input.form-submit,
@@ -24077,6 +24015,7 @@ button#local-joulegrader-preview-button:visited,
 .yui-skin-sam .yui-button:visited,
 .yui3-button:visited,
 .yui-button button:visited,
+.header-button-group .btn:visited,
 .btn.btn-primary:visited,
 .btn.btn-default:visited,
 input.form-submit:visited,
@@ -24101,6 +24040,7 @@ button#local-joulegrader-preview-button:hover,
 .yui-skin-sam .yui-button:hover,
 .yui3-button:hover,
 .yui-button button:hover,
+.header-button-group .btn:hover,
 .btn.btn-primary:hover,
 .btn.btn-default:hover,
 input.form-submit:hover,
@@ -24123,6 +24063,7 @@ button#local-joulegrader-preview-button:focus,
 .yui-skin-sam .yui-button:focus,
 .yui3-button:focus,
 .yui-button button:focus,
+.header-button-group .btn:focus,
 .btn.btn-primary:focus,
 .btn.btn-default:focus,
 input.form-submit:focus,
@@ -24145,6 +24086,7 @@ button#local-joulegrader-preview-button:active,
 .yui-skin-sam .yui-button:active,
 .yui3-button:active,
 .yui-button button:active,
+.header-button-group .btn:active,
 .btn.btn-primary:active,
 .btn.btn-default:active,
 input.form-submit:active,
@@ -24167,6 +24109,7 @@ button#local-joulegrader-preview-button.active,
 .yui-skin-sam .yui-button.active,
 .yui3-button.active,
 .yui-button button.active,
+.header-button-group .btn.active,
 .btn.btn-primary.active,
 .btn.btn-default.active,
 input.form-submit.active,
@@ -24194,6 +24137,7 @@ button#local-joulegrader-preview-button[disabled],
 .yui-skin-sam .yui-button[disabled],
 .yui3-button[disabled],
 .yui-button button[disabled],
+.header-button-group .btn[disabled],
 .btn.btn-primary[disabled],
 .btn.btn-default[disabled],
 input.form-submit[disabled],
