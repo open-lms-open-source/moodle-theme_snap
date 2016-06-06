@@ -7090,9 +7090,14 @@ ol#chapters li.current a {
   text-transform: uppercase;
 }
 #admin-menu-trigger {
-  width: 2em;
-  height: 2em;
-  margin-right: 0.25em;
+  width: 39px;
+  height: 39px;
+  margin-right: 0.3em;
+}
+#admin-menu-trigger img {
+  border: 1px solid #dadada;
+  border-radius: 100%;
+  padding: 0.5em;
 }
 #page-report-outline-user .section {
   border: 0;
