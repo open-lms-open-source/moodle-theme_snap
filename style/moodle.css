@@ -23810,6 +23810,9 @@ fieldset[disabled] #id_cancel:focus {
   padding-left: 4%;
   margin-left: 0;
 }
+.btn .badge {
+  color: #fff;
+}
 .snap-form-required #id_name,
 .snap-form-required #id_externalurl,
 .snap-form-required #id_toolurl,
