@@ -31,6 +31,9 @@ use theme_snap\services\course;
 use theme_snap\renderables\settings_link;
 use theme_snap\renderables\bb_dashboard_link;
 use theme_snap\renderables\course_card;
+// We have to force include this class as it's on login and the auto loader may not have been updated via a cache dump.
+include_once($CFG->dirroot.'/theme/snap/classes/renderables/login_alternative_methods.php');
+use theme_snap\renderables\login_alternative_methods;
 
 class theme_snap_core_renderer extends toc_renderer {
 
@@ -657,10 +660,22 @@ class theme_snap_core_renderer extends toc_renderer {
 
     /**
      * @param course_card $card
+     * @return str
      * @throws moodle_exception
      */
     public function render_course_card(course_card $card) {
         return $this->render_from_template('theme_snap/course_cards', $card);
+    }
+
+    /**
+     * @param login_alternative_methods $methods
+     * @return str
+     */
+    public function render_login_alternative_methods(login_alternative_methods $methods) {
+        if (empty($methods->potentialidps)) {
+            return '';
+        }
+        return $this->render_from_template('theme_snap/login_alternative_methods', $methods);
     }
 
     /**
@@ -669,7 +684,7 @@ class theme_snap_core_renderer extends toc_renderer {
      *
      */
     public function fixed_menu() {
-        global $CFG, $USER, $PAGE, $DB;
+        global $CFG, $USER;
 
         $logout = get_string('logout');
         $isguest = isguestuser();
@@ -725,6 +740,8 @@ class theme_snap_core_renderer extends toc_renderer {
             }
             $output .= $this->login_button();
 
+            $altlogins = $this->render_login_alternative_methods(new login_alternative_methods());
+
             $output .= "<div class='fixy' id='snap-login' role='dialog' aria-label='$loginform' tabindex='-1'>
             <form action='$wwwroot/login/index.php'  method='post'>
             <div class=fixy-inner>
@@ -741,6 +758,7 @@ class theme_snap_core_renderer extends toc_renderer {
             <br>
             <input type='submit' value='".s($login)."'>
             $helpstr
+            $altlogins
             </div>
         </form></div>";
         } else {

@@ -9796,6 +9796,10 @@ button.snap-icon-toggle:focus {
   background-color: #eee;
   min-height: 100vh;
 }
+#snap-login.fixy .subcontent.potentialidps {
+  width: auto;
+  text-align: center;
+}
 .fixy input::placeholder {
   letter-spacing: 0.1em;
 }
@@ -10683,6 +10687,9 @@ input[type="reset"][disabled],
 #page-course-loginas #region-main,
 #page-mod-survey-save #region-main {
   background-color: #03A9F4;
+}
+#snap-login .subcontent.potentialidps {
+  border-top: 1px solid #03A9F4;
 }
 /* highlight selected menu iteam logic */
 /*default */

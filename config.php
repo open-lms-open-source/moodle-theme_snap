@@ -44,6 +44,11 @@ if ($themeissnap && $notajaxscript) {
         $USER->editing = 0;
         $SESSION->theme_snap_last_course = $COURSE->id;
     }
+
+    if (isset($SESSION->wantsurl)) {
+        // We are taking a backup of this because it can get unset later by core.
+        $SESSION->snapwantsurl = $SESSION->wantsurl;
+    }
 }
 
 $THEME->doctype = 'html5';
