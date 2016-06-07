@@ -170,11 +170,10 @@ define(['jquery', 'core/log', 'theme_snap/pm_course_cards'], function($, log, co
                 var href = this.getAttribute('href');
                 var sections = $("#fixy-content section");
                 var sectionWidth = $(sections).outerWidth();
-                // Num of sections * width of section ...
-                var sectionsWidth = sections.length * sectionWidth;
                 var section = $(href);
-                var targetSection = $("#fixy-content section > div").index(section);
+                var targetSection = $(".callstoaction section > div").index(section)+1;
                 var position = sectionWidth * targetSection;
+                var sectionHeight = $(href).outerHeight() + 100;
 
                 // Course lists is at position 0.
                 if (href == '#fixy-my-courses') {
@@ -182,7 +181,6 @@ define(['jquery', 'core/log', 'theme_snap/pm_course_cards'], function($, log, co
                 }
 
                 // Set the window height.
-                var sectionHeight = $(href).outerHeight() + 100;
                 var winHeight = $(window).height();
                 if (sectionHeight < winHeight) {
                     sectionHeight = winHeight;

@@ -785,53 +785,6 @@ define(['jquery', 'theme_snap/bootstrap', 'core/log', 'theme_snap/headroom', 'th
             })(resizestamp);
         });
 
-        // Reveal more teachers.
-        $('#fixy-my-courses').on('click hover', '.courseinfo-teachers-more', null, function(e) {
-            e.preventDefault();
-            var nowhtml = $(this).html();
-            if (nowhtml.indexOf('+') > -1) {
-                $(this).html(nowhtml.replace('+', '-'));
-            } else {
-                $(this).html(nowhtml.replace('-', '+'));
-            }
-            $(this).parents('.courseinfo').toggleClass('show-all');
-        });
-
-        // Personal menu small screen behaviour.
-        $(document).on("click", '#fixy-mobile-menu a', function(e) {
-            var href = this.getAttribute('href');
-            var sections = $("#fixy-content section");
-            var sectionWidth = $(sections).outerWidth();
-            // Num of sections * width of section ...
-            var sectionsWidth = sections.length * sectionWidth;
-            var section = $(href);
-            var targetSection = $(".callstoaction section > div").index(section) +1;
-            var position = sectionWidth * targetSection;
-            var sectionHeight = $(href).outerHeight() + 100;
-
-            // Course lists is at position 0.
-            if (href == '#fixy-my-courses') {
-                position = 0;
-            }
-
-            // Set the window height.
-            var winHeight = $(window).height();
-            if (sectionHeight < winHeight) {
-                sectionHeight = winHeight;
-            }
-
-            $('#fixy-content').animate({
-                    left: '-' + position + 'px',
-                    height: sectionHeight + 'px'
-                }, "fast", "swing",
-                function() {
-                    // Animation complete.
-                    // TODO - add tab index & focus INT-8988
-
-                });
-            e.preventDefault();
-        });
-
         // Bootstrap js elements
 
         // Iniitalise core bootsrtap tooltip js
