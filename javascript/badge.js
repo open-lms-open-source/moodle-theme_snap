@@ -60,7 +60,28 @@ M.snap_message_badge.init_badge = function(Y, forwardURL, courseid) {
     // Save for later.
     M.snap_message_badge.forwardURL = forwardURL;
 
-    $(document).on( "snapUpdatePersonalMenu", function() {
+    // Add listener when jquery events ready.
+    // If you just use $(document).on, the listener will sometimes fail because jquery isn't fully initialised.
+    // This function waits until jquery is in a state where you can listen for custom events.
+    var onJQueryEventsReady = function(eventname, callback, count) {
+        if (!count) {
+            count = 1;
+        }
+        if (count > 20) {
+            // Error, jquery events never ready!
+            return;
+        }
+        count++;
+        if (typeof($._data( $(document)[0], 'events' )) != 'undefined') {
+            $(document).on(eventname, callback);
+        } else {
+            window.setTimeout(function() {
+                onJQueryEventsReady(eventname, callback, count);
+            }, 100)
+        }
+    };
+
+    onJQueryEventsReady('snapUpdatePersonalMenu', function() {
         M.snap_message_badge.init_overlay(Y);
     });
 };
