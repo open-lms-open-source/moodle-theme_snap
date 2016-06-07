@@ -789,9 +789,7 @@ class theme_snap_core_renderer extends toc_renderer {
                         $visiblecoursecount ++;
                         $courselist .= $coursecard;
                     }
-                }
-                // If course is visible or favorited.
-                else {
+                } else {
                     $visiblecoursecount ++;
                     $courselist .= $coursecard;
                 }
@@ -809,7 +807,7 @@ class theme_snap_core_renderer extends toc_renderer {
                 $courselist .= $hiddencourses;
             }
             // Output hidden courses when no visible courses.
-            elseif ($hiddencoursecount) {
+            else if ($hiddencoursecount) {
                 $hiddencourses = '<div id="fixy-hidden-courses" class="clearfix">' .$hiddencourselist. '</div>';
                 $courselist .= $hiddencourses;
             }

@@ -3,7 +3,6 @@
     "globals": {
         "$": false,
         "console": false,
-        "Modernizr": false,
         "Headroom": false
         }
 }

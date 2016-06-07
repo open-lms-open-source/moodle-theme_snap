@@ -187,11 +187,6 @@ $THEME->layouts = array(
 $THEME->javascripts = array(
 );
 $THEME->javascripts_footer = array(
-    'headroom',
-    'snap',
-    'course',
-    'modernizer',
-    'jquery.placeholder'
 );
 
 $THEME->csspostprocess = 'theme_snap_process_css';
