@@ -336,7 +336,7 @@ define(['jquery', 'core/log'], function($, log) {
             var updateMovingMessage = function() {
                 if (movingObjects.length === 1) {
                     var assetname = $(movingObjects[0]).find('.snap-asset-link .instancename').html();
-                    assetname = assetname || M.util.get_string('modulename', 'mod_label');
+                    assetname = assetname || M.str.label.pluginname;
                     var title = M.util.get_string('moving', 'theme_snap', assetname);
                     snapMoveMessage.find('.snap-move-message-title').html(title);
                 } else {
