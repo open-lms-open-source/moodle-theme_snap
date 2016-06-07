@@ -20523,6 +20523,7 @@ ol#chapters li.current a {
   border: 1px solid #dadada;
   border-radius: 100%;
   padding: 0.5em;
+  max-height: 100%;
 }
 #page-report-outline-user .section {
   border: 0;
