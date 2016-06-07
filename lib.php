@@ -78,7 +78,7 @@ function theme_snap_set_logo($css, $logo) {
     if (is_null($logo)) {
         $replacement = '';
     } else {
-        $replacement = "#logo {background-image: url($logo);} #page-login-index .loginpanel h2{background-image: url($logo);}";
+        $replacement = "#snap-home.logo {background-image: url($logo);} #page-login-index .loginpanel h2{background-image: url($logo);}";
     }
     $css = str_replace($tag, $replacement, $css);
     return $css;
