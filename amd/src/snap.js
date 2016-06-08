@@ -785,8 +785,9 @@ define(['jquery', 'theme_snap/bootstrap', 'core/log', 'theme_snap/headroom', 'th
             })(resizestamp);
         });
 
-        // Bootstrap js elements.
-        // Iniitalise core bootsrtap tooltip js.
+        // Bootstrap js elements
+
+        // Iniitalise core bootsrtap tooltip js
         $(function() {
             var supportsTouch = false;
             if ('ontouchstart' in window) {

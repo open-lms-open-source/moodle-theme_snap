@@ -629,4 +629,16 @@ class behat_theme_snap extends behat_base {
         $general = behat_context_helper::get('behat_general');
         $general->i_click_on('.courseinfo[data-shortname="'.$shortname.'"] button.favoritetoggle', 'css_element');
     }
+
+    /**
+     * Follow the link which is located inside the personal menu.
+     *
+     * @When /^I follow "(?P<link>(?:[^"]|\\")*)" in the mobile personal menu$/
+     * @param string $link we look for
+     */
+    public function i_follow_in_the_mobile_menu($link) {
+        $node = $this->get_node_in_container('link', $link, 'css_element', '#fixy-mobile-menu');
+        $this->ensure_node_is_visible($node);
+        $node->click();
+    }
 }
