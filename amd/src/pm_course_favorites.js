@@ -22,8 +22,8 @@
 /**
  * Course card favoriting.
  */
-define(['jquery', 'core/ajax', 'core/notification', 'core/templates', 'core/log'], function($, ajax, notification, templates, log) {
-
+define(['jquery', 'core/ajax', 'core/notification', 'theme_snap/model_view', 'core/log'],
+    function($, ajax, notification, mview, log) {
     return function(cardsHidden) {
 
         log.enableAll(true);
@@ -36,18 +36,13 @@ define(['jquery', 'core/ajax', 'core/notification', 'core/templates', 'core/log'
          * @param {jQuery} cardEl - coursecard element
          */
         var reloadCourseCardTemplate = function(renderable, cardEl) {
-            templates.render('theme_snap/course_cards', renderable)
-                .done(function(result) {
-                    // Using replaceWith can be jerky as you are taking the element out of the dom instead of replacing
-                    // its content. So instead of $(cardEl).replaceWith(result); we parse the html from the template and
-                    // update the html of the card.
-                    var tempEl = $($.parseHTML(result));
-                    $(cardEl).html(tempEl.html());
-                    $(cardEl).attr('class', $(tempEl).attr('class'));
-                    var button = $(cardEl).find('.favoritetoggle');
-                    $(button).removeClass('ajaxing');
-                    $(button).focus();
-                }).fail(notification.exception);
+            mview(cardEl, 'theme_snap/course_cards');
+            var callback = function(){
+                var button = $(cardEl).find('.favoritetoggle');
+                $(button).removeClass('ajaxing');
+                $(button).focus();
+            };
+            $(cardEl).trigger('modelUpdate', [renderable, callback]);
         };
 
         /**

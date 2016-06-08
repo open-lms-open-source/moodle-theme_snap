@@ -41,6 +41,12 @@ class course_card implements \renderable {
      * @var course service
      */
     private $service;
+    
+    /**
+     * @var course_card $model
+     * (should be set to json encoded version of $this);
+     */
+    public $model;
 
     /**
      * @var int $courseid
