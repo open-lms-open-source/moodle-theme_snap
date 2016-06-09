@@ -1378,6 +1378,10 @@ a.disabled {
   transition: width 0.6s ease;
   font-family: "Roboto", "Fira Sans", "Segoe UI", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
+.mform .fitem fieldset.fgroup span,
+.mform fieldset.fdate_selector span {
+  display: inline-block;
+}
 /* admin.less  */
 .formtable tbody th {
   font-weight: normal;
@@ -23634,6 +23638,7 @@ button.snap-icon-toggle:focus {
   top: 0;
   right: 0;
   margin: 0.25em;
+  z-index: 1;
 }
 .courseinfo .favoritetoggle:after {
   background: url("[[pix:theme|fav_unchecked]]");
