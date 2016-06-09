@@ -23388,6 +23388,7 @@ button.snap-icon-toggle:focus {
 }
 #fixy-mobile-menu {
   display: none;
+  z-index: 2;
 }
 @media only screen and (max-width: 480px) {
   #fixy-user .userpicture {
@@ -23446,7 +23447,7 @@ button.snap-icon-toggle:focus {
 .callstoaction section .snap-personal-menu-more,
 #fixy-my-courses .snap-personal-menu-more {
   position: absolute;
-  top: 1rem;
+  top: 0.9rem;
   right: 0;
 }
 .callstoaction section .snap-personal-menu-more:hover .svg-icon,
@@ -23472,10 +23473,6 @@ button.snap-icon-toggle:focus {
 .fixy .callstoaction #snap-personal-menu-grading,
 .fixy .callstoaction #snap-personal-menu-messages {
   min-height: 50px;
-}
-#fixy-my-courses .snap-personal-menu-more {
-  top: 1em;
-  right: 1em;
 }
 #fixy-hidden-courses {
   display: none;
