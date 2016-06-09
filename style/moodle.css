@@ -20517,7 +20517,7 @@ ol#chapters li.current a {
 #admin-menu-trigger {
   width: 39px;
   height: 39px;
-  margin-right: 0.3em;
+  margin-right: 1em;
 }
 #admin-menu-trigger img {
   border: 1px solid #dadada;
@@ -23634,6 +23634,7 @@ button.snap-icon-toggle:focus {
   top: 0;
   right: 0;
   margin: 0.25em;
+  z-index: 1;
 }
 .courseinfo .favoritetoggle:after {
   background: url("[[pix:theme|fav_unchecked]]");
