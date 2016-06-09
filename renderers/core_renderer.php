@@ -843,9 +843,6 @@ class theme_snap_core_renderer extends toc_renderer {
                 'class' => 'js-personal-menu-trigger snap-my-courses-menu',
                 'id' => 'fixy-trigger',
                 'aria-controls' => 'primary-nav',
-                'title' => get_string('sitenavigation', 'theme_snap'),
-                'data-toggle' => 'tooltip',
-                'data-placement' => 'bottom',
             );
 
             $output .= html_writer::link('#', $linkcontent, $attributes);
