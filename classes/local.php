@@ -38,22 +38,6 @@ require_once($CFG->dirroot.'/mod/forum/lib.php');
  */
 class local {
 
-
-    /**
-     * If debugging enabled in config then return reason for no grade (useful for json output).
-     *
-     * @param $warning
-     * @return null|object
-     */
-    public static function skipgradewarning($warning) {
-        global $CFG;
-        if (!empty($CFG->debugdisplay)) {
-            return (object) array ('skipgrade' => $warning);
-        } else {
-            return null;
-        }
-    }
-
     /**
      * Is there a valid grade or feedback inside this grader report table item?
      *
@@ -103,7 +87,7 @@ class local {
         // Note - moodle/grade:viewall is a capability held by teachers and thus used to exclude them from not getting
         // the grade.
         if (empty($course->showgrades) && !has_capability('moodle/grade:viewall', $coursecontext)) {
-            return self::skipgradewarning('Course set up to not show gradebook to students');
+            return false;
         }
         // Get course grade_item.
         $courseitem = \grade_item::fetch_course_item($course->id);

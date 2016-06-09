@@ -34,7 +34,7 @@ define(['jquery', 'core/notification', 'core/templates', 'core/log'], function($
         var cloneAttributes  = function(src, target, skipid){
             var srcKeys = [];
             $.each($(src)[0].attributes, function() {
-                if (this.name == 'date-model') {
+                if (this.name == 'data-model') {
                     return true;
                 }
                 if (skipid && this.name == 'id') {

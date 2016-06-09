@@ -797,7 +797,6 @@ class theme_snap_core_renderer extends toc_renderer {
             foreach ($mycourses as $course) {
 
                 $ccard = new course_card($course->id);
-                $ccard->model = htmlentities(json_encode($ccard));
                 $coursecard =  $this->render($ccard);
 
                 // If course is not visible.

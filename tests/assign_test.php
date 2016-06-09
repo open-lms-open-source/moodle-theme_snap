@@ -293,33 +293,28 @@ class theme_snap_assign_test extends mod_assign_base_testcase {
 
     public function test_course_feedback() {
         $actual = local::course_feedback($this->course);
-        $this->assertObjectHasAttribute('skipgrade', $actual);
+        $this->assertFalse($actual);
 
         $this->setUser($this->students[0]);
         $actual = local::course_feedback($this->course);
-        $this->assertObjectHasAttribute('feedbackhtml', $actual);
-        $this->assertSame('', $actual->feedbackhtml);
+        $this->assertFalse($actual);
 
         $assign = $this->create_one_ungraded_submission();
-        $this->grade_assignment($assign);
+        $this->grade_assignment($assign, $this->students[0]);
 
         $this->setUser($this->students[0]);
         $actual = local::course_feedback($this->course);
-        $this->assertObjectHasAttribute('feedbackhtml', $actual);
-        $this->assertNotSame('', $actual->feedbackhtml);
+        $this->assertTrue($actual);
 
         $this->create_extra_users();
         $this->setUser($this->extrasuspendedstudents[0]);
         $actual = local::course_feedback($this->course);
-        $this->assertObjectHasAttribute('skipgrade', $actual);
-        $this->assertContains('not enrolled', $actual->skipgrade);
+        $this->assertFalse($actual);
 
         $this->setUser($this->students[0]);
         $this->course->showgrades = 0;
         $actual = local::course_feedback($this->course);
-        $this->assertObjectHasAttribute('skipgrade', $actual);
-        $this->assertContains('set up to not show gradebook to students', $actual->skipgrade);
-
+        $this->assertFalse($actual);
     }
 
     public function test_no_course_image() {
@@ -348,11 +343,11 @@ class theme_snap_assign_test extends mod_assign_base_testcase {
         return $assign;
     }
 
-    private function grade_assignment($assign) {
+    private function grade_assignment($assign, $student) {
         $this->setUser($this->teachers[0]);
         $data = new stdClass();
         $data->grade = '50.0';
-        $assign->testable_apply_grade_to_user($data, $this->students[0]->id, 0);
+        $assign->testable_apply_grade_to_user($data, $student->id, 0);
         // TODO remove this next line when the above is fixed  to stop triggering debug messages.
         $this->resetDebugging();
     }

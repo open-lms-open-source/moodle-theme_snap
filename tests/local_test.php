@@ -41,16 +41,6 @@ class theme_snap_local_test extends \advanced_testcase {
         require_once($CFG->dirroot.'/mod/assign/tests/base_test.php');
     }
 
-    public function test_grade_warning_debug_off() {
-        global $CFG;
-
-        $this->resetAfterTest();
-        $CFG->debugdisplay = 0;
-
-        $actual = local::skipgradewarning("warning text");
-        $this->assertNull($actual);
-    }
-
     public function test_get_course_color() {
         $actual = local::get_course_color(1);
         $this->assertSame('c4ca42', $actual);
