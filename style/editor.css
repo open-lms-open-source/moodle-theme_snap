@@ -9909,7 +9909,7 @@ button.snap-icon-toggle:focus {
 .callstoaction section .snap-personal-menu-more,
 #fixy-my-courses .snap-personal-menu-more {
   position: absolute;
-  top: 1em;
+  top: 1rem;
   right: 0;
 }
 .callstoaction section .snap-personal-menu-more:hover .svg-icon,
@@ -10079,6 +10079,7 @@ button.snap-icon-toggle:focus {
   top: 0;
   right: 0;
   margin: 0.25em;
+  z-index: 1;
 }
 .courseinfo .favoritetoggle:after {
   background: url("[[pix:theme|fav_unchecked]]");
