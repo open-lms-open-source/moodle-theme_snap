@@ -6902,13 +6902,6 @@ ol#chapters li.current a {
     text-indent: 0;
   }
 }
-/* special stuff for <320 */
-@media screen and (max-width: 480px) {
-  #page-header {
-    padding-left: 0;
-    padding-right: 0;
-  }
-}
 /* if > tablet size */
 @media screen and (min-width: 768px) {
   #chapters.list-large {
