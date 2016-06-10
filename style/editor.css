@@ -3991,8 +3991,7 @@ a.disabled {
 .progress .bar {
   font-family: "Roboto", "Fira Sans", "Segoe UI", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
-.mform .fitem fieldset.fgroup span,
-.mform fieldset.fdate_selector span {
+#fgroup_id_sdays > .fgroup > span {
   display: inline-block;
 }
 /**
