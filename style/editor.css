@@ -3991,6 +3991,9 @@ a.disabled {
 .progress .bar {
   font-family: "Roboto", "Fira Sans", "Segoe UI", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
+#fgroup_id_sdays > .fgroup > span {
+  display: inline-block;
+}
 /**
  * Snap variables.
  *
