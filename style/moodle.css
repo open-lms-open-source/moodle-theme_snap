@@ -5538,8 +5538,8 @@ body.path-admin-roles .userselector {
 .loginbox .loginform .form-input input[type="text"],
 .loginbox .loginform .form-input input[type="password"] {
   display: block;
-  height: 46px;
-  padding: 8px 12px;
+  height: 42px;
+  padding: 6px 16px;
   font-size: 18px;
   line-height: 1.6;
   color: #565656;
@@ -8152,7 +8152,7 @@ input[type="checkbox"]:focus {
 }
 output {
   display: block;
-  padding-top: 9px;
+  padding-top: 7px;
   font-size: 18px;
   line-height: 1.6;
   color: #565656;
@@ -8160,8 +8160,8 @@ output {
 .form-control {
   display: block;
   width: 100%;
-  height: 46px;
-  padding: 8px 12px;
+  height: 42px;
+  padding: 6px 16px;
   font-size: 18px;
   line-height: 1.6;
   color: #565656;
@@ -8211,7 +8211,7 @@ input[type="search"] {
   input[type="time"].form-control,
   input[type="datetime-local"].form-control,
   input[type="month"].form-control {
-    line-height: 46px;
+    line-height: 42px;
   }
   input[type="date"].input-sm,
   input[type="time"].input-sm,
@@ -8300,8 +8300,8 @@ fieldset[disabled] .checkbox label {
   cursor: not-allowed;
 }
 .form-control-static {
-  padding-top: 9px;
-  padding-bottom: 9px;
+  padding-top: 7px;
+  padding-bottom: 7px;
   margin-bottom: 0;
   min-height: 46px;
 }
@@ -8388,7 +8388,7 @@ select[multiple].input-lg {
   position: relative;
 }
 .has-feedback .form-control {
-  padding-right: 57.5px;
+  padding-right: 52.5px;
 }
 .form-control-feedback {
   position: absolute;
@@ -8396,9 +8396,9 @@ select[multiple].input-lg {
   right: 0;
   z-index: 2;
   display: block;
-  width: 46px;
-  height: 46px;
-  line-height: 46px;
+  width: 42px;
+  height: 42px;
+  line-height: 42px;
   text-align: center;
   pointer-events: none;
 }
@@ -8574,11 +8574,11 @@ select[multiple].input-lg {
 .form-horizontal .checkbox-inline {
   margin-top: 0;
   margin-bottom: 0;
-  padding-top: 9px;
+  padding-top: 7px;
 }
 .form-horizontal .radio,
 .form-horizontal .checkbox {
-  min-height: 37px;
+  min-height: 35px;
 }
 .form-horizontal .form-group {
   margin-left: -15px;
@@ -8588,7 +8588,7 @@ select[multiple].input-lg {
   .form-horizontal .control-label {
     text-align: right;
     margin-bottom: 0;
-    padding-top: 9px;
+    padding-top: 7px;
   }
 }
 .form-horizontal .has-feedback .form-control-feedback {
@@ -8618,7 +8618,7 @@ select[multiple].input-lg {
   background-image: none;
   border: 1px solid transparent;
   white-space: nowrap;
-  padding: 8px 12px;
+  padding: 6px 16px;
   font-size: 18px;
   line-height: 1.6;
   border-radius: 0px;
@@ -9548,7 +9548,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
   vertical-align: middle;
 }
 .input-group-addon {
-  padding: 8px 12px;
+  padding: 6px 16px;
   font-size: 18px;
   font-weight: normal;
   line-height: 1;
@@ -10024,8 +10024,8 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
   border-bottom: 1px solid transparent;
   -webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1), 0 1px 0 rgba(255, 255, 255, 0.1);
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1), 0 1px 0 rgba(255, 255, 255, 0.1);
-  margin-top: 2px;
-  margin-bottom: 2px;
+  margin-top: 4px;
+  margin-bottom: 4px;
 }
 @media (min-width: 768px) {
   .navbar-form .form-group {
@@ -10110,8 +10110,8 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
   border-bottom-left-radius: 0;
 }
 .navbar-btn {
-  margin-top: 2px;
-  margin-bottom: 2px;
+  margin-top: 4px;
+  margin-bottom: 4px;
 }
 .navbar-btn.btn-sm {
   margin-top: 12.5px;
@@ -10373,7 +10373,7 @@ fieldset[disabled] .navbar-inverse .btn-link:focus {
 .pagination > li > span {
   position: relative;
   float: left;
-  padding: 8px 12px;
+  padding: 6px 16px;
   line-height: 1.6;
   text-decoration: none;
   color: #03A9F4;
@@ -14393,7 +14393,7 @@ input[type="reset"] {
   background-image: none;
   border: 1px solid transparent;
   white-space: nowrap;
-  padding: 8px 12px;
+  padding: 6px 16px;
   font-size: 18px;
   line-height: 1.6;
   border-radius: 0px;
@@ -14401,10 +14401,6 @@ input[type="reset"] {
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
-  padding: 0.25em 1em;
-  margin: 0;
-  vertical-align: baseline;
-  line-height: 1.5;
   margin: 0 0 10px 5px;
 }
 button:focus,
@@ -14559,17 +14555,13 @@ input.fp-btn-choose {
   background-image: none;
   border: 1px solid transparent;
   white-space: nowrap;
-  padding: 8px 12px;
+  padding: 6px 16px;
   font-size: 18px;
   line-height: 1.6;
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
-  padding: 0.25em 1em;
-  margin: 0;
-  vertical-align: baseline;
-  line-height: 1.5;
   padding: 14px 16px;
   font-size: 23px;
   line-height: 1.33;
@@ -15407,7 +15399,7 @@ body.tag .managelink {
   background-image: none;
   border: 1px solid transparent;
   white-space: nowrap;
-  padding: 8px 12px;
+  padding: 6px 16px;
   font-size: 18px;
   line-height: 1.6;
   border-radius: 0px;
@@ -15415,10 +15407,6 @@ body.tag .managelink {
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
-  padding: 0.25em 1em;
-  margin: 0;
-  vertical-align: baseline;
-  line-height: 1.5;
   color: #03A9F4;
   background-color: transparent;
   border-color: #03A9F4;
@@ -15580,6 +15568,7 @@ fieldset[disabled] .yui-button button.active {
 .ft .yui-button.yui-push-button,
 .yui-button.yui-push-button,
 .yui-button.yui-push-button.default,
+.yui-dialog .ft .yui-button.yui-push-button.default,
 .yui-button.yui-menu-button,
 .yui-button.yui-link-button,
 .yui-button.yui-radio-button,
@@ -15590,6 +15579,7 @@ fieldset[disabled] .yui-button button.active {
 .ft .yui-button.yui-push-button .first-child,
 .yui-button.yui-push-button .first-child,
 .yui-button.yui-push-button.default .first-child,
+.yui-dialog .ft .yui-button.yui-push-button.default .first-child,
 .yui-button.yui-menu-button .first-child,
 .yui-button.yui-link-button .first-child,
 .yui-button.yui-radio-button .first-child,
@@ -15599,6 +15589,7 @@ fieldset[disabled] .yui-button button.active {
 .ft .yui-button.yui-push-button .first-child a,
 .yui-button.yui-push-button .first-child a,
 .yui-button.yui-push-button.default .first-child a,
+.yui-dialog .ft .yui-button.yui-push-button.default .first-child a,
 .yui-button.yui-menu-button .first-child a,
 .yui-button.yui-link-button .first-child a,
 .yui-button.yui-radio-button .first-child a,
@@ -15606,13 +15597,12 @@ fieldset[disabled] .yui-button button.active {
 .ft .yui-button.yui-push-button .first-child button,
 .yui-button.yui-push-button .first-child button,
 .yui-button.yui-push-button.default .first-child button,
+.yui-dialog .ft .yui-button.yui-push-button.default .first-child button,
 .yui-button.yui-menu-button .first-child button,
 .yui-button.yui-link-button .first-child button,
 .yui-button.yui-radio-button .first-child button,
 .yui-button.yui-submit-button .first-child button {
-  border: none;
   color: inherit;
-  margin: 0;
   padding-left: 16px;
   padding-right: 16px;
 }
@@ -16441,7 +16431,7 @@ fieldset[disabled] .yui-button button.active {
 .yui-bootstrapped .yui-dt-paginator .yui-pg-page {
   position: relative;
   float: left;
-  padding: 8px 12px;
+  padding: 6px 16px;
   line-height: 1.6;
   text-decoration: none;
   margin-left: -1px;
@@ -16532,14 +16522,14 @@ fieldset[disabled] .yui-button button.active {
 }
 .yui-skin-sam .yui-dt-paginator .yui-pg-rpp-options,
 .yui-bootstrapped .yui-dt-paginator .yui-pg-rpp-options {
-  margin: 8px 12px;
+  margin: 6px 16px;
   float: left;
 }
 .yui-skin-sam.path-local-pld input[type="button"],
 .yui-bootstrapped.path-local-pld input[type="button"],
 .yui-skin-sam.path-local-pld input[type="submit"],
 .yui-bootstrapped.path-local-pld input[type="submit"] {
-  padding: 8px 12px;
+  padding: 6px 16px;
 }
 .yui-skin-sam#page-local-joulegrader-view .yui3-panel #fgroup_id_grading_buttonar,
 .yui-bootstrapped#page-local-joulegrader-view .yui3-panel #fgroup_id_grading_buttonar {
@@ -18630,7 +18620,7 @@ span.editinstructions {
   background-image: none;
   border: 1px solid transparent;
   white-space: nowrap;
-  padding: 8px 12px;
+  padding: 6px 16px;
   font-size: 18px;
   line-height: 1.6;
   border-radius: 0px;
@@ -18638,10 +18628,6 @@ span.editinstructions {
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
-  padding: 0.25em 1em;
-  margin: 0;
-  vertical-align: baseline;
-  line-height: 1.5;
   color: #fff !important;
 }
 .snap-asset .unread a:focus,
@@ -18702,7 +18688,7 @@ fieldset[disabled] a.snap-asset .unread a {
   background-image: none;
   border: 1px solid transparent;
   white-space: nowrap;
-  padding: 8px 12px;
+  padding: 6px 16px;
   font-size: 18px;
   line-height: 1.6;
   border-radius: 0px;
@@ -18710,10 +18696,6 @@ fieldset[disabled] a.snap-asset .unread a {
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
-  padding: 0.25em 1em;
-  margin: 0;
-  vertical-align: baseline;
-  line-height: 1.5;
 }
 #changenumsections .increase-sections:focus,
 #changenumsections .reduce-sections:focus,
@@ -19565,14 +19547,18 @@ textarea {
 #changenumsections .reduce-sections,
 .paging.paging-morelink a,
 button#local-joulegrader-preview-button,
+button.atto_equation_submit,
 a.yui3-button,
 .yui-button button,
 .header-button-group .btn,
 .btn.btn-primary,
 .btn.btn-default,
+.button-group > button,
 input.form-submit,
 input[type="button"],
 input[type="submit"],
+button[type="submit"],
+.moodle-dialogue-content button,
 input[type="reset"] {
   font-family: "Roboto", "Fira Sans", "Segoe UI", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif;
   background: transparent;
@@ -19582,28 +19568,36 @@ input[type="reset"] {
 #changenumsections .reduce-sections:hover,
 .paging.paging-morelink a:hover,
 button#local-joulegrader-preview-button:hover,
+button.atto_equation_submit:hover,
 a.yui3-button:hover,
 .yui-button button:hover,
 .header-button-group .btn:hover,
 .btn.btn-primary:hover,
 .btn.btn-default:hover,
+.button-group > button:hover,
 input.form-submit:hover,
 input[type="button"]:hover,
 input[type="submit"]:hover,
+button[type="submit"]:hover,
+.moodle-dialogue-content button:hover,
 input[type="reset"]:hover,
 .section-modchooser-text:focus,
 #changenumsections .increase-sections:focus,
 #changenumsections .reduce-sections:focus,
 .paging.paging-morelink a:focus,
 button#local-joulegrader-preview-button:focus,
+button.atto_equation_submit:focus,
 a.yui3-button:focus,
 .yui-button button:focus,
 .header-button-group .btn:focus,
 .btn.btn-primary:focus,
 .btn.btn-default:focus,
+.button-group > button:focus,
 input.form-submit:focus,
 input[type="button"]:focus,
 input[type="submit"]:focus,
+button[type="submit"]:focus,
+.moodle-dialogue-content button:focus,
 input[type="reset"]:focus {
   text-decoration: none;
   color: #fff;
@@ -19657,23 +19651,8 @@ input[type="reset"]:focus {
   background: #fff;
   border-color: #03A9F4;
 }
-#page-mod-quiz-edit div.question div.content div.points input[type="submit"],
-.btn,
-button,
-input.form-submit,
-input[type="button"],
-input[type="submit"],
-input[type="reset"],
-input[name="searchwikicontent"] + input[type="submit"],
-select + input[type="submit"],
-input[type="text"] + input[type="button"],
-input[type="password"] + input[type="submit"],
-input[type="text"] + button,
-input[type="text"] + input[type="submit"] {
-  padding: 0.25em 1em;
-  margin: 0;
-  vertical-align: baseline;
-  line-height: 1.5;
+.btn-group > button + button {
+  margin-left: 1em;
 }
 .snap-modchooser {
   clear: both;
@@ -19711,7 +19690,7 @@ input[type="text"] + input[type="submit"] {
   background-image: none;
   border: 1px solid transparent;
   white-space: nowrap;
-  padding: 8px 12px;
+  padding: 6px 16px;
   font-size: 18px;
   line-height: 1.6;
   border-radius: 0px;
@@ -19719,10 +19698,6 @@ input[type="text"] + input[type="submit"] {
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
-  padding: 0.25em 1em;
-  margin: 0;
-  vertical-align: baseline;
-  line-height: 1.5;
   color: #03A9F4;
   background-color: transparent;
   border-color: #03A9F4;
@@ -20933,7 +20908,7 @@ http://blog.rodneyrehm.de/archives/34-iOS7-Mobile-Safari-And-Viewport-Units.html
   background-image: none;
   border: 1px solid transparent;
   white-space: nowrap;
-  padding: 8px 12px;
+  padding: 6px 16px;
   font-size: 18px;
   line-height: 1.6;
   border-radius: 0px;
@@ -20941,10 +20916,6 @@ http://blog.rodneyrehm.de/archives/34-iOS7-Mobile-Safari-And-Viewport-Units.html
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
-  padding: 0.25em 1em;
-  margin: 0;
-  vertical-align: baseline;
-  line-height: 1.5;
 }
 .paging.paging-morelink a:focus,
 .paging.paging-morelink a:active:focus,
@@ -21751,7 +21722,7 @@ table#user-grades tr.avg td.cell {
   cursor: pointer;
   border: 1px solid transparent;
   white-space: nowrap;
-  padding: 8px 12px;
+  padding: 6px 16px;
   font-size: 18px;
   line-height: 1.6;
   border-radius: 0px;
@@ -21759,10 +21730,6 @@ table#user-grades tr.avg td.cell {
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
-  padding: 0.25em 1em;
-  margin: 0;
-  vertical-align: baseline;
-  line-height: 1.5;
   color: #03A9F4;
   background-color: transparent;
   border-color: #03A9F4;
@@ -23709,9 +23676,9 @@ body:not(.behat-site) #id_general .ftoggler {
   font-size: 75%;
 }
 #id_cancel {
-  color: #03A9F4;
   font-weight: normal;
   border-radius: 0;
+  color: #03A9F4;
   font-weight: 300;
   margin-left: 2em;
 }
@@ -23862,7 +23829,8 @@ hr {
   border-top: 1px solid #03A9F4;
 }
 a,
-a:visited {
+a:visited,
+.btn-link {
   color: #03A9F4;
 }
 a:focus,
@@ -23982,15 +23950,19 @@ td.submit input,
 #notice .singlebutton + .singlebutton input,
 #login.fixy input[type=submit],
 button#local-joulegrader-preview-button,
+button.atto_equation_submit,
 .yui-skin-sam .yui-button,
 .yui3-button,
 .yui-button button,
 .header-button-group .btn,
 .btn.btn-primary,
 .btn.btn-default,
+.button-group > button,
 input.form-submit,
 input[type="button"],
+.moodle-dialogue-content button[type="button"],
 input[type="submit"],
+button[type="submit"],
 input[type="reset"],
 #page-site-index .section-modchooser-link .section-modchooser-text {
   font-family: "Roboto", "Fira Sans", "Segoe UI", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -24012,15 +23984,19 @@ td.submit input:visited,
 #notice .singlebutton + .singlebutton input:visited,
 #login.fixy input[type=submit]:visited,
 button#local-joulegrader-preview-button:visited,
+button.atto_equation_submit:visited,
 .yui-skin-sam .yui-button:visited,
 .yui3-button:visited,
 .yui-button button:visited,
 .header-button-group .btn:visited,
 .btn.btn-primary:visited,
 .btn.btn-default:visited,
+.button-group > button:visited,
 input.form-submit:visited,
 input[type="button"]:visited,
+.moodle-dialogue-content button[type="button"]:visited,
 input[type="submit"]:visited,
+button[type="submit"]:visited,
 input[type="reset"]:visited,
 #page-site-index .section-modchooser-link .section-modchooser-text:visited {
   color: #03A9F4;
@@ -24037,15 +24013,19 @@ td.submit input:hover,
 #notice .singlebutton + .singlebutton input:hover,
 #login.fixy input[type=submit]:hover,
 button#local-joulegrader-preview-button:hover,
+button.atto_equation_submit:hover,
 .yui-skin-sam .yui-button:hover,
 .yui3-button:hover,
 .yui-button button:hover,
 .header-button-group .btn:hover,
 .btn.btn-primary:hover,
 .btn.btn-default:hover,
+.button-group > button:hover,
 input.form-submit:hover,
 input[type="button"]:hover,
+.moodle-dialogue-content button[type="button"]:hover,
 input[type="submit"]:hover,
+button[type="submit"]:hover,
 input[type="reset"]:hover,
 #page-site-index .section-modchooser-link .section-modchooser-text:hover,
 #course-category-listings .listing-pagination .yui3-button:focus,
@@ -24060,15 +24040,19 @@ td.submit input:focus,
 #notice .singlebutton + .singlebutton input:focus,
 #login.fixy input[type=submit]:focus,
 button#local-joulegrader-preview-button:focus,
+button.atto_equation_submit:focus,
 .yui-skin-sam .yui-button:focus,
 .yui3-button:focus,
 .yui-button button:focus,
 .header-button-group .btn:focus,
 .btn.btn-primary:focus,
 .btn.btn-default:focus,
+.button-group > button:focus,
 input.form-submit:focus,
 input[type="button"]:focus,
+.moodle-dialogue-content button[type="button"]:focus,
 input[type="submit"]:focus,
+button[type="submit"]:focus,
 input[type="reset"]:focus,
 #page-site-index .section-modchooser-link .section-modchooser-text:focus,
 #course-category-listings .listing-pagination .yui3-button:active,
@@ -24083,15 +24067,19 @@ td.submit input:active,
 #notice .singlebutton + .singlebutton input:active,
 #login.fixy input[type=submit]:active,
 button#local-joulegrader-preview-button:active,
+button.atto_equation_submit:active,
 .yui-skin-sam .yui-button:active,
 .yui3-button:active,
 .yui-button button:active,
 .header-button-group .btn:active,
 .btn.btn-primary:active,
 .btn.btn-default:active,
+.button-group > button:active,
 input.form-submit:active,
 input[type="button"]:active,
+.moodle-dialogue-content button[type="button"]:active,
 input[type="submit"]:active,
+button[type="submit"]:active,
 input[type="reset"]:active,
 #page-site-index .section-modchooser-link .section-modchooser-text:active,
 #course-category-listings .listing-pagination .yui3-button.active,
@@ -24106,15 +24094,19 @@ td.submit input.active,
 #notice .singlebutton + .singlebutton input.active,
 #login.fixy input[type=submit].active,
 button#local-joulegrader-preview-button.active,
+button.atto_equation_submit.active,
 .yui-skin-sam .yui-button.active,
 .yui3-button.active,
 .yui-button button.active,
 .header-button-group .btn.active,
 .btn.btn-primary.active,
 .btn.btn-default.active,
+.button-group > button.active,
 input.form-submit.active,
 input[type="button"].active,
+.moodle-dialogue-content button[type="button"].active,
 input[type="submit"].active,
+button[type="submit"].active,
 input[type="reset"].active,
 #page-site-index .section-modchooser-link .section-modchooser-text.active {
   background-color: #03A9F4;
@@ -24134,15 +24126,19 @@ td.submit input[disabled],
 #notice .singlebutton + .singlebutton input[disabled],
 #login.fixy input[type=submit][disabled],
 button#local-joulegrader-preview-button[disabled],
+button.atto_equation_submit[disabled],
 .yui-skin-sam .yui-button[disabled],
 .yui3-button[disabled],
 .yui-button button[disabled],
 .header-button-group .btn[disabled],
 .btn.btn-primary[disabled],
 .btn.btn-default[disabled],
+.button-group > button[disabled],
 input.form-submit[disabled],
 input[type="button"][disabled],
+.moodle-dialogue-content button[type="button"][disabled],
 input[type="submit"][disabled],
+button[type="submit"][disabled],
 input[type="reset"][disabled],
 #page-site-index .section-modchooser-link .section-modchooser-text[disabled] {
   opacity: 0.65;

@@ -1628,7 +1628,7 @@ table th[class*="col-"] {
   background-image: none;
   border: 1px solid transparent;
   white-space: nowrap;
-  padding: 8px 12px;
+  padding: 6px 16px;
   font-size: 18px;
   line-height: 1.6;
   border-radius: 0px;
@@ -5428,7 +5428,7 @@ span.editinstructions {
   background-image: none;
   border: 1px solid transparent;
   white-space: nowrap;
-  padding: 8px 12px;
+  padding: 6px 16px;
   font-size: 18px;
   line-height: 1.6;
   border-radius: 0px;
@@ -5436,10 +5436,6 @@ span.editinstructions {
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
-  padding: 0.25em 1em;
-  margin: 0;
-  vertical-align: baseline;
-  line-height: 1.5;
   color: #fff !important;
 }
 .snap-asset .unread a:focus,
@@ -5499,7 +5495,7 @@ fieldset[disabled] a.snap-asset .unread a {
   background-image: none;
   border: 1px solid transparent;
   white-space: nowrap;
-  padding: 8px 12px;
+  padding: 6px 16px;
   font-size: 18px;
   line-height: 1.6;
   border-radius: 0px;
@@ -5507,10 +5503,6 @@ fieldset[disabled] a.snap-asset .unread a {
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
-  padding: 0.25em 1em;
-  margin: 0;
-  vertical-align: baseline;
-  line-height: 1.5;
 }
 #changenumsections .increase-sections:focus,
 #changenumsections .reduce-sections:focus,
@@ -6236,14 +6228,18 @@ textarea {
 #changenumsections .reduce-sections,
 .paging.paging-morelink a,
 button#local-joulegrader-preview-button,
+button.atto_equation_submit,
 a.yui3-button,
 .yui-button button,
 .header-button-group .btn,
 .btn.btn-primary,
 .btn.btn-default,
+.button-group > button,
 input.form-submit,
 input[type="button"],
 input[type="submit"],
+button[type="submit"],
+.moodle-dialogue-content button,
 input[type="reset"] {
   font-family: "Roboto", "Fira Sans", "Segoe UI", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif;
   background: transparent;
@@ -6253,28 +6249,36 @@ input[type="reset"] {
 #changenumsections .reduce-sections:hover,
 .paging.paging-morelink a:hover,
 button#local-joulegrader-preview-button:hover,
+button.atto_equation_submit:hover,
 a.yui3-button:hover,
 .yui-button button:hover,
 .header-button-group .btn:hover,
 .btn.btn-primary:hover,
 .btn.btn-default:hover,
+.button-group > button:hover,
 input.form-submit:hover,
 input[type="button"]:hover,
 input[type="submit"]:hover,
+button[type="submit"]:hover,
+.moodle-dialogue-content button:hover,
 input[type="reset"]:hover,
 .section-modchooser-text:focus,
 #changenumsections .increase-sections:focus,
 #changenumsections .reduce-sections:focus,
 .paging.paging-morelink a:focus,
 button#local-joulegrader-preview-button:focus,
+button.atto_equation_submit:focus,
 a.yui3-button:focus,
 .yui-button button:focus,
 .header-button-group .btn:focus,
 .btn.btn-primary:focus,
 .btn.btn-default:focus,
+.button-group > button:focus,
 input.form-submit:focus,
 input[type="button"]:focus,
 input[type="submit"]:focus,
+button[type="submit"]:focus,
+.moodle-dialogue-content button:focus,
 input[type="reset"]:focus {
   text-decoration: none;
   color: #fff;
@@ -6328,23 +6332,8 @@ input[type="reset"]:focus {
   background: #fff;
   border-color: #03A9F4;
 }
-#page-mod-quiz-edit div.question div.content div.points input[type="submit"],
-.btn,
-button,
-input.form-submit,
-input[type="button"],
-input[type="submit"],
-input[type="reset"],
-input[name="searchwikicontent"] + input[type="submit"],
-select + input[type="submit"],
-input[type="text"] + input[type="button"],
-input[type="password"] + input[type="submit"],
-input[type="text"] + button,
-input[type="text"] + input[type="submit"] {
-  padding: 0.25em 1em;
-  margin: 0;
-  vertical-align: baseline;
-  line-height: 1.5;
+.btn-group > button + button {
+  margin-left: 1em;
 }
 .snap-modchooser {
   clear: both;
@@ -6381,7 +6370,7 @@ input[type="text"] + input[type="submit"] {
   background-image: none;
   border: 1px solid transparent;
   white-space: nowrap;
-  padding: 8px 12px;
+  padding: 6px 16px;
   font-size: 18px;
   line-height: 1.6;
   border-radius: 0px;
@@ -6389,10 +6378,6 @@ input[type="text"] + input[type="submit"] {
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
-  padding: 0.25em 1em;
-  margin: 0;
-  vertical-align: baseline;
-  line-height: 1.5;
   color: #03A9F4;
   background-color: transparent;
   border-color: #03A9F4;
@@ -7519,7 +7504,7 @@ http://blog.rodneyrehm.de/archives/34-iOS7-Mobile-Safari-And-Viewport-Units.html
   background-image: none;
   border: 1px solid transparent;
   white-space: nowrap;
-  padding: 8px 12px;
+  padding: 6px 16px;
   font-size: 18px;
   line-height: 1.6;
   border-radius: 0px;
@@ -7527,10 +7512,6 @@ http://blog.rodneyrehm.de/archives/34-iOS7-Mobile-Safari-And-Viewport-Units.html
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
-  padding: 0.25em 1em;
-  margin: 0;
-  vertical-align: baseline;
-  line-height: 1.5;
 }
 .paging.paging-morelink a:focus,
 .paging.paging-morelink a:active:focus,
@@ -8332,7 +8313,7 @@ table#user-grades tr.avg td.cell {
   cursor: pointer;
   border: 1px solid transparent;
   white-space: nowrap;
-  padding: 8px 12px;
+  padding: 6px 16px;
   font-size: 18px;
   line-height: 1.6;
   border-radius: 0px;
@@ -8340,10 +8321,6 @@ table#user-grades tr.avg td.cell {
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
-  padding: 0.25em 1em;
-  margin: 0;
-  vertical-align: baseline;
-  line-height: 1.5;
   color: #03A9F4;
   background-color: transparent;
   border-color: #03A9F4;
@@ -10204,9 +10181,9 @@ body:not(.behat-site) #id_general .ftoggler {
   font-size: 75%;
 }
 #id_cancel {
-  color: #03A9F4;
   font-weight: normal;
   border-radius: 0;
+  color: #03A9F4;
   font-weight: 300;
   margin-left: 2em;
 }
@@ -10357,7 +10334,8 @@ hr {
   border-top: 1px solid #03A9F4;
 }
 a,
-a:visited {
+a:visited,
+.btn-link {
   color: #03A9F4;
 }
 a:focus,
@@ -10477,15 +10455,19 @@ td.submit input,
 #notice .singlebutton + .singlebutton input,
 #login.fixy input[type=submit],
 button#local-joulegrader-preview-button,
+button.atto_equation_submit,
 .yui-skin-sam .yui-button,
 .yui3-button,
 .yui-button button,
 .header-button-group .btn,
 .btn.btn-primary,
 .btn.btn-default,
+.button-group > button,
 input.form-submit,
 input[type="button"],
+.moodle-dialogue-content button[type="button"],
 input[type="submit"],
+button[type="submit"],
 input[type="reset"],
 #page-site-index .section-modchooser-link .section-modchooser-text {
   font-family: "Roboto", "Fira Sans", "Segoe UI", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -10506,15 +10488,19 @@ td.submit input:visited,
 #notice .singlebutton + .singlebutton input:visited,
 #login.fixy input[type=submit]:visited,
 button#local-joulegrader-preview-button:visited,
+button.atto_equation_submit:visited,
 .yui-skin-sam .yui-button:visited,
 .yui3-button:visited,
 .yui-button button:visited,
 .header-button-group .btn:visited,
 .btn.btn-primary:visited,
 .btn.btn-default:visited,
+.button-group > button:visited,
 input.form-submit:visited,
 input[type="button"]:visited,
+.moodle-dialogue-content button[type="button"]:visited,
 input[type="submit"]:visited,
+button[type="submit"]:visited,
 input[type="reset"]:visited,
 #page-site-index .section-modchooser-link .section-modchooser-text:visited {
   color: #03A9F4;
@@ -10531,15 +10517,19 @@ td.submit input:hover,
 #notice .singlebutton + .singlebutton input:hover,
 #login.fixy input[type=submit]:hover,
 button#local-joulegrader-preview-button:hover,
+button.atto_equation_submit:hover,
 .yui-skin-sam .yui-button:hover,
 .yui3-button:hover,
 .yui-button button:hover,
 .header-button-group .btn:hover,
 .btn.btn-primary:hover,
 .btn.btn-default:hover,
+.button-group > button:hover,
 input.form-submit:hover,
 input[type="button"]:hover,
+.moodle-dialogue-content button[type="button"]:hover,
 input[type="submit"]:hover,
+button[type="submit"]:hover,
 input[type="reset"]:hover,
 #page-site-index .section-modchooser-link .section-modchooser-text:hover,
 #course-category-listings .listing-pagination .yui3-button:focus,
@@ -10554,15 +10544,19 @@ td.submit input:focus,
 #notice .singlebutton + .singlebutton input:focus,
 #login.fixy input[type=submit]:focus,
 button#local-joulegrader-preview-button:focus,
+button.atto_equation_submit:focus,
 .yui-skin-sam .yui-button:focus,
 .yui3-button:focus,
 .yui-button button:focus,
 .header-button-group .btn:focus,
 .btn.btn-primary:focus,
 .btn.btn-default:focus,
+.button-group > button:focus,
 input.form-submit:focus,
 input[type="button"]:focus,
+.moodle-dialogue-content button[type="button"]:focus,
 input[type="submit"]:focus,
+button[type="submit"]:focus,
 input[type="reset"]:focus,
 #page-site-index .section-modchooser-link .section-modchooser-text:focus,
 #course-category-listings .listing-pagination .yui3-button:active,
@@ -10577,15 +10571,19 @@ td.submit input:active,
 #notice .singlebutton + .singlebutton input:active,
 #login.fixy input[type=submit]:active,
 button#local-joulegrader-preview-button:active,
+button.atto_equation_submit:active,
 .yui-skin-sam .yui-button:active,
 .yui3-button:active,
 .yui-button button:active,
 .header-button-group .btn:active,
 .btn.btn-primary:active,
 .btn.btn-default:active,
+.button-group > button:active,
 input.form-submit:active,
 input[type="button"]:active,
+.moodle-dialogue-content button[type="button"]:active,
 input[type="submit"]:active,
+button[type="submit"]:active,
 input[type="reset"]:active,
 #page-site-index .section-modchooser-link .section-modchooser-text:active,
 #course-category-listings .listing-pagination .yui3-button.active,
@@ -10600,15 +10598,19 @@ td.submit input.active,
 #notice .singlebutton + .singlebutton input.active,
 #login.fixy input[type=submit].active,
 button#local-joulegrader-preview-button.active,
+button.atto_equation_submit.active,
 .yui-skin-sam .yui-button.active,
 .yui3-button.active,
 .yui-button button.active,
 .header-button-group .btn.active,
 .btn.btn-primary.active,
 .btn.btn-default.active,
+.button-group > button.active,
 input.form-submit.active,
 input[type="button"].active,
+.moodle-dialogue-content button[type="button"].active,
 input[type="submit"].active,
+button[type="submit"].active,
 input[type="reset"].active,
 #page-site-index .section-modchooser-link .section-modchooser-text.active {
   background-color: #03A9F4;
@@ -10628,15 +10630,19 @@ td.submit input[disabled],
 #notice .singlebutton + .singlebutton input[disabled],
 #login.fixy input[type=submit][disabled],
 button#local-joulegrader-preview-button[disabled],
+button.atto_equation_submit[disabled],
 .yui-skin-sam .yui-button[disabled],
 .yui3-button[disabled],
 .yui-button button[disabled],
 .header-button-group .btn[disabled],
 .btn.btn-primary[disabled],
 .btn.btn-default[disabled],
+.button-group > button[disabled],
 input.form-submit[disabled],
 input[type="button"][disabled],
+.moodle-dialogue-content button[type="button"][disabled],
 input[type="submit"][disabled],
+button[type="submit"][disabled],
 input[type="reset"][disabled],
 #page-site-index .section-modchooser-link .section-modchooser-text[disabled] {
   opacity: 0.65;
