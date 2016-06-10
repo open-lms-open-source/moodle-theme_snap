@@ -172,7 +172,6 @@ $string['released'] = 'Released: {$a}';
 $string['reopened'] = 'Reopened';
 $string['seriffont'] = 'Serif font';
 $string['seriffont_desc'] = 'This font is used for most user generated content. Using a serif font makes user generated content more readable, and feel like it is written by a human.';
-$string['sitenavigation'] = 'Site navigation';
 $string['submitted'] = 'Submitted';
 $string['subtitle'] = 'Site description';
 $string['subtitle_desc'] = 'A brief tag line about your site, about 240 characters in length. Your site description will be displayed on the site front page.';
