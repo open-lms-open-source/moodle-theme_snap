@@ -629,7 +629,7 @@ class behat_theme_snap extends behat_base {
         $general = behat_context_helper::get('behat_general');
         $general->i_click_on('.courseinfo[data-shortname="'.$shortname.'"] button.favoritetoggle', 'css_element');
     }
-
+    
     /**
      * Follow the link which is located inside the personal menu.
      *
@@ -640,5 +640,45 @@ class behat_theme_snap extends behat_base {
         $node = $this->get_node_in_container('link', $link, 'css_element', '#fixy-mobile-menu');
         $this->ensure_node_is_visible($node);
         $node->click();
+    }
+
+    /**
+     * Sends a message to the specified user from the logged user. The user full name should contain the first and last names.
+     *
+     * @Given /^I send "(?P<message_contents_string>(?:[^"]|\\")*)" message to "(?P<user_full_name_string>(?:[^"]|\\")*)" user \(theme_snap\)$/
+     * @param string $messagecontent
+     * @param string $userfullname
+     */
+    public function i_send_message_to_user($messagecontent, $userfullname) {
+        /** @var behat_forms $form */
+        $form = behat_context_helper::get('behat_forms');
+        
+        /* @var behat_general $general */
+        $general = behat_context_helper::get('behat_general');
+
+        $this->getSession()->visit($this->locate_path('message'));
+        $form->i_set_the_field_to(get_string('searchcombined', 'message'), $this->escape($userfullname));
+        $general->i_click_on('input[name="combinedsubmit"]', 'css_element');
+        $general->click_link( $this->escape(get_string('sendmessageto', 'message', $userfullname)));
+        $form->i_set_the_field_to('id_message', $this->escape($messagecontent));
+        $general->i_click_on('#id_submitbutton', 'css_element');        
+    }
+
+    /**
+     * @Given /^the message processor "(?P<processorname_string>(?:[^"]|\\")*)" is enabled$/
+     * @param string $processorname
+     */
+    public function i_enable_message_processor($processorname) {
+        global $DB;
+        $DB->set_field('message_processors', 'enabled', '1', array('name' => $processorname));
+    }
+
+    /**
+     * @Given /^the message processor "(?P<processorname_string>(?:[^"]|\\")*)" is disabled$/
+     * @param string $processorname
+     */
+    public function i_disable_message_processor($processorname) {
+        global $DB;
+        $DB->set_field('message_processors', 'enabled', '0', array('name' => $processorname));
     }
 }

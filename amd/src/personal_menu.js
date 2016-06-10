@@ -150,6 +150,8 @@ define(['jquery', 'core/log', 'theme_snap/pm_course_cards'], function($, log, co
                     }
                 });
             }
+
+            $(document).trigger('snapUpdatePersonalMenu');
         };
 
         /**
