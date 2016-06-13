@@ -56,13 +56,18 @@ section#region-main
             float: right;
             display: inline-block;
             input[type="submit"] {
-                background-color: @gray-light !important;
                 box-shadow: 0;
             }
         }
     }
 }
 
+#page-course-view-weeks.format-weeks.theme-snap #page-header #page-mast, #page-course-view-topics.format-topics.theme-snap #page-header #page-mast {
+  display: flex;
+}
+#page-course-view-weeks.format-weeks.theme-snap #page-header #page-mast h1, #page-course-view-topics.format-topics.theme-snap #page-header #page-mast h1 {
+  display: inline-block;
+}
 // Course page  - hide turn editing on link in admin block.
 .pagelayout-course #settingsnav .type_course > ul > li:first-child {
     display: none;

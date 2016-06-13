@@ -3994,14 +3994,6 @@ a.disabled {
 #fgroup_id_sdays > .fgroup > span {
   display: inline-block;
 }
-#page-course-view-weeks.format-weeks.theme-snap #page-header #page-mast,
-#page-course-view-topics.format-topics.theme-snap #page-header #page-mast {
-  display: flex;
-}
-#page-course-view-weeks.format-weeks.theme-snap #page-header #page-mast h1,
-#page-course-view-topics.format-topics.theme-snap #page-header #page-mast h1 {
-  display: inline-block;
-}
 /**
  * Snap variables.
  *
@@ -4246,8 +4238,15 @@ section#region-main
 }
 .format-topics.editing.pagelayout-course #page-mast .singlebutton input[type="submit"],
 .format-weeks.editing.pagelayout-course #page-mast .singlebutton input[type="submit"] {
-  background-color: #999 !important;
   box-shadow: 0;
+}
+#page-course-view-weeks.format-weeks.theme-snap #page-header #page-mast,
+#page-course-view-topics.format-topics.theme-snap #page-header #page-mast {
+  display: flex;
+}
+#page-course-view-weeks.format-weeks.theme-snap #page-header #page-mast h1,
+#page-course-view-topics.format-topics.theme-snap #page-header #page-mast h1 {
+  display: inline-block;
 }
 .pagelayout-course #settingsnav .type_course > ul > li:first-child {
   display: none;
@@ -10863,12 +10862,4 @@ body {
   display: block;
   height: auto;
   width: auto;
-}
-#page-course-view-weeks.format-weeks.theme-snap #page-header #page-mast,
-#page-course-view-topics.format-topics.theme-snap #page-header #page-mast {
-  display: flex;
-}
-#page-course-view-weeks.format-weeks.theme-snap #page-header #page-mast h1,
-#page-course-view-topics.format-topics.theme-snap #page-header #page-mast h1 {
-  display: inline-block;
 }
