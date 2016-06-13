@@ -54,9 +54,7 @@ section#region-main
         }
         #page-mast .singlebutton {
             float: right;
-            margin-top: -3.2em; // MAGIC NUMBER
-            margin-right: -4%; // MAGIC NUMBER
-            display: block;
+            display: inline-block;
             input[type="submit"] {
                 background-color: @gray-light !important;
                 box-shadow: 0;
@@ -1097,14 +1095,14 @@ li.snap-activity.modtype_folder {
         border-radius: 50%;
         transform: scale(0.75);
         box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
-        
-        &:hover, 
+
+        &:hover,
         &:focus {
             transform: scale(1.04);
             transition: transform 0.3s;
         }
     }
-    
+
     .label {
         margin: 0 1%;
         padding: 0.75em;
@@ -1183,7 +1181,7 @@ li.draft {
     input[type=checkbox]:checked + .svg-icon {
         background-color: @brand-success !important;
     }
-    
+
     .dropdown-menu {
         box-shadow: 0 2px 5px 0 rgba(0,0,0,.26);
         border: 0;
