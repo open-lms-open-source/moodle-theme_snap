@@ -75,31 +75,49 @@ class behat_theme_snap extends behat_base {
      * Logs in the user. There should exist a user with the same value as username and password.
      *
      * @Given /^I log in as "(?P<username_string>(?:[^"]|\\")*)" \(theme_snap\)$/
+     * @param string $username
+     * @param bool $andkeepmenuopen
      */
-    public function i_log_in_with_snap_as($username) {
+    public function i_log_in_with_snap_as($username, $andkeepmenuopen = false) {
 
+        $session = $this->getSession();
+        
         // Go back to front page.
-        $this->getSession()->visit($this->locate_path('/'));
+        $session->visit($this->locate_path('/'));
 
-        // Generic steps (we will prefix them later expanding the navigation dropdown if necessary).
-        $steps = array(
-            new Given('I click on "' . get_string('login') . '" "link"'),
-            new Given('I should not see "Log out"'),
-            new Given('I set the field "' . get_string('username') . '" to "' . $this->escape($username) . '"'),
-            new Given('I set the field "' . get_string('password') . '" to "'. $this->escape($username) . '"'),
-            new Given('I press "' . get_string('login') . '"'),
-            new Given('I click on "#fixy-close" "css_element"'),
-        );
-
-        // If Javascript is disabled we have enough with these steps.
-        if (!$this->running_javascript()) {
-            return $steps;
+        if ($this->running_javascript()) {
+            // Wait for the homepage to be ready.
+            $session->wait(self::TIMEOUT * 1000, self::PAGE_READY_JS);
         }
 
-        // Wait for the homepage to be ready.
-        $this->getSession()->wait(self::TIMEOUT * 1000, self::PAGE_READY_JS);
+        /** @var behat_general $general */
+        $general = behat_context_helper::get('behat_general');
+        $general->i_click_on(get_string('login'), 'link');
+        $general->assert_page_not_contains_text(get_string('logout'));
 
-        return $steps;
+        /** @var behat_forms $form */
+        $form = behat_context_helper::get('behat_forms');
+        $form->i_set_the_field_to(get_string('username'), $this->escape($username));
+        $form->i_set_the_field_to(get_string('password'), $this->escape($username));
+        $form->press_button(get_string('login'));
+
+        if (!$andkeepmenuopen) {
+            $showfixyonlogin = get_config('theme_snap', 'personalmenulogintoggle');
+            if ($showfixyonlogin) {
+                $general->i_click_on('#fixy-close', 'css_element');
+            }
+        }
+     }
+
+    /**
+     * Logs in the user but doesn't auto close personal menu.
+     * There should exist a user with the same value as username and password.
+     *
+     * @Given /^I log in as "(?P<username_string>(?:[^"]|\\")*)", keeping the personal menu open$/
+     * @param string $username
+     */
+    public function i_log_in_and_keep_personal_menu_open($username) {
+        $this->i_log_in_with_snap_as($username, true);
     }
 
     /**

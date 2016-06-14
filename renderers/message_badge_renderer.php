@@ -34,7 +34,6 @@ class theme_snap_message_badge_renderer extends message_badge_renderer {
      * @return array
      */
     public function get_js_module() {
-        global $COURSE;
         return array(
             'name'     => 'message_badge',
             'fullpath' => '/theme/snap/javascript/badge.js',
@@ -48,6 +47,8 @@ class theme_snap_message_badge_renderer extends message_badge_renderer {
                 'moodle-core-popuphelp',
             ),
             'strings' => array(
+                array('ok', 'moodle'),
+                array('erroroccur', 'debug'),
                 array('genericasyncfail', 'message_badge'),
                 array('loading', 'theme_snap'),
                 array('messageread', 'theme_snap'),

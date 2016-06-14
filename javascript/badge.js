@@ -140,6 +140,22 @@ M.snap_message_badge.init_message = function(Y, messageNode) {
 };
 
 /**
+ * Show error dialog
+ *
+ * @param {string} msg
+ */
+M.snap_message_badge.alert_error = function(msg) {
+    Y.use('moodle-core-notification-alert', function () {
+        var alert = new M.core.alert({
+            title : M.util.get_string('erroroccur', 'debug'),
+            message : msg,
+            yesLabel: M.util.get_string('ok', 'moodle')
+        });
+        alert.show();
+    });
+};
+
+/**
  * Send a request to ignore a message (AKA mark as read) and
  * update the badge count
  *
@@ -153,14 +169,14 @@ M.snap_message_badge.ignore_message = function(Y, url) {
                 var response = Y.JSON.parse(o.responseText);
 
                 if (response.error != undefined) {
-                    alert(response.error);
+                    M.snap_message_badge.alert_error(response.error);
                 } else {
                     M.snap_message_badge.update_unread_count(Y, response.args);
                 }
                 M.snap_message_badge.show_all_read (Y);
             },
             failure: function(id, o) {
-                alert(M.str.message_badge.genericasyncfail);
+                M.snap_message_badge.alert_error(M.str.message_badge.genericasyncfail);
             }
         }
     });
@@ -246,7 +262,7 @@ M.snap_message_badge.populate_messagebody = function(Y, messagenode, url, onsucc
                 messagenode.one('.loadingstat').remove();
 
                 if (response.error != undefined) {
-                    alert(response.error);
+                    M.snap_message_badge.alert_error(response.error);
                 } else {
                     messagenode.one('.message_badge_message_text').removeClass('snap_spinner');
 
@@ -292,7 +308,7 @@ M.snap_message_badge.populate_messagebody = function(Y, messagenode, url, onsucc
                 }
             },
             failure: function(id, o) {
-                alert(M.str.message_badge.genericasyncfail);
+                M.snap_message_badge.alert_error(M.str.message_badge.genericasyncfail);
             }
         }
     });
@@ -394,7 +410,7 @@ M.snap_message_badge.get_messages_html = function(Y, onsuccess) {
             success: function(id, o) {
                 var response = Y.JSON.parse(o.responseText);
                 if (response.error != undefined) {
-                    alert(response.error);
+                    M.snap_message_badge.alert_error(response.error);
                 } else {
                     if (typeof onsuccess == 'function') {
                         onsuccess(response);
@@ -409,7 +425,7 @@ M.snap_message_badge.get_messages_html = function(Y, onsuccess) {
                 if (!o.getAllResponseHeaders()){
                     return;
                 }
-                alert(M.str.message_badge.genericasyncfail);
+                M.snap_message_badge.alert_error(M.str.message_badge.genericasyncfail);
             }
         }
     });

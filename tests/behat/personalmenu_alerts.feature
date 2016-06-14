@@ -28,7 +28,7 @@ Feature: When the moodle theme is set to Snap, students and teachers can open a 
   Background:
     Given the following config values are set as admin:
       | theme | snap |
-      And the following config values are set as admin:
+    And the following config values are set as admin:
       | message_provider_moodle_instantmessage_loggedoff | badge | message |
     And the following "courses" exist:
       | fullname | shortname | category | groupmode |
@@ -43,8 +43,10 @@ Feature: When the moodle theme is set to Snap, students and teachers can open a 
       | student1 | C1 | student |
 
   @javascript
-  Scenario: Alerts are visible in personal menu when messages are sent and the message processor is enabled.
+  Scenario: Alerts are visible in personal menu when opened after messages are sent and the message processor is enabled.
     Given the message processor "badge" is disabled
+    And the following config values are set as admin:
+      | personalmenulogintoggle | 0 | theme_snap |
     And I log in as "student1" (theme_snap)
     And I open the personal menu
     # The alerts section should not be present if the message processor is not enabled.
@@ -63,5 +65,20 @@ Feature: When the moodle theme is set to Snap, students and teachers can open a 
     And I wait until ".message_badge_message_text" "css_element" is visible
     And I should see "New message from Student 1"
 
-
-
+  @javascript
+  Scenario: Alerts are visible in personal menu on login after messages are sent and the message processor is enabled.
+    Given the message processor "badge" is disabled
+    And I log in as "student1", keeping the personal menu open
+    # The alerts section should not be present if the message processor is not enabled.
+    Then ".alert_stream" "css_element" should not exist
+    And the message processor "badge" is enabled
+    And I log out (theme_snap)
+    And I log in as "student1", keeping the personal menu open
+    Then ".alert_stream" "css_element" should exist
+    And I wait until ".message_badge_empty" "css_element" is visible
+    Then I should see "You have no unread alerts."
+    And I send "Test message!" message to "Teacher 1" user (theme_snap)
+    And I log out (theme_snap)
+    And I log in as "teacher1", keeping the personal menu open
+    And I wait until ".message_badge_message_text" "css_element" is visible
+    And I should see "New message from Student 1"

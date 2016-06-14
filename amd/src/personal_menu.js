@@ -22,7 +22,7 @@
 /**
  * Course card favoriting.
  */
-define(['jquery', 'core/log', 'theme_snap/pm_course_cards'], function($, log, courseCards) {
+define(['jquery', 'core/log', 'core/yui', 'theme_snap/pm_course_cards', 'theme_snap/when_true'], function($, log, Y, courseCards, whenTrue) {
 
     return new (function() {
 
@@ -75,7 +75,7 @@ define(['jquery', 'core/log', 'theme_snap/pm_course_cards'], function($, log, co
                             url: M.cfg.wwwroot + '/theme/snap/rest.php?action=get_' + type + '&contextid=' + M.cfg.context,
                             success: function(data) {
                                 log.info('fetched ' + type);
-                                if (supportlocalstorage) {
+                                if (supportlocalstorage && typeof(data.html) != 'undefined') {
                                     window.sessionStorage[cache_key] = data.html;
                                 }
                                 // Note: we can't use .data because that does not manipulate the dom, we need the data
@@ -149,6 +149,20 @@ define(['jquery', 'core/log', 'theme_snap/pm_course_cards'], function($, log, co
                         }
                     }
                 });
+            }
+
+            if($('#snap-personal-menu-badges').length && typeof(M.snap_message_badge) === 'undefined') {
+                // When M.snap_message_badge is available then trigger personal menu update.
+                whenTrue(
+                    function() {
+                        return typeof(M.snap_message_badge) != 'undefined'
+                    },
+                    function() {
+                        // We can't rely on snapUpdatePersonalMenu here because it might have been triggered prior to
+                        // the badge code being loaded.
+                        // So let's just call init_overlay instead.
+                        M.snap_message_badge.init_overlay(Y);
+                    }, true);
             }
 
             $(document).trigger('snapUpdatePersonalMenu');
