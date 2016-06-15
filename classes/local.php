@@ -295,6 +295,7 @@ class local {
                  WHERE m.useridto = :userid1
                        AND contexturl IS NULL
                        AND m.timecreated > :fromdate1
+                       AND m.timeusertodeleted = 0
         ) UNION ALL (
                 SELECT $select, 0 unread
                   FROM {message_read} m
@@ -302,6 +303,7 @@ class local {
                  WHERE m.useridto = :userid2
                        AND contexturl IS NULL
                        AND m.timecreated > :fromdate2
+                       AND m.timeusertodeleted = 0
         )
           ORDER BY timecreated DESC";
 
