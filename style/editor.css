@@ -4233,20 +4233,7 @@ section#region-main
 }
 .format-topics.editing.pagelayout-course #page-mast .singlebutton,
 .format-weeks.editing.pagelayout-course #page-mast .singlebutton {
-  float: right;
-  display: inline-block;
-}
-.format-topics.editing.pagelayout-course #page-mast .singlebutton input[type="submit"],
-.format-weeks.editing.pagelayout-course #page-mast .singlebutton input[type="submit"] {
-  box-shadow: 0;
-}
-#page-course-view-weeks.format-weeks.theme-snap #page-header #page-mast,
-#page-course-view-topics.format-topics.theme-snap #page-header #page-mast {
-  display: flex;
-}
-#page-course-view-weeks.format-weeks.theme-snap #page-header #page-mast h1,
-#page-course-view-topics.format-topics.theme-snap #page-header #page-mast h1 {
-  display: inline-block;
+  display: block;
 }
 .pagelayout-course #settingsnav .type_course > ul > li:first-child {
   display: none;
