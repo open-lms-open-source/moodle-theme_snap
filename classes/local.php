@@ -291,7 +291,7 @@ class local {
         (
                 SELECT $select, 1 unread
                   FROM {message} m
-            INNER JOIN {user} u ON u.id = m.useridfrom
+            INNER JOIN {user} u ON u.id = m.useridfrom AND u.deleted = 0
                  WHERE m.useridto = :userid1
                        AND contexturl IS NULL
                        AND m.timecreated > :fromdate1
@@ -299,7 +299,7 @@ class local {
         ) UNION ALL (
                 SELECT $select, 0 unread
                   FROM {message_read} m
-            INNER JOIN {user} u ON u.id = m.useridfrom
+            INNER JOIN {user} u ON u.id = m.useridfrom AND u.deleted = 0
                  WHERE m.useridto = :userid2
                        AND contexturl IS NULL
                        AND m.timecreated > :fromdate2
