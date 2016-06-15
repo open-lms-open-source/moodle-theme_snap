@@ -42,10 +42,10 @@ Feature: When the moodle theme is set to Snap, teachers can move course sections
       | student1 | C1 | student |
 
   @javascript
-  Scenario: In read mode, teacher moves section 1 to section 2.
-    Given I log in with snap as "teacher1"
-    And I follow "Menu"
-    And I follow "Course"
+  Scenario: In read mode, teacher moves section 1 to section 4.
+    Given I log in as "teacher1" (theme_snap)
+    And I open the personal menu
+    And I follow "Course 1"
     And I wait until the page is ready
     And I follow "Topic 1"
     And I follow "Untitled Topic"
@@ -53,7 +53,7 @@ Feature: When the moodle theme is set to Snap, teachers can move course sections
       | name | My topic |
     And I press "Save changes"
     And I wait until the page is ready
-    And I follow "Move section"
+    And I follow "Move \"My topic\""
    Then I should see "Moving \"My topic\"" in the "#snap-move-message" "css_element"
     And I follow "Topic 4"
    Then I should see "Place section \"My topic\" before section \"Topic 4\""
@@ -62,9 +62,9 @@ Feature: When the moodle theme is set to Snap, teachers can move course sections
 
   @javascript
   Scenario: In read mode, student cannot move sections.
-    Given I log in with snap as "student1"
-    And I follow "Menu"
-    And I follow "Course"
+    Given I log in as "student1" (theme_snap)
+    And I open the personal menu
+    And I follow "Course 1"
     And I wait until the page is ready
     And I follow "Topic 1"
    Then "a[title=Move section]" "css_element" should not exist

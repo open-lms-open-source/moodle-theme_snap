@@ -34,39 +34,71 @@ Feature: When the moodle theme is set to Snap, teachers only see block edit cont
     And the following "users" exist:
       | username | firstname | lastname | email |
       | teacher1 | Teacher   | 1        | teacher1@example.com |
-      | student1 | Student   | 1        | student1@example.com |
     And the following "course enrolments" exist:
-      | user     | course | role |
+      | user     | course | role           |
+      | admin    | C1     | editingteacher |
       | teacher1 | C1     | editingteacher |
-      | student1 | C1     | student |
       | teacher1 | C2     | editingteacher |
-      | student1 | C2     | student |
       | teacher1 | C3     | editingteacher |
-      | student1 | C3     | student |
-    And the following "activities" exist:
-      | activity | course | idnumber | name             | intro                         | section |
-      | assign   | C1     | assign1  | Test assignment1 | Test assignment description 1 | 1       |
 
   @javascript
   Scenario: In read mode on a topics course, teacher clicks edit blocks and can edit blocks.
-    Given I log in with snap as "teacher1"
-    And I follow "Menu"
+    Given the following "activities" exist:
+      | activity | course | idnumber | name             | intro                         | section |
+      | assign   | C1     | assign1  | Test assignment1 | Test assignment description 1 | 1       |
+    And I log in as "teacher1" (theme_snap)
+    And I open the personal menu
     And I follow "Course 1"
     And I wait until the page is ready
     And I follow "Topic 1"
-   Then "#section-1" "css_element" should exist
+    Then "#section-1" "css_element" should exist
     And ".block_news_items a.toggle-display" "css_element" should not exist
     And I should see "Test assignment1" in the "#section-1" "css_element"
     And I follow "Course Tools"
     And I follow "Edit course blocks"
+    Then course page should be in edit mode
+
+    # edit mode persists if course accessed directly via menu
+    # (this is basically to check it works without the &notifyeditingon parameter
+    Given I open the personal menu
+    And I follow "Course 1"
+    Then course page should be in edit mode
+
+    # edit mode does not persist between courses
+    Given I open the personal menu
+    And I follow "Course 2"
     And I wait until the page is ready
-    And I should not see "Test assignment1" in the "#section-1" "css_element"
-    And ".block_news_items a.toggle-display" "css_element" should exist
+    And I follow "Course Tools"
+    Then I should see "Edit course blocks"
+
+  @javascript
+  Scenario: If edit mode is on for a course, it should not carry over to site homepage
+    Given I log in as "admin" (theme_snap)
+    And I open the personal menu
+    And I follow "Course 1"
+    And I wait until the page is ready
+    And I follow "Course Tools"
+    And I follow "Edit course blocks"
+    When I am on site homepage
+    Then I should not see "Change site name"
+    Then I should not see "Add a block"
+
+  @javascript
+  Scenario: If edit mode is on for site homepage, it should not carry over to courses
+    Given I log in as "admin" (theme_snap)
+    And I am on site homepage
+    And I click on "#admin-menu-trigger" "css_element"
+    And I follow "Turn editing on"
+    When I open the personal menu
+    And I follow "Course 1"
+    And I wait until the page is ready
+    And I follow "Course Tools"
+    Then I should see "Edit course blocks"
 
   @javascript
   Scenario: In edit mode on a folderview course, teacher can see sections whilst editting on.
-    Given I log in with snap as "teacher1"
-    And I follow "Menu"
+    Given I log in as "teacher1" (theme_snap)
+    And I open the personal menu
     And I follow "Course 3"
     And I wait until the page is ready
     And I click on "#page-mast .singlebutton input[type=\"submit\"]" "css_element"
@@ -74,4 +106,4 @@ Feature: When the moodle theme is set to Snap, teachers only see block edit cont
     And I should see "Add Topic"
     And I should see "Add Resource"
     And I should see "Topic Settings"
-    And I should see "Topic 1" in the "#section-1 .content" "css_element"
+    Then I should see "Topic 1" in the "#section-1 .content" "css_element"

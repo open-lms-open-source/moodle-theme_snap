@@ -24,6 +24,8 @@
 
 defined('MOODLE_INTERNAL') || die();
 
+use theme_snap\local;
+
 class snap_shared extends renderer_base {
 
     /**
@@ -338,7 +340,7 @@ class snap_shared extends renderer_base {
         // Are we viewing /course/view.php - note, this is different from just checking the page type.
         // We only ever want to load course.js when on site page or view.php - no point in loading it when on
         // course settings page, etc.
-        $courseviewpage = stripos($PAGE->url->out_as_local_url(), '/course/view.php') === 0;
+        $courseviewpage = local::current_url_path() === '/course/view.php';
         $pagehascoursecontent = ($PAGE->pagetype === 'site-index' || $courseviewpage);
 
         // Does the page have editable course content?
@@ -410,6 +412,12 @@ class snap_shared extends renderer_base {
      * @return bool
      */
     public static function gradebook_accessible($context) {
+        global $COURSE;
+
+        // Ask if user has not capabilities and if course is set to not to show the grades to students.
+        if ((!has_capability('gradereport/grader:view', $context)) && ($COURSE->showgrades == 0)) {
+            return false;
+        }
 
         // Find all enabled reports.
         $reports = core_component::get_plugin_list('gradereport');

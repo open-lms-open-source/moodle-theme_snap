@@ -793,7 +793,7 @@ body#page-lib-editor-tinymce-plugins-moodlemedia-preview {
 .moodle-dialogue-base .moodle-dialogue-wrap .moodle-dialogue-hd.yui3-widget-hd {
   background-image: none;
   background-color: #fff;
-  color: #666;
+  color: #565656;
   padding: 15px;
   border-bottom: 1px solid #f5f5f5;
   min-height: 16.6px;
@@ -2819,7 +2819,7 @@ span.editinstructions {
   margin-bottom: 0;
 }
 .coursebox > .panel-heading {
-  color: #666;
+  color: #565656;
   background-color: #f5f5f5;
   border-color: #ddd;
 }
@@ -2828,13 +2828,13 @@ span.editinstructions {
 }
 .coursebox > .panel-heading .badge {
   color: #f5f5f5;
-  background-color: #666;
+  background-color: #565656;
 }
 .coursebox > .panel-footer + .panel-collapse > .panel-body {
   border-bottom-color: #ddd;
 }
 .coursebox .info {
-  color: #666;
+  color: #565656;
   background-color: #f5f5f5;
   border-color: #ddd;
   padding: 10px 15px;
@@ -2847,7 +2847,7 @@ span.editinstructions {
 }
 .coursebox .info .badge {
   color: #f5f5f5;
-  background-color: #666;
+  background-color: #565656;
 }
 .coursebox.remotehost > .info > .categoryname a {
   background-image: url([[pix:moodle|i/mnethost]]);
@@ -3672,7 +3672,7 @@ span.editinstructions {
   background: #fff;
   border-bottom: 1px solid #CCCCCC;
   border-left: 0 solid #fff;
-  color: #666;
+  color: #565656;
 }
 #filesskin .file-picker .yui3-datatable-odd .yui3-datatable-cell {
   background-color: #F6F6F6;
@@ -4776,7 +4776,7 @@ body.path-question-type .fitem_fgroup .accesshide {
   background-color: rgba(3, 169, 244, 0.1);
   border-color: rgba(3, 169, 244, 0.1);
   color: #03A9F4;
-  color: #666;
+  color: #565656;
 }
 .que .formulation hr {
   border-top-color: rgba(3, 152, 219, 0.1);
@@ -4981,7 +4981,7 @@ a.que .correctness:focus {
   color: #0275a8;
 }
 #page-mod-quiz-edit .questionbankwindow div.header .title {
-  color: #666;
+  color: #565656;
 }
 #page-mod-quiz-edit div.container div.generalbox {
   background-color: transparent;
@@ -5269,7 +5269,7 @@ body.path-admin-roles .userselector {
   font-family: "Roboto", "Fira Sans", "Segoe UI", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-weight: 300;
   line-height: 1.5;
-  color: #666;
+  color: #565656;
   margin-top: 14px;
   margin-bottom: 14px;
   font-size: 29px;
@@ -5304,7 +5304,7 @@ body.path-admin-roles .userselector {
   font-family: "Roboto", "Fira Sans", "Segoe UI", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-weight: 300;
   line-height: 1.5;
-  color: #666;
+  color: #565656;
   margin-top: 14px;
   margin-bottom: 14px;
   font-size: 29px;
@@ -5587,7 +5587,7 @@ fieldset[disabled] .userprofile .header-button-group .btn.active {
   padding: 8px 12px;
   font-size: 18px;
   line-height: 1.6;
-  color: #666;
+  color: #565656;
   background-color: #fff;
   background-image: none;
   border: 1px solid #dadada;
@@ -5600,10 +5600,10 @@ fieldset[disabled] .userprofile .header-button-group .btn.active {
 }
 .loginbox .loginform .form-input input[type="text"]:focus,
 .loginbox .loginform .form-input input[type="password"]:focus {
-  border-color: #666;
+  border-color: #565656;
   outline: 0;
-  -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 102, 102, 0.6);
-  box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 102, 102, 0.6);
+  -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(86, 86, 86, 0.6);
+  box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(86, 86, 86, 0.6);
 }
 .loginbox .loginform .form-input input[type="text"]::-moz-placeholder,
 .loginbox .loginform .form-input input[type="password"]::-moz-placeholder {
@@ -5647,7 +5647,7 @@ textarea.loginbox .loginform .form-input input[type="password"] {
   font-size: 30px;
   line-height: 30px;
   font-weight: 300;
-  color: #666;
+  color: #565656;
 }
 .loginbox .subcontent {
   text-align: left;
@@ -6740,7 +6740,7 @@ body {
   font-family: "Roboto", "Fira Sans", "Segoe UI", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 18px;
   line-height: 1.6;
-  color: #666;
+  color: #565656;
   background-color: #fff;
 }
 input,
@@ -6841,7 +6841,7 @@ h6,
   font-family: "Roboto", "Fira Sans", "Segoe UI", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-weight: 300;
   line-height: 1.5;
-  color: #666;
+  color: #565656;
 }
 h1 small,
 h2 small,
@@ -8156,7 +8156,7 @@ legend {
   margin-bottom: 28px;
   font-size: 27px;
   line-height: inherit;
-  color: #666;
+  color: #565656;
   border: 0;
   border-bottom: 1px solid #e5e5e5;
 }
@@ -8200,7 +8200,7 @@ output {
   padding-top: 9px;
   font-size: 18px;
   line-height: 1.6;
-  color: #666;
+  color: #565656;
 }
 .form-control {
   display: block;
@@ -8209,7 +8209,7 @@ output {
   padding: 8px 12px;
   font-size: 18px;
   line-height: 1.6;
-  color: #666;
+  color: #565656;
   background-color: #fff;
   background-image: none;
   border: 1px solid #dadada;
@@ -8220,10 +8220,10 @@ output {
   transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
 }
 .form-control:focus {
-  border-color: #666;
+  border-color: #565656;
   outline: 0;
-  -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 102, 102, 0.6);
-  box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 102, 102, 0.6);
+  -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(86, 86, 86, 0.6);
+  box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(86, 86, 86, 0.6);
 }
 .form-control::-moz-placeholder {
   color: #999;
@@ -8561,7 +8561,7 @@ select[multiple].input-lg {
   display: block;
   margin-top: 5px;
   margin-bottom: 10px;
-  color: #a6a6a6;
+  color: #969696;
 }
 @media (min-width: 768px) {
   .form-inline .form-group {
@@ -9597,7 +9597,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
   font-size: 18px;
   font-weight: normal;
   line-height: 1;
-  color: #666;
+  color: #565656;
   text-align: center;
   background-color: #dadada;
   border: 1px solid #dadada;
@@ -9731,7 +9731,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 .nav-tabs > li.active > a,
 .nav-tabs > li.active > a:hover,
 .nav-tabs > li.active > a:focus {
-  color: #666;
+  color: #565656;
   background-color: #fff;
   border: 1px solid #dadada;
   border-bottom-color: transparent;
@@ -10716,7 +10716,7 @@ a.thumbnail.active {
 }
 .thumbnail .caption {
   padding: 9px;
-  color: #666;
+  color: #565656;
 }
 .alert {
   padding: 15px;
@@ -11365,7 +11365,7 @@ button.list-group-item-danger.active:focus {
   border-color: #ddd;
 }
 .panel-default > .panel-heading {
-  color: #666;
+  color: #565656;
   background-color: #f5f5f5;
   border-color: #ddd;
 }
@@ -11374,7 +11374,7 @@ button.list-group-item-danger.active:focus {
 }
 .panel-default > .panel-heading .badge {
   color: #f5f5f5;
-  background-color: #666;
+  background-color: #565656;
 }
 .panel-default > .panel-footer + .panel-collapse > .panel-body {
   border-bottom-color: #ddd;
@@ -12530,7 +12530,7 @@ button.close {
  * ones in order to overule them.
  */
 .other-user-manager-panel span.label {
-  color: #666;
+  color: #565656;
   font-size: inherit;
 }
 .gradingform_rubric .options .option .label,
@@ -13146,7 +13146,7 @@ form {
   padding-right: 15px;
 }
 .form-description {
-  color: #a6a6a6;
+  color: #969696;
   font-size: 13px;
 }
 .mform fieldset .advancedbutton {
@@ -13268,13 +13268,13 @@ input#id_externalurl {
   margin-bottom: 28px;
   font-size: 27px;
   line-height: inherit;
-  color: #666;
+  color: #565656;
   border: 0;
   border-bottom: 1px solid #e5e5e5;
 }
 .mform legend a,
 .mform legend a:hover {
-  color: #666;
+  color: #565656;
   text-decoration: none;
 }
 #page-grade-edit-outcome-course .courseoutcomes {
@@ -13408,7 +13408,7 @@ fieldset.coursesearchbox label {
   background-color: #0286c2;
 }
 .mform .error .availability-field {
-  color: #666;
+  color: #565656;
 }
 /* This dialogue is used to add an availability condition. */
 .availability-dialogue li {
@@ -15953,7 +15953,7 @@ fieldset[disabled] .yui-button button.active {
 .yui-bootstrapped .yui-navset .yui-nav > li.active > a:hover,
 .yui-skin-sam .yui-navset .yui-nav > li.active > a:focus,
 .yui-bootstrapped .yui-navset .yui-nav > li.active > a:focus {
-  color: #666;
+  color: #565656;
   background-color: #fff;
   border: 1px solid #dadada;
   border-bottom-color: transparent;
@@ -16028,7 +16028,7 @@ fieldset[disabled] .yui-button button.active {
 .yui-bootstrapped .yui-navset .yui-nav .selected > a:hover,
 .yui-skin-sam .yui-navset .yui-nav .selected > a:focus,
 .yui-bootstrapped .yui-navset .yui-nav .selected > a:focus {
-  color: #666;
+  color: #565656;
   background-color: #fff;
   border: 1px solid #dadada;
   border-bottom-color: transparent;
@@ -16142,7 +16142,7 @@ fieldset[disabled] .yui-button button.active {
 .yui-bootstrapped .yui3-tabview-list > li.active > a:hover,
 .yui-skin-sam .yui3-tabview-list > li.active > a:focus,
 .yui-bootstrapped .yui3-tabview-list > li.active > a:focus {
-  color: #666;
+  color: #565656;
   background-color: #fff;
   border: 1px solid #dadada;
   border-bottom-color: transparent;
@@ -16212,7 +16212,7 @@ fieldset[disabled] .yui-button button.active {
 .yui-bootstrapped .yui3-tabview-list .yui3-tab-selected > a:hover,
 .yui-skin-sam .yui3-tabview-list .yui3-tab-selected > a:focus,
 .yui-bootstrapped .yui3-tabview-list .yui3-tab-selected > a:focus {
-  color: #666;
+  color: #565656;
   background-color: #fff;
   border: 1px solid #999;
   border-bottom-color: transparent;
@@ -16290,7 +16290,7 @@ fieldset[disabled] .yui-button button.active {
   background-image: none;
   font-size: 36px;
   font-weight: 300;
-  color: #666;
+  color: #565656;
   line-height: 1.6;
   font-family: "Roboto", "Fira Sans", "Segoe UI", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif;
   padding: 15px;
@@ -16349,7 +16349,7 @@ fieldset[disabled] .yui-button button.active {
 .yui-bootstrapped .yui3-panel .yui3-panel-content .yui3-widget-hd {
   font-size: 36px;
   font-weight: 300;
-  color: #666;
+  color: #565656;
   line-height: 1.6;
   font-family: "Roboto", "Fira Sans", "Segoe UI", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif;
   background: none;
@@ -16572,7 +16572,7 @@ fieldset[disabled] .yui-button button.active {
 }
 .yui-skin-sam .yui-calcontainer .yui-calendar td.calcell.today a,
 .yui-bootstrapped .yui-calcontainer .yui-calendar td.calcell.today a {
-  color: #666;
+  color: #565656;
 }
 .yui-skin-sam .yui-calcontainer .yui-calendar td.calcell.calcellhover,
 .yui-bootstrapped .yui-calcontainer .yui-calendar td.calcell.calcellhover,
@@ -17607,7 +17607,7 @@ section#region-main
   -webkit-box-shadow: 0;
           box-shadow: 0;
 }
-.pagelayout-course .type_course > ul > li:first-child {
+.pagelayout-course #settingsnav .type_course > ul > li:first-child {
   display: none;
 }
 #page-course-view-folderview .type_course ul > li:first-child {
@@ -18601,7 +18601,8 @@ li.draft .snap-assettype {
   width: 250px;
   padding: 0 2%;
 }
-.snap-asset-actions > a .snap-edit-more-dropdown,
+.snap-asset-actions > a,
+.snap-asset-actions .snap-edit-more-dropdown,
 .snap-asset-actions .snap-asset-move {
   display: inline-block !important;
   width: 25%;
@@ -19326,6 +19327,11 @@ fieldset[disabled] a#changenumsections .reduce-sections {
   width: 1em;
   height: 1em;
 }
+.behat-site #snap-move-message {
+  position: relative;
+  -webkit-transition-property: none;
+          transition-property: none;
+}
 .snap-move-cancel {
   float: right;
   margin-right: 4%;
@@ -19410,7 +19416,7 @@ fieldset[disabled] a#changenumsections .reduce-sections {
   clear: both;
   border: 2px dashed #999;
   font-size: 2em;
-  font-color: #666;
+  font-color: #565656;
   font-family: "Roboto", "Fira Sans", "Segoe UI", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif;
   text-align: center;
   cursor: pointer;
@@ -19638,7 +19644,6 @@ body.ie {
 }
 input:focus,
 textarea:focus,
-select:focus,
 a:focus {
   outline: 0;
 }
@@ -19811,7 +19816,7 @@ select,
 .path-grade ul.nav.nav-tabs + ul.nav.nav-tabs li.disabled > a,
 .path-grade ul.nav.nav-tabs + ul.nav.nav-tabs li.disabled > a:hover,
 .path-grade ul.nav.nav-tabs + ul.nav.nav-tabs li.disabled > a:focus {
-  color: #666;
+  color: #565656;
   background-color: #fff;
   border: 1px solid #dadada;
   border-bottom-color: transparent;
@@ -20274,8 +20279,6 @@ fieldset[disabled] a#page-site-index .section-modchooser-link .section-modchoose
   margin: 0 auto;
   -webkit-animation-name: snap-drop;
           animation-name: snap-drop;
-  -webkit-animation-iteration-count: once;
-          animation-iteration-count: once;
   -webkit-animation-timing-function: ease-in-out;
           animation-timing-function: ease-in-out;
   -webkit-animation-duration: 0.3s;
@@ -20578,8 +20581,6 @@ footer #moodle-footer
   will-change: transform;
   -webkit-animation-name: snap-rise;
           animation-name: snap-rise;
-  -webkit-animation-iteration-count: once;
-          animation-iteration-count: once;
   -webkit-animation-timing-function: ease-in-out;
           animation-timing-function: ease-in-out;
   -webkit-animation-duration: 0.4s;
@@ -20590,10 +20591,14 @@ footer #moodle-footer
 #mr-nav.headroom--pinned {
   /*
         animation-name: snap-drop;
-        animation-iteration-count: once;
         animation-timing-function: cubic-bezier(.694, .0482, .335, 1);
         animation-duration: 0.33s;
         */
+}
+.bb_dashboard_link img {
+  width: 1em;
+  height: 1em;
+  margin-right: 0.25em;
 }
 #page {
   margin: 0;
@@ -21737,7 +21742,7 @@ ul.events-new + ul.events-underway {
 #dateselector-calendar-panel .yui3-calendar-nextmonth-day,
 #dateselector-calendar-panel .yui3-calendar-weekday {
   font-family: "Roboto", "Fira Sans", "Segoe UI", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif;
-  color: #666;
+  color: #565656;
   border-color: #fff;
   text-align: center;
   font-weight: normal;
@@ -21829,6 +21834,50 @@ ul.events-new + ul.events-underway {
     float: left;
     width: 75%;
   }
+}
+/* MESSAGING PAGE */
+#message_user_pictures .box.user {
+  position: relative;
+  min-height: 1px;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+@media (min-width: 768px) {
+  #message_user_pictures .box.user {
+    float: left;
+    width: 41.66666667%;
+  }
+}
+#message_user_pictures .box.between {
+  position: relative;
+  min-height: 1px;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+@media (min-width: 768px) {
+  #message_user_pictures .box.between {
+    float: left;
+    width: 16.66666667%;
+  }
+}
+#message_user_pictures .box {
+  text-align: center;
+}
+/* Message contaacts list */
+.message-contacts {
+  list-style: none;
+  padding: 0;
+}
+.message-contacts .pix,
+.message-contacts .link,
+.message-contacts .contact {
+  display: inline;
+}
+.message-contacts .pix {
+  margin-right: 0.5em;
+}
+.message-contacts .link {
+  float: right;
 }
 .path-mod-choice .results.names .user {
   clear: both;
@@ -22668,7 +22717,7 @@ fieldset[disabled] .gradingform_rubric.editor .addcriterion input.active {
   margin: 0.5em 1% 0.5em 0;
 }
 .path-blocks-reports #course-search-input {
-  color: #666;
+  color: #565656;
   background-color: #fff;
   background-image: none;
   border: 1px solid #dadada;
@@ -23026,7 +23075,7 @@ body.hascontinuecancel.path-site #page {
 #page-user-policy #notice,
 #page-blocks-conduit-view #notice.snap-continue-cancel,
 #page-mod-quiz-edit div.container #notice.snap-continue-cancel {
-  color: #666;
+  color: #565656;
   background-color: #fff;
   font-size: 18px;
   left: 0;
@@ -23080,7 +23129,7 @@ body.hascontinuecancel.path-site #page {
   letter-spacing: 0.1em;
   text-transform: uppercase;
   font-style: normal;
-  color: #666;
+  color: #565656;
 }
 .nav_icon {
   padding: 0.3em;
@@ -23243,7 +23292,7 @@ body.hascontinuecancel.path-site #page {
   border-top: 1px solid #ccc;
   clear: both;
   color: #dadada;
-  background-color: #666;
+  background-color: #565656;
   margin-top: 0;
 }
 #moodle-footer h1,
@@ -23530,7 +23579,7 @@ table th img.iconhelp {
   }
 }
 .label:not(.activity) font {
-  color: #666;
+  color: #565656;
   font-weight: 300;
 }
 .label:not(.activity) b font {
@@ -23581,11 +23630,11 @@ div.editor_atto_toolbar div.atto_group {
 }
 .atto_equation_library button {
   background-color: #fff;
-  color: #666;
+  color: #565656;
 }
 .atto_equation_library button:hover {
   background-color: #f2f2f2;
-  color: #666;
+  color: #565656;
 }
 .atto_charmap_selector button {
   width: 40px;
@@ -23647,6 +23696,21 @@ div.editor_atto_toolbar div.atto_group {
 .path-grade-report-grader .gradeparent .cell.user {
   font-size: 13px;
 }
+.behat-site #moodle-blocks {
+  visibility: visible;
+  height: inherit;
+}
+.behat-site #mr-nav {
+  position: absolute;
+}
+.behat-site #mr-nav.headroom--unpinned {
+  -webkit-animation-name: none;
+          animation-name: none;
+}
+.behat-site .fixy-inner {
+  -webkit-animation-name: none;
+          animation-name: none;
+}
 /**
  * Snap core swatch.
  *
@@ -23654,12 +23718,12 @@ div.editor_atto_toolbar div.atto_group {
  * @copyright Copyright (c) 2015 Moodlerooms Inc. (http://www.moodlerooms.com)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-body:not(.behat-site-running)#page-mod-resource-mod #id_optionssection,
-body:not(.behat-site-running)#page-mod-url-mod #id_optionssection {
+body:not(.behat-site)#page-mod-resource-mod #id_optionssection,
+body:not(.behat-site)#page-mod-url-mod #id_optionssection {
   display: none;
 }
-body:not(.behat-site-running) #id_generalhdr .ftoggler,
-body:not(.behat-site-running) #id_general .ftoggler {
+body:not(.behat-site) #id_generalhdr .ftoggler,
+body:not(.behat-site) #id_general .ftoggler {
   display: none;
 }
 .fdescription.required {
@@ -23704,7 +23768,7 @@ body:not(.behat-site-running) #id_general .ftoggler {
   font-family: "Roboto", "Fira Sans", "Segoe UI", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-weight: 300;
   line-height: 1.5;
-  color: #666;
+  color: #565656;
   margin-top: 14px;
   margin-bottom: 14px;
   font-size: 24px;
@@ -23782,7 +23846,7 @@ fieldset[disabled] #id_cancel:focus {
     font-family: "Roboto", "Fira Sans", "Segoe UI", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-weight: 300;
     line-height: 1.5;
-    color: #666;
+    color: #565656;
     margin-top: 14px;
     margin-bottom: 14px;
     font-size: 36px;

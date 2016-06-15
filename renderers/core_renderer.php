@@ -28,6 +28,7 @@ require_once($CFG->libdir.'/coursecatlib.php');
 
 use theme_snap\local;
 use theme_snap\renderables\settings_link;
+use theme_snap\renderables\bb_dashboard_link;
 
 class theme_snap_core_renderer extends toc_renderer {
 
@@ -243,6 +244,25 @@ class theme_snap_core_renderer extends toc_renderer {
         );
 
         return html_writer::link($url, $burgericon, $attributes);
+    }
+
+    /**
+     * Settings link for opening the Administration menu, only shown if needed.
+     * @param bb_dashboard_link $bblink
+     *
+     * @return string
+     */
+    public function render_bb_dashboard_link(bb_dashboard_link $bblink) {
+        if (!$bblink->output) {
+            return '';
+        }
+        $url = new \moodle_url('/local/geniusws/login.php');
+
+        $linkcontent = $this->render(new pix_icon('sso', get_string('blackboard', 'local_geniusws'), 'local_geniusws')).
+                get_string('dashboard', 'local_geniusws');
+        $html = html_writer::link($url, $linkcontent, ['class' => 'bb_dashboard_link']);
+
+        return $html;
     }
 
     /**
@@ -612,7 +632,21 @@ class theme_snap_core_renderer extends toc_renderer {
         if (!isloggedin() || $isguest) {
             $login = get_string('login');
             $cancel = get_string('cancel');
-            $username = get_string('username');
+            if (!empty($CFG->loginpasswordautocomplete)) {
+                $autocomplete = 'autocomplete="off"';
+            } else {
+                $autocomplete = '';
+            }
+            if (empty($CFG->authloginviaemail)) {
+                $username = get_string('username');
+            } else {
+                $username = get_string('usernameemail');
+            }
+            if (empty($CFG->loginhttps)) {
+                $wwwroot = $CFG->wwwroot;
+            } else {
+                $wwwroot = str_replace("http://", "https://", $CFG->wwwroot);
+            }
             $password = get_string('password');
             $loginform = get_string('loginform', 'theme_snap');
             $helpstr = '';
@@ -630,7 +664,7 @@ class theme_snap_core_renderer extends toc_renderer {
                         '<a class="btn btn-primary" href="'.
                         s($CFG->wwwroot).'/login/logout.php?sesskey='.sesskey().'">'.$logout.'</a></p>';
                     $helpstr .= '<p class="text-center">'.
-                        '<a href="'.s($CFG->wwwroot).'/login/index.php">'.
+                        '<a href="'.s($wwwroot).'/login/index.php">'.
                         get_string('helpwithloginandguest', 'theme_snap').'</a></p>';
                 } else {
                     if (empty($CFG->forcelogin)) {
@@ -638,12 +672,12 @@ class theme_snap_core_renderer extends toc_renderer {
                     } else {
                         $help = get_string('helpwithlogin', 'theme_snap');
                     }
-                    $helpstr = "<p class='text-center'><a href='".s($CFG->wwwroot)."/login/index.php'>$help</a></p>";
+                    $helpstr = "<p class='text-center'><a href='".s($wwwroot)."/login/index.php'>$help</a></p>";
                 }
             }
             $output .= $this->login_button();
             $output .= "<div class='fixy' id='login' role='dialog' aria-label='$loginform' tabindex='0'>
-            <form action='$CFG->wwwroot/login/'  method='post'>
+            <form action='$wwwroot/login/index.php' method='post'>
         <a id='fixy-close' class='pull-right snap-action-icon' href='#'>
             <i class='icon icon-close'></i><small>$cancel</small>
         </a>
@@ -652,7 +686,7 @@ class theme_snap_core_renderer extends toc_renderer {
             <label for='username'>$username</label>
             <input autocapitalize='off' type='text' name='username' id='username' placeholder='".s($username)."'>
             <label for='password'>$password</label>
-            <input type='password' name='password' id='password' placeholder='".s($password)."'>
+            <input type='password' name='password' id='password' placeholder='".s($password)."' $autocomplete>
             <br>
             <input type='submit' id='loginbtn' value='".s($login)."'>
             $helpstr
@@ -724,7 +758,7 @@ class theme_snap_core_renderer extends toc_renderer {
                     // Let's put the interesting avatars first!
                     $avatars = array_merge($avatars, $blankavatars);
                     // Limit visible to 4.
-                    if (count($avatars) > 4) {
+                    if (count($avatars) > 5) {
                         // Show 4 avatars and link to show more.
                         $hiddenavatars = array_slice($avatars, 4);
                         $avatars = array_slice($avatars, 0, 4);
@@ -868,8 +902,14 @@ class theme_snap_core_renderer extends toc_renderer {
 
     public function page_heading($tag = 'h1') {
         $heading = parent::page_heading($tag);
+
+        // For the user profile page message button we need to call 2.9 content_header.
+        if ($this->page->pagelayout == 'mypublic') {
+            $heading = parent::context_header();
+        }
+        // For the front page we add the site strapline.
         if ($this->page->pagelayout == 'frontpage') {
-            $heading .= '<p>' . format_string($this->page->theme->settings->subtitle) . '</p>';
+            $heading .= '<p class="snap-site-description">' . format_string($this->page->theme->settings->subtitle) . '</p>';
         }
         if ($this->page->user_is_editing() && $this->page->pagelayout == 'frontpage') {
             $url = new moodle_url('/admin/settings.php', ['section' => 'themesettingsnap'], 'admin-fullname');
@@ -1117,8 +1157,8 @@ HTML;
         }
 
         if (defined('BEHAT_SITE_RUNNING')) {
-            // Required for revealing elements that behat requires in order to run.
-            $classes[] = 'behat-site-running';
+            // TODO not needed after 2.9.4, as core will do the same automatically.
+            $classes[] = 'behat-site';
         }
 
         $classes = implode(' ', $classes);

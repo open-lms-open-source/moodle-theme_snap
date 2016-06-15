@@ -22,6 +22,7 @@
  */
 
 namespace theme_snap\renderables;
+use theme_snap\local;
 
 defined('MOODLE_INTERNAL') || die();
 
@@ -45,7 +46,7 @@ class settings_link implements \renderable {
 
         // Page path blacklist for admin menu.
         $adminblockblacklist = ['/user/profile.php'];
-        if (in_array($PAGE->url->get_path(), $adminblockblacklist)) {
+        if (in_array(local::current_url_path(), $adminblockblacklist)) {
             return;
         }
 

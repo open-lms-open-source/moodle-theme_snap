@@ -45,9 +45,9 @@ Feature: Open page module inline
     Given the following "activities" exist:
       | activity | course | idnumber | name       | intro        | content       | completion | completionview |
       | page     | C1     | page1    | Test page1 | Test page 1  | page content1 | 0          | 0              |
-    And I log in with snap as "student1"
-    And I follow "Menu"
-    And I follow "Course"
+    And I log in as "student1" (theme_snap)
+    And I open the personal menu
+    And I follow "Course 1"
     And I should not see "page content1"
     And I follow "Read more&nbsp;»"
     And I wait until ".pagemod-content[data-content-loaded=\"1\"]" "css_element" is visible
@@ -60,9 +60,9 @@ Feature: Open page module inline
     Given the following "activities" exist:
       | activity | course | idnumber | name       | intro        | content       | completion | completionview |
       | page     | C1     | page2    | Test page2 | Test page 2  | page content2 | 2          | 1              |
-    And I log in with snap as "student1"
-    And I follow "Menu"
-    And I follow "Course"
+    And I log in as "student1" (theme_snap)
+    And I open the personal menu
+    And I follow "Course 1"
     And I should not see "page content2"
     And "span.autocompletion img[title='Not completed: Test page2']" "css_element" should exist
     And I follow "Read more&nbsp;»"

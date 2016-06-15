@@ -21,21 +21,27 @@
  * @copyright Copyright (c) 2015 Moodlerooms Inc. (http://www.moodlerooms.com)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
+global $SESSION, $COURSE, $USER, $PAGE;
+$themeissnap = isset($PAGE->theme->name) && $PAGE->theme->name === 'snap';
+$notajaxscript = !defined('AJAX_SCRIPT') || AJAX_SCRIPT == false;
+// The code inside this conditional block is to be executed prior to page rendering when the theme is set to snap and
+// when the current request is not an ajax request.
+// There doesn't appear to be an official hook we can use for doing things prior to page rendering, so this is a
+// workaround.
+if ($themeissnap && $notajaxscript) {
 
- // SL - dec 2015 - Make sure editing sessions are not carried over between courses.
-global $SESSION, $COURSE, $USER;
-if (!defined('AJAX_SCRIPT')) {
+    // Setup debugging html.
+    // This allows javascript to target debug messages and move them to footer.
+    if (!function_exists('xdebug_break')) {
+        ini_set('error_prepend_string', '<div class="php-debug">');
+        ini_set('error_append_string', '</div>');
+    }
+
+    // SL - dec 2015 - Make sure editing sessions are not carried over between courses.
     if (empty($SESSION->theme_snap_last_course) || $SESSION->theme_snap_last_course != $COURSE->id) {
         $USER->editing = 0;
         $SESSION->theme_snap_last_course = $COURSE->id;
     }
-}
-
-// Setup debugging html.
-// This allows javascript to target debug messages and move them to footer.
-if (!function_exists('xdebug_break')) {
-    ini_set('error_prepend_string', '<div class="php-debug">');
-    ini_set('error_append_string', '</div>');
 }
 
 $THEME->doctype = 'html5';

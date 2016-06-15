@@ -253,7 +253,6 @@ body.ie {
 
 input:focus,
 textarea:focus,
-select:focus,
 a:focus {
     outline: 0;
 }
@@ -869,7 +868,6 @@ input[type="text"]+input[type="submit"] {
 .fixy-inner {
     margin: 0 auto;
     animation-name: snap-drop;
-    animation-iteration-count: once;
     animation-timing-function: ease-in-out;
     animation-duration: 0.3s;
 
@@ -1217,7 +1215,6 @@ footer #moodle-footer
     &.headroom--unpinned {
         will-change: transform;
         animation-name: snap-rise;
-        animation-iteration-count: once;
         animation-timing-function: ease-in-out;
         animation-duration: 0.4s;
         animation-fill-mode: forwards;
@@ -1228,7 +1225,6 @@ footer #moodle-footer
         // firefox no like this animation :(
         /*
         animation-name: snap-drop;
-        animation-iteration-count: once;
         animation-timing-function: cubic-bezier(.694, .0482, .335, 1);
         animation-duration: 0.33s;
         */
@@ -1239,6 +1235,12 @@ footer #moodle-footer
         // make header pink
         // background-color: #fcc !important;
     }
+}
+
+.bb_dashboard_link img {
+    width: 1em;
+    height: 1em;
+    margin-right: 0.25em;
 }
 
 #page {
@@ -2547,6 +2549,35 @@ ul.events-new + ul.events-underway {
 
     .descriptionbox {
         .make-md-column(9);
+    }
+}
+
+/* MESSAGING PAGE */
+#message_user_pictures {
+    .box.user {
+        .make-sm-column(5);
+    }
+    .box.between {
+        .make-sm-column(2);
+    }
+    .box {
+        text-align: center;
+    }
+}
+/* Message contaacts list */
+.message-contacts {
+    list-style: none;
+    padding: 0;
+    .pix,
+    .link,
+    .contact {
+        display: inline;
+    }
+    .pix {
+        margin-right: 0.5em;
+    }
+    .link {
+        float: right;
     }
 }
 
@@ -4362,3 +4393,25 @@ div.editor_atto_toolbar div.atto_group {
 }
 
 // End Scrolling gradebook fixes
+
+// We need to be able to see the navigation block in Snap or we can't fo things like follow the participants link and
+// log in as another user.
+.behat-site #moodle-blocks {
+    visibility: visible;
+    height: inherit;
+}
+
+// Stop header from overlapping links and causing intermittent behat failures.
+.behat-site #mr-nav {
+position: absolute;
+}
+
+// Also stop it disappearing.
+.behat-site #mr-nav.headroom--unpinned {
+animation-name: none;
+}
+
+// Stop fixy animation as it makes Behat sometimes miss buttons and links within the menu
+.behat-site .fixy-inner {
+animation-name: none;
+}

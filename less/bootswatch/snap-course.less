@@ -66,9 +66,10 @@ section#region-main
 }
 
 // Course page  - hide turn editing on link in admin block.
-.pagelayout-course .type_course > ul > li:first-child {
+.pagelayout-course #settingsnav .type_course > ul > li:first-child {
     display: none;
 }
+
 // Do something different to support folderview...
 #page-course-view-folderview .type_course ul > li:first-child {
     display: list-item;
@@ -1173,7 +1174,7 @@ li.draft {
     left: 0;
     width: 250px;
     padding: 0 2%;
-    & > a
+    & > a,
     .snap-edit-more-dropdown,
     .snap-asset-move {
         display: inline-block !important;
@@ -1733,6 +1734,12 @@ span.editinstructions {
         width: 1em;
         height: 1em;
     }
+}
+
+// Prevent the pop-up from covering other content, and causing Behat test failures in certain browsers.
+.behat-site #snap-move-message {
+    position: relative;
+    transition-property: none;
 }
 
 .snap-move-cancel {

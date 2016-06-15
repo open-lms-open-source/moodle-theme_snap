@@ -20,9 +20,9 @@ Feature: the editor hint toggle should be ignored by Snap in Joule 2.9
 
   @javascript
   Scenario: Create a URL resource in Snap theme
-    Given I log in with snap as "teacher1"
+    Given I log in as "teacher1" (theme_snap)
     And I am on site homepage
-    And I follow "Menu"
+    And I open the personal menu
     And I follow "Course 1"
     Then I should see "Welcome to your new course Teacher 1."
     Then I should see "Start by describing what your course is about using text, images, audio & video."

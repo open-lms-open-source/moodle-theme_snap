@@ -27,11 +27,11 @@ Feature: In the Snap theme, within a course, editing teachers can create a new s
     Given the following config values are set as admin:
       | theme | snap |
     And the following "courses" exist:
-      | fullname               | shortname     | category | groupmode | format         |
-      | Topics course          | course_topics | 0        | 1         | topics         |
-      | Weeks course           | course_weeks  | 0        | 1         | weeks          |
-      | Single activity course | course_single | 0        | 1         | singleactivity |
-      | Social course          | course_social | 0        | 1         | social         |
+      | fullname               | shortname     | category | groupmode | format         | startdate  |
+      | Topics course          | course_topics | 0        | 1         | topics         |            |
+      | Weeks course           | course_weeks  | 0        | 1         | weeks          | 1457078400 |
+      | Single activity course | course_single | 0        | 1         | singleactivity |            |
+      | Social course          | course_social | 0        | 1         | social         |            |
     And the following "users" exist:
       | username | firstname | lastname | email                |
       | teacher1 | Teacher   | 1        | teacher1@example.com |
@@ -53,52 +53,70 @@ Feature: In the Snap theme, within a course, editing teachers can create a new s
       | student1 | course_social | student        |
 
   @javascript
-  Scenario: For editing teachers, ensure new section creation is available and works for topic and week courses but
-    not other formats.
-  Given I log in with snap as "teacher1"
+  Scenario: For editing teachers, ensure new section creation is available and works for topic courses but
+    not single activity or social course formats.
+  Given I log in as "teacher1" (theme_snap)
     And I create a new section in course "Topics course"
-   Then I should see "New section title" in the "#course-toc" "css_element"
-    And I create a new section in course "Weeks course"
    Then I should see "New section title" in the "#course-toc" "css_element"
     And I open the personal menu
     # Negative test - the single activity course should not allow for section creation via the toc.
-    And Snap I follow link "Single activity course"
-    And "Create a new section" "css_element" should not exist
+    And I follow "Single activity course"
+   Then I should not see "Create a new section" in the "#page-header" "css_element"
     # Negative test - the social course should not allow for section creation via the toc.
-    And Snap I follow link "Social course"
-    And "Create a new section" "css_element" should not exist
+    And I open the personal menu
+    And I follow "Social course"
+   Then I should not see "Create a new section" in the "#page-header" "css_element"
     # Make sure student can see the sections created by the teacher in Topics and Weeks format courses.
-    And Snap I log out
-    And I log in with snap as "student1"
+    And I log out (theme_snap)
+    And I log in as "student1" (theme_snap)
     And I open the personal menu
-    And Snap I follow link "Topics course"
+    And I follow "Topics course"
    Then I should see "New section title" in the "#course-toc" "css_element"
     And I open the personal menu
-    And Snap I follow link "Weeks course"
-   Then I should see "New section title" in the "#course-toc" "css_element"
 
   @javascript
   Scenario: For non editing teachers and students, ensure new section creation is not available for any course formats.
-  Given I log in with snap as "teacher2"
+  Given I log in as "teacher2" (theme_snap)
     And I open the personal menu
-    And Snap I follow link "Topics course"
-   Then "Create a new section" "css_element" should not exist
+    And I follow "Topics course"
+   Then I should not see "Create a new section" in the "#page-header" "css_element"
     And I open the personal menu
-    And Snap I follow link "Weeks course"
-   Then "Create a new section" "css_element" should not exist
-    And Snap I follow link "Single activity course"
-   Then "Create a new section" "css_element" should not exist
+    And I follow "Weeks course"
+   Then I should not see "Create a new section" in the "#page-header" "css_element"
+    And I open the personal menu
+    And I follow "Single activity course"
+   Then I should not see "Create a new section" in the "#page-header" "css_element"
+    And I open the personal menu
+    And I follow "Social course"
+   Then I should not see "Create a new section" in the "#page-header" "css_element"
+    And I log out (theme_snap)
+    And I log in as "student1" (theme_snap)
+    And I open the personal menu
+    And I follow "Topics course"
+   Then I should not see "Create a new section" in the "#page-header" "css_element"
+    And I open the personal menu
+    And I follow "Weeks course"
+   Then I should not see "Create a new section" in the "#page-header" "css_element"
+    And I open the personal menu
+    And I follow "Single activity course"
+   Then I should not see "Create a new section" in the "#page-header" "css_element"
+    And I open the personal menu
+    And I follow "Social course"
+   Then I should not see "Create a new section" in the "#page-header" "css_element"
     And Snap I follow link "Social course"
-   Then "Create a new section" "css_element" should not exist
-    And Snap I log out
-    And I log in with snap as "student1"
-    And I open the personal menu
-    And Snap I follow link "Topics course"
-   Then "Create a new section" "css_element" should not exist
-    And I open the personal menu
-    And Snap I follow link "Weeks course"
-   Then "Create a new section" "css_element" should not exist
-    And Snap I follow link "Single activity course"
-   Then "Create a new section" "css_element" should not exist
-    And Snap I follow link "Social course"
-   Then "Create a new section" "css_element" should not exist
+   Then I should not see "Create a new section" in the "#page-header" "css_element"
+
+
+   @javascript
+   Scenario: For editing teachers, ensure new section creation is available for week format and creates the section with a default title.
+   Given I log in with snap as "teacher1"
+    Then I open the personal menu
+     And Snap I follow link "Weeks course"
+     And I follow "Create a new section"
+    Then I should see "Title: 8 April - 14 April"
+     And I click on "Create section" "button"
+     And Snap I log out
+     And I log in with snap as "student1"
+     And I open the personal menu
+     And Snap I follow link "Weeks course"
+    Then I should see "8 April - 14 April" in the "#course-toc" "css_element"

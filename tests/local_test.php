@@ -844,4 +844,20 @@ class theme_snap_local_test extends \advanced_testcase {
         $this->assertEquals($originaluserid, $USER->id);
     }
 
+    public function test_current_url_path() {
+        global $PAGE;
+
+        // Note, $CFG->wwwroot is set to http://www.example.com/moodle which is ideal for this test.
+        // We want to make sure we can get the local path whilst moodle is in a subpath of the url.
+
+        $this->resetAfterTest();
+        $PAGE->set_url('/course/view.php', array('id' => 1));
+        $urlpath = $PAGE->url->get_path();
+        $expected = '/moodle/course/view.php';
+        $this->assertEquals($expected, $urlpath);
+        $localpath = local::current_url_path();
+        $expected = '/course/view.php';
+        $this->assertEquals($expected, $localpath);
+    }
+
 }
