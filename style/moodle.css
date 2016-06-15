@@ -23171,6 +23171,7 @@ button.snap-icon-toggle:focus {
   display: inline;
   padding: 0.89rem 0.9rem 1.3rem;
   border: none;
+  position: relative;
 }
 .snap-my-courses-menu .userpicture {
   height: 38px;
@@ -23182,7 +23183,8 @@ button.snap-icon-toggle:focus {
   padding-top: 0;
   background-image: none;
   border-radius: 50%;
-  left: 80%;
+  left: auto;
+  right: 0.5em;
   top: 0.5em;
 }
 .fixy {
