@@ -56,8 +56,45 @@ Feature: When the moodle theme is set to Snap, students and teachers can open a 
     Then I should see "You have no messages."
     And I follow "Forum posts" in the mobile personal menu
     Then I should see "You have no relevant forum posts."
+    And I click on "#fixy-close" "css_element"
+    And I open the personal menu
+    And I wait until "#fixy-mobile-menu" "css_element" is visible
 
     Examples:
     | user     | gradealt | gradenotice                       |
     | teacher1 | Grading  | You have no submissions to grade. |
-    | student1 | Feedbac  | You have no recent feedback.      |
+    | student1 | Feedback | You have no recent feedback.      |
+
+  @javascript
+  Scenario Outline: Mobile menu icons (excluding alerts) only appear when enabled.
+    Given I change window size to "320x480"
+    And the following config values are set as admin:
+      | <toggle> | 0 | theme_snap |
+    And I log in as "student1" (theme_snap)
+    And I open the personal menu
+    Then "a[href='<href>']" "css_element" should not exist
+    And the following config values are set as admin:
+      | <toggle> | 1 | theme_snap |
+    And I reload the page
+    And I open the personal menu
+    Then "a[href='<href>']" "css_element" should exist
+    Examples:
+    | toggle           | href                           |
+    | deadlinestoggle  | #snap-personal-menu-deadlines  |
+    | feedbacktoggle   | #snap-personal-menu-graded     |
+    | messagestoggle   | #snap-personal-menu-messages   |
+    | forumpoststoggle | #snap-personal-menu-forumposts |
+
+  @javascript
+  Scenario: Alerts mobile menu icon only appears when alerts enabled.
+    Given I change window size to "320x480"
+    And the message processor "badge" is disabled
+    And I log in as "student1" (theme_snap)
+    And I open the personal menu
+    Then "a[href='#snap-personal-menu-badges']" "css_element" should not exist
+    And the message processor "badge" is enabled
+    And I reload the page
+    And I open the personal menu
+    Then "a[href='#snap-personal-menu-badges']" "css_element" should exist
+
+
