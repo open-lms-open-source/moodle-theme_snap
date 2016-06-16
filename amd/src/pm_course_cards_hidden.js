@@ -55,6 +55,7 @@ define(['jquery'], function($) {
                     }
                     $('#fixy-content').css('height',sectionHeight);
                     // Animation complete.
+                    $('#fixy-hidden-courses').toggleClass('state-visible');
                     $('#fixy-hidden-courses').focus();
                 }
             });
