@@ -697,6 +697,80 @@ class theme_snap_local_test extends \advanced_testcase {
         $this->assertCount(0, $actual);
     }
 
+
+    public function test_one_message_deleted() {
+        global $DB;
+        
+        $this->resetAfterTest();
+
+        $generator = $this->getDataGenerator();
+
+        $userfrom = $generator->create_user();
+        $userto = $generator->create_user();
+
+        $message = new \core\message\message();
+        $message->component         = 'moodle';
+        $message->name              = 'instantmessage';
+        $message->userfrom          = $userfrom;
+        $message->userto            = $userto;
+        $message->subject           = 'message subject 1';
+        $message->fullmessage       = 'message body';
+        $message->fullmessageformat = FORMAT_MARKDOWN;
+        $message->fullmessagehtml   = '<p>message body</p>';
+        $message->smallmessage      = 'small message';
+        $message->notification      = '0';
+
+        $messageid = message_send($message);
+        $aftersent = time();
+
+        $actual = local::get_user_messages($userfrom->id);
+        $this->assertCount(0, $actual);
+
+        $actual = local::get_user_messages($userto->id);
+        $this->assertCount(1, $actual);
+
+        $todelete = $DB->get_record('message', ['id' => $messageid]);
+        message_delete_message($todelete, $userto->id);
+        $actual = local::get_user_messages($userto->id);
+        $this->assertCount(0, $actual);
+    }
+
+    public function test_one_message_user_deleted() {
+        global $DB;
+
+        $this->resetAfterTest();
+
+        $generator = $this->getDataGenerator();
+
+        $userfrom = $generator->create_user();
+        $userto = $generator->create_user();
+
+        $message = new \core\message\message();
+        $message->component         = 'moodle';
+        $message->name              = 'instantmessage';
+        $message->userfrom          = $userfrom;
+        $message->userto            = $userto;
+        $message->subject           = 'message subject 1';
+        $message->fullmessage       = 'message body';
+        $message->fullmessageformat = FORMAT_MARKDOWN;
+        $message->fullmessagehtml   = '<p>message body</p>';
+        $message->smallmessage      = 'small message';
+        $message->notification      = '0';
+
+        $messageid = message_send($message);
+        $aftersent = time();
+
+        $actual = local::get_user_messages($userfrom->id);
+        $this->assertCount(0, $actual);
+
+        $actual = local::get_user_messages($userto->id);
+        $this->assertCount(1, $actual);
+
+        delete_user($userfrom);
+        $actual = local::get_user_messages($userto->id);
+        $this->assertCount(0, $actual);
+    }
+
     public function test_no_grading() {
         $actual = local::grading();
         $expected = '<p>You have no submissions to grade.</p>';
