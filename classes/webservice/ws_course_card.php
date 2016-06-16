@@ -78,6 +78,6 @@ class ws_course_card extends \external_api {
         }
         $coursecard = $service->cardbyshortname($courseshortname);
         // Convert renderable to array and skip protected / private - casting with (array) includes protected / private.
-        return (array)json_decode(json_encode($coursecard));
+        return (array)json_decode($coursecard->model);
     }
 }

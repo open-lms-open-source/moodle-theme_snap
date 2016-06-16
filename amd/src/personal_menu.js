@@ -98,59 +98,6 @@ define(['jquery', 'core/log', 'core/yui', 'theme_snap/pm_course_cards', 'theme_s
             loadAjaxInfo('messages');
             loadAjaxInfo('forumposts');
 
-            // Load course information via ajax.
-            var courseids = [];
-            var courseinfo_key = M.cfg.sesskey + 'courseinfo';
-            $('.courseinfo .dynamicinfo').each(function() {
-                courseids.push($(this).attr('data-courseid'));
-            });
-            if (courseids.length > 0) {
-
-                /**
-                 * Apply course information to courses in personal menu.
-                 *
-                 * @param crsinfo
-                 */
-                var applyCourseInfo = function(crsinfo) {
-                    for (var i in crsinfo) {
-                        var info = crsinfo[i];
-                        log.info('applying course data for courseid ' + info.courseid);
-                        var courseinfohtml = info.progress.progresshtml;
-                        if (info.feedback && info.feedback.feedbackhtml) {
-                            courseinfohtml += info.feedback.feedbackhtml;
-                        }
-                        $('.courseinfo [data-courseid="' + info.courseid + '"]').html(courseinfohtml);
-                    }
-                };
-
-                // OK - lets see if we have grades/progress in session storage we can use before ajax call.
-                if (window.sessionStorage[courseinfo_key]) {
-                    var courseinfo = JSON.parse(window.sessionStorage[courseinfo_key]);
-                    applyCourseInfo(courseinfo);
-                }
-
-                // Get course info via ajax.
-                var courseiddata = 'courseids=' + courseids.join(',');
-                log.info("fetching course data");
-                $.ajax({
-                    type: "GET",
-                    async: true,
-                    url: M.cfg.wwwroot + '/theme/snap/rest.php?action=get_courseinfo&contextid=' + M.cfg.context,
-                    data: courseiddata,
-                    success: function(data) {
-                        if (data.info) {
-                            log.info('fetched coursedata', data.info);
-                            if (supportlocalstorage) {
-                                window.sessionStorage[courseinfo_key] = JSON.stringify(data.info);
-                            }
-                            applyCourseInfo(data.info);
-                        } else {
-                            log.warn('fetched coursedata with error: JSON data object is missing info property', data);
-                        }
-                    }
-                });
-            }
-
             if($('#snap-personal-menu-badges').length && typeof(M.snap_message_badge) === 'undefined') {
                 // When M.snap_message_badge is available then trigger personal menu update.
                 whenTrue(

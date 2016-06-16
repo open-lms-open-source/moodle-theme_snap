@@ -38,22 +38,6 @@ require_once($CFG->dirroot.'/mod/forum/lib.php');
  */
 class local {
 
-
-    /**
-     * If debugging enabled in config then return reason for no grade (useful for json output).
-     *
-     * @param $warning
-     * @return null|object
-     */
-    public static function skipgradewarning($warning) {
-        global $CFG;
-        if (!empty($CFG->debugdisplay)) {
-            return (object) array ('skipgrade' => $warning);
-        } else {
-            return null;
-        }
-    }
-
     /**
      * Is there a valid grade or feedback inside this grader report table item?
      *
@@ -82,7 +66,7 @@ class local {
      * Does this course have any visible feedback for current user?.
      *
      * @param $course
-     * @return stdClass | null
+     * @return boolean
      */
     public static function course_feedback($course) {
         global $USER;
@@ -91,11 +75,11 @@ class local {
         // Security check - should they be allowed to see course grade?
         $onlyactive = true;
         if (!is_enrolled($coursecontext, $USER, 'moodle/grade:view', $onlyactive)) {
-            return self::skipgradewarning('User not enrolled on course with capability moodle/grade:view');
+            return false;
         }
         // Security check - are they allowed to see the grade report for the course?
         if (!has_capability('gradereport/user:view', $coursecontext)) {
-            return self::skipgradewarning('User does not have required course capability gradereport/user:view');
+            return false;
         }
         // See if user can view hidden grades for this course.
         $canviewhidden = has_capability('moodle/grade:viewhidden', $coursecontext);
@@ -103,7 +87,7 @@ class local {
         // Note - moodle/grade:viewall is a capability held by teachers and thus used to exclude them from not getting
         // the grade.
         if (empty($course->showgrades) && !has_capability('moodle/grade:viewall', $coursecontext)) {
-            return self::skipgradewarning('Course set up to not show gradebook to students');
+            return false;
         }
         // Get course grade_item.
         $courseitem = \grade_item::fetch_course_item($course->id);
@@ -112,7 +96,7 @@ class local {
         $coursegrade->grade_item =& $courseitem;
         // Return null if can't view.
         if ($coursegrade->is_hidden() && !$canviewhidden) {
-            return self::skipgradewarning('Course grade is hidden from students');
+            return false;
         }
         // Use user grade report to get course total - this is to take hidden grade settings into account.
         $gpr = new \grade_plugin_return(array(
@@ -130,17 +114,11 @@ class local {
                 break;
             }
         }
-        $feedbackhtml = '';
+
         if ($visiblegradefound) {
-            // Just output - feedback available.
-            $url = new \moodle_url('/grade/report/user/index.php', array('id' => $course->id));
-            $feedbackstring = get_string('feedbackavailable', 'theme_snap');
-            $feedbackhtml = \html_writer::link($url,
-                $feedbackstring,
-                array('class' => 'coursegrade')
-            );
+            return true;
         }
-        return (object) array('feedbackhtml' => $feedbackhtml);
+        return false;
     }
 
     /**
@@ -185,16 +163,12 @@ class local {
             }
         }
 
-        $compobj = (object) array('complete' => $compcount, 'total' => $trackcount, 'progresshtml' => '');
         if ($trackcount > 0) {
-            $progress = get_string('progresstotal', 'completion', $compobj);
-            // TODO - we should be putting our HTML in a renderer.
             $progresspercent = ceil(($compcount/$trackcount)*100);
-            $progressinfo = '<div class="completionstatus outoftotal">'.$progress.'<span class="pull-right">'.$progresspercent.'%</span></div>
-            <div class="completion-line" style="width:'.$progresspercent.'%"></div>
-            ';
-            $compobj->progresshtml = $progressinfo;
+        } else {
+            $progresspercent = 0;
         }
+        $compobj = (object) ['complete' => $compcount, 'total' => $trackcount, 'progress' => $progresspercent];
 
         return $compobj;
     }
@@ -217,10 +191,13 @@ class local {
                 continue;
             }
 
+            $feedbackurl = new \moodle_url('/grade/report/user/index.php', array('id' => $course->id));
+
             $courseinfo[$courseid] = (object) array(
-                'courseid' => $courseid,
-                'progress' => self::course_completion_progress($course),
-                'feedback' => self::course_feedback($course)
+                'course' => $courseid,
+                'completion' => self::course_completion_progress($course),
+                'feedback' => self::course_feedback($course),
+                'feedbackurl' =>  $feedbackurl->out()
             );
         }
         return $courseinfo;

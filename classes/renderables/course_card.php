@@ -41,6 +41,12 @@ class course_card implements \renderable {
      * @var course service
      */
     private $service;
+    
+    /**
+     * @var course_card $model
+     * (should be set to json encoded version of $this);
+     */
+    public $model;
 
     /**
      * @var int $courseid
@@ -110,6 +116,7 @@ class course_card implements \renderable {
         $this->courseid = $courseid;
         $this->service = $service ? : course::service();
         $this->apply_properties();
+        $this->model = $this;
     }
 
     /**
@@ -193,5 +200,17 @@ class course_card implements \renderable {
         }
 
         $this->hiddenavatarcount = count($this->hiddenavatars);
+    }
+
+    /**
+     * This magic method is here purely so that doing strval($coursecard->model) yields a json encoded version of the
+     * object that can be used in a template.
+     * @return string
+     */
+    public function __toString(){
+        unset($this->model);
+        $retval = json_encode($this);
+        $this->model = $this;
+        return $retval;
     }
 }
