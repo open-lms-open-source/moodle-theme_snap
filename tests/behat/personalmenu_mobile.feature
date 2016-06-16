@@ -42,6 +42,7 @@ Feature: When the moodle theme is set to Snap, students and teachers can open a 
   @javascript
   Scenario Outline: Teacher / Student can view personal menu on a mobile device.
     Given I change window size to "320x480"
+    And the message processor "badge" is enabled
     And I log in as "<user>" (theme_snap)
     And I open the personal menu
     And I follow "Deadlines" in the mobile personal menu
@@ -56,6 +57,8 @@ Feature: When the moodle theme is set to Snap, students and teachers can open a 
     Then I should see "You have no messages."
     And I follow "Forum posts" in the mobile personal menu
     Then I should see "You have no relevant forum posts."
+    And I follow "Alerts" in the mobile personal menu
+    Then I should see "You have no unread alerts."
     And I click on "#fixy-close" "css_element"
     And I open the personal menu
     And I wait until "#fixy-mobile-menu" "css_element" is visible
