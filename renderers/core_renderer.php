@@ -1279,24 +1279,6 @@ HTML;
         return $output;
     }
 
-    /**
-     * Renders an action_menu_link item.
-     *
-     * @param action_menu_link $action
-     * @return string HTML fragment
-     */
-    protected function render_action_menu_link(action_menu_link $action) {
-        global $COURSE;
-        if ($COURSE->id != SITEID) {
-            if (   stripos($action->url, 'bui_hideid') !== false
-                || stripos($action->url, 'bui_showid') !== false
-            ) {
-                $action->url->set_anchor('blocks');
-            }
-        }
-        return (parent::render_action_menu_link($action));
-    }
-
     public function pix_url($imagename, $component = 'moodle') {
         // Strip -24, -64, -256  etc from the end of filetype icons so we
         // only need to provide one SVG, see MDL-47082.
