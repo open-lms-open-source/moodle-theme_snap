@@ -82,8 +82,6 @@ if ($hasadminbutton) {
         '/theme/index.php',
         '/user/editadvanced.php',
         '/user/profile/index.php',
-
-        '/my/indexsys.php',
         '/mnet/service/enrol/index.php',
         '/local/mrooms/view.php'
     );
