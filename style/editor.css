@@ -9098,6 +9098,7 @@ body.hascontinuecancel.path-site #page {
 .form-filemanager .fp-restrictions {
   display: none;
 }
+#page-user-files .ffilemanager .fp-viewbar,
 #page-backup-backupfilesedit .ffilemanager .fp-viewbar {
   display: block;
 }
