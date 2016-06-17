@@ -70,7 +70,8 @@ hr {
 }
 
 a,
-a:visited {
+a:visited,
+.btn-link {
     color: @brand-primary;
 }
 
@@ -230,21 +231,8 @@ legend,
     color: @brand-primary;
 }
 
-// course management page pagination yui buttons
 #course-category-listings .listing-pagination .yui3-button,
-.paging.paging-morelink a {
-    background-color: @brand-primary;
-    border-color: @brand-primary;
-
-    &:hover,
-    &:focus,
-    &:active,
-    &.active {
-        background-color: darken(@brand-primary, 8%);
-        border-color: darken(@brand-primary, 12%);
-    }
-}
-
+.paging.paging-morelink a,
 #changenumsections .increase-sections,
 #changenumsections .reduce-sections,
 input.form-submit,
@@ -255,14 +243,19 @@ td.submit input,
 #notice .singlebutton + .singlebutton input,
 #login.fixy input[type=submit],
 button#local-joulegrader-preview-button,
+button.atto_equation_submit,
 .yui-skin-sam .yui-button,
 .yui3-button,
 .yui-button button,
+.header-button-group .btn,
 .btn.btn-primary,
 .btn.btn-default,
+.button-group > button,
 input.form-submit,
 input[type="button"],
+.moodle-dialogue-content button[type="button"],
 input[type="submit"],
+button[type="submit"],
 input[type="reset"],
 #page-site-index .section-modchooser-link .section-modchooser-text {
     font-family: @font-family-base;

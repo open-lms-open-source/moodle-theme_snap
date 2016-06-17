@@ -471,13 +471,18 @@ textarea {
 #changenumsections .reduce-sections,
 .paging.paging-morelink a,
 button#local-joulegrader-preview-button,
+button.atto_equation_submit,
 a.yui3-button,
 .yui-button button,
+.header-button-group .btn,
 .btn.btn-primary,
 .btn.btn-default,
+.button-group > button,
 input.form-submit,
 input[type="button"],
 input[type="submit"],
+button[type="submit"],
+.moodle-dialogue-content button,
 input[type="reset"] {
     font-family: @font-family-base;
     background: transparent;
@@ -565,24 +570,8 @@ input[type="reset"] {
     }
 }
 
-
-#page-mod-quiz-edit div.question div.content div.points input[type="submit"],
-.btn,
-button,
-input.form-submit,
-input[type="button"],
-input[type="submit"],
-input[type="reset"],
-input[name="searchwikicontent"]+input[type="submit"],
-select+input[type="submit"],
-input[type="text"]+input[type="button"],
-input[type="password"]+input[type="submit"],
-input[type="text"]+button,
-input[type="text"]+input[type="submit"] {
-    padding: 0.25em 1em;
-    margin: 0;
-    vertical-align: baseline;
-    line-height: 1.5;
+.btn-group > button + button {
+    margin-left: 1em;
 }
 
 // This a tag gets created by JS after page load so we can't fix it in the renderer.

@@ -284,12 +284,12 @@ class theme_snap_core_files_renderer extends core_files_renderer {
         <img src="'.$this->pix_url('i/loading_small').'" />
     </div>
     <form class="form-horizontal">
-        <button class="fp-file-download">'.get_string('download').'</button>
-        <button class="fp-file-delete">'.get_string('delete').'</button>
-        <button class="fp-file-setmain">'.get_string('setmainfile', 'repository').'</button>
+        <button class="btn btn-default fp-file-download">'.get_string('download').'</button>
+        <button class="btn btn-default fp-file-delete">'.get_string('delete').'</button>
+        <button class="btn btn-default fp-file-setmain">'.get_string('setmainfile', 'repository').'</button>
         <span class="fp-file-setmain-help">'.$OUTPUT->help_icon('setmainfile', 'repository').'</span>
-        <button class="fp-file-zip">'.get_string('zip', 'editor').'</button>
-        <button class="fp-file-unzip">'.get_string('unzip').'</button>
+        <button class="btn btn-default fp-file-zip">'.get_string('zip', 'editor').'</button>
+        <button class="btn btn-default fp-file-unzip">'.get_string('unzip').'</button>
         <div class="fp-hr"></div>
 
         <div class="fp-forminset">
@@ -803,8 +803,8 @@ class theme_snap_core_files_renderer extends core_files_renderer {
 <div class="file-picker fp-dlg">
     <p class="fp-dlg-text"></p>
     <div class="fp-dlg-buttons">
-        <button class="fp-dlg-butoverwrite btn">'.get_string('overwrite', 'repository').'</button>
-        <button class="fp-dlg-butrename btn"></button>
+        <button class="fp-dlg-butoverwrite btn btn-default">'.get_string('overwrite', 'repository').'</button>
+        <button class="fp-dlg-butrename btn btn-default"></button>
         <button class="fp-dlg-butcancel btn btn-default">'.get_string('cancel').'</button>
     </div>
 </div>';
