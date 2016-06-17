@@ -4233,15 +4233,7 @@ section#region-main
 }
 .format-topics.editing.pagelayout-course #page-mast .singlebutton,
 .format-weeks.editing.pagelayout-course #page-mast .singlebutton {
-  float: right;
-  margin-top: -3.2em;
-  margin-right: -4%;
   display: block;
-}
-.format-topics.editing.pagelayout-course #page-mast .singlebutton input[type="submit"],
-.format-weeks.editing.pagelayout-course #page-mast .singlebutton input[type="submit"] {
-  background-color: #999 !important;
-  box-shadow: 0;
 }
 .pagelayout-course #settingsnav .type_course > ul > li:first-child {
   display: none;
