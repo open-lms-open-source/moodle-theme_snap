@@ -17,6 +17,7 @@
 namespace theme_snap\services;
 
 use theme_snap\renderables\course_card;
+use theme_snap\local;
 
 defined('MOODLE_INTERNAL') || die();
 
@@ -41,6 +42,87 @@ class course {
             $instance = new course();
         }
         return $instance;
+    }
+
+    /**
+     * @param string $courseshortname
+     * @param string $data
+     * @param string $filename
+     * @return array
+     * @throws \file_exception
+     * @throws \stored_file_creation_exception
+     */
+    public function setcoverimage($courseshortname, $data, $filename) {
+
+        global $CFG;
+
+        $course = $this->coursebyshortname($courseshortname);
+        if ($course->id != SITEID) {
+            // Course cover images.
+            $context = \context_course::instance($course->id);
+        } else {
+            // Site cover images.
+            $context = \context_system::instance();
+        }
+
+        require_capability('moodle/course:manageactivities', $context);
+
+        $fs = get_file_storage();
+        $ext = strtolower(pathinfo($filename, PATHINFO_EXTENSION));
+        $ext = $ext === 'jpeg' ? 'jpg' : $ext;
+        $newfilename = 'rawcoverimage.'.$ext;
+
+        if ($course->id != SITEID) {
+            // Course cover images.
+            $context = \context_course::instance($course->id);
+            $fileinfo = array(
+                'contextid' => $context->id,
+                'component' => 'course',
+                'filearea' => 'overviewfiles',
+                'itemid' => 0,
+                'filepath' => '/',
+                'filename' => $newfilename);
+
+                $extensions = ['jpg', 'jpeg', 'png', 'gif', 'svg'];
+
+                // Remove any old cover image files.
+                foreach ($extensions as $ext) {
+                    $chkfilename = 'rawcoverimage.'.$ext;
+                    if ($fs->file_exists($context->id, $fileinfo['component'], $fileinfo['filearea'], 0, '/', $chkfilename)) {
+                        $storedfile = $fs->get_file($context->id, $fileinfo['component'], $fileinfo['filearea'], 0, '/', $chkfilename);
+                        $storedfile->delete();
+                    }
+                }
+
+        } else {
+            // Site cover images.
+            $context = \context_system::instance();
+            $fileinfo = array(
+                'contextid' => $context->id,
+                'component' => 'theme_snap',
+                'filearea' => 'poster',
+                'itemid' => 0,
+                'filepath' => '/',
+                'filename' => $newfilename);
+
+            // Remove everything from poster area.
+            $fs->delete_area_files($context->id, 'theme_snap', 'poster');
+        }
+
+        $binary =  base64_decode($data);
+        if (strlen($binary) > get_max_upload_file_size($CFG->maxbytes)) {
+            throw new \moodle_exception('error:coverimageexceedsmaxbytes', 'theme_snap');
+        }
+
+        // Create new cover image file and process it.
+        $storedfile = $fs->create_file_from_string($fileinfo, $binary);
+        $success = $storedfile instanceof \stored_file;
+        if ($course->id != SITEID) {
+            local::process_coverimage($context, $storedfile);
+        } else {
+            local::process_coverimage($context);
+        }
+        return ['success' => $success];
     }
 
     /**

@@ -263,7 +263,6 @@ class snap_shared extends renderer_base {
             'movecoursemodule',
             'movecoursesection',
             'movecontent',
-            'ok',
             'show',
             'tocontent',
             'totopofsection'
@@ -300,13 +299,15 @@ class snap_shared extends renderer_base {
      * @return void
      */
     public static function page_requires_js() {
-        global $PAGE, $COURSE, $USER;
+        global $CFG, $PAGE, $COURSE, $USER;
 
         $PAGE->requires->jquery();
         $PAGE->requires->strings_for_js(array(
             'close',
             'debugerrors',
             'problemsfound',
+            'error:coverimageexceedsmaxbytes',
+            'error:coverimageresolutionlow',
             'forumtopic',
             'forumauthor',
             'forumpicturegroup',
@@ -324,14 +325,13 @@ class snap_shared extends renderer_base {
         ), 'theme_snap');
 
         $PAGE->requires->strings_for_js([
+            'ok',
+            'cancel'
+        ], 'moodle');
+
+        $PAGE->requires->strings_for_js([
             'printbook'
         ], 'booktool_print');
-
-        $courseconfig = new stdClass();
-        $courseconfig->ajaxurl = '/course/rest.php';
-        // These never appear to get set in lib.php include_course_ajax - config can be passed into that function with
-        // the param set but that never seems to happen.
-        $courseconfig->pageparams = array();
 
         // Are we viewing /course/view.php - note, this is different from just checking the page type.
         // We only ever want to load course.js when on site page or view.php - no point in loading it when on
@@ -339,7 +339,14 @@ class snap_shared extends renderer_base {
         $courseviewpage = local::current_url_path() === '/course/view.php';
         $pagehascoursecontent = ($PAGE->pagetype === 'site-index' || $courseviewpage);
 
-        $initvars = [$COURSE->id, $PAGE->context->id, $courseconfig, $pagehascoursecontent];
+        $coursevars = (object) [
+            'id' => $COURSE->id,
+            'shortname' => $COURSE->shortname,
+            'contextid' => $PAGE->context->id,
+            'ajaxurl' => '/course/rest.php'
+        ];
+
+        $initvars = [$coursevars, $pagehascoursecontent, get_max_upload_file_size($CFG->maxbytes)];
         $PAGE->requires->js_call_amd('theme_snap/snap', 'snapInit', $initvars);
 
         // Does the page have editable course content?

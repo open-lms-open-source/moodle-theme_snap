@@ -1055,18 +1055,24 @@ class local {
     /**
      * Copy coverimage file to standard location and name.
      *
-     * @param stored_file $file
+     * @param context $context
+     * @param stored_file $originalfile
      * @return stored_file|bool
      */
-    public static function process_coverimage($context) {
-        if ($context->contextlevel == CONTEXT_SYSTEM) {
-            $originalfile = self::site_coverimage_original($context);
-            $newfilename = "site-image";
-        } else if ($context->contextlevel == CONTEXT_COURSE) {
-            $originalfile = self::get_course_firstimage($context->instanceid);
-            $newfilename = "course-image";
-        } else {
+    public static function process_coverimage($context, $originalfile = false) {
+
+        $contextlevel = $context->contextlevel;
+        if ($contextlevel != CONTEXT_SYSTEM && $contextlevel != CONTEXT_COURSE) {
             throw new \coding_exception('Invalid context passed to process_coverimage');
+        }
+        $newfilename = $contextlevel == CONTEXT_SYSTEM ? 'site-image' : 'course-image';
+
+        if (!$originalfile) {
+            if ($contextlevel == CONTEXT_SYSTEM) {
+                $originalfile = self::site_coverimage_original($context);
+            } else {
+                $originalfile = self::get_course_firstimage($context->instanceid);
+            }
         }
 
         $fs = get_file_storage();

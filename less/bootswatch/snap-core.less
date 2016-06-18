@@ -573,6 +573,15 @@ input[type="reset"] {
         border-color: @brand-primary;
     }
 }
+.btn.btn-solid {
+    &,
+    &:visited,
+    &:hover,
+    &:active,
+    &:focus {
+        background: #fff;
+    }
+}
 
 .btn-group > button + button {
     margin-left: 1em;
@@ -1622,6 +1631,10 @@ http://blog.rodneyrehm.de/archives/34-iOS7-Mobile-Safari-And-Viewport-Units.html
     display: inline-block;
     padding: 1em 2%;
     margin-top: 2em;
+}
+
+.path-course #page-mast h1 {
+    display: inline;
 }
 
 #page-mast .snap-login-button {
@@ -4079,4 +4092,85 @@ button.snap-icon-toggle {
     &:focus {
         border:2px solid @brand-primary;
     }
+}
+
+// Cover image control.
+#coverimagecontrol {
+    float: right;
+    margin-left: 1em;
+    display: inline-block;
+    .alakazam();
+    opacity: 0;
+}
+
+#changecoverimageconfirmation {
+    position: relative;
+    display: inline-block;
+}
+
+#coverfiles {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+}
+
+label[for="coverfiles"], #changecoverimageconfirmation button{
+    position: relative;
+    display: none;
+    top: -0.5em;
+}
+
+label.state-visible[for="coverfiles"], #changecoverimageconfirmation.state-visible button{
+    display: inline-block;
+    padding: 6px 16px;
+    cursor: pointer;
+}
+
+label.state-visible[for="coverfiles"] span:before {
+    content: '';
+    background: transparent url("[[pix:theme|camera]]") no-repeat;
+    display: inline-block;
+    margin: -0.4em 0.5em -0.4em -0.5em;
+    height: 1.5em;
+    width: 1.5em;
+}
+
+#coverfiles {
+    cursor: pointer;
+}
+
+label.state-visible[for="coverfiles"],
+#changecoverimageconfirmation .ok {
+    .spinner-three-quarters {
+        width: 1em;
+        height: 1em;
+        border-width: 0.25em;
+        margin-left: 0.5em;
+    }
+}
+
+#changecoverimageconfirmation.disabled .ok {
+    &,
+    &:visited,
+    &:hover,
+    &:active,
+    &:focus {
+        color: #fff;
+        border-color: #fff;
+    }
+}
+
+.cover-image-change #page-header {
+    background-image: none !important;
+    background-color: #aaa;
+}
+
+#page-header.mast-image .alert-warning {
+    background-color: rgba(255, 255, 255, 0.9);
+}
+
+#coverimagecontrol.snap-js-enabled {
+    opacity: 1;
 }
