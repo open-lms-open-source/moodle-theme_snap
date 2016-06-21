@@ -129,6 +129,11 @@ class local {
      */
     protected static function get_course_categories($course) {
         global $DB;
+
+        if ($course->id === SITEID) {
+            return [];
+        }
+
         $categories = [];
         $category = $DB->get_record('course_categories', array('id' => $course->category));
         if (!$category) {
@@ -140,6 +145,15 @@ class local {
         foreach (array_reverse($parentcategoryids) as $catid) {
             $categories[$catid] = null;
         }
+
+        // Load up all parent categories.
+        $idstoload = array_keys($categories);
+        array_shift($idstoload);
+        $parentcategories = $DB->get_records_list('course_categories', 'id', $idstoload);
+        foreach ($idstoload as $catid) {
+            $categories[$catid] = $parentcategories[$catid];
+        }
+
         return $categories;
     }
 
