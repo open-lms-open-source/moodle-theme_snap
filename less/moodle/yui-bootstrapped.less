@@ -18,15 +18,24 @@
 .yui-button.yui-link-button,
 .yui-button.yui-radio-button,
 .yui-button.yui-submit-button {
+    transition: all 0s;
     background-image: none;
     border: none;
+
     .first-child {
         border: none;
         a,
         button {
-            color: inherit;
             padding-left: 16px;
             padding-right: 16px;
+            color: inherit;
+            transition: all 0s;
+
+            &:focus,
+            &:active,
+            &:hover {
+                color: #fff;
+            }
         }
     }
 }

@@ -10665,6 +10665,7 @@ input[type="reset"][disabled],
 #id_cancel {
   color: #03A9F4;
 }
+#id_cancel:focus,
 #id_cancel:hover {
   color: #038dcc;
 }

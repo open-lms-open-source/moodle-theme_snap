@@ -15573,6 +15573,8 @@ fieldset[disabled] .yui-button button.active {
 .yui-button.yui-link-button,
 .yui-button.yui-radio-button,
 .yui-button.yui-submit-button {
+  -webkit-transition: all 0s;
+          transition: all 0s;
   background-image: none;
   border: none;
 }
@@ -15602,9 +15604,61 @@ fieldset[disabled] .yui-button button.active {
 .yui-button.yui-link-button .first-child button,
 .yui-button.yui-radio-button .first-child button,
 .yui-button.yui-submit-button .first-child button {
-  color: inherit;
   padding-left: 16px;
   padding-right: 16px;
+  color: inherit;
+  -webkit-transition: all 0s;
+          transition: all 0s;
+}
+.ft .yui-button.yui-push-button .first-child a:focus,
+.yui-button.yui-push-button .first-child a:focus,
+.yui-button.yui-push-button.default .first-child a:focus,
+.yui-dialog .ft .yui-button.yui-push-button.default .first-child a:focus,
+.yui-button.yui-menu-button .first-child a:focus,
+.yui-button.yui-link-button .first-child a:focus,
+.yui-button.yui-radio-button .first-child a:focus,
+.yui-button.yui-submit-button .first-child a:focus,
+.ft .yui-button.yui-push-button .first-child button:focus,
+.yui-button.yui-push-button .first-child button:focus,
+.yui-button.yui-push-button.default .first-child button:focus,
+.yui-dialog .ft .yui-button.yui-push-button.default .first-child button:focus,
+.yui-button.yui-menu-button .first-child button:focus,
+.yui-button.yui-link-button .first-child button:focus,
+.yui-button.yui-radio-button .first-child button:focus,
+.yui-button.yui-submit-button .first-child button:focus,
+.ft .yui-button.yui-push-button .first-child a:active,
+.yui-button.yui-push-button .first-child a:active,
+.yui-button.yui-push-button.default .first-child a:active,
+.yui-dialog .ft .yui-button.yui-push-button.default .first-child a:active,
+.yui-button.yui-menu-button .first-child a:active,
+.yui-button.yui-link-button .first-child a:active,
+.yui-button.yui-radio-button .first-child a:active,
+.yui-button.yui-submit-button .first-child a:active,
+.ft .yui-button.yui-push-button .first-child button:active,
+.yui-button.yui-push-button .first-child button:active,
+.yui-button.yui-push-button.default .first-child button:active,
+.yui-dialog .ft .yui-button.yui-push-button.default .first-child button:active,
+.yui-button.yui-menu-button .first-child button:active,
+.yui-button.yui-link-button .first-child button:active,
+.yui-button.yui-radio-button .first-child button:active,
+.yui-button.yui-submit-button .first-child button:active,
+.ft .yui-button.yui-push-button .first-child a:hover,
+.yui-button.yui-push-button .first-child a:hover,
+.yui-button.yui-push-button.default .first-child a:hover,
+.yui-dialog .ft .yui-button.yui-push-button.default .first-child a:hover,
+.yui-button.yui-menu-button .first-child a:hover,
+.yui-button.yui-link-button .first-child a:hover,
+.yui-button.yui-radio-button .first-child a:hover,
+.yui-button.yui-submit-button .first-child a:hover,
+.ft .yui-button.yui-push-button .first-child button:hover,
+.yui-button.yui-push-button .first-child button:hover,
+.yui-button.yui-push-button.default .first-child button:hover,
+.yui-dialog .ft .yui-button.yui-push-button.default .first-child button:hover,
+.yui-button.yui-menu-button .first-child button:hover,
+.yui-button.yui-link-button .first-child button:hover,
+.yui-button.yui-radio-button .first-child button:hover,
+.yui-button.yui-submit-button .first-child button:hover {
+  color: #fff;
 }
 .yui-skin-sam .mask,
 .yui-bootstrapped .mask {
@@ -24161,6 +24215,7 @@ input[type="reset"][disabled],
 #id_cancel {
   color: #03A9F4;
 }
+#id_cancel:focus,
 #id_cancel:hover {
   color: #038dcc;
 }
