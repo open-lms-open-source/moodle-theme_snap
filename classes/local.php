@@ -123,11 +123,12 @@ class local {
 
     /**
      * Get course categories for a specific course.
+     * Based on code in moodle_page class - functions set_category_by_id and load_category.
      * @param stdClass $course
      * @return array
      * @throws moodle_exception
      */
-    protected static function get_course_categories($course) {
+    public static function get_course_categories($course) {
         global $DB;
 
         if ($course->id === SITEID) {
