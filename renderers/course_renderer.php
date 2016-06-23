@@ -870,15 +870,14 @@ class theme_snap_core_course_renderer extends core_course_renderer {
         return $actions;
     }
 
+    /**
+     * Return move notice.
+     * @return bool|string
+     * @throws moodle_exception
+     */
     public function snap_move_notice() {
-        $o = '<div id="snap-move-message" tabindex="-1">
-              <h5 class="snap-move-message-title"></h5>
-              <p class="sr-only">-</p>
-              <a class="snap-move-cancel snap-action-icon" href="#">
-              <i class="icon icon-close"></i><small>'.get_string('cancel').'</small>
-              </a>
-        </div>';
-        return $o;
+        global $OUTPUT;
+        return $OUTPUT->render_from_template('theme_snap/snap_move_notice', null);
     }
 
     /**

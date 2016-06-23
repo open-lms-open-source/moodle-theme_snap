@@ -19,10 +19,10 @@
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-define(['jquery', 'core/log'], function($, log) {
+define(['jquery', 'core/log', 'core/templates', 'core/notification'], function($, log, templates, notification) {
 
     return {
-        init: function(moveNoticeHtml) {
+        init: function() {
 
             /**
              * Items being moved - actual dom elements.
@@ -45,6 +45,77 @@ define(['jquery', 'core/log'], function($, log) {
              * @type {*|jQuery|HTMLElement}
              */
             var snapMoveMessage = $('#snap-move-message');
+
+            /**
+             * Moving has stopped, clean up.
+             */
+            var stopMoving = function() {
+                $('body').removeClass('snap-move-inprogress');
+                $('body').removeClass('snap-move-section');
+                $('body').removeClass('snap-move-asset');
+                $('.section-moving').removeClass('section-moving');
+                $('.asset-moving').removeClass('asset-moving');
+                $('.js-snap-asset-move').removeAttr('checked');
+                movingObjects = [];
+            };
+
+            /**
+             * Move fail - sad face :(.
+             */
+            var moveFailed = function() {
+                $('.snap-move-notice').addClass('movefail');
+                $('.snap-move-notice .three-quarters').remove();
+                var actname = $(movingObject).find('.instancename').html();
+
+                $('#snap-move-message h5').html(M.util.get_string('movefailed', 'theme_snap', actname));
+                // Stop moving in 2 seconds so that the user has time to see the failed moving notice.
+                window.setTimeout(function() {
+                    // Don't pass in target, we want to abort the move!
+                    stopMoving(false);
+                }, 2000);
+            };
+
+            /**
+             * Update moving message.
+             */
+            var updateMovingMessage = function() {
+                if (movingObjects.length === 1) {
+                    var assetname = $(movingObjects[0]).find('.snap-asset-link .instancename').html();
+                    assetname = assetname || M.str.label.pluginname;
+                    var title = M.util.get_string('moving', 'theme_snap', assetname);
+                    snapMoveMessage.find('.snap-move-message-title').html(title);
+                } else {
+                    snapMoveMessage.find('.snap-move-message-title').html(
+                        M.util.get_string('movingcount', 'theme_snap', movingObjects.length)
+                    );
+                }
+                snapMoveMessage.focus();
+            };
+
+            /**
+             * Remove moving object from moving objects array.
+             * @param {object} obj
+             */
+            var removeMovingObject = function(obj) {
+                var index = movingObjects.indexOf(obj);
+                if (index > -1) {
+                    movingObjects.splice(index, 1);
+                }
+                updateMovingMessage();
+            };
+
+            /**
+             * Add ajax loading to container
+             * @param {object} container
+             * @param {bool}   dark
+             */
+            var addAjaxLoading = function(container, dark) {
+                if ($(container).find('.loadingstat').length === 0) {
+                    var darkclass = dark ? ' spinner-dark' : '';
+                    $(container).append('<div class="loadingstat spinner-three-quarters' + darkclass +
+                        '">' + M.util.get_string('loading', 'theme_snap') + '</div>');
+                }
+            };
 
             /**
              * General move request
@@ -103,19 +174,6 @@ define(['jquery', 'core/log'], function($, log) {
             };
 
             /**
-             * Add ajax loading to container
-             * @param {object} container
-             * @param {bool}   dark
-             */
-            var addAjaxLoading = function(container, dark) {
-                if ($(container).find('.loadingstat').length === 0) {
-                    var darkclass = dark ? ' spinner-dark' : '';
-                    $(container).append('<div class="loadingstat spinner-three-quarters' + darkclass +
-                        '">' + M.util.get_string('loading', 'theme_snap') + '</div>');
-                }
-            }
-
-            /**
              * Show or hide an asset
              *
              * @param {object} e
@@ -141,11 +199,11 @@ define(['jquery', 'core/log'], function($, log) {
                     complete: function() {
                         parent.find('.snap-meta .loadingstat').remove();
                     },
-                    error: function(xhr, status, error) {
-                        // TODO - localise.
-                        alert('Failed to hide/show asset');
+                    error: function() {
+                        var message = M.util.get_string('error:failedtochangeassetvisibility', 'theme_snap');
+                        notification.alert(null, message, M.util.get_string('ok'));
                     },
-                    success: function(data) {
+                    success: function() {
                         if (show) {
                             parent.removeClass('draft');
                         } else {
@@ -209,22 +267,34 @@ define(['jquery', 'core/log'], function($, log) {
                     }, true);
                 }
 
-            }
+            };
 
             /**
-             * Move fail - sad face :(.
+             * Ajax request to move section to target.
+             * @param target
              */
-            var moveFailed = function() {
-                $('.snap-move-notice').addClass('movefail');
-                $('.snap-move-notice .three-quarters').remove();
-                var actname = $(movingObject).find('.instancename').html();
+            var ajaxReqMoveSection = function(dropzone) {
+                var targetsection = $(dropzone).data('id');
+                var target = $('#section-' + targetsection);
+                var currentsection = $(movingObjects[0]).attr('id').replace('section-', '');
 
-                $('#snap-move-message h5').html(M.util.get_string('movefailed', 'theme_snap', actname));
-                // Stop moving in 2 seconds so that the user has time to see the failed moving notice.
-                window.setTimeout(function() {
-                    // Don't pass in target, we want to abort the move!
-                    stopMoving(false);
-                }, 2000);
+                if (currentsection < targetsection) {
+                    targetsection -= 1;
+                }
+
+                var params = {
+                    class: 'section',
+                    id: currentsection,
+                    value: targetsection
+                };
+
+                ajaxReqMoveGeneral(params, target, function() {
+                    var targetsection = params.value;
+
+                    // TODO - INT-8670 - ok, here we can do a page redirect / reload but should probably ajax if we have time!
+                    location.href = location.href.replace(location.hash, '') + '#section-' + targetsection;
+                    location.reload(true);
+                }, true);
             };
 
             /**
@@ -257,9 +327,9 @@ define(['jquery', 'core/log'], function($, log) {
                         complete: function() {
                             parent.find('.snap-meta .loadingstat').remove();
                         },
-                        error: function(xhr, status, error) {
-                            // TODO - localise.
-                            alert('Failed to duplicate');
+                        error: function() {
+                            var message = M.util.get_string('error:failedtoduplicateasset', 'theme_snap');
+                            notification.alert(null, message, M.util.get_string('ok'));
                         },
                         success: function(data) {
                             $(data.fullcontent).insertAfter(parent);
@@ -324,39 +394,24 @@ define(['jquery', 'core/log'], function($, log) {
              */
             var addAfterDrops = function() {
                 if (document.body.id === "page-site-index") {
-                    $('#region-main .sitetopic ul.section').append('<li class="snap-drop asset-drop"><div class="asset-wrapper"><a href="#">' + M.util.get_string('movehere', 'theme_snap') + '</a></div></li>');
+                    $('#region-main .sitetopic ul.section').append(
+                        '<li class="snap-drop asset-drop">' +
+                        '<div class="asset-wrapper">' +
+                        '<a href="#">' +
+                        M.util.get_string('movehere', 'theme_snap') +
+                        '</a>' +
+                        '</div>' +
+                        '</li>');
                 } else {
-                    $('li.section .content ul.section').append('<li class="snap-drop asset-drop"><div class="asset-wrapper"><a href="#">' + M.util.get_string('movehere', 'theme_snap') + '</a></div></li>');
+                    $('li.section .content ul.section').append(
+                        '<li class="snap-drop asset-drop">' +
+                        '<div class="asset-wrapper">' +
+                        '<a href="#">' +
+                        M.util.get_string('movehere', 'theme_snap') +
+                        '</a>' +
+                        '</div>' +
+                        '</li>');
                 }
-            }
-
-            /**
-             * Update moving message.
-             */
-            var updateMovingMessage = function() {
-                if (movingObjects.length === 1) {
-                    var assetname = $(movingObjects[0]).find('.snap-asset-link .instancename').html();
-                    assetname = assetname || M.str.label.pluginname;
-                    var title = M.util.get_string('moving', 'theme_snap', assetname);
-                    snapMoveMessage.find('.snap-move-message-title').html(title);
-                } else {
-                    snapMoveMessage.find('.snap-move-message-title').html(
-                        M.util.get_string('movingcount', 'theme_snap', movingObjects.length)
-                    );
-                }
-                snapMoveMessage.focus();
-            }
-
-            /**
-             * Remove moving object from moving objects array.
-             * @param {object} obj
-             */
-            var removeMovingObject = function(obj) {
-                var index = movingObjects.indexOf(obj);
-                if (index > -1) {
-                    movingObjects.splice(index, 1);
-                }
-                updateMovingMessage();
             };
 
             /**
@@ -380,10 +435,10 @@ define(['jquery', 'core/log'], function($, log) {
 
                         log.debug('Moving this asset', assetname);
 
-                        var classes = $(asset).attr('class');
-                        var regex = /(?=snap-mime)([a-z0-9\-]*)/;
+                        var classes = $(asset).attr('class'),
+                            regex = /(?=snap-mime)([a-z0-9\-]*)/;
                         var assetclasses = regex.exec(classes);
-                        var classes = '';
+                        classes = '';
                         if (assetclasses) {
                             classes = assetclasses.join(' ');
                         }
@@ -411,7 +466,7 @@ define(['jquery', 'core/log'], function($, log) {
                     }
                     updateMovingMessage();
                 });
-            }
+            };
 
             /**
              * When an asset or drop zone is clicked, execute move.
@@ -438,47 +493,6 @@ define(['jquery', 'core/log'], function($, log) {
             };
 
             /**
-             * Ajax request to move section to target.
-             * @param target
-             */
-            var ajaxReqMoveSection = function(dropzone) {
-                var targetsection = $(dropzone).data('id');
-                var target = $('#section-' + targetsection);
-                var currentsection = $(movingObjects[0]).attr('id').replace('section-', '');
-
-                if (currentsection < targetsection) {
-                    targetsection -= 1;
-                }
-
-                var params = {
-                    class: 'section',
-                    id: currentsection,
-                    value: targetsection
-                };
-
-                ajaxReqMoveGeneral(params, target, function() {
-                    var targetsection = params.value;
-
-                    // TODO - INT-8670 - ok, here we can do a page redirect / reload but should probably ajax if we have time!
-                    location.href = location.href.replace(location.hash, '') + '#section-' + targetsection;
-                    location.reload(true);
-                }, true);
-            };
-
-            /**
-             * Moving has stopped, clean up.
-             */
-            var stopMoving = function() {
-                $('body').removeClass('snap-move-inprogress');
-                $('body').removeClass('snap-move-section');
-                $('body').removeClass('snap-move-asset');
-                $('.section-moving').removeClass('section-moving');
-                $('.asset-moving').removeClass('asset-moving');
-                $('.js-snap-asset-move').removeAttr('checked');
-                movingObjects = [];
-            }
-
-            /**
              * When cancel button is pressed in footer, cancel move.
              */
             var moveCancelListener = function() {
@@ -498,9 +512,9 @@ define(['jquery', 'core/log'], function($, log) {
                 if (M.course && M.course.resource_toolbox) {
                     M.course.resource_toolbox.handle_resource_dim = function(button, activity, action) {
                         return (action === 'hide') ? 0 : 1;
-                    }
+                    };
                 }
-            }
+            };
 
             /**
              * Add listeners.
@@ -513,7 +527,7 @@ define(['jquery', 'core/log'], function($, log) {
                 assetEditListeners();
                 addAfterDrops();
                 $('body').addClass('snap-course-listening');
-            }
+            };
 
             /**
              * Initialise script.
@@ -521,9 +535,12 @@ define(['jquery', 'core/log'], function($, log) {
             var initialise = function() {
                 // If the move notice html was not output to the dom via php, then we need to add it here via js.
                 // This is necessary for the front page which does not have a renderer that we can override.
-                if (moveNoticeHtml) {
-                    $('#region-main').append(moveNoticeHtml);
-                    snapMoveMessage = $('#snap-move-message');
+                if (!$('#snap-move-message').length) {
+                    templates.render('theme_snap/snap_move_notice', {})
+                        .done(function(result) {
+                            $('#region-main').append(result);
+                            snapMoveMessage = $('#snap-move-message');
+                        });
                 }
 
                 // Add listeners.
@@ -534,6 +551,6 @@ define(['jquery', 'core/log'], function($, log) {
             };
             initialise();
         }
-    }
+    };
 
 });

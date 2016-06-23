@@ -31,7 +31,7 @@ define(['jquery', 'core/notification', 'core/templates', 'core/log'], function($
          * @param {jQuery} target
          * @param {bool} skipid
          */
-        var cloneAttributes  = function(src, target, skipid){
+        var cloneAttributes = function(src, target, skipid) {
             var srcKeys = [];
             $.each($(src)[0].attributes, function() {
                 if (this.name == 'data-model') {
@@ -48,21 +48,6 @@ define(['jquery', 'core/notification', 'core/templates', 'core/log'], function($
                     $(target).removeAttr(this.name);
                 }
             });
-        };
-
-        /**
-         * Main initialising function - create custom modelUpdate function on element.
-         */
-        var init = function() {
-            if (!model && $(element).data('model')) {
-                model = $(element).data('model');
-            }
-            if ($(element).data('modelInitialised') !=1) {
-                $(element).on("modelUpdate", function(event, newModel, callback) {
-                    updateModel(newModel, callback);
-                });
-            }
-            $(element).data('modelInitialised', 1);
         };
 
         /**
@@ -100,6 +85,21 @@ define(['jquery', 'core/notification', 'core/templates', 'core/log'], function($
                 }).fail(notification.exception);
         };
 
+        /**
+         * Main initialising function - create custom modelUpdate function on element.
+         */
+        var init = function() {
+            if (!model && $(element).data('model')) {
+                model = $(element).data('model');
+            }
+            if ($(element).data('modelInitialised') != 1) {
+                $(element).on("modelUpdate", function(event, newModel, callback) {
+                    updateModel(newModel, callback);
+                });
+            }
+            $(element).data('modelInitialised', 1);
+        };
+
         init();
-    }
+    };
 });

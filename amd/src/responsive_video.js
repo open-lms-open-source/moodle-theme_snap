@@ -30,7 +30,7 @@ define(['jquery'], function($) {
      * @author Guy Thomas
      * @date 2014-06-09
      */
-    var responsiveVideo = function() {
+    var ResponsiveVideo = function() {
         this.apply = function() {
             // Should we be targeting all elements of this type, or should we be more specific?
             // E.g. for externally embedded video like youtube we have to go with iframes but what happens if there is
@@ -95,5 +95,6 @@ define(['jquery'], function($) {
             });
         };
     };
-    return new responsiveVideo();
+    
+    return new ResponsiveVideo();
 });

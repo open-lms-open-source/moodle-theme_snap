@@ -23,7 +23,7 @@
  * Hidden course cards.
  */
 define(['jquery'], function($) {
-    return new function() {
+    var HiddenCards = function() {
 
         var self = this;
 
@@ -77,4 +77,5 @@ define(['jquery'], function($) {
         init();
 
     };
+    return new HiddenCards();
 });
