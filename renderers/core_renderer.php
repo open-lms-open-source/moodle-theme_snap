@@ -820,17 +820,15 @@ class theme_snap_core_renderer extends toc_renderer {
             $courselist .= $this->browse_all_courses_button();
             $courselist .= '</div>';
 
-            // Output hidden courses toggle when there are visible courses.
             if ($actualhiddencount && $visiblecoursecount) {
+                // Output hidden courses toggle when there are visible courses.
                 $togglevisstate = !empty($hiddencourselist) ? ' state-visible' : '';
                 $hiddencourses = '<div class="clearfix"><h2 class="header-hidden-courses'.$togglevisstate.'"><a id="js-toggle-hidden-courses" href="#">'. get_string('hiddencoursestoggle', 'theme_snap', $hiddencoursecount).'</a></h2>';
                 $hiddencourses .= '<div id="fixy-hidden-courses" class="clearfix" tabindex="-1">' .$hiddencourselist. '</div>';
                 $hiddencourses .= '</div>';
                 $courselist .= $hiddencourses;
-            }
-            // Output hidden courses when no visible courses.
-            else if ($hiddencoursecount) {
-                $hiddencourses = '<div id="fixy-hidden-courses" class="clearfix">' .$hiddencourselist. '</div>';
+            } else if (!$visiblecoursecount && $hiddencoursecount) {
+                $hiddencourses = '<div id="fixy-hidden-courses" class="clearfix state-visible">' .$hiddencourselist. '</div>';
                 $courselist .= $hiddencourses;
             }
             $courselist .= '</section>';
