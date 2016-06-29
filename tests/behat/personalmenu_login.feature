@@ -96,7 +96,7 @@ Feature: When the moodle theme is set to Snap,
     And I am on homepage
     When I follow "Courses"
     And I follow "Course 1"
-    And I follow "Log in"
+    # The above will trigger a redirect to the login page.
     And I set the field "username" to "teacher1"
     And I set the field "password" to "teacher1"
     And I press "Log in"
