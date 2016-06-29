@@ -742,29 +742,31 @@ class theme_snap_core_renderer extends toc_renderer {
                     $helpstr = "<p class='text-center'><a href='".s($wwwroot)."/login/index.php'>$help</a></p>";
                 }
             }
-            $output .= $this->login_button();
+            if (local::current_url_path() != '/login/index.php') {
+                $output .= $this->login_button();
 
-            $altlogins = $this->render_login_alternative_methods(new login_alternative_methods());
+                $altlogins = $this->render_login_alternative_methods(new login_alternative_methods());
 
-            $output .= "<div class='fixy' id='snap-login' role='dialog' aria-label='$loginform' tabindex='-1'>
-            <form action='$wwwroot/login/index.php'  method='post'>
-            <div class=fixy-inner>
-            <div class=fixy-header>
-            <a id='fixy-close' class='js-personal-menu-trigger pull-right snap-action-icon' href='#'>
-                <i class='icon icon-close'></i><small>$cancel</small>
-            </a>
-            <h1>$login</h1>
-            </div>
-            <label for='username'>$username</label>
-            <input autocapitalize='off' type='text' name='username' id='username'>
-            <label for='password'>$password</label>
-            <input type='password' name='password' id='password' $autocomplete>
-            <br>
-            <input type='submit' value='".s($login)."'>
-            $helpstr
-            $altlogins
-            </div>
-        </form></div>";
+                $output .= "<div class='fixy' id='snap-login' role='dialog' aria-label='$loginform' tabindex='-1'>
+                    <form action='$wwwroot/login/index.php'  method='post'>
+                    <div class=fixy-inner>
+                    <div class=fixy-header>
+                    <a id='fixy-close' class='js-personal-menu-trigger pull-right snap-action-icon' href='#'>
+                        <i class='icon icon-close'></i><small>$cancel</small>
+                    </a>
+                    <h1>$login</h1>
+                    </div>
+                    <label for='username'>$username</label>
+                    <input autocapitalize='off' type='text' name='username' id='username'>
+                    <label for='password'>$password</label>
+                    <input type='password' name='password' id='password' $autocomplete>
+                    <br>
+                    <input type='submit' value='" . s($login) . "'>
+                    $helpstr
+                    $altlogins
+                    </div>
+                    </form></div>";
+            }
         } else {
             $courselist = "";
             $userpicture = new user_picture($USER);

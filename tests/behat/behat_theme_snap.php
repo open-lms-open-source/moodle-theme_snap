@@ -699,4 +699,14 @@ class behat_theme_snap extends behat_base {
         global $DB;
         $DB->set_field('message_processors', 'enabled', '0', array('name' => $processorname));
     }
+
+    /**
+     * @Given /^I am on the course "(?P<shortname_string>(?:[^"]|\\")*)"$/
+     * @param string $shortname
+     */
+    public function i_am_on_the_course($shortname) {
+        global $DB;
+        $courseid = $DB->get_field('course', 'id', ['shortname' => $shortname]);
+        $this->getSession()->visit($this->locate_path('/course/view.php?id='.$courseid));
+    }
 }

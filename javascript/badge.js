@@ -406,7 +406,7 @@ M.snap_message_badge.get_messages_html = function(Y, onsuccess) {
     var loadingstat = Y.Node.create('<div class="loadingstat three-quarters">' + Y.Escape.html(M.util.get_string('loading', 'theme_snap')) + '</div>');
     container.append(loadingstat);
 
-    Y.io(M.cfg.wwwroot + '/message/output/badge/view.php?controller=ajax&action=getmessages&courseid=' + M.snap_message_badge.courseid + '&maxmessages=' + M.snap_message_badge.perrequest + '&offset=' + M.snap_message_badge.offset, {
+    Y.io(M.cfg.wwwroot + '/message/output/badge/view.php?controller=ajax&action=getmessages&maxmessages=' + M.snap_message_badge.perrequest + '&offset=' + M.snap_message_badge.offset, {
         on: {
             success: function(id, o) {
                 var response = Y.JSON.parse(o.responseText);

@@ -82,3 +82,24 @@ Feature: When the moodle theme is set to Snap, students and teachers can open a 
     And I log in as "teacher1", keeping the personal menu open
     And I wait until ".message_badge_message_text" "css_element" is visible
     And I should see "New message from Student 1"
+
+  @javascript @testing
+  Scenario: Alerts are visible in personal menu when user is on course page warning no guest access.
+    Given the message processor "badge" is enabled
+    And the following config values are set as admin:
+      | personalmenulogintoggle | 0 | theme_snap |
+    And the following "users" exist:
+      | username | firstname | lastname | email |
+      | student2 | Student | 2 | student1@example.com |
+    And I am on the course "C1"
+    And I wait until the page is ready
+    And I set the following fields to these values:
+      | Username | student2 |
+      | Password | student2 |
+    And I press "Log in"
+    And I should see "You can not enrol yourself in this course"
+    And I open the personal menu
+    Then ".alert_stream" "css_element" should exist
+    And I wait until ".message_badge_empty" "css_element" is visible
+    Then I should see "You have no unread alerts."
+
