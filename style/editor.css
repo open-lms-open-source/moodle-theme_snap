@@ -9529,6 +9529,9 @@ div.editor_atto_toolbar div.atto_group {
   border: none;
   margin-left: 0;
 }
+#page-admin-setting-themesettingsnap #id_s_theme_snap_customcss {
+  font-family: Monaco, Menlo, Consolas, "Courier New", monospace;
+}
 .path-grade-report-grader .gradeparent .heading.floating {
   border-top: 1px solid #ddd;
 }
