@@ -18012,13 +18012,6 @@ we do this by default in snap, so hide moodle version */
 .section li.snap-native .summary-figure {
   text-align: center;
 }
-.section li.snap-native .pagemod-readmore {
-  display: inline-block;
-  padding: 0.25em 4%;
-  margin: 0 4% 0 0;
-  border: 1px solid;
-  border-radius: 2px;
-}
 .section li.snap-native .pagemod-content {
   display: none;
   clear: both;
@@ -24010,7 +24003,6 @@ legend,
 .collapsibleregioncaption {
   font-family: "Roboto", "Fira Sans", "Segoe UI", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
-.pagemod-readmore,
 .snap-action-icon,
 #coursetools-list a {
   font-family: "Roboto", "Fira Sans", "Segoe UI", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif;
