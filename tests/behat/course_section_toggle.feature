@@ -46,10 +46,12 @@ Feature: When the moodle theme is set to Snap, teachers can toggle the visibilit
     And I follow "Course 1"
     And I follow "Topic 2"
     Then "#section-2" "css_element" should exist
+    And "#chapters li:nth-of-type(3).snap-visible-section" "css_element" should exist
     And "#section-2.hidden" "css_element" should not exist
     And I click on "#section-2 .snap-visibility.snap-hide" "css_element"
     And I wait until "#section-2 .snap-visibility.snap-show" "css_element" exists
     Then "#section-2.hidden" "css_element" should exist
+    And "#chapters li:nth-of-type(3).snap-visible-section" "css_element" should exist
     # Make sure that the navigation either side of section 2 has the dimmed class - i.e. to reflect section 2's hidden status.
     And the previous navigation for section "3" shows as hidden
     And the next navigation for section "1" shows as hidden

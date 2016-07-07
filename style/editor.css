@@ -5229,8 +5229,8 @@ ol#chapters li a {
   margin-bottom: -0.3em;
   line-height: 1.75;
 }
-ol#chapters li.current a {
-  color: #666;
+ol#chapters li.snap-visible-section a {
+  color: #565656;
   text-decoration: none;
 }
 #chapters > :first-child {

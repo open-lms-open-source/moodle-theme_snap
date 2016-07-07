@@ -91,6 +91,7 @@ Feature: Open page module inline
     And "span.autocompletion img[title='Not completed: Page completion']" "css_element" should exist
     And I should see availability info "Not available unless: The activity Page completion is marked complete"
     And I follow "Topic 1"
+    And "#chapters li:nth-of-type(2).snap-visible-section" "css_element" should exist
     # Make sure topic 1 show section availability info.
     Then I should see availability info "Not available unless: The activity Page completion is marked complete"
     And I follow "Introduction"
@@ -101,6 +102,7 @@ Feature: Open page module inline
     And I should not see availability info "Not available unless: The activity Page completion is marked complete"
     And I should not see "Conditional" in the "#chapters li:nth-of-type(2)" "css_element"
     And I should see "Progress: 1 / 1" in the "#chapters li:nth-of-type(1)" "css_element"
+    And "#chapters li:nth-of-type(1).snap-visible-section" "css_element" should exist
     And "span.autocompletion img[title='Not completed: Page completion']" "css_element" should not exist
     And "span.autocompletion img[title='Completed: Page completion']" "css_element" should exist
     And I follow "Topic 1"
@@ -116,6 +118,7 @@ Feature: Open page module inline
     And I wait until "#section-1 .pagemod-content[data-content-loaded=\"1\"]" "css_element" is visible
     Then "span.autocompletion img[title='Not completed: Page completion 2']" "css_element" should not exist
     And "span.autocompletion img[title='Completed: Page completion 2']" "css_element" should exist
+    And "#chapters li:nth-of-type(2).snap-visible-section" "css_element" should exist
     And I follow "Topic 2"
     Then I should not see availability info "Not available unless: The activity Page completion 2 is marked complete"
     And I should not see "Conditional" in the "#chapters li:nth-of-type(3)" "css_element"

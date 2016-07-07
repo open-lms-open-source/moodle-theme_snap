@@ -181,9 +181,12 @@ trait format_section_trait {
             if (!$section->visible) {
                 $sectionstyle = ' hidden';
             } else if (course_get_format($course)->is_section_current($section)) {
-                $sectionstyle = ' current';
+                $sectionstyle = ' current state-visible set-by-server';
             }
+        } else if ($course->format == "topics" && $course->marker == 0) {
+            $sectionstyle = ' state-visible set-by-server';
         }
+
 
         if ($this->is_section_conditional($section)) {
             $canviewhiddensections = has_capability(
@@ -267,7 +270,7 @@ trait format_section_trait {
         $conditionalicon = '<img aria-hidden="true" role="presentation" class="svg-icon" src="'.$this->output->pix_url('conditional', 'theme').'" />';
         $conditionalmessage = $this->section_availability_message($section,
             has_capability('moodle/course:viewhiddensections', $context));
-        if($conditionalmessage !== '') {
+        if ($conditionalmessage !== '') {
             $o .= '<div class="snap-conditional-tag">'.$conditionalicon.$conditionalmessage.'</div>';
         }
 

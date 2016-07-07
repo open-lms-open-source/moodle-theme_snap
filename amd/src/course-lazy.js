@@ -71,6 +71,16 @@ define(
         };
 
         /**
+         * Mark the section shown to user with a class in the TOC.
+         */
+        this.setTOCVisibleSection = function() {
+            var sectionIdSel = '.section.main.state-visible, #coursetools.state-visible, #snap-add-new-section.state-visible';
+            var currentSectionId = $(sectionIdSel).attr('id');
+            $('#chapters li').removeClass('snap-visible-section');
+            $('#chapters a[href$="' + currentSectionId + '"]').parent('li').addClass('snap-visible-section');
+        };
+
+        /**
          * When on course page, show the section currently referenced in the location hash.
          */
         this.showSection = function() {
@@ -79,8 +89,11 @@ define(
                 return;
             }
 
-            // Reset visible section & blocks
-            $('.course-content .main, #moodle-blocks,#coursetools, #snap-add-new-section').removeClass('state-visible');
+            if($('.section.main.state-visible.set-by-server').length) {
+                $('.section.main.state-visible.set-by-server').removeClass('set-by-server');
+            } else {
+                $('.course-content .section.main, #moodle-blocks,#coursetools, #snap-add-new-section').removeClass('state-visible');
+            }
 
             // We know the params at 0 is a section id.
             // Params will be in the format: #section-[number]&module-[cmid], e.g: #section-1&module-7255.
@@ -110,17 +123,16 @@ define(
                 '#snap-add-new-section.state-visible'
             );
             if (!visibleChapters.length) {
-                // Show chapter 0.
-                $('#section-0').addClass('state-visible').focus();
+                if ($('.section.main.current').length) {
+                    $('.section.main.current').addClass('state-visible').focus();
+                } else {
+                    $('#section-0').addClass('state-visible').focus();
+                }
                 window.scrollTo(0, 0);
             }
 
             responsiveVideo.apply();
-            // Add faux :current class to the relevant section in toc.
-            var sectionIdSel = '.main.state-visible, #coursetools.state-visible, #snap-add-new-section.state-visible';
-            var currentSectionId = $(sectionIdSel).attr('id');
-            $('#chapters li').removeClass('current');
-            $('#chapters a[href$="' + currentSectionId + '"]').parent('li').addClass('current');
+            this.setTOCVisibleSection();
         };
 
         /**
@@ -143,6 +155,9 @@ define(
             // SL - 19th aug 2014 - check we are in a course and if so, show current section.
             if (onCoursePage()) {
                 self.showSection();
+                $(document).on('snapTOCReplaced',  function() {
+                    self.setTOCVisibleSection();
+                });
             }
         };
 

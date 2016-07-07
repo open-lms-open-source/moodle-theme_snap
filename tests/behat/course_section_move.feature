@@ -55,6 +55,7 @@ Feature: When the moodle theme is set to Snap, teachers can move course sections
     When I follow "Topic 4"
     And I follow "Place section \"My & < > Topic\" before section \"Topic 4\""
     Then I should see "My & < > Topic" in the "#section-3" "css_element"
+    And "#chapters li:nth-of-type(4).snap-visible-section" "css_element" should exist
     # Check that navigation is also updated.
     # Note that "4th" refers to section-3 as section-0 is the "introduction" section in the TOC.
     When I click on the "4th" link in the TOC

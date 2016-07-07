@@ -30,7 +30,7 @@ define(['jquery', 'core/ajax', 'core/notification', 'core/templates', 'theme_sna
             var currentlyUnavailableSections = courseConfig.unavailablesections.map(Number),
             currentlyUnavailableMods =  courseConfig.unavailablemods.map(Number);
 
-            $(document).on( "snap:module_completion_change",
+            $(document).on( "snapModuleCompletionChange",
                 function() {
                     ajax.call([
                         {
@@ -90,6 +90,7 @@ define(['jquery', 'core/ajax', 'core/notification', 'core/templates', 'theme_sna
                                 templates.render('theme_snap/course_toc', response.toc)
                                     .done(function(result) {
                                         $('#course-toc').replaceWith(result);
+                                        $(document).trigger('snapTOCReplaced');
                                     });
 
                                 // Update current state.

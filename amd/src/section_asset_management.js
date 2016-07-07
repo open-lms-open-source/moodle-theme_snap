@@ -595,6 +595,7 @@ define(['jquery', 'core/log', 'core/ajax', 'core/templates', 'core/notification'
                                     promiseHandler(templates.render('theme_snap/course_toc', response.toc), {
                                             done: function(result) {
                                                 $('#course-toc').replaceWith(result);
+                                                $(document).trigger('snapTOCReplaced');
                                                 if (onComplete && typeof(onComplete) === 'function') {
                                                     onComplete(sectionNumber, toggle);
                                                 }
@@ -664,6 +665,7 @@ define(['jquery', 'core/log', 'core/ajax', 'core/templates', 'core/notification'
                     ];
                     var selector = selectors.join(',');
                     updateSectionNavigation(selector);
+
                 };
                 sectionActionListener('visibility', manageHiddenClass);
             };
