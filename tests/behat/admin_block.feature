@@ -26,7 +26,6 @@ Feature: When the moodle theme is set to Snap, the admin block will only be show
   Background:
     Given the following config values are set as admin:
       | theme | snap |
-      | thememobile | snap |
       | defaulthomepage | 1 |
     And the following "courses" exist:
       | fullname | shortname | category | format |

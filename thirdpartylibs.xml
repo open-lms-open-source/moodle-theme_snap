@@ -7,7 +7,7 @@
     <version>3.2.0</version>
   </library>
   <library>
-    <location>javascript/bootstrap.js</location>
+    <location>amd/src/bootstrap.js</location>
     <name>Twitter Bootstrap (.js files)</name>
     <license>MIT</license>
     <version>3.2.0</version>
@@ -20,21 +20,9 @@
     <licenseversion>2.0</licenseversion>
   </library>
   <library>
-    <location>javascript/headroom.js</location>
+    <location>amd/src/headroom.js</location>
     <name>Headroom.js (https://github.com/WickyNilliams/headroom.js)</name>
     <license>MIT</license>
     <version>0.7.0</version>
-  </library>
-  <library>
-    <location>javascript/jquery.placeholder.js</location>
-    <name>jquery-placeholder (https://github.com/mathiasbynens/jquery-placeholder)</name>
-    <license>MIT</license>
-    <version>2.0.8</version>
-  </library>
-  <library>
-    <location>javascript/modernizer.js</location>
-    <name>Modernizr (https://modernizr.com/)</name>
-    <license>MIT</license>
-    <version>2.0.2</version>
   </library>
 </libraries>

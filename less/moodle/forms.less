@@ -115,18 +115,7 @@ form {
     float: none;
     width: auto;
 }
-.mform .ftags label.accesshide {
-    display: block;
-    position: static;
-}
-.mform .ftags select {
-    margin-bottom: 0.7em;
-}
-@media screen and (min-width: @screen-sm-min) {
-    .mform .ftags select {
-        min-width: 22em;
-    }
-}
+
 .mform .helplink img {
     margin: 0 .45em;
     padding: 0;
@@ -334,4 +323,58 @@ fieldset.coursesearchbox label {
         font-weight: normal;
         width: 250px;
     }
+}
+
+/* Custom styles for autocomplete form element */
+.form-autocomplete-selection {
+    margin: 0.2em;
+    min-height: 21px;
+}
+.form-autocomplete-multiple [role=listitem] {
+    cursor: pointer;
+}
+
+.form-autocomplete-suggestions {
+    position: absolute;
+    background-color: white;
+    border: 2px solid @gray-lighter;
+    border-radius: 3px;
+    min-width: 206px;
+    max-height: 20em;
+    overflow: auto;
+    margin: 0px;
+    padding: 0px;
+    margin-top: -0.2em;
+    z-index: 1;
+}
+.form-autocomplete-suggestions li {
+    list-style-type: none;
+    padding: 0.2em;
+    margin: 0;
+    cursor: pointer;
+    color: @text-color;
+}
+.form-autocomplete-suggestions li:hover {
+    background-color: lighten(@dropdown-link-hover-bg , 15%);
+    color: @dropdown-link-hover-color;
+}
+.form-autocomplete-suggestions li[aria-selected=true] {
+    background-color: darken(@navbar-default-bg , 5%);
+    color: @gray;
+}
+
+.form-autocomplete-downarrow {
+    color: @text-color;
+    position: relative;
+    top: -0.3em;
+    left: -1.5em;
+    cursor: pointer;
+}
+
+.form-autocomplete-selection:focus {
+    outline: none;
+}
+.form-autocomplete-selection [data-active-selection=true] {
+    padding: 0.5em;
+    font-size: large;
 }

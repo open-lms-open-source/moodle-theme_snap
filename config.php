@@ -21,6 +21,8 @@
  * @copyright Copyright (c) 2015 Moodlerooms Inc. (http://www.moodlerooms.com)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
+defined('MOODLE_INTERNAL') || die();
+
 global $SESSION, $COURSE, $USER, $PAGE;
 $themeissnap = isset($PAGE->theme->name) && $PAGE->theme->name === 'snap';
 $notajaxscript = !defined('AJAX_SCRIPT') || AJAX_SCRIPT == false;
@@ -41,6 +43,11 @@ if ($themeissnap && $notajaxscript) {
     if (empty($SESSION->theme_snap_last_course) || $SESSION->theme_snap_last_course != $COURSE->id) {
         $USER->editing = 0;
         $SESSION->theme_snap_last_course = $COURSE->id;
+    }
+
+    if (isset($SESSION->wantsurl)) {
+        // We are taking a backup of this because it can get unset later by core.
+        $SESSION->snapwantsurl = $SESSION->wantsurl;
     }
 }
 
@@ -185,12 +192,6 @@ $THEME->layouts = array(
 $THEME->javascripts = array(
 );
 $THEME->javascripts_footer = array(
-    'bootstrap',
-    'headroom',
-    'snap',
-    'course',
-    'modernizer',
-    'jquery.placeholder'
 );
 
 $THEME->csspostprocess = 'theme_snap_process_css';

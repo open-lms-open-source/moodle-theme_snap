@@ -75,30 +75,49 @@ class behat_theme_snap extends behat_base {
      * Logs in the user. There should exist a user with the same value as username and password.
      *
      * @Given /^I log in as "(?P<username_string>(?:[^"]|\\")*)" \(theme_snap\)$/
+     * @param string $username
+     * @param bool $andkeepmenuopen
      */
-    public function i_log_in_with_snap_as($username) {
+    public function i_log_in_with_snap_as($username, $andkeepmenuopen = false) {
 
+        $session = $this->getSession();
+        
         // Go back to front page.
-        $this->getSession()->visit($this->locate_path('/'));
+        $session->visit($this->locate_path('/'));
 
-        // Generic steps (we will prefix them later expanding the navigation dropdown if necessary).
-        $steps = array(
-            new Given('I click on "' . get_string('login') . '" "link"'),
-            new Given('I should not see "Log out"'),
-            new Given('I set the field "' . get_string('username') . '" to "' . $this->escape($username) . '"'),
-            new Given('I set the field "' . get_string('password') . '" to "'. $this->escape($username) . '"'),
-            new Given('I press "' . get_string('login') . '"')
-        );
-
-        // If Javascript is disabled we have enough with these steps.
-        if (!$this->running_javascript()) {
-            return $steps;
+        if ($this->running_javascript()) {
+            // Wait for the homepage to be ready.
+            $session->wait(self::TIMEOUT * 1000, self::PAGE_READY_JS);
         }
 
-        // Wait for the homepage to be ready.
-        $this->getSession()->wait(self::TIMEOUT * 1000, self::PAGE_READY_JS);
+        /** @var behat_general $general */
+        $general = behat_context_helper::get('behat_general');
+        $general->i_click_on(get_string('login'), 'link');
+        $general->assert_page_not_contains_text(get_string('logout'));
 
-        return $steps;
+        /** @var behat_forms $form */
+        $form = behat_context_helper::get('behat_forms');
+        $form->i_set_the_field_to(get_string('username'), $this->escape($username));
+        $form->i_set_the_field_to(get_string('password'), $this->escape($username));
+        $form->press_button(get_string('login'));
+
+        if (!$andkeepmenuopen) {
+            $showfixyonlogin = get_config('theme_snap', 'personalmenulogintoggle');
+            if ($showfixyonlogin) {
+                $general->i_click_on('#fixy-close', 'css_element');
+            }
+        }
+     }
+
+    /**
+     * Logs in the user but doesn't auto close personal menu.
+     * There should exist a user with the same value as username and password.
+     *
+     * @Given /^I log in as "(?P<username_string>(?:[^"]|\\")*)", keeping the personal menu open$/
+     * @param string $username
+     */
+    public function i_log_in_and_keep_personal_menu_open($username) {
+        $this->i_log_in_with_snap_as($username, true);
     }
 
     /**
@@ -183,13 +202,11 @@ class behat_theme_snap extends behat_base {
      * @Given  /^I log out \(theme_snap\)$/
      */
     public function i_log_out() {
-        $givens = [
-            'I open the personal menu',
-            'I wait until ".btn.logout" "css_element" is visible',
-            'I follow "Log out"',
-            'I wait until the page is ready'
-        ];
-        return $this->process_givens_array($givens);
+        $this->i_open_the_personal_menu();
+
+        /** @var behat_general $general */
+        $general = behat_context_helper::get('behat_general');
+        $general->i_click_on('#fixy-logout', 'css_element');
     }
 
     /**
@@ -216,11 +233,11 @@ class behat_theme_snap extends behat_base {
      */
     public function i_open_the_personal_menu() {
         $node = $this->find('css', '#primary-nav');
+        // Only attempt to open the personal menu if its not already open.
         if (!$node->isVisible()) {
-            return [new Given('I click on "#js-personal-menu-trigger" "css_element"')];
-        } else {
-            // Already open.
-            return null;
+            /* @var $generalcontext behat_general */
+            $generalcontext = behat_context_helper::get('behat_general');
+            $generalcontext->i_click_on('.snap-my-courses-menu', 'css_element');
         }
     }
 
@@ -341,7 +358,9 @@ class behat_theme_snap extends behat_base {
             '"Add restriction..." "dialogue" should be visible',
             'I click on "Date" "button" in the "Add restriction..." "dialogue"',
             'I set the field "day" to "'.$day.'"',
-            'I set the field "Month" to "'.$month.'"',
+            // Need to be extra-specific about the month select as there's
+            // other selects with that same label on the page.
+            'I set the field with xpath "//select[@name=\'x[month]\']" to "'.$month.'"',
             'I set the field "year" to "'.$year.'"',
             'I press "'.$savestr.'"',
             'I wait until the page is ready'
@@ -555,5 +574,139 @@ class behat_theme_snap extends behat_base {
         $generalcontext->assert_element_not_contains_text('Test assignment1', '#section-1', 'css_element');
         $generalcontext->ensure_element_exists('.block_news_items a.toggle-display', 'css_element');
         $this->i_can_see_input_with_value('Turn editing off');
+    }
+
+    /**
+     * @Given /^I follow the page heading course link$/
+     */
+    public function i_follow_the_page_heading_course_link() {
+        /** @var behat_general $helper */
+        $helper = behat_context_helper::get('behat_general');
+        $helper->i_click_on('#page-mast a', 'css_element');
+    }
+
+    /**
+     * @Given /^I cannot follow the page heading$/
+     */
+    public function i_cannot_follow_the_page_heading() {
+        $this->ensure_element_exists('#page-mast', 'css_element');
+        $this->ensure_element_does_not_exist('#page-mast a', 'css_element');
+    }
+
+    /**
+     * @param string $shortname
+     * @Given /^Favorite toggle exists for course "(?P<shortname>(?:[^"]|\\")*)"$/
+     */
+    public function favorite_toggle_exists_for_course($shortname) {
+        /* @var behat_general $general */
+        $general = behat_context_helper::get('behat_general');
+        $general->should_exist('.courseinfo[data-shortname="'.$shortname.'"] .favoritetoggle[aria-pressed="false"]', 'css_element');
+    }
+
+    /**
+     * @param string $shortname1
+     * @param string $shortname2
+     * @Given /^Course card "(?P<shortname1>(?:[^"]|\\")*)" appears before "(?P<shortname2>(?:[^"]|\\")*)"$/
+     */
+    public function course_card_appears_before($shortname1, $shortname2) {
+        /* @var behat_general $general */
+        $general = behat_context_helper::get('behat_general');
+
+        $preelement = '.courseinfo[data-shortname="'.$shortname1.'"]';
+        $postelement = '.courseinfo[data-shortname="'.$shortname2.'"]';
+
+        $general->should_appear_before($preelement, 'css_element', $postelement, 'css_element');
+    }
+
+    /**
+     * @param string $shortname
+     * @Given /^Course card "(?P<shortname>(?:[^"]|\\")*)" is favorited$/
+     */
+    public function course_is_favorited($shortname) {
+        /* @var behat_general $general */
+        $general = behat_context_helper::get('behat_general');
+        $general->should_exist('.courseinfo[data-shortname="'.$shortname.'"] .favoritetoggle[aria-pressed="true"]', 'css_element');
+    }
+
+    /**
+     * @param string $shortname
+     * @Given /^Course card "(?P<shortname>(?:[^"]|\\")*)" is not favorited$/
+     */
+    public function course_is_not_favorited($shortname) {
+        /* @var behat_general $general */
+        $general = behat_context_helper::get('behat_general');
+        $general->should_not_exist('.courseinfo[data-shortname="'.$shortname.'"] .favoritetoggle[aria-pressed="true"]', 'css_element');
+    }
+
+    /**
+     * @param string $shortname
+     * @Given /^I toggle course card favorite "(?P<shortname>(?:[^"]|\\")*)"$/
+     */
+    public function i_toggle_course_card_favorite($shortname) {
+        /* @var behat_general $general */
+        $general = behat_context_helper::get('behat_general');
+        $general->i_click_on('.courseinfo[data-shortname="'.$shortname.'"] button.favoritetoggle', 'css_element');
+    }
+    
+    /**
+     * Follow the link which is located inside the personal menu.
+     *
+     * @When /^I follow "(?P<link>(?:[^"]|\\")*)" in the mobile personal menu$/
+     * @param string $link we look for
+     */
+    public function i_follow_in_the_mobile_menu($link) {
+        $node = $this->get_node_in_container('link', $link, 'css_element', '#fixy-mobile-menu');
+        $this->ensure_node_is_visible($node);
+        $node->click();
+    }
+
+    /**
+     * Sends a message to the specified user from the logged user. The user full name should contain the first and last names.
+     *
+     * @Given /^I send "(?P<message_contents_string>(?:[^"]|\\")*)" message to "(?P<user_full_name_string>(?:[^"]|\\")*)" user \(theme_snap\)$/
+     * @param string $messagecontent
+     * @param string $userfullname
+     */
+    public function i_send_message_to_user($messagecontent, $userfullname) {
+        /** @var behat_forms $form */
+        $form = behat_context_helper::get('behat_forms');
+        
+        /* @var behat_general $general */
+        $general = behat_context_helper::get('behat_general');
+
+        $this->getSession()->visit($this->locate_path('message'));
+        $form->i_set_the_field_to(get_string('searchcombined', 'message'), $this->escape($userfullname));
+        $general->i_click_on('input[name="combinedsubmit"]', 'css_element');
+        $general->click_link( $this->escape(get_string('sendmessageto', 'message', $userfullname)));
+        $form->i_set_the_field_to('id_message', $this->escape($messagecontent));
+        $general->i_click_on('#id_submitbutton', 'css_element');        
+    }
+
+    /**
+     * @Given /^the message processor "(?P<processorname_string>(?:[^"]|\\")*)" is enabled$/
+     * @param string $processorname
+     */
+    public function i_enable_message_processor($processorname) {
+        global $DB;
+        $DB->set_field('message_processors', 'enabled', '1', array('name' => $processorname));
+    }
+
+    /**
+     * @Given /^the message processor "(?P<processorname_string>(?:[^"]|\\")*)" is disabled$/
+     * @param string $processorname
+     */
+    public function i_disable_message_processor($processorname) {
+        global $DB;
+        $DB->set_field('message_processors', 'enabled', '0', array('name' => $processorname));
+    }
+
+    /**
+     * @Given /^I am on the course "(?P<shortname_string>(?:[^"]|\\")*)"$/
+     * @param string $shortname
+     */
+    public function i_am_on_the_course($shortname) {
+        global $DB;
+        $courseid = $DB->get_field('course', 'id', ['shortname' => $shortname]);
+        $this->getSession()->visit($this->locate_path('/course/view.php?id='.$courseid));
     }
 }

@@ -815,7 +815,7 @@ class theme_snap_core_course_renderer extends core_course_renderer {
 
         $target = '';
 
-        $activityimg = "<img class='iconlarge activityicon' aria-role='hidden' src='".$mod->get_icon_url()."' />";
+        $activityimg = "<img class='iconlarge activityicon' alt='' role='presentation'  src='".$mod->get_icon_url()."' />";
 
         // Multimedia mods we want to open in the same window.
         $snapmultimedia = $this->snap_multimedia();
@@ -870,14 +870,39 @@ class theme_snap_core_course_renderer extends core_course_renderer {
         return $actions;
     }
 
+    /**
+     * Return move notice.
+     * @return bool|string
+     * @throws moodle_exception
+     */
     public function snap_move_notice() {
-        $o = '<div id="snap-move-message" tabindex="-1">
-              <h5 class="snap-move-message-title"></h5>
-              <p class="sr-only">-</p>
-              <a class="snap-move-cancel snap-action-icon" href="#">
-              <i class="icon icon-close"></i><small>'.get_string('cancel').'</small>
-              </a>
-        </div>';
-        return $o;
+        global $OUTPUT;
+        return $OUTPUT->render_from_template('theme_snap/snap_move_notice', null);
+    }
+
+    /**
+     * Generates a notification if course format is not topics or weeks the user is editing and is a teacher/mananger.
+     *
+     * @return string
+     * @throws coding_exception
+     */
+    public function course_format_warning() {
+        global $COURSE, $PAGE, $OUTPUT;
+
+        $format = $COURSE->format;
+        if (in_array($format, ['weeks', 'topics'])) {
+            return '';
+        }
+
+        if (!$PAGE->user_is_editing()) {
+            return '';
+        }
+
+        if (!has_capability('moodle/course:manageactivities', context_course::instance($COURSE->id))) {
+            return '';
+        }
+
+        $url = new moodle_url('/course/edit.php', ['id' => $COURSE->id]);
+        return $OUTPUT->notification(get_string('courseformatnotification', 'theme_snap', $url->out()));
     }
 }

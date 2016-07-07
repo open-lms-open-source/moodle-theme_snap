@@ -38,22 +38,6 @@ require_once($CFG->dirroot.'/mod/forum/lib.php');
  */
 class local {
 
-
-    /**
-     * If debugging enabled in config then return reason for no grade (useful for json output).
-     *
-     * @param $warning
-     * @return null|object
-     */
-    public static function skipgradewarning($warning) {
-        global $CFG;
-        if (!empty($CFG->debugdisplay)) {
-            return (object) array ('skipgrade' => $warning);
-        } else {
-            return null;
-        }
-    }
-
     /**
      * Is there a valid grade or feedback inside this grader report table item?
      *
@@ -82,7 +66,7 @@ class local {
      * Does this course have any visible feedback for current user?.
      *
      * @param $course
-     * @return stdClass | null
+     * @return boolean
      */
     public static function course_feedback($course) {
         global $USER;
@@ -91,11 +75,11 @@ class local {
         // Security check - should they be allowed to see course grade?
         $onlyactive = true;
         if (!is_enrolled($coursecontext, $USER, 'moodle/grade:view', $onlyactive)) {
-            return self::skipgradewarning('User not enrolled on course with capability moodle/grade:view');
+            return false;
         }
         // Security check - are they allowed to see the grade report for the course?
         if (!has_capability('gradereport/user:view', $coursecontext)) {
-            return self::skipgradewarning('User does not have required course capability gradereport/user:view');
+            return false;
         }
         // See if user can view hidden grades for this course.
         $canviewhidden = has_capability('moodle/grade:viewhidden', $coursecontext);
@@ -103,7 +87,7 @@ class local {
         // Note - moodle/grade:viewall is a capability held by teachers and thus used to exclude them from not getting
         // the grade.
         if (empty($course->showgrades) && !has_capability('moodle/grade:viewall', $coursecontext)) {
-            return self::skipgradewarning('Course set up to not show gradebook to students');
+            return false;
         }
         // Get course grade_item.
         $courseitem = \grade_item::fetch_course_item($course->id);
@@ -112,7 +96,7 @@ class local {
         $coursegrade->grade_item =& $courseitem;
         // Return null if can't view.
         if ($coursegrade->is_hidden() && !$canviewhidden) {
-            return self::skipgradewarning('Course grade is hidden from students');
+            return false;
         }
         // Use user grade report to get course total - this is to take hidden grade settings into account.
         $gpr = new \grade_plugin_return(array(
@@ -130,17 +114,11 @@ class local {
                 break;
             }
         }
-        $feedbackhtml = '';
+
         if ($visiblegradefound) {
-            // Just output - feedback available.
-            $url = new \moodle_url('/grade/report/user/index.php', array('id' => $course->id));
-            $feedbackstring = get_string('feedbackavailable', 'theme_snap');
-            $feedbackhtml = \html_writer::link($url,
-                $feedbackstring,
-                array('class' => 'coursegrade')
-            );
+            return true;
         }
-        return (object) array('feedbackhtml' => $feedbackhtml);
+        return false;
     }
 
     /**
@@ -185,16 +163,12 @@ class local {
             }
         }
 
-        $compobj = (object) array('complete' => $compcount, 'total' => $trackcount, 'progresshtml' => '');
         if ($trackcount > 0) {
-            $progress = get_string('progresstotal', 'completion', $compobj);
-            // TODO - we should be putting our HTML in a renderer.
             $progresspercent = ceil(($compcount/$trackcount)*100);
-            $progressinfo = '<div class="completionstatus outoftotal">'.$progress.'<span class="pull-right">'.$progresspercent.'%</span></div>
-            <div class="completion-line" style="width:'.$progresspercent.'%"></div>
-            ';
-            $compobj->progresshtml = $progressinfo;
+        } else {
+            $progresspercent = 0;
         }
+        $compobj = (object) ['complete' => $compcount, 'total' => $trackcount, 'progress' => $progresspercent];
 
         return $compobj;
     }
@@ -217,10 +191,13 @@ class local {
                 continue;
             }
 
+            $feedbackurl = new \moodle_url('/grade/report/user/index.php', array('id' => $course->id));
+
             $courseinfo[$courseid] = (object) array(
-                'courseid' => $courseid,
-                'progress' => self::course_completion_progress($course),
-                'feedback' => self::course_feedback($course)
+                'course' => $courseid,
+                'completion' => self::course_completion_progress($course),
+                'feedback' => self::course_feedback($course),
+                'feedbackurl' =>  $feedbackurl->out()
             );
         }
         return $courseinfo;
@@ -272,32 +249,50 @@ class local {
      * Get a user's messages read and unread.
      *
      * @param int $userid
+     * @param int $since optional timestamp, only return newer messages
      * @return message[]
      */
 
-    public static function get_user_messages($userid) {
+    public static function get_user_messages($userid, $since = null) {
         global $DB;
+
+        if ($since === null) {
+            $since = time() - (12 * WEEKSECS);
+        }
 
         $select  = 'm.id, m.useridfrom, m.useridto, m.subject, m.fullmessage, m.fullmessageformat, m.fullmessagehtml, '.
                    'm.smallmessage, m.timecreated, m.notification, m.contexturl, m.contexturlname, '.
                    \user_picture::fields('u', null, 'useridfrom', 'fromuser');
 
-        $records = $DB->get_records_sql("
+        $sql  = "
         (
                 SELECT $select, 1 unread
                   FROM {message} m
-            INNER JOIN {user} u ON u.id = m.useridfrom
-                 WHERE m.useridto = ?
+            INNER JOIN {user} u ON u.id = m.useridfrom AND u.deleted = 0
+                 WHERE m.useridto = :userid1
                        AND contexturl IS NULL
+                       AND m.timecreated > :fromdate1
+                       AND m.timeusertodeleted = 0
         ) UNION ALL (
                 SELECT $select, 0 unread
                   FROM {message_read} m
-            INNER JOIN {user} u ON u.id = m.useridfrom
-                 WHERE m.useridto = ?
+            INNER JOIN {user} u ON u.id = m.useridfrom AND u.deleted = 0
+                 WHERE m.useridto = :userid2
                        AND contexturl IS NULL
+                       AND m.timecreated > :fromdate2
+                       AND m.timeusertodeleted = 0
         )
-          ORDER BY timecreated DESC
-        ", array($userid, $userid), 0, 5);
+          ORDER BY timecreated DESC";
+
+
+        $params = array(
+            'userid1' => $userid,
+            'userid2' => $userid,
+            'fromdate1' => $since,
+            'fromdate2' => $since,
+        );
+
+        $records = $DB->get_records_sql($sql, $params, 0, 5);
 
         $messages = array();
         foreach ($records as $record) {
@@ -532,7 +527,7 @@ class local {
                 $modinfo = get_fast_modinfo($event->courseid);
                 $cm = $modinfo->instances[$event->modulename][$event->instance];
 
-                $eventtitle = "<small>$event->coursefullname / </small> $event->name";
+                $eventtitle = $event->name .'<small><br>' .$event->coursefullname. '</small>';
 
                 $modimageurl = $output->pix_url('icon', $event->modulename);
                 $modname = get_string('modulename', $event->modulename);
@@ -583,7 +578,7 @@ class local {
             $modname = get_string('modulename', 'mod_'.$cm->modname);
             $modimage = \html_writer::img($modimageurl, $modname);
 
-            $gradetitle = "<small>$course->fullname / </small>$cm->name";
+            $gradetitle = $cm->name. '<small><br>' .$course->fullname. '</small>';
 
             $releasedon = isset($grade->timemodified) ? $grade->timemodified : $grade->timecreated;
             $meta = get_string('released', 'theme_snap', $output->friendly_datetime($releasedon));
@@ -620,7 +615,7 @@ class local {
             $modname = get_string('modulename', 'mod_'.$cm->modname);
             $modimage = \html_writer::img($modimageurl, $modname);
 
-            $ungradedtitle = "<small>$course->fullname / </small> $cm->name";
+            $ungradedtitle = $cm->name. '<small><br>' .$course->fullname. '</small>';
 
             $xungraded = get_string('xungraded', 'theme_snap', $ungraded->ungraded);
 
@@ -664,13 +659,18 @@ class local {
     /**
      * Get all ungraded items.
      * @param int $userid
+     * @param null|int $since
      * @return array
      */
-    public static function all_ungraded($userid) {
+    public static function all_ungraded($userid, $since = null) {
         $courseids = self::gradeable_courseids($userid);
 
         if (empty($courseids)) {
             return array();
+        }
+
+        if ($since === null) {
+            $since = time() - (12 * WEEKSECS);
         }
 
         $mods = \core_plugin_manager::instance()->get_installed_plugins('mod');
@@ -681,7 +681,7 @@ class local {
             $class = '\theme_snap\activity';
             $method = $mod.'_ungraded';
             if (method_exists($class, $method)) {
-                $grading = array_merge($grading, call_user_func([$class, $method], $courseids));
+                $grading = array_merge($grading, call_user_func([$class, $method], $courseids, $since));
             }
         }
 
@@ -1093,10 +1093,11 @@ class local {
      * Get recent forum activity for all accessible forums across all courses.
      * @param bool|int|stdclass $userorid
      * @param int $limit
+     * @param int|null $since timestamp, only return posts from after this
      * @return array
      * @throws \coding_exception
      */
-    public static function recent_forum_activity($userorid = false, $limit = 10) {
+    public static function recent_forum_activity($userorid = false, $limit = 10, $since = null) {
         global $CFG, $DB;
 
         if (file_exists($CFG->dirroot.'/mod/hsuforum')) {
@@ -1106,6 +1107,10 @@ class local {
         $user = self::get_user($userorid);
         if (!$user) {
             return [];
+        }
+
+        if ($since === null) {
+            $since = time() - (12 * WEEKSECS);
         }
 
         // Get all relevant forum ids for SQL in statement.
@@ -1175,6 +1180,7 @@ class local {
                            AND gm1.userid = :user1a
 	                     WHERE (cm1.groupmode <> :sepgps2a OR (gm1.userid IS NOT NULL $fgpsql))
 	                       AND fp1.userid <> :user2a
+                           AND fp1.modified > $since
                       ORDER BY fp1.modified DESC
                                $limitsql
                         )
@@ -1227,6 +1233,7 @@ class local {
                          WHERE (cm2.groupmode <> :sepgps2b OR (gm2.userid IS NOT NULL $afgpsql))
                            AND (fp2.privatereply = 0 OR fp2.privatereply = :user2b OR fp2.userid = :user3b)
                            AND fp2.userid <> :user4b
+                           AND fp2.modified > $since
                       ORDER BY fp2.modified DESC
                                $limitsql
                         )

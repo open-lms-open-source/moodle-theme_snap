@@ -29,7 +29,6 @@ use \theme_snap\activity_meta;
  * @copyright Copyright (c) 2015 Moodlerooms Inc. (http://www.moodlerooms.com)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-
 class activity {
 
     /**
@@ -272,15 +271,18 @@ class activity {
     /**
      * Get all assignments (for all courses) waiting to be graded.
      *
-     * @param $assignmentid
+     * @param array $courseids
+     * @param int $since
      * @return array $ungraded
      */
-    public static function assign_ungraded($courseids) {
+    public static function assign_ungraded($courseids, $since = null) {
         global $DB;
 
         $ungraded = array();
 
-        $sixmonthsago = time() - YEARSECS / 2;
+        if ($since === null) {
+            $since = time() - (12 * WEEKSECS);
+        }
 
         // Limit to assignments with grades.
         $gradetypelimit = 'AND gi.gradetype NOT IN (' . GRADE_TYPE_NONE . ',' . GRADE_TYPE_TEXT . ')';
@@ -340,7 +342,7 @@ class activity {
                            OR gg.finalgrade IS NULL
                        )
 
-                       AND (a.duedate = 0 OR a.duedate > $sixmonthsago)
+                       AND (a.duedate = 0 OR a.duedate > $since)
                  $gradetypelimit
                  GROUP BY instanceid, a.course, opentime, closetime, coursemoduleid ORDER BY a.duedate ASC";
             $rs = $DB->get_records_sql($sql, $params);
@@ -353,13 +355,16 @@ class activity {
     /**
      * Get Quizzes waiting to be graded.
      *
-     * @param $assignmentid
+     * @param array $courseids
+     * @param int $since
      * @return array $ungraded
      */
-    public static function quiz_ungraded($courseids) {
+    public static function quiz_ungraded($courseids, $since = null) {
         global $DB;
 
-        $sixmonthsago = time() - YEARSECS / 2;
+        if ($since === null) {
+            $since = time() - (12 * WEEKSECS);
+        }
 
         $ungraded = array();
 
@@ -387,7 +392,7 @@ class activity {
 
                      WHERE qa.userid NOT IN ($graderids)
                        AND qa.state = 'finished'
-                       AND (q.timeclose = 0 OR q.timeclose > $sixmonthsago)
+                       AND (q.timeclose = 0 OR q.timeclose > $since)
                   GROUP BY instanceid, q.course, opentime, closetime, coursemoduleid
                   ORDER BY q.timeclose ASC";
 

@@ -23,11 +23,13 @@
  * @copyright Copyright (c) 2015 Moodlerooms Inc. (http://www.moodlerooms.com)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
+defined('MOODLE_INTERNAL') || die();
+
 $inccoursefooterclass = ($PAGE->theme->settings->coursefootertoggle && strpos($PAGE->pagetype, 'course-view-') === 0)
     ? ' hascoursefooter'
     : ' nocoursefooter';
 ?>
-<footer id="moodle-footer" role="footer" class="clearfix<?php echo ($inccoursefooterclass)?>">
+<footer id="moodle-footer" role="contentinfo" class="clearfix<?php echo ($inccoursefooterclass)?>">
 <?php
 /* snap custom footer */
 
@@ -35,7 +37,7 @@ $inccoursefooterclass = ($PAGE->theme->settings->coursefootertoggle && strpos($P
 $footnote = empty($PAGE->theme->settings->footnote) ? '' : $PAGE->theme->settings->footnote;
 if ($this->page->user_is_editing() && $PAGE->pagetype == 'site-index') {
     $url = new moodle_url('/admin/settings.php', ['section' => 'themesettingsnap'], 'admin-footnote');
-    $link = html_writer::link($url, get_string('editcustomfooter', 'theme_snap'), ['class' => 'btn btn-default btn-sm']);
+    $link = html_writer::link($url, get_string('editcustomfooter', 'theme_snap'), ['class' => 'btn btn-inverse btn-sm']);
     $footnote .= '<p class="text-right">'.$link.'</p>';
 }
 
@@ -43,7 +45,7 @@ if ($this->page->user_is_editing() && $PAGE->pagetype == 'site-index') {
 $custommenu = $OUTPUT->custom_menu();
 if (!empty($custommenu) && $this->page->user_is_editing() && $PAGE->pagetype == 'site-index') {
     $url = new moodle_url('/admin/settings.php', ['section' => 'themesettings'], 'id_s__custommenuitems');
-    $link = html_writer::link($url, get_string('editcustommenu', 'theme_snap'), ['class' => 'btn btn-default btn-sm']);
+    $link = html_writer::link($url, get_string('editcustommenu', 'theme_snap'), ['class' => 'btn btn-inverse btn-sm']);
     $custommenu .= '<p class="text-right">'.$link.'</p>';
 }
 
@@ -72,7 +74,7 @@ if (!empty($custommenu) && !empty($footnote)) {
 
 if (core_component::get_component_directory('local_mrooms') !== null) {
     $langkey   = \local_mrooms\kb_link::resolve_language_key();
-    $builtwith = html_writer::link("https://$langkey.help.blackboard.com/Moodlerooms", get_string('joule', 'theme_snap'),
+    $builtwith = html_writer::link('https://redirects.blackboard.com/005_000'.$langkey, get_string('joule', 'theme_snap'),
         ['target' => '_blank', 'title' => get_string('joulehelpguides', 'theme_snap')]);
 } else {
     $builtwith = get_string('joule', 'theme_snap');

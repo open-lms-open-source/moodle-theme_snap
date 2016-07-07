@@ -21,6 +21,8 @@
  * @copyright Copyright (c) 2015 Moodlerooms Inc. (http://www.moodlerooms.com)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
+defined('MOODLE_INTERNAL') || die();
+
 include(__DIR__.'/header.php');
 
 use theme_snap\local;
@@ -51,7 +53,7 @@ if ($PAGE->pagetype == 'site-index') {
 <?php
 if ($this->page->user_is_editing() && $PAGE->pagetype == 'site-index') {
     $url = new moodle_url('/admin/settings.php', ['section' => 'themesettingsnap'], 'admin-poster');
-    echo html_writer::link($url, get_string('changecoverimage', 'theme_snap'), ['class' => 'btn btn-default btn-sm']);
+    echo html_writer::link($url, get_string('changecoverimage', 'theme_snap'), ['class' => 'btn btn-inverse btn-sm']);
 }
 ?>
 </div>
@@ -80,8 +82,6 @@ if ($hasadminbutton) {
         '/theme/index.php',
         '/user/editadvanced.php',
         '/user/profile/index.php',
-
-        '/my/indexsys.php',
         '/mnet/service/enrol/index.php',
         '/local/mrooms/view.php'
     );

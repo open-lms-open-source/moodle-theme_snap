@@ -53,14 +53,7 @@ section#region-main
             display: none;
         }
         #page-mast .singlebutton {
-            float: right;
-            margin-top: -3.2em; // MAGIC NUMBER
-            margin-right: -4%; // MAGIC NUMBER
             display: block;
-            input[type="submit"] {
-                background-color: @gray-light !important;
-                box-shadow: 0;
-            }
         }
     }
 }
@@ -242,20 +235,19 @@ li.section:focus {
     white-space: normal !important;
 }
 
-// overwrite moodle not showing title for section 0
+// Overwrite moodle not showing title for section 0.
+// Note: This is only relevant to course formats other than topics/weeks as we always spit the sectionname out without
+// the accesshide class in Snap for topics and weeks.
 #section-0 .sectionname.accesshide {
-    position: relative;
-    left: 0;
     font-weight: 300;
     font-size: @font-size-h2;
+    .reset-sr-only;
 }
 
 // except in folder view where the name is spat out twice on single pages
 // this is a folderview bug....
-
 .folderview .sectionname.accesshide {
-    position: absolute;
-    left: -10000px;
+    .sr-only;
 }
 
 .path-course-view .section .summary {
@@ -576,13 +568,6 @@ we do this by default in snap, so hide moodle version */
     background-color: rgba(0,0,0,0.2);
     color: white;
     text-transform: uppercase;
-}
-
-// tag styles for draft/group/contitional meta data
-.snap-groupinglabel,
-.snap-unread-marker,
-.sectiontag {
-    .snap-tag;
 }
 
 .sectiontag {
@@ -1105,14 +1090,14 @@ li.snap-activity.modtype_folder {
         border-radius: 50%;
         transform: scale(0.75);
         box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
-        
-        &:hover, 
+
+        &:hover,
         &:focus {
             transform: scale(1.04);
             transition: transform 0.3s;
         }
     }
-    
+
     .label {
         margin: 0 1%;
         padding: 0.75em;
@@ -1191,7 +1176,7 @@ li.draft {
     input[type=checkbox]:checked + .svg-icon {
         background-color: @brand-success !important;
     }
-    
+
     .dropdown-menu {
         box-shadow: 0 2px 5px 0 rgba(0,0,0,.26);
         border: 0;
@@ -1454,6 +1439,9 @@ span.editinstructions {
     padding-left: 0;
 }
 
+// TODO - audit for usage. A div with the id changenumsections seems to only show when the course page is in edit mode.
+// Snap no longer has an edit mode so this CSS is likely to be redundant.
+// See core format/renderer.php for markup with id of changenumsections.
 #changenumsections {
     .text-center;
 
@@ -1466,8 +1454,7 @@ span.editinstructions {
         }
 
         .accesshide {
-            position: relative;
-            left: 0;
+            .reset-sr-only;
             font-weight: 300;
         }
     }
@@ -1736,12 +1723,6 @@ span.editinstructions {
     }
 }
 
-// Prevent the pop-up from covering other content, and causing Behat test failures in certain browsers.
-.behat-site #snap-move-message {
-    position: relative;
-    transition-property: none;
-}
-
 .snap-move-cancel {
     float:right;
     margin-right:4%; // TODO - 15% on small screen, for fab?
@@ -1887,3 +1868,4 @@ span.editinstructions {
       max-height: 80vh;
   }
 }
+

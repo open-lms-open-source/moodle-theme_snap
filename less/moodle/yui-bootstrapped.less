@@ -13,21 +13,29 @@
 .ft .yui-button.yui-push-button,
 .yui-button.yui-push-button,
 .yui-button.yui-push-button.default,
+.yui-dialog .ft .yui-button.yui-push-button.default,
 .yui-button.yui-menu-button,
 .yui-button.yui-link-button,
 .yui-button.yui-radio-button,
 .yui-button.yui-submit-button {
+    transition: all 0s;
     background-image: none;
     border: none;
+
     .first-child {
         border: none;
         a,
         button {
-            border: none;
-            color: inherit;
-            margin: 0;
             padding-left: 16px;
             padding-right: 16px;
+            color: inherit;
+            transition: all 0s;
+
+            &:focus,
+            &:active,
+            &:hover {
+                color: #fff;
+            }
         }
     }
 }

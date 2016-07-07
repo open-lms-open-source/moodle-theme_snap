@@ -293,33 +293,28 @@ class theme_snap_assign_test extends mod_assign_base_testcase {
 
     public function test_course_feedback() {
         $actual = local::course_feedback($this->course);
-        $this->assertObjectHasAttribute('skipgrade', $actual);
+        $this->assertFalse($actual);
 
         $this->setUser($this->students[0]);
         $actual = local::course_feedback($this->course);
-        $this->assertObjectHasAttribute('feedbackhtml', $actual);
-        $this->assertSame('', $actual->feedbackhtml);
+        $this->assertFalse($actual);
 
         $assign = $this->create_one_ungraded_submission();
-        $this->grade_assignment($assign);
+        $this->grade_assignment($assign, $this->students[0]);
 
         $this->setUser($this->students[0]);
         $actual = local::course_feedback($this->course);
-        $this->assertObjectHasAttribute('feedbackhtml', $actual);
-        $this->assertNotSame('', $actual->feedbackhtml);
+        $this->assertTrue($actual);
 
         $this->create_extra_users();
         $this->setUser($this->extrasuspendedstudents[0]);
         $actual = local::course_feedback($this->course);
-        $this->assertObjectHasAttribute('skipgrade', $actual);
-        $this->assertContains('not enrolled', $actual->skipgrade);
+        $this->assertFalse($actual);
 
         $this->setUser($this->students[0]);
         $this->course->showgrades = 0;
         $actual = local::course_feedback($this->course);
-        $this->assertObjectHasAttribute('skipgrade', $actual);
-        $this->assertContains('set up to not show gradebook to students', $actual->skipgrade);
-
+        $this->assertFalse($actual);
     }
 
     public function test_no_course_image() {
@@ -329,7 +324,10 @@ class theme_snap_assign_test extends mod_assign_base_testcase {
 
     private function create_one_ungraded_submission() {
         $this->setUser($this->editingteachers[0]);
-        $assign = $this->create_instance(['assignsubmission_onlinetext_enabled' => 1]);
+        $assign = $this->create_instance([
+            'assignsubmission_onlinetext_enabled' => 1,
+            'duedate' => time() - WEEKSECS,
+        ]);
 
         // Add a submission.
         $this->setUser($this->students[0]);
@@ -345,11 +343,11 @@ class theme_snap_assign_test extends mod_assign_base_testcase {
         return $assign;
     }
 
-    private function grade_assignment($assign) {
+    private function grade_assignment($assign, $student) {
         $this->setUser($this->teachers[0]);
         $data = new stdClass();
         $data->grade = '50.0';
-        $assign->testable_apply_grade_to_user($data, $this->students[0]->id, 0);
+        $assign->testable_apply_grade_to_user($data, $student->id, 0);
         // TODO remove this next line when the above is fixed  to stop triggering debug messages.
         $this->resetDebugging();
     }
@@ -451,6 +449,21 @@ class theme_snap_assign_test extends mod_assign_base_testcase {
         $this->setUser($this->editingteachers[0]);
         $actual = local::all_ungraded($this->editingteachers[0]->id, $sixmonthsago);
         $this->assertcount($expected, $actual);
+
+        // Limit time to after the assignment is due
+        $afterduedate = time() - WEEKSECS;
+
+        $this->setUser($this->teachers[0]);
+        $actual = local::all_ungraded($this->teachers[0]->id, $afterduedate);
+        $this->assertcount(0, $actual);
+
+        $this->setUser($this->teachers[1]);
+        $actual = local::all_ungraded($this->teachers[1]->id, $afterduedate);
+        $this->assertcount(0, $actual);
+
+        $this->setUser($this->editingteachers[0]);
+        $actual = local::all_ungraded($this->editingteachers[0]->id, $afterduedate);
+        $this->assertcount(0, $actual);
     }
 
     public function test_courseinfo_empty() {

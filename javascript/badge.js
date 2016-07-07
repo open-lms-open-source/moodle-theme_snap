@@ -1,3 +1,4 @@
+// jshint ignore: start
 /**
  * This file is part of Moodle - http://moodle.org/
  *
@@ -60,19 +61,30 @@ M.snap_message_badge.init_badge = function(Y, forwardURL, courseid) {
     // Save for later.
     M.snap_message_badge.forwardURL = forwardURL;
 
-    // Load messages when the primary nav is shown.
-    var triggerNode = Y.one('.fixy-trigger');
-    if (triggerNode) {
-        triggerNode.on('click', function() {
-            M.snap_message_badge.init_overlay(Y);
-        });
-    }
+    // Add listener when jquery events ready.
+    // If you just use $(document).on, the listener will sometimes fail because jquery isn't fully initialised.
+    // This function waits until jquery is in a state where you can listen for custom events.
+    var onJQueryEventsReady = function(eventname, callback, count) {
+        if (!count) {
+            count = 1;
+        }
+        if (count > 20) {
+            // Error, jquery events never ready!
+            return;
+        }
+        count++;
+        if (typeof($._data( $(document)[0], 'events' )) != 'undefined') {
+            $(document).on(eventname, callback);
+        } else {
+            window.setTimeout(function() {
+                onJQueryEventsReady(eventname, callback, count);
+            }, 100)
+        }
+    };
 
-    // Load messages if primary nav is already showing.
-    var navNode = Y.one('#primary-nav:target');
-    if (navNode) {
+    onJQueryEventsReady('snapUpdatePersonalMenu', function() {
         M.snap_message_badge.init_overlay(Y);
-    }
+    });
 };
 
 /**
@@ -129,6 +141,22 @@ M.snap_message_badge.init_message = function(Y, messageNode) {
 };
 
 /**
+ * Show error dialog
+ *
+ * @param {string} msg
+ */
+M.snap_message_badge.alert_error = function(msg) {
+    Y.use('moodle-core-notification-alert', function () {
+        var alert = new M.core.alert({
+            title : M.util.get_string('erroroccur', 'debug'),
+            message : msg,
+            yesLabel: M.util.get_string('ok', 'moodle')
+        });
+        alert.show();
+    });
+};
+
+/**
  * Send a request to ignore a message (AKA mark as read) and
  * update the badge count
  *
@@ -142,14 +170,14 @@ M.snap_message_badge.ignore_message = function(Y, url) {
                 var response = Y.JSON.parse(o.responseText);
 
                 if (response.error != undefined) {
-                    alert(response.error);
+                    M.snap_message_badge.alert_error(response.error);
                 } else {
                     M.snap_message_badge.update_unread_count(Y, response.args);
                 }
                 M.snap_message_badge.show_all_read (Y);
             },
             failure: function(id, o) {
-                alert(M.str.message_badge.genericasyncfail);
+                M.snap_message_badge.alert_error(M.str.message_badge.genericasyncfail);
             }
         }
     });
@@ -235,7 +263,7 @@ M.snap_message_badge.populate_messagebody = function(Y, messagenode, url, onsucc
                 messagenode.one('.loadingstat').remove();
 
                 if (response.error != undefined) {
-                    alert(response.error);
+                    M.snap_message_badge.alert_error(response.error);
                 } else {
                     messagenode.one('.message_badge_message_text').removeClass('snap_spinner');
 
@@ -281,7 +309,7 @@ M.snap_message_badge.populate_messagebody = function(Y, messagenode, url, onsucc
                 }
             },
             failure: function(id, o) {
-                alert(M.str.message_badge.genericasyncfail);
+                M.snap_message_badge.alert_error(M.str.message_badge.genericasyncfail);
             }
         }
     });
@@ -378,12 +406,12 @@ M.snap_message_badge.get_messages_html = function(Y, onsuccess) {
     var loadingstat = Y.Node.create('<div class="loadingstat three-quarters">' + Y.Escape.html(M.util.get_string('loading', 'theme_snap')) + '</div>');
     container.append(loadingstat);
 
-    Y.io(M.cfg.wwwroot + '/message/output/badge/view.php?controller=ajax&action=getmessages&courseid=' + M.snap_message_badge.courseid + '&maxmessages=' + M.snap_message_badge.perrequest + '&offset=' + M.snap_message_badge.offset, {
+    Y.io(M.cfg.wwwroot + '/message/output/badge/view.php?controller=ajax&action=getmessages&maxmessages=' + M.snap_message_badge.perrequest + '&offset=' + M.snap_message_badge.offset, {
         on: {
             success: function(id, o) {
                 var response = Y.JSON.parse(o.responseText);
                 if (response.error != undefined) {
-                    alert(response.error);
+                    M.snap_message_badge.alert_error(response.error);
                 } else {
                     if (typeof onsuccess == 'function') {
                         onsuccess(response);
@@ -398,7 +426,7 @@ M.snap_message_badge.get_messages_html = function(Y, onsuccess) {
                 if (!o.getAllResponseHeaders()){
                     return;
                 }
-                alert(M.str.message_badge.genericasyncfail);
+                M.snap_message_badge.alert_error(M.str.message_badge.genericasyncfail);
             }
         }
     });

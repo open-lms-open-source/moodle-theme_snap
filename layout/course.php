@@ -22,6 +22,8 @@
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+defined('MOODLE_INTERNAL') || die();
+
 include(__DIR__.'/header.php');
 
 $coursemainpage = strpos($PAGE->pagetype, 'course-view-') === 0;
@@ -42,6 +44,10 @@ $coursemainpage = strpos($PAGE->pagetype, 'course-view-') === 0;
 
 <div id="page-mast">
 <?php
+if ($coursemainpage) {
+    $output = $PAGE->get_renderer('core', 'course');
+    echo $output->course_format_warning();
+}
 echo $OUTPUT->page_heading();
 echo $OUTPUT->course_header();
 // Note, there is no blacklisting for the edit blocks button on course pages.
@@ -70,7 +76,7 @@ include(__DIR__.'/moodle-blocks.php');
 if ($coursemainpage) {
     $coursefooter = $OUTPUT->course_footer();
     if (!empty($coursefooter)) : ?>
-    <footer role=footer id=snap-course-footer class=row><?php echo $coursefooter ?></footer>
+    <footer role=contentinfo id=snap-course-footer class=row><?php echo $coursefooter ?></footer>
     <?php endif;
 } ?>
 </main>

@@ -15,18 +15,31 @@
  * along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
  *
  * @package   theme_snap
- * @copyright Copyright (c) 2015 Moodlerooms Inc. (http://www.moodlerooms.com)
+ * @copyright Copyright (c) 2016 Moodlerooms Inc. (http://www.moodlerooms.com)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-M.theme_snap = M.theme_snap || {
-    courseid : false
-};
-M.theme_snap.core = {
-    init: function(Y, courseid, contextid, courseconfig) {
-        // Add courseid to moodle cfg variable (this is here for future proofing in case we need it)
-        M.theme_snap.courseid = courseid;
-        M.theme_snap.courseconfig = courseconfig;
-        M.cfg.context = contextid;
-        $(document).ready(snapInit);
-    }
-};
+
+/**
+ * On function evaluating true.
+ */
+define([], function() {
+    var whenTrue = function(func, callBack, forceCallBack, maxIterations, i) {
+        maxIterations = !maxIterations ? 10 : maxIterations;
+        i = !i ? 0 : i+1;
+        if (i > maxIterations) {
+            // Error, too long waiting for function to evaluate true.
+            if (forceCallBack) {
+                callBack();
+            }
+            return;
+        }
+        if (func()) {
+            callBack();
+        } else {
+            window.setTimeout(function() {
+                whenTrue(func, callBack, forceCallBack, maxIterations, i);
+            }, 200);
+        }
+    };
+    return whenTrue;
+});

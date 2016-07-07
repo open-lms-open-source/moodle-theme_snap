@@ -98,6 +98,11 @@ class toc_renderer extends core_renderer {
             return '';
         }
 
+        // Only print TOC in topics and weeks format.
+        if($COURSE->format !== 'weeks' AND $COURSE->format !== 'topics') {
+            return;
+        }
+
         $format     = course_get_format($this->page->course);
         $course     = $format->get_course();
 

@@ -16,6 +16,9 @@
 
 namespace theme_snap;
 use core\event\course_updated;
+use core\event\course_deleted;
+
+defined('MOODLE_INTERNAL') || die();
 
 /**
  * Event handlers.
@@ -44,5 +47,19 @@ class event_handlers {
         $context = \context_course::instance($course->id);
 
         local::process_coverimage($context);
+    }
+
+    /**
+     * The course delete event.
+     *
+     * Delete course favorite records when course is deleted.
+     *
+     * @param course_deleted $event
+     */
+    public static function course_deleted(course_deleted $event) {
+        global $DB;
+
+        $select = ['courseid' => $event->objectid];
+        $DB->delete_records('theme_snap_course_favorites', $select);
     }
 }

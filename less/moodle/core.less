@@ -295,11 +295,20 @@ form.popupform div {
 
 // Accessibility: text 'seen' by screen readers but not visual users.
 .accesshide {
-    position: absolute;
-    left: -10000px;
-    font-weight: normal;
-    font-size: 1em;
+    .sr-only;
 }
+
+// Make sr-only item visible to non screen reader users.
+.reset-sr-only {
+    position: relative;
+    width: auto;
+    height: auto;
+    margin: initial;
+    overflow: visible;
+    clip: auto;
+    border: initial;
+}
+
 span.hide,
 div.hide {
     display: none;
@@ -1321,4 +1330,8 @@ a.disabled {
 
 .progress .bar {
     .progress-bar;
+}
+
+#fgroup_id_sdays > .fgroup > span {
+    display: inline-block;
 }

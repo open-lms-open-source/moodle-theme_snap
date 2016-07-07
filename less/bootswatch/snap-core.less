@@ -98,7 +98,7 @@ table.boxwidthwide {
 // Login page
 // -------------------------
 
-@media screen and (min-width: @screen-sm) {
+@media screen and (min-width: @screen-sm-min) {
     .twocolumns {
 
         // override bs grids
@@ -187,30 +187,6 @@ table.boxwidthwide {
     }
 }
 
-// tag styles for draft/group/contitional/completion meta data
-.snap-tag(@colour: #F98012) {
-    font-family: @font-family-base;
-    display: inline-block;
-    background-color: @colour;
-    color: #fff;
-    padding: 0 2% 0 1%;
-    margin: 1px 1em;
-    text-transform: lowercase;
-    position: relative;
-    border-radius: 0 2px 2px 0;
-    line-height: 1.75;
-
-    // add a little tab arrow to the left ;)
-    &:before {
-        content: "";
-        position: absolute;
-        right: 100%;
-        top: 0; // this is necessary!!
-        border: 0.85em solid transparent;
-        border-right: 0.89em solid @colour;
-    }
-}
-
 .highlight-tag {
     background-color: #f56363;
     color: #fff;
@@ -226,6 +202,7 @@ table.boxwidthwide {
 
 html {
     box-sizing: border-box;
+    font-size: @font-size-base;
 }
 
 *,
@@ -240,7 +217,7 @@ html {
     text-shadow: none;
 }
 
- ::selection {
+::selection {
     background: #fe57a1;
     color: #fff;
     text-shadow: none;
@@ -273,7 +250,7 @@ input:disabled+label {
     opacity: 0.5;
 }
 
- :disabled {
+::disabled {
     cursor: not-allowed;
 }
 
@@ -294,7 +271,6 @@ table,
 }
 
 blockquote {
-
     //    border-left: 5px solid @brand-primary; customisable
     font-size: 1em;
 }
@@ -325,7 +301,11 @@ img[style*="float:right"] {
     margin: 2%;
 }
 
-@media screen and (max-width: @screen-sm) {
+small, .small {
+    font-size: small !important;
+}
+
+@media screen and (max-width: @screen-sm-max) {
 
     // unfloat images for small screen
     img[style*="float:left"],
@@ -342,7 +322,7 @@ img.icon {
     padding: 0;
     margin-right: 6px;
 }
-img.svg-icon {
+.svg-icon {
   width: 2rem;
   height: 2rem;
   margin: 0 0.3rem;
@@ -490,52 +470,133 @@ textarea {
 #changenumsections .increase-sections,
 #changenumsections .reduce-sections,
 .paging.paging-morelink a,
-a.btn,
-button,
+button#local-joulegrader-preview-button,
+button.atto_equation_submit,
 a.yui3-button,
 .yui-button button,
-.btn,
+.felement.ftext input + button,
+.header-button-group .btn,
+.btn.btn-primary,
+.btn.btn-default,
+.button-group > button,
 input.form-submit,
 input[type="button"],
 input[type="submit"],
+button[type="submit"],
+.moodle-dialogue-content button,
+button#restrictbygroup,
+button#livelogs-pause-button,
+#page-admin-tool-monitor-managerules a > button,
 input[type="reset"] {
-    border-color: #fff;
-    color: #fff;
-    font-weight: 300;
     font-family: @font-family-base;
+    background: transparent;
 
-    // background-color: @brand-primary; customisable
     &:hover,
     &:focus {
 
-        // background-color: darken(@brand-primary, 8%); customisable
-        // border-color: darken(@brand-primary, 12%); customisable
+        text-decoration: none;
+        color: #fff;
+        background: @brand-primary;
+    }
+}
+
+.btn.btn-success {
+
+    &:visited {
+        color: @brand-success;
+    }
+
+    &:hover,
+    &:active,
+    &:focus {
+        color: #fff;
+        background: @brand-success;
+    }
+}
+
+.btn.btn-info {
+
+    &:visited {
+        color: @brand-info;
+    }
+
+    &:hover,
+    &:active,
+    &:focus {
+        color: #fff;
+        background: @brand-info;
+    }
+}
+
+.btn.btn-warning {
+
+    &:visited {
+        color: @brand-warning;
+    }
+
+    &:hover,
+    &:active,
+    &:focus {
+        color: #fff;
+        background: @brand-warning;
+    }
+}
+
+.btn.btn-danger {
+
+    &:visited {
+        color: @brand-danger;
+    }
+
+    &:hover,
+    &:active,
+    &:focus {
+        color: #fff;
+        background: @brand-danger;
+    }
+}
+
+// Snap specific, for white buttons on brand color backgrounds.
+.btn.btn-inverse {
+
+    &,
+    &:visited {
+        color: #fff;
+        border-color: #fff;
+    }
+
+    &:hover,
+    &:active,
+    &:focus {
+        color: @brand-primary;
+        background: #fff;
+        border-color: @brand-primary;
+    }
+}
+
+.btn-group > button + button {
+    margin-left: 1em;
+}
+
+// This a tag gets created by JS after page load so we can't fix it in the renderer.
+.snap-modchooser {
+    clear: both;
+    margin: 3em 0;
+    padding: 0.5em;
+    display: block;
+
+    a {
+        display: block;
+        width: 100%;
+        text-align: center;
+    }
+
+    a:hover {
+        color: #fff;
         text-decoration: none;
     }
 }
 
-#page-mod-quiz-edit div.question div.content div.points input[type="submit"],
-.btn,
-button,
-input.form-submit,
-input[type="button"],
-input[type="submit"],
-input[type="reset"],
-input[name="searchwikicontent"]+input[type="submit"],
-select+input[type="submit"],
-input[type="text"]+input[type="button"],
-input[type="password"]+input[type="submit"],
-input[type="text"]+button,
-input[type="text"]+input[type="submit"] {
-    padding: 0.25em 1em;
-    margin-left: 0;
-    margin-right: 0.8em;
-    vertical-align: baseline;
-    line-height: 1.5;
-}
-
-// Shame - the front page uses a different renderer for add asset.
-.snap-modchooser,
 #page-site-index .section-modchooser-link {
     clear: both;
     margin: 3em 0;
@@ -548,6 +609,7 @@ input[type="text"]+input[type="submit"] {
 
     .section-modchooser-text {
         .btn;
+        .btn-default;
     }
 
     a,
@@ -555,7 +617,6 @@ input[type="text"]+input[type="submit"] {
         display: block;
         width: 100%;
         text-align: center;
-        color: #fff !important;
         text-decoration: none;
     }
 }
@@ -623,7 +684,7 @@ input[type="text"]+input[type="submit"] {
     .bg-cover();
 }
 
-#logo {
+#snap-home.logo {
     display: inline-block;
     background-color: transparent;
     background-repeat: no-repeat;
@@ -632,23 +693,22 @@ input[type="text"]+input[type="submit"] {
     background-size: contain;
     margin: -0.75em 0;
 }
-
-.fixy .snap-media-object {
-    padding: 0.5em 4%;
-    margin-bottom: 0;
-    .alakazam();
-    > a:focus,
-    &:hover {
-        background-color: rgba(0,0,0,0.07);
+// Reduce logo size on smallscreen
+@media screen and (max-width: @screen-sm-max) {
+    #snap-home.logo {
+        max-width: 20%;
+        vertical-align: bottom;
     }
 }
 
+
 .snap-media-object {
     .clearfix();
-    margin-bottom: 1em;
+    font-weight: 500;
+    padding: 0.5em 0;
     // Block display for keyboard user focus.
     > a:focus {
-         display:block;
+         display: block;
     }
 
     // media o media
@@ -656,8 +716,8 @@ input[type="text"]+input[type="submit"] {
     >img {
         float: left;
         display: block;
-        margin-right: 4%;
-        width: 45px;
+        width: 36px;
+        margin: 0.5em 1em 0 0.5em;
         height: auto;
         vertical-align: baseline;
     }
@@ -668,17 +728,17 @@ input[type="text"]+input[type="submit"] {
 
         // for fixy - need to re-visit when we re-use more widley
         // in the messaging system we ellispe text
-
         p {
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
+            margin: 0;
         }
 
         .text_to_html {
             line-height: 1.3em;
         }
-        
+
         a {
             &:hover,
             &:focus {
@@ -688,422 +748,63 @@ input[type="text"]+input[type="submit"] {
 
         // Shrink label size to support iPads
         .label {
-            font-size: 0.7em;
+            font-size: small;
         }
     }
 
     // media o heading
-    h3,
-    h3 small {
+    h3 {
         color: inherit;
-        font-size: 1em;
+        font-size: 1rem;
+        font-weight: 500;
         margin: 0;
     }
 
     // any meta-data that is part of the title
     h3 small {
-        opacity: 0.75;
+        color: inherit;
+        opacity: 0.9;
     }
 
     // standard media o meta - status, date
     .snap-media-meta {
         display: block;
         font-size: small;
-        opacity: 0.75;
-
-        time {
-            margin-right: 1em;
-        }
+        color: @gray-light;
     }
 
     // unread tag
     .snap-unread-marker {
-        background-color: white;
-
-        &:before {
-            border-right: 0.89em solid white;
-        }
-    }
-}
-
-// Fixy - the hipster box with a brand colour that covers everything else, use with care!
-// -------------------------
-// i do not apear until you trigger me
-
-.fixy {
-    display: none;
-}
-
-.notloggedin .fixy-trigger {
-    padding: 0.9em 1em; // SHAME - something odd where login overlaps mr-nav
-}
-
-.fixy-trigger {
-    // border: 1px solid @brand-primary; customisable
-    padding: 1em;
-    position: relative;
-    .alakazam();
-
-    &:hover {
-        color: #fff !important;
-
-        //	background-color: @brand-primary; customisable
-        text-decoration: none;
-    }
-
-    .userpicture {
-        height: 38px;
-        width: 38px;
-        margin-left: 1em;
-    }
-
-    // mrooms alerts badge
-    .message_badge_count {
-        position: absolute;
-        padding-top: 0;
-        background-image: none;
-        border-radius: 50%;
-        left: 80%;
-        top: 0.5em;
-    }
-}
-
-.fixy {
-    padding: 0 4%;
-    margin: 0 auto;
-    position: fixed;
-    width: 100%;
-    height: 100%;
-    left: 0;
-    bottom: 0;
-    overflow-y: auto;
-
-    //	background-color: @brand-primary; customisable
-    color: #fff;
-    z-index: 1000000;
-
-    hr {
-        border-color: #fff;
-        margin: 0.3em 0;
-    }
-
-    a,
-    a:hover,
-    a:focus,
-    a:active,
-    a:visited {
-        color: #fff;
-    }
-
-    h2 {
-        color: rgba(255,255,255,0.7);
-        text-transform: uppercase;
-        font-weight: 100;
-        line-height: 1;
-        margin: 1em 0;
-        padding: 0.5em 0;
-        border-bottom: 1px solid rgba(255,255,255,0.7);
-        font-size: 1em;
+        color: @brand-warning;
     }
 
     .label-success {
         padding: 0 0.2em;
         font-size: 1em;
-
         // color: @brand-primary; customisable
         background-color: rgba(255,255,255,0.6);
         border-radius: 2px;
     }
 
-    input {
-        display: block;
-        padding: 0.1em;
-        margin: 0 auto 0.5em;
-        background-color: transparent;
-        font-size: inherit;
-        border: 0;
-        color: #fff;
-        border-bottom: 2px solid rgba(255,255,255,0.3);
-        width: 90%;
-        font-size: @font-size-h5;
-        box-shadow: none;
-    }
-
-    form#coursesearch {
-        margin: 0 0 0.5em;
-        text-align: left;
-
-        label {
-            text-align: left;
-            margin-left: 0;
-        }
-    }
-
-    .btn.moodle-browseallcourses {
-        margin-bottom: 0.5em;
-        display: block;
-    }
-
-    .fixy-logout-footer {
-        border-top: 1px solid #fff;
-        padding-top: 1em;
-        margin: 1em 0;
-    }
-
-    .fixy-browse-search-courses {
-        margin-left: 0;
-
-        .col-md-6 {
-            padding-left: 0;
-        }
-    }
-}
-
-// i am the target, you shall see me
-#login:target,
-#primary-nav:target {
-    display: block;
-}
-
-.fixy-inner {
-    margin: 0 auto;
-    animation-name: snap-drop;
-    animation-timing-function: ease-in-out;
-    animation-duration: 0.3s;
-
-    legend {
-        color: #fff;
-        border-bottom: 1px solid #fff;
-    }
-
-    label {
-        color: #fff;
-        text-transform: uppercase;
-        font-size: 14px;
-        letter-spacing: 0.1em;
-        line-height: 1;
-        display: block;
-        padding-top: 1em;
-        font-weight: 100;
-        margin: 0.5em 5%;
-    }
-}
-
-// Fixy forms
-// -------------------------
-// gets a bit messey from here SHAME
-
-#login.fixy {
-    input:focus {
-        outline: none;
-        border-color: #fff;
-    }
-    input[type=submit] {
-        border: 1px solid #fff;
-        margin: 0 auto 0.5em;
-    }
-    .fixy-inner {
-        max-width: 50.5em;
-        padding-top: 4%;
-    }
 }
 
 
-.fixy input::placeholder {
-    color: #fff;
-    letter-spacing: 0.1em;
-}
 
-// Course list - personal menu and other places
-// -------------------------
 
-#fixy-my-courses .courseinfo {
-    min-height: 200px;
-}
-
-.courseinfo {
-    position: relative;
-    float: left;
-    width: 100%;
-    min-height: 250px;
-    background-repeat: no-repeat;
-    background-size: 100% auto;
-    background-position: top center;
-    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
-    margin: 0.5em 1%;
-    cursor: pointer;
-    overflow: hidden;
-    .alakazam();
-
-    &:hover {
-        background-size: 115% auto;
-        transform: scale(1.03);
-
-        .courseinfo-body {
-            padding-bottom: 0.5em;
-        }
-    }
-
-    .courseinfo-teachers {
-        width: 100%;
-        padding: 1em;
-    }
-
-    .courseinfo-teachers-extra {
-        .alakazam();
-        opacity: 0;
-    }
-    // When showing more course contacts, hide courseinfo.
-    &.show-all {
-        .courseinfo-teachers-extra {
-            opacity: 1;
-        }
-
-        .courseinfo-body {
-            visibility: hidden;
-        }
-    }
-
-    .courseinfo-body {
-        .alakazam();
-        background-color: rgba(255,255,255,0.9);
-        color: #666;
-        position: absolute;
-        bottom: 0;
-        width: 100%;
-        padding: 0 1em 1em;
-        bottom: 0;
-        min-height: 50%;
-
-        h3 a {
-            display: block;
-            display: -webkit-box;
-            max-height: 3em; // 1em font-size * 1.5 line height * 2 lines to show.
-            width: 100%;
-            -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: normal !important;
-        }
-    }
-
-    h3 {
-        font-size: 1em;
-        font-weight: 500;
-    }
-
-    .completionstatus,
-    .coursegrade {
-        font-size: small;
-    }
-
-    .coursegrade {
-        text-align: right;
-        display: block;
-        line-height: 2.5em;
-        padding-right: 2.75em;
-        background-image: url("[[pix:theme|gradebook]]");
-        background-repeat: no-repeat;
-        background-position: 100% 50%;
-        background-size: 2.5em 2.5em;
-    }
-
-    .courseinfo-teachers {
-        max-height: 200px;
-        overflow: hidden;
-        text-align: right;
-    }
-
-    &.show-all .courseinfo-teachers {
-        overflow: auto;
-    }
-
-    .userpicture,
-    .courseinfo-teachers-more {
-        border-radius: 50%;
-        margin-left: 1%;
-        width: 38px;
-        height: 38px;
-        background-color: #ccc;
-    }
-
-    .courseinfo-teachers-more {
-        background-color: transparent;
-        font-size: 0.8em;
-        float: right;
-        text-align: center;
-        padding-top: 0.35em;
-        border: 2px solid #fff;
-        color: #fff !important;
-        text-decoration: none !important;
-    }
-
-    .published-status {
-        clear: both;
-        margin-bottom: -1em;
-        float: left;
-    }
-
-    .completionstatus {
-        border-bottom: 0.5em solid @gray-lighter;
-    }
-
-    .completion-line {
-        background-color: @brand-success;
-        height: 0.3em;
-        margin-top: -0.3em;
-    }
-}
-
-#fixy-profile-link {
-    text-align: center;
-
-    .userpicture {
-        margin-right: 10px;
-    }
-}
-
-.fixy .real-user-info {
-    display: block;
-    text-align: center;
-    margin-top: -50px;
-}
-
-.fixy .label.label-info {
-    background-color: transparent;
-    border: thin solid #fff;
-}
 
 @media screen and (min-width: @screen-xs-min) {
     #moodle-footer .list-unstyled {
         column-count: 2;
     }
-
-    .courseinfo {
-        width: 100%;
-    }
 }
 
 @media screen and (min-width: @screen-sm-min) {
-    #fixy-username {
-        display: inline;
-    }
-
     #moodle-footer .list-large {
         column-count: 3;
     }
-
-    .courseinfo {
-        width: 48%;
-    }
 }
 
-@media screen and (min-width: @screen-md-min) {
-    .courseinfo {
-        width: 31%;
-    }
-}
+
 
 // Message badge alerts
 .message_badge_message,
@@ -1133,11 +834,11 @@ Its pointless using a colour to visually show that the message is read as we can
 read button has been removed and the message text is visible
 **/
 .message_badge_message.dimmed_text {
-    color: #fff;
+    color: @text-color;
 
     .message_badge_message_text,
     .message_badge_message_text a {
-        color: #fff !important;
+        color: @text-color !important;
     }
 }
 
@@ -1331,7 +1032,7 @@ header#page-header
     display: block;
 }
 
-@media screen and (max-width: @screen-sm) {
+@media screen and (max-width: @screen-sm-max) {
     .breadcrumb li {
         &:nth-last-child(n+4) {
             display: none;
@@ -1420,9 +1121,11 @@ body:not(.format-topics):not(.format-weeks) {
         }
     }
 
-    h1 {
-        color: white;
-        text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+    #page-mast h1 {
+        &, a, a:visited, a:hover {
+            color: white;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+        }
     }
 
     #course-toc {
@@ -1470,14 +1173,6 @@ ol#chapters {
     #chapters {
         width: 100%;
         text-indent: 0;
-    }
-}
-
-/* special stuff for <320 */
-@media screen and (max-width: @screen-xs) {
-    #page-header {
-        padding-left: 0;
-        padding-right: 0;
     }
 }
 
@@ -1613,7 +1308,7 @@ ol#chapters {
             padding: 2em 4%;
             width: 100%;
         }
-        
+
         .toc-footer {
             display: block;
             text-align: left;
@@ -1701,81 +1396,19 @@ ol#chapters {
     }
 }
 
-// Admin block link
+// Admin block link.
 #admin-menu-trigger {
-    background-color: transparent;
-    position: relative;
-    margin: -0.3em 0;
-    padding: 0.5em;
-    font-size: 1.5em;
-    line-height: 1;
-    top: 0;
-    width: 2.2em;
-    height: 2em;
-    cursor: pointer;
-    border-left: 1px solid;
-    /*
-    // material design button, but wrong for admin block?
-    position:fixed;
-    bottom:2em;
-    right:4%;
-    font-size:1.2em;
-    width: 3em;
-    height: 3em;
-    border-radius: 50%;
-    text-align: center;
-    padding: 0.75em;
-    color:#fff;
-    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
-    z-index:666;
-    */
+    width: 39px;
+    height: 39px;
+    margin-right: 1em;
+    img {
+        border: 1px solid @gray-lighter;
+        border-radius: 100%;
+        padding: 0.5em;
+        max-height: 100%;
+    }
 }
 
-// Burger in the settings button
-.lines {
-    display: block;
-    height: 3px;
-    transition: all 0.4s 0s ease;
-    position: relative;
-}
-
-.lines:after {
-    top: 0.5em;
-}
-
-.lines:before {
-    top: 1em;
-}
-
-.lines:after,
-.lines:before {
-    content: ' ';
-    display: block;
-    position: absolute;
-    width: 100%;
-    height: 3px;
-    transform-origin: 20% 50%;
-    /* 20% magic number */
-    transition: top 0.4s ease, transform 0.4s 0.4s ease;
-}
-
-.active .lines {
-    background: transparent;
-    transform: scale3d(1.1, 1.1, 1.1);
-    margin-top: -0.5em;
-}
-
-.active .lines:before {
-    transform: rotate3d(0, 0, 1, -45deg);
-    height: 1px;
-}
-
-.active .lines:after {
-    transform: rotate3d(0, 0, 1, 45deg);
-    height: 1px;
-}
-
-/// REFACTOTRING GOT TO HERE ///
 #page-report-outline-user .section {
     border: 0;
 }
@@ -1933,14 +1566,14 @@ ol#chapters {
 
 
 #page-mod-book-view {
-    #region-main { 
+    #region-main {
         width: 70%;
         float: right;
     }
     #moodle-blocks {
         clear: none;
-        width: 30%; 
-        float: left; 
+        width: 30%;
+        float: left;
     }
 }
 // Print style guide for book
@@ -1989,16 +1622,15 @@ http://blog.rodneyrehm.de/archives/34-iOS7-Mobile-Safari-And-Viewport-Units.html
     display: inline-block;
     padding: 1em 2%;
     margin-top: 2em;
-
-    & .btn {
-        float: right;
-    }
 }
 
 #page-mast .snap-login-button {
     display: inline-block;
     padding: 0.25em 2em;
     margin-top: 1em;
+}
+#mr-nav .snap-login-button {
+    margin-right: 1em;
 }
 
 @media screen and (min-width: @screen-sm-min) {
@@ -3587,9 +3219,7 @@ table#user-grades tr.avg td.cell {
 }
 
 #notice {
-    color: #fff;
-
-    //	background-color: @brand-primary; customisable
+    background-color: #eee;
     font-size: 2em;
     width: 100%;
     padding: 1em 4% 4em;
@@ -3604,14 +3234,6 @@ table#user-grades tr.avg td.cell {
     .buttons {
         text-align: center;
         border-top: none;
-    }
-
-    a,
-    a:visited,
-    a:link,
-    a:hover {
-        color: #fff;
-        text-decoration: underline;
     }
 }
 
@@ -3776,6 +3398,13 @@ body.hascontinuecancel.path-site #page {
     }
 }
 
+#page-user-files,
+#page-backup-backupfilesedit {
+    .ffilemanager .fp-viewbar {
+        display: block;
+    }
+}
+
 .ffilepicker .fp-btn-choose {
     margin: 0 0 10px;
 }
@@ -3925,8 +3554,8 @@ body.hascontinuecancel.path-site #page {
         vertical-align: middle;
     }
 
-    a,
-    a:hover {
+    a:not(.btn),
+    a:not(.btn):hover {
         color: #fff;
     }
 
@@ -4062,7 +3691,6 @@ http://css-spinners.com/css/spinner/three-quarters.css
 /** fix feedback field sizes on mobile devices **/
 @media screen and (max-width: @screen-xs-max) {
     .mform {
-        .ftags select,
         .fselect > select,
         .fselectyesno > select,
         .ftext > input[type="text"],
@@ -4196,15 +3824,12 @@ table th img.iconhelp {
 // Reduce font sizes on small screen
 // -------------------------
 @media screen and (max-width: @screen-xs-max) {
+    html,
     #region-main {
-        font-size: 0.9em;
-    }
-    
-    #fixy-profile-link .userpicture {
-        width: 1.5em;
+        font-size: 14.4px;
     }
 
-    h1, 
+    h1,
     .h1 {
         font-size: 1.5em;
     }
@@ -4394,24 +4019,61 @@ div.editor_atto_toolbar div.atto_group {
 
 // End Scrolling gradebook fixes
 
-// We need to be able to see the navigation block in Snap or we can't fo things like follow the participants link and
-// log in as another user.
-.behat-site #moodle-blocks {
-    visibility: visible;
-    height: inherit;
+td.mceIframeContainer > iframe {
+    max-width:100%;
 }
 
-// Stop header from overlapping links and causing intermittent behat failures.
-.behat-site #mr-nav {
-position: absolute;
+body.gecko .snap-form-required > fieldset,
+body.gecko .snap-form-advanced > fieldset {
+    display: table-cell;
+    max-width:100%;
 }
 
-// Also stop it disappearing.
-.behat-site #mr-nav.headroom--unpinned {
-animation-name: none;
+body.ie .snap-form-required > fieldset,
+body.ie .snap-form-advanced > fieldset {
+    table-layout: fixed;
+    max-width:100%;
 }
 
-// Stop fixy animation as it makes Behat sometimes miss buttons and links within the menu
-.behat-site .fixy-inner {
-animation-name: none;
+.felement.feditor,
+table.mceLayout,
+table.mceLayout tr,
+td.mceIframeContainer,
+td.mceStatusbar {
+    display: block;
+    max-width:100%;
+}
+
+table.mceLayout tbody {
+    display:block;
+}
+
+td.mceToolbar {
+    width: 100% !important;
+    position: relative;
+    display: inline-block;
+    margin: 0px !important;
+}
+
+#page-mod-quiz-edit .instancename {
+    max-width:16px;
+}
+
+#page-mod-quiz-edit .activityinstance {
+    overflow: hidden;
+    max-width: 81%;
+}
+
+// General toggle icons.
+button.snap-icon-toggle {
+    &, &:hover, &:visited, &:link, &:active, &:focus {
+        color: @brand-primary;
+        background: none;
+        border: none;
+        box-shadow: none;
+        outline: none;
+    }
+    &:focus {
+        border:2px solid @brand-primary;
+    }
 }

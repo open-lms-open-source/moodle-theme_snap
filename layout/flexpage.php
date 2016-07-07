@@ -23,6 +23,8 @@
  * @copyright Copyright (c) 2015 Moodlerooms Inc. (http://www.moodlerooms.com)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
+defined('MOODLE_INTERNAL') || die();
+
 require_once($CFG->dirroot.'/course/format/flexpage/locallib.php');
 
 // Require standard javascript libs
@@ -237,6 +239,9 @@ echo $OUTPUT->doctype() ?>
 // Output flex page front page warning if necessary.
 if ($PAGE->pagetype == 'site-index') {
     echo snap_shared::flexpage_frontpage_warning(true);
+} else if (strpos($PAGE->pagetype, 'course-view-') === 0) {
+    $output = $PAGE->get_renderer('core', 'course');
+    echo $output->course_format_warning();
 }
 echo $OUTPUT->page_heading();
 echo $OUTPUT->course_header();

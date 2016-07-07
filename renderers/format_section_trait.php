@@ -24,6 +24,8 @@
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+defined('MOODLE_INTERNAL') || die();
+
 include_once('general_section_trait.php');
 
 trait format_section_trait {
@@ -137,7 +139,7 @@ trait format_section_trait {
 
         if (!$isstealth && !$onsectionpage && has_capability('moodle/course:movesections', $coursecontext)) {
             $url = '#section-'.$section->section;
-            $snap_move_section = "<img class='svg-icon' src='".$this->output->pix_url('move', 'theme')."'>";
+            $snap_move_section = "<img class='svg-icon' alt='' role='presentation' src='".$this->output->pix_url('move', 'theme')."'>";
             $movestring = get_string('move', 'theme_snap', format_string($section->name));
             $controls[] = html_writer::link($url, $snap_move_section ,
             array('title' => $movestring, 'alt' => $movestring, 'class' => 'snap-move', 'data-id' => $section->section));
@@ -581,7 +583,7 @@ trait format_section_trait {
         $urlparams = array('section' => $section);
             // S Lamour Aug 2015 - show activity picker
             // moodle is adding a link around the span in a span with js - yay!! go moodle...
-            $modchooser = "<div class='snap-modchooser btn section_add_menus'>
+            $modchooser = "<div class='snap-modchooser btn btn-default section_add_menus'>
               <span class='section-modchooser-link'><span>".get_string('addresourceoractivity', 'theme_snap')."</span></span>
             </div>";
            $output = $this->courserenderer->course_modchooser($modules, $course) . $modchooser;

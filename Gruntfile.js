@@ -32,6 +32,10 @@
 
 module.exports = function(grunt) {
 
+    // We need to include the core Moodle grunt file too, otherwise we can't run tasks like "amd".
+    require("grunt-load-gruntfile")(grunt);
+    grunt.loadGruntfile("../../Gruntfile.js");
+
     // PHP strings for exec task.
     var moodleroot = 'dirname(dirname(__DIR__))',
         configfile = moodleroot + ' . "/config.php"',
@@ -45,7 +49,9 @@ module.exports = function(grunt) {
     // but it gets the job done.
     decachephp += "purge_all_caches();";
 
-    grunt.initConfig({
+    grunt.mergeConfig = grunt.config.merge;
+
+    grunt.mergeConfig({
         less: {
             // Compile moodle styles.
             moodle: {
@@ -157,6 +163,6 @@ module.exports = function(grunt) {
 
     // Register tasks.
     grunt.registerTask("default", ["watch"]);
-    grunt.registerTask("compile", ["less", "autoprefixer", "decache"]);
+    grunt.registerTask("compile", ["less:moodle", "less:editor", "autoprefixer", "decache"]);
     grunt.registerTask("decache", ["exec:decache"]);
 };

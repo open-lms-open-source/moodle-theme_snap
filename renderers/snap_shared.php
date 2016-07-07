@@ -243,30 +243,36 @@ class snap_shared extends renderer_base {
         }
 
         // Require various strings for the command toolbox
-        $PAGE->requires->strings_for_js(array(
-            'moveleft',
+        $PAGE->requires->strings_for_js([
+            'afterresource',
+            'aftersection',
+            'clicktochangeinbrackets',
             'deletechecktype',
             'deletechecktypename',
             'edittitle',
             'edittitleinstructions',
-            'show',
-            'hide',
+            'emptydragdropregion',
             'groupsnone',
             'groupsvisible',
             'groupsseparate',
-            'clicktochangeinbrackets',
+            'hide',
             'markthistopic',
             'markedthistopic',
+            'moveleft',
             'movesection',
             'movecoursemodule',
             'movecoursesection',
             'movecontent',
+            'ok',
+            'show',
             'tocontent',
-            'emptydragdropregion',
-            'afterresource',
-            'aftersection',
-            'totopofsection',
-        ), 'moodle');
+            'totopofsection'
+        ], 'moodle');
+
+        $PAGE->requires->strings_for_js([
+            'error:failedtochangeassetvisibility',
+            'error:failedtoduplicateasset'
+        ], 'theme_snap');
 
         // Include section-specific strings for formats which support sections.
         if (course_format_uses_sections($course->format)) {
@@ -289,7 +295,7 @@ class snap_shared extends renderer_base {
     }
 
     /**
-     * Javascript required by both flexpage layout and header layout
+     * Javascript required by both standard header layout and flexpage layout
      *
      * @return void
      */
@@ -306,6 +312,7 @@ class snap_shared extends renderer_base {
             'forumpicturegroup',
             'forumreplies',
             'forumlastpost',
+            'hiddencoursestoggle',
             'loading',
             'more',
             'moving',
@@ -326,42 +333,17 @@ class snap_shared extends renderer_base {
         // the param set but that never seems to happen.
         $courseconfig->pageparams = array();
 
-        $module = array(
-            'name' => 'theme_snap_core',
-            'fullpath' => '/theme/snap/javascript/module.js'
-        );
-
-        $PAGE->requires->js_init_call('M.theme_snap.core.init',
-          [$COURSE->id, $PAGE->context->id, $courseconfig],
-          false,
-          $module
-        );
-
         // Are we viewing /course/view.php - note, this is different from just checking the page type.
         // We only ever want to load course.js when on site page or view.php - no point in loading it when on
         // course settings page, etc.
         $courseviewpage = local::current_url_path() === '/course/view.php';
         $pagehascoursecontent = ($PAGE->pagetype === 'site-index' || $courseviewpage);
 
+        $initvars = [$COURSE->id, $PAGE->context->id, $courseconfig, $pagehascoursecontent];
+        $PAGE->requires->js_call_amd('theme_snap/snap', 'snapInit', $initvars);
+
         // Does the page have editable course content?
         if ($pagehascoursecontent && $PAGE->user_allowed_editing()) {
-            $module = array(
-              'name' => 'theme_snap_course',
-              'fullpath' => '/theme/snap/javascript/course.js'
-            );
-
-            $movenoticehtml = '';
-            if ($PAGE->pagetype === 'site-index') {
-                $courserenderer = $PAGE->get_renderer('core', 'course');
-                $movenoticehtml = $courserenderer->snap_move_notice();
-            }
-
-            $PAGE->requires->js_init_call('M.theme_snap.course.init',
-              [$movenoticehtml],
-              true,
-              $module
-            );
-
             $canmanageacts = has_capability('moodle/course:manageactivities', context_course::instance($COURSE->id));
             if ($canmanageacts && empty($USER->editing)) {
                 $modinfo = get_fast_modinfo($COURSE);

@@ -26,7 +26,6 @@ Feature: When the moodle theme is set to Snap, conditional restrictions work as 
   Background:
     Given the following config values are set as admin:
       | theme              | snap |
-      | thememobile        | snap |
       | enablecompletion   | 1    |
       | enableavailability | 1    |
     And the following "courses" exist:
