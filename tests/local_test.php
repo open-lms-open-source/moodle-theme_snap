@@ -211,7 +211,7 @@ class theme_snap_local_test extends \advanced_testcase {
     protected function create_assignment($courseid, $duedate, $opts = []) {
         global $USER, $CFG;
 
-        // This is crucial - without this you can't make a conditionally accsesed forum.
+        // This is crucial - without this you can't make a conditionally accessed forum.
         $CFG->enableavailability = true;
 
         // Hack - without this the calendar library trips up when trying to give an assignment a duedate.
@@ -238,6 +238,48 @@ class theme_snap_local_test extends \advanced_testcase {
         $cm = get_coursemodule_from_instance('assign', $instance->id);
         $context = \context_module::instance($cm->id);
         return new \testable_assign($context, $cm, get_course($courseid));
+    }
+
+    /*
+     * Test upcoming deadline times.
+     */
+    public function test_upcoming_deadlines_close_events() {
+        global $DB;
+
+        $this->resetAfterTest();
+
+        $generator = $this->getDataGenerator();
+        $course = $generator->create_course();
+        $teacher = $generator->create_user();
+        $student = $generator->create_user();
+
+        $teacherrole = $DB->get_record('role', ['shortname' => 'teacher']);
+        $generator->enrol_user($teacher->id, $course->id, $teacherrole->id);
+
+        $studentrole = $DB->get_record('role', ['shortname' => 'student']);
+        $generator->enrol_user($student->id, $course->id, $studentrole->id);
+
+        $quizgen = $this->getDataGenerator()->get_plugin_generator('mod_quiz');
+        // Seperate open and close events generated if open for more than 5 days.
+        $timeopen = time() - (5 * DAYSECS);
+        $timeclose = time() + (2 * DAYSECS);
+
+        // Can't create activities with deadlines using generator without the
+        // current user having the correct permissions for the calendar.
+        $this->setUser($teacher);
+
+        $quizgen->create_instance([
+            'course' => $course->id,
+            'timeopen' => $timeopen,
+            'timeclose' => $timeclose,
+        ]);
+
+        $actual = local::upcoming_deadlines($student->id);
+        $expected = 1;
+        $this->assertCount($expected, $actual);
+        $event = reset($actual);
+        $this->assertSame('close', $event->eventtype);
+        $this->assertSame('Quiz 1', $event->name, 'Should not have "(Quiz closes)" at the end of the event name');
     }
 
     /**
@@ -343,7 +385,7 @@ class theme_snap_local_test extends \advanced_testcase {
     }
 
     /**
-     * Test upcoming deadlines with assignmetn activity restricted to future date.
+     * Test upcoming deadlines with assignment activity restricted to future date.
      *
      * @throws \coding_exception
      */
@@ -417,8 +459,8 @@ class theme_snap_local_test extends \advanced_testcase {
         groups_add_member($group2, $student2);
 
         // Create assignment restricted to group1.
-        $opts = ['availability' =>
-            json_encode(
+        $opts = [
+            'availability' => json_encode(
                 \core_availability\tree::get_root_json(
                     [\availability_group\condition::get_json($group1->id)]
                 )
@@ -428,8 +470,8 @@ class theme_snap_local_test extends \advanced_testcase {
         $this->create_assignment($course->id, $duedate1, $opts);
 
         // Create assignment restricted to group2.
-        $opts = ['availability' =>
-            json_encode(
+        $opts = [
+            'availability' => json_encode(
                 \core_availability\tree::get_root_json(
                     [\availability_group\condition::get_json($group2->id)]
                 )
@@ -700,7 +742,7 @@ class theme_snap_local_test extends \advanced_testcase {
 
     public function test_one_message_deleted() {
         global $DB;
-        
+
         $this->resetAfterTest();
 
         $generator = $this->getDataGenerator();
@@ -721,7 +763,6 @@ class theme_snap_local_test extends \advanced_testcase {
         $message->notification      = '0';
 
         $messageid = message_send($message);
-        $aftersent = time();
 
         $actual = local::get_user_messages($userfrom->id);
         $this->assertCount(0, $actual);
@@ -736,8 +777,6 @@ class theme_snap_local_test extends \advanced_testcase {
     }
 
     public function test_one_message_user_deleted() {
-        global $DB;
-
         $this->resetAfterTest();
 
         $generator = $this->getDataGenerator();
@@ -757,8 +796,7 @@ class theme_snap_local_test extends \advanced_testcase {
         $message->smallmessage      = 'small message';
         $message->notification      = '0';
 
-        $messageid = message_send($message);
-        $aftersent = time();
+        message_send($message);
 
         $actual = local::get_user_messages($userfrom->id);
         $this->assertCount(0, $actual);
@@ -910,8 +948,8 @@ class theme_snap_local_test extends \advanced_testcase {
             $studentrole->id);
 
         // Check teacher can only grade 1 course (not a teacher on course2).
-        $gradeable_courses = local::gradeable_courseids($teacher->id);
-        $this->assertCount(1, $gradeable_courses);
+        $gradeablecourses = local::gradeable_courseids($teacher->id);
+        $this->assertCount(1, $gradeablecourses);
     }
 
     /**
