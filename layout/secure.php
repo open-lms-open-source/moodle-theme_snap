@@ -38,54 +38,25 @@ echo $OUTPUT->doctype() ?>
 
 <?php echo $OUTPUT->standard_top_of_body_html() ?>
 
-<nav role="navigation" class="navbar navbar-default">
-    <div class="navbar-header">
-        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#moodle-navbar">
-            <span class="sr-only"><?php print_string('togglenavigation', 'theme_snap') ?></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-        </button>
-        <a class="brand" href="<?php echo s($CFG->wwwroot);?>"><?php echo format_string($SITE->shortname); ?></a>
+<header id='mr-nav' class='clearfix moodle-has-zindex'>
+<div class="pull-right">
+    <?php echo $OUTPUT->login_info(false); ?>
+</div>
+<?php
+    echo format_string($SITE->shortname, true, ['context' => context_course::instance(SITEID)]);
+?>
+</header>
 
-        <div id="moodle-navbar" class="navbar-collapse collapse">
-            <?php echo $OUTPUT->custom_menu(); ?>
-            <ul class="nav pull-right">
-                <li><?php echo $OUTPUT->page_heading_menu(); ?></li>
-                <li class="navbar-text">
-                    <?php
-                        if (method_exists($OUTPUT, 'user_menu')) {
-                            echo $OUTPUT->user_menu(); // user_menu, for Moodle 2.8
-                        } else {
-                            echo $OUTPUT->login_info(); // login_info, Moodle 2.7 and before
-                        }
-                     ?>
-                </li>
-            </ul>
-        </div>
-    </div>
-</nav>
+<div id="page">
+<div id="page-content">
 
-<div id="page" class="container">
-
-    <header id="page-header" class="clearfix">
-        <?php echo $OUTPUT->page_heading(); ?>
-    </header>
-
-    <div id="page-content" class="row">
-        <div id="region-bs-main-and-pre" class="col-md-9">
-            <div class="row-fluid">
-                <section id="region-main" class="col-md-8 pull-right">
-                    <?php echo $OUTPUT->main_content(); ?>
-                </section>
-                <?php echo $OUTPUT->blocks('side-pre', 'col-md-4 desktop-first-column'); ?>
-            </div>
-        </div>
-        <?php echo $OUTPUT->blocks('side-post', 'col-md-3'); ?>
-    </div>
-
+<main id="moodle-page" class="clearfix">
+    <section id="region-main">
+        <?php echo $OUTPUT->main_content(); ?>
+    </section>
+    <?php echo $OUTPUT->blocks('side-pre'); ?>
     <?php echo $OUTPUT->standard_end_of_body_html() ?>
-
+</div>
 </div>
 </body>
 </html>
