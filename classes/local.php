@@ -295,7 +295,7 @@ class local {
         }
 
         if ($trackcount > 0) {
-            $progresspercent = ceil(($compcount/$trackcount)*100);
+            $progresspercent = ceil(($compcount / $trackcount) * 100);
         } else {
             $progresspercent = 0;
         }
@@ -328,7 +328,7 @@ class local {
                 'course' => $courseid,
                 'completion' => self::course_completion_progress($course),
                 'feedback' => self::course_feedback($course),
-                'feedbackurl' =>  $feedbackurl->out()
+                'feedbackurl' => $feedbackurl->out()
             );
         }
         return $courseinfo;
@@ -363,7 +363,7 @@ class local {
                     $capability = 'mod/feedback:complete';
                     break;
                 default:
-                    // If no modname is specified, assume a count of all users is required
+                    // If no modname is specified, assume a count of all users is required.
                     $capability = '';
             }
 
@@ -414,7 +414,6 @@ class local {
                        AND m.timeusertodeleted = 0
         )
           ORDER BY timecreated DESC";
-
 
         $params = array(
             'userid1' => $userid,
@@ -615,6 +614,10 @@ class local {
                 // Not an activity deadline.
                 continue;
             }
+            if ($event->eventtype === 'open' && $event->timeduration == 0) {
+                // Only the opening of multi-day event, not a deadline.
+                continue;
+            }
             if (!empty($event->modulename)) {
                 $modinfo = get_fast_modinfo($event->courseid);
                 $mods = $modinfo->get_instances_of($event->modulename);
@@ -622,6 +625,10 @@ class local {
                     $cminfo = $mods[$event->instance];
                     if (!$cminfo->uservisible) {
                         continue;
+                    }
+                    if ($event->eventtype === 'close') {
+                        // Revert the addition of e.g. "(Quiz closes)" to the event name.
+                        $event->name = $cminfo->name;
                     }
                 }
             }
@@ -664,7 +671,7 @@ class local {
                 $modname = get_string('modulename', $event->modulename);
                 $modimage = \html_writer::img($modimageurl, $modname);
 
-                $meta = $output->friendly_datetime($event->timestart);
+                $meta = $output->friendly_datetime($event->timestart + $event->timeduration);
 
                 $o .= $output->snap_media_object($cm->url, $modimage, $eventtitle, $meta, '');
             }
@@ -1372,7 +1379,7 @@ class local {
         }
 
         $sql = '-- Snap sql'. "\n".implode ("\n".' UNION ALL '."\n", $sqls);
-        if (count($sqls)>1) {
+        if (count($sqls) > 1) {
             $sql .= "\n".' ORDER BY modified DESC';
         }
         $posts = $DB->get_records_sql($sql, $params, 0, $limit);
