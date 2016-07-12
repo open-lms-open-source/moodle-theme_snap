@@ -122,6 +122,137 @@ class local {
     }
 
     /**
+     * Get course categories for a specific course.
+     * Based on code in moodle_page class - functions set_category_by_id and load_category.
+     * @param stdClass $course
+     * @return array
+     * @throws moodle_exception
+     */
+    public static function get_course_categories($course) {
+        global $DB;
+
+        if ($course->id === SITEID) {
+            return [];
+        }
+
+        $categories = [];
+        $category = $DB->get_record('course_categories', array('id' => $course->category));
+        if (!$category) {
+            throw new \moodle_exception('unknowncategory');
+        }
+        $categories[$category->id] = $category;
+        $parentcategoryids = explode('/', trim($category->path, '/'));
+        array_pop($parentcategoryids);
+        foreach (array_reverse($parentcategoryids) as $catid) {
+            $categories[$catid] = null;
+        }
+
+        // Load up all parent categories.
+        $idstoload = array_keys($categories);
+        array_shift($idstoload);
+        $parentcategories = $DB->get_records_list('course_categories', 'id', $idstoload);
+        foreach ($idstoload as $catid) {
+            $categories[$catid] = $parentcategories[$catid];
+        }
+
+        return $categories;
+    }
+
+    /**
+     * This has been taken directly from the moodle_page class but modified to work independently.
+     * It's used by config.php so that hacks can be targetted at just the snap theme.
+     * Work out the theme this page should use.
+     *
+     * This depends on numerous $CFG settings, and the properties of this page.
+     *
+     * @return string the name of the theme that should be used on this page.
+     */
+    public static function resolve_theme() {
+        global $CFG, $USER, $SESSION, $COURSE;
+
+        if (empty($CFG->themeorder)) {
+            $themeorder = array('course', 'category', 'session', 'user', 'site');
+        } else {
+            $themeorder = $CFG->themeorder;
+            // Just in case, make sure we always use the site theme if nothing else matched.
+            $themeorder[] = 'site';
+        }
+
+        $mnetpeertheme = '';
+        if (isloggedin() and isset($CFG->mnet_localhost_id) and $USER->mnethostid != $CFG->mnet_localhost_id) {
+            require_once($CFG->dirroot.'/mnet/peer.php');
+            $mnetpeer = new \mnet_peer();
+            $mnetpeer->set_id($USER->mnethostid);
+            if ($mnetpeer->force_theme == 1 && $mnetpeer->theme != '') {
+                $mnetpeertheme = $mnetpeer->theme;
+            }
+        }
+
+        $deviceinuse = \core_useragent::get_device_type();
+        $devicetheme = \core_useragent::get_device_type_theme($deviceinuse);
+
+        // The user is using another device than default, and we have a theme for that, we should use it.
+        $hascustomdevicetheme = \core_useragent::DEVICETYPE_DEFAULT != $deviceinuse && !empty($devicetheme);
+
+        foreach ($themeorder as $themetype) {
+            switch ($themetype) {
+                case 'course':
+                    if (!empty($CFG->allowcoursethemes) && !empty($COURSE->theme) && !$hascustomdevicetheme) {
+                        return $COURSE->theme;
+                    }
+                    break;
+
+                case 'category':
+                    if (!empty($CFG->allowcategorythemes) && !$hascustomdevicetheme) {
+                        $categories = self::get_course_categories($COURSE);
+                        foreach ($categories as $category) {
+                            if (!empty($category->theme)) {
+                                return $category->theme;
+                            }
+                        }
+                    }
+                    break;
+
+                case 'session':
+                    if (!empty($SESSION->theme)) {
+                        return $SESSION->theme;
+                    }
+                    break;
+
+                case 'user':
+                    if (!empty($CFG->allowuserthemes) && !empty($USER->theme) && !$hascustomdevicetheme) {
+                        if ($mnetpeertheme) {
+                            return $mnetpeertheme;
+                        } else {
+                            return $USER->theme;
+                        }
+                    }
+                    break;
+
+                case 'site':
+                    if ($mnetpeertheme) {
+                        return $mnetpeertheme;
+                    }
+                    // First try for the device the user is using.
+                    if (!empty($devicetheme)) {
+                        return $devicetheme;
+                    }
+                    // Next try for the default device (as a fallback).
+                    $devicetheme = \core_useragent::get_device_type_theme(\core_useragent::DEVICETYPE_DEFAULT);
+                    if (!empty($devicetheme)) {
+                        return $devicetheme;
+                    }
+                    // The default device theme isn't set up - use the overall default theme.
+                    return \theme_config::DEFAULT_THEME;
+            }
+        }
+
+        // We should most certainly have resolved a theme by now. Something has gone wrong.
+        debugging('Error resolving the theme to use for this page.', DEBUG_DEVELOPER);
+        return \theme_config::DEFAULT_THEME;
+    }    
+
+    /**
      * Get course completion progress for specific course.
      * NOTE: It is by design that even teachers get course completion progress, this is so that they see exactly the
      * same as a student would in the personal menu.

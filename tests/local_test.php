@@ -41,6 +41,86 @@ class theme_snap_local_test extends \advanced_testcase {
         require_once($CFG->dirroot.'/mod/assign/tests/base_test.php');
     }
 
+    public function test_get_course_categories() {
+        $this->resetAfterTest();
+
+        $generator = $this->getDataGenerator();
+        $cat1 = $generator->create_category((object)['name' => 'cat1']);
+        $cat2 = $generator->create_category((object)['name' => 'cat2', 'parent' => $cat1->id]);
+        $cat3 = $generator->create_category((object)['name' => 'cat3', 'parent' => $cat2->id]);
+        $course1 = $generator->create_course((object) ['category' => $cat3->id, 'visible' => 0, 'oldvisible' => 0]);
+        $categories = local::get_course_categories($course1);
+        // First item in array should be immediate parent - $cat3.
+        $expected = $cat3;
+        $actual = reset($categories);
+        $this->assertEquals($expected->id, $actual->id);
+
+        // Second item in array should be parent of immediate parent - $cat2.
+        $expected = $cat2;
+        $actual = array_slice($categories, 1, 1);
+        $actual = reset($actual);
+        $this->assertEquals($expected->id, $actual->id);
+        
+        // Final item in array should be a root category - $cat1.
+        $actual = end($categories);
+        $this->assertEmpty($actual->parent);
+        $expected = $cat1;
+        $this->assertEquals($expected->id, $actual->id);
+    }
+
+    /**
+     * Note, although the resolve_theme function is copied from the core moodle_page class there do not appear to be
+     * any tests for resolve_theme in core code.
+     */
+    public function test_resolve_theme() {
+        global $CFG, $COURSE;
+
+        $this->resetAfterTest();
+
+        $COURSE = get_course(SITEID);
+
+        $CFG->enabledevicedetection = false;
+        $CFG->theme = 'snap';
+
+        $theme = local::resolve_theme();
+        $this->assertEquals('snap', $theme);
+
+        $CFG->allowcoursethemes = true;
+        $CFG->allowcategorythemes = true;
+        $CFG->allowuserthemes = true;
+
+        $generator = $this->getDataGenerator();
+        $cat1 = $generator->create_category((object)['name' => 'cat1']);
+        $cat2 = $generator->create_category((object)['name' => 'cat2', 'parent' => $cat1->id]);
+        $cat3 = $generator->create_category((object)['name' => 'cat3', 'parent' => $cat2->id, 'theme' => 'clean']);
+        $course1 = $generator->create_course((object) ['category' => $cat3->id]);
+
+        $COURSE = $course1;
+        $theme = local::resolve_theme();
+        $this->assertEquals('clean', $theme);
+
+        $cat4 = $generator->create_category((object)['name' => 'cat4', 'theme' => 'more']);
+        $cat5 = $generator->create_category((object)['name' => 'cat5', 'parent' => $cat4->id]);
+        $cat6 = $generator->create_category((object)['name' => 'cat6', 'parent' => $cat5->id]);
+        $course2 = $generator->create_course((object) ['category' => $cat6->id]);
+
+        $COURSE = $course2;
+        $theme = local::resolve_theme();
+        $this->assertEquals('more', $theme);
+
+        $course3 = $generator->create_course((object) ['category' => $cat1->id, 'theme' => 'clean']);
+        $COURSE = $course3;
+        $theme = local::resolve_theme();
+        $this->assertEquals('clean', $theme);
+
+        $user1 = $generator->create_user(['theme' => 'more']);
+        $COURSE = get_course(SITEID);
+        $this->setUser($user1);
+        $theme = local::resolve_theme();
+        $this->assertEquals('more', $theme);
+
+    }
+
     public function test_get_course_color() {
         $actual = local::get_course_color(1);
         $this->assertSame('c4ca42', $actual);
