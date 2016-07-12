@@ -56,6 +56,8 @@ echo $OUTPUT->doctype() ?>
     </section>
     <?php echo $OUTPUT->blocks('side-pre'); ?>
     <?php echo $OUTPUT->standard_end_of_body_html() ?>
+</main>
+
 </div>
 </div>
 </body>
