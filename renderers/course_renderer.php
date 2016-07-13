@@ -658,7 +658,7 @@ class theme_snap_core_course_renderer extends core_course_renderer {
         {$thumbnail}
         <div class='summary-text'>
             {$page->summary}
-            <p><a class='pagemod-readmore' title='{$mod->name}' href='{$mod->url}' data-pagemodcontext='{$mod->context->id}'>{$readmore}</a></p>
+            <p><a class='btn btn-default pagemod-readmore' title='{$mod->name}' href='{$mod->url}' data-pagemodcontext='{$mod->context->id}'>{$readmore}</a></p>
         </div>
 
         <div class=pagemod-content tabindex='-1' data-content-loaded={$contentloaded}>
