@@ -24,17 +24,17 @@ use theme_snap\webservice\ws_course_card;
  */
 class theme_snap_ws_course_card_test extends \advanced_testcase {
 
-    function test_service_parameters() {
+    public function test_service_parameters() {
         $params = ws_course_card::service_parameters();
         $this->assertTrue($params instanceof external_function_parameters);
     }
 
-    function test_service_returns() {
+    public function test_service_returns() {
         $returns = ws_course_card::service_returns();
         $this->assertTrue($returns instanceof external_single_structure);
     }
 
-    function test_service() {
+    public function test_service() {
         global $DB;
 
         $this->resetAfterTest();

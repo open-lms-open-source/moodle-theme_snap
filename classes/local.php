@@ -250,7 +250,7 @@ class local {
         // We should most certainly have resolved a theme by now. Something has gone wrong.
         debugging('Error resolving the theme to use for this page.', DEBUG_DEVELOPER);
         return \theme_config::DEFAULT_THEME;
-    }    
+    }
 
     /**
      * Get course completion progress for specific course.
@@ -1211,20 +1211,6 @@ class local {
         } else {
             $USER = array_pop($origuser);
         }
-    }
-
-    /**
-     * Sort recent forum activity by timestamp.
-     *
-     * @param int $a
-     * @param int $b
-     * @return int
-     */
-    private static function sort_timestamp($a, $b) {
-        if ($a->timestamp === $b->timestamp) {
-            return 0;
-        }
-        return ($a->timestamp > $b->timestamp ? -1 : 1);
     }
 
     /**

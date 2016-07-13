@@ -270,7 +270,7 @@ class user_forums {
 
         // Note - we don't include the site in the list of courses. This is intentional - we want student engagement to
         // be increased in courses where learning takes place and the front page is unlikely to fit that model.
-        // Currently we are using local::swap_global_user as a hack for the following function (MDL-51353) :
+        // Currently we are using local::swap_global_user as a hack for the following function (MDL-51353).
         $this->courses = enrol_get_my_courses();
 
         $forums = [];

@@ -27,7 +27,7 @@ defined('MOODLE_INTERNAL') || die();
 
 require_once($CFG->dirroot.'/course/format/flexpage/locallib.php');
 
-// Require standard javascript libs
+// Require standard javascript libs.
 snap_shared::page_requires_js();
 
 $hasheading = ($PAGE->heading);
@@ -105,47 +105,46 @@ echo $OUTPUT->doctype() ?>
 
     <style>
    #region-top {
-   	width:100%;
-   	clear:both;
+        width: 100%;
+        clear: both;
     }
     #page-content #region-pre,
     #page-content #region-post,
-    #page-content #region-main-box
-    {
-    	float:left;
-    	width:25%;
-    	left:0;
+    #page-content #region-main-box {
+        float: left;
+        width: 25%;
+        left: 0;
     }
 
     #page-content #region-main-box {
-    	width:46%;
-    	margin:0 2%;
+        width: 46%;
+        margin: 0 2%;
     }
 
 
-	.side-pre-only #page-content #region-main-box,
-	.side-post-only #page-content #region-main-box{
-    	width:70%;
-    	margin:0 auto;
+    .side-pre-only #page-content #region-main-box,
+    .side-post-only #page-content #region-main-box {
+        width: 70%;
+        margin: 0 auto;
     }
 
     .block_settings {
-		width: auto;
-		height: auto;
-		visibility: visible;
-		position: relative;
-		background-color: #FFF !important;
-		right:0;
-	}
+        width: auto;
+        height: auto;
+        visibility: visible;
+        position: relative;
+        background-color: #FFF !important;
+        right: 0;
+    }
 
    .flexpage_actionbar {
        margin: 5px 10px;
-   }
+    }
 
    .flexpage_prev_next #format_flexpage_next_page {
        display: block;
        float: right;
-   }
+    }
 
    /* Makes the target larger for when you are dragging blocks into an empty top region */
    .format-flexpage #region-top .block-region {
@@ -167,13 +166,13 @@ echo $OUTPUT->doctype() ?>
     }
 
     .groupinglabel {
-        display:inline;
+        display: inline;
     }
 
     .section .activity .actions {
-        display:block;
-        position:relative;
-        overflow:show;
+        display: block;
+        position: relative;
+        overflow: show;
     }
 
     .section .activity .actions .menu {
@@ -183,29 +182,29 @@ echo $OUTPUT->doctype() ?>
 
     .editing .block_flexpagemod_default li.activity .commands,
     .editing .block_flexpagemod_commands .commands {
-        opacity:1 !important;
+        opacity: 1 !important;
     }
     .toggle-display .caret {
-        display:inline;
+        display: inline;
     }
 
     .format-flexpage .moodle-actionmenu[data-enhanced].show {
-        width:100%;
+        width: 100%;
     }
     .section li.activity {
-        min-height:0;
-        height:auto;
-        background-image:none;
-        box-shadow:none;
+        min-height: 0;
+        height: auto;
+        background-image: none;
+        box-shadow: none;
     }
     .snap-assettype,
     .draft_info,
     .activityinstance .conditional_info,
     .conditional_info {
-        display:none;
+        display: none;
     }
     .toggle-display.textmenu:after{
-        display:none;
+        display: none;
     }
 
     .block-region {
@@ -218,7 +217,7 @@ echo $OUTPUT->doctype() ?>
 <body id="<?php p($PAGE->bodyid) ?>" class="<?php p($PAGE->bodyclasses.' '.join(' ', $bodyclasses)) ?>">
 <?php echo $OUTPUT->standard_top_of_body_html() ?>
 
-<?php include(__DIR__.'/nav.php'); ?>
+<?php require(__DIR__.'/nav.php'); ?>
 
 
 <!-- moodle js hooks -->
@@ -251,14 +250,14 @@ echo $OUTPUT->course_header();
 </header>
 
 <?php
-    if ($PAGE->user_allowed_editing()) {
-        if ($COURSE->id == SITEID) {
-            $url=new moodle_url('/course/view.php', array('id'=>SITEID));
-            echo $OUTPUT->edit_button($url);
-        } else {
-            echo $OUTPUT->edit_button($PAGE->url);
-        }
+if ($PAGE->user_allowed_editing()) {
+    if ($COURSE->id == SITEID) {
+        $url = new moodle_url('/course/view.php', array('id' => SITEID));
+        echo $OUTPUT->edit_button($url);
+    } else {
+        echo $OUTPUT->edit_button($PAGE->url);
     }
+}
 ?>
 
 <!-- flexpage tab bar -->
@@ -285,8 +284,8 @@ echo $OUTPUT->course_header();
 <?php if (format_flexpage_has_next_or_previous()) { ?>
 <div class="flexpage_prev_next">
 <?php
-echo format_flexpage_previous_button();
-echo format_flexpage_next_button();
+    echo format_flexpage_previous_button();
+    echo format_flexpage_next_button();
 ?>
 </div>
 <?php } ?>
@@ -328,4 +327,4 @@ echo format_flexpage_next_button();
 
 
 
-<?php include(__DIR__.'/footer.php'); ?>
+<?php require(__DIR__.'/footer.php');

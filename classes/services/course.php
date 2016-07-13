@@ -28,7 +28,8 @@ defined('MOODLE_INTERNAL') || die();
  */
 class course {
 
-    private function __construct() {}
+    private function __construct() {
+    }
 
     /**
      * Return singleton.

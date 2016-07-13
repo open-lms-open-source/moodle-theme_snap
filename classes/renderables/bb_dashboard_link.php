@@ -13,7 +13,7 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
- 
+
 /**
  * Settings link renderable.
  * @author    gthomas2
@@ -36,7 +36,7 @@ class bb_dashboard_link implements \renderable {
     /**
      * @throws coding_exception
      */
-    function __construct() {
+    public function __construct() {
         global $USER;
 
         if (!class_exists('local_geniusws\navigation')) {

@@ -23,7 +23,7 @@
  */
 defined('MOODLE_INTERNAL') || die();
 
-include(__DIR__.'/header.php');
+require(__DIR__.'/header.php');
 
 use theme_snap\local;
 
@@ -105,7 +105,7 @@ echo $OUTPUT->page_heading_button();
 
 // On the front page, output some different content.
 if ($PAGE->pagetype == 'site-index') {
-    include(__DIR__.'/faux_site_index.php');
+    require(__DIR__.'/faux_site_index.php');
 } else {
     echo $OUTPUT->main_content();
 }
@@ -129,11 +129,11 @@ if (stripos($PAGE->bodyclasses, 'format-singleactivity') !== false ) {
 
 </section>
 
-<?php include(__DIR__.'/moodle-blocks.php'); ?>
+<?php require(__DIR__.'/moodle-blocks.php'); ?>
 </main>
 
 </div>
 </div>
 <!-- close moodle js hooks -->
 
-<?php include(__DIR__.'/footer.php'); ?>
+<?php require(__DIR__.'/footer.php');
