@@ -973,6 +973,7 @@ class theme_snap_local_test extends \advanced_testcase {
             'testpng_small.png' => false,
             'testgif.gif' => false,
             'testgif_small.gif' => false,
+            'testsvg.svg' => false
         ];
 
         foreach ($fixtures as $filename => $shouldberesized) {

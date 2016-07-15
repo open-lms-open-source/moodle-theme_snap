@@ -1,8 +1,8 @@
-<div id="coverimagecontrol">
-    <label class="btn btn-sm btn-file btn-solid state-visible" for="coverfiles"><span>{{#str}}changecoverimage, theme_snap{{/str}}</span>
-       <input id="coverfiles" name="coverfiles[]" type="file" accept="image/gif, image/jpeg, image/png, image/svg"/>
+<div id="snap-coverimagecontrol">
+    <label class="btn btn-sm btn-file btn-solid state-visible" for="snap-coverfiles"><span>{{#str}}changecoverimage, theme_snap{{/str}}</span>
+       <input id="snap-coverfiles" name="snap-coverfiles[]" type="file" accept="{{accepttypes}}"/>
     </label>
-    <div id="changecoverimageconfirmation">
+    <div id="snap-changecoverimageconfirmation">
         <button class="btn btn-sm btn-solid ok">{{#str}}save, admin{{/str}}</button>
         <button class="btn btn-sm btn-link cancel">{{#str}}cancel{{/str}}</button>
     </div>

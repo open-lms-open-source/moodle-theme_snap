@@ -576,7 +576,6 @@ input[type="reset"] {
 .btn.btn-solid {
     &,
     &:visited,
-    &:hover,
     &:active,
     &:focus {
         background: #fff;
@@ -4095,7 +4094,7 @@ button.snap-icon-toggle {
 }
 
 // Cover image control.
-#coverimagecontrol {
+#snap-coverimagecontrol {
     float: right;
     margin-left: 1em;
     display: inline-block;
@@ -4103,12 +4102,12 @@ button.snap-icon-toggle {
     opacity: 0;
 }
 
-#changecoverimageconfirmation {
+#snap-changecoverimageconfirmation {
     position: relative;
     display: inline-block;
 }
 
-#coverfiles {
+#snap-coverfiles {
     display: block;
     position: absolute;
     top: 0;
@@ -4116,19 +4115,19 @@ button.snap-icon-toggle {
     opacity: 0;
 }
 
-label[for="coverfiles"], #changecoverimageconfirmation button{
+label[for="snap-coverfiles"], #snap-changecoverimageconfirmation button{
     position: relative;
     display: none;
     top: -0.5em;
 }
 
-label.state-visible[for="coverfiles"], #changecoverimageconfirmation.state-visible button{
+label.state-visible[for="snap-coverfiles"], #snap-changecoverimageconfirmation.state-visible button{
     display: inline-block;
     padding: 6px 16px;
     cursor: pointer;
 }
 
-label.state-visible[for="coverfiles"] span:before {
+label.state-visible[for="snap-coverfiles"] span:before {
     content: '';
     background: transparent url("[[pix:theme|camera]]") no-repeat;
     display: inline-block;
@@ -4137,12 +4136,12 @@ label.state-visible[for="coverfiles"] span:before {
     width: 1.5em;
 }
 
-#coverfiles {
+#snap-coverfiles {
     cursor: pointer;
 }
 
-label.state-visible[for="coverfiles"],
-#changecoverimageconfirmation .ok {
+label.state-visible[for="snap-coverfiles"],
+#snap-changecoverimageconfirmation .ok {
     .spinner-three-quarters {
         width: 1em;
         height: 1em;
@@ -4151,7 +4150,7 @@ label.state-visible[for="coverfiles"],
     }
 }
 
-#changecoverimageconfirmation.disabled .ok {
+#snap-changecoverimageconfirmation.disabled .ok {
     &,
     &:visited,
     &:hover,
@@ -4171,6 +4170,6 @@ label.state-visible[for="coverfiles"],
     background-color: rgba(255, 255, 255, 0.9);
 }
 
-#coverimagecontrol.snap-js-enabled {
+#snap-coverimagecontrol.snap-js-enabled {
     opacity: 1;
 }

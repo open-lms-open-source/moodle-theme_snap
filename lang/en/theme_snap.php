@@ -57,6 +57,7 @@ $string['coursefootertoggledesc'] = 'The Course Footer shows useful information 
 $string['courseformatnotification'] = 'The current course format you are using is not fully supported by the Snap theme. For the best experience Moodlerooms recommends using the Topics or Weekly course formats with the Snap theme. The course format can be changed in the <a href="{$a}">course settings</a>.';
 $string['coursefixydefaulttext'] = 'You are currently not enrolled in any courses.<br>Courses you are enrolled in will be shown here.';
 $string['coursenavigation'] = 'Course navigation';
+$string['coursesummaryfilesunsuitable'] = 'Please empty your course summary files before you attempt to change the cover image';
 $string['coursetools'] = 'Course Tools';
 $string['createsection'] = 'Create section';
 $string['current'] = 'Current';
@@ -187,6 +188,7 @@ $string['togglenavigation'] = 'Toggle navigation';
 $string['topicactions'] = 'Topic actions';
 $string['unenrolme'] = 'Unenrol me';
 $string['unread'] = 'unread';
+$string['unsupportedcoverimagetype'] = 'Unsupported cover image type ({$a})';
 $string['via'] = 'via';
 $string['viewcourse'] = 'View Course';
 $string['viewyourprofile'] = 'View your profile';

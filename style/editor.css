@@ -4665,7 +4665,6 @@ input[type="reset"]:focus {
 }
 .btn.btn-solid,
 .btn.btn-solid:visited,
-.btn.btn-solid:hover,
 .btn.btn-solid:active,
 .btn.btn-solid:focus {
   background: #fff;
@@ -7946,37 +7945,37 @@ button.snap-icon-toggle:focus {
 button.snap-icon-toggle:focus {
   border: 2px solid #03A9F4;
 }
-#coverimagecontrol {
+#snap-coverimagecontrol {
   float: right;
   margin-left: 1em;
   display: inline-block;
   transition: all 0.4s ease-in-out;
   opacity: 0;
 }
-#changecoverimageconfirmation {
+#snap-changecoverimageconfirmation {
   position: relative;
   display: inline-block;
 }
-#coverfiles {
+#snap-coverfiles {
   display: block;
   position: absolute;
   top: 0;
   left: 0;
   opacity: 0;
 }
-label[for="coverfiles"],
-#changecoverimageconfirmation button {
+label[for="snap-coverfiles"],
+#snap-changecoverimageconfirmation button {
   position: relative;
   display: none;
   top: -0.5em;
 }
-label.state-visible[for="coverfiles"],
-#changecoverimageconfirmation.state-visible button {
+label.state-visible[for="snap-coverfiles"],
+#snap-changecoverimageconfirmation.state-visible button {
   display: inline-block;
   padding: 6px 16px;
   cursor: pointer;
 }
-label.state-visible[for="coverfiles"] span:before {
+label.state-visible[for="snap-coverfiles"] span:before {
   content: '';
   background: transparent url("[[pix:theme|camera]]") no-repeat;
   display: inline-block;
@@ -7984,21 +7983,21 @@ label.state-visible[for="coverfiles"] span:before {
   height: 1.5em;
   width: 1.5em;
 }
-#coverfiles {
+#snap-coverfiles {
   cursor: pointer;
 }
-label.state-visible[for="coverfiles"] .spinner-three-quarters,
-#changecoverimageconfirmation .ok .spinner-three-quarters {
+label.state-visible[for="snap-coverfiles"] .spinner-three-quarters,
+#snap-changecoverimageconfirmation .ok .spinner-three-quarters {
   width: 1em;
   height: 1em;
   border-width: 0.25em;
   margin-left: 0.5em;
 }
-#changecoverimageconfirmation.disabled .ok,
-#changecoverimageconfirmation.disabled .ok:visited,
-#changecoverimageconfirmation.disabled .ok:hover,
-#changecoverimageconfirmation.disabled .ok:active,
-#changecoverimageconfirmation.disabled .ok:focus {
+#snap-changecoverimageconfirmation.disabled .ok,
+#snap-changecoverimageconfirmation.disabled .ok:visited,
+#snap-changecoverimageconfirmation.disabled .ok:hover,
+#snap-changecoverimageconfirmation.disabled .ok:active,
+#snap-changecoverimageconfirmation.disabled .ok:focus {
   color: #fff;
   border-color: #fff;
 }
@@ -8009,7 +8008,7 @@ label.state-visible[for="coverfiles"] .spinner-three-quarters,
 #page-header.mast-image .alert-warning {
   background-color: rgba(255, 255, 255, 0.9);
 }
-#coverimagecontrol.snap-js-enabled {
+#snap-coverimagecontrol.snap-js-enabled {
   opacity: 1;
 }
 /**
@@ -10954,11 +10953,11 @@ img.iconhelp:hover {
 .que {
   border-bottom: 1px solid #03A9F4;
 }
-#changecoverimageconfirmation.disabled .ok,
-#changecoverimageconfirmation.disabled .ok:visited,
-#changecoverimageconfirmation.disabled .ok:hover,
-#changecoverimageconfirmation.disabled .ok:active,
-#changecoverimageconfirmation.disabled .ok:focus {
+#snap-changecoverimageconfirmation.disabled .ok,
+#snap-changecoverimageconfirmation.disabled .ok:visited,
+#snap-changecoverimageconfirmation.disabled .ok:hover,
+#snap-changecoverimageconfirmation.disabled .ok:active,
+#snap-changecoverimageconfirmation.disabled .ok:focus {
   color: #fff;
   border-color: #fff;
   background-color: #03A9F4;

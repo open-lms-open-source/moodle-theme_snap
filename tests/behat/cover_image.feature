@@ -46,25 +46,36 @@ Feature: When the moodle theme is set to Snap, cover image can be set for site a
     And I open the personal menu
     And I follow "Course 1"
     And I wait until the page is ready
-   Then I should see "Change image"
+    Then I should see "Change image"
     And I should not see cover image in page header
     And I upload cover image "testpng_small.png"
     # Test cancelling upload
     And I wait until ".btn.cancel" "css_element" is visible
     And I click on ".btn.cancel" "css_element"
-   Then I should not see cover image in page header
+    Then I should not see cover image in page header
     And I should see "Change image"
     # Test confirming upload
     And I upload cover image "testpng_small.png"
     And I wait until ".btn.ok" "css_element" is visible
     And I click on ".btn.ok" "css_element"
-    And I wait until "label[for=\"coverfiles\"]" "css_element" is visible
-   Then I should see cover image in page header
+    And I wait until "label[for=\"snap-coverfiles\"]" "css_element" is visible
+    Then I should see cover image in page header
+    And I reload the page
+    Then I should see cover image in page header
+    # Test changing the image again
+    And I upload cover image "bpd_bikes_1280px.jpg"
+    And I wait until ".btn.ok" "css_element" is visible
+    And I click on ".btn.ok" "css_element"
+    And I wait until "label[for=\"snap-coverfiles\"]" "css_element" is visible
+    Then I should see cover image in page header
+    And I reload the page
+    Then I should see cover image in page header
+
     And I log out (theme_snap)
     And I log in as "teacher2" (theme_snap)
     And I open the personal menu
     And I follow "Course 1"
-   Then I should not see "Change image"
+    Then I should not see "Change image"
 
   @javascript
   Scenario: A cover image cannot exceed the site maximum upload size.
@@ -85,12 +96,19 @@ Feature: When the moodle theme is set to Snap, cover image can be set for site a
     And I open the personal menu
     And I follow "Course 1"
     And I wait until the page is ready
-   Then I should see "Change image"
+    Then I should see "Change image"
     And I should not see cover image in page header
     And I upload cover image "bpd_bikes_3888px.jpg"
-   Then I should see "Cover image exceeds the site level maximum allowed file size"
+    Then I should see "Cover image exceeds the site level maximum allowed file size"
     And I upload cover image "testpng_small.png"
-   Then I should not see "Cover image exceeds the site level maximum allowed file size"
+    Then I should not see "Cover image exceeds the site level maximum allowed file size"
+    And I wait until ".btn.ok" "css_element" is visible
+    And I click on ".btn.ok" "css_element"
+    And I wait until "label[for=\"snap-coverfiles\"]" "css_element" is visible
+    And I should see cover image in page header
+    And I reload the page
+    Then I should see cover image in page header
+
 
   @javascript
   Scenario: A warning will be presented if the cover image is of a low resolution.
@@ -107,12 +125,12 @@ Feature: When the moodle theme is set to Snap, cover image can be set for site a
     And I open the personal menu
     And I follow "Course 1"
     And I wait until the page is ready
-   Then I should see "Change image"
+    Then I should see "Change image"
     And I should not see cover image in page header
     And I upload cover image "testpng_lt800px.png"
-   Then I should see "For best quality, we recommend a larger image of at least 800px width"
+    Then I should see "For best quality, we recommend a larger image of at least 800px width"
     And I upload cover image "testpng_small.png"
-   Then I should not see "For best quality, we recommend a larger image of at least 800px width"
+    Then I should not see "For best quality, we recommend a larger image of at least 800px width"
 
   @javascript
   Scenario: Admin user can change site cover image.
@@ -123,24 +141,26 @@ Feature: When the moodle theme is set to Snap, cover image can be set for site a
     And I log in as "admin" (theme_snap)
     And I am on site homepage
     And I wait until the page is ready
-   Then I should see "Change image"
+    Then I should see "Change image"
     And I should not see cover image in page header
     And I upload cover image "testpng_small.png"
     # Test cancelling upload
     And I wait until ".btn.cancel" "css_element" is visible
     And I click on ".btn.cancel" "css_element"
-   Then I should not see cover image in page header
+    Then I should not see cover image in page header
     And I should see "Change image"
     # Test confirming upload
     And I upload cover image "testpng_small.png"
     And I wait until ".btn.ok" "css_element" is visible
     And I click on ".btn.ok" "css_element"
-    And I wait until "label[for=\"coverfiles\"]" "css_element" is visible
-   Then I should see cover image in page header
+    And I wait until "label[for=\"snap-coverfiles\"]" "css_element" is visible
+    Then I should see cover image in page header
+    And I reload the page
+    Then I should see cover image in page header
     And I log out (theme_snap)
     And I log in as "user1" (theme_snap)
     And I am on site homepage
     And I wait until the page is ready
-   Then I should not see "Change image"
+    Then I should not see "Change image"
 
 

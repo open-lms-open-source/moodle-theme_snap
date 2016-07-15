@@ -974,8 +974,9 @@ class theme_snap_core_renderer extends toc_renderer {
             $heading = html_writer::tag($tag, $heading);
         }
 
-        if (has_capability('moodle/course:manageactivities', $PAGE->context)) {
-            $heading .= $this->render_from_template('theme_snap/cover_image_selector', null);
+        if (has_capability('moodle/course:changesummary', $PAGE->context)) {
+            $vars = ['accepttypes' => local::supported_coverimage_typesstr()];
+            $heading .= $this->render_from_template('theme_snap/cover_image_selector', $vars);
         }
         // For the user profile page message button we need to call 2.9 content_header.
         if ($this->page->pagelayout == 'mypublic') {

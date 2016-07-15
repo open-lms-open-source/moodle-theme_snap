@@ -145,8 +145,8 @@ class behat_theme_snap extends behat_base {
      * @Given /^I upload cover image "(?P<fixturefilename_string>(?:[^"]|\\")*)"$/
      */
     public function i_upload_cover_image($fixturefilename) {
-        $this->upload_file($fixturefilename, '#coverfiles');
-        $this->getSession()->executeScript('jQuery( "#coverfiles" ).trigger( "change" );');
+        $this->upload_file($fixturefilename, '#snap-coverfiles');
+        $this->getSession()->executeScript('jQuery( "#snap-coverfiles" ).trigger( "change" );');
     }
 
     /**
@@ -736,7 +736,7 @@ class behat_theme_snap extends behat_base {
     /**
      * @Given /^I should see cover image in page header$/
      */
-    public function pageheader_has_cover_image() {
+    public function  pageheader_has_cover_image() {
         $bgimage = $this->pageheader_backgroundimage();
         if (empty($bgimage) || $bgimage === 'none') {
             $exception = new ExpectationException('#page-header does not have background image ('.$bgimage.')', $this->getSession());

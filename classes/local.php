@@ -935,6 +935,45 @@ class local {
     }
 
     /**
+     * Get supported cover image types.
+     * @return array
+     */
+    public static function supported_coverimage_types() {
+        global $CFG;
+        $extsstr = strtolower($CFG->courseoverviewfilesext);
+
+        // Supported file extensions.
+        $extensions = explode(',', str_replace('.', '', $extsstr));
+        array_walk($extensions, function($s) {trim($s); });
+        // Filter out any extensions that might be in the config but not image extensions.
+        $imgextensions = ['jpg', 'png', 'gif', 'svg', 'webp'];
+        return array_intersect ($extensions, $imgextensions);
+    }
+
+    /**
+     * Get supported cover image types as a string.
+     * @return array
+     */
+    public static function supported_coverimage_typesstr() {
+        $supportedexts = self::supported_coverimage_types();
+        $extsstr = '';
+        $typemaps = [
+            'jpeg' => 'image/jpeg',
+            'jpg'  => 'image/jpeg',
+            'gif'  => 'image/gif',
+            'png'  => 'image/png',
+            'svg'  => 'image/svg'
+        ];
+        foreach ($supportedexts as $ext) {
+            if (in_array($ext, $supportedexts) && isset($typemaps[$ext])) {
+                $extsstr .= $extsstr == '' ? '' : ',';
+                $extsstr .= $typemaps[$ext];
+            }
+        }
+        return $extsstr;
+    }
+
+    /**
      * Get cover image for context
      *
      * @param $context
@@ -950,6 +989,8 @@ class local {
             return false;
         }
         if (count($files) > 1) {
+            // Note this is a coding exception and not a moodle exception because there should never be more than one
+            // file in this area, where as the course summary files area can in some circumstances have more than on file.
             throw new \coding_exception('Multiple files found in course coverimage area (context '.$contextid.')');
         }
         return (end($files));
@@ -1009,7 +1050,7 @@ class local {
         $filename = $theme->settings->poster;
         if ($filename) {
             $syscontextid = \context_system::instance()->id;
-            $fullpath = "/$syscontextid/theme_snap/poster/0$filename";
+            $fullpath = "/$syscontextid/theme_snap/poster/0/$filename";
             $fs = get_file_storage();
             return $fs->get_file_by_hash(sha1($fullpath));
         } else {
@@ -1103,6 +1144,7 @@ class local {
         } else {
             return $newfile;
         }
+
     }
 
     /**

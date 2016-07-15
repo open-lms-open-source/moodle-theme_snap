@@ -45,6 +45,48 @@ class course {
     }
 
     /**
+     * Return false if the summary files are is not suitable for course cover images.
+     * @param $context
+     * @return bool
+     */
+    protected function check_summary_files_for_image_suitability($context) {
+
+        // Supported file extensions.
+        $extensions = local::supported_coverimage_types();
+
+        $fs = get_file_storage();
+        $files = $fs->get_area_files($context->id, 'course', 'overviewfiles',0);
+        $tmparr = [];
+        // Remove '.' file from files array.
+        foreach ($files as $file) {
+            if ($file->get_filename() !== '.') {
+                $tmparr[] = $file;
+            }
+        }
+
+        if (empty($files)) {
+            // If the course summary files area is empty then its fine to upload an image.
+            return true;
+        }
+
+        $files = $tmparr;
+        if (count($files) > 1) {
+            // We have more than one file in the course summary files area, which is bad.
+            return false;
+        }
+
+        /* @var \stored_file $file*/
+        $file = end($files);
+        $ext = strtolower(pathinfo($file->get_filename(), PATHINFO_EXTENSION));
+        if (!in_array($ext, $extensions)) {
+            // Unsupported file type.
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
      * @param string $courseshortname
      * @param string $data
      * @param string $filename
@@ -65,16 +107,26 @@ class course {
             $context = \context_system::instance();
         }
 
-        require_capability('moodle/course:manageactivities', $context);
+        require_capability('moodle/course:changesummary', $context);
 
         $fs = get_file_storage();
         $ext = strtolower(pathinfo($filename, PATHINFO_EXTENSION));
         $ext = $ext === 'jpeg' ? 'jpg' : $ext;
+
+        if (!in_array($ext, local::supported_coverimage_types())) {
+            return ['success' => false, 'warning' => get_string('unsupportedcoverimagetype', 'theme_snap', $ext)];
+        }
+
         $newfilename = 'rawcoverimage.'.$ext;
 
         if ($course->id != SITEID) {
             // Course cover images.
             $context = \context_course::instance($course->id);
+            // Check suitability of course summary files area for use with cover images.
+            if (!$this->check_summary_files_for_image_suitability($context)) {
+                return ['success' => false, 'warning' => get_string('coursesummaryfilesunsuitable', 'theme_snap')];
+            }
+
             $fileinfo = array(
                 'contextid' => $context->id,
                 'component' => 'course',
@@ -83,17 +135,8 @@ class course {
                 'filepath' => '/',
                 'filename' => $newfilename);
 
-                $extensions = ['jpg', 'jpeg', 'png', 'gif', 'svg'];
-
-                // Remove any old cover image files.
-                foreach ($extensions as $ext) {
-                    $chkfilename = 'rawcoverimage.'.$ext;
-                    if ($fs->file_exists($context->id, $fileinfo['component'], $fileinfo['filearea'], 0, '/', $chkfilename)) {
-                        $storedfile = $fs->get_file($context->id, $fileinfo['component'], $fileinfo['filearea'], 0, '/', $chkfilename);
-                        $storedfile->delete();
-                    }
-                }
-
+            // Remove any old course summary image files.
+            $fs->delete_area_files($context->id, $fileinfo['component'], $fileinfo['filearea']);
         } else {
             // Site cover images.
             $context = \context_system::instance();
@@ -120,7 +163,10 @@ class course {
         if ($course->id != SITEID) {
             local::process_coverimage($context, $storedfile);
         } else {
+            set_config('poster', $newfilename, 'theme_snap');
             local::process_coverimage($context);
+            // We need to dump the cache so that the CSS can be rebuilt and include the new background image.
+            theme_reset_all_caches();
         }
         return ['success' => $success];
     }
