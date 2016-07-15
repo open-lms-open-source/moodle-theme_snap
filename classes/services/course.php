@@ -51,9 +51,6 @@ class course {
      */
     protected function check_summary_files_for_image_suitability($context) {
 
-        // Supported file extensions.
-        $extensions = local::supported_coverimage_types();
-
         $fs = get_file_storage();
         $files = $fs->get_area_files($context->id, 'course', 'overviewfiles',0);
         $tmparr = [];
@@ -63,13 +60,13 @@ class course {
                 $tmparr[] = $file;
             }
         }
+        $files = $tmparr;
 
         if (empty($files)) {
             // If the course summary files area is empty then its fine to upload an image.
             return true;
         }
 
-        $files = $tmparr;
         if (count($files) > 1) {
             // We have more than one file in the course summary files area, which is bad.
             return false;
@@ -78,7 +75,7 @@ class course {
         /* @var \stored_file $file*/
         $file = end($files);
         $ext = strtolower(pathinfo($file->get_filename(), PATHINFO_EXTENSION));
-        if (!in_array($ext, $extensions)) {
+        if (!in_array($ext, local::supported_coverimage_types())) {
             // Unsupported file type.
             return false;
         }
@@ -119,6 +116,11 @@ class course {
 
         $newfilename = 'rawcoverimage.'.$ext;
 
+        $binary =  base64_decode($data);
+        if (strlen($binary) > get_max_upload_file_size($CFG->maxbytes)) {
+            throw new \moodle_exception('error:coverimageexceedsmaxbytes', 'theme_snap');
+        }
+
         if ($course->id != SITEID) {
             // Course cover images.
             $context = \context_course::instance($course->id);
@@ -150,11 +152,6 @@ class course {
 
             // Remove everything from poster area.
             $fs->delete_area_files($context->id, 'theme_snap', 'poster');
-        }
-
-        $binary =  base64_decode($data);
-        if (strlen($binary) > get_max_upload_file_size($CFG->maxbytes)) {
-            throw new \moodle_exception('error:coverimageexceedsmaxbytes', 'theme_snap');
         }
 
         // Create new cover image file and process it.
