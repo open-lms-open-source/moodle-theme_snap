@@ -929,7 +929,7 @@ class theme_snap_local_test extends \advanced_testcase {
         $fs->delete_area_files($syscontext->id, 'theme_snap', 'poster');
 
         $fs->create_file_from_pathname($filerecord, $filepath);
-        \set_config('poster', '/'.$filename, 'theme_snap');
+        \set_config('poster', $filename, 'theme_snap');
 
         local::process_coverimage($syscontext);
     }

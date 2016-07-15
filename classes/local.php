@@ -1047,7 +1047,7 @@ class local {
      */
     public static function site_coverimage_original() {
         $theme = \theme_config::load('snap');
-        $filename = $theme->settings->poster;
+        $filename = str_replace('/', '', $theme->settings->poster);
         if ($filename) {
             $syscontextid = \context_system::instance()->id;
             $fullpath = "/$syscontextid/theme_snap/poster/0/$filename";
@@ -1085,6 +1085,7 @@ class local {
         $replacement = '';
 
         $coverurl = self::site_coverimage_url();
+
         if ($coverurl) {
             $replacement = "#page-site-index #page-header, #page-login-index #page {background-image: url($coverurl);}";
         }
