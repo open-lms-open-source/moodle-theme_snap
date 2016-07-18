@@ -120,20 +120,33 @@ class behat_theme_snap extends behat_base {
         $this->i_log_in_with_snap_as($username, true);
     }
 
-    /**
-     * @param string $fixturefilename this is a filename relative to the snap fixtures folder.
-     * @param string $input
-     *
-     * @Given /^I upload file "(?P<fixturefilename_string>(?:[^"]|\\")*)" to section "(?P<section>(?:[^"]|\\")*)"$/
-     */
-    public function i_upload_file($fixturefilename, $section = 1) {
+    protected function upload_file($fixturefilename, $selector) {
         global $CFG;
         $fixturefilename = clean_param($fixturefilename, PARAM_FILE);
         //$filepath = $CFG->themedir.'/snap/tests/fixtures/'.$fixturefilename;
         $filepath = $CFG->dirroot.'/theme/snap/tests/fixtures/'.$fixturefilename;
-        $input = '#snap-drop-file-'.$section;
-        $file = $this->find('css', $input);
+        $file = $this->find('css', $selector);
         $file->attachFile($filepath);
+    }
+
+    /**
+     * @param string $fixturefilename this is a filename relative to the snap fixtures folder.
+     * @param int $section
+     *
+     * @Given /^I upload file "(?P<fixturefilename_string>(?:[^"]|\\")*)" to section (?P<section_int>(?:\d+))$/
+     */
+    public function i_upload_file($fixturefilename, $section = 1) {
+        $this->upload_file($fixturefilename, '#snap-drop-file-'.$section);
+    }
+
+    /**
+     * @param string $fixturefilename this is a filename relative to the snap fixtures folder.
+     *
+     * @Given /^I upload cover image "(?P<fixturefilename_string>(?:[^"]|\\")*)"$/
+     */
+    public function i_upload_cover_image($fixturefilename) {
+        $this->upload_file($fixturefilename, '#snap-coverfiles');
+        $this->getSession()->executeScript('jQuery( "#snap-coverfiles" ).trigger( "change" );');
     }
 
     /**
@@ -499,7 +512,6 @@ class behat_theme_snap extends behat_base {
         return $this->i_should_not_see_available_from_in_element($date, $elementselector, 'css_element');
     }
 
-
     /**
      * @param string $text
      * @param int $tocitem
@@ -708,5 +720,38 @@ class behat_theme_snap extends behat_base {
         global $DB;
         $courseid = $DB->get_field('course', 'id', ['shortname' => $shortname]);
         $this->getSession()->visit($this->locate_path('/course/view.php?id='.$courseid));
+    }
+
+    /**
+     * Get background image for #page-header css element.
+     * @return string
+     */
+    protected function pageheader_backgroundimage() {
+        $session = $this->getSession();
+        return $session->evaluateScript(
+            "return jQuery('#page-header').css('background-image')"
+        );
+    }
+
+    /**
+     * @Given /^I should see cover image in page header$/
+     */
+    public function  pageheader_has_cover_image() {
+        $bgimage = $this->pageheader_backgroundimage();
+        if (empty($bgimage) || $bgimage === 'none') {
+            $exception = new ExpectationException('#page-header does not have background image ('.$bgimage.')', $this->getSession());
+            throw $exception;
+        }
+    }
+
+    /**
+     * @Given /^I should not see cover image in page header$/
+     */
+    public function pageheader_does_not_have_cover_image() {
+        $bgimage = $this->pageheader_backgroundimage();
+        if (!empty($bgimage) && $bgimage !== 'none') {
+            $exception = new ExpectationException('#page-header has a background image ('.$bgimage.')', $this->getSession());
+            throw $exception;
+        }
     }
 }

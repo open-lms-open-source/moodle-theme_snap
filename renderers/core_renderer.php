@@ -955,7 +955,7 @@ class theme_snap_core_renderer extends toc_renderer {
      * @return string
      */
     public function page_heading($tag = 'h1') {
-        global $COURSE;
+        global $COURSE, $PAGE;
 
         $heading = $this->page->heading;
 
@@ -969,10 +969,15 @@ class theme_snap_core_renderer extends toc_renderer {
             // This is intentional.
             $heading = $COURSE->fullname;
             $heading = html_writer::link($courseurl, $heading);
+            $heading = html_writer::tag($tag, $heading);
+        } else {
+            $heading = html_writer::tag($tag, $heading);
         }
 
-        $heading = html_writer::tag($tag, $heading);
-
+        if (has_capability('moodle/course:changesummary', $PAGE->context)) {
+            $vars = ['accepttypes' => local::supported_coverimage_typesstr()];
+            $heading .= $this->render_from_template('theme_snap/cover_image_selector', $vars);
+        }
         // For the user profile page message button we need to call 2.9 content_header.
         if ($this->page->pagelayout == 'mypublic') {
             $heading = parent::context_header();

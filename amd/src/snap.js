@@ -25,8 +25,8 @@
  * Main snap initialising function.
  */
 define(['jquery', 'theme_snap/bootstrap', 'core/log', 'theme_snap/headroom', 'theme_snap/personal_menu',
-        'theme_snap/responsive_video', 'theme_snap/section_asset_movement'],
-    function($, bsjq, log, Headroom, personalMenu, responsiveVideo, sectionAssetMovement) {
+        'theme_snap/responsive_video', 'theme_snap/section_asset_movement', 'theme_snap/cover_image'],
+    function($, bsjq, log, Headroom, personalMenu, responsiveVideo, sectionAssetMovement, coverImage) {
 
         'use strict';
 
@@ -828,12 +828,12 @@ define(['jquery', 'theme_snap/bootstrap', 'core/log', 'theme_snap/headroom', 'th
          * Initialise.
          */
         return {
-            snapInit: function(courseid, contextid, courseconfig, pageHasCourseContent) {
+            snapInit: function(courseconfig, pageHasCourseContent, siteMaxBytes) {
 
                 // Set up
-                M.theme_snap.courseid = courseid;
+                M.theme_snap.courseid = courseconfig.id;
                 M.theme_snap.courseconfig = courseconfig;
-                M.cfg.context = contextid;
+                M.cfg.context = courseconfig.contextid;
 
                 // When document has loaded.
                 $(document).ready(function() {
@@ -847,6 +847,7 @@ define(['jquery', 'theme_snap/bootstrap', 'core/log', 'theme_snap/headroom', 'th
                     if (pageHasCourseContent) {
                         sectionAssetMovement.init();
                     }
+                    coverImage(M.theme_snap.courseconfig.shortname, siteMaxBytes);
 
                     // SL - 19th aug 2014 - check we are in a course
                     if (onCoursePage()) {

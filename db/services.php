@@ -31,6 +31,14 @@ $functions = [
         'type'          => 'read',
         'ajax'          => true,
         'loginrequired' => true
+    ],
+    'theme_snap_cover_image' => [
+        'classname'     => 'theme_snap\\webservice\\ws_cover_image',
+        'methodname'    => 'service',
+        'description'   => 'Cover image modifier',
+        'type'          => 'write',
+        'ajax'          => true,
+        'loginrequired' => true
     ]
 ];
 

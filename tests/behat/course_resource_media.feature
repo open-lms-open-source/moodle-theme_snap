@@ -50,7 +50,7 @@ Feature: When the moodle theme is set to Snap, clicking on a resource with a med
     And I follow "Topic 1"
     Then "#section-1" "css_element" should exist
     And "#snap-drop-file-1" "css_element" should exist
-    And I upload file "test_mp3_file.mp3" to section "1"
+    And I upload file "test_mp3_file.mp3" to section 1
     Then ".snap-resource[data-type='mp3']" "css_element" should exist
     Then ".snap-resource[data-type='mp3']" "css_element" should exist
     And I click on ".snap-edit-asset" "css_element"

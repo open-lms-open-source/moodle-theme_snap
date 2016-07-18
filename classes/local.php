@@ -935,6 +935,45 @@ class local {
     }
 
     /**
+     * Get supported cover image types.
+     * @return array
+     */
+    public static function supported_coverimage_types() {
+        global $CFG;
+        $extsstr = strtolower($CFG->courseoverviewfilesext);
+
+        // Supported file extensions.
+        $extensions = explode(',', str_replace('.', '', $extsstr));
+        array_walk($extensions, function($s) {trim($s); });
+        // Filter out any extensions that might be in the config but not image extensions.
+        $imgextensions = ['jpg', 'png', 'gif', 'svg', 'webp'];
+        return array_intersect ($extensions, $imgextensions);
+    }
+
+    /**
+     * Get supported cover image types as a string.
+     * @return array
+     */
+    public static function supported_coverimage_typesstr() {
+        $supportedexts = self::supported_coverimage_types();
+        $extsstr = '';
+        $typemaps = [
+            'jpeg' => 'image/jpeg',
+            'jpg'  => 'image/jpeg',
+            'gif'  => 'image/gif',
+            'png'  => 'image/png',
+            'svg'  => 'image/svg'
+        ];
+        foreach ($supportedexts as $ext) {
+            if (in_array($ext, $supportedexts) && isset($typemaps[$ext])) {
+                $extsstr .= $extsstr == '' ? '' : ',';
+                $extsstr .= $typemaps[$ext];
+            }
+        }
+        return $extsstr;
+    }
+
+    /**
      * Get cover image for context
      *
      * @param $context
@@ -950,6 +989,8 @@ class local {
             return false;
         }
         if (count($files) > 1) {
+            // Note this is a coding exception and not a moodle exception because there should never be more than one
+            // file in this area, where as the course summary files area can in some circumstances have more than on file.
             throw new \coding_exception('Multiple files found in course coverimage area (context '.$contextid.')');
         }
         return (end($files));
@@ -1006,10 +1047,10 @@ class local {
      */
     public static function site_coverimage_original() {
         $theme = \theme_config::load('snap');
-        $filename = $theme->settings->poster;
+        $filename = str_replace('/', '', $theme->settings->poster);
         if ($filename) {
             $syscontextid = \context_system::instance()->id;
-            $fullpath = "/$syscontextid/theme_snap/poster/0$filename";
+            $fullpath = "/$syscontextid/theme_snap/poster/0/$filename";
             $fs = get_file_storage();
             return $fs->get_file_by_hash(sha1($fullpath));
         } else {
@@ -1044,6 +1085,7 @@ class local {
         $replacement = '';
 
         $coverurl = self::site_coverimage_url();
+
         if ($coverurl) {
             $replacement = "#page-site-index #page-header, #page-login-index #page {background-image: url($coverurl);}";
         }
@@ -1055,18 +1097,24 @@ class local {
     /**
      * Copy coverimage file to standard location and name.
      *
-     * @param stored_file $file
+     * @param context $context
+     * @param stored_file $originalfile
      * @return stored_file|bool
      */
-    public static function process_coverimage($context) {
-        if ($context->contextlevel == CONTEXT_SYSTEM) {
-            $originalfile = self::site_coverimage_original($context);
-            $newfilename = "site-image";
-        } else if ($context->contextlevel == CONTEXT_COURSE) {
-            $originalfile = self::get_course_firstimage($context->instanceid);
-            $newfilename = "course-image";
-        } else {
+    public static function process_coverimage($context, $originalfile = false) {
+
+        $contextlevel = $context->contextlevel;
+        if ($contextlevel != CONTEXT_SYSTEM && $contextlevel != CONTEXT_COURSE) {
             throw new \coding_exception('Invalid context passed to process_coverimage');
+        }
+        $newfilename = $contextlevel == CONTEXT_SYSTEM ? 'site-image' : 'course-image';
+
+        if (!$originalfile) {
+            if ($contextlevel == CONTEXT_SYSTEM) {
+                $originalfile = self::site_coverimage_original($context);
+            } else {
+                $originalfile = self::get_course_firstimage($context->instanceid);
+            }
         }
 
         $fs = get_file_storage();
@@ -1097,6 +1145,7 @@ class local {
         } else {
             return $newfile;
         }
+
     }
 
     /**
