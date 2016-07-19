@@ -7914,6 +7914,9 @@ td.mceStatusbar {
   display: block;
   max-width: 100%;
 }
+table.mceLayout {
+  height: auto !important;
+}
 table.mceLayout tbody {
   display: block;
 }

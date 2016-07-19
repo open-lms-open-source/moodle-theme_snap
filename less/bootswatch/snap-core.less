@@ -4059,6 +4059,16 @@ td.mceStatusbar {
     max-width:100%;
 }
 
+table.mceLayout {
+    // We have to use important to set the height as auto, otherwise clicking on the editors path selector causes
+    // the table element to have an inline height style property which is not big enough to house its contents.
+    // It isn't obvious what the inline height is required for and it does not affect the drag handle for resizing.
+    // To observe the inline style, go to a page with a tiny mce editor and click (p) in the path selector.
+    // You will notice that the bottom of the editor will now be much closer to the element underneath it.
+    // In some cases it will even overlap elements on the page (quiz multichoice questions are a good example).
+    height: auto !important;
+}
+
 table.mceLayout tbody {
     display:block;
 }
