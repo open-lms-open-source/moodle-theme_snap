@@ -49,9 +49,6 @@ function theme_snap_process_css($css, theme_config $theme) {
     $logo = $theme->setting_file_url('logo', 'logo');
     $css = theme_snap_set_logo($css, $logo);
 
-    // Set the background image for the poster.
-    $css = \theme_snap\local::site_coverimage_css($css);
-
     // Set the custom css.
     if (!empty($theme->settings->customcss)) {
         $customcss = $theme->settings->customcss;

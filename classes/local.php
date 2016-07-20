@@ -1086,21 +1086,14 @@ class local {
     /**
      * Adds the site cover image to CSS.
      *
-     * @param string $css The CSS to process.
-     * @return string The parsed CSS
+     * @return string cover image CSS
      */
-    public static function site_coverimage_css($css) {
-        $tag = '[[setting:poster]]';
-        $replacement = '';
-
+    public static function site_coverimage_css() {
         $coverurl = self::site_coverimage_url();
-
-        if ($coverurl) {
-            $replacement = "#page-site-index #page-header, #page-login-index #page {background-image: url($coverurl);}";
+        if (!$coverurl) {
+            return '';
         }
-
-        $css = str_replace($tag, $replacement, $css);
-        return $css;
+        return "#page-site-index #page-header, #page-login-index #page {background-image: url($coverurl);}";
     }
 
     /**

@@ -162,8 +162,6 @@ class course {
         } else {
             set_config('poster', $newfilename, 'theme_snap');
             local::process_coverimage($context);
-            // We need to dump the cache so that the CSS can be rebuilt and include the new background image.
-            theme_reset_all_caches();
         }
         return ['success' => $success];
     }

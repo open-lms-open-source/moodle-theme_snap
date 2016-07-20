@@ -980,8 +980,7 @@ class theme_snap_local_test extends \advanced_testcase {
 
             $this->fake_site_image_setting_upload($filename);
 
-            $css = '[[setting:poster]]';
-            $css = local::site_coverimage_css($css);
+            $css = local::site_coverimage_css();
 
             $this->assertContains('/theme_snap/coverimage/', $css);
 
@@ -997,8 +996,7 @@ class theme_snap_local_test extends \advanced_testcase {
 
         $this->fake_site_image_setting_cleared();
 
-        $css = '[[setting:poster]]';
-        $css = local::site_coverimage_css($css);
+        $css = local::site_coverimage_css();
 
         $this->assertSame('', $css);
         $this->assertFalse(local::site_coverimage());
