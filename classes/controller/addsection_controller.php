@@ -51,7 +51,7 @@ class addsection_controller extends controller_abstract {
 
         require_once($CFG->dirroot.'/course/lib.php');
 
-        $sectioname = optional_param('newsection','', PARAM_TEXT);
+        $sectioname = optional_param('newsection', '', PARAM_TEXT);
         $summary = optional_param('summary', '', PARAM_RAW);
         $sectioname = $sectioname === '' ? null : $sectioname;
 

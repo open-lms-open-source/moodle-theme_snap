@@ -81,7 +81,7 @@ class behat_theme_snap extends behat_base {
     public function i_log_in_with_snap_as($username, $andkeepmenuopen = false) {
 
         $session = $this->getSession();
-        
+
         // Go back to front page.
         $session->visit($this->locate_path('/'));
 
@@ -107,7 +107,7 @@ class behat_theme_snap extends behat_base {
                 $general->i_click_on('#fixy-close', 'css_element');
             }
         }
-     }
+    }
 
     /**
      * Logs in the user but doesn't auto close personal menu.
@@ -123,7 +123,7 @@ class behat_theme_snap extends behat_base {
     protected function upload_file($fixturefilename, $selector) {
         global $CFG;
         $fixturefilename = clean_param($fixturefilename, PARAM_FILE);
-        //$filepath = $CFG->themedir.'/snap/tests/fixtures/'.$fixturefilename;
+        // $filepath = $CFG->themedir.'/snap/tests/fixtures/'.$fixturefilename;
         $filepath = $CFG->dirroot.'/theme/snap/tests/fixtures/'.$fixturefilename;
         $file = $this->find('css', $selector);
         $file->attachFile($filepath);
@@ -197,11 +197,11 @@ class behat_theme_snap extends behat_base {
             'I wait until the page is ready',
             'I go to single course section 1',
             '".section-navigation.navigationtitle" "css_element" should not exist',
-            # In the above, .section-navigation.navigationtitle relates to the element on the page which contains the single
-            # section at a time navigation. Visually you would see a link on the left entitled "General" and a link on the right
-            # enitled "Topic 2"
-            # This test ensures you do not see those elements. If you swap to clean theme in a single section mode at a time
-            # course you will see that navigation after clicking on topic 1.
+            // In the above, .section-navigation.navigationtitle relates to the element on the page which contains the single
+            // section at a time navigation. Visually you would see a link on the left entitled "General" and a link on the right
+            // enitled "Topic 2"
+            // This test ensures you do not see those elements. If you swap to clean theme in a single section mode at a time
+            // course you will see that navigation after clicking on topic 1.
         ];
         $givens = array_map(function($given){
             return new Given($given);
@@ -235,7 +235,8 @@ class behat_theme_snap extends behat_base {
             'I set the field "Title" to "New section title"',
             'I click on "Create section" "button"'
         ];
-        $givens = array_map(function($a) {return new Given($a);}, $givens);
+        $givens = array_map(function($a) {return new Given($a);
+        }, $givens);
         return $givens;
     }
 
@@ -659,7 +660,7 @@ class behat_theme_snap extends behat_base {
         $general = behat_context_helper::get('behat_general');
         $general->i_click_on('.courseinfo[data-shortname="'.$shortname.'"] button.favoritetoggle', 'css_element');
     }
-    
+
     /**
      * Follow the link which is located inside the personal menu.
      *
@@ -682,7 +683,7 @@ class behat_theme_snap extends behat_base {
     public function i_send_message_to_user($messagecontent, $userfullname) {
         /** @var behat_forms $form */
         $form = behat_context_helper::get('behat_forms');
-        
+
         /* @var behat_general $general */
         $general = behat_context_helper::get('behat_general');
 
@@ -691,7 +692,7 @@ class behat_theme_snap extends behat_base {
         $general->i_click_on('input[name="combinedsubmit"]', 'css_element');
         $general->click_link( $this->escape(get_string('sendmessageto', 'message', $userfullname)));
         $form->i_set_the_field_to('id_message', $this->escape($messagecontent));
-        $general->i_click_on('#id_submitbutton', 'css_element');        
+        $general->i_click_on('#id_submitbutton', 'css_element');
     }
 
     /**

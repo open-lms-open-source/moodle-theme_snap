@@ -24,7 +24,7 @@
  */
 
 defined('MOODLE_INTERNAL') || die();
-global $CFG, $DB, $COURSE;
+global $CFG;
 
 require_once(__DIR__.'/../../../local/mr/bootstrap.php');
 require_once($CFG->dirroot.'/theme/snap/renderers/snap_shared.php');
@@ -32,7 +32,7 @@ require_once($CFG->dirroot.'/theme/snap/renderers/snap_shared.php');
 class theme_snap_gradebookaccess_testcase extends advanced_testcase {
 
     public function test_gradebookaccess_gradesavailableforstuds() {
-        global $DB, $COURSE, $PAGE;
+        global $DB, $PAGE;
 
         $this->resetAfterTest(true);
 
@@ -64,8 +64,8 @@ class theme_snap_gradebookaccess_testcase extends advanced_testcase {
         $this->assertTrue($isavailable); // As long as showgrades is active, must be available for studs.
     }
 
-	public function test_gradebookaccess_gradesnotavailableforstuds() {
-        global $DB, $COURSE, $PAGE;
+    public function test_gradebookaccess_gradesnotavailableforstuds() {
+        global $DB, $PAGE;
 
         $this->resetAfterTest(true);
 

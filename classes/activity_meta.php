@@ -54,7 +54,7 @@ class activity_meta {
     public $numsubmissions = false;
     public $numrequiregrading = false;
 
-    function __construct() {
+    public function __construct() {
         // Set default strings.
         $this->overduestr = get_string('overdue', 'theme_snap');
         $this->duestr = get_string('due', 'theme_snap');

@@ -25,9 +25,7 @@
  */
 defined('MOODLE_INTERNAL') || die();
 
-$inccoursefooterclass = ($PAGE->theme->settings->coursefootertoggle && strpos($PAGE->pagetype, 'course-view-') === 0)
-    ? ' hascoursefooter'
-    : ' nocoursefooter';
+$inccoursefooterclass = ($PAGE->theme->settings->coursefootertoggle && strpos($PAGE->pagetype, 'course-view-') === 0) ? ' hascoursefooter' : ' nocoursefooter';
 ?>
 <footer id="moodle-footer" role="contentinfo" class="clearfix<?php echo ($inccoursefooterclass)?>">
 <?php

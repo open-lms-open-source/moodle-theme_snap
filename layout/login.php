@@ -23,7 +23,7 @@
  */
 defined('MOODLE_INTERNAL') || die();
 
-include(__DIR__.'/header.php');
+require(__DIR__.'/header.php');
 ?>
 <!-- moodle js hooks -->
 <div id="page">
@@ -45,4 +45,4 @@ echo $OUTPUT->main_content();
 </div>
 <!-- close moodle js hooks -->
 
-<?php include(__DIR__.'/footer.php'); ?>
+<?php require(__DIR__.'/footer.php');

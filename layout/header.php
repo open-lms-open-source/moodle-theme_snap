@@ -64,4 +64,4 @@ if (!empty($courseimagecss)) {
 
 <?php echo $OUTPUT->standard_top_of_body_html() ?>
 
-<?php include(__DIR__.'/nav.php'); ?>
+<?php require(__DIR__.'/nav.php');

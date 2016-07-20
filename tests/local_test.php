@@ -60,7 +60,7 @@ class theme_snap_local_test extends \advanced_testcase {
         $actual = array_slice($categories, 1, 1);
         $actual = reset($actual);
         $this->assertEquals($expected->id, $actual->id);
-        
+
         // Final item in array should be a root category - $cat1.
         $actual = end($categories);
         $this->assertEmpty($actual->parent);
