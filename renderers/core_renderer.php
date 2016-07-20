@@ -947,6 +947,20 @@ class theme_snap_core_renderer extends toc_renderer {
         return "<ol class=breadcrumb>$breadcrumbs</ol>";
     }
 
+    /**
+     * Cover image selector.
+     * @return bool|null|string
+     * @throws coding_exception
+     * @throws moodle_exception
+     */
+    public function cover_image_selector() {
+        global $PAGE;
+        if (has_capability('moodle/course:changesummary', $PAGE->context)) {
+            $vars = ['accepttypes' => local::supported_coverimage_typesstr()];
+            return $this->render_from_template('theme_snap/cover_image_selector', $vars);
+        }
+        return null;
+    }
 
     /**
      * Get page heading.
@@ -974,10 +988,10 @@ class theme_snap_core_renderer extends toc_renderer {
             $heading = html_writer::tag($tag, $heading);
         }
 
-        if (has_capability('moodle/course:changesummary', $PAGE->context)) {
-            $vars = ['accepttypes' => local::supported_coverimage_typesstr()];
-            $heading .= $this->render_from_template('theme_snap/cover_image_selector', $vars);
+        if ($COURSE->id != SITEID) {
+            $heading .= $this->cover_image_selector();
         }
+
         // For the user profile page message button we need to call 2.9 content_header.
         if ($this->page->pagelayout == 'mypublic') {
             $heading = parent::context_header();

@@ -976,13 +976,19 @@ class local {
     /**
      * Get cover image for context
      *
-     * @param $context
+     * @param \context $context
      * @return bool|stored_file
      * @throws \coding_exception
      */
     public static function coverimage($context) {
         $contextid = $context->id;
         $fs = get_file_storage();
+
+        if ($context->contextlevel === CONTEXT_SYSTEM) {
+            if (!self::site_coverimage_original()) {
+                return false;
+            }
+        }
 
         $files = $fs->get_area_files($contextid, 'theme_snap', 'coverimage', 0, "itemid, filepath, filename", false);
         if (!$files) {
@@ -1047,10 +1053,13 @@ class local {
      */
     public static function site_coverimage_original() {
         $theme = \theme_config::load('snap');
-        $filename = str_replace('/', '', $theme->settings->poster);
+        $filename = $theme->settings->poster;
         if ($filename) {
+            if (substr($filename, 0, 1) != '/') {
+                $filename = '/'.$filename;
+            }
             $syscontextid = \context_system::instance()->id;
-            $fullpath = "/$syscontextid/theme_snap/poster/0/$filename";
+            $fullpath = '/'.$syscontextid.'/theme_snap/poster/0'.$filename;
             $fs = get_file_storage();
             return $fs->get_file_by_hash(sha1($fullpath));
         } else {
