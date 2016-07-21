@@ -122,7 +122,7 @@ define(['jquery', 'core/log', 'core/ajax', 'core/notification'], function($, log
                     var img = $('<img />');
                     img = img.get(0);
                     img.src = filedata;
-                    if (img.width < 800) {
+                    if (img.width < 1024) {
                         addCoverImageAlert('snap-alert-cover-image-size',
                             M.util.get_string('error:coverimageresolutionlow', 'theme_snap')
                         );

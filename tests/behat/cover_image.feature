@@ -141,10 +141,10 @@ Feature: When the moodle theme is set to Snap, cover image can be set for site a
     And I wait until the page is ready
     Then I should see "Change image"
     And I should not see cover image in page header
-    And I upload cover image "testpng_lt800px.png"
-    Then I should see "For best quality, we recommend a larger image of at least 800px width"
+    And I upload cover image "testpng_lt1024px.png"
+    Then I should see "For best quality, we recommend a larger image of at least 1024px width"
     And I upload cover image "testpng_small.png"
-    Then I should not see "For best quality, we recommend a larger image of at least 800px width"
+    Then I should not see "For best quality, we recommend a larger image of at least 1024px width"
 
   @javascript
   Scenario: Admin user can change and delete site cover image.
