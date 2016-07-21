@@ -76,6 +76,14 @@ Feature: When the moodle theme is set to Snap, cover image can be set for site a
     And I delete "rawcoverimage.jpg" from "Course summary files" filemanager (theme_snap)
     And I press "Save and display"
     Then I should not see cover image in page header
+    # Test cover image can only be set on main course page
+    And I open the personal menu
+    And I follow "Course 1"
+    Then I should see "Change image"
+    And I click on "#admin-menu-trigger" "css_element"
+    And I navigate to "Grades" node in "Course administration"
+    And I wait until the page is ready
+    Then I should not see "Change image"
     # Test that non-editing teachers can't change cover image. (no need to test with students as they have less caps)
     And I log out (theme_snap)
     And I log in as "teacher2" (theme_snap)

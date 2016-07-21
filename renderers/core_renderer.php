@@ -973,7 +973,11 @@ class theme_snap_core_renderer extends toc_renderer {
 
         $heading = $this->page->heading;
 
-        if ($COURSE->id != SITEID && stripos($heading, $COURSE->fullname) === 0) {
+        if ($this->page->pagelayout == 'mypublic') {
+            // For the user profile page message button we need to call 2.9 content_header.
+            $heading = parent::context_header();
+        } else if ($COURSE->id != SITEID && stripos($heading, $COURSE->fullname) === 0) {
+            // If we are on a course page.
             $courseurl = new moodle_url('/course/view.php', ['id' => $COURSE->id]);
             // Set heading to course fullname - ditch anything else that's in it.
             // This will make huge page headings like:
@@ -985,17 +989,18 @@ class theme_snap_core_renderer extends toc_renderer {
             $heading = html_writer::link($courseurl, $heading);
             $heading = html_writer::tag($tag, $heading);
         } else {
+            // Default headinng.
             $heading = html_writer::tag($tag, $heading);
         }
 
+        // If we are on the main page of a course, add the cover image selector.
         if ($COURSE->id != SITEID) {
-            $heading .= $this->cover_image_selector();
+            $courseviewpage = local::current_url_path() === '/course/view.php';
+            if ($courseviewpage) {
+                $heading .= $this->cover_image_selector();
+            }
         }
 
-        // For the user profile page message button we need to call 2.9 content_header.
-        if ($this->page->pagelayout == 'mypublic') {
-            $heading = parent::context_header();
-        }
         // For the front page we add the site strapline.
         if ($this->page->pagelayout == 'frontpage') {
             $heading .= '<p class="snap-site-description">' . format_string($this->page->theme->settings->subtitle) . '</p>';
