@@ -35,7 +35,7 @@ class ws_course_card extends \external_api {
     public static function service_parameters() {
         $parameters = [
             'courseshortname' => new \external_value(PARAM_TEXT, 'Course shortname', VALUE_REQUIRED),
-            'favorited' => new \external_value(PARAM_TEXT, 'Course shortname', VALUE_DEFAULT),
+            'favorited' => new \external_value(PARAM_TEXT, 'Is this course currently a favorite', VALUE_DEFAULT),
         ];
         return new \external_function_parameters($parameters);
     }
@@ -73,6 +73,9 @@ class ws_course_card extends \external_api {
      */
     public static function service($courseshortname, $favorited = null) {
         $service = course::service();
+        $course = $service->coursebyshortname($courseshortname, 'id');
+        $context = \context_course::instance($course->id);
+        self::validate_context($context);
         if ($favorited !== null) {
             $service->setfavorite($courseshortname, $favorited == 1);
         }

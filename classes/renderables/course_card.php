@@ -41,7 +41,7 @@ class course_card implements \renderable {
      * @var course service
      */
     private $service;
-    
+
     /**
      * @var course_card $model
      * (should be set to json encoded version of $this);
@@ -197,6 +197,9 @@ class course_card implements \renderable {
             }
             $this->visibleavatars = $visibleavatars;
             $this->hiddenavatars = $hiddenavatars;
+        } else {
+            $this->visibleavatars = array();
+            $this->hiddenavatars = array();
         }
 
         $this->hiddenavatarcount = count($this->hiddenavatars);

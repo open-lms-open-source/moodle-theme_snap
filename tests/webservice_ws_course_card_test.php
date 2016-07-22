@@ -48,6 +48,8 @@ class theme_snap_ws_course_card_test extends \advanced_testcase {
             $course->id,
             $sturole->id);
 
+        $this->setUser($user);
+
         $serviceresult = ws_course_card::service($course->shortname, 1);
         $this->assertTrue(is_array($serviceresult));
     }
