@@ -294,7 +294,7 @@ class behat_theme_snap extends behat_base {
     public function click_visible_link($link) {
         $linknode = $this->find_link($link);
         if (!$linknode) {
-            $msg = 'The "' . $linknode->getXPath() . '" xpath node could not be found';
+            $msg = 'The "' . $link . '" link could not be found';
             throw new ExpectationException($msg, $this->getSession());
         }
 
@@ -306,7 +306,7 @@ class behat_theme_snap extends behat_base {
 
         // The first node on the page isn't visible so we are going to have to get all nodes with the same xpath.
         // Extract xpath from the first node we found.
-        $xpath = $linknode->getXpath();
+        $xpath = str_replace("\n", '', $linknode->getXpath());
         $matches = [];
         if (preg_match_all('|^\(//html/(.*)(?=\)\[1\]$)|', $xpath, $matches) !== false) {
             $xpath = $matches[1][0];
@@ -315,6 +315,7 @@ class behat_theme_snap extends behat_base {
         }
 
         // Now get all nodes.
+        /** @var NodeElement[] $linknodes */
         $linknodes = $this->find_all('xpath', $xpath);
 
         // Cycle through all nodes and if just one of them is visible break loop.
@@ -323,20 +324,14 @@ class behat_theme_snap extends behat_base {
                 // We've already tested the first node, skip it.
                 continue;
             }
-            $visible = $this->is_node_visible($node, self::REDUCED_TIMEOUT);
-            if ($visible) {
-                break;
+            if ($this->is_node_visible($node, self::REDUCED_TIMEOUT)) {
+                $node->click();
+                return;
             }
         }
 
-        if (!$visible) {
-            // Oh dear, none of the links were visible.
-            $msg = 'At least one node should be visible for the xpath "' . $node->getXPath();
-            throw new ExpectationException($msg, $this->getSession());
-        }
-
-        // Hurray, we found a visible link - let's click it!
-        $node->click();
+        // Oh dear, none of the links were visible.
+        throw new ExpectationException('At least one node should be visible for the xpath "'.$xpath.'"', $this->getSession());
     }
 
 
