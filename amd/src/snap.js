@@ -411,7 +411,11 @@ define(['jquery', 'theme_snap/bootstrap', 'core/log', 'theme_snap/headroom', 'th
                 }
 
                 // default niceties to perform
-                var visibleChapters = $('.course-content .main, #coursetools, #snap-add-new-section').filter(':visible');
+                var visibleChapters = $(
+                    '.section.main.state-visible,' +
+                    '#coursetools.state-visible,' +
+                    '#snap-add-new-section.state-visible'
+                );
                 if (!visibleChapters.length) {
                     // show chapter 0
                     $('#section-0').addClass('state-visible').focus();
@@ -549,8 +553,8 @@ define(['jquery', 'theme_snap/bootstrap', 'core/log', 'theme_snap/headroom', 'th
         var addListeners = function() {
             var selectors = [
                 'body:not(.editing):not(.format-folderview) .chapters a',
-                'body:not(.editing):not(.format-folderview) .section_footer a',
-                'body:not(.editing):not(.format-folderview) #toc-search-results a'
+                'body:not(.format-folderview) .section_footer a',
+                'body:not(.format-folderview) #toc-search-results a'
             ];
 
             $(document).on('click', selectors.join(', '), function(e) {
