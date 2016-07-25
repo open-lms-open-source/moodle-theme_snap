@@ -18893,7 +18893,7 @@ ol#chapters li.current a {
   margin: 0;
   position: relative;
 }
-#page-site-index #page-header > .btn {
+#page-site-index #page-header #snap-coverimagecontrol {
   position: absolute;
   bottom: 1em;
   right: 4%;

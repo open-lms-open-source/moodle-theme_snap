@@ -29,7 +29,7 @@ Feature: When the moodle theme is set to Snap, cover image can be set for site a
       | defaulthomepage | 0 |
 
   @javascript
-  Scenario: Editing teachers can change course cover image.
+  Scenario: Editing teachers can change and delete course cover image.
     Given the following "courses" exist:
       | fullname | shortname | category | format |
       | Course 1 | C1        | 0        | topics |
@@ -70,7 +70,21 @@ Feature: When the moodle theme is set to Snap, cover image can be set for site a
     Then I should see cover image in page header
     And I reload the page
     Then I should see cover image in page header
-
+    # Test deleting cover image
+    And I click on "#admin-menu-trigger" "css_element"
+    And I navigate to "Edit settings" node in "Course administration"
+    And I delete "rawcoverimage.jpg" from "Course summary files" filemanager (theme_snap)
+    And I press "Save and display"
+    Then I should not see cover image in page header
+    # Test cover image can only be set on main course page
+    And I open the personal menu
+    And I follow "Course 1"
+    Then I should see "Change image"
+    And I click on "#admin-menu-trigger" "css_element"
+    And I navigate to "Grades" node in "Course administration"
+    And I wait until the page is ready
+    Then I should not see "Change image"
+    # Test that non-editing teachers can't change cover image. (no need to test with students as they have less caps)
     And I log out (theme_snap)
     And I log in as "teacher2" (theme_snap)
     And I open the personal menu
@@ -127,13 +141,13 @@ Feature: When the moodle theme is set to Snap, cover image can be set for site a
     And I wait until the page is ready
     Then I should see "Change image"
     And I should not see cover image in page header
-    And I upload cover image "testpng_lt800px.png"
-    Then I should see "For best quality, we recommend a larger image of at least 800px width"
+    And I upload cover image "testpng_lt1024px.png"
+    Then I should see "For best quality, we recommend a larger image of at least 1024px width"
     And I upload cover image "testpng_small.png"
-    Then I should not see "For best quality, we recommend a larger image of at least 800px width"
+    Then I should not see "For best quality, we recommend a larger image of at least 1024px width"
 
   @javascript
-  Scenario: Admin user can change site cover image.
+  Scenario: Admin user can change and delete site cover image.
     Given
     And the following "users" exist:
       | username | firstname | lastname | email                |
@@ -141,6 +155,9 @@ Feature: When the moodle theme is set to Snap, cover image can be set for site a
     And I log in as "admin" (theme_snap)
     And I am on site homepage
     And I wait until the page is ready
+    Then I should not see "Change image"
+    And I click on "#admin-menu-trigger" "css_element"
+    And I navigate to "Turn editing on" node in "Front page settings"
     Then I should see "Change image"
     And I should not see cover image in page header
     And I upload cover image "testpng_small.png"
@@ -157,10 +174,16 @@ Feature: When the moodle theme is set to Snap, cover image can be set for site a
     Then I should see cover image in page header
     And I reload the page
     Then I should see cover image in page header
+    # Test deleting cover image
+    And I click on "#admin-menu-trigger" "css_element"
+    And I navigate to "Snap" node in "Site administration > Appearance > Themes"
+    And I delete "rawcoverimage.png" from "Cover image" filemanager (theme_snap)
+    And I press "Save changes"
+    And I am on site homepage
+    Then I should not see cover image in page header
+    # Test non admin user can't change site image.
     And I log out (theme_snap)
     And I log in as "user1" (theme_snap)
     And I am on site homepage
     And I wait until the page is ready
     Then I should not see "Change image"
-
-
