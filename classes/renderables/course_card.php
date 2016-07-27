@@ -197,6 +197,9 @@ class course_card implements \renderable {
             }
             $this->visibleavatars = $visibleavatars;
             $this->hiddenavatars = $hiddenavatars;
+        } else {
+            $this->visibleavatars = array();
+            $this->hiddenavatars = array();
         }
 
         $this->hiddenavatarcount = count($this->hiddenavatars);
