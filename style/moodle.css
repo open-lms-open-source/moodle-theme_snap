@@ -831,9 +831,6 @@ body#page-lib-editor-tinymce-plugins-moodlemedia-preview {
   opacity: 1;
   filter: alpha(opacity=100);
 }
-.moodle-dialogue-base .moodle-dialogue-wrap .moodle-dialogue-hd .yui3-widget-buttons button.yui3-button.closebutton:focus {
-  outline: none;
-}
 .moodle-dialogue-base button.yui3-button.closebutton {
   width: 27px;
   height: 27px;
