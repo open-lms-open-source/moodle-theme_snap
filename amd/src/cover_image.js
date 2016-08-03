@@ -115,8 +115,8 @@ define(['jquery', 'core/log', 'core/ajax', 'core/notification'], function($, log
                     // Set page header to use local version for now.
                     filedata = e.target.result;
 
-                    // Ensure that the page-header has the mast-image class.
-                    $('#page-header').addClass('mast-image');
+                    // Ensure that the page-header in courses has the mast-image class.
+                    $('.path-course-view #page-header').addClass('mast-image');
 
                     // Warn if image resolution is too small.
                     var img = $('<img />');
