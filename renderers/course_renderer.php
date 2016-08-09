@@ -29,6 +29,9 @@ require_once($CFG->dirroot . "/course/renderer.php");
 require_once($CFG->dirroot . "/mod/book/locallib.php");
 require_once($CFG->libdir . "/gradelib.php");
 
+use theme_snap\activity;
+use theme_snap\activity_meta;
+
 class theme_snap_core_course_renderer extends core_course_renderer {
     /**
      * override course render for course module list items
@@ -444,15 +447,48 @@ class theme_snap_core_course_renderer extends core_course_renderer {
     }
 
     /**
+     * Submission call to action.
+     *
+     * @param cm_info $mod
+     * @param activity_meta $meta
+     * @return string
+     * @throws coding_exception
+     */
+    public function submission_cta(cm_info $mod, activity_meta $meta) {
+        global $CFG;
+
+        if (empty($meta->submissionnotrequired)) {
+            $class = 'snap-assignment-stage';
+            $url = $CFG->wwwroot.'/mod/'.$mod->modname.'/view.php?id='.$mod->id;
+
+            if ($meta->submitted) {
+                if (empty($meta->timesubmitted)) {
+                    $submittedonstr = '';
+                } else {
+                    $submittedonstr = ' '.userdate($meta->timesubmitted, get_string('strftimedate', 'langconfig'));
+                }
+                $class .= ' label label-success';
+                $message = $meta->submittedstr.$submittedonstr;
+            } else {
+                $warningstr = $meta->draft ? $meta->draftstr : $meta->notsubmittedstr;
+                $warningstr = $meta->reopened ? $meta->reopenedstr : $warningstr;
+                $class .= ' label label-warning';
+                $message = $warningstr;
+            }
+            return html_writer::link($url, $message, ['class' => $class]);
+        }
+        return '';
+    }
+
+    /**
      * Get the module meta data for a specific module.
      *
      * @param cm_info $mod
-     *
      * @return string
      */
     protected function module_meta_html(cm_info $mod) {
 
-        global $COURSE, $CFG;
+        global $COURSE;
 
         $content = '';
 
@@ -462,10 +498,8 @@ class theme_snap_core_course_renderer extends core_course_renderer {
 
         // Do we have an activity function for this module for returning meta data?
         // @todo - check module lib.php for a meta function (won't work for core mods but will for ours if we wish).
-        $methodname = $mod->modname.'_meta';
-        if (method_exists('theme_snap\\activity', $methodname)) {
-            $meta = call_user_func('theme_snap\\activity::'.$methodname, $mod);
-        } else {
+        $meta = activity::module_meta($mod);
+        if ($meta->_empty) {
             // Can't get meta data for this module.
             return '';
         }
@@ -548,28 +582,7 @@ class theme_snap_core_course_renderer extends core_course_renderer {
                 $content .= html_writer::link($url, $feedbackavailable, ['class' => 'label label-info']);
             }
 
-            // Submission CTA.
-            if (empty($meta->submissionnotrequired)) {
-                $class = 'snap-assignment-stage';
-                $url = $CFG->wwwroot.'/mod/'.$mod->modname.'/view.php?id='.$mod->id;
-                $message = '';
-
-                if ($meta->submitted) {
-                    if (empty($meta->timesubmitted)) {
-                        $submittedonstr = '';
-                    } else {
-                        $submittedonstr = ' '.userdate($meta->timesubmitted, get_string('strftimedate', 'langconfig'));
-                    }
-                    $class .= ' label label-success';
-                    $message = $meta->submittedstr.$submittedonstr;
-                } else {
-                    $warningstr = $meta->draft ? $meta->draftstr : $meta->notsubmittedstr;
-                    $warningstr = $meta->reopened ? $meta->reopenedstr : $warningstr;
-                    $class .= ' label label-warning';
-                    $message = $warningstr;
-                }
-                $content .= html_writer::link($url, $message, ['class' => $class]);
-            }
+            $content.= $this->submission_cta($mod, $meta);
         }
 
         return $content;

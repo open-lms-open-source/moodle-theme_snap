@@ -18250,12 +18250,6 @@ fieldset[disabled] #page-site-index .section-modchooser-link .section-modchooser
 .snap-media-object .snap-unread-marker {
   color: #FF9800;
 }
-.snap-media-object .label-success {
-  padding: 0 0.2em;
-  font-size: 1em;
-  background-color: rgba(255, 255, 255, 0.6);
-  border-radius: 2px;
-}
 @media screen and (min-width: 480px) {
   #moodle-footer .list-unstyled {
     -webkit-column-count: 2;
@@ -23170,12 +23164,6 @@ fieldset[disabled] a#changenumsections .reduce-sections {
   margin: 0;
   margin-bottom: 1em;
   font-size: 1rem;
-}
-.fixy .label-success {
-  padding: 0 0.2em;
-  font-size: 1em;
-  background-color: rgba(255, 255, 255, 0.6);
-  border-radius: 2px;
 }
 @media only screen and (min-width: 768px) {
   .fixy #fixy-close {
