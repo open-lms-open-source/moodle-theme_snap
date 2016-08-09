@@ -10283,7 +10283,6 @@ fieldset[disabled] #id_cancel:focus {
   background-color: inherit !important;
   max-width: 100% !important;
   border: inherit !important;
-  text-align: inherit !important;
 }
 blockquote {
   border-left: 5px solid #03A9F4;
