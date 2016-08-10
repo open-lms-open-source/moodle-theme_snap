@@ -74,8 +74,10 @@ class ws_course_card extends \external_api {
     public static function service($courseshortname, $favorited = null) {
         $service = course::service();
         $course = $service->coursebyshortname($courseshortname, 'id');
+
         $context = \context_course::instance($course->id);
         self::validate_context($context);
+
         if ($favorited !== null) {
             $service->setfavorite($courseshortname, $favorited == 1);
         }
