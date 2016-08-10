@@ -1,0 +1,45 @@
+// -------------------------
+// oembed filter
+// -------------------------
+
+// oembed content cards.
+.filter_oembed_lazyvideo_container {
+    min-width:100%;
+    background-color: black;
+    
+    // Text.
+    .filter_oembed_lazyvideo_text{
+        font-family: @font-family-base;
+        padding: 0.5em;
+    }
+    
+    // Image.
+    .filter_oembed_lazyvideo_placeholder {
+        width: auto;
+        height: 300px;
+        margin: 0 auto;
+        display: block;
+    }
+    
+    // Content when loaded.
+    iframe {
+        width: 100%;
+        min-height: 300px;
+    }
+}
+
+// Large screen.
+@media screen and (min-width: @screen-sm) {
+    .filter_oembed_lazyvideo_container {
+        
+        // Image.
+        .filter_oembed_lazyvideo_placeholder {
+            height: 400px;
+        }
+        
+        // Content when loaded.
+        iframe {
+            min-height: 400px;
+        }
+    }
+}
