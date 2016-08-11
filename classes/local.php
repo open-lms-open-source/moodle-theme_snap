@@ -568,6 +568,16 @@ class local {
     }
 
     /**
+     * Like usergetmidnight but uses server timezone instead.
+     *
+     * @param int $time - unix timestamp
+     * @return int - unix timestamp
+     */
+    private static function midnight($time) {
+        return strtotime(date('Y-m-d 00:00:00', $time));
+    }
+
+    /**
      * Return user's deadlines from the calendar.
      *
      * Usually called twice, once for all deadlines from today, then any from the next 12 months up to the
@@ -583,6 +593,13 @@ class local {
      */
     private static function get_upcoming_deadlines($userorid, $courses, $maxevents, $todayonly=false) {
 
+        static $now = null;
+
+        if (empty($now)) {
+            // This needs to be the same for every call of the function per page request.
+            $now = time();
+        }
+
         $user = self::get_user($userorid);
         if (!$user) {
             return [];
@@ -591,17 +608,15 @@ class local {
         // We need to do this so that we can calendar events and mod visibility for a specific user.
         self::swap_global_user($user);
 
-        $now = time();
+        $fromtomorrowtime = self::midnight($now + DAYSECS + 3 * HOURSECS); // Avoid rare DST change issues.
 
         if ($todayonly === true) {
-            $starttime = usergetmidnight($now);
-            $daysinfuture = 1;
+            $starttime = self::midnight($now);
+            $endtime = $fromtomorrowtime - 1;
         } else {
-            $starttime = usergetmidnight($now + DAYSECS + 3 * HOURSECS); // Avoid rare DST change issues.
-            $daysinfuture = 365;
+            $starttime = $fromtomorrowtime;
+            $endtime = $starttime + (365 * DAYSECS) - 1;
         }
-
-        $endtime = $starttime + ($daysinfuture * DAYSECS) - 1;
 
         $userevents = false;
         $groupevents = false;
@@ -674,9 +689,14 @@ class local {
                 $modimage = \html_writer::img($modimageurl, $modname);
 
                 $meta = $output->friendly_datetime($event->timestart + $event->timeduration);
-                $activitymeta = activity::module_meta($cm);
-                $meta .= '<div class="snap-completion-meta">'.$courserenderer->submission_cta($cm, $activitymeta).'</div>';
 
+                // Add completion meta data for students (exclude anyone who can grade them).
+                if (!has_capability('mod/assign:grade', $cm->context)) {
+                    $activitymeta = activity::module_meta($cm);
+                    $meta .= '<div class="snap-completion-meta">' .
+                            $courserenderer->submission_cta($cm, $activitymeta) .
+                            '</div>';
+                }
                 $o .= $output->snap_media_object($cm->url, $modimage, $eventtitle, $meta, '');
             }
         }

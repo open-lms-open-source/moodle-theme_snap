@@ -265,6 +265,47 @@ class theme_snap_local_test extends \advanced_testcase {
     }
 
     /**
+     * Test upcoming deadlines
+     */
+    public function test_upcoming_deadlines() {
+        global $DB;
+
+        $this->resetAfterTest();
+
+        $generator = $this->getDataGenerator();
+        $course = $generator->create_course();
+        $teacher = $generator->create_user();
+        $student = $generator->create_user();
+
+        $teacherrole = $DB->get_record('role', ['shortname' => 'teacher']);
+        $generator->enrol_user($teacher->id, $course->id, $teacherrole->id);
+
+        $studentrole = $DB->get_record('role', ['shortname' => 'student']);
+        $generator->enrol_user($student->id, $course->id, $studentrole->id);
+
+        $assigngen = $this->getDataGenerator()->get_plugin_generator('mod_assign');
+
+        $this->setUser($teacher);
+
+        $assigngen->create_instance([
+            'course' => $course->id,
+            'duedate' => strtotime(date('Y-m-d 00:00:00', strtotime('today')))
+        ]);
+        $assigngen->create_instance([
+            'course' => $course->id,
+            'duedate' => strtotime(date('Y-m-d 00:00:00', strtotime('tomorrow')))
+        ]);
+        $assigngen->create_instance([
+            'course' => $course->id,
+            'duedate' => strtotime(date('Y-m-d 00:00:00', strtotime('next week')))
+        ]);
+
+        $actual = local::upcoming_deadlines($student->id);
+        $expected = 3;
+        $this->assertCount($expected, $actual);
+    }
+
+    /**
      * Test no upcoming deadlines.
      */
     public function test_no_upcoming_deadlines() {

@@ -28,6 +28,7 @@
 require_once(__DIR__ . '/../../../../lib/behat/behat_base.php');
 
 use Behat\Behat\Context\Step\Given,
+    Behat\Gherkin\Node\TableNode as TableNode,
     Behat\Mink\Element\NodeElement,
     Behat\Mink\Exception\ExpectationException as ExpectationException;
 
@@ -40,6 +41,54 @@ use Behat\Behat\Context\Step\Given,
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class behat_theme_snap extends behat_base {
+
+    /**
+     * Transforms relative date statements compatible with strtotime().
+     * Idea taken from http://chillu.tumblr.com/post/67056088859/behat-step-transformations-for-relative-time.
+     *
+     * @Transform /^(?:(the|a)) timestamp of (?:(.*))$/
+     * @param string $prefix
+     * @param string $val
+     * @return int unix time stamp
+     */
+    public function process_relative_timestamp($prefix, $val) {
+        return strtotime($val);
+    }
+
+    /**
+     * Transformations for TableNode arguments.
+     *
+     * These are specifically for applying relative date transformations.
+     * Hoping to upstream this enhancement.
+     *
+     * @Transform /^table:(.*)/
+     * @param TableNode $tablenode
+     * @return TableNode The transformed table
+     */
+    public function tablenode_transformations(TableNode $tablenode) {
+
+        // Apply relative date transformations.
+        $rows = $tablenode->getRows();
+        foreach ($rows as $rk => $row) {
+            foreach ($row as $fk => $val) {
+                $val = preg_replace_callback(
+                    '/(?:(the|a)) timestamp of (?:(.*))/',
+                    function($match) {
+                        return (
+                            $this->process_relative_timestamp($match[1], $match[2])
+                        );
+                    },
+                    $val
+                );
+                $row[$fk] = $val;
+            }
+            $rows[$rk] = $row;
+        }
+
+        // Return the transformed TableNode.
+        $tablenode->setRows($rows);
+        return $tablenode;
+    }
 
     /**
      * Process givens array
