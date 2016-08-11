@@ -674,8 +674,6 @@ class local {
         }
 
         $output = $PAGE->get_renderer('theme_snap', 'core', RENDERER_TARGET_GENERAL);
-        /** @var \theme_snap_core_course_renderer $courserenderer */
-        $courserenderer = $PAGE->get_renderer('core', 'course', RENDERER_TARGET_GENERAL);
         $o = '';
         foreach ($events as $event) {
             if (!empty($event->modulename)) {
@@ -692,6 +690,8 @@ class local {
 
                 // Add completion meta data for students (exclude anyone who can grade them).
                 if (!has_capability('mod/assign:grade', $cm->context)) {
+                    /** @var \theme_snap_core_course_renderer $courserenderer */
+                    $courserenderer = $PAGE->get_renderer('core', 'course', RENDERER_TARGET_GENERAL);
                     $activitymeta = activity::module_meta($cm);
                     $meta .= '<div class="snap-completion-meta">' .
                             $courserenderer->submission_cta($cm, $activitymeta) .
