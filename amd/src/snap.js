@@ -547,11 +547,10 @@ define(['jquery', 'theme_snap/bootstrap', 'core/log', 'theme_snap/headroom', 'th
          * just a wrapper for various snippets that add listeners
          */
         var addListeners = function() {
-            
             var selectors = [
-                '.chapters a',
-                '.section_footer a',
-                '#toc-search-results a'
+                'body:not(.editing):not(.format-folderview) .chapters a',
+                'body:not(.editing):not(.format-folderview) .section_footer a',
+                'body:not(.editing):not(.format-folderview) #toc-search-results a'
             ];
 
             $(document).on('click', selectors.join(', '), function(e) {
