@@ -297,7 +297,8 @@ class local {
         if ($trackcount > 0) {
             $progresspercent = ceil(($compcount / $trackcount) * 100);
         } else {
-            $progresspercent = 0;
+            // No point in returning completion progress if there aren't any elements that can be marked as complete.
+            return null;
         }
         $compobj = (object) ['complete' => $compcount, 'total' => $trackcount, 'progress' => $progresspercent];
 
