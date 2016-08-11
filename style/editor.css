@@ -10258,9 +10258,19 @@ fieldset[disabled] #id_cancel:focus {
     display: none;
   }
 }
+/**
+* Plugins css.
+*/
+/**
+* oembed filter.
+*/
+/* oembed content cards. */
 .filter_oembed_lazyvideo_container {
   min-width: 100%;
   background-color: black;
+  /* Text. */
+  /* Image. */
+  /* Content when loaded. */
 }
 .filter_oembed_lazyvideo_container .filter_oembed_lazyvideo_text {
   font-family: "Roboto", "Fira Sans", "Segoe UI", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -10276,7 +10286,12 @@ fieldset[disabled] #id_cancel:focus {
   width: 100%;
   min-height: 300px;
 }
+/* Large screen. */
 @media screen and (min-width: 768px) {
+  .filter_oembed_lazyvideo_container {
+    /* Image. */
+    /* Content when loaded. */
+  }
   .filter_oembed_lazyvideo_container .filter_oembed_lazyvideo_placeholder {
     height: 400px;
   }
