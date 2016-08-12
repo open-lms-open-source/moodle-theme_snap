@@ -1179,7 +1179,18 @@ class local {
                 'pluginfile.php', $context->id, 'mod_page', 'intro', null);
             $page->summary = format_text($page->summary, $page->introformat, $formatoptions);
         } else {
-            $preview = html_to_text($page->content, 0, false);
+
+            // Create short summary text - no images, etc..
+            $doc = new \DOMDocument();
+            libxml_use_internal_errors(true); // Required for HTML5.
+            $doc->loadHTML($page->content);
+            libxml_clear_errors(); // Required for HTML5.
+            $imagetags = $doc->getElementsByTagName('img');
+            foreach ($imagetags as $img) {
+                $img->parentNode->removeChild($img);
+            }
+            $noimgtxt = $doc->saveHTML();
+            $preview = html_to_text($noimgtxt, 0, false);
             $page->summary = shorten_text($preview, 200);
         }
 
