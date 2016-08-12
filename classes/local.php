@@ -1170,7 +1170,6 @@ class local {
         $context = \context_module::instance($mod->id);
         $formatoptions = new \stdClass;
         $formatoptions->noclean = true;
-        $formatoptions->overflowdiv = true;
         $formatoptions->context = $context;
 
         // Make sure we have some summary/extract text for the course page.
