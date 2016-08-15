@@ -10270,6 +10270,8 @@ fieldset[disabled] #id_cancel:focus {
 .summary-text *[style],
 .summary p[style],
 .summary div[style],
+.sitetopic p[style],
+.sitetopic div[style],
 .snap-activity .contentafterlink *[style],
 .signuppanel *[style],
 .signuppanel .text_to_html *[style],
