@@ -42,7 +42,7 @@ Feature: When the moodle theme is set to Snap, students and teachers can open a 
       | teacher1 | C1     | editingteacher  |
 
   @javascript
-  Scenario Outline: Completion progress does not shows only when enabled and with tracked activities
+  Scenario Outline: Completion progress shows only when enabled and with tracked activities
     Given completion tracking is "Enabled" for course "C1"
     And I log in as "<username>" (theme_snap)
     And I open the personal menu
