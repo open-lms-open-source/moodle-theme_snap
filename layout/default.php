@@ -39,7 +39,7 @@ use theme_snap\local;
 <div id="page-header" class="clearfix
 <?php
 // Check we are in a course, and the course is using a cover image.
-if ($PAGE->pagetype != 'site-index' && !empty($coverimagecss)) : ?>
+if ($PAGE->pagetype != 'site-index' && !empty($coverimagecss) && $COURSE->id != SITEID): ?>
  mast-image
 <?php endif;?>">
 <div class="breadcrumb-nav" aria-label="breadcrumb"><?php echo $OUTPUT->navbar(); ?></div>
