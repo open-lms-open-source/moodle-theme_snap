@@ -60,6 +60,11 @@ class ws_cover_image extends \external_api {
      */
     public static function service($courseshortname, $imagedata, $imagefilename) {
         $service = course::service();
+
+        $course = $service->coursebyshortname($courseshortname, 'id');
+        $context = \context_course::instance($course->id);
+        self::validate_context($context);
+
         $coverimage = $service->setcoverimage($courseshortname, $imagedata, $imagefilename);
         return $coverimage;
     }
