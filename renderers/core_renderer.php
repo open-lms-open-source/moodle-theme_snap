@@ -970,7 +970,7 @@ class theme_snap_core_renderer extends toc_renderer {
         if ($this->page->pagelayout == 'mypublic') {
             // For the user profile page message button we need to call 2.9 content_header.
             $heading = parent::context_header();
-        } else if ($COURSE->id != SITEID && stripos($heading, $COURSE->fullname) === 0) {
+        } else if ($COURSE->id != SITEID && stripos($heading, format_string($COURSE->fullname) ) === 0) {
             // If we are on a course page.
             $courseurl = new moodle_url('/course/view.php', ['id' => $COURSE->id]);
             // Set heading to course fullname - ditch anything else that's in it.
@@ -982,6 +982,7 @@ class theme_snap_core_renderer extends toc_renderer {
             $heading = $COURSE->fullname;
             $heading = html_writer::link($courseurl, $heading);
             $heading = html_writer::tag($tag, $heading);
+            // 
         } else {
             // Default headinng.
             $heading = html_writer::tag($tag, $heading);
