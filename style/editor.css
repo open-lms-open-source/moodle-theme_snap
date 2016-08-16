@@ -10314,7 +10314,8 @@ a:hover,
 }
 a:focus,
 a:hover,
-.btn-link:hover {
+.btn-link:hover,
+.btn-link:focus {
   color: #038dcc;
 }
 #fixy-my-courses .courseinfo a,
