@@ -94,6 +94,16 @@ a:hover,
 .btn-link:focus {
     color: darken(@brand-primary, 8%);
 }
+#admin-menu-trigger {
+    &:hover,
+    &:focus {
+        outline: 0;
+        
+        img {
+            border-color: @brand-primary;
+        }
+    }
+}
 
 #fixy-my-courses .courseinfo {
     a,
@@ -353,8 +363,14 @@ input[type="reset"],
     color: @brand-primary;
 }
 
-#toc-search-input:focus {
-    border-bottom: 1px solid @brand-primary;
+#toc-search-input {
+    
+    &:hover {
+        border-color: @brand-primary;
+    }
+    &:focus {
+        border-bottom: 1px solid @brand-primary;
+    }
 }
 
 // workaround for #notices with buttons outside the div#notice

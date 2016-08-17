@@ -5148,6 +5148,7 @@ header#page-header
   padding: 0 0 1em;
   max-width: 100%;
   position: relative;
+  clear: both;
 }
 #course-toc h2 {
   text-transform: uppercase;
@@ -5260,12 +5261,9 @@ ol#chapters li.current a {
   width: 3em;
   height: 3em;
   padding: 0 1.5em;
-  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
   background-color: transparent;
+  border: 1px solid transparent;
   transition: all 0.4s ease-in-out;
-}
-#toc-search-input:hover {
-  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.23), 0 10px 30px rgba(0, 0, 0, 0.19);
 }
 #toc-search-input.state-active,
 #toc-search-input:focus {
@@ -5353,20 +5351,19 @@ ol#chapters li.current a {
   #toc-search-results {
     padding-left: 0.5em;
     font-size: 1em;
-    max-width: 300px;
   }
 }
 #toc-search-results {
   display: none;
   position: absolute;
-  top: 3.5em;
-  right: 1.5em;
+  right: 1em;
   z-index: 3;
   background-color: rgba(255, 255, 255, 0.9);
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.24);
 }
 #toc-search-results li {
   width: 300px;
+  padding: 0.1em 4%;
   overflow: hidden;
 }
 #toc-search-results li img {
@@ -7893,8 +7890,11 @@ button.snap-icon-toggle:focus {
   float: right;
   margin-left: 1em;
   display: inline-block;
-  transition: all 0.4s ease-in-out;
   opacity: 0;
+  transition: all 0.4s ease-in-out;
+}
+#snap-coverimagecontrol .btn {
+  border-color: transparent;
 }
 #snap-changecoverimageconfirmation {
   position: relative;
@@ -10318,6 +10318,14 @@ a:hover,
 .btn-link:focus {
   color: #038dcc;
 }
+#admin-menu-trigger:hover,
+#admin-menu-trigger:focus {
+  outline: 0;
+}
+#admin-menu-trigger:hover img,
+#admin-menu-trigger:focus img {
+  border-color: #03A9F4;
+}
 #fixy-my-courses .courseinfo a,
 #fixy-my-courses .courseinfo a:visited {
   color: #03A9F4;
@@ -10693,6 +10701,9 @@ input[type="reset"][disabled],
 #notice,
 #toc-search:before {
   color: #03A9F4;
+}
+#toc-search-input:hover {
+  border-color: #03A9F4;
 }
 #toc-search-input:focus {
   border-bottom: 1px solid #03A9F4;
