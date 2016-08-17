@@ -568,16 +568,6 @@ class local {
     }
 
     /**
-     * Like usergetmidnight but uses server timezone instead.
-     *
-     * @param int $time - unix timestamp
-     * @return int - unix timestamp
-     */
-    private static function midnight($time) {
-        return strtotime(date('Y-m-d 00:00:00', $time));
-    }
-
-    /**
      * Return user's deadlines from the calendar.
      *
      * Usually called twice, once for all deadlines from today, then any from the next 12 months up to the
@@ -593,13 +583,6 @@ class local {
      */
     private static function get_upcoming_deadlines($userorid, $courses, $maxevents, $todayonly=false) {
 
-        static $now = null;
-
-        if (empty($now)) {
-            // This needs to be the same for every call of the function per page request.
-            $now = time();
-        }
-
         $user = self::get_user($userorid);
         if (!$user) {
             return [];
@@ -608,13 +591,15 @@ class local {
         // We need to do this so that we can calendar events and mod visibility for a specific user.
         self::swap_global_user($user);
 
-        $fromtomorrowtime = self::midnight($now + DAYSECS + 3 * HOURSECS); // Avoid rare DST change issues.
+        $tz = new \DateTimeZone(\core_date::get_user_timezone($user));
+        $today = new \DateTime('today', $tz);
+        $tomorrow = new \DateTime('tomorrow', $tz);
 
         if ($todayonly === true) {
-            $starttime = self::midnight($now);
-            $endtime = $fromtomorrowtime - 1;
+            $starttime = $today->getTimestamp();
+            $endtime = $tomorrow->getTimestamp()-1;
         } else {
-            $starttime = $fromtomorrowtime;
+            $starttime = $tomorrow->getTimestamp();
             $endtime = $starttime + (365 * DAYSECS) - 1;
         }
 

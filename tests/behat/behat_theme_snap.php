@@ -46,12 +46,11 @@ class behat_theme_snap extends behat_base {
      * Transforms relative date statements compatible with strtotime().
      * Idea taken from http://chillu.tumblr.com/post/67056088859/behat-step-transformations-for-relative-time.
      *
-     * @Transform /^(?:(the|a)) timestamp of (?:(.*))$/
-     * @param string $prefix
+     * @Transform /^(?:the|a) timestamp of (.*)$/
      * @param string $val
      * @return int unix time stamp
      */
-    public function process_relative_timestamp($prefix, $val) {
+    public function process_relative_timestamp($val) {
         return strtotime($val);
     }
 
@@ -72,10 +71,10 @@ class behat_theme_snap extends behat_base {
         foreach ($rows as $rk => $row) {
             foreach ($row as $fk => $val) {
                 $val = preg_replace_callback(
-                    '/(?:(the|a)) timestamp of (?:(.*))/',
+                    '/(?:the|a) timestamp of (.*)$/',
                     function($match) {
                         return (
-                            $this->process_relative_timestamp($match[1], $match[2])
+                            $this->process_relative_timestamp($match[1])
                         );
                     },
                     $val

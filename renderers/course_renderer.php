@@ -499,11 +499,10 @@ class theme_snap_core_course_renderer extends core_course_renderer {
         // Do we have an activity function for this module for returning meta data?
         // @todo - check module lib.php for a meta function (won't work for core mods but will for ours if we wish).
         $meta = activity::module_meta($mod);
-        if ($meta->_empty) {
+        if (!$meta->is_set(true)) {
             // Can't get meta data for this module.
             return '';
         }
-
         $content .= '';
 
         if ($meta->isteacher) {

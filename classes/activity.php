@@ -102,6 +102,7 @@ class activity {
         $meta->timeopen = $activitydates->timeopen;
         $meta->timeclose = $activitydates->timeclose;
 
+        // TODO: use activity specific "teacher" capabilities.
         if (has_capability('mod/assign:grade', $mod->context)) {
             $meta->isteacher = true;
 
