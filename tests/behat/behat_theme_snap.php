@@ -906,4 +906,25 @@ class behat_theme_snap extends behat_base {
         $okbutton = $this->find('css', 'div.fp-dlg button.fp-dlg-butconfirm');
         $okbutton->click();
     }
+
+    /**
+     * Toggles completion tracking for specific course.
+     *
+     * @When /^completion tracking is "(?P<completion_status_string>Enabled|Disabled)" for course "(?P<course_string>(?:[^"]|\\")*)"$/
+     * @param string $completionstatus The status, enabled or disabled.
+     * @param string $courseshortname The shortname for the course where completion tracking is to be enabled / disabled.
+     */
+    public function completion_is_toggled_in_course($completionstatus, $courseshortname) {
+
+        global $DB;
+
+        $toggle = strtolower($completionstatus) == 'enabled' ? 1 : 0;
+
+        $course = $DB->get_record('course', ['shortname' => $courseshortname]);
+        if ($course) {
+            $course->enablecompletion = $toggle;
+            $DB->update_record('course', $course);
+        }
+    }
+
 }
