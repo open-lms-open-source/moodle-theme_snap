@@ -4306,6 +4306,25 @@ table.boxwidthwide {
 #page-login-index #moodle-footer {
   margin-top: 0;
 }
+.full-width {
+  width: 100vw;
+  max-width: 100vw;
+  position: relative;
+  left: 50%;
+  right: 50%;
+  margin-left: -50vw;
+  margin-right: -50vw;
+}
+.full-width-pad {
+  width: 100vw;
+  max-width: 100vw;
+  position: relative;
+  left: 50%;
+  right: 50%;
+  margin-left: -50vw;
+  margin-right: -50vw;
+  padding: 0 4%;
+}
 /* animations */
 @keyframes snap-drop {
   0% {
@@ -4322,13 +4341,6 @@ table.boxwidthwide {
   100% {
     transform: matrix(1, 0, 0, 1, 0, -600);
   }
-}
-.highlight-tag {
-  background-color: #f56363;
-  color: #fff;
-  padding: 0 0.5em;
-  border-radius: 2px;
-  line-height: 1.5;
 }
 html {
   box-sizing: border-box;
@@ -4359,7 +4371,6 @@ a:focus {
 }
 label {
   font-weight: 500;
-  color: #777;
 }
 select {
   background-color: #fff;
@@ -8468,6 +8479,7 @@ we do this by default in snap, so hide moodle version */
 .section .activity.modtype_label.label .asset-wrapper,
 .section .activity.modtype_label.label .activityinstance {
   padding: 0;
+  overflow: visible;
 }
 .section li.snap-native {
   box-shadow: none;

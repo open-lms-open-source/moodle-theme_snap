@@ -166,6 +166,23 @@ table.boxwidthwide {
     background-size: cover;
 }
 
+// 100% of the screen.
+.full-width {
+  width: 100vw;
+  max-width: 100vw;
+  position: relative;
+  left: 50%;
+  right: 50%;
+  margin-left: -50vw;
+  margin-right: -50vw;
+}
+
+// 100% with standard snap 4% gutter.
+.full-width-pad {
+    .full-width();
+    padding: 0 4%;
+}
+
 /* animations */
 @keyframes snap-drop {
     0% {
@@ -187,14 +204,6 @@ table.boxwidthwide {
     }
 }
 
-.highlight-tag {
-    background-color: #f56363;
-    color: #fff;
-    padding: 0 0.5em;
-    border-radius: 2px;
-    line-height: 1.5;
-}
-
 // -------------------------
 // Baseline boilerplate for snap
 // -------------------------
@@ -211,7 +220,7 @@ html {
     box-sizing: inherit;
 }
 
- ::-moz-selection {
+::-moz-selection {
     background: #fe57a1;
     color: #fff;
     text-shadow: none;
@@ -236,7 +245,6 @@ a:focus {
 
 label {
     font-weight: 500;
-    color: #777;
 }
 
 select {
