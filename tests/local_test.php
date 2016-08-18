@@ -265,6 +265,121 @@ class theme_snap_local_test extends \advanced_testcase {
     }
 
     /**
+     * Test upcoming deadlines
+     */
+    public function test_upcoming_deadlines() {
+        global $DB;
+
+        $this->resetAfterTest();
+
+        date_default_timezone_set('UTC');
+
+        $generator = $this->getDataGenerator();
+        $course = $generator->create_course();
+        $teacher = $generator->create_user();
+        $student = $generator->create_user();
+
+        $teacherrole = $DB->get_record('role', ['shortname' => 'teacher']);
+        $generator->enrol_user($teacher->id, $course->id, $teacherrole->id);
+
+        $studentrole = $DB->get_record('role', ['shortname' => 'student']);
+        $generator->enrol_user($student->id, $course->id, $studentrole->id);
+
+        $assigngen = $this->getDataGenerator()->get_plugin_generator('mod_assign');
+
+        $this->setUser($teacher);
+
+        $approachingdeadline = time() + HOURSECS;
+        $assigngen->create_instance([
+            'name' => 'Assign 1',
+            'course' => $course->id,
+            'duedate' => $approachingdeadline
+        ]);
+        $assigngen->create_instance([
+            'name' => 'Assign 2',
+            'course' => $course->id,
+            'duedate' => strtotime('tomorrow')
+        ]);
+        $assigngen->create_instance([
+            'name' => 'Assign 3',
+            'course' => $course->id,
+            'duedate' => strtotime('next week')
+        ]);
+
+        $quizgen = $this->getDataGenerator()->get_plugin_generator('mod_quiz');
+        $quizgen->create_instance([
+            'name' => 'Quiz 1',
+            'course' => $course->id,
+            'timeclose' => $approachingdeadline
+        ]);
+        $quizgen->create_instance([
+            'name' => 'Quiz 2',
+            'course' => $course->id,
+            'timeclose' => strtotime('tomorrow')
+        ]);
+        $quizgen->create_instance([
+            'name' => 'Quiz 3',
+            'course' => $course->id,
+            'timeclose' => strtotime('next month')
+        ]);
+
+        // 5 items should be shown as final deadline 3rd quiz gets cut off.
+        $actual = local::upcoming_deadlines($student->id);
+        $expected = 5;
+
+        // Check deadlines are listed in appropriate order.
+        $this->assertCount($expected, $actual);
+        $deadlinelist = [];
+        foreach ($actual as $item) {
+            $deadlinelist[] = $item;
+        }
+        $this->assertEquals('Assign 1', $deadlinelist[0]->name);
+        $this->assertEquals('Quiz 1', $deadlinelist[1]->name);
+        $this->assertEquals('Assign 2', $deadlinelist[2]->name);
+        $this->assertEquals('Quiz 2', $deadlinelist[3]->name);
+        $this->assertEquals('Assign 3', $deadlinelist[4]->name);
+
+        // Check 5 deadlines exist for users in all timeszones.
+        $tzoneusers = [];
+        $timezones = [
+            'GMT-1' => 'Atlantic/Cape_Verde',
+            'GMT-2' => 'America/Miquelon',
+            'GMT-3' => 'America/Rio_Branco',
+            'GMT-4' => 'America/Nassau',
+            'GMT-5' => 'America/Bogota',
+            'GMT-6' => 'America/Belize',
+            'GMT-7' => 'Pacific/Honolulu',
+            'GMT-8' => 'Pacific/Pitcairn',
+            'GMT-9' => 'Pacific/Gambier',
+            'GMT-10' => 'Pacific/Rarotonga',
+            'GMT-11' => 'Pacific/Niue',
+            'GMT'   => 'Atlantic/Azores',
+            'GMT+1' => 'Europe/London',
+            'GMT+2' => 'Europe/Paris',
+            'GMT+3' => 'Europe/Athens',
+            'GMT+4' => 'Asia/Tbilisi',
+            'GMT+5' => 'Asia/Baku',
+            'GMT+6' => 'Asia/Dhaka',
+            'GMT+7' => 'Asia/Phnom_Penh',
+            'GMT+8' => 'Asia/Hong_Kong',
+            'GMT+9' => 'Asia/Seoul',
+            'GMT+10' => 'Pacific/Guam',
+            'GMT+11' => 'Pacific/Efate',
+            'GMT+12' => 'Asia/Anadyr',
+            'GMT+13' => 'Pacific/Apia'
+        ];
+
+        foreach ($timezones as $offset => $tz) {
+            $tzoneusers[$offset] =  $generator->create_user(['timezone' => $tz]);
+            $generator->enrol_user($tzoneusers[$offset]->id, $course->id, $studentrole->id);
+            $this->setUser($tzoneusers[$offset]);
+            $actual = local::upcoming_deadlines($tzoneusers[$offset]);
+            $expected = 5;
+            $this->assertCount($expected, $actual);
+        }
+    }
+
+    /**
      * Test no upcoming deadlines.
      */
     public function test_no_upcoming_deadlines() {
