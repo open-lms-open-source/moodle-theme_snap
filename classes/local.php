@@ -297,7 +297,8 @@ class local {
         if ($trackcount > 0) {
             $progresspercent = ceil(($compcount / $trackcount) * 100);
         } else {
-            $progresspercent = 0;
+            // No point in returning completion progress if there aren't any elements that can be marked as complete.
+            return null;
         }
         $compobj = (object) ['complete' => $compcount, 'total' => $trackcount, 'progress' => $progresspercent];
 
@@ -1151,7 +1152,7 @@ class local {
     }
 
     /**
-     * Get page module instance.
+     * Get page module instance and create a summary property.
      *
      * @param $mod
      * @return mixed
@@ -1170,7 +1171,6 @@ class local {
         $context = \context_module::instance($mod->id);
         $formatoptions = new \stdClass;
         $formatoptions->noclean = true;
-        $formatoptions->overflowdiv = true;
         $formatoptions->context = $context;
 
         // Make sure we have some summary/extract text for the course page.
@@ -1179,7 +1179,21 @@ class local {
                 'pluginfile.php', $context->id, 'mod_page', 'intro', null);
             $page->summary = format_text($page->summary, $page->introformat, $formatoptions);
         } else {
-            $preview = html_to_text($page->content, 0, false);
+
+            // Create short summary text - no images, etc..
+            $doc = new \DOMDocument();
+            libxml_use_internal_errors(true); // Required for HTML5.
+            $doc->loadHTML($page->content);
+            libxml_clear_errors(); // Required for HTML5.
+            $imagetags = $doc->getElementsByTagName('img');
+            // Remove first image (note, we only remove the first image as that appears on the course page).
+            foreach ($imagetags as $img) {
+                $img->parentNode->removeChild($img);
+                break;
+            }
+
+            $noimgtxt = $doc->saveHTML();
+            $preview = html_to_text($noimgtxt, 0, false);
             $page->summary = shorten_text($preview, 200);
         }
 
