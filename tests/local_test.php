@@ -339,7 +339,7 @@ class theme_snap_local_test extends \advanced_testcase {
         $this->assertEquals('Quiz 2', $deadlinelist[3]->name);
         $this->assertEquals('Assign 3', $deadlinelist[4]->name);
 
-        // Check 5 deadlines exist for users in all timeszones
+        // Check 5 deadlines exist for users in all timeszones.
         $tzoneusers = [];
         $timezones = [
             'GMT-1' => 'Atlantic/Cape_Verde',
@@ -378,7 +378,6 @@ class theme_snap_local_test extends \advanced_testcase {
             $this->assertCount($expected, $actual);
         }
     }
-
 
     /**
      * Test no upcoming deadlines.
