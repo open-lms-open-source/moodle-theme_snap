@@ -18490,21 +18490,21 @@ header#page-header
 body:not(.format-topics):not(.format-weeks) .toc-footer {
   display: none;
 }
-.path-course .mast-image .breadcrumb li,
-.path-course .mast-image .breadcrumb li:before,
-.path-course .mast-image .breadcrumb > li + li:before,
-.path-course .mast-image .breadcrumb a,
-.path-course .mast-image .breadcrumb a:visited {
+.mast-image .breadcrumb li,
+.mast-image .breadcrumb li:before,
+.mast-image .breadcrumb > li + li:before,
+.mast-image .breadcrumb a,
+.mast-image .breadcrumb a:visited {
   text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
   color: white;
 }
-.path-course .mast-image #page-mast h1 a,
-.path-course .mast-image #page-mast h1 a:visited,
-.path-course .mast-image #page-mast h1 a:hover {
+.mast-image #page-mast h1 a,
+.mast-image #page-mast h1 a:visited,
+.mast-image #page-mast h1 a:hover {
   color: white;
   text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
 }
-.path-course .mast-image #course-toc {
+.mast-image #course-toc {
   background-color: rgba(255, 255, 255, 0.95);
 }
 #chapters {
