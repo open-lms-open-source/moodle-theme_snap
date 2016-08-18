@@ -23,7 +23,6 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-
 defined('MOODLE_INTERNAL') || die();
 
 use \theme_snap\local;
@@ -38,7 +37,6 @@ require_once($CFG->dirroot . '/mod/assign/tests/base_test.php');
  * @copyright  1999 onwards Martin Dougiamas  {@link http://moodle.com}
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-
 class theme_snap_assign_test extends mod_assign_base_testcase {
 
     public function test_assign_reopened_and_resubmitted() {

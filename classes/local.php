@@ -592,17 +592,17 @@ class local {
         // We need to do this so that we can calendar events and mod visibility for a specific user.
         self::swap_global_user($user);
 
-        $now = time();
+        $tz = new \DateTimeZone(\core_date::get_user_timezone($user));
+        $today = new \DateTime('today', $tz);
+        $tomorrow = new \DateTime('tomorrow', $tz);
 
         if ($todayonly === true) {
-            $starttime = usergetmidnight($now);
-            $daysinfuture = 1;
+            $starttime = $today->getTimestamp();
+            $endtime = $tomorrow->getTimestamp()-1;
         } else {
-            $starttime = usergetmidnight($now + DAYSECS + 3 * HOURSECS); // Avoid rare DST change issues.
-            $daysinfuture = 365;
+            $starttime = $tomorrow->getTimestamp();
+            $endtime = $starttime + (365 * DAYSECS) - 1;
         }
-
-        $endtime = $starttime + ($daysinfuture * DAYSECS) - 1;
 
         $userevents = false;
         $groupevents = false;
@@ -674,6 +674,15 @@ class local {
 
                 $meta = $output->friendly_datetime($event->timestart + $event->timeduration);
 
+                // Add completion meta data for students (exclude anyone who can grade them).
+                if (!has_capability('mod/assign:grade', $cm->context)) {
+                    /** @var \theme_snap_core_course_renderer $courserenderer */
+                    $courserenderer = $PAGE->get_renderer('core', 'course', RENDERER_TARGET_GENERAL);
+                    $activitymeta = activity::module_meta($cm);
+                    $meta .= '<div class="snap-completion-meta">' .
+                            $courserenderer->submission_cta($cm, $activitymeta) .
+                            '</div>';
+                }
                 $o .= $output->snap_media_object($cm->url, $modimage, $eventtitle, $meta, '');
             }
         }

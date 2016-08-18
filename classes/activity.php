@@ -32,6 +32,20 @@ use \theme_snap\activity_meta;
 class activity {
 
     /**
+     * @param \cm_info $mod
+     * @return activity_meta
+     */
+    public static function module_meta(\cm_info $mod) {        
+        $methodname = $mod->modname . '_meta';
+        if (method_exists('theme_snap\\activity', $methodname)) {
+            $meta = call_user_func('theme_snap\\activity::' . $methodname, $mod);
+        } else {
+            $meta = new activity_meta(); // Return empty activity meta.
+        }
+        return $meta;
+    }
+    
+    /**
      * Return standard meta data for module
      *
      * @param cm_info $mod
@@ -89,7 +103,7 @@ class activity {
         $meta->timeclose = $activitydates->timeclose;
 
         // TODO: use activity specific "teacher" capabilities.
-        if (has_capability('mod/assign:grade', \context_course::instance($courseid))) {
+        if (has_capability('mod/assign:grade', $mod->context)) {
             $meta->isteacher = true;
 
             // Teacher - useful teacher meta data.
