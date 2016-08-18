@@ -39,7 +39,7 @@ trait null_object {
             if ($prop === '_defaults') {
                 continue;
             }
-            if ($this->$prop != $default && isset($this->$prop)) {
+            if (isset($this->$prop) && $this->$prop != $default) {
                 if ($ignoreinitialstate) {
                     if (!isset($this->_defaults[$prop]) || $this->_defaults[$prop] !== $this->$prop) {
                         return true;
