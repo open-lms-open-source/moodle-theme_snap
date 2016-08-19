@@ -46,14 +46,14 @@ Feature: When the moodle theme is set to Snap, cover image can be set for site a
     And I open the personal menu
     And I follow "Course 1"
     And I wait until the page is ready
-    Then I should see "Change image"
+    Then I should see "Change cover image"
     And I should not see cover image in page header
     And I upload cover image "testpng_small.png"
     # Test cancelling upload
     And I wait until ".btn.cancel" "css_element" is visible
     And I click on ".btn.cancel" "css_element"
     Then I should not see cover image in page header
-    And I should see "Change image"
+    And I should see "Change cover image"
     # Test confirming upload
     And I upload cover image "testpng_small.png"
     And I wait until ".btn.ok" "css_element" is visible
@@ -79,17 +79,17 @@ Feature: When the moodle theme is set to Snap, cover image can be set for site a
     # Test cover image can only be set on main course page
     And I open the personal menu
     And I follow "Course 1"
-    Then I should see "Change image"
+    Then I should see "Change cover image"
     And I click on "#admin-menu-trigger" "css_element"
     And I navigate to "Grades" node in "Course administration"
     And I wait until the page is ready
-    Then I should not see "Change image"
+    Then I should not see "Change cover image"
     # Test that non-editing teachers can't change cover image. (no need to test with students as they have less caps)
     And I log out (theme_snap)
     And I log in as "teacher2" (theme_snap)
     And I open the personal menu
     And I follow "Course 1"
-    Then I should not see "Change image"
+    Then I should not see "Change cover image"
 
   @javascript
   Scenario: A cover image cannot exceed the site maximum upload size.
@@ -110,7 +110,7 @@ Feature: When the moodle theme is set to Snap, cover image can be set for site a
     And I open the personal menu
     And I follow "Course 1"
     And I wait until the page is ready
-    Then I should see "Change image"
+    Then I should see "Change cover image"
     And I should not see cover image in page header
     And I upload cover image "bpd_bikes_3888px.jpg"
     Then I should see "Cover image exceeds the site level maximum allowed file size"
@@ -139,7 +139,7 @@ Feature: When the moodle theme is set to Snap, cover image can be set for site a
     And I open the personal menu
     And I follow "Course 1"
     And I wait until the page is ready
-    Then I should see "Change image"
+    Then I should see "Change cover image"
     And I should not see cover image in page header
     And I upload cover image "testpng_lt1024px.png"
     Then I should see "For best quality, we recommend a larger image of at least 1024px width"
@@ -155,17 +155,17 @@ Feature: When the moodle theme is set to Snap, cover image can be set for site a
     And I log in as "admin" (theme_snap)
     And I am on site homepage
     And I wait until the page is ready
-    Then I should not see "Change image"
+    Then I should not see "Change cover image"
     And I click on "#admin-menu-trigger" "css_element"
     And I navigate to "Turn editing on" node in "Front page settings"
-    Then I should see "Change image"
+    Then I should see "Change cover image"
     And I should not see cover image in page header
     And I upload cover image "testpng_small.png"
     # Test cancelling upload
     And I wait until ".btn.cancel" "css_element" is visible
     And I click on ".btn.cancel" "css_element"
     Then I should not see cover image in page header
-    And I should see "Change image"
+    And I should see "Change cover image"
     # Test confirming upload
     And I upload cover image "testpng_small.png"
     And I wait until ".btn.ok" "css_element" is visible
@@ -186,4 +186,4 @@ Feature: When the moodle theme is set to Snap, cover image can be set for site a
     And I log in as "user1" (theme_snap)
     And I am on site homepage
     And I wait until the page is ready
-    Then I should not see "Change image"
+    Then I should not see "Change cover image"

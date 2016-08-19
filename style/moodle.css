@@ -18189,7 +18189,6 @@ fieldset[disabled] #page-site-index .section-modchooser-link .section-modchooser
 @media screen and (max-width: 991px) {
   #snap-home.logo {
     max-width: 20%;
-    vertical-align: bottom;
   }
 }
 .snap-media-object {
