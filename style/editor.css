@@ -10299,6 +10299,16 @@ fieldset[disabled] #id_cancel:focus {
   }
 }
 /**
+* report : dates.
+* https://moodle.org/plugins/report_editdates
+*/
+#page-report-editdates-index .activityicon {
+  width: 2rem;
+  height: 2rem;
+  margin: 0 0.3rem;
+  vertical-align: middle;
+}
+/**
  * Snap user swatch.
  *
  * @package   theme_snap
