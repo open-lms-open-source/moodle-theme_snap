@@ -120,8 +120,8 @@ if (stripos($PAGE->bodyclasses, 'format-singleactivity') !== false ) {
     // Would be nice if there was something more direct to test.
     if (preg_match('/^mod-.*-view$/', $PAGE->pagetype)) {
         echo "<section id='coursetools' class='clearfix' tabindex='-1'>";
-        echo snap_shared::coursetools_svg_icons();
-        echo snap_shared::appendices();
+        echo theme_snap_shared::coursetools_svg_icons();
+        echo theme_snap_shared::appendices();
         echo "</section>";
     }
 }

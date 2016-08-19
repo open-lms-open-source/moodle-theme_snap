@@ -26,7 +26,7 @@ defined('MOODLE_INTERNAL') || die();
 
 use theme_snap\local;
 
-class snap_shared extends renderer_base {
+class theme_snap_shared extends renderer_base {
 
     /**
      * Taken from /format/renderer.php

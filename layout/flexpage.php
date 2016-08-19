@@ -28,7 +28,7 @@ defined('MOODLE_INTERNAL') || die();
 require_once($CFG->dirroot.'/course/format/flexpage/locallib.php');
 
 // Require standard javascript libs.
-snap_shared::page_requires_js();
+theme_snap_shared::page_requires_js();
 
 $hasheading = ($PAGE->heading);
 $hasnavbar = (empty($PAGE->layout_options['nonavbar']) && $PAGE->has_navbar());
@@ -237,7 +237,7 @@ echo $OUTPUT->doctype() ?>
 <?php
 // Output flex page front page warning if necessary.
 if ($PAGE->pagetype == 'site-index') {
-    echo snap_shared::flexpage_frontpage_warning(true);
+    echo theme_snap_shared::flexpage_frontpage_warning(true);
 } else if (strpos($PAGE->pagetype, 'course-view-') === 0) {
     $output = $PAGE->get_renderer('core', 'course');
     echo $output->course_format_warning();

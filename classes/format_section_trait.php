@@ -477,8 +477,8 @@ trait format_section_trait {
         $output = html_writer::end_tag('ul');
         $output .= $this->change_num_sections($COURSE);
         $output .= "<section id='coursetools' class='clearfix'>";
-        $output .= snap_shared::coursetools_svg_icons();
-        $output .= snap_shared::appendices();
+        $output .= theme_snap_shared::coursetools_svg_icons();
+        $output .= theme_snap_shared::appendices();
         $output .= "</section>";
         return $output;
     }

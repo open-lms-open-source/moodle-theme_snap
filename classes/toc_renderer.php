@@ -25,7 +25,7 @@
 defined('MOODLE_INTERNAL') || die();
 require_once('general_section_trait.php');
 
-class toc_renderer extends core_renderer {
+class theme_snap_toc_renderer extends core_renderer {
 
     use general_section_trait;
 
@@ -61,7 +61,7 @@ class toc_renderer extends core_renderer {
         if (!$completioninfo->is_enabled()) {
             return ''; // Completion tracking not enabled.
         }
-        $sac = snap_shared::section_activity_summary($section, $course, null);
+        $sac = theme_snap_shared::section_activity_summary($section, $course, null);
         if (!empty($sac->progress)) {
             if ($perc) {
                 $percentage = $sac->progress->percentage != null ? round($sac->progress->percentage, 0).'%' : '';

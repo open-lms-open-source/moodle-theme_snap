@@ -23,7 +23,6 @@
  */
 
 defined('MOODLE_INTERNAL') || die();
-require_once('toc_renderer.php');
 require_once($CFG->libdir.'/coursecatlib.php');
 
 use theme_snap\local;
@@ -35,7 +34,7 @@ use theme_snap\renderables\course_card;
 require_once($CFG->dirroot.'/theme/snap/classes/renderables/login_alternative_methods.php');
 use theme_snap\renderables\login_alternative_methods;
 
-class theme_snap_core_renderer extends toc_renderer {
+class theme_snap_core_renderer extends theme_snap_toc_renderer {
 
     public function course_footer() {
         global $DB, $COURSE, $CFG, $PAGE;
