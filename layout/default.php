@@ -38,8 +38,8 @@ use theme_snap\local;
 <main id="moodle-page" class="clearfix">
 <div id="page-header" class="clearfix
 <?php
-// Check we are in a course, and the course is using a cover image.
-if ($PAGE->pagetype != 'site-index' && !empty($coverimagecss)) : ?>
+// Check we are in a course (not the site level course), and the course is using a cover image.
+if ($COURSE->id != SITEID && !empty($coverimagecss)): ?>
  mast-image
 <?php endif;?>">
 <div class="breadcrumb-nav" aria-label="breadcrumb"><?php echo $OUTPUT->navbar(); ?></div>
