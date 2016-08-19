@@ -133,22 +133,22 @@ module.exports = function(grunt) {
         },
         jshint: {
             options: {
-              jshintrc: true,
+                jshintrc: true,
             },
-            files: ["javascript/*",
-                "!javascript/bootstrap.js",
-                "!javascript/headroom.js",
-                "!javascript/modernizer.js",
-                "!javascript/jquery.placeholder.js"
-            ]
+            files: ["javascript/*"]
         },
         watch: {
-            // Watch for any changes to less files and compile.
-            files: ["less/**/*.less"],
-            tasks: ["compile"],
             options: {
-                spawn: false
-            }
+                spawn: false,
+            },
+            less: {
+                files: ["less/**/*.less"],
+                tasks: ["compile"],
+            },
+            amd: {
+                files: ["amd/src/**/*.js"],
+                tasks: ["amd","decache"],
+            },
         }
     });
 
@@ -163,6 +163,7 @@ module.exports = function(grunt) {
 
     // Register tasks.
     grunt.registerTask("default", ["watch"]);
+    grunt.registerTask("css", ["less:moodle", "less:editor", "autoprefixer"]);
     grunt.registerTask("compile", ["less:moodle", "less:editor", "autoprefixer", "decache"]);
     grunt.registerTask("decache", ["exec:decache"]);
 };
