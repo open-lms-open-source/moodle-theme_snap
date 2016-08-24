@@ -361,16 +361,6 @@ define(['jquery', 'theme_snap/bootstrap', 'core/log', 'theme_snap/headroom', 'th
         };
 
         /**
-         * Check hash and see if we should scroll to the module
-         */
-        var checkHashScrollToModule = function() {
-            if (location.hash.indexOf("#module") === 0) {
-                // we know the hash here is the modid
-                scrollToModule(location.hash);
-            }
-        };
-
-        /**
          * Fat controller for when hashstate/popstate alters
          * Contains the logic and controllers for adding classes for current section &/|| search.
          * @return void
@@ -378,37 +368,34 @@ define(['jquery', 'theme_snap/bootstrap', 'core/log', 'theme_snap/headroom', 'th
         var showSection = function() {
             // primary use case
             if (onCoursePage()) {
-                // check we are not in folder view
-                if (!$('.format-folderview').length) {
-                    // reset visible section & blocks
-                    $('.course-content .main, #moodle-blocks,#coursetools, #snap-add-new-section').removeClass('state-visible');
-                    // if the hash is just section, can we skip all this?
+                // reset visible section & blocks
+                $('.course-content .main, #moodle-blocks,#coursetools, #snap-add-new-section').removeClass('state-visible');
+                // if the hash is just section, can we skip all this?
 
-                    // we know the params at 0 is a section id
-                    // params will be in the format
-                    // #section-1&module-7255
-                    var urlParams = location.hash.split("&"),
-                        section = urlParams[0],
-                        mod = urlParams[1] || null;
-                    // Course tools special section.
+                // we know the params at 0 is a section id
+                // params will be in the format
+                // #section-1&module-7255
+                var urlParams = location.hash.split("&"),
+                    section = urlParams[0],
+                    mod = urlParams[1] || null;
+                // Course tools special section.
 
-                    if (section == '#coursetools') {
-                        $('#moodle-blocks').addClass('state-visible');
-                    }
-
-                    // we know that if we have a search modid will be param 1
-                    if (mod !== null) {
-                        $(section).addClass('state-visible');
-                        scrollToModule(mod);
-                    } else {
-                        $(section).addClass('state-visible').focus();
-                        // faux link click behaviour - scroll to page top
-                        window.scrollTo(0, 0);
-                    }
-
-                    // initial investigation seems to indicate this is not needed
-                    // event.preventDefault();
+                if (section == '#coursetools') {
+                    $('#moodle-blocks').addClass('state-visible');
                 }
+
+                // we know that if we have a search modid will be param 1
+                if (mod !== null) {
+                    $(section).addClass('state-visible');
+                    scrollToModule(mod);
+                } else {
+                    $(section).addClass('state-visible').focus();
+                    // faux link click behaviour - scroll to page top
+                    window.scrollTo(0, 0);
+                }
+
+                // initial investigation seems to indicate this is not needed
+                // event.preventDefault();
 
                 // default niceties to perform
                 var visibleChapters = $(
@@ -552,9 +539,9 @@ define(['jquery', 'theme_snap/bootstrap', 'core/log', 'theme_snap/headroom', 'th
          */
         var addListeners = function() {
             var selectors = [
-                'body:not(.editing):not(.format-folderview) .chapters a',
-                'body:not(.format-folderview) .section_footer a',
-                'body:not(.format-folderview) #toc-search-results a'
+                '.chapters a',
+                '.section_footer a',
+                ' #toc-search-results a'
             ];
 
             $(document).on('click', selectors.join(', '), function(e) {
@@ -582,14 +569,8 @@ define(['jquery', 'theme_snap/bootstrap', 'core/log', 'theme_snap/headroom', 'th
                     else {
                         $('#page, #moodle-footer, #js-personal-menu-trigger, #logo, .skiplinks').css('display', '');
                         if (onCoursePage()) {
-                            // In folder view we sometimes get here - how?
                             log.info('show section', e.target);
-                            if ($('.format-folderview').length) {
-                                checkHashScrollToModule();
-                            }
-                            else {
-                                showSection();
-                            }
+                            showSection();
                         }
                     }
                 }
@@ -877,11 +858,6 @@ define(['jquery', 'theme_snap/bootstrap', 'core/log', 'theme_snap/headroom', 'th
                             $('#id_name').removeAttr('required');
                             $('#mform1').submit();
                         });
-                    }
-
-                    if ($('.format-folderview').length) {
-                        // Check if we are searching for a mod.
-                        checkHashScrollToModule();
                     }
 
                     // Book mod print button.
