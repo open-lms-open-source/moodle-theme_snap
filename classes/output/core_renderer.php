@@ -338,7 +338,7 @@ class core_renderer extends toc_renderer {
 
         try {
             $badgerend = $PAGE->get_renderer('message_badge');
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $badgerend = null;
         }
 
@@ -666,8 +666,8 @@ class core_renderer extends toc_renderer {
 
     /**
      * @param course_card $card
-     * @return str
-     * @throws moodle_exception
+     * @return string
+     * @throws \moodle_exception
      */
     public function render_course_card(course_card $card) {
         return $this->render_from_template('theme_snap/course_cards', $card);
@@ -675,7 +675,7 @@ class core_renderer extends toc_renderer {
 
     /**
      * @param login_alternative_methods $methods
-     * @return str
+     * @return string
      */
     public function render_login_alternative_methods(login_alternative_methods $methods) {
         if (empty($methods->potentialidps)) {
@@ -952,8 +952,8 @@ class core_renderer extends toc_renderer {
     /**
      * Cover image selector.
      * @return bool|null|string
-     * @throws coding_exception
-     * @throws moodle_exception
+     * @throws \coding_exception
+     * @throws \moodle_exception
      */
     public function cover_image_selector() {
         global $PAGE;
@@ -1280,9 +1280,9 @@ HTML;
      */
     public function confirm($message, $continue, $cancel) {
         if (is_string($continue)) {
-            $continue = new single_button(new moodle_url($continue), get_string('continue'), 'post');
+            $continue = new \single_button(new moodle_url($continue), get_string('continue'), 'post');
         } else if ($continue instanceof moodle_url) {
-            $continue = new single_button($continue, get_string('continue'), 'post');
+            $continue = new \single_button($continue, get_string('continue'), 'post');
         } else if (!$continue instanceof \single_button) {
             throw new \coding_exception(
                 'The continue param to $OUTPUT->confirm() must be either a URL (string/moodle_url) or a single_button instance.'
@@ -1290,9 +1290,9 @@ HTML;
         }
 
         if (is_string($cancel)) {
-            $cancel = new single_button(new moodle_url($cancel), get_string('cancel'), 'get');
+            $cancel = new \single_button(new moodle_url($cancel), get_string('cancel'), 'get');
         } else if ($cancel instanceof moodle_url) {
-            $cancel = new single_button($cancel, get_string('cancel'), 'get');
+            $cancel = new \single_button($cancel, get_string('cancel'), 'get');
         } else if (!$cancel instanceof \single_button) {
             throw new \coding_exception(
                 'The cancel param to $OUTPUT->confirm() must be either a URL (string/moodle_url) or a single_button instance.'

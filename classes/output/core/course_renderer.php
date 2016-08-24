@@ -46,7 +46,7 @@ class course_renderer extends \core_course_renderer {
      *
      * @author: SL / GT
      * @param stdClass $course
-     * @param completion_info $completioninfo
+     * @param \completion_info $completioninfo
      * @param cm_info $mod
      * @param int|null $sectionreturn
      * @param array $displayoptions
@@ -168,9 +168,9 @@ class course_renderer extends \core_course_renderer {
      * {@link course_get_cm_edit_actions()}
      * {@link core_course_renderer::course_section_cm_edit_actions()}
      *
-     * @param stdClass $course
-     * @param completion_info $completioninfo
-     * @param cm_info $mod
+     * @param \stdClass $course
+     * @param \completion_info $completioninfo
+     * @param \cm_info $mod
      * @param int|null $sectionreturn
      * @param array $displayoptions
      * @return string
@@ -901,7 +901,7 @@ class course_renderer extends \core_course_renderer {
      * Generates a notification if course format is not topics or weeks the user is editing and is a teacher/mananger.
      *
      * @return string
-     * @throws coding_exception
+     * @throws \coding_exception
      */
     public function course_format_warning() {
         global $COURSE, $PAGE, $OUTPUT;

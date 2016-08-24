@@ -49,8 +49,8 @@ class toc_renderer extends \core_renderer {
 
     /**
      * toc progress percentage
-     * @param stdClass $section
-     * @param stdClass $course
+     * @param \stdClass $section
+     * @param \stdClass $course
      * @param boolean $perc - display as a percentage if true
      * @return string
      *
