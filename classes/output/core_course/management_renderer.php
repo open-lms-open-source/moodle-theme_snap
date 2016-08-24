@@ -23,11 +23,13 @@
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+namespace theme_snap\output\core_course;
+
 defined('MOODLE_INTERNAL') || die();
 
-require_once($CFG->dirroot . "/course/classes/management_renderer.php");
+use html_writer;
 
-class theme_snap_core_course_management_renderer extends core_course_management_renderer {
+class management_renderer extends \core_course_management_renderer {
 
     public function grid_start($id = null, $class = null) {
         $gridclass = 'row';

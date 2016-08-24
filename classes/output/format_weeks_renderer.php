@@ -22,11 +22,11 @@
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-defined('MOODLE_INTERNAL') || die();
-require_once($CFG->dirroot.'/course/format/weeks/renderer.php');
-require_once('format_section_trait.php');
+namespace theme_snap\output;
 
-class theme_snap_format_weeks_renderer extends format_weeks_renderer {
+defined('MOODLE_INTERNAL') || die();
+
+class format_weeks_renderer extends \format_weeks_renderer {
 
     use format_section_trait;
 

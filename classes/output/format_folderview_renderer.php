@@ -21,15 +21,21 @@
  * @copyright Copyright (c) 2015 Moodlerooms Inc. (http://www.moodlerooms.com)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
+
+namespace theme_snap\output;
+
+use html_writer;
+use theme_snap\output\shared;
+
 require_once($CFG->dirroot.'/course/format/folderview/renderer.php');
 
-class theme_snap_format_folderview_renderer extends format_folderview_renderer {
+class format_folderview_renderer extends \format_folderview_renderer {
 
     protected function end_section_list() {
         $output = html_writer::end_tag('ul');
         $output .= "<section id='coursetools' class='clearfix' tabindex='-1'>";
-        $output .= theme_snap_shared::coursetools_svg_icons();
-        $output .= theme_snap_shared::appendices();
+        $output .= shared::coursetools_svg_icons();
+        $output .= shared::appendices();
         $output .= "</section>";
         return $output;
     }

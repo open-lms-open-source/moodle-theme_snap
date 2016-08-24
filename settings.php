@@ -27,7 +27,7 @@ defined('MOODLE_INTERNAL') || die;
 if ($ADMIN->fulltree) {
 
     // Output flex page front page warning if necessary.
-    $fpwarning = theme_snap_shared::flexpage_frontpage_warning();
+    $fpwarning = \theme_snap\output\shared::flexpage_frontpage_warning();
     if (!empty($fpwarning)) {
         $setting = new admin_setting_heading('flexpage_warning', '', $fpwarning);
         $settings->add($setting);

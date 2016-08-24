@@ -24,9 +24,14 @@
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+namespace theme_snap\output;
+
 defined('MOODLE_INTERNAL') || die();
 
-require_once('general_section_trait.php');
+use context_course;
+use html_writer;
+use moodle_url;
+use stdClass;
 
 trait format_section_trait {
 
@@ -477,8 +482,8 @@ trait format_section_trait {
         $output = html_writer::end_tag('ul');
         $output .= $this->change_num_sections($COURSE);
         $output .= "<section id='coursetools' class='clearfix'>";
-        $output .= theme_snap_shared::coursetools_svg_icons();
-        $output .= theme_snap_shared::appendices();
+        $output .= shared::coursetools_svg_icons();
+        $output .= shared::appendices();
         $output .= "</section>";
         return $output;
     }

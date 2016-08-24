@@ -23,11 +23,11 @@
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+namespace theme_snap\output\core;
+
 defined('MOODLE_INTERNAL') || die();
 
-require_once($CFG->dirroot . "/files/renderer.php");
-
-class theme_snap_core_files_renderer extends core_files_renderer {
+class files_renderer extends \core_files_renderer {
 
     /**
      * Returns html for displaying one file manager
