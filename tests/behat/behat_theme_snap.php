@@ -474,6 +474,82 @@ class behat_theme_snap extends behat_base {
     }
 
     /**
+     * Apply asset completion restriction to section when edit form is shown.
+     * @param string $assettitle
+     * @Given /^I apply asset completion restriction "(?P<asset_string>(?:[^"]|\\")*)" to section$/
+     */
+    public function apply_section_completion_restriction($assettitle) {
+        $this->apply_completion_restriction($assettitle, 'Save changes');
+    }
+    
+    /**
+     * Apply asset completion restriction when edit form is shown.
+     * @param string $assettitle
+     * @param string $savestr
+     */
+    protected function apply_completion_restriction($assettitle, $savestr) {
+        /** @var behat_general $helper */
+        $helper = behat_context_helper::get('behat_general');
+        /** @var behat_forms $formhelper */
+        $formhelper = behat_context_helper::get('behat_forms');
+        $formhelper->i_expand_all_fieldsets();
+        $helper->i_click_on('Add restriction...', 'button');
+        $helper->should_be_visible('Add restriction...', 'dialogue');
+        $helper->i_click_on_in_the('Activity completion', 'button', 'Add restriction...', 'dialogue');
+        $formhelper->i_set_the_field_with_xpath_to('//select[@name=\'cm\']', $assettitle);
+        $formhelper->press_button($savestr);
+        $helper->wait_until_the_page_is_ready();
+    }
+
+    /**
+     * Restrict a course asset by date.
+     * @param string $asset1
+     * @param string $asset2
+     * @Given /^I restrict course asset "(?P<asset1_string>(?:[^"]|\\")*)" by completion of "(?P<asset2_string>(?:[^"]|\\")*)"$/
+     */
+    public function i_restrict_asset_by_completion($asset1, $asset2) {
+        /** @var behat_general $helper */
+        $helper = behat_context_helper::get('behat_general');
+        $helper->i_click_on('img[alt=\'Edit "' . $asset1 . '"\']', 'css_element');
+        $this->apply_completion_restriction($asset2, 'Save and return to course');
+    }
+
+    /**
+     * @param string $str
+     * @throws ExpectationException
+     * @Given /^I should see availability info "(?P<str>(?:[^"]|\\")*)"$/
+     */
+    public function i_see_availabilityinfo($str) {
+        $nodes = $this->find_all('css', '.availabilityinfo');
+        foreach ($nodes as $node) {
+            /** @var NodeElement $node */
+            if ($node->getText() === $str) {
+                return;
+            }
+        }
+
+        $session = $this->getSession();
+        throw new ExpectationException('Failed to find availability notice of "'.$str.'"', $session);
+    }
+
+
+    /**
+     * @param string $str
+     * @throws ExpectationException
+     * @Given /^I should not see availability info "(?P<str>(?:[^"]|\\")*)"$/
+     */
+    public function i_dont_see_availabilityinfo($str) {
+        $nodes = $this->find_all('css', '.availabilityinfo');
+        foreach ($nodes as $node) {
+            /** @var NodeElement $node */
+            if ($node->getText() === $str) {
+                $session = $this->getSession();
+                throw new ExpectationException('Availability notice found in element '.$node->getXpath().' of "'.$str.'"', $session);
+            }
+        }
+    }
+
+    /**
      * Check conditional date message in given element.
      * @param string $date
      * @param string $element

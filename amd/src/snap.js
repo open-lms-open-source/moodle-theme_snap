@@ -430,9 +430,14 @@ define(['jquery', 'theme_snap/bootstrap', 'core/log', 'theme_snap/headroom', 'th
             $('body').addClass(extraclasses.join(' '));
         };
 
-        var updateModCompletion = function($pagemod, completionhtml) {
+        /**
+         * Module has been completed.
+         * @param {jQuery} pagemod
+         * @param string completionhtml
+         */
+        var updateModCompletion = function(pagemod, completionhtml) {
             // Update completion tracking icon.
-            $pagemod.find('.autocompletion').replaceWith(completionhtml);
+            pagemod.find('.autocompletion').replaceWith(completionhtml);
         };
 
         /**
@@ -700,17 +705,17 @@ define(['jquery', 'theme_snap/bootstrap', 'core/log', 'theme_snap/headroom', 'th
             // Page mod toggle content.
             var pageToggleSelector = ".modtype_page .instancename,.pagemod-readmore,.pagemod-content .snap-action-icon";
             $(document).on("click", pageToggleSelector, function(e) {
-                var $pagemod = $(this).closest('.modtype_page');
-                scrollToElement($pagemod);
-                var isexpanded = $pagemod.hasClass('state-expanded');
-                $pagemod.toggleClass('state-expanded');
+                var pageMod = $(this).closest('.modtype_page');
+                scrollToElement(pageMod);
+                var isexpanded = pageMod.hasClass('state-expanded');
+                pageMod.toggleClass('state-expanded');
 
-                var readmore = $pagemod.find('.pagemod-readmore');
+                var readmore = pageMod.find('.pagemod-readmore');
 
-                var $pagemodcontent = $pagemod.find('.pagemod-content');
-                if ($pagemodcontent.data('content-loaded') == 1) {
+                var pageModContent = pageMod.find('.pagemod-content');
+                if (pageModContent.data('content-loaded') == 1) {
                     // Content is already available so reveal it immediately.
-                    revealPageMod($pagemod);
+                    revealPageMod(pageMod);
                     var readPageUrl = M.cfg.wwwroot + '/theme/snap/rest.php?action=read_page&contextid=' +
                         readmore.data('pagemodcontext');
                     if (!isexpanded) {
@@ -720,14 +725,15 @@ define(['jquery', 'theme_snap/bootstrap', 'core/log', 'theme_snap/headroom', 'th
                             url: readPageUrl,
                             success: function(data) {
                                 // Update completion html for this page mod instance.
-                                updateModCompletion($pagemod, data.completionhtml);
+                                updateModCompletion(pageMod, data.completionhtml);
+                                $(document).trigger('modulecompleted', pageMod);
                             }
                         });
                     }
                 } else {
                     if (!isexpanded) {
                         // Content is not available so request it.
-                        $pagemod.find('.contentafterlink').prepend(
+                        pageMod.find('.contentafterlink').prepend(
                             '<div class="ajaxstatus alert alert-info">' + M.str.theme_snap.loading + '</div>'
                         );
                         var getPageUrl = M.cfg.wwwroot + '/theme/snap/rest.php?action=get_page&contextid=' +
@@ -737,14 +743,14 @@ define(['jquery', 'theme_snap/bootstrap', 'core/log', 'theme_snap/headroom', 'th
                             async: true,
                             url: getPageUrl,
                             success: function(data) {
-                                $pagemodcontent.prepend(data.html);
-                                $pagemodcontent.data('content-loaded', 1);
-                                $pagemod.find('.contentafterlink .ajaxstatus').remove();
-                                revealPageMod($pagemod, data.completionhtml);
+                                pageModContent.prepend(data.html);
+                                pageModContent.data('content-loaded', 1);
+                                pageMod.find('.contentafterlink .ajaxstatus').remove();
+                                revealPageMod(pageMod, data.completionhtml);
                             }
                         });
                     } else {
-                        revealPageMod($pagemod);
+                        revealPageMod(pageMod);
                     }
                 }
 
@@ -814,10 +820,17 @@ define(['jquery', 'theme_snap/bootstrap', 'core/log', 'theme_snap/headroom', 'th
         return {
             snapInit: function(courseconfig, pageHasCourseContent, siteMaxBytes) {
 
-                // Set up
+                // Set up.
                 M.theme_snap.courseid = courseconfig.id;
                 M.theme_snap.courseconfig = courseconfig;
                 M.cfg.context = courseconfig.contextid;
+
+                // Course related AMD modules (note, site page can technically have course content too).
+                if (pageHasCourseContent) {
+                    require(['theme_snap/course_conditionals-lazy'], function(conditionals) {
+                        conditionals(courseconfig.shortname);
+                    });
+                }
 
                 // When document has loaded.
                 $(document).ready(function() {

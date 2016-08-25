@@ -290,4 +290,40 @@ class course {
         $course = $this->coursebyshortname($shortname, 'id');
         return new course_card($course->id);
     }
+
+    /**
+     * Get coursecompletion data by course shortname.
+     * @param string $shortname
+     * @param array $previouslyunavailablemods
+     * @return array
+     */
+    public function course_completion($shortname, $previouslyunavailablemods) {
+        global $PAGE;
+        $course = $this->coursebyshortname($shortname, 'id');
+        list ($unavailablesections, $unavailablemods) = local::conditionally_unavailable_elements($course);
+
+        $newlyavailablemods = array_diff($previouslyunavailablemods, $unavailablemods);
+
+        $newlyavailablemodhtml = [];
+        if (!empty($newlyavailablemods)) {
+            $modinfo = get_fast_modinfo($course);
+            /** @var \theme_snap_core_course_renderer $courserenderer */
+            $courserenderer = $PAGE->get_renderer('core', 'course', RENDERER_TARGET_GENERAL);
+            foreach ($newlyavailablemods as $modid) {
+                $completioninfo = new \completion_info($course);
+                $cm = $modinfo->get_cm($modid);
+                $html = $courserenderer->course_section_cm_list_item($course, $completioninfo, $cm, $cm->sectionnum);
+                $newlyavailablemodhtml[$modid] = $html;
+            }
+        }
+
+        $unavailablesections = implode(',', $unavailablesections);
+        $unavailablemods = implode(',', $unavailablemods);
+
+        return [
+            'unavailablesections' => $unavailablesections,
+            'unavailablemods' => $unavailablemods,
+            'newlyavailablemodhtml' => $newlyavailablemodhtml
+        ];
+    }
 }
