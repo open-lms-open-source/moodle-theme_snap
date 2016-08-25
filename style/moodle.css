@@ -21679,10 +21679,9 @@ li.section:focus {
 .course-content > ul li.section,
 #coursetools,
 #snap-add-new-section {
-  visibility: hidden;
-  height: 0;
-  width: 0;
-  overflow: hidden;
+  height: auto;
+  width: auto;
+  display: none;
 }
 .course-content > ul li.section.state-visible,
 #snap-add-new-section.state-visible,
@@ -21691,9 +21690,7 @@ li.section:focus {
 .editing #coursetools,
 .format-singleactivity #coursetools,
 #page-course-view-folderview #coursetools {
-  visibility: visible;
-  height: auto;
-  width: auto;
+  display: block;
   outline: 0;
 }
 /* hide progress label with odd z-indexing */
