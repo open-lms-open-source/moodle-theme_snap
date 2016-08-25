@@ -1268,7 +1268,12 @@ HTML;
                 $classes[] = 'folderview-single-section';
             }
         }
-
+        
+        // Add completion tracking class.
+        if (!empty($COURSE->enablecompletion)) {
+            $classes[] = 'completion-tracking';
+        }
+        
         // Add theme-snap class so modules can customise css for snap.
         $classes[] = 'theme-snap';
 

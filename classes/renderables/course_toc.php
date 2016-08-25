@@ -183,7 +183,7 @@ class course_toc implements \renderable, \templatable{
 
             if ($canviewhidden) { // Teachers.
                 if ($conditional) {
-                    $chapter->availabilityclass = 'text-danger';
+                    $chapter->availabilityclass = 'text-warning';
                     $chapter->availabilitystatus = get_string('conditional', 'theme_snap');
                 }
                 if (!$thissection->visible) {
@@ -196,7 +196,7 @@ class course_toc implements \renderable, \templatable{
                     continue;
                 }
                 if ($conditional && $thissection->availableinfo) {
-                    $chapter->availabilityclass = 'text-danger';
+                    $chapter->availabilityclass = 'text-warning';
                     $chapter->availabilitystatus = get_string('conditional', 'theme_snap');
                 }
                 if (!$conditional && !$thissection->visible) {

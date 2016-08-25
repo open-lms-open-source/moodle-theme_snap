@@ -70,13 +70,13 @@ $string['defaultintrosummary'] = 'Welcome to your new course {$a}.
 <br>Start by describing what your course is about using text, images, audio & video.';
 $string['defaulttopictitle'] = 'Untitled Topic';
 $string['debugerrors'] = 'Debug Errors';
-$string['draft'] = 'Draft';
+$string['draft'] = 'Not published to students';
 $string['dropzonelabel'] = 'Drop files to attach, or <span class="btn-link">browse</span>';
 $string['due'] = 'Due';
 $string['edit'] = 'Edit "{$a}"';
 $string['editcoursecontent'] = 'Edit course blocks';
 $string['editcoursesettings'] = 'Edit course settings';
-$string['editcoursetopic'] = 'Edit Topic';
+$string['editcoursetopic'] = 'Edit section';
 $string['editcustomfooter'] = 'Edit footer';
 $string['editcustommenu'] = 'Edit custom menu';
 $string['error:coverimageexceedsmaxbytes'] = 'Cover image exceeds the site level maximum allowed file size ({$a})';

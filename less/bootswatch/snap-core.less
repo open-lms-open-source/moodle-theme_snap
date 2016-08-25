@@ -1091,13 +1091,17 @@ header#page-header
         height: auto;
     }
 
-    .completionstatus {
+    .completionstatus,
+    .text {
         font-size: small;
-        color: #999;
+    }
+    
+    .completionstatus {
+        color: @gray-light;
     }
 
-    .completionstatus + .published-status:before,
-    .published-status + .published-status:before {
+    .completionstatus + .text:before,
+    .text + .text:before {
         content: " · ";
     }
 
