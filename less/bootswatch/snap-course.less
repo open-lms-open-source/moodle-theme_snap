@@ -373,10 +373,9 @@ li.section:focus {
 .course-content > ul li.section,
 #coursetools,
 #snap-add-new-section {
-    visibility: hidden;
-    height: 0;
-    width: 0;
-    overflow: hidden;
+    height: auto;
+    width: auto;
+    display:none;
 }
 
 
@@ -387,9 +386,7 @@ li.section:focus {
 .editing #coursetools,
 .format-singleactivity #coursetools,
 #page-course-view-folderview #coursetools {
-    visibility: visible;
-    height: auto;
-    width: auto;
+    display: block;
     outline: 0;
 }
 
