@@ -39,6 +39,14 @@ $functions = [
         'type'          => 'write',
         'ajax'          => true,
         'loginrequired' => true
+    ],
+    'theme_snap_course_completion' => [
+        'classname'     => 'theme_snap\\webservice\\ws_course_completion',
+        'methodname'    => 'service',
+        'description'   => 'Cover image modifier',
+        'type'          => 'write',
+        'ajax'          => true,
+        'loginrequired' => true
     ]
 ];
 

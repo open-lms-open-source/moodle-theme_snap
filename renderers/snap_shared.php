@@ -342,11 +342,40 @@ class snap_shared extends renderer_base {
         $courseviewpage = local::current_url_path() === '/course/view.php';
         $pagehascoursecontent = ($PAGE->pagetype === 'site-index' || $courseviewpage);
 
+        $cancomplete = isloggedin() && !isguestuser();
+        $unavailablesections = [];
+        $unavailablemods = [];
+        if ($cancomplete) {
+            $completioninfo = new completion_info($COURSE);
+            if ($completioninfo->is_enabled()) {
+                $modinfo = get_fast_modinfo($COURSE);
+                $sections= $modinfo->get_section_info_all();
+                foreach ($sections as $number => $section) {
+                    $ci = new \core_availability\info_section($section);
+                    $information = '';
+                    if (!$ci->is_available($information, true)) {
+                        $unavailablesections[] = $number;
+                    }
+                }
+                foreach ($modinfo as $mod) {
+                    $ci = new \core_availability\info_module($mod);
+                    if (!$ci->is_available($information, true)) {
+                        $unavailablemods[] = $mod->id;
+                    }
+                }
+
+            }
+        }
+
+        list ($unavailablesections, $unavailablemods) = local::conditionally_unavailable_elements($COURSE);
+
         $coursevars = (object) [
             'id' => $COURSE->id,
             'shortname' => $COURSE->shortname,
             'contextid' => $PAGE->context->id,
-            'ajaxurl' => '/course/rest.php'
+            'ajaxurl' => '/course/rest.php',
+            'unavailablesections' => $unavailablesections,
+            'unavailablemods' => $unavailablemods
         ];
 
         $initvars = [$coursevars, $pagehascoursecontent, get_max_upload_file_size($CFG->maxbytes)];

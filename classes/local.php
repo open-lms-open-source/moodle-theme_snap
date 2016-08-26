@@ -265,7 +265,7 @@ class local {
             return null; // Can't get completion progress for users who aren't logged in.
         }
 
-        // Security check - are they enrolled on course.
+        // Security check - are they enrolled on course?
         $context = \context_course::instance($course->id);
         if (!is_enrolled($context, null, '', true)) {
             return null;
@@ -303,6 +303,40 @@ class local {
         $compobj = (object) ['complete' => $compcount, 'total' => $trackcount, 'progress' => $progresspercent];
 
         return $compobj;
+    }
+
+    /**
+     * Return conditionally unavailable elements.
+     * @param $course
+     * @return array
+     * @throws \coding_exception
+     */
+    public static function conditionally_unavailable_elements($course) {
+        $cancomplete = isloggedin() && !isguestuser();
+        $unavailablesections = [];
+        $unavailablemods = [];
+        if ($cancomplete) {
+            $completioninfo = new \completion_info($course);
+            if ($completioninfo->is_enabled()) {
+                $modinfo = get_fast_modinfo($course);
+                $sections= $modinfo->get_section_info_all();
+                foreach ($sections as $number => $section) {
+                    $ci = new \core_availability\info_section($section);
+                    $information = '';
+                    if (!$ci->is_available($information, true)) {
+                        $unavailablesections[] = $number;
+                    }
+                }
+                foreach ($modinfo->get_cms() as $mod) {
+                    $ci = new \core_availability\info_module($mod);
+                    $information = '';
+                    if (!$ci->is_available($information, true)) {
+                        $unavailablemods[] = $mod->id;
+                    }
+                }
+            }
+        }
+        return [$unavailablesections, $unavailablemods];
     }
 
     /**

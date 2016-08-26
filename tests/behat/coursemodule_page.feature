@@ -20,7 +20,7 @@
 # @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
 
 
-@theme @theme_snap @_bug_phantomjs
+@theme @theme_snap
 Feature: Open page module inline
   As any user
   I need to view page modules inline and have auto completion tracking updated.
@@ -28,16 +28,18 @@ Feature: Open page module inline
   Background:
     Given the following config values are set as admin:
       | enablecompletion | 1 |
+      | enableavailability | 1 |
       | theme | snap |
     And the following "courses" exist:
-      | fullname | shortname | category | groupmode | enablecompletion |
-      | Course 1 | C1 | 0 | 1 | 1 |
+      | fullname | shortname | format | category | groupmode | enablecompletion |
+      | Course 1 | C1        | topics | 0        | 1         | 1                |
     And the following "users" exist:
       | username | firstname | lastname | email |
       | student1 | Student | 1 | student1@example.com |
     And the following "course enrolments" exist:
-      | user | course | role |
-      | student1 | C1 | student |
+      | user     | course | role    |
+      | admin    | C1     | teacher |
+      | student1 | C1     | student |
 
   @javascript
   Scenario: Page mod is created and opened inline.
@@ -55,18 +57,39 @@ Feature: Open page module inline
 
 
   @javascript
-  Scenario: Page mod is created with auto completion tracking enabled and opened inline.
+  Scenario: Page mod completion updates on read more and affects availability for other modules and sections.
     Given the following "activities" exist:
-      | activity | course | idnumber | name       | intro        | content       | completion | completionview |
-      | page     | C1     | page2    | Test page2 | Test page 2  | page content2 | 2          | 1              |
+      | activity | course | idnumber | name            | intro                 | content                 | completion | completionview |
+      | page     | C1     | pagec    | Page completion | Page completion intro | Page completion content | 2          | 1              |
+      | page     | C1     | pager    | Page restricted | Page restricted intro | Page restricted content | 0          | 0              |
+    And I log in as "admin" (theme_snap)
+    And I open the personal menu
+    And I follow "Course 1"
+    # Restrict the second page module to only be accessible after the first page module is marked complete.
+    And I restrict course asset "Page restricted" by completion of "Page completion"
+    # Restrict section one of the course to only be accessible after the first page module is marked complete.
+    And I follow "Topic 1"
+    And I click on "#section-1 .edit-summary" "css_element"
+    And I set the field "name" to "Topic 1"
+    And I apply asset completion restriction "Page completion" to section
+    And I log out (theme_snap)
     And I log in as "student1" (theme_snap)
     And I open the personal menu
     And I follow "Course 1"
     And I should not see "page content2"
-    And "span.autocompletion img[title='Not completed: Test page2']" "css_element" should exist
+    And "span.autocompletion img[title='Not completed: Page completion']" "css_element" should exist
+    And I should see availability info "Not available unless: The activity Page completion is marked complete"
+    And I follow "Topic 1"
+    # Make sure topic 1 show section availability info.
+    And I should see availability info "Not available unless: The activity Page completion is marked complete"
+    And I follow "Introduction"
     And I follow "Read more&nbsp;»"
     And I wait until ".pagemod-content[data-content-loaded=\"1\"]" "css_element" is visible
-    # The above step basically waits for the page content to load up.
-    And I should see "page content2"
-    And "span.autocompletion img[title='Not completed: Test page2']" "css_element" should not exist
-    And "span.autocompletion img[title='Completed: Test page2']" "css_element" should exist
+    # The above step basically waits for the page module content to load up.
+    And I should see "Page completion content"
+    And I should not see availability info "Not available unless: The activity Page completion is marked complete"
+    And "span.autocompletion img[title='Not completed: Page completion']" "css_element" should not exist
+    And "span.autocompletion img[title='Completed: Page completion']" "css_element" should exist
+    And I follow "Topic 1"
+    # Make sure topic 1 does not show section availability info.
+    And I should not see availability info "Not available unless: The activity Page completion is marked complete"

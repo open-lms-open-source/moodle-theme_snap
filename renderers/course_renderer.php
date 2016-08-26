@@ -246,7 +246,7 @@ class theme_snap_core_course_renderer extends core_course_renderer {
         $assetmeta .= $assetcompletionmeta.$assetrestrictions;
 
         // Build output.
-        $postcontent = "<div class='snap-asset-meta'>".$mod->afterlink.$assetmeta."</div>";
+        $postcontent = '<div class="snap-asset-meta" data-cmid="'.$mod->id.'">'.$mod->afterlink.$assetmeta.'</div>';
         $output .= $assetlink.$contentpart.$postcontent;
 
         // Bail at this point if we aren't using a supported format. (Folder view is only partially supported).
