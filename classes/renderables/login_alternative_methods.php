@@ -29,13 +29,13 @@ class login_alternative_methods implements \renderable {
 
     public $potentialidps = [];
 
-    function __construct() {
+    public function __construct() {
         global $CFG, $SESSION, $OUTPUT;
 
         // Get all alternative login methods and add to potentialipds array.
         $authsequence = get_enabled_auth_plugins(true);
         $potentialidps = [];
-        foreach($authsequence as $authname) {
+        foreach ($authsequence as $authname) {
             if (isset($SESSION->snapwantsurl)) {
                 $urltogo = $SESSION->snapwantsurl;
             } else {

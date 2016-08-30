@@ -24,7 +24,7 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-include(__DIR__.'/header.php');
+require(__DIR__.'/header.php');
 
 $coursemainpage = strpos($PAGE->pagetype, 'course-view-') === 0;
 ?>
@@ -37,7 +37,9 @@ $coursemainpage = strpos($PAGE->pagetype, 'course-view-') === 0;
 -->
 <main id="moodle-page" class="clearfix">
 <div id="page-header" class="clearfix
-<?php if (!empty($courseimagecss)) : ?>
+<?php
+// Check if the course is using a cover image.
+if (!empty($coverimagecss)) : ?>
  mast-image
 <?php endif;?>">
 <div class="breadcrumb-nav" aria-label="breadcrumb"><?php echo $OUTPUT->navbar(); ?></div>
@@ -71,13 +73,14 @@ echo $OUTPUT->course_content_footer();
 
 <?php
 
-include(__DIR__.'/moodle-blocks.php');
+require(__DIR__.'/moodle-blocks.php');
 
 if ($coursemainpage) {
     $coursefooter = $OUTPUT->course_footer();
-    if (!empty($coursefooter)) : ?>
+    if (!empty($coursefooter)) { ?>
     <footer role=contentinfo id=snap-course-footer class=row><?php echo $coursefooter ?></footer>
-    <?php endif;
+    <?php
+    }
 } ?>
 </main>
 
@@ -85,4 +88,4 @@ if ($coursemainpage) {
 </div>
 <!-- close moodle js hooks -->
 
-<?php include(__DIR__.'/footer.php'); ?>
+<?php require(__DIR__.'/footer.php');

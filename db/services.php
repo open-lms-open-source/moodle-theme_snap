@@ -13,7 +13,7 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
- 
+
 /**
  * Services
  * @author    gthomas2
@@ -29,6 +29,14 @@ $functions = [
         'methodname'    => 'service',
         'description'   => 'Course card renderable data',
         'type'          => 'read',
+        'ajax'          => true,
+        'loginrequired' => true
+    ],
+    'theme_snap_cover_image' => [
+        'classname'     => 'theme_snap\\webservice\\ws_cover_image',
+        'methodname'    => 'service',
+        'description'   => 'Cover image modifier',
+        'type'          => 'write',
         'ajax'          => true,
         'loginrequired' => true
     ]

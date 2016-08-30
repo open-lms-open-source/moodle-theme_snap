@@ -164,7 +164,6 @@ legend,
     font-family: @font-family-sans-serif;
 }
 
-.pagemod-readmore,
 .snap-action-icon,
 #coursetools-list a {
     font-family: @font-family-base;
@@ -251,6 +250,7 @@ button.atto_equation_submit,
 .header-button-group .btn,
 .btn.btn-primary,
 .btn.btn-default,
+.btn.btn-solid,
 .button-group > button,
 input.form-submit,
 input[type="button"],
@@ -531,4 +531,16 @@ img.iconhelp:hover {
 
 .que {
     border-bottom: 1px solid @brand-primary;
+}
+
+#snap-changecoverimageconfirmation.disabled .ok {
+    &,
+    &:visited,
+    &:hover,
+    &:active,
+    &:focus {
+        color: #fff;
+        border-color: #fff;
+        background-color: @brand-primary;
+    }
 }

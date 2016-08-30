@@ -29,16 +29,18 @@ Feature: When the moodle theme is set to Snap, the admin block will only be show
       | defaulthomepage | 1 |
     And the following "courses" exist:
       | fullname | shortname | category | format |
-      | Course 1 | C1 | 0 | topics |
+      | Course 1 | C1        | 0        | topics |
     And the following "users" exist:
-      | username | firstname | lastname | email |
-      | teacher1 | Teacher | 1 | teacher1@example.com |
-      | student1 | Student | 1 | student1@example.com |
+      | username | firstname | lastname | email                |
+      | teacher1 | Teacher   | 1        | teacher1@example.com |
+      | teacher2 | Teacher   | 2        | teacher2@example.com |
+      | student1 | Student   | 1        | student1@example.com |
     And the following "course enrolments" exist:
-      | user | course | role |
-      | admin | C1 | editingteacher |
-      | teacher1 | C1 | editingteacher |
-      | student1 | C1 | student |
+      | user     | course | role           |
+      | admin    | C1     | editingteacher |
+      | teacher1 | C1     | editingteacher |
+      | teacher2 | C1     | teacher        |
+      | student1 | C1     | student        |
 
   @javascript
   Scenario: Student does not see admin block on any page.
@@ -57,8 +59,8 @@ Feature: When the moodle theme is set to Snap, the admin block will only be show
    Then "#admin-menu-trigger" "css_element" should not exist
 
   @javascript
-  Scenario: Teacher does not see admin block on any page, except course page.
-    Given I log in as "teacher1" (theme_snap)
+  Scenario Outline: Teacher / non-editing teacher does not see admin block on any page, except course page.
+    Given I log in as "<user>" (theme_snap)
     # Check site page.
     And I am on site homepage
     Then "#admin-menu-trigger" "css_element" should not exist
@@ -71,6 +73,11 @@ Feature: When the moodle theme is set to Snap, the admin block will only be show
     And I open the personal menu
     And I follow "View your profile"
     Then "#admin-menu-trigger" "css_element" should not exist
+
+    Examples:
+    | user     |
+    | teacher1 |
+    | teacher2 |
 
   @javascript
   Scenario: Admin sees admin block on all pages, except profile page.

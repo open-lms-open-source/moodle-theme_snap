@@ -16,7 +16,7 @@
 # Tests for html5 file upload direct to course.
 #
 # @package    theme_snap
-# @copyright  2015 Guy Thomas <gthomas@moodlerooms.com>
+# @copyright  Copyright (c) 2016 Moodlerooms Inc. (http://www.moodlerooms.com)
 # @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
 
 
@@ -49,8 +49,8 @@ Feature: When the moodle theme is set to Snap, teachers can upload files as reso
     And I follow "Topic 1"
     Then "#section-1" "css_element" should exist
     And "#snap-drop-file-1" "css_element" should exist
-    And I upload file "test_text_file.txt" to section "1"
-    And I upload file "test_mp3_file.mp3" to section "1"
+    And I upload file "test_text_file.txt" to section 1
+    And I upload file "test_mp3_file.mp3" to section 1
     Then ".snap-resource[data-type='text']" "css_element" should exist
     And ".snap-resource[data-type='mp3']" "css_element" should exist
 

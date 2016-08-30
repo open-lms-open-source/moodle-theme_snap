@@ -175,8 +175,8 @@ class theme_snap_core_course_renderer extends core_course_renderer {
         // 1) The activity is not visible to users
         // and
         // 2) The 'availableinfo' is empty, i.e. the activity was
-        //     hidden in a way that leaves no info, such as using the
-        //     eye icon.
+        // hidden in a way that leaves no info, such as using the
+        // eye icon.
         if (!$mod->uservisible
             && (empty($mod->availableinfo))) {
             return $output;
@@ -246,7 +246,7 @@ class theme_snap_core_course_renderer extends core_course_renderer {
         $postcontent = "<div class='snap-asset-meta'>".$mod->afterlink.$assetmeta."</div>";
         $output .= $assetlink.$contentpart.$postcontent;
 
-        // Bail at this point if we aren't using a supported format. (Folder view is only partially supported)
+        // Bail at this point if we aren't using a supported format. (Folder view is only partially supported).
         $supported = ['folderview', 'topics', 'weeks', 'site'];
         if (!in_array($COURSE->format, $supported)) {
             return parent::course_section_cm($course, $completioninfo, $mod, $sectionreturn, $displayoptions).$assetmeta;
@@ -257,28 +257,28 @@ class theme_snap_core_course_renderer extends core_course_renderer {
         $actionsadvanced = array();
         $coursecontext = context_course::instance($mod->course);
         $modcontext = context_module::instance($mod->id);
-        $baseurl =  new moodle_url('/course/mod.php', array('sesskey' => sesskey()));
+        $baseurl = new moodle_url('/course/mod.php', array('sesskey' => sesskey()));
 
         if (has_capability('moodle/course:update', $modcontext)) {
             $str = get_strings(array('delete', 'move', 'duplicate', 'hide', 'show', 'roles'), 'moodle');
             // TODO - add snap strings here.
 
             // Move, Edit, Delete.
-            if(has_capability('moodle/course:manageactivities', $modcontext)){
-              $movealt = get_string('move', 'theme_snap', $mod->get_formatted_name());
-              $moveicon = "<img title='$movealt' aria-hidden='true' class='svg-icon' src='".$this->output->pix_url('move', 'theme')."' />";
-              $editalt = get_string('edit', 'theme_snap', $mod->get_formatted_name());
-              $editicon = "<img title='$editalt' alt='$editalt' class='svg-icon' src='".$this->output->pix_url('edit', 'theme')."'/>";
-              $actions .= "<input id='snap-move-mod-$mod->id' class='js-snap-asset-move sr-only' type='checkbox'><label class='snap-asset-move' for='snap-move-mod-$mod->id'><span class='sr-only'>$movealt</span>$moveicon</label>";
-              $actions .= "<a class='snap-edit-asset' href='".new moodle_url($baseurl, array('update' => $mod->id))."'>$editicon</a>";
-              $actionsadvanced[] = "<a href='".new moodle_url($baseurl, array('delete' => $mod->id))."'>$str->delete</a>";
+            if (has_capability('moodle/course:manageactivities', $modcontext)) {
+                $movealt = get_string('move', 'theme_snap', $mod->get_formatted_name());
+                $moveicon = "<img title='$movealt' aria-hidden='true' class='svg-icon' src='".$this->output->pix_url('move', 'theme')."' />";
+                $editalt = get_string('edit', 'theme_snap', $mod->get_formatted_name());
+                $editicon = "<img title='$editalt' alt='$editalt' class='svg-icon' src='".$this->output->pix_url('edit', 'theme')."'/>";
+                $actions .= "<input id='snap-move-mod-$mod->id' class='js-snap-asset-move sr-only' type='checkbox'><label class='snap-asset-move' for='snap-move-mod-$mod->id'><span class='sr-only'>$movealt</span>$moveicon</label>";
+                $actions .= "<a class='snap-edit-asset' href='".new moodle_url($baseurl, array('update' => $mod->id))."'>$editicon</a>";
+                $actionsadvanced[] = "<a href='".new moodle_url($baseurl, array('delete' => $mod->id))."'>$str->delete</a>";
             }
 
             // Hide/Show.
-            if (has_capability('moodle/course:activityvisibility', $modcontext)){
-              $actionsadvanced[] = "<a href='".new moodle_url($baseurl, array('hide' => $mod->id))."' class='editing_hide js_snap_hide'>$str->hide</a>";
-              $actionsadvanced[] = "<a href='".new moodle_url($baseurl, array('show' => $mod->id))."' class='editing_show js_snap_show'>$str->show</a>";
-              // ax click to change
+            if (has_capability('moodle/course:activityvisibility', $modcontext)) {
+                $actionsadvanced[] = "<a href='".new moodle_url($baseurl, array('hide' => $mod->id))."' class='editing_hide js_snap_hide'>$str->hide</a>";
+                $actionsadvanced[] = "<a href='".new moodle_url($baseurl, array('show' => $mod->id))."' class='editing_show js_snap_show'>$str->show</a>";
+                // AX click to change.
             }
 
             // Duplicate.
@@ -286,42 +286,41 @@ class theme_snap_core_course_renderer extends core_course_renderer {
             if (has_all_capabilities($dupecaps, $coursecontext) &&
             plugin_supports('mod', $mod->modname, FEATURE_BACKUP_MOODLE2) &&
             plugin_supports('mod', $mod->modname, 'duplicate', true)) {
-              $actionsadvanced[] = "<a href='".new moodle_url($baseurl, array('duplicate' => $mod->id))."' class='js_snap_duplicate'>$str->duplicate</a>";
+                $actionsadvanced[] = "<a href='".new moodle_url($baseurl, array('duplicate' => $mod->id))."' class='js_snap_duplicate'>$str->duplicate</a>";
             }
 
             // Asign roles.
             if (has_capability('moodle/role:assign', $modcontext)) {
-              $actionsadvanced[] = "<a href='".new moodle_url('/admin/roles/assign.php', array('contextid' => $modcontext->id))."'>$str->roles</a>";
+                $actionsadvanced[] = "<a href='".new moodle_url('/admin/roles/assign.php', array('contextid' => $modcontext->id))."'>$str->roles</a>";
             }
 
             // Give local plugins a chance to add icons.
             $localplugins = array();
             foreach (get_plugin_list_with_function('local', 'extend_module_editing_buttons') as $function) {
-              $localplugins = array_merge($localplugins, $function($mod));
+                $localplugins = array_merge($localplugins, $function($mod));
             }
 
             // TODO - pld string is far too long....
             $locallinks = '';
             foreach ($localplugins as $localplugin) {
-              $url = $localplugin->url;
-              $text = $localplugin->text;
-              $class = $localplugin->attributes['class'];
-              $actionsadvanced[] = "<a href='$url' class='$class'>$text</a>";
+                $url = $localplugin->url;
+                $text = $localplugin->text;
+                $class = $localplugin->attributes['class'];
+                $actionsadvanced[] = "<a href='$url' class='$class'>$text</a>";
             }
-
 
         }
 
         $advancedactions = '';
         if (!empty($actionsadvanced)) {
-          $moreicon = "<img title='".get_string('more', 'theme_snap')."' alt='".get_string('more', 'theme_snap')."' class='svg-icon' src='".$this->output->pix_url('more', 'theme')."'/>";
-          $advancedactions = "<div class='dropdown snap-edit-more-dropdown'>
+            $moreicon = "<img title='".get_string('more', 'theme_snap')."' alt='".get_string('more', 'theme_snap')."' class='svg-icon' src='".$this->output->pix_url('more', 'theme')."'/>";
+            $advancedactions = "<div class='dropdown snap-edit-more-dropdown'>
                       <a href='#' class='dropdown-toggle snap-edit-asset-more' data-toggle='dropdown' aria-expanded='false' aria-haspopup='true'>$moreicon</a>
                       <ul class='dropdown-menu'>";
-          foreach ($actionsadvanced as $action) {
-            $advancedactions .= "<li>$action</li>";
-          }
-          $advancedactions .= "</ul></div>";
+            foreach ($actionsadvanced as $action) {
+                $advancedactions .= "<li>$action</li>";
+            }
+            $advancedactions .= "</ul></div>";
         }
 
         // Add actions menu.
@@ -377,8 +376,7 @@ class theme_snap_core_course_renderer extends core_course_renderer {
         if ($mod->url) {
             if ($content) {
                 // If specified, display extra content after link.
-                $output = html_writer::tag('div', $content, array('class' =>
-                trim('contentafterlink ' . $textclasses)));
+                $output = html_writer::tag('div', $content, array('class' => trim('contentafterlink ' . $textclasses)));
             }
         } else {
             // No link, so display only content.
@@ -658,7 +656,7 @@ class theme_snap_core_course_renderer extends core_course_renderer {
         {$thumbnail}
         <div class='summary-text'>
             {$page->summary}
-            <p><a class='pagemod-readmore' title='{$mod->name}' href='{$mod->url}' data-pagemodcontext='{$mod->context->id}'>{$readmore}</a></p>
+            <p><a class='btn btn-default pagemod-readmore' title='{$mod->name}' href='{$mod->url}' data-pagemodcontext='{$mod->context->id}'>{$readmore}</a></p>
         </div>
 
         <div class=pagemod-content tabindex='-1' data-content-loaded={$contentloaded}>

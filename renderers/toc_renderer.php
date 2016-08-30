@@ -23,7 +23,7 @@
  */
 
 defined('MOODLE_INTERNAL') || die();
-include_once('general_section_trait.php');
+require_once('general_section_trait.php');
 
 class toc_renderer extends core_renderer {
 
@@ -99,7 +99,7 @@ class toc_renderer extends core_renderer {
         }
 
         // Only print TOC in topics and weeks format.
-        if($COURSE->format !== 'weeks' AND $COURSE->format !== 'topics') {
+        if ($COURSE->format !== 'weeks' AND $COURSE->format !== 'topics') {
             return;
         }
 

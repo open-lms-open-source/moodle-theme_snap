@@ -81,7 +81,7 @@ class behat_theme_snap extends behat_base {
     public function i_log_in_with_snap_as($username, $andkeepmenuopen = false) {
 
         $session = $this->getSession();
-        
+
         // Go back to front page.
         $session->visit($this->locate_path('/'));
 
@@ -107,7 +107,7 @@ class behat_theme_snap extends behat_base {
                 $general->i_click_on('#fixy-close', 'css_element');
             }
         }
-     }
+    }
 
     /**
      * Logs in the user but doesn't auto close personal menu.
@@ -120,20 +120,33 @@ class behat_theme_snap extends behat_base {
         $this->i_log_in_with_snap_as($username, true);
     }
 
-    /**
-     * @param string $fixturefilename this is a filename relative to the snap fixtures folder.
-     * @param string $input
-     *
-     * @Given /^I upload file "(?P<fixturefilename_string>(?:[^"]|\\")*)" to section "(?P<section>(?:[^"]|\\")*)"$/
-     */
-    public function i_upload_file($fixturefilename, $section = 1) {
+    protected function upload_file($fixturefilename, $selector) {
         global $CFG;
         $fixturefilename = clean_param($fixturefilename, PARAM_FILE);
-        //$filepath = $CFG->themedir.'/snap/tests/fixtures/'.$fixturefilename;
+        // $filepath = $CFG->themedir.'/snap/tests/fixtures/'.$fixturefilename;
         $filepath = $CFG->dirroot.'/theme/snap/tests/fixtures/'.$fixturefilename;
-        $input = '#snap-drop-file-'.$section;
-        $file = $this->find('css', $input);
+        $file = $this->find('css', $selector);
         $file->attachFile($filepath);
+    }
+
+    /**
+     * @param string $fixturefilename this is a filename relative to the snap fixtures folder.
+     * @param int $section
+     *
+     * @Given /^I upload file "(?P<fixturefilename_string>(?:[^"]|\\")*)" to section (?P<section_int>(?:\d+))$/
+     */
+    public function i_upload_file($fixturefilename, $section = 1) {
+        $this->upload_file($fixturefilename, '#snap-drop-file-'.$section);
+    }
+
+    /**
+     * @param string $fixturefilename this is a filename relative to the snap fixtures folder.
+     *
+     * @Given /^I upload cover image "(?P<fixturefilename_string>(?:[^"]|\\")*)"$/
+     */
+    public function i_upload_cover_image($fixturefilename) {
+        $this->upload_file($fixturefilename, '#snap-coverfiles');
+        $this->getSession()->executeScript('jQuery( "#snap-coverfiles" ).trigger( "change" );');
     }
 
     /**
@@ -184,11 +197,11 @@ class behat_theme_snap extends behat_base {
             'I wait until the page is ready',
             'I go to single course section 1',
             '".section-navigation.navigationtitle" "css_element" should not exist',
-            # In the above, .section-navigation.navigationtitle relates to the element on the page which contains the single
-            # section at a time navigation. Visually you would see a link on the left entitled "General" and a link on the right
-            # enitled "Topic 2"
-            # This test ensures you do not see those elements. If you swap to clean theme in a single section mode at a time
-            # course you will see that navigation after clicking on topic 1.
+            // In the above, .section-navigation.navigationtitle relates to the element on the page which contains the single
+            // section at a time navigation. Visually you would see a link on the left entitled "General" and a link on the right
+            // enitled "Topic 2"
+            // This test ensures you do not see those elements. If you swap to clean theme in a single section mode at a time
+            // course you will see that navigation after clicking on topic 1.
         ];
         $givens = array_map(function($given){
             return new Given($given);
@@ -222,7 +235,8 @@ class behat_theme_snap extends behat_base {
             'I set the field "Title" to "New section title"',
             'I click on "Create section" "button"'
         ];
-        $givens = array_map(function($a) {return new Given($a);}, $givens);
+        $givens = array_map(function($a) {return new Given($a);
+        }, $givens);
         return $givens;
     }
 
@@ -499,7 +513,6 @@ class behat_theme_snap extends behat_base {
         return $this->i_should_not_see_available_from_in_element($date, $elementselector, 'css_element');
     }
 
-
     /**
      * @param string $text
      * @param int $tocitem
@@ -647,7 +660,7 @@ class behat_theme_snap extends behat_base {
         $general = behat_context_helper::get('behat_general');
         $general->i_click_on('.courseinfo[data-shortname="'.$shortname.'"] button.favoritetoggle', 'css_element');
     }
-    
+
     /**
      * Follow the link which is located inside the personal menu.
      *
@@ -670,7 +683,7 @@ class behat_theme_snap extends behat_base {
     public function i_send_message_to_user($messagecontent, $userfullname) {
         /** @var behat_forms $form */
         $form = behat_context_helper::get('behat_forms');
-        
+
         /* @var behat_general $general */
         $general = behat_context_helper::get('behat_general');
 
@@ -679,7 +692,7 @@ class behat_theme_snap extends behat_base {
         $general->i_click_on('input[name="combinedsubmit"]', 'css_element');
         $general->click_link( $this->escape(get_string('sendmessageto', 'message', $userfullname)));
         $form->i_set_the_field_to('id_message', $this->escape($messagecontent));
-        $general->i_click_on('#id_submitbutton', 'css_element');        
+        $general->i_click_on('#id_submitbutton', 'css_element');
     }
 
     /**
@@ -708,5 +721,189 @@ class behat_theme_snap extends behat_base {
         global $DB;
         $courseid = $DB->get_field('course', 'id', ['shortname' => $shortname]);
         $this->getSession()->visit($this->locate_path('/course/view.php?id='.$courseid));
+    }
+
+    /**
+     * Get background image for #page-header css element.
+     * @return string
+     */
+    protected function pageheader_backgroundimage() {
+        $session = $this->getSession();
+        return $session->evaluateScript(
+            "return jQuery('#page-header').css('background-image')"
+        );
+    }
+
+    /**
+     * @Given /^I should see cover image in page header$/
+     */
+    public function  pageheader_has_cover_image() {
+        $bgimage = $this->pageheader_backgroundimage();
+        if (empty($bgimage) || $bgimage === 'none') {
+            $exception = new ExpectationException('#page-header does not have background image ('.$bgimage.')', $this->getSession());
+            throw $exception;
+        }
+    }
+
+    /**
+     * @Given /^I should not see cover image in page header$/
+     */
+    public function pageheader_does_not_have_cover_image() {
+        $bgimage = $this->pageheader_backgroundimage();
+        if (!empty($bgimage) && $bgimage !== 'none') {
+            $exception = new ExpectationException('#page-header has a background image ('.$bgimage.')', $this->getSession());
+            throw $exception;
+        }
+    }
+
+    /**
+     * MDL-55288 - changes to core function in behat_files.php required to support settings.php.
+     * Gets the NodeElement for filepicker of filemanager moodleform element.
+     *
+     * The filepicker/filemanager element label is pointing to a hidden input which is
+     * not recognized as a named selector, as it is hidden...
+     *
+     * @throws ExpectationException Thrown by behat_base::find
+     * @param string $filepickerelement The filepicker form field label
+     * @return NodeElement The hidden element node.
+     */
+    protected function get_filepicker_node($filepickerelement) {
+
+        // More info about the problem (in case there is a problem).
+        $exception = new ExpectationException('"' . $filepickerelement . '" filepicker can not be found', $this->getSession());
+
+        // If no file picker label is mentioned take the first file picker from the page.
+        if (empty($filepickerelement)) {
+            $filepickercontainer = $this->find(
+                'xpath',
+                "//*[@class=\"form-filemanager\"]",
+                $exception
+            );
+        } else {
+            // Gets the ffilemanager node specified by the locator which contains the filepicker container.
+            $filepickerelement = $this->getSession()->getSelectorsHandler()->xpathLiteral($filepickerelement);
+            $filepickercontainer = $this->find(
+                'xpath',
+                "//input[./@id = //label[normalize-space(.)=$filepickerelement]/@for]" .
+                "//ancestor::div[contains(concat(' ', normalize-space(@class), ' '), ' ffilemanager ') or " .
+                "contains(concat(' ', normalize-space(@class), ' '), ' ffilepicker ')] |" .
+                "//input[./@id = //label[normalize-space(.)=$filepickerelement]/@for]" .
+                "//ancestor::div[contains(concat(' ', normalize-space(@class), ' '), ' form-item ')]" .
+                "//div[contains(concat(' ', normalize-space(@class),' '), 'form-filemanager')]",
+                $exception
+            );
+        }
+
+        return $filepickercontainer;
+    }
+
+    /**
+     * MDL-55288 - changes to core function in behat_filepicker.php required to support settings.php.
+     * Opens the contextual menu of a folder or a file.
+     *
+     * Works both in filemanager elements and when dealing with repository
+     * elements inside filepicker modal window.
+     *
+     * @throws ExpectationException Thrown by behat_base::find
+     * @param string $name The name of the folder/file
+     * @param string $filemanagerelement The filemanager form element locator, the repository items are in filepicker modal window if false
+     * @return void
+     */
+    protected function open_element_contextual_menu($name, $filemanagerelement = false) {
+
+        // If a filemanager is specified we restrict the search to the descendants of this particular filemanager form element.
+        $containernode = false;
+        $exceptionmsg = '"'.$name.'" element can not be found';
+        if ($filemanagerelement) {
+            $containernode = $this->get_filepicker_node($filemanagerelement);
+            $exceptionmsg = 'The "'.$filemanagerelement.'" filemanager ' . $exceptionmsg;
+            $locatorprefix = "//div[@class='fp-content']";
+        } else {
+            $locatorprefix = "//div[contains(concat(' ', normalize-space(@class), ' '), ' fp-repo-items ')]//descendant::div[@class='fp-content']";
+        }
+
+        $exception = new ExpectationException($exceptionmsg, $this->getSession());
+
+        // Avoid quote-related problems.
+        $name = $this->getSession()->getSelectorsHandler()->xpathLiteral($name);
+
+        // Get a filepicker/filemanager element (folder or file).
+        try {
+
+            // First we look at the folder as we need to click on the contextual menu otherwise it would be opened.
+            $node = $this->find(
+                'xpath',
+                $locatorprefix .
+                "//descendant::*[self::div | self::a][contains(concat(' ', normalize-space(@class), ' '), ' fp-file ')]" .
+                "[contains(concat(' ', normalize-space(@class), ' '), ' fp-folder ')]" .
+                "[normalize-space(.)=$name]" .
+                "//descendant::a[contains(concat(' ', normalize-space(@class), ' '), ' fp-contextmenu ')]",
+                $exception,
+                $containernode
+            );
+
+        } catch (ExpectationException $e) {
+
+            // Here the contextual menu is hidden, we click on the thumbnail.
+            $node = $this->find(
+                'xpath',
+                $locatorprefix .
+                "//descendant::*[self::div | self::a][contains(concat(' ', normalize-space(@class), ' '), ' fp-file ')]" .
+                "[normalize-space(.)=$name]" .
+                "//descendant::div[contains(concat(' ', normalize-space(@class), ' '), ' fp-filename-field ')]",
+                false,
+                $containernode
+            );
+        }
+
+        // Click opens the contextual menu when clicking on files.
+        $this->ensure_node_is_visible($node);
+        $node->click();
+    }
+
+    /**
+     * MDL-55288 - changes to core function in behat_filepicker.php required to support settings.php.
+     * Performs $action on a filemanager container element (file or folder).
+     *
+     * It works together with open_element_contextual_menu
+     * as this method needs the contextual menu to be opened.
+     *
+     * @throws ExpectationException Thrown by behat_base::find
+     * @param string $action
+     * @param ExpectationException $exception
+     * @return void
+     */
+    protected function perform_on_element($action, ExpectationException $exception) {
+
+        // Finds the button inside the DOM, is a modal window, so should be unique.
+        $classname = 'fp-file-' . $action;
+        $button = $this->find('css', '.moodle-dialogue-focused button.' . $classname, $exception);
+
+        $this->ensure_node_is_visible($button);
+        $button->click();
+    }
+
+    /**
+     * MDL-55288 - changes to core function in behat_filepicker.php required to support settings.php.
+     * Deletes the specified file or folder from the specified filemanager field.
+     *
+     * @Given /^I delete "(?P<file_or_folder_name_string>(?:[^"]|\\")*)" from "(?P<filemanager_field_string>(?:[^"]|\\")*)" filemanager \(theme_snap\)$/
+     * @throws ExpectationException Thrown by behat_base::find
+     * @param string $name
+     * @param string $filemanagerelement
+     */
+    public function i_delete_file_from_filemanager($name, $filemanagerelement) {
+
+        // Open the contextual menu of the filemanager element.
+        $this->open_element_contextual_menu($name, $filemanagerelement);
+
+        // Execute the action.
+        $exception = new ExpectationException($name.' element can not be deleted', $this->getSession());
+        $this->perform_on_element('delete', $exception);
+
+        // Yes, we are sure.
+        // Using xpath + click instead of pressButton as 'Ok' it is a common string.
+        $okbutton = $this->find('css', 'div.fp-dlg button.fp-dlg-butconfirm');
+        $okbutton->click();
     }
 }

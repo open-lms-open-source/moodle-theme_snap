@@ -95,7 +95,7 @@ if ($ADMIN->fulltree) {
     $settings->add($setting);
 
 
-    // Personal menu settings
+    // Personal menu settings.
     $name = 'theme_snap/personalmenu';
     $title = new lang_string('personalmenu', 'theme_snap');
     $description = new lang_string('footerheadingdesc', 'theme_snap');

@@ -182,7 +182,7 @@ class snap_shared extends renderer_base {
     protected static function include_course_ajax($course, $usedmodules = array(), $enabledmodules = null, $config = null) {
         global $CFG, $PAGE;
 
-        // Ensure that ajax should be included
+        // Ensure that ajax should be included.
         if (!course_ajax_enabled($course)) {
             return false;
         }
@@ -191,22 +191,22 @@ class snap_shared extends renderer_base {
             $config = new stdClass();
         }
 
-        // The URL to use for resource changes
+        // The URL to use for resource changes.
         if (!isset($config->resourceurl)) {
             $config->resourceurl = '/course/rest.php';
         }
 
-        // The URL to use for section changes
+        // The URL to use for section changes.
         if (!isset($config->sectionurl)) {
             $config->sectionurl = '/course/rest.php';
         }
 
-        // Any additional parameters which need to be included on page submission
+        // Any additional parameters which need to be included on page submission.
         if (!isset($config->pageparams)) {
             $config->pageparams = array();
         }
 
-        // Include toolboxes
+        // Include toolboxes.
         $PAGE->requires->yui_module('moodle-course-toolboxes',
             'M.course.init_resource_toolbox',
             array(array(
@@ -225,14 +225,17 @@ class snap_shared extends renderer_base {
             ))
         );
 
-        // Include course dragdrop
+        // Include course dragdrop.
         if (course_format_uses_sections($course->format)) {
             $PAGE->requires->yui_module('moodle-course-dragdrop', 'M.course.init_section_dragdrop',
                 array(array(
                     'courseid' => $course->id,
                     'ajaxurl' => $config->sectionurl,
                     'config' => $config,
-                )), null, true);
+                )),
+                null,
+                true
+            );
 
             $PAGE->requires->yui_module('moodle-course-dragdrop', 'M.course.init_resource_dragdrop',
                 array(array(
@@ -242,7 +245,7 @@ class snap_shared extends renderer_base {
                 )), null, true);
         }
 
-        // Require various strings for the command toolbox
+        // Require various strings for the command toolbox.
         $PAGE->requires->strings_for_js([
             'afterresource',
             'aftersection',
@@ -263,7 +266,6 @@ class snap_shared extends renderer_base {
             'movecoursemodule',
             'movecoursesection',
             'movecontent',
-            'ok',
             'show',
             'tocontent',
             'totopofsection'
@@ -282,7 +284,7 @@ class snap_shared extends renderer_base {
             ), 'format_' . $course->format);
         }
 
-        // For confirming resource deletion we need the name of the module in question
+        // For confirming resource deletion we need the name of the module in question.
         foreach ($usedmodules as $module => $modname) {
             $PAGE->requires->string_for_js('pluginname', $module);
         }
@@ -300,13 +302,15 @@ class snap_shared extends renderer_base {
      * @return void
      */
     public static function page_requires_js() {
-        global $PAGE, $COURSE, $USER;
+        global $CFG, $PAGE, $COURSE, $USER;
 
         $PAGE->requires->jquery();
         $PAGE->requires->strings_for_js(array(
             'close',
             'debugerrors',
             'problemsfound',
+            'error:coverimageexceedsmaxbytes',
+            'error:coverimageresolutionlow',
             'forumtopic',
             'forumauthor',
             'forumpicturegroup',
@@ -324,14 +328,13 @@ class snap_shared extends renderer_base {
         ), 'theme_snap');
 
         $PAGE->requires->strings_for_js([
+            'ok',
+            'cancel'
+        ], 'moodle');
+
+        $PAGE->requires->strings_for_js([
             'printbook'
         ], 'booktool_print');
-
-        $courseconfig = new stdClass();
-        $courseconfig->ajaxurl = '/course/rest.php';
-        // These never appear to get set in lib.php include_course_ajax - config can be passed into that function with
-        // the param set but that never seems to happen.
-        $courseconfig->pageparams = array();
 
         // Are we viewing /course/view.php - note, this is different from just checking the page type.
         // We only ever want to load course.js when on site page or view.php - no point in loading it when on
@@ -339,7 +342,14 @@ class snap_shared extends renderer_base {
         $courseviewpage = local::current_url_path() === '/course/view.php';
         $pagehascoursecontent = ($PAGE->pagetype === 'site-index' || $courseviewpage);
 
-        $initvars = [$COURSE->id, $PAGE->context->id, $courseconfig, $pagehascoursecontent];
+        $coursevars = (object) [
+            'id' => $COURSE->id,
+            'shortname' => $COURSE->shortname,
+            'contextid' => $PAGE->context->id,
+            'ajaxurl' => '/course/rest.php'
+        ];
+
+        $initvars = [$coursevars, $pagehascoursecontent, get_max_upload_file_size($CFG->maxbytes)];
         $PAGE->requires->js_call_amd('theme_snap/snap', 'snapInit', $initvars);
 
         // Does the page have editable course content?
@@ -366,7 +376,7 @@ class snap_shared extends renderer_base {
      * @return string
      */
     public static function flexpage_frontpage_warning($adminsonly = false) {
-        global $CFG, $OUTPUT;
+        global $OUTPUT;
 
         if ($adminsonly) {
             if (!is_siteadmin()) {
@@ -506,8 +516,6 @@ class snap_shared extends renderer_base {
         $localplugins = core_component::get_plugin_list('local');
         $coursecontext = context_course::instance($COURSE->id);
 
-
-
         // Course settings.
         $settingsicon = '<svg viewBox="0 0 100 100" class="svg-icon">
         <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#coursetools-settings"></use></svg>';
@@ -578,8 +586,6 @@ class snap_shared extends renderer_base {
                 );
             }
         }
-
-
 
         $badgesicon = '<svg viewBox="0 0 100 100" class="svg-icon">
             <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#coursetools-badges"></use></svg>';

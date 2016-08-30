@@ -52,7 +52,7 @@ class theme_snap_services_course_test extends \advanced_testcase {
 
         $this->resetAfterTest();
 
-        // Create 10 courses
+        // Create 10 courses.
         for ($c = 0; $c < 10; $c++) {
             $this->courses[] = $this->getDataGenerator()->create_course();
         }

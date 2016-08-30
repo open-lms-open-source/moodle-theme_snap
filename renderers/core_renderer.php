@@ -32,7 +32,7 @@ use theme_snap\renderables\settings_link;
 use theme_snap\renderables\bb_dashboard_link;
 use theme_snap\renderables\course_card;
 // We have to force include this class as it's on login and the auto loader may not have been updated via a cache dump.
-include_once($CFG->dirroot.'/theme/snap/classes/renderables/login_alternative_methods.php');
+require_once($CFG->dirroot.'/theme/snap/classes/renderables/login_alternative_methods.php');
 use theme_snap\renderables\login_alternative_methods;
 
 class theme_snap_core_renderer extends toc_renderer {
@@ -405,8 +405,6 @@ class theme_snap_core_renderer extends toc_renderer {
      * @return string
      */
     protected function render_messages() {
-        global $CFG;
-
         if ($this->page->theme->settings->messagestoggle == 0) {
             return '';
         }
@@ -456,7 +454,6 @@ class theme_snap_core_renderer extends toc_renderer {
         $title = format_text($title, FORMAT_HTML, $formatoptions);
         $content = format_text($content, FORMAT_HTML, $formatoptions);
 
-
         $metastr = '';
         // For forum posts meta is an array with the course title / forum name.
         if (is_array($meta)) {
@@ -465,7 +462,7 @@ class theme_snap_core_renderer extends toc_renderer {
                 $metastr .= $metaitem.'<br>';
             }
             $metastr .= '</span>';
-        } elseif($meta) {
+        } else if ($meta) {
             $metastr = '<span class="snap-media-meta">' .$meta.'</span>';
         }
 
@@ -477,8 +474,6 @@ class theme_snap_core_renderer extends toc_renderer {
                 . '<h3>' .$link. '</h3>'
                 . $metastr
                 . '</div>';
-
-
 
         return '<div class="snap-media-object '.$extraclasses.'">'.$object.'</div>';
     }
@@ -546,8 +541,7 @@ class theme_snap_core_renderer extends toc_renderer {
 
         if (empty($columns)) {
              return '';
-        }
-        else {
+        } else {
             $o = '<div class="callstoaction">';
             foreach ($columns as $column) {
                 $o .= '<section>' .$column. '</section>';
@@ -799,7 +793,7 @@ class theme_snap_core_renderer extends toc_renderer {
             foreach ($mycourses as $course) {
 
                 $ccard = new course_card($course->id);
-                $coursecard =  $this->render($ccard);
+                $coursecard = $this->render($ccard);
 
                 // If course is not visible.
                 if (!$course->visible) {
@@ -877,7 +871,7 @@ class theme_snap_core_renderer extends toc_renderer {
 
 
         <div id="fixy-content">'
-        .$courselist.$this->render_callstoaction().'
+            .$courselist.$this->render_callstoaction().'
         </div><!-- end fixy-content -->
         </div><!-- end fixy-inner -->
         </nav><!-- end primary nav -->';
@@ -947,6 +941,20 @@ class theme_snap_core_renderer extends toc_renderer {
         return "<ol class=breadcrumb>$breadcrumbs</ol>";
     }
 
+    /**
+     * Cover image selector.
+     * @return bool|null|string
+     * @throws coding_exception
+     * @throws moodle_exception
+     */
+    public function cover_image_selector() {
+        global $PAGE;
+        if (has_capability('moodle/course:changesummary', $PAGE->context)) {
+            $vars = ['accepttypes' => local::supported_coverimage_typesstr()];
+            return $this->render_from_template('theme_snap/cover_image_selector', $vars);
+        }
+        return null;
+    }
 
     /**
      * Get page heading.
@@ -955,11 +963,15 @@ class theme_snap_core_renderer extends toc_renderer {
      * @return string
      */
     public function page_heading($tag = 'h1') {
-        global $COURSE;
+        global $COURSE, $PAGE;
 
         $heading = $this->page->heading;
 
-        if ($COURSE->id != SITEID && stripos($heading, $COURSE->fullname) === 0) {
+        if ($this->page->pagelayout == 'mypublic') {
+            // For the user profile page message button we need to call 2.9 content_header.
+            $heading = parent::context_header();
+        } else if ($COURSE->id != SITEID && stripos($heading, $COURSE->fullname) === 0) {
+            // If we are on a course page.
             $courseurl = new moodle_url('/course/view.php', ['id' => $COURSE->id]);
             // Set heading to course fullname - ditch anything else that's in it.
             // This will make huge page headings like:
@@ -969,14 +981,20 @@ class theme_snap_core_renderer extends toc_renderer {
             // This is intentional.
             $heading = $COURSE->fullname;
             $heading = html_writer::link($courseurl, $heading);
+            $heading = html_writer::tag($tag, $heading);
+        } else {
+            // Default headinng.
+            $heading = html_writer::tag($tag, $heading);
         }
 
-        $heading = html_writer::tag($tag, $heading);
-
-        // For the user profile page message button we need to call 2.9 content_header.
-        if ($this->page->pagelayout == 'mypublic') {
-            $heading = parent::context_header();
+        // If we are on the main page of a course, add the cover image selector.
+        if ($COURSE->id != SITEID) {
+            $courseviewpage = local::current_url_path() === '/course/view.php';
+            if ($courseviewpage) {
+                $heading .= $this->cover_image_selector();
+            }
         }
+
         // For the front page we add the site strapline.
         if ($this->page->pagelayout == 'frontpage') {
             $heading .= '<p class="snap-site-description">' . format_string($this->page->theme->settings->subtitle) . '</p>';
@@ -1360,10 +1378,10 @@ HTML;
                     'p'.$activity->content->id
             );
             $fullname = fullname($activity->user);
-            $forum_path = $activity->courseshortname. ' / ' .$activity->forumname;
+            $forumpath = $activity->courseshortname. ' / ' .$activity->forumname;
             $meta = [
                 local::relative_time($activity->timestamp),
-                format_text($forum_path, FORMAT_HTML, $formatoptions)
+                format_text($forumpath, FORMAT_HTML, $formatoptions)
             ];
             $formattedsubject = '<p>' .format_text($activity->content->subject, FORMAT_HTML, $formatoptions). '</p>';
             $output .= $this->snap_media_object($url, $picture, $fullname, $meta, $formattedsubject);

@@ -41,7 +41,7 @@ class course_card implements \renderable {
      * @var course service
      */
     private $service;
-    
+
     /**
      * @var course_card $model
      * (should be set to json encoded version of $this);
@@ -207,7 +207,7 @@ class course_card implements \renderable {
      * object that can be used in a template.
      * @return string
      */
-    public function __toString(){
+    public function __toString() {
         unset($this->model);
         $retval = json_encode($this);
         $this->model = $this;

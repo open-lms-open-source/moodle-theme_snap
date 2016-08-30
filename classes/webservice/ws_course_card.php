@@ -48,7 +48,7 @@ class ws_course_card extends \external_api {
             'courseid' => new \external_value(PARAM_INT, 'Course ID', VALUE_REQUIRED),
             'shortname' => new \external_value(PARAM_TEXT, 'Course shortname', VALUE_REQUIRED),
             'fullname' => new \external_value(PARAM_TEXT, 'Full name of course', VALUE_REQUIRED),
-            // Note PARAM_URL returns an object which wont work with a template
+            // Note PARAM_URL returns an object which wont work with a template.
             'url' => new \external_value(PARAM_RAW, 'Course url', VALUE_REQUIRED),
             'visibleavatars' => new \external_multiple_structure(
                 new \external_value(PARAM_RAW, 'Avatar HTML'),

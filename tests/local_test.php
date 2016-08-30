@@ -41,6 +41,86 @@ class theme_snap_local_test extends \advanced_testcase {
         require_once($CFG->dirroot.'/mod/assign/tests/base_test.php');
     }
 
+    public function test_get_course_categories() {
+        $this->resetAfterTest();
+
+        $generator = $this->getDataGenerator();
+        $cat1 = $generator->create_category((object)['name' => 'cat1']);
+        $cat2 = $generator->create_category((object)['name' => 'cat2', 'parent' => $cat1->id]);
+        $cat3 = $generator->create_category((object)['name' => 'cat3', 'parent' => $cat2->id]);
+        $course1 = $generator->create_course((object) ['category' => $cat3->id, 'visible' => 0, 'oldvisible' => 0]);
+        $categories = local::get_course_categories($course1);
+        // First item in array should be immediate parent - $cat3.
+        $expected = $cat3;
+        $actual = reset($categories);
+        $this->assertEquals($expected->id, $actual->id);
+
+        // Second item in array should be parent of immediate parent - $cat2.
+        $expected = $cat2;
+        $actual = array_slice($categories, 1, 1);
+        $actual = reset($actual);
+        $this->assertEquals($expected->id, $actual->id);
+
+        // Final item in array should be a root category - $cat1.
+        $actual = end($categories);
+        $this->assertEmpty($actual->parent);
+        $expected = $cat1;
+        $this->assertEquals($expected->id, $actual->id);
+    }
+
+    /**
+     * Note, although the resolve_theme function is copied from the core moodle_page class there do not appear to be
+     * any tests for resolve_theme in core code.
+     */
+    public function test_resolve_theme() {
+        global $CFG, $COURSE;
+
+        $this->resetAfterTest();
+
+        $COURSE = get_course(SITEID);
+
+        $CFG->enabledevicedetection = false;
+        $CFG->theme = 'snap';
+
+        $theme = local::resolve_theme();
+        $this->assertEquals('snap', $theme);
+
+        $CFG->allowcoursethemes = true;
+        $CFG->allowcategorythemes = true;
+        $CFG->allowuserthemes = true;
+
+        $generator = $this->getDataGenerator();
+        $cat1 = $generator->create_category((object)['name' => 'cat1']);
+        $cat2 = $generator->create_category((object)['name' => 'cat2', 'parent' => $cat1->id]);
+        $cat3 = $generator->create_category((object)['name' => 'cat3', 'parent' => $cat2->id, 'theme' => 'clean']);
+        $course1 = $generator->create_course((object) ['category' => $cat3->id]);
+
+        $COURSE = $course1;
+        $theme = local::resolve_theme();
+        $this->assertEquals('clean', $theme);
+
+        $cat4 = $generator->create_category((object)['name' => 'cat4', 'theme' => 'more']);
+        $cat5 = $generator->create_category((object)['name' => 'cat5', 'parent' => $cat4->id]);
+        $cat6 = $generator->create_category((object)['name' => 'cat6', 'parent' => $cat5->id]);
+        $course2 = $generator->create_course((object) ['category' => $cat6->id]);
+
+        $COURSE = $course2;
+        $theme = local::resolve_theme();
+        $this->assertEquals('more', $theme);
+
+        $course3 = $generator->create_course((object) ['category' => $cat1->id, 'theme' => 'clean']);
+        $COURSE = $course3;
+        $theme = local::resolve_theme();
+        $this->assertEquals('clean', $theme);
+
+        $user1 = $generator->create_user(['theme' => 'more']);
+        $COURSE = get_course(SITEID);
+        $this->setUser($user1);
+        $theme = local::resolve_theme();
+        $this->assertEquals('more', $theme);
+
+    }
+
     public function test_get_course_color() {
         $actual = local::get_course_color(1);
         $this->assertSame('c4ca42', $actual);
@@ -211,7 +291,7 @@ class theme_snap_local_test extends \advanced_testcase {
     protected function create_assignment($courseid, $duedate, $opts = []) {
         global $USER, $CFG;
 
-        // This is crucial - without this you can't make a conditionally accsesed forum.
+        // This is crucial - without this you can't make a conditionally accessed forum.
         $CFG->enableavailability = true;
 
         // Hack - without this the calendar library trips up when trying to give an assignment a duedate.
@@ -238,6 +318,48 @@ class theme_snap_local_test extends \advanced_testcase {
         $cm = get_coursemodule_from_instance('assign', $instance->id);
         $context = \context_module::instance($cm->id);
         return new \testable_assign($context, $cm, get_course($courseid));
+    }
+
+    /*
+     * Test upcoming deadline times.
+     */
+    public function test_upcoming_deadlines_close_events() {
+        global $DB;
+
+        $this->resetAfterTest();
+
+        $generator = $this->getDataGenerator();
+        $course = $generator->create_course();
+        $teacher = $generator->create_user();
+        $student = $generator->create_user();
+
+        $teacherrole = $DB->get_record('role', ['shortname' => 'teacher']);
+        $generator->enrol_user($teacher->id, $course->id, $teacherrole->id);
+
+        $studentrole = $DB->get_record('role', ['shortname' => 'student']);
+        $generator->enrol_user($student->id, $course->id, $studentrole->id);
+
+        $quizgen = $this->getDataGenerator()->get_plugin_generator('mod_quiz');
+        // Seperate open and close events generated if open for more than 5 days.
+        $timeopen = time() - (5 * DAYSECS);
+        $timeclose = time() + (2 * DAYSECS);
+
+        // Can't create activities with deadlines using generator without the
+        // current user having the correct permissions for the calendar.
+        $this->setUser($teacher);
+
+        $quizgen->create_instance([
+            'course' => $course->id,
+            'timeopen' => $timeopen,
+            'timeclose' => $timeclose,
+        ]);
+
+        $actual = local::upcoming_deadlines($student->id);
+        $expected = 1;
+        $this->assertCount($expected, $actual);
+        $event = reset($actual);
+        $this->assertSame('close', $event->eventtype);
+        $this->assertSame('Quiz 1', $event->name, 'Should not have "(Quiz closes)" at the end of the event name');
     }
 
     /**
@@ -343,7 +465,7 @@ class theme_snap_local_test extends \advanced_testcase {
     }
 
     /**
-     * Test upcoming deadlines with assignmetn activity restricted to future date.
+     * Test upcoming deadlines with assignment activity restricted to future date.
      *
      * @throws \coding_exception
      */
@@ -417,8 +539,8 @@ class theme_snap_local_test extends \advanced_testcase {
         groups_add_member($group2, $student2);
 
         // Create assignment restricted to group1.
-        $opts = ['availability' =>
-            json_encode(
+        $opts = [
+            'availability' => json_encode(
                 \core_availability\tree::get_root_json(
                     [\availability_group\condition::get_json($group1->id)]
                 )
@@ -428,8 +550,8 @@ class theme_snap_local_test extends \advanced_testcase {
         $this->create_assignment($course->id, $duedate1, $opts);
 
         // Create assignment restricted to group2.
-        $opts = ['availability' =>
-            json_encode(
+        $opts = [
+            'availability' => json_encode(
                 \core_availability\tree::get_root_json(
                     [\availability_group\condition::get_json($group2->id)]
                 )
@@ -700,7 +822,7 @@ class theme_snap_local_test extends \advanced_testcase {
 
     public function test_one_message_deleted() {
         global $DB;
-        
+
         $this->resetAfterTest();
 
         $generator = $this->getDataGenerator();
@@ -721,7 +843,6 @@ class theme_snap_local_test extends \advanced_testcase {
         $message->notification      = '0';
 
         $messageid = message_send($message);
-        $aftersent = time();
 
         $actual = local::get_user_messages($userfrom->id);
         $this->assertCount(0, $actual);
@@ -736,8 +857,6 @@ class theme_snap_local_test extends \advanced_testcase {
     }
 
     public function test_one_message_user_deleted() {
-        global $DB;
-
         $this->resetAfterTest();
 
         $generator = $this->getDataGenerator();
@@ -757,8 +876,7 @@ class theme_snap_local_test extends \advanced_testcase {
         $message->smallmessage      = 'small message';
         $message->notification      = '0';
 
-        $messageid = message_send($message);
-        $aftersent = time();
+        message_send($message);
 
         $actual = local::get_user_messages($userfrom->id);
         $this->assertCount(0, $actual);
@@ -811,7 +929,7 @@ class theme_snap_local_test extends \advanced_testcase {
         $fs->delete_area_files($syscontext->id, 'theme_snap', 'poster');
 
         $fs->create_file_from_pathname($filerecord, $filepath);
-        \set_config('poster', '/'.$filename, 'theme_snap');
+        \set_config('poster', $filename, 'theme_snap');
 
         local::process_coverimage($syscontext);
     }
@@ -855,14 +973,14 @@ class theme_snap_local_test extends \advanced_testcase {
             'testpng_small.png' => false,
             'testgif.gif' => false,
             'testgif_small.gif' => false,
+            'testsvg.svg' => false
         ];
 
         foreach ($fixtures as $filename => $shouldberesized) {
 
             $this->fake_site_image_setting_upload($filename);
 
-            $css = '[[setting:poster]]';
-            $css = local::site_coverimage_css($css);
+            $css = local::site_coverimage_css();
 
             $this->assertContains('/theme_snap/coverimage/', $css);
 
@@ -878,8 +996,7 @@ class theme_snap_local_test extends \advanced_testcase {
 
         $this->fake_site_image_setting_cleared();
 
-        $css = '[[setting:poster]]';
-        $css = local::site_coverimage_css($css);
+        $css = local::site_coverimage_css();
 
         $this->assertSame('', $css);
         $this->assertFalse(local::site_coverimage());
@@ -910,8 +1027,8 @@ class theme_snap_local_test extends \advanced_testcase {
             $studentrole->id);
 
         // Check teacher can only grade 1 course (not a teacher on course2).
-        $gradeable_courses = local::gradeable_courseids($teacher->id);
-        $this->assertCount(1, $gradeable_courses);
+        $gradeablecourses = local::gradeable_courseids($teacher->id);
+        $this->assertCount(1, $gradeablecourses);
     }
 
     /**

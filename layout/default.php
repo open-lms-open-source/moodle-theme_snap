@@ -23,7 +23,7 @@
  */
 defined('MOODLE_INTERNAL') || die();
 
-include(__DIR__.'/header.php');
+require(__DIR__.'/header.php');
 
 use theme_snap\local;
 
@@ -37,7 +37,9 @@ use theme_snap\local;
 -->
 <main id="moodle-page" class="clearfix">
 <div id="page-header" class="clearfix
-<?php if (!empty($courseimagecss)) : ?>
+<?php
+// Check we are in a course, and the course is using a cover image.
+if ($PAGE->pagetype != 'site-index' && !empty($coverimagecss)) : ?>
  mast-image
 <?php endif;?>">
 <div class="breadcrumb-nav" aria-label="breadcrumb"><?php echo $OUTPUT->navbar(); ?></div>
@@ -53,7 +55,7 @@ if ($PAGE->pagetype == 'site-index') {
 <?php
 if ($this->page->user_is_editing() && $PAGE->pagetype == 'site-index') {
     $url = new moodle_url('/admin/settings.php', ['section' => 'themesettingsnap'], 'admin-poster');
-    echo html_writer::link($url, get_string('changecoverimage', 'theme_snap'), ['class' => 'btn btn-inverse btn-sm']);
+    echo $OUTPUT->cover_image_selector();
 }
 ?>
 </div>
@@ -105,7 +107,7 @@ echo $OUTPUT->page_heading_button();
 
 // On the front page, output some different content.
 if ($PAGE->pagetype == 'site-index') {
-    include(__DIR__.'/faux_site_index.php');
+    require(__DIR__.'/faux_site_index.php');
 } else {
     echo $OUTPUT->main_content();
 }
@@ -129,11 +131,11 @@ if (stripos($PAGE->bodyclasses, 'format-singleactivity') !== false ) {
 
 </section>
 
-<?php include(__DIR__.'/moodle-blocks.php'); ?>
+<?php require(__DIR__.'/moodle-blocks.php'); ?>
 </main>
 
 </div>
 </div>
 <!-- close moodle js hooks -->
 
-<?php include(__DIR__.'/footer.php'); ?>
+<?php require(__DIR__.'/footer.php');

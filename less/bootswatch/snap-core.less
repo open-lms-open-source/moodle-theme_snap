@@ -573,6 +573,14 @@ input[type="reset"] {
         border-color: @brand-primary;
     }
 }
+.btn.btn-solid {
+    &,
+    &:visited,
+    &:active,
+    &:focus {
+        background: #fff;
+    }
+}
 
 .btn-group > button + button {
     margin-left: 1em;
@@ -1112,17 +1120,17 @@ body:not(.format-topics):not(.format-weeks) {
 // if the course has an image
 .mast-image {
     .breadcrumb {
+        li,
         li:before,
         >li+li:before,
-        a,
-        a:visited {
+        a, a:visited {
             text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
             color: white;
         }
     }
 
     #page-mast h1 {
-        &, a, a:visited, a:hover {
+        a, a:visited, a:hover {
             color: white;
             text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
         }
@@ -1599,7 +1607,7 @@ ol#chapters {
     margin: 0;
     position: relative;
 
-    &> .btn {
+    #snap-coverimagecontrol {
         position: absolute;
         bottom: 1em;
         right: 4%;
@@ -1622,6 +1630,10 @@ http://blog.rodneyrehm.de/archives/34-iOS7-Mobile-Safari-And-Viewport-Units.html
     display: inline-block;
     padding: 1em 2%;
     margin-top: 2em;
+}
+
+.path-course #page-mast h1 {
+    display: inline;
 }
 
 #page-mast .snap-login-button {
@@ -1887,10 +1899,6 @@ http://blog.rodneyrehm.de/archives/34-iOS7-Mobile-Safari-And-Viewport-Units.html
 
 .paging.paging-morelink {
     text-align: center;
-
-    a {
-        .btn;
-    }
 }
 
 /* COURE LISTINGS PAGES */
@@ -3119,8 +3127,7 @@ table#user-grades tr.avg td.cell {
 
 #page-admin-outcome-admin {
     .yui3-moodle-core_outcome-editoutcome-outcome {
-        margin: 0;
-        background-position: left center;
+        background-position: left .35em;
     }
 }
 
@@ -3974,6 +3981,10 @@ div.editor_atto_toolbar div.atto_group {
     }
 }
 
+#page-admin-setting-themesettingsnap #id_s_theme_snap_customcss {
+    font-family: @font-family-monospace;
+}
+
 // Scrolling gradebook fixes
 .path-grade-report-grader .gradeparent .heading.floating {
     border-top: 1px solid #ddd;
@@ -4044,6 +4055,16 @@ td.mceStatusbar {
     max-width:100%;
 }
 
+table.mceLayout {
+    // We have to use important to set the height as auto, otherwise clicking on the editors path selector causes
+    // the table element to have an inline height style property which is not big enough to house its contents.
+    // It isn't obvious what the inline height is required for and it does not affect the drag handle for resizing.
+    // To observe the inline style, go to a page with a tiny mce editor and click (p) in the path selector.
+    // You will notice that the bottom of the editor will now be much closer to the element underneath it.
+    // In some cases it will even overlap elements on the page (quiz multichoice questions are a good example).
+    height: auto !important;
+}
+
 table.mceLayout tbody {
     display:block;
 }
@@ -4076,4 +4097,85 @@ button.snap-icon-toggle {
     &:focus {
         border:2px solid @brand-primary;
     }
+}
+
+// Cover image control.
+#snap-coverimagecontrol {
+    float: right;
+    margin-left: 1em;
+    display: inline-block;
+    .alakazam();
+    opacity: 0;
+}
+
+#snap-changecoverimageconfirmation {
+    position: relative;
+    display: inline-block;
+}
+
+#snap-coverfiles {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+}
+
+label[for="snap-coverfiles"], #snap-changecoverimageconfirmation button{
+    position: relative;
+    display: none;
+    top: -0.5em;
+}
+
+label.state-visible[for="snap-coverfiles"], #snap-changecoverimageconfirmation.state-visible button{
+    display: inline-block;
+    padding: 6px 16px;
+    cursor: pointer;
+}
+
+label.state-visible[for="snap-coverfiles"] span:before {
+    content: '';
+    background: transparent url("[[pix:theme|camera]]") no-repeat;
+    display: inline-block;
+    margin: -0.4em 0.5em -0.4em -0.5em;
+    height: 1.5em;
+    width: 1.5em;
+}
+
+#snap-coverfiles {
+    cursor: pointer;
+}
+
+label.state-visible[for="snap-coverfiles"],
+#snap-changecoverimageconfirmation .ok {
+    .spinner-three-quarters {
+        width: 1em;
+        height: 1em;
+        border-width: 0.25em;
+        margin-left: 0.5em;
+    }
+}
+
+#snap-changecoverimageconfirmation.disabled .ok {
+    &,
+    &:visited,
+    &:hover,
+    &:active,
+    &:focus {
+        color: #fff;
+        border-color: #fff;
+    }
+}
+
+.cover-image-change #page-header {
+    background-image: none !important;
+    background-color: #aaa;
+}
+
+#page-header.mast-image .alert-warning {
+    background-color: rgba(255, 255, 255, 0.9);
+}
+
+#snap-coverimagecontrol.snap-js-enabled {
+    opacity: 1;
 }

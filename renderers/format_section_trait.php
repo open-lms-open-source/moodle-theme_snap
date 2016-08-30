@@ -26,7 +26,7 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-include_once('general_section_trait.php');
+require_once('general_section_trait.php');
 
 trait format_section_trait {
 
@@ -139,9 +139,9 @@ trait format_section_trait {
 
         if (!$isstealth && !$onsectionpage && has_capability('moodle/course:movesections', $coursecontext)) {
             $url = '#section-'.$section->section;
-            $snap_move_section = "<img class='svg-icon' alt='' role='presentation' src='".$this->output->pix_url('move', 'theme')."'>";
+            $snapmovesection = "<img class='svg-icon' alt='' role='presentation' src='".$this->output->pix_url('move', 'theme')."'>";
             $movestring = get_string('move', 'theme_snap', format_string($section->name));
-            $controls[] = html_writer::link($url, $snap_move_section ,
+            $controls[] = html_writer::link($url, $snapmovesection ,
             array('title' => $movestring, 'alt' => $movestring, 'class' => 'snap-move', 'data-id' => $section->section));
         }
 
@@ -271,11 +271,10 @@ trait format_section_trait {
         // Untitled topic title.
         $testemptytitle = get_string('topic').' '.$section->section;
         if ($sectiontitle == $testemptytitle && has_capability('moodle/course:update', $context)) {
-          $url = new moodle_url('/course/editsection.php', array('id' => $section->id, 'sr' => $sectionreturn));
-          $o .= "<h2 class='sectionname'><a href='$url' title='".s(get_string('editcoursetopic', 'theme_snap'))."'>".get_string('defaulttopictitle', 'theme_snap')."</a></h2>";
-        }
-        else {
-          $o .= $this->output->heading($sectiontitle, 2, 'sectionname' . $classes);
+            $url = new moodle_url('/course/editsection.php', array('id' => $section->id, 'sr' => $sectionreturn));
+            $o .= "<h2 class='sectionname'><a href='$url' title='".s(get_string('editcoursetopic', 'theme_snap'))."'>".get_string('defaulttopictitle', 'theme_snap')."</a></h2>";
+        } else {
+            $o .= $this->output->heading($sectiontitle, 2, 'sectionname' . $classes);
         }
 
         // Section drop zone.
@@ -290,12 +289,12 @@ trait format_section_trait {
 
         if (has_capability('moodle/course:update', $context)) {
             if (!empty($sectiontoolsarray)) {
-              $sectiontools = implode(' ', $sectiontoolsarray);
-              $o .= html_writer::tag('div', $sectiontools, array(
-                  'class' => 'snap-section-editing actions',
-                  'role' => 'region',
-                  'aria-label' => get_string('topicactions', 'theme_snap')
-              ));
+                $sectiontools = implode(' ', $sectiontoolsarray);
+                $o .= html_writer::tag('div', $sectiontools, array(
+                    'class' => 'snap-section-editing actions',
+                    'role' => 'region',
+                    'aria-label' => get_string('topicactions', 'theme_snap')
+                ));
             }
         }
 
@@ -313,11 +312,11 @@ trait format_section_trait {
 
         // Welcome message when no summary text.
         if (empty($summarytext) && $canupdatecourse) {
-          $summarytext = "<p>".get_string('defaultsummary', 'theme_snap')."</p>";
-          if ($section->section == 0) {
-              $editorname = format_string(fullname($USER));
-              $summarytext = "<p>".get_string('defaultintrosummary', 'theme_snap', $editorname)."</p>";
-          }
+            $summarytext = "<p>".get_string('defaultsummary', 'theme_snap')."</p>";
+            if ($section->section == 0) {
+                $editorname = format_string(fullname($USER));
+                $summarytext = "<p>".get_string('defaultintrosummary', 'theme_snap', $editorname)."</p>";
+            }
         }
 
         $o .= $summarytext;
@@ -466,7 +465,6 @@ trait format_section_trait {
                 }
                 echo $this->stealth_section_header($section);
                 // Don't print add resources/activities of 'stealth' sections.
-                // echo $this->courserenderer->course_section_cm_list($course, $thissection, 0);
                 echo $this->stealth_section_footer();
             }
         }
@@ -514,10 +512,10 @@ trait format_section_trait {
         } else {
             // Take this part of code from /course/format/weeks/lib.php on functions
             // get_section_name($section) and get_section_dates($section).
-            $oneweekseconds = 60*60*24*7;
+            $oneweekseconds = 60 * 60 * 24 * 7;
             // Hack alert. We add 2 hours to avoid possible DST problems. (e.g. we go into daylight
             // savings and the date changes.
-            $startdate = $course->startdate + (60 * 60 *2);
+            $startdate = $course->startdate + (60 * 60 * 2);
             $dates = new stdClass();
             $dates->start = $startdate + ($oneweekseconds * $sectionnum);
             $dates->end = $dates->start + $oneweekseconds;
@@ -573,12 +571,12 @@ trait format_section_trait {
      * @return string
      */
     function course_section_add_cm_control($course, $section, $sectionreturn = null, $displayoptions = array()) {
-        // check to see if user can add menus and there are modules to add
+        // Check to see if user can add menus and there are modules to add.
         if (!has_capability('moodle/course:manageactivities', context_course::instance($course->id))
                 || !($modnames = get_module_types_names()) || empty($modnames)) {
             return '';
         }
-        // Retrieve all modules with associated metadata
+        // Retrieve all modules with associated metadata.
         $modules = get_module_metadata($course, $modnames, $sectionreturn);
         $urlparams = array('section' => $section);
             // S Lamour Aug 2015 - show activity picker

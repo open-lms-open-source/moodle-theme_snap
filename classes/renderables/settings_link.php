@@ -13,7 +13,7 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
- 
+
 /**
  * Settings link renderable.
  * @author    gthomas2
@@ -41,7 +41,7 @@ class settings_link implements \renderable {
     /**
      * @throws coding_exception
      */
-    function __construct() {
+    public function __construct() {
         global $PAGE, $COURSE;
 
         // Page path blacklist for admin menu.
@@ -54,7 +54,11 @@ class settings_link implements \renderable {
         // The admin menu shows up for other users if they are a teacher in the current course.
         if (!is_siteadmin()) {
             // We don't want students to see the admin menu ever.
-            $canmanageacts = has_capability('moodle/course:manageactivities', $PAGE->context);
+            // Editing teachers are identified as people who can manage activities and non editing teachers as those who
+            // can view the gradebook. As editing teachers are almost certain to also be able to view the gradebook, the
+            // grader:view capability is checked first.
+            $caps = ['gradereport/grader:view', 'moodle/course:manageactivities'];
+            $canmanageacts = has_any_capability($caps, $PAGE->context);
             $isstudent = !$canmanageacts && !is_role_switched($COURSE->id);
             if ($isstudent) {
                 return;
@@ -80,7 +84,7 @@ class settings_link implements \renderable {
                 }
             }
         }
-        
+
         if (!has_capability('moodle/block:view', \context_block::instance($this->instanceid))) {
             return;
         }

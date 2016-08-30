@@ -137,7 +137,7 @@ define(['jquery', 'core/log', 'core/templates', 'core/notification'], function($
 
                 // Set common params.
                 params.sesskey = M.cfg.sesskey;
-                params.courseId = M.theme_snap.courseid;
+                params.courseId = M.theme_snap.courseconfig.id;
                 params.field = 'move';
 
                 log.debug('Making course/rest.php request', params);
@@ -189,7 +189,7 @@ define(['jquery', 'core/log', 'core/templates', 'core/notification'], function($
 
                 addAjaxLoading($(parent).find('.snap-meta'), true);
 
-                var courseid = M.theme_snap.courseid;
+                var courseid = M.theme_snap.courseconfig.id;
 
                 $.ajax({
                     type: "POST",
@@ -201,7 +201,7 @@ define(['jquery', 'core/log', 'core/templates', 'core/notification'], function($
                     },
                     error: function() {
                         var message = M.util.get_string('error:failedtochangeassetvisibility', 'theme_snap');
-                        notification.alert(null, message, M.util.get_string('ok'));
+                        notification.alert(null, message, M.util.get_string('ok', 'moodle'));
                     },
                     success: function() {
                         if (show) {
@@ -315,7 +315,7 @@ define(['jquery', 'core/log', 'core/templates', 'core/notification'], function($
                     var id = parent.attr('id').replace('module-', '');
                     addAjaxLoading($(parent).find('.snap-meta'), true);
 
-                    var courseid = M.theme_snap.courseid;
+                    var courseid = M.theme_snap.courseconfig.id;
 
                     var courserest = M.cfg.wwwroot + '/course/rest.php';
 
@@ -329,7 +329,7 @@ define(['jquery', 'core/log', 'core/templates', 'core/notification'], function($
                         },
                         error: function() {
                             var message = M.util.get_string('error:failedtoduplicateasset', 'theme_snap');
-                            notification.alert(null, message, M.util.get_string('ok'));
+                            notification.alert(null, message, M.util.get_string('ok', 'moodle'));
                         },
                         success: function(data) {
                             $(data.fullcontent).insertAfter(parent);

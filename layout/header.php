@@ -51,10 +51,12 @@ echo $OUTPUT->doctype();
 
 // Output course cover image?
 if ($COURSE->id != SITEID) {
-    $courseimagecss = \theme_snap\local::course_coverimage_css($COURSE->id);
+    $coverimagecss = \theme_snap\local::course_coverimage_css($COURSE->id);
+} else {
+    $coverimagecss = \theme_snap\local::site_coverimage_css();
 }
-if (!empty($courseimagecss)) {
-    echo "<style>$courseimagecss</style>";
+if (!empty($coverimagecss)) {
+    echo "<style>$coverimagecss</style>";
 }
 ?>
 
@@ -64,4 +66,4 @@ if (!empty($courseimagecss)) {
 
 <?php echo $OUTPUT->standard_top_of_body_html() ?>
 
-<?php include(__DIR__.'/nav.php'); ?>
+<?php require(__DIR__.'/nav.php');

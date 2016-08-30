@@ -54,12 +54,12 @@ echo $OUTPUT->doctype() ?>
                 <li><?php echo $OUTPUT->page_heading_menu(); ?></li>
                 <li class="navbar-text">
                     <?php
-                        if (method_exists($OUTPUT, 'user_menu')) {
-                            echo $OUTPUT->user_menu(); // user_menu, for Moodle 2.8
-                        } else {
-                            echo $OUTPUT->login_info(); // login_info, Moodle 2.7 and before
-                        }
-                     ?>
+                    if (method_exists($OUTPUT, 'user_menu')) {
+                        echo $OUTPUT->user_menu(); // user_menu, for Moodle 2.8
+                    } else {
+                        echo $OUTPUT->login_info(); // login_info, Moodle 2.7 and before
+                    }
+                        ?>
                 </li>
             </ul>
         </div>
@@ -72,20 +72,18 @@ echo $OUTPUT->doctype() ?>
         <?php echo $OUTPUT->page_heading(); ?>
     </header>
 
-    <div id="page-content" class="row">
-        <div id="region-bs-main-and-pre" class="col-md-9">
-            <div class="row-fluid">
-                <section id="region-main" class="col-md-8 pull-right">
-                    <?php echo $OUTPUT->main_content(); ?>
-                </section>
-                <?php echo $OUTPUT->blocks('side-pre', 'col-md-4 desktop-first-column'); ?>
-            </div>
-        </div>
-        <?php echo $OUTPUT->blocks('side-post', 'col-md-3'); ?>
-    </div>
+<div id="page">
+<div id="page-content">
 
+<main id="moodle-page" class="clearfix">
+    <section id="region-main">
+        <?php echo $OUTPUT->main_content(); ?>
+    </section>
+    <?php echo $OUTPUT->blocks('side-pre'); ?>
     <?php echo $OUTPUT->standard_end_of_body_html() ?>
+</main>
 
+</div>
 </div>
 </body>
 </html>

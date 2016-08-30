@@ -122,6 +122,137 @@ class local {
     }
 
     /**
+     * Get course categories for a specific course.
+     * Based on code in moodle_page class - functions set_category_by_id and load_category.
+     * @param stdClass $course
+     * @return array
+     * @throws moodle_exception
+     */
+    public static function get_course_categories($course) {
+        global $DB;
+
+        if ($course->id === SITEID) {
+            return [];
+        }
+
+        $categories = [];
+        $category = $DB->get_record('course_categories', array('id' => $course->category));
+        if (!$category) {
+            throw new \moodle_exception('unknowncategory');
+        }
+        $categories[$category->id] = $category;
+        $parentcategoryids = explode('/', trim($category->path, '/'));
+        array_pop($parentcategoryids);
+        foreach (array_reverse($parentcategoryids) as $catid) {
+            $categories[$catid] = null;
+        }
+
+        // Load up all parent categories.
+        $idstoload = array_keys($categories);
+        array_shift($idstoload);
+        $parentcategories = $DB->get_records_list('course_categories', 'id', $idstoload);
+        foreach ($idstoload as $catid) {
+            $categories[$catid] = $parentcategories[$catid];
+        }
+
+        return $categories;
+    }
+
+    /**
+     * This has been taken directly from the moodle_page class but modified to work independently.
+     * It's used by config.php so that hacks can be targetted at just the snap theme.
+     * Work out the theme this page should use.
+     *
+     * This depends on numerous $CFG settings, and the properties of this page.
+     *
+     * @return string the name of the theme that should be used on this page.
+     */
+    public static function resolve_theme() {
+        global $CFG, $USER, $SESSION, $COURSE;
+
+        if (empty($CFG->themeorder)) {
+            $themeorder = array('course', 'category', 'session', 'user', 'site');
+        } else {
+            $themeorder = $CFG->themeorder;
+            // Just in case, make sure we always use the site theme if nothing else matched.
+            $themeorder[] = 'site';
+        }
+
+        $mnetpeertheme = '';
+        if (isloggedin() and isset($CFG->mnet_localhost_id) and $USER->mnethostid != $CFG->mnet_localhost_id) {
+            require_once($CFG->dirroot.'/mnet/peer.php');
+            $mnetpeer = new \mnet_peer();
+            $mnetpeer->set_id($USER->mnethostid);
+            if ($mnetpeer->force_theme == 1 && $mnetpeer->theme != '') {
+                $mnetpeertheme = $mnetpeer->theme;
+            }
+        }
+
+        $deviceinuse = \core_useragent::get_device_type();
+        $devicetheme = \core_useragent::get_device_type_theme($deviceinuse);
+
+        // The user is using another device than default, and we have a theme for that, we should use it.
+        $hascustomdevicetheme = \core_useragent::DEVICETYPE_DEFAULT != $deviceinuse && !empty($devicetheme);
+
+        foreach ($themeorder as $themetype) {
+            switch ($themetype) {
+                case 'course':
+                    if (!empty($CFG->allowcoursethemes) && !empty($COURSE->theme) && !$hascustomdevicetheme) {
+                        return $COURSE->theme;
+                    }
+                    break;
+
+                case 'category':
+                    if (!empty($CFG->allowcategorythemes) && !$hascustomdevicetheme) {
+                        $categories = self::get_course_categories($COURSE);
+                        foreach ($categories as $category) {
+                            if (!empty($category->theme)) {
+                                return $category->theme;
+                            }
+                        }
+                    }
+                    break;
+
+                case 'session':
+                    if (!empty($SESSION->theme)) {
+                        return $SESSION->theme;
+                    }
+                    break;
+
+                case 'user':
+                    if (!empty($CFG->allowuserthemes) && !empty($USER->theme) && !$hascustomdevicetheme) {
+                        if ($mnetpeertheme) {
+                            return $mnetpeertheme;
+                        } else {
+                            return $USER->theme;
+                        }
+                    }
+                    break;
+
+                case 'site':
+                    if ($mnetpeertheme) {
+                        return $mnetpeertheme;
+                    }
+                    // First try for the device the user is using.
+                    if (!empty($devicetheme)) {
+                        return $devicetheme;
+                    }
+                    // Next try for the default device (as a fallback).
+                    $devicetheme = \core_useragent::get_device_type_theme(\core_useragent::DEVICETYPE_DEFAULT);
+                    if (!empty($devicetheme)) {
+                        return $devicetheme;
+                    }
+                    // The default device theme isn't set up - use the overall default theme.
+                    return \theme_config::DEFAULT_THEME;
+            }
+        }
+
+        // We should most certainly have resolved a theme by now. Something has gone wrong.
+        debugging('Error resolving the theme to use for this page.', DEBUG_DEVELOPER);
+        return \theme_config::DEFAULT_THEME;
+    }
+
+    /**
      * Get course completion progress for specific course.
      * NOTE: It is by design that even teachers get course completion progress, this is so that they see exactly the
      * same as a student would in the personal menu.
@@ -164,7 +295,7 @@ class local {
         }
 
         if ($trackcount > 0) {
-            $progresspercent = ceil(($compcount/$trackcount)*100);
+            $progresspercent = ceil(($compcount / $trackcount) * 100);
         } else {
             $progresspercent = 0;
         }
@@ -197,7 +328,7 @@ class local {
                 'course' => $courseid,
                 'completion' => self::course_completion_progress($course),
                 'feedback' => self::course_feedback($course),
-                'feedbackurl' =>  $feedbackurl->out()
+                'feedbackurl' => $feedbackurl->out()
             );
         }
         return $courseinfo;
@@ -232,7 +363,7 @@ class local {
                     $capability = 'mod/feedback:complete';
                     break;
                 default:
-                    // If no modname is specified, assume a count of all users is required
+                    // If no modname is specified, assume a count of all users is required.
                     $capability = '';
             }
 
@@ -283,7 +414,6 @@ class local {
                        AND m.timeusertodeleted = 0
         )
           ORDER BY timecreated DESC";
-
 
         $params = array(
             'userid1' => $userid,
@@ -484,6 +614,10 @@ class local {
                 // Not an activity deadline.
                 continue;
             }
+            if ($event->eventtype === 'open' && $event->timeduration == 0) {
+                // Only the opening of multi-day event, not a deadline.
+                continue;
+            }
             if (!empty($event->modulename)) {
                 $modinfo = get_fast_modinfo($event->courseid);
                 $mods = $modinfo->get_instances_of($event->modulename);
@@ -491,6 +625,10 @@ class local {
                     $cminfo = $mods[$event->instance];
                     if (!$cminfo->uservisible) {
                         continue;
+                    }
+                    if ($event->eventtype === 'close') {
+                        // Revert the addition of e.g. "(Quiz closes)" to the event name.
+                        $event->name = $cminfo->name;
                     }
                 }
             }
@@ -533,7 +671,7 @@ class local {
                 $modname = get_string('modulename', $event->modulename);
                 $modimage = \html_writer::img($modimageurl, $modname);
 
-                $meta = $output->friendly_datetime($event->timestart);
+                $meta = $output->friendly_datetime($event->timestart + $event->timeduration);
 
                 $o .= $output->snap_media_object($cm->url, $modimage, $eventtitle, $meta, '');
             }
@@ -797,9 +935,48 @@ class local {
     }
 
     /**
+     * Get supported cover image types.
+     * @return array
+     */
+    public static function supported_coverimage_types() {
+        global $CFG;
+        $extsstr = strtolower($CFG->courseoverviewfilesext);
+
+        // Supported file extensions.
+        $extensions = explode(',', str_replace('.', '', $extsstr));
+        array_walk($extensions, function($s) {trim($s); });
+        // Filter out any extensions that might be in the config but not image extensions.
+        $imgextensions = ['jpg', 'png', 'gif', 'svg', 'webp'];
+        return array_intersect ($extensions, $imgextensions);
+    }
+
+    /**
+     * Get supported cover image types as a string.
+     * @return array
+     */
+    public static function supported_coverimage_typesstr() {
+        $supportedexts = self::supported_coverimage_types();
+        $extsstr = '';
+        $typemaps = [
+            'jpeg' => 'image/jpeg',
+            'jpg'  => 'image/jpeg',
+            'gif'  => 'image/gif',
+            'png'  => 'image/png',
+            'svg'  => 'image/svg'
+        ];
+        foreach ($supportedexts as $ext) {
+            if (in_array($ext, $supportedexts) && isset($typemaps[$ext])) {
+                $extsstr .= $extsstr == '' ? '' : ',';
+                $extsstr .= $typemaps[$ext];
+            }
+        }
+        return $extsstr;
+    }
+
+    /**
      * Get cover image for context
      *
-     * @param $context
+     * @param \context $context
      * @return bool|stored_file
      * @throws \coding_exception
      */
@@ -807,11 +984,19 @@ class local {
         $contextid = $context->id;
         $fs = get_file_storage();
 
+        if ($context->contextlevel === CONTEXT_SYSTEM) {
+            if (!self::site_coverimage_original()) {
+                return false;
+            }
+        }
+
         $files = $fs->get_area_files($contextid, 'theme_snap', 'coverimage', 0, "itemid, filepath, filename", false);
         if (!$files) {
             return false;
         }
         if (count($files) > 1) {
+            // Note this is a coding exception and not a moodle exception because there should never be more than one
+            // file in this area, where as the course summary files area can in some circumstances have more than on file.
             throw new \coding_exception('Multiple files found in course coverimage area (context '.$contextid.')');
         }
         return (end($files));
@@ -870,8 +1055,11 @@ class local {
         $theme = \theme_config::load('snap');
         $filename = $theme->settings->poster;
         if ($filename) {
+            if (substr($filename, 0, 1) != '/') {
+                $filename = '/'.$filename;
+            }
             $syscontextid = \context_system::instance()->id;
-            $fullpath = "/$syscontextid/theme_snap/poster/0$filename";
+            $fullpath = '/'.$syscontextid.'/theme_snap/poster/0'.$filename;
             $fs = get_file_storage();
             return $fs->get_file_by_hash(sha1($fullpath));
         } else {
@@ -898,37 +1086,37 @@ class local {
     /**
      * Adds the site cover image to CSS.
      *
-     * @param string $css The CSS to process.
-     * @return string The parsed CSS
+     * @return string cover image CSS
      */
-    public static function site_coverimage_css($css) {
-        $tag = '[[setting:poster]]';
-        $replacement = '';
-
+    public static function site_coverimage_css() {
         $coverurl = self::site_coverimage_url();
-        if ($coverurl) {
-            $replacement = "#page-site-index #page-header, #page-login-index #page {background-image: url($coverurl);}";
+        if (!$coverurl) {
+            return '';
         }
-
-        $css = str_replace($tag, $replacement, $css);
-        return $css;
+        return "#page-site-index #page-header, #page-login-index #page {background-image: url($coverurl);}";
     }
 
     /**
      * Copy coverimage file to standard location and name.
      *
-     * @param stored_file $file
+     * @param context $context
+     * @param stored_file $originalfile
      * @return stored_file|bool
      */
-    public static function process_coverimage($context) {
-        if ($context->contextlevel == CONTEXT_SYSTEM) {
-            $originalfile = self::site_coverimage_original($context);
-            $newfilename = "site-image";
-        } else if ($context->contextlevel == CONTEXT_COURSE) {
-            $originalfile = self::get_course_firstimage($context->instanceid);
-            $newfilename = "course-image";
-        } else {
+    public static function process_coverimage($context, $originalfile = false) {
+
+        $contextlevel = $context->contextlevel;
+        if ($contextlevel != CONTEXT_SYSTEM && $contextlevel != CONTEXT_COURSE) {
             throw new \coding_exception('Invalid context passed to process_coverimage');
+        }
+        $newfilename = $contextlevel == CONTEXT_SYSTEM ? 'site-image' : 'course-image';
+
+        if (!$originalfile) {
+            if ($contextlevel == CONTEXT_SYSTEM) {
+                $originalfile = self::site_coverimage_original($context);
+            } else {
+                $originalfile = self::get_course_firstimage($context->instanceid);
+            }
         }
 
         $fs = get_file_storage();
@@ -959,6 +1147,7 @@ class local {
         } else {
             return $newfile;
         }
+
     }
 
     /**
@@ -1073,20 +1262,6 @@ class local {
         } else {
             $USER = array_pop($origuser);
         }
-    }
-
-    /**
-     * Sort recent forum activity by timestamp.
-     *
-     * @param int $a
-     * @param int $b
-     * @return int
-     */
-    private static function sort_timestamp($a, $b) {
-        if ($a->timestamp === $b->timestamp) {
-            return 0;
-        }
-        return ($a->timestamp > $b->timestamp ? -1 : 1);
     }
 
     /**
@@ -1241,7 +1416,7 @@ class local {
         }
 
         $sql = '-- Snap sql'. "\n".implode ("\n".' UNION ALL '."\n", $sqls);
-        if (count($sqls)>1) {
+        if (count($sqls) > 1) {
             $sql .= "\n".' ORDER BY modified DESC';
         }
         $posts = $DB->get_records_sql($sql, $params, 0, $limit);
