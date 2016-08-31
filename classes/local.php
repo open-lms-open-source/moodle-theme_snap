@@ -1297,7 +1297,7 @@ class local {
                 $user = $DB->get_record('user', ['id' => $userorid]);
             }
         } else {
-            throw new coding_exception('paramater $userorid must be an object or an integer or a numeric string');
+            throw new \coding_exception('paramater $userorid must be an object or an integer or a numeric string');
         }
 
         return $user;
