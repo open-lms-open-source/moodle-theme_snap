@@ -15,23 +15,19 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Snap folderview format renderer.
+ * Snap weeks format renderer.
  *
  * @package   theme_snap
  * @copyright Copyright (c) 2015 Moodlerooms Inc. (http://www.moodlerooms.com)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-require_once($CFG->dirroot.'/course/format/folderview/renderer.php');
 
-class theme_snap_format_folderview_renderer extends format_folderview_renderer {
+namespace theme_snap\output;
 
-    protected function end_section_list() {
-        $output = html_writer::end_tag('ul');
-        $output .= "<section id='coursetools' class='clearfix' tabindex='-1'>";
-        $output .= snap_shared::coursetools_svg_icons();
-        $output .= snap_shared::appendices();
-        $output .= "</section>";
-        return $output;
-    }
+defined('MOODLE_INTERNAL') || die();
+
+class format_weeks_renderer extends \format_weeks_renderer {
+
+    use format_section_trait;
 
 }

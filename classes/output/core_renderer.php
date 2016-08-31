@@ -22,10 +22,18 @@
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+namespace theme_snap\output;
+
 defined('MOODLE_INTERNAL') || die();
-require_once('toc_renderer.php');
 require_once($CFG->libdir.'/coursecatlib.php');
 
+use stdClass;
+use context_course;
+use context_system;
+use DateTime;
+use html_writer;
+use moodle_url;
+use user_picture;
 use theme_snap\local;
 use theme_snap\services\course;
 use theme_snap\renderables\settings_link;
@@ -35,7 +43,7 @@ use theme_snap\renderables\course_card;
 require_once($CFG->dirroot.'/theme/snap/classes/renderables/login_alternative_methods.php');
 use theme_snap\renderables\login_alternative_methods;
 
-class theme_snap_core_renderer extends toc_renderer {
+class core_renderer extends toc_renderer {
 
     public function course_footer() {
         global $DB, $COURSE, $CFG, $PAGE;
@@ -49,7 +57,7 @@ class theme_snap_core_renderer extends toc_renderer {
         $courseteachers = '';
         $coursesummary = '';
 
-        $clist = new course_in_list($COURSE);
+        $clist = new \course_in_list($COURSE);
         $teachers = $clist->get_course_contacts();
 
         if (!empty($teachers)) {
@@ -307,7 +315,7 @@ class theme_snap_core_renderer extends toc_renderer {
         }
         $url = new \moodle_url('/local/geniusws/login.php');
 
-        $linkcontent = $this->render(new pix_icon('sso', get_string('blackboard', 'local_geniusws'), 'local_geniusws')).
+        $linkcontent = $this->render(new \pix_icon('sso', get_string('blackboard', 'local_geniusws'), 'local_geniusws')).
                 get_string('dashboard', 'local_geniusws');
         $html = html_writer::link($url, $linkcontent, ['class' => 'bb_dashboard_link']);
 
@@ -317,7 +325,7 @@ class theme_snap_core_renderer extends toc_renderer {
 
     /**
      * Get badge renderer.
-     * @return null|theme_snap_message_badge_renderer
+     * @return null|message_badge_renderer
      */
     protected function get_badge_renderer() {
         global $PAGE;
@@ -330,7 +338,7 @@ class theme_snap_core_renderer extends toc_renderer {
 
         try {
             $badgerend = $PAGE->get_renderer('message_badge');
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $badgerend = null;
         }
 
@@ -338,7 +346,7 @@ class theme_snap_core_renderer extends toc_renderer {
         // render is loaded instead - e.g. when you initially switch to the snap theme.
         // This results in the fixy menu button looking broken as it shows the badge in its original format as opposed
         // to the overriden format provided by the snap message badge renderer.
-        if (!$badgerend instanceof theme_snap_message_badge_renderer) {
+        if (!$badgerend instanceof \theme_snap\output\message_badge_renderer) {
             $badgerend = null;
         }
 
@@ -373,7 +381,7 @@ class theme_snap_core_renderer extends toc_renderer {
         }
         $badgerend = $this->get_badge_renderer();
         $badges = '';
-        if ($badgerend && $badgerend instanceof theme_snap_message_badge_renderer) {
+        if ($badgerend && $badgerend instanceof \theme_snap\output\message_badge_renderer) {
             $badges = '<div class="alert_stream">
                 '.$badgerend->messagestitle().'
                     <div class="message_badge_container"></div>
@@ -658,8 +666,8 @@ class theme_snap_core_renderer extends toc_renderer {
 
     /**
      * @param course_card $card
-     * @return str
-     * @throws moodle_exception
+     * @return string
+     * @throws \moodle_exception
      */
     public function render_course_card(course_card $card) {
         return $this->render_from_template('theme_snap/course_cards', $card);
@@ -667,7 +675,7 @@ class theme_snap_core_renderer extends toc_renderer {
 
     /**
      * @param login_alternative_methods $methods
-     * @return str
+     * @return string
      */
     public function render_login_alternative_methods(login_alternative_methods $methods) {
         if (empty($methods->potentialidps)) {
@@ -911,10 +919,10 @@ class theme_snap_core_renderer extends toc_renderer {
         foreach ($this->page->navbar->get_items() as $item) {
             $item->hideicon = true;
 
-            if ($item->type == navigation_node::TYPE_COURSE) {
+            if ($item->type == \navigation_node::TYPE_COURSE) {
                 $courseitem = $item;
             }
-            if ($item->type == navigation_node::TYPE_SECTION) {
+            if ($item->type == \navigation_node::TYPE_SECTION) {
                 if ($courseitem != null) {
 
                     $url = $courseitem->action->out(false);
@@ -944,8 +952,8 @@ class theme_snap_core_renderer extends toc_renderer {
     /**
      * Cover image selector.
      * @return bool|null|string
-     * @throws coding_exception
-     * @throws moodle_exception
+     * @throws \coding_exception
+     * @throws \moodle_exception
      */
     public function cover_image_selector() {
         global $PAGE;
@@ -1023,7 +1031,7 @@ class theme_snap_core_renderer extends toc_renderer {
      *
      * @return string
      */
-    protected function render_custom_menu(custom_menu $menu) {
+    protected function render_custom_menu(\custom_menu $menu) {
         if (!$menu->has_children()) {
             return '';
         }
@@ -1047,7 +1055,7 @@ class theme_snap_core_renderer extends toc_renderer {
      *
      * @return string
      */
-    protected function render_custom_menu_item(custom_menu_item $menunode) {
+    protected function render_custom_menu_item(\custom_menu_item $menunode) {
         $content = html_writer::start_tag('li');
         if ($menunode->get_url() !== null) {
             $url = $menunode->get_url();
@@ -1082,7 +1090,7 @@ class theme_snap_core_renderer extends toc_renderer {
             print_error('cannotfindorcreateforum', 'forum');
         }
         $cm      = get_coursemodule_from_instance('forum', $forum->id, $SITE->id, false, MUST_EXIST);
-        $context = context_module::instance($cm->id, MUST_EXIST);
+        $context = \context_module::instance($cm->id, MUST_EXIST);
 
         $output  = html_writer::start_tag('div', array('id' => 'site-news-forum', 'class' => 'clearfix'));
         $output .= $this->heading(format_string($forum->name, true, array('context' => $context)));
@@ -1178,7 +1186,8 @@ HTML;
 
         return $output;
     }
-    protected function render_tabtree(tabtree $tabtree) {
+
+    protected function render_tabtree(\tabtree $tabtree) {
         if (empty($tabtree->subtree)) {
             return '';
         }
@@ -1192,7 +1201,7 @@ HTML;
         return html_writer::tag('ul', $firstrow, array('class' => 'nav nav-tabs nav-justified')) . $secondrow;
     }
 
-    protected function render_tabobject(tabobject $tab) {
+    protected function render_tabobject(\tabobject $tab) {
         if ($tab->selected or $tab->activated) {
             return html_writer::tag('li', html_writer::tag('a', $tab->text), array('class' => 'active'));
         } else if ($tab->inactive) {
@@ -1271,21 +1280,21 @@ HTML;
      */
     public function confirm($message, $continue, $cancel) {
         if (is_string($continue)) {
-            $continue = new single_button(new moodle_url($continue), get_string('continue'), 'post');
+            $continue = new \single_button(new moodle_url($continue), get_string('continue'), 'post');
         } else if ($continue instanceof moodle_url) {
-            $continue = new single_button($continue, get_string('continue'), 'post');
-        } else if (!$continue instanceof single_button) {
-            throw new coding_exception(
+            $continue = new \single_button($continue, get_string('continue'), 'post');
+        } else if (!$continue instanceof \single_button) {
+            throw new \coding_exception(
                 'The continue param to $OUTPUT->confirm() must be either a URL (string/moodle_url) or a single_button instance.'
             );
         }
 
         if (is_string($cancel)) {
-            $cancel = new single_button(new moodle_url($cancel), get_string('cancel'), 'get');
+            $cancel = new \single_button(new moodle_url($cancel), get_string('cancel'), 'get');
         } else if ($cancel instanceof moodle_url) {
-            $cancel = new single_button($cancel, get_string('cancel'), 'get');
-        } else if (!$cancel instanceof single_button) {
-            throw new coding_exception(
+            $cancel = new \single_button($cancel, get_string('cancel'), 'get');
+        } else if (!$cancel instanceof \single_button) {
+            throw new \coding_exception(
                 'The cancel param to $OUTPUT->confirm() must be either a URL (string/moodle_url) or a single_button instance.'
             );
         }
@@ -1317,7 +1326,7 @@ HTML;
         $blockcontents = $this->page->blocks->get_content_for_region($region, $this);
         if (!empty($this->page->theme->settings->hidenavblock) && !defined('BEHAT_SITE_RUNNING')) {
             $blockcontents = array_filter($blockcontents, function ($bc) {
-                if (!$bc instanceof block_contents) {
+                if (!$bc instanceof \block_contents) {
                     return true;
                 }
                 $isnavblock = strpos($bc->attributes['class'], 'block_navigation') !== false;
@@ -1335,13 +1344,13 @@ HTML;
         $output = '';
 
         foreach ($blockcontents as $bc) {
-            if ($bc instanceof block_contents) {
+            if ($bc instanceof \block_contents) {
                     $output .= $this->block($bc, $region);
                     $lastblock = $bc->title;
-            } else if ($bc instanceof block_move_target) {
+            } else if ($bc instanceof \block_move_target) {
                 $output .= $this->block_move_target($bc, $zones, $lastblock, $region);
             } else {
-                throw new coding_exception('Unexpected type of thing (' . get_class($bc) . ') found in list of block contents.');
+                throw new \coding_exception('Unexpected type of thing (' . get_class($bc) . ') found in list of block contents.');
             }
         }
         return $output;
@@ -1387,17 +1396,6 @@ HTML;
             $output .= $this->snap_media_object($url, $picture, $fullname, $meta, $formattedsubject);
         }
         return $output;
-    }
-
-}
-
-class theme_snap_core_renderer_ajax extends core_renderer_ajax {
-
-    public function pix_url($imagename, $component = 'moodle') {
-        // Strip -24, -64, -256  etc from the end of filetype icons so we
-        // only need to provide one SVG, see MDL-47082.
-        $imagename = \preg_replace('/-\d\d\d?$/', '', $imagename);
-        return $this->page->theme->pix_url($imagename, $component);
     }
 
 }

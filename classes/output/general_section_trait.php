@@ -15,19 +15,35 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Snap topics format renderer.
- *
+ * General section trait.
+ * @author    gthomas2
  * @package   theme_snap
  * @copyright Copyright (c) 2015 Moodlerooms Inc. (http://www.moodlerooms.com)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+namespace theme_snap\output;
+
 defined('MOODLE_INTERNAL') || die();
-require_once($CFG->dirroot.'/course/format/topics/renderer.php');
-require_once('format_section_trait.php');
 
-class theme_snap_format_topics_renderer extends format_topics_renderer {
+trait general_section_trait {
 
-    use format_section_trait;
+    /**
+     * Is a section conditional
+     *
+     * @author Guy Thomas
+     * @param \section_info $section
+     * @param bool $checkdates
+     * @return bool
+     */
+    protected function is_section_conditional(\section_info $section) {
+        // Are there any conditional fields populated?
+        if (!empty($section->availableinfo)
+            || !empty(json_decode($section->availability)->c)) {
+            return true;
+        }
+        // OK - this isn't conditional.
+        return false;
+    }
 
 }

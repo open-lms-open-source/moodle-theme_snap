@@ -24,10 +24,12 @@
  */
 
 defined('MOODLE_INTERNAL') || die();
+
+use \theme_snap\output\shared;
+
 global $CFG;
 
 require_once(__DIR__.'/../../../local/mr/bootstrap.php');
-require_once($CFG->dirroot.'/theme/snap/renderers/snap_shared.php');
 
 class theme_snap_gradebookaccess_testcase extends advanced_testcase {
 
@@ -56,11 +58,11 @@ class theme_snap_gradebookaccess_testcase extends advanced_testcase {
 
         // Check functionality of gradebook_accessible.
         $coursecontext = context_course::instance($course1->id);
-        $isavailable = snap_shared::gradebook_accessible($coursecontext);
+        $isavailable = shared::gradebook_accessible($coursecontext);
         $this->assertTrue($isavailable);
 
         $this->setUser($student); // Set the student as active user.
-        $isavailable = snap_shared::gradebook_accessible($coursecontext);
+        $isavailable = shared::gradebook_accessible($coursecontext);
         $this->assertTrue($isavailable); // As long as showgrades is active, must be available for studs.
     }
 
@@ -89,11 +91,11 @@ class theme_snap_gradebookaccess_testcase extends advanced_testcase {
 
         // Check functionality of gradebook_accessible.
         $coursecontext = context_course::instance($course2->id);
-        $isavailable = snap_shared::gradebook_accessible($coursecontext);
+        $isavailable = shared::gradebook_accessible($coursecontext);
         $this->assertTrue($isavailable);
 
         $this->setUser($student); // Set the student as active user.
-        $isavailable = snap_shared::gradebook_accessible($coursecontext);
+        $isavailable = shared::gradebook_accessible($coursecontext);
         $this->assertFalse($isavailable); // As long as showgrades is not active, mustn't be available for studs.
     }
 }
