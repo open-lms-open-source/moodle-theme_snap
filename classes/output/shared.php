@@ -353,7 +353,7 @@ class shared extends \renderer_base {
         $unavailablesections = [];
         $unavailablemods = [];
         if ($cancomplete) {
-            $completioninfo = new completion_info($COURSE);
+            $completioninfo = new \completion_info($COURSE);
             if ($completioninfo->is_enabled()) {
                 $modinfo = get_fast_modinfo($COURSE);
                 $sections= $modinfo->get_section_info_all();
