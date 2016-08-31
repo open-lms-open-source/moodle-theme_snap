@@ -23,23 +23,30 @@
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+namespace theme_snap\output\core;
+
 defined('MOODLE_INTERNAL') || die();
 
-require_once($CFG->dirroot . "/course/renderer.php");
-require_once($CFG->dirroot . "/mod/book/locallib.php");
-require_once($CFG->libdir . "/gradelib.php");
-
+use cm_info;
+use context_course;
+use context_module;
+use html_writer;
+use moodle_url;
+use stdClass;
 use theme_snap\activity;
 use theme_snap\activity_meta;
 
-class theme_snap_core_course_renderer extends core_course_renderer {
+require_once($CFG->dirroot . "/mod/book/locallib.php");
+require_once($CFG->libdir . "/gradelib.php");
+
+class course_renderer extends \core_course_renderer {
     /**
      * override course render for course module list items
      * add additional classes to list item (see $modclass)
      *
      * @author: SL / GT
      * @param stdClass $course
-     * @param completion_info $completioninfo
+     * @param \completion_info $completioninfo
      * @param cm_info $mod
      * @param int|null $sectionreturn
      * @param array $displayoptions
@@ -161,9 +168,9 @@ class theme_snap_core_course_renderer extends core_course_renderer {
      * {@link course_get_cm_edit_actions()}
      * {@link core_course_renderer::course_section_cm_edit_actions()}
      *
-     * @param stdClass $course
-     * @param completion_info $completioninfo
-     * @param cm_info $mod
+     * @param \stdClass $course
+     * @param \completion_info $completioninfo
+     * @param \cm_info $mod
      * @param int|null $sectionreturn
      * @param array $displayoptions
      * @return string
@@ -870,7 +877,7 @@ class theme_snap_core_course_renderer extends core_course_renderer {
     protected function course_get_cm_edit_actions(cm_info $mod, $sr = null) {
         $actions = course_get_cm_edit_actions($mod, -1, $sr);
         $actions = array_filter($actions, function($action) {
-            return !($action instanceof action_menu_filler);
+            return !($action instanceof \action_menu_filler);
         });
         $rename = course_get_cm_rename_action($mod, $mod->indent, $sr);
         $edittitle = get_string('edittitle');
@@ -894,7 +901,7 @@ class theme_snap_core_course_renderer extends core_course_renderer {
      * Generates a notification if course format is not topics or weeks the user is editing and is a teacher/mananger.
      *
      * @return string
-     * @throws coding_exception
+     * @throws \coding_exception
      */
     public function course_format_warning() {
         global $COURSE, $PAGE, $OUTPUT;

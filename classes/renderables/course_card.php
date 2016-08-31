@@ -54,12 +54,12 @@ class course_card implements \renderable {
     public $courseid;
 
     /**
-     * @var str $fullname
+     * @var string $fullname
      */
     public $fullname;
 
     /**
-     * @var str $shortname
+     * @var string $shortname
      */
     public $shortname;
 

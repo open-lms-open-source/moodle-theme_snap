@@ -28,7 +28,7 @@ defined('MOODLE_INTERNAL') || die();
 $PAGE->set_popup_notification_allowed(false);
 
 // Require standard page js.
-snap_shared::page_requires_js();
+\theme_snap\output\shared::page_requires_js();
 
 echo $OUTPUT->doctype();
 ?>

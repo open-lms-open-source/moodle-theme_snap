@@ -15,30 +15,29 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Renderer overrides
+ * Snap folderview format renderer.
  *
  * @package   theme_snap
  * @copyright Copyright (c) 2015 Moodlerooms Inc. (http://www.moodlerooms.com)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-defined('MOODLE_INTERNAL') || die();
+namespace theme_snap\output;
 
-require_once(__DIR__.'/renderers/snap_shared.php');
-require_once(__DIR__.'/renderers/core_renderer.php');
-require_once(__DIR__.'/renderers/course_renderer.php');
-require_once(__DIR__.'/renderers/course_management_renderer.php');
-require_once(__DIR__.'/renderers/course_format_topics_renderer.php');
-require_once(__DIR__.'/renderers/course_format_weeks_renderer.php');
+use html_writer;
+use theme_snap\output\shared;
 
-// Only include folderview renderer if available.
-if (file_exists($CFG->dirroot.'/course/format/folderview/renderer.php')) {
-    require_once(__DIR__.'/renderers/course_format_folderview_renderer.php');
-}
+require_once($CFG->dirroot.'/course/format/folderview/renderer.php');
 
-require_once(__DIR__.'/renderers/files_renderer.php');
+class format_folderview_renderer extends \format_folderview_renderer {
 
-// Include badge renderer if it should be.
-if (file_exists($CFG->dirroot.'/message/output/badge/renderer.php')) {
-    require_once(__DIR__.'/renderers/message_badge_renderer.php');
+    protected function end_section_list() {
+        $output = html_writer::end_tag('ul');
+        $output .= "<section id='coursetools' class='clearfix' tabindex='-1'>";
+        $output .= shared::coursetools_svg_icons();
+        $output .= shared::appendices();
+        $output .= "</section>";
+        return $output;
+    }
+
 }

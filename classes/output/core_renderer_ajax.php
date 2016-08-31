@@ -15,19 +15,24 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Snap weeks format renderer.
+ * Snap core renderer for ajax calls.
  *
  * @package   theme_snap
  * @copyright Copyright (c) 2015 Moodlerooms Inc. (http://www.moodlerooms.com)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+namespace theme_snap\output;
+
 defined('MOODLE_INTERNAL') || die();
-require_once($CFG->dirroot.'/course/format/weeks/renderer.php');
-require_once('format_section_trait.php');
 
-class theme_snap_format_weeks_renderer extends format_weeks_renderer {
+class core_renderer_ajax extends \core_renderer_ajax {
 
-    use format_section_trait;
+    public function pix_url($imagename, $component = 'moodle') {
+        // Strip -24, -64, -256  etc from the end of filetype icons so we
+        // only need to provide one SVG, see MDL-47082.
+        $imagename = \preg_replace('/-\d\d\d?$/', '', $imagename);
+        return $this->page->theme->pix_url($imagename, $component);
+    }
 
 }

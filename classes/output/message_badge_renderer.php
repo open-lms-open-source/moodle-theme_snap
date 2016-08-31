@@ -22,11 +22,16 @@
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+namespace theme_snap\output;
+
 defined('MOODLE_INTERNAL') || die();
+
+use moodle_url;
+use html_writer;
 
 require_once($CFG->dirroot.'/message/output/badge/renderer.php');
 
-class theme_snap_message_badge_renderer extends message_badge_renderer {
+class message_badge_renderer extends \message_badge_renderer {
 
     /**
      * The javascript module used by the presentation layer
@@ -89,7 +94,7 @@ class theme_snap_message_badge_renderer extends message_badge_renderer {
             return $this->mobile($userid);
         }
 
-        $repo       = new message_output_badge_repository_message();
+        $repo       = new \message_output_badge_repository_message();
         $forwardurl = new moodle_url('/message/output/badge/view.php', array('action' => 'forward', 'courseid' => $COURSE->id));
         $total      = $repo->count_user_unread_messages($userid);
 
@@ -126,10 +131,10 @@ class theme_snap_message_badge_renderer extends message_badge_renderer {
     /**
      * Render a single message
      *
-     * @param message_output_badge_model_message $message
+     * @param \message_output_badge_model_message $message
      * @return string
      */
-    public function render_message_output_badge_model_message(message_output_badge_model_message $message) {
+    public function render_message_output_badge_model_message(\message_output_badge_model_message $message) {
         global $COURSE;
 
         $text = $this->message_text($message);
@@ -161,7 +166,7 @@ class theme_snap_message_badge_renderer extends message_badge_renderer {
     /**
      * Render messages
      *
-     * @param message_output_badge_model_message[] $messages
+     * @param \message_output_badge_model_message[] $messages
      * @return string
      */
     public function messages(array $messages) {

@@ -22,10 +22,15 @@
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-defined('MOODLE_INTERNAL') || die();
-require_once('general_section_trait.php');
+namespace theme_snap\output;
 
-class toc_renderer extends core_renderer {
+use context_course;
+use moodle_url;
+use html_writer;
+
+defined('MOODLE_INTERNAL') || die();
+
+class toc_renderer extends \core_renderer {
 
     use general_section_trait;
 
@@ -44,8 +49,8 @@ class toc_renderer extends core_renderer {
 
     /**
      * toc progress percentage
-     * @param stdClass $section
-     * @param stdClass $course
+     * @param \stdClass $section
+     * @param \stdClass $course
      * @param boolean $perc - display as a percentage if true
      * @return string
      *
@@ -57,11 +62,11 @@ class toc_renderer extends core_renderer {
 
         require_once($CFG->libdir.'/completionlib.php');
 
-        $completioninfo = new completion_info($course);
+        $completioninfo = new \completion_info($course);
         if (!$completioninfo->is_enabled()) {
             return ''; // Completion tracking not enabled.
         }
-        $sac = snap_shared::section_activity_summary($section, $course, null);
+        $sac = shared::section_activity_summary($section, $course, null);
         if (!empty($sac->progress)) {
             if ($perc) {
                 $percentage = $sac->progress->percentage != null ? round($sac->progress->percentage, 0).'%' : '';

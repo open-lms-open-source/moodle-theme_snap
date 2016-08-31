@@ -22,11 +22,18 @@
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+namespace theme_snap\output;
+
 defined('MOODLE_INTERNAL') || die();
 
+use context_course;
+use core_component;
+use html_writer;
+use moodle_url;
+use stdClass;
 use theme_snap\local;
 
-class snap_shared extends renderer_base {
+class shared extends \renderer_base {
 
     /**
      * Taken from /format/renderer.php
@@ -52,7 +59,7 @@ class snap_shared extends renderer_base {
         $total = 0;
         $complete = 0;
         $cancomplete = isloggedin() && !isguestuser();
-        $completioninfo = new completion_info($course);
+        $completioninfo = new \completion_info($course);
         foreach ($modinfo->sections[$section->section] as $cmid) {
             $thismod = $modinfo->cms[$cmid];
             if ($thismod->uservisible) {
@@ -126,7 +133,7 @@ class snap_shared extends renderer_base {
         $showstatus = optional_param('notifyeditingon', false, PARAM_BOOL);
 
         // Get all handlers.
-        $handler = new dndupload_handler($course, $modnames);
+        $handler = new \dndupload_handler($course, $modnames);
         $jsdata = $handler->get_js_data();
         if (empty($jsdata->types) && empty($jsdata->filehandlers)) {
             return; // No valid handlers - don't enable drag and drop.
@@ -528,7 +535,7 @@ class snap_shared extends renderer_base {
      * @return string
      */
     public static function inline_svg($filename) {
-        return file_get_contents(dirname(dirname(__DIR__)).'/snap/pix/'.$filename);
+        return file_get_contents(dirname(dirname(dirname(__DIR__))).'/snap/pix/'.$filename);
     }
 
     /**
