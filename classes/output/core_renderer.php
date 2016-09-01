@@ -1233,10 +1233,6 @@ HTML;
 
         $classes[] = 'device-type-'.$PAGE->devicetypeinuse;
 
-        $openfixyafterlogin = !empty($PAGE->theme->settings->personalmenulogintoggle);
-        $onfrontpage = ($PAGE->pagetype === 'site-index');
-        $onuserdashboard = ($PAGE->pagetype === 'my-index');
-
         if (isset($SESSION->justloggedin)) {
             $openfixyafterlogin = !empty($PAGE->theme->settings->personalmenulogintoggle);
             $onfrontpage = ($PAGE->pagetype === 'site-index');
