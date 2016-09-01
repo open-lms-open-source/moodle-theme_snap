@@ -86,7 +86,7 @@ Feature: When the moodle theme is set to Snap,
     And "#section-0" "css_element" should not be visible
 
   @javascript
-  Scenario: User accesses a course and is prompted to log in, sees personal menu
+  Scenario: User accesses a course and is prompted to log in, does not see personal menu
     Given the following "courses" exist:
       | fullname | shortname |
       | Course 1 | C1        |
@@ -100,7 +100,9 @@ Feature: When the moodle theme is set to Snap,
     And I set the field "username" to "teacher1"
     And I set the field "password" to "teacher1"
     And I press "Log in"
-    Then "#primary-nav" "css_element" should be visible
-    And I follow "Close"
-    And "#primary-nav" "css_element" should not be visible
+    Then "#primary-nav" "css_element" should not be visible
     And "#section-0" "css_element" should be visible
+    And I am on site homepage
+    And "#primary-nav" "css_element" should not be visible
+    And I am on homepage
+    And "#primary-nav" "css_element" should not be visible
