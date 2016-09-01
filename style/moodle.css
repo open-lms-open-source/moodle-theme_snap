@@ -21147,6 +21147,9 @@ table th img.iconhelp {
   padding: 1em;
 }
 .path-backup .wibbler {
+  border: none;
+}
+.path-backup .wibbler .wibble {
   display: none;
 }
 div.editor_atto_toolbar {
