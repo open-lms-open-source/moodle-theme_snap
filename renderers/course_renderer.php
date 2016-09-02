@@ -94,8 +94,14 @@ class theme_snap_core_course_renderer extends core_course_renderer {
                 $modclasses [] = 'draft';
             }
 
-            $availabilityinfo = $this->course_section_cm_availability($mod, $displayoptions);
             $canviewhidden = has_capability('moodle/course:viewhiddenactivities', $mod->context);
+            // If the module isn't available, or we are a teacher (can view hidden activities) then get availability
+            // info.
+            $availabilityinfo = '';
+            if (!$mod->available || $canviewhidden) {
+                $availabilityinfo = $this->course_section_cm_availability($mod, $displayoptions);
+            }
+
             if ($availabilityinfo !== '' && !$mod->uservisible || $canviewhidden) {
                 $modclasses [] = 'conditional';
             }
@@ -236,7 +242,14 @@ class theme_snap_core_course_renderer extends core_course_renderer {
             // TBD - add a title to show this is the Grouping...
         }
 
-        $availabilityinfo = $this->course_section_cm_availability($mod, $displayoptions);
+        $canviewhidden = has_capability('moodle/course:viewhiddenactivities', $mod->context);
+        // If the module isn't available, or we are a teacher (can view hidden activities) then get availability
+        // info.
+        $availabilityinfo = '';
+        if (!$mod->available || $canviewhidden) {
+            $availabilityinfo = $this->course_section_cm_availability($mod, $displayoptions);
+        }
+        
         if ($availabilityinfo !== '') {
             $conditionalinfo = get_string('conditional', 'theme_snap');
             $assetrestrictions .= "<div class='text text-danger'>$conditionalinfo.$availabilityinfo</div>";

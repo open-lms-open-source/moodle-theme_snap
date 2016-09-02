@@ -294,24 +294,39 @@ class course {
     /**
      * Get coursecompletion data by course shortname.
      * @param string $shortname
+     * @param array $previouslyunavailablesections
      * @param array $previouslyunavailablemods
      * @return array
      */
-    public function course_completion($shortname, $previouslyunavailablemods) {
+    public function course_completion($shortname, $previouslyunavailablesections, $previouslyunavailablemods) {
         global $PAGE;
         $course = $this->coursebyshortname($shortname, 'id');
         list ($unavailablesections, $unavailablemods) = local::conditionally_unavailable_elements($course);
 
+        $newlyavailablesections = array_diff($previouslyunavailablesections, $unavailablesections);
         $newlyavailablemods = array_diff($previouslyunavailablemods, $unavailablemods);
+
+        /** @var \theme_snap_core_course_renderer $courserenderer */
+        $courserenderer = $PAGE->get_renderer('core', 'course', RENDERER_TARGET_GENERAL);
+
+        $newlyavailablesectionhtml = [];
+        if (!empty($newlyavailablesections)) {
+            foreach ($newlyavailablesections as $sectionnumber) {
+                $html = $courserenderer->course_section_cm_list($course, $sectionnumber, $sectionnumber);
+                $newlyavailablesectionhtml[$sectionnumber] = $html;
+            }
+        }
 
         $newlyavailablemodhtml = [];
         if (!empty($newlyavailablemods)) {
             $modinfo = get_fast_modinfo($course);
-            /** @var \theme_snap_core_course_renderer $courserenderer */
-            $courserenderer = $PAGE->get_renderer('core', 'course', RENDERER_TARGET_GENERAL);
             foreach ($newlyavailablemods as $modid) {
                 $completioninfo = new \completion_info($course);
                 $cm = $modinfo->get_cm($modid);
+                if (isset($newlyavailablesectionhtml[$cm->sectionnum])) {
+                    // This module's html has already been included in a newly available section.
+                    continue;
+                }
                 $html = $courserenderer->course_section_cm_list_item($course, $completioninfo, $cm, $cm->sectionnum);
                 $newlyavailablemodhtml[$modid] = $html;
             }
@@ -323,7 +338,8 @@ class course {
         return [
             'unavailablesections' => $unavailablesections,
             'unavailablemods' => $unavailablemods,
-            'newlyavailablemodhtml' => $newlyavailablemodhtml
+            'newlyavailablemodhtml' => $newlyavailablemodhtml,
+            'newlyavailablesectionhtml' => $newlyavailablesectionhtml,
         ];
     }
 }

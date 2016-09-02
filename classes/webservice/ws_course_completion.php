@@ -35,7 +35,8 @@ class ws_course_completion extends \external_api {
     public static function service_parameters() {
         $parameters = [
             'courseshortname' => new \external_value(PARAM_TEXT, 'Course shortname', VALUE_REQUIRED),
-            'unavailablemods' => new \external_value(PARAM_SEQUENCE, 'Unvailable module ids', VALUE_REQUIRED),
+            'unavailablesections' => new \external_value(PARAM_SEQUENCE, 'Unvailable section ids', VALUE_REQUIRED),
+            'unavailablemods' => new \external_value(PARAM_SEQUENCE, 'Unvailable module ids', VALUE_REQUIRED)
         ];
         return new \external_function_parameters($parameters);
     }
@@ -47,6 +48,7 @@ class ws_course_completion extends \external_api {
         $keys = [
             'unavailablesections' => new \external_value(PARAM_SEQUENCE, 'Unavailable sections', VALUE_REQUIRED),
             'unavailablemods' => new \external_value(PARAM_SEQUENCE, 'Unavailable mods', VALUE_REQUIRED),
+            'newlyavailablesectionhtml' => new \external_multiple_structure(new \external_value(PARAM_RAW, 'html'), 'Newly available sections', VALUE_REQUIRED),
             'newlyavailablemodhtml' => new \external_multiple_structure(new \external_value(PARAM_RAW, 'html'), 'Newly available mods', VALUE_REQUIRED)
         ];
 
@@ -55,13 +57,15 @@ class ws_course_completion extends \external_api {
 
     /**
      * @param string $courseshortname
+     * @param string $unavailablesections
      * @param string $unavailablemods
      * @return array
      */
-    public static function service($courseshortname, $unavailablemods) {
+    public static function service($courseshortname, $unavailablesections, $unavailablemods) {
         $service = course::service();
+        $previouslyunavailablesections = !empty($unavailablesections) ? explode(',', $unavailablesections) : [];
         $previouslyunavailablemods = !empty($unavailablemods) ? explode(',', $unavailablemods) : [];
-        $coursecompletion = $service->course_completion($courseshortname, $previouslyunavailablemods);
+        $coursecompletion = $service->course_completion($courseshortname, $previouslyunavailablesections, $previouslyunavailablemods);
         return $coursecompletion;
     }
 }

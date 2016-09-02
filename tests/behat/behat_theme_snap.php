@@ -539,7 +539,13 @@ class behat_theme_snap extends behat_base {
      * @Given /^I should not see availability info "(?P<str>(?:[^"]|\\")*)"$/
      */
     public function i_dont_see_availabilityinfo($str) {
-        $nodes = $this->find_all('css', '.availabilityinfo');
+        try {
+            $nodes = $this->find_all('css', '.availabilityinfo');
+        } catch (Exception $e) {
+            if (empty($nodes)) {
+                return;
+            }
+        }
         foreach ($nodes as $node) {
             /** @var NodeElement $node */
             if ($node->getText() === $str) {
