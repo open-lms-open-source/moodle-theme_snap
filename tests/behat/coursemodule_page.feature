@@ -59,9 +59,13 @@ Feature: Open page module inline
   @javascript
   Scenario: Page mod completion updates on read more and affects availability for other modules and sections.
     Given the following "activities" exist:
-      | activity | course | idnumber | name            | intro                 | content                 | completion | completionview |
-      | page     | C1     | pagec    | Page completion | Page completion intro | Page completion content | 2          | 1              |
-      | page     | C1     | pager    | Page restricted | Page restricted intro | Page restricted content | 0          | 0              |
+      | activity | course | idnumber  | name              | intro                 | content                 | completion | completionview | section |
+      | page     | C1     | pagec     | Page completion   | Page completion intro | Page completion content | 2          | 1              | 0       |
+      | page     | C1     | pager     | Page restricted   | Page restricted intro | Page restricted content | 0          | 0              | 0       |
+      | page     | C1     | pagec2    | Page completion 2 | Page comp2      intro | Page comp2      content | 2          | 1              | 1       |
+    And the following "activities" exist:
+      | activity | course | idnumber     | name            | section |
+      | assign   | C1     | assigntest   | Assignment Test | 2       |
     And I log in as "admin" (theme_snap)
     And I open the personal menu
     And I follow "Course 1"
@@ -72,24 +76,41 @@ Feature: Open page module inline
     And I click on "#section-1 .edit-summary" "css_element"
     And I set the field "name" to "Topic 1"
     And I apply asset completion restriction "Page completion" to section
+    And I follow "Topic 2"
+    And I click on "#section-2 .edit-summary" "css_element"
+    And I set the field "name" to "Topic 2"
+    And I apply asset completion restriction "Page completion 2" to section
     And I log out (theme_snap)
     And I log in as "student1" (theme_snap)
     And I open the personal menu
     And I follow "Course 1"
-    And I should not see "page content2"
+    Then I should not see "page content2"
     And "span.autocompletion img[title='Not completed: Page completion']" "css_element" should exist
     And I should see availability info "Not available unless: The activity Page completion is marked complete"
     And I follow "Topic 1"
     # Make sure topic 1 show section availability info.
-    And I should see availability info "Not available unless: The activity Page completion is marked complete"
+    Then I should see availability info "Not available unless: The activity Page completion is marked complete"
     And I follow "Introduction"
-    And I follow "Read more&nbsp;»"
-    And I wait until ".pagemod-content[data-content-loaded=\"1\"]" "css_element" is visible
+    And I follow visible link "Read more&nbsp;»"
+    And I wait until "#section-0 .pagemod-content[data-content-loaded=\"1\"]" "css_element" is visible
     # The above step basically waits for the page module content to load up.
-    And I should see "Page completion content"
+    Then I should see "Page completion content"
     And I should not see availability info "Not available unless: The activity Page completion is marked complete"
     And "span.autocompletion img[title='Not completed: Page completion']" "css_element" should not exist
     And "span.autocompletion img[title='Completed: Page completion']" "css_element" should exist
     And I follow "Topic 1"
     # Make sure topic 1 does not show section availability info.
-    And I should not see availability info "Not available unless: The activity Page completion is marked complete"
+    Then I should not see availability info "Not available unless: The activity Page completion is marked complete"
+    And I should see "Page completion 2"
+    # Test chained conditional release.
+    And I follow "Topic 2"
+    Then I should see availability info "Not available unless: The activity Page completion 2 is marked complete"
+    And I follow "Topic 1"
+    And "span.autocompletion img[title='Not completed: Page completion 2']" "css_element" should exist
+    And I follow visible link "Read more&nbsp;»"
+    And I wait until "#section-1 .pagemod-content[data-content-loaded=\"1\"]" "css_element" is visible
+    Then "span.autocompletion img[title='Not completed: Page completion 2']" "css_element" should not exist
+    And "span.autocompletion img[title='Completed: Page completion 2']" "css_element" should exist
+    And I follow "Topic 2"
+    Then I should not see availability info "Not available unless: The activity Page completion 2 is marked complete"
+    And I should see "Assignment Test"

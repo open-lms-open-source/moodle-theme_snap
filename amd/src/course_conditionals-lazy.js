@@ -36,39 +36,54 @@ define(['jquery', 'core/ajax', 'core/notification'], function($, ajax, notificat
                         methodname: 'theme_snap_course_completion',
                         args: {
                             courseshortname: courseshortname,
+                            unavailablesections: currentlyUnavailableSections.join(','),
                             unavailablemods: currentlyUnavailableMods.join(',')
                         },
                         done: function(response) {
-                            var arrayDiff = function(arr1, arr2) {
-                                var ret = arr1.filter(function(val) {
-                                    return arr2.indexOf(val)==-1;
-                                });
-                                return ret;
-                            };
 
                             // Remove availability warnings for sections.
-                            var unavailableSections = [],
-                                newlyAvailableSections = [];
-                            if (response.unavailablesections !== '') {
-                                unavailableSections = response.unavailablesections.split(',').map(Number);
-                            }
-                            newlyAvailableSections = arrayDiff(currentlyUnavailableSections, unavailableSections);
-                            for (var s in newlyAvailableSections) {
-                                var sectionId = newlyAvailableSections[s];
-                                $('#section-' + sectionId + ' .content > .snap-restrictions-meta').remove();
-                            }
-
-                            // We can't use the same technique as sections for mods as some mods will need content adding.
-                            if (Object.keys(response.newlyavailablemodhtml).length) {
-                                var newlyAvailableHTML = response.newlyavailablemodhtml;
-                                for (var modId in newlyAvailableHTML) {
-                                    var modhtml = newlyAvailableHTML[modId];
-                                    $('#module-' + modId).replaceWith(modhtml);
+                            if (Object.keys(response.newlyavailablesectionhtml).length) {
+                                for (var s in response.newlyavailablesectionhtml) {
+                                     $('#section-' + s + ' .content > .snap-restrictions-meta').remove();
                                 }
                             }
 
+                            /**
+                             * Update elements with newly available html.
+                             * Elements can either be sections or modules.
+                             *
+                             * @param {object} availableHTML - response json
+                             * @param {string} typeKey - string (either 'section' or 'module')
+                             */
+                            var updateNewlyAvailableHTML = function(availableHTML, typeKey) {
+                                if (!Object.keys(availableHTML).length) {
+                                    // There are no newly available elements which require updating.
+                                    return;
+                                }
+                                for (var id in availableHTML) {
+                                    var html = availableHTML[id];
+                                    var baseSelector = '#' + typeKey + '-' + id;
+                                    if (typeKey === 'module') {
+                                        $(baseSelector).replaceWith(html);
+                                    } else {
+                                        if ($(baseSelector + ' ul.section').length) {
+                                            $(baseSelector + ' ul.section').replaceWith(html);
+                                        } else {
+                                            $(baseSelector + ' nav.section_footer').before(html);
+                                        }
+                                        $(baseSelector + ' > .snap-restrictions-meta .text-danger').replaceWith('');
+                                    }
+                                }
+                            };
+
+                            // Update newly available sections with released html.
+                            updateNewlyAvailableHTML(response.newlyavailablesectionhtml, 'section');
+
+                            // Update newly available modules with released html.
+                            updateNewlyAvailableHTML(response.newlyavailablemodhtml, 'module');
+               
                             // Update current state.
-                            currentlyUnavailableSections = unavailableSections.map(Number);
+                            currentlyUnavailableSections = response.unavailablesections.split(',').map(Number);
                             currentlyUnavailableMods = response.unavailablemods.split(',').map(Number);
 
                         },
