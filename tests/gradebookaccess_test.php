@@ -27,10 +27,6 @@ defined('MOODLE_INTERNAL') || die();
 
 use \theme_snap\output\shared;
 
-global $CFG;
-
-require_once(__DIR__.'/../../../local/mr/bootstrap.php');
-
 class theme_snap_gradebookaccess_testcase extends advanced_testcase {
 
     public function test_gradebookaccess_gradesavailableforstuds() {

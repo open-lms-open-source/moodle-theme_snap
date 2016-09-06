@@ -989,7 +989,7 @@ class core_renderer extends toc_renderer {
             // This is intentional.
             $heading = $COURSE->fullname;
             $heading = html_writer::link($courseurl, $heading);
-            $heading = html_writer::tag($tag, $heading); 
+            $heading = html_writer::tag($tag, $heading);
         } else {
             // Default heading.
             $heading = html_writer::tag($tag, $heading);
@@ -1233,12 +1233,15 @@ HTML;
 
         $classes[] = 'device-type-'.$PAGE->devicetypeinuse;
 
-        $openfixyafterlogin = !empty($PAGE->theme->settings->personalmenulogintoggle);
-
-        if (!isguestuser() && isset($SESSION->justloggedin) && $openfixyafterlogin) {
-            unset($SESSION->justloggedin);
-            $classes[] = 'snap-fixy-open';
+        if (isset($SESSION->justloggedin)) {
+            $openfixyafterlogin = !empty($PAGE->theme->settings->personalmenulogintoggle);
+            $onfrontpage = ($PAGE->pagetype === 'site-index');
+            $onuserdashboard = ($PAGE->pagetype === 'my-index');
+            if ($openfixyafterlogin && !isguestuser() && ($onfrontpage || $onuserdashboard)) {
+                $classes[] = 'snap-fixy-open';
+            }
         }
+        unset($SESSION->justloggedin);
 
         // Define the page types we want to purge yui classes from the body  - e.g. local-joulegrader-view,
         // local-pld-view, etc.
