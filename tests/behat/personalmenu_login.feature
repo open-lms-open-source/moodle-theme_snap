@@ -88,14 +88,15 @@ Feature: When the moodle theme is set to Snap,
   @javascript
   Scenario: User logs in and sees the primary menu on site homepage, if that setting used
     Given the following config values are set as admin:
-      | defaulthomepage | site |
+      | defaulthomepage | 0 |
+      | defaulthomepage | 0 |
     And I follow "Log in"
     And I set the field "username" to "teacher1"
     And I set the field "password" to "teacher1"
     And I press "Log in"
     Then "#primary-nav" "css_element" should be visible
     And I follow "Close"
-    And I should see "Course overview"
+    Then "#page-site-index #page-header" "css_element" should be visible
 
   @javascript
   Scenario: User accesses a course and is prompted to log in, does not see personal menu
