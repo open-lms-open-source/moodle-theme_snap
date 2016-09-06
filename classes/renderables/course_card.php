@@ -182,23 +182,19 @@ class course_card implements \renderable {
             }
         }
 
-        if (!empty($avatars + $blankavatars)) {
-            // Let's put the interesting avatars first!
-            $avatars = array_merge($avatars, $blankavatars);
-            // Limit visible to 4.
-            if (count($avatars) > 5) {
-                // Show 4 avatars and link to show more.
-                $visibleavatars = array_slice($avatars, 0, 4);
-                $hiddenavatars = array_slice($avatars, 4);
-                $this->showextralink = true;
-            } else {
-                $visibleavatars = $avatars;
-                $hiddenavatars = [];
-            }
-            $this->visibleavatars = $visibleavatars;
-            $this->hiddenavatars = $hiddenavatars;
+        // Let's put the interesting avatars first!
+        $avatars = array_merge($avatars, $blankavatars);
+        if (count($avatars) > 5) {
+            // Show 4 avatars and link to show more.
+            $visibleavatars = array_slice($avatars, 0, 4);
+            $hiddenavatars = array_slice($avatars, 4);
+            $this->showextralink = true;
+        } else {
+            $visibleavatars = $avatars;
+            $hiddenavatars = [];
         }
-
+        $this->visibleavatars = $visibleavatars;
+        $this->hiddenavatars = $hiddenavatars;
         $this->hiddenavatarcount = count($this->hiddenavatars);
     }
 

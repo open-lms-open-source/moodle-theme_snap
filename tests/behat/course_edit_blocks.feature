@@ -30,7 +30,6 @@ Feature: When the moodle theme is set to Snap, teachers only see block edit cont
       | fullname | shortname | category | format |
       | Course 1 | C1        | 0        | topics |
       | Course 2 | C2        | 0        | weeks  |
-      | Course 3 | C3        | 0        | folderview  |
     And the following "users" exist:
       | username | firstname | lastname | email |
       | teacher1 | Teacher   | 1        | teacher1@example.com |
@@ -39,7 +38,6 @@ Feature: When the moodle theme is set to Snap, teachers only see block edit cont
       | admin    | C1     | editingteacher |
       | teacher1 | C1     | editingteacher |
       | teacher1 | C2     | editingteacher |
-      | teacher1 | C3     | editingteacher |
 
   @javascript
   Scenario: In read mode on a topics course, teacher clicks edit blocks and can edit blocks.
@@ -96,7 +94,14 @@ Feature: When the moodle theme is set to Snap, teachers only see block edit cont
     Then I should see "Edit course blocks"
 
   @javascript
-  Scenario: In edit mode on a folderview course, teacher can see sections whilst editting on.
+  Scenario: In edit mode on a folderview course, teacher can see sections whilst editing on.
+    Given I am using Joule
+    And the following "courses" exist:
+      | fullname | shortname | category | format     |
+      | Course 3 | C3        | 0        | folderview |
+    And the following "course enrolments" exist:
+      | user     | course | role           |
+      | teacher1 | C3     | editingteacher |
     Given I log in as "teacher1" (theme_snap)
     And I open the personal menu
     And I follow "Course 3"

@@ -108,6 +108,19 @@ class behat_theme_snap extends behat_base {
     }
 
     /**
+     * Checks if running in a Joule system, skips the test if not.
+     *
+     * @Given /^I am using Joule$/
+     * @return void
+     */
+    public function i_am_using_joule() {
+        global $CFG;
+        if (!file_exists($CFG->dirroot.'/local/mrooms')) {
+            throw new SkippedException("Skipping tests of Joule specific functionality");
+        }
+    }
+
+    /**
      * Waits until the provided element selector is visible.
      *
      * @Given /^I wait until "(?P<element_string>(?:[^"]|\\")*)" "(?P<selector_string>[^"]*)" is visible$/
@@ -481,7 +494,7 @@ class behat_theme_snap extends behat_base {
     public function apply_section_completion_restriction($assettitle) {
         $this->apply_completion_restriction($assettitle, 'Save changes');
     }
-    
+
     /**
      * Apply asset completion restriction when edit form is shown.
      * @param string $assettitle
