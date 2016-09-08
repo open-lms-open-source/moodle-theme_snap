@@ -100,7 +100,7 @@ a:hover,
     &:hover,
     &:focus {
         outline: 0;
-        
+
         img {
             border-color: @brand-primary;
         }
@@ -273,6 +273,10 @@ button#livelogs-pause-button,
 input[type="submit"],
 button[type="submit"],
 input[type="reset"],
+.gradingform_checklist.editor .addgroup input,
+.gradingform_checklist.editor .additem input,
+.gradingform_rubric.editor .addlevel input,
+.gradingform_rubric.editor .addcriterion input,
 #page-site-index .section-modchooser-link .section-modchooser-text {
     font-family: @font-family-base;
     transition: all 0.4s ease-in-out;
@@ -366,7 +370,7 @@ input[type="reset"],
 }
 
 #toc-search-input {
-    
+
     &:hover {
         border-color: @brand-primary;
     }
@@ -516,18 +520,6 @@ a[href="#sections"] {
 
 img.iconhelp:hover {
     background-color: @brand-primary;
-}
-
-.gradingform_checklist.editor .addgroup input,
-.gradingform_checklist.editor .additem input,
-.gradingform_rubric.editor .addlevel input,
-.gradingform_rubric.editor .addcriterion input {
-    background-color: @brand-primary;
-
-    &:hover {
-        background-color: darken(@brand-primary, 8%);
-        border-color: darken(@brand-primary, 12%);
-    }
 }
 
 .progress .bar,
