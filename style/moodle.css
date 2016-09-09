@@ -18786,13 +18786,19 @@ ol#chapters li.current a {
 }
 .mform .fitem.fitem_fcheckbox:not(#fitem_id_onlygraded) .fitemtitle {
   display: inline;
+  padding-left: 0;
+}
+.mform .fitem.fitem_fcheckbox:not(#fitem_id_onlygraded) .fitemtitle :not(#page-grade-export-xml-index) {
   float: none;
   width: auto;
-  padding-left: 0;
 }
 .mform .fitem.fitem_fcheckbox:not(#fitem_id_onlygraded) .fcheckbox {
   width: auto;
   padding-right: 0;
+}
+#page-grade-export-xml-index .fitem.fitem_fcheckbox .fitemtitle {
+  float: left;
+  width: 25%;
 }
 .femptylabel > .fitemtitle {
   display: none;
