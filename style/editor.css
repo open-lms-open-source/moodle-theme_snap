@@ -6586,6 +6586,7 @@ table#user-grades tr.avg td.cell {
   vertical-align: middle;
   touch-action: manipulation;
   cursor: pointer;
+  background-image: none;
   border: 1px solid transparent;
   white-space: nowrap;
   padding: 6px 16px;
@@ -6600,10 +6601,6 @@ table#user-grades tr.avg td.cell {
   background-color: transparent;
   border-color: #03A9F4;
   height: auto;
-  background-image: none;
-  color: #fff;
-  border: none;
-  margin-top: 0.5em;
 }
 .gradingform_checklist.editor .addgroup input:focus,
 .gradingform_checklist.editor .additem input:focus,
@@ -6860,13 +6857,6 @@ fieldset[disabled] .gradingform_rubric.editor .addcriterion input.active {
 .gradingform_rubric.editor .addcriterion input .badge {
   color: transparent;
   background-color: #03A9F4;
-}
-.gradingform_checklist.editor .addgroup input:hover,
-.gradingform_checklist.editor .additem input:hover,
-.gradingform_rubric.editor .addlevel input:hover,
-.gradingform_rubric.editor .addcriterion input:hover {
-  color: #fff;
-  border: none;
 }
 .gradingform_rubric.editor .criterion .levels .level .delete {
   position: relative;
@@ -10498,6 +10488,10 @@ button#livelogs-pause-button,
 input[type="submit"],
 button[type="submit"],
 input[type="reset"],
+.gradingform_checklist.editor .addgroup input,
+.gradingform_checklist.editor .additem input,
+.gradingform_rubric.editor .addlevel input,
+.gradingform_rubric.editor .addcriterion input,
 #page-site-index .section-modchooser-link .section-modchooser-text {
   font-family: "Roboto", "Fira Sans", "Segoe UI", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif;
   transition: all 0.4s ease-in-out;
@@ -10536,6 +10530,10 @@ button#livelogs-pause-button:visited,
 input[type="submit"]:visited,
 button[type="submit"]:visited,
 input[type="reset"]:visited,
+.gradingform_checklist.editor .addgroup input:visited,
+.gradingform_checklist.editor .additem input:visited,
+.gradingform_rubric.editor .addlevel input:visited,
+.gradingform_rubric.editor .addcriterion input:visited,
 #page-site-index .section-modchooser-link .section-modchooser-text:visited {
   color: #03A9F4;
 }
@@ -10570,6 +10568,10 @@ button#livelogs-pause-button:hover,
 input[type="submit"]:hover,
 button[type="submit"]:hover,
 input[type="reset"]:hover,
+.gradingform_checklist.editor .addgroup input:hover,
+.gradingform_checklist.editor .additem input:hover,
+.gradingform_rubric.editor .addlevel input:hover,
+.gradingform_rubric.editor .addcriterion input:hover,
 #page-site-index .section-modchooser-link .section-modchooser-text:hover,
 #course-category-listings .listing-pagination .yui3-button:focus,
 .paging.paging-morelink a:focus,
@@ -10602,6 +10604,10 @@ button#livelogs-pause-button:focus,
 input[type="submit"]:focus,
 button[type="submit"]:focus,
 input[type="reset"]:focus,
+.gradingform_checklist.editor .addgroup input:focus,
+.gradingform_checklist.editor .additem input:focus,
+.gradingform_rubric.editor .addlevel input:focus,
+.gradingform_rubric.editor .addcriterion input:focus,
 #page-site-index .section-modchooser-link .section-modchooser-text:focus,
 #course-category-listings .listing-pagination .yui3-button:active,
 .paging.paging-morelink a:active,
@@ -10634,6 +10640,10 @@ button#livelogs-pause-button:active,
 input[type="submit"]:active,
 button[type="submit"]:active,
 input[type="reset"]:active,
+.gradingform_checklist.editor .addgroup input:active,
+.gradingform_checklist.editor .additem input:active,
+.gradingform_rubric.editor .addlevel input:active,
+.gradingform_rubric.editor .addcriterion input:active,
 #page-site-index .section-modchooser-link .section-modchooser-text:active,
 #course-category-listings .listing-pagination .yui3-button.active,
 .paging.paging-morelink a.active,
@@ -10666,6 +10676,10 @@ button#livelogs-pause-button.active,
 input[type="submit"].active,
 button[type="submit"].active,
 input[type="reset"].active,
+.gradingform_checklist.editor .addgroup input.active,
+.gradingform_checklist.editor .additem input.active,
+.gradingform_rubric.editor .addlevel input.active,
+.gradingform_rubric.editor .addcriterion input.active,
 #page-site-index .section-modchooser-link .section-modchooser-text.active {
   background-color: #03A9F4;
   color: #fff;
@@ -10703,6 +10717,10 @@ button#livelogs-pause-button[disabled],
 input[type="submit"][disabled],
 button[type="submit"][disabled],
 input[type="reset"][disabled],
+.gradingform_checklist.editor .addgroup input[disabled],
+.gradingform_checklist.editor .additem input[disabled],
+.gradingform_rubric.editor .addlevel input[disabled],
+.gradingform_rubric.editor .addcriterion input[disabled],
 #page-site-index .section-modchooser-link .section-modchooser-text[disabled] {
   opacity: 0.65;
 }
@@ -10881,19 +10899,6 @@ a[href="#sections"] {
 }
 img.iconhelp:hover {
   background-color: #03A9F4;
-}
-.gradingform_checklist.editor .addgroup input,
-.gradingform_checklist.editor .additem input,
-.gradingform_rubric.editor .addlevel input,
-.gradingform_rubric.editor .addcriterion input {
-  background-color: #03A9F4;
-}
-.gradingform_checklist.editor .addgroup input:hover,
-.gradingform_checklist.editor .additem input:hover,
-.gradingform_rubric.editor .addlevel input:hover,
-.gradingform_rubric.editor .addcriterion input:hover {
-  background-color: #038dcc;
-  border-color: #027fb8;
 }
 .progress .bar,
 .progress-bar:not(progress-bar-info):not(.progress-bar-success):not(.progress-bar-warning):not(.progress-bar-danger) {
