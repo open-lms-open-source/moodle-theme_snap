@@ -1464,11 +1464,9 @@ ol#chapters {
     &.fitem_fcheckbox:not(#fitem_id_onlygraded) {
         .fitemtitle {
             display: inline;
+            float: none;
+            width: auto;
             padding-left: 0;
-            :not(#page-grade-export-xml-index) {
-                float: none;
-                width: auto;
-            }
         }
 
         .fcheckbox {
@@ -1477,9 +1475,19 @@ ol#chapters {
         }
     }
 }
-#page-grade-export-xml-index .fitem.fitem_fcheckbox .fitemtitle{
-    float: left;
-    width: 25%;
+#page-grade-export-xml-index {
+    .mform .fitem {
+        &.fitem.fitem_fcheckbox .fitemtitle{
+            float: left;
+            width: 25%;
+        }
+        .fcheckbox {
+            color: red;
+            input {
+                margin-right: 20px
+            }
+        }
+    }
 }
 .femptylabel > .fitemtitle {
     display: none;
