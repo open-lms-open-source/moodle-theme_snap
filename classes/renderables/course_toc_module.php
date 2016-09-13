@@ -15,17 +15,28 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Theme plugin version definition.
- *
- * @package   theme_snap
- * @copyright Copyright (c) 2015 Moodlerooms Inc. (http://www.moodlerooms.com)
+ * Course toc module search
+ * @author    gthomas2
+ * @copyright Copyright (c) 2016 Moodlerooms Inc. (http://www.moodlerooms.com)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-defined('MOODLE_INTERNAL') || die;
+namespace theme_snap\renderables;
 
-$plugin->version   = 2016042909;
-$plugin->requires  = 2015111604; // Requires this Moodle version (3.0.4).
-$plugin->release   = '3.0.4 (Build: 20160509)';
-$plugin->maturity  = MATURITY_STABLE;
-$plugin->component = 'theme_snap';
+defined('MOODLE_INTERNAL') || die();
+
+class course_toc_module implements \renderable {
+
+    public $modname;
+
+    public $uservisible;
+
+    public $iconurl;
+
+    public $formattedname;
+
+    public $srinfo;
+
+    public $url;
+
+}

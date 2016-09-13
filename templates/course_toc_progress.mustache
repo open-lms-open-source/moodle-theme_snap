@@ -1,0 +1,8 @@
+{{#hasprogress}}
+    <span class="completionstatus outoftotal">
+        {{#completed}}
+        <img class="snap-section-complete" src="{{pixcompleted}}" alt="{{#str}}completed, completion{{/str}}" />
+        {{/completed}}
+        {{#str}} progresstotal, completion, {{progress}} {{/str}}
+    </span>
+{{/hasprogress}}

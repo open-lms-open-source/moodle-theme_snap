@@ -20993,10 +20993,6 @@ http://css-spinners.com/css/spinner/three-quarters.css
   width: 32px;
   height: 32px;
 }
-.spinner-three-quarters:not(:required).spinner-dark {
-  border-color: #03A9F4;
-  border-right-color: transparent;
-}
 /** folderview format **/
 #page-course-view-folderview.jsenabled #tab_addBlock,
 #page-course-view-folderview .section-navigation .jumpmenu {
@@ -21643,9 +21639,38 @@ li.section:focus {
 .snap-section-editing a:hover {
   background-color: #dadada;
 }
-.snap-section-editing img.icon {
-  margin: 0;
-  padding: 0;
+.snap-section-editing a:after {
+  content: ' ';
+  width: 100%;
+  display: inline-block;
+  min-height: 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  -webkit-background-size: 70% 70%;
+          background-size: 70%;
+}
+.snap-section-editing .snap-move:after {
+  background-image: url([[pix:theme|move]]);
+  -webkit-background-size: 100% 100%;
+          background-size: 100%;
+}
+.snap-section-editing .snap-visibility.snap-show:after {
+  background-image: url([[pix:core|i/show]]);
+}
+.snap-section-editing .snap-visibility.snap-hide:after {
+  background-image: url([[pix:core|i/hide]]);
+}
+.snap-section-editing .snap-delete:after {
+  background-image: url([[pix:core|t/delete]]);
+}
+.snap-section-editing .snap-highlight.snap-marker:after {
+  background-image: url([[pix:core|i/marker]]);
+}
+.snap-section-editing .snap-highlight.snap-marked:after {
+  background-image: url([[pix:core|i/marked]]);
+}
+.snap-section-editing .loadingstat {
+  margin-left: 1em;
 }
 .snap-dropzone {
   visibility: hidden;
@@ -24525,6 +24550,10 @@ img.iconhelp:hover {
   color: #fff;
   border-color: #fff;
   background-color: #03A9F4;
+}
+.spinner-three-quarters:not(:required).spinner-dark {
+  border-color: #03A9F4;
+  border-right-color: transparent;
 }
 .behat-site #fixy-user #fixy-logout {
   line-height: 1em;

@@ -13,15 +13,14 @@
 # You should have received a copy of the GNU General Public License
 # along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 #
-# Tests for toggle course section visibility in non edit mode in snap.
+# Tests for toggle course section highlighting in non edit mode in snap.
 #
 # @package    theme_snap
-# @copyright  2015 Guy Thomas <gthomas@moodlerooms.com>
+# @copyright  2016 Guy Thomas <gthomas@moodlerooms.com>
 # @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
 
 @theme @theme_snap
-Feature: When the moodle theme is set to Snap, teachers can toggle the visibility of course sections in read mode and
-  edit mode.
+Feature: When the moodle theme is set to Snap, teachers can toggle the currently higlighted course sections.
 
   Background:
     Given the following config values are set as admin:
@@ -40,29 +39,27 @@ Feature: When the moodle theme is set to Snap, teachers can toggle the visibilit
       | student1 | C1 | student |
 
   @javascript
-  Scenario: In read mode, teacher hides section.
+  Scenario: In read mode, teacher marks section as current.
     Given I log in as "teacher1" (theme_snap)
     And I open the personal menu
     And I follow "Course 1"
     And I wait until the page is ready
     And I follow "Topic 2"
     Then "#section-2" "css_element" should exist
-    And "#section-2.hidden" "css_element" should not exist
-    And I click on "#section-2 .snap-visibility.snap-hide" "css_element"
-    And I wait until "#section-2 .snap-visibility.snap-show" "css_element" exists
-    Then "#section-2.hidden" "css_element" should exist
-    # Note, the Not published to students message is in the 3rd element of the TOC because element 1 is section 0.
-    And I should see "Not published to students" in the "#chapters li:nth-of-type(3)" "css_element"
-    Given I click on "#section-2 .snap-visibility.snap-show" "css_element"
-    And I wait until "#section-2 .snap-visibility.snap-hide" "css_element" exists
-    Then "#section-2.hidden" "css_element" should not exist
-    And I should not see "Not published to students" in the "#chapters li:nth-of-type(3)" "css_element"
+
+    And I click on "#section-2 .snap-highlight.snap-marker" "css_element"
+    And I wait until "#section-2 .snap-highlight.snap-marked" "css_element" exists
+    # Note: nth-of-type(3) corresponds to the second section in the TOC.
+    And I should see "Current" in the "#chapters li:nth-of-type(3)" "css_element"
+    Given I click on "#section-2 .snap-highlight.snap-marked" "css_element"
+    And I wait until "#section-2 .snap-highlight.snap-marker" "css_element" exists
+    Then I should not see "Current" in the "#chapters li:nth-of-type(3)" "css_element"
 
   @javascript
-  Scenario: In read mode, student cannot hide section.
+  Scenario: Student cannot mark section current.
     Given I log in as "student1" (theme_snap)
     And I open the personal menu
     And I follow "Course 1"
     And I wait until the page is ready
     And I follow "Topic 2"
-    Then "#section-2 .snap-visibility" "css_element" should not exist
+    Then "#section-2 .snap-highlight" "css_element" should not exist

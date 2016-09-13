@@ -1,0 +1,23 @@
+<ol id="chapters" class="chapters {{listlarge}}" start="0">
+    {{#chapters}}
+    <li{{#iscurrent}} class="current"{{/iscurrent}}>
+        {{#outputlink}}
+            <a class="{{class}}" href="{{url}}">{{title}}</a>
+        {{/outputlink}}
+        {{^outputlink}}
+            <span class="{{class}}">{{title}}</span>
+        {{/outputlink}}
+        {{#iscurrent}}
+            <span class="text text-success">
+                <small>{{#str}}current, theme_snap{{/str}}</small>
+            </span>
+        {{/iscurrent}}
+        {{> theme_snap/course_toc_progress }}
+        {{#availabilitystatus}}
+        <span class="text {{availabilityclass}}">
+            <small class="published-status">{{availabilitystatus}}</small>
+        </span>
+        {{/availabilitystatus}}
+    </li>
+    {{/chapters}}
+</ol>

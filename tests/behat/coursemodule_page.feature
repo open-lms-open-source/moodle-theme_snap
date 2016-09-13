@@ -85,6 +85,9 @@ Feature: Open page module inline
     And I open the personal menu
     And I follow "Course 1"
     Then I should not see "page content2"
+    # Note: nth-of-type(2) corresponds to the second section in the TOC.
+    And I should see "Conditional" in the "#chapters li:nth-of-type(2)" "css_element"
+    And I should see "Conditional" in the "#chapters li:nth-of-type(3)" "css_element"
     And "span.autocompletion img[title='Not completed: Page completion']" "css_element" should exist
     And I should see availability info "Not available unless: The activity Page completion is marked complete"
     And I follow "Topic 1"
@@ -96,6 +99,7 @@ Feature: Open page module inline
     # The above step basically waits for the page module content to load up.
     Then I should see "Page completion content"
     And I should not see availability info "Not available unless: The activity Page completion is marked complete"
+    And I should not see "Conditional" in the "#chapters li:nth-of-type(2)" "css_element"
     And "span.autocompletion img[title='Not completed: Page completion']" "css_element" should not exist
     And "span.autocompletion img[title='Completed: Page completion']" "css_element" should exist
     And I follow "Topic 1"
@@ -113,4 +117,5 @@ Feature: Open page module inline
     And "span.autocompletion img[title='Completed: Page completion 2']" "css_element" should exist
     And I follow "Topic 2"
     Then I should not see availability info "Not available unless: The activity Page completion 2 is marked complete"
+    And I should not see "Conditional" in the "#chapters li:nth-of-type(3)" "css_element"
     And I should see "Assignment Test"

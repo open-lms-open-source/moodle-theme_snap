@@ -22,12 +22,12 @@
 /**
  * Course conditionals function.
  */
-define(['jquery', 'core/ajax', 'core/notification'], function($, ajax, notification) {
+define(['jquery', 'core/ajax', 'core/notification', 'core/templates'], function($, ajax, notification, templates) {
     
     // Main function.
-    var init = function(courseshortname) {
-        var currentlyUnavailableSections = M.theme_snap.courseconfig.unavailablesections.map(Number),
-        currentlyUnavailableMods =  M.theme_snap.courseconfig.unavailablemods.map(Number);
+    var init = function(courseConfig) {
+        var currentlyUnavailableSections = courseConfig.unavailablesections.map(Number),
+        currentlyUnavailableMods =  courseConfig.unavailablemods.map(Number);
 
         $(document).on( "modulecompleted",
             function() {
@@ -35,7 +35,7 @@ define(['jquery', 'core/ajax', 'core/notification'], function($, ajax, notificat
                     {
                         methodname: 'theme_snap_course_completion',
                         args: {
-                            courseshortname: courseshortname,
+                            courseshortname: courseConfig.shortname,
                             unavailablesections: currentlyUnavailableSections.join(','),
                             unavailablemods: currentlyUnavailableMods.join(',')
                         },
@@ -81,6 +81,12 @@ define(['jquery', 'core/ajax', 'core/notification'], function($, ajax, notificat
 
                             // Update newly available modules with released html.
                             updateNewlyAvailableHTML(response.newlyavailablemodhtml, 'module');
+
+                            // Update TOC.
+                            templates.render('theme_snap/course_toc', response.toc)
+                                .done(function(result) {
+                                    $('#course-toc').replaceWith(result);
+                                });
                
                             // Update current state.
                             currentlyUnavailableSections = response.unavailablesections.split(',').map(Number);

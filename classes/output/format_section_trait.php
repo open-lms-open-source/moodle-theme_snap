@@ -32,6 +32,10 @@ use context_course;
 use html_writer;
 use moodle_url;
 use stdClass;
+use theme_snap\renderables\course_action_section_move;
+use theme_snap\renderables\course_action_section_visibility;
+use theme_snap\renderables\course_action_section_delete;
+use theme_snap\renderables\course_action_section_highlight;
 
 trait format_section_trait {
 
@@ -130,9 +134,6 @@ trait format_section_trait {
             return [];
         }
 
-        $coursecontext = context_course::instance($course->id);
-        $isstealth = isset($course->numsections) && ($section->section > $course->numsections);
-
         if ($onsectionpage) {
             $baseurl = course_get_url($course, $section->section);
         } else {
@@ -141,66 +142,18 @@ trait format_section_trait {
         $baseurl->param('sesskey', sesskey());
 
         $controls = array();
+        
+        $moveaction = new course_action_section_move($course, $section, $onsectionpage);
+        $controls[] = $this->render($moveaction);
 
-        if (!$isstealth && !$onsectionpage && has_capability('moodle/course:movesections', $coursecontext)) {
-            $url = '#section-'.$section->section;
-            $snapmovesection = "<img alt='' role='presentation' src='".$this->output->pix_url('move', 'theme')."'>";
-            $movestring = get_string('move', 'theme_snap', format_string($section->name));
-            $controls[] = html_writer::link($url, $snapmovesection ,
-            array('title' => $movestring, 'alt' => $movestring, 'class' => 'snap-move', 'data-id' => $section->section));
-        }
+        $visibilityaction = new course_action_section_visibility($course, $section, $onsectionpage);
+        $controls[] = $this->render($visibilityaction);
 
-        $url = clone($baseurl);
-        if (!$isstealth && has_capability('moodle/course:sectionvisibility', $coursecontext)) {
-            if ($section->visible) { // Show the hide/show eye.
-                $strhidefromothers = get_string('hidefromothers', 'format_'.$course->format);
-                $url->param('hide', $section->section);
-                $controls[] = html_writer::link($url,
-                    html_writer::empty_tag('img', array('src' => $this->output->pix_url('i/hide'),
-                    'class' => 'icon hide', 'alt' => $strhidefromothers)),
-                    array('title' => $strhidefromothers, 'class' => 'editing_showhide'));
-            } else {
-                $strshowfromothers = get_string('showfromothers', 'format_'.$course->format);
-                $url->param('show',  $section->section);
-                $controls[] = html_writer::link($url,
-                    html_writer::empty_tag('img', array('src' => $this->output->pix_url('i/show'),
-                    'class' => 'icon hide', 'alt' => $strshowfromothers)),
-                    array('title' => $strshowfromothers, 'class' => 'editing_showhide'));
-            }
-        }
+        $deleteaction = new course_action_section_delete($course, $section, $onsectionpage);
+        $controls[] = $this->render($deleteaction);
 
-        if (course_can_delete_section($course, $section)) {
-            if (get_string_manager()->string_exists('deletesection', 'format_'.$course->format)) {
-                $strdelete = get_string('deletesection', 'format_'.$course->format);
-            } else {
-                $strdelete = get_string('deletesection');
-            }
-            $url = new moodle_url('/course/editsection.php', array('id' => $section->id,
-                'sr' => $onsectionpage ? $section->section : 0, 'delete' => 1));
-            $controls[] = html_writer::link($url,
-                html_writer::empty_tag('img', array('src' => $this->output->pix_url('t/delete'),
-                    'class' => 'icon delete', 'alt' => $strdelete)),
-                array('title' => $strdelete));
-        }
-
-        if ($course->format === 'topics') {
-            if (!$isstealth && has_capability('moodle/course:setcurrentsection', $coursecontext)) {
-                $url = clone($baseurl);
-                if ($course->marker == $section->section) {  // Show the "light globe" on/off.
-                    $url->param('marker', 0);
-                    $controls[] = html_writer::link($url,
-                        html_writer::empty_tag('img', array('src' => $this->output->pix_url('i/marked'),
-                        'class' => 'icon ', 'alt' => get_string('markedthistopic'))),
-                        array('title' => get_string('markedthistopic'), 'class' => 'editing_highlight'));
-                } else {
-                    $url->param('marker', $section->section);
-                    $controls[] = html_writer::link($url,
-                        html_writer::empty_tag('img', array('src' => $this->output->pix_url('i/marker'),
-                        'class' => 'icon', 'alt' => get_string('markthistopic'))),
-                        array('title' => get_string('markthistopic'), 'class' => 'editing_highlight'));
-                }
-            }
-        }
+        $highlightaction = new course_action_section_highlight($course, $section, $onsectionpage);
+        $controls[] = $this->render($highlightaction);
 
         return $controls;
     }
@@ -285,12 +238,12 @@ trait format_section_trait {
         // Section drop zone.
         $caneditcourse = has_capability('moodle/course:update', $context);
         if ($caneditcourse && $section->section != 0) {
-            $o .= "<a class='snap-drop section-drop' data-id='$section->section' data-title='".
+            $o .= "<a class='snap-drop section-drop' data-title='".
                     s($sectiontitle)."' href='#'>_</a>";
         }
 
         // Section editing commands.
-        $sectiontoolsarray = $this->section_edit_controls($course, $section, false);
+        $sectiontoolsarray = $this->section_edit_controls($course, $section, $sectionreturn);
 
         if (has_capability('moodle/course:update', $context)) {
             if (!empty($sectiontoolsarray)) {
@@ -574,7 +527,7 @@ trait format_section_trait {
      *     option 'inblock' => true, suggesting to display controls vertically
      * @return string
      */
-    function course_section_add_cm_control($course, $section, $sectionreturn = null, $displayoptions = array()) {
+    public function course_section_add_cm_control($course, $section, $sectionreturn = null, $displayoptions = array()) {
         // Check to see if user can add menus and there are modules to add.
         if (!has_capability('moodle/course:manageactivities', context_course::instance($course->id))
                 || !($modnames = get_module_types_names()) || empty($modnames)) {
@@ -608,7 +561,49 @@ trait format_section_trait {
      * @param array $modnamesused (argument not used)
      * @param int $displaysection The section number in the course which is being displayed
      */
-    function print_single_section_page($course, $sections, $mods, $modnames, $modnamesused, $displaysection) {
+    public function print_single_section_page($course, $sections, $mods, $modnames, $modnamesused, $displaysection) {
         return $this->print_multiple_section_page($course, $sections, $mods, $modnames, $modnamesused);
     }
+
+    /**
+     * @param course_action_section_move $action
+     * @return mixed
+     * @throws \moodle_exception
+     */
+    public function render_course_action_section_move(course_action_section_move $action) {
+        $data = $action->export_for_template($this);
+        return $this->render_from_template('theme_snap/course_action_section', $data);
+    }
+
+    /**
+     * @param course_action_section_visibility $action
+     * @return mixed
+     * @throws \moodle_exception
+     */
+    public function render_course_action_section_visibility(course_action_section_visibility $action) {
+        $data = $action->export_for_template($this);
+        return $this->render_from_template('theme_snap/course_action_section', $data);
+    }
+
+    /**
+     * @param course_action_section_highlight $action
+     * @return mixed
+     * @throws \moodle_exception
+     */
+    public function render_course_action_section_highlight(course_action_section_highlight $action) {
+        $data = $action->export_for_template($this);
+        return $this->render_from_template('theme_snap/course_action_section', $data);
+    }
+
+    /**
+     * @param course_action_section_delete $action
+     * @return mixed
+     * @throws \moodle_exception
+     */
+    public function render_course_action_section_delete(course_action_section_delete $action) {
+        $data = $action->export_for_template($this);
+        return $this->render_from_template('theme_snap/course_action_section', $data);
+    }
+
+
 }

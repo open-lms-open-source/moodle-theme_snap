@@ -24,9 +24,9 @@
 /**
  * Main snap initialising function.
  */
-define(['jquery', 'theme_snap/bootstrap', 'core/log', 'theme_snap/headroom', 'theme_snap/personal_menu',
-        'theme_snap/responsive_video', 'theme_snap/section_asset_movement', 'theme_snap/cover_image'],
-    function($, bsjq, log, Headroom, personalMenu, responsiveVideo, sectionAssetMovement, coverImage) {
+define(['jquery', 'theme_snap/bootstrap', 'core/log', 'theme_snap/headroom', 'theme_snap/util', 'theme_snap/personal_menu',
+        'theme_snap/responsive_video', 'theme_snap/cover_image'],
+    function($, bsjq, log, Headroom, util, personalMenu, responsiveVideo, coverImage) {
 
         'use strict';
 
@@ -40,12 +40,6 @@ define(['jquery', 'theme_snap/bootstrap', 'core/log', 'theme_snap/headroom', 'th
          * @type {boolean}
          */
         var loggingenabled = false;
-
-        /**
-         * height of navigation bar
-         * @type {number}
-         */
-        var navheight = $('#mr-nav').outerHeight();
 
         /**
          * timestamp for when window was last resized
@@ -195,27 +189,6 @@ define(['jquery', 'theme_snap/bootstrap', 'core/log', 'theme_snap/headroom', 'th
         };
 
         /**
-         * Scroll to an element on page.
-         * Only ever called by scrollToModule
-         * @param jqueryCollection el
-         * @return void
-         */
-        var scrollToElement = function(el) {
-            if (!el.length) {
-                // Element does not exist so exit.
-                return;
-            }
-            if (el.length > 1) {
-                // If collection has more than one element then exit - we can't scroll to more than one element!
-                return;
-            }
-            var scrtop = el.offset().top - navheight;
-            $('html, body').animate({
-                scrollTop: scrtop
-            }, 600);
-        };
-
-        /**
          * Apply block hash to form actions etc if necessary.
          */
         var applyBlockHash = function() {
@@ -236,7 +209,7 @@ define(['jquery', 'theme_snap/bootstrap', 'core/log', 'theme_snap/headroom', 'th
             if (onCoursePage() && typeof(urlParams.time) !== 'undefined') {
                 location.hash = 'coursetools';
                 if ($('.block_calendar_month')) {
-                    scrollToElement($('.block_calendar_month'));
+                    util.scrollToElement($('.block_calendar_month'));
                 }
             }
 
@@ -335,86 +308,6 @@ define(['jquery', 'theme_snap/bootstrap', 'core/log', 'theme_snap/headroom', 'th
                     }
                 }
                 $('#toc-search-results').html(matches);
-            }
-        };
-
-        /**
-         * Scroll to a mod via search
-         * @param string modid
-         * @return void
-         */
-        var scrollToModule = function(modid) {
-            // sometimes we have a hash, sometimes we don't
-            // strip hash then add just in case
-            $('#toc-search-results').html('');
-            var targmod = $("#" + modid.replace('#', ''));
-            // http://stackoverflow.com/questions/6677035/jquery-scroll-to-element
-            scrollToElement(targmod);
-
-            var searchpin = $("#searchpin");
-            if (!searchpin.length) {
-                searchpin = $('<i id="searchpin"></i>');
-            }
-
-            $(targmod).find('.instancename').prepend(searchpin);
-            $(targmod).attr('tabindex', '-1').focus();
-        };
-
-        /**
-         * Fat controller for when hashstate/popstate alters
-         * Contains the logic and controllers for adding classes for current section &/|| search.
-         * @return void
-         */
-        var showSection = function() {
-            // primary use case
-            if (onCoursePage()) {
-                // reset visible section & blocks
-                $('.course-content .main, #moodle-blocks,#coursetools, #snap-add-new-section').removeClass('state-visible');
-                // if the hash is just section, can we skip all this?
-
-                // we know the params at 0 is a section id
-                // params will be in the format
-                // #section-1&module-7255
-                var urlParams = location.hash.split("&"),
-                    section = urlParams[0],
-                    mod = urlParams[1] || null;
-                // Course tools special section.
-
-                if (section == '#coursetools') {
-                    $('#moodle-blocks').addClass('state-visible');
-                }
-
-                // we know that if we have a search modid will be param 1
-                if (mod !== null) {
-                    $(section).addClass('state-visible');
-                    scrollToModule(mod);
-                } else {
-                    $(section).addClass('state-visible').focus();
-                    // faux link click behaviour - scroll to page top
-                    window.scrollTo(0, 0);
-                }
-
-                // initial investigation seems to indicate this is not needed
-                // event.preventDefault();
-
-                // default niceties to perform
-                var visibleChapters = $(
-                    '.section.main.state-visible,' +
-                    '#coursetools.state-visible,' +
-                    '#snap-add-new-section.state-visible'
-                );
-                if (!visibleChapters.length) {
-                    // show chapter 0
-                    $('#section-0').addClass('state-visible').focus();
-                    window.scrollTo(0, 0);
-                }
-
-                responsiveVideo.apply();
-                // add faux :current class to the relevant section in toc
-                var sectionIdSel = '.main.state-visible, #coursetools.state-visible, #snap-add-new-section.state-visible';
-                var currentSectionId = $(sectionIdSel).attr('id');
-                $('#chapters li').removeClass('current');
-                $('#chapters a[href$="' + currentSectionId + '"]').parent('li').addClass('current');
             }
         };
 
@@ -538,6 +431,30 @@ define(['jquery', 'theme_snap/bootstrap', 'core/log', 'theme_snap/headroom', 'th
         };
 
         /**
+         * listen for hash changes / popstates.
+         */
+        var listenHashChange = function(courseLib) {
+            var lastHash = location.hash;
+            $(window).on('popstate hashchange', function(e) {
+                var newHash = location.hash;
+                log.info('hashchange');
+                if (newHash !== lastHash) {
+                    if (location.hash === '#primary-nav') {
+                        personalMenu.update();
+                    }
+                    else {
+                        $('#page, #moodle-footer, #js-personal-menu-trigger, #logo, .skiplinks').css('display', '');
+                        if (onCoursePage()) {
+                            log.info('show section', e.target);
+                            courseLib.showSection();
+                        }
+                    }
+                }
+                lastHash = newHash;
+            });
+        };
+
+        /**
          * Add listeners.
          *
          * just a wrapper for various snippets that add listeners
@@ -560,27 +477,6 @@ define(['jquery', 'theme_snap/bootstrap', 'core/log', 'theme_snap/headroom', 'th
                 } else {
                     location.hash = href;
                 }
-            });
-
-            // Listen for popstates - back/fwd.
-            var lastHash = location.hash;
-            $(window).on('popstate hashchange', function(e) {
-                var newHash = location.hash;
-                log.info('hashchange');
-                if (newHash !== lastHash) {
-                    if (location.hash === '#primary-nav') {
-                        personalMenu.update();
-                    }
-                    else {
-                        $('#page, #moodle-footer, #js-personal-menu-trigger, #logo, .skiplinks').css('display', '');
-                        if (onCoursePage()) {
-                            log.info('show section', e.target);
-                            showSection();
-                        }
-                    }
-                }
-                //At the end of the func:
-                lastHash = newHash;
             });
 
             // Show fixed header on scroll down
@@ -706,7 +602,7 @@ define(['jquery', 'theme_snap/bootstrap', 'core/log', 'theme_snap/headroom', 'th
             var pageToggleSelector = ".modtype_page .instancename,.pagemod-readmore,.pagemod-content .snap-action-icon";
             $(document).on("click", pageToggleSelector, function(e) {
                 var pageMod = $(this).closest('.modtype_page');
-                scrollToElement(pageMod);
+                util.scrollToElement(pageMod);
                 var isexpanded = pageMod.hasClass('state-expanded');
                 pageMod.toggleClass('state-expanded');
 
@@ -759,7 +655,7 @@ define(['jquery', 'theme_snap/bootstrap', 'core/log', 'theme_snap/headroom', 'th
 
             $(document).on("click", ".news-article .toggle", function(e) {
                 var $news = $(this).closest('.news-article');
-                scrollToElement($news);
+                util.scrollToElement($news);
                 $(".news-article").not($news).removeClass('state-expanded');
                 $(".news-article-message").css('display', 'none');
 
@@ -818,18 +714,24 @@ define(['jquery', 'theme_snap/bootstrap', 'core/log', 'theme_snap/headroom', 'th
          * Initialise.
          */
         return {
-            snapInit: function(courseconfig, pageHasCourseContent, siteMaxBytes) {
+            snapInit: function(courseConfig, pageHasCourseContent, siteMaxBytes) {
 
                 // Set up.
-                M.theme_snap.courseid = courseconfig.id;
-                M.theme_snap.courseconfig = courseconfig;
-                M.cfg.context = courseconfig.contextid;
+                M.cfg.context = courseConfig.contextid;
 
                 // Course related AMD modules (note, site page can technically have course content too).
                 if (pageHasCourseContent) {
-                    require(['theme_snap/course_conditionals-lazy'], function(conditionals) {
-                        conditionals(courseconfig.shortname);
-                    });
+                    require(
+                        [
+                            'theme_snap/course-lazy'
+                        ], function(CourseLibAmd) {
+                            // Instantiate course lib.
+                            var courseLib = new CourseLibAmd(courseConfig);
+
+                            // Hash change listener goes here because it requires courseLib.
+                            listenHashChange(courseLib);
+                        }
+                    );
                 }
 
                 // When document has loaded.
@@ -840,16 +742,7 @@ define(['jquery', 'theme_snap/bootstrap', 'core/log', 'theme_snap/headroom', 'th
                     applyBlockHash(); // change location hash if necessary
                     bodyClasses(); // add body classes
 
-                    // AMD modules.
-                    if (pageHasCourseContent) {
-                        sectionAssetMovement.init();
-                    }
-                    coverImage(M.theme_snap.courseconfig.shortname, siteMaxBytes);
-
-                    // SL - 19th aug 2014 - check we are in a course
-                    if (onCoursePage()) {
-                        showSection();
-                    }
+                    coverImage(courseConfig.shortname, siteMaxBytes);
 
                     if ($('body').hasClass('snap-fixy-open')) {
                         personalMenu.update();

@@ -322,10 +322,39 @@ li.section:focus {
         }
     }
 
-    img.icon {
-        margin: 0;
-        padding: 0;
+    a:after {
+        content: ' ';
+        width: 100%;
+        display: inline-block;
+        min-height: 100%;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: 70%;
     }
+    .snap-move:after {
+        background-image: url([[pix:theme|move]]);
+        background-size: 100%;
+    }
+    .snap-visibility.snap-show:after {
+        background-image: url([[pix:core|i/show]]);
+    }
+    .snap-visibility.snap-hide:after {
+        background-image: url([[pix:core|i/hide]]);
+    }
+    .snap-delete:after {
+        background-image: url([[pix:core|t/delete]]);
+    }
+    .snap-highlight.snap-marker:after {
+        background-image: url([[pix:core|i/marker]]);
+    }
+    .snap-highlight.snap-marked:after {
+        background-image: url([[pix:core|i/marked]]);
+    }
+
+    .loadingstat {
+        margin-left: 1em;
+    }
+
 }
 
 .snap-dropzone {
