@@ -19330,9 +19330,6 @@ li.calendar_event_user:before {
   padding: 1.2em;
   margin: -1.2em;
 }
-.maincalendar .day.nottoday .day a {
-  color: #fff;
-}
 .maincalendar .day.today .day a {
   background-color: transparent;
   display: inline;
