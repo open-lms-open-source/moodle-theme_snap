@@ -7343,6 +7343,7 @@ body.hascontinuecancel.path-site #page {
   display: none;
 }
 #page-user-files .ffilemanager .fp-viewbar,
+#local-joulegrader-gradepane .ffilemanager .fp-viewbar,
 #page-backup-backupfilesedit .ffilemanager .fp-viewbar {
   display: block;
 }
