@@ -100,7 +100,7 @@ Feature: Open page module inline
     Then I should see "Page completion content"
     And I should not see availability info "Not available unless: The activity Page completion is marked complete"
     And I should not see "Conditional" in the "#chapters li:nth-of-type(2)" "css_element"
-    And I should see "Progress: 1 / 1" in the "#chapters li:nth-of-type(2)" "css_element"
+    And I should see "Progress: 1 / 1" in the "#chapters li:nth-of-type(1)" "css_element"
     And "span.autocompletion img[title='Not completed: Page completion']" "css_element" should not exist
     And "span.autocompletion img[title='Completed: Page completion']" "css_element" should exist
     And I follow "Topic 1"
