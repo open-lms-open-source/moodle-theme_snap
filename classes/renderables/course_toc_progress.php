@@ -28,11 +28,6 @@ use theme_snap\output\shared;
 class course_toc_progress {
 
     /**
-     * @var bool - does this section have progress?
-     */
-    public $hasprogress = false;
-
-    /**
      * @var stdClass - {complete, total}
      */
     public $progress;
@@ -72,8 +67,10 @@ class course_toc_progress {
             return;
         }
 
-        $this->hasprogress = true;
-        $this->progress = $sac->progress;
+        $this->progress = (object) [
+            'complete' => $sac->progress->complete,
+            'total' => $sac->progress->total
+        ];
         $this->pixcompleted = $OUTPUT->pix_url('i/completion-manual-y');
         $this->completed = $sac->progress->complete === $sac->progress->total;
     }

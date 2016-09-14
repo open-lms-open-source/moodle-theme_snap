@@ -23,13 +23,13 @@
  * Course conditionals function.
  */
 define(['jquery', 'core/ajax', 'core/notification', 'core/templates'], function($, ajax, notification, templates) {
-    
+
     // Main function.
     var init = function(courseConfig) {
         var currentlyUnavailableSections = courseConfig.unavailablesections.map(Number),
         currentlyUnavailableMods =  courseConfig.unavailablemods.map(Number);
 
-        $(document).on( "modulecompleted",
+        $(document).on( "snap:module_completion_change",
             function() {
                 ajax.call([
                     {

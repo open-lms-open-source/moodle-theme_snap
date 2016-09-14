@@ -622,7 +622,7 @@ define(['jquery', 'theme_snap/bootstrap', 'core/log', 'theme_snap/headroom', 'th
                             success: function(data) {
                                 // Update completion html for this page mod instance.
                                 updateModCompletion(pageMod, data.completionhtml);
-                                $(document).trigger('modulecompleted', pageMod);
+                                $(document).trigger('snap:module_completion_change', pageMod);
                             }
                         });
                     }

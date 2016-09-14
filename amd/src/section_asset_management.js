@@ -479,6 +479,7 @@ define(['jquery', 'core/log', 'core/ajax', 'core/templates', 'core/notification'
                             promiseHandler(templates.render('theme_snap/course_action_section', response.actionmodel), {
                                 done: function(result) {
                                     $(actionSelector).replaceWith(result);
+                                    $(actionSelector).focus();
                                     // Update TOC.
                                     promiseHandler(templates.render('theme_snap/course_toc', response.toc), {
                                             done: function(result) {
