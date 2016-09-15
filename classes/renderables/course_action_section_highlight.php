@@ -36,7 +36,7 @@ class course_action_section_highlight extends course_action_section_base {
     /**
      * course_action_section_highlight constructor.
      * @param stdClass $course
-     * @param stdClass $section
+     * @param stdClass $section - Note this is the section we want to affect via the url param.
      * @param bool $onsectionpage
      */
     public function __construct($course, $section, $onsectionpage = false) {
@@ -56,7 +56,10 @@ class course_action_section_highlight extends course_action_section_base {
                 $url = clone($baseurl);
                 $marker = optional_param('marker', '', PARAM_INT);
                 $marker = $marker === '' ? $course->marker : $marker;
-                if ($marker == $section->section || $section->section === 0) {  // Show the "light globe" on/off.
+                // Note if the new target section is 0 then it means the requested action is to have no current section
+                // highlighted.
+                if ($marker == $section->section || $section->section === 0) {
+                    // Show the lightbulb.
                     $this->title = get_string('markedthistopic');
                     $url->param('marker', 0);
                     $this->url = $url;

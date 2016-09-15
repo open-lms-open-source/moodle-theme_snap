@@ -48,6 +48,14 @@ define(['jquery', 'core/log', 'core/ajax', 'core/templates', 'core/notification'
             var snapMoveMessage = $('#snap-move-message');
 
             /**
+             * Get the section number for an element within a section.
+             * @param {object} el
+             */
+            var elementSectionNumber = function(el) {
+                return parseInt($(el).parents('li.section')[0].id.replace('section-', ''));
+            };
+
+            /**
              * Moving has stopped, clean up.
              */
             var stopMoving = function() {
@@ -308,9 +316,17 @@ define(['jquery', 'core/log', 'core/ajax', 'core/templates', 'core/notification'
                                         // Move current section before target section.
                                         $('#section-'+domTargetSection).before($('#section-'+currentSection));
 
-                                        // Renumber section ids.
-                                        $.each($('ul.topics li.section'), function(idx, obj){
+                                        // Renumber section ids and rename section titles.
+                                        $.each($('#region-main .course-content > ul li.section'), function(idx, obj){
                                             $(obj).attr('id', 'section-' + idx);
+                                            // Get title from TOC (note that its idx + 1 because first entry is
+                                            // introduction.
+                                            var chapterTitle = $('#chapters li:nth-of-type(' + (idx + 1) + ') .chapter-title')
+                                                    .html();
+                                            // Update section title with corresponding TOC title - this is necessary
+                                            // for weekly topic courses where the section title needs to stay the
+                                            // same as the TOC.
+                                            $('#section-' + idx + ' .content .sectionname').html(chapterTitle);
                                         });
 
                                         // Navigate to section in its new location.
@@ -415,7 +431,7 @@ define(['jquery', 'core/log', 'core/ajax', 'core/templates', 'core/notification'
              * @param {string} action visibility, highlight
              * @param {null|function} callback for when completed.
              */
-            var sectinActionListener = function(action, onComplete) {
+            var sectionActionListener = function(action, onComplete) {
 
                 $('#region-main').on('click', '.snap-section-editing.actions .snap-' + action, function(e) {
 
@@ -450,7 +466,7 @@ define(['jquery', 'core/log', 'core/ajax', 'core/templates', 'core/notification'
                     var toggler = action === 'visibility' ? 'snap-show' : 'snap-marker';
                     var toggle = $(this).hasClass(toggler) ? 1 : 0;
 
-                    var sectionNumber = $(this).parents('li.section')[0].id.replace('section-', '');
+                    var sectionNumber = elementSectionNumber(this);
                     var sectionActionsSelector = '#section-' + sectionNumber + ' .snap-section-editing';
                     var actionSelector = sectionActionsSelector + ' .snap-' + action;
 
@@ -496,7 +512,7 @@ define(['jquery', 'core/log', 'core/ajax', 'core/templates', 'core/notification'
                                     );
                                 },
                                 fail: function() {
-                                    // Cancel spinner on fail only (toc reload promise on takes care of this always).
+                                    // Cancel spinner on fail only (toc reload promise takes care of this always).
                                     $(sectionActionsSelector + ' .loadingstat').remove();
                                 }
 
@@ -528,7 +544,7 @@ define(['jquery', 'core/log', 'core/ajax', 'core/templates', 'core/notification'
              * Highlight section on click.
              */
             var highlightSectionListener = function() {
-                sectinActionListener('highlight');
+                sectionActionListener('highlight');
             };
 
             /**
@@ -542,7 +558,7 @@ define(['jquery', 'core/log', 'core/ajax', 'core/templates', 'core/notification'
                         $('#section-' + sectionNumber).removeClass('hidden');
                     }
                 };
-                sectinActionListener('visibility', manageHiddenClass);
+                sectionActionListener('visibility', manageHiddenClass);
             };
 
             /**
@@ -557,33 +573,33 @@ define(['jquery', 'core/log', 'core/ajax', 'core/templates', 'core/notification'
                     $('body').addClass('snap-move-inprogress');
 
                     // Moving a section.
-                    var sectionid = $(this).parents('li.section')[0].id.replace('section-', '');
-                    log.debug('Section is', sectionid);
-                    var section = $('#section-' + sectionid);
-                    var sectionname = section.find('.sectionname').text();
+                    var sectionNumber = elementSectionNumber(this);
+                    log.debug('Section is', sectionNumber);
+                    var section = $('#section-' + sectionNumber);
+                    var sectionName = section.find('.sectionname').text();
 
-                    log.debug('Moving this section', sectionname);
+                    log.debug('Moving this section', sectionName);
                     movingObjects = [section];
 
                     // This should never happen, but just in case...
                     $('.section-moving').removeClass('section-moving');
                     section.addClass('section-moving');
-                    $('a[href$=#section-' + sectionid + ']').parent('li').addClass('section-moving');
+                    $('a[href$=#section-' + sectionNumber + ']').parent('li').addClass('section-moving');
                     $('body').addClass('snap-move-section');
 
-                    var title = M.util.get_string('moving', 'theme_snap', sectionname);
+                    var title = M.util.get_string('moving', 'theme_snap', sectionName);
                     snapMoveMessage.find('.snap-move-message-title').html(title);
                     snapMoveMessage.focus();
 
                     $('.section-drop').each(function() {
-                        var sectiondropmsg = M.util.get_string('movingdropsectionhelp', 'theme_snap',
-                            {moving: sectionname, before: $(this).data('title')}
+                        var sectionDropMsg = M.util.get_string('movingdropsectionhelp', 'theme_snap',
+                            {moving: sectionName, before: $(this).data('title')}
                         );
-                        $(this).html(sectiondropmsg);
+                        $(this).html(sectionDropMsg);
                     });
 
                     $('#snap-move-message p.sr-only').html(
-                        M.util.get_string('movingstartedhelp', 'theme_snap', sectionname)
+                        M.util.get_string('movingstartedhelp', 'theme_snap', sectionName)
                     );
                 });
             };
@@ -616,7 +632,7 @@ define(['jquery', 'core/log', 'core/ajax', 'core/templates', 'core/notification'
             /**
              * Add listener for move checkbox.
              */
-            var asettMoveListener = function() {
+            var assetMoveListener = function() {
                 $("#region-main").on('change', '.js-snap-asset-move', function(e) {
                     e.stopPropagation();
 
@@ -710,7 +726,7 @@ define(['jquery', 'core/log', 'core/ajax', 'core/templates', 'core/notification'
                 moveSectionListener();
                 toggleSectionListener();
                 highlightSectionListener();
-                asettMoveListener();
+                assetMoveListener();
                 moveCancelListener();
                 movePlaceListener();
                 assetEditListeners();
