@@ -39,7 +39,7 @@ Feature: When the moodle theme is set to Snap, teachers can toggle the currently
       | student1 | C1 | student |
 
   @javascript
-  Scenario: In read mode, teacher marks section as current.
+  Scenario: In read mode, teacher toggles section as current and student sees appropriate status.
     Given I log in as "teacher1" (theme_snap)
     And I open the personal menu
     And I follow "Course 1"
@@ -51,8 +51,26 @@ Feature: When the moodle theme is set to Snap, teachers can toggle the currently
     And I wait until "#section-2 .snap-highlight.snap-marked" "css_element" exists
     # Note: nth-of-type(3) corresponds to the second section in the TOC.
     And I should see "Current" in the "#chapters li:nth-of-type(3)" "css_element"
+    And I log out (theme_snap)
+    And I log in as "student1" (theme_snap)
+    And I open the personal menu
+    And I follow "Course 1"
+    And I wait until the page is ready
+    Then I should see "Current" in the "#chapters li:nth-of-type(3)" "css_element"
+    And I log out (theme_snap)
+    And I log in as "teacher1" (theme_snap)
+    And I open the personal menu
+    And I follow "Course 1"
+    And I wait until the page is ready
+    And I follow "Topic 2"
     Given I click on "#section-2 .snap-highlight.snap-marked" "css_element"
     And I wait until "#section-2 .snap-highlight.snap-marker" "css_element" exists
+    Then I should not see "Current" in the "#chapters li:nth-of-type(3)" "css_element"
+    And I log out (theme_snap)
+    And I log in as "student1" (theme_snap)
+    And I open the personal menu
+    And I follow "Course 1"
+    And I wait until the page is ready
     Then I should not see "Current" in the "#chapters li:nth-of-type(3)" "css_element"
 
   @javascript
