@@ -189,67 +189,9 @@ class shared extends \renderer_base {
     protected static function include_course_ajax($course, $usedmodules = array(), $enabledmodules = null, $config = null) {
         global $CFG, $PAGE;
 
-        // Ensure that ajax should be included.
+        // Only include course AJAX for supported formats.
         if (!course_ajax_enabled($course)) {
             return false;
-        }
-
-        if (!$config) {
-            $config = new stdClass();
-        }
-
-        // The URL to use for resource changes.
-        if (!isset($config->resourceurl)) {
-            $config->resourceurl = '/course/rest.php';
-        }
-
-        // The URL to use for section changes.
-        if (!isset($config->sectionurl)) {
-            $config->sectionurl = '/course/rest.php';
-        }
-
-        // Any additional parameters which need to be included on page submission.
-        if (!isset($config->pageparams)) {
-            $config->pageparams = array();
-        }
-
-        // Include toolboxes.
-        $PAGE->requires->yui_module('moodle-course-toolboxes',
-            'M.course.init_resource_toolbox',
-            array(array(
-                'courseid' => $course->id,
-                'ajaxurl' => $config->resourceurl,
-                'config' => $config,
-            ))
-        );
-        $PAGE->requires->yui_module('moodle-course-toolboxes',
-            'M.course.init_section_toolbox',
-            array(array(
-                'courseid' => $course->id,
-                'format' => $course->format,
-                'ajaxurl' => $config->sectionurl,
-                'config' => $config,
-            ))
-        );
-
-        // Include course dragdrop.
-        if (course_format_uses_sections($course->format)) {
-            $PAGE->requires->yui_module('moodle-course-dragdrop', 'M.course.init_section_dragdrop',
-                array(array(
-                    'courseid' => $course->id,
-                    'ajaxurl' => $config->sectionurl,
-                    'config' => $config,
-                )),
-                null,
-                true
-            );
-
-            $PAGE->requires->yui_module('moodle-course-dragdrop', 'M.course.init_resource_dragdrop',
-                array(array(
-                    'courseid' => $course->id,
-                    'ajaxurl' => $config->resourceurl,
-                    'config' => $config,
-                )), null, true);
         }
 
         // Require various strings for the command toolbox.
@@ -279,6 +221,8 @@ class shared extends \renderer_base {
         ], 'moodle');
 
         $PAGE->requires->strings_for_js([
+            'error:failedtochangesectionvisibility',
+            'error:failedtohighlightsection',
             'error:failedtochangeassetvisibility',
             'error:failedtoduplicateasset'
         ], 'theme_snap');
@@ -382,7 +326,8 @@ class shared extends \renderer_base {
             'contextid' => $PAGE->context->id,
             'ajaxurl' => '/course/rest.php',
             'unavailablesections' => $unavailablesections,
-            'unavailablemods' => $unavailablemods
+            'unavailablemods' => $unavailablemods,
+            'enablecompletion' => $COURSE->enablecompletion
         ];
 
         $initvars = [$coursevars, $pagehascoursecontent, get_max_upload_file_size($CFG->maxbytes)];

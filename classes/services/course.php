@@ -18,6 +18,9 @@ namespace theme_snap\services;
 
 use theme_snap\renderables\course_card;
 use theme_snap\local;
+use theme_snap\renderables\course_toc;
+
+require_once($CFG->dirroot.'/course/lib.php');
 
 defined('MOODLE_INTERNAL') || die();
 
@@ -299,8 +302,8 @@ class course {
      * @return array
      */
     public function course_completion($shortname, $previouslyunavailablesections, $previouslyunavailablemods) {
-        global $PAGE;
-        $course = $this->coursebyshortname($shortname, 'id');
+        global $PAGE, $OUTPUT;
+        $course = $this->coursebyshortname($shortname);
         list ($unavailablesections, $unavailablemods) = local::conditionally_unavailable_elements($course);
 
         $newlyavailablesections = array_diff($previouslyunavailablesections, $unavailablesections);
@@ -335,11 +338,87 @@ class course {
         $unavailablesections = implode(',', $unavailablesections);
         $unavailablemods = implode(',', $unavailablemods);
 
+        $toc = new course_toc($course);
+
         return [
             'unavailablesections' => $unavailablesections,
             'unavailablemods' => $unavailablemods,
             'newlyavailablemodhtml' => $newlyavailablemodhtml,
             'newlyavailablesectionhtml' => $newlyavailablesectionhtml,
+            'toc' => $toc->export_for_template($OUTPUT)
+        ];
+    }
+
+    /**
+     * @param string $shortname
+     * @return object
+     */
+    public function course_toc($shortname) {
+        global $OUTPUT;
+        $course = $this->coursebyshortname($shortname);
+        $toc = new course_toc($course);
+        return $toc->export_for_template($OUTPUT);
+    }
+
+    /**
+     * @param string $shortname
+     * @return object
+     */
+    public function course_toc_chapters($shortname) {
+        $course = $this->coursebyshortname($shortname);
+        $toc = new course_toc($course);
+        return $toc->convert_object_for_export($toc->chapters);
+    }
+
+    /**
+     * @param string $shortname
+     * @param int $sectionnumber
+     * @param boolean $highlight
+     * @throws \required_capability_exception
+     * @return array
+     */
+    public function highlight_section($shortname, $sectionnumber, $highlight) {
+        global $OUTPUT;
+        $course = $this->coursebyshortname($shortname);
+        $context = \context_course::instance($course->id);
+        require_capability('moodle/course:setcurrentsection', $context);
+
+        $setsectionnumber = empty($highlight) ? 0 : $sectionnumber;
+
+        course_set_marker($course->id, $setsectionnumber);
+        $course->marker = $setsectionnumber;
+        $modinfo = get_fast_modinfo($course);
+
+        if ($highlight) {
+            $section = $modinfo->get_section_info(0);
+        } else {
+            $section = $modinfo->get_section_info($sectionnumber);
+        }
+
+        $actionmodel = new \theme_snap\renderables\course_action_section_highlight($course, $section);
+        $toc = new \theme_snap\renderables\course_toc($course);
+        return [
+            'actionmodel' => $actionmodel->export_for_template($OUTPUT),
+            'toc' => $toc->export_for_template($OUTPUT)
+        ];
+    }
+
+    public function set_section_visibility($shortname, $sectionnumber, $visible) {
+        global $OUTPUT;
+        $course = $this->coursebyshortname($shortname);
+        $context = \context_course::instance($course->id);
+        require_capability('moodle/course:sectionvisibility', $context);
+        // Note, we do not use the return value of set_section_visible (resourcestotoggle) as nested resource visibility
+        // is handled via CSS.
+        set_section_visible($course->id, $sectionnumber, $visible);
+        $modinfo = get_fast_modinfo($course);
+        $section = $modinfo->get_section_info($sectionnumber);
+        $actionmodel = new \theme_snap\renderables\course_action_section_visibility($course, $section);
+        $toc = new \theme_snap\renderables\course_toc($course);
+
+        return [
+            'actionmodel' => $actionmodel->export_for_template($OUTPUT),
+            'toc' => $toc->export_for_template($OUTPUT)
         ];
     }
 }

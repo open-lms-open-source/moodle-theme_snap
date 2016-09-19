@@ -15,17 +15,36 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Theme plugin version definition.
- *
- * @package   theme_snap
- * @copyright Copyright (c) 2015 Moodlerooms Inc. (http://www.moodlerooms.com)
+ * Base class for section actions.
+ * @author    gthomas2
+ * @copyright Copyright (c) 2016 Moodlerooms Inc. (http://www.moodlerooms.com)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-defined('MOODLE_INTERNAL') || die;
+namespace theme_snap\renderables;
+use moodle_url;
 
-$plugin->version   = 2016042909;
-$plugin->requires  = 2015111604; // Requires this Moodle version (3.0.4).
-$plugin->release   = '3.0.4 (Build: 20160509)';
-$plugin->maturity  = MATURITY_STABLE;
-$plugin->component = 'theme_snap';
+defined('MOODLE_INTERNAL') || die();
+
+abstract class course_action_section_base implements \renderable, \templatable {
+
+    use trait_exportable;
+
+    /**
+     * @var string
+     */
+    public $title;
+
+    /**
+     * @var moodle_url
+     */
+    public $url;
+
+    /**
+     * @var string
+     */
+    public $class;
+
+    abstract public function __construct($course, $section, $onsectionpage = false);
+
+}

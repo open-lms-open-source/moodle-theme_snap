@@ -43,8 +43,24 @@ $functions = [
     'theme_snap_course_completion' => [
         'classname'     => 'theme_snap\\webservice\\ws_course_completion',
         'methodname'    => 'service',
-        'description'   => 'Cover image modifier',
+        'description'   => 'Course completion updater',
         'type'          => 'write',
+        'ajax'          => true,
+        'loginrequired' => true
+    ],
+    'theme_snap_course_toc_chapters' => [
+        'classname'     => 'theme_snap\\webservice\\ws_course_toc_chapters',
+        'methodname'    => 'service',
+        'description'   => 'Get course TOC chapters',
+        'type'          => 'read',
+        'ajax'          => true,
+        'loginrequired' => true
+    ],
+    'theme_snap_course_sections' => [
+        'classname'     => 'theme_snap\\webservice\\ws_course_sections',
+        'methodname'    => 'service',
+        'description'   => 'Manage course sections',
+        'type'          => 'read',
         'ajax'          => true,
         'loginrequired' => true
     ]

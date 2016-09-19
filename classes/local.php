@@ -315,6 +315,7 @@ class local {
         $cancomplete = isloggedin() && !isguestuser();
         $unavailablesections = [];
         $unavailablemods = [];
+        $information = '';
         if ($cancomplete) {
             $completioninfo = new \completion_info($course);
             if ($completioninfo->is_enabled()) {
@@ -322,14 +323,12 @@ class local {
                 $sections= $modinfo->get_section_info_all();
                 foreach ($sections as $number => $section) {
                     $ci = new \core_availability\info_section($section);
-                    $information = '';
                     if (!$ci->is_available($information, true)) {
                         $unavailablesections[] = $number;
                     }
                 }
                 foreach ($modinfo->get_cms() as $mod) {
                     $ci = new \core_availability\info_module($mod);
-                    $information = '';
                     if (!$ci->is_available($information, true)) {
                         $unavailablemods[] = $mod->id;
                     }

@@ -22,8 +22,8 @@
 /**
  * Course card favoriting.
  */
-define(['jquery', 'core/log', 'core/yui', 'theme_snap/pm_course_cards', 'theme_snap/when_true'],
-    function($, log, Y, courseCards, whenTrue) {
+define(['jquery', 'core/log', 'core/yui', 'theme_snap/pm_course_cards', 'theme_snap/util'],
+    function($, log, Y, courseCards, util) {
 
         /**
          * Personal Menu (courses menu).
@@ -105,7 +105,7 @@ define(['jquery', 'core/log', 'core/yui', 'theme_snap/pm_course_cards', 'theme_s
 
                 if ($('#snap-personal-menu-badges').length && typeof(M.snap_message_badge) === 'undefined') {
                     // When M.snap_message_badge is available then trigger personal menu update.
-                    whenTrue(
+                    util.whenTrue(
                         function() {
                             return typeof(M.snap_message_badge) != 'undefined';
                         },

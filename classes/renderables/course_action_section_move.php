@@ -15,38 +15,32 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Snap TOC renderer.
- *
- * @package   theme_snap
- * @copyright Copyright (c) 2015 Moodlerooms Inc. (http://www.moodlerooms.com)
+ * Course action for affecting section visibility.
+ * @author    gthomas2
+ * @copyright Copyright (c) 2016 Moodlerooms Inc. (http://www.moodlerooms.com)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-namespace theme_snap\output;
-
-use theme_snap\renderables\course_toc;
+namespace theme_snap\renderables;
+use context_course;
 
 defined('MOODLE_INTERNAL') || die();
 
-class toc_renderer extends \core_renderer {
+class course_action_section_move extends course_action_section_base {
 
     /**
-     * @return bool|string
-     * @throws \moodle_exception
+     * @var string
      */
-    public function course_toc() {
-        $coursetoc = new course_toc();
-        return $this->render_from_template('theme_snap/course_toc', $coursetoc);
-    }
+    public $class = 'snap-move';
 
-    /**
-     * get course image
-     *
-     * @return bool|\moodle_url
-     */
-    public function get_course_image() {
-        global $COURSE;
+    public function __construct($course, $section, $onsectionpage = false) {
 
-        return \theme_snap\local::course_coverimage_url($COURSE->id);
+        $coursecontext = context_course::instance($course->id);
+        $isstealth = isset($course->numsections) && ($section->section > $course->numsections);
+
+        if (!$isstealth && !$onsectionpage && has_capability('moodle/course:movesections', $coursecontext)) {
+            $this->url = '#section-'.$section->section;
+            $this->title = get_string('move', 'theme_snap', format_string($section->name));
+        }
     }
 }
