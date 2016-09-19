@@ -41,7 +41,7 @@ Feature: When the moodle theme is set to Snap, students and teachers can open a 
 
   @javascript
   Scenario: Student sees correct submission status against deadlines when 1 out of 2 assignments are submitted by student.
-    Given the following "activities" exist:
+    Given the following "activities" exist with relative dates:
       | activity | course | idnumber | name             | intro             | assignsubmission_onlinetext_enabled | assignfeedback_comments_enabled | section | duedate                      |
       | assign   | C1     | assign1  | Test assignment1 | Test assignment 1 | 1                                   | 1                               | 1       | the timestamp of tomorrow    |
       | assign   | C1     | assign2  | Test assignment2 | Test assignment 2 | 1                                   | 1                               | 1       | the timestamp of next week   |
@@ -68,7 +68,7 @@ Feature: When the moodle theme is set to Snap, students and teachers can open a 
 
   @javascript
   Scenario: Teacher sees no submission status data against deadlines.
-    Given the following "activities" exist:
+    Given the following "activities" exist with relative dates:
       | activity | course | idnumber | name             | intro             | assignsubmission_onlinetext_enabled | assignfeedback_comments_enabled | section | duedate                      |
       | assign   | C1     | assign1  | Test assignment1 | Test assignment 1 | 1                                   | 1                               | 1       | the timestamp of tomorrow    |
       | assign   | C1     | assign2  | Test assignment2 | Test assignment 2 | 1                                   | 1                               | 1       | the timestamp of next week   |

@@ -43,53 +43,6 @@ use Behat\Behat\Context\Step\Given,
 class behat_theme_snap extends behat_base {
 
     /**
-     * Transforms relative date statements compatible with strtotime().
-     * Idea taken from http://chillu.tumblr.com/post/67056088859/behat-step-transformations-for-relative-time.
-     *
-     * @Transform /^(?:the|a) timestamp of (.*)$/
-     * @param string $val
-     * @return int unix time stamp
-     */
-    public function process_relative_timestamp($val) {
-        return strtotime($val);
-    }
-
-    /**
-     * Transformations for TableNode arguments.
-     *
-     * These are specifically for applying relative date transformations.
-     * Hoping to upstream this enhancement.
-     *
-     * @Transform /^table:(.*)/
-     * @param TableNode $tablenode
-     * @return TableNode The transformed table
-     */
-    public function tablenode_transformations(TableNode $tablenode) {
-
-        // Apply relative date transformations.
-        $rows = $tablenode->getRows();
-        foreach ($rows as $rk => $row) {
-            foreach ($row as $fk => $val) {
-                $val = preg_replace_callback(
-                    '/(?:the|a) timestamp of (.*)$/',
-                    function($match) {
-                        return (
-                            $this->process_relative_timestamp($match[1])
-                        );
-                    },
-                    $val
-                );
-                $row[$fk] = $val;
-            }
-            $rows[$rk] = $row;
-        }
-
-        // Return the transformed TableNode.
-        $tablenode->setRows($rows);
-        return $tablenode;
-    }
-
-    /**
      * Process givens array
      * @param array $givens
      * @return array
@@ -369,7 +322,7 @@ class behat_theme_snap extends behat_base {
     public function click_visible_link($link) {
         $linknode = $this->find_link($link);
         if (!$linknode) {
-            $msg = 'The "' . $linknode->getXPath() . '" xpath node could not be found';
+            $msg = 'The "' . $link . '" link could not be found';
             throw new ExpectationException($msg, $this->getSession());
         }
 
@@ -381,7 +334,7 @@ class behat_theme_snap extends behat_base {
 
         // The first node on the page isn't visible so we are going to have to get all nodes with the same xpath.
         // Extract xpath from the first node we found.
-        $xpath = $linknode->getXpath();
+        $xpath = str_replace("\n", '', $linknode->getXpath());
         $matches = [];
         if (preg_match_all('|^\(//html/(.*)(?=\)\[1\]$)|', $xpath, $matches) !== false) {
             $xpath = $matches[1][0];
@@ -390,6 +343,7 @@ class behat_theme_snap extends behat_base {
         }
 
         // Now get all nodes.
+        /** @var NodeElement[] $linknodes */
         $linknodes = $this->find_all('xpath', $xpath);
 
         // Cycle through all nodes and if just one of them is visible break loop.
@@ -398,20 +352,14 @@ class behat_theme_snap extends behat_base {
                 // We've already tested the first node, skip it.
                 continue;
             }
-            $visible = $this->is_node_visible($node, self::REDUCED_TIMEOUT);
-            if ($visible) {
-                break;
+            if ($this->is_node_visible($node, self::REDUCED_TIMEOUT)) {
+                $node->click();
+                return;
             }
         }
 
-        if (!$visible) {
-            // Oh dear, none of the links were visible.
-            $msg = 'At least one node should be visible for the xpath "' . $node->getXPath();
-            throw new ExpectationException($msg, $this->getSession());
-        }
-
-        // Hurray, we found a visible link - let's click it!
-        $node->click();
+        // Oh dear, none of the links were visible.
+        throw new ExpectationException('At least one node should be visible for the xpath "'.$xpath.'"', $this->getSession());
     }
 
 
@@ -1068,6 +1016,54 @@ class behat_theme_snap extends behat_base {
             $course->enablecompletion = $toggle;
             $DB->update_record('course', $course);
         }
+    }
+
+    /**
+     * Creates the specified element with relative time applied to field values.
+     * More info about available elements in http://docs.moodle.org/dev/Acceptance_testing#Fixtures.
+     *
+     * @Given /^the following "(?P<element_string>(?:[^"]|\\")*)" exist with relative dates:$/
+     *
+     * @throws Exception
+     * @throws PendingException
+     * @param string    $elementname The name of the entity to add
+     * @param TableNode $data
+     */
+    public function the_following_exist($elementname, TableNode $data) {
+        global $CFG;
+
+        require_once($CFG->dirroot.'/lib/testing/generator/lib.php');
+
+        $dg = new behat_data_generators();
+
+        $tablemode = method_exists($data, 'getTable');
+        $table = $tablemode ? $data->getTable() : $data->getRows();
+
+        foreach ($table as $rkey => $row) {
+            $r = 0;
+            foreach ($row as $key => $val) {
+                $r++;
+                if ($r > 1) {
+                    $val = preg_replace_callback(
+                        '/(?:the|a) timestamp of (.*)$/',
+                        function ($match) {
+                            return strtotime($match[1]);
+                        },
+                        $val);
+                }
+                $row[$key] = $val;
+            }
+            $rows[$rkey] = $row;
+        }
+
+        if ($tablemode) {
+            $data = new TableNode($rows);
+        } else {
+            $data->setRows($rows);
+        }
+
+        $dg->the_following_exist($elementname, $data);
+
     }
 
 }
