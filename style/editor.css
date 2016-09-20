@@ -8283,6 +8283,18 @@ li.section:focus {
   width: 0;
   overflow: hidden;
 }
+.course-content > ul li.section.hidden {
+  visibility: hidden !important;
+}
+.course-content > ul li.section.hidden.state-visible {
+  visibility: visible !important;
+}
+.course-content > ul li.section .content {
+  display: none;
+}
+.course-content > ul li.section.state-visible .content {
+  display: block;
+}
 .course-content > ul li.section.state-visible,
 #snap-add-new-section.state-visible,
 .editing #snap-add-new-section,
