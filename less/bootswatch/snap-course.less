@@ -408,6 +408,24 @@ li.section:focus {
     overflow: hidden;
 }
 
+//Override !important in less/moodle/undo.less, not needed after 3.2 and BS4.
+.course-content > ul li.section.hidden {
+    visibility: hidden !important;
+
+    &.state-visible {
+        visibility: visible !important;
+    }
+}
+
+.course-content > ul li.section {
+    .content {
+        display: none;
+    }
+
+    &.state-visible .content {
+        display: block;
+    }
+}
 
 .course-content > ul li.section.state-visible,
 #snap-add-new-section.state-visible,
