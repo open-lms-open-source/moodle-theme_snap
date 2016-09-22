@@ -184,12 +184,12 @@ class theme_snap_assign_test extends mod_assign_base_testcase {
     public function test_participant_count() {
         $courseid = $this->course->id;
         $actual = local::course_participant_count($courseid);
-        $expected = count($this->students);
+        $expected = count($this->students) + count($this->teachers) + count($this->editingteachers);
         $this->assertSame($expected, $actual);
 
         $this->create_extra_users();
         $actual = local::course_participant_count($courseid);
-        $expected = count($this->students);
+        $expected = count($this->students) + count($this->teachers) + count($this->editingteachers);
         $this->assertSame($expected, $actual);
     }
 
