@@ -45,7 +45,6 @@ Feature: When the moodle theme is set to Snap, cover image can be set for site a
     And I log in as "teacher1" (theme_snap)
     And I open the personal menu
     And I follow "Course 1"
-    And I wait until the page is ready
     Then I should see "Change cover image"
     And I should not see cover image in page header
     And I upload cover image "testpng_small.png"
@@ -82,7 +81,6 @@ Feature: When the moodle theme is set to Snap, cover image can be set for site a
     Then I should see "Change cover image"
     And I click on "#admin-menu-trigger" "css_element"
     And I navigate to "Grades" node in "Course administration"
-    And I wait until the page is ready
     Then I should not see "Change cover image"
     # Test that non-editing teachers can't change cover image. (no need to test with students as they have less caps)
     And I log out (theme_snap)
@@ -109,7 +107,6 @@ Feature: When the moodle theme is set to Snap, cover image can be set for site a
     And I log in as "teacher1" (theme_snap)
     And I open the personal menu
     And I follow "Course 1"
-    And I wait until the page is ready
     Then I should see "Change cover image"
     And I should not see cover image in page header
     And I upload cover image "bpd_bikes_3888px.jpg"
@@ -138,7 +135,6 @@ Feature: When the moodle theme is set to Snap, cover image can be set for site a
     And I log in as "teacher1" (theme_snap)
     And I open the personal menu
     And I follow "Course 1"
-    And I wait until the page is ready
     Then I should see "Change cover image"
     And I should not see cover image in page header
     And I upload cover image "testpng_lt1024px.png"
@@ -154,7 +150,6 @@ Feature: When the moodle theme is set to Snap, cover image can be set for site a
       | user1    | User      | 1        | user1@example.com    |
     And I log in as "admin" (theme_snap)
     And I am on site homepage
-    And I wait until the page is ready
     Then I should not see "Change cover image"
     And I click on "#admin-menu-trigger" "css_element"
     And I navigate to "Turn editing on" node in "Front page settings"
@@ -185,5 +180,4 @@ Feature: When the moodle theme is set to Snap, cover image can be set for site a
     And I log out (theme_snap)
     And I log in as "user1" (theme_snap)
     And I am on site homepage
-    And I wait until the page is ready
     Then I should not see "Change cover image"

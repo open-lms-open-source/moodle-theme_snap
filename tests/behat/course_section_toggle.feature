@@ -44,7 +44,6 @@ Feature: When the moodle theme is set to Snap, teachers can toggle the visibilit
     Given I log in as "teacher1" (theme_snap)
     And I open the personal menu
     And I follow "Course 1"
-    And I wait until the page is ready
     And I follow "Topic 2"
     Then "#section-2" "css_element" should exist
     And "#section-2.hidden" "css_element" should not exist
@@ -63,6 +62,5 @@ Feature: When the moodle theme is set to Snap, teachers can toggle the visibilit
     Given I log in as "student1" (theme_snap)
     And I open the personal menu
     And I follow "Course 1"
-    And I wait until the page is ready
     And I follow "Topic 2"
     Then "#section-2 .snap-visibility" "css_element" should not exist

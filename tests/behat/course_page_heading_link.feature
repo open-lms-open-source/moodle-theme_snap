@@ -41,7 +41,6 @@ Feature: When the moodle theme is set to Snap, users can link back to the course
     Given I log in as "teacher1" (theme_snap)
     And I open the personal menu
     And I follow "Course 1"
-    And I wait until the page is ready
     And I follow "Edit Topic"
     # Note the double space between "of" and "General" below is necessary.
     And I should see "Summary of  General"

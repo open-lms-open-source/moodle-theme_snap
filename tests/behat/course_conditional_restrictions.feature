@@ -51,7 +51,6 @@ Feature: When the moodle theme is set to Snap, conditional restrictions work as 
   Given I log in as "teacher1" (theme_snap)
     And I open the personal menu
     And I follow "Course 1"
-    And I wait until the page is ready
     And I go to course section 1
     And I restrict course asset "S1 Restricted - date past" by date to "yesterday"
     And I restrict course asset "S1 Restricted - date future" by date to "tomorrow"
@@ -75,7 +74,6 @@ Feature: When the moodle theme is set to Snap, conditional restrictions work as 
     And I log in as "student1" (theme_snap)
     And I open the personal menu
     And I follow "Course 1"
-    And I wait until the page is ready
     And I should not see "Conditional" in TOC item 1
     And I should see "Conditional" in TOC item 2
     And I should not see "Conditional" in TOC item 3

@@ -47,7 +47,6 @@ Feature: When the moodle theme is set to Snap, teachers only see block edit cont
     And I log in as "teacher1" (theme_snap)
     And I open the personal menu
     And I follow "Course 1"
-    And I wait until the page is ready
     And I follow "Topic 1"
     Then "#section-1" "css_element" should exist
     And ".block_news_items a.toggle-display" "css_element" should not exist
@@ -65,7 +64,6 @@ Feature: When the moodle theme is set to Snap, teachers only see block edit cont
     # edit mode does not persist between courses
     Given I open the personal menu
     And I follow "Course 2"
-    And I wait until the page is ready
     And I follow "Course Tools"
     Then I should see "Edit course blocks"
 
@@ -74,7 +72,6 @@ Feature: When the moodle theme is set to Snap, teachers only see block edit cont
     Given I log in as "admin" (theme_snap)
     And I open the personal menu
     And I follow "Course 1"
-    And I wait until the page is ready
     And I follow "Course Tools"
     And I follow "Edit course blocks"
     When I am on site homepage
@@ -89,7 +86,6 @@ Feature: When the moodle theme is set to Snap, teachers only see block edit cont
     And I follow "Turn editing on"
     When I open the personal menu
     And I follow "Course 1"
-    And I wait until the page is ready
     And I follow "Course Tools"
     Then I should see "Edit course blocks"
 
@@ -105,9 +101,7 @@ Feature: When the moodle theme is set to Snap, teachers only see block edit cont
     Given I log in as "teacher1" (theme_snap)
     And I open the personal menu
     And I follow "Course 3"
-    And I wait until the page is ready
     And I click on "#page-mast .singlebutton input[type=\"submit\"]" "css_element"
-    And I wait until the page is ready
     And I should see "Add Topic"
     And I should see "Add Resource"
     And I should see "Topic Settings"

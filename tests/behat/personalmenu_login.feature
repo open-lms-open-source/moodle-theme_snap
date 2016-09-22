@@ -73,7 +73,6 @@ Feature: When the moodle theme is set to Snap,
     And I press "Log in"
     Then "#primary-nav" "css_element" should be visible
     And I follow "Course 1"
-    And I wait until the page is ready
     And I follow "Introduction"
     And "#section-0" "css_element" should be visible
     And I follow "Topic 1"

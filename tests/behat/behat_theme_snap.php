@@ -208,7 +208,6 @@ class behat_theme_snap extends behat_base {
         $givens = [
             'I open the personal menu',
             'I follow "'.$course.'"',
-            'I wait until the page is ready',
             'I go to single course section 1',
             '".section-navigation.navigationtitle" "css_element" should not exist',
             // In the above, .section-navigation.navigationtitle relates to the element on the page which contains the single
@@ -386,7 +385,6 @@ class behat_theme_snap extends behat_base {
             'I set the field with xpath "//select[@name=\'x[month]\']" to "'.$month.'"',
             'I set the field "year" to "'.$year.'"',
             'I press "'.$savestr.'"',
-            'I wait until the page is ready'
         ];
 
         return $givens;

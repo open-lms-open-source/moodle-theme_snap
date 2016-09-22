@@ -43,7 +43,6 @@ Feature: When the moodle theme is set to Snap, teachers can toggle the currently
     Given I log in as "teacher1" (theme_snap)
     And I open the personal menu
     And I follow "Course 1"
-    And I wait until the page is ready
     And I follow "Topic 2"
     Then "#section-2" "css_element" should exist
 
@@ -55,13 +54,11 @@ Feature: When the moodle theme is set to Snap, teachers can toggle the currently
     And I log in as "student1" (theme_snap)
     And I open the personal menu
     And I follow "Course 1"
-    And I wait until the page is ready
     Then I should see "Current" in the "#chapters li:nth-of-type(3)" "css_element"
     And I log out (theme_snap)
     And I log in as "teacher1" (theme_snap)
     And I open the personal menu
     And I follow "Course 1"
-    And I wait until the page is ready
     And I follow "Topic 2"
     Given I click on "#section-2 .snap-highlight.snap-marked" "css_element"
     And I wait until "#section-2 .snap-highlight.snap-marker" "css_element" exists
@@ -70,7 +67,6 @@ Feature: When the moodle theme is set to Snap, teachers can toggle the currently
     And I log in as "student1" (theme_snap)
     And I open the personal menu
     And I follow "Course 1"
-    And I wait until the page is ready
     Then I should not see "Current" in the "#chapters li:nth-of-type(3)" "css_element"
 
   @javascript
@@ -78,6 +74,5 @@ Feature: When the moodle theme is set to Snap, teachers can toggle the currently
     Given I log in as "student1" (theme_snap)
     And I open the personal menu
     And I follow "Course 1"
-    And I wait until the page is ready
     And I follow "Topic 2"
     Then "#section-2 .snap-highlight" "css_element" should not exist
