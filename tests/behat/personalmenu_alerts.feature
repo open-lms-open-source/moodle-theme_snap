@@ -92,7 +92,6 @@ Feature: When the moodle theme is set to Snap, students and teachers can open a 
       | username | firstname | lastname | email |
       | student2 | Student | 2 | student1@example.com |
     And I am on the course "C1"
-    And I wait until the page is ready
     And I set the following fields to these values:
       | Username | student2 |
       | Password | student2 |

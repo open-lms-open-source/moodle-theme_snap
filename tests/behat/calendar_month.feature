@@ -42,7 +42,6 @@ Feature: When a user clicks on next or previous month link in the calendar block
   Given I log in as "teacher1" (theme_snap)
    Then I open the personal menu
     And I follow "Course 1"
-    And I wait until the page is ready
    Then I follow "Course Tools"
     And I follow "Edit course blocks"
    Then I add the "Calendar" block
@@ -58,7 +57,6 @@ Feature: When a user clicks on next or previous month link in the calendar block
   Given I log in as "teacher1" (theme_snap)
    Then I open the personal menu
     And I follow "Course 1"
-    And I wait until the page is ready
    Then I follow "Course Tools"
     And I follow "Edit course blocks"
    Then I add the "Calendar" block

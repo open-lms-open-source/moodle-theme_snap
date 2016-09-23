@@ -65,7 +65,6 @@ Feature: When the moodle theme is set to Snap, students and teachers can open a 
     And I open the personal menu
     And I should see "Feedback"
     And I follow "Course 1"
-    And I wait until the page is ready
     And I follow "Topic 1"
     And I wait until "#section-1" "css_element" is visible
     And I should see "Test assignment1"

@@ -51,7 +51,6 @@ Feature: When the moodle theme is set to Snap, teachers edit assets without ente
     And I log in as "student1" (theme_snap)
     And I open the personal menu
     And I follow "Course 1"
-    And I wait until the page is ready
     And I follow "Topic 1"
    Then ".snap-activity[data-type='Assignment']" "css_element" should exist
     And "div.dropdown snap-edit-more-dropdown" "css_element" should not exist
@@ -64,7 +63,6 @@ Feature: When the moodle theme is set to Snap, teachers edit assets without ente
     And I log in as "teacher2" (theme_snap)
     And I open the personal menu
     And I follow "Course 1"
-    And I wait until the page is ready
     And I follow "Topic 1"
    Then "#section-1" "css_element" should exist
     And ".snap-activity[data-type='Assignment']" "css_element" should exist
@@ -78,7 +76,6 @@ Feature: When the moodle theme is set to Snap, teachers edit assets without ente
     And I log in as "teacher1" (theme_snap)
     And I open the personal menu
     And I follow "Course 1"
-    And I wait until the page is ready
     And I follow "Topic 1"
    Then "#section-1" "css_element" should exist
     And ".snap-activity[data-type='Assignment']" "css_element" should exist
@@ -94,7 +91,6 @@ Feature: When the moodle theme is set to Snap, teachers edit assets without ente
   Given I log in as "teacher1" (theme_snap)
     And I open the personal menu
     And I follow "Course 1"
-    And I wait until the page is ready
     And I follow "Topic 1"
    Then "#section-1" "css_element" should exist
     And "#snap-drop-file-1" "css_element" should exist
@@ -116,7 +112,6 @@ Feature: When the moodle theme is set to Snap, teachers edit assets without ente
     And I log in as "teacher1" (theme_snap)
     And I open the personal menu
     And I follow "Course 1"
-    And I wait until the page is ready
     And I follow "Topic 1"
    Then "#section-1" "css_element" should exist
     And ".snap-activity[data-type='Assignment']" "css_element" should exist
@@ -130,7 +125,6 @@ Feature: When the moodle theme is set to Snap, teachers edit assets without ente
   Given I log in as "teacher1" (theme_snap)
     And I open the personal menu
     And I follow "Course 1"
-    And I wait until the page is ready
     And I follow "Topic 1"
    Then "#section-1" "css_element" should exist
     And "#snap-drop-file-1" "css_element" should exist

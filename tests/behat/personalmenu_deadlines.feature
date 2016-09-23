@@ -50,7 +50,6 @@ Feature: When the moodle theme is set to Snap, students and teachers can open a 
     And I should see "Not Submitted" in the "#snap-personal-menu-deadlines div.snap-media-object:first-of-type" "css_element"
     And I should see "Not Submitted" in the "#snap-personal-menu-deadlines div.snap-media-object:nth-of-type(2)" "css_element"
     And I follow "Course 1"
-    And I wait until the page is ready
     And I follow "Topic 1"
     And I wait until "#section-1" "css_element" is visible
     And I should see "Test assignment1"

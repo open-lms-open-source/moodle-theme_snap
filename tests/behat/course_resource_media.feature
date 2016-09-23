@@ -46,7 +46,6 @@ Feature: When the moodle theme is set to Snap, clicking on a resource with a med
     Given I log in as "teacher1" (theme_snap)
     And I open the personal menu
     And I follow "Course 1"
-    And I wait until the page is ready
     And I follow "Topic 1"
     Then "#section-1" "css_element" should exist
     And "#snap-drop-file-1" "css_element" should exist
@@ -54,12 +53,10 @@ Feature: When the moodle theme is set to Snap, clicking on a resource with a med
     Then ".snap-resource[data-type='mp3']" "css_element" should exist
     Then ".snap-resource[data-type='mp3']" "css_element" should exist
     And I click on ".snap-edit-asset" "css_element"
-    And I wait until the page is ready
     And I set the following fields to these values:
       | Completion tracking | 2 |
       | Student must view this activity to complete it | 1 |
     And I click on "#id_submitbutton2" "css_element"
-    And I wait until the page is ready
     And "span.autocompletion img[title='Not completed: test mp3 file']" "css_element" should exist
     And I click on ".snap-resource[data-type='mp3']" "css_element"
     And I wait until "#snap-light-box" "css_element" is visible
