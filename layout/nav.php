@@ -33,8 +33,10 @@ use theme_snap\renderables\bb_dashboard_link;
 <header id='mr-nav' class='clearfix moodle-has-zindex'>
 <div class="pull-right">
 <?php
-    $bblink = new bb_dashboard_link();
-    echo $OUTPUT->render($bblink);
+    if (class_exists('local_geniusws\navigation')) {
+        $bblink = new bb_dashboard_link();
+        echo $OUTPUT->render($bblink);
+    }
     echo $OUTPUT->fixed_menu();
     $settingslink = new settings_link();
     echo $OUTPUT->render($settingslink);
