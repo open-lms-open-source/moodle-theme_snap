@@ -52,7 +52,7 @@ class course_toc implements \renderable, \templatable{
     public $chapters;
 
     /**
-     * @var \stdClass {canaddnewsection, imgurladdnewsection, imgurltools}
+     * @var course_toc_footer
      */
     public $footer;
 

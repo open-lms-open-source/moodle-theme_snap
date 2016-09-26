@@ -42,7 +42,7 @@ class shared extends \renderer_base {
      * @param stdClass $section The course_section entry from DB
      * @param stdClass $course the course record from DB
      * @param array    $mods (argument not used)
-     * @return string HTML to output.
+     * @return stdClass
      */
     public static function section_activity_summary($section, $course, $mods) {
         global $CFG;

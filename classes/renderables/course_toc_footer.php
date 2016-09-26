@@ -15,51 +15,30 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Course toc section
- * @author    gthomas2
- * @copyright Copyright (c) 2016 Moodlerooms Inc. (http://www.moodlerooms.com)
+ * Renderable for course toc footer.
+ * @author    Guy Thomas <gthomas@moodlerooms.com>
+ * @copyright Copyright (c) 2016 Blackboard Inc.
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-
 namespace theme_snap\renderables;
 
 defined('MOODLE_INTERNAL') || die();
 
-class course_toc_chapter implements \renderable {
-    
+class course_toc_footer implements \renderable {
+
     /**
-     * @var bool 
+     * @var boolean
      */
-    public $outputlink;
+    public $canaddnewsection;
 
     /**
      * @var string
      */
-    public $title;
-
-    /**
-     * @var bool
-     */
-    public $iscurrent;
+    public $imgurladdnewsection;
 
     /**
      * @var string
      */
-    public $availabilityclass;
-
-    /**
-     * @var string
-     */
-    public $availabilitystatus;
-
-    /**
-     * @var course_toc_progress
-     */
-    public $progress;
-
-    /**
-     * @var string
-     */
-    public $url;
+    public $imgurltools;
 
 }

@@ -27,16 +27,34 @@ defined('MOODLE_INTERNAL') || die();
 
 class course_toc_module implements \renderable {
 
+    /**
+     * @var string module name
+     */
     public $modname;
 
+    /**
+     * @var boolean is this module visible to the current user?
+     */
     public $uservisible;
 
+    /**
+     * @var \moodle_url url to module icon
+     */
     public $iconurl;
 
+    /**
+     * @var string formatted name of module
+     */
     public $formattedname;
 
+    /**
+     * @var string any screen reader info to display
+     */
     public $srinfo;
 
+    /**
+     * @var string (hash)
+     */
     public $url;
 
 }

@@ -28,7 +28,19 @@ use theme_snap\output\shared;
 class course_toc_progress {
 
     /**
-     * @var stdClass - {complete, total}
+     * @var stdClass
+     * @wsparam {
+     *     "complete": {
+     *         "type": PARAM_INT,
+     *         "required": true,
+     *         "description": "Number of items completed"
+     *     },
+     *     "total": {
+     *         "type": PARAM_INT,
+     *         "required": true,
+     *         "description": "Total items to complete"
+     *     }
+     * };
      */
     public $progress;
 
