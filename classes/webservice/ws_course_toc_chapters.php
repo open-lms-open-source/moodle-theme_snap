@@ -45,7 +45,9 @@ class ws_course_toc_chapters extends \external_api {
     public static function service_returns() {
         $keys = [
             'chapters' =>  new \external_multiple_structure(
-                definition_helper::define_class_for_webservice('theme_snap\renderables\course_toc_chapter'),
+                new \external_single_structure(
+                    definition_helper::define_class_for_webservice('theme_snap\renderables\course_toc_chapter')
+                ),
                 'Table of content chapters',
                 true
             )

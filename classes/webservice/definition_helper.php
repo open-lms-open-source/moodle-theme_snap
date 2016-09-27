@@ -27,7 +27,7 @@ use external_single_structure;
 use external_multiple_structure;
 use external_value;
 use coding_exception;
-use Horde\Socket\Client\Exception;
+use moodle_url;
 
 defined('MOODLE_INTERNAL') || die();
 
@@ -99,14 +99,77 @@ class definition_helper {
     }
 
     /**
-     * Converts an object's 'PARAM_TYPE' string values into constants.
+     * Create an external value from an object containing type, description, required properties.
+     * @param stdClass $obj
+     * @return external_value
+     * @throws coding_exception
+     */
+    private function create_external_value_from_obj($obj) {
+        if (empty($obj->type)) {
+            throw new coding_exception('Object is missing type property');
+        }
+        $type = $obj->type;
+        $description = !empty($obj->description) ? $obj->description : null;
+
+        if (isset($obj->required)) {
+            $required = !empty($obj->required) || $obj->required === false ? $obj->required : null;
+            if (!is_bool($required)) {
+                // If null, required will be false by default.
+                $required = strtolower($required) === 'true';
+            }
+        } else {
+            $required = false;
+        }
+
+        if (isset($obj->allownull)) {
+            $allownull = !empty($obj->allownull) || $obj->allownull === false ? $obj->allownull : null;
+            if (!is_bool($allownull)) {
+                // If null, allownull will be true by default.
+                $allownull = !strtolower($allownull) === 'false';
+            }
+        } else {
+            $allownull = true;
+        }
+
+        $extval = new external_value($type, $description, $required, null, $allownull);
+        return $extval;
+    }
+
+    /**
+     * Converts an object's 'PARAM_TYPE' string values into constants OR classes into new definitions.
      *
      * @param $obj
      */
     private function convert_object_params($obj) {
        foreach ($obj as $key => $val) {
            if (isset($val->type) && is_string($val->type)) {
-               $obj->$key->type = constant($val->type);
+               if (defined($val->type)) {
+                   $obj->$key->type = constant($val->type);
+                   $obj->$key = $this->create_external_value_from_obj($obj->$key);
+               } else if (strpos($val->type, '{') !== false) {
+                   $obj->$key->type = $this->convert_ws_param_to_object();
+               } else {
+                   $classdetected = $this->get_class_from_type($val->type);
+                   if ($classdetected) {
+                       if ($classdetected === $this->classname) {
+                           throw new coding_exception($this->param_error('Class definition infinite recursion ', $key));
+                       }
+                       $isarray = strpos($val->type, '[]') !== false;
+                       if ($isarray) {
+                           $defineobj = new definition_helper($classdetected);
+                           if (empty($val->description)) {
+                               throw new coding_exception($this->param_error('Missing description for', $key));
+                           }
+                           $obj->$key = new external_multiple_structure(new external_single_structure((array) $defineobj->get_definition(), $val->description));
+                       } else {
+                           return new external_single_structure((array) $defineobj, $val->description);
+                       }
+                   } else {
+                       throw new coding_exception(
+                           $this->param_error('Unable to process type '.$val->type, $key)
+                       );
+                   }
+               }
            } else {
                $obj->$key = $this->convert_object_params($val);
            }
@@ -208,15 +271,16 @@ class definition_helper {
         if (!$obj) {
             throw new coding_exception($this->param_error('Failed to decode @wsparam json', $name));
         }
+
         if (isset($obj->type) && is_string($obj->type)) {
             // The comment is defining just this parameter - e.g:
             // @wsparam {
             //    type: PARAM_INT,
             //    description: "Counter",
             //    required: true
-            // }
+            // };
             //
-            if (!isset($obj->description)) {
+            if (empty($obj->description)) {
                 throw new coding_exception($this->param_error('Missing description for', $name));
             }
             $required = !empty($obj->required);
@@ -231,12 +295,12 @@ class definition_helper {
             //    },
             //    total: {
             //        type: PARAM_INT,
-            //        description: "Total to complete",
+            //        description: "Total to complete"
             //    }
-            // }
+            // };
             //
             if ($isarray) {
-                return new external_multiple_structure(external_single_structure((array)$obj));
+                return new external_multiple_structure(new external_single_structure((array)$obj));
             } else {
                 return new external_single_structure((array)$obj);
             }
@@ -280,6 +344,34 @@ class definition_helper {
             return true; // Failed to find but return default value of true.
         }
         return false; // Failed to find.
+    }
+
+    /**
+     * Get class from type.
+     * @param string $type
+     * @return bool|mixed|string
+     */
+    private function get_class_from_type($type) {
+        $reflect = new \ReflectionClass($this->classname);
+        $chktype = str_replace('[]', '', $type);
+        $mainnamespace = $reflect->getNamespaceName();
+
+        if (class_exists($chktype)) {
+            return $chktype;
+        } else if (class_exists($mainnamespace . '\\' . $chktype)) {
+            return $mainnamespace . '\\' . $chktype;
+        } else {
+            foreach ($this->usenamespaces as $namespace) {
+                $regex = '/\\\\' . $chktype . '$/';
+                if (preg_match($regex, $namespace) === 1) {
+                    if (class_exists($namespace)) {
+                        return $namespace;
+                    }
+                }
+            }
+        }
+
+        return false;
     }
 
     /**
@@ -360,6 +452,8 @@ class definition_helper {
                 $type = trim($matches[1]);
                 if (isset($aliases[$type])) {
                     $type = $aliases[$type];
+                } else if (isset($aliases[str_replace('\\', '', $type)])) {
+                    $type = $aliases[str_replace('\\', '', $type)];
                 } else {
                     if ($type === 'stdClass') {
                         throw new coding_exception(
@@ -367,29 +461,16 @@ class definition_helper {
                         );
                     }
                     $isarray = strpos($type, '[]');
-                    $chktype = str_replace('[]', '', $type);
-                    $mainnamespace = $reflect->getNamespaceName();
-
-                    if (class_exists($chktype)) {
-                        $classdetected = $chktype;
-                    } else if (class_exists($mainnamespace . '\\' . $chktype)) {
-                        $classdetected = $mainnamespace . '\\' . $chktype;
-                    } else {
-                        foreach ($this->usenamespaces as $namespace) {
-                            $regex = '/\\\\' . $chktype . '$/';
-                            if (preg_match($regex, $namespace) === 1) {
-                                if (class_exists($namespace)) {
-                                    $classdetected = $namespace;
-                                    break;
-                                }
-                            }
-                        }
-                    }
+                    $classdetected = $this->get_class_from_type($type);
 
                     if (empty($classdetected)) {
                         throw new coding_exception(
                             $this->param_error('Unknown / incompatible var type ' . $type, $name)
                         );
+                    }
+
+                    if ($classdetected === $this->classname) {
+                        throw new coding_exception($this->param_error('Class definition infinite recursion ', $name));
                     }
                 }
             }

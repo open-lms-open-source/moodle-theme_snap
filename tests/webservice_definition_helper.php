@@ -58,6 +58,27 @@ class definition_helper_testable extends definition_helper {
     }
 }
 
+/**
+ * Simple class for testing.
+ * Class wsdocs_teeth
+ */
+class wsdocs_teeth {
+    /**
+     * @var string type of teeth
+     */
+    public $type;
+
+    /**
+     * @var string left or right
+     */
+    public $side;
+
+    /**
+     * @var boolean top if true, else bottom
+     */
+    public $top;
+}
+
 class wsdocs_testing {
     /**
      * @var string My head
@@ -92,6 +113,21 @@ class wsdocs_testing {
      * @wsrequired true
      */
     public $ears;
+
+    /**
+     * @var stdClass
+     * @wsparam {
+     *     tongue: {
+     *         type: PARAM_INT,
+     *         description: "Length of tongue"
+     *     },
+     *     teeth: {
+     *         type: wsdocs_teeth[],
+     *         description: "Array of teeth"
+     *     }
+     * };
+     */
+    public $mouth;
 }
 
 /**
@@ -213,12 +249,13 @@ EOF;
         $this->assertTrue(is_object($obj));
         $this->assertFalse($isarr);
         $this->assertTrue(!empty($obj->complete));
+        $this->assertTrue($obj->complete instanceof external_value);
         $this->assertTrue(!empty($obj->complete->type));
         $this->assertTrue(!empty($obj->complete->required));
-        $this->assertTrue(!empty($obj->complete->description));
+        $this->assertTrue(!empty($obj->complete->desc));
         $this->assertEquals(PARAM_INT, $obj->complete->type);
         $this->assertEquals(true, $obj->complete->required);
-        $this->assertEquals('Number of items completed', $obj->complete->description);
+        $this->assertEquals('Number of items completed', $obj->complete->desc);
     }
 
     public function test_convert_ws_param_array_to_object() {
@@ -251,12 +288,13 @@ EOF;
         $this->assertTrue(is_object($obj));
         $this->assertTrue($isarr);
         $this->assertTrue(!empty($obj->complete));
+        $this->assertTrue($obj->complete instanceof external_value);
         $this->assertTrue(!empty($obj->complete->type));
         $this->assertTrue(!empty($obj->complete->required));
-        $this->assertTrue(!empty($obj->complete->description));
+        $this->assertTrue(!empty($obj->complete->desc));
         $this->assertEquals(PARAM_INT, $obj->complete->type);
         $this->assertEquals(true, $obj->complete->required);
-        $this->assertEquals('Number of items completed', $obj->complete->description);
+        $this->assertEquals('Number of items completed', $obj->complete->desc);
     }
 
 }
