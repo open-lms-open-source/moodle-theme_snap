@@ -71,7 +71,7 @@ function theme_snap_process_css($css, theme_config $theme) {
  * @return string The parsed CSS
  */
 function theme_snap_set_logo($css, $logo) {
-    $tag = '[[setting:logo]]';
+    $tag = '/**setting:logo**/';
     if (is_null($logo)) {
         $replacement = '';
     } else {
@@ -89,7 +89,7 @@ function theme_snap_set_logo($css, $logo) {
  * @return string The CSS which now contains our custom CSS.
  */
 function theme_snap_set_customcss($css, $customcss) {
-    $tag = '[[setting:customcss]]';
+    $tag = '/**setting:customcss**/';
     $replacement = $customcss;
     if (is_null($replacement)) {
         $replacement = '';
@@ -139,7 +139,7 @@ function theme_snap_get_bootswatch_variables(theme_config $theme) {
 function theme_snap_set_bootswatch($css, array $variables) {
     global $CFG;
 
-    $tag = '[[setting:snap-user-bootswatch]]';
+    $tag = '/**setting:snap-user-bootswatch**/';
     if (strpos($css, $tag) === false) {
         return $css; // Avoid doing work when tag is not present.
     }
