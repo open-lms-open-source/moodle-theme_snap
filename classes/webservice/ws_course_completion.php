@@ -49,14 +49,25 @@ class ws_course_completion extends \external_api {
             'unavailablesections' => new \external_value(PARAM_SEQUENCE, 'Unavailable sections', VALUE_REQUIRED),
             'unavailablemods' => new \external_value(PARAM_SEQUENCE, 'Unavailable mods', VALUE_REQUIRED),
             'newlyavailablesectionhtml' => new \external_multiple_structure(
-                new \external_value(PARAM_RAW, 'html'), 'Newly available sections', VALUE_REQUIRED
+                new \external_single_structure(
+                    [
+                        'number' => new \external_value(PARAM_INT, 'section number'),
+                        'html'   => new \external_value(PARAM_RAW, 'html')
+                    ],
+                    'Newly available sections', VALUE_REQUIRED
+                )
             ),
             'newlyavailablemodhtml' => new \external_multiple_structure(
-                new \external_value(PARAM_RAW, 'html'), 'Newly available mods', VALUE_REQUIRED
+                new \external_single_structure(
+                    [
+                        'id' => new \external_value(PARAM_INT, 'id'),
+                        'html' => new \external_value(PARAM_RAW, 'html')
+                    ],
+                   'Newly available mods', VALUE_REQUIRED
+                )
             ),
-            'toc' => new \external_value(PARAM_RAW, 'Table of contents', VALUE_REQUIRED)
+            'toc' => new \external_single_structure(definition_helper::define_class_for_webservice('theme_snap\renderables\course_toc'), 'Table of contents', VALUE_REQUIRED)
         ];
-
         return new \external_single_structure($keys, 'course_completion');
     }
 

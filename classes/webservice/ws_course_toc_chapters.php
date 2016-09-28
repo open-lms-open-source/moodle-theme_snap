@@ -44,12 +44,17 @@ class ws_course_toc_chapters extends \external_api {
      */
     public static function service_returns() {
         $keys = [
-            'chapters' =>  new \external_multiple_structure(
-                new \external_single_structure(
-                    definition_helper::define_class_for_webservice('theme_snap\renderables\course_toc_chapter')
-                ),
-                'Table of content chapters',
-                true
+            'chapters' =>  new \external_single_structure(
+                [
+                    'chapters' => new \external_multiple_structure(
+                        new \external_single_structure(
+                            definition_helper::define_class_for_webservice('theme_snap\renderables\course_toc_chapter')
+                        ),
+                        'Table of content chapters',
+                        true
+                    ),
+                    'listlarge' => new \external_value(PARAM_ALPHAEXT, 'Additional class if the list is considered large')
+                ]
             )
         ];
 

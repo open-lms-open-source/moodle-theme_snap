@@ -147,7 +147,7 @@ class definition_helper {
                    $obj->$key->type = constant($val->type);
                    $obj->$key = $this->create_external_value_from_obj($obj->$key);
                } else if (strpos($val->type, '{') !== false) {
-                   $obj->$key->type = $this->convert_ws_param_to_object();
+                   $obj->$key->type = $this->convert_ws_param_to_object($val->type);
                } else {
                    $classdetected = $this->get_class_from_type($val->type);
                    if ($classdetected) {
@@ -158,11 +158,11 @@ class definition_helper {
                        if ($isarray) {
                            $defineobj = new definition_helper($classdetected);
                            if (empty($val->description)) {
-                               throw new coding_exception($this->param_error('Missing description for', $key));
+                               $val->description = '';
                            }
                            $obj->$key = new external_multiple_structure(new external_single_structure((array) $defineobj->get_definition(), $val->description));
                        } else {
-                           return new external_single_structure((array) $defineobj, $val->description);
+                           $obj->$key = new external_single_structure((array) $defineobj, $val->description);
                        }
                    } else {
                        throw new coding_exception(
@@ -171,7 +171,11 @@ class definition_helper {
                    }
                }
            } else {
-               $obj->$key = $this->convert_object_params($val);
+               if (is_object($obj->$key)) {
+                   $obj->$key = $this->convert_object_params($val);
+               } else {
+                   throw new coding_exception('Type not specified', var_export($obj, true));
+               }
            }
        }
     }
@@ -187,7 +191,7 @@ class definition_helper {
      *      "description" : "My description"
      * };
      * @param $comment
-     * @return [$object, $isarray]
+     * @return [$obj, $isarray]
      */
     private function convert_ws_param_to_object($comment) {
         $matches = [];
@@ -411,10 +415,11 @@ class definition_helper {
             // Do we have a @wsrequired to define the required status of this property?
             $wsreq = $this->get_wsdoc($comment, ['@wsrequired']);
 
-            // Do we have a @wsallownull
+            // Do we have a @wsallownull?
             $wsallownull = $this->get_wsdoc($comment, ['@wsallownull']);
 
-            $regex = '/(?<=\*\s@var\s)(\S*)\s(.*)/';
+            // Get information from @var doc.
+            $regex = '/(?<=\*\s@var\s)(\S*)([^\S\x0a\x0d].*|)/m';
             $matches = [];
             $hasvardoc = preg_match($regex, $comment, $matches);
             if ($hasvardoc !== 1 && (empty($wstype) && empty($wsdesc))) {
@@ -428,9 +433,10 @@ class definition_helper {
             } else {
                 // Extract from @var.
                 if (count($matches) < 3) {
-                    throw new coding_exception($this->param_error('Missing description for', $name));
+                    $description = '';
+                } else {
+                    $description = trim($matches[2]);
                 }
-                $description = trim($matches[2]);
             }
 
             // Establish type.

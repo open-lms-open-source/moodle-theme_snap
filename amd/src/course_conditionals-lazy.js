@@ -44,7 +44,9 @@ define(['jquery', 'core/ajax', 'core/notification', 'core/templates'], function(
                             // Remove availability warnings for sections.
                             if (Object.keys(response.newlyavailablesectionhtml).length) {
                                 for (var s in response.newlyavailablesectionhtml) {
-                                     $('#section-' + s + ' .content > .snap-restrictions-meta').remove();
+                                    var item = response.newlyavailablesectionhtml[s];
+                                    var number = item.number;
+                                    $('#section-' + number + ' .content > .snap-restrictions-meta').remove();
                                 }
                             }
 
@@ -60,8 +62,10 @@ define(['jquery', 'core/ajax', 'core/notification', 'core/templates'], function(
                                     // There are no newly available elements which require updating.
                                     return;
                                 }
-                                for (var id in availableHTML) {
-                                    var html = availableHTML[id];
+                                for (var i in availableHTML) {
+                                    var item = availableHTML[i];
+                                    var id = item.id ? item.id : item.number;
+                                    var html = item.html;
                                     var baseSelector = '#' + typeKey + '-' + id;
                                     if (typeKey === 'module') {
                                         $(baseSelector).replaceWith(html);

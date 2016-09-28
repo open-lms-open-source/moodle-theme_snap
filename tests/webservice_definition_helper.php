@@ -130,6 +130,24 @@ class wsdocs_testing {
     public $mouth;
 }
 
+class var_nodescription {
+    /**
+     * @var str
+     */
+    public $something;
+}
+
+class wsparam_notype {
+    /**
+     * @wsparam {
+     *     doohicky: {
+     *         description: "An amazing thing."
+     *     }
+     * };
+     */
+    public $something;
+}
+
 /**
  * Tests for webservice definition healper.
  * @author    Guy Thomas <gthomas@moodlerooms.com>
@@ -295,6 +313,20 @@ EOF;
         $this->assertEquals(PARAM_INT, $obj->complete->type);
         $this->assertEquals(true, $obj->complete->required);
         $this->assertEquals('Number of items completed', $obj->complete->desc);
+    }
+
+    public function test_convert_ws_param_no_type() {
+        $this->setExpectedException('coding_exception', 'Type not specified');
+        new definition_helper_testable(new wsparam_notype());
+    }
+
+    public function test_convert_var_no_description() {
+        $helper = new definition_helper_testable(new var_nodescription());
+        $definition = $helper->get_definition();
+        $this->assertArrayHasKey('something', $definition);
+        $something = $definition['something'];
+        $this->assertTrue($something instanceof external_value);
+        $this->assertEmpty($something->desc);
     }
 
 }

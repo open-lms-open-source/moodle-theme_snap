@@ -50,7 +50,7 @@ class course_toc_progress {
     public $completed;
 
     /**
-     * @var string
+     * @var string - pixurl for completed
      */
     public $pixcompleted;
 
@@ -69,6 +69,12 @@ class course_toc_progress {
             $completioninfo = new \completion_info($course);
             $compinfos[$course->id] = $completioninfo;
         }
+
+        // Set this to empty or web service won't be happy on early abort.
+        $this->progress = (object) [
+            'complete' => null,
+            'total' => null
+        ];
         
         if (!$completioninfo->is_enabled()) {
             return ''; // Completion tracking not enabled.

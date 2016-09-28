@@ -87,13 +87,10 @@ class ws_course_sections extends \external_api {
         $service = course::service();
         switch ($action) {
             case 'highlight' :
-                $retval = $service->highlight_section($courseshortname, $sectionnumber, $value);
+                return $service->highlight_section($courseshortname, $sectionnumber, $value);
             case 'visibility' :
-                $retval = $service->set_section_visibility($courseshortname, $sectionnumber, $value);
+                return $service->set_section_visibility($courseshortname, $sectionnumber, $value);
         }
-        var_dump($retval);
-        die;
-        return $retval;
         throw new \coding_exception('Invalid action selected :' . $action);
     }
 }
