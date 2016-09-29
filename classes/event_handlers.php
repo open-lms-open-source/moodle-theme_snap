@@ -66,7 +66,7 @@ class event_handlers {
     /**
      * The user delete event.
      *
-     * Delete course favorite records when a user is deleted.
+     * Delete course favorite records when an user is deleted.
      *
      * @param user_deleted $event
      */
