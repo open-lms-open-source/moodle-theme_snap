@@ -298,7 +298,7 @@ class theme_snap_local_test extends \advanced_testcase {
         $assigngen->create_instance([
             'name' => 'Assign 2',
             'course' => $course->id,
-            'duedate' => strtotime('tomorrow')
+            'duedate' => strtotime('tomorrow') + HOURSECS * 2 // Add two hours so that test works at 23:30.
         ]);
         $assigngen->create_instance([
             'name' => 'Assign 3',
@@ -315,7 +315,7 @@ class theme_snap_local_test extends \advanced_testcase {
         $quizgen->create_instance([
             'name' => 'Quiz 2',
             'course' => $course->id,
-            'timeclose' => strtotime('tomorrow')
+            'timeclose' => strtotime('tomorrow') + HOURSECS * 2 // Add two hours so that test works at 23:30.
         ]);
         $quizgen->create_instance([
             'name' => 'Quiz 3',
