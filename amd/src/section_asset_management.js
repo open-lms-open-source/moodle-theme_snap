@@ -584,7 +584,7 @@ define(['jquery', 'core/log', 'core/ajax', 'core/templates', 'core/notification'
                     // This should never happen, but just in case...
                     $('.section-moving').removeClass('section-moving');
                     section.addClass('section-moving');
-                    $('a[href$=#section-' + sectionNumber + ']').parent('li').addClass('section-moving');
+                    $('a[href="#section-' + sectionNumber + '"]').parent('li').addClass('section-moving');
                     $('body').addClass('snap-move-section');
 
                     var title = M.util.get_string('moving', 'theme_snap', sectionName);

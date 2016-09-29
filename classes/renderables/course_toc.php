@@ -47,17 +47,27 @@ class course_toc implements \renderable, \templatable{
     public $modules = [];
 
     /**
-     * @var course_toc_chapter[]
+     * @var \stdClass
+     * @wsparam {
+     *     chapters: {
+     *        type: course_toc_chapter[],
+     *        description: "An array of course_toc_chapter objects"
+     *     },
+     *     listlarge: {
+     *        type: PARAM_ALPHAEXT,
+     *        description: "list-large css class when TOC has more than 9 chapters"
+     *     }
+     * };
      */
     public $chapters;
 
     /**
-     * @var \stdClass {canaddnewsection, imgurladdnewsection, imgurltools}
+     * @var course_toc_footer
      */
     public $footer;
 
     /**
-     * @var \stdClass
+     * @var \stdClass 
      */
     protected $course;
 
@@ -98,12 +108,16 @@ class course_toc implements \renderable, \templatable{
      * @throws \coding_exception
      */
     protected function set_modules() {
-        global $CFG;
+        global $CFG, $PAGE;
 
         // If course does not have any sections then exit - note, module search is not supported in course formats
         // that don't have sections.
         if (!isset($this->course->numsections)) {
             return;
+        }
+
+        if (!isset($PAGE->context) && AJAX_SCRIPT) {
+            $PAGE->set_context(context_course::instance($this->course->id));
         }
 
         $modinfo = get_fast_modinfo($this->course);

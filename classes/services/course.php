@@ -303,7 +303,12 @@ class course {
      */
     public function course_completion($shortname, $previouslyunavailablesections, $previouslyunavailablemods) {
         global $PAGE, $OUTPUT;
+
         $course = $this->coursebyshortname($shortname);
+        if (!isset($PAGE->context) && AJAX_SCRIPT) {
+            $PAGE->set_context(\context_course::instance($course->id));
+        }
+
         list ($unavailablesections, $unavailablemods) = local::conditionally_unavailable_elements($course);
 
         $newlyavailablesections = array_diff($previouslyunavailablesections, $unavailablesections);
@@ -316,7 +321,10 @@ class course {
         if (!empty($newlyavailablesections)) {
             foreach ($newlyavailablesections as $sectionnumber) {
                 $html = $courserenderer->course_section_cm_list($course, $sectionnumber, $sectionnumber);
-                $newlyavailablesectionhtml[$sectionnumber] = $html;
+                $newlyavailablesectionhtml[$sectionnumber] = (object) [
+                    'number' => $sectionnumber,
+                    'html'   => $html
+                ];
             }
         }
 
@@ -331,7 +339,10 @@ class course {
                     continue;
                 }
                 $html = $courserenderer->course_section_cm_list_item($course, $completioninfo, $cm, $cm->sectionnum);
-                $newlyavailablemodhtml[$modid] = $html;
+                $newlyavailablemodhtml[$modid] = (object) [
+                    'id'   => $modid,
+                    'html' => $html
+                ];
             }
         }
 
