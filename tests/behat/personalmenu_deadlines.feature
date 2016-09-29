@@ -85,11 +85,11 @@ Feature: When the moodle theme is set to Snap, students and teachers can open a 
     And I click on "#admin-menu-trigger" "css_element"
     # Core code throws errors from the Calendar and Upcoming Events block, so hide those too.
     And I navigate to "Manage blocks" node in "Site administration > Plugins > Blocks"
-    And I click on "//a[@title=\"Hide\"]" "xpath_element" in the "Calendar" "table_row"
-    And I click on "//a[@title=\"Hide\"]" "xpath_element" in the "Upcoming events" "table_row"
+    And I click on "Hide" "link" in the "Calendar" "table_row"
+    And I click on "Hide" "link" in the "Upcoming events" "table_row"
     And I click on "#admin-menu-trigger" "css_element"
     And I navigate to "Manage activities" node in "Site administration > Plugins > Activity modules"
-    And I click on "//a[@title=\"Hide\"]" "xpath_element" in the "Assignment" "table_row"
+    And I click on "Hide" "link" in the "Assignment" "table_row"
     And I log out (theme_snap)
     And I log in as "teacher1" (theme_snap)
     And I open the personal menu
