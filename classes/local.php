@@ -1471,10 +1471,11 @@ class local {
                          ";
         }
 
-        $sql = '-- Snap sql'. "\n".implode ("\n".' UNION ALL '."\n", $sqls);
+        $sql = implode("\n".' UNION ALL '."\n", $sqls);
         if (count($sqls) > 1) {
             $sql .= "\n".' ORDER BY modified DESC';
         }
+        $sql = '-- Snap sql'."\n"."SELECT * FROM ($sql) x";
         $posts = $DB->get_records_sql($sql, $params, 0, $limit);
 
         $activities = [];
