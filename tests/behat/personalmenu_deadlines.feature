@@ -66,11 +66,47 @@ Feature: When the moodle theme is set to Snap, students and teachers can open a 
     And I should see "Not Submitted" in the "#snap-personal-menu-deadlines div.snap-media-object:nth-of-type(2)" "css_element"
 
   @javascript
-  Scenario: Teacher sees no submission status data against deadlines.
+  Scenario: Users see no submission status data against deadlines for hidden activities.
     Given the following "activities" exist with relative dates:
       | activity | course | idnumber | name             | intro             | assignsubmission_onlinetext_enabled | assignfeedback_comments_enabled | section | duedate                      |
       | assign   | C1     | assign1  | Test assignment1 | Test assignment 1 | 1                                   | 1                               | 1       | the timestamp of tomorrow    |
       | assign   | C1     | assign2  | Test assignment2 | Test assignment 2 | 1                                   | 1                               | 1       | the timestamp of next week   |
+    And I log in as "teacher1" (theme_snap)
+    And I open the personal menu
+    And I should see "Test assignment1"
+    And I should see "Test assignment2"
+    And I log out (theme_snap)
+    And I log in as "student1" (theme_snap)
+    And I open the personal menu
+    And I should see "Test assignment1"
+    And I should see "Test assignment2"
+    And I log out (theme_snap)
+    And I log in as "admin" (theme_snap)
+    And I click on "#admin-menu-trigger" "css_element"
+    # Core code throws errors from the Calendar and Upcoming Events block, so hide those too.
+    And I navigate to "Manage blocks" node in "Site administration > Plugins > Blocks"
+    And I click on "//a[@title=\"Hide\"]" "xpath_element" in the "Calendar" "table_row"
+    And I click on "//a[@title=\"Hide\"]" "xpath_element" in the "Upcoming events" "table_row"
+    And I click on "#admin-menu-trigger" "css_element"
+    And I navigate to "Manage activities" node in "Site administration > Plugins > Activity modules"
+    And I click on "//a[@title=\"Hide\"]" "xpath_element" in the "Assignment" "table_row"
+    And I log out (theme_snap)
+    And I log in as "teacher1" (theme_snap)
+    And I open the personal menu
+    And I should see "You have no upcoming deadlines"
+    And I log out (theme_snap)
+    And I log in as "student1" (theme_snap)
+    And I open the personal menu
+    And I should see "You have no upcoming deadlines"
+
+  @javascript
+  Scenario: Student and Teacher  see no submission status data against deadlines for disabled modules.
+    Given the following "activities" exist with relative dates:
+      | activity | course | idnumber | name             | intro             | assignsubmission_onlinetext_enabled | assignfeedback_comments_enabled | section | duedate                      |
+      | assign   | C1     | assign1  | Test assignment1 | Test assignment 1 | 1                                   | 1                               | 1       | the timestamp of tomorrow    |
+      | assign   | C1     | assign2  | Test assignment2 | Test assignment 2 | 1                                   | 1                               | 1       | the timestamp of next week   |
+    Given the following config values are set as admin:
+      | theme | snap |
     And I log in as "teacher1" (theme_snap)
     And I open the personal menu
     And I should not see "Submitted" in the "#snap-personal-menu-deadlines div.snap-media-object:first-of-type" "css_element"
