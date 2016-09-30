@@ -369,12 +369,12 @@ class theme_snap_services_course_test extends \advanced_testcase {
         $service = $this->courseservice;
         $service->setfavorite($this->courses[0]->shortname, true, $this->user1->id);
         $service->setfavorite($this->courses[1]->shortname, true, $this->user1->id);
-        $favorites1 = $DB->get_records('theme_snap_course_favorites', array('userid'=>$this->user1->id));
-        $this->assertNotEmpty($favorites1);
+        $favorites = $DB->get_records('theme_snap_course_favorites', array('userid'=>$this->user1->id));
+        $this->assertNotEmpty($favorites);
         $userid = $this->user1->id;
         delete_user($this->user1);
-        $favorites2 = $DB->get_records('theme_snap_course_favorites', array('userid'=>$userid));
-        $this->assertEmpty($favorites2);
+        $favorites = $DB->get_records('theme_snap_course_favorites', array('userid'=>$userid));
+        $this->assertEmpty($favorites);
     }
 
 }
