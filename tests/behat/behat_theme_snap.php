@@ -401,7 +401,7 @@ class behat_theme_snap extends behat_base {
 
         $givens = [
             'I go to course section '.$section,
-            'I follow visible link "Edit Topic"',
+            'I follow visible link "Edit section"',
             'I wait until ".snap-form-advanced" "css_element" is visible',
             'I set the field "name" to "Topic '.$date.' '.$section.'"',
         ];
