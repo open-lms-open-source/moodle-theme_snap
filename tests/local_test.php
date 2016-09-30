@@ -503,18 +503,22 @@ class theme_snap_local_test extends \advanced_testcase {
         // Create an assignment.
         $this->create_assignment($course->id, time() + (DAYSECS * 2));
 
+        $actual = local::upcoming_deadlines($student->id);
+        $this->assertCount(1, $actual);
+
+        $actual = local::upcoming_deadlines($teacher->id);
+        $this->assertCount(1, $actual);
+
         // Disable Assign module.
         $assignmod = $DB->get_record('modules', ['name' => 'assign']);
         $DB->set_field('modules', 'visible', '0', ['id' => $assignmod->id]);
         rebuild_course_cache($course->id);
 
         $actual = local::upcoming_deadlines($student->id);
-        $expected = 0;
-        $this->assertCount($expected, $actual);
+        $this->assertCount(0, $actual);
 
         $actual = local::upcoming_deadlines($teacher->id);
-        $expected = 0;
-        $this->assertCount($expected, $actual);
+        $this->assertCount(0, $actual);
 
     }
 
