@@ -10985,6 +10985,9 @@ img.iconhelp:hover {
   position: relative;
   transition-property: none;
 }
+/**setting:logo**/
+/**setting:snap-user-bootswatch**/
+/**setting:customcss**/
 body {
   margin: 8px;
   font-family: Georgia, "Times New Roman", Times, serif;
