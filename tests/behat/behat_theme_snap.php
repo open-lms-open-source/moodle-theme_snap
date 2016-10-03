@@ -479,7 +479,7 @@ class behat_theme_snap extends behat_base {
      * @Given /^I should see availability info "(?P<str>(?:[^"]|\\")*)"$/
      */
     public function i_see_availabilityinfo($str) {
-        $nodes = $this->find_all('css', '.availabilityinfo');
+        $nodes = $this->find_all('css', '.snap-conditional-tag');
         foreach ($nodes as $node) {
             /** @var NodeElement $node */
             if ($node->getText() === $str) {
@@ -499,7 +499,7 @@ class behat_theme_snap extends behat_base {
      */
     public function i_dont_see_availabilityinfo($str) {
         try {
-            $nodes = $this->find_all('css', '.availabilityinfo');
+            $nodes = $this->find_all('css', '.snap-conditional-tag');
         } catch (Exception $e) {
             if (empty($nodes)) {
                 return;
@@ -527,11 +527,11 @@ class behat_theme_snap extends behat_base {
         $date = userdate($datetime,
             get_string('strftimedate', 'langconfig'));
 
-        $givens = [
-            'I should see "Available from" in the "'.$element.'" "'.$selectortype.'"',
-            'I should see "'.$date.'" in the "'.$element.'" "'.$selectortype.'"',
-        ];
-        return $this->process_givens_array($givens);
+        /** @var behat_general $helper */
+        $helper = behat_context_helper::get('behat_general');
+        $helper->assert_element_contains_text('Available from', $element, $selectortype);
+        $helper->assert_element_contains_text($date, $element, $selectortype);
+
     }
 
     /**
@@ -547,11 +547,23 @@ class behat_theme_snap extends behat_base {
         $date = userdate($datetime,
             get_string('strftimedate', 'langconfig'));
 
-        $givens = [
-            'I should not see "Available from" in the "'.$element.'" "'.$selectortype.'"',
-            'I should not see "'.$date.'" in the "'.$element.'" "'.$selectortype.'"',
-        ];
-        return $this->process_givens_array($givens);
+        // If node does not exist then all is well - i.e. we can't see the string in the element because the element
+        // does not exist!
+        try {
+            $node = $this->get_selected_node($selectortype, $element);
+        } catch (Exception $e) {
+            if (empty($node)) {
+                return;
+            }
+        }
+        if (empty($node)) {
+            return;
+        }
+
+        /** @var behat_general $helper */
+        $helper = behat_context_helper::get('behat_general');
+        $helper->assert_element_not_contains_text('Available from', $element, $selectortype);
+        $helper->assert_element_not_contains_text($date, $element, $selectortype);
     }
 
     /**
