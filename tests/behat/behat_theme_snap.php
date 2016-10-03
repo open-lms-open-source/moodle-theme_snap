@@ -587,7 +587,7 @@ class behat_theme_snap extends behat_base {
      * @Given /^I should see available from date of "(?P<date_string>(?:[^"]|\\")*)" in section (?P<section_int>(?:\d+))$/
      */
     public function i_should_see_available_from_in_section($date, $section) {
-        $elementselector = '#section-'.$section.' > div.content > div.snap-restrictions-meta';
+        $elementselector = '#section-'.$section.' > div.content > .snap-conditional-tag';
         return $this->i_should_see_available_from_in_element($date, $elementselector, 'css_element');
     }
 
@@ -598,7 +598,7 @@ class behat_theme_snap extends behat_base {
      * @Given /^I should not see available from date of "(?P<date_string>(?:[^"]|\\")*)" in section (?P<section_int>(?:\d+))$/
      */
     public function i_should_not_see_available_from_in_section($date, $section) {
-        $elementselector = '#section-'.$section.' > div.content > div.snap-restrictions-meta';
+        $elementselector = '#section-'.$section.' > div.content > .snap-conditional-tag';
         return $this->i_should_not_see_available_from_in_element($date, $elementselector, 'css_element');
     }
 

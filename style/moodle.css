@@ -22277,8 +22277,7 @@ a.snap-due-date:focus {
 .snap-draft-tag strong {
   font-weight: normal;
 }
-.snap-completion-meta,
-.conditional .snap-restrictions-meta {
+.snap-completion-meta {
   display: block !important;
   clear: both;
 }
