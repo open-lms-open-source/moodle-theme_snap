@@ -62,4 +62,19 @@ class event_handlers {
         $select = ['courseid' => $event->objectid];
         $DB->delete_records('theme_snap_course_favorites', $select);
     }
+
+    /**
+     * The user delete event.
+     *
+     * Delete course favorite records when an user is deleted.
+     *
+     * @param user_deleted $event
+     */
+    public static function user_deleted($event) {
+        global $DB;
+
+        $select = ['userid' => $event->objectid];
+        $DB->delete_records('theme_snap_course_favorites', $select);
+    }
+
 }

@@ -32,5 +32,9 @@ $observers = array(
     array (
         'eventname' => '\core\event\course_deleted',
         'callback'  => '\theme_snap\event_handlers::course_deleted'
+    ),
+    array (
+        'eventname' => '\core\event\user_deleted',
+        'callback'  => '\theme_snap\event_handlers::user_deleted'
     )
 );
