@@ -360,4 +360,20 @@ class theme_snap_services_course_test extends \advanced_testcase {
         $this->assertEquals('Hide topic', $actionmodel->title);
         $this->assertContains('hide=3', $actionmodel->url);
     }
+
+    // Records for favorite courses should not exist when the user is deleted.
+
+    public function test_user_deletion() {
+        global $DB;
+
+        $service = $this->courseservice;
+        $service->setfavorite($this->courses[0]->shortname, true, $this->user1->id);
+        $service->setfavorite($this->courses[1]->shortname, true, $this->user1->id);
+        $favorites = $DB->get_records('theme_snap_course_favorites', array('userid'=>$this->user1->id));
+        $this->assertNotEmpty($favorites);
+        delete_user($this->user1);
+        $favorites = $DB->get_records('theme_snap_course_favorites', array('userid'=>$this->user1->id));
+        $this->assertEmpty($favorites);
+    }
+
 }
