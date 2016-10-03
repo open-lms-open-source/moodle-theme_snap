@@ -370,7 +370,7 @@ class theme_snap_local_test extends \advanced_testcase {
         ];
 
         foreach ($timezones as $offset => $tz) {
-            $tzoneusers[$offset] =  $generator->create_user(['timezone' => $tz]);
+            $tzoneusers[$offset] = $generator->create_user(['timezone' => $tz]);
             $generator->enrol_user($tzoneusers[$offset]->id, $course->id, $studentrole->id);
             $this->setUser($tzoneusers[$offset]);
             $actual = local::upcoming_deadlines($tzoneusers[$offset]);
@@ -478,7 +478,52 @@ class theme_snap_local_test extends \advanced_testcase {
     }
 
     /**
-     * Test upcoming deadlines
+     * Test upcoming deadlines on activity disabled by admin.
+     *
+     * @throws \coding_exception
+     */
+    public function test_upcoming_deadlines_disabled() {
+        global $DB;
+
+        $this->resetAfterTest();
+
+        $generator = $this->getDataGenerator();
+        $course = $generator->create_course();
+        $teacher = $generator->create_user();
+        $student = $generator->create_user();
+
+        // Enrol teacher.
+        $teacherrole = $DB->get_record('role', array('shortname' => 'teacher'));
+        $this->getDataGenerator()->enrol_user($teacher->id, $course->id, $teacherrole->id);
+
+        // Enrol student.
+        $studentrole = $DB->get_record('role', array('shortname' => 'student'));
+        $generator->enrol_user($student->id, $course->id, $studentrole->id);
+
+        // Create an assignment.
+        $this->create_assignment($course->id, time() + (DAYSECS * 2));
+
+        $actual = local::upcoming_deadlines($student->id);
+        $this->assertCount(1, $actual);
+
+        $actual = local::upcoming_deadlines($teacher->id);
+        $this->assertCount(1, $actual);
+
+        // Disable Assign module.
+        $assignmod = $DB->get_record('modules', ['name' => 'assign']);
+        $DB->set_field('modules', 'visible', '0', ['id' => $assignmod->id]);
+        rebuild_course_cache($course->id);
+
+        $actual = local::upcoming_deadlines($student->id);
+        $this->assertCount(0, $actual);
+
+        $actual = local::upcoming_deadlines($teacher->id);
+        $this->assertCount(0, $actual);
+
+    }
+
+    /**
+     * Test upcoming deadlines on activity in course not available to students
      *
      * @throws \coding_exception
      */
@@ -1209,21 +1254,21 @@ class theme_snap_local_test extends \advanced_testcase {
                     '<p>Some content text</p>' . str_pad('-', 200)
         ]);
         $cm = get_course_and_cm_from_instance($page->id, 'page', $course->id)[1];
-        // Remove the intro text from the page record
+        // Remove the intro text from the page record.
         $page->intro = '';
         $DB->update_record('page', $page);
 
         $pagemod = local::get_page_mod($cm);
-        
+
         // Ensure summary contains text.
         $this->assertContains('Some content text', $pagemod->summary);
 
         // Ensure summary contains text without tags.
         $this->assertNotContains('<p>Some content text</p>', $pagemod->summary);
-        
+
         // Ensure summary does not contain any images.
         $this->assertNotContains('<img', $pagemod->summary);
-        
+
         // Make sure summary text never greater than 200 chars (note this only applies to when summary generated from
         // content).
         $this->assertLessThan(201, strlen($pagemod->summary));

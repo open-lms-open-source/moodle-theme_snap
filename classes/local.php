@@ -320,7 +320,7 @@ class local {
             $completioninfo = new \completion_info($course);
             if ($completioninfo->is_enabled()) {
                 $modinfo = get_fast_modinfo($course);
-                $sections= $modinfo->get_section_info_all();
+                $sections = $modinfo->get_section_info_all();
                 foreach ($sections as $number => $section) {
                     $ci = new \core_availability\info_section($section);
                     if (!$ci->is_available($information, true)) {
@@ -631,7 +631,7 @@ class local {
 
         if ($todayonly === true) {
             $starttime = $today->getTimestamp();
-            $endtime = $tomorrow->getTimestamp()-1;
+            $endtime = $tomorrow->getTimestamp() - 1;
         } else {
             $starttime = $tomorrow->getTimestamp();
             $endtime = $starttime + (365 * DAYSECS) - 1;
@@ -664,6 +664,8 @@ class local {
                         // Revert the addition of e.g. "(Quiz closes)" to the event name.
                         $event->name = $cminfo->name;
                     }
+                } else {
+                    continue;
                 }
             }
 
@@ -698,7 +700,6 @@ class local {
             if (!empty($event->modulename)) {
                 $modinfo = get_fast_modinfo($event->courseid);
                 $cm = $modinfo->instances[$event->modulename][$event->instance];
-
                 $eventtitle = $event->name .'<small><br>' .$event->coursefullname. '</small>';
 
                 $modimageurl = $output->pix_url('icon', $event->modulename);
@@ -742,6 +743,9 @@ class local {
             $course = $modinfo->get_course();
 
             $modtype = $grade->itemmodule;
+            if (empty($modinfo->instances[$modtype][$grade->iteminstance])) {
+                continue;
+            }
             $cm = $modinfo->instances[$modtype][$grade->iteminstance];
 
             $coursecontext = \context_course::instance($grade->courseid);
