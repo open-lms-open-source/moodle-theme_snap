@@ -49,8 +49,6 @@
 }
 
 
-
-
 /**
 * report : dates.
 * https://moodle.org/plugins/report_editdates
@@ -59,3 +57,100 @@
 #page-report-editdates-index .activityicon {
     .svg-icon();
 }
+
+
+/**
+* mod assign grading interface
+*/
+
+.path-mod-assign [data-region="grading-navigation-panel"],
+.path-mod-assign [data-region="review-panel"],
+.path-mod-assign [data-region="grade-panel"],
+.path-mod-assign [data-region="grading-navigation"],
+.assignfeedback_editpdf_widget .drawingregion {
+    position: relative;
+    top: auto;
+    bottom: auto;
+    left: auto;
+    right: auto;
+}
+
+.path-mod-assign [data-region="grading-navigation-panel"],
+.path-mod-assign [data-region="user-info"] {
+    height: auto;
+}
+
+.path-mod-assign [data-region="user-info"] {
+    
+    h4 {
+        font-size: 1em;
+    }
+    .img-rounded {
+        height: 3em;
+        border-radius: 100%;
+    }
+}
+
+/* Drop down menus in the anotation bar */
+.moodle-dialogue-base .moodle-dialogue.assignfeedback_editpdf_dropdown {
+    min-width: 1em;
+}
+
+ul.assignfeedback_editpdf_menu {
+    margin: 0;
+    padding: 0;
+}
+
+/* Dialogue close icons */
+.path-mod-assign [data-region="popout-button"] img.smallicon {
+    margin: 0 !important;
+}
+
+
+@media screen and (min-width : @screen-md) {
+    
+    .path-mod-assign [data-region="review-panel-content"],
+    .path-mod-assign [data-region="grade-panel"] {
+        max-height: 80vh;
+        overflow-y: scroll;
+    }
+    
+    .path-mod-assign [data-region="review-panel"] {
+        .make-md-column(8);
+        padding-right: 0;
+        
+        .pageheader {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1;
+        }
+        
+        &.grade-panel-collapsed {
+            .make-md-column(12);
+            right: 0;
+        }
+    }
+
+    .path-mod-assign [data-region="grade-panel"] {
+        .make-md-column(4);
+    }
+    
+    .path-mod-assign [data-region="grade-actions-panel"] {
+        position: fixed;
+        background-color: white;
+        height: auto;
+    }
+    
+    .path-mod-assign [data-region="grade-actions"] {
+        padding: 0.5em;
+    }
+    
+    .path-mod-assign [data-region="grade-actions-panel"] [data-region="grade-actions"] .collapse-buttons {
+        top: 25%;
+        right: 0;
+        height: auto;
+    }
+}
+
