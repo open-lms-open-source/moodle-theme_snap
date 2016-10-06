@@ -785,41 +785,47 @@ class local {
 
         $grading = self::all_ungraded($USER->id);
 
-        if (empty($grading)) {
-            return '<p>' . get_string('nograding', 'theme_snap') . '</p>';
-        }
-
-        $output = $PAGE->get_renderer('theme_snap', 'core', RENDERER_TARGET_GENERAL);
         $out = '';
-        foreach ($grading as $ungraded) {
-            $modinfo = get_fast_modinfo($ungraded->course);
-            $course = $modinfo->get_course();
-            $cm = $modinfo->get_cm($ungraded->coursemoduleid);
+        if (!empty($grading)) {
 
-            $modimageurl = $output->pix_url('icon', $cm->modname);
-            $modname = get_string('modulename', 'mod_'.$cm->modname);
-            $modimage = \html_writer::img($modimageurl, $modname);
+            $output = $PAGE->get_renderer('theme_snap', 'core', RENDERER_TARGET_GENERAL);
+            foreach ($grading as $ungraded) {
+                $modinfo = get_fast_modinfo($ungraded->course);
+                $course = $modinfo->get_course();
+                if (empty($modinfo->get_cms()[$ungraded->coursemoduleid])) {
+                    continue;
+                }
+                $cm = $modinfo->get_cm($ungraded->coursemoduleid);
 
-            $ungradedtitle = $cm->name. '<small><br>' .$course->fullname. '</small>';
+                $modimageurl = $output->pix_url('icon', $cm->modname);
+                $modname = get_string('modulename', 'mod_'.$cm->modname);
+                $modimage = \html_writer::img($modimageurl, $modname);
 
-            $xungraded = get_string('xungraded', 'theme_snap', $ungraded->ungraded);
+                $ungradedtitle = $cm->name. '<small><br>' .$course->fullname. '</small>';
 
-            $function = '\theme_snap\activity::'.$cm->modname.'_num_submissions';
+                $xungraded = get_string('xungraded', 'theme_snap', $ungraded->ungraded);
 
-            $a['completed'] = call_user_func($function, $ungraded->course, $ungraded->instanceid);
-            $a['participants'] = (self::course_participant_count($ungraded->course, $cm->modname));
-            $xofysubmitted = get_string('xofysubmitted', 'theme_snap', $a);
-            $info = '<span class="label label-info">'.$xofysubmitted.', '.$xungraded.'</span>';
+                $function = '\theme_snap\activity::'.$cm->modname.'_num_submissions';
 
-            $meta = '';
-            if (!empty($ungraded->closetime)) {
-                $meta = $output->friendly_datetime($ungraded->closetime);
+                $a['completed'] = call_user_func($function, $ungraded->course, $ungraded->instanceid);
+                $a['participants'] = (self::course_participant_count($ungraded->course, $cm->modname));
+                $xofysubmitted = get_string('xofysubmitted', 'theme_snap', $a);
+                $info = '<span class="label label-info">'.$xofysubmitted.', '.$xungraded.'</span>';
+
+                $meta = '';
+                if (!empty($ungraded->closetime)) {
+                    $meta = $output->friendly_datetime($ungraded->closetime);
+                }
+
+                $out .= $output->snap_media_object($cm->url, $modimage, $ungradedtitle, $meta, $info);
             }
-
-            $out .= $output->snap_media_object($cm->url, $modimage, $ungradedtitle, $meta, $info);
         }
 
-        return $out;
+        if (empty($out)) {
+            return '<p>' . get_string('nograding', 'theme_snap') . '</p>';
+        } else {
+            return $out;
+        }
     }
 
     /**
