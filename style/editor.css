@@ -10245,7 +10245,7 @@ fieldset[disabled] #id_cancel:focus {
   right: auto;
 }
 .path-mod-assign [data-region="grading-navigation-panel"],
-.path-mod-assign .path-mod-assign [data-region="user-info"] {
+.path-mod-assign [data-region="user-info"] {
   height: auto;
 }
 .path-mod-assign [data-region="user-info"] h4 {
