@@ -36,6 +36,8 @@ require_once($CFG->dirroot.'/lib/externallib.php');
 
 /**
  * Definition helper class.
+ * Note: If you are using this class, please be aware that you need to purge caches to force new definitions when
+ * classes change. To ensure this happens for a release you can simply version bump your plugin.
  *
  * @author    Guy Thomas <gthomas@moodlerooms.com>
  * @copyright Copyright (c) 2016 Blackboard Inc.
