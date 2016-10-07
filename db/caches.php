@@ -15,17 +15,20 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Theme plugin version definition.
+ * Web service cache definitions.
  *
- * @package   theme_snap
- * @copyright Copyright (c) 2015 Moodlerooms Inc. (http://www.moodlerooms.com)
+ * @package    theme_snap
+ * @author    Guy Thomas <gthomas@moodlerooms.com>
+ * @copyright Copyright (c) 2016 Blackboard Inc.
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 defined('MOODLE_INTERNAL') || die;
 
-$plugin->version   = 2016042912;
-$plugin->requires  = 2015111604; // Requires this Moodle version (3.0.4).
-$plugin->release   = '3.0.4 (Build: 20160509)';
-$plugin->maturity  = MATURITY_STABLE;
-$plugin->component = 'theme_snap';
+$definitions = array(
+    'webservicedefinitions' => array(
+        'mode' => cache_store::MODE_APPLICATION,
+        'simplekeys' => false,
+        'simpledata' => false
+    )
+);

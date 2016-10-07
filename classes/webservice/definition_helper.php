@@ -28,6 +28,7 @@ use external_multiple_structure;
 use external_value;
 use coding_exception;
 use moodle_url;
+use cache;
 
 defined('MOODLE_INTERNAL') || die();
 
@@ -64,13 +65,41 @@ class definition_helper {
     public function __construct($classorobject) {
         $reflect = new \ReflectionClass($classorobject);
         $this->classname = $reflect->getName();
+
+        $cacheddefinition = $this->get_definition_from_cache($this->classname);
+        if ($cacheddefinition) {
+            $this->definition = $cacheddefinition;
+            return;
+        }
+
         $this->set_use_namespaces($classorobject);
         $this->_define_class_for_webservice($classorobject);
+        $this->cache_definition($this->classname, $this->definition);
+    }
+
+    /**
+     * Get definition for classname from cache.
+     * @param string $classname
+     */
+    private function get_definition_from_cache($classname) {
+        $cache = cache::make('theme_snap', 'webservicedefinitions');
+        $data = $cache->get($classname);
+        return unserialize($data);
+    }
+
+    /**
+     * Cache definition for specific classname.
+     * @param string $classname
+     * @param external_value[] $definition
+     */
+    private function cache_definition($classname, $definition) {
+        $cache = cache::make('theme_snap', 'webservicedefinitions');
+        $cache->set($classname, serialize($definition));
     }
 
     /**
      * Get defintion.
-     * @return \external_value[]
+     * @return external_value[]
      */
     public function get_definition() {
         return $this->definition;
@@ -379,7 +408,7 @@ class definition_helper {
     }
 
     /**
-     * Returns an array of \external_values based on a class or object for use with defining a webservice.
+     * Returns an array of external_value objects based on a class or object for use with defining a webservice.
      *
      * @param $classorobject
      * @throws coding_exception
