@@ -792,7 +792,7 @@ class local {
             foreach ($grading as $ungraded) {
                 $modinfo = get_fast_modinfo($ungraded->course);
                 $course = $modinfo->get_course();
-                if (empty($modinfo->get_cms()[$ungraded->coursemoduleid])) {
+                if (empty($modinfo->get_cms()['$ungraded->coursemoduleid'])) {
                     continue;
                 }
                 $cm = $modinfo->get_cm($ungraded->coursemoduleid);
