@@ -121,7 +121,6 @@ a:hover,
 
 .section li.snap-native .activityinstance .snap-asset-link a {
     color: @brand-primary;
-
     &:visited {
         color: @brand-primary;
     }
@@ -129,6 +128,20 @@ a:hover,
     &:focus,
     &:hover {
         color: darken(@brand-primary, 8%);
+    }
+}
+.snap-asset-link a {
+    color: @text-color;
+    &:focus,
+    &:hover {
+        color: darken(@brand-primary, 8%);
+    }
+}
+
+.snap-due-date {
+    background-color: @brand-primary;
+    &.snap-date-overdue {
+        background-color: @brand-danger;
     }
 }
 
@@ -388,7 +401,7 @@ input[type="reset"],
 }
 
 #snap-login .subcontent.potentialidps {
-    border-top:1px solid @brand-primary;
+    border-top: 1px solid @brand-primary;
 }
 
 /* highlight selected menu iteam logic */
@@ -407,6 +420,12 @@ a[href="#sections"] {
 /* activities */
 .current .sectionname {
     color: @brand-primary;
+}
+
+// Catch all for mods we do not have colours for.
+li.snap-resource,
+li.snap-activity {
+    border-top-color: @brand-primary
 }
 
 // yui-bs overrides

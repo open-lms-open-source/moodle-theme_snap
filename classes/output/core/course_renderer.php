@@ -116,6 +116,9 @@ class course_renderer extends \core_course_renderer {
                 $modclasses [] = 'unavailable';
             }
             // TODO - can we add completion data.
+            if (has_capability('moodle/course:update', $mod->context)) {
+                $modclasses [] = 'snap-can-edit';
+            }
 
             $modclasses [] = 'snap-asset'; // Added to stop conflicts in flexpage.
             $modclasses [] = 'activity'; // Moodle needs this for drag n drop.
@@ -153,7 +156,7 @@ class course_renderer extends \core_course_renderer {
         if ($availinfo) {
             $formattedinfo = \core_availability\info::format_info(
                 $availinfo, $mod->get_course());
-            return html_writer::div($formattedinfo, 'availabilityinfo');
+            return $formattedinfo;
         }
 
         return '';
@@ -199,75 +202,80 @@ class course_renderer extends \core_course_renderer {
         }
         $output .= '<div class="asset-wrapper">';
 
-        // TODO - add if can edit.
         // Drop section notice.
-        $output .= '<a class="snap-move-note" href="#">'.get_string('movehere', 'theme_snap').'</a>';
+        if (has_capability('moodle/course:update', $mod->context)) {
+            $output .= '<a class="snap-move-note" href="#">'.get_string('movehere', 'theme_snap').'</a>';
+        }
         // Start the div for the activity content.
         $output .= "<div class='activityinstance'>";
         // Display the link to the module (or do nothing if module has no url).
         $cmname = $this->course_section_cm_name($mod, $displayoptions);
         $assetlink = '';
-        // SHAME - For moodles ajax show/hide call to work it needs activityinstance > a to add a class of dimmed to.
-        // This dimmed class is of course inaccessible junk.
+        
         if (!empty($cmname)) {
-            $assetlink = '<a></a><h4 class="snap-asset-link">'.$cmname.'</h4>';
+            // Activity/resource type.
+            $snapmodtype = $this->get_mod_type($mod)[0];
+            $assetlink = '<div class="snap-assettype">'.$snapmodtype.'</div>';
+            // Asset link.
+            $assetlink .= '<h4 class="snap-asset-link">'.$cmname.'</h4>';
         }
 
         // Asset content.
         $contentpart = $this->course_section_cm_text($mod, $displayoptions);
 
-        // Activity/resource type.
-        $snapmodtype = $this->get_mod_type($mod)[0];
-        $assetmeta = "<span class='snap-assettype'>".$snapmodtype."</span>";
-
-        // Groups, Restriction and all that jazz metadata.
-        // Completion tracking.
-        $completiontracking = $this->course_section_cm_completion($course, $completioninfo, $mod, $displayoptions);
+        // Asset metadata - groups, completion etc.
         // Due date, feedback available and all the nice snap things.
+        $snapcompletionmeta = '';
         $snapcompletiondata = $this->module_meta_html($mod);
-        $assetcompletionmeta = "<div class='snap-completion-meta'>".$completiontracking.$snapcompletiondata."</div>";
-
-        // Draft status - always output, shown via css of parent.
-        $assetrestrictions = "<div class='draft-tag text text-warning'>".get_string('draft', 'theme_snap')."</div>";
-
-        $canmanagegroups = has_capability('moodle/course:managegroups', context_course::instance($mod->course));
-        if ($canmanagegroups && $mod->effectivegroupmode != NOGROUPS) {
-            if ($mod->effectivegroupmode == VISIBLEGROUPS) {
-                $groupinfo = get_string('groupsvisible');
-            } else if ($mod->effectivegroupmode == SEPARATEGROUPS) {
-                $groupinfo = get_string('groupsseparate');
-            }
-            $assetrestrictions .= "<div class='text'>$groupinfo</div>";
+        if($snapcompletiondata) {
+            $snapcompletionmeta = '<div class="snap-completion-meta">'.$snapcompletiondata.'</div>';
         }
+        
+        // Completion tracking.
+        $completiontracking = '<div class="snap-asset-completion-tracking">'.$this->course_section_cm_completion($course, $completioninfo, $mod, $displayoptions).'</div>';
+        
+        // Draft status - always output, shown via css of parent.
+        $drafttag = '<div class="snap-draft-tag">'.get_string('draft', 'theme_snap').'</div>';
 
-        // TODO - ask what this is...
-        if (!empty($mod->groupingid) && $canmanagegroups) {
-            // Grouping label.
-            $groupings = groups_get_all_groupings($mod->course);
-            $assetrestrictions .= "<div class='text text-danger'>".format_string($groupings[$mod->groupingid]->name)."</div>";
+        // Group.
+        $groupmeta = '';
+        // Resources cannot have groups/groupings.
+        if($mod->modname !== 'resource') {
+            $canmanagegroups = has_capability('moodle/course:managegroups', context_course::instance($mod->course));
+            if ($canmanagegroups && $mod->effectivegroupmode != NOGROUPS) {
+                if ($mod->effectivegroupmode == VISIBLEGROUPS) {
+                    $groupinfo = get_string('groupsvisible');
+                } else if ($mod->effectivegroupmode == SEPARATEGROUPS) {
+                    $groupinfo = get_string('groupsseparate');
+                }
+                $groupmeta .= '<div class="snap-group-tag">'.$groupinfo.'</div>';
+            }
 
-            // TBD - add a title to show this is the Grouping...
+            // This will show a grouping (group of groups) name against a module if one has been assigned to the module instance.
+            if ($canmanagegroups && !empty($mod->groupingid)) {
+                // Grouping label.
+                $groupings = groups_get_all_groupings($mod->course);
+                $groupmeta .= '<div class="snap-grouping-tag">'.format_string($groupings[$mod->groupingid]->name).'</div>';
+            }
         }
 
         $canviewhidden = has_capability('moodle/course:viewhiddenactivities', $mod->context);
         // If the module isn't available, or we are a teacher (can view hidden activities) then get availability
         // info.
-        $availabilityinfo = '';
+        $conditionalmeta = '';
         if (!$mod->available || $canviewhidden) {
             $availabilityinfo = $this->course_section_cm_availability($mod, $displayoptions);
+            if($availabilityinfo) {
+                $conditionalmeta .= '<div class="snap-conditional-tag">'.$availabilityinfo.'</div>';
+            }
         }
-        
-        if ($availabilityinfo !== '') {
-            $conditionalinfo = get_string('conditional', 'theme_snap');
-            $assetrestrictions .= "<div class='text text-danger'>$conditionalinfo.$availabilityinfo</div>";
-        }
-        $assetrestrictions = "<div class='snap-restrictions-meta'>$assetrestrictions</div>";
 
-        $assetmeta .= $assetcompletionmeta.$assetrestrictions;
+        // Add draft, contitional.
+        $assetmeta = $drafttag.$conditionalmeta;
 
         // Build output.
-        $postcontent = '<div class="snap-asset-meta" data-cmid="'.$mod->id.'">'.$mod->afterlink.$assetmeta.'</div>';
-        $output .= $assetlink.$contentpart.$postcontent;
+        $postcontent = '<div class="snap-asset-meta" data-cmid="'.$mod->id.'">'.$assetmeta.$mod->afterlink.'</div>';
+        $output .= $assetlink.$postcontent.$contentpart.$snapcompletionmeta.$groupmeta.$completiontracking;
 
         // Bail at this point if we aren't using a supported format. (Folder view is only partially supported).
         $supported = ['folderview', 'topics', 'weeks', 'site'];
@@ -345,6 +353,7 @@ class course_renderer extends \core_course_renderer {
             }
             $advancedactions .= "</ul></div>";
         }
+        $output .= "</div>"; // Close .activityinstance.
 
         // Add actions menu.
         if ($actions) {
@@ -352,7 +361,6 @@ class course_renderer extends \core_course_renderer {
             $output .= $actions.$advancedactions;
             $output .= "</div>";
         }
-        $output .= "</div>"; // Close .activityinstance.
         $output .= "</div>"; // Close .asset-wrapper.
         return $output;
     }
@@ -487,15 +495,13 @@ class course_renderer extends \core_course_renderer {
                 } else {
                     $submittedonstr = ' '.userdate($meta->timesubmitted, get_string('strftimedate', 'langconfig'));
                 }
-                $class .= ' label label-success';
                 $message = $meta->submittedstr.$submittedonstr;
             } else {
                 $warningstr = $meta->draft ? $meta->draftstr : $meta->notsubmittedstr;
                 $warningstr = $meta->reopened ? $meta->reopenedstr : $warningstr;
-                $class .= ' label label-warning';
                 $message = $warningstr;
             }
-            return html_writer::link($url, $message, ['class' => $class]);
+            return html_writer::link($url, $message);
         }
         return '';
     }
@@ -508,7 +514,7 @@ class course_renderer extends \core_course_renderer {
      */
     protected function module_meta_html(cm_info $mod) {
 
-        global $COURSE;
+        global $COURSE, $OUTPUT;
 
         $content = '';
 
@@ -527,19 +533,8 @@ class course_renderer extends \core_course_renderer {
 
         if ($meta->isteacher) {
             // Teacher - useful teacher meta data.
-            if (!empty($meta->timeclose)) {
-                $due = get_string('due', 'theme_snap');
-                $dateformat = get_string('strftimedate', 'langconfig');
-                $labeltext = $due . ' ' . userdate($meta->timeclose, $dateformat);
-
-                $labelclass = 'label label-info';
-                $url = new \moodle_url("/mod/{$mod->modname}/view.php", ['id' => $mod->id]);
-                $content .= html_writer::link($url, $labeltext, ['class' => $labelclass]);
-            }
-
             $engagementmeta = array();
 
-            $gradedlabel = "info";
             // Below, !== false means we get 0 out of x submissions.
             if (!$meta->submissionnotrequired && $meta->numsubmissions !== false) {
                 $engagementmeta[] = get_string('xofy'.$meta->submitstrkey, 'theme_snap',
@@ -551,7 +546,6 @@ class course_renderer extends \core_course_renderer {
             }
 
             if ($meta->numrequiregrading) {
-                $gradedlabel = "warning";
                 $engagementmeta[] = get_string('xungraded', 'theme_snap', $meta->numrequiregrading);
             }
             if (!empty($engagementmeta)) {
@@ -565,30 +559,10 @@ class course_renderer extends \core_course_renderer {
                 );
                 $url = new moodle_url("/mod/{$mod->modname}/view.php", $params);
 
-                $content .= html_writer::link($url, $engagementstr, ['class' => "label label-$gradedlabel"]);
+                $content .= html_writer::link($url, $engagementstr);
             }
+            
         } else {
-            // Student - useful student meta data.
-            if (!empty($meta->timeopen) && $meta->timeopen > time()) {
-                // TODO - spit out a 'submissions allowed form' tag.
-                return $content;
-            }
-            // Note, due date is rendered seperately for students as it has a warning class if overdue.
-            if (!empty($meta->timeclose)) {
-                if ($meta->overdue) {
-                    $dueinfo = $meta->overduestr;
-                    $status = 'danger';
-                } else {
-                    $dueinfo = $meta->duestr;
-                    $status = 'info';
-                }
-                $url = new \moodle_url("/mod/{$mod->modname}/view.php", ['id' => $mod->id]);
-                $dateformat = get_string('strftimedate', 'langconfig');
-                $labeltext = $dueinfo . ' ' . userdate($meta->timeclose, $dateformat);
-                $labelclass = "label label-$status";
-                $content .= html_writer::link($url, $labeltext, ['class' => $labelclass]);
-            }
-
             // Feedback meta.
             if (!empty($meta->grade)) {
                 // Note - the link that a module takes you to would be better off defined by a function in
@@ -598,10 +572,28 @@ class course_renderer extends \core_course_renderer {
                     $url = new \moodle_url('/mod/'.$mod->modname.'/view.php?id='.$mod->id);
                 }
                 $feedbackavailable = get_string('feedbackavailable', 'theme_snap');
-                $content .= html_writer::link($url, $feedbackavailable, ['class' => 'label label-info']);
+                $content .= html_writer::link($url, $feedbackavailable);
             }
-
-            $content.= $this->submission_cta($mod, $meta);
+            
+            // If submissions are not allowed, return the content.
+            if (!empty($meta->timeopen) && $meta->timeopen > time()) {
+                // TODO - spit out a 'submissions allowed from' tag.
+                return $content;
+            }
+            $content .= $this->submission_cta($mod, $meta);
+        }
+        
+        // Activity due date.
+        if (!empty($meta->timeclose)) {
+            $due = get_string('due', 'theme_snap');
+            $url = new \moodle_url("/mod/{$mod->modname}/view.php", ['id' => $mod->id]);
+            $dateformat = get_string('strftimedate', 'langconfig');
+            $labeltext = $due . ' ' . userdate($meta->timeclose, $dateformat);
+            $warningclass = '';
+            if($meta->timeclose < time()){
+                $warningclass = ' snap-date-overdue';
+            }
+            $content .= html_writer::link($url, $labeltext, array('class' => 'snap-due-date'.$warningclass));
         }
 
         return $content;
@@ -851,6 +843,7 @@ class course_renderer extends \core_course_renderer {
         $snapmultimedia = $this->snap_multimedia();
 
         if ($mod->modname === 'resource') {
+            $activityimg = '';
             $extension = $this->get_mod_type($mod)[1];
             if (in_array($extension, $snapmultimedia) ) {
                 // For multimedia we need to handle the popup setting.
@@ -864,6 +857,7 @@ class course_renderer extends \core_course_renderer {
             }
         }
         if ($mod->modname === 'url') {
+            $activityimg = '';
             // Set the url to redirect 1 to avoid intermediate pages.
             $url .= "&amp;redirect=1";
             $target = "target='_blank'";
@@ -874,7 +868,7 @@ class course_renderer extends \core_course_renderer {
         } else {
             // We may be displaying this just in order to show information
             // about visibility, without the actual link ($mod->uservisible).
-            $output .= "<div>$instancename</div> $groupinglabel";
+            $output .= "<div>$activityimg $instancename</div> $groupinglabel";
         }
 
         return $output;

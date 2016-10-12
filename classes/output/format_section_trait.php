@@ -257,10 +257,12 @@ trait format_section_trait {
         }
 
         // Availabiliy message.
-        $o .= "<div class='snap-restrictions-meta'>
-        <div class='text text-danger'>".$this->section_availability_message($section,
-            has_capability('moodle/course:viewhiddensections', $context))."</div>
-        </div>";
+        $conditionalicon = '<img aria-hidden="true" role="presentation" class="svg-icon" src="'.$this->output->pix_url('conditional', 'theme').'" />';
+        $conditionalmessage = $this->section_availability_message($section,
+            has_capability('moodle/course:viewhiddensections', $context));
+        if($conditionalmessage !== '') {
+            $o .= '<div class="snap-conditional-tag">'.$conditionalicon.$conditionalmessage.'</div>';
+        }
 
         // Section summary/body text.
         $o .= "<div class='summary'>";
@@ -280,7 +282,8 @@ trait format_section_trait {
         $o .= $summarytext;
         if ($canupdatecourse) {
             $url = new moodle_url('/course/editsection.php', array('id' => $section->id, 'sr' => $sectionreturn));
-            $o .= "<a href='$url' class='edit-summary'>".get_string('editcoursetopic', 'theme_snap')."</a>";
+            $icon = '<img aria-hidden="true" role="presentation" class="svg-icon" src="'.$this->output->pix_url('pencil', 'theme').'" /><br/>';
+            $o .= '<a href="'.$url.'" class="edit-summary">'.$icon.get_string('editcoursetopic', 'theme_snap'). '</a>';
         }
         $o .= "</div>";
 

@@ -99,8 +99,8 @@ M.snap_message_badge.init_overlay = function(Y, callback) {
         }
         return;
     }
-    M.snap_message_badge.initDone = true;
 
+    M.snap_message_badge.initDone = true;
     M.snap_message_badge.get_messages_html(Y, M.snap_message_badge.onresponse_messages_html);
 };
 

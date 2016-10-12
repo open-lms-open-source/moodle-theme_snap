@@ -18477,12 +18477,15 @@ header#page-header
   width: 1.5em;
   height: auto;
 }
-#course-toc .completionstatus {
+#course-toc .completionstatus,
+#course-toc .text {
   font-size: small;
+}
+#course-toc .completionstatus {
   color: #999;
 }
-#course-toc .completionstatus + .published-status:before,
-#course-toc .published-status + .published-status:before {
+#course-toc .completionstatus + .text:before,
+#course-toc .text + .text:before {
   content: " · ";
 }
 #course-toc .toc-footer {
@@ -21448,9 +21451,24 @@ section#region-main
 .dndupload-over .snap-dropzone {
   background-color: #fafafa;
 }
-/* A SPECIAL SECTION IN SNAP FOR COURSE TOOLS */
 #coursetools-logo {
   height: 100%;
+}
+#coursetools-list:before,
+#coursetools-list:after {
+  content: " ";
+  display: table;
+}
+#coursetools-list:after {
+  clear: both;
+}
+#coursetools-list:before,
+#coursetools-list:after {
+  content: " ";
+  display: table;
+}
+#coursetools-list:after {
+  clear: both;
 }
 #coursetools-list a {
   display: block;
@@ -21510,13 +21528,6 @@ li.section:focus {
 .course-content .current {
   background-color: transparent;
 }
-.course-content .current {
-  background-color: transparent;
-}
-.course-content .current .content:before {
-  display: block;
-  font-size: 36px;
-}
 .course-content .single-section ul.folderview li.section .right.side .editing_highlight img {
   display: block;
 }
@@ -21555,7 +21566,8 @@ li.section:focus {
 .path-course-view .section .summary {
   position: relative;
   line-height: inherit;
-  padding-bottom: 1.6em;
+  padding-bottom: 1.5em;
+  margin-bottom: 1.5em;
 }
 .path-course-view .section .summary:before,
 .path-course-view .section .summary:after {
@@ -21575,46 +21587,6 @@ li.section:focus {
 }
 .path-course-view .section .summary p {
   margin-bottom: 1.6em;
-}
-.course-content ul.weeks li.section .left.side.snap-section-editing,
-.course-content ul.weeks li.section .right.side.snap-section-editing,
-.course-content ul.topics li.section .left.side.snap-section-editing,
-.course-content ul.topics li.section .right.side.snap-section-editing {
-  max-width: 100%;
-  min-width: 0;
-  width: auto;
-  padding: 0;
-  margin: 0 auto;
-  float: none;
-  display: block;
-  text-align: left;
-  margin-top: -1em;
-}
-.course-content ul.weeks li.section .left.side.snap-section-editing a,
-.course-content ul.weeks li.section .right.side.snap-section-editing a,
-.course-content ul.topics li.section .left.side.snap-section-editing a,
-.course-content ul.topics li.section .right.side.snap-section-editing a,
-.course-content ul.weeks li.section .left.side.snap-section-editing span,
-.course-content ul.weeks li.section .right.side.snap-section-editing span,
-.course-content ul.topics li.section .left.side.snap-section-editing span,
-.course-content ul.topics li.section .right.side.snap-section-editing span {
-  display: inline-block;
-  width: auto;
-  padding: 0 0.3em;
-}
-.course-content ul.weeks li.section .left.side.snap-section-editing img.icon,
-.course-content ul.weeks li.section .right.side.snap-section-editing img.icon,
-.course-content ul.topics li.section .left.side.snap-section-editing img.icon,
-.course-content ul.topics li.section .right.side.snap-section-editing img.icon {
-  margin: 0;
-  padding: 0;
-  vertical-align: baseline;
-}
-.course-content ul.weeks li.section .left.side.snap-section-editing .section-handle,
-.course-content ul.weeks li.section .right.side.snap-section-editing .section-handle,
-.course-content ul.topics li.section .left.side.snap-section-editing .section-handle,
-.course-content ul.topics li.section .right.side.snap-section-editing .section-handle {
-  float: left;
 }
 .snap-section-editing {
   visibility: hidden;
@@ -21754,24 +21726,6 @@ body.format-flexpage .singlebutton {
 .folderview-single-section #coursetools {
   display: none;
 }
-.snap-section-remove {
-  text-align: right;
-  padding-bottom: 2em;
-  border-bottom: 1px solid #ccc;
-}
-.snap-section-remove + h3 + form {
-  padding-bottom: 2em;
-}
-.snap-section-remove + h3 + form label {
-  display: block;
-}
-.course-content ul li.section.hidden {
-  opacity: 1;
-}
-.course-content ul li.section.hidden .content .summary,
-.course-content ul li.section.hidden .content .section {
-  opacity: 0.7;
-}
 /* MODS & RESOURCES IN COURSE */
 .path-site li.activity > div,
 .path-course-view li.activity > div {
@@ -21807,38 +21761,35 @@ body.format-flexpage .singlebutton {
 .section .activityinstance .contentwithoutlink .contentafterlink p {
   margin-bottom: 1.6em;
 }
-.snap-asset-link {
-  margin: 0;
-  padding: 0;
-}
 .section li.snap-asset {
   display: block;
   position: relative;
   padding: 0;
-  margin: 1em auto;
-  padding-bottom: 1em;
-  min-height: 125px;
+  margin: 0 auto;
   height: auto;
   font-family: "Roboto", "Fira Sans", "Segoe UI", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif;
-  background-image: url([[pix:theme|file]]);
-  background-repeat: no-repeat;
-  background-position: 50% 75%;
-  -webkit-background-size: 70px auto;
-          background-size: 70px auto;
-  -webkit-box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
-          box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
+  background-color: #fff;
+  border: 1px solid #dadada;
+  border-top-width: 0.3em;
+}
+.section li.snap-asset.snap-can-edit {
+  padding-bottom: 2em !important;
 }
 .section li.snap-asset .asset-wrapper {
   height: 100%;
   overflow-x: hidden;
   overflow-y: auto;
   position: static;
-  padding: 1em 0;
+  padding: 0.5em 1em;
+}
+.section li.snap-asset .snap-assettype {
+  font-size: small;
+  text-transform: uppercase;
 }
 .section li.snap-asset .activityinstance {
-  padding: 0.5em 2%;
-  background-color: #fff;
+  padding: 0;
   height: auto;
+  background-color: rgba(255, 255, 255, 0.9);
 }
 .section li.snap-asset .activityinstance:before,
 .section li.snap-asset .activityinstance:after {
@@ -21857,19 +21808,63 @@ body.format-flexpage .singlebutton {
   clear: both;
 }
 .section li.snap-asset .activityinstance .activityicon {
-  float: right;
-  width: 60px;
-  height: 60px;
+  float: left;
+  width: 38px;
+  height: 38px;
+  margin-top: -5px;
+  margin-right: 0.5em;
+  -webkit-transition: all 0.4s ease-in-out;
+          transition: all 0.4s ease-in-out;
 }
-.section li.snap-asset .activityinstance .snap-asset-link a {
-  color: #666;
+.section li.snap-asset .activityinstance .snap-asset-link {
+  font-size: 1em;
+  margin: 0;
+  padding: 0.5em 0;
+  -webkit-transition: all 0.4s ease-in-out;
+          transition: all 0.4s ease-in-out;
 }
-.section li.snap-asset .activityinstance .snap-asset-link a:hover {
-  color: #333;
+.section li.snap-asset .activityinstance .snap-asset-link a:hover,
+.section li.snap-asset .activityinstance .snap-asset-link a:focus {
   text-decoration: none;
 }
-/* resourcelinkdetails = moodle putting filetype on screen if option selected
-we do this by default in snap, so hide moodle version */
+.section li.snap-asset .activityinstance .snap-asset-link a:hover .activityicon,
+.section li.snap-asset .activityinstance .snap-asset-link a:focus .activityicon {
+  -webkit-transform: scale(1.25);
+      -ms-transform: scale(1.25);
+          transform: scale(1.25);
+}
+@media screen and (max-width: 480px) {
+  .section li.snap-resource,
+  .section li.snap-resource:hover {
+    width: 99%;
+    margin: 1em auto;
+    height: auto;
+    background-position: 95% 25%;
+    -webkit-background-size: 60px 60px;
+            background-size: 60px;
+  }
+  .section li.snap-resource .snap-asset-actions,
+  .section li.snap-resource:hover .snap-asset-actions {
+    width: 250px;
+  }
+  .section li.snap-resource .snap-asset-actions .snap-asset-move,
+  .section li.snap-resource:hover .snap-asset-actions .snap-asset-move,
+  .section li.snap-resource .snap-asset-actions .snap-edit-more-dropdown,
+  .section li.snap-resource:hover .snap-asset-actions .snap-edit-more-dropdown,
+  .section li.snap-resource .snap-asset-actions > a,
+  .section li.snap-resource:hover .snap-asset-actions > a {
+    width: 25%;
+    text-align: left;
+    padding: 0;
+  }
+  .section .snap-asset-actions ul.dropdown-menu {
+    left: -125px;
+  }
+}
+/**
+ * resourcelinkdetails = moodle putting filetype on screen if option selected
+ * we do this by default in snap, so hide moodle version
+ */
 .resourcelinkdetails {
   display: none;
 }
@@ -21878,46 +21873,17 @@ we do this by default in snap, so hide moodle version */
 .groupinglabel {
   display: none;
 }
-.snap-assettype {
-  font-size: small;
-}
-.snap-assettype {
-  position: absolute;
-  top: 0;
-  left: 0;
-  display: inline-block;
-  padding: 0 2%;
-  background-color: rgba(0, 0, 0, 0.2);
-  color: white;
-  text-transform: uppercase;
-}
-.sectiontag {
-  margin-left: 1.4em;
-}
-.availabilityinfo {
-  clear: both;
-  font-size: small;
-  font-family: "Roboto", "Fira Sans", "Segoe UI", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif;
-  display: block;
-}
-.section.hidden .activity .activityinstance .availabilityinfo,
-.section .activity.draft .activityinstance .availabilityinfo {
-  display: none;
-}
-.modtype_label .snap-assettype {
-  display: none;
-}
 .section .activity.modtype_label.label {
   background-image: none;
   height: auto;
   width: 100%;
-  background-color: white !important;
   text-align: left;
   font-weight: 300;
   padding: 0.5em 0;
   margin: 0.5em 0;
   -webkit-box-shadow: none;
           box-shadow: none;
+  border: none !important;
 }
 .section .activity.modtype_label.label:before,
 .section .activity.modtype_label.label:after {
@@ -21938,25 +21904,21 @@ we do this by default in snap, so hide moodle version */
 .section .activity.modtype_label.label .asset-wrapper,
 .section .activity.modtype_label.label .activityinstance {
   padding: 0;
-  overflow: visible;
 }
 .section li.snap-native {
-  -webkit-box-shadow: none;
-          box-shadow: none;
+  border: none;
   height: auto;
-  margin: 1em 0;
-  padding: 0.3em 0;
-  background-image: none;
+  margin: 0.5em auto;
 }
-.section li.snap-native .activityinstance {
-  padding: 1em 0;
+.section li.snap-native .asset-wrapper {
+  padding: 0;
 }
 .section li.snap-native .activityicon,
 .section li.snap-native .snap-assettype {
   display: none;
 }
 .section li.snap-native .instancename {
-  font-size: 29px;
+  font-size: 1.3em;
 }
 .section li.snap-native .contentafterlink {
   font-size: 1em;
@@ -22002,7 +21964,6 @@ we do this by default in snap, so hide moodle version */
 }
 .snap-image-image .snap-image-link {
   display: block;
-  text-align: center;
 }
 .snap-image-image .snap-image-summary,
 .snap-image-image .snap-image-title {
@@ -22012,6 +21973,7 @@ we do this by default in snap, so hide moodle version */
   width: 100%;
   background-color: rgba(255, 255, 255, 0.9);
   padding: 0 4%;
+  font-size: 1em;
 }
 .snap-image-image .snap-image-title {
   text-align: center;
@@ -22020,28 +21982,26 @@ we do this by default in snap, so hide moodle version */
   position: relative;
   margin-top: -3em;
 }
-.snap-resource .contentafterlink {
-  font-size: small;
-}
 .section li.snap-resource {
-  height: 250px;
-  min-width: 210px;
-  width: 30%;
-  margin: 1em 1.5%;
-  padding: 0.3em 1px 1.5em;
+  height: 200px;
+  width: 31%;
+  margin: 1%;
   float: left;
   display: block;
   clear: none;
+  background-image: url([[pix:theme|file]]);
+  background-repeat: no-repeat;
+  background-position: 50% 70%;
+  -webkit-background-size: 38px auto;
+          background-size: 38px auto;
   -webkit-transition: all 0.4s ease-in-out;
           transition: all 0.4s ease-in-out;
 }
 .section li.snap-resource:hover {
-  -webkit-background-size: 85px auto;
-          background-size: 85px auto;
-  background-position: 50% 70%;
+  -webkit-background-size: 50px auto;
+          background-size: 50px auto;
 }
 .section li.snap-resource .asset-wrapper {
-  padding: 1em 2%;
   cursor: pointer;
 }
 .section li.snap-resource .asset-wrapper:before,
@@ -22060,21 +22020,16 @@ we do this by default in snap, so hide moodle version */
 .section li.snap-resource .asset-wrapper:after {
   clear: both;
 }
-.section li.snap-resource .activityinstance {
-  padding: 0.5em 4%;
-}
-.section li.snap-resource .activityicon {
-  display: none;
-}
-.section li.snap-resource .instancename {
-  display: block;
-  line-height: 1.3;
-}
-.section li.snap-resource .snap-assettype {
-  padding: 0 4%;
+.section li.snap-resource .activityinstance .activityicon {
+  height: 1.5em;
+  width: 1.5em;
+  margin-top: 0;
 }
 .section li.snap-resource .snap-asset-link {
   font-size: 1em;
+}
+.section li.snap-resource .contentafterlink {
+  font-size: small;
 }
 @media screen and (max-width: 480px) {
   .section li.snap-resource,
@@ -22082,13 +22037,15 @@ we do this by default in snap, so hide moodle version */
     width: 99%;
     margin: 1em auto;
     height: auto;
-    background-position: 95% 25%;
-    -webkit-background-size: 60px 60px;
-            background-size: 60px;
+    background-image: none !important;
   }
   .section li.snap-resource .activityinstance,
   .section li.snap-resource:hover .activityinstance {
     width: 75%;
+  }
+  .section li.snap-resource .activityinstance .activityicon,
+  .section li.snap-resource:hover .activityinstance .activityicon {
+    display: inline;
   }
   .section li.snap-resource .snap-asset-actions,
   .section li.snap-resource:hover .snap-asset-actions {
@@ -22108,219 +22065,120 @@ we do this by default in snap, so hide moodle version */
     left: -125px;
   }
 }
-li.snap-resource.snap-mime-document,
-#snap-move-message.snap-mime-document,
-li.snap-resource.snap-mime-writer,
-#snap-move-message.snap-mime-writer,
-li.snap-resource.snap-mime-oth,
-#snap-move-message.snap-mime-oth {
-  background-color: #42b4d6;
-  background-image: url([[pix:theme|doc]]);
+section li.snap-resource.snap-mime-document,
+section li.snap-resource.snap-mime-writer,
+section li.snap-resource.snap-mime-oth {
+  border-top-color: #03A9F4;
+  background-image: url([[pix:core|/f/document]]);
 }
-li.snap-resource.snap-mime-powerpoint,
-#snap-move-message.snap-mime-powerpoint,
-li.snap-resource.snap-mime-impress,
-#snap-move-message.snap-mime-impress {
-  background-color: #F37C2A;
-  background-image: url([[pix:theme|powerpoint]]);
+section li.snap-resource.snap-mime-powerpoint,
+section li.snap-resource.snap-mime-impress {
+  border-top-color: #ff7300;
+  background-image: url([[pix:core|/f/powerpoint]]);
 }
-li.snap-resource.snap-mime-spreadsheet,
-#snap-move-message.snap-mime-spreadsheet,
-li.snap-resource.snap-mime-chart,
-#snap-move-message.snap-mime-chart,
-li.snap-resource.snap-mime-database,
-#snap-move-message.snap-mime-database,
-li.snap-resource.snap-mime-calc,
-#snap-move-message.snap-mime-calc {
-  background-color: #7D9D3E;
-  background-image: url([[pix:theme|spreadsheet]]);
+section li.snap-resource.snap-mime-spreadsheet,
+section li.snap-resource.snap-mime-chart,
+section li.snap-resource.snap-mime-database,
+section li.snap-resource.snap-mime-calc {
+  border-top-color: #009e51;
+  background-image: url([[pix:core|/f/spreadsheet]]);
 }
-li.snap-resource.snap-mime-pdf,
-#snap-move-message.snap-mime-pdf,
-li.snap-resource.snap-mime-eps,
-#snap-move-message.snap-mime-eps,
-li.snap-resource.snap-mime-flash,
-#snap-move-message.snap-mime-flash {
-  background-color: #e34947;
-  background-image: url([[pix:theme|pdf]]);
+section li.snap-resource.snap-mime-pdf,
+section li.snap-resource.snap-mime-eps,
+section li.snap-resource.snap-mime-flash {
+  border-top-color: #F44336;
+  background-image: url([[pix:core|/f/pdf]]);
 }
-li.snap-resource.snap-mime-flash,
-#snap-move-message.snap-mime-flash {
-  background-image: url([[pix:theme|flash]]);
+section li.snap-resource.snap-mime-flash {
+  background-image: url([[pix:core|/f/flash]]);
 }
-li.snap-resource.snap-mime-mp3,
-#snap-move-message.snap-mime-mp3,
-li.snap-resource.snap-mime-wav,
-#snap-move-message.snap-mime-wav,
-li.snap-resource.snap-mime-audio,
-#snap-move-message.snap-mime-audio {
-  background-color: #EDC92C;
-  background-image: url([[pix:theme|music]]);
+section li.snap-resource.snap-mime-mp3,
+section li.snap-resource.snap-mime-wav,
+section li.snap-resource.snap-mime-audio {
+  border-top-color: #8BC34A;
+  background-image: url([[pix:core|/f/audio]]);
 }
-li.snap-resource.snap-mime-mov,
-#snap-move-message.snap-mime-mov,
-li.snap-resource.snap-mime-wmv,
-#snap-move-message.snap-mime-wmv,
-li.snap-resource.snap-mime-video,
-#snap-move-message.snap-mime-video,
-li.snap-resource.snap-mime-quicktime,
-#snap-move-message.snap-mime-quicktime,
-li.snap-resource.snap-mime-mpeg,
-#snap-move-message.snap-mime-mpeg,
-li.snap-resource.snap-mime-avi,
-#snap-move-message.snap-mime-avi {
-  background-color: #55B5CC;
-  background-image: url([[pix:theme|video]]);
+section li.snap-resource.snap-mime-mov,
+section li.snap-resource.snap-mime-wmv,
+section li.snap-resource.snap-mime-video,
+section li.snap-resource.snap-mime-quicktime,
+section li.snap-resource.snap-mime-mpeg,
+section li.snap-resource.snap-mime-avi {
+  border-top-color: #55B5CC;
+  background-image: url([[pix:core|/f/video]]);
 }
-li.snap-resource.modtype_lightboxgallery,
-#snap-move-message.modtype_lightboxgallery,
-li.snap-resource.snap-mime-bmp,
-#snap-move-message.snap-mime-bmp {
-  background-color: #4ABC96;
-  background-image: url([[pix:theme|image]]);
+section li.snap-resource.modtype_lightboxgallery,
+section li.snap-resource.snap-mime-bmp {
+  border-top-color: #4ABC96;
+  background-image: url([[pix:core|/f/image]]);
 }
-li.snap-resource.modtype_url,
-#snap-move-message.modtype_url {
-  background-color: #999;
-  background-image: url([[pix:theme|link]]);
+section li.snap-resource.modtype_url {
+  border-top-color: #999;
+  background-image: url([[pix:core|/f/url]]);
 }
-li.snap-resource.modtype_imscp,
-#snap-move-message.modtype_imscp,
-li.snap-resource.modtype_scorm,
-#snap-move-message.modtype_scorm {
-  background-color: #F7981D;
-  background-image: url([[pix:theme|book]]);
+section li.snap-resource.modtype_imscp,
+section li.snap-resource.modtype_scorm {
+  border-top-color: #F7981D;
+  background-image: url([[pix:core|/f/book]]);
 }
-li.snap-resource.modtype_imscp,
-#snap-move-message.modtype_imscp,
-li.snap-resource.modtype_scorm,
-#snap-move-message.modtype_scorm {
-  background-image: url([[pix:theme|scorm]]);
+section li.snap-resource.modtype_imscp,
+section li.snap-resource.modtype_scorm {
+  background-image: url([[pix:core|/f/scorm]]);
 }
-li.snap-resource.modtype_folder,
-#snap-move-message.modtype_folder {
-  background-color: #F9F29A;
-  background-image: url([[pix:theme|folder]]);
+section li.snap-resource.modtype_folder {
+  border-top-color: #fed859;
+  background-image: url([[pix:core|/f/folder]]);
 }
-li.snap-resource.snap-mime-archive,
-#snap-move-message.snap-mime-archive {
-  background-color: #F9F29A;
-  background-image: url([[pix:theme|zip]]);
+section li.snap-resource.snap-mime-archive {
+  border-top-color: #fed859;
+  background-image: url([[pix:core|/f/archive]]);
 }
-li.snap-resource.snap-mime-markup,
-#snap-move-message.snap-mime-markup,
-li.snap-resource.snap-mime-html,
-#snap-move-message.snap-mime-html,
-li.snap-resource.snap-mime-sourcecode,
-#snap-move-message.snap-mime-sourcecode {
-  background-color: #f0652a;
-  background-image: url([[pix:theme|code]]);
+section li.snap-resource.snap-mime-markup,
+section li.snap-resource.snap-mime-html,
+section li.snap-resource.snap-mime-sourcecode {
+  border-top-color: #f0652a;
+  background-image: url([[pix:core|/f/sourcecode]]);
 }
-li.snap-resource.snap-mime-text,
-#snap-move-message.snap-mime-text {
-  background-color: #f1bf26;
+section li.snap-resource.snap-mime-text {
+  border-top-color: #f1bf26;
 }
 .section li.snap-activity {
-  background-image: none;
-  width: 99%;
+  margin: 1em 1%;
+  padding-bottom: 1em;
 }
-.section li.snap-activity .instancename {
-  font-size: 23px;
-  display: block;
-  overflow: hidden;
+.section li.snap-activity.modtype_forum,
+.section li.snap-activity.modtype_chat,
+.section li.snap-activity.modtype_hsuforum {
+  border-top-color: #8BC34A;
 }
-.section li.snap-activity .activityicon {
-  margin-left: 3%;
+.section li.snap-activity.modtype_assign,
+.section li.snap-activity.modtype_assignment,
+.section li.snap-activity.modtype_workshop {
+  border-top-color: #03A9F4;
 }
-.section li.snap-activity .activityinstance .snap-asset-link a {
-  display: block;
+.section li.snap-activity.modtype_choice,
+.section li.snap-activity.modtype_feedback,
+.section li.snap-activity.modtype_quiz,
+.section li.snap-activity.modtype_survey,
+.section li.snap-activity.modtype_questionnaire,
+.section li.snap-activity.modtype_lesson {
+  border-top-color: #FFA000;
 }
-.section li.snap-activity .activityinstance .snap-asset-link a:before,
-.section li.snap-activity .activityinstance .snap-asset-link a:after {
-  content: " ";
-  display: table;
+.section li.snap-activity.modtype_data,
+.section li.snap-activity.modtype_glossary,
+.section li.snap-activity.modtype_wiki {
+  border-top-color: #009688;
 }
-.section li.snap-activity .activityinstance .snap-asset-link a:after {
-  clear: both;
+.section li.snap-activity.modtype_collaborate {
+  border-top-color: #c800a1;
 }
-.section li.snap-activity .activityinstance .snap-asset-link a:before,
-.section li.snap-activity .activityinstance .snap-asset-link a:after {
-  content: " ";
-  display: table;
-}
-.section li.snap-activity .activityinstance .snap-asset-link a:after {
-  clear: both;
-}
-li.snap-activity {
-  border-left: 0.3em solid #ccc;
-  border-radius: 3px;
-}
-li.modtype_forum,
-li.modtype_chat,
-li.modtype_hsuforum {
-  border-color: #49a0ae;
-}
-li.modtype_forum .snap-assettype,
-li.modtype_chat .snap-assettype,
-li.modtype_hsuforum .snap-assettype {
-  background-color: #49a0ae;
-}
-li.modtype_assign,
-li.modtype_assignment,
-li.modtype_workshop {
-  border-color: #4abc96;
-}
-li.modtype_assign .snap-assettype,
-li.modtype_assignment .snap-assettype,
-li.modtype_workshop .snap-assettype {
-  background-color: #4abc96;
-}
-li.modtype_lesson {
-  border-color: #6cc077;
-}
-li.modtype_lesson .snap-assettype {
-  background-color: #6cc077;
-}
-li.modtype_choice,
-li.modtype_feedback,
-li.modtype_quiz,
-li.modtype_survey,
-li.modtype_questionnaire {
-  border-color: #a0bf19;
-}
-li.modtype_choice .snap-assettype,
-li.modtype_feedback .snap-assettype,
-li.modtype_quiz .snap-assettype,
-li.modtype_survey .snap-assettype,
-li.modtype_questionnaire .snap-assettype {
-  background-color: #a0bf19;
-}
-li.modtype_data,
-li.modtype_glossary,
-li.modtype_wiki {
-  border-color: #edc92c;
-}
-li.modtype_data .snap-assettype,
-li.modtype_glossary .snap-assettype,
-li.modtype_wiki .snap-assettype {
-  background-color: #edc92c;
-}
-li.modtype_collaborate {
-  border-color: #aa70b0;
-}
-li.modtype_collaborate .snap-assettype {
-  background-color: #aa70b0;
-}
-li.snap-activity.modtype_folder {
-  border-color: #f9f29a;
-}
-li.snap-activity.modtype_folder .snap-assettype {
-  background-color: #f9f29a;
+.section li.snap-activity.modtype_folder {
+  border-top-color: #fed859;
 }
 /* EDIT SUMMARY */
 /* Make it obvious that you can edit a summary - Add text and some styles to that gear thing */
 #page-site-index .sitetopic > a:last-of-type,
-.summary > a:last-of-type {
+.summary .edit-summary {
   clear: both;
   display: block;
   text-align: center;
@@ -22328,18 +22186,12 @@ li.snap-activity.modtype_folder .snap-assettype {
   background-color: transparent;
   font-family: "Roboto", "Fira Sans", "Segoe UI", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
-#page-site-index .sitetopic > a:last-of-type img,
-.summary > a:last-of-type img {
-  display: none;
-}
-#page-site-index .sitetopic > a:last-of-type:after,
-.summary > a:last-of-type:after {
+#page-site-index .sitetopic > a:last-of-type:after {
   content: attr(title);
   display: block;
   font-weight: 300;
 }
-#page-site-index .sitetopic > a:last-of-type:before,
-.summary > a:last-of-type:before {
+#page-site-index .sitetopic > a:last-of-type:before {
   content: " ";
   background: transparent url("[[pix:theme|pencil]]") no-repeat 50% 50%;
   display: block;
@@ -22349,99 +22201,176 @@ li.snap-activity.modtype_folder .snap-assettype {
 }
 .snap-asset-meta {
   clear: both;
-}
-.modtype_label .snap-asset-meta {
-  margin-bottom: 2em;
-}
-/* Activity data - e.g. Due date */
-.snap-completion-meta {
-  padding-bottom: 0.5em;
-  /* Completion actions */
-}
-.snap-completion-meta .togglecompletion,
-.snap-completion-meta .autocompletion {
-  display: inline-block;
-  clear: left;
-  float: left;
-}
-.snap-completion-meta span.autocompletion img,
-.snap-completion-meta form.togglecompletion input {
-  width: 30px;
-  height: 30px;
-  display: inline;
-  position: relative;
-}
-.snap-completion-meta form.togglecompletion input {
-  border-radius: 50%;
-  -webkit-transform: scale(0.75);
-      -ms-transform: scale(0.75);
-          transform: scale(0.75);
-  -webkit-box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
-          box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
-}
-.snap-completion-meta form.togglecompletion input:hover,
-.snap-completion-meta form.togglecompletion input:focus {
-  -webkit-transform: scale(1.04);
-      -ms-transform: scale(1.04);
-          transform: scale(1.04);
-  -webkit-transition: -webkit-transform 0.3s;
-          transition: transform 0.3s;
-}
-.snap-completion-meta .label {
-  margin: 0 1%;
-  padding: 0.75em;
-  display: inline-block;
+  padding: 0;
 }
 .snap-completion-meta,
-.conditional .snap-restrictions-meta {
+.snap-group-tag,
+.snap-grouping-tag {
+  text-align: right;
+  font-size: small;
+  margin-bottom: 0.5em;
+}
+.snap-completion-meta a,
+.snap-group-tag a,
+.snap-grouping-tag a {
+  padding: 0.5em;
+  font-weight: 500;
+}
+.snap-completion-meta a + a,
+.snap-group-tag a + a,
+.snap-grouping-tag a + a {
+  border-left: 1px solid;
+}
+.snap-due-date {
+  display: inline;
+  padding: .2em .6em .3em;
+  font-size: 75%;
+  font-weight: bold;
+  line-height: 1;
+  color: #fff;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: baseline;
+  border-radius: .25em;
+  font-family: "Roboto", "Fira Sans", "Segoe UI", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  border-radius: 0;
+  font-weight: normal;
+  font-size: 1em;
+  border-left-color: white;
+}
+a.snap-due-date:hover,
+a.snap-due-date:focus {
+  color: #fff;
+  text-decoration: none;
+  cursor: pointer;
+}
+.snap-due-date:empty {
+  display: none;
+}
+.btn .snap-due-date {
+  position: relative;
+  top: -1px;
+}
+.snap-due-date[href]:visited {
+  color: #fff;
+}
+.snap-conditional-tag,
+.snap-draft-tag {
+  font-size: small;
+  font-family: "Roboto", "Fira Sans", "Segoe UI", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  background-color: #eee;
+  margin: 0.5em 0;
+  padding: 0.5em;
+}
+.snap-conditional-tag .availabilityinfo,
+.snap-draft-tag .availabilityinfo {
+  display: inline;
+  margin-left: 0.5em;
+}
+.snap-conditional-tag ul,
+.snap-draft-tag ul {
+  margin: 0 !important;
+  list-style: none;
+  padding: 0;
+}
+.snap-conditional-tag strong,
+.snap-draft-tag strong {
+  font-weight: normal;
+}
+.snap-completion-meta {
   display: block !important;
   clear: both;
 }
-.snap-restrictions-meta {
-  margin: 0;
-  display: none;
-}
-.snap-restrictions-meta .text {
-  font-size: small;
-  margin: 0.3em 0;
-  padding-left: 0.3em;
-  border-left: 0.5em solid;
-  font-weight: 500;
-}
-.snap-asset-meta .draft-tag {
+.snap-draft-tag {
   display: none !important;
+  font-size: small;
 }
-.hidden .snap-asset-meta .draft-tag,
-.draft .snap-asset-meta .draft-tag {
+.draft .snap-draft-tag {
   display: block !important;
 }
-li.draft .snap-asset-link,
-li.draft .contentwithoutlink,
-li.draft .contentafterlink,
-li.draft .snap-assettype {
-  opacity: 0.6;
+li.draft {
+  border-top-color: #eee !important;
 }
-/* all the editing options and completion data in one region */
+li.draft .activityinstance {
+  opacity: 0.75;
+}
+li.draft .editing_hide {
+  display: none;
+}
+li.draft .editing_show {
+  display: block;
+}
+.section.hidden {
+  opacity: 1 !important;
+}
+.section.hidden .content {
+  opacity: 0.75;
+}
+.section.hidden li.draft .activityinstance {
+  opacity: 1;
+}
+.snap-asset-completion-tracking {
+  position: absolute;
+  top: 0.5em;
+  right: 1em;
+  display: block;
+}
+/* Completion actions */
+span.autocompletion img,
+form.togglecompletion input {
+  height: 20px;
+  width: 20px;
+}
+form.togglecompletion input {
+  -webkit-transition: all 0.4s ease-in-out;
+          transition: all 0.4s ease-in-out;
+}
+form.togglecompletion input:hover,
+form.togglecompletion input:focus {
+  -webkit-transform: scale(1.1);
+      -ms-transform: scale(1.1);
+          transform: scale(1.1);
+}
+/* Indent text associated with activity/resource. */
+.section li.snap-activity .contentafterlink,
+.section li.snap-activity .hsuforum-recent {
+  margin-left: 47px;
+}
 .snap-asset-actions {
   visibility: hidden;
   position: absolute;
   bottom: 0;
   left: 0;
   width: 250px;
-  padding: 0 2%;
 }
 .snap-asset-actions > a,
 .snap-asset-actions .snap-edit-more-dropdown,
 .snap-asset-actions .snap-asset-move {
   display: inline-block !important;
-  width: 25%;
+  padding: 0.3em 7%;
+  text-align: center;
+  width: 33%;
   cursor: pointer;
+}
+.snap-asset-actions > a:hover .svg-icon,
+.snap-asset-actions .snap-edit-more-dropdown:hover .svg-icon,
+.snap-asset-actions .snap-asset-move:hover .svg-icon,
+.snap-asset-actions > a:focus .svg-icon,
+.snap-asset-actions .snap-edit-more-dropdown:focus .svg-icon,
+.snap-asset-actions .snap-asset-move:focus .svg-icon {
+  -webkit-transform: scale(1.1);
+      -ms-transform: scale(1.1);
+          transform: scale(1.1);
+  border-color: #999;
 }
 .snap-asset-actions .svg-icon {
   border-radius: 100%;
-  background-color: white;
+  border: 1px solid white;
   width: 1.75em;
   height: 1.75em;
+  background-color: white;
+  -webkit-transition: all 0.4s ease-in-out;
+          transition: all 0.4s ease-in-out;
 }
 .snap-asset-actions input[type=checkbox]:checked + .svg-icon {
   background-color: #8BC34A !important;
@@ -22458,17 +22387,6 @@ li.draft .snap-assettype {
 }
 .snap-course-listening .snap-asset-actions {
   visibility: visible;
-}
-.modtype_label .snap-asset-actions .snap-edit-more-dropdown:hover .svg-icon,
-.snap-native .snap-asset-actions .snap-edit-more-dropdown:hover .svg-icon,
-.snap-activity .snap-asset-actions .snap-edit-more-dropdown:hover .svg-icon,
-.modtype_label .snap-asset-actions label:hover .svg-icon,
-.snap-native .snap-asset-actions label:hover .svg-icon,
-.snap-activity .snap-asset-actions label:hover .svg-icon,
-.modtype_label .snap-asset-actions > a:hover .svg-icon,
-.snap-native .snap-asset-actions > a:hover .svg-icon,
-.snap-activity .snap-asset-actions > a:hover .svg-icon {
-  background-color: #dadada;
 }
 .snap-resource .snap-asset-actions {
   width: 100%;
@@ -22491,12 +22409,6 @@ li.draft .snap-assettype {
 }
 .dropdown-menu .editing_show {
   display: none;
-}
-li.draft .editing_hide {
-  display: none;
-}
-li.draft .editing_show {
-  display: block;
 }
 /* reset some moodle shame */
 .moodle-actionmenu,
@@ -22551,12 +22463,6 @@ li.draft .editing_show {
 /* remove bg colour for actions when menu shown */
 .action-menu-shown .actions {
   background-color: transparent;
-}
-/* commands - moodle container for edit options */
-.snap-asset .commands {
-  display: block;
-  float: right;
-  font-size: small;
 }
 .section .snap-asset .editing_move {
   padding: 0 2%;
@@ -22888,7 +22794,7 @@ fieldset[disabled] a#changenumsections .reduce-sections {
     width: 30%;
     min-width: 210px;
     max-width: inherit;
-    height: 250px;
+    height: 210px;
     min-height: inherit;
     max-height: inherit;
   }
@@ -22906,7 +22812,7 @@ fieldset[disabled] a#changenumsections .reduce-sections {
     width: 30%;
     min-width: 210px;
     max-width: inherit;
-    height: 250px;
+    height: 210px;
     min-height: inherit;
     max-height: inherit;
   }
@@ -23053,6 +22959,7 @@ fieldset[disabled] a#changenumsections .reduce-sections {
 .snap-move-inprogress #snap-move-message {
   padding: 0.5em 0;
   max-height: 200px;
+  z-index: 2;
 }
 .snap-move-inprogress .snap-move-cancel {
   visibility: visible;
@@ -24029,6 +23936,19 @@ a:hover,
 .section li.snap-native .activityinstance .snap-asset-link a:hover {
   color: #038dcc;
 }
+.snap-asset-link a {
+  color: #565656;
+}
+.snap-asset-link a:focus,
+.snap-asset-link a:hover {
+  color: #038dcc;
+}
+.snap-due-date {
+  background-color: #03A9F4;
+}
+.snap-due-date.snap-date-overdue {
+  background-color: #E91E63;
+}
 #dateselector-calendar-panel .yui3-calendar-day {
   color: #03A9F4;
 }
@@ -24445,6 +24365,10 @@ a[href="#sections"] {
 /* activities */
 .current .sectionname {
   color: #03A9F4;
+}
+li.snap-resource,
+li.snap-activity {
+  border-top-color: #03A9F4;
 }
 .yui-skin-sam .yuimenu a.yuimenuitemlabel:hover,
 .yui-bootstrapped .yuimenu a.yuimenuitemlabel:hover,

@@ -46,7 +46,7 @@ define(['jquery', 'core/ajax', 'core/notification', 'core/templates'], function(
                                 for (var s in response.newlyavailablesectionhtml) {
                                     var item = response.newlyavailablesectionhtml[s];
                                     var number = item.number;
-                                    $('#section-' + number + ' .content > .snap-restrictions-meta').remove();
+                                    $('#section-' + number + ' .content > .snap-conditional-tag').remove();
                                 }
                             }
 
@@ -75,7 +75,7 @@ define(['jquery', 'core/ajax', 'core/notification', 'core/templates'], function(
                                         } else {
                                             $(baseSelector + ' nav.section_footer').before(html);
                                         }
-                                        $(baseSelector + ' > .snap-restrictions-meta .text-danger').replaceWith('');
+                                        $(baseSelector + ' > .snap-conditional-tag').replaceWith('');
                                     }
                                 }
                             };
