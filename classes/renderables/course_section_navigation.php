@@ -15,7 +15,8 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * [Renderable
+ * Renderable for course section navigation.
+ * @package   theme_snap
  * @author    Guy Thomas <gthomas@moodlerooms.com>
  * @copyright Copyright (c) 2016 Blackboard Inc.
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
@@ -25,6 +26,15 @@ namespace theme_snap\renderables;
 
 use context_course;
 
+defined('MOODLE_INTERNAL') || die();
+
+/**
+ * Renderable class for course section navigation.
+ * @package   theme_snap
+ * @author    Guy Thomas <gthomas@moodlerooms.com>
+ * @copyright Copyright (c) 2016 Blackboard Inc.
+ * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
 class course_section_navigation implements \renderable {
 
     /**
