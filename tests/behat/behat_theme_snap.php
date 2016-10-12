@@ -1076,4 +1076,129 @@ class behat_theme_snap extends behat_base {
 
     }
 
+    /**
+     * @Given /^I click on the "(?P<nth_string>(?:[^"]|\\")*)" link in the TOC$/
+     *
+     * @param string $nth
+     */
+    public function i_click_on_nth_item_in_toc($nth) {
+        $nth = intval($nth);
+        /** @var behat_general $helper */
+        $helper = behat_context_helper::get('behat_general');
+        $helper->i_click_on('#chapters li:nth-of-type(' . $nth . ')', 'css_element');
+    }
+
+    /**
+     * Check navigation in section matches link title and href.
+     * @param string $type "next" / "previous"
+     * @param int $section
+     * @param string $linktitle
+     * @param string $linkhref
+     */
+    protected function check_navigation_for_section($type, $section, $linktitle, $linkhref) {
+        $baseselector = '#section-' . $section . ' nav.section_footer a.'.$type.'_section';
+        $titleselector = $baseselector.' span';
+        $node = $this->find('css', $titleselector);
+        $title = $node->getText();
+        $title = $node->getHtml();
+        // Title case version of type.
+        $ttype = ucfirst($type);
+        $expectedtitle = '<span class="nav_guide">' . $ttype . ' section</span><br>'.$linktitle;
+        if (strtolower($title) !== strtolower($expectedtitle)) {
+            $msg = $ttype.' title does not match expected "' . $expectedtitle . '"' . ' V "' . $title .
+                    '" - selector = "'.$titleselector.'"';
+            throw new ExpectationException($msg, $this->getSession());
+        }
+        $node = $this->find('css', $baseselector);
+        $href = $node->getAttribute('href');
+        if ($href !== $linkhref) {
+            $msg = $ttype.' navigation href does not match expected "' . $linkhref . '"' . ' V "' . $href .
+                        '" - selector = "'.$baseselector.'"';
+            throw new ExpectationException($msg, $this->getSession());
+        }
+    }
+
+    /**
+     * @Given /^The previous navigation for section "(?P<section_int>(?:[^"]|\\")*)" is for "(?P<title_str>(?:[^"]|\\")*)" linking to "(?P<link_str>(?:[^"]|\\")*)"$/
+     * @param int $section
+     * @param string $linktitle
+     * @param string $linkhref
+     */
+    public function the_previous_navigation_for_section_is($section, $linktitle, $linkhref) {
+        $this->check_navigation_for_section('previous', $section, $linktitle, $linkhref);
+    }
+
+    /**
+     * @Given /^The next navigation for section "(?P<section_int>(?:[^"]|\\")*)" is for "(?P<title_str>(?:[^"]|\\")*)" linking to "(?P<link_str>(?:[^"]|\\")*)"$/
+     * @param int $section
+     * @param string $linktitle
+     * @param string $linkhref
+     */
+    public function the_next_navigation_for_section_is($section, $linktitle, $linkhref) {
+        $this->check_navigation_for_section('next', $section, $linktitle, $linkhref);
+    }
+
+    /**
+     * Check navigation in section has hidden state.
+     * @param string $type "next" / "previous"
+     * @param int $section
+     */
+    protected function check_navigation_hidden_for_section($type, $section) {
+        $selector = '#section-' . $section . ' nav.section_footer a.'.$type.'_section';
+        $node = $this->find('css', $selector);
+        $class = $node->getAttribute('class');
+        $classes = explode(' ', $class);
+        if (!in_array('dimmed_text', $classes)) {
+            $msg = 'Section link should be hidden - selector "' . $selector . '"';
+            throw new ExpectationException($msg, $this->getSession());
+        }
+    }
+
+    /**
+     * @Given /^The previous navigation for section "(?P<section_int>(?:[^"]|\\")*)" shows as hidden$/
+     * @param int $section
+     */
+    public function the_previous_navigation_for_section_is_hidden($section) {
+        $this->check_navigation_hidden_for_section('previous', $section);
+    }
+
+    /**
+     * @Given /^The next navigation for section "(?P<section_int>(?:[^"]|\\")*)" shows as hidden$/
+     * @param int $section
+     */
+    public function the_next_navigation_for_section_is_hidden($section) {
+        $this->check_navigation_hidden_for_section('next', $section);
+    }
+
+    /**
+     * Check navigation in section has visible state.
+     * @param string $type "next" / "previous"
+     * @param int $section
+     */
+    protected function check_navigation_visible_for_section($type, $section) {
+        $selector = '#section-' . $section . ' nav.section_footer a.'.$type.'_section';
+        $node = $this->find('css', $selector);
+        $class = $node->getAttribute('class');
+        $classes = explode(' ', $class);
+        if (in_array('dimmed_text', $classes)) {
+            $msg = 'Section link should be visible - selector "' . $selector . '"';
+            throw new ExpectationException($msg, $this->getSession());
+        }
+    }
+
+    /**
+     * @Given /^The previous navigation for section "(?P<section_int>(?:[^"]|\\")*)" shows as visible$/
+     * @param int $section
+     */
+    public function the_previous_navigation_for_section_is_visble($section) {
+        $this->check_navigation_visible_for_section('previous', $section);
+    }
+
+    /**
+     * @Given /^The next navigation for section "(?P<section_int>(?:[^"]|\\")*)" shows as visible$/
+     * @param int $section
+     */
+    public function the_next_navigation_for_section_is_visible($section) {
+        $this->check_navigation_visible_for_section('next', $section);
+    }
 }
