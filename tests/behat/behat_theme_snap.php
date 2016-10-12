@@ -1119,7 +1119,7 @@ class behat_theme_snap extends behat_base {
     }
 
     /**
-     * @Given /^The previous navigation for section "(?P<section_int>(?:[^"]|\\")*)" is for "(?P<title_str>(?:[^"]|\\")*)" linking to "(?P<link_str>(?:[^"]|\\")*)"$/
+     * @Given /^the previous navigation for section "(?P<section_int>(?:[^"]|\\")*)" is for "(?P<title_str>(?:[^"]|\\")*)" linking to "(?P<link_str>(?:[^"]|\\")*)"$/
      * @param int $section
      * @param string $linktitle
      * @param string $linkhref
@@ -1129,7 +1129,7 @@ class behat_theme_snap extends behat_base {
     }
 
     /**
-     * @Given /^The next navigation for section "(?P<section_int>(?:[^"]|\\")*)" is for "(?P<title_str>(?:[^"]|\\")*)" linking to "(?P<link_str>(?:[^"]|\\")*)"$/
+     * @Given /^the next navigation for section "(?P<section_int>(?:[^"]|\\")*)" is for "(?P<title_str>(?:[^"]|\\")*)" linking to "(?P<link_str>(?:[^"]|\\")*)"$/
      * @param int $section
      * @param string $linktitle
      * @param string $linkhref
@@ -1155,7 +1155,7 @@ class behat_theme_snap extends behat_base {
     }
 
     /**
-     * @Given /^The previous navigation for section "(?P<section_int>(?:[^"]|\\")*)" shows as hidden$/
+     * @Given /^the previous navigation for section "(?P<section_int>(?:[^"]|\\")*)" shows as hidden$/
      * @param int $section
      */
     public function the_previous_navigation_for_section_is_hidden($section) {
@@ -1163,7 +1163,7 @@ class behat_theme_snap extends behat_base {
     }
 
     /**
-     * @Given /^The next navigation for section "(?P<section_int>(?:[^"]|\\")*)" shows as hidden$/
+     * @Given /^the next navigation for section "(?P<section_int>(?:[^"]|\\")*)" shows as hidden$/
      * @param int $section
      */
     public function the_next_navigation_for_section_is_hidden($section) {
@@ -1187,7 +1187,7 @@ class behat_theme_snap extends behat_base {
     }
 
     /**
-     * @Given /^The previous navigation for section "(?P<section_int>(?:[^"]|\\")*)" shows as visible$/
+     * @Given /^the previous navigation for section "(?P<section_int>(?:[^"]|\\")*)" shows as visible$/
      * @param int $section
      */
     public function the_previous_navigation_for_section_is_visble($section) {
@@ -1195,7 +1195,7 @@ class behat_theme_snap extends behat_base {
     }
 
     /**
-     * @Given /^The next navigation for section "(?P<section_int>(?:[^"]|\\")*)" shows as visible$/
+     * @Given /^the next navigation for section "(?P<section_int>(?:[^"]|\\")*)" shows as visible$/
      * @param int $section
      */
     public function the_next_navigation_for_section_is_visible($section) {

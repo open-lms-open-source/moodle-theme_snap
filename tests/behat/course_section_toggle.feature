@@ -51,8 +51,8 @@ Feature: When the moodle theme is set to Snap, teachers can toggle the visibilit
     And I wait until "#section-2 .snap-visibility.snap-show" "css_element" exists
     Then "#section-2.hidden" "css_element" should exist
     # Make sure that the navigation either side of section 2 has the dimmed class - i.e. to reflect section 2's hidden status.
-    And The previous navigation for section "3" shows as hidden
-    And The next navigation for section "1" shows as hidden
+    And the previous navigation for section "3" shows as hidden
+    And the next navigation for section "1" shows as hidden
     # Note, the Not published to students message is in the 3rd element of the TOC because element 1 is section 0.
     And I should see "Not published to students" in the "#chapters li:nth-of-type(3)" "css_element"
     # Let's make the section visible again
@@ -61,8 +61,8 @@ Feature: When the moodle theme is set to Snap, teachers can toggle the visibilit
     Then "#section-2.hidden" "css_element" should not exist
     And I should not see "Not published to students" in the "#chapters li:nth-of-type(3)" "css_element"
     # Make sure that the navigation either side of section 2 does not have the dimmed class - i.e. to reflect section 2's visible status.
-    And The previous navigation for section "3" shows as visible
-    And The next navigation for section "1" shows as visible
+    And the previous navigation for section "3" shows as visible
+    And the next navigation for section "1" shows as visible
 
   @javascript
   Scenario: In read mode, student cannot hide section.
