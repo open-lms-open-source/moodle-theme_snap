@@ -5344,6 +5344,28 @@ body.path-admin-roles .userselector {
   margin-left: 0;
   margin-right: 0;
 }
+div.groupmanagementtable {
+  margin-left: -15px;
+  margin-right: -15px;
+}
+div.groupmanagementtable .groups,
+div.groupmanagementtable .members {
+  position: relative;
+  min-height: 1px;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+@media (min-width: 768px) {
+  div.groupmanagementtable .groups,
+  div.groupmanagementtable .members {
+    float: left;
+    width: 50%;
+  }
+}
+div.groupmanagementtable .groups select,
+div.groupmanagementtable .members select {
+  min-width: 33%;
+}
 .userprofile .fullprofilelink {
   text-align: center;
   margin: 10px;
@@ -12089,6 +12111,8 @@ button.close {
 .userprofile dl.list dd:after,
 #page-user-preferences .row-fluid:before,
 #page-user-preferences .row-fluid:after,
+div.groupmanagementtable:before,
+div.groupmanagementtable:after,
 .userprofile dl.list dd:before,
 .userprofile dl.list dd:after,
 .dl-horizontal dd:before,
@@ -12176,6 +12200,7 @@ button.close {
 .moodle-dialogue-base .moodle-dialogue .moodle-dialogue-content .moodle-dialogue-ft:after,
 .userprofile dl.list dd:after,
 #page-user-preferences .row-fluid:after,
+div.groupmanagementtable:after,
 .userprofile dl.list dd:after,
 .dl-horizontal dd:after,
 .container:after,
@@ -19132,6 +19157,7 @@ http://blog.rodneyrehm.de/archives/34-iOS7-Mobile-Safari-And-Viewport-Units.html
 .coursebox.moodle-dialogue-base .moodle-dialogue .moodle-dialogue-content .moodle-dialogue-ft,
 .coursebox.userprofile dl.list dd,
 .coursebox#page-user-preferences .row-fluid,
+.courseboxdiv.groupmanagementtable,
 .coursebox.userprofile dl.list dd,
 .coursebox.dl-horizontal dd,
 .coursebox.container,
