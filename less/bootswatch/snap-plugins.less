@@ -49,8 +49,6 @@
 }
 
 
-
-
 /**
 * report : dates.
 * https://moodle.org/plugins/report_editdates
@@ -59,3 +57,111 @@
 #page-report-editdates-index .activityicon {
     .svg-icon();
 }
+
+
+
+/**
+ * Mod assign grading interface.
+ */
+
+.path-mod-assign {
+    
+    [data-region="grading-navigation-panel"],
+    [data-region="review-panel"],
+    [data-region="grade-panel"],
+    [data-region="grading-navigation"],
+    .assignfeedback_editpdf_widget .drawingregion {
+        position: relative;
+        top: auto;
+        bottom: auto;
+        left: auto;
+        right: auto;
+    }
+    
+    [data-region="grading-navigation-panel"],
+    [data-region="user-info"] {
+        height: auto;
+    }
+    
+    [data-region="user-info"] {
+        
+        h4 {
+            font-size: 1em;
+        }
+        .img-rounded {
+            height: 3em;
+            border-radius: 100%;
+        }
+    }
+    
+    /* Drop down menus in the anotation bar */
+    .moodle-dialogue-base .moodle-dialogue.assignfeedback_editpdf_dropdown {
+        min-width: 1em;
+    }
+    
+    ul.assignfeedback_editpdf_menu {
+        margin: 0;
+        padding: 0;
+    }
+    
+    /* Dialogue close icons */
+    [data-region="popout-button"] img.smallicon {
+        margin: 0 !important;
+    }
+} 
+
+@media screen and (min-width : @screen-md-min) {
+    
+    .path-mod-assign {
+         
+         /* Remove margin from bs row so panes are full page. */
+         .grading-main {
+             margin-right: 0;
+         }
+         
+         [data-region="review-panel-content"],
+         [data-region="grade-panel"] {
+            max-height: 80vh;
+            overflow-y: scroll;
+        }
+        
+        [data-region="review-panel"] {
+            .make-md-column(8);
+            padding-right: 0;
+            
+            .pageheader {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                z-index: 1;
+            }
+            
+            &.grade-panel-collapsed {
+                .make-md-column(12);
+                right: 0;
+            }
+        }
+        
+        [data-region="grade-panel"] {
+            .make-md-column(4);
+        }
+        
+        [data-region="grade-actions-panel"] {
+            position: fixed;
+            background-color: white;
+            height: auto;
+            
+            [data-region="grade-actions"] {
+                padding: 0.5em;
+                
+                .collapse-buttons {
+                    top: 25%;
+                    right: 0;
+                    height: auto;
+                }
+            }
+        }
+    }
+}
+
