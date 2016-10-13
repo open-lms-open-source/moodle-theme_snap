@@ -41,7 +41,7 @@ Feature: When the moodle theme is set to Snap, teachers can move course sections
       | student1 | C1 | student |
 
   @javascript
-  Scenario: In read mode, teacher moves section 1 to section 4.
+  Scenario: In read mode, teacher moves section 1 before section 4 (section 3).
     Given I log in as "teacher1" (theme_snap)
     And I open the personal menu
     And I follow "Course 1"
@@ -51,10 +51,18 @@ Feature: When the moodle theme is set to Snap, teachers can move course sections
       | name | My topic |
     And I press "Save changes"
     And I follow "Move \"My topic\""
-   Then I should see "Moving \"My topic\"" in the "#snap-move-message" "css_element"
-    And I follow "Topic 4"
-   Then I should see "Place section \"My topic\" before section \"Topic 4\""
-    And I should see "My topic" in the "#section-4" "css_element"
+    Then I should see "Moving \"My topic\"" in the "#snap-move-message" "css_element"
+    When I follow "Topic 4"
+    And I follow "Place section \"My topic\" before section \"Topic 4\""
+    Then I should see "My topic" in the "#section-3" "css_element"
+    # Check that navigation is also updated.
+    # Note that "4th" refers to section-3 as section-0 is the "introduction" section in the TOC.
+    When I click on the "4th" link in the TOC
+    Then I should see "My topic" in the "#section-3 .sectionname" "css_element"
+    Then the previous navigation for section "3" is for "Topic 2" linking to "#section-2"
+    And the next navigation for section "3" is for "Topic 4" linking to "#section-4"
+    And the previous navigation for section "4" is for "My topic" linking to "#section-3"
+    And the next navigation for section "2" is for "My topic" linking to "#section-3"
 
   @javascript
   Scenario: In read mode, student cannot move sections.
@@ -62,4 +70,4 @@ Feature: When the moodle theme is set to Snap, teachers can move course sections
     And I open the personal menu
     And I follow "Course 1"
     And I follow "Topic 1"
-   Then "a[title=Move section]" "css_element" should not exist
+    Then "a[title=Move section]" "css_element" should not exist

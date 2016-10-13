@@ -36,6 +36,7 @@ use theme_snap\renderables\course_action_section_move;
 use theme_snap\renderables\course_action_section_visibility;
 use theme_snap\renderables\course_action_section_delete;
 use theme_snap\renderables\course_action_section_highlight;
+use theme_snap\renderables\course_section_navigation;
 
 trait format_section_trait {
 
@@ -291,73 +292,13 @@ trait format_section_trait {
     }
 
     /**
-     * Next and previous links for Snap theme sections
-     *
-     * Mostly a spruced up version of the get_nav_links logic, since that
-     * renderer mixes the logic of retrieving and building the link targets
-     * based on availability with creating the HTML to display them niceley.
-     * @return string
+     * @param course_section_navigation $navigation
      */
-    protected function next_previous($course, $sections, $sectionno) {
-        $course = course_get_format($course)->get_course();
-
-        $previousarrow = '<i class="icon-arrow-left"></i>';
-        $nextarrow = '<i class="icon-arrow-right"></i>';
-
-        $canviewhidden = has_capability('moodle/course:viewhiddensections', context_course::instance($course->id))
-        or !$course->hiddensections;
-
-        $previous = '';
-        $target = $sectionno - 1;
-        while ($target >= 0 && empty($previous)) {
-            if ($canviewhidden
-                || $sections[$target]->uservisible
-                || $sections[$target]->availableinfo) {
-                $attributes = array('class' => 'previous_section');
-                if (!$sections[$target]->visible) {
-                    $attributes['class'] .= ' dimmed_text';
-                }
-                $sectionname = get_section_name($course, $sections[$target]);
-                // Better first section title.
-                if ($sectionname == get_string('general')) {
-                    $sectionname = get_string('introduction', 'theme_snap');
-                }
-                $previousstring = get_string('previoussection', 'theme_snap');
-                $linkcontent = $this->target_link_content($sectionname, $previousarrow, $previousstring);
-                $url = "#section-$target";
-                $previous = html_writer::link($url, $linkcontent, $attributes);
-            }
-            $target--;
-        }
-
-        $next = '';
-        $target = $sectionno + 1;
-        while ($target <= $course->numsections && empty($next)) {
-            if ($canviewhidden
-                || $sections[$target]->uservisible
-                || $sections[$target]->availableinfo) {
-                $attributes = array('class' => 'next_section');
-                if (!$sections[$target]->visible) {
-                    $attributes['class'] .= ' dimmed_text';
-                }
-                $sectionname = get_section_name($course, $sections[$target]);
-                // Better first section title.
-                if ($sectionname == get_string('general')) {
-                    $sectionname = get_string('introduction', 'theme_snap');
-                }
-                $nextstring = get_string('nextsection', 'theme_snap');
-                $linkcontent = $this->target_link_content($sectionname, $nextarrow, $nextstring);
-                $url = "#section-$target";
-                $next = html_writer::link($url, $linkcontent, $attributes);
-            }
-            $target++;
-        }
-        return "<nav class='section_footer'>".$previous.$next."</nav>";
+    public function render_course_section_navigation(course_section_navigation $navigation) {
+        return $this->render_from_template('theme_snap/course_section_navigation', $navigation);
     }
 
-
-    // Basically unchanged from the core version  but inserts calls to
-    // theme_snap_next_previous to add some navigation .
+    // Basically unchanged from the core version adds some navigation with course_section_navigation renderable.
     public function print_multiple_section_page($course, $sections, $mods, $modnames, $modnamesused) {
         global $PAGE;
 
@@ -411,7 +352,7 @@ trait format_section_trait {
                  echo $this->course_section_add_cm_control($course, $section, 0);
             }
             if (!$PAGE->user_is_editing()) {
-                echo $this->next_previous($course, $modinfo->get_section_info_all(), $section);
+                echo $this->render(new course_section_navigation($course, $modinfo->get_section_info_all(), $section));
             }
             echo $this->section_footer();
         }
