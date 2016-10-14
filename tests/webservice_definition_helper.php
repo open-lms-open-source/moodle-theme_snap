@@ -329,4 +329,23 @@ EOF;
         $this->assertEmpty($something->desc);
     }
 
+    public function test_cache_definition() {
+        $classname = 'wsdocs_testing';
+        $helper = new definition_helper_testable($classname);
+        $definition = $helper->get_definition();
+
+        // Wipe cache so we can test nothing in cache.
+        $cache = cache::make('theme_snap', 'webservicedefinitions');
+        $data = $cache->delete($classname);
+
+        // Test empty cache.
+        $cached = $helper->get_definition_from_cache($classname);
+        $this->assertFalse($cached);
+
+        // Test recover from cache.
+        $helper->cache_definition($classname, $definition);
+        $cached = $helper->get_definition_from_cache($classname);
+        $this->assertNotEmpty($cached);
+    }
+
 }

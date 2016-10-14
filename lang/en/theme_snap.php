@@ -41,6 +41,7 @@ $string['brandingheading'] = 'Branding';
 $string['brandingheadingdesc'] = '';
 $string['browse'] = 'Browse';
 $string['browseallcourses'] = 'Browse all courses';
+$string['cachedef_webservicedefinitions'] = 'Caching for auto generated web service definitions.';
 $string['changecoverimage'] = 'Change cover image';
 $string['changefullname'] = 'Change site name';
 $string['chapters'] = 'Chapters';
