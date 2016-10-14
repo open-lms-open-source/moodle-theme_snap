@@ -10221,9 +10221,9 @@ fieldset[disabled] #id_cancel:focus {
   }
 }
 /**
-* report : dates.
-* https://moodle.org/plugins/report_editdates
-*/
+ * report : dates.
+ * https://moodle.org/plugins/report_editdates
+ */
 #page-report-editdates-index .activityicon {
   width: 2rem;
   height: 2rem;
@@ -10339,6 +10339,18 @@ fieldset[disabled] #id_cancel:focus {
     float: left;
     width: 33.33333333%;
   }
+}
+/**
+ * Assign feedback PDF editor.
+ * Prevent PDF edit area from displaying outside of dialogs.
+ *
+ * Note - applies to joule grader which is why this is not nested within .path-mod-assign.
+ * Also, note - it's an issue with the editor being inside a dialog, so fix applied more widely than just to
+ * joule-grader.
+ */
+.moodle-dialogue-base .assignfeedback_editpdf_widget .drawingregion {
+  left: 0;
+  top: 0;
 }
 /**
  * Snap user swatch.
