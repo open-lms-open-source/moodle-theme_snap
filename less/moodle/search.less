@@ -1,0 +1,39 @@
+.search-results .result .result-context-info {
+    margin: 0.5em 0;
+}
+
+.search-results .result .filename {
+    font-style: italic;
+}
+
+.search-input-wrapper {
+    margin: 0 5px 0 2px;
+    display: inline;
+}
+
+.search-input-wrapper > div {
+    margin: 10px 0 9px 0;
+    display: inline;
+}
+
+.search-input-wrapper.expanded {
+    width: 160px;
+}
+
+.search-input-wrapper > form {
+    opacity: 0;
+    width: 0;
+    margin-left: 10px;
+    transition: opacity 0.5s ease;
+    transition: width 0.5s ease;
+    display: inline-block;
+
+    &.expanded {
+        opacity: 1;
+        width: 160px;
+    }
+
+    input {
+        height: 2em;
+    }
+}
