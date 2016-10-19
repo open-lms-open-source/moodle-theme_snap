@@ -472,6 +472,7 @@ trait format_section_trait {
      * @return string
      */
     public function course_section_add_cm_control($course, $section, $sectionreturn = null, $displayoptions = array()) {
+        global $OUTPUT;
         // Check to see if user can add menus and there are modules to add.
         if (!has_capability('moodle/course:manageactivities', context_course::instance($course->id))
                 || !($modnames = get_module_types_names()) || empty($modnames)) {
@@ -482,17 +483,21 @@ trait format_section_trait {
         $urlparams = array('section' => $section);
             // S Lamour Aug 2015 - show activity picker
             // moodle is adding a link around the span in a span with js - yay!! go moodle...
-            $modchooser = "<div class='snap-modchooser btn btn-default section_add_menus'>
-              <span class='section-modchooser-link'><span>".get_string('addresourceoractivity', 'theme_snap')."</span></span>
-            </div>";
+            $iconurl = $OUTPUT->pix_url('move_here', 'theme');
+            $icon = '<img src="'.$iconurl.'" class="svg-icon" role="presentation" alt=""><br>';
+            $modchooser = '<div class="col-sm-6 snap-modchooser section_add_menus">
+              <span class="section-modchooser-link btn btn-link">'.$icon.'<span>'.get_string('addresourceoractivity', 'theme_snap').'</span></span>
+            </div>';
            $output = $this->courserenderer->course_modchooser($modules, $course) . $modchooser;
 
            // Add zone for quick uploading of files.
-           $upload = '<form class="snap-dropzone">
-              <label for="snap-drop-file-'.$section.'" class="snap-dropzone-label h6">'.get_string('dropzonelabel', 'theme_snap').'</label>
-              <input type="file" multiple name="snap-drop-file-'.$section.'" id="snap-drop-file-'.$section.'" class="js-snap-drop-file sr-only"/>
-              </form>';
-           return $output.$upload;
+           $upload = '<div class="col-sm-6">
+                <form class="snap-dropzone">
+                    <label tabindex="0" for="snap-drop-file-'.$section.'" class="snap-dropzone-label">'.get_string('dropzonelabel', 'theme_snap').'</label>
+                    <input type="file" multiple name="snap-drop-file-'.$section.'" id="snap-drop-file-'.$section.'" class="js-snap-drop-file sr-only"/>
+                </form>
+                </div>';
+           return '<div class="row">'.$output.$upload.'</div>';
     }
 
     /**

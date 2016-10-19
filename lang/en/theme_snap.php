@@ -25,7 +25,7 @@
 $string['aboutcourse'] = 'About This Course';
 $string['activity'] = 'Activity';
 $string['addanewsection'] = 'Create a new section';
-$string['addresourceoractivity'] = 'Create learning activity or resource';
+$string['addresourceoractivity'] = 'Create learning activity';
 $string['admin'] = 'Admin';
 $string['advancedbrandingheading'] = 'Advanced branding';
 $string['advancedbrandingheadingdesc'] = '';
