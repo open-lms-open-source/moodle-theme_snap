@@ -42,7 +42,7 @@ class ws_loginstatus extends \external_api {
      */
     public static function service_parameters() {
         $keys = [
-            'failedactionmsg' => new \external_value(PARAM_TEXT, 'Failed action', VALUE_OPTIONAL)
+            'failedactionmsg' => new \external_value(PARAM_TEXT, 'Failed action', VALUE_REQUIRED)
         ];
 
         return new  \external_function_parameters($keys, 'login status params');

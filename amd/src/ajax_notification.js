@@ -73,10 +73,8 @@ define(['core/notification', 'core/ajax'],
                     };
 
                     // Ajax call login status function to see if we are logged in or not.
-                    var args = {};
-                    if (failAction) {
-                        args = {failedactionmsg: failAction};
-                    }
+                    failAction = failAction ? failAction : '';
+                    var args = {failedactionmsg: failAction};
 
                     ajax.call([
                         {
