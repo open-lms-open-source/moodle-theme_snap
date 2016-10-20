@@ -19,8 +19,9 @@
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-define(['jquery', 'core/log', 'core/ajax', 'core/templates', 'core/notification', 'theme_snap/util'],
-    function($, log, ajax, templates, notification, util) {
+define(['jquery', 'core/log', 'core/ajax', 'core/templates', 'core/notification',
+    'theme_snap/util', 'theme_snap/ajax_notification'],
+    function($, log, ajax, templates, notification, util, ajaxNotify) {
 
     return {
         init: function(courseLib) {
@@ -165,9 +166,10 @@ define(['jquery', 'core/log', 'core/ajax', 'core/templates', 'core/notification'
                     url: M.cfg.wwwroot + courseLib.courseConfig.ajaxurl
                 });
                 req.done(function(data) {
-                    if (data.error) {
+                    if (ajaxNotify.ifErrorShowBestMsg(data)) {
                         log.debug('Ajax request fail');
                         moveFailed();
+                        return;
                     } else {
                         log.debug('Ajax request successful');
                         if (onSuccess) {
@@ -211,6 +213,9 @@ define(['jquery', 'core/log', 'core/ajax', 'core/templates', 'core/notification'
 
                 var courseid = courseLib.courseConfig.id;
 
+                var errMessage = M.util.get_string('error:failedtochangeassetvisibility', 'theme_snap');
+                var errAction = M.util.get_string('action:changeassetvisibility', 'theme_snap');
+
                 $.ajax({
                     type: "POST",
                     async: true,
@@ -219,11 +224,13 @@ define(['jquery', 'core/log', 'core/ajax', 'core/templates', 'core/notification'
                     complete: function() {
                         parent.find('.snap-meta .loadingstat').remove();
                     },
-                    error: function() {
-                        var message = M.util.get_string('error:failedtochangeassetvisibility', 'theme_snap');
-                        notification.alert(null, message, M.util.get_string('ok', 'moodle'));
+                    error: function(response) {
+                        ajaxNotify.ifErrorShowBestMsg(response, errAction, errMessage);
                     },
-                    success: function() {
+                    success: function(response) {
+                        if (ajaxNotify.ifErrorShowBestMsg(response, errAction, errMessage)) {
+                            return;
+                        }
                         if (show) {
                             parent.removeClass('draft');
                         } else {
@@ -421,7 +428,7 @@ define(['jquery', 'core/log', 'core/ajax', 'core/templates', 'core/notification'
                                     });
                             },
                             fail: function(response) {
-                                notification.exception(response);
+                                ajaxNotify.ifErrorShowBestMsg(response);
                                 stopMoving();
                             }
                         }
@@ -452,6 +459,9 @@ define(['jquery', 'core/log', 'core/ajax', 'core/templates', 'core/notification'
 
                     var courserest = M.cfg.wwwroot + '/course/rest.php';
 
+                    var errAction = M.util.get_string('action:duplicateasset', 'theme_snap');
+                    var errMessage = M.util.get_string('error:failedtoduplicateasset', 'theme_snap');
+                    
                     $.ajax({
                         type: "POST",
                         async: true,
@@ -460,11 +470,13 @@ define(['jquery', 'core/log', 'core/ajax', 'core/templates', 'core/notification'
                         complete: function() {
                             parent.find('.snap-meta .loadingstat').remove();
                         },
-                        error: function() {
-                            var message = M.util.get_string('error:failedtoduplicateasset', 'theme_snap');
-                            notification.alert(null, message, M.util.get_string('ok', 'moodle'));
+                        error: function(data) {
+                            ajaxNotify.ifErrorShowBestMsg(data, errAction, errMessage);
                         },
                         success: function(data) {
+                            if (ajaxNotify.ifErrorShowBestMsg(data, errAction, errMessage)) {
+                                return;
+                            }
                             $(data.fullcontent).insertAfter(parent);
                         },
                         data: {
@@ -602,14 +614,16 @@ define(['jquery', 'core/log', 'core/ajax', 'core/templates', 'core/notification'
                             });
                         },
 
-                        fail: function() {
-                            var message;
+                        fail: function(response) {
+                            var errMessage, errAction;
                             if (action === 'visibility') {
-                                message = M.util.get_string('error:failedtochangesectionvisibility', 'theme_snap');
+                                errMessage = M.util.get_string('error:failedtochangesectionvisibility', 'theme_snap');
+                                errAction = M.util.get_string('action:changesectionvisibility', 'theme_snap');
                             } else {
-                                message = M.util.get_string('error:failedtohighlightsection', 'theme_snap');
+                                errMessage = M.util.get_string('error:failedtohighlightsection', 'theme_snap');
+                                errAction = M.util.get_string('action:highlightsectionvisibility', 'theme_snap');
                             }
-                            notification.alert(null, message, M.util.get_string('ok', 'moodle'));
+                            ajaxNotify.ifErrorShowBestMsg(response, errAction, errMessage);
                             // Cancel spinner on fail only (nested functions take care of spinner).
                             $(sectionActionsSelector + ' .loadingstat').remove();
                         },

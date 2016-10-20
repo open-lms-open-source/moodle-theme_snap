@@ -49,6 +49,21 @@ M.snap_message_badge.totalmessages = 0;
 M.snap_message_badge.courseid = null;
 
 /**
+ * Show the best error message for a response error.
+ *
+ * @param {obejct} response
+ */
+M.snap_message_badge.responseBestErrorMessage = function(response) {
+    require(
+        [
+            'theme_snap/ajax_notification'
+        ], function(ajaxNotify) {
+            ajaxNotify.ifErrorShowBestMsg(response.error);
+        }
+    );
+}
+
+/**
  * Init Badge
  *
  * @param {YUI} Y
@@ -170,7 +185,7 @@ M.snap_message_badge.ignore_message = function(Y, url) {
                 var response = Y.JSON.parse(o.responseText);
 
                 if (response.error != undefined) {
-                    M.snap_message_badge.alert_error(response.error);
+                    M.snap_message_badge.responseBestErrorMessage(response.error);
                 } else {
                     M.snap_message_badge.update_unread_count(Y, response.args);
                 }
@@ -263,7 +278,7 @@ M.snap_message_badge.populate_messagebody = function(Y, messagenode, url, onsucc
                 messagenode.one('.loadingstat').remove();
 
                 if (response.error != undefined) {
-                    M.snap_message_badge.alert_error(response.error);
+                    M.snap_message_badge.responseBestErrorMessage(response.error);
                 } else {
                     messagenode.one('.message_badge_message_text').removeClass('snap_spinner');
 
@@ -411,7 +426,7 @@ M.snap_message_badge.get_messages_html = function(Y, onsuccess) {
             success: function(id, o) {
                 var response = Y.JSON.parse(o.responseText);
                 if (response.error != undefined) {
-                    M.snap_message_badge.alert_error(response.error);
+                    M.snap_message_badge.responseBestErrorMessage(response.error);
                 } else {
                     if (typeof onsuccess == 'function') {
                         onsuccess(response);

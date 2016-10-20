@@ -22,8 +22,9 @@
 /**
  * Personal menu course cards.
  */
-define(['jquery', 'core/log', 'theme_snap/pm_course_cards_hidden', 'theme_snap/pm_course_favorites', 'theme_snap/model_view'],
-    function($, log, cardsHidden, courseFavorites, mview) {
+define(['jquery', 'core/log', 'theme_snap/pm_course_cards_hidden', 'theme_snap/pm_course_favorites',
+    'theme_snap/model_view', 'theme_snap/ajax_notification'],
+    function($, log, cardsHidden, courseFavorites, mview, ajaxNotify) {
         var CourseCards = function() {
 
             $(document).ready(function() {
@@ -77,6 +78,9 @@ define(['jquery', 'core/log', 'theme_snap/pm_course_cards_hidden', 'theme_snap/p
                         url: M.cfg.wwwroot + '/theme/snap/rest.php?action=get_courseinfo&contextid=' + M.cfg.context,
                         data: courseiddata,
                         success: function(data) {
+                            if (ajaxNotify.ifErrorShowBestMsg(data)) {
+                                return;
+                            }
                             if (data.info) {
                                 log.debug('fetched coursedata', data.info);
                                 if (supportlocalstorage) {

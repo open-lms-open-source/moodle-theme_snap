@@ -24,6 +24,10 @@
 
 $string['aboutcourse'] = 'About This Course';
 $string['activity'] = 'Activity';
+$string['action:changeassetvisibility'] = 'change asset visibility';
+$string['action:duplicateasset'] = 'duplicate asset';
+$string['action:changesectionvisibility'] = 'change section visibility';
+$string['action:highlightsectionvisibility'] = 'highlight section visibility';
 $string['addanewsection'] = 'Create a new section';
 $string['addresourceoractivity'] = 'Create learning activity or resource';
 $string['admin'] = 'Admin';
@@ -126,6 +130,8 @@ $string['joulehelpguides'] = 'Joule help guides';
 $string['knowledgebase'] = 'Moodlerooms Knowledge Base';
 $string['loading'] = 'Loading...';
 $string['loggedinasguest'] = 'You are logged in as guest';
+$string['loggedoutmsg'] = 'You are currently logged out';
+$string['loggedoutfailmsg'] = 'You must be logged in to {$a}.';
 $string['loginform'] = 'Login';
 $string['logo'] = 'Logo';
 $string['logodesc'] = 'Please upload your custom logo here. The logo will be displayed in the header across the entire site.';

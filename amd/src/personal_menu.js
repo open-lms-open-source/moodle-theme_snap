@@ -22,8 +22,8 @@
 /**
  * Course card favoriting.
  */
-define(['jquery', 'core/log', 'core/yui', 'theme_snap/pm_course_cards', 'theme_snap/util'],
-    function($, log, Y, courseCards, util) {
+define(['jquery', 'core/log', 'core/yui', 'theme_snap/pm_course_cards', 'theme_snap/util', 'theme_snap/ajax_notification'],
+    function($, log, Y, courseCards, util, ajaxNotify) {
 
         /**
          * Personal Menu (courses menu).
@@ -79,6 +79,9 @@ define(['jquery', 'core/log', 'core/yui', 'theme_snap/pm_course_cards', 'theme_s
                                 async: true,
                                 url: M.cfg.wwwroot + '/theme/snap/rest.php?action=get_' + type + '&contextid=' + M.cfg.context,
                                 success: function(data) {
+                                    if (ajaxNotify.ifErrorShowBestMsg(data)) {
+                                        return;
+                                    }
                                     log.info('fetched ' + type);
                                     if (supportlocalstorage && typeof(data.html) != 'undefined') {
                                         window.sessionStorage[cache_key] = data.html;

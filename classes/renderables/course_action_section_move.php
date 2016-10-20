@@ -23,6 +23,7 @@
 
 namespace theme_snap\renderables;
 use context_course;
+use section_info;
 
 defined('MOODLE_INTERNAL') || die();
 
@@ -33,14 +34,15 @@ class course_action_section_move extends course_action_section_base {
      */
     public $class = 'snap-move';
 
-    public function __construct($course, $section, $onsectionpage = false) {
+    public function __construct($course, section_info $section, $onsectionpage = false) {
 
         $coursecontext = context_course::instance($course->id);
         $isstealth = isset($course->numsections) && ($section->section > $course->numsections);
 
         if (!$isstealth && !$onsectionpage && has_capability('moodle/course:movesections', $coursecontext)) {
             $this->url = '#section-'.$section->section;
-            $this->title = get_string('move', 'theme_snap', format_string($section->name));
+            $sectionname = !empty($section->name) ? $section->name : get_section_name($course, $section);
+            $this->title = get_string('move', 'theme_snap', format_string($sectionname));
         }
     }
 }

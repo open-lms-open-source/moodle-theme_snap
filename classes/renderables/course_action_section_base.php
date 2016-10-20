@@ -23,6 +23,7 @@
 
 namespace theme_snap\renderables;
 use moodle_url;
+use section_info;
 
 defined('MOODLE_INTERNAL') || die();
 
@@ -45,6 +46,6 @@ abstract class course_action_section_base implements \renderable, \templatable {
      */
     public $class;
 
-    abstract public function __construct($course, $section, $onsectionpage = false);
+    abstract public function __construct($course, section_info $section, $onsectionpage = false);
 
 }

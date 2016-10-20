@@ -23,6 +23,7 @@
 
 namespace theme_snap\renderables;
 use moodle_url;
+use section_info;
 
 defined('MOODLE_INTERNAL') || die();
 
@@ -33,7 +34,7 @@ class course_action_section_delete extends course_action_section_base {
      */
     public $class = 'snap-delete';
 
-    public function __construct($course, $section, $onsectionpage = false) {
+    public function __construct($course, section_info $section, $onsectionpage = false) {
 
         if (course_can_delete_section($course, $section)) {
             if (get_string_manager()->string_exists('deletesection', 'format_'.$course->format)) {

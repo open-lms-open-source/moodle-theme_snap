@@ -217,10 +217,15 @@ class shared extends \renderer_base {
             'movecontent',
             'show',
             'tocontent',
-            'totopofsection'
+            'totopofsection',
+            'unknownerror'
         ], 'moodle');
 
         $PAGE->requires->strings_for_js([
+            'action:changeassetvisibility',
+            'action:changesectionvisibility',
+            'action:duplicateasset',
+            'action:highlightsectionvisibility',
             'error:failedtochangesectionvisibility',
             'error:failedtohighlightsection',
             'error:failedtochangeassetvisibility',

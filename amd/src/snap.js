@@ -25,8 +25,8 @@
  * Main snap initialising function.
  */
 define(['jquery', 'theme_snap/bootstrap', 'core/log', 'theme_snap/headroom', 'theme_snap/util', 'theme_snap/personal_menu',
-        'theme_snap/responsive_video', 'theme_snap/cover_image'],
-    function($, bsjq, log, Headroom, util, personalMenu, responsiveVideo, coverImage) {
+        'theme_snap/responsive_video', 'theme_snap/cover_image', 'theme_snap/ajax_notification'],
+    function($, bsjq, log, Headroom, util, personalMenu, responsiveVideo, coverImage, ajaxNotify) {
 
         'use strict';
 
@@ -377,6 +377,9 @@ define(['jquery', 'theme_snap/bootstrap', 'core/log', 'theme_snap/headroom', 'th
                 async: true,
                 url: M.cfg.wwwroot + '/theme/snap/rest.php?action=get_media&contextid=' + $(resourcemod).data('modcontext'),
                 success: function(data) {
+                    if (ajaxNotify.ifErrorShowBestMsg(data)) {
+                        return;
+                    }
                     lightboxopen(data.html, appendto);
 
                     updateModCompletion($(resourcemod), data.completionhtml);
@@ -620,6 +623,9 @@ define(['jquery', 'theme_snap/bootstrap', 'core/log', 'theme_snap/headroom', 'th
                             async: true,
                             url: readPageUrl,
                             success: function(data) {
+                                if (ajaxNotify.ifErrorShowBestMsg(data)) {
+                                    return;
+                                }
                                 // Update completion html for this page mod instance.
                                 updateModCompletion(pageMod, data.completionhtml);
                                 $(document).trigger('snap:module_completion_change', pageMod);
@@ -639,6 +645,9 @@ define(['jquery', 'theme_snap/bootstrap', 'core/log', 'theme_snap/headroom', 'th
                             async: true,
                             url: getPageUrl,
                             success: function(data) {
+                                if (ajaxNotify.ifErrorShowBestMsg(data)) {
+                                    return;
+                                }
                                 pageModContent.prepend(data.html);
                                 pageModContent.data('content-loaded', 1);
                                 pageMod.find('.contentafterlink .ajaxstatus').remove();

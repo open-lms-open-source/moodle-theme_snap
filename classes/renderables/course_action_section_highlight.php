@@ -23,6 +23,7 @@
 
 namespace theme_snap\renderables;
 use context_course;
+use section_info;
 
 defined('MOODLE_INTERNAL') || die();
 
@@ -39,7 +40,7 @@ class course_action_section_highlight extends course_action_section_base {
      * @param stdClass $section - Note this is the section we want to affect via the url param.
      * @param bool $onsectionpage
      */
-    public function __construct($course, $section, $onsectionpage = false) {
+    public function __construct($course, section_info $section, $onsectionpage = false) {
         
         if ($onsectionpage) {
             $baseurl = course_get_url($course, $section->section);

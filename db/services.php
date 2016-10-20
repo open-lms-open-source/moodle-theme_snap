@@ -63,6 +63,14 @@ $functions = [
         'type'          => 'read',
         'ajax'          => true,
         'loginrequired' => true
+    ],
+    'theme_snap_loginstatus' => [
+        'classname'     => 'theme_snap\\webservice\\ws_loginstatus',
+        'methodname'    => 'service',
+        'description'   => 'Get current login status',
+        'type'          => 'read',
+        'ajax'          => true,
+        'loginrequired' => false
     ]
 ];
 

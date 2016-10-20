@@ -1201,4 +1201,20 @@ class behat_theme_snap extends behat_base {
     public function the_next_navigation_for_section_is_visible($section) {
         $this->check_navigation_visible_for_section('next', $section);
     }
+
+    /**
+     * Logs out via a separate window so that the current window retains all options that require login.
+     * @Given /^I log out via a separate window$/
+     */
+    public function i_log_out_via_a_separate_window() {
+        global $CFG;
+        $session = $this->getSession();
+        $mainwindow = $session->getWindowName();
+        $logoutwindow = 'Log out window';
+        $session->executeScript('window.open("'.$CFG->wwwroot.'", "'.$logoutwindow.'")');
+        $session->switchToWindow($logoutwindow);
+        $this->i_log_out();
+        $session->executeScript('window.close()');
+        $session->switchToWindow($mainwindow);
+    }
 }

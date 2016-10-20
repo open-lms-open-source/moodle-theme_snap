@@ -22,88 +22,89 @@
 /**
  * Course conditionals function.
  */
-define(['jquery', 'core/ajax', 'core/notification', 'core/templates'], function($, ajax, notification, templates) {
+define(['jquery', 'core/ajax', 'core/notification', 'core/templates', 'theme_snap/ajax_notification'],
+    function($, ajax, notification, templates, ajaxNotify) {
 
-    // Main function.
-    var init = function(courseConfig) {
-        var currentlyUnavailableSections = courseConfig.unavailablesections.map(Number),
-        currentlyUnavailableMods =  courseConfig.unavailablemods.map(Number);
+        // Main function.
+        var init = function(courseConfig) {
+            var currentlyUnavailableSections = courseConfig.unavailablesections.map(Number),
+            currentlyUnavailableMods =  courseConfig.unavailablemods.map(Number);
 
-        $(document).on( "snap:module_completion_change",
-            function() {
-                ajax.call([
-                    {
-                        methodname: 'theme_snap_course_completion',
-                        args: {
-                            courseshortname: courseConfig.shortname,
-                            unavailablesections: currentlyUnavailableSections.join(','),
-                            unavailablemods: currentlyUnavailableMods.join(',')
-                        },
-                        done: function(response) {
-
-                            // Remove availability warnings for sections.
-                            if (Object.keys(response.newlyavailablesectionhtml).length) {
-                                for (var s in response.newlyavailablesectionhtml) {
-                                    var item = response.newlyavailablesectionhtml[s];
-                                    var number = item.number;
-                                    $('#section-' + number + ' .content > .snap-conditional-tag').remove();
-                                }
-                            }
-
-                            /**
-                             * Update elements with newly available html.
-                             * Elements can either be sections or modules.
-                             *
-                             * @param {object} availableHTML - response json
-                             * @param {string} typeKey - string (either 'section' or 'module')
-                             */
-                            var updateNewlyAvailableHTML = function(availableHTML, typeKey) {
-                                if (!Object.keys(availableHTML).length) {
-                                    // There are no newly available elements which require updating.
-                                    return;
-                                }
-                                for (var i in availableHTML) {
-                                    var item = availableHTML[i];
-                                    var id = item.id ? item.id : item.number;
-                                    var html = item.html;
-                                    var baseSelector = '#' + typeKey + '-' + id;
-                                    if (typeKey === 'module') {
-                                        $(baseSelector).replaceWith(html);
-                                    } else {
-                                        if ($(baseSelector + ' ul.section').length) {
-                                            $(baseSelector + ' ul.section').replaceWith(html);
-                                        } else {
-                                            $(baseSelector + ' nav.section_footer').before(html);
-                                        }
-                                        $(baseSelector + ' > .snap-conditional-tag').replaceWith('');
+            $(document).on( "snap:module_completion_change",
+                function() {
+                    ajax.call([
+                        {
+                            methodname: 'theme_snap_course_completion',
+                            args: {
+                                courseshortname: courseConfig.shortname,
+                                unavailablesections: currentlyUnavailableSections.join(','),
+                                unavailablemods: currentlyUnavailableMods.join(',')
+                            },
+                            done: function(response) {
+                                // Remove availability warnings for sections.
+                                if (Object.keys(response.newlyavailablesectionhtml).length) {
+                                    for (var s in response.newlyavailablesectionhtml) {
+                                        var item = response.newlyavailablesectionhtml[s];
+                                        var number = item.number;
+                                        $('#section-' + number + ' .content > .snap-conditional-tag').remove();
                                     }
                                 }
-                            };
 
-                            // Update newly available sections with released html.
-                            updateNewlyAvailableHTML(response.newlyavailablesectionhtml, 'section');
+                                /**
+                                 * Update elements with newly available html.
+                                 * Elements can either be sections or modules.
+                                 *
+                                 * @param {object} availableHTML - response json
+                                 * @param {string} typeKey - string (either 'section' or 'module')
+                                 */
+                                var updateNewlyAvailableHTML = function(availableHTML, typeKey) {
+                                    if (!Object.keys(availableHTML).length) {
+                                        // There are no newly available elements which require updating.
+                                        return;
+                                    }
+                                    for (var i in availableHTML) {
+                                        var item = availableHTML[i];
+                                        var id = item.id ? item.id : item.number;
+                                        var html = item.html;
+                                        var baseSelector = '#' + typeKey + '-' + id;
+                                        if (typeKey === 'module') {
+                                            $(baseSelector).replaceWith(html);
+                                        } else {
+                                            if ($(baseSelector + ' ul.section').length) {
+                                                $(baseSelector + ' ul.section').replaceWith(html);
+                                            } else {
+                                                $(baseSelector + ' nav.section_footer').before(html);
+                                            }
+                                            $(baseSelector + ' > .snap-conditional-tag').replaceWith('');
+                                        }
+                                    }
+                                };
 
-                            // Update newly available modules with released html.
-                            updateNewlyAvailableHTML(response.newlyavailablemodhtml, 'module');
+                                // Update newly available sections with released html.
+                                updateNewlyAvailableHTML(response.newlyavailablesectionhtml, 'section');
 
-                            // Update TOC.
-                            templates.render('theme_snap/course_toc', response.toc)
-                                .done(function(result) {
-                                    $('#course-toc').replaceWith(result);
-                                });
-               
-                            // Update current state.
-                            currentlyUnavailableSections = response.unavailablesections.split(',').map(Number);
-                            currentlyUnavailableMods = response.unavailablemods.split(',').map(Number);
+                                // Update newly available modules with released html.
+                                updateNewlyAvailableHTML(response.newlyavailablemodhtml, 'module');
 
-                        },
-                        fail: function(response) {
-                            notification.exception(response);
+                                // Update TOC.
+                                templates.render('theme_snap/course_toc', response.toc)
+                                    .done(function(result) {
+                                        $('#course-toc').replaceWith(result);
+                                    });
+
+                                // Update current state.
+                                currentlyUnavailableSections = response.unavailablesections.split(',').map(Number);
+                                currentlyUnavailableMods = response.unavailablemods.split(',').map(Number);
+
+                            },
+                            fail: function(response) {
+                                ajaxNotify.ifErrorShowBestMsg(response);
+                            }
                         }
-                    }
-                ], true, true);
-            }
-        );
-    };
-    return init;
-});
+                    ], true, true);
+                }
+            );
+        };
+        return init;
+    }
+);

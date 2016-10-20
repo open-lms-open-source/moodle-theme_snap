@@ -22,10 +22,9 @@
 /**
  * Course card favoriting.
  */
-define(['jquery', 'core/ajax', 'core/notification', 'theme_snap/model_view', 'core/log'],
-    function($, ajax, notification, mview, log) {
+define(['jquery', 'core/ajax', 'core/notification', 'core/log', 'theme_snap/model_view', 'theme_snap/ajax_notification'],
+    function($, ajax, notification, log, mview, ajaxNotify) {
         return function(cardsHidden) {
-
             log.enableAll(true);
 
             /**
@@ -200,7 +199,7 @@ define(['jquery', 'core/ajax', 'core/notification', 'theme_snap/model_view', 'co
                             },
                             fail: function(response) {
                                 $(button).removeClass('ajaxing');
-                                notification.exception(response);
+                                ajaxNotify.ifErrorShowBestMsg(response);
                             }
                         }
                     ], true, true);
