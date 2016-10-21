@@ -52,6 +52,11 @@ Feature: When the moodle theme is set to Snap, teachers can upload files as reso
     And I upload file "test_mp3_file.mp3" to section 1
     Then ".snap-resource[data-type='text']" "css_element" should exist
     And ".snap-resource[data-type='mp3']" "css_element" should exist
+    # Make sure image uploads do not suffer from annoying prompt for label handler.
+    And I upload file "testgif.gif" to section 1
+    Then I should not see "Add image to course page"
+    And I should not see "Create file resource"
+    And I should see "testgif" in the "#section-1 .snap-image-image .snap-image-title" "css_element"
 
   @javascript
   Scenario: Student cannot upload file.
