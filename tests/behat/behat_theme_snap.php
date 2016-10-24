@@ -1217,4 +1217,37 @@ class behat_theme_snap extends behat_base {
         $session->executeScript('window.close()');
         $session->switchToWindow($mainwindow);
     }
+
+    /**
+     * @Given /^the course format for "(?P<shortname_string>(?:[^"]|\\")*)" is set to "(?P<format_string>(?:[^"]|\\")*)"$/
+     * @param string $shortname
+     * @param string $format
+     */
+    public function the_course_format_is_set_to($shortname, $format) {
+        global $DB;
+        $service = theme_snap\services\course::service();
+        $course = $service->coursebyshortname($shortname, 'id');
+        $DB->set_field('course', 'format', $format, ['id' => intval($course->id)]);
+    }
+
+    /**
+     * @Given /^I am on the course main page for "(?P<shortname_string>(?:[^"]|\\")*)"$/
+     * @param string $shortname
+     */
+    public function i_am_on_course_page($shortname) {
+        $service = theme_snap\services\course::service();
+        $course = $service->coursebyshortname($shortname, 'id');
+        $this->getSession()->visit($this->locate_path('/course/view.php?id='.$course->id));
+    }
+
+    /**
+     * @Given /^I am on the course "(?P<subpage_string>(?:[^"]|\\")*)" page for "(?P<shortname_string>(?:[^"]|\\")*)"$/
+     * @param string $shortname
+     */
+    public function i_am_on_course_subpage($subpage, $shortname) {
+        $service = theme_snap\services\course::service();
+        $course = $service->coursebyshortname($shortname, 'id');
+        file_put_contents('/vagrant/tmp/subpage.txt', var_export($this->locate_path('/course/'.$subpage.'.php?id='.$course->id), true));
+        $this->getSession()->visit($this->locate_path('/course/'.$subpage.'.php?id='.$course->id));
+    }
 }

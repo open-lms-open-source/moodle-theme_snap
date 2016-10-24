@@ -44,6 +44,17 @@ class settings_link implements \renderable {
     public function __construct() {
         global $PAGE, $COURSE;
 
+        // Are we on the main course page?
+        $oncoursepage = strpos($PAGE->pagetype, 'course-view') === 0;
+
+        // For any format other than topics, weeks, fodlerview or singleactivity, always output admin menu on main
+        // course page.
+        $formats = ['topics', 'weeks', 'folderview', 'singleactivity'];
+        if ($oncoursepage && !empty($COURSE->format) && !in_array($COURSE->format, $formats)) {
+            $this->set_admin_menu_instance();
+            return;
+        }
+
         // Page path blacklist for admin menu.
         $adminblockblacklist = ['/user/profile.php'];
         if (in_array(local::current_url_path(), $adminblockblacklist)) {
@@ -68,11 +79,23 @@ class settings_link implements \renderable {
         if (!$PAGE->blocks->is_block_present('settings')) {
             // Throw error if on front page or course page.
             // (There are pages that don't have a settings block so we shouldn't throw an error on those pages).
-            if (strpos($PAGE->pagetype, 'course-view') === 0 || $PAGE->pagetype === 'site-index') {
+            if ($oncoursepage || $PAGE->pagetype === 'site-index') {
                 debugging('Settings block was not found on this page', DEBUG_DEVELOPER);
             }
             return;
         }
+
+        $this->set_admin_menu_instance();
+
+    }
+
+    /**
+     * Set admin menu instance, if required capability satisfied.
+     * 
+     * @throws \coding_exception
+     */
+    private function set_admin_menu_instance() {
+        global $PAGE;
 
         // Core Moodle API appears to be missing a 'get block by name' function.
         // Cycle through all regions and block instances until we find settings.
@@ -83,6 +106,10 @@ class settings_link implements \renderable {
                     break 2;
                 }
             }
+        }
+
+        if (empty($this->instanceid)) {
+            return;
         }
 
         if (!has_capability('moodle/block:view', \context_block::instance($this->instanceid))) {
