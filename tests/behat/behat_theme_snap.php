@@ -1247,7 +1247,6 @@ class behat_theme_snap extends behat_base {
     public function i_am_on_course_subpage($subpage, $shortname) {
         $service = theme_snap\services\course::service();
         $course = $service->coursebyshortname($shortname, 'id');
-        file_put_contents('/vagrant/tmp/subpage.txt', var_export($this->locate_path('/course/'.$subpage.'.php?id='.$course->id), true));
         $this->getSession()->visit($this->locate_path('/course/'.$subpage.'.php?id='.$course->id));
     }
 }
