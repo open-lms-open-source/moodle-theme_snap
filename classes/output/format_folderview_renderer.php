@@ -33,10 +33,7 @@ class format_folderview_renderer extends \format_folderview_renderer {
 
     protected function end_section_list() {
         $output = html_writer::end_tag('ul');
-        $output .= "<section id='coursetools' class='clearfix' tabindex='-1'>";
-        $output .= shared::coursetools_svg_icons();
-        $output .= shared::appendices();
-        $output .= "</section>";
+        $output .= shared::course_tools(true);
         return $output;
     }
 
