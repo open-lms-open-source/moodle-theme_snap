@@ -30,20 +30,20 @@ Feature: When the moodle theme is set to Snap, and global search is enabled, use
 
   @javascript
   Scenario: Non-logged in user sees search interface.
-  Given I am on site homepage
-  Then ".snap-login-button" "css_element" should exist
-  Then ".search-input-form" "css_element" should exist
-  And the following config values are set as admin:
-      | enableglobalsearch | |
-  And I reload the page
-  Then ".search-input-form" "css_element" should not exist
+    Given I am on site homepage
+    Then ".snap-login-button" "css_element" should exist
+    Then ".search-input-form" "css_element" should exist
+    And the following config values are set as admin:
+        | enableglobalsearch | |
+    And I reload the page
+    Then ".search-input-form" "css_element" should not exist
 
   @javascript
   Scenario: Logged in user sees search interface.
-  Given I log in as "admin" (theme_snap)
-  Then ".search-input-form" "css_element" should exist
-  And the following config values are set as admin:
-      | enableglobalsearch | |
-  And I reload the page
-  Then ".search-input-form" "css_element" should not exist
+    Given I log in as "admin" (theme_snap)
+    Then ".search-input-form" "css_element" should exist
+    And the following config values are set as admin:
+        | enableglobalsearch | |
+    And I reload the page
+    Then ".search-input-form" "css_element" should not exist
 
