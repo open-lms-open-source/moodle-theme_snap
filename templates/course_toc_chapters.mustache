@@ -2,7 +2,7 @@
     {{#chapters}}
     <li{{#iscurrent}} class="current"{{/iscurrent}}>
         {{#outputlink}}
-            <a class="chapter-title" href="{{url}}">{{title}}</a>
+            <a class="chapter-title" href="{{url}}">{{{title}}}</a>
         {{/outputlink}}
         {{^outputlink}}
             <span class="chapter-title">{{title}}</span>

@@ -286,6 +286,28 @@ class theme_snap_services_course_test extends \advanced_testcase {
         $this->assertTrue($chapters->chapters[0] instanceof theme_snap\renderables\course_toc_chapter);
     }
 
+    /**
+     * @group toc
+     */
+    public function test_course_toc_chapters_escaped_chars() {
+        $generator = $this->getDataGenerator();
+
+        $generator->create_course([
+            'shortname' => 'testcourse',
+            'format' => 'topics',
+            'numsections' => 10
+        ], ['createsections' => true]);
+        $chapters = $this->courseservice->course_toc_chapters('testcourse');
+        $chapters->chapters[1]->title = 'This & that';
+        global $OUTPUT;
+        print_object($chapters->chapters);
+        $toc_html = $OUTPUT->render_from_template('theme_snap/course_toc_chapters',
+            (object) ['chapters' => $chapters->chapters, 'listlarge' => (count($chapters) > 9),
+            'outputlink' => true, 'url' => 'I hate you']);
+        print_object($toc_html);
+
+    }
+
     public function test_highlight_section() {
         $generator = $this->getDataGenerator();
 
