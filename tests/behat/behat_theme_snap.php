@@ -1046,7 +1046,7 @@ class behat_theme_snap extends behat_base {
 
         $dg = new behat_data_generators();
 
-        $tablemode = method_exists($data, 'getTable');
+        $tablemode = method_exists($data, 'getTable'); // Behat 3 uses getTable;
         $table = $tablemode ? $data->getTable() : $data->getRows();
 
         foreach ($table as $rkey => $row) {
@@ -1228,6 +1228,25 @@ class behat_theme_snap extends behat_base {
         $service = theme_snap\services\course::service();
         $course = $service->coursebyshortname($shortname, 'id');
         $DB->set_field('course', 'format', $format, ['id' => intval($course->id)]);
+    }
+
+    /**
+     * @Given /^the course format for "(?P<shortname_string>(?:[^"]|\\")*)" is set to "(?P<format_string>(?:[^"]|\\")*)" with the following settings:$/
+     * @param string $shortname
+     * @param string $format
+     */
+    public function the_course_format_is_set_to_and_configured($shortname, $format, TableNode $data) {
+        global $DB;
+        $service = theme_snap\services\course::service();
+        $course = $service->coursebyshortname($shortname, 'id');
+        $DB->set_field('course', 'format', $format, ['id' => intval($course->id)]);
+        $row = $data->getRowsHash();
+        if (isset($row['sectionid'])) {
+            $row['sectionid'] = 0;
+        }
+        $row['courseid'] = $course->id;
+        $row['format'] = $format;
+        $DB->insert_record('course_format_options', $row);
     }
 
     /**

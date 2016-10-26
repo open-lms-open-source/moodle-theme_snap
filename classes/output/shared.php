@@ -712,7 +712,7 @@ class shared extends \renderer_base {
             // Would be nice if there was something more direct to test.
             if (preg_match('/^mod-.*-view$/', $PAGE->pagetype)) {
                 $showtools = true;
-            } else if ($PAGE->cm->modname === 'hsuforum') {
+            } else if ($PAGE->cm && $PAGE->cm->modname === 'hsuforum') {
                 $mod = $DB->get_record('hsuforum', ['id' => $PAGE->cm->instance]);
                 $showtools = $mod->type === 'single' && $PAGE->pagetype === 'mod-hsuforum-discuss';
             }

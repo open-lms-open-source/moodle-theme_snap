@@ -39,4 +39,51 @@ Feature: When the moodle theme is set to Snap, a course tools section is availab
       | student1 | C1     | student        |
 
   @javascript
-  Scenario: Course tools is available for supported formats.
+  Scenario: Course tools link does not show for unsupported formats.
+    Given the course format for "C1" is set to "social"
+    When I log in as "student1"
+    And I am on the course main page for "C1"
+    Then "a[href=\"#coursetools\"]" "css_element" should not exist
+
+  @javascript
+  Scenario Outline: Course tools link functions for supported formats.
+    Given the course format for "C1" is set to "<format>"
+    When I log in as "student1"
+    And I am on the course main page for "C1"
+    And I click on "a[href=\"#coursetools\"]" "css_element"
+    Then I should see "Course Tools" in the "#coursetools" "css_element"
+    Examples:
+      | format     |
+      | topics     |
+      | weeks      |
+
+  @javascript
+  Scenario: Course tools show automatically for single activity format.
+    Given the course format for "C1" is set to "singleactivity" with the following settings:
+      | name      | activitytype |
+      | value     | forum        |
+    And the following "activities" exist:
+      | activity | course | idnumber | name            | intro           | section |
+      | forum    | C1     | forum1   | Test forum      | Test forum      | 1       |
+    When I log in as "student1"
+    And I am on the course main page for "C1"
+    # Note we have to call this step twice because for some reason it doesn't automatically go to the module page the
+    # first time - that's a core issue though.
+    And I am on the course main page for "C1"
+    Then I should see "Course Tools" in the "#coursetools" "css_element"
+
+  @javascript
+  Scenario: Course tools show automatically for single activity format, specifically for hsuforum.
+    Given I am using Joule
+    And the course format for "C1" is set to "singleactivity" with the following settings:
+      | name      | activitytype |
+      | value     | hsuforum        |
+    And the following "activities" exist:
+      | activity    | course | idnumber | name          | intro           | section |
+      | hsuforum    | C1     | forum1   | Test hsuforum | Test hsuforum   | 1       |
+    When I log in as "student1"
+    And I am on the course main page for "C1"
+    # Note we have to call this step twice because for some reason it doesn't automatically go to the module page the
+    # first time - that's a core issue though.
+    And I am on the course main page for "C1"
+    Then I should see "Course Tools" in the "#coursetools" "css_element"
