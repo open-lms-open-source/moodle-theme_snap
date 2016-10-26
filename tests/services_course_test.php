@@ -299,13 +299,13 @@ class theme_snap_services_course_test extends \advanced_testcase {
         ], ['createsections' => true]);
         $chapters = $this->courseservice->course_toc_chapters('testcourse');
         $chapters->chapters[1]->title = 'This & that';
-        global $OUTPUT;
-        print_object($chapters->chapters);
+        global $OUTPUT;        
         $toc_html = $OUTPUT->render_from_template('theme_snap/course_toc_chapters',
             (object) ['chapters' => $chapters->chapters, 'listlarge' => (count($chapters) > 9),
             'outputlink' => true, 'url' => 'I hate you']);
-        print_object($toc_html);
-
+        $pattern = '/>(.*)<\/a>/';
+        preg_match_all($pattern, $toc_html, $matches);
+        print_object($matches);                
     }
 
     public function test_highlight_section() {
