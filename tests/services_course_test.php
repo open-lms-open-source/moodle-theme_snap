@@ -286,26 +286,34 @@ class theme_snap_services_course_test extends \advanced_testcase {
         $this->assertTrue($chapters->chapters[0] instanceof theme_snap\renderables\course_toc_chapter);
     }
 
-    /**
-     * @group toc
-     */
     public function test_course_toc_chapters_escaped_chars() {
+        global $OUTPUT;
+
+        $titles = [
+            "This & that", "This 'and' that", 'This "and" that',
+            "This < that", "This > that"];
         $generator = $this->getDataGenerator();
 
         $generator->create_course([
             'shortname' => 'testcourse',
             'format' => 'topics',
-            'numsections' => 10
+            'numsections' => count($titles) - 1
         ], ['createsections' => true]);
+
         $chapters = $this->courseservice->course_toc_chapters('testcourse');
-        $chapters->chapters[1]->title = 'This & that';
-        global $OUTPUT;        
-        $toc_html = $OUTPUT->render_from_template('theme_snap/course_toc_chapters',
+
+        for ($x = 0;  $x < count($titles); $x++) {
+            $chapters->chapters[$x]->title = $titles[$x];
+        }
+
+        $tochtml = $OUTPUT->render_from_template('theme_snap/course_toc_chapters',
             (object) ['chapters' => $chapters->chapters, 'listlarge' => (count($chapters) > 9),
-            'outputlink' => true, 'url' => 'I hate you']);
+                'outputlink' => true, 'url' => 'I hate you']);
         $pattern = '/>(.*)<\/a>/';
-        preg_match_all($pattern, $toc_html, $matches);
-        print_object($matches);                
+        preg_match_all($pattern, $tochtml, $matches);
+        for ($x = 0;  $x < count($titles); $x++) {
+            $this->assertEquals($titles[$x], $matches[1][$x]);
+        }
     }
 
     public function test_highlight_section() {
