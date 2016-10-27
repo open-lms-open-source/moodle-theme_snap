@@ -52,9 +52,9 @@ Feature: When the moodle theme is set to Snap, a course tools section is availab
     And I click on "a[href=\"#coursetools\"]" "css_element"
     Then I should see "Course Tools" in the "#coursetools" "css_element"
     Examples:
-      | format     |
-      | topics     |
-      | weeks      |
+      | format |
+      | topics |
+      | weeks  |
 
   @javascript
   Scenario: Course tools show automatically for single activity format.
@@ -72,17 +72,21 @@ Feature: When the moodle theme is set to Snap, a course tools section is availab
     Then I should see "Course Tools" in the "#coursetools" "css_element"
 
   @javascript
-  Scenario: Course tools show automatically for single activity format, specifically for hsuforum.
+  Scenario Outline: Course tools show automatically for single activity format set to hsuforum of types general / single.
     Given I am using Joule
     And the course format for "C1" is set to "singleactivity" with the following settings:
       | name      | activitytype |
       | value     | hsuforum        |
     And the following "activities" exist:
-      | activity    | course | idnumber | name          | intro           | section |
-      | hsuforum    | C1     | forum1   | Test hsuforum | Test hsuforum   | 1       |
+      | activity    | course | idnumber | name          | intro           | section | type   |
+      | hsuforum    | C1     | forum1   | Test hsuforum | Test hsuforum   | 1       | <type> |
     When I log in as "student1"
     And I am on the course main page for "C1"
     # Note we have to call this step twice because for some reason it doesn't automatically go to the module page the
     # first time - that's a core issue though.
     And I am on the course main page for "C1"
     Then I should see "Course Tools" in the "#coursetools" "css_element"
+    Examples:
+      | type    |
+      | general |
+      | single  |
