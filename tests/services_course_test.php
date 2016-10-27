@@ -286,33 +286,41 @@ class theme_snap_services_course_test extends \advanced_testcase {
         $this->assertTrue($chapters->chapters[0] instanceof theme_snap\renderables\course_toc_chapter);
     }
 
-    public function test_course_toc_chapters_escaped_chars() {
-        global $OUTPUT;
 
-        $titles = [
-            "This & that", "This 'and' that", 'This "and" that',
-            "This < that", "This > that"];
+    /**
+     * @group toc
+     */
+    public function test_course_toc_chapters_escaped_chars() {
+        global $OUTPUT, $DB;
+
+        $titles = [ "This & that", "This < that", "This > that", "This & & that"];
         $generator = $this->getDataGenerator();
 
-        $generator->create_course([
+        $course = $generator->create_course([
             'shortname' => 'testcourse',
             'format' => 'topics',
             'numsections' => count($titles) - 1
         ], ['createsections' => true]);
 
-        $chapters = $this->courseservice->course_toc_chapters('testcourse');
+        // Get section names for course.
+        $coursesections = $DB->get_records('course_sections', array('course' => $course->id));
 
-        for ($x = 0;  $x < count($titles); $x++) {
-            $chapters->chapters[$x]->title = $titles[$x];
+        // Modify section names.
+        $t = 0;
+        foreach ($coursesections as $section) {
+            $section->name = $titles[$t];
+            $t++;
+            $DB->update_record('course_sections', $section);
         }
 
+        $chapters = $this->courseservice->course_toc_chapters('testcourse');
+
         $tochtml = $OUTPUT->render_from_template('theme_snap/course_toc_chapters',
-            (object) ['chapters' => $chapters->chapters, 'listlarge' => (count($chapters) > 9),
-                'outputlink' => true, 'url' => 'I hate you']);
+            (object) ['chapters' => $chapters->chapters, 'listlarge' => (count($chapters) > 9)]);
         $pattern = '/>(.*)<\/a>/';
         preg_match_all($pattern, $tochtml, $matches);
         for ($x = 0;  $x < count($titles); $x++) {
-            $this->assertEquals($titles[$x], $matches[1][$x]);
+            $this->assertEquals(htmlspecialchars($titles[$x]), $matches[1][$x]);
         }
     }
 
