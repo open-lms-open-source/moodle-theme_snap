@@ -285,11 +285,7 @@ class theme_snap_services_course_test extends \advanced_testcase {
         $this->assertCount(3, $chapters->chapters);
         $this->assertTrue($chapters->chapters[0] instanceof theme_snap\renderables\course_toc_chapter);
     }
-
-
-    /**
-     * @group toc
-     */
+    
     public function test_course_toc_chapters_escaped_chars() {
         global $OUTPUT, $DB;
 
