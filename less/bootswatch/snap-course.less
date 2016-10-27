@@ -120,43 +120,68 @@ section#region-main
     height: 100%;
 }
 
-#coursetools-list {
-    .clearfix();
-    
-    a {
-        display: block;
 
-        .svg-icon {
-            width: 2em;
-            height: 2em;
-            display: inline-block;
-            vertical-align: middle;
-            margin-right: 4%;
-        }
-    }
-}
 
-@media screen and (min-width: @screen-md) {
+
+
+
     #coursetools {
-        margin: 0 -10%;
         clear: both;
+        // margin: 0 -6em;
     }
 
     .format-singleactivity #coursetools {
         margin: 0;
     }
 
-    #coursetools-list {
-        padding: 1em;
 
-        a {
-            width: 50%;
-            float: left;
-            padding: 0.3em;
-            font-size: 1.1em;
+#coursetools {
+    // TODO - spacing on coursetools.
+    /*
+    margin: 0 -12%;
+    padding: 0 4%;
+    */
+}
+
+#coursetools-list {
+    .clearfix();
+    
+    a {
+        width: 32%;
+        margin: 0.5%;
+        float: left;
+        padding: 0.5em;
+        font-size: 1em;
+        text-align: center;
+        border: 1px solid #eee;
+        border-radius: 4px;
+        
+        .snap-participant-icons,
+        img.svg-icon {
+            display: block !important;
+            width: 100% !important;
+            margin: 0.3em auto;
+            .clearfix();
+        }
+        
+        .snap-cover-icon {
+            .svg-icon();
+            border-radius: 100%;
+            display: block;
+            margin: 0.3em auto;
+        }
+        
+        .snap-participant-icons {
+            
+            img {
+                .svg-icon();
+                margin: 0 0.5%;
+                display: inline-block;
+            }
         }
     }
 }
+
 
 // -------------------------
 // Add numbers to sections
