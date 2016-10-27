@@ -5989,7 +5989,7 @@ ul.events-new + ul.events-underway {
 }
 #dateselector-calendar-panel .yui3-calendar-header-label,
 #dateselector-calendar-panel .yui3-calendar-day,
-#dateselector-calendar-panel .yui3-calendar-previousmonth-day,
+#dateselector-calendar-panel .yui3-calendar-prevmonth-day,
 #dateselector-calendar-panel .yui3-calendar-nextmonth-day,
 #dateselector-calendar-panel .yui3-calendar-weekday {
   font-family: "Roboto", "Fira Sans", "Segoe UI", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -5998,12 +5998,12 @@ ul.events-new + ul.events-underway {
   text-align: center;
   font-weight: normal;
 }
-#dateselector-calendar-panel .yui3-calendar-previousmonth-day,
+#dateselector-calendar-panel .yui3-calendar-prevmonth-day,
 #dateselector-calendar-panel .yui3-calendar-nextmonth-day,
 #dateselector-calendar-panel .yui3-calendar-weekday {
   font-weight: 100;
 }
-#dateselector-calendar-panel .yui3-calendar-previousmonth-day,
+#dateselector-calendar-panel .yui3-calendar-prevmonth-day,
 #dateselector-calendar-panel .yui3-calendar-nextmonth-day {
   color: #999;
 }
