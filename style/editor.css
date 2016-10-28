@@ -4684,26 +4684,12 @@ input[type="reset"]:focus {
 .btn-group > button + button {
   margin-left: 1em;
 }
-.snap-modchooser {
-  clear: both;
-  margin: 3em 0;
-  padding: 0.5em;
-  display: block;
-}
-.snap-modchooser a {
-  display: block;
-  width: 100%;
-  text-align: center;
-}
-.snap-modchooser a:hover {
-  color: #fff;
-  text-decoration: none;
-}
 #page-site-index .section-modchooser-link {
   clear: both;
   margin: 3em 0;
   padding: 0.5em;
   display: block;
+  border-color: white;
 }
 #page-site-index .section-modchooser-link img {
   display: none;
@@ -8227,15 +8213,40 @@ li.section:focus {
 }
 .snap-dropzone {
   text-align: center;
-  padding: 1em 4%;
-  margin: 1em 0;
-  border: 3px dashed #dadada;
 }
 .snap-dropzone .snap-dropzone-label {
+  display: block;
   cursor: pointer;
-  background: transparent url("[[pix:resource|icon]]") 0 50% no-repeat;
-  padding-left: 2em;
-  background-size: 1.5em 1.5em;
+  background: transparent url("[[pix:resource|icon]]") 50% 1em no-repeat;
+  background-size: 2rem 2rem;
+  padding: 3em 0 1em 0;
+  border: 3px dashed #eee;
+  border-radius: 4px;
+}
+.snap-dropzone .snap-dropzone-label:hover,
+.snap-dropzone .snap-dropzone-label:focus {
+  border-color: #dadada;
+}
+.section-modchooser-link {
+  display: block;
+  text-align: center;
+  padding: 1em 0;
+  border: 3px solid #eee;
+}
+.section-modchooser-link:hover,
+.section-modchooser-link:focus {
+  border-color: #dadada;
+}
+.section-modchooser-link a {
+  display: block;
+}
+.section-modchooser-link,
+.snap-dropzone {
+  margin-top: 1em;
+}
+/* Landing page does not have renderer, so markup is different. */
+#page-site-index .section-modchooser-link {
+  border-color: white;
 }
 .snap-course-listening .snap-section-editing {
   visibility: visible;
