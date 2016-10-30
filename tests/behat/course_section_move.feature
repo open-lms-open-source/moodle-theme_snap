@@ -48,21 +48,21 @@ Feature: When the moodle theme is set to Snap, teachers can move course sections
     And I follow "Topic 1"
     And I follow "Untitled Topic"
     And I set the following fields to these values:
-      | name | My topic |
+      | name | My & < > Topic |
     And I press "Save changes"
-    And I follow "Move \"My topic\""
-    Then I should see "Moving \"My topic\"" in the "#snap-move-message" "css_element"
+    And I follow "Move \"My &amp;amp; &amp;lt; &amp;gt; Topic\""
+    Then I should see "Moving \"My & < > Topic\"" in the "#snap-move-message" "css_element"
     When I follow "Topic 4"
-    And I follow "Place section \"My topic\" before section \"Topic 4\""
-    Then I should see "My topic" in the "#section-3" "css_element"
+    And I follow "Place section \"My & < > Topic\" before section \"Topic 4\""
+    Then I should see "My & < > Topic" in the "#section-3" "css_element"
     # Check that navigation is also updated.
     # Note that "4th" refers to section-3 as section-0 is the "introduction" section in the TOC.
     When I click on the "4th" link in the TOC
-    Then I should see "My topic" in the "#section-3 .sectionname" "css_element"
+    Then I should see "My & < > Topic" in the "#section-3 .sectionname" "css_element"
     Then the previous navigation for section "3" is for "Topic 2" linking to "#section-2"
     And the next navigation for section "3" is for "Topic 4" linking to "#section-4"
-    And the previous navigation for section "4" is for "My topic" linking to "#section-3"
-    And the next navigation for section "2" is for "My topic" linking to "#section-3"
+    And the previous navigation for section "4" is for "My &amp; &lt; &gt; Topic" linking to "#section-3"
+    And the next navigation for section "2" is for "My &amp; &lt; &gt; Topic" linking to "#section-3"
 
   @javascript
   Scenario: In read mode, student cannot move sections.
