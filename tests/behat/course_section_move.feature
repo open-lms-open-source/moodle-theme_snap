@@ -50,7 +50,7 @@ Feature: When the moodle theme is set to Snap, teachers can move course sections
     And I set the following fields to these values:
       | name | My & < > Topic |
     And I press "Save changes"
-    And I follow "Move \"My &amp;amp; &amp;lt; &amp;gt; Topic\""
+    And I follow "Move \"My & < > Topic\""
     Then I should see "Moving \"My & < > Topic\"" in the "#snap-move-message" "css_element"
     When I follow "Topic 4"
     And I follow "Place section \"My & < > Topic\" before section \"Topic 4\""
