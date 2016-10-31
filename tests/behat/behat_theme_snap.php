@@ -1099,11 +1099,10 @@ class behat_theme_snap extends behat_base {
         $baseselector = '#section-' . $section . ' nav.section_footer a.'.$type.'_section';
         $titleselector = $baseselector.' span';
         $node = $this->find('css', $titleselector);
-        $title = $node->getText();
         $title = $node->getHtml();
         // Title case version of type.
         $ttype = ucfirst($type);
-        $expectedtitle = '<span class="nav_guide">' . $ttype . ' section</span><br>'.$linktitle;
+        $expectedtitle = '<span class="nav_guide">' . $ttype . ' section</span><br>'.htmlentities($linktitle);
         if (strtolower($title) !== strtolower($expectedtitle)) {
             $msg = $ttype.' title does not match expected "' . $expectedtitle . '"' . ' V "' . $title .
                     '" - selector = "'.$titleselector.'"';

@@ -61,8 +61,8 @@ Feature: When the moodle theme is set to Snap, teachers can move course sections
     Then I should see "My & < > Topic" in the "#section-3 .sectionname" "css_element"
     Then the previous navigation for section "3" is for "Topic 2" linking to "#section-2"
     And the next navigation for section "3" is for "Topic 4" linking to "#section-4"
-    And the previous navigation for section "4" is for "My &amp; &lt; &gt; Topic" linking to "#section-3"
-    And the next navigation for section "2" is for "My &amp; &lt; &gt; Topic" linking to "#section-3"
+    And the previous navigation for section "4" is for "My & < > Topic" linking to "#section-3"
+    And the next navigation for section "2" is for "My & < > Topic" linking to "#section-3"
 
   @javascript
   Scenario: In read mode, student cannot move sections.
