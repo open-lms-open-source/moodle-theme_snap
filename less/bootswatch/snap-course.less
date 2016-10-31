@@ -116,31 +116,8 @@ section#region-main
 // -------------------------
 // Special section in snap for course tools.
 // -------------------------
-#coursetools-logo {
-    height: 100%;
-}
-
-
-
-
-
-
-    #coursetools {
-        clear: both;
-        // margin: 0 -6em;
-    }
-
-    .format-singleactivity #coursetools {
-        margin: 0;
-    }
-
-
 #coursetools {
-    // TODO - spacing on coursetools.
-    /*
-    margin: 0 -12%;
-    padding: 0 4%;
-    */
+    .clearfix();
 }
 
 #coursetools-list {
@@ -159,18 +136,16 @@ section#region-main
         .snap-participant-icons,
         img.svg-icon {
             display: block !important;
-            width: 100% !important;
             margin: 0.3em auto;
             .clearfix();
         }
         
+        /* Cover image used as icon. */
         .snap-cover-icon {
-            .svg-icon();
             border-radius: 100%;
-            display: block;
-            margin: 0.3em auto;
         }
         
+        /* User images as icons. */
         .snap-participant-icons {
             
             img {
@@ -178,6 +153,15 @@ section#region-main
                 margin: 0 0.5%;
                 display: inline-block;
             }
+        }
+    }
+}
+
+/* Small screen course tools */
+@media screen and (max-width: @screen-xs-min) {
+    #coursetools-list {
+        a {
+            width: 49%;
         }
     }
 }

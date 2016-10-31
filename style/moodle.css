@@ -21517,20 +21517,21 @@ section#region-main
 .dndupload-over .snap-dropzone {
   background-color: #fafafa;
 }
-#coursetools-logo {
-  height: 100%;
+#coursetools:before,
+#coursetools:after {
+  content: " ";
+  display: table;
 }
-#coursetools {
+#coursetools:after {
   clear: both;
 }
-.format-singleactivity #coursetools {
-  margin: 0;
+#coursetools:before,
+#coursetools:after {
+  content: " ";
+  display: table;
 }
-#coursetools {
-  /*
-    margin: 0 -12%;
-    padding: 0 4%;
-    */
+#coursetools:after {
+  clear: both;
 }
 #coursetools-list:before,
 #coursetools-list:after {
@@ -21557,11 +21558,12 @@ section#region-main
   text-align: center;
   border: 1px solid #eee;
   border-radius: 4px;
+  /* Cover image used as icon. */
+  /* User images as icons. */
 }
 #coursetools-list a .snap-participant-icons,
 #coursetools-list a img.svg-icon {
   display: block !important;
-  width: 100% !important;
   margin: 0.3em auto;
 }
 #coursetools-list a .snap-participant-icons:before,
@@ -21587,13 +21589,7 @@ section#region-main
   clear: both;
 }
 #coursetools-list a .snap-cover-icon {
-  width: 2rem;
-  height: 2rem;
-  margin: 0 0.3rem;
-  vertical-align: middle;
   border-radius: 100%;
-  display: block;
-  margin: 0.3em auto;
 }
 #coursetools-list a .snap-participant-icons img {
   width: 2rem;
@@ -21602,6 +21598,12 @@ section#region-main
   vertical-align: middle;
   margin: 0 0.5%;
   display: inline-block;
+}
+/* Small screen course tools */
+@media screen and (max-width: 480px) {
+  #coursetools-list a {
+    width: 49%;
+  }
 }
 .topics,
 .weeks {

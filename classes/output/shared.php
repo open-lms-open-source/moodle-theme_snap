@@ -501,7 +501,7 @@ class shared extends \renderer_base {
             if (!empty($coverimageurl)) {
                 $iconurl = $coverimageurl;
             }
-            $settingsicon = '<img src="'.$iconurl.'" class="snap-cover-icon" alt="" role="presentation">';
+            $settingsicon = '<img src="'.$iconurl.'" class="snap-cover-icon svg-icon" alt="" role="presentation">';
 
             $links[] = array(
                 'link' => 'course/edit.php?id='.$COURSE->id,
@@ -678,7 +678,9 @@ class shared extends \renderer_base {
 
         // Output course tools section.
         $coursetools = get_string('coursetools', 'theme_snap');
-        $o = '<h2>'.$coursetools.'</h2>';
+        $iconurl = $OUTPUT->pix_url('course_dashboard', 'theme');
+        $coursetoolsicon = '<img src="'.$iconurl.'" class="svg-icon" alt="" role="presentation">';
+        $o = '<h2>'.$coursetoolsicon.$coursetools.'</h2>';
         $o .= $enrollink.'<div id="coursetools-list">'.
             self::render_appendices($links).'</div><hr>'.$editblocks;
 
