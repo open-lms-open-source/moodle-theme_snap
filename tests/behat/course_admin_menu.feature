@@ -73,11 +73,7 @@ Feature: When the moodle theme is set to Snap, students do not see the course ad
     | student1 | weeks          | not exist  |
     | student1 | singleactivity | not exist  |
     | student1 | social         | not exist  |
-    | teacher1 | topics         | not exist  |
-    | teacher1 | weeks          | not exist  |
-    | teacher1 | singleactivity | not exist  |
-    | teacher1 | social         | not exist  |
-    | admin    | topics         | exist      |
-    | admin    | weeks          | exist      |
-    | admin    | singleactivity | exist      |
-    | admin    | social         | exist      |
+    | teacher1 | topics         | exist      |
+    | teacher1 | weeks          | exist      |
+    | teacher1 | singleactivity | exist      |
+    | teacher1 | social         | exist      |
