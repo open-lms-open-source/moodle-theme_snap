@@ -377,10 +377,7 @@ trait format_section_trait {
 
         $output = html_writer::end_tag('ul');
         $output .= $this->change_num_sections($COURSE);
-        $output .= "<section id='coursetools' class='clearfix'>";
-        $output .= shared::coursetools_svg_icons();
-        $output .= shared::appendices();
-        $output .= "</section>";
+        $output .= shared::course_tools(true);
         return $output;
     }
 

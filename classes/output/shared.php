@@ -693,5 +693,38 @@ class shared extends \renderer_base {
         return $o;
     }
 
+    /**
+     * Course tools.
+     *
+     * @param bool $forceshow - force the tools section to be shown.
+     * @return string
+     */
+    public static function course_tools($forceshow = false) {
+        global $PAGE, $DB;
 
+        $output = '';
+
+        $showtools = $forceshow;
+
+        if (!$showtools && stripos($PAGE->bodyclasses, 'format-singleactivity') !== false ) {
+            // Display course tools in single activity mode, but only on main page.
+            // Current test for main page is based on the pagetype matching a regex.
+            // Would be nice if there was something more direct to test.
+            if (preg_match('/^mod-.*-view$/', $PAGE->pagetype)) {
+                $showtools = true;
+            } else if ($PAGE->cm && $PAGE->cm->modname === 'hsuforum') {
+                $mod = $DB->get_record('hsuforum', ['id' => $PAGE->cm->instance]);
+                $showtools = $mod->type === 'single' && $PAGE->pagetype === 'mod-hsuforum-discuss';
+            }
+        }
+
+        if ($showtools) {
+            $output = '<section id="coursetools" class="clearfix" tabindex="-1">';
+            $output .= self::coursetools_svg_icons();
+            $output .= self::appendices();
+            $output .= '</section>';
+        }
+
+        return $output;
+    }
 }

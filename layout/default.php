@@ -115,19 +115,14 @@ if ($PAGE->pagetype == 'site-index') {
 echo $OUTPUT->course_content_footer();
 
 if (stripos($PAGE->bodyclasses, 'format-singleactivity') !== false ) {
-    // Display course tools in single activity mode, but only on main page.
-    // Current test for main page is based on the pagetype matching a regex.
-    // Would be nice if there was something more direct to test.
-    if (preg_match('/^mod-.*-view$/', $PAGE->pagetype)) {
-        echo "<section id='coursetools' class='clearfix' tabindex='-1'>";
-        echo \theme_snap\output\shared::coursetools_svg_icons();
-        echo \theme_snap\output\shared::appendices();
-        echo "</section>";
+    // Shared renderer is only loaded if required at this point.
+    $output = \theme_snap\output\shared::course_tools();
+    if (!empty($output)) {
+        echo $output;
     }
 }
 
 ?>
-
 
 </section>
 
