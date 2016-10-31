@@ -22142,7 +22142,8 @@ body.format-flexpage .singlebutton {
 }
 section li.snap-resource.snap-mime-document,
 section li.snap-resource.snap-mime-writer,
-section li.snap-resource.snap-mime-oth {
+section li.snap-resource.snap-mime-oth,
+section li.snap-resource.snap-mime-text {
   border-top-color: #03A9F4;
   background-image: url([[pix:core|/f/document]]);
 }
