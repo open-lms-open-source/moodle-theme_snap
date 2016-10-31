@@ -17582,6 +17582,22 @@ img.spacer,
   padding: 0;
   margin: 0 auto;
 }
+.section.img-text:before,
+.section.img-text:after {
+  content: " ";
+  display: table;
+}
+.section.img-text:after {
+  clear: both;
+}
+.section.img-text:before,
+.section.img-text:after {
+  content: " ";
+  display: table;
+}
+.section.img-text:after {
+  clear: both;
+}
 table.boxwidthnormal,
 table.boxwidthwide {
   width: 100%;
