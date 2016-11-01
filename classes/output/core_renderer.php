@@ -1233,7 +1233,8 @@ HTML;
 
         $classes[] = 'device-type-'.$PAGE->devicetypeinuse;
 
-        if (isset($SESSION->justloggedin)) {
+        $forcepasschange = get_user_preferences('auth_forcepasswordchange');
+        if (isset($SESSION->justloggedin) && empty($forcepasschange)) {
             $openfixyafterlogin = !empty($PAGE->theme->settings->personalmenulogintoggle);
             $onfrontpage = ($PAGE->pagetype === 'site-index');
             $onuserdashboard = ($PAGE->pagetype === 'my-index');

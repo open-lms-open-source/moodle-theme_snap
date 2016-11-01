@@ -93,6 +93,11 @@ class behat_theme_snap extends behat_base {
      * @param bool $andkeepmenuopen
      */
     public function i_log_in_with_snap_as($username, $andkeepmenuopen = false) {
+        global $DB;
+        $user = $DB->get_record('user', ['username' => $username]);
+        if (empty($user)) {
+            throw new coding_exception('Invalid username '.$username);
+        }
 
         $session = $this->getSession();
 
@@ -115,7 +120,8 @@ class behat_theme_snap extends behat_base {
         $form->i_set_the_field_to(get_string('password'), $this->escape($username));
         $form->press_button(get_string('login'));
 
-        if (!$andkeepmenuopen) {
+        $forcepasschange = get_user_preferences('auth_forcepasswordchange', null, $user);
+        if (!$andkeepmenuopen && empty($forcepasschange)) {
             $showfixyonlogin = get_config('theme_snap', 'personalmenulogintoggle');
             if ($showfixyonlogin) {
                 $general->i_click_on('#fixy-close', 'css_element');
@@ -1267,5 +1273,18 @@ class behat_theme_snap extends behat_base {
         $service = theme_snap\services\course::service();
         $course = $service->coursebyshortname($shortname, 'id');
         $this->getSession()->visit($this->locate_path('/course/'.$subpage.'.php?id='.$course->id));
+    }
+
+    /**
+     * @Given /^force password change is assigned to user "(?P<username_string>(?:[^"]|\\")*)"$/
+     * @param string $username
+     */
+    public function force_password_change_is_assigned_to_user($username) {
+        global $DB;
+        $user = $DB->get_record('user', ['username' => $username]);
+        if (empty($user)) {
+            throw new coding_exception('Invalid username '.$username);
+        }
+        set_user_preference('auth_forcepasswordchange', 1, $user);
     }
 }

@@ -720,13 +720,21 @@ define(['jquery', 'theme_snap/bootstrap', 'core/log', 'theme_snap/headroom', 'th
         };
 
         /**
-         * Initialise.
+         * AMD return object.
          */
         return {
-            snapInit: function(courseConfig, pageHasCourseContent, siteMaxBytes) {
+            /**
+             * Snap initialise function.
+             * @param {object} courseConfig
+             * @param {bool} pageHasCourseContent
+             * @param {int} siteMaxBytes
+             * @param {bool} forcePassChange
+             */
+            snapInit: function(courseConfig, pageHasCourseContent, siteMaxBytes, forcePassChange) {
 
                 // Set up.
                 M.cfg.context = courseConfig.contextid;
+                M.snapTheme = {forcePassChange: forcePassChange};
 
                 // Course related AMD modules (note, site page can technically have course content too).
                 if (pageHasCourseContent) {

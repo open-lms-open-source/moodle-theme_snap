@@ -60,6 +60,14 @@ define(['core/notification', 'core/ajax'],
 
                 if (response.error || response.errorcode) {
 
+                    if (M.snapTheme.forcePassChange) {
+                        // When a force password change is in effect it breaks the theme_snap_loginstatus method.
+                        // Send user to page for changing password:
+                        window.location = M.cfg.wwwroot+'/login/change_password.php';
+                        staticLoginErrorShown = true; // Not really, but we only want this redirect to happen once.
+                        return;
+                    }
+
                     /**
                      * Error notification function for non logged out issues.
                      * @param response
@@ -74,7 +82,9 @@ define(['core/notification', 'core/ajax'],
 
                     // Ajax call login status function to see if we are logged in or not.
                     failAction = failAction ? failAction : '';
-                    var args = {failedactionmsg: failAction};
+                    var args = {
+                        failedactionmsg: failAction
+                    };
 
                     ajax.call([
                         {
