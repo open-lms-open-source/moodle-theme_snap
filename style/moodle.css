@@ -20612,7 +20612,8 @@ fieldset[disabled] .gradingform_rubric.editor .addcriterion input.active {
   margin: 0 auto 1em;
 }
 .gradetreebox,
-.gradingtable .no-overflow {
+.gradingtable .no-overflow,
+#page-mod-quiz-report.pagelayout-report .no-overflow {
   overflow: auto;
 }
 .path-grade-report-customgrader .gradeparent .right_scroller table#user-grades th,
