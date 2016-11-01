@@ -61,8 +61,8 @@ Feature: When the moodle theme is set to Snap, students do not see the course ad
     | teacher1 | social         | exist      |
 
   @javascript
-  Scenario Outline: When not on main course page, user can / cannot access course admin menu. Students / Teachers cannot
-  access menu for any format. Admin can access menu for all course formats.
+  Scenario Outline: When not on main course page, user can / cannot access course admin menu. Students cannot
+  access menu for any format. Teacher can access menu for all course formats.
     Given the course format for "C1" is set to "<format>"
     And I log in as "<user>" (theme_snap)
     And I am on the course "resources" page for "C1"
