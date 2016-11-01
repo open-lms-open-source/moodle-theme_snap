@@ -8119,6 +8119,7 @@ section#region-main
 @media screen and (max-width: 480px) {
   #coursetools-list a {
     width: 49%;
+    height: 78px;
   }
 }
 .topics,
@@ -9978,7 +9979,7 @@ fieldset[disabled] a#changenumsections .reduce-sections {
   display: block;
   line-height: 2.5em;
   padding-right: 2.75em;
-  background-image: url("[[pix:theme|gradebook]]");
+  background-image: url("[[pix:theme|tick]]");
   background-repeat: no-repeat;
   background-position: 100% 50%;
   background-size: 2.5em 2.5em;

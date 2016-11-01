@@ -614,7 +614,7 @@ class core_renderer extends toc_renderer {
         $o = "<h2>$recentfeedback</h2>";
         $o .= '<div id="snap-personal-menu-graded"></div>';
         $url = new moodle_url('/grade/report/mygrades.php');
-        $o .= $this->column_header_icon_link('viewmyfeedback', 'gradebook', $url);
+        $o .= $this->column_header_icon_link('viewmyfeedback', 'tick', $url);
         return $o;
     }
 
