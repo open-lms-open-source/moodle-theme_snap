@@ -46,12 +46,14 @@ section#region-main
     #page-mast .singlebutton {
         display: none;
     }
+
     // SLamour Nov 2015 - editing only shows blocks.
     &.editing.pagelayout-course {
         #course-toc,
         #region-main {
             display: none;
         }
+
         #page-mast .singlebutton {
             display: block;
         }
@@ -80,6 +82,7 @@ section#region-main
     #region-main {
         max-width: 43.5em;
     }
+
     #moodle-frontpage-elements,
     #moodle-blocks {
         display: none;
@@ -121,7 +124,7 @@ section#region-main
 
 #coursetools-list {
     .clearfix();
-    
+
     a {
         width: 32%;
         margin: 0.5%;
@@ -131,19 +134,19 @@ section#region-main
         text-align: center;
         border: 1px solid #eee;
         border-radius: 4px;
-        
+
         .snap-participant-icons,
         img.svg-icon {
             display: block !important;
             margin: 0.3em auto;
             .clearfix();
         }
-        
+
         /* Cover image used as icon. */
         .snap-cover-icon {
             border-radius: 100%;
         }
-        
+
         /* User images as icons. */
         .snap-participant-icons {
             img {
@@ -273,6 +276,7 @@ li.section:focus {
     display: block;
     text-align: left;
     margin-top: -1em;
+
     a {
         display: inline-block;
         border-radius: 100%;
@@ -294,22 +298,28 @@ li.section:focus {
         background-repeat: no-repeat;
         background-size: 70%;
     }
+
     .snap-move:after {
         background-image: url([[pix:theme|move]]);
         background-size: 100%;
     }
+
     .snap-visibility.snap-show:after {
         background-image: url([[pix:core|i/show]]);
     }
+
     .snap-visibility.snap-hide:after {
         background-image: url([[pix:core|i/hide]]);
     }
+
     .snap-delete:after {
         background-image: url([[pix:core|t/delete]]);
     }
+
     .snap-highlight.snap-marker:after {
         background-image: url([[pix:core|i/marker]]);
     }
+
     .snap-highlight.snap-marked:after {
         background-image: url([[pix:core|i/marked]]);
     }
@@ -326,7 +336,7 @@ li.section:focus {
 
 .snap-dropzone {
     text-align: center;
-    
+
     .snap-dropzone-label {
         display: block;
         cursor: pointer;
@@ -353,7 +363,7 @@ li.section:focus {
     &:focus {
         border-color: @gray-lighter;
     }
-    
+
     a {
         display: block;
     }
@@ -374,6 +384,7 @@ li.section:focus {
     .snap-section-editing {
         visibility: visible;
     }
+
     .snap-dropzone {
         visibility: visible;
     }
@@ -460,10 +471,6 @@ body.format-flexpage .singlebutton {
     display: none;
 }
 
-
-
-
-
 /* MODS & RESOURCES IN COURSE */
 
 // -------------------------
@@ -523,7 +530,7 @@ body.format-flexpage .singlebutton {
     background-color: #fff;
     border: 1px solid @gray-lighter;
     border-top-width: 0.3em;
-    
+
     // For editors add space for editong tools.
     &.snap-can-edit {
         padding-bottom: 2em !important;
@@ -536,12 +543,12 @@ body.format-flexpage .singlebutton {
         position: static;
         padding: 0.5em 1em;
     }
-    
+
     .snap-assettype {
         font-size: small;
         text-transform: uppercase;
     }
-    
+
     .activityinstance {
         padding: 0;
         height: auto;
@@ -563,6 +570,7 @@ body.format-flexpage .singlebutton {
             margin: 0;
             padding: 0.5em 0;
             .alakazam();
+
             // The link itself.
             a {
                 &:hover,
@@ -588,7 +596,7 @@ body.format-flexpage .singlebutton {
         height: auto;
         background-position: 95% 25%;
         background-size: 60px;
-        
+
         .snap-asset-actions {
             width: 250px;
             .snap-asset-move,
@@ -600,6 +608,7 @@ body.format-flexpage .singlebutton {
             }
         }
     }
+
     .section .snap-asset-actions ul.dropdown-menu {
         left: -125px; // magic number so dropdown does not go off the edge of the screen on small screen.
     }
@@ -774,17 +783,17 @@ body.format-flexpage .singlebutton {
         .clearfix();
         cursor: pointer;
     }
-    
+
     .activityinstance .activityicon {
         height: 1.5em;
         width: 1.5em;
         margin-top: 0;
     }
-    
+
     .snap-asset-link {
         font-size: 1em;
     }
-    
+
     .contentafterlink {
         font-size: small;
     }
@@ -798,14 +807,14 @@ body.format-flexpage .singlebutton {
         margin: 1em auto;
         height: auto;
         background-image: none !important;
-        
+
         .activityinstance {
             width: 75%;
             .activityicon {
                 display: inline;
             }
         }
-        
+
         .snap-asset-actions {
             width: 250px;
             .snap-asset-move,
@@ -817,6 +826,7 @@ body.format-flexpage .singlebutton {
             }
         }
     }
+
     .section .snap-asset-actions ul.dropdown-menu {
         left: -125px; // magic number so dropdown does not go off the edge of the screen on small screen.
     }
@@ -832,13 +842,13 @@ section li.snap-resource {
         border-top-color: #03A9F4;
         background-image: url([[pix:core|/f/document]]);
     }
-    
+
     &.snap-mime-powerpoint,
     &.snap-mime-impress {
         border-top-color: #ff7300;
         background-image: url([[pix:core|/f/powerpoint]]);
     }
-    
+
     &.snap-mime-spreadsheet,
     &.snap-mime-chart,
     &.snap-mime-database,
@@ -854,6 +864,7 @@ section li.snap-resource {
         border-top-color: #F44336;
         background-image: url([[pix:core|/f/pdf]]);
     }
+
     &.snap-mime-flash {
         background-image: url([[pix:core|/f/flash]]);
     }
@@ -930,7 +941,7 @@ section li.snap-resource {
 .section li.snap-activity {
     margin: 1em 1%;
     padding-bottom: 1em;
-    
+
     &.modtype_forum,
     &.modtype_chat,
     &.modtype_hsuforum {
@@ -961,7 +972,7 @@ section li.snap-resource {
     &.modtype_collaborate {
         border-top-color: #c800a1;
     }
-    
+
     &.modtype_folder {
         border-top-color: #fed859;
     }
@@ -1014,11 +1025,11 @@ section li.snap-resource {
     text-align: right;
     font-size: small;
     margin-bottom: 0.5em;
-    
+
     a {
         padding: 0.5em;
         font-weight: 500;
-        
+
         + a {
             border-left: 1px solid;
         }
@@ -1041,18 +1052,18 @@ section li.snap-resource {
     background-color: #eee;
     margin: 0.5em 0;
     padding: 0.5em;
-    
+
     .availabilityinfo {
         display: inline;
         margin-left: 0.5em;
     }
-    
+
     ul {
         margin: 0 !important; // SHAME - lists in lists in lists in lists....
         list-style: none;
         padding: 0;
     }
-    
+
     strong {
         font-weight: normal;
     }
@@ -1080,16 +1091,16 @@ section li.snap-resource {
 // Assets with draft tag.
 li.draft {
     border-top-color: #eee !important;
-    
+
     .activityinstance {
         opacity: 0.75;
     }
-    
+
     // Options to hide/show in the dropdown.
     .editing_hide {
         display: none;
     }
-    
+
     .editing_show {
         display: block;
     }
@@ -1098,11 +1109,11 @@ li.draft {
 // Sections which are draft.
 .section.hidden {
     opacity: 1 !important;
-    
+
     .content {
         opacity: 0.75;
     }
-    
+
     // Draft assets inside hidden section....
     li.draft .activityinstance {
             opacity: 1;
@@ -1129,6 +1140,7 @@ form.togglecompletion input {
 
 form.togglecompletion input {
     .alakazam();
+
     &:hover, 
     &:focus {
         transform: scale(1.1);
@@ -1155,8 +1167,7 @@ form.togglecompletion input {
     bottom: 0;
     left: 0;
     width: 250px;
-    
-    
+
     & > a,
     .snap-edit-more-dropdown,
     .snap-asset-move {
@@ -1165,7 +1176,7 @@ form.togglecompletion input {
         text-align: center;
         width: 33%;
         cursor: pointer;
-        
+
         &:hover,
         &:focus {
             .svg-icon {
@@ -1174,7 +1185,7 @@ form.togglecompletion input {
             }
         }
     }
-    
+
     .svg-icon {
         border-radius: 100%;
         border: 1px solid white;
@@ -1183,7 +1194,7 @@ form.togglecompletion input {
         background-color: white;
         .alakazam();
     }
-    
+
     // When checkbox for moving is checked
     input[type=checkbox]:checked + .svg-icon {
         background-color: @brand-success !important;
@@ -1194,6 +1205,7 @@ form.togglecompletion input {
         border: 0;
         padding: 0;
     }
+
     .dropdown-menu a {
         font-weight: inherit;
         font-size: 0.8em;
@@ -1222,6 +1234,7 @@ form.togglecompletion input {
             text-align: center;
             width: 33%;
         }
+
         .dropdown-menu {
             left: -165px;
         }
@@ -1272,9 +1285,6 @@ form.togglecompletion input {
         }
     }
 }
-
-
-
 
 /* add bg colour for actions when editing */
 .editing .actions {
@@ -1549,21 +1559,21 @@ span.editinstructions {
 // -------------------------
 @keyframes fadeup {
    0%{
-     opacity:0.1;
+       opacity:0.1;
    }
    100%{
-     opacity:1;
+       opacity:1;
    }
 }
 .path-course-view {
-  li.state-visible,
-  #page-header,
-  #region-main {
-    animation-name: fadeup;
-    animation-iteration-count: 1;
-    animation-timing-function: linear;
-    animation-duration: 0.68s;
-  }
+    li.state-visible,
+    #page-header,
+    #region-main {
+        animation-name: fadeup;
+        animation-iteration-count: 1;
+        animation-timing-function: linear;
+        animation-duration: 0.68s;
+    }
 }
 
 @keyframes movefail {
@@ -1630,37 +1640,38 @@ span.editinstructions {
 // Moving sections.
 // -------------------------
 #course-toc .section-moving {
-  border-left: 0.3em solid;
-  padding-left: 0.3em;
+    border-left: 0.3em solid;
+    padding-left: 0.3em;
 }
 
 // Hide section drop on moving section, the following section and when not moving.
 .section-drop,
 .section-moving a.section-drop,
 .section-moving + .section .section-drop {
-  display: none;
+    display: none;
 }
 
 // Section moving drop zone.
 .section-drop {
-  height: 125px;
-  margin: 1em 0;
-  clear: both;
-  border: 2px dashed @gray-lighter;
-  font-family: @font-family-base;
-  text-align: center;
-  display:none;
+    height: 125px;
+    margin: 1em 0;
+    clear: both;
+    border: 2px dashed @gray-lighter;
+    font-family: @font-family-base;
+    text-align: center;
+    display:none;
 }
 
 .section-drop,
 .snap-move-note {
-  background: transparent url("[[pix:theme|move_here]]") no-repeat 50% 80%;
-  background-size: 70px 70px;
+    background: transparent url("[[pix:theme|move_here]]") no-repeat 50% 80%;
+    background-size: 70px 70px;
 }
 
 .snap-move-section {
     .section-drop {
         display: block;
+
         &:hover {
           border-color: @state-success-text;
         }
@@ -1681,6 +1692,7 @@ span.editinstructions {
     max-height: 0;
     overflow: hidden;
     .alakazam();
+
     .snap-move-message-title{
         text-transform: capitalize;
         color: #fff !important;
@@ -1692,6 +1704,7 @@ span.editinstructions {
         margin-left: 4%;
         width: 68.2%;
     }
+
     .spinner-three-quarters {
         margin-left: 1em;
         width: 1em;
@@ -1705,6 +1718,7 @@ span.editinstructions {
     color: #fff !important;
     opacity:0.8;
     visibility: hidden;
+
     &:hover {
         color: #fff;
         opacity: 1;
@@ -1724,20 +1738,24 @@ span.editinstructions {
     .snap-dropzone {
       display:none !important;
     }
+
     &.snap-move-section {
         .snap-asset-actions,
         .snap-asset .togglecompletion {
             display: none !important;
         }
     }
+
     #snap-move-message {
       padding:0.5em 0;
       max-height: 200px;
       z-index: 2;
     }
+
     .snap-move-cancel {
       visibility: visible;
     }
+
     .actions {
         display: none;
     }
@@ -1773,34 +1791,37 @@ span.editinstructions {
 // Show when moving
 // Asset dropzones.
 .snap-move-asset {
-  .snap-asset:not(.asset-moving) {
-      border: 2px dashed @gray-light;
-  }
-  .snap-resource:not(.asset-moving) {
-      border: 2px dashed white;
-  }
-  .snap-asset:not(.asset-moving) .snap-move-note {
-      position: absolute;
-      top: 0;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      background-color: rgba(255,255,255,0.7);
-      cursor: pointer;
-      text-align: center;
-      padding: 1em;
-      display: block;
-  }
-  .snap-drop.asset-drop {
-      display: block;
-      clear: both;
-      border: 2px dashed @gray-light;
-      font-size: 2em;
-      font-color: @gray;
-      font-family: @font-family-base;
-      text-align: center;
-      cursor: pointer;
-  }
+      .snap-asset:not(.asset-moving) {
+          border: 2px dashed @gray-light;
+      }
+
+      .snap-resource:not(.asset-moving) {
+          border: 2px dashed white;
+      }
+
+      .snap-asset:not(.asset-moving) .snap-move-note {
+          position: absolute;
+          top: 0;
+          bottom: 0;
+          left: 0;
+          right: 0;
+          background-color: rgba(255,255,255,0.7);
+          cursor: pointer;
+          text-align: center;
+          padding: 1em;
+          display: block;
+      }
+
+      .snap-drop.asset-drop {
+          display: block;
+          clear: both;
+          border: 2px dashed @gray-light;
+          font-size: 2em;
+          font-color: @gray;
+          font-family: @font-family-base;
+          text-align: center;
+          cursor: pointer;
+      }
 }
 
 #snap-light-box {
@@ -1829,6 +1850,7 @@ span.editinstructions {
     .icon-close:before {
         background: transparent url([[pix:theme|close_x]]) no-repeat 50% 50%;
     }
+
     .resourcecontent audio {
        margin: 1em auto;
     }
