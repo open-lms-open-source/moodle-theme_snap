@@ -7530,11 +7530,6 @@ body.hascontinuecancel.path-site #page {
 .nav-justified + .nav-justified {
   margin-top: 1em;
 }
-/* NB */
-/* PLEASE DON'T JUST DUMP CSS ANYWHERE BELOW HERE */
-/* LOOK UP AND YOU'LL FIND THE CSS PRETTY MUCH FOLLOWS THE DOM STRUCTURE */
-/* ADD YOUR CSS IN THE SAME PLACE AS IT IS IN THE DOM */
-/** SHAME **/
 @keyframes slideInDown {
   0% {
     opacity: 0;
@@ -7546,10 +7541,6 @@ body.hascontinuecancel.path-site #page {
 }
 .slideInDown {
   animation-name: slideInDown;
-}
-.snap_spinner:after {
-  content: url("[[pix:theme|loading-bubbles]]");
-  padding-left: 0.25em;
 }
 /**
 spinner, from
