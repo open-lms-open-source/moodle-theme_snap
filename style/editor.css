@@ -7530,11 +7530,6 @@ body.hascontinuecancel.path-site #page {
 .nav-justified + .nav-justified {
   margin-top: 1em;
 }
-/* NB */
-/* PLEASE DON'T JUST DUMP CSS ANYWHERE BELOW HERE */
-/* LOOK UP AND YOU'LL FIND THE CSS PRETTY MUCH FOLLOWS THE DOM STRUCTURE */
-/* ADD YOUR CSS IN THE SAME PLACE AS IT IS IN THE DOM */
-/** SHAME **/
 @keyframes slideInDown {
   0% {
     opacity: 0;
@@ -7546,10 +7541,6 @@ body.hascontinuecancel.path-site #page {
 }
 .slideInDown {
   animation-name: slideInDown;
-}
-.snap_spinner:after {
-  content: url("[[pix:theme|loading-bubbles]]");
-  padding-left: 0.25em;
 }
 /**
 spinner, from
@@ -8033,8 +8024,21 @@ section#region-main
 .dndupload-over .snap-dropzone {
   background-color: #fafafa;
 }
-#coursetools-logo {
-  height: 100%;
+#coursetools:before,
+#coursetools:after {
+  content: " ";
+  display: table;
+}
+#coursetools:after {
+  clear: both;
+}
+#coursetools:before,
+#coursetools:after {
+  content: " ";
+  display: table;
+}
+#coursetools:after {
+  clear: both;
 }
 #coursetools-list:before,
 #coursetools-list:after {
@@ -8053,31 +8057,60 @@ section#region-main
   clear: both;
 }
 #coursetools-list a {
-  display: block;
+  width: 32%;
+  margin: 0.5%;
+  float: left;
+  padding: 0.5em;
+  font-size: 1em;
+  text-align: center;
+  border: 1px solid #eee;
+  border-radius: 4px;
+  /* Cover image used as icon. */
+  /* User images as icons. */
 }
-#coursetools-list a .svg-icon {
-  width: 2em;
-  height: 2em;
-  display: inline-block;
+#coursetools-list a .snap-participant-icons,
+#coursetools-list a img.svg-icon {
+  display: block !important;
+  margin: 0.3em auto;
+}
+#coursetools-list a .snap-participant-icons:before,
+#coursetools-list a img.svg-icon:before,
+#coursetools-list a .snap-participant-icons:after,
+#coursetools-list a img.svg-icon:after {
+  content: " ";
+  display: table;
+}
+#coursetools-list a .snap-participant-icons:after,
+#coursetools-list a img.svg-icon:after {
+  clear: both;
+}
+#coursetools-list a .snap-participant-icons:before,
+#coursetools-list a img.svg-icon:before,
+#coursetools-list a .snap-participant-icons:after,
+#coursetools-list a img.svg-icon:after {
+  content: " ";
+  display: table;
+}
+#coursetools-list a .snap-participant-icons:after,
+#coursetools-list a img.svg-icon:after {
+  clear: both;
+}
+#coursetools-list a .snap-cover-icon {
+  border-radius: 100%;
+}
+#coursetools-list a .snap-participant-icons img {
+  width: 2rem;
+  height: 2rem;
+  margin: 0 0.3rem;
   vertical-align: middle;
-  margin-right: 4%;
+  margin: 0 0.5%;
+  display: inline-block;
 }
-@media screen and (min-width: 992px) {
-  #coursetools {
-    margin: 0 -10%;
-    clear: both;
-  }
-  .format-singleactivity #coursetools {
-    margin: 0;
-  }
-  #coursetools-list {
-    padding: 1em;
-  }
+/* Small screen course tools */
+@media screen and (max-width: 480px) {
   #coursetools-list a {
-    width: 50%;
-    float: left;
-    padding: 0.3em;
-    font-size: 1.1em;
+    width: 49%;
+    height: 78px;
   }
 }
 .topics,
@@ -9938,7 +9971,7 @@ fieldset[disabled] a#changenumsections .reduce-sections {
   display: block;
   line-height: 2.5em;
   padding-right: 2.75em;
-  background-image: url("[[pix:theme|gradebook]]");
+  background-image: url("[[pix:theme|tick]]");
   background-repeat: no-repeat;
   background-position: 100% 50%;
   background-size: 2.5em 2.5em;

@@ -421,8 +421,7 @@ class shared extends \renderer_base {
      * array(
      *      array(
      *          'link'=>[url in a string]
-     *          'title'=>[mandatory - anyold string title],
-     *          'capability'=>[if you want to limit who can see link],
+     *          'title'=>[mandatory - anyold string title]
      *      )
      * )
      * note - couldn't use html_writer::alist function as it does not support sub lists
@@ -434,58 +433,17 @@ class shared extends \renderer_base {
     public static function render_appendices(array $links) {
         global $CFG, $COURSE;
 
-        $coursecontext = context_course::instance($COURSE->id);
-
         $o = '';
         foreach ($links as $item) {
-
             $item = (object) $item;
-
-            // Check if user has appropriate access to see this item.
-            if (!empty($item->capability)) {
-                if (strpos($item->capability, '!') !== 0) {
-                    if (!has_capability($item->capability, $coursecontext)) {
-                        continue;
-                    }
-                } else {
-                    if (has_capability(substr($item->capability, 1), $coursecontext)) {
-                        continue;
-                    }
-                }
-            }
-
             // Make sure item link is the correct type of url.
             if (stripos($item->link, 'http') !== 0) {
                 $item->link = $CFG->wwwroot.'/'.$item->link;
             }
-
-            // Generate linkhtml and add it to treestr.
-            $linkhtml = '';
-            if (!empty($item->link)) {
-                $linkhtml = html_writer::link($item->link, $item->title);
-            } else {
-                $linkhtml = "<span>$item->title</span>";
-            }
-            $o .= $linkhtml;
+            // Generate linkhtml.
+            $o .= html_writer::link($item->link, $item->title);
         }
         return $o;
-    }
-    /**
-     * Course tools svg icons
-     *
-     * @return string
-     */
-    public static function coursetools_svg_icons() {
-        return self::inline_svg('coursetools-icons.svg');
-    }
-
-    /**
-     * Get inline svg icon.
-     * @param $filename
-     * @return string
-     */
-    public static function inline_svg($filename) {
-        return file_get_contents(dirname(dirname(dirname(__DIR__))).'/snap/pix/'.$filename);
     }
 
     /**
@@ -501,137 +459,9 @@ class shared extends \renderer_base {
         $links = array();
         $localplugins = core_component::get_plugin_list('local');
         $coursecontext = context_course::instance($COURSE->id);
-
-        // Course settings.
-        $settingsicon = '<svg viewBox="0 0 100 100" class="svg-icon">
-        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#coursetools-settings"></use></svg>';
-        $links[] = array(
-            'link' => 'course/edit.php?id='.$COURSE->id,
-            'title' => $settingsicon.get_string('editcoursesettings', 'theme_snap'),
-            'capability' => 'moodle/course:update' // Capability required to view this item.
-        );
-
-        // Participants.
-        $participanticon = '<svg viewBox="0 0 100 100" class="svg-icon">
-        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#coursetools-participants"></use></svg>';
-        $links[] = array(
-            'link' => 'user/index.php?id='.$COURSE->id.'&mode=1',
-            'title' => $participanticon.get_string('participants'),
-            'capability' => 'moodle/course:viewparticipants' // Capability required to view this item.
-        );
-        // Gradebook.
-        $gradebookicon = '<svg viewBox="0 0 100 100" class="svg-icon">
-        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#coursetools-gradbook"></use></svg>';
-
-        if (self::gradebook_accessible($coursecontext)) {
-            // Gradebook.
-            $links[] = array(
-                'link' => 'grade/index.php?id='.$COURSE->id,
-                'title' => $gradebookicon.get_string('gradebook', 'grades')
-            );
-        }
-
-        // Only show if joule grader is installed.
-        if (array_key_exists('joulegrader', $localplugins)) {
-            if (has_capability('local/joulegrader:grade', $coursecontext)
-                || has_capability('local/joulegrader:view', $coursecontext)
-            ) {
-                $links[] = array(
-                    'link' => 'local/joulegrader/view.php?courseid='.$COURSE->id,
-                    'title' => $gradebookicon.get_string('pluginname', 'local_joulegrader'),
-                );
-            }
-        }
-
-        // Only show Norton grader if installed.
-        if (array_key_exists('nortongrader', $localplugins)) {
-            if (has_capability('local/nortongrader:grade', $coursecontext)
-                || has_capability('local/nortongrader:view', $coursecontext)
-            ) {
-                $links[] = array(
-                    'link' => $CFG->wwwroot.'/local/nortongrader/view.php?courseid='.$COURSE->id,
-                    'title' => $gradebookicon.get_string('pluginname', 'local_nortongrader')
-                );
-            }
-        }
-
-        // Only show core outcomes if enabled.
-        $outcomesicon = '<svg viewBox="0 0 100 100" class="svg-icon">
-        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#coursetools-outcomes"></use></svg>';
-        if (!empty($CFG->core_outcome_enable) && has_capability('moodle/grade:edit', $coursecontext)) {
-            $links[] = array(
-                'link'  => 'outcome/course.php?contextid='.$coursecontext->id,
-                'title' => $outcomesicon.get_string('outcomes', 'outcome'),
-            );
-        } else if (!empty($CFG->core_outcome_enable) && !is_guest($coursecontext)) {
-            $outcomesets = new \core_outcome\model\outcome_set_repository();
-            if ($outcomesets->course_has_any_outcome_sets($COURSE->id)) {
-                $links[] = array(
-                    'link'  => 'outcome/course.php?contextid='.$coursecontext->id.'&action=report_course_user_performance_table',
-                    'title' => $participanticon.get_string('report:course_user_performance_table', 'outcome'),
-                );
-            }
-        }
-
-        $badgesicon = '<svg viewBox="0 0 100 100" class="svg-icon">
-            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#coursetools-badges"></use></svg>';
-        // Course badges.
-        if (!empty($CFG->enablebadges) && !empty($CFG->badges_allowcoursebadges)) {
-            // Match capabilities used by badges subsystem.
-            $studentcaps = array(
-                'moodle/badges:earnbadge',
-                'moodle/badges:viewbadges',
-            );
-            $teachercaps = array(
-                'moodle/badges:viewawarded',
-                'moodle/badges:createbadge',
-                'moodle/badges:awardbadge',
-                'moodle/badges:configuremessages',
-                'moodle/badges:configuredetails',
-                'moodle/badges:deletebadge',
-            );
-            // Show link for students.
-            if (!is_guest($coursecontext) && has_any_capability($studentcaps, $coursecontext)) {
-                $links[] = array(
-                    'link' => 'badges/view.php?type=' . BADGE_TYPE_COURSE . '&id=' . $COURSE->id,
-                    'title' => $badgesicon.get_string('badgesview', 'badges'),
-                    'capability' => '!moodle/course:update' // You must not have this capability to view this item.
-                );
-            }
-            // Show link for trachers / admin staff.
-            if (!is_guest($coursecontext) && has_any_capability($teachercaps, $coursecontext)) {
-                $links[] = array(
-                    'link' => 'badges/index.php?type=' . BADGE_TYPE_COURSE . '&id=' . $COURSE->id,
-                    'title' => $badgesicon.get_string('managebadges', 'badges'),
-                );
-            }
-        }
-
-        // Only show Joule reports if installed.
-        $reportsicon = '<svg viewBox="0 0 100 100" class="svg-icon">
-            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#coursetools-reports"></use></svg>';
-        if (array_key_exists('reports', core_component::get_plugin_list('block'))) {
-            if (has_capability('block/reports:viewown', $coursecontext, null, false)
-                || has_capability('block/reports:view', $coursecontext)
-            ) {
-                $links[] = array(
-                    'link' => $CFG->wwwroot.'/blocks/reports/view.php?action=dashboard&courseid='.$COURSE->id,
-                    'title' => $reportsicon.get_string('joulereports', 'block_reports')
-                );
-            }
-        }
-
-        // Personalised Learning Designer.
-        $pldicon = '<svg viewBox="0 0 100 100" class="svg-icon">
-        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#coursetools-pld"></use></svg>';
-        $pldname = get_string('pld', 'theme_snap');
-        $links[] = array(
-            'link' => 'local/pld/view.php?courseid='.$COURSE->id,
-            'title' => $pldicon.$pldname,
-            'capability' => 'moodle/course:update', // Capability required to view this item.
-        );
-
+        
         // Course enrolment link.
+        $enrollink = '';
         $plugins   = enrol_get_plugins(true);
         $instances = enrol_get_instances($COURSE->id, true);
         $selfenrol = false;
@@ -658,37 +488,192 @@ class shared extends \renderer_base {
             }
         }
         if ($selfenrol) {
-            $enrolicon = '<svg viewBox="0 0 100 100" class="svg-icon">
-            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#coursetools-settings"></use></svg>';
+            $enrollink = '<div class="text-center"><a href="'.$enrolurl.'" class="btn btn-primary">'.$enrolstr.'</a></div><br>';
+        }
+        
+        // Course settings.
+        if (has_capability('moodle/course:update', $coursecontext)) {
+            $iconurl = $OUTPUT->pix_url('gear', 'theme');
+            $coverimageurl = local::course_coverimage_url($COURSE->id);
+            if (!empty($coverimageurl)) {
+                $iconurl = $coverimageurl;
+            }
+            $settingsicon = '<img src="'.$iconurl.'" class="snap-cover-icon svg-icon" alt="" role="presentation">';
+
             $links[] = array(
-                'link' => $enrolurl,
-                'title' => $enrolicon.$enrolstr
+                'link' => 'course/edit.php?id='.$COURSE->id,
+                'title' => $settingsicon.get_string('editcoursesettings', 'theme_snap'),
             );
         }
 
-        // Turn editing on.
-        $iconsrc = $OUTPUT->pix_url('icon', 'label');
-        $editcourseicon = '<img class="svg-icon" alt="" title="" src="'.$iconsrc.'">';
-        $url = new moodle_url('/course/view.php', ['id' => $COURSE->id, 'sesskey' => sesskey()]);
-        if ($PAGE->user_is_editing()) {
-            $url->param('edit', 'off');
-            $editstring = get_string('turneditingoff');
-        } else {
-            $url->param('edit', 'on');
-            $editstring = get_string('editcoursecontent', 'theme_snap');
+        // Norton grader if installed.
+        $iconurl = $OUTPUT->pix_url('joule_grader', 'theme');
+        $gradebookicon = '<img src="'.$iconurl.'" class="svg-icon" alt="" role="presentation">';
+        if (array_key_exists('nortongrader', $localplugins)) {
+            if (has_capability('local/nortongrader:grade', $coursecontext)
+                || has_capability('local/nortongrader:view', $coursecontext)
+            ) {
+                $links[] = array(
+                    'link' => $CFG->wwwroot.'/local/nortongrader/view.php?courseid='.$COURSE->id,
+                    'title' => $gradebookicon.get_string('pluginname', 'local_nortongrader'),
+                );
+            }
         }
-        $links[] = array(
-            'link' => $url,
-            'title' => $editcourseicon.$editstring,
-            'capability' => 'moodle/course:update' // Capability required to view this item.
-        );
+        
+        // Joule grader if installed.
+        if (array_key_exists('joulegrader', $localplugins) && !array_key_exists('nortongrader', $localplugins)) {
+            if (has_capability('local/joulegrader:grade', $coursecontext)
+                || has_capability('local/joulegrader:view', $coursecontext)
+            ) {
+                $links[] = array(
+                    'link' => 'local/joulegrader/view.php?courseid='.$COURSE->id,
+                    'title' => $gradebookicon.get_string('pluginname', 'local_joulegrader'),
+                );
+            }
+        }
+        
+        // Gradebook.
+        if (self::gradebook_accessible($coursecontext)) {
+            $iconurl = $OUTPUT->pix_url('gradebook', 'theme');
+            $gradebookicon = '<img src="'.$iconurl.'" class="svg-icon" alt="" role="presentation">';
+            // Gradebook.
+            $links[] = array(
+                'link' => 'grade/index.php?id='.$COURSE->id,
+                'title' => $gradebookicon.get_string('gradebook', 'grades')
+            );
+        }
 
-        $toolssvg = '<img src="'.$OUTPUT->pix_url('tools', 'theme').'" alt="" />';
-        // Output course tools.
+        // Participants.
+        if (has_capability('moodle/course:viewparticipants', $coursecontext)) {
+            // Get count of course users.
+            $usercount = count_enrolled_users(context_course::instance($COURSE->id), '', 0, true);
+            
+            // Build icon.
+            $participanticons = '';
+            if(!empty($usercount)) {
+                // Get subset of users for icon.
+                $usersubset = get_enrolled_users(context_course::instance($COURSE->id), '', 0, 'u.*', 'picture desc, lastaccess desc', 0, 4, true);
+                foreach ($usersubset as $user) {
+                    $userpicture = new \user_picture($user);
+                    $userpicture->link = false;
+                    $userpicture->size = 100;
+                    $participanticons .= $OUTPUT->render($userpicture);
+                }
+            }
+            else {
+                // Default icon when 0 participants.
+                $iconurl = $OUTPUT->pix_url('u/f1');
+                $participanticons = '<img src="'.$iconurl.'" alt="" role="presentation">'; 
+            }
+            
+            $participanticons = '<div class="snap-participant-icons">'.$participanticons.'</div>';
+            $links[] = array(
+                'link' => 'user/index.php?id='.$COURSE->id.'&mode=1',
+                'title' => $participanticons.$usercount.' '.get_string('participants')
+            );
+        }
+        
+        // Joule reports if installed.
+        if (array_key_exists('reports', core_component::get_plugin_list('block'))) {
+            $iconurl = $OUTPUT->pix_url('joule_reports', 'theme');
+            $reportsicon = '<img src="'.$iconurl.'" class="svg-icon" alt="" role="presentation">';
+            if (has_capability('block/reports:viewown', $coursecontext, null, false)
+                || has_capability('block/reports:view', $coursecontext)
+            ) {
+                $links[] = array(
+                    'link' => $CFG->wwwroot.'/blocks/reports/view.php?action=dashboard&courseid='.$COURSE->id,
+                    'title' => $reportsicon.get_string('joulereports', 'block_reports')
+                );
+            }
+        }
+
+        // Personalised Learning Designer.
+        if (array_key_exists('pld', $localplugins) && has_capability('moodle/course:update', $coursecontext)) {
+            $iconurl = $OUTPUT->pix_url('pld', 'theme');
+            $pldicon = '<img src="'.$iconurl.'" class="svg-icon" alt="" role="presentation">';
+            $pldname = get_string('pld', 'theme_snap');
+            $links[] = array(
+                'link' => 'local/pld/view.php?courseid='.$COURSE->id,
+                'title' => $pldicon.$pldname
+            );
+        }
+
+        // Competencies if enabled.
+        if (get_config('core_competency', 'enabled') && has_capability('moodle/competency:competencyview', $coursecontext)) {
+            $iconurl = $OUTPUT->pix_url('competencies', 'theme');
+            $competenciesicon = '<img src="'.$iconurl.'" class="svg-icon" alt="" role="presentation">';
+            $links[] = array(
+                'link'  => 'admin/tool/lp/coursecompetencies.php?courseid='.$COURSE->id,
+                'title' => $competenciesicon.get_string('competencies', 'core_competency')
+            );
+        }
+
+        // Outcomes if enabled.
+        if(!empty($CFG->core_outcome_enable)) {
+            $iconurl = $OUTPUT->pix_url('outcomes', 'theme');
+            $outcomesicon = '<img src="'.$iconurl.'" class="svg-icon" alt="" role="presentation">';
+            
+            if (has_capability('moodle/grade:edit', $coursecontext)) {
+                $links[] = array(
+                    'link'  => 'outcome/course.php?contextid='.$coursecontext->id,
+                    'title' => $outcomesicon.get_string('outcomes', 'outcome'),
+                );
+            } else if (!is_guest($coursecontext)) {
+                $outcomesets = new \core_outcome\model\outcome_set_repository();
+                if ($outcomesets->course_has_any_outcome_sets($COURSE->id)) {
+                    $links[] = array(
+                        'link'  => 'outcome/course.php?contextid='.$coursecontext->id.'&action=report_course_user_performance_table',
+                        'title' => $outcomesicon.get_string('outcomes', 'outcome'),
+                    );
+                }
+            }
+        }
+
+        // Course badges.
+        if (!empty($CFG->enablebadges) && !empty($CFG->badges_allowcoursebadges)) {
+            // Match capabilities used by badges subsystem.
+            $badgecaps = array(
+                'moodle/badges:earnbadge',
+                'moodle/badges:viewbadges',
+                'moodle/badges:viewawarded',
+                'moodle/badges:createbadge',
+                'moodle/badges:awardbadge',
+                'moodle/badges:configuremessages',
+                'moodle/badges:configuredetails',
+                'moodle/badges:deletebadge',
+            );
+            $canviewbadges = has_any_capability($badgecaps, $coursecontext);
+            if (!is_guest($coursecontext) && $canviewbadges) {
+                $iconurl = $OUTPUT->pix_url('badges', 'theme');
+                $badgesicon = '<img src="'.$iconurl.'" class="svg-icon" alt="" role="presentation">';
+                $links[] = array(
+                    'link' => 'badges/view.php?type=' . BADGE_TYPE_COURSE . '&id=' . $COURSE->id,
+                    'title' => $badgesicon.get_string('badges', 'badges')
+                );
+            }
+        }
+
+         // Edit blocks.
+         $editblocks = '';
+         if (has_capability('moodle/course:update', $coursecontext)) {
+            $url = new moodle_url('/course/view.php', ['id' => $COURSE->id, 'sesskey' => sesskey()]);
+            if ($PAGE->user_is_editing()) {
+                $url->param('edit', 'off');
+                $editstring = get_string('turneditingoff');
+            } else {
+                $url->param('edit', 'on');
+                $editstring = get_string('editcoursecontent', 'theme_snap');
+            }
+            $editblocks = '<div class="text-center"><a href="'.$url.'" class="btn btn-primary">'.$editstring.'</a></div><br>';
+        }
+
+        // Output course tools section.
         $coursetools = get_string('coursetools', 'theme_snap');
-        $o = "<h2>$coursetools</h2>";
-        $o .= "<div class='row'><div class='col-xs-4'>{$toolssvg}</div><div class='col-xs-8'><div id='coursetools-list'>".
-            self::render_appendices($links)."</div></div></div><hr>";
+        $iconurl = $OUTPUT->pix_url('course_dashboard', 'theme');
+        $coursetoolsicon = '<img src="'.$iconurl.'" class="svg-icon" alt="" role="presentation">';
+        $o = '<h2>'.$coursetoolsicon.$coursetools.'</h2>';
+        $o .= $enrollink.'<div id="coursetools-list">'.
+            self::render_appendices($links).'</div><hr>'.$editblocks;
 
         return $o;
     }
@@ -720,7 +705,6 @@ class shared extends \renderer_base {
 
         if ($showtools) {
             $output = '<section id="coursetools" class="clearfix" tabindex="-1">';
-            $output .= self::coursetools_svg_icons();
             $output .= self::appendices();
             $output .= '</section>';
         }

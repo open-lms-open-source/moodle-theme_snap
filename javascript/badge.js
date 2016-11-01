@@ -280,8 +280,6 @@ M.snap_message_badge.populate_messagebody = function(Y, messagenode, url, onsucc
                 if (response.error != undefined) {
                     M.snap_message_badge.responseBestErrorMessage(response.error);
                 } else {
-                    messagenode.one('.message_badge_message_text').removeClass('snap_spinner');
-
                     var contentnode = messagenode.one('.message_badge_message_text');
 
                     // Get rid of read action (its read now!).
