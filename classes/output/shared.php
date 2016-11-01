@@ -456,8 +456,6 @@ class shared extends \renderer_base {
     public static function appendices() {
         global $CFG, $COURSE, $PAGE, $OUTPUT;
 
-        // TODO - see about turning off stuff when not present for students??
-        
         $links = array();
         $localplugins = core_component::get_plugin_list('local');
         $coursecontext = context_course::instance($COURSE->id);
