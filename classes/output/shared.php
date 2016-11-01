@@ -458,7 +458,6 @@ class shared extends \renderer_base {
 
         // TODO - see about turning off stuff when not present for students??
         
-        
         $links = array();
         $localplugins = core_component::get_plugin_list('local');
         $coursecontext = context_course::instance($COURSE->id);
@@ -589,10 +588,7 @@ class shared extends \renderer_base {
                 );
             }
         }
-        
-        
-        
-        
+
         // Personalised Learning Designer.
         if (array_key_exists('pld', $localplugins) && has_capability('moodle/course:update', $coursecontext)) {
             $iconurl = $OUTPUT->pix_url('pld', 'theme');
@@ -603,7 +599,6 @@ class shared extends \renderer_base {
                 'title' => $pldicon.$pldname
             );
         }
-
 
         // Competencies if enabled.
         if (get_config('core_competency', 'enabled') && has_capability('moodle/competency:competencyview', $coursecontext)) {
@@ -659,8 +654,6 @@ class shared extends \renderer_base {
                 );
             }
         }
-
-        
 
          // Edit blocks.
          $editblocks = '';
