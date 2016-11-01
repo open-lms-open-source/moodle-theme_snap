@@ -714,7 +714,6 @@ class shared extends \renderer_base {
 
         if ($showtools) {
             $output = '<section id="coursetools" class="clearfix" tabindex="-1">';
-            $output .= self::coursetools_svg_icons();
             $output .= self::appendices();
             $output .= '</section>';
         }
