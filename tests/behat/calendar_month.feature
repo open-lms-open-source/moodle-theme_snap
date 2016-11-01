@@ -43,7 +43,7 @@ Feature: When a user clicks on next or previous month link in the calendar block
    Then I open the personal menu
     And I follow "Course 1"
    Then I follow "Course Tools"
-    And I follow "Edit course blocks"
+    And I follow "Edit blocks"
    Then I add the "Calendar" block
     And I turn editing mode off
    Then I follow "Course Tools"
@@ -58,7 +58,7 @@ Feature: When a user clicks on next or previous month link in the calendar block
    Then I open the personal menu
     And I follow "Course 1"
    Then I follow "Course Tools"
-    And I follow "Edit course blocks"
+    And I follow "Edit blocks"
    Then I add the "Calendar" block
     And I turn editing mode off
    Then I follow "Course Tools"

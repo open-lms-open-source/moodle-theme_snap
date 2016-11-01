@@ -52,7 +52,7 @@ Feature: When the moodle theme is set to Snap, teachers only see block edit cont
     And ".block_news_items a.toggle-display" "css_element" should not exist
     And I should see "Test assignment1" in the "#section-1" "css_element"
     And I follow "Course Tools"
-    And I follow "Edit course blocks"
+    And I follow "Edit blocks"
     Then course page should be in edit mode
 
     # edit mode persists if course accessed directly via menu
@@ -65,7 +65,7 @@ Feature: When the moodle theme is set to Snap, teachers only see block edit cont
     Given I open the personal menu
     And I follow "Course 2"
     And I follow "Course Tools"
-    Then I should see "Edit course blocks"
+    Then I should see "Edit blocks"
 
   @javascript
   Scenario: If edit mode is on for a course, it should not carry over to site homepage
@@ -73,7 +73,7 @@ Feature: When the moodle theme is set to Snap, teachers only see block edit cont
     And I open the personal menu
     And I follow "Course 1"
     And I follow "Course Tools"
-    And I follow "Edit course blocks"
+    And I follow "Edit blocks"
     When I am on site homepage
     Then I should not see "Change site name"
     Then I should not see "Add a block"
@@ -87,7 +87,7 @@ Feature: When the moodle theme is set to Snap, teachers only see block edit cont
     When I open the personal menu
     And I follow "Course 1"
     And I follow "Course Tools"
-    Then I should see "Edit course blocks"
+    Then I should see "Edit blocks"
 
   @javascript
   Scenario: In edit mode on a folderview course, teacher can see sections whilst editing on.
