@@ -1225,6 +1225,9 @@ class local {
             // Create short summary text - no images, etc..
             $doc = new \DOMDocument();
             libxml_use_internal_errors(true); // Required for HTML5.
+            // DOMDocument is broken out of the box when working with UTF8 chars in HTML. See
+            // http://stackoverflow.com/questions/8218230/php-domdocument-loadhtml-not-encoding-utf-8-correctly
+            // for more information.
             $doc->loadHTML(mb_convert_encoding($page->content, 'HTML-ENTITIES', 'UTF-8'));
             libxml_clear_errors(); // Required for HTML5.
             $imagetags = $doc->getElementsByTagName('img');
@@ -1237,7 +1240,6 @@ class local {
             $noimgtxt = $doc->saveHTML();
             $preview = html_to_text($noimgtxt, 0, false);
             $page->summary = shorten_text($preview, 200);
-
         }
 
         // Process content.
