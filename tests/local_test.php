@@ -1200,13 +1200,15 @@ class theme_snap_local_test extends \advanced_testcase {
 
         $this->resetAfterTest();
 
+        $testtxt = 'Hello world, Καλημέρα κόσμε, コンニチハ';
+
         $generator = $this->getDataGenerator();
         $course = $generator->create_course();
         $pagegen = $generator->get_plugin_generator('mod_page');
         $page = $pagegen->create_instance([
             'course' => $course->id,
             'content' => '<img src="http://fakeurl.local/testimg.png" alt="some alt text" />' .
-                    '<p>Some content text</p>' . str_pad('-', 200)
+                    '<p>'.$testtxt.'</p>' . str_pad('-', 200)
         ]);
         $cm = get_course_and_cm_from_instance($page->id, 'page', $course->id)[1];
         // Remove the intro text from the page record
@@ -1216,10 +1218,10 @@ class theme_snap_local_test extends \advanced_testcase {
         $pagemod = local::get_page_mod($cm);
         
         // Ensure summary contains text.
-        $this->assertContains('Some content text', $pagemod->summary);
+        $this->assertContains($testtxt, $pagemod->summary);
 
         // Ensure summary contains text without tags.
-        $this->assertNotContains('<p>Some content text</p>', $pagemod->summary);
+        $this->assertNotContains('<p>'.$testtxt.'</p>', $pagemod->summary);
         
         // Ensure summary does not contain any images.
         $this->assertNotContains('<img', $pagemod->summary);
@@ -1231,7 +1233,7 @@ class theme_snap_local_test extends \advanced_testcase {
         // If more than one image is added to content, make sure 1st image alt tag is removed and 2nd image alt tag is
         // preserved.
         $page->content = '<img src="http://fakeurl.local/img1.png" alt="image 1" />' .
-            '<img src="http://fakeurl.local/img2.png" alt="image 2" />';
+                         '<img src="http://fakeurl.local/img2.png" alt="image 2" />';
         $DB->update_record('page', $page);
         $pagemod = local::get_page_mod($cm);
         $this->assertNotContains('[image 1]', $pagemod->summary);
