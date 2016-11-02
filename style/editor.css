@@ -9289,6 +9289,9 @@ fieldset[disabled] a#changenumsections .reduce-sections {
 #page-course-recent #region-main td.userpicture img {
   margin-left: 25px;
 }
+#page-course-resources table.mod_index td img {
+  max-width: 2rem;
+}
 @media screen and (max-width: 991px) {
   .userlist table.controls tr td.right {
     text-align: left;
