@@ -61,11 +61,11 @@ Feature: When the moodle theme is set to Snap, students do not see the course ad
     | teacher1 | social         | exist      |
 
   @javascript
-  Scenario Outline: When not on main course page, user can / cannot access course admin menu. Students / Teachers cannot
-  access menu for any format. Admin can access menu for all course formats.
+  Scenario Outline: When not on main course page, user can / cannot access course admin menu. Students cannot
+  access menu for any format. Teacher can access menu for all course formats.
     Given the course format for "C1" is set to "<format>"
     And I log in as "<user>" (theme_snap)
-    And I am on the course "search" page for "C1"
+    And I am on the course "resources" page for "C1"
     Then "#admin-menu-trigger" "css_element" should <existornot>
   Examples:
     | user     | format         | existornot |
@@ -73,11 +73,7 @@ Feature: When the moodle theme is set to Snap, students do not see the course ad
     | student1 | weeks          | not exist  |
     | student1 | singleactivity | not exist  |
     | student1 | social         | not exist  |
-    | teacher1 | topics         | not exist  |
-    | teacher1 | weeks          | not exist  |
-    | teacher1 | singleactivity | not exist  |
-    | teacher1 | social         | not exist  |
-    | admin    | topics         | exist      |
-    | admin    | weeks          | exist      |
-    | admin    | singleactivity | exist      |
-    | admin    | social         | exist      |
+    | teacher1 | topics         | exist      |
+    | teacher1 | weeks          | exist      |
+    | teacher1 | singleactivity | exist      |
+    | teacher1 | social         | exist      |
