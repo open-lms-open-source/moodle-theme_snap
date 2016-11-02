@@ -1225,7 +1225,10 @@ class local {
             // Create short summary text - no images, etc..
             $doc = new \DOMDocument();
             libxml_use_internal_errors(true); // Required for HTML5.
-            $doc->loadHTML($page->content);
+            // DOMDocument is broken out of the box when working with UTF8 chars in HTML. See
+            // http://stackoverflow.com/questions/8218230/php-domdocument-loadhtml-not-encoding-utf-8-correctly
+            // for more information.
+            $doc->loadHTML(mb_convert_encoding($page->content, 'HTML-ENTITIES', 'UTF-8'));
             libxml_clear_errors(); // Required for HTML5.
             $imagetags = $doc->getElementsByTagName('img');
             // Remove first image (note, we only remove the first image as that appears on the course page).
