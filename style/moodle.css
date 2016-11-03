@@ -20564,20 +20564,6 @@ fieldset[disabled] .gradingform_rubric.editor .addcriterion input.active {
   border: none;
   padding: 0 0.5em;
 }
-#page-blocks-conduit-view .mform .fitem .felement.fgroup span {
-  display: inline-block;
-}
-.path-blocks-conduit .widgets {
-  white-space: normal;
-}
-.path-blocks-conduit .widgets input {
-  display: block;
-  margin: 8px 0 0 5px;
-}
-.path-blocks-conduit .widgets a {
-  display: block;
-  margin-top: -1.5em;
-}
 #page-admin-outcome-admin .yui3-moodle-core_outcome-editoutcome-outcome {
   background-position: left .35em;
 }
@@ -24106,6 +24092,27 @@ fieldset[disabled] #id_cancel:focus {
 #page-mod-survey-save div[role="main"] h2 {
   padding-top: 0.5em;
   color: #fff;
+}
+/**
+ * Conduit.
+ */
+#page-blocks-conduit-view .mform .fitem .felement.fgroup span {
+  display: inline-block;
+}
+#page-blocks-conduit-view .mform #fgroup_id_timestarted_grp .felement.fgroup span,
+#page-blocks-conduit-view .mform #fgroup_id_timecompleted_grp .felement.fgroup span {
+  display: block;
+}
+.path-blocks-conduit .widgets {
+  white-space: normal;
+}
+.path-blocks-conduit .widgets input {
+  display: block;
+  margin: 8px 0 0 5px;
+}
+.path-blocks-conduit .widgets a {
+  display: block;
+  margin-top: -1.5em;
 }
 /**
  * Snap user swatch.
