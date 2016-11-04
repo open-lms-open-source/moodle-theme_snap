@@ -121,12 +121,11 @@ Feature: When the moodle theme is set to Snap, ajax failures due to log outs / e
     Then I should see "You are currently logged out"
 
     @javascript
-    Scenario: User account is created with force password change on login enabled, AJAX errors cause a redirect to the
-      force login page.
+    Scenario: User account is created with force password change on login enabled, personal menu shows a warning when
+      opened with a link to change the users password.
       Given force password change is assigned to user "teacher"
       When I log in as "teacher" (theme_snap)
       Then I should see "You must change your password to proceed."
-      # Opening the personal menu should trigger an AJAX error, this should redirect us back to the force password
-      # change page.
+      # Opening the personal menu should trigger an AJAX error which is displayed within the menu.
       And I open the personal menu
-      Then I should see "You must change your password to proceed."
+      Then I should see "You must change your password before using the personal menu." in the "#fixy-content .force-pwd-warning" "css_element"

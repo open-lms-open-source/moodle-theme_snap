@@ -101,6 +101,7 @@ $string['footerheading'] = 'Footer';
 $string['footerheadingdesc'] = '';
 $string['footnote'] = 'Site footer';
 $string['footnotedesc'] = 'A footer for your site. This is the best place to put links to help, support and any other sites your organisation has that you want learners/educators to be aware of e.g. library, email etc.';
+$string['forcepwdwarningpersonalmenu'] = 'You must <a href="{$a}">change your password</a> before using the personal menu.';
 $string['forumauthor'] = 'Author';
 $string['forumlastpost'] = 'Last Post';
 $string['forumpicturegroup'] = 'Group';

@@ -20,9 +20,9 @@
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-define(['core/notification', 'core/ajax'],
+define(['core/notification', 'core/ajax', 'core/templates', 'core/str'],
 
-    function(notification, ajax) {
+    function(notification, ajax, templates, str) {
 
         var staticLoginErrorShown = false;
 
@@ -61,9 +61,30 @@ define(['core/notification', 'core/ajax'],
                 if (response.error || response.errorcode) {
 
                     if (M.snapTheme.forcePassChange) {
+                        var pwdChangeUrl = M.cfg.wwwroot+'/login/change_password.php';
                         // When a force password change is in effect it breaks the theme_snap_loginstatus method.
-                        // Send user to page for changing password:
-                        window.location = M.cfg.wwwroot+'/login/change_password.php';
+                        // Warn user in personal menu and redirect to password change page if appropriate.
+                        str.get_string('forcepwdwarningpersonalmenu', 'theme_snap', pwdChangeUrl).done(
+                            function(forcePwdWarning) {
+                                var alertMsg = { "message": forcePwdWarning, "extraclasses": "force-pwd-warning"};
+                                templates.render('core/notification_warning', alertMsg)
+                                    .done(function(result) {
+                                        $('#fixy-content').html('<br />'+result);
+                                    });
+                            }
+                        );
+
+                        if ($('#fixy-content').is(':visible')) {
+                            // If the personal menu is open then it should have a message in it informing the user
+                            // that they need to change their password to proceed.
+                            return;
+                        }
+
+                        if (window.location.indexOf('login/change_password.php') > -1) {
+                            // We are already on the change password page - avoid redirect loop!
+                            return;
+                        }
+                        window.location = pwdChangeUrl;
                         staticLoginErrorShown = true; // Not really, but we only want this redirect to happen once.
                         return;
                     }
