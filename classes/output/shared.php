@@ -335,7 +335,8 @@ class shared extends \renderer_base {
             'enablecompletion' => $COURSE->enablecompletion
         ];
 
-        $initvars = [$coursevars, $pagehascoursecontent, get_max_upload_file_size($CFG->maxbytes), get_user_preferences('auth_forcepasswordchange')];
+        $initvars = [$coursevars, $pagehascoursecontent, get_max_upload_file_size($CFG->maxbytes),
+                     get_user_preferences('auth_forcepasswordchange', false)];
         $PAGE->requires->js_call_amd('theme_snap/snap', 'snapInit', $initvars);
 
         // Does the page have editable course content?
