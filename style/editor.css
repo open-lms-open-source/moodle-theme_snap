@@ -9267,6 +9267,9 @@ fieldset[disabled] a#changenumsections .reduce-sections {
 #page-course-completion .mform .fcontainer .fitem_fcheckbox .fcheckbox input {
   margin: 0;
 }
+#page-grade-edit-tree-calculation input[type="text"] {
+  margin: 0.5rem 0 0.5rem 0.5rem;
+}
 #page-course-recent img.icon.smallicon {
   width: 35px;
   height: 35px;
