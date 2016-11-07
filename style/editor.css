@@ -7150,7 +7150,8 @@ fieldset[disabled] .gradingform_rubric.editor .addcriterion input.active {
 }
 .gradetreebox,
 .gradingtable .no-overflow,
-#page-mod-quiz-report.pagelayout-report .no-overflow {
+#page-mod-quiz-report.pagelayout-report .no-overflow,
+.path-admin-roles div[role="main"] > form {
   overflow: auto;
 }
 .path-grade-report-customgrader .gradeparent .right_scroller table#user-grades th,
