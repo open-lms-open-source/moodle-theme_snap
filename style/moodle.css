@@ -13426,8 +13426,8 @@ fieldset.coursesearchbox label {
   color: #fff;
 }
 .form-autocomplete-suggestions li[aria-selected=true] {
-  background-color: #0398db;
-  color: #565656;
+  background-color: #03A9F4;
+  color: #fff;
 }
 .form-autocomplete-downarrow {
   color: #565656;
@@ -24120,6 +24120,50 @@ fieldset[disabled] #id_cancel:focus {
   display: block;
   margin-top: -1.5em;
 }
+/*
+ * Competencies.
+ *
+ * Buttons used in multiple templates.
+ *
+ */
+/* Search icon. */
+.path-admin-tool-lp [data-region="filtercompetencies"] button {
+  font-weight: normal;
+  border-radius: 0;
+  color: #03A9F4;
+}
+.path-admin-tool-lp [data-region="filtercompetencies"] button,
+.path-admin-tool-lp [data-region="filtercompetencies"] button:active,
+.path-admin-tool-lp [data-region="filtercompetencies"] button.active,
+.path-admin-tool-lp [data-region="filtercompetencies"] button[disabled],
+fieldset[disabled] .path-admin-tool-lp [data-region="filtercompetencies"] button {
+  background-color: transparent;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+.path-admin-tool-lp [data-region="filtercompetencies"] button,
+.path-admin-tool-lp [data-region="filtercompetencies"] button:hover,
+.path-admin-tool-lp [data-region="filtercompetencies"] button:focus,
+.path-admin-tool-lp [data-region="filtercompetencies"] button:active {
+  border-color: transparent;
+}
+.path-admin-tool-lp [data-region="filtercompetencies"] button:hover,
+.path-admin-tool-lp [data-region="filtercompetencies"] button:focus {
+  color: #0275a8;
+  text-decoration: underline;
+  background-color: transparent;
+}
+.path-admin-tool-lp [data-region="filtercompetencies"] button[disabled]:hover,
+fieldset[disabled] .path-admin-tool-lp [data-region="filtercompetencies"] button:hover,
+.path-admin-tool-lp [data-region="filtercompetencies"] button[disabled]:focus,
+fieldset[disabled] .path-admin-tool-lp [data-region="filtercompetencies"] button:focus {
+  color: #999;
+  text-decoration: none;
+}
+/* Buttons without full bs class. */
+.path-admin-tool-lp button.btn {
+  background-color: white;
+}
 /**
  * Snap user swatch.
  *
@@ -24291,6 +24335,7 @@ legend,
 .snap-unread-marker {
   color: #03A9F4;
 }
+.path-admin-tool-lp button.btn,
 #course-category-listings .listing-pagination .yui3-button,
 .paging.paging-morelink a,
 #changenumsections .increase-sections,
@@ -24334,6 +24379,7 @@ input[type="reset"],
   border-color: #03A9F4;
   border-radius: 4px;
 }
+.path-admin-tool-lp button.btn:visited,
 #course-category-listings .listing-pagination .yui3-button:visited,
 .paging.paging-morelink a:visited,
 #changenumsections .increase-sections:visited,
@@ -24372,6 +24418,7 @@ input[type="reset"]:visited,
 #page-site-index .section-modchooser-link .section-modchooser-text:visited {
   color: #03A9F4;
 }
+.path-admin-tool-lp button.btn:hover,
 #course-category-listings .listing-pagination .yui3-button:hover,
 .paging.paging-morelink a:hover,
 #changenumsections .increase-sections:hover,
@@ -24408,6 +24455,7 @@ input[type="reset"]:hover,
 .gradingform_rubric.editor .addlevel input:hover,
 .gradingform_rubric.editor .addcriterion input:hover,
 #page-site-index .section-modchooser-link .section-modchooser-text:hover,
+.path-admin-tool-lp button.btn:focus,
 #course-category-listings .listing-pagination .yui3-button:focus,
 .paging.paging-morelink a:focus,
 #changenumsections .increase-sections:focus,
@@ -24444,6 +24492,7 @@ input[type="reset"]:focus,
 .gradingform_rubric.editor .addlevel input:focus,
 .gradingform_rubric.editor .addcriterion input:focus,
 #page-site-index .section-modchooser-link .section-modchooser-text:focus,
+.path-admin-tool-lp button.btn:active,
 #course-category-listings .listing-pagination .yui3-button:active,
 .paging.paging-morelink a:active,
 #changenumsections .increase-sections:active,
@@ -24480,6 +24529,7 @@ input[type="reset"]:active,
 .gradingform_rubric.editor .addlevel input:active,
 .gradingform_rubric.editor .addcriterion input:active,
 #page-site-index .section-modchooser-link .section-modchooser-text:active,
+.path-admin-tool-lp button.btn.active,
 #course-category-listings .listing-pagination .yui3-button.active,
 .paging.paging-morelink a.active,
 #changenumsections .increase-sections.active,
@@ -24521,6 +24571,7 @@ input[type="reset"].active,
   border-color: #03A9F4;
   text-decoration: none;
 }
+.path-admin-tool-lp button.btn[disabled],
 #course-category-listings .listing-pagination .yui3-button[disabled],
 .paging.paging-morelink a[disabled],
 #changenumsections .increase-sections[disabled],

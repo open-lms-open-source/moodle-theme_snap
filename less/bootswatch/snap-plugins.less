@@ -10,13 +10,13 @@
 .filter_oembed_lazyvideo_container {
     min-width: 100%;
     background-color: black;
-    
+
     /* Text. */
     .filter_oembed_lazyvideo_text{
         font-family: @font-family-base;
         padding: 0.5em;
     }
-    
+
     /* Image. */
     .filter_oembed_lazyvideo_placeholder {
         width: auto;
@@ -24,7 +24,7 @@
         margin: 0 auto;
         display: block;
     }
-    
+
     /* Content when loaded. */
     iframe {
         width: 100%;
@@ -35,12 +35,12 @@
 /* Large screen. */
 @media screen and (min-width: @screen-sm) {
     .filter_oembed_lazyvideo_container {
-        
+
         /* Image. */
         .filter_oembed_lazyvideo_placeholder {
             height: 400px;
         }
-        
+
         /* Content when loaded. */
         iframe {
             min-height: 400px;
@@ -60,7 +60,7 @@
  * Mod assign grading interface.
  */
 .path-mod-assign {
-    
+
     [data-region="grading-navigation-panel"],
     [data-region="review-panel"],
     [data-region="grade-panel"],
@@ -72,14 +72,14 @@
         left: auto;
         right: auto;
     }
-    
+
     [data-region="grading-navigation-panel"],
     [data-region="user-info"] {
         height: auto;
     }
-    
+
     [data-region="user-info"] {
-        
+
         h4 {
             font-size: 1em;
         }
@@ -88,42 +88,42 @@
             border-radius: 100%;
         }
     }
-    
+
     /* Drop down menus in the anotation bar */
     .moodle-dialogue-base .moodle-dialogue.assignfeedback_editpdf_dropdown {
         min-width: 1em;
     }
-    
+
     ul.assignfeedback_editpdf_menu {
         margin: 0;
         padding: 0;
     }
-    
+
     /* Dialogue close icons */
     [data-region="popout-button"] img.smallicon {
         margin: 0 !important;
     }
-} 
+}
 
 @media screen and (min-width : @screen-md-min) {
-    
+
     .path-mod-assign {
-         
+
          /* Remove margin from bs row so panes are full page. */
          .grading-main {
              margin-right: 0;
          }
-         
+
          [data-region="review-panel-content"],
          [data-region="grade-panel"] {
             max-height: 80vh;
             overflow-y: scroll;
         }
-        
+
         [data-region="review-panel"] {
             .make-md-column(8);
             padding-right: 0;
-            
+
             .pageheader {
                 position: absolute;
                 top: 0;
@@ -131,25 +131,25 @@
                 width: 100%;
                 z-index: 1;
             }
-            
+
             &.grade-panel-collapsed {
                 .make-md-column(12);
                 right: 0;
             }
         }
-        
+
         [data-region="grade-panel"] {
             .make-md-column(4);
         }
-        
+
         [data-region="grade-actions-panel"] {
             position: fixed;
             background-color: white;
             height: auto;
-            
+
             [data-region="grade-actions"] {
                 padding: 0.5em;
-                
+
                 .collapse-buttons {
                     top: 25%;
                     right: 0;
@@ -210,4 +210,21 @@
         display: block;
         margin-top: -1.5em;
     }
+}
+
+/*
+ * Competencies.
+ *
+ * Buttons used in multiple templates.
+ *
+ */
+
+/* Search icon. */
+.path-admin-tool-lp [data-region="filtercompetencies"]  button {
+    .btn-link();
+}
+
+/* Buttons without full bs class. */
+.path-admin-tool-lp button.btn {
+    background-color: white;
 }
