@@ -7945,6 +7945,10 @@ label.state-visible[for="snap-coverfiles"] .spinner-three-quarters,
 #snap-coverimagecontrol.snap-js-enabled {
   opacity: 1;
 }
+#page-badges-criteria .statusbox,
+#page-badges-criteria ul.nav-tabs {
+  margin: 1em 0;
+}
 /**
  * Snap course swatch.
  *
