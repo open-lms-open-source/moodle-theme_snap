@@ -20896,8 +20896,10 @@ body.hascontinuecancel.path-site #page {
 .jsenabled .choosercontainer #chooseform .alloptions {
   padding: 0 4%;
 }
-#page-files-index img.smallicon,
-#page-outcome-course img.smallicon {
+#page-files-index #region-main img.smallicon,
+#page-outcome-course #region-main img.smallicon,
+#page-files-index .moodle-dialogue-base img.smallicon,
+#page-outcome-course .moodle-dialogue-base img.smallicon {
   width: 2rem;
   height: 2rem;
   margin: 0 0.3rem;
