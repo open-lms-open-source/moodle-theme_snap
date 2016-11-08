@@ -64,23 +64,24 @@ define(['core/notification', 'core/ajax', 'core/templates', 'core/str'],
                         var pwdChangeUrl = M.cfg.wwwroot+'/login/change_password.php';
                         // When a force password change is in effect it breaks the theme_snap_loginstatus method.
                         // Warn user in personal menu and redirect to password change page if appropriate.
-                        str.get_string('forcepwdwarningpersonalmenu', 'theme_snap', pwdChangeUrl).done(
-                            function(forcePwdWarning) {
-                                var alertMsg = { "message": forcePwdWarning, "extraclasses": "force-pwd-warning"};
-                                templates.render('core/notification_warning', alertMsg)
-                                    .done(function(result) {
-                                        $('#fixy-content').html('<br />'+result);
-                                    });
+                        if ($('#fixy-content').length) {
+                            str.get_string('forcepwdwarningpersonalmenu', 'theme_snap', pwdChangeUrl).done(
+                                function(forcePwdWarning) {
+                                    var alertMsg = {"message": forcePwdWarning, "extraclasses": "force-pwd-warning"};
+                                    templates.render('core/notification_warning', alertMsg)
+                                        .done(function(result) {
+                                            $('#fixy-content').html('<br />' + result);
+                                        });
+                                }
+                            );
+                            if ($('#fixy-content').is(':visible')) {
+                                // If the personal menu is open then it should have a message in it informing the user
+                                // that they need to change their password to proceed.
+                                return;
                             }
-                        );
-
-                        if ($('#fixy-content').is(':visible')) {
-                            // If the personal menu is open then it should have a message in it informing the user
-                            // that they need to change their password to proceed.
-                            return;
                         }
 
-                        if (window.location.indexOf('login/change_password.php') > -1) {
+                        if (window.location.href.indexOf('login/change_password.php') > -1) {
                             // We are already on the change password page - avoid redirect loop!
                             return;
                         }
