@@ -7118,6 +7118,10 @@ fieldset[disabled] .gradingform_rubric.editor .addcriterion input.active {
 #page-admin-outcome-admin .yui3-moodle-core_outcome-editoutcome-outcome {
   background-position: left .35em;
 }
+.yui3-moodle-core_outcome-editoutcome-panel #outcome_edit_panel .fitem {
+  display: block;
+  margin-bottom: 0.5rem;
+}
 .yui3-aclist-content {
   overflow-y: auto;
   max-height: 90vh;
