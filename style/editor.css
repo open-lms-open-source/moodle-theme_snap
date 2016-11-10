@@ -7966,6 +7966,10 @@ label.state-visible[for="snap-coverfiles"] .spinner-three-quarters,
   font-size: 18px;
   margin-top: 0.5rem;
 }
+#page-course-recent #region-main div.generalbox > h3 + div[style],
+#page-course-recent #region-main div.generalbox > h3 + div[style] + div.submission {
+  padding: 0 !important;
+}
 #page-course-recent #region-main div.generalbox > h3 + div div.glossary-activity-content {
   float: left;
   margin-left: 10px;
@@ -7974,10 +7978,6 @@ label.state-visible[for="snap-coverfiles"] .spinner-three-quarters,
 #page-course-recent #region-main div.generalbox > h3 + div > div a img,
 #page-course-recent #region-main div.generalbox > h3 + div > a img {
   margin-left: 25px;
-}
-#page-course-recent #region-main div.generalbox > h3 + div,
-#page-course-recent #region-main div.generalbox > h3 + div + div {
-  padding: 0 !important;
 }
 #page-course-recent #region-main div.generalbox > h3 + div + div.submission {
   margin-left: 10px;

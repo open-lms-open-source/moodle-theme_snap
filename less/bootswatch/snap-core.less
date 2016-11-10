@@ -4161,6 +4161,14 @@ label.state-visible[for="snap-coverfiles"],
     }
 
     > h3 + div {
+
+        // Workshop - this is the best way we can possibly target the workshop divs as sadly only one div has
+        // a class (submission).
+        &[style],
+        &[style] + div.submission {
+            padding: 0 !important; // Please forgive !important - required to remove inline style in workshop.
+        }
+
         // Glossary.
         div.glossary-activity-content {
             float: left;
@@ -4174,12 +4182,6 @@ label.state-visible[for="snap-coverfiles"],
         // Workshop.
         > a img {
             margin-left: 25px;
-        }
-
-        &,
-        + div {
-            // Workshop.
-            padding: 0 !important; // Please forgive !important - required to remove inline style in workshop.
         }
 
         + div.submission {
