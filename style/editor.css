@@ -4119,16 +4119,18 @@ body.path-site .block.block_settings {
 /* Reset margin on setting block. */
 .block_settings .block_tree ul {
   margin-left: 0;
+  padding-left: 20px;
 }
 /* icons in blocks */
 .block_navigation .block_tree .tree_item.branch,
 .block_settings .block_tree .tree_item.branch {
-  background-position: 0 0.5em;
+  background-position: 0 0.4em;
 }
 .block_navigation .block_tree li.item_with_icon > p img,
 .block_settings .block_tree li.item_with_icon > p img {
-  top: 0.5em;
+  top: 0.15em;
   opacity: 0.7;
+  position: relative;
 }
 .block .icon.column {
   width: 21px;
