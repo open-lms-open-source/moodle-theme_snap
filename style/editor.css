@@ -7957,6 +7957,38 @@ label.state-visible[for="snap-coverfiles"] .spinner-three-quarters,
   margin: 1em 0;
 }
 /**
+ * Fixes to recent course activity page.
+ * Note - excuse the awful CSS used here but terribly inconsistent markup across modules necessitates it.
+ */
+#page-course-recent #region-main div.generalbox td,
+#page-course-recent #region-main div.generalbox > div {
+  font-family: "Roboto", "Fira Sans", "Segoe UI", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 18px;
+  margin-top: 0.5rem;
+}
+#page-course-recent #region-main div.generalbox > h3 + div div.glossary-activity-content {
+  float: left;
+  margin-left: 10px;
+}
+#page-course-recent #region-main div.generalbox > h3 + div span div a img,
+#page-course-recent #region-main div.generalbox > h3 + div > div a img,
+#page-course-recent #region-main div.generalbox > h3 + div > a img {
+  margin-left: 25px;
+}
+#page-course-recent #region-main div.generalbox > h3 + div,
+#page-course-recent #region-main div.generalbox > h3 + div + div {
+  padding: 0 !important;
+}
+#page-course-recent #region-main div.generalbox > h3 + div + div.submission {
+  margin-left: 10px;
+}
+#page-course-recent #region-main div.generalbox > h3 + div + div.submission strong {
+  font-weight: 300;
+}
+#page-course-recent #region-main div.generalbox table.forum-recent div.title.bold {
+  font-weight: 300;
+}
+/**
  * Snap course swatch.
  *
  * @package   theme_snap

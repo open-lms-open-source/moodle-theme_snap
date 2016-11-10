@@ -4147,3 +4147,55 @@ label.state-visible[for="snap-coverfiles"],
         margin: 1em 0;
     }
 }
+
+/**
+ * Fixes to recent course activity page.
+ * Note - excuse the awful CSS used here but terribly inconsistent markup across modules necessitates it.
+ */
+#page-course-recent #region-main div.generalbox {
+    td,
+    > div {
+        font-family: @font-family-base;
+        font-size: @font-size-base;
+        margin-top: 0.5rem;
+    }
+
+    > h3 + div {
+        // Glossary.
+        div.glossary-activity-content {
+            float: left;
+            margin-left: 10px;
+        }
+
+        // Questionnaire.
+        span div a img,
+        // Glossary.
+        > div a img,
+        // Workshop.
+        > a img {
+            margin-left: 25px;
+        }
+
+        &,
+        + div {
+            // Workshop.
+            padding: 0 !important; // Please forgive !important - required to remove inline style in workshop.
+        }
+
+        + div.submission {
+            // Workshop data positioning.
+            margin-left: 10px;
+            // Get rid of bold title in workshop.
+            strong {
+                font-weight: 300;
+            }
+        }
+    }
+
+    table.forum-recent {
+        // Forum - get rid of bold title.
+        div.title.bold {
+            font-weight: 300;
+        }
+    }
+}
