@@ -10493,6 +10493,13 @@ fieldset[disabled] .path-admin-tool-lp [data-region="filtercompetencies"] button
   background-color: white;
 }
 /**
+ * Stop rubric mform from being positioned inefficiently in dialog.
+ */
+#local-joulegrader-gradepane-panel .mform {
+  max-width: 100%;
+  margin: 0 auto;
+}
+/**
  * Snap user swatch.
  *
  * @package   theme_snap
