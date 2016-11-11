@@ -26,6 +26,7 @@ require_once($CFG->libdir.'/coursecatlib.php');
 require_once($CFG->dirroot.'/grade/lib.php');
 require_once($CFG->dirroot.'/grade/report/user/lib.php');
 require_once($CFG->dirroot.'/mod/forum/lib.php');
+require_once($CFG->dirroot.'/lib/enrollib.php');
 
 /**
  * General local snap functions.
@@ -345,16 +346,15 @@ class local {
      * @return bool | array
      */
     public static function courseinfo($courseids) {
-        global $DB;
         $courseinfo = array();
-        foreach ($courseids as $courseid) {
-            $course = $DB->get_record('course', array('id' => $courseid));
 
-            $context = \context_course::instance($courseid);
-            if (!is_enrolled($context, null, '', true)) {
-                // Skip this course, don't have permission to view.
-                continue;
+        $courses = enrol_get_my_courses();
+
+        foreach ($courseids as $courseid) {
+            if (!isset($courses[$courseid])) {
+                throw new \coding_exception('Invalid course id specified', $courseid);
             }
+            $course = $courses[$courseid];
 
             $feedbackurl = new \moodle_url('/grade/report/user/index.php', array('id' => $course->id));
 
