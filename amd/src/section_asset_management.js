@@ -461,7 +461,7 @@ define(['jquery', 'core/log', 'core/ajax', 'core/templates', 'core/notification'
 
                     var errAction = M.util.get_string('action:duplicateasset', 'theme_snap');
                     var errMessage = M.util.get_string('error:failedtoduplicateasset', 'theme_snap');
-                    
+
                     $.ajax({
                         type: "POST",
                         async: true,
@@ -641,7 +641,9 @@ define(['jquery', 'core/log', 'core/ajax', 'core/templates', 'core/notification'
              * Highlight section on click.
              */
             var highlightSectionListener = function() {
-                sectionActionListener('highlight');
+                sectionActionListener('highlight', function(sectionNumber) {
+                    $('#section-' + sectionNumber).toggleClass("current");
+                });
             };
 
             /**

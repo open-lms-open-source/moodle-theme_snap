@@ -1047,7 +1047,8 @@ section li.snap-resource {
 
 // Conditional information styled as fauz alerts.
 .snap-conditional-tag,
-.snap-draft-tag {
+.snap-draft-tag,
+.snap-current-tag {
     font-size: small;
     font-family: @font-family-base;
     background-color: #eee;
@@ -1078,14 +1079,23 @@ section li.snap-resource {
 }
 
 // hide draft tag, unless asset has class draft (can be added by js)
-.snap-draft-tag {
+.snap-draft-tag,
+.snap-current-tag {
     display: none !important; // SHAME - overcome bad overspecificity...
     font-size: small;
 }
 
-// show draft tag if parent has draft or  class
-.draft .snap-draft-tag {
+// show draft tag if parent has draft or class.
+.hidden .content .snap-draft-tag,
+.snap-asset.draft .snap-draft-tag {
     display: block !important; // SHAME - overcome bad overspecificity...
+}
+
+// Show current tag if parent has current class.
+.current .snap-current-tag {
+    display: block !important; // SHAME - overcome bad overspecificity...
+    color: white;
+    background-color: @brand-success;
 }
 
 
