@@ -254,23 +254,67 @@ class local {
     }
 
     /**
+     * Get / create completion cache stamp for specific course id.
+     *
+     * @param $courseid
+     * @param bool $new
+     * @return float
+     */
+    public static function course_completion_cachestamp($courseid, $new = false) {
+        $muc = \cache::make('theme_snap', 'course_completion_progress_ts');
+        $cachestamp = $muc->get($courseid);
+        if (!$cachestamp || $new) {
+            if (defined('PHPUNIT_TEST') && PHPUNIT_TEST) {
+                // This is here to ensure cache stamp is fresh where test code calls this function multiple times
+                // within one test function.
+                usleep(1);
+            }
+            $ts = microtime(true);
+            $muc->set($courseid, $ts);
+            return $ts;
+        }
+        return $cachestamp;
+    }
+
+    /**
      * Get course completion progress for specific course.
      * NOTE: It is by design that even teachers get course completion progress, this is so that they see exactly the
      * same as a student would in the personal menu.
      *
-     * @param $course
-     * @return stdClass | null
+     * @param $course - a course current user is enrolled on (enrollment check should be done outside of this function
+     * for performance reasons).
+     * @return stdClass
      */
     public static function course_completion_progress($course) {
-        if (!isloggedin() || isguestuser()) {
-            return null; // Can't get completion progress for users who aren't logged in.
+        global $USER, $CFG;
+
+        // Default completion object.
+        $compobj = (object) [
+            'complete' => null,
+            'total' => null,
+            'progress' => null,
+            'fromcache' => false // Useful for debugging and unit testing.
+        ];
+
+        if (!isloggedin() || isguestuser() || !$CFG->enablecompletion || !$course->enablecompletion) {
+            // Can't get completion progress for users who aren't logged in.
+            // Or if completion tracking is not enabled at site / course level.
+            // Don't even bother with the cache, just return empty object.
+            return $compobj;
         }
 
-        // Security check - are they enrolled on course?
-        $context = \context_course::instance($course->id);
-        if (!is_enrolled($context, null, '', true)) {
-            return null;
+        // Course cache stamp is used to invalidate user session caches if an application level event occurs -
+        // e.g. course completion settings updated, new module added, module deleted, etc.
+        $cachestamp = self::course_completion_cachestamp($course->id);
+
+        /** @var \cache_session $muc */
+        $muc = \cache::make('theme_snap', 'course_completion_progress');
+        $cached = $muc->get($course->id.'_'.$USER->id);
+        if ($cached && $cached->timestamp >= $cachestamp) {
+            $cached->fromcache = true; // Useful for debugging and unit testing.
+            return $cached;
         }
+
         $completioninfo = new \completion_info($course);
         $trackcount = 0;
         $compcount = 0;
@@ -297,11 +341,21 @@ class local {
 
         if ($trackcount > 0) {
             $progresspercent = ceil(($compcount / $trackcount) * 100);
+            $compobj = (object) [
+                'complete' => $compcount,
+                'total' => $trackcount,
+                'progress' => $progresspercent,
+                'timestamp' => microtime(true),
+                'fromcache' => false
+            ];
         } else {
-            // No point in returning completion progress if there aren't any elements that can be marked as complete.
-            return null;
+            // Everything except timestamp is null because nothing is trackable at the moment.
+            // We still want to cache this though to avoid repeated unnecessary db calls.
+            $compobj->timestamp = microtime(true);
         }
-        $compobj = (object) ['complete' => $compcount, 'total' => $trackcount, 'progress' => $progresspercent];
+
+        // There wasn't anything in the cache we could use, so lets add an entry to the cache that we can use later.
+        $muc->set($course->id.'_'.$USER->id, $compobj);
 
         return $compobj;
     }
@@ -348,11 +402,12 @@ class local {
     public static function courseinfo($courseids) {
         $courseinfo = array();
 
-        $courses = enrol_get_my_courses();
+        $courses = enrol_get_my_courses(['enablecompletion']);
 
         foreach ($courseids as $courseid) {
             if (!isset($courses[$courseid])) {
-                throw new \coding_exception('Invalid course id specified', $courseid);
+                // Don't throw an error, just carry on.
+                continue;
             }
             $course = $courses[$courseid];
 

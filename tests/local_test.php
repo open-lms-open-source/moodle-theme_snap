@@ -1267,4 +1267,129 @@ class theme_snap_local_test extends \advanced_testcase {
         $this->assertGreaterThan(200, strlen($pagemod->summary));
     }
 
+    /**
+     * @param array $params
+     * @return \cm_info
+     * @throws \coding_exception
+     */
+    private function add_assignment(array $params) {
+        $generator = $this->getDataGenerator()->get_plugin_generator('mod_assign');
+        $instance = $generator->create_instance($params);
+        $cm = get_coursemodule_from_instance('assign', $instance->id);
+        $cm = \cm_info::create($cm);
+
+        // Trigger course module created event.
+        $event = \core\event\course_module_created::create_from_cm($cm);
+        $event->trigger();
+        return ($cm);
+    }
+    
+    /**
+     * Test getting course completion cache stamp + resetting it to a new stamp.
+     */
+    public function test_course_completion_cachestamp() {
+        $this->resetAfterTest();
+
+        $generator = $this->getDataGenerator();
+        $course = $generator->create_course();
+
+        $ts = local::course_completion_cachestamp($course->id);
+        $this->assertNotNull($ts);
+
+        // Make sure getting the cache stamp a second time results in same timestamp.
+        sleep(1);
+        $ts2 = local::course_completion_cachestamp($course->id);
+        $this->assertEquals($ts, $ts2);
+
+        // Reset cache stamp and make sure it is now different to the first one.
+        $ts3 = local::course_completion_cachestamp($course->id, true);
+        $this->assertNotEquals($ts, $ts3);
+    }
+
+    public function test_course_completion_progress() {
+        global $DB, $CFG;
+        
+        $this->resetAfterTest();
+
+        // Set up.
+        $CFG->enablecompletion = true;
+        $generator = $this->getDataGenerator();
+        $course = $generator->create_course((object) ['enablecompletion' => 1]);
+        $student = $generator->create_user();
+        $studentrole = $DB->get_record('role', ['shortname' => 'student']);
+        $generator->enrol_user($student->id, $course->id, $studentrole->id);
+        $this->setUser($student);
+
+        // Assert no completion when no trackable items.
+        $comp = local::course_completion_progress($course);
+        $this->assertTrue(property_exists($comp, 'complete'));
+        $this->assertNull($comp->complete);
+        // Assert null completion data not in cache.
+        $this->assertFalse($comp->fromcache);
+        // Assert null completion data in cache on 2nd hit.
+        $comp = local::course_completion_progress($course);
+        $this->assertTrue($comp->fromcache);
+
+        // Assert completion data populated and cache dumped on assignment creation.
+        $params = [
+            'course' => $course->id,
+            'completion' => COMPLETION_TRACKING_AUTOMATIC
+        ];
+        $cm = $this->add_assignment($params);
+        $comp = local::course_completion_progress($course);
+        $this->assertFalse($comp->fromcache);
+        $this->assertInstanceOf('stdClass', $comp);
+        $this->assertEquals(0, $comp->complete);
+        $this->assertEquals(1, $comp->total);
+        $this->assertEquals(0, $comp->progress);
+
+        // Assert from cache again on 2nd get.
+        $comp = local::course_completion_progress($course);
+        $this->assertTrue($comp->fromcache);
+
+        // Assert completion updates on grading.
+        $DB->set_field('course_modules', 'completiongradeitemnumber', 0, ['id' => $cm->id]);
+        $assign = new \assign($cm->context, $cm, $course);
+        $gradeitem = $assign->get_grade_item();
+        \grade_object::set_properties($gradeitem, array('gradepass' => 50.0));
+        $gradeitem->update();
+        $assignrow = $assign->get_instance();
+        $grades = array();
+        $grades[$student->id] = (object) [
+            'rawgrade' => 60,
+            'userid' => $student->id
+        ];
+        $assignrow->cmidnumber = null;
+        assign_grade_item_update($assignrow, $grades);
+        $comp = local::course_completion_progress($course);
+        $this->assertFalse($comp->fromcache); // Cache should have been dumped at this point.
+        $this->assertEquals(1, $comp->complete);
+        $this->assertEquals(1, $comp->total);
+        $this->assertEquals(100, $comp->progress);
+
+        // Assert from cache again on 2nd get.
+        $comp = local::course_completion_progress($course);
+        $this->assertTrue($comp->fromcache);
+
+        // Assert no completion when disabled at site level.
+        $CFG->enablecompletion = false;
+        $comp = local::course_completion_progress($course);
+        $this->assertNull($comp->complete);
+
+        // Assert no completion when disabled at course level.
+        $CFG->enablecompletion = true;
+        $DB->update_record('course', (object) ['id' => $course->id, 'enablecompletion' => 0]);
+        $course = $DB->get_record('course', ['id' => $course->id]);
+        $comp = local::course_completion_progress($course);
+        $this->assertNull($comp->complete);
+
+        // Assert completion restored when re-enabled at both site and course level.
+        $DB->update_record('course', (object) ['id' => $course->id, 'enablecompletion' => 1]);
+        $course = $DB->get_record('course', ['id' => $course->id]);
+        $comp = local::course_completion_progress($course);
+        $this->assertTrue($comp->fromcache); // Cache should still be valid.
+        $this->assertEquals(1, $comp->complete);
+        $this->assertEquals(1, $comp->total);
+        $this->assertEquals(100, $comp->progress);
+    }
 }
