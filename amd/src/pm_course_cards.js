@@ -22,8 +22,9 @@
 /**
  * Personal menu course cards.
  */
-define(['jquery', 'core/log', 'theme_snap/pm_course_cards_hidden', 'theme_snap/pm_course_favorites', 'theme_snap/model_view'],
-    function($, log, cardsHidden, courseFavorites, mview) {
+define(['jquery', 'core/log', 'core/templates',
+        'theme_snap/pm_course_cards_hidden', 'theme_snap/pm_course_favorites', 'theme_snap/model_view'],
+    function($, log, templates, cardsHidden, courseFavorites, mview) {
         var CourseCards = function() {
 
             $(document).ready(function() {
@@ -53,13 +54,17 @@ define(['jquery', 'core/log', 'theme_snap/pm_course_cards_hidden', 'theme_snap/p
                      * @param crsinfo
                      */
                     var applyCourseInfo = function(crsinfo) {
-                        for (var i in crsinfo) {
-                            var info = crsinfo[i];
-                            log.debug('applying course data for courseid ' + info.course);
-                            var cardEl = $('.courseinfo[data-courseid="' + info.course + '"]');
-                            mview(cardEl, 'theme_snap/course_cards');
-                            $(cardEl).trigger('modelUpdate', info);
-                        }
+                        // Pre-load template or it will get loaded multiple times with a detriment on performance.
+                        templates.render('theme_snap/course_cards', [])
+                            .done(function() {
+                                for (var i in crsinfo) {
+                                    var info = crsinfo[i];
+                                    log.debug('applying course data for courseid ' + info.course);
+                                    var cardEl = $('.courseinfo[data-courseid="' + info.course + '"]');
+                                    mview(cardEl, 'theme_snap/course_cards');
+                                    $(cardEl).trigger('modelUpdate', info);
+                                }
+                            });
                     };
 
                     // OK - lets see if we have grades/progress in session storage we can use before ajax call.
