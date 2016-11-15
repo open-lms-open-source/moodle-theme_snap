@@ -258,6 +258,7 @@ class shared extends \renderer_base {
         $PAGE->requires->jquery();
         $PAGE->requires->strings_for_js(array(
             'close',
+            'coursecontacts',
             'debugerrors',
             'problemsfound',
             'error:coverimageexceedsmaxbytes',
@@ -275,7 +276,8 @@ class shared extends \renderer_base {
             'movehere',
             'movefailed',
             'movingdropsectionhelp',
-            'movingstartedhelp'
+            'movingstartedhelp',
+            'notpublished'
         ), 'theme_snap');
 
         $PAGE->requires->strings_for_js([
@@ -286,6 +288,10 @@ class shared extends \renderer_base {
         $PAGE->requires->strings_for_js([
             'printbook'
         ], 'booktool_print');
+
+        $PAGE->requires->strings_for_js([
+            'progresstotal'
+        ], 'completion');
 
         // Are we viewing /course/view.php - note, this is different from just checking the page type.
         // We only ever want to load course.js when on site page or view.php - no point in loading it when on

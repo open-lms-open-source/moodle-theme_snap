@@ -27,72 +27,85 @@ define(['jquery', 'core/log', 'core/templates',
     function($, log, templates, cardsHidden, courseFavorites, mview) {
         var CourseCards = function() {
 
+            var self = this;
+
+            /**
+             * Apply course information to courses in personal menu.
+             *
+             * @param crsinfo
+             */
+            this.applyCourseInfo = function(crsinfo) {
+                // Pre-load template or it will get loaded multiple times with a detriment on performance.
+                templates.render('theme_snap/course_cards', [])
+                    .done(function() {
+                        for (var i in crsinfo) {
+                            var info = crsinfo[i];
+                            log.debug('applying course data for courseid ' + info.course);
+                            var cardEl = $('.courseinfo[data-courseid="' + info.course + '"]');
+                            mview(cardEl, 'theme_snap/course_cards');
+                            $(cardEl).trigger('modelUpdate', info);
+                        }
+                    });
+            };
+
+            /**
+             * Request courseids.
+             * @param courseids[]
+             */
+            this.reqCourseInfo = function(courseids) {
+                if (courseids.length === 0) {
+                    return;
+                }
+                // Get course info via ajax.
+                var courseiddata = 'courseids=' + courseids.join(',');
+                var courseinfo_key = M.cfg.sesskey + 'courseinfo';
+                log.debug("fetching course data");
+                $.ajax({
+                    type: "GET",
+                    async: true,
+                    url: M.cfg.wwwroot + '/theme/snap/rest.php?action=get_courseinfo&contextid=' + M.cfg.context,
+                    data: courseiddata,
+                    success: function(data) {
+                        if (data.info) {
+                            log.debug('fetched coursedata', data.info);
+                            if (window.sessionStorage) {
+                                window.sessionStorage[courseinfo_key] = JSON.stringify(data.info);
+                            }
+                            self.applyCourseInfo(data.info);
+                        } else {
+                            log.warn('fetched coursedata with error: JSON data object is missing info property', data);
+                        }
+                    }
+                });
+            };
+
+            /**
+             * Get course ids from cards.
+             * @returns {Array}
+             */
+            this.getCourseIds = function() {
+                var courseIds = [];
+                $('.courseinfo').each(function() {
+                    courseIds.push($(this).attr('data-courseid'));
+                });
+                return courseIds;
+            };
+
             $(document).ready(function() {
                 courseFavorites(cardsHidden);
 
                 // Load course information via ajax.
-                var supportlocalstorage = true;
-                if (typeof localStorage === 'object') {
-                    try {
-                        localStorage.setItem('localStorage', 1);
-                        localStorage.removeItem('localStorage');
-                    } catch (e) {
-                        supportlocalstorage = false;
-                    }
-                }
-
-                var courseids = [];
+                var courseIds = self.getCourseIds();
                 var courseinfo_key = M.cfg.sesskey + 'courseinfo';
-                $('.courseinfo').each(function() {
-                    courseids.push($(this).attr('data-courseid'));
-                });
-                if (courseids.length > 0) {
-
-                    /**
-                     * Apply course information to courses in personal menu.
-                     *
-                     * @param crsinfo
-                     */
-                    var applyCourseInfo = function(crsinfo) {
-                        // Pre-load template or it will get loaded multiple times with a detriment on performance.
-                        templates.render('theme_snap/course_cards', [])
-                            .done(function() {
-                                for (var i in crsinfo) {
-                                    var info = crsinfo[i];
-                                    log.debug('applying course data for courseid ' + info.course);
-                                    var cardEl = $('.courseinfo[data-courseid="' + info.course + '"]');
-                                    mview(cardEl, 'theme_snap/course_cards');
-                                    $(cardEl).trigger('modelUpdate', info);
-                                }
-                            });
-                    };
-
-                    // OK - lets see if we have grades/progress in session storage we can use before ajax call.
+                if (courseIds.length > 0) {
+                    // OK - lets see if we have grades/progress in session storage.
                     if (window.sessionStorage[courseinfo_key]) {
                         var courseinfo = JSON.parse(window.sessionStorage[courseinfo_key]);
-                        applyCourseInfo(courseinfo);
+                        self.applyCourseInfo(courseinfo);
+                    } else {
+                        // Only make AJAX request on document ready if the session storage isn't populated.
+                        self.reqCourseInfo(courseIds);
                     }
-
-                    // Get course info via ajax.
-                    var courseiddata = 'courseids=' + courseids.join(',');
-                    log.debug("fetching course data");
-                    $.ajax({
-                        type: "GET",
-                        async: true,
-                        url: M.cfg.wwwroot + '/theme/snap/rest.php?action=get_courseinfo&contextid=' + M.cfg.context,
-                        data: courseiddata,
-                        success: function(data) {
-                            if (data.info) {
-                                log.debug('fetched coursedata', data.info);
-                                if (supportlocalstorage) {
-                                    window.sessionStorage[courseinfo_key] = JSON.stringify(data.info);
-                                }
-                                applyCourseInfo(data.info);
-                            } else {
-                                log.warn('fetched coursedata with error: JSON data object is missing info property', data);
-                            }
-                        }
-                    });
                 }
             });
 
