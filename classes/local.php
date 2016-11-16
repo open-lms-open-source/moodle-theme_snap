@@ -293,7 +293,8 @@ class local {
             'complete' => null,
             'total' => null,
             'progress' => null,
-            'fromcache' => false // Useful for debugging and unit testing.
+            'fromcache' => false, // Useful for debugging and unit testing.
+            'render' => false // Template flag.
         ];
 
         if (!isloggedin() || isguestuser() || !$CFG->enablecompletion || !$course->enablecompletion) {
@@ -346,7 +347,8 @@ class local {
                 'total' => $trackcount,
                 'progress' => $progresspercent,
                 'timestamp' => microtime(true),
-                'fromcache' => false
+                'fromcache' => false,
+                'render' => true
             ];
         } else {
             // Everything except timestamp is null because nothing is trackable at the moment.
