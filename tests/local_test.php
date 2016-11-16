@@ -1318,6 +1318,10 @@ class theme_snap_local_test extends \advanced_testcase {
         $student = $generator->create_user();
         $studentrole = $DB->get_record('role', ['shortname' => 'student']);
         $generator->enrol_user($student->id, $course->id, $studentrole->id);
+        $teacher = $generator->create_user();
+        $editingteacherrole = $DB->get_record('role', array('shortname'=>'editingteacher'));
+        $generator->enrol_user($teacher->id, $course->id, $editingteacherrole->id);
+
         $this->setUser($student);
 
         // Assert no completion when no trackable items.
@@ -1348,6 +1352,7 @@ class theme_snap_local_test extends \advanced_testcase {
         $this->assertTrue($comp->fromcache);
 
         // Assert completion updates on grading.
+        $this->setUser($teacher); // We need to be a teacher if we are grading.
         $DB->set_field('course_modules', 'completiongradeitemnumber', 0, ['id' => $cm->id]);
         $assign = new \assign($cm->context, $cm, $course);
         $gradeitem = $assign->get_grade_item();
@@ -1361,6 +1366,8 @@ class theme_snap_local_test extends \advanced_testcase {
         ];
         $assignrow->cmidnumber = null;
         assign_grade_item_update($assignrow, $grades);
+        $this->setUser($student);
+
         $comp = local::course_completion_progress($course);
         $this->assertFalse($comp->fromcache); // Cache should have been dumped at this point.
         $this->assertEquals(1, $comp->complete);

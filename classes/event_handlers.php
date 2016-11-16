@@ -123,7 +123,7 @@ class event_handlers {
      */
     public static function course_module_completion_updated(course_module_completion_updated $event) {
         $muc = \cache::make('theme_snap', 'course_completion_progress');
-        $muc->delete($event->courseid.'_'.$event->userid);
+        $muc->delete($event->courseid.'_'.$event->relateduserid);
     }
 
 }
