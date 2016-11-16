@@ -24,14 +24,15 @@
 defined('MOODLE_INTERNAL') || die();
 
 $definitions = [
+    // This is used so that we can invalidate session level caches if the course completion settings for a course
+    // change.
     'course_completion_progress_ts' => [
-        // This is used so that we can invalidate session level caches if the course completion settings for a course
-        // change.
         'mode'               => cache_store::MODE_APPLICATION,
         'simplekeys'         => true,
         'simpledata'         => true,
         'staticacceleration' => false
     ],
+    // This is used to cache completion data per course / user.
     'course_completion_progress' => [
         'mode'               => cache_store::MODE_SESSION,
         'simplekeys'         => true,
