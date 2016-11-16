@@ -57,7 +57,7 @@ define(['jquery', 'core/log', 'core/yui', 'theme_snap/pm_course_cards', 'theme_s
                         var cache_key = M.cfg.sesskey + 'personal-menu-' + type;
                         try {
                             // Display old content while waiting
-                            if (window.sessionStorage[cache_key]) {
+                            if (util.supportsSessionStorage() && window.sessionStorage[cache_key]) {
                                 log.info('using locally stored ' + type);
                                 var html = window.sessionStorage[cache_key];
                                 $(container).html(html);
@@ -69,7 +69,7 @@ define(['jquery', 'core/log', 'core/yui', 'theme_snap/pm_course_cards', 'theme_s
                                 url: M.cfg.wwwroot + '/theme/snap/rest.php?action=get_' + type + '&contextid=' + M.cfg.context,
                                 success: function(data) {
                                     log.info('fetched ' + type);
-                                    if (window.sessionStorage && typeof(data.html) != 'undefined') {
+                                    if (util.supportsSessionStorage() && typeof(data.html) != 'undefined') {
                                         window.sessionStorage[cache_key] = data.html;
                                     }
                                     // Note: we can't use .data because that does not manipulate the dom, we need the data

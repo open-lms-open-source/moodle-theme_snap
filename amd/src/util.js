@@ -21,6 +21,8 @@
 
 define(['jquery'], function($) {
 
+    var staticSupportsSessionStorage = null;
+
     /**
      * General utilities library.
      */
@@ -67,6 +69,26 @@ define(['jquery'], function($) {
             $('html, body').animate({
                 scrollTop: scrtop
             }, 600);
+        },
+
+        /**
+         * Does the browser support session storage?
+         * @returns {null|bool}
+         */
+        supportsSessionStorage: function() {
+            if (staticSupportsSessionStorage !== null) {
+                return staticSupportsSessionStorage;
+            }
+            if (typeof window.sessionStorage === 'object') {
+                try {
+                    window.sessionStorage.setItem('sessionStorage', 1);
+                    window.sessionStorage.removeItem('sessionStorage');
+                    staticSupportsSessionStorage = true;
+                } catch (e) {
+                    staticSupportsSessionStorage = false;
+                }
+            }
+            return staticSupportsSessionStorage;
         }
     };
 });

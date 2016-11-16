@@ -23,8 +23,9 @@
  * Personal menu course cards.
  */
 define(['jquery', 'core/log', 'core/templates',
-        'theme_snap/pm_course_cards_hidden', 'theme_snap/pm_course_favorites', 'theme_snap/model_view'],
-    function($, log, templates, cardsHidden, courseFavorites, mview) {
+        'theme_snap/pm_course_cards_hidden', 'theme_snap/pm_course_favorites', 'theme_snap/model_view',
+        'theme_snap/util'],
+    function($, log, templates, cardsHidden, courseFavorites, mview, util) {
         var CourseCards = function() {
 
             var self = this;
@@ -68,7 +69,7 @@ define(['jquery', 'core/log', 'core/templates',
                     success: function(data) {
                         if (data.info) {
                             log.debug('fetched coursedata', data.info);
-                            if (window.sessionStorage) {
+                            if (util.supportsSessionStorage()) {
                                 window.sessionStorage[courseinfo_key] = JSON.stringify(data.info);
                             }
                             self.applyCourseInfo(data.info);
@@ -99,7 +100,7 @@ define(['jquery', 'core/log', 'core/templates',
                 var courseinfo_key = M.cfg.sesskey + 'courseinfo';
                 if (courseIds.length > 0) {
                     // OK - lets see if we have grades/progress in session storage.
-                    if (window.sessionStorage[courseinfo_key]) {
+                    if (util.supportsSessionStorage() && window.sessionStorage[courseinfo_key]) {
                         var courseinfo = JSON.parse(window.sessionStorage[courseinfo_key]);
                         self.applyCourseInfo(courseinfo);
                     } else {
