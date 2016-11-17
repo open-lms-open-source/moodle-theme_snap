@@ -143,7 +143,7 @@ trait format_section_trait {
         $baseurl->param('sesskey', sesskey());
 
         $controls = array();
-        
+
         $moveaction = new course_action_section_move($course, $section, $onsectionpage);
         $controls[] = $this->render($moveaction);
 
@@ -256,6 +256,12 @@ trait format_section_trait {
                 ));
             }
         }
+
+        // Current section message.
+        $o .= '<span class="snap-current-tag">'.get_string('current', 'theme_snap').'</span>';
+
+        // Draft message.
+        $o .= '<div class="snap-draft-tag">'.get_string('draft', 'theme_snap').'</div>';
 
         // Availabiliy message.
         $conditionalicon = '<img aria-hidden="true" role="presentation" class="svg-icon" src="'.$this->output->pix_url('conditional', 'theme').'" />';

@@ -8895,7 +8895,8 @@ section li.snap-resource.snap-mime-text {
   color: #fff;
 }
 .snap-conditional-tag,
-.snap-draft-tag {
+.snap-draft-tag,
+.snap-current-tag {
   font-size: small;
   font-family: "Roboto", "Fira Sans", "Segoe UI", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif;
   background-color: #eee;
@@ -8903,30 +8904,40 @@ section li.snap-resource.snap-mime-text {
   padding: 0.5em;
 }
 .snap-conditional-tag .availabilityinfo,
-.snap-draft-tag .availabilityinfo {
+.snap-draft-tag .availabilityinfo,
+.snap-current-tag .availabilityinfo {
   display: inline;
   margin-left: 0.5em;
 }
 .snap-conditional-tag ul,
-.snap-draft-tag ul {
+.snap-draft-tag ul,
+.snap-current-tag ul {
   margin: 0 !important;
   list-style: none;
   padding: 0;
 }
 .snap-conditional-tag strong,
-.snap-draft-tag strong {
+.snap-draft-tag strong,
+.snap-current-tag strong {
   font-weight: normal;
 }
 .snap-completion-meta {
   display: block !important;
   clear: both;
 }
-.snap-draft-tag {
+.snap-draft-tag,
+.snap-current-tag {
   display: none !important;
   font-size: small;
 }
-.draft .snap-draft-tag {
+.hidden .content .snap-draft-tag,
+.snap-asset.draft .snap-draft-tag {
   display: block !important;
+}
+.current .snap-current-tag {
+  display: block !important;
+  color: white;
+  background-color: #8BC34A;
 }
 li.draft {
   border-top-color: #eee !important;
@@ -11052,10 +11063,6 @@ a[href="#sections"] {
 .moodle-actionmenu[data-enhanced].show .menu a:focus {
   color: #03A9F4;
   background-color: transparent;
-}
-/* activities */
-.current .sectionname {
-  color: #03A9F4;
 }
 li.snap-resource,
 li.snap-activity {
