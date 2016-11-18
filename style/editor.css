@@ -7968,23 +7968,31 @@ label.state-visible[for="snap-coverfiles"] .spinner-three-quarters,
   font-size: 18px;
   margin-top: 0.5rem;
 }
-#page-course-recent #region-main div.generalbox > h3 + div[style],
-#page-course-recent #region-main div.generalbox > h3 + div[style] + div.submission {
+#page-course-recent #region-main div.generalbox td[style],
+#page-course-recent #region-main div.generalbox > div[style],
+#page-course-recent #region-main div.generalbox td[style] + div.submission,
+#page-course-recent #region-main div.generalbox > div[style] + div.submission {
   padding: 0 !important;
 }
-#page-course-recent #region-main div.generalbox > h3 + div div.glossary-activity-content {
+#page-course-recent #region-main div.generalbox td div.glossary-activity-content,
+#page-course-recent #region-main div.generalbox > div div.glossary-activity-content {
   float: left;
   margin-left: 10px;
 }
-#page-course-recent #region-main div.generalbox > h3 + div span div a img,
-#page-course-recent #region-main div.generalbox > h3 + div > div a img,
-#page-course-recent #region-main div.generalbox > h3 + div > a img {
+#page-course-recent #region-main div.generalbox td span div a img,
+#page-course-recent #region-main div.generalbox > div span div a img,
+#page-course-recent #region-main div.generalbox td > div a img,
+#page-course-recent #region-main div.generalbox > div > div a img,
+#page-course-recent #region-main div.generalbox td > a img,
+#page-course-recent #region-main div.generalbox > div > a img {
   margin-left: 25px;
 }
-#page-course-recent #region-main div.generalbox > h3 + div + div.submission {
+#page-course-recent #region-main div.generalbox td + div.submission,
+#page-course-recent #region-main div.generalbox > div + div.submission {
   margin-left: 10px;
 }
-#page-course-recent #region-main div.generalbox > h3 + div + div.submission strong {
+#page-course-recent #region-main div.generalbox td + div.submission strong,
+#page-course-recent #region-main div.generalbox > div + div.submission strong {
   font-weight: 300;
 }
 #page-course-recent #region-main div.generalbox table.forum-recent div.title.bold {
