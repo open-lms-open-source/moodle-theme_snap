@@ -71,7 +71,7 @@ class theme_snap_assign_test extends mod_assign_base_testcase {
         $this->resetDebugging();
 
         // This is required so that the submissions timemodified > the grade timemodified.
-        sleep(2);
+        $this->waitForSecond();
 
         // Edit the submission again.
         $this->setUser($this->students[0]);
@@ -79,7 +79,7 @@ class theme_snap_assign_test extends mod_assign_base_testcase {
         $assign->testable_update_submission($submission, $this->students[0]->id, true, false);
 
         // This is required so that the submissions timemodified > the grade timemodified.
-        sleep(2);
+        $this->waitForSecond();
 
         // Allow the student another attempt.
         $this->teachers[0]->ignoresesskey = true;
