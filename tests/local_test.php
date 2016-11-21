@@ -1200,7 +1200,7 @@ class theme_snap_local_test extends \advanced_testcase {
 
         $this->resetAfterTest();
 
-        $testtxt = 'Hello world, Καλημέρα κόσμε, コンニチハ';
+        $testtxt = 'Hello world, Καλημέρα κόσμε, コンニチハ, àâæçéèêë';
 
         $generator = $this->getDataGenerator();
         $course = $generator->create_course();
