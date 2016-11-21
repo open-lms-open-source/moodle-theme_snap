@@ -276,75 +276,6 @@ class theme_snap_assign_test extends mod_assign_base_testcase {
         $this->assertSame($expected, $actual);
     }
 
-    public function test_course_completion_progress() {
-        global $CFG, $DB;
-        $CFG->enablecompletion = true;
-
-        $DB->update_record('course', (object) ['id' => $this->course->id, 'enablecompletion' => 1]);
-        $this->course = $DB->get_record('course', ['id' => $this->course->id]);
-
-        $actual = local::course_completion_progress($this->course);
-        $this->assertNull($actual);
-
-        $this->create_extra_users();
-        $this->setUser($this->extrasuspendedstudents[0]);
-        $actual = local::course_completion_progress($this->course);
-        $this->assertNull($actual);
-
-        $this->setUser($this->students[0]);
-        $actual = local::course_completion_progress($this->course);
-        $this->assertNull($actual);
-
-        // Create an assignment that is enabled for completion.
-        $this->setUSer($this->teachers[0]);
-        $assign = $this->create_instance(
-            [
-                'course' => $this->course->id,
-                'name' => 'Assign!',
-                'completion' => COMPLETION_TRACKING_AUTOMATIC
-            ]
-        );
-
-        // Should now have something that can be tracked for progress.
-        $this->setUser($this->students[0]);
-        $actual = local::course_completion_progress($this->course);
-        $this->assertInstanceOf('stdClass', $actual);
-        $this->assertEquals(0, $actual->complete);
-        $this->assertEquals(1, $actual->total);
-        $this->assertEquals(0, $actual->progress);
-
-        // Make sure completion updates on grading.
-        $DB->set_field('course_modules', 'completiongradeitemnumber', 0, ['id' => $assign->get_course_module()->id]);
-        $gradeitem = $assign->get_grade_item();
-        grade_object::set_properties($gradeitem, array('gradepass' => 50.0));
-        $gradeitem->update();
-        $assignrow = $assign->get_instance();
-        $grades = array();
-        $grades[$this->students[0]->id] = (object) [
-            'rawgrade' => 60,
-            'userid' => $this->students[0]->id
-        ];
-        $assignrow->cmidnumber = null;
-        assign_grade_item_update($assignrow, $grades);
-        $actual = local::course_completion_progress($this->course);
-        $this->assertInstanceOf('stdClass', $actual);
-        $this->assertEquals(1, $actual->complete);
-        $this->assertEquals(1, $actual->total);
-        $this->assertEquals(100, $actual->progress);
-
-        // Make sure course completion returns null when disabled at site level.
-        $CFG->enablecompletion = false;
-        $actual = local::course_completion_progress($this->course);
-        $this->assertNull($actual);
-
-        // Make sure course completion returns null when disabled at course level.
-        $CFG->enablecompletion = true;
-        $DB->update_record('course', (object) ['id' => $this->course->id, 'enablecompletion' => 0]);
-        $this->course = $DB->get_record('course', ['id' => $this->course->id]);
-        $actual = local::course_completion_progress($this->course);
-        $this->assertNull($actual);
-    }
-
     public function test_course_feedback() {
         $actual = local::course_feedback($this->course);
         $this->assertFalse($actual);
@@ -520,15 +451,20 @@ class theme_snap_assign_test extends mod_assign_base_testcase {
         $this->assertcount(0, $actual);
     }
 
-    public function test_courseinfo_empty() {
+    public function test_courseinfo_empty_no_courses() {
         $actual = local::courseinfo([]);
         $this->assertCount(0, $actual);
+    }
 
-        // Current user not enrolled in this course.
+    public function test_courseinfo_error_not_enrolled() {
         $actual = local::courseinfo([$this->course->id]);
         $this->assertCount(0, $actual);
+    }
 
-        // Current user enrolled but inactive in this course.
+    /**
+     * Test current user enrolled but suspended in this course.
+     */
+    public function test_courseinfo_suspended_user() {
         $this->create_extra_users();
         $this->setUser($this->extrasuspendedstudents[0]);
         $actual = local::courseinfo([$this->course->id]);

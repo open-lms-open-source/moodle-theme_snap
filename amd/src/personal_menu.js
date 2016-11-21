@@ -40,19 +40,8 @@ define(['jquery', 'core/log', 'core/yui', 'theme_snap/pm_course_cards', 'theme_s
              */
             this.update = function() {
 
-                /**
-                 * Check if the browser supports localstorage.
-                 * Safari on private mode does not support write on this object
-                 */
-                var supportlocalstorage = true;
-                if (typeof localStorage === 'object') {
-                    try {
-                        localStorage.setItem('localStorage', 1);
-                        localStorage.removeItem('localStorage');
-                    } catch (e) {
-                        supportlocalstorage = false;
-                    }
-                }
+                // Update course cards with info.
+                courseCards.reqCourseInfo(courseCards.getCourseIds());
 
                 $('#primary-nav').focus();
                 // primary nav showing so hide the other dom parts
@@ -68,7 +57,7 @@ define(['jquery', 'core/log', 'core/yui', 'theme_snap/pm_course_cards', 'theme_s
                         var cache_key = M.cfg.sesskey + 'personal-menu-' + type;
                         try {
                             // Display old content while waiting
-                            if (window.sessionStorage[cache_key]) {
+                            if (util.supportsSessionStorage() && window.sessionStorage[cache_key]) {
                                 log.info('using locally stored ' + type);
                                 var html = window.sessionStorage[cache_key];
                                 $(container).html(html);
@@ -83,7 +72,7 @@ define(['jquery', 'core/log', 'core/yui', 'theme_snap/pm_course_cards', 'theme_s
                                         return;
                                     }
                                     log.info('fetched ' + type);
-                                    if (supportlocalstorage && typeof(data.html) != 'undefined') {
+                                    if (util.supportsSessionStorage() && typeof(data.html) != 'undefined') {
                                         window.sessionStorage[cache_key] = data.html;
                                     }
                                     // Note: we can't use .data because that does not manipulate the dom, we need the data
