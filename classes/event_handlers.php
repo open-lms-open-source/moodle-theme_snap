@@ -122,8 +122,8 @@ class event_handlers {
      * @param course_module_completion_updated $event
      */
     public static function course_module_completion_updated(course_module_completion_updated $event) {
-        $muc = \cache::make('theme_snap', 'course_completion_progress');
-        $muc->delete($event->courseid.'_'.$event->relateduserid);
+        // Force an update for the specific course and user effected by this completion event.
+        local::course_user_completion_cachestamp($event->courseid, $event->relateduserid, true);
     }
 
 }
