@@ -36,5 +36,29 @@ $observers = array(
     array (
         'eventname' => '\core\event\user_deleted',
         'callback'  => '\theme_snap\event_handlers::user_deleted'
+    ),
+
+    // All events affecting course completion at course level.
+    array (
+        'eventname' => '\core\event\course_completion_updated',
+        'callback'  => '\theme_snap\event_handlers::course_completion_updated'
+    ),
+    array (
+        'eventname' => '\core\event\course_module_created',
+        'callback'  => '\theme_snap\event_handlers::course_module_created'
+    ),
+    array (
+        'eventname' => '\core\event\course_module_updated',
+        'callback'  => '\theme_snap\event_handlers::course_module_updated'
+    ),
+    array (
+        'eventname' => '\core\event\course_module_deleted',
+        'callback'  => '\theme_snap\event_handlers::course_module_deleted'
+    ),
+
+    // User level course completion event.
+    array (
+        'eventname' => '\core\event\course_module_completion_updated',
+        'callback'  => '\theme_snap\event_handlers::course_module_completion_updated'
     )
 );

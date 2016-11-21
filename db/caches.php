@@ -15,9 +15,9 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Web service cache definitions.
+ * Cache definition for snap.
  *
- * @package    theme_snap
+ * @package   theme_snap
  * @author    Guy Thomas <gthomas@moodlerooms.com>
  * @copyright Copyright (c) 2016 Blackboard Inc.
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
@@ -26,9 +26,24 @@
 defined('MOODLE_INTERNAL') || die;
 
 $definitions = array(
-    'webservicedefinitions' => array(
-        'mode' => cache_store::MODE_APPLICATION,
-        'simplekeys' => false,
-        'simpledata' => false
-    )
+    'webservicedefinitions' => [
+        'mode'               => cache_store::MODE_APPLICATION,
+        'simplekeys'         => false,
+        'simpledata'         => false
+    ],
+    // This is used so that we can invalidate session level caches if the course completion settings for a course
+    // change.
+    'course_completion_progress_ts' => [
+        'mode'               => cache_store::MODE_APPLICATION,
+        'simplekeys'         => true,
+        'simpledata'         => true,
+        'staticacceleration' => false
+    ],
+    // This is used to cache completion data per course / user.
+    'course_completion_progress' => [
+        'mode'               => cache_store::MODE_SESSION,
+        'simplekeys'         => true,
+        'simpledata'         => false,
+        'staticacceleration' => false
+    ]
 );

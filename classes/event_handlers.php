@@ -17,6 +17,11 @@
 namespace theme_snap;
 use core\event\course_updated;
 use core\event\course_deleted;
+use core\event\course_completion_updated;
+use core\event\course_module_created;
+use core\event\course_module_updated;
+use core\event\course_module_deleted;
+use core\event\course_module_completion_updated;
 
 defined('MOODLE_INTERNAL') || die();
 
@@ -31,7 +36,6 @@ defined('MOODLE_INTERNAL') || die();
  */
 
 class event_handlers {
-
 
     /**
      * The course update event.
@@ -75,6 +79,51 @@ class event_handlers {
 
         $select = ['userid' => $event->objectid];
         $DB->delete_records('theme_snap_course_favorites', $select);
+    }
+
+    /**
+     * Update course completion time stamp for course affected by event.
+     * @param course_completion_updated $event
+     */
+    public static function course_completion_updated(course_completion_updated $event) {
+        // Force an update of course completion cache stamp.
+        local::course_completion_cachestamp($event->courseid, true);
+    }
+
+    /**
+     * Update course completion time stamp for course affected by event.
+     * @param course_module_created $event
+     */
+    public static function course_module_created(course_module_created $event) {
+        // Force an update of course completion cache stamp.
+        local::course_completion_cachestamp($event->courseid, true);
+    }
+
+    /**
+     * Update course completion time stamp for course affected by event.
+     * @param course_module_updated $event
+     */
+    public static function course_module_updated(course_module_updated $event) {
+        // Force an update of course completion cache stamp.
+        local::course_completion_cachestamp($event->courseid, true);
+    }
+
+    /**
+     * Update course completion time stamp for course affected by event.
+     * @param course_module_deleted $event
+     */
+    public static function course_module_deleted(course_module_deleted $event) {
+        // Force an update of course completion cache stamp.
+        local::course_completion_cachestamp($event->courseid, true);
+    }
+
+    /**
+     * Purge session level cache for affected course.
+     * @param course_module_completion_updated $event
+     */
+    public static function course_module_completion_updated(course_module_completion_updated $event) {
+        $muc = \cache::make('theme_snap', 'course_completion_progress');
+        $muc->delete($event->courseid.'_'.$event->relateduserid);
     }
 
 }
