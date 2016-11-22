@@ -1351,7 +1351,7 @@ class theme_snap_local_test extends \advanced_testcase {
         $comp = local::course_completion_progress($course);
         $this->assertTrue($comp->fromcache);
 
-        // Assert completion updates on grading.
+        // Assert completion does not update for current user when grading someone else's assignment.
         $this->setUser($teacher); // We need to be a teacher if we are grading.
         $DB->set_field('course_modules', 'completiongradeitemnumber', 0, ['id' => $cm->id]);
         $assign = new \assign($cm->context, $cm, $course);
@@ -1366,8 +1366,23 @@ class theme_snap_local_test extends \advanced_testcase {
         ];
         $assignrow->cmidnumber = null;
         assign_grade_item_update($assignrow, $grades);
-        $this->setUser($student);
+        $comp = local::course_completion_progress($course);
+        $this->assertFalse($comp->fromcache);
+        $this->assertInstanceOf('stdClass', $comp);
+        $this->assertEquals(0, $comp->complete);
+        $this->assertEquals(1, $comp->total);
+        $this->assertEquals(0, $comp->progress);
 
+        // Assert completion does update for current user when they grade their own assignment.
+        // Note, we need to stay as a teacher because if we logged out to test as student it would invalidate the
+        // cache and we are testing for cache invalidation here!!!!
+        $grades = array();
+        $grades[$teacher->id] = (object) [
+            'rawgrade' => 60,
+            'userid' => $teacher->id
+        ];
+        $assignrow->cmidnumber = null;
+        assign_grade_item_update($assignrow, $grades);
         $comp = local::course_completion_progress($course);
         $this->assertFalse($comp->fromcache); // Cache should have been dumped at this point.
         $this->assertEquals(1, $comp->complete);

@@ -254,15 +254,14 @@ class local {
     }
 
     /**
-     * Get / create completion cache stamp for specific course id.
-     *
-     * @param $courseid
+     * Generate or get course completion cache stamp for key.
+     * @param string $key
      * @param bool $new
-     * @return float
      */
-    public static function course_completion_cachestamp($courseid, $new = false) {
+    protected static function gen_course_completion_cachestamp($key, $new = false) {
+        $key = strval($key);
         $muc = \cache::make('theme_snap', 'course_completion_progress_ts');
-        $cachestamp = $muc->get($courseid);
+        $cachestamp = $muc->get($key);
         if (!$cachestamp || $new) {
             if (defined('PHPUNIT_TEST') && PHPUNIT_TEST) {
                 // This is here to ensure cache stamp is fresh where test code calls this function multiple times
@@ -270,10 +269,31 @@ class local {
                 usleep(1);
             }
             $ts = microtime(true);
-            $muc->set($courseid, $ts);
+            $muc->set($key, $ts);
             return $ts;
         }
         return $cachestamp;
+    }
+
+    /**
+     * Get / create completion cache stamp for specific course id.
+     *
+     * @param int $courseid
+     * @param bool $new
+     * @return float
+     */
+    public static function course_completion_cachestamp($courseid, $new = false) {
+        return self::gen_course_completion_cachestamp(strval($courseid), $new);
+    }
+
+    /**
+     * @param int $courseid
+     * @param int $userid
+     * @param bool $new
+     * @return false|mixed
+     */
+    public static function course_user_completion_cachestamp($courseid, $userid, $new = false) {
+        return self::gen_course_completion_cachestamp($courseid.'_'.$userid, $new);
     }
 
     /**
@@ -306,12 +326,16 @@ class local {
 
         // Course cache stamp is used to invalidate user session caches if an application level event occurs -
         // e.g. course completion settings updated, new module added, module deleted, etc.
-        $cachestamp = self::course_completion_cachestamp($course->id);
+        $coursestamp = self::course_completion_cachestamp($course->id);
+
+        // Course user cache stamp is used to invalidate user session caches if an event occurs which affects this
+        // user - e.g. A teacher grades this users assignment and that triggers completion.
+        $courseuserstamp = self::course_user_completion_cachestamp($course->id, $USER->id);
 
         /** @var \cache_session $muc */
         $muc = \cache::make('theme_snap', 'course_completion_progress');
         $cached = $muc->get($course->id.'_'.$USER->id);
-        if ($cached && $cached->timestamp >= $cachestamp) {
+        if ($cached && $cached->timestamp >= $coursestamp && $cached->timestamp >= $courseuserstamp) {
             $cached->fromcache = true; // Useful for debugging and unit testing.
             return $cached;
         }
