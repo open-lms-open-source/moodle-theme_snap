@@ -1200,7 +1200,7 @@ class theme_snap_local_test extends \advanced_testcase {
 
         $this->resetAfterTest();
 
-        $testtxt = 'Hello world, Καλημέρα κόσμε, コンニチハ';
+        $testtxt = 'Hello world, Καλημέρα κόσμε, コンニチハ, àâæçéèêë';
 
         $generator = $this->getDataGenerator();
         $course = $generator->create_course();
@@ -1226,18 +1226,16 @@ class theme_snap_local_test extends \advanced_testcase {
         // Ensure summary does not contain any images.
         $this->assertNotContains('<img', $pagemod->summary);
         
-        // Make sure summary text never greater than 200 chars (note this only applies to when summary generated from
-        // content).
-        $this->assertLessThan(201, strlen($pagemod->summary));
+        // Make sure summary text has been shortened with elipsis.
+        $this->assertStringEndsWith('...', $pagemod->summary);
 
-        // If more than one image is added to content, make sure 1st image alt tag is removed and 2nd image alt tag is
-        // preserved.
+        // Make sure no images are preserved in summary text.
         $page->content = '<img src="http://fakeurl.local/img1.png" alt="image 1" />' .
                          '<img src="http://fakeurl.local/img2.png" alt="image 2" />';
         $DB->update_record('page', $page);
         $pagemod = local::get_page_mod($cm);
-        $this->assertNotContains('[image 1]', $pagemod->summary);
-        $this->assertContains('[image 2]', $pagemod->summary);
+        $this->assertNotContains('image 1', $pagemod->summary);
+        $this->assertNotContains('image 2', $pagemod->summary);
     }
 
     /**
