@@ -1223,9 +1223,6 @@ class local {
         } else {
             $preview = strip_tags($page->content);
             $page->summary = shorten_text($preview, 200);
-            if (\core_text::strlen($page->summary) > 200) {
-                $page->summary = shorten_text($page->summary, 200, true);
-            }
         }
 
         // Process content.

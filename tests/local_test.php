@@ -1226,9 +1226,8 @@ class theme_snap_local_test extends \advanced_testcase {
         // Ensure summary does not contain any images.
         $this->assertNotContains('<img', $pagemod->summary);
         
-        // Make sure summary text never greater than 200 chars (note this only applies to when summary generated from
-        // content).
-        $this->assertLessThan(201, \core_text::strlen($pagemod->summary));
+        // Make sure summary text has been shortened with elipsis.
+        $this->assertStringEndsWith('...', $pagemod->summary);
 
         // Make sure no images are preserved in summary text.
         $page->content = '<img src="http://fakeurl.local/img1.png" alt="image 1" />' .
