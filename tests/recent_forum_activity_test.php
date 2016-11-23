@@ -26,6 +26,7 @@ namespace theme_snap\tests;
 
 use theme_snap\local;
 use theme_snap\user_forums;
+use core_component;
 
 defined('MOODLE_INTERNAL') || die();
 
@@ -70,6 +71,17 @@ class theme_snap_recent_forum_activity_test extends \advanced_testcase {
      * @var stdClass
      */
     protected $group2;
+
+    /**
+     * checks if specific plugin is present and enabled
+     * @param $component - plugin component
+     * @return bool
+     */
+    protected function plugin_present($component) {
+        list($type, $plugin) = core_component::normalize_component($component);
+        $plugins = \core_plugin_manager::instance()->get_enabled_plugins($type);
+        return in_array($plugin, $plugins);
+    }
 
     /**
      * Pre-requisites for tests.
@@ -136,6 +148,10 @@ class theme_snap_recent_forum_activity_test extends \advanced_testcase {
      */
     public function test_forum_discussion_simple($ftype = 'forum', $toffset = 0, $u1offset = 0, $u2offset = 0) {
 
+        if ($ftype == 'hsuforum' && !$this->plugin_present('hsuforum')) {
+            $this->markTestSkipped('Skipped test, mod_hsuforum is not installed.');
+        }
+
         // If this is not a combined test then check and make sure there is no activity (nothing done yet).
         if ($toffset === 0 && $u1offset === 0 && $u2offset === 0) {
             $activity = local::recent_forum_activity($this->teacher2->id);
@@ -192,6 +208,10 @@ class theme_snap_recent_forum_activity_test extends \advanced_testcase {
      * @throws \coding_exception
      */
     public function test_forum_post_simple($ftype = 'forum', $toffset = 0, $u1offset = 0, $u2offset = 0) {
+
+        if ($ftype == 'hsuforum' && !$this->plugin_present('hsuforum')) {
+            $this->markTestSkipped('Skipped test, mod_hsuforum is not installed.');
+        }
 
         $record = new \stdClass();
         $record->course = $this->course1->id;
@@ -251,6 +271,10 @@ class theme_snap_recent_forum_activity_test extends \advanced_testcase {
      */
     public function test_forum_high_volume_posts($ftype = 'forum') {
         global $DB;
+
+        if ($ftype == 'hsuforum' && !$this->plugin_present('hsuforum')) {
+            $this->markTestSkipped('Skipped test, mod_hsuforum is not installed.');
+        }
 
         // Disabled for general use.
         $this->markTestIncomplete(
@@ -410,6 +434,10 @@ class theme_snap_recent_forum_activity_test extends \advanced_testcase {
      */
     public function test_hsuforum_anonymous() {
 
+        if (!$this->plugin_present('hsuforum')) {
+            $this->markTestSkipped('Skipped test, mod_hsuforum is not installed.');
+        }
+
         $record = new \stdClass();
         $record->course = $this->course1->id;
         $record->anonymous = 1;
@@ -439,6 +467,10 @@ class theme_snap_recent_forum_activity_test extends \advanced_testcase {
      * @param string $ftype
      */
     public function test_forum_qanda($ftype = 'forum') {
+
+        if ($ftype == 'hsuforum' && !$this->plugin_present('hsuforum')) {
+            $this->markTestSkipped('Skipped test, mod_hsuforum is not installed.');
+        }
 
         $record = new \stdClass();
         $record->course = $this->course1->id;
@@ -485,7 +517,9 @@ class theme_snap_recent_forum_activity_test extends \advanced_testcase {
      * @throws \coding_exception
      */
     public function test_hsuforum_private() {
-
+        if (!$this->plugin_present('hsuforum')) {
+            $this->markTestSkipped('Skipped test, mod_hsuforum is not installed.');
+        }
         $record = new \stdClass();
         $record->course = $this->course2->id; // Use course 2 so that both user1 and user2 can access it.
         $record->allowprivatereplies = 1;
@@ -522,6 +556,10 @@ class theme_snap_recent_forum_activity_test extends \advanced_testcase {
      */
     public function test_forum_restricted($ftype = 'forum', $toffset = 0, $u1offset = 0, $u2offset = 0) {
         global $CFG;
+
+        if ($ftype == 'hsuforum' && !$this->plugin_present('hsuforum')) {
+            $this->markTestSkipped('Skipped test, mod_hsuforum is not installed.');
+        }
 
         // This is crucial - without this you can't make a conditionally accsesed forum.
         $CFG->enableavailability = true;
@@ -571,6 +609,11 @@ class theme_snap_recent_forum_activity_test extends \advanced_testcase {
      * @param int $u2offset
      */
     public function test_forum_group_posts($ftype = 'forum', $toffset = 0, $u1offset = 0, $u2offset = 0) {
+
+        if ($ftype == 'hsuforum' && !$this->plugin_present('hsuforum')) {
+            $this->markTestSkipped('Skipped test, mod_hsuforum is not installed.');
+        }
+
         // Create a forum with group mode enabled.
         $record = new \stdClass();
         $record->course = $this->course2->id;
