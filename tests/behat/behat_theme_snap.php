@@ -30,7 +30,8 @@ require_once(__DIR__ . '/../../../../lib/behat/behat_base.php');
 use Behat\Behat\Context\Step\Given,
     Behat\Gherkin\Node\TableNode as TableNode,
     Behat\Mink\Element\NodeElement,
-    Behat\Mink\Exception\ExpectationException as ExpectationException;
+    Behat\Mink\Exception\ExpectationException as ExpectationException,
+    Moodle\BehatExtension\Exception\SkippedException;
 
 /**
  * Choice activity definitions.
