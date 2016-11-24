@@ -6048,10 +6048,6 @@ ul.events-new + ul.events-underway {
   border-radius: 100%;
 }
 @media screen and (min-width: 768px) {
-  #dateselector-calendar-panel {
-    left: 33% !important;
-    top: 50% !important;
-  }
   #dateselector-calendar-panel .yui3-calendar-base {
     width: 100%;
   }
