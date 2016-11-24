@@ -105,4 +105,28 @@ class snap_personal_menu_controller extends controller_abstract {
             'info' => $courseinfo
         ));
     }
+
+    /**
+     * Get user's current login status.
+     *
+     * @return string
+     * @throws \coding_exception
+     */
+    public function get_loginstatus_action() {
+        $failedactionmsg = optional_param('failedactionmsg', null, PARAM_TEXT);
+        $loggedin = isloggedin();
+        $return = [
+            'loggedin' => $loggedin
+        ];
+        if (!$loggedin) {
+            if (!empty($failedactionmsg)) {
+                $return['loggedoutmsg'] = get_string('loggedoutfailmsg', 'theme_snap', $failedactionmsg);
+            } else {
+                $return['loggedoutmsg'] = get_string('loggedoutmsg', 'theme_snap');
+            }
+            $return['loggedouttitle'] = get_string('loggedoutmsgtitle', 'theme_snap');
+            $return['loggedoutcontinue'] = get_string('continue');
+        }
+        return json_encode($return);
+    }
 }

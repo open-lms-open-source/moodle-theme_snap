@@ -287,7 +287,9 @@ class shared extends \renderer_base {
 
         $PAGE->requires->strings_for_js([
             'ok',
-            'cancel'
+            'cancel',
+            'error',
+            'unknownerror'
         ], 'moodle');
 
         $PAGE->requires->strings_for_js([
@@ -341,8 +343,8 @@ class shared extends \renderer_base {
             'enablecompletion' => $COURSE->enablecompletion
         ];
 
-        $initvars = [$coursevars, $pagehascoursecontent, get_max_upload_file_size($CFG->maxbytes),
-                     get_user_preferences('auth_forcepasswordchange', false)];
+        $forcepwdchange = (bool) get_user_preferences('auth_forcepasswordchange', false);
+        $initvars = [$coursevars, $pagehascoursecontent, get_max_upload_file_size($CFG->maxbytes), $forcepwdchange];
         $PAGE->requires->js_call_amd('theme_snap/snap', 'snapInit', $initvars);
 
         // Does the page have editable course content?

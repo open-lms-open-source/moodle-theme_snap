@@ -37,11 +37,15 @@ $contextid = optional_param('contextid', $systemcontext->id, PARAM_INT);
 
 list($context, $course, $cm) = get_context_info_array($contextid);
 
-$courseactions = ['get_media', 'read_page', 'get_page'];
-if (in_array($action, $courseactions)) {
-    require_login($course, false, $cm, false, true);
-} else {
-    require_login();
+$nologinactions = ['get_loginstatus']; // Actions which do not require login checks.
+
+if (!in_array($action, $nologinactions)) {
+    $courseactions = ['get_media', 'read_page', 'get_page'];
+    if (in_array($action, $courseactions)) {
+        require_login($course, false, $cm, false, true);
+    } else {
+        require_login();
+    }
 }
 
 /** @var $PAGE moodle_page */

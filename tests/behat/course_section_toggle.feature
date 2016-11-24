@@ -42,8 +42,7 @@ Feature: When the moodle theme is set to Snap, teachers can toggle the visibilit
   @javascript
   Scenario: In read mode, teacher hides section.
     Given I log in as "teacher1" (theme_snap)
-    And I open the personal menu
-    And I follow "Course 1"
+    And I am on the course main page for "C1"
     And I follow "Topic 2"
     Then "#section-2" "css_element" should exist
     And "#chapters li:nth-of-type(3).snap-visible-section" "css_element" should exist
@@ -67,9 +66,19 @@ Feature: When the moodle theme is set to Snap, teachers can toggle the visibilit
     And the next navigation for section "1" shows as visible
 
   @javascript
+  Scenario: Teacher loses teacher capability whilst course open and receives the correct error message when trying to
+  hide section.
+    Given I log in as "teacher1" (theme_snap)
+    And I am on the course main page for "C1"
+    And the editing teacher role is removed from course "C1" for "teacher1"
+    And I follow "Topic 1"
+    Then "#section-1" "css_element" should exist
+    And I click on "#section-1 .snap-visibility.snap-hide" "css_element"
+    Then I should see "Failed to hide/show section"
+
+  @javascript
   Scenario: In read mode, student cannot hide section.
     Given I log in as "student1" (theme_snap)
-    And I open the personal menu
-    And I follow "Course 1"
+    And I am on the course main page for "C1"
     And I follow "Topic 2"
     Then "#section-2 .snap-visibility" "css_element" should not exist

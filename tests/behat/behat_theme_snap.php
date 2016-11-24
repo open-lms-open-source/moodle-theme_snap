@@ -24,8 +24,9 @@
  */
 
 // NOTE: no MOODLE_INTERNAL test here, this file may be required by behat before including /config.php.
-
 require_once(__DIR__ . '/../../../../lib/behat/behat_base.php');
+define('MOODLE_INTERNAL', true);
+require_once(__DIR__ . '/../../../../lib/accesslib.php');
 
 use Behat\Behat\Context\Step\Given,
     Behat\Gherkin\Node\TableNode as TableNode,
@@ -1275,15 +1276,81 @@ class behat_theme_snap extends behat_base {
     }
 
     /**
-     * @Given /^force password change is assigned to user "(?P<username_string>(?:[^"]|\\")*)"$/
+     * Get user record by username.
+     *
      * @param string $username
+     * @return stdClass | false
+     * @throws coding_exception
      */
-    public function force_password_change_is_assigned_to_user($username) {
+    private function get_user_by_username($username) {
         global $DB;
         $user = $DB->get_record('user', ['username' => $username]);
         if (empty($user)) {
             throw new coding_exception('Invalid username '.$username);
         }
+        return $user;
+    }
+
+    /**
+     * @Given /^force password change is assigned to user "(?P<username_string>(?:[^"]|\\")*)"$/
+     * @param string $username
+     */
+    public function force_password_change_is_assigned_to_user($username) {
+        $user = $this->get_user_by_username($username);
         set_user_preference('auth_forcepasswordchange', 1, $user);
+    }
+
+    /**
+     * Unassigns a role from a user for specific context.
+     * Copied from enrol/locallib.php - note, could not include enrol/locallib.php into behat without it complaining.
+     *
+     * @param int $contextid;
+     * @param int $userid
+     * @param int $roleid
+     * @return bool
+     * @throws coding_exception
+     * @throws moodle_exception
+     */
+    protected function unassign_role_from_user($contextid, $userid, $roleid) {
+        global $DB;
+        $user = $DB->get_record('user', array('id'=>$userid), '*', MUST_EXIST);
+        $ras = $DB->get_records('role_assignments', array('contextid'=>$contextid, 'userid'=>$user->id, 'roleid'=>$roleid));
+        foreach ($ras as $ra) {
+            if ($ra->component) {
+                if (strpos($ra->component, 'enrol_') !== 0) {
+                    continue;
+                }
+            }
+            role_unassign($ra->roleid, $ra->userid, $ra->contextid, $ra->component, $ra->itemid);
+        }
+        return true;
+    }
+
+    /**
+     * @Given /^the editing teacher role is removed from course "(?P<shortname_string>(?:[^"]|\\")*)" for "(?P<username_string>(?:[^"]|\\")*)"$/
+     * @param string $shortname
+     * @param string $username
+     */
+    public function the_teacher_role_is_removed_for($shortname, $username) {
+        global $DB;
+
+        $service = theme_snap\services\course::service();
+        $course = $service->coursebyshortname($shortname, 'id');
+
+        $page = new moodle_page();
+        $coursecontext = context_course::instance($course->id);
+        $page->set_context($coursecontext);
+
+        $user = $this->get_user_by_username($username);
+        $teacherrole = $DB->get_record('role', ['shortname' => 'editingteacher'], 'id');
+        $this->unassign_role_from_user($coursecontext->id, $user->id, $teacherrole->id);
+    }
+
+    /**
+     * @Given /^debugging is turned off$/
+     */
+    public function debugging_is_turned_off() {
+        set_config('debug', '0');
+        set_config('debugdisplay', '0');
     }
 }

@@ -43,8 +43,7 @@ Feature: When the moodle theme is set to Snap, teachers can move course sections
   @javascript
   Scenario: In read mode, teacher moves section 1 before section 4 (section 3).
     Given I log in as "teacher1" (theme_snap)
-    And I open the personal menu
-    And I follow "Course 1"
+    And I am on the course main page for "C1"
     And I follow "Topic 1"
     And I follow "Untitled Topic"
     And I set the following fields to these values:
@@ -66,9 +65,26 @@ Feature: When the moodle theme is set to Snap, teachers can move course sections
     And the next navigation for section "2" is for "My & < > Topic" linking to "#section-3"
 
   @javascript
+  Scenario: Teacher loses teacher capability whilst course open and receives the correct error message when trying to
+  move section.
+    Given debugging is turned off
+    And I log in as "teacher1" (theme_snap)
+    And I am on the course main page for "C1"
+    And I follow "Topic 1"
+    And I follow "Untitled Topic"
+    And I set the following fields to these values:
+      | name | My & < > Topic |
+    And I press "Save changes"
+    And I follow "Move \"My & < > Topic\""
+    Then I should see "Moving \"My & < > Topic\"" in the "#snap-move-message" "css_element"
+    When I follow "Topic 4"
+    And the editing teacher role is removed from course "C1" for "teacher1"
+    And I follow "Place section \"My & < > Topic\" before section \"Topic 4\""
+    Then I should see "Sorry, but you do not currently have permissions to do that (Move sections)"
+
+  @javascript
   Scenario: In read mode, student cannot move sections.
     Given I log in as "student1" (theme_snap)
-    And I open the personal menu
-    And I follow "Course 1"
+    And I am on the course main page for "C1"
     And I follow "Topic 1"
     Then "a[title=Move section]" "css_element" should not exist
