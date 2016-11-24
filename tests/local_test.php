@@ -310,17 +310,17 @@ class theme_snap_local_test extends \advanced_testcase {
         $quizgen->create_instance([
             'name' => 'Quiz 1',
             'course' => $course->id,
-            'timeclose' => $approachingdeadline
+            'timeclose' => $approachingdeadline + 1 // Add 1 second so that Quiz deadlines sort predictably after Assign.
         ]);
         $quizgen->create_instance([
             'name' => 'Quiz 2',
             'course' => $course->id,
-            'timeclose' => strtotime('tomorrow') + HOURSECS * 2 // Add two hours so that test works at 23:30.
+            'timeclose' => strtotime('tomorrow') + (HOURSECS * 2) + 1 // Add two hours so that test works at 23:30.
         ]);
         $quizgen->create_instance([
             'name' => 'Quiz 3',
             'course' => $course->id,
-            'timeclose' => strtotime('next month')
+            'timeclose' => strtotime('next month') + 1
         ]);
 
         // 5 items should be shown as final deadline 3rd quiz gets cut off.
@@ -1216,16 +1216,16 @@ class theme_snap_local_test extends \advanced_testcase {
         $DB->update_record('page', $page);
 
         $pagemod = local::get_page_mod($cm);
-        
+
         // Ensure summary contains text.
         $this->assertContains($testtxt, $pagemod->summary);
 
         // Ensure summary contains text without tags.
         $this->assertNotContains('<p>'.$testtxt.'</p>', $pagemod->summary);
-        
+
         // Ensure summary does not contain any images.
         $this->assertNotContains('<img', $pagemod->summary);
-        
+
         // Make sure summary text has been shortened with elipsis.
         $this->assertStringEndsWith('...', $pagemod->summary);
 
@@ -1283,7 +1283,7 @@ class theme_snap_local_test extends \advanced_testcase {
         $event->trigger();
         return ($cm);
     }
-    
+
     /**
      * Test getting course completion cache stamp + resetting it to a new stamp.
      */
@@ -1308,7 +1308,7 @@ class theme_snap_local_test extends \advanced_testcase {
 
     public function test_course_completion_progress() {
         global $DB, $CFG;
-        
+
         $this->resetAfterTest();
 
         // Set up.
