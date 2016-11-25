@@ -888,7 +888,6 @@ class local {
             $xofysubmitted = get_string('xofysubmitted', 'theme_snap', $a);
             $meta = $xofysubmitted.', '.$xungraded.'<br>';
 
-            // $meta = '';
             if (!empty($ungraded->closetime)) {
                 $meta .= $output->friendly_datetime($ungraded->closetime);
             }
