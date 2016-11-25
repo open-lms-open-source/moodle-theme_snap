@@ -886,14 +886,14 @@ class local {
             $a['completed'] = call_user_func($function, $ungraded->course, $ungraded->instanceid);
             $a['participants'] = (self::course_participant_count($ungraded->course, $cm->modname));
             $xofysubmitted = get_string('xofysubmitted', 'theme_snap', $a);
-            $info = '<span class="label label-info">'.$xofysubmitted.', '.$xungraded.'</span>';
+            $meta = $xofysubmitted.', '.$xungraded.'<br>';
 
-            $meta = '';
+            // $meta = '';
             if (!empty($ungraded->closetime)) {
-                $meta = $output->friendly_datetime($ungraded->closetime);
+                $meta .= $output->friendly_datetime($ungraded->closetime);
             }
 
-            $out .= $output->snap_media_object($cm->url, $modimage, $ungradedtitle, $meta, $info);
+            $out .= $output->snap_media_object($cm->url, $modimage, $ungradedtitle, $meta, '');
         }
 
         return $out;
