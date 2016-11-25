@@ -24228,17 +24228,17 @@ fieldset[disabled] .path-admin-tool-lp [data-region="filtercompetencies"] button
   background-color: white;
 }
 /* Icon size. */
-#page-admin-tool-lp-coursecompetencies ul.inline {
+.path-admin-tool-lp ul.inline {
   padding-left: 0;
   list-style: none;
   margin-left: -5px;
 }
-#page-admin-tool-lp-coursecompetencies ul.inline > li {
+.path-admin-tool-lp ul.inline > li {
   display: inline-block;
   padding-left: 5px;
   padding-right: 5px;
 }
-#page-admin-tool-lp-coursecompetencies ul.inline img {
+.path-admin-tool-lp ul.inline img {
   width: 2rem;
   height: 2rem;
   margin: 0 0.3rem;
