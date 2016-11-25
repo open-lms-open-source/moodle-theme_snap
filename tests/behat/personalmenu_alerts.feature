@@ -26,7 +26,8 @@ Feature: When the moodle theme is set to Snap, students and teachers can open a 
   configured).
 
   Background:
-    Given the following config values are set as admin:
+    Given I am using Joule
+    And the following config values are set as admin:
       | theme | snap |
     And the following config values are set as admin:
       | message_provider_moodle_instantmessage_loggedoff | badge | message |
