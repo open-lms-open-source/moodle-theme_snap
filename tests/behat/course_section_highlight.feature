@@ -76,8 +76,8 @@ Feature: When the moodle theme is set to Snap, teachers can toggle the currently
     And the editing teacher role is removed from course "C1" for "teacher1"
     And I follow "Topic 1"
     Then "#section-1" "css_element" should exist
-    And I click on "#section-1 .snap-visibility.snap-hide" "css_element"
-    Then I should see "Failed to hide/show section"
+    And I click on "#section-1 .snap-highlight.snap-marker" "css_element"
+    Then I should see "Failed to highlight section"
 
   @javascript
   Scenario: Student cannot mark section current.
