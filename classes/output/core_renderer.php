@@ -514,9 +514,9 @@ class core_renderer extends toc_renderer {
         $graded = $this->render_graded();
         $grading = $this->render_grading();
         if (empty($grading)) {
-            $gradebookmenulink = $this->mobile_menu_link('recentfeedback', 'gradebook', '#snap-personal-menu-graded');
+            $gradebookmenulink = $this->mobile_menu_link('recentfeedback', 'grading', '#snap-personal-menu-graded');
         } else {
-            $gradebookmenulink = $this->mobile_menu_link('grading', 'gradebook', '#snap-personal-menu-grading');
+            $gradebookmenulink = $this->mobile_menu_link('grading', 'grading', '#snap-personal-menu-grading');
         }
         if (!empty($grading)) {
             $columns[] = $grading;
@@ -1269,12 +1269,12 @@ HTML;
                 $classes[] = 'folderview-single-section';
             }
         }
-        
+
         // Add completion tracking class.
         if (!empty($COURSE->enablecompletion)) {
             $classes[] = 'completion-tracking';
         }
-        
+
         // Add theme-snap class so modules can customise css for snap.
         $classes[] = 'theme-snap';
 
