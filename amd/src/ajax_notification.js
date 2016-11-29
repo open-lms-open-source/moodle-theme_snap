@@ -24,7 +24,16 @@ define(['core/notification', 'core/ajax', 'core/templates', 'core/str'],
 
     function(notification, ajax, templates, str) {
 
-        var staticLoginErrorShown = false;
+        // Module level variables.
+        var loginErrorShown = false;
+        var loggingOut = false;
+
+        // Module level code.
+        $(document).ready(function() {
+            $('#fixy-logout').click(function() {
+                loggingOut = true;
+            });
+        });
 
         /**
          * This feature is simply to work around this issue - MDL-54551.
@@ -37,13 +46,17 @@ define(['core/notification', 'core/ajax', 'core/templates', 'core/str'],
              *
              * @param response
              * @param failaction
-             * @return bool
              */
             ifErrorShowBestMsg : function(response, failAction, failMsg) {
 
-                if (staticLoginErrorShown) {
+                if (loginErrorShown) {
                     // We already have a login error message.
-                    return true;
+                    return;
+                }
+
+                if (loggingOut) {
+                    // No point in showing error messages if we are logging out.
+                    return;
                 }
 
                 if (typeof response !== 'object') {
@@ -62,8 +75,8 @@ define(['core/notification', 'core/ajax', 'core/templates', 'core/str'],
 
                     if (M.snapTheme.forcePassChange) {
                         var pwdChangeUrl = M.cfg.wwwroot+'/login/change_password.php';
-                        // When a force password change is in effect it breaks the theme_snap_loginstatus method.
-                        // Warn user in personal menu and redirect to password change page if appropriate.
+                        // When a force password change is in effect, warn user in personal menu and redirect to
+                        // password change page if appropriate.
                         if ($('#fixy-content').length) {
                             str.get_string('forcepwdwarningpersonalmenu', 'theme_snap', pwdChangeUrl).done(
                                 function(forcePwdWarning) {
@@ -86,7 +99,7 @@ define(['core/notification', 'core/ajax', 'core/templates', 'core/str'],
                             return;
                         }
                         window.location = pwdChangeUrl;
-                        staticLoginErrorShown = true; // Not really, but we only want this redirect to happen once.
+                        loginErrorShown = true; // Not really, but we only want this redirect to happen once.
                         return;
                     }
 
@@ -96,63 +109,74 @@ define(['core/notification', 'core/ajax', 'core/templates', 'core/str'],
                      */
                     var errorNotification = function(response) {
                         if (failMsg) {
-                            notification.alert(null, failMsg, M.util.get_string('ok', 'moodle'));
+                            notification.alert(M.util.get_string('error', 'moodle'),
+                                    failMsg, M.util.get_string('ok', 'moodle'));
                         } else {
-                            notification.exception(response);
+                            if (response.backtrace) {
+                                notification.exception(response);
+                            } else {
+                                var errorstr;
+                                if (response.error) {
+                                    errorstr = response.error;
+                                    if (response.stacktrace) {
+                                        errorstr = '<div>' + errorstr + '<pre>' + response.stacktrace + '</pre></div>';
+                                    }
+
+                                } else {
+                                    errorstr = M.util.get_string('unknownerror', 'moodle');
+                                }
+                                notification.alert(M.util.get_string('error', 'moodle'),
+                                        errorstr, M.util.get_string('ok', 'moodle'));
+                            }
                         }
                     };
 
                     // Ajax call login status function to see if we are logged in or not.
+                    // Note, we can't use a moodle web service for this ajax call because it will not provide
+                    // an error response that we can rely on - see MDL-54551.
                     failAction = failAction ? failAction : '';
-                    var args = {
-                        failedactionmsg: failAction
-                    };
-
-                    ajax.call([
-                        {
-                            methodname: 'theme_snap_loginstatus',
-                            args: args,
-                            done: function(thisResp) {
-                                if (staticLoginErrorShown) {
-                                    return;
-                                }
-                                // Show login error message or original error message.
-                                if (!thisResp.loggedin) {
-                                    // Hide ALL confirmation dialog 2nd buttons and close buttons.
-                                    // Note - this is not ideal but at this point we need to log in anyway, so not
-                                    // an issue.
-                                    $('<style>' +
-                                        '.confirmation-dialogue .confirmation-buttons input:nth-of-type(2), ' +
-                                        '.moodle-dialogue-base.moodle-dialogue-confirm button.yui3-button.closebutton' +
-                                        '{ display : none }' +
-                                        '</style>'
-                                    ).appendTo('head');
-                                    notification.confirm(
-                                        thisResp.loggedouttitle,
-                                        thisResp.loggedoutmsg,
-                                        thisResp.loggedoutcontinue,
-                                        ' ',
-                                        function() {
-                                            window.location = M.cfg.wwwroot+'/login/index.php';
-                                        }
-                                    );
-                                    staticLoginErrorShown = true;
-                                  } else {
-                                    // This is not a login issue, show original error message.
-                                    errorNotification(response);
-                                }
-                            },
-                            fail: function() {
-                                // The ajax call to determine the login status failed, just show original error message.
-                                errorNotification(response);
-                            }
+                    $.ajax({
+                        type: "POST",
+                        async: true,
+                        data: {
+                            "sesskey" : M.cfg.sesskey,
+                            "failedactionmsg" : failAction
+                        },
+                        url: M.cfg.wwwroot + '/theme/snap/rest.php?action=get_loginstatus'
+                    }).done(function(thisResp) {
+                        if (loginErrorShown) {
+                            return;
                         }
-                    ], false, false);
-                    // Has a login error.
-                    return true;
+                        // Show login error message or original error message.
+                        if (!thisResp.loggedin) {
+                            // Hide ALL confirmation dialog 2nd buttons and close buttons.
+                            // Note - this is not ideal but at this point we need to log in anyway, so not
+                            // an issue.
+                            $('<style>' +
+                                '.confirmation-dialogue .confirmation-buttons input:nth-of-type(2), ' +
+                                '.moodle-dialogue-base.moodle-dialogue-confirm button.yui3-button.closebutton' +
+                                '{ display : none }' +
+                                '</style>'
+                            ).appendTo('head');
+                            notification.confirm(
+                                thisResp.loggedouttitle,
+                                thisResp.loggedoutmsg,
+                                thisResp.loggedoutcontinue,
+                                ' ',
+                                function() {
+                                    window.location = M.cfg.wwwroot+'/login/index.php';
+                                }
+                            );
+                            loginErrorShown = true;
+                        } else {
+                            // This is not a login issue, show original error message.
+                            console.log(response);
+                            errorNotification(response);
+                        }
+                    });
                 }
-                // No login error.
-                return false;
+
+                return;
             }
         };
     }
