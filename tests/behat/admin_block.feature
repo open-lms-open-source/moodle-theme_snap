@@ -43,54 +43,24 @@ Feature: When the moodle theme is set to Snap, the admin block will only be show
       | student1 | C1     | student        |
 
   @javascript
-  Scenario: Student does not see admin block on any page.
-    Given I log in as "student1" (theme_snap)
-    # Check site page.
-    And I am on site homepage
-   Then "#admin-menu-trigger" "css_element" should not exist
-    # Check dashboard page.
-    And I am on homepage
-   Then "#admin-menu-trigger" "css_element" should not exist
-    And I open the personal menu
-    And I follow "Course 1"
-   Then "#admin-menu-trigger" "css_element" should not exist
-    And I open the personal menu
-    And I follow "View your profile"
-   Then "#admin-menu-trigger" "css_element" should not exist
-
-  @javascript
-  Scenario Outline: Teacher / non-editing teacher does not see admin block on any page, except course page.
+  Scenario Outline: User only sees admin block on relevant pages.
     Given I log in as "<user>" (theme_snap)
     # Check site page.
     And I am on site homepage
-    Then "#admin-menu-trigger" "css_element" should not exist
+    Then "#admin-menu-trigger" "css_element" <existssite> exist
     # Check dashboard page.
-    And I am on homepage
-    Then "#admin-menu-trigger" "css_element" should not exist
-    And I open the personal menu
-    And I follow "Course 1"
-    Then "#admin-menu-trigger" "css_element" should exist
-    And I open the personal menu
+    When I am on homepage
+    Then "#admin-menu-trigger" "css_element" <existsdashboard> exist
+    # Check course page.
+    When I am on the course main page for "C1"
+    Then "#admin-menu-trigger" "css_element" <existscourse> exist
+    # Check profile page.
+    When I open the personal menu
     And I follow "View your profile"
-    Then "#admin-menu-trigger" "css_element" should not exist
-
+    Then "#admin-menu-trigger" "css_element" <existsprofile> exist
     Examples:
-    | user     |
-    | teacher1 |
-    | teacher2 |
-
-  @javascript
-  Scenario: Admin sees admin block on all pages, except profile page.
-    Given I log in as "admin" (theme_snap)
-    # Check site page.
-    And I am on site homepage
-    Then "#admin-menu-trigger" "css_element" should exist
-    # Check dashboard page.
-    And I am on homepage
-    Then "#admin-menu-trigger" "css_element" should exist
-    And I open the personal menu
-    And I follow "Course 1"
-    Then "#admin-menu-trigger" "css_element" should exist
-    And I open the personal menu
-    And I follow "View your profile"
-    Then "#admin-menu-trigger" "css_element" should not exist
+    | user     | existssite | existsdashboard | existscourse | existsprofile |
+    | student1 | should not | should not      | should not   | should not    |
+    | teacher1 | should not | should not      | should       | should not    |
+    | teacher2 | should not | should not      | should       | should not    |
+    | admin    | should     | should          | should       | should not    |

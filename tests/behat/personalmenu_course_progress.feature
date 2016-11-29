@@ -45,8 +45,7 @@ Feature: When the moodle theme is set to Snap, students and teachers can open a 
   Scenario Outline: Completion progress shows only when enabled and with tracked activities
     Given completion tracking is "Enabled" for course "C1"
     And I log in as "<username>" (theme_snap)
-    And I open the personal menu
-    Then I should see "Course 1"
+    And I am on the course main page for "C1"
     And I should not see "Progress: 0 / 0"
     And the following "activities" exist:
       | activity | course | idnumber | name            | intro           | section | completion | completionview |

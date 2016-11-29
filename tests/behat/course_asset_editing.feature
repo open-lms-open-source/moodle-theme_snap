@@ -49,8 +49,7 @@ Feature: When the moodle theme is set to Snap, teachers edit assets without ente
       | activity | course | idnumber | name            | intro           | section | assignsubmission_onlinetext_enabled |
       | assign   | C1     | assign1  | Test assignment | Test assignment | 1       | 1                                   |
     And I log in as "student1" (theme_snap)
-    And I open the personal menu
-    And I follow "Course 1"
+    And I am on the course main page for "C1"
     And I follow "Topic 1"
    Then ".snap-activity[data-type='Assignment']" "css_element" should exist
     And "div.dropdown snap-edit-more-dropdown" "css_element" should not exist
@@ -61,8 +60,7 @@ Feature: When the moodle theme is set to Snap, teachers edit assets without ente
       | activity | course | idnumber | name            | intro           | section | assignsubmission_onlinetext_enabled |
       | assign   | C1     | assign1  | Test assignment | Test assignment | 1       | 1                                   |
     And I log in as "teacher2" (theme_snap)
-    And I open the personal menu
-    And I follow "Course 1"
+    And I am on the course main page for "C1"
     And I follow "Topic 1"
    Then "#section-1" "css_element" should exist
     And ".snap-activity[data-type='Assignment']" "css_element" should exist
@@ -74,8 +72,7 @@ Feature: When the moodle theme is set to Snap, teachers edit assets without ente
       | activity | course | idnumber | name            | intro           | section | assignsubmission_onlinetext_enabled |
       | assign   | C1     | assign1  | Test assignment | Test assignment | 1       | 1                                   |
     And I log in as "teacher1" (theme_snap)
-    And I open the personal menu
-    And I follow "Course 1"
+    And I am on the course main page for "C1"
     And I follow "Topic 1"
    Then "#section-1" "css_element" should exist
     And ".snap-activity[data-type='Assignment']" "css_element" should exist
@@ -89,8 +86,7 @@ Feature: When the moodle theme is set to Snap, teachers edit assets without ente
   @javascript
   Scenario: In read mode, teacher hides then shows resource.
   Given I log in as "teacher1" (theme_snap)
-    And I open the personal menu
-    And I follow "Course 1"
+    And I am on the course main page for "C1"
     And I follow "Topic 1"
    Then "#section-1" "css_element" should exist
     And "#snap-drop-file-1" "css_element" should exist
@@ -110,8 +106,7 @@ Feature: When the moodle theme is set to Snap, teachers edit assets without ente
       | activity | course | idnumber | name            | intro           | section | assignsubmission_onlinetext_enabled |
       | assign   | C1     | assign1  | Test assignment | Test assignment | 1       | 1                                   |
     And I log in as "teacher1" (theme_snap)
-    And I open the personal menu
-    And I follow "Course 1"
+    And I am on the course main page for "C1"
     And I follow "Topic 1"
    Then "#section-1" "css_element" should exist
     And ".snap-activity[data-type='Assignment']" "css_element" should exist
@@ -123,8 +118,7 @@ Feature: When the moodle theme is set to Snap, teachers edit assets without ente
   @javascript
   Scenario: In read mode, teacher duplicates resource.
   Given I log in as "teacher1" (theme_snap)
-    And I open the personal menu
-    And I follow "Course 1"
+    And I am on the course main page for "C1"
     And I follow "Topic 1"
    Then "#section-1" "css_element" should exist
     And "#snap-drop-file-1" "css_element" should exist

@@ -51,8 +51,7 @@ Feature: When the moodle theme is set to Snap, ajax failures due to log outs / e
       | teacher | C1     | editingteacher |
     # Test logout msg when changing section visibility
     And I log in as "teacher" (theme_snap)
-    And I open the personal menu
-    And I follow "Course 1"
+    And I am on the course main page for "C1"
     When I follow "Topic 2"
     Then "#section-2" "css_element" should exist
     And I log out via a separate window
@@ -60,8 +59,7 @@ Feature: When the moodle theme is set to Snap, ajax failures due to log outs / e
     Then I should see "You are currently logged out"
     # Test logout msg when highlighting section
     And I log in as "teacher" (theme_snap)
-    And I open the personal menu
-    And I follow "Course 1"
+    And I am on the course main page for "C1"
     When I follow "Topic 2"
     Then "#section-2" "css_element" should exist
     And I log out via a separate window
@@ -69,8 +67,7 @@ Feature: When the moodle theme is set to Snap, ajax failures due to log outs / e
     Then I should see "You are currently logged out"
     # Test logout msg when moving section
     And I log in as "teacher" (theme_snap)
-    And I open the personal menu
-    And I follow "Course 1"
+    And I am on the course main page for "C1"
     When I follow "Topic 2"
     And I follow "Move \"Topic 2\""
     Then I should see "Moving \"Untitled Topic\"" in the "#snap-move-message" "css_element"
@@ -92,8 +89,7 @@ Feature: When the moodle theme is set to Snap, ajax failures due to log outs / e
       | assign   | C1     | assign1  | Test assignment | Test assignment | 1       | 1                                   |
     # Test logout msg when changing asset visibility
     Given I log in as "teacher" (theme_snap)
-    And I open the personal menu
-    And I follow "Course 1"
+    And I am on the course main page for "C1"
     When I follow "Topic 1"
     And I click on ".snap-activity[data-type='Assignment'] a.snap-edit-asset-more" "css_element"
     And I log out via a separate window
@@ -101,8 +97,7 @@ Feature: When the moodle theme is set to Snap, ajax failures due to log outs / e
     Then I should see "You are currently logged out"
     # Test logout msg when attempting to duplicate asset
     Given I log in as "teacher" (theme_snap)
-    And I open the personal menu
-    And I follow "Course 1"
+    And I am on the course main page for "C1"
     When I follow "Topic 1"
     And I click on ".snap-activity[data-type='Assignment'] a.snap-edit-asset-more" "css_element"
     And I log out via a separate window
@@ -110,8 +105,7 @@ Feature: When the moodle theme is set to Snap, ajax failures due to log outs / e
     Then I should see "You are currently logged out"
     # Test logout msg when attempting to move asset
     Given I log in as "teacher" (theme_snap)
-    And I open the personal menu
-    And I follow "Course 1"
+    And I am on the course main page for "C1"
     And I follow "Topic 1"
     Then "#section-1" "css_element" should exist
     And I click on ".snap-activity.modtype_assign .snap-asset-move img[title='Move \"Test assignment\"']" "css_element"

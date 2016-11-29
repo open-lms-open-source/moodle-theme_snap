@@ -47,8 +47,7 @@ Feature: Open page module inline
       | activity | course | idnumber | name       | intro        | content       | completion | completionview |
       | page     | C1     | page1    | Test page1 | Test page 1  | page content1 | 0          | 0              |
     And I log in as "student1" (theme_snap)
-    And I open the personal menu
-    And I follow "Course 1"
+    And I am on the course main page for "C1"
     And I should not see "page content1"
     And I follow "Read more&nbsp;»"
     And I wait until ".pagemod-content[data-content-loaded=\"1\"]" "css_element" is visible
@@ -67,8 +66,7 @@ Feature: Open page module inline
       | activity | course | idnumber     | name            | section |
       | assign   | C1     | assigntest   | Assignment Test | 2       |
     And I log in as "admin" (theme_snap)
-    And I open the personal menu
-    And I follow "Course 1"
+    And I am on the course main page for "C1"
     # Restrict the second page module to only be accessible after the first page module is marked complete.
     And I restrict course asset "Page restricted" by completion of "Page completion"
     # Restrict section one of the course to only be accessible after the first page module is marked complete.
@@ -82,8 +80,7 @@ Feature: Open page module inline
     And I apply asset completion restriction "Page completion 2" to section
     And I log out (theme_snap)
     And I log in as "student1" (theme_snap)
-    And I open the personal menu
-    And I follow "Course 1"
+    And I am on the course main page for "C1"
     Then I should not see "page content2"
     # Note: nth-of-type(2) corresponds to the second section in the TOC.
     And I should see "Conditional" in the "#chapters li:nth-of-type(2)" "css_element"

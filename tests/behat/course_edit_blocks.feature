@@ -45,8 +45,7 @@ Feature: When the moodle theme is set to Snap, teachers only see block edit cont
       | activity | course | idnumber | name             | intro                         | section |
       | assign   | C1     | assign1  | Test assignment1 | Test assignment description 1 | 1       |
     And I log in as "teacher1" (theme_snap)
-    And I open the personal menu
-    And I follow "Course 1"
+    And I am on the course main page for "C1"
     And I follow "Topic 1"
     Then "#section-1" "css_element" should exist
     And ".block_news_items a.toggle-display" "css_element" should not exist
@@ -57,21 +56,18 @@ Feature: When the moodle theme is set to Snap, teachers only see block edit cont
 
     # edit mode persists if course accessed directly via menu
     # (this is basically to check it works without the &notifyeditingon parameter
-    Given I open the personal menu
-    And I follow "Course 1"
+    Given I am on the course main page for "C1"
     Then course page should be in edit mode
 
     # edit mode does not persist between courses
-    Given I open the personal menu
-    And I follow "Course 2"
+    Given I am on the course main page for "C2"
     And I follow "Course Tools"
     Then I should see "Edit blocks"
 
   @javascript
   Scenario: If edit mode is on for a course, it should not carry over to site homepage
     Given I log in as "admin" (theme_snap)
-    And I open the personal menu
-    And I follow "Course 1"
+    And I am on the course main page for "C1"
     And I follow "Course Tools"
     And I follow "Edit blocks"
     When I am on site homepage
@@ -84,8 +80,7 @@ Feature: When the moodle theme is set to Snap, teachers only see block edit cont
     And I am on site homepage
     And I click on "#admin-menu-trigger" "css_element"
     And I follow "Turn editing on"
-    When I open the personal menu
-    And I follow "Course 1"
+    When I am on the course main page for "C1"
     And I follow "Course Tools"
     Then I should see "Edit blocks"
 
@@ -99,8 +94,7 @@ Feature: When the moodle theme is set to Snap, teachers only see block edit cont
       | user     | course | role           |
       | teacher1 | C3     | editingteacher |
     Given I log in as "teacher1" (theme_snap)
-    And I open the personal menu
-    And I follow "Course 3"
+    And I am on the course main page for "C3"
     And I click on "#page-mast .singlebutton input[type=\"submit\"]" "css_element"
     And I should see "Add Topic"
     And I should see "Add Resource"

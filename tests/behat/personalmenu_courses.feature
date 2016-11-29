@@ -19,7 +19,6 @@
 # @copyright  Copyright (c) 2015 Moodlerooms Inc. (http://www.moodlerooms.com)
 # @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
 
-
 @theme @theme_snap
 Feature: When the moodle theme is set to Snap, students and teachers can open a personal menu which features a
   list of courses they are enrolled in to give them easy access to their courses.
@@ -37,7 +36,7 @@ Feature: When the moodle theme is set to Snap, students and teachers can open a 
       | student2 | Student   | 2        | student2@example.com |
 
   @javascript
-  Scenario: Enrolled courses display, hidden courses with teacher roles need expanding first
+  Scenario: Enrolled courses display and are navigable, hidden courses with teacher roles need expanding first
     Given the following "course enrolments" exist:
       | user  | course | role    |
       | user1 | C1     | student |
@@ -49,6 +48,9 @@ Feature: When the moodle theme is set to Snap, students and teachers can open a 
     And I should not see "Course Hidden"
     And I follow "Hidden courses (1)"
     And I should see "Course Hidden"
+    When I follow "Course 1"
+    Then I should see "Course 1"
+    And I should see "Introduction" in the "#chapters" "css_element"
 
   @javascript
   Scenario: User with no course enrolments sees a message
