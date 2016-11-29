@@ -24924,3 +24924,6 @@ img.iconhelp:hover {
 /**setting:logo**/
 /**setting:snap-user-bootswatch**/
 /**setting:customcss**/
+#xray-js-menu #xray-title #xray-icon img{
+     margin: 0 0 10px 0;
+}
