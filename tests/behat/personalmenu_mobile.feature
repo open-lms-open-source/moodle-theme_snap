@@ -65,6 +65,7 @@ Feature: When the moodle theme is set to Snap, students and teachers can open a 
     | teacher1 | Grading  | You have no submissions to grade. |
     | student1 | Feedback | You have no recent feedback.      |
 
+  @javascript
   Scenario: Teacher / Student using Joule can view alerts in the personal menu on a mobile device.
     Given I am using Joule
     And I change window size to "320x480"
