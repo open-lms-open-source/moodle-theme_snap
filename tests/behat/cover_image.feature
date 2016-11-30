@@ -43,8 +43,7 @@ Feature: When the moodle theme is set to Snap, cover image can be set for site a
       | teacher1 | C1     | editingteacher |
       | teacher2 | C1     | teacher        |
     And I log in as "teacher1" (theme_snap)
-    And I open the personal menu
-    And I follow "Course 1"
+    And I am on the course main page for "C1"
     Then I should see "Change cover image"
     And I should not see cover image in page header
     And I upload cover image "testpng_small.png"
@@ -76,8 +75,7 @@ Feature: When the moodle theme is set to Snap, cover image can be set for site a
     And I press "Save and display"
     Then I should not see cover image in page header
     # Test cover image can only be set on main course page
-    And I open the personal menu
-    And I follow "Course 1"
+    And I am on the course main page for "C1"
     Then I should see "Change cover image"
     And I click on "#admin-menu-trigger" "css_element"
     And I navigate to "Grades" node in "Course administration"
@@ -85,8 +83,7 @@ Feature: When the moodle theme is set to Snap, cover image can be set for site a
     # Test that non-editing teachers can't change cover image. (no need to test with students as they have less caps)
     And I log out (theme_snap)
     And I log in as "teacher2" (theme_snap)
-    And I open the personal menu
-    And I follow "Course 1"
+    And I am on the course main page for "C1"
     Then I should not see "Change cover image"
 
   @javascript
@@ -105,8 +102,7 @@ Feature: When the moodle theme is set to Snap, cover image can be set for site a
       | user     | course | role           |
       | teacher1 | C1     | editingteacher |
     And I log in as "teacher1" (theme_snap)
-    And I open the personal menu
-    And I follow "Course 1"
+    And I am on the course main page for "C1"
     Then I should see "Change cover image"
     And I should not see cover image in page header
     And I upload cover image "bpd_bikes_3888px.jpg"
@@ -133,8 +129,7 @@ Feature: When the moodle theme is set to Snap, cover image can be set for site a
       | user     | course | role           |
       | teacher1 | C1     | editingteacher |
     And I log in as "teacher1" (theme_snap)
-    And I open the personal menu
-    And I follow "Course 1"
+    And I am on the course main page for "C1"
     Then I should see "Change cover image"
     And I should not see cover image in page header
     And I upload cover image "testpng_lt1024px.png"
