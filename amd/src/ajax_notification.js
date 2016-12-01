@@ -46,17 +46,18 @@ define(['core/notification', 'core/ajax', 'core/templates', 'core/str'],
              *
              * @param response
              * @param failaction
+             * @return boolean - error message shown?
              */
             ifErrorShowBestMsg : function(response, failAction, failMsg) {
 
                 if (loginErrorShown) {
                     // We already have a login error message.
-                    return;
+                    return true;
                 }
 
                 if (loggingOut) {
                     // No point in showing error messages if we are logging out.
-                    return;
+                    return false;
                 }
 
                 if (typeof response !== 'object') {
@@ -90,17 +91,17 @@ define(['core/notification', 'core/ajax', 'core/templates', 'core/str'],
                             if ($('#fixy-content').is(':visible')) {
                                 // If the personal menu is open then it should have a message in it informing the user
                                 // that they need to change their password to proceed.
-                                return;
+                                return true;
                             }
                         }
 
                         if (window.location.href.indexOf('login/change_password.php') > -1) {
                             // We are already on the change password page - avoid redirect loop!
-                            return;
+                            return true;
                         }
                         window.location = pwdChangeUrl;
                         loginErrorShown = true; // Not really, but we only want this redirect to happen once.
-                        return;
+                        return true;
                     }
 
                     /**
@@ -145,7 +146,7 @@ define(['core/notification', 'core/ajax', 'core/templates', 'core/str'],
                         url: M.cfg.wwwroot + '/theme/snap/rest.php?action=get_loginstatus'
                     }).done(function(thisResp) {
                         if (loginErrorShown) {
-                            return;
+                            return true;
                         }
                         // Show login error message or original error message.
                         if (!thisResp.loggedin) {
@@ -174,9 +175,10 @@ define(['core/notification', 'core/ajax', 'core/templates', 'core/str'],
                             errorNotification(response);
                         }
                     });
+                    return true;
                 }
 
-                return;
+                return false;
             }
         };
     }
