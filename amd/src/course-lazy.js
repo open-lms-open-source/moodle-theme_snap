@@ -88,10 +88,10 @@ define(
                 // Only relevant for main course page.
                 return;
             }
-            var sectionsetbyserver = '';
+            var sectionSetByServer = '';
 
             if($('.section.main.state-visible.set-by-server').length) {
-                sectionsetbyserver = '#' + $('.section.main.state-visible.set-by-server').attr('id');
+                sectionSetByServer = '#' + $('.section.main.state-visible.set-by-server').attr('id');
                 $('.section.main.state-visible.set-by-server').removeClass('set-by-server');
             } else {
                 $('.course-content .section.main, #moodle-blocks,#coursetools, #snap-add-new-section').removeClass('state-visible');
@@ -103,8 +103,8 @@ define(
                 section = urlParams[0],
                 mod = urlParams[1] || null;
 
-            if (section !== '' && section !== sectionsetbyserver) {
-                $(sectionsetbyserver).removeClass('state-visible');
+            if (section !== '' && section !== sectionSetByServer) {
+                $(sectionSetByServer).removeClass('state-visible');
             }
 
             // Course tools special section.
