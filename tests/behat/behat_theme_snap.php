@@ -45,24 +45,6 @@ use Behat\Behat\Context\Step\Given,
 class behat_theme_snap extends behat_base {
 
     /**
-     * Process givens array
-     * @param array $givens
-     * @return array
-     */
-    protected function process_givens_array(array $givens) {
-        $givens = array_map(function($given){
-            if (is_string($given)) {
-                return new Given($given);
-            } else if ($given instanceof Given) {
-                return $given;
-            } else {
-                throw new coding_exception('Given must be a string or Given instance');
-            }
-        }, $givens);
-        return $givens;
-    }
-
-    /**
      * Checks if running in a Joule system, skips the test if not.
      *
      * @Given /^I am using Joule$/
@@ -208,26 +190,20 @@ class behat_theme_snap extends behat_base {
     }
 
     /**
-     * @param string
+     * @param string $shortname
      * @return array
-     * @Given  /^I can see course "(?P<course>(?:[^"]|\\")*)" in all sections mode$/
+     * @Given  /^I can see course "(?P<shortname>(?:[^"]|\\")*)" in all sections mode$/
      */
-    public function i_can_see_course_in_all_sections_mode($course) {
-        $givens = [
-            'I open the personal menu',
-            'I follow "'.$course.'"',
-            'I go to single course section 1',
-            '".section-navigation.navigationtitle" "css_element" should not exist',
-            // In the above, .section-navigation.navigationtitle relates to the element on the page which contains the single
-            // section at a time navigation. Visually you would see a link on the left entitled "General" and a link on the right
-            // enitled "Topic 2"
-            // This test ensures you do not see those elements. If you swap to clean theme in a single section mode at a time
-            // course you will see that navigation after clicking on topic 1.
-        ];
-        $givens = array_map(function($given){
-            return new Given($given);
-        }, $givens);
-        return $givens;
+    public function i_can_see_course_in_all_sections_mode($shortname) {
+        $this->i_am_on_course_page($shortname);
+        $this->i_go_to_single_course_section(1);
+
+        // In the selector below, .section-navigation.navigationtitle relates to the element which contains the single
+        // section at a time navigation. Visually you would see a link on the left entitled "General" and a link on the
+        // right entitled "Topic 2"
+        // This test ensures you do not see those elements. If you swap to clean theme in a single section mode at a
+        // time course you will see that navigation after clicking on topic 1.
+        $this->execute('behat_general::should_not_exist', ['.section-navigation.navigationtitle', 'css_element']);
     }
 
     /**
@@ -244,21 +220,17 @@ class behat_theme_snap extends behat_base {
     }
 
     /**
-     * @param string $coursename
-     * @Given /^I create a new section in course "(?P<coursename>(?:[^"]|\\")*)"$/
+     * @param string $shortname - course shortname
+     * @Given /^I create a new section in course "(?P<shortname>(?:[^"]|\\")*)"$/
      * @return array
      */
-    public function i_create_a_new_section_in_course($coursename) {
-        $givens = [
-            'I open the personal menu',
-            'I follow "'.$coursename.'"',
-            'I follow "Create a new section"',
-            'I set the field "Title" to "New section title"',
-            'I click on "Create section" "button"'
-        ];
-        $givens = array_map(function($a) {return new Given($a);
-        }, $givens);
-        return $givens;
+    public function i_create_a_new_section_in_course($shortname) {
+
+        $this->i_am_on_course_page($shortname);
+
+        $this->execute('behat_general::click_link', ['Create a new section']);
+        $this->execute('behat_forms::i_set_the_field_to', ['Title', 'New section title']);
+        $this->execute('behat_general::i_click_on', ['Create section', 'button']);
     }
 
     /**
@@ -374,7 +346,6 @@ class behat_theme_snap extends behat_base {
      * List steps required for adding a date restriction
      * @param int $datetime
      * @param string $savestr
-     * @return array
      */
     protected function add_date_restriction($datetime, $savestr) {
 
@@ -382,20 +353,20 @@ class behat_theme_snap extends behat_base {
         $month = date('n', $datetime);
         $day = date('j', $datetime);
 
-        $givens = [
-            'I expand all fieldsets',
-            'I click on "Add restriction..." "button"',
-            '"Add restriction..." "dialogue" should be visible',
-            'I click on "Date" "button" in the "Add restriction..." "dialogue"',
-            'I set the field "day" to "'.$day.'"',
-            // Need to be extra-specific about the month select as there's
-            // other selects with that same label on the page.
-            'I set the field with xpath "//select[@name=\'x[month]\']" to "'.$month.'"',
-            'I set the field "year" to "'.$year.'"',
-            'I press "'.$savestr.'"',
-        ];
+        /** @var behat_forms $formcontext */
+        $formcontext = behat_context_helper::get('behat_forms');
 
-        return $givens;
+        /** @var behat_general $generalcontext */
+        $generalcontext = behat_context_helper::get('behat_general');
+
+        $formcontext->i_expand_all_fieldsets();
+        $generalcontext->i_click_on('Add restriction...', 'button');
+        $generalcontext->should_be_visible('Add restriction...', 'dialogue');
+        $generalcontext->i_click_on_in_the('Date', 'button', 'Add restriction...', 'dialogue');
+        $formcontext->i_set_the_field_to('day', $day);
+        $formcontext->i_set_the_field_with_xpath_to('//select[@name=\'x[month]\']', $month);
+        $formcontext->i_set_the_field_to('year', $year);
+        $formcontext->press_button($savestr);
     }
 
     /**
@@ -406,17 +377,11 @@ class behat_theme_snap extends behat_base {
      */
     public function i_restrict_course_section_by_date($section, $date) {
         $datetime = strtotime($date);
-
-        $givens = [
-            'I go to course section '.$section,
-            'I follow visible link "Edit section"',
-            'I wait until ".snap-form-advanced" "css_element" is visible',
-            'I set the field "name" to "Topic '.$date.' '.$section.'"',
-        ];
-
-        $givens = array_merge($givens, $this->add_date_restriction($datetime, 'Save changes'));
-
-        return $this->process_givens_array($givens);
+        $this->i_go_to_course_section($section);
+        $this->click_visible_link('Edit section');
+        $this->i_wait_until_is_visible('.snap-form-advanced', 'css_element');
+        $this->execute('behat_forms::i_set_the_field_to', ['name', 'Topic '.$date.' '.$section]);
+        $this->add_date_restriction($datetime, 'Save changes');
     }
 
     /**
@@ -427,17 +392,11 @@ class behat_theme_snap extends behat_base {
      */
     public function i_restrict_asset_by_date($assettitle, $date) {
         $datetime = strtotime($date);
-
-        $givens = [
-            'I follow asset link "'.$assettitle.'"',
-            'I click on "#admin-menu-trigger" "css_element"',
-            'I wait until ".block_settings.state-visible" "css_element" is visible',
-            'I navigate to "Edit settings" node in "Assignment administration"'
-        ];
-
-        $givens = array_merge($givens, $this->add_date_restriction($datetime, 'Save and return to course'));
-
-        return $this->process_givens_array($givens);
+        $this->i_follow_asset_link($assettitle);
+        $this->execute('behat_general::i_click_on', ['#admin-menu-trigger', 'css_element']);
+        $this->i_wait_until_is_visible('.block_settings.state-visible', 'css_element');
+        $this->execute('behat_navigation::i_navigate_to_node_in', ['Edit settings', 'Assignment administration']);
+        $this->add_date_restriction($datetime, 'Save and return to course');
     }
 
     /**
@@ -629,10 +588,7 @@ class behat_theme_snap extends behat_base {
      */
     public function i_should_see_in_toc_item($text, $tocitem) {
         $tocitem++; // Ignore introduction item.
-        $givens = [
-            'I should see "'.$text.'" in the "#chapters li:nth-of-type('.$tocitem.')" "css_element"'
-        ];
-        return $this->process_givens_array($givens);
+        $this->execute('behat_general::assert_element_contains_text', [$text, '#chapters li:nth-of-type('.$tocitem.')', 'css_element']);
     }
 
     /**
@@ -642,10 +598,7 @@ class behat_theme_snap extends behat_base {
      */
     public function i_should_not_see_in_toc_item($text, $tocitem) {
         $tocitem++; // Ignore introduction item.
-        $givens = [
-            'I should not see "'.$text.'" in the "#chapters li:nth-of-type('.$tocitem.')" "css_element"'
-        ];
-        return $this->process_givens_array($givens);
+        $this->execute('behat_general::assert_element_not_contains_text', [$text, '#chapters li:nth-of-type('.$tocitem.')', 'css_element']);
     }
 
     /**

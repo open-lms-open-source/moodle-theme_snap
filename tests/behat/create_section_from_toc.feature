@@ -56,7 +56,7 @@ Feature: In the Snap theme, within a course, editing teachers can create a new s
   Scenario: For editing teachers, ensure new section creation is available and works for topic courses but
     not single activity or social course formats.
   Given I log in as "teacher1" (theme_snap)
-    And I create a new section in course "Topics course"
+    And I create a new section in course "course_topics"
    Then I should see "New section title" in the "#course-toc" "css_element"
 
     # Negative test - the single activity course should not allow for section creation via the toc.
