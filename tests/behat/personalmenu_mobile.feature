@@ -42,7 +42,6 @@ Feature: When the moodle theme is set to Snap, students and teachers can open a 
   @javascript
   Scenario Outline: Teacher / Student can view personal menu on a mobile device.
     Given I change window size to "320x480"
-    And the message processor "badge" is enabled
     And I log in as "<user>" (theme_snap)
     And I open the personal menu
     And I follow "Deadlines" in the mobile personal menu
@@ -57,8 +56,6 @@ Feature: When the moodle theme is set to Snap, students and teachers can open a 
     Then I should see "You have no messages."
     And I follow "Forum posts" in the mobile personal menu
     Then I should see "You have no relevant forum posts."
-    And I follow "Alerts" in the mobile personal menu
-    Then I should see "You have no unread alerts."
     And I click on "#fixy-close" "css_element"
     And I open the personal menu
     And I wait until "#fixy-mobile-menu" "css_element" is visible
@@ -67,6 +64,29 @@ Feature: When the moodle theme is set to Snap, students and teachers can open a 
     | user     | gradealt | gradenotice                       |
     | teacher1 | Grading  | You have no submissions to grade. |
     | student1 | Feedback | You have no recent feedback.      |
+
+  @javascript
+  Scenario: Teacher / Student using Joule can view alerts in the personal menu on a mobile device.
+    Given I am using Joule
+    And I change window size to "320x480"
+    And the message processor "badge" is enabled
+    And I log in as "student1" (theme_snap)
+    And I open the personal menu
+    And I follow "Deadlines" in the mobile personal menu
+    Then I should see "You have no upcoming deadlines."
+    # This is deliberately not in the order of the icons as the default pane shows courses so we need to switch to
+    # something else first.
+    And I follow "Courses" in the mobile personal menu
+    Then I should see "Course 1"
+    And I follow "Messages" in the mobile personal menu
+    Then I should see "You have no messages."
+    And I follow "Forum posts" in the mobile personal menu
+    Then I should see "You have no relevant forum posts."
+    And I follow "Alerts" in the mobile personal menu
+    Then I should see "You have no unread alerts."
+    And I click on "#fixy-close" "css_element"
+    And I open the personal menu
+    And I wait until "#fixy-mobile-menu" "css_element" is visible
 
   @javascript
   Scenario Outline: Mobile menu icons (excluding alerts) only appear when enabled.
@@ -90,7 +110,8 @@ Feature: When the moodle theme is set to Snap, students and teachers can open a 
 
   @javascript
   Scenario: Alerts mobile menu icon only appears when alerts enabled.
-    Given I change window size to "320x480"
+    Given I am using Joule
+    And I change window size to "320x480"
     And the message processor "badge" is disabled
     And I log in as "student1" (theme_snap)
     And I open the personal menu
