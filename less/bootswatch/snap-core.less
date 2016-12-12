@@ -1856,7 +1856,7 @@ http://blog.rodneyrehm.de/archives/34-iOS7-Mobile-Safari-And-Viewport-Units.html
 
 .coursebox .content .courseimage {
     text-align: center;
-    height: 150px;
+    max-height: 150px;
     overflow: hidden;
 }
 
@@ -1873,22 +1873,17 @@ http://blog.rodneyrehm.de/archives/34-iOS7-Mobile-Safari-And-Viewport-Units.html
         border: 0;
     }
 
-    .coursebox .info,
-    .coursebox .content .summary,
-    .coursebox .content .teachers {
-        width: 62%;
-        float: right;
-    }
+    .coursebox .content {
+        .summary,
+        .teachers {
+            width: 62%;
+            float: left;
+        }
 
-    .coursebox .content .summary,
-    .coursebox .content .teachers {
-        float: right;
-    }
-
-    .coursebox .content .courseimage {
-        float: left;
-        width: 33%;
-        margin-top: -2.1em;
+        .courseimage {
+                float: right;
+                width: 33%;
+        }
     }
 }
 
