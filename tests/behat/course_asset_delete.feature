@@ -13,36 +13,31 @@
 # You should have received a copy of the GNU General Public License
 # along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 #
-# Tests for toggle course section visibility in non edit mode in snap.
+# Tests deleting assets in snap.
 #
 # @package    theme_snap
-# @copyright  2015 Guy Thomas <gthomas@moodlerooms.com>
+# @author     Guy Thomas
+# @copyright  2016 Blackboard Ltd
 # @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
 
-
 @theme @theme_snap
-Feature: When the moodle theme is set to Snap, teachers can move course resources and activities without using drag and drop.
+Feature: When the moodle theme is set to Snap, teachers can delete course resources and activities without having to reload the page.
 
   Background:
-    Given I log in as "admin"
-    And I navigate to "Front page settings" node in "Site administration > Front page"
-    And I set the following fields to these values:
-      | Include a topic section | 1 |
-    And I log out
     Given the following config values are set as admin:
-      | theme           | snap |
-      | defaulthomepage | 0    |
+      | theme              | snap |
+      | defaulthomepage    | 0    |
     And the following "courses" exist:
       | fullname | shortname | category | format |
-      | Course 1 | C1 | 0 | topics |
+      | Course 1 | C1        | 0        | topics |
     And the following "users" exist:
-      | username | firstname | lastname | email |
-      | teacher1 | Teacher | 1 | teacher1@example.com |
-      | student1 | Student | 1 | student1@example.com |
+      | username | firstname | lastname | email                |
+      | teacher1 | Teacher   | 1        | teacher1@example.com |
+      | student1 | Student   | 1        | student1@example.com |
     And the following "course enrolments" exist:
-      | user | course | role |
-      | teacher1 | C1 | editingteacher |
-      | student1 | C1 | student |
+      | user     | course | role           |
+      | teacher1 | C1     | editingteacher |
+      | student1 | C1     | student        |
     And the following "activities" exist:
       | activity | course               | idnumber | name             | intro                         | section | assignsubmission_onlinetext_enabled |
       | assign   | C1                   | assign1  | Test assignment1 | Test assignment description 1 | 1       | 1                                   |
@@ -53,6 +48,11 @@ Feature: When the moodle theme is set to Snap, teachers can move course resource
   @javascript
   Scenario: In read mode, on front page, admin can cancel / confirm delete activity.
     Given I log in as "admin" (theme_snap)
+    And I click on "#admin-menu-trigger" "css_element"
+    And I navigate to "Front page settings" node in "Site administration > Front page"
+    And I set the following fields to these values:
+      | Include a topic section | 1 |
+    And I am on site homepage
     And I should see "Test assignment1"
     When I click on ".snap-activity[data-type='Assignment'] a.snap-edit-asset-more" "css_element"
     And I click on ".snap-activity[data-type='Assignment'] a.js_snap_delete" "css_element"
@@ -64,7 +64,7 @@ Feature: When the moodle theme is set to Snap, teachers can move course resource
     And I click on ".snap-activity[data-type='Assignment'] a.js_snap_delete" "css_element"
     Then I should see asset delete dialog
     When I press "Yes"
-    And I should not see "Test assignment1"
+    Then I should not see "Test assignment1"
 
   @javascript
   Scenario: In read mode, on course, teacher can cancel / confirm delete activity.
@@ -82,31 +82,8 @@ Feature: When the moodle theme is set to Snap, teachers can move course resource
     And I click on ".snap-activity[data-type='Assignment'] a.js_snap_delete" "css_element"
     Then I should see asset delete dialog
     When I press "Yes"
-    Then I should not see "Test assignment1"
+    Then I should not see "Test assignment1" in the "#section-1" "css_element"
     And I cannot see "Test assignment1" in course asset search
-
-  @javascript
-  Scenario: Assets and sections that are conditionally released by other assets reflect deletions of dependencies.
-    Given I log in as "teacher1" (theme_snap)
-    And I restrict course asset "Test assignment2" by completion of "Test assignment1"
-    And I follow "Topic 2"
-    And I click on "#section-2 .edit-summary" "css_element"
-    And I set the field "name" to "Topic 2"
-    And I apply asset completion restriction "Test assignment2" to section
-    And I am on the course main page for "C1"
-    And I follow "Topic 1"
-    And I should see "Not available unless: The activity Test assignment2 is marked complete"
-    And I follow "Topic 2"
-    And I should see "Not available unless: The activity Test assignment2 is marked complete"
-    And I follow "Topic 1"
-    Then "#section-1" "css_element" should exist
-    When I click on ".snap-activity[data-type='Assignment'] a.snap-edit-asset-more" "css_element"
-    And I click on ".snap-activity[data-type='Assignment'] a.js_snap_delete" "css_element"
-    Then I should see asset delete dialog
-    When I press "Yes"
-    Then I should see "Not available unless: The activity (Missing activity) is marked complete"
-    When I follow "Topic 2"
-    Then I should see "Not available unless: The activity (Missing activity) is marked complete"
 
   @javascript
   Scenario: Student cannot delete activity.

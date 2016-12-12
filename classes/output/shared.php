@@ -218,7 +218,9 @@ class shared extends \renderer_base {
             'show',
             'tocontent',
             'totopofsection',
-            'unknownerror'
+            'unknownerror',
+            'yes',
+            'no'
         ], 'moodle');
 
         $PAGE->requires->strings_for_js([
@@ -229,7 +231,12 @@ class shared extends \renderer_base {
             'error:failedtochangesectionvisibility',
             'error:failedtohighlightsection',
             'error:failedtochangeassetvisibility',
-            'error:failedtoduplicateasset'
+            'error:failedtoduplicateasset',
+            'deleteassetconfirmation',
+            'deleteassetconfirmationinstance',
+            'deletingasset',
+            'deletingassetinstance',
+            'deleteassettitle'
         ], 'theme_snap');
 
         // Include section-specific strings for formats which support sections.

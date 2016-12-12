@@ -70,7 +70,7 @@ Feature: When the moodle theme is set to Snap, ajax failures due to log outs / e
     And I am on the course main page for "C1"
     When I follow "Topic 2"
     And I follow "Move \"Topic 2\""
-    Then I should see "Moving \"Untitled Topic\"" in the "#snap-move-message" "css_element"
+    Then I should see "Moving \"Untitled Topic\"" in the "#snap-footer-alert" "css_element"
     And I follow "Topic 4"
     And I log out via a separate window
     When I follow "Place section \"Untitled Topic\" before section \"Topic 4\""

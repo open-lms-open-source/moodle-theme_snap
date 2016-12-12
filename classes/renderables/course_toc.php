@@ -134,6 +134,7 @@ class course_toc implements \renderable, \templatable{
             }
 
             $module = new course_toc_module();
+            $module->cmid = $cm->id;
             $module->uservisible = $cm->uservisible;
             $module->modname = $cm->modname;
             $module->iconurl = $cm->get_icon_url();
