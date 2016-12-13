@@ -327,18 +327,20 @@ define(['jquery', 'core/log', 'core/ajax', 'core/templates', 'core/notification'
                     footerAlert.addAjaxLoading('');
                     footerAlert.show();
 
+                    var params = {
+                        courseshortname: courseLib.courseConfig.shortname,
+                        action: 'delete',
+                        sectionnumber: sectionNum,
+                        value: 1
+                    };
+
                     log.debug('Making course/rest.php section delete request', params);
 
                     // Make ajax call.
                     var ajaxPromises = ajax.call([
                         {
                             methodname: 'theme_snap_course_sections',
-                            args: {
-                                courseshortname: courseLib.courseConfig.shortname,
-                                action: 'delete',
-                                sectionnumber: sectionNum,
-                                value: 1
-                            }
+                            args: params
                         }
                     ], true, true);
 
