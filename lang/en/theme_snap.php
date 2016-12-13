@@ -82,6 +82,9 @@ $string['deleteassetconfirmation'] = 'Are you sure you want to delete this asset
 $string['deleteassetconfirmationinstance'] = 'Are you sure you want to delete the asset "{$a}"?';
 $string['deletingasset'] = 'Deleting asset.';
 $string['deletingassetinstance'] = 'Deleting asset "{$a}".';
+$string['deletesectiontitle'] = 'Delete Section?';
+$string['deletesectionconfirmation'] = 'Are you sure you want to delete the section "{$a}" and all the resources and activities within it?';
+$string['deletingsection'] = 'Deleting section "{$a}"?';
 $string['draft'] = 'Not published to students';
 $string['dropzonelabel'] = 'Drop files to attach, or <span class="btn-link">browse</span>';
 $string['due'] = 'Due';

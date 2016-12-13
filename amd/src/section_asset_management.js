@@ -67,7 +67,7 @@ define(['jquery', 'core/log', 'core/ajax', 'core/templates', 'core/notification'
                 $('body').removeClass('snap-move-inprogress');
                 $('body').removeClass('snap-move-section');
                 $('body').removeClass('snap-move-asset');
-                footerAlert.hide();
+                footerAlert.hideAndReset();
                 $('.section-moving').removeClass('section-moving');
                 $('.asset-moving').removeClass('asset-moving');
                 $('.js-snap-asset-move').removeAttr('checked');
@@ -190,6 +190,200 @@ define(['jquery', 'core/log', 'core/ajax', 'core/templates', 'core/notification'
             };
 
             /**
+             * Implement always for promise (missing in core AJAX as of Moodle 3.1).
+             * @param {promise} promise
+             * @param {object} callbacks
+             */
+            var promiseHandler = function(promise, callbacks) {
+
+                if (callbacks.done && typeof(callbacks.done) === 'function') {
+                    promise.done(function(result) {
+                        callbacks.done(result);
+                        // Implement always callback.
+                        if (callbacks.always && typeof(callbacks.always) === 'function') {
+                            callbacks.always(result);
+                        }
+                    });
+                }
+
+                if (callbacks.fail && typeof(callbacks.fail) === 'function') {
+                    promise.fail(function(result) {
+                        callbacks.fail(result);
+                        // Implement always callback.
+                        if (callbacks.always && typeof(callbacks.always) === 'function') {
+                            callbacks.always(result);
+                        }
+                    });
+                }
+
+            };
+
+            /**
+             * Get section title.
+             * @param {integer} section
+             * @returns {*|jQuery}
+             */
+            var getSectionTitle = function(section) {
+                // Get title from TOC.
+                return $('#chapters li:nth-of-type(' + (section + 1) + ') .chapter-title').html();
+            };
+
+            /**
+             * Update next / previous links.
+             * @param {string} selector
+             */
+            var updateSectionNavigation = function(selector) {
+                var sections, totalSectionCount;
+                if (!selector) {
+                    selector = '#region-main .course-content > ul li.section';
+                    sections = $(selector);
+                    totalSectionCount = sections.length;
+                } else {
+                    sections = $(selector);
+                    var allSections = $('#region-main .course-content > ul li.section');
+                    totalSectionCount = allSections.length;
+                }
+
+                $.each(sections, function(idx, el) {
+                    var sectionNum = sectionNumber(el);
+                    var previousSection = sectionNum - 1;
+                    var nextSection = sectionNum + 1;
+                    var previous = false;
+                    var next = false;
+                    var hidden, extraclasses;
+                    if (previousSection > -1) {
+                        hidden = $('#section-' + previousSection).hasClass('hidden');
+                        extraclasses = hidden ? ' dimmed_text' : '';
+                        previous = {
+                            section: previousSection,
+                            title: getSectionTitle(previousSection),
+                            classes: extraclasses
+                        };
+                    }
+                    if (nextSection < totalSectionCount) {
+                        hidden = $('#section-' + nextSection).hasClass('hidden');
+                        extraclasses = hidden ? ' dimmed_text' : '';
+                        next = {
+                            section: nextSection,
+                            title: getSectionTitle(nextSection),
+                            classes: extraclasses
+                        };
+                    }
+                    var navigation = {
+                        previous: previous,
+                        next: next
+                    };
+                    templates.render('theme_snap/course_section_navigation', navigation)
+                        .done(function(result) {
+                            $('#section-' + sectionNum + ' .section_footer').replaceWith(result);
+                        });
+
+                });
+            };
+
+            /**
+             * Update sections.
+             */
+            var updateSections = function() {
+
+                // Renumber section ids, rename section titles.
+                $.each($('#region-main .course-content > ul li.section'), function(idx, obj) {
+                    $(obj).attr('id', 'section-' + idx);
+                    // Get title from TOC (note that its idx + 1 because first entry is
+                    // introduction.
+                    var chapterTitle = getSectionTitle(idx);
+                    // Update section title with corresponding TOC title - this is necessary
+                    // for weekly topic courses where the section title needs to stay the
+                    // same as the TOC.
+                    $('#section-' + idx + ' .content .sectionname').html(chapterTitle);
+                });
+
+                updateSectionNavigation();
+            };
+
+            /**
+             * Delete section dialog and confirm function.
+             * @param {object} e
+             * @param {object} el
+             */
+            var sectionDelete = function(e, el) {
+                e.preventDefault();
+                var sectionNum = parentSectionNumber(el);
+                var section = $('#section-' + sectionNum);
+                var sectionName = section.find('.sectionname').text();
+
+                /**
+                 * Delete section.
+                 */
+                var doDelete = function() {
+                    if (ajaxing) {
+                        // Request already made.
+                        log.debug('Skipping ajax request, one already in progress');
+                        return;
+                    }
+                    var delProgress = M.util.get_string('deletingsection', 'theme_snap', sectionName);
+
+                    footerAlert.setTitle(delProgress);
+                    footerAlert.addAjaxLoading('');
+                    footerAlert.show();
+
+                    log.debug('Making course/rest.php section delete request', params);
+
+                    // Make ajax call.
+                    var ajaxPromises = ajax.call([
+                        {
+                            methodname: 'theme_snap_course_sections',
+                            args: {
+                                courseshortname: courseLib.courseConfig.shortname,
+                                action: 'delete',
+                                sectionnumber: sectionNum,
+                                value: 1
+                            }
+                        }
+                    ], true, true);
+
+                    // Handle ajax promises.
+                    promiseHandler(ajaxPromises[0], {
+                        done: function(response) {
+                            // Update TOC.
+                            promiseHandler(templates.render('theme_snap/course_toc', response.toc), {
+                                    done: function(result) {
+                                        $('#course-toc').replaceWith(result);
+                                        $(document).trigger('snapTOCReplaced');
+                                        // Remove section from DOM.
+                                        section.remove();
+                                        updateSections();
+                                    },
+                                    always: function() {
+                                        // Allow another request now this has finished.
+                                        footerAlert.hideAndReset();
+                                        ajaxing = false;
+                                    }
+                                }
+                            );
+                            // Current section no longer exists so change location to previous section.
+                            if (sectionNum >= $('.course-content > ul li.section').length) {
+                                location.hash = 'section-' + (sectionNum - 1);
+                            }
+                            courseLib.showSection();
+                        },
+                        fail: function(response) {
+                            ajaxNotify.ifErrorShowBestMsg(response);
+                            footerAlert.hideAndReset();
+                            // Allow another request now this has finished.
+                            ajaxing = false;
+                        }
+                    });
+                };
+
+                var delTitle = M.util.get_string('deletesectiontitle', 'theme_snap');
+                var delConf = M.util.get_string('deletesectionconfirmation', 'theme_snap', sectionName);
+                var ok = M.util.get_string('yes', 'moodle');
+                var cancel = M.util.get_string('no', 'moodle');
+                notification.confirm(delTitle, delConf, ok, cancel, doDelete);
+            };
+
+            /**
              * Delete asset dialog and confirm function.
              * @param {object} e
              * @param {object} el
@@ -207,6 +401,9 @@ define(['jquery', 'core/log', 'core/ajax', 'core/templates', 'core/notification'
                     action   : "DELETE"
                 };
 
+                /**
+                 * Delete asset.
+                 */
                 var doDelete = function() {
                     if (ajaxing) {
                         // Request already made.
@@ -223,7 +420,7 @@ define(['jquery', 'core/log', 'core/ajax', 'core/templates', 'core/notification'
                     footerAlert.addAjaxLoading('');
                     footerAlert.show();
 
-                    log.debug('Making course/rest.php delete request', params);
+                    log.debug('Making course/rest.php asset delete request', params);
                     var req = $.ajax({
                         type: "POST",
                         async: true,
@@ -248,7 +445,7 @@ define(['jquery', 'core/log', 'core/ajax', 'core/templates', 'core/notification'
                         ajaxNotify.ifErrorShowBestMsg(data);
                     });
                     req.always(function() {
-                        footerAlert.hide();
+                        footerAlert.hideAndReset();
                     });
 
                 };
@@ -366,69 +563,6 @@ define(['jquery', 'core/log', 'core/ajax', 'core/templates', 'core/notification'
             };
 
             /**
-             * Get section title.
-             * @param section
-             * @returns {*|jQuery}
-             */
-            var getSectionTitle = function(section) {
-                // Get title from TOC.
-                return $('#chapters li:nth-of-type(' + (section + 1) + ') .chapter-title').html();
-            };
-
-            /**
-             * Update next / previous links.
-             * @param {string} selector
-             */
-            var updateSectionNavigation = function(selector) {
-                var sections, totalSectionCount;
-                if (!selector) {
-                    selector = '#region-main .course-content > ul li.section';
-                    sections = $(selector);
-                    totalSectionCount = sections.length;
-                } else {
-                    sections = $(selector);
-                    var allSections = $('#region-main .course-content > ul li.section');
-                    totalSectionCount = allSections.length;
-                }
-
-                $.each(sections, function(idx, el) {
-                    var sectionNum = sectionNumber(el);
-                    var previousSection = sectionNum - 1;
-                    var nextSection = sectionNum + 1;
-                    var previous = false;
-                    var next = false;
-                    var hidden, extraclasses;
-                    if (previousSection > -1) {
-                        hidden = $('#section-' + previousSection).hasClass('hidden');
-                        extraclasses = hidden ? ' dimmed_text' : '';
-                        previous = {
-                            section: previousSection,
-                            title: getSectionTitle(previousSection),
-                            classes: extraclasses
-                        };
-                    }
-                    if (nextSection < totalSectionCount) {
-                        hidden = $('#section-' + nextSection).hasClass('hidden');
-                        extraclasses = hidden ? ' dimmed_text' : '';
-                        next = {
-                            section: nextSection,
-                            title: getSectionTitle(nextSection),
-                            classes: extraclasses
-                        };
-                    }
-                    var navigation = {
-                        previous: previous,
-                        next: next
-                    };
-                    templates.render('theme_snap/course_section_navigation', navigation)
-                        .done(function(result) {
-                            $('#section-' + sectionNum + ' .section_footer').replaceWith(result);
-                        });
-
-                });
-            };
-
-            /**
              * Ajax request to move section to target.
              * @param {str|object} dropzone
              */
@@ -443,27 +577,6 @@ define(['jquery', 'core/log', 'core/ajax', 'core/templates', 'core/notification'
                     class: 'section',
                     id: currentSection,
                     value: targetSection
-                };
-
-                /**
-                 * Update sections.
-                 */
-                var updateSections = function() {
-
-                    // Renumber section ids, rename section titles.
-                    $.each($('#region-main .course-content > ul li.section'), function(idx, obj) {
-                        $(obj).attr('id', 'section-' + idx);
-                        // Get title from TOC (note that its idx + 1 because first entry is
-                        // introduction.
-                        var chapterTitle = getSectionTitle(idx);
-                        // Update section title with corresponding TOC title - this is necessary
-                        // for weekly topic courses where the section title needs to stay the
-                        // same as the TOC.
-                        $('#section-' + idx + ' .content .sectionname').html(chapterTitle);
-                    });
-
-                    updateSectionNavigation();
-
                 };
 
                 ajaxReqMoveGeneral(params, function() {
@@ -522,6 +635,10 @@ define(['jquery', 'core/log', 'core/ajax', 'core/templates', 'core/notification'
                     assetDelete(e, this);
                 });
 
+                $(document).on('click', '.snap-section-editing.actions .snap-delete', function(e) {
+                    sectionDelete(e, this);
+                });
+
                 $(document).on('click', '.snap-asset-actions .js_snap_duplicate', function(e) {
                     e.preventDefault();
                     var parent = $($(this).parents('.snap-asset')[0]);
@@ -562,35 +679,6 @@ define(['jquery', 'core/log', 'core/ajax', 'core/templates', 'core/notification'
                         }
                     });
                 });
-            };
-
-            /**
-             * Implement always for promise (missing in core AJAX as of Moodle 3.1).
-             * @param {promise} promise
-             * @param {object} callbacks
-             */
-            var promiseHandler = function(promise, callbacks) {
-
-                if (callbacks.done && typeof(callbacks.done) === 'function') {
-                    promise.done(function(result) {
-                        callbacks.done(result);
-                        // Implement always callback.
-                        if (callbacks.always && typeof(callbacks.always) === 'function') {
-                            callbacks.always(result);
-                        }
-                    });
-                }
-
-                if (callbacks.fail && typeof(callbacks.fail) === 'function') {
-                    promise.fail(function(result) {
-                        callbacks.fail(result);
-                        // Implement always callback.
-                        if (callbacks.always && typeof(callbacks.always) === 'function') {
-                            callbacks.always(result);
-                        }
-                    });
-                }
-
             };
 
             /**

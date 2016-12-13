@@ -234,9 +234,12 @@ class shared extends \renderer_base {
             'error:failedtoduplicateasset',
             'deleteassetconfirmation',
             'deleteassetconfirmationinstance',
+            'deleteassettitle',
             'deletingasset',
             'deletingassetinstance',
-            'deleteassettitle'
+            'deletesectionconfirmation',
+            'deletesectiontitle',
+            'deletingsection'
         ], 'theme_snap');
 
         // Include section-specific strings for formats which support sections.

@@ -102,6 +102,16 @@ define(['jquery', 'core/templates'],
                 containerEl.removeClass('snap-footer-alert-visible');
                 $('.snap-footer-alert-cancel').removeClass('state-visible');
             };
+
+            /**
+             * Hide footer alert and reset content.
+             */
+            this.hideAndReset = function() {
+                this.removeAjaxLoading();
+                this.setTitle('');
+                this.setSrNotice('');
+                this.hide();
+            };
         };
         return new FooterAlert();
     }

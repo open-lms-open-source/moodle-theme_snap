@@ -396,7 +396,6 @@ class theme_snap_services_course_test extends \advanced_testcase {
     }
 
     // Records for favorite courses should not exist when the user is deleted.
-
     public function test_user_deletion() {
         global $DB;
 
@@ -410,4 +409,30 @@ class theme_snap_services_course_test extends \advanced_testcase {
         $this->assertEmpty($favorites);
     }
 
+    private function count_course_sections($courseid) {
+        global $DB;
+        $count = $DB->count_records('course_sections', ['course' => $courseid]);
+        return $count;
+    }
+
+    // Test course section deletion.
+    public function test_section_deletion() {
+        $service = $this->courseservice;
+        $generator = $this->getDataGenerator();
+
+        // Create topics course
+        $course = $generator->create_course([
+            'shortname' => 'testcourse',
+            'format' => 'topics',
+            'numsections' => 5
+        ], ['createsections' => true]);
+
+        $this->assertEquals(6, $this->count_course_sections($course->id));
+
+        $this->setAdminUser();
+
+        $service->delete_section($course->shortname, 1);
+
+        $this->assertEquals(5, $this->count_course_sections($course->id));
+    }
 }
