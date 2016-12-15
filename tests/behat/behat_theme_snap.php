@@ -1301,10 +1301,97 @@ class behat_theme_snap extends behat_base {
     }
 
     /**
+     * @Given /^I should see asset delete dialog$/
+     */
+    public function i_should_see_asset_delete_dialog() {
+        $text = get_string('deleteassettitle', 'theme_snap');
+        $element = '.moodle-dialogue-hd';
+        $this->execute('behat_general::assert_element_contains_text', [$text, $element, 'css_element']);
+    }
+
+    /**
+     * @Given /^I should not see asset delete dialog$/
+     */
+    public function i_should_not_see_asset_delete_dialog() {
+        $text = get_string('deleteassettitle', 'theme_snap');
+        $element = '.moodle-dialogue-hd';
+        try {
+            $nodes = $this->find_all('css', $element);
+        } catch (Exception $e) {
+            return; // No dialog.
+        }
+        if (!empty($nodes)) {
+            // Make sure dialog does not contain delete asset text.
+            $this->execute('behat_general::assert_element_not_contains_text', [$text, $element, 'css_element']);
+        }
+    }
+    /**
+     * @Given /^I should see section delete dialog$/
+     */
+    public function i_should_see_section_delete_dialog() {
+        $text = get_string('deletesectiontitle', 'theme_snap');
+        $element = '.moodle-dialogue-hd';
+        $this->execute('behat_general::assert_element_contains_text', [$text, $element, 'css_element']);
+    }
+
+    /**
+     * @Given /^I should not see section delete dialog$/
+     */
+    public function i_should_not_see_section_delete_dialog() {
+        $text = get_string('deletesectiontitle', 'theme_snap');
+        $element = '.moodle-dialogue-hd';
+        try {
+            $nodes = $this->find_all('css', $element);
+        } catch (Exception $e) {
+            return; // No dialog.
+        }
+        if (!empty($nodes)) {
+            // Make sure dialog does not contain delete asset text.
+            $this->execute('behat_general::assert_element_not_contains_text', [$text, $element, 'css_element']);
+        }
+    }
+
+    /**
+     * @param string $asset
+     * @param boolean $can;
+     */
+    private function can_or_cant_see_asset_in_course_asset_search($asset, $can = true) {
+        /** @var behat_forms $formcontext */
+        $formcontext = behat_context_helper::get('behat_forms');
+
+        /** @var behat_general $generalcontext */
+        $generalcontext = behat_context_helper::get('behat_general');
+
+        $formcontext->i_set_the_field_with_xpath_to('//input[@id=\'toc-search-input\']', $asset);
+        if ($can) {
+            $generalcontext->assert_element_contains_text($asset, '#toc-search-results', 'css_element');
+        } else {
+            $generalcontext->assert_element_not_contains_text($asset, '#toc-search-results', 'css_element');
+        }
+    }
+
+    /**
+     * @Given /^I can see "(?P<asset_string>(?:[^"]|\\")*)" in course asset search$/
+     * @param string $asset
+     */
+    public function i_can_see_asset_in_course_asset_search($asset) {
+        $this->can_or_cant_see_asset_in_course_asset_search($asset, true);
+    }
+
+    /**
+     * @Given /^I cannot see "(?P<asset_string>(?:[^"]|\\")*)" in course asset search$/
+     * @param string $asset
+     */
+    public function i_cannot_see_asset_in_course_asset_search($asset) {
+        $this->can_or_cant_see_asset_in_course_asset_search($asset, false);
+    }
+
+    /**
      * @Given /^debugging is turned off$/
      */
     public function debugging_is_turned_off() {
         set_config('debug', '0');
         set_config('debugdisplay', '0');
     }
+
 }

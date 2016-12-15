@@ -50,7 +50,7 @@ Feature: When the moodle theme is set to Snap, teachers can move course sections
       | name | My & < > Topic |
     And I press "Save changes"
     And I follow "Move \"My & < > Topic\""
-    Then I should see "Moving \"My & < > Topic\"" in the "#snap-move-message" "css_element"
+    Then I should see "Moving \"My & < > Topic\"" in the "#snap-footer-alert" "css_element"
     When I follow "Topic 4"
     And I follow "Place section \"My & < > Topic\" before section \"Topic 4\""
     Then I should see "My & < > Topic" in the "#section-3" "css_element"
@@ -76,7 +76,7 @@ Feature: When the moodle theme is set to Snap, teachers can move course sections
       | name | My & < > Topic |
     And I press "Save changes"
     And I follow "Move \"My & < > Topic\""
-    Then I should see "Moving \"My & < > Topic\"" in the "#snap-move-message" "css_element"
+    Then I should see "Moving \"My & < > Topic\"" in the "#snap-footer-alert" "css_element"
     When I follow "Topic 4"
     And the editing teacher role is removed from course "C1" for "teacher1"
     And I follow "Place section \"My & < > Topic\" before section \"Topic 4\""

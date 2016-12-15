@@ -414,6 +414,15 @@ class course {
         ];
     }
 
+    /**
+     * Set the visibility of a section.
+     * @param string $shortname
+     * @param int $sectionnumber
+     * @param boolean $visible
+     * @return array
+     * @throws \moodle_exception
+     * @throws \required_capability_exception
+     */
     public function set_section_visibility($shortname, $sectionnumber, $visible) {
         global $OUTPUT;
         $course = $this->coursebyshortname($shortname);
@@ -429,6 +438,32 @@ class course {
 
         return [
             'actionmodel' => $actionmodel->export_for_template($OUTPUT),
+            'toc' => $toc->export_for_template($OUTPUT)
+        ];
+    }
+
+    /**
+     * Delete a section.
+     * @param string $shortname
+     * @param int $sectionnumber
+     */
+    public function delete_section($shortname, $sectionnumber) {
+        global $OUTPUT;
+        $course = $this->coursebyshortname($shortname);
+        $context = \context_course::instance($course->id);
+        require_capability('moodle/course:sectionvisibility', $context);
+        // Note, we do not use the return value of set_section_visible (resourcestotoggle) as nested resource visibility
+        // is handled via CSS.
+        $modinfo = get_fast_modinfo($course);
+        $sectioninfo = $modinfo->get_section_info($sectionnumber);
+
+        if (course_can_delete_section($course, $sectioninfo)) {
+            course_delete_section($course, $sectioninfo, true);
+        }
+
+        $toc = new \theme_snap\renderables\course_toc($course);
+
+        return [
             'toc' => $toc->export_for_template($OUTPUT)
         ];
     }

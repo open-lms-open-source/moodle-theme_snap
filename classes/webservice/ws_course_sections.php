@@ -48,7 +48,7 @@ class ws_course_sections extends \external_api {
     public static function service_parameters() {
         $parameters = [
             'courseshortname' => new \external_value(PARAM_TEXT, 'Course shortname', VALUE_REQUIRED),
-            'action' => new \external_value(PARAM_ALPHA, 'Action to perform: visibility|highlight', VALUE_REQUIRED),
+            'action' => new \external_value(PARAM_ALPHA, 'Action to perform: visibility|highlight|delete', VALUE_REQUIRED),
             'sectionnumber' => new \external_value(PARAM_INT, 'Section number', VALUE_REQUIRED),
             'value' => new \external_value(PARAM_INT,
                     'Value corresponding to action - e.g. visibility 0 is hide, highlight 1 would highlight the section',
@@ -65,7 +65,7 @@ class ws_course_sections extends \external_api {
             'actionmodel' => new \external_single_structure(
                 definition_helper::define_class_for_webservice('theme_snap\renderables\course_action_section_base'),
                 'Action model',
-                VALUE_REQUIRED
+                VALUE_OPTIONAL
             ),
             'toc' => new \external_single_Structure(
                 definition_helper::define_class_for_webservice('theme_snap\renderables\course_toc'),
@@ -90,6 +90,8 @@ class ws_course_sections extends \external_api {
                 return $service->highlight_section($courseshortname, $sectionnumber, $value);
             case 'visibility' :
                 return $service->set_section_visibility($courseshortname, $sectionnumber, $value);
+            case 'delete' :
+                return $service->delete_section($courseshortname, $sectionnumber);
         }
         throw new \coding_exception('Invalid action selected :' . $action);
     }

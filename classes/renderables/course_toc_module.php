@@ -48,13 +48,18 @@ class course_toc_module implements \renderable {
     public $formattedname;
 
     /**
-     * @var string any screen reader info to display
+     * @var string - any screen reader info to display
      */
     public $srinfo;
 
     /**
-     * @var string (hash)
+     * @var string - hash bang #section-x&module-x
      */
     public $url;
+
+    /**
+     * @var int - course module id
+     */
+    public $cmid;
 
 }

@@ -20,8 +20,8 @@
  */
 
 define(['jquery', 'core/log', 'core/ajax', 'core/templates', 'core/notification',
-    'theme_snap/util', 'theme_snap/ajax_notification'],
-    function($, log, ajax, templates, notification, util, ajaxNotify) {
+    'theme_snap/util', 'theme_snap/ajax_notification', 'theme_snap/footer_alert'],
+    function($, log, ajax, templates, notification, util, ajaxNotify, footerAlert) {
 
     return {
         init: function(courseLib) {
@@ -42,11 +42,6 @@ define(['jquery', 'core/log', 'core/ajax', 'core/templates', 'core/notification'
              * @type {boolean}
              */
             var ajaxing = false;
-
-            /**
-             * @type {*|jQuery|HTMLElement}
-             */
-            var snapMoveMessage = $('#snap-move-message');
 
             /**
              * Get the section number from a section element.
@@ -72,6 +67,7 @@ define(['jquery', 'core/log', 'core/ajax', 'core/templates', 'core/notification'
                 $('body').removeClass('snap-move-inprogress');
                 $('body').removeClass('snap-move-section');
                 $('body').removeClass('snap-move-asset');
+                footerAlert.hideAndReset();
                 $('.section-moving').removeClass('section-moving');
                 $('.asset-moving').removeClass('asset-moving');
                 $('.js-snap-asset-move').removeAttr('checked');
@@ -82,11 +78,10 @@ define(['jquery', 'core/log', 'core/ajax', 'core/templates', 'core/notification'
              * Move fail - sad face :(.
              */
             var moveFailed = function() {
-                $('.snap-move-notice').addClass('movefail');
-                $('.snap-move-notice .three-quarters').remove();
                 var actname = $(movingObject).find('.instancename').html();
 
-                $('#snap-move-message h5').html(M.util.get_string('movefailed', 'theme_snap', actname));
+                footerAlert.removeAjaxLoading();
+                footerAlert.setTitle(M.util.get_string('movefailed', 'theme_snap', actname));
                 // Stop moving in 2 seconds so that the user has time to see the failed moving notice.
                 window.setTimeout(function() {
                     // Don't pass in target, we want to abort the move!
@@ -98,17 +93,16 @@ define(['jquery', 'core/log', 'core/ajax', 'core/templates', 'core/notification'
              * Update moving message.
              */
             var updateMovingMessage = function() {
+                var title;
                 if (movingObjects.length === 1) {
                     var assetname = $(movingObjects[0]).find('.snap-asset-link .instancename').html();
                     assetname = assetname || M.str.label.pluginname;
-                    var title = M.util.get_string('moving', 'theme_snap', assetname);
-                    snapMoveMessage.find('.snap-move-message-title').html(title);
+                    title = M.util.get_string('moving', 'theme_snap', assetname);
+
                 } else {
-                    snapMoveMessage.find('.snap-move-message-title').html(
-                        M.util.get_string('movingcount', 'theme_snap', movingObjects.length)
-                    );
+                    title = M.util.get_string('movingcount', 'theme_snap', movingObjects.length);
                 }
-                snapMoveMessage.focus();
+                footerAlert.setTitle(title);
             };
 
             /**
@@ -151,7 +145,7 @@ define(['jquery', 'core/log', 'core/ajax', 'core/templates', 'core/notification'
                 }
 
                 // Add spinner.
-                addAjaxLoading($('#snap-move-message .snap-move-message-title'));
+                footerAlert.addAjaxLoading();
 
                 // Set common params.
                 params.sesskey = M.cfg.sesskey;
@@ -190,9 +184,283 @@ define(['jquery', 'core/log', 'core/ajax', 'core/templates', 'core/notification'
                 if (finalItem) {
                     req.complete(function() {
                         ajaxing = false;
-                        $('#snap-move-message-title .spinner-three-quarters').remove();
+                        footerAlert.removeAjaxLoading();
                     });
                 }
+            };
+
+            /**
+             * Implement always for promise (missing in core AJAX as of Moodle 3.1).
+             * @param {promise} promise
+             * @param {object} callbacks
+             */
+            var promiseHandler = function(promise, callbacks) {
+
+                if (callbacks.done && typeof(callbacks.done) === 'function') {
+                    promise.done(function(result) {
+                        callbacks.done(result);
+                        // Implement always callback.
+                        if (callbacks.always && typeof(callbacks.always) === 'function') {
+                            callbacks.always(result);
+                        }
+                    });
+                }
+
+                if (callbacks.fail && typeof(callbacks.fail) === 'function') {
+                    promise.fail(function(result) {
+                        callbacks.fail(result);
+                        // Implement always callback.
+                        if (callbacks.always && typeof(callbacks.always) === 'function') {
+                            callbacks.always(result);
+                        }
+                    });
+                }
+
+            };
+
+            /**
+             * Get section title.
+             * @param {integer} section
+             * @returns {*|jQuery}
+             */
+            var getSectionTitle = function(section) {
+                // Get title from TOC.
+                return $('#chapters li:nth-of-type(' + (section + 1) + ') .chapter-title').html();
+            };
+
+            /**
+             * Update next / previous links.
+             * @param {string} selector
+             */
+            var updateSectionNavigation = function(selector) {
+                var sections, totalSectionCount;
+                if (!selector) {
+                    selector = '#region-main .course-content > ul li.section';
+                    sections = $(selector);
+                    totalSectionCount = sections.length;
+                } else {
+                    sections = $(selector);
+                    var allSections = $('#region-main .course-content > ul li.section');
+                    totalSectionCount = allSections.length;
+                }
+
+                $.each(sections, function(idx, el) {
+                    var sectionNum = sectionNumber(el);
+                    var previousSection = sectionNum - 1;
+                    var nextSection = sectionNum + 1;
+                    var previous = false;
+                    var next = false;
+                    var hidden, extraclasses;
+                    if (previousSection > -1) {
+                        hidden = $('#section-' + previousSection).hasClass('hidden');
+                        extraclasses = hidden ? ' dimmed_text' : '';
+                        previous = {
+                            section: previousSection,
+                            title: getSectionTitle(previousSection),
+                            classes: extraclasses
+                        };
+                    }
+                    if (nextSection < totalSectionCount) {
+                        hidden = $('#section-' + nextSection).hasClass('hidden');
+                        extraclasses = hidden ? ' dimmed_text' : '';
+                        next = {
+                            section: nextSection,
+                            title: getSectionTitle(nextSection),
+                            classes: extraclasses
+                        };
+                    }
+                    var navigation = {
+                        previous: previous,
+                        next: next
+                    };
+                    templates.render('theme_snap/course_section_navigation', navigation)
+                        .done(function(result) {
+                            $('#section-' + sectionNum + ' .section_footer').replaceWith(result);
+                        });
+
+                });
+            };
+
+            /**
+             * Update sections.
+             */
+            var updateSections = function() {
+
+                // Renumber section ids, rename section titles.
+                $.each($('#region-main .course-content > ul li.section'), function(idx, obj) {
+                    $(obj).attr('id', 'section-' + idx);
+                    // Get title from TOC (note that its idx + 1 because first entry is
+                    // introduction.
+                    var chapterTitle = getSectionTitle(idx);
+                    // Update section title with corresponding TOC title - this is necessary
+                    // for weekly topic courses where the section title needs to stay the
+                    // same as the TOC.
+                    $('#section-' + idx + ' .content .sectionname').html(chapterTitle);
+                });
+
+                updateSectionNavigation();
+            };
+
+            /**
+             * Delete section dialog and confirm function.
+             * @param {object} e
+             * @param {object} el
+             */
+            var sectionDelete = function(e, el) {
+                e.preventDefault();
+                var sectionNum = parentSectionNumber(el);
+                var section = $('#section-' + sectionNum);
+                var sectionName = section.find('.sectionname').text();
+
+                /**
+                 * Delete section.
+                 */
+                var doDelete = function() {
+                    if (ajaxing) {
+                        // Request already made.
+                        log.debug('Skipping ajax request, one already in progress');
+                        return;
+                    }
+                    var delProgress = M.util.get_string('deletingsection', 'theme_snap', sectionName);
+
+                    footerAlert.setTitle(delProgress);
+                    footerAlert.addAjaxLoading('');
+                    footerAlert.show();
+
+                    var params = {
+                        courseshortname: courseLib.courseConfig.shortname,
+                        action: 'delete',
+                        sectionnumber: sectionNum,
+                        value: 1
+                    };
+
+                    log.debug('Making course/rest.php section delete request', params);
+
+                    // Make ajax call.
+                    var ajaxPromises = ajax.call([
+                        {
+                            methodname: 'theme_snap_course_sections',
+                            args: params
+                        }
+                    ], true, true);
+
+                    // Handle ajax promises.
+                    promiseHandler(ajaxPromises[0], {
+                        done: function(response) {
+                            // Update TOC.
+                            promiseHandler(templates.render('theme_snap/course_toc', response.toc), {
+                                    done: function(result) {
+                                        $('#course-toc').replaceWith(result);
+                                        $(document).trigger('snapTOCReplaced');
+                                        // Remove section from DOM.
+                                        section.remove();
+                                        updateSections();
+                                    },
+                                    always: function() {
+                                        // Allow another request now this has finished.
+                                        footerAlert.hideAndReset();
+                                        ajaxing = false;
+                                    }
+                                }
+                            );
+                            // Current section no longer exists so change location to previous section.
+                            if (sectionNum >= $('.course-content > ul li.section').length) {
+                                location.hash = 'section-' + (sectionNum - 1);
+                            }
+                            courseLib.showSection();
+                        },
+                        fail: function(response) {
+                            ajaxNotify.ifErrorShowBestMsg(response);
+                            footerAlert.hideAndReset();
+                            // Allow another request now this has finished.
+                            ajaxing = false;
+                        }
+                    });
+                };
+
+                var delTitle = M.util.get_string('deletesectiontitle', 'theme_snap');
+                var delConf = M.util.get_string('deletesectionconfirmation', 'theme_snap', sectionName);
+                var ok = M.util.get_string('yes', 'moodle');
+                var cancel = M.util.get_string('no', 'moodle');
+                notification.confirm(delTitle, delConf, ok, cancel, doDelete);
+            };
+
+            /**
+             * Delete asset dialog and confirm function.
+             * @param {object} e
+             * @param {object} el
+             */
+            var assetDelete = function(e, el) {
+                e.preventDefault();
+                var asset = $($(el).parents('.snap-asset')[0]);
+                var cmid = Number(asset[0].id.replace('module-', ''));
+                var instanceName = asset.find('.instancename').text();
+                var params = {
+                    id       : cmid,
+                    "class"  : "resource",
+                    sesskey  : M.cfg.sesskey,
+                    courseId : courseLib.courseConfig.id,
+                    action   : "DELETE"
+                };
+
+                /**
+                 * Delete asset.
+                 */
+                var doDelete = function() {
+                    if (ajaxing) {
+                        // Request already made.
+                        log.debug('Skipping ajax request, one already in progress');
+                        return;
+                    }
+                    var delProgress = '';
+                    if (instanceName.trim() === '') {
+                        delProgress = M.util.get_string('deletingasset', 'theme_snap');
+                    } else {
+                        delProgress = M.util.get_string('deletingassetinstance', 'theme_snap', instanceName);
+                    }
+                    footerAlert.setTitle(delProgress);
+                    footerAlert.addAjaxLoading('');
+                    footerAlert.show();
+
+                    log.debug('Making course/rest.php asset delete request', params);
+                    var req = $.ajax({
+                        type: "POST",
+                        async: true,
+                        data: params,
+                        dataType: 'text',
+                        url: M.cfg.wwwroot + courseLib.courseConfig.ajaxurl
+                    });
+                    req.done(function(data, textStatus, xhr) {
+                        if (data !== '' || xhr.status !== 200) {
+                            if (ajaxNotify.ifErrorShowBestMsg(data)) {
+                                log.debug('Ajax request fail');
+                                return;
+                            }
+                        }
+                        log.debug('Ajax request successful');
+                        // Remove asset from DOM.
+                        asset.remove();
+                        // Remove asset searchable.
+                        $('#toc-searchables li[data-id="' + cmid + '"]').remove();
+                    });
+                    req.fail(function(data) {
+                        ajaxNotify.ifErrorShowBestMsg(data);
+                    });
+                    req.always(function() {
+                        footerAlert.hideAndReset();
+                    });
+
+                };
+                var delTitle = M.util.get_string('deleteassettitle', 'theme_snap');
+                var delConf = '';
+                if (instanceName.trim() === '') {
+                    delConf = M.util.get_string('deleteassetconfirmation', 'theme_snap');
+                } else {
+                    delConf = M.util.get_string('deleteassetconfirmationinstance', 'theme_snap', instanceName);
+                }
+                var ok = M.util.get_string('yes', 'moodle');
+                var cancel = M.util.get_string('no', 'moodle');
+                notification.confirm(delTitle, delConf, ok, cancel, doDelete);
             };
 
             /**
@@ -297,69 +565,6 @@ define(['jquery', 'core/log', 'core/ajax', 'core/templates', 'core/notification'
             };
 
             /**
-             * Get section title.
-             * @param section
-             * @returns {*|jQuery}
-             */
-            var getSectionTitle = function(section) {
-                // Get title from TOC.
-                return $('#chapters li:nth-of-type(' + (section + 1) + ') .chapter-title').html();
-            };
-
-            /**
-             * Update next / previous links.
-             * @param {string} selector
-             */
-            var updateSectionNavigation = function(selector) {
-                var sections, totalSectionCount;
-                if (!selector) {
-                    selector = '#region-main .course-content > ul li.section';
-                    sections = $(selector);
-                    totalSectionCount = sections.length;
-                } else {
-                    sections = $(selector);
-                    var allSections = $('#region-main .course-content > ul li.section');
-                    totalSectionCount = allSections.length;
-                }
-
-                $.each(sections, function(idx, el) {
-                    var sectionNum = sectionNumber(el);
-                    var previousSection = sectionNum - 1;
-                    var nextSection = sectionNum + 1;
-                    var previous = false;
-                    var next = false;
-                    var hidden, extraclasses;
-                    if (previousSection > -1) {
-                        hidden = $('#section-' + previousSection).hasClass('hidden');
-                        extraclasses = hidden ? ' dimmed_text' : '';
-                        previous = {
-                            section: previousSection,
-                            title: getSectionTitle(previousSection),
-                            classes: extraclasses
-                        };
-                    }
-                    if (nextSection < totalSectionCount) {
-                        hidden = $('#section-' + nextSection).hasClass('hidden');
-                        extraclasses = hidden ? ' dimmed_text' : '';
-                        next = {
-                            section: nextSection,
-                            title: getSectionTitle(nextSection),
-                            classes: extraclasses
-                        };
-                    }
-                    var navigation = {
-                        previous: previous,
-                        next: next
-                    };
-                    templates.render('theme_snap/course_section_navigation', navigation)
-                        .done(function(result) {
-                            $('#section-' + sectionNum + ' .section_footer').replaceWith(result);
-                        });
-
-                });
-            };
-
-            /**
              * Ajax request to move section to target.
              * @param {str|object} dropzone
              */
@@ -374,27 +579,6 @@ define(['jquery', 'core/log', 'core/ajax', 'core/templates', 'core/notification'
                     class: 'section',
                     id: currentSection,
                     value: targetSection
-                };
-
-                /**
-                 * Update sections.
-                 */
-                var updateSections = function() {
-
-                    // Renumber section ids, rename section titles.
-                    $.each($('#region-main .course-content > ul li.section'), function(idx, obj) {
-                        $(obj).attr('id', 'section-' + idx);
-                        // Get title from TOC (note that its idx + 1 because first entry is
-                        // introduction.
-                        var chapterTitle = getSectionTitle(idx);
-                        // Update section title with corresponding TOC title - this is necessary
-                        // for weekly topic courses where the section title needs to stay the
-                        // same as the TOC.
-                        $('#section-' + idx + ' .content .sectionname').html(chapterTitle);
-                    });
-
-                    updateSectionNavigation();
-
                 };
 
                 ajaxReqMoveGeneral(params, function() {
@@ -449,6 +633,14 @@ define(['jquery', 'core/log', 'core/ajax', 'core/templates', 'core/notification'
                     assetShowHide(e, this, true);
                 });
 
+                $(document).on('click', '.snap-asset-actions .js_snap_delete', function(e) {
+                    assetDelete(e, this);
+                });
+
+                $(document).on('click', '.snap-section-editing.actions .snap-delete', function(e) {
+                    sectionDelete(e, this);
+                });
+
                 $(document).on('click', '.snap-asset-actions .js_snap_duplicate', function(e) {
                     e.preventDefault();
                     var parent = $($(this).parents('.snap-asset')[0]);
@@ -489,35 +681,6 @@ define(['jquery', 'core/log', 'core/ajax', 'core/templates', 'core/notification'
                         }
                     });
                 });
-            };
-
-            /**
-             * Implement always for promise (missing in core AJAX as of Moodle 3.1).
-             * @param {promise} promise
-             * @param {object} callbacks
-             */
-            var promiseHandler = function(promise, callbacks) {
-
-                if (callbacks.done && typeof(callbacks.done) === 'function') {
-                    promise.done(function(result) {
-                        callbacks.done(result);
-                        // Implement always callback.
-                        if (callbacks.always && typeof(callbacks.always) === 'function') {
-                            callbacks.always(result);
-                        }
-                    });
-                }
-
-                if (callbacks.fail && typeof(callbacks.fail) === 'function') {
-                    promise.fail(function(result) {
-                        callbacks.fail(result);
-                        // Implement always callback.
-                        if (callbacks.always && typeof(callbacks.always) === 'function') {
-                            callbacks.always(result);
-                        }
-                    });
-                }
-
             };
 
             /**
@@ -671,6 +834,16 @@ define(['jquery', 'core/log', 'core/ajax', 'core/templates', 'core/notification'
             };
 
             /**
+             * Show footer alert for moving.
+             */
+            var footerAlertShowMove = function() {
+                footerAlert.show(function(e){
+                    e.preventDefault();
+                    stopMoving();
+                });
+            };
+            
+            /**
              * When section move link is clicked, get the data we need and start the move.
              */
             var moveSectionListener = function() {
@@ -680,6 +853,7 @@ define(['jquery', 'core/log', 'core/ajax', 'core/templates', 'core/notification'
                     e.preventDefault();
 
                     $('body').addClass('snap-move-inprogress');
+                    footerAlertShowMove();
 
                     // Moving a section.
                     var sectionNumber = parentSectionNumber(this);
@@ -697,8 +871,7 @@ define(['jquery', 'core/log', 'core/ajax', 'core/templates', 'core/notification'
                     $('body').addClass('snap-move-section');
 
                     var title = M.util.get_string('moving', 'theme_snap', sectionName);
-                    snapMoveMessage.find('.snap-move-message-title').html(title);
-                    snapMoveMessage.focus();
+                    footerAlert.setTitle(title);
 
                     $('.section-drop').each(function() {
                         var sectionDropMsg = M.util.get_string('movingdropsectionhelp', 'theme_snap',
@@ -707,9 +880,7 @@ define(['jquery', 'core/log', 'core/ajax', 'core/templates', 'core/notification'
                         $(this).html(sectionDropMsg);
                     });
 
-                    $('#snap-move-message p.sr-only').html(
-                        M.util.get_string('movingstartedhelp', 'theme_snap', sectionName)
-                    );
+                    footerAlert.setSrNotice(M.util.get_string('movingstartedhelp', 'theme_snap', sectionName));
                 });
             };
 
@@ -788,6 +959,7 @@ define(['jquery', 'core/log', 'core/ajax', 'core/templates', 'core/notification'
                             stopMoving();
                         }
                     }
+                    footerAlertShowMove();
                     updateMovingMessage();
                 });
             };
@@ -817,18 +989,6 @@ define(['jquery', 'core/log', 'core/ajax', 'core/templates', 'core/notification'
             };
 
             /**
-             * When cancel button is pressed in footer, cancel move.
-             */
-            var moveCancelListener = function() {
-                $(".snap-move-cancel").click(
-                    function(e) {
-                        e.preventDefault();
-                        stopMoving();
-                    }
-                );
-            };
-
-            /**
              * Add listeners.
              */
             var addListeners = function() {
@@ -836,7 +996,6 @@ define(['jquery', 'core/log', 'core/ajax', 'core/templates', 'core/notification'
                 toggleSectionListener();
                 highlightSectionListener();
                 assetMoveListener();
-                moveCancelListener();
                 movePlaceListener();
                 assetEditListeners();
                 addAfterDrops();
@@ -859,16 +1018,6 @@ define(['jquery', 'core/log', 'core/ajax', 'core/templates', 'core/notification'
              * Initialise script.
              */
             var initialise = function() {
-                // If the move notice html was not output to the dom via php, then we need to add it here via js.
-                // This is necessary for the front page which does not have a renderer that we can override.
-                if (!$('#snap-move-message').length) {
-                    templates.render('theme_snap/snap_move_notice', {})
-                        .done(function(result) {
-                            $('#region-main').append(result);
-                            snapMoveMessage = $('#snap-move-message');
-                        });
-                }
-
                 // Add listeners.
                 addListeners();
 

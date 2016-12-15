@@ -1601,57 +1601,6 @@ span.editinstructions {
     }
 }
 
-@keyframes movefail {
-    0% {
-        box-shadow: inset 0 0 1px rgba(255, 255, 255, 0.5);
-    }
-    50% {
-        box-shadow: inset 0 0 300px rgba(255, 255, 255, 0.5);
-    }
-    100% {
-        box-shadow: inset 0 0 1px rgba(255, 255, 255, 0.5);
-    }
-}
-
-
-@keyframes resourceinsert {
-    0%   {
-        width: 0;
-        min-width: 0;
-        max-width:0;
-        height: 0;
-        min-height: 0;
-        max-height:0
-    }
-    100% {
-        width: 30%;
-        min-width: 210px;
-        max-width: inherit;
-        height: 210px;
-        min-height: inherit;
-        max-height: inherit;
-    }
-}
-
-@keyframes activityinsert {
-    0%   {
-        width: 0;
-        min-width: 0;
-        max-width:0;
-        height: 0;
-        min-height: 0;
-        max-height:0
-    }
-    100% {
-        width: 100%;
-        min-width: 100%;
-        max-width: 100%;
-        height: auto;
-        min-height: 125px;
-        max-height: inherit;
-    }
-}
-
 @keyframes fadein {
     0%   {
         opacity: 0;
@@ -1703,7 +1652,7 @@ span.editinstructions {
     }
 }
 
-#snap-move-message {
+#snap-footer-alert {
     position: fixed;
     z-index:1;
     bottom:0;
@@ -1717,27 +1666,31 @@ span.editinstructions {
     max-height: 0;
     overflow: hidden;
     .alakazam();
-
-    .snap-move-message-title{
-        text-transform: capitalize;
-        color: #fff !important;
-        display: inline-block;
-        background-size: 1.5em 1.5em;
-        background-position: 0 center;
-        background-repeat: no-repeat;
-        padding-left: 1.7em; // Magic number for icon
-        margin-left: 4%;
-        width: 68.2%;
-    }
-
     .spinner-three-quarters {
         margin-left: 1em;
         width: 1em;
         height: 1em;
     }
+    &.snap-footer-alert-visible {
+        padding:0.5em 0;
+        max-height: 200px;
+        z-index: 2;
+    }
 }
 
-.snap-move-cancel {
+.snap-footer-alert-title{
+    text-transform: capitalize;
+    color: #fff !important;
+    display: inline-block;
+    background-size: 1.5em 1.5em;
+    background-position: 0 center;
+    background-repeat: no-repeat;
+    padding-left: 1.7em; // Magic number for icon
+    margin-left: 4%;
+    width: 68.2%;
+}
+
+.snap-footer-alert-cancel {
     float:right;
     margin-right:4%; // TODO - 15% on small screen, for fab?
     color: #fff !important;
@@ -1748,7 +1701,13 @@ span.editinstructions {
         color: #fff;
         opacity: 1;
     }
+
+    &.state-visible {
+        visibility: visible;
+    }
 }
+
+
 
 // Body class when moving
 .snap-move-inprogress {
@@ -1771,16 +1730,6 @@ span.editinstructions {
         }
     }
 
-    #snap-move-message {
-      padding:0.5em 0;
-      max-height: 200px;
-      z-index: 2;
-    }
-
-    .snap-move-cancel {
-      visibility: visible;
-    }
-
     .actions {
         display: none;
     }
@@ -1795,19 +1744,6 @@ span.editinstructions {
         animation-iteration-count: 1;
         animation-fill-mode: forwards;
     }
-}
-
-.snap-move-notice.movefail{
-    animation: movefail 0.25s;
-    animation-iteration-count: 16;
-}
-
-.snap-activity.clonedropstatus {
-    animation: activityinsert 1s;
-}
-
-.snap-resource.clonedropstatus {
-    animation: resourceinsert 1s;
 }
 
 .snap-move-note, .snap-drop.asset-drop {

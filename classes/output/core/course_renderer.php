@@ -302,7 +302,8 @@ class course_renderer extends \core_course_renderer {
                 $editicon = "<img title='$editalt' alt='$editalt' class='svg-icon' src='".$this->output->pix_url('edit', 'theme')."'/>";
                 $actions .= "<input id='snap-move-mod-$mod->id' class='js-snap-asset-move sr-only' type='checkbox'><label class='snap-asset-move' for='snap-move-mod-$mod->id'><span class='sr-only'>$movealt</span>$moveicon</label>";
                 $actions .= "<a class='snap-edit-asset' href='".new moodle_url($baseurl, array('update' => $mod->id))."'>$editicon</a>";
-                $actionsadvanced[] = "<a href='".new moodle_url($baseurl, array('delete' => $mod->id))."'>$str->delete</a>";
+                $actionsadvanced[] = "<a href='".new moodle_url($baseurl, array('delete' => $mod->id)).
+                    "' class='js_snap_delete'>$str->delete</a>";
             }
 
             // Hide/Show.
@@ -899,9 +900,9 @@ class course_renderer extends \core_course_renderer {
      * @return bool|string
      * @throws moodle_exception
      */
-    public function snap_move_notice() {
+    public function snap_footer_alert() {
         global $OUTPUT;
-        return $OUTPUT->render_from_template('theme_snap/snap_move_notice', null);
+        return $OUTPUT->render_from_template('theme_snap/footer_alert', null);
     }
 
     /**
