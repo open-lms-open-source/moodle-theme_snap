@@ -378,10 +378,10 @@ define(['jquery', 'core/log', 'core/ajax', 'core/templates', 'core/notification'
                     });
                 };
 
-                var delTitle = M.util.get_string('deletesectiontitle', 'theme_snap');
-                var delConf = M.util.get_string('deletesectionconfirmation', 'theme_snap', sectionName);
-                var ok = M.util.get_string('yes', 'moodle');
-                var cancel = M.util.get_string('no', 'moodle');
+                var delTitle = M.util.get_string('confirm', 'moodle');
+                var delConf = M.util.get_string('confirmdeletesection', 'moodle', sectionName);
+                var ok = M.util.get_string('deletesectionconfirm', 'theme_snap');
+                var cancel = M.util.get_string('cancel', 'moodle');
                 notification.confirm(delTitle, delConf, ok, cancel, doDelete);
             };
 
@@ -403,6 +403,21 @@ define(['jquery', 'core/log', 'core/ajax', 'core/templates', 'core/notification'
                     action   : "DELETE"
                 };
 
+                // Create progress and confirmation strings.
+                var delConf = '',
+                    delProgress = '',
+                    plugindata = {
+                        type: M.util.get_string('pluginname', asset.attr('class').match(/modtype_([^\s]*)/)[1])
+                    };
+                if (instanceName.trim() !== '') {
+                    plugindata.name = instanceName;
+                    delConf = M.util.get_string('deletechecktypename', 'moodle', plugindata);
+                    delProgress = M.util.get_string('deletingassetname', 'theme_snap', plugindata);
+                } else {
+                    delConf = M.util.get_string('deletechecktype', 'moodle', plugindata);
+                    delProgress = M.util.get_string('deletingasset', 'theme_snap', plugindata.type);
+                }
+
                 /**
                  * Delete asset.
                  */
@@ -412,12 +427,7 @@ define(['jquery', 'core/log', 'core/ajax', 'core/templates', 'core/notification'
                         log.debug('Skipping ajax request, one already in progress');
                         return;
                     }
-                    var delProgress = '';
-                    if (instanceName.trim() === '') {
-                        delProgress = M.util.get_string('deletingasset', 'theme_snap');
-                    } else {
-                        delProgress = M.util.get_string('deletingassetinstance', 'theme_snap', instanceName);
-                    }
+
                     footerAlert.setTitle(delProgress);
                     footerAlert.addAjaxLoading('');
                     footerAlert.show();
@@ -451,15 +461,11 @@ define(['jquery', 'core/log', 'core/ajax', 'core/templates', 'core/notification'
                     });
 
                 };
-                var delTitle = M.util.get_string('deleteassettitle', 'theme_snap');
-                var delConf = '';
-                if (instanceName.trim() === '') {
-                    delConf = M.util.get_string('deleteassetconfirmation', 'theme_snap');
-                } else {
-                    delConf = M.util.get_string('deleteassetconfirmationinstance', 'theme_snap', instanceName);
-                }
-                var ok = M.util.get_string('yes', 'moodle');
-                var cancel = M.util.get_string('no', 'moodle');
+
+
+                var delTitle = M.util.get_string('confirm', 'moodle');
+                var ok = M.util.get_string('deleteassetconfirm', 'theme_snap', plugindata.type);
+                var cancel = M.util.get_string('cancel', 'moodle');
                 notification.confirm(delTitle, delConf, ok, cancel, doDelete);
             };
 

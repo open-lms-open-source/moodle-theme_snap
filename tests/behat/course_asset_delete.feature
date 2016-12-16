@@ -57,13 +57,13 @@ Feature: When the moodle theme is set to Snap, teachers can delete course resour
     When I click on ".snap-activity[data-type='Assignment'] a.snap-edit-asset-more" "css_element"
     And I click on ".snap-activity[data-type='Assignment'] a.js_snap_delete" "css_element"
     Then I should see asset delete dialog
-    And I press "No"
+    And I cancel dialog
     Then I should not see asset delete dialog
     And I should see "Test assignment1"
     When I click on ".snap-activity[data-type='Assignment'] a.snap-edit-asset-more" "css_element"
     And I click on ".snap-activity[data-type='Assignment'] a.js_snap_delete" "css_element"
     Then I should see asset delete dialog
-    When I press "Yes"
+    When I press "Delete Assign"
     Then I should not see "Test assignment1"
 
   @javascript
@@ -75,13 +75,13 @@ Feature: When the moodle theme is set to Snap, teachers can delete course resour
     When I click on ".snap-activity[data-type='Assignment'] a.snap-edit-asset-more" "css_element"
     And I click on ".snap-activity[data-type='Assignment'] a.js_snap_delete" "css_element"
     Then I should see asset delete dialog
-    And I press "No"
+    And I cancel dialog
     Then I should not see asset delete dialog
     And I should see "Test assignment1"
     When I click on ".snap-activity[data-type='Assignment'] a.snap-edit-asset-more" "css_element"
     And I click on ".snap-activity[data-type='Assignment'] a.js_snap_delete" "css_element"
     Then I should see asset delete dialog
-    When I press "Yes"
+    When I press "Delete Assign"
     Then I should not see "Test assignment1" in the "#section-1" "css_element"
     And I cannot see "Test assignment1" in course asset search
 

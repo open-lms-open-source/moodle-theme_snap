@@ -61,12 +61,12 @@ Feature: When the moodle theme is set to Snap, teachers can delete sections with
     Then "#section-1" "css_element" should exist
     When I click on "#section-1 .snap-section-editing.actions a.snap-delete" "css_element"
     Then I should see section delete dialog
-    And I press "No"
+    And I cancel dialog
     Then I should not see section delete dialog
     And I should see "Topic one"
     When I click on "#section-1 .snap-section-editing.actions a.snap-delete" "css_element"
     Then I should see section delete dialog
-    When I press "Yes"
+    When I press "Delete Section"
     Then I should not see "Topic one" in the "#section-1" "css_element"
     And I cannot see "Test assignment1" in course asset search
     And I can see "Test assignment2" in course asset search

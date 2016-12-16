@@ -1304,8 +1304,8 @@ class behat_theme_snap extends behat_base {
      * @Given /^I should see asset delete dialog$/
      */
     public function i_should_see_asset_delete_dialog() {
-        $text = get_string('deleteassettitle', 'theme_snap');
-        $element = '.moodle-dialogue-hd';
+        $element = '.moodle-dialogue-confirm .confirmation-message';
+        $text = 'Are you sure that you want to delete';
         $this->execute('behat_general::assert_element_contains_text', [$text, $element, 'css_element']);
     }
 
@@ -1313,8 +1313,7 @@ class behat_theme_snap extends behat_base {
      * @Given /^I should not see asset delete dialog$/
      */
     public function i_should_not_see_asset_delete_dialog() {
-        $text = get_string('deleteassettitle', 'theme_snap');
-        $element = '.moodle-dialogue-hd';
+        $element = '.moodle-dialogue-confirm .confirmation-message';
         try {
             $nodes = $this->find_all('css', $element);
         } catch (Exception $e) {
@@ -1322,6 +1321,7 @@ class behat_theme_snap extends behat_base {
         }
         if (!empty($nodes)) {
             // Make sure dialog does not contain delete asset text.
+            $text = 'Are you sure that you want to delete';
             $this->execute('behat_general::assert_element_not_contains_text', [$text, $element, 'css_element']);
         }
     }
@@ -1329,8 +1329,8 @@ class behat_theme_snap extends behat_base {
      * @Given /^I should see section delete dialog$/
      */
     public function i_should_see_section_delete_dialog() {
-        $text = get_string('deletesectiontitle', 'theme_snap');
-        $element = '.moodle-dialogue-hd';
+        $element = '.moodle-dialogue-confirm .confirmation-message';
+        $text = 'Are you absolutely sure you want to completely delete';
         $this->execute('behat_general::assert_element_contains_text', [$text, $element, 'css_element']);
     }
 
@@ -1338,8 +1338,7 @@ class behat_theme_snap extends behat_base {
      * @Given /^I should not see section delete dialog$/
      */
     public function i_should_not_see_section_delete_dialog() {
-        $text = get_string('deletesectiontitle', 'theme_snap');
-        $element = '.moodle-dialogue-hd';
+        $element = '.moodle-dialogue-confirm .confirmation-message';
         try {
             $nodes = $this->find_all('css', $element);
         } catch (Exception $e) {
@@ -1347,8 +1346,17 @@ class behat_theme_snap extends behat_base {
         }
         if (!empty($nodes)) {
             // Make sure dialog does not contain delete asset text.
+            $text = 'Are you absolutely sure you want to completely delete';
             $this->execute('behat_general::assert_element_not_contains_text', [$text, $element, 'css_element']);
         }
+    }
+
+    /**
+     * @Given /^I cancel dialog$/
+     */
+    public function i_cancel_dialog() {
+        $element = '.moodle-dialogue-confirm .confirmation-buttons input[type="button"][value="Cancel"]';
+        $this->execute('behat_general::i_click_on', [$element, 'css_element']);
     }
 
     /**

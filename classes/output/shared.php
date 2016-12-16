@@ -199,6 +199,7 @@ class shared extends \renderer_base {
             'afterresource',
             'aftersection',
             'clicktochangeinbrackets',
+            'confirmdeletesection',
             'deletechecktype',
             'deletechecktypename',
             'edittitle',
@@ -219,8 +220,8 @@ class shared extends \renderer_base {
             'tocontent',
             'totopofsection',
             'unknownerror',
-            'yes',
-            'no'
+            'ok',
+            'cancel'
         ], 'moodle');
 
         $PAGE->requires->strings_for_js([
@@ -232,13 +233,10 @@ class shared extends \renderer_base {
             'error:failedtohighlightsection',
             'error:failedtochangeassetvisibility',
             'error:failedtoduplicateasset',
-            'deleteassetconfirmation',
-            'deleteassetconfirmationinstance',
-            'deleteassettitle',
+            'deleteassetconfirm',
             'deletingasset',
-            'deletingassetinstance',
-            'deletesectionconfirmation',
-            'deletesectiontitle',
+            'deletingassetname',
+            'deletesectionconfirm',
             'deletingsection'
         ], 'theme_snap');
 
