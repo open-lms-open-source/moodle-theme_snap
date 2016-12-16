@@ -73,7 +73,7 @@ class files_renderer extends \core_files_renderer {
      * @param \form_filemanager $fm
      * @return string
      */
-    private function fm_print_generallayout($fm) {
+    protected function fm_print_generallayout($fm) {
         global $OUTPUT;
         $options = $fm->options;
         $clientid = $options->client_id;
@@ -152,7 +152,7 @@ class files_renderer extends \core_files_renderer {
      * @see fp_js_template_iconfilename()
      * @return string
      */
-    private function fm_js_template_iconfilename() {
+    protected function fm_js_template_iconfilename() {
         $rv = '
 <div class="fp-file">
     <a href="#">
@@ -183,7 +183,7 @@ class files_renderer extends \core_files_renderer {
      * @see fp_js_template_listfilename()
      * @return string
      */
-    private function fm_js_template_listfilename() {
+    protected function fm_js_template_listfilename() {
         $rv = '
 <span class="fp-filename-icon">
     <a href="#">
@@ -210,7 +210,7 @@ class files_renderer extends \core_files_renderer {
      *
      * @return string
      */
-    private function fm_js_template_mkdir() {
+    protected function fm_js_template_mkdir() {
         $rv = '
 <div class="filemanager fp-mkdir-dlg" role="dialog" aria-live="assertive" aria-labelledby="fp-mkdir-dlg-title">
     <div class="fp-mkdir-dlg-text">
@@ -229,7 +229,7 @@ class files_renderer extends \core_files_renderer {
      * @see fp_js_template_message()
      * @return string
      */
-    private function fm_js_template_message() {
+    protected function fm_js_template_message() {
         return $this->fp_js_template_message();
     }
 
@@ -274,7 +274,7 @@ class files_renderer extends \core_files_renderer {
      *
      * @return string
      */
-    private function fm_js_template_fileselectlayout() {
+    protected function fm_js_template_fileselectlayout() {
         global $OUTPUT;
         $strloading  = get_string('loading', 'repository');
         $iconprogress = $this->pix_icon('i/loading_small', $strloading).'';
@@ -362,7 +362,7 @@ class files_renderer extends \core_files_renderer {
      *
      * @return string
      */
-    private function fm_js_template_confirmdialog() {
+    protected function fm_js_template_confirmdialog() {
         $rv = '
 <div class="filemanager fp-dlg">
     <div class="fp-dlg-text"></div>
@@ -432,7 +432,7 @@ class files_renderer extends \core_files_renderer {
      *
      * @return string
      */
-    private function fp_js_template_generallayout() {
+    protected function fp_js_template_generallayout() {
         $rv = '
 <div tabindex="0" class="file-picker fp-generallayout" role="dialog" aria-live="assertive">
     <div class="fp-repo-area">
@@ -514,7 +514,7 @@ class files_renderer extends \core_files_renderer {
      *
      * @return string
      */
-    private function fp_js_template_iconfilename() {
+    protected function fp_js_template_iconfilename() {
         $rv = '
 <a class="fp-file" href="#" >
     <div style="position:relative;">
@@ -545,7 +545,7 @@ class files_renderer extends \core_files_renderer {
      *
      * @return string
      */
-    private function fp_js_template_listfilename() {
+    protected function fp_js_template_listfilename() {
         $rv = '
 <span class="fp-filename-icon">
     <a href="#">
@@ -569,7 +569,7 @@ class files_renderer extends \core_files_renderer {
      *
      * @return string
      */
-    private function fp_js_template_nextpage() {
+    protected function fp_js_template_nextpage() {
         $rv = '
 <div class="fp-nextpage">
     <div class="fp-nextpage-link"><a href="#">'.get_string('more').'</a></div>
@@ -608,7 +608,7 @@ class files_renderer extends \core_files_renderer {
      *
      * @return string
      */
-    private function fp_js_template_selectlayout() {
+    protected function fp_js_template_selectlayout() {
         $rv = '
 <div class="file-picker fp-select">
     <div class="fp-select-loading">
@@ -692,7 +692,7 @@ class files_renderer extends \core_files_renderer {
      *
      * @return string
      */
-    private function fp_js_template_uploadform() {
+    protected function fp_js_template_uploadform() {
         $rv = '
 <div class="fp-upload-form">
     <div class="fp-content-center">
@@ -737,7 +737,7 @@ class files_renderer extends \core_files_renderer {
      *
      * @return string
      */
-    private function fp_js_template_loading() {
+    protected function fp_js_template_loading() {
         return '
 <div class="fp-content-loading">
     <div class="fp-content-center">
@@ -755,7 +755,7 @@ class files_renderer extends \core_files_renderer {
      *
      * @return string
      */
-    private function fp_js_template_error() {
+    protected function fp_js_template_error() {
         $rv = '
 <div class="fp-content-error" ><div class="fp-error"></div></div>';
         return $rv;
@@ -774,7 +774,7 @@ class files_renderer extends \core_files_renderer {
      *
      * @return string
      */
-    private function fp_js_template_message() {
+    protected function fp_js_template_message() {
         $rv = '
 <div class="file-picker fp-msg" role="alertdialog" aria-live="assertive" aria-labelledby="fp-msg-labelledby">
     <p class="fp-msg-text" id="fp-msg-labelledby"></p>
@@ -798,7 +798,7 @@ class files_renderer extends \core_files_renderer {
      *
      * @return string
      */
-    private function fp_js_template_processexistingfile() {
+    protected function fp_js_template_processexistingfile() {
         $rv = '
 <div class="file-picker fp-dlg">
     <p class="fp-dlg-text"></p>
@@ -826,7 +826,7 @@ class files_renderer extends \core_files_renderer {
      *
      * @return string
      */
-    private function fp_js_template_processexistingfilemultiple() {
+    protected function fp_js_template_processexistingfilemultiple() {
         $rv = '
 <div class="file-picker fp-dlg">
     <p class="fp-dlg-text"></p>
@@ -862,7 +862,7 @@ class files_renderer extends \core_files_renderer {
      *
      * @return string
      */
-    private function fp_js_template_loginform() {
+    protected function fp_js_template_loginform() {
         $rv = '
 <div class="fp-login-form">
     <div class="fp-content-center">

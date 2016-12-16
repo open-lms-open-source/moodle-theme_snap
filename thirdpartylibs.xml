@@ -4,13 +4,13 @@
     <location>less/bootstrap3</location>
     <name>Twitter Bootstrap (.less files)</name>
     <license>MIT</license>
-    <version>3.2.0</version>
+    <version>3.3.7</version>
   </library>
   <library>
     <location>amd/src/bootstrap.js</location>
     <name>Twitter Bootstrap (.js files)</name>
     <license>MIT</license>
-    <version>3.2.0</version>
+    <version>3.3.7</version>
   </library>
   <library>
     <location>lessphp</location>
