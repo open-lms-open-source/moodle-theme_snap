@@ -47,7 +47,8 @@ Feature: Manual completion updates page wihout reload.
       | assign   | C1                   | assign4  | Test assignment4 | Test assignment description 4 | 2       | 1                                   | 0          | 0              |
 
   @javascript
-  Scenario: Assignment module is marked complete and releases restricted activities / sections.
+  # Done as one scenario for best performance.
+  Scenario: Assignment module is manually marked complete and releases restricted activities / sections.
     Given I log in as "admin" (theme_snap)
     And I am on the course main page for "C1"
     # Restrict the second assign module to only be accessible after the first assign module is marked complete.
@@ -74,15 +75,17 @@ Feature: Manual completion updates page wihout reload.
     Then I should see availability info "Not available unless: The activity Test assignment3 is marked complete" in "section" "2"
     And I should not see "Test assignment4"
     And I follow "Introduction"
-    And I should see "Conditional" in the "#chapters li:nth-of-type(2)" "css_element"
+    And I should see "Conditional" in TOC chapter "1"
+    And I should see "Conditional" in TOC chapter "2"
     When I press "Mark as complete: Test assignment1"
-    Then the "Test assignment1" "assign" activity with "manual" completion should be marked as complete
+    Then the "Test assignment1" "assign" activity with "manual" completion should be marked as complete (core_fix)
     And I should see "Test assignment2"
     And I should not see "Test assignment3"
     # Test chained activity completion
     When I press "Mark as complete: Test assignment2"
-    Then the "Test assignment2" "assign" activity with "manual" completion should be marked as complete
-    Then I should not see "Conditional" in the "#chapters li:nth-of-type(2)" "css_element"
+    Then the "Test assignment2" "assign" activity with "manual" completion should be marked as complete (core_fix)
+    Then I should not see "Conditional" in TOC chapter "1"
+     And I should see "Conditional" in TOC chapter "2"
     When I follow "Topic 1"
     Then I should not see availability info "Not available unless: The activity Test assignment2 is marked complete"
     And I should see "Test assignment3"
@@ -91,8 +94,8 @@ Feature: Manual completion updates page wihout reload.
     And I follow "Topic 1"
     # Test chained activity completion when section has become visible
     When I press "Mark as complete: Test assignment3"
-    Then the "Test assignment3" "assign" activity with "manual" completion should be marked as complete
-    Then I should not see "Conditional" in the "#chapters li:nth-of-type(3)" "css_element"
+    Then the "Test assignment3" "assign" activity with "manual" completion should be marked as complete (core_fix)
+    Then I should not see "Conditional" in TOC chapter "2"
     When I follow "Topic 2"
     Then I should not see availability info "Not available unless: The activity Test assignment3 is marked complete"
     And I should see "Test assignment4"

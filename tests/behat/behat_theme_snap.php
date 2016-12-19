@@ -28,8 +28,7 @@ require_once(__DIR__ . '/../../../../lib/behat/behat_base.php');
 define('MOODLE_INTERNAL', true);
 require_once(__DIR__ . '/../../../../lib/accesslib.php');
 
-use Behat\Behat\Context\Step\Given,
-    Behat\Gherkin\Node\TableNode as TableNode,
+use Behat\Gherkin\Node\TableNode as TableNode,
     Behat\Mink\Element\NodeElement,
     Behat\Mink\Exception\ExpectationException as ExpectationException,
     Moodle\BehatExtension\Exception\SkippedException;
@@ -1451,4 +1450,74 @@ class behat_theme_snap extends behat_base {
         set_config('debugdisplay', '0');
     }
 
+    /**
+     * Core step copied from completion/tests/behat/behat_completion.php to fix bug MDL-57452
+     * Checks if the activity with specified name is marked as complete.
+     *
+     * @Given /^the "(?P<activityname_string>(?:[^"]|\\")*)" "(?P<activitytype_string>(?:[^"]|\\")*)" activity with "(manual|auto)" completion should be marked as complete \(core_fix\)$/
+     */
+    public function activity_marked_as_complete($activityname, $activitytype, $completiontype) {
+        if ($completiontype == "manual") {
+            $imgalttext = get_string("completion-alt-manual-y", 'core_completion', $activityname);
+        } else {
+            $imgalttext = get_string("completion-alt-auto-y", 'core_completion', $activityname);
+        }
+        $activityxpath = "//li[contains(concat(' ', @class, ' '), ' modtype_" . strtolower($activitytype) . " ')]";
+        $activityxpath .= "[descendant::*[contains(text(), '" . $activityname . "')]]";
+
+        $xpathtocheck = $activityxpath .
+            "//img[contains(@alt, '$imgalttext')]|//input[@type='image'][contains(@alt, '$imgalttext')]";
+        $this->execute("behat_general::should_exist",
+            array($xpathtocheck, "xpath_element")
+        );
+
+    }
+
+    /**
+     * Checks if the activity with specified name is not marked as complete.
+     * Core step copied from completion/tests/behat/behat_completion.php to fix bug MDL-57452
+     *
+     * @Given /^the "(?P<activityname_string>(?:[^"]|\\")*)" "(?P<activitytype_string>(?:[^"]|\\")*)" activity with "(manual|auto)" completion should be marked as not complete \(core_fix\)$/
+     */
+    public function activity_marked_as_not_complete($activityname, $activitytype, $completiontype) {
+        if ($completiontype == "manual") {
+            $imgalttext = get_string("completion-alt-manual-n", 'core_completion', $activityname);
+        } else {
+            $imgalttext = get_string("completion-alt-auto-n", 'core_completion', $activityname);
+        }
+        $activityxpath = "//li[contains(concat(' ', @class, ' '), ' modtype_" . strtolower($activitytype) . " ')]";
+        $activityxpath .= "[descendant::*[contains(text(), '" . $activityname . "')]]";
+
+        $xpathtocheck = $activityxpath .
+            "//img[contains(@alt, '$imgalttext')]|//input[@type='image'][contains(@alt, '$imgalttext')]";
+        $this->execute("behat_general::should_exist",
+            array($xpathtocheck, "xpath_element")
+        );
+    }
+
+    /**
+     * Test specific toc chapter contains string.
+     *
+     * @Given /^I should see "(?P<test_string>(?:[^"]|\\")*)" in TOC chapter "(?P<chapter_int>(?:\d+))"$/
+     * @param {string} $str
+     * @param {int} $chapter
+     */
+    public function i_see_in_toc_chapter($str, $chapter) {
+        $chapter++; // Increment by one to ignore introduction chapter.
+        $element = '#chapters li:nth-of-type('.$chapter.')';
+        $this->execute('behat_general::assert_element_contains_text', [$str, $element, 'css_element']);
+    }
+
+    /**
+     * Test specific toc chapter does not contain string.
+     *
+     * @Given /^I should not see "(?P<test_string>(?:[^"]|\\")*)" in TOC chapter "(?P<chapter_int>(?:\d+))"$/
+     * @param {string} $str
+     * @param {int} $chapter
+     */
+    public function i_dont_see_in_toc_chapter($str, $chapter) {
+        $chapter++; // Increment by one to ignore introduction chapter.
+        $element = '#chapters li:nth-of-type('.$chapter.')';
+        $this->execute('behat_general::assert_element_not_contains_text', [$str, $element, 'css_element']);
+    }
 }

@@ -63,6 +63,14 @@ $functions = [
         'type'          => 'read',
         'ajax'          => true,
         'loginrequired' => true
+    ],
+    'theme_snap_course_module_completion' => [
+        'classname'     => 'theme_snap\\webservice\\ws_course_module_completion',
+        'methodname'    => 'service',
+        'description'   => 'Course module completion',
+        'type'          => 'read',
+        'ajax'          => true,
+        'loginrequired' => true
     ]
 ];
 
