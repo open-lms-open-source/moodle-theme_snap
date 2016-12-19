@@ -187,7 +187,7 @@ class shared extends \renderer_base {
      * @return bool
      */
     protected static function include_course_ajax($course, $usedmodules = array(), $enabledmodules = null, $config = null) {
-        global $CFG, $PAGE;
+        global $CFG, $PAGE, $COURSE;
 
         // Only include course AJAX for supported formats.
         if (!course_ajax_enabled($course)) {
@@ -253,9 +253,11 @@ class shared extends \renderer_base {
             $PAGE->requires->string_for_js('pluginname', $module);
         }
 
-        // Load drag and drop upload AJAX.
-        require_once($CFG->dirroot.'/course/dnduploadlib.php');
-        self::dndupload_add_to_course($course, $enabledmodules);
+        if ($COURSE->id !== SITEID) {
+            // Load drag and drop upload AJAX.
+            require_once($CFG->dirroot . '/course/dnduploadlib.php');
+            self::dndupload_add_to_course($course, $enabledmodules);
+        }
 
         return true;
     }
@@ -358,14 +360,15 @@ class shared extends \renderer_base {
         // Does the page have editable course content?
         if ($pagehascoursecontent && $PAGE->user_allowed_editing()) {
             $canmanageacts = has_capability('moodle/course:manageactivities', context_course::instance($COURSE->id));
-            if ($canmanageacts && empty($USER->editing)) {
+            if ($canmanageacts && (empty($USER->editing) || $COURSE->id === SITEID)) {
                 $modinfo = get_fast_modinfo($COURSE);
                 $modnamesused = $modinfo->get_used_module_names();
 
                 // Temporarily change edit mode to on for course ajax to be included.
+                $originaleditstate = !empty($USER->editing) ? $USER->editing : false;
                 $USER->editing = true;
                 self::include_course_ajax($COURSE, $modnamesused);
-                $USER->editing = false;
+                $USER->editing = $originaleditstate;
             }
         }
     }
