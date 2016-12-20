@@ -75,8 +75,8 @@ Feature: Manual completion updates page wihout reload.
     Then I should see availability info "Not available unless: The activity Test assignment3 is marked complete" in "section" "2"
     And I should not see "Test assignment4"
     And I follow "Introduction"
-    And I should see "Conditional" in TOC chapter "1"
-    And I should see "Conditional" in TOC chapter "2"
+    And I should see "Conditional" in TOC item "1"
+    And I should see "Conditional" in TOC item "2"
     When I press "Mark as complete: Test assignment1"
     Then the "Test assignment1" "assign" activity with "manual" completion should be marked as complete (core_fix)
     And I should see "Test assignment2"
@@ -84,8 +84,8 @@ Feature: Manual completion updates page wihout reload.
     # Test chained activity completion
     When I press "Mark as complete: Test assignment2"
     Then the "Test assignment2" "assign" activity with "manual" completion should be marked as complete (core_fix)
-    Then I should not see "Conditional" in TOC chapter "1"
-     And I should see "Conditional" in TOC chapter "2"
+    Then I should not see "Conditional" in TOC item "1"
+     And I should see "Conditional" in TOC item "2"
     When I follow "Topic 1"
     Then I should not see availability info "Not available unless: The activity Test assignment2 is marked complete"
     And I should see "Test assignment3"
@@ -95,7 +95,7 @@ Feature: Manual completion updates page wihout reload.
     # Test chained activity completion when section has become visible
     When I press "Mark as complete: Test assignment3"
     Then the "Test assignment3" "assign" activity with "manual" completion should be marked as complete (core_fix)
-    Then I should not see "Conditional" in TOC chapter "2"
+    Then I should not see "Conditional" in TOC item "2"
     When I follow "Topic 2"
     Then I should not see availability info "Not available unless: The activity Test assignment3 is marked complete"
     And I should see "Test assignment4"

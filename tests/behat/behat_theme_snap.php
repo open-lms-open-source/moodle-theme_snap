@@ -636,7 +636,8 @@ class behat_theme_snap extends behat_base {
      */
     public function i_should_see_in_toc_item($text, $tocitem) {
         $tocitem++; // Ignore introduction item.
-        $this->execute('behat_general::assert_element_contains_text', [$text, '#chapters li:nth-of-type('.$tocitem.')', 'css_element']);
+        $element = '#chapters li:nth-of-type('.$tocitem.')';
+        $this->execute('behat_general::assert_element_contains_text', [$text, $element, 'css_element']);
     }
 
     /**
@@ -646,7 +647,8 @@ class behat_theme_snap extends behat_base {
      */
     public function i_should_not_see_in_toc_item($text, $tocitem) {
         $tocitem++; // Ignore introduction item.
-        $this->execute('behat_general::assert_element_not_contains_text', [$text, '#chapters li:nth-of-type('.$tocitem.')', 'css_element']);
+        $element = '#chapters li:nth-of-type('.$tocitem.')';
+        $this->execute('behat_general::assert_element_not_contains_text', [$text, $element, 'css_element']);
     }
 
     /**
@@ -1493,31 +1495,5 @@ class behat_theme_snap extends behat_base {
         $this->execute("behat_general::should_exist",
             array($xpathtocheck, "xpath_element")
         );
-    }
-
-    /**
-     * Test specific toc chapter contains string.
-     *
-     * @Given /^I should see "(?P<test_string>(?:[^"]|\\")*)" in TOC chapter "(?P<chapter_int>(?:\d+))"$/
-     * @param {string} $str
-     * @param {int} $chapter
-     */
-    public function i_see_in_toc_chapter($str, $chapter) {
-        $chapter++; // Increment by one to ignore introduction chapter.
-        $element = '#chapters li:nth-of-type('.$chapter.')';
-        $this->execute('behat_general::assert_element_contains_text', [$str, $element, 'css_element']);
-    }
-
-    /**
-     * Test specific toc chapter does not contain string.
-     *
-     * @Given /^I should not see "(?P<test_string>(?:[^"]|\\")*)" in TOC chapter "(?P<chapter_int>(?:\d+))"$/
-     * @param {string} $str
-     * @param {int} $chapter
-     */
-    public function i_dont_see_in_toc_chapter($str, $chapter) {
-        $chapter++; // Increment by one to ignore introduction chapter.
-        $element = '#chapters li:nth-of-type('.$chapter.')';
-        $this->execute('behat_general::assert_element_not_contains_text', [$str, $element, 'css_element']);
     }
 }

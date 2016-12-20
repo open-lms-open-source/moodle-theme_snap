@@ -52,7 +52,7 @@ define(
                 e.preventDefault();
                 var id = $(this).find('input[name="id"]').val();
                 var completionState = $(this).find('input[name="completionstate"]').val();
-                var module = $($(this).parents('li.snap-asset')[0]);
+                var module = $(this).parents('li.snap-asset').first();
 
                 ajax.call([
                     {
