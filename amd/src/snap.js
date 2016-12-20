@@ -796,8 +796,10 @@ define(['jquery', 'theme_snap/bootstrap', 'core/log', 'theme_snap/headroom', 'th
                     var on_mod_settings = mod_settings_id_re.test($('body').attr('id')) && location.href.indexOf("modedit") > -1;
                     var on_course_settings = $('body').attr('id') === 'page-course-edit';
                     var on_section_settings = $('body').attr('id') === 'page-course-editsection';
+                    var page_blacklist = ['page-mod-hvp-mod'];
+                    var page_not_in_blacklist = page_blacklist.indexOf($('body').attr('id')) === -1;
 
-                    if (on_mod_settings || on_course_settings || on_section_settings) {
+                    if ((on_mod_settings || on_course_settings || on_section_settings) && page_not_in_blacklist) {
                         // Wrap advanced options in a div
                         var vital = [
                             ':first',
