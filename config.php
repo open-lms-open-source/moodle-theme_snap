@@ -24,7 +24,6 @@
 defined('MOODLE_INTERNAL') || die();
 
 use theme_snap\local;
-use theme_snap\snap_page_requirements_manager;
 
 global $SESSION, $COURSE, $USER, $PAGE;
 
@@ -207,16 +206,3 @@ $THEME->blockrtlmanipulations = array(
     'side-pre' => 'side-post',
     'side-post' => 'side-pre'
 );
-
-if ($themeissnap && $notajaxscript) {
-    if (empty($CFG->snappageinit)) {
-        $CFG->snappageinit = true;
-        $PAGE->initialise_theme_and_output();
-
-        // Modify $PAGE to use snap requirements manager.
-        $requires = new ReflectionProperty($PAGE, '_requires');
-        $requires->setAccessible(true);
-        $requires->setValue($PAGE, new snap_page_requirements_manager());
-        $requires->setAccessible(false);
-    }
-}

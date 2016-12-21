@@ -13,8 +13,9 @@
 # You should have received a copy of the GNU General Public License
 # along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 #
-# Tests to make sure admin menu is only shown to relevant people on relevant pages.
+# Tests for course resource and activity editing features.
 #
+# Renderable for course section navigation.
 # @package   theme_snap
 # @author    Guy Thomas <gthomas@moodlerooms.com>
 # @copyright Copyright (c) 2016 Blackboard Inc.

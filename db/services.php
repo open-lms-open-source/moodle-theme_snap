@@ -60,15 +60,7 @@ $functions = [
         'classname'     => 'theme_snap\\webservice\\ws_course_sections',
         'methodname'    => 'service',
         'description'   => 'Manage course sections',
-        'type'          => 'write',
-        'ajax'          => true,
-        'loginrequired' => true
-    ],
-    'theme_snap_course_module_completion' => [
-        'classname'     => 'theme_snap\\webservice\\ws_course_module_completion',
-        'methodname'    => 'service',
-        'description'   => 'Course module completion',
-        'type'          => 'write',
+        'type'          => 'read',
         'ajax'          => true,
         'loginrequired' => true
     ]

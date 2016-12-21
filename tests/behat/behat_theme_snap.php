@@ -28,7 +28,8 @@ require_once(__DIR__ . '/../../../../lib/behat/behat_base.php');
 define('MOODLE_INTERNAL', true);
 require_once(__DIR__ . '/../../../../lib/accesslib.php');
 
-use Behat\Gherkin\Node\TableNode as TableNode,
+use Behat\Behat\Context\Step\Given,
+    Behat\Gherkin\Node\TableNode as TableNode,
     Behat\Mink\Element\NodeElement,
     Behat\Mink\Exception\ExpectationException as ExpectationException,
     Moodle\BehatExtension\Exception\SkippedException;
@@ -441,12 +442,11 @@ class behat_theme_snap extends behat_base {
 
     /**
      * @param string $str
-     * @param string $baseselector
      * @throws ExpectationException
      * @Given /^I should see availability info "(?P<str>(?:[^"]|\\")*)"$/
      */
-    public function i_see_availabilityinfo($str, $baseselector = '') {
-        $nodes = $this->find_all('xpath', $baseselector.'//div[contains(@class, \'snap-conditional-tag\')]');
+    public function i_see_availabilityinfo($str) {
+        $nodes = $this->find_all('css', '.snap-conditional-tag');
         foreach ($nodes as $node) {
             /** @var NodeElement $node */
             if ($node->getText() === $str) {
@@ -458,52 +458,15 @@ class behat_theme_snap extends behat_base {
         throw new ExpectationException('Failed to find availability notice of "'.$str.'"', $session);
     }
 
-    /**
-     * Get base selector for availabilityinfo dending on type and elementstr.
-     *
-     * @param string $type
-     * @param string $elementstr
-     * @return string
-     */
-    private function base_selector_availabilityinfo($type, $elementstr) {
-        if ($type === 'section') {
-            $baseselector = '//li[@id="section-'.$elementstr.'"]';
-        } else if ($type === 'asset') {
-            $baseselector = '(//li[contains(@class, \'snap-asset\')]'. // Selection when editing teacher.
-                '//h4[contains(@class, \'snap-asset-link\')]'.
-                '//span[contains(text(), \''.$elementstr.'\')]'.
-                '/parent::a/parent::h4/parent::div'.
-                '|'.
-                '//li[contains(@class, \'snap-asset\')]'. // Selection when anyone else.
-                '//h4[contains(@class, \'snap-asset-link\')]'.
-                '//*[contains(text(),  \''.$elementstr.'\')]'.
-                '/parent::h4/parent::div)';
-        } else {
-            throw new coding_exception('Unknown element type ('.$type.')');
-        }
-        return $baseselector;
-    }
 
     /**
      * @param string $str
-     * @param string $type
-     * @param string $elementstr
-     * @throws ExpectationException
-     * @Given /^I should see availability info "(?P<str>(?:[^"]|\\")*)" in "(?P<elementtype>section|asset)" "(?P<elementstr>(?:[^"]|\\")*)"$/
-     */
-    public function i_see_availabilityinfo_in($str, $type, $elementstr) {
-        $this->i_see_availabilityinfo($str, $this->base_selector_availabilityinfo($type, $elementstr));
-    }
-
-    /**
-     * @param string $str
-     * @param string $baseselector
      * @throws ExpectationException
      * @Given /^I should not see availability info "(?P<str>(?:[^"]|\\")*)"$/
      */
-    public function i_dont_see_availabilityinfo($str, $baseselector = '') {
+    public function i_dont_see_availabilityinfo($str) {
         try {
-            $nodes = $this->find_all('xpath', $baseselector.'//div[contains(@class, \'snap-conditional-tag\')]');
+            $nodes = $this->find_all('css', '.snap-conditional-tag');
         } catch (Exception $e) {
             if (empty($nodes)) {
                 return;
@@ -516,17 +479,6 @@ class behat_theme_snap extends behat_base {
                 throw new ExpectationException('Availability notice found in element '.$node->getXpath().' of "'.$str.'"', $session);
             }
         }
-    }
-
-    /**
-     * @param string $str
-     * @param string $type
-     * @param string $elementstr
-     * @throws ExpectationException
-     * @Given /^I should not see availability info "(?P<str>(?:[^"]|\\")*)" in "(?P<elementtype>section|asset)" "(?P<elementstr>(?:[^"]|\\")*)"$/
-     */
-    public function i_dont_see_availabilityinfo_in($str, $type, $elementstr) {
-        $this->i_dont_see_availabilityinfo($str, $this->base_selector_availabilityinfo($type, $elementstr));
     }
 
     /**
@@ -636,8 +588,7 @@ class behat_theme_snap extends behat_base {
      */
     public function i_should_see_in_toc_item($text, $tocitem) {
         $tocitem++; // Ignore introduction item.
-        $element = '#chapters li:nth-of-type('.$tocitem.')';
-        $this->execute('behat_general::assert_element_contains_text', [$text, $element, 'css_element']);
+        $this->execute('behat_general::assert_element_contains_text', [$text, '#chapters li:nth-of-type('.$tocitem.')', 'css_element']);
     }
 
     /**
@@ -647,8 +598,7 @@ class behat_theme_snap extends behat_base {
      */
     public function i_should_not_see_in_toc_item($text, $tocitem) {
         $tocitem++; // Ignore introduction item.
-        $element = '#chapters li:nth-of-type('.$tocitem.')';
-        $this->execute('behat_general::assert_element_not_contains_text', [$text, $element, 'css_element']);
+        $this->execute('behat_general::assert_element_not_contains_text', [$text, '#chapters li:nth-of-type('.$tocitem.')', 'css_element']);
     }
 
     /**
@@ -1452,48 +1402,4 @@ class behat_theme_snap extends behat_base {
         set_config('debugdisplay', '0');
     }
 
-    /**
-     * Core step copied from completion/tests/behat/behat_completion.php to fix bug MDL-57452
-     * Checks if the activity with specified name is marked as complete.
-     *
-     * @Given /^the "(?P<activityname_string>(?:[^"]|\\")*)" "(?P<activitytype_string>(?:[^"]|\\")*)" activity with "(manual|auto)" completion should be marked as complete \(core_fix\)$/
-     */
-    public function activity_marked_as_complete($activityname, $activitytype, $completiontype) {
-        if ($completiontype == "manual") {
-            $imgalttext = get_string("completion-alt-manual-y", 'core_completion', $activityname);
-        } else {
-            $imgalttext = get_string("completion-alt-auto-y", 'core_completion', $activityname);
-        }
-        $activityxpath = "//li[contains(concat(' ', @class, ' '), ' modtype_" . strtolower($activitytype) . " ')]";
-        $activityxpath .= "[descendant::*[contains(text(), '" . $activityname . "')]]";
-
-        $xpathtocheck = $activityxpath .
-            "//img[contains(@alt, '$imgalttext')]|//input[@type='image'][contains(@alt, '$imgalttext')]";
-        $this->execute("behat_general::should_exist",
-            array($xpathtocheck, "xpath_element")
-        );
-
-    }
-
-    /**
-     * Checks if the activity with specified name is not marked as complete.
-     * Core step copied from completion/tests/behat/behat_completion.php to fix bug MDL-57452
-     *
-     * @Given /^the "(?P<activityname_string>(?:[^"]|\\")*)" "(?P<activitytype_string>(?:[^"]|\\")*)" activity with "(manual|auto)" completion should be marked as not complete \(core_fix\)$/
-     */
-    public function activity_marked_as_not_complete($activityname, $activitytype, $completiontype) {
-        if ($completiontype == "manual") {
-            $imgalttext = get_string("completion-alt-manual-n", 'core_completion', $activityname);
-        } else {
-            $imgalttext = get_string("completion-alt-auto-n", 'core_completion', $activityname);
-        }
-        $activityxpath = "//li[contains(concat(' ', @class, ' '), ' modtype_" . strtolower($activitytype) . " ')]";
-        $activityxpath .= "[descendant::*[contains(text(), '" . $activityname . "')]]";
-
-        $xpathtocheck = $activityxpath .
-            "//img[contains(@alt, '$imgalttext')]|//input[@type='image'][contains(@alt, '$imgalttext')]";
-        $this->execute("behat_general::should_exist",
-            array($xpathtocheck, "xpath_element")
-        );
-    }
 }

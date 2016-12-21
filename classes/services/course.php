@@ -467,40 +467,4 @@ class course {
             'toc' => $toc->export_for_template($OUTPUT)
         ];
     }
-
-    /**
-     * Toggle module completion state.
-     * @param int $id (cmid)
-     * @param int $completionstate
-     * @throws \coding_exception
-     * @throws \moodle_exception
-     * @throws moodle_exception
-     * @return string
-     */
-    public function module_toggle_completion($id, $completionstate) {
-        global $DB, $PAGE;
-
-        // Get course-modules entry.
-        list ($course, $cminfo) = get_course_and_cm_from_cmid($id);
-
-        // Get renderer for completion HTML.
-        $context = \context_module::instance($id);
-        $PAGE->set_context($context);
-        $renderer = $PAGE->get_renderer('core', 'course', RENDERER_TARGET_GENERAL);
-
-        // Set up completion object and check it is enabled.
-        $completion = new \completion_info($course);
-        if (!$completion->is_enabled()) {
-            throw new \moodle_exception('completionnotenabled', 'completion');
-        }
-
-        // Check completion state is manual.
-        if ($cminfo->completion != COMPLETION_TRACKING_MANUAL) {
-            throw new \moodle_exception('cannotmanualctrack', $cminfo->modname);
-        }
-
-        $completion->update_state($cminfo, $completionstate);
-
-        return $renderer->course_section_cm_completion($course, $completion, $cminfo);
-    }
 }

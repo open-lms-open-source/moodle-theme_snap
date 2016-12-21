@@ -27,10 +27,9 @@ define(
         'jquery',
         'theme_snap/util',
         'theme_snap/responsive_video',
-        'theme_snap/section_asset_management',
-        'theme_snap/course_modules'
+        'theme_snap/section_asset_management'
     ],
-    function($, util, responsiveVideo, sectionAssetManagement, courseModules) {
+    function($, util, responsiveVideo, sectionAssetManagement) {
 
     /**
      * Return class(has private and public methods).
@@ -147,7 +146,6 @@ define(
          */
         var init = function() {
             sectionAssetManagement.init(self);
-            courseModules.init();
 
             // Only load the conditionals library if it's enabled for the course, viva la HTTP2!
             if (self.courseConfig.enablecompletion) {

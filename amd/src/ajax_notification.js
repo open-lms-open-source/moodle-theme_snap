@@ -124,11 +124,7 @@ define(['core/notification', 'core/ajax', 'core/templates', 'core/str'],
                                     }
 
                                 } else {
-                                    if (response.errorcode && response.message) {
-                                        errorstr = response.message;
-                                    } else {
-                                        errorstr = M.util.get_string('unknownerror', 'moodle');
-                                    }
+                                    errorstr = M.util.get_string('unknownerror', 'moodle');
                                 }
                                 notification.alert(M.util.get_string('error', 'moodle'),
                                         errorstr, M.util.get_string('ok', 'moodle'));
