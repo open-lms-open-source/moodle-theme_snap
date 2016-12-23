@@ -168,7 +168,14 @@ define(['jquery', 'core/log', 'core/yui', 'theme_snap/pm_course_cards', 'theme_s
 
                 });
             };
-            applyListeners();
+
+            /**
+             * Initialising function.
+             */
+            this.init = function() {
+                applyListeners();
+                courseCards.init();
+            };
         };
 
         return new PersonalMenu();

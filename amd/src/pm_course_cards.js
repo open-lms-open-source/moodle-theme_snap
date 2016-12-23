@@ -96,46 +96,51 @@ define(['jquery', 'core/log', 'core/templates',
                 return courseIds;
             };
 
-            $(document).ready(function() {
-                courseFavorites(cardsHidden);
+            /**
+             * Initialising function.
+             */
+            this.init = function() {
+                $(document).ready(function() {
+                    courseFavorites(cardsHidden);
 
-                // Load course information via ajax.
-                var courseIds = self.getCourseIds();
-                var courseinfo_key = M.cfg.sesskey + 'courseinfo';
-                if (courseIds.length > 0) {
-                    // OK - lets see if we have grades/progress in session storage.
-                    if (util.supportsSessionStorage() && window.sessionStorage[courseinfo_key]) {
-                        var courseinfo = JSON.parse(window.sessionStorage[courseinfo_key]);
-                        self.applyCourseInfo(courseinfo);
-                    } else {
-                        // Only make AJAX request on document ready if the session storage isn't populated.
-                        self.reqCourseInfo(courseIds);
+                    // Load course information via ajax.
+                    var courseIds = self.getCourseIds();
+                    var courseinfo_key = M.cfg.sesskey + 'courseinfo';
+                    if (courseIds.length > 0) {
+                        // OK - lets see if we have grades/progress in session storage.
+                        if (util.supportsSessionStorage() && window.sessionStorage[courseinfo_key]) {
+                            var courseinfo = JSON.parse(window.sessionStorage[courseinfo_key]);
+                            self.applyCourseInfo(courseinfo);
+                        } else {
+                            // Only make AJAX request on document ready if the session storage isn't populated.
+                            self.reqCourseInfo(courseIds);
+                        }
                     }
-                }
-            });
+                });
 
-            // Reveal more teachers on click or hover teachers more icon.
-            $('#fixy-my-courses').on('click hover', '.courseinfo-teachers-more', null, function(e) {
-                e.preventDefault();
-                var nowhtml = $(this).html();
-                if (nowhtml.indexOf('+') > -1) {
-                    $(this).html(nowhtml.replace('+', '-'));
-                } else {
-                    $(this).html(nowhtml.replace('-', '+'));
-                }
-                $(this).parents('.courseinfo').toggleClass('show-all');
-            });
-
-            // Personal menu course card clickable.
-            $(document).on('click', '.courseinfo[data-href]', function(e) {
-                var trigger = $(e.target),
-                    hreftarget = '_self';
-                // Excludes any clicks in the card deeplinks.
-                if (!$(trigger).closest('a').length) {
-                    window.open($(this).data('href'), hreftarget);
+                // Reveal more teachers on click or hover teachers more icon.
+                $('#fixy-my-courses').on('click hover', '.courseinfo-teachers-more', null, function(e) {
                     e.preventDefault();
-                }
-            });
+                    var nowhtml = $(this).html();
+                    if (nowhtml.indexOf('+') > -1) {
+                        $(this).html(nowhtml.replace('+', '-'));
+                    } else {
+                        $(this).html(nowhtml.replace('-', '+'));
+                    }
+                    $(this).parents('.courseinfo').toggleClass('show-all');
+                });
+
+                // Personal menu course card clickable.
+                $(document).on('click', '.courseinfo[data-href]', function(e) {
+                    var trigger = $(e.target),
+                        hreftarget = '_self';
+                    // Excludes any clicks in the card deeplinks.
+                    if (!$(trigger).closest('a').length) {
+                        window.open($(this).data('href'), hreftarget);
+                        e.preventDefault();
+                    }
+                });
+            };
 
         };
 

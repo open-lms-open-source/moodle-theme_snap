@@ -478,6 +478,9 @@ define(['jquery', 'theme_snap/bootstrap', 'core/log', 'theme_snap/headroom', 'th
                 M.cfg.context = courseConfig.contextid;
                 M.snapTheme = {forcePassChange: forcePassChange};
 
+                // General AMD modules.
+                personalMenu.init();
+
                 // Course related AMD modules (note, site page can technically have course content too).
                 if (pageHasCourseContent) {
                     require(
