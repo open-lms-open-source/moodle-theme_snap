@@ -53,6 +53,8 @@ class theme_snap_services_course_test extends \advanced_testcase {
 
         $this->resetAfterTest();
 
+        $CFG->theme = 'snap';
+
         // Create 10 courses.
         for ($c = 0; $c < 10; $c++) {
             $this->courses[] = $this->getDataGenerator()->create_course();
@@ -223,13 +225,13 @@ class theme_snap_services_course_test extends \advanced_testcase {
             $previouslyunavailablesections,
             $previouslyunavailablemods);
 
-        // Make sure that the second page module (which is now newly available) appears in the list of newly available
+        // Make sure that the second page module (which is now newly available) appears in the list of changed
         // module html.
-        $this->assertTrue(isset($result['newlyavailablemodhtml'][$page2->cmid]));
+        $this->assertTrue(isset($result['changedmodhtml'][$page2->cmid]));
 
-        // Make sure that the second section (which is now wnely available) appears in the list of newly available
+        // Make sure that the second section (which is now wnely available) appears in the list of changed
         // section html.
-        $this->assertTrue(isset($result['newlyavailablesectionhtml'][2]));
+        $this->assertTrue(isset($result['changedsectionhtml'][2]));
 
     }
 
