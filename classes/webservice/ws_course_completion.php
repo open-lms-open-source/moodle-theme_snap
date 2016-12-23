@@ -48,7 +48,7 @@ class ws_course_completion extends \external_api {
         $keys = [
             'unavailablesections' => new \external_value(PARAM_SEQUENCE, 'Unavailable sections', VALUE_REQUIRED),
             'unavailablemods' => new \external_value(PARAM_SEQUENCE, 'Unavailable mods', VALUE_REQUIRED),
-            'newlyavailablesectionhtml' => new \external_multiple_structure(
+            'changedsectionhtml' => new \external_multiple_structure(
                 new \external_single_structure(
                     [
                         'number' => new \external_value(PARAM_INT, 'section number'),
@@ -57,7 +57,7 @@ class ws_course_completion extends \external_api {
                     'Newly available sections', VALUE_REQUIRED
                 )
             ),
-            'newlyavailablemodhtml' => new \external_multiple_structure(
+            'changedmodhtml' => new \external_multiple_structure(
                 new \external_single_structure(
                     [
                         'id' => new \external_value(PARAM_INT, 'id'),

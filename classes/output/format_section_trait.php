@@ -176,6 +176,11 @@ trait format_section_trait {
         $o = '';
         $sectionstyle = '';
 
+        // We have to get the output renderer instead of using $this->output to ensure we get the non ajax version of
+        // the renderer, even when via an AJAX request. The HTML returned has to be the same for all requests, even
+        // ajax.
+        $output = $PAGE->get_renderer('theme_snap', 'core', RENDERER_TARGET_GENERAL);
+
         if ($section->section != 0) {
             // Only in the non-general sections.
             if (!$section->visible) {
@@ -236,7 +241,7 @@ trait format_section_trait {
             $url = new moodle_url('/course/editsection.php', array('id' => $section->id, 'sr' => $sectionreturn));
             $o .= "<h2 class='sectionname'><a href='$url' title='".s(get_string('editcoursetopic', 'theme_snap'))."'>".get_string('defaulttopictitle', 'theme_snap')."</a></h2>";
         } else {
-            $o .= $this->output->heading($sectiontitle, 2, 'sectionname' . $classes);
+            $o .= $output->heading($sectiontitle, 2, 'sectionname' . $classes);
         }
 
         // Section drop zone.
@@ -267,7 +272,7 @@ trait format_section_trait {
         $o .= '<div class="snap-draft-tag">'.get_string('draft', 'theme_snap').'</div>';
 
         // Availabiliy message.
-        $conditionalicon = '<img aria-hidden="true" role="presentation" class="svg-icon" src="'.$this->output->pix_url('conditional', 'theme').'" />';
+        $conditionalicon = '<img aria-hidden="true" role="presentation" class="svg-icon" src="'.$output->pix_url('conditional', 'theme').'" />';
         $conditionalmessage = $this->section_availability_message($section,
             has_capability('moodle/course:viewhiddensections', $context));
         if ($conditionalmessage !== '') {
@@ -305,6 +310,35 @@ trait format_section_trait {
      */
     public function render_course_section_navigation(course_section_navigation $navigation) {
         return $this->render_from_template('theme_snap/course_section_navigation', $navigation);
+    }
+
+
+    /**
+     * Render an individual course section.
+     * @param \stdClass $course
+     * @param \section_info $section
+     * @param \course_modinfo $modinfo
+     * @return string
+     */
+    public function course_section($course, $section, $modinfo) {
+        global $PAGE;
+
+        $output = $this->section_header($section, $course, false, 0);
+
+        // GThomas 21st Dec 2015 - Only output assets inside section if the section is user visible.
+        // Otherwise you can see them, click on them and it takes you to an error page complaining that they
+        // are restricted!
+        if ($section->uservisible) {
+            $output .= $this->courserenderer->course_section_cm_list($course, $section, 0);
+            // SLamour Aug 2015 - make add asset visible without turning editing on
+            // N.B. this function handles the can edit permissions.
+            $output .= $this->course_section_add_cm_control($course, $section->section, 0);
+        }
+        if (!$PAGE->user_is_editing()) {
+            $output .= $this->render(new course_section_navigation($course, $modinfo->get_section_info_all(), $section->section));
+        }
+        $output .= $this->section_footer();
+        return $output;
     }
 
     // Basically unchanged from the core version adds some navigation with course_section_navigation renderable.
@@ -349,21 +383,8 @@ trait format_section_trait {
                 }
             }
 
-            echo $this->section_header($thissection, $course, false, 0);
-
-            // GThomas 21st Dec 2015 - Only output assets inside section if the section is user visible.
-            // Otherwise you can see them, click on them and it takes you to an error page complaining that they
-            // are restricted!
-            if ($thissection->uservisible) {
-                 echo $this->courserenderer->course_section_cm_list($course, $thissection, 0);
-                 // SLamour Aug 2015 - make add asset visible without turning editing on
-                 // N.B. this function handles the can edit permissions.
-                 echo $this->course_section_add_cm_control($course, $section, 0);
-            }
-            if (!$PAGE->user_is_editing()) {
-                echo $this->render(new course_section_navigation($course, $modinfo->get_section_info_all(), $section));
-            }
-            echo $this->section_footer();
+            // Output course section.
+            echo $this->course_section($course, $thissection, $modinfo);
         }
 
         if ($PAGE->user_is_editing() and has_capability('moodle/course:update', $context)) {
