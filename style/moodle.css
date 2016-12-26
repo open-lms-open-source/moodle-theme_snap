@@ -2097,6 +2097,9 @@ img.iconsmall {
 #page-admin-roles-assign div.box.generalbox .alert-link {
   color: #c1134e;
 }
+#page-admin-mod-lti-toolconfigure .tool-card .name {
+  font-size: 1em;
+}
 /* calendar.less */
 .calendartable {
   width: 100%;
