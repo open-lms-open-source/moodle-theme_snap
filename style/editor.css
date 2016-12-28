@@ -10495,6 +10495,12 @@ fieldset[disabled] .path-admin-tool-lp [data-region="filtercompetencies"] button
   margin: 0 0.3rem;
   vertical-align: middle;
 }
+#page-report-competency-index dd[data-region="coursecompetencyactivities"] a img {
+  width: 2rem;
+  height: 2rem;
+  margin: 0 0.3rem;
+  vertical-align: middle;
+}
 /* autocomplete form - might be used more in moodle 3.2, but just in competencies at the moment. */
 .form-autocomplete-downarrow {
   color: #565656;
