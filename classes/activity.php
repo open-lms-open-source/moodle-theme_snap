@@ -813,32 +813,35 @@ class activity {
      * @return bool|array
      */
 
-    public static function instance_activity_override_dates($courseid, $modname, $modinstance, $timeopenfld,
-                                                             $timeclosefld) {
+    public static function instance_activity_override_dates($courseid, $modname, $modinstance, $timeopenfld, $timeclosefld) {
         global $DB, $USER;
+
         if ($modname == 'quiz' || $modname == 'lesson') {
             $id = $modname == 'quiz' ? $modname : 'lessonid';
             $sql = "-- Snap sql
-                    SELECT $id as id, MIN($timeopenfld) AS timeopen, MAX($timeclosefld) as timeclose
+                    SELECT $id as id, $timeopenfld AS timeopen, $timeclosefld as timeclose
                         FROM {" . $modname . "_overrides}
-                    WHERE " . $id . " = ? AND (userid = ?";
-            $groups = groups_get_user_groups($courseid);
-            if ($groups[0]) {
-                $usergroups = array();
-                foreach ($groups[0] as $group) {
-                    $usergroups[] = $group;
-                }
-                $usergroups = join(", ", $usergroups);
-                $sql .= " OR groupid IN ($usergroups))";
-            } else {
-                $sql .= ')';
-            }
+                    WHERE " . $id . " = ? AND userid = ?";
             $override = $DB->get_records_sql($sql, array($modinstance, $USER->id));
             if (array_key_exists($modinstance, $override)) {
-                return $override;
-            }
-            else {
-                return false;
+                return $override; // Core's priority is user override  over group override.
+            } else {
+                $groups = groups_get_user_groups($courseid);
+                if ($groups[0]) {
+                    $usergroups = array();
+                    foreach ($groups[0] as $group) {
+                        $usergroups[] = $group;
+                    }
+                    $usergroups = join(", ", $usergroups);
+                    $sql = "-- Snap sql
+                        SELECT $id as id, MIN($timeopenfld) AS timeopen, MAX($timeclosefld) as timeclose
+                        FROM {" . $modname . "_overrides}
+                        WHERE " . $id . " = ? AND groupid IN ($usergroups)";
+                    $override = $DB->get_records_sql($sql, array($modinstance));
+                    if (array_key_exists($modinstance, $override)) {
+                        return $override;
+                    }
+                }
             }
         }
         return false;
