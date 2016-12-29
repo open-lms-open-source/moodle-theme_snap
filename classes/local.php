@@ -785,9 +785,20 @@ class local {
                 $modimageurl = $output->pix_url('icon', $event->modulename);
                 $modname = get_string('modulename', $event->modulename);
                 $modimage = \html_writer::img($modimageurl, $modname);
+                $override = array();
+                if ($modname == 'Quiz' || $modname == 'Lesson') {
+                    $modname2 = strtolower($modname);
+                    $startdate = $modname2 == 'quiz' ? 'timeopen' : 'available';
+                    $enddate = $modname2 == 'quiz' ? 'timeclose' : 'deadline';
+                    $override = \theme_snap\activity::instance_activity_override_dates($event->courseid, $modname2,
+                        $event->instance, $startdate, $enddate);
+                }
+                if ($override) {
+                    $meta = $output->friendly_datetime(0 + $override[$event->instance]->timeclose);
+                } else {
+                    $meta = $output->friendly_datetime($event->timestart + $event->timeduration);
 
-                $meta = $output->friendly_datetime($event->timestart + $event->timeduration);
-
+                }
                 // Add completion meta data for students (exclude anyone who can grade them).
                 if (!has_capability('mod/assign:grade', $cm->context)) {
                     /** @var \theme_snap_core_course_renderer $courserenderer */

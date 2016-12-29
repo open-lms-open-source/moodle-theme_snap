@@ -802,6 +802,49 @@ class activity {
     }
 
     /**
+     * Get the override dates for an activity Lesson or Quiz
+     *
+     * @param $courseid
+     * @param string $modname
+     * @param int $modinstance
+     * @param $timeopenfld
+     * @param $timeclosefld
+     *
+     * @return bool|array
+     */
+
+    public static function instance_activity_override_dates($courseid, $modname, $modinstance, $timeopenfld,
+                                                             $timeclosefld) {
+        global $DB, $USER;
+        if ($modname == 'quiz' || $modname == 'lesson') {
+            $id = $modname == 'quiz' ? $modname : 'lessonid';
+            $sql = "-- Snap sql
+                    SELECT $id as id, MIN($timeopenfld) AS timeopen, MAX($timeclosefld) as timeclose
+                        FROM {" . $modname . "_overrides}
+                    WHERE " . $id . " = ? AND (userid = ?";
+            $groups = groups_get_user_groups($courseid);
+            if ($groups[0]) {
+                $usergroups = array();
+                foreach ($groups[0] as $group) {
+                    $usergroups[] = $group;
+                }
+                $usergroups = join(", ", $usergroups);
+                $sql .= " OR groupid IN ($usergroups))";
+            } else {
+                $sql .= ')';
+            }
+            $override = $DB->get_records_sql($sql, array($modinstance, $USER->id));
+            if (array_key_exists($modinstance, $override)) {
+                return $override;
+            }
+            else {
+                return false;
+            }
+        }
+        return false;
+    }
+
+    /**
      * Get the activity dates for a specific module instance
      *
      * @param $courseid
@@ -816,14 +859,18 @@ class activity {
 
         // Note: Caches all moduledates to minimise database transactions.
         static $moddates = array();
-
         if (!isset($moddates[$courseid.'_'.$mod->modname][$mod->instance]) || PHPUNIT_TEST) {
-            $sql = "-- Snap sql
+            $override = self::instance_activity_override_dates($courseid, $mod->modname, $mod->instance, $timeopenfld,
+                $timeclosefld);
+            if ($override) {
+                $moddates[$courseid.'_'.$mod->modname] = $override;
+            } else {
+                $sql = "-- Snap sql
                     SELECT id, $timeopenfld AS timeopen, $timeclosefld as timeclose
                         FROM {".$mod->modname."}
                     WHERE course = ?";
-            $moddates[$courseid.'_'.$mod->modname] = $DB->get_records_sql($sql, array($courseid));
-
+                $moddates[$courseid.'_'.$mod->modname] = $DB->get_records_sql($sql, array($courseid));
+            }
         }
         return $moddates[$courseid.'_'.$mod->modname][$mod->instance];
     }
