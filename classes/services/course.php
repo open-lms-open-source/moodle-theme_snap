@@ -312,34 +312,46 @@ class course {
         list ($unavailablesections, $unavailablemods) = local::conditionally_unavailable_elements($course);
 
         $newlyavailablesections = array_diff($previouslyunavailablesections, $unavailablesections);
+        $intersectunavailable = array_intersect($previouslyunavailablesections, $unavailablesections);
+        $newlyunavailablesections = array_diff($unavailablesections, $intersectunavailable);
+
+
         $newlyavailablemods = array_diff($previouslyunavailablemods, $unavailablemods);
+        $intersectunavailable = array_intersect($previouslyunavailablemods, $unavailablemods);
+        $newlyunavailablemods = array_diff($unavailablemods, $intersectunavailable);
 
         /** @var \theme_snap_core_course_renderer $courserenderer */
         $courserenderer = $PAGE->get_renderer('core', 'course', RENDERER_TARGET_GENERAL);
+        $format = course_get_format($course);
+        $formatrenderer = $format->get_renderer($PAGE);
+        $modinfo = get_fast_modinfo($course);
 
-        $newlyavailablesectionhtml = [];
-        if (!empty($newlyavailablesections)) {
-            foreach ($newlyavailablesections as $sectionnumber) {
-                $html = $courserenderer->course_section_cm_list($course, $sectionnumber, $sectionnumber);
-                $newlyavailablesectionhtml[$sectionnumber] = (object) [
+        $changedsectionhtml = [];
+        $changedsections = array_merge($newlyavailablesections, $newlyunavailablesections);
+        if (!empty($changedsections)) {
+            foreach ($changedsections as $sectionnumber) {
+                $section = $modinfo->get_section_info($sectionnumber);
+                $html = $formatrenderer->course_section($course, $section, $modinfo);
+                $changedsectionhtml[$sectionnumber] = (object) [
                     'number' => $sectionnumber,
                     'html'   => $html
                 ];
             }
         }
 
-        $newlyavailablemodhtml = [];
-        if (!empty($newlyavailablemods)) {
+        $changedmodhtml = [];
+        $changedmods = array_merge($newlyavailablemods, $newlyunavailablemods);
+        if (!empty($changedmods)) {
             $modinfo = get_fast_modinfo($course);
-            foreach ($newlyavailablemods as $modid) {
+            foreach ($changedmods as $modid) {
                 $completioninfo = new \completion_info($course);
                 $cm = $modinfo->get_cm($modid);
-                if (isset($newlyavailablesectionhtml[$cm->sectionnum])) {
-                    // This module's html has already been included in a newly available section.
+                if (isset($changedsectionhtml[$cm->sectionnum])) {
+                    // This module's html has already been included in a changed section html.
                     continue;
                 }
                 $html = $courserenderer->course_section_cm_list_item($course, $completioninfo, $cm, $cm->sectionnum);
-                $newlyavailablemodhtml[$modid] = (object) [
+                $changedmodhtml[$modid] = (object) [
                     'id'   => $modid,
                     'html' => $html
                 ];
@@ -354,8 +366,8 @@ class course {
         return [
             'unavailablesections' => $unavailablesections,
             'unavailablemods' => $unavailablemods,
-            'newlyavailablemodhtml' => $newlyavailablemodhtml,
-            'newlyavailablesectionhtml' => $newlyavailablesectionhtml,
+            'changedmodhtml' => $changedmodhtml,
+            'changedsectionhtml' => $changedsectionhtml,
             'toc' => $toc->export_for_template($OUTPUT)
         ];
     }
@@ -466,5 +478,41 @@ class course {
         return [
             'toc' => $toc->export_for_template($OUTPUT)
         ];
+    }
+
+    /**
+     * Toggle module completion state.
+     * @param int $id (cmid)
+     * @param int $completionstate
+     * @throws \coding_exception
+     * @throws \moodle_exception
+     * @throws moodle_exception
+     * @return string
+     */
+    public function module_toggle_completion($id, $completionstate) {
+        global $DB, $PAGE;
+
+        // Get course-modules entry.
+        list ($course, $cminfo) = get_course_and_cm_from_cmid($id);
+
+        // Get renderer for completion HTML.
+        $context = \context_module::instance($id);
+        $PAGE->set_context($context);
+        $renderer = $PAGE->get_renderer('core', 'course', RENDERER_TARGET_GENERAL);
+
+        // Set up completion object and check it is enabled.
+        $completion = new \completion_info($course);
+        if (!$completion->is_enabled()) {
+            throw new \moodle_exception('completionnotenabled', 'completion');
+        }
+
+        // Check completion state is manual.
+        if ($cminfo->completion != COMPLETION_TRACKING_MANUAL) {
+            throw new \moodle_exception('cannotmanualctrack', $cminfo->modname);
+        }
+
+        $completion->update_state($cminfo, $completionstate);
+
+        return $renderer->course_section_cm_completion($course, $completion, $cminfo);
     }
 }

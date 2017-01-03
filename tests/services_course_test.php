@@ -53,6 +53,8 @@ class theme_snap_services_course_test extends \advanced_testcase {
 
         $this->resetAfterTest();
 
+        $CFG->theme = 'snap';
+
         // Create 10 courses.
         for ($c = 0; $c < 10; $c++) {
             $this->courses[] = $this->getDataGenerator()->create_course();
@@ -223,13 +225,13 @@ class theme_snap_services_course_test extends \advanced_testcase {
             $previouslyunavailablesections,
             $previouslyunavailablemods);
 
-        // Make sure that the second page module (which is now newly available) appears in the list of newly available
+        // Make sure that the second page module (which is now newly available) appears in the list of changed
         // module html.
-        $this->assertTrue(isset($result['newlyavailablemodhtml'][$page2->cmid]));
+        $this->assertTrue(isset($result['changedmodhtml'][$page2->cmid]));
 
-        // Make sure that the second section (which is now wnely available) appears in the list of newly available
+        // Make sure that the second section (which is now wnely available) appears in the list of changed
         // section html.
-        $this->assertTrue(isset($result['newlyavailablesectionhtml'][2]));
+        $this->assertTrue(isset($result['changedsectionhtml'][2]));
 
     }
 
@@ -434,5 +436,69 @@ class theme_snap_services_course_test extends \advanced_testcase {
         $service->delete_section($course->shortname, 1);
 
         $this->assertEquals(5, $this->count_course_sections($course->id));
+    }
+
+    public function test_module_toggle_completion() {
+        global $DB;
+        
+        $service = $this->courseservice;
+        $this->resetAfterTest();
+
+        // Enable avaibility.
+        // If not enabled all conditional fields will be ignored.
+        set_config('enableavailability', 1);
+
+        // Enable course completion.
+        // If not enabled all completion settings will be ignored.
+        set_config('enablecompletion', COMPLETION_ENABLED);
+
+        $generator = $this->getDataGenerator();
+
+        // Create course with completion tracking enabled.
+        $course = $generator->create_course([
+            'enablecompletion' => 1,
+            'numsections' => 3
+        ], ['createsections' => true]);
+
+
+        // Enrol user to completion tracking course.
+        $sturole = $DB->get_record('role', array('shortname' => 'student'));
+        $generator->enrol_user($this->user1->id,
+            $course->id,
+            $sturole->id);
+
+        // Create page with completion marked manually.
+        $page1 = $generator->create_module('page', array('course' => $course->id, 'name' => 'page1 complete manually'),
+            array('completion' => 1, 'completionview' => 0));
+        $modinfo = get_fast_modinfo($course);
+        $page1cm = $modinfo->get_cm($page1->cmid);
+        $completion = new completion_info($course);
+        $completiondata = $completion->get_data($page1cm);
+        $this->assertEquals(COMPLETION_INCOMPLETE, $completiondata->completionstate);
+        
+        // Manually mark page complete.
+        $service->module_toggle_completion($page1cm->id, COMPLETION_COMPLETE);
+
+        // Dump cache and reget modinfo.
+        get_fast_modinfo($course, 0, true);
+        $modinfo = get_fast_modinfo($course);
+        $page1cm = $modinfo->get_cm($page1->cmid);
+        $completion = new completion_info($course);
+        $completiondata = $completion->get_data($page1cm);
+        // Assert complete.
+        $this->assertEquals(COMPLETION_COMPLETE, $completiondata->completionstate);
+
+        // Manually mark page incomplete.
+        $service->module_toggle_completion($page1cm->id, COMPLETION_INCOMPLETE);
+
+        // Dump cache and reget modinfo.
+        get_fast_modinfo($course, 0, true);
+        $modinfo = get_fast_modinfo($course);
+        $page1cm = $modinfo->get_cm($page1->cmid);
+        $completion = new completion_info($course);
+        $completiondata = $completion->get_data($page1cm);
+        // Assert incomplete.
+        $this->assertEquals(COMPLETION_INCOMPLETE, $completiondata->completionstate);
+
     }
 }
