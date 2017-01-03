@@ -50,6 +50,7 @@ if (!in_array($action, $nologinactions)) {
 
 /** @var $PAGE moodle_page */
 $PAGE->set_context($context);
+$PAGE->set_course($course);
 $PAGE->set_url('/theme/snap/rest.php', array('action' => $action, 'contextid' => $context->id));
 
 $router = new router();
