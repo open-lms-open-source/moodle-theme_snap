@@ -804,11 +804,11 @@ class activity {
     /**
      * Get the override dates for an activity Lesson or Quiz
      *
-     * @param $courseid
+     * @param int $courseid
      * @param string $modname
      * @param int $modinstance
-     * @param $timeopenfld
-     * @param $timeclosefld
+     * @param string $timeopenfld
+     * @param string $timeclosefld
      *
      * @return bool|array
      */
@@ -816,7 +816,7 @@ class activity {
     public static function instance_activity_override_dates($courseid, $modname, $modinstance, $timeopenfld, $timeclosefld) {
         global $DB, $USER;
 
-        if ($modname == 'quiz' || $modname == 'lesson') {
+        if ($modname === 'quiz' || $modname === 'lesson') {
             $id = $modname == 'quiz' ? $modname : 'lessonid';
             $sql = "-- Snap sql
                     SELECT $id as id, $timeopenfld AS timeopen, $timeclosefld as timeclose
@@ -828,11 +828,7 @@ class activity {
             } else {
                 $groups = groups_get_user_groups($courseid);
                 if ($groups[0]) {
-                    $usergroups = array();
-                    foreach ($groups[0] as $group) {
-                        $usergroups[] = $group;
-                    }
-                    $usergroups = join(", ", $usergroups);
+                    $usergroups = join(", ", $groups[0]);
                     $sql = "-- Snap sql
                         SELECT $id as id, MIN($timeopenfld) AS timeopen, MAX($timeclosefld) as timeclose
                         FROM {" . $modname . "_overrides}

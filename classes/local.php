@@ -786,11 +786,10 @@ class local {
                 $modname = get_string('modulename', $event->modulename);
                 $modimage = \html_writer::img($modimageurl, $modname);
                 $override = array();
-                if ($modname == 'Quiz' || $modname == 'Lesson') {
-                    $modname2 = strtolower($modname);
-                    $startdate = $modname2 == 'quiz' ? 'timeopen' : 'available';
-                    $enddate = $modname2 == 'quiz' ? 'timeclose' : 'deadline';
-                    $override = \theme_snap\activity::instance_activity_override_dates($event->courseid, $modname2,
+                if ($modname == 'Quiz' || $modname== 'Lesson') {
+                    $startdate = $event->modulename === 'quiz' ? 'timeopen' : 'available';
+                    $enddate = $event->modulename === 'quiz' ? 'timeclose' : 'deadline';
+                    $override = \theme_snap\activity::instance_activity_override_dates($event->courseid, $event->modulename,
                         $event->instance, $startdate, $enddate);
                 }
                 if ($override) {
