@@ -36,12 +36,11 @@ Feature: When the moodle theme is set to Snap, students and teachers can open a 
       | username | firstname | lastname | email |
       | teacher1 | Teacher | 1 | teacher1@example.com |
       | student1 | Student | 1 | student1@example.com |
-      | student2 | Student | 2 | student2@example.com |
     And the following "course enrolments" exist:
       | user | course | role |
       | teacher1 | C1 | editingteacher |
       | student1 | C1 | student |
-      | student2 | C2 | student |
+      | student1 | C2 | student |
 
   @javascript
   Scenario: Student sees correct submission status against deadlines when 1 out of 2 assignments are submitted by student.
@@ -90,7 +89,7 @@ Feature: When the moodle theme is set to Snap, students and teachers can open a 
       | activity | course | idnumber | name             | intro             | assignsubmission_onlinetext_enabled | assignfeedback_comments_enabled | section | duedate                      |
       | assign   | C2     | assign1  | Test assignment1 | Test assignment 1 | 1                                   | 1                               | 1       | the timestamp of tomorrow    |
       | assign   | C2     | assign2  | Test assignment2 | Test assignment 2 | 1                                   | 1                               | 1       | the timestamp of next week   |
-    And I log in as "student2"
+    And I log in as "student1"
     And I follow "Course 2"
     And I follow "Topic 1"
     And I wait until "#section-1" "css_element" is visible
