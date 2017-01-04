@@ -817,7 +817,7 @@ class activity {
         global $DB, $USER;
 
         if ($modname === 'quiz' || $modname === 'lesson') {
-            $id = $modname == 'quiz' ? $modname : 'lessonid';
+            $id = $modname === 'quiz' ? $modname : 'lessonid';
             $sql = "-- Snap sql
                     SELECT $id as id, $timeopenfld AS timeopen, $timeclosefld as timeclose
                         FROM {" . $modname . "_overrides}
