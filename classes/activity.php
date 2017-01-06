@@ -811,8 +811,7 @@ class activity {
      *
      * @return bool|stdClass
      */
-    public static function instance_activity_dates($courseid, $mod, $timeopenfld, $timeclosefld)
-    {
+    public static function instance_activity_dates($courseid, $mod, $timeopenfld, $timeclosefld) {
         global $DB, $USER;
         // Note: Caches all moduledates to minimise database transactions.
         static $moddates = array();
@@ -830,22 +829,26 @@ class activity {
 
                 if ($groups[0]) {
                     $usergroups = join(", ", $groups[0]);
-                    $sql .= ", CASE WHEN l1.$timeopenfld IS NULL THEN MIN(l2.$timeopenfld) ELSE l1.$timeopenfld END AS timeopenover,
-                            CASE WHEN l1.$timeclosefld IS NULL THEN MAX(l2.$timeclosefld) ELSE l1.$timeclosefld END AS timecloseover
+                    $sql .= ", CASE WHEN ovrd1.$timeopenfld IS NULL THEN MIN(ovrd2.$timeopenfld) ELSE ovrd1.$timeopenfld END AS timeopenover,
+                            CASE WHEN ovrd1.$timeclosefld IS NULL THEN MAX(ovrd2.$timeclosefld) ELSE ovrd1.$timeclosefld END AS timecloseover
                             FROM {" . $mod->modname . "}
-                            LEFT JOIN {" . $mod->modname . "_overrides} as l1 ON {" . $mod->modname . "}.id=l1.$id AND $USER->id=l1.userid
-                            LEFT JOIN {" . $mod->modname . "_overrides} as l2 ON {" . $mod->modname . "}.id=l2.$id AND l2.groupid IN ($usergroups)";
+                            LEFT JOIN {" . $mod->modname . "_overrides} ovrd1 ON {" . $mod->modname . "}.id=ovrd1.$id AND $USER->id=ovrd1.userid
+                            LEFT JOIN {" . $mod->modname . "_overrides} ovrd2 ON {" . $mod->modname . "}.id=ovrd2.$id AND ovrd2.groupid IN ($usergroups)";
                 } else {
-                    $sql .= ", l1.$timeopenfld AS timeopenover, l1.$timeclosefld AS timecloseover
-                             FROM {" . $mod->modname . "} LEFT JOIN {" . $mod->modname . "_overrides} as l1
-                             ON {" . $mod->modname . "}.id=l1.$id AND $USER->id=l1.userid";
+                    $sql .= ", ovrd1.$timeopenfld AS timeopenover, ovrd1.$timeclosefld AS timecloseover
+                             FROM {" . $mod->modname . "} LEFT JOIN {" . $mod->modname . "_overrides} ovrd1
+                             ON {" . $mod->modname . "}.id=ovrd1.$id AND $USER->id=ovrd1.userid";
                 }
                 $sql .= " WHERE {" . $mod->modname . "}.course = ?";
                 $result = $DB->get_records_sql($sql, array($courseid));
+
                 if ($result[$mod->instance]->timecloseover) {
                     $result[$mod->instance]->timeclose = $result[$mod->instance]->timecloseover;
+                }
+                if ($result[$mod->instance]->timeopenover) {
                     $result[$mod->instance]->timeopen = $result[$mod->instance]->timeopenover;
                 }
+
             } else {
                 $sql .= " FROM {" . $mod->modname . "}
                     WHERE course = ?";
