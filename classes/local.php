@@ -789,11 +789,10 @@ class local {
                 if ($event->modulename === 'quiz' || $event->modulename === 'lesson') {
                     $startdate = $event->modulename === 'quiz' ? 'timeopen' : 'available';
                     $enddate = $event->modulename === 'quiz' ? 'timeclose' : 'deadline';
-                    $override = \theme_snap\activity::instance_activity_override_dates($event->courseid, $event->modulename,
-                        $event->instance, $startdate, $enddate);
+                    $override = \theme_snap\activity::instance_activity_dates($event->courseid, $cm, $startdate, $enddate);
                 }
                 if ($override) {
-                    $meta = $output->friendly_datetime(0 + $override[$event->instance]->timeclose);
+                    $meta = $output->friendly_datetime(0 + $override->timeclose);
                 } else {
                     $meta = $output->friendly_datetime($event->timestart + $event->timeduration);
 

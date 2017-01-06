@@ -802,76 +802,58 @@ class activity {
     }
 
     /**
-     * Get the override dates for an activity Lesson or Quiz
-     *
-     * @param int $courseid
-     * @param string $modname
-     * @param int $modinstance
-     * @param string $timeopenfld
-     * @param string $timeclosefld
-     *
-     * @return bool|array
-     */
-
-    public static function instance_activity_override_dates($courseid, $modname, $modinstance, $timeopenfld, $timeclosefld) {
-        global $DB, $USER;
-
-        if ($modname === 'quiz' || $modname === 'lesson') {
-            $id = $modname === 'quiz' ? $modname : 'lessonid';
-            $sql = "-- Snap sql
-                    SELECT $id as id, $timeopenfld AS timeopen, $timeclosefld as timeclose
-                        FROM {" . $modname . "_overrides}
-                    WHERE " . $id . " = ? AND userid = ?";
-            $override = $DB->get_records_sql($sql, array($modinstance, $USER->id));
-            if (array_key_exists($modinstance, $override)) {
-                return $override; // Core's priority is user override  over group override.
-            } else {
-                $groups = groups_get_user_groups($courseid);
-                if ($groups[0]) {
-                    $usergroups = join(", ", $groups[0]);
-                    $sql = "-- Snap sql
-                        SELECT $id as id, MIN($timeopenfld) AS timeopen, MAX($timeclosefld) as timeclose
-                        FROM {" . $modname . "_overrides}
-                        WHERE " . $id . " = ? AND groupid IN ($usergroups)";
-                    $override = $DB->get_records_sql($sql, array($modinstance));
-                    if (array_key_exists($modinstance, $override)) {
-                        return $override;
-                    }
-                }
-            }
-        }
-        return false;
-    }
-
-    /**
      * Get the activity dates for a specific module instance
      *
      * @param $courseid
      * @param stdClass $mod
-     * @param $timeopenfld
-     * @param $timeclosefld
+     * @param string $timeopenfld
+     * @param string $timeclosefld
      *
      * @return bool|stdClass
      */
-    public static function instance_activity_dates($courseid, $mod, $timeopenfld, $timeclosefld) {
-        global $DB;
-
+    public static function instance_activity_dates($courseid, $mod, $timeopenfld, $timeclosefld)
+    {
+        global $DB, $USER;
         // Note: Caches all moduledates to minimise database transactions.
         static $moddates = array();
-        if (!isset($moddates[$courseid.'_'.$mod->modname][$mod->instance]) || PHPUNIT_TEST) {
-            $override = self::instance_activity_override_dates($courseid, $mod->modname, $mod->instance, $timeopenfld,
-                $timeclosefld);
-            if ($override) {
-                $moddates[$courseid.'_'.$mod->modname] = $override;
+        if (!isset($moddates[$courseid . '_' . $mod->modname][$mod->instance]) || PHPUNIT_TEST) {
+
+            $sql = "-- Snap sql
+                    SELECT 
+                    {" . $mod->modname . "}.id, 
+                    {" . $mod->modname . "}.$timeopenfld AS timeopen, 
+                    {" . $mod->modname . "}.$timeclosefld as timeclose";
+
+            if ($mod->modname === 'quiz' || $mod->modname === 'lesson') {
+                $id = $mod->modname === 'quiz' ? $mod->modname : 'lessonid';
+                $groups = groups_get_user_groups($courseid);
+
+                if ($groups[0]) {
+                    $usergroups = join(", ", $groups[0]);
+                    $sql .= ", CASE WHEN l1.$timeopenfld IS NULL THEN MIN(l2.$timeopenfld) ELSE l1.$timeopenfld END AS timeopenover,
+                            CASE WHEN l1.$timeclosefld IS NULL THEN MAX(l2.$timeclosefld) ELSE l1.$timeclosefld END AS timecloseover
+                            FROM {" . $mod->modname . "}
+                            LEFT JOIN {" . $mod->modname . "_overrides} as l1 ON {" . $mod->modname . "}.id=l1.$id AND $USER->id=l1.userid
+                            LEFT JOIN {" . $mod->modname . "_overrides} as l2 ON {" . $mod->modname . "}.id=l2.$id AND l2.groupid IN ($usergroups)";
+                } else {
+                    $sql .= ", l1.$timeopenfld AS timeopenover, l1.$timeclosefld AS timecloseover
+                             FROM {" . $mod->modname . "} LEFT JOIN {" . $mod->modname . "_overrides} as l1
+                             ON {" . $mod->modname . "}.id=l1.$id AND $USER->id=l1.userid";
+                }
+                $sql .= " WHERE {" . $mod->modname . "}.course = ?";
+                $result = $DB->get_records_sql($sql, array($courseid));
+                if ($result[$mod->instance]->timecloseover) {
+                    $result[$mod->instance]->timeclose = $result[$mod->instance]->timecloseover;
+                    $result[$mod->instance]->timeopen = $result[$mod->instance]->timeopenover;
+                }
             } else {
-                $sql = "-- Snap sql
-                    SELECT id, $timeopenfld AS timeopen, $timeclosefld as timeclose
-                        FROM {".$mod->modname."}
+                $sql .= " FROM {" . $mod->modname . "}
                     WHERE course = ?";
-                $moddates[$courseid.'_'.$mod->modname] = $DB->get_records_sql($sql, array($courseid));
+                $result = $DB->get_records_sql($sql, array($courseid));
             }
+            $moddates[$courseid . '_' . $mod->modname] = $result;
         }
-        return $moddates[$courseid.'_'.$mod->modname][$mod->instance];
+        return $moddates[$courseid . '_' . $mod->modname][$mod->instance];
     }
 
     /**
