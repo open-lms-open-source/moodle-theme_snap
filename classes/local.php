@@ -817,12 +817,18 @@ class local {
         $grades = activity::events_graded($onlyactive);
 
         $o = '';
+        $enabledmods = \core_plugin_manager::instance()->get_enabled_plugins('mod');
+        $enabledmods = array_keys($enabledmods);
         foreach ($grades as $grade) {
 
             $modinfo = get_fast_modinfo($grade->courseid);
             $course = $modinfo->get_course();
 
             $modtype = $grade->itemmodule;
+            if (!in_array($modtype, $enabledmods)) {
+                continue;
+            }
+
             $cm = $modinfo->instances[$modtype][$grade->iteminstance];
 
             $coursecontext = \context_course::instance($grade->courseid);
@@ -934,7 +940,7 @@ class local {
             $since = time() - (12 * WEEKSECS);
         }
 
-        $mods = \core_plugin_manager::instance()->get_installed_plugins('mod');
+        $mods = \core_plugin_manager::instance()->get_enabled_plugins('mod');
         $mods = array_keys($mods);
 
         $grading = [];
