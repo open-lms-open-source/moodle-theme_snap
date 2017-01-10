@@ -811,52 +811,54 @@ class activity {
      *
      * @return bool|stdClass
      */
-    public static function instance_activity_dates($courseid, $mod, $timeopenfld, $timeclosefld) {
+    public static function instance_activity_dates($courseid, $mod, $timeopenfld = '', $timeclosefld = '') {
         global $DB, $USER;
         // Note: Caches all moduledates to minimise database transactions.
         static $moddates = array();
         if (!isset($moddates[$courseid . '_' . $mod->modname][$mod->instance]) || PHPUNIT_TEST) {
-
+            $timeopenfld = $mod->modname === 'quiz' ? 'timeopen' : ($mod->modname === 'lesson' ? 'available' : $timeopenfld);
+            $timeclosefld = $mod->modname === 'quiz' ? 'timeclose' : ($mod->modname === 'lesson' ? 'deadline' : $timeclosefld);
             $sql = "-- Snap sql
                     SELECT 
-                    {" . $mod->modname . "}.id, 
-                    {" . $mod->modname . "}.$timeopenfld AS timeopen, 
-                    {" . $mod->modname . "}.$timeclosefld as timeclose";
-
+                    module.id, 
+                    module.$timeopenfld AS timeopen, 
+                    module.$timeclosefld AS timeclose";
             if ($mod->modname === 'quiz' || $mod->modname === 'lesson') {
                 $id = $mod->modname === 'quiz' ? $mod->modname : 'lessonid';
                 $groups = groups_get_user_groups($courseid);
-
+                $params = array();
                 if ($groups[0]) {
-                    $usergroups = join(", ", $groups[0]);
+                    list ($groupsql, $params) = $DB->get_in_or_equal($groups[0]);
                     $sql .= ", CASE WHEN ovrd1.$timeopenfld IS NULL THEN MIN(ovrd2.$timeopenfld) ELSE ovrd1.$timeopenfld END AS timeopenover,
                             CASE WHEN ovrd1.$timeclosefld IS NULL THEN MAX(ovrd2.$timeclosefld) ELSE ovrd1.$timeclosefld END AS timecloseover
-                            FROM {" . $mod->modname . "}
-                            LEFT JOIN {" . $mod->modname . "_overrides} ovrd1 ON {" . $mod->modname . "}.id=ovrd1.$id AND $USER->id=ovrd1.userid
-                            LEFT JOIN {" . $mod->modname . "_overrides} ovrd2 ON {" . $mod->modname . "}.id=ovrd2.$id AND ovrd2.groupid IN ($usergroups)";
+                            FROM {" . $mod->modname . "} module
+                            LEFT JOIN {" . $mod->modname . "_overrides} ovrd1 ON module.id=ovrd1.$id AND $USER->id=ovrd1.userid
+                            LEFT JOIN {" . $mod->modname . "_overrides} ovrd2 ON module.id=ovrd2.$id AND ovrd2.groupid $groupsql";
                 } else {
                     $sql .= ", ovrd1.$timeopenfld AS timeopenover, ovrd1.$timeclosefld AS timecloseover
-                             FROM {" . $mod->modname . "} LEFT JOIN {" . $mod->modname . "_overrides} ovrd1
-                             ON {" . $mod->modname . "}.id=ovrd1.$id AND $USER->id=ovrd1.userid";
+                             FROM {" . $mod->modname . "} module 
+                             LEFT JOIN {" . $mod->modname . "_overrides} ovrd1
+                             ON module.id=ovrd1.$id AND $USER->id=ovrd1.userid";
                 }
-                $sql .= " WHERE {" . $mod->modname . "}.course = ?";
-                $result = $DB->get_records_sql($sql, array($courseid));
-
-                if ($result[$mod->instance]->timecloseover) {
-                    $result[$mod->instance]->timeclose = $result[$mod->instance]->timecloseover;
-                }
-                if ($result[$mod->instance]->timeopenover) {
-                    $result[$mod->instance]->timeopen = $result[$mod->instance]->timeopenover;
-                }
-
+                $sql .= " WHERE module.course = ?";
+                $params[] = $courseid;
+                $result = $DB->get_records_sql($sql, $params);
             } else {
-                $sql .= " FROM {" . $mod->modname . "}
-                    WHERE course = ?";
+                $sql .= " FROM {" . $mod->modname . "} module
+                    WHERE module.course = ?";
                 $result = $DB->get_records_sql($sql, array($courseid));
             }
             $moddates[$courseid . '_' . $mod->modname] = $result;
         }
-        return $moddates[$courseid . '_' . $mod->modname][$mod->instance];
+        $modinst = $moddates[$courseid.'_'.$mod->modname][$mod->instance];
+        if (!empty($modinst->timecloseover)) {
+            $modinst->timeclose = $modinst->timecloseover;
+            if ($modinst->timeopenover) {
+                $modinst->timeopen = $modinst->timeopenover;
+            }
+        }
+        return $modinst;
+
     }
 
     /**
