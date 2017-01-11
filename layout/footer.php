@@ -47,8 +47,6 @@ if (!empty($custommenu) && $this->page->user_is_editing() && $PAGE->pagetype == 
     $custommenu .= '<p class="text-right">'.$link.'</p>';
 }
 
-
-
 if (!empty($custommenu) && !empty($footnote)) {
     echo '<div class="row">';
         echo '<div class="col-md-6">';
@@ -68,6 +66,24 @@ if (!empty($custommenu) && !empty($footnote)) {
         <div class="col-md-12">';
     echo $custommenu;
     echo '</div></div>';
+}
+
+/* Social media links */
+$socialmedialinks = '';
+if (!empty($PAGE->theme->settings->facebook)) {
+    $socialmedialinks .= $this->social_menu_link('facebook', $PAGE->theme->settings->facebook);
+}
+if (!empty($PAGE->theme->settings->twitter)) {
+    $socialmedialinks .= $this->social_menu_link('twitter', $PAGE->theme->settings->twitter);
+}
+if (!empty($PAGE->theme->settings->youtube)) {
+    $socialmedialinks .= $this->social_menu_link('youtube', $PAGE->theme->settings->youtube);
+}
+if (!empty($PAGE->theme->settings->instagram)) {
+    $socialmedialinks .= $this->social_menu_link('instagram', $PAGE->theme->settings->instagram);
+}
+if(!empty($socialmedialinks)) {
+    echo '<div id="snap_socialmedia_links">'.$socialmedialinks.'</div>';
 }
 
 if (core_component::get_component_directory('local_mrooms') !== null) {
