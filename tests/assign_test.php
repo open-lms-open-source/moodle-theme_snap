@@ -128,7 +128,7 @@ class theme_snap_assign_test extends mod_assign_base_testcase {
     }
 
     public function test_assign_upcoming_deadlines() {
-        GLOBAL $DB;
+        global $DB;
         $this->setUser($this->editingteachers[0]);
         $this->create_instance(['duedate' => time()]);
 
