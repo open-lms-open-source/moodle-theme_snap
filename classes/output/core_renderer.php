@@ -230,6 +230,14 @@ class core_renderer extends toc_renderer {
         return $link;
     }
 
+    /**
+     * Print links for social media icons.
+     *
+     * @author: SL
+     * @param string $iconname
+     * @param string $url
+     * @return string
+     */
     public function social_menu_link($iconname, $url) {
         global $OUTPUT;
         $iconurl = $OUTPUT->pix_url($iconname, 'theme');

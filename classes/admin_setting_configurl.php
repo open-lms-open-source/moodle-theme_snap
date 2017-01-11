@@ -18,17 +18,22 @@ namespace theme_snap;
 
 defined('MOODLE_INTERNAL') || die();
 
+/**
+ * Class to render input of type url in settings pages.
+ * @package theme_snap
+ * @author SL
+ * @copyright Blackboard Ltd 2017
+ * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
 class admin_setting_configurl extends \admin_setting_configtext {
     /**
-     * Config text constructor
+     * Config url constructor
      *
      * @param string $name unique ascii name, either 'mysetting' for settings that in config, or 'myplugin/mysetting'
      * for ones in config_plugins.
      * @param string $visiblename localised
      * @param string $description long localised info
      * @param string $defaultsetting
-     * @param mixed $paramtype int means PARAM_XXX type, string is a allowed format in regex
-     * @param int $size default field size
      */
     public function __construct($name, $visiblename, $description, $defaultsetting) {
         parent::__construct($name, $visiblename, $description, $defaultsetting, PARAM_URL, 50);
@@ -37,7 +42,9 @@ class admin_setting_configurl extends \admin_setting_configtext {
     public function output_html($data, $query='') {
        $default = $this->get_defaultsetting();
        return format_admin_setting($this, $this->visiblename,
-       '<div class="form-text defaultsnext"><input type="url" size="'.$this->size.'" id="'.$this->get_id().'" name="'.$this->get_full_name().'" value="'.s($data).'" /></div>',
-       $this->description, true, '', $default, $query);
+               '<div class="form-text defaultsnext"><input type="url" size="' .
+               $this->size. '" id="' .$this->get_id(). '" name="' .$this->get_full_name().
+               '" value="' .s($data). '" /></div>',
+               $this->description, true, '', $default, $query);
    }
 }

@@ -192,7 +192,7 @@ if ($ADMIN->fulltree) {
     $setting->set_updatedcallback('theme_reset_all_caches');
     $settings->add($setting);
 
-    // Social media
+    // Social media.
     $name = 'theme_snap/facebook';
     $title = new lang_string('facebook', 'theme_snap');
     $description = new lang_string('facebookdesc', 'theme_snap');
