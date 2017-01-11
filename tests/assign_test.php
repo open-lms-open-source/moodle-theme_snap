@@ -128,6 +128,7 @@ class theme_snap_assign_test extends mod_assign_base_testcase {
     }
 
     public function test_assign_upcoming_deadlines() {
+        GLOBAL $DB;
         $this->setUser($this->editingteachers[0]);
         $this->create_instance(['duedate' => time()]);
 
@@ -177,6 +178,51 @@ class theme_snap_assign_test extends mod_assign_base_testcase {
         $this->setUser($this->students[0]);
         $deadlines = local::upcoming_deadlines($this->students[0]->id, $max);
         $this->assertCount(2, $deadlines);
+        $this->setUser($this->editingteachers[0]);
+
+        $quiz_generator = $this->getDataGenerator()->get_plugin_generator('mod_quiz');
+
+        $reference = time();
+        $day = 60 * 60 * 24;
+        $quiz = $quiz_generator->create_instance(array('course'=>$this->course->id, 'timeclose'=> $reference));
+        $modinfo = get_fast_modinfo($this->course->id);
+        $cm = $modinfo->instances['quiz'][$quiz->id];
+        $this->setUser($this->students[0]);
+        $override = \theme_snap\activity::instance_activity_dates($this->course->id, $cm);
+
+        $this->assertEmpty($override->timeopenover);
+        $this->assertEmpty($override->timecloseover);
+        $this->assertEquals($override->timeclose, $reference);
+
+        // User override.
+        $DB->insert_record('quiz_overrides', array('quiz'=>$quiz->id, 'userid'=>$this->students[0]->id, 'timeclose' => $reference + $day));
+        $override = \theme_snap\activity::instance_activity_dates($this->course->id, $cm);
+        $this->assertEquals($override->timecloseover, $reference + $day);
+        $this->assertEquals($override->timeclose, $override->timecloseover);
+
+        // Group override.
+        $groups = groups_get_user_groups($this->course->id);
+        $DB->insert_record('quiz_overrides', array('quiz'=>$quiz->id, 'groupid'=> (int) $groups[0][0], 'timeopen' => $reference + $day, 'timeclose' => $reference + (3 * $day)));
+        $override = \theme_snap\activity::instance_activity_dates($this->course->id, $cm);
+
+        // Returned override should be user instead of group.
+        $this->assertEquals($override->timecloseover, $reference + $day);
+        $this->assertEquals($override->timeclose, $override->timecloseover);
+
+        // Deleting the user override should bring the group override as result.
+        $DB->delete_records('quiz_overrides', array ('userid' => $this->students[0]->id, 'quiz' => $quiz->id));
+        $override = \theme_snap\activity::instance_activity_dates($this->course->id, $cm);
+        $this->assertEquals($override->timeclose, $reference + (3 * $day));
+
+        // Second group override.
+        $group2 = $this->getDataGenerator()->create_group(array('courseid' => $this->course->id));
+        $this->getDataGenerator()->create_group_member(array('userid' => $this->students[0], 'groupid' => $group2->id));
+        $DB->insert_record('quiz_overrides', array('quiz'=>$quiz->id, 'groupid'=> (int) $group2->id, 'timeopen' => $reference + (2 * $day), 'timeclose' => $reference + (7 * $day)));
+        $override = \theme_snap\activity::instance_activity_dates($this->course->id, $cm);
+
+        // Values should match max and min values between the groups records.
+        $this->assertEquals($override->timeclose, $reference + (7 * $day));
+        $this->assertEquals($override->timeopen, $reference + $day);
     }
 
     public function test_assign_overdue() {
