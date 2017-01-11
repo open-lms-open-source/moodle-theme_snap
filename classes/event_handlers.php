@@ -46,9 +46,7 @@ class event_handlers {
      * @return void
      */
     public static function course_updated(course_updated $event) {
-
-        $course  = $event->get_record_snapshot('course', $event->objectid);
-        $context = \context_course::instance($course->id);
+        $context = \context_course::instance($event->objectid);
 
         local::process_coverimage($context);
     }
