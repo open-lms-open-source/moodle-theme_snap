@@ -226,7 +226,23 @@ class core_renderer extends toc_renderer {
         $alt = get_string($langstring, 'theme_snap');
         $iconurl = $OUTPUT->pix_url($iconname, 'theme');
         $icon = '<img class="svg-icon" alt="' .$alt. '" src="' .$iconurl. '">';
-        $link = '<a href="' .$url. '">'.$icon.'</a>';
+        $link = '<a href="' .$url. '">' .$icon. '</a>';
+        return $link;
+    }
+
+    /**
+     * Print links for social media icons.
+     *
+     * @author: SL
+     * @param string $iconname
+     * @param string $url
+     * @return string
+     */
+    public function social_menu_link($iconname, $url) {
+        global $OUTPUT;
+        $iconurl = $OUTPUT->pix_url($iconname, 'theme');
+        $icon = '<img class="svg-icon" title="' .$iconname. '" alt="' .$iconname. '" src="' .$iconurl. '">';
+        $link = '<a href="' .$url. '" target="_blank">' .$icon. '</a>';
         return $link;
     }
 

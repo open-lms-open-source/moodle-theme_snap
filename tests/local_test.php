@@ -1297,7 +1297,7 @@ class theme_snap_local_test extends \advanced_testcase {
         $this->assertNotNull($ts);
 
         // Make sure getting the cache stamp a second time results in same timestamp.
-        sleep(1);
+        $this->waitForSecond();
         $ts2 = local::course_completion_cachestamp($course->id);
         $this->assertEquals($ts, $ts2);
 
