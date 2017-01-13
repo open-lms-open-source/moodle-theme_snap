@@ -209,7 +209,7 @@ $THEME->blockrtlmanipulations = array(
 );
 
 if ($themeissnap && $notajaxscript) {
-    if (empty($CFG->snappageinit)) {
+    if (empty($CFG->snappageinit) && !empty($PAGE)) {
         $CFG->snappageinit = true;
         $PAGE->initialise_theme_and_output();
 
