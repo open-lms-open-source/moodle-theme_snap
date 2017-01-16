@@ -214,9 +214,12 @@ if ($themeissnap && $notajaxscript) {
         $PAGE->initialise_theme_and_output();
 
         // Modify $PAGE to use snap requirements manager.
-        $requires = new ReflectionProperty($PAGE, '_requires');
-        $requires->setAccessible(true);
-        $requires->setValue($PAGE, new snap_page_requirements_manager());
-        $requires->setAccessible(false);
+        $blacklist = ['page-mod-hvp-view' => 'page-mod-hvp-view'];
+        if (!array_key_exists($PAGE->bodyid, $blacklist)) {
+            $requires = new ReflectionProperty($PAGE, '_requires');
+            $requires->setAccessible(true);
+            $requires->setValue($PAGE, new snap_page_requirements_manager());
+            $requires->setAccessible(false);
+        }
     }
 }
