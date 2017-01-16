@@ -826,6 +826,7 @@ class activity {
             if ($mod->modname === 'quiz' || $mod->modname === 'lesson') {
                 $id = $mod->modname === 'quiz' ? $mod->modname : 'lessonid';
                 $groups = groups_get_user_groups($courseid);
+                $groupbysql = '';
                 $params = array();
                 if ($groups[0]) {
                     list ($groupsql, $params) = $DB->get_in_or_equal($groups[0]);
@@ -833,16 +834,16 @@ class activity {
                             CASE WHEN ovrd1.$timeclosefld IS NULL THEN MAX(ovrd2.$timeclosefld) ELSE ovrd1.$timeclosefld END AS timecloseover
                             FROM {" . $mod->modname . "} module
                             LEFT JOIN {" . $mod->modname . "_overrides} ovrd1 ON module.id=ovrd1.$id AND $USER->id=ovrd1.userid
-                            LEFT JOIN {" . $mod->modname . "_overrides} ovrd2 ON module.id=ovrd2.$id AND ovrd2.groupid $groupsql
-                            WHERE module.id = ? AND module.course = ?";
-                    $params[] = $mod->instance;
+                            LEFT JOIN {" . $mod->modname . "_overrides} ovrd2 ON module.id=ovrd2.$id AND ovrd2.groupid $groupsql";
+                    $groupbysql = " GROUP BY module.id, timeopen, timeclose";
                 } else {
                     $sql .= ", ovrd1.$timeopenfld AS timeopenover, ovrd1.$timeclosefld AS timecloseover
                              FROM {" . $mod->modname . "} module 
                              LEFT JOIN {" . $mod->modname . "_overrides} ovrd1
-                             ON module.id=ovrd1.$id AND $USER->id=ovrd1.userid
-                             WHERE module.course = ?";
+                             ON module.id=ovrd1.$id AND $USER->id=ovrd1.userid";
                 }
+                $sql .= " WHERE module.course = ?";
+                $sql .= $groupbysql;
                 $params[] = $courseid;
                 $result = $DB->get_records_sql($sql, $params);
             } else {
