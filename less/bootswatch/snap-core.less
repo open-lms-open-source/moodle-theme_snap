@@ -600,7 +600,7 @@ input[type="reset"] {
 
 #page-site-index .section-modchooser-link {
     clear: both;
-    margin: 3em 0;
+    margin: 0;
     padding: 0.5em;
     display: block;
     border-color: white;
@@ -1587,13 +1587,14 @@ ol#chapters {
 }
 
 /* FRONT PAGE ELEMENTS */
-#page-site-index #region-main {
-    max-width: 100%;
-    padding: 0;
-    margin: 0 auto;
-}
+#page-site-index {
+    #region-main {
+        max-width: 100%;
+        padding: 0;
+        margin: 0 auto;
+    }
 
-#page-site-index #page-header {
+    #page-header {
     // background-color: @brand-primary; customisable
     padding-top: 12.7%;
     padding-bottom: 1.75em;
@@ -1601,11 +1602,19 @@ ol#chapters {
     border-bottom: 0;
     margin: 0;
     position: relative;
+    }
 
     #snap-coverimagecontrol {
         position: absolute;
         bottom: 1em;
         right: 4%;
+    }
+
+    #page-mast {
+        background-color: rgba(255,255,255,0.9);
+        display: inline-block;
+        padding: 1em 2%;
+        margin-top: 2em;
     }
 }
 
@@ -1618,13 +1627,6 @@ http://blog.rodneyrehm.de/archives/34-iOS7-Mobile-Safari-And-Viewport-Units.html
     #page-site-index #page-header {
         min-height: 87vh;
     }
-}
-
-#page-site-index #page-mast {
-    background-color: rgba(255,255,255,0.9);
-    display: inline-block;
-    padding: 1em 2%;
-    margin-top: 2em;
 }
 
 .path-course #page-mast h1 {
@@ -3909,12 +3911,15 @@ div.editor_atto_toolbar div.atto_group {
     max-width: 100%;
 }
 
-#page-admin-setting-themesettingsnap .admin_colourpicker {
+#page-admin-setting-themesettingsnap{
+
+    .admin_colourpicker {
     display: block;
     float: left;
     height: 40px;
     width: 30px;
     margin: 1px 4px;
+    }
 
     .loadingicon,
     .colourdialogue,
@@ -3929,6 +3934,75 @@ div.editor_atto_toolbar div.atto_group {
         border-radius: 100%;
         border: none;
         margin-left: 0;
+    }
+
+    /* Subtitle textarea. */
+    #admin-subtitle textarea {
+        height: 5em;
+    }
+
+
+}
+
+/* Feature spots. */
+#snap-feature-spots {
+    padding: 1em 0;
+    .text-center();
+
+    .snap-feature-spots-heading {
+        padding-top: 0;
+        margin-top: 0;
+    }
+
+    .snap-feature-image {
+        max-width: 200px;
+    }
+}
+
+#page-admin-setting-themesnapfeaturespots {
+
+    #admin-fs_heading {
+        input {
+            .h4();
+            .text-center();
+        }
+
+        .form-defaultinfo,
+        .form-shortname {
+            display: none;
+        }
+    }
+    #admin-fs_one_title,
+    #admin-fs_two_title,
+    #admin-fs_three_title {
+        input {
+            .h5();
+        }
+    }
+
+    #admin-fs_one_title,
+    #admin-fs_two_title,
+    #admin-fs_three_title,
+    #admin-fs_one_image,
+    #admin-fs_two_image,
+    #admin-fs_three_image,
+    #admin-fs_one_text,
+    #admin-fs_two_text,
+    #admin-fs_three_text {
+        float: left;
+        width: 33.3%;
+        margin: 0;
+
+        .form-defaultinfo,
+        .form-shortname,
+        .fp-btn-download,
+        .dndupload-message {
+            display: none;
+        }
+    }
+
+    #admin-fs_one_text {
+        clear: left;
     }
 }
 

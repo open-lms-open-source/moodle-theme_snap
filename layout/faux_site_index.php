@@ -41,6 +41,10 @@ if (substr_compare($maincontent, $lastclosetag, -strlen($lastclosetag)) !== 0) {
     $message = 'Main content does not have the expected div tag wrapping it, required for Snap Site News.';
     throw new coding_exception($message);
 }
+
+// Snap feature spots.
+echo $this->feature_spot_cards();
+
 echo substr($maincontent, 0, -strlen($lastclosetag));
 $courserenderer = $PAGE->get_renderer('core', 'course');
 

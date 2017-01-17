@@ -103,6 +103,22 @@ $string['favicon'] = 'Favicon';
 $string['favicondesc'] = 'Please upload your favicon in .ico format here. The favicon will be displayed along with the page title in your browser’s tab bar and in bookmarks.';
 $string['favorite'] = 'Favorite {$a}';
 $string['favorited'] = 'Favorited {$a}';
+$string['featurespots'] = 'Features & Benefits spots';
+$string['featurespotsedit'] = 'Edit feature spots';
+$string['featurespotshelp'] = 'Feature spots are for highlighting your sites main benefits to current or potential users.
+Feature spots are great for describing the main features or benetifs of your site in a bite size way,
+and will diplayed under the header image on your site front page.<br>
+You can add up to 3 feature spots, simply by adding their title, content, and an optional image. Any images used should be no more than 200px in width, and all be of equal height.';
+$string['featurespotsheading'] = 'Feature spot heading';
+$string['featureonetitle'] = 'Feature 1 title';
+$string['featuretwotitle'] = 'Feature 2 title';
+$string['featurethreetitle'] = 'Feature 3 title';
+$string['featureonetext'] = 'Feature 1 content';
+$string['featuretwotext'] = 'Feature 2 content';
+$string['featurethreetext'] = 'Feature 3 content';
+$string['featureoneimage'] = 'Feature 1 image';
+$string['featuretwoimage'] = 'Feature 2 image';
+$string['featurethreeimage'] = 'Feature 3 image';
 $string['feedbackavailable'] = 'Feedback available';
 $string['feedbacktoggle'] = 'Recent feedback';
 $string['feedbacktoggledesc'] = 'Recent Feedback shows recent feedback to learners and submissions which need grading to educators.';

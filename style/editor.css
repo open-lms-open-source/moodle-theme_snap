@@ -4704,7 +4704,7 @@ input[type="reset"]:focus {
 }
 #page-site-index .section-modchooser-link {
   clear: both;
-  margin: 3em 0;
+  margin: 0;
   padding: 0.5em;
   display: block;
   border-color: white;
@@ -5581,10 +5581,16 @@ ol#chapters li.snap-visible-section a {
   margin: 0;
   position: relative;
 }
-#page-site-index #page-header #snap-coverimagecontrol {
+#page-site-index #snap-coverimagecontrol {
   position: absolute;
   bottom: 1em;
   right: 4%;
+}
+#page-site-index #page-mast {
+  background-color: rgba(255, 255, 255, 0.9);
+  display: inline-block;
+  padding: 1em 2%;
+  margin-top: 2em;
 }
 /*
 BUG:
@@ -5595,12 +5601,6 @@ http://blog.rodneyrehm.de/archives/34-iOS7-Mobile-Safari-And-Viewport-Units.html
   #page-site-index #page-header {
     min-height: 87vh;
   }
-}
-#page-site-index #page-mast {
-  background-color: rgba(255, 255, 255, 0.9);
-  display: inline-block;
-  padding: 1em 2%;
-  margin-top: 2em;
 }
 .path-course #page-mast h1 {
   display: inline;
@@ -7771,6 +7771,9 @@ div.editor_atto_toolbar div.atto_group {
 #page-message-index div.singleselect {
   max-width: 100%;
 }
+#page-admin-setting-themesettingsnap {
+  /* Subtitle textarea. */
+}
 #page-admin-setting-themesettingsnap .admin_colourpicker {
   display: block;
   float: left;
@@ -7778,18 +7781,140 @@ div.editor_atto_toolbar div.atto_group {
   width: 30px;
   margin: 1px 4px;
 }
-#page-admin-setting-themesettingsnap .admin_colourpicker .loadingicon,
-#page-admin-setting-themesettingsnap .admin_colourpicker .colourdialogue,
-#page-admin-setting-themesettingsnap .admin_colourpicker .previewcolour {
+#page-admin-setting-themesettingsnap .loadingicon,
+#page-admin-setting-themesettingsnap .colourdialogue,
+#page-admin-setting-themesettingsnap .previewcolour {
   display: none;
 }
-#page-admin-setting-themesettingsnap .admin_colourpicker .currentcolour {
+#page-admin-setting-themesettingsnap .currentcolour {
   /* size is set with a style tag so need to !important to override */
   height: 30px !important;
   width: 30px !important;
   border-radius: 100%;
   border: none;
   margin-left: 0;
+}
+#page-admin-setting-themesettingsnap #admin-subtitle textarea {
+  height: 5em;
+}
+/* Feature spots. */
+#snap-feature-spots {
+  padding: 1em 0;
+  text-align: center;
+}
+#snap-feature-spots .snap-feature-spots-heading {
+  padding-top: 0;
+  margin-top: 0;
+}
+#snap-feature-spots .snap-feature-image {
+  max-width: 200px;
+}
+#page-admin-setting-themesnapfeaturespots #admin-fs_heading input {
+  font-weight: 300;
+  line-height: 1.5;
+  color: #565656;
+  margin-top: 14px;
+  margin-bottom: 14px;
+  font-size: 36px;
+  font-family: "Roboto", "Fira Sans", "Segoe UI", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  text-align: center;
+}
+#page-admin-setting-themesnapfeaturespots #admin-fs_heading input small,
+#page-admin-setting-themesnapfeaturespots #admin-fs_heading input .small {
+  font-weight: normal;
+  line-height: 1;
+  color: #999;
+}
+#page-admin-setting-themesnapfeaturespots #admin-fs_heading input small,
+#page-admin-setting-themesnapfeaturespots #admin-fs_heading input .small {
+  font-size: 75%;
+}
+#page-admin-setting-themesnapfeaturespots #admin-fs_heading .form-defaultinfo,
+#page-admin-setting-themesnapfeaturespots #admin-fs_heading .form-shortname {
+  display: none;
+}
+#page-admin-setting-themesnapfeaturespots #admin-fs_one_title input,
+#page-admin-setting-themesnapfeaturespots #admin-fs_two_title input,
+#page-admin-setting-themesnapfeaturespots #admin-fs_three_title input {
+  font-weight: 300;
+  line-height: 1.5;
+  color: #565656;
+  margin-top: 14px;
+  margin-bottom: 14px;
+  font-size: 29px;
+  font-family: "Roboto", "Fira Sans", "Segoe UI", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+#page-admin-setting-themesnapfeaturespots #admin-fs_one_title input small,
+#page-admin-setting-themesnapfeaturespots #admin-fs_two_title input small,
+#page-admin-setting-themesnapfeaturespots #admin-fs_three_title input small,
+#page-admin-setting-themesnapfeaturespots #admin-fs_one_title input .small,
+#page-admin-setting-themesnapfeaturespots #admin-fs_two_title input .small,
+#page-admin-setting-themesnapfeaturespots #admin-fs_three_title input .small {
+  font-weight: normal;
+  line-height: 1;
+  color: #999;
+}
+#page-admin-setting-themesnapfeaturespots #admin-fs_one_title input small,
+#page-admin-setting-themesnapfeaturespots #admin-fs_two_title input small,
+#page-admin-setting-themesnapfeaturespots #admin-fs_three_title input small,
+#page-admin-setting-themesnapfeaturespots #admin-fs_one_title input .small,
+#page-admin-setting-themesnapfeaturespots #admin-fs_two_title input .small,
+#page-admin-setting-themesnapfeaturespots #admin-fs_three_title input .small {
+  font-size: 75%;
+}
+#page-admin-setting-themesnapfeaturespots #admin-fs_one_title,
+#page-admin-setting-themesnapfeaturespots #admin-fs_two_title,
+#page-admin-setting-themesnapfeaturespots #admin-fs_three_title,
+#page-admin-setting-themesnapfeaturespots #admin-fs_one_image,
+#page-admin-setting-themesnapfeaturespots #admin-fs_two_image,
+#page-admin-setting-themesnapfeaturespots #admin-fs_three_image,
+#page-admin-setting-themesnapfeaturespots #admin-fs_one_text,
+#page-admin-setting-themesnapfeaturespots #admin-fs_two_text,
+#page-admin-setting-themesnapfeaturespots #admin-fs_three_text {
+  float: left;
+  width: 33.3%;
+  margin: 0;
+}
+#page-admin-setting-themesnapfeaturespots #admin-fs_one_title .form-defaultinfo,
+#page-admin-setting-themesnapfeaturespots #admin-fs_two_title .form-defaultinfo,
+#page-admin-setting-themesnapfeaturespots #admin-fs_three_title .form-defaultinfo,
+#page-admin-setting-themesnapfeaturespots #admin-fs_one_image .form-defaultinfo,
+#page-admin-setting-themesnapfeaturespots #admin-fs_two_image .form-defaultinfo,
+#page-admin-setting-themesnapfeaturespots #admin-fs_three_image .form-defaultinfo,
+#page-admin-setting-themesnapfeaturespots #admin-fs_one_text .form-defaultinfo,
+#page-admin-setting-themesnapfeaturespots #admin-fs_two_text .form-defaultinfo,
+#page-admin-setting-themesnapfeaturespots #admin-fs_three_text .form-defaultinfo,
+#page-admin-setting-themesnapfeaturespots #admin-fs_one_title .form-shortname,
+#page-admin-setting-themesnapfeaturespots #admin-fs_two_title .form-shortname,
+#page-admin-setting-themesnapfeaturespots #admin-fs_three_title .form-shortname,
+#page-admin-setting-themesnapfeaturespots #admin-fs_one_image .form-shortname,
+#page-admin-setting-themesnapfeaturespots #admin-fs_two_image .form-shortname,
+#page-admin-setting-themesnapfeaturespots #admin-fs_three_image .form-shortname,
+#page-admin-setting-themesnapfeaturespots #admin-fs_one_text .form-shortname,
+#page-admin-setting-themesnapfeaturespots #admin-fs_two_text .form-shortname,
+#page-admin-setting-themesnapfeaturespots #admin-fs_three_text .form-shortname,
+#page-admin-setting-themesnapfeaturespots #admin-fs_one_title .fp-btn-download,
+#page-admin-setting-themesnapfeaturespots #admin-fs_two_title .fp-btn-download,
+#page-admin-setting-themesnapfeaturespots #admin-fs_three_title .fp-btn-download,
+#page-admin-setting-themesnapfeaturespots #admin-fs_one_image .fp-btn-download,
+#page-admin-setting-themesnapfeaturespots #admin-fs_two_image .fp-btn-download,
+#page-admin-setting-themesnapfeaturespots #admin-fs_three_image .fp-btn-download,
+#page-admin-setting-themesnapfeaturespots #admin-fs_one_text .fp-btn-download,
+#page-admin-setting-themesnapfeaturespots #admin-fs_two_text .fp-btn-download,
+#page-admin-setting-themesnapfeaturespots #admin-fs_three_text .fp-btn-download,
+#page-admin-setting-themesnapfeaturespots #admin-fs_one_title .dndupload-message,
+#page-admin-setting-themesnapfeaturespots #admin-fs_two_title .dndupload-message,
+#page-admin-setting-themesnapfeaturespots #admin-fs_three_title .dndupload-message,
+#page-admin-setting-themesnapfeaturespots #admin-fs_one_image .dndupload-message,
+#page-admin-setting-themesnapfeaturespots #admin-fs_two_image .dndupload-message,
+#page-admin-setting-themesnapfeaturespots #admin-fs_three_image .dndupload-message,
+#page-admin-setting-themesnapfeaturespots #admin-fs_one_text .dndupload-message,
+#page-admin-setting-themesnapfeaturespots #admin-fs_two_text .dndupload-message,
+#page-admin-setting-themesnapfeaturespots #admin-fs_three_text .dndupload-message {
+  display: none;
+}
+#page-admin-setting-themesnapfeaturespots #admin-fs_one_text {
+  clear: left;
 }
 #page-admin-setting-themesettingsnap #id_s_theme_snap_customcss {
   font-family: Monaco, Menlo, Consolas, "Courier New", monospace;
@@ -8390,7 +8515,7 @@ body.format-flexpage .singlebutton {
 }
 .section-modchooser {
   text-align: center;
-  padding: 3em 0;
+  padding: 0;
 }
 .folderview-single-section #coursetools {
   display: none;
@@ -10153,13 +10278,13 @@ body:not(.behat-site) #id_general .ftoggler {
 #page-course-edit #maincontent + h2,
 #page-course-editsection #maincontent + h2,
 .pagelayout-admin.path-mod #maincontent + h2 {
-  font-family: "Roboto", "Fira Sans", "Segoe UI", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-weight: 300;
   line-height: 1.5;
   color: #565656;
   margin-top: 14px;
   margin-bottom: 14px;
   font-size: 24px;
+  font-family: "Roboto", "Fira Sans", "Segoe UI", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 #page-course-edit #maincontent + h2 small,
 #page-course-editsection #maincontent + h2 small,
@@ -10235,13 +10360,13 @@ fieldset[disabled] #id_cancel:focus {
 }
 @media (min-width: 992px) {
   #id_name {
-    font-family: "Roboto", "Fira Sans", "Segoe UI", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-weight: 300;
     line-height: 1.5;
     color: #565656;
     margin-top: 14px;
     margin-bottom: 14px;
     font-size: 36px;
+    font-family: "Roboto", "Fira Sans", "Segoe UI", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif;
     margin-top: 0;
   }
   #id_name small,
@@ -10700,11 +10825,17 @@ a:hover,
   font-family: Georgia, "Times New Roman", Times, serif;
 }
 h1,
+.h1,
 h2,
+.h2,
 h3,
+.h3,
 h4,
+.h4,
 h5,
+.h5,
 h6,
+.h6,
 legend,
 .mform legend a,
 .mform legend a:hover,

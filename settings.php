@@ -26,20 +26,28 @@ defined('MOODLE_INTERNAL') || die;
 
 use theme_snap\admin_setting_configurl;
 
+$ADMIN->add('themes', new admin_category('theme_snap', 'Snap'));
+$settings = null; // Unsets the default $settings object initialised by Moodle.
+// Basic settings.
+$snapsettings = new admin_settingpage('themesettingsnap', 'Snap');
+
+// Feature spots settings.
+$fssettings = new admin_settingpage('themesnapfeaturespots', get_string('featurespots', 'theme_snap'));
+
 if ($ADMIN->fulltree) {
 
     // Output flex page front page warning if necessary.
     $fpwarning = \theme_snap\output\shared::flexpage_frontpage_warning();
     if (!empty($fpwarning)) {
         $setting = new admin_setting_heading('flexpage_warning', '', $fpwarning);
-        $settings->add($setting);
+        $snapsettings->add($setting);
     }
 
     $name = 'theme_snap/brandingheading';
     $title = new lang_string('brandingheading', 'theme_snap');
     $description = new lang_string('brandingheadingdesc', 'theme_snap');
     $setting = new admin_setting_heading($name, $title, $description);
-    $settings->add($setting);
+    $snapsettings->add($setting);
 
     if (!during_initial_install() && !empty(get_site()->fullname)) {
         // Site name setting.
@@ -47,7 +55,7 @@ if ($ADMIN->fulltree) {
         $title = new lang_string('fullname', 'theme_snap');
         $description = new lang_string('fullnamedesc', 'theme_snap');
         $setting = new admin_setting_sitesettext($name, $title, $description, null);
-        $settings->add($setting);
+        $snapsettings->add($setting);
     }
 
     // Site description setting.
@@ -55,7 +63,7 @@ if ($ADMIN->fulltree) {
     $title = new lang_string('subtitle', 'theme_snap');
     $description = new lang_string('subtitle_desc', 'theme_snap');
     $setting = new admin_setting_configtextarea($name, $title, $description, '');
-    $settings->add($setting);
+    $snapsettings->add($setting);
 
     // Main theme colour setting.
     $name = 'theme_snap/themecolor';
@@ -65,7 +73,7 @@ if ($ADMIN->fulltree) {
     $previewconfig = null;
     $setting = new admin_setting_configcolourpicker($name, $title, $description, $default, $previewconfig);
     $setting->set_updatedcallback('theme_reset_all_caches');
-    $settings->add($setting);
+    $snapsettings->add($setting);
 
      // Logo file setting.
     $name = 'theme_snap/logo';
@@ -74,7 +82,7 @@ if ($ADMIN->fulltree) {
     $opts = array('accepted_types' => array('.png', '.jpg', '.gif', '.webp', '.tiff', '.svg'));
     $setting = new admin_setting_configstoredfile($name, $title, $description, 'logo', 0, $opts);
     $setting->set_updatedcallback('theme_reset_all_caches');
-    $settings->add($setting);
+    $snapsettings->add($setting);
 
     // Favicon file setting.
     $name = 'theme_snap/favicon';
@@ -83,7 +91,7 @@ if ($ADMIN->fulltree) {
     $opts = array('accepted_types' => array('.ico'));
     $setting = new admin_setting_configstoredfile($name, $title, $description, 'favicon', 0, $opts);
     $setting->set_updatedcallback('theme_reset_all_caches');
-    $settings->add($setting);
+    $snapsettings->add($setting);
 
     // Cover image file setting.
     $name = 'theme_snap/poster';
@@ -92,15 +100,14 @@ if ($ADMIN->fulltree) {
     $opts = array('accepted_types' => array('.png', '.jpg', '.gif', '.webp', '.tiff', '.svg'));
     $setting = new admin_setting_configstoredfile($name, $title, $description, 'poster', 0, $opts);
     $setting->set_updatedcallback('theme_snap_process_site_coverimage');
-    $settings->add($setting);
-
+    $snapsettings->add($setting);
 
     // Personal menu settings.
     $name = 'theme_snap/personalmenu';
     $title = new lang_string('personalmenu', 'theme_snap');
     $description = new lang_string('footerheadingdesc', 'theme_snap');
     $setting = new admin_setting_heading($name, $title, $description);
-    $settings->add($setting);
+    $snapsettings->add($setting);
 
     // Personal menu display on login on/off.
     $name = 'theme_snap/personalmenulogintoggle';
@@ -110,7 +117,7 @@ if ($ADMIN->fulltree) {
     $unchecked = '0';
     $default = $checked;
     $setting = new admin_setting_configcheckbox($name, $title, $description, $default, $checked, $unchecked);
-    $settings->add($setting);
+    $snapsettings->add($setting);
 
     // Personal menu deadlines on/off.
     $name = 'theme_snap/deadlinestoggle';
@@ -121,7 +128,7 @@ if ($ADMIN->fulltree) {
     $default = $checked;
     $setting = new admin_setting_configcheckbox($name, $title, $description, $default, $checked, $unchecked);
     $setting->set_updatedcallback('theme_reset_all_caches');
-    $settings->add($setting);
+    $snapsettings->add($setting);
 
     // Personal menu recent feedback & grading  on/off.
     $name = 'theme_snap/feedbacktoggle';
@@ -132,7 +139,7 @@ if ($ADMIN->fulltree) {
     $default = $checked;
     $setting = new admin_setting_configcheckbox($name, $title, $description, $default, $checked, $unchecked);
     $setting->set_updatedcallback('theme_reset_all_caches');
-    $settings->add($setting);
+    $snapsettings->add($setting);
 
     // Personal menu messages on/off.
     $name = 'theme_snap/messagestoggle';
@@ -143,7 +150,7 @@ if ($ADMIN->fulltree) {
     $default = $checked;
     $setting = new admin_setting_configcheckbox($name, $title, $description, $default, $checked, $unchecked);
     $setting->set_updatedcallback('theme_reset_all_caches');
-    $settings->add($setting);
+    $snapsettings->add($setting);
 
     // Personal menu forum posts on/off.
     $name = 'theme_snap/forumpoststoggle';
@@ -154,13 +161,13 @@ if ($ADMIN->fulltree) {
     $default = $checked;
     $setting = new admin_setting_configcheckbox($name, $title, $description, $default, $checked, $unchecked);
     $setting->set_updatedcallback('theme_reset_all_caches');
-    $settings->add($setting);
+    $snapsettings->add($setting);
 
     $name = 'theme_snap/footerheading';
     $title = new lang_string('footerheading', 'theme_snap');
     $description = new lang_string('footerheadingdesc', 'theme_snap');
     $setting = new admin_setting_heading($name, $title, $description);
-    $settings->add($setting);
+    $snapsettings->add($setting);
 
     // Hide navigation block.
     $name = 'theme_snap/hidenavblock';
@@ -170,7 +177,7 @@ if ($ADMIN->fulltree) {
     $unchecked = '0';
     $default = $checked;
     $setting = new admin_setting_configcheckbox($name, $title, $description, $default, $checked, $unchecked);
-    $settings->add($setting);
+    $snapsettings->add($setting);
 
     // Course footer on/off.
     $name = 'theme_snap/coursefootertoggle';
@@ -181,7 +188,7 @@ if ($ADMIN->fulltree) {
     $default = $checked;
     $setting = new admin_setting_configcheckbox($name, $title, $description, $default, $checked, $unchecked);
     $setting->set_updatedcallback('theme_reset_all_caches');
-    $settings->add($setting);
+    $snapsettings->add($setting);
 
     // Custom footer setting.
     $name = 'theme_snap/footnote';
@@ -190,7 +197,7 @@ if ($ADMIN->fulltree) {
     $default = '';
     $setting = new admin_setting_confightmleditor($name, $title, $description, $default);
     $setting->set_updatedcallback('theme_reset_all_caches');
-    $settings->add($setting);
+    $snapsettings->add($setting);
 
     // Social media.
     $name = 'theme_snap/facebook';
@@ -198,35 +205,35 @@ if ($ADMIN->fulltree) {
     $description = new lang_string('facebookdesc', 'theme_snap');
     $default = '';
     $setting = new admin_setting_configurl($name, $title, $description, $default);
-    $settings->add($setting);
+    $snapsettings->add($setting);
 
     $name = 'theme_snap/twitter';
     $title = new lang_string('twitter', 'theme_snap');
     $description = new lang_string('twitterdesc', 'theme_snap');
     $default = '';
     $setting = new admin_setting_configurl($name, $title, $description, $default);
-    $settings->add($setting);
+    $snapsettings->add($setting);
 
     $name = 'theme_snap/youtube';
     $title = new lang_string('youtube', 'theme_snap');
     $description = new lang_string('youtubedesc', 'theme_snap');
     $default = '';
     $setting = new admin_setting_configurl($name, $title, $description, $default);
-    $settings->add($setting);
+    $snapsettings->add($setting);
 
     $name = 'theme_snap/instagram';
     $title = new lang_string('instagram', 'theme_snap');
     $description = new lang_string('instagramdesc', 'theme_snap');
     $default = '';
     $setting = new admin_setting_configurl($name, $title, $description, $default);
-    $settings->add($setting);
+    $snapsettings->add($setting);
 
     // Advanced branding heading.
     $name = 'theme_snap/advancedbrandingheading';
     $title = new lang_string('advancedbrandingheading', 'theme_snap');
     $description = new lang_string('advancedbrandingheadingdesc', 'theme_snap');
     $setting = new admin_setting_heading($name, $title, $description);
-    $settings->add($setting);
+    $snapsettings->add($setting);
 
     // Heading font setting.
     $name = 'theme_snap/headingfont';
@@ -235,7 +242,7 @@ if ($ADMIN->fulltree) {
     $default = '"Roboto"';
     $setting = new admin_setting_configtext($name, $title, $description, $default);
     $setting->set_updatedcallback('theme_reset_all_caches');
-    $settings->add($setting);
+    $snapsettings->add($setting);
 
     // Serif font setting.
     $name = 'theme_snap/seriffont';
@@ -244,7 +251,7 @@ if ($ADMIN->fulltree) {
     $default = '"Georgia"';
     $setting = new admin_setting_configtext($name, $title, $description, $default);
     $setting->set_updatedcallback('theme_reset_all_caches');
-    $settings->add($setting);
+    $snapsettings->add($setting);
 
     // Custom CSS file.
     $name = 'theme_snap/customcss';
@@ -253,5 +260,94 @@ if ($ADMIN->fulltree) {
     $default = '';
     $setting = new admin_setting_configtextarea($name, $title, $description, $default);
     $setting->set_updatedcallback('theme_reset_all_caches');
-    $settings->add($setting);
+    $snapsettings->add($setting);
+
+
+    // Feature spots settings.
+    // Feature spot instructions.
+    $name = 'theme_snap/fs_instructions';
+    $heading = '';
+    $description = get_string('featurespotshelp', 'theme_snap');
+    $setting = new admin_setting_heading($name, $heading, $description);
+    $fssettings->add($setting);
+
+    // Feature spots heading.
+    $name = 'theme_snap/fs_heading';
+    $title = new lang_string('featurespotsheading', 'theme_snap');
+    $description = '';
+    $default = '';
+    $setting = new admin_setting_configtext($name, $title, $description, $default, PARAM_RAW_TRIMMED, 50);
+    $fssettings->add($setting);
+
+    // Feature spot one title.
+    $name = 'theme_snap/fs_one_title';
+    $title = new lang_string('featureonetitle', 'theme_snap');
+    $description = '';
+    $default = '';
+    $setting = new admin_setting_configtext($name, $title, $description, $default);
+    $fssettings->add($setting);
+
+    $name = 'theme_snap/fs_two_title';
+    $title = new lang_string('featuretwotitle', 'theme_snap');
+    $description = '';
+    $default = '';
+    $setting = new admin_setting_configtext($name, $title, $description, $default);
+    $fssettings->add($setting);
+
+    $name = 'theme_snap/fs_three_title';
+    $title = new lang_string('featurethreetitle', 'theme_snap');
+    $description = '';
+    $default = '';
+    $setting = new admin_setting_configtext($name, $title, $description, $default);
+    $fssettings->add($setting);
+
+    // Feature spot one image.
+    $name = 'theme_snap/fs_one_image';
+    $title = new lang_string('featureoneimage', 'theme_snap');
+    $description = '';
+    $opts = array('accepted_types' => array('.png', '.jpg', '.gif', '.webp', '.svg'));
+    $setting = new admin_setting_configstoredfile($name, $title, $description, 'fs_one_image', 0, $opts);
+    $fssettings->add($setting);
+
+    // Feature spot two image.
+    $name = 'theme_snap/fs_two_image';
+    $title = new lang_string('featuretwoimage', 'theme_snap');
+    $description = '';
+    $opts = array('accepted_types' => array('.png', '.jpg', '.gif', '.webp', '.svg'));
+    $setting = new admin_setting_configstoredfile($name, $title, $description, 'fs_two_image', 0, $opts);
+    $fssettings->add($setting);
+
+    // Feature spot three image.
+    $name = 'theme_snap/fs_three_image';
+    $title = new lang_string('featurethreeimage', 'theme_snap');
+    $description = '';
+    $opts = array('accepted_types' => array('.png', '.jpg', '.gif', '.webp', '.svg'));
+    $setting = new admin_setting_configstoredfile($name, $title, $description, 'fs_three_image', 0, $opts);
+    $fssettings->add($setting);
+
+
+    $name = 'theme_snap/fs_one_text';
+    $title = new lang_string('featureonetext', 'theme_snap');
+    $description = '';
+    $default = '';
+    $setting = new admin_setting_configtextarea($name, $title, $description, $default);
+    $fssettings->add($setting);
+
+    $name = 'theme_snap/fs_two_text';
+    $title = new lang_string('featuretwotext', 'theme_snap');
+    $description = '';
+    $default = '';
+    $setting = new admin_setting_configtextarea($name, $title, $description, $default);
+    $fssettings->add($setting);
+
+    $name = 'theme_snap/fs_three_text';
+    $title = new lang_string('featurethreetext', 'theme_snap');
+    $description = '';
+    $default = '';
+    $setting = new admin_setting_configtextarea($name, $title, $description, $default);
+    $fssettings->add($setting);
+
+    // Add theme pages.
+    $ADMIN->add('theme_snap', $snapsettings);
+    $ADMIN->add('theme_snap', $fssettings);
 }

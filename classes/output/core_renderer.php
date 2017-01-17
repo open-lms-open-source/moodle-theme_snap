@@ -1423,4 +1423,97 @@ HTML;
         return $output;
     }
 
+
+    /**
+     * Return feature spot cards html.
+     *
+     * @return string
+     */
+    public function feature_spot_cards() {
+        global $PAGE;
+
+        $fsnames = array("fs_one", "fs_two", "fs_three");
+        $features = array();
+        // Note - we are using underscores in the settings to make easier to read.
+        foreach($fsnames as $feature) {
+            $title = $feature . '_title';
+            $text = $feature . '_text';
+            $image = $feature . '_image';
+            if(!empty($PAGE->theme->settings->$title) && !empty($PAGE->theme->settings->$text)) {
+                $url = '';
+                if(!empty($PAGE->theme->settings->$image)) {
+                    $url = $this->page->theme->setting_file_url($image, $image);
+                }
+                $features[] = $this->feature_spot_card($PAGE->theme->settings->$title, $url, $PAGE->theme->settings->$text);
+            }
+        }
+
+        $fscount = count($features);
+        if ($fscount > 0) {
+            $fstitle = '';
+            if(!empty($PAGE->theme->settings->fs_heading)) {
+                $fstitle = '<h2 class="snap-feature-spots-heading">' .s($PAGE->theme->settings->fs_heading). '</h2>';
+            }
+
+            $colclass = '';
+            if ($fscount == 2) {
+                /* two cards = 50% */
+                $colclass = 'col-sm-6';
+            }
+            if ($fscount == 3) {
+                /* three cards = 33.3% */
+                $colclass = 'col-sm-4';
+            }
+
+            $cards = '';
+            $i = 1;
+            foreach($features as $feature) {
+                $cards .= '<div class="' .$colclass. '" id="snap-feature-' .$i. '">' .$feature. '</div>';
+                $i++;
+            }
+
+            $fsedit = '';
+            if($this->page->user_is_editing()) {
+                $url = new moodle_url('/admin/settings.php', ['section' => 'themesnapfeaturespots']);
+                $link = html_writer::link($url, get_string('featurespotsedit', 'theme_snap'), ['class' => 'btn btn-primary']);
+                $fsedit = '<p class="text-center">'.$link.'</p>';
+            }
+
+            // Build feature spots.
+            $featurespots = '<div id="snap-feature-spots" class="container">';
+            $featurespots .= $fstitle;
+            $featurespots .= '<div class="row">' .$cards. '</div>';
+            $featurespots .= $fsedit;
+            $featurespots .= '</div>';
+
+            // Return feature spots.
+            return $featurespots;
+        }
+    }
+
+    /**
+     * Return feature spot card html.
+     *
+     * @param string $title
+     * @param string $image
+     * @param string $text
+     * @return string
+     */
+    public function feature_spot_card($title, $image, $text) {
+        $card = '<div class="snap-feature">
+            <!--Card content-->
+            <div class="snap-feature-block">
+                <!--Title-->
+                <h3 class="snap-feature-title h5">' .s($title). '</h3>
+                <!--Card image-->
+                <img class="snap-feature-image" src="' .$image. '" alt="" role="presentation">
+                <!--/.Card image-->
+                <!--Text-->
+                <p class="snap-feature-text">' .s($text). '</p>
+            </div>
+            <!--/.Card content-->
+        </div>';
+        return $card;
+    }
+
 }
