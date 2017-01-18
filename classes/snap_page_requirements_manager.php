@@ -50,9 +50,8 @@ class snap_page_requirements_manager extends \page_requirements_manager {
     }
 
     /**
-     * This function wants to use the snap_page_requirements_manager in the $PAGE object.
-     * Some third party plugins have properties privates or protected in the original manager,
-     * we need to copy those properties in our snap manager to be able of execute.
+     * If the $PAGE requirement manager has already been utilised we need to copy those requirements into
+     * the snap_page_requirements_manager.
      */
     public function copy_page_requirements() {
         global $PAGE;
