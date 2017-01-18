@@ -25,12 +25,10 @@
 
 // NOTE: no MOODLE_INTERNAL test here, this file may be required by behat before including /config.php.
 require_once(__DIR__ . '/../../../../lib/behat/behat_base.php');
-define('MOODLE_INTERNAL', true);
-require_once(__DIR__ . '/../../../../lib/accesslib.php');
 
-use Behat\Gherkin\Node\TableNode as TableNode,
+use Behat\Gherkin\Node\TableNode,
     Behat\Mink\Element\NodeElement,
-    Behat\Mink\Exception\ExpectationException as ExpectationException,
+    Behat\Mink\Exception\ExpectationException,
     Moodle\BehatExtension\Exception\SkippedException;
 
 /**
@@ -61,7 +59,7 @@ class behat_theme_snap extends behat_base {
      *
      * @Given /^I wait until "(?P<element_string>(?:[^"]|\\")*)" "(?P<selector_string>[^"]*)" is visible$/
      * @param string $element
-     * @param string $selector
+     * @param string $selectortype
      * @return void
      */
     public function i_wait_until_is_visible($element, $selectortype) {
