@@ -214,29 +214,8 @@ if ($themeissnap && $notajaxscript) {
         $PAGE->initialise_theme_and_output();
 
         // Modify $PAGE to use snap requirements manager.
-        $requires = new ReflectionProperty($PAGE, '_requires');
-        $requires->setAccessible(true);
-
         $snappman = new snap_page_requirements_manager();
-
-        $pmanreflect = new ReflectionClass($PAGE->requires);
-        $props = $pmanreflect->getProperties();
-        foreach ($props as $prop) {
-            $prop->setAccessible(true);
-            $pname = $prop->getName();
-            $pval = $prop->getValue($PAGE->requires);
-            if ($pval === null) {
-                continue;
-            }
-
-            $snapmanprop = new ReflectionProperty($snappman, $pname);
-            // TODO - work out if private / protected and only set accessible if so, then reset to not accessible after.
-            $snapmanprop->setAccessible(true);
-            $snapmanprop->setValue($snappman, $pval);
-        }
-
-        $requires->setValue($PAGE, $snappman);
-        $requires->setAccessible(false);
+        $snappman->copy_page_requirements();
     }
 
 }

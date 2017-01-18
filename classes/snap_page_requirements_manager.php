@@ -48,4 +48,39 @@ class snap_page_requirements_manager extends \page_requirements_manager {
         }
         parent::js_init_call($function, $extraarguments, $ondomready, $module);
     }
+
+    /**
+     * This function wants to use the snap_page_requirements_manager in the $PAGE object.
+     * Some third party plugins have properties privates or protected in the original manager,
+     * we need to copy those properties in our snap manager to be able of execute.
+     */
+    public function copy_page_requirements() {
+        global $PAGE;
+
+        // Modify $PAGE to use snap requirements manager.
+        $requires = new \ReflectionProperty($PAGE, '_requires');
+        $requires->setAccessible(true);
+
+        $pmanreflect = new \ReflectionClass($PAGE->requires);
+        $props = $pmanreflect->getProperties();
+        foreach ($props as $prop) {
+            $prop->setAccessible(true);
+            $pname = $prop->getName();
+            $pval = $prop->getValue($PAGE->requires);
+            if ($pval === null) {
+                continue;
+            }
+
+            $snapmanprop = new \ReflectionProperty($this, $pname);
+            // if the property is private or protected  set accessible, after the copy reset to not accessible.
+            $isprotected = $snapmanprop->isPrivate() || $snapmanprop->isProtected();
+            if ($isprotected) {
+                $snapmanprop->setAccessible(true);
+            }
+            $snapmanprop->setValue($this, $pval);
+            $snapmanprop->setAccessible(!$isprotected);
+        }
+        $requires->setValue($PAGE, $this);
+        $requires->setAccessible(false);
+    }
 }
