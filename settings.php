@@ -28,6 +28,7 @@ use theme_snap\admin_setting_configurl;
 
 $ADMIN->add('themes', new admin_category('theme_snap', 'Snap'));
 $settings = null; // Unsets the default $settings object initialised by Moodle.
+
 // Basic settings.
 $snapsettings = new admin_settingpage('themesettingsnap', 'Snap');
 
@@ -35,7 +36,6 @@ $snapsettings = new admin_settingpage('themesettingsnap', 'Snap');
 $fssettings = new admin_settingpage('themesnapfeaturespots', get_string('featurespots', 'theme_snap'));
 
 if ($ADMIN->fulltree) {
-
     // Output flex page front page warning if necessary.
     $fpwarning = \theme_snap\output\shared::flexpage_frontpage_warning();
     if (!empty($fpwarning)) {
@@ -262,7 +262,6 @@ if ($ADMIN->fulltree) {
     $setting->set_updatedcallback('theme_reset_all_caches');
     $snapsettings->add($setting);
 
-
     // Feature spots settings.
     // Feature spot instructions.
     $name = 'theme_snap/fs_instructions';
@@ -346,8 +345,7 @@ if ($ADMIN->fulltree) {
     $default = '';
     $setting = new admin_setting_configtextarea($name, $title, $description, $default);
     $fssettings->add($setting);
-
-    // Add theme pages.
-    $ADMIN->add('theme_snap', $snapsettings);
-    $ADMIN->add('theme_snap', $fssettings);
 }
+// Add theme pages.
+$ADMIN->add('theme_snap', $snapsettings);
+$ADMIN->add('theme_snap', $fssettings);

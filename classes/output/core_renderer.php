@@ -1440,18 +1440,20 @@ HTML;
             $text = $feature . '_text';
             $image = $feature . '_image';
             if(!empty($PAGE->theme->settings->$title) && !empty($PAGE->theme->settings->$text)) {
-                $url = '';
+                $img = '';
                 if(!empty($PAGE->theme->settings->$image)) {
                     $url = $this->page->theme->setting_file_url($image, $image);
+                    $img = '<!--Card image-->
+                    <img class="snap-feature-image" src="' .$url. '" alt="" role="presentation">';
                 }
-                $features[] = $this->feature_spot_card($PAGE->theme->settings->$title, $url, $PAGE->theme->settings->$text);
+                $features[] = $this->feature_spot_card($PAGE->theme->settings->$title, $img, $PAGE->theme->settings->$text);
             }
         }
 
         $fscount = count($features);
         if ($fscount > 0) {
             $fstitle = '';
-            if(!empty($PAGE->theme->settings->fs_heading)) {
+            if (!empty($PAGE->theme->settings->fs_heading)) {
                 $fstitle = '<h2 class="snap-feature-spots-heading">' .s($PAGE->theme->settings->fs_heading). '</h2>';
             }
 
@@ -1467,13 +1469,13 @@ HTML;
 
             $cards = '';
             $i = 1;
-            foreach($features as $feature) {
+            foreach ($features as $feature) {
                 $cards .= '<div class="' .$colclass. '" id="snap-feature-' .$i. '">' .$feature. '</div>';
                 $i++;
             }
 
             $fsedit = '';
-            if($this->page->user_is_editing()) {
+            if ($this->page->user_is_editing()) {
                 $url = new moodle_url('/admin/settings.php', ['section' => 'themesnapfeaturespots']);
                 $link = html_writer::link($url, get_string('featurespotsedit', 'theme_snap'), ['class' => 'btn btn-primary']);
                 $fsedit = '<p class="text-center">'.$link.'</p>';
@@ -1505,9 +1507,7 @@ HTML;
             <div class="snap-feature-block">
                 <!--Title-->
                 <h3 class="snap-feature-title h5">' .s($title). '</h3>
-                <!--Card image-->
-                <img class="snap-feature-image" src="' .$image. '" alt="" role="presentation">
-                <!--/.Card image-->
+                ' .$image. '
                 <!--Text-->
                 <p class="snap-feature-text">' .s($text). '</p>
             </div>
@@ -1515,5 +1515,4 @@ HTML;
         </div>';
         return $card;
     }
-
 }
