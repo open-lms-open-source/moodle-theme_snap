@@ -326,7 +326,6 @@ class core_renderer extends toc_renderer {
      * @return string
      */
     public function render_bb_dashboard_link(bb_dashboard_link $bblink) {
-        global $PAGE;
 
         if (!$bblink->output) {
             return '';
