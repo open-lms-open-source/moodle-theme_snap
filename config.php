@@ -214,9 +214,8 @@ if ($themeissnap && $notajaxscript) {
         $PAGE->initialise_theme_and_output();
 
         // Modify $PAGE to use snap requirements manager.
-        $requires = new ReflectionProperty($PAGE, '_requires');
-        $requires->setAccessible(true);
-        $requires->setValue($PAGE, new snap_page_requirements_manager());
-        $requires->setAccessible(false);
+        $snappman = new snap_page_requirements_manager();
+        $snappman->copy_page_requirements();
     }
+
 }
