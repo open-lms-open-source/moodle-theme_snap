@@ -326,14 +326,15 @@ class core_renderer extends toc_renderer {
      * @return string
      */
     public function render_bb_dashboard_link(bb_dashboard_link $bblink) {
+        global $PAGE;
+
         if (!$bblink->output) {
             return '';
         }
-        $url = new \moodle_url('/local/geniusws/login.php');
 
         $linkcontent = $this->render(new \pix_icon('sso', get_string('blackboard', 'local_geniusws'), 'local_geniusws')).
                 get_string('dashboard', 'local_geniusws');
-        $html = html_writer::link($url, $linkcontent, ['class' => 'bb_dashboard_link']);
+        $html = html_writer::link($bblink->loginurl, $linkcontent, ['class' => 'bb_dashboard_link']);
 
         return $html;
     }
