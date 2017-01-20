@@ -87,7 +87,7 @@ class local {
         // Do not show grade if grade book disabled for students.
         // Note - moodle/grade:viewall is a capability held by teachers and thus used to exclude them from not getting
         // the grade.
-        if (empty($course->showgrades) && !has_capability('moodle/grade:viewall', $coursecontext)) {
+        if (($course->showgrades == 0) && !has_capability('moodle/grade:viewall', $coursecontext)) {
             return false;
         }
         // Get course grade_item.
@@ -428,7 +428,7 @@ class local {
     public static function courseinfo($courseids) {
         $courseinfo = array();
 
-        $courses = enrol_get_my_courses(['enablecompletion']);
+        $courses = enrol_get_my_courses(['enablecompletion', 'showgrades']);
 
         foreach ($courseids as $courseid) {
             if (!isset($courses[$courseid])) {
