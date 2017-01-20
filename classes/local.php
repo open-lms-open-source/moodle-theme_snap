@@ -87,7 +87,7 @@ class local {
         // Do not show grade if grade book disabled for students.
         // Note - moodle/grade:viewall is a capability held by teachers and thus used to exclude them from not getting
         // the grade.
-        if (($course->showgrades == 0) && !has_capability('moodle/grade:viewall', $coursecontext)) {
+        if (empty($course->showgrades) && !has_capability('moodle/grade:viewall', $coursecontext)) {
             return false;
         }
         // Get course grade_item.
