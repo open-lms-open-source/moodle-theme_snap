@@ -44,11 +44,11 @@ Feature: When the moodle theme is set to Snap, students can open a personal menu
   @javascript
   Scenario: The user should see the feedback link on the personal menu when he has a graded assignment.
     Given the following "activities" exist:
-      | activity | course | idnumber | name                 | intro                       | assignsubmission_onlinetext_enabled | assignfeedback_comments_enabled | section |
-      | assign   | C1     | assign1  | Test assignment1 | Test assignment description 1 | 1 | 1 | 1 |
+      | activity | course | idnumber | name                 | intro                         | assignsubmission_onlinetext_enabled | assignfeedback_comments_enabled | section |
+      | assign   | C1     | assign1  | Test assignment1     | Test assignment description 1 | 1                                   | 1                               | 1       |
     And I log in as "student1" (theme_snap)
     And I open the personal menu
-    And I should not see "Feedback available"
+    And I should not see "Feedback available" in the ".courseinfo" "css_element"
     And I follow "Course 1"
     And I follow "Topic 1"
     And I wait until "#section-1" "css_element" is visible
@@ -78,4 +78,4 @@ Feature: When the moodle theme is set to Snap, students can open a personal menu
     And I log out (theme_snap)
     Then I log in as "student1" (theme_snap)
     And I open the personal menu
-    And I should see "Feedback available"
+    And I should see "Feedback available" in the ".courseinfo" "css_element"
