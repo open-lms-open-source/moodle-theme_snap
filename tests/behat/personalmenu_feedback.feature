@@ -31,15 +31,15 @@ Feature: When the moodle theme is set to Snap, students can open a personal menu
       | theme | snap |
     And the following "courses" exist:
       | fullname | shortname | category | groupmode |
-      | Course 1 | C1 | 0 | 1 |
+      | Course 1 | C1        | 0        | 1         |
     And the following "users" exist:
-      | username | firstname | lastname | email |
-      | teacher1 | Teacher | 1 | teacher1@example.com |
-      | student1 | Student | 1 | student1@example.com |
+      | username | firstname | lastname | email                |
+      | teacher1 | Teacher   | 1        | teacher1@example.com |
+      | student1 | Student   | 1        | student1@example.com |
     And the following "course enrolments" exist:
-      | user | course | role |
-      | teacher1 | C1 | editingteacher |
-      | student1 | C1 | student |
+      | user     | course | role           |
+      | teacher1 | C1     | editingteacher |
+      | student1 | C1     | student        |
 
   @javascript
   Scenario: The user should see the feedback link on the personal menu when he has a graded assignment.
@@ -70,7 +70,7 @@ Feature: When the moodle theme is set to Snap, students can open a personal menu
     And I follow "View all submissions"
     And I click on "Grade" "link" in the "Student 1" "table_row"
     When I set the following fields to these values:
-      | Grade out of 100 | 50 |
+      | Grade out of 100  | 50                       |
       | Feedback comments | I'm the teacher feedback |
     And I press "Save changes"
     And I press "Ok"
