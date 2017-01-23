@@ -34,6 +34,11 @@ class bb_dashboard_link implements \renderable {
     public $output = false;
 
     /**
+     * @var string - local login url.
+     */
+    public $loginurl;
+
+    /**
      * @throws coding_exception
      */
     public function __construct() {
@@ -44,5 +49,6 @@ class bb_dashboard_link implements \renderable {
         }
 
         $this->output = true;
+        $this->loginurl = navigation::login_url();
     }
 }
