@@ -45,6 +45,9 @@ if (substr_compare($maincontent, $lastclosetag, -strlen($lastclosetag)) !== 0) {
 // Snap feature spots.
 echo $this->feature_spot_cards();
 
+// Snap featured courses.
+echo $this->featured_courses();
+
 echo substr($maincontent, 0, -strlen($lastclosetag));
 $courserenderer = $PAGE->get_renderer('core', 'course');
 

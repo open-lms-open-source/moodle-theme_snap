@@ -7916,6 +7916,99 @@ div.editor_atto_toolbar div.atto_group {
 #page-admin-setting-themesnapfeaturespots #admin-fs_one_text {
   clear: left;
 }
+/* Featured courses admin page. */
+#page-admin-setting-themesnapfeaturedcourses #admin-fc_heading input {
+  font-weight: 300;
+  line-height: 1.5;
+  color: #565656;
+  margin-top: 14px;
+  margin-bottom: 14px;
+  font-size: 36px;
+  font-family: "Roboto", "Fira Sans", "Segoe UI", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  text-align: center;
+}
+#page-admin-setting-themesnapfeaturedcourses #admin-fc_heading input small,
+#page-admin-setting-themesnapfeaturedcourses #admin-fc_heading input .small {
+  font-weight: normal;
+  line-height: 1;
+  color: #999;
+}
+#page-admin-setting-themesnapfeaturedcourses #admin-fc_heading input small,
+#page-admin-setting-themesnapfeaturedcourses #admin-fc_heading input .small {
+  font-size: 75%;
+}
+#page-admin-setting-themesnapfeaturedcourses #admin-fc_heading .form-shortname {
+  display: none;
+}
+#page-admin-setting-themesnapfeaturedcourses #admin-fc_one,
+#page-admin-setting-themesnapfeaturedcourses #admin-fc_two,
+#page-admin-setting-themesnapfeaturedcourses #admin-fc_three,
+#page-admin-setting-themesnapfeaturedcourses #admin-fc_four,
+#page-admin-setting-themesnapfeaturedcourses #admin-fc_five,
+#page-admin-setting-themesnapfeaturedcourses #admin-fc_six,
+#page-admin-setting-themesnapfeaturedcourses #admin-fc_seven,
+#page-admin-setting-themesnapfeaturedcourses #admin-fc_eight {
+  width: 50%;
+  float: left;
+  padding: 1em;
+}
+#page-admin-setting-themesnapfeaturedcourses #admin-fc_one .form-defaultinfo,
+#page-admin-setting-themesnapfeaturedcourses #admin-fc_two .form-defaultinfo,
+#page-admin-setting-themesnapfeaturedcourses #admin-fc_three .form-defaultinfo,
+#page-admin-setting-themesnapfeaturedcourses #admin-fc_four .form-defaultinfo,
+#page-admin-setting-themesnapfeaturedcourses #admin-fc_five .form-defaultinfo,
+#page-admin-setting-themesnapfeaturedcourses #admin-fc_six .form-defaultinfo,
+#page-admin-setting-themesnapfeaturedcourses #admin-fc_seven .form-defaultinfo,
+#page-admin-setting-themesnapfeaturedcourses #admin-fc_eight .form-defaultinfo,
+#page-admin-setting-themesnapfeaturedcourses #admin-fc_one .form-shortname,
+#page-admin-setting-themesnapfeaturedcourses #admin-fc_two .form-shortname,
+#page-admin-setting-themesnapfeaturedcourses #admin-fc_three .form-shortname,
+#page-admin-setting-themesnapfeaturedcourses #admin-fc_four .form-shortname,
+#page-admin-setting-themesnapfeaturedcourses #admin-fc_five .form-shortname,
+#page-admin-setting-themesnapfeaturedcourses #admin-fc_six .form-shortname,
+#page-admin-setting-themesnapfeaturedcourses #admin-fc_seven .form-shortname,
+#page-admin-setting-themesnapfeaturedcourses #admin-fc_eight .form-shortname {
+  display: none;
+}
+#page-admin-setting-themesnapfeaturedcourses #admin-fc_browse_all {
+  clear: both;
+}
+/* Featured courses section. */
+@media screen and (min-width: 768px) {
+  #snap-featured-courses .row div {
+    /* Center and restrict width for when only one course */
+    max-width: 50%;
+    margin: 0 auto;
+  }
+}
+/* Featured course link. */
+.snap-featured-course {
+  display: block;
+  height: 300px;
+  position: relative;
+  background-color: #ccc;
+  margin-bottom: 1em;
+  background-position: center top;
+  background-size: cover;
+  transition: all 0.4s ease-in-out;
+}
+.snap-featured-course:hover {
+  transform: scale(1.03);
+  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
+}
+.snap-featured-course:hover .snap-featured-course-title {
+  text-decoration: underline;
+}
+/* Featured course title. */
+.snap-featured-course-title {
+  display: block;
+  min-height: 25%;
+  width: 100%;
+  background-color: white;
+  position: absolute;
+  bottom: 0;
+  padding-top: 0.5em;
+}
 #page-admin-setting-themesettingsnap #id_s_theme_snap_customcss {
   font-family: Monaco, Menlo, Consolas, "Courier New", monospace;
 }
@@ -10845,7 +10938,8 @@ legend,
 .coursebox .info .coursename,
 .form_autocomplete_selection,
 .form_autocomplete_suggestions,
-.collapsibleregioncaption {
+.collapsibleregioncaption,
+.snap-featured-course-title {
   font-family: "Roboto", "Fira Sans", "Segoe UI", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 .snap-action-icon,

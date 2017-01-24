@@ -25,6 +25,7 @@
 defined('MOODLE_INTERNAL') || die;
 
 use theme_snap\admin_setting_configurl;
+use theme_snap\admin_setting_configcourseid;
 
 $ADMIN->add('themes', new admin_category('theme_snap', 'Snap'));
 $settings = null; // Unsets the default $settings object initialised by Moodle.
@@ -34,6 +35,9 @@ $snapsettings = new admin_settingpage('themesettingsnap', 'Snap');
 
 // Feature spots settings.
 $fssettings = new admin_settingpage('themesnapfeaturespots', get_string('featurespots', 'theme_snap'));
+
+// Featured courses settings.
+$fcsettings = new admin_settingpage('themesnapfeaturedcourses', get_string('featuredcourses', 'theme_snap'));
 
 if ($ADMIN->fulltree) {
     // Output flex page front page warning if necessary.
@@ -330,7 +334,77 @@ if ($ADMIN->fulltree) {
     $title = new lang_string('featurethreetext', 'theme_snap');
     $setting = new admin_setting_configtextarea($name, $title, $description, $default);
     $fssettings->add($setting);
+
+    // Featured courses instructions.
+    $name = 'theme_snap/fc_instructions';
+    $heading = '';
+    $description = get_string('featuredcourseshelp', 'theme_snap');
+    $setting = new admin_setting_heading($name, $heading, $description);
+    $fcsettings->add($setting);
+
+    // Featured courses heading.
+    $name = 'theme_snap/fc_heading';
+    $title = new lang_string('featuredcoursesheading', 'theme_snap');
+    $description = '';
+    $default = new lang_string('featuredcourses', 'theme_snap');
+    $setting = new admin_setting_configtext($name, $title, $description, $default, PARAM_RAW_TRIMMED, 50);
+    $fcsettings->add($setting);
+
+    // Featured courses.
+    $name = 'theme_snap/fc_one';
+    $title = new lang_string('featuredcourseone', 'theme_snap');
+    $description = '';
+    $default = '0;
+    $setting = new admin_setting_configcourseid($name, $title, $description, $default, PARAM_RAW_TRIMMED);
+    $fcsettings->add($setting);
+
+    $name = 'theme_snap/fc_two';
+    $title = new lang_string('featuredcoursetwo', 'theme_snap');
+    $setting = new admin_setting_configcourseid($name, $title, $description, $default, PARAM_RAW_TRIMMED);
+    $fcsettings->add($setting);
+
+    $name = 'theme_snap/fc_three';
+    $title = new lang_string('featuredcoursethree', 'theme_snap');
+    $setting = new admin_setting_configcourseid($name, $title, $description, $default, PARAM_RAW_TRIMMED);
+    $fcsettings->add($setting);
+
+    $name = 'theme_snap/fc_four';
+    $title = new lang_string('featuredcoursefour', 'theme_snap');
+    $setting = new admin_setting_configcourseid($name, $title, $description, $default, PARAM_RAW_TRIMMED);
+    $fcsettings->add($setting);
+
+    $name = 'theme_snap/fc_five';
+    $title = new lang_string('featuredcoursefive', 'theme_snap');
+    $setting = new admin_setting_configcourseid($name, $title, $description, $default, PARAM_RAW_TRIMMED);
+    $fcsettings->add($setting);
+
+    $name = 'theme_snap/fc_six';
+    $title = new lang_string('featuredcoursesix', 'theme_snap');
+    $setting = new admin_setting_configcourseid($name, $title, $description, $default, PARAM_RAW_TRIMMED);
+    $fcsettings->add($setting);
+
+    $name = 'theme_snap/fc_seven';
+    $title = new lang_string('featuredcourseseven', 'theme_snap');
+    $setting = new admin_setting_configcourseid($name, $title, $description, $default, PARAM_RAW_TRIMMED);
+    $fcsettings->add($setting);
+
+    $name = 'theme_snap/fc_eight';
+    $title = new lang_string('featuredcourseeight', 'theme_snap');
+    $setting = new admin_setting_configcourseid($name, $title, $description, $default, PARAM_RAW_TRIMMED);
+    $fcsettings->add($setting);
+
+    // Browse all courses link.
+    $name = 'theme_snap/fc_browse_all';
+    $title = new lang_string('featuredcoursesbrowseall', 'theme_snap');
+    $description = new lang_string('featuredcoursesbrowsealldesc', 'theme_snap');
+    $checked = '1';
+    $unchecked = '0';
+    $default = $unchecked;
+    $setting = new admin_setting_configcheckbox($name, $title, $description, $default, $checked, $unchecked);
+    $fcsettings->add($setting);
 }
+
 // Add theme pages.
 $ADMIN->add('theme_snap', $snapsettings);
 $ADMIN->add('theme_snap', $fssettings);
+$ADMIN->add('theme_snap', $fcsettings);

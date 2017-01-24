@@ -4006,6 +4006,87 @@ div.editor_atto_toolbar div.atto_group {
     }
 }
 
+/* Featured courses admin page. */
+#page-admin-setting-themesnapfeaturedcourses {
+
+    #admin-fc_heading {
+        input {
+            .h4();
+            .text-center();
+        }
+
+        .form-shortname {
+            display: none;
+        }
+    }
+
+    #admin-fc_one,
+    #admin-fc_two,
+    #admin-fc_three,
+    #admin-fc_four,
+    #admin-fc_five,
+    #admin-fc_six,
+    #admin-fc_seven,
+    #admin-fc_eight {
+        width: 50%;
+        float: left;
+        padding: 1em;
+
+        .form-defaultinfo,
+        .form-shortname {
+            display: none;
+        }
+    }
+
+    #admin-fc_browse_all {
+        clear: both;
+    }
+}
+
+/* Featured courses section. */
+@media screen and (min-width: @screen-sm-min) {
+    #snap-featured-courses .row div {
+        /* Center and restrict width for when only one course */
+        max-width: 50%;
+        margin: 0 auto;
+    }
+}
+
+/* Featured course link. */
+.snap-featured-course {
+    display: block;
+    height: 300px;
+    position: relative;
+    background-color: #ccc;
+    margin-bottom: 1em;
+    .bg-cover();
+    .alakazam();
+
+    &:hover {
+        transform: scale(1.03);
+        box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14),
+        0 3px 1px -2px rgba(0, 0, 0, 0.2),
+        0 1px 5px 0 rgba(0, 0, 0, 0.12);
+
+        .snap-featured-course-title {
+            text-decoration: underline;
+        }
+    }
+}
+
+/* Featured course title. */
+.snap-featured-course-title {
+    display: block;
+    min-height: 25%;
+    width: 100%;
+    background-color: white;
+    position: absolute;
+    bottom: 0;
+    padding-top: 0.5em;
+}
+
+
+
 #page-admin-setting-themesettingsnap #id_s_theme_snap_customcss {
     font-family: @font-family-monospace;
 }
