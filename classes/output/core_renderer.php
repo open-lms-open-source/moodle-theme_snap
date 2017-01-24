@@ -1435,13 +1435,13 @@ HTML;
         $fsnames = array("fs_one", "fs_two", "fs_three");
         $features = array();
         // Note - we are using underscores in the settings to make easier to read.
-        foreach($fsnames as $feature) {
+        foreach ($fsnames as $feature) {
             $title = $feature . '_title';
             $text = $feature . '_text';
             $image = $feature . '_image';
-            if(!empty($PAGE->theme->settings->$title) && !empty($PAGE->theme->settings->$text)) {
+            if (!empty($PAGE->theme->settings->$title) && !empty($PAGE->theme->settings->$text)) {
                 $img = '';
-                if(!empty($PAGE->theme->settings->$image)) {
+                if (!empty($PAGE->theme->settings->$image)) {
                     $url = $this->page->theme->setting_file_url($image, $image);
                     $img = '<!--Card image-->
                     <img class="snap-feature-image" src="' .$url. '" alt="" role="presentation">';

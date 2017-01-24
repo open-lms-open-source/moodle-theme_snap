@@ -25,6 +25,7 @@ defined('MOODLE_INTERNAL') || die();
  * @copyright Blackboard Ltd 2017
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
+ 
 class admin_setting_configurl extends \admin_setting_configtext {
     /**
      * Config url constructor
