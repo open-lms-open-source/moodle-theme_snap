@@ -428,7 +428,7 @@ class local {
     public static function courseinfo($courseids) {
         $courseinfo = array();
 
-        $courses = enrol_get_my_courses(['enablecompletion']);
+        $courses = enrol_get_my_courses(['enablecompletion', 'showgrades']);
 
         foreach ($courseids as $courseid) {
             if (!isset($courses[$courseid])) {
