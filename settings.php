@@ -26,7 +26,6 @@ defined('MOODLE_INTERNAL') || die;
 
 use theme_snap\admin_setting_configurl;
 
-
 $ADMIN->add('themes', new admin_category('theme_snap', 'Snap'));
 $settings = null; // Unsets the default $settings object initialised by Moodle.
 
