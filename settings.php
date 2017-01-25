@@ -40,6 +40,10 @@ $fssettings = new admin_settingpage('themesnapfeaturespots', get_string('feature
 $fcsettings = new admin_settingpage('themesnapfeaturedcourses', get_string('featuredcourses', 'theme_snap'));
 
 if ($ADMIN->fulltree) {
+
+    $checked = '1';
+    $unchecked = '0';
+
     // Output flex page front page warning if necessary.
     $fpwarning = \theme_snap\output\shared::flexpage_frontpage_warning();
     if (!empty($fpwarning)) {
@@ -117,8 +121,6 @@ if ($ADMIN->fulltree) {
     $name = 'theme_snap/personalmenulogintoggle';
     $title = new lang_string('personalmenulogintoggle', 'theme_snap');
     $description = new lang_string('personalmenulogintoggledesc', 'theme_snap');
-    $checked = '1';
-    $unchecked = '0';
     $default = $checked;
     $setting = new admin_setting_configcheckbox($name, $title, $description, $default, $checked, $unchecked);
     $snapsettings->add($setting);
@@ -127,8 +129,6 @@ if ($ADMIN->fulltree) {
     $name = 'theme_snap/deadlinestoggle';
     $title = new lang_string('deadlinestoggle', 'theme_snap');
     $description = new lang_string('deadlinestoggledesc', 'theme_snap');
-    $checked = '1';
-    $unchecked = '0';
     $default = $checked;
     $setting = new admin_setting_configcheckbox($name, $title, $description, $default, $checked, $unchecked);
     $setting->set_updatedcallback('theme_reset_all_caches');
@@ -138,8 +138,6 @@ if ($ADMIN->fulltree) {
     $name = 'theme_snap/feedbacktoggle';
     $title = new lang_string('feedbacktoggle', 'theme_snap');
     $description = new lang_string('feedbacktoggledesc', 'theme_snap');
-    $checked = '1';
-    $unchecked = '0';
     $default = $checked;
     $setting = new admin_setting_configcheckbox($name, $title, $description, $default, $checked, $unchecked);
     $setting->set_updatedcallback('theme_reset_all_caches');
@@ -149,8 +147,6 @@ if ($ADMIN->fulltree) {
     $name = 'theme_snap/messagestoggle';
     $title = new lang_string('messagestoggle', 'theme_snap');
     $description = new lang_string('messagestoggledesc', 'theme_snap');
-    $checked = '1';
-    $unchecked = '0';
     $default = $checked;
     $setting = new admin_setting_configcheckbox($name, $title, $description, $default, $checked, $unchecked);
     $setting->set_updatedcallback('theme_reset_all_caches');
@@ -160,8 +156,6 @@ if ($ADMIN->fulltree) {
     $name = 'theme_snap/forumpoststoggle';
     $title = new lang_string('forumpoststoggle', 'theme_snap');
     $description = new lang_string('forumpoststoggledesc', 'theme_snap');
-    $checked = '1';
-    $unchecked = '0';
     $default = $checked;
     $setting = new admin_setting_configcheckbox($name, $title, $description, $default, $checked, $unchecked);
     $setting->set_updatedcallback('theme_reset_all_caches');
@@ -177,8 +171,6 @@ if ($ADMIN->fulltree) {
     $name = 'theme_snap/hidenavblock';
     $title = new lang_string('hidenavblock', 'theme_snap');
     $description = new lang_string('hidenavblockdesc', 'theme_snap');
-    $checked = '1';
-    $unchecked = '0';
     $default = $checked;
     $setting = new admin_setting_configcheckbox($name, $title, $description, $default, $checked, $unchecked);
     $snapsettings->add($setting);
@@ -187,8 +179,6 @@ if ($ADMIN->fulltree) {
     $name = 'theme_snap/coursefootertoggle';
     $title = new lang_string('coursefootertoggle', 'theme_snap');
     $description = new lang_string('coursefootertoggledesc', 'theme_snap');
-    $checked = '1';
-    $unchecked = '0';
     $default = $checked;
     $setting = new admin_setting_configcheckbox($name, $title, $description, $default, $checked, $unchecked);
     $setting->set_updatedcallback('theme_reset_all_caches');
@@ -354,7 +344,7 @@ if ($ADMIN->fulltree) {
     $name = 'theme_snap/fc_one';
     $title = new lang_string('featuredcourseone', 'theme_snap');
     $description = '';
-    $default = '0;
+    $default = '0';
     $setting = new admin_setting_configcourseid($name, $title, $description, $default, PARAM_RAW_TRIMMED);
     $fcsettings->add($setting);
 

@@ -1525,27 +1525,23 @@ HTML;
 
     public function featured_courses() {
         global $PAGE, $DB;
-
-        $fctitle = '';
-        if (!empty($PAGE->theme->settings->fc_heading)) {
-            $fctitle = '<h2 class="snap-featured-courses-heading">' .s($PAGE->theme->settings->fc_heading). '</h2>';
-        }
-
         // Build array of course ids to display.
-        $fcspot = array("fc_one", "fc_two", "fc_three", "fc_four", "fc_five", "fc_six", "fc_seven", "fc_eight");
+        $ids = array("fc_one", "fc_two", "fc_three", "fc_four", "fc_five", "fc_six", "fc_seven", "fc_eight");
         $courseids = array();
-        foreach ($fcspot as $fc) {
-            if (!empty($PAGE->theme->settings->$fc)) {
-                $courseids[] = $PAGE->theme->settings->$fc;
+        foreach ($ids as $id) {
+            if (!empty($PAGE->theme->settings->$id)) {
+                $courseids[] = $PAGE->theme->settings->$id;
             }
         }
 
         // Get DB records for course ids.
-        $courses = '';
+        $courses = array();
         if (count($courseids)) {
-            $ids = implode(',', $courseids);
-            $sql = "SELECT * FROM {course} WHERE id IN ($ids)";
-            $courses = $DB->get_records_sql($sql);
+            list ($coursesql, $params) = $DB->get_in_or_equal($courseids);
+            $sql = "SELECT * FROM {course} WHERE id $coursesql";
+            $courses = $DB->get_records_sql($sql, $params);
+        } else {
+            return '';
         }
 
         // Build html for course card.
@@ -1554,58 +1550,65 @@ HTML;
             $cards[] = $this->featured_course($course);
         }
 
-        // Build grid and output.
-        $fccount = count($cards);
-        $output = '';
-        if ($fccount > 0) {
-            // Calculate boostrap column class.
-            $colclass = '';
-            if ($fccount >= 4) {
-                /* four cards = 25% */
-                $colclass = 'col-sm-3';
-            }
-            if ($fccount == 2) {
-                /* two cards = 50% */
-                $colclass = 'col-sm-6';
-            }
-            if ($fccount == 3 || $fccount == 6) {
-                /* three cards = 33.3% */
-                $colclass = 'col-sm-4';
-            }
-
-            // Build featured courses cards.
-            $i = 1;
-            $fccards = '';
-            foreach ($cards as $card) {
-                $fccards .= '<div class="' .$colclass. '" id="snap-featured-course-' .$i. '">' .$card. '</div>';
-                $i++;
-            }
-
-            // Featured courses browse all link.
-            $browse = '';
-            if (!empty($PAGE->theme->settings->fc_browse_all)) {
-                $url = new moodle_url('/course/');
-                $link = html_writer::link($url, get_string('featuredcoursesbrowseall', 'theme_snap'), ['class' => 'btn btn-primary']);
-                $browse = '<p class="text-center">'.$link.'</p>';
-            }
-
-            // Featured courses quick edit link.
-            $edit = '';
-            if ($this->page->user_is_editing()) {
-                $url = new moodle_url('/admin/settings.php', ['section' => 'themesnapfeaturedcourses']);
-                $link = html_writer::link($url, get_string('featuredcoursesedit', 'theme_snap'), ['class' => 'btn btn-primary']);
-                $edit = '<p class="text-center">'.$link.'</p>';
-            }
-
-            // Build featured courses section.
-            $output = '<div id="snap-featured-courses" class="container text-center">';
-            $output .= $fctitle;
-            $output .= '<div class="row text-center">' .$fccards. '</div>';
-            $output .= $browse;
-            $output .= $edit;
-            $output .= '</div>';
+        // Double check there is content, or return ''.
+        $count = count($cards);
+        if ($count < 1) {
+            return '';
         }
 
+        // Build grid and output.
+        // Calculate boostrap column class.
+        $colclass = '';
+        if ($count >= 4) {
+            /* four cards = 25% */
+            $colclass = 'col-sm-3';
+        }
+        if ($count == 2) {
+            /* two cards = 50% */
+            $colclass = 'col-sm-6';
+        }
+        if ($count == 3 || $count == 6) {
+            /* three cards = 33.3% */
+            $colclass = 'col-sm-4';
+        }
+
+        // Build featured courses cards.
+        $i = 1;
+        $colums = '';
+        foreach ($cards as $card) {
+            $colums .= '<div class="' .$colclass. '" id="snap-featured-course-' .$i. '">' .$card. '</div>';
+            $i++;
+        }
+
+        // Featured courses title.
+        $title = '';
+        if (!empty($PAGE->theme->settings->fc_heading)) {
+            $title = '<h2 class="snap-featured-courses-heading">' .s($PAGE->theme->settings->fc_heading). '</h2>';
+        }
+
+        // Featured courses browse all link.
+        $browse = '';
+        if (!empty($PAGE->theme->settings->fc_browse_all)) {
+            $url = new moodle_url('/course/');
+            $link = html_writer::link($url, get_string('featuredcoursesbrowseall', 'theme_snap'), ['class' => 'btn btn-primary']);
+            $browse = '<p class="text-center">'.$link.'</p>';
+        }
+
+        // Featured courses quick edit link.
+        $edit = '';
+        if ($this->page->user_is_editing()) {
+            $url = new moodle_url('/admin/settings.php', ['section' => 'themesnapfeaturedcourses']);
+            $link = html_writer::link($url, get_string('featuredcoursesedit', 'theme_snap'), ['class' => 'btn btn-primary']);
+            $edit = '<p class="text-center">'.$link.'</p>';
+        }
+
+        // Build featured courses section.
+        $output = '<div id="snap-featured-courses" class="container text-center">';
+        $output .= $title;
+        $output .= '<div class="row text-center">' .$colums. '</div>';
+        $output .= $browse;
+        $output .= $edit;
+        $output .= '</div>';
         // Return featured courses.
         return $output;
     }
