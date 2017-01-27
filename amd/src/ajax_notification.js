@@ -175,6 +175,7 @@ define(['core/notification', 'core/ajax', 'core/templates', 'core/str'],
                             loginErrorShown = true;
                         } else {
                             // This is not a login issue, show original error message.
+                            // eslint-disable-next-line no-console
                             console.log(response);
                             errorNotification(response);
                         }

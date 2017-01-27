@@ -196,21 +196,21 @@ define(['jquery', 'core/log', 'core/ajax', 'core/templates', 'core/notification'
              */
             var promiseHandler = function(promise, callbacks) {
 
-                if (callbacks.done && typeof(callbacks.done) === 'function') {
+                if (callbacks.done && typeof (callbacks.done) === 'function') {
                     promise.done(function(result) {
                         callbacks.done(result);
                         // Implement always callback.
-                        if (callbacks.always && typeof(callbacks.always) === 'function') {
+                        if (callbacks.always && typeof (callbacks.always) === 'function') {
                             callbacks.always(result);
                         }
                     });
                 }
 
-                if (callbacks.fail && typeof(callbacks.fail) === 'function') {
+                if (callbacks.fail && typeof (callbacks.fail) === 'function') {
                     promise.fail(function(result) {
                         callbacks.fail(result);
                         // Implement always callback.
-                        if (callbacks.always && typeof(callbacks.always) === 'function') {
+                        if (callbacks.always && typeof (callbacks.always) === 'function') {
                             callbacks.always(result);
                         }
                     });
@@ -396,11 +396,11 @@ define(['jquery', 'core/log', 'core/ajax', 'core/templates', 'core/notification'
                 var cmid = Number(asset[0].id.replace('module-', ''));
                 var instanceName = asset.find('.instancename').text();
                 var params = {
-                    id       : cmid,
-                    "class"  : "resource",
-                    sesskey  : M.cfg.sesskey,
-                    courseId : courseLib.courseConfig.id,
-                    action   : "DELETE"
+                    id: cmid,
+                    "class": "resource",
+                    sesskey: M.cfg.sesskey,
+                    courseId: courseLib.courseConfig.id,
+                    action: "DELETE"
                 };
 
                 // Create progress and confirmation strings.
@@ -532,7 +532,7 @@ define(['jquery', 'core/log', 'core/ajax', 'core/templates', 'core/notification'
                 log.debug('Move objects', movingObjects);
 
                 // Prepare request parameters
-                params['class'] = 'resource';
+                params.class = 'resource';
 
                 updateMovingMessage();
 
@@ -582,7 +582,7 @@ define(['jquery', 'core/log', 'core/ajax', 'core/templates', 'core/notification'
                         domTargetSection;
 
                 var params = {
-                    class: 'section',
+                    "class": 'section',
                     id: currentSection,
                     value: targetSection
                 };
@@ -604,7 +604,7 @@ define(['jquery', 'core/log', 'core/ajax', 'core/templates', 'core/notification'
                                         $('#chapters').replaceWith(result);
 
                                         // Move current section before target section.
-                                        $('#section-'+domTargetSection).before($('#section-'+currentSection));
+                                        $('#section-' + domTargetSection).before($('#section-' + currentSection));
 
                                         // Update section ids, next previous links, etc.
                                         updateSections();
@@ -765,7 +765,7 @@ define(['jquery', 'core/log', 'core/ajax', 'core/templates', 'core/notification'
                                             done: function(result) {
                                                 $('#course-toc').replaceWith(result);
                                                 $(document).trigger('snapTOCReplaced');
-                                                if (onComplete && typeof(onComplete) === 'function') {
+                                                if (onComplete && typeof (onComplete) === 'function') {
                                                     onComplete(sectionNumber, toggle);
                                                 }
                                             },
@@ -843,12 +843,12 @@ define(['jquery', 'core/log', 'core/ajax', 'core/templates', 'core/notification'
              * Show footer alert for moving.
              */
             var footerAlertShowMove = function() {
-                footerAlert.show(function(e){
+                footerAlert.show(function(e) {
                     e.preventDefault();
                     stopMoving();
                 });
             };
-            
+
             /**
              * When section move link is clicked, get the data we need and start the move.
              */
@@ -1028,9 +1028,11 @@ define(['jquery', 'core/log', 'core/ajax', 'core/templates', 'core/notification'
                 addListeners();
 
                 // Override core functions
-                util.whenTrue(function(){
+                util.whenTrue(function() {
                     return M.course && M.course.init_section_toolbox;
-                }, function(){overrideCore();}, true);
+                }, function() {
+overrideCore();
+}, true);
 
             };
             initialise();

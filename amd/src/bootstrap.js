@@ -1,4 +1,3 @@
-// jshint ignore: start
 define(['jquery'], function(jQuery) {
 
     $ = jQuery;

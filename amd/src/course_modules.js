@@ -214,7 +214,7 @@ define(
             /**
              * Close lightbox.
              */
-            var lightboxclose = function() { // jshint ignore:line
+            var lightboxclose = function() {
                 var lbox = lightbox();
                 lbox.remove();
             };
@@ -276,7 +276,8 @@ define(
                         }
 
                         // Execute script.
-                        eval(script); // jshint ignore:line
+                        // eslint-disable-next-line no-eval
+                        eval(script);
                     });
                     if (hasflowplayerscript) {
                         var jsurl;
@@ -291,7 +292,8 @@ define(
                         // make flowplayer undefined.
                         // Note, we can't use flowplayer.delete in strict mode, hence "= undefined".
                         if (typeof(flowplayer) !== 'undefined') {
-                            flowplayer = undefined; // jshint ignore:line
+                            // eslint-disable-next-line no-undef
+                            flowplayer = undefined;
                         }
                         M.util.load_flowplayer();
                         $('head script[src="' + jsurl + '"]').trigger("onreadystatechange");

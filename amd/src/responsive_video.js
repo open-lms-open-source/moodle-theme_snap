@@ -95,6 +95,6 @@ define(['jquery'], function($) {
             });
         };
     };
-    
+
     return new ResponsiveVideo();
 });
