@@ -363,13 +363,13 @@ class course {
 
         $toc = new course_toc($course);
 
-        // If the course format is different from topics or weeks then the $toc would have some empty values
+        // If the course format is different from topics or weeks then the $toc would have some empty values.
         $validformats = ['weeks', 'topics'];
         if (!in_array($course->format, $validformats)) {
             $toc->chapters = array('chapters' => []);
             $toc->footer = array('footer' => []);
         }
-        
+
         return [
             'unavailablesections' => $unavailablesections,
             'unavailablemods' => $unavailablemods,
