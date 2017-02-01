@@ -24157,6 +24157,9 @@ fieldset[disabled] #id_cancel:focus {
   left: auto;
   right: auto;
 }
+.path-mod-assign .assignfeedback_editpdf_widget .drawingregion {
+  top: 52px;
+}
 .path-mod-assign [data-region="grading-navigation-panel"],
 .path-mod-assign [data-region="user-info"] {
   height: auto;
