@@ -34,6 +34,7 @@ Feature: Open page module inline
       | username | firstname | lastname | email                |
       | student1 | Student   | 1        | student1@example.com |
     And completion tracking is "Enabled" for course "Acceptance test site"
+    And debugging is turned off
 
   @javascript
   Scenario: Page mod is created and opened inline at the front page.
@@ -44,6 +45,7 @@ Feature: Open page module inline
      And I am on site homepage
      And I should not see "page content1"
      And I follow "Read more&nbsp;»"
+     And I should not see an error dialog
      And I wait until ".pagemod-content[data-content-loaded=\"1\"]" "css_element" is visible
      # The above step basically waits for the page content to load up.
      And I should see "page content1"
@@ -70,6 +72,7 @@ Feature: Open page module inline
    Then I should not see "Page restricted intro"
     And I should see availability info "Not available unless: The activity Page completion is marked complete"
     And I follow visible link "Read more&nbsp;»"
+    And I should not see an error dialog
     And I wait until ".pagemod-content[data-content-loaded=\"1\"]" "css_element" is visible
     # The above step basically waits for the page module content to load up.
    Then I should see "Page completion content"
