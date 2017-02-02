@@ -24,7 +24,7 @@
 @theme @theme_snap
 Feature: Open page module inline
   As any user
-  I need to view page modules inline and have auto completion tracking updated.
+  I need to view page modules inline at front page.
 
   Background:
     Given the following config values are set as admin:
@@ -34,9 +34,6 @@ Feature: Open page module inline
     And the following "users" exist:
       | username | firstname | lastname | email                |
       | student1 | Student   | 1        | student1@example.com |
-    And the following "course enrolments" exist:
-      | user  | course               | role    |
-      | admin | Acceptance test site | teacher |
 
   @javascript
   Scenario: Page mod is created and opened inline at the front page.
@@ -58,9 +55,6 @@ Feature: Open page module inline
       | activity | course               | idnumber  | name              | intro                 | content                 | completion | completionview | section |
       | page     | Acceptance test site | pagec     | Page completion   | Page completion intro | Page completion content | 2          | 1              | 1       |
       | page     | Acceptance test site | pager     | Page restricted   | Page restricted intro | Page restricted content | 0          | 0              | 1       |
-    And the following "activities" exist:
-      | activity | course               | idnumber     | name            | section |
-      | assign   | Acceptance test site | assigntest   | Assignment Test | 0       |
     And completion tracking is "Enabled" for course "Acceptance test site"
    Then I log in as "admin" (theme_snap)
     And I am on site homepage
