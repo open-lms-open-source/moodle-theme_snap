@@ -34,6 +34,7 @@ Feature: Open page module inline
     And the following "users" exist:
       | username | firstname | lastname | email                |
       | student1 | Student   | 1        | student1@example.com |
+    And completion tracking is "Enabled" for course "Acceptance test site"
 
   @javascript
   Scenario: Page mod is created and opened inline at the front page.
@@ -52,24 +53,29 @@ Feature: Open page module inline
   @javascript
   Scenario: Page mod completion updates on read more and affects availability for other modules at the front page.
     Given the following "activities" exist:
-      | activity | course               | idnumber  | name              | intro                 | content                 | completion | completionview | section |
-      | page     | Acceptance test site | pagec     | Page completion   | Page completion intro | Page completion content | 2          | 1              | 1       |
-      | page     | Acceptance test site | pager     | Page restricted   | Page restricted intro | Page restricted content | 0          | 0              | 1       |
-    And completion tracking is "Enabled" for course "Acceptance test site"
+      | activity | course               | idnumber  | name              | intro                 | content                 | section |
+      | page     | Acceptance test site | pagec     | Page completion   | Page completion intro | Page completion content | 1       |
+      | page     | Acceptance test site | pager     | Page restricted   | Page restricted intro | Page restricted content | 1       |
    Then I log in as "admin" (theme_snap)
     And I am on site homepage
+    # Sometimes the page activity is not being created with the correct completion options, so I have to do it manually
+    And I follow "Edit \"Page completion\""
+    And I expand all fieldsets
+    And I set the field "completion" to "2"
+    And I set the field "completionview" to "1"
+    And I press "Save and return to course"
     # Restrict the second page module to only be accessible after the first page module is marked complete.
     And I restrict course asset "Page restricted" by completion of "Page completion"
     And I log out (theme_snap)
     And I log in as "student1" (theme_snap)
     And I am on site homepage
-    Then I should not see "Page restricted intro"
+   Then I should not see "Page restricted intro"
     And I should see availability info "Not available unless: The activity Page completion is marked complete"
     And I follow visible link "Read more&nbsp;»"
     And I wait until ".pagemod-content[data-content-loaded=\"1\"]" "css_element" is visible
     # The above step basically waits for the page module content to load up.
-    Then I should see "Page completion content"
+   Then I should see "Page completion content"
     And I should not see availability info "Not available unless: The activity Page completion is marked complete"
     And I should see "Page restricted"
     And I follow visible link "Read more&nbsp;»"
-    Then I should see " Page restricted content"
+   Then I should see " Page restricted content"
