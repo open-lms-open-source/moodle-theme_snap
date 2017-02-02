@@ -13,11 +13,11 @@
 # You should have received a copy of the GNU General Public License
 # along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 #
-# Tests for page module.
+# Tests for page module behaviour at front page.
 #
 # @package    theme_snap
 # @author     Guillermo Alvarez
-# @copyright  2016 Blackboard Ltd
+# @copyright  2017 Blackboard Ltd
 # @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
 
 
@@ -48,7 +48,6 @@ Feature: Open page module inline
      And I wait until ".pagemod-content[data-content-loaded=\"1\"]" "css_element" is visible
      # The above step basically waits for the page content to load up.
      And I should see "page content1"
-
 
   @javascript
   Scenario: Page mod completion updates on read more and affects availability for other modules at the front page.
