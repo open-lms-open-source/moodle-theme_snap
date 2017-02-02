@@ -49,7 +49,7 @@ class admin_setting_configcourseid extends \admin_setting_configtext {
             $courses = $DB->get_records_sql($sql, [SITEID]);
             $datalist = '<datalist id="courseids">';
             foreach ($courses as $course) {
-                $datalist .= '<option value="' .$course->id. '">' .$course->fullname. '</option>';
+                $datalist .= '<option value="' .$course->id. '">' .s($course->fullname). '</option>';
             }
             $datalist .= '</datalist>';
             $datalistrendered = true;

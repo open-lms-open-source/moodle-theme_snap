@@ -1458,13 +1458,11 @@ HTML;
             }
 
             $colclass = '';
-            if ($fscount == 2) {
-                /* two cards = 50% */
-                $colclass = 'col-sm-6';
+            if ($fscount === 2) {
+                $colclass = 'col-sm-6'; // Two cards = 50%.
             }
-            if ($fscount == 3) {
-                /* three cards = 33.3% */
-                $colclass = 'col-sm-4';
+            if ($fscount === 3) {
+                $colclass = 'col-sm-4'; // Three cards = 33.3%.
             }
 
             $cards = '';
@@ -1501,7 +1499,7 @@ HTML;
      * @param string $text
      * @return string
      */
-    public function feature_spot_card($title, $image, $text) {
+    protected function feature_spot_card($title, $image, $text) {
         $card = '<div class="snap-feature">
             <!--Card content-->
             <div class="snap-feature-block">
@@ -1518,11 +1516,12 @@ HTML;
 
 
     /**
-     * Return feature spot cards html.
+     * Return featured courses html.
+     * There are intentionally no checks for hidden course status
+     * OR current users enrolment status.
      *
      * @return string
      */
-
     public function featured_courses() {
         global $PAGE, $DB;
         // Build array of course ids to display.
@@ -1560,16 +1559,13 @@ HTML;
         // Calculate boostrap column class.
         $colclass = '';
         if ($count >= 4) {
-            /* four cards = 25% */
-            $colclass = 'col-sm-3';
+            $colclass = 'col-sm-3'; // Four cards = 25%.
         }
-        if ($count == 2) {
-            /* two cards = 50% */
-            $colclass = 'col-sm-6';
+        if ($count === 2) {
+            $colclass = 'col-sm-6'; // Two cards = 50%.
         }
-        if ($count == 3 || $count == 6) {
-            /* three cards = 33.3% */
-            $colclass = 'col-sm-4';
+        if ($count === 3 || $count === 6) {
+            $colclass = 'col-sm-4'; // Three cards = 33.3%.
         }
 
         // Build featured courses cards.
@@ -1619,7 +1615,7 @@ HTML;
      * @param object $course
      * @return string
      */
-    public function featured_course($course) {
+    protected function featured_course($course) {
         $url = new moodle_url('/course/view.php?id=' .$course->id);
         $coverimage = local::course_coverimage_url($course->id);
         $bgcss = '';
