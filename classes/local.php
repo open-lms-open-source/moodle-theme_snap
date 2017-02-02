@@ -1106,6 +1106,73 @@ class local {
     }
 
     /**
+     * Deletes all previous course card images.
+     * @param int $context
+     * @return void
+     */
+    public static function course_card_clean_up($context) {
+        $fs = get_file_storage();
+        $fs->delete_area_files($context->id, 'theme_snap', 'coursecard');
+    }
+
+    /**
+     * Creates a resized course card image when the cover image is too large, otherwise returns the original.
+     * @param int $context
+     * @param stored_file|bool $originalfile
+     * @return bool|stored_file
+     */
+    public static function set_course_card_image($context, $originalfile) {
+        if ($originalfile) {
+            $finfo = $originalfile->get_imageinfo();
+            $coursecardmaxwidth = 1000;
+            $coursecardwidth = 720;
+            if ($finfo['mimetype'] != 'image/jpeg' || $finfo['width'] <= $coursecardmaxwidth) {
+                // We use the same cover image that loads up in the course home page.
+                $originalfile = self::coverimage($context);
+                return $originalfile;
+            }
+            $filename = $originalfile->get_filename();
+            $id = $originalfile->get_id();
+            $fs = get_file_storage();
+            $cardimage = $fs->get_file($context->id, 'theme_snap', 'coursecard', 0, '/', 'course-card-'.$id.'-'.$filename);
+            if ($cardimage) {
+                return $cardimage;
+            }
+            $filespec = array(
+                'contextid' => $context->id,
+                'component' => 'theme_snap',
+                'filearea' => 'coursecard',
+                'itemid' => 0,
+                'filepath' => '/',
+                'filename' => 'course-card-'.$id.'-'.$filename,
+            );
+            $coursecardimage = $fs->create_file_from_storedfile($filespec, $originalfile);
+            $coursecardimage = image::resize($coursecardimage, false, $coursecardwidth);
+            return $coursecardimage;
+        }
+        return false;
+    }
+
+    /**
+     * Get the cover image url for the course card.
+     *
+     * @param int $courseid
+     * @return bool|moodle_url
+     */
+    public static function course_card_image_url($courseid) {
+        $context = \context_course::instance($courseid);
+        $fs = get_file_storage();
+        $cardimages = $fs->get_area_files($context->id, 'theme_snap', 'coursecard', 0, "itemid, filepath, filename", false);
+        if ($cardimages) {
+            return self::snap_pluginfile_url(end($cardimages));
+        } else {
+            $originalfile = self::get_course_firstimage($courseid);
+            $cardimage = self::set_course_card_image($context, $originalfile);
+            return self::snap_pluginfile_url($cardimage);
+        }
+    }
+
+    /**
      * Get cover image for context
      *
      * @param \context $context
@@ -1273,7 +1340,8 @@ class local {
 
         $newfile = $fs->create_file_from_storedfile($filespec, $originalfile);
         $finfo = $newfile->get_imageinfo();
-
+        self::course_card_clean_up($context);
+        self::set_course_card_image($context, $originalfile);
         if ($finfo['mimetype'] == 'image/jpeg' && $finfo['width'] > 1380) {
             return image::resize($newfile, false, 1280);
         } else {

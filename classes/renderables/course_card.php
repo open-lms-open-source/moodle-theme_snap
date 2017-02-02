@@ -142,7 +142,7 @@ class course_card implements \renderable {
     private function apply_image_css() {
         $bgcolor = local::get_course_color($this->courseid);
         $this->imagecss = "background-color: #$bgcolor;";
-        $bgimage = local::course_coverimage_url($this->courseid);
+        $bgimage = local::course_card_image_url($this->courseid);
         if (!empty($bgimage)) {
             $this->imagecss .= "background-image: url($bgimage);";
         }

@@ -211,7 +211,7 @@ function theme_snap_pluginfile($course, $cm, $context, $filearea, $args, $forced
         $theme = theme_config::load('snap');
         return $theme->setting_file_serve($filearea, $args, $forcedownload, $options);
     } else if (($context->contextlevel == CONTEXT_SYSTEM || $context->contextlevel == CONTEXT_COURSE)
-        && $filearea == 'coverimage') {
+        && $filearea == 'coverimage' || $filearea == 'coursecard') {
         theme_snap_send_file($context, $filearea, $args, $forcedownload, $options);
     } else {
         send_file_not_found();
