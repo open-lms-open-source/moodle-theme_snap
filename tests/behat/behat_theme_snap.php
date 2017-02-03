@@ -1496,4 +1496,18 @@ class behat_theme_snap extends behat_base {
             array($xpathtocheck, "xpath_element")
         );
     }
+
+    /**
+     * @Given /^I should not see an error dialog$/
+     */
+    public function iShouldNotSeeAnErrorDialog() {
+        $element = '.moodle-dialogue-confirm .confirmation-message';
+        try {
+            $nodes = $this->find_all('css', $element);
+        } catch (Exception $e) {
+            return; // No dialog.
+        }
+        throw new ExpectationException('An error dialog has been displayed', $this->getSession());
+    }
+
 }

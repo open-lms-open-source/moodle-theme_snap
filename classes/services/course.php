@@ -322,13 +322,13 @@ class course {
 
         /** @var \theme_snap_core_course_renderer $courserenderer */
         $courserenderer = $PAGE->get_renderer('core', 'course', RENDERER_TARGET_GENERAL);
-        $format = course_get_format($course);
-        $formatrenderer = $format->get_renderer($PAGE);
         $modinfo = get_fast_modinfo($course);
 
         $changedsectionhtml = [];
         $changedsections = array_merge($newlyavailablesections, $newlyunavailablesections);
         if (!empty($changedsections)) {
+            $format = course_get_format($course);
+            $formatrenderer = $format->get_renderer($PAGE);
             foreach ($changedsections as $sectionnumber) {
                 $section = $modinfo->get_section_info($sectionnumber);
                 $html = $formatrenderer->course_section($course, $section, $modinfo);
@@ -362,6 +362,13 @@ class course {
         $unavailablemods = implode(',', $unavailablemods);
 
         $toc = new course_toc($course);
+
+        // If the course format is different from topics or weeks then the $toc would have some empty values.
+        $validformats = ['weeks', 'topics'];
+        if (!in_array($course->format, $validformats)) {
+            $toc->chapters = array('chapters' => []);
+            $toc->footer = array('footer' => []);
+        }
 
         return [
             'unavailablesections' => $unavailablesections,
