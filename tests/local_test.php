@@ -1118,6 +1118,99 @@ class theme_snap_local_test extends \advanced_testcase {
     }
 
     /**
+     * Imitates an admin setting the course cover image via the
+     * Snap theme settings page. Creates a file, sets a theme
+     * setting with the filname, then calls the callback triggered
+     * by submitting the form.
+     *
+     * @param $fixturename
+     * @param $context
+     * @return array
+     * @throws \Exception
+     * @throws \dml_exception
+     * @throws \file_exception
+     * @throws \stored_file_creation_exception
+     */
+    protected function fake_course_image_setting_upload($filename, $context) {
+        global $CFG;
+
+        $filerecord = array(
+            'contextid' => $context->id,
+            'component' => 'theme_snap',
+            'filearea'  => 'coverimage',
+            'itemid'    => 0,
+            'filepath'  => '/',
+            'filename'  => $filename,
+        );
+
+        $filepath = $CFG->dirroot.'/theme/snap/tests/fixtures/'.$filename;
+
+        $fs = \get_file_storage();
+
+        $fs->delete_area_files($context->id, 'theme_snap', 'coverimage');
+
+        $fs->create_file_from_pathname($filerecord, $filepath);
+        \set_config('coverimage', $filename, 'theme_snap');
+    }
+
+    /**
+     * Test the functions that creates or handles the course card images.
+     *
+     */
+
+    public function test_resize_cover_image_functions() {
+        $this->resetAfterTest();
+        $course = $this->getDataGenerator()->create_course();
+        $context = \context_course::instance($course->id);
+        $fixtures = [
+            'bpd_bikes_3888px.jpg' => true , // True means SHOULD get resized.
+            'bpd_bikes_1381px.jpg' => true,
+            'bpd_bikes_1380px.jpg' => true,
+            'bpd_bikes_1379px.jpg' => true,
+            'bpd_bikes_1280px.jpg' => true,
+            'bpd_bikes_1000px.jpg' => false,
+            'bpd_bikes_640px.jpg' => false
+        ];
+        foreach ($fixtures as $filename => $shouldberesized) {
+
+            $this->fake_course_image_setting_upload($filename, $context);
+            $originalfile = local::course_coverimage($course->id);
+            $this->assertNotEmpty($originalfile);
+            $resized = local::set_course_card_image($context, $originalfile);
+            $this->assertNotEmpty($resized);
+            $finfo = $resized->get_imageinfo();
+            if ($shouldberesized) {
+                $this->assertSame(720, $finfo['width']);
+                $this->assertNotEquals($originalfile, $resized);
+            } else {
+                $this->assertEquals($resized, $originalfile);
+            }
+        }
+        $fs = \get_file_storage();
+        $fs->delete_area_files($context->id, 'theme_snap', 'coverimage');
+        $originalfile = local::course_coverimage($course->id);
+        $coursecardimage = local::set_course_card_image($context, $originalfile);
+        $this->assertFalse($coursecardimage);
+        $cardimages = $fs->get_area_files($context->id, 'theme_snap', 'coursecard', 0, "itemid, filepath, filename", false);
+        $this->assertCount(5, $cardimages);
+        $this->fake_course_image_setting_upload('bpd_bikes_1381px.jpg', $context);
+        $originalfile = local::course_coverimage($course->id);
+        local::set_course_card_image($context, $originalfile);
+        $cardimages = $fs->get_area_files($context->id, 'theme_snap', 'coursecard', 0, "itemid, filepath, filename", false);
+        $this->assertCount(6, $cardimages);
+        // Call 2 times this function should not duplicate the course card images.
+        local::set_course_card_image($context, $originalfile);
+        $this->assertCount(6, $cardimages);
+        $url = local::course_card_image_url($course->id);
+        $id = $originalfile->get_id();
+        $this->assertNotFalse(strpos($url, $id));
+        local::course_card_clean_up($context);
+        $cardimages = $fs->get_area_files($context->id, 'theme_snap', 'coursecard', 0, "itemid, filepath, filename", false);
+        $this->assertCount(0, $cardimages);
+    }
+
+
+    /**
      * Test gradeable_courseids function - i.e. courses where user is allowed to view the grade book.
      */
     public function test_gradeable_courseids() {
