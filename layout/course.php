@@ -61,7 +61,14 @@ if ($coursemainpage) {
 </div>
 </div>
 
-<section id="region-main">
+<?php
+$cardclass = '';
+if (!empty($PAGE->theme->settings->resourcedisplay)) {
+    $cardclass = 'class="snap-resource-' .$PAGE->theme->settings->resourcedisplay. '"';
+}
+?>
+
+<section id="region-main" <?php echo $cardclass ?> >
 <?php
 echo $OUTPUT->course_content_header();
 $output = $PAGE->get_renderer('core', 'course');

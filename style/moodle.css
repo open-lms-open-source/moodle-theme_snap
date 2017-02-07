@@ -12195,7 +12195,9 @@ div.groupmanagementtable:after,
 .user-enroller-panel .oump-wrap .oump-footer:before,
 .user-enroller-panel .oump-wrap .oump-footer:after,
 .other-user-manager-panel .oump-wrap .oump-footer:before,
-.other-user-manager-panel .oump-wrap .oump-footer:after {
+.other-user-manager-panel .oump-wrap .oump-footer:after,
+#id_s_theme_snap_resourcedisplay:before,
+#id_s_theme_snap_resourcedisplay:after {
   content: " ";
   display: table;
 }
@@ -12243,7 +12245,8 @@ div.groupmanagementtable:after,
 .user-enroller-panel .uep-wrap .oump-footer:after,
 .other-user-manager-panel .uep-wrap .oump-footer:after,
 .user-enroller-panel .oump-wrap .oump-footer:after,
-.other-user-manager-panel .oump-wrap .oump-footer:after {
+.other-user-manager-panel .oump-wrap .oump-footer:after,
+#id_s_theme_snap_resourcedisplay:after {
   clear: both;
 }
 .center-block {
@@ -13272,12 +13275,11 @@ input#id_externalurl {
 input[type="radio"] + label,
 input[type="checkbox"] + label {
   display: inline;
-  padding-left: 0.2em;
+  padding-left: 0.25em;
 }
 input[type="radio"],
 input[type="checkbox"] {
-  margin-top: -4px;
-  margin-right: 7px;
+  margin: 0.25em;
 }
 .singleselect {
   display: inline-block;
@@ -19242,7 +19244,8 @@ http://blog.rodneyrehm.de/archives/34-iOS7-Mobile-Safari-And-Viewport-Units.html
 .coursebox.user-enroller-panel .uep-wrap .oump-footer,
 .coursebox.other-user-manager-panel .uep-wrap .oump-footer,
 .coursebox.user-enroller-panel .oump-wrap .oump-footer,
-.coursebox.other-user-manager-panel .oump-wrap .oump-footer {
+.coursebox.other-user-manager-panel .oump-wrap .oump-footer,
+.coursebox#id_s_theme_snap_resourcedisplay {
   padding: 1em 4%;
   border-bottom: 1px solid #eee;
 }
@@ -22215,34 +22218,6 @@ body.format-flexpage .singlebutton {
       -ms-transform: scale(1.25);
           transform: scale(1.25);
 }
-@media screen and (max-width: 480px) {
-  .section li.snap-resource,
-  .section li.snap-resource:hover {
-    width: 99%;
-    margin: 1em auto;
-    height: auto;
-    background-position: 95% 25%;
-    -webkit-background-size: 60px 60px;
-            background-size: 60px;
-  }
-  .section li.snap-resource .snap-asset-actions,
-  .section li.snap-resource:hover .snap-asset-actions {
-    width: 250px;
-  }
-  .section li.snap-resource .snap-asset-actions .snap-asset-move,
-  .section li.snap-resource:hover .snap-asset-actions .snap-asset-move,
-  .section li.snap-resource .snap-asset-actions .snap-edit-more-dropdown,
-  .section li.snap-resource:hover .snap-asset-actions .snap-edit-more-dropdown,
-  .section li.snap-resource .snap-asset-actions > a,
-  .section li.snap-resource:hover .snap-asset-actions > a {
-    width: 25%;
-    text-align: left;
-    padding: 0;
-  }
-  .section .snap-asset-actions ul.dropdown-menu {
-    left: -125px;
-  }
-}
 /**
  * resourcelinkdetails = moodle putting filetype on screen if option selected
  * we do this by default in snap, so hide moodle version
@@ -22365,42 +22340,9 @@ body.format-flexpage .singlebutton {
   margin-top: -3em;
 }
 .section li.snap-resource {
-  height: 200px;
-  width: 31%;
-  margin: 1%;
-  float: left;
   display: block;
-  clear: none;
-  background-image: url([[pix:theme|file]]);
-  background-repeat: no-repeat;
-  background-position: 50% 70%;
-  -webkit-background-size: 38px auto;
-          background-size: 38px auto;
   -webkit-transition: all 0.4s ease-in-out;
           transition: all 0.4s ease-in-out;
-}
-.section li.snap-resource:hover {
-  -webkit-background-size: 50px auto;
-          background-size: 50px auto;
-}
-.section li.snap-resource .asset-wrapper {
-  cursor: pointer;
-}
-.section li.snap-resource .asset-wrapper:before,
-.section li.snap-resource .asset-wrapper:after {
-  content: " ";
-  display: table;
-}
-.section li.snap-resource .asset-wrapper:after {
-  clear: both;
-}
-.section li.snap-resource .asset-wrapper:before,
-.section li.snap-resource .asset-wrapper:after {
-  content: " ";
-  display: table;
-}
-.section li.snap-resource .asset-wrapper:after {
-  clear: both;
 }
 .section li.snap-resource .activityinstance .activityicon {
   height: 1.5em;
@@ -22410,120 +22352,161 @@ body.format-flexpage .singlebutton {
 .section li.snap-resource .snap-asset-link {
   font-size: 1em;
 }
-.section li.snap-resource .contentafterlink {
+section.snap-resource-card li.snap-resource {
+  height: 200px;
+  width: 31%;
+  margin: 1%;
+  float: left;
+  clear: none;
+  background-image: url([[pix:theme|file]]);
+  background-repeat: no-repeat;
+  background-position: 50% 70%;
+  -webkit-background-size: 38px auto;
+          background-size: 38px auto;
+}
+section.snap-resource-card li.snap-resource:hover {
+  -webkit-background-size: 50px auto;
+          background-size: 50px auto;
+}
+section.snap-resource-card li.snap-resource .asset-wrapper {
+  cursor: pointer;
+}
+section.snap-resource-card li.snap-resource .asset-wrapper:before,
+section.snap-resource-card li.snap-resource .asset-wrapper:after {
+  content: " ";
+  display: table;
+}
+section.snap-resource-card li.snap-resource .asset-wrapper:after {
+  clear: both;
+}
+section.snap-resource-card li.snap-resource .asset-wrapper:before,
+section.snap-resource-card li.snap-resource .asset-wrapper:after {
+  content: " ";
+  display: table;
+}
+section.snap-resource-card li.snap-resource .asset-wrapper:after {
+  clear: both;
+}
+section.snap-resource-card li.snap-resource .activityicon {
+  display: none;
+}
+section.snap-resource-card li.snap-resource .contentafterlink {
   font-size: small;
 }
+section.snap-resource-card li.snap-resource.snap-mime-document,
+section.snap-resource-card li.snap-resource.snap-mime-writer,
+section.snap-resource-card li.snap-resource.snap-mime-oth,
+section.snap-resource-card li.snap-resource.snap-mime-text {
+  border-top-color: #03A9F4;
+  background-image: url([[pix:core|/f/document]]);
+}
+section.snap-resource-card li.snap-resource.snap-mime-powerpoint,
+section.snap-resource-card li.snap-resource.snap-mime-impress {
+  border-top-color: #ff7300;
+  background-image: url([[pix:core|/f/powerpoint]]);
+}
+section.snap-resource-card li.snap-resource.snap-mime-spreadsheet,
+section.snap-resource-card li.snap-resource.snap-mime-chart,
+section.snap-resource-card li.snap-resource.snap-mime-database,
+section.snap-resource-card li.snap-resource.snap-mime-calc {
+  border-top-color: #009e51;
+  background-image: url([[pix:core|/f/spreadsheet]]);
+}
+section.snap-resource-card li.snap-resource.snap-mime-pdf,
+section.snap-resource-card li.snap-resource.snap-mime-eps,
+section.snap-resource-card li.snap-resource.snap-mime-flash {
+  border-top-color: #F44336;
+  background-image: url([[pix:core|/f/pdf]]);
+}
+section.snap-resource-card li.snap-resource.snap-mime-flash {
+  background-image: url([[pix:core|/f/flash]]);
+}
+section.snap-resource-card li.snap-resource.snap-mime-mp3,
+section.snap-resource-card li.snap-resource.snap-mime-wav,
+section.snap-resource-card li.snap-resource.snap-mime-audio {
+  border-top-color: #8BC34A;
+  background-image: url([[pix:core|/f/audio]]);
+}
+section.snap-resource-card li.snap-resource.snap-mime-mov,
+section.snap-resource-card li.snap-resource.snap-mime-wmv,
+section.snap-resource-card li.snap-resource.snap-mime-video,
+section.snap-resource-card li.snap-resource.snap-mime-quicktime,
+section.snap-resource-card li.snap-resource.snap-mime-mpeg,
+section.snap-resource-card li.snap-resource.snap-mime-avi {
+  border-top-color: #55B5CC;
+  background-image: url([[pix:core|/f/video]]);
+}
+section.snap-resource-card li.snap-resource.modtype_lightboxgallery,
+section.snap-resource-card li.snap-resource.snap-mime-bmp {
+  border-top-color: #4ABC96;
+  background-image: url([[pix:core|/f/image]]);
+}
+section.snap-resource-card li.snap-resource.modtype_url {
+  border-top-color: #999;
+  background-image: url([[pix:core|/f/url]]);
+}
+section.snap-resource-card li.snap-resource.modtype_imscp,
+section.snap-resource-card li.snap-resource.modtype_scorm {
+  border-top-color: #F7981D;
+  background-image: url([[pix:core|/f/book]]);
+}
+section.snap-resource-card li.snap-resource.modtype_imscp,
+section.snap-resource-card li.snap-resource.modtype_scorm {
+  background-image: url([[pix:core|/f/scorm]]);
+}
+section.snap-resource-card li.snap-resource.modtype_folder {
+  border-top-color: #fed859;
+  background-image: url([[pix:core|/f/folder]]);
+}
+section.snap-resource-card li.snap-resource.snap-mime-archive {
+  border-top-color: #fed859;
+  background-image: url([[pix:core|/f/archive]]);
+}
+section.snap-resource-card li.snap-resource.snap-mime-markup,
+section.snap-resource-card li.snap-resource.snap-mime-html,
+section.snap-resource-card li.snap-resource.snap-mime-sourcecode {
+  border-top-color: #f0652a;
+  background-image: url([[pix:core|/f/sourcecode]]);
+}
+section.snap-resource-card li.snap-resource.snap-mime-text {
+  border-top-color: #f1bf26;
+}
 @media screen and (max-width: 480px) {
-  .section li.snap-resource,
-  .section li.snap-resource:hover {
+  section.snap-resource-card li.snap-resource {
     width: 99%;
     margin: 1em auto;
     height: auto;
     background-image: none !important;
   }
-  .section li.snap-resource .activityinstance,
-  .section li.snap-resource:hover .activityinstance {
+  section.snap-resource-card li.snap-resource .activityinstance {
     width: 75%;
   }
-  .section li.snap-resource .activityinstance .activityicon,
-  .section li.snap-resource:hover .activityinstance .activityicon {
+  section.snap-resource-card li.snap-resource .activityinstance .activityicon {
     display: inline;
   }
-  .section li.snap-resource .snap-asset-actions,
-  .section li.snap-resource:hover .snap-asset-actions {
+  section.snap-resource-card li.snap-resource .snap-asset-actions {
     width: 250px;
   }
-  .section li.snap-resource .snap-asset-actions .snap-asset-move,
-  .section li.snap-resource:hover .snap-asset-actions .snap-asset-move,
-  .section li.snap-resource .snap-asset-actions .snap-edit-more-dropdown,
-  .section li.snap-resource:hover .snap-asset-actions .snap-edit-more-dropdown,
-  .section li.snap-resource .snap-asset-actions > a,
-  .section li.snap-resource:hover .snap-asset-actions > a {
+  section.snap-resource-card li.snap-resource .snap-asset-actions .snap-asset-move,
+  section.snap-resource-card li.snap-resource .snap-asset-actions .snap-edit-more-dropdown,
+  section.snap-resource-card li.snap-resource .snap-asset-actions > a {
     width: 25%;
     text-align: left;
     padding: 0;
   }
-  .section .snap-asset-actions ul.dropdown-menu {
+  section.snap-resource-card .snap-asset-actions ul.dropdown-menu {
     left: -125px;
   }
 }
-section li.snap-resource.snap-mime-document,
-section li.snap-resource.snap-mime-writer,
-section li.snap-resource.snap-mime-oth,
-section li.snap-resource.snap-mime-text {
-  border-top-color: #03A9F4;
-  background-image: url([[pix:core|/f/document]]);
+section.snap-resource-list li.snap-resource {
+  border: none;
+  margin: 0 1%;
 }
-section li.snap-resource.snap-mime-powerpoint,
-section li.snap-resource.snap-mime-impress {
-  border-top-color: #ff7300;
-  background-image: url([[pix:core|/f/powerpoint]]);
+section.snap-resource-list li.snap-resource .snap-assettype {
+  display: none;
 }
-section li.snap-resource.snap-mime-spreadsheet,
-section li.snap-resource.snap-mime-chart,
-section li.snap-resource.snap-mime-database,
-section li.snap-resource.snap-mime-calc {
-  border-top-color: #009e51;
-  background-image: url([[pix:core|/f/spreadsheet]]);
-}
-section li.snap-resource.snap-mime-pdf,
-section li.snap-resource.snap-mime-eps,
-section li.snap-resource.snap-mime-flash {
-  border-top-color: #F44336;
-  background-image: url([[pix:core|/f/pdf]]);
-}
-section li.snap-resource.snap-mime-flash {
-  background-image: url([[pix:core|/f/flash]]);
-}
-section li.snap-resource.snap-mime-mp3,
-section li.snap-resource.snap-mime-wav,
-section li.snap-resource.snap-mime-audio {
-  border-top-color: #8BC34A;
-  background-image: url([[pix:core|/f/audio]]);
-}
-section li.snap-resource.snap-mime-mov,
-section li.snap-resource.snap-mime-wmv,
-section li.snap-resource.snap-mime-video,
-section li.snap-resource.snap-mime-quicktime,
-section li.snap-resource.snap-mime-mpeg,
-section li.snap-resource.snap-mime-avi {
-  border-top-color: #55B5CC;
-  background-image: url([[pix:core|/f/video]]);
-}
-section li.snap-resource.modtype_lightboxgallery,
-section li.snap-resource.snap-mime-bmp {
-  border-top-color: #4ABC96;
-  background-image: url([[pix:core|/f/image]]);
-}
-section li.snap-resource.modtype_url {
-  border-top-color: #999;
-  background-image: url([[pix:core|/f/url]]);
-}
-section li.snap-resource.modtype_imscp,
-section li.snap-resource.modtype_scorm {
-  border-top-color: #F7981D;
-  background-image: url([[pix:core|/f/book]]);
-}
-section li.snap-resource.modtype_imscp,
-section li.snap-resource.modtype_scorm {
-  background-image: url([[pix:core|/f/scorm]]);
-}
-section li.snap-resource.modtype_folder {
-  border-top-color: #fed859;
-  background-image: url([[pix:core|/f/folder]]);
-}
-section li.snap-resource.snap-mime-archive {
-  border-top-color: #fed859;
-  background-image: url([[pix:core|/f/archive]]);
-}
-section li.snap-resource.snap-mime-markup,
-section li.snap-resource.snap-mime-html,
-section li.snap-resource.snap-mime-sourcecode {
-  border-top-color: #f0652a;
-  background-image: url([[pix:core|/f/sourcecode]]);
-}
-section li.snap-resource.snap-mime-text {
-  border-top-color: #f1bf26;
+section.snap-resource-list li.snap-resource .snap-asset-actions {
+  width: 250px;
 }
 .section li.snap-activity {
   margin: 1em 1%;
@@ -23293,8 +23276,8 @@ fieldset[disabled] a#changenumsections .reduce-sections {
 .section-drop,
 .snap-move-note {
   background: transparent url("[[pix:theme|move_here]]") no-repeat 50% 80%;
-  -webkit-background-size: 70px 70px;
-          background-size: 70px 70px;
+  -webkit-background-size: 2.5em 2.5em;
+          background-size: 2.5em;
 }
 .snap-move-section .section-drop {
   display: block;
@@ -24012,6 +23995,9 @@ body:not(.behat-site) #id_general .ftoggler {
 #id_generalhdr .fcontainer {
   display: block;
 }
+input[type="radio"] {
+  max-width: none;
+}
 #newsection {
   width: 100%;
   margin: 0;
@@ -24185,6 +24171,40 @@ fieldset[disabled] #id_cancel:focus {
   .snap-form-required #id_submitbutton2 + #id_submitbutton {
     display: none;
   }
+}
+#id_s_theme_snap_resourcedisplay {
+  margin-left: -15px;
+  margin-right: -15px;
+  max-width: 100%;
+}
+#s_theme_snap_resourcedisplay_list,
+#s_theme_snap_resourcedisplay_card {
+  position: relative;
+  min-height: 1px;
+  padding-left: 15px;
+  padding-right: 15px;
+  text-align: center;
+}
+@media (min-width: 768px) {
+  #s_theme_snap_resourcedisplay_list,
+  #s_theme_snap_resourcedisplay_card {
+    float: left;
+    width: 50%;
+  }
+}
+#s_theme_snap_resourcedisplay_list + br,
+#s_theme_snap_resourcedisplay_card + br {
+  display: none;
+}
+#s_theme_snap_resourcedisplay_list:before,
+#s_theme_snap_resourcedisplay_card:before {
+  display: block;
+}
+#s_theme_snap_resourcedisplay_list:before {
+  content: url("[[pix:theme|list]]");
+}
+#s_theme_snap_resourcedisplay_card:before {
+  content: url("[[pix:theme|cards]]");
 }
 /**
 * Plugins css.
@@ -24469,6 +24489,34 @@ fieldset[disabled] .path-admin-tool-lp [data-region="filtercompetencies"] button
 #local-joulegrader-gradepane-panel .mform {
   max-width: 100%;
   margin: 0 auto;
+}
+/**
+ * Mod lesson.
+ */
+/* Radio button and checkbox inputs. */
+#page-mod-lesson-view.path-mod-lesson .answeroptiongroup,
+#page-mod-lesson-view.path-mod-lesson .answeroption {
+  /* Put options on seperate lines. */
+}
+#page-mod-lesson-view.path-mod-lesson .answeroptiongroup input[type="radio"],
+#page-mod-lesson-view.path-mod-lesson .answeroption input[type="radio"],
+#page-mod-lesson-view.path-mod-lesson .answeroptiongroup input[type="checkbox"],
+#page-mod-lesson-view.path-mod-lesson .answeroption input[type="checkbox"] {
+  top: 0.25em;
+}
+#page-mod-lesson-view.path-mod-lesson .answeroptiongroup input[type="radio"] + label,
+#page-mod-lesson-view.path-mod-lesson .answeroption input[type="radio"] + label,
+#page-mod-lesson-view.path-mod-lesson .answeroptiongroup input[type="checkbox"] + label,
+#page-mod-lesson-view.path-mod-lesson .answeroption input[type="checkbox"] + label {
+  padding-left: 1.5em;
+}
+#page-mod-lesson-view.path-mod-lesson .answeroptiongroup .fgroup > span,
+#page-mod-lesson-view.path-mod-lesson .answeroption .fgroup > span {
+  display: table;
+}
+#page-mod-lesson-view.path-mod-lesson .answeroptiongroup .fgroup > span label p,
+#page-mod-lesson-view.path-mod-lesson .answeroption .fgroup > span label p {
+  display: inline;
 }
 /**
  * Snap user swatch.

@@ -259,3 +259,31 @@
     max-width: 100%;
     margin: 0 auto;
 }
+
+/**
+ * Mod lesson.
+ */
+
+/* Radio button and checkbox inputs. */
+#page-mod-lesson-view.path-mod-lesson {
+    .answeroptiongroup,
+    .answeroption {
+
+        input[type="radio"],
+        input[type="checkbox"] {
+            top: 0.25em;
+
+            + label {
+                padding-left: 1.5em;
+            }
+        }
+
+        /* Put options on seperate lines. */
+        .fgroup>span {
+            display: table; // SHAME - hack for lessons css/html display of radio buttons.
+            label p {
+                display: inline; // SHAME - fix for p tag in each label.
+            }
+        }
+    }
+}

@@ -26,6 +26,8 @@ defined('MOODLE_INTERNAL') || die;
 
 use theme_snap\admin_setting_configurl;
 use theme_snap\admin_setting_configcourseid;
+use theme_snap\admin_setting_configradiobuttons;
+
 
 $ADMIN->add('themes', new admin_category('theme_snap', 'Snap'));
 $settings = null; // Unsets the default $settings object initialised by Moodle.
@@ -38,6 +40,9 @@ $fssettings = new admin_settingpage('themesnapfeaturespots', get_string('feature
 
 // Featured courses settings.
 $fcsettings = new admin_settingpage('themesnapfeaturedcourses', get_string('featuredcourses', 'theme_snap'));
+
+// Feature spots settings.
+$resourcesettings = new admin_settingpage('themesnapresourcedisplay', get_string('resourcedisplay', 'theme_snap'));
 
 if ($ADMIN->fulltree) {
 
@@ -392,9 +397,26 @@ if ($ADMIN->fulltree) {
     $default = $unchecked;
     $setting = new admin_setting_configcheckbox($name, $title, $description, $default, $checked, $unchecked);
     $fcsettings->add($setting);
+
+    // Resource display help text.
+    $name = 'theme_snap/resourcedisplayhelp';
+    $heading = '';
+    $description = get_string('resourcedisplayhelp', 'theme_snap');
+    $setting = new admin_setting_heading($name, $heading, $description);
+    $resourcesettings->add($setting);
+
+    // Resource display options.
+    $name = 'theme_snap/resourcedisplay';
+    $title = new lang_string('resourcedisplay', 'theme_snap');
+    $radios = array('list' => 'list', 'card' => 'card');
+    $default = 'list';
+    $description = '';
+    $setting = new admin_setting_configradiobuttons($name, $title, $description, $default, $radios);
+    $resourcesettings->add($setting);
 }
 
 // Add theme pages.
 $ADMIN->add('theme_snap', $snapsettings);
 $ADMIN->add('theme_snap', $fssettings);
 $ADMIN->add('theme_snap', $fcsettings);
+$ADMIN->add('theme_snap', $resourcesettings);

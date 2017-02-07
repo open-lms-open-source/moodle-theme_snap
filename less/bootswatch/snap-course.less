@@ -587,32 +587,7 @@ body.format-flexpage .singlebutton {
 }
 
 
-// Resources to full width on mobile screen.
-@media screen and (max-width: @screen-xs) {
-    .section li.snap-resource,
-    .section li.snap-resource:hover {
-        width: 99%;
-        margin: 1em auto;
-        height: auto;
-        background-position: 95% 25%;
-        background-size: 60px;
 
-        .snap-asset-actions {
-            width: 250px;
-            .snap-asset-move,
-            .snap-edit-more-dropdown,
-            > a {
-                width: 25%;
-                text-align: left;
-                padding: 0;
-            }
-        }
-    }
-
-    .section .snap-asset-actions ul.dropdown-menu {
-        left: -125px; // magic number so dropdown does not go off the edge of the screen on small screen.
-    }
-}
 
 /**
  * resourcelinkdetails = moodle putting filetype on screen if option selected
@@ -761,18 +736,36 @@ body.format-flexpage .singlebutton {
 // -------------------------
 
 .section li.snap-resource {
+    display: block;
+    .alakazam();
+
+    .activityinstance .activityicon {
+        height: 1.5em;
+        width: 1.5em;
+        margin-top: 0;
+    }
+
+    .snap-asset-link {
+        font-size: 1em;
+    }
+}
+
+
+
+
+// -------------------------
+// Snap resources as cards.
+// -------------------------
+section.snap-resource-card li.snap-resource {
     height: 200px;
     width: 31%;
     margin: 1%;
     float: left;
-    display: block;
     clear: none;
     background-image: url([[pix:theme|file]]);
     background-repeat: no-repeat;
     background-position: 50% 70%;
     background-size: 38px auto;
-    // background-image: none !important;
-    .alakazam();
 
     &:hover {
         background-size: 50px auto;
@@ -784,57 +777,13 @@ body.format-flexpage .singlebutton {
         cursor: pointer;
     }
 
-    .activityinstance .activityicon {
-        height: 1.5em;
-        width: 1.5em;
-        margin-top: 0;
-    }
-
-    .snap-asset-link {
-        font-size: 1em;
+    .activityicon {
+        display: none;
     }
 
     .contentafterlink {
         font-size: small;
     }
-}
-
-// Resources to full width on tiny screen
-@media screen and (max-width: @screen-xs) {
-    .section li.snap-resource,
-    .section li.snap-resource:hover {
-        width: 99%;
-        margin: 1em auto;
-        height: auto;
-        background-image: none !important;
-
-        .activityinstance {
-            width: 75%;
-            .activityicon {
-                display: inline;
-            }
-        }
-
-        .snap-asset-actions {
-            width: 250px;
-            .snap-asset-move,
-            .snap-edit-more-dropdown,
-            > a {
-                width: 25%;
-                text-align: left;
-                padding: 0;
-            }
-        }
-    }
-
-    .section .snap-asset-actions ul.dropdown-menu {
-        left: -125px; // magic number so dropdown does not go off the edge of the screen on small screen.
-    }
-}
-
-// MIME TYPEs //
-// MICROSOFT //
-section li.snap-resource {
 
     &.snap-mime-document,
     &.snap-mime-writer,
@@ -931,6 +880,56 @@ section li.snap-resource {
 
     &.snap-mime-text {
         border-top-color: #f1bf26;
+    }
+}
+
+
+// Resources to full width on tiny screen
+@media screen and (max-width: @screen-xs) {
+    section.snap-resource-card li.snap-resource {
+        width: 99%;
+        margin: 1em auto;
+        height: auto;
+        background-image: none !important;
+
+        .activityinstance {
+            width: 75%;
+            .activityicon {
+                display: inline;
+            }
+        }
+
+        .snap-asset-actions {
+            width: 250px;
+            .snap-asset-move,
+            .snap-edit-more-dropdown,
+            > a {
+                width: 25%;
+                text-align: left;
+                padding: 0;
+            }
+        }
+    }
+
+    section.snap-resource-card .snap-asset-actions ul.dropdown-menu {
+        left: -125px; // magic number so dropdown does not go off the edge of the screen on small screen.
+    }
+}
+
+
+// -------------------------
+// Snap resources as list.
+// -------------------------
+section.snap-resource-list li.snap-resource {
+    border: none;
+    margin: 0 1%;
+
+    .snap-assettype {
+        display: none;
+    }
+
+    .snap-asset-actions {
+        width: 250px;
     }
 }
 
@@ -1704,7 +1703,7 @@ span.editinstructions {
 .section-drop,
 .snap-move-note {
     background: transparent url("[[pix:theme|move_here]]") no-repeat 50% 80%;
-    background-size: 70px 70px;
+    background-size: 2.5em;
 }
 
 .snap-move-section {
