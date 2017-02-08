@@ -138,13 +138,11 @@ define(
                             async: true,
                             url: readPageUrl,
                             success: function(data) {
-                                if (!$('#page-site-index').length && ajaxNotify.ifErrorShowBestMsg(data)) {
+                                if (ajaxNotify.ifErrorShowBestMsg(data)) {
                                     return;
                                 }
                                 // Update completion html for this page mod instance.
-                                if (data.completionhtml !== undefined) {
-                                    updateModCompletion(pageMod, data.completionhtml);
-                                }
+                                updateModCompletion(pageMod, data.completionhtml);
                             }
                         });
                     }
