@@ -54,7 +54,7 @@ if ($course !== null) {
 }
 $PAGE->set_url('/theme/snap/rest.php', array('action' => $action, 'contextid' => $context->id));
 
-if ($action === 'read_page') {
+if ($cm !== null) {
     $PAGE->set_cm($cm);
 }
 
