@@ -57,7 +57,7 @@ Feature: When the moodle theme is set to Snap, clicking on a resource with a med
       | Student must view this activity to complete it | 1 |
     And I click on "#id_submitbutton2" "css_element"
     And "span.autocompletion img[title='Not completed: test mp3 file']" "css_element" should exist
-    And I click on ".snap-resource[data-type='mp3']" "css_element"
+    And I click on ".snap-resource[data-type='mp3'] .snap-asset-link a" "css_element"
     And I wait until "#snap-light-box" "css_element" is visible
    Then "#snap-light-box" "css_element" should exist
     And I click on "#snap-light-box-close" "css_element"

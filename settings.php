@@ -408,8 +408,10 @@ if ($ADMIN->fulltree) {
     // Resource display options.
     $name = 'theme_snap/resourcedisplay';
     $title = new lang_string('resourcedisplay', 'theme_snap');
-    $radios = array('list' => 'list', 'card' => 'card');
-    $default = 'list';
+    $card = s(new lang_string('card', 'theme_snap'));
+    $list = s(new lang_string('list', 'theme_snap'));
+    $radios = array('list' => $list, 'card' => $card);
+    $default = 'card';
     $description = '';
     $setting = new admin_setting_configradiobuttons($name, $title, $description, $default, $radios);
     $resourcesettings->add($setting);
