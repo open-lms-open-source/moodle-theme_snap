@@ -350,7 +350,7 @@ class shared extends \renderer_base {
             'ajaxurl' => '/course/rest.php',
             'unavailablesections' => $unavailablesections,
             'unavailablemods' => $unavailablemods,
-            'enablecompletion' => $COURSE->enablecompletion
+            'enablecompletion' => isloggedin() && $COURSE->enablecompletion
         ];
 
         $forcepwdchange = (bool) get_user_preferences('auth_forcepasswordchange', false);

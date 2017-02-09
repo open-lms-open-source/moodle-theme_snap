@@ -37,10 +37,9 @@ $contextid = optional_param('contextid', $systemcontext->id, PARAM_INT);
 
 list($context, $course, $cm) = get_context_info_array($contextid);
 
-$nologinactions = ['get_loginstatus']; // Actions which do not require login checks.
-
+$nologinactions = ['get_loginstatus', 'read_page']; // Actions which do not require login checks.
 if (!in_array($action, $nologinactions)) {
-    $courseactions = ['get_media', 'read_page', 'get_page'];
+    $courseactions = ['get_media', 'get_page'];
     if (in_array($action, $courseactions)) {
         require_login($course, false, $cm, false, true);
     } else {
@@ -54,6 +53,10 @@ if ($course !== null) {
     $PAGE->set_course($course);
 }
 $PAGE->set_url('/theme/snap/rest.php', array('action' => $action, 'contextid' => $context->id));
+
+if ($cm !== null) {
+    $PAGE->set_cm($cm);
+}
 
 $router = new router();
 

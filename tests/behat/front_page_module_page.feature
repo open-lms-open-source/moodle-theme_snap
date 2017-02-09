@@ -80,3 +80,19 @@ Feature: Open page module inline
     And I should see "Page restricted"
     And I follow visible link "Read more&nbsp;»"
    Then I should see " Page restricted content"
+
+  @javascript
+  Scenario: Page mod should be visible at the front page for users that are not logged in.
+    Given the following "activities" exist:
+      | activity | course               | idnumber | name       | intro        | content       | completion | completionview | section |
+      | page     | Acceptance test site | page1    | Test page1 | Test page 1  | page content1 | 0          | 0              | 1       |
+    And I log in as "admin" (theme_snap)
+    And I am on site homepage
+    And I should see "Test page1"
+    And I should not see "page content1"
+    And I log out (theme_snap)
+    And I should not see "page content1"
+   Then I follow visible link "Read more&nbsp;"
+    And I should not see an error dialog
+    And I wait until ".pagemod-content[data-content-loaded=\"1\"]" "css_element" is visible
+    And I should see "page content1"
