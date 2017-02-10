@@ -10606,6 +10606,10 @@ fieldset[disabled] #id_cancel:focus {
 .path-mod-assign [data-region="popout-button"] img.smallicon {
   margin: 0 !important;
 }
+.path-mod-assign .gradingform_guide_comment_chooser > ul > li button {
+  text-align: left;
+  white-space: normal;
+}
 @media screen and (min-width: 992px) {
   .path-mod-assign {
     /* Remove margin from bs row so panes are full page. */
