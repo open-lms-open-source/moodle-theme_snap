@@ -115,7 +115,7 @@ class theme_snap_recent_forum_activity_test extends \advanced_testcase {
             $sturole->id);
 
         // Enrol teachers on both courses.
-        $teacherrole = $DB->get_record('role', array('shortname' => 'teacher'));
+        $teacherrole = $DB->get_record('role', array('shortname' => 'editingteacher'));
         $teachers = [$this->teacher2, $this->teacher1];
         foreach ($teachers as $teacher) {
             $this->getDataGenerator()->enrol_user($teacher->id,

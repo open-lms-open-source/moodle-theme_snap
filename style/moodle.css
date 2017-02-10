@@ -809,7 +809,6 @@ body#page-lib-editor-tinymce-plugins-moodlemedia-preview {
   color: #565656;
   padding: 15px;
   border-bottom: 1px solid #f5f5f5;
-  min-height: 16.6px;
   padding-right: 30px;
   font-size: 36px;
   min-height: 66px;
@@ -5597,6 +5596,11 @@ div.groupmanagementtable .members select {
 .loginbox .loginform .form-input input[type="password"]::-webkit-input-placeholder {
   color: #999;
 }
+.loginbox .loginform .form-input input[type="text"]::-ms-expand,
+.loginbox .loginform .form-input input[type="password"]::-ms-expand {
+  border: 0;
+  background-color: transparent;
+}
 .loginbox .loginform .form-input input[type="text"][disabled],
 .loginbox .loginform .form-input input[type="password"][disabled],
 .loginbox .loginform .form-input input[type="text"][readonly],
@@ -5637,8 +5641,8 @@ textarea.loginbox .loginform .form-input input[type="password"] {
   display: none;
 }
 /*!
- * Bootstrap v3.3.5 (http://getbootstrap.com)
- * Copyright 2011-2015 Twitter, Inc.
+ * Bootstrap v3.3.7 (http://getbootstrap.com)
+ * Copyright 2011-2016 Twitter, Inc.
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
  */
 /*! normalize.css v3.0.3 | MIT License | github.com/necolas/normalize.css */
@@ -6740,7 +6744,6 @@ a:focus {
   text-decoration: underline;
 }
 a:focus {
-  outline: thin dotted;
   outline: 5px auto -webkit-focus-ring-color;
   outline-offset: -2px;
 }
@@ -8170,7 +8173,6 @@ select[size] {
 input[type="file"]:focus,
 input[type="radio"]:focus,
 input[type="checkbox"]:focus {
-  outline: thin dotted;
   outline: 5px auto -webkit-focus-ring-color;
   outline-offset: -2px;
 }
@@ -8213,6 +8215,10 @@ output {
 }
 .form-control::-webkit-input-placeholder {
   color: #999;
+}
+.form-control::-ms-expand {
+  border: 0;
+  background-color: transparent;
 }
 .form-control[disabled],
 .form-control[readonly],
@@ -8620,7 +8626,7 @@ select[multiple].input-lg {
 }
 @media (min-width: 768px) {
   .form-horizontal .form-group-lg .control-label {
-    padding-top: 19.62px;
+    padding-top: 15px;
     font-size: 23px;
   }
 }
@@ -8657,7 +8663,6 @@ select[multiple].input-lg {
 .btn.focus,
 .btn:active.focus,
 .btn.active.focus {
-  outline: thin dotted;
   outline: 5px auto -webkit-focus-ring-color;
   outline-offset: -2px;
 }
@@ -8728,9 +8733,6 @@ fieldset[disabled] a.btn {
 .open > .dropdown-toggle.btn-default {
   background-image: none;
 }
-.btn-default.disabled,
-.btn-default[disabled],
-fieldset[disabled] .btn-default,
 .btn-default.disabled:hover,
 .btn-default[disabled]:hover,
 fieldset[disabled] .btn-default:hover,
@@ -8739,13 +8741,7 @@ fieldset[disabled] .btn-default:hover,
 fieldset[disabled] .btn-default:focus,
 .btn-default.disabled.focus,
 .btn-default[disabled].focus,
-fieldset[disabled] .btn-default.focus,
-.btn-default.disabled:active,
-.btn-default[disabled]:active,
-fieldset[disabled] .btn-default:active,
-.btn-default.disabled.active,
-.btn-default[disabled].active,
-fieldset[disabled] .btn-default.active {
+fieldset[disabled] .btn-default.focus {
   background-color: transparent;
   border-color: #03A9F4;
 }
@@ -8794,9 +8790,6 @@ fieldset[disabled] .btn-default.active {
 .open > .dropdown-toggle.btn-primary {
   background-image: none;
 }
-.btn-primary.disabled,
-.btn-primary[disabled],
-fieldset[disabled] .btn-primary,
 .btn-primary.disabled:hover,
 .btn-primary[disabled]:hover,
 fieldset[disabled] .btn-primary:hover,
@@ -8805,13 +8798,7 @@ fieldset[disabled] .btn-primary:hover,
 fieldset[disabled] .btn-primary:focus,
 .btn-primary.disabled.focus,
 .btn-primary[disabled].focus,
-fieldset[disabled] .btn-primary.focus,
-.btn-primary.disabled:active,
-.btn-primary[disabled]:active,
-fieldset[disabled] .btn-primary:active,
-.btn-primary.disabled.active,
-.btn-primary[disabled].active,
-fieldset[disabled] .btn-primary.active {
+fieldset[disabled] .btn-primary.focus {
   background-color: transparent;
   border-color: #03A9F4;
 }
@@ -8860,9 +8847,6 @@ fieldset[disabled] .btn-primary.active {
 .open > .dropdown-toggle.btn-success {
   background-image: none;
 }
-.btn-success.disabled,
-.btn-success[disabled],
-fieldset[disabled] .btn-success,
 .btn-success.disabled:hover,
 .btn-success[disabled]:hover,
 fieldset[disabled] .btn-success:hover,
@@ -8871,13 +8855,7 @@ fieldset[disabled] .btn-success:hover,
 fieldset[disabled] .btn-success:focus,
 .btn-success.disabled.focus,
 .btn-success[disabled].focus,
-fieldset[disabled] .btn-success.focus,
-.btn-success.disabled:active,
-.btn-success[disabled]:active,
-fieldset[disabled] .btn-success:active,
-.btn-success.disabled.active,
-.btn-success[disabled].active,
-fieldset[disabled] .btn-success.active {
+fieldset[disabled] .btn-success.focus {
   background-color: transparent;
   border-color: #8BC34A;
 }
@@ -8926,9 +8904,6 @@ fieldset[disabled] .btn-success.active {
 .open > .dropdown-toggle.btn-info {
   background-image: none;
 }
-.btn-info.disabled,
-.btn-info[disabled],
-fieldset[disabled] .btn-info,
 .btn-info.disabled:hover,
 .btn-info[disabled]:hover,
 fieldset[disabled] .btn-info:hover,
@@ -8937,13 +8912,7 @@ fieldset[disabled] .btn-info:hover,
 fieldset[disabled] .btn-info:focus,
 .btn-info.disabled.focus,
 .btn-info[disabled].focus,
-fieldset[disabled] .btn-info.focus,
-.btn-info.disabled:active,
-.btn-info[disabled]:active,
-fieldset[disabled] .btn-info:active,
-.btn-info.disabled.active,
-.btn-info[disabled].active,
-fieldset[disabled] .btn-info.active {
+fieldset[disabled] .btn-info.focus {
   background-color: transparent;
   border-color: #03A9F4;
 }
@@ -8992,9 +8961,6 @@ fieldset[disabled] .btn-info.active {
 .open > .dropdown-toggle.btn-warning {
   background-image: none;
 }
-.btn-warning.disabled,
-.btn-warning[disabled],
-fieldset[disabled] .btn-warning,
 .btn-warning.disabled:hover,
 .btn-warning[disabled]:hover,
 fieldset[disabled] .btn-warning:hover,
@@ -9003,13 +8969,7 @@ fieldset[disabled] .btn-warning:hover,
 fieldset[disabled] .btn-warning:focus,
 .btn-warning.disabled.focus,
 .btn-warning[disabled].focus,
-fieldset[disabled] .btn-warning.focus,
-.btn-warning.disabled:active,
-.btn-warning[disabled]:active,
-fieldset[disabled] .btn-warning:active,
-.btn-warning.disabled.active,
-.btn-warning[disabled].active,
-fieldset[disabled] .btn-warning.active {
+fieldset[disabled] .btn-warning.focus {
   background-color: transparent;
   border-color: #FF9800;
 }
@@ -9058,9 +9018,6 @@ fieldset[disabled] .btn-warning.active {
 .open > .dropdown-toggle.btn-danger {
   background-image: none;
 }
-.btn-danger.disabled,
-.btn-danger[disabled],
-fieldset[disabled] .btn-danger,
 .btn-danger.disabled:hover,
 .btn-danger[disabled]:hover,
 fieldset[disabled] .btn-danger:hover,
@@ -9069,13 +9026,7 @@ fieldset[disabled] .btn-danger:hover,
 fieldset[disabled] .btn-danger:focus,
 .btn-danger.disabled.focus,
 .btn-danger[disabled].focus,
-fieldset[disabled] .btn-danger.focus,
-.btn-danger.disabled:active,
-.btn-danger[disabled]:active,
-fieldset[disabled] .btn-danger:active,
-.btn-danger.disabled.active,
-.btn-danger[disabled].active,
-fieldset[disabled] .btn-danger.active {
+fieldset[disabled] .btn-danger.focus {
   background-color: transparent;
   border-color: #E91E63;
 }
@@ -9446,13 +9397,15 @@ tbody.collapse.in {
 }
 .btn-group-vertical > .btn:first-child:not(:last-child) {
   border-top-right-radius: 0px;
+  border-top-left-radius: 0px;
   border-bottom-right-radius: 0;
   border-bottom-left-radius: 0;
 }
 .btn-group-vertical > .btn:last-child:not(:first-child) {
-  border-bottom-left-radius: 0px;
   border-top-right-radius: 0;
   border-top-left-radius: 0;
+  border-bottom-right-radius: 0px;
+  border-bottom-left-radius: 0px;
 }
 .btn-group-vertical > .btn-group:not(:first-child):not(:last-child) > .btn {
   border-radius: 0;
@@ -9508,6 +9461,9 @@ tbody.collapse.in {
   float: left;
   width: 100%;
   margin-bottom: 0;
+}
+.input-group .form-control:focus {
+  z-index: 3;
 }
 .input-group-lg > .form-control,
 .input-group-lg > .input-group-addon,
@@ -10420,7 +10376,7 @@ fieldset[disabled] .navbar-inverse .btn-link:focus {
 .pagination > li > span:hover,
 .pagination > li > a:focus,
 .pagination > li > span:focus {
-  z-index: 3;
+  z-index: 2;
   color: #0275a8;
   background-color: #dadada;
   border-color: #999;
@@ -10431,7 +10387,7 @@ fieldset[disabled] .navbar-inverse .btn-link:focus {
 .pagination > .active > span:hover,
 .pagination > .active > a:focus,
 .pagination > .active > span:focus {
-  z-index: 2;
+  z-index: 3;
   color: #fff;
   background-color: #03A9F4;
   border-color: #03A9F4;
@@ -10653,6 +10609,8 @@ a.badge:focus {
 .container .jumbotron,
 .container-fluid .jumbotron {
   border-radius: 0px;
+  padding-left: 15px;
+  padding-right: 15px;
 }
 .jumbotron .container {
   max-width: 100%;
@@ -11589,7 +11547,6 @@ button.close {
 .modal-header {
   padding: 15px;
   border-bottom: 1px solid #f5f5f5;
-  min-height: 16.6px;
 }
 .modal-header .close {
   margin-top: -2px;
@@ -11977,6 +11934,7 @@ button.close {
   color: #fff;
   text-align: center;
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
+  background-color: rgba(0, 0, 0, 0);
 }
 .carousel-control.left {
   background-image: -webkit-linear-gradient(left, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0.0001) 100%);
@@ -12086,16 +12044,16 @@ button.close {
   .carousel-control .icon-next {
     width: 30px;
     height: 30px;
-    margin-top: -15px;
+    margin-top: -10px;
     font-size: 30px;
   }
   .carousel-control .glyphicon-chevron-left,
   .carousel-control .icon-prev {
-    margin-left: -15px;
+    margin-left: -10px;
   }
   .carousel-control .glyphicon-chevron-right,
   .carousel-control .icon-next {
-    margin-right: -15px;
+    margin-right: -10px;
   }
   .carousel-caption {
     left: 20%;
@@ -12108,6 +12066,10 @@ button.close {
 }
 .clearfix:before,
 .clearfix:after,
+.moodle-dialogue-base .moodle-dialogue-wrap .moodle-dialogue-hd:before,
+.moodle-dialogue-base .moodle-dialogue-wrap .moodle-dialogue-hd:after,
+.moodle-dialogue-base .moodle-dialogue-wrap .moodle-dialogue-hd.yui3-widget-hd:before,
+.moodle-dialogue-base .moodle-dialogue-wrap .moodle-dialogue-hd.yui3-widget-hd:after,
 .moodle-dialogue-base .moodle-dialogue .moodle-dialogue-content .moodle-dialogue-ft:before,
 .moodle-dialogue-base .moodle-dialogue .moodle-dialogue-content .moodle-dialogue-ft:after,
 .userprofile dl.list dd:before,
@@ -12144,6 +12106,8 @@ div.groupmanagementtable:after,
 .pager:after,
 .panel-body:before,
 .panel-body:after,
+.modal-header:before,
+.modal-header:after,
 .modal-footer:before,
 .modal-footer:after,
 .mform .fcontainer .fitem:before,
@@ -12164,10 +12128,18 @@ div.groupmanagementtable:after,
 .yui-skin-sam .yui3-tabview-list:after,
 .yui-bootstrapped .yui3-tabview-list:before,
 .yui-bootstrapped .yui3-tabview-list:after,
+.yui-skin-sam .yui-panel-container .yui-panel .hd:before,
+.yui-skin-sam .yui-panel-container .yui-panel .hd:after,
+.yui-bootstrapped .yui-panel-container .yui-panel .hd:before,
+.yui-bootstrapped .yui-panel-container .yui-panel .hd:after,
 .yui-skin-sam .yui-panel-container .yui-panel .ft:before,
 .yui-skin-sam .yui-panel-container .yui-panel .ft:after,
 .yui-bootstrapped .yui-panel-container .yui-panel .ft:before,
 .yui-bootstrapped .yui-panel-container .yui-panel .ft:after,
+.yui-skin-sam .yui3-panel .yui3-panel-content .yui3-widget-hd:before,
+.yui-skin-sam .yui3-panel .yui3-panel-content .yui3-widget-hd:after,
+.yui-bootstrapped .yui3-panel .yui3-panel-content .yui3-widget-hd:before,
+.yui-bootstrapped .yui3-panel .yui3-panel-content .yui3-widget-hd:after,
 .yui-skin-sam .yui3-panel .yui3-panel-content .yui3-widget-ft:before,
 .yui-skin-sam .yui3-panel .yui3-panel-content .yui3-widget-ft:after,
 .yui-bootstrapped .yui3-panel .yui3-panel-content .yui3-widget-ft:before,
@@ -12180,6 +12152,22 @@ div.groupmanagementtable:after,
 .yui-skin-sam#page-local-joulegrader-view .yui3-panel #fgroup_id_grading_buttonar:after,
 .yui-bootstrapped#page-local-joulegrader-view .yui3-panel #fgroup_id_grading_buttonar:before,
 .yui-bootstrapped#page-local-joulegrader-view .yui3-panel #fgroup_id_grading_buttonar:after,
+.user-enroller-panel .uep-wrap .uep-header:before,
+.user-enroller-panel .uep-wrap .uep-header:after,
+.other-user-manager-panel .uep-wrap .uep-header:before,
+.other-user-manager-panel .uep-wrap .uep-header:after,
+.user-enroller-panel .oump-wrap .uep-header:before,
+.user-enroller-panel .oump-wrap .uep-header:after,
+.other-user-manager-panel .oump-wrap .uep-header:before,
+.other-user-manager-panel .oump-wrap .uep-header:after,
+.user-enroller-panel .uep-wrap .oump-header:before,
+.user-enroller-panel .uep-wrap .oump-header:after,
+.other-user-manager-panel .uep-wrap .oump-header:before,
+.other-user-manager-panel .uep-wrap .oump-header:after,
+.user-enroller-panel .oump-wrap .oump-header:before,
+.user-enroller-panel .oump-wrap .oump-header:after,
+.other-user-manager-panel .oump-wrap .oump-header:before,
+.other-user-manager-panel .oump-wrap .oump-header:after,
 .user-enroller-panel .uep-wrap .uep-footer:before,
 .user-enroller-panel .uep-wrap .uep-footer:after,
 .other-user-manager-panel .uep-wrap .uep-footer:before,
@@ -12202,6 +12190,8 @@ div.groupmanagementtable:after,
   display: table;
 }
 .clearfix:after,
+.moodle-dialogue-base .moodle-dialogue-wrap .moodle-dialogue-hd:after,
+.moodle-dialogue-base .moodle-dialogue-wrap .moodle-dialogue-hd.yui3-widget-hd:after,
 .moodle-dialogue-base .moodle-dialogue .moodle-dialogue-content .moodle-dialogue-ft:after,
 .userprofile dl.list dd:after,
 #page-user-preferences .row-fluid:after,
@@ -12220,6 +12210,7 @@ div.groupmanagementtable:after,
 .navbar-collapse:after,
 .pager:after,
 .panel-body:after,
+.modal-header:after,
 .modal-footer:after,
 .mform .fcontainer .fitem:after,
 .mform fieldset .fitem:after,
@@ -12230,14 +12221,26 @@ div.groupmanagementtable:after,
 .yui-bootstrapped .yui-navset .yui-nav:after,
 .yui-skin-sam .yui3-tabview-list:after,
 .yui-bootstrapped .yui3-tabview-list:after,
+.yui-skin-sam .yui-panel-container .yui-panel .hd:after,
+.yui-bootstrapped .yui-panel-container .yui-panel .hd:after,
 .yui-skin-sam .yui-panel-container .yui-panel .ft:after,
 .yui-bootstrapped .yui-panel-container .yui-panel .ft:after,
+.yui-skin-sam .yui3-panel .yui3-panel-content .yui3-widget-hd:after,
+.yui-bootstrapped .yui3-panel .yui3-panel-content .yui3-widget-hd:after,
 .yui-skin-sam .yui3-panel .yui3-panel-content .yui3-widget-ft:after,
 .yui-bootstrapped .yui3-panel .yui3-panel-content .yui3-widget-ft:after,
 .yui-skin-sam .yui3-panel .yui3-panel-content .ft:after,
 .yui-bootstrapped .yui3-panel .yui3-panel-content .ft:after,
 .yui-skin-sam#page-local-joulegrader-view .yui3-panel #fgroup_id_grading_buttonar:after,
 .yui-bootstrapped#page-local-joulegrader-view .yui3-panel #fgroup_id_grading_buttonar:after,
+.user-enroller-panel .uep-wrap .uep-header:after,
+.other-user-manager-panel .uep-wrap .uep-header:after,
+.user-enroller-panel .oump-wrap .uep-header:after,
+.other-user-manager-panel .oump-wrap .uep-header:after,
+.user-enroller-panel .uep-wrap .oump-header:after,
+.other-user-manager-panel .uep-wrap .oump-header:after,
+.user-enroller-panel .oump-wrap .oump-header:after,
+.other-user-manager-panel .oump-wrap .oump-header:after,
 .user-enroller-panel .uep-wrap .uep-footer:after,
 .other-user-manager-panel .uep-wrap .uep-footer:after,
 .user-enroller-panel .oump-wrap .uep-footer:after,
@@ -14512,7 +14515,6 @@ input.form-submit.active.focus,
 input[type="button"].active.focus,
 input[type="submit"].active.focus,
 input[type="reset"].active.focus {
-  outline: thin dotted;
   outline: 5px auto -webkit-focus-ring-color;
   outline-offset: -2px;
 }
@@ -14662,7 +14664,6 @@ input.fp-btn-choose {
 #page-grade-grading-manage .actions .action.focus,
 #page-grade-grading-manage .actions .action:active.focus,
 #page-grade-grading-manage .actions .action.active.focus {
-  outline: thin dotted;
   outline: 5px auto -webkit-focus-ring-color;
   outline-offset: -2px;
 }
@@ -15536,7 +15537,6 @@ body.tag .managelink {
 .yui-button button:active.focus,
 .yui3-button.active.focus,
 .yui-button button.active.focus {
-  outline: thin dotted;
   outline: 5px auto -webkit-focus-ring-color;
   outline-offset: -2px;
 }
@@ -15630,12 +15630,6 @@ fieldset[disabled] a.yui-button button {
 .open > .dropdown-toggle.yui-button button {
   background-image: none;
 }
-.yui3-button.disabled,
-.yui-button button.disabled,
-.yui3-button[disabled],
-.yui-button button[disabled],
-fieldset[disabled] .yui3-button,
-fieldset[disabled] .yui-button button,
 .yui3-button.disabled:hover,
 .yui-button button.disabled:hover,
 .yui3-button[disabled]:hover,
@@ -15653,19 +15647,7 @@ fieldset[disabled] .yui-button button:focus,
 .yui3-button[disabled].focus,
 .yui-button button[disabled].focus,
 fieldset[disabled] .yui3-button.focus,
-fieldset[disabled] .yui-button button.focus,
-.yui3-button.disabled:active,
-.yui-button button.disabled:active,
-.yui3-button[disabled]:active,
-.yui-button button[disabled]:active,
-fieldset[disabled] .yui3-button:active,
-fieldset[disabled] .yui-button button:active,
-.yui3-button.disabled.active,
-.yui-button button.disabled.active,
-.yui3-button[disabled].active,
-.yui-button button[disabled].active,
-fieldset[disabled] .yui3-button.active,
-fieldset[disabled] .yui-button button.active {
+fieldset[disabled] .yui-button button.focus {
   background-color: transparent;
   border-color: #03A9F4;
 }
@@ -16263,7 +16245,6 @@ fieldset[disabled] .yui-button button.active {
   font-family: "Roboto", "Fira Sans", "Segoe UI", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif;
   padding: 15px;
   border-bottom: 1px solid #f5f5f5;
-  min-height: 16.6px;
 }
 .yui-skin-sam .yui-panel-container .yui-panel .bd,
 .yui-bootstrapped .yui-panel-container .yui-panel .bd {
@@ -16325,7 +16306,6 @@ fieldset[disabled] .yui-button button.active {
   text-align: left;
   padding: 15px;
   border-bottom: 1px solid #f5f5f5;
-  min-height: 16.6px;
   min-height: 66px;
 }
 .yui-skin-sam .yui3-panel .yui3-panel-content .yui3-widget-hd .yui3-widget-buttons,
@@ -16784,7 +16764,6 @@ fieldset[disabled] .yui-button button.active {
   font-family: "Roboto", "Fira Sans", "Segoe UI", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif;
   padding: 15px;
   border-bottom: 1px solid #f5f5f5;
-  min-height: 16.6px;
   border-top-right-radius: 0px;
   border-top-left-radius: 0px;
 }
@@ -18106,7 +18085,6 @@ input[type="reset"]:focus {
 #page-site-index .section-modchooser-link .section-modchooser-text.focus,
 #page-site-index .section-modchooser-link .section-modchooser-text:active.focus,
 #page-site-index .section-modchooser-link .section-modchooser-text.active.focus {
-  outline: thin dotted;
   outline: 5px auto -webkit-focus-ring-color;
   outline-offset: -2px;
 }
@@ -18172,9 +18150,6 @@ fieldset[disabled] a#page-site-index .section-modchooser-link .section-modchoose
 .open > .dropdown-toggle#page-site-index .section-modchooser-link .section-modchooser-text {
   background-image: none;
 }
-#page-site-index .section-modchooser-link .section-modchooser-text.disabled,
-#page-site-index .section-modchooser-link .section-modchooser-text[disabled],
-fieldset[disabled] #page-site-index .section-modchooser-link .section-modchooser-text,
 #page-site-index .section-modchooser-link .section-modchooser-text.disabled:hover,
 #page-site-index .section-modchooser-link .section-modchooser-text[disabled]:hover,
 fieldset[disabled] #page-site-index .section-modchooser-link .section-modchooser-text:hover,
@@ -18183,13 +18158,7 @@ fieldset[disabled] #page-site-index .section-modchooser-link .section-modchooser
 fieldset[disabled] #page-site-index .section-modchooser-link .section-modchooser-text:focus,
 #page-site-index .section-modchooser-link .section-modchooser-text.disabled.focus,
 #page-site-index .section-modchooser-link .section-modchooser-text[disabled].focus,
-fieldset[disabled] #page-site-index .section-modchooser-link .section-modchooser-text.focus,
-#page-site-index .section-modchooser-link .section-modchooser-text.disabled:active,
-#page-site-index .section-modchooser-link .section-modchooser-text[disabled]:active,
-fieldset[disabled] #page-site-index .section-modchooser-link .section-modchooser-text:active,
-#page-site-index .section-modchooser-link .section-modchooser-text.disabled.active,
-#page-site-index .section-modchooser-link .section-modchooser-text[disabled].active,
-fieldset[disabled] #page-site-index .section-modchooser-link .section-modchooser-text.active {
+fieldset[disabled] #page-site-index .section-modchooser-link .section-modchooser-text.focus {
   background-color: transparent;
   border-color: #03A9F4;
 }
@@ -19201,6 +19170,8 @@ http://blog.rodneyrehm.de/archives/34-iOS7-Mobile-Safari-And-Viewport-Units.html
   }
 }
 .coursebox.clearfix,
+.coursebox.moodle-dialogue-base .moodle-dialogue-wrap .moodle-dialogue-hd,
+.coursebox.moodle-dialogue-base .moodle-dialogue-wrap .moodle-dialogue-hd.yui3-widget-hd,
 .coursebox.moodle-dialogue-base .moodle-dialogue .moodle-dialogue-content .moodle-dialogue-ft,
 .coursebox.userprofile dl.list dd,
 .coursebox#page-user-preferences .row-fluid,
@@ -19219,6 +19190,7 @@ http://blog.rodneyrehm.de/archives/34-iOS7-Mobile-Safari-And-Viewport-Units.html
 .coursebox.navbar-collapse,
 .coursebox.pager,
 .coursebox.panel-body,
+.coursebox.modal-header,
 .coursebox.modal-footer,
 .coursebox.mform .fcontainer .fitem,
 .coursebox.mform fieldset .fitem,
@@ -19229,14 +19201,26 @@ http://blog.rodneyrehm.de/archives/34-iOS7-Mobile-Safari-And-Viewport-Units.html
 .coursebox.yui-bootstrapped .yui-navset .yui-nav,
 .coursebox.yui-skin-sam .yui3-tabview-list,
 .coursebox.yui-bootstrapped .yui3-tabview-list,
+.coursebox.yui-skin-sam .yui-panel-container .yui-panel .hd,
+.coursebox.yui-bootstrapped .yui-panel-container .yui-panel .hd,
 .coursebox.yui-skin-sam .yui-panel-container .yui-panel .ft,
 .coursebox.yui-bootstrapped .yui-panel-container .yui-panel .ft,
+.coursebox.yui-skin-sam .yui3-panel .yui3-panel-content .yui3-widget-hd,
+.coursebox.yui-bootstrapped .yui3-panel .yui3-panel-content .yui3-widget-hd,
 .coursebox.yui-skin-sam .yui3-panel .yui3-panel-content .yui3-widget-ft,
 .coursebox.yui-bootstrapped .yui3-panel .yui3-panel-content .yui3-widget-ft,
 .coursebox.yui-skin-sam .yui3-panel .yui3-panel-content .ft,
 .coursebox.yui-bootstrapped .yui3-panel .yui3-panel-content .ft,
 .coursebox.yui-skin-sam#page-local-joulegrader-view .yui3-panel #fgroup_id_grading_buttonar,
 .coursebox.yui-bootstrapped#page-local-joulegrader-view .yui3-panel #fgroup_id_grading_buttonar,
+.coursebox.user-enroller-panel .uep-wrap .uep-header,
+.coursebox.other-user-manager-panel .uep-wrap .uep-header,
+.coursebox.user-enroller-panel .oump-wrap .uep-header,
+.coursebox.other-user-manager-panel .oump-wrap .uep-header,
+.coursebox.user-enroller-panel .uep-wrap .oump-header,
+.coursebox.other-user-manager-panel .uep-wrap .oump-header,
+.coursebox.user-enroller-panel .oump-wrap .oump-header,
+.coursebox.other-user-manager-panel .oump-wrap .oump-header,
 .coursebox.user-enroller-panel .uep-wrap .uep-footer,
 .coursebox.other-user-manager-panel .uep-wrap .uep-footer,
 .coursebox.user-enroller-panel .oump-wrap .uep-footer,
@@ -20087,7 +20071,6 @@ table#user-grades tr.avg td.cell {
 .gradingform_checklist.editor .additem input.active.focus,
 .gradingform_rubric.editor .addlevel input.active.focus,
 .gradingform_rubric.editor .addcriterion input.active.focus {
-  outline: thin dotted;
   outline: 5px auto -webkit-focus-ring-color;
   outline-offset: -2px;
 }
@@ -20237,18 +20220,6 @@ fieldset[disabled] a.gradingform_rubric.editor .addcriterion input {
 .open > .dropdown-toggle.gradingform_rubric.editor .addcriterion input {
   background-image: none;
 }
-.gradingform_checklist.editor .addgroup input.disabled,
-.gradingform_checklist.editor .additem input.disabled,
-.gradingform_rubric.editor .addlevel input.disabled,
-.gradingform_rubric.editor .addcriterion input.disabled,
-.gradingform_checklist.editor .addgroup input[disabled],
-.gradingform_checklist.editor .additem input[disabled],
-.gradingform_rubric.editor .addlevel input[disabled],
-.gradingform_rubric.editor .addcriterion input[disabled],
-fieldset[disabled] .gradingform_checklist.editor .addgroup input,
-fieldset[disabled] .gradingform_checklist.editor .additem input,
-fieldset[disabled] .gradingform_rubric.editor .addlevel input,
-fieldset[disabled] .gradingform_rubric.editor .addcriterion input,
 .gradingform_checklist.editor .addgroup input.disabled:hover,
 .gradingform_checklist.editor .additem input.disabled:hover,
 .gradingform_rubric.editor .addlevel input.disabled:hover,
@@ -20284,31 +20255,7 @@ fieldset[disabled] .gradingform_rubric.editor .addcriterion input:focus,
 fieldset[disabled] .gradingform_checklist.editor .addgroup input.focus,
 fieldset[disabled] .gradingform_checklist.editor .additem input.focus,
 fieldset[disabled] .gradingform_rubric.editor .addlevel input.focus,
-fieldset[disabled] .gradingform_rubric.editor .addcriterion input.focus,
-.gradingform_checklist.editor .addgroup input.disabled:active,
-.gradingform_checklist.editor .additem input.disabled:active,
-.gradingform_rubric.editor .addlevel input.disabled:active,
-.gradingform_rubric.editor .addcriterion input.disabled:active,
-.gradingform_checklist.editor .addgroup input[disabled]:active,
-.gradingform_checklist.editor .additem input[disabled]:active,
-.gradingform_rubric.editor .addlevel input[disabled]:active,
-.gradingform_rubric.editor .addcriterion input[disabled]:active,
-fieldset[disabled] .gradingform_checklist.editor .addgroup input:active,
-fieldset[disabled] .gradingform_checklist.editor .additem input:active,
-fieldset[disabled] .gradingform_rubric.editor .addlevel input:active,
-fieldset[disabled] .gradingform_rubric.editor .addcriterion input:active,
-.gradingform_checklist.editor .addgroup input.disabled.active,
-.gradingform_checklist.editor .additem input.disabled.active,
-.gradingform_rubric.editor .addlevel input.disabled.active,
-.gradingform_rubric.editor .addcriterion input.disabled.active,
-.gradingform_checklist.editor .addgroup input[disabled].active,
-.gradingform_checklist.editor .additem input[disabled].active,
-.gradingform_rubric.editor .addlevel input[disabled].active,
-.gradingform_rubric.editor .addcriterion input[disabled].active,
-fieldset[disabled] .gradingform_checklist.editor .addgroup input.active,
-fieldset[disabled] .gradingform_checklist.editor .additem input.active,
-fieldset[disabled] .gradingform_rubric.editor .addlevel input.active,
-fieldset[disabled] .gradingform_rubric.editor .addcriterion input.active {
+fieldset[disabled] .gradingform_rubric.editor .addcriterion input.focus {
   background-color: transparent;
   border-color: #03A9F4;
 }
@@ -23078,7 +23025,6 @@ span.editinstructions {
 #changenumsections .reduce-sections:active.focus,
 #changenumsections .increase-sections.active.focus,
 #changenumsections .reduce-sections.active.focus {
-  outline: thin dotted;
   outline: 5px auto -webkit-focus-ring-color;
   outline-offset: -2px;
 }

@@ -50,13 +50,13 @@ class kernel_test extends \basic_testcase {
     }
 
     public function test_resolve_controller_callback() {
-        $controller = $this->getMock('\theme_snap\controller\controller_abstract', array(
+        $controller = $this->createPartialMock('\theme_snap\controller\controller_abstract', array(
             'init',
             'test_action',
             'require_capability',
         ));
 
-        $router = $this->getMock('\theme_snap\controller\router', array('route_action'));
+        $router = $this->createPartialMock('\theme_snap\controller\router', array('route_action'));
         $router->expects($this->once())
             ->method('route_action')
             ->will($this->returnValue(array($controller, 'test_action')));

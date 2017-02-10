@@ -61,7 +61,9 @@ define(['jquery', 'core/ajax', 'core/notification', 'core/log', 'theme_snap/mode
              */
             var getCardTitle = function(cardEl, lowerCase) {
                 // The title comes back in lower case by default as it's used for case insensitive sorting.
-                lowerCase = null ? null : true;
+                if (lowerCase === undefined) {
+                    lowerCase = true;
+                }
                 var title = $(cardEl).find('.coursefullname').html();
                 if (lowerCase) {
                     title = title.toLowerCase();
@@ -147,7 +149,7 @@ define(['jquery', 'core/ajax', 'core/notification', 'core/log', 'theme_snap/mode
                 }
 
                 cardsHidden.updateToggleCount();
-                if (typeof(onMoveComplete) === 'function') {
+                if (typeof (onMoveComplete) === 'function') {
                     onMoveComplete();
                 }
             };

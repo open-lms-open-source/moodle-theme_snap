@@ -20,6 +20,7 @@
  */
 
 /* exported snapInit */
+/* eslint no-invalid-this: "warn"*/
 
 /**
  * Main snap initialising function.
@@ -151,7 +152,7 @@ define(['jquery', 'theme_snap/bootstrap', 'core/log', 'theme_snap/headroom', 'th
             var urlParams = getURLParams(location.href);
 
             // If calendar navigation has been clicked then go back to calendar.
-            if (onCoursePage() && typeof(urlParams.time) !== 'undefined') {
+            if (onCoursePage() && typeof (urlParams.time) !== 'undefined') {
                 location.hash = 'coursetools';
                 if ($('.block_calendar_month')) {
                     util.scrollToElement($('.block_calendar_month'));
@@ -168,7 +169,7 @@ define(['jquery', 'theme_snap/bootstrap', 'core/log', 'theme_snap/headroom', 'th
             var paramchecks = ['bui_deleteid', 'bui_editid'];
             for (var p in paramchecks) {
                 var param = paramchecks[p];
-                if (typeof(urlParams[param]) !== 'undefined') {
+                if (typeof (urlParams[param]) !== 'undefined') {
                     formselectors.push('#notice form');
                     break;
                 }
@@ -279,8 +280,7 @@ define(['jquery', 'theme_snap/bootstrap', 'core/log', 'theme_snap/headroom', 'th
                 if (newHash !== lastHash) {
                     if (location.hash === '#primary-nav') {
                         personalMenu.update();
-                    }
-                    else {
+                    } else {
                         $('#page, #moodle-footer, #js-personal-menu-trigger, #logo, .skiplinks').css('display', '');
                         if (onCoursePage()) {
                             log.info('show section', e.target);
@@ -416,8 +416,7 @@ define(['jquery', 'theme_snap/bootstrap', 'core/log', 'theme_snap/headroom', 'th
                     if ($news.is('.state-expanded')) {
                         $news.find('.news-article-message').focus();
                         $news.attr('aria-expanded', 'true');
-                    }
-                    else {
+                    } else {
                         $news.focus();
                         $news.attr('aria-expanded', 'false');
                     }
@@ -449,10 +448,10 @@ define(['jquery', 'theme_snap/bootstrap', 'core/log', 'theme_snap/headroom', 'th
             $(function() {
                 var supportsTouch = false;
                 if ('ontouchstart' in window) {
-                    //iOS & android
+                    // iOS & android
                     supportsTouch = true;
                 } else if (window.navigator.msPointerEnabled) {
-                    //Win8
+                    // Win8
                     supportsTouch = true;
                 }
                 if (!supportsTouch) {
@@ -558,7 +557,7 @@ define(['jquery', 'theme_snap/bootstrap', 'core/log', 'theme_snap/headroom', 'th
                             '#page-mod-workshop-mod #id_gradingsettings',
                             '#page-mod-choicegroup-mod #id_miscellaneoussettingshdr',
                             '#page-mod-choicegroup-mod #id_groups',
-                            '#page-mod-scorm-mod #id_packagehdr',
+                            '#page-mod-scorm-mod #id_packagehdr'
                         ];
                         vital = vital.join();
 
