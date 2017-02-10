@@ -211,7 +211,7 @@ class course_renderer extends \core_course_renderer {
         // Display the link to the module (or do nothing if module has no url).
         $cmname = $this->course_section_cm_name($mod, $displayoptions);
         $assetlink = '';
-        
+
         if (!empty($cmname)) {
             // Activity/resource type.
             $snapmodtype = $this->get_mod_type($mod)[0];
@@ -230,10 +230,10 @@ class course_renderer extends \core_course_renderer {
         if($snapcompletiondata) {
             $snapcompletionmeta = '<div class="snap-completion-meta">'.$snapcompletiondata.'</div>';
         }
-        
+
         // Completion tracking.
         $completiontracking = '<div class="snap-asset-completion-tracking">'.$this->course_section_cm_completion($course, $completioninfo, $mod, $displayoptions).'</div>';
-        
+
         // Draft status - always output, shown via css of parent.
         $drafttag = '<div class="snap-draft-tag">'.get_string('draft', 'theme_snap').'</div>';
 
@@ -562,7 +562,7 @@ class course_renderer extends \core_course_renderer {
 
                 $content .= html_writer::link($url, $engagementstr);
             }
-            
+
         } else {
             // Feedback meta.
             if (!empty($meta->grade)) {
@@ -575,7 +575,7 @@ class course_renderer extends \core_course_renderer {
                 $feedbackavailable = get_string('feedbackavailable', 'theme_snap');
                 $content .= html_writer::link($url, $feedbackavailable);
             }
-            
+
             // If submissions are not allowed, return the content.
             if (!empty($meta->timeopen) && $meta->timeopen > time()) {
                 // TODO - spit out a 'submissions allowed from' tag.
@@ -583,7 +583,7 @@ class course_renderer extends \core_course_renderer {
             }
             $content .= $this->submission_cta($mod, $meta);
         }
-        
+
         // Activity due date.
         if (!empty($meta->timeclose)) {
             $due = get_string('due', 'theme_snap');
@@ -844,7 +844,6 @@ class course_renderer extends \core_course_renderer {
         $snapmultimedia = $this->snap_multimedia();
 
         if ($mod->modname === 'resource') {
-            $activityimg = '';
             $extension = $this->get_mod_type($mod)[1];
             if (in_array($extension, $snapmultimedia) ) {
                 // For multimedia we need to handle the popup setting.
@@ -858,7 +857,6 @@ class course_renderer extends \core_course_renderer {
             }
         }
         if ($mod->modname === 'url') {
-            $activityimg = '';
             // Set the url to redirect 1 to avoid intermediate pages.
             $url .= "&amp;redirect=1";
             $target = "target='_blank'";

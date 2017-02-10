@@ -320,8 +320,14 @@ define(
                     $(this).closest('li.activity').toggleClass('draft');
                 });
 
+                // Make lightbox for list display of resources.
+                $(document).on('click', '.js-snap-media .snap-asset-link a', function(e) {
+                    lightboxMedia($(this).closest('.snap-resource'));
+                    e.preventDefault();
+                });
+
                 // Make resource cards clickable.
-                $(document).on('click', '.snap-resource', function(e) {
+                $(document).on('click', '.snap-resource-card .snap-resource', function(e) {
                     var trigger = $(e.target),
                         hreftarget = '_self',
                         link = $(trigger).closest('.snap-resource').find('.snap-asset-link a'),
@@ -331,7 +337,9 @@ define(
                     }
 
                     // Excludes any clicks in the actions menu, on links or forms.
-                    if (!$(trigger).closest('form, a, input, label').length) {
+                    var selector = '.snap-asset-completion-tracking, .snap-asset-actions, .contentafterlink a';
+                    var withintarget = $(trigger).closest(selector).length;
+                    if (!withintarget) {
                         if ($(this).hasClass('js-snap-media')) {
                             lightboxMedia(this);
                         } else {
