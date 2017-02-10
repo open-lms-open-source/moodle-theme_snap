@@ -408,8 +408,8 @@ if ($ADMIN->fulltree) {
     // Resource display options.
     $name = 'theme_snap/resourcedisplay';
     $title = new lang_string('resourcedisplay', 'theme_snap');
-    $card = s(new lang_string('card', 'theme_snap'));
-    $list = s(new lang_string('list', 'theme_snap'));
+    $card = new lang_string('card', 'theme_snap');
+    $list = new lang_string('list', 'theme_snap');
     $radios = array('list' => $list, 'card' => $card);
     $default = 'card';
     $description = '';

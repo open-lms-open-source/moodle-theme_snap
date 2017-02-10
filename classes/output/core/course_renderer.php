@@ -857,7 +857,6 @@ class course_renderer extends \core_course_renderer {
             }
         }
         if ($mod->modname === 'url') {
-            $activityimg = '';
             // Set the url to redirect 1 to avoid intermediate pages.
             $url .= "&amp;redirect=1";
             $target = "target='_blank'";

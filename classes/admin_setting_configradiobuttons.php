@@ -19,7 +19,7 @@ namespace theme_snap;
 defined('MOODLE_INTERNAL') || die();
 
 /**
- * Class to render input of type url in settings pages.
+ * Class to render radio buttons in settings pages.
  * @package theme_snap
  * @author SL
  * @copyright Blackboard Ltd 2017
@@ -54,17 +54,16 @@ class admin_setting_configradiobuttons extends \admin_setting {
         if (!empty($current)) {
             $checkedvalue = $current;
         }
-        $inputs = '<div class="radio" id="'.$this->get_id().'">';
+        $inputs = '<div class="form-radio" ><div class="radio" id="'.$this->get_id().'">';
         foreach ($this->radios as $key => $value) {
             $checked = '';
             if ($key === $checkedvalue) {
                $checked = 'checked';
            }
-           $inputs .= '<label id="' .$this->get_full_name().'_'.$key. '"><input type="radio" name="' .$this->get_full_name(). '" value="' .$key. '" ' .$checked. '>' .$value. '</label><br>';
+           $inputs .= '<label id="' .$this->get_full_name().'_'.$key. '"><input type="radio" name="' .$this->get_full_name(). '" value="' .$key. '" ' .$checked. '>' .s($value). '</label><br>';
         }
-        $inputs .= '</div>';
+        $inputs .= '</div></div>';
         return format_admin_setting($this, $this->visiblename,
-        '<div class="form-radio" >'
         .$inputs,
         $this->description, true, '', $default, $query);
    }
