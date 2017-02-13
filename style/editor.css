@@ -10534,10 +10534,6 @@ fieldset[disabled] #id_cancel:focus {
 .path-mod-assign [data-region="popout-button"] img.smallicon {
   margin: 0 !important;
 }
-.path-mod-assign .gradingform_guide_comment_chooser > ul > li button {
-  text-align: left;
-  white-space: normal;
-}
 @media screen and (min-width: 992px) {
   .path-mod-assign {
     /* Remove margin from bs row so panes are full page. */
@@ -10756,6 +10752,14 @@ fieldset[disabled] .path-admin-tool-lp [data-region="filtercompetencies"] button
 #page-mod-lesson-view.path-mod-lesson .answeroptiongroup .fgroup > span label p,
 #page-mod-lesson-view.path-mod-lesson .answeroption .fgroup > span label p {
   display: inline;
+}
+.gradingform_guide_comment_chooser {
+  max-height: 60vh;
+  overflow-y: auto;
+}
+.gradingform_guide_comment_chooser > ul > li button {
+  text-align: left;
+  white-space: normal;
 }
 /**
  * Snap user swatch.
