@@ -60,14 +60,6 @@ if ($coursemainpage) {
 ?>
 </div>
 </div>
-
-<?php
-$cardclass = '';
-if (!empty($PAGE->theme->settings->resourcedisplay)) {
-    $cardclass = 'class="snap-resource-' .$PAGE->theme->settings->resourcedisplay. '"';
-}
-?>
-
 <section id="region-main" <?php echo $cardclass ?> >
 <?php
 echo $OUTPUT->course_content_header();
@@ -79,7 +71,6 @@ echo $OUTPUT->course_content_footer();
 </section>
 
 <?php
-
 require(__DIR__.'/moodle-blocks.php');
 
 if ($coursemainpage) {
