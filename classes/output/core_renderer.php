@@ -1293,7 +1293,9 @@ HTML;
 
         // Add resource display class.
         if (!empty($PAGE->theme->settings->resourcedisplay)) {
-            $classes[] = 'snap-resource-' .$PAGE->theme->settings->resourcedisplay;
+            $classes[] = 'snap-resource-'.$PAGE->theme->settings->resourcedisplay;
+        } else {
+            $classes[] = 'snap-resource-card';
         }
 
         // Add theme-snap class so modules can customise css for snap.
