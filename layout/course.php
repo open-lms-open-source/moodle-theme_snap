@@ -60,7 +60,7 @@ if ($coursemainpage) {
 ?>
 </div>
 </div>
-<section id="region-main" <?php echo $cardclass ?> >
+<section id="region-main">
 <?php
 echo $OUTPUT->course_content_header();
 $output = $PAGE->get_renderer('core', 'course');
