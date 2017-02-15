@@ -22299,7 +22299,7 @@ body.format-flexpage .singlebutton {
 .section li.snap-resource .snap-asset-link {
   font-size: 1em;
 }
-section.snap-resource-card li.snap-resource {
+body.snap-resource-card li.snap-resource {
   height: 200px;
   width: 31%;
   margin: 1%;
@@ -22311,148 +22311,145 @@ section.snap-resource-card li.snap-resource {
   -webkit-background-size: 38px auto;
           background-size: 38px auto;
 }
-section.snap-resource-card li.snap-resource:hover {
+body.snap-resource-card li.snap-resource:hover {
   -webkit-background-size: 50px auto;
           background-size: 50px auto;
 }
-section.snap-resource-card li.snap-resource .asset-wrapper {
+body.snap-resource-card li.snap-resource .asset-wrapper {
   cursor: pointer;
 }
-section.snap-resource-card li.snap-resource .asset-wrapper:before,
-section.snap-resource-card li.snap-resource .asset-wrapper:after {
+body.snap-resource-card li.snap-resource .asset-wrapper:before,
+body.snap-resource-card li.snap-resource .asset-wrapper:after {
   content: " ";
   display: table;
 }
-section.snap-resource-card li.snap-resource .asset-wrapper:after {
+body.snap-resource-card li.snap-resource .asset-wrapper:after {
   clear: both;
 }
-section.snap-resource-card li.snap-resource .asset-wrapper:before,
-section.snap-resource-card li.snap-resource .asset-wrapper:after {
+body.snap-resource-card li.snap-resource .asset-wrapper:before,
+body.snap-resource-card li.snap-resource .asset-wrapper:after {
   content: " ";
   display: table;
 }
-section.snap-resource-card li.snap-resource .asset-wrapper:after {
+body.snap-resource-card li.snap-resource .asset-wrapper:after {
   clear: both;
 }
-section.snap-resource-card li.snap-resource .activityicon {
+body.snap-resource-card li.snap-resource .activityicon {
   display: none;
 }
-section.snap-resource-card li.snap-resource .contentafterlink {
+body.snap-resource-card li.snap-resource .contentafterlink {
   font-size: small;
 }
-section.snap-resource-card li.snap-resource.snap-mime-document,
-section.snap-resource-card li.snap-resource.snap-mime-writer,
-section.snap-resource-card li.snap-resource.snap-mime-oth,
-section.snap-resource-card li.snap-resource.snap-mime-text {
+body.snap-resource-card li.snap-resource.snap-mime-document,
+body.snap-resource-card li.snap-resource.snap-mime-writer,
+body.snap-resource-card li.snap-resource.snap-mime-oth,
+body.snap-resource-card li.snap-resource.snap-mime-text {
   border-top-color: #03A9F4;
   background-image: url([[pix:core|/f/document]]);
 }
-section.snap-resource-card li.snap-resource.snap-mime-powerpoint,
-section.snap-resource-card li.snap-resource.snap-mime-impress {
+body.snap-resource-card li.snap-resource.snap-mime-powerpoint,
+body.snap-resource-card li.snap-resource.snap-mime-impress {
   border-top-color: #ff7300;
   background-image: url([[pix:core|/f/powerpoint]]);
 }
-section.snap-resource-card li.snap-resource.snap-mime-spreadsheet,
-section.snap-resource-card li.snap-resource.snap-mime-chart,
-section.snap-resource-card li.snap-resource.snap-mime-database,
-section.snap-resource-card li.snap-resource.snap-mime-calc {
+body.snap-resource-card li.snap-resource.snap-mime-spreadsheet,
+body.snap-resource-card li.snap-resource.snap-mime-chart,
+body.snap-resource-card li.snap-resource.snap-mime-database,
+body.snap-resource-card li.snap-resource.snap-mime-calc {
   border-top-color: #009e51;
   background-image: url([[pix:core|/f/spreadsheet]]);
 }
-section.snap-resource-card li.snap-resource.snap-mime-pdf,
-section.snap-resource-card li.snap-resource.snap-mime-eps,
-section.snap-resource-card li.snap-resource.snap-mime-flash {
+body.snap-resource-card li.snap-resource.snap-mime-pdf,
+body.snap-resource-card li.snap-resource.snap-mime-eps,
+body.snap-resource-card li.snap-resource.snap-mime-flash {
   border-top-color: #F44336;
   background-image: url([[pix:core|/f/pdf]]);
 }
-section.snap-resource-card li.snap-resource.snap-mime-flash {
+body.snap-resource-card li.snap-resource.snap-mime-flash {
   background-image: url([[pix:core|/f/flash]]);
 }
-section.snap-resource-card li.snap-resource.snap-mime-mp3,
-section.snap-resource-card li.snap-resource.snap-mime-wav,
-section.snap-resource-card li.snap-resource.snap-mime-audio {
+body.snap-resource-card li.snap-resource.snap-mime-mp3,
+body.snap-resource-card li.snap-resource.snap-mime-wav,
+body.snap-resource-card li.snap-resource.snap-mime-audio {
   border-top-color: #8BC34A;
   background-image: url([[pix:core|/f/audio]]);
 }
-section.snap-resource-card li.snap-resource.snap-mime-mov,
-section.snap-resource-card li.snap-resource.snap-mime-wmv,
-section.snap-resource-card li.snap-resource.snap-mime-video,
-section.snap-resource-card li.snap-resource.snap-mime-quicktime,
-section.snap-resource-card li.snap-resource.snap-mime-mpeg,
-section.snap-resource-card li.snap-resource.snap-mime-avi {
+body.snap-resource-card li.snap-resource.snap-mime-mov,
+body.snap-resource-card li.snap-resource.snap-mime-wmv,
+body.snap-resource-card li.snap-resource.snap-mime-video,
+body.snap-resource-card li.snap-resource.snap-mime-quicktime,
+body.snap-resource-card li.snap-resource.snap-mime-mpeg,
+body.snap-resource-card li.snap-resource.snap-mime-avi {
   border-top-color: #55B5CC;
   background-image: url([[pix:core|/f/video]]);
 }
-section.snap-resource-card li.snap-resource.modtype_lightboxgallery,
-section.snap-resource-card li.snap-resource.snap-mime-bmp {
+body.snap-resource-card li.snap-resource.modtype_lightboxgallery,
+body.snap-resource-card li.snap-resource.snap-mime-bmp {
   border-top-color: #4ABC96;
   background-image: url([[pix:core|/f/image]]);
 }
-section.snap-resource-card li.snap-resource.modtype_url {
+body.snap-resource-card li.snap-resource.modtype_url {
   border-top-color: #999;
   background-image: url([[pix:core|/f/url]]);
 }
-section.snap-resource-card li.snap-resource.modtype_imscp,
-section.snap-resource-card li.snap-resource.modtype_scorm {
+body.snap-resource-card li.snap-resource.modtype_imscp,
+body.snap-resource-card li.snap-resource.modtype_scorm {
   border-top-color: #F7981D;
   background-image: url([[pix:core|/f/book]]);
 }
-section.snap-resource-card li.snap-resource.modtype_imscp,
-section.snap-resource-card li.snap-resource.modtype_scorm {
+body.snap-resource-card li.snap-resource.modtype_imscp,
+body.snap-resource-card li.snap-resource.modtype_scorm {
   background-image: url([[pix:core|/f/scorm]]);
 }
-section.snap-resource-card li.snap-resource.modtype_folder {
+body.snap-resource-card li.snap-resource.modtype_folder {
   border-top-color: #fed859;
   background-image: url([[pix:core|/f/folder]]);
 }
-section.snap-resource-card li.snap-resource.snap-mime-archive {
+body.snap-resource-card li.snap-resource.snap-mime-archive {
   border-top-color: #fed859;
   background-image: url([[pix:core|/f/archive]]);
 }
-section.snap-resource-card li.snap-resource.snap-mime-markup,
-section.snap-resource-card li.snap-resource.snap-mime-html,
-section.snap-resource-card li.snap-resource.snap-mime-sourcecode {
+body.snap-resource-card li.snap-resource.snap-mime-markup,
+body.snap-resource-card li.snap-resource.snap-mime-html,
+body.snap-resource-card li.snap-resource.snap-mime-sourcecode {
   border-top-color: #f0652a;
   background-image: url([[pix:core|/f/sourcecode]]);
 }
-section.snap-resource-card li.snap-resource.snap-mime-text {
+body.snap-resource-card li.snap-resource.snap-mime-text {
   border-top-color: #f1bf26;
 }
 @media screen and (max-width: 480px) {
-  section.snap-resource-card li.snap-resource {
+  body.snap-resource-card li.snap-resource {
     width: 99%;
     margin: 1em auto;
     height: auto;
     background-image: none !important;
   }
-  section.snap-resource-card li.snap-resource .activityinstance {
+  body.snap-resource-card li.snap-resource .activityinstance {
     width: 75%;
   }
-  section.snap-resource-card li.snap-resource .activityinstance .activityicon {
+  body.snap-resource-card li.snap-resource .activityinstance .activityicon {
     display: inline;
   }
-  section.snap-resource-card li.snap-resource .snap-asset-actions {
+  body.snap-resource-card li.snap-resource .snap-asset-actions {
     width: 250px;
   }
-  section.snap-resource-card li.snap-resource .snap-asset-actions .snap-asset-move,
-  section.snap-resource-card li.snap-resource .snap-asset-actions .snap-edit-more-dropdown,
-  section.snap-resource-card li.snap-resource .snap-asset-actions > a {
+  body.snap-resource-card li.snap-resource .snap-asset-actions .snap-asset-move,
+  body.snap-resource-card li.snap-resource .snap-asset-actions .snap-edit-more-dropdown,
+  body.snap-resource-card li.snap-resource .snap-asset-actions > a {
     width: 25%;
     text-align: left;
     padding: 0;
   }
-  section.snap-resource-card .snap-asset-actions ul.dropdown-menu {
-    left: -125px;
-  }
 }
-section.snap-resource-list li.snap-resource {
+.snap-resource-list li.snap-resource {
   border: none;
   margin: 0 1%;
 }
-section.snap-resource-list li.snap-resource .snap-assettype {
+.snap-resource-list li.snap-resource .snap-assettype {
   display: none;
 }
-section.snap-resource-list li.snap-resource .snap-asset-actions {
+.snap-resource-list li.snap-resource .snap-asset-actions {
   width: 250px;
 }
 .section li.snap-activity {
@@ -22830,9 +22827,6 @@ form.togglecompletion.ajaxing div {
   padding: 0.3em 7%;
   text-align: center;
   width: 33%;
-}
-.snap-resource .snap-asset-actions .dropdown-menu {
-  left: -165px;
 }
 .dropdown-menu .editing_show {
   display: none;

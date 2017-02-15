@@ -756,7 +756,7 @@ body.format-flexpage .singlebutton {
 // -------------------------
 // Snap resources as cards.
 // -------------------------
-section.snap-resource-card li.snap-resource {
+body.snap-resource-card li.snap-resource {
     height: 200px;
     width: 31%;
     margin: 1%;
@@ -885,7 +885,7 @@ section.snap-resource-card li.snap-resource {
 
 // Resources to full width on tiny screen.
 @media screen and (max-width: @screen-xs) {
-    section.snap-resource-card li.snap-resource {
+    body.snap-resource-card li.snap-resource {
         width: 99%;
         margin: 1em auto;
         height: auto;
@@ -909,16 +909,12 @@ section.snap-resource-card li.snap-resource {
             }
         }
     }
-
-    section.snap-resource-card .snap-asset-actions ul.dropdown-menu {
-        left: -125px; // magic number so dropdown does not go off the edge of the screen on small screen.
-    }
 }
 
 // -------------------------
 // Snap resources as list.
 // -------------------------
-section.snap-resource-list li.snap-resource {
+.snap-resource-list li.snap-resource {
     border: none;
     margin: 0 1%;
 
@@ -1304,10 +1300,6 @@ form.togglecompletion {
             padding: 0.3em 7%;
             text-align: center;
             width: 33%;
-        }
-
-        .dropdown-menu {
-            left: -165px;
         }
     }
 }
