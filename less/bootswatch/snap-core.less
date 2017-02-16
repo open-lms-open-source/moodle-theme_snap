@@ -2816,6 +2816,11 @@ table#user-grades tr.avg td.cell {
     background: none;
 }
 
+.report-category-overlay .yui3-widget {
+    width: inherit !important;
+    min-width: 220px;
+}
+
 .report-course-overlay .yui3-widget {
     width: inherit !important;
     min-width: 300px;
@@ -4231,25 +4236,32 @@ button.snap-icon-toggle {
     opacity: 0;
 }
 
-label[for="snap-coverfiles"], #snap-changecoverimageconfirmation button{
+label[for="snap-coverfiles"],
+#snap-changecoverimageconfirmation button{
     position: relative;
     display: none;
     top: -0.5em;
 }
 
-label.state-visible[for="snap-coverfiles"], #snap-changecoverimageconfirmation.state-visible button{
+label.state-visible[for="snap-coverfiles"],
+#snap-changecoverimageconfirmation.state-visible button{
     display: inline-block;
-    padding: 6px 16px;
     cursor: pointer;
 }
 
-label.state-visible[for="snap-coverfiles"] span:before {
-    content: '';
-    background: transparent url("[[pix:theme|camera]]") no-repeat;
-    display: inline-block;
-    margin: -0.4em 0.5em -0.4em -0.5em;
-    height: 1.5em;
-    width: 1.5em;
+label.state-visible[for="snap-coverfiles"] {
+    span {
+        padding: 1em;
+        .hidden-xs();
+    }
+    &:before {
+        content: '';
+        background: transparent url("[[pix:theme|camera]]") no-repeat;
+        display: inline-block;
+        margin: -0.5em 0;
+        height: 1.5em;
+        width: 1.5em;
+    }
 }
 
 #snap-coverfiles {
@@ -4279,7 +4291,7 @@ label.state-visible[for="snap-coverfiles"],
 
 .cover-image-change #page-header {
     background-image: none !important;
-    background-color: #aaa;
+    background-color: @gray-lighter;
 }
 
 #page-header.mast-image .alert-warning {
