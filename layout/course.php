@@ -27,6 +27,14 @@ defined('MOODLE_INTERNAL') || die();
 require(__DIR__.'/header.php');
 
 $coursemainpage = strpos($PAGE->pagetype, 'course-view-') === 0;
+$tocformat = '';
+if ($COURSE->format == 'topics' || $COURSE->format == 'weeks') {
+    $tocformat = 1;
+}
+$leftnav = '';
+if($coursemainpage && $tocformat) {
+    $leftnav = !empty($PAGE->theme->settings->leftnav);
+}
 ?>
 <!-- moodle js hooks -->
 <div id="page">
@@ -54,12 +62,22 @@ echo $OUTPUT->page_heading();
 echo $OUTPUT->course_header();
 // Note, there is no blacklisting for the edit blocks button on course pages.
 echo $OUTPUT->page_heading_button();
-if ($coursemainpage) {
+if (!$leftnav) {
     echo $OUTPUT->course_toc();
 }
 ?>
 </div>
 </div>
+<?php
+if ($leftnav) {
+    echo '<div id="snap-course-wrapper">';
+    echo '<div class="row">';
+    echo '<div class="col-md-3">';
+    echo $OUTPUT->course_toc();
+    echo '</div>';
+    echo '<div class="col-md-9">';
+}
+?>
 <section id="region-main">
 <?php
 echo $OUTPUT->course_content_header();
@@ -69,9 +87,14 @@ echo $OUTPUT->main_content();
 echo $OUTPUT->course_content_footer();
 ?>
 </section>
-
 <?php
 require(__DIR__.'/moodle-blocks.php');
+
+if ($leftnav) {
+    echo '</div> <!-- close section -->';
+    echo '</div> <!-- close row -->';
+    echo '</div> <!-- close course wrapper -->';
+}
 
 if ($coursemainpage) {
     $coursefooter = $OUTPUT->course_footer();

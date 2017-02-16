@@ -67,7 +67,7 @@ class course_toc implements \renderable, \templatable{
     public $footer;
 
     /**
-     * @var \stdClass 
+     * @var \stdClass
      */
     protected $course;
 

@@ -252,6 +252,14 @@ if ($ADMIN->fulltree) {
     $setting->set_updatedcallback('theme_reset_all_caches');
     $snapsettings->add($setting);
 
+    // Left toc option.
+    $name = 'theme_snap/leftnav';
+    $title = new lang_string('leftnav', 'theme_snap');
+    $description = new lang_string('leftnavdesc', 'theme_snap');
+    $default = $unchecked;
+    $setting = new admin_setting_configcheckbox($name, $title, $description, $default, $checked, $unchecked);
+    $snapsettings->add($setting);
+
     // Custom CSS file.
     $name = 'theme_snap/customcss';
     $title = new lang_string('customcss', 'theme_snap');
