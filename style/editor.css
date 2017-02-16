@@ -6585,6 +6585,7 @@ table#user-grades tr.avg td.cell {
 }
 .report-category-overlay .yui3-widget {
   width: inherit !important;
+  min-width: 220px;
 }
 .report-course-overlay .yui3-widget {
   width: inherit !important;
