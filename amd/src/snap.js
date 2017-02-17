@@ -344,12 +344,12 @@ define(['jquery', 'theme_snap/bootstrap', 'core/log', 'theme_snap/headroom', 'th
 
             // Listener for toc search.
             var dataList = $("#toc-searchables").find('li').clone(true);
-            $('#page-mast').on('keyup', '#toc-search-input', function() {
+            $('#course-toc').on('keyup', '#toc-search-input', function() {
                 tocSearchCourse(dataList);
             });
 
             // Handle keyboard navigation of search items.
-            $('#page-mast').on('keydown', '#toc-search-input', function(e) {
+            $('#course-toc').on('keydown', '#toc-search-input', function(e) {
                 var keyCode = e.keyCode || e.which;
                 if (keyCode === 9) {
                     // 9 tab
@@ -366,7 +366,7 @@ define(['jquery', 'theme_snap/bootstrap', 'core/log', 'theme_snap/headroom', 'th
                 }
             });
 
-            $('#page-mast').on("click", '#toc-search-results a', function() {
+            $('#course-toc').on("click", '#toc-search-results a', function() {
                 $("#toc-search-input").val('');
                 $('#toc-search-results').html('');
                 $("#toc-search-input").removeClass('state-active');
