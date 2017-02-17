@@ -350,7 +350,7 @@ define(['jquery', 'core/log', 'core/ajax', 'core/templates', 'core/notification'
                             // Update TOC.
                             promiseHandler(templates.render('theme_snap/course_toc', response.toc), {
                                     done: function(result) {
-                                        $('#course-toc').replaceWith(result);
+                                        $('#course-toc').html($(result).html());
                                         $(document).trigger('snapTOCReplaced');
                                         // Remove section from DOM.
                                         section.remove();
@@ -763,7 +763,7 @@ define(['jquery', 'core/log', 'core/ajax', 'core/templates', 'core/notification'
                                     // Update TOC.
                                     promiseHandler(templates.render('theme_snap/course_toc', response.toc), {
                                             done: function(result) {
-                                                $('#course-toc').replaceWith(result);
+                                                $('#course-toc').html($(result).html());
                                                 $(document).trigger('snapTOCReplaced');
                                                 if (onComplete && typeof(onComplete) === 'function') {
                                                     onComplete(sectionNumber, toggle);
@@ -848,7 +848,7 @@ define(['jquery', 'core/log', 'core/ajax', 'core/templates', 'core/notification'
                     stopMoving();
                 });
             };
-            
+
             /**
              * When section move link is clicked, get the data we need and start the move.
              */

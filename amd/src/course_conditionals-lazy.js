@@ -71,7 +71,7 @@ define(['jquery', 'core/ajax', 'core/notification', 'core/templates', 'theme_sna
                                 // Update TOC.
                                 templates.render('theme_snap/course_toc', response.toc)
                                     .done(function(result) {
-                                        $('#course-toc').replaceWith(result);
+                                        $('#course-toc').html($(result).html());
                                         $(document).trigger('snapTOCReplaced');
                                     });
 
