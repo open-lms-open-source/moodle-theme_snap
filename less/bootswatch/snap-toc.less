@@ -16,7 +16,7 @@
  * Snap Table of contents.
  *
  * @package   theme_snap
- * @copyright Copyright (c) 2015 Moodlerooms Inc. (http://www.moodlerooms.com)
+ * @copyright Copyright (c) 2017 Blackboard Inc. (http://www.moodlerooms.com)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -24,13 +24,13 @@
 // Course toc & appendicies.
 // -------------------------
 #course-toc {
-    /* toc heading. */
+    /* TOC heading. */
     #toc-desktop-menu-heading {
         text-transform: uppercase;
         font-size: 1em;
     }
 
-    /* toc list. */
+    /* TOC list. */
     #chapters {
         padding: 0;
 
@@ -59,7 +59,7 @@
         height: 1.5em;
     }
 
-     /* css mididots. */
+     /* CSS mididots. */
      .text + .text:before {
         content: " · ";
      }
@@ -76,13 +76,13 @@
         padding-top: 1em;
     }
 
-    /* toc heading. */
+    /* TOC heading. */
     #toc-desktop-menu-heading {
         padding: 1em 0;
         border-bottom: 1px solid @gray-lighter;
     }
 
-    /* toc list. */
+    /* TOC list. */
     #chapters {
       .list-unstyled();
       li {
@@ -139,7 +139,7 @@
         margin: 0;
     }
 
-    // specific styles for numbered chapters to improve readability
+    // Specific styles for numbered chapters to improve readability.
     ol#chapters {
         list-style-position: outside;
 
@@ -148,8 +148,6 @@
         }
     }
 
-    // in moodle the first section does not get a number :(
-    // moodlebug
     #chapters >:first-child {
         list-style: none;
     }
@@ -188,7 +186,6 @@
 }
 
 #toc-search-input {
-     webkit-appearance: textfield;
      border: none;
      border-radius: 50%;
      width: 3em;
@@ -197,10 +194,6 @@
      background-color: transparent;
      border: 1px solid transparent;
      .alakazam();
-
-     &:hover {
-         // box-shadow: 0 6px 10px rgba(0, 0, 0, 0.23),0 10px 30px rgba(0, 0, 0, 0.19);
-     }
 
      &.state-active,
      &:focus {
@@ -211,7 +204,7 @@
      }
 }
 
-// hidden list - always
+// Hidden list - always.
 #toc-searchables {
     display: none;
 }

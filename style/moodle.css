@@ -23201,15 +23201,15 @@ fieldset[disabled] a#changenumsections .reduce-sections {
  * Snap Table of contents.
  *
  * @package   theme_snap
- * @copyright Copyright (c) 2015 Moodlerooms Inc. (http://www.moodlerooms.com)
+ * @copyright Copyright (c) 2017 Blackboard Inc. (http://www.moodlerooms.com)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 #course-toc {
-  /* toc heading. */
-  /* toc list. */
+  /* TOC heading. */
+  /* TOC list. */
   /* Section currently displayed. */
   /* Completed section icon. */
-  /* css mididots. */
+  /* CSS mididots. */
 }
 #course-toc #toc-desktop-menu-heading {
   text-transform: uppercase;
@@ -23241,8 +23241,8 @@ fieldset[disabled] a#changenumsections .reduce-sections {
 }
 #snap-course-wrapper {
   margin: 0 4%;
-  /* toc heading. */
-  /* toc list. */
+  /* TOC heading. */
+  /* TOC list. */
   /* Remove numbering of sections. */
 }
 #snap-course-wrapper #course-toc,
@@ -23328,7 +23328,6 @@ fieldset[disabled] a#changenumsections .reduce-sections {
   margin-bottom: -0.3em;
 }
 #toc-search-input {
-  webkit-appearance: textfield;
   border: none;
   border-radius: 50%;
   width: 3em;
