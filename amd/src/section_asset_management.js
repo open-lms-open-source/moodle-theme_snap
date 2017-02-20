@@ -182,7 +182,7 @@ define(['jquery', 'core/log', 'core/ajax', 'core/templates', 'core/notification'
                 });
 
                 if (finalItem) {
-                    req.complete(function() {
+                    req.always(function() {
                         ajaxing = false;
                         footerAlert.removeAjaxLoading();
                     });

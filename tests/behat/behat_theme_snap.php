@@ -29,7 +29,8 @@ require_once(__DIR__ . '/../../../../lib/behat/behat_base.php');
 use Behat\Gherkin\Node\TableNode,
     Behat\Mink\Element\NodeElement,
     Behat\Mink\Exception\ExpectationException,
-    Moodle\BehatExtension\Exception\SkippedException;
+    Moodle\BehatExtension\Exception\SkippedException,
+    core\message\message;
 
 /**
  * Choice activity definitions.
@@ -694,8 +695,11 @@ class behat_theme_snap extends behat_base {
     public function course_page_should_be_in_edit_mode() {
         /* @var $generalcontext behat_general */
         $generalcontext = behat_context_helper::get('behat_general');
-        $generalcontext->assert_element_not_contains_text('Test assignment1', '#section-1', 'css_element');
-        $generalcontext->ensure_element_exists('.block_news_items a.toggle-display', 'css_element');
+        $node = $this->get_selected_node('css_element', '#course-toc');
+        if ($node->isVisible()) {
+            throw new ExpectationException('#course-toc should not be visible', $this->getSession()->getDriver());
+        }
+        $generalcontext->ensure_element_exists('.block_adminblock', 'css_element');
         $this->i_can_see_input_with_value('Turn editing off');
     }
 
@@ -784,6 +788,25 @@ class behat_theme_snap extends behat_base {
     }
 
     /**
+     * Get the actual behat user (note $USER does not correspond to the behat sessions user).
+     * @return mixed
+     * @throws coding_exception
+     */
+    protected function get_behat_user() {
+        global $DB;
+
+        $sid = $this->getSession()->getCookie('MoodleSession');
+        if (empty($sid)) {
+            throw new coding_exception('failed to get moodle session');
+        }
+        $userid = $DB->get_field('sessions', 'userid', ['sid' => $sid]);
+        if (empty($userid)) {
+            throw new coding_exception('failed to get user from seession id '.$sid);
+        }
+        return $DB->get_record('user', ['id' => $userid]);
+    }
+
+    /**
      * Sends a message to the specified user from the logged user. The user full name should contain the first and last names.
      *
      * @Given /^I send "(?P<message_contents_string>(?:[^"]|\\")*)" message to "(?P<user_full_name_string>(?:[^"]|\\")*)" user \(theme_snap\)$/
@@ -791,18 +814,29 @@ class behat_theme_snap extends behat_base {
      * @param string $userfullname
      */
     public function i_send_message_to_user($messagecontent, $userfullname) {
-        /** @var behat_forms $form */
-        $form = behat_context_helper::get('behat_forms');
+        global $DB;
 
-        /* @var behat_general $general */
-        $general = behat_context_helper::get('behat_general');
+        $fromuser = $this->get_behat_user();
 
-        $this->getSession()->visit($this->locate_path('message'));
-        $form->i_set_the_field_to(get_string('searchcombined', 'message'), $this->escape($userfullname));
-        $general->i_click_on('input[name="combinedsubmit"]', 'css_element');
-        $general->click_link( $this->escape(get_string('sendmessageto', 'message', $userfullname)));
-        $form->i_set_the_field_to('id_message', $this->escape($messagecontent));
-        $general->i_click_on('#id_submitbutton', 'css_element');
+        $fullnamesql = $DB->sql_concat('firstname', "' '", 'lastname');
+        $sqlselect = $fullnamesql . ' = ?';
+        $touser = $DB->get_record_select('user', $sqlselect, [$userfullname]);
+        $smallmessage = shorten_text($messagecontent, 30);
+        $subject = get_string_manager()->get_string('unreadnewmessage', 'message', fullname($fromuser), $touser->lang);
+        $message = new message();
+        $message->courseid = SITEID;
+        $message->userfrom = $fromuser->id;
+        $message->userto = $touser->id;
+        $message->subject = $subject;
+        $message->smallmessage = $smallmessage;
+        $message->fullmessage = $messagecontent;
+        $message->fullmessageformat = 0;
+        $message->fullmessagehtml = null;
+        $message->notification = 0;
+        $message->component = 'moodle';
+        $message->name = "instantmessage";
+
+        message_send($message);
     }
 
     /**

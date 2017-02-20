@@ -24,11 +24,11 @@
 Feature: When the moodle theme is set to Snap, teachers can move course resources and activities without using drag and drop.
 
   Background:
-    Given I log in as "admin"
-    And I navigate to "Front page settings" node in "Site administration > Front page"
+    Given I log in as "admin" (theme_snap)
+    And I navigate to "Front page > Front page settings" in site administration
     And I set the following fields to these values:
       | Include a topic section | 1 |
-    And I log out
+    And I log out (theme_snap)
     Given the following config values are set as admin:
       | theme           | snap |
       | defaulthomepage | 0    |

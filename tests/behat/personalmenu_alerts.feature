@@ -46,6 +46,7 @@ Feature: When the moodle theme is set to Snap, students and teachers can open a 
   @javascript
   Scenario: Alerts are visible in personal menu when opened after messages are sent and the message processor is enabled.
     Given the message processor "badge" is disabled
+    And I change viewport size to "large"
     And the following config values are set as admin:
       | personalmenulogintoggle | 0 | theme_snap |
     And I log in as "student1" (theme_snap)
@@ -69,6 +70,7 @@ Feature: When the moodle theme is set to Snap, students and teachers can open a 
   @javascript
   Scenario: Alerts are visible in personal menu on login after messages are sent and the message processor is enabled.
     Given the message processor "badge" is disabled
+    And I change viewport size to "large"
     And I log in as "student1", keeping the personal menu open
     # The alerts section should not be present if the message processor is not enabled.
     Then ".alert_stream" "css_element" should not exist
@@ -84,7 +86,7 @@ Feature: When the moodle theme is set to Snap, students and teachers can open a 
     And I wait until ".message_badge_message_text" "css_element" is visible
     And I should see "New message from Student 1"
 
-  @javascript @testing
+  @javascript
   Scenario: Alerts are visible in personal menu when user is on course page warning no guest access.
     Given the message processor "badge" is enabled
     And the following config values are set as admin:
