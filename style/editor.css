@@ -9629,8 +9629,8 @@ fieldset[disabled] a#changenumsections .reduce-sections {
   text-decoration: none;
 }
 #course-toc .snap-section-complete {
-  width: 1.5em;
-  height: 1.5em;
+  width: 1.3em;
+  height: 1.3em;
 }
 #course-toc .text + .text:before {
   content: " · ";
