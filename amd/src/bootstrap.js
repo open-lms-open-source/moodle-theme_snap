@@ -1,7 +1,9 @@
 // jshint ignore: start
 define(['jquery'], function(jQuery) {
 
-  $ = jQuery;
+  if ($ === undefined) {
+    $ = jQuery;
+  }
 
   /*!
    * Bootstrap v3.3.5 (http://getbootstrap.com)
@@ -2341,6 +2343,7 @@ define(['jquery'], function(jQuery) {
 
   }(jQuery);
 
+  jQuery.extend($, jQuery); // Merge AMD module version of jQuery into global $.
   return $;
 
 });
