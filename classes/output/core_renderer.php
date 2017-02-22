@@ -33,6 +33,7 @@ use context_system;
 use DateTime;
 use html_writer;
 use moodle_url;
+use navigation_node;
 use user_picture;
 use theme_snap\local;
 use theme_snap\services\course;
@@ -1634,5 +1635,21 @@ HTML;
             <span class="snap-featured-course-title">' .s($course->fullname). '</span>
         </a>';
         return $card;
+    }
+
+    /**
+     * Override parent function so that all courses (except the front page) skip the 'turn editing on' button.
+     */
+    protected function render_navigation_node(navigation_node $item) {
+        if ($item->action instanceof moodle_url) {
+            // Hide the course 'turn editing on' link.
+            $iscoursepath = $item->action->get_path() === '/course/view.php';
+            $iseditlink = $item->action->get_param('edit') === 'on';
+            $isfrontpage = $item->action->get_param('id') === SITEID;
+            if ($iscoursepath && $iseditlink && !$isfrontpage) {
+                return '';
+            }
+        }
+        return parent::render_navigation_node($item);
     }
 }

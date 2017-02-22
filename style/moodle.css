@@ -21457,9 +21457,6 @@ section#region-main
 .format-weeks.editing.pagelayout-course #page-mast .singlebutton {
   display: block;
 }
-.pagelayout-course #settingsnav .type_course > ul > li:first-child {
-  display: none;
-}
 #page-course-view-folderview .type_course ul > li:first-child {
   display: list-item;
 }
