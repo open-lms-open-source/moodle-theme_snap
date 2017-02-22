@@ -1532,14 +1532,32 @@ class behat_theme_snap extends behat_base {
     /**
      * @Given /^I should not see an error dialog$/
      */
-    public function iShouldNotSeeAnErrorDialog() {
+    public function i_should_not_see_an_error_dialog() {
         $element = '.moodle-dialogue-confirm .confirmation-message';
         try {
-            $nodes = $this->find_all('css', $element);
+            $this->find_all('css', $element);
         } catch (Exception $e) {
             return; // No dialog.
         }
         throw new ExpectationException('An error dialog has been displayed', $this->getSession());
+    }
+
+    /**
+     * @Given /^I see a bootstrap tooltip on hovering over the admin menu$/
+     */
+    public function i_see_a_bootstrap_tooltip_on_hovering_over_the_admin_menu() {
+        $this->getSession()->getDriver()->mouseOver('//a[@id="admin-menu-trigger"]');
+        $this->ensure_element_is_visible('div.tooltip', 'css_element');
+        $this->execute("behat_general::assert_element_contains_text",
+            array(get_string('admin', 'theme_snap'), 'div.tooltip', 'css_element')
+        );
+    }
+
+    /**
+     * @Given /^I am on the snap jquery bootstrap test page$/
+     */
+    public function i_am_on_the_snap_jquery_bootstrap_test_page() {
+        $this->getSession()->visit($this->locate_path('/theme/snap/tests/fixtures/test_jquery_bootstrap.php'));
     }
 
 }

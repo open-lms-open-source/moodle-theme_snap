@@ -1,6 +1,9 @@
 define(['jquery'], function(jQuery) {
 
+  if ($ === undefined) {
     $ = jQuery;
+  }
+
   /*!
    * Bootstrap v3.3.7 (http://getbootstrap.com)
    * Copyright 2011-2016 Twitter, Inc.
@@ -2379,6 +2382,7 @@ define(['jquery'], function(jQuery) {
 
   }(jQuery);
 
+  jQuery.extend($, jQuery); // Merge AMD module version of jQuery into global $.
   return $;
 
 });
