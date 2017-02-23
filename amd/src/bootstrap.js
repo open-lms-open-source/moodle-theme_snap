@@ -2343,7 +2343,6 @@ define(['jquery'], function(jQuery) {
 
   }(jQuery);
 
-  jQuery.extend($, jQuery); // Merge AMD module version of jQuery into global $.
-  return $;
+  return jQuery;
 
 });
