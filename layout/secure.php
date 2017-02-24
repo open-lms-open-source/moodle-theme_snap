@@ -46,31 +46,18 @@ echo $OUTPUT->doctype() ?>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
         </button>
-        <a class="brand" href="<?php echo s($CFG->wwwroot);?>"><?php echo format_string($SITE->shortname); ?></a>
+        <span class="navbar-brand"><?php echo $SITE->shortname; ?></span>
+    </div>
 
-        <div id="moodle-navbar" class="navbar-collapse collapse">
-            <?php echo $OUTPUT->custom_menu(); ?>
-            <ul class="nav pull-right">
-                <li><?php echo $OUTPUT->page_heading_menu(); ?></li>
-                <li class="navbar-text">
-                    <?php
-                    if (method_exists($OUTPUT, 'user_menu')) {
-                        echo $OUTPUT->user_menu(); // user_menu, for Moodle 2.8
-                    } else {
-                        echo $OUTPUT->login_info(); // login_info, Moodle 2.7 and before
-                    }
-                        ?>
-                </li>
-            </ul>
-        </div>
+    <div id="moodle-navbar" class="navbar-collapse collapse">
+        <ul class="nav pull-right">
+            <li><?php echo $OUTPUT->page_heading_menu(); ?></li>
+            <li class="navbar-text"><?php echo $OUTPUT->login_info(false) ?></li>
+        </ul>
     </div>
 </nav>
 
 <div id="page" class="container">
-
-    <header id="page-header" class="clearfix">
-        <?php echo $OUTPUT->page_heading(); ?>
-    </header>
 
 <div id="page">
 <div id="page-content">

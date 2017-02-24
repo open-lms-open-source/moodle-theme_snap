@@ -1212,7 +1212,7 @@ body.jsenabled .formlisting {
 .jsenabled .moodle-actionmenu[data-enhance] .toggle-display.textmenu .caret {
   margin-top: 8px;
   margin-left: 2px;
-  border-top-color: #fff;
+  border-top-color: #03A9F4;
 }
 .jsenabled .moodle-actionmenu[data-enhance] .toggle-display.textmenu .caret:hover,
 .jsenabled .moodle-actionmenu[data-enhance] .toggle-display.textmenu .caret:active {
@@ -10169,33 +10169,33 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
   }
 }
 .navbar-default {
-  background-color: #03A9F4;
-  border-color: #0392d3;
+  background-color: #fff;
+  border-color: #eeeeee;
 }
 .navbar-default .navbar-brand {
-  color: #fff;
+  color: #565656;
 }
 .navbar-default .navbar-brand:hover,
 .navbar-default .navbar-brand:focus {
-  color: #fff;
+  color: #565656;
   background-color: none;
 }
 .navbar-default .navbar-text {
-  color: #ddd;
+  color: #565656;
 }
 .navbar-default .navbar-nav > li > a {
-  color: #fff;
+  color: #03A9F4;
 }
 .navbar-default .navbar-nav > li > a:hover,
 .navbar-default .navbar-nav > li > a:focus {
-  color: #fff;
-  background-color: #0286c2;
+  color: #0275a8;
+  background-color: #e6e6e6;
 }
 .navbar-default .navbar-nav > .active > a,
 .navbar-default .navbar-nav > .active > a:hover,
 .navbar-default .navbar-nav > .active > a:focus {
   color: #fff;
-  background-color: #0286c2;
+  background-color: #e6e6e6;
 }
 .navbar-default .navbar-nav > .disabled > a,
 .navbar-default .navbar-nav > .disabled > a:hover,
@@ -10204,39 +10204,39 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
   background-color: transparent;
 }
 .navbar-default .navbar-toggle {
-  border-color: #0286c2;
+  border-color: #e6e6e6;
 }
 .navbar-default .navbar-toggle:hover,
 .navbar-default .navbar-toggle:focus {
-  background-color: #0286c2;
+  background-color: #e6e6e6;
 }
 .navbar-default .navbar-toggle .icon-bar {
   background-color: #fff;
 }
 .navbar-default .navbar-collapse,
 .navbar-default .navbar-form {
-  border-color: #0392d3;
+  border-color: #eeeeee;
 }
 .navbar-default .navbar-nav > .open > a,
 .navbar-default .navbar-nav > .open > a:hover,
 .navbar-default .navbar-nav > .open > a:focus {
-  background-color: #0286c2;
+  background-color: #e6e6e6;
   color: #fff;
 }
 @media (max-width: 767px) {
   .navbar-default .navbar-nav .open .dropdown-menu > li > a {
-    color: #fff;
+    color: #03A9F4;
   }
   .navbar-default .navbar-nav .open .dropdown-menu > li > a:hover,
   .navbar-default .navbar-nav .open .dropdown-menu > li > a:focus {
-    color: #fff;
-    background-color: #0286c2;
+    color: #0275a8;
+    background-color: #e6e6e6;
   }
   .navbar-default .navbar-nav .open .dropdown-menu > .active > a,
   .navbar-default .navbar-nav .open .dropdown-menu > .active > a:hover,
   .navbar-default .navbar-nav .open .dropdown-menu > .active > a:focus {
     color: #fff;
-    background-color: #0286c2;
+    background-color: #e6e6e6;
   }
   .navbar-default .navbar-nav .open .dropdown-menu > .disabled > a,
   .navbar-default .navbar-nav .open .dropdown-menu > .disabled > a:hover,
@@ -10246,17 +10246,17 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
   }
 }
 .navbar-default .navbar-link {
-  color: #fff;
+  color: #03A9F4;
 }
 .navbar-default .navbar-link:hover {
-  color: #fff;
+  color: #0275a8;
 }
 .navbar-default .btn-link {
-  color: #fff;
+  color: #03A9F4;
 }
 .navbar-default .btn-link:hover,
 .navbar-default .btn-link:focus {
-  color: #fff;
+  color: #0275a8;
 }
 .navbar-default .btn-link[disabled]:hover,
 fieldset[disabled] .navbar-default .btn-link:hover,
@@ -18483,9 +18483,6 @@ footer #moodle-footer
 #maincontent {
   height: 0;
 }
-aside {
-  position: relative;
-}
 /***************
 THE HEADER DOM LOOKS LIKE THIS :
 
@@ -19619,6 +19616,127 @@ ul.events-new + ul.events-underway {
   color: #eee;
   padding: 0.1em 1%;
   z-index: 1030;
+}
+#page-mod-quiz-review .arrow_link {
+  display: inline-block;
+  margin-bottom: 0;
+  font-weight: 300;
+  text-align: center;
+  vertical-align: middle;
+  -ms-touch-action: manipulation;
+      touch-action: manipulation;
+  cursor: pointer;
+  background-image: none;
+  border: 1px solid transparent;
+  white-space: nowrap;
+  padding: 6px 16px;
+  font-size: 18px;
+  line-height: 1.6;
+  border-radius: 0px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  color: #03A9F4;
+  background-color: transparent;
+  border-color: #03A9F4;
+}
+#page-mod-quiz-review .arrow_link:focus,
+#page-mod-quiz-review .arrow_link:active:focus,
+#page-mod-quiz-review .arrow_link.active:focus,
+#page-mod-quiz-review .arrow_link.focus,
+#page-mod-quiz-review .arrow_link:active.focus,
+#page-mod-quiz-review .arrow_link.active.focus {
+  outline: thin dotted;
+  outline: 5px auto -webkit-focus-ring-color;
+  outline-offset: -2px;
+}
+#page-mod-quiz-review .arrow_link:hover,
+#page-mod-quiz-review .arrow_link:focus,
+#page-mod-quiz-review .arrow_link.focus {
+  color: #03A9F4;
+  text-decoration: none;
+}
+#page-mod-quiz-review .arrow_link:active,
+#page-mod-quiz-review .arrow_link.active {
+  outline: 0;
+  background-image: none;
+  -webkit-box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+  box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+}
+#page-mod-quiz-review .arrow_link.disabled,
+#page-mod-quiz-review .arrow_link[disabled],
+fieldset[disabled] #page-mod-quiz-review .arrow_link {
+  cursor: not-allowed;
+  opacity: 0.65;
+  filter: alpha(opacity=65);
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+a#page-mod-quiz-review .arrow_link.disabled,
+fieldset[disabled] a#page-mod-quiz-review .arrow_link {
+  pointer-events: none;
+}
+#page-mod-quiz-review .arrow_link:focus,
+#page-mod-quiz-review .arrow_link.focus {
+  color: #03A9F4;
+  background-color: rgba(0, 0, 0, 0);
+  border-color: #015276;
+}
+#page-mod-quiz-review .arrow_link:hover {
+  color: #03A9F4;
+  background-color: rgba(0, 0, 0, 0);
+  border-color: #027fb8;
+}
+#page-mod-quiz-review .arrow_link:active,
+#page-mod-quiz-review .arrow_link.active,
+.open > .dropdown-toggle#page-mod-quiz-review .arrow_link {
+  color: #03A9F4;
+  background-color: rgba(0, 0, 0, 0);
+  border-color: #027fb8;
+}
+#page-mod-quiz-review .arrow_link:active:hover,
+#page-mod-quiz-review .arrow_link.active:hover,
+.open > .dropdown-toggle#page-mod-quiz-review .arrow_link:hover,
+#page-mod-quiz-review .arrow_link:active:focus,
+#page-mod-quiz-review .arrow_link.active:focus,
+.open > .dropdown-toggle#page-mod-quiz-review .arrow_link:focus,
+#page-mod-quiz-review .arrow_link:active.focus,
+#page-mod-quiz-review .arrow_link.active.focus,
+.open > .dropdown-toggle#page-mod-quiz-review .arrow_link.focus {
+  color: #03A9F4;
+  background-color: rgba(0, 0, 0, 0);
+  border-color: #015276;
+}
+#page-mod-quiz-review .arrow_link:active,
+#page-mod-quiz-review .arrow_link.active,
+.open > .dropdown-toggle#page-mod-quiz-review .arrow_link {
+  background-image: none;
+}
+#page-mod-quiz-review .arrow_link.disabled,
+#page-mod-quiz-review .arrow_link[disabled],
+fieldset[disabled] #page-mod-quiz-review .arrow_link,
+#page-mod-quiz-review .arrow_link.disabled:hover,
+#page-mod-quiz-review .arrow_link[disabled]:hover,
+fieldset[disabled] #page-mod-quiz-review .arrow_link:hover,
+#page-mod-quiz-review .arrow_link.disabled:focus,
+#page-mod-quiz-review .arrow_link[disabled]:focus,
+fieldset[disabled] #page-mod-quiz-review .arrow_link:focus,
+#page-mod-quiz-review .arrow_link.disabled.focus,
+#page-mod-quiz-review .arrow_link[disabled].focus,
+fieldset[disabled] #page-mod-quiz-review .arrow_link.focus,
+#page-mod-quiz-review .arrow_link.disabled:active,
+#page-mod-quiz-review .arrow_link[disabled]:active,
+fieldset[disabled] #page-mod-quiz-review .arrow_link:active,
+#page-mod-quiz-review .arrow_link.disabled.active,
+#page-mod-quiz-review .arrow_link[disabled].active,
+fieldset[disabled] #page-mod-quiz-review .arrow_link.active {
+  background-color: transparent;
+  border-color: #03A9F4;
+}
+#page-mod-quiz-review .arrow_link .badge {
+  color: transparent;
+  background-color: #03A9F4;
 }
 #page-mod-quiz-mod #id_reviewoptionshdr .fitem {
   width: 100%;
@@ -24549,6 +24667,7 @@ legend,
 .snap-unread-marker {
   color: #03A9F4;
 }
+#page-mod-quiz-review .arrow_link,
 .path-admin-tool-lp button.btn,
 #course-category-listings .listing-pagination .yui3-button,
 .paging.paging-morelink a,
@@ -24593,6 +24712,7 @@ input[type="reset"],
   border-color: #03A9F4;
   border-radius: 4px;
 }
+#page-mod-quiz-review .arrow_link:visited,
 .path-admin-tool-lp button.btn:visited,
 #course-category-listings .listing-pagination .yui3-button:visited,
 .paging.paging-morelink a:visited,
@@ -24632,6 +24752,7 @@ input[type="reset"]:visited,
 #page-site-index .section-modchooser-link .section-modchooser-text:visited {
   color: #03A9F4;
 }
+#page-mod-quiz-review .arrow_link:hover,
 .path-admin-tool-lp button.btn:hover,
 #course-category-listings .listing-pagination .yui3-button:hover,
 .paging.paging-morelink a:hover,
@@ -24669,6 +24790,7 @@ input[type="reset"]:hover,
 .gradingform_rubric.editor .addlevel input:hover,
 .gradingform_rubric.editor .addcriterion input:hover,
 #page-site-index .section-modchooser-link .section-modchooser-text:hover,
+#page-mod-quiz-review .arrow_link:focus,
 .path-admin-tool-lp button.btn:focus,
 #course-category-listings .listing-pagination .yui3-button:focus,
 .paging.paging-morelink a:focus,
@@ -24706,6 +24828,7 @@ input[type="reset"]:focus,
 .gradingform_rubric.editor .addlevel input:focus,
 .gradingform_rubric.editor .addcriterion input:focus,
 #page-site-index .section-modchooser-link .section-modchooser-text:focus,
+#page-mod-quiz-review .arrow_link:active,
 .path-admin-tool-lp button.btn:active,
 #course-category-listings .listing-pagination .yui3-button:active,
 .paging.paging-morelink a:active,
@@ -24743,6 +24866,7 @@ input[type="reset"]:active,
 .gradingform_rubric.editor .addlevel input:active,
 .gradingform_rubric.editor .addcriterion input:active,
 #page-site-index .section-modchooser-link .section-modchooser-text:active,
+#page-mod-quiz-review .arrow_link.active,
 .path-admin-tool-lp button.btn.active,
 #course-category-listings .listing-pagination .yui3-button.active,
 .paging.paging-morelink a.active,
@@ -24785,6 +24909,7 @@ input[type="reset"].active,
   border-color: #03A9F4;
   text-decoration: none;
 }
+#page-mod-quiz-review .arrow_link[disabled],
 .path-admin-tool-lp button.btn[disabled],
 #course-category-listings .listing-pagination .yui3-button[disabled],
 .paging.paging-morelink a[disabled],
