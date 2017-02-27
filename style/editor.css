@@ -3791,7 +3791,7 @@ body.jsenabled .formlisting {
 .jsenabled .moodle-actionmenu[data-enhance] .toggle-display.textmenu .caret {
   margin-top: 8px;
   margin-left: 2px;
-  border-top-color: #fff;
+  border-top-color: #03A9F4;
 }
 .jsenabled .moodle-actionmenu[data-enhance] .toggle-display.textmenu .caret:hover,
 .jsenabled .moodle-actionmenu[data-enhance] .toggle-display.textmenu .caret:active {
@@ -5053,9 +5053,6 @@ footer #moodle-footer
 #maincontent {
   height: 0;
 }
-aside {
-  position: relative;
-}
 /***************
 THE HEADER DOM LOOKS LIKE THIS :
 
@@ -5899,6 +5896,126 @@ ul.events-new + ul.events-underway {
   color: #eee;
   padding: 0.1em 1%;
   z-index: 1030;
+}
+#page-mod-quiz-review .arrow_link {
+  display: inline-block;
+  margin-bottom: 0;
+  font-weight: 300;
+  text-align: center;
+  vertical-align: middle;
+  touch-action: manipulation;
+  cursor: pointer;
+  background-image: none;
+  border: 1px solid transparent;
+  white-space: nowrap;
+  padding: 6px 16px;
+  font-size: 18px;
+  line-height: 1.6;
+  border-radius: 0px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  color: #03A9F4;
+  background-color: transparent;
+  border-color: #03A9F4;
+}
+#page-mod-quiz-review .arrow_link:focus,
+#page-mod-quiz-review .arrow_link:active:focus,
+#page-mod-quiz-review .arrow_link.active:focus,
+#page-mod-quiz-review .arrow_link.focus,
+#page-mod-quiz-review .arrow_link:active.focus,
+#page-mod-quiz-review .arrow_link.active.focus {
+  outline: thin dotted;
+  outline: 5px auto -webkit-focus-ring-color;
+  outline-offset: -2px;
+}
+#page-mod-quiz-review .arrow_link:hover,
+#page-mod-quiz-review .arrow_link:focus,
+#page-mod-quiz-review .arrow_link.focus {
+  color: #03A9F4;
+  text-decoration: none;
+}
+#page-mod-quiz-review .arrow_link:active,
+#page-mod-quiz-review .arrow_link.active {
+  outline: 0;
+  background-image: none;
+  -webkit-box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+  box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+}
+#page-mod-quiz-review .arrow_link.disabled,
+#page-mod-quiz-review .arrow_link[disabled],
+fieldset[disabled] #page-mod-quiz-review .arrow_link {
+  cursor: not-allowed;
+  opacity: 0.65;
+  filter: alpha(opacity=65);
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+a#page-mod-quiz-review .arrow_link.disabled,
+fieldset[disabled] a#page-mod-quiz-review .arrow_link {
+  pointer-events: none;
+}
+#page-mod-quiz-review .arrow_link:focus,
+#page-mod-quiz-review .arrow_link.focus {
+  color: #03A9F4;
+  background-color: rgba(0, 0, 0, 0);
+  border-color: #015276;
+}
+#page-mod-quiz-review .arrow_link:hover {
+  color: #03A9F4;
+  background-color: rgba(0, 0, 0, 0);
+  border-color: #027fb8;
+}
+#page-mod-quiz-review .arrow_link:active,
+#page-mod-quiz-review .arrow_link.active,
+.open > .dropdown-toggle#page-mod-quiz-review .arrow_link {
+  color: #03A9F4;
+  background-color: rgba(0, 0, 0, 0);
+  border-color: #027fb8;
+}
+#page-mod-quiz-review .arrow_link:active:hover,
+#page-mod-quiz-review .arrow_link.active:hover,
+.open > .dropdown-toggle#page-mod-quiz-review .arrow_link:hover,
+#page-mod-quiz-review .arrow_link:active:focus,
+#page-mod-quiz-review .arrow_link.active:focus,
+.open > .dropdown-toggle#page-mod-quiz-review .arrow_link:focus,
+#page-mod-quiz-review .arrow_link:active.focus,
+#page-mod-quiz-review .arrow_link.active.focus,
+.open > .dropdown-toggle#page-mod-quiz-review .arrow_link.focus {
+  color: #03A9F4;
+  background-color: rgba(0, 0, 0, 0);
+  border-color: #015276;
+}
+#page-mod-quiz-review .arrow_link:active,
+#page-mod-quiz-review .arrow_link.active,
+.open > .dropdown-toggle#page-mod-quiz-review .arrow_link {
+  background-image: none;
+}
+#page-mod-quiz-review .arrow_link.disabled,
+#page-mod-quiz-review .arrow_link[disabled],
+fieldset[disabled] #page-mod-quiz-review .arrow_link,
+#page-mod-quiz-review .arrow_link.disabled:hover,
+#page-mod-quiz-review .arrow_link[disabled]:hover,
+fieldset[disabled] #page-mod-quiz-review .arrow_link:hover,
+#page-mod-quiz-review .arrow_link.disabled:focus,
+#page-mod-quiz-review .arrow_link[disabled]:focus,
+fieldset[disabled] #page-mod-quiz-review .arrow_link:focus,
+#page-mod-quiz-review .arrow_link.disabled.focus,
+#page-mod-quiz-review .arrow_link[disabled].focus,
+fieldset[disabled] #page-mod-quiz-review .arrow_link.focus,
+#page-mod-quiz-review .arrow_link.disabled:active,
+#page-mod-quiz-review .arrow_link[disabled]:active,
+fieldset[disabled] #page-mod-quiz-review .arrow_link:active,
+#page-mod-quiz-review .arrow_link.disabled.active,
+#page-mod-quiz-review .arrow_link[disabled].active,
+fieldset[disabled] #page-mod-quiz-review .arrow_link.active {
+  background-color: transparent;
+  border-color: #03A9F4;
+}
+#page-mod-quiz-review .arrow_link .badge {
+  color: transparent;
+  background-color: #03A9F4;
 }
 #page-mod-quiz-mod #id_reviewoptionshdr .fitem {
   width: 100%;
@@ -10976,6 +11093,7 @@ legend,
 .snap-unread-marker {
   color: #03A9F4;
 }
+#page-mod-quiz-review .arrow_link,
 .path-admin-tool-lp button.btn,
 #course-category-listings .listing-pagination .yui3-button,
 .paging.paging-morelink a,
@@ -11019,6 +11137,7 @@ input[type="reset"],
   border-color: #03A9F4;
   border-radius: 4px;
 }
+#page-mod-quiz-review .arrow_link:visited,
 .path-admin-tool-lp button.btn:visited,
 #course-category-listings .listing-pagination .yui3-button:visited,
 .paging.paging-morelink a:visited,
@@ -11058,6 +11177,7 @@ input[type="reset"]:visited,
 #page-site-index .section-modchooser-link .section-modchooser-text:visited {
   color: #03A9F4;
 }
+#page-mod-quiz-review .arrow_link:hover,
 .path-admin-tool-lp button.btn:hover,
 #course-category-listings .listing-pagination .yui3-button:hover,
 .paging.paging-morelink a:hover,
@@ -11095,6 +11215,7 @@ input[type="reset"]:hover,
 .gradingform_rubric.editor .addlevel input:hover,
 .gradingform_rubric.editor .addcriterion input:hover,
 #page-site-index .section-modchooser-link .section-modchooser-text:hover,
+#page-mod-quiz-review .arrow_link:focus,
 .path-admin-tool-lp button.btn:focus,
 #course-category-listings .listing-pagination .yui3-button:focus,
 .paging.paging-morelink a:focus,
@@ -11132,6 +11253,7 @@ input[type="reset"]:focus,
 .gradingform_rubric.editor .addlevel input:focus,
 .gradingform_rubric.editor .addcriterion input:focus,
 #page-site-index .section-modchooser-link .section-modchooser-text:focus,
+#page-mod-quiz-review .arrow_link:active,
 .path-admin-tool-lp button.btn:active,
 #course-category-listings .listing-pagination .yui3-button:active,
 .paging.paging-morelink a:active,
@@ -11169,6 +11291,7 @@ input[type="reset"]:active,
 .gradingform_rubric.editor .addlevel input:active,
 .gradingform_rubric.editor .addcriterion input:active,
 #page-site-index .section-modchooser-link .section-modchooser-text:active,
+#page-mod-quiz-review .arrow_link.active,
 .path-admin-tool-lp button.btn.active,
 #course-category-listings .listing-pagination .yui3-button.active,
 .paging.paging-morelink a.active,
@@ -11211,6 +11334,7 @@ input[type="reset"].active,
   border-color: #03A9F4;
   text-decoration: none;
 }
+#page-mod-quiz-review .arrow_link[disabled],
 .path-admin-tool-lp button.btn[disabled],
 #course-category-listings .listing-pagination .yui3-button[disabled],
 .paging.paging-morelink a[disabled],
