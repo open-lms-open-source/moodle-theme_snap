@@ -121,8 +121,7 @@ $string['featureoneimage'] = 'Feature 1 image';
 $string['featuretwoimage'] = 'Feature 2 image';
 $string['featurethreeimage'] = 'Feature 3 image';
 $string['featuredcourses'] = 'Featured courses';
-$string['featuredcourseshelp'] = 'Featured courses enables you to add up to 8 featured courses to the front page of your site.<br>
-Use this form to add the id&#8217;s of the courses you&#8217;d like to feature.';
+$string['featuredcourseshelp'] = 'Highlight up to 8 featured courses to your site&#8217;s front page. Use the Course ID to feature a course.';
 $string['featuredcoursesheading'] = 'Featured courses heading';
 $string['featuredcourseone'] = 'Featured course 1';
 $string['featuredcoursetwo'] = 'Featured course 2';

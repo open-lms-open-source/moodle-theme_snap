@@ -7769,6 +7769,11 @@ div.editor_atto_toolbar div.atto_group {
     margin: 0 auto;
   }
 }
+/* Featured course container. */
+#snap-featured-courses {
+  width: 100%;
+  padding: 2em 4%;
+}
 /* Featured course link. */
 .snap-featured-course {
   display: block;
@@ -7795,7 +7800,7 @@ div.editor_atto_toolbar div.atto_group {
   background-color: white;
   position: absolute;
   bottom: 0;
-  padding-top: 0.5em;
+  padding: 0.5em 4%;
 }
 #page-admin-setting-themesettingsnap #id_s_theme_snap_customcss {
   font-family: Monaco, Menlo, Consolas, "Courier New", monospace;
