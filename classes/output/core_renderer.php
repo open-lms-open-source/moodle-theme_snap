@@ -1488,7 +1488,7 @@ HTML;
             }
 
             // Build feature spots.
-            $featurespots = '<div id="snap-feature-spots" class="container">';
+            $featurespots = '<div id="snap-feature-spots">';
             $featurespots .= $fstitle;
             $featurespots .= '<div class="row">' .$cards. '</div>';
             $featurespots .= $fsedit;
@@ -1511,10 +1511,10 @@ HTML;
         $card = '<div class="snap-feature">
             <!--Card content-->
             <div class="snap-feature-block">
+                ' .$image. '
                 <!--Title-->
                 <h3 class="snap-feature-title h5">' .s($title). '</h3>
-                ' .$image. '
-                <!--Text-->
+                <!--Content-->
                 <p class="snap-feature-text">' .s($text). '</p>
             </div>
             <!--/.Card content-->
