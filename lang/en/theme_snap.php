@@ -106,10 +106,10 @@ $string['favorite'] = 'Favorite {$a}';
 $string['favorited'] = 'Favorited {$a}';
 $string['featurespots'] = 'Features & Benefits spots';
 $string['featurespotsedit'] = 'Edit feature spots';
-$string['featurespotshelp'] = 'Feature spots are for highlighting your site&#8217;s main benefits to current or potential users.
-Feature spots are great for describing the main features or benefits of your site in a bite size way,
-and will display under the header image on your site front page.<br>
-You can add up to 3 feature spots, simply by adding their title, content, and an optional image. Any images used should be no more than 200px in width, and all be of equal height.';
+$string['featurespotshelp'] = 'Highlight your site&#8217;s main benefits to current or potential users.
+You can add up to 3 feature spots under the header on your site&#8217;s front page.
+Add a title, content, and an optional image for each feature.<br><br>
+<i>Images should be no more than 200px in width and equal in height.</i>';
 $string['featurespotsheading'] = 'Feature spot heading';
 $string['featureonetitle'] = 'Feature 1 title';
 $string['featuretwotitle'] = 'Feature 2 title';
