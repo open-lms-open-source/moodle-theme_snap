@@ -1551,9 +1551,17 @@ HTML;
             return '';
         }
 
+        // Order records to match order input.
+        $orderedcourses = array();
+        foreach ($courseids as $courseid) {
+            if (!empty($courses[$courseid])) {
+                $orderedcourses[] = $courses[$courseid];
+            }
+        }
+
         // Build html for course card.
         $cards = array();
-        foreach ($courses as $course) {
+        foreach ($orderedcourses as $course) {
             $cards[] = $this->featured_course($course);
         }
 
@@ -1607,7 +1615,7 @@ HTML;
         }
 
         // Build featured courses section.
-        $output = '<div id="snap-featured-courses" class="container text-center">';
+        $output = '<div id="snap-featured-courses" class="text-center">';
         $output .= $title;
         $output .= '<div class="row text-center">' .$colums. '</div>';
         $output .= $browse;
