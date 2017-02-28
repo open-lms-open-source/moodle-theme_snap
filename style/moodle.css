@@ -21284,6 +21284,8 @@ div.editor_atto_toolbar div.atto_group {
 #page-admin-setting-themesnapfeaturespots #admin-fs_three_text .dndupload-message {
   display: none;
 }
+#page-admin-setting-themesnapfeaturespots #admin-fs_one_image,
+#page-admin-setting-themesnapfeaturespots #admin-fs_one_title,
 #page-admin-setting-themesnapfeaturespots #admin-fs_one_text {
   clear: left;
 }
