@@ -5926,7 +5926,6 @@ ul.events-new + ul.events-underway {
 #page-mod-quiz-review .arrow_link.focus,
 #page-mod-quiz-review .arrow_link:active.focus,
 #page-mod-quiz-review .arrow_link.active.focus {
-  outline: thin dotted;
   outline: 5px auto -webkit-focus-ring-color;
   outline-offset: -2px;
 }
@@ -5992,9 +5991,6 @@ fieldset[disabled] a#page-mod-quiz-review .arrow_link {
 .open > .dropdown-toggle#page-mod-quiz-review .arrow_link {
   background-image: none;
 }
-#page-mod-quiz-review .arrow_link.disabled,
-#page-mod-quiz-review .arrow_link[disabled],
-fieldset[disabled] #page-mod-quiz-review .arrow_link,
 #page-mod-quiz-review .arrow_link.disabled:hover,
 #page-mod-quiz-review .arrow_link[disabled]:hover,
 fieldset[disabled] #page-mod-quiz-review .arrow_link:hover,
@@ -6003,13 +5999,7 @@ fieldset[disabled] #page-mod-quiz-review .arrow_link:hover,
 fieldset[disabled] #page-mod-quiz-review .arrow_link:focus,
 #page-mod-quiz-review .arrow_link.disabled.focus,
 #page-mod-quiz-review .arrow_link[disabled].focus,
-fieldset[disabled] #page-mod-quiz-review .arrow_link.focus,
-#page-mod-quiz-review .arrow_link.disabled:active,
-#page-mod-quiz-review .arrow_link[disabled]:active,
-fieldset[disabled] #page-mod-quiz-review .arrow_link:active,
-#page-mod-quiz-review .arrow_link.disabled.active,
-#page-mod-quiz-review .arrow_link[disabled].active,
-fieldset[disabled] #page-mod-quiz-review .arrow_link.active {
+fieldset[disabled] #page-mod-quiz-review .arrow_link.focus {
   background-color: transparent;
   border-color: #03A9F4;
 }
