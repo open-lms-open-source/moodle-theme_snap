@@ -22588,6 +22588,7 @@ li.draft .editing_show {
   top: 0.5em;
   right: 1em;
   display: block;
+  line-height: 0;
 }
 /* Completion actions */
 @-webkit-keyframes circleajax {
