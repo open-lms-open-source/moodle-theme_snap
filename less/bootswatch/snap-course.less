@@ -985,21 +985,30 @@ body.snap-resource-card li.snap-resource {
     font-family: @font-family-base;
 }
 
-#page-site-index .sitetopic>a:last-of-type:after {
-    content: attr(title);
-    display: block;
-    font-weight: 300;
-}
+#page-site-index {
 
-#page-site-index .sitetopic>a:last-of-type:before {
-    content: " ";
-    background: transparent url("[[pix:theme|pencil]]") no-repeat 50% 50%;
-    display: block;
-    height: 3em;
-    width: 3em;
-    margin: 0.5em auto;
-}
+    .sitetopic > a {
+        &:last-of-type {
+            &:after {
+                content: attr(title);
+                display: block;
+                font-weight: 300;
+            }
+            &:before {
+                content: " ";
+                background: transparent url("[[pix:theme|pencil]]") no-repeat 50% 50%;
+                display: block;
+                height: 3em;
+                width: 3em;
+                margin: 0.5em auto;
+            }
+        }
 
+        .iconsmall{
+            display: none;
+        }
+    }
+}
 
 // -------------------------
 // Activity & Resource metadata
@@ -1008,7 +1017,6 @@ body.snap-resource-card li.snap-resource {
     clear: both;
     padding: 0;
 }
-
 
 // Activity data - e.g. Due date & Group info
 .snap-completion-meta,
