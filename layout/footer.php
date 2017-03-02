@@ -85,16 +85,6 @@ if (!empty($PAGE->theme->settings->instagram)) {
 if(!empty($socialmedialinks)) {
     echo '<div id="snap_socialmedia_links">'.$socialmedialinks.'</div>';
 }
-
-if (core_component::get_component_directory('local_mrooms') !== null) {
-    $langkey   = \local_mrooms\kb_link::resolve_language_key();
-    $builtwith = html_writer::link('https://redirects.blackboard.com/005_000'.$langkey, get_string('joule', 'theme_snap'),
-        ['target' => '_blank', 'title' => get_string('joulehelpguides', 'theme_snap')]);
-} else {
-    $builtwith = get_string('joule', 'theme_snap');
-}
-
-$poweredbyrunby = get_string('poweredbyrunby', 'theme_snap', $builtwith);
 ?>
 
 <div id='mrooms-footer' class="helplink text-right">
@@ -103,9 +93,10 @@ $poweredbyrunby = get_string('poweredbyrunby', 'theme_snap', $builtwith);
     if ($OUTPUT->page_doc_link()) {
         echo $OUTPUT->page_doc_link();
     }
+    $poweredbyrunby = get_string('poweredbyrunby', 'theme_snap');
     ?>
     <br/><?php echo $poweredbyrunby ?>
-<br>© Copyright 2016 Moodlerooms Inc, All Rights Reserved.</small>
+    </small>
 </div>
 <!-- close mrooms footer -->
 <div id="page-footer">
