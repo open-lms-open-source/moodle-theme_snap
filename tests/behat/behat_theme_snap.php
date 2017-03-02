@@ -248,6 +248,49 @@ class behat_theme_snap extends behat_base {
     }
 
     /**
+     * @Given /^I close the personal menu$/
+     */
+    public function i_close_the_personal_menu() {
+        $node = $this->find('css', '#primary-nav');
+        // Only attempt to close the personal menu if its already open.
+        if ($node->isVisible()) {
+            $node = $this->find('css', '#fixy-close');
+            $node->click();
+        }
+    }
+
+    /**
+     * @param string $assignmentname
+     * @param string $shortname
+     * @param string $grade
+     * @param string $username
+     * @Given /^the assignment "(?P<assign>(?:[^"]|\\")*)" in the course "(?P<shortname>(?:[^"]|\\")*)" is graded as "(?P<grade>(?:[^"]|\\")*)" for "(?P<user>(?:[^"]|\\")*)"$/
+     */
+    public function the_assignment_is_graded($assignmentname, $shortname, $grade, $username) {
+        global $CFG, $DB;
+        require_once($CFG->dirroot.'/mod/assign/locallib.php');
+        $course = $DB->get_record('course', ['shortname' => $shortname]);
+        $assign = $DB->get_record('assign', ['course' => $course->id, 'name' => $assignmentname]);
+        $user = $DB->get_record('user', ['username' => $username]);
+
+        $cm = get_coursemodule_from_instance('assign', $assign->id);
+        $cm = cm_info::create($cm);
+
+        $assign = new \assign($cm->context, $cm, $course);
+        $gradeitem = $assign->get_grade_item();
+        $gradeitem->update();
+        $assignrow = $assign->get_instance();
+        $grades = array();
+        $grades[$user->id] = (object) [
+            'rawgrade' => $grade,
+            'userid' => $user->id
+        ];
+        $assignrow->cmidnumber = null;
+        assign_grade_item_update($assignrow, $grades);
+        grade_regrade_final_grades($course->id);
+    }
+
+    /**
      * Checks that the provided node is visible.
      *
      * @throws ExpectationException

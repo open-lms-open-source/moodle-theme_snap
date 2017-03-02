@@ -102,7 +102,7 @@
 #fixy-user {
     padding: 1em 4%;
     .clearfix();
-    a, 
+    a,
     a .h1 {
         color: white;
     }
@@ -239,7 +239,7 @@
 
 // Mobile personal menu.
 @media only screen and (max-width: @screen-xs) {
-    
+
     // User pic small screen.
     #fixy-user .userpicture {
         width: 60px;
@@ -277,13 +277,13 @@
         text-align: center;
         background-color: #fff;
         border-top: 1px solid #eee;
-        
+
         a{
             display: inline-block;
             margin:2%;
             width:12%;
             outline: 0px;
-            
+
             .svg-icon {
                 border-radius: 50%;
                 height: 40px;
@@ -291,7 +291,7 @@
             }
         }
     }
-    
+
     .courseinfo-body {
         width: 61.8% !important;
         height: auto;
@@ -379,7 +379,7 @@
     &:hover {
         transform: scale(1.06);
         box-shadow: 0 8px 17px 0 @gray-light, 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-        
+
         .courseinfo-teachers {
             transform: scale(1.2);
         }
@@ -393,7 +393,7 @@
         width: 100%;
         overflow: hidden;
         text-align: center;
-        
+
     }
 
     .userpicture,
@@ -426,12 +426,12 @@
     }
     // When showing more course contacts, hide courseinfo.
     &.show-all {
-        
+
         .courseinfo-teachers-extra {
             opacity: 1;
             height: auto;
         }
-        
+
         .courseinfo-teachers {
             overflow: auto;
             top: -5em;
@@ -470,14 +470,19 @@
     }
 
     .completionstatus,
+    .feedbackavailable,
     .coursegrade {
         font-size: small;
     }
 
+    .feedbackavailable,
     .coursegrade {
         text-align: right;
         display: block;
         line-height: 2.5em;
+    }
+
+    .feedbackavailable {
         padding-right: 2.75em;
         background-image: url("[[pix:theme|tick]]");
         background-repeat: no-repeat;
@@ -551,7 +556,7 @@
 
 .header-hidden-courses {
     display: none;
-    
+
     &.state-visible {
         display: inherit;
     }
@@ -561,7 +566,7 @@
 button.snap-icon-toggle.favoritetoggle {
     border-radius: 100%;
     border: 2px solid transparent;
-    
+
     &:focus {
         border-color: #FEC111;
     }

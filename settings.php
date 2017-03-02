@@ -166,6 +166,14 @@ if ($ADMIN->fulltree) {
     $setting->set_updatedcallback('theme_reset_all_caches');
     $snapsettings->add($setting);
 
+    // Personal menu show course grade in cards.
+    $name = 'theme_snap/showcoursegradepersonalmenu';
+    $title = new lang_string('showcoursegradepersonalmenu', 'theme_snap');
+    $description = new lang_string('showcoursegradepersonalmenudesc', 'theme_snap');
+    $default = $unchecked;
+    $setting = new admin_setting_configcheckbox($name, $title, $description, $default, $checked, $unchecked);
+    $snapsettings->add($setting);
+
     $name = 'theme_snap/footerheading';
     $title = new lang_string('footerheading', 'theme_snap');
     $description = new lang_string('footerheadingdesc', 'theme_snap');

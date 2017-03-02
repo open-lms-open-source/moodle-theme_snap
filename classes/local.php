@@ -66,21 +66,62 @@ class local {
     /**
      * Does this course have any visible feedback for current user?.
      *
-     * @param $course
-     * @return boolean
+     * @param \stdClass $course
+     * @return \stdClass
      */
     public static function course_feedback($course) {
         global $USER;
+
+        $failobj = (object) [
+            'fromcache' => false, // Useful for debugging and unit testing.
+            'feedback' => false
+        ];
+
+        if (!isloggedin() || isguestuser()) {
+            return $failobj;
+        }
+
+        $config = get_config('theme_snap');
+
+        // Course cache stamp is used to invalidate user session caches if an application level event occurs -
+        // e.g. course module added, module deleted, module updated etc.
+        $coursestamp = self::course_grading_cachestamp($course->id);
+
+        // Course user cache stamp is used to invalidate user session caches if an event occurs which affects this
+        // user - e.g. A teacher adds a grade against this user.
+        $courseuserstamp = self::course_user_graded_cachestamp($course->id, $USER->id);
+
+        /** @var \cache_session $muc */
+        $muc = \cache::make('theme_snap', 'course_grades');
+        $cached = $muc->get($course->id.'_'.$USER->id);
+        if ($cached && $cached->timestamp >= $coursestamp && $cached->timestamp >= $courseuserstamp) {
+            $configchange = false;
+            if (!empty($config->showcoursegradepersonalmenu)) {
+                if (!$cached->showgrade) {
+                    $configchange = true;
+                }
+            } else {
+                if ($cached->showgrade) {
+                    $configchange = true;
+                }
+            }
+            // Only return the cached version if the related config hasn't changed.
+            if (!$configchange) {
+                $cached->fromcache = true; // Useful for debugging and unit testing.
+                return $cached;
+            }
+        }
+
         // Get course context.
         $coursecontext = \context_course::instance($course->id);
         // Security check - should they be allowed to see course grade?
         $onlyactive = true;
         if (!is_enrolled($coursecontext, $USER, 'moodle/grade:view', $onlyactive)) {
-            return false;
+            return $failobj;
         }
         // Security check - are they allowed to see the grade report for the course?
         if (!has_capability('gradereport/user:view', $coursecontext)) {
-            return false;
+            return $failobj;
         }
         // See if user can view hidden grades for this course.
         $canviewhidden = has_capability('moodle/grade:viewhidden', $coursecontext);
@@ -88,38 +129,59 @@ class local {
         // Note - moodle/grade:viewall is a capability held by teachers and thus used to exclude them from not getting
         // the grade.
         if (empty($course->showgrades) && !has_capability('moodle/grade:viewall', $coursecontext)) {
-            return false;
+            return $failobj;
         }
         // Get course grade_item.
         $courseitem = \grade_item::fetch_course_item($course->id);
         // Get the stored grade.
         $coursegrade = new \grade_grade(array('itemid' => $courseitem->id, 'userid' => $USER->id));
         $coursegrade->grade_item =& $courseitem;
-        // Return null if can't view.
-        if ($coursegrade->is_hidden() && !$canviewhidden) {
-            return false;
-        }
-        // Use user grade report to get course total - this is to take hidden grade settings into account.
-        $gpr = new \grade_plugin_return(array(
-                'type' => 'report',
-                'plugin' => 'user',
-                'courseid' => $course->id,
-                'userid' => $USER->id)
-        );
-        $report = new \grade_report_user($course->id, $gpr, $coursecontext, $USER->id);
-        $report->fill_table();
-        $visiblegradefound = false;
-        foreach ($report->tabledata as $item) {
-            if (self::item_has_grade_or_feedback($item)) {
-                $visiblegradefound = true;
-                break;
+
+        $feedbackurl = new \moodle_url('/grade/report/user/index.php', array('id' => $course->id));
+        // Default feedbackobj.
+        $feedbackobj = (object) [
+            'feedbackurl' => $feedbackurl->out(),
+            'showgrade' => $config->showcoursegradepersonalmenu
+        ];
+
+        if (!$coursegrade->is_hidden() || $canviewhidden) {
+            // Use user grade report to get course total - this is to take hidden grade settings into account.
+            $gpr = new \grade_plugin_return(array(
+                    'type' => 'report',
+                    'plugin' => 'user',
+                    'courseid' => $course->id,
+                    'userid' => $USER->id)
+            );
+            $report = new \grade_report_user($course->id, $gpr, $coursecontext, $USER->id);
+            $report->fill_table();
+
+            if (!empty($config->showcoursegradepersonalmenu)) {
+                $coursetotal = end($report->tabledata);
+                $coursegrade = $coursetotal['grade']['content'];
+                $ignoregrades = [
+                    '-',
+                    '&nbsp;',
+                    get_string('error')
+                ];
+                if (!in_array($coursegrade, $ignoregrades)) {
+                    $feedbackobj->coursegrade = $coursegrade;
+                }
+            } else {
+                foreach ($report->tabledata as $item) {
+                    if (self::item_has_grade_or_feedback($item)) {
+                        $feedbackobj->feedbackavailable = true;
+                        break;
+                    }
+                }
             }
         }
 
-        if ($visiblegradefound) {
-            return true;
-        }
-        return false;
+        // Cache object.
+        $feedbackobj->timestamp = microtime(true);
+        $muc->set($course->id.'_'.$USER->id, $feedbackobj);
+        $feedbackobj->fromcache = false; // We set the cache, we didn't get it from the cache.
+
+        return $feedbackobj;
     }
 
     /**
@@ -256,11 +318,12 @@ class local {
     /**
      * Generate or get course completion cache stamp for key.
      * @param string $key
+     * @param string $cache;
      * @param bool $new
      */
-    protected static function gen_course_completion_cachestamp($key, $new = false) {
+    protected static function get_cachestamp($key, $cache, $new = false) {
         $key = strval($key);
-        $muc = \cache::make('theme_snap', 'course_completion_progress_ts');
+        $muc = \cache::make('theme_snap', $cache);
         $cachestamp = $muc->get($key);
         if (!$cachestamp || $new) {
             if (defined('PHPUNIT_TEST') && PHPUNIT_TEST) {
@@ -276,14 +339,31 @@ class local {
     }
 
     /**
-     * Get / create completion cache stamp for specific course id.
+     * @param int $courseid
+     * @param bool $new
+     */
+    public static function course_grading_cachestamp($courseid, $new = false) {
+        return self::get_cachestamp(strval($courseid), 'course_grades_ts', $new);
+    }
+
+    /**
+     * @param int $courseid
+     * @param int $userid
+     * @param bool $new
+     */
+    public static function course_user_graded_cachestamp($courseid, $userid, $new = false) {
+        return self::get_cachestamp($courseid.'_'.$userid, 'course_grades_ts', $new);
+    }
+
+    /**
+     * Get / reset completion cache stamp for specific course id.
      *
      * @param int $courseid
      * @param bool $new
      * @return float
      */
     public static function course_completion_cachestamp($courseid, $new = false) {
-        return self::gen_course_completion_cachestamp(strval($courseid), $new);
+        return self::get_cachestamp(strval($courseid), 'course_completion_progress_ts', $new);
     }
 
     /**
@@ -293,7 +373,7 @@ class local {
      * @return false|mixed
      */
     public static function course_user_completion_cachestamp($courseid, $userid, $new = false) {
-        return self::gen_course_completion_cachestamp($courseid.'_'.$userid, $new);
+        return self::get_cachestamp($courseid.'_'.$userid, 'course_completion_progress_ts', $new);
     }
 
     /**
@@ -437,14 +517,13 @@ class local {
             }
             $course = $courses[$courseid];
 
-            $feedbackurl = new \moodle_url('/grade/report/user/index.php', array('id' => $course->id));
-
             $courseinfo[$courseid] = (object) array(
                 'course' => $courseid,
-                'completion' => self::course_completion_progress($course),
-                'feedback' => self::course_feedback($course),
-                'feedbackurl' => $feedbackurl->out()
+                'completion' => self::course_completion_progress($course)
             );
+
+            $feedback = self::course_feedback($course);
+            $courseinfo[$courseid]->feedback = $feedback;
         }
         return $courseinfo;
     }

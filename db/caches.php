@@ -45,5 +45,19 @@ $definitions = array(
         'simplekeys'         => true,
         'simpledata'         => false,
         'staticacceleration' => false
-    ]
+    ],
+    // This is used so that we can invalidate session level caches if something is graded.
+    'course_grades_ts' => [
+        'mode'               => cache_store::MODE_APPLICATION,
+        'simplekeys'         => true,
+        'simpledata'         => true,
+        'staticacceleration' => false
+    ],
+    // This is used to cache completion data per course / user.
+    'course_grades' => [
+        'mode'               => cache_store::MODE_SESSION,
+        'simplekeys'         => true,
+        'simpledata'         => false,
+        'staticacceleration' => false
+    ],
 );

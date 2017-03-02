@@ -341,32 +341,6 @@ class theme_snap_assign_test extends mod_assign_base_testcase {
         $this->assertSame($expected, $actual);
     }
 
-    public function test_course_feedback() {
-        $actual = local::course_feedback($this->course);
-        $this->assertFalse($actual);
-
-        $this->setUser($this->students[0]);
-        $actual = local::course_feedback($this->course);
-        $this->assertFalse($actual);
-
-        $assign = $this->create_one_ungraded_submission();
-        $this->grade_assignment($assign, $this->students[0]);
-
-        $this->setUser($this->students[0]);
-        $actual = local::course_feedback($this->course);
-        $this->assertTrue($actual);
-
-        $this->create_extra_users();
-        $this->setUser($this->extrasuspendedstudents[0]);
-        $actual = local::course_feedback($this->course);
-        $this->assertFalse($actual);
-
-        $this->setUser($this->students[0]);
-        $this->course->showgrades = 0;
-        $actual = local::course_feedback($this->course);
-        $this->assertFalse($actual);
-    }
-
     public function test_no_course_image() {
         $actual = local::course_coverimage_url($this->course->id);
         $this->assertFalse($actual);
