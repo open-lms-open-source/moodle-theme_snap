@@ -22462,6 +22462,9 @@ body.snap-resource-card li.snap-resource.snap-mime-text {
   width: 3em;
   margin: 0.5em auto;
 }
+#page-site-index .sitetopic > a .iconsmall {
+  display: none;
+}
 .snap-asset-meta {
   clear: both;
   padding: 0;
