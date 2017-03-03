@@ -106,7 +106,7 @@ if ($hasadminbutton) {
 
 echo $OUTPUT->page_heading_button();
 
-if ($PAGE->pagelayout === 'frontpage' && $PAGE->pagetype == 'site-index') {
+if ($PAGE->pagelayout === 'frontpage' && $PAGE->pagetype === 'site-index') {
     require(__DIR__.'/faux_site_index.php');
 } else {
     echo $OUTPUT->main_content();
