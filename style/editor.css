@@ -4214,6 +4214,13 @@ body.path-site .block.block_settings {
 .block .commands.show .moodle-core-dragdrop-draghandle {
   display: none;
 }
+/* Hide header when editing front page block. */
+#page-site-index.pagelayout-admin #page-header {
+  display: none;
+}
+#page-site-index.pagelayout-admin #region-main {
+  padding-top: 2em;
+}
 /**
  * Snap core swatch.
  *
