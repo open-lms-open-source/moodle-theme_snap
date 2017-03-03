@@ -24743,6 +24743,9 @@ fieldset[disabled] .path-admin-tool-lp [data-region="filtercompetencies"] button
 .path-course.path-user .userprofile .profile_tree {
   margin-left: -15px;
   margin-right: -15px;
+  -webkit-column-count: 1;
+     -moz-column-count: 1;
+          column-count: 1;
   -webkit-column-count: initial;
      -moz-column-count: initial;
           column-count: initial;
