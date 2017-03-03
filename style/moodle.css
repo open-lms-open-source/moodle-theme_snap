@@ -12197,7 +12197,11 @@ div.groupmanagementtable:after,
 .other-user-manager-panel .oump-wrap .oump-footer:before,
 .other-user-manager-panel .oump-wrap .oump-footer:after,
 #id_s_theme_snap_resourcedisplay:before,
-#id_s_theme_snap_resourcedisplay:after {
+#id_s_theme_snap_resourcedisplay:after,
+#page-user-profile .userprofile .profile_tree:before,
+#page-user-profile .userprofile .profile_tree:after,
+.path-course.path-user .userprofile .profile_tree:before,
+.path-course.path-user .userprofile .profile_tree:after {
   content: " ";
   display: table;
 }
@@ -12246,7 +12250,9 @@ div.groupmanagementtable:after,
 .other-user-manager-panel .uep-wrap .oump-footer:after,
 .user-enroller-panel .oump-wrap .oump-footer:after,
 .other-user-manager-panel .oump-wrap .oump-footer:after,
-#id_s_theme_snap_resourcedisplay:after {
+#id_s_theme_snap_resourcedisplay:after,
+#page-user-profile .userprofile .profile_tree:after,
+.path-course.path-user .userprofile .profile_tree:after {
   clear: both;
 }
 .center-block {
@@ -19006,7 +19012,9 @@ http://blog.rodneyrehm.de/archives/34-iOS7-Mobile-Safari-And-Viewport-Units.html
 .coursebox.other-user-manager-panel .uep-wrap .oump-footer,
 .coursebox.user-enroller-panel .oump-wrap .oump-footer,
 .coursebox.other-user-manager-panel .oump-wrap .oump-footer,
-.coursebox#id_s_theme_snap_resourcedisplay {
+.coursebox#id_s_theme_snap_resourcedisplay,
+.coursebox#page-user-profile .userprofile .profile_tree,
+.coursebox.path-course.path-user .userprofile .profile_tree {
   padding: 1em 4%;
   border-bottom: 1px solid #eee;
 }
@@ -24687,6 +24695,138 @@ fieldset[disabled] .path-admin-tool-lp [data-region="filtercompetencies"] button
 .gradingform_guide_comment_chooser > ul > li button {
   text-align: left;
   white-space: normal;
+}
+/**
+ * Moodle user profile page.
+ *
+ * @package   theme_snap
+ * @copyright Copyright (c) 2017 Moodlerooms Inc. (http://www.moodlerooms.com)
+ * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
+#page-user-profile,
+.path-course.path-user {
+  /* User image and name. */
+  /* Full screen. */
+}
+#page-user-profile .page-context-header,
+.path-course.path-user .page-context-header {
+  text-align: center;
+}
+#page-user-profile .page-context-header .page-header-image,
+.path-course.path-user .page-context-header .page-header-image,
+#page-user-profile .page-context-header .page-header-headings,
+.path-course.path-user .page-context-header .page-header-headings {
+  display: block;
+  padding: 0;
+}
+#page-user-profile #region-main,
+.path-course.path-user #region-main {
+  max-width: 100%;
+  padding: 1em 4%;
+}
+#page-user-profile .userprofile,
+.path-course.path-user .userprofile {
+  /* Message button. */
+  /* Profile text. */
+  /* Profile option lists. */
+}
+#page-user-profile .userprofile .header-button-group,
+.path-course.path-user .userprofile .header-button-group {
+  float: none !important;
+}
+#page-user-profile .userprofile .description,
+.path-course.path-user .userprofile .description {
+  max-width: 43.5em;
+  margin: 0 auto;
+}
+#page-user-profile .userprofile .profile_tree,
+.path-course.path-user .userprofile .profile_tree {
+  margin-left: -15px;
+  margin-right: -15px;
+  -webkit-column-count: initial;
+     -moz-column-count: initial;
+          column-count: initial;
+  /* Titles. */
+  /* Datalists. */
+}
+#page-user-profile .userprofile .profile_tree section,
+.path-course.path-user .userprofile .profile_tree section {
+  position: relative;
+  min-height: 1px;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+@media (min-width: 768px) {
+  #page-user-profile .userprofile .profile_tree section,
+  .path-course.path-user .userprofile .profile_tree section {
+    float: left;
+    width: 50%;
+  }
+}
+@media (min-width: 992px) {
+  #page-user-profile .userprofile .profile_tree section,
+  .path-course.path-user .userprofile .profile_tree section {
+    float: left;
+    width: 25%;
+  }
+}
+#page-user-profile .userprofile .profile_tree section:nth-of-type(5),
+.path-course.path-user .userprofile .profile_tree section:nth-of-type(5) {
+  clear: left;
+}
+#page-user-profile .userprofile .profile_tree .node_category h3,
+.path-course.path-user .userprofile .profile_tree .node_category h3 {
+  font-weight: 300;
+  line-height: 1.5;
+  color: #565656;
+  margin-top: 14px;
+  margin-bottom: 14px;
+  font-size: 29px;
+  font-family: "Roboto", "Fira Sans", "Segoe UI", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+#page-user-profile .userprofile .profile_tree .node_category h3 small,
+.path-course.path-user .userprofile .profile_tree .node_category h3 small,
+#page-user-profile .userprofile .profile_tree .node_category h3 .small,
+.path-course.path-user .userprofile .profile_tree .node_category h3 .small {
+  font-weight: normal;
+  line-height: 1;
+  color: #999;
+}
+#page-user-profile .userprofile .profile_tree .node_category h3 small,
+.path-course.path-user .userprofile .profile_tree .node_category h3 small,
+#page-user-profile .userprofile .profile_tree .node_category h3 .small,
+.path-course.path-user .userprofile .profile_tree .node_category h3 .small {
+  font-size: 75%;
+}
+#page-user-profile .userprofile .profile_tree .node_category li.contentnode dl dd,
+.path-course.path-user .userprofile .profile_tree .node_category li.contentnode dl dd {
+  margin: 0;
+}
+/* Course user profile. */
+.path-course.path-user {
+  /* If course image, pull the user image up. */
+}
+.path-course.path-user #page-header.mast-image {
+  margin-bottom: -3.75em;
+}
+/* Global user profile. */
+#page-user-profile .page-header-headings h1 {
+  margin: 0.25em 0;
+}
+/* Large screen. */
+@media screen and (min-width: 992px) {
+  #page-user-profile,
+  .path-course.path-user {
+    /* Hack to center buttons */
+  }
+  #page-user-profile div.singlebutton,
+  .path-course.path-user div.singlebutton {
+    margin-left: 30vw;
+  }
+  #page-user-profile div.singlebutton + .singlebutton,
+  .path-course.path-user div.singlebutton + .singlebutton {
+    margin-left: 0;
+  }
 }
 /**
  * Snap user swatch.
