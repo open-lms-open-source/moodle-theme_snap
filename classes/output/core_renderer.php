@@ -856,7 +856,6 @@ class core_renderer extends toc_renderer {
             $menu = '<span class="hidden-xs">' .get_string('menu', 'theme_snap'). '</span>';
             $badge = $this->render_badge_count();
             $linkcontent = $menu.$picture.$badge;
-            $linkcontent = $menu.$picture.$badge;
             $attributes = array(
                 'aria-haspopup' => 'true',
                 'class' => 'js-personal-menu-trigger snap-my-courses-menu',
