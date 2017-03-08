@@ -49,7 +49,9 @@ Feature: When the moodle theme is set to Snap, students and teachers can open a 
     And the following "activities" exist:
       | activity | course | idnumber | name              | intro                       |
       | assign   | C1     | assign1  | Test assignment 1 | Test assignment description |
-    And the assignment "Test assignment 1" in the course "C1" is graded as "70" for "student1"
+    And I grade the assignment "Test assignment 1" in course "C1" as follows:
+      | username | grade |
+      | student1 | 70    |
     And I open the personal menu
     And I should see "70" in the "a.coursegrade" "css_element"
 
@@ -68,7 +70,9 @@ Feature: When the moodle theme is set to Snap, students and teachers can open a 
     And the following "activities" exist:
       | activity | course | idnumber | name              | intro                       |
       | assign   | C1     | assign1  | Test assignment 1 | Test assignment description |
-    And the assignment "Test assignment 1" in the course "C1" is graded as "70" for "student1"
+    And I grade the assignment "Test assignment 1" in course "C1" as follows:
+      | username | grade |
+      | student1 | 70    |
     And I open the personal menu
     And I should see "Feedback available" in the "a.feedbackavailable" "css_element"
 

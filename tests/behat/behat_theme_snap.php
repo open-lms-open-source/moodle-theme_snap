@@ -264,14 +264,19 @@ class behat_theme_snap extends behat_base {
      * @param string $shortname
      * @param string $grade
      * @param string $username
-     * @Given /^the assignment "(?P<assign>(?:[^"]|\\")*)" in the course "(?P<shortname>(?:[^"]|\\")*)" is graded as "(?P<grade>(?:[^"]|\\")*)" for "(?P<user>(?:[^"]|\\")*)"$/
+     * @Given /^I grade the assignment "(?P<assign>(?:[^"]|\\")*)" in course "(?P<shortname>(?:[^"]|\\")*)" as follows:$/
      */
-    public function the_assignment_is_graded($assignmentname, $shortname, $grade, $username) {
-        global $CFG, $DB;
+    public function i_grade_the_assignment_as_follows($assignmentname, $shortname, TableNode $data) {
+        global $CFG, $DB, $USER;
+
         require_once($CFG->dirroot.'/mod/assign/locallib.php');
+
+        $origuser = $USER;
+        $USER = $this->get_behat_user();
+
         $course = $DB->get_record('course', ['shortname' => $shortname]);
         $assign = $DB->get_record('assign', ['course' => $course->id, 'name' => $assignmentname]);
-        $user = $DB->get_record('user', ['username' => $username]);
+        $rows = $data->getHash();
 
         $cm = get_coursemodule_from_instance('assign', $assign->id);
         $cm = cm_info::create($cm);
@@ -281,13 +286,41 @@ class behat_theme_snap extends behat_base {
         $gradeitem->update();
         $assignrow = $assign->get_instance();
         $grades = array();
-        $grades[$user->id] = (object) [
-            'rawgrade' => $grade,
-            'userid' => $user->id
-        ];
-        $assignrow->cmidnumber = null;
-        assign_grade_item_update($assignrow, $grades);
+
+        $commentsplugin = $assign->get_feedback_plugin_by_type('comments');
+        if ($commentsplugin->is_visible()) {
+            $commentsplugin->enable();
+        }
+
+        foreach ($rows as $row) {
+            $user = $DB->get_record('user', ['username' => $row['username']]);
+            $grades[$user->id] = (object) [
+                'rawgrade' => $row['grade'],
+                'userid' => $user->id
+            ];
+
+            $assignrow->cmidnumber = null;
+            assign_grade_item_update($assignrow, $grades);
+
+            if (!empty($row['feedback'])) {
+                if ($commentsplugin->is_visible()) {
+                    $formdata = (object)[
+                        'id' => $cm->id,
+                        'assignfeedbackcomments_editor[text]' => $row['feedback'],
+                        'assignfeedbackcomments_editor[format]' => FORMAT_HTML
+                    ];
+                    if (!$commentsplugin->save_settings($formdata)) {
+                        print_error($commentsplugin->get_error());
+                        $USER = $origuser;
+                        return false;
+                    }
+                }
+            }
+        }
+
         grade_regrade_final_grades($course->id);
+
+        $USER = $origuser;
     }
 
     /**
@@ -826,6 +859,25 @@ class behat_theme_snap extends behat_base {
         $node = $this->get_node_in_container('link', $link, 'css_element', '#fixy-mobile-menu');
         $this->ensure_node_is_visible($node);
         $node->click();
+    }
+
+    /**
+     * Get the actual behat user (note $USER does not correspond to the behat sessions user).
+     * @return mixed
+     * @throws coding_exception
+     */
+    protected function get_behat_user() {
+        global $DB;
+
+        $sid = $this->getSession()->getCookie('MoodleSession');
+        if (empty($sid)) {
+            throw new coding_exception('failed to get moodle session');
+        }
+        $userid = $DB->get_field('sessions', 'userid', ['sid' => $sid]);
+        if (empty($userid)) {
+            throw new coding_exception('failed to get user from seession id '.$sid);
+        }
+        return $DB->get_record('user', ['id' => $userid]);
     }
 
     /**
