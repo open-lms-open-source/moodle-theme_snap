@@ -247,6 +247,82 @@ class behat_theme_snap extends behat_base {
     }
 
     /**
+     * @Given /^I close the personal menu$/
+     */
+    public function i_close_the_personal_menu() {
+        $node = $this->find('css', '#primary-nav');
+        // Only attempt to close the personal menu if its already open.
+        if ($node->isVisible()) {
+            $node = $this->find('css', '#fixy-close');
+            $node->click();
+        }
+    }
+
+    /**
+     * @param string $assignmentname
+     * @param string $shortname
+     * @param string $grade
+     * @param string $username
+     * @Given /^I grade the assignment "(?P<assign>(?:[^"]|\\")*)" in course "(?P<shortname>(?:[^"]|\\")*)" as follows:$/
+     */
+    public function i_grade_the_assignment_as_follows($assignmentname, $shortname, TableNode $data) {
+        global $CFG, $DB, $USER;
+
+        require_once($CFG->dirroot.'/mod/assign/locallib.php');
+
+        $origuser = $USER;
+        $USER = $this->get_behat_user();
+
+        $course = $DB->get_record('course', ['shortname' => $shortname]);
+        $assign = $DB->get_record('assign', ['course' => $course->id, 'name' => $assignmentname]);
+        $rows = $data->getHash();
+
+        $cm = get_coursemodule_from_instance('assign', $assign->id);
+        $cm = cm_info::create($cm);
+
+        $assign = new \assign($cm->context, $cm, $course);
+        $gradeitem = $assign->get_grade_item();
+        $gradeitem->update();
+        $assignrow = $assign->get_instance();
+        $grades = array();
+
+        $commentsplugin = $assign->get_feedback_plugin_by_type('comments');
+        if ($commentsplugin->is_visible()) {
+            $commentsplugin->enable();
+        }
+
+        foreach ($rows as $row) {
+            $user = $DB->get_record('user', ['username' => $row['username']]);
+            $grades[$user->id] = (object) [
+                'rawgrade' => $row['grade'],
+                'userid' => $user->id
+            ];
+
+            $assignrow->cmidnumber = null;
+            assign_grade_item_update($assignrow, $grades);
+
+            if (!empty($row['feedback'])) {
+                if ($commentsplugin->is_visible()) {
+                    $formdata = (object)[
+                        'id' => $cm->id,
+                        'assignfeedbackcomments_editor[text]' => $row['feedback'],
+                        'assignfeedbackcomments_editor[format]' => FORMAT_HTML
+                    ];
+                    if (!$commentsplugin->save_settings($formdata)) {
+                        print_error($commentsplugin->get_error());
+                        $USER = $origuser;
+                        return false;
+                    }
+                }
+            }
+        }
+
+        grade_regrade_final_grades($course->id);
+
+        $USER = $origuser;
+    }
+
+    /**
      * Checks that the provided node is visible.
      *
      * @throws ExpectationException

@@ -29,8 +29,14 @@
             <div class="completion-line" style="width:{{completion.progress}}%"></div>
             {{/completion.render}}
             {{#feedback}}
-                <a class="coursegrade" href="{{feedbackurl}}">{{#str}}feedbackavailable, theme_snap{{/str}}</a>
+                {{#feedbackavailable}}
+                <a class="feedbackavailable" href="{{feedbackurl}}">{{#str}}feedbackavailable, theme_snap{{/str}}</a>
+                {{/feedbackavailable}}
+                {{#coursegrade}}
+                    <a class="coursegrade" href="{{feedbackurl}}">{{coursegrade}}</a>
+                {{/coursegrade}}
             {{/feedback}}
+
         </div>
         <div class="courseinfo-teachers">
             <h4 class="sr-only">{{# str }} coursecontacts, theme_snap {{/ str }}</h4>

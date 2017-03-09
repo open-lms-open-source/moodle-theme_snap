@@ -37,6 +37,10 @@ $observers = array(
         'eventname' => '\core\event\user_deleted',
         'callback'  => '\theme_snap\event_handlers::user_deleted'
     ),
+    array (
+        'eventname' => '\core\event\user_graded',
+        'callback'  => '\theme_snap\event_handlers::user_graded'
+    ),
 
     // All events affecting course completion at course level.
     array (

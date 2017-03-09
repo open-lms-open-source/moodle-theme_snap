@@ -1507,4 +1507,101 @@ class theme_snap_local_test extends \advanced_testcase {
         $this->assertEquals(1, $comp->total);
         $this->assertEquals(100, $comp->progress);
     }
+
+    /**
+     * @param string $property to check is populated in feedback objects.
+     */
+    private function course_feedback_test($property) {
+        global $DB;
+
+        // Set up.
+        $generator = $this->getDataGenerator();
+        $course = $generator->create_course();
+        $student = $generator->create_user();
+        $student2 = $generator->create_user();
+        $studentrole = $DB->get_record('role', ['shortname' => 'student']);
+        $generator->enrol_user($student->id, $course->id, $studentrole->id);
+        $generator->enrol_user($student2->id, $course->id, $studentrole->id);
+        grade_regrade_final_grades($course->id);
+
+        $this->setUser($student);
+
+        // Assert no feedback available.
+        $feedback = local::course_feedback($course);
+        $this->assertTrue(empty($feedback->$property)); // Can't use assertEmpty as property wont exist.
+
+        // Check caching is working.
+        $this->assertFalse($feedback->fromcache);
+        $feedback = local::course_feedback($course);
+        $this->assertTrue($feedback->fromcache);
+
+        // Assert feedback available is empty and cache dumped on assignment creation
+        // (requires grading for feedback available).
+        $params = [
+            'course' => $course->id
+        ];
+        $cm = $this->add_assignment($params);
+        $feedback = local::course_feedback($course);
+        $this->assertTrue(empty($feedback->$property));
+        $this->assertFalse($feedback->fromcache);
+        $feedback = local::course_feedback($course);
+        $this->assertTrue($feedback->fromcache);
+
+        // Assert feedback available does not update for current user when grading someone else's assignment.
+        $assign = new \assign($cm->context, $cm, $course);
+        $gradeitem = $assign->get_grade_item();
+        \grade_object::set_properties($gradeitem, array('gradepass' => 50.0));
+        $gradeitem->update();
+        $assignrow = $assign->get_instance();
+        $grades = array();
+        $grades[$student2->id] = (object) [
+            'rawgrade' => 60,
+            'userid' => $student2->id
+        ];
+        $assignrow->cmidnumber = null;
+        assign_grade_item_update($assignrow, $grades);
+        grade_regrade_final_grades($course->id);
+
+        $feedback = local::course_feedback($course);
+        // Cache still not invalidated as grading was for a different user.
+        $this->assertTrue($feedback->fromcache);
+        // Still no feedback avialable.
+        $this->assertTrue(empty($feedback->$property));
+
+        // Assert feedback available is populated when a teacher grades the students assignment (submission not
+        // required for this test.
+        $assign = new \assign($cm->context, $cm, $course);
+        $gradeitem = $assign->get_grade_item();
+        \grade_object::set_properties($gradeitem, array('gradepass' => 50.0));
+        $gradeitem->update();
+        $assignrow = $assign->get_instance();
+        $grades = array();
+        $grades[$student->id] = (object) [
+            'rawgrade' => 60,
+            'userid' => $student->id
+        ];
+        $assignrow->cmidnumber = null;
+        assign_grade_item_update($assignrow, $grades);
+        grade_regrade_final_grades($course->id);
+        $feedback = local::course_feedback($course);
+        // Cache should be invalidated now that a grade has been assigned to this student.
+        $this->assertFalse($feedback->fromcache);
+        // Feedback should be available now.
+        $this->assertNotEmpty($feedback->$property);
+        $feedback = local::course_feedback($course);
+        // Cache primed again.
+        $this->assertTrue($feedback->fromcache);
+    }
+
+    public function test_course_feedback_available() {
+        $this->resetAfterTest();
+        set_config('showcoursegradepersonalmenu', 0, 'theme_snap');
+        $this->course_feedback_test('feedbackavailable');
+    }
+
+    public function test_course_feedback_grade() {
+        $this->resetAfterTest();
+        set_config('showcoursegradepersonalmenu', 1, 'theme_snap');
+        $this->course_feedback_test('coursegrade');
+    }
 }

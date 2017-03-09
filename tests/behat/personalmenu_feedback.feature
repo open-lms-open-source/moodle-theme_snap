@@ -66,15 +66,9 @@ Feature: When the moodle theme is set to Snap, students can open a personal menu
     And I wait until "#snap-personal-menu-grading[data-content-loaded=\"1\"]" "css_element" is visible
     # The above waits until the snap personal menu column is loaded.
     Then I should see "1 of 1 Submitted, 1 Ungraded"
-    And I follow "Test assignment1"
-    And I follow "View all submissions"
-    And I click on "Grade" "link" in the "Student 1" "table_row"
-    When I set the following fields to these values:
-      | Grade out of 100  | 50                       |
-      | Feedback comments | I'm the teacher feedback |
-    And I press "Save changes"
-    And I press "Ok"
-    And I follow "Test assignment1"
+    And I grade the assignment "Test assignment1" in course "C1" as follows:
+      | username | grade | feedback                 |
+      | student1 | 50    | I'm the teacher feedback |
     And I log out (theme_snap)
     Then I log in as "student1" (theme_snap)
     And I open the personal menu
