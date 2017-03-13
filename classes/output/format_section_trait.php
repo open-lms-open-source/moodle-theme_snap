@@ -232,6 +232,7 @@ trait format_section_trait {
         $sectiontitle = get_section_name($course, $section);
         // Better first section title.
         if ($sectiontitle == get_string('general') && $section->section == 0) {
+            $classes = '';
             $sectiontitle = get_string('introduction', 'theme_snap');
         }
 

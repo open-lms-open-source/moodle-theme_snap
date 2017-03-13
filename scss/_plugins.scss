@@ -1,0 +1,124 @@
+/**
+* Plugins css.
+*/
+
+/**
+ * report : dates.
+ * https://moodle.org/plugins/report_editdates
+ */
+#page-report-editdates-index .activityicon {
+    @include svg-icon;
+}
+
+/**
+ * Assign feedback PDF editor.
+ * Prevent PDF edit area from displaying outside of dialogs.
+ *
+ * Note - applies to joule grader which is why this is not nested within .path-mod-assign.
+ * Also, note - it's an issue with the editor being inside a dialog, so fix applied more widely than just to
+ * joule-grader.
+ */
+.moodle-dialogue-base .assignfeedback_editpdf_widget .drawingregion {
+    left:0;
+    top:0;
+}
+
+/* Drop down menus in the anotation bar */
+.moodle-dialogue-base .moodle-dialogue.assignfeedback_editpdf_dropdown {
+    min-width: 1em;
+}
+
+.path-mod-assign [data-region="user-info"] .img-rounded {
+    height: 40px;
+}
+.path-mod-assign #page-content [data-region="grade-panel"] .popout [data-region="popout-button"] img {
+    max-width: none;
+}
+
+/**
+ * Survey module.
+ * Fix black text on save.
+ */
+#page-mod-survey-save div[role="main"] h2 {
+    padding-top:0.5em;
+    color:#fff;
+}
+
+/**
+ * Conduit.
+ */
+#page-blocks-conduit-view {
+    .mform {
+        .fitem .felement.fgroup span {
+            display: inline-block;
+        }
+        #fgroup_id_timestarted_grp, #fgroup_id_timecompleted_grp {
+            .felement.fgroup span {
+                display: block;
+            }
+        }
+    }
+}
+
+.path-blocks-conduit .widgets {
+    white-space: normal;
+
+    input {
+        display: block;
+        margin: 8px 0 0 5px;
+    }
+
+    a {
+        display: block;
+        margin-top: -1.5em;
+    }
+}
+
+.edit_pages_box span.label {
+  color: $body-color;
+}
+
+/**
+ * Stop rubric mform from being positioned inefficiently in dialog.
+ */
+#local-joulegrader-gradepane-panel .mform{
+    max-width: 100%;
+    margin: 0 auto;
+}
+
+/**
+ * Mod lesson.
+ */
+
+/* Radio button and checkbox inputs. */
+#page-mod-lesson-view.path-mod-lesson {
+    .answeroptiongroup,
+    .answeroption {
+
+        input[type="radio"],
+        input[type="checkbox"] {
+            top: 0.25em;
+
+            + label {
+                padding-left: 1.5em;
+            }
+        }
+
+        /* Put options on seperate lines. */
+        .fgroup>span {
+            display: table; // SHAME - hack for lessons css/html display of radio buttons.
+            label p {
+                display: inline; // SHAME - fix for p tag in each label.
+            }
+        }
+    }
+}
+
+.gradingform_guide_comment_chooser {
+    max-height: 60vh;
+    overflow-y: auto;
+}
+.gradingform_guide_comment_chooser > ul > li button {
+    text-align: left;
+    white-space: normal;
+}

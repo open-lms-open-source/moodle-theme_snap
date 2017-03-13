@@ -40,12 +40,33 @@ use theme_snap\services\course;
 use theme_snap\renderables\settings_link;
 use theme_snap\renderables\bb_dashboard_link;
 use theme_snap\renderables\course_card;
+use theme_snap\renderables\course_toc;
 // We have to force include this class as it's on login and the auto loader may not have been updated via a cache dump.
 require_once($CFG->dirroot.'/theme/snap/classes/renderables/login_alternative_methods.php');
 use theme_snap\renderables\login_alternative_methods;
 
-class core_renderer extends toc_renderer {
+class core_renderer extends \theme_boost\output\core_renderer {
 
+    /**
+     * @return bool|string
+     * @throws \moodle_exception
+     */
+    public function course_toc() {
+        $coursetoc = new course_toc();
+        return $this->render_from_template('theme_snap/course_toc', $coursetoc);
+    }
+
+    /**
+     * get course image
+     *
+     * @return bool|\moodle_url
+     */
+
+    public function get_course_image() {
+        global $COURSE;
+
+        return \theme_snap\local::course_coverimage_url($COURSE->id);
+    }
     public function course_footer() {
         global $DB, $COURSE, $CFG, $PAGE;
 
@@ -927,51 +948,6 @@ class core_renderer extends toc_renderer {
         return false;
     }
 
-
-    /*
-     * This renders the navbar.
-     * Uses bootstrap compatible html.
-     */
-    public function navbar() {
-        global $COURSE, $CFG;
-
-        require_once($CFG->dirroot.'/course/lib.php');
-
-        $breadcrumbs = '';
-        $courseitem = null;
-        foreach ($this->page->navbar->get_items() as $item) {
-            $item->hideicon = true;
-
-            if ($item->type == \navigation_node::TYPE_COURSE) {
-                $courseitem = $item;
-            }
-            if ($item->type == \navigation_node::TYPE_SECTION) {
-                if ($courseitem != null) {
-
-                    $url = $courseitem->action->out(false);
-
-                    $item->action = $courseitem->action;
-                    $sectionnumber = $this->get_section_for_id($item->key);
-
-                    // Append section focus hash only for topics and weeks formats because we can
-                    // trust the behaviour of these formats.
-                    if ($COURSE->format == 'topics' || $COURSE->format == 'weeks') {
-                        $url .= '#section-'.$sectionnumber;
-                        if ($item->text == get_string('general')) {
-                            $item->text = get_string('introduction', 'theme_snap');
-                        }
-                    } else {
-                        $url = course_get_url($COURSE, $sectionnumber);
-                    }
-                    $item->action = new moodle_url($url);
-                }
-            }
-
-            $breadcrumbs .= '<li>'.$this->render($item).'</li>';
-        }
-        return "<ol class=breadcrumb>$breadcrumbs</ol>";
-    }
-
     /**
      * Cover image selector.
      * @return bool|null|string
@@ -1208,37 +1184,6 @@ HTML;
         $output .= html_writer::end_tag('div');
 
         return $output;
-    }
-
-    protected function render_tabtree(\tabtree $tabtree) {
-        if (empty($tabtree->subtree)) {
-            return '';
-        }
-        $firstrow = $secondrow = '';
-        foreach ($tabtree->subtree as $tab) {
-            $firstrow .= $this->render($tab);
-            if (($tab->selected || $tab->activated) && !empty($tab->subtree) && $tab->subtree !== array()) {
-                $secondrow = $this->tabtree($tab->subtree);
-            }
-        }
-        return html_writer::tag('ul', $firstrow, array('class' => 'nav nav-tabs nav-justified')) . $secondrow;
-    }
-
-    protected function render_tabobject(\tabobject $tab) {
-        if ($tab->selected or $tab->activated) {
-            return html_writer::tag('li', html_writer::tag('a', $tab->text), array('class' => 'active'));
-        } else if ($tab->inactive) {
-            return html_writer::tag('li', html_writer::tag('a', $tab->text), array('class' => 'disabled'));
-        } else {
-            if (!($tab->link instanceof moodle_url)) {
-                // Backward compatibility when link was passed as quoted string
-                // to avoid double escaping of ampersands etc.
-                $link = '<a href="'.$tab->link.'" title="'.s($tab->title).'">'.$tab->text.'</a>';
-            } else {
-                $link = html_writer::link($tab->link, $tab->text, array('title' => $tab->title));
-            }
-            return html_writer::tag('li', $link);
-        }
     }
 
     /**

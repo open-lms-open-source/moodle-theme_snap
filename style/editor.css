@@ -8052,6 +8052,15 @@ label.state-visible[for="snap-coverfiles"] .spinner-three-quarters,
 #page-course-recent #region-main div.generalbox table.forum-recent div.title.bold {
   font-weight: 300;
 }
+.reset-sr-only {
+  position: relative;
+  width: auto;
+  height: auto;
+  margin: initial;
+  overflow: visible;
+  clip: auto;
+  border: initial;
+}
 /**
  * Snap course swatch.
  *

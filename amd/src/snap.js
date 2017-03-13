@@ -571,7 +571,7 @@ define(['jquery', 'theme_snap/bootstrap', 'core/log', 'theme_snap/headroom', 'th
                             }
                         }
 
-                        var savebuttons = $("#mform1 #fgroup_id_buttonar");
+                        var savebuttons = $("#mform1 > .form-group:last");
                         $(main_form).append(savebuttons);
                     }
 

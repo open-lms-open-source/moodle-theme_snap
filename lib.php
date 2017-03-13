@@ -57,9 +57,6 @@ function theme_snap_process_css($css, theme_config $theme) {
     }
     $css = theme_snap_set_customcss($css, $customcss);
 
-    // Set bootswatch.
-    $css = theme_snap_set_bootswatch($css, theme_snap_get_bootswatch_variables($theme));
-
     return $css;
 }
 
@@ -96,68 +93,6 @@ function theme_snap_set_customcss($css, $customcss) {
     }
     $css = str_replace($tag, $replacement, $css);
     return $css;
-}
-
-/**
- * Extract bootswatch variables from theme configuration.
- *
- * @param theme_config $theme
- * @return array
- */
-function theme_snap_get_bootswatch_variables(theme_config $theme) {
-    $settings['brand-primary'] = !empty($theme->settings->themecolor) ? $theme->settings->themecolor : '#3bcedb';
-    $userfontsans  = $theme->settings->headingfont;
-    if (empty($userfontsans) || in_array($userfontsans, ['Roboto', '"Roboto"'])) {
-        $userfontsans = '';
-    } else {
-        $userfontsans .= ",";
-    }
-    $fallbacksans = 'Roboto,"Fira Sans","Segoe UI","HelveticaNeue-Light",'
-        . '"Helvetica Neue Light","Helvetica Neue",Helvetica, Arial, sans-serif';
-    $settings['font-family-sans-serif'] = $userfontsans . $fallbacksans;
-
-    $userfontserif = $theme->settings->seriffont;
-    if (empty($userfontserif) || in_array($userfontserif, ['Georgia', '"Georgia"'])) {
-        $userfontserif = '';
-    } else {
-        $userfontserif .= ",";
-    }
-    $fallbackserif = 'Georgia,"Times New Roman", Times, serif';
-    $settings['font-family-serif'] = $userfontserif . $fallbackserif;
-
-    return $settings;
-}
-
-/**
- * Add bootswatch CSS
- *
- * @param string $css The original CSS.
- * @param array $variables The bootswatch variables
- * @return string
- * @see theme_snap_get_bootswatch_variables
- */
-function theme_snap_set_bootswatch($css, array $variables) {
-    global $CFG;
-
-    $tag = '/**setting:snap-user-bootswatch**/';
-    if (strpos($css, $tag) === false) {
-        return $css; // Avoid doing work when tag is not present.
-    }
-    require_once(__DIR__.'/lessphp/Less.php');
-
-    try {
-        $parser = new Less_Parser();
-        $parser->parseFile(__DIR__.'/less/bootswatch/snap-variables.less', $CFG->wwwroot.'/');
-        $parser->parseFile(__DIR__.'/less/bootswatch/snap-user-bootswatch.less', $CFG->wwwroot.'/');
-        if (!empty($variables)) {
-            $parser->ModifyVars($variables);
-        }
-        $replacement = $parser->getCss();
-    } catch (Exception $e) {
-        add_to_log(get_site()->id, 'library', 'bootswatch', '', 'Failed to complile bootswatch: '.$e->getMessage());
-        $replacement = '';  // Nothing we can do but remove the tag.
-    }
-    return str_replace($tag, $replacement, $css);
 }
 
 /**
@@ -235,4 +170,77 @@ function theme_snap_myprofile_navigation(core_user\output\myprofile\tree $tree, 
             $tree->add_node($prefnode);
         }
     }
+}
+
+function theme_snap_get_main_scss_content($theme) {
+    global $CFG;
+
+    // Note, the following code is not fully used yet, only the hardcoded
+    // pre and post scss files will be loaded, not any presets defined by
+    // settings.
+
+    $scss = '';
+    $filename = !empty($theme->settings->preset) ? $theme->settings->preset : null;
+    $fs = get_file_storage();
+
+    $context = context_system::instance();
+    if ($filename == 'default.scss') {
+        // We still load the default preset files directly from the boost theme. No sense in duplicating them.
+        $scss .= file_get_contents($CFG->dirroot . '/theme/boost/scss/preset/default.scss');
+    } else if ($filename == 'plain.scss') {
+        // We still load the default preset files directly from the boost theme. No sense in duplicating them.
+        $scss .= file_get_contents($CFG->dirroot . '/theme/boost/scss/preset/plain.scss');
+
+    } else if ($filename && ($presetfile = $fs->get_file($context->id, 'theme_snap', 'preset', 0, '/', $filename))) {
+        // This preset file was fetched from the file area for theme_snap and not theme_boost (see the line above).
+        $scss .= $presetfile->get_content();
+    } else {
+        $scss = '@import "moodle";';
+    }
+
+    // Pre CSS - this is loaded AFTER any prescss from the setting but before the main scss.
+    $pre = file_get_contents($CFG->dirroot . '/theme/snap/scss/pre.scss');
+    // Post CSS - this is loaded AFTER the main scss but before the extra scss from the setting.
+    $post = file_get_contents($CFG->dirroot . '/theme/snap/scss/post.scss');
+
+    // Combine them together.
+    return $pre . "\n" . $scss . "\n" . $post;
+}
+
+/**
+ * Get SCSS to prepend.
+ *
+ * @param theme_config $theme The theme config object.
+ * @return array
+ */
+function theme_snap_get_pre_scss($theme) {
+    global $CFG;
+
+    $scss = '';
+
+    $settings['brand-primary'] = !empty($theme->settings->themecolor) ? $theme->settings->themecolor : '#3bcedb';
+    $userfontsans  = $theme->settings->headingfont;
+    if (empty($userfontsans) || in_array($userfontsans, ['Roboto', '"Roboto"'])) {
+        $userfontsans = '';
+    } else {
+        $userfontsans .= ",";
+    }
+    $fallbacksans = 'Roboto,"Fira Sans","Segoe UI","HelveticaNeue-Light",'
+        . '"Helvetica Neue Light","Helvetica Neue",Helvetica, Arial, sans-serif';
+    $settings['font-family-sans-serif'] = $userfontsans . $fallbacksans;
+
+    $userfontserif = $theme->settings->seriffont;
+    if (empty($userfontserif) || in_array($userfontserif, ['Georgia', '"Georgia"'])) {
+        $userfontserif = '';
+    } else {
+        $userfontserif .= ",";
+    }
+    $fallbackserif = 'Georgia,"Times New Roman", Times, serif';
+    $settings['font-family-serif'] = $userfontserif . $fallbackserif;
+
+    foreach ($settings as $key => $value) {
+        $scss .= '$' . $key . ': ' . $value . ";\n";
+    }
+
+    return $scss;
 }

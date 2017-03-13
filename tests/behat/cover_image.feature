@@ -71,7 +71,7 @@ Feature: When the moodle theme is set to Snap, cover image can be set for site a
     # Test deleting cover image
     And I click on "#admin-menu-trigger" "css_element"
     And I navigate to "Edit settings" node in "Course administration"
-    And I delete "rawcoverimage.jpg" from "Course summary files" filemanager (theme_snap)
+    And I delete "rawcoverimage.jpg" from "Course summary files" filemanager
     And I press "Save and display"
     Then I should not see cover image in page header
     # Test cover image can only be set on main course page
@@ -166,7 +166,7 @@ Feature: When the moodle theme is set to Snap, cover image can be set for site a
     Then I should see cover image in page header
     # Test deleting cover image
     And I navigate to "Appearance > Themes > Snap > Snap" in site administration
-    And I delete "rawcoverimage.png" from "Cover image" filemanager (theme_snap)
+    And I delete "rawcoverimage.png" from "Cover image" filemanager
     And I press "Save changes"
     And I am on site homepage
     Then I should not see cover image in page header

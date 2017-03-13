@@ -303,13 +303,13 @@ class course_renderer extends \core_course_renderer {
                 $actions .= "<input id='snap-move-mod-$mod->id' class='js-snap-asset-move sr-only' type='checkbox'><label class='snap-asset-move' for='snap-move-mod-$mod->id'><span class='sr-only'>$movealt</span>$moveicon</label>";
                 $actions .= "<a class='snap-edit-asset' href='".new moodle_url($baseurl, array('update' => $mod->id))."'>$editicon</a>";
                 $actionsadvanced[] = "<a href='".new moodle_url($baseurl, array('delete' => $mod->id)).
-                    "' class='js_snap_delete'>$str->delete</a>";
+                    "' class='js_snap_delete dropdown-item'>$str->delete</a>";
             }
 
             // Hide/Show.
             if (has_capability('moodle/course:activityvisibility', $modcontext)) {
-                $actionsadvanced[] = "<a href='".new moodle_url($baseurl, array('hide' => $mod->id))."' class='editing_hide js_snap_hide'>$str->hide</a>";
-                $actionsadvanced[] = "<a href='".new moodle_url($baseurl, array('show' => $mod->id))."' class='editing_show js_snap_show'>$str->show</a>";
+                $actionsadvanced[] = "<a href='".new moodle_url($baseurl, array('hide' => $mod->id))."' class='dropdown-item editing_hide js_snap_hide'>$str->hide</a>";
+                $actionsadvanced[] = "<a href='".new moodle_url($baseurl, array('show' => $mod->id))."' class='dropdown-item editing_show js_snap_show'>$str->show</a>";
                 // AX click to change.
             }
 
@@ -318,12 +318,12 @@ class course_renderer extends \core_course_renderer {
             if (has_all_capabilities($dupecaps, $coursecontext) &&
             plugin_supports('mod', $mod->modname, FEATURE_BACKUP_MOODLE2) &&
             plugin_supports('mod', $mod->modname, 'duplicate', true)) {
-                $actionsadvanced[] = "<a href='".new moodle_url($baseurl, array('duplicate' => $mod->id))."' class='js_snap_duplicate'>$str->duplicate</a>";
+                $actionsadvanced[] = "<a href='".new moodle_url($baseurl, array('duplicate' => $mod->id))."' class='dropdown-item js_snap_duplicate'>$str->duplicate</a>";
             }
 
             // Asign roles.
             if (has_capability('moodle/role:assign', $modcontext)) {
-                $actionsadvanced[] = "<a href='".new moodle_url('/admin/roles/assign.php', array('contextid' => $modcontext->id))."'>$str->roles</a>";
+                $actionsadvanced[] = "<a class='dropdown-item' href='".new moodle_url('/admin/roles/assign.php', array('contextid' => $modcontext->id))."'>$str->roles</a>";
             }
 
             // Give local plugins a chance to add icons.
@@ -341,7 +341,7 @@ class course_renderer extends \core_course_renderer {
             foreach ($localplugins as $localplugin) {
                 $url = $localplugin->url;
                 $text = $localplugin->text;
-                $class = $localplugin->attributes['class'];
+                $class = 'dropdown-item ' . $localplugin->attributes['class'];
                 $actionsadvanced[] = "<a href='$url' class='$class'>$text</a>";
             }
 
@@ -351,11 +351,11 @@ class course_renderer extends \core_course_renderer {
             $moreicon = "<img title='".get_string('more', 'theme_snap')."' alt='".get_string('more', 'theme_snap')."' class='svg-icon' src='".$this->output->pix_url('more', 'theme')."'/>";
             $advancedactions = "<div class='dropdown snap-edit-more-dropdown'>
                       <a href='#' class='dropdown-toggle snap-edit-asset-more' data-toggle='dropdown' aria-expanded='false' aria-haspopup='true'>$moreicon</a>
-                      <ul class='dropdown-menu'>";
+                      <div class='dropdown-menu'>";
             foreach ($actionsadvanced as $action) {
-                $advancedactions .= "<li>$action</li>";
+                $advancedactions .= "$action";
             }
-            $advancedactions .= "</ul></div>";
+            $advancedactions .= "</div></div>";
         }
         $output .= "</div>"; // Close .activityinstance.
 
@@ -689,7 +689,7 @@ class course_renderer extends \core_course_renderer {
 
         <div class=pagemod-content tabindex='-1' data-content-loaded={$contentloaded}>
             {$content}
-            <div><hr><a  class='snap-action-icon' href='#'>
+            <div class='d-block'><hr><a  class='snap-action-icon' href='#'>
             <i class='icon icon-close'></i><small>$close</small></a></div>
         </div>";
 

@@ -59,17 +59,17 @@ if ($themeissnap && $notajaxscript) {
 $THEME->doctype = 'html5';
 $THEME->yuicssmodules = array('cssgrids'); // This is required for joule grader.
 $THEME->name = 'snap';
-$THEME->parents = array();
-$THEME->sheets = array('moodle');
+$THEME->parents = array('boost');
+
+$THEME->enable_dock = false;
+$THEME->prescsscallback = 'theme_snap_get_pre_scss';
+$THEME->scss = function($theme) {
+    return theme_snap_get_main_scss_content($theme);
+};
+$THEME->csspostprocess = 'theme_snap_process_css';
 $THEME->supportscssoptimisation = false;
 
 $THEME->editor_sheets = array('editor');
-
-$THEME->plugins_exclude_sheets = array(
-    'block' => array(
-        'html'
-    ),
-);
 
 $THEME->rendererfactory = 'theme_overridden_renderer_factory';
 
@@ -199,7 +199,6 @@ $THEME->javascripts = array(
 $THEME->javascripts_footer = array(
 );
 
-$THEME->csspostprocess = 'theme_snap_process_css';
 $THEME->hidefromselector = false;
 
 // For use with Flexpage layouts.
