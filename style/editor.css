@@ -10399,22 +10399,12 @@ fieldset[disabled] a#changenumsections .reduce-sections {
   margin: 0;
 }
 .courseinfo .completionstatus,
-.courseinfo .feedbackavailable,
 .courseinfo .coursegrade {
   font-size: small;
 }
-.courseinfo .feedbackavailable,
 .courseinfo .coursegrade {
-  text-align: right;
   display: block;
   line-height: 2.5em;
-}
-.courseinfo .feedbackavailable {
-  padding-right: 2.75em;
-  background-image: url("[[pix:theme|tick]]");
-  background-repeat: no-repeat;
-  background-position: 100% 50%;
-  background-size: 2.5em 2.5em;
 }
 .courseinfo .published-status {
   clear: both;

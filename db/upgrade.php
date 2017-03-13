@@ -86,5 +86,12 @@ function xmldb_theme_snap_upgrade($oldversion) {
         upgrade_plugin_savepoint(true, 2016042904, 'theme', 'snap');
     }
 
+    if ($oldversion < 2016121309) {
+        if (get_config('core', 'theme') === 'snap') {
+            set_config('showcoursegradepersonalmenu', 0, 'theme_snap');
+        }
+        upgrade_plugin_savepoint(true, 2016121309, 'theme', 'snap');
+    }
+
     return true;
 }

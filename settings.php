@@ -170,7 +170,7 @@ if ($ADMIN->fulltree) {
     $name = 'theme_snap/showcoursegradepersonalmenu';
     $title = new lang_string('showcoursegradepersonalmenu', 'theme_snap');
     $description = new lang_string('showcoursegradepersonalmenudesc', 'theme_snap');
-    $default = $unchecked;
+    $default = $checked; // For new installations (legacy is unchecked via upgrade.php).
     $setting = new admin_setting_configcheckbox($name, $title, $description, $default, $checked, $unchecked);
     $snapsettings->add($setting);
 
