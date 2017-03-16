@@ -152,6 +152,12 @@ class course_total_grade extends \grade_report_overview {
 
     }
 
+    /**
+     * Get course total grade.
+     * @param bool $studentcoursesonly
+     * @return string
+     * @throws \coding_exception
+     */
     public function get_course_total($studentcoursesonly = true) {
         global $USER, $DB;
 
@@ -279,8 +285,6 @@ class course_total_grade extends \grade_report_overview {
                 return "$rank/".$this->get_numusers(false); // total course users
             }
         }
-
         return grade_format_gradevalue($finalgrade, $course_grade->grade_item, true, GRADE_DISPLAY_TYPE_DEFAULT);
-
     }
 }

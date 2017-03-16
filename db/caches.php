@@ -45,32 +45,5 @@ $definitions = array(
         'simplekeys'         => true,
         'simpledata'         => false,
         'staticacceleration' => false
-    ],
-    // This is used so that we can ignore the course_grades cache for a user if grade settings change.
-    // More efficient than trying to invalidate the cache of every user effected - instead when a logged in user
-    // requests their course grade it will check the hash and timemodified for grade settings.
-    // We have a maximum lifespan (ttl) of 30 minutes which will cause the settings hash and timemodified stamps to be
-    // refreshed.
-    'course_grade_settings' => [
-        'mode'               => cache_store::MODE_APPLICATION,
-        'simplekeys'         => true,
-        'simpledata'         => false,
-        'staticacceleration' => true,
-        'ttl' => (HOURSECS / 2)
-    ],
-    // This is used so that we can ignore the course_grades cache for a user if something is graded.
-    // More efficient than trying to invalidate the cache of every user effected.
-    'course_grades_ts' => [
-        'mode'               => cache_store::MODE_APPLICATION,
-        'simplekeys'         => true,
-        'simpledata'         => false,
-        'staticacceleration' => false
-    ],
-    // This is used to cache grade data per course / user.
-    'course_grades' => [
-        'mode'               => cache_store::MODE_APPLICATION,
-        'simplekeys'         => true,
-        'simpledata'         => false,
-        'staticacceleration' => false
-    ],
+    ]
 );
