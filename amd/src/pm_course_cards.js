@@ -24,8 +24,9 @@
  */
 define(['jquery', 'core/log', 'core/templates',
     'theme_snap/pm_course_cards_hidden', 'theme_snap/pm_course_favorites',
-    'theme_snap/model_view', 'theme_snap/ajax_notification', 'theme_snap/util'],
-    function($, log, templates, cardsHidden, courseFavorites, mview, ajaxNotify, util) {
+    'theme_snap/model_view', 'theme_snap/ajax_notification', 'theme_snap/util',
+    'theme_snap/appear'],
+    function($, log, templates, cardsHidden, courseFavorites, mview, ajaxNotify, util, appear) {
 
         var CourseCards = function() {
 
@@ -96,6 +97,21 @@ define(['jquery', 'core/log', 'core/templates',
                 return courseIds;
             };
 
+            this.applyAppearForImages = function() {
+                appear(document.body).on('appear', '.courseinfo', function(e, appeared) {
+                    appeared.each(function() {
+                        var imgurl = $(this).data('image-url');
+                        if (imgurl !== undefined) {
+                            $(this).css('background-image', 'url(' + imgurl.trim() + ')');
+                        }
+                    });
+                });
+                // Appear configuration - start loading images when they are out of the view port by 100px.
+                var appearConf = {appeartopoffset : 100, appearleftoffset : 100};
+                $('.courseinfo').appear(appearConf);
+                appear.force_appear();
+            };
+
             /**
              * Initialising function.
              */
@@ -107,6 +123,7 @@ define(['jquery', 'core/log', 'core/templates',
                     var courseIds = self.getCourseIds();
                     var courseinfo_key = M.cfg.sesskey + 'courseinfo';
                     if (courseIds.length > 0) {
+                        self.applyAppearForImages();
                         // OK - lets see if we have grades/progress in session storage.
                         if (util.supportsSessionStorage() && window.sessionStorage[courseinfo_key]) {
                             var courseinfo = JSON.parse(window.sessionStorage[courseinfo_key]);

@@ -99,6 +99,11 @@ class course_card implements \renderable {
     public $imagecss;
 
     /**
+     * @var string
+     */
+    public $lazyloadimageurl;
+
+    /**
      * @var bool
      */
     public $published = true;
@@ -140,11 +145,19 @@ class course_card implements \renderable {
      * Set image css for course card (cover image, etc).
      */
     private function apply_image_css() {
+        static $count = 0;
+        $count++;
         $bgcolor = local::get_course_color($this->courseid);
         $this->imagecss = "background-color: #$bgcolor;";
+        // Only immediately load images for the first 15 cards.
         $bgimage = local::course_card_image_url($this->courseid);
-        if (!empty($bgimage)) {
-            $this->imagecss .= "background-image: url($bgimage);";
+        $isajax = defined('AJAX_SCRIPT') && AJAX_SCRIPT;
+        if (!$isajax  && $count <= 15) {
+            if (!empty($bgimage)) {
+                $this->imagecss .= "background-image: url($bgimage);";
+            }
+        } else {
+            $this->lazyloadimageurl = $bgimage->out();
         }
     }
 
