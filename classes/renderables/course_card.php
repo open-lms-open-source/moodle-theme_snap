@@ -152,12 +152,13 @@ class course_card implements \renderable {
         // Only immediately load images for the first 15 cards.
         $bgimage = local::course_card_image_url($this->courseid);
         $isajax = defined('AJAX_SCRIPT') && AJAX_SCRIPT;
-        if (!$isajax  && $count <= 15) {
-            if (!empty($bgimage)) {
+
+        if (!empty($bgimage)) {
+            if (!$isajax && $count <= 15) {
                 $this->imagecss .= "background-image: url($bgimage);";
+            } else {
+                $this->lazyloadimageurl = $bgimage->out();
             }
-        } else {
-            $this->lazyloadimageurl = $bgimage->out();
         }
     }
 
