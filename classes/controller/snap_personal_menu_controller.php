@@ -96,6 +96,7 @@ class snap_personal_menu_controller extends controller_abstract {
      * @return string
      */
     public function get_courseinfo_action() {
+        
         $courseids = optional_param('courseids', false, PARAM_SEQUENCE);
         if (!empty($courseids)) {
             $courseids = explode(',', $courseids);

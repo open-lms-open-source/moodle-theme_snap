@@ -18,13 +18,14 @@
 namespace theme_snap;
 
 use html_writer;
-use theme_snap\user_forums;
+use \theme_snap\user_forums;
+use \theme_snap\course_total_grade;
 
 require_once($CFG->dirroot.'/calendar/lib.php');
 require_once($CFG->libdir.'/completionlib.php');
 require_once($CFG->libdir.'/coursecatlib.php');
 require_once($CFG->dirroot.'/grade/lib.php');
-require_once($CFG->dirroot.'/grade/report/user/lib.php');
+require_once($CFG->dirroot.'/grade/report/overview/lib.php');
 require_once($CFG->dirroot.'/mod/forum/lib.php');
 require_once($CFG->dirroot.'/lib/enrollib.php');
 
@@ -69,47 +70,21 @@ class local {
      * @param \stdClass $course
      * @return \stdClass
      */
-    public static function course_feedback($course) {
+    public static function course_grade($course) {
         global $USER;
 
         $failobj = (object) [
-            'fromcache' => false, // Useful for debugging and unit testing.
             'feedback' => false
         ];
 
-        if (!isloggedin() || isguestuser()) {
+        $config = get_config('theme_snap');
+        if (empty($config->showcoursegradepersonalmenu)) {
+            // If not enabled, don't return data.
             return $failobj;
         }
 
-        $config = get_config('theme_snap');
-
-        // Course cache stamp is used to invalidate user session caches if an application level event occurs -
-        // e.g. course module added, module deleted, module updated etc.
-        $coursestamp = self::course_grading_cachestamp($course->id);
-
-        // Course user cache stamp is used to invalidate user session caches if an event occurs which affects this
-        // user - e.g. A teacher adds a grade against this user.
-        $courseuserstamp = self::course_user_graded_cachestamp($course->id, $USER->id);
-
-        /** @var \cache_session $muc */
-        $muc = \cache::make('theme_snap', 'course_grades');
-        $cached = $muc->get($course->id.'_'.$USER->id);
-        if ($cached && $cached->timestamp >= $coursestamp && $cached->timestamp >= $courseuserstamp) {
-            $configchange = false;
-            if (!empty($config->showcoursegradepersonalmenu)) {
-                if (!$cached->showgrade) {
-                    $configchange = true;
-                }
-            } else {
-                if ($cached->showgrade) {
-                    $configchange = true;
-                }
-            }
-            // Only return the cached version if the related config hasn't changed.
-            if (!$configchange) {
-                $cached->fromcache = true; // Useful for debugging and unit testing.
-                return $cached;
-            }
+        if (!isloggedin() || isguestuser()) {
+            return $failobj;
         }
 
         // Get course context.
@@ -120,7 +95,7 @@ class local {
             return $failobj;
         }
         // Security check - are they allowed to see the grade report for the course?
-        if (!has_capability('gradereport/user:view', $coursecontext)) {
+        if (!has_capability('gradereport/overview:view', $coursecontext)) {
             return $failobj;
         }
         // See if user can view hidden grades for this course.
@@ -145,41 +120,26 @@ class local {
         ];
 
         if (!$coursegrade->is_hidden() || $canviewhidden) {
-            // Use user grade report to get course total - this is to take hidden grade settings into account.
+            // Use overview grade report to get course total - this is to take hidden grade settings into account.
             $gpr = new \grade_plugin_return(array(
                     'type' => 'report',
-                    'plugin' => 'user',
+                    'plugin' => 'overview',
                     'courseid' => $course->id,
                     'userid' => $USER->id)
             );
-            $report = new \grade_report_user($course->id, $gpr, $coursecontext, $USER->id);
-            $report->fill_table();
 
-            if (!empty($config->showcoursegradepersonalmenu)) {
-                $coursetotal = end($report->tabledata);
-                $coursegrade = $coursetotal['grade']['content'];
-                $ignoregrades = [
-                    '-',
-                    '&nbsp;',
-                    get_string('error')
-                ];
-                if (!in_array($coursegrade, $ignoregrades)) {
-                    $feedbackobj->coursegrade = $coursegrade;
-                }
-            } else {
-                foreach ($report->tabledata as $item) {
-                    if (self::item_has_grade_or_feedback($item)) {
-                        $feedbackobj->feedbackavailable = true;
-                        break;
-                    }
-                }
+            // Create a report instance.
+            $report = new course_total_grade($USER, $gpr, $course);
+            $coursegrade = $report->get_course_total();
+            $ignoregrades = [
+                '-',
+                '&nbsp;',
+                get_string('error')
+            ];
+            if (!in_array($coursegrade, $ignoregrades)) {
+                $feedbackobj->coursegrade = $coursegrade;
             }
         }
-
-        // Cache object.
-        $feedbackobj->timestamp = microtime(true);
-        $muc->set($course->id.'_'.$USER->id, $feedbackobj);
-        $feedbackobj->fromcache = false; // We set the cache, we didn't get it from the cache.
 
         return $feedbackobj;
     }
@@ -339,23 +299,6 @@ class local {
     }
 
     /**
-     * @param int $courseid
-     * @param bool $new
-     */
-    public static function course_grading_cachestamp($courseid, $new = false) {
-        return self::get_cachestamp(strval($courseid), 'course_grades_ts', $new);
-    }
-
-    /**
-     * @param int $courseid
-     * @param int $userid
-     * @param bool $new
-     */
-    public static function course_user_graded_cachestamp($courseid, $userid, $new = false) {
-        return self::get_cachestamp($courseid.'_'.$userid, 'course_grades_ts', $new);
-    }
-
-    /**
      * Get / reset completion cache stamp for specific course id.
      *
      * @param int $courseid
@@ -510,6 +453,13 @@ class local {
 
         $courses = enrol_get_my_courses(['enablecompletion', 'showgrades']);
 
+        // We do not support meta data for people who have a crazy number of courses!
+        if (count($courses) > 100) {
+            return $courseinfo;
+        }
+
+        $showgrades = get_config('theme_snap', 'showcoursegradepersonalmenu');
+
         foreach ($courseids as $courseid) {
             if (!isset($courses[$courseid])) {
                 // Don't throw an error, just carry on.
@@ -522,8 +472,10 @@ class local {
                 'completion' => self::course_completion_progress($course)
             );
 
-            $feedback = self::course_feedback($course);
-            $courseinfo[$courseid]->feedback = $feedback;
+            if (!empty($showgrades)) {
+                $feedback = self::course_grade($course);
+                $courseinfo[$courseid]->feedback = $feedback;
+            }
         }
         return $courseinfo;
     }

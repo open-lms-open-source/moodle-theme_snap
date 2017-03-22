@@ -24,19 +24,15 @@
     <div class="courseinfo-body">
         <h3><a class="coursefullname" href="{{{url}}}">{{fullname}}</a></h3>
         <div class=dynamicinfo>
+            {{#feedback}}
+                {{#coursegrade}}
+                    <div class="coursegrade">{{#str}}coursegrade, theme_snap{{/str}} <a href="{{feedbackurl}}">{{coursegrade}}</a></div>
+                {{/coursegrade}}
+            {{/feedback}}
             {{#completion.render}}
             <div class="completionstatus outoftotal">{{#str}}progresstotal, completion, {"complete":{{completion.complete}},"total":{{completion.total}} }{{/str}}<span class="pull-right">{{completion.progress}}%</span></div>
             <div class="completion-line" style="width:{{completion.progress}}%"></div>
             {{/completion.render}}
-            {{#feedback}}
-                {{#feedbackavailable}}
-                <a class="feedbackavailable" href="{{feedbackurl}}">{{#str}}feedbackavailable, theme_snap{{/str}}</a>
-                {{/feedbackavailable}}
-                {{#coursegrade}}
-                    <a class="coursegrade" href="{{feedbackurl}}">{{coursegrade}}</a>
-                {{/coursegrade}}
-            {{/feedback}}
-
         </div>
         <div class="courseinfo-teachers">
             <h4 class="sr-only">{{# str }} coursecontacts, theme_snap {{/ str }}</h4>

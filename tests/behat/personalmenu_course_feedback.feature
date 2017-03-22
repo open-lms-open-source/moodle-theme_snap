@@ -35,12 +35,12 @@ Feature: When the moodle theme is set to Snap, students and teachers can open a 
       | teacher1 | Teacher      | 1        | teacher1@example.com |
 
   @javascript
-  Scenario: Enrolled courses show grade for feedback.
+  Scenario Outline: Enrolled courses show grade in personal menu when enabled.
     Given the following "course enrolments" exist:
       | user     | course | role    |
       | student1 | C1     | student |
     And the following config values are set as admin:
-      | showcoursegradepersonalmenu | 1 | theme_snap |
+      | showcoursegradepersonalmenu | <showgrades> | theme_snap |
     And I log in as "student1" (theme_snap)
     And I open the personal menu
     Then I should see "Course 1"
@@ -52,27 +52,9 @@ Feature: When the moodle theme is set to Snap, students and teachers can open a 
     And I grade the assignment "Test assignment 1" in course "C1" as follows:
       | username | grade |
       | student1 | 70    |
-    And I open the personal menu
-    And I should see "70" in the "a.coursegrade" "css_element"
-
-  @javascript
-  Scenario: Enrolled courses show feedback available.
-    Given the following "course enrolments" exist:
-      | user     | course | role    |
-      | student1 | C1     | student |
-    And the following config values are set as admin:
-      | showcoursegradepersonalmenu | 0 | theme_snap |
-    And I log in as "student1" (theme_snap)
-    And I open the personal menu
-    Then I should see "Course 1"
-    And "a.feedbackavailable" "css_element" should not exist
-    And I close the personal menu
-    And the following "activities" exist:
-      | activity | course | idnumber | name              | intro                       |
-      | assign   | C1     | assign1  | Test assignment 1 | Test assignment description |
-    And I grade the assignment "Test assignment 1" in course "C1" as follows:
-      | username | grade |
-      | student1 | 70    |
-    And I open the personal menu
-    And I should see "Feedback available" in the "a.feedbackavailable" "css_element"
-
+    When I open the personal menu
+    Then <finalstep>
+    Examples:
+    | showgrades | finalstep                                              |
+    | 1          | I should see "70" in the "div.coursegrade" "css_element" |
+    | 0          | "div.coursegrade" "css_element" should not exist         |

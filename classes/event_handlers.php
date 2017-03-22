@@ -82,22 +82,12 @@ class event_handlers {
     }
 
     /**
-     * Invalidate cache when user graded.
-     * @param user_graded $event
-     */
-    public static function user_graded(user_graded $event) {
-        // Force an update for the specific course and user effected by this event.
-        local::course_user_graded_cachestamp($event->courseid, $event->relateduserid, true);
-    }
-
-    /**
      * Update course grading / completion time stamp for course affected by event.
      * @param course_completion_updated $event
      */
     public static function course_completion_updated(course_completion_updated $event) {
         // Force an update of affected cache stamps.
         local::course_completion_cachestamp($event->courseid, true);
-        local::course_grading_cachestamp($event->courseid, true);
     }
 
     /**
@@ -107,7 +97,6 @@ class event_handlers {
     public static function course_module_created(course_module_created $event) {
         // Force an update of affected cache stamps.
         local::course_completion_cachestamp($event->courseid, true);
-        local::course_grading_cachestamp($event->courseid, true);
     }
 
     /**
@@ -117,7 +106,6 @@ class event_handlers {
     public static function course_module_updated(course_module_updated $event) {
         // Force an update of affected cache stamps.
         local::course_completion_cachestamp($event->courseid, true);
-        local::course_grading_cachestamp($event->courseid, true);
     }
 
     /**
@@ -127,7 +115,6 @@ class event_handlers {
     public static function course_module_deleted(course_module_deleted $event) {
         // Force an update of affected cache stamps.
         local::course_completion_cachestamp($event->courseid, true);
-        local::course_grading_cachestamp($event->courseid, true);
     }
 
     /**
