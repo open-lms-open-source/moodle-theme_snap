@@ -1163,6 +1163,11 @@ class local {
                 return $originalfile;
             }
             $filename = $originalfile->get_filename();
+            if ($filename === 'rawcoverimage.jpg') {
+                // Since this is a course card image, the new file name should not have 'raw' or 'coverimage' in it,
+                // as that would be confusing on inspection!
+                $filename = 'image.jpg';
+            }
             $id = $originalfile->get_id();
             $fs = get_file_storage();
             $cardimage = $fs->get_file($context->id, 'theme_snap', 'coursecard', 0, '/', 'course-card-'.$id.'-'.$filename);
@@ -1195,12 +1200,18 @@ class local {
         $fs = get_file_storage();
         $cardimages = $fs->get_area_files($context->id, 'theme_snap', 'coursecard', 0, "itemid, filepath, filename", false);
         if ($cardimages) {
-            return self::snap_pluginfile_url(end($cardimages));
-        } else {
-            $originalfile = self::get_course_firstimage($courseid);
-            $cardimage = self::set_course_card_image($context, $originalfile);
-            return self::snap_pluginfile_url($cardimage);
+            /** @var \stored_file $cardimage */
+            $cardimage = end($cardimages);
+            if (stripos($cardimage->get_filename(), 'rawcoverimage.') !== false) {
+                // The current card image has a bad name (from old code), so get rid of it.
+                self::course_card_clean_up($context);
+            } else {
+                return self::snap_pluginfile_url($cardimage);
+            }
         }
+        $originalfile = self::get_course_firstimage($courseid);
+        $cardimage = self::set_course_card_image($context, $originalfile);
+        return self::snap_pluginfile_url($cardimage);
     }
 
     /**
