@@ -854,7 +854,7 @@ class core_renderer extends toc_renderer {
             }
             $courselist .= '</section>';
 
-            $menu = get_string('menu', 'theme_snap');
+            $menu = '<span class="hidden-xs">' .get_string('menu', 'theme_snap'). '</span>';
             $badge = $this->render_badge_count();
             $linkcontent = $menu.$picture.$badge;
             $attributes = array(
@@ -876,7 +876,7 @@ class core_renderer extends toc_renderer {
                 $realuserinfo = html_writer::span($via.' '.html_writer::span($fullname, 'real-user-name'), 'real-user-info');
             }
 
-            $output .= '<nav id="primary-nav" class="fixy toggle-details" tabindex="-1">
+            $output .= '<nav id="primary-nav" class="fixy toggle-details appear_enabled" tabindex="-1">
             <div class="fixy-inner">
             <div class="fixy-header">
             <a id="fixy-close" class="js-personal-menu-trigger pull-right snap-action-icon" href="#">

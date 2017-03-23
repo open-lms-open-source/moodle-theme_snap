@@ -25,4 +25,10 @@
     <license>MIT</license>
     <version>0.7.0</version>
   </library>
+  <library>
+    <location>amd/src/appear.js</location>
+    <name>Jquery appear plugin</name>
+    <license>MIT</license>
+    <version>0.3.6</version>
+  </library>
 </libraries>

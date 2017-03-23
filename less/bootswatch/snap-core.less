@@ -687,21 +687,15 @@ input[type="reset"] {
 }
 
 #snap-home.logo {
-    display: inline-block;
+    display: block;
     background-color: transparent;
     background-repeat: no-repeat;
-    height: 38px;
-    width: 38%;
     background-size: contain;
-    margin: -0.75em 0;
-}
-// Reduce logo size on smallscreen
-@media screen and (max-width: @screen-sm-max) {
-    #snap-home.logo {
-        max-width: 20%;
-    }
-}
+    background-position: left center;
+    height: 40px;
+    width: 50%;
 
+}
 
 .snap-media-object {
     .clearfix();
@@ -1105,12 +1099,12 @@ header#page-header
 
 // Admin block link.
 #admin-menu-trigger {
-    width: 39px;
-    height: 39px;
+    width: 40px;
+    height: 40px;
     margin-right: 1em;
+    border: 1px solid @gray-lighter;
+    border-radius: 100%;
     img {
-        border: 1px solid @gray-lighter;
-        border-radius: 100%;
         padding: 0.5em;
         max-height: 100%;
     }
