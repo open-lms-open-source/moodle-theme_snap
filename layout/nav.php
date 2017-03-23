@@ -51,6 +51,7 @@ use theme_snap\renderables\bb_dashboard_link;
         'id' => 'snap-home',
         'title' => $sitefullname,
     );
+
     if (!empty($PAGE->theme->settings->logo)) {
         $sitefullname = '<span class="sr-only">'.format_string($SITE->fullname).'</span>';
         $attrs['class'] = 'logo';

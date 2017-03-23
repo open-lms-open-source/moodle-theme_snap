@@ -853,7 +853,7 @@ class core_renderer extends toc_renderer {
             }
             $courselist .= '</section>';
 
-            $menu = get_string('menu', 'theme_snap');
+            $menu = '<span class="hidden-xs">' .get_string('menu', 'theme_snap'). '</span>';
             $badge = $this->render_badge_count();
             $linkcontent = $menu.$picture.$badge;
             $attributes = array(

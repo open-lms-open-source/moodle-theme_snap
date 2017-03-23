@@ -18262,19 +18262,14 @@ fieldset[disabled] #page-site-index .section-modchooser-link .section-modchooser
           background-size: cover;
 }
 #snap-home.logo {
-  display: inline-block;
+  display: block;
   background-color: transparent;
   background-repeat: no-repeat;
-  height: 38px;
-  width: 38%;
   -webkit-background-size: contain;
           background-size: contain;
-  margin: -0.75em 0;
-}
-@media screen and (max-width: 991px) {
-  #snap-home.logo {
-    max-width: 20%;
-  }
+  background-position: left center;
+  height: 40px;
+  width: 50%;
 }
 .snap-media-object {
   font-weight: 500;
@@ -18586,13 +18581,13 @@ header#page-header
   text-transform: uppercase;
 }
 #admin-menu-trigger {
-  width: 39px;
-  height: 39px;
+  width: 40px;
+  height: 40px;
   margin-right: 1em;
-}
-#admin-menu-trigger img {
   border: 1px solid #dadada;
   border-radius: 100%;
+}
+#admin-menu-trigger img {
   padding: 0.5em;
   max-height: 100%;
 }
@@ -23629,14 +23624,14 @@ fieldset[disabled] a#changenumsections .reduce-sections {
 }
 .snap-my-courses-menu {
   display: inline;
-  padding: 0.89rem 0.9rem 1.3rem;
   border: none;
   position: relative;
+  padding: 1rem 1rem 1rem 0;
 }
 .snap-my-courses-menu .userpicture {
   height: 2em;
   width: 2em;
-  margin-left: 1em;
+  margin-left: 1rem;
 }
 .snap-my-courses-menu .message_badge_count {
   position: absolute;
@@ -24896,9 +24891,6 @@ a:hover,
 #admin-menu-trigger:hover,
 #admin-menu-trigger:focus {
   outline: 0;
-}
-#admin-menu-trigger:hover img,
-#admin-menu-trigger:focus img {
   border-color: #03A9F4;
 }
 #fixy-my-courses .courseinfo a,
