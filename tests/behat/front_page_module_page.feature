@@ -21,7 +21,7 @@
 # @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
 
 @theme @theme_snap
-Feature: Open page module inline
+Feature: Open page (front page) module inline
   As any user
   I need to view page modules inline at front page.
 
