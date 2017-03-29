@@ -20,8 +20,8 @@
 # @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
 
 @theme @theme_snap
-Feature: When the moodle theme is set to Snap, students and teachers can open a personal menu which features a
-  list of courses they are enrolled in with a feedback available or grade.
+Feature: When the moodle theme is set to Snap, students and teachers can open a personal menu where they can find
+  a list of courses they are enrolled in with a feedback available or grade.
 
   Background:
     Given the following config values are set as admin:

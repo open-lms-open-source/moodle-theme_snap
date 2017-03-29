@@ -21,9 +21,8 @@
 
 
 @theme @theme_snap
-Feature: When the moodle theme is set to Snap, students and teachers can open a personal menu which features an
-  alerts column showing them things that have recently happened (depending on how the message outputs have been
-  configured).
+Feature: When the moodle theme is set to Snap, students and teachers can open a personal menu that shows things that
+  have recently happened (depending on how the message outputs have been configured).
 
   Background:
     Given I am using Joule

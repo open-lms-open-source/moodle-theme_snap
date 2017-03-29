@@ -21,8 +21,8 @@
 
 
 @theme @theme_snap
-Feature: When the moodle theme is set to Snap, students and teachers can open a personal menu which features a
-  deadlines column showing deadlines for activities and the submission / attempt status thereof.
+Feature: When the moodle theme is set to Snap, students and teachers can find in their personal menu a list of deadlines
+  for activities and the submission / attempt status thereof.
 
   Background:
     Given the following config values are set as admin:
