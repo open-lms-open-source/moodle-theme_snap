@@ -22,76 +22,171 @@
 /**
  * Main responsive video function.
  */
-define(['jquery'], function($) {
+define(['jquery', 'media_videojs/loader'], function($, videoJsLoader) {
 
     /**
      * Apply responsive video to non HTML5 video elements.
      *
      * @author Guy Thomas
-     * @date 2014-06-09
      */
     var ResponsiveVideo = function() {
-        this.apply = function() {
-            // Should we be targeting all elements of this type, or should we be more specific?
-            // E.g. for externally embedded video like youtube we have to go with iframes but what happens if there is
-            // an iframe and it isn't a video iframe - it still gets processed by this script.
-            $('.mediaplugin object, .mediaplugin embed, iframe').not("[data-iframe-srcvideo='value']").each(function() {
+
+        /**
+         * Get selectors for retrieving elements suitable for responsive code.
+         * @returns {string}
+         */
+        var getNodeSelectors = function() {
+            var supportedSites = [
+                'youtube.com',
+                'youtu.be',
+                'vimeo.com',
+                'archive.org/embed',
+                'youtube-nocookie.com',
+                'embed.ted.com',
+                'embed-ssl.ted.com',
+                'kickstarter.com',
+                'video.html',
+                'simmons.tegrity.com',
+                'dailymotion.com'
+            ];
+            var selectors = [
+                '.mediaplugin object:not(.media-responsive object, .felement.feditor object, .vjs-tech)',
+                '.mediaplugin embed:not(.media-responsive embed, .felement.feditor embed, .vjs-tech)'
+            ];
+            for (var s in supportedSites) {
+                var site = supportedSites[s];
+                selectors.push('iframe:not(.media-responsive iframe, .felement.feditor iframe, .vjs-tech)[src*="' + site + '"]');
+            }
+            var joined = selectors.join(',');
+            return joined;
+        };
+
+        /**
+         * Make non vjs-tech iframes, etc responsive.
+         * @param nodes
+         */
+        var makeResponsive = function(nodes, onComplete) {
+            if (!nodes){
+                nodes = $(getNodeSelectors());
+            }
+
+            $(nodes).each(function() {
                 var width,
                     height,
-                    aspectratio;
+                    aspectRatio;
 
-                var tagname = this.tagName.toLowerCase();
-                if (tagname === 'iframe') {
-                    var supportedsites = [
-                        'youtube.com',
-                        'youtu.be',
-                        'vimeo.com',
-                        'archive.org/embed',
-                        'youtube-nocookie.com',
-                        'embed.ted.com',
-                        'embed-ssl.ted.com',
-                        'kickstarter.com',
-                        'video.html',
-                        'simmons.tegrity.com',
-                        'dailymotion.com'
-                    ];
-                    var supported = false;
-                    for (var s in supportedsites) {
-                        if (this.src.indexOf(supportedsites[s]) > -1) {
-                            supported = true;
-                            break;
-                        }
+                var parent = $(this).parent();
+
+                var tagName = this.tagName.toLowerCase();
+                if (tagName === 'iframe') {
+
+                    if ($(parent).hasClass('media-responsive')) {
+                        return true;
                     }
-                    this.setAttribute('data-iframe-srcvideo', (supported ? '1' : '0'));
-                    if (!supported) {
-                        return true; // Skip as not supported.
+
+                    if (!$(parent).hasClass('mediaplugin')) {
+                        // This iframe will need a new parent as we need a container we can rely on to just contain
+                        // This one iframe.
+                        var newParent = $('<div></div>').append($(this));
+                        $(parent).append(newParent);
+                        parent = newParent;
                     }
-                    // Set class.
-                    $(this).parent().addClass('videoiframe');
                 }
 
-                aspectratio = this.getAttribute('data-aspect-ratio');
-                if (aspectratio === null) { // Note, an empty attribute should evaluate to === null.
-                    // Calculate aspect ratio.
-                    width = this.width || this.offsetWidth;
-                    width = parseInt(width);
-                    height = this.height || this.offsetHeight;
-                    height = parseInt(height);
-                    aspectratio = height / width;
-                    this.setAttribute('data-aspect-ratio', aspectratio);
+                // Calculate aspect ratio.
+                width = $(this).attr('width') || $(this).width();
+                height = $(this).attr('height') || $(this).height();
+
+                // If only the width or height contains percentages then we can't use it and will have to fall back
+                // on offsets.
+                if (!isNaN(width) || !isNaN(height)) {
+                    width += ' ';
+                    height += ' ';
+                }
+                if (width.indexOf('%') > -1 && height.indexOf('%') == -1
+                    || width.indexOf('%') == -1 && height.indexOf('%') > -1
+                ) {
+                    width = $(this).width();
+                    height = $(this).height();
                 }
 
-                if (tagname === 'iframe') {
+                width = parseInt(width);
+                height = parseInt(height);
+                aspectRatio = height / width;
+
+                if (tagName === 'iframe') {
                     // Remove attributes.
                     $(this).removeAttr('width');
                     $(this).removeAttr('height');
                 }
 
-                // Get width again.
-                width = parseInt(this.offsetWidth);
-                // Set height based on width and aspectratio
-                var style = {height: (width * aspectratio) + 'px'};
-                $(this).css(style);
+                // Make sure parent has a padding element.
+                if (!parent.find('.media-responsive-pad').length) {
+                    var aspectPerc = aspectRatio * 100;
+                    var responsivePad = '<div class="media-responsive-pad" style="padding-top:' + aspectPerc + '%"></div>';
+                    parent.append(responsivePad);
+                }
+
+                // Add responsive class to parent element.
+                parent.addClass('media-responsive');
+            });
+            if (typeof(onComplete) === 'function') {
+                onComplete();
+            }
+        };
+
+        this.init = function() {
+            /**
+             * Apply a mutation observer to track oembed-content being dynamically added to the page.
+             */
+            var responsiveContentOnInsert = function() {
+                /**
+                 * Return nodes to process.
+                 * @param {opbject} node (dom element)
+                 * @returns {boolean}
+                 */
+                var nodesToProcess = function(node) {
+                    if (!node.tagName) {
+                        return false;
+                    }
+                    var selectors = getNodeSelectors();
+                    if ($(node).is(selectors)) {
+                        return $(node);
+                    } else {
+                        return $(node).find(selectors);
+                    }
+                };
+
+                var observer = new MutationObserver(function(mutations) {
+                    mutations.forEach(function(mutation) {
+                        for (var n in mutation.addedNodes) {
+                            var node = mutation.addedNodes[n];
+                            var nodes = nodesToProcess(node);
+                            if (nodes) {
+                                videoJsLoader.setUp();
+                                // Only apply responsive content to the newly added node for efficiency.
+                                makeResponsive(nodes);
+                            }
+                        }
+                    });
+                });
+
+                var observerConfig = {
+                    attributes: false,
+                    childList: true,
+                    characterData: false,
+                    subtree: true
+                };
+
+                // Note: Currently observing mutations throughout the document body - We might want to limit scope for
+                // observation at some point in the future.
+                var targetNode = document.body;
+                observer.observe(targetNode, observerConfig);
+            };
+
+            $(document).ready(function() {
+                // Call responsive content on dom ready, to catch things that existed prior to mutation observation.
+                makeResponsive(null, responsiveContentOnInsert);
             });
         };
     };

@@ -28,10 +28,9 @@ define(
         'jquery',
         'core/ajax',
         'theme_snap/util',
-        'theme_snap/responsive_video',
         'theme_snap/ajax_notification'
     ],
-    function($, ajax, util, responsiveVideo, ajaxNotify) {
+    function($, ajax, util, ajaxNotify) {
 
         /**
          * Module has been completed.
@@ -108,9 +107,6 @@ define(
             if (completionHTML) {
                 updateModCompletion(pageMod, completionHTML);
             }
-
-            // If there is any video in the new content then we need to make it responsive.
-            responsiveVideo.apply();
         };
 
         /**
@@ -258,51 +254,8 @@ define(
 
                     updateModCompletion($(resourcemod), data.completionhtml);
 
-                    // Execute scripts - necessary for flv to work.
-                    var hasflowplayerscript = false;
-                    $('#snap-light-box script').each(function() {
-                        var script = $(this).text();
+                    $(document).trigger('snapContentRevealed');
 
-                        // Remove cdata from script.
-                        script = script.replace(/^(?:\s*)\/\/<!\[CDATA\[/, '').replace(/\/\/\]\](?:\s*)$/, '');
-
-                        // Check for flv video scripts.
-                        if (script.indexOf('M.util.add_video_player') > -1) {
-                            hasflowplayerscript = true;
-                            // This is really important - we have to reset this or it will try to apply flow player to all
-                            // the video players it has already initialised and even ones that no longer exist because
-                            // they have been wiped from the DOM.
-                            M.util.video_players = [];
-                        }
-
-                        // Execute script.
-                        // eslint-disable-next-line no-eval
-                        eval(script);
-                    });
-                    if (hasflowplayerscript) {
-                        var jsurl;
-                        if (M.cfg.jsrev == -1) {
-                            jsurl = M.cfg.wwwroot + '/lib/flowplayer/flowplayer-3.2.13.js';
-                        } else {
-                            jsurl = M.cfg.wwwroot +
-                                '/lib/javascript.php?jsfile=/lib/flowplayer/flowplayer-3.2.13.min.js&rev=' + M.cfg.jsrev;
-                        }
-                        $('head script[src="' + jsurl + '"]').remove();
-                        // This is so hacky it's untrue, we need to load flow player again but it won't do so unless we
-                        // make flowplayer undefined.
-                        // Note, we can't use flowplayer.delete in strict mode, hence "= undefined".
-                        if (typeof(flowplayer) !== 'undefined') {
-                            // eslint-disable-next-line no-undef
-                            flowplayer = undefined;
-                        }
-                        M.util.load_flowplayer();
-                        $('head script[src="' + jsurl + '"]').trigger("onreadystatechange");
-                    }
-                    // Apply responsive video after 1 second. Note: 1 second is just to give crappy flow player time to
-                    // sort itself out.
-                    window.setTimeout(function() {
-                        responsiveVideo.apply();
-                    }, 1000);
                     $('#snap-light-box').focus();
                 }
             });
