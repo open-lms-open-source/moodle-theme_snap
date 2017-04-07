@@ -12527,6 +12527,9 @@ div.groupmanagementtable:after,
   color: #565656;
   font-size: inherit;
 }
+.edit_pages_box span.label {
+  color: #565656;
+}
 .gradingform_rubric .options .option .label,
 li.activity.label,
 .file-picker td.label {
