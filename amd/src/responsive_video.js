@@ -87,8 +87,9 @@ define(['jquery', 'media_videojs/loader'], function($, videoJsLoader) {
                     if (!$(parent).hasClass('mediaplugin')) {
                         // This iframe will need a new parent as we need a container we can rely on to just contain
                         // This one iframe.
-                        var newParent = $('<div></div>').append($(this));
-                        $(parent).append(newParent);
+                        var newParent = $('<div></div>');
+                        $(this).after(newParent);
+                        $(newParent).append($(this));
                         parent = newParent;
                     }
                 }
