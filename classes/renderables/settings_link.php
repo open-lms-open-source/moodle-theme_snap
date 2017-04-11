@@ -77,11 +77,6 @@ class settings_link implements \renderable {
         }
 
         if (!$PAGE->blocks->is_block_present('settings')) {
-            // Throw error if on front page or course page.
-            // (There are pages that don't have a settings block so we shouldn't throw an error on those pages).
-            if ($oncoursepage || $PAGE->pagetype === 'site-index') {
-                debugging('Settings block was not found on this page', DEBUG_DEVELOPER);
-            }
             return;
         }
 
