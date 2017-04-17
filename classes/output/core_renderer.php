@@ -376,7 +376,13 @@ class core_renderer extends toc_renderer {
      * @return string
      */
     protected function render_badge_count() {
-        global $USER;
+        global $USER, $PAGE;
+
+        $mprocs = get_message_processors(true);
+        if (!isset($mprocs['badge']) && $this->page->theme->settings->messagestoggle == 1) {
+            // Badge message processor is not enabled - render conversation count container.
+            return '<span class="conversation_badge_count hidden"></span>';
+        }
 
         $badgerend = $this->get_badge_renderer();
         if (empty($badgerend)) {
