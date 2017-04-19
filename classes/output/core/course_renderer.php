@@ -40,6 +40,18 @@ require_once($CFG->dirroot . "/mod/book/locallib.php");
 require_once($CFG->libdir . "/gradelib.php");
 
 class course_renderer extends \core_course_renderer {
+
+    /**
+     * @var boolean Check if the course has a sharing_cart instance and
+     * we need to add the javascript of the block_sharing_cart
+     */
+    var $shouldloadsharingcartjs = null;
+
+    /**
+     * @var boolean Check if the javascript of the block_sharing_cart is already loaded and executed
+     */
+    var $issharingcartjsloaded = false;
+
     /**
      * override course render for course module list items
      * add additional classes to list item (see $modclass)
@@ -202,6 +214,8 @@ class course_renderer extends \core_course_renderer {
         }
         $output .= '<div class="asset-wrapper">';
 
+        $this->block_sharing_cart_adding_module();
+
         // Drop section notice.
         if (has_capability('moodle/course:update', $mod->context)) {
             $output .= '<a class="snap-move-note" href="#">'.get_string('movehere', 'theme_snap').'</a>';
@@ -342,13 +356,12 @@ class course_renderer extends \core_course_renderer {
             }
 
         }
-
         $advancedactions = '';
         if (!empty($actionsadvanced)) {
             $moreicon = "<img title='".get_string('more', 'theme_snap')."' alt='".get_string('more', 'theme_snap')."' class='svg-icon' src='".$this->output->pix_url('more', 'theme')."'/>";
             $advancedactions = "<div class='dropdown snap-edit-more-dropdown'>
                       <a href='#' class='dropdown-toggle snap-edit-asset-more' data-toggle='dropdown' aria-expanded='false' aria-haspopup='true'>$moreicon</a>
-                      <ul class='dropdown-menu pull-right'>";
+                      <ul class='dropdown-menu pull-right' role='menu'>";
             foreach ($actionsadvanced as $action) {
                 $advancedactions .= "<li>$action</li>";
             }
@@ -927,5 +940,37 @@ class course_renderer extends \core_course_renderer {
 
         $url = new moodle_url('/course/edit.php', ['id' => $COURSE->id]);
         return $OUTPUT->notification(get_string('courseformatnotification', 'theme_snap', $url->out()));
+    }
+
+    /**
+     * Load the YUI module of block_sharing_cart to add the option of copy to sharing cart in the activity menu
+     *
+     * @return void
+     */
+    private function block_sharing_cart_adding_module() {
+        global $DB, $COURSE;
+
+        if (is_null($this->shouldloadsharingcartjs)) {
+            $coursecontext = context_course::instance($COURSE->id);
+            $this->shouldloadsharingcartjs = !empty($DB->get_record('block_instances', array('blockname' => 'sharing_cart',
+                'parentcontextid' => $coursecontext->id)));
+        }
+
+        if ($this->shouldloadsharingcartjs) {
+            if (!$this->issharingcartjsloaded) {
+                $this->page->requires->js('/blocks/sharing_cart/module.js');
+                $this->page->requires->yui_module('block_sharing_cart', 'M.block_sharing_cart.init_activity_commands', array(), null, true);
+                $this->page->requires->strings_for_js(
+                    array('yes', 'no', 'ok', 'cancel', 'error', 'edit', 'move', 'delete', 'movehere'),
+                    'moodle'
+                );
+                $this->page->requires->strings_for_js(
+                    array('copyhere', 'notarget', 'backup', 'restore', 'movedir', 'clipboard',
+                        'confirm_backup', 'confirm_userdata', 'confirm_delete'),
+                    'block_sharing_cart'
+                );
+                $this->issharingcartjsloaded = true;
+            }
+        }
     }
 }
