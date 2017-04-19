@@ -22000,6 +22000,7 @@ li.section:focus {
   height: auto;
   width: auto;
   outline: 0;
+  overflow: visible;
 }
 /* hide progress label with odd z-indexing */
 #completionprogressid {
