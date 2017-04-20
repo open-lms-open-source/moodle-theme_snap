@@ -26,11 +26,10 @@ define(
     [
         'jquery',
         'theme_snap/util',
-        'theme_snap/responsive_video',
         'theme_snap/section_asset_management',
         'theme_snap/course_modules'
     ],
-    function($, util, responsiveVideo, sectionAssetManagement, courseModules) {
+    function($, util, sectionAssetManagement, courseModules) {
 
     /**
      * Return class(has private and public methods).
@@ -79,6 +78,7 @@ define(
             var currentSectionId = $(sectionIdSel).attr('id');
             $('#chapters li').removeClass('snap-visible-section');
             $('#chapters a[href$="' + currentSectionId + '"]').parent('li').addClass('snap-visible-section');
+            $(document).trigger('snapContentRevealed');
         };
 
         /**
@@ -138,7 +138,6 @@ define(
                 window.scrollTo(0, 0);
             }
 
-            responsiveVideo.apply();
             this.setTOCVisibleSection();
         };
 

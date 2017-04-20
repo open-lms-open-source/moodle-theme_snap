@@ -42,12 +42,6 @@ define(['jquery', 'theme_snap/bootstrap', 'core/log', 'theme_snap/headroom', 'th
          */
         var loggingenabled = false;
 
-        /**
-         * timestamp for when window was last resized
-         * @type {null}
-         */
-        var resizestamp = null;
-
         if (!loggingenabled) {
             log.disableAll(true);
         } else {
@@ -420,26 +414,9 @@ define(['jquery', 'theme_snap/bootstrap', 'core/log', 'theme_snap/headroom', 'th
                         $news.focus();
                         $news.attr('aria-expanded', 'false');
                     }
+                    $(document).trigger('snapContentRevealed');
                 });
-                responsiveVideo.apply();
                 e.preventDefault();
-            });
-
-            // Listen for window resize for videos.
-            $(window).resize(function() {
-                resizestamp = new Date().getTime();
-                (function(timestamp) {
-                    window.setTimeout(function() {
-                        log.info('checking ' + timestamp + ' against ' + resizestamp);
-                        if (timestamp === resizestamp) {
-                            log.info('running resize hook functions');
-                            responsiveVideo.apply();
-                        } else {
-                            log.info('skipping resize hook functions - timestamp has changed from ' +
-                                timestamp + ' to ' + resizestamp);
-                        }
-                    }, 200); // wait 1/20th of a second before resizing
-                })(resizestamp);
             });
 
             // Bootstrap js elements
@@ -595,12 +572,12 @@ define(['jquery', 'theme_snap/bootstrap', 'core/log', 'theme_snap/headroom', 'th
                         $(main_form).append(savebuttons);
                     }
 
+                    // Makes video responsive.
+                    responsiveVideo.init();
+
                     $(window).on('load', function() {
                         // Add a class to the body to show js is loaded.
                         $('body').addClass('snap-js-loaded');
-                        // Make video responsive.
-                        // Note, if you don't do this on load then FLV media gets wrong size.
-                        responsiveVideo.apply();
                     });
                 });
             }

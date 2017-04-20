@@ -341,6 +341,29 @@ img.icon {
   vertical-align: middle;
 }
 
+.mediaplugin_videojs > div {
+    max-width: none !important;
+}
+
+.media-responsive {
+    width: 100%;
+    display: block;
+    position: relative;
+    > *:not(video):first-child {
+        position: absolute !important;
+        top: 0 !important;
+        bottom: 0 !important;
+        right: 0 !important;
+        left: 0 !important;
+        height: 100% !important;
+        width: 100% !important;
+    }
+}
+
+.media-responsive-pad {
+    display: block;
+}
+
 // Responsive video for iframes, objects, embeds.
 .videoiframe iframe {
     width: 100% !important;
@@ -349,7 +372,8 @@ img.icon {
 
 .mediaplugin object,
 .mediaplugin_flv,
-.mediaplugin embed {
+.mediaplugin embed
+.mediaplugin iframe {
   width: 100%;
   margin: 0 auto;
   max-height: 90vh;
