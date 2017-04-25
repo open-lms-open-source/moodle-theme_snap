@@ -332,6 +332,10 @@ class course_renderer extends \core_course_renderer {
                 $localplugins = array_merge($localplugins, $function($mod));
             }
 
+            foreach (get_plugin_list_with_function('block', 'extend_module_editing_buttons') as $function) {
+                $localplugins = array_merge($localplugins, $function($mod));
+            }
+
             // TODO - pld string is far too long....
             $locallinks = '';
             foreach ($localplugins as $localplugin) {
@@ -342,7 +346,6 @@ class course_renderer extends \core_course_renderer {
             }
 
         }
-
         $advancedactions = '';
         if (!empty($actionsadvanced)) {
             $moreicon = "<img title='".get_string('more', 'theme_snap')."' alt='".get_string('more', 'theme_snap')."' class='svg-icon' src='".$this->output->pix_url('more', 'theme')."'/>";
