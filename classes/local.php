@@ -74,7 +74,7 @@ class local {
         global $USER;
 
         $failobj = (object) [
-            'feedback' => false
+            'coursegrade' => false
         ];
 
         $config = get_config('theme_snap');
@@ -132,11 +132,12 @@ class local {
             $report = new course_total_grade($USER, $gpr, $course);
             $coursegrade = $report->get_course_total();
             $ignoregrades = [
+                '',
                 '-',
                 '&nbsp;',
                 get_string('error')
             ];
-            if (!in_array($coursegrade, $ignoregrades)) {
+            if (!in_array($coursegrade['value'], $ignoregrades)) {
                 $feedbackobj->coursegrade = $coursegrade;
             }
         }

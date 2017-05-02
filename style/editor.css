@@ -4426,7 +4426,8 @@ img.icon {
   padding: 0;
   margin-right: 6px;
 }
-.svg-icon {
+.svg-icon,
+.snap-icon {
   width: 2rem;
   height: 2rem;
   margin: 0 0.3rem;
@@ -8208,6 +8209,22 @@ section#region-main
   margin: 0 0.5%;
   display: inline-block;
 }
+.snap-progress-circle {
+  width: 75%;
+  margin: 0 auto;
+  position: relative;
+  border-radius: 100%;
+}
+.snap-progress-circle.snap-progressbar-link:hover,
+.snap-progress-circle.snap-progressbar-link:focus {
+  background-color: #eee;
+}
+.snap-progress-circle.snap-progressbar-link .progressbar-text:hover {
+  text-decoration: underline;
+}
+.snap-progress-circle .progressbar-text {
+  font-size: 1.3rem;
+}
 /* Small screen course tools */
 @media screen and (max-width: 480px) {
   #coursetools-list a {
@@ -11153,11 +11170,15 @@ a:hover,
   border-color: #03A9F4;
 }
 #fixy-my-courses .courseinfo a,
-#fixy-my-courses .courseinfo a:visited {
+.snap-progressbar-link .progressbar-text a,
+#fixy-my-courses .courseinfo a:visited,
+.snap-progressbar-link .progressbar-text a:visited {
   color: #03A9F4;
 }
 #fixy-my-courses .courseinfo a:focus,
-#fixy-my-courses .courseinfo a:hover {
+.snap-progressbar-link .progressbar-text a:focus,
+#fixy-my-courses .courseinfo a:hover,
+.snap-progressbar-link .progressbar-text a:hover {
   color: #038dcc;
 }
 .section li.snap-native .activityinstance .snap-asset-link a {
@@ -11228,7 +11249,8 @@ legend,
   font-family: "Roboto", "Fira Sans", "Segoe UI", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 .snap-action-icon,
-#coursetools-list a {
+#coursetools-list a,
+.snap-progress-circle .progressbar-text {
   font-family: "Roboto", "Fira Sans", "Segoe UI", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 .nav-pills > li.active > a,

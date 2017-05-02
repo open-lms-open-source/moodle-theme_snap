@@ -117,6 +117,47 @@ section#region-main
     @include clearfix;
 }
 
+// -------------------------
+// Progressbar.js circles in course dashboard.
+// -------------------------
+.snap-progress-circle {
+    width: 75%;
+    margin: 0 auto;
+    position: relative;
+    border-radius: 100%;
+
+    &.snap-progressbar-link {
+        &:hover,
+        &:focus {
+            background-color: #eee;
+        }
+        .progressbar-text:hover{
+                text-decoration: underline;
+        }
+    }
+
+    .progressbar-text{
+        font-size: 1.3em;
+        font-family: $font-family-system;
+        a,
+        a:visited {
+         color: $brand-primary;
+        }
+        a:focus,
+        a:hover {
+            color: darken($brand-primary, 8%);
+        }
+    }
+}
+
+#snap-student-dashboard {
+    padding: 1em 0;
+
+    .userpicture {
+        margin-top: 5%;
+    }
+}
+
 #coursetools-list {
     @include clearfix;
 

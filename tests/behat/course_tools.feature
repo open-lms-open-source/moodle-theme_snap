@@ -16,7 +16,6 @@
 # Tests for availability of course tools section.
 #
 # @package   theme_snap
-# @author    Guy Thomas <gthomas@moodlerooms.com>
 # @copyright Copyright (c) 2016 Blackboard Inc.
 # @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
 
@@ -27,6 +26,9 @@ Feature: When the moodle theme is set to Snap, a course tools section is availab
     Given the following config values are set as admin:
       | theme | snap |
       | defaulthomepage | 0 |
+      | enablecompletion   | 1    |
+    And the following config values are set as admin:
+      | personalmenulogintoggle | 0 | theme_snap |
     And the following "courses" exist:
       | fullname | shortname | category | format |
       | Course 1 | C1        | 0        | topics |
@@ -47,29 +49,53 @@ Feature: When the moodle theme is set to Snap, a course tools section is availab
   @javascript
   Scenario Outline: Course tools link functions for supported formats.
     Given the course format for "C1" is set to "<format>"
+    And completion tracking is "<completionenabled>" for course "C1"
+    And I set the following system permissions of "Student" role:
+      | capability            | permission            |
+      | gradereport/overview:view | <gradebookaccessible> |
     When I log in as "student1"
     And I am on the course main page for "C1"
     And I click on "a[href=\"#coursetools\"]" "css_element"
     Then I should see "Course Dashboard" in the "#coursetools" "css_element"
+    And "#snap-student-dashboard" "css_element" should exist
+    And ".snap-student-dashboard-progress" "css_element" <seecompletion> exist
+    And ".snap-student-dashboard-grade" "css_element" <seegrade> exist
     Examples:
-      | format |
-      | topics |
-      | weeks  |
+      | format | completionenabled | gradebookaccessible | seecompletion | seegrade   |
+      | topics | Enabled           | Allow               | should        | should     |
+      | topics | Disabled          | Prevent             | should not    | should not |
+      | topics | Enabled           | Prevent             | should        | should not |
+      | topics | Disabled          | Allow               | should not    | should     |
+      | weeks  | Enabled           | Allow               | should        | should     |
+      | weeks  | Disabled          | Prevent             | should not    | should not |
+      | weeks  | Enabled           | Prevent             | should        | should not |
+      | weeks  | Disabled          | Allow               | should not    | should     |
 
   @javascript
-  Scenario: Course tools show automatically for single activity format.
+  Scenario Outline: Course tools show automatically for single activity format.
     Given the course format for "C1" is set to "singleactivity" with the following settings:
       | name      | activitytype |
       | value     | forum        |
     And the following "activities" exist:
       | activity | course | idnumber | name            | intro           | section |
       | forum    | C1     | forum1   | Test forum      | Test forum      | 1       |
+    And completion tracking is "<completionenabled>" for course "C1"
+    And I set the following system permissions of "Student" role:
+      | capability                | permission            |
+      | gradereport/overview:view | <gradebookaccessible> |
     When I log in as "student1"
     And I am on the course main page for "C1"
     # Note we have to call this step twice because for some reason it doesn't automatically go to the module page the
     # first time - that's a core issue though.
     And I am on the course main page for "C1"
     Then I should see "Course Dashboard" in the "#coursetools" "css_element"
+    And "#snap-student-dashboard" "css_element" should exist
+    And ".snap-student-dashboard-progress" "css_element" <seecompletion> exist
+    And ".snap-student-dashboard-grade" "css_element" <seegrade> exist
+    Examples:
+      | completionenabled | gradebookaccessible | seecompletion | seegrade   |
+      | Enabled           | Allow               | should        | should     |
+      | Disabled          | Prevent             | should not    | should not |
 
   @javascript
   Scenario Outline: Course tools show automatically for single activity format set to hsuforum of types general / single.
@@ -80,13 +106,22 @@ Feature: When the moodle theme is set to Snap, a course tools section is availab
     And the following "activities" exist:
       | activity    | course | idnumber | name          | intro           | section | type   |
       | hsuforum    | C1     | forum1   | Test hsuforum | Test hsuforum   | 1       | <type> |
+    And completion tracking is "<completionenabled>" for course "C1"
+    And I set the following system permissions of "Student" role:
+      | capability                | permission            |
+      | gradereport/overview:view | <gradebookaccessible> |
     When I log in as "student1"
     And I am on the course main page for "C1"
     # Note we have to call this step twice because for some reason it doesn't automatically go to the module page the
     # first time - that's a core issue though.
     And I am on the course main page for "C1"
     Then I should see "Course Dashboard" in the "#coursetools" "css_element"
+    And "#snap-student-dashboard" "css_element" should exist
+    And ".snap-student-dashboard-progress" "css_element" <seecompletion> exist
+    And ".snap-student-dashboard-grade" "css_element" <seegrade> exist
     Examples:
-      | type    |
-      | general |
-      | single  |
+      | type    | completionenabled | gradebookaccessible | seecompletion | seegrade   |
+      | general | Enabled           | Allow               | should        | should     |
+      | general | Disabled          | Prevent             | should not    | should not |
+      | single  | Enabled           | Allow               | should        | should     |
+      | single  | Disabled          | Prevent             | should not    | should not |
