@@ -60,7 +60,7 @@ class behat_theme_snap_behat_navigation extends behat_navigation {
      * when the config value linkadmincategories is enabled.
      * @param NodeElement $node
      */
-    private function js_trigger_click($node) {
+    protected function js_trigger_click($node) {
         $session = $this->getSession();
         $xpath = $node->getXpath();
 
