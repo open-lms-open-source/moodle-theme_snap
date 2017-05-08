@@ -66,8 +66,8 @@ Feature: When the moodle theme is set to Snap, students and teachers can open a 
     | student1 | Feedback | You have no recent feedback.      |
 
   @javascript
-  Scenario: Teacher / Student using Joule can view alerts in the personal menu on a mobile device.
-    Given I am using Joule
+  Scenario: Teacher / Student using Moodlerooms can view alerts in the personal menu on a mobile device.
+    Given I am using Moodlerooms
     And I change window size to "320x480"
     And the message processor "badge" is enabled
     And I log in as "student1" (theme_snap)
@@ -110,7 +110,7 @@ Feature: When the moodle theme is set to Snap, students and teachers can open a 
 
   @javascript
   Scenario: Alerts mobile menu icon only appears when alerts enabled.
-    Given I am using Joule
+    Given I am using Moodlerooms
     And I change window size to "320x480"
     And the message processor "badge" is disabled
     And I log in as "student1" (theme_snap)

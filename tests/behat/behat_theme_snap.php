@@ -43,12 +43,12 @@ use Behat\Gherkin\Node\TableNode,
 class behat_theme_snap extends behat_base {
 
     /**
-     * Checks if running in a Joule system, skips the test if not.
+     * Checks if running in a Moodlerooms system, skips the test if not.
      *
-     * @Given /^I am using Joule$/
+     * @Given /^I am using Moodlerooms$/
      * @return void
      */
-    public function i_am_using_joule() {
+    public function i_am_using_moodlerooms() {
         global $CFG;
         if (!file_exists($CFG->dirroot.'/local/mrooms')) {
             throw new SkippedException("Skipping tests of Joule specific functionality");
