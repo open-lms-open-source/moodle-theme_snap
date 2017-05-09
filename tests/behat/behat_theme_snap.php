@@ -51,7 +51,7 @@ class behat_theme_snap extends behat_base {
     public function i_am_using_moodlerooms() {
         global $CFG;
         if (!file_exists($CFG->dirroot.'/local/mrooms')) {
-            throw new SkippedException("Skipping tests of Joule specific functionality");
+            throw new SkippedException("Skipping tests of Moodlerooms specific functionality");
         }
     }
 
