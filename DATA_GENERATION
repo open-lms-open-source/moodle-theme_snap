@@ -1,0 +1,15 @@
+moosh course-create newcourse{1..10}
+moosh course-enrol -r teacher 2 admin
+moosh course-enrol -r teacher 3 admin
+moosh course-enrol -r teacher 4 admin
+moosh course-enrol -r teacher 5 admin
+moosh course-enrol -r teacher 6 admin
+moosh course-enrol -r teacher 7 admin
+moosh course-enrol -r teacher 8 admin
+moosh course-enrol -r teacher 9 admin
+moosh category-create -p 1 -v 1 -d "Mathematic" Mathematic
+moosh category-create -p 1 -v 1 -d "Geography" Geography
+moosh category-create -p 1 -v 1 -d "Sport" Sport
+moosh category-create -p 0 -v 1 -d "Dance" Dance
+moosh category-create -p 0 -v 1 -d "Mathematic" Mathematic
+moosh category-create -p 0 -v 1 -d "Geopgraphy" Geography

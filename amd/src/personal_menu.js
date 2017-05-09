@@ -22,8 +22,8 @@
 /**
  * Course card favoriting.
  */
-define(['jquery', 'core/log', 'core/yui', 'theme_snap/pm_course_cards', 'theme_snap/util', 'theme_snap/ajax_notification'],
-    function($, log, Y, courseCards, util, ajaxNotify) {
+define(['jquery', 'core/log', 'core/yui', 'theme_snap/pm_course_cards', 'theme_snap/util', 'theme_snap/ajax_notification', 'theme_snap/pm_category_filter'],
+    function($, log, Y, courseCards, util, ajaxNotify, categoryFilter) {
 
         /**
          * Personal Menu (courses menu).
@@ -122,6 +122,10 @@ define(['jquery', 'core/log', 'core/yui', 'theme_snap/pm_course_cards', 'theme_s
             var applyListeners = function() {
                 // On clicking personal menu trigger.
                 $(document).on("click", ".js-personal-menu-trigger", function(event) {
+                    // TODO: in very rare case it may be possible that a different Snap code overlap the css set in the
+                    // TODO: following call. To fix it we need to move this call later.
+                    categoryFilter.viewingMode("get");
+
                     $('body').toggleClass('snap-fixy-open');
                     if ($('.snap-fixy-open #primary-nav').is(':visible')) {
                         self.update();

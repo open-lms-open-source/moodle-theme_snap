@@ -290,8 +290,8 @@ class course {
      * @return course_card (renderable)
      */
     public function cardbyshortname($shortname) {
-        $course = $this->coursebyshortname($shortname, 'id');
-        return new course_card($course->id);
+        $course = $this->coursebyshortname($shortname, 'id, category');
+        return new course_card($course, null);
     }
 
     /**

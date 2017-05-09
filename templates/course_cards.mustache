@@ -19,7 +19,7 @@
  @copyright Copyright (c) 2016 Moodlerooms Inc. (http://www.moodlerooms.com)
  @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
 }}
-<div data-hidden="{{^published}}true{{/published}}{{#published}}false{{/published}}" data-courseid="{{courseid}}" data-model="{{model}}" data-href="{{{url}}}" data-shortname="{{shortname}}" class="courseinfo{{#favorited}} favorited{{/favorited}}" style="{{imagecss}}" tab-index="-1"{{#lazyloadimageurl}} data-image-url="{{.}}"{{/lazyloadimageurl}}>
+<div data-hidden="{{^published}}true{{/published}}{{#published}}false{{/published}}" data-categoryid="{{categoryid}}" data-courseid="{{courseid}}" data-model="{{model}}" data-href="{{{url}}}" data-shortname="{{shortname}}" class="courseinfo{{#favorited}} favorited{{/favorited}}" style="{{imagecss}}" tab-index="-1"{{#lazyloadimageurl}} data-image-url="{{.}}"{{/lazyloadimageurl}}>
     <button class="snap-icon-toggle favoritetoggle" title="{{toggletitle}}" aria-pressed="{{#favorited}}true{{/favorited}}{{^favorited}}false{{/favorited}}"></button>
     <div class="courseinfo-body">
         <h3><a class="coursefullname" href="{{{url}}}">{{fullname}}</a></h3>

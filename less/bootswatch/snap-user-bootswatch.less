@@ -576,3 +576,254 @@ img.iconhelp:hover {
     border-color: @brand-primary;
     border-right-color: transparent;
 }
+
+// User Menu
+.snap_pm_courses_section_title {
+    display: inline-block;
+}
+.snap_pm_category_filter_title {
+    display: block;
+}
+.pushy-content ul {
+    list-style-type: none;
+    padding: 0px;
+}
+.pushy-content {
+    margin-top: 50px;
+}
+.pushy .pushy-close-icon {
+    padding: 15px 15px;
+    font-size: smaller;
+}
+
+.snap_pm_selectcat {
+    font-size: larger;
+    margin: 0px;
+    margin-bottom: 26px;
+    text-align: center;
+    color: @body-bg;
+}
+
+.fixy h2.user_category_menu_title {
+    float:left;
+    margin-bottom: 0;
+}
+
+.snap_pm_editcat.menu-btn {
+    background: transparent;
+    cursor:pointer;
+    color: @link-color;
+    margin:0px;
+    padding: 0 0 0 0px;
+    font-size: small;
+    visibility: hidden;
+}
+
+@media screen and (max-width: @screen-sm-min) {
+    .snap_pm_editcat.menu-btn {
+        vertical-align: super;
+    }
+}
+.snap_pm_user_category_list{
+    padding-top: 0px;
+    display: none;
+    font-size: small;
+    vertical-align: top;
+    line-height: 28px;
+}
+.snap_pm_user_category_filter_links {
+    font-size: small;
+    margin: 0px;
+    padding: 0px;
+}
+
+.snap_pm_allcourses {
+    cursor: pointer;
+}
+
+.snap_pm_catfilter {
+    cursor: pointer;
+}
+
+.pushy-submenu.snap_pm_menu_mycategory_li {
+    margin: 0px;
+    margin-left: 15px;
+    margin-bottom: 5px;
+    cursor:pointer;
+}
+
+.snap_pm_menu_mycategory {
+    color: @brand-primary-light;
+}
+
+.pushy.pushy-left {
+    background-color: @brand-primary;
+}
+
+#fixy-visible-courses {
+    margin-top: 0px;
+}
+
+.pushy-content label {
+    display: inline-block; // to make it easier to click
+    color: @brand-primary-light;
+    cursor: pointer;
+    position: relative; // important
+
+    // Now we'll create the checkbox object
+
+    span {
+        display: inline-block;
+        position: relative;
+        background-color: transparent;
+        width: 25px;
+        height: 25px;
+        transform-origin: center;
+        border: 2px solid @brand-primary-light;
+        border-radius: 50%;
+        vertical-align: -6px;
+        margin-right: 10px;
+        transition: background-color 150ms 200ms, transform 350ms cubic-bezier(.78,-1.22,.17,1.89); // custom ease effect for bouncy animation
+
+        // Now we'll create the "tick" using pseudo elements - those will be basically two lines that will be rotated to form the "tick"
+
+        &:before {
+            content: "";
+            width: 0px;
+            height: 2px;
+            border-radius: 2px; // so that the tick has nice rounded look
+            background: @body-bg;
+            position: absolute;
+            transform: rotate(45deg);
+            top: 11px; // you'll need to experiment with placement depending on the dimensions you've chosen
+            left: 7px; // you'll need to experiment with placement depending on the dimensions you've chosen
+            transition: width 50ms ease 50ms;
+            transform-origin: 0% 0%;
+        }
+
+        &:after {
+            content: "";
+            width: 0;
+            height: 2px;
+            border-radius: 2px; // so that the tick has nice rounded look
+            background: @body-bg;
+            position: absolute;
+            transform: rotate(305deg);
+            top: 14px; // you'll need to experiment with placement depending on the dimensions you've chosen
+            left: 8px; // you'll need to experiment with placement depending on the dimensions you've chosen
+            transition: width 50ms ease;
+            transform-origin: 0% 0%;
+        }
+    }
+    // Time to add some life to it
+
+    &:hover {
+        span {
+            &:before {
+                width: 5px;
+                transition: width 100ms ease;
+            }
+
+            &:after {
+                width: 10px;
+                transition: width 150ms ease 100ms;
+            }
+        }
+    }
+}
+
+.pushy-content label {
+    font-weight: inherit;
+}
+
+.pushy-content input[type="checkbox"] {
+    display: none; // hide the system checkbox
+
+    // Let's add some effects after the checkbox is checked
+
+    &:checked {
+        + label {
+            font-weight: inherit;
+            color: @body-bg;
+            span {
+
+                background-color: @body-bg;
+
+                transform: scale(1.10); // enlarge the box
+
+                border: 2px solid @body-bg;
+
+
+                &:after {
+                    width: 10px;
+                    background: @brand-primary;
+                    transition: width 150ms ease 100ms; // enlarge the tick
+                }
+
+                &:before {
+                    width: 5px;
+                    background: @brand-primary;
+                    transition: width 150ms ease 100ms; // enlarge the tick
+                }
+            }
+
+            &:hover { // copy the states for onMouseOver to avoid flickering
+                span {
+                    background-color: @body-bg;
+                    transform: scale(1.10); // enlarge the box
+
+                    &:after {
+                        width: 10px;
+                        background: @brand-primary;
+                        transition: width 150ms ease 100ms; // enlarge the tick
+                    }
+
+                    &:before {
+                        width: 5px;
+                        background: @brand-primary;
+                        transition: width 150ms ease 100ms; // enlarge the tick
+                    }
+                }
+            }
+        }
+    }
+}
+
+.snap_pm_courses_section_title ul li a:hover {
+    border-color: transparent;
+}
+
+.snap_pm_courses_section_title ul li a {
+    padding-top: 0.5em;
+    line-height: 1;
+}
+
+.snap_pm_courses_section_title ul {
+    font-size: 1rem;
+    font-weight: 500;
+}
+
+/* Do not display browse all course on mobile size as it overlap the menu. TODO: add it at the bottom in the renderer + media query */
+@media screen and (max-width: @screen-sm-min) {
+    .snap-personal-menu-more.courses {
+        display:none;
+    }
+}
+
+.snap_pm_category_filter_title button {
+    font-size: 13px;
+    font-weight: 300;
+    line-height: 26px;
+    vertical-align: top;
+}
+
+.snap_pm_courses_section_title ul li a.theme_snap_pm_firstmenuitem {
+    padding-left:0px;
+}
+
+.snap_pm_courses_section_title ul li a.theme_snap_pm_active_link, .snap_pm_courses_section_title ul li a.theme_snap_pm_active_link:hover,
+.snap_pm_courses_section_title ul li a.theme_snap_pm_active_link:active, .snap_pm_courses_section_title ul li a.theme_snap_pm_active_link:focus {
+    background-color: @nav-link-hover-bg;
+    border: 0px solid;
+    color: @text-color;
+}
