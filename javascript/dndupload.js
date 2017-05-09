@@ -7,14 +7,14 @@ M.theme_snap.dndupload.init = function(Y, options) {
     var self = this;
     this.init = main_init;
 
-    // Rebuild file handlers without annoying img label handler.
-    var imgExts = ['gif', 'jpe', 'jpg', 'jpeg', 'png', 'svg', 'svgz', 'webp'];
+    // Rebuild file handlers without annoying label handler.
+    var extensions = ['gif', 'jpe', 'jpg', 'jpeg', 'png', 'svg', 'svgz', 'webp', 'mp3'];
     var newfilehandlers = [];
     for (var h in options.handlers.filehandlers) {
         var handler = options.handlers.filehandlers[h];
         if (handler && handler.module) {
             // Prevent label img dialog from showing.
-            if (handler.module !== 'label' || imgExts.indexOf(handler.extension.toLowerCase()) === -1) {
+            if (handler.module !== 'label' || extensions.indexOf(handler.extension.toLowerCase()) === -1) {
                 newfilehandlers.push(handler);
             }
         }
