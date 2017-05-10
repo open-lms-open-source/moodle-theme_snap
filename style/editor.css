@@ -9928,7 +9928,16 @@ fieldset[disabled] a#changenumsections .reduce-sections {
   width: 2em;
   margin-left: 1rem;
 }
-.snap-my-courses-menu .message_badge_count {
+.snap-my-courses-menu .conversation_badge_count {
+  color: white;
+  height: 1.8em;
+  width: 1.8em;
+  text-align: center;
+  font-size: .55em;
+  cursor: pointer;
+}
+.snap-my-courses-menu .message_badge_count,
+.snap-my-courses-menu .conversation_badge_count {
   position: absolute;
   padding-top: 0;
   background-image: none;
@@ -11221,7 +11230,8 @@ legend,
 .snap-media-body p {
   font-family: Georgia, "Times New Roman", Times, serif;
 }
-#fixy-trigger .message_badge_count {
+#fixy-trigger .message_badge_count,
+#fixy-trigger .conversation_badge_count {
   background-color: #038dcc;
 }
 .courseinfo-teachers-more:hover {

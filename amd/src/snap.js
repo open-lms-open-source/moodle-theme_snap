@@ -447,8 +447,11 @@ define(['jquery', 'theme_snap/bootstrap', 'core/log', 'theme_snap/headroom', 'th
              * @param {bool} pageHasCourseContent
              * @param {int} siteMaxBytes
              * @param {bool} forcePassChange
+             * @param {bool} conversationBadgeCountEnabled
+             * @param {int} userId
              */
-            snapInit: function(courseConfig, pageHasCourseContent, siteMaxBytes, forcePassChange) {
+            snapInit: function(courseConfig, pageHasCourseContent, siteMaxBytes, forcePassChange,
+                               messageBadgeCountEnabled, userId) {
 
                 // Set up.
                 M.cfg.context = courseConfig.contextid;
@@ -574,6 +577,17 @@ define(['jquery', 'theme_snap/bootstrap', 'core/log', 'theme_snap/headroom', 'th
 
                     // Makes video responsive.
                     responsiveVideo.init();
+
+                    // Conversation counter for user badge.
+                    if (messageBadgeCountEnabled) {
+                        require(
+                            [
+                                'theme_snap/conversation_badge_count-lazy'
+                            ], function(conversationBadgeCount) {
+                                conversationBadgeCount.init(userId);
+                            }
+                        );
+                    }
 
                     $(window).on('load', function() {
                         // Add a class to the body to show js is loaded.

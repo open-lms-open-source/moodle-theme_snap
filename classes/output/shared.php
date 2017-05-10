@@ -354,7 +354,10 @@ class shared extends \renderer_base {
         ];
 
         $forcepwdchange = (bool) get_user_preferences('auth_forcepasswordchange', false);
-        $initvars = [$coursevars, $pagehascoursecontent, get_max_upload_file_size($CFG->maxbytes), $forcepwdchange];
+        $conversationbadgecountenabled = isloggedin() && !isset($mprocs['badge']) && $PAGE->theme->settings->messagestoggle == 1;
+        $userid = $USER->id;
+        $initvars = [$coursevars, $pagehascoursecontent, get_max_upload_file_size($CFG->maxbytes), $forcepwdchange,
+                     $conversationbadgecountenabled, $userid];
         $PAGE->requires->js_call_amd('theme_snap/snap', 'snapInit', $initvars);
 
         // Does the page have editable course content?
