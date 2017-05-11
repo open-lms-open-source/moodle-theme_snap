@@ -228,7 +228,7 @@ class user_forums {
      * there are query parameter limits in mssql and oracle.
      *
      * @param array $forums
-     * @param bool $hsufourm - is this a collection of advanced forums?
+     * @param bool $hsufourm - is this a collection of Moodlerooms forums?
      * @return mixed
      */
     protected function process_stale_forums(Array $forums, $hsuforum = false) {

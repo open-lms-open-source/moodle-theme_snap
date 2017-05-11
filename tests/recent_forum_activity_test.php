@@ -429,7 +429,7 @@ class theme_snap_recent_forum_activity_test extends \advanced_testcase {
     }
 
     /**
-     * Test an anonymous advanced forum with one anonymous discussion & reply.
+     * Test an anonymous Moodlerooms forum with one anonymous discussion & reply.
      * @throws \coding_exception
      */
     public function test_hsuforum_anonymous() {
@@ -498,14 +498,14 @@ class theme_snap_recent_forum_activity_test extends \advanced_testcase {
     }
 
     /**
-     * Test qanda advanced forum.
+     * Test qanda Moodlerooms forum.
      */
     public function test_hsuforum_qanda() {
         self::test_forum_qanda('hsuforum');
     }
 
     /**
-     * Test qanda forum & advanced forum combined.
+     * Test qanda forum & Moodlerooms forum combined.
      */
     public function test_combined_qanda() {
         self::test_forum_qanda('forum');
@@ -513,7 +513,7 @@ class theme_snap_recent_forum_activity_test extends \advanced_testcase {
     }
 
     /**
-     * Test an advanced forum with one private reply.
+     * Test an Moodlerooms forum with one private reply.
      * @throws \coding_exception
      */
     public function test_hsuforum_private() {
