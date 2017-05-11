@@ -25,7 +25,7 @@ Feature: When the moodle theme is set to Snap, students and teachers can see the
   of messages received when alerts are disabled
 
   Background:
-    Given I am using Joule
+    Given I am using Moodlerooms
     And the following config values are set as admin:
       | theme | snap |
     And the following config values are set as admin:
