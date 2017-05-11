@@ -1618,4 +1618,55 @@ HTML;
        $o = '<a href=" '.$url.' ">' .$img.s($name). '</a><br>';
        return $o;
    }
+
+    /**
+     * Renders the boost core notification popup area, which includes messages and notification popups
+     * @return string Notification popup area
+     */
+    protected function render_notification_popups() {
+        global $CFG, $USER;
+
+        if(!isloggedin()) return '';
+
+        // Add the messages and notifications popovers.
+        $popovernavarea = '';
+        $popovernavarea .= '<div class="pull-right navbar navbar-full navbar-light moodle-has-z-index snap-core-navbar">';
+        $popovernavarea .= '<div class="container-fluid navbar-nav">';
+
+        $messagespopover = '';
+        if (!empty($CFG->messaging)) {
+            $context = [
+                'userid' => $USER->id,
+                'urls' => [
+                    'seeall' => (new moodle_url('/message/index.php'))->out(),
+                    'writeamessage' => (new moodle_url('/message/index.php', ['contactsfirst' => 1]))->out(),
+                    'preferences' => (new moodle_url('/message/edit.php', ['id' => $USER->id]))->out(),
+                ],
+            ];
+            $messagespopover .= $this->render_from_template('message_popup/message_popover', $context);
+        }
+
+        $popovernavarea .= $messagespopover;
+
+        // Add the notifications popover.
+        $notificationspopover = '';
+        $enabled = \core_message\api::is_processor_enabled("popup");
+        if ($enabled) {
+            $context = [
+                'userid' => $USER->id,
+                'urls' => [
+                    'seeall' => (new moodle_url('/message/output/popup/notifications.php'))->out(),
+                    'preferences' => (new moodle_url('/message/notificationpreferences.php', ['userid' => $USER->id]))->out(),
+                ],
+            ];
+            $notificationspopover .= $this->render_from_template('message_popup/notification_popover', $context);
+        }
+
+        $popovernavarea .= $notificationspopover;
+
+        $popovernavarea .= '</div>';
+        $popovernavarea .= '</div>';
+
+        return $popovernavarea;
+    }
 }
