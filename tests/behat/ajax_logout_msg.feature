@@ -39,7 +39,7 @@ Feature: When the moodle theme is set to Snap, ajax failures due to log outs / e
     And I open the personal menu
     Then I should see "You are logged out"
     When I press "Continue"
-    Then ".loginform" "css_element" should exist
+    Then "body#page-login-index" "css_element" should exist
 
   @javascript
   Scenario: Teacher get's login status warning when trying to manage sections if logged out.

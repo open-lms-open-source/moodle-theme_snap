@@ -44,7 +44,8 @@ Feature: When a user clicks on next or previous month link in the calendar block
    Then I follow "Course Tools"
     And I follow "Edit blocks"
    Then I add the "Calendar" block
-    And I turn editing mode off
+    And I click on "#admin-menu-trigger" "css_element"
+    And I follow visible link "Turn editing off"
    Then I follow "Course Tools"
     And I should see "Calendar"
     And I follow "Next month"
@@ -58,7 +59,8 @@ Feature: When a user clicks on next or previous month link in the calendar block
    Then I follow "Course Tools"
     And I follow "Edit blocks"
    Then I add the "Calendar" block
-    And I turn editing mode off
+    And I click on "#admin-menu-trigger" "css_element"
+    And I follow visible link "Turn editing off"
    Then I follow "Course Tools"
     And I should see "Calendar"
     And I follow "Previous month"

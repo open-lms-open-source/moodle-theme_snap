@@ -95,7 +95,7 @@ Feature: When the moodle theme is set to Snap, teachers only see block edit cont
       | teacher1 | C3     | editingteacher |
     Given I log in as "teacher1" (theme_snap)
     And I am on the course main page for "C3"
-    And I click on "#page-mast .singlebutton input[type=\"submit\"]" "css_element"
+    And I follow "Edit blocks"
     And I should see "Add Topic"
     And I should see "Add Resource"
     And I should see "Topic Settings"
