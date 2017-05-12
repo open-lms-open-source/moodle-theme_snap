@@ -38,6 +38,19 @@
     }
 }
 
+// copied from theme/boost/scss/bootstrap/_nav.scss to avoid @inline explosion.
+%fake-nav {
+  padding-left: 0;
+  margin-bottom: 0;
+  list-style: none;
+}
+
+%fake-nav-tabs {
+  border-bottom: $nav-tabs-border-width solid $nav-tabs-border-color;
+  @include clearfix();
+}
+
+
 .yui-skin-sam,
 .yui-bootstrapped {
     .mask {
@@ -56,8 +69,8 @@
     }
     .yui-navset {
         .yui-nav {
-            @extend .nav;
-            @extend .nav-tabs;
+            @extend %fake-nav;
+            @extend %fake-nav-tabs;
             .selected > a {
                 em {
                     border: none;
@@ -98,8 +111,8 @@
         }
     }
     .yui3-tabview-list {
-        @extend .nav;
-        @extend .nav-tabs;
+        @extend %fake-nav;
+        @extend %fake-nav-tabs;
         .yui3-tab-selected > a {
           &,
           &:hover,
@@ -488,90 +501,3 @@
     margin: 0;
 }
 
-@media (max-width: 400px) {
-    // Override javascript assumption
-    .user-enroller-panel {
-        left: 0 !important;
-    }
-}
-
-.user-enroller-panel, .other-user-manager-panel {
-    max-width: 100%;
-    border: none;
-    background: transparent;
-    .uep-wrap, .oump-wrap {
-        margin: 0;
-        background-color: $modal-content-bg;
-        @extend .modal-content;
-        .uep-header, .oump-header {
-            background-color: $modal-content-bg;
-            font-family: $headings-font-family;
-            @extend .modal-header;
-            @include border-top-radius($border-radius-lg);
-            h2 {
-                margin: 0;
-                font-size: $font-size-h4;
-            }
-            .close, .oump-panel-close {
-                background: url([[pix:theme|close_x]]);
-                width: 27px;
-                height:27px;
-                top: 20px;
-                right: 20px;
-                opacity: 0.4;
-                &:hover {
-                    opacity: 0.8;
-                }
-            }
-        }
-        .uep-content, .oump-content {
-            background-color: $modal-content-bg;
-            border: none;
-            @extend .modal-body;
-            padding: 0;
-            .uep-controls {
-                background-color: $modal-content-bg;
-                border-bottom: 1px solid $modal-header-border-color;
-                text-align: center;
-                .uep-enrolment-option.role label {
-                    padding-right: .5em;
-                }
-            }
-            .uep-search-results, .oump-search-results {
-                .totalusers, .oump-total-users {
-                    padding: 0;
-                    border: 0;
-                    font-size: $font-size-sm;
-                    font-weight: normal;
-                    background-color: $modal-content-bg;
-                }
-                .users .user, .oump-users .oump-user {
-                    border: none;
-                    border-top: 1px solid $table-border-color;
-                    &.odd {
-                        background-color: $table-bg-accent;
-                    }
-                    .details {
-                        width: auto;
-                    }
-                }
-            }
-            .uep-loading-lightbox, .oump-loading-lightbox {
-                background-color: $modal-content-bg
-            }
-        }
-        .uep-footer, .oump-footer {
-            background-color: $modal-content-bg;
-            @extend .modal-footer;
-            @include border-bottom-radius($border-radius-lg);
-            margin-top: 0;
-            text-align: center;
-            .uep-search, .oump-search {
-                margin: 0 0 8px;
-                input {
-                    width: auto;
-                }
-            }
-        }
-    }
-}

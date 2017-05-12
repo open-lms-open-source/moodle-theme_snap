@@ -543,67 +543,9 @@ input[type="reset"] {
     }
 }
 
-.btn.btn-success {
-
-    &:visited {
-        color: $brand-success;
-    }
-
-    &:hover,
-    &:active,
-    &:focus {
-        color: #fff;
-        background: $brand-success;
-    }
-}
-
-.btn.btn-info {
-
-    &:visited {
-        color: $brand-info;
-    }
-
-    &:hover,
-    &:active,
-    &:focus {
-        color: #fff;
-        background: $brand-info;
-    }
-}
-
-.btn.btn-warning {
-
-    &:visited {
-        color: $brand-warning;
-    }
-
-    &:hover,
-    &:active,
-    &:focus {
-        color: #fff;
-        background: $brand-warning;
-    }
-}
-
-.btn.btn-danger {
-
-    &:visited {
-        color: $brand-danger;
-    }
-
-    &:hover,
-    &:active,
-    &:focus {
-        color: #fff;
-        background: $brand-danger;
-    }
-}
-
-// Snap specific, for white buttons on brand color backgrounds.
 .btn.btn-inverse {
 
-    &,
-    &:visited {
+    & {
         color: #fff;
         border-color: #fff;
     }
@@ -618,7 +560,6 @@ input[type="reset"] {
 }
 .btn.btn-solid {
     &,
-    &:visited,
     &:active,
     &:focus {
         background: #fff;
@@ -1078,14 +1019,14 @@ header#page-header
         li,
         li:before,
         >li+li:before,
-        a, a:visited {
+        a {
             text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
             color: white;
         }
     }
 
     #page-mast h1 {
-        a, a:visited, a:hover {
+        a, a:hover {
             color: white;
             text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
         }
@@ -1939,8 +1880,8 @@ ul.events-new + ul.events-underway {
 }
 
 #page-mod-quiz-review .arrow_link {
-    @extend .btn;
-    @extend .btn-default;
+    @extend %fake-btn;
+    @extend .btn-secondary;
 }
 
 // Quiz setup form //
@@ -2470,8 +2411,8 @@ table#user-grades tr.avg td.cell {
 .gradingform_checklist.editor .additem input,
 .gradingform_rubric.editor .addlevel input,
 .gradingform_rubric.editor .addcriterion input {
-    @extend .btn;
-    @extend .btn-default;
+    @extend %fake-btn;
+    @extend .btn-secondary;
     height: auto;
 }
 
@@ -2856,12 +2797,7 @@ table#user-grades tr.avg td.cell {
 
 // bootstrap labels
 .label {
-    border-radius: 0;
     font-weight: normal;
-
-    &[href]:visited {
-        color: #fff;
-    }
 }
 
 // when we display a continue cancel notice, we need the page contents to be the same height.
@@ -2998,12 +2934,6 @@ body.hascontinuecancel.path-site #page {
         min-width: 89%;
         height: 100%;
     }
-}
-
-/* assigning roles /enrol/otherusers.php */
-.other-user-manager-panel {
-    min-width: 32%;
-    padding: 0;
 }
 
 /* file picker dropzone */
@@ -3708,7 +3638,7 @@ td.mceToolbar {
 
 // General toggle icons.
 button.snap-icon-toggle {
-    &, &:hover, &:visited, &:link, &:active, &:focus {
+    &, &:hover, &:link, &:active, &:focus {
         color: $brand-primary;
         background: none;
         border: none;
@@ -3797,7 +3727,6 @@ label.state-visible[for="snap-coverfiles"],
 
 #snap-changecoverimageconfirmation.disabled .ok {
     &,
-    &:visited,
     &:hover,
     &:active,
     &:focus {

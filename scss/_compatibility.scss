@@ -11,3 +11,17 @@
 .text-right {
     text-align: right;
 }
+
+// Badges from bs3 missing from theme/boost/moodle/bs2-compatability.
+
+.label-danger,
+.badge-danger {
+    @include tag-variant($tag-danger-bg);
+}
+
+.label-primary,
+.badge-primary {
+    @include tag-variant($tag-primary-bg);
+}
+
+
