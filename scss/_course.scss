@@ -347,7 +347,7 @@ li.section:focus {
     a {
         display: block;
     }
-    
+
     img {
         @include svg-icon;
     }
@@ -505,6 +505,13 @@ body.format-flexpage .singlebutton {
 // Activity & Resource styles
 // -------------------------
 
+// -------------------------
+// Reset divs to display as block level elements.
+// -------------------------
+.section .activity .activityinstance,
+.section .activity .activityinstance div {
+    display: block;
+}
 
 // -------------------------
 //  Assets in snap.
