@@ -43,7 +43,6 @@ module.exports = function(grunt) {
 
     decachephp += "define(\"CLI_SCRIPT\", true);";
     decachephp += "require(" + configfile  + ");";
-
     decachephp += "theme_reset_all_caches();";
 
     grunt.mergeConfig = grunt.config.merge;
