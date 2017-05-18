@@ -25,14 +25,11 @@
 /**
  * Main snap initialising function.
  */
-define(['jquery', 'theme_snap/bootstrap', 'core/log', 'theme_snap/headroom', 'theme_snap/util', 'theme_snap/personal_menu',
+define(['jquery', 'core/log', 'theme_snap/headroom', 'theme_snap/util', 'theme_snap/personal_menu',
         'theme_snap/responsive_video', 'theme_snap/cover_image'],
-    function($, bsjq, log, Headroom, util, personalMenu, responsiveVideo, coverImage) {
+    function($, log, Headroom, util, personalMenu, responsiveVideo, coverImage) {
 
         'use strict';
-
-        // Use bootstrap modified jquery (tooltips).
-        $ = bsjq;
 
         M.theme_snap = M.theme_snap || {};
 

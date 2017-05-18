@@ -14,7 +14,7 @@ php:
 
 env:
  global:
-  - MOODLE_BRANCH=MOODLE_31_STABLE
+  - MOODLE_BRANCH=MOODLE_32_STABLE
   - IGNORE_PATHS=node_modules
  matrix:
   - DB=pgsql
