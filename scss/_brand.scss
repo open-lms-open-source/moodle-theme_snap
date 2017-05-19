@@ -69,9 +69,7 @@ hr {
     border-top: 1px solid $brand-primary;
 }
 
-a,
-a:visited,
-.btn-link {
+a {
     color: $brand-primary;
 }
 
@@ -90,9 +88,7 @@ a,
 }
 
 a:focus,
-a:hover,
-.btn-link:hover,
-.btn-link:focus {
+a:hover,{
     color: darken($brand-primary, 8%);
 }
 #admin-menu-trigger {
@@ -104,8 +100,7 @@ a:hover,
 }
 
 #fixy-my-courses .courseinfo {
-    a,
-    a:visited {
+    a {
         color: $brand-primary;
     }
 
@@ -117,9 +112,6 @@ a:hover,
 
 .section li.snap-native .activityinstance .snap-asset-link a {
     color: $brand-primary;
-    &:visited {
-        color: $brand-primary;
-    }
 
     &:focus,
     &:hover {
@@ -300,10 +292,6 @@ input[type="reset"],
     border-width: 1px;
     border-style: solid;
 
-    &:visited {
-        color: $brand-primary;
-    }
-
     &:hover,
     &:focus,
     &:active,
@@ -341,16 +329,6 @@ input[type="reset"],
     font-family: $font-family-base;
     transition: all 0.4s ease-in-out;
     border-radius: 4px;
-}
-
-
-#id_cancel {
-    color: $brand-primary;
-
-    &:focus,
-    &:hover {
-        color: darken($brand-primary, 8%);
-    }
 }
 
 // None standard buttons - e.g. atto
@@ -559,7 +537,6 @@ li.snap-activity {
 
 #snap-changecoverimageconfirmation.disabled .ok {
     &,
-    &:visited,
     &:hover,
     &:active,
     &:focus {

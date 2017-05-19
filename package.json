@@ -1,15 +1,11 @@
 {
-  "description": "Grunt tasks for Moodle Bootstrap theme.",
+  "description": "Grunt tasks for Moodle Snap theme.",
   "private": true,
   "devDependencies": {
     "grunt": "~0.4.1",
-    "grunt-autoprefixer": "^3.0.3",
-    "grunt-contrib-csslint": "^0.5.0",
-    "grunt-contrib-jshint": "^0.12.0",
-    "grunt-contrib-less": "^1.0.1",
     "grunt-contrib-watch": "^0.6.1",
     "grunt-exec": "~0.4.2",
-    "grunt-lesslint": "^2.0.0",
-    "grunt-load-gruntfile" : "^0.0.2"
+    "grunt-http": "^2.2.0",
+    "grunt-load-gruntfile": "^0.0.2"
   }
 }

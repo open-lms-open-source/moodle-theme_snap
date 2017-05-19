@@ -44,81 +44,11 @@ module.exports = function(grunt) {
     decachephp += "define(\"CLI_SCRIPT\", true);";
     decachephp += "require(" + configfile  + ");";
 
-    // The previously used theme_reset_all_caches() stopped working for us, we investigated but couldn't figure out why.
-    // Using purge_all_caches() is a bit of a nuclear option, as it clears more than we should need to
-    // but it gets the job done.
-    decachephp += "purge_all_caches();";
+    decachephp += "theme_reset_all_caches();";
 
     grunt.mergeConfig = grunt.config.merge;
 
     grunt.mergeConfig({
-        less: {
-            // Compile moodle styles.
-            moodle: {
-                options: {
-                    compress: false
-                },
-                files: {
-                    "style/moodle.css": "less/moodle.less",
-                }
-            },
-            // Compile editor styles.
-            editor: {
-                options: {
-                    compress: false
-                },
-                files: {
-                    "style/editor.css": "less/editor.less"
-                }
-            }
-        },
-        csslint: {
-            src: "style/moodle.css",
-            options: {
-                "adjoining-classes": false,
-                "box-sizing": false,
-                "box-model": false,
-                "overqualified-elements": false,
-                "bulletproof-font-face": false,
-                "compatible-vendor-prefixes": false,
-                "selector-max-approaching": false,
-                "fallback-colors": false,
-                "floats": false,
-                "ids": false,
-                "qualified-headings": false,
-                "selector-max": false,
-                "unique-headings": false,
-                "gradients": false,
-                "important": false,
-                "font-sizes": false,
-            }
-        },
-        lesslint: {
-            src: "less/moodle.less",
-            options: {
-                imports: "less/**/*.less"
-            }
-        },
-        autoprefixer: {
-          options: {
-            browsers: [
-              'Android 2.3',
-              'Android >= 4',
-              'Chrome >= 20',
-              'Firefox >= 24', // Firefox 24 is the latest ESR
-              'Explorer >= 9',
-              'iOS >= 6',
-              'Opera >= 12.1',
-              'Safari >= 6'
-            ]
-          },
-          core: {
-            options: {
-              map: false
-            },
-            src: ['style/moodle.css'],
-          },
-        },
         exec: {
             decache: {
                 cmd: "php -r '" + decachephp + "'",
@@ -131,19 +61,20 @@ module.exports = function(grunt) {
                 }
             }
         },
-        jshint: {
-            options: {
-                jshintrc: true,
-            },
-            files: ["javascript/*"]
+        http: {
+            prime_theme_cache: {
+                options: {
+                    url: 'http://joule2.dev/theme/styles.php/snap/-1/all',
+                }
+            }
         },
         watch: {
             options: {
                 spawn: false,
             },
             less: {
-                files: ["less/**/*.less"],
-                tasks: ["compile"],
+                files: ["scss/**/*.scss"],
+                tasks: ["decache"],
             },
             amd: {
                 files: ["amd/src/**/*.js"],
@@ -153,17 +84,11 @@ module.exports = function(grunt) {
     });
 
     // Load contrib tasks.
-    grunt.loadNpmTasks("grunt-autoprefixer");
-    grunt.loadNpmTasks('grunt-contrib-jshint');
-    grunt.loadNpmTasks('grunt-contrib-csslint');
-    grunt.loadNpmTasks("grunt-contrib-less");
-    grunt.loadNpmTasks("grunt-lesslint");
     grunt.loadNpmTasks("grunt-contrib-watch");
     grunt.loadNpmTasks("grunt-exec");
+    grunt.loadNpmTasks("grunt-http");
 
     // Register tasks.
     grunt.registerTask("default", ["watch"]);
-    grunt.registerTask("css", ["less:moodle", "less:editor", "autoprefixer"]);
-    grunt.registerTask("compile", ["less:moodle", "less:editor", "autoprefixer", "decache"]);
-    grunt.registerTask("decache", ["exec:decache"]);
+    grunt.registerTask("decache", ["exec:decache", "http:prime_theme_cache"]);
 };
