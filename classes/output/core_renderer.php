@@ -1609,6 +1609,86 @@ HTML;
                 return '';
             }
         }
-        return parent::render_navigation_node($item);
+
+        if ($item->key === 'courseadmin') {
+            $this->add_switchroleto_navigation_node($item);
+        }
+
+        return parent::render_navigation_node($item);;
+    }
+
+    /**
+     * Adds a switch role menu to a navigation node.
+     * Inspiration taken from : lib/navigationlib.php
+     * https://github.com/moodle/moodle/commit/70b03eff02a261b16130c52aca5cd87ebd810b5e
+     *
+     * @param navigation_node $item
+     */
+    private function add_switchroleto_navigation_node(navigation_node $item) {
+        global $PAGE;
+
+        $course = $PAGE->course;
+        $coursecontext = context_course::instance($course->id);
+        // Switch roles
+        $roles = array();
+        $assumedrole = $this->in_alternative_role();
+        if ($assumedrole !== false) {
+            $roles[0] = get_string('switchrolereturn');
+        }
+
+        if (has_capability('moodle/role:switchroles', $coursecontext)) {
+            $availableroles = get_switchable_roles($coursecontext);
+            if (is_array($availableroles)) {
+                foreach ($availableroles as $key => $role) {
+                    if ($assumedrole == (int)$key) {
+                        continue;
+                    }
+                    $roles[$key] = $role;
+                }
+            }
+        }
+        if (is_array($roles) && count($roles) > 0) {
+            $switchroles = $item->add(get_string('switchroleto'), null, navigation_node::TYPE_CONTAINER, null, 'switchroleto');
+            if ((count($roles) == 1 && array_key_exists(0, $roles)) || $assumedrole !== false) {
+                $switchroles->force_open();
+            }
+            foreach ($roles as $key => $name) {
+                $url = new moodle_url('/course/switchrole.php', array(
+                    'id' => $course->id, 'sesskey' => sesskey(),
+                    'switchrole' => $key, 'returnurl' => $PAGE->url->out_as_local_url(false)));
+                $switchroles->add($name, $url, navigation_node::TYPE_SETTING, null, $key, new \pix_icon('i/switchrole', ''));
+            }
+        }
+    }
+
+    /**
+     * Determine whether the user is assuming another role
+     * Inspiration taken from : lib/navigationlib.php
+     * https://github.com/moodle/moodle/commit/70b03eff02a261b16130c52aca5cd87ebd810b5e
+     *
+     * This function checks to see if the user is assuming another role by means of
+     * role switching. In doing this we compare each RSW key (context path) against
+     * the current context path. This ensures that we can provide the switching
+     * options against both the course and any page shown under the course.
+     *
+     * @return bool|int The role(int) if the user is in another role, false otherwise
+     */
+    private function in_alternative_role() {
+        global $USER, $PAGE;
+
+        $course = $PAGE->course;
+        $coursecontext = context_course::instance($course->id);
+
+        if (!empty($USER->access['rsw']) && is_array($USER->access['rsw'])) {
+            if (!empty($this->page->context) && !empty($USER->access['rsw'][$this->page->context->path])) {
+                return $USER->access['rsw'][$this->page->context->path];
+            }
+            foreach ($USER->access['rsw'] as $key=>$role) {
+                if (strpos($coursecontext->path,$key)===0) {
+                    return $role;
+                }
+            }
+        }
+        return false;
     }
 }
