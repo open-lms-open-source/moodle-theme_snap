@@ -24,6 +24,11 @@
 // Snap specific overrides to Boost settinsg from
 // theme/boost/scss/bootstrap/variables.scss
 
+$font-size-root: 18px;
+$font-size-lg:   1.25rem;
+$font-size-sm:   .75rem;
+$font-size-xs:   .6rem;
+
 // This needs some investigation of issues around IE11 and Moodle's autoprefixer implementaion.
 //$enable-flex:               true;
 $enable-rounded:            false;

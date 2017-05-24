@@ -541,7 +541,7 @@ body.format-flexpage .singlebutton {
     }
 
     .snap-assettype {
-        font-size: small;
+        font-size: $font-size-sm;
         text-transform: uppercase;
     }
 
@@ -1019,7 +1019,7 @@ body.snap-resource-card li.snap-resource {
 .snap-group-tag,
 .snap-grouping-tag {
     text-align: right;
-    font-size: small;
+    font-size: $font-size-sm;
     margin-bottom: 0.5em;
 
     a {
@@ -1077,7 +1077,7 @@ body.snap-resource-card li.snap-resource {
 .snap-draft-tag,
 .snap-current-tag {
     display: none !important; // SHAME - overcome bad overspecificity...
-    font-size: small;
+    font-size: $font-size-sm;
 }
 
 // show draft tag if parent has draft or class.
@@ -1818,7 +1818,6 @@ span.editinstructions {
 #snap-light-box {
     display: none;
     position: fixed;
-    box-sizing: border-box;
     top: 0;
     left: 0;
     right: 0;

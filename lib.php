@@ -195,7 +195,7 @@ function theme_snap_get_main_scss_content($theme) {
         // This preset file was fetched from the file area for theme_snap and not theme_boost (see the line above).
         $scss .= $presetfile->get_content();
     } else {
-        $scss = '@import "moodle";';
+        $scss = '@import "boost";';
     }
 
     // Pre CSS - this is loaded AFTER any prescss from the setting but before the main scss.
