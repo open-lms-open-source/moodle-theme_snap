@@ -194,9 +194,13 @@ body.path-site .block.block_settings {
         display: none;
     }
 
-    .header {
+    & > .card-block {
+        padding-left: 2%;
+        padding-right: 2%;
+    }
+
+    .card-title {
         visibility: hidden;
-        height: 1.5em;
     }
 }
 
@@ -208,7 +212,6 @@ body.path-site .block.block_settings {
     overflow-x: hidden;
     z-index: 13;
     right: 0;
-    padding-top: 2em;
     border-left: 1px solid #eee;
     transition: right 0.4s ease-in-out;
 }
