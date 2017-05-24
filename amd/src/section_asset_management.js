@@ -190,35 +190,6 @@ define(['jquery', 'core/log', 'core/ajax', 'core/templates', 'core/notification'
             };
 
             /**
-             * Implement always for promise (missing in core AJAX as of Moodle 3.1).
-             * @param {promise} promise
-             * @param {object} callbacks
-             */
-            var promiseHandler = function(promise, callbacks) {
-
-                if (callbacks.done && typeof (callbacks.done) === 'function') {
-                    promise.done(function(result) {
-                        callbacks.done(result);
-                        // Implement always callback.
-                        if (callbacks.always && typeof (callbacks.always) === 'function') {
-                            callbacks.always(result);
-                        }
-                    });
-                }
-
-                if (callbacks.fail && typeof (callbacks.fail) === 'function') {
-                    promise.fail(function(result) {
-                        callbacks.fail(result);
-                        // Implement always callback.
-                        if (callbacks.always && typeof (callbacks.always) === 'function') {
-                            callbacks.always(result);
-                        }
-                    });
-                }
-
-            };
-
-            /**
              * Get section title.
              * @param {integer} section
              * @returns {*|jQuery}
@@ -231,8 +202,10 @@ define(['jquery', 'core/log', 'core/ajax', 'core/templates', 'core/notification'
             /**
              * Update next / previous links.
              * @param {string} selector
+             * @return {promise}
              */
             var updateSectionNavigation = function(selector) {
+                var dfd = $.Deferred();
                 var sections, totalSectionCount;
                 if (!selector) {
                     selector = '#region-main .course-content > ul li.section';
@@ -243,6 +216,8 @@ define(['jquery', 'core/log', 'core/ajax', 'core/templates', 'core/notification'
                     var allSections = $('#region-main .course-content > ul li.section');
                     totalSectionCount = allSections.length;
                 }
+
+                var completed = 0;
 
                 $.each(sections, function(idx, el) {
                     var sectionNum = sectionNumber(el);
@@ -276,9 +251,14 @@ define(['jquery', 'core/log', 'core/ajax', 'core/templates', 'core/notification'
                     templates.render('theme_snap/course_section_navigation', navigation)
                         .done(function(result) {
                             $('#section-' + sectionNum + ' .section_footer').replaceWith(result);
+                            completed++;
+                            if (completed === sections.length) {
+                                dfd.resolve();
+                            }
                         });
 
                 });
+                return dfd.promise();
             };
 
             /**
@@ -345,37 +325,34 @@ define(['jquery', 'core/log', 'core/ajax', 'core/templates', 'core/notification'
                     ], true, true);
 
                     // Handle ajax promises.
-                    promiseHandler(ajaxPromises[0], {
-                        done: function(response) {
+                    ajaxPromises[0]
+                        .done(function(response) {
                             // Update TOC.
-                            promiseHandler(templates.render('theme_snap/course_toc', response.toc), {
-                                    done: function(result) {
-                                        $('#course-toc').html($(result).html());
-                                        $(document).trigger('snapTOCReplaced');
-                                        // Remove section from DOM.
-                                        section.remove();
-                                        updateSections();
-                                    },
-                                    always: function() {
-                                        // Allow another request now this has finished.
-                                        footerAlert.hideAndReset();
-                                        ajaxing = false;
-                                    }
-                                }
-                            );
+                            templates.render('theme_snap/course_toc', response.toc)
+                                .done(function(result) {
+                                    $('#course-toc').html($(result).html());
+                                    $(document).trigger('snapTOCReplaced');
+                                    // Remove section from DOM.
+                                    section.remove();
+                                    updateSections();
+                                })
+                                .always(function() {
+                                    // Allow another request now this has finished.
+                                    footerAlert.hideAndReset();
+                                    ajaxing = false;
+                                });
                             // Current section no longer exists so change location to previous section.
                             if (sectionNum >= $('.course-content > ul li.section').length) {
                                 location.hash = 'section-' + (sectionNum - 1);
                             }
                             courseLib.showSection();
-                        },
-                        fail: function(response) {
+                        })
+                        .fail(function(response) {
                             ajaxNotify.ifErrorShowBestMsg(response);
                             footerAlert.hideAndReset();
                             // Allow another request now this has finished.
                             ajaxing = false;
-                        }
-                    });
+                        });
                 };
 
                 var delTitle = M.util.get_string('confirm', 'moodle');
@@ -719,7 +696,8 @@ define(['jquery', 'core/log', 'core/ajax', 'core/templates', 'core/notification'
                     }
 
                     // Only allow 1 request to be made at a time.
-                    // Note, this is still async - just limited to one request in queue.
+                    // Note, this is still async - just limited to one section action request at a time.
+                    // All other ajax requests (templates, etc) will still be async.
                     if (ajaxing) {
                         // Request already made.
                         log.debug('Skipping ajax request, one already in progress');
@@ -737,6 +715,9 @@ define(['jquery', 'core/log', 'core/ajax', 'core/templates', 'core/notification'
                     // Add spinner.
                     addAjaxLoading(sectionActionsSelector, true);
 
+                    var jsid = 'sectionupdate_' + new Date().getTime().toString(16) + (Math.floor(Math.random() * 1000));
+                    M.util.js_pending(jsid);
+
                     // Make ajax call.
                     var ajaxPromises = ajax.call([
                         {
@@ -751,59 +732,52 @@ define(['jquery', 'core/log', 'core/ajax', 'core/templates', 'core/notification'
                     ], true, true);
 
                     // Handle ajax promises.
-                    promiseHandler(ajaxPromises[0], {
-
-                        done: function(response) {
-
-                            // Update section action and then reload TOC.
-                            promiseHandler(templates.render('theme_snap/course_action_section', response.actionmodel), {
-                                done: function(result) {
-                                    $(actionSelector).replaceWith(result);
-                                    $(actionSelector).focus();
-                                    // Update TOC.
-                                    promiseHandler(templates.render('theme_snap/course_toc', response.toc), {
-                                            done: function(result) {
-                                                $('#course-toc').html($(result).html());
-                                                $(document).trigger('snapTOCReplaced');
-                                                if (onComplete && typeof (onComplete) === 'function') {
-                                                    onComplete(sectionNumber, toggle);
-                                                }
-                                            },
-                                            always: function() {
-                                                // Cancel spinner always!
-                                                $(sectionActionsSelector + ' .loadingstat').remove();
-                                            }
+                    ajaxPromises[0]
+                    .fail(function(response) {
+                        var errMessage, errAction;
+                        if (action === 'visibility') {
+                            errMessage = M.util.get_string('error:failedtochangesectionvisibility', 'theme_snap');
+                            errAction = M.util.get_string('action:changesectionvisibility', 'theme_snap');
+                        } else {
+                            errMessage = M.util.get_string('error:failedtohighlightsection', 'theme_snap');
+                            errAction = M.util.get_string('action:highlightsectionvisibility', 'theme_snap');
+                        }
+                        ajaxNotify.ifErrorShowBestMsg(response, errAction, errMessage);
+                        M.util.js_complete(jsid);
+                    }).always(function() {
+                        $(sectionActionsSelector + ' .loadingstat').remove();
+                        // Allow another request now this has finished.
+                        ajaxing = false;
+                    }).done(function(response) {
+                        // Update section action and then reload TOC.
+                        return templates.render('theme_snap/course_action_section', response.actionmodel)
+                        .then(function(result) {
+                            $(actionSelector).replaceWith(result);
+                            $(actionSelector).focus();
+                            // Update TOC.
+                            return templates.render('theme_snap/course_toc', response.toc);
+                        }).then(function(result) {
+                            $('#course-toc').html($(result).html());
+                            $(document).trigger('snapTOCReplaced');
+                            if (onComplete && typeof(onComplete) === 'function') {
+                                var completion = onComplete(sectionNumber, toggle);
+                                if (completion && typeof(completion.always) === 'function') {
+                                    // Callback returns a promise, js no longer running.
+                                    completion.always(
+                                        function() {
+                                            M.util.js_complete(jsid);
                                         }
                                     );
-                                },
-                                fail: function() {
-                                    // Cancel spinner on fail only (toc reload promise takes care of this always).
-                                    $(sectionActionsSelector + ' .loadingstat').remove();
+                                } else {
+                                    // Callback does not return a promise, js no longer running.
+                                    M.util.js_complete(jsid);
                                 }
-
-                            });
-                        },
-
-                        fail: function(response) {
-                            var errMessage, errAction;
-                            if (action === 'visibility') {
-                                errMessage = M.util.get_string('error:failedtochangesectionvisibility', 'theme_snap');
-                                errAction = M.util.get_string('action:changesectionvisibility', 'theme_snap');
                             } else {
-                                errMessage = M.util.get_string('error:failedtohighlightsection', 'theme_snap');
-                                errAction = M.util.get_string('action:highlightsectionvisibility', 'theme_snap');
+                                M.util.js_complete(jsid);
                             }
-                            ajaxNotify.ifErrorShowBestMsg(response, errAction, errMessage);
-                            // Cancel spinner on fail only (nested functions take care of spinner).
-                            $(sectionActionsSelector + ' .loadingstat').remove();
-                        },
-
-                        always: function() {
-                            // Allow another request now this has finished.
-                            ajaxing = false;
-                        }
-
+                        });
                     });
+
                 });
             };
 
@@ -820,6 +794,12 @@ define(['jquery', 'core/log', 'core/ajax', 'core/templates', 'core/notification'
              * Toggle section visibility on click.
              */
             var toggleSectionListener = function() {
+                /**
+                 * Toggle hidden class and update section navigation.
+                 * @param sectionNumber
+                 * @param toggle
+                 * @returns {promise}
+                 */
                 var manageHiddenClass = function(sectionNumber, toggle) {
                     if (toggle === 0) {
                         $('#section-' + sectionNumber).addClass('hidden');
@@ -833,7 +813,7 @@ define(['jquery', 'core/log', 'core/ajax', 'core/templates', 'core/notification'
                         '#section-' + (sectionNumber + 1)
                     ];
                     var selector = selectors.join(',');
-                    updateSectionNavigation(selector);
+                    return updateSectionNavigation(selector);
 
                 };
                 sectionActionListener('visibility', manageHiddenClass);
