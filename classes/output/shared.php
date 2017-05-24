@@ -271,7 +271,7 @@ class shared extends \renderer_base {
         global $CFG, $PAGE, $COURSE, $USER;
 
         $PAGE->requires->jquery();
-        $PAGE->requires->js_call_amd('theme_boost/loader', 'init');
+        $PAGE->requires->js_amd_inline("require(['theme_boost/loader']);");
         $PAGE->requires->strings_for_js(array(
             'close',
             'coursecontacts',
