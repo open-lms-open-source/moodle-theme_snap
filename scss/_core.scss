@@ -1107,6 +1107,7 @@ header#page-header
 }
 
 // Override the above for a table that is also a form
+.block_conduit_setting_mappings > .mform,
 .quickgradingform > .mform {
     max-width: none;
 }
