@@ -879,6 +879,11 @@ body.snap-resource-card li.snap-resource {
     }
 }
 
+// Clear none-cards after floated cards.
+body.snap-resource-card li.activity {
+    clear: left;
+}
+
 // Resources to full width on tiny screen.
 @include media-breakpoint-down(sm) {
     body.snap-resource-card li.snap-resource {
