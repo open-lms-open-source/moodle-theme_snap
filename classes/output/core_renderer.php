@@ -881,7 +881,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
             }
             $courselist .= '</section>';
 
-            $menu = '<span class="hidden-xs">' .get_string('menu', 'theme_snap'). '</span>';
+            $menu = '<span class="hidden-xs-down">' .get_string('menu', 'theme_snap'). '</span>';
             $badge = $this->render_badge_count();
             $linkcontent = $menu.$picture.$badge;
             $attributes = array(
