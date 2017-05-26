@@ -591,7 +591,7 @@ input[type="reset"] {
 // Replacing font icon with svgs
 // -------------------------
 
-.icon-close:before {
+.snap-icon-close:before {
     content: '';
     background: transparent url("[[pix:theme|close_x]]") no-repeat 50% 50%;
     display: block;
@@ -600,8 +600,8 @@ input[type="reset"] {
     margin: 0.1em auto;
 }
 
-#snap-footer-alert .icon-close:before,
-.fixy .icon-close:before {
+#snap-footer-alert .snap-icon-close:before,
+.fixy .snap-icon-close:before {
     background: transparent url("[[pix:theme|close_x_white]]") no-repeat 50% 50%;
 }
 
@@ -1036,6 +1036,7 @@ header#page-header
         line-height: 1;
         font-size: 1rem;
         text-transform: uppercase;
+        font-weight: lighter;
     }
 }
 
