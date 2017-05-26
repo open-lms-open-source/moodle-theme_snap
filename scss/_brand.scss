@@ -246,6 +246,8 @@ legend,
 .snap-unread-marker {
     color: $brand-primary;
 }
+
+.messaging-area-container .messaging-area .messages-area .response .delete-confirmation .btn.btn-link.confirm,
 #page-mod-quiz-review .arrow_link,
 .path-admin-tool-lp button.btn,
 #course-category-listings .listing-pagination .yui3-button,
@@ -524,6 +526,13 @@ li.snap-activity {
     background-color: $brand-primary;
 }
 
+// AJAX spinner.
+.spinner-three-quarters:not(:required).spinner-dark {
+    border-color: $brand-primary;
+    border-right-color: transparent;
+}
+
+
 // -------------------------
 //  Moodle mods
 // -------------------------
@@ -546,8 +555,47 @@ li.snap-activity {
     }
 }
 
-// AJAX spinner.
-.spinner-three-quarters:not(:required).spinner-dark {
-    border-color: $brand-primary;
-    border-right-color: transparent;
+// -------------------------
+// Messaging
+// -------------------------
+.messaging-area-container .messaging-area {
+    .contacts-area {
+
+        // Hoverable divs.
+        .contacts .contact,
+        .contacts .contact.selected,
+        .searcharea .course {
+            &:hover {
+                background-color: rgba($brand-primary, .5);
+            }
+        }
+
+        // contact.selected large screen only, media query copied from message.scss
+        @media (min-width: 979px) {
+            .contacts .contact.selected {
+                background-color: $brand-primary;
+            }
+        }
+
+        // Tabs to change from messages to contacts.
+        .tabs .tab:hover {
+            color: darken($brand-primary, 8%);
+        }
+    }
+
+    // Users own messages.
+    .messages-area .messages .message .right .text {
+        background-color: $brand-primary;
+    }
+
+    // Link and button colours.
+    .contacts-area .tabs .tab.selected,
+    .btn.btn-link {
+        color: $brand-primary;
+
+        &:hover,
+        &:focus {
+            color: darken($brand-primary, 8%);
+        }
+    }
 }
