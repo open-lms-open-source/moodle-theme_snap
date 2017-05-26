@@ -190,8 +190,8 @@ define(
                 if (lbox.length === 0) {
                     $(appendto).append('<div id="snap-light-box" tabindex="-1">' +
                         '<div id="snap-light-box-content"></div>' +
-                        '<a id="snap-light-box-close" class="pull-right snap-action-icon" href="#">' +
-                        '<i class="icon icon-close"></i><small>Close</small>' +
+                        '<a id="snap-light-box-close" class="pull-right snap-action-icon snap-icon-close" href="#">' +
+                        '<small>Close</small>' +
                         '</a>' +
                         '</div>');
                     $('#snap-light-box-close').click(function(e) {

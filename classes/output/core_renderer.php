@@ -797,8 +797,8 @@ class core_renderer extends \theme_boost\output\core_renderer {
                     <form action='$wwwroot/login/index.php'  method='post'>
                     <div class=fixy-inner>
                     <div class=fixy-header>
-                    <a id='fixy-close' class='js-personal-menu-trigger pull-right snap-action-icon' href='#'>
-                        <i class='icon icon-close'></i><small>$cancel</small>
+                    <a id='fixy-close' class='js-personal-menu-trigger pull-right snap-action-icon snap-icon-close' href='#'>
+                        <small>$cancel</small>
                     </a>
                     <h1>$login</h1>
                     </div>
@@ -906,8 +906,8 @@ class core_renderer extends \theme_boost\output\core_renderer {
             $output .= '<nav id="primary-nav" class="fixy toggle-details appear_enabled" tabindex="-1">
             <div class="fixy-inner">
             <div class="fixy-header">
-            <a id="fixy-close" class="js-personal-menu-trigger pull-right snap-action-icon" href="#">
-                <i class="icon icon-close"></i><small>'.$close.'</small>
+            <a id="fixy-close" class="js-personal-menu-trigger pull-right snap-action-icon snap-icon-close" href="#">
+                <small>'.$close.'</small>
             </a>
 
             <div id="fixy-user">'.$picture.'
@@ -1161,8 +1161,8 @@ class core_renderer extends \theme_boost\output\core_renderer {
     {$preview}
     <div class="news-article-message" tabindex="-1">
         {$message}
-        <div><hr><a class="snap-action-icon toggle" href="#">
-        <i class="icon icon-close"></i><small>{$close}</small></a></div>
+        <div><hr><a class="snap-action-icon snap-icon-close toggle" href="#">
+        <small>{$close}</small></a></div>
     </div>
 </div>
 HTML;

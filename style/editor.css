@@ -4838,8 +4838,8 @@ fieldset[disabled] #page-site-index .section-modchooser-link .section-modchooser
   width: 1em;
   margin: 0.1em auto;
 }
-#snap-footer-alert .icon-close:before,
-.fixy .icon-close:before {
+#snap-footer-alert .snap-icon-close:before,
+.fixy .snap-icon-close:before {
   background: transparent url("[[pix:theme|close_x_white]]") no-repeat 50% 50%;
 }
 .icon-arrow-left:before,
