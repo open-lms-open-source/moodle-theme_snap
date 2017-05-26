@@ -560,11 +560,11 @@ li.snap-activity {
 // -------------------------
 .messaging-area-container .messaging-area {
     .contacts-area {
-
         // Hoverable divs.
         .contacts .contact,
         .contacts .contact.selected,
         .searcharea .course {
+
             &:hover {
                 background-color: rgba($brand-primary, .5);
             }

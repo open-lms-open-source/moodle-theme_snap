@@ -37,7 +37,6 @@
         border: none;
         border-top: 1px solid $gray-lighter;
         overflow: visible !important;
-
         // Contacts area.
         .contacts-area {
             // Footer to switch between contacts and messages.
@@ -46,14 +45,17 @@
             }
             // Contact media element type things.
             .contacts .contact .information{
+
                 .name {
                     font-weight: normal;
                 }
+
                 .lastmessage {
                     line-height: normal;
                     height: auto;
                 }
             }
+
             // Search area headings.
             .searcharea .heading {
                 border: 0;
@@ -61,10 +63,8 @@
                 padding: 1rem 0;
             }
         }
-
         // Messages area.
         .messages-area {
-
             // Delete messages link.
             .response .delete-confirmation .btn.btn-link.confirm {
                 height: auto;
@@ -77,12 +77,10 @@
                     background-color: white !important; // SHAME - !important to overide hover styles when editing.
                     border: none;
                     padding: 0;
-
                     // This is your own message, and gets a brand-color background.
                     &.right{
                         color: white;
                     }
-
                     // These are other messages.
                     .text {
                         background-color: $gray-lighter;
@@ -95,6 +93,7 @@
                 // Selecting messages to delete when editing a thread.
                 &[aria-checked="true"] .content,
                 &[aria-checked="false"] .content:hover {
+
                     .text {
                         background-color: $brand-success;
                     }
