@@ -880,7 +880,7 @@ body.snap-resource-card li.snap-resource {
 }
 
 // Clear none-cards after floated cards.
-body.snap-resource-card li.activity {
+.snap-resource-card li.activity {
     clear: left;
 }
 
