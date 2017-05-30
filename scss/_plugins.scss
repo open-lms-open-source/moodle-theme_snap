@@ -122,3 +122,14 @@
     text-align: left;
     white-space: normal;
 }
+
+/**
+ * Styling for mod_choicegroup.
+ */
+#page-mod-choicegroup-report .response table.results td.data .user {
+    float: left;
+
+    .attemptaction {
+        margin-right: 1em;
+    }
+}
