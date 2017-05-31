@@ -506,14 +506,6 @@ body.format-flexpage .singlebutton {
 // -------------------------
 
 // -------------------------
-// Reset divs to display as block level elements.
-// -------------------------
-.section .activity .activityinstance,
-.section .activity .activityinstance div {
-    display: block;
-}
-
-// -------------------------
 //  Assets in snap.
 // -------------------------
 .section li.snap-asset {
@@ -616,7 +608,7 @@ body.format-flexpage .singlebutton {
 
     .asset-wrapper,
     .activityinstance {
-        padding: 0;
+        padding: 0.5em 0;
     }
 }
 

@@ -78,7 +78,7 @@ define(['jquery', 'media_videojs/loader'], function($, videoJsLoader) {
                 var parent = $(this).parent();
 
                 var tagName = this.tagName.toLowerCase();
-                if (tagName === 'iframe') {
+                if (tagName === 'iframe' || tagName === 'object' || tagName === 'embed') {
 
                     if ($(parent).hasClass('media-responsive')) {
                         return true;
@@ -86,7 +86,8 @@ define(['jquery', 'media_videojs/loader'], function($, videoJsLoader) {
 
                     if (!$(parent).hasClass('mediaplugin')) {
                         // This iframe will need a new parent as we need a container we can rely on to just contain
-                        // This one iframe.
+                        // This iframe / object will need a new parent as we need a container we can rely on to just
+                        // contain this one iframe / object.
                         var newParent = $('<div></div>');
                         $(this).after(newParent);
                         $(newParent).append($(this));

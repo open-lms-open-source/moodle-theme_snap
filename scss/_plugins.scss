@@ -2,6 +2,38 @@
 * Plugins css.
 */
 
+
+/**
+ * Video js filter.
+ */
+
+// Center play button.
+.video-js {
+    .vjs-big-play-button {
+        top: calc(50% - 2rem);
+        left: calc(50% - 2rem);
+        line-height: 4rem;
+        height: 4rem;
+        width: 4rem;
+        border-radius: 100%;
+        border-color: transparent;
+        background-color: rgba($brand-primary, .7);
+
+        &:focus {
+            background-color: $brand-primary;
+        }
+    }
+
+    &:hover {
+        .vjs-big-play-button {
+            background-color: $brand-primary;
+            border-color: transparent;
+        }
+    }
+}
+
+
+
 /**
  * report : dates.
  * https://moodle.org/plugins/report_editdates
