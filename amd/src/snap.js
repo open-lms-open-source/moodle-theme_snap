@@ -495,7 +495,7 @@ define(['jquery', 'core/log', 'theme_snap/headroom', 'theme_snap/util', 'theme_s
                         usedefaultname.checked = false;
                         sname.required = "required";
                         sname.focus();
-                        $('#id_name + span').css('display', 'none');
+                        $('#id_usedefaultname').parent().css('display', 'none');
 
                         // Enable the cancel button.
                         $('#id_cancel').on('click', function() {
