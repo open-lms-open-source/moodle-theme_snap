@@ -1038,10 +1038,10 @@ body.snap-resource-card li.snap-resource {
 }
 
 // Activity dues date.
-.snap-due-date {
-    @extend .tag-default;
+a.snap-due-date {
     font-size: 1em;
-    border-left-color: white;
+    border-radius: 1em;
+    padding: 0.5em 1em;
 }
 
 
