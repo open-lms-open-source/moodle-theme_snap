@@ -446,3 +446,18 @@ div.editor_atto_toolbar div.atto_group {
 #s_theme_snap_resourcedisplay_card:before {
     content: url("[[pix:theme|cards]]");
 }
+
+// -------------------------
+// Enrolled Users filter
+// -------------------------
+
+@include media-breakpoint-up(sm) {
+    #page-enrol-users #filterform > .fitem {
+            margin-right: 1rem;
+            margin-bottom: 1rem;
+
+            &:last-child {
+                display: block;
+        }
+    }
+}

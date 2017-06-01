@@ -758,48 +758,6 @@ class course_renderer extends \core_course_renderer {
     }
 
     /**
-     * Yes, this looks like it should be part of core renderer but moodles crazy ia means its part of course.
-     */
-    public function course_search_form($value = '', $format = 'plain') {
-        if ($format !== 'fixy') {
-            // For now only handle search in fixy menu.
-            return parent::course_search_form($value, $format);
-        }
-
-        static $count = 0;
-        $formid = 'coursesearch';
-        if ((++$count) > 1) {
-            $formid .= $count;
-        }
-        $inputid = 'coursesearchbox';
-        $inputsize = 30;
-
-        if ($format === 'navbar') {
-            $formid = 'coursesearchnavbar';
-            $inputid = 'navsearchbox';
-        }
-
-        $strsearchcourses = get_string("searchcourses");
-        $searchurl = new moodle_url('/course/search.php');
-
-        $form = array('id' => $formid, 'action' => $searchurl, 'method' => 'get', 'class' => "form-inline", 'role' => 'form');
-        $output = html_writer::start_tag('form', $form);
-        $output .= html_writer::tag('label', $strsearchcourses, array('for' => $inputid, 'class' => 'sr-only'));
-        $output .= html_writer::start_div('input-group');
-        $search = array('type' => 'text', 'id' => $inputid, 'size' => $inputsize, 'name' => 'search',
-        'class' => 'form-control', 'value' => s($value), 'placeholder' => $strsearchcourses);
-        $output .= html_writer::empty_tag('input', $search);
-        $button = array('type' => 'submit', 'class' => 'btn btn-default');
-        $output .= html_writer::start_span('input-group-btn');
-        $output .= html_writer::tag('button', get_string('go'), $button);
-        $output .= html_writer::end_span();
-        $output .= html_writer::end_div(); // Close form-group.
-        $output .= html_writer::end_tag('form');
-
-        return $output;
-    }
-
-    /**
      * Every mime type we consider to be multimedia.
      * @return array
      */
