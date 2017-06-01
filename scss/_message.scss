@@ -1,0 +1,104 @@
+/**
+ * New message page in moodle 3.2
+ *
+ */
+
+// Hide unnecessary content on the page.
+#page-message-index {
+    #page-mast,
+    #page-header,
+    #moodle-footer,
+    #moodle-blocks,
+    #admin-menu-trigger {
+        display: none;
+    }
+
+    #maincontent + h2 {
+        @include sr-only();
+    }
+
+    #region-main {
+        max-width: 100%;
+        padding: 58px 0 0 0; // 58px for #mr-nav height.
+
+        textarea {
+            font-family: $font-family-base;
+        }
+    }
+}
+
+// Style messaging area.
+// Note - once supported this should probably use a css grid or flex.
+.messaging-area-container {
+    font-family: $font-family-base;
+    margin-bottom: 0;
+
+    .messaging-area {
+        border: none;
+        border-top: 1px solid $gray-lighter;
+        overflow: visible !important;
+        // Contacts area.
+        .contacts-area {
+            // Footer to switch between contacts and messages.
+            .tabs .tab {
+                background-color: transparent;
+            }
+            // Contact media element type things.
+            .contacts .contact .information{
+
+                .name {
+                    font-weight: normal;
+                }
+
+                .lastmessage {
+                    line-height: normal;
+                    height: auto;
+                }
+            }
+
+            // Search area headings.
+            .searcharea .heading {
+                border: 0;
+                @extend .h1;
+                padding: 1rem 0;
+            }
+        }
+        // Messages area.
+        .messages-area {
+            // Delete messages link.
+            .response .delete-confirmation .btn.btn-link.confirm {
+                height: auto;
+            }
+            // Message.
+            .messages .message {
+
+                .content {
+                    font-size: 1rem;
+                    background-color: white !important; // SHAME - !important to overide hover styles when editing.
+                    border: none;
+                    padding: 0;
+                    // This is your own message, and gets a brand-color background.
+                    &.right{
+                        color: white;
+                    }
+                    // These are other messages.
+                    .text {
+                        background-color: $gray-lighter;
+                        border-radius: 1rem;
+                        border: none;
+                        padding: 0.25rem 0.5rem;
+                    }
+                }
+
+                // Selecting messages to delete when editing a thread.
+                &[aria-checked="true"] .content,
+                &[aria-checked="false"] .content:hover {
+
+                    .text {
+                        background-color: $brand-success;
+                    }
+                }
+            }
+        }
+    }
+}
