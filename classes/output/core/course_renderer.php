@@ -593,11 +593,11 @@ class course_renderer extends \core_course_renderer {
             $url = new \moodle_url("/mod/{$mod->modname}/view.php", ['id' => $mod->id]);
             $dateformat = get_string('strftimedate', 'langconfig');
             $labeltext = $due . ' ' . userdate($meta->timeclose, $dateformat);
-            $warningclass = '';
+            $dateclass = 'tag-success';
             if($meta->timeclose < time()){
-                $warningclass = ' snap-date-overdue';
+                $dateclass = ' tag-danger';
             }
-            $content .= html_writer::link($url, $labeltext, array('class' => 'snap-due-date'.$warningclass));
+            $content .= html_writer::link($url, $labeltext, array('class' => 'snap-due-date tag '.$dateclass));
         }
 
         return $content;

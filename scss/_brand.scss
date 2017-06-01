@@ -126,13 +126,6 @@ a:hover,{
     }
 }
 
-.snap-due-date {
-    background-color: $brand-primary;
-    &.snap-date-overdue {
-        background-color: $brand-danger;
-    }
-}
-
 // Calendar
 #dateselector-calendar-panel {
     .yui3-calendar-day {
