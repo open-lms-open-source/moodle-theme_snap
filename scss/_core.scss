@@ -34,7 +34,8 @@ html {
 
 img.spacer,
 .noavailable,
-.clearfloat {
+.clearfloat,
+.noicon {
     display: none;
 }
 
@@ -99,61 +100,52 @@ table.boxwidthwide {
 }
 
 // -------------------------
-// Login page
+// Login & sign up page
 // -------------------------
 
-@include media-breakpoint-up(md) {
-    .twocolumns {
-
-        // override bs grids
-        .signuppanel,
-        .loginpanel {
-            float: none !important;
-            width: 100% !important;
-            left: 0 !important;
-            padding: 0 !important;
-        }
-    }
-}
-
-#page-login-index {
+#page-login-index,
+#page-login-signup {
     #region-main {
         max-width: 100%;
         padding: 0 4% 2em;
     }
-
-    .loginpanel h2 {
+    #moodle-footer {
+        margin-top: 0;
+    }
+    // The login box.
+    .snap-login {
+        padding: 1em 4%;
+        margin: 2em auto;
+        max-width: 30rem;
+        width: 100%;
+        background-color: rgba(255,255,255,0.9);
+    }
+    // The site name.
+    .snap-logo-sitename {
         text-indent: 100%;
         white-space: nowrap;
         overflow: hidden;
-        background: no-repeat center center;
+        background-position: center center;
         background-size: contain;
-        margin: 0;
+        background-repeat: no-repeat;
+        padding: 1em 0;
+        margin-bottom: 0.5em;
     }
+}
+#page-login-signup {
 
-    .loginbox {
-        float: none;
-        padding: 1em 4%;
-        width: 100%;
-        background-color: rgba(255,255,255,0.9);
-        margin: 2em auto;
-        max-width: 30em;
-        left: 0;
-    }
-
-    #loginbtn {
-        display: block;
-        width: 100%;
-        margin: 1em 0;
-    }
-
-    // Remove first time here?
-    .signuppanel > h2 {
+    .collapsible-actions,
+    .ftoggler {
         display: none;
     }
-
-    #moodle-footer {
-        margin-top: 0;
+    // Inputs to full width.
+    .mform .form-inline .form-control,
+    .mform .form-inline .custom-select {
+        width: 100%;
+    }
+    // Disable hiding of form.
+    .jsenabled .mform .collapsed .fcontainer {
+        display: block !important;
     }
 }
 
@@ -3009,7 +3001,6 @@ body.hascontinuecancel.path-site #page {
 #moodle-footer {
     padding-top: 3em;
     padding-bottom: 1em;
-    border-top: 1px solid #ccc;
     clear: both;
     color: $gray-lighter;
     background-color: $body-color;

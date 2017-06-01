@@ -1719,4 +1719,21 @@ HTML;
         }
         return false;
     }
+
+    /**
+     * Return Snap's logo url for login.mustache 
+     *
+     * @param int $maxwidth not used in Snap.
+     * @param int $maxheight not used in Snap.
+     * @return moodle_url|false
+     */
+    public function get_logo_url($maxwidth = null, $maxheight = 200) {
+        global $PAGE;
+        if (empty($PAGE->theme->settings->logo)) {
+            return false;
+        } else {
+            $logourl = $PAGE->theme->setting_file_url('logo', 'logo');
+            return new moodle_url($logourl);
+        }
+    }
 }
