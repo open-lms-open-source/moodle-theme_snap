@@ -1637,4 +1637,79 @@ HTML;
         }
         return $navoutput;
     }
+
+    /*
+    * This renders the navbar.
+    * Uses bootstrap compatible html.
+    */
+   public function navbar() {
+       global $COURSE, $CFG;
+
+       require_once($CFG->dirroot.'/course/lib.php');
+
+       $breadcrumbs = '';
+       $courseitem = null;
+       $snapmycourses = html_writer::link('#', get_string('menu', 'theme_snap'), array('class' => 'js-personal-menu-trigger'));
+
+       foreach ($this->page->navbar->get_items() as $item) {
+           $item->hideicon = true;
+
+           // Remove link to current page - n.b. needs improving.
+           if ($item->action == $this->page->url) {
+               continue;
+           }
+
+           // For Admin users - When default home is set to dashboard, let admin access the site home page.
+           if($item->key === 'myhome' && has_capability('moodle/site:config', context_system::instance())) {
+               $breadcrumbs .= '<li class="breadcrumb-item">' .html_writer::link(new moodle_url('/', ['redirect' => 0]), get_string('sitehome')). '</li>';
+               continue;
+           }
+
+           // Remove link to home/dashboard as site name/logo provides the same link.
+           if ($item->key === 'home' || $item->key === 'myhome' || $item->key === 'dashboard') {
+               continue;
+           }
+
+           // Replace my courses none-link with link to snap personal menu.
+           if ($item->key === 'mycourses') {
+               $breadcrumbs .= '<li class="breadcrumb-item">' .$snapmycourses. '</li>';
+               continue;
+           }
+
+           if ($item->type == \navigation_node::TYPE_COURSE) {
+               $courseitem = $item;
+           }
+
+           if ($item->type == \navigation_node::TYPE_SECTION) {
+               if ($courseitem != null) {
+                   $url = $courseitem->action->out(false);
+                   $item->action = $courseitem->action;
+                   $sectionnumber = $this->get_section_for_id($item->key);
+
+                   // Append section focus hash only for topics and weeks formats because we can
+                   // trust the behaviour of these formats.
+                   if ($COURSE->format == 'topics' || $COURSE->format == 'weeks') {
+                       $url .= '#section-'.$sectionnumber;
+                       if ($item->text == get_string('general')) {
+                           $item->text = get_string('introduction', 'theme_snap');
+                       }
+                   } else {
+                       $url = course_get_url($COURSE, $sectionnumber);
+                   }
+                   $item->action = new moodle_url($url);
+               }
+           }
+
+           // Only output breadcrumb items which have links.
+           if ($item->action !== null) {
+               $link = html_writer::link($item->action, $item->text);
+               $breadcrumbs .= '<li class="breadcrumb-item">' .$link. '</li>';
+           }
+       }
+
+       if(!empty($breadcrumbs)) {
+           return '<div class="breadcrumb-nav" aria-label="breadcrumb">'.
+           '<ol class="breadcrumb">' .$breadcrumbs .'</ol></div>';
+       }
+   }
 }

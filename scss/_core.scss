@@ -970,15 +970,15 @@ header#page-header
     padding-bottom: 0.5em;
 }
 
-// Breadcrumb - not really a breadcrumb like on the web, but some moodleything
+// Breadcrumb - not really a breadcrumb like on the web, but something moodley
 // -------------------------
 
 .breadcrumb-nav {
     margin-bottom: 0;
     float: none;
     @include media-breakpoint-up(md) {
-       margin-top: -0.5em;
-   }
+        margin-top: -0.5em;
+    }
 }
 
 .breadcrumb {
