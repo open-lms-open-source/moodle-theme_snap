@@ -1098,9 +1098,15 @@ a.snap-due-date {
     background-color: $brand-success;
 }
 
+// Draft hide/show.
+.snap-asset {
+    .editing_show {
+        display: none;
+    }
+}
 
 // Assets with draft tag.
-li.draft {
+.snap-asset.draft {
     border-top-color: #eee !important;
 
     .activityinstance {
@@ -1126,7 +1132,7 @@ li.draft {
     }
 
     // Draft assets inside hidden section....
-    li.draft .activityinstance {
+    .snap-asset.draft .activityinstance {
             opacity: 1;
     }
 }
@@ -1314,14 +1320,6 @@ form.togglecompletion {
         }
     }
 }
-
-// Draft hide/show.
-.dropdown-menu {
-    .editing_show {
-        display: none;
-    }
-}
-
 
 /* reset some moodle shame */
 .moodle-actionmenu,
