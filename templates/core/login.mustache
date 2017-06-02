@@ -130,15 +130,6 @@
             class="form-control"
             placeholder={{#quote}}{{#str}}password{{/str}}{{/quote}}
             {{^passwordautocomplete}}autocomplete="off"{{/passwordautocomplete}}>
-
-        <!-- {{#rememberusername}}
-            <div class="rememberpass m-t-1">
-                <input type="checkbox" name="rememberusername" id="rememberusername" value="1" {{#username}}checked="checked"{{/username}} />
-                <label for="rememberusername">{{#str}} rememberusername, admin {{/str}}</label>
-            </div>
-        {{/rememberusername}}
-    -->
-
         <br>
         <button type="submit" class="btn btn-primary btn-block" id="loginbtn">{{#str}}login{{/str}}</button>
         <a class="small btn btn-link btn-block" href="{{forgotpasswordurl}}">{{#str}}forgotten{{/str}}</a>
