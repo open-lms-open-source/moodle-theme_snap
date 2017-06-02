@@ -1739,4 +1739,5 @@ class local {
         global $PAGE;
         return parse_url($PAGE->url->out_as_local_url())['path'];
     }
+
 }

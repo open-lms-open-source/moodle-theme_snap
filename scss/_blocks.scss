@@ -20,7 +20,7 @@
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 @include media-breakpoint-up(md) {
-    #moodle-blocks {
+    #moodle-blocks > aside {
         column-count: 2;
         column-gap: 5%;
         column-width: 45%;

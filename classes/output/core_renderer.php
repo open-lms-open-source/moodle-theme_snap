@@ -544,6 +544,34 @@ class core_renderer extends \theme_boost\output\core_renderer {
         );
     }
 
+    /**
+     * Output moodle blocks and Snap wrapper with edit button.
+     * @return string
+     */
+    public function snap_blocks() {
+        global $COURSE, $OUTPUT, $PAGE;
+
+        $coursecontext = \context_course::instance($COURSE->id);
+
+        $editblocks = '';
+        if (has_capability('moodle/course:update', $coursecontext)) {
+            $url = new \moodle_url('/course/view.php', ['id' => $COURSE->id, 'sesskey' => sesskey()]);
+            if ($PAGE->user_is_editing()) {
+               $url->param('edit', 'off');
+               $editstring = get_string('turneditingoff');
+            } else {
+                $url->param('edit', 'on');
+                $editstring = get_string('editcoursecontent', 'theme_snap');
+            }
+            $editblocks = '<div class="text-center"><a href="'.$url.'" class="btn btn-primary">'.$editstring.'</a></div><br>';
+        }
+        $output = '<div id="moodle-blocks" class="clearfix">';
+        $output .= $editblocks;
+        $output .= $OUTPUT->blocks('side-pre');
+        $output .= '</div>';
+
+        return $output;
+    }
 
     protected function render_callstoaction() {
 
