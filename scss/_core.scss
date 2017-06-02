@@ -2742,7 +2742,8 @@ table#user-grades tr.avg td.cell {
     background-color: #eee;
     font-size: 2em;
     width: 100%;
-    padding: 1em 4% 4em;
+    padding: 1em 4%;
+    padding-bottom: 4rem !important; // Needed to overule .p-y-1 class.
 
     // pull buttons up into the #notice when they are placed
     // after it, rather than inside it.
