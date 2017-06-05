@@ -1742,7 +1742,12 @@ span.editinstructions {
     }
 }
 
-
+// Small screen moving cancel link.
+@include media-breakpoint-down(md) {
+    .snap-footer-alert-cancel {
+        margin-right: 3em;
+    }
+}
 
 // Body class when moving
 .snap-move-inprogress {

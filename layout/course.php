@@ -66,10 +66,10 @@ if ($tocformat && !$leftnav) {
 if ($tocformat && $leftnav) {
     echo '<div id="snap-course-wrapper">';
     echo '<div class="row">';
-    echo '<div class="col-md-3">';
+    echo '<div class="col-lg-3">';
     echo $OUTPUT->course_toc();
     echo '</div>';
-    echo '<div class="col-md-9">';
+    echo '<div class="col-lg-9">';
 }
 ?>
 <section id="region-main">
