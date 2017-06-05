@@ -1868,3 +1868,8 @@ span.editinstructions {
     @extend .progress-bar;
     display: block;
 }
+
+// Fix urlselect in grade report.
+.path-grade-report #maincontent + .urlselect {
+    left: 71vw;
+}
