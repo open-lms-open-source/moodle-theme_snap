@@ -892,11 +892,8 @@ body.snap-resource-card li.snap-resource {
         height: auto;
         background-image: none !important;
 
-        .activityinstance {
-            width: 75%;
-            .activityicon {
-                display: inline;
-            }
+        .activityinstance .activityicon {
+            display: inline;
         }
 
         .snap-asset-actions {
