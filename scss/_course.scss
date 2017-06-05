@@ -1857,3 +1857,14 @@ span.editinstructions {
       max-height: 80vh;
   }
 }
+
+// Adding support for bootstrap 4 progress bar.
+.dndupload-progress-outer {
+    @extend .progress;
+    display: block;
+}
+
+.dndupload-progress-inner {
+    @extend .progress-bar;
+    display: block;
+}
