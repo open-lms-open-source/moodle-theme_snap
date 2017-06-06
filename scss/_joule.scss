@@ -14,7 +14,7 @@
 
 #block-reports-useraction-dragbox {
     background-color: $modal-backdrop-bg;
-    border: none;
+    border: 1px solid rgba(0,0,0,.2);
 }
 #block-reports-useraction-msgtable tr td{
     display: block;
