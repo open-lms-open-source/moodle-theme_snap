@@ -2898,6 +2898,27 @@ body.hascontinuecancel.path-site #page {
     }
 }
 
+.chooserdialogue .moodle-dialogue-wrap .moodle-dialogue-bd {
+    background: $body-bg;
+}
+
+.jschooser .choosercontainer #chooseform .alloptions {
+    max-height: calc(100vh - 10rem) !important; // Overules JS caculated value.
+}
+
+.choosercontainer #chooseform {
+
+    .moduletypetitle,
+    .option,
+    .nonoption {
+        padding: 0 4%;
+    }
+
+    .option .icon {
+        padding: 0 .5rem;
+    }
+}
+
 /* file picker dropzone */
 .filemanager {
     .fp-pathbar,
