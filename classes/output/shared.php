@@ -483,7 +483,7 @@ class shared extends \renderer_base {
         $links = array();
         $localplugins = core_component::get_plugin_list('local');
         $coursecontext = context_course::instance($COURSE->id);
-        
+
         // Course enrolment link.
         $enrollink = '';
         $plugins   = enrol_get_plugins(true);
@@ -514,7 +514,7 @@ class shared extends \renderer_base {
         if ($selfenrol) {
             $enrollink = '<div class="text-center"><a href="'.$enrolurl.'" class="btn btn-primary">'.$enrolstr.'</a></div><br>';
         }
-        
+
         // Course settings.
         if (has_capability('moodle/course:update', $coursecontext)) {
             $iconurl = $OUTPUT->pix_url('gear', 'theme');
@@ -543,7 +543,7 @@ class shared extends \renderer_base {
                 );
             }
         }
-        
+
         // Joule grader if installed.
         if (array_key_exists('joulegrader', $localplugins) && !array_key_exists('nortongrader', $localplugins)) {
             if (has_capability('local/joulegrader:grade', $coursecontext)
@@ -555,7 +555,7 @@ class shared extends \renderer_base {
                 );
             }
         }
-        
+
         // Gradebook.
         if (self::gradebook_accessible($coursecontext)) {
             $iconurl = $OUTPUT->pix_url('gradebook', 'theme');
@@ -571,7 +571,7 @@ class shared extends \renderer_base {
         if (has_capability('moodle/course:viewparticipants', $coursecontext)) {
             // Get count of course users.
             $usercount = count_enrolled_users(context_course::instance($COURSE->id), '', 0, true);
-            
+
             // Build icon.
             $participanticons = '';
             if(!empty($usercount)) {
@@ -587,16 +587,16 @@ class shared extends \renderer_base {
             else {
                 // Default icon when 0 participants.
                 $iconurl = $OUTPUT->pix_url('u/f1');
-                $participanticons = '<img src="'.$iconurl.'" alt="" role="presentation">'; 
+                $participanticons = '<img src="'.$iconurl.'" alt="" role="presentation">';
             }
-            
+
             $participanticons = '<div class="snap-participant-icons">'.$participanticons.'</div>';
             $links[] = array(
                 'link' => 'user/index.php?id='.$COURSE->id.'&mode=1',
                 'title' => $participanticons.$usercount.' '.get_string('participants')
             );
         }
-        
+
         // Joule reports if installed.
         if (array_key_exists('reports', core_component::get_plugin_list('block'))) {
             $iconurl = $OUTPUT->pix_url('joule_reports', 'theme');
@@ -636,7 +636,7 @@ class shared extends \renderer_base {
         if(!empty($CFG->core_outcome_enable)) {
             $iconurl = $OUTPUT->pix_url('outcomes', 'theme');
             $outcomesicon = '<img src="'.$iconurl.'" class="svg-icon" alt="" role="presentation">';
-            
+
             if (has_capability('moodle/grade:edit', $coursecontext)) {
                 $links[] = array(
                     'link'  => 'outcome/course.php?contextid='.$coursecontext->id,
@@ -677,27 +677,13 @@ class shared extends \renderer_base {
             }
         }
 
-         // Edit blocks.
-         $editblocks = '';
-         if (has_capability('moodle/course:update', $coursecontext)) {
-            $url = new moodle_url('/course/view.php', ['id' => $COURSE->id, 'sesskey' => sesskey()]);
-            if ($PAGE->user_is_editing()) {
-                $url->param('edit', 'off');
-                $editstring = get_string('turneditingoff');
-            } else {
-                $url->param('edit', 'on');
-                $editstring = get_string('editcoursecontent', 'theme_snap');
-            }
-            $editblocks = '<div class="text-center"><a href="'.$url.'" class="btn btn-primary">'.$editstring.'</a></div><br>';
-        }
-
         // Output course tools section.
         $coursetools = get_string('coursetools', 'theme_snap');
         $iconurl = $OUTPUT->pix_url('course_dashboard', 'theme');
         $coursetoolsicon = '<img src="'.$iconurl.'" class="svg-icon" alt="" role="presentation">';
         $o = '<h2>'.$coursetoolsicon.$coursetools.'</h2>';
         $o .= $enrollink.'<div id="coursetools-list">'.
-            self::render_appendices($links).'</div><hr>'.$editblocks;
+            self::render_appendices($links).'</div><hr>';
 
         return $o;
     }
