@@ -633,7 +633,7 @@ class course_renderer extends \core_course_renderer {
         }
         $summary = $mod->get_formatted_content(array('overflowdiv' => false, 'noclean' => true));
 
-        $imglink = "<a class='snap-image-link' href='{$imgsrc}' target='_blank'><img src='{$imgsrc}' alt=''/></a>";
+        $imglink = "<a class='snap-image-link' href='{$imgsrc}' target='_blank'>".format_text("<img src='{$imgsrc}' alt=''/>")."</a>";
 
         $modname = format_string($mod->name);
 
