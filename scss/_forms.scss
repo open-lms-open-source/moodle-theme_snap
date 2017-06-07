@@ -374,7 +374,7 @@ div.editor_atto_toolbar div.atto_group {
 
         // FF select elements don't respect % max width.
         select {
-            max-width: 300px;
+            max-width: 200px !important;
         }
 
 
@@ -401,6 +401,16 @@ div.editor_atto_toolbar div.atto_group {
         z-index: 25;
         border-top: 1px solid #eee;
         text-align: center;
+    }
+
+    .snap-form-advanced {
+        select {
+            max-width: 140px !important;
+        }
+
+        input {
+            max-width: 140px !important;
+        }
     }
 
 }
