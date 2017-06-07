@@ -22,52 +22,92 @@
 
 #page-user-profile,
 .path-course.path-user {
-
-    /* User image and name. */
-    .page-context-header {
-        text-align: center;
-
-        .page-header-image,
-        .page-header-headings {
-            display: block;
-            padding: 0;
-         }
-    }
-    /* Full screen. */
+    // Full screen width for profile pages.
     #region-main {
         max-width: 100%;
         padding: 1em 4%;
     }
+    // User image and name.
+    .page-context-header {
+        text-align: center;
+
+        .page-header-image,
+        .page-header-headings,
+        .header-button-group {
+            display: block;
+            padding: 0;
+            float: none;
+            @include clearfix;
+         }
+
+         .page-header-headings {
+            padding-bottom: 0.5em;
+         }
+
+         .header-button-group {
+            display: inline-block;
+
+            .btn {
+                 border-color: transparent;
+             }
+         }
+    }
+
+    // Hide button text on small screens.
+    @include media-breakpoint-down(xs) {
+        .header-button-title {
+            display: none;
+        }
+    }
+
+    // Float edit blocks and reset buttons.
+    .singlebutton {
+        float: right;
+    }
 
     .userprofile {
-        /* Message button. */
-        .header-button-group {
-           float: none !important;
-        }
-        /* Profile text. */
+        clear: both;
+        // Profile text.
         .description {
             max-width: 43.5em;
             margin: 0 auto;
         }
-        /* Profile option lists. */
+        // Profile option lists.
         .profile_tree {
-            @include make-row();
+            // Reset core col counts.
             column-count: 1; // IE dosn't support initial (March 2017).
             column-count: initial;
+            @include make-row();
 
-            section {
-                @include make-col(6);
-
+            // Make colums for sections.
+            @include media-breakpoint-up(sm) {
+                .node_category {
+                    @include make-col(3);
+                    border: none;
+                }
+                .node_category:nth-of-type(5) {
+                    clear: left;
+                }
+            }
+            // Small screen colums to full width.
+            @include media-breakpoint-down(sm) {
+                .node_category {
+                    @include make-col(12);
+                    border: none;
+                }
             }
 
-            section:nth-of-type(5) {
-                clear: left;
+            .node_category{
+                // Titles.
+                h3 {
+                    @extend h5;
+                }
+                // Edit profile link.
+                .editprofile {
+                    text-align: left;
+                }
             }
-            /* Titles. */
-            .node_category h3 {
-                @extend h5;
-            }
-            /* Datalists. */
+            // Datalists.
             .node_category li.contentnode dl dd {
                 margin: 0;
             }
@@ -76,31 +116,49 @@
     }
 }
 
-/* Course user profile. */
-.path-course.path-user {
-    /* If course image, pull the user image up. */
+// Pull up the course user profile when there is a cover image.
+.path-course.path-user.pagelayout-standard {
+    // If course image, pull the user image up.
     #page-header.mast-image {
         margin-bottom: -3.75em;
     }
 }
 
-/* Global user profile. */
-#page-user-profile {
-    .page-header-headings h1 {
-        margin: 0.25em 0; // Reset h1 margin.
+// SHAME - Course partisipants page user profiles list.
+.path-course.path-user {
+    .userinfobox {
+        border: none;
+        border-bottom: 1px solid $gray-lighter;
+        padding: 0;
+        margin-bottom: 0.5em;
+        @include make-row();
     }
-}
-
-/* Large screen. */
-@include media-breakpoint-up(lg){
-    #page-user-profile,
-    .path-course.path-user{
-        /* Hack to center buttons */
-        div.singlebutton {
-            margin-left: 30vw;
-            +.singlebutton {
-                margin-left: 0;
-            }
+    .left.side {
+        @include make-col(2);
+        .userpicture {
+            max-width: 75%;
+            height: auto;
+        }
+    }
+    .content {
+        @include make-col(10);
+        .username {
+            padding:0;
+        }
+        .info {
+            font-size: small;
+        }
+    }
+    .links {
+        clear: both;
+        @include make-col(12);
+        br {
+            display: none;
+        }
+        a {
+            float: right;
+            display: inline-block;
+            margin-right: 0.5em;
         }
     }
 }
