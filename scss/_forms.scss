@@ -161,6 +161,17 @@ body:not(.behat-site) {
 .fdescription.required {
     display: none;
 }
+// Style required asterix.
+fieldset abbr[title] {
+    font-size: xx-small;
+    text-decoration: none;
+    border: none;
+    &:after {
+        content: " " attr(title);
+        text-transform: lowercase;
+        text-transform: capitalize;
+    }
+}
 
 // Prevent toggler collapse on required section
 #id_general .fcontainer,
