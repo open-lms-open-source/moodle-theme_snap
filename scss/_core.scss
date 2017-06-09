@@ -1838,6 +1838,12 @@ ul.events-new + ul.events-underway {
     @extend .btn-secondary;
 }
 
+#page-mod-quiz-edit .section .activity .actions {
+    position: absolute;
+    right: 0;
+    top: 0
+}
+
 // Quiz setup form //
 #page-mod-quiz-mod #id_reviewoptionshdr .fitem {
     width: 100%;
