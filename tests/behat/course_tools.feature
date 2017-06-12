@@ -50,7 +50,7 @@ Feature: When the moodle theme is set to Snap, a course tools section is availab
     When I log in as "student1"
     And I am on the course main page for "C1"
     And I click on "a[href=\"#coursetools\"]" "css_element"
-    Then I should see "Course Tools" in the "#coursetools" "css_element"
+    Then I should see "Course Dashboard" in the "#coursetools" "css_element"
     Examples:
       | format |
       | topics |
@@ -69,7 +69,7 @@ Feature: When the moodle theme is set to Snap, a course tools section is availab
     # Note we have to call this step twice because for some reason it doesn't automatically go to the module page the
     # first time - that's a core issue though.
     And I am on the course main page for "C1"
-    Then I should see "Course Tools" in the "#coursetools" "css_element"
+    Then I should see "Course Dashboard" in the "#coursetools" "css_element"
 
   @javascript
   Scenario Outline: Course tools show automatically for single activity format set to hsuforum of types general / single.
@@ -85,7 +85,7 @@ Feature: When the moodle theme is set to Snap, a course tools section is availab
     # Note we have to call this step twice because for some reason it doesn't automatically go to the module page the
     # first time - that's a core issue though.
     And I am on the course main page for "C1"
-    Then I should see "Course Tools" in the "#coursetools" "css_element"
+    Then I should see "Course Dashboard" in the "#coursetools" "css_element"
     Examples:
       | type    |
       | general |

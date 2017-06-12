@@ -41,12 +41,12 @@ Feature: When a user clicks on next or previous month link in the calendar block
     or in the previous month link
   Given I log in as "teacher1" (theme_snap)
     And I am on the course main page for "course_topics"
-   Then I follow "Course Tools"
+   Then I follow "Course Dashboard"
     And I follow "Edit blocks"
    Then I add the "Calendar" block
     And I click on "#admin-menu-trigger" "css_element"
     And I follow visible link "Turn editing off"
-   Then I follow "Course Tools"
+   Then I follow "Course Dashboard"
     And I should see "Calendar"
     And I follow "Next month"
    Then I should see "Calendar"
@@ -56,12 +56,12 @@ Feature: When a user clicks on next or previous month link in the calendar block
     or in the previous month link
   Given I log in as "teacher1" (theme_snap)
    Then I am on the course main page for "course_topics"
-   Then I follow "Course Tools"
+   Then I follow "Course Dashboard"
     And I follow "Edit blocks"
    Then I add the "Calendar" block
     And I click on "#admin-menu-trigger" "css_element"
     And I follow visible link "Turn editing off"
-   Then I follow "Course Tools"
+   Then I follow "Course Dashboard"
     And I should see "Calendar"
     And I follow "Previous month"
    Then I should see "Calendar"
