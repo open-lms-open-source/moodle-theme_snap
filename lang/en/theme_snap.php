@@ -49,6 +49,7 @@ $string['cachedef_course_completion_progress'] = 'This is used to cache completi
 $string['cachedef_course_completion_progress_ts'] = 'This is used so that we can invalidate session level caches if the course completion settings for a course or module change.';
 $string['cachedef_webservicedefinitions'] = 'Caching for auto generated web service definitions.';
 $string['card'] = 'Card';
+$string['categoryedit'] = 'Edit category';
 $string['changecoverimage'] = 'Change cover image';
 $string['changefullname'] = 'Change site name';
 $string['chapters'] = 'Chapters';
