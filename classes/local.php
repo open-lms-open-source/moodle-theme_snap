@@ -449,6 +449,7 @@ class local {
      * @return bool | array
      */
     public static function courseinfo($courseids) {
+        global $CFG;
         $courseinfo = array();
 
         $courses = enrol_get_my_courses(['enablecompletion', 'showgrades']);
@@ -472,7 +473,8 @@ class local {
                 'completion' => self::course_completion_progress($course)
             );
 
-            if (!empty($showgrades)) {
+            $reportusershowgrade = grade_get_setting($courseid, 'report_user_showgrade', !empty($CFG->grade_report_user_showgrade));
+            if (!empty($showgrades) && !empty($reportusershowgrade)) {
                 $feedback = self::course_grade($course);
                 $courseinfo[$courseid]->feedback = $feedback;
             }
