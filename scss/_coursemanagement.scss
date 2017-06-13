@@ -52,6 +52,13 @@
                 display: inline;
             }
         }
+
+        // Hide move up/down actions on first/last iteams.
+        .listitem:last-child>div .item-actions .action-movedown,
+        .listitem:first-child>div .item-actions .action-moveup {
+            display: none;
+        }
+
         .float-right {
             float: right;
         }
