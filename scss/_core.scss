@@ -88,8 +88,6 @@ table.boxwidthwide {
 }
 
 // Undo .well styles
-#page-course-index-category .generalbox.info,
-.courses .coursebox.collapsed,
 .loginbox,
 .loginbox.twocolumns .loginpanel,
 .loginbox.onecolumn {
@@ -1372,78 +1370,6 @@ http://blog.rodneyrehm.de/archives/34-iOS7-Mobile-Safari-And-Viewport-Units.html
     .news-article {
         min-height: 33vh;
     }
-}
-
-//
-// Front page - Course lists
-// --------------------------------------------------
-
-.coursebox.clearfix {
-    padding: 1em 4%;
-    border-bottom: 1px solid #eee;
-}
-
-.coursebox .info .coursename {
-    font-size: $font-size-h4;
-}
-
-.coursebox .enrolmenticons,
-.coursebox .moreinfo {
-    display: inline;
-    float: none;
-    padding: 0;
-}
-
-.coursebox .content .courseimage {
-    text-align: center;
-    max-height: 150px;
-    overflow: hidden;
-}
-
-.coursebox .content .courseimage img {
-    max-width: 100%;
-    max-height: 100%;
-}
-
-@include media-breakpoint-up(lg) {
-    .frontpage-course-list-all .coursebox {
-        width: 50%;
-        display: inline-block;
-        vertical-align: top;
-        border: 0;
-    }
-
-    .coursebox .content {
-        .summary,
-        .teachers {
-            width: 62%;
-            float: left;
-        }
-
-        .courseimage {
-                float: right;
-                width: 33%;
-        }
-    }
-}
-
-.paging.paging-morelink {
-    text-align: center;
-}
-
-/* COURE LISTINGS PAGES */
-.course_category_tree .category>.info,
-.coursebox .info,
-.coursebox {
-    background-color: transparent;
-    border: none;
-    border-color: transparent;
-    box-shadow: none;
-    margin: 0;
-}
-
-.coursebox .info {
-    padding: 0;
 }
 
 /* Calandar */
