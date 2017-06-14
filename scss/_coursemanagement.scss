@@ -19,6 +19,9 @@
     @extend .row;
     padding-top: 1em;
 
+    .categoryname {
+        margin: 0 0.5rem;
+    }
     // Two or three cols of data.
     .grid-col {
         .listing-actions {
@@ -57,10 +60,6 @@
         .listitem:last-child>div .item-actions .action-movedown,
         .listitem:first-child>div .item-actions .action-moveup {
             display: none;
-        }
-
-        .float-right {
-            float: right;
         }
         // Actions for catagory.
         .category-item-actions {
