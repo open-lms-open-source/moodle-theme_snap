@@ -1913,9 +1913,23 @@ ul.events-new + ul.events-underway {
     font-weight: 300;
 }
 
-// quiz itself //
+// Quiz itself //
+
+// For quiz, we don't want two coluns.
+.path-mod-quiz #moodle-blocks>aside {
+    column-count: 1 !important;
+}
+
+.path-mod-quiz .block__fake {
+    text-align: center;
+    .qnbutton {
+        display: inline-block;
+        float: none;
+    }
+}
+
 .que {
-    border-bottom: 1px solid #999;
+    border-bottom: 1px solid $gray;
     padding: 1.5em 0;
     margin: 1em 0;
 }
@@ -1943,22 +1957,31 @@ ul.events-new + ul.events-underway {
 .que .info>div {
     display: inline-block;
     font-size: $font-size-sm;
-    color: #999;
+    color: $gray-light;
     padding-right: 2%;
 }
 
-.que .formulation,
-.formulation .incorrect,
-.formulation .correct {
-    border: 0;
-    background-color: transparent;
-    width: 100%;
-    margin: 0;
-    padding: 0;
+// Adding region main to overwite boost extend alert on quiz elements.
+#region-main {
+    .que .formulation,
+    .formulation .incorrect,
+    .formulation .correct {
+        border: 0;
+        background-color: transparent;
+        width: 100%;
+        margin: 0;
+        padding: 0;
+        color: $gray;
+    }
 }
 
 .que .qtext {
     font-size: 1.3em;
+}
+
+// Add margin to quiz submit/check button.
+.que .im-controls {
+    margin: 0.5em 0;
 }
 
 .que.multichoice .answer .specificfeedback {
