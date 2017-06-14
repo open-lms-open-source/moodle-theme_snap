@@ -551,10 +551,11 @@ class core_renderer extends \theme_boost\output\core_renderer {
     public function snap_blocks() {
         global $COURSE, $OUTPUT, $PAGE;
 
-        $coursecontext = \context_course::instance($COURSE->id);
-
         $editblocks = '';
-        if (has_capability('moodle/course:update', $coursecontext)) {
+
+        $oncoursepage = strpos($PAGE->pagetype, 'course-view') === 0;
+        $coursecontext = \context_course::instance($COURSE->id);
+        if ($oncoursepage && has_capability('moodle/course:update', $coursecontext)) {
             $url = new \moodle_url('/course/view.php', ['id' => $COURSE->id, 'sesskey' => sesskey()]);
             if ($PAGE->user_is_editing()) {
                $url->param('edit', 'off');
@@ -565,6 +566,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
             }
             $editblocks = '<div class="text-center"><a href="'.$url.'" class="btn btn-primary">'.$editstring.'</a></div><br>';
         }
+
         $output = '<div id="moodle-blocks" class="clearfix">';
         $output .= $editblocks;
         $output .= $OUTPUT->blocks('side-pre');
@@ -1721,7 +1723,7 @@ HTML;
     }
 
     /**
-     * Return Snap's logo url for login.mustache 
+     * Return Snap's logo url for login.mustache
      *
      * @param int $maxwidth not used in Snap.
      * @param int $maxheight not used in Snap.
