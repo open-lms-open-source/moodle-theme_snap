@@ -48,3 +48,9 @@
 .float-left {
     float: left;
 }
+
+// IE11 workaround for CSS column-count interacting weirdly with drop-down menus.
+
+.ie11.editing #moodle-blocks > aside {
+    column-count: 1;
+}
