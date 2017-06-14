@@ -39,4 +39,12 @@
     background: $table-bg;
 }
 
+// Should be in bs4, possibly missing from moodle alpha.
 
+.float-right {
+    float: right;
+}
+
+.float-left {
+    float: left;
+}
