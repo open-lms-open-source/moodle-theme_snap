@@ -58,6 +58,8 @@
         opacity: $modal-backdrop-opacity;
     }
     .yui-dt > table {
+        @extend .table;
+        @extend .table-striped;
         th.yui-dt-sortable {
             &.yui-dt-asc a.yui-dt-sortable:after {
                 content: "\00a0▲";
