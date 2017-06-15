@@ -63,8 +63,27 @@
 .path-mod-assign [data-region="user-info"] .img-rounded {
     height: 40px;
 }
+
 .path-mod-assign #page-content [data-region="grade-panel"] .popout [data-region="popout-button"] img {
     max-width: none;
+}
+
+.path-mod-assign [data-region="grade-panel"] .mform .fitem:hover {
+    background-color: $modal-content-bg;
+}
+
+.path-mod-assign [data-region="grade-panel"] .mform .fitem .felement {
+    float: none;
+    margin-top: .25rem;
+}
+
+.path-mod-assign [data-region="grade-panel"] .fitem.has-popout {
+    padding: $spacer / 2;
+
+    &.popout {
+        // When actually popped out.
+        padding: $card-spacer-y $card-spacer-x;
+    }
 }
 
 /**
