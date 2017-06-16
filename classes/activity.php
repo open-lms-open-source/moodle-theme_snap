@@ -35,7 +35,7 @@ class activity {
      * @param \cm_info $mod
      * @return activity_meta
      */
-    public static function module_meta(\cm_info $mod) {        
+    public static function module_meta(\cm_info $mod) {
         $methodname = $mod->modname . '_meta';
         if (method_exists('theme_snap\\activity', $methodname)) {
             $meta = call_user_func('theme_snap\\activity::' . $methodname, $mod);
@@ -44,7 +44,7 @@ class activity {
         }
         return $meta;
     }
-    
+
     /**
      * Return standard meta data for module
      *
@@ -819,7 +819,7 @@ class activity {
             $timeopenfld = $mod->modname === 'quiz' ? 'timeopen' : ($mod->modname === 'lesson' ? 'available' : $timeopenfld);
             $timeclosefld = $mod->modname === 'quiz' ? 'timeclose' : ($mod->modname === 'lesson' ? 'deadline' : $timeclosefld);
             $sql = "-- Snap sql
-                    SELECT 
+                    SELECT
                     module.id, 
                     module.$timeopenfld AS timeopen, 
                     module.$timeclosefld AS timeclose";
@@ -830,12 +830,47 @@ class activity {
                 $params = array();
                 if ($groups[0]) {
                     list ($groupsql, $params) = $DB->get_in_or_equal($groups[0]);
-                    $sql .= ", CASE WHEN ovrd1.$timeopenfld IS NULL THEN MIN(ovrd2.$timeopenfld) ELSE ovrd1.$timeopenfld END AS timeopenover,
-                            CASE WHEN ovrd1.$timeclosefld IS NULL THEN MAX(ovrd2.$timeclosefld) ELSE ovrd1.$timeclosefld END AS timecloseover
-                            FROM {" . $mod->modname . "} module
-                            LEFT JOIN {" . $mod->modname . "_overrides} ovrd1 ON module.id=ovrd1.$id AND $USER->id=ovrd1.userid
-                            LEFT JOIN {" . $mod->modname . "_overrides} ovrd2 ON module.id=ovrd2.$id AND ovrd2.groupid $groupsql";
-                    $groupbysql = " GROUP BY module.id, timeopen, timeclose";
+                    if ($DB->get_dbfamily() === 'mysql') {
+                        $sql .= ",
+                            CASE
+                                WHEN ovrd1.$timeopenfld IS NULL
+                                THEN MIN(ovrd2.$timeopenfld)
+                                ELSE ovrd1.$timeopenfld
+                            END AS timeopenover,
+                            CASE
+                                WHEN ovrd1.$timeclosefld IS NULL
+                                THEN MAX(ovrd2.$timeclosefld)
+                                ELSE ovrd1.$timeclosefld
+                            END AS timecloseover
+                            FROM {" . $mod->modname . "} module";
+                    } else {
+                        $sql .= ",
+                            MIN (
+                                CASE
+                                    WHEN ovrd1.$timeopenfld IS NULL
+                                    THEN ovrd2.$timeopenfld
+                                    ELSE ovrd1.$timeopenfld
+                                END
+                            ) AS timeopenover,
+                            MAX (
+                                CASE
+                                    WHEN ovrd1.$timeclosefld IS NULL
+                                    THEN ovrd2.$timeclosefld
+                                    ELSE ovrd1.$timeclosefld
+                                END
+                            ) AS timecloseover
+                            FROM {" . $mod->modname . "} module";
+                    }
+                    $sql .= "
+                        LEFT JOIN {" . $mod->modname . "_overrides} ovrd1
+                               ON module.id=ovrd1.$id
+                              AND $USER->id=ovrd1.userid
+                        LEFT JOIN {" . $mod->modname . "_overrides} ovrd2
+                               ON module.id=ovrd2.$id
+                              AND ovrd2.groupid $groupsql";
+                    $groupbysql = "
+                         GROUP BY module.id, module.$timeopenfld, module.$timeclosefld";
+
                 } else {
                     $sql .= ", ovrd1.$timeopenfld AS timeopenover, ovrd1.$timeclosefld AS timecloseover
                              FROM {" . $mod->modname . "} module 
