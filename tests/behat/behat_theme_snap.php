@@ -1179,6 +1179,7 @@ class behat_theme_snap extends behat_base {
         $mainwindow = $session->getWindowName();
         $logoutwindow = 'Log out window';
         $session->executeScript('window.open("'.$CFG->wwwroot.'", "'.$logoutwindow.'")');
+        sleep(1); // Allow time for the window to open.
         $session->switchToWindow($logoutwindow);
         $this->i_log_out();
         $session->executeScript('window.close()');
