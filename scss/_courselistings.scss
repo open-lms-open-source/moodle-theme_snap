@@ -96,11 +96,8 @@
         max-width: 100%;
     }
     // Layout for search, select cat and expand/collapse.
-    #coursesearch {
-        float: left;
-    }
-    .categorypicker {
-        float: right;
+    #switchcategory select {
+        max-width: 75%;
     }
     .collapsible-actions,
     .course_category_tree {

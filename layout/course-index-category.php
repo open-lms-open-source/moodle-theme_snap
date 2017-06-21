@@ -10,7 +10,7 @@ require(__DIR__.'/header.php');
     ////////////////////////// MAIN  ///////////////////////////////
     -->
         <main id="moodle-page" class="clearfix">
-        <div id="page-header" class="clearfix">
+        <div id="page-header" class="clearfix snap-category-header">
         <div class="breadcrumb-nav" aria-label="breadcrumb"><?php echo $OUTPUT->navbar(); ?></div>
             <div id="page-mast">
             <?php
