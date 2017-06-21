@@ -39,6 +39,16 @@ list($context, $course, $cm) = get_context_info_array($contextid);
 
 $nologinactions = ['get_loginstatus', 'read_page']; // Actions which do not require login checks.
 if (!in_array($action, $nologinactions)) {
+    if (!isloggedin()) {
+        // We used to let the require_login code below throw an exception when
+        // the user is not logged in, but that filled up the New Relic logs
+        // with noise, so now we just send the error back to the browser.
+        echo json_encode([
+            'error' => 'Not logged in',
+            'errorcode' => 'notloggedinerror',
+        ]);
+        return;
+    }
     $courseactions = ['get_media', 'get_page'];
     if (in_array($action, $courseactions)) {
         require_login($course, false, $cm, false, true);
