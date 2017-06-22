@@ -257,6 +257,7 @@ $string['viewmyfeedback'] = 'View my feedback';
 $string['viewcalendar'] = 'View my calendar';
 $string['viewforumposts'] = 'View my forum posts';
 $string['viewmessaging'] = 'View my messages';
+$string['vieworiginalimage'] = 'View original image';
 $string['warnsiteformatflexpage'] = 'Your site uses Flexpage on the front page. Flexpage is not optimized for small screen devices. It is recommended that you disable the use of Flexpage in your <a href="{$a}">front page settings</a> if you would like your site to be mobile device friendly.';
 $string['xofyanswered'] = '{$a->completed} of {$a->participants} Answered';
 $string['xofyattempted'] = '{$a->completed} of {$a->participants} Attempted';

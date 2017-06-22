@@ -611,6 +611,7 @@ class course_renderer extends \core_course_renderer {
      * @return string
      */
     protected function mod_image_html($mod) {
+        global $OUTPUT;
         if (!$mod->uservisible) {
                 return "";
         }
@@ -631,18 +632,24 @@ class course_renderer extends \core_course_renderer {
                 );
             }
         }
+
+        $summary = '';
         $summary = $mod->get_formatted_content(array('overflowdiv' => false, 'noclean' => true));
-
-        $imglink = "<a class='snap-image-link' href='{$imgsrc}' target='_blank'>".format_text("<img src='{$imgsrc}' alt=''/>")."</a>";
-
         $modname = format_string($mod->name);
+        $img = format_text('<img src="' .$imgsrc. '" alt="' .$modname. '"/>');
+        $icon = '<img title="' .get_string('vieworiginalimage', 'theme_snap'). '"
+                alt="' .get_string('vieworiginalimage', 'theme_snap'). '"
+                src="' .$OUTPUT->pix_url('arrow-expand', 'theme'). '">';
+        $imglink = '<a class="snap-expand-link" href="' .$imgsrc. '" target="_blank">' .$icon. '</a>';
 
-        if (!empty($summary)) {
-            return "<div class='snap-image-image'>$imglink<div class='snap-image-summary'><h6>$modname</h6>$summary</div></div>";
-        }
+        $output = '<figure class="snap-resource-figure figure">'
+                    .$img.$imglink.
+                    '<figcaption class="snap-resource-figure-caption figure-caption">'
+                        .$modname.$summary.
+                    '</figcaption>
+                </figure>';
 
-        return "<div class='snap-image-image'><div class='snap-image-title'><h6>$modname</h6></div>$imglink</div>";
-
+        return $output;
     }
 
     /**

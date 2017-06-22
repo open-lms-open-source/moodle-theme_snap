@@ -691,33 +691,40 @@ body.format-flexpage .singlebutton {
     margin: 0;
 }
 
-.snap-image-image {
+.snap-resource-figure {
     position: relative;
 
-    .snap-image-link {
-        display: block;
-    }
-
-    .snap-image-summary,
-    .snap-image-title {
+    .snap-expand-link {
+        display: inline-block;
         position: absolute;
-        bottom: 0;
-        display: block;
-        width: 100%;
-        background-color: rgba(255,255,255,0.9);
-        padding: 0 4%;
-        font-size: 1em;
+        top: 0.5rem;
+        left: 0.5rem;
+
+        img {
+            border-radius: 100%;
+            border: 1px solid white;
+            width: 1.75rem;
+            height: 1.75rem;
+            transition: all .4s ease-in-out;
+            background-color: white;
+        }
+
+        &:hover,
+        &:focus {
+
+            img {
+                transform: scale(1.1);
+                border-color: $gray-light;
+            }
+        }
     }
 
-    .snap-image-title {
-        text-align: center;
-    }
-
-    .snap-image-summary {
-        position: relative;
-        margin-top: -3em;
+    .snap-resource-figure-caption {
+        padding: 0.5em 0;
+        color: $gray;
     }
 }
+
 
 // -------------------------
 // Snap resource
