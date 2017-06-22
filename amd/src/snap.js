@@ -586,7 +586,7 @@ define(['jquery', 'core/log', 'theme_snap/headroom', 'theme_snap/util', 'theme_s
                         );
                     }
 
-                    $(window).on('load', function() {
+                    $(document).ready(function() {
                         // Add a class to the body to show js is loaded.
                         $('body').addClass('snap-js-loaded');
                     });
