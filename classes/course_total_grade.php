@@ -46,11 +46,6 @@ class course_total_grade extends \grade_report_overview {
     protected $isstudent = false;
 
     /**
-     * @var \context_course
-     */
-    protected $coursecontext;
-
-    /**
      * show student ranks
      */
     public $showrank;
@@ -101,10 +96,9 @@ class course_total_grade extends \grade_report_overview {
 
         $this->courseid  = $course->id;
         $this->course = $course;
-        $this->coursecontext = \context_course::instance($course->id);
+        $this->context = \context_course::instance($course->id);
+        $this->gradebookroles = $CFG->gradebookroles;
 
-        $this->showrank = array();
-        $this->showrank['any'] = false;
 
         $this->showtotalsifcontainhidden = array();
 
@@ -112,15 +106,12 @@ class course_total_grade extends \grade_report_overview {
         $this->teachercourses = array();
         $roleids = explode(',', get_config('moodle', 'gradebookroles'));
 
-        $this->showrank[$course->id] = grade_get_setting($course->id, 'report_overview_showrank', !empty($CFG->grade_report_overview_showrank));
-        if ($this->showrank[$course->id]) {
-            $this->showrank['any'] = true;
-        }
+        $this->showrank = grade_get_setting($course->id, 'report_overview_showrank', !empty($CFG->grade_report_overview_showrank));
 
         $this->showtotalsifcontainhidden[$course->id] = grade_get_setting($course->id, 'report_overview_showtotalsifcontainhidden', $CFG->grade_report_overview_showtotalsifcontainhidden);
 
         foreach ($roleids as $roleid) {
-            if (user_has_role_assignment($user->id, $roleid, $this->coursecontext->id)) {
+            if (user_has_role_assignment($user->id, $roleid, $this->context->id)) {
                 $this->isstudent = true;
             }
         }
@@ -165,19 +156,19 @@ class course_total_grade extends \grade_report_overview {
             return '';
         }
 
-        if (!$this->course->visible && !has_capability('moodle/course:viewhiddencourses', $this->coursecontext)) {
+        if (!$this->course->visible && !has_capability('moodle/course:viewhiddencourses', $this->context)) {
             // The course is hidden and the user isn't allowed to see it
             return '';
         }
 
         if (!has_capability('moodle/user:viewuseractivitiesreport', context_user::instance($this->user->id)) &&
-            ((!has_capability('moodle/grade:view', $this->coursecontext) || $this->user->id != $USER->id) &&
-                !has_capability('moodle/grade:viewall', $this->coursecontext))
+            ((!has_capability('moodle/grade:view', $this->context) || $this->user->id != $USER->id) &&
+                !has_capability('moodle/grade:viewall', $this->context))
         ) {
             return '';
         }
 
-        $canviewhidden = has_capability('moodle/grade:viewhidden', $this->coursecontext);
+        $canviewhidden = has_capability('moodle/grade:viewhidden', $this->context);
 
         // Get course grade_item
         $course_item = grade_item::fetch_course_item($this->course->id);
