@@ -319,6 +319,14 @@
         position: absolute;
         top: 0.9rem;
         right: 0;
+        .svg-icon {
+            @include alakazam();
+            border-radius: 100%;
+            margin-right: 0;
+            width: 36px;
+            height: 36px;
+            // box-shadow: 0 2px 2.5px 0 $gray-lighter, 0 1.5px 5px 0 rgba(0, 0, 0, 0.19);
+        }
         &:hover,
         &:focus {
             .svg-icon {
@@ -327,14 +335,6 @@
                 // box-shadow: 0 4px 5px 0 $gray-lighter, 0 3px 10px 0 rgba(0, 0, 0, 0.19);
             }
         }
-    }
-    .svg-icon {
-        @include alakazam();
-        border-radius: 100%;
-        margin-right: 0;
-        width: 36px;
-        height: 36px;
-        // box-shadow: 0 2px 2.5px 0 $gray-lighter, 0 1.5px 5px 0 rgba(0, 0, 0, 0.19);
     }
 }
 

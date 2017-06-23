@@ -523,7 +523,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
 
         $object = $image
                 . '<div class="snap-media-body">'
-                . '<h3>' .$link. '</h3>'
+                . $link
                 . $metastr
                 . '</div>';
 
@@ -623,6 +623,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
              return '';
         } else {
             $o = '<div class="callstoaction">';
+            $o .= $this->render_intelliboard();
             foreach ($columns as $column) {
                 $o .= '<section>' .$column. '</section>';
             }
@@ -1721,7 +1722,7 @@ HTML;
     }
 
     /**
-     * Return Snap's logo url for login.mustache 
+     * Return Snap's logo url for login.mustache
      *
      * @param int $maxwidth not used in Snap.
      * @param int $maxheight not used in Snap.
@@ -1735,5 +1736,71 @@ HTML;
             $logourl = $PAGE->theme->setting_file_url('logo', 'logo');
             return new moodle_url($logourl);
         }
+    }
+
+    /**
+     * Render intelliboard links in personal menu.
+     * @return string
+     */
+    protected function render_intelliboard() {
+        global $CFG, $OUTPUT, $PAGE;
+        $o = '';
+        $links = '';
+
+        // Bail if no intelliboard.
+        if (!get_config('local_intelliboard')) {
+            return $o;
+        }
+
+        // Intelliboard adds links to the flatnav we use to check wich links to output.
+        $flatnav = $PAGE->flatnav->get_key_list();
+
+        // Student dashboard link.
+        if (in_array("intelliboard_student", $flatnav)) {
+            $alt_name = get_config('local_intelliboard', 't0');
+            $def_name = get_string('ts1', 'local_intelliboard');
+            $name = ($alt_name) ? $alt_name : $def_name;
+            $url = new moodle_url($CFG->wwwroot.'/local/intelliboard/student/');
+            $iconurl = $OUTPUT->pix_url('intelliboard-learner', 'theme');
+            $icon = '<img class="svg-icon" role="presentation" src="' .$iconurl. '">';
+            $links .= '<a href=" '.$url.' ">' .$icon.$name. '</a><br>';
+        }
+
+        // Instructor dashboard link.
+        if (in_array("intelliboard_instructor", $flatnav)) {
+            $alt_name = get_config('local_intelliboard', 'n11');
+            $def_name = get_string('n10', 'local_intelliboard');
+            $name = ($alt_name) ? $alt_name : $def_name;
+            $url = new moodle_url($CFG->wwwroot.'/local/intelliboard/instructor/');
+            $iconurl = $OUTPUT->pix_url('intelliboard', 'theme');
+            $icon = '<img class="svg-icon" role="presentation" src="' .$iconurl. '">';
+            $links .= '<a href=" '.$url.' ">' .$icon.$name. '</a><br>';
+        }
+
+        // Competency dashboard link.
+        if (in_array("intelliboard_competency", $flatnav)) {
+            $alt_name = get_config('local_intelliboard', 'a11');
+            $def_name = get_string('a0', 'local_intelliboard');
+            $name = ($alt_name) ? $alt_name : $def_name;
+            $url = new moodle_url($CFG->wwwroot.'/local/intelliboard/competencies/');
+            $iconurl = $OUTPUT->pix_url('intelliboard-competencies', 'theme');
+            $icon = '<img class="svg-icon" role="presentation" src="' .$iconurl. '">';
+            $links .= '<a href=" '.$url.' ">' .$icon.$name. '</a><br>';
+        }
+
+        // No links to display.
+        if(!$links){
+            return $o;
+        }
+
+        $intelliboardheading = get_string('intelliboardroot', 'local_intelliboard');
+        $o = '<section id="snap-intelliboard-menu">';
+        $o .= '<h2>' .$intelliboardheading. '</h2>';
+        $o .= '<div id="snap-personal-menu-intelliboard">'
+                .$links.
+                '</div>';
+        $o .= '</section>';
+
+        return $o;
     }
 }
