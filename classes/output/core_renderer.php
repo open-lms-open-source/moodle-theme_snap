@@ -1788,8 +1788,8 @@ HTML;
 
     /**
      * Render intelliboard link in personal menu.
-     * @param int $altkey system name.
-     * @param int $defkey default name.
+     * @param string $altkey system name.
+     * @param string $defkey default name.
      * @param string $urlcomponent url extension.
      * @param string $icon icon sufix.
      * @return string
