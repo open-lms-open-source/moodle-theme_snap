@@ -931,7 +931,9 @@ header#page-header
 .breadcrumb-nav {
     margin-bottom: 0;
     float: none;
-    margin-top: -0.5em;
+    @include media-breakpoint-up(md) {
+       margin-top: -0.5em;
+   }
 }
 
 .breadcrumb {
