@@ -1757,35 +1757,17 @@ HTML;
 
         // Student dashboard link.
         if (in_array("intelliboard_student", $flatnav)) {
-            $alt_name = get_config('local_intelliboard', 't0');
-            $def_name = get_string('ts1', 'local_intelliboard');
-            $name = ($alt_name) ? $alt_name : $def_name;
-            $url = new moodle_url($CFG->wwwroot.'/local/intelliboard/student/');
-            $iconurl = $OUTPUT->pix_url('intelliboard-learner', 'theme');
-            $icon = '<img class="svg-icon" role="presentation" src="' .$iconurl. '">';
-            $links .= '<a href=" '.$url.' ">' .$icon.$name. '</a><br>';
+            $links .= $this->render_intelliboard_link('t0', 'ts1', 'student', 'intelliboard-learner');
         }
 
         // Instructor dashboard link.
         if (in_array("intelliboard_instructor", $flatnav)) {
-            $alt_name = get_config('local_intelliboard', 'n11');
-            $def_name = get_string('n10', 'local_intelliboard');
-            $name = ($alt_name) ? $alt_name : $def_name;
-            $url = new moodle_url($CFG->wwwroot.'/local/intelliboard/instructor/');
-            $iconurl = $OUTPUT->pix_url('intelliboard', 'theme');
-            $icon = '<img class="svg-icon" role="presentation" src="' .$iconurl. '">';
-            $links .= '<a href=" '.$url.' ">' .$icon.$name. '</a><br>';
+            $links .= $this->render_intelliboard_link('n11', 'n10', 'instructor', 'intelliboard');
         }
 
         // Competency dashboard link.
         if (in_array("intelliboard_competency", $flatnav)) {
-            $alt_name = get_config('local_intelliboard', 'a11');
-            $def_name = get_string('a0', 'local_intelliboard');
-            $name = ($alt_name) ? $alt_name : $def_name;
-            $url = new moodle_url($CFG->wwwroot.'/local/intelliboard/competencies/');
-            $iconurl = $OUTPUT->pix_url('intelliboard-competencies', 'theme');
-            $icon = '<img class="svg-icon" role="presentation" src="' .$iconurl. '">';
-            $links .= '<a href=" '.$url.' ">' .$icon.$name. '</a><br>';
+            $links .= $this->render_intelliboard_link('a11', 'a0', 'competencies', 'intelliboard-competencies');
         }
 
         // No links to display.
@@ -1803,4 +1785,19 @@ HTML;
 
         return $o;
     }
+
+    /**
+     * Render intelliboard link in personal menu.
+     * @return string
+     */
+    public function render_intelliboard_link($altkey, $defkey, $urlcomponent, $icon) {
+       $altname = get_config('local_intelliboard', $altkey);
+       $defname = get_string($defkey, 'local_intelliboard');
+       $name = $altname ?: $defname;
+       $url = new moodle_url($CFG->wwwroot.'/local/intelliboard/'.$urlcomponent.'/');
+       $iconurl = $OUTPUT->pix_url($icon, 'theme');
+       $img = '<img class="svg-icon" role="presentation" src="' .$iconurl. '">';
+       $o = '<a href=" '.$url.' ">' .$img.$name. '</a><br>';
+       return $o;
+   }
 }
