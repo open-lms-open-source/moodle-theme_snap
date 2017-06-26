@@ -256,7 +256,7 @@ body {
 table,
 .floater .cell {
     width: 100%;
-    font-family: $font-family-base;
+    font-family: $font-family-system;
     font-size: $font-size-base;
 }
 
@@ -492,7 +492,7 @@ button#restrictbygroup,
 button#livelogs-pause-button,
 #page-admin-tool-monitor-managerules a > button,
 input[type="reset"] {
-    font-family: $font-family-base;
+    font-family: $font-family-system;
     background: transparent;
 
     &:hover,
@@ -2597,7 +2597,7 @@ table#user-grades tr.avg td.cell {
 
 .path-blocks-reports .report-title {
     font-weight: normal;
-    font-family: $font-family-base;
+    font-family: $font-family-system;
 }
 
 // whitelist - make grade table larger, apply whitespace remover
