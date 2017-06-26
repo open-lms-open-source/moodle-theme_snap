@@ -185,7 +185,7 @@ textarea {
 }
 
 .editor_atto_content_wrap {
-    border-color: #eee;
+    border-color: $gray-lighter;
 }
 
 
@@ -194,6 +194,7 @@ textarea {
 // -------------------------
 input[type="radio"] {
     max-width: none;
+    margin-right: .5rem;
 }
 
 // -------------------------

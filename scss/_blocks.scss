@@ -84,7 +84,7 @@
 #page-mod-book-view,
 #page-mod-quiz-review,
 #page-mod-quiz-attempt {
-    #moodle-blocks {
+    #moodle-blocks > aside {
         -webkit-column-count: 1;
         -moz-column-count: 1;
         column-count: 1;
@@ -101,7 +101,7 @@
 
         .block__fake,
         .block_fake {
-            margin-top: 2em;
+            margin-top: 1rem;
         }
     }
 }

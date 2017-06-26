@@ -722,9 +722,11 @@ class course_renderer extends \core_course_renderer {
             $formatoptions->overflowdiv = true;
             $formatoptions->context = $context;
             $content = format_text($content, $book->introformat, $formatoptions);
-
-            return "<div class=summary-text>
-                    {$content}</div>".$this->book_get_toc($chapters, $book, $cm);
+            $o = '<div class="summary-text row">';
+            $o .= '<div class="col-sm-6">' .$content. '</div>';
+            $o .= '<div class="col-sm-6">' .$this->book_get_toc($chapters, $book, $cm) . '</div>';
+            $o .= '</div>';
+            return $o;
         }
         return $this->book_get_toc($chapters, $book, $cm);
     }

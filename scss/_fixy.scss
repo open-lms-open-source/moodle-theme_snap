@@ -85,7 +85,7 @@
     }
 }
 
-@include media-breakpoint-up(sm) {
+@include media-breakpoint-up(md) {
     .fixy #fixy-close {
         margin-top: 1rem;
     }
