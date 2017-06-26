@@ -197,6 +197,14 @@ input[type="radio"] {
 }
 
 // -------------------------
+// Radio & checkbox padding.
+// -------------------------
+input[type="radio"],
+input[type="checkbox"] {
+    margin-right: 0.25rem;
+}
+
+// -------------------------
 // Snap add new section form.
 // -------------------------
 #newsection {
@@ -358,6 +366,11 @@ div.editor_atto_toolbar div.atto_group {
 .mform legend a:hover {
     color: $body-color;
     text-decoration: none;
+}
+
+// Atto ledgends fix.
+.mform.atto_form fieldset.collapsible legend a.fheader {
+    margin-left: 0;
 }
 
 @include media-breakpoint-up(lg) {
