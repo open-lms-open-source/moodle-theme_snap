@@ -1743,7 +1743,7 @@ HTML;
      * @return string
      */
     protected function render_intelliboard() {
-        global $CFG, $OUTPUT, $PAGE;
+        global $PAGE;
         $o = '';
         $links = '';
 
@@ -1788,9 +1788,15 @@ HTML;
 
     /**
      * Render intelliboard link in personal menu.
+     * @param int $altkey system name.
+     * @param int $defkey default name.
+     * @param string $urlcomponent url extension.
+     * @param string $icon icon sufix.
      * @return string
      */
     public function render_intelliboard_link($altkey, $defkey, $urlcomponent, $icon) {
+       global $OUTPUT, $CFG;
+
        $altname = get_config('local_intelliboard', $altkey);
        $defname = get_string($defkey, 'local_intelliboard');
        $name = $altname ?: $defname;
