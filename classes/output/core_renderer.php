@@ -1757,17 +1757,20 @@ HTML;
 
         // Student dashboard link.
         if (in_array("intelliboard_student", $flatnav)) {
-            $links .= $this->render_intelliboard_link('t0', 'ts1', 'student', 'intelliboard-learner');
+            $node = $PAGE->flatnav->get("intelliboard_student");
+            $links .= $this->render_intelliboard_link($node->get_content(), $node->action(), 'intelliboard-learner');
         }
 
         // Instructor dashboard link.
         if (in_array("intelliboard_instructor", $flatnav)) {
-            $links .= $this->render_intelliboard_link('n11', 'n10', 'instructor', 'intelliboard');
+            $node = $PAGE->flatnav->get("intelliboard_instructor");
+            $links .= $this->render_intelliboard_link($node->get_content(), $node->action(), 'intelliboard');
         }
 
         // Competency dashboard link.
         if (in_array("intelliboard_competency", $flatnav)) {
-            $links .= $this->render_intelliboard_link('a11', 'a0', 'competencies', 'intelliboard-competencies');
+            $node = $PAGE->flatnav->get("intelliboard_competency");
+            $links .= $this->render_intelliboard_link($node->get_content(), $node->action(), 'intelliboard-competencies');
         }
 
         // No links to display.
@@ -1788,22 +1791,16 @@ HTML;
 
     /**
      * Render intelliboard link in personal menu.
-     * @param string $altkey system name.
-     * @param string $defkey default name.
-     * @param string $urlcomponent url extension.
+     * @param string $name of the link.
+     * @param moodle_url $url of the link.
      * @param string $icon icon sufix.
      * @return string
      */
-    public function render_intelliboard_link($altkey, $defkey, $urlcomponent, $icon) {
-       global $OUTPUT, $CFG;
-
-       $altname = get_config('local_intelliboard', $altkey);
-       $defname = get_string($defkey, 'local_intelliboard');
-       $name = $altname ?: $defname;
-       $url = new moodle_url($CFG->wwwroot.'/local/intelliboard/'.$urlcomponent.'/');
+    public function render_intelliboard_link($name, $url, $icon) {
+       global $OUTPUT;
        $iconurl = $OUTPUT->pix_url($icon, 'theme');
        $img = '<img class="svg-icon" role="presentation" src="' .$iconurl. '">';
-       $o = '<a href=" '.$url.' ">' .$img.$name. '</a><br>';
+       $o = '<a href=" '.$url.' ">' .$img.s($name). '</a><br>';
        return $o;
    }
 }
