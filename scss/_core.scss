@@ -1160,7 +1160,7 @@ BUG:
 mobile safari does not re-calculate vh on viewport change
 http://blog.rodneyrehm.de/archives/34-iOS7-Mobile-Safari-And-Viewport-Units.html
 */
-@include media-breakpoint-down(lg) {
+@include media-breakpoint-up(lg) {
     #page-site-index #page-header {
         min-height: 87vh;
     }
