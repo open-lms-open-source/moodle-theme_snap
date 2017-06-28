@@ -227,7 +227,7 @@ function theme_snap_get_pre_scss($theme) {
     }
     $fallbacksans = 'Roboto,"Fira Sans","Segoe UI","HelveticaNeue-Light",'
         . '"Helvetica Neue Light","Helvetica Neue",Helvetica, Arial, sans-serif';
-    $settings['font-family-sans-serif'] = $userfontsans . $fallbacksans;
+    $settings['font-family-feature'] = $userfontsans . $fallbacksans;
 
     $userfontserif = $theme->settings->seriffont;
     if (empty($userfontserif) || in_array($userfontserif, ['Georgia', '"Georgia"'])) {

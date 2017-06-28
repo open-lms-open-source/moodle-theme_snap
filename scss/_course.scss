@@ -514,7 +514,7 @@ body.format-flexpage .singlebutton {
     padding: 0;
     margin: 0 auto;
     height: auto;
-    font-family: $font-family-base;
+    font-family: $font-family-system;
     background-color: #fff;
     border: 1px solid $gray-lighter;
     border-top-width: 0.3em;
@@ -979,7 +979,7 @@ body.snap-resource-card li.snap-resource {
     text-align: center;
     margin: 1em 0;
     background-color: transparent;
-    font-family: $font-family-base;
+    font-family: $font-family-system;
 }
 
 #page-site-index {
@@ -1046,7 +1046,7 @@ a.snap-due-date {
 .snap-draft-tag,
 .snap-current-tag {
     font-size: small;
-    font-family: $font-family-base;
+    font-family: $font-family-system;
     background-color: #eee;
     margin: 0.5em 0;
     padding: 0.5em;
@@ -1472,7 +1472,7 @@ input.titleeditor {
 span.editinstructions {
     box-shadow: none;
     border: 0;
-    font-family: $font-family-base;
+    font-family: $font-family-system;
 }
 
 /* forum unread posts button */
@@ -1563,7 +1563,7 @@ span.editinstructions {
 #page-course-recent #region-main div.generalbox {
     td,
     > div {
-        font-family: $font-family-base;
+        font-family: $font-family-system;
         font-size: $font-size-base;
         margin-top: 0.5rem;
 
@@ -1713,7 +1713,7 @@ span.editinstructions {
     margin: 1em 0;
     clear: both;
     border: 2px dashed $gray-lighter;
-    font-family: $font-family-base;
+    font-family: $font-family-system;
     text-align: center;
     display:none;
 }
@@ -1861,7 +1861,7 @@ span.editinstructions {
           border: 2px dashed $gray-light;
           font-size: 2em;
           font-color: $gray;
-          font-family: $font-family-base;
+          font-family: $font-family-system;
           text-align: center;
           cursor: pointer;
       }

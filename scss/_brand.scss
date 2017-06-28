@@ -166,17 +166,17 @@ legend,
 .mform legend a,
 .mform legend a:hover,
 .coursebox .info .coursename,
-.form_autocomplete_selection,
-.form_autocomplete_suggestions,
 .collapsibleregioncaption,
 .snap-featured-course-title {
-    font-family: $font-family-sans-serif;
+    font-family: $font-family-feature;
 }
 
+.form_autocomplete_selection,
+.form_autocomplete_suggestions,
 .snap-system-text,
 .snap-action-icon,
 #coursetools-list a {
-    font-family: $font-family-base;
+    font-family: $font-family-system;
 }
 
 // Pills
@@ -280,7 +280,7 @@ input[type="reset"],
 .gradingform_rubric.editor .addlevel input,
 .gradingform_rubric.editor .addcriterion input,
 #page-site-index .section-modchooser-link .section-modchooser-text {
-    font-family: $font-family-base;
+    font-family: $font-family-system;
     transition: all 0.4s ease-in-out;
     color: $brand-primary;
     border-color: $brand-primary;
@@ -322,7 +322,7 @@ input[type="reset"],
 .btn.btn-danger,
 .btn.btn-inverse,
 .btn.btn-link {
-    font-family: $font-family-base;
+    font-family: $font-family-system;
     transition: all 0.4s ease-in-out;
     border-radius: 4px;
 }
