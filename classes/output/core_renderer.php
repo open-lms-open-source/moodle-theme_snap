@@ -523,7 +523,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
 
         $object = $image
                 . '<div class="snap-media-body">'
-                . '<h3>' .$link. '</h3>'
+                . $link
                 . $metastr
                 . '</div>';
 
@@ -623,6 +623,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
              return '';
         } else {
             $o = '<div class="callstoaction">';
+            $o .= $this->render_intelliboard();
             foreach ($columns as $column) {
                 $o .= '<section>' .$column. '</section>';
             }
@@ -1721,7 +1722,7 @@ HTML;
     }
 
     /**
-     * Return Snap's logo url for login.mustache 
+     * Return Snap's logo url for login.mustache
      *
      * @param int $maxwidth not used in Snap.
      * @param int $maxheight not used in Snap.
@@ -1736,4 +1737,70 @@ HTML;
             return new moodle_url($logourl);
         }
     }
+
+    /**
+     * Render intelliboard links in personal menu.
+     * @return string
+     */
+    protected function render_intelliboard() {
+        global $PAGE;
+        $o = '';
+        $links = '';
+
+        // Bail if no intelliboard.
+        if (!get_config('local_intelliboard')) {
+            return $o;
+        }
+
+        // Intelliboard adds links to the flatnav we use to check wich links to output.
+        $flatnav = $PAGE->flatnav->get_key_list();
+
+        // Student dashboard link.
+        if (in_array("intelliboard_student", $flatnav)) {
+            $node = $PAGE->flatnav->get("intelliboard_student");
+            $links .= $this->render_intelliboard_link($node->get_content(), $node->action(), 'intelliboard-learner');
+        }
+
+        // Instructor dashboard link.
+        if (in_array("intelliboard_instructor", $flatnav)) {
+            $node = $PAGE->flatnav->get("intelliboard_instructor");
+            $links .= $this->render_intelliboard_link($node->get_content(), $node->action(), 'intelliboard');
+        }
+
+        // Competency dashboard link.
+        if (in_array("intelliboard_competency", $flatnav)) {
+            $node = $PAGE->flatnav->get("intelliboard_competency");
+            $links .= $this->render_intelliboard_link($node->get_content(), $node->action(), 'intelliboard-competencies');
+        }
+
+        // No links to display.
+        if(!$links){
+            return $o;
+        }
+
+        $intelliboardheading = get_string('intelliboardroot', 'local_intelliboard');
+        $o = '<section id="snap-intelliboard-menu">';
+        $o .= '<h2>' .$intelliboardheading. '</h2>';
+        $o .= '<div id="snap-personal-menu-intelliboard">'
+                .$links.
+                '</div>';
+        $o .= '</section>';
+
+        return $o;
+    }
+
+    /**
+     * Render intelliboard link in personal menu.
+     * @param string $name of the link.
+     * @param moodle_url $url of the link.
+     * @param string $icon icon sufix.
+     * @return string
+     */
+    public function render_intelliboard_link($name, $url, $icon) {
+       global $OUTPUT;
+       $iconurl = $OUTPUT->pix_url($icon, 'theme');
+       $img = '<img class="svg-icon" role="presentation" src="' .$iconurl. '">';
+       $o = '<a href=" '.$url.' ">' .$img.s($name). '</a><br>';
+       return $o;
+   }
 }
