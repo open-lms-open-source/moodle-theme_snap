@@ -201,6 +201,14 @@ table.boxwidthwide {
 // -------------------------
 // Baseline boilerplate for snap
 // -------------------------
+body {
+    font-weight: 300;
+}
+
+a {
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+}
 
 ::-moz-selection {
     background: #fe57a1;
@@ -248,8 +256,8 @@ textarea {
     max-width: 100%;
 }
 
-body {
-    font-weight: 300;
+small, .small {
+    font-size: $font-size-sm !important;
 }
 
 // GT Mod - 2015-07-09 - add .floater .cell to accommodate fixed col and header in gradebook
@@ -260,19 +268,23 @@ table,
     font-size: $font-size-base;
 }
 
-blockquote {
-    //    border-left: 5px solid $brand-primary; customisable
-    font-size: 1em;
+.blockquote {
+    border-left-color: $brand-primary;
+    font-size: 1rem;
 }
+
+.blockquote-reverse {
+    border-right-color: $brand-primary;
+}
+
+blockquote {
+    @extend .blockquote;
+}
+
 
 img {
     max-width: 100%;
     height: auto;
-}
-
-a {
-    word-wrap: break-word;
-    overflow-wrap: break-word;
 }
 
 // Stop images shrinking to nothing on Chrome
@@ -291,10 +303,6 @@ img[style*="float:right"] {
     margin: 2%;
 }
 
-small, .small {
-    font-size: $font-size-sm !important;
-}
-
 @include media-breakpoint-down(md) {
 
     // unfloat images for small screen
@@ -311,6 +319,11 @@ small, .small {
 img.icon {
     padding: 0;
     margin-right: 6px;
+}
+
+/* mdl hide stuff icon - hide in bs has different meaning*/
+img.icon.hide {
+    display: inline-block !important;
 }
 
 @mixin svg-icon {
@@ -366,11 +379,6 @@ img.icon {
 video {
     width: 100% !important;
     height: auto !important;
-}
-
-/* mdl hide stuff icon - hide in bs has different meaning*/
-img.icon.hide {
-    display: inline-block !important;
 }
 
 li {
