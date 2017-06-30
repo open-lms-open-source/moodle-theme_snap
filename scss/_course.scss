@@ -1764,12 +1764,9 @@ span.editinstructions {
     text-transform: capitalize;
     color: #fff !important;
     display: inline-block;
-    background-size: 1.5em 1.5em;
-    background-position: 0 center;
-    background-repeat: no-repeat;
-    padding-left: 1.7em; // Magic number for icon
+    padding: 1em;
     margin-left: 4%;
-    width: 68.2%;
+    width: 50%;
 }
 
 .snap-footer-alert-cancel {
@@ -1789,7 +1786,12 @@ span.editinstructions {
     }
 }
 
-
+// Small screen moving cancel link.
+@include media-breakpoint-down(md) {
+    .snap-footer-alert-cancel {
+        margin-right: 3em;
+    }
+}
 
 // Body class when moving
 .snap-move-inprogress {
