@@ -139,37 +139,48 @@ class shared extends \renderer_base {
             return; // No valid handlers - don't enable drag and drop.
         }
 
+        // Adding file handlers straight to footer, explanation below.
+        $json = json_encode($handler->get_js_data());
+        $script = <<<EOF
+            <script>
+                var theme_snap_course_file_handlers = $json;
+            </script>
+EOF;
+
+        if (!isset($CFG->additionalhtmlfooter)) {
+            $CFG->additionalhtmlfooter = '';
+        }
+        // Note, we have to put the file handlers into the footer instead of passing them into the amd module as an
+        // argument. If you pass large amounts of data into the amd arguments then it throws a debug error.
+        $CFG->additionalhtmlfooter .= $script;
+
         // Add the javascript to the page.
-        $jsmodule = array(
-            'name' => 'coursedndupload',
-            'fullpath' => '/theme/snap/javascript/dndupload.js',
-            'strings' => array(
-                array('addfilehere', 'moodle'),
-                array('dndworkingfiletextlink', 'moodle'),
-                array('dndworkingfilelink', 'moodle'),
-                array('dndworkingfiletext', 'moodle'),
-                array('dndworkingfile', 'moodle'),
-                array('dndworkingtextlink', 'moodle'),
-                array('dndworkingtext', 'moodle'),
-                array('dndworkinglink', 'moodle'),
-                array('namedfiletoolarge', 'moodle'),
-                array('actionchoice', 'moodle'),
-                array('servererror', 'moodle'),
-                array('upload', 'moodle'),
-                array('cancel', 'moodle'),
-                array('modulename', 'mod_label'),
-            ),
-            'requires' => array('node', 'event', 'json', 'anim')
-        );
+        $PAGE->requires->strings_for_js([
+            'addfilehere',
+            'dndworkingfiletextlink',
+            'dndworkingfilelink',
+            'dndworkingfiletext',
+            'dndworkingfile',
+            'dndworkingtextlink',
+            'dndworkingtext',
+            'dndworkinglink',
+            'namedfiletoolarge',
+            'actionchoice',
+            'servererror',
+            'upload',
+            'cancel'
+        ], 'moodle');
+        $PAGE->requires->strings_for_js([
+            'modulename'
+        ], 'mod_label');
         $vars = array(
             array('courseid' => $course->id,
                 'maxbytes' => get_max_upload_file_size($CFG->maxbytes, $course->maxbytes),
-                'handlers' => $handler->get_js_data(),
                 'showstatus' => $showstatus)
         );
 
         $PAGE->requires->js('/course/dndupload.js');
-        $PAGE->requires->js_init_call('M.theme_snap.dndupload.init', $vars, true, $jsmodule);
+        $PAGE->requires->js_call_amd('theme_snap/dndupload-lazy', 'init', $vars);
     }
 
 
