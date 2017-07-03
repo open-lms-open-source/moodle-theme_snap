@@ -1760,7 +1760,7 @@ HTML;
         // Student dashboard link.
         if (in_array("intelliboard_student", $flatnav)) {
             $node = $PAGE->flatnav->get("intelliboard_student");
-            $links .= $this->render_intelliboard_link($node->get_content(), $node->action(), 'intelliboard-learner');
+            $links .= $this->render_intelliboard_link($node->get_content(), $node->action(), 'intelliboard_learner');
         }
 
         // Instructor dashboard link.
@@ -1772,7 +1772,7 @@ HTML;
         // Competency dashboard link.
         if (in_array("intelliboard_competency", $flatnav)) {
             $node = $PAGE->flatnav->get("intelliboard_competency");
-            $links .= $this->render_intelliboard_link($node->get_content(), $node->action(), 'intelliboard-competencies');
+            $links .= $this->render_intelliboard_link($node->get_content(), $node->action(), 'intelliboard_competencies');
         }
 
         // No links to display.
