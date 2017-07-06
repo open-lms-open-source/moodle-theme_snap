@@ -1731,13 +1731,20 @@ HTML;
      * @return moodle_url|false
      */
     public function get_logo_url($maxwidth = null, $maxheight = 200) {
-        global $PAGE;
+        global $PAGE, $CFG;
         if (empty($PAGE->theme->settings->logo)) {
             return false;
-        } else {
-            $logourl = $PAGE->theme->setting_file_url('logo', 'logo');
-            return new moodle_url($logourl);
         }
+
+        // Following code copied from  theme->setting_file_url but without the
+        // bit that strips the protocol from the url.
+
+        $itemid = theme_get_revision();
+        $filepath = $PAGE->theme->settings->logo;
+        $syscontextid = context_system::instance()->id;
+
+        $url = moodle_url::make_file_url("$CFG->httpswwwroot/pluginfile.php", "/$syscontextid/theme_snap/logo/$itemid".$filepath);
+        return $url;
     }
 
     /**
