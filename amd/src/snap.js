@@ -526,11 +526,20 @@ define(['jquery', 'core/log', 'theme_snap/headroom', 'theme_snap/util', 'theme_s
 
                     coverImage(courseConfig.shortname, siteMaxBytes);
 
+                    // Allow deeplinking to bs tabs on snap settings page.
+                    if ($('#page-admin-setting-themesettingsnap').length) {
+                        var tabHash = location.hash;
+                        // Check link is to a tab hash.
+                        if (tabHash && $('.nav-link[href="' + tabHash + '"]').length) {
+                            $('.nav-link[href="' + tabHash + '"]').tab('show');
+                            $(window).scrollTop(0);
+                        }
+                    }
+
                     if ($('body').hasClass('snap-fixy-open')) {
                         personalMenu.update();
                     }
 
-                    // SL - 19th aug 2014 - resposive video and snap search in exceptions.
                     // SHAME - make section name creation mandatory
                     if ($('#page-course-editsection.format-topics').length) {
                         var usedefaultname = document.getElementById('id_usedefaultname'),

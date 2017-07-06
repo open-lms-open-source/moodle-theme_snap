@@ -47,7 +47,7 @@ Feature: When the moodle theme is set to Snap, students and teachers can open a 
     Given the message processor "badge" is disabled
     And I change viewport size to "large"
     And the following config values are set as admin:
-      | personalmenulogintoggle | 0 | theme_snap |
+      | pmtoggle | 0 | theme_snap |
     And I log in as "student1" (theme_snap)
     And I open the personal menu
     # The alerts section should not be present if the message processor is not enabled.
@@ -89,7 +89,7 @@ Feature: When the moodle theme is set to Snap, students and teachers can open a 
   Scenario: Alerts are visible in personal menu when user is on course page warning no guest access.
     Given the message processor "badge" is enabled
     And the following config values are set as admin:
-      | personalmenulogintoggle | 0 | theme_snap |
+      | pmtoggle | 0 | theme_snap |
     And the following "users" exist:
       | username | firstname | lastname | email |
       | student2 | Student | 2 | student1@example.com |

@@ -3266,39 +3266,6 @@ table th img.iconhelp {
     max-width: 100%;
 }
 
-#page-admin-setting-themesettingsnap{
-
-    .admin_colourpicker {
-    display: block;
-    float: left;
-    height: 40px;
-    width: 30px;
-    margin: 1px 4px;
-    }
-
-    .loadingicon,
-    .colourdialogue,
-    .previewcolour {
-        display: none;
-    }
-
-    .currentcolour {
-        /* size is set with a style tag so need to !important to override */
-        height: 30px !important;
-        width: 30px !important;
-        border-radius: 100%;
-        border: none;
-        margin-left: 0;
-    }
-
-    /* Subtitle textarea. */
-    #admin-subtitle textarea {
-        height: 5em;
-    }
-
-
-}
-
 /* Feature spots. */
 #snap-feature-spots {
     padding: 2em 4%;
@@ -3311,92 +3278,6 @@ table th img.iconhelp {
 
     .snap-feature-image {
         max-width: 200px;
-    }
-}
-
-#page-admin-setting-themesnapfeaturespots {
-
-    #admin-fs_heading {
-        input {
-            font-size: $font-size-h4;
-            text-align: center;
-        }
-
-        .form-defaultinfo,
-        .form-shortname {
-            display: none;
-        }
-    }
-    #admin-fs_one_title,
-    #admin-fs_two_title,
-    #admin-fs_three_title {
-        input {
-            font-size: $font-size-h5;
-        }
-    }
-
-    #admin-fs_one_title,
-    #admin-fs_two_title,
-    #admin-fs_three_title,
-    #admin-fs_one_image,
-    #admin-fs_two_image,
-    #admin-fs_three_image,
-    #admin-fs_one_text,
-    #admin-fs_two_text,
-    #admin-fs_three_text {
-        float: left;
-        width: 33.3%;
-        margin: 0;
-
-        .form-defaultinfo,
-        .form-shortname,
-        .fp-btn-download,
-        .dndupload-message {
-            display: none;
-        }
-    }
-
-    #admin-fs_one_image,
-    #admin-fs_one_title,
-    #admin-fs_one_text {
-        clear: left;
-    }
-}
-
-/* Featured courses admin page. */
-#page-admin-setting-themesnapfeaturedcourses {
-
-    #admin-fc_heading {
-        input {
-            font-size: $font-size-h4;
-            text-align: center;;
-        }
-
-        .form-shortname {
-            display: none;
-        }
-    }
-
-    #admin-fc_one,
-    #admin-fc_two,
-    #admin-fc_three,
-    #admin-fc_four,
-    #admin-fc_five,
-    #admin-fc_six,
-    #admin-fc_seven,
-    #admin-fc_eight {
-        width: 50%;
-        float: left;
-        padding: 1em;
-
-        .form-defaultinfo,
-        .form-shortname {
-            display: none;
-        }
-    }
-
-    #admin-fc_browse_all {
-        clear: both;
     }
 }
 
@@ -3446,12 +3327,6 @@ table th img.iconhelp {
     position: absolute;
     bottom: 0;
     padding: 0.5em 4%;
-}
-
-
-
-#page-admin-setting-themesettingsnap #id_s_theme_snap_customcss {
-    font-family: $font-family-monospace;
 }
 
 // Scrolling gradebook fixes

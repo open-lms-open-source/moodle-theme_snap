@@ -42,7 +42,7 @@ Feature: When the moodle theme is set to Snap,
   @javascript
   Scenario: User logs in and does not see the primary menu, if option turned off
     Given the following config values are set as admin:
-      | personalmenulogintoggle | 0 | theme_snap |
+      | pmtoggle | 0 | theme_snap |
     Given I follow "Log in"
     And I set the field "username" to "teacher1"
     And I set the field "password" to "teacher1"

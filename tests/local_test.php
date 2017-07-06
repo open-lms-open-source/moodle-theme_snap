@@ -1513,7 +1513,7 @@ class theme_snap_local_test extends \advanced_testcase {
 
         $this->resetAfterTest();
 
-        set_config('showcoursegradepersonalmenu', 1, 'theme_snap');
+        set_config('gradestoggle', 1, 'theme_snap');
 
         // Set up.
         $generator = $this->getDataGenerator();
@@ -1579,7 +1579,7 @@ class theme_snap_local_test extends \advanced_testcase {
         $this->assertNotEmpty($feedback->coursegrade);
 
         // Assert coursegrade property does not exist when disabled in settings.
-        set_config('showcoursegradepersonalmenu', 0, 'theme_snap');
+        set_config('gradestoggle', 0, 'theme_snap');
         $feedback = local::course_grade($course);
         $this->assertTrue(empty($feedback->coursegrade));
     }

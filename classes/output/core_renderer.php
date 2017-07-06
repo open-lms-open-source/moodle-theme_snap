@@ -1038,7 +1038,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
             $heading .= '<p class="snap-site-description">' . format_string($this->page->theme->settings->subtitle) . '</p>';
         }
         if ($this->page->user_is_editing() && $this->page->pagelayout == 'frontpage') {
-            $url = new moodle_url('/admin/settings.php', ['section' => 'themesettingsnap'], 'admin-fullname');
+            $url = new moodle_url('/admin/settings.php', ['section' => 'themesettingsnap']);
             $link = html_writer::link($url,
                             get_string('changefullname', 'theme_snap'),
                             ['class' => 'btn btn-default btn-sm']);
@@ -1464,7 +1464,7 @@ HTML;
 
             $fsedit = '';
             if ($this->page->user_is_editing()) {
-                $url = new moodle_url('/admin/settings.php', ['section' => 'themesnapfeaturespots']);
+                $url = new moodle_url('/admin/settings.php?section=themesettingsnap#themesnapfeaturespots');
                 $link = html_writer::link($url, get_string('featurespotsedit', 'theme_snap'), ['class' => 'btn btn-primary']);
                 $fsedit = '<p class="text-center">'.$link.'</p>';
             }
@@ -1591,7 +1591,7 @@ HTML;
         // Featured courses quick edit link.
         $edit = '';
         if ($this->page->user_is_editing()) {
-            $url = new moodle_url('/admin/settings.php', ['section' => 'themesnapfeaturedcourses']);
+            $url = new moodle_url('/admin/settings.php?section=themesettingsnap#themesnapfeaturedcourses');
             $link = html_writer::link($url, get_string('featuredcoursesedit', 'theme_snap'), ['class' => 'btn btn-primary']);
             $edit = '<p class="text-center">'.$link.'</p>';
         }
