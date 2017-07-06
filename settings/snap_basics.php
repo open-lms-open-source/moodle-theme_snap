@@ -67,7 +67,6 @@ $title = new lang_string('footnote', 'theme_snap');
 $description = new lang_string('footnotedesc', 'theme_snap');
 $default = '';
 $setting = new admin_setting_confightmleditor($name, $title, $description, $default);
-$setting->set_updatedcallback('theme_reset_all_caches');
 $snapsettings->add($setting);
 
 // Advanced branding heading.

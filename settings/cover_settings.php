@@ -14,13 +14,13 @@ $snapsettings->add($setting);
 $name = 'theme_snap/poster';
 $title = new lang_string('poster', 'theme_snap');
 $description = new lang_string('posterdesc', 'theme_snap');
-$opts = array('accepted_types' => array('.png', '.jpg', '.gif', '.webp', '.tiff', '.svg'));
+$opts = array('accepted_types' => array('.png', '.jpg', '.gif', '.webp', '.svg'));
 $setting = new admin_setting_configstoredfile($name, $title, $description, 'poster', 0, $opts);
 $setting->set_updatedcallback('theme_snap_process_site_coverimage');
 $snapsettings->add($setting);
 
-$name = 'theme_snap/cover_carosel';
-$heading = new lang_string('covercarosel', 'theme_snap');
+$name = 'theme_snap/cover_carousel';
+$heading = new lang_string('covercarousel', 'theme_snap');
 $description = new lang_string('comingsoon', 'theme_snap');
 $setting = new admin_setting_heading($name, $heading, $description);
 $snapsettings->add($setting);
