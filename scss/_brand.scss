@@ -507,9 +507,13 @@ li.snap-activity {
     background-color: $brand-primary;
 }
 
-.dropdown-menu > li > a:hover,
-.dropdown-menu > li > a:focus {
-    background-color: $brand-primary;
+.dropdown-menu > li > a {
+    display: block;
+    &:hover,
+    &:focus {
+        background-color: $brand-primary;
+        color: white;
+    }
 }
 
 // AJAX spinner.
