@@ -41,7 +41,6 @@
 // -------------------------
 // Tab styles.
 // -------------------------
-// TODO - add js for deep linking...
 #snap-admin-tabs {
     border-bottom: 0;
     .nav-item {
@@ -91,7 +90,7 @@
     }
 
     .currentcolour {
-        /* size is set with a style tag so need to !important to override */
+        // Size is set with a style tag so need to !important to override.
         height: 35px !important;
         width: 35px !important;
         border-radius: 100%;
