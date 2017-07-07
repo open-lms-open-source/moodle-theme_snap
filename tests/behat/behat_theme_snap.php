@@ -104,7 +104,7 @@ class behat_theme_snap extends behat_base {
 
         $forcepasschange = get_user_preferences('auth_forcepasswordchange', null, $user);
         if (!$andkeepmenuopen && empty($forcepasschange)) {
-            $showfixyonlogin = get_config('theme_snap', 'pmtoggle');
+            $showfixyonlogin = get_config('theme_snap', 'personalmenulogintoggle');
             if ($showfixyonlogin) {
                 $general->i_click_on('#fixy-close', 'css_element');
             }

@@ -25,7 +25,7 @@
 defined('MOODLE_INTERNAL') || die;
 
 $settings = null; // Unsets the default $settings object initialised by Moodle.
-$settings = new theme_snap_admin_settingspage_tabs('themesettingsnap', 'Snap');
+$settings = new theme_boost_admin_settingspage_tabs('themesettingsnap', 'Snap');
 
 if ($ADMIN->fulltree) {
     $checked = '1';

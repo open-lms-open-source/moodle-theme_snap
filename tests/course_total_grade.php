@@ -285,7 +285,7 @@ class theme_snap_course_total_grade_test extends \advanced_testcase {
         ];
 
         $config = get_config('theme_snap');
-        if (empty($config->gradestoggle)) {
+        if (empty($config->showcoursegradepersonalmenu)) {
             // If not enabled, don't return data.
             return $failobj;
         }
@@ -323,7 +323,7 @@ class theme_snap_course_total_grade_test extends \advanced_testcase {
         // Default feedbackobj.
         $feedbackobj = (object)[
             'feedbackurl' => $feedbackurl->out(),
-            'showgrade' => $config->gradestoggle
+            'showgrade' => $config->showcoursegradepersonalmenu
         ];
 
         if (!$coursegrade->is_hidden() || $canviewhidden) {

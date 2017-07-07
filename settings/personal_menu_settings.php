@@ -4,10 +4,10 @@ defined('MOODLE_INTERNAL') || die;// Main settings.
 $snapsettings = new admin_settingpage('themesnappersonalmenu', get_string('personalmenu', 'theme_snap'));
 
 // Personal menu show course grade in cards.
-$name = 'theme_snap/gradestoggle';
-$title = new lang_string('gradestoggle', 'theme_snap');
-$description = new lang_string('gradestoggledesc', 'theme_snap');
-$default = $checked; // For new installations (legacy is unchecked via upgrade.php).
+$name = 'theme_snap/showcoursegradepersonalmenu';
+$title = new lang_string('showcoursegradepersonalmenu', 'theme_snap');
+$description = new lang_string('showcoursegradepersonalmenudesc', 'theme_snap');
+$default = $checked;
 $setting = new admin_setting_configcheckbox($name, $title, $description, $default, $checked, $unchecked);
 $snapsettings->add($setting);
 
@@ -48,9 +48,9 @@ $setting->set_updatedcallback('theme_reset_all_caches');
 $snapsettings->add($setting);
 
 // Personal menu display on login on/off.
-$name = 'theme_snap/pmtoggle';
-$title = new lang_string('pmtoggle', 'theme_snap');
-$description = new lang_string('pmtoggledesc', 'theme_snap');
+$name = 'theme_snap/personalmenulogintoggle';
+$title = new lang_string('personalmenulogintoggle', 'theme_snap');
+$description = new lang_string('personalmenulogintoggledesc', 'theme_snap');
 $default = $checked;
 $setting = new admin_setting_configcheckbox($name, $title, $description, $default, $checked, $unchecked);
 $snapsettings->add($setting);

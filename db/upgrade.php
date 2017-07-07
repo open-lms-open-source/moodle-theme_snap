@@ -54,7 +54,7 @@ function xmldb_theme_snap_upgrade($oldversion) {
     if ($oldversion < 2016042900) {
         // Set default value for showing personal menu on login.
         if (get_config('core', 'theme') == 'snap') {
-            set_config('pmtoggle', 0, 'theme_snap');
+            set_config('personalmenulogintoggle', 0, 'theme_snap');
         }
 
         // Snap savepoint reached.
@@ -88,7 +88,7 @@ function xmldb_theme_snap_upgrade($oldversion) {
 
     if ($oldversion < 2016121309) {
         if (get_config('core', 'theme') === 'snap') {
-            set_config('gradestoggle', 0, 'theme_snap');
+            set_config('showcoursegradepersonalmenu', 0, 'theme_snap');
         }
         upgrade_plugin_savepoint(true, 2016121309, 'theme', 'snap');
     }

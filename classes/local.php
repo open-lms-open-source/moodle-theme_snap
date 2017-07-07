@@ -78,7 +78,7 @@ class local {
         ];
 
         $config = get_config('theme_snap');
-        if (empty($config->gradestoggle)) {
+        if (empty($config->showcoursegradepersonalmenu)) {
             // If not enabled, don't return data.
             return $failobj;
         }
@@ -116,7 +116,7 @@ class local {
         // Default feedbackobj.
         $feedbackobj = (object) [
             'feedbackurl' => $feedbackurl->out(),
-            'showgrade' => $config->gradestoggle
+            'showgrade' => $config->showcoursegradepersonalmenu
         ];
 
         if (!$coursegrade->is_hidden() || $canviewhidden) {
@@ -459,7 +459,7 @@ class local {
             return $courseinfo;
         }
 
-        $showgrades = get_config('theme_snap', 'gradestoggle');
+        $showgrades = get_config('theme_snap', 'showcoursegradepersonalmenu');
 
         foreach ($courseids as $courseid) {
             if (!isset($courses[$courseid])) {

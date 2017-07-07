@@ -40,7 +40,7 @@ Feature: When the moodle theme is set to Snap, students and teachers can open a 
       | user     | course | role    |
       | student1 | C1     | student |
     And the following config values are set as admin:
-      | gradestoggle | <showgrades> | theme_snap |
+      | showcoursegradepersonalmenu | <showgrades> | theme_snap |
     And I log in as "student1" (theme_snap)
     And I open the personal menu
     Then I should see "Course 1"
