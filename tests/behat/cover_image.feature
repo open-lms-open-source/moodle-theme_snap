@@ -137,7 +137,7 @@ Feature: When the moodle theme is set to Snap, cover image can be set for site a
     And I upload cover image "testpng_small.png"
     Then I should not see "For best quality, we recommend a larger image of at least 1024px width"
 
-  @javascript @wip
+  @javascript
   Scenario: Admin user can change and delete site cover image.
     Given
     And the following "users" exist:
