@@ -48,8 +48,7 @@ Feature: When the moodle theme is set to Snap, teachers can delete course resour
   @javascript
   Scenario: In read mode, on front page, admin can cancel / confirm delete activity.
     Given I log in as "admin" (theme_snap)
-    And I click on "#admin-menu-trigger" "css_element"
-    And I navigate to "Front page > Front page settings" in site administration
+    And I go to "/admin/settings.php?section=frontpagesettings"
     And I set the following fields to these values:
       | Include a topic section | 1 |
     And I am on site homepage
