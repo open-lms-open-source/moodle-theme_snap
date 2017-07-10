@@ -184,3 +184,11 @@
         margin-right: 1em;
     }
 }
+
+/**
+ * Styling for admin tool templatelibrary.
+ */
+
+#page-admin-tool-templatelibrary-index [data-region="searchresults"] {
+    overflow: auto;
+}
