@@ -1218,6 +1218,10 @@ http://blog.rodneyrehm.de/archives/34-iOS7-Mobile-Safari-And-Viewport-Units.html
     @include clearfix;
     padding: 0 4%;
 }
+#page-site-index .singlebutton {
+    display: block;
+    text-align: center;
+}
 
 #site-news-forum h2,
 #frontpage-course-list h2,
