@@ -137,6 +137,79 @@
     margin: 0 auto;
 }
 
+
+/**
+ * Mod book.
+ */
+.path-mod-book {
+
+    .book_toc_numbered {
+        font-size: 1em;
+        ul {
+            list-style-type: none;
+            padding: 0;
+            ul {
+                padding-left: 4%;
+            }
+        }
+    }
+
+    .card-block {
+        padding :0;
+    }
+
+    // Hide next/previous image when not a link.
+    .navimages{
+        img {
+            visibility: hidden;
+        }
+        a img {
+            visibility: visible;
+        }
+    }
+    // Style next and previous navigation.
+    .navtop {
+        display: none;
+    }
+    .bookprev,
+    .booknext {
+        display: inline-block;
+        width: 50%;
+    }
+    .bookprev {
+        text-align: left;
+    }
+    .bookprev:after,
+    .booknext:before {
+        content: attr(title);
+        font-family: $font-family-base;
+    }
+}
+
+// Book mod grid.
+@include media-breakpoint-up(sm) {
+    #page-mod-book-view {
+
+        #region-main {
+            width: 70%;
+            float: right;
+        }
+
+        #moodle-blocks {
+            clear: none;
+            width: 30%;
+            float: left;
+        }
+    }
+}
+
+// Print style guide for book
+#page-mod-book-print {
+    font-size: 18px !important;
+    font-family: $font-family-serif !important;
+}
+
+
 /**
  * Mod lesson.
  */
