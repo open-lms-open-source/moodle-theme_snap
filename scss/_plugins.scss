@@ -275,3 +275,15 @@
 #page-admin-tool-templatelibrary-index [data-region="searchresults"] {
     overflow: auto;
 }
+
+/**
+ * Course competency report.
+ */
+
+/**
+ * Special fix for course competency report popup alert span when no activities are found.
+ */
+[data-region="coursecompetencyactivities"] .alert {
+    border-left: none;
+    padding-left: 0em;
+}
