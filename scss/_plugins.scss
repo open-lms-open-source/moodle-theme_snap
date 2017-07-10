@@ -60,8 +60,18 @@
     min-width: 1em;
 }
 
-.path-mod-assign [data-region="user-info"] .img-rounded {
-    height: 40px;
+.path-mod-assign [data-region="user-info"] {
+    h4 {
+        line-height: 1rem;
+    }
+    .img-rounded {
+        height: 40px;
+        border-radius: 100%;
+    }
+}
+
+#advancedgrading-criteria td.remark {
+    min-width: 150px;
 }
 
 .path-mod-assign #page-content [data-region="grade-panel"] .popout [data-region="popout-button"] img {
