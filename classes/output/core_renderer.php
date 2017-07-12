@@ -1024,7 +1024,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
             </div>
             <nav class="pushy pushy-left" data-focus="#'.$firstcategory.'" >
                 <a class="pushy-close-icon pull-right snap-action-icon" href="#">
-                    <i class="icon icon-close"></i>
+                    <i class="icon snap-icon snap-icon-close"></i>
                 </a>
                 <div class="pushy-content" tabindex=0  >
                     <div class="snap_pm_selectcat">Select categories</div>
