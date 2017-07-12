@@ -45,3 +45,4 @@ $drawer-width: 320px;
 @import "moodle/responsive-tabs";
 @import "moodle/bs2-compat";
 @import "moodle/print";
+$brand-primary-light:   lighten($brand-primary, 30%);

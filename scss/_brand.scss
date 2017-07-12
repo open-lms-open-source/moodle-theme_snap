@@ -590,59 +590,61 @@ li.snap-activity {
     }
 }
 
+// -------------------------
 // User Menu
+// -------------------------
 .snap_pm_courses_section_title {
-    display: inline-block;
-}
-.snap_pm_category_filter_title {
     display: block;
 }
-.pushy-content ul {
-    list-style-type: none;
-    padding: 0px;
-}
-.pushy-content {
-    margin-top: 50px;
-}
-.pushy .pushy-close-icon {
-    padding: 15px 15px;
-    font-size: smaller;
+	.snap_pm_category_filter_title {
+	    display: block;
+	}
+	.pushy-content ul {
+	    list-style-type: none;
+	    padding: 0px;
+	}
+	.pushy-content {
+	    margin-top: 50px;
+	}
+	.pushy .pushy-close-icon {
+	    padding: 15px 15px;
+	    font-size: smaller;
+	    color: white;
+	}
+
+	.snap_pm_selectcat {
+	    font-size: larger;
+	    margin: 0px;
+	    margin-bottom: 26px;
+	    text-align: center;
+	    color: $body-bg;
+	}
+
+	.fixy h2.user_category_menu_title {
+	    float:left;
+	    margin-bottom: 0;
+	}
+
+	.snap_pm_editcat.menu-btn {
+	    background: transparent;
+	    cursor: pointer;
+	    color: $link-color;
+	    margin:0px;
+	    font-size: small;
+	    visibility: hidden;
+	}
+
+	@media screen and (max-width: $screen-sm) {
+	.snap_pm_editcat.menu-btn {
+            vertical-align: super;
+    
+       }
 }
 
-.snap_pm_selectcat {
-    font-size: larger;
-    margin: 0px;
-    margin-bottom: 26px;
-    text-align: center;
-    color: @body-bg;
-}
-
-.fixy h2.user_category_menu_title {
-    float:left;
-    margin-bottom: 0;
-}
-
-.snap_pm_editcat.menu-btn {
-    background: transparent;
-    cursor:pointer;
-    color: @link-color;
-    margin:0px;
-    padding: 0 0 0 0px;
-    font-size: small;
-    visibility: hidden;
-}
-
-@media screen and (max-width: @screen-sm-min) {
-    .snap_pm_editcat.menu-btn {
-        vertical-align: super;
-    }
-}
 .snap_pm_user_category_list{
     padding-top: 0px;
     display: none;
     font-size: small;
-    vertical-align: top;
-    line-height: 28px;
 }
 .snap_pm_user_category_filter_links {
     font-size: small;
@@ -666,11 +668,11 @@ li.snap-activity {
 }
 
 .snap_pm_menu_mycategory {
-    color: @brand-primary-light;
+    color: $brand-primary-light;
 }
 
 .pushy.pushy-left {
-    background-color: @brand-primary;
+    background-color: $brand-primary;
 }
 
 #fixy-visible-courses {
@@ -679,7 +681,8 @@ li.snap-activity {
 
 .pushy-content label {
     display: inline-block; // to make it easier to click
-    color: @brand-primary-light;
+    //TODO: Make the color LIGHT for dark primary bg or DARK for light primary bg, programatically. Need this for readability.
+    color: $body-bg;
     cursor: pointer;
     position: relative; // important
 
@@ -692,7 +695,7 @@ li.snap-activity {
         width: 25px;
         height: 25px;
         transform-origin: center;
-        border: 2px solid @brand-primary-light;
+        border: 2px solid $brand-primary-light;
         border-radius: 50%;
         vertical-align: -6px;
         margin-right: 10px;
@@ -705,7 +708,7 @@ li.snap-activity {
             width: 0px;
             height: 2px;
             border-radius: 2px; // so that the tick has nice rounded look
-            background: @body-bg;
+            background: $body-bg;
             position: absolute;
             transform: rotate(45deg);
             top: 11px; // you'll need to experiment with placement depending on the dimensions you've chosen
@@ -719,7 +722,7 @@ li.snap-activity {
             width: 0;
             height: 2px;
             border-radius: 2px; // so that the tick has nice rounded look
-            background: @body-bg;
+            background: $body-bg;
             position: absolute;
             transform: rotate(305deg);
             top: 14px; // you'll need to experiment with placement depending on the dimensions you've chosen
@@ -757,43 +760,43 @@ li.snap-activity {
     &:checked {
         + label {
             font-weight: inherit;
-            color: @body-bg;
+            color: $body-bg;
             span {
 
-                background-color: @body-bg;
+                background-color: $body-bg;
 
                 transform: scale(1.10); // enlarge the box
 
-                border: 2px solid @body-bg;
+                border: 2px solid $body-bg;
 
 
                 &:after {
                     width: 10px;
-                    background: @brand-primary;
+                    background: $brand-primary;
                     transition: width 150ms ease 100ms; // enlarge the tick
                 }
 
                 &:before {
                     width: 5px;
-                    background: @brand-primary;
+                    background: $brand-primary;
                     transition: width 150ms ease 100ms; // enlarge the tick
                 }
             }
 
             &:hover { // copy the states for onMouseOver to avoid flickering
                 span {
-                    background-color: @body-bg;
+                    background-color: $body-bg;
                     transform: scale(1.10); // enlarge the box
 
                     &:after {
                         width: 10px;
-                        background: @brand-primary;
+                        background: $brand-primary;
                         transition: width 150ms ease 100ms; // enlarge the tick
                     }
 
                     &:before {
                         width: 5px;
-                        background: @brand-primary;
+                        background: $brand-primary;
                         transition: width 150ms ease 100ms; // enlarge the tick
                     }
                 }
@@ -817,7 +820,7 @@ li.snap-activity {
 }
 
 /* Do not display browse all course on mobile size as it overlap the menu. TODO: add it at the bottom in the renderer + media query */
-@media screen and (max-width: @screen-sm-min) {
+@media screen and (max-width: $screen-sm) {
     .snap-personal-menu-more.courses {
         display:none;
     }
@@ -825,9 +828,14 @@ li.snap-activity {
 
 .snap_pm_category_filter_title button {
     font-size: 13px;
-    font-weight: 300;
+    font-weight: 500;
     line-height: 26px;
-    vertical-align: top;
+    border: none;
+}    
+
+.snap_pm_courses_section_title ul li a {
+    float: left;
+    padding: 10px 15px;
 }
 
 .snap_pm_courses_section_title ul li a.theme_snap_pm_firstmenuitem {
@@ -836,7 +844,7 @@ li.snap-activity {
 
 .snap_pm_courses_section_title ul li a.theme_snap_pm_active_link, .snap_pm_courses_section_title ul li a.theme_snap_pm_active_link:hover,
 .snap_pm_courses_section_title ul li a.theme_snap_pm_active_link:active, .snap_pm_courses_section_title ul li a.theme_snap_pm_active_link:focus {
-    background-color: @nav-link-hover-bg;
+    background-color: $nav-link-hover-bg;
     border: 0px solid;
-    color: @text-color;
+    color: $text-color;
 }
