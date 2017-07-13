@@ -32,8 +32,8 @@
     padding: 1rem 1rem 1rem 0; // Padding to support message badge.
 
     .userpicture {
-        height: 2em;
-        width: 2em;
+        height: 38px;
+        width: 38px;
         margin-left: 1rem;
     }
 
@@ -85,7 +85,7 @@
     }
 }
 
-@include media-breakpoint-up(sm) {
+@include media-breakpoint-up(md) {
     .fixy #fixy-close {
         margin-top: 1rem;
     }

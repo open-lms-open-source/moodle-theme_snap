@@ -939,7 +939,9 @@ header#page-header
 .breadcrumb-nav {
     margin-bottom: 0;
     float: none;
-    margin-top: -0.5em;
+    @include media-breakpoint-up(md) {
+       margin-top: -0.5em;
+   }
 }
 
 .breadcrumb {
@@ -1090,45 +1092,11 @@ header#page-header
     padding: 0;
 }
 
-/* BOOK MOD FIX */
-.path-mod-book .book_toc_numbered {
-    font-size: 1em;
-}
-
 /* hide show description option */
-#page-mod-book-mod,
 #page-mod-page-mod {
     #fitem_id_showdescription {
         display: none;
     }
-}
-/* Hide not so useful images and exit book option */
-.navimages {
-    img,
-    .bookexit {
-        display:none;
-    }
-    a img{
-        display: inline;
-    }
-}
-
-
-#page-mod-book-view {
-    #region-main {
-        width: 70%;
-        float: right;
-    }
-    #moodle-blocks {
-        clear: none;
-        width: 30%;
-        float: left;
-    }
-}
-// Print style guide for book
-#page-mod-book-print {
-    font-size: 18px !important;
-    font-family: $font-family-serif !important;
 }
 
 /* FRONT PAGE ELEMENTS */
@@ -1217,6 +1185,10 @@ http://blog.rodneyrehm.de/archives/34-iOS7-Mobile-Safari-And-Viewport-Units.html
 #page-site-index .sitetopic {
     @include clearfix;
     padding: 0 4%;
+}
+#page-site-index .singlebutton {
+    display: block;
+    text-align: center;
 }
 
 #site-news-forum h2,
