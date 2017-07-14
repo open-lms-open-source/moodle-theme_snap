@@ -3095,7 +3095,7 @@ http://css-spinners.com/css/spinner/three-quarters.css
 }
 
 // yui-bs overrides (note SNAP specific)
-.yui-bootstrapped {
+.yui-bootstrapped:not(.ie11) {
 
     // stop yui menu from being completely unusable on mobile device
     // note: it still isn't that great and a select box would be way better
@@ -3115,6 +3115,14 @@ http://css-spinners.com/css/spinner/three-quarters.css
             padding: 0;
             margin: 0;
         }
+    }
+}
+
+.yui-bootstrapped.ie11 #pld_tokenselector.yuimenu {
+    top: 100px !important;
+
+    & > div {
+        height: auto !important;
     }
 }
 
