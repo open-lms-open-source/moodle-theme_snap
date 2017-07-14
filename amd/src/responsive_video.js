@@ -50,12 +50,12 @@ define(['jquery', 'media_videojs/loader'], function($, videoJsLoader) {
                 'dailymotion.com'
             ];
             var selectors = [
-                '.mediaplugin object:not(.media-responsive object, .felement.feditor object, .vjs-tech)',
-                '.mediaplugin embed:not(.media-responsive embed, .felement.feditor embed, .vjs-tech)'
+                '.mediaplugin object:not(.media-responsive-element):not(.vjs-tech)',
+                '.mediaplugin embed:not(.media-responsive-element):not(.vjs-tech)'
             ];
             for (var s in supportedSites) {
                 var site = supportedSites[s];
-                selectors.push('iframe:not(.media-responsive iframe, .felement.feditor iframe, .vjs-tech)[src*="' + site + '"]');
+                selectors.push('iframe:not(.media-responsive-element):not(.vjs-tech)[src*="' + site + '"]');
             }
             var joined = selectors.join(',');
             return joined;
@@ -82,6 +82,12 @@ define(['jquery', 'media_videojs/loader'], function($, videoJsLoader) {
 
                     if ($(parent).hasClass('media-responsive')) {
                         return true;
+                    }
+
+                    if ($(this).parents('div[class^="editor_"],div[data-fieldtype="editor"]').length) {
+                        // We are in an editor!
+                        // Do not process or it could lead to user html being polluted.
+                        return;
                     }
 
                     if (!$(parent).hasClass('mediaplugin')) {
@@ -131,6 +137,9 @@ define(['jquery', 'media_videojs/loader'], function($, videoJsLoader) {
 
                 // Add responsive class to parent element.
                 parent.addClass('media-responsive');
+
+                // Add this class to element to prevent re-processing.
+                $(this).addClass('media-responsive-element');
             });
             if (typeof(onComplete) === 'function') {
                 onComplete();
