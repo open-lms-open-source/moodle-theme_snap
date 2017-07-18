@@ -693,8 +693,9 @@ EOF;
         $iconurl = $OUTPUT->pix_url('course_dashboard', 'theme');
         $coursetoolsicon = '<img src="'.$iconurl.'" class="svg-icon" alt="" role="presentation">';
         $o = '<h2>'.$coursetoolsicon.$coursetools.'</h2>';
-        $o .= $enrollink.'<div id="coursetools-list">'.
-            self::render_appendices($links).'</div><hr>';
+        $o .= $enrollink;
+        $o .= self::print_student_dashboard();
+        $o .= '<div id="coursetools-list">' .self::render_appendices($links). '</div><hr>';
 
         return $o;
     }
@@ -731,5 +732,75 @@ EOF;
         }
 
         return $output;
+    }
+
+    /**
+     * User dashboard.
+     * Shown to users in the course dashboard, initially their progress and grade.
+     * Progress and Grade use a progress.js circle.
+     *
+     * @return string
+     */
+    public static function print_student_dashboard() {
+        global $USER, $COURSE, $OUTPUT;
+
+        $coursecontext = context_course::instance($COURSE->id);
+        $output = '';
+
+        // Don't output for teachers.
+        if (has_capability('moodle/grade:viewall', $coursecontext)) {
+            return $output;
+        }
+        // Don't output if gradebook is not accessible for this user.
+        if (!self::gradebook_accessible($coursecontext)) {
+            return $output;
+        }
+
+        $userpicture = new \user_picture($USER);
+        $userpicture->link = false;
+        $userpicture->alttext = false;
+        $userpicture->class = 'userpicture snap-icon'; // icon class for margin.
+        $userpicture->size = 100;
+        $userpic = $OUTPUT->render($userpicture);
+
+        $userboard  = '<div id="snap-student-dashboard" class="row clearfix">';
+        $userboard .= '<div class="col-xs-6">';
+        $userboard .= '<h4 class="h6">' .s(fullname($USER)). '</h4>';
+        $userboard .= $userpic;
+        $userboard .= '</div>';
+
+        // User progress.
+        if ($COURSE->enablecompletion) {
+            $progress = local::course_completion_progress($COURSE);
+            $userboard .= '<div class="col-xs-3 text-center snap-student-dashboard-progress">';
+            $userboard .= '<h4 class="h6">' .get_string('progress', 'theme_snap'). '</h6>';
+            $userboard .= '<div class="js-progressbar-circle snap-progress-circle" value="' .round($progress->progress). '"></div>';
+            $userboard .= '</div>';
+        }
+
+        // User grade.
+        if (has_capability('gradereport/overview:view', $coursecontext)) {
+            $grade = local::course_grade($COURSE);
+            $coursegrade = '-';
+            if (isset($grade->coursegrade['percentage'])) {
+                $coursegrade = round($grade->coursegrade['percentage']);
+            }
+
+            $moodleurl = new moodle_url('/grade/report/user/index.php', ['id' => $COURSE->id, 'userid' => $USER->id]);
+
+            $userboard .= '<div class="col-xs-3 text-center snap-student-dashboard-grade">';
+            $userboard .= '<h4 class="h6">' . get_string('grade') . '</h6>';
+            $userboard .= '<a href="' . $moodleurl . '">';
+            $userboard .= '<div class="js-progressbar-circle snap-progress-circle snap-progressbar-link" value="' . $coursegrade . '"></div>';
+            $userboard .= '</a>';
+            $userboard .= '</div>';
+        }
+
+        $userboard .= '</div><!- close .snap-user-dashboard ->';
+        $userboard .= '<br>';
+
+        $output .= $userboard;
+        return $output;
+
     }
 }

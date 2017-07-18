@@ -26,8 +26,8 @@
  * Main snap initialising function.
  */
 define(['jquery', 'core/log', 'theme_snap/headroom', 'theme_snap/util', 'theme_snap/personal_menu',
-        'theme_snap/responsive_video', 'theme_snap/cover_image'],
-    function($, log, Headroom, util, personalMenu, responsiveVideo, coverImage) {
+        'theme_snap/responsive_video', 'theme_snap/cover_image', 'theme_snap/progressbar'],
+    function($, log, Headroom, util, personalMenu, responsiveVideo, coverImage, ProgressBar) {
 
         'use strict';
 
@@ -261,7 +261,7 @@ define(['jquery', 'core/log', 'theme_snap/headroom', 'theme_snap/util', 'theme_s
         };
 
         /**
-         * listen for hash changes / popstates.
+         * Listen for hash changes / popstates.
          */
         var listenHashChange = function(courseLib) {
             var lastHash = location.hash;
@@ -280,6 +280,50 @@ define(['jquery', 'core/log', 'theme_snap/headroom', 'theme_snap/util', 'theme_s
                     }
                 }
                 lastHash = newHash;
+            });
+        };
+
+        /**
+         * Apply progressbar.js for circular progress displays.
+         */
+        var progressbarcircle = function() {
+            $('.js-progressbar-circle').each(function() {
+                var circle = new ProgressBar.Circle(this, {
+                    color: 'inherit', // @gray.
+                    easing: 'linear',
+                    strokeWidth: 6,
+                    trailWidth: 3,
+                    duration: 1400,
+                    text: {
+                        value: '0'
+                    }
+                });
+
+                var value = ($(this).attr('value') / 100);
+                var endColor = '#8BC34A'; // green @brand-success.
+                if (value === 0 || $(this).attr('value') === '-') {
+                  circle.setText('-');
+                } else {
+                  if ($(this).attr('value') < 50) {
+                      endColor = '#FF9800'; // @brand-warning orange.
+                  }
+                  else {
+                      endColor = '#8BC34A'; // green @brand-success.
+                  }
+                  circle.setText($(this).attr('value') +'<small>%</small>');
+                }
+
+                circle.animate(value, {
+                    from: {
+                        color: '#999' // @gray-light.
+                    },
+                    to: {
+                        color: endColor
+                    },
+                    step: function(state, circle) {
+                        circle.path.setAttribute('stroke', state.color);
+                    }
+                });
             });
         };
 
@@ -591,6 +635,8 @@ define(['jquery', 'core/log', 'theme_snap/headroom', 'theme_snap/util', 'theme_s
                     $(document).ready(function() {
                         // Add a class to the body to show js is loaded.
                         $('body').addClass('snap-js-loaded');
+                        // Apply progressbar.js for circluar progress display.
+                        progressbarcircle();
                     });
                 });
             }

@@ -64,7 +64,7 @@ $string['coursefootertoggle'] = 'Show Course Footer';
 $string['coursefootertoggledesc'] = 'The Course Footer shows useful information to users on a course page including course contacts, course description and recent activity in the course.';
 $string['courseformatnotification'] = 'The current course format you are using is not fully supported by the Snap theme. For the best experience Moodlerooms recommends using the Topics or Weekly course formats with the Snap theme. The course format can be changed in the <a href="{$a}">course settings</a>.';
 $string['coursefixydefaulttext'] = 'You are currently not enrolled in any courses.<br>Courses you are enrolled in will be shown here.';
-$string['coursegrade'] = 'Course grade :';
+$string['coursegrade'] = 'Course grade:';
 $string['coursenavigation'] = 'Course navigation';
 $string['coursesummaryfilesunsuitable'] = 'Please empty your course summary files before you attempt to change the cover image';
 $string['coursetools'] = 'Course Dashboard';
@@ -221,6 +221,7 @@ $string['poweredbyrunby'] = 'Built with <a href="http://moodlerooms.com/" target
     Copyright &#169; 2017 Blackboard Inc, All Rights Reserved.';
 $string['previoussection'] = 'Previous section';
 $string['problemsfound'] = 'Problems Found';
+$string['progress'] = 'Progress';
 $string['readmore'] = 'Read more&nbsp;»';
 $string['recentactivity'] = 'Recent Activity';
 $string['recentfeedback'] = 'Feedback';

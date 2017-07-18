@@ -475,7 +475,7 @@ class theme_snap_course_total_grade_test extends \advanced_testcase {
                         if (!empty($legacyfeedback->coursegrade)) {
                             $message  = "\n\n". 'report_user_showtotalsifcontainhidden = '.$setting;
                             $message .= "\n\n". 'displaytype = '.$displaytype;
-                            $this->assertSame($legacyfeedback->coursegrade, $coursegrade, $message);
+                            $this->assertSame($legacyfeedback->coursegrade, $coursegrade['value'], $message);
                         } else {
                             $this->assertEmpty($coursegrade, 'course grade is '.var_export($coursegrade, true));
                         }

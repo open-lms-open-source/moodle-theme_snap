@@ -1,15 +1,21 @@
 <?xml version="1.0"?>
 <libraries>
   <library>
+    <location>amd/src/appear.js</location>
+    <name>Jquery appear plugin</name>
+    <license>MIT</license>
+    <version>0.3.6</version>
+  </library>
+  <library>
     <location>amd/src/headroom.js</location>
     <name>Headroom.js (https://github.com/WickyNilliams/headroom.js)</name>
     <license>MIT</license>
     <version>0.7.0</version>
   </library>
   <library>
-    <location>amd/src/appear.js</location>
-    <name>Jquery appear plugin</name>
+    <location>amd/src/progressbar.js</location>
+    <name>Progress bar https://kimmobrunfeldt.github.io/progressbar.js</name>
     <license>MIT</license>
-    <version>0.3.6</version>
+    <version>1.0.1</version>
   </library>
 </libraries>
