@@ -41,6 +41,7 @@ $string['assigndraft'] = 'Draft requires your confirmation';
 $string['assignreopened'] = 'Reopened';
 $string['at'] = 'at';
 $string['attempted'] = 'Attempted';
+$string['basics'] = 'Basics';
 $string['brandingheading'] = 'Branding';
 $string['brandingheadingdesc'] = '';
 $string['browse'] = 'Browse';

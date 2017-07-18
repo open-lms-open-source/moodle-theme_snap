@@ -17,7 +17,6 @@ $title = new lang_string('deadlinestoggle', 'theme_snap');
 $description = new lang_string('deadlinestoggledesc', 'theme_snap');
 $default = $checked;
 $setting = new admin_setting_configcheckbox($name, $title, $description, $default, $checked, $unchecked);
-$setting->set_updatedcallback('theme_reset_all_caches');
 $snapsettings->add($setting);
 
 // Personal menu recent feedback & grading  on/off.
@@ -26,7 +25,6 @@ $title = new lang_string('feedbacktoggle', 'theme_snap');
 $description = new lang_string('feedbacktoggledesc', 'theme_snap');
 $default = $checked;
 $setting = new admin_setting_configcheckbox($name, $title, $description, $default, $checked, $unchecked);
-$setting->set_updatedcallback('theme_reset_all_caches');
 $snapsettings->add($setting);
 
 // Personal menu messages on/off.
@@ -35,7 +33,6 @@ $title = new lang_string('messagestoggle', 'theme_snap');
 $description = new lang_string('messagestoggledesc', 'theme_snap');
 $default = $checked;
 $setting = new admin_setting_configcheckbox($name, $title, $description, $default, $checked, $unchecked);
-$setting->set_updatedcallback('theme_reset_all_caches');
 $snapsettings->add($setting);
 
 // Personal menu forum posts on/off.
@@ -44,7 +41,6 @@ $title = new lang_string('forumpoststoggle', 'theme_snap');
 $description = new lang_string('forumpoststoggledesc', 'theme_snap');
 $default = $checked;
 $setting = new admin_setting_configcheckbox($name, $title, $description, $default, $checked, $unchecked);
-$setting->set_updatedcallback('theme_reset_all_caches');
 $snapsettings->add($setting);
 
 // Personal menu display on login on/off.

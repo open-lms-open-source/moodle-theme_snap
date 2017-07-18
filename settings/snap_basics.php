@@ -1,7 +1,7 @@
 <?php
 defined('MOODLE_INTERNAL') || die;// Main settings.
 
-$snapsettings = new admin_settingpage('themesnapbranding', 'Basics');
+$snapsettings = new admin_settingpage('themesnapbranding', get_string('basics', 'theme_snap'));
 
 if (!during_initial_install() && !empty(get_site()->fullname)) {
     // Site name setting.

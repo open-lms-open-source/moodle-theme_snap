@@ -40,7 +40,6 @@ $title = new lang_string('coursefootertoggle', 'theme_snap');
 $description = new lang_string('coursefootertoggledesc', 'theme_snap');
 $default = $checked;
 $setting = new admin_setting_configcheckbox($name, $title, $description, $default, $checked, $unchecked);
-$setting->set_updatedcallback('theme_reset_all_caches');
 $snapsettings->add($setting);
 
 // Hide navigation block.
