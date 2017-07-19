@@ -467,6 +467,8 @@ class theme_snap_services_course_test extends \advanced_testcase {
             $course->id,
             $sturole->id);
 
+        $this->setUser($this->user1);
+
         // Create page with completion marked manually.
         $page1 = $generator->create_module('page', array('course' => $course->id, 'name' => 'page1 complete manually'),
             array('completion' => 1, 'completionview' => 0));

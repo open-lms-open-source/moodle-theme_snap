@@ -528,7 +528,7 @@ EOF;
 
         // Course settings.
         if (has_capability('moodle/course:update', $coursecontext)) {
-            $iconurl = $OUTPUT->pix_url('gear', 'theme');
+            $iconurl = $OUTPUT->image_url('gear', 'theme');
             $coverimageurl = local::course_coverimage_url($COURSE->id);
             if (!empty($coverimageurl)) {
                 $iconurl = $coverimageurl;
@@ -542,7 +542,7 @@ EOF;
         }
 
         // Norton grader if installed.
-        $iconurl = $OUTPUT->pix_url('joule_grader', 'theme');
+        $iconurl = $OUTPUT->image_url('joule_grader', 'theme');
         $gradebookicon = '<img src="'.$iconurl.'" class="svg-icon" alt="" role="presentation">';
         if (array_key_exists('nortongrader', $localplugins)) {
             if (has_capability('local/nortongrader:grade', $coursecontext)
@@ -569,7 +569,7 @@ EOF;
 
         // Gradebook.
         if (self::gradebook_accessible($coursecontext)) {
-            $iconurl = $OUTPUT->pix_url('gradebook', 'theme');
+            $iconurl = $OUTPUT->image_url('gradebook', 'theme');
             $gradebookicon = '<img src="'.$iconurl.'" class="svg-icon" alt="" role="presentation">';
             // Gradebook.
             $links[] = array(
@@ -597,7 +597,7 @@ EOF;
             }
             else {
                 // Default icon when 0 participants.
-                $iconurl = $OUTPUT->pix_url('u/f1');
+                $iconurl = $OUTPUT->image_url('u/f1');
                 $participanticons = '<img src="'.$iconurl.'" alt="" role="presentation">';
             }
 
@@ -610,7 +610,7 @@ EOF;
 
         // Joule reports if installed.
         if (array_key_exists('reports', core_component::get_plugin_list('block'))) {
-            $iconurl = $OUTPUT->pix_url('joule_reports', 'theme');
+            $iconurl = $OUTPUT->image_url('joule_reports', 'theme');
             $reportsicon = '<img src="'.$iconurl.'" class="svg-icon" alt="" role="presentation">';
             if (has_capability('block/reports:viewown', $coursecontext, null, false)
                 || has_capability('block/reports:view', $coursecontext)
@@ -624,7 +624,7 @@ EOF;
 
         // Personalised Learning Designer.
         if (array_key_exists('pld', $localplugins) && has_capability('moodle/course:update', $coursecontext)) {
-            $iconurl = $OUTPUT->pix_url('pld', 'theme');
+            $iconurl = $OUTPUT->image_url('pld', 'theme');
             $pldicon = '<img src="'.$iconurl.'" class="svg-icon" alt="" role="presentation">';
             $pldname = get_string('pld', 'theme_snap');
             $links[] = array(
@@ -635,7 +635,7 @@ EOF;
 
         // Competencies if enabled.
         if (get_config('core_competency', 'enabled') && has_capability('moodle/competency:competencyview', $coursecontext)) {
-            $iconurl = $OUTPUT->pix_url('competencies', 'theme');
+            $iconurl = $OUTPUT->image_url('competencies', 'theme');
             $competenciesicon = '<img src="'.$iconurl.'" class="svg-icon" alt="" role="presentation">';
             $links[] = array(
                 'link'  => 'admin/tool/lp/coursecompetencies.php?courseid='.$COURSE->id,
@@ -645,7 +645,7 @@ EOF;
 
         // Outcomes if enabled.
         if(!empty($CFG->core_outcome_enable)) {
-            $iconurl = $OUTPUT->pix_url('outcomes', 'theme');
+            $iconurl = $OUTPUT->image_url('outcomes', 'theme');
             $outcomesicon = '<img src="'.$iconurl.'" class="svg-icon" alt="" role="presentation">';
 
             if (has_capability('moodle/grade:edit', $coursecontext)) {
@@ -679,7 +679,7 @@ EOF;
             );
             $canviewbadges = has_any_capability($badgecaps, $coursecontext);
             if (!is_guest($coursecontext) && $canviewbadges) {
-                $iconurl = $OUTPUT->pix_url('badges', 'theme');
+                $iconurl = $OUTPUT->image_url('badges', 'theme');
                 $badgesicon = '<img src="'.$iconurl.'" class="svg-icon" alt="" role="presentation">';
                 $links[] = array(
                     'link' => 'badges/view.php?type=' . BADGE_TYPE_COURSE . '&id=' . $COURSE->id,
@@ -690,7 +690,7 @@ EOF;
 
         // Output course tools section.
         $coursetools = get_string('coursetools', 'theme_snap');
-        $iconurl = $OUTPUT->pix_url('course_dashboard', 'theme');
+        $iconurl = $OUTPUT->image_url('course_dashboard', 'theme');
         $coursetoolsicon = '<img src="'.$iconurl.'" class="svg-icon" alt="" role="presentation">';
         $o = '<h2>'.$coursetoolsicon.$coursetools.'</h2>';
         $o .= $enrollink.'<div id="coursetools-list">'.

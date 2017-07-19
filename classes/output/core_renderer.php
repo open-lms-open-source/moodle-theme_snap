@@ -227,7 +227,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
     public function column_header_icon_link($langstring, $iconname, $url) {
         global $OUTPUT;
         $text = get_string($langstring, 'theme_snap');
-        $iconurl = $OUTPUT->pix_url($iconname, 'theme');
+        $iconurl = $OUTPUT->image_url($iconname, 'theme');
         $icon = '<img class="svg-icon" role="presentation" src="' .$iconurl. '">';
         $link = '<a class="snap-personal-menu-more" href="' .$url. '"><small>' .$text. '</small>' .$icon. '</a>';
         return $link;
@@ -246,7 +246,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
     public function mobile_menu_link($langstring, $iconname, $url) {
         global $OUTPUT;
         $alt = get_string($langstring, 'theme_snap');
-        $iconurl = $OUTPUT->pix_url($iconname, 'theme');
+        $iconurl = $OUTPUT->image_url($iconname, 'theme');
         $icon = '<img class="svg-icon" alt="' .$alt. '" src="' .$iconurl. '">';
         $link = '<a href="' .$url. '">' .$icon. '</a>';
         return $link;
@@ -262,7 +262,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
      */
     public function social_menu_link($iconname, $url) {
         global $OUTPUT;
-        $iconurl = $OUTPUT->pix_url($iconname, 'theme');
+        $iconurl = $OUTPUT->image_url($iconname, 'theme');
         $icon = '<img class="svg-icon" title="' .$iconname. '" alt="' .$iconname. '" src="' .$iconurl. '">';
         $link = '<a href="' .$url. '" target="_blank">' .$icon. '</a>';
         return $link;
@@ -301,7 +301,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
             foreach ($recentactivity as $modname => $moduleactivity) {
                 // Get mod icon, empty alt as title already there.
                 $img = html_writer::tag('img', '', array(
-                    'src' => $OUTPUT->pix_url('icon', $modname),
+                    'src' => $OUTPUT->image_url('icon', $modname),
                     'alt' => '',
                 ));
                 // Create media object for module activity.
@@ -325,7 +325,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
         if (!$settingslink->output) {
             return '';
         }
-        $iconurl = $OUTPUT->pix_url('gear', 'theme');
+        $iconurl = $OUTPUT->image_url('gear', 'theme');
         $gearicon = '<img src="' .$iconurl. '">';
         $url = '#inst' . $settingslink->instanceid;
         $attributes = array(
@@ -1321,11 +1321,11 @@ HTML;
         return $output;
     }
 
-    public function pix_url($imagename, $component = 'moodle') {
+    public function image_url($imagename, $component = 'moodle') {
         // Strip -24, -64, -256  etc from the end of filetype icons so we
         // only need to provide one SVG, see MDL-47082.
         $imagename = \preg_replace('/-\d\d\d?$/', '', $imagename);
-        return $this->page->theme->pix_url($imagename, $component);
+        return $this->page->theme->image_url($imagename, $component);
     }
 
     /**

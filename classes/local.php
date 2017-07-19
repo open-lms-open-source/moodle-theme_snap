@@ -813,7 +813,7 @@ class local {
 
                 $eventtitle = $event->name .'<small><br>' .$event->coursefullname. '</small>';
 
-                $modimageurl = $output->pix_url('icon', $event->modulename);
+                $modimageurl = $output->image_url('icon', $event->modulename);
                 $modname = get_string('modulename', $event->modulename);
                 $modimage = \html_writer::img($modimageurl, $modname);
                 $deadline = $event->timestart + $event->timeduration;
@@ -876,7 +876,7 @@ class local {
                 $url = $cm->url;
             }
 
-            $modimageurl = $output->pix_url('icon', $cm->modname);
+            $modimageurl = $output->image_url('icon', $cm->modname);
             $modname = get_string('modulename', 'mod_'.$cm->modname);
             $modimage = \html_writer::img($modimageurl, $modname);
 
@@ -913,7 +913,7 @@ class local {
             $course = $modinfo->get_course();
             $cm = $modinfo->get_cm($ungraded->coursemoduleid);
 
-            $modimageurl = $output->pix_url('icon', $cm->modname);
+            $modimageurl = $output->image_url('icon', $cm->modname);
             $modname = get_string('modulename', 'mod_'.$cm->modname);
             $modimage = \html_writer::img($modimageurl, $modname);
 
