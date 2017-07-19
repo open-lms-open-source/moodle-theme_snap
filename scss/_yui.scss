@@ -493,10 +493,12 @@
 
 
 // JS error messages
-.yui3-skin-sam .yui3-widget-mask {
+.yui3-skin-sam .yui3-widget-mask,
+.moodle-dialogue-base .moodle-dialogue-lightbox {
     background-color: $modal-backdrop-bg;
     opacity: $modal-backdrop-opacity;
 }
+
 .moodle-dialogue-content .yui3-widget-hd h1 {
     @extend .modal-title;
     font-size: $font-size-h4;
