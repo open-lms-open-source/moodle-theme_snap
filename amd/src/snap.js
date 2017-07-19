@@ -26,8 +26,8 @@
  * Main snap initialising function.
  */
 define(['jquery', 'core/log', 'theme_snap/headroom', 'theme_snap/util', 'theme_snap/personal_menu',
-        'theme_snap/responsive_video', 'theme_snap/cover_image', 'theme_snap/progressbar'],
-    function($, log, Headroom, util, personalMenu, responsiveVideo, coverImage, ProgressBar) {
+        'theme_snap/cover_image', 'theme_snap/progressbar'],
+    function($, log, Headroom, util, personalMenu, coverImage, ProgressBar) {
 
         'use strict';
 
@@ -645,9 +645,6 @@ define(['jquery', 'core/log', 'theme_snap/headroom', 'theme_snap/util', 'theme_s
                         var savebuttons = $("#mform1 > .form-group:last");
                         $(main_form).append(savebuttons);
                     }
-
-                    // Makes video responsive.
-                    responsiveVideo.init();
 
                     // Conversation counter for user badge.
                     if (messageBadgeCountEnabled) {
