@@ -48,7 +48,7 @@ Feature: When the moodle theme is set to Snap, students and teachers can open a 
     And I should not see "Course Hidden"
     And I follow "Hidden courses (1)"
     And I should see "Course Hidden"
-    When I follow "Course 1"
+    When I am on "Course 1" course homepage
     Then I should see "Course 1"
     And I should see "Introduction" in the "#chapters" "css_element"
 

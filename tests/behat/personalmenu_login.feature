@@ -72,7 +72,7 @@ Feature: When the moodle theme is set to Snap,
     And I set the field "password" to "teacher1"
     And I press "Log in"
     Then "#primary-nav" "css_element" should be visible
-    And I follow "Course 1"
+    And I am on "Course 1" course homepage
     And I follow "Introduction"
     And "#section-0" "css_element" should be visible
     And I follow "Topic 1"
@@ -107,7 +107,7 @@ Feature: When the moodle theme is set to Snap,
       | teacher1  | C1     | editingteacher |
     And I am on homepage
     When I follow "Courses"
-    And I follow "Course 1"
+    And I am on "Course 1" course homepage
     # The above will trigger a redirect to the login page.
     And I set the field "username" to "teacher1"
     And I set the field "password" to "teacher1"
