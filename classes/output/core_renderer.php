@@ -67,153 +67,6 @@ class core_renderer extends \theme_boost\output\core_renderer {
 
         return \theme_snap\local::course_coverimage_url($COURSE->id);
     }
-    public function course_footer() {
-        global $DB, $COURSE, $CFG, $PAGE;
-
-        // Note: This check will be removed for Snap 2.7.
-        if (empty($PAGE->theme->settings->coursefootertoggle)) {
-            return false;
-        }
-
-        $context = context_course::instance($COURSE->id);
-        $courseteachers = '';
-        $coursesummary = '';
-
-        $clist = new \course_in_list($COURSE);
-        $teachers = $clist->get_course_contacts();
-
-        if (!empty($teachers)) {
-            // Get all teacher user records in one go.
-            $teacherids = array();
-            foreach ($teachers as $teacher) {
-                $teacherids[] = $teacher['user']->id;
-            }
-            $teacherusers = $DB->get_records_list('user', 'id', $teacherids);
-
-            // Create string for teachers.
-            $courseteachers .= '<h6>'.get_string('coursecontacts', 'theme_snap').'</h6><div id=course_teachers>';
-            foreach ($teachers as $teacher) {
-                if (!isset($teacherusers[$teacher['user']->id])) {
-                    continue;
-                }
-                $teacheruser = $teacherusers [$teacher['user']->id];
-                $courseteachers .= $this->print_teacher_profile($teacheruser);
-            }
-            $courseteachers .= "</div>";
-        }
-        // If user can edit add link to manage users.
-        if (has_capability('moodle/course:enrolreview', $context)) {
-            if (empty($courseteachers)) {
-                $courseteachers = "<h6>".get_string('coursecontacts', 'theme_snap')."</h6>";
-            }
-            $courseteachers .= '<a class="btn btn-default btn-sm" href="'.$CFG->wwwroot.'/enrol/users.php?id='.
-                $COURSE->id.'">'.get_string('enrolledusers', 'enrol').'</a>';
-        }
-
-        if (!empty($COURSE->summary)) {
-            $coursesummary = '<h6>'.get_string('aboutcourse', 'theme_snap').'</h6>';
-            $formatoptions = new stdClass;
-            $formatoptions->noclean = true;
-            $formatoptions->overflowdiv = true;
-            $formatoptions->context = $context;
-            $coursesummarycontent = file_rewrite_pluginfile_urls($COURSE->summary,
-                'pluginfile.php', $context->id, 'course', 'summary', null);
-            $coursesummarycontent = format_text($coursesummarycontent, $COURSE->summaryformat, $formatoptions);
-            $coursesummary .= '<div id=course_about>'.$coursesummarycontent.'</div>';
-        }
-
-        // If able to edit add link to edit summary.
-        if (has_capability('moodle/course:update', $context)) {
-            if (empty($coursesummary)) {
-                $coursesummary = '<h6>'.get_string('aboutcourse', 'theme_snap').'</h6>';
-            }
-            $coursesummary .= '<a class="btn btn-default btn-sm" href="'.$CFG->wwwroot.'/course/edit.php?id='.
-                $COURSE->id.'#id_descriptionhdr">'.get_string('editsummary').'</a>';
-        }
-
-        // Get recent activities on mods in the course.
-        $courserecentactivities = $this->get_mod_recent_activity($context);
-        if ($courserecentactivities) {
-            $courserecentactivity = '<h6>'.get_string('recentactivity').'</h6>';
-            $courserecentactivity .= "<div id=course_recent_updates>";
-            if (!empty($courserecentactivities)) {
-                $courserecentactivity .= $courserecentactivities;
-            }
-            $courserecentactivity .= "</div>";
-        }
-        // If user can edit add link to moodle recent activity stuff.
-        if (has_capability('moodle/course:update', $context)) {
-            if (empty($courserecentactivities)) {
-                $courserecentactivity = '<h6>'.get_string('recentactivity').'</h6>';
-                $courserecentactivity .= get_string('norecentactivity');
-            }
-            $courserecentactivity .= '<div><a class="btn btn-default btn-sm" href="'.$CFG->wwwroot.'/course/recent.php?id='
-                .$COURSE->id.'">'.get_string('showmore', 'form').'</a></div>';
-        }
-
-        if (!empty($courserecentactivity)) {
-            $columns[] = $courserecentactivity;
-        }
-        if (!empty($courseteachers)) {
-            $columns[] = $courseteachers;
-        }
-        if (!empty($coursesummary)) {
-            $columns[] = $coursesummary;
-        }
-
-        // Logic for printing bootstrap grid.
-        if (empty($columns)) {
-            return '';
-        } else if (count($columns) == 1) {
-                $output  = '<div class="col-md-12">'.$columns[0].'</div>';
-        } else if (count($columns) >= 2 && !empty($courserecentactivity)) {
-            // Here we output recent updates any some other sections.
-            if (count($columns) > 2) {
-                $output  = '<div class="col-md-6">'.$columns[1].$columns[2].'</div>';
-            } else {
-                $output  = '<div class="col-md-6">'.$columns[1].'</div>';
-            }
-            $output .= '<div class="col-md-6">'.$columns[0].'</div>';
-        } else if (count($columns) == 2) {
-            $output  = '<div class="col-md-6">'.$columns[1].'</div>';
-            $output  .= '<div class="col-md-6">'.$columns[0].'</div>';
-        }
-
-        return $output;
-    }
-
-
-    /**
-     * Print teacher profile
-     * Prints a media object with the techers photo, name (links to profile) and desctiption.
-     *
-     * @param stdClass $user
-     * @return string
-     */
-    public function print_teacher_profile($user) {
-        global $CFG, $COURSE;
-
-        $userpicture = new user_picture($user);
-        $userpicture->link = false;
-        $userpicture->alttext = false;
-        $userpicture->size = 100;
-        $picture = $this->render($userpicture);
-
-        $fullname = '<a href="'.$CFG->wwwroot.'/user/profile.php?id='.$user->id.'">'.format_string(fullname($user)).'</a>';
-        $coursecontext = context_course::instance($COURSE->id);
-        $user->description = file_rewrite_pluginfile_urls($user->description,
-            'pluginfile.php', $coursecontext->id, 'user', 'profile', $user->id);
-        $description = format_text($user->description, $user->descriptionformat);
-
-        return "<div class='snap-media-object'>
-                $picture
-                <div class='snap-media-body'>
-                $fullname
-                $description
-                </div>
-                </div>";
-    }
-
 
     /**
      * Print links to more information for personal menu colums.
@@ -267,52 +120,6 @@ class core_renderer extends \theme_boost\output\core_renderer {
         $link = '<a href="' .$url. '" target="_blank">' .$icon. '</a>';
         return $link;
     }
-
-    public function get_mod_recent_activity($context) {
-        global $COURSE, $OUTPUT;
-        $viewfullnames = has_capability('moodle/site:viewfullnames', $context);
-        $recentactivity = array();
-        $timestart = time() - (86400 * 7); // 7 days ago.
-        if (optional_param('testing', false, PARAM_BOOL)) {
-            $timestart = time() - (86400 * 700); // 700 days ago for testing purposes.
-        }
-        $modinfo = get_fast_modinfo($COURSE);
-        $usedmodules = $modinfo->get_used_module_names();
-        if (empty($usedmodules)) {
-            // No used modules so return null string.
-            return '';
-        }
-        foreach ($usedmodules as $modname => $modfullname) {
-            // Each module gets it's own logs and prints them.
-            ob_start();
-            $hascontent = component_callback('mod_'. $modname, 'print_recent_activity',
-                    array($COURSE, $viewfullnames, $timestart), false);
-            if ($hascontent) {
-                $content = ob_get_contents();
-                if (!empty($content)) {
-                    $recentactivity[$modname] = $content;
-                }
-            }
-            ob_end_clean();
-        }
-
-        $output = '';
-        if (!empty($recentactivity)) {
-            foreach ($recentactivity as $modname => $moduleactivity) {
-                // Get mod icon, empty alt as title already there.
-                $img = html_writer::tag('img', '', array(
-                    'src' => $OUTPUT->pix_url('icon', $modname),
-                    'alt' => '',
-                ));
-                // Create media object for module activity.
-                $output .= "<div class='snap-media-object course-footer-update-$modname'>$img".
-                    "<div class=snap-media-body>$moduleactivity</div></div>";
-            }
-        }
-
-        return $output;
-    }
-
 
     /**
      * Settings link for opening the Administration menu, only shown if needed.
@@ -521,13 +328,12 @@ class core_renderer extends \theme_boost\output\core_renderer {
         $title = '<h3>' .$title. '</h3>' .$content;
         $link = html_writer::link($url, $title);
 
-        $object = $image
-                . '<div class="snap-media-body">'
-                . $link
-                . $metastr
-                . '</div>';
-
-        return '<div class="snap-media-object '.$extraclasses.'">'.$object.'</div>';
+        $data = (object) [
+                'image' => $image,
+                'content' => $link.$metastr,
+                'class' => $extraclasses
+        ];
+        return $this->render_from_template('theme_snap/media_object', $data);
     }
 
 

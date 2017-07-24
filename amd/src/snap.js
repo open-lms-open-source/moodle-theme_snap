@@ -284,6 +284,18 @@ define(['jquery', 'core/log', 'theme_snap/headroom', 'theme_snap/util', 'theme_s
         };
 
         /**
+         * Course footer recent activity dom re-order.
+         */
+        var recentUpdatesFix = function() {
+            $('#snap-course-footer-recent-activity .info').each(function() {
+                $(this).appendTo($(this).prev());
+            });
+            $('#snap-course-footer-recent-activity .head .name').each(function() {
+                $(this).prependTo($(this).closest( ".head" ));
+            });
+        };
+
+        /**
          * Apply progressbar.js for circular progress displays.
          */
         var progressbarcircle = function() {
@@ -646,6 +658,7 @@ define(['jquery', 'core/log', 'theme_snap/headroom', 'theme_snap/util', 'theme_s
                         $('body').addClass('snap-js-loaded');
                         // Apply progressbar.js for circluar progress display.
                         progressbarcircle();
+                        recentUpdatesFix();
                     });
                 });
             }

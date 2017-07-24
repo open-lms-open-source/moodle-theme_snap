@@ -652,7 +652,7 @@ input[type="reset"] {
         float: left;
         display: block;
         width: 36px;
-        margin: 0.5em 1em 0 0.5em;
+        margin: .3em 1em 0 .3em;
         height: auto;
         vertical-align: baseline;
     }
@@ -1072,8 +1072,8 @@ header#page-header
 
 .course-content,
 .settingsform,
-.mform,
-#page-mod-page-view #region-main {
+#page-mod-page-view #region-main,
+#snap-course-footer-about {
     max-width: 43.5em;
     margin: 0 auto;
 }
@@ -2579,22 +2579,20 @@ table#user-grades tr.avg td.cell {
     font-family: $font-family-system;
 }
 
-// whitelist - make grade table larger, apply whitespace remover
+// Whitelist - pages need to be full width.
 .path-mod-assign,
-.path-grade-edit-tree,
-.path-grade-report-customgrader,
-.path-grade-report-grader,
-.path-admin-report {
+.path-grade,
+.path-admin-report,
+.pagelayout-admin,
+#page-course-editsection {
     #region-main {
         width: 100%;
         max-width: 100%;
     }
 
-    table.simple,
-    #gradetreesubmit,
-    ul.nav-tabs {
-        max-width: 60.5em;
-        margin: 0 auto 1em;
+    .snap-form-required fieldset {
+        max-width: 43.5em;
+        margin: 1em 0;
     }
 }
 
