@@ -1131,6 +1131,7 @@ class course_renderer extends \core_course_renderer {
 
         // Get recent activities on mods in the course.
         $courserecentactivities = $this->get_mod_recent_activity($context);
+        $courserecentactivity = '';
         if ($courserecentactivities) {
             $courserecentactivity = '<h5>'.get_string('recentactivity').'</h5>';
             if (!empty($courserecentactivities)) {
@@ -1204,7 +1205,6 @@ class course_renderer extends \core_course_renderer {
      * @param stdClass $context
      * @return string
      */
-
     public function get_mod_recent_activity($context) {
         global $COURSE, $OUTPUT;
         $viewfullnames = has_capability('moodle/site:viewfullnames', $context);
