@@ -20,6 +20,13 @@ $snapsettings = new admin_settingpage('themesnapsocialmedia', get_string('social
     $setting = new admin_setting_configurl($name, $title, $description, $default);
     $snapsettings->add($setting);
 
+    $name = 'theme_snap/linkedin';
+    $title = new lang_string('linkedin', 'theme_snap');
+    $description = new lang_string('linkedindesc', 'theme_snap');
+    $default = '';
+    $setting = new admin_setting_configurl($name, $title, $description, $default);
+    $snapsettings->add($setting);
+
     $name = 'theme_snap/youtube';
     $title = new lang_string('youtube', 'theme_snap');
     $description = new lang_string('youtubedesc', 'theme_snap');
