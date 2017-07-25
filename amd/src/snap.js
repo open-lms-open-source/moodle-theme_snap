@@ -536,6 +536,13 @@ define(['jquery', 'core/log', 'theme_snap/headroom', 'theme_snap/util', 'theme_s
                     applyBlockHash(); // change location hash if necessary
                     bodyClasses(); // add body classes
 
+                    // Add a class to the body to show js is loaded.
+                    $('body').addClass('snap-js-loaded');
+                    // Apply progressbar.js for circluar progress display.
+                    progressbarcircle();
+                    // Course footer recent updates dom fixes.
+                    recentUpdatesFix();
+
                     coverImage(courseConfig.shortname, siteMaxBytes);
 
                     // Allow deeplinking to bs tabs on snap settings page.
@@ -652,14 +659,6 @@ define(['jquery', 'core/log', 'theme_snap/headroom', 'theme_snap/util', 'theme_s
                             }
                         );
                     }
-
-                    $(document).ready(function() {
-                        // Add a class to the body to show js is loaded.
-                        $('body').addClass('snap-js-loaded');
-                        // Apply progressbar.js for circluar progress display.
-                        progressbarcircle();
-                        recentUpdatesFix();
-                    });
                 });
             }
         };
