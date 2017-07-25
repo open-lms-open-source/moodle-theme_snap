@@ -715,16 +715,6 @@ input[type="reset"] {
 
 }
 
-@include media-breakpoint-up(sm) {
-    #moodle-footer .list-unstyled {
-        column-count: 2;
-    }
-
-    #moodle-footer .list-large {
-        column-count: 3;
-    }
-}
-
 // Message badge alerts
 .message_badge_message,
 .message_badge_empty {
@@ -2933,13 +2923,16 @@ body.hascontinuecancel.path-site #page {
 // The site footer - moodle-footer
 // -------------------------
 
+#page {
+    margin-bottom: 1em;
+}
+
 #moodle-footer {
     padding-top: 3em;
     padding-bottom: 1em;
     clear: both;
     color: $gray-lighter;
     background-color: $body-color;
-    margin-top: 0;
 }
 
 #moodle-footer {
@@ -2970,25 +2963,15 @@ body.hascontinuecancel.path-site #page {
     }
 }
 
-#page-site-index #moodle-footer {
-    margin-top: 0;
-}
-
-#moodle-footer.nocoursefooter {
-    margin-top: 2em;
+// Custom menu lists.
+@include media-breakpoint-up(sm) {
+    #moodle-custom-menu .list-unstyled {
+        column-count: 2;
+    }
 }
 
 #site-news-forum + br {
     display: none;
-}
-
-/* Moodle error, reports, all that stuff in the footer */
-#page-footer {
-    border-top: none;
-
-    .langmenu {
-        text-align: right;
-    }
 }
 
 .nav-justified + .nav-justified {
