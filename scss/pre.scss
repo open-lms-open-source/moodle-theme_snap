@@ -69,3 +69,22 @@ $state-warning-border:           fade-out($brand-warning, 0.9);
 $state-danger-text:              $brand-danger;
 $state-danger-bg:                fade-out($brand-danger, 0.9);
 $state-danger-border:            fade-out($brand-danger, 0.9);
+
+$footer-color-bg:                #f1f0ee;
+
+// -------------------------
+// Colour variables for resources and activities.
+// -------------------------
+
+$color-word:                         #03A9F4; // Blue.
+$color-powerpoint:                   #ff7300; // Orange.
+$color-excel:                        #009e51; // Green.
+$color-pdf:                          #F44336; // Red.
+$color-audio:                        #8BC34A; // Green.
+$color-video:                        #55B5CC; // Blue.
+$color-code:                         #f0652a; // Orange.
+
+$color-communication:                #8BC34A; // Foums, Chat
+$color-assignment:                   #03A9F4; // Assignment, workshop
+$color-quiz:                         #FFA000; // Quiz, choice, feedback
+$color-wiki:                         #009688; // Wiki, glossary

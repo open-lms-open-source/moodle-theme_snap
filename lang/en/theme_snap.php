@@ -22,7 +22,7 @@
  * @license   http://opensource.org/licenses/gpl-3.0.html GNU Public License
  */
 
-$string['aboutcourse'] = 'About This Course';
+$string['aboutcourse'] = 'About this Course';
 $string['activity'] = 'Activity';
 $string['action:changeassetvisibility'] = 'change asset visibility';
 $string['action:duplicateasset'] = 'duplicate asset';

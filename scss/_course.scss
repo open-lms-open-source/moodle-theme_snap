@@ -825,13 +825,13 @@ body.snap-resource-card li.snap-resource {
     &.snap-mime-writer,
     &.snap-mime-oth,
     &.snap-mime-text {
-        border-top-color: #03A9F4;
+        border-top-color: $color-word;
         background-image: url([[pix:core|/f/document]]);
     }
 
     &.snap-mime-powerpoint,
     &.snap-mime-impress {
-        border-top-color: #ff7300;
+        border-top-color: $color-powerpoint;
         background-image: url([[pix:core|/f/powerpoint]]);
     }
 
@@ -839,7 +839,7 @@ body.snap-resource-card li.snap-resource {
     &.snap-mime-chart,
     &.snap-mime-database,
     &.snap-mime-calc {
-        border-top-color: #009e51;
+        border-top-color: $color-excel;
         background-image: url([[pix:core|/f/spreadsheet]]);
     }
 
@@ -847,7 +847,7 @@ body.snap-resource-card li.snap-resource {
     &.snap-mime-pdf,
     &.snap-mime-eps,
     &.snap-mime-flash {
-        border-top-color: #F44336;
+        border-top-color: $color-pdf;
         background-image: url([[pix:core|/f/pdf]]);
     }
 
@@ -859,7 +859,7 @@ body.snap-resource-card li.snap-resource {
     &.snap-mime-mp3,
     &.snap-mime-wav,
     &.snap-mime-audio {
-        border-top-color: #8BC34A;
+        border-top-color: $color-audio;
         background-image: url([[pix:core|/f/audio]]);
     }
 
@@ -869,7 +869,7 @@ body.snap-resource-card li.snap-resource {
     &.snap-mime-quicktime,
     &.snap-mime-mpeg,
     &.snap-mime-avi {
-        border-top-color: #55B5CC;
+        border-top-color: $color-video;
         background-image: url([[pix:core|/f/video]]);
     }
 
@@ -891,7 +891,6 @@ body.snap-resource-card li.snap-resource {
         background-image: url([[pix:core|/f/book]]);
     }
 
-    &.modtype_imscp,
     &.modtype_scorm {
         background-image: url([[pix:core|/f/scorm]]);
     }
@@ -975,13 +974,13 @@ body.snap-resource-card li.snap-resource {
     &.modtype_forum,
     &.modtype_chat,
     &.modtype_hsuforum {
-        border-top-color: #8BC34A;
+        border-top-color: $color-communication;
     }
 
     &.modtype_assign,
     &.modtype_assignment,
     &.modtype_workshop {
-        border-top-color: #03A9F4;
+        border-top-color: $color-assignment;
     }
 
     &.modtype_choice,
@@ -990,13 +989,13 @@ body.snap-resource-card li.snap-resource {
     &.modtype_survey,
     &.modtype_questionnaire,
     &.modtype_lesson {
-        border-top-color: #FFA000;
+        border-top-color: $color-quiz;
     }
 
     &.modtype_data,
     &.modtype_glossary,
     &.modtype_wiki {
-        border-top-color: #009688;
+        border-top-color: $color-wiki;
     }
 
     &.modtype_collaborate {
@@ -1535,38 +1534,6 @@ span.editinstructions {
     padding-left: 0;
 }
 
-// -------------------------
-// Course footer.
-// -------------------------
-
-#snap-course-footer {
-    margin: 2em auto -2em; // pull the sitewide footer up if we have a course footer
-    padding: 1em 4%;
-    background-color: #f1f0ee;
-}
-
-#course_recent_updates {
-    h3 {
-        font-size: 1em;
-        clear: both;
-    }
-
-    .head {
-        .date,
-        .name {
-            display: inline;
-        }
-
-        .date {
-            float: right;
-            font-size: small;
-        }
-    }
-
-    .info.bold {
-        font-weight: inherit;
-    }
-}
 
 // -------------------------
 // Course completion settings page.

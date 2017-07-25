@@ -97,9 +97,9 @@ if ($tocformat && $leftnav) {
 }
 
 if ($coursemainpage) {
-    $coursefooter = $OUTPUT->course_footer();
+    $coursefooter = $output->course_footer();
     if (!empty($coursefooter)) { ?>
-    <footer role=contentinfo id=snap-course-footer class=row><?php echo $coursefooter ?></footer>
+        <footer role="contentinfo" id="snap-course-footer"><?php echo $coursefooter ?></footer>
     <?php
     }
 } ?>

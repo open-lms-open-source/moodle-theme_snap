@@ -1,0 +1,153 @@
+// -------------------------
+//  Course footer - a footer in snap courses.
+// -------------------------
+// -------------------------
+// Course footer.
+// -------------------------
+
+#snap-course-footer {
+    margin-top: 1em;
+    padding: 1em 4%;
+    background-color: $footer-color-bg;
+
+    .snap-media-object {
+        font-weight: normal;
+    }
+}
+
+#snap-course-footer-recent-activity,
+#snap-course-footer-about,
+#snap-course-footer-summary {
+    padding-top: .5em;
+}
+
+// -------------------------
+//  About the course.
+// -------------------------
+#snap-course-footer-about {
+    max-width: 43.5em;
+}
+#snap-course-footer-summary {
+    font-family: $font-family-serif;
+}
+// -------------------------
+//  Course contacts.
+// -------------------------
+#snap-course-footer-contacts {
+    .snap-media-object .userpicture {
+        width: 50px;
+    }
+}
+
+// -------------------------
+//  Recent updates.
+// -------------------------
+#snap-course-footer-recent-activity {
+    padding-top: .5em;
+
+    h3 {
+        display: none;
+    }
+
+    // Grid content for various breakpoints.
+    @include media-breakpoint-up(md) {
+        .snap-media-object {
+            width: 23%;
+            float: left;
+        }
+        // Clear every 4th.
+        & > .snap-media-object:nth-child(5n+1) {
+            clear: left;
+        }
+    }
+    @include media-breakpoint-down(md) {
+        .snap-media-object {
+            width: 48%;
+            float: left;
+        }
+        // Clear every second.
+        & > .snap-media-object:nth-child(3n+1) {
+            clear: left;
+        }
+    }
+
+    .snap-media-object {
+        margin-right: 2%;
+        border-top: .3em solid $gray-light;
+        // Mrooms forum output updates as media objects which we need to be 100%;
+        .snap-media-object {
+            width: 100%;
+            float: none;
+            border: none;
+
+            h3 {
+                display: block;
+            }
+        }
+        // Activity colours.
+        &.forum,
+        &.chat,
+        &.hsuforum {
+            border-color: $color-communication;
+        }
+        &.assign,
+        &.assignment,
+        &.workshop {
+            border-color: $color-assignment;
+        }
+        &.choice,
+        &.feedback,
+        &.quiz,
+        &.survey,
+        &.questionnaire,
+        &.lesson {
+            border-color: $color-quiz;
+        }
+        &.data,
+        &.glossary,
+        &.wiki {
+            border-color: $color-wiki;
+        }
+    }
+
+    // Single line recent updates info (normally a link).
+    .info {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+
+        &.bold {
+            font-weight: inherit;
+        }
+    }
+
+    .date {
+        font-size: small;
+    }
+
+    // Attempt to only show the most recent update.
+    // This is complex.
+    // Snap also uses js to update the dom for recent updates.
+
+    // Hide things to start...
+    .snap-media-object .snap-media-object,
+    li,
+    .head,
+    .info {
+        display: none;
+    }
+    // Updates are shown in reverse order, and we want the most recent, i.e. the last.
+    .snap-media-object div.snap-media-object,
+    li,
+    div.head {
+        &:nth-of-type(-n+1) {
+            display: block;
+        }
+    }
+    // Block display some elements account for dom inconsistansies.
+    .head .info,
+    .snap-media-object.chat .head,
+    .snap-media-object.chat .userlist {
+        display: block;
+    }
+}
