@@ -137,13 +137,16 @@
         display: none;
     }
     // Updates are shown in reverse order, and we want the most recent, i.e. the last.
-    .snap-media-object div.snap-media-object,
-    li,
-    div.head {
-        &:nth-of-type(-n+1) {
-            display: block;
+    .snap-media-object {
+        div.snap-media-object,
+        li,
+        div.head {
+            &:last-of-type {
+                display: block;
+            }
         }
     }
+    
     // Block display some elements account for dom inconsistansies.
     .head .info,
     .snap-media-object.chat .head,
