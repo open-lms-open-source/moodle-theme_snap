@@ -2920,12 +2920,8 @@ body.hascontinuecancel.path-site #page {
 // -------------------------
 // The site footer - moodle-footer
 // -------------------------
-
-#page {
-    margin-bottom: 1em;
-}
-#page-login-index #page {
-    margin-bottom: 0;
+body:not(".pagelayout-course") #moodle-footer {
+    margin-top: 2em;
 }
 
 #moodle-footer {
