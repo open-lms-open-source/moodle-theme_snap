@@ -2909,12 +2909,20 @@ body.hascontinuecancel.path-site #page {
 // -------------------------
 // Show icons with consistent sizes
 // -------------------------
-#page-files-index, #page-outcome-course {
+#page-outcome-course {
     #region-main, .moodle-dialogue-base {
         img.smallicon {
             @include svg-icon;
         }
     }
+}
+
+#page-files-index {
+  .generaltable, .moodle-dialogue-base {
+    img.smallicon {
+      @include svg-icon;
+    }
+  }
 }
 
 // -------------------------
