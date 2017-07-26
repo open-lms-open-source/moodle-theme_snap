@@ -2920,7 +2920,7 @@ body.hascontinuecancel.path-site #page {
 // -------------------------
 // The site footer - moodle-footer
 // -------------------------
-body:not(".pagelayout-course") #moodle-footer {
+body:not(.pagelayout-course) #moodle-footer {
     margin-top: 2em;
 }
 
