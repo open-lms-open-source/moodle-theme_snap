@@ -89,7 +89,7 @@ class course_toc_progress {
             'complete' => $sac->progress->complete,
             'total' => $sac->progress->total
         ];
-        $this->pixcompleted = $OUTPUT->pix_url('i/completion-manual-y');
+        $this->pixcompleted = $OUTPUT->image_url('i/completion-manual-y');
         $this->completed = $sac->progress->complete === $sac->progress->total;
     }
 }

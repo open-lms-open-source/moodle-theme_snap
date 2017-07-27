@@ -52,7 +52,7 @@ Feature: When the moodle theme is set to Snap, students and teachers can find in
     And I open the personal menu
     And I should see "Not Submitted" in the "#snap-personal-menu-deadlines div.snap-media-object:first-of-type" "css_element"
     And I should see "Not Submitted" in the "#snap-personal-menu-deadlines div.snap-media-object:nth-of-type(2)" "css_element"
-    And I follow "Course 1"
+    And I am on "Course 1" course homepage
     And I follow "Topic 1"
     And I wait until "#section-1" "css_element" is visible
     And I should see "Test assignment1"
@@ -90,7 +90,7 @@ Feature: When the moodle theme is set to Snap, students and teachers can find in
       | assign   | C2     | assign1  | Test assignment1 | Test assignment 1 | 1                                   | 1                               | 1       | the timestamp of tomorrow    |
       | assign   | C2     | assign2  | Test assignment2 | Test assignment 2 | 1                                   | 1                               | 1       | the timestamp of next week   |
     And I log in as "student1"
-    And I follow "Course 2"
+    And I am on "Course 2" course homepage
     And I follow "Topic 1"
     And I wait until "#section-1" "css_element" is visible
     And I should see "Test assignment1"

@@ -273,7 +273,7 @@ trait format_section_trait {
         $o .= '<div class="snap-draft-tag">'.get_string('draft', 'theme_snap').'</div>';
 
         // Availabiliy message.
-        $conditionalicon = '<img aria-hidden="true" role="presentation" class="svg-icon" src="'.$output->pix_url('conditional', 'theme').'" />';
+        $conditionalicon = '<img aria-hidden="true" role="presentation" class="svg-icon" src="'.$output->image_url('conditional', 'theme').'" />';
         $conditionalmessage = $this->section_availability_message($section,
             has_capability('moodle/course:viewhiddensections', $context));
         if ($conditionalmessage !== '') {
@@ -298,7 +298,7 @@ trait format_section_trait {
         $o .= $summarytext;
         if ($canupdatecourse) {
             $url = new moodle_url('/course/editsection.php', array('id' => $section->id, 'sr' => $sectionreturn));
-            $icon = '<img aria-hidden="true" role="presentation" class="svg-icon" src="'.$this->output->pix_url('pencil', 'theme').'" /><br/>';
+            $icon = '<img aria-hidden="true" role="presentation" class="svg-icon" src="'.$this->output->image_url('pencil', 'theme').'" /><br/>';
             $o .= '<a href="'.$url.'" class="edit-summary">'.$icon.get_string('editcoursetopic', 'theme_snap'). '</a>';
         }
         $o .= "</div>";
@@ -511,7 +511,7 @@ trait format_section_trait {
         $urlparams = array('section' => $section);
             // S Lamour Aug 2015 - show activity picker
             // moodle is adding a link around the span in a span with js - yay!! go moodle...
-            $iconurl = $OUTPUT->pix_url('move_here', 'theme');
+            $iconurl = $OUTPUT->image_url('move_here', 'theme');
             $icon = '<img src="'.$iconurl.'" class="svg-icon" role="presentation" alt=""><br>';
             $modchooser = '<div class="col-sm-6 snap-modchooser section_add_menus">
               <span class="section-modchooser-link btn btn-link">'.$icon.'<span>'.get_string('addresourceoractivity', 'theme_snap').'</span></span>
