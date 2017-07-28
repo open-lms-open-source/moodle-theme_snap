@@ -26,8 +26,8 @@
  * Main snap initialising function.
  */
 define(['jquery', 'core/log', 'theme_snap/headroom', 'theme_snap/util', 'theme_snap/personal_menu',
-        'theme_snap/responsive_video', 'theme_snap/cover_image', 'theme_snap/progressbar'],
-    function($, log, Headroom, util, personalMenu, responsiveVideo, coverImage, ProgressBar) {
+        'theme_snap/cover_image', 'theme_snap/progressbar'],
+    function($, log, Headroom, util, personalMenu, coverImage, ProgressBar) {
 
         'use strict';
 
@@ -284,6 +284,18 @@ define(['jquery', 'core/log', 'theme_snap/headroom', 'theme_snap/util', 'theme_s
         };
 
         /**
+         * Course footer recent activity dom re-order.
+         */
+        var recentUpdatesFix = function() {
+            $('#snap-course-footer-recent-activity .info').each(function() {
+                $(this).appendTo($(this).prev());
+            });
+            $('#snap-course-footer-recent-activity .head .name').each(function() {
+                $(this).prependTo($(this).closest( ".head" ));
+            });
+        };
+
+        /**
          * Apply progressbar.js for circular progress displays.
          */
         var progressbarcircle = function() {
@@ -524,13 +536,29 @@ define(['jquery', 'core/log', 'theme_snap/headroom', 'theme_snap/util', 'theme_s
                     applyBlockHash(); // change location hash if necessary
                     bodyClasses(); // add body classes
 
+                    // Add a class to the body to show js is loaded.
+                    $('body').addClass('snap-js-loaded');
+                    // Apply progressbar.js for circluar progress display.
+                    progressbarcircle();
+                    // Course footer recent updates dom fixes.
+                    recentUpdatesFix();
+
                     coverImage(courseConfig.shortname, siteMaxBytes);
+
+                    // Allow deeplinking to bs tabs on snap settings page.
+                    if ($('#page-admin-setting-themesettingsnap').length) {
+                        var tabHash = location.hash;
+                        // Check link is to a tab hash.
+                        if (tabHash && $('.nav-link[href="' + tabHash + '"]').length) {
+                            $('.nav-link[href="' + tabHash + '"]').tab('show');
+                            $(window).scrollTop(0);
+                        }
+                    }
 
                     if ($('body').hasClass('snap-fixy-open')) {
                         personalMenu.update();
                     }
 
-                    // SL - 19th aug 2014 - resposive video and snap search in exceptions.
                     // SHAME - make section name creation mandatory
                     if ($('#page-course-editsection.format-topics').length) {
                         var usedefaultname = document.getElementById('id_usedefaultname'),
@@ -618,9 +646,6 @@ define(['jquery', 'core/log', 'theme_snap/headroom', 'theme_snap/util', 'theme_s
                         $(main_form).append(savebuttons);
                     }
 
-                    // Makes video responsive.
-                    responsiveVideo.init();
-
                     // Conversation counter for user badge.
                     if (messageBadgeCountEnabled) {
                         require(
@@ -631,13 +656,6 @@ define(['jquery', 'core/log', 'theme_snap/headroom', 'theme_snap/util', 'theme_s
                             }
                         );
                     }
-
-                    $(document).ready(function() {
-                        // Add a class to the body to show js is loaded.
-                        $('body').addClass('snap-js-loaded');
-                        // Apply progressbar.js for circluar progress display.
-                        progressbarcircle();
-                    });
                 });
             }
         };

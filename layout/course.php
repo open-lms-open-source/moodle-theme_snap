@@ -28,7 +28,13 @@ require(__DIR__.'/header.php');
 
 $coursemainpage = strpos($PAGE->pagetype, 'course-view-') === 0;
 $tocformat = ($COURSE->format == 'topics' || $COURSE->format == 'weeks');
-$leftnav = !empty($PAGE->theme->settings->leftnav);
+// Check if the toc is displayed list or top - used to add layout in this file.
+$leftnav = false;
+if (!empty($PAGE->theme->settings->leftnav)) {
+    if ($PAGE->theme->settings->leftnav == 'list') {
+        $leftnav = true;
+    }
+}
 ?>
 <!-- moodle js hooks -->
 <div id="page">
@@ -91,9 +97,9 @@ if ($tocformat && $leftnav) {
 }
 
 if ($coursemainpage) {
-    $coursefooter = $OUTPUT->course_footer();
+    $coursefooter = $output->course_footer();
     if (!empty($coursefooter)) { ?>
-    <footer role=contentinfo id=snap-course-footer class=row><?php echo $coursefooter ?></footer>
+        <footer role="contentinfo" id="snap-course-footer"><?php echo $coursefooter ?></footer>
     <?php
     }
 } ?>

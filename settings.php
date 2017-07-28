@@ -18,34 +18,16 @@
  * Snap settings.
  *
  * @package   theme_snap
- * @copyright Copyright (c) 2015 Moodlerooms Inc. (http://www.moodlerooms.com)
+ * @copyright Copyright (c) 2017 Moodlerooms Inc. (http://www.moodlerooms.com)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 defined('MOODLE_INTERNAL') || die;
 
-use theme_snap\admin_setting_configurl;
-use theme_snap\admin_setting_configcourseid;
-use theme_snap\admin_setting_configradiobuttons;
-
-
-$ADMIN->add('themes', new admin_category('theme_snap', 'Snap'));
 $settings = null; // Unsets the default $settings object initialised by Moodle.
-
-// Basic settings.
-$snapsettings = new admin_settingpage('themesettingsnap', 'Snap');
-
-// Feature spots settings.
-$fssettings = new admin_settingpage('themesnapfeaturespots', get_string('featurespots', 'theme_snap'));
-
-// Featured courses settings.
-$fcsettings = new admin_settingpage('themesnapfeaturedcourses', get_string('featuredcourses', 'theme_snap'));
-
-// Feature spots settings.
-$resourcesettings = new admin_settingpage('themesnapresourcedisplay', get_string('resourcedisplay', 'theme_snap'));
+$settings = new theme_boost_admin_settingspage_tabs('themesettingsnap', 'Snap');
 
 if ($ADMIN->fulltree) {
-
     $checked = '1';
     $unchecked = '0';
 
@@ -440,10 +422,12 @@ if ($ADMIN->fulltree) {
     $description = '';
     $setting = new admin_setting_configradiobuttons($name, $title, $description, $default, $radios);
     $resourcesettings->add($setting);
+    
+    require('settings/snap_basics.php');
+    require('settings/cover_settings.php');
+    require('settings/personal_menu_settings.php');
+    require('settings/feature_spots_settings.php');
+    require('settings/featured_courses_settings.php');
+    require('settings/course_settings.php');
+    require('settings/social_media_settings.php');
 }
-
-// Add theme pages.
-$ADMIN->add('theme_snap', $snapsettings);
-$ADMIN->add('theme_snap', $fssettings);
-$ADMIN->add('theme_snap', $fcsettings);
-$ADMIN->add('theme_snap', $resourcesettings);

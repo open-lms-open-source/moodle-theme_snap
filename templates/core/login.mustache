@@ -146,22 +146,24 @@
         </div>
     {{/hasidentityproviders}}
 </div>
-<div class="snap-login">
-    {{#cansignup}}
+
+{{#cansignup}}
+    <div class="snap-login">
         <h5>{{#str}}firsttime{{/str}}</h5>
         <p><a class="btn btn-primary btn-block" href="{{signupurl}}">{{#str}}startsignup{{/str}}</a></p>
-    {{/cansignup}}
+    </div>
+{{/cansignup}}
 
-    {{#canloginasguest}}
+{{#canloginasguest}}
+    <div class="snap-login">
         <h5>{{#str}}someallowguest{{/str}}</h5>
         <form action="{{loginurl}}" method="post" id="guestlogin">
             <input type="hidden" name="username" value="guest" />
             <input type="hidden" name="password" value="guest" />
             <button class="btn btn-secondary btn-block" type="submit">{{#str}}loginguest{{/str}}</button>
         </form>
-    {{/canloginasguest}}
-
-</div> <!-- close snap login -->
+    </div>
+{{/canloginasguest}}
 
 
 {{#js}}

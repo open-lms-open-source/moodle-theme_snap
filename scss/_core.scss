@@ -360,25 +360,39 @@ img.icon.hide {
     display: block;
 }
 
-// Responsive video for iframes, objects, embeds.
-.videoiframe iframe {
-    width: 100% !important;
-    margin: 0 auto;
-}
-
-.mediaplugin object,
-.mediaplugin_flv,
-.mediaplugin embed
-.mediaplugin iframe {
-  width: 100%;
-  margin: 0 auto;
-  max-height: 90vh;
-}
-
 // Responsive video for HTML5 only.
 video {
     width: 100% !important;
     height: auto !important;
+}
+
+// Responsive video for iframes, objects, embeds.
+iframe:not(.vjs-tech) {
+    &[src*="youtube.com"],
+    &[src*="youtu.be"],
+    &[src*="vimeo.com"],
+    &[src*="archive.org/embed"],
+    &[src*="youtube-nocookie.com"],
+    &[src*="embed.ted.com"],
+    &[src*="embed-ssl.ted.com"],
+    &[src*="kickstarter.com"],
+    &[src*="video.html"],
+    &[src*="simmons.tegrity.com"],
+    &[src*="dailymotion.com"] {
+        width: 100%;
+        height: 240px;
+        margin: 0 auto;
+        max-width: $user-content-max-width;
+        display: block;
+        clear: both;
+
+        @include media-breakpoint-up(sm) {
+            height: 360px;
+        }
+        @include media-breakpoint-up(md) {
+            height: 420px;
+        }
+    }
 }
 
 li {
@@ -652,7 +666,7 @@ input[type="reset"] {
         float: left;
         display: block;
         width: 36px;
-        margin: 0.5em 1em 0 0.5em;
+        margin: .3em 1em 0 .3em;
         height: auto;
         vertical-align: baseline;
     }
@@ -713,16 +727,6 @@ input[type="reset"] {
         color: $brand-warning;
     }
 
-}
-
-@include media-breakpoint-up(sm) {
-    #moodle-footer .list-unstyled {
-        column-count: 2;
-    }
-
-    #moodle-footer .list-large {
-        column-count: 3;
-    }
 }
 
 // Message badge alerts
@@ -1072,9 +1076,9 @@ header#page-header
 
 .course-content,
 .settingsform,
-.mform,
-#page-mod-page-view #region-main {
-    max-width: 43.5em;
+#page-mod-page-view #region-main,
+#snap-course-footer-about {
+    max-width: $user-content-max-width;
     margin: 0 auto;
 }
 
@@ -1148,7 +1152,6 @@ http://blog.rodneyrehm.de/archives/34-iOS7-Mobile-Safari-And-Viewport-Units.html
 
 #page-mast .snap-login-button {
     display: inline-block;
-    padding: 0.25em 2em;
     margin-top: 1em;
 }
 #mr-nav .snap-login-button {
@@ -2580,22 +2583,20 @@ table#user-grades tr.avg td.cell {
     font-family: $font-family-system;
 }
 
-// whitelist - make grade table larger, apply whitespace remover
+// Whitelist - pages need to be full width.
 .path-mod-assign,
-.path-grade-edit-tree,
-.path-grade-report-customgrader,
-.path-grade-report-grader,
-.path-admin-report {
+.path-grade,
+.path-admin-report,
+.pagelayout-admin,
+#page-course-editsection {
     #region-main {
         width: 100%;
         max-width: 100%;
     }
 
-    table.simple,
-    #gradetreesubmit,
-    ul.nav-tabs {
-        max-width: 60.5em;
-        margin: 0 auto 1em;
+    .snap-form-required fieldset {
+        max-width: 43.5em;
+        margin: 1em 0;
     }
 }
 
@@ -2922,7 +2923,7 @@ body.hascontinuecancel.path-site #page {
 // -------------------------
 // Show icons with consistent sizes
 // -------------------------
-#page-files-index, #page-outcome-course {
+#page-outcome-course {
     #region-main, .moodle-dialogue-base {
         img.smallicon {
             @include svg-icon;
@@ -2930,9 +2931,20 @@ body.hascontinuecancel.path-site #page {
     }
 }
 
+#page-files-index {
+  .generaltable, .moodle-dialogue-base {
+    img.smallicon {
+      @include svg-icon;
+    }
+  }
+}
+
 // -------------------------
 // The site footer - moodle-footer
 // -------------------------
+body:not(.pagelayout-course) #moodle-footer {
+    margin-top: 2em;
+}
 
 #moodle-footer {
     padding-top: 3em;
@@ -2940,7 +2952,6 @@ body.hascontinuecancel.path-site #page {
     clear: both;
     color: $gray-lighter;
     background-color: $body-color;
-    margin-top: 0;
 }
 
 #moodle-footer {
@@ -2971,25 +2982,15 @@ body.hascontinuecancel.path-site #page {
     }
 }
 
-#page-site-index #moodle-footer {
-    margin-top: 0;
-}
-
-#moodle-footer.nocoursefooter {
-    margin-top: 2em;
+// Custom menu lists.
+@include media-breakpoint-up(sm) {
+    #moodle-custom-menu .list-unstyled {
+        column-count: 2;
+    }
 }
 
 #site-news-forum + br {
     display: none;
-}
-
-/* Moodle error, reports, all that stuff in the footer */
-#page-footer {
-    border-top: none;
-
-    .langmenu {
-        text-align: right;
-    }
 }
 
 .nav-justified + .nav-justified {
@@ -3096,7 +3097,7 @@ http://css-spinners.com/css/spinner/three-quarters.css
 }
 
 // yui-bs overrides (note SNAP specific)
-.yui-bootstrapped {
+.yui-bootstrapped:not(.ie11) {
 
     // stop yui menu from being completely unusable on mobile device
     // note: it still isn't that great and a select box would be way better
@@ -3116,6 +3117,14 @@ http://css-spinners.com/css/spinner/three-quarters.css
             padding: 0;
             margin: 0;
         }
+    }
+}
+
+.yui-bootstrapped.ie11 #pld_tokenselector.yuimenu {
+    top: 100px !important;
+
+    & > div {
+        height: auto !important;
     }
 }
 
@@ -3266,39 +3275,6 @@ table th img.iconhelp {
     max-width: 100%;
 }
 
-#page-admin-setting-themesettingsnap{
-
-    .admin_colourpicker {
-    display: block;
-    float: left;
-    height: 40px;
-    width: 30px;
-    margin: 1px 4px;
-    }
-
-    .loadingicon,
-    .colourdialogue,
-    .previewcolour {
-        display: none;
-    }
-
-    .currentcolour {
-        /* size is set with a style tag so need to !important to override */
-        height: 30px !important;
-        width: 30px !important;
-        border-radius: 100%;
-        border: none;
-        margin-left: 0;
-    }
-
-    /* Subtitle textarea. */
-    #admin-subtitle textarea {
-        height: 5em;
-    }
-
-
-}
-
 /* Feature spots. */
 #snap-feature-spots {
     padding: 2em 4%;
@@ -3311,92 +3287,6 @@ table th img.iconhelp {
 
     .snap-feature-image {
         max-width: 200px;
-    }
-}
-
-#page-admin-setting-themesnapfeaturespots {
-
-    #admin-fs_heading {
-        input {
-            font-size: $font-size-h4;
-            text-align: center;
-        }
-
-        .form-defaultinfo,
-        .form-shortname {
-            display: none;
-        }
-    }
-    #admin-fs_one_title,
-    #admin-fs_two_title,
-    #admin-fs_three_title {
-        input {
-            font-size: $font-size-h5;
-        }
-    }
-
-    #admin-fs_one_title,
-    #admin-fs_two_title,
-    #admin-fs_three_title,
-    #admin-fs_one_image,
-    #admin-fs_two_image,
-    #admin-fs_three_image,
-    #admin-fs_one_text,
-    #admin-fs_two_text,
-    #admin-fs_three_text {
-        float: left;
-        width: 33.3%;
-        margin: 0;
-
-        .form-defaultinfo,
-        .form-shortname,
-        .fp-btn-download,
-        .dndupload-message {
-            display: none;
-        }
-    }
-
-    #admin-fs_one_image,
-    #admin-fs_one_title,
-    #admin-fs_one_text {
-        clear: left;
-    }
-}
-
-/* Featured courses admin page. */
-#page-admin-setting-themesnapfeaturedcourses {
-
-    #admin-fc_heading {
-        input {
-            font-size: $font-size-h4;
-            text-align: center;;
-        }
-
-        .form-shortname {
-            display: none;
-        }
-    }
-
-    #admin-fc_one,
-    #admin-fc_two,
-    #admin-fc_three,
-    #admin-fc_four,
-    #admin-fc_five,
-    #admin-fc_six,
-    #admin-fc_seven,
-    #admin-fc_eight {
-        width: 50%;
-        float: left;
-        padding: 1em;
-
-        .form-defaultinfo,
-        .form-shortname {
-            display: none;
-        }
-    }
-
-    #admin-fc_browse_all {
-        clear: both;
     }
 }
 
@@ -3446,12 +3336,6 @@ table th img.iconhelp {
     position: absolute;
     bottom: 0;
     padding: 0.5em 4%;
-}
-
-
-
-#page-admin-setting-themesettingsnap #id_s_theme_snap_customcss {
-    font-family: $font-family-monospace;
 }
 
 // Scrolling gradebook fixes
