@@ -144,15 +144,18 @@ class ws_user_categories extends \external_api {
 
         if ($params['value'] == "get" || empty($params['value'])) {
             $value = get_user_preferences('theme_snap_personal_menu_viewing_mode');
-        } else {
 
+            // Reset the viewing mode if the site settings is disable.
+            if ($value == 'categories' && !get_config('theme_snap', 'categoriestoggle')) {
+                set_user_preference('theme_snap_personal_menu_viewing_mode', 'all');
+                $value = 'all';
+            }
+        } else {
             if ($params['value'] != 'categories' && $params['value'] != 'all') {
                 $error = 'Unknown value';
             } else {
                 set_user_preference('theme_snap_personal_menu_viewing_mode', $params['value']);
             }
-
-
         }
 
         return array('value' => $value, 'error' => $error);

@@ -857,38 +857,52 @@ class core_renderer extends \theme_boost\output\core_renderer {
             // Create courses array with favorites first.
             $mycourses = $favorited + $notfavorited;
 
-            $coursesmenu = get_string('courses');
-
             // Retrieve user preferences filter.
             $viewingmode = get_user_preferences('theme_snap_personal_menu_viewing_mode');
             if (!empty($viewingmode) and $viewingmode == 'categories') {
                 $allcoursesvisibility = '';
                 $selectedcatvisibility = 'theme_snap_pm_active_link';
+
+                // Reset the viewing mode if the site settings is disable.
+                if (!get_config('theme_snap', 'categoriestoggle')) {
+                    set_user_preference('theme_snap_personal_menu_viewing_mode', 'all');
+                    $allcoursesvisibility = 'theme_snap_pm_active_link';
+                    $selectedcatvisibility = '';
+                }
             } else {
                 $allcoursesvisibility = 'theme_snap_pm_active_link';
                 $selectedcatvisibility = '';
+            }
+
+            if (get_config('theme_snap', 'categoriestoggle')) {
+                $coursesmenu = get_string('allcourses', 'theme_snap');
+                $categorieslink = '
+                <li role="presentation">
+                                    <a href="#" class="snap_pm_catfilter  ' . $selectedcatvisibility . '">Categories</a>
+                                    </li>';
+                $categorieschangelink = '<div class="snap_pm_category_filter_title">
+                                <div class="snap_pm_user_category_list"></div>
+                                <button aria-label="change categories menu" title="change categories menu" 
+                                    role="button" aria-controls="pushy" aria-expanded="false"
+                                    class="snap_pm_editcat menu-btn" tabindex=0 >change</button>
+                            </div>';
+
+            } else {
+                $coursesmenu = get_string('courses');
+                $categorieslink = '';
+                $categorieschangelink = '';
             }
 
             $courselist .= '
                 <section id="fixy-my-courses">
                     <div class="clearfix">
                         <div class="snap_pm_courses_section_title">
-                            <!--button class="user_category_menu_title user_category_menu_allcourses_title btn btn-default">All courses</button>
-                            <button class="user_category_menu_title user_category_menu_categories_title btn btn-default">Categories</button-->
                             <ul class="nav nav-tabs" style="border: 0px">
                               <li role="presentation">
-                              <a class="snap_pm_allcourses theme_snap_pm_firstmenuitem '.$allcoursesvisibility.'" href="#">All courses</a></li>
-                              <li role="presentation">
-                                <a href="#" class="snap_pm_catfilter  '.$selectedcatvisibility.'">Categories</a>
-                                </li>
-                              <!-- li role="presentation"><a href="#">UOP Monthly</a></li-->
+                              <a class="snap_pm_allcourses theme_snap_pm_firstmenuitem '.$allcoursesvisibility.'" href="#">'.$coursesmenu.'</a></li>
+                              ' . $categorieslink . '
                             </ul>
-                            <div class="snap_pm_category_filter_title">
-                                <div class="snap_pm_user_category_list"></div>
-                                <button aria-label="change categories menu" title="change categories menu" 
-                                    role="button" aria-controls="pushy" aria-expanded="false"
-                                    class="snap_pm_editcat menu-btn" tabindex=0 >change</button>
-                            </div>
+                            ' . $categorieschangelink . '
                         </div>';
             if (isloggedin()) {
                 $courselist .= '

@@ -35,6 +35,7 @@ $string['advancedbrandingheading'] = 'Advanced branding';
 $string['advancedbrandingheadingdesc'] = '';
 $string['ago'] = 'ago';
 $string['alerts'] = 'Alerts';
+$string['allcourses'] = 'All courses';
 $string['answered'] = 'Answered';
 $string['appendices'] = 'Tools';
 $string['assigndraft'] = 'Draft requires your confirmation';
@@ -49,6 +50,9 @@ $string['cachedef_course_completion_progress'] = 'This is used to cache completi
 $string['cachedef_course_completion_progress_ts'] = 'This is used so that we can invalidate session level caches if the course completion settings for a course or module change.';
 $string['cachedef_webservicedefinitions'] = 'Caching for auto generated web service definitions.';
 $string['card'] = 'Card';
+$string['categoriestoggle'] = 'Filter courses by categories';
+$string['categoriestoggledesc'] = 'Display a new "Categories" link. The link opens a category selector allowing the user to filter the
+displayed courses';
 $string['categoryedit'] = 'Edit category';
 $string['changecoverimage'] = 'Change cover image';
 $string['changefullname'] = 'Change site name';
