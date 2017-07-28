@@ -11,6 +11,15 @@ $default = $checked;
 $setting = new admin_setting_configcheckbox($name, $title, $description, $default, $checked, $unchecked);
 $snapsettings->add($setting);
 
+// Personal menu category filter on/off.
+$name = 'theme_snap/categoriestoggle';
+$title = new lang_string('categoriestoggle', 'theme_snap');
+$description = new lang_string('categoriestoggledesc', 'theme_snap');
+$default = $unchecked;
+$setting = new admin_setting_configcheckbox($name, $title, $description, $default, $checked, $unchecked);
+$setting->set_updatedcallback('theme_reset_all_caches');
+$snapsettings->add($setting);
+
 // Personal menu deadlines on/off.
 $name = 'theme_snap/deadlinestoggle';
 $title = new lang_string('deadlinestoggle', 'theme_snap');
