@@ -366,6 +366,22 @@ video {
     height: auto !important;
 }
 
+@mixin responsive-video() {
+    width: 100%;
+    max-width: $user-content-max-width;
+    height: 240px;
+    margin: 0 auto;
+    display: block;
+    clear: both;
+
+    @include media-breakpoint-up(sm) {
+        height: 360px;
+    }
+    @include media-breakpoint-up(md) {
+        height: 480px;
+    }
+}
+
 // Responsive video for iframes, objects, embeds.
 iframe:not(.vjs-tech) {
     &[src*="youtube.com"],
@@ -379,19 +395,30 @@ iframe:not(.vjs-tech) {
     &[src*="video.html"],
     &[src*="simmons.tegrity.com"],
     &[src*="dailymotion.com"] {
-        width: 100%;
-        height: 240px;
-        margin: 0 auto;
-        max-width: $user-content-max-width;
-        display: block;
-        clear: both;
+        @include responsive-video();
+    }
+}
 
-        @include media-breakpoint-up(sm) {
-            height: 360px;
-        }
-        @include media-breakpoint-up(md) {
-            height: 420px;
-        }
+body.theme-snap .oembed-responsive {
+    > :first-child:not(video),
+    > .oembed-responsive-pad {
+        @include responsive-video();
+    }
+}
+
+.mediaplugin_videojs {
+    @include responsive-video();
+
+    height: auto;
+    max-height: 240px;
+
+    @include media-breakpoint-up(sm) {
+        max-height: 360px;
+        height: auto;
+    }
+    @include media-breakpoint-up(md) {
+        max-height: 480px;
+        height: auto;
     }
 }
 
