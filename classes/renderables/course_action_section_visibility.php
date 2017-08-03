@@ -44,10 +44,9 @@ class course_action_section_visibility extends course_action_section_base {
         $baseurl->param('sesskey', sesskey());
 
         $coursecontext = context_course::instance($course->id);
-        $isstealth = isset($course->numsections) && ($section->section > $course->numsections);
 
         $url = clone($baseurl);
-        if (!$isstealth && has_capability('moodle/course:sectionvisibility', $coursecontext)) {
+        if (has_capability('moodle/course:sectionvisibility', $coursecontext)) {
             if ($section->visible) { // Show the hide/show eye.
                 $this->title =  get_string('hidefromothers', 'format_'.$course->format);
                 $url->param('hide', $section->section);

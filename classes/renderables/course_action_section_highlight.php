@@ -41,7 +41,7 @@ class course_action_section_highlight extends course_action_section_base {
      * @param bool $onsectionpage
      */
     public function __construct($course, section_info $section, $onsectionpage = false) {
-        
+
         if ($onsectionpage) {
             $baseurl = course_get_url($course, $section->section);
         } else {
@@ -50,10 +50,9 @@ class course_action_section_highlight extends course_action_section_base {
         $baseurl->param('sesskey', sesskey());
 
         $coursecontext = context_course::instance($course->id);
-        $isstealth = isset($course->numsections) && ($section->section > $course->numsections);
 
         if ($course->format === 'topics') {
-            if (!$isstealth && has_capability('moodle/course:setcurrentsection', $coursecontext)) {
+            if (has_capability('moodle/course:setcurrentsection', $coursecontext)) {
                 $url = clone($baseurl);
                 $marker = optional_param('marker', '', PARAM_INT);
                 $marker = $marker === '' ? $course->marker : $marker;

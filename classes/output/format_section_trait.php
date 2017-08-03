@@ -84,7 +84,8 @@ trait format_section_trait {
         }
 
         $forward = $sectionno + 1;
-        while ($forward <= $course->numsections and empty($links['next'])) {
+        $numsections = course_get_format($course)->get_last_section_number();
+        while ($forward <= $numsections and empty($links['next'])) {
             if ($canviewhidden
             || $sections[$forward]->uservisible
             || $sections[$forward]->availableinfo) {
@@ -356,10 +357,11 @@ trait format_section_trait {
 
         // Now the list of sections..
         echo $this->start_section_list();
+        $numsections = course_get_format($course)->get_last_section_number();
 
         foreach ($modinfo->get_section_info_all() as $section => $thissection) {
 
-            if ($section > $course->numsections) {
+            if ($section > $numsections) {
                 // Activities inside this section are 'orphaned', this section will be printed as 'stealth' below.
                 continue;
             }
@@ -391,7 +393,7 @@ trait format_section_trait {
         if ($PAGE->user_is_editing() and has_capability('moodle/course:update', $context)) {
             // Print stealth sections if present.
             foreach ($modinfo->get_section_info_all() as $section => $thissection) {
-                if ($section <= $course->numsections or empty($modinfo->sections[$section])) {
+                if ($section <= $numsections or empty($modinfo->sections[$section])) {
                     // This is not stealth section or it is empty.
                     continue;
                 }
@@ -435,7 +437,7 @@ trait format_section_trait {
 
         $required = '';
         $defaulttitle = get_string('title', 'theme_snap');
-        $sectionnum = $course->numsections;
+        $sectionnum = course_get_format($course)->get_last_section_number();
         if ($course->format === 'topics') {
             $required = 'required';
         } else {
