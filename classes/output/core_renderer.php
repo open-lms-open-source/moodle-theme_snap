@@ -1613,7 +1613,7 @@ HTML;
      */
     public function render_intelliboard_link($name, $url, $icon) {
        global $OUTPUT;
-       $iconurl = $OUTPUT->pix_url($icon, 'theme');
+       $iconurl = $OUTPUT->image_url($icon, 'theme');
        $img = '<img class="svg-icon" role="presentation" src="' .$iconurl. '">';
        $o = '<a href=" '.$url.' ">' .$img.s($name). '</a><br>';
        return $o;
