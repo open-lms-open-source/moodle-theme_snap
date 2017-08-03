@@ -60,15 +60,11 @@ class addsection_controller extends controller_abstract {
         $courseid = $PAGE->context->get_course_context()->instanceid;
 
         $course = course_get_format($courseid)->get_course();
-        $course->numsections++;
-
-        course_get_format($course)->update_course_format_options(
-            array('numsections' => $course->numsections)
-        );
-        course_create_sections_if_missing($course, range(0, $course->numsections));
+        $numsections = course_get_format($courseid)->get_last_section_number() + 1;
+        course_create_sections_if_missing($course, range(0, $numsections));
 
         $modinfo = get_fast_modinfo($course);
-        $section = $modinfo->get_section_info($course->numsections, MUST_EXIST);
+        $section = $modinfo->get_section_info($numsections, MUST_EXIST);
         $DB->set_field('course_sections', 'name', $sectioname, array('id' => $section->id));
         $DB->set_field('course_sections', 'summary', $summary, array('id' => $section->id));
         $DB->set_field('course_sections', 'summaryformat', FORMAT_HTML, array('id' => $section->id));
