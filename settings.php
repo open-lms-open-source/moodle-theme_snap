@@ -35,7 +35,7 @@ if ($ADMIN->fulltree) {
     $fpwarning = \theme_snap\output\shared::flexpage_frontpage_warning();
     if (!empty($fpwarning)) {
         $setting = new admin_setting_heading('flexpage_warning', '', $fpwarning);
-        $snapsettings->add($setting);
+        $settings->add($setting);
     }
 
     require('settings/snap_basics.php');
