@@ -37,7 +37,7 @@ if ($ADMIN->fulltree) {
         $setting = new admin_setting_heading('flexpage_warning', '', $fpwarning);
         $settings->add($setting);
     }
-
+    
     require('settings/snap_basics.php');
     require('settings/cover_settings.php');
     require('settings/personal_menu_settings.php');

@@ -48,6 +48,14 @@ $functions = [
         'ajax'          => true,
         'loginrequired' => true
     ],
+    'theme_snap_user_categories' => [
+        'classname'     => 'theme_snap\\webservice\\ws_user_categories',
+        'methodname'    => 'user_categories',
+        'description'   => 'add or remove a category from the user course menu - also can return listing of categories',
+        'type'          => 'write',
+        'ajax'          => true,
+        'loginrequired' => true
+    ],
     'theme_snap_course_toc_chapters' => [
         'classname'     => 'theme_snap\\webservice\\ws_course_toc_chapters',
         'methodname'    => 'service',
@@ -60,6 +68,14 @@ $functions = [
         'classname'     => 'theme_snap\\webservice\\ws_course_sections',
         'methodname'    => 'service',
         'description'   => 'Manage course sections',
+        'type'          => 'write',
+        'ajax'          => true,
+        'loginrequired' => true
+    ],
+    'theme_snap_user_viewing_mode' => [
+        'classname'     => 'theme_snap\\webservice\\ws_user_categories',
+        'methodname'    => 'user_viewing_mode',
+        'description'   => 'get or set the user viewing mode',
         'type'          => 'write',
         'ajax'          => true,
         'loginrequired' => true

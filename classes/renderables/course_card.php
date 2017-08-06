@@ -54,6 +54,11 @@ class course_card implements \renderable {
     public $courseid;
 
     /**
+     * @var int $categoryid
+     */
+    public $categoryid;
+
+    /**
      * @var string $fullname
      */
     public $fullname;
@@ -117,8 +122,9 @@ class course_card implements \renderable {
      * @param int $courseid
      * @param course | null $service
      */
-    public function __construct($courseid, course $service = null) {
-        $this->courseid = $courseid;
+    public function __construct($course, course $service = null) {
+        $this->courseid = $course->id;
+        $this->categoryid = $course->category;
         $this->service = $service ? : course::service();
         $this->apply_properties();
         $this->model = $this;

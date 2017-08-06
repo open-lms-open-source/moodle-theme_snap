@@ -108,6 +108,7 @@ if (!empty($custommenu)) {
 </div>
 </footer>
 <?php echo $OUTPUT->standard_end_of_body_html() ?>
+<script src="<?php echo $CFG->httpswwwroot ?>/theme/snap/pushy/js/pushy.min.js"></script>
 <!-- bye! -->
 </body>
 </html>

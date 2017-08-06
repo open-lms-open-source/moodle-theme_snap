@@ -59,6 +59,7 @@ if (!empty($coverimagecss)) {
     echo "<style>$coverimagecss</style>";
 }
 ?>
+    <link rel="stylesheet" href="<?php echo $CFG->httpswwwroot ?>/theme/snap/pushy/css/pushy.css">
 
 </head>
 
