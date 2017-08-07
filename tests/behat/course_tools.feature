@@ -26,7 +26,6 @@ Feature: When the moodle theme is set to Snap, a course tools section is availab
     Given the following config values are set as admin:
       | theme | snap |
       | defaulthomepage | 0 |
-      | enablecompletion   | 1    |
     And the following config values are set as admin:
       | personalmenulogintoggle | 0 | theme_snap |
     And the following "courses" exist:
