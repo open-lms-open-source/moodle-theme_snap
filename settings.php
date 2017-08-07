@@ -30,14 +30,6 @@ $settings = new theme_boost_admin_settingspage_tabs('themesettingsnap', 'Snap');
 if ($ADMIN->fulltree) {
     $checked = '1';
     $unchecked = '0';
-
-    // Output flex page front page warning if necessary.
-    $fpwarning = \theme_snap\output\shared::flexpage_frontpage_warning();
-    if (!empty($fpwarning)) {
-        $setting = new admin_setting_heading('flexpage_warning', '', $fpwarning);
-        $settings->add($setting);
-    }
-
     require('settings/snap_basics.php');
     require('settings/cover_settings.php');
     require('settings/personal_menu_settings.php');
