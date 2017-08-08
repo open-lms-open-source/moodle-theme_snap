@@ -54,6 +54,7 @@ $string['categoryedit'] = 'Edit category';
 $string['changecoverimage'] = 'Change cover image';
 $string['changefullname'] = 'Change site name';
 $string['chapters'] = 'Chapters';
+$string['choosereadme'] = '<div class="clearfix"><div class="theme_screenshot"><h2>Snap</h2><img class=img-polaroid src="snap/pix/screenshot.jpg" /></div></div>';
 $string['close'] = 'Close';
 $string['conditional'] = 'Conditional';
 $string['contents'] = 'Contents';
