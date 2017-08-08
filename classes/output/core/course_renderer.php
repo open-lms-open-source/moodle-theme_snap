@@ -298,9 +298,9 @@ class course_renderer extends \core_course_renderer {
             // Move, Edit, Delete.
             if (has_capability('moodle/course:manageactivities', $modcontext)) {
                 $movealt = get_string('move', 'theme_snap', $mod->get_formatted_name());
-                $moveicon = "<img title='$movealt' aria-hidden='true' class='svg-icon' src='".$this->output->pix_url('move', 'theme')."' />";
+                $moveicon = "<img title='$movealt' aria-hidden='true' class='svg-icon' src='".$this->output->image_url('move', 'theme')."' />";
                 $editalt = get_string('edit', 'theme_snap', $mod->get_formatted_name());
-                $editicon = "<img title='$editalt' alt='$editalt' class='svg-icon' src='".$this->output->pix_url('edit', 'theme')."'/>";
+                $editicon = "<img title='$editalt' alt='$editalt' class='svg-icon' src='".$this->output->image_url('edit', 'theme')."'/>";
                 $actions .= "<input id='snap-move-mod-$mod->id' class='js-snap-asset-move sr-only' type='checkbox'><label class='snap-asset-move' for='snap-move-mod-$mod->id'><span class='sr-only'>$movealt</span>$moveicon</label>";
                 $actions .= "<a class='snap-edit-asset' href='".new moodle_url($baseurl, array('update' => $mod->id))."'>$editicon</a>";
                 $actionsadvanced[] = "<a href='".new moodle_url($baseurl, array('delete' => $mod->id)).
@@ -349,7 +349,7 @@ class course_renderer extends \core_course_renderer {
         }
         $advancedactions = '';
         if (!empty($actionsadvanced)) {
-            $moreicon = "<img title='".get_string('more', 'theme_snap')."' alt='".get_string('more', 'theme_snap')."' class='svg-icon' src='".$this->output->pix_url('more', 'theme')."'/>";
+            $moreicon = "<img title='".get_string('more', 'theme_snap')."' alt='".get_string('more', 'theme_snap')."' class='svg-icon' src='".$this->output->image_url('more', 'theme')."'/>";
             $advancedactions = "<div class='dropdown snap-edit-more-dropdown'>
                       <a href='#' class='dropdown-toggle snap-edit-asset-more' data-toggle='dropdown' aria-expanded='false' aria-haspopup='true'>$moreicon</a>
                       <div class='dropdown-menu' role='menu'>";
@@ -640,7 +640,7 @@ class course_renderer extends \core_course_renderer {
         $img = format_text('<img src="' .$imgsrc. '" alt="' .$modname. '"/>');
         $icon = '<img title="' .get_string('vieworiginalimage', 'theme_snap'). '"
                 alt="' .get_string('vieworiginalimage', 'theme_snap'). '"
-                src="' .$OUTPUT->pix_url('arrow-expand', 'theme'). '">';
+                src="' .$OUTPUT->image_url('arrow-expand', 'theme'). '">';
         $imglink = '<a class="snap-expand-link" href="' .$imgsrc. '" target="_blank">' .$icon. '</a>';
 
         $output = '<figure class="snap-resource-figure figure">'
@@ -1188,7 +1188,7 @@ class course_renderer extends \core_course_renderer {
         $picture = $this->render($userpicture);
 
         $fullname = '<a href="' .$CFG->wwwroot. '/user/profile.php?id=' .$user->id. '">'.format_string(fullname($user)).'</a>';
-        $messageicon = '<img class="svg-icon" alt="" role="presentation" src="' .$OUTPUT->pix_url('messages', 'theme').' ">';
+        $messageicon = '<img class="svg-icon" alt="" role="presentation" src="' .$OUTPUT->image_url('messages', 'theme').' ">';
         $message = '<br><small><a href="' .$CFG->wwwroot. '/message/index.php?id=' .$user->id. '">message' .$messageicon. '</a></small>';
 
         $data = (object) [
@@ -1240,7 +1240,7 @@ class course_renderer extends \core_course_renderer {
             foreach ($recentactivity as $modname => $moduleactivity) {
                 // Get mod icon, empty alt as title already there.
                 $img = html_writer::tag('img', '', array(
-                    'src' => $OUTPUT->pix_url('icon', $modname),
+                    'src' => $OUTPUT->image_url('icon', $modname),
                     'alt' => '',
                 ));
 
