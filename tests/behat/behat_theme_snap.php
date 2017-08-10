@@ -444,6 +444,16 @@ class behat_theme_snap extends behat_base {
     }
 
     /**
+     * Whilst editing a section, set the section name.
+     * @param string $name
+     * @Given /^I set the section name to "(?P<name_string>(?:[^"]|\\")*)"$/
+     */
+    public function i_set_section_name_to($name) {
+        $this->execute('behat_forms::i_set_the_field_to', ['name[customize]', '1']);
+        $this->execute('behat_forms::i_set_the_field_to', ['name[value]', $name]);
+    }
+
+    /**
      * Restrict a course section by date.
      * @param int $section
      * @param string $date
@@ -453,8 +463,9 @@ class behat_theme_snap extends behat_base {
         $datetime = strtotime($date);
         $this->i_go_to_course_section($section);
         $this->click_visible_link('Edit section');
-        $this->i_wait_until_is_visible('.snap-form-advanced', 'css_element');
-        $this->execute('behat_forms::i_set_the_field_to', ['name', 'Topic '.$date.' '.$section]);
+        $this->i_wait_until_is_visible('.editor_atto', 'css_element');
+        $this->execute('behat_forms::i_set_the_field_to', ['name[customize]', '1']);
+        $this->execute('behat_forms::i_set_the_field_to', ['name[value]', 'Topic '.$date.' '.$section]);
         $this->add_date_restriction($datetime, 'Save changes');
     }
 
@@ -521,10 +532,12 @@ class behat_theme_snap extends behat_base {
      * @Given /^I should see availability info "(?P<str>(?:[^"]|\\")*)"$/
      */
     public function i_see_availabilityinfo($str, $baseselector = '') {
+        $str = trim($str);
         $nodes = $this->find_all('xpath', $baseselector.'//div[contains(@class, \'snap-conditional-tag\')]');
         foreach ($nodes as $node) {
             /** @var NodeElement $node */
-            if ($node->getText() === $str) {
+            $nodetext = trim($node->getText());
+            if (stripos($nodetext, $str) !== false) {
                 return;
             }
         }
@@ -828,6 +841,7 @@ class behat_theme_snap extends behat_base {
     public function course_is_favorited($shortname) {
         /* @var behat_general $general */
         $general = behat_context_helper::get('behat_general');
+        $this->ensure_element_does_not_exist('.snap-icon-toggle.favoritetoggle.ajaxing', 'css_element');
         $general->should_exist('.courseinfo[data-shortname="'.$shortname.'"] .favoritetoggle[aria-pressed="true"]', 'css_element');
     }
 
@@ -838,6 +852,7 @@ class behat_theme_snap extends behat_base {
     public function course_is_not_favorited($shortname) {
         /* @var behat_general $general */
         $general = behat_context_helper::get('behat_general');
+        $this->ensure_element_does_not_exist('.snap-icon-toggle.favoritetoggle.ajaxing', 'css_element');
         $general->should_not_exist('.courseinfo[data-shortname="'.$shortname.'"] .favoritetoggle[aria-pressed="true"]', 'css_element');
     }
 
@@ -1410,6 +1425,28 @@ class behat_theme_snap extends behat_base {
     }
 
     /**
+     * Marks an activity as complete.
+     * @param string $activityname
+     *
+     * @Given /^I mark the activity "(?P<activityname_string>(?:[^"]|\\")*)" as complete$/
+     */
+    public function i_mark_as_complete($activityname) {
+        $imgalt = 'Not completed: '.$activityname.'. Select to mark as complete.';
+        $this->execute('behat_general::i_click_on', ['img.icon[alt="'.$imgalt.'"]', 'css_element']);
+    }
+
+    /**
+     * Marks an activity as incomplete.
+     * @param string $activityname
+     *
+     * @Given /^I mark the activity "(?P<activityname_string>(?:[^"]|\\")*)" as incomplete$/
+     */
+    public function i_mark_as_incomplete($activityname) {
+        $imgalt = 'Completed: '.$activityname.'. Select to mark as not complete.';
+        $this->execute('behat_general::i_click_on', ['img.icon[alt="'.$imgalt.'"]', 'css_element']);
+    }
+
+    /**
      * Core step copied from completion/tests/behat/behat_completion.php to fix bug MDL-57452
      * Checks if the activity with specified name is marked as complete.
      *
@@ -1429,7 +1466,6 @@ class behat_theme_snap extends behat_base {
         $this->execute("behat_general::should_exist",
             array($xpathtocheck, "xpath_element")
         );
-
     }
 
     /**
@@ -1484,5 +1520,4 @@ class behat_theme_snap extends behat_base {
     public function i_am_on_the_snap_jquery_bootstrap_test_page() {
         $this->getSession()->visit($this->locate_path('/theme/snap/tests/fixtures/test_jquery_bootstrap.php'));
     }
-
 }

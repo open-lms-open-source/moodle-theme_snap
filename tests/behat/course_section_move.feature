@@ -46,8 +46,7 @@ Feature: When the moodle theme is set to Snap, teachers can move course sections
     And I am on the course main page for "C1"
     And I follow "Topic 1"
     And I follow "Untitled Topic"
-    And I set the following fields to these values:
-      | name | My & < > Topic |
+    And I set the section name to "My & < > Topic"
     And I press "Save changes"
     And I follow "Move \"My & < > Topic\""
     Then I should see "Moving \"My & < > Topic\"" in the "#snap-footer-alert" "css_element"
@@ -72,8 +71,7 @@ Feature: When the moodle theme is set to Snap, teachers can move course sections
     And I am on the course main page for "C1"
     And I follow "Topic 1"
     And I follow "Untitled Topic"
-    And I set the following fields to these values:
-      | name | My & < > Topic |
+    And I set the section name to "My & < > Topic"
     And I press "Save changes"
     And I follow "Move \"My & < > Topic\""
     Then I should see "Moving \"My & < > Topic\"" in the "#snap-footer-alert" "css_element"

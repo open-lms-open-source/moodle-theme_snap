@@ -50,11 +50,11 @@ Feature: When the moodle theme is set to Snap, teachers can delete sections with
 
     And I follow "Topic 1"
     And I click on "#section-1 .edit-summary" "css_element"
-    And I set the field "name" to "Topic one"
+    And I set the section name to "Topic one"
     And I press "Save changes"
     And I follow "Topic 2"
     And I click on "#section-2 .edit-summary" "css_element"
-    And I set the field "name" to "Topic two"
+    And I set the section name to "Topic two"
     And I press "Save changes"
 
     And I follow "Topic one"
