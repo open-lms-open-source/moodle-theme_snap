@@ -319,7 +319,8 @@ class course_renderer extends \core_course_renderer {
             if (has_all_capabilities($dupecaps, $coursecontext) &&
             plugin_supports('mod', $mod->modname, FEATURE_BACKUP_MOODLE2) &&
             plugin_supports('mod', $mod->modname, 'duplicate', true)) {
-                $actionsadvanced[] = "<a href='".new moodle_url($baseurl, array('duplicate' => $mod->id))."' class='dropdown-item js_snap_duplicate'>$str->duplicate</a>";
+                $actionsadvanced[] = "<a href='".new moodle_url($baseurl, array('duplicate' => $mod->id)).
+                    "' class='dropdown-item js_snap_duplicate'>$str->duplicate</a>";
             }
 
             // Asign roles.

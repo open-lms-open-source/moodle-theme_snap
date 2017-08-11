@@ -72,11 +72,11 @@ Feature: Open page module inline
     # Restrict section one of the course to only be accessible after the first page module is marked complete.
     And I follow "Topic 1"
     And I click on "#section-1 .edit-summary" "css_element"
-    And I set the field "name" to "Topic 1"
+    And I set the section name to "Topic 1"
     And I apply asset completion restriction "Page completion" to section
     And I follow "Topic 2"
     And I click on "#section-2 .edit-summary" "css_element"
-    And I set the field "name" to "Topic 2"
+    And I set the section name to "Topic 2"
     And I apply asset completion restriction "Page completion 2" to section
     And I log out (theme_snap)
     And I log in as "student1" (theme_snap)

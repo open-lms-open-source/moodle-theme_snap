@@ -460,7 +460,7 @@ define(['jquery', 'core/log', 'core/ajax', 'core/templates', 'core/notification'
 
                 var id = parent.attr('id').replace('module-', '');
 
-                addAjaxLoading($(parent).find('.snap-meta'), true);
+                addAjaxLoading($(parent).find('.snap-asset-meta'), true);
 
                 var courseid = courseLib.courseConfig.id;
 
@@ -473,7 +473,7 @@ define(['jquery', 'core/log', 'core/ajax', 'core/templates', 'core/notification'
                     url: courserest,
                     dataType: 'html',
                     complete: function() {
-                        parent.find('.snap-meta .loadingstat').remove();
+                        parent.find('.snap-asset-meta .loadingstat').remove();
                     },
                     error: function(response) {
                         ajaxNotify.ifErrorShowBestMsg(response, errAction, errMessage);
@@ -626,43 +626,42 @@ define(['jquery', 'core/log', 'core/ajax', 'core/templates', 'core/notification'
 
                 $(document).on('click', '.snap-asset-actions .js_snap_duplicate', function(e) {
                     e.preventDefault();
-                    var parent = $($(this).parents('.snap-asset')[0]);
-                    var id = parent.attr('id').replace('module-', '');
-                    addAjaxLoading($(parent).find('.snap-meta'), true);
-
-                    var courseid = courseLib.courseConfig.id;
-
-                    var courserest = M.cfg.wwwroot + '/course/rest.php';
+                    var target = $(this);
+                    var courseModule = $(target.parents('.snap-asset')[0]);
+                    var id = courseModule.attr('id').replace('module-', '');
+                    addAjaxLoading($(courseModule).find('.snap-asset-meta'), true);
 
                     var errAction = M.util.get_string('action:duplicateasset', 'theme_snap');
                     var errMessage = M.util.get_string('error:failedtoduplicateasset', 'theme_snap');
 
-                    $.ajax({
-                        type: "POST",
-                        async: true,
-                        url: courserest,
-                        dataType: 'json',
-                        complete: function() {
-                            parent.find('.snap-meta .loadingstat').remove();
-                        },
-                        error: function(data) {
-                            ajaxNotify.ifErrorShowBestMsg(data, errAction, errMessage);
-                        },
-                        success: function(data) {
+                    var action = 'duplicate';
+
+                    var promises = ajax.call([{
+                        methodname: 'core_course_edit_module',
+                        args: {id: id,
+                            action: action,
+                            sectionreturn: target.attr('data-sectionreturn') ? target.attr('data-sectionreturn') : 0
+                        }
+                    }], true);
+
+                    $.when.apply($, promises)
+                        .done(function(data) {
+                             // Trigger event that can be observed by course formats.
+                            courseModule.trigger($.Event('coursemoduleedited', {ajaxreturn: data, action: action}));
                             if (ajaxNotify.ifErrorShowBestMsg(data, errAction, errMessage)) {
                                 return;
                             }
-                            $(data.fullcontent).insertAfter(parent);
-                        },
-                        data: {
-                            'class': 'resource',
-                            field: 'duplicate',
-                            id: id,
-                            sr: 0,
-                            sesskey: M.cfg.sesskey,
-                            courseId: courseid
-                        }
-                    });
+                            courseModule.replaceWith(data);
+                        }).fail(function(ex) {
+                            // Trigger event that can be observed by course formats.
+                            var e = $.Event('coursemoduleeditfailed', {exception: ex, action: action});
+                            courseModule.trigger(e);
+                            if (!e.isDefaultPrevented()) {
+                                ajaxNotify.ifErrorShowBestMsg(ex, errAction, errMessage);
+                            }
+                        }).always(function() {
+                            courseModule.find('.snap-asset-meta .loadingstat').remove();
+                        });
                 });
             };
 

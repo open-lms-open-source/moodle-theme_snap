@@ -479,9 +479,7 @@ class course {
         if (course_can_delete_section($course, $sectioninfo)) {
             course_delete_section($course, $sectioninfo, true);
         }
-
         $toc = new \theme_snap\renderables\course_toc($course);
-
         return [
             'toc' => $toc->export_for_template($OUTPUT)
         ];
