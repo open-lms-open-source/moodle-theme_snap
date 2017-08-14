@@ -26,8 +26,6 @@ Feature: When the moodle theme is set to Snap, conditional restrictions work as 
   Background:
     Given the following config values are set as admin:
       | theme              | snap |
-      | enablecompletion   | 1    |
-      | enableavailability | 1    |
     And the following "courses" exist:
       | fullname | shortname | category | groupmode | enablecompletion |
       | Course 1 | C1        | 0        | 1         | 1                |
