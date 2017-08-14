@@ -137,7 +137,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
         $url = '#inst' . $settingslink->instanceid;
         $attributes = array(
             'id' => 'admin-menu-trigger',
-            'class' => 'pull-right',
+            'class' => 'pull-right js-only',
             'data-toggle' => 'tooltip',
             'data-placement' => 'bottom',
             'title' => get_string('admin', 'theme_snap'),
