@@ -3566,3 +3566,10 @@ label.state-visible[for="snap-coverfiles"],
     clip: auto;
     border: initial;
 }
+
+.js-only {
+    visibility: hidden;
+}
+.snap-js-loaded .js-only {
+    visibility: visible;
+}
