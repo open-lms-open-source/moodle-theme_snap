@@ -27,8 +27,6 @@ Feature: When the moodle theme is set to Snap, students and teachers can open a 
   Background:
     Given the following config values are set as admin:
       | theme | snap |
-      | enablecompletion   | 1 |
-      | enableavailability | 1 |
     And the following "courses" exist:
       | fullname        | shortname | category | groupmode | visible |
       | Course 1        | C1        | 0        | 1         | 1       |

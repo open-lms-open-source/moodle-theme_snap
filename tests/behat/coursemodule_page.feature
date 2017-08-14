@@ -27,8 +27,6 @@ Feature: Open page module inline
 
   Background:
     Given the following config values are set as admin:
-      | enablecompletion | 1 |
-      | enableavailability | 1 |
       | theme | snap |
     And the following "courses" exist:
       | fullname | shortname | format | category | groupmode | enablecompletion |
