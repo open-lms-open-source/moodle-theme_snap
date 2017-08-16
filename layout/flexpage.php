@@ -99,7 +99,7 @@ echo $OUTPUT->doctype() ?>
 <link rel="shortcut icon" href="<?php echo $OUTPUT->favicon() ?>"/>
 <?php echo $OUTPUT->standard_head_html() ?>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link href='http://fonts.googleapis.com/css?family=Roboto:500,100,400,300' rel='stylesheet' type='text/css'>
+<link href='//fonts.googleapis.com/css?family=Roboto:500,100,400,300' rel='stylesheet' type='text/css'>
 
     <?php echo format_flexpage_default_width_styles() ?>
 
