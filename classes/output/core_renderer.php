@@ -1434,6 +1434,54 @@ HTML;
     }
 
     /**
+     * Return snap modchooser modal.
+     * @return string
+     */
+    protected function course_modchooser() {
+        global $OUTPUT, $COURSE;
+        // Check to see if user can add menus and there are modules to add.
+        if (!has_capability('moodle/course:manageactivities', context_course::instance($COURSE->id))
+                || !($modnames = get_module_types_names()) || empty($modnames)) {
+            return '';
+        }
+        // Retrieve all modules with associated metadata.
+        $sectionreturn = null;
+        $modules = get_module_metadata($COURSE, $modnames, $sectionreturn);
+
+        foreach ($modules as $mod) {
+            $help = !empty($mod->help) ? $mod->help : '';
+            $helptext = format_text($help, FORMAT_MARKDOWN);
+
+
+            if ($mod->archetype === MOD_ARCHETYPE_RESOURCE) {
+                $resources[] = (object) [
+                    'name' => $mod->name,
+                    'title' => $mod->title,
+                    'icon' => ''.$OUTPUT->pix_url('icon', $mod->name),
+                    'link' => $mod->link .'&section=0', // Section is replaced by js.
+                    'help' => $helptext
+                ];
+            }
+            else {
+                $activities[] = (object) [
+                    'name' => $mod->name,
+                    'title' => $mod->title,
+                    'icon' => ''.$OUTPUT->pix_url('icon', $mod->name),
+                    'link' => $mod->link .'&section=0', // Section is replaced by js.
+                    'help' => $helptext
+                ];
+            }
+        }
+
+        $data['tabs'] = (object) [
+             'activities' => $activities,
+             'resources' => $resources
+        ];
+
+        return $this->render_from_template('theme_snap/course_modchooser_modal', $data);
+    }
+
+    /**
      * Override parent function so that all courses (except the front page) skip the 'turn editing on' button.
      */
     protected function render_navigation_node(navigation_node $item) {

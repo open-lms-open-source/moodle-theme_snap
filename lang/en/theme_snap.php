@@ -24,6 +24,7 @@
 
 $string['aboutcourse'] = 'About this Course';
 $string['activity'] = 'Activity';
+$string['activities'] = 'Activities';
 $string['action:changeassetvisibility'] = 'change asset visibility';
 $string['action:duplicateasset'] = 'duplicate asset';
 $string['action:changesectionvisibility'] = 'change section visibility';

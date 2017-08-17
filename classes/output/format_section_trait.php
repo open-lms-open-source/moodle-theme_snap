@@ -508,26 +508,25 @@ trait format_section_trait {
                 || !($modnames = get_module_types_names()) || empty($modnames)) {
             return '';
         }
-        // Retrieve all modules with associated metadata.
-        $modules = get_module_metadata($course, $modnames, $sectionreturn);
-        $urlparams = array('section' => $section);
-            // S Lamour Aug 2015 - show activity picker
-            // moodle is adding a link around the span in a span with js - yay!! go moodle...
-            $iconurl = $OUTPUT->image_url('move_here', 'theme');
-            $icon = '<img src="'.$iconurl.'" class="svg-icon" role="presentation" alt=""><br>';
-            $modchooser = '<div class="col-sm-6 snap-modchooser section_add_menus">
-              <span class="section-modchooser-link btn btn-link">'.$icon.'<span>'.get_string('addresourceoractivity', 'theme_snap').'</span></span>
-            </div>';
-           $output = $this->courserenderer->course_modchooser($modules, $course) . $modchooser;
 
-           // Add zone for quick uploading of files.
-           $upload = '<div class="col-sm-6">
-                <form class="snap-dropzone">
-                    <label tabindex="0" for="snap-drop-file-'.$section.'" class="snap-dropzone-label">'.get_string('dropzonelabel', 'theme_snap').'</label>
-                    <input type="file" multiple name="snap-drop-file-'.$section.'" id="snap-drop-file-'.$section.'" class="js-snap-drop-file sr-only"/>
-                </form>
-                </div>';
-           return '<div class="row">'.$output.$upload.'</div>';
+        $iconurl = $OUTPUT->image_url('move_here', 'theme');
+        $icon = '<img src="'.$iconurl.'" class="svg-icon" role="presentation" alt=""><br>';
+        // Slamour Aug 2017
+        // Add button to pick launch modchooser.
+        $modchooser = '
+        <div class="col-sm-6 snap-modchooser">
+            <a href="#" class="js-only section-modchooser-link btn btn-link" data-section="'.$section.'" data-toggle="modal" data-target="#snap-modchooser-modal">'.$icon.get_string('addresourceoractivity', 'theme_snap').'</a>
+        </div>';
+
+        // Add zone for quick uploading of files.
+        $upload = '<div class="col-sm-6">
+            <form class="snap-dropzone js-only">
+                <label tabindex="0" for="snap-drop-file-'.$section.'" class="snap-dropzone-label">'.get_string('dropzonelabel', 'theme_snap').'</label>
+                <input type="file" multiple name="snap-drop-file-'.$section.'" id="snap-drop-file-'.$section.'" class="js-snap-drop-file sr-only"/>
+            </form>
+            </div>';
+
+        return '<div class="row">'.$modchooser.$upload.'</div>';
     }
 
     /**
