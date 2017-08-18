@@ -35,8 +35,13 @@ if (!empty($PAGE->theme->settings->leftnav)) {
         $leftnav = true;
     }
 }
+$mastimage = '';
+// Check we are in a course (not the site level course), and the course is using a cover image.
+if ($COURSE->id != SITEID && !empty($coverimagecss)) {
+    $mastimage = 'mast-image';
+}
 ?>
-<!-- moodle js hooks -->
+<!-- Moodle js hooks -->
 <div id="page">
 <div id="page-content">
 
@@ -44,29 +49,24 @@ if (!empty($PAGE->theme->settings->leftnav)) {
 ////////////////////////// MAIN  ///////////////////////////////
 -->
 <main id="moodle-page" class="clearfix">
-<div id="page-header" class="clearfix
-<?php
-// Check if the course is using a cover image.
-if (!empty($coverimagecss)) : ?>
- mast-image
-<?php endif;?>">
-<div class="breadcrumb-nav" aria-label="breadcrumb"><?php echo $OUTPUT->navbar(); ?></div>
+<div id="page-header" class="clearfix <?php echo $mastimage; ?>">
+    <div class="breadcrumb-nav" aria-label="breadcrumb"><?php echo $OUTPUT->navbar(); ?></div>
 
-<div id="page-mast">
-<?php
-if ($coursemainpage) {
-    $output = $PAGE->get_renderer('core', 'course');
-    echo $output->course_format_warning();
-}
-echo $OUTPUT->page_heading();
-echo $OUTPUT->course_header();
-// Note, there is no blacklisting for the edit blocks button on course pages.
-echo $OUTPUT->page_heading_button();
-if ($tocformat && !$leftnav) {
-    echo $OUTPUT->course_toc();
-}
-?>
-</div>
+    <div id="page-mast">
+    <?php
+    if ($coursemainpage) {
+        $output = $PAGE->get_renderer('core', 'course');
+        echo $output->course_format_warning();
+    }
+    echo $OUTPUT->page_heading();
+    echo $OUTPUT->course_header();
+    // Note, there is no blacklisting for the edit blocks button on course pages.
+    echo $OUTPUT->page_heading_button();
+    if ($tocformat && !$leftnav) {
+        echo $OUTPUT->course_toc();
+    }
+    ?>
+    </div>
 </div>
 <?php
 if ($tocformat && $leftnav) {

@@ -801,6 +801,45 @@ class core_renderer extends \theme_boost\output\core_renderer {
     }
 
     /**
+     * Cover carousel.
+     * @return string
+     *
+    */
+    public function cover_carousel() {
+        global $PAGE;
+
+        if (empty($PAGE->theme->settings->cover_carousel)) {
+            return '';
+        }
+
+        $slidenames = array("slide_one", "slide_two", "slide_three");
+        $slides = array();
+        $i = 0;
+        foreach ($slidenames as $slidename) {
+            $image = $slidename . '_image';
+            $title = $slidename . '_title';
+            $subtitle = $slidename . '_subtitle';
+            if (!empty($PAGE->theme->settings->$image) && !empty($PAGE->theme->settings->$title)) {
+                $slide = (object) [
+                    'index' => $i++,
+                    'active' => '',
+                    'name' => $slidename,
+                    'image' => $PAGE->theme->setting_file_url($image, $image),
+                    'title' => $PAGE->theme->settings->$title,
+                    'subtitle' => $PAGE->theme->settings->$subtitle
+                ];
+                $slides[] = $slide;
+            }
+        }
+        if(empty($slides)) {
+            return '';
+        }
+        $slides[0]->active = 'active';
+        $data['slides'] = $slides;
+        return $this->render_from_template('theme_snap/carousel', $data);
+    }
+
+    /**
      * Get page heading.
      *
      * @param string $tag

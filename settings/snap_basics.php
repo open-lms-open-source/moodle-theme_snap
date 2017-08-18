@@ -25,7 +25,7 @@ $snapsettings->add($setting);
 
 // Site description setting.
 $name = 'theme_snap/subtitle';
-$title = new lang_string('subtitle', 'theme_snap');
+$title = new lang_string('sitedescription', 'theme_snap');
 $description = new lang_string('subtitle_desc', 'theme_snap');
 $setting = new admin_setting_configtext($name, $title, $description, '', PARAM_RAW_TRIMMED, 50);
 $snapsettings->add($setting);
