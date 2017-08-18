@@ -380,24 +380,13 @@ class behat_theme_snap extends behat_base {
         }
 
         // See if the first node is visible and if so click it.
-        if ($this->is_node_visible($linknode)) {
+        if ($this->is_node_visible($linknode, self::REDUCED_TIMEOUT)) {
             $linknode->click();
             return;
         }
 
-        // The first node on the page isn't visible so we are going to have to get all nodes with the same xpath.
-        // Extract xpath from the first node we found.
-        $xpath = str_replace("\n", '', $linknode->getXpath());
-        $matches = [];
-        if (preg_match_all('|^\(//html/(.*)(?=\)\[1\]$)|', $xpath, $matches) !== false) {
-            $xpath = $matches[1][0];
-        } else {
-            throw new coding_exception('Failed to extract xpath from '.$xpath);
-        }
-
-        // Now get all nodes.
         /** @var NodeElement[] $linknodes */
-        $linknodes = $this->find_all('xpath', $xpath);
+        $linknodes = $this->find_all('named_partial', ['link', behat_context_helper::escape($link)]);
 
         // Cycle through all nodes and if just one of them is visible break loop.
         foreach ($linknodes as $node) {
@@ -405,7 +394,7 @@ class behat_theme_snap extends behat_base {
                 // We've already tested the first node, skip it.
                 continue;
             }
-            if ($this->is_node_visible($node, self::REDUCED_TIMEOUT)) {
+            if ($node->isVisible()) {
                 $node->click();
                 return;
             }
@@ -1194,6 +1183,7 @@ class behat_theme_snap extends behat_base {
         $mainwindow = $session->getWindowName();
         $logoutwindow = 'Log out window';
         $session->executeScript('window.open("'.$CFG->wwwroot.'", "'.$logoutwindow.'")');
+        sleep(1); // Allow time for the window to open.
         $session->switchToWindow($logoutwindow);
         $this->i_log_out();
         $session->executeScript('window.close()');
