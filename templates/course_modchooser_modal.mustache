@@ -14,10 +14,36 @@
     You should have received a copy of the GNU General Public License
     along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 }}
+
 {{!
  @package   theme_snap
  @copyright Copyright (c) 2017 Blackboard Inc.
  @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+}}
+
+{{!
+    @template theme_snap/course_modchooser_modal
+    Example context (json):
+    {
+        "tabs": {
+            "activities":
+                [{
+                    "name":"modname",
+                    "title":"Mod human name",
+                    "icon":"/theme/image.php/snap/assign/0/icon",
+                    "link":"http://google.com",
+                    "help":"help text"
+                }],
+            "resources":
+                [{
+                    "name":"modname",
+                    "title":"Mod human name",
+                    "icon":"/theme/image.php/snap/assign/0/icon",
+                    "link":"http://google.com",
+                    "help":"help text"
+                }]
+        }
+    }
 }}
 
 <!-- Modal -->
