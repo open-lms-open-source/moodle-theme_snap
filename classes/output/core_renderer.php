@@ -532,7 +532,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
             'aria-haspopup' => 'true',
             'class' => 'btn btn-default snap-login-button js-personal-menu-trigger',
         ];
-        if (!empty($CFG->alternateloginurl)) {
+        if (!empty($CFG->alternateloginurl) or !empty($CFG->theme_snap_disablequicklogin)) {
             $loginurl = $CFG->wwwroot.'/login/index.php';
             $loginatts = [
                 'class' => 'btn btn-default snap-login-button',
