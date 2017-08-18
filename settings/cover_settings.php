@@ -19,18 +19,4 @@ $setting = new admin_setting_configstoredfile($name, $title, $description, 'post
 $setting->set_updatedcallback('theme_snap_process_site_coverimage');
 $snapsettings->add($setting);
 
-$name = 'theme_snap/cover_carousel';
-$heading = new lang_string('covercarousel', 'theme_snap');
-$description = new lang_string('comingsoon', 'theme_snap');
-$setting = new admin_setting_heading($name, $heading, $description);
-$snapsettings->add($setting);
-
-$name = 'theme_snap/cover_video';
-$heading = new lang_string('covervideo', 'theme_snap');
-$description = new lang_string('comingsoon', 'theme_snap');
-$setting = new admin_setting_heading($name, $heading, $description);
-$snapsettings->add($setting);
-
-
-
 $settings->add($snapsettings);
