@@ -2841,17 +2841,13 @@ body.hascontinuecancel.path-site #page {
     border-right: 1px solid $gray-lighter;
 }
 
-html[dir="rtl"] {
-    .previous_section,
-    .next_section {
-        .nav_icon {
-            transform: rotate(180deg);
-            border: none;
-        }
-    }
-
-
+/*rtl:raw:
+.previous_section .nav_icon,
+.next_section .nav_icon {
+        transform: rotate(180deg);
+        border: none;
 }
+*/
 
 /* moodle dialogues */
 /* standard size */
