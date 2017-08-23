@@ -26,6 +26,7 @@ namespace theme_snap\output;
 
 defined('MOODLE_INTERNAL') || die();
 require_once($CFG->libdir.'/coursecatlib.php');
+require_once($CFG->dirroot.'/message/output/popup/lib.php');
 
 use stdClass;
 use context_course;
@@ -1620,53 +1621,23 @@ HTML;
    }
 
     /**
-     * Renders the boost core notification popup area, which includes messages and notification popups
-     * @return string Notification popup area
+     * Renders a wrap of the boost core notification popup area, which includes messages and notification popups
+     * @return string notification popup area.
      */
     protected function render_notification_popups() {
-        global $CFG, $USER;
+        global $OUTPUT;
 
-        if(!isloggedin()) return '';
-
-        // Add the messages and notifications popovers.
-        $popovernavarea = '';
-        $popovernavarea .= '<div class="pull-right navbar navbar-full navbar-light moodle-has-z-index snap-core-navbar">';
-        $popovernavarea .= '<div class="container-fluid navbar-nav">';
-
-        $messagespopover = '';
-        if (!empty($CFG->messaging)) {
-            $context = [
-                'userid' => $USER->id,
-                'urls' => [
-                    'seeall' => (new moodle_url('/message/index.php'))->out(),
-                    'writeamessage' => (new moodle_url('/message/index.php', ['contactsfirst' => 1]))->out(),
-                    'preferences' => (new moodle_url('/message/edit.php', ['id' => $USER->id]))->out(),
-                ],
-            ];
-            $messagespopover .= $this->render_from_template('message_popup/message_popover', $context);
+        $navoutput = message_popup_render_navbar_output($OUTPUT);
+        if (empty($navoutput)) {
+            return '';
         }
 
-        $popovernavarea .= $messagespopover;
-
-        // Add the notifications popover.
-        $notificationspopover = '';
-        $enabled = \core_message\api::is_processor_enabled("popup");
-        if ($enabled) {
-            $context = [
-                'userid' => $USER->id,
-                'urls' => [
-                    'seeall' => (new moodle_url('/message/output/popup/notifications.php'))->out(),
-                    'preferences' => (new moodle_url('/message/notificationpreferences.php', ['userid' => $USER->id]))->out(),
-                ],
-            ];
-            $notificationspopover .= $this->render_from_template('message_popup/notification_popover', $context);
-        }
-
-        $popovernavarea .= $notificationspopover;
-
-        $popovernavarea .= '</div>';
-        $popovernavarea .= '</div>';
-
-        return $popovernavarea;
+        // Wrap message popup navbar output.
+        $output = <<<EOF
+<div class="pull-right navbar navbar-full navbar-light moodle-has-z-index snap-core-navbar">
+    <div class="container-fluid navbar-nav">$navoutput</div>
+</div>
+EOF;
+        return $output;
     }
 }

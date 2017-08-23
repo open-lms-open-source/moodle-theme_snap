@@ -43,6 +43,7 @@ use theme_snap\renderables\bb_dashboard_link;
     echo $OUTPUT->render($settingslink);
 ?>
 </div>
+
 <?php
     echo $OUTPUT->render_notification_popups();
     $sitefullname = format_string($SITE->fullname);
