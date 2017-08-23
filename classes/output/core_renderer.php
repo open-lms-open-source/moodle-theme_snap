@@ -1625,9 +1625,13 @@ HTML;
      * @return string notification popup area.
      */
     protected function render_notification_popups() {
-        global $OUTPUT;
+        global $OUTPUT, $CFG;
 
+        // We only want the notifications bell, not the messages badge so temporarilly disable messaging to exclude it.
+        $messagingenabled = $CFG->messaging;
+        $CFG->messaging = false;
         $navoutput = message_popup_render_navbar_output($OUTPUT);
+        $CFG->messaging = $messagingenabled;
         if (empty($navoutput)) {
             return '';
         }
