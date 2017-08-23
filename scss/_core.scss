@@ -2825,22 +2825,29 @@ body.hascontinuecancel.path-site #page {
 .nav_icon {
     padding: 0.3em;
     text-align: center;
+    font-size: 2em;
 }
 
 .next_section .nav_icon {
-    margin-left: 0.3em;
-    border-left: 1px solid #eee;
-    font-size: 2em;
-    width: 50px;
     float: right;
+    margin-left: 0.3em;
+    border-left: 1px solid $gray-lighter;
+    width: 50px;
 }
 
 .previous_section .nav_icon {
     float: left;
     margin-right: 0.3em;
-    border-right: 1px solid #eee;
-    font-size: 2em;
+    border-right: 1px solid $gray-lighter;
 }
+
+/*rtl:raw:
+.previous_section .nav_icon,
+.next_section .nav_icon {
+        transform: rotate(180deg);
+        border: none;
+}
+*/
 
 /* moodle dialogues */
 /* standard size */
