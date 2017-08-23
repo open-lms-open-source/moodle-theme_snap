@@ -603,8 +603,6 @@ define(['jquery', 'core/log', 'theme_snap/headroom', 'theme_snap/util', 'theme_s
                             '#id_general + #id_general', // Turnitin duplicate ID bug.
                             '#id_content',
                             '#page-mod-choice-mod #id_optionhdr',
-                            '#page-mod-assign-mod #id_availability',
-                            '#page-mod-assign-mod #id_submissiontypes',
                             '#page-mod-workshop-mod #id_gradingsettings',
                             '#page-mod-choicegroup-mod #id_miscellaneoussettingshdr',
                             '#page-mod-choicegroup-mod #id_groups',
@@ -616,6 +614,7 @@ define(['jquery', 'core/log', 'theme_snap/headroom', 'theme_snap/util', 'theme_s
 
                         // Add expand all to advanced column
                         $(".snap-form-advanced").append($(".collapsible-actions"));
+                        $(".snap-form-advanced fieldset").addClass('collapsed');
 
                         // Sanitize required input into a single fieldset
                         var main_form = $("#mform1 fieldset:first");
@@ -647,6 +646,13 @@ define(['jquery', 'core/log', 'theme_snap/headroom', 'theme_snap/util', 'theme_s
                         var showdescription = $("#page-mod-resource-mod [id='id_showdescription']").closest('.form-group');
                         $("#page-mod-resource-mod .snap-form-advanced #id_modstandardelshdr .fcontainer").append(description);
                         $("#page-mod-resource-mod .snap-form-advanced #id_modstandardelshdr .fcontainer").append(showdescription);
+
+                        // Assignment - put due date in required, and attatchments in common settings.
+                        var filemanager = $("#page-mod-assign-mod [data-fieldtype='filemanager']").closest('.form-group');
+                        var duedate = $("#page-mod-assign-mod [for='id_duedate']").closest('.form-group');
+                        $("#page-mod-assign-mod .snap-form-advanced #id_modstandardelshdr .fcontainer").append(filemanager);
+                        $("#page-mod-assign-mod .snap-form-required .fcontainer").append(duedate);
+
                         var savebuttons = $("#mform1 > .form-group:last");
                         $(main_form).append(savebuttons);
                     }

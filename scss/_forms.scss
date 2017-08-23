@@ -43,6 +43,11 @@ body:not(.behat-site) {
     border: none;
 }
 
+.snap-form-advanced .collapsible-actions .collapseexpand {
+    background: none;
+    padding: 0;
+}
+
 .form-label .form-shortname {
     display: inline;
 }
