@@ -3601,9 +3601,9 @@ label.state-visible[for="snap-coverfiles"],
     border: initial;
 }
 
-.js-only {
-    visibility: hidden;
-}
-.snap-js-loaded .js-only {
-    visibility: visible;
+body:not(.snap-js-loaded) .js-only {
+    pointer-events: none;
+    cursor: default;
+    filter: grayscale(100%);
+    opacity: 0.5;
 }
