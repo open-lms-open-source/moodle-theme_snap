@@ -527,7 +527,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
         global $CFG;
 
         $output = '';
-        $loginurl = '#';
+        $loginurl = $CFG->wwwroot.'/login/index.php';
         $loginatts = [
             'aria-haspopup' => 'true',
             'class' => 'btn btn-default snap-login-button js-personal-menu-trigger',
@@ -723,7 +723,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
             $linkcontent = $menu.$picture.$badge;
             $attributes = array(
                 'aria-haspopup' => 'true',
-                'class' => 'js-personal-menu-trigger snap-my-courses-menu',
+                'class' => 'js-personal-menu-trigger snap-my-courses-menu js-only',
                 'id' => 'fixy-trigger',
                 'aria-controls' => 'primary-nav',
             );
