@@ -27,6 +27,7 @@ define(['core/notification', 'core/ajax', 'core/templates', 'core/str'],
         // Module level variables.
         var loginErrorShown = false;
         var loggingOut = false;
+        var redirectInProgress = false;
 
         // Module level code.
         $(document).ready(function() {
@@ -70,6 +71,13 @@ define(['core/notification', 'core/ajax', 'core/templates', 'core/str'],
                 if (typeof response  === 'undefined') {
                     // Assume error.
                     response = {error: M.util.get_string('unknownerror', 'core')};
+                }
+
+                if (!redirectInProgress && response.errorcode && response.errorcode === "sitepolicynotagreed") {
+                    var redirect = M.cfg.wwwroot + '/user/policy.php';
+                    window.location = redirect;
+                    redirectInProgress = true;
+                    return true; // Prevent further error messages from showing as a redirect is in progress.
                 }
 
                 if (response.error || response.errorcode) {
