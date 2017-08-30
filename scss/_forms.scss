@@ -48,6 +48,11 @@ body:not(.behat-site) {
     padding: 0;
 }
 
+.snap-form-advanced .dndupload-message {
+    font-family: $font-family-system;
+    font-size: small;
+}
+
 .form-label .form-shortname {
     display: inline;
 }

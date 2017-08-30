@@ -612,8 +612,9 @@ define(['jquery', 'core/log', 'theme_snap/headroom', 'theme_snap/util', 'theme_s
 
                         $('#mform1 > fieldset').not(vital).wrapAll('<div class="snap-form-advanced col-md-4" />');
 
-                        // Add expand all to advanced column
+                        // Add expand all to advanced column.
                         $(".snap-form-advanced").append($(".collapsible-actions"));
+                        // Add collapsed to all fieldsets in advanced.
                         $(".snap-form-advanced fieldset").addClass('collapsed');
 
                         // Sanitize required input into a single fieldset
