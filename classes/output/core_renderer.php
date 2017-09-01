@@ -1571,19 +1571,19 @@ HTML;
         $flatnav = $PAGE->flatnav->get_key_list();
 
         // Student dashboard link.
-        if (in_array("intelliboard_student", $flatnav)) {
+        if (in_array("intelliboard_student", $flatnav, true)) {
             $node = $PAGE->flatnav->get("intelliboard_student");
             $links .= $this->render_intelliboard_link($node->get_content(), $node->action(), 'intelliboard_learner');
         }
 
         // Instructor dashboard link.
-        if (in_array("intelliboard_instructor", $flatnav)) {
+        if (in_array("intelliboard_instructor", $flatnav, true)) {
             $node = $PAGE->flatnav->get("intelliboard_instructor");
             $links .= $this->render_intelliboard_link($node->get_content(), $node->action(), 'intelliboard');
         }
 
         // Competency dashboard link.
-        if (in_array("intelliboard_competency", $flatnav)) {
+        if (in_array("intelliboard_competency", $flatnav, true)) {
             $node = $PAGE->flatnav->get("intelliboard_competency");
             $links .= $this->render_intelliboard_link($node->get_content(), $node->action(), 'intelliboard_competencies');
         }
