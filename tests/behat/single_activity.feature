@@ -20,7 +20,6 @@
 # @copyright Copyright (c) 2017 Blackboard Inc. (http://www.blackboard.com)
 # @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
 
-
 @theme @theme_snap
 Feature: Use the Single Activity format in Snap
   In order to use the Single Activity format in Snap
@@ -31,7 +30,7 @@ Feature: Use the Single Activity format in Snap
     Given the following config values are set as admin:
       | theme | snap |
     And the following "categories" exist:
-      | name | category 0| idnumber |
+      | name | category | idnumber |
       | Test Cat | 0 | TESTCAT |
 
   @javascript
