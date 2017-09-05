@@ -516,11 +516,39 @@ class local {
 
             $context = \context_course::instance($courseid);
             $onlyactive = true;
-            $enrolled = count_enrolled_users($context, $capability, null, $onlyactive);
+            $enrolled = self::count_enrolled_users($context, $capability, null, $onlyactive);
             $participantcount[$idx] = $enrolled;
         }
 
         return $participantcount[$idx];
+    }
+
+    /**
+     * Counts list of users enrolled given a context, skipping duplicate ids.
+     * Inspired by count_enrolled_users found in lib/enrollib.php
+     * Core method is counting duplicates because users can be enrolled into a course via different methods, hence,
+     * having multiple registered enrollments.
+     *
+     * @param \context $context
+     * @param string $withcapability
+     * @param int $groupid 0 means ignore groups, any other value limits the result by group id
+     * @param bool $onlyactive consider only active enrolments in enabled plugins and time restrictions
+     * @return int number of enrolled users.
+     */
+    public static function count_enrolled_users(\context $context, $withcapability = '', $groupid = 0, $onlyactive = false) {
+        global $DB;
+
+        $capjoin = get_enrolled_with_capabilities_join(
+            $context, '', $withcapability, $groupid, $onlyactive);
+
+        $sql = "SELECT COUNT(*)
+                  FROM (SELECT DISTINCT u.id
+                          FROM {user} u
+                               $capjoin->joins
+                         WHERE $capjoin->wheres AND u.deleted = 0) as uids 
+                ";
+
+        return $DB->count_records_sql($sql, $capjoin->params);
     }
 
     /**
