@@ -545,7 +545,7 @@ class local {
                   FROM (SELECT DISTINCT u.id
                           FROM {user} u
                                $capjoin->joins
-                         WHERE $capjoin->wheres AND u.deleted = 0) as uids 
+                         WHERE $capjoin->wheres AND u.deleted = 0) as uids
                 ";
 
         return $DB->count_records_sql($sql, $capjoin->params);
@@ -1449,10 +1449,14 @@ class local {
                 'pluginfile.php', $context->id, 'mod_page', 'intro', null);
             $page->summary = format_text($page->summary, $page->introformat, $formatoptions);
         } else {
-            $preview = strip_tags($page->content);
-            $page->summary = shorten_text($preview, 200);
+            $preview = format_text($page->content, $page->contentformat, $formatoptions);
+            // Prevent img alt tags from being spat out by html_to_text by escaping them.
+            $preview = str_replace('alt=', 'alt&#61;', $preview);
+            $wrapwidth = 0;
+            $listlinks = false;
+            $preview = html_to_text($preview, $wrapwidth, $listlinks);
+            $page->summary = s(shorten_text($preview, 200));
         }
-
         // Process content.
         $page->content = file_rewrite_pluginfile_urls($page->content,
             'pluginfile.php', $context->id, 'mod_page', 'content', $page->revision);
