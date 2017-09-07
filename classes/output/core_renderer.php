@@ -1635,13 +1635,6 @@ HTML;
         if (empty($navoutput)) {
             return '';
         }
-
-        // Wrap message popup navbar output.
-        $output = <<<EOF
-<div class="pull-right navbar navbar-full navbar-light moodle-has-z-index snap-core-navbar">
-    <div class="container-fluid navbar-nav">$navoutput</div>
-</div>
-EOF;
-        return $output;
+        return $navoutput;
     }
 }
