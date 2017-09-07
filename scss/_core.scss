@@ -3613,13 +3613,3 @@ body:not(.snap-js-loaded) .js-only {
     filter: grayscale(100%);
     opacity: 0.5;
 }
-
-.snap-core-navbar {
-    padding: inherit;
-    top: -0.8em;
-    margin-right: -1em;
-    max-height: 1em;
-    .popover-region-container {
-        top: 2.8rem;
-    }
-}
