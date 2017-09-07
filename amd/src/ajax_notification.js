@@ -69,14 +69,16 @@ define(['core/notification', 'core/ajax', 'core/templates', 'core/str'],
                 }
 
                 if (typeof response  === 'undefined') {
-                    // Assume error.
-                    response = {error: M.util.get_string('unknownerror', 'core')};
+                    // We don't know what the error was so don't show a useless unknown error dialog.
+                    return false;
                 }
 
-                if (!redirectInProgress && response.errorcode && response.errorcode === "sitepolicynotagreed") {
-                    var redirect = M.cfg.wwwroot + '/user/policy.php';
-                    window.location = redirect;
-                    redirectInProgress = true;
+                var redirect = M.cfg.wwwroot + '/user/policy.php';
+                if (response.errorcode && response.errorcode === "sitepolicynotagreed") {
+                    if (window.location != redirect && !redirectInProgress && $('#primary-nav').is(':visible')) {
+                        window.location = redirect;
+                        redirectInProgress = true;
+                    }
                     return true; // Prevent further error messages from showing as a redirect is in progress.
                 }
 
@@ -135,7 +137,8 @@ define(['core/notification', 'core/ajax', 'core/templates', 'core/str'],
                                     if (response.errorcode && response.message) {
                                         errorstr = response.message;
                                     } else {
-                                        errorstr = M.util.get_string('unknownerror', 'moodle');
+                                        // Don't display any error messages as we don't know what the error is.
+                                        return false;
                                     }
                                 }
                                 notification.alert(M.util.get_string('error', 'moodle'),

@@ -504,14 +504,14 @@ define(['jquery', 'core/log', 'theme_snap/headroom', 'theme_snap/util', 'theme_s
              * @param {int} userId
              */
             snapInit: function(courseConfig, pageHasCourseContent, siteMaxBytes, forcePassChange,
-                               messageBadgeCountEnabled, userId) {
+                               messageBadgeCountEnabled, userId, sitePolicyAcceptReqd) {
 
                 // Set up.
                 M.cfg.context = courseConfig.contextid;
                 M.snapTheme = {forcePassChange: forcePassChange};
 
                 // General AMD modules.
-                personalMenu.init();
+                personalMenu.init(sitePolicyAcceptReqd);
 
                 // Course related AMD modules (note, site page can technically have course content too).
                 if (pageHasCourseContent) {

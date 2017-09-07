@@ -33,12 +33,21 @@ define(['jquery', 'core/log', 'core/yui', 'theme_snap/pm_course_cards', 'theme_s
 
             var self = this;
 
+            var redirectToSitePolicy = false;
+
             /**
              * Add deadlines, messages, grades & grading,  async'ly to the personal menu
              *
              * @author Stuart Lamour
              */
             this.update = function() {
+
+                // If site policy needs acceptance, then don't update, just redirect to site policy!
+                if (redirectToSitePolicy) {
+                    var redirect = M.cfg.wwwroot + '/user/policy.php';
+                    window.location = redirect;
+                    return;
+                }
 
                 // Update course cards with info.
                 courseCards.reqCourseInfo(courseCards.getCourseIds());
@@ -172,9 +181,12 @@ define(['jquery', 'core/log', 'core/yui', 'theme_snap/pm_course_cards', 'theme_s
             /**
              * Initialising function.
              */
-            this.init = function() {
+            this.init = function(sitePolicyAcceptReqd) {
+                redirectToSitePolicy = sitePolicyAcceptReqd;
                 applyListeners();
-                courseCards.init();
+                if (!redirectToSitePolicy) {
+                    courseCards.init();
+                }
             };
         };
 
