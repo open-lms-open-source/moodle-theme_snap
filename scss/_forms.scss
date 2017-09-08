@@ -373,9 +373,38 @@ div.editor_atto_toolbar div.atto_group {
     text-decoration: none;
 }
 
+// Colapse/expand toggle on forms.
+.mform fieldset.collapsed legend a.fheader,
+.mform fieldset.collapsible legend a.fheader {
+    padding: 0;
+    display: block;
+    background: none;
+
+    &:after {
+        font-family: FontAwesome;
+        line-height: 1.5;
+        content: "\f106"; // up arrow default.
+        float: right;
+        margin-right: .4rem; // magic number to line up with help icons.
+    }
+}
+.mform fieldset.collapsible.collapsed legend a.fheader:after {
+    content: "\f107"; // down arrow to indicate can expand.
+}
+
+// Remove arrow on expand all link.
+.collapsible-actions .collapseexpand {
+    background: none;
+    padding-left: 0;
+}
+
 // Atto ledgends fix.
-.mform.atto_form fieldset.collapsible legend a.fheader {
+.mform fieldset.collapsible legend a.fheader {
     margin-left: 0;
+}
+
+.snap-form-advanced legend {
+    font-size: 1rem;
 }
 
 @include media-breakpoint-up(lg) {
@@ -393,26 +422,20 @@ div.editor_atto_toolbar div.atto_group {
 
     // All the non-essential form elements.
     .snap-form-advanced {
-        fieldset.collapsible legend a.fheader {
-            margin-left: -6px;
-        }
-
-        legend {
-            font-size: 1em;
-        }
 
         // FF select elements don't respect % max width.
         select {
             max-width: 200px !important;
         }
-
-
-        .collapsible-actions {
-            text-align: left;
-
-            .collapseexpand {
-                margin-left: -6px;
-            }
+        .ftoggler{
+            background-color: $gray-lighter;
+            padding: .3em .5em;
+        }
+        .collapsed .ftoggler{
+            background-color: transparent;
+        }
+        fieldset > .fcontainer {
+            border: 3px solid $gray-lighter;
         }
     }
 }
