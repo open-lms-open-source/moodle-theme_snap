@@ -337,6 +337,12 @@ img.icon.hide {
     @include svg-icon;
 }
 
+// Font awesome icons.
+i.icon,
+p.tree_item:before {
+    color: #999;
+}
+
 .mediaplugin_videojs > div {
     max-width: none !important;
 }
