@@ -724,7 +724,7 @@ class local {
         foreach ($events as $event) {
             if (isset($courses[$event->courseid])) {
                 $course = $courses[$event->courseid];
-                $event->coursefullname = $course->fullname;
+                $event->coursefullname = format_string($course->fullname);
             }
         }
         return $events;
@@ -909,7 +909,7 @@ class local {
             $modname = get_string('modulename', 'mod_'.$cm->modname);
             $modimage = \html_writer::img($modimageurl, $modname);
 
-            $gradetitle = $cm->name. '<small><br>' .$course->fullname. '</small>';
+            $gradetitle = $cm->name. '<small><br>' .format_string($course->fullname). '</small>';
 
             $releasedon = isset($grade->timemodified) ? $grade->timemodified : $grade->timecreated;
             $meta = get_string('released', 'theme_snap', $output->friendly_datetime($releasedon));
@@ -946,7 +946,7 @@ class local {
             $modname = get_string('modulename', 'mod_'.$cm->modname);
             $modimage = \html_writer::img($modimageurl, $modname);
 
-            $ungradedtitle = $cm->name. '<small><br>' .$course->fullname. '</small>';
+            $ungradedtitle = $cm->name. '<small><br>' .format_string($course->fullname). '</small>';
 
             $xungraded = get_string('xungraded', 'theme_snap', $ungraded->ungraded);
 
@@ -1726,7 +1726,7 @@ class local {
                     'cmid' => $post->cmid,
                     'name' => $post->subject,
                     'courseshortname' => $post->courseshortname,
-                    'coursefullname' => $post->coursefullname,
+                    'coursefullname' => format_string($post->coursefullname),
                     'forumname' => $post->forumname,
                     'sectionnum' => null,
                     'timestamp' => $post->modified,

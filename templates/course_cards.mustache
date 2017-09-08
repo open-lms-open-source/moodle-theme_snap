@@ -22,7 +22,7 @@
 <div data-hidden="{{^published}}true{{/published}}{{#published}}false{{/published}}" data-courseid="{{courseid}}" data-model="{{model}}" data-href="{{{url}}}" data-shortname="{{shortname}}" class="courseinfo{{#favorited}} favorited{{/favorited}}" style="{{imagecss}}" tab-index="-1"{{#lazyloadimageurl}} data-image-url="{{.}}"{{/lazyloadimageurl}}>
     <button class="snap-icon-toggle favoritetoggle" title="{{toggletitle}}" aria-pressed="{{#favorited}}true{{/favorited}}{{^favorited}}false{{/favorited}}"></button>
     <div class="courseinfo-body">
-        <h3><a class="coursefullname" href="{{{url}}}">{{fullname}}</a></h3>
+        <h3><a class="coursefullname" href="{{{url}}}">{{{fullname}}}</a></h3>
         <div class="dynamicinfo">
             {{#feedback.coursegrade.value}}
                     <div class="coursegrade">{{#str}}coursegrade, theme_snap{{/str}} <a href="{{feedbackurl}}">{{feedback.coursegrade.value}}</a></div>

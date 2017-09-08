@@ -823,7 +823,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
             // simply show -
             // My course
             // This is intentional.
-            $heading = $COURSE->fullname;
+            $heading = format_string($COURSE->fullname);
             $heading = html_writer::link($courseurl, $heading);
             $heading = html_writer::tag($tag, $heading);
         } else {
