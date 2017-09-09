@@ -20,9 +20,9 @@
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-define(['core/notification', 'core/ajax', 'core/templates', 'core/str'],
+define(['jquery', 'core/notification', 'core/ajax', 'core/templates', 'core/str', 'theme_snap/util'],
 
-    function(notification, ajax, templates, str) {
+    function($, notification, ajax, templates, str, util) {
 
         // Module level variables.
         var loginErrorShown = false;
@@ -47,18 +47,63 @@ define(['core/notification', 'core/ajax', 'core/templates', 'core/str'],
              *
              * @param response
              * @param failaction
-             * @return boolean - error message shown?
+             * @return promise - resolves with a boolean (true if error shown)
              */
             ifErrorShowBestMsg : function(response, failAction, failMsg) {
 
+                var dfd = $.Deferred();
+
+                /**
+                 * Error notification function for non logged out issues.
+                 * @param response
+                 * @return promise
+                 */
+                var errorNotification = function(response) {
+                    var endfd = $.Deferred();
+                    if (failMsg) {
+                        notification.alert(M.util.get_string('error', 'moodle'),
+                            failMsg, M.util.get_string('ok', 'moodle'));
+                    } else {
+                        if (response.backtrace) {
+                            notification.exception(response);
+                        } else {
+                            var errorstr;
+                            if (response.error) {
+                                errorstr = response.error;
+                                if (response.stacktrace) {
+                                    errorstr = '<div>' + errorstr + '<pre>' + response.stacktrace + '</pre></div>';
+                                }
+
+                            } else {
+                                if (response.errorcode && response.message) {
+                                    errorstr = response.message;
+                                } else {
+                                    errorstr = M.util.get_string('unknownerror', 'moodle');
+                                }
+                            }
+                            notification.alert(M.util.get_string('error', 'moodle'),
+                                errorstr, M.util.get_string('ok', 'moodle'));
+                        }
+                    }
+                    util.whenTrue(function(){
+                        var isvisible = $('.moodle-dialogue-base').is(':visible');
+                        return isvisible;
+                    }, function() {
+                        endfd.resolve(true);
+                    }, true);
+                    return endfd.promise();
+                };
+
                 if (loginErrorShown) {
                     // We already have a login error message.
-                    return true;
+                    dfd.resolve(true);
+                    return dfd.promise();
                 }
 
                 if (loggingOut) {
                     // No point in showing error messages if we are logging out.
-                    return false;
+                    dfd.resolve(true);
+                    return dfd.promise();
                 }
 
                 if (typeof response !== 'object') {
@@ -76,8 +121,12 @@ define(['core/notification', 'core/ajax', 'core/templates', 'core/str'],
                 if (!redirectInProgress && response.errorcode && response.errorcode === "sitepolicynotagreed") {
                     var redirect = M.cfg.wwwroot + '/user/policy.php';
                     window.location = redirect;
+                    // Prevent further error messages from showing as a redirect is in progress.
                     redirectInProgress = true;
-                    return true; // Prevent further error messages from showing as a redirect is in progress.
+                    loginErrorShown = true;
+                    dfd.resolve(true);
+                    return dfd.promise();
+
                 }
 
                 if (response.error || response.errorcode) {
@@ -87,68 +136,38 @@ define(['core/notification', 'core/ajax', 'core/templates', 'core/str'],
                         // When a force password change is in effect, warn user in personal menu and redirect to
                         // password change page if appropriate.
                         if ($('#fixy-content').length) {
-                            str.get_string('forcepwdwarningpersonalmenu', 'theme_snap', pwdChangeUrl).done(
+                            str.get_string('forcepwdwarningpersonalmenu', 'theme_snap', pwdChangeUrl).then(
                                 function(forcePwdWarning) {
                                     var alertMsg = {"message": forcePwdWarning, "extraclasses": "force-pwd-warning"};
-                                    templates.render('core/notification_warning', alertMsg)
-                                        .done(function(result) {
-                                            $('#fixy-content').html('<br />' + result);
-                                        });
+                                    return templates.render('core/notification_warning', alertMsg);
+                                }
+                            ).then(
+                                function(result) {
+                                    $('#fixy-content').html('<br />' + result);
+                                    dfd.resolve(true);
                                 }
                             );
                             if ($('#fixy-content').is(':visible')) {
                                 // If the personal menu is open then it should have a message in it informing the user
                                 // that they need to change their password to proceed.
-                                return true;
+                                loginErrorShown = true;
+                                return dfd.promise();
                             }
                         }
 
-                        if (window.location.href.indexOf('login/change_password.php') > -1) {
-                            // We are already on the change password page - avoid redirect loop!
-                            return true;
-                        }
                         window.location = pwdChangeUrl;
-                        loginErrorShown = true; // Not really, but we only want this redirect to happen once.
-                        return true;
+                        // Regardless of if error was shown, we only want this redirect to happen once so set
+                        // loginErrorShown to true.
+                        loginErrorShown = true;
+                        dfd.resolve(true);
+                        return dfd.promise();
                     }
-
-                    /**
-                     * Error notification function for non logged out issues.
-                     * @param response
-                     */
-                    var errorNotification = function(response) {
-                        if (failMsg) {
-                            notification.alert(M.util.get_string('error', 'moodle'),
-                                    failMsg, M.util.get_string('ok', 'moodle'));
-                        } else {
-                            if (response.backtrace) {
-                                notification.exception(response);
-                            } else {
-                                var errorstr;
-                                if (response.error) {
-                                    errorstr = response.error;
-                                    if (response.stacktrace) {
-                                        errorstr = '<div>' + errorstr + '<pre>' + response.stacktrace + '</pre></div>';
-                                    }
-
-                                } else {
-                                    if (response.errorcode && response.message) {
-                                        errorstr = response.message;
-                                    } else {
-                                        errorstr = M.util.get_string('unknownerror', 'moodle');
-                                    }
-                                }
-                                notification.alert(M.util.get_string('error', 'moodle'),
-                                        errorstr, M.util.get_string('ok', 'moodle'));
-                            }
-                        }
-                    };
 
                     // Ajax call login status function to see if we are logged in or not.
                     // Note, we can't use a moodle web service for this ajax call because it will not provide
                     // an error response that we can rely on - see MDL-54551.
                     failAction = failAction ? failAction : '';
-                    $.ajax({
+                    return $.ajax({
                         type: "POST",
                         async: true,
                         data: {
@@ -156,9 +175,10 @@ define(['core/notification', 'core/ajax', 'core/templates', 'core/str'],
                             "failedactionmsg" : failAction
                         },
                         url: M.cfg.wwwroot + '/theme/snap/rest.php?action=get_loginstatus'
-                    }).done(function(thisResp) {
+                    }).then(function(thisResp) {
                         if (loginErrorShown) {
-                            return true;
+                            dfd.resolve(true);
+                            return dfd.promise();
                         }
                         // Show login error message or original error message.
                         if (!thisResp.loggedin) {
@@ -183,15 +203,13 @@ define(['core/notification', 'core/ajax', 'core/templates', 'core/str'],
                             loginErrorShown = true;
                         } else {
                             // This is not a login issue, show original error message.
-                            // eslint-disable-next-line no-console
-                            console.log(response);
-                            errorNotification(response);
+                            return errorNotification(response); // Returns promise which is resolved when dialog shown.
                         }
                     });
-                    return true;
                 }
 
-                return false;
+                dfd.resolve(false);
+                return dfd.promise();
             }
         };
     }

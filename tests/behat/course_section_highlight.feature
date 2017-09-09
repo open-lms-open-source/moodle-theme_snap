@@ -69,6 +69,8 @@ Feature: When the moodle theme is set to Snap, teachers can toggle the currently
     Then I should not see "Current" in the "#chapters li:nth-of-type(3)" "css_element"
 
   @javascript
+  # This scenario is necessary to make sure the correct error message comes back when an AJAX request fails but it is
+  # not related to a session time out / the user being logged out.
   Scenario: Teacher loses teacher capability whilst course open and receives the correct error message when trying to
   highlight section.
     Given I log in as "teacher1" (theme_snap)
@@ -77,6 +79,8 @@ Feature: When the moodle theme is set to Snap, teachers can toggle the currently
     And I follow "Topic 1"
     Then "#section-1" "css_element" should exist
     And I click on "#section-1 .snap-highlight.snap-marker" "css_element"
+    # Shame to have a 1 second pause here but this fails on CI intermittently without this pause.
+    And I wait "1" seconds
     Then I should see "Failed to highlight section"
 
   @javascript

@@ -66,16 +66,21 @@ define(
                         methodname: 'theme_snap_course_module_completion',
                         args: {id: id, completionstate: completionState},
                         done: function(response) {
-                            form.removeClass('ajaxing');
-                            if (ajaxNotify.ifErrorShowBestMsg(response)) {
-                                return;
-                            }
-                            // Update completion html for this module instance.
-                            updateModCompletion(module, response.completionhtml);
+
+                            ajaxNotify.ifErrorShowBestMsg(response).done(function(errorShown) {
+                                form.removeClass('ajaxing');
+                                if (errorShown) {
+                                    return;
+                                } else {
+                                    // No errors, update completion html for this module instance.
+                                    updateModCompletion(module, response.completionhtml);
+                                }
+                            });
                         },
                         fail: function(response) {
-                            form.removeClass('ajaxing');
-                            ajaxNotify.ifErrorShowBestMsg(response);
+                            ajaxNotify.ifErrorShowBestMsg(response).then(function() {
+                                form.removeClass('ajaxing');
+                            });
                         }
                     }
                 ], true, true);
@@ -134,11 +139,14 @@ define(
                             async: true,
                             url: readPageUrl,
                             success: function(data) {
-                                if (ajaxNotify.ifErrorShowBestMsg(data)) {
-                                    return;
-                                }
-                                // Update completion html for this page mod instance.
-                                updateModCompletion(pageMod, data.completionhtml);
+                                ajaxNotify.ifErrorShowBestMsg(data).done(function(errorShown) {
+                                    if (errorShown) {
+                                        return;
+                                    } else {
+                                        // No errors, update completion html for this page mod instance.
+                                        updateModCompletion(pageMod, data.completionhtml);
+                                    }
+                                });
                             }
                         });
                     }
@@ -155,13 +163,17 @@ define(
                             async: true,
                             url: getPageUrl,
                             success: function(data) {
-                                if (ajaxNotify.ifErrorShowBestMsg(data)) {
-                                    return;
-                                }
-                                pageModContent.prepend(data.html);
-                                pageModContent.data('content-loaded', 1);
-                                pageMod.find('.contentafterlink .ajaxstatus').remove();
-                                revealPageMod(pageMod, data.completionhtml);
+                                ajaxNotify.ifErrorShowBestMsg(data).done(function(errorShown) {
+                                    if (errorShown) {
+                                        return;
+                                    } else {
+                                        // No errors, reveal page mod.
+                                        pageModContent.prepend(data.html);
+                                        pageModContent.data('content-loaded', 1);
+                                        pageMod.find('.contentafterlink .ajaxstatus').remove();
+                                        revealPageMod(pageMod, data.completionhtml);
+                                    }
+                                });
                             }
                         });
                     } else {
@@ -247,16 +259,17 @@ define(
                 async: true,
                 url: M.cfg.wwwroot + '/theme/snap/rest.php?action=get_media&contextid=' + $(resourcemod).data('modcontext'),
                 success: function(data) {
-                    if (ajaxNotify.ifErrorShowBestMsg(data)) {
-                        return;
-                    }
-                    lightboxopen(data.html, appendto);
-
-                    updateModCompletion($(resourcemod), data.completionhtml);
-
-                    $(document).trigger('snapContentRevealed');
-
-                    $('#snap-light-box').focus();
+                    ajaxNotify.ifErrorShowBestMsg(data).done(function(errorShown) {
+                        if (errorShown) {
+                            return;
+                        } else {
+                            // No errors, open lightbox and update module completion.
+                            lightboxopen(data.html, appendto);
+                            updateModCompletion($(resourcemod), data.completionhtml);
+                            $(document).trigger('snapContentRevealed');
+                            $('#snap-light-box').focus();
+                        }
+                    });
                 }
             });
 
