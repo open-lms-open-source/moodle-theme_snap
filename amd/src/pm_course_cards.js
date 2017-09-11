@@ -69,18 +69,22 @@ define(['jquery', 'core/log', 'core/templates',
                     url: M.cfg.wwwroot + '/theme/snap/rest.php?action=get_courseinfo&contextid=' + M.cfg.context,
                     data: courseiddata,
                     success: function(data) {
-                        if (ajaxNotify.ifErrorShowBestMsg(data)) {
-                            return;
-                        }
-                        if (data.info) {
-                            log.debug('fetched coursedata', data.info);
-                            if (util.supportsSessionStorage()) {
-                                window.sessionStorage[courseinfo_key] = JSON.stringify(data.info);
+                        ajaxNotify.ifErrorShowBestMsg(data).done(function(errorShown) {
+                            if (errorShown) {
+                                return;
+                            } else {
+                                // No errors, apply course info.
+                                if (data.info) {
+                                    log.debug('fetched coursedata', data.info);
+                                    if (util.supportsSessionStorage()) {
+                                        window.sessionStorage[courseinfo_key] = JSON.stringify(data.info);
+                                    }
+                                    self.applyCourseInfo(data.info);
+                                } else {
+                                    log.warn('fetched coursedata with error: JSON data object is missing info property', data);
+                                }
                             }
-                            self.applyCourseInfo(data.info);
-                        } else {
-                            log.warn('fetched coursedata with error: JSON data object is missing info property', data);
-                        }
+                        });
                     }
                 });
             };

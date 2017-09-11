@@ -33,8 +33,10 @@ define(['jquery', 'core/ajax', 'core/notification', 'core/log', 'theme_snap/mode
              * @method reloadCourseCardTemplate
              * @param {object} renderable - coursecard renderable
              * @param {jQuery} cardEl - coursecard element
+             * @return promise
              */
             var reloadCourseCardTemplate = function(renderable, cardEl) {
+                var dfd = $.Deferred();
                 mview(cardEl, 'theme_snap/course_cards');
                 var callback = function() {
                     var button = $(cardEl).find('.favoritetoggle');
@@ -42,6 +44,10 @@ define(['jquery', 'core/ajax', 'core/notification', 'core/log', 'theme_snap/mode
                     $(button).focus();
                 };
                 $(cardEl).trigger('modelUpdate', [renderable, callback]);
+                $(cardEl).on('modelUpdated', function(e) {
+                    dfd.resolve(e);
+                });
+                return dfd.promise();
             };
 
             /**
@@ -191,27 +197,40 @@ define(['jquery', 'core/ajax', 'core/notification', 'core/log', 'theme_snap/mode
                 var cardEl = $($(button).parents('.courseinfo')[0]);
                 var shortname = $(cardEl).data('shortname');
 
-                var doAjax = function() {
-                    ajax.call([
+                var doAjax = function(jsid) {
+                    return ajax.call([
                         {
                             methodname: 'theme_snap_course_card',
                             args: {courseshortname: shortname, favorited: favorited},
-                            done: function(response) {
-                                reloadCourseCardTemplate(response, cardEl);
-                            },
                             fail: function(response) {
                                 $(button).removeClass('ajaxing');
                                 ajaxNotify.ifErrorShowBestMsg(response);
                             }
                         }
-                    ], true, true);
+                    ], true, true)[0].then(function(response) {
+                        return reloadCourseCardTemplate(response, cardEl);
+                    }).then(function(){
+                        M.util.js_complete(jsid);
+                    });
                 };
 
                 if (favorited === 1) {
+                    var jsid = 'favourite_' + new Date().getTime().toString(16) + (Math.floor(Math.random() * 1000));
+                    M.util.js_pending(jsid);
                     // Move to favorites.
-                    moveCard(cardEl, '#fixy-visible-courses .courseinfo.favorited', '#fixy-visible-courses', true, doAjax);
+                    moveCard(cardEl, '#fixy-visible-courses .courseinfo.favorited', '#fixy-visible-courses', true,
+                        function() {
+                            doAjax(jsid);
+                        }
+                    );
                 } else {
-                    moveOutOfFavorites(cardEl, doAjax);
+                    var jsid = 'unfavourite_' + new Date().getTime().toString(16) + (Math.floor(Math.random() * 1000));
+                    M.util.js_pending(jsid);
+                    moveOutOfFavorites(cardEl,
+                        function() {
+                           doAjax(jsid);
+                        }
+                    );
                 }
             };
 

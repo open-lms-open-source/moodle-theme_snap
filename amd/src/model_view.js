@@ -82,6 +82,7 @@ define(['jquery', 'core/notification', 'core/templates', 'core/log'], function($
                     if (typeof(callback) === 'function') {
                         callback();
                     }
+                    $(element).trigger('modelUpdated');
                 }).fail(notification.exception);
         };
 

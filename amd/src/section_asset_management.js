@@ -160,22 +160,25 @@ define(['jquery', 'core/log', 'core/ajax', 'core/templates', 'core/notification'
                     url: M.cfg.wwwroot + courseLib.courseConfig.ajaxurl
                 });
                 req.done(function(data) {
-                    if (ajaxNotify.ifErrorShowBestMsg(data)) {
-                        log.debug('Ajax request fail');
-                        moveFailed();
-                        return;
-                    } else {
-                        log.debug('Ajax request successful');
-                        if (onSuccess) {
-                            onSuccess();
-                        }
-                        if (finalItem) {
-                            if (params.class === 'resource') {
-                                // Only stop moving for resources, sections handle this later once the TOC is reloaded.
-                                stopMoving();
+                    ajaxNotify.ifErrorShowBestMsg(data).done(function(errorShown) {
+                        if (errorShown) {
+                            log.debug('Ajax request fail');
+                            moveFailed();
+                            return;
+                        } else {
+                            // No errors, call success callback and stop moving if necessary.
+                            log.debug('Ajax request successful');
+                            if (onSuccess) {
+                                onSuccess();
+                            }
+                            if (finalItem) {
+                                if (params.class === 'resource') {
+                                    // Only stop moving for resources, sections handle this later once the TOC is reloaded.
+                                    stopMoving();
+                                }
                             }
                         }
-                    }
+                    });
                 });
                 req.fail(function() {
                     moveFailed();
@@ -418,17 +421,28 @@ define(['jquery', 'core/log', 'core/ajax', 'core/templates', 'core/notification'
                         url: M.cfg.wwwroot + courseLib.courseConfig.ajaxurl
                     });
                     req.done(function(data, textStatus, xhr) {
-                        if (data !== '' || xhr.status !== 200) {
-                            if (ajaxNotify.ifErrorShowBestMsg(data)) {
-                                log.debug('Ajax request fail');
-                                return;
-                            }
+                        if (data !== '') {
+                            ajaxNotify.ifErrorShowBestMsg(data).done(function(errorShown) {
+                                if (errorShown) {
+                                    log.debug('Ajax request fail');
+                                    return;
+                                } else {
+                                    // No errors, remove asset.
+                                    log.debug('Ajax request successful');
+                                    // Remove asset from DOM.
+                                    asset.remove();
+                                    // Remove asset searchable.
+                                    $('#toc-searchables li[data-id="' + cmid + '"]').remove();
+                                }
+                            });
+                        } else if (xhr.status === 200) {
+                            // No errors, remove asset.
+                            log.debug('Ajax request successful');
+                            // Remove asset from DOM.
+                            asset.remove();
+                            // Remove asset searchable.
+                            $('#toc-searchables li[data-id="' + cmid + '"]').remove();
                         }
-                        log.debug('Ajax request successful');
-                        // Remove asset from DOM.
-                        asset.remove();
-                        // Remove asset searchable.
-                        $('#toc-searchables li[data-id="' + cmid + '"]').remove();
                     });
                     req.fail(function(data) {
                         ajaxNotify.ifErrorShowBestMsg(data);
@@ -479,14 +493,18 @@ define(['jquery', 'core/log', 'core/ajax', 'core/templates', 'core/notification'
                         ajaxNotify.ifErrorShowBestMsg(response, errAction, errMessage);
                     },
                     success: function(response) {
-                        if (ajaxNotify.ifErrorShowBestMsg(response, errAction, errMessage)) {
-                            return;
-                        }
-                        if (show) {
-                            parent.removeClass('draft');
-                        } else {
-                            parent.addClass('draft');
-                        }
+                        ajaxNotify.ifErrorShowBestMsg(response, errAction, errMessage).done(function(errorShown) {
+                            if (errorShown) {
+                                return;
+                            } else {
+                                // No errors, set draft class.
+                                if (show) {
+                                    parent.removeClass('draft');
+                                } else {
+                                    parent.addClass('draft');
+                                }
+                            }
+                        });
                     },
                     data: {
                         id: id,
@@ -648,10 +666,11 @@ define(['jquery', 'core/log', 'core/ajax', 'core/templates', 'core/notification'
                         .done(function(data) {
                              // Trigger event that can be observed by course formats.
                             courseModule.trigger($.Event('coursemoduleedited', {ajaxreturn: data, action: action}));
-                            if (ajaxNotify.ifErrorShowBestMsg(data, errAction, errMessage)) {
-                                return;
-                            }
-                            courseModule.replaceWith(data);
+                            ajaxNotify.ifErrorShowBestMsg(data, errAction, errMessage).done(function(errorShown) {
+                                if (!errorShown) {
+                                    courseModule.replaceWith(data);
+                                }
+                            });
                         }).fail(function(ex) {
                             // Trigger event that can be observed by course formats.
                             var e = $.Event('coursemoduleeditfailed', {exception: ex, action: action});
@@ -741,8 +760,9 @@ define(['jquery', 'core/log', 'core/ajax', 'core/templates', 'core/notification'
                             errMessage = M.util.get_string('error:failedtohighlightsection', 'theme_snap');
                             errAction = M.util.get_string('action:highlightsectionvisibility', 'theme_snap');
                         }
-                        ajaxNotify.ifErrorShowBestMsg(response, errAction, errMessage);
-                        M.util.js_complete(jsid);
+                        ajaxNotify.ifErrorShowBestMsg(response, errAction, errMessage).done(function() {
+                            M.util.js_complete(jsid);
+                        });
                     }).always(function() {
                         $(sectionActionsSelector + ' .loadingstat').remove();
                         // Allow another request now this has finished.
@@ -776,7 +796,6 @@ define(['jquery', 'core/log', 'core/ajax', 'core/templates', 'core/notification'
                             }
                         });
                     });
-
                 });
             };
 
