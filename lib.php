@@ -225,8 +225,7 @@ function theme_snap_get_pre_scss($theme) {
     } else {
         $userfontsans .= ",";
     }
-    $fallbacksans = 'Roboto,"Fira Sans","Segoe UI","HelveticaNeue-Light",'
-        . '"Helvetica Neue Light","Helvetica Neue",Helvetica, Arial, sans-serif';
+    $fallbacksans = 'Roboto, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif';
     $settings['font-family-feature'] = $userfontsans . $fallbacksans;
 
     $userfontserif = $theme->settings->seriffont;

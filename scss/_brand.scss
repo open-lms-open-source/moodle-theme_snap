@@ -156,15 +156,15 @@ legend,
 .mform legend a:hover,
 .coursebox .info .coursename,
 .collapsibleregioncaption,
-.snap-featured-course-title {
+.snap-featured-course-title,
+#coursetools-list a {
     font-family: $font-family-feature;
 }
 
 .form_autocomplete_selection,
 .form_autocomplete_suggestions,
 .snap-system-text,
-.snap-action-icon,
-#coursetools-list a {
+.snap-action-icon {
     font-family: $font-family-system;
 }
 
