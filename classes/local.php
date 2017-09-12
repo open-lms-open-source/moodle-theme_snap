@@ -846,6 +846,13 @@ class local {
                 $modname = get_string('modulename', $event->modulename);
                 $modimage = \html_writer::img($modimageurl, $modname);
                 $deadline = $event->timestart + $event->timeduration;
+                if ($event->modulename === 'collaborate') {
+                    if ($event->timeduration == 0) {
+                        // No deadline for long duration collab rooms.
+                        continue;
+                    }
+                    $deadline = $event->timestart;
+                }
                 if ($event->modulename === 'quiz' || $event->modulename === 'lesson') {
                     $override = \theme_snap\activity::instance_activity_dates($event->courseid, $cm);
                     $deadline = $override->timeclose;
@@ -862,6 +869,9 @@ class local {
                 }
                 $o .= $output->snap_media_object($cm->url, $modimage, $eventtitle, $meta, '');
             }
+        }
+        if (empty($o)) {
+            return '<p>' . get_string('nodeadlines', 'theme_snap') . '</p>';
         }
         return $o;
     }
