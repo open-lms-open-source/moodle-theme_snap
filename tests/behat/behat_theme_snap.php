@@ -1510,4 +1510,36 @@ class behat_theme_snap extends behat_base {
     public function i_am_on_the_snap_jquery_bootstrap_test_page() {
         $this->getSession()->visit($this->locate_path('/theme/snap/tests/fixtures/test_jquery_bootstrap.php'));
     }
+
+    /**
+     * @Given /^I have been redirected to the site policy page$/
+     */
+    public function i_am_redirected_to_site_policy_page() {
+        $currenturl = $this->getSession()->getCurrentUrl();
+        if (strpos($currenturl, 'user/policy.php') === false) {
+            $msg = 'User has not been redirected to site policy page';
+            throw new ExpectationException($msg, $this->getSession());
+        }
+    }
+
+    /**
+     * @Given /^I am currently on the default site home page$/
+     */
+    public function i_am_currently_on_the_site_home_page() {
+        global $CFG;
+
+        $currenturl = $this->getSession()->getCurrentUrl();
+        $currenturl = str_replace($CFG->wwwroot, '', $currenturl);
+        $currenturl = str_replace('index.php', '', $currenturl);
+
+        $expectedurl = $CFG->defaulthomepage == 0 ? '/' : '/my';
+
+        if ($currenturl !== $expectedurl) {
+            $msg = "Expected user to be on default site home page - currenturl is $currenturl and expected url ";
+            $msg .= "is $expectedurl";
+
+            throw new ExpectationException($msg, $this->getSession());
+        }
+    }
+
 }
