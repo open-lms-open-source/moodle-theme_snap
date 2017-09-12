@@ -73,12 +73,13 @@ define(['jquery', 'core/notification', 'core/ajax', 'core/templates', 'core/str'
                                 if (response.stacktrace) {
                                     errorstr = '<div>' + errorstr + '<pre>' + response.stacktrace + '</pre></div>';
                                 }
-
                             } else {
                                 if (response.errorcode && response.message) {
                                     errorstr = response.message;
                                 } else {
-                                    errorstr = M.util.get_string('unknownerror', 'moodle');
+                                    // Don't display any error messages as we don't know what the error is.
+                                    endfd.resolve(false);
+                                    return endfd.promise();
                                 }
                             }
                             notification.alert(M.util.get_string('error', 'moodle'),
@@ -114,19 +115,22 @@ define(['jquery', 'core/notification', 'core/ajax', 'core/templates', 'core/str'
                 }
 
                 if (typeof response  === 'undefined') {
-                    // Assume error.
-                    response = {error: M.util.get_string('unknownerror', 'core')};
+                    // We don't know what the error was so don't show a useless unknown error dialog.
+                    return false;
                 }
 
-                if (!redirectInProgress && response.errorcode && response.errorcode === "sitepolicynotagreed") {
+                if (response.errorcode && response.errorcode === "sitepolicynotagreed") {
                     var redirect = M.cfg.wwwroot + '/user/policy.php';
-                    window.location = redirect;
-                    // Prevent further error messages from showing as a redirect is in progress.
-                    redirectInProgress = true;
-                    loginErrorShown = true;
-                    dfd.resolve(true);
+                    if (window.location != redirect && !redirectInProgress && $('#primary-nav').is(':visible')) {
+                        window.location = redirect;
+                        // Prevent further error messages from showing as a redirect is in progress.
+                        redirectInProgress = true;
+                        loginErrorShown = true;
+                        dfd.resolve(true);
+                    } else {
+                        dfd.resolve(false);
+                    }
                     return dfd.promise();
-
                 }
 
                 if (response.error || response.errorcode) {

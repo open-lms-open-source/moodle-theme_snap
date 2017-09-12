@@ -368,8 +368,9 @@ EOF;
         $forcepwdchange = (bool) get_user_preferences('auth_forcepasswordchange', false);
         $conversationbadgecountenabled = isloggedin() && !isset($mprocs['badge']) && $PAGE->theme->settings->messagestoggle == 1;
         $userid = $USER->id;
+        $sitepolicyacceptreqd = isloggedin() && $CFG->sitepolicy && empty($USER->policyagreed) && !is_siteadmin();
         $initvars = [$coursevars, $pagehascoursecontent, get_max_upload_file_size($CFG->maxbytes), $forcepwdchange,
-                     $conversationbadgecountenabled, $userid];
+                     $conversationbadgecountenabled, $userid, $sitepolicyacceptreqd];
         $PAGE->requires->js_call_amd('theme_snap/snap', 'snapInit', $initvars);
 
         // Does the page have editable course content?
