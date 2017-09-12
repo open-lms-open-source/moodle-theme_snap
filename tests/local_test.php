@@ -370,7 +370,7 @@ class theme_snap_local_test extends \advanced_testcase {
         ];
 
         foreach ($timezones as $offset => $tz) {
-            $tzoneusers[$offset] =  $generator->create_user(['timezone' => $tz]);
+            $tzoneusers[$offset] = $generator->create_user(['timezone' => $tz]);
             $generator->enrol_user($tzoneusers[$offset]->id, $course->id, $studentrole->id);
             $this->setUser($tzoneusers[$offset]);
             $actual = local::upcoming_deadlines($tzoneusers[$offset]);
@@ -1293,28 +1293,30 @@ class theme_snap_local_test extends \advanced_testcase {
 
         $this->resetAfterTest();
 
-        $testtxt = 'Hello world, Καλημέρα κόσμε, コンニチハ, àâæçéèêë';
+        $testtext = 'Hello world, Καλημέρα κόσμε, コンニチハ, àâæçéèêë';
 
         $generator = $this->getDataGenerator();
         $course = $generator->create_course();
         $pagegen = $generator->get_plugin_generator('mod_page');
+        $content = '<img src="http://fakeurl.local/testimg.png" alt="some alt text" />' .
+                    '<p>'.$testtext.'</p> truncateme ';
+        $content = str_pad($content, 400, '-');
         $page = $pagegen->create_instance([
             'course' => $course->id,
-            'content' => '<img src="http://fakeurl.local/testimg.png" alt="some alt text" />' .
-                    '<p>'.$testtxt.'</p>' . str_pad('-', 200)
+            'content' => $content,
         ]);
         $cm = get_course_and_cm_from_instance($page->id, 'page', $course->id)[1];
-        // Remove the intro text from the page record
+        // Remove the intro text from the page record.
         $page->intro = '';
         $DB->update_record('page', $page);
 
         $pagemod = local::get_page_mod($cm);
 
         // Ensure summary contains text.
-        $this->assertContains($testtxt, $pagemod->summary);
+        $this->assertContains($testtext, $pagemod->summary);
 
         // Ensure summary contains text without tags.
-        $this->assertNotContains('<p>'.$testtxt.'</p>', $pagemod->summary);
+        $this->assertNotContains('<p>'.$testtext.'</p>', $pagemod->summary);
 
         // Ensure summary does not contain any images.
         $this->assertNotContains('<img', $pagemod->summary);
@@ -1339,19 +1341,23 @@ class theme_snap_local_test extends \advanced_testcase {
     public function test_get_page_mod_intro_summary() {
         $this->resetAfterTest();
 
+        $testtext = 'Hello world, Καλημέρα κόσμε, コンニチハ, àâæçéèêë';
+
         $generator = $this->getDataGenerator();
         $course = $generator->create_course();
         $pagegen = $generator->get_plugin_generator('mod_page');
+        $intro = '<img src="http://fakeurl.local/testimg.png" alt="some alt text" />' .
+                '<p>' . $testtext . '</p>';
+        $intro = str_pad($intro, 300, '-');
         $page = $pagegen->create_instance([
             'course' => $course->id,
-            'intro' => '<img src="http://fakeurl.local/testimg.png" alt="some alt text" />' .
-                '<p>Some content text</p>' . str_pad('-', 200)
+            'intro' => $intro,
         ]);
         $cm = get_course_and_cm_from_instance($page->id, 'page', $course->id)[1];
         $pagemod = local::get_page_mod($cm);
 
         // Ensure summary contains text and is sitll within tags.
-        $this->assertContains('<p>Some content text</p>', $pagemod->summary);
+        $this->assertContains('<p>' . $testtext . '</p>', $pagemod->summary);
 
         // Ensure summary contains images.
         $this->assertContains('<img', $pagemod->summary);
@@ -1412,7 +1418,7 @@ class theme_snap_local_test extends \advanced_testcase {
         $studentrole = $DB->get_record('role', ['shortname' => 'student']);
         $generator->enrol_user($student->id, $course->id, $studentrole->id);
         $teacher = $generator->create_user();
-        $editingteacherrole = $DB->get_record('role', array('shortname'=>'editingteacher'));
+        $editingteacherrole = $DB->get_record('role', array('shortname' => 'editingteacher'));
         $generator->enrol_user($teacher->id, $course->id, $editingteacherrole->id);
 
         $this->setUser($student);
