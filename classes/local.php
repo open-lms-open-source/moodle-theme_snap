@@ -785,7 +785,7 @@ class local {
         $processed = 0;
         $output = array();
         foreach ($events as $event) {
-            if ($event->eventtype === 'course') {
+            if ($event->eventtype === 'course' || $event->eventtype === 'gradingdue') {
                 // Not an activity deadline.
                 continue;
             }
