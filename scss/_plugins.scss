@@ -334,6 +334,9 @@
         border-bottom: none;
         padding-right: 0;
     }
+    .hover-tooltip {
+        display: none;
+    }
 
     // Override core hover colours.
     .content-item-container:hover {
