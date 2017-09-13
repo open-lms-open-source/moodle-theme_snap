@@ -1457,7 +1457,7 @@ HTML;
                 $resources[] = (object) [
                     'name' => $mod->name,
                     'title' => $mod->title,
-                    'icon' => ''.$OUTPUT->pix_url('icon', $mod->name),
+                    'icon' => ''.$OUTPUT->image_url('icon', $mod->name),
                     'link' => $mod->link .'&section=0', // Section is replaced by js.
                     'help' => $helptext
                 ];
@@ -1466,7 +1466,7 @@ HTML;
                 $activities[] = (object) [
                     'name' => $mod->name,
                     'title' => $mod->title,
-                    'icon' => ''.$OUTPUT->pix_url('icon', $mod->name),
+                    'icon' => ''.$OUTPUT->image_url('icon', $mod->name),
                     'link' => $mod->link .'&section=0', // Section is replaced by js.
                     'help' => $helptext
                 ];
