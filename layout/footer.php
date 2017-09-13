@@ -93,7 +93,14 @@ if (!empty($custommenu)) {
                 echo $OUTPUT->page_doc_link();
                 echo "<br>";
             }
-            echo get_string('poweredbyrunby', 'theme_snap');
+            if (core_component::get_component_directory('local_mrooms') !== null) {
+                $langkey   = \local_mrooms\kb_link::resolve_language_key();
+               $builtwith = html_writer::link("https://$langkey.help.blackboard.com/Moodlerooms", get_string('pluginname', 'theme_snap'),
+               ['target' => '_blank', 'title' => get_string('help', 'theme_snap')]);
+           } else {
+               $builtwith = get_string('Snap', 'theme_snap');
+           }
+            echo get_string('poweredbyrunby', 'theme_snap', $builtwith);
             ?>
         </small>
     </div>
