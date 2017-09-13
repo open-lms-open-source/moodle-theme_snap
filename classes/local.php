@@ -1453,13 +1453,18 @@ class local {
         $formatoptions->noclean = true;
         $formatoptions->context = $context;
 
+        // Process content.
+        $page->content = file_rewrite_pluginfile_urls($page->content,
+            'pluginfile.php', $context->id, 'mod_page', 'content', $page->revision);
+        $page->content = format_text($page->content, $page->contentformat, $formatoptions);
+
         // Make sure we have some summary/extract text for the course page.
         if (!empty($page->intro)) {
             $page->summary = file_rewrite_pluginfile_urls($page->intro,
                 'pluginfile.php', $context->id, 'mod_page', 'intro', null);
             $page->summary = format_text($page->summary, $page->introformat, $formatoptions);
         } else {
-            $preview = format_text($page->content, $page->contentformat, $formatoptions);
+            $preview = $page->content;
             // Prevent img alt tags from being spat out by html_to_text by escaping them.
             $preview = str_replace('alt=', 'alt&#61;', $preview);
             $wrapwidth = 0;
@@ -1467,10 +1472,6 @@ class local {
             $preview = html_to_text($preview, $wrapwidth, $listlinks);
             $page->summary = s(shorten_text($preview, 200));
         }
-        // Process content.
-        $page->content = file_rewrite_pluginfile_urls($page->content,
-            'pluginfile.php', $context->id, 'mod_page', 'content', $page->revision);
-        $page->content = format_text($page->content, $page->contentformat, $formatoptions);
 
         return ($page);
     }
