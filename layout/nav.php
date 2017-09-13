@@ -41,6 +41,7 @@ use theme_snap\renderables\bb_dashboard_link;
     echo core_renderer::search_box();
     $settingslink = new settings_link();
     echo $OUTPUT->render($settingslink);
+    echo $OUTPUT->render_notification_popups();
 ?>
 </div>
 

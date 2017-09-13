@@ -26,6 +26,7 @@ namespace theme_snap\output;
 
 defined('MOODLE_INTERNAL') || die();
 require_once($CFG->libdir.'/coursecatlib.php');
+require_once($CFG->dirroot.'/message/output/popup/lib.php');
 
 use stdClass;
 use context_course;
@@ -149,7 +150,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
 
 
     /**
-     * Settings link for opening the Administration menu, only shown if needed.
+     * Link to genius, only shown if needed.
      * @param bb_dashboard_link $bblink
      *
      * @return string
@@ -1618,4 +1619,22 @@ HTML;
        $o = '<a href=" '.$url.' ">' .$img.s($name). '</a><br>';
        return $o;
    }
+
+    /**
+     * Renders a wrap of the boost core notification popup area, which includes messages and notification popups
+     * @return string notification popup area.
+     */
+    protected function render_notification_popups() {
+        global $OUTPUT, $CFG;
+
+        // We only want the notifications bell, not the messages badge so temporarilly disable messaging to exclude it.
+        $messagingenabled = $CFG->messaging;
+        $CFG->messaging = false;
+        $navoutput = message_popup_render_navbar_output($OUTPUT);
+        $CFG->messaging = $messagingenabled;
+        if (empty($navoutput)) {
+            return '';
+        }
+        return $navoutput;
+    }
 }
