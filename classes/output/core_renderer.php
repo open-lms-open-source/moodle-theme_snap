@@ -150,7 +150,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
 
 
     /**
-     * Settings link for opening the Administration menu, only shown if needed.
+     * Link to genius, only shown if needed.
      * @param bb_dashboard_link $bblink
      *
      * @return string
