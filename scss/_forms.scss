@@ -374,22 +374,26 @@ div.editor_atto_toolbar div.atto_group {
 }
 
 // Colapse/expand toggle on forms.
-.mform fieldset.collapsed legend a.fheader,
-.mform fieldset.collapsible legend a.fheader {
-    padding: 0;
-    display: block;
-    background: none;
+.mform fieldset {
+    &.collapsed,
+    &.collapsible {
+        legend a.fheader {
+            padding: 0;
+            display: block;
+            background: none;
 
-    &:after {
-        font-family: FontAwesome;
-        line-height: 1.5;
-        content: "\f106"; // up arrow default.
-        float: right;
-        margin-right: .4rem; // magic number to line up with help icons.
+            &:after {
+                font-family: FontAwesome;
+                line-height: 1.5;
+                content: "\f106"; // up arrow default.
+                float: right;
+                margin-right: .4rem; // magic number to line up with help icons.
+            }
+        }
     }
-}
-.mform fieldset.collapsible.collapsed legend a.fheader:after {
-    content: "\f107"; // down arrow to indicate can expand.
+    &.collapsible.collapsed legend a.fheader:after {
+        content: "\f107"; // down arrow to indicate can expand.
+    }
 }
 
 // Remove arrow on expand all link.
