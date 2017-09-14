@@ -375,12 +375,12 @@ div.editor_atto_toolbar div.atto_group {
 
 // Colapse/expand toggle on forms.
 .mform fieldset {
-    &.collapsed,
     &.collapsible {
         legend a.fheader {
             padding: 0;
             display: block;
             background: none;
+            margin-left: 0;
 
             &:after {
                 font-family: FontAwesome;
@@ -391,7 +391,7 @@ div.editor_atto_toolbar div.atto_group {
             }
         }
     }
-    &.collapsible.collapsed legend a.fheader:after {
+    &.collapsed legend a.fheader:after {
         content: "\f107"; // down arrow to indicate can expand.
     }
 }
@@ -400,11 +400,6 @@ div.editor_atto_toolbar div.atto_group {
 .collapsible-actions .collapseexpand {
     background: none;
     padding-left: 0;
-}
-
-// Atto ledgends fix.
-.mform fieldset.collapsible legend a.fheader {
-    margin-left: 0;
 }
 
 .snap-form-advanced legend {
