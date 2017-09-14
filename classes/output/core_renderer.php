@@ -730,7 +730,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
 
             $output .= html_writer::link('#', $linkcontent, $attributes);
 
-            $close = get_string('close', 'theme_snap');
+            $close = get_string('closebuttontitle', 'moodle');
             $viewyourprofile = get_string('viewyourprofile', 'theme_snap');
             $realuserinfo = '';
             if (\core\session\manager::is_loggedinas()) {
@@ -985,7 +985,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
                 $newsimage = '<div class="news-article-image toggle"'.$imagestyle.' title="'.
                     get_string('readmore', 'theme_snap').'"></div>';
             }
-            $close = get_string('close', 'theme_snap');
+            $close = get_string('closebuttontitle', 'moodle');
             $output .= <<<HTML
 <div class="news-article clearfix">
     {$newsimage}

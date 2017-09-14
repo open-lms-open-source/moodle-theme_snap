@@ -24,7 +24,6 @@
 
 $string['aboutcourse'] = 'About this Course';
 $string['activity'] = 'Activity';
-$string['activities'] = 'Activities';
 $string['action:changeassetvisibility'] = 'change asset visibility';
 $string['action:duplicateasset'] = 'duplicate asset';
 $string['action:changesectionvisibility'] = 'change section visibility';
@@ -56,7 +55,6 @@ $string['changecoverimage'] = 'Change cover image';
 $string['changefullname'] = 'Change site name';
 $string['chapters'] = 'Chapters';
 $string['choosereadme'] = '<div class="clearfix"><div class="theme_screenshot"><h2>Snap</h2><img class=img-polaroid src="snap/pix/screenshot.jpg" /></div></div>';
-$string['close'] = 'Close';
 $string['conditional'] = 'Conditional';
 $string['contents'] = 'Contents';
 $string['contributed'] = 'Contributed';
@@ -162,7 +160,6 @@ $string['graderadviseuserreport'] = 'The "grader report" does not work well on m
 $string['grading'] = 'Grading';
 $string['headingfont'] = 'Heading font';
 $string['headingfont_desc'] = 'This font is used in the headings (h1 - h6 elements) across your site. If you are including a custom webfont remember to add it to the moodle extra html form.';
-$string['help'] = 'Help';
 $string['helpwithlogin'] = 'Help with login';
 $string['helpwithloginandguest'] = 'Help with login / guest access';
 $string['hidenavblock'] = 'Hide default Moodle navigation block';
