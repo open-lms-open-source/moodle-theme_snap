@@ -642,6 +642,11 @@ define(['jquery', 'core/log', 'theme_snap/headroom', 'theme_snap/util', 'theme_s
                             }
                         }
 
+                        // Resources - put description in common mod settings.
+                        var description = $("#page-mod-resource-mod [data-fieldtype='editor']").closest('.form-group');
+                        var showdescription = $("#page-mod-resource-mod [id='id_showdescription']").closest('.form-group');
+                        $("#page-mod-resource-mod .snap-form-advanced #id_modstandardelshdr .fcontainer").append(description);
+                        $("#page-mod-resource-mod .snap-form-advanced #id_modstandardelshdr .fcontainer").append(showdescription);
                         var savebuttons = $("#mform1 > .form-group:last");
                         $(main_form).append(savebuttons);
                     }
