@@ -731,7 +731,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
 
             $output .= html_writer::link('#', $linkcontent, $attributes);
 
-            $close = get_string('close', 'theme_snap');
+            $close = get_string('closebuttontitle', 'moodle');
             $viewyourprofile = get_string('viewyourprofile', 'theme_snap');
             $realuserinfo = '';
             if (\core\session\manager::is_loggedinas()) {
@@ -986,7 +986,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
                 $newsimage = '<div class="news-article-image toggle"'.$imagestyle.' title="'.
                     get_string('readmore', 'theme_snap').'"></div>';
             }
-            $close = get_string('close', 'theme_snap');
+            $close = get_string('closebuttontitle', 'moodle');
             $output .= <<<HTML
 <div class="news-article clearfix">
     {$newsimage}
@@ -1432,6 +1432,54 @@ HTML;
             <span class="snap-featured-course-title">' .s($course->fullname). '</span>
         </a>';
         return $card;
+    }
+
+    /**
+     * Return snap modchooser modal.
+     * @return string
+     */
+    protected function course_modchooser() {
+        global $OUTPUT, $COURSE;
+        // Check to see if user can add menus and there are modules to add.
+        if (!has_capability('moodle/course:manageactivities', context_course::instance($COURSE->id))
+                || !($modnames = get_module_types_names()) || empty($modnames)) {
+            return '';
+        }
+        // Retrieve all modules with associated metadata.
+        $sectionreturn = null;
+        $modules = get_module_metadata($COURSE, $modnames, $sectionreturn);
+
+        foreach ($modules as $mod) {
+            $help = !empty($mod->help) ? $mod->help : '';
+            $helptext = format_text($help, FORMAT_MARKDOWN);
+
+
+            if ($mod->archetype === MOD_ARCHETYPE_RESOURCE) {
+                $resources[] = (object) [
+                    'name' => $mod->name,
+                    'title' => $mod->title,
+                    'icon' => ''.$OUTPUT->image_url('icon', $mod->name),
+                    'link' => $mod->link .'&section=0', // Section is replaced by js.
+                    'help' => $helptext
+                ];
+            }
+            else {
+                $activities[] = (object) [
+                    'name' => $mod->name,
+                    'title' => $mod->title,
+                    'icon' => ''.$OUTPUT->image_url('icon', $mod->name),
+                    'link' => $mod->link .'&section=0', // Section is replaced by js.
+                    'help' => $helptext
+                ];
+            }
+        }
+
+        $data['tabs'] = (object) [
+             'activities' => $activities,
+             'resources' => $resources
+        ];
+
+        return $this->render_from_template('theme_snap/course_modchooser_modal', $data);
     }
 
     /**

@@ -351,6 +351,36 @@ li.section:focus {
 
 }
 
+#snap-modchooser-modal {
+    .modal-header {
+        border-bottom: none;
+    }
+
+    .snap-modchooser-addlink {
+        display: block;
+        height: 90px;
+        overflow: hidden;
+        font-size: .8em;
+        font-family: $font-family-system;
+        font-weight: 500;
+        @include alakazam;
+
+        &:hover,
+        &:focus {
+            transform: scale(1.1);
+        }
+
+        img {
+            margin: 0.5em 0;
+        }
+
+    }
+
+    .snap-modchooser-help {
+        text-align: left;
+    }
+}
+
 .snap-dropzone {
     visibility: hidden;
 }
@@ -538,6 +568,15 @@ body.format-flexpage .singlebutton {
 
         .contentafterlink p {
             margin-bottom: 1.6em;
+        }
+    }
+}
+// Bootstrap navtabs do not require margin.
+.section {
+    ul,
+    ol {
+        &.nav-tabs {
+            margin: 0;
         }
     }
 }

@@ -79,10 +79,12 @@ if ($tocformat && $leftnav) {
 }
 ?>
 <section id="region-main">
+
 <?php
 echo $OUTPUT->course_content_header();
 $output = $PAGE->get_renderer('core', 'course');
 echo $output->snap_footer_alert();
+echo $OUTPUT->course_modchooser();
 echo $OUTPUT->main_content();
 echo $OUTPUT->course_content_footer();
 ?>

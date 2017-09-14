@@ -24,7 +24,7 @@ define(['jquery', 'core/log', 'core/ajax', 'core/notification', 'theme_snap/ajax
 
         // TODO - in Moodle 3.1 we should use the core template for this.
         var addCoverImageAlert = function(id, msg) {
-            var closestr =  M.util.get_string('close', 'theme_snap');
+            var closestr =  M.util.get_string('closebuttontitle', 'moodle');
             if (!$(id).length) {
                 $('#snap-coverimagecontrol').after(
                     '<div id="'+id+'" class="alert alert-warning" role="alert">' +
