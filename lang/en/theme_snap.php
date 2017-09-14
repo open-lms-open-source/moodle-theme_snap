@@ -158,6 +158,7 @@ $string['fullname'] = 'Site name';
 $string['fullnamedesc'] = 'The name of your site.';
 $string['graderadviseuserreport'] = 'The "grader report" does not work well on mobile devices. The "user report" is recommended instead';
 $string['grading'] = 'Grading';
+$string['help'] = 'Help';
 $string['headingfont'] = 'Heading font';
 $string['headingfont_desc'] = 'This font is used in the headings (h1 - h6 elements) across your site. If you are including a custom webfont remember to add it to the moodle extra html form.';
 $string['helpwithlogin'] = 'Help with login';

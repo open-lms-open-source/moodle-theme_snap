@@ -284,7 +284,6 @@ EOF;
         $PAGE->requires->jquery();
         $PAGE->requires->js_amd_inline("require(['theme_boost/loader']);");
         $PAGE->requires->strings_for_js(array(
-            'close',
             'coursecontacts',
             'debugerrors',
             'problemsfound',
@@ -311,7 +310,8 @@ EOF;
             'ok',
             'cancel',
             'error',
-            'unknownerror'
+            'unknownerror',
+            'closebuttontitle',
         ], 'moodle');
 
         $PAGE->requires->strings_for_js([
