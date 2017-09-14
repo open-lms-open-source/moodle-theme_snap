@@ -338,6 +338,11 @@
         display: none;
     }
 
+    .popover-region-content-container {
+        max-height: 400px;
+        overflow-y: scroll;
+    }
+
     // Override core hover colours.
     .content-item-container:hover {
         background-color: white !important;
