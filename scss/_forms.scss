@@ -436,6 +436,11 @@ div.editor_atto_toolbar div.atto_group {
         fieldset > .fcontainer {
             border: 3px solid $gray-lighter;
         }
+        // Make sure buttons fit container.
+        button,
+        .btn {
+            white-space: normal;
+        }
     }
 }
 

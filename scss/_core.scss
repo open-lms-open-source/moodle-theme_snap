@@ -2855,7 +2855,9 @@ body.hascontinuecancel.path-site #page {
 }
 */
 
-/* moodle dialogues */
+// -------------------------
+// Moodle dialogues.
+// -------------------------
 /* standard size */
 .moodle-dialogue-base .moodle-dialogue {
     min-width: 32%;
@@ -2863,101 +2865,9 @@ body.hascontinuecancel.path-site #page {
     /* large size */
     &.chooserdialogue,
     &.filepicker {
-        min-width: 89%;
+        min-width: 90%;
         height: 100%;
     }
-}
-
-.chooserdialogue .moodle-dialogue-wrap .moodle-dialogue-bd {
-    background: $body-bg;
-}
-
-.jschooser .choosercontainer #chooseform .alloptions {
-    max-height: calc(100vh - 10rem) !important; // Overules JS caculated value.
-}
-
-.choosercontainer #chooseform {
-
-    .moduletypetitle,
-    .option,
-    .nonoption {
-        padding: 0 4%;
-    }
-
-    .option .icon {
-        padding: 0 .5rem;
-    }
-}
-
-/* file picker dropzone */
-.filemanager {
-    .fp-pathbar,
-    .fp-viewbar,
-    .fp-restrictions {
-        display: none;
-    }
-}
-
-#page-user-files,
-#local-joulegrader-gradepane,
-#page-backup-backupfilesedit {
-    .ffilemanager .fp-viewbar {
-        display: block;
-    }
-}
-
-.ffilepicker .fp-btn-choose {
-    margin: 0 0 10px;
-}
-
-.fitem_filepicker .fitemtitle label {
-    margin-bottom: 0;
-}
-
-.felement.ffilepicker {
-    margin-top: 0;
-}
-
-.filepicker-filelist,
-.filemanager-container {
-    border: none;
-}
-
-.filemanager .fp-navbar {
-    background-color: transparent;
-    border: none;
-}
-
-.filemanager-toolbar {
-    padding: 0 0 8px;
-}
-
-.dndupload-arrow {
-    cursor: pointer;
-    background-image: url("[[pix:resource|icon]]");
-    margin-top: 10px;
-}
-
-.filepicker-filelist .filepicker-container,
-.filemanager .filemanager-container .fm-empty-container,
-.filemanager-container.dndupload-over .dndupload-target,
-.filemanager-container .dndupload-target {
-    top: 0;
-    bottom: 0;
-    right: 0;
-    left: 0;
-    padding-top: 100px;
-}
-
-.filemanager-loading {
-    border: 2px dashed #bbb;
-    padding-top: 45px;
-    min-height: 130px;
-    background-color: $body-bg;
-}
-
-.jsenabled .filemanager-loading {
-    margin-top: 0;
 }
 
 // -------------------------
