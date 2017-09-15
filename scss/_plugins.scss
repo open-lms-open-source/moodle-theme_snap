@@ -224,6 +224,59 @@
  * Mod lesson.
  */
 
+.path-mod-lesson {
+    // Remove duplicate page edit button.
+    form[action*="editpage.php"] {
+        display: none;
+    }
+    // Unstyle secondary navtabs.
+    .nav.nav-tabs + .nav-tabs {
+        border: none;
+        text-align: right;
+        li {
+            display: inline-block;
+            margin-right: 0.5em;
+        }
+        * {
+            border: none;
+            margin: 0;
+            padding: 0;
+            float: none;
+        }
+    }
+    // Unset inline height and width of slideshow.
+    .slideshow {
+        height: auto !important;
+        width: auto !important;
+        padding-bottom: 1em;
+    }
+    // Improve edit pages form - tables for layout :(
+    // NOTE - lots of inline styles in lesson, so !important needed.
+    .edit_pages_box{
+        // Remove striping.
+        tr {
+            background-color: white !important;
+        }
+        // Make page headings obvious.
+        th.header {
+            text-align: left !important;
+            border-bottom: none !important;
+            font-size: 1.5em;
+            font-weight: 500;
+            // Float actions right.
+            a {
+                float: right;
+                padding: 0.3em;
+            }
+        }
+        // Fix none bs label class.
+        span.label {
+            color: white;
+        }
+    }
+}
+
+
 /* Radio button and checkbox inputs. */
 #page-mod-lesson-view.path-mod-lesson {
     .answeroptiongroup,
@@ -246,15 +299,6 @@
             }
         }
     }
-}
-
-.gradingform_guide_comment_chooser {
-    max-height: 60vh;
-    overflow-y: auto;
-}
-.gradingform_guide_comment_chooser > ul > li button {
-    text-align: left;
-    white-space: normal;
 }
 
 /**
@@ -286,6 +330,15 @@
 [data-region="coursecompetencyactivities"] .alert {
     border-left: none;
     padding-left: 0em;
+}
+
+.gradingform_guide_comment_chooser {
+    max-height: 60vh;
+    overflow-y: auto;
+}
+.gradingform_guide_comment_chooser > ul > li button {
+    text-align: left;
+    white-space: normal;
 }
 
 /**

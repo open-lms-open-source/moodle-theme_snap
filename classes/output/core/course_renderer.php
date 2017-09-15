@@ -363,7 +363,7 @@ class course_renderer extends \core_course_renderer {
 
         // Add actions menu.
         if ($actions) {
-            $output .= "<div class='snap-asset-actions' role='region' aria-label='actions'>";
+            $output .= "<div class='js-only snap-asset-actions' role='region' aria-label='actions'>";
             $output .= $actions.$advancedactions;
             $output .= "</div>";
         }

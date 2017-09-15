@@ -260,7 +260,7 @@ trait format_section_trait {
             if (!empty($sectiontoolsarray)) {
                 $sectiontools = implode(' ', $sectiontoolsarray);
                 $o .= html_writer::tag('div', $sectiontools, array(
-                    'class' => 'snap-section-editing actions',
+                    'class' => 'js-only snap-section-editing actions',
                     'role' => 'region',
                     'aria-label' => get_string('topicactions', 'theme_snap')
                 ));

@@ -287,7 +287,6 @@ li.section:focus {
 }
 
 .snap-section-editing {
-    visibility: hidden;
     max-width: 100%;
     min-width: 0;
     width: auto;
@@ -382,10 +381,6 @@ li.section:focus {
 }
 
 .snap-dropzone {
-    visibility: hidden;
-}
-
-.snap-dropzone {
     text-align: center;
 
     .snap-dropzone-label {
@@ -432,17 +427,6 @@ li.section:focus {
 /* Landing page does not have renderer, so markup is different. */
 #page-site-index .section-modchooser-link {
     border-color: white;
-}
-
-// Do not show elements requiring js until js is classed as loaded.
-.snap-course-listening {
-    .snap-section-editing {
-        visibility: visible;
-    }
-
-    .snap-dropzone {
-        visibility: visible;
-    }
 }
 
 // get rid of js cursor style applied to the whole commands area
@@ -1324,7 +1308,6 @@ form.togglecompletion {
 
 // All the editing options in one region.
 .snap-asset-actions {
-    visibility: hidden;
     position: absolute;
     bottom: 0;
     left: 0;
@@ -1377,12 +1360,6 @@ form.togglecompletion {
     .dropdown-menu a {
         font-weight: inherit;
         font-size: 0.8em;
-    }
-}
-// Only show these actions once all listeners applied.
-.snap-course-listening {
-    .snap-asset-actions {
-        visibility: visible;
     }
 }
 
