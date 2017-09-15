@@ -17,7 +17,8 @@
 
 #snap-course-footer-recent-activity,
 #snap-course-footer-about,
-#snap-course-footer-summary {
+#snap-course-footer-summary,
+#snap-course-footer-contacts {
     padding-top: .5em;
 }
 
@@ -146,7 +147,7 @@
             }
         }
     }
-    
+
     // Block display some elements account for dom inconsistansies.
     .head .info,
     .snap-media-object.chat .head,
