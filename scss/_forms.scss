@@ -43,6 +43,16 @@ body:not(.behat-site) {
     border: none;
 }
 
+.snap-form-advanced .collapsible-actions .collapseexpand {
+    background: none;
+    padding: 0;
+}
+
+.snap-form-advanced .dndupload-message {
+    font-family: $font-family-system;
+    font-size: small;
+}
+
 .form-label .form-shortname {
     display: inline;
 }
