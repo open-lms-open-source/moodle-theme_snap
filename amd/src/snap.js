@@ -614,8 +614,10 @@ define(['jquery', 'core/log', 'theme_snap/headroom', 'theme_snap/util', 'theme_s
 
                         // Add expand all to advanced column.
                         $(".snap-form-advanced").append($(".collapsible-actions"));
-                        // Add collapsed to all fieldsets in advanced.
-                        $(".snap-form-advanced fieldset").addClass('collapsed');
+                        // Add collapsed to all fieldsets in advanced, except on course edit page.
+                        if (!$('#page-course-edit').length) {
+                            $(".snap-form-advanced fieldset").addClass('collapsed');
+                        }
 
                         // Sanitize required input into a single fieldset
                         var main_form = $("#mform1 fieldset:first");
