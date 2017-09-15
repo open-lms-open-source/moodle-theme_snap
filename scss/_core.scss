@@ -159,16 +159,27 @@ table.boxwidthwide {
     background-position: center top;
     background-size: cover;
 }
+// Hide elements which require js to be loaded.
+.js-only {
+    @include alakazam;
+}
+
+body:not(.snap-js-loaded) .js-only {
+    pointer-events: none;
+    cursor: default;
+    filter: grayscale(100%);
+    opacity: 0.5;
+}
 
 // 100% of the screen.
 .full-width {
-  width: 100vw;
-  max-width: 100vw;
-  position: relative;
-  left: 50%;
-  right: 50%;
-  margin-left: -50vw;
-  margin-right: -50vw;
+    width: 100vw;
+    max-width: 100vw;
+    position: relative;
+    left: 50%;
+    right: 50%;
+    margin-left: -50vw;
+    margin-right: -50vw;
 }
 
 // 100% with standard snap 4% gutter.
@@ -3599,11 +3610,4 @@ label.state-visible[for="snap-coverfiles"],
     overflow: visible;
     clip: auto;
     border: initial;
-}
-
-body:not(.snap-js-loaded) .js-only {
-    pointer-events: none;
-    cursor: default;
-    filter: grayscale(100%);
-    opacity: 0.5;
 }

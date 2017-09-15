@@ -259,7 +259,7 @@ trait format_section_trait {
             if (!empty($sectiontoolsarray)) {
                 $sectiontools = implode(' ', $sectiontoolsarray);
                 $o .= html_writer::tag('div', $sectiontools, array(
-                    'class' => 'snap-section-editing actions',
+                    'class' => 'js-only snap-section-editing actions',
                     'role' => 'region',
                     'aria-label' => get_string('topicactions', 'theme_snap')
                 ));
@@ -520,7 +520,7 @@ trait format_section_trait {
 
            // Add zone for quick uploading of files.
            $upload = '<div class="col-sm-6">
-                <form class="snap-dropzone">
+                <form class="js-only snap-dropzone">
                     <label tabindex="0" for="snap-drop-file-'.$section.'" class="snap-dropzone-label">'.get_string('dropzonelabel', 'theme_snap').'</label>
                     <input type="file" multiple name="snap-drop-file-'.$section.'" id="snap-drop-file-'.$section.'" class="js-snap-drop-file sr-only"/>
                 </form>
