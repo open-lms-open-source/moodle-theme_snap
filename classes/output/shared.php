@@ -245,8 +245,6 @@ EOF;
             'error:failedtochangeassetvisibility',
             'error:failedtoduplicateasset',
             'deleteassetconfirm',
-            'deletingasset',
-            'deletingassetname',
             'deletesectionconfirm',
             'deletingsection'
         ], 'theme_snap');

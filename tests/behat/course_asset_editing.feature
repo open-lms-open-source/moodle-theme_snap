@@ -96,9 +96,15 @@ Feature: When the moodle theme is set to Snap, teachers edit assets without ente
     And I click on ".snap-resource[data-type='text'] a.snap-edit-asset-more" "css_element"
     And I click on ".snap-resource[data-type='text'] a.js_snap_hide" "css_element"
    Then I wait until ".snap-resource[data-type='text'].draft" "css_element" exists
+    # This is to test that the change persists.
+    And I reload the page
+    And ".snap-resource[data-type='text'].draft" "css_element" should exist
     And I click on ".snap-resource[data-type='text'] a.snap-edit-asset-more" "css_element"
     And I click on ".snap-resource[data-type='text'] a.js_snap_show" "css_element"
    Then I wait until ".snap-resource[data-type='text'].draft" "css_element" does not exist
+    # This is to test that the change persists.
+    And I reload the page
+    And ".snap-resource[data-type='text'].draft" "css_element" should not exist
 
   @javascript
   Scenario: In read mode, teacher duplicates activity.
@@ -114,6 +120,9 @@ Feature: When the moodle theme is set to Snap, teachers edit assets without ente
     And I click on ".snap-activity[data-type='Assignment'] a.snap-edit-asset-more" "css_element"
     And I click on ".snap-activity[data-type='Assignment'] a.js_snap_duplicate" "css_element"
    Then I wait until ".snap-activity[data-type='Assignment'] + .snap-activity[data-type='Assignment']" "css_element" exists
+    # This is to test that the duplication persists.
+    And I reload the page
+    And ".snap-activity[data-type='Assignment'] + .snap-activity[data-type='Assignment']" "css_element" should exist
 
   @javascript
   Scenario: In read mode, teacher duplicates resource.
@@ -128,4 +137,7 @@ Feature: When the moodle theme is set to Snap, teachers edit assets without ente
     And I click on ".snap-resource[data-type='text'] a.snap-edit-asset-more" "css_element"
     And I click on ".snap-resource[data-type='text'] a.js_snap_duplicate" "css_element"
    Then I wait until ".snap-resource[data-type='text'] + .snap-resource[data-type='text']" "css_element" exists
+        # This is to test that the duplication persists.
+    And I reload the page
+   Then ".snap-resource[data-type='text'] + .snap-resource[data-type='text']" "css_element" should exist
 

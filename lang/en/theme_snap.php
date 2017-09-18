@@ -106,6 +106,7 @@ $string['error:failedtochangeassetvisibility'] = 'Failed to hide/show asset';
 $string['error:failedtochangesectionvisibility'] = 'Failed to hide/show section';
 $string['error:failedtohighlightsection'] = 'Failed to highlight section';
 $string['error:failedtoduplicateasset'] = 'Failed to duplicate';
+$string['error:failedtodeleteasset'] = 'Failed to delete asset';
 $string['facebook'] = 'Facebook';
 $string['facebookdesc'] = 'The url of your facebook page.';
 $string['favicon'] = 'Favicon';
