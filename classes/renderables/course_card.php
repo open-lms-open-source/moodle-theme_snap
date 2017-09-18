@@ -132,7 +132,7 @@ class course_card implements \renderable {
         $this->course = $DB->get_record('course', ['id' => $this->courseid]);
         $this->url = new \moodle_url('/course/view.php', ['id' => $this->course->id]) . '';
         $this->shortname = $this->course->shortname;
-        $this->fullname = $this->course->fullname;
+        $this->fullname = format_string($this->course->fullname);
         $this->published = (bool)$this->course->visible;
         $this->favorited = $this->service->favorited($this->courseid);
         $togglestrkey = !$this->favorited ? 'favorite' : 'favorited';

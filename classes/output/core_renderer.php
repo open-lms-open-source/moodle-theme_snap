@@ -824,7 +824,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
             // simply show -
             // My course
             // This is intentional.
-            $heading = $COURSE->fullname;
+            $heading = format_string($COURSE->fullname);
             $heading = html_writer::link($courseurl, $heading);
             $heading = html_writer::tag($tag, $heading);
         } else {
@@ -979,7 +979,8 @@ class core_renderer extends \theme_boost\output\core_renderer {
             $preview = '';
             $newsimage = '';
             if (!$imagestyle) {
-                $preview = html_to_text($message, 0, false);
+                $preview = format_text($message, $discussion->messageformat, ['context' => $context]);
+                $preview = html_to_text($preview, 0, false);
                 $preview = "<div class='news-article-preview'><p>".shorten_text($preview, 200)."</p>
                 <p class='text-right'>".$readmorebtn."</p></div>";
             } else {
