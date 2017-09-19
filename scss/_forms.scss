@@ -313,10 +313,10 @@ div.editor_atto_toolbar div.atto_group {
     max-width: 100%;
 }
 
-// Hide save & display for resources
-#page-mod-url-mod,
-#page-mod-page-mod,
-#page-mod-resource-mod {
+// Hide save & display for resources (except in single activity format).
+#page-mod-url-mod:not(.format-singleactivity),
+#page-mod-page-mod:not(.format-singleactivity),
+#page-mod-resource-mod:not(.format-singleactivity) {
     #id_submitbutton {
         display: none;
     }
