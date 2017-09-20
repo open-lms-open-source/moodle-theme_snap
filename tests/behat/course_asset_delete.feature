@@ -64,6 +64,9 @@ Feature: When the moodle theme is set to Snap, teachers can delete course resour
     Then I should see asset delete dialog
     When I press "Delete Assign"
     Then I should not see "Test assignment1"
+    # This is to test that the deletion persists.
+    And I reload the page
+    Then I should not see "Test assignment1"
 
   @javascript
   Scenario: In read mode, on course, teacher can cancel / confirm delete activity.
@@ -81,6 +84,10 @@ Feature: When the moodle theme is set to Snap, teachers can delete course resour
     And I click on ".snap-activity[data-type='Assignment'] a.js_snap_delete" "css_element"
     Then I should see asset delete dialog
     When I press "Delete Assign"
+    Then I should not see "Test assignment1" in the "#section-1" "css_element"
+    And I cannot see "Test assignment1" in course asset search
+    # This is to test that the deletion persists.
+    And I reload the page
     Then I should not see "Test assignment1" in the "#section-1" "css_element"
     And I cannot see "Test assignment1" in course asset search
 

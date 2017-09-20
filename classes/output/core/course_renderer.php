@@ -304,13 +304,13 @@ class course_renderer extends \core_course_renderer {
                 $actions .= "<input id='snap-move-mod-$mod->id' class='js-snap-asset-move sr-only' type='checkbox'><label class='snap-asset-move' for='snap-move-mod-$mod->id'><span class='sr-only'>$movealt</span>$moveicon</label>";
                 $actions .= "<a class='snap-edit-asset' href='".new moodle_url($baseurl, array('update' => $mod->id))."'>$editicon</a>";
                 $actionsadvanced[] = "<a href='".new moodle_url($baseurl, array('delete' => $mod->id)).
-                    "' class='js_snap_delete dropdown-item'>$str->delete</a>";
+                    "' data-action='delete' class='js_snap_delete dropdown-item'>$str->delete</a>";
             }
 
             // Hide/Show.
             if (has_capability('moodle/course:activityvisibility', $modcontext)) {
-                $actionsadvanced[] = "<a href='".new moodle_url($baseurl, array('hide' => $mod->id))."' class='dropdown-item editing_hide js_snap_hide'>$str->hide</a>";
-                $actionsadvanced[] = "<a href='".new moodle_url($baseurl, array('show' => $mod->id))."' class='dropdown-item editing_show js_snap_show'>$str->show</a>";
+                $actionsadvanced[] = "<a href='".new moodle_url($baseurl, array('hide' => $mod->id))."' data-action='hide' class='dropdown-item editing_hide js_snap_hide'>$str->hide</a>";
+                $actionsadvanced[] = "<a href='".new moodle_url($baseurl, array('show' => $mod->id))."' data-action='show' class='dropdown-item editing_show js_snap_show'>$str->show</a>";
                 // AX click to change.
             }
 
@@ -320,7 +320,7 @@ class course_renderer extends \core_course_renderer {
             plugin_supports('mod', $mod->modname, FEATURE_BACKUP_MOODLE2) &&
             plugin_supports('mod', $mod->modname, 'duplicate', true)) {
                 $actionsadvanced[] = "<a href='".new moodle_url($baseurl, array('duplicate' => $mod->id)).
-                    "' class='dropdown-item js_snap_duplicate'>$str->duplicate</a>";
+                    "' data-action='duplicate' class='dropdown-item js_snap_duplicate'>$str->duplicate</a>";
             }
 
             // Asign roles.

@@ -44,7 +44,7 @@ Feature: When the moodle theme is set to Snap, teachers can delete sections with
       | assign   | C1     | assign2  | Test assignment2 | Test assignment description 2 | 2       | 1                                   |
 
   @javascript
-  Scenario: In read mode, on course, teacher can cancel / confirm delete activity.
+  Scenario: In read mode, on course, teacher can cancel / confirm delete section.
     Given I log in as "teacher1" (theme_snap)
     And I am on the course main page for "C1"
 

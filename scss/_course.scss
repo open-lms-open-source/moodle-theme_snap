@@ -304,6 +304,7 @@ li.section:focus {
         height: 2em;
         padding: 0.1em 0.3em;
         text-align: center;
+        overflow: hidden;
         &:hover {
             background-color: $gray-lighter;
         }
@@ -342,6 +343,13 @@ li.section:focus {
 
     .snap-highlight.snap-marked:after {
         background-image: url([[pix:core|i/marked]]);
+    }
+
+    a.ajaxing:after {
+        @include ajaxing(block, relative, 20px, 6px);
+        background-image: none !important;
+        margin: 0 auto;
+        top: 6px;
     }
 
     .loadingstat {
@@ -1208,38 +1216,7 @@ a.snap-due-date {
 }
 
 /* Completion actions */
-@keyframes circleajax {
-    0% {
-        border-top-color: rgba(100,100,100,1);
-        border-right-color: rgba(50,50,50,0.25);
-        border-bottom-color: rgba(50,50,50,0.25);
-        border-left-color: rgba(50,50,50,0.25);
-    }
-    25% {
-        border-top-color: rgba(50,50,50,0.25);
-        border-right-color: rgba(100,100,100,1);
-        border-bottom-color: rgba(50,50,50,0.25);
-        border-left-color: rgba(50,50,50,0.25);
-    }
-    50% {
-        border-top-color: rgba(50,50,50,0.25);
-        border-right-color: rgba(50,50,50,0.25);
-        border-bottom-color: rgba(100,100,100,1);
-        border-left-color: rgba(50,50,50,0.25);
-    }
-    75% {
-        border-top-color: rgba(50,50,50,0.25);
-        border-right-color: rgba(50,50,50,0.25);
-        border-bottom-color: rgba(50,50,50,0.25);
-        border-left-color: rgba(100,100,100,1);
-    }
-    100% {
-        border-top-color: rgba(100,100,100,1);
-        border-right-color: rgba(50,50,50,0.25);
-        border-bottom-color: rgba(50,50,50,0.25);
-        border-left-color: rgba(50,50,50,0.25);
-    }
-}
+
 span.autocompletion img,
 form.togglecompletion {
     position: relative;
@@ -1247,6 +1224,7 @@ form.togglecompletion {
     height: 20px;
     margin: 0;
 }
+
 form.togglecompletion {
     .btn.btn-link {
         padding: 0;
@@ -1268,25 +1246,7 @@ form.togglecompletion {
 
     &.ajaxing {
         &:after {
-            content:'';
-            display: block;
-            position: absolute;
-            width: 20px;
-            height: 20px;
-            top: 0px;
-            left: 0px;
-            border: solid;
-            border-width: 6px;
-            border-radius: 50%;
-            box-sizing: border-box;
-            border-top-color: rgba(50,50,50,1);
-            border-right-color: rgba(50,50,50,0.25);
-            border-bottom-color: rgba(50,50,50,0.25);
-            border-left-color: rgba(50,50,50,0.25);
-            animation-name: circleajax;
-            animation-duration: 2s;
-            animation-iteration-count: infinite;
-            animation-timing-function: linear;
+            @include ajaxing(block, absolute, 20px, 6px);
         }
         div {
             display: none;
@@ -1335,6 +1295,15 @@ form.togglecompletion {
         // Hide the bootstrap dropdown menu caret.
         border-width: 0;
         margin: 0;
+    }
+
+    .dropdown-toggle.snap-edit-asset-more.ajaxing {
+        &:after {
+            @include ajaxing(inline-block, relative, 26px, 7px);
+        }
+        img {
+            display: none;
+        }
     }
 
     .svg-icon {
