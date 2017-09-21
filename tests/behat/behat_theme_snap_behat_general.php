@@ -24,7 +24,8 @@
 // NOTE: no MOODLE_INTERNAL test here, this file may be required by behat before including /config.php.
 
 use Behat\Mink\Exception\ExpectationException as ExpectationException,
-    Behat\Mink\Exception\ElementNotFoundException as ElementNotFoundException;
+    Behat\Mink\Exception\ElementNotFoundException as ElementNotFoundException,
+    Behat\Mink\Element\NodeElement as NodeElement;
 
 require_once(__DIR__ . '/../../../../lib/tests/behat/behat_general.php');
 
@@ -40,7 +41,7 @@ class behat_theme_snap_behat_general extends behat_general {
     /**
      * Get nodes containing text in the page or, if specified, within a container.
      * @param string $text
-     * @param bool $container
+     * @param bool|NodeElement $container
      * @return array|bool
      */
     protected function get_nodes_containing_text($text, $container = false) {
@@ -69,8 +70,7 @@ class behat_theme_snap_behat_general extends behat_general {
      * Check that text is visible in nodes, throw error if not.
      * @param NodeElement[] $nodes
      * @param string $text
-     * @param bool $element
-     * @param bool $selectortype
+     * @param bool|string $element
      */
     protected function check_text_visible_in_nodes($nodes, $text, $element = false) {
         $args = [
@@ -101,8 +101,8 @@ class behat_theme_snap_behat_general extends behat_general {
      * Check text is not visible in nodes and throw error if so.
      * @param NodeElement[] $nodes
      * @param string $text
-     * @param bool $element
-     * @param bool $selectortype
+     * @param bool|string $element
+     * @param bool|string $selectortype
      */
     protected function check_text_not_visible_in_nodes($nodes, $text, $element = false, $selectortype = false) {
         // We need to ensure all the found nodes are hidden.
