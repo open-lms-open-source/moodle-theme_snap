@@ -576,8 +576,8 @@ define(['jquery', 'core/log', 'theme_snap/headroom', 'theme_snap/util', 'theme_s
                         });
                     }
 
-                    // Book mod print button.
-                    if ($('#page-mod-book-view').length) {
+                    // Book mod print button, only show if print link already present.
+                    if ($('#page-mod-book-view a[href*="mod/book/tool/print/index.php"]').length) {
                         var urlParams = getURLParams(location.href);
                         if (urlParams) {
                             $('[data-block="_fake"]').append('<p>' +
