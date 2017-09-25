@@ -700,7 +700,7 @@ define(['jquery', 'core/log', 'core/ajax', 'core/str', 'core/templates', 'core/n
                         return;
                     }
 
-                    // For toggling visability.
+                    // For toggling visibility.
                     if(action === 'visibility') {
                         var toggle = $(this).hasClass('snap-hide') ? 0 : 1;
                     } else {
