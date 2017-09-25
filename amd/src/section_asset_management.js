@@ -338,17 +338,17 @@ define(['jquery', 'core/log', 'core/ajax', 'core/templates', 'core/notification'
                                     // Remove section from DOM.
                                     section.remove();
                                     updateSections();
+                                    // Current section no longer exists so change location to previous section.
+                                    if (sectionNum >= $('.course-content > ul li.section').length) {
+                                        location.hash = 'section-' + (sectionNum - 1);
+                                    }
+                                    courseLib.showSection();
                                 })
                                 .always(function() {
                                     // Allow another request now this has finished.
                                     footerAlert.hideAndReset();
                                     ajaxing = false;
                                 });
-                            // Current section no longer exists so change location to previous section.
-                            if (sectionNum >= $('.course-content > ul li.section').length) {
-                                location.hash = 'section-' + (sectionNum - 1);
-                            }
-                            courseLib.showSection();
                         })
                         .fail(function(response) {
                             ajaxNotify.ifErrorShowBestMsg(response);
