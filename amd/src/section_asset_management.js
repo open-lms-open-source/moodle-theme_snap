@@ -390,6 +390,7 @@ define(['jquery', 'core/log', 'core/ajax', 'core/str', 'core/templates', 'core/n
                                     // Remove section from DOM.
                                     section.remove();
                                     updateSections();
+
                                     // Current section no longer exists so change location to previous section.
                                     if (sectionNum >= $('.course-content > ul li.section').length) {
                                         location.hash = 'section-' + (sectionNum - 1);

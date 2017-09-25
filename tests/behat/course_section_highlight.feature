@@ -79,8 +79,6 @@ Feature: When the moodle theme is set to Snap, teachers can toggle the currently
     And I follow "Topic 1"
     Then "#section-1" "css_element" should exist
     And I click on "#section-1 .snap-highlight.snap-marker" "css_element"
-    # Shame to have a 1 second pause here but this fails on CI intermittently without this pause.
-    And I wait "1" seconds
     Then I should see "Failed to highlight section"
 
   @javascript
