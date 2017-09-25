@@ -202,6 +202,9 @@ trait format_section_trait {
             if (!$section->uservisible || $canviewhiddensections) {
                 $sectionstyle .= ' conditional';
             }
+            if (course_get_format($course)->is_section_current($section)) {
+                $sectionstyle .= ' current state-visible set-by-server';
+            }
         }
 
         // SHAME - the tabindex is intefering with moodle js.
@@ -246,6 +249,7 @@ trait format_section_trait {
             $o .= $output->heading($sectiontitle, 2, 'sectionname' . $classes);
         }
 
+
         // Section drop zone.
         $caneditcourse = has_capability('moodle/course:update', $context);
         if ($caneditcourse && $section->section != 0) {
@@ -266,19 +270,33 @@ trait format_section_trait {
                 ));
             }
         }
+        // Draft message.
+        $drafticon = '<img aria-hidden="true" role="presentation" class="svg-icon" src="'.$output->image_url('/i/show').'" />';
+        $o .= '<div class="snap-draft-tag">'.$drafticon.' '.get_string('draft', 'theme_snap').'</div>';
 
         // Current section message.
-        $o .= '<span class="snap-current-tag">'.get_string('current', 'theme_snap').'</span>';
-
-        // Draft message.
-        $o .= '<div class="snap-draft-tag">'.get_string('draft', 'theme_snap').'</div>';
+        $currenticon = '<img aria-hidden="true" role="presentation" class="svg-icon" src="'.$output->image_url('/i/marked').'" />';
+        $o .= '<span class="snap-current-tag">'.$currenticon.' '.get_string('current', 'theme_snap').'</span>';
 
         // Availabiliy message.
-        $conditionalicon = '<img aria-hidden="true" role="presentation" class="svg-icon" src="'.$output->image_url('conditional', 'theme').'" />';
-        $conditionalmessage = $this->section_availability_message($section,
-            has_capability('moodle/course:viewhiddensections', $context));
-        if ($conditionalmessage !== '') {
-            $o .= '<div class="snap-conditional-tag">'.$conditionalicon.$conditionalmessage.'</div>';
+        // Note - $canviewhiddensection is required so that teachers can see the availability info message permanently,
+        // even if the teacher satisfies the conditions to make the section available.
+        // section->availabeinfo will be empty when all conditions are met.
+        $canviewhiddensections =  has_capability('moodle/course:viewhiddensections', $context);
+        $formattedinfo = '';
+        if ($canviewhiddensections || !empty($section->availableinfo)) {
+            $conditionalicon = '<img aria-hidden="true" role="presentation" class="svg-icon" src="' . $output->image_url('conditional', 'theme') . '" />';
+            $ci = new \core_availability\info_section($section);
+            $fullinfo = $ci->get_full_information();
+            $formattedinfo = '';
+            if ($fullinfo) {
+                $formattedinfo = \core_availability\info::format_info(
+                    $fullinfo, $section->course);
+            }
+        }
+
+        if ($formattedinfo !== '') {
+            $o .= '<div class="snap-conditional-tag">'.$conditionalicon.' '.$formattedinfo.'</div>';
         }
 
         // Section summary/body text.

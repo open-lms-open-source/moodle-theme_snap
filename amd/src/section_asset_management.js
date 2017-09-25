@@ -700,8 +700,13 @@ define(['jquery', 'core/log', 'core/ajax', 'core/str', 'core/templates', 'core/n
                         return;
                     }
 
-                    var toggler = action === 'visibility' ? 'snap-show' : 'snap-marker';
-                    var toggle = $(this).hasClass(toggler) ? 1 : 0;
+                    // For toggling visability.
+                    if(action === 'visibility') {
+                        var toggle = $(this).hasClass('snap-hide') ? 0 : 1;
+                    } else {
+                        // For toggling highlight/mark as current.
+                        var toggle = $(this).attr('aria-pressed') === 'true' ? 0 : 1;
+                    }
 
                     var sectionNumber = parentSectionNumber(this);
                     var sectionActionsSelector = '#section-' + sectionNumber + ' .snap-section-editing';
@@ -778,7 +783,19 @@ define(['jquery', 'core/log', 'core/ajax', 'core/str', 'core/templates', 'core/n
              */
             var highlightSectionListener = function() {
                 sectionActionListener('highlight', function(sectionNumber) {
-                    $('#section-' + sectionNumber).toggleClass("current");
+                    $('#section-' + sectionNumber).toggleClass('current');
+
+                    // Reset sections which are not highlighted.
+                    var $notCurrent = $('li.section.main')
+                    .not('#section-' + sectionNumber)
+                    .not('#section-0').removeClass("current");
+
+                    $notCurrent.each(function() {
+                        var highlighter = $(this).find('.snap-highlight');
+                        var sectionNumber = parentSectionNumber(highlighter);
+                        var newLink = $(highlighter).attr('href').replace(/(marker=)[0-9]+/ig, '$1' +sectionNumber);
+                        $(highlighter).attr('href', newLink).attr('aria-pressed', 'false');
+                    });
                 });
             };
 

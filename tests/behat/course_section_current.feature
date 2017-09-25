@@ -52,7 +52,7 @@ Feature: Entering a Snap course without specifying a section will take you to th
     Then I should see "Introduction" in the ".section.state-visible" "css_element"
     And "#chapters li:nth-of-type(1).snap-visible-section" "css_element" should exist
     And I follow "Topic 1"
-    And I follow "Highlight this topic as the current topic"
+    And I highlight section 1
     And I am on the course main page for "C1"
     And I should see "Untitled Topic" in the ".section.state-visible" "css_element"
     And "#chapters li:nth-of-type(2).snap-visible-section" "css_element" should exist
@@ -63,7 +63,7 @@ Feature: Entering a Snap course without specifying a section will take you to th
     And I am on the course main page for "C1"
     Then I should see "Introduction" in the ".section.state-visible" "css_element"
     And I follow "Topic 1"
-    And I follow "Highlight this topic as the current topic"
+    And I highlight section 1
     And I follow "Hide topic"
     And I am on the course main page for "C1"
     Then I should see "Introduction" in the ".section.state-visible" "css_element"
@@ -78,7 +78,7 @@ Feature: Entering a Snap course without specifying a section will take you to th
   Given I log in as "teacher1" (theme_snap)
     And I am on the course main page for "C1"
     And I go to course section 1
-    And I follow "Highlight this topic as the current topic"
+    And I highlight section 1
     And I restrict course section 1 by date to "tomorrow"
     And I should see "Conditional" in TOC item 1
     And I go to course section 1

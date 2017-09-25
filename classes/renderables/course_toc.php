@@ -181,15 +181,18 @@ class course_toc implements \renderable, \templatable{
             $conditional = $this->is_section_conditional($thissection);
             $chapter = new course_toc_chapter();
             $chapter->outputlink = true;
+            $chapter->classes = '';
 
             if ($canviewhidden) { // Teachers.
                 if ($conditional) {
                     $chapter->availabilityclass = 'text-warning';
                     $chapter->availabilitystatus = get_string('conditional', 'theme_snap');
+                    $chapter->classes .= 'conditional ';
                 }
                 if (!$thissection->visible) {
                     $chapter->availabilityclass = 'text-warning';
                     $chapter->availabilitystatus = get_string('notpublished', 'theme_snap');
+                    $chapter->classes .= 'draft ';
                 }
             } else { // Students.
                 if ($conditional && !$thissection->uservisible && !$thissection->availableinfo) {
@@ -199,12 +202,14 @@ class course_toc implements \renderable, \templatable{
                 if ($conditional && $thissection->availableinfo) {
                     $chapter->availabilityclass = 'text-warning';
                     $chapter->availabilitystatus = get_string('conditional', 'theme_snap');
+                    $chapter->classes .= 'conditional ';
                 }
                 if (!$conditional && !$thissection->visible) {
                     // Hidden section collapsed, so show as text in TOC.
                     $chapter->outputlink  = false;
                     $chapter->availabilityclass = 'text-warning';
                     $chapter->availabilitystatus = get_string('notavailable');
+                    $chapter->classes .= 'draft ';
                 }
             }
 
@@ -215,6 +220,7 @@ class course_toc implements \renderable, \templatable{
 
             if ($this->format->is_section_current($section)) {
                 $chapter->iscurrent = true;
+                $chapter->classes .= 'snap-visible-section current ';
             }
 
             if ($chapter->outputlink) {

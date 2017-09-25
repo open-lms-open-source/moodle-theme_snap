@@ -164,7 +164,7 @@ class theme_snap_services_course_test extends \advanced_testcase {
             'enablecompletion' => 1,
             'numsections' => 3
         ], ['createsections' => true]);
-                
+
         // Enrol user to completion tracking course.
         $sturole = $DB->get_record('role', array('shortname' => 'student'));
         $generator->enrol_user($this->user1->id,
@@ -205,7 +205,7 @@ class theme_snap_services_course_test extends \advanced_testcase {
         list ($previouslyunavailablesections, $previouslyunavailablemods) = local::conditionally_unavailable_elements($course);
         $this->assertContains(2, $previouslyunavailablesections);
         $this->assertContains($page2cm->id, $previouslyunavailablemods);
-        
+
         // View page1 to trigger completion
         $context = context_module::instance($page1->cmid);
         page_view($page1, $course, $page1cm, $context);
@@ -220,7 +220,7 @@ class theme_snap_services_course_test extends \advanced_testcase {
         list ($unavailablesections, $unavailablemods) = local::conditionally_unavailable_elements($course);
         $this->assertNotContains($page2cm->id, $unavailablemods);
         $this->assertNotContains(2, $unavailablesections);
-                
+
         $result = $this->courseservice->course_completion($course->shortname,
             $previouslyunavailablesections,
             $previouslyunavailablemods);
@@ -287,7 +287,7 @@ class theme_snap_services_course_test extends \advanced_testcase {
         $this->assertCount(3, $chapters->chapters);
         $this->assertTrue($chapters->chapters[0] instanceof theme_snap\renderables\course_toc_chapter);
     }
-    
+
     public function test_course_toc_chapters_escaped_chars() {
         global $OUTPUT, $DB;
 
@@ -344,8 +344,7 @@ class theme_snap_services_course_test extends \advanced_testcase {
         $this->assertTrue($toc instanceof theme_snap\renderables\course_toc);
 
         // Check that action model has toggled after highlight.
-        $this->assertEquals('snap-highlight snap-marked', $actionmodel->class);
-        $this->assertEquals('This topic is highlighted as the current topic', $actionmodel->title);
+        $this->assertEquals('aria-pressed="true"', $actionmodel->ariapressed);
         $this->assertContains('marker=0', $actionmodel->url);
 
         // Unhiglight the section.
@@ -354,8 +353,7 @@ class theme_snap_services_course_test extends \advanced_testcase {
         $this->assertTrue($actionmodel instanceof theme_snap\renderables\course_action_section_highlight);
 
         // Check that action model now corresponds to unhighlighted state.
-        $this->assertEquals('snap-highlight snap-marker', $actionmodel->class);
-        $this->assertEquals('Highlight this topic as the current topic', $actionmodel->title);
+        $this->assertEquals('aria-pressed="false"', $actionmodel->ariapressed);
         $this->assertContains('marker=3', $actionmodel->url);
     }
 
@@ -440,7 +438,7 @@ class theme_snap_services_course_test extends \advanced_testcase {
 
     public function test_module_toggle_completion() {
         global $DB;
-        
+
         $service = $this->courseservice;
         $this->resetAfterTest();
 
@@ -477,7 +475,7 @@ class theme_snap_services_course_test extends \advanced_testcase {
         $completion = new completion_info($course);
         $completiondata = $completion->get_data($page1cm);
         $this->assertEquals(COMPLETION_INCOMPLETE, $completiondata->completionstate);
-        
+
         // Manually mark page complete.
         $service->module_toggle_completion($page1cm->id, COMPLETION_COMPLETE);
 

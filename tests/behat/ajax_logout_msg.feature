@@ -63,7 +63,7 @@ Feature: When the moodle theme is set to Snap, ajax failures due to log outs / e
     When I follow "Topic 2"
     Then "#section-2" "css_element" should exist
     And I log out via a separate window
-    And I click on "#section-2 .snap-highlight.snap-marker" "css_element"
+    And I click on "#section-2 .snap-highlight" "css_element"
     Then I should see "You are logged out"
     # Test logout msg when moving section
     And I log in as "teacher" (theme_snap)

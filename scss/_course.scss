@@ -84,12 +84,6 @@ section#region-main
     }
 }
 
-.ie.path-course-view section#region-main > .singlebutton input[type="submit"] {
-    background-image: url("[[pix:theme|edit_for_ie]]");
-    background-size: 23px;
-    background-position: left center;
-}
-
 .section .filler {
     display: none;
 }
@@ -305,7 +299,9 @@ li.section:focus {
         padding: 0.1em 0.3em;
         text-align: center;
         overflow: hidden;
-        &:hover {
+        &:hover,
+        &.snap-show,
+        &[aria-pressed="true"] {
             background-color: $gray-lighter;
         }
     }
@@ -337,11 +333,11 @@ li.section:focus {
         background-image: url([[pix:core|t/delete]]);
     }
 
-    .snap-highlight.snap-marker:after {
+    .snap-highlight[aria-pressed="false"]:after {
         background-image: url([[pix:core|i/marker]]);
     }
 
-    .snap-highlight.snap-marked:after {
+    .snap-highlight[aria-pressed="true"]:after {
         background-image: url([[pix:core|i/marked]]);
     }
 
@@ -1127,6 +1123,11 @@ a.snap-due-date {
         margin-left: 0.5em;
     }
 
+    .svg-icon {
+        width: 1.3rem;
+        height: auto;
+    }
+
     ul {
         margin: 0 !important; // SHAME - lists in lists in lists in lists....
         list-style: none;
@@ -1161,8 +1162,7 @@ a.snap-due-date {
 // Show current tag if parent has current class.
 .current .snap-current-tag {
     display: block !important; // SHAME - overcome bad overspecificity...
-    color: white;
-    background-color: $brand-success;
+    color: $brand-success;
 }
 
 // Draft hide/show.

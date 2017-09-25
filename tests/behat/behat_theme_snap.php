@@ -1542,4 +1542,14 @@ class behat_theme_snap extends behat_base {
         }
     }
 
+    /**
+     * @Given /^I highlight section (?P<section_int>(?:\d+))$/
+     * @param int $section
+     */
+    public function i_highlight_section($section) {
+        $xpath = '//li[@id="section-'.$section.'"]//div[contains(@class, "snap-section-editing")]';
+        $xpath .='//a[contains(@class, "snap-highlight")][@aria-pressed="false"]';
+        $this->execute('behat_general::i_click_on', [$xpath, 'xpath_element']);
+    }
+
 }
