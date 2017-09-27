@@ -24,9 +24,6 @@
     h1,h2,h3,h4,h5 {
         page-break-after: avoid;
     }
-    img {
-        page-break-inside: avoid;
-    }
 
      // Printing a course page.
     .path-course-view {
@@ -44,9 +41,18 @@
         .section li.snap-asset.snap-can-edit {
             padding-bottom: 0 !important;
         }
+        // Hide left toc.
+        #snap-course-wrapper > .row > .col-lg-3 {
+            display: none;
+        }
+        // Full width content.
+        #snap-course-wrapper > .row > .col-lg-9 {
+            width: 100%;
+        }
         // Hide all the things!
         #page-header,
         #snap-course-footer,
+        #course-toc,
         #toc-mobile-menu-toggle,
         .summary .edit-summary,
         .section_footer,
