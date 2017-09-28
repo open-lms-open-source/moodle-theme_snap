@@ -43,12 +43,15 @@ if ($COURSE->id != SITEID && !empty($coverimagecss)) {
 -->
 <main id="moodle-page" class="clearfix">
 <div id="page-header" class="clearfix <?php echo $mastimage; ?>">
-    <?php if ($PAGE->pagetype !== 'site-index') : ?>
+    <?php if ($PAGE->pagetype !== 'site-index') { ?>
         <div class="breadcrumb-nav" aria-label="breadcrumb"><?php echo $OUTPUT->navbar(); ?></div>
-    <?php endif; ?>
-    <?php if ($carousel) : ?>
-        <?php echo $carousel; ?>
-    <?php else : ?>
+    <?php }
+        if ($carousel) {
+            // Front page carousel.
+            echo $carousel;
+        } else {
+            // Front page banner image.
+    ?>
         <div id="page-mast">
         <?php
             echo $OUTPUT->page_heading();
@@ -63,8 +66,8 @@ if ($COURSE->id != SITEID && !empty($coverimagecss)) {
                 $url = new moodle_url('/admin/settings.php', ['section' => 'themesettingsnap'], 'admin-poster');
                 echo $OUTPUT->cover_image_selector();
             }
-        ?>
-    <?php endif; ?>
+        } // End else.
+    ?>
 </div>
 
 <section id="region-main">
