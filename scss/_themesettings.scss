@@ -109,7 +109,17 @@
 // -------------------------
 // Tab - Cover display.
 // -------------------------
+#themesnapccoverdisplay {
+    @include make-row();
 
+    div[id^="admin-slide_"] {
+        @include make-col(4);
+
+        .form-defaultinfo {
+            display: none;
+        }
+    }
+}
 // -------------------------
 // Tab - Personal menu.
 // -------------------------
@@ -117,16 +127,6 @@
     @include make-row();
     .form-item {
         @include make-col(4);
-    }
-}
-
-// -------------------------
-// Tab - Course display.
-// -------------------------
-#themesnapcoursedisplay {
-    .form-item {
-        border-bottom: 1px solid $brand-primary;
-        margin-bottom: 1rem;
     }
 }
 
@@ -221,13 +221,16 @@
     }
 }
 
-
-
 // -------------------------
 // Tab - Course display.
 // -------------------------
 #themesnapcoursedisplay {
     @include make-row();
+
+    .form-item {
+        border-bottom: 1px solid $brand-primary;
+        margin-bottom: 1rem;
+    }
 
     #s_theme_snap_leftnav_list,
     #s_theme_snap_leftnav_top,

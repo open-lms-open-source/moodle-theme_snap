@@ -71,6 +71,9 @@ $string['coursesummaryfilesunsuitable'] = 'Please empty your course summary file
 $string['coursetools'] = 'Course Dashboard';
 $string['coverdisplay'] = 'Cover display';
 $string['covercarousel'] = 'Cover carousel';
+$string['covercarouselon'] = 'Use Cover carousel';
+$string['covercarouseldescription'] = '<p>The carousel is a set of rotating banners, or a slideshow, that displays on the homepage of your site instead of the cover image.</p>
+<p>Add up to 3 images, a title for each slide, and an optional subtitle. Images of 1200 x 600 pixels work best.</p>';
 $string['coverimage'] = 'Cover image';
 $string['covervideo'] = 'Cover video';
 $string['comingsoon'] = 'Coming soon!';
@@ -222,7 +225,7 @@ $string['personalmenulogintoggledesc'] = 'Opens the personal menu immediately af
 $string['pld'] = 'PLD';
 $string['pluginname'] = 'Snap';
 $string['poster'] = 'Cover image';
-$string['posterdesc'] = 'A large header image for the front page of your site. Landscape images (1280px width x 500px height) or larger work best.';
+$string['posterdesc'] = 'A large header image for the front page of your site. Landscape images (1200 x 600 pixels) or larger work best.';
 $string['poweredbyrunby'] = 'Built with <a href="http://moodlerooms.com/" target="_blank">Moodlerooms</a>,
      powered by <a href="http://www.moodle.com/" target="_blank">Moodle</a>.<br>
     Copyright &#169; 2017 Blackboard Inc, All Rights Reserved.';
@@ -247,7 +250,8 @@ $string['showcoursegradepersonalmenu'] = 'Grades';
 $string['showcoursegradepersonalmenudesc'] = 'Show users their grade in course cards in the personal menu';
 $string['socialmedia'] = 'Social Media';
 $string['submitted'] = 'Submitted';
-$string['subtitle'] = 'Site description';
+$string['sitedescription'] = 'Site description';
+$string['subtitle'] = 'Subtitle';
 $string['subtitle_desc'] = 'Briefly describe your site for users.';
 $string['themecolor'] = 'Site colour';
 $string['themecolordesc'] = 'Bright colours work best and will give your site a modern feel.';

@@ -1155,14 +1155,16 @@ header#page-header
         margin: 0 auto;
     }
 
+    #page-header,
+    .carousel-slide {
+        // background-color: $brand-primary; customisable
+        min-height: 405px;
+        position: relative;
+        padding: 0;
+        margin: 0;
+    }
     #page-header {
-    // background-color: $brand-primary; customisable
-    padding-top: 12.7%;
-    padding-bottom: 1.75em;
-    min-height: 405px;
-    border-bottom: 0;
-    margin: 0;
-    position: relative;
+        margin-bottom: 2em;
     }
 
     #snap-coverimagecontrol {
@@ -1175,18 +1177,22 @@ header#page-header
         background-color: rgba(255,255,255,0.9);
         display: inline-block;
         padding: 1em 2%;
-        margin-top: 2em;
+        margin: 10em 4%;
     }
 }
 
-/*
-BUG:
-mobile safari does not re-calculate vh on viewport change
-http://blog.rodneyrehm.de/archives/34-iOS7-Mobile-Safari-And-Viewport-Units.html
-*/
 @include media-breakpoint-up(lg) {
-    #page-site-index #page-header {
-        min-height: 87vh;
+    #page-site-index {
+        #page-header,
+        .carousel-slide {
+            min-height: 600px;
+        }
+    }
+}
+@include media-breakpoint-up(md) {
+    #page-site-index #page-mast {
+        width: 50%;
+        margin: 20vh 4%;
     }
 }
 
@@ -1201,16 +1207,47 @@ http://blog.rodneyrehm.de/archives/34-iOS7-Mobile-Safari-And-Viewport-Units.html
 #mr-nav .snap-login-button {
     margin-right: 1em;
 }
+// -------------------------
+// Front page carousel componant.
+// -------------------------
+#snap-site-carousel {
 
-@include media-breakpoint-up(md) {
-    #page-site-index #page-mast {
-        width: 50%;
-        margin: 11vh 0;
+    .carousel-slide {
+        background-position: center center;
+        background-size: cover;
+        background-color: white;
     }
-}
 
-#page-site-index .breadcrumb-nav {
-    display: none;
+    .carousel-caption {
+        // Reset bootstrap styles.
+        left: 4%;
+        bottom: inherit;
+        text-align: left;
+        top: 20vh;
+        width: 50%;
+        text-shadow: none;
+        color: #666;
+        // Add snap cover styles.
+        background-color: rgba(255,255,255,0.9);
+        padding: 1em 2%;
+        margin-top: 2em;
+    }
+
+    .carousel-indicators {
+        bottom: -50px;
+        transform: scale(1.3);
+
+        li {
+            border-color: $gray-light;
+        }
+        .active {
+            background-color: $gray-light;
+        }
+    }
+
+    .carousel-controls {
+        display: none;
+    }
 }
 
 #page-site-index .content-slide {

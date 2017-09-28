@@ -27,8 +27,14 @@ require(__DIR__.'/header.php');
 
 use theme_snap\local;
 
+$mastimage = '';
+// Check we are in a course (not the site level course), and the course is using a cover image.
+if ($COURSE->id != SITEID && !empty($coverimagecss)) {
+    $mastimage = 'mast-image';
+}
 ?>
-<!-- moodle js hooks -->
+
+<!-- Moodle js hooks -->
 <div id="page">
 <div id="page-content">
 
@@ -36,28 +42,32 @@ use theme_snap\local;
 ////////////////////////// MAIN  ///////////////////////////////
 -->
 <main id="moodle-page" class="clearfix">
-<div id="page-header" class="clearfix
-<?php
-// Check we are in a course (not the site level course), and the course is using a cover image.
-if ($COURSE->id != SITEID && !empty($coverimagecss)): ?>
- mast-image
-<?php endif;?>">
-<div class="breadcrumb-nav" aria-label="breadcrumb"><?php echo $OUTPUT->navbar(); ?></div>
-<div id="page-mast">
-<?php
-echo $OUTPUT->page_heading();
-echo $OUTPUT->course_header();
-if ($PAGE->pagetype == 'site-index') {
-    echo $OUTPUT->login_button();
-}
-?>
-</div>
-<?php
-if ($this->page->user_is_editing() && $PAGE->pagetype == 'site-index') {
-    $url = new moodle_url('/admin/settings.php', ['section' => 'themesettingsnap'], 'admin-poster');
-    echo $OUTPUT->cover_image_selector();
-}
-?>
+<div id="page-header" class="clearfix <?php echo $mastimage; ?>">
+    <?php if ($PAGE->pagetype !== 'site-index') { ?>
+        <div class="breadcrumb-nav" aria-label="breadcrumb"><?php echo $OUTPUT->navbar(); ?></div>
+    <?php }
+        if ($carousel) {
+            // Front page carousel.
+            echo $carousel;
+        } else {
+            // Front page banner image.
+    ?>
+        <div id="page-mast">
+        <?php
+            echo $OUTPUT->page_heading();
+            echo $OUTPUT->course_header();
+            if ($PAGE->pagetype === 'site-index') {
+                echo $OUTPUT->login_button();
+            }
+        ?>
+        </div>
+        <?php
+            if ($this->page->user_is_editing() && $PAGE->pagetype == 'site-index') {
+                $url = new moodle_url('/admin/settings.php', ['section' => 'themesettingsnap'], 'admin-poster');
+                echo $OUTPUT->cover_image_selector();
+            }
+        } // End else.
+    ?>
 </div>
 
 <section id="region-main">

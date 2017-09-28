@@ -49,13 +49,19 @@ echo $OUTPUT->doctype();
 <link href='//fonts.googleapis.com/css?family=Roboto:500,100,400,300' rel='stylesheet' type='text/css'>
 <?php
 
+// Front page carousel.
+$carousel = false;
+if ($PAGE->pagetype === 'site-index' && !empty($PAGE->theme->settings->cover_carousel)) {
+    // Output is html from template, but can be empty if no slides.
+    $carousel = $OUTPUT->cover_carousel();
+}
 // Output course cover image?
 if ($COURSE->id != SITEID) {
     $coverimagecss = \theme_snap\local::course_coverimage_css($COURSE->id);
 } else {
     $coverimagecss = \theme_snap\local::site_coverimage_css();
 }
-if (!empty($coverimagecss)) {
+if (!empty($coverimagecss) && !$carousel) {
     echo "<style>$coverimagecss</style>";
 }
 ?>
