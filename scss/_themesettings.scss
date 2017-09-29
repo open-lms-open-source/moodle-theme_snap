@@ -109,7 +109,7 @@
 // -------------------------
 // Tab - Cover display.
 // -------------------------
-#themesnapccoverdisplay {
+#themesnapcoverdisplay {
     @include make-row();
 
     div[id^="admin-slide_"] {
@@ -118,6 +118,11 @@
         .form-defaultinfo {
             display: none;
         }
+    }
+    #admin-slide_one_image,
+    #admin-slide_one_title,
+    #admin-slide_one_subtitle {
+        clear: left;
     }
 }
 // -------------------------

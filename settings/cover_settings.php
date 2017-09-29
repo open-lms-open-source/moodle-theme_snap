@@ -2,7 +2,7 @@
 defined('MOODLE_INTERNAL') || die;// Main settings.
 use theme_snap\admin_setting_configradiobuttons;
 
-$snapsettings = new admin_settingpage('themesnapccoverdisplay', get_string('coverdisplay', 'theme_snap'));
+$snapsettings = new admin_settingpage('themesnapcoverdisplay', get_string('coverdisplay', 'theme_snap'));
 
 $name = 'theme_snap/cover_image';
 $heading = new lang_string('poster', 'theme_snap');
