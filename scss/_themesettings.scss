@@ -119,6 +119,11 @@
             display: none;
         }
     }
+    #admin-slide_one_image,
+    #admin-slide_one_title,
+    #admin-slide_one_subtitle {
+        clear: left;
+    }
 }
 // -------------------------
 // Tab - Personal menu.
