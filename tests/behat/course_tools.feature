@@ -62,12 +62,12 @@ Feature: When the moodle theme is set to Snap, a course tools section is availab
     Examples:
       | format | completionenabled | gradebookaccessible | seecompletion | seegrade   |
       | topics | Enabled           | Allow               | should        | should     |
-      | topics | Disabled          | Prevent             | should not    | should not |
-      | topics | Enabled           | Prevent             | should        | should not |
+      | topics | Disabled          | Prohibit            | should not    | should not |
+      | topics | Enabled           | Prohibit            | should        | should not |
       | topics | Disabled          | Allow               | should not    | should     |
       | weeks  | Enabled           | Allow               | should        | should     |
-      | weeks  | Disabled          | Prevent             | should not    | should not |
-      | weeks  | Enabled           | Prevent             | should        | should not |
+      | weeks  | Disabled          | Prohibit            | should not    | should not |
+      | weeks  | Enabled           | Prohibit            | should        | should not |
       | weeks  | Disabled          | Allow               | should not    | should     |
 
   @javascript
@@ -94,7 +94,7 @@ Feature: When the moodle theme is set to Snap, a course tools section is availab
     Examples:
       | completionenabled | gradebookaccessible | seecompletion | seegrade   |
       | Enabled           | Allow               | should        | should     |
-      | Disabled          | Prevent             | should not    | should not |
+      | Disabled          | Prohibit            | should not    | should not |
 
   @javascript
   Scenario Outline: Course tools show automatically for single activity format set to hsuforum of types general / single.
@@ -121,6 +121,6 @@ Feature: When the moodle theme is set to Snap, a course tools section is availab
     Examples:
       | type    | completionenabled | gradebookaccessible | seecompletion | seegrade   |
       | general | Enabled           | Allow               | should        | should     |
-      | general | Disabled          | Prevent             | should not    | should not |
+      | general | Disabled          | Prohibit            | should not    | should not |
       | single  | Enabled           | Allow               | should        | should     |
-      | single  | Disabled          | Prevent             | should not    | should not |
+      | single  | Disabled          | Prohibit            | should not    | should not |
