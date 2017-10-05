@@ -226,8 +226,11 @@
 
 .path-mod-lesson {
     // Remove duplicate page edit button.
-    form[action*="editpage.php"] {
-        display: none;
+    &#page-mod-lesson-edit,
+    &#page-mod-lesson-view {
+        .singlebutton > form[action*="editpage.php"] {
+            display: none;
+        }
     }
     // Unstyle secondary navtabs.
     .nav.nav-tabs + .nav-tabs {
