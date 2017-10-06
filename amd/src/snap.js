@@ -543,7 +543,13 @@ define(['jquery', 'core/log', 'theme_snap/headroom', 'theme_snap/util', 'theme_s
                     // Course footer recent updates dom fixes.
                     recentUpdatesFix();
 
-                    coverImage(courseConfig.shortname, siteMaxBytes);
+                    if ($('body').hasClass('pagelayout-course') || $('body').hasClass('pagelayout-frontpage')) {
+                        coverImage.courseImage(courseConfig.shortname, siteMaxBytes);
+                    } else if ($('body').hasClass('pagelayout-coursecategory')) {
+                        if (courseConfig.categoryid) {
+                            coverImage.categoryImage(courseConfig.categoryid, siteMaxBytes);
+                        }
+                    }
 
                     // Allow deeplinking to bs tabs on snap settings page.
                     if ($('#page-admin-setting-themesettingsnap').length) {

@@ -63,7 +63,6 @@ if ($COURSE->id != SITEID && !empty($coverimagecss)) {
         </div>
         <?php
             if ($this->page->user_is_editing() && $PAGE->pagetype == 'site-index') {
-                $url = new moodle_url('/admin/settings.php', ['section' => 'themesettingsnap'], 'admin-poster');
                 echo $OUTPUT->cover_image_selector();
             }
         } // End else.

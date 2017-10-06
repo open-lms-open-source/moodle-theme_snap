@@ -88,25 +88,16 @@ class course {
     }
 
     /**
-     * @param string $courseshortname
+     * @param \context $context
      * @param string $data
      * @param string $filename
      * @return array
      * @throws \file_exception
      * @throws \stored_file_creation_exception
      */
-    public function setcoverimage($courseshortname, $data, $filename) {
+    public function setcoverimage(\context $context, $data, $filename) {
 
         global $CFG;
-
-        $course = $this->coursebyshortname($courseshortname);
-        if ($course->id != SITEID) {
-            // Course cover images.
-            $context = \context_course::instance($course->id);
-        } else {
-            // Site cover images.
-            $context = \context_system::instance();
-        }
 
         require_capability('moodle/course:changesummary', $context);
 
@@ -125,9 +116,8 @@ class course {
             throw new \moodle_exception('error:coverimageexceedsmaxbytes', 'theme_snap');
         }
 
-        if ($course->id != SITEID) {
+        if ($context->contextlevel === CONTEXT_COURSE) {
             // Course cover images.
-            $context = \context_course::instance($course->id);
             // Check suitability of course summary files area for use with cover images.
             if (!$this->check_summary_files_for_image_suitability($context)) {
                 return ['success' => false, 'warning' => get_string('coursesummaryfilesunsuitable', 'theme_snap')];
@@ -141,11 +131,9 @@ class course {
                 'filepath' => '/',
                 'filename' => $newfilename);
 
-            // Remove any old course summary image files.
+            // Remove any old course summary image files for this context.
             $fs->delete_area_files($context->id, $fileinfo['component'], $fileinfo['filearea']);
-        } else {
-            // Site cover images.
-            $context = \context_system::instance();
+        } else if ($context->contextlevel === CONTEXT_SYSTEM || $context->contextlevel === CONTEXT_COURSECAT) {
             $fileinfo = array(
                 'contextid' => $context->id,
                 'component' => 'theme_snap',
@@ -154,18 +142,20 @@ class course {
                 'filepath' => '/',
                 'filename' => $newfilename);
 
-            // Remove everything from poster area.
+            // Remove everything from poster area for this context.
             $fs->delete_area_files($context->id, 'theme_snap', 'poster');
+        } else {
+            throw new coding_exception('Unsupported context level '.$context->contextlevel);
         }
 
         // Create new cover image file and process it.
         $storedfile = $fs->create_file_from_string($fileinfo, $binary);
         $success = $storedfile instanceof \stored_file;
-        if ($course->id != SITEID) {
-            local::process_coverimage($context, $storedfile);
-        } else {
+        if ($context->contextlevel === CONTEXT_SYSTEM) {
             set_config('poster', $newfilename, 'theme_snap');
             local::process_coverimage($context);
+        } else if ($context->contextlevel === CONTEXT_COURSE || $context->contextlevel === CONTEXT_COURSECAT) {
+            local::process_coverimage($context, $storedfile);
         }
         return ['success' => $success];
     }

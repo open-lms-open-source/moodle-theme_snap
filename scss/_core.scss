@@ -1021,7 +1021,7 @@ header#page-header
 
 
 
-// if the course has an image
+// If the page has an image - courses & catagories.
 .mast-image {
     .breadcrumb {
         li,
@@ -1033,13 +1033,15 @@ header#page-header
         }
     }
 
-    #page-mast h1 {
-        a, a:hover {
+    #page-mast > {
+        h1,
+        h1 a,
+        h1 a:hover {
             color: white;
             text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
         }
     }
-
+    // Add a bg colur to the toc in page header.
     #course-toc {
         background-color: rgba(255,255,255,0.95);
     }
@@ -1166,7 +1168,7 @@ header#page-header
         background-color: rgba(255,255,255,0.9);
         display: inline-block;
         padding: 1em 2%;
-        margin: 10em 4%;
+        margin: 10em 4% 1em;
     }
 }
 
@@ -1183,10 +1185,6 @@ header#page-header
         width: 50%;
         margin: 20vh 4%;
     }
-}
-
-.path-course #page-mast h1 {
-    display: inline;
 }
 
 #page-mast .snap-login-button {
@@ -3430,6 +3428,7 @@ button.snap-icon-toggle {
 
     .btn {
         border-color: transparent;
+        margin-left: 1em;
     }
 }
 
@@ -3450,7 +3449,13 @@ label[for="snap-coverfiles"],
 #snap-changecoverimageconfirmation button{
     position: relative;
     display: none;
-    top: -0.5em;
+}
+
+body:not(.pagelayout-coursecategory) {
+    label[for="snap-coverfiles"],
+    #snap-changecoverimageconfirmation button{
+        top: -0.5em;
+    }
 }
 
 label.state-visible[for="snap-coverfiles"],
@@ -3471,6 +3476,11 @@ label.state-visible[for="snap-coverfiles"] {
         height: 1.5em;
         width: 1.5em;
     }
+    &.ajaxing:before {
+        @include ajaxing(inline-block, relative, 16px, 4px);
+        margin: 0 0 -3px 0.5em;
+        background: none;
+    }
 }
 
 @include media-breakpoint-down(xs) {
@@ -3483,16 +3493,6 @@ label.state-visible[for="snap-coverfiles"] {
 
 #snap-coverfiles {
     cursor: pointer;
-}
-
-label.state-visible[for="snap-coverfiles"],
-#snap-changecoverimageconfirmation .ok {
-    .spinner-three-quarters {
-        width: 1em;
-        height: 1em;
-        border-width: 0.25em;
-        margin-left: 0.5em;
-    }
 }
 
 #snap-changecoverimageconfirmation.disabled .ok {
@@ -3516,6 +3516,24 @@ label.state-visible[for="snap-coverfiles"],
 
 #snap-coverimagecontrol.snap-js-enabled {
     opacity: 1;
+}
+
+.snap-alert-cover-image {
+    background-color: white;
+    width: auto;
+    text-align: left;
+    margin: 1em 0;
+}
+
+#snap-changecoverimageconfirmation .ok.ajaxing:after {
+    @include ajaxingwhite(inline-block, relative, 16px, 4px);
+    margin: 0 0 -3px 0.5em;
+}
+
+body.pagelayout-frontpage {
+    .snap-alert-cover-image {
+        margin: 1em 4%;
+    }
 }
 
 #page-badges-criteria {

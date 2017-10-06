@@ -30,8 +30,7 @@ Feature: When the moodle theme is set to Snap, cover image can be set for site a
 
   @javascript
   Scenario: Editing teachers can change and delete course cover image.
-    Given I skip because "Currently failing and to be fixed later in INT-12339"
-    And the following "courses" exist:
+    Given the following "courses" exist:
       | fullname | shortname | category | format |
       | Course 1 | C1        | 0        | topics |
     And the following "users" exist:
@@ -89,8 +88,7 @@ Feature: When the moodle theme is set to Snap, cover image can be set for site a
 
   @javascript
   Scenario: A cover image cannot exceed the site maximum upload size.
-    Given I skip because "Currently failing and to be fixed later in INT-12339"
-    And the following config values are set as admin:
+    Given the following config values are set as admin:
       | theme | snap |
       | defaulthomepage | 0 |
       | maxbytes | 2097152 |
@@ -109,6 +107,7 @@ Feature: When the moodle theme is set to Snap, cover image can be set for site a
     And I should not see cover image in page header
     And I upload cover image "bpd_bikes_3888px.jpg"
     Then I should see "Cover image exceeds the site level maximum allowed file size"
+    And I should not see "For best quality, we recommend a larger image of at least 1024px width"
     And I upload cover image "testpng_small.png"
     Then I should not see "Cover image exceeds the site level maximum allowed file size"
     And I wait until ".btn.ok" "css_element" is visible
@@ -118,11 +117,9 @@ Feature: When the moodle theme is set to Snap, cover image can be set for site a
     And I reload the page
     Then I should see cover image in page header
 
-
   @javascript
   Scenario: A warning will be presented if the cover image is of a low resolution.
-    Given I skip because "Currently failing and to be fixed later in INT-12339"
-    And the following "courses" exist:
+    Given the following "courses" exist:
       | fullname | shortname | category | format |
       | Course 1 | C1        | 0        | topics |
     And the following "users" exist:
@@ -142,8 +139,7 @@ Feature: When the moodle theme is set to Snap, cover image can be set for site a
 
   @javascript
   Scenario: Admin user can change and delete site cover image.
-    Given I skip because "Currently failing and to be fixed later in INT-12339"
-    And the following "users" exist:
+    Given the following "users" exist:
       | username | firstname | lastname | email                |
       | user1    | User      | 1        | user1@example.com    |
     And I log in as "admin" (theme_snap)
@@ -178,4 +174,36 @@ Feature: When the moodle theme is set to Snap, cover image can be set for site a
     And I log out (theme_snap)
     And I log in as "user1" (theme_snap)
     And I am on site homepage
+    Then I should not see "Change cover image"
+
+  @javascript
+  Scenario: Admin user can change and delete category cover image.
+    Given the following "users" exist:
+      | username | firstname | lastname | email                |
+      | user1    | User      | 1        | user1@example.com    |
+    And the following "categories" exist:
+      | name  | category | idnumber |
+      | Cat 1 | 0        | CAT1     |
+    And I log in as "admin"
+    And I am on the course category page for category with idnumber "CAT1"
+    Then I should see "Change cover image"
+    And I should not see cover image in page header
+    And I upload cover image "testpng_small.png"
+    # Test cancelling upload
+    And I wait until ".btn.cancel" "css_element" is visible
+    And I click on ".btn.cancel" "css_element"
+    Then I should not see cover image in page header
+    And I should see "Change cover image"
+    # Test confirming upload
+    And I upload cover image "testpng_small.png"
+    And I wait until ".btn.ok" "css_element" is visible
+    And I click on ".btn.ok" "css_element"
+    And I wait until "label[for=\"snap-coverfiles\"]" "css_element" is visible
+    Then I should see cover image in page header
+    And I reload the page
+    Then I should see cover image in page header
+    # Test non admin user can't change site image.
+    And I log out (theme_snap)
+    And I log in as "user1"
+    And I am on the course category page for category with idnumber "CAT1"
     Then I should not see "Change cover image"

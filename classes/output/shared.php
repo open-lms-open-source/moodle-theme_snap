@@ -357,6 +357,7 @@ EOF;
             'id' => $COURSE->id,
             'shortname' => $COURSE->shortname,
             'contextid' => $PAGE->context->id,
+            'categoryid' => !empty($PAGE->category->id) ? $PAGE->category->id : false,
             'ajaxurl' => '/course/rest.php',
             'unavailablesections' => $unavailablesections,
             'unavailablemods' => $unavailablemods,

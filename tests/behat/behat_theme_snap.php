@@ -948,6 +948,16 @@ class behat_theme_snap extends behat_base {
     }
 
     /**
+     * @Given /^I am on the course category page for category with idnumber "(?P<catid_string>(?:[^"]|\\")*)"$/
+     * @param string $idnumber
+     */
+    public function i_am_on_the_course_category_page($idnumber) {
+        global $DB;
+        $id = $DB->get_field('course_categories', 'id', ['idnumber' => $idnumber]);
+        $this->getSession()->visit($this->locate_path('course/index.php?categoryid='.$id));
+    }
+
+    /**
      * Get background image for #page-header css element.
      * @return string
      */

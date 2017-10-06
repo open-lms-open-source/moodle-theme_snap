@@ -1283,6 +1283,16 @@ class local {
     }
 
     /**
+     * Get processed course cat cover image.
+     * @param $catid
+     * @return bool|stored_file
+     */
+    public static function course_cat_coverimage($catid) {
+        $context = \context_coursecat::instance($catid);
+        return (self::coverimage($context));
+    }
+
+    /**
      * Get processed course cover image.
      *
      * @param $courseid
@@ -1294,7 +1304,22 @@ class local {
     }
 
     /**
+     * Get cover image url for course category.
+     * @param int $catid
+     *
+     * @return bool|moodle_url
+     */
+    public static function course_cat_coverimage_url($catid) {
+        $file = self::course_cat_coverimage($catid);
+        if (!$file) {
+            $file = self::process_coverimage(\context_coursecat::instance($catid));
+        }
+        return self::snap_pluginfile_url($file);
+    }
+
+    /**
      * Get cover image url for course.
+     * @param int $courseid
      *
      * @return bool|moodle_url
      */
@@ -1349,6 +1374,21 @@ class local {
 
 
     /**
+     * Adds the course category cover image to CSS.
+     *
+     * @param int $courseid
+     * @return string The parsed CSS
+     */
+    public static function course_cat_coverimage_css($catid) {
+        $css = '';
+        $coverurl = self::course_cat_coverimage_url($catid);
+        if ($coverurl) {
+            $css = "#page-header {background-image: url($coverurl);}";
+        }
+        return $css;
+    }
+
+    /**
      * Adds the course cover image to CSS.
      *
      * @param int $courseid
@@ -1377,25 +1417,46 @@ class local {
     }
 
     /**
+     * Get the best cover image file name for a given context.
+     * @param \context $context
+     * @return string
+     * @throws \coding_exception
+     */
+    private static function coverimage_filename(\context $context) {
+        $contextlevel = $context->contextlevel;
+        $filename = '';
+        switch ($contextlevel) {
+            case CONTEXT_SYSTEM : $filename = 'site-image'; break;
+            case CONTEXT_COURSECAT : $filename = 'category-image'; break;
+            case CONTEXT_COURSE : $filename = 'course-image'; break;
+            default : throw new \coding_exception('Unsupported context level '.$contextlevel);
+        }
+        return $filename;
+    }
+
+    /**
      * Copy coverimage file to standard location and name.
      *
      * @param context $context
      * @param stored_file $originalfile
      * @return stored_file|bool
      */
-    public static function process_coverimage($context, $originalfile = false) {
+    public static function process_coverimage(\context $context, $originalfile = false) {
 
         $contextlevel = $context->contextlevel;
-        if ($contextlevel != CONTEXT_SYSTEM && $contextlevel != CONTEXT_COURSE) {
+        $validcontexts = [CONTEXT_SYSTEM, CONTEXT_COURSECAT, CONTEXT_COURSE];
+        if (!in_array($contextlevel, $validcontexts)) {
             throw new \coding_exception('Invalid context passed to process_coverimage');
         }
-        $newfilename = $contextlevel == CONTEXT_SYSTEM ? 'site-image' : 'course-image';
+        $newfilename = self::coverimage_filename($context);
 
         if (!$originalfile) {
-            if ($contextlevel == CONTEXT_SYSTEM) {
+            if ($contextlevel === CONTEXT_SYSTEM) {
                 $originalfile = self::site_coverimage_original($context);
-            } else {
+            } else if ($contextlevel === CONTEXT_COURSE) {
                 $originalfile = self::get_course_firstimage($context->instanceid);
+            } else if ($contextlevel === CONTEXT_COURSECAT) {
+                $originalfile = self::coverimage($context);
             }
         }
 
@@ -1421,8 +1482,10 @@ class local {
 
         $newfile = $fs->create_file_from_storedfile($filespec, $originalfile);
         $finfo = $newfile->get_imageinfo();
-        self::course_card_clean_up($context);
-        self::set_course_card_image($context, $originalfile);
+        if ($contextlevel === CONTEXT_COURSE) {
+            self::course_card_clean_up($context);
+            self::set_course_card_image($context, $originalfile);
+        }
         if ($finfo['mimetype'] == 'image/jpeg' && $finfo['width'] > 1380) {
             return image::resize($newfile, false, 1280);
         } else {

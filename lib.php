@@ -142,10 +142,12 @@ function theme_snap_send_file($context, $filearea, $args, $forcedownload, $optio
  */
 function theme_snap_pluginfile($course, $cm, $context, $filearea, $args, $forcedownload, array $options = array()) {
 
+    $coverimagecontexts = [CONTEXT_SYSTEM, CONTEXT_COURSE, CONTEXT_COURSECAT];
+
     if ($context->contextlevel == CONTEXT_SYSTEM && in_array($filearea, ['logo', 'favicon', 'fs_one_image', 'fs_two_image', 'fs_three_image', 'slide_one_image', 'slide_two_image', 'slide_three_image'])) {
         $theme = theme_config::load('snap');
         return $theme->setting_file_serve($filearea, $args, $forcedownload, $options);
-    } else if (($context->contextlevel == CONTEXT_SYSTEM || $context->contextlevel == CONTEXT_COURSE)
+    } else if (in_array($context->contextlevel, $coverimagecontexts)
         && $filearea == 'coverimage' || $filearea == 'coursecard') {
         theme_snap_send_file($context, $filearea, $args, $forcedownload, $options);
     } else {
