@@ -16,21 +16,26 @@
 # Tests for course favoriting in the Snap personal menu.
 #
 # @package    theme_snap
-# @copyright  Copyright (c) 2015 Moodlerooms Inc. (http://www.moodlerooms.com)
+# @copyright  Copyright (c) 2017 Blackboard Inc.
 # @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
 
 @theme @theme_snap
-Feature: When the moodle theme is set to Snap, students and teachers favorite courses in the personal menu.
+Feature: When the moodle theme is set to Snap, expired courses appear in an archive section within the personal menu.
+  For non archived courses, it is possible to favorite and un-favorite them.
 
   Background:
     Given the following config values are set as admin:
       | theme | snap |
     And the following "courses" exist:
-      | fullname | shortname | category | groupmode | visible |
-      | Course 1 | C1        | 0        | 1         | 1       |
-      | Course 2 | C2        | 0        | 1         | 1       |
-      | Course 3 | C3        | 0        | 1         | 1       |
-      | Course H | CH        | 0        | 1         | 0       |
+      | fullname       | shortname | category | groupmode | visible | startdate     | enddate      |
+      | Course 1       | C1        | 0        | 1         | 1       |               |              |
+      | Course 2       | C2        | 0        | 1         | 1       | ##yesterday## | ##tomorrow## |
+      | Course 3       | C3        | 0        | 1         | 1       | ##-1 years##  | ##next year##|
+      | Past-course 1  | PC1       | 0        | 1         | 1       | ##-2 years##  | ##last year##|
+      | Past-course 2  | PC2       | 0        | 1         | 1       | ##-2 years##  | ##last year##|
+      | Past-course 3  | PC3       | 0        | 1         | 1       | ##-2 years##  | ##last year##|
+      | Course H       | CH        | 0        | 1         | 0       |               |              |
+      | Past Course H  | PCH       | 0        | 1         | 0       | ##-3 years##  | ##-2 years## |
     And the following "users" exist:
       | username | firstname | lastname | email |
       | student1 | Student | 1 | student1@example.com |
@@ -40,16 +45,48 @@ Feature: When the moodle theme is set to Snap, students and teachers favorite co
       | student1 | C1     | student        |
       | student1 | C2     | student        |
       | student1 | C3     | student        |
+      | student1 | PC1    | student        |
+      | student1 | PC2    | student        |
+      | student1 | PC3    | student        |
       | teacher1 | C1     | editingteacher |
       | teacher1 | C2     | editingteacher |
       | teacher1 | C3     | editingteacher |
+      | teacher1 | PC1    | editingteacher |
+      | teacher1 | PC2    | editingteacher |
+      | teacher1 | PC3    | editingteacher |
       | teacher1 | CH     | editingteacher |
+      | teacher1 | PCH    | editingteacher |
 
   @javascript
-  Scenario: User can favorite / unfavorite courses.
-    Given I log in as "student1" (theme_snap)
+  Scenario: User can navigate to and from archived courses sections.
+    Given I log in as "student1"
     And I open the personal menu
-    Then Favorite toggle exists for course "C1"
+    And I should see "Courses"
+    And I should see "##last year##Y##"
+    And I should see "Course 1"
+    And I should see "Course 2"
+    And I should see "Course 3"
+    And I should not see "Past-course 1"
+    And I should not see "Past-course 2"
+    And I should not see "Past-course 3"
+    And I follow "##last year##Y##"
+    And I should see "Past-course 1"
+    And I should see "Past-course 2"
+    And I should see "Past-course 3"
+    And I should not see "Course 1"
+    And I should not see "Course 2"
+    And I should not see "Course 3"
+    And I click on "#snap-pm-tab-current" "css_element"
+    And I should not see "Past-course 1"
+    And I should not see "Past-course 2"
+    And I should not see "Past-course 3"
+
+  @javascript
+  Scenario: User can favorite courses in current / hidden section but not archive sections.
+    Given I log in as "student1"
+    And I open the personal menu
+    And I should see "Courses"
+    And Favorite toggle exists for course "C1"
     And Favorite toggle exists for course "C2"
     And Favorite toggle exists for course "C3"
     And Course card "C1" appears before "C2"
@@ -60,9 +97,14 @@ Feature: When the moodle theme is set to Snap, students and teachers favorite co
     And I open the personal menu
     Then Course card "C3" appears before "C1"
     And Course card "C1" appears before "C2"
+    # Make sure archived courses can not be favorited.
+    And I follow "##last year##Y##"
+    And Favorite toggle does not exist for course "PC1"
+    And Favorite toggle does not exist for course "PC2"
+    And Favorite toggle does not exist for course "PC3"
     # Log out and log in as teacher (make sure they can't see students favorites)
-    And I log out (theme_snap)
-    And I log in as "teacher1" (theme_snap)
+    And I log out
+    And I log in as "teacher1"
     And I open the personal menu
     Then Favorite toggle exists for course "C1"
     And Favorite toggle exists for course "C2"
@@ -81,10 +123,13 @@ Feature: When the moodle theme is set to Snap, students and teachers favorite co
     # Test favoriting / unfavoriting hidden course
     And I toggle course card favorite "CH"
     Then Course card "CH" is favorited
-    And I should not see "Hidden courses"
     And I toggle course card favorite "CH"
     Then Course card "CH" is not favorited
-    And I should see "Hidden courses"
+    # Make sure archived courses can not be favorited.
+    And I follow "##last year##Y##"
+    And Favorite toggle does not exist for course "PC1"
+    And Favorite toggle does not exist for course "PC2"
+    And Favorite toggle does not exist for course "PC3"
 
   @javascript
   Scenario: User can favorite / unfavorite courses when all are hidden.
@@ -101,7 +146,7 @@ Feature: When the moodle theme is set to Snap, students and teachers favorite co
       | teacher2 | H1     | editingteacher |
       | teacher2 | H2     | editingteacher |
       | teacher2 | H3     | editingteacher |
-    Given I log in as "teacher2" (theme_snap)
+    Given I log in as "teacher2"
     When I open the personal menu
     Then Favorite toggle exists for course "H1"
     And Favorite toggle exists for course "H2"
@@ -120,6 +165,6 @@ Feature: When the moodle theme is set to Snap, students and teachers favorite co
     Then Course card "H1" appears before "H2"
     And I reload the page
     And I open the personal menu
-    And I follow "Hidden courses (2)"
+    And I follow "Hidden courses"
     Then Course card "H3" appears before "H1"
     And Course card "H1" appears before "H2"

@@ -20,7 +20,7 @@
  */
 
 /**
- * Course card favoriting.
+ * Snap Personal menu.
  */
 define(['jquery', 'core/log', 'core/yui', 'theme_snap/pm_course_cards', 'theme_snap/util', 'theme_snap/ajax_notification'],
     function($, log, Y, courseCards, util, ajaxNotify) {
@@ -38,7 +38,6 @@ define(['jquery', 'core/log', 'core/yui', 'theme_snap/pm_course_cards', 'theme_s
             /**
              * Add deadlines, messages, grades & grading,  async'ly to the personal menu
              *
-             * @author Stuart Lamour
              */
             this.update = function() {
 
@@ -52,15 +51,15 @@ define(['jquery', 'core/log', 'core/yui', 'theme_snap/pm_course_cards', 'theme_s
                 // Update course cards with info.
                 courseCards.reqCourseInfo(courseCards.getCourseIds());
 
-                $('#primary-nav').focus();
-                // primary nav showing so hide the other dom parts
-                $('#page, #moodle-footer, #js-personal-menu-trigger, #logo, .skiplinks').hide(0);
+
+                $('#snap-pm').focus();
 
                 /**
                  * Load ajax info into personal menu.
                  *
                  */
                 var loadAjaxInfo = function(type) {
+                    // Target for data to be displayed on screen.
                     var container = $('#snap-personal-menu-' + type);
                     if ($(container).length) {
                         var cache_key = M.cfg.sesskey + 'personal-menu-' + type;
@@ -130,30 +129,22 @@ define(['jquery', 'core/log', 'core/yui', 'theme_snap/pm_course_cards', 'theme_s
             };
 
             /**
-             * Apply personal menu listeners.
+             * Apply listeners for personal menu in mobile mode.
              */
-            var applyListeners = function() {
-                // On clicking personal menu trigger.
-                $(document).on("click", ".js-personal-menu-trigger", function(event) {
-                    $('body').toggleClass('snap-fixy-open');
-                    if ($('.snap-fixy-open #primary-nav').is(':visible')) {
-                        self.update();
-                    }
-                    event.preventDefault();
-                });
-
-                // Personal menu small screen behaviour.
-                $(document).on("click", '#fixy-mobile-menu a', function(e) {
-                    var href = this.getAttribute('href');
-                    var sections = $("#fixy-content section");
+            var mobilePersonalMenuListeners = function() {
+                /**
+                 * Get section left position and height.
+                 */
+                var getSectionCoords = function(href) {
+                    var sections = $("#snap-pm-content section");
                     var sectionWidth = $(sections).outerWidth();
                     var section = $(href);
-                    var targetSection = $(".callstoaction section > div").index(section) + 1;
+                    var targetSection = $("#snap-pm-updates section > div").index(section) + 1;
                     var position = sectionWidth * targetSection;
-                    var sectionHeight = $(href).outerHeight() + 100;
+                    var sectionHeight = $(href).outerHeight() + 200;
 
                     // Course lists is at position 0.
-                    if (href == '#fixy-my-courses') {
+                    if (href == '#snap-pm-courses') {
                         position = 0;
                     }
 
@@ -162,24 +153,58 @@ define(['jquery', 'core/log', 'core/yui', 'theme_snap/pm_course_cards', 'theme_s
                     if (sectionHeight < winHeight) {
                         sectionHeight = winHeight;
                     }
+                    return {left: position, height: sectionHeight};
+                };
+                // Personal menu small screen behaviour corrections on resize.
+                $(window).on('resize', function() {
+                    if (window.innerWidth >= 992) {
+                        // If equal or larger than Bootstrap 992 large breakpoint, clear left positions of sections.
+                        $('#snap-pm-content').removeAttr('style');
+                        return;
+                    }
+                    var activeLink = $('#snap-pm-mobilemenu a.state-active');
+                    if (!activeLink || !activeLink.length) {
+                        return;
+                    }
+                    var href = activeLink.attr('href');
+                    var posHeight = getSectionCoords(href);
 
-                    $('#fixy-content').animate({
-                            left: '-' + position + 'px',
-                            height: sectionHeight + 'px'
-                        }, "fast", "swing",
+                    $('#snap-pm-content').css('left', '-' + posHeight.left + 'px');
+                    $('#snap-pm-content').css('height', posHeight.height + 'px');
+                });
+                // Personal menu small screen behaviour.
+                $(document).on("click", '#snap-pm-mobilemenu a', function(e) {
+                    var href = this.getAttribute('href');
+                    var posHeight = getSectionCoords(href);
+
+                    $("html, body").animate({scrollTop: 0}, 0);
+                    $('#snap-pm-content').animate({
+                            left: '-' + posHeight.left + 'px',
+                            height: posHeight.height + 'px'
+                        }, "700", "swing",
                         function() {
                             // Animation complete.
-                            // TODO - add tab index & focus INT-8988
-
                         });
+                    $('#snap-pm-mobilemenu a').removeClass('state-active');
+                    $(this).addClass('state-active');
                     e.preventDefault();
                 });
+            };
 
-                // Listen for close button to show page content.
-                $(document).on("click", "#fixy-close", function() {
-                    $('#page, #moodle-footer, #js-personal-menu-trigger, #logo, .skiplinks').css('display', '');
-
+            /**
+             * Apply personal menu listeners.
+             */
+            var applyListeners = function() {
+                // On clicking personal menu trigger.
+                $(document).on("click", ".js-snap-pm-trigger", function(event) {
+                    $('body').toggleClass('snap-pm-open');
+                    if ($('.snap-pm-open #snap-pm').is(':visible')) {
+                        self.update();
+                    }
+                    event.preventDefault();
                 });
+
+                mobilePersonalMenuListeners();
             };
 
             /**

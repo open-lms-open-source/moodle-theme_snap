@@ -620,7 +620,7 @@ class local {
 
         $messages = self::get_user_messages($USER->id);
         if (empty($messages)) {
-            return '<p>' . get_string('nomessages', 'theme_snap') . '</p>';
+            return '<p class="small">' . get_string('nomessages', 'theme_snap') . '</p>';
         }
 
         $output = $PAGE->get_renderer('theme_snap', 'core', RENDERER_TARGET_GENERAL);
@@ -830,7 +830,7 @@ class local {
 
         $events = self::upcoming_deadlines($USER->id);
         if (empty($events)) {
-            return '<p>' . get_string('nodeadlines', 'theme_snap') . '</p>';
+            return '<p class="small">' . get_string('nodeadlines', 'theme_snap') . '</p>';
         }
 
         $output = $PAGE->get_renderer('theme_snap', 'core', RENDERER_TARGET_GENERAL);
@@ -931,7 +931,7 @@ class local {
         }
 
         if (empty($o)) {
-            return '<p>'. get_string('nograded', 'theme_snap') . '</p>';
+            return '<p class="small">'. get_string('nograded', 'theme_snap') . '</p>';
         }
         return $o;
     }
@@ -942,7 +942,7 @@ class local {
         $grading = self::all_ungraded($USER->id);
 
         if (empty($grading)) {
-            return '<p>' . get_string('nograding', 'theme_snap') . '</p>';
+            return '<p class="small">' . get_string('nograding', 'theme_snap') . '</p>';
         }
 
         $output = $PAGE->get_renderer('theme_snap', 'core', RENDERER_TARGET_GENERAL);
@@ -1072,7 +1072,9 @@ class local {
      * @return string
      */
     public static function get_course_color($id) {
-        return substr(md5($id), 0, 6);
+        $colour = substr(md5($id), 0, 6);
+        $colour2 = substr(md5($id), 6, 6);
+        return 'linear-gradient(to bottom right, #' .$colour. ', #'. $colour2. ')';
     }
 
     public static function get_course_firstimage($courseid) {
@@ -1826,7 +1828,7 @@ class local {
         global $PAGE;
         $activities = self::recent_forum_activity();
         if (empty($activities)) {
-            return '<p>' . get_string('noforumposts', 'theme_snap') . '</p>';
+            return '<p class="small">' . get_string('noforumposts', 'theme_snap') . '</p>';
         }
         $activities = array_slice($activities, 0, 10);
         $renderer = $PAGE->get_renderer('theme_snap', 'core', RENDERER_TARGET_GENERAL);

@@ -212,18 +212,24 @@ class course {
      * @throws \coding_exception
      */
     public function my_courses_split_by_favorites() {
-        $courses = enrol_get_my_courses(null, 'fullname ASC, id DESC');
+        $courses = enrol_get_my_courses('enddate', 'fullname ASC, id DESC');
         $favorites = $this->favorites();
         $favorited = [];
         $notfavorited = [];
+        $past = [];
         foreach ($courses as $course) {
-            if (isset($favorites[$course->id])) {
+            $today = time();
+            if (!empty($course->enddate) && $course->enddate < $today) {
+                $course->endyear = userdate($course->enddate, '%Y');
+                $past[$course->endyear][$course->id] = $course;
+            } elseif (isset($favorites[$course->id])) {
                 $favorited[$course->id] = $course;
             } else {
                 $notfavorited[$course->id] = $course;
             }
         }
-        return [$favorited, $notfavorited];
+        krsort($past); // Reorder list by year.
+        return [$past, $favorited, $notfavorited];
     }
 
     /**

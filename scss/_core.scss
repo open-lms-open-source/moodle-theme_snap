@@ -188,7 +188,7 @@ body:not(.snap-js-loaded) .js-only {
     padding: 0 4%;
 }
 
-/* animations */
+// Animations.
 @keyframes snap-drop {
     0% {
         transform: matrix(1, 0, 0, 1, 0, -600);
@@ -626,14 +626,10 @@ input[type="reset"] {
 
 .userpicture.defaultuserpic {
     border: 1px solid #e5e5e5;
-
-    .fixy & {
-        border: none;
-    }
 }
 
 // -------------------------
-// Replacing font icon with svgs
+// Icons inserted as pseudo elements.
 // -------------------------
 
 .snap-icon-close:before {
@@ -645,9 +641,12 @@ input[type="reset"] {
     margin: 0.1em auto;
 }
 
-#snap-footer-alert .snap-icon-close:before,
-.fixy .snap-icon-close:before {
-    background: transparent url("[[pix:theme|close_x_white]]") no-repeat 50% 50%;
+// White close icon.
+#snap-footer-alert,
+#snap-pm {
+    .snap-icon-close:before {
+        background-image: url("[[pix:theme|close_x_white]]");
+    }
 }
 
 .icon-arrow-left:before,
@@ -661,7 +660,7 @@ input[type="reset"] {
 }
 
 .icon-arrow-left:before {
-    background: transparent url("[[pix:theme|left-arrow]]") no-repeat 50% 50%;
+    background-image: url("[[pix:theme|left-arrow]]");
 }
 
 // -------------------------
@@ -672,17 +671,6 @@ input[type="reset"] {
 #page-login-index #page {
     @include bg-cover;
 }
-
-#snap-home.logo {
-    display: block;
-    background-color: transparent;
-    background-repeat: no-repeat;
-    background-size: contain;
-    background-position: left center;
-    height: 40px;
-    width: 50%;
-}
-
 
 .snap-media-object {
     @include clearfix;
@@ -708,7 +696,7 @@ input[type="reset"] {
     .snap-media-body {
         overflow: hidden;
 
-        // for fixy - need to re-visit when we re-use more widley
+        // for personal menu updates - need to re-visit when we re-use more widley
         // in the messaging system we ellispe text
         p {
             white-space: nowrap;
@@ -857,12 +845,13 @@ footer #moodle-footer
     }
 }
 
-// Mr.nav - he's there and fixed to the top of your page
+// -------------------------
+// Mr.nav - he's there, fixed to the top of your page
 // -------------------------
 
 #mr-nav {
     position: fixed;
-    width: 100%;
+    width: 100vw;
     z-index: 23;
     line-height: 2;
     padding: 0.5em 0 0.5em 4%;
@@ -886,13 +875,54 @@ footer #moodle-footer
         animation-duration: 0.33s;
         */
     }
+}
 
-    &.errors-found {
+#snap-pm-trigger {
+    display: inline;
+    border: none;
+    position: relative; // Position to support message badge.
+    padding: 1rem; // Padding to support message badge.
 
-        // make header pink
-        // background-color: #fcc !important;
+    .userpicture {
+        height: 38px;
+        width: 38px;
+        margin-left: 1rem;
+    }
+
+    // Styles that message_badge_count has in core.
+    .conversation_badge_count {
+        color: white;
+        height: 1.8em;
+        width: 1.8em;
+        text-align: center;
+        font-size: .55em;
+        cursor: pointer;
+    }
+
+    // mrooms alerts badge
+    .message_badge_count,
+    .conversation_badge_count {
+        position: absolute;
+        padding-top: 0;
+        background-image: none;
+        border-radius: 50%;
+        left: auto;
+        right: 0.5em;
+        top: 0.5em;
     }
 }
+
+#snap-home.logo {
+    display: block;
+    background-color: transparent;
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: left center;
+    height: 40px;
+    width: auto;
+}
+
+
 
 .bb_dashboard_link img {
     width: 1em;
@@ -1155,7 +1185,13 @@ header#page-header
         margin: 0;
     }
     #page-header {
-        margin-bottom: 2em;
+        // background-color: $brand-primary; customisable
+        padding-top: 12.7%;
+        padding-bottom: 1.75em;
+        min-height: 400px;
+        border-bottom: 0;
+        margin: 0;
+        position: relative;
     }
 
     #snap-coverimagecontrol {
@@ -1760,7 +1796,7 @@ ul.events-new + ul.events-underway {
 
 .path-mod-workshop .collapsibleregioncaption {
     font-size: $font-size-h3;
-    font-weight: 300;
+    font-weight: 400;
 }
 
 // -------------------------
@@ -1967,7 +2003,7 @@ ul.events-new + ul.events-underway {
 #page-mod-quiz-edit #categoryquestions .questiontext,
 .questioncontentcontainer label,
 #page-mod-quiz-edit div.question div.content .questiontext {
-    font-weight: 300;
+    font-weight: 400;
 }
 
 // Quiz itself //
@@ -2008,7 +2044,7 @@ ul.events-new + ul.events-underway {
 .que h3.no,
 .que span.qno {
     font-size: $font-size-h2;
-    font-weight: 300;
+    font-weight: 400;
 }
 
 .que .info>div {
@@ -2753,6 +2789,10 @@ table#user-grades tr.avg td.cell {
         text-align: center;
         border-top: none;
     }
+}
+
+#page-course-loginas #notice {
+    margin-top: 3em;
 }
 
 // bootstrap labels

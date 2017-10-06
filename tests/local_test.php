@@ -123,16 +123,16 @@ class theme_snap_local_test extends \advanced_testcase {
 
     public function test_get_course_color() {
         $actual = local::get_course_color(1);
-        $this->assertSame('c4ca42', $actual);
+        $this->assertContains('c4ca42', $actual);
 
         $actual = local::get_course_color(10);
-        $this->assertSame('d3d944', $actual);
+        $this->assertContains('d3d944', $actual);
 
         $actual = local::get_course_color(100);
-        $this->assertSame('f89913', $actual);
+        $this->assertContains('f89913', $actual);
 
         $actual = local::get_course_color(1000);
-        $this->assertSame('a9b7ba', $actual);
+        $this->assertContains('a9b7ba', $actual);
     }
 
     public function test_simpler_time() {
@@ -390,8 +390,8 @@ class theme_snap_local_test extends \advanced_testcase {
         $this->assertSame($actual, $expected);
 
         $actual = local::deadlines();
-        $expected = '<p>You have no upcoming deadlines.</p>';
-        $this->assertSame($actual, $expected);
+        $expected = 'You have no upcoming deadlines.';
+        $this->assertSame(strip_tags($actual), $expected);
     }
 
     /**
@@ -896,8 +896,8 @@ class theme_snap_local_test extends \advanced_testcase {
         $this->assertSame($actual, $expected);
 
         $actual = local::messages();
-        $expected = '<p>You have no messages.</p>';
-        $this->assertSame($actual, $expected);
+        $expected = 'You have no messages.';
+        $this->assertSame(strip_tags($actual), $expected);
     }
 
     public function test_one_message() {
@@ -1006,8 +1006,8 @@ class theme_snap_local_test extends \advanced_testcase {
 
     public function test_no_grading() {
         $actual = local::grading();
-        $expected = '<p>You have no submissions to grade.</p>';
-        $this->assertSame($actual, $expected);
+        $expected = 'You have no submissions to grade.';
+        $this->assertSame(strip_tags($actual), $expected);
     }
 
     /**

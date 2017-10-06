@@ -272,7 +272,7 @@ define(['jquery', 'core/log', 'theme_snap/headroom', 'theme_snap/util', 'theme_s
                     if (location.hash === '#primary-nav') {
                         personalMenu.update();
                     } else {
-                        $('#page, #moodle-footer, #js-personal-menu-trigger, #logo, .skiplinks').css('display', '');
+                        $('#page, #moodle-footer, #js-snap-pm-trigger, #logo, .skiplinks').css('display', '');
                         if (onCoursePage()) {
                             log.info('show section', e.target);
                             courseLib.showSection();
@@ -561,7 +561,7 @@ define(['jquery', 'core/log', 'theme_snap/headroom', 'theme_snap/util', 'theme_s
                         }
                     }
 
-                    if ($('body').hasClass('snap-fixy-open')) {
+                    if ($('body').hasClass('snap-pm-open')) {
                         personalMenu.update();
                     }
 

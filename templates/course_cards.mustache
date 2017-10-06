@@ -16,14 +16,16 @@
 }}
 {{!
  @package   theme_snap
- @copyright Copyright (c) 2016 Moodlerooms Inc. (http://www.moodlerooms.com)
+ @copyright Copyright (c) 2017 Blackboard Inc.
  @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
 }}
-<div data-hidden="{{^published}}true{{/published}}{{#published}}false{{/published}}" data-courseid="{{courseid}}" data-model="{{model}}" data-href="{{{url}}}" data-shortname="{{shortname}}" class="courseinfo{{#favorited}} favorited{{/favorited}}" style="{{imagecss}}" tab-index="-1"{{#lazyloadimageurl}} data-image-url="{{.}}"{{/lazyloadimageurl}}>
+<div data-hidden="{{^published}}true{{/published}}{{#published}}false{{/published}}" data-courseid="{{courseid}}" data-category="{{category}}" data-model="{{model}}" data-href="{{{url}}}" data-shortname="{{shortname}}" class="coursecard{{#favorited}} favorited{{/favorited}}" style="{{imagecss}}" tab-index="-1"{{#lazyloadimageurl}} data-image-url="{{.}}"{{/lazyloadimageurl}}>
+    {{^archived}}
     <button class="snap-icon-toggle favoritetoggle" title="{{toggletitle}}" aria-pressed="{{#favorited}}true{{/favorited}}{{^favorited}}false{{/favorited}}"></button>
-    <div class="courseinfo-body">
-        <h3><a class="coursefullname" href="{{{url}}}">{{{fullname}}}</a></h3>
-        <div class="dynamicinfo">
+    {{/archived}}
+    <div class="coursecard-body">
+        <h3><a class="coursecard-coursename" href="{{{url}}}">{{{fullname}}}</a></h3>
+        <div class="coursecard-dynamicinfo">
             {{#feedback.coursegrade.value}}
                     <div class="coursegrade">{{#str}}coursegrade, theme_snap{{/str}} <a href="{{feedbackurl}}">{{feedback.coursegrade.value}}</a></div>
             {{/feedback.coursegrade.value}}
@@ -32,27 +34,24 @@
             <div class="completion-line" style="width:{{completion.progress}}%"></div>
             {{/completion.render}}
         </div>
-        <div class="courseinfo-teachers">
-            <h4 class="sr-only">{{# str }} coursecontacts, theme_snap {{/ str }}</h4>
-            <div class="courseinfo-teachers-visible">
-                {{#visibleavatars}}
-                    {{{.}}}
-                {{/visibleavatars}}
-                {{#showextralink}}
-                    <a class="courseinfo-teachers-more state-visible" href="#">{{hiddenavatarcount}}</a>
-                {{/showextralink}}
-
-            </div>
-            <div class="courseinfo-teachers-extra">
-                {{#hiddenavatars}}
-                    {{{.}}}
-                {{/hiddenavatars}}
-            </div>
-        </div>
         {{^published}}
         <small class="published-status text-warning">
             {{# str }} notpublished, theme_snap {{/ str }}
         </small>
         {{/published}}
+        <div class="coursecard-contacts">
+            <h4 class="sr-only">{{#str}}coursecontacts, theme_snap{{/str}}</h4>
+            {{#visibleavatars}}
+                {{{.}}}
+            {{/visibleavatars}}
+            {{#showextralink}}
+                <a data-toggle="collapse" class="coursecard-contacts-more" aria-expanded="false" href="#coursecard-contacts-{{courseid}}"  aria-controls="coursecard-contacts-{{courseid}}" href="#">{{hiddenavatarcount}}<span class="sr-only"> {{#str}}more, theme_snap{{/str}}</span></a>
+                    <div class="collapse" id="coursecard-contacts-{{courseid}}">
+                        {{#hiddenavatars}}
+                            {{{.}}}
+                        {{/hiddenavatars}}
+                    </div>
+            {{/showextralink}}
+        </div>
     </div>
 </div>

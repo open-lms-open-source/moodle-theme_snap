@@ -9929,18 +9929,18 @@ fieldset[disabled] a#changenumsections .reduce-sections {
   display: none;
   background-color: #eee;
 }
-.snap-fixy-open #primary-nav,
-.snap-fixy-open #snap-login {
+.snap-pm-open #primary-nav,
+.snap-pm-open #snap-login {
   display: block;
 }
-.snap-fixy-open #page,
-.snap-fixy-open #moodle-footer,
-.snap-fixy-open #fixy-trigger,
-.snap-fixy-open .bb_dashboard_link,
-.snap-fixy-open #admin-menu-trigger,
-.snap-fixy-open #newmessageoverlay,
-.snap-fixy-open #snap-home,
-.snap-fixy-open .skiplinks {
+.snap-pm-open #page,
+.snap-pm-open #moodle-footer,
+.snap-pm-open #fixy-trigger,
+.snap-pm-open .bb_dashboard_link,
+.snap-pm-open #admin-menu-trigger,
+.snap-pm-open #newmessageoverlay,
+.snap-pm-open #snap-home,
+.snap-pm-open .skiplinks {
   display: none;
 }
 .snap-my-courses-menu {
@@ -9982,7 +9982,7 @@ fieldset[disabled] a#changenumsections .reduce-sections {
   overflow-y: auto;
   z-index: 1000000;
 }
-.fixy #fixy-close {
+.fixy #snap-pm-close {
   color: #fff;
 }
 .fixy h2 {
@@ -9994,7 +9994,7 @@ fieldset[disabled] a#changenumsections .reduce-sections {
   font-size: 1rem;
 }
 @media only screen and (min-width: 768px) {
-  .fixy #fixy-close {
+  .fixy #snap-pm-close {
     margin-top: 1rem;
   }
 }
@@ -10042,26 +10042,26 @@ fieldset[disabled] a#changenumsections .reduce-sections {
   display: block;
   line-height: 0;
 }
-#fixy-content {
+#snap-pm-content {
   padding: 0 2%;
 }
-#fixy-content:before,
-#fixy-content:after {
+#snap-pm-content:before,
+#snap-pm-content:after {
   content: " ";
   display: table;
 }
-#fixy-content:after {
+#snap-pm-content:after {
   clear: both;
 }
-#fixy-content:before,
-#fixy-content:after {
+#snap-pm-content:before,
+#snap-pm-content:after {
   content: " ";
   display: table;
 }
-#fixy-content:after {
+#snap-pm-content:after {
   clear: both;
 }
-#fixy-content section {
+#snap-pm-content section {
   padding: 1em 0;
 }
 #snap-login.fixy input {
@@ -10168,7 +10168,7 @@ fieldset[disabled] a#changenumsections .reduce-sections {
     padding: 1em;
     transition: all 0.4s ease-in-out;
   }
-  #fixy-content {
+  #snap-pm-content {
     position: relative;
     width: 700vw;
     overflow: hidden;

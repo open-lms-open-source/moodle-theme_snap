@@ -667,7 +667,7 @@ body.format-flexpage .singlebutton {
     height: auto;
     width: 100%;
     text-align: left;
-    font-weight: 300;
+    font-weight: 400;
     padding: 0.5em 0;
     margin: 0.5em 0;
     box-shadow: none;
@@ -744,7 +744,6 @@ body.format-flexpage .singlebutton {
 
 // TODO - make better
 // title/link on images - css is shame
-
 .snap-native.snap-image .activityinstance .snap-asset-link a {
     display: none;
 }
@@ -1056,7 +1055,6 @@ body.snap-resource-card li.snap-resource {
             &:after {
                 content: attr(title);
                 display: block;
-                font-weight: 300;
             }
             &:before {
                 content: " ";
@@ -1591,7 +1589,7 @@ span.editinstructions {
             margin-left: 10px;
             // Get rid of bold title in workshop.
             strong {
-                font-weight: 300;
+                font-weight: 400;
             }
         }
     }

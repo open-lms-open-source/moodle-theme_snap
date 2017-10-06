@@ -55,7 +55,7 @@ Feature: In the Snap theme, within a course, editing teachers can create a new s
   @javascript
   Scenario: For editing teachers, ensure new section creation is available and works for topic courses but
     not single activity or social course formats.
-  Given I log in as "teacher1" (theme_snap)
+  Given I log in as "teacher1"
     And I create a new section in course "course_topics"
    Then I should see "New section title" in the "#course-toc" "css_element"
 
@@ -66,14 +66,14 @@ Feature: In the Snap theme, within a course, editing teachers can create a new s
     And I am on the course main page for "course_social"
    Then I should not see "Create a new section" in the "#page-header" "css_element"
     # Make sure student can see the sections created by the teacher in Topics and Weeks format courses.
-    And I log out (theme_snap)
-    And I log in as "student1" (theme_snap)
+    And I log out
+    And I log in as "student1"
     And I am on the course main page for "course_topics"
    Then I should see "New section title" in the "#course-toc" "css_element"
 
   @javascript
   Scenario: For non editing teachers and students, ensure new section creation is not available for any course formats.
-  Given I log in as "teacher2" (theme_snap)
+  Given I log in as "teacher2"
     And I am on the course main page for "course_topics"
    Then I should not see "Create a new section" in the "#page-header" "css_element"
     And I am on the course main page for "course_weeks"
@@ -82,8 +82,8 @@ Feature: In the Snap theme, within a course, editing teachers can create a new s
    Then I should not see "Create a new section" in the "#page-header" "css_element"
     And I am on the course main page for "course_social"
    Then I should not see "Create a new section" in the "#page-header" "css_element"
-    And I log out (theme_snap)
-    And I log in as "student1" (theme_snap)
+    And I log out
+    And I log in as "student1"
     And I am on the course main page for "course_topics"
    Then I should not see "Create a new section" in the "#page-header" "css_element"
     And I am on the course main page for "course_weeks"
@@ -96,12 +96,12 @@ Feature: In the Snap theme, within a course, editing teachers can create a new s
 
    @javascript
    Scenario: For editing teachers, ensure new section creation is available for week format and creates the section with a default title.
-   Given I log in as "teacher1" (theme_snap)
+   Given I log in as "teacher1"
     Then I am on the course main page for "course_weeks"
      And I follow "Create a new section"
     Then I should see "Title: 8 April - 14 April"
      And I click on "Create section" "button"
-     And I log out (theme_snap)
-     And I log in as "student1" (theme_snap)
+     And I log out
+     And I log in as "student1"
      And I am on the course main page for "course_weeks"
     Then I should see "8 April - 14 April" in the "#course-toc" "css_element"

@@ -33,7 +33,7 @@ Feature: When the moodle theme is set to Snap, ajax failures due to log outs / e
 
   @javascript
   Scenario: Logged in user get's login status warning when logged out if personal menu is opened.
-    Given I log in as "teacher" (theme_snap)
+    Given I log in as "teacher"
     And I am on site homepage
     And I log out via a separate window
     And I open the personal menu
@@ -50,7 +50,7 @@ Feature: When the moodle theme is set to Snap, ajax failures due to log outs / e
       | user    | course | role           |
       | teacher | C1     | editingteacher |
     # Test logout msg when changing section visibility
-    And I log in as "teacher" (theme_snap)
+    And I log in as "teacher"
     And I am on the course main page for "C1"
     When I follow "Topic 2"
     Then "#section-2" "css_element" should exist
@@ -58,7 +58,7 @@ Feature: When the moodle theme is set to Snap, ajax failures due to log outs / e
     When I click on "#section-2 .snap-visibility.snap-hide" "css_element"
     Then I should see "You are logged out"
     # Test logout msg when highlighting section
-    And I log in as "teacher" (theme_snap)
+    And I log in as "teacher"
     And I am on the course main page for "C1"
     When I follow "Topic 2"
     Then "#section-2" "css_element" should exist
@@ -66,7 +66,7 @@ Feature: When the moodle theme is set to Snap, ajax failures due to log outs / e
     And I click on "#section-2 .snap-highlight" "css_element"
     Then I should see "You are logged out"
     # Test logout msg when moving section
-    And I log in as "teacher" (theme_snap)
+    And I log in as "teacher"
     And I am on the course main page for "C1"
     When I follow "Topic 2"
     And I follow "Move \"Topic 2\""
@@ -88,7 +88,7 @@ Feature: When the moodle theme is set to Snap, ajax failures due to log outs / e
       | activity | course | idnumber | name            | intro           | section | assignsubmission_onlinetext_enabled |
       | assign   | C1     | assign1  | Test assignment | Test assignment | 1       | 1                                   |
     # Test logout msg when changing asset visibility
-    Given I log in as "teacher" (theme_snap)
+    Given I log in as "teacher"
     And I am on the course main page for "C1"
     When I follow "Topic 1"
     And I click on ".snap-activity[data-type='Assignment'] a.snap-edit-asset-more" "css_element"
@@ -96,7 +96,7 @@ Feature: When the moodle theme is set to Snap, ajax failures due to log outs / e
     When I click on ".snap-activity[data-type='Assignment'] a.js_snap_hide" "css_element"
     Then I should see "You are logged out"
     # Test logout msg when attempting to duplicate asset
-    Given I log in as "teacher" (theme_snap)
+    Given I log in as "teacher"
     And I am on the course main page for "C1"
     When I follow "Topic 1"
     And I click on ".snap-activity[data-type='Assignment'] a.snap-edit-asset-more" "css_element"
@@ -104,7 +104,7 @@ Feature: When the moodle theme is set to Snap, ajax failures due to log outs / e
     When I click on ".snap-activity[data-type='Assignment'] a.js_snap_duplicate" "css_element"
     Then I should see "You are logged out"
     # Test logout msg when attempting to move asset
-    Given I log in as "teacher" (theme_snap)
+    Given I log in as "teacher"
     And I am on the course main page for "C1"
     And I follow "Topic 1"
     Then "#section-1" "css_element" should exist
@@ -118,8 +118,8 @@ Feature: When the moodle theme is set to Snap, ajax failures due to log outs / e
   Scenario: User account is created with force password change on login enabled, personal menu shows a warning when
     opened with a link to change the users password.
     Given force password change is assigned to user "teacher"
-    When I log in as "teacher" (theme_snap)
+    When I log in as "teacher"
     Then I should see "You must change your password to proceed."
     # Opening the personal menu should trigger an AJAX error which is displayed within the menu.
     And I open the personal menu
-    Then I should see "You must change your password before using the personal menu." in the "#fixy-content .force-pwd-warning" "css_element"
+    Then I should see "You must change your password before using the personal menu." in the "#snap-pm-content .force-pwd-warning" "css_element"

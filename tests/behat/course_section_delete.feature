@@ -45,7 +45,7 @@ Feature: When the moodle theme is set to Snap, teachers can delete sections with
 
   @javascript
   Scenario: In read mode, on course, teacher can cancel / confirm delete section.
-    Given I log in as "teacher1" (theme_snap)
+    Given I log in as "teacher1"
     And I am on the course main page for "C1"
 
     And I follow "Topic 1"
@@ -73,7 +73,7 @@ Feature: When the moodle theme is set to Snap, teachers can delete sections with
 
   @javascript
   Scenario: Student cannot delete section.
-    Given I log in as "student1" (theme_snap)
+    Given I log in as "student1"
     And I am on the course main page for "C1"
     And I follow "Topic 1"
     Then "#section-1 .snap-section-editing.actions a.snap-delete" "css_element" should not exist

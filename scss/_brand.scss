@@ -91,17 +91,6 @@ a:hover,{
     }
 }
 
-#fixy-my-courses .courseinfo {
-    a {
-        color: $brand-primary;
-    }
-
-    a:focus,
-    a:hover {
-        color: darken($brand-primary, 8%);
-    }
-}
-
 .section li.snap-native .activityinstance .snap-asset-link a {
     color: $brand-primary;
 
@@ -194,7 +183,7 @@ legend,
     font-family: $font-family-serif;
 }
 
-#fixy-trigger {
+#snap-pm-trigger {
     .message_badge_count,
     .conversation_badge_count {
         background-color: darken($brand-primary, 8%);
@@ -204,25 +193,6 @@ legend,
 .courseinfo-teachers-more {
     &:hover {
         border-color: $brand-primary ;
-    }
-}
-
-
-#fixy-user {
-    background-color: $brand-primary;
-}
-
-.fixy .label-success {
-    color: $brand-primary;
-}
-
-.fixy .fixy-header {
-    background-color: $brand-primary;
-}
-
-#fixy-mobile-menu {
-    .svg-icon {
-        border: 1px solid $brand-primary;
     }
 }
 
@@ -243,7 +213,6 @@ input#id_submitbutton2,
 .path-admin .buttons input[type="submit"],
 td.submit input,
 #notice .singlebutton + .singlebutton input,
-#login.fixy input[type=submit],
 button#local-joulegrader-preview-button,
 button.atto_equation_submit,
 .yui-skin-sam .yui-button,
@@ -348,6 +317,7 @@ input[type="reset"],
 #snap-footer-alert,
 #toc-mobile-menu-toggle {
     background-color: $brand-primary;
+
 }
 
 #notice,
@@ -371,10 +341,6 @@ input[type="reset"],
     #region-main {
         background-color: $brand-primary;
     }
-}
-
-#snap-login .subcontent.potentialidps {
-    border-top: 1px solid $brand-primary;
 }
 
 /* highlight selected menu iteam logic */

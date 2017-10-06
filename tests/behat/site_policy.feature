@@ -38,7 +38,7 @@ Feature: As an authenticated non-admin user, opening the snap personal menu redi
     Given I log in as "student1", keeping the personal menu open
     And I have been redirected to the site policy page
     And I press "Yes"
-    And I log out (theme_snap)
+    And I log out
     When I log in as "student1", keeping the personal menu open
     Then I am currently on the default site home page
 
@@ -47,12 +47,12 @@ Feature: As an authenticated non-admin user, opening the snap personal menu redi
     Accepting the site policy prevents redirect next time personal menu is opened.
     Given the following config values are set as admin:
       | personalmenulogintoggle | 0 | theme_snap |
-    And I log in as "student1" (theme_snap)
+    And I log in as "student1"
     And I am currently on the default site home page
     When I open the personal menu
     Then I have been redirected to the site policy page
     And I press "Yes"
-    And I log out (theme_snap)
+    And I log out
     When I log in as "student1", keeping the personal menu open
     Then I am currently on the default site home page
 

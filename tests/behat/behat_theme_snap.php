@@ -70,11 +70,10 @@ class behat_theme_snap extends behat_base {
     /**
      * Logs in the user. There should exist a user with the same value as username and password.
      *
-     * @Given /^I log in as "(?P<username_string>(?:[^"]|\\")*)" \(theme_snap\)$/
      * @param string $username
      * @param bool $andkeepmenuopen
      */
-    public function i_log_in_with_snap_as($username, $andkeepmenuopen = false) {
+    protected function i_log_in_with_snap_as($username, $andkeepmenuopen = false) {
         global $DB;
         $user = $DB->get_record('user', ['username' => $username]);
         if (empty($user)) {
@@ -106,7 +105,7 @@ class behat_theme_snap extends behat_base {
         if (!$andkeepmenuopen && empty($forcepasschange)) {
             $showfixyonlogin = get_config('theme_snap', 'personalmenulogintoggle');
             if ($showfixyonlogin) {
-                $general->i_click_on('#fixy-close', 'css_element');
+                $general->i_click_on('#snap-pm-close', 'css_element');
             }
         }
     }
@@ -205,19 +204,6 @@ class behat_theme_snap extends behat_base {
     }
 
     /**
-     * @param string
-     * @return array
-     * @Given  /^I log out \(theme_snap\)$/
-     */
-    public function i_log_out() {
-        $this->i_open_the_personal_menu();
-
-        /** @var behat_general $general */
-        $general = behat_context_helper::get('behat_general');
-        $general->i_click_on('#fixy-logout', 'css_element');
-    }
-
-    /**
      * @param string $shortname - course shortname
      * @Given /^I create a new section in course "(?P<shortname>(?:[^"]|\\")*)"$/
      * @return array
@@ -237,7 +223,7 @@ class behat_theme_snap extends behat_base {
      * @Given /^I open the personal menu$/
      */
     public function i_open_the_personal_menu() {
-        $node = $this->find('css', '#primary-nav');
+        $node = $this->find('css', '#snap-pm');
         // Only attempt to open the personal menu if its not already open.
         if (!$node->isVisible()) {
             /* @var $generalcontext behat_general */
@@ -250,10 +236,10 @@ class behat_theme_snap extends behat_base {
      * @Given /^I close the personal menu$/
      */
     public function i_close_the_personal_menu() {
-        $node = $this->find('css', '#primary-nav');
+        $node = $this->find('css', '#snap-pm');
         // Only attempt to close the personal menu if its already open.
         if ($node->isVisible()) {
-            $node = $this->find('css', '#fixy-close');
+            $node = $this->find('css', '#snap-pm-close');
             $node->click();
         }
     }
@@ -271,7 +257,7 @@ class behat_theme_snap extends behat_base {
         require_once($CFG->dirroot.'/mod/assign/locallib.php');
 
         $origuser = $USER;
-        $USER = $this->get_behat_user();
+        $USER = $this->get_session_user();
 
         $course = $DB->get_record('course', ['shortname' => $shortname]);
         $assign = $DB->get_record('assign', ['course' => $course->id, 'name' => $assignmentname]);
@@ -800,12 +786,22 @@ class behat_theme_snap extends behat_base {
 
     /**
      * @param string $shortname
+     * @Given /^Favorite toggle does not exist for course "(?P<shortname>(?:[^"]|\\")*)"$/
+     */
+    public function favorite_toggle_doesnt_exist_for_course($shortname) {
+        /* @var behat_general $general */
+        $general = behat_context_helper::get('behat_general');
+        $general->should_not_exist('.coursecard[data-shortname="'.$shortname.'"] .favoritetoggle[aria-pressed="false"]', 'css_element');
+    }
+
+    /**
+     * @param string $shortname
      * @Given /^Favorite toggle exists for course "(?P<shortname>(?:[^"]|\\")*)"$/
      */
     public function favorite_toggle_exists_for_course($shortname) {
         /* @var behat_general $general */
         $general = behat_context_helper::get('behat_general');
-        $general->should_exist('.courseinfo[data-shortname="'.$shortname.'"] .favoritetoggle[aria-pressed="false"]', 'css_element');
+        $general->should_exist('.coursecard[data-shortname="'.$shortname.'"] .favoritetoggle[aria-pressed="false"]', 'css_element');
     }
 
     /**
@@ -817,8 +813,8 @@ class behat_theme_snap extends behat_base {
         /* @var behat_general $general */
         $general = behat_context_helper::get('behat_general');
 
-        $preelement = '.courseinfo[data-shortname="'.$shortname1.'"]';
-        $postelement = '.courseinfo[data-shortname="'.$shortname2.'"]';
+        $preelement = '.coursecard[data-shortname="'.$shortname1.'"]';
+        $postelement = '.coursecard[data-shortname="'.$shortname2.'"]';
 
         $general->should_appear_before($preelement, 'css_element', $postelement, 'css_element');
     }
@@ -831,7 +827,7 @@ class behat_theme_snap extends behat_base {
         /* @var behat_general $general */
         $general = behat_context_helper::get('behat_general');
         $this->ensure_element_does_not_exist('.snap-icon-toggle.favoritetoggle.ajaxing', 'css_element');
-        $general->should_exist('.courseinfo[data-shortname="'.$shortname.'"] .favoritetoggle[aria-pressed="true"]', 'css_element');
+        $general->should_exist('.coursecard[data-shortname="'.$shortname.'"] .favoritetoggle[aria-pressed="true"]', 'css_element');
     }
 
     /**
@@ -842,7 +838,7 @@ class behat_theme_snap extends behat_base {
         /* @var behat_general $general */
         $general = behat_context_helper::get('behat_general');
         $this->ensure_element_does_not_exist('.snap-icon-toggle.favoritetoggle.ajaxing', 'css_element');
-        $general->should_not_exist('.courseinfo[data-shortname="'.$shortname.'"] .favoritetoggle[aria-pressed="true"]', 'css_element');
+        $general->should_not_exist('.coursecard[data-shortname="'.$shortname.'"] .favoritetoggle[aria-pressed="true"]', 'css_element');
     }
 
     /**
@@ -852,7 +848,7 @@ class behat_theme_snap extends behat_base {
     public function i_toggle_course_card_favorite($shortname) {
         /* @var behat_general $general */
         $general = behat_context_helper::get('behat_general');
-        $general->i_click_on('.courseinfo[data-shortname="'.$shortname.'"] button.favoritetoggle', 'css_element');
+        $general->i_click_on('.coursecard[data-shortname="'.$shortname.'"] button.favoritetoggle', 'css_element');
     }
 
     /**
@@ -862,61 +858,9 @@ class behat_theme_snap extends behat_base {
      * @param string $link we look for
      */
     public function i_follow_in_the_mobile_menu($link) {
-        $node = $this->get_node_in_container('link', $link, 'css_element', '#fixy-mobile-menu');
+        $node = $this->get_node_in_container('link', $link, 'css_element', '#snap-pm-mobilemenu');
         $this->ensure_node_is_visible($node);
         $node->click();
-    }
-
-    /**
-     * Get the actual behat user (note $USER does not correspond to the behat sessions user).
-     * @return mixed
-     * @throws coding_exception
-     */
-    protected function get_behat_user() {
-        global $DB;
-
-        $sid = $this->getSession()->getCookie('MoodleSession');
-        if (empty($sid)) {
-            throw new coding_exception('failed to get moodle session');
-        }
-        $userid = $DB->get_field('sessions', 'userid', ['sid' => $sid]);
-        if (empty($userid)) {
-            throw new coding_exception('failed to get user from seession id '.$sid);
-        }
-        return $DB->get_record('user', ['id' => $userid]);
-    }
-
-    /**
-     * Sends a message to the specified user from the logged user. The user full name should contain the first and last names.
-     *
-     * @Given /^I send "(?P<message_contents_string>(?:[^"]|\\")*)" message to "(?P<user_full_name_string>(?:[^"]|\\")*)" user \(theme_snap\)$/
-     * @param string $messagecontent
-     * @param string $userfullname
-     */
-    public function i_send_message_to_user($messagecontent, $userfullname) {
-        global $DB;
-
-        $fromuser = $this->get_behat_user();
-
-        $fullnamesql = $DB->sql_concat('firstname', "' '", 'lastname');
-        $sqlselect = $fullnamesql . ' = ?';
-        $touser = $DB->get_record_select('user', $sqlselect, [$userfullname]);
-        $smallmessage = shorten_text($messagecontent, 30);
-        $subject = get_string_manager()->get_string('unreadnewmessage', 'message', fullname($fromuser), $touser->lang);
-        $message = new message();
-        $message->courseid = SITEID;
-        $message->userfrom = $fromuser->id;
-        $message->userto = $touser->id;
-        $message->subject = $subject;
-        $message->smallmessage = $smallmessage;
-        $message->fullmessage = $messagecontent;
-        $message->fullmessageformat = 0;
-        $message->fullmessagehtml = null;
-        $message->notification = 0;
-        $message->component = 'moodle';
-        $message->name = "instantmessage";
-
-        message_send($message);
     }
 
     /**
@@ -1195,7 +1139,7 @@ class behat_theme_snap extends behat_base {
         $session->executeScript('window.open("'.$CFG->wwwroot.'", "'.$logoutwindow.'")');
         sleep(1); // Allow time for the window to open.
         $session->switchToWindow($logoutwindow);
-        $this->i_log_out();
+        $this->execute('behat_theme_snap_behat_auth::i_log_out');
         $session->executeScript('window.close()');
         $session->switchToWindow($mainwindow);
     }

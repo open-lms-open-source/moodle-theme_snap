@@ -42,7 +42,7 @@ Feature: When the moodle theme is set to Snap, cover image can be set for site a
       | admin    | C1     | editingteacher |
       | teacher1 | C1     | editingteacher |
       | teacher2 | C1     | teacher        |
-    And I log in as "teacher1" (theme_snap)
+    And I log in as "teacher1"
     And I am on the course main page for "C1"
     Then I should see "Change cover image"
     And I should not see cover image in page header
@@ -81,8 +81,8 @@ Feature: When the moodle theme is set to Snap, cover image can be set for site a
     And I navigate to "Gradebook setup" node in "Course administration"
     Then I should not see "Change cover image"
     # Test that non-editing teachers can't change cover image. (no need to test with students as they have less caps)
-    And I log out (theme_snap)
-    And I log in as "teacher2" (theme_snap)
+    And I log out
+    And I log in as "teacher2"
     And I am on the course main page for "C1"
     Then I should not see "Change cover image"
 
@@ -101,7 +101,7 @@ Feature: When the moodle theme is set to Snap, cover image can be set for site a
     And the following "course enrolments" exist:
       | user     | course | role           |
       | teacher1 | C1     | editingteacher |
-    And I log in as "teacher1" (theme_snap)
+    And I log in as "teacher1"
     And I am on the course main page for "C1"
     Then I should see "Change cover image"
     And I should not see cover image in page header
@@ -128,7 +128,7 @@ Feature: When the moodle theme is set to Snap, cover image can be set for site a
     And the following "course enrolments" exist:
       | user     | course | role           |
       | teacher1 | C1     | editingteacher |
-    And I log in as "teacher1" (theme_snap)
+    And I log in as "teacher1"
     And I am on the course main page for "C1"
     Then I should see "Change cover image"
     And I should not see cover image in page header
@@ -142,7 +142,7 @@ Feature: When the moodle theme is set to Snap, cover image can be set for site a
     Given the following "users" exist:
       | username | firstname | lastname | email                |
       | user1    | User      | 1        | user1@example.com    |
-    And I log in as "admin" (theme_snap)
+    And I log in as "admin"
     And I am on site homepage
     Then I should not see "Change cover image"
     And I click on "#admin-menu-trigger" "css_element"
@@ -171,8 +171,8 @@ Feature: When the moodle theme is set to Snap, cover image can be set for site a
     And I am on site homepage
     Then I should not see cover image in page header
     # Test non admin user can't change site image.
-    And I log out (theme_snap)
-    And I log in as "user1" (theme_snap)
+    And I log out
+    And I log in as "user1"
     And I am on site homepage
     Then I should not see "Change cover image"
 
@@ -203,7 +203,7 @@ Feature: When the moodle theme is set to Snap, cover image can be set for site a
     And I reload the page
     Then I should see cover image in page header
     # Test non admin user can't change site image.
-    And I log out (theme_snap)
+    And I log out
     And I log in as "user1"
     And I am on the course category page for category with idnumber "CAT1"
     Then I should not see "Change cover image"

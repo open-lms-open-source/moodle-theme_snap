@@ -38,7 +38,7 @@ Feature: When the moodle theme is set to Snap, users can link back to the course
 
   @javascript
   Scenario: Teacher can navigate back to course main page from editing topics section.
-    Given I log in as "teacher1" (theme_snap)
+    Given I log in as "teacher1"
     And I am on the course main page for "C1"
     And I follow "Edit section"
     # Note the double space between "of" and "General" below is necessary.

@@ -31,5 +31,5 @@ Feature: When the moodle theme is set to Snap, log out works via personal menu.
 
   @javascript
   Scenario: User logs in then out.
-    Given I log in as "teacher1" (theme_snap)
-    And I log out (theme_snap)
+    Given I log in as "teacher1"
+    And I log out

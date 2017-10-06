@@ -1,11 +1,5 @@
 .behat-site {
 
-    #fixy-user {
-        #fixy-logout {
-            line-height: 1em;
-        }
-    }
-
     // We need to be able to see the navigation block in Snap or we can't fo things like follow the participants link and
     // log in as another user.
     #moodle-blocks {

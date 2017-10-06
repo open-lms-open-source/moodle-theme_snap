@@ -60,6 +60,17 @@ class theme_snap_services_course_test extends \advanced_testcase {
             $this->courses[] = $this->getDataGenerator()->create_course();
         }
 
+        // Create 5 courses in the past.
+        for ($c = 0; $c < 5; $c++) {
+            $enddate = time() - DAYSECS * rand(0, 365);
+            $startdate = $enddate - YEARSECS;
+            $record = (object) [
+                'startdate' => $startdate,
+                'enddate' => $enddate
+            ];
+            $this->courses[] = $this->getDataGenerator()->create_course($record);
+        }
+
         $this->user1 = $this->getDataGenerator()->create_user();
 
         // Enrol user to all courses.
@@ -103,27 +114,47 @@ class theme_snap_services_course_test extends \advanced_testcase {
         $this->assertFalse(isset($favorites[$this->courses[2]->id]));
     }
 
-    public function test_my_courses_split_by_favorites() {
+    public function test_my_courses_split_by_past_courses_favorites() {
         $service = $this->courseservice;
         $service->setfavorite($this->courses[0]->shortname, true, $this->user1->id);
         $service->setfavorite($this->courses[1]->shortname, true, $this->user1->id);
 
         $this->setUser($this->user1);
-        list ($favorites, $notfavorites) = $service->my_courses_split_by_favorites();
+        list ($pastcourses, $favorites, $notfavorites) = $service->my_courses_split_by_favorites();
+        $notfavorites = array_keys($notfavorites);
+        sort($notfavorites);
 
+        $expectedpastcourses = [
+            $this->courses[10]->id,
+            $this->courses[11]->id,
+            $this->courses[12]->id,
+            $this->courses[13]->id,
+            $this->courses[14]->id
+        ];
+
+        // Collapse pastcourses (currently hashed by year).
+        $collapsed = [];
+        foreach ($pastcourses as $year => $courses) {
+            $collapsed = array_merge($collapsed, array_keys($courses));
+        }
+        $pastcourses = $collapsed;
+        foreach ($expectedpastcourses as $expectedpastcourse) {
+            $this->assertContains($expectedpastcourse, $pastcourses);
+        }
         $expectedfavorites = [
             $this->courses[0]->id,
             $this->courses[1]->id
         ];
-
         $this->assertEquals($expectedfavorites, array_keys($favorites));
-        $notfavoritecourses = array_slice($this->courses, 2);
+
+        $notfavoritecourses = array_slice($this->courses, 2, 8);
+        $expectednotfavorites = array_keys($notfavoritecourses);
+        sort($expectednotfavorites);
         $expectednotfavorites = [];
         foreach ($notfavoritecourses as $course) {
             $expectednotfavorites[] = $course->id;
         }
-        asort($notfavorites);
-        $this->assertEquals($expectednotfavorites, array_keys($notfavorites));
+        $this->assertEquals($expectednotfavorites, $notfavorites);
     }
 
     public function test_setfavorite() {

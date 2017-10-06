@@ -41,7 +41,7 @@ Feature: When the moodle theme is set to Snap, students and teachers can open a 
       | student1 | C1     | student |
     And the following config values are set as admin:
       | showcoursegradepersonalmenu | <showgrades> | theme_snap |
-    And I log in as "student1" (theme_snap)
+    And I log in as "student1"
     And I open the personal menu
     Then I should see "Course 1"
     And "a.coursegrade" "css_element" should not exist
