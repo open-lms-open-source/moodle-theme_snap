@@ -332,6 +332,11 @@ img.icon {
     margin-right: 6px;
 }
 
+img.iconlarge {
+    height: 38px;
+    width: 38px;
+}
+
 /* mdl hide stuff icon - hide in bs has different meaning*/
 img.icon.hide {
     display: inline-block !important;
@@ -2961,6 +2966,7 @@ body.hascontinuecancel.path-site #page {
 .dndupload-arrow {
     cursor: pointer;
     background-image: url("[[pix:resource|icon]]");
+    background-size: 60px 60px;
     margin-top: 10px;
 }
 
