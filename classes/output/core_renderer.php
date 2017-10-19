@@ -49,6 +49,56 @@ use theme_snap\renderables\login_alternative_methods;
 class core_renderer extends \theme_boost\output\core_renderer {
 
     /**
+     * Copied from outputrenderere.php
+     * Heading with attached help button (same title text)
+     * and optional icon attached.
+     *
+     * @param string $text A heading text
+     * @param string $helpidentifier The keyword that defines a help page
+     * @param string $component component name
+     * @param string|moodle_url $icon
+     * @param string $iconalt icon alt text
+     * @param int $level The level of importance of the heading. Defaulting to 2
+     * @param string $classnames A space-separated list of CSS classes. Defaulting to null
+     * @return string HTML fragment
+     */
+    public function heading_with_help($text, $helpidentifier, $component = 'moodle', $icon = '', $iconalt = '', $level = 2, $classnames = null) {
+        global $COURSE;
+        $image = '';
+        if ($icon) {
+            $image = $this->pix_icon($icon, $iconalt, $component, array('class'=>'icon iconlarge'));
+        }
+
+        $help = '';
+        $collapsablehelp = '';
+        if ($helpidentifier) {
+            // Display header mod help as collapsable instead of popover for mods.
+            if($helpidentifier = 'modulename') {
+                // Get mod help text.
+                $modnames = get_module_types_names();
+                $modname = $modnames[$component];
+                $mod = get_module_metadata($COURSE, array($component => $modname), null);
+                if($mod[$component]->help) {
+                    $helptext = format_text($mod[$component]->help, FORMAT_MARKDOWN);
+                    $data = (object) [
+                        'helptext' => $helptext,
+                        'modtitle' => $mod[$component]->title
+                    ];
+                    $collapsablehelp = $this->render_from_template('theme_snap/heading_help_collapse', $data);
+                    $classnames .= ' d-inline';
+                }
+                $heading = $this->heading($image.$text, $level, $classnames);
+                // Return heading and help.
+                return $heading.$collapsablehelp;
+            } else {
+                $help = $this->help_icon($helpidentifier, $component);
+            }
+        }
+
+        return $this->heading($image.$text.$help, $level, $classnames);
+    }
+
+    /**
      * @return bool|string
      * @throws \moodle_exception
      */
@@ -1480,7 +1530,6 @@ HTML;
         // Retrieve all modules with associated metadata.
         $sectionreturn = null;
         $modules = get_module_metadata($COURSE, $modnames, $sectionreturn);
-
         foreach ($modules as $mod) {
             $help = !empty($mod->help) ? $mod->help : '';
             $helptext = format_text($help, FORMAT_MARKDOWN);

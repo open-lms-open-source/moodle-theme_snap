@@ -435,16 +435,14 @@ li {
 }
 
 hr {
-    margin-top: 0.75em;
-    margin-bottom: 0.75em;
-    height: 1.75em;
+    height: 1px;
+    margin: 2em 2%;
     border: 0;
-
-    // border-top: 1px solid $brand-primary; customisable
+    background-color: $brand-primary;
 }
 
 .block .content hr {
-    margin: 0.3;
+    margin: .3em;
     height: 1px;
 }
 
@@ -2689,6 +2687,7 @@ table#user-grades tr.avg td.cell {
 
 // Whitelist - pages need to be full width.
 .path-mod-assign,
+.path-mod-hvp,
 .path-grade,
 .path-admin-report,
 .pagelayout-admin,

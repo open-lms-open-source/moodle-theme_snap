@@ -64,8 +64,8 @@
                 <li class="nav-item">
                     <a class="nav-link" data-toggle="tab" href="#resources" role="tab">{{#str}}resources{{/str}}</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" data-toggle="tab" href="#help" role="tab">{{#str}}help{{/str}}</a>
+                <li class="nav-item pull-right" id="snap-modchooser-help-tab">
+                    <a class="nav-link" data-toggle="tab" href="#help" role="tab">{{#str}}helpguide, theme_snap{{/str}} {{#pix}}help, core, {{#str}}help, theme_snap{{/str}} {{/pix }}</a>
                 </li>
             </ul>
 
@@ -89,7 +89,7 @@
                 </div>
                 <div class="tab-pane row text-center" id="help" role="tabpanel">
                     {{#activities}}
-                        <div class="col-xs-3 snap-modchooser-activity">
+                        <div class="col-xs-3 snap-modchooser-activity" id="snap-modchooser_{{name}}">
                             <a class="snap-modchooser-addlink" href="{{{link}}}"><img src="{{icon}}" class="svg-icon" alt="" role="presentation"><br>{{title}}</a>
                         </div>
                         <div class="col-xs-8 snap-modchooser-help">
@@ -98,7 +98,7 @@
                         <div class="col-xs-12"><hr></div>
                     {{/activities}}
                     {{#resources}}
-                        <div class="col-xs-3 snap-modchooser-resource">
+                        <div class="col-xs-3 snap-modchooser-resource" id="snap-modchooser_{{name}}">
                             <a class="snap-modchooser-addlink" href="{{{link}}}"><img src="{{icon}}" class="svg-icon" alt="" role="presentation"><br>{{title}}</a>
                         </div>
                         <div class="col-xs-8 snap-modchooser-help">
