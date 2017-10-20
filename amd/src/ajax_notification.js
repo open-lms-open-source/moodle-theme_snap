@@ -159,7 +159,9 @@ define(['jquery', 'core/notification', 'core/ajax', 'core/templates', 'core/str'
                             }
                         }
 
-                        window.location = pwdChangeUrl;
+                        if (window.location != pwdChangeUrl) {
+                            window.location = pwdChangeUrl;
+                        }
                         // Regardless of if error was shown, we only want this redirect to happen once so set
                         // loginErrorShown to true.
                         loginErrorShown = true;
