@@ -27,6 +27,9 @@
 
      // Printing a course page.
     .path-course-view {
+        .section {
+            width: 100%;
+        }
         // List elements which are actually content.
         .section.img-text li {
             page-break-inside: auto;
@@ -51,6 +54,7 @@
         }
         // Hide all the things!
         #page-header,
+        #xray-js-menu,
         #snap-course-footer,
         #course-toc,
         #toc-mobile-menu-toggle,
