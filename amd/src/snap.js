@@ -561,17 +561,16 @@ define(['jquery', 'core/log', 'theme_snap/headroom', 'theme_snap/util', 'theme_s
 
                     // SHAME - make section name creation mandatory
                     if ($('#page-course-editsection.format-topics').length) {
-                        var usedefaultname = document.getElementById('id_usedefaultname'),
-                            sname = document.getElementById('id_name');
-                        usedefaultname.value = '0';
-                        usedefaultname.checked = false;
+                        var usedefaultname = document.getElementById('id_name_customize'),
+                            sname = document.getElementById('id_name_value');
+                        usedefaultname.value = '1';
+                        usedefaultname.checked = true;
                         sname.required = "required";
-                        sname.focus();
-                        $('#id_usedefaultname').parent().css('display', 'none');
+                        $(usedefaultname).parent().css('display', 'none');
 
                         // Enable the cancel button.
                         $('#id_cancel').on('click', function() {
-                            $('#id_name').removeAttr('required');
+                            $(sname).removeAttr('required');
                             $('#mform1').submit();
                         });
                     }
