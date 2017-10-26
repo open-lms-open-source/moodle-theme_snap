@@ -101,6 +101,9 @@ class activity {
         $activitydates = self::instance_activity_dates($courseid, $mod, $timeopenfld, $timeclosefld);
         $meta->timeopen = $activitydates->timeopen;
         $meta->timeclose = $activitydates->timeclose;
+        if (isset($activitydates->extension)) {
+            $meta->extension = $activitydates->extension;
+        }
 
         // TODO: use activity specific "teacher" capabilities.
         if (has_capability('mod/assign:grade', $mod->context)) {
@@ -823,6 +826,11 @@ class activity {
                     module.id, 
                     module.$timeopenfld AS timeopen, 
                     module.$timeclosefld AS timeclose";
+            if ($mod->modname === 'assign') {
+                $sql .= ",
+                    auf.extensionduedate AS extension
+                ";
+            }
             if ($mod->modname === 'quiz' || $mod->modname === 'lesson') {
                 $id = $mod->modname === 'quiz' ? $mod->modname : 'lessonid';
                 $groups = groups_get_user_groups($courseid);
@@ -882,8 +890,13 @@ class activity {
                 $params[] = $courseid;
                 $result = $DB->get_records_sql($sql, $params);
             } else {
-                $sql .= " FROM {" . $mod->modname . "} module
-                    WHERE module.course = ?";
+                $sql .= " FROM {" . $mod->modname . "} module";
+                if ($mod->modname === 'assign') {
+                    $sql .= "
+                     LEFT JOIN {assign_user_flags} auf ON module.id = auf.assignment
+                     ";
+                }
+                $sql .= "WHERE module.course = ?";
                 $result = $DB->get_records_sql($sql, array($courseid));
             }
             $moddates[$courseid . '_' . $mod->modname] = $result;

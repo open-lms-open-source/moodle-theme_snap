@@ -44,10 +44,10 @@ Feature: When the moodle theme is set to Snap, students and teachers can find in
 
   @javascript
   Scenario: Student sees correct submission status against deadlines when 1 out of 2 assignments are submitted by student.
-    Given the following "activities" exist with relative dates:
-      | activity | course | idnumber | name             | intro             | assignsubmission_onlinetext_enabled | assignfeedback_comments_enabled | section | duedate                      |
-      | assign   | C1     | assign1  | Test assignment1 | Test assignment 1 | 1                                   | 1                               | 1       | the timestamp of tomorrow    |
-      | assign   | C1     | assign2  | Test assignment2 | Test assignment 2 | 1                                   | 1                               | 1       | the timestamp of next week   |
+    Given the following "activities" exist:
+      | activity | course | idnumber | name             | intro             | assignsubmission_onlinetext_enabled | assignfeedback_comments_enabled | section | duedate         |
+      | assign   | C1     | assign1  | Test assignment1 | Test assignment 1 | 1                                   | 1                               | 1       | ##tomorrow##    |
+      | assign   | C1     | assign2  | Test assignment2 | Test assignment 2 | 1                                   | 1                               | 1       | ##next week##   |
     And I log in as "student1"
     And I open the personal menu
     And I should see "Not Submitted" in the "#snap-personal-menu-deadlines div.snap-media-object:first-of-type" "css_element"
@@ -70,10 +70,10 @@ Feature: When the moodle theme is set to Snap, students and teachers can find in
 
   @javascript
   Scenario: Teacher sees no submission status data against deadlines.
-    Given the following "activities" exist with relative dates:
-      | activity | course | idnumber | name             | intro             | assignsubmission_onlinetext_enabled | assignfeedback_comments_enabled | section | duedate                      |
-      | assign   | C1     | assign1  | Test assignment1 | Test assignment 1 | 1                                   | 1                               | 1       | the timestamp of tomorrow    |
-      | assign   | C1     | assign2  | Test assignment2 | Test assignment 2 | 1                                   | 1                               | 1       | the timestamp of next week   |
+    Given the following "activities" exist:
+      | activity | course | idnumber | name             | intro             | assignsubmission_onlinetext_enabled | assignfeedback_comments_enabled | section | duedate       |
+      | assign   | C1     | assign1  | Test assignment1 | Test assignment 1 | 1                                   | 1                               | 1       | ##tomorrow##  |
+      | assign   | C1     | assign2  | Test assignment2 | Test assignment 2 | 1                                   | 1                               | 1       | ##next week## |
     And I log in as "teacher1"
     And I open the personal menu
     And I should not see "Submitted" in the "#snap-personal-menu-deadlines div.snap-media-object:first-of-type" "css_element"
@@ -85,10 +85,10 @@ Feature: When the moodle theme is set to Snap, students and teachers can find in
   Scenario: Student sees correct submission status when the platform theme is different from snap and the course is forced to snap
     Given the following config values are set as admin:
       | theme | clean |
-    Given the following "activities" exist with relative dates:
+    Given the following "activities" exist:
       | activity | course | idnumber | name             | intro             | assignsubmission_onlinetext_enabled | assignfeedback_comments_enabled | section | duedate                      |
-      | assign   | C2     | assign1  | Test assignment1 | Test assignment 1 | 1                                   | 1                               | 1       | the timestamp of tomorrow    |
-      | assign   | C2     | assign2  | Test assignment2 | Test assignment 2 | 1                                   | 1                               | 1       | the timestamp of next week   |
+      | assign   | C2     | assign1  | Test assignment1 | Test assignment 1 | 1                                   | 1                               | 1       | ##tomorrow##    |
+      | assign   | C2     | assign2  | Test assignment2 | Test assignment 2 | 1                                   | 1                               | 1       | ##next week##   |
     And I log in as "student1"
     And I am on "Course 2" course homepage
     And I follow "Topic 1"
@@ -105,3 +105,17 @@ Feature: When the moodle theme is set to Snap, students and teachers can find in
     And I should see "Submitted" in the "#snap-personal-menu-deadlines div.snap-media-object:first-of-type" "css_element"
     And I should not see "Not Submitted" in the "#snap-personal-menu-deadlines div.snap-media-object:first-of-type" "css_element"
     And I should see "Not Submitted" in the "#snap-personal-menu-deadlines div.snap-media-object:nth-of-type(2)" "css_element"
+
+  @javascript
+  Scenario: Extended deadline dates take priority over deadlines.
+    Given the following config values are set as admin:
+      | theme | snap |
+    Given the following "activities" exist:
+      | activity | course | idnumber | name             | intro             | assignsubmission_onlinetext_enabled | assignfeedback_comments_enabled | section | duedate       |
+      | assign   | C2     | assign1  | Test assignment1 | Test assignment 1 | 1                                   | 1                               | 1       | ##yesterday## |
+      | assign   | C2     | assign2  | Test assignment2 | Test assignment 2 | 1                                   | 1                               | 1       | ##tomorrow##  |
+    And deadline for assignment "Test assignment1" in course "C2" is extended to "##next week##" for "student1"
+    And I log in as "student1"
+    And I open the personal menu
+    And I see a personal menu deadline of "##next week##" for "Test assignment1"
+    And I see a personal menu deadline of "##tomorrow##" for "Test assignment2"

@@ -265,6 +265,41 @@ class theme_snap_local_test extends \advanced_testcase {
     }
 
     /**
+     * Assert that deadlines array contains specific assignment id.
+     * @param array $deadlines
+     * @param int $assignid
+     */
+    private function assert_deadlines_includes_assignment(array $deadlines, $assignid) {
+        $hasassign = false;
+        foreach ($deadlines as $event) {
+            if ($event->modulename === 'assign' && $event->instance == $assignid) {
+                $hasassign = true;
+                break;
+            }
+        }
+        $this->assertTrue($hasassign, 'Error, deadlines does not contain assignment with id '.$assignid);
+    }
+
+    /**
+     * Extend assignment deadline for specific assignment and student.
+     * @param int $assignid
+     * @param int $studentid
+     * @param int | null $extendeddue
+     */
+    private function extend_assign_deadline($assignid, $studentid, $extendeddue = null) {
+        if (empty($extendeddue)) {
+            $extendeddue = time() + (DAYSECS * 2);
+        }
+        list ($course, $cm) = get_course_and_cm_from_instance($assignid, 'assign');
+        $cm = \cm_info::create($cm);
+        $assignment = new \assign($cm->context, $cm, $course);
+        $flags = $assignment->get_user_flags($studentid, true);
+        $extension = time() + (DAYSECS * 2);
+        $flags->extensionduedate = $extension;
+        $assignment->update_user_flags($flags);
+    }
+
+    /**
      * Test upcoming deadlines
      */
     public function test_upcoming_deadlines() {
@@ -290,6 +325,8 @@ class theme_snap_local_test extends \advanced_testcase {
         $this->setUser($teacher);
 
         $approachingdeadline = time() + HOURSECS;
+        $deadlinepast = time() - WEEKSECS;
+
         $assigngen->create_instance([
             'name' => 'Assign 1',
             'course' => $course->id,
@@ -304,6 +341,11 @@ class theme_snap_local_test extends \advanced_testcase {
             'name' => 'Assign 3',
             'course' => $course->id,
             'duedate' => strtotime('next week')
+        ]);
+        $ovedrueassign = $assigngen->create_instance([
+            'name' => 'Assign 4',
+            'course' => $course->id,
+            'duedate' => $deadlinepast
         ]);
 
         $quizgen = $this->getDataGenerator()->get_plugin_generator('mod_quiz');
@@ -323,7 +365,8 @@ class theme_snap_local_test extends \advanced_testcase {
             'timeclose' => strtotime('next month') + 1
         ]);
 
-        // 5 items should be shown as final deadline 3rd quiz gets cut off.
+        // 5 items should be shown as final deadline 3rd quiz gets cut off and assignment with past deadline should not
+        // show.
         $actual = local::upcoming_deadlines($student->id);
         $expected = 5;
 
@@ -377,6 +420,11 @@ class theme_snap_local_test extends \advanced_testcase {
             $expected = 5;
             $this->assertCount($expected, $actual);
         }
+
+        // Test that extended deadlines are included in upcoming deadlines.
+        $this->extend_assign_deadline($ovedrueassign->id, $student->id);
+        $deadlines = local::upcoming_deadlines($student->id, 5);
+        $this->assert_deadlines_includes_assignment($deadlines, $ovedrueassign->id);
     }
 
     /**

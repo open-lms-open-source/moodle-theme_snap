@@ -96,7 +96,7 @@ $string['deletesectionconfirm'] = 'Delete Section';
 $string['deletingsection'] = 'Deleting section "{$a}"';
 $string['draft'] = 'Not published to students';
 $string['dropzonelabel'] = 'Drop files to attach, or <span class="btn-link">browse</span>';
-$string['due'] = 'Due';
+$string['due'] = 'Due {$a}';
 $string['edit'] = 'Edit "{$a}"';
 $string['editcoursecontent'] = 'Edit blocks';
 $string['editcoursesettings'] = 'Course settings';
@@ -110,6 +110,7 @@ $string['error:failedtochangesectionvisibility'] = 'Failed to hide/show section'
 $string['error:failedtohighlightsection'] = 'Failed to highlight section';
 $string['error:failedtoduplicateasset'] = 'Failed to duplicate';
 $string['error:failedtodeleteasset'] = 'Failed to delete asset';
+$string['extension'] = 'Extension {$a}';
 $string['facebook'] = 'Facebook';
 $string['facebookdesc'] = 'The url of your facebook page.';
 $string['favicon'] = 'Favicon';

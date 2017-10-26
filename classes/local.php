@@ -742,6 +742,124 @@ class local {
         return self::get_upcoming_deadlines($userorid, $courses, 100, true);
     }
 
+
+    /**
+     * Get calendar events. Copied from calendar/lib.php and adapted to work with assignment extensions.
+     *
+     * @param int $tstart Start time of time range for events
+     * @param int $tend End time of time range for events
+     * @param array|int|boolean $users array of users, user id or boolean for all/no user events
+     * @param array|int|boolean $groups array of groups, group id or boolean for all/no group events
+     * @param array|int|boolean $courses array of courses, course id or boolean for all/no course events
+     * @param boolean $withduration whether only events starting within time range selected
+     *                              or events in progress/already started selected as well
+     * @param boolean $ignorehidden whether to select only visible events or all events
+     * @return array $events of selected events or an empty array if there aren't any (or there was an error)
+     */
+    private static function calendar_get_events($tstart, $tend, $users, $groups, $courses, $withduration=true, $ignorehidden=true) {
+        global $DB;
+
+        $whereclause = '';
+        $params = array();
+        // Quick test.
+        if (empty($users) && empty($groups) && empty($courses)) {
+            return array();
+        }
+
+        if ((is_array($users) && !empty($users)) or is_numeric($users)) {
+            // Events from a number of users
+            if(!empty($whereclause)) $whereclause .= ' OR';
+            list($insqlusers, $inparamsusers) = $DB->get_in_or_equal($users, SQL_PARAMS_NAMED);
+            $whereclause .= " (e.userid $insqlusers AND e.courseid = 0 AND e.groupid = 0)";
+            $params = array_merge($params, $inparamsusers);
+        } else if($users === true) {
+            // Events from ALL users
+            if(!empty($whereclause)) $whereclause .= ' OR';
+            $whereclause .= ' (e.userid != 0 AND e.courseid = 0 AND e.groupid = 0)';
+        } else if($users === false) {
+            // No user at all, do nothing
+        }
+
+        if ((is_array($groups) && !empty($groups)) or is_numeric($groups)) {
+            // Events from a number of groups
+            if(!empty($whereclause)) $whereclause .= ' OR';
+            list($insqlgroups, $inparamsgroups) = $DB->get_in_or_equal($groups, SQL_PARAMS_NAMED);
+            $whereclause .= " e.groupid $insqlgroups ";
+            $params = array_merge($params, $inparamsgroups);
+        } else if($groups === true) {
+            // Events from ALL groups
+            if(!empty($whereclause)) $whereclause .= ' OR ';
+            $whereclause .= ' e.groupid != 0';
+        }
+        // boolean false (no groups at all): we don't need to do anything
+
+        if ((is_array($courses) && !empty($courses)) or is_numeric($courses)) {
+            if(!empty($whereclause)) $whereclause .= ' OR';
+            list($insqlcourses, $inparamscourses) = $DB->get_in_or_equal($courses, SQL_PARAMS_NAMED);
+            $whereclause .= " (e.groupid = 0 AND e.courseid $insqlcourses)";
+            $params = array_merge($params, $inparamscourses);
+        } else if ($courses === true) {
+            // Events from ALL courses
+            if(!empty($whereclause)) $whereclause .= ' OR';
+            $whereclause .= ' (e.groupid = 0 AND e.courseid != 0)';
+        }
+
+        // Security check: if, by now, we have NOTHING in $whereclause, then it means
+        // that NO event-selecting clauses were defined. Thus, we won't be returning ANY
+        // events no matter what. Allowing the code to proceed might return a completely
+        // valid query with only time constraints, thus selecting ALL events in that time frame!
+        if(empty($whereclause)) {
+            return array();
+        }
+
+        if($withduration) {
+            $timeclause = "(
+                ((e.timestart >= $tstart OR e.timestart + e.timeduration > $tstart) AND e.timestart <= $tend) OR
+                ((auf.extensionduedate >= $tstart OR auf.extensionduedate + e.timeduration > $tstart)
+                AND auf.extensionduedate <= $tend)
+            )";
+        }
+        else {
+            $timeclause = "(
+                (e.timestart >= $tstart AND e.timestart <= $tend) OR 
+                (auf.extensionduedate >= $tstart AND auf.extensionduedate <= $tend)
+            )";
+        }
+        if(!empty($whereclause)) {
+            // We have additional constraints
+            $whereclause = $timeclause.' AND ('.$whereclause.')';
+        }
+        else {
+            // Just basic time filtering
+            $whereclause = $timeclause;
+        }
+
+        if ($ignorehidden) {
+            $whereclause .= ' AND e.visible = 1';
+        }
+
+        $sql = "SELECT e.*, auf.extensionduedate,
+              (
+              CASE 
+              WHEN auf.extensionduedate IS NULL
+              THEN e.timestart
+              ELSE auf.extensionduedate
+               END
+              ) AS duedate
+              FROM {event} e
+         LEFT JOIN {modules} m ON e.modulename = m.name
+         LEFT JOIN {assign_user_flags} auf ON e.modulename = 'assign' AND e.instance = auf.assignment
+                -- Non visible modules will have a value of 0.
+             WHERE (m.visible = 1 OR m.visible IS NULL) AND $whereclause
+          ORDER BY duedate";
+        $events = $DB->get_records_sql($sql, $params);
+
+        if ($events === false) {
+            $events = array();
+        }
+        return $events;
+    }
+
     /**
      * Return user's deadlines from the calendar.
      *
@@ -780,7 +898,7 @@ class local {
 
         $userevents = false;
         $groupevents = false;
-        $events = calendar_get_events($starttime, $endtime, $userevents, $groupevents, $courses);
+        $events = self::calendar_get_events($starttime, $endtime, $userevents, $groupevents, $courses);
 
         $processed = 0;
         $output = array();
@@ -845,7 +963,12 @@ class local {
                 $modimageurl = $output->image_url('icon', $event->modulename);
                 $modname = get_string('modulename', $event->modulename);
                 $modimage = \html_writer::img($modimageurl, $modname);
-                $deadline = $event->timestart + $event->timeduration;
+                if (!empty($event->extensionduedate)) {
+                    // If we have an extension then always show this as the due date.
+                    $deadline = $event->extensionduedate + $event->timeduration;
+                } else {
+                    $deadline = $event->timestart + $event->timeduration;
+                }
                 if ($event->modulename === 'collaborate') {
                     if ($event->timeduration == 0) {
                         // No deadline for long duration collab rooms.

@@ -785,6 +785,17 @@ class behat_theme_snap extends behat_base {
     }
 
     /**
+     * Get selector for favorite toggle.
+     * @param string $shortname
+     * @param bool $pressed
+     * @return string
+     */
+    private function favorite_selector($shortname, $pressed = true) {
+        $pressedstr = $pressed ? 'true' : 'false';
+        return '.courseinfo[data-shortname="'.$shortname.'"] .favoritetoggle[aria-pressed="'.$pressedstr.'"]';
+    }
+
+    /**
      * @param string $shortname
      * @Given /^Favorite toggle does not exist for course "(?P<shortname>(?:[^"]|\\")*)"$/
      */
@@ -801,7 +812,7 @@ class behat_theme_snap extends behat_base {
     public function favorite_toggle_exists_for_course($shortname) {
         /* @var behat_general $general */
         $general = behat_context_helper::get('behat_general');
-        $general->should_exist('.coursecard[data-shortname="'.$shortname.'"] .favoritetoggle[aria-pressed="false"]', 'css_element');
+        $general->should_exist($this->favorite_selector($shortname, false), 'css_element');
     }
 
     /**
@@ -827,7 +838,7 @@ class behat_theme_snap extends behat_base {
         /* @var behat_general $general */
         $general = behat_context_helper::get('behat_general');
         $this->ensure_element_does_not_exist('.snap-icon-toggle.favoritetoggle.ajaxing', 'css_element');
-        $general->should_exist('.coursecard[data-shortname="'.$shortname.'"] .favoritetoggle[aria-pressed="true"]', 'css_element');
+        $general->should_exist($this->favorite_selector($shortname), 'css_element');
     }
 
     /**
@@ -838,7 +849,7 @@ class behat_theme_snap extends behat_base {
         /* @var behat_general $general */
         $general = behat_context_helper::get('behat_general');
         $this->ensure_element_does_not_exist('.snap-icon-toggle.favoritetoggle.ajaxing', 'css_element');
-        $general->should_not_exist('.coursecard[data-shortname="'.$shortname.'"] .favoritetoggle[aria-pressed="true"]', 'css_element');
+        $general->should_not_exist($this->favorite_selector($shortname), 'css_element');
     }
 
     /**
@@ -952,54 +963,6 @@ class behat_theme_snap extends behat_base {
             $course->enablecompletion = $toggle;
             $DB->update_record('course', $course);
         }
-    }
-
-    /**
-     * Creates the specified element with relative time applied to field values.
-     * More info about available elements in http://docs.moodle.org/dev/Acceptance_testing#Fixtures.
-     *
-     * @Given /^the following "(?P<element_string>(?:[^"]|\\")*)" exist with relative dates:$/
-     *
-     * @throws Exception
-     * @throws PendingException
-     * @param string    $elementname The name of the entity to add
-     * @param TableNode $data
-     */
-    public function the_following_exist($elementname, TableNode $data) {
-        global $CFG;
-
-        require_once($CFG->dirroot.'/lib/testing/generator/lib.php');
-
-        $dg = new behat_data_generators();
-
-        $tablemode = method_exists($data, 'getTable'); // Behat 3 uses getTable;
-        $table = $tablemode ? $data->getTable() : $data->getRows();
-
-        foreach ($table as $rkey => $row) {
-            $r = 0;
-            foreach ($row as $key => $val) {
-                $r++;
-                if ($r > 1) {
-                    $val = preg_replace_callback(
-                        '/(?:the|a) timestamp of (.*)$/',
-                        function ($match) {
-                            return strtotime($match[1]);
-                        },
-                        $val);
-                }
-                $row[$key] = $val;
-            }
-            $rows[$rkey] = $row;
-        }
-
-        if ($tablemode) {
-            $data = new TableNode($rows);
-        } else {
-            $data->setRows($rows);
-        }
-
-        $dg->the_following_exist($elementname, $data);
-
     }
 
     /**
@@ -1506,4 +1469,132 @@ class behat_theme_snap extends behat_base {
         $this->execute('behat_general::i_click_on', [$xpath, 'xpath_element']);
     }
 
+    /**
+     * @Given /^deadline for assignment "(?P<name_string>(?:[^"]|\\")*)" in course "(?P<shortname_string>(?:[^"]|\\")*)" is extended to "(?P<date_string>(?:[^"]|\\")*)" for "(?P<uname_string>(?:[^"]|\\")*)"$/
+     * @param string $shortname
+     * @param string $format
+     * #param string $username
+     */
+    public function deadline_is_extended($assignname, $shortname, $extension, $username) {
+        global $DB, $CFG;
+
+        require_once($CFG->dirroot.'/mod/assign/locallib.php');
+
+        $service = theme_snap\services\course::service();
+        $course = $service->coursebyshortname($shortname, 'id');
+
+        $assign = $DB->get_record('assign', ['course' => $course->id, 'name' => $assignname], 'id');
+        if (!$assign) {
+            $msg = 'Failed to get assignment '.$assignname. ' for course id '.$course->id;
+            throw new ExpectationException($msg, $this->getSession());
+        }
+
+        $user = $this->get_user_by_username($username);
+        if (!$user) {
+            throw new ExpectationException('Couldn\'t find user with username "'.$username.'"', $this->getSession());
+        }
+
+        list ($course, $cm) = get_course_and_cm_from_instance($assign->id, 'assign');
+        $cm = cm_info::create($cm);
+
+        // Create assignment object and update extension date for user and assignment.
+        $assignment = new assign($cm->context, $cm, $course);
+        $flags = $assignment->get_user_flags($user->id, true);
+        $flags->extensionduedate = $extension;
+        $assignment->update_user_flags($flags);
+    }
+
+    /**
+     * @Given /^I see a personal menu deadline of "(?P<deadline_int>(?:[^"]|\\")*)" for "(?P<eventname_string>(?:[^"]|\\")*)"$/
+     * @param int $deadline
+     * @param string $eventname
+     */
+    public function i_see_personal_menu_deadline($deadline, $eventname) {
+        $deadline = calendar_day_representation($deadline);
+        $xpath = "//div[@id='snap-personal-menu-deadlines']//h3[contains(text(), '$eventname')]/parent::a/parent::div".
+            "/parent::div//time[contains(text(), '$deadline')]";
+        $this->ensure_element_is_visible($xpath, 'xpath_element');
+    }
+
+    /**
+     * @param string $name
+     * @return string
+     */
+    private function meta_assign_xpath($name) {
+        $xpath = "//span[contains(@class, 'instancename')][contains(text(), '$name')]/parent::a/parent::h4".
+        "/parent::div//div[contains(@class, 'snap-completion-meta')]";
+        return $xpath;
+    }
+
+    /**
+     * Get general xpath for course assignment meta data.
+     * @param string $name
+     * @param string $submitted
+     * @return string
+     */
+    private function meta_assign_submitted_xpath($name, $submitted = 'Not Submitted') {
+        $xpath = $this->meta_assign_xpath($name)."/a[contains(text(), '$submitted')]";
+        return $xpath;
+    }
+
+    /**
+     * @Given /^assignment entitled "(?P<assign_string>(?:[^"]|\\")*)" shows as not submitted in metadata$/
+     * @param string $name
+     */
+    public function meta_assign_is_not_submitted($name) {
+        $xpath = $this->meta_assign_submitted_xpath($name);
+        $this->ensure_element_is_visible($xpath, 'xpath_element');
+    }
+
+    /**
+     * @Given /^assignment entitled "(?P<assign_string>(?:[^"]|\\")*)" shows as submitted in metadata$/
+     * @param string $name
+     */
+    public function meta_assign_is_submitted($name) {
+        $xpath = $this->meta_assign_submitted_xpath($name, 'Submitted');
+        $this->ensure_element_is_visible($xpath, 'xpath_element');
+    }
+
+    /**
+     * @Given /^assignment entitled "(?P<assign_string>(?:[^"]|\\")*)" is overdue in metadata$/
+     * @param string $name
+     */
+    public function meta_assign_overdue($name) {
+        $xpath = $this->meta_assign_xpath($name);
+        $xpath .= "/a[contains(@class, 'snap-due-date')][contains(@class, 'tag-danger')]";
+        $this->ensure_element_is_visible($xpath, 'xpath_element');
+    }
+
+    /**
+     * @Given /^assignment entitled "(?P<assign_string>(?:[^"]|\\")*)" is not overdue in metadata$/
+     * @param string $name
+     */
+    public function meta_assign_not_overdue($name) {
+        $xpath = $this->meta_assign_xpath($name);
+        $xpath .= "/a[contains(@class, 'snap-due-date')][contains(@class, 'tag-success')]";
+        $this->ensure_element_is_visible($xpath, 'xpath_element');
+        $xpath = $this->meta_assign_xpath($name);
+        $xpath .= "/a[contains(@class, 'snap-due-date')][contains(@class, 'tag-danger')]";
+        $this->ensure_element_does_not_exist($xpath, 'xpath_element');
+    }
+
+    /**
+     * @Given /^assignment entitled "(?P<assign_string>(?:[^"]|\\")*)" has feedback metadata$/
+     * @param string $name
+     */
+    public function meta_assign_has_feedback($name) {
+        $xpath = $this->meta_assign_xpath($name);
+        $xpath .= "/a[contains(text(), 'Feedback available')]";
+        $this->ensure_element_is_visible($xpath, 'xpath_element');
+    }
+
+    /**
+     * @Given /^assignment entitled "(?P<assign_string>(?:[^"]|\\")*)" does not have feedback metadata$/
+     * @param string $name
+     */
+    public function meta_assign_not_has_feedback($name) {
+        $xpath = $this->meta_assign_xpath($name);
+        $xpath .= "/a[contains(text(), 'Feedback available')]";
+        $this->ensure_element_does_not_exist($xpath, 'xpath_element');
+    }
 }
