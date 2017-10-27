@@ -36,11 +36,13 @@ Feature: When the moodle theme is set to Snap, students and teachers can find in
       | username | firstname | lastname | email |
       | teacher1 | Teacher | 1 | teacher1@example.com |
       | student1 | Student | 1 | student1@example.com |
+      | student2 | Student | 2 | student2@example.com |
     And the following "course enrolments" exist:
       | user | course | role |
       | teacher1 | C1 | editingteacher |
       | student1 | C1 | student |
       | student1 | C2 | student |
+      | student2 | C2 | student |
 
   @javascript
   Scenario: Student sees correct submission status against deadlines when 1 out of 2 assignments are submitted by student.
@@ -119,3 +121,10 @@ Feature: When the moodle theme is set to Snap, students and teachers can find in
     And I open the personal menu
     And I see a personal menu deadline of "##next week##" for "Test assignment1"
     And I see a personal menu deadline of "##tomorrow##" for "Test assignment2"
+    And I log out (theme_snap)
+    # Make sure student2 doesn't see the extension.
+    And I log in as "student2"
+    And I open the personal menu
+    And I do not see a personal menu deadline of "##next week##" for "Test assignment1"
+    And I see a personal menu deadline of "##tomorrow##" for "Test assignment2"
+

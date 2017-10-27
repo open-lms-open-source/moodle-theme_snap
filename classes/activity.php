@@ -869,10 +869,11 @@ class activity {
                             ) AS timecloseover
                             FROM {" . $mod->modname . "} module";
                     }
+                    $params[] = $USER->id;
                     $sql .= "
                         LEFT JOIN {" . $mod->modname . "_overrides} ovrd1
                                ON module.id=ovrd1.$id
-                              AND $USER->id=ovrd1.userid
+                              AND ovrd1.userid = ?
                         LEFT JOIN {" . $mod->modname . "_overrides} ovrd2
                                ON module.id=ovrd2.$id
                               AND ovrd2.groupid $groupsql";
@@ -880,24 +881,30 @@ class activity {
                          GROUP BY module.id, module.$timeopenfld, module.$timeclosefld";
 
                 } else {
+                    $params[] = $USER->id;
                     $sql .= ", ovrd1.$timeopenfld AS timeopenover, ovrd1.$timeclosefld AS timecloseover
                              FROM {" . $mod->modname . "} module 
                              LEFT JOIN {" . $mod->modname . "_overrides} ovrd1
-                             ON module.id=ovrd1.$id AND $USER->id=ovrd1.userid";
+                             ON module.id=ovrd1.$id AND ovrd1.userid = ?";
                 }
                 $sql .= " WHERE module.course = ?";
                 $sql .= $groupbysql;
                 $params[] = $courseid;
                 $result = $DB->get_records_sql($sql, $params);
             } else {
+                $params = [];
                 $sql .= " FROM {" . $mod->modname . "} module";
                 if ($mod->modname === 'assign') {
+                    $params[] = $USER->id;
                     $sql .= "
-                     LEFT JOIN {assign_user_flags} auf ON module.id = auf.assignment
+                     LEFT JOIN {assign_user_flags} auf
+                            ON module.id = auf.assignment
+                           AND auf.userid = ?
                      ";
                 }
+                $params[] = $courseid;
                 $sql .= "WHERE module.course = ?";
-                $result = $DB->get_records_sql($sql, array($courseid));
+                $result = $DB->get_records_sql($sql, $params);
             }
             $moddates[$courseid . '_' . $mod->modname] = $result;
         }

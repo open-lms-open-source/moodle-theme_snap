@@ -757,7 +757,7 @@ class local {
      * @return array $events of selected events or an empty array if there aren't any (or there was an error)
      */
     private static function calendar_get_events($tstart, $tend, $users, $groups, $courses, $withduration=true, $ignorehidden=true) {
-        global $DB;
+        global $DB, $USER;
 
         $whereclause = '';
         $params = array();
@@ -848,10 +848,14 @@ class local {
               ) AS duedate
               FROM {event} e
          LEFT JOIN {modules} m ON e.modulename = m.name
-         LEFT JOIN {assign_user_flags} auf ON e.modulename = 'assign' AND e.instance = auf.assignment
+         LEFT JOIN {assign_user_flags} auf
+                ON e.modulename = 'assign'
+               AND e.instance = auf.assignment
+               AND auf.userid = :extensionuser
                 -- Non visible modules will have a value of 0.
              WHERE (m.visible = 1 OR m.visible IS NULL) AND $whereclause
           ORDER BY duedate";
+        $params['extensionuser'] = $USER->id;
         $events = $DB->get_records_sql($sql, $params);
 
         if ($events === false) {

@@ -1505,15 +1505,36 @@ class behat_theme_snap extends behat_base {
     }
 
     /**
+     * Return xpath for personal menu deadlines.
+     * @param int $deadline
+     * @param string $eventname
+     * @return string
+     */
+    private function personal_menu_deadline_xpath($deadline, $eventname) {
+        $deadline = calendar_day_representation($deadline);
+        $xpath = "//div[@id='snap-personal-menu-deadlines']//h3[contains(text(), '$eventname')]/parent::a/parent::div".
+            "/parent::div//time[contains(text(), '$deadline')]";
+        return $xpath;
+    }
+
+    /**
      * @Given /^I see a personal menu deadline of "(?P<deadline_int>(?:[^"]|\\")*)" for "(?P<eventname_string>(?:[^"]|\\")*)"$/
      * @param int $deadline
      * @param string $eventname
      */
     public function i_see_personal_menu_deadline($deadline, $eventname) {
-        $deadline = calendar_day_representation($deadline);
-        $xpath = "//div[@id='snap-personal-menu-deadlines']//h3[contains(text(), '$eventname')]/parent::a/parent::div".
-            "/parent::div//time[contains(text(), '$deadline')]";
+        $xpath = $this->personal_menu_deadline_xpath($deadline, $eventname);
         $this->ensure_element_is_visible($xpath, 'xpath_element');
+    }
+
+    /**
+     * @Given /^I do not see a personal menu deadline of "(?P<deadline_int>(?:[^"]|\\")*)" for "(?P<eventname_string>(?:[^"]|\\")*)"$/
+     * @param int $deadline
+     * @param string $eventname
+     */
+    public function i_dont_see_personal_menu_deadline($deadline, $eventname) {
+        $xpath = $this->personal_menu_deadline_xpath($deadline, $eventname);
+        $this->ensure_element_does_not_exist($xpath, 'xpath_element');
     }
 
     /**
