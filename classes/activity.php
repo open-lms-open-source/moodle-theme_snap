@@ -869,7 +869,7 @@ class activity {
                             ) AS timecloseover
                             FROM {" . $mod->modname . "} module";
                     }
-                    $params[] = $USER->id;
+                    array_unshift($params, $USER->id); // Add userid to start of params.
                     $sql .= "
                         LEFT JOIN {" . $mod->modname . "_overrides} ovrd1
                                ON module.id=ovrd1.$id

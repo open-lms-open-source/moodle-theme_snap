@@ -792,7 +792,7 @@ class behat_theme_snap extends behat_base {
      */
     private function favorite_selector($shortname, $pressed = true) {
         $pressedstr = $pressed ? 'true' : 'false';
-        return '.courseinfo[data-shortname="'.$shortname.'"] .favoritetoggle[aria-pressed="'.$pressedstr.'"]';
+        return '.coursecard[data-shortname="'.$shortname.'"] .favoritetoggle[aria-pressed="'.$pressedstr.'"]';
     }
 
     /**
@@ -802,7 +802,8 @@ class behat_theme_snap extends behat_base {
     public function favorite_toggle_doesnt_exist_for_course($shortname) {
         /* @var behat_general $general */
         $general = behat_context_helper::get('behat_general');
-        $general->should_not_exist('.coursecard[data-shortname="'.$shortname.'"] .favoritetoggle[aria-pressed="false"]', 'css_element');
+        $general->should_not_exist($this->favorite_selector($shortname, false), 'css_element');
+        $general->should_not_exist($this->favorite_selector($shortname, true), 'css_element');
     }
 
     /**

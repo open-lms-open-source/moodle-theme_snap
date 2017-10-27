@@ -121,7 +121,7 @@ Feature: When the moodle theme is set to Snap, students and teachers can find in
     And I open the personal menu
     And I see a personal menu deadline of "##next week##" for "Test assignment1"
     And I see a personal menu deadline of "##tomorrow##" for "Test assignment2"
-    And I log out (theme_snap)
+    And I log out
     # Make sure student2 doesn't see the extension.
     And I log in as "student2"
     And I open the personal menu

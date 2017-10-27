@@ -195,14 +195,14 @@ class theme_snap_assign_test extends mod_assign_base_testcase {
 
         $this->assertEmpty($override->timeopenover);
         $this->assertEmpty($override->timecloseover);
-        $this->assertEquals($override->timeclose, $reference);
+        $this->assertEquals($reference, $override->timeclose);
 
         // User override.
         $DB->insert_record('quiz_overrides', array('quiz' => $quiz1->id, 'userid' => $this->students[0]->id,
             'timeclose' => $reference + $day));
         $override = \theme_snap\activity::instance_activity_dates($this->course->id, $cm);
         $override2 = \theme_snap\activity::instance_activity_dates($this->course->id, $cm2);
-        $this->assertEquals($override->timecloseover, $reference + $day);
+        $this->assertEquals($reference + $day, $override->timecloseover);
         $this->assertEquals($override->timeclose, $override->timecloseover);
         $this->assertEquals($override2->timeclose, $quiz2->timeclose);
 
