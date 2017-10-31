@@ -46,10 +46,10 @@ Feature: When the moodle theme is set to Snap, students and teachers can see the
   Scenario: Message badge count is shown when alerts are enabled for a user in snap.
     Given the message processor "badge" is enabled
     And I change viewport size to "large"
-    And I log in as "student1" (theme_snap)
-    And I send "Test message!" message to "Teacher 1" user (theme_snap)
-    And I log out (theme_snap)
-    And I log in as "teacher1" (theme_snap)
+    And I log in as "student1"
+    And I send "Test message!" message to "Teacher 1" user
+    And I log out
+    And I log in as "teacher1"
     Then ".message_badge_count" "css_element" should exist
     # Placeholder should not exist.
     Then ".conversation_badge_count" "css_element" should not exist
@@ -58,14 +58,14 @@ Feature: When the moodle theme is set to Snap, students and teachers can see the
   Scenario: Conversation badge count is shown when alerts are disabled for a user in snap.
     Given the message processor "badge" is disabled
     # Placeholder should exist but be hidden.
-    And I log in as "teacher1" (theme_snap)
+    And I log in as "teacher1"
     Then ".conversation_badge_count.hidden" "css_element" should exist
-    And I log out (theme_snap)
+    And I log out
     And I change viewport size to "large"
-    And I log in as "student1" (theme_snap)
-    And I send "Test message!" message to "Teacher 1" user (theme_snap)
-    And I log out (theme_snap)
-    And I log in as "teacher1" (theme_snap)
+    And I log in as "student1"
+    And I send "Test message!" message to "Teacher 1" user
+    And I log out
+    And I log in as "teacher1"
     # Placeholder should exist but not be hidden.
     Then ".conversation_badge_count" "css_element" should exist
 
@@ -74,5 +74,5 @@ Feature: When the moodle theme is set to Snap, students and teachers can see the
     Given the message processor "badge" is disabled
     And the following config values are set as admin:
       | messagestoggle | 0 | theme_snap |
-    And I log in as "teacher1" (theme_snap)
+    And I log in as "teacher1"
     Then ".conversation_badge_count.hidden" "css_element" should not exist

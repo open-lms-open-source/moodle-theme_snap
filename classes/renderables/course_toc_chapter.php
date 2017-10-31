@@ -26,9 +26,9 @@ namespace theme_snap\renderables;
 defined('MOODLE_INTERNAL') || die();
 
 class course_toc_chapter implements \renderable {
-    
+
     /**
-     * @var bool 
+     * @var bool
      */
     public $outputlink;
 
@@ -36,6 +36,11 @@ class course_toc_chapter implements \renderable {
      * @var string
      */
     public $title;
+
+    /**
+     * @var string
+     */
+    public $classes;
 
     /**
      * @var bool

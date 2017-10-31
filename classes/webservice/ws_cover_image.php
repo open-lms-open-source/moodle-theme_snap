@@ -34,9 +34,12 @@ class ws_cover_image extends \external_api {
      */
     public static function service_parameters() {
         $parameters = [
-            'courseshortname' => new \external_value(PARAM_TEXT, 'Course shortname', VALUE_REQUIRED),
-            'imagedata' => new \external_value(PARAM_TEXT, 'Image data', VALUE_REQUIRED),
-            'imagefilename' => new \external_value(PARAM_TEXT, 'Image filename', VALUE_REQUIRED)
+            'params' => new \external_single_structure([
+                'imagedata' => new \external_value(PARAM_TEXT, 'Image data', VALUE_REQUIRED),
+                'imagefilename' => new \external_value(PARAM_TEXT, 'Image filename', VALUE_REQUIRED),
+                'categoryid' => new \external_value(PARAM_INT, 'Category Id', VALUE_OPTIONAL),
+                'courseshortname' => new \external_value(PARAM_TEXT, 'Course shortname', VALUE_OPTIONAL)
+            ], 'Params wrapper - just here to accommodate optional values', VALUE_REQUIRED)
         ];
         return new \external_function_parameters($parameters);
     }
@@ -53,19 +56,32 @@ class ws_cover_image extends \external_api {
     }
 
     /**
-     * @param string $courseshortname
      * @param string $imagedata
      * @param string $imagefilename
+     * @param int $categoryid
+     * @param string $courseshortname
      * @return array
      */
-    public static function service($courseshortname, $imagedata, $imagefilename) {
+    public static function service($params) {
         $service = course::service();
 
-        $course = $service->coursebyshortname($courseshortname, 'id');
-        $context = \context_course::instance($course->id);
+        $params = self::validate_parameters(self::service_parameters(), ['params' => $params])['params'];
+
+        if (!empty($params['courseshortname'])) {
+            $course = $service->coursebyshortname($params['courseshortname'], 'id');
+            if ($course->id === SITEID) {
+                $context = \context_system::instance();
+            } else {
+                $context = \context_course::instance($course->id);
+            }
+        } else if (!empty($params['categoryid'])) {
+            $context = get_category_or_system_context($params['categoryid']);
+        } else {
+            throw new \coding_exception('Error - courseshortname OR categoryid must be provided');
+        }
         self::validate_context($context);
 
-        $coverimage = $service->setcoverimage($courseshortname, $imagedata, $imagefilename);
+        $coverimage = $service->setcoverimage($context, $params['imagedata'], $params['imagefilename']);
         return $coverimage;
     }
 }

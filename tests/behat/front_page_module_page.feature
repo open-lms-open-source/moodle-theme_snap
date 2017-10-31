@@ -54,7 +54,7 @@ Feature: Open page (front page) module inline
       | activity | course               | idnumber  | name              | intro                 | content                 | section |
       | page     | Acceptance test site | pagec     | Page completion   | Page completion intro | Page completion content | 1       |
       | page     | Acceptance test site | pager     | Page restricted   | Page restricted intro | Page restricted content | 1       |
-   Then I log in as "admin" (theme_snap)
+   Then I log in as "admin"
     And I am on site homepage
     # Sometimes the page activity is not being created with the correct completion options, so I have to do it manually
     And I follow "Edit \"Page completion\""
@@ -64,8 +64,8 @@ Feature: Open page (front page) module inline
     And I press "Save and return to course"
     # Restrict the second page module to only be accessible after the first page module is marked complete.
     And I restrict course asset "Page restricted" by completion of "Page completion"
-    And I log out (theme_snap)
-    And I log in as "student1" (theme_snap)
+    And I log out
+    And I log in as "student1"
     And I am on site homepage
    Then I should not see "Page restricted intro"
     And I should see availability info "Not available unless: The activity Page completion is marked complete"
@@ -84,11 +84,11 @@ Feature: Open page (front page) module inline
     Given the following "activities" exist:
       | activity | course               | idnumber | name       | intro        | content       | completion | completionview | section |
       | page     | Acceptance test site | page1    | Test page1 | Test page 1  | page content1 | 0          | 0              | 1       |
-    And I log in as "admin" (theme_snap)
+    And I log in as "admin"
     And I am on site homepage
     And I should see "Test page1"
     And I should not see "page content1"
-    And I log out (theme_snap)
+    And I log out
     And I should not see "page content1"
    Then I follow visible link "Read more&nbsp;"
     And I should not see an error dialog

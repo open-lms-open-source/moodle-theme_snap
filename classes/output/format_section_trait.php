@@ -84,7 +84,8 @@ trait format_section_trait {
         }
 
         $forward = $sectionno + 1;
-        while ($forward <= $course->numsections and empty($links['next'])) {
+        $numsections = course_get_format($course)->get_last_section_number();
+        while ($forward <= $numsections and empty($links['next'])) {
             if ($canviewhidden
             || $sections[$forward]->uservisible
             || $sections[$forward]->availableinfo) {
@@ -201,6 +202,9 @@ trait format_section_trait {
             if (!$section->uservisible || $canviewhiddensections) {
                 $sectionstyle .= ' conditional';
             }
+            if (course_get_format($course)->is_section_current($section)) {
+                $sectionstyle .= ' current state-visible set-by-server';
+            }
         }
 
         // SHAME - the tabindex is intefering with moodle js.
@@ -245,6 +249,7 @@ trait format_section_trait {
             $o .= $output->heading($sectiontitle, 2, 'sectionname' . $classes);
         }
 
+
         // Section drop zone.
         $caneditcourse = has_capability('moodle/course:update', $context);
         if ($caneditcourse && $section->section != 0) {
@@ -265,19 +270,33 @@ trait format_section_trait {
                 ));
             }
         }
+        // Draft message.
+        $drafticon = '<img aria-hidden="true" role="presentation" class="svg-icon" src="'.$output->image_url('/i/show').'" />';
+        $o .= '<div class="snap-draft-tag">'.$drafticon.' '.get_string('draft', 'theme_snap').'</div>';
 
         // Current section message.
-        $o .= '<span class="snap-current-tag">'.get_string('current', 'theme_snap').'</span>';
-
-        // Draft message.
-        $o .= '<div class="snap-draft-tag">'.get_string('draft', 'theme_snap').'</div>';
+        $currenticon = '<img aria-hidden="true" role="presentation" class="svg-icon" src="'.$output->image_url('/i/marked').'" />';
+        $o .= '<span class="snap-current-tag">'.$currenticon.' '.get_string('current', 'theme_snap').'</span>';
 
         // Availabiliy message.
-        $conditionalicon = '<img aria-hidden="true" role="presentation" class="svg-icon" src="'.$output->pix_url('conditional', 'theme').'" />';
-        $conditionalmessage = $this->section_availability_message($section,
-            has_capability('moodle/course:viewhiddensections', $context));
-        if ($conditionalmessage !== '') {
-            $o .= '<div class="snap-conditional-tag">'.$conditionalicon.$conditionalmessage.'</div>';
+        // Note - $canviewhiddensection is required so that teachers can see the availability info message permanently,
+        // even if the teacher satisfies the conditions to make the section available.
+        // section->availabeinfo will be empty when all conditions are met.
+        $canviewhiddensections =  has_capability('moodle/course:viewhiddensections', $context);
+        $formattedinfo = '';
+        if ($canviewhiddensections || !empty($section->availableinfo)) {
+            $conditionalicon = '<img aria-hidden="true" role="presentation" class="svg-icon" src="' . $output->image_url('conditional', 'theme') . '" />';
+            $ci = new \core_availability\info_section($section);
+            $fullinfo = $ci->get_full_information();
+            $formattedinfo = '';
+            if ($fullinfo) {
+                $formattedinfo = \core_availability\info::format_info(
+                    $fullinfo, $section->course);
+            }
+        }
+
+        if ($formattedinfo !== '') {
+            $o .= '<div class="snap-conditional-tag">'.$conditionalicon.' '.$formattedinfo.'</div>';
         }
 
         // Section summary/body text.
@@ -298,7 +317,7 @@ trait format_section_trait {
         $o .= $summarytext;
         if ($canupdatecourse) {
             $url = new moodle_url('/course/editsection.php', array('id' => $section->id, 'sr' => $sectionreturn));
-            $icon = '<img aria-hidden="true" role="presentation" class="svg-icon" src="'.$this->output->pix_url('pencil', 'theme').'" /><br/>';
+            $icon = '<img aria-hidden="true" role="presentation" class="svg-icon" src="'.$this->output->image_url('pencil', 'theme').'" /><br/>';
             $o .= '<a href="'.$url.'" class="edit-summary">'.$icon.get_string('editcoursetopic', 'theme_snap'). '</a>';
         }
         $o .= "</div>";
@@ -356,10 +375,11 @@ trait format_section_trait {
 
         // Now the list of sections..
         echo $this->start_section_list();
+        $numsections = course_get_format($course)->get_last_section_number();
 
         foreach ($modinfo->get_section_info_all() as $section => $thissection) {
 
-            if ($section > $course->numsections) {
+            if ($section > $numsections) {
                 // Activities inside this section are 'orphaned', this section will be printed as 'stealth' below.
                 continue;
             }
@@ -391,7 +411,7 @@ trait format_section_trait {
         if ($PAGE->user_is_editing() and has_capability('moodle/course:update', $context)) {
             // Print stealth sections if present.
             foreach ($modinfo->get_section_info_all() as $section => $thissection) {
-                if ($section <= $course->numsections or empty($modinfo->sections[$section])) {
+                if ($section <= $numsections or empty($modinfo->sections[$section])) {
                     // This is not stealth section or it is empty.
                     continue;
                 }
@@ -435,7 +455,7 @@ trait format_section_trait {
 
         $required = '';
         $defaulttitle = get_string('title', 'theme_snap');
-        $sectionnum = $course->numsections;
+        $sectionnum = course_get_format($course)->get_last_section_number();
         if ($course->format === 'topics') {
             $required = 'required';
         } else {
@@ -506,26 +526,25 @@ trait format_section_trait {
                 || !($modnames = get_module_types_names()) || empty($modnames)) {
             return '';
         }
-        // Retrieve all modules with associated metadata.
-        $modules = get_module_metadata($course, $modnames, $sectionreturn);
-        $urlparams = array('section' => $section);
-            // S Lamour Aug 2015 - show activity picker
-            // moodle is adding a link around the span in a span with js - yay!! go moodle...
-            $iconurl = $OUTPUT->pix_url('move_here', 'theme');
-            $icon = '<img src="'.$iconurl.'" class="svg-icon" role="presentation" alt=""><br>';
-            $modchooser = '<div class="col-sm-6 snap-modchooser section_add_menus">
-              <span class="section-modchooser-link btn btn-link">'.$icon.'<span>'.get_string('addresourceoractivity', 'theme_snap').'</span></span>
-            </div>';
-           $output = $this->courserenderer->course_modchooser($modules, $course) . $modchooser;
 
-           // Add zone for quick uploading of files.
-           $upload = '<div class="col-sm-6">
-                <form class="js-only snap-dropzone">
-                    <label tabindex="0" for="snap-drop-file-'.$section.'" class="snap-dropzone-label">'.get_string('dropzonelabel', 'theme_snap').'</label>
-                    <input type="file" multiple name="snap-drop-file-'.$section.'" id="snap-drop-file-'.$section.'" class="js-snap-drop-file sr-only"/>
-                </form>
-                </div>';
-           return '<div class="row">'.$output.$upload.'</div>';
+        $iconurl = $OUTPUT->image_url('move_here', 'theme');
+        $icon = '<img src="'.$iconurl.'" class="svg-icon" role="presentation" alt=""><br>';
+        // Slamour Aug 2017
+        // Add button to pick launch modchooser.
+        $modchooser = '
+        <div class="col-sm-6 snap-modchooser">
+            <a href="#" class="js-only section-modchooser-link btn btn-link" data-section="'.$section.'" data-toggle="modal" data-target="#snap-modchooser-modal">'.$icon.get_string('addresourceoractivity', 'theme_snap').'</a>
+        </div>';
+
+        // Add zone for quick uploading of files.
+        $upload = '<div class="col-sm-6">
+            <form class="snap-dropzone js-only">
+                <label tabindex="0" for="snap-drop-file-'.$section.'" class="snap-dropzone-label">'.get_string('dropzonelabel', 'theme_snap').'</label>
+                <input type="file" multiple name="snap-drop-file-'.$section.'" id="snap-drop-file-'.$section.'" class="js-snap-drop-file sr-only"/>
+            </form>
+            </div>';
+
+        return '<div class="row">'.$modchooser.$upload.'</div>';
     }
 
     /**

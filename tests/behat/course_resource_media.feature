@@ -42,7 +42,7 @@ Feature: When the moodle theme is set to Snap, clicking on a resource with a med
 
   @javascript
   Scenario: MP3 opens inline and marked as completed.
-    Given I log in as "teacher1" (theme_snap)
+    Given I log in as "teacher1"
     And I am on the course main page for "C1"
     And I follow "Topic 1"
     Then "#section-1" "css_element" should exist

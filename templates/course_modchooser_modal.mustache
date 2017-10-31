@@ -1,0 +1,115 @@
+{{!
+    This file is part of Moodle - http://moodle.org/
+
+    Moodle is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Moodle is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+}}
+
+{{!
+ @package   theme_snap
+ @copyright Copyright (c) 2017 Blackboard Inc.
+ @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+}}
+
+{{!
+    @template theme_snap/course_modchooser_modal
+    Example context (json):
+    {
+        "tabs": {
+            "activities":
+                [{
+                    "name":"modname",
+                    "title":"Mod human name",
+                    "icon":"/theme/image.php/snap/assign/0/icon",
+                    "link":"http://google.com",
+                    "help":"help text"
+                }],
+            "resources":
+                [{
+                    "name":"modname",
+                    "title":"Mod human name",
+                    "icon":"/theme/image.php/snap/assign/0/icon",
+                    "link":"http://google.com",
+                    "help":"help text"
+                }]
+        }
+    }
+}}
+
+<!-- Modal -->
+<div data-section="0" class="modal fade" id="snap-modchooser-modal" tabindex="-1" role="dialog" aria-labelledby="snap-modchooser-title" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="{{#str}}closebuttontitle{{/str}}">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h6 class="modal-title" id="snap-modchooser-title">{{#str}}addresourceoractivity, theme_snap{{/str}}</h6>
+            </div>
+            <!-- Nav tabs -->
+            <ul class="nav nav-tabs" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active" data-toggle="tab" href="#activites" role="tab">{{#str}}activities{{/str}}</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" href="#resources" role="tab">{{#str}}resources{{/str}}</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" href="#help" role="tab">{{#str}}help{{/str}}</a>
+                </li>
+            </ul>
+
+            <!-- Tab panes -->
+            <div class="tab-content snap-modchooser-tabs">
+            <br>
+            {{#tabs}}
+                <div class="tab-pane row text-center active" id="activites" role="tabpanel">
+                    {{#activities}}
+                        <div class="col-xs-3 snap-modchooser-activity">
+                            <a class="snap-modchooser-addlink" href="{{{link}}}"><img src="{{icon}}" class="svg-icon" alt="" role="presentation"><br>{{title}}</a>
+                        </div>
+                    {{/activities}}
+                </div>
+                <div class="tab-pane row text-center" id="resources" role="tabpanel">
+                    {{#resources}}
+                        <div class="col-xs-3 snap-modchooser-resource">
+                            <a class="snap-modchooser-addlink" href="{{{link}}}"><img src="{{icon}}" class="svg-icon" alt="" role="presentation"><br>{{title}}</a>
+                        </div>
+                    {{/resources}}
+                </div>
+                <div class="tab-pane row text-center" id="help" role="tabpanel">
+                    {{#activities}}
+                        <div class="col-xs-3 snap-modchooser-activity">
+                            <a class="snap-modchooser-addlink" href="{{{link}}}"><img src="{{icon}}" class="svg-icon" alt="" role="presentation"><br>{{title}}</a>
+                        </div>
+                        <div class="col-xs-8 snap-modchooser-help">
+                            {{{help}}}
+                        </div>
+                        <div class="col-xs-12"><hr></div>
+                    {{/activities}}
+                    {{#resources}}
+                        <div class="col-xs-3 snap-modchooser-resource">
+                            <a class="snap-modchooser-addlink" href="{{{link}}}"><img src="{{icon}}" class="svg-icon" alt="" role="presentation"><br>{{title}}</a>
+                        </div>
+                        <div class="col-xs-8 snap-modchooser-help">
+                            {{{help}}}
+                        </div>
+                        <div class="col-xs-12"><hr></div>
+                    {{/resources}}
+                </div>
+            {{/tabs}}
+            <br>
+            </div>
+        </div>
+    </div>
+</div>

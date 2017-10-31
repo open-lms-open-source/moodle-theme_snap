@@ -41,20 +41,20 @@ Feature: When the moodle theme is set to Snap, students and teachers can open a 
       | user  | course | role    |
       | user1 | C1     | student |
       | user1 | Hidden | teacher |
-    And I log in as "user1" (theme_snap)
+    And I log in as "user1"
     And I open the personal menu
     Then I should see "Course 1"
     And I should not see "Courses you are enrolled in will be shown here"
     And I should not see "Course Hidden"
-    And I follow "Hidden courses (1)"
+    And I follow "Hidden courses"
     And I should see "Course Hidden"
-    When I follow "Course 1"
+    When I am on "Course 1" course homepage
     Then I should see "Course 1"
     And I should see "Introduction" in the "#chapters" "css_element"
 
   @javascript
   Scenario: User with no course enrolments sees a message
-    Given I log in as "student2" (theme_snap)
+    Given I log in as "student2"
     When I open the personal menu
     Then I should see "Courses you are enrolled in will be shown here"
     And I should not see "Hidden courses"
@@ -64,7 +64,7 @@ Feature: When the moodle theme is set to Snap, students and teachers can open a 
     Given the following "course enrolments" exist:
       | user     | course | role    |
       | student2 | Hidden | student |
-    And I log in as "student2" (theme_snap)
+    And I log in as "student2"
     When I open the personal menu
     Then I should see "Courses you are enrolled in will be shown here"
     And I should not see "Course Hidden"
@@ -75,7 +75,7 @@ Feature: When the moodle theme is set to Snap, students and teachers can open a 
     Given the following "course enrolments" exist:
       | user     | course | role    | timeend    |
       | student2 | Hidden | student | 1466172659 |
-    And I log in as "student2" (theme_snap)
+    And I log in as "student2"
     When I open the personal menu
     Then I should see "Courses you are enrolled in will be shown here"
     And I should not see "Course Hidden"
@@ -89,7 +89,7 @@ Feature: When the moodle theme is set to Snap, students and teachers can open a 
     And the following "course enrolments" exist:
       | user     | course | role    | timeend    |
       | teacher1 | Hidden | teacher | 1466172659 |
-    And I log in as "teacher1" (theme_snap)
+    And I log in as "teacher1"
     When I open the personal menu
     Then I should see "Courses you are enrolled in will be shown here"
     And I should not see "Course Hidden"
@@ -103,14 +103,14 @@ Feature: When the moodle theme is set to Snap, students and teachers can open a 
     And the following "course enrolments" exist:
       | user     | course | role    |
       | teacher1 | Hidden | teacher |
-    And I log in as "teacher1" (theme_snap)
+    And I log in as "teacher1"
     When I open the personal menu
     Then I should see "Course Hidden"
     And I should not see "Courses you are enrolled in will be shown here"
-    And I should not see "Hidden Courses (1)"
+    And I should not see "Hidden Courses"
 
   @javascript
-  Scenario: Hidden count is correct and closing the expander works
+  Scenario: Opening / closing the expander works
     Given the following "users" exist:
       | username | firstname | lastname | email                 |
       | teacher1 | Teacher   | 1        | teacher1@example.com  |
@@ -122,16 +122,18 @@ Feature: When the moodle theme is set to Snap, students and teachers can open a 
       | teacher1 | C1      | teacher |
       | teacher1 | Hidden  | teacher |
       | teacher1 | Hidden2 | teacher |
-    And I log in as "teacher1" (theme_snap)
+    And I log in as "teacher1"
     When I open the personal menu
     Then I should see "Course 1"
     And I should not see "Courses you are enrolled in will be shown here"
     And I should not see "Course Hidden"
     And I should not see "Course Hidden 2"
-    And I follow "Hidden courses (2)"
+    And I follow "Hidden courses"
     And I should see "Course Hidden"
     And I should see "Course Hidden 2"
-    And I follow "Hidden courses (2)"
+    # Sadly, the following pause is necessary as rapid clicks of the "Hidden courses" link are not registered.
+    And I wait "1" seconds
+    And I follow "Hidden courses"
     And I should not see "Course Hidden"
     And I should not see "Course Hidden 2"
 

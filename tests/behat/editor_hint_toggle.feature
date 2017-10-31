@@ -20,7 +20,7 @@ Feature: the editor hint toggle should be ignored by Snap in Moodlerooms 2.9
 
   @javascript
   Scenario: Create a URL resource in Snap theme
-    Given I log in as "teacher1" (theme_snap)
+    Given I log in as "teacher1"
     And I am on the course main page for "C1"
     Then I should see "Welcome to your new course Teacher 1."
     Then I should see "Start by describing what your course is about using text, images, audio & video."

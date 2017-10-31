@@ -77,6 +77,11 @@ class course_toc implements \renderable, \templatable{
     protected $format;
 
     /**
+     * @var int
+     */
+    protected $numsections;
+
+    /**
      * course_toc constructor.
      * @param null $course
      */
@@ -95,8 +100,7 @@ class course_toc implements \renderable, \templatable{
 
         $this->format  = course_get_format($course);
         $this->course  = $this->format->get_course(); // Has additional fields.
-
-        course_create_sections_if_missing($course, range(0, $this->course->numsections));
+        $this->numsections = $this->format->get_last_section_number();
 
         $this->set_modules();
         $this->set_chapters();
@@ -112,7 +116,7 @@ class course_toc implements \renderable, \templatable{
 
         // If course does not have any sections then exit - note, module search is not supported in course formats
         // that don't have sections.
-        if (!isset($this->course->numsections)) {
+        if (empty($this->numsections)) {
             return;
         }
 
@@ -126,7 +130,7 @@ class course_toc implements \renderable, \templatable{
             if ($cm->modname == 'label') {
                 continue;
             }
-            if ($cm->sectionnum > $this->course->numsections) {
+            if ($cm->sectionnum > $this->numsections) {
                 continue; // Module outside of number of sections.
             }
             if (!$cm->uservisible && (empty($cm->availableinfo))) {
@@ -157,7 +161,7 @@ class course_toc implements \renderable, \templatable{
 
         $this->chapters = (object) [];
 
-        $this->chapters->listlarge = $this->course->numsections > 9 ? 'list-large' : '';
+        $this->chapters->listlarge = $this->numsections > 9 ? 'list-large' : '';
 
         $this->chapters->chapters= [];
 
@@ -166,10 +170,6 @@ class course_toc implements \renderable, \templatable{
         $modinfo = get_fast_modinfo($this->course);
 
         foreach ($modinfo->get_section_info_all() as $section => $thissection) {
-
-            if ($section > $this->course->numsections) {
-                continue;
-            }
             // Students - If course hidden sections completely invisible & section is hidden, and you cannot
             // see hidden things, bale out.
             if ($this->course->hiddensections
@@ -181,15 +181,18 @@ class course_toc implements \renderable, \templatable{
             $conditional = $this->is_section_conditional($thissection);
             $chapter = new course_toc_chapter();
             $chapter->outputlink = true;
+            $chapter->classes = '';
 
             if ($canviewhidden) { // Teachers.
                 if ($conditional) {
                     $chapter->availabilityclass = 'text-warning';
                     $chapter->availabilitystatus = get_string('conditional', 'theme_snap');
+                    $chapter->classes .= 'conditional ';
                 }
                 if (!$thissection->visible) {
                     $chapter->availabilityclass = 'text-warning';
                     $chapter->availabilitystatus = get_string('notpublished', 'theme_snap');
+                    $chapter->classes .= 'draft ';
                 }
             } else { // Students.
                 if ($conditional && !$thissection->uservisible && !$thissection->availableinfo) {
@@ -199,12 +202,14 @@ class course_toc implements \renderable, \templatable{
                 if ($conditional && $thissection->availableinfo) {
                     $chapter->availabilityclass = 'text-warning';
                     $chapter->availabilitystatus = get_string('conditional', 'theme_snap');
+                    $chapter->classes .= 'conditional ';
                 }
                 if (!$conditional && !$thissection->visible) {
                     // Hidden section collapsed, so show as text in TOC.
                     $chapter->outputlink  = false;
                     $chapter->availabilityclass = 'text-warning';
                     $chapter->availabilitystatus = get_string('notavailable');
+                    $chapter->classes .= 'draft ';
                 }
             }
 
@@ -215,6 +220,7 @@ class course_toc implements \renderable, \templatable{
 
             if ($this->format->is_section_current($section)) {
                 $chapter->iscurrent = true;
+                $chapter->classes .= 'snap-visible-section current ';
             }
 
             if ($chapter->outputlink) {
@@ -242,8 +248,8 @@ class course_toc implements \renderable, \templatable{
         global $OUTPUT;
         $this->footer = (object) [
             'canaddnewsection' => has_capability('moodle/course:update', context_course::instance($this->course->id)),
-            'imgurladdnewsection' => $OUTPUT->pix_url('pencil', 'theme'),
-            'imgurltools' => $OUTPUT->pix_url('course_dashboard', 'theme')
+            'imgurladdnewsection' => $OUTPUT->image_url('pencil', 'theme'),
+            'imgurltools' => $OUTPUT->image_url('course_dashboard', 'theme')
         ];
     }
 

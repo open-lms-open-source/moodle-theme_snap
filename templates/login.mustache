@@ -1,0 +1,34 @@
+<div id="snap-pm" class="snap-pm-login-form" tabindex="-1">
+    <div id="snap-pm-inner">
+
+        <header id="snap-pm-header" class="clearfix">
+            <div class="pull-right">
+                <a id="snap-pm-close" class="js-snap-pm-trigger snap-action-icon snap-icon-close" href="#">
+                        <small>{{#str}}closebuttontitle{{/str}}</small>
+                </a>
+            </div>
+            <h1>{{#str}}login{{/str}}</h1>
+        </header>
+        <div id="snap-pm-content">
+            <form action='{{action}}'  method='post'>
+                <div class="form-group">
+                    <label class="form-control-label" for='username' >{{#str}}username{{/str}}</label>
+                    <input class="form-control" autocapitalize='off' type='text' name='username' id='username' required>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for='password'>{{#str}}password{{/str}}</label>
+                    <input class="form-control" type='password' name='password' id='password' required>
+                </div>
+                <br>
+                <input type='submit' class="btn-block" value='{{#str}}login{{/str}}'>
+            </form>
+            {{#altlogins}}
+            <br><hr><br>
+                {{{.}}}
+            {{/altlogins}}
+            <div id="snap-pm-login-help">
+                <a class="btn btn-primary" href="{{action}}"><i class="fa fa-info-circle" aria-hidden="true"></i> {{#str}}help{{/str}}</a>
+            </div>
+        </div>
+    </div>
+</div>

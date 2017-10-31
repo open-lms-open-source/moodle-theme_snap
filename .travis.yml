@@ -8,6 +8,7 @@ addons:
     packages:
       - oracle-java8-installer
       - oracle-java8-set-default
+      - chromium-chromedriver
 
 cache:
   directories:
@@ -21,17 +22,16 @@ php:
 env:
  global:
   - IGNORE_PATHS=node_modules
+  - MOODLE_BRANCH=MOODLE_33_STABLE
  matrix:
-  - MOODLE_BRANCH=MOODLE_32_STABLE DB=pgsql
-  - MOODLE_BRANCH=MOODLE_32_STABLE DB=mysqli
+  - DB=pgsql
+  - DB=mysqli
 
 matrix:
     include:
       - env: MOODLE_BRANCH=master DB=pgsql
-      - env: MOODLE_BRANCH=MOODLE_33_STABLE DB=mysqli
     allow_failuers:
       - env: MOODLE_BRANCH=master DB=pgsql
-
 
 before_install:
   - phpenv config-rm xdebug.ini
@@ -53,5 +53,4 @@ script:
   - moodle-plugin-ci codechecker
   - moodle-plugin-ci validate
   - moodle-plugin-ci phpunit
-  - moodle-plugin-ci behat
-
+  - moodle-plugin-ci behat --profile chrome

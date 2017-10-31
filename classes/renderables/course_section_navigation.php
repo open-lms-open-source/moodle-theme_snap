@@ -83,7 +83,8 @@ class course_section_navigation implements \renderable {
 
         $this->next = false;
         $target = $sectionno + 1;
-        while ($target <= $course->numsections && empty($this->next)) {
+        $lastsectionno = course_get_format($course)->get_last_section_number();
+        while ($target <= $lastsectionno && empty($this->next)) {
             $extraclasses = '';
             if ($canviewhidden
                 || $sections[$target]->uservisible

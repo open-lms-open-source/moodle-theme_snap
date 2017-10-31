@@ -19,9 +19,9 @@
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-define(['jquery', 'core/log', 'core/ajax', 'core/templates', 'core/notification',
+define(['jquery', 'core/log', 'core/ajax', 'core/str', 'core/templates', 'core/notification',
     'theme_snap/util', 'theme_snap/ajax_notification', 'theme_snap/footer_alert'],
-    function($, log, ajax, templates, notification, util, ajaxNotify, footerAlert) {
+    function($, log, ajax, str, templates, notification, util, ajaxNotify, footerAlert) {
 
     return {
         init: function(courseLib) {
@@ -42,6 +42,70 @@ define(['jquery', 'core/log', 'core/ajax', 'core/templates', 'core/notification'
              * @type {boolean}
              */
             var ajaxing = false;
+
+            var ajaxTracker;
+
+            /**
+             * AJAX tracker class - for tracking chained AJAX requests (prevents behat intermittent faults).
+             * Also, sets and unsets ajax classes on trigger element / child of trigger if specified.
+             */
+            var AjaxTracker = function() {
+
+                var triggersByKey = {};
+
+                /**
+                 * Starts tracking.
+                 * @param {string} jsPendingKey
+                 * @param {domElement} trigger
+                 * @param {string} subSelector
+                 */
+                this.start = function(jsPendingKey, trigger, subSelector) {
+                    if (this.ajaxing(jsPendingKey)) {
+                        log.debug('Skipping ajax request for '+jsPendingKey+', AJAX already in progress');
+                        return false;
+                    }
+                    M.util.js_pending(jsPendingKey);
+                    triggersByKey[jsPendingKey] = {trigger: trigger, subSelector: subSelector};
+                    if (trigger) {
+                        if (subSelector) {
+                            $(trigger).find(subSelector).addClass('ajaxing');
+                        } else {
+                            $(trigger).addClass('ajaxing');
+                        }
+                    }
+                    return true;
+                };
+
+                /**
+                 * Is there an AJAX request in progress.
+                 * @param jsPendingKey
+                 * @returns {boolean}
+                 */
+                this.ajaxing = function(jsPendingKey) {
+                    return M.util.pending_js.indexOf(jsPendingKey) > -1;
+                };
+
+                /**
+                 * Completes tracking.
+                 */
+                this.complete = function(jsPendingKey) {
+                    if (triggersByKey[jsPendingKey]) {
+                        var trigger = triggersByKey[jsPendingKey].trigger,
+                            subSelector = triggersByKey[jsPendingKey].subSelector;
+                    }
+                    if (trigger) {
+                        if (subSelector) {
+                            $(trigger).find(subSelector).removeClass('ajaxing');
+                        } else {
+                            $(trigger).removeClass('ajaxing');
+                        }
+                    }
+                    delete triggersByKey[jsPendingKey];
+                    M.util.js_complete(jsPendingKey);
+                };
+            };
+
+            ajaxTracker = new AjaxTracker();
 
             /**
              * Get the section number from a section element.
@@ -115,19 +179,6 @@ define(['jquery', 'core/log', 'core/ajax', 'core/templates', 'core/notification'
                     movingObjects.splice(index, 1);
                 }
                 updateMovingMessage();
-            };
-
-            /**
-             * Add ajax loading to container
-             * @param {object} container
-             * @param {bool}   dark
-             */
-            var addAjaxLoading = function(container, dark) {
-                if ($(container).find('.loadingstat').length === 0) {
-                    var darkclass = dark ? ' spinner-dark' : '';
-                    $(container).append('<div class="loadingstat spinner-three-quarters' + darkclass +
-                        '">' + M.util.get_string('loading', 'theme_snap') + '</div>');
-                }
             };
 
             /**
@@ -299,11 +350,12 @@ define(['jquery', 'core/log', 'core/ajax', 'core/templates', 'core/notification'
                  * Delete section.
                  */
                 var doDelete = function() {
-                    if (ajaxing) {
-                        // Request already made.
-                        log.debug('Skipping ajax request, one already in progress');
+
+                    if (!ajaxTracker.start('section_delete', el)) {
+                        // Already in progress.
                         return;
                     }
+
                     var delProgress = M.util.get_string('deletingsection', 'theme_snap', sectionName);
 
                     footerAlert.setTitle(delProgress);
@@ -338,23 +390,29 @@ define(['jquery', 'core/log', 'core/ajax', 'core/templates', 'core/notification'
                                     // Remove section from DOM.
                                     section.remove();
                                     updateSections();
+
                                     // Current section no longer exists so change location to previous section.
                                     if (sectionNum >= $('.course-content > ul li.section').length) {
                                         location.hash = 'section-' + (sectionNum - 1);
                                     }
                                     courseLib.showSection();
+                                    // We can't complete the action in the 'always' section because we want it to
+                                    // definitely be called after the section is removed from the DOM.
+                                    ajaxTracker.complete('section_delete');
                                 })
                                 .always(function() {
                                     // Allow another request now this has finished.
                                     footerAlert.hideAndReset();
-                                    ajaxing = false;
+                                })
+                                .fail(function() {
+                                    ajaxTracker.complete('section_delete');
                                 });
                         })
                         .fail(function(response) {
                             ajaxNotify.ifErrorShowBestMsg(response);
                             footerAlert.hideAndReset();
                             // Allow another request now this has finished.
-                            ajaxing = false;
+                            ajaxTracker.complete('section_delete');
                         });
                 };
 
@@ -366,153 +424,123 @@ define(['jquery', 'core/log', 'core/ajax', 'core/templates', 'core/notification'
             };
 
             /**
-             * Delete asset dialog and confirm function.
-             * @param {object} e
-             * @param {object} el
+             * Generic action handler for all asset actions.
+             * @param {event} e
+             * @param {domNode} triggerEl
              */
-            var assetDelete = function(e, el) {
+            var assetAction = function(e, triggerEl) {
                 e.preventDefault();
-                var asset = $($(el).parents('.snap-asset')[0]);
-                var cmid = Number(asset[0].id.replace('module-', ''));
-                var instanceName = asset.find('.instancename').text();
-                var params = {
-                    id: cmid,
-                    "class": "resource",
-                    sesskey: M.cfg.sesskey,
-                    courseId: courseLib.courseConfig.id,
-                    action: "DELETE"
-                };
 
-                // Create progress and confirmation strings.
-                var delConf = '',
-                    delProgress = '',
-                    plugindata = {
-                        type: M.util.get_string('pluginname', asset.attr('class').match(/modtype_([^\s]*)/)[1])
-                    };
-                if (instanceName.trim() !== '') {
-                    plugindata.name = instanceName;
-                    delConf = M.util.get_string('deletechecktypename', 'moodle', plugindata);
-                    delProgress = M.util.get_string('deletingassetname', 'theme_snap', plugindata);
-                } else {
-                    delConf = M.util.get_string('deletechecktype', 'moodle', plugindata);
-                    delProgress = M.util.get_string('deletingasset', 'theme_snap', plugindata.type);
+                var assetEl = $($(triggerEl).parents('.snap-asset')[0]),
+                    cmid = Number(assetEl[0].id.replace('module-', '')),
+                    instanceName = assetEl.find('.instancename').text().trim(),
+                    action = $(triggerEl).data('action'),
+                    errActionKey = '',
+                    errMessageKey = '',
+                    errAction = '',
+                    errMessage = '',
+                    jsPendingKey = 'asset_' + action;
+
+                if (ajaxTracker.ajaxing(jsPendingKey)) {
+                    // Already in progress.
+                    // We check this because we don't want to show the confirmation dialog when in progress.
+                    return;
                 }
 
-                /**
-                 * Delete asset.
-                 */
-                var doDelete = function() {
-                    if (ajaxing) {
+                var actionAJAX = function() {
+                    if (!ajaxTracker.start(jsPendingKey, assetEl, '.snap-edit-asset-more')) {
                         // Request already made.
-                        log.debug('Skipping ajax request, one already in progress');
                         return;
                     }
 
-                    footerAlert.setTitle(delProgress);
-                    footerAlert.addAjaxLoading('');
-                    footerAlert.show();
+                    var params = {
+                        'action' : action,
+                        'sectionreturn' : 0,
+                        'id' : cmid
+                    };
 
-                    log.debug('Making course/rest.php asset delete request', params);
-                    var req = $.ajax({
-                        type: "POST",
-                        async: true,
-                        data: params,
-                        dataType: 'text',
-                        url: M.cfg.wwwroot + courseLib.courseConfig.ajaxurl
-                    });
-                    req.done(function(data, textStatus, xhr) {
-                        if (data !== '') {
-                            ajaxNotify.ifErrorShowBestMsg(data).done(function(errorShown) {
+                    ajax.call([
+                        {
+                            methodname: 'core_course_edit_module',
+                            args: params
+                        }
+                    ], true, true)[0]
+                        .done(function(response) {
+                            ajaxNotify.ifErrorShowBestMsg(response, errAction, errMessage).done(function(errorShown) {
+                                ajaxTracker.complete(jsPendingKey);
                                 if (errorShown) {
                                     log.debug('Ajax request fail');
                                     return;
                                 } else {
-                                    // No errors, remove asset.
                                     log.debug('Ajax request successful');
-                                    // Remove asset from DOM.
-                                    asset.remove();
-                                    // Remove asset searchable.
-                                    $('#toc-searchables li[data-id="' + cmid + '"]').remove();
+                                    if (action === 'delete') {
+                                        // Remove asset from DOM.
+                                        assetEl.remove();
+                                        // Remove asset searchable.
+                                        $('#toc-searchables li[data-id="' + cmid + '"]').remove();
+                                    } else if (action === 'show') {
+                                        assetEl.removeClass('draft');
+                                    } else if (action === 'hide') {
+                                        assetEl.addClass('draft');
+                                    } else if (action === 'duplicate') {
+                                        assetEl.replaceWith(response);
+                                    }
                                 }
                             });
-                        } else if (xhr.status === 200) {
-                            // No errors, remove asset.
-                            log.debug('Ajax request successful');
-                            // Remove asset from DOM.
-                            asset.remove();
-                            // Remove asset searchable.
-                            $('#toc-searchables li[data-id="' + cmid + '"]').remove();
-                        }
-                    });
-                    req.fail(function(data) {
-                        ajaxNotify.ifErrorShowBestMsg(data);
-                    });
-                    req.always(function() {
-                        footerAlert.hideAndReset();
-                    });
-
+                        })
+                        .fail(function(response) {
+                            ajaxNotify.ifErrorShowBestMsg(response, errAction, errMessage).done(function() {
+                                ajaxTracker.complete(jsPendingKey);
+                            });
+                        })
+                        .always(function() {
+                            footerAlert.hideAndReset();
+                        });
                 };
 
+                /**
+                 * Get error strings incase of AJAX failure.
+                 * @returns {*|Promise}
+                 */
+                var get_error_strings = function() {
+                    if (action === 'duplicate') {
+                        errActionKey = 'action:duplicateasset';
+                        errMessageKey = 'error:failedtoduplicateasset';
+                    } else if (action === 'show' || action === 'hide') {
+                        errActionKey = 'action:changeassetvisibility';
+                        errMessageKey = 'error:failedtochangeassetvisibility';
+                    } else if (action === 'delete') {
+                        errActionKey = 'action:deleteasset';
+                        errMessageKey = 'error:failedtodeleteasset';
+                    }
+                    return str.get_strings([
+                        {key: errActionKey, component: 'theme_snap'},
+                        {key: errMessageKey, component: 'theme_snap'}
+                    ]);
+                };
 
-                var delTitle = M.util.get_string('confirm', 'moodle');
-                var ok = M.util.get_string('deleteassetconfirm', 'theme_snap', plugindata.type);
-                var cancel = M.util.get_string('cancel', 'moodle');
-                notification.confirm(delTitle, delConf, ok, cancel, doDelete);
-            };
+                get_error_strings().then(function(strings) {
+                    errAction = strings[0];
+                    errMessage = strings[0];
+                    if (action === 'delete') {
+                        // Create confirmation strings.
+                        var delConf = '',
+                            plugindata = {
+                                type: M.util.get_string('pluginname', assetEl.attr('class').match(/modtype_([^\s]*)/)[1])
+                            };
+                        if (instanceName !== '') {
+                            plugindata.name = instanceName;
+                            delConf = M.util.get_string('deletechecktypename', 'moodle', plugindata);
+                        } else {
+                            delConf = M.util.get_string('deletechecktype', 'moodle', plugindata);
+                        }
 
-            /**
-             * Show or hide an asset
-             *
-             * @param {object} e
-             * @param {object} el
-             * @param {bool}   show
-             */
-            var assetShowHide = function(e, el, show) {
-                e.preventDefault();
-                var courserest = M.cfg.wwwroot + '/course/rest.php';
-                var parent = $($(el).parents('.snap-asset')[0]);
-
-                var id = parent.attr('id').replace('module-', '');
-
-                addAjaxLoading($(parent).find('.snap-meta'), true);
-
-                var courseid = courseLib.courseConfig.id;
-
-                var errMessage = M.util.get_string('error:failedtochangeassetvisibility', 'theme_snap');
-                var errAction = M.util.get_string('action:changeassetvisibility', 'theme_snap');
-
-                $.ajax({
-                    type: "POST",
-                    async: true,
-                    url: courserest,
-                    dataType: 'html',
-                    complete: function() {
-                        parent.find('.snap-meta .loadingstat').remove();
-                    },
-                    error: function(response) {
-                        ajaxNotify.ifErrorShowBestMsg(response, errAction, errMessage);
-                    },
-                    success: function(response) {
-                        ajaxNotify.ifErrorShowBestMsg(response, errAction, errMessage).done(function(errorShown) {
-                            if (errorShown) {
-                                return;
-                            } else {
-                                // No errors, set draft class.
-                                if (show) {
-                                    parent.removeClass('draft');
-                                } else {
-                                    parent.addClass('draft');
-                                }
-                            }
-                        });
-                    },
-                    data: {
-                        id: id,
-                        'class': 'resource',
-                        field: 'visible',
-                        sesskey: M.cfg.sesskey,
-                        value: show ? 1 : 0,
-                        courseId: courseid
+                        var delTitle = M.util.get_string('confirm', 'moodle');
+                        var ok = M.util.get_string('deleteassetconfirm', 'theme_snap', plugindata.type);
+                        var cancel = M.util.get_string('cancel', 'moodle');
+                        notification.confirm(delTitle, delConf, ok, cancel, actionAJAX);
+                    } else {
+                        actionAJAX();
                     }
                 });
             };
@@ -626,65 +654,13 @@ define(['jquery', 'core/log', 'core/ajax', 'core/templates', 'core/notification'
              * Listen for edit action clicks, hide, show, duplicate, etc..
              */
             var assetEditListeners = function() {
-                $(document).on('click', '.snap-asset-actions .js_snap_hide', function(e) {
-                    assetShowHide(e, this, false);
-                });
+                var actionSelectors = '.snap-asset-actions .js_snap_hide, ';
+                actionSelectors += '.snap-asset-actions .js_snap_show, ';
+                actionSelectors += '.snap-asset-actions .js_snap_delete, ';
+                actionSelectors += '.snap-asset-actions .js_snap_duplicate';
 
-                $(document).on('click', '.snap-asset-actions .js_snap_show', function(e) {
-                    assetShowHide(e, this, true);
-                });
-
-                $(document).on('click', '.snap-asset-actions .js_snap_delete', function(e) {
-                    assetDelete(e, this);
-                });
-
-                $(document).on('click', '.snap-section-editing.actions .snap-delete', function(e) {
-                    sectionDelete(e, this);
-                });
-
-                $(document).on('click', '.snap-asset-actions .js_snap_duplicate', function(e) {
-                    e.preventDefault();
-                    var parent = $($(this).parents('.snap-asset')[0]);
-                    var id = parent.attr('id').replace('module-', '');
-                    addAjaxLoading($(parent).find('.snap-meta'), true);
-
-                    var courseid = courseLib.courseConfig.id;
-
-                    var courserest = M.cfg.wwwroot + '/course/rest.php';
-
-                    var errAction = M.util.get_string('action:duplicateasset', 'theme_snap');
-                    var errMessage = M.util.get_string('error:failedtoduplicateasset', 'theme_snap');
-
-                    $.ajax({
-                        type: "POST",
-                        async: true,
-                        url: courserest,
-                        dataType: 'json',
-                        complete: function() {
-                            parent.find('.snap-meta .loadingstat').remove();
-                        },
-                        error: function(data) {
-                            ajaxNotify.ifErrorShowBestMsg(data, errAction, errMessage);
-                        },
-                        success: function(data) {
-                            ajaxNotify.ifErrorShowBestMsg(data, errAction, errMessage).done(function(errorShown) {
-                                if (errorShown) {
-                                    return;
-                                } else {
-                                    // No errors, insert duplicate.
-                                    $(data.fullcontent).insertAfter(parent);
-                                }
-                            });
-                        },
-                        data: {
-                            'class': 'resource',
-                            field: 'duplicate',
-                            id: id,
-                            sr: 0,
-                            sesskey: M.cfg.sesskey,
-                            courseId: courseid
-                        }
-                    });
+                $(document).on('click', actionSelectors, function(e) {
+                    assetAction(e, this);
                 });
             };
 
@@ -700,6 +676,8 @@ define(['jquery', 'core/log', 'core/ajax', 'core/templates', 'core/notification'
 
                     e.stopPropagation();
                     e.preventDefault();
+
+                    var trigger = this;
 
                     /**
                      * Invalid section action exception.
@@ -717,28 +695,23 @@ define(['jquery', 'core/log', 'core/ajax', 'core/templates', 'core/notification'
                         throw new InvalidActionException(action);
                     }
 
-                    // Only allow 1 request to be made at a time.
-                    // Note, this is still async - just limited to one section action request at a time.
-                    // All other ajax requests (templates, etc) will still be async.
-                    if (ajaxing) {
-                        // Request already made.
-                        log.debug('Skipping ajax request, one already in progress');
+                    if (!ajaxTracker.start('section_' + action, trigger)) {
+                        // Request already in progress.
                         return;
                     }
-                    ajaxing = true;
 
-                    var toggler = action === 'visibility' ? 'snap-show' : 'snap-marker';
-                    var toggle = $(this).hasClass(toggler) ? 1 : 0;
+                    // For toggling visibility.
+                    if(action === 'visibility') {
+                        var toggle = $(this).hasClass('snap-hide') ? 0 : 1;
+                    } else {
+                        // For toggling highlight/mark as current.
+                        var toggle = $(this).attr('aria-pressed') === 'true' ? 0 : 1;
+                    }
 
                     var sectionNumber = parentSectionNumber(this);
                     var sectionActionsSelector = '#section-' + sectionNumber + ' .snap-section-editing';
                     var actionSelector = sectionActionsSelector + ' .snap-' + action;
 
-                    // Add spinner.
-                    addAjaxLoading(sectionActionsSelector, true);
-
-                    var jsid = 'sectionupdate_' + new Date().getTime().toString(16) + (Math.floor(Math.random() * 1000));
-                    M.util.js_pending(jsid);
 
                     // Make ajax call.
                     var ajaxPromises = ajax.call([
@@ -765,12 +738,11 @@ define(['jquery', 'core/log', 'core/ajax', 'core/templates', 'core/notification'
                             errAction = M.util.get_string('action:highlightsectionvisibility', 'theme_snap');
                         }
                         ajaxNotify.ifErrorShowBestMsg(response, errAction, errMessage).done(function() {
-                            M.util.js_complete(jsid);
+                            // Allow another request now this has finished.
+                            ajaxTracker.complete('section_' + action);
                         });
                     }).always(function() {
-                        $(sectionActionsSelector + ' .loadingstat').remove();
-                        // Allow another request now this has finished.
-                        ajaxing = false;
+                        $(trigger).removeClass('ajaxing');
                     }).done(function(response) {
                         // Update section action and then reload TOC.
                         return templates.render('theme_snap/course_action_section', response.actionmodel)
@@ -788,15 +760,18 @@ define(['jquery', 'core/log', 'core/ajax', 'core/templates', 'core/notification'
                                     // Callback returns a promise, js no longer running.
                                     completion.always(
                                         function() {
-                                            M.util.js_complete(jsid);
+                                            // Allow another request now this has finished.
+                                            ajaxTracker.complete('section_' + action);
                                         }
                                     );
                                 } else {
                                     // Callback does not return a promise, js no longer running.
-                                    M.util.js_complete(jsid);
+                                    // Allow another request now this has finished.
+                                    ajaxTracker.complete('section_' + action);
                                 }
                             } else {
-                                M.util.js_complete(jsid);
+                                // Allow another request now this has finished.
+                                ajaxTracker.complete('section_' + action);
                             }
                         });
                     });
@@ -808,7 +783,28 @@ define(['jquery', 'core/log', 'core/ajax', 'core/templates', 'core/notification'
              */
             var highlightSectionListener = function() {
                 sectionActionListener('highlight', function(sectionNumber) {
-                    $('#section-' + sectionNumber).toggleClass("current");
+                    $('#section-' + sectionNumber).toggleClass('current');
+
+                    // Reset sections which are not highlighted.
+                    var $notCurrent = $('li.section.main')
+                    .not('#section-' + sectionNumber)
+                    .not('#section-0').removeClass("current");
+
+                    $notCurrent.each(function() {
+                        var highlighter = $(this).find('.snap-highlight');
+                        var sectionNumber = parentSectionNumber(highlighter);
+                        var newLink = $(highlighter).attr('href').replace(/(marker=)[0-9]+/ig, '$1' +sectionNumber);
+                        $(highlighter).attr('href', newLink).attr('aria-pressed', 'false');
+                    });
+                });
+            };
+
+            /**
+             * Delete section on click.
+             */
+            var deleteSectionListener = function() {
+                $(document).on('click', '.snap-section-editing.actions .snap-delete', function(e) {
+                    sectionDelete(e, this);
                 });
             };
 
@@ -1003,6 +999,7 @@ define(['jquery', 'core/log', 'core/ajax', 'core/templates', 'core/notification'
                 moveSectionListener();
                 toggleSectionListener();
                 highlightSectionListener();
+                deleteSectionListener();
                 assetMoveListener();
                 movePlaceListener();
                 assetEditListeners();

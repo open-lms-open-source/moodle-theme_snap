@@ -84,12 +84,6 @@ section#region-main
     }
 }
 
-.ie.path-course-view section#region-main > .singlebutton input[type="submit"] {
-    background-image: url("[[pix:theme|edit_for_ie]]");
-    background-size: 23px;
-    background-position: left center;
-}
-
 .section .filler {
     display: none;
 }
@@ -304,7 +298,10 @@ li.section:focus {
         height: 2em;
         padding: 0.1em 0.3em;
         text-align: center;
-        &:hover {
+        overflow: hidden;
+        &:hover,
+        &.snap-show,
+        &[aria-pressed="true"] {
             background-color: $gray-lighter;
         }
     }
@@ -336,18 +333,55 @@ li.section:focus {
         background-image: url([[pix:core|t/delete]]);
     }
 
-    .snap-highlight.snap-marker:after {
+    .snap-highlight[aria-pressed="false"]:after {
         background-image: url([[pix:core|i/marker]]);
     }
 
-    .snap-highlight.snap-marked:after {
+    .snap-highlight[aria-pressed="true"]:after {
         background-image: url([[pix:core|i/marked]]);
+    }
+
+    a.ajaxing:after {
+        @include ajaxing(block, relative, 20px, 6px);
+        background-image: none !important;
+        margin: 0 auto;
+        top: 6px;
     }
 
     .loadingstat {
         margin-left: 1em;
     }
 
+}
+
+#snap-modchooser-modal {
+    .modal-header {
+        border-bottom: none;
+    }
+
+    .snap-modchooser-addlink {
+        display: block;
+        height: 90px;
+        overflow: hidden;
+        font-size: .8em;
+        font-family: $font-family-system;
+        font-weight: 500;
+        @include alakazam;
+
+        &:hover,
+        &:focus {
+            transform: scale(1.1);
+        }
+
+        img {
+            margin: 0.5em 0;
+        }
+
+    }
+
+    .snap-modchooser-help {
+        text-align: left;
+    }
 }
 
 .snap-dropzone {
@@ -525,6 +559,15 @@ body.format-flexpage .singlebutton {
         }
     }
 }
+// Bootstrap navtabs do not require margin.
+.section {
+    ul,
+    ol {
+        &.nav-tabs {
+            margin: 0;
+        }
+    }
+}
 
 // -------------------------
 // Activity & Resource styles
@@ -624,7 +667,7 @@ body.format-flexpage .singlebutton {
     height: auto;
     width: 100%;
     text-align: left;
-    font-weight: 300;
+    font-weight: 400;
     padding: 0.5em 0;
     margin: 0.5em 0;
     box-shadow: none;
@@ -701,7 +744,6 @@ body.format-flexpage .singlebutton {
 
 // TODO - make better
 // title/link on images - css is shame
-
 .snap-native.snap-image .activityinstance .snap-asset-link a {
     display: none;
 }
@@ -1013,7 +1055,6 @@ body.snap-resource-card li.snap-resource {
             &:after {
                 content: attr(title);
                 display: block;
-                font-weight: 300;
             }
             &:before {
                 content: " ";
@@ -1080,6 +1121,11 @@ a.snap-due-date {
         margin-left: 0.5em;
     }
 
+    .svg-icon {
+        width: 1.3rem;
+        height: auto;
+    }
+
     ul {
         margin: 0 !important; // SHAME - lists in lists in lists in lists....
         list-style: none;
@@ -1114,8 +1160,7 @@ a.snap-due-date {
 // Show current tag if parent has current class.
 .current .snap-current-tag {
     display: block !important; // SHAME - overcome bad overspecificity...
-    color: white;
-    background-color: $brand-success;
+    color: $brand-success;
 }
 
 // Draft hide/show.
@@ -1169,38 +1214,7 @@ a.snap-due-date {
 }
 
 /* Completion actions */
-@keyframes circleajax {
-    0% {
-        border-top-color: rgba(100,100,100,1);
-        border-right-color: rgba(50,50,50,0.25);
-        border-bottom-color: rgba(50,50,50,0.25);
-        border-left-color: rgba(50,50,50,0.25);
-    }
-    25% {
-        border-top-color: rgba(50,50,50,0.25);
-        border-right-color: rgba(100,100,100,1);
-        border-bottom-color: rgba(50,50,50,0.25);
-        border-left-color: rgba(50,50,50,0.25);
-    }
-    50% {
-        border-top-color: rgba(50,50,50,0.25);
-        border-right-color: rgba(50,50,50,0.25);
-        border-bottom-color: rgba(100,100,100,1);
-        border-left-color: rgba(50,50,50,0.25);
-    }
-    75% {
-        border-top-color: rgba(50,50,50,0.25);
-        border-right-color: rgba(50,50,50,0.25);
-        border-bottom-color: rgba(50,50,50,0.25);
-        border-left-color: rgba(100,100,100,1);
-    }
-    100% {
-        border-top-color: rgba(100,100,100,1);
-        border-right-color: rgba(50,50,50,0.25);
-        border-bottom-color: rgba(50,50,50,0.25);
-        border-left-color: rgba(50,50,50,0.25);
-    }
-}
+
 span.autocompletion img,
 form.togglecompletion {
     position: relative;
@@ -1208,11 +1222,17 @@ form.togglecompletion {
     height: 20px;
     margin: 0;
 }
+
 form.togglecompletion {
-    input {
-        &[type="image"] {
-            width: 100%;
-            height: 100%;
+    .btn.btn-link {
+        padding: 0;
+        border: 0 none transparent;
+        img.icon {
+            padding: 0;
+            margin-right: 6px;
+            width: 20px;
+            height: 20px;
+            max-width: none;
         }
     }
     @include alakazam;
@@ -1224,27 +1244,7 @@ form.togglecompletion {
 
     &.ajaxing {
         &:after {
-            content:'';
-            display: block;
-            position: absolute;
-            width: calc(100% + 8px);
-            height: calc(100% + 8px);
-            margin-top: -4px;
-            margin-left: -4px;
-            top: 0px;
-            left: 0px;
-            border: solid;
-            border-width: 6px;
-            border-radius: 50%;
-            box-sizing: border-box;
-            border-top-color: rgba(50,50,50,1);
-            border-right-color: rgba(50,50,50,0.25);
-            border-bottom-color: rgba(50,50,50,0.25);
-            border-left-color: rgba(50,50,50,0.25);
-            animation-name: circleajax;
-            animation-duration: 2s;
-            animation-iteration-count: infinite;
-            animation-timing-function: linear;
+            @include ajaxing(block, absolute, 20px, 6px);
         }
         div {
             display: none;
@@ -1293,6 +1293,15 @@ form.togglecompletion {
         // Hide the bootstrap dropdown menu caret.
         border-width: 0;
         margin: 0;
+    }
+
+    .dropdown-toggle.snap-edit-asset-more.ajaxing {
+        &:after {
+            @include ajaxing(inline-block, relative, 26px, 7px);
+        }
+        img {
+            display: none;
+        }
     }
 
     .svg-icon {
@@ -1580,7 +1589,7 @@ span.editinstructions {
             margin-left: 10px;
             // Get rid of bold title in workshop.
             strong {
-                font-weight: 300;
+                font-weight: 400;
             }
         }
     }

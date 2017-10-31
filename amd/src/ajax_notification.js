@@ -31,7 +31,7 @@ define(['jquery', 'core/notification', 'core/ajax', 'core/templates', 'core/str'
 
         // Module level code.
         $(document).ready(function() {
-            $('#fixy-logout').click(function() {
+            $('#snap-pm-logout').click(function() {
                 loggingOut = true;
             });
         });
@@ -139,7 +139,7 @@ define(['jquery', 'core/notification', 'core/ajax', 'core/templates', 'core/str'
                         var pwdChangeUrl = M.cfg.wwwroot+'/login/change_password.php';
                         // When a force password change is in effect, warn user in personal menu and redirect to
                         // password change page if appropriate.
-                        if ($('#fixy-content').length) {
+                        if ($('#snap-pm-content').length) {
                             str.get_string('forcepwdwarningpersonalmenu', 'theme_snap', pwdChangeUrl).then(
                                 function(forcePwdWarning) {
                                     var alertMsg = {"message": forcePwdWarning, "extraclasses": "force-pwd-warning"};
@@ -147,11 +147,11 @@ define(['jquery', 'core/notification', 'core/ajax', 'core/templates', 'core/str'
                                 }
                             ).then(
                                 function(result) {
-                                    $('#fixy-content').html('<br />' + result);
+                                    $('#snap-pm-content').html('<br />' + result);
                                     dfd.resolve(true);
                                 }
                             );
-                            if ($('#fixy-content').is(':visible')) {
+                            if ($('#snap-pm-content').is(':visible')) {
                                 // If the personal menu is open then it should have a message in it informing the user
                                 // that they need to change their password to proceed.
                                 loginErrorShown = true;
@@ -159,7 +159,9 @@ define(['jquery', 'core/notification', 'core/ajax', 'core/templates', 'core/str'
                             }
                         }
 
-                        window.location = pwdChangeUrl;
+                        if (window.location != pwdChangeUrl) {
+                            window.location = pwdChangeUrl;
+                        }
                         // Regardless of if error was shown, we only want this redirect to happen once so set
                         // loginErrorShown to true.
                         loginErrorShown = true;

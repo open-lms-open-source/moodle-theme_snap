@@ -40,31 +40,31 @@ Feature: When the moodle theme is set to Snap, teachers can toggle the currently
 
   @javascript
   Scenario: In read mode, teacher toggles section as current and student sees appropriate status.
-    Given I log in as "teacher1" (theme_snap)
+    Given I log in as "teacher1"
     And I am on the course main page for "C1"
     And I follow "Topic 2"
     Then "#section-2" "css_element" should exist
     And "#chapters li:nth-of-type(3).snap-visible-section" "css_element" should exist
 
-    And I click on "#section-2 .snap-highlight.snap-marker" "css_element"
-    And I wait until "#section-2 .snap-highlight.snap-marked" "css_element" exists
+    And I click on "#section-2 .snap-highlight" "css_element"
+    And I wait until "#section-2 .snap-highlight" "css_element" exists
     # Note: nth-of-type(3) corresponds to the second section in the TOC.
     And I should see "Current" in the "#chapters li:nth-of-type(3)" "css_element"
     And "#chapters li:nth-of-type(3).snap-visible-section" "css_element" should exist
-    And I log out (theme_snap)
-    And I log in as "student1" (theme_snap)
+    And I log out
+    And I log in as "student1"
     And I am on the course main page for "C1"
     Then I should see "Current" in the "#chapters li:nth-of-type(3)" "css_element"
-    And I log out (theme_snap)
-    And I log in as "teacher1" (theme_snap)
+    And I log out
+    And I log in as "teacher1"
     And I am on the course main page for "C1"
     And I follow "Topic 2"
-    Given I click on "#section-2 .snap-highlight.snap-marked" "css_element"
-    And I wait until "#section-2 .snap-highlight.snap-marker" "css_element" exists
+    Given I click on "#section-2 .snap-highlight" "css_element"
+    And I wait until "#section-2 .snap-highlight" "css_element" exists
     Then I should not see "Current" in the "#chapters li:nth-of-type(3)" "css_element"
     And "#chapters li:nth-of-type(3).snap-visible-section" "css_element" should exist
-    And I log out (theme_snap)
-    And I log in as "student1" (theme_snap)
+    And I log out
+    And I log in as "student1"
     And I am on the course main page for "C1"
     Then I should not see "Current" in the "#chapters li:nth-of-type(3)" "css_element"
 
@@ -73,17 +73,19 @@ Feature: When the moodle theme is set to Snap, teachers can toggle the currently
   # not related to a session time out / the user being logged out.
   Scenario: Teacher loses teacher capability whilst course open and receives the correct error message when trying to
   highlight section.
-    Given I log in as "teacher1" (theme_snap)
+    Given I log in as "teacher1"
     And I am on the course main page for "C1"
     And the editing teacher role is removed from course "C1" for "teacher1"
     And I follow "Topic 1"
     Then "#section-1" "css_element" should exist
-    And I click on "#section-1 .snap-highlight.snap-marker" "css_element"
+    And I click on "#section-1 .snap-highlight" "css_element"
+    # Shame to have a 1 second pause here but this fails on CI intermittently without this pause.
+    And I wait "1" seconds
     Then I should see "Failed to highlight section"
 
   @javascript
   Scenario: Student cannot mark section current.
-    Given I log in as "student1" (theme_snap)
+    Given I log in as "student1"
     And I am on the course main page for "C1"
     And I follow "Topic 2"
     Then "#section-2 .snap-highlight" "css_element" should not exist

@@ -226,8 +226,11 @@
 
 .path-mod-lesson {
     // Remove duplicate page edit button.
-    form[action*="editpage.php"] {
-        display: none;
+    &#page-mod-lesson-edit,
+    &#page-mod-lesson-view {
+        .singlebutton > form[action*="editpage.php"] {
+            display: none;
+        }
     }
     // Unstyle secondary navtabs.
     .nav.nav-tabs + .nav-tabs {
@@ -339,4 +342,74 @@
 .gradingform_guide_comment_chooser > ul > li button {
     text-align: left;
     white-space: normal;
+}
+
+/**
+ * Core notifications (bell) and popover.
+ */
+#nav-notification-popover-container {
+    margin-right: 1rem;
+    width: 40px;
+    height: 40px;
+    border: 1px solid #eceeef;
+    border-radius: 100%;
+    text-align: center;
+
+    // Bell icon.
+    .icon.fa-bell {
+        margin-right: 0;
+    }
+    // Hide arrow on the top of the popover.
+    .popover-region-toggle:before,
+    .popover-region-toggle:after {
+        display: none;
+    }
+
+    // Circle with a count on the bell.
+    .count-container {
+        background-color: darken($brand-primary, 8%);
+        height: 18px;
+        width: 18px;
+        text-align: center;
+        border-radius: 50%;
+        padding: 0;
+        line-height: inherit;
+        top: -0.33rem; // magic numbers...
+        right: -0.33rem;
+    }
+
+    .popover-region-container {
+        top: 2.5rem;
+        height: auto;
+        width: 300px;
+        text-align: left;
+    }
+
+    .popover-region-header-container {
+        height: auto;
+        border-bottom: none;
+        padding-right: 0;
+    }
+    .hover-tooltip {
+        display: none;
+    }
+
+    .popover-region-content-container {
+        max-height: 400px;
+        overflow-y: scroll;
+    }
+
+    // Override core hover colours.
+    .content-item-container:hover {
+        background-color: white !important;
+        color: $body-color !important;
+    }
+
+    .content-item-footer .timestamp {
+        color: $body-color !important;
+    }
+
+    .popover-region-footer-container {
+        height: auto;
+    }
 }

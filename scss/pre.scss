@@ -31,21 +31,21 @@ $font-size-xs:   .6rem;
 
 // This needs some investigation of issues around IE11 and Moodle's autoprefixer implementaion.
 //$enable-flex:               true;
-$enable-rounded:            false;
+$enable-rounded:        false;
 
 $brand-success:         #8BC34A;
 $brand-warning:         #FF9800;
 $brand-danger:          #E91E63;
 $brand-info:            #03A9F4;
 
-$body-bg:              #fff;
+$body-bg:               #fff;
 $body-color:            #565656;
 
-$font-family-system:        "Roboto", "Fira Sans", "Segoe UI", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif;
-$font-family-sans-serif: $font-family-system;
+$font-family-system:      -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !default;
+$font-family-sans-serif:  "Roboto", $font-family-system;
 $font-family-monospace:   Monaco, Menlo, Consolas, "Courier New", monospace;
 
-$headings-font-weight:    300;
+$headings-font-weight:    400;
 $headings-color:          $body-color;
 
 $modal-backdrop-bg:           #fff;

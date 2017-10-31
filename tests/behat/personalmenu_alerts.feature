@@ -48,7 +48,7 @@ Feature: When the moodle theme is set to Snap, students and teachers can open a 
     And I change viewport size to "large"
     And the following config values are set as admin:
       | personalmenulogintoggle | 0 | theme_snap |
-    And I log in as "student1" (theme_snap)
+    And I log in as "student1"
     And I open the personal menu
     # The alerts section should not be present if the message processor is not enabled.
     Then ".alert_stream" "css_element" should not exist
@@ -58,9 +58,9 @@ Feature: When the moodle theme is set to Snap, students and teachers can open a 
     Then ".alert_stream" "css_element" should exist
     And I wait until ".message_badge_empty" "css_element" is visible
     Then I should see "You have no unread alerts."
-    And I send "Test message!" message to "Teacher 1" user (theme_snap)
-    And I log out (theme_snap)
-    And I log in as "teacher1" (theme_snap)
+    And I send "Test message!" message to "Teacher 1" user
+    And I log out
+    And I log in as "teacher1"
     And ".message_badge_count" "css_element" should exist
     And I open the personal menu
     And I wait until ".message_badge_message_text" "css_element" is visible
@@ -74,13 +74,13 @@ Feature: When the moodle theme is set to Snap, students and teachers can open a 
     # The alerts section should not be present if the message processor is not enabled.
     Then ".alert_stream" "css_element" should not exist
     And the message processor "badge" is enabled
-    And I log out (theme_snap)
+    And I log out
     And I log in as "student1", keeping the personal menu open
     Then ".alert_stream" "css_element" should exist
     And I wait until ".message_badge_empty" "css_element" is visible
     Then I should see "You have no unread alerts."
-    And I send "Test message!" message to "Teacher 1" user (theme_snap)
-    And I log out (theme_snap)
+    And I send "Test message!" message to "Teacher 1" user
+    And I log out
     And I log in as "teacher1", keeping the personal menu open
     And I wait until ".message_badge_message_text" "css_element" is visible
     And I should see "New message from Student 1"

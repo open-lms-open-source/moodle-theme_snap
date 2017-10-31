@@ -39,7 +39,7 @@ Feature: When a user clicks on next or previous month link in the calendar block
   @javascript
   Scenario: Ensure that on the redirection the calendar is being display on the page when a user clicks on the next month link
     or in the previous month link
-  Given I log in as "teacher1" (theme_snap)
+  Given I log in as "teacher1"
     And I am on the course main page for "course_topics"
    Then I follow "Course Dashboard"
     And I follow "Edit blocks"
@@ -54,7 +54,7 @@ Feature: When a user clicks on next or previous month link in the calendar block
   @javascript
   Scenario: Ensure that on the redirection the calendar is being display on the page when a user clicks on the previous month link
     or in the previous month link
-  Given I log in as "teacher1" (theme_snap)
+  Given I log in as "teacher1"
    Then I am on the course main page for "course_topics"
    Then I follow "Course Dashboard"
     And I follow "Edit blocks"

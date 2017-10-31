@@ -42,7 +42,7 @@ Feature: When the moodle theme is set to Snap, cover image can be set for site a
       | admin    | C1     | editingteacher |
       | teacher1 | C1     | editingteacher |
       | teacher2 | C1     | teacher        |
-    And I log in as "teacher1" (theme_snap)
+    And I log in as "teacher1"
     And I am on the course main page for "C1"
     Then I should see "Change cover image"
     And I should not see cover image in page header
@@ -81,8 +81,8 @@ Feature: When the moodle theme is set to Snap, cover image can be set for site a
     And I navigate to "Gradebook setup" node in "Course administration"
     Then I should not see "Change cover image"
     # Test that non-editing teachers can't change cover image. (no need to test with students as they have less caps)
-    And I log out (theme_snap)
-    And I log in as "teacher2" (theme_snap)
+    And I log out
+    And I log in as "teacher2"
     And I am on the course main page for "C1"
     Then I should not see "Change cover image"
 
@@ -101,12 +101,13 @@ Feature: When the moodle theme is set to Snap, cover image can be set for site a
     And the following "course enrolments" exist:
       | user     | course | role           |
       | teacher1 | C1     | editingteacher |
-    And I log in as "teacher1" (theme_snap)
+    And I log in as "teacher1"
     And I am on the course main page for "C1"
     Then I should see "Change cover image"
     And I should not see cover image in page header
     And I upload cover image "bpd_bikes_3888px.jpg"
     Then I should see "Cover image exceeds the site level maximum allowed file size"
+    And I should not see "For best quality, we recommend a larger image of at least 1024px width"
     And I upload cover image "testpng_small.png"
     Then I should not see "Cover image exceeds the site level maximum allowed file size"
     And I wait until ".btn.ok" "css_element" is visible
@@ -115,7 +116,6 @@ Feature: When the moodle theme is set to Snap, cover image can be set for site a
     And I should see cover image in page header
     And I reload the page
     Then I should see cover image in page header
-
 
   @javascript
   Scenario: A warning will be presented if the cover image is of a low resolution.
@@ -128,7 +128,7 @@ Feature: When the moodle theme is set to Snap, cover image can be set for site a
     And the following "course enrolments" exist:
       | user     | course | role           |
       | teacher1 | C1     | editingteacher |
-    And I log in as "teacher1" (theme_snap)
+    And I log in as "teacher1"
     And I am on the course main page for "C1"
     Then I should see "Change cover image"
     And I should not see cover image in page header
@@ -139,11 +139,10 @@ Feature: When the moodle theme is set to Snap, cover image can be set for site a
 
   @javascript
   Scenario: Admin user can change and delete site cover image.
-    Given
-    And the following "users" exist:
+    Given the following "users" exist:
       | username | firstname | lastname | email                |
       | user1    | User      | 1        | user1@example.com    |
-    And I log in as "admin" (theme_snap)
+    And I log in as "admin"
     And I am on site homepage
     Then I should not see "Change cover image"
     And I click on "#admin-menu-trigger" "css_element"
@@ -172,7 +171,39 @@ Feature: When the moodle theme is set to Snap, cover image can be set for site a
     And I am on site homepage
     Then I should not see cover image in page header
     # Test non admin user can't change site image.
-    And I log out (theme_snap)
-    And I log in as "user1" (theme_snap)
+    And I log out
+    And I log in as "user1"
     And I am on site homepage
+    Then I should not see "Change cover image"
+
+  @javascript
+  Scenario: Admin user can change and delete category cover image.
+    Given the following "users" exist:
+      | username | firstname | lastname | email                |
+      | user1    | User      | 1        | user1@example.com    |
+    And the following "categories" exist:
+      | name  | category | idnumber |
+      | Cat 1 | 0        | CAT1     |
+    And I log in as "admin"
+    And I am on the course category page for category with idnumber "CAT1"
+    Then I should see "Change cover image"
+    And I should not see cover image in page header
+    And I upload cover image "testpng_small.png"
+    # Test cancelling upload
+    And I wait until ".btn.cancel" "css_element" is visible
+    And I click on ".btn.cancel" "css_element"
+    Then I should not see cover image in page header
+    And I should see "Change cover image"
+    # Test confirming upload
+    And I upload cover image "testpng_small.png"
+    And I wait until ".btn.ok" "css_element" is visible
+    And I click on ".btn.ok" "css_element"
+    And I wait until "label[for=\"snap-coverfiles\"]" "css_element" is visible
+    Then I should see cover image in page header
+    And I reload the page
+    Then I should see cover image in page header
+    # Test non admin user can't change site image.
+    And I log out
+    And I log in as "user1"
+    And I am on the course category page for category with idnumber "CAT1"
     Then I should not see "Change cover image"

@@ -43,11 +43,10 @@ echo $OUTPUT->doctype() ?>
         <span class="navbar-brand"><?php echo $SITE->shortname; ?></span>
     </div>
 
-    <div id="moodle-navbar" class="navbar-collapse collapse">
-        <ul class="nav pull-right">
-            <li><?php echo $OUTPUT->page_heading_menu(); ?></li>
-            <li class="navbar-text"><?php echo $OUTPUT->login_info(false) ?></li>
-        </ul>
+    <div id="moodle-navbar">
+        <div class="nav-link  pull-xs-right">
+            <?php echo $OUTPUT->login_info(false) ?>
+        </div>
     </div>
 </nav>
 
@@ -60,10 +59,13 @@ echo $OUTPUT->doctype() ?>
     <section id="region-main">
         <?php echo $OUTPUT->main_content(); ?>
     </section>
+    <div id="moodle-blocks" class="clearfix">
     <?php echo $OUTPUT->blocks('side-pre'); ?>
+    </div>
     <?php echo $OUTPUT->standard_end_of_body_html() ?>
 </main>
 
+</div>
 </div>
 </div>
 </body>

@@ -78,6 +78,7 @@
     #course-toc,
     #region-main {
         padding-top: 1em;
+        outline: none;
     }
 
     /* TOC heading. */
@@ -88,10 +89,29 @@
 
     /* TOC list. */
     #chapters {
-      @include list-unstyled();
-      li {
-          margin-left: 0;
-      }
+        @include list-unstyled();
+        li {
+            margin-left: 0;
+            // Indicators for draft and current section.
+            &.draft,
+            &.current {
+                .chapter-title:before {
+                    content: " ";
+                    height: 14px;
+                    width: 14px;
+                    display: inline-block;
+                    margin-right: .35em;
+                    border-radius: 50%;
+                }
+            }
+            &.current .chapter-title:before{
+                background-color: $brand-success;
+            }
+            &.draft .chapter-title:before{
+                background-color: $brand-warning;
+            }
+        }
+
     }
 
     .toc-footer {
@@ -113,6 +133,8 @@
         content: '';
     }
 }
+
+
 
 // -------------------------
 // Display when toc is part of page header.
@@ -316,7 +338,7 @@
     }
 
     #course-toc.state-visible {
-        top: -1em;
+        top: 0;
         left: 0;
         bottom: 0;
         display: block;

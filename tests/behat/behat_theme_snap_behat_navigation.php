@@ -62,7 +62,7 @@ class behat_theme_snap_behat_navigation extends behat_navigation {
      */
     protected function js_trigger_click($node) {
         $session = $this->getSession();
-        $xpath = $node->getXpath();
+        $xpath = addslashes_js($node->getXpath());
 
         $supportsxpath = $this->browser_supports_document_evaluate();
         if ($supportsxpath) {
@@ -142,7 +142,7 @@ EOF;
 
                 // Wait for node to load, if not loaded before.
                 if ($pnode->hasAttribute('data-loaded') && $pnode->getAttribute('data-loaded') == "false") {
-                    $jscondition = '(document.evaluate("' . $pnode->getXpath() . '", document, null, '.
+                    $jscondition = '(document.evaluate("' . addslashes_js($pnode->getXpath()) . '", document, null, '.
                         'XPathResult.ANY_TYPE, null).iterateNext().getAttribute(\'data-loaded\') == "true")';
 
                     $this->getSession()->wait(self::EXTENDED_TIMEOUT * 1000, $jscondition);

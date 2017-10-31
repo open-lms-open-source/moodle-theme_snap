@@ -70,11 +70,10 @@ class behat_theme_snap extends behat_base {
     /**
      * Logs in the user. There should exist a user with the same value as username and password.
      *
-     * @Given /^I log in as "(?P<username_string>(?:[^"]|\\")*)" \(theme_snap\)$/
      * @param string $username
      * @param bool $andkeepmenuopen
      */
-    public function i_log_in_with_snap_as($username, $andkeepmenuopen = false) {
+    protected function i_log_in_with_snap_as($username, $andkeepmenuopen = false) {
         global $DB;
         $user = $DB->get_record('user', ['username' => $username]);
         if (empty($user)) {
@@ -106,7 +105,7 @@ class behat_theme_snap extends behat_base {
         if (!$andkeepmenuopen && empty($forcepasschange)) {
             $showfixyonlogin = get_config('theme_snap', 'personalmenulogintoggle');
             if ($showfixyonlogin) {
-                $general->i_click_on('#fixy-close', 'css_element');
+                $general->i_click_on('#snap-pm-close', 'css_element');
             }
         }
     }
@@ -205,19 +204,6 @@ class behat_theme_snap extends behat_base {
     }
 
     /**
-     * @param string
-     * @return array
-     * @Given  /^I log out \(theme_snap\)$/
-     */
-    public function i_log_out() {
-        $this->i_open_the_personal_menu();
-
-        /** @var behat_general $general */
-        $general = behat_context_helper::get('behat_general');
-        $general->i_click_on('#fixy-logout', 'css_element');
-    }
-
-    /**
      * @param string $shortname - course shortname
      * @Given /^I create a new section in course "(?P<shortname>(?:[^"]|\\")*)"$/
      * @return array
@@ -237,7 +223,7 @@ class behat_theme_snap extends behat_base {
      * @Given /^I open the personal menu$/
      */
     public function i_open_the_personal_menu() {
-        $node = $this->find('css', '#primary-nav');
+        $node = $this->find('css', '#snap-pm');
         // Only attempt to open the personal menu if its not already open.
         if (!$node->isVisible()) {
             /* @var $generalcontext behat_general */
@@ -250,10 +236,10 @@ class behat_theme_snap extends behat_base {
      * @Given /^I close the personal menu$/
      */
     public function i_close_the_personal_menu() {
-        $node = $this->find('css', '#primary-nav');
+        $node = $this->find('css', '#snap-pm');
         // Only attempt to close the personal menu if its already open.
         if ($node->isVisible()) {
-            $node = $this->find('css', '#fixy-close');
+            $node = $this->find('css', '#snap-pm-close');
             $node->click();
         }
     }
@@ -271,7 +257,7 @@ class behat_theme_snap extends behat_base {
         require_once($CFG->dirroot.'/mod/assign/locallib.php');
 
         $origuser = $USER;
-        $USER = $this->get_behat_user();
+        $USER = $this->get_session_user();
 
         $course = $DB->get_record('course', ['shortname' => $shortname]);
         $assign = $DB->get_record('assign', ['course' => $course->id, 'name' => $assignmentname]);
@@ -380,24 +366,13 @@ class behat_theme_snap extends behat_base {
         }
 
         // See if the first node is visible and if so click it.
-        if ($this->is_node_visible($linknode)) {
+        if ($this->is_node_visible($linknode, self::REDUCED_TIMEOUT)) {
             $linknode->click();
             return;
         }
 
-        // The first node on the page isn't visible so we are going to have to get all nodes with the same xpath.
-        // Extract xpath from the first node we found.
-        $xpath = str_replace("\n", '', $linknode->getXpath());
-        $matches = [];
-        if (preg_match_all('|^\(//html/(.*)(?=\)\[1\]$)|', $xpath, $matches) !== false) {
-            $xpath = $matches[1][0];
-        } else {
-            throw new coding_exception('Failed to extract xpath from '.$xpath);
-        }
-
-        // Now get all nodes.
         /** @var NodeElement[] $linknodes */
-        $linknodes = $this->find_all('xpath', $xpath);
+        $linknodes = $this->find_all('named_partial', ['link', behat_context_helper::escape($link)]);
 
         // Cycle through all nodes and if just one of them is visible break loop.
         foreach ($linknodes as $node) {
@@ -405,7 +380,7 @@ class behat_theme_snap extends behat_base {
                 // We've already tested the first node, skip it.
                 continue;
             }
-            if ($this->is_node_visible($node, self::REDUCED_TIMEOUT)) {
+            if ($node->isVisible()) {
                 $node->click();
                 return;
             }
@@ -444,6 +419,16 @@ class behat_theme_snap extends behat_base {
     }
 
     /**
+     * Whilst editing a section, set the section name.
+     * @param string $name
+     * @Given /^I set the section name to "(?P<name_string>(?:[^"]|\\")*)"$/
+     */
+    public function i_set_section_name_to($name) {
+        $this->execute('behat_forms::i_set_the_field_to', ['name[customize]', '1']);
+        $this->execute('behat_forms::i_set_the_field_to', ['name[value]', $name]);
+    }
+
+    /**
      * Restrict a course section by date.
      * @param int $section
      * @param string $date
@@ -453,8 +438,9 @@ class behat_theme_snap extends behat_base {
         $datetime = strtotime($date);
         $this->i_go_to_course_section($section);
         $this->click_visible_link('Edit section');
-        $this->i_wait_until_is_visible('.snap-form-advanced', 'css_element');
-        $this->execute('behat_forms::i_set_the_field_to', ['name', 'Topic '.$date.' '.$section]);
+        $this->i_wait_until_is_visible('.editor_atto', 'css_element');
+        $this->execute('behat_forms::i_set_the_field_to', ['name[customize]', '1']);
+        $this->execute('behat_forms::i_set_the_field_to', ['name[value]', 'Topic '.$date.' '.$section]);
         $this->add_date_restriction($datetime, 'Save changes');
     }
 
@@ -521,10 +507,12 @@ class behat_theme_snap extends behat_base {
      * @Given /^I should see availability info "(?P<str>(?:[^"]|\\")*)"$/
      */
     public function i_see_availabilityinfo($str, $baseselector = '') {
+        $str = trim($str);
         $nodes = $this->find_all('xpath', $baseselector.'//div[contains(@class, \'snap-conditional-tag\')]');
         foreach ($nodes as $node) {
             /** @var NodeElement $node */
-            if ($node->getText() === $str) {
+            $nodetext = trim($node->getText());
+            if (stripos($nodetext, $str) !== false) {
                 return;
             }
         }
@@ -798,12 +786,22 @@ class behat_theme_snap extends behat_base {
 
     /**
      * @param string $shortname
+     * @Given /^Favorite toggle does not exist for course "(?P<shortname>(?:[^"]|\\")*)"$/
+     */
+    public function favorite_toggle_doesnt_exist_for_course($shortname) {
+        /* @var behat_general $general */
+        $general = behat_context_helper::get('behat_general');
+        $general->should_not_exist('.coursecard[data-shortname="'.$shortname.'"] .favoritetoggle[aria-pressed="false"]', 'css_element');
+    }
+
+    /**
+     * @param string $shortname
      * @Given /^Favorite toggle exists for course "(?P<shortname>(?:[^"]|\\")*)"$/
      */
     public function favorite_toggle_exists_for_course($shortname) {
         /* @var behat_general $general */
         $general = behat_context_helper::get('behat_general');
-        $general->should_exist('.courseinfo[data-shortname="'.$shortname.'"] .favoritetoggle[aria-pressed="false"]', 'css_element');
+        $general->should_exist('.coursecard[data-shortname="'.$shortname.'"] .favoritetoggle[aria-pressed="false"]', 'css_element');
     }
 
     /**
@@ -815,8 +813,8 @@ class behat_theme_snap extends behat_base {
         /* @var behat_general $general */
         $general = behat_context_helper::get('behat_general');
 
-        $preelement = '.courseinfo[data-shortname="'.$shortname1.'"]';
-        $postelement = '.courseinfo[data-shortname="'.$shortname2.'"]';
+        $preelement = '.coursecard[data-shortname="'.$shortname1.'"]';
+        $postelement = '.coursecard[data-shortname="'.$shortname2.'"]';
 
         $general->should_appear_before($preelement, 'css_element', $postelement, 'css_element');
     }
@@ -828,7 +826,8 @@ class behat_theme_snap extends behat_base {
     public function course_is_favorited($shortname) {
         /* @var behat_general $general */
         $general = behat_context_helper::get('behat_general');
-        $general->should_exist('.courseinfo[data-shortname="'.$shortname.'"] .favoritetoggle[aria-pressed="true"]', 'css_element');
+        $this->ensure_element_does_not_exist('.snap-icon-toggle.favoritetoggle.ajaxing', 'css_element');
+        $general->should_exist('.coursecard[data-shortname="'.$shortname.'"] .favoritetoggle[aria-pressed="true"]', 'css_element');
     }
 
     /**
@@ -838,7 +837,8 @@ class behat_theme_snap extends behat_base {
     public function course_is_not_favorited($shortname) {
         /* @var behat_general $general */
         $general = behat_context_helper::get('behat_general');
-        $general->should_not_exist('.courseinfo[data-shortname="'.$shortname.'"] .favoritetoggle[aria-pressed="true"]', 'css_element');
+        $this->ensure_element_does_not_exist('.snap-icon-toggle.favoritetoggle.ajaxing', 'css_element');
+        $general->should_not_exist('.coursecard[data-shortname="'.$shortname.'"] .favoritetoggle[aria-pressed="true"]', 'css_element');
     }
 
     /**
@@ -848,7 +848,7 @@ class behat_theme_snap extends behat_base {
     public function i_toggle_course_card_favorite($shortname) {
         /* @var behat_general $general */
         $general = behat_context_helper::get('behat_general');
-        $general->i_click_on('.courseinfo[data-shortname="'.$shortname.'"] button.favoritetoggle', 'css_element');
+        $general->i_click_on('.coursecard[data-shortname="'.$shortname.'"] button.favoritetoggle', 'css_element');
     }
 
     /**
@@ -858,61 +858,9 @@ class behat_theme_snap extends behat_base {
      * @param string $link we look for
      */
     public function i_follow_in_the_mobile_menu($link) {
-        $node = $this->get_node_in_container('link', $link, 'css_element', '#fixy-mobile-menu');
+        $node = $this->get_node_in_container('link', $link, 'css_element', '#snap-pm-mobilemenu');
         $this->ensure_node_is_visible($node);
         $node->click();
-    }
-
-    /**
-     * Get the actual behat user (note $USER does not correspond to the behat sessions user).
-     * @return mixed
-     * @throws coding_exception
-     */
-    protected function get_behat_user() {
-        global $DB;
-
-        $sid = $this->getSession()->getCookie('MoodleSession');
-        if (empty($sid)) {
-            throw new coding_exception('failed to get moodle session');
-        }
-        $userid = $DB->get_field('sessions', 'userid', ['sid' => $sid]);
-        if (empty($userid)) {
-            throw new coding_exception('failed to get user from seession id '.$sid);
-        }
-        return $DB->get_record('user', ['id' => $userid]);
-    }
-
-    /**
-     * Sends a message to the specified user from the logged user. The user full name should contain the first and last names.
-     *
-     * @Given /^I send "(?P<message_contents_string>(?:[^"]|\\")*)" message to "(?P<user_full_name_string>(?:[^"]|\\")*)" user \(theme_snap\)$/
-     * @param string $messagecontent
-     * @param string $userfullname
-     */
-    public function i_send_message_to_user($messagecontent, $userfullname) {
-        global $DB;
-
-        $fromuser = $this->get_behat_user();
-
-        $fullnamesql = $DB->sql_concat('firstname', "' '", 'lastname');
-        $sqlselect = $fullnamesql . ' = ?';
-        $touser = $DB->get_record_select('user', $sqlselect, [$userfullname]);
-        $smallmessage = shorten_text($messagecontent, 30);
-        $subject = get_string_manager()->get_string('unreadnewmessage', 'message', fullname($fromuser), $touser->lang);
-        $message = new message();
-        $message->courseid = SITEID;
-        $message->userfrom = $fromuser->id;
-        $message->userto = $touser->id;
-        $message->subject = $subject;
-        $message->smallmessage = $smallmessage;
-        $message->fullmessage = $messagecontent;
-        $message->fullmessageformat = 0;
-        $message->fullmessagehtml = null;
-        $message->notification = 0;
-        $message->component = 'moodle';
-        $message->name = "instantmessage";
-
-        message_send($message);
     }
 
     /**
@@ -941,6 +889,16 @@ class behat_theme_snap extends behat_base {
         global $DB;
         $courseid = $DB->get_field('course', 'id', ['shortname' => $shortname]);
         $this->getSession()->visit($this->locate_path('/course/view.php?id='.$courseid));
+    }
+
+    /**
+     * @Given /^I am on the course category page for category with idnumber "(?P<catid_string>(?:[^"]|\\")*)"$/
+     * @param string $idnumber
+     */
+    public function i_am_on_the_course_category_page($idnumber) {
+        global $DB;
+        $id = $DB->get_field('course_categories', 'id', ['idnumber' => $idnumber]);
+        $this->getSession()->visit($this->locate_path('course/index.php?categoryid='.$id));
     }
 
     /**
@@ -1179,8 +1137,9 @@ class behat_theme_snap extends behat_base {
         $mainwindow = $session->getWindowName();
         $logoutwindow = 'Log out window';
         $session->executeScript('window.open("'.$CFG->wwwroot.'", "'.$logoutwindow.'")');
+        sleep(1); // Allow time for the window to open.
         $session->switchToWindow($logoutwindow);
-        $this->i_log_out();
+        $this->execute('behat_theme_snap_behat_auth::i_log_out');
         $session->executeScript('window.close()');
         $session->switchToWindow($mainwindow);
     }
@@ -1410,6 +1369,28 @@ class behat_theme_snap extends behat_base {
     }
 
     /**
+     * Marks an activity as complete.
+     * @param string $activityname
+     *
+     * @Given /^I mark the activity "(?P<activityname_string>(?:[^"]|\\")*)" as complete$/
+     */
+    public function i_mark_as_complete($activityname) {
+        $imgalt = 'Not completed: '.$activityname.'. Select to mark as complete.';
+        $this->execute('behat_general::i_click_on', ['img.icon[alt="'.$imgalt.'"]', 'css_element']);
+    }
+
+    /**
+     * Marks an activity as incomplete.
+     * @param string $activityname
+     *
+     * @Given /^I mark the activity "(?P<activityname_string>(?:[^"]|\\")*)" as incomplete$/
+     */
+    public function i_mark_as_incomplete($activityname) {
+        $imgalt = 'Completed: '.$activityname.'. Select to mark as not complete.';
+        $this->execute('behat_general::i_click_on', ['img.icon[alt="'.$imgalt.'"]', 'css_element']);
+    }
+
+    /**
      * Core step copied from completion/tests/behat/behat_completion.php to fix bug MDL-57452
      * Checks if the activity with specified name is marked as complete.
      *
@@ -1429,7 +1410,6 @@ class behat_theme_snap extends behat_base {
         $this->execute("behat_general::should_exist",
             array($xpathtocheck, "xpath_element")
         );
-
     }
 
     /**
@@ -1514,6 +1494,16 @@ class behat_theme_snap extends behat_base {
 
             throw new ExpectationException($msg, $this->getSession());
         }
+    }
+
+    /**
+     * @Given /^I highlight section (?P<section_int>(?:\d+))$/
+     * @param int $section
+     */
+    public function i_highlight_section($section) {
+        $xpath = '//li[@id="section-'.$section.'"]//div[contains(@class, "snap-section-editing")]';
+        $xpath .='//a[contains(@class, "snap-highlight")][@aria-pressed="false"]';
+        $this->execute('behat_general::i_click_on', [$xpath, 'xpath_element']);
     }
 
 }

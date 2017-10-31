@@ -37,10 +37,11 @@ use theme_snap\renderables\bb_dashboard_link;
         $bblink = new bb_dashboard_link();
         echo $OUTPUT->render($bblink);
     }
-    echo $OUTPUT->fixed_menu();
+    echo $OUTPUT->personal_menu_trigger();
     echo core_renderer::search_box();
     $settingslink = new settings_link();
     echo $OUTPUT->render($settingslink);
+    echo $OUTPUT->render_notification_popups();
 ?>
 </div>
 
@@ -60,3 +61,5 @@ use theme_snap\renderables\bb_dashboard_link;
     echo html_writer::link($CFG->wwwroot, $sitefullname, $attrs);
 ?>
 </header>
+
+<?php echo $OUTPUT->personal_menu(); ?>

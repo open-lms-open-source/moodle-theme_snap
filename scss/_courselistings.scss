@@ -95,6 +95,13 @@
     #region-main {
         max-width: 100%;
     }
+    // Catagory descriptions.
+    .snap-category-description {
+        max-width: 43.5em;
+        padding: 2%;
+        background-color: white;
+        font-family: $font-family-serif;
+    }
     // Layout for search, select cat and expand/collapse.
     #switchcategory select {
         max-width: 75%;
@@ -106,6 +113,7 @@
     .course_category_tree {
         padding: 1rem 0;
     }
+
 }
 
 // Catagory expand/collapse & associated icons.

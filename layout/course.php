@@ -29,10 +29,10 @@ require(__DIR__.'/header.php');
 $coursemainpage = strpos($PAGE->pagetype, 'course-view-') === 0;
 $tocformat = ($COURSE->format == 'topics' || $COURSE->format == 'weeks');
 // Check if the toc is displayed list or top - used to add layout in this file.
-$leftnav = false;
+$leftnav = true;
 if (!empty($PAGE->theme->settings->leftnav)) {
-    if ($PAGE->theme->settings->leftnav == 'list') {
-        $leftnav = true;
+    if ($PAGE->theme->settings->leftnav == 'top') {
+        $leftnav = false;
     }
 }
 $mastimage = '';
@@ -79,10 +79,12 @@ if ($tocformat && $leftnav) {
 }
 ?>
 <section id="region-main">
+
 <?php
 echo $OUTPUT->course_content_header();
 $output = $PAGE->get_renderer('core', 'course');
 echo $output->snap_footer_alert();
+echo $OUTPUT->course_modchooser();
 echo $OUTPUT->main_content();
 echo $OUTPUT->course_content_footer();
 ?>

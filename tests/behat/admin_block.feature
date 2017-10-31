@@ -44,7 +44,7 @@ Feature: When the moodle theme is set to Snap, the admin block will only be show
 
   @javascript
   Scenario Outline: User only sees admin block on relevant pages.
-    Given I log in as "<user>" (theme_snap)
+    Given I log in as "<user>"
     # Check site page.
     And I am on site homepage
     Then "#admin-menu-trigger" "css_element" <existssite> exist

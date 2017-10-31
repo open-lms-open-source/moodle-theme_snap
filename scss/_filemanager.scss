@@ -1,0 +1,118 @@
+/**
+ * Moodle file manager.
+ *
+ */
+
+.filemanager {
+    font-family: $font-family-system;
+
+    .dndupload-message {
+        font-size: small;
+    }
+
+    .fp-btn-mkdir,
+    .fp-btn-download {
+        @include sr-only();
+    }
+
+    // Hide :
+    // pathbar (dir structure),
+    // viewbar (view options),
+    // restrictions (max file size etc)
+    .fp-pathbar,
+    .fp-viewbar,
+    .fp-restrictions {
+        display: none;
+    }
+}
+
+// Make filenames more reabable.
+.fp-filename {
+    font-size: small;
+    line-height: 1;
+}
+.fp-icon {
+    margin-top: 0;
+}
+
+// Viewbar is shown on these pages.
+#page-user-files,
+#local-joulegrader-gradepane,
+#page-backup-backupfilesedit {
+    .filemanager .fp-viewbar {
+        display: block;
+    }
+}
+
+// Code below moved from other scss files.
+
+.chooserdialogue .moodle-dialogue-wrap .moodle-dialogue-bd {
+    background: $body-bg;
+}
+
+.jschooser .choosercontainer #chooseform .alloptions {
+    max-height: calc(100vh - 10rem) !important; // Overules JS caculated value.
+}
+
+.choosercontainer #chooseform {
+    .moduletypetitle,
+    .option,
+    .nonoption {
+        padding: 0 4%;
+    }
+
+    .option .icon {
+        padding: 0 .5rem;
+    }
+}
+
+.fitem_filepicker .fitemtitle label {
+    margin-bottom: 0;
+}
+
+.felement.ffilepicker {
+    margin-top: 0;
+}
+
+.filepicker-filelist,
+.filemanager-container {
+    border: none;
+}
+
+.filemanager .fp-navbar {
+    background-color: transparent;
+    border: none;
+}
+
+.filemanager-toolbar {
+    padding: 0 0 8px;
+}
+
+.dndupload-arrow {
+    cursor: pointer;
+    background-image: url("[[pix:resource|icon]]");
+    background-size: 60px 60px;
+    margin-top: 10px;
+}
+
+.filepicker-filelist .filepicker-container,
+.filemanager .filemanager-container .fm-empty-container,
+.filemanager-container.dndupload-over .dndupload-target,
+.filemanager-container .dndupload-target {
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    padding-top: 100px;
+}
+
+.filemanager-loading {
+    border: 2px dashed #bbb;
+    padding-top: 45px;
+    min-height: 130px;
+    background-color: $body-bg;
+}
+
+.jsenabled .filemanager-loading {
+    margin-top: 0;
+}

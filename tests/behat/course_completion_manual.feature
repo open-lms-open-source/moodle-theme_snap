@@ -47,23 +47,23 @@ Feature: Manual completion updates page wihout reload.
   @javascript
   # Done as one scenario for best performance.
   Scenario: Assignment module is manually marked complete and releases restricted activities / sections.
-    Given I log in as "admin" (theme_snap)
+    Given I log in as "admin"
     And I am on the course main page for "C1"
     # Restrict the second assign module to only be accessible after the first assign module is marked complete.
     And I restrict course asset "Test assignment2" by completion of "Test assignment1"
     # Restrict section 1 to only be accessible after the second assign module is complete.
     And I follow "Topic 1"
     And I click on "#section-1 .edit-summary" "css_element"
-    And I set the field "name" to "Topic 1"
+    And I set the section name to "Topic 1"
     And I apply asset completion restriction "Test assignment2" to section
     # Restrict section 2 to only be accessible after the third assign module is complete.
     And I follow "Topic 2"
     And I click on "#section-2 .edit-summary" "css_element"
-    And I set the field "name" to "Topic 2"
+    And I set the section name to "Topic 2"
     And I apply asset completion restriction "Test assignment3" to section
-    And I log out (theme_snap)
+    And I log out
     # Log in as student to test manual completion releases restrictions.
-    And I log in as "student1" (theme_snap)
+    And I log in as "student1"
     And I am on the course main page for "C1"
     And I should see availability info "Not available unless: The activity Test assignment1 is marked complete" in "asset" "Test assignment2"
     When I follow "Topic 1"
@@ -75,12 +75,12 @@ Feature: Manual completion updates page wihout reload.
     And I follow "Introduction"
     And I should see "Conditional" in TOC item 1
     And I should see "Conditional" in TOC item 2
-    When I press "Mark as complete: Test assignment1"
+    When I mark the activity "Test assignment1" as complete
     Then the "Test assignment1" "assign" activity with "manual" completion should be marked as complete (core_fix)
     And I should see "Test assignment2"
     And I should not see "Test assignment3"
     # Test chained activity completion
-    When I press "Mark as complete: Test assignment2"
+    When I mark the activity "Test assignment2" as complete
     Then the "Test assignment2" "assign" activity with "manual" completion should be marked as complete (core_fix)
     Then I should not see "Conditional" in TOC item 1
     And I should see "Conditional" in TOC item 2
@@ -91,7 +91,7 @@ Feature: Manual completion updates page wihout reload.
     Then I should see availability info "Not available unless: The activity Test assignment3 is marked complete"
     And I follow "Topic 1"
     # Test chained activity completion when section has become visible
-    When I press "Mark as complete: Test assignment3"
+    When I mark the activity "Test assignment3" as complete
     Then the "Test assignment3" "assign" activity with "manual" completion should be marked as complete (core_fix)
     Then I should not see "Conditional" in TOC item 2
     When I follow "Topic 2"
@@ -99,12 +99,12 @@ Feature: Manual completion updates page wihout reload.
     And I should see "Test assignment4"
     # Test marking incomplete
     And I follow "Topic 1"
-    When I press "Mark as not complete: Test assignment3"
+    When I mark the activity "Test assignment3" as incomplete
     Then I should see "Conditional" in TOC item 2
     When I follow "Topic 2"
     Then I should see availability info "Not available unless: The activity Test assignment3 is marked complete"
     When I follow "Introduction"
-    And I press "Mark as not complete: Test assignment2"
+    When I mark the activity "Test assignment2" as incomplete
     Then I should see "Conditional" in TOC item 1
     When I follow "Topic 1"
     Then I should see availability info "Not available unless: The activity Test assignment2 is marked complete"
