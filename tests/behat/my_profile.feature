@@ -5,8 +5,6 @@ Feature: A user can see a link to their settings in their profile page
   I need to click on the link in the profile page
 
     Background:
-    Given the following config values are set as admin:
-      | theme | snap |
     Given the following "users" exist:
       | username | firstname | lastname | email                |
       | student1 | Student   | 1        | student1@example.com |

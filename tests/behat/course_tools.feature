@@ -23,12 +23,7 @@
 Feature: When the moodle theme is set to Snap, a course tools section is available.
 
   Background:
-    Given the following config values are set as admin:
-      | theme | snap |
-      | defaulthomepage | 0 |
-    And the following config values are set as admin:
-      | personalmenulogintoggle | 0 | theme_snap |
-    And the following "courses" exist:
+    Given the following "courses" exist:
       | fullname | shortname | category | format |
       | Course 1 | C1        | 0        | topics |
     And the following "users" exist:

@@ -24,9 +24,7 @@
 Feature: When the moodle theme is set to Snap, teachers only see block edit controls when in edit mode.
 
   Background:
-    Given the following config values are set as admin:
-      | theme | snap |
-    And the following "courses" exist:
+    Given the following "courses" exist:
       | fullname | shortname | category | format |
       | Course 1 | C1        | 0        | topics |
       | Course 2 | C2        | 0        | weeks  |

@@ -23,9 +23,7 @@ Feature: When a user clicks on next or previous month link in the calendar block
   the page redirects and the calendar block must be visible.
 
   Background:
-    Given the following config values are set as admin:
-      | theme | snap |
-    And the following "courses" exist:
+    Given the following "courses" exist:
       | fullname               | shortname     | category | groupmode | format         |
       | Course 1               | course_topics | 0        | 1         | topics         |
     And the following "users" exist:
@@ -41,11 +39,7 @@ Feature: When a user clicks on next or previous month link in the calendar block
     or in the previous month link
   Given I log in as "teacher1"
     And I am on the course main page for "course_topics"
-   Then I follow "Course Dashboard"
-    And I follow "Edit blocks"
    Then I add the "Calendar" block
-    And I click on "#admin-menu-trigger" "css_element"
-    And I follow visible link "Turn editing off"
    Then I follow "Course Dashboard"
     And I should see "Calendar"
     And I follow "Next month"
@@ -56,11 +50,7 @@ Feature: When a user clicks on next or previous month link in the calendar block
     or in the previous month link
   Given I log in as "teacher1"
    Then I am on the course main page for "course_topics"
-   Then I follow "Course Dashboard"
-    And I follow "Edit blocks"
    Then I add the "Calendar" block
-    And I click on "#admin-menu-trigger" "css_element"
-    And I follow visible link "Turn editing off"
    Then I follow "Course Dashboard"
     And I should see "Calendar"
     And I follow "Previous month"

@@ -25,7 +25,6 @@ Feature: When the moodle theme is set to Snap, and global search is enabled, use
 
   Background:
     Given the following config values are set as admin:
-      | theme              | snap |
       | enableglobalsearch | true |
 
   @javascript

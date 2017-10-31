@@ -24,9 +24,7 @@
 Feature: Entering a Snap course without specifying a section will take you to the current section
 
   Background:
-    Given the following config values are set as admin:
-      | theme | snap |
-    And the following "courses" exist:
+  Given the following "courses" exist:
       | fullname | shortname | category | format |
       | Course 1 | C1        | 0        | topics |
     And the following "users" exist:

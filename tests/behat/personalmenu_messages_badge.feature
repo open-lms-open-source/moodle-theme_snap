@@ -27,8 +27,6 @@ Feature: When the moodle theme is set to Snap, students and teachers can see the
   Background:
     Given I am using Moodlerooms
     And the following config values are set as admin:
-      | theme | snap |
-    And the following config values are set as admin:
       | message_provider_moodle_instantmessage_loggedoff | badge | message |
     And the following "courses" exist:
       | fullname | shortname | category | groupmode |

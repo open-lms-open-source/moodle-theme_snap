@@ -24,9 +24,7 @@ Feature: When the moodle theme is set to Snap, students and teachers can open a 
   they are enrolled in to give them easy access.
 
   Background:
-    Given the following config values are set as admin:
-      | theme | snap |
-    And the following "courses" exist:
+    Given the following "courses" exist:
       | fullname        | shortname | category | groupmode | visible |
       | Course 1        | C1        | 0        | 1         | 1       |
       | Course Hidden   | Hidden    | 0        | 1         | 0       |

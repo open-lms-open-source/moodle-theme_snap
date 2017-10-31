@@ -26,7 +26,6 @@ Feature: When the moodle theme is set to Snap, students and teachers can find in
 
   Background:
     Given the following config values are set as admin:
-      | theme | snap |
       | allowcoursethemes | 1 |
     And the following "courses" exist:
       | fullname | shortname | category | groupmode | theme |

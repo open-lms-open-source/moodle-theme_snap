@@ -24,9 +24,7 @@ Feature: In the Snap theme, within a course, editing teachers can create a new s
   This requires the course to use the weeks and topics format.
 
   Background:
-    Given the following config values are set as admin:
-      | theme | snap |
-    And the following "courses" exist:
+  Given the following "courses" exist:
       | fullname               | shortname     | category | groupmode | format         | startdate  |
       | Topics course          | course_topics | 0        | 1         | topics         |            |
       | Weeks course           | course_weeks  | 0        | 1         | weeks          | 1457078400 |

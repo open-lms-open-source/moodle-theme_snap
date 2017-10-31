@@ -27,8 +27,6 @@ Feature: When the moodle theme is set to Snap, students and teachers can open a 
   Background:
     Given I am using Moodlerooms
     And the following config values are set as admin:
-      | theme | snap |
-    And the following config values are set as admin:
       | message_provider_moodle_instantmessage_loggedoff | badge | message |
     And the following "courses" exist:
       | fullname | shortname | category | groupmode |
@@ -70,18 +68,18 @@ Feature: When the moodle theme is set to Snap, students and teachers can open a 
   Scenario: Alerts are visible in personal menu on login after messages are sent and the message processor is enabled.
     Given the message processor "badge" is disabled
     And I change viewport size to "large"
-    And I log in as "student1", keeping the personal menu open
+    And I log in as "student1"
     # The alerts section should not be present if the message processor is not enabled.
     Then ".alert_stream" "css_element" should not exist
     And the message processor "badge" is enabled
     And I log out
-    And I log in as "student1", keeping the personal menu open
+    And I log in as "student1"
     Then ".alert_stream" "css_element" should exist
     And I wait until ".message_badge_empty" "css_element" is visible
     Then I should see "You have no unread alerts."
     And I send "Test message!" message to "Teacher 1" user
     And I log out
-    And I log in as "teacher1", keeping the personal menu open
+    And I log in as "teacher1"
     And I wait until ".message_badge_message_text" "css_element" is visible
     And I should see "New message from Student 1"
 

@@ -25,9 +25,7 @@ Feature: When the moodle theme is set to Snap,
           and optionally open the personal menu on login
 
   Background:
-    Given the following config values are set as admin:
-      | theme | snap |
-    And the following "users" exist:
+    Given the following "users" exist:
       | username | firstname | lastname | email                |
       | teacher1 | Teacher   | 1        | teacher1@example.com |
     And I am on site homepage
@@ -87,7 +85,6 @@ Feature: When the moodle theme is set to Snap,
   @javascript
   Scenario: User logs in and sees the personal menu on site homepage, if that setting used
     Given the following config values are set as admin:
-      | defaulthomepage | 0 |
       | defaulthomepage | 0 |
     And I follow "Log in"
     And I set the field "username" to "teacher1"

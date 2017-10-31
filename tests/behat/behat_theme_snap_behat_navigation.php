@@ -172,4 +172,11 @@ EOF;
         $lastnode = array_pop($parentnodes);
         $this->select_node_in_navigation($lastnode, $parentnodes);
     }
+    /**
+     * Just go to the course page as Snap doesn't have the same concept of editing mode.
+     */
+    public function i_am_on_course_homepage_with_editing_mode_on($coursefullname) {
+        // Snap doesn't really have the concept of edit mode.
+        $this->i_am_on_course_homepage($coursefullname);
+    }
 }

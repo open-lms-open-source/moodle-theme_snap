@@ -25,9 +25,7 @@
 Feature: Manual completion updates page wihout reload.
 
   Background:
-    Given the following config values are set as admin:
-      | theme | snap |
-    And the following "courses" exist:
+  Given the following "courses" exist:
       | fullname | shortname | format | category | groupmode | enablecompletion |
       | Course 1 | C1        | topics | 0        | 1         | 1                |
     And the following "users" exist:

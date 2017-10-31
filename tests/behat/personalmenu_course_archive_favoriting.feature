@@ -24,22 +24,20 @@ Feature: When the moodle theme is set to Snap, expired courses appear in an arch
   For non archived courses, it is possible to favorite and un-favorite them.
 
   Background:
-    Given the following config values are set as admin:
-      | theme | snap |
-    And the following "courses" exist:
-      | fullname       | shortname | category | groupmode | visible | startdate     | enddate      |
-      | Course 1       | C1        | 0        | 1         | 1       |               |              |
-      | Course 2       | C2        | 0        | 1         | 1       | ##yesterday## | ##tomorrow## |
-      | Course 3       | C3        | 0        | 1         | 1       | ##-1 years##  | ##next year##|
-      | Past-course 1  | PC1       | 0        | 1         | 1       | ##-2 years##  | ##last year##|
-      | Past-course 2  | PC2       | 0        | 1         | 1       | ##-2 years##  | ##last year##|
-      | Past-course 3  | PC3       | 0        | 1         | 1       | ##-2 years##  | ##last year##|
-      | Course H       | CH        | 0        | 1         | 0       |               |              |
-      | Past Course H  | PCH       | 0        | 1         | 0       | ##-3 years##  | ##-2 years## |
+    Given the following "courses" exist:
+      | fullname      | shortname | category | groupmode | visible | startdate     | enddate       |
+      | Course 1      | C1        | 0        | 1         | 1       |               |               |
+      | Course 2      | C2        | 0        | 1         | 1       | ##yesterday## | ##tomorrow##  |
+      | Course 3      | C3        | 0        | 1         | 1       | ##-1 years##  | ##next year## |
+      | Past-course 1 | PC1       | 0        | 1         | 1       | ##-2 years##  | ##last year## |
+      | Past-course 2 | PC2       | 0        | 1         | 1       | ##-2 years##  | ##last year## |
+      | Past-course 3 | PC3       | 0        | 1         | 1       | ##-2 years##  | ##last year## |
+      | Course H      | CH        | 0        | 1         | 0       |               |               |
+      | Past Course H | PCH       | 0        | 1         | 0       | ##-3 years##  | ##-2 years##  |
     And the following "users" exist:
-      | username | firstname | lastname | email |
-      | student1 | Student | 1 | student1@example.com |
-      | teacher1 | Teacher | 1 | teacher1@example.com |
+      | username | firstname | lastname | email                |
+      | student1 | Student   | 1        | student1@example.com |
+      | teacher1 | Teacher   | 1        | teacher1@example.com |
     And the following "course enrolments" exist:
       | user     | course | role           |
       | student1 | C1     | student        |

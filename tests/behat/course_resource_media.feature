@@ -25,12 +25,9 @@ Feature: When the moodle theme is set to Snap, clicking on a resource with a med
   resource inline.
 
   Background:
-    Given the following config values are set as admin:
-      | theme | snap |
-      | thememobile | snap |
-    And the following "courses" exist:
+  Given the following "courses" exist:
       | fullname | shortname | category | groupmode | enablecompletion |
-      | Course 1 | C1 | 0 | 1 | 1 |
+      | Course 1 | C1        | 0        | 1         | 1                |
     And the following "users" exist:
       | username | firstname | lastname | email |
       | teacher1 | Teacher | 1 | teacher1@example.com |

@@ -26,14 +26,12 @@ Feature: Open page module inline
   I need to view page modules inline and have auto completion tracking updated.
 
   Background:
-    Given the following config values are set as admin:
-      | theme | snap |
-    And the following "courses" exist:
+    Given the following "courses" exist:
       | fullname | shortname | format | category | groupmode | enablecompletion |
       | Course 1 | C1        | topics | 0        | 1         | 1                |
     And the following "users" exist:
-      | username | firstname | lastname | email |
-      | student1 | Student | 1 | student1@example.com |
+      | username | firstname | lastname | email                |
+      | student1 | Student   | 1        | student1@example.com |
     And the following "course enrolments" exist:
       | user     | course | role    |
       | admin    | C1     | teacher |
@@ -118,3 +116,4 @@ Feature: Open page module inline
     Then I should not see availability info "Not available unless: The activity Page completion 2 is marked complete"
     And I should not see "Conditional" in the "#chapters li:nth-of-type(3)" "css_element"
     And I should see "Assignment Test"
+

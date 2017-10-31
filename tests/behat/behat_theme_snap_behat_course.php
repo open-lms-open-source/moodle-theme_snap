@@ -15,26 +15,38 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Overrides for behat authentication.
- * @author    Guy Thomas <gthomas@moodlerooms.com>
+ * Overrides for behat course.
  * @copyright Copyright (c) 2017 Blackboard Inc.
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 // NOTE: no MOODLE_INTERNAL test here, this file may be required by behat before including /config.php.
 
-require_once(__DIR__ . '/../../../../auth/tests/behat/behat_auth.php');
+use Behat\Mink\Exception\ExpectationException as ExpectationException,
+    Behat\Mink\Element\NodeElement as NodeElement;
+
+require_once(__DIR__ . '/../../../../course/tests/behat/behat_course.php');
 
 /**
- * Overrides for behat authentication.
- * @author    Guy Thomas <gthomas@moodlerooms.com>
+ * Overrides to make behat course steps work with Snap.
+ *
  * @copyright Copyright (c) 2017 Blackboard Inc.
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class behat_theme_snap_behat_auth extends behat_auth {
+class behat_theme_snap_behat_course extends behat_course {
 
-    public function i_log_out() {
-        $this->getSession()->visit($this->locate_path('login/logout.php'));
-        $this->execute('behat_forms::press_button', get_string('continue'));
+    public function i_add_to_section($activity, $section) {
+
+        if ($this->getSession()->getPage()->find('css', 'body#page-site-index') && (int)$section <= 1) {
+            return parent::i_add_to_section($activity, $section);
+        }
+
+        $xpath = "//*[@id='snap-modchooser-modal']//a[text()='$activity']";
+
+        $node = $this->find('xpath', $xpath);
+        $href = $node->getAttribute('href');
+        $url = new moodle_url($href);
+        $url->param('section', $section);
+        $this->getSession()->visit($this->locate_path($url->out_as_local_url(false)));
     }
 }
