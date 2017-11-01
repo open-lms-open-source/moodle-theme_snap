@@ -1099,10 +1099,10 @@ body.snap-resource-card li.snap-resource {
 }
 
 // Activity dues date.
-a.snap-due-date {
-    font-size: 1em;
+.snap-due-date {
+    font-size: inherit;
+    font-weight: normal;
     border-radius: 1em;
-    padding: 0.5em 1em;
 }
 
 

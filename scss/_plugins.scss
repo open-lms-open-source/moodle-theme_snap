@@ -42,6 +42,79 @@
     @include svg-icon;
 }
 
+
+/**
+ * Coments block.
+ */
+.comment-list li {
+    color: $body-color !important; // Shame - overwrite inline style.
+}
+
+/**
+ * Mod assignment.
+ */
+#page-mod-assign-view {
+    .duedata {
+        font-family: $font-family-system;
+    }
+    // Rubric tables for grading criteria.
+    .gradingmethodpreview {
+        clear: both;
+    }
+    
+    .gradingform_rubric {
+        max-width: 100%;
+    }
+    // Grading feedback checklist.
+    .gradingform_checklist .group .items .item.checked {
+        background: #eee;
+        border: none;
+        border-left: .25em solid $brand-success;
+    }
+
+    .gradingform_checklist .group .description {
+        font-family: $font-family-system;
+    }
+
+    // Larger screen layout.
+    @include media-breakpoint-up(md) {
+        .assign-intro,
+        .assign-feedback {
+            @include make-col(8);
+            padding-right: 4%;
+        }
+
+        .groupselector,
+        .assign-grading-summary,
+        .assign-submission-data {
+            @include make-row();
+            @include make-col(4);
+            float: right;
+        }
+    }
+
+    .groupselector,
+    .assign-grading-summary,
+    .assign-submission-data {
+        padding: 1em;
+        margin-bottom: .5em;
+        background-color: $gray-lighter;
+        font-family: $font-family-system;
+    }
+    // Add an indicator of progress for submissions.
+    .submissions-status {
+        border-bottom: .5em solid #999;
+        padding-bottom: 1em;
+        margin-bottom: 1em;
+    }
+
+    .submissions-line {
+        background-color: $brand-success;
+        height: .5em;
+        margin-bottom: -1.5em; // Height + submissions-status padding.
+    }
+}
+
 /**
  * Assign feedback PDF editor.
  * Prevent PDF edit area from displaying outside of dialogs.
