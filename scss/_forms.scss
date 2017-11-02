@@ -43,16 +43,6 @@ body:not(.behat-site) {
     border: none;
 }
 
-.snap-form-advanced .collapsible-actions .collapseexpand {
-    background: none;
-    padding: 0;
-}
-
-.snap-form-advanced .dndupload-message {
-    font-family: $font-family-system;
-    font-size: small;
-}
-
 .form-label .form-shortname {
     display: inline;
 }
@@ -330,7 +320,15 @@ div.editor_atto_toolbar div.atto_group {
 #page-course-edit #maincontent + h2,
 #page-course-editsection #maincontent + h2,
 .pagelayout-admin.path-mod #maincontent + h2 {
- @extend h6;
+    @extend h6;
+}
+
+// Help for mods displayed in the edit form.
+#snap-collapse-help {
+    padding: 1em 0;
+    margin: 2em 2%;
+    background-color: $gray-lighter;
+    border-left: .25em solid $brand-primary;
 }
 
 #id_cancel {
@@ -369,6 +367,16 @@ div.editor_atto_toolbar div.atto_group {
     .editor_atto_content {
         // Need !important to override the style tag set by JS.
         min-height: 250px !important;
+    }
+}
+
+.snap-form-advanced {
+    .dndupload-message {
+        font-family: $font-family-system;
+        font-size: small;
+    }
+    legend {
+        font-size: 1rem;
     }
 }
 
@@ -412,10 +420,6 @@ div.editor_atto_toolbar div.atto_group {
     padding-left: 0;
 }
 
-.snap-form-advanced legend {
-    font-size: 1rem;
-}
-
 @include media-breakpoint-up(lg) {
 
     #id_name {
@@ -431,7 +435,6 @@ div.editor_atto_toolbar div.atto_group {
 
     // All the non-essential form elements.
     .snap-form-advanced {
-
         // FF select elements don't respect % max width.
         select {
             max-width: 200px !important;

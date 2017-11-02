@@ -359,13 +359,17 @@ li.section:focus {
         border-bottom: none;
     }
 
+    #snap-modchooser-help-tab .nav-link {
+        border: none;
+    }
+
     .snap-modchooser-addlink {
         display: block;
         height: 90px;
         overflow: hidden;
         font-size: .8em;
         font-family: $font-family-system;
-        font-weight: 500;
+        color: $body-color;
         @include alakazam;
 
         &:hover,
