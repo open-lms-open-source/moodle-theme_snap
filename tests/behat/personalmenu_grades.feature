@@ -78,7 +78,7 @@ Feature: When the moodle theme is set to Snap, students and teachers can open a 
     #And I follow "Test assignment1"
 
     And I follow "Not Submitted"
-   When I press "Add submission"
+   When I follow "Add submission"
     And I set the following fields to these values:
       | Online text | I'm the student submission |
     And I press "Save changes"

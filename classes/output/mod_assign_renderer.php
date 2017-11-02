@@ -41,7 +41,7 @@ require_once($CFG->dirroot . "/mod/assign/renderer.php");
 class mod_assign_renderer extends \mod_assign_renderer {
 
     /**
-     ** Copied from assign/renderer.php
+     * Copied from assign/renderer.php
      * Displayed for all users.
      * Render the header.
      *
@@ -67,12 +67,15 @@ class mod_assign_renderer extends \mod_assign_renderer {
 
         if ($header->showintro) {
             $o .= '<div class="assign-intro">';
-            $o .= $this->render_assign_duedate($header->assign);
+            $o .= $this->render_assign_duedate($header);
             $o .= '<div class="p-y-1">';
             $o .= format_module_intro('assign', $header->assign, $header->coursemoduleid);
             $o .= $header->postfix;
-            // TODO - edit button...
             $o .= '</div>';
+            $o .= '</div>';
+        } else {
+            $o .= '<div class="assign-intro">';
+            $o .= $this->render_assign_duedate($header);
             $o .= '</div>';
         }
         return $o;
@@ -86,7 +89,8 @@ class mod_assign_renderer extends \mod_assign_renderer {
      * @param assign_header $header
      * @return string
      */
-    public function render_assign_duedate($status) {
+    public function render_assign_duedate(\assign_header $header) {
+        $status = $header->assign;
         $time = time();
         $duedate = $status->duedate;
         $duedata = '';
@@ -183,7 +187,7 @@ class mod_assign_renderer extends \mod_assign_renderer {
         // Grade button.
         $urlparams = array('id' => $summary->coursemoduleid, 'action' => 'grader');
         $url = new moodle_url('/mod/assign/view.php', $urlparams);
-        $o .= '<a href="' .$url. '" class="btn btn-inverse">' . get_string('grade') . '</a>';
+        $o .= '<a href="' .$url. '" role="button" class="btn btn-inverse">' . get_string('grade') . '</a>';
         // Close assign-grading-summary.
         $o .= '</div>';
         return $o;
@@ -203,7 +207,7 @@ class mod_assign_renderer extends \mod_assign_renderer {
         $userpicture = new \user_picture($USER);
         $userpicture->link = false;
         $userpicture->alttext = false;
-        $userpicture->class = 'userpicture'; // icon class for margin.
+        $userpicture->class = 'userpicture';
         $userpicture->size = 35;
         $userpic = $OUTPUT->render($userpicture).' '.s(fullname($USER));
 
@@ -247,8 +251,8 @@ class mod_assign_renderer extends \mod_assign_renderer {
             if ($maxattempts == ASSIGN_UNLIMITED_ATTEMPTS) {
                 $attempts = get_string('currentattempt', 'assign', $currentattempt);
             } else {
-                $attempts = get_string('currentattemptof', 'assign', array('attemptnumber'=>$currentattempt,
-                                                                          'maxattempts'=>$maxattempts));
+                $attempts = get_string('currentattemptof', 'assign', array('attemptnumber' => $currentattempt,
+                                                                          'maxattempts' => $maxattempts));
             }
             $statusdata .= $attempts;
             $statusdata .= '</div>';
@@ -257,7 +261,7 @@ class mod_assign_renderer extends \mod_assign_renderer {
         // Status.
         // Add a tick if submitted.
         $tick = '';
-        if($status->submission->status == 'submitted') {
+        if($status->submission->status === 'submitted') {
             $tick = '<i class="icon fa fa-check text-success fa-fw " aria-hidden="true" role="presentation"></i>';
         }
         $statusdata .= '<div>' .$tick.get_string('submissionstatus', 'assign'). ': ';
@@ -359,15 +363,15 @@ class mod_assign_renderer extends \mod_assign_renderer {
                         $plugin->has_user_summary() &&
                         $pluginshowsummary
                     ) {
-                        $submissiondata .= '<h4 class="h6">' .$plugin->get_name(). '</h4>';
-                        $displaymode = assign_submission_plugin_submission::SUMMARY;
-                        $pluginsubmission = new assign_submission_plugin_submission($plugin,
-                        $submission,
-                        $displaymode,
-                        $status->coursemoduleid,
-                        $status->returnaction,
-                        $status->returnparams);
-                        $submissiondata .= $this->render($pluginsubmission);
+                            $submissiondata .= '<h4 class="h6">' .$plugin->get_name(). '</h4>';
+                            $displaymode = assign_submission_plugin_submission::SUMMARY;
+                            $pluginsubmission = new assign_submission_plugin_submission($plugin,
+                            $submission,
+                            $displaymode,
+                            $status->coursemoduleid,
+                            $status->returnaction,
+                            $status->returnparams);
+                            $submissiondata .= $this->render($pluginsubmission);
                     }
                 }
             }
@@ -387,30 +391,29 @@ class mod_assign_renderer extends \mod_assign_renderer {
                     $urlparams = array('id' => $status->coursemoduleid, 'action' => 'editsubmission');
                     $url = new moodle_url('/mod/assign/view.php', $urlparams);
                     if (!$submission || $submission->status == ASSIGN_SUBMISSION_STATUS_NEW) {
-                        $submissiondata .= '<a href="' .$url. '" class="btn btn-inverse">' .get_string('addsubmission', 'assign'). '</a>';
+                        $submissiondata .= '<a href="' .$url. '" role="button" class="btn btn-inverse">' .get_string('addsubmission', 'assign'). '</a>';
                     } else if ($submission->status == ASSIGN_SUBMISSION_STATUS_REOPENED) {
                         $submissiondata .= get_string('addnewattempt_help', 'assign') .'<br>';
-                        $submissiondata .= '<a href="' .$url. '" class="btn btn-inverse">' .get_string('addnewattempt', 'assign'). '</a>';
+                        $submissiondata .= '<a href="' .$url. '" role="button" class="btn btn-inverse">' .get_string('addnewattempt', 'assign'). '</a>';
 
                         $submissiondata .= '<br>' .get_string('addnewattemptfromprevious_help', 'assign') .'<br>';
                         $urlparams = array('id' => $status->coursemoduleid,
                                            'action' => 'editprevioussubmission',
-                                           'sesskey'=>sesskey());
+                                           'sesskey' => sesskey());
                         $url = new moodle_url('/mod/assign/view.php', $urlparams);
-                        $submissiondata .= '<a href="' .$url. '" class="btn btn-inverse">' .get_string('addnewattemptfromprevious', 'assign'). '</a>';
+                        $submissiondata .= '<a href="' .$url. '" role="button" class="btn btn-inverse">' .get_string('addnewattemptfromprevious', 'assign'). '</a>';
                     } else {
-                        $submissiondata .= '<a href="' .$url. '" class="btn btn-inverse">' .get_string('editsubmission', 'assign'). '</a>';
+                        $submissiondata .= '<a href="' .$url. '" role="button" class="btn btn-inverse">' .get_string('editsubmission', 'assign'). '</a>';
                     }
                 }
 
                 if ($status->cansubmit) {
                     $submissiondata .= get_string('submitassignment_help', 'assign') .'<br>';
                     $urlparams = array('id' => $status->coursemoduleid, 'action' => 'submit');
-                    $submissiondata .= '<a href="' .$url. '" class="btn btn-inverse">' .get_string('submitassignment', 'assign'). '</a>';
+                    $submissiondata .= '<a href="' .$url. '" role="button" class="btn btn-inverse">' .get_string('submitassignment', 'assign'). '</a>';
 
                 }
             }
-            // $submissiondata .= '<input type="file"><label>add</label></input>';
             $submissiondata .= '</div><!-- close assign-submission-data -->';
         }
         $o .= $submissiondata;

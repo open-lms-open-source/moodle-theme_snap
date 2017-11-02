@@ -61,19 +61,21 @@
     .gradingmethodpreview {
         clear: both;
     }
-    
+
     .gradingform_rubric {
         max-width: 100%;
     }
     // Grading feedback checklist.
-    .gradingform_checklist .group .items .item.checked {
-        background: #eee;
-        border: none;
-        border-left: .25em solid $brand-success;
-    }
+    .gradingform_checklist .group {
+        .items .item.checked {
+            background: #eee;
+            border: none;
+            border-left: .25em solid $brand-success;
+        }
 
-    .gradingform_checklist .group .description {
-        font-family: $font-family-system;
+        .description {
+            font-family: $font-family-system;
+        }
     }
 
     // Larger screen layout.
@@ -82,6 +84,7 @@
         .assign-feedback {
             @include make-col(8);
             padding-right: 4%;
+            min-height: 100px;
         }
 
         .groupselector,

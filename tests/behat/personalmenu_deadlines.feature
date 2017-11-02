@@ -57,7 +57,7 @@ Feature: When the moodle theme is set to Snap, students and teachers can find in
     And I wait until "#section-1" "css_element" is visible
     And I should see "Test assignment1"
     And I follow "Not Submitted"
-    When I press "Add submission"
+    When I follow "Add submission"
     And I set the following fields to these values:
       | Online text | I'm the student submission |
     And I press "Save changes"
@@ -95,7 +95,7 @@ Feature: When the moodle theme is set to Snap, students and teachers can find in
     And I wait until "#section-1" "css_element" is visible
     And I should see "Test assignment1"
     And I follow "Not Submitted"
-    When I press "Add submission"
+    When I follow "Add submission"
     And I set the following fields to these values:
       | Online text | I'm the student submission |
     And I press "Save changes"
