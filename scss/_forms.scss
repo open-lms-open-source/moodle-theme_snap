@@ -370,14 +370,14 @@ div.editor_atto_toolbar div.atto_group {
     }
 }
 
-.snap-form-advanced .collapsible-actions .collapseexpand {
-    background: none;
-    padding: 0;
-}
-
-.snap-form-advanced .dndupload-message {
-    font-family: $font-family-system;
-    font-size: small;
+.snap-form-advanced {
+    .dndupload-message {
+        font-family: $font-family-system;
+        font-size: small;
+    }
+    legend {
+        font-size: 1rem;
+    }
 }
 
 .mform legend {
@@ -420,10 +420,6 @@ div.editor_atto_toolbar div.atto_group {
     padding-left: 0;
 }
 
-.snap-form-advanced legend {
-    font-size: 1rem;
-}
-
 @include media-breakpoint-up(lg) {
 
     #id_name {
@@ -439,7 +435,6 @@ div.editor_atto_toolbar div.atto_group {
 
     // All the non-essential form elements.
     .snap-form-advanced {
-
         // FF select elements don't respect % max width.
         select {
             max-width: 200px !important;

@@ -49,7 +49,7 @@ use theme_snap\renderables\login_alternative_methods;
 class core_renderer extends \theme_boost\output\core_renderer {
 
     /**
-     * Copied from outputrenderere.php
+     * Copied from outputrenderer.php
      * Heading with attached help button (same title text)
      * and optional icon attached.
      *
