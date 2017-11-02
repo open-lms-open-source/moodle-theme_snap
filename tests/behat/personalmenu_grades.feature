@@ -82,7 +82,7 @@ Feature: When the moodle theme is set to Snap, students and teachers can open a 
     And I set the following fields to these values:
       | Online text | I'm the student submission |
     And I press "Save changes"
-    And I press "Submit assignment"
+    And I follow "Submit assignment"
     And I press "Continue"
     And I log out
     And I log in as "teacher1"

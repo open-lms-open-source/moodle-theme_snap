@@ -61,7 +61,7 @@ Feature: When the moodle theme is set to Snap, students and teachers can find in
     And I set the following fields to these values:
       | Online text | I'm the student submission |
     And I press "Save changes"
-    And I press "Submit assignment"
+    And I follow "Submit assignment"
     And I press "Continue"
     And I open the personal menu
     And I should see "Submitted" in the "#snap-personal-menu-deadlines div.snap-media-object:first-of-type" "css_element"
@@ -99,7 +99,7 @@ Feature: When the moodle theme is set to Snap, students and teachers can find in
     And I set the following fields to these values:
       | Online text | I'm the student submission |
     And I press "Save changes"
-    And I press "Submit assignment"
+    And I follow "Submit assignment"
     And I press "Continue"
     And I open the personal menu
     And I should see "Submitted" in the "#snap-personal-menu-deadlines div.snap-media-object:first-of-type" "css_element"
