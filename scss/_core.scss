@@ -2006,6 +2006,10 @@ ul.events-new + ul.events-underway {
     font-weight: 400;
 }
 
+#page-mod-quiz-edit .instancemaxmarkcontainer input[name='maxmark'] {
+    height: 1.5em !important;
+}
+
 // Quiz itself //
 
 // For quiz, we don't want two coluns.

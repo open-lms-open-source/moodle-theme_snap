@@ -1497,8 +1497,20 @@ input.titleeditor {
 }
 
 span.editinstructions {
-    box-shadow: none;
-    border: 0;
+    /*rtl:remove*/
+    position: absolute;
+    /*rtl:raw:
+    position: relative;
+    */
+    top: 0;
+    margin-top: -22px;
+    margin-left: 30px;
+    font-size: $font-size-sm;
+    padding: .1em .4em;
+    background-color: #fff;
+    color: $state-info-text;
+    text-decoration: none;
+    z-index: 9999;
     font-family: $font-family-system;
 }
 
