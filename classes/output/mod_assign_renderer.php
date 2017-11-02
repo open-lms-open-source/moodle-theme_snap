@@ -34,8 +34,6 @@ use assign_submission_status;
 use assign_submission_plugin_submission;
 use assign_feedback_plugin_feedback;
 
-
-
 require_once($CFG->dirroot . "/mod/assign/renderer.php");
 
 class mod_assign_renderer extends \mod_assign_renderer {
@@ -104,7 +102,6 @@ class mod_assign_renderer extends \mod_assign_renderer {
             // Due date.
             $duedata .= '<div>' .get_string('due', 'theme_snap'). ' ' .userdate($duedate). '</div>';
 
-
             // Time remaining.
             if ($duedate - $time >= 0) {
                 $due = format_time($duedate - $time);
@@ -164,8 +161,8 @@ class mod_assign_renderer extends \mod_assign_renderer {
             if ($summary->warnofungroupedusers) {
                 $submissionsdata = '<div class="alert alert-danger">' .get_string('ungroupedusers', 'assign'). '</div>';
             }
-            // participantcount is replaced by number of groups in teamsubmission - not sure why.
-            // TODO - is it possible to find out what this is meant for??
+            // SHAME - participantcount is replaced by number of groups in teamsubmission - not sure why.
+            // On the page this seems to only add confusion.
             $submissionsdata .= '<div>' .get_string('numberofteams', 'assign'). ': ' .$summary->participantcount. '</div>';
             $submissionsdata .= '<div>' .get_string('numberofsubmittedassignments', 'assign'). ': '. $summary->submissionssubmittedcount. '</div>';
         } else {
@@ -194,7 +191,7 @@ class mod_assign_renderer extends \mod_assign_renderer {
     }
 
     /**
-     * * Copied from assign/renderer.php
+     * Copied from assign/renderer.php
      * Displayed for students.
      * Render the current status of the submission.
      *
