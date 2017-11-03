@@ -100,7 +100,7 @@ class mod_assign_renderer extends \mod_assign_renderer {
             }
 
             // Due date.
-            $duedata .= '<div>' .get_string('due', 'theme_snap'). ' ' .userdate($duedate). '</div>';
+            $duedata .= '<div>' .get_string('due', 'theme_snap', userdate($duedate)). '</div>';
 
             // Time remaining.
             if ($duedate - $time >= 0) {
