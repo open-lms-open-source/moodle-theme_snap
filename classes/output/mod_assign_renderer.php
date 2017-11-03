@@ -418,7 +418,7 @@ class mod_assign_renderer extends \mod_assign_renderer {
 
         // If assignment not graded, output marking criteria,
         // else feedback is displayed which contains marking criteria.
-        if (!$status->graded) {
+        if (!$status->graded && $status->gradingcontrollerpreview) {
             $gradingmethodpreview = '<div class="gradingmethodpreview">';
             $gradingmethodpreview .= '<h5>' .get_string('gradingmethodpreview', 'assign') .'</h5>';
             $gradingmethodpreview .= $status->gradingcontrollerpreview;
