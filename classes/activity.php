@@ -892,17 +892,17 @@ class activity {
                 $result = $DB->get_records_sql($sql, $params);
             } else {
                 $params = [];
-                $sql .= " FROM {" . $mod->modname . "} module";
+                $sql .= "  FROM {" . $mod->modname . "} module";
                 if ($mod->modname === 'assign') {
                     $params[] = $USER->id;
                     $sql .= "
-                     LEFT JOIN {assign_user_flags} auf
-                            ON module.id = auf.assignment
-                           AND auf.userid = ?
+                      LEFT JOIN {assign_user_flags} auf
+                             ON module.id = auf.assignment
+                            AND auf.userid = ?
                      ";
                 }
                 $params[] = $courseid;
-                $sql .= "WHERE module.course = ?";
+                $sql .= " WHERE module.course = ?";
                 $result = $DB->get_records_sql($sql, $params);
             }
             $moddates[$courseid . '_' . $mod->modname] = $result;
