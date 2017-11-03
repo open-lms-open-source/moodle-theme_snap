@@ -16,10 +16,9 @@
 
 namespace theme_snap;
 
-require_once($CFG->dirroot.'/mod/assign/locallib.php');
+defined('MOODLE_INTERNAL') || die();
 
-// Note: PHP Storm is reporting this unused but it is!
-use \theme_snap\activity_meta;
+require_once($CFG->dirroot.'/mod/assign/locallib.php');
 
 /**
  * Activity functions.
@@ -823,8 +822,8 @@ class activity {
             $timeclosefld = $mod->modname === 'quiz' ? 'timeclose' : ($mod->modname === 'lesson' ? 'deadline' : $timeclosefld);
             $sql = "-- Snap sql
                     SELECT
-                    module.id, 
-                    module.$timeopenfld AS timeopen, 
+                    module.id,
+                    module.$timeopenfld AS timeopen,
                     module.$timeclosefld AS timeclose";
             if ($mod->modname === 'assign') {
                 $sql .= ",
@@ -883,7 +882,7 @@ class activity {
                 } else {
                     $params[] = $USER->id;
                     $sql .= ", ovrd1.$timeopenfld AS timeopenover, ovrd1.$timeclosefld AS timecloseover
-                             FROM {" . $mod->modname . "} module 
+                             FROM {" . $mod->modname . "} module
                              LEFT JOIN {" . $mod->modname . "_overrides} ovrd1
                              ON module.id=ovrd1.$id AND ovrd1.userid = ?";
                 }

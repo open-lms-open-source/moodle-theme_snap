@@ -85,9 +85,12 @@ class behat_theme_snap_behat_general extends behat_general {
                     }
                 }
                 if ($args['element']) {
-                    throw new ExpectationException('"' . $args['text'] . '" text was found in the "' . $args['element'] . '" element but was not visible', $context->getSession());
+                    $msg = '"' . $args['text'] . '" text was found in the "' . $args['element'];
+                    $msg .= '" element but was not visible';
+                    throw new ExpectationException($msg, $context->getSession());
                 } else {
-                    throw new ExpectationException('"' . $args['text'] . '" text was found but was not visible', $context->getSession());
+                    $msg = '"' . $args['text'] . '" text was found but was not visible';
+                    throw new ExpectationException($msg, $context->getSession());
                 }
             },
             $args,
@@ -214,7 +217,8 @@ class behat_theme_snap_behat_general extends behat_general {
             sleep(2);
             $nodes = $this->get_nodes_containing_text($text, $container);
             if (empty($nodes)) {
-                throw new ExpectationException('"' . $text . '" text was not found in the "' . $element . '" element', $this->getSession());
+                $msg = '"' . $text . '" text was not found in the "' . $element . '" element';
+                throw new ExpectationException($msg, $this->getSession());
             }
         }
 
@@ -236,7 +240,8 @@ class behat_theme_snap_behat_general extends behat_general {
             sleep(2);
             $nodes = $this->get_nodes_containing_text($text, $container);
             if (empty($nodes)) {
-                throw new ExpectationException('"' . $text . '" text was not found in the "' . $element . '" element', $this->getSession());
+                $msg = '"' . $text . '" text was not found in the "' . $element . '" element';
+                throw new ExpectationException($msg, $this->getSession());
             }
             $this->check_text_visible_in_nodes($nodes, $text, $element);
         }

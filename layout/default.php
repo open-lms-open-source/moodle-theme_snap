@@ -27,6 +27,9 @@ require(__DIR__.'/header.php');
 
 use theme_snap\local;
 
+// @codingStandardsIgnoreStart
+// Note, coding standards ignore is required so that we can have more readable indentation under php tags.
+
 $mastimage = '';
 // Check we are in a course (not the site level course), and the course is using a cover image.
 if ($COURSE->id != SITEID && !empty($coverimagecss)) {
@@ -141,5 +144,5 @@ if (stripos($PAGE->bodyclasses, 'format-singleactivity') !== false ) {
 </div>
 </div>
 <!-- close moodle js hooks -->
-
-<?php require(__DIR__.'/footer.php');
+<?php // @codingStandardsIgnoreEnd
+require(__DIR__.'/footer.php');

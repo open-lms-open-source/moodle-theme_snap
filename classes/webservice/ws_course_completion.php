@@ -66,7 +66,10 @@ class ws_course_completion extends \external_api {
                    'Newly available mods', VALUE_REQUIRED
                 )
             ),
-            'toc' => new \external_single_structure(definition_helper::define_class_for_webservice('theme_snap\renderables\course_toc'), 'Table of contents', VALUE_REQUIRED)
+            'toc' => new \external_single_structure(
+                definition_helper::define_class_for_webservice('theme_snap\renderables\course_toc'),
+                'Table of contents', VALUE_REQUIRED
+            )
         ];
         return new \external_single_structure($keys, 'course_completion');
     }

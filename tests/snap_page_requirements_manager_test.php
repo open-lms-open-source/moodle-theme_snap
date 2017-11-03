@@ -92,6 +92,7 @@ class theme_snap_snap_page_requirements_manager_test extends \advanced_testcase 
         $CFG->theme = 'snap';
 
         $PAGE->initialise_theme_and_output();
+        // @codingStandardsIgnoreLine
         $this->assertInstanceOf(snap_page_requirements_manager::class, $PAGE->requires);
     }
 }

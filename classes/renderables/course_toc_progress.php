@@ -23,6 +23,8 @@
 
 namespace theme_snap\renderables;
 
+defined('MOODLE_INTERNAL') || die();
+
 use theme_snap\output\shared;
 
 class course_toc_progress {
@@ -75,7 +77,7 @@ class course_toc_progress {
             'complete' => null,
             'total' => null
         ];
-        
+
         if (!$completioninfo->is_enabled()) {
             return ''; // Completion tracking not enabled.
         }

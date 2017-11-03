@@ -64,6 +64,7 @@ class kernel {
      * @return array
      */
     public function resolve_controller_callback($action) {
+        // @codingStandardsIgnoreLine
         /** @var $controller controller_abstract */
         list($controller, $method) = $this->router->route_action($action);
 

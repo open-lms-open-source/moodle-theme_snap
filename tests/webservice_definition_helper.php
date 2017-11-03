@@ -14,6 +14,8 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
+defined('MOODLE_INTERNAL') || die();
+
 use theme_snap\webservice\definition_helper;
 use theme_snap\renderables\course_toc;
 
@@ -51,8 +53,8 @@ class definition_helper_testable extends definition_helper {
      */
     public function __call($name, $arguments) {
         $reflection = new ReflectionObject($this);
-        $parentReflection = $reflection->getParentClass();
-        $method = $parentReflection->getMethod($name);
+        $parentreflection = $reflection->getParentClass();
+        $method = $parentreflection->getMethod($name);
         $method->setAccessible(true);
         return $method->invokeArgs($this, $arguments);
     }

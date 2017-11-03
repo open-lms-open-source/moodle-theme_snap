@@ -78,7 +78,8 @@ class course_total_grade extends \grade_report_overview {
         $this->teachercourses = array();
         $roleids = explode(',', get_config('moodle', 'gradebookroles'));
 
-        $this->showtotalsifcontainhidden[$course->id] = grade_get_setting($course->id, 'report_overview_showtotalsifcontainhidden', $CFG->grade_report_overview_showtotalsifcontainhidden);
+        $this->showtotalsifcontainhidden[$course->id] = grade_get_setting($course->id,
+                'report_overview_showtotalsifcontainhidden', $CFG->grade_report_overview_showtotalsifcontainhidden);
 
         foreach ($roleids as $roleid) {
             if (user_has_role_assignment($user->id, $roleid, $this->context->id)) {
@@ -86,7 +87,7 @@ class course_total_grade extends \grade_report_overview {
             }
         }
 
-        // The default grade decimals is 2
+        // The default grade decimals is 2.
         $defaultdecimals = 2;
         if (property_exists($CFG, 'grade_decimalpoints')) {
             $defaultdecimals = $CFG->grade_decimalpoints;
@@ -112,7 +113,7 @@ class course_total_grade extends \grade_report_overview {
         }
 
         if (!$this->course->visible && !has_capability('moodle/course:viewhiddencourses', $this->context)) {
-            // The course is hidden and the user isn't allowed to see it
+            // The course is hidden and the user isn't allowed to see it.
             return $output;
         }
 
@@ -123,54 +124,54 @@ class course_total_grade extends \grade_report_overview {
             return $output;
         }
 
-        // Get course grade_item
-        $course_item = grade_item::fetch_course_item($this->course->id);
+        // Get course grade_item.
+        $courseitem = grade_item::fetch_course_item($this->course->id);
 
-        // Get the stored grade
-        $course_grade = new grade_grade(array('itemid' => $course_item->id, 'userid' => $this->user->id));
-        $course_grade->grade_item =& $course_item;
-        $finalgrade = $course_grade->finalgrade;
+        // Get the stored grade.
+        $coursegrade = new grade_grade(array('itemid' => $courseitem->id, 'userid' => $this->user->id));
+        $coursegrade->grade_item =& $courseitem;
+        $finalgrade = $coursegrade->finalgrade;
 
         // Return error when grade needs updating.
-        if ($course_grade->grade_item->needsupdate) {
+        if ($coursegrade->grade_item->needsupdate) {
             return array("value" => get_string('error'), "percentage" => '-');
         }
 
         $canviewhidden = has_capability('moodle/grade:viewhidden', $this->context);
         // Return '-' values when grade is hidden and user cannot view.
-        if (!$canviewhidden && $course_grade->is_hidden()) {
+        if (!$canviewhidden && $coursegrade->is_hidden()) {
             return $output;
         }
 
         if (!$canviewhidden and !is_null($finalgrade)) {
-            if ($course_grade->is_hidden()) {
+            if ($coursegrade->is_hidden()) {
                 $finalgrade = null;
             } else {
                 $adjustedgrade = $this->blank_hidden_total_and_adjust_bounds($this->course->id,
-                    $course_item,
+                    $courseitem,
                     $finalgrade);
 
                 // We temporarily adjust the view of this grade item - because the min and
                 // max are affected by the hidden values in the aggregation.
                 $finalgrade = $adjustedgrade['grade'];
-                $course_grade->grade_item->grademax = $adjustedgrade['grademax'];
-                $course_grade->grade_item->grademin = $adjustedgrade['grademin'];
+                $coursegrade->grade_item->grademax = $adjustedgrade['grademax'];
+                $coursegrade->grade_item->grademin = $adjustedgrade['grademin'];
             }
         } else {
             // We must use the specific max/min because it can be different for
             // each grade_grade when items are excluded from sum of grades.
             if (!is_null($finalgrade)) {
-                $course_grade->grade_item->grademin = $course_grade->get_grade_min();
-                $course_grade->grade_item->grademax = $course_grade->get_grade_max();
+                $coursegrade->grade_item->grademin = $coursegrade->get_grade_min();
+                $coursegrade->grade_item->grademax = $coursegrade->get_grade_max();
             }
         }
 
         // Percentage grade for use with progressbar.js.
         $percentage = round(grade_format_gradevalue($finalgrade,
-                $course_grade->grade_item,
+                $coursegrade->grade_item,
                 true, GRADE_DISPLAY_TYPE_PERCENTAGE));
 
-        $value = grade_format_gradevalue($finalgrade, $course_grade->grade_item);
+        $value = grade_format_gradevalue($finalgrade, $coursegrade->grade_item);
         return array("value" => $value, "percentage" => $percentage);
     }
 }

@@ -44,7 +44,7 @@ class ws_course_toc_chapters extends \external_api {
      */
     public static function service_returns() {
         $keys = [
-            'chapters' =>  new \external_single_structure(
+            'chapters' => new \external_single_structure(
                 [
                     'chapters' => new \external_multiple_structure(
                         new \external_single_structure(

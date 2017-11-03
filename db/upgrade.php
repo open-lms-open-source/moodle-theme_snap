@@ -16,7 +16,7 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-include_once($CFG->dirroot.'/theme/snap/lib.php');
+require_once($CFG->dirroot.'/theme/snap/lib.php');
 
 /**
  * Theme upgrade

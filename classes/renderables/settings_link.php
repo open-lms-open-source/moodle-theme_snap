@@ -86,7 +86,7 @@ class settings_link implements \renderable {
 
     /**
      * Set admin menu instance, if required capability satisfied.
-     * 
+     *
      * @throws \coding_exception
      */
     private function set_admin_menu_instance() {

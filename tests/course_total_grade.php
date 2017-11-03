@@ -21,6 +21,8 @@
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+defined('MOODLE_INTERNAL') || die();
+
 use theme_snap\local;
 use theme_snap\course_total_grade;
 
@@ -226,7 +228,7 @@ class theme_snap_course_total_grade_test extends \advanced_testcase {
             for ($a = 0; $a < $this->assigncount; $a++) {
                 $gi++;
                 $gradeitemsetting = $gradeitemsettings[$gi];
-                if ($gi >= count($gradeitemsettings)-1) {
+                if ($gi >= count($gradeitemsettings) - 1) {
                     $gi = 0;
                 }
                 if (!isset($courseassignments[$c])) {
@@ -419,7 +421,7 @@ class theme_snap_course_total_grade_test extends \advanced_testcase {
         }
 
         // Manually adjust these parameters to get different performance test results.
-        $this->init(5,20,0);
+        $this->init(5, 20, 0);
 
         // Test legacy (user report) method.
         $title = 'Legacy method (user report)';

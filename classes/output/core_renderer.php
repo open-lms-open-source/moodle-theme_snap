@@ -62,23 +62,24 @@ class core_renderer extends \theme_boost\output\core_renderer {
      * @param string $classnames A space-separated list of CSS classes. Defaulting to null
      * @return string HTML fragment
      */
-    public function heading_with_help($text, $helpidentifier, $component = 'moodle', $icon = '', $iconalt = '', $level = 2, $classnames = null) {
+    public function heading_with_help($text, $helpidentifier, $component = 'moodle', $icon = '', $iconalt = '',
+                                      $level = 2, $classnames = null) {
         global $COURSE;
         $image = '';
         if ($icon) {
-            $image = $this->pix_icon($icon, $iconalt, $component, array('class'=>'icon iconlarge'));
+            $image = $this->pix_icon($icon, $iconalt, $component, array('class' => 'icon iconlarge'));
         }
 
         $help = '';
         $collapsablehelp = '';
         if ($helpidentifier) {
             // Display header mod help as collapsable instead of popover for mods.
-            if($helpidentifier = 'modulename') {
+            if ($helpidentifier = 'modulename') {
                 // Get mod help text.
                 $modnames = get_module_types_names();
                 $modname = $modnames[$component];
                 $mod = get_module_metadata($COURSE, array($component => $modname), null);
-                if($mod[$component]->help) {
+                if ($mod[$component]->help) {
                     $helptext = format_text($mod[$component]->help, FORMAT_MARKDOWN);
                     $data = (object) [
                         'helptext' => $helptext,
@@ -401,8 +402,8 @@ class core_renderer extends \theme_boost\output\core_renderer {
         if ($oncoursepage && has_capability('moodle/course:update', $coursecontext)) {
             $url = new \moodle_url('/course/view.php', ['id' => $COURSE->id, 'sesskey' => sesskey()]);
             if ($PAGE->user_is_editing()) {
-               $url->param('edit', 'off');
-               $editstring = get_string('turneditingoff');
+                $url->param('edit', 'off');
+                $editstring = get_string('turneditingoff');
             } else {
                 $url->param('edit', 'on');
                 $editstring = get_string('editcoursecontent', 'theme_snap');
@@ -647,7 +648,6 @@ class core_renderer extends \theme_boost\output\core_renderer {
                     class="h1" role="heading" aria-level="1">'
                     .format_string(fullname($USER)). '</a>';
 
-
         // Real user when logged in as.
         $realfullnamelink = '';
         if (\core\session\manager::is_loggedinas()) {
@@ -709,7 +709,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
         }
 
         $hiddencourses = [];
-        if($hidden) {
+        if ($hidden) {
             $hiddencourses = [
                 'count' => count($hidden),
                 'courses' => $hidden
@@ -722,7 +722,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
             // A courses array for each year.
             $courses = [];
             // Add course cards to each year.
-            foreach($yearcourses as $course) {
+            foreach ($yearcourses as $course) {
                 $ccard = new course_card($course->id);
                 $ccard->archived = true;
                 $courses[] = $ccard;
@@ -732,12 +732,12 @@ class core_renderer extends \theme_boost\output\core_renderer {
                  'year' => $endyear,
                  'courses' => $courses
             ];
-            // Append each year object
+            // Append each year object.
             $pastcourselist[] = $year;
         }
 
         // When there are no currentcourses we set hiddencourses as the main list.
-        if(!$currentcourses) {
+        if (!$currentcourses) {
             $currentcourses = $hiddencourses;
             $hiddencourses = '';
         }
@@ -847,7 +847,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
      * Cover carousel.
      * @return string
      *
-    */
+     */
     public function cover_carousel() {
         global $PAGE;
 
@@ -874,7 +874,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
                 $slides[] = $slide;
             }
         }
-        if(empty($slides)) {
+        if (empty($slides)) {
             return '';
         }
         $slides[0]->active = 'active';
@@ -1534,7 +1534,6 @@ HTML;
             $help = !empty($mod->help) ? $mod->help : '';
             $helptext = format_text($help, FORMAT_MARKDOWN);
 
-
             if ($mod->archetype === MOD_ARCHETYPE_RESOURCE) {
                 $resources[] = (object) [
                     'name' => $mod->name,
@@ -1543,8 +1542,7 @@ HTML;
                     'link' => $mod->link .'&section=0', // Section is replaced by js.
                     'help' => $helptext
                 ];
-            }
-            else {
+            } else {
                 $activities[] = (object) [
                     'name' => $mod->name,
                     'title' => $mod->title,
@@ -1596,7 +1594,7 @@ HTML;
 
         $course = $PAGE->course;
         $coursecontext = context_course::instance($course->id);
-        // Switch roles
+        // Switch roles.
         $roles = array();
         $assumedrole = $this->in_alternative_role();
         if ($assumedrole !== false) {
@@ -1650,8 +1648,8 @@ HTML;
             if (!empty($this->page->context) && !empty($USER->access['rsw'][$this->page->context->path])) {
                 return $USER->access['rsw'][$this->page->context->path];
             }
-            foreach ($USER->access['rsw'] as $key=>$role) {
-                if (strpos($coursecontext->path,$key)===0) {
+            foreach ($USER->access['rsw'] as $key => $role) {
+                if (strpos($coursecontext->path, $key) === 0) {
                     return $role;
                 }
             }
@@ -1719,7 +1717,7 @@ HTML;
         }
 
         // No links to display.
-        if(!$links){
+        if (!$links) {
             return $o;
         }
 
@@ -1740,12 +1738,12 @@ HTML;
      * @return string
      */
     public function render_intelliboard_link($name, $url, $icon) {
-       global $OUTPUT;
-       $iconurl = $OUTPUT->image_url($icon, 'theme');
-       $img = '<img class="svg-icon" role="presentation" src="' .$iconurl. '">';
-       $o = '<a href=" '.$url.' ">' .$img.s($name). '</a><br>';
-       return $o;
-   }
+        global $OUTPUT;
+        $iconurl = $OUTPUT->image_url($icon, 'theme');
+        $img = '<img class="svg-icon" role="presentation" src="'.$iconurl.'">';
+        $o = '<a href=" '.$url.' ">'.$img.s($name).'</a><br>';
+        return $o;
+    }
 
     /**
      * Renders a wrap of the boost core notification popup area, which includes messages and notification popups
@@ -1765,78 +1763,80 @@ HTML;
         return $navoutput;
     }
 
-    /*
-    * This renders the navbar.
-    * Uses bootstrap compatible html.
-    */
-   public function navbar() {
-       global $COURSE, $CFG;
+    /**
+     * This renders the navbar.
+     * Uses bootstrap compatible html.
+     */
+    public function navbar() {
+        global $COURSE, $CFG;
 
-       require_once($CFG->dirroot.'/course/lib.php');
+        require_once($CFG->dirroot.'/course/lib.php');
 
-       $breadcrumbs = '';
-       $courseitem = null;
-       $snapmycourses = html_writer::link('#', get_string('menu', 'theme_snap'), array('class' => 'js-snap-pm-trigger'));
+        $breadcrumbs = '';
+        $courseitem = null;
+        $snapmycourses = html_writer::link('#', get_string('menu', 'theme_snap'), array('class' => 'js-snap-pm-trigger'));
 
-       foreach ($this->page->navbar->get_items() as $item) {
-           $item->hideicon = true;
+        foreach ($this->page->navbar->get_items() as $item) {
+            $item->hideicon = true;
 
-           // Remove link to current page - n.b. needs improving.
-           if ($item->action == $this->page->url) {
-               continue;
-           }
+            // Remove link to current page - n.b. needs improving.
+            if ($item->action == $this->page->url) {
+                continue;
+            }
 
-           // For Admin users - When default home is set to dashboard, let admin access the site home page.
-           if($item->key === 'myhome' && has_capability('moodle/site:config', context_system::instance())) {
-               $breadcrumbs .= '<li class="breadcrumb-item">' .html_writer::link(new moodle_url('/', ['redirect' => 0]), get_string('sitehome')). '</li>';
-               continue;
-           }
+            // For Admin users - When default home is set to dashboard, let admin access the site home page.
+            if ($item->key === 'myhome' && has_capability('moodle/site:config', context_system::instance())) {
+                $breadcrumbs .= '<li class="breadcrumb-item">';
+                $breadcrumbs .= html_writer::link(new moodle_url('/', ['redirect' => 0]), get_string('sitehome'));
+                $breadcrumbs .= '</li>';
+                continue;
+            }
 
-           // Remove link to home/dashboard as site name/logo provides the same link.
-           if ($item->key === 'home' || $item->key === 'myhome' || $item->key === 'dashboard') {
-               continue;
-           }
+            // Remove link to home/dashboard as site name/logo provides the same link.
+            if ($item->key === 'home' || $item->key === 'myhome' || $item->key === 'dashboard') {
+                continue;
+            }
 
-           // Replace my courses none-link with link to snap personal menu.
-           if ($item->key === 'mycourses') {
-               $breadcrumbs .= '<li class="breadcrumb-item">' .$snapmycourses. '</li>';
-               continue;
-           }
+            // Replace my courses none-link with link to snap personal menu.
+            if ($item->key === 'mycourses') {
+                $breadcrumbs .= '<li class="breadcrumb-item">' .$snapmycourses. '</li>';
+                continue;
+            }
 
-           if ($item->type == \navigation_node::TYPE_COURSE) {
-               $courseitem = $item;
-           }
+            if ($item->type == \navigation_node::TYPE_COURSE) {
+                $courseitem = $item;
+            }
 
-           if ($item->type == \navigation_node::TYPE_SECTION) {
-               if ($courseitem != null) {
-                   $url = $courseitem->action->out(false);
-                   $item->action = $courseitem->action;
-                   $sectionnumber = $this->get_section_for_id($item->key);
+            if ($item->type == \navigation_node::TYPE_SECTION) {
+                if ($courseitem != null) {
+                    $url = $courseitem->action->out(false);
+                    $item->action = $courseitem->action;
+                    $sectionnumber = $this->get_section_for_id($item->key);
 
-                   // Append section focus hash only for topics and weeks formats because we can
-                   // trust the behaviour of these formats.
-                   if ($COURSE->format == 'topics' || $COURSE->format == 'weeks') {
-                       $url .= '#section-'.$sectionnumber;
-                       if ($item->text == get_string('general')) {
-                           $item->text = get_string('introduction', 'theme_snap');
-                       }
-                   } else {
-                       $url = course_get_url($COURSE, $sectionnumber);
-                   }
-                   $item->action = new moodle_url($url);
-               }
-           }
+                    // Append section focus hash only for topics and weeks formats because we can
+                    // trust the behaviour of these formats.
+                    if ($COURSE->format == 'topics' || $COURSE->format == 'weeks') {
+                        $url .= '#section-'.$sectionnumber;
+                        if ($item->text == get_string('general')) {
+                            $item->text = get_string('introduction', 'theme_snap');
+                        }
+                    } else {
+                        $url = course_get_url($COURSE, $sectionnumber);
+                    }
+                    $item->action = new moodle_url($url);
+                }
+            }
 
-           // Only output breadcrumb items which have links.
-           if ($item->action !== null) {
-               $link = html_writer::link($item->action, $item->text);
-               $breadcrumbs .= '<li class="breadcrumb-item">' .$link. '</li>';
-           }
-       }
+            // Only output breadcrumb items which have links.
+            if ($item->action !== null) {
+                $link = html_writer::link($item->action, $item->text);
+                $breadcrumbs .= '<li class="breadcrumb-item">' .$link. '</li>';
+            }
+        }
 
-       if(!empty($breadcrumbs)) {
-           return '<div class="breadcrumb-nav" aria-label="breadcrumb">'.
-           '<ol class="breadcrumb">' .$breadcrumbs .'</ol></div>';
-       }
-   }
+        if (!empty($breadcrumbs)) {
+            return '<div class="breadcrumb-nav" aria-label="breadcrumb">'.
+                '<ol class="breadcrumb">' .$breadcrumbs .'</ol></div>';
+        }
+    }
 }

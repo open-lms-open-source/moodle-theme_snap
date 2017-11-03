@@ -34,7 +34,7 @@ use assign_submission_status;
 use assign_submission_plugin_submission;
 use assign_feedback_plugin_feedback;
 
-require_once($CFG->dirroot . "/mod/assign/renderer.php");
+require_once($CFG->dirroot.'/mod/assign/renderer.php');
 
 class mod_assign_renderer extends \mod_assign_renderer {
 
@@ -96,16 +96,16 @@ class mod_assign_renderer extends \mod_assign_renderer {
             // Allow submissions from.
             if ($status->allowsubmissionsfromdate && $time <= $status->allowsubmissionsfromdate) {
                 $date = userdate($status->allowsubmissionsfromdate);
-                $duedata .= '<div>' .get_string('allowsubmissionsfromdatesummary', 'assign', $date). '</div>';
+                $duedata .= '<div>'.get_string('allowsubmissionsfromdatesummary', 'assign', $date).'</div>';
             }
 
             // Due date.
-            $duedata .= '<div>' .get_string('due', 'theme_snap', userdate($duedate)). '</div>';
+            $duedata .= '<div>'.get_string('due', 'theme_snap', userdate($duedate)).'</div>';
 
             // Time remaining.
             if ($duedate - $time >= 0) {
                 $due = format_time($duedate - $time);
-                $duedata .= '<div>' .get_string('timeremaining', 'assign'). ': ' .$due. '</div>';
+                $duedata .= '<div>'.get_string('timeremaining', 'assign').': '.$due.'</div>';
             }
 
             // Late submissions data.
@@ -116,11 +116,11 @@ class mod_assign_renderer extends \mod_assign_renderer {
                     if ($cutoffdate > $time) {
                         $late = get_string('latesubmissionsaccepted', 'assign', userdate($status->cutoffdate));
                     }
-                    $duedata .= '<div>' .get_string('latesubmissions', 'assign'). ': ' .$late. '</div>';
+                    $duedata .= '<div>'.get_string('latesubmissions', 'assign').': '.$late.'</div>';
                 }
             }
         }
-        return '<div class="duedata">' .$duedata. '</div>';
+        return '<div class="duedata">'.$duedata.'</div>';
     }
 
     /**
@@ -139,8 +139,10 @@ class mod_assign_renderer extends \mod_assign_renderer {
             // Ungraded submissions.
             if ($summary->submissionsneedgradingcount > 0) {
                 $needsgradingdata .= '<div>';
-                $needsgradingdata .= get_string('numberofsubmissionsneedgrading', 'assign'). ' ';
-                $needsgradingdata .= '<span class="badge badge-success pull-right">' .$summary->submissionsneedgradingcount. '</span>';
+                $needsgradingdata .= get_string('numberofsubmissionsneedgrading', 'assign').' ';
+                $needsgradingdata .= '<span class="badge badge-success pull-right">'.
+                    $summary->submissionsneedgradingcount.
+                    '</span>';
                 $needsgradingdata .= '</div>';
             }
             // Team submission - don't show needs grading count.
@@ -150,41 +152,43 @@ class mod_assign_renderer extends \mod_assign_renderer {
         }
         // Drafts count. Don't show drafts count when using offline assignment.
         if ($summary->submissiondraftsenabled && $summary->submissionsenabled) {
-            $needsgradingdata .= '<div>' .get_string('numberofdraftsubmissions', 'assign'). ' <span class="pull-right badge badge-warning">' .$summary->submissiondraftscount. '</span></div>';
+            $needsgradingdata .= '<div>'.get_string('numberofdraftsubmissions', 'assign').
+                ' <span class="pull-right badge badge-warning">'.$summary->submissiondraftscount.'</span></div>';
         }
-        $o .= '<div class="needsgradingdata">' .$needsgradingdata. '</div>';
+        $o .= '<div class="needsgradingdata">'.$needsgradingdata.'</div>';
 
         // Number of submissions.
         $submissionsdata = '';
         if ($summary->teamsubmission) {
             // Team submissions.
             if ($summary->warnofungroupedusers) {
-                $submissionsdata = '<div class="alert alert-danger">' .get_string('ungroupedusers', 'assign'). '</div>';
+                $submissionsdata = '<div class="alert alert-danger">'.get_string('ungroupedusers', 'assign').'</div>';
             }
             // SHAME - participantcount is replaced by number of groups in teamsubmission - not sure why.
             // On the page this seems to only add confusion.
-            $submissionsdata .= '<div>' .get_string('numberofteams', 'assign'). ': ' .$summary->participantcount. '</div>';
-            $submissionsdata .= '<div>' .get_string('numberofsubmittedassignments', 'assign'). ': '. $summary->submissionssubmittedcount. '</div>';
+            $submissionsdata .= '<div>'.get_string('numberofteams', 'assign').': '.$summary->participantcount.'</div>';
+            $submissionsdata .= '<div>'.get_string('numberofsubmittedassignments', 'assign').': '.
+                    $summary->submissionssubmittedcount.'</div>';
         } else {
             // Single submissions.
-            $percentage = round(($summary->submissionssubmittedcount / $summary->participantcount), 3) * 100 .'%';
+            $percentage = round(($summary->submissionssubmittedcount / $summary->participantcount), 3) * 100 . '%';
             $submissionsdata = '<div class="submissions-status">';
-            $submissionsdata .= get_string('submissions', 'assign'). ': ';
-            $submissionsdata .= $summary->submissionssubmittedcount. ' / ' .$summary->participantcount;
-            $submissionsdata .= '<span class="pull-right">' .$percentage. '</span>';
-            $submissionsdata .= '<br><div class="submissions-line" style="width:' .$percentage. '"></div>';
+            $submissionsdata .= get_string('submissions', 'assign').': ';
+            $submissionsdata .= $summary->submissionssubmittedcount.' / '.$summary->participantcount;
+            $submissionsdata .= '<span class="pull-right">'.$percentage.'</span>';
+            $submissionsdata .= '<br><div class="submissions-line" style="width:'.$percentage.'"></div>';
             $submissionsdata .= '</div>';
         }
-        $o .= '<div class="submissionsdata">' .$submissionsdata. '</div>';
+        $o .= '<div class="submissionsdata">'.$submissionsdata.'</div>';
 
         // View all submissions link.
         $urlparams = array('id' => $summary->coursemoduleid, 'action' => 'grading');
         $url = new moodle_url('/mod/assign/view.php', $urlparams);
-        $o .= '<a href="' .$url. '" class="pull-right btn btn-link">' . get_string('viewgrading', 'mod_assign') . '</a>';
+        $o .= '<a href="'.$url.'" class="pull-right btn btn-link">'.get_string('viewgrading', 'mod_assign').'</a>';
         // Grade button.
         $urlparams = array('id' => $summary->coursemoduleid, 'action' => 'grader');
         $url = new moodle_url('/mod/assign/view.php', $urlparams);
-        $o .= '<a href="' .$url. '" role="button" class="btn btn-inverse">' . get_string('grade') . '</a>';
+        $o .= '<a href="'.$url.'" role="button" class="btn btn-inverse">'.get_string('grade').'</a>';
         // Close assign-grading-summary.
         $o .= '</div>';
         return $o;
@@ -213,21 +217,21 @@ class mod_assign_renderer extends \mod_assign_renderer {
         // Team submissions - group name, warning.
         if ($status->teamsubmissionenabled) {
             // Team.
-            $team = get_string('submissionteam', 'assign'). ': ';
+            $team = get_string('submissionteam', 'assign').': ';
             $group = $status->submissiongroup;
             if ($group) {
-                $statusdata .= '<h4 class="h6">' .$team.format_string($group->name, false, $status->context). '</h4>';
+                $statusdata .= '<h4 class="h6">'.$team.format_string($group->name, false, $status->context).'</h4>';
             } else {
-                $statusdata .= '<h4 class="h6">' .$team.get_string('defaultteam', 'assign'). '</h4>';
+                $statusdata .= '<h4 class="h6">'.$team.get_string('defaultteam', 'assign').'</h4>';
             }
 
             if ($status->preventsubmissionnotingroup) {
                 if (count($status->usergroups) == 0) {
-                    $warning = get_string('noteam', 'assign'). '.<br>' .get_string('noteam_desc', 'assign');
-                    $statusdata .= '<div class="alert alert-danger">' .$warning. '</div>';
+                    $warning = get_string('noteam', 'assign').'.<br>'.get_string('noteam_desc', 'assign');
+                    $statusdata .= '<div class="alert alert-danger">'.$warning.'</div>';
                 } else if (count($status->usergroups) > 1) {
-                    $warning = get_string('multipleteams', 'assign'). '.<br>' .get_string('multipleteams_desc', 'assign');
-                    $statusdata .= '<div class="alert alert-danger">' .$warning. '</div>';
+                    $warning = get_string('multipleteams', 'assign').'.<br>'.get_string('multipleteams_desc', 'assign');
+                    $statusdata .= '<div class="alert alert-danger">'.$warning.'</div>';
                 }
             }
         }
@@ -243,7 +247,7 @@ class mod_assign_renderer extends \mod_assign_renderer {
                 $currentattempt = $status->submission->attemptnumber + 1;
             }
 
-            $statusdata .= '<div>' .get_string('attemptnumber', 'assign'). '<br>';
+            $statusdata .= '<div>'.get_string('attemptnumber', 'assign').'<br>';
             $maxattempts = $status->maxattempts;
             if ($maxattempts == ASSIGN_UNLIMITED_ATTEMPTS) {
                 $attempts = get_string('currentattempt', 'assign', $currentattempt);
@@ -258,10 +262,10 @@ class mod_assign_renderer extends \mod_assign_renderer {
         // Status.
         // Add a tick if submitted.
         $tick = '';
-        if($status->submission->status === 'submitted') {
+        if ($status->submission->status === 'submitted') {
             $tick = '<i class="icon fa fa-check text-success fa-fw " aria-hidden="true" role="presentation"></i>';
         }
-        $statusdata .= '<div>' .$tick.get_string('submissionstatus', 'assign'). ': ';
+        $statusdata .= '<div>'.$tick.get_string('submissionstatus', 'assign').': ';
         if ($status->teamsubmissionenabled) {
             // Team.
             $group = $status->submissiongroup;
@@ -269,7 +273,7 @@ class mod_assign_renderer extends \mod_assign_renderer {
                 $statusdata .= get_string('nosubmission', 'assign');
             } else if ($status->teamsubmission && $status->teamsubmission->status != ASSIGN_SUBMISSION_STATUS_NEW) {
                 $teamstatus = $status->teamsubmission->status;
-                $submissionsummary = get_string('submissionstatus_' . $teamstatus, 'assign');
+                $submissionsummary = get_string('submissionstatus_'.$teamstatus, 'assign');
                 $groupid = 0;
                 if ($status->submissiongroup) {
                     $groupid = $status->submissiongroup->id;
@@ -278,7 +282,7 @@ class mod_assign_renderer extends \mod_assign_renderer {
                 $members = $status->submissiongroupmemberswhoneedtosubmit;
                 $userslist = array();
                 foreach ($members as $member) {
-                    $urlparams = array('id' => $member->id, 'course'=>$status->courseid);
+                    $urlparams = array('id' => $member->id, 'course' => $status->courseid);
                     $url = new moodle_url('/user/view.php', $urlparams);
                     if ($status->view == assign_submission_status::GRADER_VIEW && $status->blindmarking) {
                         $userslist[] = $member->alias;
@@ -303,7 +307,7 @@ class mod_assign_renderer extends \mod_assign_renderer {
         } else {
             // Single user.
             if ($status->submission && $status->submission->status != ASSIGN_SUBMISSION_STATUS_NEW) {
-                $statusstr = get_string('submissionstatus_' . $status->submission->status, 'assign');
+                $statusstr = get_string('submissionstatus_'.$status->submission->status, 'assign');
                 $statusdata .= $statusstr;
             } else {
                 if (!$status->submissionsenabled) {
@@ -316,7 +320,7 @@ class mod_assign_renderer extends \mod_assign_renderer {
 
         // Is locked?
         if ($status->locked) {
-            $statusdata .= '<br>' .get_string('submissionslocked', 'assign');
+            $statusdata .= '<br>'.get_string('submissionslocked', 'assign');
         }
         $statusdata .= '</div>';
 
@@ -326,19 +330,19 @@ class mod_assign_renderer extends \mod_assign_renderer {
             $status->gradingstatus == ASSIGN_MARKING_WORKFLOW_STATE_RELEASED) {
                 $tick = '<i class="icon fa fa-check text-success fa-fw " aria-hidden="true" role="presentation"></i>';
         }
-        $gradingdata = '<div>'.$tick.get_string('gradingstatus', 'assign'). ': ';
+        $gradingdata = '<div>'.$tick.get_string('gradingstatus', 'assign').': ';
         if ($status->gradingstatus == ASSIGN_GRADING_STATUS_GRADED ||
             $status->gradingstatus == ASSIGN_GRADING_STATUS_NOT_GRADED) {
             $gradingdata .= get_string($status->gradingstatus, 'assign');
         } else {
-            $gradingstatus = 'markingworkflowstate' . $status->gradingstatus;
+            $gradingstatus = 'markingworkflowstate'.$status->gradingstatus;
             $gradingdata .= get_string($gradingstatus, 'assign');
         }
         $gradingdata .= '</div>';
 
         // Show graders whether this submission is editable by students.
         if ($status->view == assign_submission_status::GRADER_VIEW) {
-            $gradingdata .= '<div>' .get_string('editingstatus', 'assign') .'<br>';
+            $gradingdata .= '<div>'.get_string('editingstatus', 'assign').'<br>';
             if ($status->canedit) {
                 $gradingdata .= get_string('submissioneditable', 'assign');
             } else {
@@ -351,7 +355,7 @@ class mod_assign_renderer extends \mod_assign_renderer {
         $submissiondata = '';
         if ($submission) {
             $submissiondata .= '<div class="assign-submission-data">';
-            $submissiondata .= '<div>' .$userpic. '</div><hr>';
+            $submissiondata .= '<div>'.$userpic.'</div><hr>';
             if (!$status->teamsubmission || $status->submissiongroup != false || !$status->preventsubmissionnotingroup) {
                 foreach ($status->submissionplugins as $plugin) {
                         $pluginshowsummary = !$plugin->is_empty($submission) || !$plugin->allow_submissions();
@@ -360,7 +364,7 @@ class mod_assign_renderer extends \mod_assign_renderer {
                         $plugin->has_user_summary() &&
                         $pluginshowsummary
                     ) {
-                            $submissiondata .= '<h4 class="h6">' .$plugin->get_name(). '</h4>';
+                            $submissiondata .= '<h4 class="h6">'.$plugin->get_name().'</h4>';
                             $displaymode = assign_submission_plugin_submission::SUMMARY;
                             $pluginsubmission = new assign_submission_plugin_submission($plugin,
                             $submission,
@@ -373,12 +377,12 @@ class mod_assign_renderer extends \mod_assign_renderer {
                 }
             }
 
-            $submissiondata .= '<div class="statusdata">' .$statusdata. '</div>';
-            $submissiondata .= '<div class="gradingdata">' .$gradingdata. '</div>';
+            $submissiondata .= '<div class="statusdata">'.$statusdata.'</div>';
+            $submissiondata .= '<div class="gradingdata">'.$gradingdata.'</div>';
 
             if ($submission->status != ASSIGN_SUBMISSION_STATUS_NEW) {
-                    $submissiondata .= '<div>' .get_string('timemodified', 'assign') .': ';
-                    $submissiondata .= userdate($submission->timemodified) .'</div>';
+                    $submissiondata .= '<div>' .get_string('timemodified', 'assign').': ';
+                    $submissiondata .= userdate($submission->timemodified).'</div>';
             }
             $submissiondata .= '<br>';
 
@@ -388,28 +392,32 @@ class mod_assign_renderer extends \mod_assign_renderer {
                     $urlparams = array('id' => $status->coursemoduleid, 'action' => 'editsubmission');
                     $url = new moodle_url('/mod/assign/view.php', $urlparams);
                     if (!$submission || $submission->status == ASSIGN_SUBMISSION_STATUS_NEW) {
-                        $submissiondata .= '<a href="' .$url. '" role="button" class="btn btn-inverse">' .get_string('addsubmission', 'assign'). '</a>';
+                        $submissiondata .= '<a href="'.$url.'" role="button" class="btn btn-inverse">'
+                            .get_string('addsubmission', 'assign').'</a>';
                     } else if ($submission->status == ASSIGN_SUBMISSION_STATUS_REOPENED) {
-                        $submissiondata .= '<div>' .get_string('addnewattempt_help', 'assign') .'</div>';
-                        $submissiondata .= '<a href="' .$url. '" role="button" class="btn btn-inverse">' .get_string('addnewattempt', 'assign'). '</a>';
+                        $submissiondata .= '<div>'.get_string('addnewattempt_help', 'assign').'</div>';
+                        $submissiondata .= '<a href="'.$url.'" role="button" class="btn btn-inverse">'
+                            .get_string('addnewattempt', 'assign').'</a>';
 
-                        $submissiondata .= '<div>' .get_string('addnewattemptfromprevious_help', 'assign') .'</div>';
+                        $submissiondata .= '<div>'.get_string('addnewattemptfromprevious_help', 'assign').'</div>';
                         $urlparams = array('id' => $status->coursemoduleid,
                                            'action' => 'editprevioussubmission',
                                            'sesskey' => sesskey());
                         $url = new moodle_url('/mod/assign/view.php', $urlparams);
-                        $submissiondata .= '<a href="' .$url. '" role="button" class="btn btn-inverse">' .get_string('addnewattemptfromprevious', 'assign'). '</a>';
+                        $submissiondata .= '<a href="'.$url.'" role="button" class="btn btn-inverse">'
+                            .get_string('addnewattemptfromprevious', 'assign').'</a>';
                     } else {
-                        $submissiondata .= '<a href="' .$url. '" role="button" class="btn btn-inverse">' .get_string('editsubmission', 'assign'). '</a>';
+                        $submissiondata .= '<a href="'.$url.'" role="button" class="btn btn-inverse">'
+                            .get_string('editsubmission', 'assign').'</a>';
                     }
                 }
 
                 if ($status->cansubmit) {
-                    $submissiondata .= '<div>' .get_string('submitassignment_help', 'assign'). '</div>';
+                    $submissiondata .= '<div>'.get_string('submitassignment_help', 'assign').'</div>';
                     $urlparams = array('id' => $status->coursemoduleid, 'action' => 'submit');
                     $url = new moodle_url('/mod/assign/view.php', $urlparams);
-                    $submissiondata .= '<a href="' .$url. '" role="button" class="btn btn-inverse">' .get_string('submitassignment', 'assign'). '</a>';
-
+                    $submissiondata .= '<a href="'.$url.'" role="button" class="btn btn-inverse">'
+                        .get_string('submitassignment', 'assign').'</a>';
                 }
             }
             $submissiondata .= '</div><!-- close assign-submission-data -->';
@@ -420,7 +428,7 @@ class mod_assign_renderer extends \mod_assign_renderer {
         // else feedback is displayed which contains marking criteria.
         if (!$status->graded && $status->gradingcontrollerpreview) {
             $gradingmethodpreview = '<div class="gradingmethodpreview">';
-            $gradingmethodpreview .= '<h5>' .get_string('gradingmethodpreview', 'assign') .'</h5>';
+            $gradingmethodpreview .= '<h5>'.get_string('gradingmethodpreview', 'assign').'</h5>';
             $gradingmethodpreview .= $status->gradingcontrollerpreview;
             $gradingmethodpreview .= '</div>';
             $o .= $gradingmethodpreview;
@@ -436,23 +444,23 @@ class mod_assign_renderer extends \mod_assign_renderer {
      */
     public function render_assign_feedback_status(\assign_feedback_status $status) {
         $o = '<div class="assign-feedback">';
-        $o .= '<h3>' .get_string('feedback', 'assign'). '</h3><br>';
+        $o .= '<h3>'.get_string('feedback', 'assign').'</h3><br>';
         if ($status->grader) {
             // Grader.
-            $userdescription = $this->output->user_picture($status->grader) .
+            $userdescription = $this->output->user_picture($status->grader).
                                ' '.
                                fullname($status->grader, $status->canviewfullnames);
             $grader = $userdescription;
             if (isset($status->gradefordisplay)) {
-                $grader = '<div class="row"><div class="col-sm-6">' .$grader. '</div>';
-                $grader .= '<div class="col-sm-6"><em>'. userdate($status->gradeddate) .'</em></div>';
+                $grader = '<div class="row"><div class="col-sm-6">'.$grader.'</div>';
+                $grader .= '<div class="col-sm-6"><em>'.userdate($status->gradeddate).'</em></div>';
                 $grader .= '</div>';
             }
             $o .= $grader;
         }
         // Grade.
         if (isset($status->gradefordisplay)) {
-            $o .= '<div class="p-y-1">' .$status->gradefordisplay .'</div>';
+            $o .= '<div class="p-y-1">'.$status->gradefordisplay.'</div>';
         }
 
         foreach ($status->feedbackplugins as $plugin) {
@@ -463,7 +471,7 @@ class mod_assign_renderer extends \mod_assign_renderer {
                     !$plugin->is_empty($status->grade)) {
 
                 $o .= '<div>';
-                $o .= '<h5>' .$plugin->get_name(). '</h5>';
+                $o .= '<h5>'.$plugin->get_name().'</h5>';
                 $displaymode = assign_feedback_plugin_feedback::SUMMARY;
                 $pluginfeedback = new assign_feedback_plugin_feedback($plugin,
                                                                       $status->grade,

@@ -16,13 +16,13 @@
 
 namespace theme_snap\services;
 
+defined('MOODLE_INTERNAL') || die();
+
 use theme_snap\renderables\course_card;
 use theme_snap\local;
 use theme_snap\renderables\course_toc;
 
 require_once($CFG->dirroot.'/course/lib.php');
-
-defined('MOODLE_INTERNAL') || die();
 
 /**
  * Course service class.
@@ -56,7 +56,7 @@ class course {
     protected function check_summary_files_for_image_suitability($context) {
 
         $fs = get_file_storage();
-        $files = $fs->get_area_files($context->id, 'course', 'overviewfiles',0);
+        $files = $fs->get_area_files($context->id, 'course', 'overviewfiles', 0);
         $tmparr = [];
         // Remove '.' file from files array.
         foreach ($files as $file) {
@@ -76,6 +76,7 @@ class course {
             return false;
         }
 
+        // @codingStandardsIgnoreLine
         /* @var \stored_file $file*/
         $file = end($files);
         $ext = strtolower(pathinfo($file->get_filename(), PATHINFO_EXTENSION));
@@ -111,7 +112,7 @@ class course {
 
         $newfilename = 'rawcoverimage.'.$ext;
 
-        $binary =  base64_decode($data);
+        $binary = base64_decode($data);
         if (strlen($binary) > get_max_upload_file_size($CFG->maxbytes)) {
             throw new \moodle_exception('error:coverimageexceedsmaxbytes', 'theme_snap');
         }
@@ -222,7 +223,7 @@ class course {
             if (!empty($course->enddate) && $course->enddate < $today) {
                 $course->endyear = userdate($course->enddate, '%Y');
                 $past[$course->endyear][$course->id] = $course;
-            } elseif (isset($favorites[$course->id])) {
+            } else if (isset($favorites[$course->id])) {
                 $favorited[$course->id] = $course;
             } else {
                 $notfavorited[$course->id] = $course;
@@ -310,7 +311,6 @@ class course {
         $newlyavailablesections = array_diff($previouslyunavailablesections, $unavailablesections);
         $intersectunavailable = array_intersect($previouslyunavailablesections, $unavailablesections);
         $newlyunavailablesections = array_diff($unavailablesections, $intersectunavailable);
-
 
         $newlyavailablemods = array_diff($previouslyunavailablemods, $unavailablemods);
         $intersectunavailable = array_intersect($previouslyunavailablemods, $unavailablemods);

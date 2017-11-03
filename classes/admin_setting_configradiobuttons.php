@@ -58,16 +58,17 @@ class admin_setting_configradiobuttons extends \admin_setting {
         foreach ($this->radios as $key => $value) {
             $checked = '';
             if ($key === $checkedvalue) {
-               $checked = 'checked';
-           }
-           $inputs .= '<label id="' .$this->get_full_name().'_'.$key. '"><input type="radio" name="' .$this->get_full_name(). '" value="' .$key. '" ' .$checked. '>' .s($value). '</label><br>';
+                $checked = 'checked';
+            }
+            $inputs .= '<label id="' .s($this->get_full_name()).'_'.$key.'"><input type="radio" name="'.
+                    s($this->get_full_name()). '" value="' .$key. '" ' .$checked. '>' .s($value). '</label><br>';
         }
         $inputs .= '</div></div>';
         return format_admin_setting($this, $this->visiblename, $inputs,
         $this->description, true, '', $default, $query);
-   }
+    }
 
-   /**
+    /**
      * Return the setting
      *
      * @return mixed returns config if successful else null

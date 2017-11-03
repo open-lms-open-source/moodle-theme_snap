@@ -17,6 +17,8 @@
 
 namespace theme_snap;
 
+defined('MOODLE_INTERNAL') || die();
+
 use html_writer;
 use \theme_snap\user_forums;
 use \theme_snap\course_total_grade;
@@ -66,9 +68,8 @@ class local {
 
     /**
      * Does this course have any visible feedback for current user?.
-     *
      * @param \stdClass $course
-     * @return \stdClass
+     * @return object
      */
     public static function course_grade($course) {
         global $USER;
@@ -425,7 +426,7 @@ class local {
             $completioninfo = new \completion_info($course);
             if ($completioninfo->is_enabled()) {
                 $modinfo = get_fast_modinfo($course);
-                $sections= $modinfo->get_section_info_all();
+                $sections = $modinfo->get_section_info_all();
                 foreach ($sections as $number => $section) {
                     $ci = new \core_availability\info_section($section);
                     if (!$ci->is_available($information, true)) {
@@ -767,40 +768,49 @@ class local {
         }
 
         if ((is_array($users) && !empty($users)) or is_numeric($users)) {
-            // Events from a number of users
-            if(!empty($whereclause)) $whereclause .= ' OR';
+            // Events from a number of users.
+            if (!empty($whereclause)) {
+                $whereclause .= ' OR';
+            }
             list($insqlusers, $inparamsusers) = $DB->get_in_or_equal($users, SQL_PARAMS_NAMED);
             $whereclause .= " (e.userid $insqlusers AND e.courseid = 0 AND e.groupid = 0)";
             $params = array_merge($params, $inparamsusers);
-        } else if($users === true) {
-            // Events from ALL users
-            if(!empty($whereclause)) $whereclause .= ' OR';
+        } else if ($users === true) {
+            // Events from ALL users.
+            if (!empty($whereclause)) {
+                $whereclause .= ' OR';
+            }
             $whereclause .= ' (e.userid != 0 AND e.courseid = 0 AND e.groupid = 0)';
-        } else if($users === false) {
-            // No user at all, do nothing
         }
 
         if ((is_array($groups) && !empty($groups)) or is_numeric($groups)) {
-            // Events from a number of groups
-            if(!empty($whereclause)) $whereclause .= ' OR';
+            // Events from a number of groups.
+            if (!empty($whereclause)) {
+                $whereclause .= ' OR';
+            }
             list($insqlgroups, $inparamsgroups) = $DB->get_in_or_equal($groups, SQL_PARAMS_NAMED);
             $whereclause .= " e.groupid $insqlgroups ";
             $params = array_merge($params, $inparamsgroups);
-        } else if($groups === true) {
-            // Events from ALL groups
-            if(!empty($whereclause)) $whereclause .= ' OR ';
+        } else if ($groups === true) {
+            // Events from ALL groups.
+            if (!empty($whereclause)) {
+                $whereclause .= ' OR ';
+            }
             $whereclause .= ' e.groupid != 0';
         }
-        // boolean false (no groups at all): we don't need to do anything
 
         if ((is_array($courses) && !empty($courses)) or is_numeric($courses)) {
-            if(!empty($whereclause)) $whereclause .= ' OR';
+            if (!empty($whereclause)) {
+                $whereclause .= ' OR';
+            }
             list($insqlcourses, $inparamscourses) = $DB->get_in_or_equal($courses, SQL_PARAMS_NAMED);
             $whereclause .= " (e.groupid = 0 AND e.courseid $insqlcourses)";
             $params = array_merge($params, $inparamscourses);
         } else if ($courses === true) {
-            // Events from ALL courses
-            if(!empty($whereclause)) $whereclause .= ' OR';
+            // Events from ALL courses.
+            if (!empty($whereclause)) {
+                $whereclause .= ' OR';
+            }
             $whereclause .= ' (e.groupid = 0 AND e.courseid != 0)';
         }
 
@@ -808,29 +818,27 @@ class local {
         // that NO event-selecting clauses were defined. Thus, we won't be returning ANY
         // events no matter what. Allowing the code to proceed might return a completely
         // valid query with only time constraints, thus selecting ALL events in that time frame!
-        if(empty($whereclause)) {
+        if (empty($whereclause)) {
             return array();
         }
 
-        if($withduration) {
+        if ($withduration) {
             $timeclause = "(
                 ((e.timestart >= $tstart OR e.timestart + e.timeduration > $tstart) AND e.timestart <= $tend) OR
                 ((auf.extensionduedate >= $tstart OR auf.extensionduedate + e.timeduration > $tstart)
                 AND auf.extensionduedate <= $tend)
             )";
-        }
-        else {
+        } else {
             $timeclause = "(
-                (e.timestart >= $tstart AND e.timestart <= $tend) OR 
+                (e.timestart >= $tstart AND e.timestart <= $tend) OR
                 (auf.extensionduedate >= $tstart AND auf.extensionduedate <= $tend)
             )";
         }
-        if(!empty($whereclause)) {
-            // We have additional constraints
+        if (!empty($whereclause)) {
+            // We have additional constraints.
             $whereclause = $timeclause.' AND ('.$whereclause.')';
-        }
-        else {
-            // Just basic time filtering
+        } else {
+            // Just basic time filtering.
             $whereclause = $timeclause;
         }
 
@@ -840,7 +848,7 @@ class local {
 
         $sql = "SELECT e.*, auf.extensionduedate,
               (
-              CASE 
+              CASE
               WHEN auf.extensionduedate IS NULL
               THEN e.timestart
               ELSE auf.extensionduedate
@@ -894,7 +902,7 @@ class local {
 
         if ($todayonly === true) {
             $starttime = $today->getTimestamp();
-            $endtime = $tomorrow->getTimestamp()-1;
+            $endtime = $tomorrow->getTimestamp() - 1;
         } else {
             $starttime = $tomorrow->getTimestamp();
             $endtime = $starttime + (365 * DAYSECS) - 1;
@@ -1275,7 +1283,11 @@ class local {
 
         // Supported file extensions.
         $extensions = explode(',', str_replace('.', '', $extsstr));
-        array_walk($extensions, function($s) {trim($s); });
+        array_walk($extensions, function($s) {
+                trim($s);
+        }
+        );
+
         // Filter out any extensions that might be in the config but not image extensions.
         $imgextensions = ['jpg', 'png', 'gif', 'svg', 'webp'];
         return array_intersect ($extensions, $imgextensions);
@@ -1553,14 +1565,18 @@ class local {
      */
     private static function coverimage_filename(\context $context) {
         $contextlevel = $context->contextlevel;
-        $filename = '';
-        switch ($contextlevel) {
-            case CONTEXT_SYSTEM : $filename = 'site-image'; break;
-            case CONTEXT_COURSECAT : $filename = 'category-image'; break;
-            case CONTEXT_COURSE : $filename = 'course-image'; break;
-            default : throw new \coding_exception('Unsupported context level '.$contextlevel);
+
+        $filenamemap = [
+            CONTEXT_SYSTEM => 'site-image',
+            CONTEXT_COURSECAT => 'category-image',
+            CONTEXT_COURSE => 'course-image'
+        ];
+
+        if (empty($filenamemap[$contextlevel])) {
+            throw new \coding_exception('Unsupported context level '.$contextlevel);
+        } else {
+            return $filenamemap[$contextlevel];
         }
-        return $filename;
     }
 
     /**

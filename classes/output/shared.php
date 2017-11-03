@@ -333,7 +333,7 @@ EOF;
             $completioninfo = new \completion_info($COURSE);
             if ($completioninfo->is_enabled()) {
                 $modinfo = get_fast_modinfo($COURSE);
-                $sections= $modinfo->get_section_info_all();
+                $sections = $modinfo->get_section_info_all();
                 foreach ($sections as $number => $section) {
                     $ci = new \core_availability\info_section($section);
                     $information = '';
@@ -581,21 +581,21 @@ EOF;
         // Participants.
         if (has_capability('moodle/course:viewparticipants', $coursecontext)) {
             // Get count of course users.
-            $usercount = count_enrolled_users(context_course::instance($COURSE->id), '', 0, true);
+            $usercount = count_enrolled_users($coursecontext, '', 0, true);
 
             // Build icon.
             $participanticons = '';
-            if(!empty($usercount)) {
+            if (!empty($usercount)) {
                 // Get subset of users for icon.
-                $usersubset = get_enrolled_users(context_course::instance($COURSE->id), '', 0, 'u.*', 'picture desc, lastaccess desc', 0, 4, true);
+                $usersubset = get_enrolled_users($coursecontext,
+                        '', 0, 'u.*', 'picture desc, lastaccess desc', 0, 4, true);
                 foreach ($usersubset as $user) {
                     $userpicture = new \user_picture($user);
                     $userpicture->link = false;
                     $userpicture->size = 100;
                     $participanticons .= $OUTPUT->render($userpicture);
                 }
-            }
-            else {
+            } else {
                 // Default icon when 0 participants.
                 $iconurl = $OUTPUT->image_url('u/f1');
                 $participanticons = '<img src="'.$iconurl.'" alt="" role="presentation">';
@@ -644,7 +644,7 @@ EOF;
         }
 
         // Outcomes if enabled.
-        if(!empty($CFG->core_outcome_enable)) {
+        if (!empty($CFG->core_outcome_enable)) {
             $iconurl = $OUTPUT->image_url('outcomes', 'theme');
             $outcomesicon = '<img src="'.$iconurl.'" class="svg-icon" alt="" role="presentation">';
 
@@ -657,7 +657,8 @@ EOF;
                 $outcomesets = new \core_outcome\model\outcome_set_repository();
                 if ($outcomesets->course_has_any_outcome_sets($COURSE->id)) {
                     $links[] = array(
-                        'link'  => 'outcome/course.php?contextid='.$coursecontext->id.'&action=report_course_user_performance_table',
+                        'link'  => 'outcome/course.php?contextid='.$coursecontext->id.
+                            '&action=report_course_user_performance_table',
                         'title' => $outcomesicon.get_string('outcomes', 'outcome'),
                     );
                 }
@@ -759,7 +760,7 @@ EOF;
         $userpicture = new \user_picture($USER);
         $userpicture->link = false;
         $userpicture->alttext = false;
-        $userpicture->class = 'userpicture snap-icon'; // icon class for margin.
+        $userpicture->class = 'userpicture snap-icon'; // Icon class for margin.
         $userpicture->size = 100;
         $userpic = $OUTPUT->render($userpicture);
 
@@ -791,7 +792,8 @@ EOF;
             $userboard .= '<div class="col-xs-3 text-center snap-student-dashboard-grade">';
             $userboard .= '<h4 class="h6">' . get_string('grade') . '</h6>';
             $userboard .= '<a href="' . $moodleurl . '">';
-            $userboard .= '<div class="js-progressbar-circle snap-progress-circle snap-progressbar-link" value="' . $coursegrade . '"></div>';
+            $userboard .= '<div class="js-progressbar-circle snap-progress-circle snap-progressbar-link" value="';
+            $userboard .= s($coursegrade) . '"></div>';
             $userboard .= '</a>';
             $userboard .= '</div>';
         }

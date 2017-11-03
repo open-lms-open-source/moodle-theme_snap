@@ -33,33 +33,34 @@ use theme_snap\renderables\bb_dashboard_link;
 <header id='mr-nav' class='clearfix moodle-has-zindex'>
 <div class="pull-right">
 <?php
-    if (class_exists('local_geniusws\navigation')) {
-        $bblink = new bb_dashboard_link();
-        echo $OUTPUT->render($bblink);
-    }
-    echo $OUTPUT->personal_menu_trigger();
-    echo core_renderer::search_box();
-    $settingslink = new settings_link();
-    echo $OUTPUT->render($settingslink);
-    echo $OUTPUT->render_notification_popups();
+if (class_exists('local_geniusws\navigation')) {
+    $bblink = new bb_dashboard_link();
+    echo $OUTPUT->render($bblink);
+}
+echo $OUTPUT->personal_menu_trigger();
+echo core_renderer::search_box();
+$settingslink = new settings_link();
+echo $OUTPUT->render($settingslink);
+echo $OUTPUT->render_notification_popups();
 ?>
 </div>
 
 <?php
-    $sitefullname = format_string($SITE->fullname);
-    $attrs = array(
-        'aria-label' => get_string('home', 'theme_snap'),
-        'id' => 'snap-home',
-        'title' => $sitefullname,
-    );
+$sitefullname = format_string($SITE->fullname);
+$attrs = array(
+    'aria-label' => get_string('home', 'theme_snap'),
+    'id' => 'snap-home',
+    'title' => $sitefullname,
+);
 
-    if (!empty($PAGE->theme->settings->logo)) {
-        $sitefullname = '<span class="sr-only">'.format_string($SITE->fullname).'</span>';
-        $attrs['class'] = 'logo';
-    }
+if (!empty($PAGE->theme->settings->logo)) {
+    $sitefullname = '<span class="sr-only">'.format_string($SITE->fullname).'</span>';
+    $attrs['class'] = 'logo';
+}
 
-    echo html_writer::link($CFG->wwwroot, $sitefullname, $attrs);
+echo html_writer::link($CFG->wwwroot, $sitefullname, $attrs);
 ?>
 </header>
 
-<?php echo $OUTPUT->personal_menu(); ?>
+<?php
+echo $OUTPUT->personal_menu();

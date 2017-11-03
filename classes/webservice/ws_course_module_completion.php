@@ -47,7 +47,7 @@ class ws_course_module_completion extends \external_api {
     public static function service_returns() {
         $keys = [
             'id' => new \external_value(PARAM_INT, 'course module id'),
-            'completionhtml' =>new \external_value(PARAM_RAW, 'completion html')
+            'completionhtml' => new \external_value(PARAM_RAW, 'completion html')
         ];
         return new \external_single_structure($keys, 'course_module_completion');
     }

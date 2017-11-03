@@ -24,6 +24,8 @@
 
 namespace theme_snap;
 
+defined('MOODLE_INTERNAL') || die();
+
 require_once($CFG->dirroot.'/lib/outputrequirementslib.php');
 
 class snap_page_requirements_manager extends \page_requirements_manager {
@@ -71,7 +73,7 @@ class snap_page_requirements_manager extends \page_requirements_manager {
             }
 
             $snapmanprop = new \ReflectionProperty($this, $pname);
-            // if the property is private or protected  set accessible, after the copy reset to not accessible.
+            // If the property is private or protected  set accessible, after the copy reset to not accessible.
             $isprotected = $snapmanprop->isPrivate() || $snapmanprop->isProtected();
             if ($isprotected) {
                 $snapmanprop->setAccessible(true);
