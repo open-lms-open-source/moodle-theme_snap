@@ -57,6 +57,7 @@ if (!in_array($action, $nologinactions)) {
     }
 }
 
+// @codingStandardsIgnoreLine
 /** @var $PAGE moodle_page */
 $PAGE->set_context($context);
 if ($course !== null) {

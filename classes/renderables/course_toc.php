@@ -85,7 +85,7 @@ class course_toc implements \renderable, \templatable{
      * course_toc constructor.
      * @param null $course
      */
-    function __construct($course = null) {
+    public function __construct($course = null) {
         global $COURSE;
         if (empty($course)) {
             $course = $COURSE;
@@ -163,7 +163,7 @@ class course_toc implements \renderable, \templatable{
 
         $this->chapters->listlarge = $this->numsections > 9 ? 'list-large' : '';
 
-        $this->chapters->chapters= [];
+        $this->chapters->chapters = [];
 
         $canviewhidden = has_capability('moodle/course:viewhiddensections', context_course::instance($this->course->id));
 
@@ -227,17 +227,16 @@ class course_toc implements \renderable, \templatable{
                 $singlepage = $this->course->format !== 'folderview';
                 if ($singlepage) {
                     $chapter->url = '#section-'.$section;
-                } else
-                    if ($section > 0) {
-                        $chapter->url = course_get_url($this->course, $section, ['navigation' => true, 'sr' => $section]);
-                    } else {
-                        // We need to create the url for section 0, or a hash will get returned.
-                        $chapter->url = new moodle_url('/course/view.php', ['id' => $this->course->id, 'section' => $section]);
-                    }
+                } else if ($section > 0) {
+                    $chapter->url = course_get_url($this->course, $section, ['navigation' => true, 'sr' => $section]);
+                } else {
+                    // We need to create the url for section 0, or a hash will get returned.
+                    $chapter->url = new moodle_url('/course/view.php', ['id' => $this->course->id, 'section' => $section]);
+                }
             }
 
             $chapter->progress = new course_toc_progress($this->course, $thissection);
-            $this->chapters->chapters[]=$chapter;
+            $this->chapters->chapters[] = $chapter;
         }
     }
 

@@ -52,12 +52,13 @@ class behat_theme_snap_behat_permissions extends behat_permissions {
         foreach ($table->getRows() as $key => $row) {
 
             if (count($row) !== 2) {
-                throw new ExpectationException('You should specify a table with capability/permission columns', $this->getSession());
+                $msg = 'You should specify a table with capability/permission columns';
+                throw new ExpectationException($msg, $this->getSession());
             }
 
             list($capability, $permission) = $row;
 
-            // Skip the headers row if it was provided
+            // Skip the headers row if it was provided.
             if (strtolower($capability) == 'capability' || strtolower($capability) == 'capabilities') {
                 continue;
             }

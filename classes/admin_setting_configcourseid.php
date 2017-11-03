@@ -61,5 +61,5 @@ class admin_setting_configcourseid extends \admin_setting_configtext {
                $this->size. '" id="' .$this->get_id(). '" name="' .$this->get_full_name().
                '" value="' .s($data). '" />' .$datalist. '</div>',
                $this->description, true, '', $default, $query);
-   }
+    }
 }

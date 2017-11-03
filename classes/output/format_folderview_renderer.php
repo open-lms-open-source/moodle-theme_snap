@@ -24,6 +24,8 @@
 
 namespace theme_snap\output;
 
+defined('MOODLE_INTERNAL') || die();
+
 use html_writer;
 use theme_snap\output\shared;
 

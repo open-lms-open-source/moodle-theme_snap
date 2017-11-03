@@ -16,6 +16,8 @@
 
 namespace theme_snap\traits;
 
+defined('MOODLE_INTERNAL') || die();
+
 /**
  * Facilitates the null object pattern - https://www.wikiwand.com/en/Null_Object_pattern.
  * @author    gthomas2

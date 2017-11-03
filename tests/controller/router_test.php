@@ -36,8 +36,10 @@ defined('MOODLE_INTERNAL') || die();
  */
 class router_test extends \basic_testcase {
     public function test_route_action() {
-        $controller1 = $this->createPartialMock('\theme_snap\controller\controller_abstract', array('init', 'test_action', 'require_capability'));
-        $controller2 = $this->createPartialMock('\theme_snap\controller\controller_abstract', array('init', 'test_action', 'require_capability'));
+        $controller1 = $this->createPartialMock('\theme_snap\controller\controller_abstract',
+            array('init', 'test_action', 'require_capability'));
+        $controller2 = $this->createPartialMock('\theme_snap\controller\controller_abstract',
+            array('init', 'test_action', 'require_capability'));
 
         $router = new router();
         $router->add_controller($controller1);

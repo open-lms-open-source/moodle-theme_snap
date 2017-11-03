@@ -1,5 +1,4 @@
 <?php
-
 // This file is part of Moodle - http://moodle.org/
 //
 // Moodle is free software: you can redistribute it and/or modify
@@ -23,14 +22,15 @@
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 namespace theme_snap\webservice;
+
+defined('MOODLE_INTERNAL') || die();
+
 use external_single_structure;
 use external_multiple_structure;
 use external_value;
 use coding_exception;
 use moodle_url;
 use cache;
-
-defined('MOODLE_INTERNAL') || die();
 
 require_once($CFG->dirroot.'/lib/externallib.php');
 
@@ -121,7 +121,7 @@ class definition_helper {
         if (!$contents) {
             return;
         }
-        $matches =[];
+        $matches = [];
         preg_match_all('/(?<=use)\s(\S*);/m', $contents, $matches);
         if (count($matches) < 2) {
             return;
@@ -172,43 +172,45 @@ class definition_helper {
      * @param $obj
      */
     private function convert_object_params($obj) {
-       foreach ($obj as $key => $val) {
-           if (isset($val->type) && is_string($val->type)) {
-               if (defined($val->type)) {
-                   $obj->$key->type = constant($val->type);
-                   $obj->$key = $this->create_external_value_from_obj($obj->$key);
-               } else if (strpos($val->type, '{') !== false) {
-                   $obj->$key->type = $this->convert_ws_param_to_object($val->type);
-               } else {
-                   $classdetected = $this->get_class_from_type($val->type);
-                   if ($classdetected) {
-                       if ($classdetected === $this->classname) {
-                           throw new coding_exception($this->param_error('Class definition infinite recursion ', $key));
-                       }
-                       $isarray = strpos($val->type, '[]') !== false;
-                       if ($isarray) {
-                           $defineobj = new definition_helper($classdetected);
-                           if (empty($val->description)) {
-                               $val->description = '';
-                           }
-                           $obj->$key = new external_multiple_structure(new external_single_structure((array) $defineobj->get_definition(), $val->description));
-                       } else {
-                           $obj->$key = new external_single_structure((array) $defineobj, $val->description);
-                       }
-                   } else {
-                       throw new coding_exception(
-                           $this->param_error('Unable to process type '.$val->type, $key)
-                       );
-                   }
-               }
-           } else {
-               if (is_object($obj->$key)) {
-                   $obj->$key = $this->convert_object_params($val);
-               } else {
-                   throw new coding_exception('Type not specified', var_export($obj, true));
-               }
-           }
-       }
+        foreach ($obj as $key => $val) {
+            if (isset($val->type) && is_string($val->type)) {
+                if (defined($val->type)) {
+                    $obj->$key->type = constant($val->type);
+                    $obj->$key = $this->create_external_value_from_obj($obj->$key);
+                } else if (strpos($val->type, '{') !== false) {
+                    $obj->$key->type = $this->convert_ws_param_to_object($val->type);
+                } else {
+                    $classdetected = $this->get_class_from_type($val->type);
+                    if ($classdetected) {
+                        if ($classdetected === $this->classname) {
+                            throw new coding_exception($this->param_error('Class definition infinite recursion ', $key));
+                        }
+                        $isarray = strpos($val->type, '[]') !== false;
+                        if ($isarray) {
+                            $defineobj = new definition_helper($classdetected);
+                            if (empty($val->description)) {
+                                $val->description = '';
+                            }
+                            $obj->$key = new external_multiple_structure(
+                                new external_single_structure((array) $defineobj->get_definition(), $val->description)
+                            );
+                        } else {
+                            $obj->$key = new external_single_structure((array) $defineobj, $val->description);
+                        }
+                    } else {
+                        throw new coding_exception(
+                            $this->param_error('Unable to process type '.$val->type, $key)
+                        );
+                    }
+                }
+            } else {
+                if (is_object($obj->$key)) {
+                    $obj->$key = $this->convert_object_params($val);
+                } else {
+                    throw new coding_exception('Type not specified', var_export($obj, true));
+                }
+            }
+        }
     }
 
     /**
@@ -229,7 +231,7 @@ class definition_helper {
         $regex = '/(?<=@wsparam)(?:\s*{)(.*)(};|}\[\];)/s';
 
         $haswsparamdoc = preg_match($regex, $comment, $matches);
-        if ($haswsparamdoc !==1) {
+        if ($haswsparamdoc !== 1) {
             return ['object' => false, 'isarray' => false];
         }
         $isarray = strpos($matches[2], '[]') !== false;
@@ -308,32 +310,38 @@ class definition_helper {
         }
 
         if (isset($obj->type) && is_string($obj->type)) {
-            // The comment is defining just this parameter - e.g:
-            // @wsparam {
-            //    type: PARAM_INT,
-            //    description: "Counter",
-            //    required: true
-            // };
-            //
+            // @codingStandardsIgnoreStart
+            // The comment is defining just this parameter - e.g:.
+            /**
+             * @wsparam {
+             *    type: PARAM_INT,
+             *    description: "Counter",
+             *    required: true
+             * };
+             */
+            // @codingStandardsIgnoreEnd
             if (empty($obj->description)) {
                 throw new coding_exception($this->param_error('Missing description for', $name));
             }
             $required = !empty($obj->required);
             return new external_value($obj->type, $obj->description, $required);
         } else {
-            // The comment is defining an object - i.e. StdClass - e.g.:
-            // @wsparam {
-            //    progress: {
-            //        type: PARAM_INT,
-            //        description: "Student progress",
-            //        required: true
-            //    },
-            //    total: {
-            //        type: PARAM_INT,
-            //        description: "Total to complete"
-            //    }
-            // };
-            //
+            // @codingStandardsIgnoreStart
+            // The comment is defining an object - i.e. StdClass - e.g:.
+            /**
+             * @wsparam {
+             *    progress: {
+             *        type: PARAM_INT,
+             *        description: "Student progress",
+             *        required: true
+             *    },
+             *    total: {
+             *        type: PARAM_INT,
+             *        description: "Total to complete"
+             *    }
+             * };
+             */
+            // @codingStandardsIgnoreEnd
             if ($isarray) {
                 return new external_multiple_structure(new external_single_structure((array)$obj));
             } else {

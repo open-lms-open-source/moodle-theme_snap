@@ -124,7 +124,6 @@ class behat_theme_snap extends behat_base {
     protected function upload_file($fixturefilename, $selector) {
         global $CFG;
         $fixturefilename = clean_param($fixturefilename, PARAM_FILE);
-        // $filepath = $CFG->themedir.'/snap/tests/fixtures/'.$fixturefilename;
         $filepath = $CFG->dirroot.'/theme/snap/tests/fixtures/'.$fixturefilename;
         $file = $this->find('css', $selector);
         $file->attachFile($filepath);
@@ -226,6 +225,7 @@ class behat_theme_snap extends behat_base {
         $node = $this->find('css', '#snap-pm');
         // Only attempt to open the personal menu if its not already open.
         if (!$node->isVisible()) {
+            // @codingStandardsIgnoreLine
             /* @var $generalcontext behat_general */
             $generalcontext = behat_context_helper::get('behat_general');
             $generalcontext->i_click_on('.snap-my-courses-menu', 'css_element');
@@ -509,8 +509,10 @@ class behat_theme_snap extends behat_base {
     public function i_see_availabilityinfo($str, $baseselector = '') {
         $str = trim($str);
         $nodes = $this->find_all('xpath', $baseselector.'//div[contains(@class, \'snap-conditional-tag\')]');
+
+        // @codingStandardsIgnoreLine
+        /** @var NodeElement $node */
         foreach ($nodes as $node) {
-            /** @var NodeElement $node */
             $nodetext = trim($node->getText());
             if (stripos($nodetext, $str) !== false) {
                 return;
@@ -552,6 +554,7 @@ class behat_theme_snap extends behat_base {
      * @param string $type
      * @param string $elementstr
      * @throws ExpectationException
+     * @codingStandardsIgnoreLine
      * @Given /^I should see availability info "(?P<str>(?:[^"]|\\")*)" in "(?P<elementtype>section|asset)" "(?P<elementstr>(?:[^"]|\\")*)"$/
      */
     public function i_see_availabilityinfo_in($str, $type, $elementstr) {
@@ -572,13 +575,16 @@ class behat_theme_snap extends behat_base {
                 return;
             }
         }
+        // @codingStandardsIgnoreStart
+        /** @var NodeElement $node */
         foreach ($nodes as $node) {
-            /** @var NodeElement $node */
             if ($node->getText() === $str) {
                 $session = $this->getSession();
-                throw new ExpectationException('Availability notice found in element '.$node->getXpath().' of "'.$str.'"', $session);
+                $msg = 'Availability notice found in element '.$node->getXpath().' of "'.$str.'"';
+                throw new ExpectationException($msg, $session);
             }
         }
+        // @codingStandardsIgnoreEnd
     }
 
     /**
@@ -586,6 +592,7 @@ class behat_theme_snap extends behat_base {
      * @param string $type
      * @param string $elementstr
      * @throws ExpectationException
+     * @codingStandardsIgnoreLine
      * @Given /^I should not see availability info "(?P<str>(?:[^"]|\\")*)" in "(?P<elementtype>section|asset)" "(?P<elementstr>(?:[^"]|\\")*)"$/
      */
     public function i_dont_see_availabilityinfo_in($str, $type, $elementstr) {
@@ -597,6 +604,7 @@ class behat_theme_snap extends behat_base {
      * @param string $date
      * @param string $element
      * @param string $selectortype
+     * @codingStandardsIgnoreLine
      * @Given /^I should see available from date of "(?P<date_string>(?:[^"]|\\")*)" in "(?P<element_string>(?:[^"]|\\")*)" "(?P<locator_string>(?:[^"]|\\")*)"$/
      */
     public function i_should_see_available_from_in_element($date, $element, $selectortype) {
@@ -617,6 +625,7 @@ class behat_theme_snap extends behat_base {
      * @param string $date
      * @param string $element
      * @param string $selectortype
+     * @codingStandardsIgnoreLine
      * @Given /^I should not see available from date of "(?P<date_string>(?:[^"]|\\")*)" in "(?P<element_string>(?:[^"]|\\")*)" "(?P<locator_string>(?:[^"]|\\")*)"$/
      */
     public function i_should_not_see_available_from_in_element($date, $element, $selectortype) {
@@ -649,6 +658,7 @@ class behat_theme_snap extends behat_base {
      * @param string $date
      * @param string $nthasset
      * @param int $section
+     * @codingStandardsIgnoreLine
      * @Given /^I should see available from date of "(?P<date_string>(?:[^"]|\\")*)" in the (?P<nthasset_string>(?:\d+st|\d+nd|\d+rd|\d+th)) asset within section (?P<section_int>(?:\d+))$/
      */
     public function i_should_see_available_from_in_asset($date, $nthasset, $section) {
@@ -662,6 +672,7 @@ class behat_theme_snap extends behat_base {
      * @param string $date
      * @param string $nthasset
      * @param int $section
+     * @codingStandardsIgnoreLine
      * @Given /^I should not see available from date of "(?P<date_string>(?:[^"]|\\")*)" in the (?P<nthasset_string>(?:\d+st|\d+nd|\d+rd|\d+th)) asset within section (?P<section_int>(?:\d+))$/
      */
     public function i_should_not_see_available_from_in_asset($date, $nthasset, $section) {
@@ -757,6 +768,7 @@ class behat_theme_snap extends behat_base {
      * @Given /^course page should be in edit mode$/
      */
     public function course_page_should_be_in_edit_mode() {
+        // @codingStandardsIgnoreLine
         /* @var $generalcontext behat_general */
         $generalcontext = behat_context_helper::get('behat_general');
         $node = $this->get_selected_node('css_element', '#course-toc');
@@ -771,6 +783,7 @@ class behat_theme_snap extends behat_base {
      * @Given /^I follow the page heading course link$/
      */
     public function i_follow_the_page_heading_course_link() {
+        // @codingStandardsIgnoreLine
         /** @var behat_general $helper */
         $helper = behat_context_helper::get('behat_general');
         $helper->i_click_on('#page-mast a', 'css_element');
@@ -800,6 +813,7 @@ class behat_theme_snap extends behat_base {
      * @Given /^Favorite toggle does not exist for course "(?P<shortname>(?:[^"]|\\")*)"$/
      */
     public function favorite_toggle_doesnt_exist_for_course($shortname) {
+        // @codingStandardsIgnoreLine
         /* @var behat_general $general */
         $general = behat_context_helper::get('behat_general');
         $general->should_not_exist($this->favorite_selector($shortname, false), 'css_element');
@@ -811,6 +825,7 @@ class behat_theme_snap extends behat_base {
      * @Given /^Favorite toggle exists for course "(?P<shortname>(?:[^"]|\\")*)"$/
      */
     public function favorite_toggle_exists_for_course($shortname) {
+        // @codingStandardsIgnoreLine
         /* @var behat_general $general */
         $general = behat_context_helper::get('behat_general');
         $general->should_exist($this->favorite_selector($shortname, false), 'css_element');
@@ -822,6 +837,7 @@ class behat_theme_snap extends behat_base {
      * @Given /^Course card "(?P<shortname1>(?:[^"]|\\")*)" appears before "(?P<shortname2>(?:[^"]|\\")*)"$/
      */
     public function course_card_appears_before($shortname1, $shortname2) {
+        // @codingStandardsIgnoreLine
         /* @var behat_general $general */
         $general = behat_context_helper::get('behat_general');
 
@@ -836,6 +852,7 @@ class behat_theme_snap extends behat_base {
      * @Given /^Course card "(?P<shortname>(?:[^"]|\\")*)" is favorited$/
      */
     public function course_is_favorited($shortname) {
+        // @codingStandardsIgnoreLine
         /* @var behat_general $general */
         $general = behat_context_helper::get('behat_general');
         $this->ensure_element_does_not_exist('.snap-icon-toggle.favoritetoggle.ajaxing', 'css_element');
@@ -847,6 +864,7 @@ class behat_theme_snap extends behat_base {
      * @Given /^Course card "(?P<shortname>(?:[^"]|\\")*)" is not favorited$/
      */
     public function course_is_not_favorited($shortname) {
+        // @codingStandardsIgnoreLine
         /* @var behat_general $general */
         $general = behat_context_helper::get('behat_general');
         $this->ensure_element_does_not_exist('.snap-icon-toggle.favoritetoggle.ajaxing', 'css_element');
@@ -858,6 +876,7 @@ class behat_theme_snap extends behat_base {
      * @Given /^I toggle course card favorite "(?P<shortname>(?:[^"]|\\")*)"$/
      */
     public function i_toggle_course_card_favorite($shortname) {
+        // @codingStandardsIgnoreLine
         /* @var behat_general $general */
         $general = behat_context_helper::get('behat_general');
         $general->i_click_on('.coursecard[data-shortname="'.$shortname.'"] button.favoritetoggle', 'css_element');
@@ -930,7 +949,8 @@ class behat_theme_snap extends behat_base {
     public function  pageheader_has_cover_image() {
         $bgimage = $this->pageheader_backgroundimage();
         if (empty($bgimage) || $bgimage === 'none') {
-            $exception = new ExpectationException('#page-header does not have background image ('.$bgimage.')', $this->getSession());
+            $msg = '#page-header does not have background image ('.$bgimage.')';
+            $exception = new ExpectationException($msg, $this->getSession());
             throw $exception;
         }
     }
@@ -941,7 +961,8 @@ class behat_theme_snap extends behat_base {
     public function pageheader_does_not_have_cover_image() {
         $bgimage = $this->pageheader_backgroundimage();
         if (!empty($bgimage) && $bgimage !== 'none') {
-            $exception = new ExpectationException('#page-header has a background image ('.$bgimage.')', $this->getSession());
+            $msg = '#page-header has a background image ('.$bgimage.')';
+            $exception = new ExpectationException($msg, $this->getSession());
             throw $exception;
         }
     }
@@ -949,6 +970,7 @@ class behat_theme_snap extends behat_base {
     /**
      * Toggles completion tracking for specific course.
      *
+     * @codingStandardsIgnoreLine
      * @When /^completion tracking is "(?P<completion_status_string>Enabled|Disabled)" for course "(?P<course_string>(?:[^"]|\\")*)"$/
      * @param string $completionstatus The status, enabled or disabled.
      * @param string $courseshortname The shortname for the course where completion tracking is to be enabled / disabled.
@@ -1008,6 +1030,7 @@ class behat_theme_snap extends behat_base {
     }
 
     /**
+     * @codingStandardsIgnoreLine
      * @Given /^the previous navigation for section "(?P<section_int>(?:[^"]|\\")*)" is for "(?P<title_str>(?:[^"]|\\")*)" linking to "(?P<link_str>(?:[^"]|\\")*)"$/
      * @param int $section
      * @param string $linktitle
@@ -1018,6 +1041,7 @@ class behat_theme_snap extends behat_base {
     }
 
     /**
+     * @codingStandardsIgnoreLine
      * @Given /^the next navigation for section "(?P<section_int>(?:[^"]|\\")*)" is for "(?P<title_str>(?:[^"]|\\")*)" linking to "(?P<link_str>(?:[^"]|\\")*)"$/
      * @param int $section
      * @param string $linktitle
@@ -1121,6 +1145,7 @@ class behat_theme_snap extends behat_base {
     }
 
     /**
+     * @codingStandardsIgnoreLine
      * @Given /^the course format for "(?P<shortname_string>(?:[^"]|\\")*)" is set to "(?P<format_string>(?:[^"]|\\")*)" with the following settings:$/
      * @param string $shortname
      * @param string $format
@@ -1197,8 +1222,8 @@ class behat_theme_snap extends behat_base {
      */
     protected function unassign_role_from_user($contextid, $userid, $roleid) {
         global $DB;
-        $user = $DB->get_record('user', array('id'=>$userid), '*', MUST_EXIST);
-        $ras = $DB->get_records('role_assignments', array('contextid'=>$contextid, 'userid'=>$user->id, 'roleid'=>$roleid));
+        $user = $DB->get_record('user', array('id' => $userid), '*', MUST_EXIST);
+        $ras = $DB->get_records('role_assignments', array('contextid' => $contextid, 'userid' => $user->id, 'roleid' => $roleid));
         foreach ($ras as $ra) {
             if ($ra->component) {
                 if (strpos($ra->component, 'enrol_') !== 0) {
@@ -1211,6 +1236,7 @@ class behat_theme_snap extends behat_base {
     }
 
     /**
+     * @codingStandardsIgnoreLine
      * @Given /^the editing teacher role is removed from course "(?P<shortname_string>(?:[^"]|\\")*)" for "(?P<username_string>(?:[^"]|\\")*)"$/
      * @param string $shortname
      * @param string $username
@@ -1358,6 +1384,7 @@ class behat_theme_snap extends behat_base {
      * Core step copied from completion/tests/behat/behat_completion.php to fix bug MDL-57452
      * Checks if the activity with specified name is marked as complete.
      *
+     * @codingStandardsIgnoreLine
      * @Given /^the "(?P<activityname_string>(?:[^"]|\\")*)" "(?P<activitytype_string>(?:[^"]|\\")*)" activity with "(manual|auto)" completion should be marked as complete \(core_fix\)$/
      */
     public function activity_marked_as_complete($activityname, $activitytype, $completiontype) {
@@ -1379,7 +1406,7 @@ class behat_theme_snap extends behat_base {
     /**
      * Checks if the activity with specified name is not marked as complete.
      * Core step copied from completion/tests/behat/behat_completion.php to fix bug MDL-57452
-     *
+     * @codingStandardsIgnoreLine
      * @Given /^the "(?P<activityname_string>(?:[^"]|\\")*)" "(?P<activitytype_string>(?:[^"]|\\")*)" activity with "(manual|auto)" completion should be marked as not complete \(core_fix\)$/
      */
     public function activity_marked_as_not_complete($activityname, $activitytype, $completiontype) {
@@ -1466,11 +1493,12 @@ class behat_theme_snap extends behat_base {
      */
     public function i_highlight_section($section) {
         $xpath = '//li[@id="section-'.$section.'"]//div[contains(@class, "snap-section-editing")]';
-        $xpath .='//a[contains(@class, "snap-highlight")][@aria-pressed="false"]';
+        $xpath .= '//a[contains(@class, "snap-highlight")][@aria-pressed="false"]';
         $this->execute('behat_general::i_click_on', [$xpath, 'xpath_element']);
     }
 
     /**
+     * @codingStandardsIgnoreLine
      * @Given /^deadline for assignment "(?P<name_string>(?:[^"]|\\")*)" in course "(?P<shortname_string>(?:[^"]|\\")*)" is extended to "(?P<date_string>(?:[^"]|\\")*)" for "(?P<uname_string>(?:[^"]|\\")*)"$/
      * @param string $shortname
      * @param string $format
@@ -1529,6 +1557,7 @@ class behat_theme_snap extends behat_base {
     }
 
     /**
+     * @codingStandardsIgnoreLine
      * @Given /^I do not see a personal menu deadline of "(?P<deadline_int>(?:[^"]|\\")*)" for "(?P<eventname_string>(?:[^"]|\\")*)"$/
      * @param int $deadline
      * @param string $eventname

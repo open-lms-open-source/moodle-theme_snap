@@ -193,7 +193,6 @@ trait format_section_trait {
             $sectionstyle = ' state-visible set-by-server';
         }
 
-
         if ($this->is_section_conditional($section)) {
             $canviewhiddensections = has_capability(
                 'moodle/course:viewhiddensections',
@@ -244,11 +243,11 @@ trait format_section_trait {
         $testemptytitle = get_string('topic').' '.$section->section;
         if ($sectiontitle == $testemptytitle && has_capability('moodle/course:update', $context)) {
             $url = new moodle_url('/course/editsection.php', array('id' => $section->id, 'sr' => $sectionreturn));
-            $o .= "<h2 class='sectionname'><a href='$url' title='".s(get_string('editcoursetopic', 'theme_snap'))."'>".get_string('defaulttopictitle', 'theme_snap')."</a></h2>";
+            $o .= "<h2 class='sectionname'><a href='$url' title='".s(get_string('editcoursetopic', 'theme_snap'))."'>";
+            $o .= get_string('defaulttopictitle', 'theme_snap')."</a></h2>";
         } else {
             $o .= $output->heading($sectiontitle, 2, 'sectionname' . $classes);
         }
-
 
         // Section drop zone.
         $caneditcourse = has_capability('moodle/course:update', $context);
@@ -282,10 +281,11 @@ trait format_section_trait {
         // Note - $canviewhiddensection is required so that teachers can see the availability info message permanently,
         // even if the teacher satisfies the conditions to make the section available.
         // section->availabeinfo will be empty when all conditions are met.
-        $canviewhiddensections =  has_capability('moodle/course:viewhiddensections', $context);
+        $canviewhiddensections = has_capability('moodle/course:viewhiddensections', $context);
         $formattedinfo = '';
         if ($canviewhiddensections || !empty($section->availableinfo)) {
-            $conditionalicon = '<img aria-hidden="true" role="presentation" class="svg-icon" src="' . $output->image_url('conditional', 'theme') . '" />';
+            $src = $output->image_url('conditional', 'theme');
+            $conditionalicon = '<img aria-hidden="true" role="presentation" class="svg-icon" src="'.$src.'" />';
             $ci = new \core_availability\info_section($section);
             $fullinfo = $ci->get_full_information();
             $formattedinfo = '';
@@ -317,7 +317,8 @@ trait format_section_trait {
         $o .= $summarytext;
         if ($canupdatecourse) {
             $url = new moodle_url('/course/editsection.php', array('id' => $section->id, 'sr' => $sectionreturn));
-            $icon = '<img aria-hidden="true" role="presentation" class="svg-icon" src="'.$this->output->image_url('pencil', 'theme').'" /><br/>';
+            $icon = '<img aria-hidden="true" role="presentation" class="svg-icon" src="';
+            $icon .= $this->output->image_url('pencil', 'theme').'" /><br/>';
             $o .= '<a href="'.$url.'" class="edit-summary">'.$icon.get_string('editcoursetopic', 'theme_snap'). '</a>';
         }
         $o .= "</div>";
@@ -460,6 +461,7 @@ trait format_section_trait {
             $required = 'required';
         } else {
             // Take this part of code from /course/format/weeks/lib.php on functions
+            // @codingStandardsIgnoreLine
             // get_section_name($section) and get_section_dates($section).
             $oneweekseconds = 60 * 60 * 24 * 7;
             // Hack alert. We add 2 hours to avoid possible DST problems. (e.g. we go into daylight
@@ -486,13 +488,14 @@ trait format_section_trait {
         $output .= '<div class="form-group">';
         $output .= "<label for='newsection' class='sr-only'>".get_string('title', 'theme_snap')."</label>";
         if ($course->format === 'topics') {
-            $output .= "<input class='h3' id='newsection' type='text' maxlength='250' name='newsection' $required placeholder='".get_string('title', 'theme_snap')."'>";
+            $output .= '<input class="h3" id="newsection" type="text" maxlength="250" name="newsection" '.$required;
+            $output .= ' placeholder="'.s(get_string('title', 'theme_snap')).'">';
         } else {
-            $output .= "<h3>".$defaulttitle.': '.$datesection."</h3>";
+            $output .= '<h3>'.$defaulttitle.': '.$datesection.'</h3>';
         }
         $output .= '</div>';
         $output .= '<div class="form-group">';
-        $output .= "<label for='summary'>".get_string('contents', 'theme_snap')."</label>";
+        $output .= '<label for="summary">'.get_string('contents', 'theme_snap').'</label>';
         $output .= print_textarea(true, 10, 150, "100%",
             "auto", "summary", '', $course->id, true);
         $output .= '</div>';
@@ -531,16 +534,20 @@ trait format_section_trait {
         $icon = '<img src="'.$iconurl.'" class="svg-icon" role="presentation" alt=""><br>';
         // Slamour Aug 2017
         // Add button to pick launch modchooser.
+        $mcclass = 'js-only section-modchooser-link btn btn-link';
+        $mcdataattributes = 'data-section="'.$section.'" data-toggle="modal" data-target="#snap-modchooser-modal"';
         $modchooser = '
         <div class="col-sm-6 snap-modchooser">
-            <a href="#" class="js-only section-modchooser-link btn btn-link" data-section="'.$section.'" data-toggle="modal" data-target="#snap-modchooser-modal">'.$icon.get_string('addresourceoractivity', 'theme_snap').'</a>
+            <a href="#" class="'.$mcclass.'" '.$mcdataattributes.'>'.$icon.get_string('addresourceoractivity', 'theme_snap').'</a>
         </div>';
 
         // Add zone for quick uploading of files.
         $upload = '<div class="col-sm-6">
             <form class="snap-dropzone js-only">
-                <label tabindex="0" for="snap-drop-file-'.$section.'" class="snap-dropzone-label">'.get_string('dropzonelabel', 'theme_snap').'</label>
-                <input type="file" multiple name="snap-drop-file-'.$section.'" id="snap-drop-file-'.$section.'" class="js-snap-drop-file sr-only"/>
+                <label tabindex="0" for="snap-drop-file-'.$section.'" class="snap-dropzone-label">';
+        $upload .= get_string('dropzonelabel', 'theme_snap').'</label>
+                <input type="file" multiple name="snap-drop-file-'.$section.'" id="snap-drop-file-'.$section;
+        $upload .= '" class="js-snap-drop-file sr-only"/>
             </form>
             </div>';
 

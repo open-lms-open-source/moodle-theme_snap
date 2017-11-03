@@ -25,7 +25,7 @@ require_once(__DIR__.'/../../../../config.php');
 
 defined('MOODLE_INTERNAL') || die();
 
-global $PAGE, $OUTPUT;
+require_login();
 
 $PAGE->set_url(new moodle_url('/mod/collaborate/tests/fixtures/test_jquery_bootstrap.php'));
 $PAGE->set_context(context_system::instance());
@@ -47,7 +47,7 @@ $(function() {
     $( "#progressbar" ).progressbar({
             value: false
         });
-    });    
+    });
 </script>
 
 <h2>Test bootstrap jquery plugin</h2>

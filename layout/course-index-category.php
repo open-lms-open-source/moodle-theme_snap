@@ -21,11 +21,13 @@
  * @copyright Copyright (c) 2017 Blackboard Inc.
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-?>
 
-<?php
 defined('MOODLE_INTERNAL') || die();
+
 require(__DIR__.'/header.php');
+
+// @codingStandardsIgnoreStart
+// Note, coding standards ignore is required so that we can have more readable indentation under php tags.
 
 $mastimage = '';
 // Check we are in a course (not the site level course), and the course is using a cover image.
@@ -60,7 +62,8 @@ if (!empty($coverimagecss)) {
                     $editcatagory = '';
                     if (can_edit_in_category($catid)) {
                         $editurl = new moodle_url('/course/editcategory.php', ['id' => $catid]);
-                        $editcatagory = '<div><a href=" '.$editurl.' " class="btn btn-default btn-sm">' .get_string('categoryedit', 'theme_snap'). '</a></div>';
+                        $editcatagory = '<div><a href=" '.$editurl.' " class="btn btn-default btn-sm">'
+                                .get_string('categoryedit', 'theme_snap').'</a></div>';
                     }
 
                     // Category summary.
@@ -71,15 +74,14 @@ if (!empty($coverimagecss)) {
                             'pluginfile.php', $content->id, 'coursecat', 'description', null);
                         $options = array('noclean' => true, 'overflowdiv' => false);
                         $catsummary = '<div class="snap-category-description">'
-                        .format_text($catdescription, $cat->descriptionformat, $options).
-                        $editcatagory.'</div>';
+                            .format_text($catdescription, $cat->descriptionformat, $options).
+                            $editcatagory.'</div>';
                     } else {
                         // No summary, output edit link.
                         $catsummary = $editcatagory;
                     }
                     echo '<h1>' .s($catname). '</h1>';
                     echo $catsummary;
-
                 }
 
                 $iscoursecat = $PAGE->context->contextlevel === CONTEXT_COURSECAT;
@@ -106,4 +108,6 @@ if (!empty($coverimagecss)) {
     </div>
 </div>
 <!-- close moodle js hooks -->
-<?php require(__DIR__.'/footer.php');
+<?php
+// @codingStandardsIgnoreEnd
+require(__DIR__.'/footer.php');

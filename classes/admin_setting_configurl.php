@@ -25,7 +25,6 @@ defined('MOODLE_INTERNAL') || die();
  * @copyright Blackboard Ltd 2017
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
- 
 class admin_setting_configurl extends \admin_setting_configtext {
     /**
      * Config url constructor
@@ -41,11 +40,11 @@ class admin_setting_configurl extends \admin_setting_configtext {
     }
 
     public function output_html($data, $query='') {
-       $default = $this->get_defaultsetting();
-       return format_admin_setting($this, $this->visiblename,
-               '<div class="form-text defaultsnext"><input type="url" size="' .
-               $this->size. '" id="' .$this->get_id(). '" name="' .$this->get_full_name().
-               '" value="' .s($data). '" /></div>',
-               $this->description, true, '', $default, $query);
-   }
+        $default = $this->get_defaultsetting();
+        return format_admin_setting($this, $this->visiblename,
+                    '<div class="form-text defaultsnext"><input type="url" size="'.
+                    $this->size.'" id="'.$this->get_id().'" name="'.$this->get_full_name().
+                    '" value="'.s($data).'" /></div>',
+                    $this->description, true, '', $default, $query);
+    }
 }

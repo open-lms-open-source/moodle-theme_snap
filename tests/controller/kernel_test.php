@@ -57,15 +57,11 @@ class kernel_test extends \basic_testcase {
         ));
 
         $router = $this->createPartialMock('\theme_snap\controller\router', array('route_action'));
-        $router->expects($this->once())
-            ->method('route_action')
-            ->will($this->returnValue(array($controller, 'test_action')));
+        $router->expects($this->once())->method('route_action')->will($this->returnValue([$controller, 'test_action']));
 
         $kernel = new kernel($router);
 
-        $controller->expects($this->once())
-            ->method('init')
-            ->with('test');
+        $controller->expects($this->once())->method('init')->with('test');
 
         list($routedcontroller, $method) = $kernel->resolve_controller_callback('test');
 

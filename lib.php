@@ -22,6 +22,7 @@
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+defined('MOODLE_INTERNAL') || die();
 
 /**
  * Process site cover image.
@@ -144,7 +145,19 @@ function theme_snap_pluginfile($course, $cm, $context, $filearea, $args, $forced
 
     $coverimagecontexts = [CONTEXT_SYSTEM, CONTEXT_COURSE, CONTEXT_COURSECAT];
 
-    if ($context->contextlevel == CONTEXT_SYSTEM && in_array($filearea, ['logo', 'favicon', 'fs_one_image', 'fs_two_image', 'fs_three_image', 'slide_one_image', 'slide_two_image', 'slide_three_image'])) {
+    // System level file areas.
+    $sysfileareas = [
+        'logo',
+        'favicon',
+        'fs_one_image',
+        'fs_two_image',
+        'fs_three_image',
+        'slide_one_image',
+        'slide_two_image',
+        'slide_three_image'
+    ];
+
+    if ($context->contextlevel == CONTEXT_SYSTEM && in_array($filearea, $sysfileareas)) {
         $theme = theme_config::load('snap');
         return $theme->setting_file_serve($filearea, $args, $forcedownload, $options);
     } else if (in_array($context->contextlevel, $coverimagecontexts)

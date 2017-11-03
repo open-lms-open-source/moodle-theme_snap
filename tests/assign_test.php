@@ -157,21 +157,6 @@ class theme_snap_assign_test extends mod_assign_base_testcase {
         $deadlines = local::upcoming_deadlines($this->teachers[0]->id);
         $this->assertCount(2, $deadlines);
 
-        /* TODO create non visible deadline.
-        $this->setUser($this->editingteachers[0]);
-        $this->create_instance(['duedate' => time() + 3 * DAYSECSe]);
-        $deadlines = local::upcoming_deadlines($this->editingteachers[0]->id);
-        $this->assertCount(3, $deadlines);
-
-        $this->setUser($this->students[0]);
-        $deadlines = local::upcoming_deadlines($this->students[0]->id);
-        $this->assertCount(2, $deadlines);
-
-        $this->setUser($this->teachers[0]);
-        $deadlines = local::upcoming_deadlines($this->teachers[0]->id);
-        $this->assertCount(3, $deadlines);
-        */
-
         $this->create_instance(['duedate' => time() + 4 * DAYSECS]);
         $this->create_instance(['duedate' => time() + 4 * DAYSECS]);
         $max = 2;
@@ -232,7 +217,7 @@ class theme_snap_assign_test extends mod_assign_base_testcase {
         $this->assertEquals($override->timeclose, $reference + (7 * $day));
         $this->assertEquals($override->timeopen, $reference + $day);
 
-        // Switching to a user without group
+        // Switching to a user without group.
         $nogroupuser = $this->getDataGenerator()->create_user();
         $this->setUser($nogroupuser);
         $override = \theme_snap\activity::instance_activity_dates($this->course->id, $cm);

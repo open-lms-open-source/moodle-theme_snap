@@ -69,7 +69,7 @@ class behat_theme_snap_behat_navigation extends behat_navigation {
             $script = <<<EOF
                 var node = document.evaluate(
                     "$xpath", document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null
-                ).singleNodeValue;            
+                ).singleNodeValue;
                 node.click();
 EOF;
             $session->executeScript($script);
