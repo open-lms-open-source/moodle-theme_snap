@@ -327,14 +327,6 @@
  * Course competency report.
  */
 
-/**
- * Special fix for course competency report popup alert span when no activities are found.
- */
-[data-region="coursecompetencyactivities"] .alert {
-    border-left: none;
-    padding-left: 0em;
-}
-
 .gradingform_guide_comment_chooser {
     max-height: 60vh;
     overflow-y: auto;
@@ -342,4 +334,12 @@
 .gradingform_guide_comment_chooser > ul > li button {
     text-align: left;
     white-space: normal;
+}
+
+/**
+* Course prorgess report.
+*/
+
+.completion-progresscell {
+    text-align: center;
 }
