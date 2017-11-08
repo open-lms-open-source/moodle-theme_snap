@@ -123,7 +123,6 @@ class course_renderer extends \core_course_renderer {
                 $modclasses [] = 'snap-can-edit';
             }
 
-
             $modclasses [] = 'snap-asset'; // Added to stop conflicts in flexpage.
             $modclasses [] = 'activity'; // Moodle needs this for drag n drop.
             $modclasses [] = $mod->modname;
