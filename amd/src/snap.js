@@ -661,6 +661,27 @@ define(['jquery', 'core/log', 'theme_snap/headroom', 'theme_snap/util', 'theme_s
                         $("#page-mod-assign-mod .snap-form-advanced #id_modstandardelshdr .fcontainer").append(filemanager);
                         $("#page-mod-assign-mod .snap-form-required .fcontainer").append(duedate);
 
+                        // Move availablity at the top of advanced settings.
+                        var availablity = $('#id_visible').closest('.form-group').addClass('snap-form-visibility');
+                        var label = $(availablity).find('label');
+                        var select = $(availablity).find('select');
+                        $(label).insertBefore(select);
+
+                        // SHAME - rewrite form lang strings to be more user friendly.
+                        $(label).text(M.util.get_string('visibility', 'theme_snap') + ' ');
+                        $("#id_visible option[value='0']").text(M.util.get_string('modhide', 'moodle'));
+                        $("#id_visible option[value='-1']").text(M.util.get_string('hiddenoncoursepage', 'moodle'));
+                        // Hidden section re-use show to make mods stealth.
+                        // For hidden sections the show option therefore needs the stealth string.
+                        var showstring = $("#id_visible option[value='1']").text();
+                        if (showstring === M.util.get_string('showoncoursepage', 'moodle')) {
+                            $("#id_visible option[value='1']").text(M.util.get_string('modshow', 'moodle'));
+                        } else {
+                            $("#id_visible option[value='1']").text(M.util.get_string('hiddenoncoursepage', 'moodle'));
+                        }
+                        $('.snap-form-advanced').prepend(availablity);
+
+                        // Add save buttons.
                         var savebuttons = $("#mform1 > .form-group:last");
                         $(main_form).append(savebuttons);
                     }

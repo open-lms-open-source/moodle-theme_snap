@@ -96,8 +96,12 @@ class course_renderer extends \core_course_renderer {
             }
 
             // Is this mod draft?
-            if (!$mod->visible) {
+            if (!$mod->visible && !$mod->visibleold) {
                 $modclasses [] = 'draft';
+            }
+            // Is this mod stealth?
+            if ($mod->is_stealth()) {
+                $modclasses [] = 'stealth';
             }
 
             $canviewhidden = has_capability('moodle/course:viewhiddenactivities', $mod->context);
@@ -118,6 +122,7 @@ class course_renderer extends \core_course_renderer {
             if (has_capability('moodle/course:update', $mod->context)) {
                 $modclasses [] = 'snap-can-edit';
             }
+
 
             $modclasses [] = 'snap-asset'; // Added to stop conflicts in flexpage.
             $modclasses [] = 'activity'; // Moodle needs this for drag n drop.
@@ -199,6 +204,10 @@ class course_renderer extends \core_course_renderer {
             && (empty($mod->availableinfo))) {
             return $output;
         }
+        if (!$mod->is_visible_on_course_page()) {
+            return $output;
+        }
+
         $output .= '<div class="asset-wrapper">';
 
         // Drop section notice.
@@ -235,8 +244,16 @@ class course_renderer extends \core_course_renderer {
         $completiontracking .= $this->course_section_cm_completion($course, $completioninfo, $mod, $displayoptions);
         $completiontracking .= '</div>';
 
-        // Draft status - always output, shown via css of parent.
-        $drafttag = '<div class="snap-draft-tag">'.get_string('draft', 'theme_snap').'</div>';
+        // Draft & Stealth tags.
+        $stealthtag = '';
+        $drafttag = '';
+        if ($mod->is_stealth()) {
+            // Stealth tag.
+            $stealthtag = '<div class="snap-stealth-tag">'.get_string('hiddenoncoursepage', 'moodle').'</div>';
+        } else {
+            // Draft status - always output, shown via css of parent.
+            $drafttag = '<div class="snap-draft-tag">'.get_string('draft', 'theme_snap').'</div>';
+        }
 
         // Group.
         $groupmeta = '';
@@ -272,7 +289,7 @@ class course_renderer extends \core_course_renderer {
         }
 
         // Add draft, contitional.
-        $assetmeta = $drafttag.$conditionalmeta;
+        $assetmeta = $stealthtag.$drafttag.$conditionalmeta;
 
         // Build output.
         $postcontent = '<div class="snap-asset-meta" data-cmid="'.$mod->id.'">'.$assetmeta.$mod->afterlink.'</div>';
@@ -313,14 +330,14 @@ class course_renderer extends \core_course_renderer {
             }
 
             // Hide/Show.
-            if (has_capability('moodle/course:activityvisibility', $modcontext)) {
+            // Not output for stealth activites.
+            if (has_capability('moodle/course:activityvisibility', $modcontext) && !$mod->is_stealth()) {
                 $hideaction = '<a href="'.new moodle_url($baseurl, array('hide' => $mod->id));
                 $hideaction .= '" data-action="hide" class="dropdown-item editing_hide js_snap_hide">'.$str->hide.'</a>';
                 $actionsadvanced[] = $hideaction;
                 $showaction = '<a href="'.new moodle_url($baseurl, array('show' => $mod->id));
                 $showaction .= '" data-action="show" class="dropdown-item editing_show js_snap_show">'.$str->show.'</a>';
                 $actionsadvanced[] = $showaction;
-                // AX click to change.
             }
 
             // Duplicate.

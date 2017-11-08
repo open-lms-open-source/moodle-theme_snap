@@ -371,6 +371,10 @@ div.editor_atto_toolbar div.atto_group {
 }
 
 .snap-form-advanced {
+    .snap-form-visibility {
+        padding: 1em;
+        background-color: #eee;
+    }
     .dndupload-message {
         font-family: $font-family-system;
         font-size: small;
