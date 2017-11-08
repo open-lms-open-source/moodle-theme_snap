@@ -15,26 +15,34 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Overrides for behat authentication.
- * @author    Guy Thomas <gthomas@moodlerooms.com>
+ * Overrides for behat blocks.
  * @copyright Copyright (c) 2017 Blackboard Inc.
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 // NOTE: no MOODLE_INTERNAL test here, this file may be required by behat before including /config.php.
 
-require_once(__DIR__ . '/../../../../auth/tests/behat/behat_auth.php');
+use Behat\Mink\Exception\ExpectationException as ExpectationException,
+    Behat\Mink\Element\NodeElement as NodeElement;
+
+require_once(__DIR__ . '/../../../../blocks/tests/behat/behat_blocks.php');
 
 /**
- * Overrides for behat authentication.
- * @author    Guy Thomas <gthomas@moodlerooms.com>
+ * Overrides to make behat block steps work with Snap.
+ *
  * @copyright Copyright (c) 2017 Blackboard Inc.
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class behat_theme_snap_behat_auth extends behat_auth {
+class behat_theme_snap_behat_blocks extends behat_blocks {
 
-    public function i_log_out() {
-        $this->getSession()->visit($this->locate_path('login/logout.php'));
-        $this->execute('behat_forms::press_button', get_string('continue'));
+    public function i_add_the_block($blockname) {
+        // Enter block editing mode before adding tbe block, then leave it.
+        // Core tests expect you to have enabled edit mode in advance, but Snap
+        // does this differently.
+        $helper = behat_context_helper::get('behat_general');
+        $helper->click_link("Course Dashboard");
+        $helper->click_link("Edit blocks");
+        parent::i_add_the_block($blockname);
+        $helper->click_link("Turn editing off");
     }
 }

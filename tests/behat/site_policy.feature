@@ -25,9 +25,8 @@ Feature: As an authenticated non-admin user, opening the snap personal menu redi
 
   Background:
     Given the following config values are set as admin:
-      | theme | snap |
-      | defaulthomepage | 0 |
-      | sitepolicy | http://somesitepolicy.local |
+      | defaulthomepage | 0                           |
+      | sitepolicy      | http://somesitepolicy.local |
     And the following "users" exist:
       | username | firstname | lastname | email |
       | student1 | Student | 1 | student1@example.com |
@@ -35,11 +34,11 @@ Feature: As an authenticated non-admin user, opening the snap personal menu redi
   @javascript
   Scenario: Opening personal menu redirects to site policy page appropriately when personal menu set to show on login.
     Accepting the site policy prevents redirect on next login.
-    Given I log in as "student1", keeping the personal menu open
+    Given I log in as "student1"
     And I have been redirected to the site policy page
     And I press "Yes"
     And I log out
-    When I log in as "student1", keeping the personal menu open
+    When I log in as "student1"
     Then I am currently on the default site home page
 
   @javascript
@@ -53,10 +52,10 @@ Feature: As an authenticated non-admin user, opening the snap personal menu redi
     Then I have been redirected to the site policy page
     And I press "Yes"
     And I log out
-    When I log in as "student1", keeping the personal menu open
+    When I log in as "student1"
     Then I am currently on the default site home page
 
   @javascript
   Scenario: Opening personal menu does not redirect when logged in as admin user.
-    Given I log in as "admin", keeping the personal menu open
+    Given I log in as "admin"
     Then I am currently on the default site home page

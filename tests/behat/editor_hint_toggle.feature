@@ -7,16 +7,15 @@ Feature: the editor hint toggle should be ignored by Snap in Moodlerooms 2.9
   Background:
     Given the following config values are set as admin:
       | theme_snap_disableeditorhints | true |
-      | theme                         | snap |
     Given the following "users" exist:
-      | username | firstname | lastname | email |
-      | teacher1 | Teacher | 1 | teacher1@example.com |
+      | username | firstname | lastname | email                |
+      | teacher1 | Teacher   | 1        | teacher1@example.com |
     And the following "courses" exist:
       | fullname | shortname | category |
-      | Course 1 | C1 | 0 |
+      | Course 1 | C1        | 0        |
     And the following "course enrolments" exist:
-      | user | course | role |
-      | teacher1 | C1 | editingteacher |
+      | user     | course | role           |
+      | teacher1 | C1     | editingteacher |
 
   @javascript
   Scenario: Create a URL resource in Snap theme

@@ -27,11 +27,9 @@ Feature: Use the Single Activity format in Snap
   I need to be able to create a course using Single Activity format without errors in Snap
 
   Background:
-    Given the following config values are set as admin:
-      | theme | snap |
-    And the following "categories" exist:
-      | name | category | idnumber |
-      | Test Cat | 0 | TESTCAT |
+  Given the following "categories" exist:
+      | name     | category | idnumber |
+      | Test Cat | 0        | TESTCAT  |
 
   @javascript
   Scenario: Admin creates a single activity course with a Glossary

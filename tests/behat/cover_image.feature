@@ -25,7 +25,6 @@ Feature: When the moodle theme is set to Snap, cover image can be set for site a
 
   Background:
     Given the following config values are set as admin:
-      | theme | snap |
       | defaulthomepage | 0 |
 
   @javascript
@@ -89,7 +88,6 @@ Feature: When the moodle theme is set to Snap, cover image can be set for site a
   @javascript
   Scenario: A cover image cannot exceed the site maximum upload size.
     Given the following config values are set as admin:
-      | theme | snap |
       | defaulthomepage | 0 |
       | maxbytes | 2097152 |
     And the following "courses" exist:

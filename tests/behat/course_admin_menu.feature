@@ -26,10 +26,7 @@ Feature: When the moodle theme is set to Snap, students do not see the course ad
   Note, folderview is not a core format and therefore is exculded from the tests.
 
   Background:
-    Given the following config values are set as admin:
-      | theme | snap |
-      | defaulthomepage | 0 |
-    And the following "courses" exist:
+    Given the following "courses" exist:
       | fullname | shortname | category | format |
       | Course 1 | C1        | 0        | topics |
     And the following "users" exist:

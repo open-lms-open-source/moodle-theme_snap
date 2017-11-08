@@ -67,60 +67,6 @@ class behat_theme_snap extends behat_base {
         $this->ensure_element_is_visible($element, $selectortype);
     }
 
-    /**
-     * Logs in the user. There should exist a user with the same value as username and password.
-     *
-     * @param string $username
-     * @param bool $andkeepmenuopen
-     */
-    protected function i_log_in_with_snap_as($username, $andkeepmenuopen = false) {
-        global $DB;
-        $user = $DB->get_record('user', ['username' => $username]);
-        if (empty($user)) {
-            throw new coding_exception('Invalid username '.$username);
-        }
-
-        $session = $this->getSession();
-
-        // Go back to front page.
-        $session->visit($this->locate_path('/'));
-
-        if ($this->running_javascript()) {
-            // Wait for the homepage to be ready.
-            $session->wait(self::TIMEOUT * 1000, self::PAGE_READY_JS);
-        }
-
-        /** @var behat_general $general */
-        $general = behat_context_helper::get('behat_general');
-        $general->i_click_on(get_string('login'), 'link');
-        $general->assert_page_not_contains_text(get_string('logout'));
-
-        /** @var behat_forms $form */
-        $form = behat_context_helper::get('behat_forms');
-        $form->i_set_the_field_to(get_string('username'), $this->escape($username));
-        $form->i_set_the_field_to(get_string('password'), $this->escape($username));
-        $form->press_button(get_string('login'));
-
-        $forcepasschange = get_user_preferences('auth_forcepasswordchange', null, $user);
-        if (!$andkeepmenuopen && empty($forcepasschange)) {
-            $showfixyonlogin = get_config('theme_snap', 'personalmenulogintoggle');
-            if ($showfixyonlogin) {
-                $general->i_click_on('#snap-pm-close', 'css_element');
-            }
-        }
-    }
-
-    /**
-     * Logs in the user but doesn't auto close personal menu.
-     * There should exist a user with the same value as username and password.
-     *
-     * @Given /^I log in as "(?P<username_string>(?:[^"]|\\")*)", keeping the personal menu open$/
-     * @param string $username
-     */
-    public function i_log_in_and_keep_personal_menu_open($username) {
-        $this->i_log_in_with_snap_as($username, true);
-    }
-
     protected function upload_file($fixturefilename, $selector) {
         global $CFG;
         $fixturefilename = clean_param($fixturefilename, PARAM_FILE);
@@ -1127,7 +1073,7 @@ class behat_theme_snap extends behat_base {
         $session->executeScript('window.open("'.$CFG->wwwroot.'", "'.$logoutwindow.'")');
         sleep(1); // Allow time for the window to open.
         $session->switchToWindow($logoutwindow);
-        $this->execute('behat_theme_snap_behat_auth::i_log_out');
+        $this->execute('behat_auth::i_log_out');
         $session->executeScript('window.close()');
         $session->switchToWindow($mainwindow);
     }
@@ -1439,24 +1385,6 @@ class behat_theme_snap extends behat_base {
     }
 
     /**
-     * @Given /^I see a bootstrap tooltip on hovering over the admin menu$/
-     */
-    public function i_see_a_bootstrap_tooltip_on_hovering_over_the_admin_menu() {
-        $this->getSession()->getDriver()->mouseOver('//a[@id="admin-menu-trigger"]');
-        $this->ensure_element_is_visible('div.tooltip', 'css_element');
-        $this->execute("behat_general::assert_element_contains_text",
-            array(get_string('admin', 'theme_snap'), 'div.tooltip', 'css_element')
-        );
-    }
-
-    /**
-     * @Given /^I am on the snap jquery bootstrap test page$/
-     */
-    public function i_am_on_the_snap_jquery_bootstrap_test_page() {
-        $this->getSession()->visit($this->locate_path('/theme/snap/tests/fixtures/test_jquery_bootstrap.php'));
-    }
-
-    /**
      * @Given /^I have been redirected to the site policy page$/
      */
     public function i_am_redirected_to_site_policy_page() {
@@ -1477,7 +1405,7 @@ class behat_theme_snap extends behat_base {
         $currenturl = str_replace($CFG->wwwroot, '', $currenturl);
         $currenturl = str_replace('index.php', '', $currenturl);
 
-        $expectedurl = $CFG->defaulthomepage == 0 ? '/' : '/my';
+        $expectedurl = $CFG->defaulthomepage == 0 ? '/' : '/my/';
 
         if ($currenturl !== $expectedurl) {
             $msg = "Expected user to be on default site home page - currenturl is $currenturl and expected url ";

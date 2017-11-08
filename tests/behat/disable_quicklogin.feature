@@ -26,10 +26,6 @@ Feature: Disable Snap quick login
   As an Admin
   I need to be able to disable the Snap quick login
 
-  Background:
-    Given the following config values are set as admin:
-      | theme | snap |
-
   @javascript
   Scenario: Snap quick login is disabled
     Given the following config values are set as admin:

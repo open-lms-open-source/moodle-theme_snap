@@ -25,7 +25,6 @@ Feature: When the moodle theme is set to Snap, ajax failures due to log outs / e
 
   Background:
     Given the following config values are set as admin:
-      | theme | snap |
       | defaulthomepage | 0 |
     And the following "users" exist:
       | username | firstname | lastname | email                |

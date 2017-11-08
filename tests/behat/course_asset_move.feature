@@ -29,9 +29,6 @@ Feature: When the moodle theme is set to Snap, teachers can move course resource
     And I set the following fields to these values:
       | Include a topic section | 1 |
     And I log out
-    Given the following config values are set as admin:
-      | theme           | snap |
-      | defaulthomepage | 0    |
     And the following "courses" exist:
       | fullname | shortname | category | format |
       | Course 1 | C1 | 0 | topics |

@@ -25,9 +25,7 @@ Feature: When the moodle theme is set to Snap, students and teachers can open a 
   grades / grading column showing them things that have recently had feedback or have recently been submitted.
 
   Background:
-    Given the following config values are set as admin:
-      | theme | snap |
-    And the following "courses" exist:
+    Given the following "courses" exist:
       | fullname | shortname | category | groupmode |
       | Course 1 | C1 | 0 | 1 |
     And the following "users" exist:

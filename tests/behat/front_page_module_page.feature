@@ -26,9 +26,7 @@ Feature: Open page (front page) module inline
   I need to view page modules inline at front page.
 
   Background:
-    Given the following config values are set as admin:
-      | theme              | snap |
-    And the following "users" exist:
+    Given the following "users" exist:
       | username | firstname | lastname | email                |
       | student1 | Student   | 1        | student1@example.com |
     And completion tracking is "Enabled" for course "Acceptance test site"
