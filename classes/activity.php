@@ -1021,4 +1021,16 @@ class activity {
 
         return $eventdata;
     }
+
+    /**
+     * Return extension date for user on assignment.
+     * @param int $assignmentid
+     * @return int | bool
+     */
+    public static function assignment_user_extension_date($assignmentid) {
+        global $USER, $DB;
+        $vars = array('assignment' => $assignmentid, 'userid' => $USER->id);
+        $row = $DB->get_record('assign_user_flags', $vars, 'extensionduedate');
+        return $row ? $row->extensionduedate : false;
+    }
 }

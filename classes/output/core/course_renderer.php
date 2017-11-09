@@ -605,15 +605,12 @@ class course_renderer extends \core_course_renderer {
         // Activity due date.
         if (!empty($meta->extension) || !empty($meta->timeclose)) {
             $dateformat = get_string('strftimedate', 'langconfig');
-
             if (!empty($meta->extension)) {
-                $duekey = 'extension';
                 $field = 'extension';
             } else if (!empty($meta->timeclose)) {
-                $duekey = 'due';
                 $field = 'timeclose';
             }
-            $labeltext = get_string($duekey, 'theme_snap', userdate($meta->$field, $dateformat));
+            $labeltext = get_string('due', 'theme_snap', userdate($meta->$field, $dateformat));
             $pastdue = $meta->$field < time();
             $url = new \moodle_url("/mod/{$mod->modname}/view.php", ['id' => $mod->id]);
             $dateclass = $pastdue ? 'tag-danger' : 'tag-success';
