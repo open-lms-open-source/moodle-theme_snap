@@ -26,6 +26,8 @@
 
 defined('MOODLE_INTERNAL') || die();
 
+use theme_snap\renderables\featured_courses;
+
 if (isloggedin() and !isguestuser() and isset($CFG->frontpageloggedin)) {
     $frontpagelayout = $CFG->frontpageloggedin;
 } else {
@@ -46,7 +48,7 @@ if (substr_compare($maincontent, $lastclosetag, -strlen($lastclosetag)) !== 0) {
 echo $this->feature_spot_cards();
 
 // Snap featured courses.
-echo $this->featured_courses();
+echo $OUTPUT->render(new featured_courses());
 
 echo substr($maincontent, 0, -strlen($lastclosetag));
 $courserenderer = $PAGE->get_renderer('core', 'course');
