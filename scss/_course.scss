@@ -1106,6 +1106,7 @@ body.snap-resource-card li.snap-resource {
 
 // Conditional information styled as fauz alerts.
 .snap-conditional-tag,
+.snap-stealth-tag,
 .snap-draft-tag,
 .snap-current-tag {
     font-size: small;
@@ -1142,15 +1143,15 @@ body.snap-resource-card li.snap-resource {
     clear: both;
 }
 
-// hide draft tag, unless asset has class draft (can be added by js)
+// Hide draft tag, unless asset has class draft (can be added by js).
 .snap-draft-tag,
 .snap-current-tag {
     display: none !important; // SHAME - overcome bad overspecificity...
     font-size: $font-size-sm;
 }
 
-// show draft tag if parent has draft or class.
-.hidden .content .snap-draft-tag,
+// Show draft for mods & sections.
+.hidden .content .snap-draft-section,
 .snap-asset.draft .snap-draft-tag {
     display: block !important; // SHAME - overcome bad overspecificity...
 }
@@ -1168,21 +1169,26 @@ body.snap-resource-card li.snap-resource {
     }
 }
 
-// Assets with draft tag.
-.snap-asset.draft {
-    border-top-color: #eee !important;
-
-    .activityinstance {
-        opacity: 0.75;
-    }
-
-    // Options to hide/show in the dropdown.
-    .editing_hide {
-        display: none;
-    }
-
+// Hide hide/show when section is hidden.
+.hidden li.snap-asset {
+    .editing_hide,
     .editing_show {
-        display: block;
+        display: none !important;
+    }
+}
+
+// Assets with draft tag.
+.snap-asset {
+    &.draft,
+    &.stealth {
+    border-top-color: #eee !important;
+        // Options to hide/show in the dropdown.
+        .editing_hide {
+            display: none;
+        }
+        .editing_show {
+            display: block;
+        }
     }
 }
 

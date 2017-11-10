@@ -301,7 +301,8 @@ EOF;
             'movefailed',
             'movingdropsectionhelp',
             'movingstartedhelp',
-            'notpublished'
+            'notpublished',
+            'visibility'
         ), 'theme_snap');
 
         $PAGE->requires->strings_for_js([
@@ -310,6 +311,10 @@ EOF;
             'error',
             'unknownerror',
             'closebuttontitle',
+            'modhide',
+            'modshow',
+            'hiddenoncoursepage',
+            'showoncoursepage'
         ], 'moodle');
 
         $PAGE->requires->strings_for_js([

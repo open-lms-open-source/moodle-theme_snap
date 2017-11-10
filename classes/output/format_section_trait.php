@@ -271,7 +271,7 @@ trait format_section_trait {
         }
         // Draft message.
         $drafticon = '<img aria-hidden="true" role="presentation" class="svg-icon" src="'.$output->image_url('/i/show').'" />';
-        $o .= '<div class="snap-draft-tag">'.$drafticon.' '.get_string('draft', 'theme_snap').'</div>';
+        $o .= '<div class="snap-draft-tag snap-draft-section">'.$drafticon.' '.get_string('draft', 'theme_snap').'</div>';
 
         // Current section message.
         $currenticon = '<img aria-hidden="true" role="presentation" class="svg-icon" src="'.$output->image_url('/i/marked').'" />';
