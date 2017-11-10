@@ -42,6 +42,8 @@ use theme_snap\renderables\settings_link;
 use theme_snap\renderables\bb_dashboard_link;
 use theme_snap\renderables\course_card;
 use theme_snap\renderables\course_toc;
+use theme_snap\renderables\featured_courses;
+
 // We have to force include this class as it's on login and the auto loader may not have been updated via a cache dump.
 require_once($CFG->dirroot.'/theme/snap/classes/renderables/login_alternative_methods.php');
 use theme_snap\renderables\login_alternative_methods;
@@ -1393,7 +1395,6 @@ HTML;
         return $card;
     }
 
-
     /**
      * Return featured courses html.
      * There are intentionally no checks for hidden course status
@@ -1401,119 +1402,12 @@ HTML;
      *
      * @return string
      */
-    public function featured_courses() {
-        global $PAGE, $DB;
-        // Build array of course ids to display.
-        $ids = array("fc_one", "fc_two", "fc_three", "fc_four", "fc_five", "fc_six", "fc_seven", "fc_eight");
-        $courseids = array();
-        foreach ($ids as $id) {
-            if (!empty($PAGE->theme->settings->$id)) {
-                $courseids[] = $PAGE->theme->settings->$id;
-            }
-        }
-
-        // Get DB records for course ids.
-        $courses = array();
-        if (count($courseids)) {
-            list ($coursesql, $params) = $DB->get_in_or_equal($courseids);
-            $sql = "SELECT * FROM {course} WHERE id $coursesql";
-            $courses = $DB->get_records_sql($sql, $params);
-        } else {
+    public function render_featured_courses(featured_courses $fc) {
+        if (empty($fc)) {
             return '';
         }
 
-        // Order records to match order input.
-        $orderedcourses = array();
-        foreach ($courseids as $courseid) {
-            if (!empty($courses[$courseid])) {
-                $orderedcourses[] = $courses[$courseid];
-            }
-        }
-
-        // Build html for course card.
-        $cards = array();
-        foreach ($orderedcourses as $course) {
-            $cards[] = $this->featured_course($course);
-        }
-
-        // Double check there is content, or return ''.
-        $count = count($cards);
-        if ($count < 1) {
-            return '';
-        }
-
-        // Build grid and output.
-        // Calculate boostrap column class.
-        $colclass = '';
-        if ($count >= 4) {
-            $colclass = 'col-sm-3'; // Four cards = 25%.
-        }
-        if ($count === 2) {
-            $colclass = 'col-sm-6'; // Two cards = 50%.
-        }
-        if ($count === 3 || $count === 6) {
-            $colclass = 'col-sm-4'; // Three cards = 33.3%.
-        }
-
-        // Build featured courses cards.
-        $i = 1;
-        $colums = '';
-        foreach ($cards as $card) {
-            $colums .= '<div class="' .$colclass. '" id="snap-featured-course-' .$i. '">' .$card. '</div>';
-            $i++;
-        }
-
-        // Featured courses title.
-        $title = '';
-        if (!empty($PAGE->theme->settings->fc_heading)) {
-            $title = '<h2 class="snap-featured-courses-heading">' .s($PAGE->theme->settings->fc_heading). '</h2>';
-        }
-
-        // Featured courses browse all link.
-        $browse = '';
-        if (!empty($PAGE->theme->settings->fc_browse_all)) {
-            $url = new moodle_url('/course/');
-            $link = html_writer::link($url, get_string('featuredcoursesbrowseall', 'theme_snap'), ['class' => 'btn btn-primary']);
-            $browse = '<p class="text-center">'.$link.'</p>';
-        }
-
-        // Featured courses quick edit link.
-        $edit = '';
-        if ($this->page->user_is_editing()) {
-            $url = new moodle_url('/admin/settings.php?section=themesettingsnap#themesnapfeaturedcourses');
-            $link = html_writer::link($url, get_string('featuredcoursesedit', 'theme_snap'), ['class' => 'btn btn-primary']);
-            $edit = '<p class="text-center">'.$link.'</p>';
-        }
-
-        // Build featured courses section.
-        $output = '<div id="snap-featured-courses" class="text-center">';
-        $output .= $title;
-        $output .= '<div class="row text-center">' .$colums. '</div>';
-        $output .= $browse;
-        $output .= $edit;
-        $output .= '</div>';
-        // Return featured courses.
-        return $output;
-    }
-
-    /**
-     * Return featured course card html.
-     *
-     * @param object $course
-     * @return string
-     */
-    protected function featured_course($course) {
-        $url = new moodle_url('/course/view.php?id=' .$course->id);
-        $coverimage = local::course_coverimage_url($course->id);
-        $bgcss = '';
-        if (!empty($coverimage)) {
-            $bgcss = "background-image: url($coverimage);";
-        }
-        $card = '<a href="' .$url. '" class="snap-featured-course" style="' .$bgcss.'">
-            <!--Card content-->
-            <span class="snap-featured-course-title">' .s($course->fullname). '</span>
-        </a>';
-        return $card;
+        return $this->render_from_template('theme_snap/featured_courses', $fc);
     }
 
     /**
