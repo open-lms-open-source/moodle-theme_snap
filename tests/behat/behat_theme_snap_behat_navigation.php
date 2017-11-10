@@ -158,20 +158,23 @@ EOF;
         return $node->find('xpath', $xpath);
     }
 
-    /**
-     * Override core function so that admin menu can be opened before trying to navigate through tree.
-     */
-    public function i_navigate_to_in_site_administration($nodetext) {
-        $node = $this->find('css', '.block_settings');
+    protected function select_node_in_navigation($nodetext, $parentnodes) {
+        $nodetoclick = $this->find_node_in_navigation($nodetext, $parentnodes);
+        // Throw exception if no node found.
+        if (!$nodetoclick) {
+            throw new ExpectationException('Navigation node "' . $nodetext . '" not found under "' .
+                implode($parentnodes, ' > ') . '"', $this->getSession());
+        }
+
+        $settings = $this->find('css', '.block_settings');
         // Only attempt to open the admin menu if its not already open.
-        if (!$node->isVisible()) {
+        if (!$settings->isVisible()) {
             $this->execute('behat_general::i_click_on', ['#admin-menu-trigger', 'css_element']);
         }
-        $parentnodes = array_map('trim', explode('>', $nodetext));
-        array_unshift($parentnodes, get_string('administrationsite'));
-        $lastnode = array_pop($parentnodes);
-        $this->select_node_in_navigation($lastnode, $parentnodes);
+
+        $nodetoclick->click();
     }
+
     /**
      * Just go to the course page as Snap doesn't have the same concept of editing mode.
      */
@@ -179,4 +182,5 @@ EOF;
         // Snap doesn't really have the concept of edit mode.
         $this->i_am_on_course_homepage($coursefullname);
     }
+
 }
