@@ -14,6 +14,27 @@
     You should have received a copy of the GNU General Public License
     along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 }}
+{{!
+    @copyright Copyright (c) 2017 Blackboard Inc.
+
+    @template theme_snap/course_search_form
+
+    Course search template
+
+    Context variables required for this template:
+    * searchurl - url to submit form to
+    * id - unique CSS id
+    * inputid - unique CSS id for the input
+    * value - term previously searched for
+
+    Example context (json):
+    {
+        "searchurl": "/",
+        "id": "id123",
+        "inputid": "input_id",
+        "value": "",
+    }
+}}
 <form action="{{searchurl}}" id="{{id}}" method="get">
     <fieldset class="coursesearchbox invisiblefieldset">
         <label for="{{inputid}}" class="sr-only">{{#str}}searchcourses{{/str}}</label>

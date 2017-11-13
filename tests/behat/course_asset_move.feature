@@ -25,7 +25,8 @@ Feature: When the moodle theme is set to Snap, teachers can move course resource
 
   Background:
     Given I log in as "admin"
-    And I go to "/admin/settings.php?section=frontpagesettings"
+    And I am on site homepage
+    And I navigate to "Edit settings" node in "Front page settings"
     And I set the following fields to these values:
       | Include a topic section | 1 |
     And I log out

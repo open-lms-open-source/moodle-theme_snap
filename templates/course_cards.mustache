@@ -15,11 +15,38 @@
     along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 }}
 {{!
- @package   theme_snap
- @copyright Copyright (c) 2017 Blackboard Inc.
- @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+    @copyright Copyright (c) 2017 Blackboard Inc.
+
+    @template theme_snap/course_cards
+
+    Course cards template
+
+    Context variables required for this template:
+    * published - visible to students
+    * courseid - id of the course
+    * categoryid - id of the category that contains the course 
+    * model - 
+    * archived - course close date has passed
+    * toggletitle - hover text on favorite toggle
+    * favorited - is the course pinned to the top of the list
+    * url - course url
+    * fullname - course fullname
+    * feedback - is the course pinned to the top of the list
+
+    Example context (json):
+    {
+        "published": true,
+        "courseid": "160",
+        "categoryid": "2",
+        "settings": "RAW HTML",
+        "archived": false,
+        "toggletitle": "Favorite",
+        "favorited": true,
+        "url": "/",
+        "fullname": "Course 101"
+    }
 }}
-<div data-hidden="{{^published}}true{{/published}}{{#published}}false{{/published}}" data-courseid="{{courseid}}" data-category="{{category}}" data-model="{{model}}" data-href="{{{url}}}" data-shortname="{{shortname}}" class="coursecard{{#favorited}} favorited{{/favorited}}" style="{{imagecss}}" tab-index="-1"{{#lazyloadimageurl}} data-image-url="{{.}}"{{/lazyloadimageurl}}>
+<div data-hidden="{{^published}}true{{/published}}{{#published}}false{{/published}}" data-courseid="{{courseid}}" data-category="{{category}}" data-model="{{model}}" data-href="{{{url}}}" data-shortname="{{shortname}}" class="coursecard{{#favorited}} favorited{{/favorited}}" style="{{imagecss}}" tabindex="-1"{{#lazyloadimageurl}} data-image-url="{{.}}"{{/lazyloadimageurl}}>
     {{^archived}}
     <button class="snap-icon-toggle favoritetoggle" title="{{toggletitle}}" aria-pressed="{{#favorited}}true{{/favorited}}{{^favorited}}false{{/favorited}}"></button>
     {{/archived}}

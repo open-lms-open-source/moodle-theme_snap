@@ -78,100 +78,23 @@ EOF;
         }
     }
 
-    /**
-     * Override core behat find_node_in_navigation so that expanding navigation menu is faster and works in Snap.
-     * Related core issue: MDL-58023.
-     */
-    protected function find_node_in_navigation($nodetext, $parentnodes, $nodetype = 'link') {
-        // Site admin is different and needs special treatment.
-        $siteadminstr = get_string('administrationsite');
-
-        // Create array of all parentnodes.
-        $countparentnode = count($parentnodes);
-
-        // If JS is disabled and Site administration is not expanded we
-        // should follow it, so all the lower-level nodes are available.
-        if (!$this->running_javascript()) {
-            if ($parentnodes[0] === $siteadminstr) {
-                // We don't know if there if Site admin is already expanded so
-                // don't wait, it is non-JS and we already waited for the DOM.
-                $siteadminlink = $this->getSession()->getPage()->find('named_exact', array('link', "'" . $siteadminstr . "'"));
-                if ($siteadminlink) {
-                    $siteadminlink->click();
-                }
-            }
+    protected function select_node_in_navigation($nodetext, $parentnodes) {
+        $nodetoclick = $this->find_node_in_navigation($nodetext, $parentnodes);
+        // Throw exception if no node found.
+        if (!$nodetoclick) {
+            throw new ExpectationException('Navigation node "' . $nodetext . '" not found under "' .
+                implode($parentnodes, ' > ') . '"', $this->getSession());
         }
 
-        // Get top level node.
-        $node = $this->get_top_navigation_node($parentnodes[0]);
-
-        // Expand all nodes.
-        for ($i = 0; $i < $countparentnode; $i++) {
-            if ($i > 0) {
-                // Sub nodes within top level node.
-                $node = $this->get_navigation_node($parentnodes[$i], $node);
-            }
-
-            // The p node contains the aria jazz.
-            $pnodexpath = "/p[contains(concat(' ', normalize-space(@class), ' '), ' tree_item ')]";
-            $pnode = $node->find('xpath', $pnodexpath);
-
-            // Keep expanding all sub-parents if js enabled.
-            if ($pnode && $this->running_javascript() && $pnode->hasAttribute('aria-expanded') &&
-                ($pnode->getAttribute('aria-expanded') == "false")) {
-
-                $this->ensure_node_is_visible($pnode);
-
-                if ($this->browser_supports_document_evaluate()) {
-                    $this->js_trigger_click($pnode);
-                } else {
-                    // If node is a link then some driver click in the middle of the node, which click on link and
-                    // page gets redirected. To ensure expansion works in all cases, check if the node to expand is a
-                    // link and if yes then click on link and wait for it to navigate to next page with node expanded.
-                    $nodetoexpandliteral = behat_context_helper::escape($parentnodes[$i]);
-                    $nodetoexpandxpathlink = $pnodexpath . "/a[normalize-space(.)=" . $nodetoexpandliteral . "]";
-
-                    if ($nodetoexpandlink = $node->find('xpath', $nodetoexpandxpathlink)) {
-                        $behatgeneralcontext = behat_context_helper::get('behat_general');
-                        $nodetoexpandlink->click();
-                        $behatgeneralcontext->wait_until_the_page_is_ready();
-                    } else {
-                        $pnode->click();
-                    }
-                }
-
-                // Wait for node to load, if not loaded before.
-                if ($pnode->hasAttribute('data-loaded') && $pnode->getAttribute('data-loaded') == "false") {
-                    $jscondition = '(document.evaluate("' . addslashes_js($pnode->getXpath()) . '", document, null, '.
-                        'XPathResult.ANY_TYPE, null).iterateNext().getAttribute(\'data-loaded\') == "true")';
-
-                    $this->getSession()->wait(self::EXTENDED_TIMEOUT * 1000, $jscondition);
-                }
-            }
-        }
-
-        // Finally, click on requested node under navigation.
-        $nodetextliteral = behat_context_helper::escape($nodetext);
-        $tagname = ($nodetype === 'link') ? 'a' : 'span';
-        $xpath = "/ul/li/p[contains(concat(' ', normalize-space(@class), ' '), ' tree_item ')]" .
-            "/{$tagname}[normalize-space(.)=" . $nodetextliteral . "]";
-        return $node->find('xpath', $xpath);
-    }
-
-    /**
-     * Override core function so that admin menu can be opened before trying to navigate through tree.
-     */
-    public function i_navigate_to_in_site_administration($nodetext) {
-        $node = $this->find('css', '.block_settings');
+        $settings = $this->find('css', '.block_settings');
         // Only attempt to open the admin menu if its not already open.
-        if (!$node->isVisible()) {
+        if (!$settings->isVisible()) {
             $this->execute('behat_general::i_click_on', ['#admin-menu-trigger', 'css_element']);
         }
-        $parentnodes = array_map('trim', explode('>', $nodetext));
-        array_unshift($parentnodes, get_string('administrationsite'));
-        $lastnode = array_pop($parentnodes);
-        $this->select_node_in_navigation($lastnode, $parentnodes);
+
+        $nodetoclick->click();
     }
+
     /**
      * Just go to the course page as Snap doesn't have the same concept of editing mode.
      */
@@ -179,4 +102,5 @@ EOF;
         // Snap doesn't really have the concept of edit mode.
         $this->i_am_on_course_homepage($coursefullname);
     }
+
 }
