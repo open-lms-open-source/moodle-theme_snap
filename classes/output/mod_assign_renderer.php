@@ -33,6 +33,7 @@ use moodle_url;
 use assign_submission_status;
 use assign_submission_plugin_submission;
 use assign_feedback_plugin_feedback;
+use theme_snap\activity;
 
 require_once($CFG->dirroot.'/mod/assign/renderer.php');
 
@@ -89,8 +90,15 @@ class mod_assign_renderer extends \mod_assign_renderer {
      */
     public function render_assign_duedate(\assign_header $header) {
         $status = $header->assign;
-        $time = time();
         $duedate = $status->duedate;
+        $extensiontag = '';
+        // If the user has an extension use as due date.
+        $extensionduedate = activity::assignment_user_extension_date($status->id);
+        if ($extensionduedate) {
+            $duedate = $extensionduedate;
+        }
+
+        $time = time();
         $duedata = '';
         if ($duedate > 0) {
             // Allow submissions from.
@@ -106,6 +114,11 @@ class mod_assign_renderer extends \mod_assign_renderer {
             if ($duedate - $time >= 0) {
                 $due = format_time($duedate - $time);
                 $duedata .= '<div>'.get_string('timeremaining', 'assign').': '.$due.'</div>';
+            }
+
+            // Tell user they have been granted an extension.
+            if ($extensionduedate) {
+                $duedata .= '<div>'.get_string('eventextensiongranted', 'assign').'</div>';
             }
 
             // Late submissions data.
@@ -171,7 +184,10 @@ class mod_assign_renderer extends \mod_assign_renderer {
                     $summary->submissionssubmittedcount.'</div>';
         } else {
             // Single submissions.
-            $percentage = round(($summary->submissionssubmittedcount / $summary->participantcount), 3) * 100 . '%';
+            $percentage = 0;
+            if ($summary->participantcount) {
+                $percentage = round(($summary->submissionssubmittedcount / $summary->participantcount), 3) * 100 . '%';
+            }
             $submissionsdata = '<div class="submissions-status">';
             $submissionsdata .= get_string('submissions', 'assign').': ';
             $submissionsdata .= $summary->submissionssubmittedcount.' / '.$summary->participantcount;
@@ -204,6 +220,7 @@ class mod_assign_renderer extends \mod_assign_renderer {
      */
     public function render_assign_submission_status(\assign_submission_status $status) {
         global $USER, $OUTPUT;
+
         // User picture and name.
         $userpicture = new \user_picture($USER);
         $userpicture->link = false;
