@@ -1275,8 +1275,29 @@ header#page-header
     display: none;
 }
 
+// Front page core elements.
+#page-site-index {
+    // Front page course search box.
+    #coursesearch .input-group {
+        max-width: 300px;
+    }
+    // Front page edit summary - hide cog icon.
+    .sitetopic .fa-cog {
+        display: none;
+    }
+    // Front page add resource - hide + icon.
+    .section-modchooser-link .fa-plus {
+        display: none;
+    }
+}
+
+
+
 #frontpage-course-list {
     padding: 1em 4%;
+    .paging {
+        padding: 1em;
+    }
 }
 
 #page-site-index .sitetopic,
