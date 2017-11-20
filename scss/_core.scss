@@ -2783,9 +2783,14 @@ table#user-grades tr.avg td.cell {
 // bootstrap alerts
 
 .alert {
-    clear: both;
-    border: 0;
-    border-left: 3em solid;
+    &.alert-info,
+    &.alert-success,
+    &.alert-danger,
+    &.alert-warning {
+        clear: both;
+        border: 0;
+        border-left: 3em solid;
+    }
 }
 
 #notice {
