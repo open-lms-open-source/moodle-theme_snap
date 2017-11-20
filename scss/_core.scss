@@ -748,64 +748,6 @@ input[type="reset"] {
 
 }
 
-// Message badge alerts
-.message_badge_message,
-.message_badge_empty {
-    border-top: none;
-}
-
-.message_badge_message_subject {
-    padding-right: 0;
-}
-
-.message_badge_message_close {
-    display: none;
-}
-
-.message_badge_message_text article {
-    font-size: 0.9em;
-    font-family: $font-family-serif;
-}
-
-.message_badge_message_content {
-    margin-left: 65px;
-}
-
-/**
-Its pointless using a colour to visually show that the message is read as we can already tell this by the fact the
-read button has been removed and the message text is visible
-**/
-.message_badge_message.dimmed_text {
-    color: $body-color;
-
-    .message_badge_message_text,
-    .message_badge_message_text a {
-        color: $body-color !important;
-    }
-}
-
-.message_badge_user_picture {
-    margin-right: 18px;
-
-    img {
-        width: 50px;
-    }
-}
-
-.alert_stream {
-    .message_badge_container {
-        .message_badge_overlay,
-        .message_badge_message_overlay {
-            background-color: transparent;
-            border: none;
-            max-height: none;
-            width: 100%;
-            overflow: visible;
-        }
-    }
-}
-
-// End of message badge alerts
 // -------------------------
 // Layout of moodle/snap DOM structure
 // -------------------------
@@ -889,17 +831,7 @@ footer #moodle-footer
 
     // Styles that message_badge_count has in core.
     .conversation_badge_count {
-        color: white;
-        height: 1.8em;
-        width: 1.8em;
-        text-align: center;
-        font-size: .55em;
         cursor: pointer;
-    }
-
-    // mrooms alerts badge
-    .message_badge_count,
-    .conversation_badge_count {
         position: absolute;
         padding-top: 0;
         background-image: none;
@@ -907,6 +839,11 @@ footer #moodle-footer
         left: auto;
         right: 0.5em;
         top: 0.5em;
+        color: white;
+        height: 1.8em;
+        width: 1.8em;
+        text-align: center;
+        font-size: .55em;
     }
 }
 

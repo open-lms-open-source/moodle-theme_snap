@@ -34,7 +34,6 @@ $string['admin'] = 'Admin';
 $string['advancedbrandingheading'] = 'Advanced branding';
 $string['advancedbrandingheadingdesc'] = '';
 $string['ago'] = 'ago';
-$string['alerts'] = 'Alerts';
 $string['answered'] = 'Answered';
 $string['appendices'] = 'Tools';
 $string['assigndraft'] = 'Draft requires your confirmation';
