@@ -37,11 +37,14 @@ if (class_exists('local_geniusws\navigation')) {
     $bblink = new bb_dashboard_link();
     echo $OUTPUT->render($bblink);
 }
+
 echo $OUTPUT->personal_menu_trigger();
-echo core_renderer::search_box();
 $settingslink = new settings_link();
 echo $OUTPUT->render($settingslink);
+echo '<div class="hidden-md-down pull-right">';
 echo $OUTPUT->render_notification_popups();
+echo core_renderer::search_box();
+echo '</div>';
 ?>
 </div>
 

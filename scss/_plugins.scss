@@ -1,7 +1,19 @@
 /**
-* Plugins css.
-*/
+ * Plugins css.
+ */
 
+/**
+ * Global search.
+ */
+ 
+// Fix height inherited for search input.
+#mr-nav .search-input-wrapper{
+    margin: 0 1rem;
+
+    form > input {
+        height: auto;
+    }
+}
 
 /**
  * Video js filter.
