@@ -577,7 +577,7 @@ define(['jquery', 'core/log', 'theme_snap/headroom', 'theme_snap/util', 'theme_s
                         // Enable the cancel button.
                         $('#id_cancel').on('click', function() {
                             $(sname).removeAttr('required');
-                            $('#mform1').submit();
+                            return true;
                         });
                     }
 
