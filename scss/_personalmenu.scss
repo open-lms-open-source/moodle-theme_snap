@@ -404,8 +404,12 @@ body.snap-pm-open {
 // -------------------------
 //  Personal menu links to browse all course, see all messages etc.
 // -------------------------
-.snap-personal-menu-more {
+#snap-pm-courses .snap-personal-menu-more {
     position: absolute;
     top: 0;
     right: 0;
+}
+.snap-personal-menu-more {
+    display: block;
+    text-align: right;
 }
