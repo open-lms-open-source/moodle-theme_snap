@@ -1170,7 +1170,7 @@ header#page-header
 #page-site-index {
     #region-main {
         max-width: 100%;
-        padding: 0;
+        padding: 2em 0;
         margin: 0 auto;
     }
 
@@ -1181,15 +1181,6 @@ header#page-header
         position: relative;
         padding: 0;
         margin: 0;
-    }
-    #page-header {
-        // background-color: $brand-primary; customisable
-        padding-top: 12.7%;
-        padding-bottom: 1.75em;
-        min-height: 400px;
-        border-bottom: 0;
-        margin: 0;
-        position: relative;
     }
 
     #snap-coverimagecontrol {
