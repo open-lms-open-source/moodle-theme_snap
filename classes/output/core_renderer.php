@@ -76,7 +76,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
         $collapsablehelp = '';
         if ($helpidentifier) {
             // Display header mod help as collapsable instead of popover for mods.
-            if ($helpidentifier = 'modulename') {
+            if ($helpidentifier === 'modulename') {
                 // Get mod help text.
                 $modnames = get_module_types_names();
                 $modname = $modnames[$component];
