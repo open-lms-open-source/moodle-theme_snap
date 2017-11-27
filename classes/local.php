@@ -19,9 +19,10 @@ namespace theme_snap;
 
 defined('MOODLE_INTERNAL') || die();
 
-use html_writer;
-use \theme_snap\user_forums;
-use \theme_snap\course_total_grade;
+use \theme_snap\user_forums,
+    \theme_snap\course_total_grade,
+    html_writer,
+    cm_info;
 
 require_once($CFG->dirroot.'/calendar/lib.php');
 require_once($CFG->libdir.'/completionlib.php');
@@ -492,6 +493,10 @@ class local {
     public static function course_participant_count($courseid, $modname = null) {
         static $participantcount = array();
 
+        if (defined('PHPUNIT_TEST') && PHPUNIT_TEST) {
+            $participantcount = [];
+        }
+
         // Incorporate the modname in the static cache index.
         $idx = $courseid . $modname;
 
@@ -688,327 +693,6 @@ class local {
         } else {
             return $seconds;
         }
-    }
-
-
-    /**
-     * Return user's upcoming deadlines from the calendar.
-     *
-     * All deadlines from today, then any from the next 12 months up to the
-     * max requested.
-     * @param \stdClass|integer $userorid
-     * @param integer $maxdeadlines
-     * @return array
-     */
-    public static function upcoming_deadlines($userorid, $maxdeadlines = 5) {
-
-        $user = self::get_user($userorid);
-        if (!$user) {
-            return [];
-        }
-
-        $courses = enrol_get_users_courses($user->id, true);
-
-        if (empty($courses)) {
-            return [];
-        }
-
-        $courseids = array_keys($courses);
-
-        $events = self::get_todays_deadlines($user, $courseids);
-
-        if (count($events) < $maxdeadlines) {
-            $maxaftercurrentday = $maxdeadlines - count($events);
-            $moreevents = self::get_upcoming_deadlines($user, $courseids, $maxaftercurrentday);
-            $events = $events + $moreevents;
-        }
-        foreach ($events as $event) {
-            if (isset($courses[$event->courseid])) {
-                $course = $courses[$event->courseid];
-                $event->coursefullname = format_string($course->fullname);
-            }
-        }
-        return $events;
-    }
-
-    /**
-     * Return user's deadlines for today from the calendar.
-     *
-     * @param \stdClass|int $userorid
-     * @param array $courses ids of all user's courses.
-     * @return array
-     */
-    private static function get_todays_deadlines($userorid, $courses) {
-        // Get all deadlines for today, assume that will never be higher than 100.
-        return self::get_upcoming_deadlines($userorid, $courses, 100, true);
-    }
-
-
-    /**
-     * Get calendar events. Copied from calendar/lib.php and adapted to work with assignment extensions.
-     *
-     * @param int $tstart Start time of time range for events
-     * @param int $tend End time of time range for events
-     * @param array|int|boolean $users array of users, user id or boolean for all/no user events
-     * @param array|int|boolean $groups array of groups, group id or boolean for all/no group events
-     * @param array|int|boolean $courses array of courses, course id or boolean for all/no course events
-     * @param boolean $withduration whether only events starting within time range selected
-     *                              or events in progress/already started selected as well
-     * @param boolean $ignorehidden whether to select only visible events or all events
-     * @return array $events of selected events or an empty array if there aren't any (or there was an error)
-     */
-    private static function calendar_get_events($tstart, $tend, $users, $groups, $courses, $withduration=true, $ignorehidden=true) {
-        global $DB, $USER;
-
-        $whereclause = '';
-        $params = array();
-        // Quick test.
-        if (empty($users) && empty($groups) && empty($courses)) {
-            return array();
-        }
-
-        if ((is_array($users) && !empty($users)) or is_numeric($users)) {
-            // Events from a number of users.
-            if (!empty($whereclause)) {
-                $whereclause .= ' OR';
-            }
-            list($insqlusers, $inparamsusers) = $DB->get_in_or_equal($users, SQL_PARAMS_NAMED);
-            $whereclause .= " (e.userid $insqlusers AND e.courseid = 0 AND e.groupid = 0)";
-            $params = array_merge($params, $inparamsusers);
-        } else if ($users === true) {
-            // Events from ALL users.
-            if (!empty($whereclause)) {
-                $whereclause .= ' OR';
-            }
-            $whereclause .= ' (e.userid != 0 AND e.courseid = 0 AND e.groupid = 0)';
-        }
-
-        if ((is_array($groups) && !empty($groups)) or is_numeric($groups)) {
-            // Events from a number of groups.
-            if (!empty($whereclause)) {
-                $whereclause .= ' OR';
-            }
-            list($insqlgroups, $inparamsgroups) = $DB->get_in_or_equal($groups, SQL_PARAMS_NAMED);
-            $whereclause .= " e.groupid $insqlgroups ";
-            $params = array_merge($params, $inparamsgroups);
-        } else if ($groups === true) {
-            // Events from ALL groups.
-            if (!empty($whereclause)) {
-                $whereclause .= ' OR ';
-            }
-            $whereclause .= ' e.groupid != 0';
-        }
-
-        if ((is_array($courses) && !empty($courses)) or is_numeric($courses)) {
-            if (!empty($whereclause)) {
-                $whereclause .= ' OR';
-            }
-            list($insqlcourses, $inparamscourses) = $DB->get_in_or_equal($courses, SQL_PARAMS_NAMED);
-            $whereclause .= " (e.groupid = 0 AND e.courseid $insqlcourses)";
-            $params = array_merge($params, $inparamscourses);
-        } else if ($courses === true) {
-            // Events from ALL courses.
-            if (!empty($whereclause)) {
-                $whereclause .= ' OR';
-            }
-            $whereclause .= ' (e.groupid = 0 AND e.courseid != 0)';
-        }
-
-        // Security check: if, by now, we have NOTHING in $whereclause, then it means
-        // that NO event-selecting clauses were defined. Thus, we won't be returning ANY
-        // events no matter what. Allowing the code to proceed might return a completely
-        // valid query with only time constraints, thus selecting ALL events in that time frame!
-        if (empty($whereclause)) {
-            return array();
-        }
-
-        if ($withduration) {
-            $timeclause = "(
-                ((e.timestart >= $tstart OR e.timestart + e.timeduration > $tstart) AND e.timestart <= $tend) OR
-                ((auf.extensionduedate >= $tstart OR auf.extensionduedate + e.timeduration > $tstart)
-                AND auf.extensionduedate <= $tend)
-            )";
-        } else {
-            $timeclause = "(
-                (e.timestart >= $tstart AND e.timestart <= $tend) OR
-                (auf.extensionduedate >= $tstart AND auf.extensionduedate <= $tend)
-            )";
-        }
-        if (!empty($whereclause)) {
-            // We have additional constraints.
-            $whereclause = $timeclause.' AND ('.$whereclause.')';
-        } else {
-            // Just basic time filtering.
-            $whereclause = $timeclause;
-        }
-
-        if ($ignorehidden) {
-            $whereclause .= ' AND e.visible = 1';
-        }
-
-        $sql = "SELECT e.*, auf.extensionduedate,
-              (
-              CASE
-              WHEN auf.extensionduedate IS NULL
-              THEN e.timestart
-              ELSE auf.extensionduedate
-               END
-              ) AS duedate
-              FROM {event} e
-         LEFT JOIN {modules} m ON e.modulename = m.name
-         LEFT JOIN {assign_user_flags} auf
-                ON e.modulename = 'assign'
-               AND e.instance = auf.assignment
-               AND auf.userid = :extensionuser
-                -- Non visible modules will have a value of 0.
-             WHERE (m.visible = 1 OR m.visible IS NULL) AND $whereclause
-          ORDER BY duedate";
-        $params['extensionuser'] = $USER->id;
-        $events = $DB->get_records_sql($sql, $params);
-
-        if ($events === false) {
-            $events = array();
-        }
-        return $events;
-    }
-
-    /**
-     * Return user's deadlines from the calendar.
-     *
-     * Usually called twice, once for all deadlines from today, then any from the next 12 months up to the
-     * max requested.
-     *
-     * Based on the calender function calendar_get_upcoming.
-     *
-     * @param \stdClass|int $userorid
-     * @param array $courses ids of all user's courses.
-     * @param int $maxevents to return
-     * @param bool $todayonly true if only the next 24 hours to be returned
-     * @return array
-     */
-    private static function get_upcoming_deadlines($userorid, $courses, $maxevents, $todayonly=false) {
-
-        $user = self::get_user($userorid);
-        if (!$user) {
-            return [];
-        }
-
-        // We need to do this so that we can calendar events and mod visibility for a specific user.
-        self::swap_global_user($user);
-
-        $tz = new \DateTimeZone(\core_date::get_user_timezone($user));
-        $today = new \DateTime('today', $tz);
-        $tomorrow = new \DateTime('tomorrow', $tz);
-
-        if ($todayonly === true) {
-            $starttime = $today->getTimestamp();
-            $endtime = $tomorrow->getTimestamp() - 1;
-        } else {
-            $starttime = $tomorrow->getTimestamp();
-            $endtime = $starttime + (365 * DAYSECS) - 1;
-        }
-
-        $userevents = false;
-        $groupevents = false;
-        $events = self::calendar_get_events($starttime, $endtime, $userevents, $groupevents, $courses);
-
-        $processed = 0;
-        $output = array();
-        foreach ($events as $event) {
-            if ($event->eventtype === 'course' || $event->eventtype === 'gradingdue') {
-                // Not an activity deadline.
-                continue;
-            }
-            if ($event->eventtype === 'open' && $event->timeduration == 0) {
-                // Only the opening of multi-day event, not a deadline.
-                continue;
-            }
-            if (!empty($event->modulename)) {
-                $modinfo = get_fast_modinfo($event->courseid);
-                $mods = $modinfo->get_instances_of($event->modulename);
-                if (isset($mods[$event->instance])) {
-                    $cminfo = $mods[$event->instance];
-                    if (!$cminfo->uservisible) {
-                        continue;
-                    }
-                    if ($event->eventtype === 'close') {
-                        // Revert the addition of e.g. "(Quiz closes)" to the event name.
-                        $event->name = $cminfo->name;
-                    }
-                }
-            }
-
-            $output[$event->id] = $event;
-            ++$processed;
-
-            if ($processed >= $maxevents) {
-                break;
-            }
-        }
-
-        self::swap_global_user(false);
-
-        return $output;
-    }
-
-    /**
-     * Get deadlines string.
-     * @return string
-     */
-    public static function deadlines() {
-        global $USER, $PAGE;
-
-        $events = self::upcoming_deadlines($USER->id);
-        if (empty($events)) {
-            return '<p class="small">' . get_string('nodeadlines', 'theme_snap') . '</p>';
-        }
-
-        $output = $PAGE->get_renderer('theme_snap', 'core', RENDERER_TARGET_GENERAL);
-        $o = '';
-        foreach ($events as $event) {
-            if (!empty($event->modulename)) {
-                $modinfo = get_fast_modinfo($event->courseid);
-                $cm = $modinfo->instances[$event->modulename][$event->instance];
-
-                $eventtitle = $event->name .'<small><br>' .$event->coursefullname. '</small>';
-
-                $modimageurl = $output->image_url('icon', $event->modulename);
-                $modname = get_string('modulename', $event->modulename);
-                $modimage = \html_writer::img($modimageurl, $modname);
-                if (!empty($event->extensionduedate)) {
-                    // If we have an extension then always show this as the due date.
-                    $deadline = $event->extensionduedate + $event->timeduration;
-                } else {
-                    $deadline = $event->timestart + $event->timeduration;
-                }
-                if ($event->modulename === 'collaborate') {
-                    if ($event->timeduration == 0) {
-                        // No deadline for long duration collab rooms.
-                        continue;
-                    }
-                    $deadline = $event->timestart;
-                }
-                if ($event->modulename === 'quiz' || $event->modulename === 'lesson') {
-                    $override = \theme_snap\activity::instance_activity_dates($event->courseid, $cm);
-                    $deadline = $override->timeclose;
-                }
-                $meta = $output->friendly_datetime($deadline);
-                // Add completion meta data for students (exclude anyone who can grade them).
-                if (!has_capability('mod/assign:grade', $cm->context)) {
-                    /** @var \theme_snap_core_course_renderer $courserenderer */
-                    $courserenderer = $PAGE->get_renderer('core', 'course', RENDERER_TARGET_GENERAL);
-                    $activitymeta = activity::module_meta($cm);
-                    $meta .= '<div class="snap-completion-meta">' .
-                            $courserenderer->submission_cta($cm, $activitymeta) .
-                            '</div>';
-                }
-                $o .= $output->snap_media_object($cm->url, $modimage, $eventtitle, $meta, '');
-            }
-        }
-        if (empty($o)) {
-            return '<p>' . get_string('nodeadlines', 'theme_snap') . '</p>';
-        }
-        return $o;
     }
 
     /**
@@ -1992,4 +1676,28 @@ class local {
         return parse_url($PAGE->url->out_as_local_url())['path'];
     }
 
+    /**
+     * Add or update a calendar change stamp for a specific $courseid.
+     * @param $courseid
+     */
+    public static function add_calendar_change_stamp($courseid) {
+        $muc = \cache::make('theme_snap', 'generalstaticappcache');
+        $cached = $muc->get('calendarchangestamps');
+        if ($cached) {
+            $cached[$courseid] = microtime(true);
+        } else {
+            $cached = [$courseid => microtime(true)];
+        }
+        $muc->set('calendarchangestamps', $cached);
+    }
+
+    /**
+     * Recover calendar change stamps.
+     * @return false|mixed
+     */
+    public static function get_calendar_change_stamps() {
+        $muc = \cache::make('theme_snap', 'generalstaticappcache');
+        $cached = $muc->get('calendarchangestamps');
+        return $cached;
+    }
 }

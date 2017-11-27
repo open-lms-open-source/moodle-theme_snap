@@ -37,6 +37,7 @@ use moodle_url;
 use navigation_node;
 use user_picture;
 use theme_snap\local;
+use theme_snap\activity;
 use theme_snap\services\course;
 use theme_snap\renderables\settings_link;
 use theme_snap\renderables\bb_dashboard_link;
@@ -293,9 +294,10 @@ class core_renderer extends \theme_boost\output\core_renderer {
      * @param array|string $meta
      * @param string $content
      * @param string $extraclasses
+     * @param string $attributes
      * @return string
      */
-    public function snap_media_object($url, $image, $title, $meta, $content, $extraclasses = '') {
+    public function snap_media_object($url, $image, $title, $meta, $content, $extraclasses = '', $attributes = '') {
         $formatoptions = new stdClass;
         $formatoptions->filter = false;
         $title = format_text($title, FORMAT_HTML, $formatoptions);
@@ -319,7 +321,8 @@ class core_renderer extends \theme_boost\output\core_renderer {
         $data = (object) [
                 'image' => $image,
                 'content' => $link.$metastr,
-                'class' => $extraclasses
+                'class' => $extraclasses,
+                'attributes' => $attributes
         ];
         return $this->render_from_template('theme_snap/media_object', $data);
     }
@@ -1245,6 +1248,64 @@ HTML;
         return $output;
     }
 
+    /**
+     * Return deadlines html for array of events.
+     * @param stdClass $eventsobj
+     * @return string
+     */
+    public function deadlines(stdClass $eventsobj) {
+        global $PAGE;
+
+        $events = $eventsobj->events;
+        $fromcache = $eventsobj->fromcache ? 1 : 0;
+        $datafromcache = ' data-from-cache="'.$fromcache.'" ';
+
+        if (empty($events)) {
+            return '<p class="small"'.$datafromcache.'>' . get_string('nodeadlines', 'theme_snap') . '</p>';
+        }
+
+        $o = '';
+        foreach ($events as $event) {
+            if (!empty($event->modulename)) {
+                list ($course, $cm) = get_course_and_cm_from_instance($event->instance, $event->modulename);
+
+                $eventtitle = $event->name .'<small'.$datafromcache.'><br>' .$event->coursefullname. '</small>';
+
+                $modimageurl = $this->image_url('icon', $event->modulename);
+                $modname = get_string('modulename', $event->modulename);
+                $modimage = \html_writer::img($modimageurl, $modname);
+                if (!empty($event->extensionduedate)) {
+                    // If we have an extension then always show this as the due date.
+                    $deadline = $event->extensionduedate + $event->timeduration;
+                } else {
+                    $deadline = $event->timestart + $event->timeduration;
+                }
+                if ($event->modulename === 'collaborate') {
+                    if ($event->timeduration == 0) {
+                        // No deadline for long duration collab rooms.
+                        continue;
+                    }
+                    $deadline = $event->timestart;
+                }
+
+                $meta = $this->friendly_datetime($deadline);
+                // Add completion meta data for students (exclude anyone who can grade them).
+                if (!has_capability('mod/assign:grade', $cm->context)) {
+                    /** @var \theme_snap_core_course_renderer $courserenderer */
+                    $courserenderer = $PAGE->get_renderer('core', 'course', RENDERER_TARGET_GENERAL);
+                    $activitymeta = activity::module_meta($cm);
+                    $meta .= '<div class="snap-completion-meta">' .
+                        $courserenderer->submission_cta($cm, $activitymeta) .
+                        '</div>';
+                }
+                $o .= $this->snap_media_object($cm->url, $modimage, $eventtitle, $meta, '', '', $datafromcache);
+            }
+        }
+        if (empty($o)) {
+            return '<p>' . get_string('nodeadlines', 'theme_snap') . '</p>';
+        }
+        return $o;
+    }
 
     /**
      * Return feature spot cards html.

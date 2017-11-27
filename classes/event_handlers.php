@@ -24,6 +24,7 @@ use core\event\course_module_deleted;
 use core\event\course_module_completion_updated;
 use core\event\user_deleted;
 use core\event\user_graded;
+use core\event\base;
 
 defined('MOODLE_INTERNAL') || die();
 
@@ -124,6 +125,14 @@ class event_handlers {
     public static function course_module_completion_updated(course_module_completion_updated $event) {
         // Force an update for the specific course and user effected by this completion event.
         local::course_user_completion_cachestamp($event->courseid, $event->relateduserid, true);
+    }
+
+    /**
+     * Record calendar change for affected course.
+     * @param base $event
+     */
+    public static function calendar_change(base $event) {
+        local::add_calendar_change_stamp($event->courseid);
     }
 
 }

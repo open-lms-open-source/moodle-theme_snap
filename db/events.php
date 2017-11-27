@@ -38,6 +38,24 @@ $observers = array(
         'callback'  => '\theme_snap\event_handlers::user_deleted'
     ),
 
+    // Calendar events.
+    array (
+        'eventname' => '\core\event\calendar_event_created',
+        'callback' => '\theme_snap\event_handlers::calendar_change',
+    ),
+    array (
+        'eventname' => '\core\event\calendar_event_updated',
+        'callback' => '\theme_snap\event_handlers::calendar_change'
+    ),
+    array (
+        'eventname' => '\core\event\calendar_event_deleted',
+        'callback' => '\theme_snap\event_handlers::calendar_change'
+    ),
+    array (
+        'eventname' => '\mod_assign\event\extension_granted',
+        'callback' => '\theme_snap\event_handlers::calendar_change'
+    ),
+
     // All events affecting course completion at course level.
     array (
         'eventname' => '\core\event\course_completion_updated',
@@ -56,7 +74,7 @@ $observers = array(
         'callback'  => '\theme_snap\event_handlers::course_module_deleted'
     ),
 
-    // User level course completion event.
+    // User level course completion events.
     array (
         'eventname' => '\core\event\course_module_completion_updated',
         'callback'  => '\theme_snap\event_handlers::course_module_completion_updated'

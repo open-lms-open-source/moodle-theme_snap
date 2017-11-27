@@ -127,115 +127,15 @@ class theme_snap_assign_test extends mod_assign_base_testcase {
         $this->assertFalse($actual->isteacher);
     }
 
-    public function test_assign_upcoming_deadlines() {
-        global $DB;
-        $this->setUser($this->editingteachers[0]);
-        $this->create_instance(['duedate' => time()]);
-
-        $deadlines = local::upcoming_deadlines($this->editingteachers[0]->id);
-        $this->assertCount(1, $deadlines);
-
-        $this->setUser($this->students[0]);
-        $deadlines = local::upcoming_deadlines($this->students[0]->id);
-        $this->assertCount(1, $deadlines);
-
-        $this->setUser($this->teachers[0]);
-        $deadlines = local::upcoming_deadlines($this->teachers[0]->id);
-        $this->assertCount(1, $deadlines);
-
-        $this->setUser($this->editingteachers[0]);
-        $this->create_instance(['duedate' => time() + 3 * DAYSECS]);
-
-        $deadlines = local::upcoming_deadlines($this->editingteachers[0]->id);
-        $this->assertCount(2, $deadlines);
-
-        $this->setUser($this->students[0]);
-        $deadlines = local::upcoming_deadlines($this->students[0]->id);
-        $this->assertCount(2, $deadlines);
-
-        $this->setUser($this->teachers[0]);
-        $deadlines = local::upcoming_deadlines($this->teachers[0]->id);
-        $this->assertCount(2, $deadlines);
-
-        $this->create_instance(['duedate' => time() + 4 * DAYSECS]);
-        $this->create_instance(['duedate' => time() + 4 * DAYSECS]);
-        $max = 2;
-        $this->setUser($this->students[0]);
-        $deadlines = local::upcoming_deadlines($this->students[0]->id, $max);
-        $this->assertCount(2, $deadlines);
-        $this->setUser($this->editingteachers[0]);
-
-        $quizgenerator = $this->getDataGenerator()->get_plugin_generator('mod_quiz');
-
-        $reference = time();
-        $day = 60 * 60 * 24;
-        $quiz1 = $quizgenerator->create_instance(array('course' => $this->course->id, 'timeclose' => $reference));
-        $quiz2 = $quizgenerator->create_instance(array('course' => $this->course->id,
-            'timeclose' => $reference + (2 * $day) ));
-        $modinfo = get_fast_modinfo($this->course->id);
-        $cm = $modinfo->instances['quiz'][$quiz1->id];
-        $cm2 = $modinfo->instances['quiz'][$quiz2->id];
-        $this->setUser($this->students[0]);
-        $override = \theme_snap\activity::instance_activity_dates($this->course->id, $cm);
-
-        $this->assertEmpty($override->timeopenover);
-        $this->assertEmpty($override->timecloseover);
-        $this->assertEquals($reference, $override->timeclose);
-
-        // User override.
-        $DB->insert_record('quiz_overrides', array('quiz' => $quiz1->id, 'userid' => $this->students[0]->id,
-            'timeclose' => $reference + $day));
-        $override = \theme_snap\activity::instance_activity_dates($this->course->id, $cm);
-        $override2 = \theme_snap\activity::instance_activity_dates($this->course->id, $cm2);
-        $this->assertEquals($reference + $day, $override->timecloseover);
-        $this->assertEquals($override->timeclose, $override->timecloseover);
-        $this->assertEquals($override2->timeclose, $quiz2->timeclose);
-
-        // Group override.
-        $groups = groups_get_user_groups($this->course->id);
-        $DB->insert_record('quiz_overrides', array('quiz' => $quiz1->id, 'groupid' => (int) $groups[0][0],
-            'timeopen' => $reference + $day, 'timeclose' => $reference + (3 * $day)));
-        $override = \theme_snap\activity::instance_activity_dates($this->course->id, $cm);
-
-        // Returned override should be user instead of group.
-        $this->assertEquals($override->timecloseover, $reference + $day);
-        $this->assertEquals($override->timeclose, $override->timecloseover);
-
-        // Deleting the user override should bring the group override as result.
-        $DB->delete_records('quiz_overrides', array ('userid' => $this->students[0]->id, 'quiz' => $quiz1->id));
-        $override = \theme_snap\activity::instance_activity_dates($this->course->id, $cm);
-        $this->assertEquals($override->timeclose, $reference + (3 * $day));
-
-        // Second group override.
-        $group2 = $this->getDataGenerator()->create_group(array('courseid' => $this->course->id));
-        $this->getDataGenerator()->create_group_member(array('userid' => $this->students[0], 'groupid' => $group2->id));
-        $DB->insert_record('quiz_overrides', array('quiz' => $quiz1->id, 'groupid' => $group2->id,
-            'timeopen' => $reference + (2 * $day), 'timeclose' => $reference + (7 * $day)));
-        $override = \theme_snap\activity::instance_activity_dates($this->course->id, $cm);
-
-        // Values should match max and min values between the groups records.
-        $this->assertEquals($override->timeclose, $reference + (7 * $day));
-        $this->assertEquals($override->timeopen, $reference + $day);
-
-        // Switching to a user without group.
-        $nogroupuser = $this->getDataGenerator()->create_user();
-        $this->setUser($nogroupuser);
-        $override = \theme_snap\activity::instance_activity_dates($this->course->id, $cm);
-        $this->assertEquals($override->timeclose, $quiz1->timeclose);
-        $this->assertEmpty($override->timecloseover);
-        $override = \theme_snap\activity::instance_activity_dates($this->course->id, $cm2);
-        $this->assertEquals($override->timeclose, $quiz2->timeclose);
-        $this->assertEmpty($override->timecloseover);
-
-    }
-
     public function test_assign_overdue() {
-        global $PAGE;
+        global $PAGE, $CFG;
+
+        $this->resetAfterTest();
 
         // Create one month overdue assignment.
         $this->setUser($this->teachers[0]);
         $assign = $this->create_instance([
-            'duedate' => time() - 4 * DAYSECS,
+            'duedate' => time() - (4 * DAYSECS),
             'assignsubmission_onlinetext_enabled' => 1,
             'name' => 'Overdue Assignment Test'
         ]);
@@ -252,10 +152,11 @@ class theme_snap_assign_test extends mod_assign_base_testcase {
 
         // At one time there was an issue where the overdue status would flip after viewing the module.
         // Make sure this isn't happening by viewing the assignment.
-        // Code taken from assign/tests/events_test.php test_submission_status_viewed.
+        // Code taken from mod/assign/tests/events_test.php test_submission_status_viewed.
         $PAGE->set_url('/a_url');
         // View the assignment.
         $assign->view();
+
         // Viewing an assignment creates a submission record with a status of new.
         // Make sure a submission record now exists with a status of new.
         $submission = activity::get_submission_row($this->course->id, $assigncm, 'submission', 'assignment');
@@ -264,71 +165,6 @@ class theme_snap_assign_test extends mod_assign_base_testcase {
         $meta = activity::assign_meta($assigncm);
         // Ensure that assignment is still classed as overdue.
         $this->assertTrue($meta->overdue);
-    }
-
-    public function test_participant_count_all() {
-        $courseid = $this->course->id;
-        $actual = local::course_participant_count($courseid);
-        $expected = count($this->students) + count($this->teachers) + count($this->editingteachers);
-        $this->assertSame($expected, $actual);
-
-        $this->create_extra_users();
-        $actual = local::course_participant_count($courseid);
-        $expected = count($this->students) + count($this->teachers) + count($this->editingteachers);
-        $this->assertSame($expected, $actual);
-    }
-
-    public function test_participant_count_assign() {
-        $courseid = $this->course->id;
-        $actual = local::course_participant_count($courseid, 'assign');
-        $expected = count($this->students);
-        $this->assertSame($expected, $actual);
-
-        $this->create_extra_users();
-        $actual = local::course_participant_count($courseid, 'assign');
-        $expected = count($this->students);
-        $this->assertSame($expected, $actual);
-    }
-
-    public function test_participant_count_quiz() {
-        $courseid = $this->course->id;
-        $actual = local::course_participant_count($courseid, 'quiz');
-        $expected = count($this->students);
-        $this->assertSame($expected, $actual);
-
-        $this->create_extra_users();
-        $actual = local::course_participant_count($courseid, 'quiz');
-        $expected = count($this->students);
-        $this->assertSame($expected, $actual);
-    }
-
-    public function test_participant_count_choice() {
-        $courseid = $this->course->id;
-        $actual = local::course_participant_count($courseid, 'choice');
-        $expected = count($this->students) + count($this->teachers) + count($this->editingteachers);
-        $this->assertSame($expected, $actual);
-
-        $this->create_extra_users();
-        $actual = local::course_participant_count($courseid, 'choice');
-        $expected = count($this->students) + count($this->teachers) + count($this->editingteachers);
-        $this->assertSame($expected, $actual);
-    }
-
-    public function test_participant_count_feedback() {
-        $courseid = $this->course->id;
-        $actual = local::course_participant_count($courseid, 'feedback');
-        $expected = count($this->students);
-        $this->assertSame($expected, $actual);
-
-        $this->create_extra_users();
-        $actual = local::course_participant_count($courseid, 'feedback');
-        $expected = count($this->students);
-        $this->assertSame($expected, $actual);
-    }
-
-    public function test_no_course_image() {
-        $actual = local::course_coverimage_url($this->course->id);
-        $this->assertFalse($actual);
     }
 
     private function create_one_ungraded_submission() {
@@ -352,15 +188,6 @@ class theme_snap_assign_test extends mod_assign_base_testcase {
         return $assign;
     }
 
-    private function grade_assignment($assign, $student) {
-        $this->setUser($this->teachers[0]);
-        $data = new stdClass();
-        $data->grade = '50.0';
-        $assign->testable_apply_grade_to_user($data, $student->id, 0);
-        // TODO remove this next line when the above is fixed  to stop triggering debug messages.
-        $this->resetDebugging();
-    }
-
     public function test_assign_ungraded() {
         $sixmonthsago = time() - YEARSECS / 2;
 
@@ -374,18 +201,6 @@ class theme_snap_assign_test extends mod_assign_base_testcase {
 
         $actual = activity::assign_ungraded([$this->course->id], $sixmonthsago);
         $this->assertCount(1, $actual);
-    }
-
-    public function test_quiz_ungraded() {
-        $sixmonthsago = time() - YEARSECS / 2;
-
-        $actual = activity::quiz_ungraded([], $sixmonthsago);
-        $this->assertCount(0, $actual);
-
-        $actual = activity::quiz_ungraded([$this->course->id], $sixmonthsago);
-        $this->assertCount(0, $actual);
-
-        // TODO need a test with actually generated quizzes.
     }
 
     public function test_events_graded() {

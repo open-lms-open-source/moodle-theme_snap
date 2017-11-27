@@ -564,7 +564,6 @@ class course_renderer extends \core_course_renderer {
             // Can't get meta data for this module.
             return '';
         }
-        $content .= '';
 
         if ($meta->isteacher) {
             // Teacher - useful teacher meta data.
@@ -615,6 +614,8 @@ class course_renderer extends \core_course_renderer {
                 // TODO - spit out a 'submissions allowed from' tag.
                 return $content;
             }
+            // @codingStandardsIgnoreLine
+            /* @var cm_info $mod */
             $content .= $this->submission_cta($mod, $meta);
         }
 
@@ -630,7 +631,11 @@ class course_renderer extends \core_course_renderer {
             $pastdue = $meta->$field < time();
             $url = new \moodle_url("/mod/{$mod->modname}/view.php", ['id' => $mod->id]);
             $dateclass = $pastdue ? 'tag-danger' : 'tag-success';
-            $content .= html_writer::link($url, $labeltext, array('class' => 'snap-due-date tag '.$dateclass));
+            $content .= html_writer::link($url, $labeltext,
+                    [
+                        'class' => 'snap-due-date tag '.$dateclass,
+                        'data-from-cache' => $meta->timesfromcache ? 1 : 0
+                    ]);
         }
 
         return $content;

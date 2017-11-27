@@ -25,7 +25,7 @@
 namespace theme_snap\tests;
 
 use theme_snap\local;
-use theme_snap\activity;
+use theme_snap\snap_base_test;
 
 defined('MOODLE_INTERNAL') || die();
 
@@ -34,7 +34,7 @@ defined('MOODLE_INTERNAL') || die();
  * @copyright Copyright (c) 2015 Moodlerooms Inc. (http://www.moodlerooms.com)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class theme_snap_local_test extends \advanced_testcase {
+class theme_snap_local_test extends snap_base_test {
 
     public function setUp() {
         global $CFG;
@@ -262,678 +262,6 @@ class theme_snap_local_test extends \advanced_testcase {
         $actual = local::extract_first_image($html);
         $this->assertSame('http://www.example.com/image.jpg', $actual['src']);
         $this->assertSame('example image', $actual['alt']);
-    }
-
-    /**
-     * Assert that deadlines array contains specific assignment id.
-     * @param array $deadlines
-     * @param int $assignid
-     */
-    private function assert_deadlines_includes_assignment(array $deadlines, $assignid) {
-        $hasassign = false;
-        foreach ($deadlines as $event) {
-            if ($event->modulename === 'assign' && $event->instance == $assignid) {
-                $hasassign = true;
-                break;
-            }
-        }
-        $this->assertTrue($hasassign, 'Error, deadlines does not contain assignment with id '.$assignid);
-    }
-
-    /**
-     * Extend assignment deadline for specific assignment and student.
-     * @param int $assignid
-     * @param int $studentid
-     * @param int | null $extendeddue
-     */
-    private function extend_assign_deadline($assignid, $studentid, $extendeddue = null) {
-        if (empty($extendeddue)) {
-            $extendeddue = time() + (DAYSECS * 2);
-        }
-        list ($course, $cm) = get_course_and_cm_from_instance($assignid, 'assign');
-        $cm = \cm_info::create($cm);
-        $assignment = new \assign($cm->context, $cm, $course);
-        $flags = $assignment->get_user_flags($studentid, true);
-        $extension = time() + (DAYSECS * 2);
-        $flags->extensionduedate = $extension;
-        $assignment->update_user_flags($flags);
-    }
-
-    /**
-     * Test upcoming deadlines
-     */
-    public function test_upcoming_deadlines() {
-        global $DB;
-
-        $this->resetAfterTest();
-
-        date_default_timezone_set('UTC');
-
-        $generator = $this->getDataGenerator();
-        $course = $generator->create_course();
-        $teacher = $generator->create_user();
-        $student = $generator->create_user();
-
-        $teacherrole = $DB->get_record('role', ['shortname' => 'teacher']);
-        $generator->enrol_user($teacher->id, $course->id, $teacherrole->id);
-
-        $studentrole = $DB->get_record('role', ['shortname' => 'student']);
-        $generator->enrol_user($student->id, $course->id, $studentrole->id);
-
-        $assigngen = $this->getDataGenerator()->get_plugin_generator('mod_assign');
-
-        $this->setUser($teacher);
-
-        $approachingdeadline = time() + HOURSECS;
-        $deadlinepast = time() - WEEKSECS;
-
-        $assigngen->create_instance([
-            'name' => 'Assign 1',
-            'course' => $course->id,
-            'duedate' => $approachingdeadline
-        ]);
-        $assigngen->create_instance([
-            'name' => 'Assign 2',
-            'course' => $course->id,
-            'duedate' => strtotime('tomorrow') + HOURSECS * 2 // Add two hours so that test works at 23:30.
-        ]);
-        $assigngen->create_instance([
-            'name' => 'Assign 3',
-            'course' => $course->id,
-            'duedate' => strtotime('next week')
-        ]);
-        $ovedrueassign = $assigngen->create_instance([
-            'name' => 'Assign 4',
-            'course' => $course->id,
-            'duedate' => $deadlinepast
-        ]);
-
-        $quizgen = $this->getDataGenerator()->get_plugin_generator('mod_quiz');
-        $quizgen->create_instance([
-            'name' => 'Quiz 1',
-            'course' => $course->id,
-            'timeclose' => $approachingdeadline + 1 // Add 1 second so that Quiz deadlines sort predictably after Assign.
-        ]);
-        $quizgen->create_instance([
-            'name' => 'Quiz 2',
-            'course' => $course->id,
-            'timeclose' => strtotime('tomorrow') + (HOURSECS * 2) + 1 // Add two hours so that test works at 23:30.
-        ]);
-        $quizgen->create_instance([
-            'name' => 'Quiz 3',
-            'course' => $course->id,
-            'timeclose' => strtotime('next month') + 1
-        ]);
-
-        // 5 items should be shown as final deadline 3rd quiz gets cut off and assignment with past deadline should not
-        // show.
-        $actual = local::upcoming_deadlines($student->id);
-        $expected = 5;
-
-        // Check deadlines are listed in appropriate order.
-        $this->assertCount($expected, $actual);
-        $deadlinelist = [];
-        foreach ($actual as $item) {
-            $deadlinelist[] = $item;
-        }
-        $this->assertEquals('Assign 1', $deadlinelist[0]->name);
-        $this->assertEquals('Quiz 1', $deadlinelist[1]->name);
-        $this->assertEquals('Assign 2', $deadlinelist[2]->name);
-        $this->assertEquals('Quiz 2', $deadlinelist[3]->name);
-        $this->assertEquals('Assign 3', $deadlinelist[4]->name);
-
-        // Check 5 deadlines exist for users in all timeszones.
-        $tzoneusers = [];
-        $timezones = [
-            'GMT-1' => 'Atlantic/Cape_Verde',
-            'GMT-2' => 'America/Miquelon',
-            'GMT-3' => 'America/Rio_Branco',
-            'GMT-4' => 'America/Nassau',
-            'GMT-5' => 'America/Bogota',
-            'GMT-6' => 'America/Belize',
-            'GMT-7' => 'Pacific/Honolulu',
-            'GMT-8' => 'Pacific/Pitcairn',
-            'GMT-9' => 'Pacific/Gambier',
-            'GMT-10' => 'Pacific/Rarotonga',
-            'GMT-11' => 'Pacific/Niue',
-            'GMT'   => 'Atlantic/Azores',
-            'GMT+1' => 'Europe/London',
-            'GMT+2' => 'Europe/Paris',
-            'GMT+3' => 'Europe/Athens',
-            'GMT+4' => 'Asia/Tbilisi',
-            'GMT+5' => 'Asia/Baku',
-            'GMT+6' => 'Asia/Dhaka',
-            'GMT+7' => 'Asia/Phnom_Penh',
-            'GMT+8' => 'Asia/Hong_Kong',
-            'GMT+9' => 'Asia/Seoul',
-            'GMT+10' => 'Pacific/Guam',
-            'GMT+11' => 'Pacific/Efate',
-            'GMT+12' => 'Asia/Anadyr',
-            'GMT+13' => 'Pacific/Apia'
-        ];
-
-        foreach ($timezones as $offset => $tz) {
-            $tzoneusers[$offset] = $generator->create_user(['timezone' => $tz]);
-            $generator->enrol_user($tzoneusers[$offset]->id, $course->id, $studentrole->id);
-            $this->setUser($tzoneusers[$offset]);
-            $actual = local::upcoming_deadlines($tzoneusers[$offset]);
-            $expected = 5;
-            $this->assertCount($expected, $actual);
-        }
-
-        // Test that extended deadlines are included in upcoming deadlines.
-        $this->extend_assign_deadline($ovedrueassign->id, $student->id);
-        $deadlines = local::upcoming_deadlines($student->id, 5);
-        $this->assert_deadlines_includes_assignment($deadlines, $ovedrueassign->id);
-    }
-
-    /**
-     * Test no upcoming deadlines.
-     */
-    public function test_no_upcoming_deadlines() {
-        global $USER;
-
-        $actual = local::upcoming_deadlines($USER->id);
-        $expected = array();
-        $this->assertSame($actual, $expected);
-
-        $actual = local::deadlines();
-        $expected = 'You have no upcoming deadlines.';
-        $this->assertSame(strip_tags($actual), $expected);
-    }
-
-    /**
-     * Crete an assign module instance.
-     *
-     * @param int $courseid
-     * @param int $duedate
-     * @param array $opts - an array of field values to go into the assign record.
-     * @return mixed
-     * @throws \coding_exception
-     */
-    protected function create_assignment($courseid, $duedate, $opts = []) {
-        global $USER, $CFG;
-
-        // This is crucial - without this you can't make a conditionally accessed forum.
-        $CFG->enableavailability = true;
-
-        // Hack - without this the calendar library trips up when trying to give an assignment a duedate.
-        // lib.php line 2234 - nopermissiontoupdatecalendar.
-        $origuser = $USER;
-        $USER = get_admin();
-
-        $generator = $this->getDataGenerator()->get_plugin_generator('mod_assign');
-
-        $params = [
-            'course' => $courseid,
-            'duedate' => $duedate,
-            'grade' => 100
-        ];
-        foreach ($opts as $key => $val) {
-            // Overwrite or add opt vals to params.
-            $params[$key] = $val;
-        }
-        $instance = $generator->create_instance($params);
-
-        // Restore user.
-        $USER = $origuser;
-
-        $cm = get_coursemodule_from_instance('assign', $instance->id);
-        $context = \context_module::instance($cm->id);
-        return new \testable_assign($context, $cm, get_course($courseid));
-    }
-
-    /*
-     * Test upcoming deadline times.
-     */
-    public function test_upcoming_deadlines_close_events() {
-        global $DB;
-
-        $this->resetAfterTest();
-
-        $generator = $this->getDataGenerator();
-        $course = $generator->create_course();
-        $teacher = $generator->create_user();
-        $student = $generator->create_user();
-
-        $teacherrole = $DB->get_record('role', ['shortname' => 'teacher']);
-        $generator->enrol_user($teacher->id, $course->id, $teacherrole->id);
-
-        $studentrole = $DB->get_record('role', ['shortname' => 'student']);
-        $generator->enrol_user($student->id, $course->id, $studentrole->id);
-
-        $quizgen = $this->getDataGenerator()->get_plugin_generator('mod_quiz');
-        // Seperate open and close events generated if open for more than 5 days.
-        $timeopen = time() - (5 * DAYSECS);
-        $timeclose = time() + (2 * DAYSECS);
-
-        // Can't create activities with deadlines using generator without the
-        // current user having the correct permissions for the calendar.
-        $this->setUser($teacher);
-
-        $quizgen->create_instance([
-            'course' => $course->id,
-            'timeopen' => $timeopen,
-            'timeclose' => $timeclose,
-        ]);
-
-        $actual = local::upcoming_deadlines($student->id);
-        $expected = 1;
-        $this->assertCount($expected, $actual);
-        $event = reset($actual);
-        $this->assertSame('close', $event->eventtype);
-        $this->assertSame('Quiz 1', $event->name, 'Should not have "(Quiz closes)" at the end of the event name');
-    }
-
-    /**
-     * Test upcoming deadlines
-     *
-     * @throws \coding_exception
-     */
-    public function test_upcoming_deadlines_hidden() {
-        global $DB;
-
-        $this->resetAfterTest();
-
-        $generator = $this->getDataGenerator();
-        $course1 = $generator->create_course();
-        $course2 = $generator->create_course((object) ['visible' => 0, 'oldvisible' => 0]);
-        $teacher = $generator->create_user();
-        $student = $generator->create_user();
-
-        $courses = [$course1, $course2];
-
-        // Enrol teacher on both courses.
-        $teacherrole = $DB->get_record('role', array('shortname' => 'teacher'));
-        foreach ([$course1, $course2] as $course) {
-            $this->getDataGenerator()->enrol_user($teacher->id,
-                    $course->id,
-                    $teacherrole->id
-            );
-        }
-
-        // Enrol student on both courses.
-        $studentrole = $DB->get_record('role', array('shortname' => 'student'));
-        foreach ($courses as $course) {
-            $generator->enrol_user($student->id,
-                    $course->id,
-                    $studentrole->id
-            );
-        }
-
-        // Create an assignment in each course.
-        foreach ($courses as $course) {
-            $this->create_assignment($course->id, time() + (DAYSECS * 2));
-        }
-
-        // Student should see 1 deadline as course2 is hidden.
-        $actual = local::upcoming_deadlines($student->id);
-        $expected = 1;
-        $this->assertCount($expected, $actual);
-
-        // Teacher should see 2 deadlines as they can see hidden courses.
-        $actual = local::upcoming_deadlines($teacher->id);
-        $expected = 2;
-        $this->assertCount($expected, $actual);
-
-    }
-
-    /**
-     * Test upcoming deadlines where enrolment has expired.
-     *
-     * @throws \coding_exception
-     */
-    public function test_upcoming_deadlines_enrolment_expired() {
-        global $DB;
-
-        $this->resetAfterTest();
-
-        $generator = $this->getDataGenerator();
-        $course = $generator->create_course();
-        $student = $generator->create_user();
-
-        // Enrol student on with an expired enrolment.
-        $studentrole = $DB->get_record('role', array('shortname' => 'student'));
-        $generator->enrol_user($student->id,
-                $course->id,
-                $studentrole->id,
-                'manual',
-                time() - (DAYSECS * 2),
-                time() - DAYSECS
-        );
-
-        // Create assign instance.
-        $this->create_assignment($course->id, time() + (DAYSECS * 2));
-
-        // Student should see 0 deadlines as their enrollments have expired.
-        $actual = local::upcoming_deadlines($student->id);
-        $expected = 0;
-        $this->assertCount($expected, $actual);
-    }
-
-    /**
-     * Get date condition for module availability.
-     * @param $time
-     * @param string $comparator
-     * @return string
-     * @throws \coding_exception
-     */
-    protected function get_date_condition_json($time, $comparator = '>=') {
-        return json_encode(
-            \core_availability\tree::get_root_json(
-                [\availability_date\condition::get_json($comparator, $time)
-                ]
-            )
-        );
-    }
-
-    /**
-     * Test upcoming deadlines with assignment activity restricted to future date.
-     *
-     * @throws \coding_exception
-     */
-    public function test_upcoming_deadlines_restricted() {
-        global $DB;
-
-        $this->resetAfterTest();
-
-        $generator = $this->getDataGenerator();
-        $course = $generator->create_course();
-        $student = $generator->create_user();
-
-        // Enrol student.
-        $studentrole = $DB->get_record('role', array('shortname' => 'student'));
-        $generator->enrol_user($student->id,
-                $course->id,
-                $studentrole->id
-        );
-
-        // Create assign instance.
-        $this->create_assignment($course->id, time() + (DAYSECS * 2));
-        $actual = local::upcoming_deadlines($student->id);
-        $expected = 1;
-        $this->assertCount($expected, $actual);
-
-        // Create restricted assign instance.
-        $opts = ['availability' => $this->get_date_condition_json(time() + WEEKSECS)];
-        $this->create_assignment($course->id, time() + (DAYSECS * 2), $opts);
-
-        // Student should see 1 deadlines as the second assignment is restricted until next week.
-        $actual = local::upcoming_deadlines($student->id);
-        $expected = 1;
-        $this->assertCount($expected, $actual);
-    }
-
-    /**
-     * Test upcoming deadlines restricted by group
-     *
-     * @throws \coding_exception
-     */
-    public function test_upcoming_deadlines_group() {
-        global $DB;
-
-        $this->resetAfterTest();
-
-        $generator = $this->getDataGenerator();
-        $course = $generator->create_course();
-        $student1 = $generator->create_user();
-        $student2 = $generator->create_user();
-        $teacher = $generator->create_user();
-        $group1 = $this->create_group($course->id, 'group1');
-        $group2 = $this->create_group($course->id, 'group2');
-
-        // Enrol students.
-        $studentrole = $DB->get_record('role', array('shortname' => 'student'));
-        foreach ([$student1, $student2] as $student) {
-            $generator->enrol_user($student->id,
-                $course->id,
-                $studentrole->id
-            );
-        }
-
-        // Enrol teacher.
-        $teacherrole = $DB->get_record('role', array('shortname' => 'teacher'));
-        $generator->enrol_user($teacher->id,
-            $course->id,
-            $teacherrole->id);
-
-        // Add students to groups.
-        groups_add_member($group1, $student1);
-        groups_add_member($group2, $student2);
-
-        // Create assignment restricted to group1.
-        $opts = [
-            'availability' => json_encode(
-                \core_availability\tree::get_root_json(
-                    [\availability_group\condition::get_json($group1->id)]
-                )
-            )
-        ];
-        $duedate1 = time() + (DAYSECS * 2);
-        $this->create_assignment($course->id, $duedate1, $opts);
-
-        // Create assignment restricted to group2.
-        $opts = [
-            'availability' => json_encode(
-                \core_availability\tree::get_root_json(
-                    [\availability_group\condition::get_json($group2->id)]
-                )
-            )
-        ];
-        $duedate2 = time() + (DAYSECS * 3);
-        $this->create_assignment($course->id, $duedate2, $opts);
-
-        // Ensure student1 only has 1 deadline and that it is for group1.
-        $stu1deadlines = local::upcoming_deadlines($student1->id);
-        $this->assertCount(1, $stu1deadlines);
-        $this->assertEquals($duedate1, reset($stu1deadlines)->timestart);
-
-        // Ensure student2 only has 1 deadline and that it is for group2.
-        $stu2deadlines = local::upcoming_deadlines($student2->id);
-        $this->assertCount(1, $stu2deadlines);
-        $this->assertEquals($duedate2, reset($stu2deadlines)->timestart);
-
-        // Ensure teacher can see both deadlines.
-        $tchdeadlines = local::upcoming_deadlines($teacher->id);
-        $this->assertCount(2, $tchdeadlines);
-    }
-
-    /**
-     * General feedback test.
-     *
-     * @throws \coding_exception
-     */
-    public function test_feedback() {
-        global $DB;
-
-        $this->resetAfterTest();
-
-        $generator = $this->getDataGenerator();
-        $course = $generator->create_course();
-        $teacher = $generator->create_user();
-        $student = $generator->create_user();
-
-        // Enrol teacher.
-        $teacherrole = $DB->get_record('role', array('shortname' => 'teacher'));
-        $this->getDataGenerator()->enrol_user($teacher->id,
-                $course->id,
-                $teacherrole->id
-        );
-
-        // Enrol student.
-        $studentrole = $DB->get_record('role', array('shortname' => 'student'));
-        $generator->enrol_user($student->id,
-                $course->id,
-                $studentrole->id
-        );
-
-        // Create an assignment and mark with a regular grade.
-        $assign = $this->create_assignment($course->id, time() + (DAYSECS * 2));
-        $data = $assign->get_user_grade($student->id, true);
-        $data->grade = '50.5';
-        $assign->update_grade($data);
-
-        // Create an assignment and mark a zero grade (should still count as feedback).
-        $assign = $this->create_assignment($course->id, time() + (DAYSECS * 2));
-        $data = $assign->get_user_grade($student->id, true);
-        $data->grade = '0';
-        $assign->update_grade($data);
-
-        // Student should see 2 feedback availables.
-        $this->setUser($student);
-        $actual = activity::events_graded();
-        $expected = 2;
-        $this->assertCount($expected, $actual);
-    }
-
-    /**
-     * Test feedback where course is hidden.
-     *
-     * @throws \coding_exception
-     */
-    public function test_feedback_hidden() {
-        global $DB;
-
-        $this->resetAfterTest();
-
-        $generator = $this->getDataGenerator();
-        $course1 = $generator->create_course();
-        $course2 = $generator->create_course((object) ['visible' => 0, 'oldvisible' => 0]);
-        $teacher = $generator->create_user();
-        $student = $generator->create_user();
-
-        $courses = [$course1, $course2];
-
-        // Enrol teacher on both courses.
-        $teacherrole = $DB->get_record('role', array('shortname' => 'teacher'));
-        foreach ([$course1, $course2] as $course) {
-            $this->getDataGenerator()->enrol_user($teacher->id,
-                    $course->id,
-                    $teacherrole->id);
-        }
-
-        // Enrol student on both courses.
-        $studentrole = $DB->get_record('role', array('shortname' => 'student'));
-        foreach ($courses as $course) {
-            $generator->enrol_user($student->id,
-                    $course->id,
-                    $studentrole->id);
-        }
-
-        // Create an assignment in each course and mark it.
-        foreach ($courses as $course) {
-            $assign = $this->create_assignment($course->id, time() + (DAYSECS * 2));
-
-            // Mark the assignment.
-            $data = $assign->get_user_grade($student->id, true);
-            $data->grade = '50.5';
-            $assign->update_grade($data);
-        }
-
-        // Student should see 1 feedback available as course2 is hidden.
-        $this->setUser($student);
-        $actual = activity::events_graded();
-        $expected = 1;
-        $this->assertCount($expected, $actual);
-    }
-
-    /**
-     * Create group for specific course.
-     *
-     * @param int $courseid
-     * @param str $name
-     * @return \stdClass
-     * @throws \coding_exception
-     */
-    protected function create_group($courseid, $name) {
-        $generator = $this->getDataGenerator();
-        $group = [
-            'courseid' => $courseid,
-            'name' => $name
-        ];
-        return $generator->create_group($group);
-    }
-
-    /**
-     * Test feedback where enrolment has expired.
-     *
-     * @throws \coding_exception
-     */
-    public function test_feedback_enrolment_expired() {
-        global $DB;
-
-        $this->resetAfterTest();
-
-        $generator = $this->getDataGenerator();
-        $course = $generator->create_course();
-        $student = $generator->create_user();
-
-        // Enrol student on with an expired enrolment.
-        $studentrole = $DB->get_record('role', array('shortname' => 'student'));
-        $generator->enrol_user($student->id,
-                $course->id,
-                $studentrole->id,
-                'manual',
-                time() - (DAYSECS * 2),
-                time() - DAYSECS
-        );
-
-        // Create assign instance.
-        $assign = $this->create_assignment($course->id, time() + (DAYSECS * 2));
-
-        // Mark assignment.
-        $data = $assign->get_user_grade($student->id, true);
-        $data->grade = '50.5';
-        $assign->update_grade($data);
-
-        // Student should see 0 feedback items as their enrollments have expired.
-        $this->setUser($student);
-        $actual = activity::events_graded();
-        $expected = 0;
-        $this->assertCount($expected, $actual);
-    }
-
-    /**
-     * Test feedback with assignment restricted to future date.
-     *
-     * @throws \coding_exception
-     */
-    public function test_feedback_restricted() {
-        global $DB;
-
-        $this->resetAfterTest();
-
-        $generator = $this->getDataGenerator();
-        $course = $generator->create_course();
-        $student = $generator->create_user();
-
-        // Enrol student.
-        $studentrole = $DB->get_record('role', array('shortname' => 'student'));
-        $generator->enrol_user($student->id,
-                $course->id,
-                $studentrole->id
-        );
-
-        // Create assign instance.
-        $this->create_assignment($course->id, time() + (DAYSECS * 2));
-        $actual = local::upcoming_deadlines($student->id);
-        $expected = 1;
-        $this->assertCount($expected, $actual);
-
-        // Create restricted assign instance.
-        $opts = ['availability' => $this->get_date_condition_json(time() + WEEKSECS)];
-        $assign = $this->create_assignment($course->id, time() + (DAYSECS * 2), $opts);
-
-        // Mark restricted assign instasnce.
-        $data = $assign->get_user_grade($student->id, true);
-        $data->grade = '50.5';
-        $assign->update_grade($data);
-
-        // Student should only see 1 feedback item as one is normal and one is restricted until next week.
-        $this->setUser($student);
-        $actual = activity::events_graded();
-        $expected = 1;
-        $this->assertCount($expected, $actual);
     }
 
     public function test_no_messages() {
@@ -1638,4 +966,133 @@ class theme_snap_local_test extends \advanced_testcase {
         $this->assertTrue(empty($feedback->coursegrade));
     }
 
+    public function test_add_get_calendar_change_stamp() {
+        $this->resetAfterTest();
+
+        $dg = $this->getDataGenerator();
+        $course = $dg->create_course();
+
+        local::add_calendar_change_stamp($course->id);
+
+        $stamps = local::get_calendar_change_stamps();
+
+        $this->assertCount(1, $stamps);
+        $this->assertNotEmpty($stamps[$course->id]);
+    }
+
+    private function create_extra_users($courseid, array &$students, array &$teachers, array &$editingteachers) {
+        $dg = $this->getDataGenerator();
+
+        for ($s = 0; $s < 10; $s ++) {
+            $newstudent = $dg->create_user();
+            $dg->enrol_user($newstudent->id, $courseid, 'student');
+            $students[] = $newstudent;
+            $newteacher = $dg->create_user();
+            $dg->enrol_user($newteacher->id, $courseid, 'teacher');
+            $teachers[] = $newteacher;
+            $neweditingteacher = $dg->create_user();
+            $dg->enrol_user($neweditingteacher->id, $courseid, 'editingteacher');
+            $editingteachers[] = $neweditingteacher;
+
+        }
+    }
+
+    public function test_participant_count_all() {
+        $this->resetAfterTest();
+
+        list ($student, $teacher, $course, $group) = $this->course_group_user_setup();
+        $teachers = [$teacher];
+        $students = [$student];
+        $editingteachers = [];
+
+        $actual = local::course_participant_count($course->id);
+        $expected = count($students) + count($teachers) + count($editingteachers);
+        $this->assertSame($expected, $actual);
+
+        $this->create_extra_users($course->id, $students, $teachers, $editingteachers);
+        $actual = local::course_participant_count($course->id);
+        $expected = count($students) + count($teachers) + count($editingteachers);
+        $this->assertSame($expected, $actual);
+    }
+
+    public function test_participant_count_assign() {
+        $this->resetAfterTest();
+
+        list ($student, $teacher, $course, $group) = $this->course_group_user_setup();
+        $teachers = [$teacher];
+        $students = [$student];
+        $editingteachers = [];
+
+        $actual = local::course_participant_count($course->id, 'assign');
+        $expected = count($students);
+        $this->assertSame($expected, $actual);
+
+        $this->create_extra_users($course->id, $students, $teachers, $editingteachers);
+        $actual = local::course_participant_count($course->id, 'assign');
+        $expected = count($students);
+        $this->assertSame($expected, $actual);
+    }
+
+    public function test_participant_count_quiz() {
+        $this->resetAfterTest();
+
+        list ($student, $teacher, $course, $group) = $this->course_group_user_setup();
+        $teachers = [$teacher];
+        $students = [$student];
+        $editingteachers = [];
+
+        $actual = local::course_participant_count($course->id, 'quiz');
+        $expected = count($students);
+        $this->assertSame($expected, $actual);
+
+        $this->create_extra_users($course->id, $students, $teachers, $editingteachers);
+        $actual = local::course_participant_count($course->id, 'quiz');
+        $expected = count($students);
+        $this->assertSame($expected, $actual);
+    }
+
+    public function test_participant_count_choice() {
+        $this->resetAfterTest();
+
+        list ($student, $teacher, $course, $group) = $this->course_group_user_setup();
+        $teachers = [$teacher];
+        $students = [$student];
+        $editingteachers = [];
+
+        $actual = local::course_participant_count($course->id, 'choice');
+        $expected = count($students) + count($teachers) + count($editingteachers);
+        $this->assertSame($expected, $actual);
+
+        $this->create_extra_users($course->id, $students, $teachers, $editingteachers);
+        $actual = local::course_participant_count($course->id, 'choice');
+        $expected = count($students) + count($teachers) + count($editingteachers);
+        $this->assertSame($expected, $actual);
+    }
+
+    public function test_participant_count_feedback() {
+        $this->resetAfterTest();
+
+        list ($student, $teacher, $course, $group) = $this->course_group_user_setup();
+        $teachers = [$teacher];
+        $students = [$student];
+        $editingteachers = [];
+
+        $actual = local::course_participant_count($course->id, 'feedback');
+        $expected = count($students);
+        $this->assertSame($expected, $actual);
+
+        $this->create_extra_users($course->id, $students, $teachers, $editingteachers);
+        $actual = local::course_participant_count($course->id, 'feedback');
+        $expected = count($students);
+        $this->assertSame($expected, $actual);
+    }
+
+    public function test_no_course_image() {
+        $this->resetAfterTest();
+
+        $dg = $this->getDataGenerator();
+        $course = $dg->create_course();
+        $actual = local::course_coverimage_url($course->id);
+        $this->assertFalse($actual);
+    }
 }
