@@ -1403,7 +1403,7 @@ HTML;
      * @return string
      */
     public function render_featured_courses(featured_courses $fc) {
-        if (empty($fc)) {
+        if (empty($fc->cards)) {
             return '';
         }
 
