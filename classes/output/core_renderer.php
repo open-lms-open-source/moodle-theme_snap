@@ -225,78 +225,17 @@ class core_renderer extends \theme_boost\output\core_renderer {
         return $html;
     }
 
-
-    /**
-     * Get badge renderer.
-     * @return null|message_badge_renderer
-     */
-    protected function get_badge_renderer() {
-        global $PAGE;
-
-        $mprocs = get_message_processors(true);
-        if (!isset($mprocs['badge'])) {
-            // Badge message processor is not enabled - exit.
-            return null;
-        }
-
-        try {
-            $badgerend = $PAGE->get_renderer('message_badge');
-        } catch (\Exception $e) {
-            $badgerend = null;
-        }
-
-        // Note: In certain circumstances the snap message badge render is not loaded and the original message badge
-        // render is loaded instead - e.g. when you initially switch to the snap theme.
-        // This results in the fixy menu button looking broken as it shows the badge in its original format as opposed
-        // to the overriden format provided by the snap message badge renderer.
-        if (!$badgerend instanceof \theme_snap\output\message_badge_renderer) {
-            $badgerend = null;
-        }
-
-        return $badgerend;
-    }
-
-
     /**
      * Badge counter for new messages.
      * @return string
      */
     protected function render_badge_count() {
-        global $USER, $PAGE;
-
-        $mprocs = get_message_processors(true);
-        if (!isset($mprocs['badge']) && $this->page->theme->settings->messagestoggle == 1) {
-            // Badge message processor is not enabled - render conversation count container.
+        global $CFG;
+        // Add the messages popover.
+        if (!empty($CFG->messaging) && !empty(get_config('theme_snap', 'messagestoggle'))) {
             return '<span class="conversation_badge_count hidden"></span>';
         }
-
-        $badgerend = $this->get_badge_renderer();
-        if (empty($badgerend)) {
-            return '';
-        }
-        return $badgerend->badge($USER->id);
-    }
-
-
-    /**
-     * Render badges.
-     * @return string
-     */
-    protected function render_badges() {
-        $mprocs = get_message_processors(true);
-        if (!isset($mprocs['badge'])) {
-            // Badge message processor is not enabled - exit.
-            return null;
-        }
-        $badgerend = $this->get_badge_renderer();
-        $badges = '';
-        if ($badgerend && $badgerend instanceof \theme_snap\output\message_badge_renderer) {
-            $badges = '<div class="alert_stream">
-                '.$badgerend->messagestitle().'
-                    <div class="message_badge_container"></div>
-                </div>';
-        }
-        return $badges;
+        return '';
     }
 
     /**
@@ -444,13 +383,6 @@ class core_renderer extends \theme_boost\output\core_renderer {
         } else if (!empty($graded)) {
             $columns[] = $graded;
             $mobilemenu .= $gradebookmenulink;
-        }
-
-        $badges = $this->render_badges();
-        if (!empty($badges)) {
-            $columns[] = '<div id="snap-personal-menu-badges">' .$badges. '</div>';
-            $mobilemenu .= $this->mobile_menu_link('alerts', 'alerts', '#snap-personal-menu-badges');
-
         }
 
         $messages = $this->render_messages();

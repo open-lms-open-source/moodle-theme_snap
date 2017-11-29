@@ -107,24 +107,6 @@ define(['jquery', 'core/log', 'core/yui', 'theme_snap/pm_course_cards', 'theme_s
                 loadAjaxInfo('messages');
                 loadAjaxInfo('forumposts');
 
-                if ($('#snap-personal-menu-badges').length) {
-                    if (typeof(M.snap_message_badge) === 'undefined') {
-                        // When M.snap_message_badge is available then trigger personal menu update.
-                        util.whenTrue(
-                            function() {
-                                return typeof(M.snap_message_badge) != 'undefined';
-                            },
-                            function() {
-                                // We can't rely on snapUpdatePersonalMenu here because it might have been triggered prior to
-                                // the badge code being loaded.
-                                // So let's just call init_overlay instead.
-                                M.snap_message_badge.init_overlay(Y);
-                            }, true);
-                    } else {
-                        M.snap_message_badge.init_overlay(Y);
-                    }
-                }
-
                 $(document).trigger('snapUpdatePersonalMenu');
             };
 

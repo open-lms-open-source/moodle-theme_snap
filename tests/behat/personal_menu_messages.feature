@@ -13,22 +13,18 @@
 # You should have received a copy of the GNU General Public License
 # along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 #
-# Tests for Snap personal menu alerts.
+# Tests for Snap personal menu conversation badge count.
 #
 # @package    theme_snap
 # @copyright  Copyright (c) 2017 Moodlerooms Inc. (http://www.moodlerooms.com)
 # @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
 
 
-@theme @theme_snap @theme_snap_messages_badge
-Feature: When the moodle theme is set to Snap, students and teachers can see the badge have a counter with the amount
-  of messages received when alerts are disabled
+@theme @theme_snap
+Feature: When the moodle theme is set to Snap, students and teachers have a conversation badge count and messages section.
 
   Background:
-    Given I am using Moodlerooms
-    And the following config values are set as admin:
-      | message_provider_moodle_instantmessage_loggedoff | badge | message |
-    And the following "courses" exist:
+    Given the following "courses" exist:
       | fullname | shortname | category | groupmode |
       | Course 1 | C1 | 0 | 1 |
     And the following "users" exist:
@@ -41,22 +37,8 @@ Feature: When the moodle theme is set to Snap, students and teachers can see the
       | student1 | C1 | student |
 
   @javascript
-  Scenario: Message badge count is shown when alerts are enabled for a user in snap.
-    Given the message processor "badge" is enabled
-    And I change viewport size to "large"
-    And I log in as "student1"
-    And I send "Test message!" message to "Teacher 1" user
-    And I log out
-    And I log in as "teacher1"
-    Then ".message_badge_count" "css_element" should exist
-    # Placeholder should not exist.
-    Then ".conversation_badge_count" "css_element" should not exist
-
-  @javascript
-  Scenario: Conversation badge count is shown when alerts are disabled for a user in snap.
-    Given the message processor "badge" is disabled
-    # Placeholder should exist but be hidden.
-    And I log in as "teacher1"
+  Scenario: Snap user can see conversation count and messages.
+    Given I log in as "teacher1"
     Then ".conversation_badge_count.hidden" "css_element" should exist
     And I log out
     And I change viewport size to "large"
@@ -64,13 +46,15 @@ Feature: When the moodle theme is set to Snap, students and teachers can see the
     And I send "Test message!" message to "Teacher 1" user
     And I log out
     And I log in as "teacher1"
-    # Placeholder should exist but not be hidden.
     Then ".conversation_badge_count" "css_element" should exist
+    And I open the personal menu
+    And I should see "Test message!" in the "#snap-personal-menu-messages" "css_element"
 
   @javascript
-  Scenario: No badge count is shown when alerts are disabled and snap messages setting is disabled for a user in snap.
-    Given the message processor "badge" is disabled
-    And the following config values are set as admin:
+  Scenario: No badge count is shown when snap messages setting is disabled for a user in snap.
+    Given the following config values are set as admin:
       | messagestoggle | 0 | theme_snap |
     And I log in as "teacher1"
     Then ".conversation_badge_count.hidden" "css_element" should not exist
+    And I open the personal menu
+    And "#snap-personal-menu-messages" "css_element" should not exist
