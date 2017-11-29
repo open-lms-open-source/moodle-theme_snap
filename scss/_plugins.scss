@@ -5,11 +5,19 @@
 /**
  * Global search.
  */
- 
-// Fix height inherited for search input.
+
+
 #mr-nav .search-input-wrapper{
     margin: 0 1rem;
-
+    overflow: visible;
+    // Colour for search icon.
+    .icon.fa-search {
+        font-size: 24px;
+        width: auto;
+        margin-top: -6px;
+        color: $brand-primary;
+    }
+    // Height for search input.
     form > input {
         height: auto;
     }
@@ -428,16 +436,17 @@
  * Core notifications (bell) and popover.
  */
 #nav-notification-popover-container {
-    margin-right: 1rem;
-    width: 40px;
-    height: 40px;
-    border: 1px solid #eceeef;
-    border-radius: 100%;
-    text-align: center;
-
     // Bell icon.
     .icon.fa-bell {
-        margin-right: 0;
+        font-size: 24px;
+        width: auto;
+        margin: 0 .5em;
+        margin-top: -6px;
+        color: $brand-primary;
+
+        &:before {
+            content: "\f0a2";
+        }
     }
     // Hide arrow on the top of the popover.
     .popover-region-toggle:before,
@@ -454,8 +463,8 @@
         border-radius: 50%;
         padding: 0;
         line-height: inherit;
-        top: -0.33rem; // magic numbers...
-        right: -0.33rem;
+        top: -.33rem; // magic numbers...
+        left: 0;
     }
 
     .popover-region-container {

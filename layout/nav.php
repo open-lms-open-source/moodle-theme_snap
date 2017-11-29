@@ -31,7 +31,7 @@ use theme_snap\renderables\bb_dashboard_link;
 
 ?>
 <header id='mr-nav' class='clearfix moodle-has-zindex'>
-<div class="pull-right">
+<div class="pull-right js-only">
 <?php
 if (class_exists('local_geniusws\navigation')) {
     $bblink = new bb_dashboard_link();
@@ -41,9 +41,9 @@ if (class_exists('local_geniusws\navigation')) {
 echo $OUTPUT->personal_menu_trigger();
 $settingslink = new settings_link();
 echo $OUTPUT->render($settingslink);
-echo '<div class="hidden-md-down pull-right">';
-echo $OUTPUT->render_notification_popups();
+echo '<div class=" hidden-md-down pull-right">';
 echo core_renderer::search_box();
+echo $OUTPUT->render_notification_popups();
 echo '</div>';
 ?>
 </div>

@@ -179,12 +179,6 @@ legend,
     font-family: $font-family-serif;
 }
 
-#snap-pm-trigger {
-    .conversation_badge_count {
-        background-color: darken($brand-primary, 8%);
-    }
-}
-
 .courseinfo-teachers-more {
     &:hover {
         border-color: $brand-primary ;
