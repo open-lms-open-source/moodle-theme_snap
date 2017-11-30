@@ -824,8 +824,15 @@ footer #moodle-footer
     padding: 1em; // Padding to support message badge.
 
     .userpicture {
-        height: 40px;
-        width: 40px;
+        width: 45px;
+        height: auto;
+        @include alakazam;
+    }
+    &:hover,
+    &:focus {
+        .userpicture {
+            transform: scale(1.1);
+        }
     }
 
     // Core alerts badge.
@@ -852,8 +859,8 @@ footer #moodle-footer
     background-repeat: no-repeat;
     background-size: contain;
     background-position: left center;
-    height: 40px;
-    max-width: 200px;
+    height: 45px;
+    max-width: 250px;
 }
 
 // Admin menu trigger.

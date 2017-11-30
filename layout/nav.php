@@ -35,7 +35,9 @@ use theme_snap\renderables\bb_dashboard_link;
 <?php
 if (class_exists('local_geniusws\navigation')) {
     $bblink = new bb_dashboard_link();
+    echo '<span class="hidden-md-down">';
     echo $OUTPUT->render($bblink);
+    echo '</span>';
 }
 
 echo $OUTPUT->personal_menu_trigger();
