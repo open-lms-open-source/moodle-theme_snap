@@ -1,7 +1,109 @@
 /**
-* Plugins css.
-*/
+ * Plugins css.
+ */
 
+/**
+ * Global search.
+ */
+
+#mr-nav .search-input-wrapper {
+    padding: .5em;
+    padding-bottom: 0;
+    overflow: visible;
+    // Colour for search icon.
+    .icon.fa-search {
+        font-size: 24px;
+        width: auto;
+        height: auto;
+        color: $brand-primary;
+    }
+    // Height for search input.
+    form > input {
+        height: auto;
+    }
+}
+
+/**
+ * Core notifications (bell) and popover.
+ */
+#nav-notification-popover-container {
+    display: inline-block;
+    float: none;
+    // Bell icon.
+    .icon.fa-bell {
+        font-size: 24px;
+        width: auto;
+        height: auto;
+        color: $brand-primary;
+
+        &:before {
+            content: "\f0a2";
+        }
+    }
+    .popover-region-toggle {
+        padding: 0.5em;
+        // Hide arrow on the top of the popover.
+        &:before,
+        &:after {
+            display: none;
+        }
+    }
+
+    // Circle with a count on the bell.
+    .count-container {
+        background-color: darken($brand-primary, 8%);
+        height: 18px;
+        width: 18px;
+        text-align: center;
+        border-radius: 50%;
+        padding: 0;
+        line-height: inherit;
+        top: 0;
+        left: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        &.hidden {
+            display: none;
+        }
+    }
+
+    .popover-region-container {
+        top: 2.5rem;
+        height: auto;
+        width: 300px;
+        text-align: left;
+    }
+
+    .popover-region-header-container {
+        height: auto;
+        border-bottom: none;
+        padding-right: 0;
+    }
+    .hover-tooltip {
+        display: none;
+    }
+
+    .popover-region-content-container {
+        max-height: 400px;
+        overflow-y: scroll;
+    }
+
+    // Override core hover colours.
+    .content-item-container:hover {
+        background-color: white !important;
+        color: $body-color !important;
+    }
+
+    .content-item-footer .timestamp {
+        color: $body-color !important;
+    }
+
+    .popover-region-footer-container {
+        height: auto;
+    }
+}
 
 /**
  * Video js filter.
@@ -32,8 +134,6 @@
     }
 }
 
-
-
 /**
  * report : dates.
  * https://moodle.org/plugins/report_editdates
@@ -41,7 +141,6 @@
 #page-report-editdates-index .activityicon {
     @include svg-icon;
 }
-
 
 /**
  * Coments block.
@@ -223,7 +322,6 @@
     margin: 0 auto;
 }
 
-
 /**
  * Mod book.
  */
@@ -295,7 +393,6 @@
     font-family: $font-family-serif !important;
 }
 
-
 /**
  * Mod lesson.
  */
@@ -355,7 +452,6 @@
     }
 }
 
-
 /* Radio button and checkbox inputs. */
 #page-mod-lesson-view.path-mod-lesson {
     .answeroptiongroup,
@@ -410,76 +506,6 @@
 .gradingform_guide_comment_chooser > ul > li button {
     text-align: left;
     white-space: normal;
-}
-
-/**
- * Core notifications (bell) and popover.
- */
-#nav-notification-popover-container {
-    margin-right: 1rem;
-    width: 40px;
-    height: 40px;
-    border: 1px solid #eceeef;
-    border-radius: 100%;
-    text-align: center;
-
-    // Bell icon.
-    .icon.fa-bell {
-        margin-right: 0;
-    }
-    // Hide arrow on the top of the popover.
-    .popover-region-toggle:before,
-    .popover-region-toggle:after {
-        display: none;
-    }
-
-    // Circle with a count on the bell.
-    .count-container {
-        background-color: darken($brand-primary, 8%);
-        height: 18px;
-        width: 18px;
-        text-align: center;
-        border-radius: 50%;
-        padding: 0;
-        line-height: inherit;
-        top: -0.33rem; // magic numbers...
-        right: -0.33rem;
-    }
-
-    .popover-region-container {
-        top: 2.5rem;
-        height: auto;
-        width: 300px;
-        text-align: left;
-    }
-
-    .popover-region-header-container {
-        height: auto;
-        border-bottom: none;
-        padding-right: 0;
-    }
-    .hover-tooltip {
-        display: none;
-    }
-
-    .popover-region-content-container {
-        max-height: 400px;
-        overflow-y: scroll;
-    }
-
-    // Override core hover colours.
-    .content-item-container:hover {
-        background-color: white !important;
-        color: $body-color !important;
-    }
-
-    .content-item-footer .timestamp {
-        color: $body-color !important;
-    }
-
-    .popover-region-footer-container {
-        height: auto;
-    }
 }
 
 /**

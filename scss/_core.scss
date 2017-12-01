@@ -793,8 +793,7 @@ footer #moodle-footer
     position: fixed;
     width: 100vw;
     z-index: 23;
-    line-height: 2;
-    padding: 0.5em 0 0.5em 4%;
+    padding: .5em 4%;
     background-color: rgba(255,255,255,0.95);
 
     //headroom js http://wicky.nillia.ms/headroom.js/
@@ -821,43 +820,76 @@ footer #moodle-footer
     display: inline;
     border: none;
     position: relative; // Position to support message badge.
-    padding: 1rem; // Padding to support message badge.
+    padding: 1em; // Padding to support message badge.
 
     .userpicture {
-        height: 38px;
-        width: 38px;
-        margin-left: 1rem;
+        width: 40px;
+        height: auto;
+        @include alakazam;
+    }
+    &:hover,
+    &:focus {
+        .userpicture {
+            transform: scale(1.2);
+        }
     }
 
-    // Styles that message_badge_count has in core.
+    // Core alerts badge.
     .conversation_badge_count {
-        cursor: pointer;
-        position: absolute;
-        padding-top: 0;
-        background-image: none;
+        background-color: darken($brand-primary, 8%);
+        height: 18px;
+        width: 18px;
         border-radius: 50%;
-        left: auto;
-        right: 0.5em;
-        top: 0.5em;
+        padding: 0;
+        line-height: inherit;
         color: white;
-        height: 1.8em;
-        width: 1.8em;
-        text-align: center;
-        font-size: .55em;
+        position: absolute;
+        left: .33em; // Magic number.
+        top: .33em; // Magic number.
+        font-size: 10px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        &.hidden {
+            display: none;
+        }
     }
 }
 
-#snap-home.logo {
-    display: block;
-    background-color: transparent;
-    background-repeat: no-repeat;
-    background-size: contain;
-    background-position: left center;
-    height: 40px;
-    width: auto;
+#snap-home {
+    display: inline-block;
+    padding: .5em 0;
+    // If logo image.
+    &.logo {
+        display: block;
+        height: 45px;
+        max-width: 250px;
+        background-color: transparent;
+        background-repeat: no-repeat;
+        background-size: contain;
+        background-position: left center;
+    }
 }
 
-
+// Admin menu trigger.
+#snap-admin-icon {
+    @include alakazam;
+    .snap-gear-icon {
+        fill: none;
+        stroke: currentColor;
+        stroke-width: 5;
+        stroke-miterlimit: 10;
+    }
+    // Animate and change colour.
+    &:hover,
+    &:focus {
+        transform: rotate(90deg);
+        .snap-gear-icon {
+            fill: currentColor;
+        }
+    }
+}
 
 .bb_dashboard_link img {
     width: 1em;
@@ -939,7 +971,7 @@ header#page-header
 // -------------------------
 
 .breadcrumb-nav {
-    margin-bottom: 0;
+    padding: .5em 0;
     float: none;
     @include media-breakpoint-up(md) {
         margin-top: -0.5em;
@@ -1046,16 +1078,9 @@ header#page-header
 
 // Admin block link.
 #admin-menu-trigger {
-    width: 40px;
-    height: 40px;
-    margin-right: 1em;
-    border: 1px solid $gray-lighter;
-    border-radius: 100%;
-
-    img {
-        padding: 0.5em;
-        max-height: 100%;
-    }
+    width: 30px;
+    margin-left: .75em;
+    padding-top: .5em;
 }
 
 #page-report-outline-user .section {
@@ -1107,7 +1132,7 @@ header#page-header
 #page-site-index {
     #region-main {
         max-width: 100%;
-        padding: 2em 0;
+        padding: 1em 0 0 0;
         margin: 0 auto;
     }
 
@@ -1153,9 +1178,7 @@ header#page-header
     display: inline-block;
     margin-top: 1em;
 }
-#mr-nav .snap-login-button {
-    margin-right: 1em;
-}
+
 // -------------------------
 // Front page carousel componant.
 // -------------------------
@@ -2910,6 +2933,11 @@ body:not(.pagelayout-course) #moodle-footer {
     background-color: $body-color;
 }
 
+#snap-footer-content,
+#snap-socialmedia-links {
+    padding: 1em 0;
+}
+
 #moodle-footer {
     h1,
     h2,
@@ -3258,7 +3286,10 @@ table th img.iconhelp {
 /* Featured course container. */
 #snap-featured-courses {
     width: 100%;
-    padding: 2em 4%;
+    padding: 1em 4%;
+}
+.snap-featured-courses-heading {
+    padding: 1em 0;
 }
 
 /* Featured course link. */
