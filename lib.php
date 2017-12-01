@@ -252,6 +252,20 @@ function theme_snap_get_pre_scss($theme) {
     $fallbackserif = 'Georgia,"Times New Roman", Times, serif';
     $settings['font-family-serif'] = $userfontserif . $fallbackserif;
 
+    if (!empty($theme->settings->customisenavbar)) {
+        $settings['nav-bg'] = !empty($theme->settings->navbarbg) ? $theme->settings->navbarbg : '#ffffff';
+        $settings['nav-color'] = !empty($theme->settings->navbarlink) ? $theme->settings->navbarlink : $settings['brand-primary'];
+    }
+    if (!empty($theme->settings->customisenavbutton)) {
+        $settings['nav-button-bg'] = !empty($theme->settings->navbarbuttoncolor) ? $theme->settings->navbarbuttoncolor : "#ffffff";
+
+        if (!empty($theme->settings->navbarbuttonlink)) {
+            $settings['nav-button-color'] = $theme->settings->navbarbuttonlink;
+        } else {
+            $settings['nav-button-color'] = $settings['brand-primary'];
+        }
+    }
+
     foreach ($settings as $key => $value) {
         $scss .= '$' . $key . ': ' . $value . ";\n";
     }

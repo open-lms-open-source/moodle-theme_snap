@@ -794,7 +794,7 @@ footer #moodle-footer
     width: 100vw;
     z-index: 23;
     padding: .5em 4%;
-    background-color: rgba(255,255,255,0.95);
+    background-color: $nav-bg;
 
     //headroom js http://wicky.nillia.ms/headroom.js/
     &.headroom--unpinned {
@@ -814,13 +814,50 @@ footer #moodle-footer
         animation-duration: 0.33s;
         */
     }
+
+    .popover-region-notifications > div >.icon {
+        color: $nav-color;
+
+        &:hover {
+            color: $nav-color-hover;
+        }
+    }
+
+    a {
+        color: $nav-color;
+
+        &:hover,
+        &:focus {
+            color: $nav-color-hover;
+        }
+    }
+
+    .snap-login-button {
+        color: $nav-login-color;
+        background-color: $nav-login-bg;
+        border-color: $nav-login-bg;
+
+        &:hover,
+        &:focus {
+            color: darken($nav-login-color, 8%);
+            background-color: darken($nav-login-bg, 8%);
+            border-color: darken($nav-login-bg, 8%);
+        }
+
+    }
 }
 
-#snap-pm-trigger {
+#mr-nav #snap-pm-trigger {
     display: inline;
     border: none;
     position: relative; // Position to support message badge.
-    padding: 1em; // Padding to support message badge.
+    padding-left: 1em; // Padding to support message badge.
+    padding-right: 0.5em;
+    padding-top: 1.2em;
+    padding-bottom: 1.16em;
+    margin-right: 0.5em;
+    color: $nav-button-color;
+    background-color: $nav-button-bg;
 
     .userpicture {
         width: 40px;
@@ -832,6 +869,7 @@ footer #moodle-footer
         .userpicture {
             transform: scale(1.2);
         }
+        color: darken($nav-button-color, 8%);
     }
 
     // Core alerts badge.
@@ -845,7 +883,7 @@ footer #moodle-footer
         color: white;
         position: absolute;
         left: .33em; // Magic number.
-        top: .33em; // Magic number.
+        top: .6em; // Magic number.
         font-size: 10px;
         display: flex;
         justify-content: center;
@@ -854,6 +892,13 @@ footer #moodle-footer
         &.hidden {
             display: none;
         }
+    }
+}
+
+@include media-breakpoint-down(sm) {
+
+    #mr-nav #snap-pm-trigger {
+        padding-bottom: 1.36em;
     }
 }
 

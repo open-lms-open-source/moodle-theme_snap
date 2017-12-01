@@ -27,7 +27,7 @@
     // Save button on large screen.
     @include media-breakpoint-up(sm) {
         button[type=submit] {
-            margin-left: 25%;
+            margin-left: 27%;
         }
     }
     // Shortname on small screen.
@@ -59,12 +59,22 @@
 
     #admin-fullname,
     #admin-themecolor,
+    #admin-navbarbg,
+    #admin-navbarlink,
+    #admin-navbarbuttoncolor,
+    #admin-navbarbuttonlink,
     #admin-logo,
     #admin-favicon,
     #admin-headingfont,
     #admin-seriffont {
         width: 50%;
         float: left;
+    }
+
+    #admin-customisenavbutton {
+        clear: left;
+        padding-top: 1rem;
+        border-top: 1px solid #eee;
     }
 
     #admin-subtitle,
@@ -94,12 +104,12 @@
         height: 35px !important;
         width: 35px !important;
         border-radius: 100%;
-        border: none;
+        border: thin solid #eee;
         margin-left: 0;
     }
 
-    #admin-themecolor input{
-        margin-left: 1rem;
+    .admin_colourpicker + input {
+        margin-left: .5rem;
     }
 
     #id_s_theme_snap_customcss {
