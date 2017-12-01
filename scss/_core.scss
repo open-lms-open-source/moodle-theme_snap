@@ -793,7 +793,6 @@ footer #moodle-footer
     position: fixed;
     width: 100vw;
     z-index: 23;
-    line-height: 2;
     padding: .5em 4%;
     background-color: rgba(255,255,255,0.95);
 
@@ -824,14 +823,14 @@ footer #moodle-footer
     padding: 1em; // Padding to support message badge.
 
     .userpicture {
-        width: 45px;
+        width: 40px;
         height: auto;
         @include alakazam;
     }
     &:hover,
     &:focus {
         .userpicture {
-            transform: scale(1.1);
+            transform: scale(1.2);
         }
     }
 
@@ -840,41 +839,43 @@ footer #moodle-footer
         background-color: darken($brand-primary, 8%);
         height: 18px;
         width: 18px;
-        text-align: center;
         border-radius: 50%;
         padding: 0;
         line-height: inherit;
         color: white;
         position: absolute;
-        left: 0;
-        top: .2rem; // Magic number.
+        left: .33em; // Magic number.
+        top: .33em; // Magic number.
         font-size: 10px;
-
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
 }
 
-#snap-home.logo {
-    display: block;
-    background-color: transparent;
-    background-repeat: no-repeat;
-    background-size: contain;
-    background-position: left center;
-    height: 45px;
-    max-width: 250px;
+#snap-home {
+    display: inline-block;
+    padding: .5em 0;
+    // If logo image.
+    &.logo {
+        display: block;
+        height: 45px;
+        max-width: 250px;
+        background-color: transparent;
+        background-repeat: no-repeat;
+        background-size: contain;
+        background-position: left center;
+    }
 }
 
 // Admin menu trigger.
 #snap-admin-icon {
     @include alakazam;
-    .snap-gear-icon,
-    .snap-gear-center {
+    .snap-gear-icon {
         fill: none;
         stroke: currentColor;
         stroke-width: 5;
         stroke-miterlimit: 10;
-    }
-    .snap-gear-center {
-        fill: white;
     }
     // Animate and change colour.
     &:hover,
@@ -1073,9 +1074,9 @@ header#page-header
 
 // Admin block link.
 #admin-menu-trigger {
-    width: 28px;
-    margin-left: 1em;
-    padding-top: .3em;
+    width: 30px;
+    margin-left: .75em;
+    padding-top: .5em;
 }
 
 #page-report-outline-user .section {
@@ -1127,7 +1128,7 @@ header#page-header
 #page-site-index {
     #region-main {
         max-width: 100%;
-        padding: 2em 0;
+        padding: 1em 0 0 0;
         margin: 0 auto;
     }
 
@@ -3281,7 +3282,7 @@ table th img.iconhelp {
 /* Featured course container. */
 #snap-featured-courses {
     width: 100%;
-    padding: 2em 4%;
+    padding: 1em 4%;
 }
 .snap-featured-courses-heading {
     padding: 1em 0;

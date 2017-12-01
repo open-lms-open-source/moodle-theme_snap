@@ -193,8 +193,13 @@ class core_renderer extends \theme_boost\output\core_renderer {
         // @codingStandardsIgnoreStart
         $gearicon = '<svg xmlns="http://www.w3.org/2000/svg" id="snap-admin-icon" viewBox="0 0 100 100">
                         <title>'.get_string('admin', 'theme_snap').'</title>
-                        <path d="M85.2 54.9c.2-1.4.3-2.9.3-4.5 0-1.5-.1-3-.3-4.5l9.6-7.5c.9-.7 1-1.9.6-2.9l-9.1-15.8c-.6-1-1.8-1.3-2.8-1l-11.3 4.6c-2.4-1.8-4.9-3.3-7.7-4.5l-1.8-12c-.1-1-1-1.9-2.2-1.9H42.3c-1.1 0-2.1.9-2.2 1.9l-1.7 12.1c-2.8 1.1-5.3 2.7-7.7 4.5l-11.3-4.6c-1-.4-2.2 0-2.8 1L7.5 35.6c-.6 1-.3 2.2.6 2.9l9.6 7.5c-.2 1.4-.3 2.9-.3 4.5 0 1.5.1 3 .3 4.5L8 62.4c-.9.7-1 1.9-.6 2.9l9.1 15.8c.6 1 1.8 1.3 2.8 1l11.3-4.6c2.4 1.8 4.9 3.3 7.7 4.5L40 94.1c.1 1 1 1.9 2.2 1.9h18.2c1.1 0 2.1-.9 2.2-1.9L64.3 82c2.8-1.1 5.3-2.7 7.7-4.5l11.3 4.6c1 .4 2.2 0 2.8-1l9.1-15.8c.6-1 .3-2.2-.6-2.9l-9.4-7.5z" class="snap-gear-icon"/>
-                        <circle cx="51.4" cy="50.5" r="15.9" class="snap-gear-center"/>
+                        <path d="M85.2,54.9c0.2-1.4,0.3-2.9,0.3-4.5c0-1.5-0.1-3-0.3-4.5l9.6-7.5c0.9-0.7,1-1.9,0.6-2.9l-9.1-15.8c-0.6-1-1.8-1.3-2.8-1
+                        l-11.3,4.6c-2.4-1.8-4.9-3.3-7.7-4.5l-1.8-12c-0.1-1-1-1.9-2.2-1.9H42.3c-1.1,0-2.1,0.9-2.2,1.9l-1.7,12.1c-2.8,1.1-5.3,2.7-7.7,4.5
+                        l-11.3-4.6c-1-0.4-2.2,0-2.8,1L7.5,35.6c-0.6,1-0.3,2.2,0.6,2.9l9.6,7.5c-0.2,1.4-0.3,2.9-0.3,4.5c0,1.5,0.1,3,0.3,4.5L8,62.4
+                        c-0.9,0.7-1,1.9-0.6,2.9l9.1,15.8c0.6,1,1.8,1.3,2.8,1l11.3-4.6c2.4,1.8,4.9,3.3,7.7,4.5L40,94.1c0.1,1,1,1.9,2.2,1.9h18.2
+                        c1.1,0,2.1-0.9,2.2-1.9L64.3,82c2.8-1.1,5.3-2.7,7.7-4.5l11.3,4.6c1,0.4,2.2,0,2.8-1l9.1-15.8c0.6-1,0.3-2.2-0.6-2.9
+                        C94.6,62.4,85.2,54.9,85.2,54.9z M51.4,34.6c8.8,0,15.9,7.1,15.9,15.9s-7.1,15.9-15.9,15.9s-15.9-7.1-15.9-15.9S42.6,34.6,51.4,34.6
+                        z" class="snap-gear-icon"/>
                     </svg>';
          // @codingStandardsIgnoreEnd
         $url = '#inst' . $settingslink->instanceid;
@@ -225,8 +230,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
 
         $linkcontent = $this->render(new \pix_icon('sso', get_string('blackboard', 'local_geniusws'), 'local_geniusws')).
                 get_string('dashboard', 'local_geniusws');
-        $html = html_writer::link($bblink->loginurl, $linkcontent, ['class' => 'bb_dashboard_link']);
-
+        $html = html_writer::link($bblink->loginurl, $linkcontent, ['class' => 'bb_dashboard_link hidden-md-down']);
         return $html;
     }
 
