@@ -22,7 +22,7 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-namespace theme_snap\event\strategies;
+namespace theme_snap\calendar\event\strategies;
 
 defined('MOODLE_INTERNAL') || die();
 
@@ -36,6 +36,7 @@ class activity_retrieval_strategy extends \core_calendar\local\event\strategies\
 
     /**
      * Tweaks to core function - only get module level events, only get due, closing and opening events.
+     * Also override assignment duedate with extension when present.
      *
      * @param array|int|boolean $users array of users, user id or boolean for all/no user events
      * @param array|int|boolean $groups array of groups, group id or boolean for all/no group events

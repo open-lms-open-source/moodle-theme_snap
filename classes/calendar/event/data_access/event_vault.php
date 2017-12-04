@@ -22,7 +22,7 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-namespace theme_snap\event\data_access;
+namespace theme_snap\calendar\event\data_access;
 
 defined('MOODLE_INTERNAL') || die();
 

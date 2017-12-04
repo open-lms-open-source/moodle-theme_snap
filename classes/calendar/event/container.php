@@ -22,12 +22,12 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-namespace theme_snap\event;
+namespace theme_snap\calendar\event;
 
 defined('MOODLE_INTERNAL') || die();
 
-use theme_snap\event\data_access\event_vault;
-use theme_snap\event\strategies\activity_retrieval_strategy;
+use theme_snap\calendar\event\data_access\event_vault;
+use theme_snap\calendar\event\strategies\activity_retrieval_strategy;
 use core_calendar\action_factory;
 use core_calendar\local\event\entities\event_interface;
 use core_calendar\local\event\factories\event_factory;
@@ -45,7 +45,7 @@ class container extends \core_calendar\local\event\container {
      * Initialises the dependency graph if it hasn't yet been.
      */
     public static function ovd_init() {
-        if (empty(self::$eventvault) || get_class(self::$eventvault) != 'theme_snap\event\data_access\event_vault') {
+        if (empty(self::$eventvault) || get_class(self::$eventvault) != 'theme_snap\calendar\event\data_access\event_vault') {
             self::$eventvault = false;
             self::$actionfactory = new action_factory();
             self::$eventmapper = new event_mapper(

@@ -1179,8 +1179,8 @@ class activity {
         $ignorehidden = true
     ) {
 
-        \theme_snap\event\container::ovd_init();
-        $vault = \theme_snap\event\container::get_event_vault();
+        \theme_snap\calendar\event\container::ovd_init();
+        $vault = \theme_snap\calendar\event\container::get_event_vault();
 
         $timestartafterevent = null;
         $timesortafterevent = null;
