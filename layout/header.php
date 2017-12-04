@@ -61,7 +61,7 @@ if ($PAGE->context->contextlevel === CONTEXT_COURSECAT) {
     if ($PAGE->pagelayout === 'coursecategory') {
         $coverimagecss = \theme_snap\local::course_cat_coverimage_css($PAGE->context->instanceid);
     }
-} else if ($PAGE->pagelayout === 'frontpage') {
+} else if ($PAGE->pagelayout === 'frontpage' || $PAGE->pagelayout === 'login') {
     $coverimagecss = \theme_snap\local::site_coverimage_css();
 } else {
     $coverimagecss = \theme_snap\local::course_coverimage_css($COURSE->id);
