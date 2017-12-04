@@ -672,8 +672,8 @@ define(['jquery', 'core/log', 'theme_snap/headroom', 'theme_snap/util', 'theme_s
                         $("#id_visible option[value='0']").text(M.util.get_string('modhide', 'moodle'));
                         $("#id_visible option[value='-1']").text(M.util.get_string('hiddenoncoursepage', 'moodle'));
 
-                        // Skip on on main course editing form.
-                        if ($("#page-course-edit").length < 1) {
+                        // Only change these strings if we are not on the course editing form.
+                        if (!$("#page-course-edit").length) {
                             // Hidden section re-use show to make mods stealth.
                             // For hidden sections the show option therefore needs the stealth string.
                             var showstring = $("#id_visible option[value='1']").text();
