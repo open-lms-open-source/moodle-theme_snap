@@ -58,10 +58,16 @@ class activity_meta {
      * @var int $timeopen - unix time stamp for time open
      */
     public $timeopen;
+
     /**
      * @var int $timeclose - unix time stamp for time closes
      */
     public $timeclose;
+
+    /**
+     * @var bool - did we use the muc to get the timeopen / timeclose data?
+     */
+    public $timesfromcache;
 
     /**
      * @var int $extension - unix time stamp for extended due dates.

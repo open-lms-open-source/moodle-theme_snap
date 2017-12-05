@@ -41,9 +41,12 @@ class snap_personal_menu_controller extends controller_abstract {
      * @return string
      */
     public function get_deadlines_action() {
-        return json_encode(array(
-            'html' => \theme_snap\local::deadlines()
-        ));
+        global $PAGE, $USER;
+        $output = $PAGE->get_renderer('theme_snap', 'core', RENDERER_TARGET_GENERAL);
+        $deadlines = \theme_snap\activity::upcoming_deadlines($USER->id);
+        return json_encode([
+            'html' => $output->deadlines($deadlines)
+        ]);
     }
 
     /**

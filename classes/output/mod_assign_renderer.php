@@ -89,14 +89,12 @@ class mod_assign_renderer extends \mod_assign_renderer {
      * @return string
      */
     public function render_assign_duedate(\assign_header $header) {
+        global $USER;
+
         $status = $header->assign;
-        $duedate = $status->duedate;
-        $extensiontag = '';
-        // If the user has an extension use as due date.
-        $extensionduedate = activity::assignment_user_extension_date($status->id);
-        if ($extensionduedate) {
-            $duedate = $extensionduedate;
-        }
+
+        $duedateinfo = activity::assignment_due_date_info($status->id, $USER->id);
+        $duedate = $duedateinfo->duedate;
 
         $time = time();
         $duedata = '';
@@ -117,7 +115,7 @@ class mod_assign_renderer extends \mod_assign_renderer {
             }
 
             // Tell user they have been granted an extension.
-            if ($extensionduedate) {
+            if ($duedateinfo->extended) {
                 $duedata .= '<div>'.get_string('eventextensiongranted', 'assign').'</div>';
             }
 

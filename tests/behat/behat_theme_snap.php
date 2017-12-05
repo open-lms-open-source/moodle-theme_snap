@@ -1433,9 +1433,11 @@ class behat_theme_snap extends behat_base {
      * #param string $username
      */
     public function deadline_is_extended($assignname, $shortname, $extension, $username) {
-        global $DB, $CFG;
-
-        require_once($CFG->dirroot.'/mod/assign/locallib.php');
+        global $CFG, $DB;
+        require_once($CFG->dirroot.'/vendor/autoload.php');
+        require_once($CFG->libdir.'/phpunit/classes/base_testcase.php');
+        require_once($CFG->libdir.'/phpunit/classes/advanced_testcase.php');
+        require_once($CFG->dirroot.'/mod/assign/tests/base_test.php');
 
         $service = theme_snap\services\course::service();
         $course = $service->coursebyshortname($shortname, 'id');
@@ -1455,10 +1457,8 @@ class behat_theme_snap extends behat_base {
         $cm = cm_info::create($cm);
 
         // Create assignment object and update extension date for user and assignment.
-        $assignment = new assign($cm->context, $cm, $course);
-        $flags = $assignment->get_user_flags($user->id, true);
-        $flags->extensionduedate = $extension;
-        $assignment->update_user_flags($flags);
+        $assign = new testable_assign($cm->context, $cm, $course);
+        $assign->testable_save_user_extension($user->id, $extension);
     }
 
     /**
