@@ -1278,6 +1278,10 @@ class activity {
      *
      * @param int|stdClass $userorid
      * @param stdClass[] $courses array of courses hashed by course id.
+     * @param int $tstart
+     * @param int $tend
+     * @param string $cacheprefix
+     * @param int $limit
      * @return stdClass
      */
     public static function user_activity_events($userorid, array $courses, $tstart, $tend, $cacheprefix = '',
@@ -1364,6 +1368,7 @@ class activity {
 
         }
         $events = $tmparr;
+        unset($tmparr);
 
         $retobj->timestamp = microtime(true);
         $retobj->events = $events;
@@ -1402,6 +1407,12 @@ class activity {
         $eventsobj = self::user_activity_events($user, $courses, $todayts, $todayts + (YEARSECS / 2), 'deadlines');
 
         $events = $eventsobj->events;
+        uasort($events, function($e1, $e2) {
+            if ($e1->timestart === $e2->timestart) {
+                return 0;
+            }
+            return ($e1->timestart < $e2->timestart) ? -1 : 1;
+        });
 
         $counteventstoday = 0;
 

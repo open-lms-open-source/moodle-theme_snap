@@ -831,7 +831,6 @@ class theme_snap_acitvity_test extends snap_base_test {
         $deadlines = activity::upcoming_deadlines($teacher->id)->events;
         $this->assertCount(1, $deadlines);
 
-        $this->setUser($teacher);
         $this->create_assignment($course->id, time() + 3 * DAYSECS);
 
         $deadlines = activity::upcoming_deadlines($teacher->id)->events;
@@ -942,7 +941,7 @@ class theme_snap_acitvity_test extends snap_base_test {
         $deadlinepast = time() - WEEKSECS;
 
         $overdueassign = $this->create_assignment(
-            $course->id, $deadlinepast, ['name' => 'Assign in past']
+            $course->id, $deadlinepast, ['name' => 'Assign overdue']
         );
         $overdueassignid = $overdueassign->get_instance()->id;
 
@@ -953,15 +952,33 @@ class theme_snap_acitvity_test extends snap_base_test {
         $this->assertTrue($eventobj->fromcache);
         $this->assertEmpty($eventobj->events);
 
+        // Test creating assignment invalidates cache and that current assignments feature in list.
+        $deadlinefuture = time() + DAYSECS;
+        $assignobj = $this->create_assignment(
+            $course->id, $deadlinefuture, ['name' => 'Assign future due']
+        );
+        $assign = $assignobj->get_instance();
+        $eventobj = activity::upcoming_deadlines($student);
+        $this->assertFalse($eventobj->fromcache);
+        $this->assert_deadlines_includes_assignment($eventobj->events, $assign->id);
+        $eventobj = activity::upcoming_deadlines($student);
+        $this->assertTrue($eventobj->fromcache);
+        $this->assert_deadlines_includes_assignment($eventobj->events, $assign->id);
+
         // Test extension set invalidates cache and trumps all overrides.
         $this->setUser($teacher);
-        $extension = time() + DAYSECS;
+        $extension = $deadlinefuture + DAYSECS; // 1 Day further in future than non extended assignment.
         $this->extend_assign_deadline($overdueassignid, $student->id, $extension);
         $this->setUser($student);
 
         $eventobj = activity::upcoming_deadlines($student);
-        $deadlines = $eventobj->events;
-        $this->assert_deadlines_includes_assignment($deadlines, $overdueassignid);
+        $this->assert_deadlines_includes_assignment($eventobj->events, $overdueassignid);
+
+        // Assert count and order of assignments is correct.
+        $this->assertCount(2, $eventobj->events);
+        $this->assertEquals('Assign future due', $eventobj->events[0]->name);
+        // The overdue assignment should be last in the list as it now has a deadline greater than the other assignment.
+        $this->assertEquals('Assign overdue', $eventobj->events[1]->name);
     }
 
     /**
