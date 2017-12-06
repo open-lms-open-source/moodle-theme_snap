@@ -33,6 +33,7 @@ $font-size-xs:   .6rem;
 //$enable-flex:               true;
 $enable-rounded:        false;
 
+$brand-primary:         #ff7f41 !default;
 $brand-success:         #8BC34A;
 $brand-warning:         #FF9800;
 $brand-danger:          #E91E63;
@@ -43,6 +44,7 @@ $body-color:            #565656;
 
 $font-family-system:      -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !default;
 $font-family-sans-serif:  "Roboto", $font-family-system;
+$font-family-feature:     "Roboto", $font-family-system;
 $font-family-monospace:   Monaco, Menlo, Consolas, "Courier New", monospace;
 
 $headings-font-weight:    400;
@@ -90,3 +92,24 @@ $color-communication:                #8BC34A; // Foums, Chat
 $color-assignment:                   #03A9F4; // Assignment, workshop
 $color-quiz:                         #FFA000; // Quiz, choice, feedback
 $color-wiki:                         #009688; // Wiki, glossary
+
+
+// -------------------------
+// Colour variables for the customisable mr_nav.
+// -------------------------
+
+$nav-bg:                            rgba(255,255,255,.95) !default;
+$nav-color:                         $brand-primary !default;
+$nav-color-hover:                   darken($nav-color, 8%);
+
+$nav-button-bg:                     rgba(255,255,255,0) !default;
+$nav-button-color:                  $nav-color !default;
+
+$nav-login-bg:                      $nav-button-bg;
+$nav-login-color:                   $nav-button-color;
+
+@if (alpha($nav-button-bg) == 0) {
+    $nav-login-color:               $nav-bg;
+    $nav-login-bg:                  $nav-button-color;
+}
+

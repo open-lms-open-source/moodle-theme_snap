@@ -37,4 +37,5 @@ if ($ADMIN->fulltree) {
     require('settings/featured_courses_settings.php');
     require('settings/course_settings.php');
     require('settings/social_media_settings.php');
+    require('settings/navigation_bar_settings.php');
 }
