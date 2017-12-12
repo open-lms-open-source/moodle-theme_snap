@@ -37,7 +37,6 @@
         // Section at the top of the printout.
         .course-content>ul li.section.state-visible {
             position: absolute;
-            top: 0;
             page-break-inside: avoid;
         }
         // Remove padding as edit commands are hidden.
@@ -54,7 +53,6 @@
         }
         // Hide all the things!
         #page-header,
-        #xray-js-menu,
         #snap-course-footer,
         #course-toc,
         #toc-mobile-menu-toggle,
