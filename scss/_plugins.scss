@@ -15,7 +15,7 @@
         font-size: 24px;
         width: auto;
         height: auto;
-        color: $brand-primary;
+        color: $nav-color;
     }
     // Height for search input.
     form > input {
@@ -34,7 +34,7 @@
         font-size: 24px;
         width: auto;
         height: auto;
-        color: $brand-primary;
+        color: $nav-color;
 
         &:before {
             content: "\f0a2";
@@ -103,6 +103,7 @@
     .popover-region-footer-container {
         height: auto;
     }
+
 }
 
 /**
