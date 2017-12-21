@@ -233,6 +233,11 @@ input[type="checkbox"] {
 
 // TODO - move all atto styles to here
 
+div.editor_atto {
+    display: flex;
+    flex-direction: column-reverse;
+}
+
 div.editor_atto_toolbar {
     background-color: transparent;
     border-color: #eee;
