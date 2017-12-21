@@ -2816,6 +2816,9 @@ table#user-grades tr.avg td.cell {
     .buttons {
         text-align: center;
         border-top: none;
+        display: flex;
+        margin: 0 auto;
+        width: 3em;
     }
 }
 
