@@ -216,3 +216,11 @@ if ($themeissnap && $notajaxscript) {
     }
 
 }
+
+$runningbehattest = defined('BEHAT_SITE_RUNNING') && BEHAT_SITE_RUNNING;
+$requiredblocks = array('settings');
+if ($runningbehattest) {
+    array_push($requiredblocks, 'navigation');
+}
+
+$THEME->requiredblocks = $requiredblocks;

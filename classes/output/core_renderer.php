@@ -1174,15 +1174,6 @@ HTML;
      */
     public function blocks_for_region($region) {
         $blockcontents = $this->page->blocks->get_content_for_region($region, $this);
-        if (!empty($this->page->theme->settings->hidenavblock) && !defined('BEHAT_SITE_RUNNING')) {
-            $blockcontents = array_filter($blockcontents, function ($bc) {
-                if (!$bc instanceof \block_contents) {
-                    return true;
-                }
-                $isnavblock = strpos($bc->attributes['class'], 'block_navigation') !== false;
-                return !$isnavblock;
-            });
-        }
 
         $blocks = $this->page->blocks->get_blocks_for_region($region);
 
