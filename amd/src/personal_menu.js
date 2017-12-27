@@ -179,6 +179,7 @@ define(['jquery', 'core/log', 'core/yui', 'theme_snap/pm_course_cards', 'theme_s
             var applyListeners = function() {
                 // On clicking personal menu trigger.
                 $(document).on("click", ".js-snap-pm-trigger", function(event) {
+                    $("html, body").animate({scrollTop: 0}, 0);
                     $('body').toggleClass('snap-pm-open');
                     if ($('.snap-pm-open #snap-pm').is(':visible')) {
                         self.update();
