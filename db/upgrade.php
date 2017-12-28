@@ -93,5 +93,12 @@ function xmldb_theme_snap_upgrade($oldversion) {
         upgrade_plugin_savepoint(true, 2016121309, 'theme', 'snap');
     }
 
+    if ($oldversion < 2017122801) {
+        if (!is_null(get_config('theme_snap', 'hidenavblock'))) {
+            unset_config('hidenavblock', 'theme_snap');
+        }
+        upgrade_plugin_savepoint(true, 2017122801, 'theme', 'snap');
+    }
+
     return true;
 }
