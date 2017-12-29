@@ -1164,49 +1164,6 @@ HTML;
     }
 
     /**
-     * Override parent to (optionally) remove the nav block.
-     *
-     * Always show when Behat tests are running as it is used by core
-     * tests to navigate around the site.
-     *
-     * @todo For 2.7, when this will no longer be an option, we should
-     * automatically turn off the nav block to stop all this at the source.
-     */
-    public function blocks_for_region($region) {
-        $blockcontents = $this->page->blocks->get_content_for_region($region, $this);
-        if (!empty($this->page->theme->settings->hidenavblock) && !defined('BEHAT_SITE_RUNNING')) {
-            $blockcontents = array_filter($blockcontents, function ($bc) {
-                if (!$bc instanceof \block_contents) {
-                    return true;
-                }
-                $isnavblock = strpos($bc->attributes['class'], 'block_navigation') !== false;
-                return !$isnavblock;
-            });
-        }
-
-        $blocks = $this->page->blocks->get_blocks_for_region($region);
-
-        $lastblock = null;
-        $zones = array();
-        foreach ($blocks as $block) {
-            $zones[] = $block->title;
-        }
-        $output = '';
-
-        foreach ($blockcontents as $bc) {
-            if ($bc instanceof \block_contents) {
-                    $output .= $this->block($bc, $region);
-                    $lastblock = $bc->title;
-            } else if ($bc instanceof \block_move_target) {
-                $output .= $this->block_move_target($bc, $zones, $lastblock, $region);
-            } else {
-                throw new \coding_exception('Unexpected type of thing (' . get_class($bc) . ') found in list of block contents.');
-            }
-        }
-        return $output;
-    }
-
-    /**
      * Render recent forum activity.
      *
      * @param array $activities

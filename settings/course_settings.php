@@ -49,12 +49,4 @@ $default = $checked;
 $setting = new admin_setting_configcheckbox($name, $title, $description, $default, $checked, $unchecked);
 $snapsettings->add($setting);
 
-// Hide navigation block.
-$name = 'theme_snap/hidenavblock';
-$title = new lang_string('hidenavblock', 'theme_snap');
-$description = new lang_string('hidenavblockdesc', 'theme_snap');
-$default = $checked;
-$setting = new admin_setting_configcheckbox($name, $title, $description, $default, $checked, $unchecked);
-$snapsettings->add($setting);
-
 $settings->add($snapsettings);
