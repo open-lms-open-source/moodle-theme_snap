@@ -1359,10 +1359,9 @@ class local {
             $preview = $page->content;
             // Prevent img alt tags from being spat out by html_to_text by escaping them.
             $preview = str_replace('alt=', 'alt&#61;', $preview);
-            $wrapwidth = 0;
-            $listlinks = false;
-            $preview = html_to_text($preview, $wrapwidth, $listlinks);
-            $page->summary = s(shorten_text($preview, 200));
+            // Only formatting tags and links are allowed.
+            $preview = strip_tags($preview, '<b><i><em><mark><small><del><ins><sub><sup><style><a>');
+            $page->summary = shorten_text($preview, 200);
         }
 
         return ($page);
