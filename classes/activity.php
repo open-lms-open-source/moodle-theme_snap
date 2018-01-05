@@ -95,7 +95,7 @@ class activity {
         }
 
         // If module is not visible to the user then don't bother getting meta data.
-        if (!$mod->uservisible) {
+        if (!$mod->visibleoncoursepage) {
             return $meta;
         }
 
