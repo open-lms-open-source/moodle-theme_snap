@@ -252,6 +252,7 @@ $string['released'] = 'Released: {$a}';
 $string['reopened'] = 'Reopened';
 $string['resourcedisplay'] = 'Resource display';
 $string['resourcedisplayhelp'] = 'Select how attachments and links appear in your course.';
+$string['search'] = 'Search contents';
 $string['seriffont'] = 'Serif font';
 $string['seriffont_desc'] = 'This font is used for most user generated content. Using a serif font makes user generated content more readable, and feel like it is written by a human.';
 $string['showcoursegradepersonalmenu'] = 'Grades';

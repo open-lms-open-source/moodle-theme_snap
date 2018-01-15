@@ -1,6 +1,6 @@
 <form id="toc-search" onSubmit="return false;">
-    <input id="toc-search-input" type="search" title="{{#str}}search{{/str}}" placeholder="{{#str}}search{{/str}}" aria-autocomplete="list" aria-haspopup="true" aria-activedescendant="toc-search-results" autocomplete="off" />
-    <ul id="toc-search-results" class="list-unstyled" role="listbox" aria-label="search results" aria-live="polite" aria-relevant="additions"></ul>
+    <input search-enabled="true" id="toc-search-input" type="text" title="{{#str}}search{{/str}}" placeholder="{{#str}}search, theme_snap{{/str}}" autocomplete="off" />
+    <ul id="toc-search-results" class="list-unstyled" role="listbox" aria-label="search" aria-relevant="additions"></ul>
     <ul role="listbox" id="toc-searchables" aria-hidden="true">
         {{#modules}}
             <li role=option data-id="{{cmid}}">
