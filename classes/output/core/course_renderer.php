@@ -71,7 +71,7 @@ class course_renderer extends \core_course_renderer {
                 }
                 // For images we overwrite with the native class.
                 if ($this->is_image_mod($mod)) {
-                    $modclasses = array('snap-native', 'snap-image', 'snap-mime-'.$extension);
+                    $modclasses = array('snap-native-image', 'snap-image', 'snap-mime-'.$extension);
                 }
             } else if ($mod->modname === 'folder' && !$mod->url) {
                 // Folder mod set to display on page.

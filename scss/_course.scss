@@ -732,6 +732,20 @@ body.format-flexpage .singlebutton {
     }
 }
 
+//------------------------------
+// Class to render core filters
+//------------------------------
+.section li.snap-native-image {
+
+    @extend .section li.snap-native;
+
+    .snap-resource-figure-caption,
+    img.activityicon,
+    .snap-assettype {
+        display: none;
+    }
+}
+
 @include media-breakpoint-up(md) {
     li.modtype_page .summary-figure {
         width: 50%;
