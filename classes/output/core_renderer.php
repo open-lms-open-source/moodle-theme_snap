@@ -82,7 +82,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
                 $modnames = get_module_types_names();
                 $modname = $modnames[$component];
                 $mod = get_module_metadata($COURSE, array($component => $modname), null);
-                if (!empty($mod) && $mod[$component]->help) {
+                if (!empty($mod) && is_object($mod[$component]) && $mod[$component]->help) {
                     $helptext = format_text($mod[$component]->help, FORMAT_MARKDOWN);
                     $data = (object) [
                         'helptext' => $helptext,
