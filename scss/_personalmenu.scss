@@ -245,6 +245,9 @@ body.snap-pm-open {
 //  Personal menu current courses.
 // -------------------------
 #snap-pm-courses-current {
+    #snap-pm-courses-current-cards {
+        margin-top: 2em;
+    }
     // Hidden courses - always output for js, but hidden unless populated.
     #snap-pm-courses-hidden {
         display: none;
