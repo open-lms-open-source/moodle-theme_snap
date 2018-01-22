@@ -1175,6 +1175,7 @@ class activity {
         array $usersfilter = null,
         array $groupsfilter = null,
         array $coursesfilter = null,
+        array $categoriesfilter = null,
         $withduration = true,
         $ignorehidden = true
     ) {
@@ -1205,7 +1206,7 @@ class activity {
             $usersfilter,
             $groupsfilter,
             $coursesfilter,
-            null,
+            $categoriesfilter,
             $withduration,
             $ignorehidden
         );
@@ -1265,6 +1266,7 @@ class activity {
             $userparam,
             $groupparam,
             $courseparam,
+            null, // Categories param - TODO, check this out.
             $withduration,
             $ignorehidden
         );
