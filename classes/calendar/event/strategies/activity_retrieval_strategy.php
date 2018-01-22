@@ -53,6 +53,7 @@ class activity_retrieval_strategy extends \core_calendar\local\event\strategies\
         $users,
         $groups,
         $courses,
+        $categories,
         $whereconditions,
         $whereparams,
         $ordersql,
