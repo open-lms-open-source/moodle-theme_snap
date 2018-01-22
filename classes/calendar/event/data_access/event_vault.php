@@ -66,6 +66,7 @@ class event_vault extends \core_calendar\local\event\data_access\event_vault {
         array $usersfilter = null,
         array $groupsfilter = null,
         array $coursesfilter = null,
+        array $categoriesfilter = null,
         $withduration = true,
         $ignorehidden = true,
         callable $filter = null
@@ -132,6 +133,7 @@ class event_vault extends \core_calendar\local\event\data_access\event_vault {
             $usersfilter,
             $groupsfilter,
             $coursesfilter,
+            $categoriesfilter,
             $where,
             $params,
             "COALESCE(e.timesort, e.timestart) ASC, e.id ASC",

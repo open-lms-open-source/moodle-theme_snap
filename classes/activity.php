@@ -1175,6 +1175,7 @@ class activity {
         array $usersfilter = null,
         array $groupsfilter = null,
         array $coursesfilter = null,
+        array $categoriesfilter = null,
         $withduration = true,
         $ignorehidden = true
     ) {
@@ -1205,6 +1206,7 @@ class activity {
             $usersfilter,
             $groupsfilter,
             $coursesfilter,
+            $categoriesfilter,
             $withduration,
             $ignorehidden
         );
@@ -1222,7 +1224,7 @@ class activity {
 
         $calendar = new \calendar_information(0, 0, 0, $tstart);
         $course = get_course(SITEID);
-        $calendar->prepare_for_view($course, $courses);
+        $calendar->set_sources($course, $courses);
 
         $withduration = true;
         $ignorehidden = true;
@@ -1264,6 +1266,7 @@ class activity {
             $userparam,
             $groupparam,
             $courseparam,
+            null, // Categories param - TODO, check this out.
             $withduration,
             $ignorehidden
         );
