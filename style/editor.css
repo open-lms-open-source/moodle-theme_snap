@@ -7607,7 +7607,7 @@ div.editor_atto_toolbar div.atto_group {
 #page-admin-setting-themesettingsnap {
   /* Subtitle textarea. */
 }
-#page-admin-setting-themesettingsnap .admin_colourpicker {
+#page-admin-setting-themesettingsnap .tab-pane:not(#themesnapcolorcategories) .admin_colourpicker {
   display: block;
   float: left;
   height: 40px;
