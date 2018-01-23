@@ -191,6 +191,14 @@ class behat_theme_snap extends behat_base {
     }
 
     /**
+     * This function will wait an instant for ajax calls to finish.
+     * @Given /^I wait for the personal menu to be loaded$/
+     */
+    public function i_wait_personal_menu_to_load() {
+        $this->getSession()->wait(1000, '(jQuery.active === 0)'); // Time in milliseconds.
+    }
+
+    /**
      * @param string $assignmentname
      * @param string $shortname
      * @param string $grade

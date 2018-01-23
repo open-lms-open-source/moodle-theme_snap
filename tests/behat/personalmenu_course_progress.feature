@@ -48,6 +48,7 @@ Feature: When the moodle theme is set to Snap, students and teachers can open a 
       | assign   | C1     | assign1  | Test assignment | Test assignment | 1       | 1          | 1              |
     And I reload the page
     And I open the personal menu
+    And I wait for the personal menu to be loaded
     Then I should see "Course 1"
     And I should see "Progress: 0 / 1"
     And I am on "Course 1" course homepage
@@ -55,10 +56,12 @@ Feature: When the moodle theme is set to Snap, students and teachers can open a 
     And I mark the activity "Test assignment" as complete
     And I reload the page
     And I open the personal menu
+    And I wait for the personal menu to be loaded
     Then I should see "Progress: 1 / 1"
     Given completion tracking is "Disabled" for course "C1"
     And I reload the page
     And I open the personal menu
+    And I wait for the personal menu to be loaded
     Then I should not see "Progress:"
     Given completion tracking is "Enabled" for course "C1"
     And the following config values are set as admin:
