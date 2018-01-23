@@ -28,9 +28,10 @@ define(
         'jquery',
         'core/ajax',
         'theme_snap/util',
-        'theme_snap/ajax_notification'
+        'theme_snap/ajax_notification',
+        'core/str'
     ],
-    function($, ajax, util, ajaxNotify) {
+    function($, ajax, util, ajaxNotify, str) {
 
         /**
          * Module has been completed.
@@ -92,7 +93,7 @@ define(
          * Reveal page module content.
          *
          * @param {jQuery} pageMod
-         * @param {string} completionhtml - updated completionhtml
+         * @param {string} completionHTML - updated completionHTML
          */
         var revealPageMod = function(pageMod, completionHTML) {
             pageMod.find('.pagemod-content').slideToggle("fast", function() {
@@ -101,8 +102,7 @@ define(
                     pageMod.attr('aria-expanded', 'true');
                     pageMod.find('.pagemod-content').focus();
 
-                }
-                else {
+                } else {
                     pageMod.attr('aria-expanded', 'false');
                     pageMod.focus();
                 }
@@ -153,9 +153,12 @@ define(
                 } else {
                     if (!isexpanded) {
                         // Content is not available so request it.
-                        pageMod.find('.contentafterlink').prepend(
-                            '<div class="ajaxstatus alert alert-info">' + M.str.theme_snap.loading + '</div>'
-                        );
+                        var loadingStrPromise = str.get_string('loading', 'theme_snap');
+                        $.when(loadingStrPromise).done(function(loadingStr) {
+                            pageMod.find('.contentafterlink').prepend(
+                                '<div class="ajaxstatus alert alert-info">' + loadingStr + '</div>'
+                            );
+                        });
                         var getPageUrl = M.cfg.wwwroot + '/theme/snap/rest.php?action=get_page&contextid=' +
                             readmore.data('pagemodcontext');
                         $.ajax({
@@ -193,8 +196,8 @@ define(
             /**
              * Ensure lightbox container exists.
              *
-             * @param appendto
-             * @param onclose
+             * @param {string} appendto
+             * @param {function} onclose
              * @returns {*|jQuery|HTMLElement}
              */
             var lightbox = function(appendto, onclose) {
@@ -210,7 +213,7 @@ define(
                         e.preventDefault();
                         e.stopPropagation();
                         lightboxclose();
-                        if (typeof(onclose) === 'function') {
+                        if (typeof (onclose) === 'function') {
                             onclose();
                         }
                     });
@@ -230,9 +233,9 @@ define(
             /**
              * Open lightbox and set content if necessary.
              *
-             * @param content
-             * @param appendto
-             * @param onclose
+             * @param {string} content
+             * @param {*} appendto
+             * @param {function} onclose
              */
             var lightboxopen = function(content, appendto, onclose) {
                 appendto = appendto ? appendto : $('body');

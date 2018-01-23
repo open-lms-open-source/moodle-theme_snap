@@ -65,6 +65,7 @@ define(['jquery', 'core/templates'],
 
             /**
              * Add AJAX loading spinner.
+             * @param {string} str
              */
             this.addAjaxLoading = function(str) {
                 str = !str ? M.util.get_string('loading', 'theme_snap') : str;
@@ -84,10 +85,11 @@ define(['jquery', 'core/templates'],
 
             /**
              * Show footer alert.
+             * @param {function} onCancel
              */
             this.show = function(onCancel) {
                 containerEl.addClass('snap-footer-alert-visible');
-                if (typeof(onCancel) === 'function') {
+                if (typeof (onCancel) === 'function') {
                     $('.snap-footer-alert-cancel').click(onCancel);
                     $('.snap-footer-alert-cancel').addClass('state-visible');
                 } else {

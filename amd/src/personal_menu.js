@@ -56,18 +56,18 @@ define(['jquery', 'core/log', 'core/yui', 'theme_snap/pm_course_cards', 'theme_s
 
                 /**
                  * Load ajax info into personal menu.
-                 *
+                 * @param {string} type
                  */
                 var loadAjaxInfo = function(type) {
                     // Target for data to be displayed on screen.
                     var container = $('#snap-personal-menu-' + type);
                     if ($(container).length) {
-                        var cache_key = M.cfg.sesskey + 'personal-menu-' + type;
+                        var cacheKey = M.cfg.sesskey + 'personal-menu-' + type;
                         try {
                             // Display old content while waiting
-                            if (util.supportsSessionStorage() && window.sessionStorage[cache_key]) {
+                            if (util.supportsSessionStorage() && window.sessionStorage[cacheKey]) {
                                 log.info('using locally stored ' + type);
-                                var html = window.sessionStorage[cache_key];
+                                var html = window.sessionStorage[cacheKey];
                                 $(container).html(html);
                             }
                             log.info('fetching ' + type);
@@ -82,8 +82,8 @@ define(['jquery', 'core/log', 'core/yui', 'theme_snap/pm_course_cards', 'theme_s
                                         } else {
                                             // No errors, update sesion storage.
                                             log.info('fetched ' + type);
-                                            if (util.supportsSessionStorage() && typeof(data.html) != 'undefined') {
-                                                window.sessionStorage[cache_key] = data.html;
+                                            if (util.supportsSessionStorage() && typeof (data.html) != 'undefined') {
+                                                window.sessionStorage[cacheKey] = data.html;
                                             }
                                             // Note: we can't use .data because that does not manipulate the dom, we need the data
                                             // attribute populated immediately so things like behat can utilise it.
@@ -116,6 +116,8 @@ define(['jquery', 'core/log', 'core/yui', 'theme_snap/pm_course_cards', 'theme_s
             var mobilePersonalMenuListeners = function() {
                 /**
                  * Get section left position and height.
+                 * @param {string} href
+                 * @returns {Object.<string, number>}
                  */
                 var getSectionCoords = function(href) {
                     var sections = $("#snap-pm-content section");
@@ -192,6 +194,7 @@ define(['jquery', 'core/log', 'core/yui', 'theme_snap/pm_course_cards', 'theme_s
 
             /**
              * Initialising function.
+             * @param {boolean} sitePolicyAcceptReqd
              */
             this.init = function(sitePolicyAcceptReqd) {
                 redirectToSitePolicy = sitePolicyAcceptReqd;

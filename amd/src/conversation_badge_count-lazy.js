@@ -31,7 +31,7 @@ define(['jquery', 'core/ajax'],
          * Initialising function.
          * @param {int} userid The user id
          */
-        self.init = function(userid){
+        self.init = function(userid) {
             self.userid = userid;
             // Container.
             self.containerEl = $('.conversation_badge_count');

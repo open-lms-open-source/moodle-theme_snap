@@ -24,12 +24,12 @@ define(['jquery', 'core/log', 'core/ajax', 'core/notification', 'theme_snap/ajax
 
         // TODO - in Moodle 3.1 we should use the core template for this.
         var addCoverImageAlert = function(id, msg) {
-            var closestr =  M.util.get_string('closebuttontitle', 'moodle');
+            var closestr = M.util.get_string('closebuttontitle', 'moodle');
             if (!$(id).length) {
                 $('#snap-coverimagecontrol').before(
-                    '<div id="'+id+'" class="snap-alert-cover-image alert alert-warning" role="alert">' +
+                    '<div id="' + id + '" class="snap-alert-cover-image alert alert-warning" role="alert">' +
                     msg +
-                    '<button type="button" class="close" data-dismiss="alert" aria-label="'+closestr+'">' +
+                    '<button type="button" class="close" data-dismiss="alert" aria-label="' + closestr + '">' +
                     '<span aria-hidden="true">&times;</span>' +
                     '</button>' +
                     '</div>'
@@ -40,12 +40,12 @@ define(['jquery', 'core/log', 'core/ajax', 'core/notification', 'theme_snap/ajax
         /**
          * Get human file size from bytes.
          * http://stackoverflow.com/questions/10420352/converting-file-size-in-bytes-to-human-readable.
-         * @param size
+         * @param {int} size
          * @returns {string}
          */
         var humanFileSize = function(size) {
-            var i = Math.floor( Math.log(size) / Math.log(1024) );
-            return ( size / Math.pow(1024, i) ).toFixed(2) * 1 + ' ' + ['B', 'kB', 'MB', 'GB', 'TB'][i];
+            var i = Math.floor(Math.log(size) / Math.log(1024));
+            return (size / Math.pow(1024, i)).toFixed(2) * 1 + ' ' + ['B', 'kB', 'MB', 'GB', 'TB'][i];
         };
 
         /**
@@ -158,7 +158,7 @@ define(['jquery', 'core/log', 'core/ajax', 'core/notification', 'theme_snap/ajax
                 reader.readAsDataURL(file);
 
             });
-            $('#snap-changecoverimageconfirmation .ok').click(function(){
+            $('#snap-changecoverimageconfirmation .ok').click(function() {
 
                 if ($(this).parent().hasClass('disabled')) {
                     return;
@@ -192,7 +192,7 @@ define(['jquery', 'core/log', 'core/ajax', 'core/notification', 'theme_snap/ajax
                     }
                 ], true, true);
             });
-            $('#snap-changecoverimageconfirmation .cancel').click(function(){
+            $('#snap-changecoverimageconfirmation .cancel').click(function() {
 
                 if ($(this).parent().hasClass('disabled')) {
                     return;
@@ -214,6 +214,7 @@ define(['jquery', 'core/log', 'core/ajax', 'core/notification', 'theme_snap/ajax
         /**
          * Main function
          * @param {string} courseShortName
+         * @param {int} siteMaxBytes
          */
         var courseCoverImage = function(courseShortName, siteMaxBytes) {
             var ajaxParams = {imagefilename: null, imagedata: null, categoryid: null,

@@ -33,7 +33,7 @@ define(['jquery', 'core/ajax', 'core/notification', 'core/log', 'theme_snap/mode
              * @method reloadCourseCardTemplate
              * @param {object} renderable - coursecard renderable
              * @param {jQuery} cardEl - coursecard element
-             * @return promise
+             * @returns {Promise}
              */
             var reloadCourseCardTemplate = function(renderable, cardEl) {
                 var dfd = $.Deferred();
@@ -82,6 +82,7 @@ define(['jquery', 'core/ajax', 'core/notification', 'core/log', 'theme_snap/mode
              *
              * @param {jQuery} cardEl
              * @param {jQuery} cards
+             * @returns {number}
              */
             var getCardIndex = function(cardEl, cards) {
                 if (cards.length === 0) {
@@ -210,13 +211,14 @@ define(['jquery', 'core/ajax', 'core/notification', 'core/log', 'theme_snap/mode
                         }
                     ], true, true)[0].then(function(response) {
                         return reloadCourseCardTemplate(response, cardEl);
-                    }).then(function(){
+                    }).then(function() {
                         M.util.js_complete(jsid);
                     });
                 };
 
+                var jsid;
                 if (favorited === 1) {
-                    var jsid = 'favourite_' + new Date().getTime().toString(16) + (Math.floor(Math.random() * 1000));
+                    jsid = 'favourite_' + new Date().getTime().toString(16) + (Math.floor(Math.random() * 1000));
                     M.util.js_pending(jsid);
                     // Move to favorites.
                     moveCard(cardEl, '#snap-pm-courses-current-cards .coursecard.favorited', '#snap-pm-courses-current-cards', true,
@@ -225,7 +227,7 @@ define(['jquery', 'core/ajax', 'core/notification', 'core/log', 'theme_snap/mode
                         }
                     );
                 } else {
-                    var jsid = 'unfavourite_' + new Date().getTime().toString(16) + (Math.floor(Math.random() * 1000));
+                    jsid = 'unfavourite_' + new Date().getTime().toString(16) + (Math.floor(Math.random() * 1000));
                     M.util.js_pending(jsid);
                     moveOutOfFavorites(cardEl,
                         function() {

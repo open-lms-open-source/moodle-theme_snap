@@ -58,10 +58,11 @@ define(['jquery', 'core/log', 'core/ajax', 'core/str', 'core/templates', 'core/n
                  * @param {string} jsPendingKey
                  * @param {domElement} trigger
                  * @param {string} subSelector
+                 * @returns {boolean}
                  */
                 this.start = function(jsPendingKey, trigger, subSelector) {
                     if (this.ajaxing(jsPendingKey)) {
-                        log.debug('Skipping ajax request for '+jsPendingKey+', AJAX already in progress');
+                        log.debug('Skipping ajax request for ' + jsPendingKey + ', AJAX already in progress');
                         return false;
                     }
                     M.util.js_pending(jsPendingKey);
@@ -78,7 +79,7 @@ define(['jquery', 'core/log', 'core/ajax', 'core/str', 'core/templates', 'core/n
 
                 /**
                  * Is there an AJAX request in progress.
-                 * @param jsPendingKey
+                 * @param {string} jsPendingKey
                  * @returns {boolean}
                  */
                 this.ajaxing = function(jsPendingKey) {
@@ -87,11 +88,13 @@ define(['jquery', 'core/log', 'core/ajax', 'core/str', 'core/templates', 'core/n
 
                 /**
                  * Completes tracking.
+                 * @param {string} jsPendingKey
                  */
                 this.complete = function(jsPendingKey) {
+                    var trigger, subSelector;
                     if (triggersByKey[jsPendingKey]) {
-                        var trigger = triggersByKey[jsPendingKey].trigger,
-                            subSelector = triggersByKey[jsPendingKey].subSelector;
+                        trigger = triggersByKey[jsPendingKey].trigger;
+                        subSelector = triggersByKey[jsPendingKey].subSelector;
                     }
                     if (trigger) {
                         if (subSelector) {
@@ -110,7 +113,7 @@ define(['jquery', 'core/log', 'core/ajax', 'core/str', 'core/templates', 'core/n
             /**
              * Get the section number from a section element.
              * @param {jQuery|object} el
-             * @return {integer}
+             * @returns {number}
              */
             var sectionNumber = function(el) {
                 return (parseInt($(el).attr('id').replace('section-', '')));
@@ -119,6 +122,7 @@ define(['jquery', 'core/log', 'core/ajax', 'core/str', 'core/templates', 'core/n
             /**
              * Get the section number for an element within a section.
              * @param {object} el
+             * @returns {number}
              */
             var parentSectionNumber = function(el) {
                 return sectionNumber($(el).parents('li.section.main')[0]);
@@ -160,9 +164,8 @@ define(['jquery', 'core/log', 'core/ajax', 'core/str', 'core/templates', 'core/n
                 var title;
                 if (movingObjects.length === 1) {
                     var assetname = $(movingObjects[0]).find('.snap-asset-link .instancename').html();
-                    assetname = assetname || M.str.label.pluginname;
+                    assetname = assetname || M.util.get_string('pluginname', 'label', assetname);
                     title = M.util.get_string('moving', 'theme_snap', assetname);
-
                 } else {
                     title = M.util.get_string('movingcount', 'theme_snap', movingObjects.length);
                 }
@@ -185,8 +188,8 @@ define(['jquery', 'core/log', 'core/ajax', 'core/str', 'core/templates', 'core/n
              * General move request
              *
              * @param {object}   params
-             * @param {function} onsuccess
-             * @param {bool}     finaltime
+             * @param {function} onSuccess
+             * @param {bool}     finalItem
              */
             var ajaxReqMoveGeneral = function(params, onSuccess, finalItem) {
                 if (ajaxing) {
@@ -454,9 +457,9 @@ define(['jquery', 'core/log', 'core/ajax', 'core/str', 'core/templates', 'core/n
                     }
 
                     var params = {
-                        'action' : action,
-                        'sectionreturn' : 0,
-                        'id' : cmid
+                        'action': action,
+                        'sectionreturn': 0,
+                        'id': cmid
                     };
 
                     ajax.call([
@@ -502,7 +505,7 @@ define(['jquery', 'core/log', 'core/ajax', 'core/str', 'core/templates', 'core/n
                  * Get error strings incase of AJAX failure.
                  * @returns {*|Promise}
                  */
-                var get_error_strings = function() {
+                var getErrorStrings = function() {
                     if (action === 'duplicate') {
                         errActionKey = 'action:duplicateasset';
                         errMessageKey = 'error:failedtoduplicateasset';
@@ -519,7 +522,7 @@ define(['jquery', 'core/log', 'core/ajax', 'core/str', 'core/templates', 'core/n
                     ]);
                 };
 
-                get_error_strings().then(function(strings) {
+                getErrorStrings().then(function(strings) {
                     errAction = strings[0];
                     errMessage = strings[0];
                     if (action === 'delete') {
@@ -668,7 +671,7 @@ define(['jquery', 'core/log', 'core/ajax', 'core/str', 'core/templates', 'core/n
              * Generic section action handler.
              *
              * @param {string} action visibility, highlight
-             * @param {null|function} callback for when completed.
+             * @param {null|function} onComplete for when completed.
              */
             var sectionActionListener = function(action, onComplete) {
 
@@ -701,11 +704,12 @@ define(['jquery', 'core/log', 'core/ajax', 'core/str', 'core/templates', 'core/n
                     }
 
                     // For toggling visibility.
-                    if(action === 'visibility') {
-                        var toggle = $(this).hasClass('snap-hide') ? 0 : 1;
+                    var toggle;
+                    if (action === 'visibility') {
+                        toggle = $(this).hasClass('snap-hide') ? 0 : 1;
                     } else {
                         // For toggling highlight/mark as current.
-                        var toggle = $(this).attr('aria-pressed') === 'true' ? 0 : 1;
+                        toggle = $(this).attr('aria-pressed') === 'true' ? 0 : 1;
                     }
 
                     var sectionNumber = parentSectionNumber(this);
@@ -754,9 +758,9 @@ define(['jquery', 'core/log', 'core/ajax', 'core/str', 'core/templates', 'core/n
                         }).then(function(result) {
                             $('#course-toc').html($(result).html());
                             $(document).trigger('snapTOCReplaced');
-                            if (onComplete && typeof(onComplete) === 'function') {
+                            if (onComplete && typeof (onComplete) === 'function') {
                                 var completion = onComplete(sectionNumber, toggle);
-                                if (completion && typeof(completion.always) === 'function') {
+                                if (completion && typeof (completion.always) === 'function') {
                                     // Callback returns a promise, js no longer running.
                                     completion.always(
                                         function() {
@@ -793,7 +797,7 @@ define(['jquery', 'core/log', 'core/ajax', 'core/str', 'core/templates', 'core/n
                     $notCurrent.each(function() {
                         var highlighter = $(this).find('.snap-highlight');
                         var sectionNumber = parentSectionNumber(highlighter);
-                        var newLink = $(highlighter).attr('href').replace(/(marker=)[0-9]+/ig, '$1' +sectionNumber);
+                        var newLink = $(highlighter).attr('href').replace(/(marker=)[0-9]+/ig, '$1' + sectionNumber);
                         $(highlighter).attr('href', newLink).attr('aria-pressed', 'false');
                     });
                 });
@@ -814,9 +818,9 @@ define(['jquery', 'core/log', 'core/ajax', 'core/str', 'core/templates', 'core/n
             var toggleSectionListener = function() {
                 /**
                  * Toggle hidden class and update section navigation.
-                 * @param sectionNumber
-                 * @param toggle
-                 * @returns {promise}
+                 * @param {number} sectionNumber
+                 * @param {boolean} toggle
+                 * @returns {Promise}
                  */
                 var manageHiddenClass = function(sectionNumber, toggle) {
                     if (toggle === 0) {
@@ -832,7 +836,6 @@ define(['jquery', 'core/log', 'core/ajax', 'core/str', 'core/templates', 'core/n
                     ];
                     var selector = selectors.join(',');
                     return updateSectionNavigation(selector);
-
                 };
                 sectionActionListener('visibility', manageHiddenClass);
             };
@@ -1013,9 +1016,11 @@ define(['jquery', 'core/log', 'core/ajax', 'core/str', 'core/templates', 'core/n
             var overrideCore = function() {
                 // Check M.course exists (doesn't exist in social format).
                 if (M.course && M.course.resource_toolbox) {
+                    /* eslint-disable camelcase */
                     M.course.resource_toolbox.handle_resource_dim = function(button, activity, action) {
                         return (action === 'hide') ? 0 : 1;
                     };
+                    /* eslint-enable camelcase */
                 }
             };
 

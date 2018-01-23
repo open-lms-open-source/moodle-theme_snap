@@ -143,7 +143,7 @@ class shared extends \renderer_base {
         $json = json_encode($handler->get_js_data());
         $script = <<<EOF
             <script>
-                var theme_snap_course_file_handlers = $json;
+                var themeSnapCourseFileHandlers = $json;
             </script>
 EOF;
 

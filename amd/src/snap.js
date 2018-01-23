@@ -31,7 +31,9 @@ define(['jquery', 'core/log', 'theme_snap/headroom', 'theme_snap/util', 'theme_s
 
         'use strict';
 
+        /* eslint-disable camelcase */
         M.theme_snap = M.theme_snap || {};
+        /* eslint-enable camelcase */
 
         /**
          * master switch for logging
@@ -47,7 +49,8 @@ define(['jquery', 'core/log', 'theme_snap/headroom', 'theme_snap/util', 'theme_s
 
         /**
          * Get all url parameters from href
-         * @param href
+         * @param {string} href
+         * @returns {Array}
          */
         var getURLParams = function(href) {
             // Create temporary array from href.
@@ -80,7 +83,6 @@ define(['jquery', 'core/log', 'theme_snap/headroom', 'theme_snap/util', 'theme_s
          *
          * @author Guy Thomas
          * @date 2014-05-19
-         * @return void
          */
         var movePHPErrorsToHeader = function() {
             // Remove <br> tags inserted before xdebug-error.
@@ -120,6 +122,7 @@ define(['jquery', 'core/log', 'theme_snap/headroom', 'theme_snap/util', 'theme_s
          * Are we on the course page?
          * Note: This doesn't mean that we are in a course - Being in a course could mean that you are on a module page.
          * This means that you are actually on the course page.
+         * @returns {boolean}
          */
         var onCoursePage = function() {
             return $('body').attr('id').indexOf('page-course-view-') === 0;
@@ -128,10 +131,12 @@ define(['jquery', 'core/log', 'theme_snap/headroom', 'theme_snap/util', 'theme_s
         /**
          * Apply block hash to form actions etc if necessary.
          */
+        /* eslint-disable no-invalid-this */
         var applyBlockHash = function() {
             // Add block hash to add block form.
             if (onCoursePage()) {
                 $('.block_adminblock form').each(function() {
+                    /* eslint-disable no-invalid-this */
                     $(this).attr('action', $(this).attr('action') + '#coursetools');
                 });
             }
@@ -185,7 +190,6 @@ define(['jquery', 'core/log', 'theme_snap/headroom', 'theme_snap/util', 'theme_s
          *
          * @author Guy Thomas
          * @date 2014-05-20
-         * @return void
          */
         var setForumStrings = function() {
             $('.path-mod-forum tr.discussion td.topic.starter').attr('data-cellname',
@@ -204,7 +208,7 @@ define(['jquery', 'core/log', 'theme_snap/headroom', 'theme_snap/util', 'theme_s
          * Process toc search string - trim, remove case sensitivity etc.
          *
          * @author Guy Thomas
-         * @param string searchString
+         * @param {string} searchString
          * @returns {string}
          */
         var processSearchString = function(searchString) {
@@ -262,6 +266,7 @@ define(['jquery', 'core/log', 'theme_snap/headroom', 'theme_snap/util', 'theme_s
 
         /**
          * Listen for hash changes / popstates.
+         * @param {CourseLibAmd} courseLib
          */
         var listenHashChange = function(courseLib) {
             var lastHash = location.hash;
@@ -291,7 +296,7 @@ define(['jquery', 'core/log', 'theme_snap/headroom', 'theme_snap/util', 'theme_s
                 $(this).appendTo($(this).prev());
             });
             $('#snap-course-footer-recent-activity .head .name').each(function() {
-                $(this).prependTo($(this).closest( ".head" ));
+                $(this).prependTo($(this).closest(".head"));
             });
         };
 
@@ -318,11 +323,10 @@ define(['jquery', 'core/log', 'theme_snap/headroom', 'theme_snap/util', 'theme_s
                 } else {
                   if ($(this).attr('value') < 50) {
                       endColor = '#FF9800'; // @brand-warning orange.
-                  }
-                  else {
+                  } else {
                       endColor = '#8BC34A'; // green @brand-success.
                   }
-                  circle.setText($(this).attr('value') +'<small>%</small>');
+                  circle.setText($(this).attr('value') + '<small>%</small>');
                 }
 
                 circle.animate(value, {
@@ -500,8 +504,9 @@ define(['jquery', 'core/log', 'theme_snap/headroom', 'theme_snap/util', 'theme_s
              * @param {bool} pageHasCourseContent
              * @param {int} siteMaxBytes
              * @param {bool} forcePassChange
-             * @param {bool} conversationBadgeCountEnabled
+             * @param {bool} messageBadgeCountEnabled
              * @param {int} userId
+             * @param {bool} sitePolicyAcceptReqd
              */
             snapInit: function(courseConfig, pageHasCourseContent, siteMaxBytes, forcePassChange,
                                messageBadgeCountEnabled, userId, sitePolicyAcceptReqd) {
@@ -529,6 +534,7 @@ define(['jquery', 'core/log', 'theme_snap/headroom', 'theme_snap/util', 'theme_s
                 }
 
                 // When document has loaded.
+                /* eslint-disable complexity */
                 $(document).ready(function() {
                     movePHPErrorsToHeader(); // boring
                     setForumStrings(); // whatever
@@ -592,14 +598,14 @@ define(['jquery', 'core/log', 'theme_snap/headroom', 'theme_snap/util', 'theme_s
                         }
                     }
 
-                    var mod_settings_id_re = /^page-mod-.*-mod$/; // e.g. #page-mod-resource-mod or #page-mod-forum-mod
-                    var on_mod_settings = mod_settings_id_re.test($('body').attr('id')) && location.href.indexOf("modedit") > -1;
-                    var on_course_settings = $('body').attr('id') === 'page-course-edit';
-                    var on_section_settings = $('body').attr('id') === 'page-course-editsection';
-                    var page_blacklist = ['page-mod-hvp-mod'];
-                    var page_not_in_blacklist = page_blacklist.indexOf($('body').attr('id')) === -1;
+                    var modSettingsIdRe = /^page-mod-.*-mod$/; // e.g. #page-mod-resource-mod or #page-mod-forum-mod
+                    var onModSettings = modSettingsIdRe.test($('body').attr('id')) && location.href.indexOf("modedit") > -1;
+                    var onCourseSettings = $('body').attr('id') === 'page-course-edit';
+                    var onSectionSettings = $('body').attr('id') === 'page-course-editsection';
+                    var pageBlacklist = ['page-mod-hvp-mod'];
+                    var pageNotInBlacklist = pageBlacklist.indexOf($('body').attr('id')) === -1;
 
-                    if ((on_mod_settings || on_course_settings || on_section_settings) && page_not_in_blacklist) {
+                    if ((onModSettings || onCourseSettings || onSectionSettings) && pageNotInBlacklist) {
                         // Wrap advanced options in a div
                         var vital = [
                             ':first',
@@ -625,32 +631,32 @@ define(['jquery', 'core/log', 'theme_snap/headroom', 'theme_snap/util', 'theme_s
                         }
 
                         // Sanitize required input into a single fieldset
-                        var main_form = $("#mform1 fieldset:first");
-                        var append_to = $("#mform1 fieldset:first .fcontainer");
+                        var mainForm = $("#mform1 fieldset:first");
+                        var appendTo = $("#mform1 fieldset:first .fcontainer");
 
                         var required = $("#mform1 > fieldset").not("#mform1 > fieldset:first");
                         for (var i = 0; i < required.length; i++) {
                             var content = $(required[i]).find('.fcontainer');
-                            $(append_to).append(content);
+                            $(appendTo).append(content);
                             $(required[i]).remove();
                         }
-                        $(main_form).wrap('<div class="snap-form-required col-md-8" />');
+                        $(mainForm).wrap('<div class="snap-form-required col-md-8" />');
 
                         var description = $("#mform1 fieldset:first .fitem_feditor:not(.required)");
 
-                        if (on_mod_settings && description) {
+                        if (onModSettings && description) {
                             var editingassignment = $('body').attr('id') == 'page-mod-assign-mod';
                             var editingchoice = $('body').attr('id') == 'page-mod-choice-mod';
                             var editingturnitin = $('body').attr('id') == 'page-mod-turnitintool-mod';
                             var editingworkshop = $('body').attr('id') == 'page-mod-workshop-mod';
                             if (!editingchoice && !editingassignment && !editingturnitin && !editingworkshop) {
-                                $(append_to).append(description);
-                                $(append_to).append($('#fitem_id_showdescription'));
+                                $(appendTo).append(description);
+                                $(appendTo).append($('#fitem_id_showdescription'));
                             }
                         }
 
                         // Resources - put description in common mod settings.
-                        var description = $("#page-mod-resource-mod [data-fieldtype='editor']").closest('.form-group');
+                        description = $("#page-mod-resource-mod [data-fieldtype='editor']").closest('.form-group');
                         var showdescription = $("#page-mod-resource-mod [id='id_showdescription']").closest('.form-group');
                         $("#page-mod-resource-mod .snap-form-advanced #id_modstandardelshdr .fcontainer").append(description);
                         $("#page-mod-resource-mod .snap-form-advanced #id_modstandardelshdr .fcontainer").append(showdescription);
@@ -688,11 +694,11 @@ define(['jquery', 'core/log', 'theme_snap/headroom', 'theme_snap/util', 'theme_s
 
                         // Add save buttons.
                         var savebuttons = $("#mform1 > .form-group:last");
-                        $(main_form).append(savebuttons);
+                        $(mainForm).append(savebuttons);
 
                         // Expand collapsed fieldsets when editing a mod that has errors in it.
                         var errorElements = $('.form-group.has-danger');
-                        if (on_mod_settings && errorElements.length) {
+                        if (onModSettings && errorElements.length) {
                             errorElements.closest('.collapsible').removeClass('collapsed');
                         }
                     }
