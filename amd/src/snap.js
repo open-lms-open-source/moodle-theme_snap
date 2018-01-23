@@ -689,6 +689,12 @@ define(['jquery', 'core/log', 'theme_snap/headroom', 'theme_snap/util', 'theme_s
                         // Add save buttons.
                         var savebuttons = $("#mform1 > .form-group:last");
                         $(main_form).append(savebuttons);
+
+                        // Expand collapsed fieldsets when editing a mod that has errors in it.
+                        var errorElements = $('.form-group.has-danger');
+                        if (on_mod_settings && errorElements.length) {
+                            errorElements.closest('.collapsible').removeClass('collapsed');
+                        }
                     }
 
                     // Conversation counter for user badge.
