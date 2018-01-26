@@ -3631,3 +3631,8 @@ body.pagelayout-frontpage {
     clip: auto;
     border: initial;
 }
+
+// Hides 'Blocks editing on' button in all the plagiarism settings pages.
+.path-admin-plagiarism .singlebutton {
+    display: none;
+}
