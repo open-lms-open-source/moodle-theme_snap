@@ -176,7 +176,7 @@ class behat_theme_snap_behat_general extends behat_general {
 
     public function assert_page_not_contains_text($text) {
         $nodes = $this->get_nodes_containing_text($text);
-        if (empty($nodes)) {
+        if (empty($nodes) || $this->recheck_for_nodes_not_containing_text(10, $text)) {
             // No nodes found so no text found!
             return;
         }
@@ -252,7 +252,7 @@ class behat_theme_snap_behat_general extends behat_general {
         // Getting the container where the text should be found.
         $container = $this->get_selected_node($selectortype, $element);
         $nodes = $this->get_nodes_containing_text($text, $container);
-        if (empty($nodes)) {
+        if (empty($nodes) || $this->recheck_for_nodes_not_containing_text(10, $text, $container)) {
             // No nodes found so no text found!
             return;
         }
@@ -278,6 +278,21 @@ class behat_theme_snap_behat_general extends behat_general {
                 return;
             }
             $this->check_text_not_visible_in_nodes($nodes, $text, $element, $selectortype);
+        }
+    }
+
+    public function recheck_for_nodes_not_containing_text($times, $text, $container = false) {
+        $this->wait_for_pending_js();
+        sleep(2);
+        $nodes = $this->get_nodes_containing_text($text, $container);
+        if (!empty($nodes)) {
+            if ($times > 0) {
+                return $this->recheck_for_nodes_not_containing_text($times - 1, $text, $container);
+            } else {
+                return false;
+            }
+        } else {
+            return true;
         }
     }
 }
