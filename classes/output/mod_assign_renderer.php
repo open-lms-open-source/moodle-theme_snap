@@ -202,7 +202,7 @@ class mod_assign_renderer extends \mod_assign_renderer {
         // Grade button.
         $urlparams = array('id' => $summary->coursemoduleid, 'action' => 'grader');
         $url = new moodle_url('/mod/assign/view.php', $urlparams);
-        $o .= '<a href="'.$url.'" role="button" class="btn btn-inverse">'.get_string('grade').'</a>';
+        $o .= '<a href="'.$url.'" role="button" class="btn btn-primary">'.get_string('grade').'</a>';
         // Close assign-grading-summary.
         $o .= '</div>';
         return $o;
@@ -407,11 +407,11 @@ class mod_assign_renderer extends \mod_assign_renderer {
                     $urlparams = array('id' => $status->coursemoduleid, 'action' => 'editsubmission');
                     $url = new moodle_url('/mod/assign/view.php', $urlparams);
                     if (!$submission || $submission->status == ASSIGN_SUBMISSION_STATUS_NEW) {
-                        $submissiondata .= '<a href="'.$url.'" role="button" class="btn btn-inverse">'
+                        $submissiondata .= '<a href="'.$url.'" role="button" class="btn btn-primary">'
                             .get_string('addsubmission', 'assign').'</a>';
                     } else if ($submission->status == ASSIGN_SUBMISSION_STATUS_REOPENED) {
                         $submissiondata .= '<div>'.get_string('addnewattempt_help', 'assign').'</div>';
-                        $submissiondata .= '<a href="'.$url.'" role="button" class="btn btn-inverse">'
+                        $submissiondata .= '<a href="'.$url.'" role="button" class="btn btn-primary">'
                             .get_string('addnewattempt', 'assign').'</a>';
 
                         $submissiondata .= '<div>'.get_string('addnewattemptfromprevious_help', 'assign').'</div>';
@@ -419,10 +419,10 @@ class mod_assign_renderer extends \mod_assign_renderer {
                                            'action' => 'editprevioussubmission',
                                            'sesskey' => sesskey());
                         $url = new moodle_url('/mod/assign/view.php', $urlparams);
-                        $submissiondata .= '<a href="'.$url.'" role="button" class="btn btn-inverse">'
+                        $submissiondata .= '<a href="'.$url.'" role="button" class="btn btn-primary">'
                             .get_string('addnewattemptfromprevious', 'assign').'</a>';
                     } else {
-                        $submissiondata .= '<a href="'.$url.'" role="button" class="btn btn-inverse">'
+                        $submissiondata .= '<a href="'.$url.'" role="button" class="btn btn-primary">'
                             .get_string('editsubmission', 'assign').'</a>';
                     }
                 }
@@ -431,7 +431,7 @@ class mod_assign_renderer extends \mod_assign_renderer {
                     $submissiondata .= '<div>'.get_string('submitassignment_help', 'assign').'</div>';
                     $urlparams = array('id' => $status->coursemoduleid, 'action' => 'submit');
                     $url = new moodle_url('/mod/assign/view.php', $urlparams);
-                    $submissiondata .= '<a href="'.$url.'" role="button" class="btn btn-inverse">'
+                    $submissiondata .= '<a href="'.$url.'" role="button" class="btn btn-primary">'
                         .get_string('submitassignment', 'assign').'</a>';
                 }
             }

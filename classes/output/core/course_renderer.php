@@ -724,7 +724,7 @@ class course_renderer extends \core_course_renderer {
             }
         }
         $contentloaded = !$lazyload ? 1 : 0;
-        $pslinkclass = 'btn btn-default pagemod-readmore';
+        $pslinkclass = 'btn btn-secondary pagemod-readmore';
         $pmcontextattribute = 'data-pagemodcontext="'.$mod->context->id.'"';
 
         $o = "
@@ -1080,7 +1080,7 @@ class course_renderer extends \core_course_renderer {
             } else {
                 $url = new moodle_url('/course/edit.php', ['category' => $CFG->defaultrequestcategory, 'returnto' => 'topcat']);
             }
-            $output .= '<div class="text-center"><a class="btn btn-default" href="'.$url.'">'.
+            $output .= '<div class="text-center"><a class="btn btn-secondary" href="'.$url.'">'.
                 get_string('addnewcourse', 'moodle').'</a></div>';
         }
 
@@ -1142,7 +1142,7 @@ class course_renderer extends \core_course_renderer {
             if (empty($courseteachers)) {
                 $courseteachers = "<h5>".get_string('coursecontacts', 'theme_snap')."</h5>";
             }
-            $courseteachers .= '<br><a class="btn btn-default btn-sm" href="'.$CFG->wwwroot.'/enrol/users.php?id='.
+            $courseteachers .= '<br><a class="btn btn-outline-secondary btn-sm" href="'.$CFG->wwwroot.'/enrol/users.php?id='.
                 $COURSE->id.'">'.get_string('enrolledusers', 'enrol').'</a>';
         }
 
@@ -1164,7 +1164,7 @@ class course_renderer extends \core_course_renderer {
             if (empty($coursesummary)) {
                 $coursesummary = '<h5>'.get_string('aboutcourse', 'theme_snap').'</h5>';
             }
-            $coursesummary .= '<br><a class="btn btn-default btn-sm" href="'.$CFG->wwwroot.'/course/edit.php?id='.
+            $coursesummary .= '<br><a class="btn btn-outline-secondary btn-sm" href="'.$CFG->wwwroot.'/course/edit.php?id='.
                 $COURSE->id.'#id_descriptionhdr">'.get_string('editsummary').'</a>';
         }
 

@@ -49,7 +49,6 @@ body.snap-pm-open {
 //  Personal menu header.
 // -------------------------
 #snap-pm-header {
-    background-color: $brand-primary;
     padding: 2%;
     color: white;
 
@@ -57,7 +56,6 @@ body.snap-pm-open {
         float: left;
         width: 5em;
         margin-right: 2%;
-        box-shadow: 0 0 5em lighten($brand-primary, 8%);
     }
 
     h1,
@@ -232,10 +230,6 @@ body.snap-pm-open {
             &.state-active {
                 transform: scale(1.5);
                 margin-top: -.5em;
-
-                .svg-icon {
-                    border: 2px solid $brand-primary;
-                }
             }
         }
     }
@@ -245,9 +239,6 @@ body.snap-pm-open {
 //  Personal menu current courses.
 // -------------------------
 #snap-pm-courses-current {
-    #snap-pm-courses-current-cards {
-        margin-top: 2em;
-    }
     // Hidden courses - always output for js, but hidden unless populated.
     #snap-pm-courses-hidden {
         display: none;
@@ -281,7 +272,6 @@ body.snap-pm-open {
     cursor: pointer;
     position: relative;
     overflow: hidden;
-    background-color: $brand-primary;
     @include bg-cover;
     @include alakazam();
 

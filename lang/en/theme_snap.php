@@ -104,7 +104,7 @@ $string['deletingassetname'] = 'Deleting {$a->type} "{$a->name}"';
 $string['deletesectionconfirm'] = 'Delete Section';
 $string['deletingsection'] = 'Deleting section "{$a}"';
 $string['draft'] = 'Not published to students';
-$string['dropzonelabel'] = 'Drop files to attach, or <span class="btn-link">browse</span>';
+$string['dropzonelabel'] = 'Drop files to attach, or <span class="fake-link">browse</span>';
 $string['due'] = 'Due {$a}';
 $string['edit'] = 'Edit "{$a}"';
 $string['editcoursecontent'] = 'Edit blocks';

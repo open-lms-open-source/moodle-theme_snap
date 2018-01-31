@@ -120,16 +120,10 @@
         width: 4rem;
         border-radius: 100%;
         border-color: transparent;
-        background-color: rgba($brand-primary, .7);
-
-        &:focus {
-            background-color: $brand-primary;
-        }
     }
 
     &:hover {
         .vjs-big-play-button {
-            background-color: $brand-primary;
             border-color: transparent;
         }
     }

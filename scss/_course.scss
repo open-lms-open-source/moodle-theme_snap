@@ -119,22 +119,14 @@ section#region-main
         &:focus {
             background-color: #eee;
         }
-        .progressbar-text:hover{
-                text-decoration: underline;
+        .progressbar-text:hover {
+            text-decoration: underline;
         }
     }
 
-    .progressbar-text{
+    .progressbar-text {
         font-size: 1.3em;
         font-family: $font-family-system;
-        a,
-        a:visited {
-         color: $brand-primary;
-        }
-        a:focus,
-        a:hover {
-            color: darken($brand-primary, 8%);
-        }
     }
 }
 
@@ -157,7 +149,7 @@ section#region-main
         font-size: 1em;
         text-align: center;
         border: 1px solid #eee;
-        border-radius: 4px;
+        border-radius: $btn-border-radius;
 
         .snap-participant-icons,
         img.svg-icon {
@@ -392,11 +384,15 @@ li.section:focus {
         background-size: 2rem 2rem;
         padding: 3em 0 1em 0;
         border: 3px dashed #eee;
-        border-radius: 4px;
+        border-radius: $btn-border-radius;
 
         &:hover,
         &:focus {
             border-color: $gray-lighter;
+
+            .fake-link {
+                text-decoration: underline;
+            }
         }
     }
 }
@@ -627,6 +623,8 @@ body.format-flexpage .singlebutton {
 
             // The link itself.
             a {
+                color: $body-color;
+
                 &:hover,
                 &:focus {
                     text-decoration: none;
@@ -729,20 +727,6 @@ body.format-flexpage .singlebutton {
         .summary-figure {
             display: none;
         }
-    }
-}
-
-//------------------------------
-// Class to render core filters
-//------------------------------
-.section li.snap-native-image {
-
-    @extend .section li.snap-native;
-
-    .snap-resource-figure-caption,
-    img.activityicon,
-    .snap-assettype {
-        display: none;
     }
 }
 
@@ -1195,7 +1179,7 @@ body.snap-resource-card li.snap-resource {
 .snap-asset {
     &.draft,
     &.stealth {
-    border-top-color: #eee !important;
+        border-top-color: #eee !important;
         // Options to hide/show in the dropdown.
         .editing_hide {
             display: none;
@@ -1216,7 +1200,7 @@ body.snap-resource-card li.snap-resource {
 
     // Draft assets inside hidden section....
     .snap-asset.draft .activityinstance {
-            opacity: 1;
+        opacity: 1;
     }
 }
 
@@ -1697,12 +1681,12 @@ span.editinstructions {
 // Moving things in snap
 // -------------------------
 @keyframes fadeup {
-   0%{
-       opacity:0.1;
-   }
-   100%{
-       opacity:1;
-   }
+    0%{
+        opacity:0.1;
+    }
+    100%{
+        opacity:1;
+    }
 }
 .path-course-view {
     li.state-visible,
@@ -1754,7 +1738,7 @@ span.editinstructions {
         display: block;
 
         &:hover {
-          border-color: $state-success-text;
+            border-color: $state-success-text;
         }
     }
 }
@@ -1829,7 +1813,7 @@ span.editinstructions {
     .snap-section-editing,
     .snap-modchooser,
     .snap-dropzone {
-      display:none !important;
+        display:none !important;
     }
 
     &.snap-move-section {
@@ -1861,37 +1845,37 @@ span.editinstructions {
 // Show when moving
 // Asset dropzones.
 .snap-move-asset {
-      .snap-asset:not(.asset-moving) {
-          border: 2px dashed $gray-light;
-      }
+    .snap-asset:not(.asset-moving) {
+        border: 2px dashed $gray-light;
+    }
 
-      .snap-resource:not(.asset-moving) {
-          border: 2px dashed white;
-      }
+    .snap-resource:not(.asset-moving) {
+        border: 2px dashed white;
+    }
 
-      .snap-asset:not(.asset-moving) .snap-move-note {
-          position: absolute;
-          top: 0;
-          bottom: 0;
-          left: 0;
-          right: 0;
-          background-color: rgba(255,255,255,0.7);
-          cursor: pointer;
-          text-align: center;
-          padding: 1em;
-          display: block;
-      }
+    .snap-asset:not(.asset-moving) .snap-move-note {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background-color: rgba(255,255,255,0.7);
+        cursor: pointer;
+        text-align: center;
+        padding: 1em;
+        display: block;
+    }
 
-      .snap-drop.asset-drop {
-          display: block;
-          clear: both;
-          border: 2px dashed $gray-light;
-          font-size: 2em;
-          font-color: $gray;
-          font-family: $font-family-system;
-          text-align: center;
-          cursor: pointer;
-      }
+    .snap-drop.asset-drop {
+        display: block;
+        clear: both;
+        border: 2px dashed $gray-light;
+        font-size: 2em;
+        font-color: $gray;
+        font-family: $font-family-system;
+        text-align: center;
+        cursor: pointer;
+    }
 }
 
 #snap-light-box {
@@ -1921,7 +1905,7 @@ span.editinstructions {
     }
 
     .resourcecontent audio {
-       margin: 1em auto;
+        margin: 1em auto;
     }
 }
 
@@ -1931,10 +1915,10 @@ span.editinstructions {
 }
 
 @include media-breakpoint-up(md) {
-  .snap-lightbox-description {
-      overflow-y: auto;
-      max-height: 80vh;
-  }
+    .snap-lightbox-description {
+        overflow-y: auto;
+        max-height: 80vh;
+    }
 }
 
 // Adding support for bootstrap 4 progress bar.

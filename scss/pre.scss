@@ -31,7 +31,6 @@ $font-size-xs:   .6rem;
 
 // This needs some investigation of issues around IE11 and Moodle's autoprefixer implementaion.
 //$enable-flex:               true;
-$enable-rounded:        false;
 
 $brand-primary:         #ff7f41 !default;
 $brand-success:         #8BC34A;
@@ -75,6 +74,21 @@ $state-danger-border:            fade-out($brand-danger, 0.9);
 $footer-color-bg:                #f1f0ee;
 
 $user-content-max-width:         43.5em;
+
+// -------------------------
+// Button customisations
+// -------------------------
+
+$btn-secondary-color:           $brand-primary;
+$btn-secondary-border:          $brand-primary;
+
+$border-radius:          0;
+$border-radius-lg:       0;
+$border-radius-sm:       0;
+
+$btn-border-radius:          .25rem;
+$btn-border-radius-lg:       .3rem;
+$btn-border-radius-sm:       .2rem;
 
 // -------------------------
 // Colour variables for resources and activities.

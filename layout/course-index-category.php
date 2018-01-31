@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Layout - course-index-catagory.
+ * Layout - course-index-category.
  *
  * @package   theme_snap
  * @copyright Copyright (c) 2017 Blackboard Inc.
@@ -62,7 +62,7 @@ if (!empty($coverimagecss)) {
                     $editcatagory = '';
                     if (can_edit_in_category($catid)) {
                         $editurl = new moodle_url('/course/editcategory.php', ['id' => $catid]);
-                        $editcatagory = '<div><a href=" '.$editurl.' " class="btn btn-default btn-sm">'
+                        $editcatagory = '<div><a href=" '.$editurl.' " class="btn btn-secondary btn-sm">'
                                 .get_string('categoryedit', 'theme_snap').'</a></div>';
                     }
 
@@ -98,7 +98,7 @@ if (!empty($coverimagecss)) {
         <section id="region-main">
             <?php
             if ($manageurl) {
-                echo '<p><a class="btn btn-default btn-sm" href="' . $manageurl . '">';
+                echo '<p><a class="btn btn-secondary btn-sm" href="' . $manageurl . '">';
                 echo get_string('managecourses', 'moodle') . '</a></p>';
             }
             echo $OUTPUT->main_content();

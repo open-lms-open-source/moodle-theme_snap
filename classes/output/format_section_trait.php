@@ -503,6 +503,7 @@ trait format_section_trait {
         $output .= '</div>';
         $output .= html_writer::empty_tag('input', array(
             'type' => 'submit',
+            'class' => 'btn btn-primary',
             'name' => 'addtopic',
             'value' => get_string('createsection', 'theme_snap'),
         ));

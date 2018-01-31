@@ -46,6 +46,8 @@ function theme_snap_process_site_coverimage() {
  */
 function theme_snap_process_css($css, theme_config $theme) {
 
+    $css = theme_snap_set_category_colors($css);
+
     // Set the background image for the logo.
     $logo = $theme->setting_file_url('logo', 'logo');
     $css = theme_snap_set_logo($css, $logo);
@@ -58,6 +60,64 @@ function theme_snap_process_css($css, theme_config $theme) {
     }
     $css = theme_snap_set_customcss($css, $customcss);
 
+    return $css;
+}
+
+/**
+ * Adds the custom category colors to the CSS.
+ *
+ * @param string $css The CSS.
+ * @return string The updated CSS
+ */
+function theme_snap_set_category_colors($css) {
+    global $DB;
+
+    $tag = '/**setting:categorycolors**/';
+    $replacement = '';
+
+    // Get category colors from database.
+    $categorycolors = array();
+    $dbcategorycolors = get_config("theme_snap", "category_color");
+    if (!empty($dbcategorycolors) && $dbcategorycolors != '0') {
+        $categorycolors = json_decode($dbcategorycolors, true);
+    }
+
+    if (!empty($categorycolors)) {
+        $colors = $categorycolors;
+
+        list($insql, $inparams) = $DB->get_in_or_equal(array_keys($colors));
+        $categories = $DB->get_records_select(
+            'course_categories',
+            'id ' . $insql,
+            $inparams,
+            // Ordered by path ascending so that the colors of child categories overrides,
+            // parent categories by coming later in the CSS output.
+            'path ASC'
+        );
+
+        $themedirectory = realpath(core_component::get_component_directory('theme_snap'));
+        $brandscss = file_get_contents($themedirectory . '/scss/_brandcolor.scss');
+        foreach ($categories as $category) {
+            $compiler = new core_scss();
+            // Rewrite wrapper class with current category id.
+            $categoryselector = '.category-' . $category->id . ' {';
+            $scss = str_replace('.theme-snap {', $categoryselector, $brandscss);
+            $compiler->append_raw_scss($scss);
+            $compiler->add_variables([
+                'brand-primary' => $colors[$category->id]
+            ]);
+
+            try {
+                $compiled = $compiler->to_css();
+            } catch (\Leafo\ScssPhp\Exception $e) {
+                $compiled = '';
+                debugging('Error while compiling SCSS: ' . $e->getMessage(), DEBUG_DEVELOPER);
+            }
+            $replacement = $replacement . $compiled;
+        }
+    }
+
+    $css = str_replace($tag, $replacement, $css);
     return $css;
 }
 

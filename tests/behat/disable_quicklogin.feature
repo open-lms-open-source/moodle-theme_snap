@@ -32,10 +32,10 @@ Feature: Disable Snap quick login
       | theme_snap_disablequicklogin | 1 |
     And I am on homepage
     And I wait until the page is ready
-    Then ".btn.btn-default.snap-login-button.js-snap-pm-trigger" "css_element" should not exist
+    Then ".btn.btn-primary.snap-login-button.js-snap-pm-trigger" "css_element" should not exist
 
   @javascript
   Scenario: Snap quick login is not disabled
     Given I am on homepage
     And I wait until the page is ready
-    Then ".btn.btn-default.snap-login-button.js-snap-pm-trigger" "css_element" should exist
+    Then ".btn.btn-primary.snap-login-button.js-snap-pm-trigger" "css_element" should exist

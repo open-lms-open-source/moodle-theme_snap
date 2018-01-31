@@ -31,6 +31,8 @@ require_once($CFG->dirroot.'/message/output/popup/lib.php');
 use stdClass;
 use context_course;
 use context_system;
+use coding_exception;
+use single_button;
 use DateTime;
 use html_writer;
 use moodle_url;
@@ -523,12 +525,12 @@ class core_renderer extends \theme_boost\output\core_renderer {
         $loginurl = $CFG->wwwroot.'/login/index.php';
         $loginatts = [
             'aria-haspopup' => 'true',
-            'class' => 'btn btn-default snap-login-button js-snap-pm-trigger',
+            'class' => 'btn btn-primary snap-login-button js-snap-pm-trigger',
         ];
         if (!empty($CFG->alternateloginurl) or !empty($CFG->theme_snap_disablequicklogin)) {
             $loginurl = $CFG->wwwroot.'/login/index.php';
             $loginatts = [
-                'class' => 'btn btn-default snap-login-button',
+                'class' => 'btn btn-primary snap-login-button',
             ];
         }
         // This check is here for the front page login.
@@ -875,7 +877,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
             $url = new moodle_url('/admin/settings.php', ['section' => 'themesettingsnap']);
             $link = html_writer::link($url,
                             get_string('changefullname', 'theme_snap'),
-                            ['class' => 'btn btn-default btn-sm']);
+                            ['class' => 'btn btn-secondary btn-sm']);
             $heading .= $link;
         }
         return $heading;
@@ -999,7 +1001,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
             $name    = format_string($discussion->name, true, array('context' => $context));
             $date    = userdate($discussion->timemodified, get_string('strftimedatetime', 'langconfig'));
 
-            $readmorebtn = "<a class='btn btn-default toggle' href='".
+            $readmorebtn = "<a class='btn btn-secondary toggle' href='".
                 $CFG->wwwroot."/mod/forum/discuss.php?d=".$discussion->discussion."'>".
                 get_string('readmore', 'theme_snap')."</a>";
 
@@ -1036,7 +1038,7 @@ HTML;
         $actionlinks = html_writer::link(
             new moodle_url('/mod/forum/view.php', array('id' => $cm->id)),
             get_string('morenews', 'theme_snap'),
-            array('class' => 'btn btn-default')
+            array('class' => 'btn btn-secondary')
         );
         if (forum_user_can_post_discussion($forum, $currentgroup, $groupmode, $cm, $context)) {
             $actionlinks .= html_writer::link(
@@ -1060,7 +1062,7 @@ HTML;
      * @return array|string
      */
     public function body_css_classes(array $additionalclasses = array()) {
-        global $PAGE, $COURSE, $SESSION;
+        global $PAGE, $COURSE, $SESSION, $CFG;
 
         $classes = parent::body_css_classes($additionalclasses);
         $classes = explode (' ', $classes);
@@ -1119,6 +1121,17 @@ HTML;
         // Add theme-snap class so modules can customise css for snap.
         $classes[] = 'theme-snap';
 
+        if (empty($CFG->allowcategorythemes) && !empty($CFG->prototype_category_colors)) {
+            // This duplicates code triggered by allowcategorythemes, so no
+            // need to repeat it if that setting is on.
+            $catids = array_keys($PAGE->categories);
+            // Immediate parent category is always output by core code.
+            array_shift($catids);
+            foreach ($catids as $catid) {
+                $classes[] = 'category-' . $catid;
+            }
+        }
+
         $classes = implode(' ', $classes);
         return $classes;
     }
@@ -1129,27 +1142,34 @@ HTML;
      * rather than inside them.
      */
     public function confirm($message, $continue, $cancel) {
-        if (is_string($continue)) {
-            $continue = new \single_button(new moodle_url($continue), get_string('continue'), 'post');
+        // We need plain styling of confirm boxes on upgrade because we don't know which stylesheet we have (it could be
+        // from any previous version of Moodle).
+        if ($continue instanceof single_button) {
+            $continue->primary = true;
+        } else if (is_string($continue)) {
+            $continue = new single_button(new moodle_url($continue), get_string('continue'), 'post', true);
         } else if ($continue instanceof moodle_url) {
-            $continue = new \single_button($continue, get_string('continue'), 'post');
-        } else if (!$continue instanceof \single_button) {
-            throw new \coding_exception(
+            $continue = new \single_button($continue, get_string('continue'), 'post', true);
+        } else {
+            throw new coding_exception(
                 'The continue param to $OUTPUT->confirm() must be either a URL (string/moodle_url) or a single_button instance.'
             );
         }
 
-        if (is_string($cancel)) {
-            $cancel = new \single_button(new moodle_url($cancel), get_string('cancel'), 'get');
+        if ($cancel instanceof single_button) {
+            $output = '';
+        } else if (is_string($cancel)) {
+            $cancel = new single_button(new moodle_url($cancel), get_string('cancel'), 'get');
         } else if ($cancel instanceof moodle_url) {
             $cancel = new \single_button($cancel, get_string('cancel'), 'get');
-        } else if (!$cancel instanceof \single_button) {
-            throw new \coding_exception(
+        } else {
+            throw new coding_exception(
                 'The cancel param to $OUTPUT->confirm() must be either a URL (string/moodle_url) or a single_button instance.'
             );
         }
 
         $output = $this->box_start('generalbox snap-continue-cancel', 'notice');
+        $output .= html_writer::tag('h4', get_string('confirm'));
         $output .= html_writer::tag('p', $message);
         $output .= html_writer::tag('div', $this->render($continue) . $this->render($cancel), array('class' => 'buttons'));
         $output .= $this->box_end();

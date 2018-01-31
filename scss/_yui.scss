@@ -53,6 +53,14 @@
 
 .yui-skin-sam,
 .yui-bootstrapped {
+    .yuimenu {
+        a.yuimenuitemlabel {
+            &:hover,
+            &:focus {
+                background-color: $dropdown-link-hover-bg;
+            }
+        }
+    }
     .mask {
         background-color: $modal-backdrop-bg;
         opacity: $modal-backdrop-opacity;

@@ -233,16 +233,6 @@ input[type="checkbox"] {
 
 // TODO - move all atto styles to here
 
-div.editor_atto_wrap {
-    display: flex;
-    flex-direction: column-reverse;
-}
-
-div.editor_atto {
-    display: flex;
-    flex-direction: column-reverse;
-}
-
 div.editor_atto_toolbar {
     background-color: transparent;
     border-color: #eee;
@@ -304,7 +294,7 @@ div.editor_atto_toolbar div.atto_group {
     bottom: 1em;
     .atto_info,
     .atto_warning {
-      border-radius: 0;
+        border-radius: 0;
     }
 }
 
@@ -338,13 +328,12 @@ div.editor_atto_toolbar div.atto_group {
     padding: 1em 0;
     margin: 2em 2%;
     background-color: $gray-lighter;
-    border-left: .25em solid $brand-primary;
 }
 
 #id_cancel {
-    @extend .btn-link;
     font-weight: 300;
     margin-left: 2em;
+    border: none;
 }
 
 #fitem_id_outcomes .yui3-moodle-core_outcome-mapoutcome-content-wrapper ul {
@@ -518,11 +507,11 @@ div.editor_atto_toolbar div.atto_group {
 
 @include media-breakpoint-up(sm) {
     #page-enrol-users #filterform > .fitem {
-            margin-right: 1rem;
-            margin-bottom: 1rem;
+        margin-right: 1rem;
+        margin-bottom: 1rem;
 
-            &:last-child {
-                display: block;
+        &:last-child {
+            display: block;
         }
     }
 }
