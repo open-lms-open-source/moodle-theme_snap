@@ -786,7 +786,7 @@ EOF;
 
         // User grade.
         if (has_capability('gradereport/overview:view', $coursecontext)) {
-            $grade = local::course_grade($COURSE);
+            $grade = local::course_grade($COURSE, true);
             $coursegrade = '-';
             if (isset($grade->coursegrade['percentage'])) {
                 $coursegrade = round($grade->coursegrade['percentage']);
