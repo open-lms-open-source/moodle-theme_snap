@@ -55,7 +55,7 @@
 // -------------------------
 // Tab - Basics.
 // -------------------------
-#page-admin-setting-themesettingsnap {
+#page-admin-setting-themesettingsnap .tab-pane:not(#themesnapcolorcategories) {
 
     #admin-fullname,
     #admin-themecolor,
@@ -116,6 +116,13 @@
         font-family: $font-family-monospace;
     }
 }
+#page-admin-setting-themesettingsnap .tab-pane#themesnapcolorcategories {
+
+    #id_s_theme_snap_category_color {
+        font-family: monospace;
+    }
+}
+
 // -------------------------
 // Tab - Cover display.
 // -------------------------

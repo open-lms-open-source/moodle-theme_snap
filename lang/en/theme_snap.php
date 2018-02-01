@@ -52,6 +52,11 @@ $string['cachedef_course_completion_progress_ts'] = 'This is used so that we can
 $string['cachedef_webservicedefinitions'] = 'Caching for auto generated web service definitions.';
 $string['card'] = 'Card';
 $string['categoryedit'] = 'Edit category';
+$string['category_color'] = 'Category color';
+$string['category_color_description'] = 'Course Category color. Child courses take the nearest parent category configuration';
+$string['category_color_palette'] = 'Color palette';
+$string['category_color_palette_description'] = 'See the corresponding hexadecimal value for the given color. This wont
+affect any configuration, it is just a sample to help users build the configuration value.';
 $string['changecoverimage'] = 'Change cover image';
 $string['changefullname'] = 'Change site name';
 $string['chapters'] = 'Chapters';
@@ -107,6 +112,9 @@ $string['editcoursesettings'] = 'Course settings';
 $string['editcoursetopic'] = 'Edit section';
 $string['editcustomfooter'] = 'Edit footer';
 $string['editcustommenu'] = 'Edit custom menu';
+$string['error:categorycolorinvalidjson'] = 'Incorrect JSON format for course categories';
+$string['error:categorycolorinvalidvalue'] = 'Record id or color value for category "{$a}" aren\'t valid';
+$string['error:categorynotfound'] = 'The category record with id "{$a}" hasn\'t been found';
 $string['error:coverimageexceedsmaxbytes'] = 'Cover image exceeds the site level maximum allowed file size ({$a})';
 $string['error:coverimageresolutionlow'] = 'For best quality, we recommend a larger image of at least 1024px width.';
 $string['error:failedtochangeassetvisibility'] = 'Failed to hide/show asset';
@@ -181,6 +189,16 @@ $string['images'] = 'Images';
 $string['instagram'] = 'Instagram';
 $string['instagramdesc'] = 'The url of your instagram account.';
 $string['introduction'] = 'Introduction';
+$string['jsontext'] = 'JSON Text';
+$string['jsontextdescription'] = 'The text area validates the given JSON, so only existing categories are allowed,
+only numerical values as id records (category records) are valid and only hexadecimal values are accepted as colors.
+Here is an example:<br>
+{"1":"#FAAFFF",<br>
+"45":"#AFF",<br>
+"65":"#FFF228",<br>
+"12":"#CC0084",<br>
+"56":"#CC0087",<br>
+"89":"#CCF084"}';
 $string['knowledgebase'] = 'Moodlerooms Knowledge Base';
 $string['list'] = 'List';
 $string['linkedin'] = 'LinkedIn';
