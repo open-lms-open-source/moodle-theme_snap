@@ -319,7 +319,7 @@ input[type="reset"],
         border-color: $brand-primary;
     }
     &:focus {
-        border-bottom: 1px solid $brand-primary;
+        border: 3px solid $brand-primary;
     }
 }
 
