@@ -82,7 +82,6 @@ a:hover,{
 #admin-menu-trigger {
     &:hover,
     &:focus {
-        outline: 0;
         border-color: $brand-primary;
     }
 }
