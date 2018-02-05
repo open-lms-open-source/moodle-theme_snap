@@ -246,7 +246,7 @@ trait format_section_trait {
             $o .= "<h2 class='sectionname'><a href='$url' title='".s(get_string('editcoursetopic', 'theme_snap'))."'>";
             $o .= get_string('defaulttopictitle', 'theme_snap')."</a></h2>";
         } else {
-            $o .= $output->heading($sectiontitle, 2, 'sectionname' . $classes);
+            $o .= "<div tabindex='0'>" . $output->heading($sectiontitle, 2, 'sectionname' . $classes) . "</div>";
         }
 
         // Section drop zone.
@@ -307,11 +307,13 @@ trait format_section_trait {
 
         // Welcome message when no summary text.
         if (empty($summarytext) && $canupdatecourse) {
-            $summarytext = "<p>".get_string('defaultsummary', 'theme_snap')."</p>";
+            $summarytext = "<p tabindex='0'>".get_string('defaultsummary', 'theme_snap')."</p>";
             if ($section->section == 0) {
                 $editorname = format_string(fullname($USER));
-                $summarytext = "<p>".get_string('defaultintrosummary', 'theme_snap', $editorname)."</p>";
+                $summarytext = "<p tabindex='0'>".get_string('defaultintrosummary', 'theme_snap', $editorname)."</p>";
             }
+        } else {
+            $summarytext = "<div tabindex='0'>" . $summarytext . "</div>";
         }
 
         $o .= $summarytext;
