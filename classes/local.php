@@ -70,9 +70,10 @@ class local {
     /**
      * Does this course have any visible feedback for current user?.
      * @param \stdClass $course
+     * @param bool $oncoursedashboard
      * @return object
      */
-    public static function course_grade($course) {
+    public static function course_grade($course, $oncoursedashboard = false) {
         global $USER;
 
         $failobj = (object) [
@@ -80,7 +81,7 @@ class local {
         ];
 
         $config = get_config('theme_snap');
-        if (empty($config->showcoursegradepersonalmenu)) {
+        if (empty($config->showcoursegradepersonalmenu) && $oncoursedashboard === false) {
             // If not enabled, don't return data.
             return $failobj;
         }
