@@ -64,7 +64,7 @@ class theme_snap_services_course_test extends \advanced_testcase {
 
         // Create 5 courses in the past.
         for ($c = 0; $c < 5; $c++) {
-            $enddate = time() - DAYSECS * rand(0, 365);
+            $enddate = time() - DAYSECS * ($c + 1) * 10;
             $startdate = $enddate - YEARSECS;
             $record = (object) [
                 'startdate' => $startdate,
