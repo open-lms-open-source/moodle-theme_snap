@@ -633,6 +633,10 @@ input[type="reset"] {
     margin: 0.1em auto;
 }
 
+.snap-icon-close:focus {
+    text-decoration: underline !important;
+}
+
 // White close icon.
 #snap-footer-alert,
 #snap-pm {
