@@ -833,9 +833,12 @@ footer #moodle-footer
     .popover-region-container a {
         color: $brand-primary;
 
-        &:hover,
-        &:focus {
+        &:hover {
             color: darken($brand-primary, 8%);
+        }
+        &:focus {
+            color: darken($brand-primary, 30%);
+            text-decoration: underline;
         }
     }
 
