@@ -90,6 +90,9 @@
     .popover-region-content-container {
         max-height: 400px;
         overflow-y: scroll;
+        a.context-link {
+            outline: none;
+        }
     }
 
     // Override core hover colours.
