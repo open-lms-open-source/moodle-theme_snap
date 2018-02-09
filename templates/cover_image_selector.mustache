@@ -35,16 +35,3 @@
         <button class="btn btn-sm btn-danger cancel">{{#str}}cancel, moodle{{/str}}</button>
     </div>
 </div>
-{{!
-Function to Listen cover image label key press for accessible usage.
-}}
-{{#js}}
-    require(['jquery'], function($) {
-        var coverImage = $('#snap-coverimagecontrol label');
-        coverImage.keypress(function(e) {
-            if (e.which === 13) {
-                $('#snap-coverfiles').trigger('click');
-            }
-        });
-    });
-{{/js}}
