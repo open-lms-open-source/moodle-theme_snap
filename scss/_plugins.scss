@@ -6,6 +6,8 @@
  * Global search.
  */
 
+/* stylelint-disable declaration-no-important*/
+
 #mr-nav .search-input-wrapper {
     padding: .5em;
     padding-bottom: 0;
@@ -271,8 +273,8 @@
  * Fix black text on save.
  */
 #page-mod-survey-save div[role="main"] h2 {
-    padding-top:0.5em;
-    color:#fff;
+    padding-top: 0.5em;
+    color: #fff;
 }
 
 /**
@@ -283,7 +285,8 @@
         .fitem .felement.fgroup span {
             display: inline-block;
         }
-        #fgroup_id_timestarted_grp, #fgroup_id_timecompleted_grp {
+        #fgroup_id_timestarted_grp,
+        #fgroup_id_timecompleted_grp {
             .felement.fgroup span {
                 display: block;
             }
@@ -306,13 +309,13 @@
 }
 
 .edit_pages_box span.label {
-  color: $body-color;
+    color: $body-color;
 }
 
 /**
  * Stop rubric mform from being positioned inefficiently in dialog.
  */
-#local-joulegrader-gradepane-panel .mform{
+#local-joulegrader-gradepane-panel .mform {
     max-width: 100%;
     margin: 0 auto;
 }
@@ -334,11 +337,11 @@
     }
 
     .card-block {
-        padding :0;
+        padding: 0;
     }
 
     // Hide next/previous image when not a link.
-    .navimages{
+    .navimages {
         img {
             visibility: hidden;
         }
@@ -423,7 +426,7 @@
     }
     // Improve edit pages form - tables for layout :(
     // NOTE - lots of inline styles in lesson, so !important needed.
-    .edit_pages_box{
+    .edit_pages_box {
         // Remove striping.
         tr {
             background-color: white !important;
@@ -462,7 +465,7 @@
         }
 
         /* Put options on seperate lines. */
-        .fgroup>span {
+        .fgroup > span {
             display: table; // SHAME - hack for lessons css/html display of radio buttons.
             label p {
                 display: inline; // SHAME - fix for p tag in each label.

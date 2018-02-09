@@ -13,13 +13,14 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 /**
- * Snap typefaces.
- *
- * @package   theme_snap
- * @copyright Copyright (c) 2018 Blackboard Inc. (http://www.blackboard.com)
- * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
- */
+* Snap typefaces.
+*
+* @package   theme_snap
+* @copyright Copyright (c) 2018 Blackboard Inc. (http://www.blackboard.com)
+* @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+*/
 
+/* stylelint-disable declaration-no-important*/
 
 .news-article-message *[style],
 .snap-image-summary *[style],
@@ -32,15 +33,15 @@
 .signuppanel *[style],
 .signuppanel .text_to_html *[style],
 .snap-lightbox-description *[style] {
-  color: inherit !important;
-  font-size: inherit !important;
-  line-height: inherit !important;
-  margin: inherit !important;
-  padding: inherit !important;
-  font-family: inherit !important;
-  background-color: inherit !important;
-  max-width: 100% !important;
-  border: inherit !important;
+    color: inherit !important;
+    font-size: inherit !important;
+    line-height: inherit !important;
+    margin: inherit !important;
+    padding: inherit !important;
+    font-family: inherit !important;
+    background-color: inherit !important;
+    max-width: 100% !important;
+    border: inherit !important;
 }
 
 #region-main,
@@ -49,16 +50,22 @@
 .contentwithoutlink,
 .user-grade td.feedbacktext,
 .snap-lightbox-description,
-#page-mod-book-print  {
-  font-family: $font-family-serif;
+#page-mod-book-print {
+    font-family: $font-family-serif;
 }
 
-h1, .h1,
-h2, .h2,
-h3, .h3,
-h4, .h4,
-h5, .h5,
-h6, .h6,
+h1,
+.h1,
+h2,
+.h2,
+h3,
+.h3,
+h4,
+.h4,
+h5,
+.h5,
+h6,
+.h6,
 legend,
 .mform legend a,
 .mform legend a:hover,
@@ -66,18 +73,18 @@ legend,
 .collapsibleregioncaption,
 .snap-featured-course-title,
 #coursetools-list a {
-  font-family: $font-family-feature;
+    font-family: $font-family-feature;
 }
 
 .form_autocomplete_selection,
 .form_autocomplete_suggestions,
 .snap-system-text,
 .snap-action-icon {
-  font-family: $font-family-system;
+    font-family: $font-family-system;
 }
 
 .snap-media-body p {
-  font-family: $font-family-serif;
+    font-family: $font-family-serif;
 }
 
 #page-mod-quiz-review .arrow_link,
@@ -109,17 +116,17 @@ input[type="reset"],
 .gradingform_rubric.editor .addlevel input,
 .gradingform_rubric.editor .addcriterion input,
 #page-site-index .section-modchooser-link .section-modchooser-text {
-  font-family: $font-family-system;
+    font-family: $font-family-system;
 }
 
 .btn {
-  font-family: $font-family-system;
-  transition: all 0.4s ease-in-out;
+    font-family: $font-family-system;
+    transition: all 0.4s ease-in-out;
 }
 
 // None standard buttons - e.g. atto
 .editing.path-course-view section#region-main > .singlebutton input[type="submit"],
 .editor_atto_toolbar button,
 #page-mast .singlebutton input[type="submit"] {
-  box-shadow: none;
+    box-shadow: none;
 }

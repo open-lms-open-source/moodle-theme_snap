@@ -4,7 +4,10 @@
 // -------------------------
 // Main form.
 // -------------------------
-#page-admin-setting-themesettingsnap{
+
+/* stylelint-disable declaration-no-important*/
+
+#page-admin-setting-themesettingsnap {
     #region-main,
     .settingsform {
         max-width: 100%;
@@ -16,7 +19,7 @@
     }
 
     .form-description,
-    .dndupload-message  {
+    .dndupload-message {
         font-size: small;
     }
 

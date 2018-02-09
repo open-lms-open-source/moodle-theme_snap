@@ -2,6 +2,9 @@
  * Print style sheet.
  *
  */
+
+/* stylelint-disable declaration-no-important*/
+
 @media print {
     body {
         color: $body-color;
@@ -21,11 +24,15 @@
         margin: 2cm;
     }
 
-    h1,h2,h3,h4,h5 {
+    h1,
+    h2,
+    h3,
+    h4,
+    h5 {
         page-break-after: avoid;
     }
 
-     // Printing a course page.
+    // Printing a course page.
     .path-course-view {
         .section {
             width: 100%;
@@ -35,7 +42,7 @@
             page-break-inside: auto;
         }
         // Section at the top of the printout.
-        .course-content>ul li.section.state-visible {
+        .course-content > ul li.section.state-visible {
             position: absolute;
             page-break-inside: avoid;
         }

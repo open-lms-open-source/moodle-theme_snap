@@ -35,8 +35,11 @@ section#region-main
 
  ****************************/
 
+/* stylelint-disable declaration-no-important*/
+
 // Course page  - turn editing on button.
-.format-topics, .format-weeks {
+.format-topics,
+.format-weeks {
     #page-mast .singlebutton {
         display: none;
     }
@@ -94,7 +97,7 @@ section#region-main
 }
 .dndupload-over {
     .snap-dropzone {
-        background-color:#fafafa;
+        background-color: #fafafa;
     }
 }
 
@@ -519,8 +522,8 @@ body.format-flexpage .singlebutton {
 // Reset moodle css mess
 // -------------------------
 
-.path-site li.activity>div,
-.path-course-view li.activity>div {
+.path-site li.activity > div,
+.path-course-view li.activity > div {
     padding: 0;
 }
 
@@ -602,7 +605,7 @@ body.format-flexpage .singlebutton {
     .activityinstance {
         padding: 0;
         height: auto;
-        background-color: rgba(255,255,255,0.9);
+        background-color: rgba(255, 255, 255, 0.9);
         @include clearfix;
 
         .activityicon {
@@ -637,9 +640,6 @@ body.format-flexpage .singlebutton {
         }
     }
 }
-
-
-
 
 /**
  * resourcelinkdetails = moodle putting filetype on screen if option selected
@@ -686,7 +686,7 @@ body.format-flexpage .singlebutton {
     margin: 0.5em auto;
 
     .asset-wrapper {
-        padding:0;
+        padding: 0;
     }
 
     .activityicon,
@@ -808,9 +808,6 @@ body.format-flexpage .singlebutton {
     }
 }
 
-
-
-
 // -------------------------
 // Snap resources as cards.
 // -------------------------
@@ -897,7 +894,7 @@ body.snap-resource-card li.snap-resource {
 
     &.modtype_lightboxgallery,
     &.snap-mime-bmp {
-        border-top-color: #4ABC96;
+        border-top-color: #4abc96;
         background-image: url([[pix:core|/f/image]]);
     }
 
@@ -909,7 +906,7 @@ body.snap-resource-card li.snap-resource {
 
     &.modtype_imscp,
     &.modtype_scorm {
-        border-top-color: #F7981D;
+        border-top-color: #f7981d;
         background-image: url([[pix:core|/f/book]]);
     }
 
@@ -1034,7 +1031,7 @@ body.snap-resource-card li.snap-resource {
 // -------------------------
 /* EDIT SUMMARY */
 /* Make it obvious that you can edit a summary - Add text and some styles to that gear thing */
-#page-site-index .sitetopic>a:last-of-type,
+#page-site-index .sitetopic > a:last-of-type,
 .summary .edit-summary {
     clear: both;
     display: block;
@@ -1062,7 +1059,7 @@ body.snap-resource-card li.snap-resource {
             }
         }
 
-        .iconsmall{
+        .iconsmall {
             display: none;
         }
     }
@@ -1321,7 +1318,7 @@ form.togglecompletion {
     }
 
     .dropdown-menu {
-        box-shadow: 0 2px 5px 0 rgba(0,0,0,.26);
+        box-shadow: 0 2px 5px 0 rgba(0, 0, 0, .26);
         border: 0;
         padding: 0;
     }
@@ -1348,12 +1345,12 @@ form.togglecompletion {
 
 /* reset some moodle shame */
 .moodle-actionmenu,
-.moodle-actionmenu>ul,
-.moodle-actionmenu>ul>li {
+.moodle-actionmenu > ul,
+.moodle-actionmenu > ul > li {
     display: block;
 }
 
-.moodle-actionmenu>ul>li {
+.moodle-actionmenu > ul > li {
     display: inline-block;
 }
 /*  actions at the footer of an element */
@@ -1365,7 +1362,6 @@ form.togglecompletion {
     top: auto;
     bottom: 0;
     left: 0;
-    width: 100%;
     overflow: hidden;
     @include clearfix;
 
@@ -1377,7 +1373,7 @@ form.togglecompletion {
             text-align: right;
         }
 
-        &>ul {
+        & > ul {
             margin: 0;
         }
     }
@@ -1385,7 +1381,7 @@ form.togglecompletion {
 
 /* add bg colour for actions when editing */
 .editing .actions {
-    background-color: rgba(255,255,255,0.95);
+    background-color: rgba(255, 255, 255, 0.95);
 }
 /* remove bg colour for actions when menu shown */
 .action-menu-shown .actions {
@@ -1436,7 +1432,7 @@ div.commands ul.menubar {
 }
 
 // last min css for marks code changes - make edit button block when editing...
-.action-menu-shown .moodle-actionmenu>ul>li {
+.action-menu-shown .moodle-actionmenu > ul > li {
     display: block;
 }
 
@@ -1675,17 +1671,15 @@ span.editinstructions {
     }
 }
 
-
-
 // -------------------------
 // Moving things in snap
 // -------------------------
 @keyframes fadeup {
-    0%{
-        opacity:0.1;
+    0% {
+        opacity: 0.1;
     }
-    100%{
-        opacity:1;
+    100% {
+        opacity: 1;
     }
 }
 .path-course-view {
@@ -1700,7 +1694,7 @@ span.editinstructions {
 }
 
 @keyframes fadein {
-    0%   {
+    0% {
         opacity: 0;
     }
     100% {
@@ -1724,7 +1718,7 @@ span.editinstructions {
     border: 2px dashed $gray-lighter;
     font-family: $font-family-system;
     text-align: center;
-    display:none;
+    display: none;
 }
 
 .section-drop,
@@ -1745,14 +1739,14 @@ span.editinstructions {
 
 #snap-footer-alert {
     position: fixed;
-    z-index:1;
-    bottom:0;
-    left:0;
-    width:100%;
-    background-color:#000;
-    color:#fff;
-    background-image:none !important;
-    outline:none !important;
+    z-index: 1;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: #000;
+    color: #fff;
+    background-image: none !important;
+    outline: none !important;
     // for animation..
     max-height: 0;
     overflow: hidden;
@@ -1763,13 +1757,13 @@ span.editinstructions {
         height: 1em;
     }
     &.snap-footer-alert-visible {
-        padding:0.5em 0;
+        padding: 0.5em 0;
         max-height: 200px;
         z-index: 2;
     }
 }
 
-.snap-footer-alert-title{
+.snap-footer-alert-title {
     text-transform: capitalize;
     color: #fff !important;
     display: inline-block;
@@ -1813,7 +1807,7 @@ span.editinstructions {
     .snap-section-editing,
     .snap-modchooser,
     .snap-dropzone {
-        display:none !important;
+        display: none !important;
     }
 
     &.snap-move-section {
@@ -1830,16 +1824,14 @@ span.editinstructions {
 
 .snap-asset {
     &.movefinished {
-        & + li.snap-resource {
-
-        }
         animation: fadein 0.5s;
         animation-iteration-count: 1;
         animation-fill-mode: forwards;
     }
 }
 
-.snap-move-note, .snap-drop.asset-drop {
+.snap-move-note,
+.snap-drop.asset-drop {
     display: none;
 }
 // Show when moving
@@ -1859,7 +1851,7 @@ span.editinstructions {
         bottom: 0;
         left: 0;
         right: 0;
-        background-color: rgba(255,255,255,0.7);
+        background-color: rgba(255, 255, 255, 0.7);
         cursor: pointer;
         text-align: center;
         padding: 1em;
@@ -1871,7 +1863,7 @@ span.editinstructions {
         clear: both;
         border: 2px dashed $gray-light;
         font-size: 2em;
-        font-color: $gray;
+        color: $gray;
         font-family: $font-family-system;
         text-align: center;
         cursor: pointer;
@@ -1887,7 +1879,7 @@ span.editinstructions {
     bottom: 0;
     background-color: $modal-backdrop-bg;
     z-index: 1000000;
-    overflow-y:scroll;
+    overflow-y: scroll;
 
     &.state-visible {
         display: block;

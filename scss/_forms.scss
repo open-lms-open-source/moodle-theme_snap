@@ -20,6 +20,8 @@
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+/* stylelint-disable declaration-no-important*/
+
 // Exclude hidden form elements from being hidden when behat is running or it breaks
 // "I set the following fields to these values". More specifically, the error is because expand_all_fields in
 // behat_forms.php doesn't handle errors with .moreless-toggler not being visible (it handles it not being there but
@@ -75,14 +77,14 @@ body:not(.behat-site) {
 }
 #page-grade-export-xml-index {
     .mform .fitem {
-        &.fitem.fitem_fcheckbox .fitemtitle{
+        &.fitem.fitem_fcheckbox .fitemtitle {
             float: left;
             width: 25%;
         }
         .fcheckbox {
             color: red;
             input {
-                margin-right: 20px
+                margin-right: 20px;
             }
         }
     }
@@ -168,7 +170,6 @@ fieldset abbr[title] {
     border: none;
     &:after {
         content: " " attr(title);
-        text-transform: lowercase;
         text-transform: capitalize;
     }
 }
@@ -442,11 +443,11 @@ div.editor_atto_toolbar div.atto_group {
         select {
             max-width: 200px !important;
         }
-        .ftoggler{
+        .ftoggler {
             background-color: $gray-lighter;
             padding: .3em .5em;
         }
-        .collapsed .ftoggler{
+        .collapsed .ftoggler {
             background-color: transparent;
         }
         fieldset > .fcontainer {

@@ -19,6 +19,9 @@
  * @copyright Copyright (c) 2015 Moodlerooms Inc. (http://www.moodlerooms.com)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
+
+/* stylelint-disable declaration-no-important*/
+
 @include media-breakpoint-up(md) {
     #moodle-blocks > aside {
         column-count: 2;
@@ -112,7 +115,6 @@
     padding: 0 2%;
     border: 0;
     box-shadow: none;
-    border: 0;
     background-color: transparent;
     max-width: 50.5em;
 }

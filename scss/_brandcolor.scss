@@ -42,11 +42,12 @@
 
     // Focus outline for keyboard tab users
     a,
-    .dropdown-toggle{
-        &:focus{
+    .dropdown-toggle {
+        &:focus {
             outline: 3px solid $brand-primary;
         }
-        &:active, &:hover {
+        &:active,
+        &:hover {
             outline: 0;
         }
     }
@@ -68,7 +69,11 @@
 
     // General toggle icons.
     button.snap-icon-toggle {
-        &, &:hover, &:link, &:active, &:focus {
+        &,
+        &:hover,
+        &:link,
+        &:active,
+        &:focus {
             color: $brand-primary;
         }
         &:focus {
@@ -160,7 +165,7 @@
 
     .courseinfo-teachers-more {
         &:hover {
-            border-color: $brand-primary ;
+            border-color: $brand-primary;
         }
     }
 
@@ -348,7 +353,7 @@
     // Catch all for mods we do not have colours for.
     li.snap-resource,
     li.snap-activity {
-        border-top-color: $brand-primary
+        border-top-color: $brand-primary;
     }
 
     // yui-bs overrides
@@ -450,7 +455,7 @@
     }
 
     .progress .bar,
-    .progress-bar:not(progress-bar-info):not(.progress-bar-success):not(.progress-bar-warning):not(.progress-bar-danger) {
+    .progress-bar:not(.progress-bar-info):not(.progress-bar-success):not(.progress-bar-warning):not(.progress-bar-danger) {
         background-color: $brand-primary;
     }
 

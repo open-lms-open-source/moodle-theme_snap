@@ -3,6 +3,8 @@
  *
  */
 
+/* stylelint-disable declaration-no-important*/
+
 // Hide unnecessary content on the page.
 #page-message-index {
     #page-mast,
@@ -44,7 +46,7 @@
                 background-color: transparent;
             }
             // Contact media element type things.
-            .contacts .contact .information{
+            .contacts .contact .information {
 
                 .name {
                     font-weight: normal;
@@ -78,7 +80,7 @@
                     border: none;
                     padding: 0;
                     // This is your own message, and gets a brand-color background.
-                    &.right{
+                    &.right {
                         color: white;
                     }
                     // These are other messages.

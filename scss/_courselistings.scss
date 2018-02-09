@@ -3,7 +3,7 @@
 // -------------------------
 
 // Reset core styles.
-.course_category_tree .category>.info,
+.course_category_tree .category > .info,
 .coursebox .info,
 .coursebox {
     background-color: transparent;
@@ -19,7 +19,7 @@
     border-bottom: 1px solid $gray-lighter;
 
     .coursename {
-        display : inline;
+        display: inline;
     }
     .info .coursename {
         font-size: $font-size-h6;

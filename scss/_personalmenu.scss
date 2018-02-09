@@ -1,6 +1,9 @@
 // -------------------------
 //  Personal menu.
 // -------------------------
+
+/* stylelint-disable declaration-no-important*/
+
 #snap-pm {
     background-color: #eee;
     overflow-x: hidden; // Prevent scrollbars.
@@ -38,7 +41,9 @@ body.snap-pm-open {
 
     // Animate opening the pm.
     #snap-pm-inner {
+        /* stylelint-disable no-unknown-animations*/
         animation-name: snap-drop;
+        /* stylelint-enable no-unknown-animations*/
         animation-iteration-count: once;
         animation-timing-function: ease-in-out;
         animation-duration: 0.3s;
@@ -177,7 +182,7 @@ body.snap-pm-open {
 
     100% {
         opacity: 1;
-        transform: translate3d(0, 0, 0);;
+        transform: translate3d(0, 0, 0);
     }
 }
 
@@ -189,7 +194,7 @@ body.snap-pm-open {
 
     100% {
         opacity: 1;
-        transform: translate3d(0, 0, 0);;
+        transform: translate3d(0, 0, 0);
     }
 }
 
@@ -200,7 +205,6 @@ body.snap-pm-open {
     display: none;
 
     @include media-breakpoint-down(md) {
-        display: block;
         position: fixed;
         bottom: 0;
         left: 0;
@@ -260,8 +264,9 @@ body.snap-pm-open {
 
         &:hover {
             transform: scale(1.05);
-            box-shadow: 0 8px 17px 0 $gray-light,
-                        0 6px 20px 0 rgba(0, 0, 0, 0.19);
+            box-shadow:
+                0 8px 17px 0 $gray-light,
+                0 6px 20px 0 rgba(0, 0, 0, 0.19);
         }
     }
 
@@ -290,7 +295,6 @@ body.snap-pm-open {
             margin: 0;
             // Link to course, limited to 2 lines.
             a {
-                display: block;
                 overflow: hidden;
                 line-height: 1.25;
                 width: 100%;
@@ -313,7 +317,7 @@ body.snap-pm-open {
         text-align: center;
 
         .userpicture,
-        .coursecard-contacts-more  {
+        .coursecard-contacts-more {
             margin: 0 1%;
             width: 2rem;
             height: 2rem;
