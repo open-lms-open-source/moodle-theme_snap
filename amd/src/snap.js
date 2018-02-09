@@ -713,6 +713,16 @@ define(['jquery', 'core/log', 'theme_snap/headroom', 'theme_snap/util', 'theme_s
                             }
                         );
                     }
+
+                    // Listen to cover image label key press for accessible usage.
+                    var focustarget = $('#snap-coverimagecontrol label');
+                    if (focustarget && focustarget.length) {
+                        focustarget.keypress(function (e) {
+                            if (e.which === 13) {
+                                $('#snap-coverfiles').trigger('click');
+                            }
+                        });
+                    }
                 });
             }
         };
