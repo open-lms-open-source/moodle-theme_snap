@@ -81,7 +81,7 @@ $string['deletesectionconfirm'] = 'Esborra la secció';
 $string['deletingsection'] = 'S’està suprimint "{$a}"';
 $string['draft'] = 'No publicat per als estudiants';
 $string['dropzonelabel'] = 'Deixeu anar fitxers per adjuntar o <span class="btn-link">navegueu</span>';
-$string['due'] = 'Data límit';
+$string['due'] = 'Data límit "{$a}"';
 $string['edit'] = 'Edita "{$a}"';
 $string['editcoursecontent'] = 'Edita els blocs';
 $string['editcoursesettings'] = 'Paràmetres del curs';

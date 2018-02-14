@@ -79,7 +79,7 @@ $string['deletesectionconfirm'] = 'حذف القسم';
 $string['deletingsection'] = 'حذف القسم "{$a}"';
 $string['draft'] = 'لم يتم نشره للطلاب';
 $string['dropzonelabel'] = 'إفلات الملفات للإرفاق أو استعراض <span class="btn-link"></span>';
-$string['due'] = 'مهام مطلوب أداؤها';
+$string['due'] = 'مهام مطلوب أداؤها "{$a}"';
 $string['edit'] = 'تحرير "{$a}"';
 $string['editcoursecontent'] = 'تحرير الكتل';
 $string['editcoursesettings'] = 'إعدادات المقرر الدراسي';
