@@ -3619,3 +3619,13 @@ body.pagelayout-frontpage {
 .path-admin-plagiarism .singlebutton {
     display: none;
 }
+
+// Adjust the size of the message containers.
+#page-message-index .messaging-area-container .messaging-area .contacts-area .contacts .contact {
+    height: 23%;
+
+    .information .name {
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+}
