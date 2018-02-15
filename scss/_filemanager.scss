@@ -12,17 +12,10 @@
         font-size: small;
     }
 
-    .fp-btn-mkdir,
-    .fp-btn-download {
-        @include sr-only();
-    }
-
     // Hide :
     // pathbar (dir structure),
-    // viewbar (view options),
     // restrictions (max file size etc)
     .fp-pathbar,
-    .fp-viewbar,
     .fp-restrictions {
         display: none;
     }
@@ -35,15 +28,6 @@
 }
 .fp-icon {
     margin-top: 0;
-}
-
-// Viewbar is shown on these pages.
-#page-user-files,
-#local-joulegrader-gradepane,
-#page-backup-backupfilesedit {
-    .filemanager .fp-viewbar {
-        display: block;
-    }
 }
 
 // Code below moved from other scss files.
