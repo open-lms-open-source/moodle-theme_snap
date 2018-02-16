@@ -629,7 +629,7 @@ EOF;
         }
 
         // Personalised Learning Designer.
-        if (array_key_exists('pld', $localplugins) && has_capability('moodle/course:update', $coursecontext)) {
+        if (array_key_exists('pld', $localplugins) && has_capability('local/pld:editcourserules', $coursecontext)) {
             $iconurl = $OUTPUT->image_url('pld', 'theme');
             $pldicon = '<img src="'.$iconurl.'" class="svg-icon" alt="" role="presentation">';
             $pldname = get_string('pld', 'theme_snap');
