@@ -600,6 +600,10 @@ define(['jquery', 'core/log', 'theme_snap/headroom', 'theme_snap/util', 'theme_s
 
                     var modSettingsIdRe = /^page-mod-.*-mod$/; // e.g. #page-mod-resource-mod or #page-mod-forum-mod
                     var onModSettings = modSettingsIdRe.test($('body').attr('id')) && location.href.indexOf("modedit") > -1;
+                    if (!onModSettings) {
+                        modSettingsIdRe = /^page-mod-.*-general$/;
+                        onModSettings = modSettingsIdRe.test($('body').attr('id')) && location.href.indexOf("modedit") > -1;
+                    }
                     var onCourseSettings = $('body').attr('id') === 'page-course-edit';
                     var onSectionSettings = $('body').attr('id') === 'page-course-editsection';
                     var pageBlacklist = ['page-mod-hvp-mod'];
