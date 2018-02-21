@@ -441,7 +441,7 @@ div.editor_atto_toolbar div.atto_group {
     .snap-form-advanced {
         // FF select elements don't respect % max width.
         select {
-            max-width: 200px !important;
+            max-width: 250px !important;
         }
         .ftoggler {
             background-color: $gray-lighter;
