@@ -26,8 +26,8 @@
  * Main snap initialising function.
  */
 define(['jquery', 'core/log', 'theme_snap/headroom', 'theme_snap/util', 'theme_snap/personal_menu',
-        'theme_snap/cover_image', 'theme_snap/progressbar'],
-    function($, log, Headroom, util, personalMenu, coverImage, ProgressBar) {
+        'theme_snap/cover_image', 'theme_snap/progressbar', 'core/templates', 'core/str'],
+    function($, log, Headroom, util, personalMenu, coverImage, ProgressBar, templates, str) {
 
         'use strict';
 
@@ -679,6 +679,36 @@ define(['jquery', 'core/log', 'theme_snap/headroom', 'theme_snap/util', 'theme_s
 
                         // SHAME - rewrite visibility form lang string to be more user friendly.
                         $(label).text(M.util.get_string('visibility', 'theme_snap') + ' ');
+
+                        if ($("#page-course-edit").length) {
+                            // We are in course editing form.
+                            // Removing the "Show all sections in one page" from the course format form.
+                            str.get_strings([
+                                {key: 'showallsectionsdisabled', component: 'theme_snap'},
+                                {key: 'disabled', component: 'theme_snap'}
+                            ]).then(function(strings) {
+                                var strMessage = strings[0], strDisabled = strings[1];
+                                templates.render('theme_snap/form_alert', {
+                                    type: 'warning',
+                                    classes: '',
+                                    message: strMessage
+                                }).then(function(html) {
+                                    var op0 = $('[name="coursedisplay"] > option[value="0"]');
+                                    var op1 = $('[name="coursedisplay"] > option[value="1"]');
+                                    var selectNode =  $('[name="coursedisplay"]');
+                                    // Disable option 0
+                                    op0.attr('disabled','disabled');
+                                    // Add "(Disabled)" to option text
+                                    op0.append(' (' + strDisabled + ')');
+                                    // Remove selection attribute
+                                    op0.removeAttr("selected");
+                                    // Select option 1
+                                    op1.attr('selected','selected');
+                                    // Add warning
+                                    selectNode.parent().append(html);
+                                });
+                            });
+                        }
 
                         $('.snap-form-advanced').prepend(availablity);
 

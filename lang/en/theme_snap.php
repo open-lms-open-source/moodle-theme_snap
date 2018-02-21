@@ -311,3 +311,5 @@ $string['xofysubmitted'] = '{$a->completed} of {$a->participants} Submitted';
 $string['xungraded'] = '{$a} Ungraded';
 $string['youtube'] = 'YouTube';
 $string['youtubedesc'] = 'The url of your youtube channel.';
+$string['showallsectionsdisabled'] = 'Due to its design language, "Show all sections on one page" isn\'t available in Snap.';
+$string['disabled'] = 'Disabled';
