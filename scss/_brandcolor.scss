@@ -23,9 +23,14 @@
 // Everything affected by brand-color choice to allow per category customisation.
 // Wrap in a .theme-snap class so that it can be replaced with .category-x later.
 
+$darker-grey-btn: #999999;
+$dark-grey-btn: #adadad;
+$light-grey-btn: #cccccc;
+$lighter-grey-btn: #e6e6e6;
+
 .theme-snap {
 
-    a:not(.btn):not(.dropdown-item),
+    a:not(.btn):not(.dropdown-item):not(.snap-due-date),
     .btn-link,
     .fake-link {
         color: $brand-primary;
@@ -53,7 +58,7 @@
     }
 
     .js-snap-asset-move:focus + label .svg-icon {
-        outline: 3px solid $brand-primary;
+        outline: 3px auto $brand-primary;
     }
 
     .iconhelp {
@@ -197,6 +202,7 @@
         &.active {
             background-color: darken($brand-primary, 10%);
             border-color: darken($brand-primary, 10%);
+            outline: 3px auto $brand-primary;
         }
     }
 
@@ -230,12 +236,12 @@
             background-color: $brand-primary;
             border-color: $brand-primary;
             color: #fff;
+            outline: 3px auto $brand-primary;
         }
 
     }
 
     .btn.btn-secondary {
-
         .icon {
             color: $brand-primary;
         }
@@ -326,6 +332,7 @@
         }
         &:focus {
             border-bottom: 1px solid $brand-primary;
+            outline: 3px auto $brand-primary;
         }
     }
 
@@ -553,4 +560,105 @@
         }
     }
 
+    // -------------------------
+    // Navigation bar
+    // -------------------------
+    #mr-nav {
+        a {
+            color: $nav-color;
+            &:hover,
+            &:focus {
+                color: darken($nav-color, 8%);
+            }
+        }
+
+        a.snap-login-button {
+            color: #FFFFFF;
+        }
+
+        .icon.fa-search {
+            color: $nav-color;
+        }
+
+        .popover-region-notifications > div >.icon {
+            color: $nav-color;
+            &:hover {
+                color: darken($nav-color, 8%);
+            }
+        }
+
+        #snap-pm-trigger {
+            color: $nav-color;
+        }
+
+        #nav-notification-popover-container .count-container {
+            background-color: $nav-color;
+        }
+
+        #nav-notification-popover-container {
+            // Bell icon.
+            .icon.fa-bell {
+                color: $nav-color;
+            }
+        }
+    }
+
+
+    // -------------------------
+    // Grader Report
+    // -------------------------
+    span.letter.active,
+    .initialbar .letter.active
+    {
+        background-color: $brand-primary;
+        border-color: $brand-primary;
+    }
+
+    // -------------------------
+    // Extra focus options
+    // -------------------------
+    #snap-coverimagecontrol > .btn-secondary,
+    div[tabindex],
+    .btn.btn-link,
+    .custom-select,
+    .form-control,
+    .categoryname,
+    .snap-dropzone > .snap-dropzone-label{
+        &:focus {
+            outline: 3px auto $brand-primary;
+        }
+    }
+
+    .fp-toolbar div  a.btn.btn-secondary.btn-sm,
+    .fp-viewbar > a.btn.btn-secondary.btn-sm{
+        color: $darker-grey-btn;
+        border-color: $light-grey-btn;
+
+        .icon {
+            color: $dark-grey-btn;
+        }
+
+        &:hover{
+            border-color: $dark-grey-btn;
+            color: $dark-grey-btn;
+            background-color: $lighter-grey-btn;
+        }
+
+    }
+
+    .fp-viewbar > a.btn.btn-secondary.btn-sm.checked {
+        background-color: $brand-primary;
+        border-color: $brand-primary;
+    }
+
+    #snap-coverimagecontrol > .btn.btn-secondary.btn-sm:hover {
+        background-color: $lighter-grey-btn;
+    }
+
+    .visibleifjs a.btn{
+        color: $brand-primary;
+        &:hover{
+            color: darken($brand-primary, 8%);
+        }
+    }
 }
