@@ -119,7 +119,7 @@ $string['headingfont_desc'] = 'يستخدم هذا الخط في العناوي�
 $string['help'] = 'مساعدة';
 $string['helpwithlogin'] = 'المساعدة في تسجيل الدخول';
 $string['helpwithloginandguest'] = 'المساعدة في تسجيل الدخول / وصول الضيف';
-$string['hiddencoursestoggle'] = 'المقررات الدراسية المخفية ({$a})';
+$string['hiddencoursestoggle'] = 'المقررات الدراسية المخفية';
 $string['highlightedsection'] = 'مميَّز';
 $string['home'] = 'الصفحة الرئيسية';
 $string['image'] = 'صورة';
