@@ -677,22 +677,8 @@ define(['jquery', 'core/log', 'theme_snap/headroom', 'theme_snap/util', 'theme_s
                         var select = $(availablity).find('select');
                         $(label).insertBefore(select);
 
-                        // SHAME - rewrite form lang strings to be more user friendly.
+                        // SHAME - rewrite visibility form lang string to be more user friendly.
                         $(label).text(M.util.get_string('visibility', 'theme_snap') + ' ');
-                        $("#id_visible option[value='0']").text(M.util.get_string('modhide', 'moodle'));
-                        $("#id_visible option[value='-1']").text(M.util.get_string('hiddenoncoursepage', 'moodle'));
-
-                        // Only change these strings if we are not on the course editing form.
-                        if (!$("#page-course-edit").length) {
-                            // Hidden section re-use show to make mods stealth.
-                            // For hidden sections the show option therefore needs the stealth string.
-                            var showstring = $("#id_visible option[value='1']").text();
-                            if (showstring === M.util.get_string('showoncoursepage', 'moodle')) {
-                                $("#id_visible option[value='1']").text(M.util.get_string('modshow', 'moodle'));
-                            } else {
-                                $("#id_visible option[value='1']").text(M.util.get_string('hiddenoncoursepage', 'moodle'));
-                            }
-                        }
 
                         $('.snap-form-advanced').prepend(availablity);
 
