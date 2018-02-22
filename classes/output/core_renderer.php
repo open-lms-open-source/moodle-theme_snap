@@ -1063,7 +1063,6 @@ HTML;
      */
     public function body_css_classes(array $additionalclasses = array()) {
         global $PAGE, $COURSE, $SESSION, $CFG;
-
         $classes = parent::body_css_classes($additionalclasses);
         $classes = explode (' ', $classes);
 
@@ -1121,7 +1120,7 @@ HTML;
         // Add theme-snap class so modules can customise css for snap.
         $classes[] = 'theme-snap';
 
-        if (empty($CFG->allowcategorythemes) && !empty($CFG->prototype_category_colors)) {
+        if (!empty($CFG->allowcategorythemes)) {
             // This duplicates code triggered by allowcategorythemes, so no
             // need to repeat it if that setting is on.
             $catids = array_keys($PAGE->categories);
@@ -1130,7 +1129,18 @@ HTML;
             foreach ($catids as $catid) {
                 $classes[] = 'category-' . $catid;
             }
+            // Put class category-x on body when loading editcategory page on course.
+            if (strpos($PAGE->url->get_path(), "course/editcategory.php") !== false && $PAGE->url->get_param('id') !== null) {
+                $classes[] = 'category-' . $PAGE->url->get_param('id');
+            }
+            // Put class category-x on body when loading add new course page.
+            if (strpos($PAGE->url->get_path(), "course/edit.php") !== false && $PAGE->url->get_param('category') !== null) {
+                $classes[] = 'category-' . $PAGE->url->get_param('category');
+            }
         }
+
+        // Remove duplicates if necessary.
+        $classes = array_unique($classes);
 
         $classes = implode(' ', $classes);
         return $classes;

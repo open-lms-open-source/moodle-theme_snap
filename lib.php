@@ -104,7 +104,8 @@ function theme_snap_set_category_colors($css) {
             $scss = str_replace('.theme-snap {', $categoryselector, $brandscss);
             $compiler->append_raw_scss($scss);
             $compiler->add_variables([
-                'brand-primary' => $colors[$category->id]
+                'brand-primary' => $colors[$category->id],
+                'nav-color' => $colors[$category->id]
             ]);
 
             try {
