@@ -1396,10 +1396,15 @@ HTML;
                     'help' => $helptext
                 ];
             } else {
+                // The name should be 'lti' instead of the module's URL which is the one we're getting.
+                $imageurl = $OUTPUT->image_url('icon', $mod->name);
+                if (strpos($mod->name, 'lti:') !== false) {
+                    $imageurl = $OUTPUT->image_url('icon', 'lti');
+                }
                 $activities[] = (object) [
                     'name' => $mod->name,
                     'title' => $mod->title,
-                    'icon' => ''.$OUTPUT->image_url('icon', $mod->name),
+                    'icon' => ''.$imageurl,
                     'link' => $mod->link .'&section=0', // Section is replaced by js.
                     'help' => $helptext
                 ];
