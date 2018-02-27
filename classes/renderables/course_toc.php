@@ -114,14 +114,15 @@ class course_toc implements \renderable, \templatable{
     protected function set_modules() {
         global $CFG, $PAGE;
 
+        // Set context first so $OUTPUT does not break later.
+        if (!isset($PAGE->context) && AJAX_SCRIPT) {
+            $PAGE->set_context(context_course::instance($this->course->id));
+        }
+
         // If course does not have any sections then exit - note, module search is not supported in course formats
         // that don't have sections.
         if (empty($this->numsections)) {
             return;
-        }
-
-        if (!isset($PAGE->context) && AJAX_SCRIPT) {
-            $PAGE->set_context(context_course::instance($this->course->id));
         }
 
         $modinfo = get_fast_modinfo($this->course);
