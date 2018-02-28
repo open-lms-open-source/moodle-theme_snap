@@ -131,6 +131,14 @@ class mod_assign_renderer extends \mod_assign_renderer {
                 }
             }
         }
+
+        if (empty($duedate)) {
+            if ($status->allowsubmissionsfromdate && $time <= $status->allowsubmissionsfromdate) {
+                $date = userdate($status->allowsubmissionsfromdate);
+                $duedata .= '<div>'.get_string('allowsubmissionsfromdatesummary', 'assign', $date).'</div>';
+            }
+        }
+
         return '<div class="duedata">'.$duedata.'</div>';
     }
 
