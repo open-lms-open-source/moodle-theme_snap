@@ -1063,6 +1063,7 @@ HTML;
      */
     public function body_css_classes(array $additionalclasses = array()) {
         global $PAGE, $COURSE, $SESSION, $CFG;
+
         $classes = parent::body_css_classes($additionalclasses);
         $classes = explode (' ', $classes);
 
@@ -1130,12 +1131,21 @@ HTML;
                 $classes[] = 'category-' . $catid;
             }
             // Put class category-x on body when loading editcategory page on course.
+            // Categories and parent categories are added in ascendant order.
             if (strpos($PAGE->url->get_path(), "course/editcategory.php") !== false && $PAGE->url->get_param('id') !== null) {
-                $classes[] = 'category-' . $PAGE->url->get_param('id');
+                $parentcategories = self::get_parentcategories($PAGE->url->get_param('id'));
+                foreach ($parentcategories as $category) {
+                    $classes[] = 'category-' . $category;
+                }
             }
+
             // Put class category-x on body when loading add new course page.
+            // Categories and parent categories are added in ascendant order.
             if (strpos($PAGE->url->get_path(), "course/edit.php") !== false && $PAGE->url->get_param('category') !== null) {
-                $classes[] = 'category-' . $PAGE->url->get_param('category');
+                $parentcategories = self::get_parentcategories($PAGE->url->get_param('category'));
+                foreach ($parentcategories as $category) {
+                    $classes[] = 'category-' . $category;
+                }
             }
         }
 
@@ -1144,6 +1154,22 @@ HTML;
 
         $classes = implode(' ', $classes);
         return $classes;
+    }
+
+    /**
+     * Returns all parent categories hierarchy from a category id
+     * @param int $id
+     * @return array
+     * @throws \moodle_exception
+     */
+    private function get_parentcategories($id) {
+        global $DB;
+        $category = $DB->get_record('course_categories', array('id' => $id));
+        if (!$category) {
+            throw new \moodle_exception('unknowncategory');
+        }
+        $parentcategoryids = explode('/', trim($category->path, '/'));
+        return $parentcategoryids;
     }
 
     /**
