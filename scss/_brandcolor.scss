@@ -623,6 +623,8 @@ $lighter-grey-btn: #e6e6e6;
     .custom-select,
     .form-control,
     .categoryname,
+    .summary > p,
+    .atto_group > button,
     .snap-dropzone > .snap-dropzone-label{
         &:focus {
             outline: 3px auto $brand-primary;
@@ -649,6 +651,7 @@ $lighter-grey-btn: #e6e6e6;
     .fp-viewbar > a.btn.btn-secondary.btn-sm.checked {
         background-color: $brand-primary;
         border-color: $brand-primary;
+        outline-color: $brand-primary;
     }
 
     #snap-coverimagecontrol > .btn.btn-secondary.btn-sm:hover {
