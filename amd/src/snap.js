@@ -507,9 +507,10 @@ define(['jquery', 'core/log', 'theme_snap/headroom', 'theme_snap/util', 'theme_s
              * @param {bool} messageBadgeCountEnabled
              * @param {int} userId
              * @param {bool} sitePolicyAcceptReqd
+             * @param {bool} inAlternativeRole
              */
             snapInit: function(courseConfig, pageHasCourseContent, siteMaxBytes, forcePassChange,
-                               messageBadgeCountEnabled, userId, sitePolicyAcceptReqd) {
+                               messageBadgeCountEnabled, userId, sitePolicyAcceptReqd, inAlternativeRole) {
 
                 // Set up.
                 M.cfg.context = courseConfig.contextid;
@@ -742,6 +743,22 @@ define(['jquery', 'core/log', 'theme_snap/headroom', 'theme_snap/util', 'theme_s
                                 $('#snap-coverfiles').trigger('click');
                             }
                         });
+                    }
+
+                    // Review if settings block is missing.
+                    if (!$('.block_settings').length) {
+                        // Hide admin icon.
+                        $('#admin-menu-trigger').hide();
+                        if (inAlternativeRole) {
+                            // Handle possible alternative role.
+                            require(
+                                [
+                                    'theme_snap/alternative_role_handler-lazy'
+                                ], function(alternativeRoleHandler) {
+                                    alternativeRoleHandler.init(courseConfig.id);
+                                }
+                            );
+                        }
                     }
                 });
             }

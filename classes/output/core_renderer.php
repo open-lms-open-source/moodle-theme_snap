@@ -1510,7 +1510,7 @@ HTML;
         $coursecontext = context_course::instance($course->id);
         // Switch roles.
         $roles = array();
-        $assumedrole = $this->in_alternative_role();
+        $assumedrole = self::in_alternative_role();
         if ($assumedrole !== false) {
             $roles[0] = get_string('switchrolereturn');
         }
@@ -1552,15 +1552,15 @@ HTML;
      *
      * @return bool|int The role(int) if the user is in another role, false otherwise
      */
-    private function in_alternative_role() {
+    public static function in_alternative_role() {
         global $USER, $PAGE;
 
         $course = $PAGE->course;
         $coursecontext = context_course::instance($course->id);
 
         if (!empty($USER->access['rsw']) && is_array($USER->access['rsw'])) {
-            if (!empty($this->page->context) && !empty($USER->access['rsw'][$this->page->context->path])) {
-                return $USER->access['rsw'][$this->page->context->path];
+            if (!empty($PAGE->context) && !empty($USER->access['rsw'][$PAGE->context->path])) {
+                return $USER->access['rsw'][$PAGE->context->path];
             }
             foreach ($USER->access['rsw'] as $key => $role) {
                 if (strpos($coursecontext->path, $key) === 0) {

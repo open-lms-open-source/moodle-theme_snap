@@ -314,7 +314,8 @@ EOF;
             'modhide',
             'modshow',
             'hiddenoncoursepage',
-            'showoncoursepage'
+            'showoncoursepage',
+            'switchrolereturn'
         ], 'moodle');
 
         $PAGE->requires->strings_for_js([
@@ -374,8 +375,9 @@ EOF;
         $conversationbadgecountenabled = isloggedin() && isset($mprocs['badge']) && $PAGE->theme->settings->messagestoggle == 1;
         $userid = $USER->id;
         $sitepolicyacceptreqd = isloggedin() && $CFG->sitepolicy && empty($USER->policyagreed) && !is_siteadmin();
+        $inalternativerole = \theme_snap\output\core_renderer::in_alternative_role();
         $initvars = [$coursevars, $pagehascoursecontent, get_max_upload_file_size($CFG->maxbytes), $forcepwdchange,
-                     $conversationbadgecountenabled, $userid, $sitepolicyacceptreqd];
+                     $conversationbadgecountenabled, $userid, $sitepolicyacceptreqd, $inalternativerole];
         $PAGE->requires->js_call_amd('theme_snap/snap', 'snapInit', $initvars);
 
         // Does the page have editable course content?
