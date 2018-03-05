@@ -44,6 +44,10 @@ Feature: When the moodle theme is set to Snap, switching between roles should be
     And I navigate to "Guest" node in "Course administration > Switch role to..."
     And I wait until the page is ready
     Then I should see "Return to my normal role"
+    Then "#admin-menu-trigger" "css_element" should not be visible
     And I click on "#returntonormalrole" "css_element"
     And I wait until the page is ready
     And I should not see "Return to my normal role"
+    Then "#admin-menu-trigger" "css_element" should be visible
+    And I click on "#admin-menu-trigger" "css_element"
+    Then I should see "Course administration"

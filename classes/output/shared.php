@@ -277,7 +277,7 @@ EOF;
      * @return void
      */
     public static function page_requires_js() {
-        global $CFG, $PAGE, $COURSE, $USER;
+        global $CFG, $PAGE, $COURSE, $USER, $OUTPUT;
 
         $PAGE->requires->jquery();
         $PAGE->requires->js_amd_inline("require(['theme_boost/loader']);");
@@ -375,7 +375,7 @@ EOF;
         $conversationbadgecountenabled = isloggedin() && isset($mprocs['badge']) && $PAGE->theme->settings->messagestoggle == 1;
         $userid = $USER->id;
         $sitepolicyacceptreqd = isloggedin() && $CFG->sitepolicy && empty($USER->policyagreed) && !is_siteadmin();
-        $inalternativerole = \theme_snap\output\core_renderer::in_alternative_role();
+        $inalternativerole = $OUTPUT->in_alternative_role();
         $initvars = [$coursevars, $pagehascoursecontent, get_max_upload_file_size($CFG->maxbytes), $forcepwdchange,
                      $conversationbadgecountenabled, $userid, $sitepolicyacceptreqd, $inalternativerole];
         $PAGE->requires->js_call_amd('theme_snap/snap', 'snapInit', $initvars);
