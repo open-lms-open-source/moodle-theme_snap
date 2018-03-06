@@ -23,31 +23,25 @@
 /**
  * @module theme_snap/alternative_role_handler-lazy
  */
-define(['jquery', 'core/ajax', 'theme_snap/ajax_notification', 'core/templates'],
-    function($, Ajax, AjaxNotify, templates) {
-        var self = this;
-
-        /**
-         * Initialising function.
-         */
-        self.init = function(courseId) {
-            // Encode return url.
-            var returnURL = encodeURIComponent(window.location.href.replace(M.cfg.wwwroot, ''));
-
-            // Render "return to normal role" button and add to Snap admin navigation.
-            templates.render('theme_snap/return_to_normal_role', {
-                switchroleurl: M.cfg.wwwroot + '/course/switchrole.php?'
-                        + 'id=' + courseId
-                        + '&sesskey=' + M.cfg.sesskey
-                        + '&switchrole=0'
-                        + '&returnurl=' + returnURL
-            }).then(function(html) {
-                $('#admin-menu-trigger').parent().append(html);
-            });
-        };
-
+define(['jquery', 'core/templates'],
+    function($, templates) {
         return {
-            init: self.init
+            /**
+             * Initialising function.
+             */
+            init: function(courseId) {
+                var returnURL = encodeURIComponent(window.location.href.replace(M.cfg.wwwroot, ''));
+
+                templates.render('theme_snap/return_to_normal_role', {
+                    switchroleurl: M.cfg.wwwroot + '/course/switchrole.php?'
+                    + 'id=' + courseId
+                    + '&sesskey=' + M.cfg.sesskey
+                    + '&switchrole=0'
+                    + '&returnurl=' + returnURL
+                }).then(function(html) {
+                    $('#admin-menu-trigger').parent().append(html);
+                });
+            }
         };
     }
 );
