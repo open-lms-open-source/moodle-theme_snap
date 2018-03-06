@@ -210,7 +210,6 @@ trait format_section_trait {
         // SHAME - Remove tabindex when editing menu is shown.
         $sectionarrayvars = array('id' => 'section-'.$section->section,
         'class' => 'section main clearfix'.$sectionstyle,
-        'role' => 'article',
         'aria-label' => get_section_name($course, $section));
         if (!$PAGE->user_is_editing()) {
             $sectionarrayvars['tabindex'] = '-1';
