@@ -1205,6 +1205,7 @@ class activity {
             $usersfilter,
             $groupsfilter,
             $coursesfilter,
+            null,
             $withduration,
             $ignorehidden
         );
@@ -1222,7 +1223,7 @@ class activity {
 
         $calendar = new \calendar_information(0, 0, 0, $tstart);
         $course = get_course(SITEID);
-        $calendar->prepare_for_view($course, $courses);
+        $calendar->set_sources($course, $courses);
 
         $withduration = true;
         $ignorehidden = true;

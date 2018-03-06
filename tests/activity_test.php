@@ -397,7 +397,7 @@ class theme_snap_acitvity_test extends snap_base_test {
         $calendar = new \calendar_information(0, 0, 0, $tstart);
         $course = get_course(SITEID);
         $courses = enrol_get_my_courses();
-        $calendar->prepare_for_view($course, $courses);
+        $calendar->set_sources($course, $courses);
         $events = activity::get_calendar_activity_events($tstart, $tend, $courses);
         $snapevent = reset($events);
         $this->assertEquals($due, $snapevent->timestart);
@@ -456,7 +456,7 @@ class theme_snap_acitvity_test extends snap_base_test {
         $calendar = new \calendar_information(0, 0, 0, $tstart);
         $course = get_course(SITEID);
         $courses = enrol_get_my_courses();
-        $calendar->prepare_for_view($course, $courses);
+        $calendar->set_sources($course, $courses);
         $eventsobj = activity::user_activity_events($student, $courses, $tstart, $tend, 'allcourses');
         $events = $eventsobj->events;
         $snapevent = reset($events);
@@ -976,9 +976,9 @@ class theme_snap_acitvity_test extends snap_base_test {
 
         // Assert count and order of assignments is correct.
         $this->assertCount(2, $eventobj->events);
-        $this->assertEquals('Assign future due', $eventobj->events[0]->name);
+        $this->assertEquals('Assign future due is due', $eventobj->events[0]->name);
         // The overdue assignment should be last in the list as it now has a deadline greater than the other assignment.
-        $this->assertEquals('Assign overdue', $eventobj->events[1]->name);
+        $this->assertEquals('Assign overdue is due', $eventobj->events[1]->name);
     }
 
     /**
@@ -1058,11 +1058,11 @@ class theme_snap_acitvity_test extends snap_base_test {
         foreach ($actual as $item) {
             $deadlinelist[] = $item;
         }
-        $this->assertEquals('Assign 1', $deadlinelist[0]->name);
+        $this->assertEquals('Assign 1 is due', $deadlinelist[0]->name);
         $this->assertEquals('Quiz 1', $deadlinelist[1]->name);
-        $this->assertEquals('Assign 2', $deadlinelist[2]->name);
+        $this->assertEquals('Assign 2 is due', $deadlinelist[2]->name);
         $this->assertEquals('Quiz 2', $deadlinelist[3]->name);
-        $this->assertEquals('Assign 3', $deadlinelist[4]->name);
+        $this->assertEquals('Assign 3 is due', $deadlinelist[4]->name);
 
         // Check 5 deadlines exist for users in all timeszones.
         $tzoneusers = [];

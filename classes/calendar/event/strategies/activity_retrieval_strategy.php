@@ -53,6 +53,7 @@ class activity_retrieval_strategy extends \core_calendar\local\event\strategies\
         $users,
         $groups,
         $courses,
+        $categories,
         $whereconditions,
         $whereparams,
         $ordersql,
@@ -64,7 +65,7 @@ class activity_retrieval_strategy extends \core_calendar\local\event\strategies\
 
         $params = array();
         // Quick test.
-        if (empty($users) && empty($groups) && empty($courses)) {
+        if (empty($users) && empty($groups) && empty($courses) && empty($categories)) {
             return array();
         }
 
@@ -75,11 +76,11 @@ class activity_retrieval_strategy extends \core_calendar\local\event\strategies\
         if ((is_array($users) && !empty($users)) or is_numeric($users)) {
             // Events from a number of users.
             list($insqlusers, $inparamsusers) = $DB->get_in_or_equal($users, SQL_PARAMS_NAMED);
-            $filters[] = "(e.userid $insqlusers AND e.courseid = 0 AND e.groupid = 0)";
+            $filters[] = "(e.userid $insqlusers AND e.courseid = 0 AND e.groupid = 0 AND e.categoryid = 0)";
             $params = array_merge($params, $inparamsusers);
         } else if ($users === true) {
             // Events from ALL users.
-            $filters[] = "(e.userid != 0 AND e.courseid = 0 AND e.groupid = 0)";
+            $filters[] = "(e.userid != 0 AND e.courseid = 0 AND e.groupid = 0 AND e.categoryid = 0)";
         }
         // Boolean false (no users at all): We don't need to do anything.
 
@@ -103,6 +104,16 @@ class activity_retrieval_strategy extends \core_calendar\local\event\strategies\
         } else if ($courses === true) {
             // Events from ALL courses.
             $filters[] = "(e.groupid = 0 AND e.courseid != 0)";
+        }
+
+        // Category filter.
+        if ((is_array($categories) && !empty($categories)) or is_numeric($categories)) {
+            list($insqlcategories, $inparamscategories) = $DB->get_in_or_equal($categories, SQL_PARAMS_NAMED);
+            $filters[] = "(e.groupid = 0 AND e.courseid = 0 AND e.categoryid $insqlcategories)";
+            $params = array_merge($params, $inparamscategories);
+        } else if ($categories === true) {
+            // Events from ALL categories.
+            $filters[] = "(e.groupid = 0 AND e.courseid = 0 AND e.categoryid != 0)";
         }
 
         // Security check: if, by now, we have NOTHING in $whereclause, then it means
@@ -143,7 +154,7 @@ class activity_retrieval_strategy extends \core_calendar\local\event\strategies\
 
         if ($user) {
             // Set filter condition for the user's events.
-            $subqueryconditions[] = "(ev.userid = :user AND ev.courseid = 0 AND ev.groupid = 0)";
+            $subqueryconditions[] = "(ev.userid = :user AND ev.courseid = 0 AND ev.groupid = 0 AND ev.categoryid = 0)";
             $subqueryparams['user'] = $user;
 
             foreach ($usercourses as $courseid) {
@@ -185,8 +196,17 @@ class activity_retrieval_strategy extends \core_calendar\local\event\strategies\
         // Set subquery filter condition for the courses.
         if (!empty($subquerycourses)) {
             list($incourses, $incoursesparams) = $DB->get_in_or_equal($subquerycourses, SQL_PARAMS_NAMED);
-            $subqueryconditions[] = "(ev.groupid = 0 AND ev.courseid $incourses)";
+            $subqueryconditions[] = "(ev.groupid = 0 AND ev.courseid $incourses AND ev.categoryid = 0)";
             $subqueryparams = array_merge($subqueryparams, $incoursesparams);
+        }
+
+        // Set subquery filter condition for the categories.
+        if ($categories === true) {
+            $subqueryconditions[] = "(ev.categoryid != 0 AND ev.eventtype = 'category')";
+        } else if (!empty($categories)) {
+            list($incategories, $incategoriesparams) = $DB->get_in_or_equal($categories, SQL_PARAMS_NAMED);
+            $subqueryconditions[] = "(ev.groupid = 0 AND ev.courseid = 0 AND ev.categoryid $incategories)";
+            $subqueryparams = array_merge($subqueryparams, $incategoriesparams);
         }
 
         // Build the WHERE condition for the sub-query.

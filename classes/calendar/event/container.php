@@ -49,15 +49,15 @@ class container extends \core_calendar\local\event\container {
             self::$eventvault = false;
             self::$actionfactory = new action_factory();
             self::$eventmapper = new event_mapper(
-            // The event mapper we return from here needs to know how to
-            // make events, so it needs an event factory. However we can't
-            // give it the same one as we store and return in the container
-            // as that one uses all our plumbing to control event visibility.
-            //
-            // So we make a new even factory that doesn't do anyting other than
-            // return the instance.
+                // The event mapper we return from here needs to know how to
+                // make events, so it needs an event factory. However we can't
+                // give it the same one as we store and return in the container
+                // as that one uses all our plumbing to control event visibility.
+                //
+                // So we make a new even factory that doesn't do anyting other than
+                // return the instance.
                 new event_factory(
-                // Never apply actions, simply return.
+                    // Never apply actions, simply return.
                     function(event_interface $event) {
                         return $event;
                     },
@@ -80,6 +80,15 @@ class container extends \core_calendar\local\event\container {
                 [self::class, 'apply_component_is_event_visible'],
                 // @codingStandardsIgnoreEnd
                 function ($dbrow) {
+                    if (!empty($dbrow->categoryid)) {
+                        // This is a category event. Check that the category is visible to this user.
+                        $category = \coursecat::get($dbrow->categoryid, IGNORE_MISSING, true);
+
+                        if (empty($category) || !$category->is_uservisible()) {
+                            return true;
+                        }
+                    }
+
                     // At present we only have a bail-out check for events in course modules.
                     if (empty($dbrow->modulename)) {
                         return false;
