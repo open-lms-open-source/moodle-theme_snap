@@ -318,7 +318,8 @@ EOF;
     }
 
     public function test_convert_ws_param_no_type() {
-        $this->setExpectedException('coding_exception', 'Type not specified');
+        $this->expectException('coding_exception');
+        $this->expectExceptionMessage('Type not specified');
         new definition_helper_testable(new wsparam_notype());
     }
 
