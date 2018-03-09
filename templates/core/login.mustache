@@ -140,11 +140,20 @@
         <div class="potentialidplist">
             {{#identityproviders}}
                 <div class="potentialidp">
-                    <a href="{{url}}" title={{#quote}}{{name}}{{/quote}}>{{#icon}}{{>core/pix_icon}}{{/icon}}{{name}}</a>
+                    <a href="{{url}}" title={{#quote}}{{name}}{{/quote}}>
+                        {{#iconurl}}
+                            <img class="auth-icon" src="{{iconurl}}"/>
+                        {{/iconurl}}
+                        {{^iconurl}}
+                            {{#pix}} /i/permissions, core {{/pix}}
+                        {{/iconurl}}
+                        {{name}}
+                    </a>
                 </div>
             {{/identityproviders}}
         </div>
     {{/hasidentityproviders}}
+
 </div>
 
 {{#hasinstructions}}
@@ -173,7 +182,6 @@
         </div>
     </div>
 {{/hasinstructions}}
-
 {{#cansignup}}
     <div class="snap-login">
         <h5>{{#str}}firsttime{{/str}}</h5>
@@ -208,4 +216,8 @@
         {{/autofocusform}}
     {{/error}}
     });
+
+
+
 {{/js}}
+
