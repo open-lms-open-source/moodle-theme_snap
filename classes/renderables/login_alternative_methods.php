@@ -49,10 +49,19 @@ class login_alternative_methods implements \renderable {
 
         if (!empty($potentialidps)) {
             foreach ($potentialidps as $idp) {
+
+                $icon = $OUTPUT->image_url('i/permissions');
+
+                if (!empty($idp['iconurl'])) {
+                    $icon = $idp['iconurl'];
+                } else if (!empty($idp['icon'])) {
+                    $icon = $OUTPUT->image_url($idp['icon']->pix, $idp['icon']->component);
+                }
+
                 $this->potentialidps[] = (object) [
                     'url' => $idp['url']->out(),
                     'name' => $idp['name'],
-                    'icon' => $OUTPUT->image_url($idp['icon']->pix)
+                    'icon' => $icon
                 ];
             }
         }

@@ -3629,3 +3629,13 @@ body.pagelayout-frontpage {
         text-overflow: ellipsis;
     }
 }
+
+// Auth icon align fix.
+#page-login-index .auth-icon,
+#page-site-index .auth-icon,
+#page-login-index .icon,
+#page-site-index .icon{
+    width: 24px;
+    height: 24px;
+    margin: 0;
+}
