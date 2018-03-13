@@ -117,6 +117,7 @@ $string['error:categorycolorinvalidvalue'] = 'Record id or color value for categ
 $string['error:categorynotfound'] = 'The category record with id "{$a}" hasn\'t been found';
 $string['error:coverimageexceedsmaxbytes'] = 'Cover image exceeds the site level maximum allowed file size ({$a})';
 $string['error:coverimageresolutionlow'] = 'For best quality, we recommend a larger image of at least 1024px width.';
+$string['error:duplicatedcategoryids'] = 'Incorrect JSON format, some IDs are duplicated';
 $string['error:failedtochangeassetvisibility'] = 'Failed to hide/show asset';
 $string['error:failedtochangesectionvisibility'] = 'Failed to hide/show section';
 $string['error:failedtohighlightsection'] = 'Failed to highlight section';

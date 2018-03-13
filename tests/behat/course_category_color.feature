@@ -102,3 +102,20 @@ Feature: When the moodle theme is set to Snap, admins can change the color for a
     And the following fields do not match these values:
       |    JSON Text   | {"20":"#FA"} |
 
+  @javascript
+  Scenario: Go to Snap settings page and put a wrong JSON text with duplicated IDs.
+    Given I log in as "admin"
+      And I am on site homepage
+      And I click on "#admin-menu-trigger" "css_element"
+      And I navigate to "Snap" node in "Site administration>Appearance>Themes"
+      And I should see "Category color"
+      And I click on "Category color" "link"
+      And I should see "JSON Text"
+      And I set the following fields to these values:
+        |  Color palette | #FFAAFF                                           |
+        |    JSON Text   | {"10":"#FAAFFF", "10":"0DAA00"} |
+      And I click on "Save changes" "button"
+      And I wait until the page is ready
+      And I click on "Category color" "link"
+     Then the following fields do not match these values:
+        |    JSON Text   | {"10":"#FAAFFF", "10":"0DAA00"} |
