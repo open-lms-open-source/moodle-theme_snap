@@ -83,7 +83,7 @@ class admin_setting_configcolorcategory extends \admin_setting_configtext {
      * Saves the setting.
      *
      * @param string $data
-     * @return bool
+     * @return bool|string
      */
     public function write_setting($data) {
         global $DB;
@@ -102,9 +102,36 @@ class admin_setting_configcolorcategory extends \admin_setting_configtext {
                     return get_string('error:categorynotfound', 'theme_snap', $categoryid);
                 }
             }
+            $sizeelements = $this->validate_text($data);
+            if ($sizeelements !== count((array)$categories)) {
+                return get_string('error:duplicatedcategoryids', 'theme_snap');
+            }
         } else {
             $data = 0;
         }
         return ($this->config_write($this->name, $data) ? '' : get_string('errorsetting', 'admin'));
     }
+
+    /**
+     * Returns the quantity of pairs (id => color) in the JSON string.
+     * @param string $data
+     * @return int
+     */
+    private function validate_text($data) {
+        $temp = $data;
+        $symbols = array('{', '}', '"');
+        foreach ($symbols as $symbol) {
+            $temp = str_replace($symbol, '', $temp);
+        }
+        $temp = trim(str_replace(',', ' ', $temp));
+        $split = preg_split('/\s+/', $temp);
+        $cont = 0;
+        foreach ($split as $key => $value) {
+            if (!empty($value)) {
+                $cont++;
+            }
+        }
+        return $cont;
+    }
+
 }
