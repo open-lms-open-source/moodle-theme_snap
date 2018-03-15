@@ -44,8 +44,9 @@ Feature: When the moodle theme is set to Snap, admins can change the color for a
       |    JSON Text   | This is more than 10 words. 1 2 3 4 5 6 7 8 9 10. |
     And I click on "Save changes" "button"
     And I wait until the page is ready
-    And the following fields do not match these values:
-      |    JSON Text   | This is more than 10 words. 1 2 3 4 5 6 7 8 9 10. |
+    And I should see "Some settings were not changed due to an error."
+    And I click on "Category color" "link"
+    And I should see "Incorrect JSON format for course categories"
 
   @javascript
   Scenario: Go to Snap settings page and put a valid JSON text in it.
@@ -58,12 +59,13 @@ Feature: When the moodle theme is set to Snap, admins can change the color for a
     And I should see "JSON Text"
     And I set the field "JSON Text" to "aaa"
     And I set the following fields to these values:
-      |  Color palette |      #FFAAFF                  |
+      |  Color palette |      #FFAAFF                   |
       |    JSON Text   | {"5":"#FAAFFF","10":"#FABCF0"} |
     And I click on "Save changes" "button"
     And I wait until the page is ready
+    And I should not see "Some settings were not changed due to an error."
     And the following fields match these values:
-      |  Color palette |      #FFAAFF     |
+      |  Color palette |      #FFAAFF                   |
       |    JSON Text   | {"5":"#FAAFFF","10":"#FABCF0"} |
 
   @javascript
@@ -81,8 +83,9 @@ Feature: When the moodle theme is set to Snap, admins can change the color for a
       |    JSON Text   | {"70":"#FAAFFF"} |
     And I click on "Save changes" "button"
     And I wait until the page is ready
-    And the following fields do not match these values:
-      |    JSON Text   | {"70":"#FAAFFF"} |
+    And I should see "Some settings were not changed due to an error."
+    And I click on "Category color" "link"
+    And I should see "The category record with id \"70\" hasn't been found"
 
   @javascript
   Scenario: Go to Snap settings page and put a not valid color in the JSON text.
@@ -99,8 +102,9 @@ Feature: When the moodle theme is set to Snap, admins can change the color for a
       |    JSON Text   | {"20":"#FA"} |
     And I click on "Save changes" "button"
     And I wait until the page is ready
-    And the following fields do not match these values:
-      |    JSON Text   | {"20":"#FA"} |
+    And I should see "Some settings were not changed due to an error."
+    And I click on "Category color" "link"
+    And I should see "Record id or color value for category \"20\" aren't valid"
 
   @javascript
   Scenario: Go to Snap settings page and put a wrong JSON text with duplicated IDs.
@@ -112,10 +116,10 @@ Feature: When the moodle theme is set to Snap, admins can change the color for a
       And I click on "Category color" "link"
       And I should see "JSON Text"
       And I set the following fields to these values:
-        |  Color palette | #FFAAFF                                           |
-        |    JSON Text   | {"10":"#FAAFFF", "10":"0DAA00"} |
+        |  Color palette | #FFAAFF                          |
+        |    JSON Text   | {"10":"#FAAFFF", "10":"#0DAA00"} |
       And I click on "Save changes" "button"
       And I wait until the page is ready
+      And I should see "Some settings were not changed due to an error."
       And I click on "Category color" "link"
-     Then the following fields do not match these values:
-        |    JSON Text   | {"10":"#FAAFFF", "10":"0DAA00"} |
+      And I should see "Incorrect JSON format, some IDs are duplicated"
