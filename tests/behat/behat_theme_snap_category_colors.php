@@ -78,6 +78,36 @@ class behat_theme_snap_category_colors extends behat_base {
     }
 
     /**
+     * Checks if css element have a property with input value.
+     *
+     * @Given /^I check \
+     *        element "(?P<element_string>(?:[^"]|\\")*)" with \
+     *        property "(?P<property_string>(?:[^"]|\\")*)" = "(?P<value_string>(?:[^"]|\\")*)"$/
+     * @param string $element element to be checked
+     * @param string $property property to be checked
+     * @param string $value value of the property
+     * @throws Exception
+     */
+    public function i_check_element_with_property($element, $property, $value) {
+        $session = $this->getSession();
+        $elementvalue = $session->getDriver()->evaluateScript(
+            'window.getComputedStyle(document.querySelectorAll("'
+            . $element . '")[0], null).getPropertyValue("' . $property . '");');
+
+        if (strpos($elementvalue, 'rgb') !== false) {
+            $elementvalue = self::rgb2array($elementvalue);
+            $value = self::hex2rgb($value);
+        }
+
+        if ($elementvalue !== $value) {
+            throw new Exception( $property . " with value " . (is_array($value) ? implode(",", $value) : $value)
+                    . " was not found in element " . $element . ", instead "
+                    . (is_array($elementvalue) ? implode(",", $elementvalue) : $elementvalue)
+                    . " was found.");
+        }
+    }
+
+    /**
      * Function to get a RGB array from a hex color (1, 3, or 6 digits).
      * @param string $color color in hex format
      * @return array|bool
