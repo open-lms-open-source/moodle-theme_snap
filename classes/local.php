@@ -761,16 +761,23 @@ class local {
 
         $grading = self::all_ungraded($USER->id);
 
-        if (empty($grading)) {
-            return '<p class="small">' . get_string('nograding', 'theme_snap') . '</p>';
-        }
-
         $output = $PAGE->get_renderer('theme_snap', 'core', RENDERER_TARGET_GENERAL);
         $out = '';
-        foreach ($grading as $ungraded) {
+        foreach ($grading as $key => $ungraded) {
             $modinfo = get_fast_modinfo($ungraded->course);
             $course = $modinfo->get_course();
             $cm = $modinfo->get_cm($ungraded->coursemoduleid);
+            $groupmode = groups_get_activity_groupmode($cm);
+
+            $context = \context_module::instance($cm->id);
+
+            // Show grading in the personal menu only to the teachers with the proper access to the courses
+            // or the groups.
+            if ($groupmode == SEPARATEGROUPS && !has_capability('moodle/course:viewhiddenactivities', $context) &&
+                    $cm->uservisible != 1) {
+                unset($grading[$key]);
+                continue;
+            }
 
             $modimageurl = $output->image_url('icon', $cm->modname);
             $modname = get_string('modulename', 'mod_'.$cm->modname);
@@ -792,6 +799,10 @@ class local {
             }
 
             $out .= $output->snap_media_object($cm->url, $modimage, $ungradedtitle, $meta, '');
+        }
+
+        if (empty($grading)) {
+            return '<p class="small">' . get_string('nograding', 'theme_snap') . '</p>';
         }
 
         return $out;
