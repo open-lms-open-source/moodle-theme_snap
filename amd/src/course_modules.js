@@ -41,6 +41,7 @@ define(
         var updateModCompletion = function(module, completionhtml) {
             // Update completion tracking icon.
             module.find('.snap-asset-completion-tracking').html(completionhtml);
+            module.find('.btn-link').focus();
             $(document).trigger('snapModuleCompletionChange', module);
         };
 
