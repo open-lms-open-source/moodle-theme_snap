@@ -1200,6 +1200,10 @@ header#page-header
         padding: 1em 2%;
         margin: 10em 4% 1em;
     }
+
+    #moodle-page {
+        padding-top: 2em;
+    }
 }
 
 @include media-breakpoint-up(lg) {
