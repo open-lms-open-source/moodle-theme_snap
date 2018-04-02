@@ -307,74 +307,72 @@ class course_renderer extends \core_course_renderer {
         $modcontext = context_module::instance($mod->id);
         $baseurl = new moodle_url('/course/mod.php', array('sesskey' => sesskey()));
 
-        if (has_capability('moodle/course:update', $modcontext)) {
-            $str = get_strings(array('delete', 'move', 'duplicate', 'hide', 'show', 'roles'), 'moodle');
-            // TODO - add snap strings here.
+        $str = get_strings(array('delete', 'move', 'duplicate', 'hide', 'show', 'roles'), 'moodle');
+        // TODO - add snap strings here.
 
-            // Move, Edit, Delete.
-            if (has_capability('moodle/course:manageactivities', $modcontext)) {
-                $movealt = s(get_string('move', 'theme_snap', $mod->get_formatted_name()));
-                $moveicon = '<img title="'.$movealt.'" aria-hidden="true" class="svg-icon" src="';
-                $moveicon .= $this->output->image_url('move', 'theme').'"/>';
-                $editalt = s(get_string('edit', 'theme_snap', $mod->get_formatted_name()));
-                $editicon = '<img title="'.$editalt.'" alt="'.$editalt.'" class="svg-icon" src="';
-                $editicon .= $this->output->image_url('edit', 'theme').'"/>';
-                $actions .= '<input id="snap-move-mod-'.$mod->id.'" class="js-snap-asset-move sr-only" type="checkbox">';
-                $actions .= '<label class="snap-asset-move" for="snap-move-mod-'.$mod->id.'">';
-                $actions .= '<span class="sr-only">'.$movealt.'</span>'.$moveicon.'</label>';
-                $actions .= '<a class="snap-edit-asset" href="'.new moodle_url($baseurl, array('update' => $mod->id)).'">';
-                $actions .= $editicon.'</a>';
-                $actionsadvanced[] = '<a href="'.new moodle_url($baseurl, array('delete' => $mod->id)).
-                    '" data-action="delete" class="js_snap_delete dropdown-item">'.$str->delete.'</a>';
-            }
+        // Move, Edit, Delete.
+        if (has_capability('moodle/course:manageactivities', $modcontext)) {
+            $movealt = s(get_string('move', 'theme_snap', $mod->get_formatted_name()));
+            $moveicon = '<img title="'.$movealt.'" aria-hidden="true" class="svg-icon" src="';
+            $moveicon .= $this->output->image_url('move', 'theme').'"/>';
+            $editalt = s(get_string('edit', 'theme_snap', $mod->get_formatted_name()));
+            $editicon = '<img title="'.$editalt.'" alt="'.$editalt.'" class="svg-icon" src="';
+            $editicon .= $this->output->image_url('edit', 'theme').'"/>';
+            $actions .= '<input id="snap-move-mod-'.$mod->id.'" class="js-snap-asset-move sr-only" type="checkbox">';
+            $actions .= '<label class="snap-asset-move" for="snap-move-mod-'.$mod->id.'">';
+            $actions .= '<span class="sr-only">'.$movealt.'</span>'.$moveicon.'</label>';
+            $actions .= '<a class="snap-edit-asset" href="'.new moodle_url($baseurl, array('update' => $mod->id)).'">';
+            $actions .= $editicon.'</a>';
+            $actionsadvanced[] = '<a href="'.new moodle_url($baseurl, array('delete' => $mod->id)).
+                '" data-action="delete" class="js_snap_delete dropdown-item">'.$str->delete.'</a>';
+        }
 
-            // Hide/Show.
-            // Not output for stealth activites.
-            if (has_capability('moodle/course:activityvisibility', $modcontext) && !$mod->is_stealth()) {
-                $hideaction = '<a href="'.new moodle_url($baseurl, array('hide' => $mod->id));
-                $hideaction .= '" data-action="hide" class="dropdown-item editing_hide js_snap_hide">'.$str->hide.'</a>';
-                $actionsadvanced[] = $hideaction;
-                $showaction = '<a href="'.new moodle_url($baseurl, array('show' => $mod->id));
-                $showaction .= '" data-action="show" class="dropdown-item editing_show js_snap_show">'.$str->show.'</a>';
-                $actionsadvanced[] = $showaction;
-            }
+        // Hide/Show.
+        // Not output for stealth activites.
+        if (has_capability('moodle/course:activityvisibility', $modcontext) && !$mod->is_stealth()) {
+            $hideaction = '<a href="'.new moodle_url($baseurl, array('hide' => $mod->id));
+            $hideaction .= '" data-action="hide" class="dropdown-item editing_hide js_snap_hide">'.$str->hide.'</a>';
+            $actionsadvanced[] = $hideaction;
+            $showaction = '<a href="'.new moodle_url($baseurl, array('show' => $mod->id));
+            $showaction .= '" data-action="show" class="dropdown-item editing_show js_snap_show">'.$str->show.'</a>';
+            $actionsadvanced[] = $showaction;
+        }
 
-            // Duplicate.
-            $dupecaps = array('moodle/backup:backuptargetimport', 'moodle/restore:restoretargetimport');
-            if (has_all_capabilities($dupecaps, $coursecontext) &&
+        // Duplicate.
+        $dupecaps = array('moodle/backup:backuptargetimport', 'moodle/restore:restoretargetimport');
+        if (has_all_capabilities($dupecaps, $coursecontext) &&
             plugin_supports('mod', $mod->modname, FEATURE_BACKUP_MOODLE2) &&
             plugin_supports('mod', $mod->modname, 'duplicate', true)) {
-                $actionsadvanced[] = "<a href='".new moodle_url($baseurl, array('duplicate' => $mod->id)).
-                    "' data-action='duplicate' class='dropdown-item js_snap_duplicate'>$str->duplicate</a>";
-            }
-
-            // Asign roles.
-            if (has_capability('moodle/role:assign', $modcontext)) {
-                $actionsadvanced[] = "<a class='dropdown-item' href='".
-                        new moodle_url('/admin/roles/assign.php', array('contextid' => $modcontext->id)).
-                        "'>$str->roles</a>";
-            }
-
-            // Give local plugins a chance to add icons.
-            $localplugins = array();
-            foreach (get_plugin_list_with_function('local', 'extend_module_editing_buttons') as $function) {
-                $localplugins = array_merge($localplugins, $function($mod));
-            }
-
-            foreach (get_plugin_list_with_function('block', 'extend_module_editing_buttons') as $function) {
-                $localplugins = array_merge($localplugins, $function($mod));
-            }
-
-            // TODO - pld string is far too long....
-            $locallinks = '';
-            foreach ($localplugins as $localplugin) {
-                $url = $localplugin->url;
-                $text = $localplugin->text;
-                $class = 'dropdown-item ' . $localplugin->attributes['class'];
-                $actionsadvanced[] = "<a href='$url' class='$class'>$text</a>";
-            }
-
+            $actionsadvanced[] = "<a href='".new moodle_url($baseurl, array('duplicate' => $mod->id)).
+                "' data-action='duplicate' class='dropdown-item js_snap_duplicate'>$str->duplicate</a>";
         }
+
+        // Asign roles.
+        if (has_capability('moodle/role:assign', $modcontext)) {
+            $actionsadvanced[] = "<a class='dropdown-item' href='".
+                new moodle_url('/admin/roles/assign.php', array('contextid' => $modcontext->id)).
+                "'>$str->roles</a>";
+        }
+
+        // Give local plugins a chance to add icons.
+        $localplugins = array();
+        foreach (get_plugin_list_with_function('local', 'extend_module_editing_buttons') as $function) {
+            $localplugins = array_merge($localplugins, $function($mod));
+        }
+
+        foreach (get_plugin_list_with_function('block', 'extend_module_editing_buttons') as $function) {
+            $localplugins = array_merge($localplugins, $function($mod));
+        }
+
+        // TODO - pld string is far too long....
+        $locallinks = '';
+        foreach ($localplugins as $localplugin) {
+            $url = $localplugin->url;
+            $text = $localplugin->text;
+            $class = 'dropdown-item ' . $localplugin->attributes['class'];
+            $actionsadvanced[] = "<a href='$url' class='$class'>$text</a>";
+        }
+
         $advancedactions = '';
         if (!empty($actionsadvanced)) {
             $moreicon = "<img title='".get_string('more', 'theme_snap')."' alt='".get_string('more', 'theme_snap').
