@@ -195,7 +195,7 @@ class behat_theme_snap extends behat_base {
      * @Given /^I wait for the personal menu to be loaded$/
      */
     public function i_wait_personal_menu_to_load() {
-        $this->getSession()->wait(1000, '(jQuery.active === 0)'); // Time in milliseconds.
+        $this->getSession()->wait(2000, '(jQuery.active === 0)'); // Time in milliseconds.
     }
 
     /**
