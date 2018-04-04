@@ -50,12 +50,13 @@ if (!empty($coverimagecss)) {
                 $categories = $PAGE->categories;
                 if (empty($categories)) {
                     $catname = get_string('courses', 'theme_snap');
-                    echo '<h1>' .s($catname). '</h1>';
+                    $catname = format_text($catname);
+                    echo '<h1>' . html_to_text(s($catname)) . '</h1>';
                 } else {
                     // Get the current category name and description.
                     $cat = reset($categories);
                     $catid = $cat->id;
-                    $catname = $cat->name;
+                    $catname = format_text($cat->name);
                     $catdescription = $cat->description;
 
                     // Category edit link.
@@ -80,7 +81,7 @@ if (!empty($coverimagecss)) {
                         // No summary, output edit link.
                         $catsummary = $editcatagory;
                     }
-                    echo '<h1>' .s($catname). '</h1>';
+                    echo '<h1>' . html_to_text(s($catname)) . '</h1>';
                     echo $catsummary;
                 }
 

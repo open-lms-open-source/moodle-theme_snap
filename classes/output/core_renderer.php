@@ -990,6 +990,8 @@ class core_renderer extends \theme_boost\output\core_renderer {
             $message    = file_rewrite_pluginfile_urls($discussion->message,
                           'pluginfile.php', $context->id, 'mod_forum', 'post', $discussion->id);
 
+            $message    = format_text(html_to_text($message));
+
             $imagestyle = '';
 
             $imgarr = \theme_snap\local::extract_first_image($message);
@@ -1010,7 +1012,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
             if (!$imagestyle) {
                 $preview = format_text($message, $discussion->messageformat, ['context' => $context]);
                 $preview = html_to_text($preview, 0, false);
-                $preview = "<div class='news-article-preview'><p>".shorten_text($preview, 200)."</p>
+                $preview = "<div class='news-article-preview'><p>".format_text(shorten_text($preview, 200))."</p>
                 <p class='text-right'>".$readmorebtn."</p></div>";
             } else {
                 $newsimage = '<div class="news-article-image toggle"'.$imagestyle.' title="'.
