@@ -587,7 +587,8 @@ EOF;
         }
 
         // Participants.
-        if (has_capability('moodle/course:viewparticipants', $coursecontext)) {
+        if (course_can_view_participants($coursecontext)) {
+
             // Get count of course users.
             $usercount = count_enrolled_users($coursecontext, '', 0, true);
 
