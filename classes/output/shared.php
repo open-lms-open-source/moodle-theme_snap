@@ -374,7 +374,9 @@ EOF;
         $forcepwdchange = (bool) get_user_preferences('auth_forcepasswordchange', false);
         $conversationbadgecountenabled = isloggedin() && isset($mprocs['badge']) && $PAGE->theme->settings->messagestoggle == 1;
         $userid = $USER->id;
-        $sitepolicyacceptreqd = isloggedin() && $CFG->sitepolicy && empty($USER->policyagreed) && !is_siteadmin();
+        $manager = new \core_privacy\local\sitepolicy\manager();
+        $policyurlexist = $manager->is_defined();
+        $sitepolicyacceptreqd = isloggedin() && $policyurlexist && empty($USER->policyagreed) && !is_siteadmin();
         $inalternativerole = $OUTPUT->in_alternative_role();
         $initvars = [$coursevars, $pagehascoursecontent, get_max_upload_file_size($CFG->maxbytes), $forcepwdchange,
                      $conversationbadgecountenabled, $userid, $sitepolicyacceptreqd, $inalternativerole];
