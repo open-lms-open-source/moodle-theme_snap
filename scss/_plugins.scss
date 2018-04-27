@@ -339,10 +339,6 @@
         }
     }
 
-    .card-block {
-        padding: 0;
-    }
-
     // Hide next/previous image when not a link.
     .navimages {
         img {
@@ -350,6 +346,11 @@
         }
         a img {
             visibility: visible;
+        }
+        .bookprev:after,
+        .booknext:before {
+            content: attr(title);
+            font-family: $font-family-base;
         }
     }
     // Style next and previous navigation.
@@ -364,11 +365,7 @@
     .bookprev {
         text-align: left;
     }
-    .bookprev:after,
-    .booknext:before {
-        content: attr(title);
-        font-family: $font-family-base;
-    }
+
 }
 
 // Book mod grid.
