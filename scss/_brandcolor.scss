@@ -601,6 +601,9 @@ $lighter-grey-btn: #e6e6e6;
                 color: $nav-color;
             }
         }
+        .conversation_badge_count {
+            background-color: darken($nav-color, 8%);
+        }
     }
 
 
