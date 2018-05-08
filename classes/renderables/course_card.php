@@ -124,6 +124,11 @@ class course_card implements \renderable {
     public $category = null;
 
     /**
+     * @var string
+     */
+    public $feedbackurl;
+
+    /**
      * @param int $courseid
      * @param course | null $service
      */
@@ -142,6 +147,7 @@ class course_card implements \renderable {
         $this->course = $DB->get_record('course', ['id' => $this->courseid]);
         $this->category = $this->course->category;
         $this->url = new \moodle_url('/course/view.php', ['id' => $this->course->id]) . '';
+        $this->feedbackurl = new \moodle_url('/grade/report/user/index.php', ['id' => $this->course->id]) . '';
         $this->shortname = $this->course->shortname;
         $this->fullname = format_string($this->course->fullname);
         $this->published = (bool)$this->course->visible;
