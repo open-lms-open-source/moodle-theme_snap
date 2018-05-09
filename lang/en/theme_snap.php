@@ -257,6 +257,10 @@ $string['poweredbyrunby'] = 'Built with <a href="http://moodlerooms.com/" target
      powered by <a href="http://www.moodle.com/" target="_blank">Moodle</a>.<br>
     Copyright &#169; 2017 Blackboard Inc, All Rights Reserved.';
 $string['previoussection'] = 'Previous section';
+$string['privacy:metadata:theme_snap_course_favorites:courseid'] = 'The course ID of the course that the user favorited';
+$string['privacy:metadata:theme_snap_course_favorites:userid'] = 'The user ID of the user that favorited the course';
+$string['privacy:metadata:theme_snap_course_favorites:timefavorited'] = 'The timestamp of when the user favorited the course';
+$string['privacy:metadata:theme_snap_course_favorites'] = 'Stores users\' course favorites for Snap';
 $string['problemsfound'] = 'Problems Found';
 $string['progress'] = 'Progress';
 $string['readmore'] = 'Read more&nbsp;»';
