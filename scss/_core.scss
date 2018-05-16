@@ -1867,6 +1867,32 @@ ul.events-new + ul.events-underway {
     top: 0;
 }
 
+#page-mod-quiz-review {
+    .formulation {
+        select {
+            .custom-select {
+                padding-right: 5em;
+            }
+            &:disabled {
+                color: #818a91 !important;
+                cursor: not-allowed;
+                background-color: #eceeef !important;
+                padding-right: 5em;
+            }
+            width: auto !important;
+        }
+
+        input[type="text"] {
+            width: auto !important;
+        }
+
+        input.form-control[readonly] {
+            background-color: #eceeef !important;
+            opacity: 1;
+        }
+    }
+}
+
 // Quiz setup form //
 #page-mod-quiz-mod #id_reviewoptionshdr .fitem {
     width: 100%;
