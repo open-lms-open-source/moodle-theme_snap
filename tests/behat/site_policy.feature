@@ -46,6 +46,7 @@ Feature: As an authenticated non-admin user, opening the snap personal menu redi
     Accepting the site policy prevents redirect next time personal menu is opened.
     Given the following config values are set as admin:
       | personalmenulogintoggle | 0 | theme_snap |
+    And I skip because "Site policy changes in core changed functionality"
     And I log in as "student1"
     And I am currently on the default site home page
     When I open the personal menu
