@@ -330,6 +330,10 @@ li.section:focus {
         background-image: url([[pix:core|i/marked]]);
     }
 
+    .snap-sharing-cart:after {
+        background-image: url([[pix:core|t/backup]]);
+    }
+
     a.ajaxing:after {
         @include ajaxing(block, relative, 20px, 6px);
         background-image: none !important;
