@@ -1861,6 +1861,16 @@ ul.events-new + ul.events-underway {
     @extend .btn-secondary;
 }
 
+.path-mod-quiz #mod_quiz_navblock .qnbutton {
+    overflow: hidden;
+}
+
+.path-mod-quiz #mod_quiz_navblock .qnbutton:hover, .path-mod-quiz #mod_quiz_navblock .qnbutton:focus {
+    background-color: $brand-primary;
+    border: 1px solid $brand-primary;
+    color: #ffffff;
+}
+
 #page-mod-quiz-edit .section .activity .actions {
     position: absolute;
     right: 0;
