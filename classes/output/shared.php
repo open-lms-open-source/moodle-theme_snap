@@ -551,22 +551,11 @@ EOF;
             );
         }
 
-        // Norton grader if installed.
         $iconurl = $OUTPUT->image_url('joule_grader', 'theme');
         $gradebookicon = '<img src="'.$iconurl.'" class="svg-icon" alt="" role="presentation">';
-        if (array_key_exists('nortongrader', $localplugins)) {
-            if (has_capability('local/nortongrader:grade', $coursecontext)
-                || has_capability('local/nortongrader:view', $coursecontext)
-            ) {
-                $links[] = array(
-                    'link' => $CFG->wwwroot.'/local/nortongrader/view.php?courseid='.$COURSE->id,
-                    'title' => $gradebookicon.get_string('pluginname', 'local_nortongrader'),
-                );
-            }
-        }
 
         // Joule grader if installed.
-        if (array_key_exists('joulegrader', $localplugins) && !array_key_exists('nortongrader', $localplugins)) {
+        if (array_key_exists('joulegrader', $localplugins)) {
             if (has_capability('local/joulegrader:grade', $coursecontext)
                 || has_capability('local/joulegrader:view', $coursecontext)
             ) {

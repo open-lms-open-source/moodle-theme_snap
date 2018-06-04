@@ -1089,8 +1089,6 @@ HTML;
             'local-joulegrader-view',
             'blocks-conduit-view',
             'blocks-reports-view',
-            'grade-report-joulegrader-index',
-            'grade-report-nortongrader-index',
             'admin-setting-modsettinglti',
             'blocks-campusvue-view',
             'enrol-instances',
