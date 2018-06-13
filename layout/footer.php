@@ -31,7 +31,7 @@ defined('MOODLE_INTERNAL') || die();
 /* Snap custom footer.*/
 /* Custom footer edit buttons. */
 $footnote = empty($PAGE->theme->settings->footnote) ? '' : $PAGE->theme->settings->footnote;
-$footnote = format_text(html_to_text($footnote));
+$footnote = format_text($footnote, FORMAT_HTML);
 if ($this->page->user_is_editing() && $PAGE->pagetype == 'site-index') {
     $url = new moodle_url('/admin/settings.php', ['section' => 'themesettingsnap'], 'admin-footnote');
     $link = html_writer::link($url, get_string('editcustomfooter', 'theme_snap'), ['class' => 'btn btn-primary btn-sm']);
