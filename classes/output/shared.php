@@ -499,7 +499,7 @@ EOF;
      * @return string
      */
     public static function appendices() {
-        global $CFG, $COURSE, $PAGE, $OUTPUT;
+        global $CFG, $COURSE, $PAGE, $OUTPUT, $DB;
 
         $links = array();
         $localplugins = core_component::get_plugin_list('local');
@@ -686,6 +686,34 @@ EOF;
                     'link' => 'badges/view.php?type=' . BADGE_TYPE_COURSE . '&id=' . $COURSE->id,
                     'title' => $badgesicon.get_string('badges', 'badges')
                 );
+            }
+        }
+
+        // Mediasite.
+        if ($COURSE->id > 1 && has_capability('mod/mediasite:courses7', $coursecontext) &&
+            file_exists($CFG->dirroot . "/mod/mediasite/navigation.php")) {
+            require_once($CFG->dirroot . "/mod/mediasite/mediasitesite.php");
+            $iconurl = $OUTPUT->image_url('icon', 'mediasite');
+            $badgesicon = '<img src="'.$iconurl.'" class="svg-icon" alt="" role="presentation">';
+            $courseconfig = $DB->get_record('mediasite_course_config', array('course' => $COURSE->id));
+            if (!empty($courseconfig->mediasite_courses_enabled) && $courseconfig->mediasite_site) {
+                $site = new MediasiteSite($courseconfig->mediasite_site);
+                $url = new moodle_url(
+                    '/mod/mediasite/courses7.php',
+                    array('id' => $COURSE->id, 'siteid' => $courseconfig->mediasite_site)
+                );
+                $links[] = array(
+                    'link' => $url->out_as_local_url(false),
+                    'title' => $badgesicon . $site->get_integration_catalog_title()
+                );
+            } else {
+                foreach (get_mediasite_sites(true, false) as $site) {
+                    $url = new moodle_url('/mod/mediasite/courses7.php', array('id' => $COURSE->id, 'siteid' => $site->id));
+                    $links[] = array(
+                        'link' => $url->out_as_local_url(false),
+                        'title' => $badgesicon . $site->integration_catalog_title
+                    );
+                }
             }
         }
 
