@@ -124,6 +124,7 @@ if ($PAGE->pagelayout === 'frontpage' && $PAGE->pagetype === 'site-index') {
     echo $OUTPUT->main_content();
 }
 
+echo $OUTPUT->activity_navigation();
 echo $OUTPUT->course_content_footer();
 
 if (stripos($PAGE->bodyclasses, 'format-singleactivity') !== false ) {
