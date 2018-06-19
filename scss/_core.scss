@@ -2234,6 +2234,16 @@ ul.events-new + ul.events-underway {
         width: 100%;
         padding-bottom: 10px;
     }
+
+    div {
+        .no-overflow {
+            overflow: hidden;
+        }
+
+        .grouppictures {
+            margin-top: 0.5em;
+        }
+    }
 }
 
 // -------------------------
