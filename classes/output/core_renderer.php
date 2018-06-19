@@ -1438,6 +1438,12 @@ HTML;
         }
         // Retrieve all modules with associated metadata.
         $sectionreturn = null;
+
+        foreach ($modnames as $module => $name) {
+            if (is_callable('mr_off') && mr_off($module, '_MR_MODULES')) {
+                unset($modnames[$module]);
+            }
+        }
         $modules = get_module_metadata($COURSE, $modnames, $sectionreturn);
         foreach ($modules as $mod) {
             $help = !empty($mod->help) ? $mod->help : '';

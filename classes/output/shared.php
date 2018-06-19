@@ -691,7 +691,8 @@ EOF;
 
         // Mediasite.
         if ($COURSE->id > 1 && has_capability('mod/mediasite:courses7', $coursecontext) &&
-            file_exists($CFG->dirroot . "/mod/mediasite/navigation.php")) {
+            \core_component::get_component_directory('mod_mediasite') !== null && is_callable('mr_on') &&
+            mr_on("mediasite", "_MR_MODULES")) {
             require_once($CFG->dirroot . "/mod/mediasite/mediasitesite.php");
             $iconurl = $OUTPUT->image_url('icon', 'mediasite');
             $badgesicon = '<img src="'.$iconurl.'" class="svg-icon" alt="" role="presentation">';
