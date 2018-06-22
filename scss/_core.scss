@@ -3584,3 +3584,13 @@ body.pagelayout-frontpage {
     height: 24px;
     margin: 0;
 }
+
+// Center prev and next links for activities.
+section#region-main div.m-t-2.m-b-1 {
+    display: inline-flex;
+    width: 100%;
+
+    .row {
+        margin: 0 auto;
+    }
+}
