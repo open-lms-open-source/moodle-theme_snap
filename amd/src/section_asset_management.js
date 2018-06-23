@@ -333,6 +333,8 @@ define(['jquery', 'core/log', 'core/ajax', 'core/str', 'core/templates', 'core/n
                     // for weekly topic courses where the section title needs to stay the
                     // same as the TOC.
                     $('#section-' + idx + ' .content .sectionname').html(chapterTitle);
+                    // Update section data attribute to reflect new section idx.
+                    $(this).find('a.section-modchooser-link').attr('data-section', idx);
                 });
 
                 updateSectionNavigation();
