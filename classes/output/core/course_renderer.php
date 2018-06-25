@@ -149,7 +149,7 @@ class course_renderer extends \core_course_renderer {
      */
     public function course_section_cm_availability(cm_info $mod, $displayoptions = array()) {
         // If we have available info, always spit it out.
-        if (!empty($mod->availableinfo)) {
+        if (!$mod->uservisible && !empty($mod->availableinfo)) {
             $availinfo = $mod->availableinfo;
         } else {
             $ci = new \core_availability\info_module($mod);
