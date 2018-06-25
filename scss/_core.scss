@@ -2246,6 +2246,18 @@ ul.events-new + ul.events-underway {
     }
 }
 
+#page-mod-forum-post {
+    div {
+        .no-overflow {
+            overflow: hidden;
+        }
+
+        .grouppictures {
+            margin-top: 0.5em;
+        }
+    }
+}
+
 // -------------------------
 // Forum responsive table
 // -------------------------
