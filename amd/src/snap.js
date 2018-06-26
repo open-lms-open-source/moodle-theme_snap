@@ -495,6 +495,31 @@ define(['jquery', 'core/log', 'theme_snap/headroom', 'theme_snap/util', 'theme_s
         };
 
         /**
+         * Function to fix the styles when fullscreen is used with Atto Editor.
+         */
+        function waitForFullScreenButton() {
+            var maxIterations = 15;
+            var i = 0;
+            var checker = setInterval(function() {
+                i = i + 1;
+                if (i > maxIterations) {
+                    clearInterval(checker);
+                } else {
+                    if ($('button.atto_fullscreen_button').length != 0 && $('div.editor_atto').length != 0) {
+                        $('button.atto_fullscreen_button').click(function() {
+                            $('div.editor_atto').css('background-color', '#eee');
+                            $('div.editor_atto').css('z-index', '1');
+                        });
+                        $('button.atto_html_button').click(function() {
+                            $('#id_introeditor').css('z-index', '1');
+                        });
+                        clearInterval(checker);
+                    }
+                }
+            }, 2000);
+        }
+
+        /**
          * AMD return object.
          */
         return {
@@ -760,6 +785,8 @@ define(['jquery', 'core/log', 'theme_snap/headroom', 'theme_snap/util', 'theme_s
                             );
                         }
                     }
+
+                    waitForFullScreenButton();
                 });
             }
         };
