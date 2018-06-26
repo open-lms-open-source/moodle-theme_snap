@@ -586,6 +586,7 @@ class local {
                        AND contexturl IS NULL
                        AND m.timecreated > :fromdate1
                        AND m.timeusertodeleted = 0
+                       AND m.notification = 0
         ) UNION ALL (
                 SELECT $select, 0 unread
                   FROM {message_read} m
@@ -594,6 +595,7 @@ class local {
                        AND contexturl IS NULL
                        AND m.timecreated > :fromdate2
                        AND m.timeusertodeleted = 0
+                       AND m.notification = 0
         )
           ORDER BY timecreated DESC";
 
