@@ -573,7 +573,7 @@ $lighter-grey-btn: #e6e6e6;
         }
 
         a.snap-login-button {
-            color: #FFFFFF;
+            color: $nav-login-color;
         }
 
         .icon.fa-search {
@@ -588,7 +588,7 @@ $lighter-grey-btn: #e6e6e6;
         }
 
         #snap-pm-trigger {
-            color: $nav-color;
+            color: $nav-button-color;
         }
 
         #nav-notification-popover-container .count-container {

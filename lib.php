@@ -46,7 +46,7 @@ function theme_snap_process_site_coverimage() {
  */
 function theme_snap_process_css($css, theme_config $theme) {
 
-    $css = theme_snap_set_category_colors($css);
+    $css = theme_snap_set_category_colors($css, $theme);
 
     // Set the background image for the logo.
     $logo = $theme->setting_file_url('logo', 'logo');
@@ -69,7 +69,7 @@ function theme_snap_process_css($css, theme_config $theme) {
  * @param string $css The CSS.
  * @return string The updated CSS
  */
-function theme_snap_set_category_colors($css) {
+function theme_snap_set_category_colors($css, $theme) {
     global $DB;
 
     $tag = '/**setting:categorycolors**/';
@@ -105,7 +105,9 @@ function theme_snap_set_category_colors($css) {
             $compiler->append_raw_scss($scss);
             $compiler->add_variables([
                 'brand-primary' => $colors[$category->id],
-                'nav-color' => $colors[$category->id]
+                'nav-color' => $colors[$category->id],
+                'nav-button-color' => $colors[$category->id],
+                'nav-login-color' => !empty($theme->settings->navbarbuttonlink) ? $theme->settings->navbarbuttonlink : '#FFFFFF'
             ]);
 
             try {
