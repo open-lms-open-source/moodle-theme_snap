@@ -3598,11 +3598,23 @@ body.pagelayout-frontpage {
 }
 
 // Center prev and next links for activities.
-section#region-main div.m-t-2.m-b-1 {
-    display: inline-flex;
-    width: 100%;
+section#region-main {
+    div.m-t-2.m-b-1 {
+        display: inline-flex;
+        width: 100%;
 
-    .row {
-        margin: 0 auto;
+        .row {
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .col-md-4 {
+            min-height: 8em;
+            text-align: justify;
+
+            .mdl-align {
+                padding: 0 0.5em;
+            }
+        }
     }
 }
