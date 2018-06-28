@@ -117,6 +117,7 @@ define(['jquery', 'core/log', 'core/ajax', 'core/notification', 'theme_snap/ajax
 
                         // Ensure that the page-header in courses has the mast-image class.
                         $('.path-course-view #page-header').addClass('mast-image');
+                        $('.path-course-view #page-header .breadcrumb-item a').addClass('mast-breadcrumb');
 
                         // Warn if image file size exceeds max upload size.
                         // Note: The site max bytes is intentional, as the person who can do the upload would be able to

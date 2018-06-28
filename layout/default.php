@@ -47,7 +47,7 @@ if ($COURSE->id != SITEID && !empty($coverimagecss)) {
 <main id="moodle-page" class="clearfix">
 <div id="page-header" class="clearfix <?php echo $mastimage; ?>">
     <?php if ($PAGE->pagetype !== 'site-index') { ?>
-        <div class="breadcrumb-nav" aria-label="breadcrumb"><?php echo $OUTPUT->navbar(); ?></div>
+        <div class="breadcrumb-nav" aria-label="breadcrumb"><?php echo $OUTPUT->navbar($mastimage); ?></div>
     <?php }
         if ($carousel) {
             // Front page carousel.

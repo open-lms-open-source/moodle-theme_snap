@@ -1686,15 +1686,21 @@ HTML;
     /**
      * This renders the navbar.
      * Uses bootstrap compatible html.
+     * @param string $coverimage
      */
-    public function navbar() {
+    public function navbar($coverimage = '') {
         global $COURSE, $CFG;
 
         require_once($CFG->dirroot.'/course/lib.php');
 
         $breadcrumbs = '';
         $courseitem = null;
-        $snapmycourses = html_writer::link('#', get_string('menu', 'theme_snap'), array('class' => 'js-snap-pm-trigger'));
+        $attr['class'] = 'js-snap-pm-trigger';
+
+        if (!empty($coverimage)) {
+            $attr['class'] .= ' mast-breadcrumb';
+        }
+        $snapmycourses = html_writer::link('#', get_string('menu', 'theme_snap'), $attr);
 
         foreach ($this->page->navbar->get_items() as $item) {
             $item->hideicon = true;
@@ -1749,7 +1755,11 @@ HTML;
 
             // Only output breadcrumb items which have links.
             if ($item->action !== null) {
-                $link = html_writer::link($item->action, $item->text);
+                $attr = [];
+                if (!empty($coverimage)) {
+                    $attr = ['class' => 'mast-breadcrumb'];
+                }
+                $link = html_writer::link($item->action, $item->text, $attr);
                 $breadcrumbs .= '<li class="breadcrumb-item">' .$link. '</li>';
             }
         }
