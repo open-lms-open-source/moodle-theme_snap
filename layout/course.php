@@ -50,7 +50,7 @@ if ($COURSE->id != SITEID && !empty($coverimagecss)) {
 -->
 <main id="moodle-page" class="clearfix">
 <div id="page-header" class="clearfix <?php echo $mastimage; ?>">
-    <div class="breadcrumb-nav" aria-label="breadcrumb"><?php echo $OUTPUT->navbar(); ?></div>
+    <div class="breadcrumb-nav" aria-label="breadcrumb"><?php echo $OUTPUT->navbar($mastimage); ?></div>
 
     <div id="page-mast">
     <?php

@@ -65,7 +65,9 @@ Feature: When the moodle theme is set to Snap, cover image can be set for site a
     And I click on ".btn.ok" "css_element"
     And I wait until "label[for=\"snap-coverfiles\"]" "css_element" is visible
     Then I should see cover image in page header
+    And I check element ".mast-image .breadcrumb a" with color "#FFFFFF"
     And I reload the page
+    And I check element ".mast-image .breadcrumb a" with color "#FFFFFF"
     Then I should see cover image in page header
     # Test deleting cover image
     And I click on "#admin-menu-trigger" "css_element"

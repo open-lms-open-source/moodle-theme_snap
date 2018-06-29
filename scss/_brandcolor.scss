@@ -30,7 +30,7 @@ $lighter-grey-btn: #e6e6e6;
 
 .theme-snap {
 
-    a:not(.btn):not(.dropdown-item):not(.snap-due-date):not(.yui3-button),
+    a:not(.btn):not(.dropdown-item):not(.snap-due-date):not(.yui3-button):not(.mast-breadcrumb),
     .btn-link,
     .fake-link {
         color: $brand-primary;
