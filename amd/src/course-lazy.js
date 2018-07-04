@@ -120,7 +120,7 @@ define(
             } else {
                 $(section).addClass('state-visible').focus();
                 // Faux link click behaviour - scroll to page top.
-                window.scrollTo(0, 0);
+                scrollBack();
             }
 
             // Default niceties to perform.
@@ -135,10 +135,29 @@ define(
                 } else {
                     $('#section-0').addClass('state-visible').focus();
                 }
-                window.scrollTo(0, 0);
+                scrollBack();
             }
 
+            // Store last activity/resource accessed on sessionStorage
+            $('li.snap-activity:visible, li.snap-resource:visible').on('click', 'a.mod-link', function() {
+                sessionStorage.setItem('lastMod', $(this).parents('[id^=module]').attr('id'));
+            });
+
             this.setTOCVisibleSection();
+        };
+
+        /**
+         * Scroll to the last activity or resource accessed,
+         * if there is nothing stored in session go to page top.
+         */
+        var scrollBack = function () {
+            var storedmod = sessionStorage.getItem('lastMod');
+            if(storedmod === null){
+                window.scrollTo(0, 0);
+            } else {
+                util.scrollToElement($('#'+storedmod+''));
+                sessionStorage.removeItem('lastMod');
+            }
         };
 
         /**

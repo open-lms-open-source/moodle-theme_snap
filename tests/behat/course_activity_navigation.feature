@@ -67,6 +67,7 @@ Feature: Activity navigation in Snap theme
       | workshop   | Workshop 1   | Test workshop description   | C1     | workshop1 | 6       |
       | assign     | Assignment 1 | Test assignment description | C2     | assign21  | 0       |
     And I log in as "admin"
+    And I reset session storage
     And I am on "Course 1" course homepage with editing mode on
     # Stealth activity.
     And I follow "Topic 2"
@@ -78,6 +79,7 @@ Feature: Activity navigation in Snap theme
     And I click on ".snap-activity[data-type='Glossary'] a.js_snap_hide" "css_element"
     # Hidden section.
     And I follow "Topic 5"
+    And I wait until the page is ready
     And I click on "#section-5 a.snap-visibility.snap-hide" "css_element"
     # Set up book.
     And I follow "Introduction"
