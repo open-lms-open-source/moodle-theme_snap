@@ -18,12 +18,12 @@ cache:
 
 php:
  - 7.1
- - 5.6
+ - 7.0
 
 env:
  global:
   - IGNORE_PATHS=node_modules
-  - MOODLE_BRANCH=MOODLE_33_STABLE
+  - MOODLE_BRANCH=MOODLE_34_STABLE
  matrix:
   - DB=pgsql
   - DB=mysqli
