@@ -321,6 +321,7 @@ define(
                             if ($(link).attr('target') === '_blank') {
                                 hreftarget = '_blank';
                             }
+                            sessionStorage.setItem('lastMod', $(this).attr('id'));
                             window.open(href, hreftarget);
                         }
                         e.preventDefault();
