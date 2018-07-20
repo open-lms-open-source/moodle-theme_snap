@@ -21,9 +21,9 @@
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-namespace theme_snap\webservice;
+namespace theme_n2018\webservice;
 
-use theme_snap\services\course;
+use theme_n2018\services\course;
 
 defined('MOODLE_INTERNAL') || die();
 
@@ -63,12 +63,12 @@ class ws_course_sections extends \external_api {
     public static function service_returns() {
         $keys = [
             'actionmodel' => new \external_single_structure(
-                definition_helper::define_class_for_webservice('theme_snap\renderables\course_action_section_base'),
+                definition_helper::define_class_for_webservice('theme_n2018\renderables\course_action_section_base'),
                 'Action model',
                 VALUE_OPTIONAL
             ),
             'toc' => new \external_single_Structure(
-                definition_helper::define_class_for_webservice('theme_snap\renderables\course_toc'),
+                definition_helper::define_class_for_webservice('theme_n2018\renderables\course_toc'),
                 'Table of contents',
                 VALUE_REQUIRED
             )

@@ -15,13 +15,13 @@
 #
 # Tests for html5 file upload direct to course.
 #
-# @package    theme_snap
+# @package    theme_n2018
 # @copyright  Copyright (c) 2016 Moodlerooms Inc. (http://www.moodlerooms.com)
 # @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
 
 
-@theme @theme_snap
-Feature: When the moodle theme is set to Snap, teachers can upload files as resources directly to the current
+@theme @theme_n2018
+Feature: When the moodle theme is set to N2018, teachers can upload files as resources directly to the current
   course section from a simple file input element in either read or edit mode.
 
   Background:
@@ -44,20 +44,20 @@ Feature: When the moodle theme is set to Snap, teachers can upload files as reso
     And I am on the course main page for "C1"
     And I follow "Topic 1"
     Then "#section-1" "css_element" should exist
-    And "#snap-drop-file-1" "css_element" should exist
+    And "#n2018-drop-file-1" "css_element" should exist
     And I upload file "test_text_file.txt" to section 1
     And I upload file "test_mp3_file.mp3" to section 1
-    Then ".snap-resource[data-type='text']" "css_element" should exist
-    And ".snap-resource[data-type='mp3']" "css_element" should exist
+    Then ".n2018-resource[data-type='text']" "css_element" should exist
+    And ".n2018-resource[data-type='mp3']" "css_element" should exist
     # Make sure image uploads do not suffer from annoying prompt for label handler.
     And I upload file "testgif.gif" to section 1
     Then I should not see "Add image to course page"
     And I should not see "Create file resource"
-    And I should see "testgif" in the "#section-1 .snap-native-image .activityinstance .instancename" "css_element"
+    And I should see "testgif" in the "#section-1 .figure .figure-caption" "css_element"
 
   @javascript
   Scenario: Student cannot upload file.
     Given I log in as "student1"
     And I am on the course main page for "C1"
     And I follow "Topic 1"
-    Then "#snap-drop-file" "css_element" should not exist
+    Then "#n2018-drop-file" "css_element" should not exist

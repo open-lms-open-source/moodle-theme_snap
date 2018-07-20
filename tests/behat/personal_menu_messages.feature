@@ -13,15 +13,15 @@
 # You should have received a copy of the GNU General Public License
 # along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 #
-# Tests for Snap personal menu conversation badge count.
+# Tests for N2018 personal menu conversation badge count.
 #
-# @package    theme_snap
+# @package    theme_n2018
 # @copyright  Copyright (c) 2017 Moodlerooms Inc. (http://www.moodlerooms.com)
 # @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
 
 
-@theme @theme_snap
-Feature: When the moodle theme is set to Snap, students and teachers have a conversation badge count and messages section.
+@theme @theme_n2018
+Feature: When the moodle theme is set to N2018, students and teachers have a conversation badge count and messages section.
 
   Background:
     Given the following "courses" exist:
@@ -37,7 +37,7 @@ Feature: When the moodle theme is set to Snap, students and teachers have a conv
       | student1 | C1 | student |
 
   @javascript
-  Scenario: Snap user can see conversation count and messages.
+  Scenario: N2018 user can see conversation count and messages.
     Given I log in as "teacher1"
     Then ".conversation_badge_count.hidden" "css_element" should exist
     And I log out
@@ -48,13 +48,13 @@ Feature: When the moodle theme is set to Snap, students and teachers have a conv
     And I log in as "teacher1"
     Then ".conversation_badge_count" "css_element" should exist
     And I open the personal menu
-    And I should see "Test message!" in the "#snap-personal-menu-messages" "css_element"
+    And I should see "Test message!" in the "#n2018-personal-menu-messages" "css_element"
 
   @javascript
-  Scenario: No badge count is shown when snap messages setting is disabled for a user in snap.
+  Scenario: No badge count is shown when n2018 messages setting is disabled for a user in n2018.
     Given the following config values are set as admin:
-      | messagestoggle | 0 | theme_snap |
+      | messagestoggle | 0 | theme_n2018 |
     And I log in as "teacher1"
     Then ".conversation_badge_count.hidden" "css_element" should not exist
     And I open the personal menu
-    And "#snap-personal-menu-messages" "css_element" should not exist
+    And "#n2018-personal-menu-messages" "css_element" should not exist

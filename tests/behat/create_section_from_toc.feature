@@ -14,12 +14,12 @@
 # along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 #
 #
-# @package    theme_snap
+# @package    theme_n2018
 # @copyright Copyright (c) 2015 Moodlerooms Inc. (http://www.moodlerooms.com)
 # @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
 
-@theme @theme_snap
-Feature: In the Snap theme, within a course, editing teachers can create a new section by clicking on a
+@theme @theme_n2018
+Feature: In the N2018 theme, within a course, editing teachers can create a new section by clicking on a
   link in the TOC which reveals a form.
   This requires the course to use the weeks and topics format.
 

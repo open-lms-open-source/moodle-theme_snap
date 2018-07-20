@@ -19,7 +19,7 @@
  * This layout is baed on a moodle site index.php file but has been adapted to show news items in a different
  * way.
  *
- * @package   theme_snap
+ * @package   theme_n2018
  * @copyright Copyright (c) 2015 Moodlerooms Inc. (http://www.moodlerooms.com)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
@@ -28,7 +28,7 @@ defined('MOODLE_INTERNAL') || die();
 $PAGE->set_popup_notification_allowed(false);
 
 // Require standard page js.
-\theme_snap\output\shared::page_requires_js();
+\theme_n2018\output\shared::page_requires_js();
 
 echo $OUTPUT->doctype();
 ?>
@@ -59,12 +59,12 @@ if ($PAGE->pagetype === 'site-index' && !empty($PAGE->theme->settings->cover_car
 $coverimagecss = '';
 if ($PAGE->context->contextlevel === CONTEXT_COURSECAT) {
     if ($PAGE->pagelayout === 'coursecategory') {
-        $coverimagecss = \theme_snap\local::course_cat_coverimage_css($PAGE->context->instanceid);
+        $coverimagecss = \theme_n2018\local::course_cat_coverimage_css($PAGE->context->instanceid);
     }
 } else if ($PAGE->pagelayout === 'frontpage' || $PAGE->pagelayout === 'login') {
-    $coverimagecss = \theme_snap\local::site_coverimage_css();
+    $coverimagecss = \theme_n2018\local::site_coverimage_css();
 } else {
-    $coverimagecss = \theme_snap\local::course_coverimage_css($COURSE->id);
+    $coverimagecss = \theme_n2018\local::course_coverimage_css($COURSE->id);
 }
 
 if (!empty($coverimagecss) && !$carousel) {

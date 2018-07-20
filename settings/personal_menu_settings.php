@@ -16,54 +16,54 @@
 
 defined('MOODLE_INTERNAL') || die;// Main settings.
 
-$snapsettings = new admin_settingpage('themesnappersonalmenu', get_string('personalmenu', 'theme_snap'));
+$n2018settings = new admin_settingpage('themen2018personalmenu', get_string('personalmenu', 'theme_n2018'));
 
 // Personal menu show course grade in cards.
-$name = 'theme_snap/showcoursegradepersonalmenu';
-$title = new lang_string('showcoursegradepersonalmenu', 'theme_snap');
-$description = new lang_string('showcoursegradepersonalmenudesc', 'theme_snap');
+$name = 'theme_n2018/showcoursegradepersonalmenu';
+$title = new lang_string('showcoursegradepersonalmenu', 'theme_n2018');
+$description = new lang_string('showcoursegradepersonalmenudesc', 'theme_n2018');
 $default = $checked;
 $setting = new admin_setting_configcheckbox($name, $title, $description, $default, $checked, $unchecked);
-$snapsettings->add($setting);
+$n2018settings->add($setting);
 
 // Personal menu deadlines on/off.
-$name = 'theme_snap/deadlinestoggle';
-$title = new lang_string('deadlinestoggle', 'theme_snap');
-$description = new lang_string('deadlinestoggledesc', 'theme_snap');
+$name = 'theme_n2018/deadlinestoggle';
+$title = new lang_string('deadlinestoggle', 'theme_n2018');
+$description = new lang_string('deadlinestoggledesc', 'theme_n2018');
 $default = $checked;
 $setting = new admin_setting_configcheckbox($name, $title, $description, $default, $checked, $unchecked);
-$snapsettings->add($setting);
+$n2018settings->add($setting);
 
 // Personal menu recent feedback & grading  on/off.
-$name = 'theme_snap/feedbacktoggle';
-$title = new lang_string('feedbacktoggle', 'theme_snap');
-$description = new lang_string('feedbacktoggledesc', 'theme_snap');
+$name = 'theme_n2018/feedbacktoggle';
+$title = new lang_string('feedbacktoggle', 'theme_n2018');
+$description = new lang_string('feedbacktoggledesc', 'theme_n2018');
 $default = $checked;
 $setting = new admin_setting_configcheckbox($name, $title, $description, $default, $checked, $unchecked);
-$snapsettings->add($setting);
+$n2018settings->add($setting);
 
 // Personal menu messages on/off.
-$name = 'theme_snap/messagestoggle';
-$title = new lang_string('messagestoggle', 'theme_snap');
-$description = new lang_string('messagestoggledesc', 'theme_snap');
+$name = 'theme_n2018/messagestoggle';
+$title = new lang_string('messagestoggle', 'theme_n2018');
+$description = new lang_string('messagestoggledesc', 'theme_n2018');
 $default = $checked;
 $setting = new admin_setting_configcheckbox($name, $title, $description, $default, $checked, $unchecked);
-$snapsettings->add($setting);
+$n2018settings->add($setting);
 
 // Personal menu forum posts on/off.
-$name = 'theme_snap/forumpoststoggle';
-$title = new lang_string('forumpoststoggle', 'theme_snap');
-$description = new lang_string('forumpoststoggledesc', 'theme_snap');
+$name = 'theme_n2018/forumpoststoggle';
+$title = new lang_string('forumpoststoggle', 'theme_n2018');
+$description = new lang_string('forumpoststoggledesc', 'theme_n2018');
 $default = $checked;
 $setting = new admin_setting_configcheckbox($name, $title, $description, $default, $checked, $unchecked);
-$snapsettings->add($setting);
+$n2018settings->add($setting);
 
 // Personal menu display on login on/off.
-$name = 'theme_snap/personalmenulogintoggle';
-$title = new lang_string('personalmenulogintoggle', 'theme_snap');
-$description = new lang_string('personalmenulogintoggledesc', 'theme_snap');
+$name = 'theme_n2018/personalmenulogintoggle';
+$title = new lang_string('personalmenulogintoggle', 'theme_n2018');
+$description = new lang_string('personalmenulogintoggledesc', 'theme_n2018');
 $default = $checked;
 $setting = new admin_setting_configcheckbox($name, $title, $description, $default, $checked, $unchecked);
-$snapsettings->add($setting);
+$n2018settings->add($setting);
 
-$settings->add($snapsettings);
+$settings->add($n2018settings);

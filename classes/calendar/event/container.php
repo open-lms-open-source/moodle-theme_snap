@@ -17,24 +17,24 @@
 /**
  * Wrap core Moodle class.
  *
- * @package    theme_snap
+ * @package    theme_n2018
  * @copyright  2017 Blackboard Inc
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-namespace theme_snap\calendar\event;
+namespace theme_n2018\calendar\event;
 
 defined('MOODLE_INTERNAL') || die();
 
-use theme_snap\calendar\event\data_access\event_vault;
-use theme_snap\calendar\event\strategies\activity_retrieval_strategy;
+use theme_n2018\calendar\event\data_access\event_vault;
+use theme_n2018\calendar\event\strategies\activity_retrieval_strategy;
 use core_calendar\action_factory;
 use core_calendar\local\event\entities\event_interface;
 use core_calendar\local\event\factories\event_factory;
 use core_calendar\local\event\mappers\event_mapper;
 
 /**
- * Snap event container.
+ * N2018 event container.
  *
  * @copyright 2017 Blackboard Inc
  * @license http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
@@ -45,19 +45,19 @@ class container extends \core_calendar\local\event\container {
      * Initialises the dependency graph if it hasn't yet been.
      */
     public static function ovd_init() {
-        if (empty(self::$eventvault) || get_class(self::$eventvault) != 'theme_snap\calendar\event\data_access\event_vault') {
+        if (empty(self::$eventvault) || get_class(self::$eventvault) != 'theme_n2018\calendar\event\data_access\event_vault') {
             self::$eventvault = false;
             self::$actionfactory = new action_factory();
             self::$eventmapper = new event_mapper(
-                // The event mapper we return from here needs to know how to
-                // make events, so it needs an event factory. However we can't
-                // give it the same one as we store and return in the container
-                // as that one uses all our plumbing to control event visibility.
-                //
-                // So we make a new even factory that doesn't do anyting other than
-                // return the instance.
+            // The event mapper we return from here needs to know how to
+            // make events, so it needs an event factory. However we can't
+            // give it the same one as we store and return in the container
+            // as that one uses all our plumbing to control event visibility.
+            //
+            // So we make a new even factory that doesn't do anyting other than
+            // return the instance.
                 new event_factory(
-                    // Never apply actions, simply return.
+                // Never apply actions, simply return.
                     function(event_interface $event) {
                         return $event;
                     },
@@ -80,15 +80,6 @@ class container extends \core_calendar\local\event\container {
                 [self::class, 'apply_component_is_event_visible'],
                 // @codingStandardsIgnoreEnd
                 function ($dbrow) {
-                    if (!empty($dbrow->categoryid)) {
-                        // This is a category event. Check that the category is visible to this user.
-                        $category = \coursecat::get($dbrow->categoryid, IGNORE_MISSING, true);
-
-                        if (empty($category) || !$category->is_uservisible()) {
-                            return true;
-                        }
-                    }
-
                     // At present we only have a bail-out check for events in course modules.
                     if (empty($dbrow->modulename)) {
                         return false;
@@ -140,7 +131,7 @@ class container extends \core_calendar\local\event\container {
         }
 
         if (empty(self::$eventvault)) {
-            // Use snap retrieval strategy.
+            // Use n2018 retrieval strategy.
             self::$eventretrievalstrategy = new activity_retrieval_strategy();
             self::$eventvault = new event_vault(self::$eventfactory, self::$eventretrievalstrategy);
         }

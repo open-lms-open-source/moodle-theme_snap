@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
  *
- * @package   theme_snap
+ * @package   theme_n2018
  * @copyright Copyright (c) 2016 Moodlerooms Inc. (http://www.moodlerooms.com)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
@@ -25,15 +25,14 @@
 define(
     [
         'jquery',
-        'theme_snap/util',
-        'theme_snap/section_asset_management',
-        'theme_snap/course_modules'
+        'theme_n2018/util',
+        'theme_n2018/section_asset_management',
+        'theme_n2018/course_modules'
     ],
     function($, util, sectionAssetManagement, courseModules) {
 
     /**
      * Return class(has private and public methods).
-     * @param {object} courseConfig
      */
     return function(courseConfig) {
 
@@ -51,7 +50,8 @@ define(
 
         /**
          * Scroll to a mod via search
-         * @param {string} modid
+         * @param string modid
+         * @return void
          */
         var scrollToModule = function(modid) {
             // sometimes we have a hash, sometimes we don't
@@ -74,11 +74,11 @@ define(
          * Mark the section shown to user with a class in the TOC.
          */
         this.setTOCVisibleSection = function() {
-            var sectionIdSel = '.section.main.state-visible, #coursetools.state-visible, #snap-add-new-section.state-visible';
+            var sectionIdSel = '.section.main.state-visible, #coursetools.state-visible, #n2018-add-new-section.state-visible';
             var currentSectionId = $(sectionIdSel).attr('id');
-            $('#chapters li').removeClass('snap-visible-section');
-            $('#chapters a[href$="' + currentSectionId + '"]').parent('li').addClass('snap-visible-section');
-            $(document).trigger('snapContentRevealed');
+            $('#chapters li').removeClass('n2018-visible-section');
+            $('#chapters a[href$="' + currentSectionId + '"]').parent('li').addClass('n2018-visible-section');
+            $(document).trigger('n2018ContentRevealed');
         };
 
         /**
@@ -91,11 +91,11 @@ define(
             }
             var sectionSetByServer = '';
 
-            if ($('.section.main.state-visible.set-by-server').length) {
+            if($('.section.main.state-visible.set-by-server').length) {
                 sectionSetByServer = '#' + $('.section.main.state-visible.set-by-server').attr('id');
                 $('.section.main.state-visible.set-by-server').removeClass('set-by-server');
             } else {
-                $('.course-content .section.main, #moodle-blocks,#coursetools, #snap-add-new-section').removeClass('state-visible');
+                $('.course-content .section.main, #moodle-blocks,#coursetools, #n2018-add-new-section').removeClass('state-visible');
             }
 
             // We know the params at 0 is a section id.
@@ -120,14 +120,14 @@ define(
             } else {
                 $(section).addClass('state-visible').focus();
                 // Faux link click behaviour - scroll to page top.
-                scrollBack();
+                window.scrollTo(0, 0);
             }
 
             // Default niceties to perform.
             var visibleChapters = $(
                 '.section.main.state-visible,' +
                 '#coursetools.state-visible,' +
-                '#snap-add-new-section.state-visible'
+                '#n2018-add-new-section.state-visible'
             );
             if (!visibleChapters.length) {
                 if ($('.section.main.current').length) {
@@ -135,29 +135,10 @@ define(
                 } else {
                     $('#section-0').addClass('state-visible').focus();
                 }
-                scrollBack();
+                window.scrollTo(0, 0);
             }
-
-            // Store last activity/resource accessed on sessionStorage
-            $('li.snap-activity:visible, li.snap-resource:visible').on('click', 'a.mod-link', function() {
-                sessionStorage.setItem('lastMod', $(this).parents('[id^=module]').attr('id'));
-            });
 
             this.setTOCVisibleSection();
-        };
-
-        /**
-         * Scroll to the last activity or resource accessed,
-         * if there is nothing stored in session go to page top.
-         */
-        var scrollBack = function () {
-            var storedmod = sessionStorage.getItem('lastMod');
-            if(storedmod === null){
-                window.scrollTo(0, 0);
-            } else {
-                util.scrollToElement($('#'+storedmod+''));
-                sessionStorage.removeItem('lastMod');
-            }
         };
 
         /**
@@ -171,7 +152,7 @@ define(
             if (self.courseConfig.enablecompletion) {
                 require(
                     [
-                        'theme_snap/course_conditionals-lazy'
+                        'theme_n2018/course_conditionals-lazy'
                     ], function(conditionals) {
                         conditionals(courseConfig);
                     }
@@ -181,22 +162,22 @@ define(
             // SL - 19th aug 2014 - check we are in a course and if so, show current section.
             if (onCoursePage()) {
                 self.showSection();
-                $(document).on('snapTOCReplaced', function() {
+                $(document).on('n2018TOCReplaced',  function() {
                     self.setTOCVisibleSection();
                 });
             }
         };
 
         /**
-         * Snap modchooser listener to add current section to urls.
+         * N2018 modchooser listener to add current section to urls.
          */
         var modchooserSectionLinks = function() {
-            $('.section-modchooser-link').click(function() {
+            $('.section-modchooser-link').click( function() {
                 // Grab the section number from the button.
                 var sectionNum = $(this).attr('data-section');
-                $('.snap-modchooser-addlink').each(function() {
+                $('.n2018-modchooser-addlink').each(function() {
                     // Update section in mod link to current section.
-                    var newLink = this.href.replace(/(section=)[0-9]+/ig, '$1' + sectionNum);
+                    var newLink = this.href.replace(/(section=)[0-9]+/ig, '$1' +sectionNum);
                     $(this).attr('href', newLink);
                 });
             });

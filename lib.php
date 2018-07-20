@@ -15,9 +15,9 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Standard library functions for snap theme.
+ * Standard library functions for n2018 theme.
  *
- * @package   theme_snap
+ * @package   theme_n2018
  * @copyright Copyright (c) 2015 Moodlerooms Inc. (http://www.moodlerooms.com)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
@@ -31,9 +31,9 @@ defined('MOODLE_INTERNAL') || die();
  * @throws coding_exception
  * @throws dml_exception
  */
-function theme_snap_process_site_coverimage() {
+function theme_n2018_process_site_coverimage() {
     $context = \context_system::instance();
-    \theme_snap\local::process_coverimage($context);
+    \theme_n2018\local::process_coverimage($context);
     theme_reset_all_caches();
 }
 
@@ -44,13 +44,11 @@ function theme_snap_process_site_coverimage() {
  * @param theme_config $theme
  * @return string
  */
-function theme_snap_process_css($css, theme_config $theme) {
-
-    $css = theme_snap_set_category_colors($css, $theme);
+function theme_n2018_process_css($css, theme_config $theme) {
 
     // Set the background image for the logo.
     $logo = $theme->setting_file_url('logo', 'logo');
-    $css = theme_snap_set_logo($css, $logo);
+    $css = theme_n2018_set_logo($css, $logo);
 
     // Set the custom css.
     if (!empty($theme->settings->customcss)) {
@@ -58,69 +56,8 @@ function theme_snap_process_css($css, theme_config $theme) {
     } else {
         $customcss = null;
     }
-    $css = theme_snap_set_customcss($css, $customcss);
+    $css = theme_n2018_set_customcss($css, $customcss);
 
-    return $css;
-}
-
-/**
- * Adds the custom category colors to the CSS.
- *
- * @param string $css The CSS.
- * @return string The updated CSS
- */
-function theme_snap_set_category_colors($css, $theme) {
-    global $DB;
-
-    $tag = '/**setting:categorycolors**/';
-    $replacement = '';
-
-    // Get category colors from database.
-    $categorycolors = array();
-    $dbcategorycolors = get_config("theme_snap", "category_color");
-    if (!empty($dbcategorycolors) && $dbcategorycolors != '0') {
-        $categorycolors = json_decode($dbcategorycolors, true);
-    }
-
-    if (!empty($categorycolors)) {
-        $colors = $categorycolors;
-
-        list($insql, $inparams) = $DB->get_in_or_equal(array_keys($colors));
-        $categories = $DB->get_records_select(
-            'course_categories',
-            'id ' . $insql,
-            $inparams,
-            // Ordered by path ascending so that the colors of child categories overrides,
-            // parent categories by coming later in the CSS output.
-            'path ASC'
-        );
-
-        $themedirectory = realpath(core_component::get_component_directory('theme_snap'));
-        $brandscss = file_get_contents($themedirectory . '/scss/_brandcolor.scss');
-        foreach ($categories as $category) {
-            $compiler = new core_scss();
-            // Rewrite wrapper class with current category id.
-            $categoryselector = '.category-' . $category->id . ' {';
-            $scss = str_replace('.theme-snap {', $categoryselector, $brandscss);
-            $compiler->append_raw_scss($scss);
-            $compiler->add_variables([
-                'brand-primary' => $colors[$category->id],
-                'nav-color' => $colors[$category->id],
-                'nav-button-color' => $colors[$category->id],
-                'nav-login-color' => !empty($theme->settings->navbarbuttonlink) ? $theme->settings->navbarbuttonlink : '#FFFFFF'
-            ]);
-
-            try {
-                $compiled = $compiler->to_css();
-            } catch (\Leafo\ScssPhp\Exception $e) {
-                $compiled = '';
-                debugging('Error while compiling SCSS: ' . $e->getMessage(), DEBUG_DEVELOPER);
-            }
-            $replacement = $replacement . $compiled;
-        }
-    }
-
-    $css = str_replace($tag, $replacement, $css);
     return $css;
 }
 
@@ -131,12 +68,12 @@ function theme_snap_set_category_colors($css, $theme) {
  * @param string $logo The URL of the logo.
  * @return string The parsed CSS
  */
-function theme_snap_set_logo($css, $logo) {
+function theme_n2018_set_logo($css, $logo) {
     $tag = '/**setting:logo**/';
     if (is_null($logo)) {
         $replacement = '';
     } else {
-        $replacement = "#snap-home.logo, .snap-logo-sitename {background-image: url($logo);}";
+        $replacement = "#n2018-home.logo, .n2018-logo-sitename {background-image: url($logo);}";
     }
     $css = str_replace($tag, $replacement, $css);
     return $css;
@@ -149,7 +86,7 @@ function theme_snap_set_logo($css, $logo) {
  * @param string $customcss The custom CSS to add.
  * @return string The CSS which now contains our custom CSS.
  */
-function theme_snap_set_customcss($css, $customcss) {
+function theme_n2018_set_customcss($css, $customcss) {
     $tag = '/**setting:customcss**/';
     $replacement = $customcss;
     if (is_null($replacement)) {
@@ -170,7 +107,7 @@ function theme_snap_set_customcss($css, $customcss) {
  * @param $options
  * @return bool
  */
-function theme_snap_send_file($context, $filearea, $args, $forcedownload, $options) {
+function theme_n2018_send_file($context, $filearea, $args, $forcedownload, $options) {
     $revision = array_shift($args);
     if ($revision < 0) {
         $lifetime = 0;
@@ -180,7 +117,7 @@ function theme_snap_send_file($context, $filearea, $args, $forcedownload, $optio
 
     $filename = end($args);
     $contextid = $context->id;
-    $fullpath = "/$contextid/theme_snap/$filearea/0/$filename";
+    $fullpath = "/$contextid/theme_n2018/$filearea/0/$filename";
     $fs = get_file_storage();
     $file = $fs->get_file_by_hash(sha1($fullpath));
 
@@ -204,7 +141,7 @@ function theme_snap_send_file($context, $filearea, $args, $forcedownload, $optio
  * @param array $options
  * @return bool
  */
-function theme_snap_pluginfile($course, $cm, $context, $filearea, $args, $forcedownload, array $options = array()) {
+function theme_n2018_pluginfile($course, $cm, $context, $filearea, $args, $forcedownload, array $options = array()) {
 
     $coverimagecontexts = [CONTEXT_SYSTEM, CONTEXT_COURSE, CONTEXT_COURSECAT];
 
@@ -221,20 +158,20 @@ function theme_snap_pluginfile($course, $cm, $context, $filearea, $args, $forced
     ];
 
     if ($context->contextlevel == CONTEXT_SYSTEM && in_array($filearea, $sysfileareas)) {
-        $theme = theme_config::load('snap');
+        $theme = theme_config::load('n2018');
         return $theme->setting_file_serve($filearea, $args, $forcedownload, $options);
     } else if (in_array($context->contextlevel, $coverimagecontexts)
         && $filearea == 'coverimage' || $filearea == 'coursecard') {
-        theme_snap_send_file($context, $filearea, $args, $forcedownload, $options);
+        theme_n2018_send_file($context, $filearea, $args, $forcedownload, $options);
     } else {
         send_file_not_found();
     }
 }
 
-function theme_snap_myprofile_navigation(core_user\output\myprofile\tree $tree, $user, $iscurrentuser, $course) {
+function theme_n2018_myprofile_navigation(core_user\output\myprofile\tree $tree, $user, $iscurrentuser, $course) {
     global $PAGE;
 
-    if ($PAGE->theme->name === 'snap') {
+    if ($PAGE->theme->name === 'n2018') {
         if ($iscurrentuser) {
             $str = get_strings(['preferences']);
             if (isset($tree->nodes['editprofile'])) {
@@ -250,7 +187,7 @@ function theme_snap_myprofile_navigation(core_user\output\myprofile\tree $tree, 
     }
 }
 
-function theme_snap_get_main_scss_content($theme) {
+function theme_n2018_get_main_scss_content($theme) {
     global $CFG;
 
     // Note, the following code is not fully used yet, only the hardcoded
@@ -269,17 +206,17 @@ function theme_snap_get_main_scss_content($theme) {
         // We still load the default preset files directly from the boost theme. No sense in duplicating them.
         $scss .= file_get_contents($CFG->dirroot . '/theme/boost/scss/preset/plain.scss');
 
-    } else if ($filename && ($presetfile = $fs->get_file($context->id, 'theme_snap', 'preset', 0, '/', $filename))) {
-        // This preset file was fetched from the file area for theme_snap and not theme_boost (see the line above).
+    } else if ($filename && ($presetfile = $fs->get_file($context->id, 'theme_n2018', 'preset', 0, '/', $filename))) {
+        // This preset file was fetched from the file area for theme_n2018 and not theme_boost (see the line above).
         $scss .= $presetfile->get_content();
     } else {
         $scss = '@import "boost";';
     }
 
     // Pre CSS - this is loaded AFTER any prescss from the setting but before the main scss.
-    $pre = file_get_contents($CFG->dirroot . '/theme/snap/scss/pre.scss');
+    $pre = file_get_contents($CFG->dirroot . '/theme/n2018/scss/pre.scss');
     // Post CSS - this is loaded AFTER the main scss but before the extra scss from the setting.
-    $post = file_get_contents($CFG->dirroot . '/theme/snap/scss/post.scss');
+    $post = file_get_contents($CFG->dirroot . '/theme/n2018/scss/post.scss');
 
     // Combine them together.
     return $pre . "\n" . $scss . "\n" . $post;
@@ -291,7 +228,7 @@ function theme_snap_get_main_scss_content($theme) {
  * @param theme_config $theme The theme config object.
  * @return array
  */
-function theme_snap_get_pre_scss($theme) {
+function theme_n2018_get_pre_scss($theme) {
     global $CFG;
 
     $scss = '';

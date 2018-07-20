@@ -15,13 +15,13 @@
 #
 # Tests course edting mode.
 #
-# @package    theme_snap
+# @package    theme_n2018
 # @copyright Copyright (c) 2015 Moodlerooms Inc. (http://www.moodlerooms.com)
 # @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
 
 
-@theme @theme_snap
-Feature: When the moodle theme is set to Snap, teachers only see block edit controls when in edit mode.
+@theme @theme_n2018
+Feature: When the moodle theme is set to N2018, teachers only see block edit controls when in edit mode.
 
   Background:
     Given the following "courses" exist:

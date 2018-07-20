@@ -15,13 +15,13 @@
 #
 # Tests for cover image uploading.
 #
-# @package    theme_snap
+# @package    theme_n2018
 # @copyright  Copyright (c) 2016 Moodlerooms Inc. (http://www.moodlerooms.com)
 # @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
 
 
-@theme @theme_snap
-Feature: When the moodle theme is set to Snap, cover image can be set for site and courses.
+@theme @theme_n2018
+Feature: When the moodle theme is set to N2018, cover image can be set for site and courses.
 
   Background:
     Given the following config values are set as admin:
@@ -55,7 +55,7 @@ Feature: When the moodle theme is set to Snap, cover image can be set for site a
     And I upload cover image "testpng_small.png"
     And I wait until ".btn.ok" "css_element" is visible
     And I click on ".btn.ok" "css_element"
-    And I wait until "label[for=\"snap-coverfiles\"]" "css_element" is visible
+    And I wait until "label[for=\"n2018-coverfiles\"]" "css_element" is visible
     Then I should see cover image in page header
     And I reload the page
     Then I should see cover image in page header
@@ -63,11 +63,9 @@ Feature: When the moodle theme is set to Snap, cover image can be set for site a
     And I upload cover image "bpd_bikes_1280px.jpg"
     And I wait until ".btn.ok" "css_element" is visible
     And I click on ".btn.ok" "css_element"
-    And I wait until "label[for=\"snap-coverfiles\"]" "css_element" is visible
+    And I wait until "label[for=\"n2018-coverfiles\"]" "css_element" is visible
     Then I should see cover image in page header
-    And I check element ".mast-image .breadcrumb a" with color "#FFFFFF"
     And I reload the page
-    And I check element ".mast-image .breadcrumb a" with color "#FFFFFF"
     Then I should see cover image in page header
     # Test deleting cover image
     And I click on "#admin-menu-trigger" "css_element"
@@ -112,7 +110,7 @@ Feature: When the moodle theme is set to Snap, cover image can be set for site a
     Then I should not see "Cover image exceeds the site level maximum allowed file size"
     And I wait until ".btn.ok" "css_element" is visible
     And I click on ".btn.ok" "css_element"
-    And I wait until "label[for=\"snap-coverfiles\"]" "css_element" is visible
+    And I wait until "label[for=\"n2018-coverfiles\"]" "css_element" is visible
     And I should see cover image in page header
     And I reload the page
     Then I should see cover image in page header
@@ -159,12 +157,12 @@ Feature: When the moodle theme is set to Snap, cover image can be set for site a
     And I upload cover image "testpng_small.png"
     And I wait until ".btn.ok" "css_element" is visible
     And I click on ".btn.ok" "css_element"
-    And I wait until "label[for=\"snap-coverfiles\"]" "css_element" is visible
+    And I wait until "label[for=\"n2018-coverfiles\"]" "css_element" is visible
     Then I should see cover image in page header
     And I reload the page
     Then I should see cover image in page header
     # Test deleting cover image
-    And I navigate to "Appearance > Themes > Snap" in site administration
+    And I navigate to "Appearance > Themes > N2018" in site administration
     And I follow "Cover display"
     And I delete "rawcoverimage.png" from "Cover image" filemanager
     And I press "Save changes"
@@ -198,7 +196,7 @@ Feature: When the moodle theme is set to Snap, cover image can be set for site a
     And I upload cover image "testpng_small.png"
     And I wait until ".btn.ok" "css_element" is visible
     And I click on ".btn.ok" "css_element"
-    And I wait until "label[for=\"snap-coverfiles\"]" "css_element" is visible
+    And I wait until "label[for=\"n2018-coverfiles\"]" "css_element" is visible
     Then I should see cover image in page header
     And I reload the page
     Then I should see cover image in page header

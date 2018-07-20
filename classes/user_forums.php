@@ -15,16 +15,16 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 
-namespace theme_snap;
+namespace theme_n2018;
 
-use theme_snap\local;
+use theme_n2018\local;
 
 defined('MOODLE_INTERNAL') || die();
 
 /**
  * Provides information on all forums a user has access to.
  *
- * @package   theme_snap
+ * @package   theme_n2018
  * @copyright Copyright (c) 2015 Moodlerooms Inc. (http://www.moodlerooms.com)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */

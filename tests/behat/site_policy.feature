@@ -15,12 +15,12 @@
 #
 # Tests for site policy redirects.
 #
-# @package    theme_snap
+# @package    theme_n2018
 # @copyright  Copyright (c) 2017 Blackboard Inc.
 # @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
 
-@theme @theme_snap
-Feature: As an authenticated non-admin user, opening the snap personal menu redirects to the site policy acceptance
+@theme @theme_n2018
+Feature: As an authenticated non-admin user, opening the n2018 personal menu redirects to the site policy acceptance
   page when not previously accepted.
 
   Background:
@@ -45,8 +45,7 @@ Feature: As an authenticated non-admin user, opening the snap personal menu redi
   Scenario: Opening personal menu redirects to site policy page appropriately when personal menu set to not show on login.
     Accepting the site policy prevents redirect next time personal menu is opened.
     Given the following config values are set as admin:
-      | personalmenulogintoggle | 0 | theme_snap |
-    And I skip because "Site policy changes in core changed functionality"
+      | personalmenulogintoggle | 0 | theme_n2018 |
     And I log in as "student1"
     And I am currently on the default site home page
     When I open the personal menu

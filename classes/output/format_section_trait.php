@@ -19,12 +19,12 @@
  * Code that is shared between course_format_topic_renderer.php and course_format_weeks_renderer.php
  * Used for section outputs.
  *
- * @package   theme_snap
+ * @package   theme_n2018
  * @copyright Copyright (c) 2015 Moodlerooms Inc. (http://www.moodlerooms.com)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-namespace theme_snap\output;
+namespace theme_n2018\output;
 
 defined('MOODLE_INTERNAL') || die();
 
@@ -32,11 +32,11 @@ use context_course;
 use html_writer;
 use moodle_url;
 use stdClass;
-use theme_snap\renderables\course_action_section_move;
-use theme_snap\renderables\course_action_section_visibility;
-use theme_snap\renderables\course_action_section_delete;
-use theme_snap\renderables\course_action_section_highlight;
-use theme_snap\renderables\course_section_navigation;
+use theme_n2018\renderables\course_action_section_move;
+use theme_n2018\renderables\course_action_section_visibility;
+use theme_n2018\renderables\course_action_section_delete;
+use theme_n2018\renderables\course_action_section_highlight;
+use theme_n2018\renderables\course_section_navigation;
 
 trait format_section_trait {
 
@@ -180,7 +180,7 @@ trait format_section_trait {
         // We have to get the output renderer instead of using $this->output to ensure we get the non ajax version of
         // the renderer, even when via an AJAX request. The HTML returned has to be the same for all requests, even
         // ajax.
-        $output = $PAGE->get_renderer('theme_snap', 'core', RENDERER_TARGET_GENERAL);
+        $output = $PAGE->get_renderer('theme_n2018', 'core', RENDERER_TARGET_GENERAL);
 
         if ($section->section != 0) {
             // Only in the non-general sections.
@@ -210,6 +210,7 @@ trait format_section_trait {
         // SHAME - Remove tabindex when editing menu is shown.
         $sectionarrayvars = array('id' => 'section-'.$section->section,
         'class' => 'section main clearfix'.$sectionstyle,
+        'role' => 'article',
         'aria-label' => get_section_name($course, $section));
         if (!$PAGE->user_is_editing()) {
             $sectionarrayvars['tabindex'] = '-1';
@@ -235,23 +236,23 @@ trait format_section_trait {
         // Better first section title.
         if ($sectiontitle == get_string('general') && $section->section == 0) {
             $classes = '';
-            $sectiontitle = get_string('introduction', 'theme_snap');
+            $sectiontitle = get_string('introduction', 'theme_n2018');
         }
 
         // Untitled topic title.
         $testemptytitle = get_string('topic').' '.$section->section;
         if ($sectiontitle == $testemptytitle && has_capability('moodle/course:update', $context)) {
             $url = new moodle_url('/course/editsection.php', array('id' => $section->id, 'sr' => $sectionreturn));
-            $o .= "<h2 class='sectionname'><a href='$url' title='".s(get_string('editcoursetopic', 'theme_snap'))."'>";
-            $o .= get_string('defaulttopictitle', 'theme_snap')."</a></h2>";
+            $o .= "<h2 class='sectionname'><a href='$url' title='".s(get_string('editcoursetopic', 'theme_n2018'))."'>";
+            $o .= get_string('defaulttopictitle', 'theme_n2018')."</a></h2>";
         } else {
-            $o .= "<div tabindex='0'>" . $output->heading($sectiontitle, 2, 'sectionname' . $classes) . "</div>";
+            $o .= $output->heading($sectiontitle, 2, 'sectionname' . $classes);
         }
 
         // Section drop zone.
         $caneditcourse = has_capability('moodle/course:update', $context);
         if ($caneditcourse && $section->section != 0) {
-            $o .= "<a class='snap-drop section-drop' data-title='".
+            $o .= "<a class='n2018-drop section-drop' data-title='".
                     s($sectiontitle)."' href='#'>_</a>";
         }
 
@@ -262,19 +263,19 @@ trait format_section_trait {
             if (!empty($sectiontoolsarray)) {
                 $sectiontools = implode(' ', $sectiontoolsarray);
                 $o .= html_writer::tag('div', $sectiontools, array(
-                    'class' => 'js-only snap-section-editing actions',
+                    'class' => 'js-only n2018-section-editing actions',
                     'role' => 'region',
-                    'aria-label' => get_string('topicactions', 'theme_snap')
+                    'aria-label' => get_string('topicactions', 'theme_n2018')
                 ));
             }
         }
         // Draft message.
         $drafticon = '<img aria-hidden="true" role="presentation" class="svg-icon" src="'.$output->image_url('/i/show').'" />';
-        $o .= '<div class="snap-draft-tag snap-draft-section">'.$drafticon.' '.get_string('draft', 'theme_snap').'</div>';
+        $o .= '<div class="n2018-draft-tag n2018-draft-section">'.$drafticon.' '.get_string('draft', 'theme_n2018').'</div>';
 
         // Current section message.
         $currenticon = '<img aria-hidden="true" role="presentation" class="svg-icon" src="'.$output->image_url('/i/marked').'" />';
-        $o .= '<span class="snap-current-tag">'.$currenticon.' '.get_string('current', 'theme_snap').'</span>';
+        $o .= '<span class="n2018-current-tag">'.$currenticon.' '.get_string('current', 'theme_n2018').'</span>';
 
         // Availabiliy message.
         // Note - $canviewhiddensection is required so that teachers can see the availability info message permanently,
@@ -295,7 +296,7 @@ trait format_section_trait {
         }
 
         if ($formattedinfo !== '') {
-            $o .= '<div class="snap-conditional-tag">'.$conditionalicon.' '.$formattedinfo.'</div>';
+            $o .= '<div class="n2018-conditional-tag">'.$conditionalicon.' '.$formattedinfo.'</div>';
         }
 
         // Section summary/body text.
@@ -306,13 +307,11 @@ trait format_section_trait {
 
         // Welcome message when no summary text.
         if (empty($summarytext) && $canupdatecourse) {
-            $summarytext = "<p tabindex='0'>".get_string('defaultsummary', 'theme_snap')."</p>";
+            $summarytext = "<p>".get_string('defaultsummary', 'theme_n2018')."</p>";
             if ($section->section == 0) {
                 $editorname = format_string(fullname($USER));
-                $summarytext = "<p tabindex='0'>".get_string('defaultintrosummary', 'theme_snap', $editorname)."</p>";
+                $summarytext = "<p>".get_string('defaultintrosummary', 'theme_n2018', $editorname)."</p>";
             }
-        } else {
-            $summarytext = "<div tabindex='0'>" . $summarytext . "</div>";
         }
 
         $o .= $summarytext;
@@ -320,7 +319,7 @@ trait format_section_trait {
             $url = new moodle_url('/course/editsection.php', array('id' => $section->id, 'sr' => $sectionreturn));
             $icon = '<img aria-hidden="true" role="presentation" class="svg-icon" src="';
             $icon .= $this->output->image_url('pencil', 'theme').'" /><br/>';
-            $o .= '<a href="'.$url.'" class="edit-summary">'.$icon.get_string('editcoursetopic', 'theme_snap'). '</a>';
+            $o .= '<a href="'.$url.'" class="edit-summary">'.$icon.get_string('editcoursetopic', 'theme_n2018'). '</a>';
         }
         $o .= "</div>";
 
@@ -331,7 +330,7 @@ trait format_section_trait {
      * @param course_section_navigation $navigation
      */
     public function render_course_section_navigation(course_section_navigation $navigation) {
-        return $this->render_from_template('theme_snap/course_section_navigation', $navigation);
+        return $this->render_from_template('theme_n2018/course_section_navigation', $navigation);
     }
 
 
@@ -449,14 +448,14 @@ trait format_section_trait {
             return '';
         }
 
-        $url = new moodle_url('/theme/snap/index.php', array(
+        $url = new moodle_url('/theme/n2018/index.php', array(
             'sesskey'  => sesskey(),
             'action' => 'addsection',
             'contextid' => $context->id,
         ));
 
         $required = '';
-        $defaulttitle = get_string('title', 'theme_snap');
+        $defaulttitle = get_string('title', 'theme_n2018');
         $sectionnum = course_get_format($course)->get_last_section_number();
         if ($course->format === 'topics') {
             $required = 'required';
@@ -478,8 +477,8 @@ trait format_section_trait {
             $endweekday = userdate($dates->end, $dateformat);
             $datesection = $weekday.' - '.$endweekday;
         }
-        $heading = get_string('addanewsection', 'theme_snap');
-        $output = "<section id='snap-add-new-section' class='clearfix' tabindex='-1'>
+        $heading = get_string('addanewsection', 'theme_n2018');
+        $output = "<section id='n2018-add-new-section' class='clearfix' tabindex='-1'>
         <h3>$heading</h3>";
         $output .= html_writer::start_tag('form', array(
             'method' => 'post',
@@ -487,24 +486,23 @@ trait format_section_trait {
         ));
         $output .= html_writer::input_hidden_params($url);
         $output .= '<div class="form-group">';
-        $output .= "<label for='newsection' class='sr-only'>".get_string('title', 'theme_snap')."</label>";
+        $output .= "<label for='newsection' class='sr-only'>".get_string('title', 'theme_n2018')."</label>";
         if ($course->format === 'topics') {
             $output .= '<input class="h3" id="newsection" type="text" maxlength="250" name="newsection" '.$required;
-            $output .= ' placeholder="'.s(get_string('title', 'theme_snap')).'">';
+            $output .= ' placeholder="'.s(get_string('title', 'theme_n2018')).'">';
         } else {
             $output .= '<h3>'.$defaulttitle.': '.$datesection.'</h3>';
         }
         $output .= '</div>';
         $output .= '<div class="form-group">';
-        $output .= '<label for="summary">'.get_string('contents', 'theme_snap').'</label>';
+        $output .= '<label for="summary">'.get_string('contents', 'theme_n2018').'</label>';
         $output .= print_textarea(true, 10, 150, "100%",
             "auto", "summary", '', $course->id, true);
         $output .= '</div>';
         $output .= html_writer::empty_tag('input', array(
             'type' => 'submit',
-            'class' => 'btn btn-primary',
             'name' => 'addtopic',
-            'value' => get_string('createsection', 'theme_snap'),
+            'value' => get_string('createsection', 'theme_n2018'),
         ));
         $output .= html_writer::end_tag('form');
         $output .= '</section>';
@@ -537,19 +535,19 @@ trait format_section_trait {
         // Slamour Aug 2017
         // Add button to pick launch modchooser.
         $mcclass = 'js-only section-modchooser-link btn btn-link';
-        $mcdataattributes = 'data-section="'.$section.'" data-toggle="modal" data-target="#snap-modchooser-modal"';
+        $mcdataattributes = 'data-section="'.$section.'" data-toggle="modal" data-target="#n2018-modchooser-modal"';
         $modchooser = '
-        <div class="col-sm-6 snap-modchooser">
-            <a href="#" class="'.$mcclass.'" '.$mcdataattributes.'>'.$icon.get_string('addresourceoractivity', 'theme_snap').'</a>
+        <div class="col-sm-6 n2018-modchooser">
+            <a href="#" class="'.$mcclass.'" '.$mcdataattributes.'>'.$icon.get_string('addresourceoractivity', 'theme_n2018').'</a>
         </div>';
 
         // Add zone for quick uploading of files.
         $upload = '<div class="col-sm-6">
-            <form class="snap-dropzone js-only">
-                <label tabindex="0" for="snap-drop-file-'.$section.'" class="snap-dropzone-label">';
-        $upload .= get_string('dropzonelabel', 'theme_snap').'</label>
-                <input type="file" multiple name="snap-drop-file-'.$section.'" id="snap-drop-file-'.$section;
-        $upload .= '" class="js-snap-drop-file sr-only"/>
+            <form class="n2018-dropzone js-only">
+                <label tabindex="0" for="n2018-drop-file-'.$section.'" class="n2018-dropzone-label">';
+        $upload .= get_string('dropzonelabel', 'theme_n2018').'</label>
+                <input type="file" multiple name="n2018-drop-file-'.$section.'" id="n2018-drop-file-'.$section;
+        $upload .= '" class="js-n2018-drop-file sr-only"/>
             </form>
             </div>';
 
@@ -557,7 +555,7 @@ trait format_section_trait {
     }
 
     /**
-     * Always output the html for multiple sections, single section mode is not supported in Snap.
+     * Always output the html for multiple sections, single section mode is not supported in N2018.
      *
      * @param stdClass $course The course entry from DB
      * @param array $sections (argument not used)
@@ -577,7 +575,7 @@ trait format_section_trait {
      */
     public function render_course_action_section_move(course_action_section_move $action) {
         $data = $action->export_for_template($this);
-        return $this->render_from_template('theme_snap/course_action_section', $data);
+        return $this->render_from_template('theme_n2018/course_action_section', $data);
     }
 
     /**
@@ -587,7 +585,7 @@ trait format_section_trait {
      */
     public function render_course_action_section_visibility(course_action_section_visibility $action) {
         $data = $action->export_for_template($this);
-        return $this->render_from_template('theme_snap/course_action_section', $data);
+        return $this->render_from_template('theme_n2018/course_action_section', $data);
     }
 
     /**
@@ -597,7 +595,7 @@ trait format_section_trait {
      */
     public function render_course_action_section_highlight(course_action_section_highlight $action) {
         $data = $action->export_for_template($this);
-        return $this->render_from_template('theme_snap/course_action_section', $data);
+        return $this->render_from_template('theme_n2018/course_action_section', $data);
     }
 
     /**
@@ -607,7 +605,7 @@ trait format_section_trait {
      */
     public function render_course_action_section_delete(course_action_section_delete $action) {
         $data = $action->export_for_template($this);
-        return $this->render_from_template('theme_snap/course_action_section', $data);
+        return $this->render_from_template('theme_n2018/course_action_section', $data);
     }
 
 

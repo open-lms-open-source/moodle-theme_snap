@@ -15,13 +15,13 @@
 #
 # Tests for role switching features on course home page.
 #
-# @package    theme_snap
+# @package    theme_n2018
 # @copyright  Copyright (c) 2018 Blackboard Inc. (http://www.blackboard.com)
 # @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
 
 
-@theme @theme_snap
-Feature: When the moodle theme is set to Snap, switching between roles should be possible.
+@theme @theme_n2018
+Feature: When the moodle theme is set to n2018, switching between roles should be possible.
 
   Background:
     Given the following config values are set as admin:

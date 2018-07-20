@@ -15,19 +15,19 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Snap folderview format renderer.
+ * N2018 folderview format renderer.
  *
- * @package   theme_snap
+ * @package   theme_n2018
  * @copyright Copyright (c) 2015 Moodlerooms Inc. (http://www.moodlerooms.com)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-namespace theme_snap\output;
+namespace theme_n2018\output;
 
 defined('MOODLE_INTERNAL') || die();
 
 use html_writer;
-use theme_snap\output\shared;
+use theme_n2018\output\shared;
 
 require_once($CFG->dirroot.'/course/format/folderview/renderer.php');
 

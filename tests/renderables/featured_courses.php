@@ -14,15 +14,15 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
-namespace theme_snap\tests\renderables;
+namespace theme_n2018\tests\renderables;
 
 defined('MOODLE_INTERNAL') || die();
 
-use theme_snap\renderables\featured_courses;
+use theme_n2018\renderables\featured_courses;
 
 /**
  * Test course card service.
- * @package   theme_snap
+ * @package   theme_n2018
  * @author    gthomas2
  * @copyright Copyright (c) 2016 Moodlerooms Inc. (http://www.moodlerooms.com)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
@@ -41,10 +41,10 @@ class featured_courses_test extends \advanced_testcase {
         $course2 = $dg->create_course(['fullname' => 'Biology 101']);
         $course3 = $dg->create_course(['fullname' => 'Physics 101']);
         $course4 = $dg->create_course(['fullname' => 'English 101']);
-        set_config('fc_one', $course1->id, 'theme_snap');
-        set_config('fc_two', $course2->id, 'theme_snap');
-        set_config('fc_three', $course3->id, 'theme_snap');
-        set_config('fc_four', $course4->id, 'theme_snap');
+        set_config('fc_one', $course1->id, 'theme_n2018');
+        set_config('fc_two', $course2->id, 'theme_n2018');
+        set_config('fc_three', $course3->id, 'theme_n2018');
+        set_config('fc_four', $course4->id, 'theme_n2018');
         $fc = new featured_courses();
         $this->assertNotEmpty($fc->cards);
         $this->assertEquals($course1->fullname, $fc->cards[0]->title);
@@ -56,18 +56,18 @@ class featured_courses_test extends \advanced_testcase {
         $this->assertEmpty($fc->browseallurl);
 
         // Enable browse all button and test for url not empty.
-        set_config('fc_browse_all', '1', 'theme_snap');
+        set_config('fc_browse_all', '1', 'theme_n2018');
         $fc = new featured_courses();
         $this->assertNotEmpty($fc->browseallurl);
 
         // Test featured courses title empty if unset.
-        set_config('fc_heading', '', 'theme_snap');
+        set_config('fc_heading', '', 'theme_n2018');
         $fc = new featured_courses();
         $this->assertEmpty($fc->heading);
 
         // Add a title and test for it.
         $fcheading = 'Loads of lovely courses';
-        set_config('fc_heading', $fcheading, 'theme_snap');
+        set_config('fc_heading', $fcheading, 'theme_n2018');
         $fc = new featured_courses();
         $this->assertEquals($fcheading, $fc->heading);
 

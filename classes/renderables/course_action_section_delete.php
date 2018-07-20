@@ -21,7 +21,7 @@
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-namespace theme_snap\renderables;
+namespace theme_n2018\renderables;
 use moodle_url;
 use section_info;
 
@@ -32,7 +32,7 @@ class course_action_section_delete extends course_action_section_base {
     /**
      * @var string
      */
-    public $class = 'snap-delete';
+    public $class = 'n2018-delete';
 
     public function __construct($course, section_info $section, $onsectionpage = false) {
 

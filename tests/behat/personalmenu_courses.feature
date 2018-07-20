@@ -13,14 +13,14 @@
 # You should have received a copy of the GNU General Public License
 # along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 #
-# Tests for courses in the Snap personal menu.
+# Tests for courses in the N2018 personal menu.
 #
-# @package    theme_snap
+# @package    theme_n2018
 # @copyright  Copyright (c) 2015 Moodlerooms Inc. (http://www.moodlerooms.com)
 # @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
 
-@theme @theme_snap
-Feature: When the moodle theme is set to Snap, students and teachers can open a personal menu with a list of courses
+@theme @theme_n2018
+Feature: When the moodle theme is set to N2018, students and teachers can open a personal menu with a list of courses
   they are enrolled in to give them easy access.
 
   Background:

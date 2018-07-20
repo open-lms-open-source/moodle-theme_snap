@@ -13,14 +13,14 @@
 # You should have received a copy of the GNU General Public License
 # along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 #
-# Tests for course favoriting in the Snap personal menu.
+# Tests for course favoriting in the N2018 personal menu.
 #
-# @package    theme_snap
+# @package    theme_n2018
 # @copyright  Copyright (c) 2017 Blackboard Inc.
 # @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
 
-@theme @theme_snap
-Feature: When the moodle theme is set to Snap, expired courses appear in an archive section within the personal menu.
+@theme @theme_n2018
+Feature: When the moodle theme is set to N2018, expired courses appear in an archive section within the personal menu.
   For non archived courses, it is possible to favorite and un-favorite them.
 
   Background:
@@ -74,7 +74,7 @@ Feature: When the moodle theme is set to Snap, expired courses appear in an arch
     And I should not see "Course 1"
     And I should not see "Course 2"
     And I should not see "Course 3"
-    And I click on "#snap-pm-tab-current" "css_element"
+    And I click on "#n2018-pm-tab-current" "css_element"
     And I should not see "Past-course 1"
     And I should not see "Past-course 2"
     And I should not see "Past-course 3"

@@ -14,7 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
-namespace theme_snap\controller;
+namespace theme_n2018\controller;
 
 defined('MOODLE_INTERNAL') || die();
 
@@ -23,7 +23,7 @@ defined('MOODLE_INTERNAL') || die();
  * Controllers handle requests.  Any methods that end with "_action"
  * can be routed to via the URL.  See the router for how this happens.
  *
- * @package   theme_snap
+ * @package   theme_n2018
  * @copyright Copyright (c) 2015 Moodlerooms Inc. (http://www.moodlerooms.com)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */

@@ -17,28 +17,28 @@
 /**
  * Controller Router Tests
  *
- * @package   theme_snap
+ * @package   theme_n2018
  * @copyright Copyright (c) 2015 Moodlerooms Inc. (http://www.moodlerooms.com)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-namespace theme_snap\tests\controller;
+namespace theme_n2018\tests\controller;
 
-use theme_snap\controller\controller_abstract;
-use theme_snap\controller\router;
+use theme_n2018\controller\controller_abstract;
+use theme_n2018\controller\router;
 
 defined('MOODLE_INTERNAL') || die();
 
 /**
- * @package   theme_snap
+ * @package   theme_n2018
  * @copyright Copyright (c) 2015 Moodlerooms Inc. (http://www.moodlerooms.com)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class router_test extends \basic_testcase {
     public function test_route_action() {
-        $controller1 = $this->createPartialMock('\theme_snap\controller\controller_abstract',
+        $controller1 = $this->createPartialMock('\theme_n2018\controller\controller_abstract',
             array('init', 'test_action', 'require_capability'));
-        $controller2 = $this->createPartialMock('\theme_snap\controller\controller_abstract',
+        $controller2 = $this->createPartialMock('\theme_n2018\controller\controller_abstract',
             array('init', 'test_action', 'require_capability'));
 
         $router = new router();
@@ -65,7 +65,7 @@ class router_test extends \basic_testcase {
      * @expectedException \coding_exception
      */
     public function test_route_fail() {
-        $controller = $this->createPartialMock('\theme_snap\controller\controller_abstract', array('init', 'require_capability'));
+        $controller = $this->createPartialMock('\theme_n2018\controller\controller_abstract', array('init', 'require_capability'));
         $router     = new router();
         $router->add_controller($controller);
         $router->route_action('test');

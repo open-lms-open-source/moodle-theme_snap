@@ -17,7 +17,7 @@
 {{!
     @copyright Copyright (c) 2017 Blackboard Inc.
 
-    @template theme_snap/course_cards
+    @template theme_n2018/course_cards
 
     Course cards template
 
@@ -48,13 +48,13 @@
 }}
 <div data-hidden="{{^published}}true{{/published}}{{#published}}false{{/published}}" data-courseid="{{courseid}}" data-category="{{category}}" data-model="{{model}}" data-href="{{{url}}}" data-shortname="{{shortname}}" class="coursecard{{#favorited}} favorited{{/favorited}}" style="{{imagecss}}" tabindex="-1"{{#lazyloadimageurl}} data-image-url="{{.}}"{{/lazyloadimageurl}}>
     {{^archived}}
-    <button class="snap-icon-toggle favoritetoggle" title="{{toggletitle}}" aria-pressed="{{#favorited}}true{{/favorited}}{{^favorited}}false{{/favorited}}"></button>
+    <button class="n2018-icon-toggle favoritetoggle" title="{{toggletitle}}" aria-pressed="{{#favorited}}true{{/favorited}}{{^favorited}}false{{/favorited}}"></button>
     {{/archived}}
     <div class="coursecard-body">
         <h3><a class="coursecard-coursename" href="{{{url}}}">{{{fullname}}}</a></h3>
         <div class="coursecard-dynamicinfo">
             {{#feedback.coursegrade.value}}
-                    <div class="coursegrade">{{#str}}coursegrade, theme_snap{{/str}} <a href="{{feedbackurl}}">{{feedback.coursegrade.value}}</a></div>
+                    <div class="coursegrade">{{#str}}coursegrade, theme_n2018{{/str}} <a href="{{feedbackurl}}">{{feedback.coursegrade.value}}</a></div>
             {{/feedback.coursegrade.value}}
             {{#completion.render}}
             <div class="completionstatus outoftotal">{{#str}}progresstotal, completion, {"complete":{{completion.complete}},"total":{{completion.total}} }{{/str}}<span class="pull-right">{{completion.progress}}%</span></div>
@@ -63,16 +63,16 @@
         </div>
         {{^published}}
         <small class="published-status text-warning">
-            {{# str }} notpublished, theme_snap {{/ str }}
+            {{# str }} notpublished, theme_n2018 {{/ str }}
         </small>
         {{/published}}
         <div class="coursecard-contacts">
-            <h4 class="sr-only">{{#str}}coursecontacts, theme_snap{{/str}}</h4>
+            <h4 class="sr-only">{{#str}}coursecontacts, theme_n2018{{/str}}</h4>
             {{#visibleavatars}}
                 {{{.}}}
             {{/visibleavatars}}
             {{#showextralink}}
-                <a data-toggle="collapse" class="coursecard-contacts-more" aria-expanded="false" href="#coursecard-contacts-{{courseid}}"  aria-controls="coursecard-contacts-{{courseid}}" href="#">{{hiddenavatarcount}}<span class="sr-only"> {{#str}}more, theme_snap{{/str}}</span></a>
+                <a data-toggle="collapse" class="coursecard-contacts-more" aria-expanded="false" href="#coursecard-contacts-{{courseid}}"  aria-controls="coursecard-contacts-{{courseid}}" href="#">{{hiddenavatarcount}}<span class="sr-only"> {{#str}}more, theme_n2018{{/str}}</span></a>
                     <div class="collapse" id="coursecard-contacts-{{courseid}}">
                         {{#hiddenavatars}}
                             {{{.}}}

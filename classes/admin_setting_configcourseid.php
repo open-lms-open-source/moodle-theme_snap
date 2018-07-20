@@ -14,13 +14,13 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
-namespace theme_snap;
+namespace theme_n2018;
 
 defined('MOODLE_INTERNAL') || die();
 
 /**
  * Class to render input of type url in settings pages.
- * @package theme_snap
+ * @package theme_n2018
  * @author SL
  * @copyright Blackboard Ltd 2017
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later

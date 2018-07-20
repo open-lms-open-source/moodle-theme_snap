@@ -13,15 +13,15 @@
 # You should have received a copy of the GNU General Public License
 # along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 #
-# Tests for course progress in the Snap personal menu.
+# Tests for course progress in the N2018 personal menu.
 #
-# @package    theme_snap
+# @package    theme_n2018
 # @copyright  Copyright (c) 2016 Moodlerooms Inc. (http://www.moodlerooms.com)
 # @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
 
 
-@theme @theme_snap
-Feature: When the moodle theme is set to Snap, students and teachers can open a personal menu which features a
+@theme @theme_n2018
+Feature: When the moodle theme is set to N2018, students and teachers can open a personal menu which features a
   list of courses they are enrolled in with a progress bar indication completion (if completion tracking is enabled).
 
   Background:
@@ -48,7 +48,6 @@ Feature: When the moodle theme is set to Snap, students and teachers can open a 
       | assign   | C1     | assign1  | Test assignment | Test assignment | 1       | 1          | 1              |
     And I reload the page
     And I open the personal menu
-    And I wait for the personal menu to be loaded
     Then I should see "Course 1"
     And I should see "Progress: 0 / 1"
     And I am on "Course 1" course homepage
@@ -56,12 +55,10 @@ Feature: When the moodle theme is set to Snap, students and teachers can open a 
     And I mark the activity "Test assignment" as complete
     And I reload the page
     And I open the personal menu
-    And I wait for the personal menu to be loaded
     Then I should see "Progress: 1 / 1"
     Given completion tracking is "Disabled" for course "C1"
     And I reload the page
     And I open the personal menu
-    And I wait for the personal menu to be loaded
     Then I should not see "Progress:"
     Given completion tracking is "Enabled" for course "C1"
     And the following config values are set as admin:

@@ -1,10 +1,7 @@
 // -------------------------
 //  Personal menu.
 // -------------------------
-
-/* stylelint-disable declaration-no-important*/
-
-#snap-pm {
+#n2018-pm {
     background-color: #eee;
     overflow-x: hidden; // Prevent scrollbars.
     display: none;
@@ -18,16 +15,16 @@
     display: none;
 }
 
-body.snap-pm-open {
+body.n2018-pm-open {
     background-color: #eee;
 }
 
 // -------------------------
 //  Personal open and close.
 // -------------------------
-.snap-pm-open {
+.n2018-pm-open {
 
-    #snap-pm {
+    #n2018-pm {
         display: block;
     }
 
@@ -40,10 +37,8 @@ body.snap-pm-open {
     }
 
     // Animate opening the pm.
-    #snap-pm-inner {
-        /* stylelint-disable no-unknown-animations*/
-        animation-name: snap-drop;
-        /* stylelint-enable no-unknown-animations*/
+    #n2018-pm-inner {
+        animation-name: n2018-drop;
         animation-iteration-count: once;
         animation-timing-function: ease-in-out;
         animation-duration: 0.3s;
@@ -53,7 +48,8 @@ body.snap-pm-open {
 // -------------------------
 //  Personal menu header.
 // -------------------------
-#snap-pm-header {
+#n2018-pm-header {
+    background-color: $brand-primary;
     padding: 2%;
     color: white;
 
@@ -61,6 +57,7 @@ body.snap-pm-open {
         float: left;
         width: 5em;
         margin-right: 2%;
+        box-shadow: 0 0 5em lighten($brand-primary, 8%);
     }
 
     h1,
@@ -69,7 +66,7 @@ body.snap-pm-open {
         padding-top: 0; // No top padding on close icon and links.
     }
 
-    #snap-pm-header-quicklinks {
+    #n2018-pm-header-quicklinks {
         a:after {
             content: '-';
             display: inline-block;
@@ -84,8 +81,8 @@ body.snap-pm-open {
 // -------------------------
 // Personal Menu as login form.
 // -------------------------
-.snap-pm-login-form {
-    #snap-pm-content {
+.n2018-pm-login-form {
+    #n2018-pm-content {
         width: 23em;
         margin: 2em auto;
     }
@@ -94,7 +91,7 @@ body.snap-pm-open {
         letter-spacing: 0.03rem;
     }
 
-    #snap-pm-login-help {
+    #n2018-pm-login-help {
         position: fixed;
         bottom: 0;
         right: 2%;
@@ -104,7 +101,7 @@ body.snap-pm-open {
 // -------------------------
 //  Navigation to previous years courses.
 // -------------------------
-#snap-pm-courses-nav {
+#n2018-pm-courses-nav {
     border: none;
     // Reset bs styles.
     .nav-item {
@@ -121,7 +118,7 @@ body.snap-pm-open {
 // -------------------------
 //  Personal menu content.
 // -------------------------
-#snap-pm-content {
+#n2018-pm-content {
     padding: 2%;
     position: relative;
 
@@ -135,7 +132,7 @@ body.snap-pm-open {
         margin: 0.5em 0;
     }
 
-    #snap-pm-courses {
+    #n2018-pm-courses {
         overflow: hidden;
     }
 
@@ -157,7 +154,7 @@ body.snap-pm-open {
 // -------------------------
 //  Tab content for current and previous courses.
 // -------------------------
-#snap-pm-courses-content {
+#n2018-pm-courses-content {
     .tab-pane {
         display: none;
         &.active {
@@ -169,7 +166,7 @@ body.snap-pm-open {
         }
     }
 
-    #snap-pm-courses-current.tab-pane.active {
+    #n2018-pm-courses-current.tab-pane.active {
         animation-name: slideFromLeft;
     }
 }
@@ -182,7 +179,7 @@ body.snap-pm-open {
 
     100% {
         opacity: 1;
-        transform: translate3d(0, 0, 0);
+        transform: translate3d(0, 0, 0);;
     }
 }
 
@@ -194,17 +191,18 @@ body.snap-pm-open {
 
     100% {
         opacity: 1;
-        transform: translate3d(0, 0, 0);
+        transform: translate3d(0, 0, 0);;
     }
 }
 
 // -------------------------
 //  Personal menu tablet & mobile navigation.
 // -------------------------
-#snap-pm-mobilemenu {
+#n2018-pm-mobilemenu {
     display: none;
 
     @include media-breakpoint-down(md) {
+        display: block;
         position: fixed;
         bottom: 0;
         left: 0;
@@ -234,6 +232,10 @@ body.snap-pm-open {
             &.state-active {
                 transform: scale(1.5);
                 margin-top: -.5em;
+
+                .svg-icon {
+                    border: 2px solid $brand-primary;
+                }
             }
         }
     }
@@ -242,12 +244,9 @@ body.snap-pm-open {
 // -------------------------
 //  Personal menu current courses.
 // -------------------------
-#snap-pm-courses-current {
-    #snap-pm-courses-current-cards {
-        margin-top: 2em;
-    }
+#n2018-pm-courses-current {
     // Hidden courses - always output for js, but hidden unless populated.
-    #snap-pm-courses-hidden {
+    #n2018-pm-courses-hidden {
         display: none;
         &.state-visible {
             display: block; // Toggled in template and js.
@@ -267,9 +266,8 @@ body.snap-pm-open {
 
         &:hover {
             transform: scale(1.05);
-            box-shadow:
-                0 8px 17px 0 $gray-light,
-                0 6px 20px 0 rgba(0, 0, 0, 0.19);
+            box-shadow: 0 8px 17px 0 $gray-light,
+                        0 6px 20px 0 rgba(0, 0, 0, 0.19);
         }
     }
 
@@ -280,6 +278,7 @@ body.snap-pm-open {
     cursor: pointer;
     position: relative;
     overflow: hidden;
+    background-color: $brand-primary;
     @include bg-cover;
     @include alakazam();
 
@@ -298,6 +297,7 @@ body.snap-pm-open {
             margin: 0;
             // Link to course, limited to 2 lines.
             a {
+                display: block;
                 overflow: hidden;
                 line-height: 1.25;
                 width: 100%;
@@ -320,7 +320,7 @@ body.snap-pm-open {
         text-align: center;
 
         .userpicture,
-        .coursecard-contacts-more {
+        .coursecard-contacts-more  {
             margin: 0 1%;
             width: 2rem;
             height: 2rem;
@@ -392,7 +392,7 @@ body.snap-pm-open {
 // -------------------------
 //  Personal menu updates.
 // -------------------------
-#snap-pm-updates {
+#n2018-pm-updates {
     section {
         position: relative;
         border-bottom: 1px solid $gray-light;
@@ -404,12 +404,12 @@ body.snap-pm-open {
 // -------------------------
 //  Personal menu links to browse all course, see all messages etc.
 // -------------------------
-#snap-pm-courses .snap-personal-menu-more {
+#n2018-pm-courses .n2018-personal-menu-more {
     position: absolute;
     top: 0;
     right: 0;
 }
-.snap-personal-menu-more {
+.n2018-personal-menu-more {
     display: block;
     text-align: right;
 }

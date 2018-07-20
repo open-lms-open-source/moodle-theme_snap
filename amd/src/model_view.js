@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
  *
- * @package   theme_snap
+ * @package   theme_n2018
  * @copyright Copyright (c) 2016 Moodlerooms Inc. (http://www.moodlerooms.com)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
@@ -42,7 +42,6 @@ define(['jquery', 'core/notification', 'core/templates', 'core/log'], function($
                 }
                 srcKeys.push(this.name);
                 $(target).attr(this.name, this.value);
-                return true;
             });
             $.each($(target)[0].attributes, function() {
                 if (srcKeys.indexOf(this.name) == -1) {
@@ -80,7 +79,7 @@ define(['jquery', 'core/notification', 'core/templates', 'core/log'], function($
                     var tempEl = $($.parseHTML(result));
                     $(element).html(tempEl.html());
                     cloneAttributes(tempEl, $(element), true);
-                    if (typeof (callback) === 'function') {
+                    if (typeof(callback) === 'function') {
                         callback();
                     }
                     $(element).trigger('modelUpdated');

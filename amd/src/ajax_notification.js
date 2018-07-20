@@ -14,13 +14,13 @@
  * You should have received a copy of the GNU General Public License
  * along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
  *
- * @package   theme_snap
+ * @package   theme_n2018
  * @author    Guy Thomas <gthomas@moodlerooms.com>
  * @copyright Copyright (c) 2016 Blackboard Inc.
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-define(['jquery', 'core/notification', 'core/ajax', 'core/templates', 'core/str', 'theme_snap/util'],
+define(['jquery', 'core/notification', 'core/ajax', 'core/templates', 'core/str', 'theme_n2018/util'],
 
     function($, notification, ajax, templates, str, util) {
 
@@ -31,7 +31,7 @@ define(['jquery', 'core/notification', 'core/ajax', 'core/templates', 'core/str'
 
         // Module level code.
         $(document).ready(function() {
-            $('#snap-pm-logout').click(function() {
+            $('#n2018-pm-logout').click(function() {
                 loggingOut = true;
             });
         });
@@ -45,19 +45,18 @@ define(['jquery', 'core/notification', 'core/ajax', 'core/templates', 'core/str'
             /**
              * If there is an error in this response then show the best error message for the user.
              *
-             * @param {object} response
-             * @param {string} failAction
-             * @param {string} failMsg
-             * @returns {function} promise - resolves with a boolean (true if error shown)
+             * @param response
+             * @param failaction
+             * @return promise - resolves with a boolean (true if error shown)
              */
-            ifErrorShowBestMsg: function(response, failAction, failMsg) {
+            ifErrorShowBestMsg : function(response, failAction, failMsg) {
 
                 var dfd = $.Deferred();
 
                 /**
                  * Error notification function for non logged out issues.
-                 * @param {object} response
-                 * @returns {function} promise
+                 * @param response
+                 * @return promise
                  */
                 var errorNotification = function(response) {
                     var endfd = $.Deferred();
@@ -87,7 +86,7 @@ define(['jquery', 'core/notification', 'core/ajax', 'core/templates', 'core/str'
                                 errorstr, M.util.get_string('ok', 'moodle'));
                         }
                     }
-                    util.whenTrue(function() {
+                    util.whenTrue(function(){
                         var isvisible = $('.moodle-dialogue-base').is(':visible');
                         return isvisible;
                     }, function() {
@@ -112,12 +111,10 @@ define(['jquery', 'core/notification', 'core/ajax', 'core/templates', 'core/str'
                     try {
                         var jsonObj = JSON.parse(response);
                         response = jsonObj;
-                    } catch (e) {
-                        // Not caring about exceptions.
-                    }
+                    } catch (e) {}
                 }
 
-                if (typeof response === 'undefined') {
+                if (typeof response  === 'undefined') {
                     // We don't know what the error was so don't show a useless unknown error dialog.
                     return false;
                 }
@@ -138,23 +135,23 @@ define(['jquery', 'core/notification', 'core/ajax', 'core/templates', 'core/str'
 
                 if (response.error || response.errorcode) {
 
-                    if (M.snapTheme.forcePassChange) {
-                        var pwdChangeUrl = M.cfg.wwwroot + '/login/change_password.php';
+                    if (M.n2018Theme.forcePassChange) {
+                        var pwdChangeUrl = M.cfg.wwwroot+'/login/change_password.php';
                         // When a force password change is in effect, warn user in personal menu and redirect to
                         // password change page if appropriate.
-                        if ($('#snap-pm-content').length) {
-                            str.get_string('forcepwdwarningpersonalmenu', 'theme_snap', pwdChangeUrl).then(
+                        if ($('#n2018-pm-content').length) {
+                            str.get_string('forcepwdwarningpersonalmenu', 'theme_n2018', pwdChangeUrl).then(
                                 function(forcePwdWarning) {
                                     var alertMsg = {"message": forcePwdWarning, "extraclasses": "force-pwd-warning"};
                                     return templates.render('core/notification_warning', alertMsg);
                                 }
                             ).then(
                                 function(result) {
-                                    $('#snap-pm-content').html('<br />' + result);
+                                    $('#n2018-pm-content').html('<br />' + result);
                                     dfd.resolve(true);
                                 }
                             );
-                            if ($('#snap-pm-content').is(':visible')) {
+                            if ($('#n2018-pm-content').is(':visible')) {
                                 // If the personal menu is open then it should have a message in it informing the user
                                 // that they need to change their password to proceed.
                                 loginErrorShown = true;
@@ -180,10 +177,10 @@ define(['jquery', 'core/notification', 'core/ajax', 'core/templates', 'core/str'
                         type: "POST",
                         async: true,
                         data: {
-                            "sesskey": M.cfg.sesskey,
-                            "failedactionmsg": failAction
+                            "sesskey" : M.cfg.sesskey,
+                            "failedactionmsg" : failAction
                         },
-                        url: M.cfg.wwwroot + '/theme/snap/rest.php?action=get_loginstatus'
+                        url: M.cfg.wwwroot + '/theme/n2018/rest.php?action=get_loginstatus'
                     }).then(function(thisResp) {
                         if (loginErrorShown) {
                             dfd.resolve(true);
@@ -206,12 +203,10 @@ define(['jquery', 'core/notification', 'core/ajax', 'core/templates', 'core/str'
                                 thisResp.loggedoutcontinue,
                                 ' ',
                                 function() {
-                                    window.location = M.cfg.wwwroot + '/login/index.php';
+                                    window.location = M.cfg.wwwroot+'/login/index.php';
                                 }
                             );
                             loginErrorShown = true;
-                            dfd.resolve(true);
-                            return dfd.promise();
                         } else {
                             // This is not a login issue, show original error message.
                             return errorNotification(response); // Returns promise which is resolved when dialog shown.

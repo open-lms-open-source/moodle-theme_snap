@@ -13,16 +13,16 @@
 # You should have received a copy of the GNU General Public License
 # along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 #
-# Tests for Snap behat tweaks.
+# Tests for N2018 behat tweaks.
 #
-# @package    theme_snap
+# @package    theme_n2018
 # @copyright  Copyright (c) 2015 Moodlerooms Inc. (http://www.moodlerooms.com)
 # @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
 
 
-@theme @theme_snap
-Feature: When the moodle theme is set to Snap, behat tests that navigate via the Nav block should still work
-    even though this block is hidden by default in the Snap theme.
+@theme @theme_n2018
+Feature: When the moodle theme is set to N2018, behat tests that navigate via the Nav block should still work
+    even though this block is hidden by default in the N2018 theme.
 
   Scenario: Log in as admin and always see the navigation block in behat
     Given I log in as "admin"

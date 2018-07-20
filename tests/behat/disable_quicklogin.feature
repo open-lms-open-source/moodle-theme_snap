@@ -13,29 +13,29 @@
 # You should have received a copy of the GNU General Public License
 # along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 #
-# Tests for Snap behat tweaks.
+# Tests for N2018 behat tweaks.
 #
-# @package    theme_snap
+# @package    theme_n2018
 # @copyright  Copyright (c) 2017 Blackboard Inc. (http://www.blackboard.com)
 # @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
 
 
-@theme @theme_snap
-Feature: Disable Snap quick login
+@theme @theme_n2018
+Feature: Disable N2018 quick login
   In order to use some advanced authentication functionality
   As an Admin
-  I need to be able to disable the Snap quick login
+  I need to be able to disable the N2018 quick login
 
   @javascript
-  Scenario: Snap quick login is disabled
+  Scenario: N2018 quick login is disabled
     Given the following config values are set as admin:
-      | theme_snap_disablequicklogin | 1 |
+      | theme_n2018_disablequicklogin | 1 |
     And I am on homepage
     And I wait until the page is ready
-    Then ".btn.btn-primary.snap-login-button.js-snap-pm-trigger" "css_element" should not exist
+    Then ".btn.btn-default.n2018-login-button.js-n2018-pm-trigger" "css_element" should not exist
 
   @javascript
-  Scenario: Snap quick login is not disabled
+  Scenario: N2018 quick login is not disabled
     Given I am on homepage
     And I wait until the page is ready
-    Then ".btn.btn-primary.snap-login-button.js-snap-pm-trigger" "css_element" should exist
+    Then ".btn.btn-default.n2018-login-button.js-n2018-pm-trigger" "css_element" should exist

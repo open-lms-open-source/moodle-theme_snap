@@ -16,44 +16,44 @@
 
 defined('MOODLE_INTERNAL') || die;// Main settings.
 
-use theme_snap\admin_setting_configurl;
+use theme_n2018\admin_setting_configurl;
 
-$snapsettings = new admin_settingpage('themesnapsocialmedia', get_string('socialmedia', 'theme_snap'));
+$n2018settings = new admin_settingpage('themen2018socialmedia', get_string('socialmedia', 'theme_n2018'));
 
     // Social media.
-    $name = 'theme_snap/facebook';
-    $title = new lang_string('facebook', 'theme_snap');
-    $description = new lang_string('facebookdesc', 'theme_snap');
+    $name = 'theme_n2018/facebook';
+    $title = new lang_string('facebook', 'theme_n2018');
+    $description = new lang_string('facebookdesc', 'theme_n2018');
     $default = '';
     $setting = new admin_setting_configurl($name, $title, $description, $default);
-    $snapsettings->add($setting);
+    $n2018settings->add($setting);
 
-    $name = 'theme_snap/twitter';
-    $title = new lang_string('twitter', 'theme_snap');
-    $description = new lang_string('twitterdesc', 'theme_snap');
+    $name = 'theme_n2018/twitter';
+    $title = new lang_string('twitter', 'theme_n2018');
+    $description = new lang_string('twitterdesc', 'theme_n2018');
     $default = '';
     $setting = new admin_setting_configurl($name, $title, $description, $default);
-    $snapsettings->add($setting);
+    $n2018settings->add($setting);
 
-    $name = 'theme_snap/linkedin';
-    $title = new lang_string('linkedin', 'theme_snap');
-    $description = new lang_string('linkedindesc', 'theme_snap');
+    $name = 'theme_n2018/linkedin';
+    $title = new lang_string('linkedin', 'theme_n2018');
+    $description = new lang_string('linkedindesc', 'theme_n2018');
     $default = '';
     $setting = new admin_setting_configurl($name, $title, $description, $default);
-    $snapsettings->add($setting);
+    $n2018settings->add($setting);
 
-    $name = 'theme_snap/youtube';
-    $title = new lang_string('youtube', 'theme_snap');
-    $description = new lang_string('youtubedesc', 'theme_snap');
+    $name = 'theme_n2018/youtube';
+    $title = new lang_string('youtube', 'theme_n2018');
+    $description = new lang_string('youtubedesc', 'theme_n2018');
     $default = '';
     $setting = new admin_setting_configurl($name, $title, $description, $default);
-    $snapsettings->add($setting);
+    $n2018settings->add($setting);
 
-    $name = 'theme_snap/instagram';
-    $title = new lang_string('instagram', 'theme_snap');
-    $description = new lang_string('instagramdesc', 'theme_snap');
+    $name = 'theme_n2018/instagram';
+    $title = new lang_string('instagram', 'theme_n2018');
+    $description = new lang_string('instagramdesc', 'theme_n2018');
     $default = '';
     $setting = new admin_setting_configurl($name, $title, $description, $default);
-    $snapsettings->add($setting);
+    $n2018settings->add($setting);
 
-    $settings->add($snapsettings);
+    $settings->add($n2018settings);

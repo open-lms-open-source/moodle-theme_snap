@@ -19,15 +19,15 @@
  * This layout is baed on a moodle site index.php file but has been adapted to show news items in a different
  * way.
  *
- * @package   theme_snap
+ * @package   theme_n2018
  * @copyright Copyright (c) 2015 Moodlerooms Inc. (http://www.moodlerooms.com)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 defined('MOODLE_INTERNAL') || die();
 
-use theme_snap\renderables\settings_link;
-use theme_snap\renderables\bb_dashboard_link;
+use theme_n2018\renderables\settings_link;
+use theme_n2018\renderables\bb_dashboard_link;
 
 ?>
 <header id='mr-nav' class='clearfix moodle-has-zindex'>
@@ -52,8 +52,8 @@ echo '</span>';
 <?php
 $sitefullname = format_string($SITE->fullname);
 $attrs = array(
-    'aria-label' => get_string('home', 'theme_snap'),
-    'id' => 'snap-home',
+    'aria-label' => get_string('home', 'theme_n2018'),
+    'id' => 'n2018-home',
     'title' => $sitefullname,
 );
 

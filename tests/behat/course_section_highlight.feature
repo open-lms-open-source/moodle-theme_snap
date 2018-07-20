@@ -13,14 +13,14 @@
 # You should have received a copy of the GNU General Public License
 # along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 #
-# Tests for toggle course section highlighting in non edit mode in snap.
+# Tests for toggle course section highlighting in non edit mode in n2018.
 #
-# @package    theme_snap
+# @package    theme_n2018
 # @copyright  2016 Guy Thomas <gthomas@moodlerooms.com>
 # @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
 
-@theme @theme_snap
-Feature: When the moodle theme is set to Snap, teachers can toggle the currently higlighted course sections.
+@theme @theme_n2018
+Feature: When the moodle theme is set to N2018, teachers can toggle the currently higlighted course sections.
 
   Background:
     Given the following "courses" exist:
@@ -42,13 +42,13 @@ Feature: When the moodle theme is set to Snap, teachers can toggle the currently
     And I am on the course main page for "C1"
     And I follow "Topic 2"
     Then "#section-2" "css_element" should exist
-    And "#chapters li:nth-of-type(3).snap-visible-section" "css_element" should exist
+    And "#chapters li:nth-of-type(3).n2018-visible-section" "css_element" should exist
 
-    And I click on "#section-2 .snap-highlight" "css_element"
-    And I wait until "#section-2 .snap-highlight" "css_element" exists
+    And I click on "#section-2 .n2018-highlight" "css_element"
+    And I wait until "#section-2 .n2018-highlight" "css_element" exists
     # Note: nth-of-type(3) corresponds to the second section in the TOC.
     And I should see "Current" in the "#chapters li:nth-of-type(3)" "css_element"
-    And "#chapters li:nth-of-type(3).snap-visible-section" "css_element" should exist
+    And "#chapters li:nth-of-type(3).n2018-visible-section" "css_element" should exist
     And I log out
     And I log in as "student1"
     And I am on the course main page for "C1"
@@ -57,10 +57,10 @@ Feature: When the moodle theme is set to Snap, teachers can toggle the currently
     And I log in as "teacher1"
     And I am on the course main page for "C1"
     And I follow "Topic 2"
-    Given I click on "#section-2 .snap-highlight" "css_element"
-    And I wait until "#section-2 .snap-highlight" "css_element" exists
+    Given I click on "#section-2 .n2018-highlight" "css_element"
+    And I wait until "#section-2 .n2018-highlight" "css_element" exists
     Then I should not see "Current" in the "#chapters li:nth-of-type(3)" "css_element"
-    And "#chapters li:nth-of-type(3).snap-visible-section" "css_element" should exist
+    And "#chapters li:nth-of-type(3).n2018-visible-section" "css_element" should exist
     And I log out
     And I log in as "student1"
     And I am on the course main page for "C1"
@@ -76,7 +76,7 @@ Feature: When the moodle theme is set to Snap, teachers can toggle the currently
     And the editing teacher role is removed from course "C1" for "teacher1"
     And I follow "Topic 1"
     Then "#section-1" "css_element" should exist
-    And I click on "#section-1 .snap-highlight" "css_element"
+    And I click on "#section-1 .n2018-highlight" "css_element"
     # Shame to have a 1 second pause here but this fails on CI intermittently without this pause.
     And I wait "1" seconds
     Then I should see "Failed to highlight section"
@@ -86,4 +86,4 @@ Feature: When the moodle theme is set to Snap, teachers can toggle the currently
     Given I log in as "student1"
     And I am on the course main page for "C1"
     And I follow "Topic 2"
-    Then "#section-2 .snap-highlight" "css_element" should not exist
+    Then "#section-2 .n2018-highlight" "css_element" should not exist

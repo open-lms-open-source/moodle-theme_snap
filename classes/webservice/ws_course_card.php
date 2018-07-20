@@ -14,9 +14,9 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
-namespace theme_snap\webservice;
+namespace theme_n2018\webservice;
 
-use theme_snap\services\course;
+use theme_n2018\services\course;
 
 defined('MOODLE_INTERNAL') || die();
 

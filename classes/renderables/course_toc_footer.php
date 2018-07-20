@@ -20,7 +20,7 @@
  * @copyright Copyright (c) 2016 Blackboard Inc.
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-namespace theme_snap\renderables;
+namespace theme_n2018\renderables;
 
 defined('MOODLE_INTERNAL') || die();
 

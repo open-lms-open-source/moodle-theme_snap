@@ -15,38 +15,46 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 defined('MOODLE_INTERNAL') || die;// Main settings.
-use theme_snap\admin_setting_configradiobuttons;
+use theme_n2018\admin_setting_configradiobuttons;
 
-$snapsettings = new admin_settingpage('themesnapcoursedisplay', get_string('coursedisplay', 'theme_snap'));
+$n2018settings = new admin_settingpage('themen2018coursedisplay', get_string('coursedisplay', 'theme_n2018'));
 
 // Course toc display options.
-$name = 'theme_snap/leftnav';
-$title = new lang_string('leftnav', 'theme_snap');
-$list = get_string('list', 'theme_snap');
-$top = get_string('top', 'theme_snap');
+$name = 'theme_n2018/leftnav';
+$title = new lang_string('leftnav', 'theme_n2018');
+$list = get_string('list', 'theme_n2018');
+$top = get_string('top', 'theme_n2018');
 $radios = array('list' => $list, 'top' => $top);
 $default = 'list';
-$description = new lang_string('leftnavdesc', 'theme_snap');
+$description = new lang_string('leftnavdesc', 'theme_n2018');
 $setting = new admin_setting_configradiobuttons($name, $title, $description, $default, $radios);
-$snapsettings->add($setting);
+$n2018settings->add($setting);
 
 // Resource display options.
-$name = 'theme_snap/resourcedisplay';
-$title = new lang_string('resourcedisplay', 'theme_snap');
-$card = new lang_string('card', 'theme_snap');
-$list = new lang_string('list', 'theme_snap');
+$name = 'theme_n2018/resourcedisplay';
+$title = new lang_string('resourcedisplay', 'theme_n2018');
+$card = new lang_string('card', 'theme_n2018');
+$list = new lang_string('list', 'theme_n2018');
 $radios = array('list' => $list, 'card' => $card);
 $default = 'card';
-$description = get_string('resourcedisplayhelp', 'theme_snap');
+$description = get_string('resourcedisplayhelp', 'theme_n2018');
 $setting = new admin_setting_configradiobuttons($name, $title, $description, $default, $radios);
-$snapsettings->add($setting);
+$n2018settings->add($setting);
 
 // Course footer on/off.
-$name = 'theme_snap/coursefootertoggle';
-$title = new lang_string('coursefootertoggle', 'theme_snap');
-$description = new lang_string('coursefootertoggledesc', 'theme_snap');
+$name = 'theme_n2018/coursefootertoggle';
+$title = new lang_string('coursefootertoggle', 'theme_n2018');
+$description = new lang_string('coursefootertoggledesc', 'theme_n2018');
 $default = $checked;
 $setting = new admin_setting_configcheckbox($name, $title, $description, $default, $checked, $unchecked);
-$snapsettings->add($setting);
+$n2018settings->add($setting);
 
-$settings->add($snapsettings);
+// Hide navigation block.
+$name = 'theme_n2018/hidenavblock';
+$title = new lang_string('hidenavblock', 'theme_n2018');
+$description = new lang_string('hidenavblockdesc', 'theme_n2018');
+$default = $checked;
+$setting = new admin_setting_configcheckbox($name, $title, $description, $default, $checked, $unchecked);
+$n2018settings->add($setting);
+
+$settings->add($n2018settings);

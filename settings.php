@@ -15,9 +15,9 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Snap settings.
+ * N2018 settings.
  *
- * @package   theme_snap
+ * @package   theme_n2018
  * @copyright Copyright (c) 2017 Moodlerooms Inc. (http://www.moodlerooms.com)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
@@ -25,12 +25,12 @@
 defined('MOODLE_INTERNAL') || die;
 
 $settings = null; // Unsets the default $settings object initialised by Moodle.
-$settings = new theme_boost_admin_settingspage_tabs('themesettingsnap', 'Snap');
+$settings = new theme_boost_admin_settingspage_tabs('themesettingn2018', 'N2018');
 
 if ($ADMIN->fulltree) {
     $checked = '1';
     $unchecked = '0';
-    require('settings/snap_basics.php');
+    require('settings/n2018_basics.php');
     require('settings/cover_settings.php');
     require('settings/personal_menu_settings.php');
     require('settings/feature_spots_settings.php');
@@ -38,5 +38,4 @@ if ($ADMIN->fulltree) {
     require('settings/course_settings.php');
     require('settings/social_media_settings.php');
     require('settings/navigation_bar_settings.php');
-    require('settings/categories_color_settings.php');
 }

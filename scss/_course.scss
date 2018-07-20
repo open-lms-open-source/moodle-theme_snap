@@ -13,9 +13,9 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 /**
- * Snap course swatch.
+ * N2018 course swatch.
  *
- * @package   theme_snap
+ * @package   theme_n2018
  * @copyright Copyright (c) 2015 Moodlerooms Inc. (http://www.moodlerooms.com)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
@@ -35,11 +35,8 @@ section#region-main
 
  ****************************/
 
-/* stylelint-disable declaration-no-important*/
-
 // Course page  - turn editing on button.
-.format-topics,
-.format-weeks {
+.format-topics, .format-weeks {
     #page-mast .singlebutton {
         display: none;
     }
@@ -96,13 +93,13 @@ section#region-main
     display: none !important;
 }
 .dndupload-over {
-    .snap-dropzone {
-        background-color: #fafafa;
+    .n2018-dropzone {
+        background-color:#fafafa;
     }
 }
 
 // -------------------------
-// Special section in snap for course tools.
+// Special section in n2018 for course tools.
 // -------------------------
 #coursetools {
     @include clearfix;
@@ -111,29 +108,37 @@ section#region-main
 // -------------------------
 // Progressbar.js circles in course dashboard.
 // -------------------------
-.snap-progress-circle {
+.n2018-progress-circle {
     width: 75%;
     margin: 0 auto;
     position: relative;
     border-radius: 100%;
 
-    &.snap-progressbar-link {
+    &.n2018-progressbar-link {
         &:hover,
         &:focus {
             background-color: #eee;
         }
-        .progressbar-text:hover {
-            text-decoration: underline;
+        .progressbar-text:hover{
+                text-decoration: underline;
         }
     }
 
-    .progressbar-text {
+    .progressbar-text{
         font-size: 1.3em;
         font-family: $font-family-system;
+        a,
+        a:visited {
+         color: $brand-primary;
+        }
+        a:focus,
+        a:hover {
+            color: darken($brand-primary, 8%);
+        }
     }
 }
 
-#snap-student-dashboard {
+#n2018-student-dashboard {
     padding: 1em 0;
 
     .userpicture {
@@ -152,9 +157,9 @@ section#region-main
         font-size: 1em;
         text-align: center;
         border: 1px solid #eee;
-        border-radius: $btn-border-radius;
+        border-radius: 4px;
 
-        .snap-participant-icons,
+        .n2018-participant-icons,
         img.svg-icon {
             display: block !important;
             margin: 0.3em auto;
@@ -162,12 +167,12 @@ section#region-main
         }
 
         /* Cover image used as icon. */
-        .snap-cover-icon {
+        .n2018-cover-icon {
             border-radius: 100%;
         }
 
         /* User images as icons. */
-        .snap-participant-icons {
+        .n2018-participant-icons {
             img {
                 @include svg-icon;
                 margin: 0 0.5%;
@@ -269,7 +274,7 @@ li.section:focus {
     }
 }
 
-.snap-section-editing {
+.n2018-section-editing {
     max-width: 100%;
     min-width: 0;
     width: auto;
@@ -289,7 +294,7 @@ li.section:focus {
         text-align: center;
         overflow: hidden;
         &:hover,
-        &.snap-show,
+        &.n2018-show,
         &[aria-pressed="true"] {
             background-color: $gray-lighter;
         }
@@ -305,33 +310,29 @@ li.section:focus {
         background-size: 70%;
     }
 
-    .snap-move:after {
+    .n2018-move:after {
         background-image: url([[pix:theme|move]]);
         background-size: 100%;
     }
 
-    .snap-visibility.snap-show:after {
+    .n2018-visibility.n2018-show:after {
         background-image: url([[pix:core|i/show]]);
     }
 
-    .snap-visibility.snap-hide:after {
+    .n2018-visibility.n2018-hide:after {
         background-image: url([[pix:core|i/hide]]);
     }
 
-    .snap-delete:after {
+    .n2018-delete:after {
         background-image: url([[pix:core|t/delete]]);
     }
 
-    .snap-highlight[aria-pressed="false"]:after {
+    .n2018-highlight[aria-pressed="false"]:after {
         background-image: url([[pix:core|i/marker]]);
     }
 
-    .snap-highlight[aria-pressed="true"]:after {
+    .n2018-highlight[aria-pressed="true"]:after {
         background-image: url([[pix:core|i/marked]]);
-    }
-
-    .snap-sharing-cart:after {
-        background-image: url([[pix:core|t/backup]]);
     }
 
     a.ajaxing:after {
@@ -347,16 +348,16 @@ li.section:focus {
 
 }
 
-#snap-modchooser-modal {
+#n2018-modchooser-modal {
     .modal-header {
         border-bottom: none;
     }
 
-    #snap-modchooser-help-tab .nav-link {
+    #n2018-modchooser-help-tab .nav-link {
         border: none;
     }
 
-    .snap-modchooser-addlink {
+    .n2018-modchooser-addlink {
         display: block;
         height: 90px;
         overflow: hidden;
@@ -376,30 +377,26 @@ li.section:focus {
 
     }
 
-    .snap-modchooser-help {
+    .n2018-modchooser-help {
         text-align: left;
     }
 }
 
-.snap-dropzone {
+.n2018-dropzone {
     text-align: center;
 
-    .snap-dropzone-label {
+    .n2018-dropzone-label {
         display: block;
         cursor: pointer;
         background: transparent url("[[pix:resource|icon]]") 50% 1em no-repeat;
         background-size: 2rem 2rem;
         padding: 3em 0 1em 0;
         border: 3px dashed #eee;
-        border-radius: $btn-border-radius;
+        border-radius: 4px;
 
         &:hover,
         &:focus {
             border-color: $gray-lighter;
-
-            .fake-link {
-                text-decoration: underline;
-            }
         }
     }
 }
@@ -425,7 +422,7 @@ li.section:focus {
 }
 
 .section-modchooser-link,
-.snap-dropzone {
+.n2018-dropzone {
     margin-top: 1em;
 }
 
@@ -435,7 +432,7 @@ li.section:focus {
 }
 
 // get rid of js cursor style applied to the whole commands area
-.snap-section-editing[style] {
+.n2018-section-editing[style] {
     cursor: default !important;
 }
 
@@ -451,7 +448,7 @@ li.section:focus {
 
 .course-content > ul li.section,
 #coursetools,
-#snap-add-new-section {
+#n2018-add-new-section {
     visibility: hidden;
     height: 0;
     width: 0;
@@ -482,8 +479,8 @@ li.section:focus {
 }
 
 .course-content > ul li.section.state-visible,
-#snap-add-new-section.state-visible,
-.editing #snap-add-new-section,
+#n2018-add-new-section.state-visible,
+.editing #n2018-add-new-section,
 #coursetools.state-visible,
 .editing #coursetools,
 .format-singleactivity #coursetools,
@@ -526,8 +523,8 @@ body.format-flexpage .singlebutton {
 // Reset moodle css mess
 // -------------------------
 
-.path-site li.activity > div,
-.path-course-view li.activity > div {
+.path-site li.activity>div,
+.path-course-view li.activity>div {
     padding: 0;
 }
 
@@ -575,9 +572,9 @@ body.format-flexpage .singlebutton {
 // -------------------------
 
 // -------------------------
-//  Assets in snap.
+//  Assets in n2018.
 // -------------------------
-.section li.snap-asset {
+.section li.n2018-asset {
     display: block;
     position: relative;
     padding: 0;
@@ -589,19 +586,19 @@ body.format-flexpage .singlebutton {
     border-top-width: 0.3em;
 
     // For editors add space for editong tools.
-    &.snap-can-edit {
+    &.n2018-can-edit {
         padding-bottom: 2em !important;
     }
 
     .asset-wrapper {
-        height: auto;
+        height: 100%;
         overflow-x: hidden;
         overflow-y: auto;
         position: static;
         padding: 0.5em 1em;
     }
 
-    .snap-assettype {
+    .n2018-assettype {
         font-size: $font-size-sm;
         text-transform: uppercase;
     }
@@ -609,7 +606,7 @@ body.format-flexpage .singlebutton {
     .activityinstance {
         padding: 0;
         height: auto;
-        background-color: rgba(255, 255, 255, 0.9);
+        background-color: rgba(255,255,255,0.9);
         @include clearfix;
 
         .activityicon {
@@ -621,8 +618,8 @@ body.format-flexpage .singlebutton {
             @include alakazam;
         }
 
-        // Link to the mod (headings in snap).
-        .snap-asset-link {
+        // Link to the mod (headings in n2018).
+        .n2018-asset-link {
             font-size: 1em;
             margin: 0;
             padding: 0.5em 0;
@@ -630,8 +627,6 @@ body.format-flexpage .singlebutton {
 
             // The link itself.
             a {
-                color: $body-color;
-
                 &:hover,
                 &:focus {
                     text-decoration: none;
@@ -645,21 +640,24 @@ body.format-flexpage .singlebutton {
     }
 }
 
+
+
+
 /**
  * resourcelinkdetails = moodle putting filetype on screen if option selected
- * we do this by default in snap, so hide moodle version
+ * we do this by default in n2018, so hide moodle version
  */
 .resourcelinkdetails {
     display: none;
 }
-/* snap has its own implimentation of these, so hide moodles */
+/* n2018 has its own implimentation of these, so hide moodles */
 .activityinstance .accesshide,
 .groupinglabel {
     display: none;
 }
 
 // -------------------------
-// Snap label
+// N2018 label
 // -------------------------
 
 .section .activity.modtype_label.label {
@@ -681,20 +679,20 @@ body.format-flexpage .singlebutton {
 }
 
 // -------------------------
-// Snap native assets - books, page, images
+// N2018 native assets - books, page, images
 // -------------------------
 
-.section li.snap-native {
+.section li.n2018-native {
     border: none;
     height: auto;
     margin: 0.5em auto;
 
     .asset-wrapper {
-        padding: 0;
+        padding:0;
     }
 
     .activityicon,
-    .snap-assettype {
+    .n2018-assettype {
         display: none;
     }
 
@@ -744,7 +742,7 @@ body.format-flexpage .singlebutton {
 
 // TODO - make better
 // title/link on images - css is shame
-.snap-native.snap-image .activityinstance .snap-asset-link a {
+.n2018-native.n2018-image .activityinstance .n2018-asset-link a {
     display: none;
 }
 
@@ -754,14 +752,14 @@ body.format-flexpage .singlebutton {
 }
 
 
-.snap-native.modtype_book ol.bookmod-chapters {
+.n2018-native.modtype_book ol.bookmod-chapters {
     margin: 0;
 }
 
-.snap-resource-figure {
+.n2018-resource-figure {
     position: relative;
 
-    .snap-expand-link {
+    .n2018-expand-link {
         display: inline-block;
         position: absolute;
         top: 0.5rem;
@@ -786,7 +784,7 @@ body.format-flexpage .singlebutton {
         }
     }
 
-    .snap-resource-figure-caption {
+    .n2018-resource-figure-caption {
         padding: 0.5em 0;
         color: $gray;
     }
@@ -794,10 +792,10 @@ body.format-flexpage .singlebutton {
 
 
 // -------------------------
-// Snap resource
+// N2018 resource
 // -------------------------
 
-.section li.snap-resource {
+.section li.n2018-resource {
     display: block;
     @include alakazam;
 
@@ -807,15 +805,18 @@ body.format-flexpage .singlebutton {
         margin-top: 0;
     }
 
-    .snap-asset-link {
+    .n2018-asset-link {
         font-size: 1em;
     }
 }
 
+
+
+
 // -------------------------
-// Snap resources as cards.
+// N2018 resources as cards.
 // -------------------------
-body.snap-resource-card li.snap-resource {
+body.n2018-resource-card li.n2018-resource {
     height: 200px;
     width: 31%;
     margin: 1%;
@@ -844,61 +845,61 @@ body.snap-resource-card li.snap-resource {
         font-size: small;
     }
 
-    &.snap-mime-document,
-    &.snap-mime-writer,
-    &.snap-mime-oth,
-    &.snap-mime-text {
+    &.n2018-mime-document,
+    &.n2018-mime-writer,
+    &.n2018-mime-oth,
+    &.n2018-mime-text {
         border-top-color: $color-word;
         background-image: url([[pix:core|/f/document]]);
     }
 
-    &.snap-mime-powerpoint,
-    &.snap-mime-impress {
+    &.n2018-mime-powerpoint,
+    &.n2018-mime-impress {
         border-top-color: $color-powerpoint;
         background-image: url([[pix:core|/f/powerpoint]]);
     }
 
-    &.snap-mime-spreadsheet,
-    &.snap-mime-chart,
-    &.snap-mime-database,
-    &.snap-mime-calc {
+    &.n2018-mime-spreadsheet,
+    &.n2018-mime-chart,
+    &.n2018-mime-database,
+    &.n2018-mime-calc {
         border-top-color: $color-excel;
         background-image: url([[pix:core|/f/spreadsheet]]);
     }
 
     // ADOBE //
-    &.snap-mime-pdf,
-    &.snap-mime-eps,
-    &.snap-mime-flash {
+    &.n2018-mime-pdf,
+    &.n2018-mime-eps,
+    &.n2018-mime-flash {
         border-top-color: $color-pdf;
         background-image: url([[pix:core|/f/pdf]]);
     }
 
-    &.snap-mime-flash {
+    &.n2018-mime-flash {
         background-image: url([[pix:core|/f/flash]]);
     }
 
     // MULTIMEDIA //
-    &.snap-mime-mp3,
-    &.snap-mime-wav,
-    &.snap-mime-audio {
+    &.n2018-mime-mp3,
+    &.n2018-mime-wav,
+    &.n2018-mime-audio {
         border-top-color: $color-audio;
         background-image: url([[pix:core|/f/audio]]);
     }
 
-    &.snap-mime-mov,
-    &.snap-mime-wmv,
-    &.snap-mime-video,
-    &.snap-mime-quicktime,
-    &.snap-mime-mpeg,
-    &.snap-mime-avi {
+    &.n2018-mime-mov,
+    &.n2018-mime-wmv,
+    &.n2018-mime-video,
+    &.n2018-mime-quicktime,
+    &.n2018-mime-mpeg,
+    &.n2018-mime-avi {
         border-top-color: $color-video;
         background-image: url([[pix:core|/f/video]]);
     }
 
     &.modtype_lightboxgallery,
-    &.snap-mime-bmp {
-        border-top-color: #4abc96;
+    &.n2018-mime-bmp {
+        border-top-color: #4ABC96;
         background-image: url([[pix:core|/f/image]]);
     }
 
@@ -910,7 +911,7 @@ body.snap-resource-card li.snap-resource {
 
     &.modtype_imscp,
     &.modtype_scorm {
-        border-top-color: #f7981d;
+        border-top-color: #F7981D;
         background-image: url([[pix:core|/f/book]]);
     }
 
@@ -924,31 +925,31 @@ body.snap-resource-card li.snap-resource {
     }
 
     // CODE & SYSTEM //
-    &.snap-mime-archive {
+    &.n2018-mime-archive {
         border-top-color: #fed859;
         background-image: url([[pix:core|/f/archive]]);
     }
 
-    &.snap-mime-markup,
-    &.snap-mime-html,
-    &.snap-mime-sourcecode {
+    &.n2018-mime-markup,
+    &.n2018-mime-html,
+    &.n2018-mime-sourcecode {
         border-top-color: #f0652a;
         background-image: url([[pix:core|/f/sourcecode]]);
     }
 
-    &.snap-mime-text {
+    &.n2018-mime-text {
         border-top-color: #f1bf26;
     }
 }
 
 // Clear none-cards after floated cards.
-.snap-resource-card li.activity {
+.n2018-resource-card li.activity {
     clear: left;
 }
 
 // Resources to full width on tiny screen.
 @include media-breakpoint-down(sm) {
-    body.snap-resource-card li.snap-resource {
+    body.n2018-resource-card li.n2018-resource {
         width: 99%;
         margin: 1em auto;
         height: auto;
@@ -958,10 +959,10 @@ body.snap-resource-card li.snap-resource {
             display: inline;
         }
 
-        .snap-asset-actions {
+        .n2018-asset-actions {
             width: 250px;
-            .snap-asset-move,
-            .snap-edit-more-dropdown,
+            .n2018-asset-move,
+            .n2018-edit-more-dropdown,
             > a {
                 width: 25%;
                 text-align: left;
@@ -972,25 +973,25 @@ body.snap-resource-card li.snap-resource {
 }
 
 // -------------------------
-// Snap resources as list.
+// N2018 resources as list.
 // -------------------------
-.snap-resource-list li.snap-resource {
+.n2018-resource-list li.n2018-resource {
     border: none;
     margin: 0 1%;
 
-    .snap-assettype {
+    .n2018-assettype {
         display: none;
     }
 
-    .snap-asset-actions {
+    .n2018-asset-actions {
         width: 250px;
     }
 }
 
 // -------------------------
-// Snap Activity
+// N2018 Activity
 // -------------------------
-.section li.snap-activity {
+.section li.n2018-activity {
     margin: 1em 1%;
     padding-bottom: 1em;
 
@@ -1035,7 +1036,7 @@ body.snap-resource-card li.snap-resource {
 // -------------------------
 /* EDIT SUMMARY */
 /* Make it obvious that you can edit a summary - Add text and some styles to that gear thing */
-#page-site-index .sitetopic > a:last-of-type,
+#page-site-index .sitetopic>a:last-of-type,
 .summary .edit-summary {
     clear: both;
     display: block;
@@ -1063,7 +1064,7 @@ body.snap-resource-card li.snap-resource {
             }
         }
 
-        .iconsmall {
+        .iconsmall{
             display: none;
         }
     }
@@ -1072,15 +1073,15 @@ body.snap-resource-card li.snap-resource {
 // -------------------------
 // Activity & Resource metadata
 // -------------------------
-.snap-asset-meta {
+.n2018-asset-meta {
     clear: both;
     padding: 0;
 }
 
 // Activity data - e.g. Due date & Group info
-.snap-completion-meta,
-.snap-group-tag,
-.snap-grouping-tag {
+.n2018-completion-meta,
+.n2018-group-tag,
+.n2018-grouping-tag {
     text-align: right;
     font-size: $font-size-sm;
     margin-bottom: 0.5em;
@@ -1096,7 +1097,7 @@ body.snap-resource-card li.snap-resource {
 }
 
 // Activity dues date.
-.snap-due-date {
+.n2018-due-date {
     font-size: inherit;
     font-weight: normal;
     border-radius: 1em;
@@ -1104,10 +1105,10 @@ body.snap-resource-card li.snap-resource {
 
 
 // Conditional information styled as fauz alerts.
-.snap-conditional-tag,
-.snap-stealth-tag,
-.snap-draft-tag,
-.snap-current-tag {
+.n2018-conditional-tag,
+.n2018-stealth-tag,
+.n2018-draft-tag,
+.n2018-current-tag {
     font-size: small;
     font-family: $font-family-system;
     background-color: #eee;
@@ -1135,41 +1136,41 @@ body.snap-resource-card li.snap-resource {
     }
 }
 
-.snap-completion-meta {
+.n2018-completion-meta {
     // SHAME - hsuforum sets div inline block to overcome other themes moodle css...
-    // We need to counteract this for snap for hsu forum for the moment.
+    // We need to counteract this for n2018 for hsu forum for the moment.
     display: block !important;
     clear: both;
 }
 
 // Hide draft tag, unless asset has class draft (can be added by js).
-.snap-draft-tag,
-.snap-current-tag {
+.n2018-draft-tag,
+.n2018-current-tag {
     display: none !important; // SHAME - overcome bad overspecificity...
     font-size: $font-size-sm;
 }
 
 // Show draft for mods & sections.
-.hidden .content .snap-draft-section,
-.snap-asset.draft .snap-draft-tag {
+.hidden .content .n2018-draft-section,
+.n2018-asset.draft .n2018-draft-tag {
     display: block !important; // SHAME - overcome bad overspecificity...
 }
 
 // Show current tag if parent has current class.
-.current .snap-current-tag {
+.current .n2018-current-tag {
     display: block !important; // SHAME - overcome bad overspecificity...
     color: $brand-success;
 }
 
 // Draft hide/show.
-.snap-asset {
+.n2018-asset {
     .editing_show {
         display: none;
     }
 }
 
 // Hide hide/show when section is hidden.
-.hidden li.snap-asset {
+.hidden li.n2018-asset {
     .editing_hide,
     .editing_show {
         display: none !important;
@@ -1177,10 +1178,10 @@ body.snap-resource-card li.snap-resource {
 }
 
 // Assets with draft tag.
-.snap-asset {
+.n2018-asset {
     &.draft,
     &.stealth {
-        border-top-color: #eee !important;
+    border-top-color: #eee !important;
         // Options to hide/show in the dropdown.
         .editing_hide {
             display: none;
@@ -1200,15 +1201,15 @@ body.snap-resource-card li.snap-resource {
     }
 
     // Draft assets inside hidden section....
-    .snap-asset.draft .activityinstance {
-        opacity: 1;
+    .n2018-asset.draft .activityinstance {
+            opacity: 1;
     }
 }
 
 // TODO - in course_renderer figure out if completion tracking enabled.
 // If so - add 1.3em gutter to slat to stop overlapping.
 
-.snap-asset-completion-tracking {
+.n2018-asset-completion-tracking {
     position: absolute;
     top: 0.5em;
     right: 1em;
@@ -1256,7 +1257,7 @@ form.togglecompletion {
 }
 
 /* Indent text associated with activity/resource. */
-.section li.snap-activity {
+.section li.n2018-activity {
     .contentafterlink,
     .hsuforum-recent {
         margin-left: (38px + 9px); // icon size (38px + margin);
@@ -1264,19 +1265,19 @@ form.togglecompletion {
 }
 
 // -------------------------
-// Snap actions
+// N2018 actions
 // -------------------------
 
 // All the editing options in one region.
-.snap-asset-actions {
+.n2018-asset-actions {
     position: absolute;
     bottom: 0;
     left: 0;
     width: 250px;
 
     & > a,
-    .snap-edit-more-dropdown,
-    .snap-asset-move {
+    .n2018-edit-more-dropdown,
+    .n2018-asset-move {
         display: inline-block !important;
         padding: 0.3em 7%;
         text-align: center;
@@ -1292,13 +1293,13 @@ form.togglecompletion {
         }
     }
 
-    .snap-edit-more-dropdown .dropdown-toggle::after {
+    .n2018-edit-more-dropdown .dropdown-toggle::after {
         // Hide the bootstrap dropdown menu caret.
         border-width: 0;
         margin: 0;
     }
 
-    .dropdown-toggle.snap-edit-asset-more.ajaxing {
+    .dropdown-toggle.n2018-edit-asset-more.ajaxing {
         &:after {
             @include ajaxing(inline-block, relative, 26px, 7px);
         }
@@ -1322,7 +1323,7 @@ form.togglecompletion {
     }
 
     .dropdown-menu {
-        box-shadow: 0 2px 5px 0 rgba(0, 0, 0, .26);
+        box-shadow: 0 2px 5px 0 rgba(0,0,0,.26);
         border: 0;
         padding: 0;
     }
@@ -1333,12 +1334,12 @@ form.togglecompletion {
     }
 }
 
-.snap-resource {
-    .snap-asset-actions {
+.n2018-resource {
+    .n2018-asset-actions {
         width: 100%;
 
         & > a,
-        .snap-edit-more-dropdown,
+        .n2018-edit-more-dropdown,
         label {
             padding: 0.3em 7%;
             text-align: center;
@@ -1349,16 +1350,16 @@ form.togglecompletion {
 
 /* reset some moodle shame */
 .moodle-actionmenu,
-.moodle-actionmenu > ul,
-.moodle-actionmenu > ul > li {
+.moodle-actionmenu>ul,
+.moodle-actionmenu>ul>li {
     display: block;
 }
 
-.moodle-actionmenu > ul > li {
+.moodle-actionmenu>ul>li {
     display: inline-block;
 }
 /*  actions at the footer of an element */
-.section .snap-asset .actions {
+.section .n2018-asset .actions {
     clear: both;
     float: none;
     width: 100%;
@@ -1366,6 +1367,7 @@ form.togglecompletion {
     top: auto;
     bottom: 0;
     left: 0;
+    width: 100%;
     overflow: hidden;
     @include clearfix;
 
@@ -1377,7 +1379,7 @@ form.togglecompletion {
             text-align: right;
         }
 
-        & > ul {
+        &>ul {
             margin: 0;
         }
     }
@@ -1385,7 +1387,7 @@ form.togglecompletion {
 
 /* add bg colour for actions when editing */
 .editing .actions {
-    background-color: rgba(255, 255, 255, 0.95);
+    background-color: rgba(255,255,255,0.95);
 }
 /* remove bg colour for actions when menu shown */
 .action-menu-shown .actions {
@@ -1393,7 +1395,7 @@ form.togglecompletion {
 }
 
 // draghandle
-.section .snap-asset .editing_move {
+.section .n2018-asset .editing_move {
     padding: 0 2%;
 }
 
@@ -1407,7 +1409,7 @@ div.commands ul.menubar {
 }
 
 // i know. SHAME selector :(
-.jsenabled .snap-asset .moodle-actionmenu[data-enhance] .toggle-display.textmenu {
+.jsenabled .n2018-asset .moodle-actionmenu[data-enhance] .toggle-display.textmenu {
     text-decoration: none;
     padding: 0.5em 1em;
     margin: 0;
@@ -1436,7 +1438,7 @@ div.commands ul.menubar {
 }
 
 // last min css for marks code changes - make edit button block when editing...
-.action-menu-shown .moodle-actionmenu > ul > li {
+.action-menu-shown .moodle-actionmenu>ul>li {
     display: block;
 }
 
@@ -1445,7 +1447,7 @@ div.commands ul.menubar {
 // -------------------------
 // hide to start, and set some defaults
 
-.editing .snap-asset {
+.editing .n2018-asset {
     .actions .menu {
         position: relative;
         display: block;
@@ -1517,7 +1519,7 @@ span.editinstructions {
 }
 
 /* forum unread posts button */
-.snap-asset .unread {
+.n2018-asset .unread {
     clear: both;
     display: block;
     background-color: transparent;
@@ -1675,16 +1677,18 @@ span.editinstructions {
     }
 }
 
+
+
 // -------------------------
-// Moving things in snap
+// Moving things in n2018
 // -------------------------
 @keyframes fadeup {
-    0% {
-        opacity: 0.1;
-    }
-    100% {
-        opacity: 1;
-    }
+   0%{
+       opacity:0.1;
+   }
+   100%{
+       opacity:1;
+   }
 }
 .path-course-view {
     li.state-visible,
@@ -1698,7 +1702,7 @@ span.editinstructions {
 }
 
 @keyframes fadein {
-    0% {
+    0%   {
         opacity: 0;
     }
     100% {
@@ -1722,35 +1726,35 @@ span.editinstructions {
     border: 2px dashed $gray-lighter;
     font-family: $font-family-system;
     text-align: center;
-    display: none;
+    display:none;
 }
 
 .section-drop,
-.snap-move-note {
+.n2018-move-note {
     background: transparent url("[[pix:theme|move_here]]") no-repeat 50% 80%;
     background-size: 2.5em 2.5em;
 }
 
-.snap-move-section {
+.n2018-move-section {
     .section-drop {
         display: block;
 
         &:hover {
-            border-color: $state-success-text;
+          border-color: $state-success-text;
         }
     }
 }
 
-#snap-footer-alert {
+#n2018-footer-alert {
     position: fixed;
-    z-index: 1;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    background-color: #000;
-    color: #fff;
-    background-image: none !important;
-    outline: none !important;
+    z-index:1;
+    bottom:0;
+    left:0;
+    width:100%;
+    background-color:#000;
+    color:#fff;
+    background-image:none !important;
+    outline:none !important;
     // for animation..
     max-height: 0;
     overflow: hidden;
@@ -1760,14 +1764,14 @@ span.editinstructions {
         width: 1em;
         height: 1em;
     }
-    &.snap-footer-alert-visible {
-        padding: 0.5em 0;
+    &.n2018-footer-alert-visible {
+        padding:0.5em 0;
         max-height: 200px;
         z-index: 2;
     }
 }
 
-.snap-footer-alert-title {
+.n2018-footer-alert-title{
     text-transform: capitalize;
     color: #fff !important;
     display: inline-block;
@@ -1776,7 +1780,7 @@ span.editinstructions {
     width: 50%;
 }
 
-.snap-footer-alert-cancel {
+.n2018-footer-alert-cancel {
     float: right;
     margin-right: 4%;
     color: #fff !important;
@@ -1795,28 +1799,28 @@ span.editinstructions {
 
 // Small screen moving cancel link.
 @include media-breakpoint-down(md) {
-    .snap-footer-alert-cancel {
+    .n2018-footer-alert-cancel {
         margin-right: 3em;
     }
 }
 
 // Body class when moving
-.snap-move-inprogress {
+.n2018-move-inprogress {
     // The asset we are moving
-    .snap-moving,
-    .snap-modchooser,
+    .n2018-moving,
+    .n2018-modchooser,
     .edit-summary,
-    .snap-asset-actions .snap-edit-asset,
-    .snap-asset-actions .snap-edit-more-dropdown,
-    .snap-section-editing,
-    .snap-modchooser,
-    .snap-dropzone {
-        display: none !important;
+    .n2018-asset-actions .n2018-edit-asset,
+    .n2018-asset-actions .n2018-edit-more-dropdown,
+    .n2018-section-editing,
+    .n2018-modchooser,
+    .n2018-dropzone {
+      display:none !important;
     }
 
-    &.snap-move-section {
-        .snap-asset-actions,
-        .snap-asset .togglecompletion {
+    &.n2018-move-section {
+        .n2018-asset-actions,
+        .n2018-asset .togglecompletion {
             display: none !important;
         }
     }
@@ -1826,55 +1830,57 @@ span.editinstructions {
     }
 }
 
-.snap-asset {
+.n2018-asset {
     &.movefinished {
+        & + li.n2018-resource {
+
+        }
         animation: fadein 0.5s;
         animation-iteration-count: 1;
         animation-fill-mode: forwards;
     }
 }
 
-.snap-move-note,
-.snap-drop.asset-drop {
+.n2018-move-note, .n2018-drop.asset-drop {
     display: none;
 }
 // Show when moving
 // Asset dropzones.
-.snap-move-asset {
-    .snap-asset:not(.asset-moving) {
-        border: 2px dashed $gray-light;
-    }
+.n2018-move-asset {
+      .n2018-asset:not(.asset-moving) {
+          border: 2px dashed $gray-light;
+      }
 
-    .snap-resource:not(.asset-moving) {
-        border: 2px dashed white;
-    }
+      .n2018-resource:not(.asset-moving) {
+          border: 2px dashed white;
+      }
 
-    .snap-asset:not(.asset-moving) .snap-move-note {
-        position: absolute;
-        top: 0;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        background-color: rgba(255, 255, 255, 0.7);
-        cursor: pointer;
-        text-align: center;
-        padding: 1em;
-        display: block;
-    }
+      .n2018-asset:not(.asset-moving) .n2018-move-note {
+          position: absolute;
+          top: 0;
+          bottom: 0;
+          left: 0;
+          right: 0;
+          background-color: rgba(255,255,255,0.7);
+          cursor: pointer;
+          text-align: center;
+          padding: 1em;
+          display: block;
+      }
 
-    .snap-drop.asset-drop {
-        display: block;
-        clear: both;
-        border: 2px dashed $gray-light;
-        font-size: 2em;
-        color: $gray;
-        font-family: $font-family-system;
-        text-align: center;
-        cursor: pointer;
-    }
+      .n2018-drop.asset-drop {
+          display: block;
+          clear: both;
+          border: 2px dashed $gray-light;
+          font-size: 2em;
+          font-color: $gray;
+          font-family: $font-family-system;
+          text-align: center;
+          cursor: pointer;
+      }
 }
 
-#snap-light-box {
+#n2018-light-box {
     display: none;
     position: fixed;
     top: 0;
@@ -1883,38 +1889,38 @@ span.editinstructions {
     bottom: 0;
     background-color: $modal-backdrop-bg;
     z-index: 1000000;
-    overflow-y: scroll;
+    overflow-y:scroll;
 
     &.state-visible {
         display: block;
     }
 
-    #snap-light-box-close {
+    #n2018-light-box-close {
         position: absolute;
         z-index: 2;
         top: 0.5em;
         right: 0.5em;
     }
 
-    .snap-icon-close:before {
+    .n2018-icon-close:before {
         background: transparent url([[pix:theme|close_x]]) no-repeat 50% 50%;
     }
 
     .resourcecontent audio {
-        margin: 1em auto;
+       margin: 1em auto;
     }
 }
 
-#snap-light-box-content {
+#n2018-light-box-content {
     width: 100%;
     padding: 1em 4%;
 }
 
 @include media-breakpoint-up(md) {
-    .snap-lightbox-description {
-        overflow-y: auto;
-        max-height: 80vh;
-    }
+  .n2018-lightbox-description {
+      overflow-y: auto;
+      max-height: 80vh;
+  }
 }
 
 // Adding support for bootstrap 4 progress bar.

@@ -14,7 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
-namespace theme_snap\controller;
+namespace theme_n2018\controller;
 
 defined('MOODLE_INTERNAL') || die();
 
@@ -22,7 +22,7 @@ defined('MOODLE_INTERNAL') || die();
  * Deadlines Controller.
  * Handles requests for media elements that can be viewed inline.
  *
- * @package   theme_snap
+ * @package   theme_n2018
  * @copyright Copyright (c) 2015 Moodlerooms Inc. (http://www.moodlerooms.com)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
@@ -76,12 +76,12 @@ class mediaresource_controller extends controller_abstract {
             $moodleurl = new \moodle_url('/pluginfile.php' . $path);
             $embedhtml = \core_media_manager::instance()->embed_url($moodleurl, $resource->name, 0, 0, $embedoptions);
             // Modal title.
-            $content = "<h5 class='snap-lightbox-title'>".format_string($resource->name)."</h5>";
+            $content = "<h5 class='n2018-lightbox-title'>".format_string($resource->name)."</h5>";
 
             // Grid me up.
             if (!empty($resource->intro)) {
                 $lightboxgrid = "<div class='col-sm-8'>$embedhtml</div>";
-                $lightboxgrid .= "<div class='col-sm-4 snap-lightbox-description'>".
+                $lightboxgrid .= "<div class='col-sm-4 n2018-lightbox-description'>".
                         format_module_intro('resource', $resource, $cm->id)."</div>";
             } else {
                 $lightboxgrid = "<div class='col-sm-12'>$embedhtml</div>";

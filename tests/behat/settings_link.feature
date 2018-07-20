@@ -15,13 +15,13 @@
 #
 # Tests for settings link.
 #
-# @package    theme_snap
+# @package    theme_n2018
 # @copyright  2015 Guy Thomas <gthomas@moodlerooms.com>
 # @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
 
 
-@theme @theme_snap @_bug_phantomjs
-Feature: When the moodle theme is set to Snap, only teachers should see an admin settings link.
+@theme @theme_n2018 @_bug_phantomjs
+Feature: When the moodle theme is set to N2018, only teachers should see an admin settings link.
 
   Background:
     Given the following "courses" exist:

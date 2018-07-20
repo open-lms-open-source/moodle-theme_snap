@@ -25,19 +25,19 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-use \theme_snap\local;
-use \theme_snap\activity;
+use \theme_n2018\local;
+use \theme_n2018\activity;
 
 global $CFG;
 require_once($CFG->dirroot . '/mod/assign/tests/base_test.php');
 
 /**
- * Unit tests for theme snap that rely on mod/assign present in course.
+ * Unit tests for theme n2018 that rely on mod/assign present in course.
  *
  * @copyright  1999 onwards Martin Dougiamas  {@link http://moodle.com}
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class theme_snap_assign_test extends mod_assign_base_testcase {
+class theme_n2018_assign_test extends mod_assign_base_testcase {
 
     public function test_assign_reopened_and_resubmitted() {
         $this->setUser($this->editingteachers[0]);

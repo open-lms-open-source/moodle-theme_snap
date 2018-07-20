@@ -1,4 +1,4 @@
-@theme @theme_snap
+@theme @theme_n2018
 Feature: A user can see a link to their settings in their profile page
   In order to change my preferences
   As a user

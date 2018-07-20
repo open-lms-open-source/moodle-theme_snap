@@ -13,15 +13,15 @@
 # You should have received a copy of the GNU General Public License
 # along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 #
-# Tests for toggle course section visibility in non edit mode in snap.
+# Tests for toggle course section visibility in non edit mode in n2018.
 #
-# @package    theme_snap
+# @package    theme_n2018
 # @copyright  2015 Guy Thomas <gthomas@moodlerooms.com>
 # @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
 
 
-@theme @theme_snap
-Feature: When the moodle theme is set to Snap, teachers can move course sections without using drag and drop and without
+@theme @theme_n2018
+Feature: When the moodle theme is set to N2018, teachers can move course sections without using drag and drop and without
   having to enter edit mode.
 
   Background:
@@ -46,11 +46,11 @@ Feature: When the moodle theme is set to Snap, teachers can move course sections
     And I set the section name to "My & < > Topic"
     And I press "Save changes"
     And I follow "Move \"My & < > Topic\""
-    Then I should see "Moving \"My & < > Topic\"" in the "#snap-footer-alert" "css_element"
+    Then I should see "Moving \"My & < > Topic\"" in the "#n2018-footer-alert" "css_element"
     When I follow "Topic 4"
     And I follow "Place section \"My & < > Topic\" before section \"Topic 4\""
     Then I should see "My & < > Topic" in the "#section-3 .sectionname" "css_element"
-    And "#chapters li:nth-of-type(4).snap-visible-section" "css_element" should exist
+    And "#chapters li:nth-of-type(4).n2018-visible-section" "css_element" should exist
     # Check that navigation is also updated.
     # Note that "4th" refers to section-3 as section-0 is the "introduction" section in the TOC.
     When I click on the "4th" link in the TOC
@@ -59,9 +59,6 @@ Feature: When the moodle theme is set to Snap, teachers can move course sections
     And the next navigation for section "3" is for "Topic 4" linking to "#section-4"
     And the previous navigation for section "4" is for "My & < > Topic" linking to "#section-3"
     And the next navigation for section "2" is for "My & < > Topic" linking to "#section-3"
-    # The data-section attribute of the moved section module link should match the section number.
-    # This is done so activities are created in the correct section.
-    Then "#section-3 a.section-modchooser-link[data-section=\"3\"]" "css_element" should exist
 
   @javascript
   Scenario: Teacher loses teacher capability whilst course open and receives the correct error message when trying to
@@ -74,7 +71,7 @@ Feature: When the moodle theme is set to Snap, teachers can move course sections
     And I set the section name to "My & < > Topic"
     And I press "Save changes"
     And I follow "Move \"My & < > Topic\""
-    Then I should see "Moving \"My & < > Topic\"" in the "#snap-footer-alert" "css_element"
+    Then I should see "Moving \"My & < > Topic\"" in the "#n2018-footer-alert" "css_element"
     When I follow "Topic 4"
     And the editing teacher role is removed from course "C1" for "teacher1"
     And I follow "Place section \"My & < > Topic\" before section \"Topic 4\""

@@ -1,5 +1,5 @@
 {
-  "description": "Grunt tasks for Moodle Snap theme.",
+  "description": "Grunt tasks for Moodle N2018 theme.",
   "private": true,
   "devDependencies": {
     "grunt": "~0.4.1",

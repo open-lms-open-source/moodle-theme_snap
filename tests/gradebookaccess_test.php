@@ -17,7 +17,7 @@
 /**
  * Test gradebook_accessible functionality.
  *
- * @package   theme_snap
+ * @package   theme_n2018
  * @category  phpunit
  * @copyright Copyright (c) 2016 Moodlerooms Inc. (http://www.moodlerooms.com)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
@@ -25,9 +25,9 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-use \theme_snap\output\shared;
+use \theme_n2018\output\shared;
 
-class theme_snap_gradebookaccess_testcase extends advanced_testcase {
+class theme_n2018_gradebookaccess_testcase extends advanced_testcase {
 
     public function test_gradebookaccess_gradesavailableforstuds() {
         global $DB, $PAGE;

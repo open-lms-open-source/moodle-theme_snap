@@ -13,15 +13,15 @@
 # You should have received a copy of the GNU General Public License
 # along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 #
-# Tests for single section to be overriden with normal behaviour in Snap.
+# Tests for single section to be overriden with normal behaviour in N2018.
 #
-# @package    theme_snap
+# @package    theme_n2018
 # @copyright  Copyright (c) 2015 Moodlerooms Inc. (http://www.moodlerooms.com)
 # @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
 
 
-@theme @theme_snap
-Feature: When the moodle theme is set to Snap, courses in single section per page mode are forced to operate with all
+@theme @theme_n2018
+Feature: When the moodle theme is set to N2018, courses in single section per page mode are forced to operate with all
   sections displayed at the same time.
 
   Background:

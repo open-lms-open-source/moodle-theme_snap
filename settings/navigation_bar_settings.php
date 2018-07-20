@@ -16,67 +16,67 @@
 
 defined('MOODLE_INTERNAL') || die;// Main settings.
 
-$snapsettings = new admin_settingpage('themesnaptopbar', get_string('customtopbar', 'theme_snap'));
+$n2018settings = new admin_settingpage('themen2018topbar', get_string('customtopbar', 'theme_n2018'));
 
 $checked = '1';
 $unchecked = '0';
 
 // Use custom colors for navigation bar at top of the screen.
-$name = 'theme_snap/customisenavbar';
-$title = new lang_string('customisenavbar', 'theme_snap');
+$name = 'theme_n2018/customisenavbar';
+$title = new lang_string('customisenavbar', 'theme_n2018');
 $description = '';
 $default = $unchecked;
 $setting = new admin_setting_configcheckbox($name, $title, $description, $default, $checked, $unchecked);
 $setting->set_updatedcallback('theme_reset_all_caches');
-$snapsettings->add($setting);
+$n2018settings->add($setting);
 
 // Custom background color of nav bar at top of screen.
-$name = 'theme_snap/navbarbg';
-$title = new lang_string('navbarbg', 'theme_snap');
+$name = 'theme_n2018/navbarbg';
+$title = new lang_string('navbarbg', 'theme_n2018');
 $description = '';
 $default = '#ffffff';
 $previewconfig = null;
 $setting = new admin_setting_configcolourpicker($name, $title, $description, $default, $previewconfig);
 $setting->set_updatedcallback('theme_reset_all_caches');
-$snapsettings->add($setting);
+$n2018settings->add($setting);
 
 // Color of links in nav bar at top of the screen.
-$name = 'theme_snap/navbarlink';
-$title = new lang_string('navbarlink', 'theme_snap');
+$name = 'theme_n2018/navbarlink';
+$title = new lang_string('navbarlink', 'theme_n2018');
 $description = '';
 $default = '#ff7f41'; // Moodlerooms orange.
 $previewconfig = null;
 $setting = new admin_setting_configcolourpicker($name, $title, $description, $default, $previewconfig);
 $setting->set_updatedcallback('theme_reset_all_caches');
-$snapsettings->add($setting);
+$n2018settings->add($setting);
 
 // Use custom colors for My Courses button at top of the screen.
-$name = 'theme_snap/customisenavbutton';
-$title = new lang_string('customisenavbutton', 'theme_snap');
+$name = 'theme_n2018/customisenavbutton';
+$title = new lang_string('customisenavbutton', 'theme_n2018');
 $description = '';
 $default = $unchecked;
 $setting = new admin_setting_configcheckbox($name, $title, $description, $default, $checked, $unchecked);
 $setting->set_updatedcallback('theme_reset_all_caches');
-$snapsettings->add($setting);
+$n2018settings->add($setting);
 
 // Color of My Courses link background in nav bar at the top of the screen.
-$name = 'theme_snap/navbarbuttoncolor';
-$title = new lang_string('navbarbuttoncolor', 'theme_snap');
+$name = 'theme_n2018/navbarbuttoncolor';
+$title = new lang_string('navbarbuttoncolor', 'theme_n2018');
 $description = '';
 $default = '#ffffff';
 $previewconfig = null;
 $setting = new admin_setting_configcolourpicker($name, $title, $description, $default, $previewconfig);
 $setting->set_updatedcallback('theme_reset_all_caches');
-$snapsettings->add($setting);
+$n2018settings->add($setting);
 
 // Color of My Courses link text in nav bar at the top of the screen.
-$name = 'theme_snap/navbarbuttonlink';
-$title = new lang_string('navbarbuttonlink', 'theme_snap');
+$name = 'theme_n2018/navbarbuttonlink';
+$title = new lang_string('navbarbuttonlink', 'theme_n2018');
 $description = '';
 $default = '#ff7f41'; // Moodlerooms orange.
 $previewconfig = null;
 $setting = new admin_setting_configcolourpicker($name, $title, $description, $default, $previewconfig);
 $setting->set_updatedcallback('theme_reset_all_caches');
-$snapsettings->add($setting);
+$n2018settings->add($setting);
 
-$settings->add($snapsettings);
+$settings->add($n2018settings);

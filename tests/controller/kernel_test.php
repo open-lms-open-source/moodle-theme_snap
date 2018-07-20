@@ -17,20 +17,20 @@
 /**
  * Kernel Tests
  *
- * @package   theme_snap
+ * @package   theme_n2018
  * @copyright Copyright (c) 2015 Moodlerooms Inc. (http://www.moodlerooms.com)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-namespace theme_snap\tests\controller;
+namespace theme_n2018\tests\controller;
 
-use theme_snap\controller\kernel;
-use theme_snap\controller\router;
+use theme_n2018\controller\kernel;
+use theme_n2018\controller\router;
 
 defined('MOODLE_INTERNAL') || die();
 
 /**
- * @package   theme_snap
+ * @package   theme_n2018
  * @copyright Copyright (c) 2015 Moodlerooms Inc. (http://www.moodlerooms.com)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
@@ -50,13 +50,13 @@ class kernel_test extends \basic_testcase {
     }
 
     public function test_resolve_controller_callback() {
-        $controller = $this->createPartialMock('\theme_snap\controller\controller_abstract', array(
+        $controller = $this->createPartialMock('\theme_n2018\controller\controller_abstract', array(
             'init',
             'test_action',
             'require_capability',
         ));
 
-        $router = $this->createPartialMock('\theme_snap\controller\router', array('route_action'));
+        $router = $this->createPartialMock('\theme_n2018\controller\router', array('route_action'));
         $router->expects($this->once())->method('route_action')->will($this->returnValue([$controller, 'test_action']));
 
         $kernel = new kernel($router);

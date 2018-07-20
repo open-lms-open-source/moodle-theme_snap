@@ -16,18 +16,18 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-use theme_snap\services\course;
-use theme_snap\renderables\course_card;
-use theme_snap\local;
+use theme_n2018\services\course;
+use theme_n2018\renderables\course_card;
+use theme_n2018\local;
 
 /**
  * Test course card service.
- * @package   theme_snap
+ * @package   theme_n2018
  * @author    gthomas2
  * @copyright Copyright (c) 2016 Moodlerooms Inc. (http://www.moodlerooms.com)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class theme_snap_services_course_test extends \advanced_testcase {
+class theme_n2018_services_course_test extends \advanced_testcase {
 
     /**
      * @var stdClass
@@ -55,7 +55,7 @@ class theme_snap_services_course_test extends \advanced_testcase {
 
         $this->resetAfterTest();
 
-        $CFG->theme = 'snap';
+        $CFG->theme = 'n2018';
 
         // Create 10 courses.
         for ($c = 0; $c < 10; $c++) {
@@ -64,7 +64,7 @@ class theme_snap_services_course_test extends \advanced_testcase {
 
         // Create 5 courses in the past.
         for ($c = 0; $c < 5; $c++) {
-            $enddate = time() - DAYSECS * ($c + 1) * 10;
+            $enddate = time() - DAYSECS * rand(0, 365);
             $startdate = $enddate - YEARSECS;
             $record = (object) [
                 'startdate' => $startdate,
@@ -280,9 +280,9 @@ class theme_snap_services_course_test extends \advanced_testcase {
         $page = $generator->create_module('page', array('course' => $course->id, 'name' => 'test page'));
 
         $toc = $this->courseservice->course_toc('testlistlarge');
-        $this->assertTrue($toc->modules[0] instanceof theme_snap\renderables\course_toc_module);
+        $this->assertTrue($toc->modules[0] instanceof theme_n2018\renderables\course_toc_module);
         $this->assertTrue($toc->modules[0]->url === '#section-0&module-'.$page->cmid);
-        $this->assertTrue($toc instanceof theme_snap\renderables\course_toc);
+        $this->assertTrue($toc instanceof theme_n2018\renderables\course_toc);
         $this->assertEquals(true, $toc->formatsupportstoc);
         $this->assertEquals('list-large', $toc->chapters->listlarge);
         $this->assertCount(11, $toc->chapters->chapters);
@@ -318,7 +318,7 @@ class theme_snap_services_course_test extends \advanced_testcase {
         $chapters = $this->courseservice->course_toc_chapters('testcourse');
 
         $this->assertCount(3, $chapters->chapters);
-        $this->assertTrue($chapters->chapters[0] instanceof theme_snap\renderables\course_toc_chapter);
+        $this->assertTrue($chapters->chapters[0] instanceof theme_n2018\renderables\course_toc_chapter);
     }
 
     public function test_course_toc_chapters_escaped_chars() {
@@ -346,7 +346,7 @@ class theme_snap_services_course_test extends \advanced_testcase {
 
         $chapters = $this->courseservice->course_toc_chapters('testcourse');
 
-        $tochtml = $OUTPUT->render_from_template('theme_snap/course_toc_chapters',
+        $tochtml = $OUTPUT->render_from_template('theme_n2018/course_toc_chapters',
             (object) ['chapters' => $chapters->chapters, 'listlarge' => (count($chapters) > 9)]);
         $pattern = '/>(.*)<\/a>/';
         preg_match_all($pattern, $tochtml, $matches);
@@ -373,8 +373,8 @@ class theme_snap_services_course_test extends \advanced_testcase {
         $this->assertTrue(isset($highlight['toc']));
         $actionmodel = $highlight['actionmodel'];
         $toc = $highlight['toc'];
-        $this->assertTrue($actionmodel instanceof theme_snap\renderables\course_action_section_highlight);
-        $this->assertTrue($toc instanceof theme_snap\renderables\course_toc);
+        $this->assertTrue($actionmodel instanceof theme_n2018\renderables\course_action_section_highlight);
+        $this->assertTrue($toc instanceof theme_n2018\renderables\course_toc);
 
         // Check that action model has toggled after highlight.
         $this->assertEquals('aria-pressed="true"', $actionmodel->ariapressed);
@@ -383,7 +383,7 @@ class theme_snap_services_course_test extends \advanced_testcase {
         // Unhiglight the section.
         $highlight = $this->courseservice->highlight_section('testcourse', 3, false);
         $actionmodel = $highlight['actionmodel'];
-        $this->assertTrue($actionmodel instanceof theme_snap\renderables\course_action_section_highlight);
+        $this->assertTrue($actionmodel instanceof theme_n2018\renderables\course_action_section_highlight);
 
         // Check that action model now corresponds to unhighlighted state.
         $this->assertEquals('aria-pressed="false"', $actionmodel->ariapressed);
@@ -408,21 +408,21 @@ class theme_snap_services_course_test extends \advanced_testcase {
         $this->assertTrue(isset($visibility['toc']));
         $actionmodel = $visibility['actionmodel'];
         $toc = $visibility['toc'];
-        $this->assertTrue($actionmodel instanceof theme_snap\renderables\course_action_section_visibility);
-        $this->assertTrue($toc instanceof theme_snap\renderables\course_toc);
+        $this->assertTrue($actionmodel instanceof theme_n2018\renderables\course_action_section_visibility);
+        $this->assertTrue($toc instanceof theme_n2018\renderables\course_toc);
 
         // Check that action model has toggled after section hidden.
-        $this->assertEquals('snap-visibility snap-show', $actionmodel->class);
+        $this->assertEquals('n2018-visibility n2018-show', $actionmodel->class);
         $this->assertEquals('Show topic', $actionmodel->title);
         $this->assertContains('show=3', $actionmodel->url);
 
         // Unhide the section.
         $visibility = $this->courseservice->set_section_visibility('testcourse', 3, true);
         $actionmodel = $visibility['actionmodel'];
-        $this->assertTrue($actionmodel instanceof theme_snap\renderables\course_action_section_visibility);
+        $this->assertTrue($actionmodel instanceof theme_n2018\renderables\course_action_section_visibility);
 
         // Check that action model now corresponds to unhighlighted state.
-        $this->assertEquals('snap-visibility snap-hide', $actionmodel->class);
+        $this->assertEquals('n2018-visibility n2018-hide', $actionmodel->class);
         $this->assertEquals('Hide topic', $actionmodel->title);
         $this->assertContains('hide=3', $actionmodel->url);
     }
@@ -434,10 +434,10 @@ class theme_snap_services_course_test extends \advanced_testcase {
         $service = $this->courseservice;
         $service->setfavorite($this->courses[0]->shortname, true, $this->user1->id);
         $service->setfavorite($this->courses[1]->shortname, true, $this->user1->id);
-        $favorites = $DB->get_records('theme_snap_course_favorites', array('userid' => $this->user1->id));
+        $favorites = $DB->get_records('theme_n2018_course_favorites', array('userid' => $this->user1->id));
         $this->assertNotEmpty($favorites);
         delete_user($this->user1);
-        $favorites = $DB->get_records('theme_snap_course_favorites', array('userid' => $this->user1->id));
+        $favorites = $DB->get_records('theme_n2018_course_favorites', array('userid' => $this->user1->id));
         $this->assertEmpty($favorites);
     }
 

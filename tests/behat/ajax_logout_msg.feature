@@ -15,12 +15,12 @@
 #
 # Tests for cover image uploading.
 #
-# @package    theme_snap
+# @package    theme_n2018
 # @copyright  Copyright (c) 2016 Blackboard Ltd.
 # @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
 
-@theme @theme_snap
-Feature: When the moodle theme is set to Snap, ajax failures due to log outs / expired sessions are reported correctly
+@theme @theme_n2018
+Feature: When the moodle theme is set to N2018, ajax failures due to log outs / expired sessions are reported correctly
   as session issues.
 
   Background:
@@ -54,7 +54,7 @@ Feature: When the moodle theme is set to Snap, ajax failures due to log outs / e
     When I follow "Topic 2"
     Then "#section-2" "css_element" should exist
     And I log out via a separate window
-    When I click on "#section-2 .snap-visibility.snap-hide" "css_element"
+    When I click on "#section-2 .n2018-visibility.n2018-hide" "css_element"
     Then I should see "You are logged out"
     # Test logout msg when highlighting section
     And I log in as "teacher"
@@ -62,14 +62,14 @@ Feature: When the moodle theme is set to Snap, ajax failures due to log outs / e
     When I follow "Topic 2"
     Then "#section-2" "css_element" should exist
     And I log out via a separate window
-    And I click on "#section-2 .snap-highlight" "css_element"
+    And I click on "#section-2 .n2018-highlight" "css_element"
     Then I should see "You are logged out"
     # Test logout msg when moving section
     And I log in as "teacher"
     And I am on the course main page for "C1"
     When I follow "Topic 2"
     And I follow "Move \"Topic 2\""
-    Then I should see "Moving \"Untitled Topic\"" in the "#snap-footer-alert" "css_element"
+    Then I should see "Moving \"Untitled Topic\"" in the "#n2018-footer-alert" "css_element"
     And I follow "Topic 4"
     And I log out via a separate window
     When I follow "Place section \"Untitled Topic\" before section \"Topic 4\""
@@ -90,27 +90,27 @@ Feature: When the moodle theme is set to Snap, ajax failures due to log outs / e
     Given I log in as "teacher"
     And I am on the course main page for "C1"
     When I follow "Topic 1"
-    And I click on ".snap-activity[data-type='Assignment'] a.snap-edit-asset-more" "css_element"
+    And I click on ".n2018-activity[data-type='Assignment'] a.n2018-edit-asset-more" "css_element"
     And I log out via a separate window
-    When I click on ".snap-activity[data-type='Assignment'] a.js_snap_hide" "css_element"
+    When I click on ".n2018-activity[data-type='Assignment'] a.js_n2018_hide" "css_element"
     Then I should see "You are logged out"
     # Test logout msg when attempting to duplicate asset
     Given I log in as "teacher"
     And I am on the course main page for "C1"
     When I follow "Topic 1"
-    And I click on ".snap-activity[data-type='Assignment'] a.snap-edit-asset-more" "css_element"
+    And I click on ".n2018-activity[data-type='Assignment'] a.n2018-edit-asset-more" "css_element"
     And I log out via a separate window
-    When I click on ".snap-activity[data-type='Assignment'] a.js_snap_duplicate" "css_element"
+    When I click on ".n2018-activity[data-type='Assignment'] a.js_n2018_duplicate" "css_element"
     Then I should see "You are logged out"
     # Test logout msg when attempting to move asset
     Given I log in as "teacher"
     And I am on the course main page for "C1"
     And I follow "Topic 1"
     Then "#section-1" "css_element" should exist
-    And I click on ".snap-activity.modtype_assign .snap-asset-move img[title='Move \"Test assignment\"']" "css_element"
+    And I click on ".n2018-activity.modtype_assign .n2018-asset-move img[title='Move \"Test assignment\"']" "css_element"
     Then I should see "Moving \"Test assignment\""
     And I log out via a separate window
-    When I click on "li#section-1 li.snap-drop.asset-drop div.asset-wrapper" "css_element"
+    When I click on "li#section-1 li.n2018-drop.asset-drop div.asset-wrapper" "css_element"
     Then I should see "You are logged out"
 
   @javascript
@@ -121,4 +121,4 @@ Feature: When the moodle theme is set to Snap, ajax failures due to log outs / e
     Then I should see "You must change your password to proceed."
     # Opening the personal menu should trigger an AJAX error which is displayed within the menu.
     And I open the personal menu
-    Then I should see "You must change your password before using the personal menu." in the "#snap-pm-content .force-pwd-warning" "css_element"
+    Then I should see "You must change your password before using the personal menu." in the "#n2018-pm-content .force-pwd-warning" "css_element"

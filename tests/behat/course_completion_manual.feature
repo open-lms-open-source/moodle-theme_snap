@@ -15,13 +15,13 @@
 #
 # Tests for manual completion.
 #
-# @package   theme_snap
+# @package   theme_n2018
 # @author    Guy Thomas <gthomas@moodlerooms.com>
 # @copyright Copyright (c) 2016 Blackboard Inc.
 # @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
 
 
-@theme @theme_snap
+@theme @theme_n2018
 Feature: Manual completion updates page wihout reload.
 
   Background:

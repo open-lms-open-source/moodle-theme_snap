@@ -21,11 +21,11 @@
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-namespace theme_snap\renderables;
+namespace theme_n2018\renderables;
 
 defined('MOODLE_INTERNAL') || die();
 
-use theme_snap\output\shared;
+use theme_n2018\output\shared;
 
 class course_toc_progress {
 

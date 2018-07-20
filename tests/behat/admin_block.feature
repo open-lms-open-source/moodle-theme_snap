@@ -15,13 +15,13 @@
 #
 # Tests for visibility of admin block by user type and page.
 #
-# @package    theme_snap
+# @package    theme_n2018
 # @copyright Copyright (c) 2015 Blackboard Inc.
 # @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
 
 
-@theme @theme_snap
-Feature: When the moodle theme is set to Snap, the admin block will only be shown when appropriate.
+@theme @theme_n2018
+Feature: When the moodle theme is set to N2018, the admin block will only be shown when appropriate.
 
   Background:
     Given the following "courses" exist:

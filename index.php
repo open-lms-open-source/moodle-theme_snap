@@ -15,16 +15,16 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Snap non-AJAX handler
+ * N2018 non-AJAX handler
  *
- * @package   theme_snap
+ * @package   theme_n2018
  * @copyright Copyright (c) 2015 Moodlerooms Inc. (http://www.moodlerooms.com)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-use theme_snap\controller\kernel;
-use theme_snap\controller\router;
-use theme_snap\controller\addsection_controller;
+use theme_n2018\controller\kernel;
+use theme_n2018\controller\router;
+use theme_n2018\controller\addsection_controller;
 
 require_once(__DIR__.'/../../config.php');
 
@@ -40,7 +40,7 @@ require_login($course, false, $cm, false, true);
 // @codingStandardsIgnoreLine
 /** @var $PAGE moodle_page */
 $PAGE->set_context($context);
-$PAGE->set_url('/theme/snap/index.php', array('action' => $action, 'contextid' => $context->id));
+$PAGE->set_url('/theme/n2018/index.php', array('action' => $action, 'contextid' => $context->id));
 
 $router = new router();
 $router->add_controller(new addsection_controller());

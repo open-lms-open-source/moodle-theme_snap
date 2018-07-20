@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
  *
- * @package   theme_snap
+ * @package   theme_n2018
  * @copyright Copyright (c) 2016 Moodlerooms Inc. (http://www.moodlerooms.com)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
@@ -22,7 +22,7 @@
 /**
  * Course card favoriting.
  */
-define(['jquery', 'core/ajax', 'core/notification', 'core/log', 'theme_snap/model_view', 'theme_snap/ajax_notification'],
+define(['jquery', 'core/ajax', 'core/notification', 'core/log', 'theme_n2018/model_view', 'theme_n2018/ajax_notification'],
     function($, ajax, notification, log, mview, ajaxNotify) {
         return function() {
             log.enableAll(true);
@@ -33,11 +33,11 @@ define(['jquery', 'core/ajax', 'core/notification', 'core/log', 'theme_snap/mode
              * @method reloadCourseCardTemplate
              * @param {object} renderable - coursecard renderable
              * @param {jQuery} cardEl - coursecard element
-             * @returns {Promise}
+             * @return promise
              */
             var reloadCourseCardTemplate = function(renderable, cardEl) {
                 var dfd = $.Deferred();
-                mview(cardEl, 'theme_snap/course_cards');
+                mview(cardEl, 'theme_n2018/course_cards');
                 var callback = function() {
                     var button = $(cardEl).find('.favoritetoggle');
                     $(button).removeClass('ajaxing');
@@ -82,7 +82,6 @@ define(['jquery', 'core/ajax', 'core/notification', 'core/log', 'theme_snap/mode
              *
              * @param {jQuery} cardEl
              * @param {jQuery} cards
-             * @returns {number}
              */
             var getCardIndex = function(cardEl, cards) {
                 if (cards.length === 0) {
@@ -169,17 +168,17 @@ define(['jquery', 'core/ajax', 'core/notification', 'core/log', 'theme_snap/mode
             var moveOutOfFavorites = function(cardEl, onMoveComplete) {
                 var container;
                 // Check there are courses which are not hidden.
-                // When this is 0 we only have hidden courses, so container is #snap-pm-courses-current-cards.
-                var publishedcount = $('#snap-pm-courses-current .coursecard:not([data-hidden="true"])').length;
+                // When this is 0 we only have hidden courses, so container is #n2018-pm-courses-current-cards.
+                var publishedcount = $('#n2018-pm-courses-current .coursecard:not([data-hidden="true"])').length;
                 // Special stuff for when moving a hidden course.
                 if ($(cardEl).data('hidden') === true && publishedcount > 0) {
-                    container = '#snap-pm-courses-hidden-cards';
+                    container = '#n2018-pm-courses-hidden-cards';
                     // Open hidden courses section.
-                    $('#snap-pm-courses-hidden').addClass('state-visible');
-                    $('#snap-pm-courses-hidden-cards').collapse('show');
+                    $('#n2018-pm-courses-hidden').addClass('state-visible');
+                    $('#n2018-pm-courses-hidden-cards').collapse('show');
                 } else {
                     window.console.log('not a hidden card');
-                    container = '#snap-pm-courses-current-cards';
+                    container = '#n2018-pm-courses-current-cards';
                 }
                 moveCard(cardEl, container + ' .coursecard:not(.favorited)', container, false, onMoveComplete);
             };
@@ -202,7 +201,7 @@ define(['jquery', 'core/ajax', 'core/notification', 'core/log', 'theme_snap/mode
                 var doAjax = function(jsid) {
                     return ajax.call([
                         {
-                            methodname: 'theme_snap_course_card',
+                            methodname: 'theme_n2018_course_card',
                             args: {courseshortname: shortname, favorited: favorited},
                             fail: function(response) {
                                 $(button).removeClass('ajaxing');
@@ -211,23 +210,22 @@ define(['jquery', 'core/ajax', 'core/notification', 'core/log', 'theme_snap/mode
                         }
                     ], true, true)[0].then(function(response) {
                         return reloadCourseCardTemplate(response, cardEl);
-                    }).then(function() {
+                    }).then(function(){
                         M.util.js_complete(jsid);
                     });
                 };
 
-                var jsid;
                 if (favorited === 1) {
-                    jsid = 'favourite_' + new Date().getTime().toString(16) + (Math.floor(Math.random() * 1000));
+                    var jsid = 'favourite_' + new Date().getTime().toString(16) + (Math.floor(Math.random() * 1000));
                     M.util.js_pending(jsid);
                     // Move to favorites.
-                    moveCard(cardEl, '#snap-pm-courses-current-cards .coursecard.favorited', '#snap-pm-courses-current-cards', true,
+                    moveCard(cardEl, '#n2018-pm-courses-current-cards .coursecard.favorited', '#n2018-pm-courses-current-cards', true,
                         function() {
                             doAjax(jsid);
                         }
                     );
                 } else {
-                    jsid = 'unfavourite_' + new Date().getTime().toString(16) + (Math.floor(Math.random() * 1000));
+                    var jsid = 'unfavourite_' + new Date().getTime().toString(16) + (Math.floor(Math.random() * 1000));
                     M.util.js_pending(jsid);
                     moveOutOfFavorites(cardEl,
                         function() {
@@ -240,7 +238,7 @@ define(['jquery', 'core/ajax', 'core/notification', 'core/log', 'theme_snap/mode
             /**
              * On clicking favourite toggle. (Delegated).
              */
-            $("#snap-pm").on("click", ".favoritetoggle", function(e) {
+            $("#n2018-pm").on("click", ".favoritetoggle", function(e) {
                 e.preventDefault();
                 e.stopPropagation();
                 favoriteCourse(this);

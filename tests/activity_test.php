@@ -16,20 +16,20 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-use \theme_snap\activity,
-    \theme_snap\snap_base_test;
+use \theme_n2018\activity,
+    \theme_n2018\n2018_base_test;
 
 global $CFG;
 require_once($CFG->dirroot . '/mod/assign/tests/base_test.php');
 
 /**
- * Testing for theme/snap/classes/activity.php
+ * Testing for theme/n2018/classes/activity.php
  *
- * @package  theme_snap
+ * @package  theme_n2018
  * @copyright  2017 Blackboard inc.
  * @license  http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class theme_snap_acitvity_test extends snap_base_test {
+class theme_n2018_acitvity_test extends n2018_base_test {
 
     /**
      * Crete an assign module instance.
@@ -397,19 +397,19 @@ class theme_snap_acitvity_test extends snap_base_test {
         $calendar = new \calendar_information(0, 0, 0, $tstart);
         $course = get_course(SITEID);
         $courses = enrol_get_my_courses();
-        $calendar->set_sources($course, $courses);
+        $calendar->prepare_for_view($course, $courses);
         $events = activity::get_calendar_activity_events($tstart, $tend, $courses);
-        $snapevent = reset($events);
-        $this->assertEquals($due, $snapevent->timestart);
-        $this->assertEquals($due, $snapevent->timesort);
+        $n2018event = reset($events);
+        $this->assertEquals($due, $n2018event->timestart);
+        $this->assertEquals($due, $n2018event->timesort);
 
         // Test extension set.
         $this->extend_assign_deadline($assign->id, $student->id, $extension);
-        // Test that the Snap calendar includes extensions to assignments.
+        // Test that the N2018 calendar includes extensions to assignments.
         $events = activity::get_calendar_activity_events($tstart, $tend, $courses);
-        $snapevent = reset($events);
-        $this->assertEquals($extension, $snapevent->timestart);
-        $this->assertEquals($extension, $snapevent->timesort);
+        $n2018event = reset($events);
+        $this->assertEquals($extension, $n2018event->timestart);
+        $this->assertEquals($extension, $n2018event->timesort);
 
         // Reset the caches so we can get the core calendar:.
         \core_calendar\local\event\container::reset_caches();
@@ -423,13 +423,13 @@ class theme_snap_acitvity_test extends snap_base_test {
         $this->assertEquals($due, $coreevent->timestart);
         $this->assertEquals($due, $coreevent->timesort);
 
-        // Test that the Snap calendar event is the same as the core event
+        // Test that the N2018 calendar event is the same as the core event
         // (with the exception of the timestart + timesort fields).
-        unset($snapevent->timestart);
-        unset($snapevent->timesort);
+        unset($n2018event->timestart);
+        unset($n2018event->timesort);
         unset($coreevent->timestart);
         unset($coreevent->timesort);
-        $this->assertEquals($snapevent, $coreevent);
+        $this->assertEquals($n2018event, $coreevent);
     }
 
     public function test_user_activity_events() {
@@ -456,70 +456,70 @@ class theme_snap_acitvity_test extends snap_base_test {
         $calendar = new \calendar_information(0, 0, 0, $tstart);
         $course = get_course(SITEID);
         $courses = enrol_get_my_courses();
-        $calendar->set_sources($course, $courses);
+        $calendar->prepare_for_view($course, $courses);
         $eventsobj = activity::user_activity_events($student, $courses, $tstart, $tend, 'allcourses');
         $events = $eventsobj->events;
-        $snapevent = reset($events);
-        $this->assertEquals($due, $snapevent->timestart);
-        $this->assertEquals($due, $snapevent->timesort);
+        $n2018event = reset($events);
+        $this->assertEquals($due, $n2018event->timestart);
+        $this->assertEquals($due, $n2018event->timesort);
         // Assert not from cache.
         $this->assertFalse($eventsobj->fromcache);
         // Test that getting the events again recovers them from cache and that they are populated.
         $eventsobj = activity::user_activity_events($student, $courses, $tstart, $tend, 'allcourses');
         $events = $eventsobj->events;
-        $snapevent = reset($events);
+        $n2018event = reset($events);
         // Assert from cache.
         $this->assertTrue($eventsobj->fromcache);
-        $this->assertEquals($due, $snapevent->timestart);
-        $this->assertEquals($due, $snapevent->timesort);
+        $this->assertEquals($due, $n2018event->timestart);
+        $this->assertEquals($due, $n2018event->timesort);
 
         // Test group override invalidates cache and overrides due date.
         $this->override_assign_group_duedate($assign->id, $group->id, $ovdgroupdue, 1);
 
         $eventsobj = activity::user_activity_events($student, $courses, $tstart, $tend, 'allcourses');
         $events = $eventsobj->events;
-        $snapevent = reset($events);
+        $n2018event = reset($events);
         // Assert not from cache.
         $this->assertFalse($eventsobj->fromcache);
-        $this->assertEquals($ovdgroupdue, $snapevent->timestart);
-        $this->assertEquals($ovdgroupdue, $snapevent->timesort);
+        $this->assertEquals($ovdgroupdue, $n2018event->timestart);
+        $this->assertEquals($ovdgroupdue, $n2018event->timesort);
 
         $eventsobj = activity::user_activity_events($student, $courses, $tstart, $tend, 'allcourses');
         $events = $eventsobj->events;
-        $snapevent = reset($events);
+        $n2018event = reset($events);
         // Assert from cache.
         $this->assertTrue($eventsobj->fromcache);
-        $this->assertEquals($ovdgroupdue, $snapevent->timestart);
-        $this->assertEquals($ovdgroupdue, $snapevent->timesort);
+        $this->assertEquals($ovdgroupdue, $n2018event->timestart);
+        $this->assertEquals($ovdgroupdue, $n2018event->timesort);
 
         // Test user override invalidates cache and trumps group override.
         $this->override_assign_user_duedate($assign->id, $student->id, $ovduserdue);
 
         $eventsobj = activity::user_activity_events($student, $courses, $tstart, $tend, 'allcourses');
         $events = $eventsobj->events;
-        $snapevent = reset($events);
+        $n2018event = reset($events);
         // Assert not from cache.
         $this->assertFalse($eventsobj->fromcache);
-        $this->assertEquals($ovduserdue, $snapevent->timestart);
-        $this->assertEquals($ovduserdue, $snapevent->timesort);
+        $this->assertEquals($ovduserdue, $n2018event->timestart);
+        $this->assertEquals($ovduserdue, $n2018event->timesort);
 
         $eventsobj = activity::user_activity_events($student, $courses, $tstart, $tend, 'allcourses');
         $events = $eventsobj->events;
-        $snapevent = reset($events);
+        $n2018event = reset($events);
         // Assert from cache.
         $this->assertTrue($eventsobj->fromcache);
-        $this->assertEquals($ovduserdue, $snapevent->timestart);
-        $this->assertEquals($ovduserdue, $snapevent->timesort);
+        $this->assertEquals($ovduserdue, $n2018event->timestart);
+        $this->assertEquals($ovduserdue, $n2018event->timesort);
 
         // Test extension set invalidates cache and trumps all overrides.
         $this->extend_assign_deadline($assign->id, $student->id, $extension);
         $eventsobj = activity::user_activity_events($student, $courses, $tstart, $tend, 'allcourses');
         $events = $eventsobj->events;
-        $snapevent = reset($events);
+        $n2018event = reset($events);
         // Assert not from cache.
         $this->assertFalse($eventsobj->fromcache);
-        $this->assertEquals($extension, $snapevent->timestart);
-        $this->assertEquals($extension, $snapevent->timesort);
+        $this->assertEquals($extension, $n2018event->timestart);
+        $this->assertEquals($extension, $n2018event->timesort);
 
     }
 
@@ -546,7 +546,7 @@ class theme_snap_acitvity_test extends snap_base_test {
         $cm = $modinfo->instances['quiz'][$quiz1->id];
         $cm2 = $modinfo->instances['quiz'][$quiz2->id];
         $this->setUser($student);
-        $quizdates = \theme_snap\activity::instance_activity_dates($course->id, $cm, '', '');
+        $quizdates = \theme_n2018\activity::instance_activity_dates($course->id, $cm, '', '');
 
         // Check no override.
         $this->assertEquals($timeclose1, $quizdates->timeclose);
@@ -555,8 +555,8 @@ class theme_snap_acitvity_test extends snap_base_test {
         $ovduserdue = $timeclose1 + DAYSECS;
         $this->override_quiz_user_duedate($quiz1->id, $student->id, $ovduserdue);
 
-        $dates1 = \theme_snap\activity::instance_activity_dates($course->id, $cm, '', '');
-        $dates2 = \theme_snap\activity::instance_activity_dates($course->id, $cm2, '', '');
+        $dates1 = \theme_n2018\activity::instance_activity_dates($course->id, $cm, '', '');
+        $dates2 = \theme_n2018\activity::instance_activity_dates($course->id, $cm2, '', '');
 
         $this->assertEquals($ovduserdue, $dates1->timeclose);
         $this->assertEquals($timeclose2, $dates2->timeclose);
@@ -564,14 +564,14 @@ class theme_snap_acitvity_test extends snap_base_test {
         // Group override.
         $ovdgroupdue = $timeclose1 + (3 * DAYSECS);
         $this->override_quiz_group_duedate($quiz1->id, $group->id, $ovdgroupdue);
-        $dates1 = \theme_snap\activity::instance_activity_dates($course->id, $cm, '', '');
+        $dates1 = \theme_n2018\activity::instance_activity_dates($course->id, $cm, '', '');
 
         // Returned override should be user instead of group - user overrides trump groups.
         $this->assertEquals($ovduserdue, $dates1->timeclose);
 
         // Deleting the user override should bring the group override as result.
         $this->delete_quiz_user_overrides($quiz1->id, $student->id);
-        $dates1 = \theme_snap\activity::instance_activity_dates($course->id, $cm, '', '');
+        $dates1 = \theme_n2018\activity::instance_activity_dates($course->id, $cm, '', '');
         $this->assertEquals($ovdgroupdue, $dates1->timeclose);
 
         // Second group override.
@@ -583,7 +583,7 @@ class theme_snap_acitvity_test extends snap_base_test {
         $this->override_quiz_group_opendate($quiz1->id, $group2->id, $ovdgroup2open);
         $this->override_quiz_group_duedate($quiz1->id, $group2->id, $ovdgroup2due);
 
-        $dates1 = \theme_snap\activity::instance_activity_dates($course->id, $cm, '', '');
+        $dates1 = \theme_n2018\activity::instance_activity_dates($course->id, $cm, '', '');
 
         $this->assertEquals($ovdgroup2open, $dates1->timeopen);
         $this->assertEquals($ovdgroup2due, $dates1->timeclose);
@@ -591,10 +591,10 @@ class theme_snap_acitvity_test extends snap_base_test {
         // Switching to a user without group.
         $nogroupuser = $this->getDataGenerator()->create_user();
         $this->setUser($nogroupuser);
-        $dates1 = \theme_snap\activity::instance_activity_dates($course->id, $cm, '', '');
+        $dates1 = \theme_n2018\activity::instance_activity_dates($course->id, $cm, '', '');
         $this->assertEquals($quiz1->timeclose, $dates1->timeclose);
 
-        $dates2 = \theme_snap\activity::instance_activity_dates($course->id, $cm2, '', '');
+        $dates2 = \theme_n2018\activity::instance_activity_dates($course->id, $cm2, '', '');
         $this->assertEquals($quiz2->timeclose, $dates2->timeclose);
 
         // Now test assignment works alongside quiz.
@@ -607,7 +607,7 @@ class theme_snap_acitvity_test extends snap_base_test {
         $cm = $modinfo->instances['assign'][$assign1->id];
         $cm2 = $modinfo->instances['assign'][$assign2->id];
         $this->setUser($student);
-        $assigndates = \theme_snap\activity::instance_activity_dates($course->id, $cm, '', '');
+        $assigndates = \theme_n2018\activity::instance_activity_dates($course->id, $cm, '', '');
 
         // Check no override.
         $this->assertEquals($timeclose1, $assigndates->timeclose);
@@ -616,8 +616,8 @@ class theme_snap_acitvity_test extends snap_base_test {
         $ovduserdue = $timeclose1 + DAYSECS;
         $this->override_assign_user_duedate($assign1->id, $student->id, $ovduserdue);
 
-        $dates1 = \theme_snap\activity::instance_activity_dates($course->id, $cm, '', '');
-        $dates2 = \theme_snap\activity::instance_activity_dates($course->id, $cm2, '', '');
+        $dates1 = \theme_n2018\activity::instance_activity_dates($course->id, $cm, '', '');
+        $dates2 = \theme_n2018\activity::instance_activity_dates($course->id, $cm2, '', '');
 
         $this->assertEquals($ovduserdue, $dates1->timeclose);
         $this->assertEquals($timeclose2, $dates2->timeclose);
@@ -625,14 +625,14 @@ class theme_snap_acitvity_test extends snap_base_test {
         // Group override.
         $ovdgroupdue = $timeclose1 + (3 * DAYSECS);
         $this->override_assign_group_duedate($assign1->id, $group->id, $ovdgroupdue, 1);
-        $dates1 = \theme_snap\activity::instance_activity_dates($course->id, $cm, '', '');
+        $dates1 = \theme_n2018\activity::instance_activity_dates($course->id, $cm, '', '');
 
         // Returned override should be user instead of group - user overrides trump groups.
         $this->assertEquals($ovduserdue, $dates1->timeclose);
 
         // Deleting the user override should bring the group override as result.
         $this->delete_assign_user_overrides($assign1->id, $student->id);
-        $dates1 = \theme_snap\activity::instance_activity_dates($course->id, $cm, '', '');
+        $dates1 = \theme_n2018\activity::instance_activity_dates($course->id, $cm, '', '');
         $this->assertEquals($ovdgroupdue, $dates1->timeclose);
 
         // Change the sort order of the original group override so we can have a new one override it.
@@ -646,7 +646,7 @@ class theme_snap_acitvity_test extends snap_base_test {
         $this->override_assign_group_opendate($assign1->id, $group2->id, $ovdgroup2open, 1);
         $this->override_assign_group_duedate($assign1->id, $group2->id, $ovdgroup2due, 1);
 
-        $dates1 = \theme_snap\activity::instance_activity_dates($course->id, $cm, '', '');
+        $dates1 = \theme_n2018\activity::instance_activity_dates($course->id, $cm, '', '');
 
         $this->assertEquals($ovdgroup2open, $dates1->timeopen);
         $this->assertEquals($ovdgroup2due, $dates1->timeclose);
@@ -654,15 +654,15 @@ class theme_snap_acitvity_test extends snap_base_test {
         // Override open time for user and make sure it trumps the group override.
         $ovduseropen = time() + (11 * DAYSECS);
         $this->override_assign_user_opendate($assign1->id, $student->id, $ovduseropen);
-        $dates1 = \theme_snap\activity::instance_activity_dates($course->id, $cm, '', '');
+        $dates1 = \theme_n2018\activity::instance_activity_dates($course->id, $cm, '', '');
         $this->assertEquals($ovduseropen, $dates1->timeopen);
 
         // Switching to a user without group.
         $this->setUser($nogroupuser);
-        $dates1 = \theme_snap\activity::instance_activity_dates($course->id, $cm, '', '');
+        $dates1 = \theme_n2018\activity::instance_activity_dates($course->id, $cm, '', '');
         $this->assertEquals($assign1->duedate, $dates1->timeclose);
 
-        $dates2 = \theme_snap\activity::instance_activity_dates($course->id, $cm2, '', '');
+        $dates2 = \theme_n2018\activity::instance_activity_dates($course->id, $cm2, '', '');
         $this->assertEquals($assign2->duedate, $dates2->timeclose);
     }
 
@@ -797,7 +797,7 @@ class theme_snap_acitvity_test extends snap_base_test {
         ];
 
         $events = phpunit_util::call_internal_method(null, 'hash_events_by_module_instance', [$events],
-            '\theme_snap\activity');
+            '\theme_n2018\activity');
 
         $this->assertCount(3, $events['assign']['1000']);
         $this->assertCount(1, $events['lesson']['1000']);
@@ -976,9 +976,9 @@ class theme_snap_acitvity_test extends snap_base_test {
 
         // Assert count and order of assignments is correct.
         $this->assertCount(2, $eventobj->events);
-        $this->assertEquals('Assign future due is due', $eventobj->events[0]->name);
+        $this->assertEquals('Assign future due', $eventobj->events[0]->name);
         // The overdue assignment should be last in the list as it now has a deadline greater than the other assignment.
-        $this->assertEquals('Assign overdue is due', $eventobj->events[1]->name);
+        $this->assertEquals('Assign overdue', $eventobj->events[1]->name);
     }
 
     /**
@@ -1058,11 +1058,11 @@ class theme_snap_acitvity_test extends snap_base_test {
         foreach ($actual as $item) {
             $deadlinelist[] = $item;
         }
-        $this->assertEquals('Assign 1 is due', $deadlinelist[0]->name);
+        $this->assertEquals('Assign 1', $deadlinelist[0]->name);
         $this->assertEquals('Quiz 1', $deadlinelist[1]->name);
-        $this->assertEquals('Assign 2 is due', $deadlinelist[2]->name);
+        $this->assertEquals('Assign 2', $deadlinelist[2]->name);
         $this->assertEquals('Quiz 2', $deadlinelist[3]->name);
-        $this->assertEquals('Assign 3 is due', $deadlinelist[4]->name);
+        $this->assertEquals('Assign 3', $deadlinelist[4]->name);
 
         // Check 5 deadlines exist for users in all timeszones.
         $tzoneusers = [];

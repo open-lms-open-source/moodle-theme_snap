@@ -17,16 +17,21 @@
 /**
  * Event vault class
  *
- * @package    theme_snap
+ * @package    theme_n2018
  * @copyright  2017 Ryan Wyllie <ryan@moodle.com> / 2017 Blackboard Inc
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-namespace theme_snap\calendar\event\data_access;
+namespace theme_n2018\calendar\event\data_access;
 
 defined('MOODLE_INTERNAL') || die();
 
+use core_calendar\local\event\entities\action_event_interface;
 use core_calendar\local\event\entities\event_interface;
+use core_calendar\local\event\exceptions\limit_invalid_parameter_exception;
+use core_calendar\local\event\factories\action_factory_interface;
+use core_calendar\local\event\factories\event_factory_interface;
+use core_calendar\local\event\strategies\raw_event_retrieval_strategy_interface;
 
 /**
  * Event vault class.
@@ -61,7 +66,6 @@ class event_vault extends \core_calendar\local\event\data_access\event_vault {
         array $usersfilter = null,
         array $groupsfilter = null,
         array $coursesfilter = null,
-        array $categoriesfilter = null,
         $withduration = true,
         $ignorehidden = true,
         callable $filter = null
@@ -128,7 +132,6 @@ class event_vault extends \core_calendar\local\event\data_access\event_vault {
             $usersfilter,
             $groupsfilter,
             $coursesfilter,
-            $categoriesfilter,
             $where,
             $params,
             "COALESCE(e.timesort, e.timestart) ASC, e.id ASC",
@@ -184,7 +187,7 @@ class event_vault extends \core_calendar\local\event\data_access\event_vault {
             }
             if ($field === 'timestart') {
                 $where = '((timestart = :timefrom1 AND e.id > :timefromid) OR timestart > :timefrom2' .
-                       ($withduration ? ' OR timestart + timeduration > :timefrom3' : '') . ')';
+                    ($withduration ? ' OR timestart + timeduration > :timefrom3' : '') . ')';
 
                 if ($this->usersfilter) {
                     $where = '(' . $where . ' OR auf.extensionduedate > :timefrom4'.
@@ -203,7 +206,7 @@ class event_vault extends \core_calendar\local\event\data_access\event_vault {
             $where = 'timesort >= :timefrom';
             if ($field === 'timestart') {
                 $where = '(timestart >= :timefrom' .
-                       ($withduration ? ' OR timestart + timeduration > :timefrom2' : '') . ')';
+                    ($withduration ? ' OR timestart + timeduration > :timefrom2' : '') . ')';
                 if ($this->usersfilter) {
                     $where = '(' . $where . ' OR auf.extensionduedate > :timefrom3'.
                         ($withduration ? ' OR auf.extensionduedate + timeduration > :timefrom4' : '').

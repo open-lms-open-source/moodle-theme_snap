@@ -14,11 +14,11 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
-namespace theme_snap\renderables;
+namespace theme_n2018\renderables;
 
 defined('MOODLE_INTERNAL') || die();
 
-use theme_snap\local,
+use theme_n2018\local,
     moodle_url;
 
 /**
@@ -55,7 +55,7 @@ class featured_courses implements \renderable, \templatable {
     public function __construct() {
         global $PAGE, $DB;
 
-        $config = get_config('theme_snap');
+        $config = get_config('theme_n2018');
 
         // Featured courses title.
         if (!empty($config->fc_heading)) {
@@ -68,14 +68,14 @@ class featured_courses implements \renderable, \templatable {
         }
 
         if ($PAGE->user_is_editing()) {
-            $url = new moodle_url('/admin/settings.php?section=themesettingsnap#themesnapfeaturedcourses');
+            $url = new moodle_url('/admin/settings.php?section=themesettingn2018#themen2018featuredcourses');
             $this->editurl = $url;
         }
 
         // Build array of course ids to display.
         $ids = array("fc_one", "fc_two", "fc_three", "fc_four", "fc_five", "fc_six", "fc_seven", "fc_eight");
         $courseids = array();
-        $config = get_config('theme_snap');
+        $config = get_config('theme_n2018');
         foreach ($ids as $id) {
             if (!empty($config->$id)) {
                 $courseids[] = $config->$id;

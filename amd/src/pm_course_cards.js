@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
  *
- * @package   theme_snap
+ * @package   theme_n2018
  * @copyright Copyright (c) 2016 Moodlerooms Inc. (http://www.moodlerooms.com)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
@@ -22,9 +22,9 @@
 /**
  * Personal menu course cards.
  */
-define(['jquery', 'core/log', 'core/templates', 'theme_snap/pm_course_favorites',
-    'theme_snap/model_view', 'theme_snap/ajax_notification', 'theme_snap/util',
-    'theme_snap/appear'],
+define(['jquery', 'core/log', 'core/templates', 'theme_n2018/pm_course_favorites',
+    'theme_n2018/model_view', 'theme_n2018/ajax_notification', 'theme_n2018/util',
+    'theme_n2018/appear'],
     function($, log, templates, courseFavorites, mview, ajaxNotify, util, appear) {
 
         var CourseCards = function() {
@@ -34,17 +34,17 @@ define(['jquery', 'core/log', 'core/templates', 'theme_snap/pm_course_favorites'
             /**
              * Apply course information to courses in personal menu.
              *
-             * @param {Array} crsinfo
+             * @param crsinfo
              */
             this.applyCourseInfo = function(crsinfo) {
                 // Pre-load template or it will get loaded multiple times with a detriment on performance.
-                templates.render('theme_snap/course_cards', [])
+                templates.render('theme_n2018/course_cards', [])
                     .done(function() {
                         for (var i in crsinfo) {
                             var info = crsinfo[i];
                             log.debug('applying course data for courseid ' + info.course);
                             var cardEl = $('.coursecard[data-courseid="' + info.course + '"]');
-                            mview(cardEl, 'theme_snap/course_cards');
+                            mview(cardEl, 'theme_n2018/course_cards');
                             $(cardEl).trigger('modelUpdate', info);
                         }
                     });
@@ -52,7 +52,7 @@ define(['jquery', 'core/log', 'core/templates', 'theme_snap/pm_course_favorites'
 
             /**
              * Request courseids.
-             * @param {number[]} courseids
+             * @param courseids[]
              */
             this.reqCourseInfo = function(courseids) {
                 if (courseids.length === 0) {
@@ -60,12 +60,12 @@ define(['jquery', 'core/log', 'core/templates', 'theme_snap/pm_course_favorites'
                 }
                 // Get course info via ajax.
                 var courseiddata = 'courseids=' + courseids.join(',');
-                var courseInfoKey = M.cfg.sesskey + 'coursecard';
+                var courseinfo_key = M.cfg.sesskey + 'coursecard';
                 log.debug("fetching course data");
                 $.ajax({
                     type: "GET",
                     async: true,
-                    url: M.cfg.wwwroot + '/theme/snap/rest.php?action=get_courseinfo&contextid=' + M.cfg.context,
+                    url: M.cfg.wwwroot + '/theme/n2018/rest.php?action=get_courseinfo&contextid=' + M.cfg.context,
                     data: courseiddata,
                     success: function(data) {
                         ajaxNotify.ifErrorShowBestMsg(data).done(function(errorShown) {
@@ -76,7 +76,7 @@ define(['jquery', 'core/log', 'core/templates', 'theme_snap/pm_course_favorites'
                                 if (data.info) {
                                     log.debug('fetched coursedata', data.info);
                                     if (util.supportsSessionStorage()) {
-                                        window.sessionStorage[courseInfoKey] = JSON.stringify(data.info);
+                                        window.sessionStorage[courseinfo_key] = JSON.stringify(data.info);
                                     }
                                     self.applyCourseInfo(data.info);
                                 } else {
@@ -109,7 +109,7 @@ define(['jquery', 'core/log', 'core/templates', 'theme_snap/pm_course_favorites'
                             // We use a fake image element to track the loading of the image so we can insert the
                             // background image once the image is loaded. If we didn't do this then we'd see a flicker
                             // from the course card gradient to the main brand colour before the image loaded.
-                            $('<img src="' + imgurl.trim() + '" />').on('load', function() {
+                            $('<img src="' + imgurl.trim() + '" />').on('load', function(){
                                 $(card).css('background-image', 'url(' + imgurl.trim() + ')');
                             });
                         }
@@ -119,31 +119,27 @@ define(['jquery', 'core/log', 'core/templates', 'theme_snap/pm_course_favorites'
                 /**
                  * Detect when animation is completed.
                  * https://davidwalsh.name/css-animation-callback
-                 * @returns {string}
                  */
                 function whichAnimationEvent() {
                     var t;
                     var el = document.createElement('fakeelement');
-                    var res = 'Animationend';
                     var animations = {
-                        'Animation': 'Animationend',
-                        'OAnimation': 'oAnimationEnd',
-                        'MozAnimation': 'Animationend',
-                        'WebkitAnimation': 'webkitAnimationEnd'
+                        'Animation' : 'Animationend',
+                        'OAnimation' : 'oAnimationEnd',
+                        'MozAnimation' : 'Animationend',
+                        'WebkitAnimation' : 'webkitAnimationEnd'
                     };
 
                     for (t in animations) {
                         if (el.style[t] !== undefined) {
-                            res = animations[t];
-                            break;
+                            return animations[t];
                         }
                     }
-                    return res; // Adding a default return value.
                 }
 
-                // When the course archive navigation elements are clicked we need to force appear to check for
+                // When the course archive navigtation elements are clicked we need to force appear to check for
                 // newly visible course cards.
-                $('#snap-pm-courses .nav-tabs .nav-link').on('click', function() {
+                $('#n2018-pm-courses .nav-tabs .nav-link').on('click', function() {
                     var selector = $(this).attr('href');
                     // Note, appear does not play nicely with CSS animations so we are waiting for the animation to
                     // complete before we force appear to check for newly visible cards.
@@ -153,7 +149,7 @@ define(['jquery', 'core/log', 'core/templates', 'theme_snap/pm_course_favorites'
                 });
 
                 // Appear configuration - start loading images when they are out of the view port by 100px.
-                var appearConf = {appeartopoffset: 100, appearleftoffset: 100};
+                var appearConf = {appeartopoffset : 100, appearleftoffset : 100};
                 $('.coursecard').appear(appearConf);
                 appear.force_appear();
             };
@@ -167,12 +163,12 @@ define(['jquery', 'core/log', 'core/templates', 'theme_snap/pm_course_favorites'
 
                     // Load course information via ajax.
                     var courseIds = self.getCourseIds();
-                    var courseInfoKey = M.cfg.sesskey + 'coursecard';
+                    var courseinfo_key = M.cfg.sesskey + 'coursecard';
                     if (courseIds.length > 0) {
                         self.applyAppearForImages();
                         // OK - lets see if we have grades/progress in session storage.
-                        if (util.supportsSessionStorage() && window.sessionStorage[courseInfoKey]) {
-                            var courseinfo = JSON.parse(window.sessionStorage[courseInfoKey]);
+                        if (util.supportsSessionStorage() && window.sessionStorage[courseinfo_key]) {
+                            var courseinfo = JSON.parse(window.sessionStorage[courseinfo_key]);
                             self.applyCourseInfo(courseinfo);
                         } else {
                             // Only make AJAX request on document ready if the session storage isn't populated.

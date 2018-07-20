@@ -15,13 +15,13 @@
 #
 # Tests for settings link.
 #
-# @package    theme_snap
+# @package    theme_n2018
 # @copyright Copyright (c) 2016 Blackboard Inc. (http://www.blackboard.com)
 # @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
 
 
-@theme @theme_snap
-Feature: When the moodle theme is set to Snap, and global search is enabled, users should see a global search interface.
+@theme @theme_n2018
+Feature: When the moodle theme is set to N2018, and global search is enabled, users should see a global search interface.
 
   Background:
     Given the following config values are set as admin:
@@ -30,7 +30,7 @@ Feature: When the moodle theme is set to Snap, and global search is enabled, use
   @javascript
   Scenario: Non-logged in user sees search interface.
     Given I am on site homepage
-    Then ".snap-login-button" "css_element" should exist
+    Then ".n2018-login-button" "css_element" should exist
     Then ".search-input-form" "css_element" should exist
     And the following config values are set as admin:
         | enableglobalsearch | |

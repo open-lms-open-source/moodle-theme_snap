@@ -15,13 +15,13 @@
 #
 # Tests to make sure admin menu is only shown to relevant people on relevant pages.
 #
-# @package   theme_snap
+# @package   theme_n2018
 # @author    Guy Thomas <gthomas@moodlerooms.com>
 # @copyright Copyright (c) 2016 Blackboard Inc.
 # @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
 
-@theme @theme_snap
-Feature: When the moodle theme is set to Snap, students do not see the course admin menu for 'topics', 'weeks',
+@theme @theme_n2018
+Feature: When the moodle theme is set to N2018, students do not see the course admin menu for 'topics', 'weeks',
   'folderview' and 'singleactivity' - for any other format they do.
   Note, folderview is not a core format and therefore is exculded from the tests.
 

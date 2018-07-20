@@ -14,11 +14,11 @@
 # along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 #
 #
-# @package    theme_snap
+# @package    theme_n2018
 # @copyright Copyright (c) 2015 Moodlerooms Inc. (http://www.moodlerooms.com)
 # @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
 
-@theme @theme_snap
+@theme @theme_n2018
 Feature: When a user clicks on next or previous month link in the calendar block, then
   the page redirects and the calendar block must be visible.
 
@@ -42,7 +42,7 @@ Feature: When a user clicks on next or previous month link in the calendar block
    Then I add the "Calendar" block
    Then I follow "Course Dashboard"
     And I should see "Calendar"
-    And I click on ".arrow_link.next" "css_element"
+    And I follow "Next month"
    Then I should see "Calendar"
 
   @javascript
