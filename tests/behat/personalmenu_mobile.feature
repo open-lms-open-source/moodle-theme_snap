@@ -13,15 +13,15 @@
 # You should have received a copy of the GNU General Public License
 # along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 #
-# Tests for Snap personal menu on mobile devices.
+# Tests for N2018 personal menu on mobile devices.
 #
-# @package    theme_snap
+# @package    theme_n2018
 # @copyright  Copyright (c) 2016 Moodlerooms Inc. (http://www.moodlerooms.com)
 # @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
 
 
-@theme @theme_snap
-Feature: When the moodle theme is set to Snap, students and teachers can open a personal menu which works responsively
+@theme @theme_n2018
+Feature: When the moodle theme is set to N2018, students and teachers can open a personal menu which works responsively
   on mobile devices.
 
   Background:
@@ -54,9 +54,9 @@ Feature: When the moodle theme is set to Snap, students and teachers can open a 
     Then I should see "You have no messages."
     And I follow "Forum posts" in the mobile personal menu
     Then I should see "You have no relevant forum posts."
-    And I click on "#snap-pm-close" "css_element"
+    And I click on "#n2018-pm-close" "css_element"
     And I open the personal menu
-    And I wait until "#snap-pm-mobilemenu" "css_element" is visible
+    And I wait until "#n2018-pm-mobilemenu" "css_element" is visible
 
     Examples:
     | user     | gradealt | gradenotice                       |
@@ -67,20 +67,20 @@ Feature: When the moodle theme is set to Snap, students and teachers can open a 
   Scenario Outline: Mobile menu icons only appear when enabled.
     Given I change window size to "320x480"
     And the following config values are set as admin:
-      | <toggle> | 0 | theme_snap |
+      | <toggle> | 0 | theme_n2018 |
     And I log in as "student1"
     And I open the personal menu
     Then "a[href='<href>']" "css_element" should not exist
     And the following config values are set as admin:
-      | <toggle> | 1 | theme_snap |
+      | <toggle> | 1 | theme_n2018 |
     And I reload the page
     And I open the personal menu
     Then "a[href='<href>']" "css_element" should exist
     Examples:
     | toggle           | href                           |
-    | deadlinestoggle  | #snap-personal-menu-deadlines  |
-    | feedbacktoggle   | #snap-personal-menu-graded     |
-    | messagestoggle   | #snap-personal-menu-messages   |
-    | forumpoststoggle | #snap-personal-menu-forumposts |
+    | deadlinestoggle  | #n2018-personal-menu-deadlines  |
+    | feedbacktoggle   | #n2018-personal-menu-graded     |
+    | messagestoggle   | #n2018-personal-menu-messages   |
+    | forumpoststoggle | #n2018-personal-menu-forumposts |
 
 

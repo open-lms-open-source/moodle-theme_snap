@@ -14,7 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
-namespace theme_snap;
+namespace theme_n2018;
 use core\event\course_updated;
 use core\event\course_deleted;
 use core\event\course_completion_updated;
@@ -31,9 +31,9 @@ defined('MOODLE_INTERNAL') || die();
 /**
  * Event handlers.
  *
- * This class contains all the event handlers used by Snap.
+ * This class contains all the event handlers used by N2018.
  *
- * @package   theme_snap
+ * @package   theme_n2018
  * @copyright Copyright (c) 2015 Moodlerooms Inc. (http://www.moodlerooms.com)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
@@ -65,7 +65,7 @@ class event_handlers {
         global $DB;
 
         $select = ['courseid' => $event->objectid];
-        $DB->delete_records('theme_snap_course_favorites', $select);
+        $DB->delete_records('theme_n2018_course_favorites', $select);
     }
 
     /**
@@ -79,7 +79,7 @@ class event_handlers {
         global $DB;
 
         $select = ['userid' => $event->objectid];
-        $DB->delete_records('theme_snap_course_favorites', $select);
+        $DB->delete_records('theme_n2018_course_favorites', $select);
     }
 
     /**

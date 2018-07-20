@@ -15,7 +15,7 @@
 /**
  * Moodle user profile page.
  *
- * @package   theme_snap
+ * @package   theme_n2018
  * @copyright Copyright (c) 2017 Moodlerooms Inc. (http://www.moodlerooms.com)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
@@ -38,19 +38,19 @@
             padding: 0;
             float: none;
             @include clearfix;
-        }
+         }
 
-        .page-header-headings {
+         .page-header-headings {
             padding-bottom: 0.5em;
-        }
+         }
 
-        .header-button-group {
+         .header-button-group {
             display: inline-block;
 
             .btn {
-                border-color: transparent;
-            }
-        }
+                 border-color: transparent;
+             }
+         }
     }
 
     // Hide button text on small screens.
@@ -75,7 +75,8 @@
         // Profile option lists.
         .profile_tree {
             // Reset core col counts.
-            column-count: 1; // IE doesn't support initial (March 2017).
+            column-count: 1; // IE dosn't support initial (March 2017).
+            column-count: initial;
             @include make-row();
 
             // Make colums for sections.
@@ -96,7 +97,7 @@
                 }
             }
 
-            .node_category {
+            .node_category{
                 // Titles.
                 h3 {
                     @extend h5;
@@ -142,7 +143,7 @@
     .content {
         @include make-col(10);
         .username {
-            padding: 0;
+            padding:0;
         }
         .info {
             font-size: small;

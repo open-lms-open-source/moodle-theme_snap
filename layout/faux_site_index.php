@@ -19,14 +19,14 @@
  * This layout is baed on a moodle site index.php file but has been adapted to show news items in a different
  * way.
  *
- * @package   theme_snap
+ * @package   theme_n2018
  * @copyright Copyright (c) 2015 Moodlerooms Inc. (http://www.moodlerooms.com)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 defined('MOODLE_INTERNAL') || die();
 
-use theme_snap\renderables\featured_courses;
+use theme_n2018\renderables\featured_courses;
 
 if (isloggedin() and !isguestuser() and isset($CFG->frontpageloggedin)) {
     $frontpagelayout = $CFG->frontpageloggedin;
@@ -40,14 +40,14 @@ $CFG->frontpageloggedin = '';
 $lastclosetag = '</div>';
 $maincontent = $OUTPUT->main_content();
 if (substr_compare($maincontent, $lastclosetag, -strlen($lastclosetag)) !== 0) {
-    $message = 'Main content does not have the expected div tag wrapping it, required for Snap Site News.';
+    $message = 'Main content does not have the expected div tag wrapping it, required for N2018 Site News.';
     throw new coding_exception($message);
 }
 
-// Snap feature spots.
+// N2018 feature spots.
 echo $this->feature_spot_cards();
 
-// Snap featured courses.
+// N2018 featured courses.
 echo $OUTPUT->render(new featured_courses());
 
 echo substr($maincontent, 0, -strlen($lastclosetag));
@@ -62,7 +62,7 @@ foreach (explode(',', $frontpagelayout) as $section) {
     switch ($section) {
         case FRONTPAGENEWS:
             if ($SITE->newsitems) { // Print forums only when needed
-                // Snap specific override.
+                // N2018 specific override.
                 echo $OUTPUT->site_frontpage_news();
             }
         break;

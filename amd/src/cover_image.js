@@ -14,22 +14,22 @@
  * You should have received a copy of the GNU General Public License
  * along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
  *
- * @package   theme_snap
+ * @package   theme_n2018
  * @copyright Copyright (c) 2015 Moodlerooms Inc. (http://www.moodlerooms.com)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-define(['jquery', 'core/log', 'core/ajax', 'core/notification', 'theme_snap/ajax_notification'],
+define(['jquery', 'core/log', 'core/ajax', 'core/notification', 'theme_n2018/ajax_notification'],
     function($, log, ajax, notification, ajaxNotify) {
 
         // TODO - in Moodle 3.1 we should use the core template for this.
         var addCoverImageAlert = function(id, msg) {
-            var closestr = M.util.get_string('closebuttontitle', 'moodle');
+            var closestr =  M.util.get_string('closebuttontitle', 'moodle');
             if (!$(id).length) {
-                $('#snap-coverimagecontrol').before(
-                    '<div id="' + id + '" class="snap-alert-cover-image alert alert-warning" role="alert">' +
+                $('#n2018-coverimagecontrol').before(
+                    '<div id="'+id+'" class="n2018-alert-cover-image alert alert-warning" role="alert">' +
                     msg +
-                    '<button type="button" class="close" data-dismiss="alert" aria-label="' + closestr + '">' +
+                    '<button type="button" class="close" data-dismiss="alert" aria-label="'+closestr+'">' +
                     '<span aria-hidden="true">&times;</span>' +
                     '</button>' +
                     '</div>'
@@ -40,35 +40,35 @@ define(['jquery', 'core/log', 'core/ajax', 'core/notification', 'theme_snap/ajax
         /**
          * Get human file size from bytes.
          * http://stackoverflow.com/questions/10420352/converting-file-size-in-bytes-to-human-readable.
-         * @param {int} size
+         * @param size
          * @returns {string}
          */
         var humanFileSize = function(size) {
-            var i = Math.floor(Math.log(size) / Math.log(1024));
-            return (size / Math.pow(1024, i)).toFixed(2) * 1 + ' ' + ['B', 'kB', 'MB', 'GB', 'TB'][i];
+            var i = Math.floor( Math.log(size) / Math.log(1024) );
+            return ( size / Math.pow(1024, i) ).toFixed(2) * 1 + ' ' + ['B', 'kB', 'MB', 'GB', 'TB'][i];
         };
 
         /**
          * First state - image selection button visible.
          */
         var state1 = function() {
-            $('#snap-changecoverimageconfirmation .ok').removeClass('ajaxing');
-            $('#snap-alert-cover-image-size').remove();
-            $('#snap-alert-cover-image-bytes').remove();
-            $('label[for="snap-coverfiles"]').removeClass('ajaxing');
-            $('#snap-changecoverimageconfirmation').removeClass('state-visible');
-            $('label[for="snap-coverfiles"]').addClass('state-visible');
-            $('#snap-coverfiles').val('');
+            $('#n2018-changecoverimageconfirmation .ok').removeClass('ajaxing');
+            $('#n2018-alert-cover-image-size').remove();
+            $('#n2018-alert-cover-image-bytes').remove();
+            $('label[for="n2018-coverfiles"]').removeClass('ajaxing');
+            $('#n2018-changecoverimageconfirmation').removeClass('state-visible');
+            $('label[for="n2018-coverfiles"]').addClass('state-visible');
+            $('#n2018-coverfiles').val('');
         };
 
         /**
          * Second state - confirm / cancel buttons visible.
          */
         var state2 = function() {
-            $('#snap-alert-cover-image-upload-failed').remove();
-            $('#snap-changecoverimageconfirmation').removeClass('disabled');
-            $('label[for="snap-coverfiles"]').removeClass('state-visible');
-            $('#snap-changecoverimageconfirmation').addClass('state-visible');
+            $('#n2018-alert-cover-image-upload-failed').remove();
+            $('#n2018-changecoverimageconfirmation').removeClass('disabled');
+            $('label[for="n2018-coverfiles"]').removeClass('state-visible');
+            $('#n2018-changecoverimageconfirmation').addClass('state-visible');
             $('body').removeClass('cover-image-change');
         };
 
@@ -84,13 +84,13 @@ define(['jquery', 'core/log', 'core/ajax', 'core/notification', 'theme_snap/ajax
             $('#changecoverimage').click(function(e) {
                 e.preventDefault();
                 $(this).removeClass('state-visible');
-                $('label[for="snap-coverfiles"]').addClass('state-visible');
+                $('label[for="n2018-coverfiles"]').addClass('state-visible');
             });
 
             var file,
                 filedata;
 
-            $('#snap-coverfiles').on('change', function(e) {
+            $('#n2018-coverfiles').on('change', function(e) {
                 $('body').addClass('cover-image-change');
                 var files = e.target.files; // FileList object
                 if (!files.length) {
@@ -106,7 +106,7 @@ define(['jquery', 'core/log', 'core/ajax', 'core/notification', 'theme_snap/ajax
 
                 var reader = new FileReader();
 
-                $('label[for="snap-coverfiles"]').addClass('ajaxing');
+                $('label[for="n2018-coverfiles"]').addClass('ajaxing');
 
                 // Closure to capture the file information.
                 reader.onload = (function(theFile) {
@@ -117,7 +117,6 @@ define(['jquery', 'core/log', 'core/ajax', 'core/notification', 'theme_snap/ajax
 
                         // Ensure that the page-header in courses has the mast-image class.
                         $('.path-course-view #page-header').addClass('mast-image');
-                        $('.path-course-view #page-header .breadcrumb-item a').addClass('mast-breadcrumb');
 
                         // Warn if image file size exceeds max upload size.
                         // Note: The site max bytes is intentional, as the person who can do the upload would be able to
@@ -127,11 +126,11 @@ define(['jquery', 'core/log', 'core/ajax', 'core/notification', 'theme_snap/ajax
                             // Go back to initial state and show warning about image file size.
                             state1();
                             var maxbytesstr = humanFileSize(maxbytes);
-                            var message = M.util.get_string('error:coverimageexceedsmaxbytes', 'theme_snap', maxbytesstr);
-                            addCoverImageAlert('snap-alert-cover-image-bytes', message);
+                            var message = M.util.get_string('error:coverimageexceedsmaxbytes', 'theme_n2018', maxbytesstr);
+                            addCoverImageAlert('n2018-alert-cover-image-bytes', message);
                             return;
                         } else {
-                            $('#snap-alert-cover-image-bytes').remove();
+                            $('#n2018-alert-cover-image-bytes').remove();
                         }
 
                         // Warn if image resolution is too small.
@@ -140,11 +139,11 @@ define(['jquery', 'core/log', 'core/ajax', 'core/notification', 'theme_snap/ajax
                         img.src = filedata;
                         $(img).on('load', function() {
                             if (img.width < 1024) {
-                                addCoverImageAlert('snap-alert-cover-image-size',
-                                    M.util.get_string('error:coverimageresolutionlow', 'theme_snap')
+                                addCoverImageAlert('n2018-alert-cover-image-size',
+                                    M.util.get_string('error:coverimageresolutionlow', 'theme_n2018')
                                 );
                             } else {
-                                $('#snap-alert-cover-image-size').remove();
+                                $('#n2018-alert-cover-image-size').remove();
                             }
                         });
 
@@ -159,17 +158,17 @@ define(['jquery', 'core/log', 'core/ajax', 'core/notification', 'theme_snap/ajax
                 reader.readAsDataURL(file);
 
             });
-            $('#snap-changecoverimageconfirmation .ok').click(function() {
+            $('#n2018-changecoverimageconfirmation .ok').click(function(){
 
                 if ($(this).parent().hasClass('disabled')) {
                     return;
                 }
 
-                $('#snap-alert-cover-image-size').remove();
-                $('#snap-alert-cover-image-bytes').remove();
+                $('#n2018-alert-cover-image-size').remove();
+                $('#n2018-alert-cover-image-bytes').remove();
 
-                $('#snap-changecoverimageconfirmation .ok').addClass('ajaxing');
-                $('#snap-changecoverimageconfirmation').addClass('disabled');
+                $('#n2018-changecoverimageconfirmation .ok').addClass('ajaxing');
+                $('#n2018-changecoverimageconfirmation').addClass('disabled');
 
                 var imageData = filedata.split('base64,')[1];
 
@@ -178,12 +177,12 @@ define(['jquery', 'core/log', 'core/ajax', 'core/notification', 'theme_snap/ajax
 
                 ajax.call([
                     {
-                        methodname: 'theme_snap_cover_image',
+                        methodname: 'theme_n2018_cover_image',
                         args: {params: ajaxParams},
                         done: function(response) {
                             state1();
                             if (!response.success && response.warning) {
-                                addCoverImageAlert('snap-alert-cover-image-upload-failed', response.warning);
+                                addCoverImageAlert('n2018-alert-cover-image-upload-failed', response.warning);
                             }
                         },
                         fail: function(response) {
@@ -193,7 +192,7 @@ define(['jquery', 'core/log', 'core/ajax', 'core/notification', 'theme_snap/ajax
                     }
                 ], true, true);
             });
-            $('#snap-changecoverimageconfirmation .cancel').click(function() {
+            $('#n2018-changecoverimageconfirmation .cancel').click(function(){
 
                 if ($(this).parent().hasClass('disabled')) {
                     return;
@@ -202,7 +201,7 @@ define(['jquery', 'core/log', 'core/ajax', 'core/notification', 'theme_snap/ajax
                 $('#page-header').css('background-image', $('#page-header').data('servercoverfile'));
                 state1();
             });
-            $('#snap-coverimagecontrol').addClass('snap-js-enabled');
+            $('#n2018-coverimagecontrol').addClass('n2018-js-enabled');
         };
 
         var categoryCoverImage = function(categoryId, siteMaxBytes) {
@@ -215,7 +214,6 @@ define(['jquery', 'core/log', 'core/ajax', 'core/notification', 'theme_snap/ajax
         /**
          * Main function
          * @param {string} courseShortName
-         * @param {int} siteMaxBytes
          */
         var courseCoverImage = function(courseShortName, siteMaxBytes) {
             var ajaxParams = {imagefilename: null, imagedata: null, categoryid: null,

@@ -14,13 +14,13 @@
  * You should have received a copy of the GNU General Public License
  * along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
  *
- * @package   theme_snap
+ * @package   theme_n2018
  * @copyright Copyright (c) 2015 Moodlerooms Inc. (http://www.moodlerooms.com)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 define(['jquery', 'core/log', 'core/ajax', 'core/str', 'core/templates', 'core/notification',
-    'theme_snap/util', 'theme_snap/ajax_notification', 'theme_snap/footer_alert'],
+    'theme_n2018/util', 'theme_n2018/ajax_notification', 'theme_n2018/footer_alert'],
     function($, log, ajax, str, templates, notification, util, ajaxNotify, footerAlert) {
 
     return {
@@ -58,11 +58,10 @@ define(['jquery', 'core/log', 'core/ajax', 'core/str', 'core/templates', 'core/n
                  * @param {string} jsPendingKey
                  * @param {domElement} trigger
                  * @param {string} subSelector
-                 * @returns {boolean}
                  */
                 this.start = function(jsPendingKey, trigger, subSelector) {
                     if (this.ajaxing(jsPendingKey)) {
-                        log.debug('Skipping ajax request for ' + jsPendingKey + ', AJAX already in progress');
+                        log.debug('Skipping ajax request for '+jsPendingKey+', AJAX already in progress');
                         return false;
                     }
                     M.util.js_pending(jsPendingKey);
@@ -79,7 +78,7 @@ define(['jquery', 'core/log', 'core/ajax', 'core/str', 'core/templates', 'core/n
 
                 /**
                  * Is there an AJAX request in progress.
-                 * @param {string} jsPendingKey
+                 * @param jsPendingKey
                  * @returns {boolean}
                  */
                 this.ajaxing = function(jsPendingKey) {
@@ -88,13 +87,11 @@ define(['jquery', 'core/log', 'core/ajax', 'core/str', 'core/templates', 'core/n
 
                 /**
                  * Completes tracking.
-                 * @param {string} jsPendingKey
                  */
                 this.complete = function(jsPendingKey) {
-                    var trigger, subSelector;
                     if (triggersByKey[jsPendingKey]) {
-                        trigger = triggersByKey[jsPendingKey].trigger;
-                        subSelector = triggersByKey[jsPendingKey].subSelector;
+                        var trigger = triggersByKey[jsPendingKey].trigger,
+                            subSelector = triggersByKey[jsPendingKey].subSelector;
                     }
                     if (trigger) {
                         if (subSelector) {
@@ -113,7 +110,7 @@ define(['jquery', 'core/log', 'core/ajax', 'core/str', 'core/templates', 'core/n
             /**
              * Get the section number from a section element.
              * @param {jQuery|object} el
-             * @returns {number}
+             * @return {integer}
              */
             var sectionNumber = function(el) {
                 return (parseInt($(el).attr('id').replace('section-', '')));
@@ -122,7 +119,6 @@ define(['jquery', 'core/log', 'core/ajax', 'core/str', 'core/templates', 'core/n
             /**
              * Get the section number for an element within a section.
              * @param {object} el
-             * @returns {number}
              */
             var parentSectionNumber = function(el) {
                 return sectionNumber($(el).parents('li.section.main')[0]);
@@ -132,13 +128,13 @@ define(['jquery', 'core/log', 'core/ajax', 'core/str', 'core/templates', 'core/n
              * Moving has stopped, clean up.
              */
             var stopMoving = function() {
-                $('body').removeClass('snap-move-inprogress');
-                $('body').removeClass('snap-move-section');
-                $('body').removeClass('snap-move-asset');
+                $('body').removeClass('n2018-move-inprogress');
+                $('body').removeClass('n2018-move-section');
+                $('body').removeClass('n2018-move-asset');
                 footerAlert.hideAndReset();
                 $('.section-moving').removeClass('section-moving');
                 $('.asset-moving').removeClass('asset-moving');
-                $('.js-snap-asset-move').removeAttr('checked');
+                $('.js-n2018-asset-move').removeAttr('checked');
                 movingObjects = [];
             };
 
@@ -149,7 +145,7 @@ define(['jquery', 'core/log', 'core/ajax', 'core/str', 'core/templates', 'core/n
                 var actname = $(movingObject).find('.instancename').html();
 
                 footerAlert.removeAjaxLoading();
-                footerAlert.setTitle(M.util.get_string('movefailed', 'theme_snap', actname));
+                footerAlert.setTitle(M.util.get_string('movefailed', 'theme_n2018', actname));
                 // Stop moving in 2 seconds so that the user has time to see the failed moving notice.
                 window.setTimeout(function() {
                     // Don't pass in target, we want to abort the move!
@@ -163,11 +159,12 @@ define(['jquery', 'core/log', 'core/ajax', 'core/str', 'core/templates', 'core/n
             var updateMovingMessage = function() {
                 var title;
                 if (movingObjects.length === 1) {
-                    var assetname = $(movingObjects[0]).find('.snap-asset-link .instancename').html();
-                    assetname = assetname || M.util.get_string('pluginname', 'label', assetname);
-                    title = M.util.get_string('moving', 'theme_snap', assetname);
+                    var assetname = $(movingObjects[0]).find('.n2018-asset-link .instancename').html();
+                    assetname = assetname || M.str.label.pluginname;
+                    title = M.util.get_string('moving', 'theme_n2018', assetname);
+
                 } else {
-                    title = M.util.get_string('movingcount', 'theme_snap', movingObjects.length);
+                    title = M.util.get_string('movingcount', 'theme_n2018', movingObjects.length);
                 }
                 footerAlert.setTitle(title);
             };
@@ -188,8 +185,8 @@ define(['jquery', 'core/log', 'core/ajax', 'core/str', 'core/templates', 'core/n
              * General move request
              *
              * @param {object}   params
-             * @param {function} onSuccess
-             * @param {bool}     finalItem
+             * @param {function} onsuccess
+             * @param {bool}     finaltime
              */
             var ajaxReqMoveGeneral = function(params, onSuccess, finalItem) {
                 if (ajaxing) {
@@ -305,7 +302,7 @@ define(['jquery', 'core/log', 'core/ajax', 'core/str', 'core/templates', 'core/n
                         previous: previous,
                         next: next
                     };
-                    templates.render('theme_snap/course_section_navigation', navigation)
+                    templates.render('theme_n2018/course_section_navigation', navigation)
                         .done(function(result) {
                             $('#section-' + sectionNum + ' .section_footer').replaceWith(result);
                             completed++;
@@ -333,8 +330,6 @@ define(['jquery', 'core/log', 'core/ajax', 'core/str', 'core/templates', 'core/n
                     // for weekly topic courses where the section title needs to stay the
                     // same as the TOC.
                     $('#section-' + idx + ' .content .sectionname').html(chapterTitle);
-                    // Update section data attribute to reflect new section idx.
-                    $(this).find('a.section-modchooser-link').attr('data-section', idx);
                 });
 
                 updateSectionNavigation();
@@ -361,7 +356,7 @@ define(['jquery', 'core/log', 'core/ajax', 'core/str', 'core/templates', 'core/n
                         return;
                     }
 
-                    var delProgress = M.util.get_string('deletingsection', 'theme_snap', sectionName);
+                    var delProgress = M.util.get_string('deletingsection', 'theme_n2018', sectionName);
 
                     footerAlert.setTitle(delProgress);
                     footerAlert.addAjaxLoading('');
@@ -379,7 +374,7 @@ define(['jquery', 'core/log', 'core/ajax', 'core/str', 'core/templates', 'core/n
                     // Make ajax call.
                     var ajaxPromises = ajax.call([
                         {
-                            methodname: 'theme_snap_course_sections',
+                            methodname: 'theme_n2018_course_sections',
                             args: params
                         }
                     ], true, true);
@@ -388,10 +383,10 @@ define(['jquery', 'core/log', 'core/ajax', 'core/str', 'core/templates', 'core/n
                     ajaxPromises[0]
                         .done(function(response) {
                             // Update TOC.
-                            templates.render('theme_snap/course_toc', response.toc)
+                            templates.render('theme_n2018/course_toc', response.toc)
                                 .done(function(result) {
                                     $('#course-toc').html($(result).html());
-                                    $(document).trigger('snapTOCReplaced');
+                                    $(document).trigger('n2018TOCReplaced');
                                     // Remove section from DOM.
                                     section.remove();
                                     updateSections();
@@ -423,7 +418,7 @@ define(['jquery', 'core/log', 'core/ajax', 'core/str', 'core/templates', 'core/n
 
                 var delTitle = M.util.get_string('confirm', 'moodle');
                 var delConf = M.util.get_string('confirmdeletesection', 'moodle', sectionName);
-                var ok = M.util.get_string('deletesectionconfirm', 'theme_snap');
+                var ok = M.util.get_string('deletesectionconfirm', 'theme_n2018');
                 var cancel = M.util.get_string('cancel', 'moodle');
                 notification.confirm(delTitle, delConf, ok, cancel, doDelete);
             };
@@ -436,7 +431,7 @@ define(['jquery', 'core/log', 'core/ajax', 'core/str', 'core/templates', 'core/n
             var assetAction = function(e, triggerEl) {
                 e.preventDefault();
 
-                var assetEl = $($(triggerEl).parents('.snap-asset')[0]),
+                var assetEl = $($(triggerEl).parents('.n2018-asset')[0]),
                     cmid = Number(assetEl[0].id.replace('module-', '')),
                     instanceName = assetEl.find('.instancename').text().trim(),
                     action = $(triggerEl).data('action'),
@@ -453,15 +448,15 @@ define(['jquery', 'core/log', 'core/ajax', 'core/str', 'core/templates', 'core/n
                 }
 
                 var actionAJAX = function() {
-                    if (!ajaxTracker.start(jsPendingKey, assetEl, '.snap-edit-asset-more')) {
+                    if (!ajaxTracker.start(jsPendingKey, assetEl, '.n2018-edit-asset-more')) {
                         // Request already made.
                         return;
                     }
 
                     var params = {
-                        'action': action,
-                        'sectionreturn': 0,
-                        'id': cmid
+                        'action' : action,
+                        'sectionreturn' : 0,
+                        'id' : cmid
                     };
 
                     ajax.call([
@@ -507,7 +502,7 @@ define(['jquery', 'core/log', 'core/ajax', 'core/str', 'core/templates', 'core/n
                  * Get error strings incase of AJAX failure.
                  * @returns {*|Promise}
                  */
-                var getErrorStrings = function() {
+                var get_error_strings = function() {
                     if (action === 'duplicate') {
                         errActionKey = 'action:duplicateasset';
                         errMessageKey = 'error:failedtoduplicateasset';
@@ -519,12 +514,12 @@ define(['jquery', 'core/log', 'core/ajax', 'core/str', 'core/templates', 'core/n
                         errMessageKey = 'error:failedtodeleteasset';
                     }
                     return str.get_strings([
-                        {key: errActionKey, component: 'theme_snap'},
-                        {key: errMessageKey, component: 'theme_snap'}
+                        {key: errActionKey, component: 'theme_n2018'},
+                        {key: errMessageKey, component: 'theme_n2018'}
                     ]);
                 };
 
-                getErrorStrings().then(function(strings) {
+                get_error_strings().then(function(strings) {
                     errAction = strings[0];
                     errMessage = strings[0];
                     if (action === 'delete') {
@@ -541,7 +536,7 @@ define(['jquery', 'core/log', 'core/ajax', 'core/str', 'core/templates', 'core/n
                         }
 
                         var delTitle = M.util.get_string('confirm', 'moodle');
-                        var ok = M.util.get_string('deleteassetconfirm', 'theme_snap', plugindata.type);
+                        var ok = M.util.get_string('deleteassetconfirm', 'theme_n2018', plugindata.type);
                         var cancel = M.util.get_string('cancel', 'moodle');
                         notification.confirm(delTitle, delConf, ok, cancel, actionAJAX);
                     } else {
@@ -568,7 +563,7 @@ define(['jquery', 'core/log', 'core/ajax', 'core/str', 'core/templates', 'core/n
 
                 params.id = Number(movingObject.id.replace('module-', ''));
 
-                if (target && !$(target).hasClass('snap-drop')) {
+                if (target && !$(target).hasClass('n2018-drop')) {
                     params.beforeId = Number($(target)[0].id.replace('module-', ''));
                 } else {
                     params.beforeId = 0;
@@ -620,13 +615,13 @@ define(['jquery', 'core/log', 'core/ajax', 'core/str', 'core/templates', 'core/n
                     // Update TOC chapters.
                     ajax.call([
                         {
-                            methodname: 'theme_snap_course_toc_chapters',
+                            methodname: 'theme_n2018_course_toc_chapters',
                             args: {
                                 courseshortname: courseLib.courseConfig.shortname
                             },
                             done: function(response) {
                                 // Update TOC.
-                                templates.render('theme_snap/course_toc_chapters', response.chapters)
+                                templates.render('theme_n2018/course_toc_chapters', response.chapters)
                                     .done(function(result) {
                                         // Update chapters.
                                         $('#chapters').replaceWith(result);
@@ -659,10 +654,10 @@ define(['jquery', 'core/log', 'core/ajax', 'core/str', 'core/templates', 'core/n
              * Listen for edit action clicks, hide, show, duplicate, etc..
              */
             var assetEditListeners = function() {
-                var actionSelectors = '.snap-asset-actions .js_snap_hide, ';
-                actionSelectors += '.snap-asset-actions .js_snap_show, ';
-                actionSelectors += '.snap-asset-actions .js_snap_delete, ';
-                actionSelectors += '.snap-asset-actions .js_snap_duplicate';
+                var actionSelectors = '.n2018-asset-actions .js_n2018_hide, ';
+                actionSelectors += '.n2018-asset-actions .js_n2018_show, ';
+                actionSelectors += '.n2018-asset-actions .js_n2018_delete, ';
+                actionSelectors += '.n2018-asset-actions .js_n2018_duplicate';
 
                 $(document).on('click', actionSelectors, function(e) {
                     assetAction(e, this);
@@ -673,11 +668,11 @@ define(['jquery', 'core/log', 'core/ajax', 'core/str', 'core/templates', 'core/n
              * Generic section action handler.
              *
              * @param {string} action visibility, highlight
-             * @param {null|function} onComplete for when completed.
+             * @param {null|function} callback for when completed.
              */
             var sectionActionListener = function(action, onComplete) {
 
-                $('#region-main').on('click', '.snap-section-editing.actions .snap-' + action, function(e) {
+                $('#region-main').on('click', '.n2018-section-editing.actions .n2018-' + action, function(e) {
 
                     e.stopPropagation();
                     e.preventDefault();
@@ -706,23 +701,22 @@ define(['jquery', 'core/log', 'core/ajax', 'core/str', 'core/templates', 'core/n
                     }
 
                     // For toggling visibility.
-                    var toggle;
-                    if (action === 'visibility') {
-                        toggle = $(this).hasClass('snap-hide') ? 0 : 1;
+                    if(action === 'visibility') {
+                        var toggle = $(this).hasClass('n2018-hide') ? 0 : 1;
                     } else {
                         // For toggling highlight/mark as current.
-                        toggle = $(this).attr('aria-pressed') === 'true' ? 0 : 1;
+                        var toggle = $(this).attr('aria-pressed') === 'true' ? 0 : 1;
                     }
 
                     var sectionNumber = parentSectionNumber(this);
-                    var sectionActionsSelector = '#section-' + sectionNumber + ' .snap-section-editing';
-                    var actionSelector = sectionActionsSelector + ' .snap-' + action;
+                    var sectionActionsSelector = '#section-' + sectionNumber + ' .n2018-section-editing';
+                    var actionSelector = sectionActionsSelector + ' .n2018-' + action;
 
 
                     // Make ajax call.
                     var ajaxPromises = ajax.call([
                         {
-                            methodname: 'theme_snap_course_sections',
+                            methodname: 'theme_n2018_course_sections',
                             args: {
                                 courseshortname: courseLib.courseConfig.shortname,
                                 action: action,
@@ -737,11 +731,11 @@ define(['jquery', 'core/log', 'core/ajax', 'core/str', 'core/templates', 'core/n
                     .fail(function(response) {
                         var errMessage, errAction;
                         if (action === 'visibility') {
-                            errMessage = M.util.get_string('error:failedtochangesectionvisibility', 'theme_snap');
-                            errAction = M.util.get_string('action:changesectionvisibility', 'theme_snap');
+                            errMessage = M.util.get_string('error:failedtochangesectionvisibility', 'theme_n2018');
+                            errAction = M.util.get_string('action:changesectionvisibility', 'theme_n2018');
                         } else {
-                            errMessage = M.util.get_string('error:failedtohighlightsection', 'theme_snap');
-                            errAction = M.util.get_string('action:highlightsectionvisibility', 'theme_snap');
+                            errMessage = M.util.get_string('error:failedtohighlightsection', 'theme_n2018');
+                            errAction = M.util.get_string('action:highlightsectionvisibility', 'theme_n2018');
                         }
                         ajaxNotify.ifErrorShowBestMsg(response, errAction, errMessage).done(function() {
                             // Allow another request now this has finished.
@@ -751,18 +745,18 @@ define(['jquery', 'core/log', 'core/ajax', 'core/str', 'core/templates', 'core/n
                         $(trigger).removeClass('ajaxing');
                     }).done(function(response) {
                         // Update section action and then reload TOC.
-                        return templates.render('theme_snap/course_action_section', response.actionmodel)
+                        return templates.render('theme_n2018/course_action_section', response.actionmodel)
                         .then(function(result) {
                             $(actionSelector).replaceWith(result);
                             $(actionSelector).focus();
                             // Update TOC.
-                            return templates.render('theme_snap/course_toc', response.toc);
+                            return templates.render('theme_n2018/course_toc', response.toc);
                         }).then(function(result) {
                             $('#course-toc').html($(result).html());
-                            $(document).trigger('snapTOCReplaced');
-                            if (onComplete && typeof (onComplete) === 'function') {
+                            $(document).trigger('n2018TOCReplaced');
+                            if (onComplete && typeof(onComplete) === 'function') {
                                 var completion = onComplete(sectionNumber, toggle);
-                                if (completion && typeof (completion.always) === 'function') {
+                                if (completion && typeof(completion.always) === 'function') {
                                     // Callback returns a promise, js no longer running.
                                     completion.always(
                                         function() {
@@ -797,9 +791,9 @@ define(['jquery', 'core/log', 'core/ajax', 'core/str', 'core/templates', 'core/n
                     .not('#section-0').removeClass("current");
 
                     $notCurrent.each(function() {
-                        var highlighter = $(this).find('.snap-highlight');
+                        var highlighter = $(this).find('.n2018-highlight');
                         var sectionNumber = parentSectionNumber(highlighter);
-                        var newLink = $(highlighter).attr('href').replace(/(marker=)[0-9]+/ig, '$1' + sectionNumber);
+                        var newLink = $(highlighter).attr('href').replace(/(marker=)[0-9]+/ig, '$1' +sectionNumber);
                         $(highlighter).attr('href', newLink).attr('aria-pressed', 'false');
                     });
                 });
@@ -809,7 +803,7 @@ define(['jquery', 'core/log', 'core/ajax', 'core/str', 'core/templates', 'core/n
              * Delete section on click.
              */
             var deleteSectionListener = function() {
-                $(document).on('click', '.snap-section-editing.actions .snap-delete', function(e) {
+                $(document).on('click', '.n2018-section-editing.actions .n2018-delete', function(e) {
                     sectionDelete(e, this);
                 });
             };
@@ -820,9 +814,9 @@ define(['jquery', 'core/log', 'core/ajax', 'core/str', 'core/templates', 'core/n
             var toggleSectionListener = function() {
                 /**
                  * Toggle hidden class and update section navigation.
-                 * @param {number} sectionNumber
-                 * @param {boolean} toggle
-                 * @returns {Promise}
+                 * @param sectionNumber
+                 * @param toggle
+                 * @returns {promise}
                  */
                 var manageHiddenClass = function(sectionNumber, toggle) {
                     if (toggle === 0) {
@@ -838,6 +832,7 @@ define(['jquery', 'core/log', 'core/ajax', 'core/str', 'core/templates', 'core/n
                     ];
                     var selector = selectors.join(',');
                     return updateSectionNavigation(selector);
+
                 };
                 sectionActionListener('visibility', manageHiddenClass);
             };
@@ -857,11 +852,11 @@ define(['jquery', 'core/log', 'core/ajax', 'core/str', 'core/templates', 'core/n
              */
             var moveSectionListener = function() {
                 // Listen clicks on move links.
-                $("#region-main").on('click', '.snap-section-editing.actions .snap-move', function(e) {
+                $("#region-main").on('click', '.n2018-section-editing.actions .n2018-move', function(e) {
                     e.stopPropagation();
                     e.preventDefault();
 
-                    $('body').addClass('snap-move-inprogress');
+                    $('body').addClass('n2018-move-inprogress');
                     footerAlertShowMove();
 
                     // Moving a section.
@@ -877,19 +872,19 @@ define(['jquery', 'core/log', 'core/ajax', 'core/str', 'core/templates', 'core/n
                     $('.section-moving').removeClass('section-moving');
                     section.addClass('section-moving');
                     $('a[href="#section-' + sectionNumber + '"]').parent('li').addClass('section-moving');
-                    $('body').addClass('snap-move-section');
+                    $('body').addClass('n2018-move-section');
 
-                    var title = M.util.get_string('moving', 'theme_snap', sectionName);
+                    var title = M.util.get_string('moving', 'theme_n2018', sectionName);
                     footerAlert.setTitle(title);
 
                     $('.section-drop').each(function() {
-                        var sectionDropMsg = M.util.get_string('movingdropsectionhelp', 'theme_snap',
+                        var sectionDropMsg = M.util.get_string('movingdropsectionhelp', 'theme_n2018',
                             {moving: sectionName, before: $(this).data('title')}
                         );
                         $(this).html(sectionDropMsg);
                     });
 
-                    footerAlert.setSrNotice(M.util.get_string('movingstartedhelp', 'theme_snap', sectionName));
+                    footerAlert.setSrNotice(M.util.get_string('movingstartedhelp', 'theme_n2018', sectionName));
                 });
             };
 
@@ -899,19 +894,19 @@ define(['jquery', 'core/log', 'core/ajax', 'core/str', 'core/templates', 'core/n
             var addAfterDrops = function() {
                 if (document.body.id === "page-site-index") {
                     $('#region-main .sitetopic ul.section').append(
-                        '<li class="snap-drop asset-drop">' +
+                        '<li class="n2018-drop asset-drop">' +
                         '<div class="asset-wrapper">' +
                         '<a href="#">' +
-                        M.util.get_string('movehere', 'theme_snap') +
+                        M.util.get_string('movehere', 'theme_n2018') +
                         '</a>' +
                         '</div>' +
                         '</li>');
                 } else {
                     $('li.section .content ul.section').append(
-                        '<li class="snap-drop asset-drop">' +
+                        '<li class="n2018-drop asset-drop">' +
                         '<div class="asset-wrapper">' +
                         '<a href="#">' +
-                        M.util.get_string('movehere', 'theme_snap') +
+                        M.util.get_string('movehere', 'theme_n2018') +
                         '</a>' +
                         '</div>' +
                         '</li>');
@@ -922,25 +917,25 @@ define(['jquery', 'core/log', 'core/ajax', 'core/str', 'core/templates', 'core/n
              * Add listener for move checkbox.
              */
             var assetMoveListener = function() {
-                $("#region-main").on('change', '.js-snap-asset-move', function(e) {
+                $("#region-main").on('change', '.js-n2018-asset-move', function(e) {
                     e.stopPropagation();
 
-                    var asset = $(this).parents('.snap-asset')[0];
+                    var asset = $(this).parents('.n2018-asset')[0];
 
                     // Make sure after drop is at the end of section.
                     var section = $(asset).parents('ul.section')[0];
-                    var afterdrop = $(section).find('li.snap-drop.asset-drop');
+                    var afterdrop = $(section).find('li.n2018-drop.asset-drop');
                     $(section).append(afterdrop);
 
                     if (movingObjects.length === 0) {
                         // Moving asset - activity or resource.
                         // Initiate move.
-                        var assetname = $(asset).find('.snap-asset-link .instancename').html();
+                        var assetname = $(asset).find('.n2018-asset-link .instancename').html();
 
                         log.debug('Moving this asset', assetname);
 
                         var classes = $(asset).attr('class'),
-                            regex = /(?=snap-mime)([a-z0-9\-]*)/;
+                            regex = /(?=n2018-mime)([a-z0-9\-]*)/;
                         var assetclasses = regex.exec(classes);
                         classes = '';
                         if (assetclasses) {
@@ -948,10 +943,10 @@ define(['jquery', 'core/log', 'core/ajax', 'core/str', 'core/templates', 'core/n
                         }
                         log.debug('Moving this class', classes);
                         $(asset).addClass('asset-moving');
-                        $(asset).find('.js-snap-asset-move').prop('checked', 'checked');
+                        $(asset).find('.js-n2018-asset-move').prop('checked', 'checked');
 
-                        $('body').addClass('snap-move-inprogress');
-                        $('body').addClass('snap-move-asset');
+                        $('body').addClass('n2018-move-inprogress');
+                        $('body').addClass('n2018-move-asset');
                     }
 
                     if ($(this).prop('checked')) {
@@ -977,19 +972,19 @@ define(['jquery', 'core/log', 'core/ajax', 'core/str', 'core/templates', 'core/n
              * When an asset or drop zone is clicked, execute move.
              */
             var movePlaceListener = function() {
-                $(document).on('click', '.snap-move-note, .snap-drop', function(e) {
-                    log.debug('Snap drop clicked', e);
+                $(document).on('click', '.n2018-move-note, .n2018-drop', function(e) {
+                    log.debug('N2018 drop clicked', e);
                     if (movingObjects) {
                         e.stopPropagation();
                         e.preventDefault();
-                        if ($('body').hasClass('snap-move-section')) {
+                        if ($('body').hasClass('n2018-move-section')) {
                             ajaxReqMoveSection(this);
                         } else {
                             var target;
-                            if ($(this).hasClass('snap-drop')) {
+                            if ($(this).hasClass('n2018-drop')) {
                                 target = this;
                             } else {
-                                target = $(this).closest('.snap-asset');
+                                target = $(this).closest('.n2018-asset');
                             }
                             ajaxReqMoveAsset(target);
                         }
@@ -1009,7 +1004,7 @@ define(['jquery', 'core/log', 'core/ajax', 'core/str', 'core/templates', 'core/n
                 movePlaceListener();
                 assetEditListeners();
                 addAfterDrops();
-                $('body').addClass('snap-course-listening');
+                $('body').addClass('n2018-course-listening');
             };
 
             /**
@@ -1018,11 +1013,9 @@ define(['jquery', 'core/log', 'core/ajax', 'core/str', 'core/templates', 'core/n
             var overrideCore = function() {
                 // Check M.course exists (doesn't exist in social format).
                 if (M.course && M.course.resource_toolbox) {
-                    /* eslint-disable camelcase */
                     M.course.resource_toolbox.handle_resource_dim = function(button, activity, action) {
                         return (action === 'hide') ? 0 : 1;
                     };
-                    /* eslint-enable camelcase */
                 }
             };
 

@@ -21,7 +21,7 @@
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-namespace theme_snap\renderables;
+namespace theme_n2018\renderables;
 use context_course;
 use section_info;
 
@@ -32,7 +32,7 @@ class course_action_section_visibility extends course_action_section_base {
     /**
      * @var string
      */
-    public $class = 'snap-visibility';
+    public $class = 'n2018-visibility';
 
     public function __construct($course, section_info $section, $onsectionpage = false) {
 
@@ -51,12 +51,12 @@ class course_action_section_visibility extends course_action_section_base {
                 $this->title = get_string('hidefromothers', 'format_'.$course->format);
                 $url->param('hide', $section->section);
                 $this->url = $url;
-                $this->class .= ' snap-hide';
+                $this->class .= ' n2018-hide';
             } else {
                 $this->title = get_string('showfromothers', 'format_'.$course->format);
                 $url->param('show',  $section->section);
                 $this->url = $url;
-                $this->class .= ' snap-show';
+                $this->class .= ' n2018-show';
             }
         }
     }

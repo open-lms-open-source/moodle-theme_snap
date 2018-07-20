@@ -14,15 +14,15 @@
  * You should have received a copy of the GNU General Public License
  * along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
  *
- * @package   theme_snap
+ * @package   theme_n2018
  * @copyright Copyright (c) 2016 Moodlerooms Inc. (http://www.moodlerooms.com)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 /**
- * Snap Personal menu.
+ * N2018 Personal menu.
  */
-define(['jquery', 'core/log', 'core/yui', 'theme_snap/pm_course_cards', 'theme_snap/util', 'theme_snap/ajax_notification'],
+define(['jquery', 'core/log', 'core/yui', 'theme_n2018/pm_course_cards', 'theme_n2018/util', 'theme_n2018/ajax_notification'],
     function($, log, Y, courseCards, util, ajaxNotify) {
 
         /**
@@ -52,29 +52,29 @@ define(['jquery', 'core/log', 'core/yui', 'theme_snap/pm_course_cards', 'theme_s
                 courseCards.reqCourseInfo(courseCards.getCourseIds());
 
 
-                $('#snap-pm').focus();
+                $('#n2018-pm').focus();
 
                 /**
                  * Load ajax info into personal menu.
-                 * @param {string} type
+                 *
                  */
                 var loadAjaxInfo = function(type) {
                     // Target for data to be displayed on screen.
-                    var container = $('#snap-personal-menu-' + type);
+                    var container = $('#n2018-personal-menu-' + type);
                     if ($(container).length) {
-                        var cacheKey = M.cfg.sesskey + 'personal-menu-' + type;
+                        var cache_key = M.cfg.sesskey + 'personal-menu-' + type;
                         try {
                             // Display old content while waiting
-                            if (util.supportsSessionStorage() && window.sessionStorage[cacheKey]) {
+                            if (util.supportsSessionStorage() && window.sessionStorage[cache_key]) {
                                 log.info('using locally stored ' + type);
-                                var html = window.sessionStorage[cacheKey];
+                                var html = window.sessionStorage[cache_key];
                                 $(container).html(html);
                             }
                             log.info('fetching ' + type);
                             $.ajax({
                                 type: "GET",
                                 async: true,
-                                url: M.cfg.wwwroot + '/theme/snap/rest.php?action=get_' + type + '&contextid=' + M.cfg.context,
+                                url: M.cfg.wwwroot + '/theme/n2018/rest.php?action=get_' + type + '&contextid=' + M.cfg.context,
                                 success: function(data) {
                                     ajaxNotify.ifErrorShowBestMsg(data).done(function(errorShown) {
                                         if (errorShown) {
@@ -82,8 +82,8 @@ define(['jquery', 'core/log', 'core/yui', 'theme_snap/pm_course_cards', 'theme_s
                                         } else {
                                             // No errors, update sesion storage.
                                             log.info('fetched ' + type);
-                                            if (util.supportsSessionStorage() && typeof (data.html) != 'undefined') {
-                                                window.sessionStorage[cacheKey] = data.html;
+                                            if (util.supportsSessionStorage() && typeof(data.html) != 'undefined') {
+                                                window.sessionStorage[cache_key] = data.html;
                                             }
                                             // Note: we can't use .data because that does not manipulate the dom, we need the data
                                             // attribute populated immediately so things like behat can utilise it.
@@ -107,7 +107,7 @@ define(['jquery', 'core/log', 'core/yui', 'theme_snap/pm_course_cards', 'theme_s
                 loadAjaxInfo('messages');
                 loadAjaxInfo('forumposts');
 
-                $(document).trigger('snapUpdatePersonalMenu');
+                $(document).trigger('n2018UpdatePersonalMenu');
             };
 
             /**
@@ -116,19 +116,17 @@ define(['jquery', 'core/log', 'core/yui', 'theme_snap/pm_course_cards', 'theme_s
             var mobilePersonalMenuListeners = function() {
                 /**
                  * Get section left position and height.
-                 * @param {string} href
-                 * @returns {Object.<string, number>}
                  */
                 var getSectionCoords = function(href) {
-                    var sections = $("#snap-pm-content section");
+                    var sections = $("#n2018-pm-content section");
                     var sectionWidth = $(sections).outerWidth();
                     var section = $(href);
-                    var targetSection = $("#snap-pm-updates section > div").index(section) + 1;
+                    var targetSection = $("#n2018-pm-updates section > div").index(section) + 1;
                     var position = sectionWidth * targetSection;
                     var sectionHeight = $(href).outerHeight() + 200;
 
                     // Course lists is at position 0.
-                    if (href == '#snap-pm-courses') {
+                    if (href == '#n2018-pm-courses') {
                         position = 0;
                     }
 
@@ -143,33 +141,33 @@ define(['jquery', 'core/log', 'core/yui', 'theme_snap/pm_course_cards', 'theme_s
                 $(window).on('resize', function() {
                     if (window.innerWidth >= 992) {
                         // If equal or larger than Bootstrap 992 large breakpoint, clear left positions of sections.
-                        $('#snap-pm-content').removeAttr('style');
+                        $('#n2018-pm-content').removeAttr('style');
                         return;
                     }
-                    var activeLink = $('#snap-pm-mobilemenu a.state-active');
+                    var activeLink = $('#n2018-pm-mobilemenu a.state-active');
                     if (!activeLink || !activeLink.length) {
                         return;
                     }
                     var href = activeLink.attr('href');
                     var posHeight = getSectionCoords(href);
 
-                    $('#snap-pm-content').css('left', '-' + posHeight.left + 'px');
-                    $('#snap-pm-content').css('height', posHeight.height + 'px');
+                    $('#n2018-pm-content').css('left', '-' + posHeight.left + 'px');
+                    $('#n2018-pm-content').css('height', posHeight.height + 'px');
                 });
                 // Personal menu small screen behaviour.
-                $(document).on("click", '#snap-pm-mobilemenu a', function(e) {
+                $(document).on("click", '#n2018-pm-mobilemenu a', function(e) {
                     var href = this.getAttribute('href');
                     var posHeight = getSectionCoords(href);
 
                     $("html, body").animate({scrollTop: 0}, 0);
-                    $('#snap-pm-content').animate({
+                    $('#n2018-pm-content').animate({
                             left: '-' + posHeight.left + 'px',
                             height: posHeight.height + 'px'
                         }, "700", "swing",
                         function() {
                             // Animation complete.
                         });
-                    $('#snap-pm-mobilemenu a').removeClass('state-active');
+                    $('#n2018-pm-mobilemenu a').removeClass('state-active');
                     $(this).addClass('state-active');
                     e.preventDefault();
                 });
@@ -180,10 +178,9 @@ define(['jquery', 'core/log', 'core/yui', 'theme_snap/pm_course_cards', 'theme_s
              */
             var applyListeners = function() {
                 // On clicking personal menu trigger.
-                $(document).on("click", ".js-snap-pm-trigger", function(event) {
-                    $("html, body").animate({scrollTop: 0}, 0);
-                    $('body').toggleClass('snap-pm-open');
-                    if ($('.snap-pm-open #snap-pm').is(':visible')) {
+                $(document).on("click", ".js-n2018-pm-trigger", function(event) {
+                    $('body').toggleClass('n2018-pm-open');
+                    if ($('.n2018-pm-open #n2018-pm').is(':visible')) {
                         self.update();
                     }
                     event.preventDefault();
@@ -194,7 +191,6 @@ define(['jquery', 'core/log', 'core/yui', 'theme_snap/pm_course_cards', 'theme_s
 
             /**
              * Initialising function.
-             * @param {boolean} sitePolicyAcceptReqd
              */
             this.init = function(sitePolicyAcceptReqd) {
                 redirectToSitePolicy = sitePolicyAcceptReqd;

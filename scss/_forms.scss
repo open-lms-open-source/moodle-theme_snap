@@ -13,14 +13,12 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 /**
- * Snap core swatch.
+ * N2018 core swatch.
  *
- * @package   theme_snap
+ * @package   theme_n2018
  * @copyright Copyright (c) 2015 Moodlerooms Inc. (http://www.moodlerooms.com)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-
-/* stylelint-disable declaration-no-important*/
 
 // Exclude hidden form elements from being hidden when behat is running or it breaks
 // "I set the following fields to these values". More specifically, the error is because expand_all_fields in
@@ -77,14 +75,14 @@ body:not(.behat-site) {
 }
 #page-grade-export-xml-index {
     .mform .fitem {
-        &.fitem.fitem_fcheckbox .fitemtitle {
+        &.fitem.fitem_fcheckbox .fitemtitle{
             float: left;
             width: 25%;
         }
         .fcheckbox {
             color: red;
             input {
-                margin-right: 20px;
+                margin-right: 20px
             }
         }
     }
@@ -170,6 +168,7 @@ fieldset abbr[title] {
     border: none;
     &:after {
         content: " " attr(title);
+        text-transform: lowercase;
         text-transform: capitalize;
     }
 }
@@ -211,14 +210,14 @@ input[type="checkbox"] {
 }
 
 // -------------------------
-// Snap add new section form.
+// N2018 add new section form.
 // -------------------------
 #newsection {
     width: 100%;
     margin: 0;
 }
 
-#snap-add-new-section {
+#n2018-add-new-section {
 
     .editor_atto_content {
         min-height: 250px !important; // overcome js
@@ -242,7 +241,8 @@ div.editor_atto_toolbar {
 
 .editor_atto_content {
     padding: 1em 2%;
-    max-height: 100vh !important;
+    height: auto !important;
+    max-height: 75vh !important;
     min-height: 100px !important;
     resize: none;
 }
@@ -294,7 +294,7 @@ div.editor_atto_toolbar div.atto_group {
     bottom: 1em;
     .atto_info,
     .atto_warning {
-        border-radius: 0;
+      border-radius: 0;
     }
 }
 
@@ -324,16 +324,17 @@ div.editor_atto_toolbar div.atto_group {
 }
 
 // Help for mods displayed in the edit form.
-#snap-collapse-help {
+#n2018-collapse-help {
     padding: 1em 0;
     margin: 2em 2%;
     background-color: $gray-lighter;
+    border-left: .25em solid $brand-primary;
 }
 
 #id_cancel {
+    @extend .btn-link;
     font-weight: 300;
     margin-left: 2em;
-    border: none;
 }
 
 #fitem_id_outcomes .yui3-moodle-core_outcome-mapoutcome-content-wrapper ul {
@@ -349,7 +350,7 @@ div.editor_atto_toolbar div.atto_group {
 // Two column forms
 // -------------------------
 
-.snap-form-required {
+.n2018-form-required {
 
     #id_name,
     #id_externalurl,
@@ -369,8 +370,8 @@ div.editor_atto_toolbar div.atto_group {
     }
 }
 
-.snap-form-advanced {
-    .snap-form-visibility {
+.n2018-form-advanced {
+    .n2018-form-visibility {
         padding: 1em;
         background-color: #eee;
     }
@@ -429,7 +430,7 @@ div.editor_atto_toolbar div.atto_group {
         margin-top: 0;
     }
 
-    .snap-form-required {
+    .n2018-form-required {
 
         #fgroup_id_buttonar {
             margin-top: 25px;
@@ -437,16 +438,16 @@ div.editor_atto_toolbar div.atto_group {
     }
 
     // All the non-essential form elements.
-    .snap-form-advanced {
+    .n2018-form-advanced {
         // FF select elements don't respect % max width.
         select {
-            max-width: 250px !important;
+            max-width: 200px !important;
         }
-        .ftoggler {
+        .ftoggler{
             background-color: $gray-lighter;
             padding: .3em .5em;
         }
-        .collapsed .ftoggler {
+        .collapsed .ftoggler{
             background-color: transparent;
         }
         fieldset > .fcontainer {
@@ -462,7 +463,7 @@ div.editor_atto_toolbar div.atto_group {
 
 @include media-breakpoint-down(md) {
 
-    .snap-form-required #fgroup_id_buttonar {
+    .n2018-form-required #fgroup_id_buttonar {
         position: fixed;
         bottom: 0;
         left: 0;
@@ -475,7 +476,7 @@ div.editor_atto_toolbar div.atto_group {
         text-align: center;
     }
 
-    .snap-form-advanced {
+    .n2018-form-advanced {
         select {
             max-width: 140px !important;
         }
@@ -489,7 +490,7 @@ div.editor_atto_toolbar div.atto_group {
 
 @include media-breakpoint-down(sm) {
 
-    .snap-form-required {
+    .n2018-form-required {
         #id_cancel {
             margin-left: 0;
         }
@@ -507,11 +508,11 @@ div.editor_atto_toolbar div.atto_group {
 
 @include media-breakpoint-up(sm) {
     #page-enrol-users #filterform > .fitem {
-        margin-right: 1rem;
-        margin-bottom: 1rem;
+            margin-right: 1rem;
+            margin-bottom: 1rem;
 
-        &:last-child {
-            display: block;
+            &:last-child {
+                display: block;
         }
     }
 }

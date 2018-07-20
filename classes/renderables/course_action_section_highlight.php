@@ -21,7 +21,7 @@
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-namespace theme_snap\renderables;
+namespace theme_n2018\renderables;
 use context_course;
 use section_info;
 
@@ -32,7 +32,7 @@ class course_action_section_highlight extends course_action_section_base {
     /**
      * @var string
      */
-    public $class = 'snap-highlight';
+    public $class = 'n2018-highlight';
 
     /**
      * @var string

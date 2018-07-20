@@ -13,22 +13,20 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 /**
- * Snap core swatch.
+ * N2018 core swatch.
  *
- * @package   theme_snap
+ * @package   theme_n2018
  * @copyright Copyright (c) 2015 Moodlerooms Inc. (http://www.moodlerooms.com)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 // overwrite some global CSS from a turnitin mod
 // see https://github.com/jmcgettrick/MoodleDirectV2/issues/50
 
-/* stylelint-disable declaration-no-important*/
-
 html {
     -webkit-font-smoothing: auto !important;
 }
 
-// Snap Layout yo...
+// N2018 Layout yo...
 // -------------------------
 // SHAME -  all that fun moodle reset css
 // -------------------------
@@ -113,15 +111,15 @@ table.boxwidthwide {
         margin-top: 0;
     }
     // The login box.
-    .snap-login {
+    .n2018-login {
         padding: 1em 4%;
         margin: 2em auto;
         max-width: 30rem;
         width: 100%;
-        background-color: rgba(255, 255, 255, 0.9);
+        background-color: rgba(255,255,255,0.9);
     }
     // The site name.
-    .snap-logo-sitename {
+    .n2018-logo-sitename {
         text-indent: 100%;
         white-space: nowrap;
         overflow: hidden;
@@ -166,7 +164,7 @@ table.boxwidthwide {
     @include alakazam;
 }
 
-body:not(.snap-js-loaded) .js-only {
+body:not(.n2018-js-loaded) .js-only {
     pointer-events: none;
     cursor: default;
     filter: grayscale(100%);
@@ -184,14 +182,14 @@ body:not(.snap-js-loaded) .js-only {
     margin-right: -50vw;
 }
 
-// 100% with standard snap 4% gutter.
+// 100% with standard n2018 4% gutter.
 .full-width-pad {
     @extend .full-width;
     padding: 0 4%;
 }
 
 // Animations.
-@keyframes snap-drop {
+@keyframes n2018-drop {
     0% {
         transform: matrix(1, 0, 0, 1, 0, -600);
     }
@@ -201,7 +199,7 @@ body:not(.snap-js-loaded) .js-only {
     }
 }
 
-@keyframes snap-rise {
+@keyframes n2018-rise {
     0% {
         transform: matrix(1, 0, 0, 1, 0, 0);
     }
@@ -212,7 +210,7 @@ body:not(.snap-js-loaded) .js-only {
 }
 
 // -------------------------
-// Baseline boilerplate for snap
+// Baseline boilerplate for n2018
 // -------------------------
 body {
     font-weight: 400;
@@ -240,6 +238,12 @@ body.ie {
     -ms-overflow-style: scrollbar;
 }
 
+input:focus,
+textarea:focus,
+a:focus {
+    outline: 0;
+}
+
 label {
     font-weight: 500;
 }
@@ -251,11 +255,11 @@ select {
 
 select:disabled,
 input:disabled,
-input:disabled + label {
+input:disabled+label {
     opacity: 0.5;
 }
 
-:disabled {
+::disabled {
     cursor: not-allowed;
 }
 
@@ -263,8 +267,7 @@ textarea {
     max-width: 100%;
 }
 
-small,
-.small {
+small, .small {
     font-size: $font-size-sm !important;
 }
 
@@ -300,7 +303,7 @@ table img {
     min-width: 12px;
 }
 
-table.results td.graph > img {
+table.results td.graph>img {
     min-width: 0;
 }
 
@@ -340,10 +343,10 @@ img.icon.hide {
 }
 
 @mixin svg-icon {
-    width: 2rem;
-    height: 2rem;
-    margin: 0 0.3rem;
-    vertical-align: middle;
+  width: 2rem;
+  height: 2rem;
+  margin: 0 0.3rem;
+  vertical-align: middle;
 }
 
 .svg-icon {
@@ -418,7 +421,7 @@ iframe:not(.vjs-tech) {
     }
 }
 
-body.theme-snap .oembed-responsive {
+body.theme-n2018 .oembed-responsive {
     > :first-child:not(video),
     > .oembed-responsive-pad {
         @include responsive-video();
@@ -435,6 +438,7 @@ hr {
     height: 1px;
     margin: 2em 2%;
     border: 0;
+    background-color: $brand-primary;
 }
 
 .block .content hr {
@@ -519,42 +523,55 @@ textarea {
     max-width: 100%;
 }
 
-.button-group > button,
-input.form-submit,
-.atto_form button,
-.gradingform_checklist.editor .addgroup input,
-.gradingform_checklist.editor .additem input,
-.gradingform_rubric.editor .addlevel input,
-.gradingform_rubric.editor .addcriterion input,
+.section-modchooser-text,
+#changenumsections .increase-sections,
+#changenumsections .reduce-sections,
 .paging.paging-morelink a,
+button#local-joulegrader-preview-button,
+button.atto_equation_submit,
 a.yui3-button,
 .yui-button button,
-#page-site-index .section-modchooser-link .section-modchooser-text {
-
-    // Imitate btn.btn-secondary CSS for buttons without proper
-    // Bootstrap classes applied to them.
-    transition: all 0.4s ease-in-out;
+.felement.ftext input + button,
+.header-button-group .btn,
+.btn.btn-primary,
+.btn.btn-default,
+.button-group > button,
+input.form-submit,
+input[type="button"],
+input[type="submit"],
+button[type="submit"],
+.moodle-dialogue-content button,
+button#restrictbygroup,
+button#livelogs-pause-button,
+#page-admin-tool-monitor-managerules a > button,
+input[type="reset"] {
+    font-family: $font-family-system;
     background: transparent;
-    border-radius: 4px;
-    border-width: 1px;
-    border-style: solid;
-    // Em's used to allow for small and large buttons.
-    padding: .5em 1em;
 
-    &:hover:not(:disabled),
-    &:focus:not(:disabled),
-    &:active:not(:disabled),
-    &.active:not(:disabled) {
+    &:hover,
+    &:focus {
 
         text-decoration: none;
         color: #fff;
-    }
-
-    &:disabled {
-        opacity: 0.65;
+        background: $brand-primary;
     }
 }
 
+.btn.btn-inverse {
+
+    & {
+        color: #fff;
+        border-color: #fff;
+    }
+
+    &:hover,
+    &:active,
+    &:focus {
+        color: $brand-primary;
+        background: #fff;
+        border-color: $brand-primary;
+    }
+}
 .btn.btn-solid {
     &,
     &:active,
@@ -563,7 +580,7 @@ a.yui3-button,
     }
 }
 
-.button-group > button + button {
+.btn-group > button + button {
     margin-left: 1em;
 }
 
@@ -592,7 +609,7 @@ a.yui3-button,
 }
 
 // -------------------------
-// Snap theme helper classes
+// N2018 theme helper classes
 // -------------------------
 
 .published-status {
@@ -613,7 +630,7 @@ a.yui3-button,
 // Icons inserted as pseudo elements.
 // -------------------------
 
-.snap-icon-close:before {
+.n2018-icon-close:before {
     content: '';
     background: transparent url("[[pix:theme|close_x]]") no-repeat 50% 50%;
     display: block;
@@ -622,14 +639,10 @@ a.yui3-button,
     margin: 0.1em auto;
 }
 
-.snap-icon-close:focus {
-    text-decoration: underline !important;
-}
-
 // White close icon.
-#snap-footer-alert,
-#snap-pm {
-    .snap-icon-close:before {
+#n2018-footer-alert,
+#n2018-pm {
+    .n2018-icon-close:before {
         background-image: url("[[pix:theme|close_x_white]]");
     }
 }
@@ -649,7 +662,7 @@ a.yui3-button,
 }
 
 // -------------------------
-// Snap theme elements n componants
+// N2018 theme elements n componants
 // -------------------------
 
 #page-header,
@@ -657,18 +670,18 @@ a.yui3-button,
     @include bg-cover;
 }
 
-.snap-media-object {
+.n2018-media-object {
     @include clearfix;
     font-weight: 500;
     padding: 0.5em 0;
     // Block display for keyboard user focus.
     > a:focus {
-        display: block;
+         display: block;
     }
 
     // media o media
-    > a > img,
-    > img {
+    >a>img,
+    >img {
         float: left;
         display: block;
         width: 36px;
@@ -678,7 +691,7 @@ a.yui3-button,
     }
 
     // media o content
-    .snap-media-body {
+    .n2018-media-body {
         overflow: hidden;
 
         // for personal menu updates - need to re-visit when we re-use more widley
@@ -722,21 +735,21 @@ a.yui3-button,
     }
 
     // standard media o meta - status, date
-    .snap-media-meta {
+    .n2018-media-meta {
         display: block;
         font-size: $font-size-sm;
         color: $gray-light;
     }
 
     // unread tag
-    .snap-unread-marker {
+    .n2018-unread-marker {
         color: $brand-warning;
     }
 
 }
 
 // -------------------------
-// Layout of moodle/snap DOM structure
+// Layout of moodle/n2018 DOM structure
 // -------------------------
 /***************
 THE DOM LOOKS LIKE THIS :
@@ -786,7 +799,7 @@ footer #moodle-footer
     //headroom js http://wicky.nillia.ms/headroom.js/
     &.headroom--unpinned {
         will-change: transform;
-        animation-name: snap-rise;
+        animation-name: n2018-rise;
         animation-timing-function: ease-in-out;
         animation-duration: 0.4s;
         animation-fill-mode: forwards;
@@ -796,13 +809,13 @@ footer #moodle-footer
 
         // firefox no like this animation :(
         /*
-        animation-name: snap-drop;
+        animation-name: n2018-drop;
         animation-timing-function: cubic-bezier(.694, .0482, .335, 1);
         animation-duration: 0.33s;
         */
     }
 
-    .popover-region-notifications > div > .icon {
+    .popover-region-notifications > div >.icon {
         color: $nav-color;
 
         &:hover {
@@ -819,19 +832,7 @@ footer #moodle-footer
         }
     }
 
-    .popover-region-container a {
-        color: $brand-primary;
-
-        &:hover {
-            color: darken($brand-primary, 8%);
-        }
-        &:focus {
-            color: darken($brand-primary, 30%);
-            text-decoration: underline;
-        }
-    }
-
-    .snap-login-button {
+    .n2018-login-button {
         color: $nav-login-color;
         background-color: $nav-login-bg;
         border-color: $nav-login-bg;
@@ -846,7 +847,7 @@ footer #moodle-footer
     }
 }
 
-#mr-nav #snap-pm-trigger {
+#mr-nav #n2018-pm-trigger {
     display: inline;
     border: none;
     position: relative; // Position to support message badge.
@@ -873,6 +874,7 @@ footer #moodle-footer
 
     // Core alerts badge.
     .conversation_badge_count {
+        background-color: darken($brand-primary, 8%);
         height: 18px;
         width: 18px;
         border-radius: 50%;
@@ -895,12 +897,12 @@ footer #moodle-footer
 
 @include media-breakpoint-down(sm) {
 
-    #mr-nav #snap-pm-trigger {
+    #mr-nav #n2018-pm-trigger {
         padding-bottom: 1.36em;
     }
 }
 
-#snap-home {
+#n2018-home {
     display: inline-block;
     padding: .5em 0;
     // If logo image.
@@ -916,9 +918,9 @@ footer #moodle-footer
 }
 
 // Admin menu trigger.
-#snap-admin-icon {
+#n2018-admin-icon {
     @include alakazam;
-    .snap-gear-icon {
+    .n2018-gear-icon {
         fill: none;
         stroke: currentColor;
         stroke-width: 5;
@@ -928,7 +930,7 @@ footer #moodle-footer
     &:hover,
     &:focus {
         transform: rotate(90deg);
-        .snap-gear-icon {
+        .n2018-gear-icon {
             fill: currentColor;
         }
     }
@@ -1059,12 +1061,14 @@ header#page-header
 
  ****************************/
 
+
+
 // If the page has an image - courses & catagories.
 .mast-image {
     .breadcrumb {
         li,
         li:before,
-        > li + li:before,
+        >li+li:before,
         a {
             text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
             color: white;
@@ -1081,7 +1085,7 @@ header#page-header
     }
     // Add a bg colur to the toc in page header.
     #course-toc {
-        background-color: rgba(255, 255, 255, 0.95);
+        background-color: rgba(255,255,255,0.95);
     }
 }
 
@@ -1099,7 +1103,7 @@ header#page-header
 }
 
 /* SHAME - button to toggle actions, e.g. close */
-.snap-action-icon {
+.n2018-action-icon {
     padding: 0.5em;
     font-size: 1.5em;
     line-height: 1;
@@ -1144,7 +1148,7 @@ header#page-header
 .course-content,
 .settingsform,
 #page-mod-page-view #region-main,
-#snap-course-footer-about {
+#n2018-course-footer-about {
     max-width: $user-content-max-width;
     margin: 0 auto;
 }
@@ -1187,21 +1191,17 @@ header#page-header
         margin: 0;
     }
 
-    #snap-coverimagecontrol {
+    #n2018-coverimagecontrol {
         position: absolute;
         bottom: 1em;
         right: 4%;
     }
 
     #page-mast {
-        background-color: rgba(255, 255, 255, 0.9);
+        background-color: rgba(255,255,255,0.9);
         display: inline-block;
         padding: 1em 2%;
         margin: 10em 4% 1em;
-    }
-
-    #moodle-page {
-        padding-top: 2em;
     }
 }
 
@@ -1220,7 +1220,7 @@ header#page-header
     }
 }
 
-#page-mast .snap-login-button {
+#page-mast .n2018-login-button {
     display: inline-block;
     margin-top: 1em;
 }
@@ -1228,7 +1228,7 @@ header#page-header
 // -------------------------
 // Front page carousel componant.
 // -------------------------
-#snap-site-carousel {
+#n2018-site-carousel {
 
     .carousel-slide {
         background-position: center center;
@@ -1245,8 +1245,8 @@ header#page-header
         width: 50%;
         text-shadow: none;
         color: #666;
-        // Add snap cover styles.
-        background-color: rgba(255, 255, 255, 0.9);
+        // Add n2018 cover styles.
+        background-color: rgba(255,255,255,0.9);
         padding: 1em 2%;
         margin-top: 2em;
     }
@@ -1382,6 +1382,10 @@ header#page-header
     .news-article-preview,
     .news-article-image {
         display: none;
+    }
+
+    .news-article-inner {
+
     }
 
     .news-article-message {
@@ -1861,46 +1865,10 @@ ul.events-new + ul.events-underway {
     @extend .btn-secondary;
 }
 
-.path-mod-quiz #mod_quiz_navblock .qnbutton {
-    overflow: hidden;
-}
-
-.path-mod-quiz #mod_quiz_navblock .qnbutton:hover, .path-mod-quiz #mod_quiz_navblock .qnbutton:focus {
-    background-color: $brand-primary;
-    border: 1px solid $brand-primary;
-    color: #ffffff;
-}
-
 #page-mod-quiz-edit .section .activity .actions {
     position: absolute;
     right: 0;
-    top: 0;
-}
-
-#page-mod-quiz-review {
-    .formulation {
-        select {
-            .custom-select {
-                padding-right: 5em;
-            }
-            &:disabled {
-                color: #818a91 !important;
-                cursor: not-allowed;
-                background-color: #eceeef !important;
-                padding-right: 5em;
-            }
-            width: auto !important;
-        }
-
-        input[type="text"] {
-            width: auto !important;
-        }
-
-        input.form-control[readonly] {
-            background-color: #eceeef !important;
-            opacity: 1;
-        }
-    }
+    top: 0
 }
 
 // Quiz setup form //
@@ -2059,7 +2027,7 @@ ul.events-new + ul.events-underway {
 // Quiz itself //
 
 // For quiz, we don't want two coluns.
-.path-mod-quiz #moodle-blocks > aside {
+.path-mod-quiz #moodle-blocks>aside {
     column-count: 1 !important;
 }
 
@@ -2097,7 +2065,7 @@ ul.events-new + ul.events-underway {
     font-weight: 400;
 }
 
-.que .info > div {
+.que .info>div {
     display: inline-block;
     font-size: $font-size-sm;
     color: $gray-light;
@@ -2226,35 +2194,11 @@ ul.events-new + ul.events-underway {
 // Forum
 // -------------------------
 
-#page-mod-forum-discuss {
-    .discussioncontrol.exporttoportfolio,
-    .discussioncontrol.displaymode,
-    .discussioncontrol.movediscussion {
-        margin: auto;
-        width: 100%;
-        padding-bottom: 10px;
-    }
-
-    div {
-        .no-overflow {
-            overflow: hidden;
-        }
-
-        .grouppictures {
-            margin-top: 0.5em;
-        }
-    }
-}
-
-#page-mod-forum-post {
-    div {
-        .no-overflow {
-            overflow: hidden;
-        }
-
-        .grouppictures {
-            margin-top: 0.5em;
-        }
+// on front page the forum has extranious options //
+.course-1 {
+    .movediscussion,
+    .displaymode {
+        display: none;
     }
 }
 
@@ -2519,8 +2463,7 @@ table#user-grades tr.avg td.cell {
         // copied from less/bootstrap3/forms.scss .form-control
         color: $input-color;
         background-color: $input-bg;
-        // Reset unusual Firefox-on-Android default style; see https://github.com/necolas/normalize.css/issues/214
-        background-image: none;
+        background-image: none; // Reset unusual Firefox-on-Android default style; see https://github.com/necolas/normalize.css/issues/214
         border: 1px solid $input-border-color;
         border-radius: $input-border-radius;
         @include box-shadow(inset 0 1px 1px rgba(0,0,0,.075));
@@ -2597,9 +2540,115 @@ table#user-grades tr.avg td.cell {
     }
 }
 
-// TODO short term fix for Snap disappearing header interfering with scrolling Gradebook
+#local-nortongrader-navigation {
+    background-color: transparent;
+    text-align: right;
+}
+
+#local-joulegrader-resize,
+#local-nortongrader-resize {
+
+    // display: none;
+}
+
+// TODO short term fix for N2018 disappearing header interfering with scrolling Gradebook
 #page-grade-report-grader-index header#mr-nav {
     animation-name: none;
+}
+
+#page-grade-report-joulegrader-index #joule-grades-thead {
+    table-layout: fixed;
+}
+
+#page-grade-report-nortongrader-index,
+#page-grade-report-joulegrader-index {
+    #gradereport-joulegrader-navbox,
+    #gradereport-nortongrader-navbox {
+        border: 0;
+        background: none;
+    }
+
+    table .header[scope="col"] {
+        background-color: #fff;
+        font-size: 13px; // SHAME - magic number
+    }
+
+    table {
+        margin: 0;
+        text-align: right;
+    }
+
+    #joule-grades-thead-wrap,
+    #joule-grades-leftcol-wrap,
+    table.joule-grades {
+        border: none;
+        font-size: $font-size-base;
+    }
+
+    table.joule-grades {
+        tr.odd td.cell {
+            background-color: $table-bg-accent;
+
+            &.overridden,
+            &.ajaxoverridden {
+                background-color: #efd9a4;
+            }
+        }
+    }
+
+    table.joule-grades td,
+    table.joule-grades th {
+        border-right: none;
+        border-left: none;
+        border-width: 1px;
+    }
+
+    table.joule-grades th.item,
+    table.joule-grades th.categoryitem,
+    table.joule-grades th.courseitem {
+        border-bottom-color: $table-border-color;
+    }
+
+    #joule-grades-leftcol-wrap {
+        border-right: 1px solid $table-border-color;
+    }
+
+    table.joule-grades th,
+    table.joule-grades td {
+        padding: $table-sm-cell-padding;
+    }
+
+    #joule-grades-fthead {
+        margin-top: -1px;
+    }
+
+    #joule-grades-leftcol {
+        margin-top: 0;
+    }
+
+    #joule-grades,
+    #joule-grades-leftcol {
+        .row {
+            &.nortongraderactionmenu,
+            &.joulegraderactionmenu {
+                margin-left: 0;
+                margin-right: 0;
+
+                &:before,
+                &:after {
+                    display: none;
+                }
+            }
+        }
+    }
+
+    #joule-grades-fthead {
+        width: auto;
+    }
+
+    #joule-grades-leftcol-wrap {
+        border-bottom: none;
+    }
 }
 
 #page-local-joulegrader-view {
@@ -2663,7 +2712,7 @@ table#user-grades tr.avg td.cell {
         max-width: 100%;
     }
 
-    .snap-form-required fieldset {
+    .n2018-form-required fieldset {
         max-width: 43.5em;
         margin: 1em 0;
     }
@@ -2751,7 +2800,7 @@ table#user-grades tr.avg td.cell {
     // pull buttons up into the #notice when they are placed
     // after it, rather than inside it.
 
-    & + .continuebutton {
+    &+ .continuebutton {
         margin-top: -3em;
     }
 
@@ -2780,11 +2829,11 @@ body.hascontinuecancel.path-site #page {
 }
 
 // hard code some specific uses here till MDL-45655 fixes them
-// and allows us to add the snap-continue-cancel class
+// and allows us to add the n2018-continue-cancel class
 // the hardcodeded ones here have the button inside the div
 
 #page-admin-purgecaches #notice,
-#notice.snap-continue-cancel {
+#notice.n2018-continue-cancel {
     min-height: 800px;
     position: absolute;
     padding: 10% 4%;
@@ -2795,8 +2844,8 @@ body.hascontinuecancel.path-site #page {
 
 // Override for odd little notice when deleting questions.
 #page-user-policy #notice,
-#page-blocks-conduit-view #notice.snap-continue-cancel,
-#page-mod-quiz-edit div.container #notice.snap-continue-cancel {
+#page-blocks-conduit-view #notice.n2018-continue-cancel,
+#page-mod-quiz-edit div.container #notice.n2018-continue-cancel {
     color: $body-color;
     background-color: $body-bg;
     font-size: $font-size-base;
@@ -2804,7 +2853,7 @@ body.hascontinuecancel.path-site #page {
 }
 
 #page-user-policy #notice,
-#page-blocks-conduit-view #notice.snap-continue-cancel {
+#page-blocks-conduit-view #notice.n2018-continue-cancel {
     position: relative;
     margin: 0;
     padding: 0;
@@ -2930,8 +2979,8 @@ body:not(.pagelayout-course) #moodle-footer {
     background-color: $body-color;
 }
 
-#snap-footer-content,
-#snap-socialmedia-links {
+#n2018-footer-content,
+#n2018-socialmedia-links {
     padding: 1em 0;
 }
 
@@ -3110,7 +3159,7 @@ http://css-spinners.com/css/spinner/three-quarters.css
 }
 
 // nicer positioning of fatal errors
-div[data-rel=fatalerror] {
+div[data-rel = fatalerror] {
     margin: 1em;
 }
 
@@ -3132,6 +3181,7 @@ div[data-rel=fatalerror] {
     &:focus > img,
     & > img:hover {
         // Reduce border to make the icon expand.
+        background-color: $brand-primary;
         border-width: 0;
         height: 24px;
         width: 24px;
@@ -3256,23 +3306,23 @@ table th img.iconhelp {
 }
 
 /* Feature spots. */
-#snap-feature-spots {
+#n2018-feature-spots {
     padding: 2em 4%;
     text-align: center;
 
-    .snap-feature-spots-heading {
+    .n2018-feature-spots-heading {
         padding-top: 0;
         margin-top: 0;
     }
 
-    .snap-feature-image {
+    .n2018-feature-image {
         max-width: 200px;
     }
 }
 
 /* Featured courses section. */
 @include media-breakpoint-up(md) {
-    #snap-featured-courses .row div {
+    #n2018-featured-courses .row div {
         /* Center and restrict width for when only one course */
         max-width: 50%;
         margin: 0 auto;
@@ -3280,16 +3330,16 @@ table th img.iconhelp {
 }
 
 /* Featured course container. */
-#snap-featured-courses {
+#n2018-featured-courses {
     width: 100%;
     padding: 1em 4%;
 }
-.snap-featured-courses-heading {
+.n2018-featured-courses-heading {
     padding: 1em 0;
 }
 
 /* Featured course link. */
-.snap-featured-course {
+.n2018-featured-course {
     display: block;
     height: 300px;
     position: relative;
@@ -3300,19 +3350,18 @@ table th img.iconhelp {
 
     &:hover {
         transform: scale(1.03);
-        box-shadow:
-            0 2px 2px 0 rgba(0, 0, 0, 0.14),
-            0 3px 1px -2px rgba(0, 0, 0, 0.2),
-            0 1px 5px 0 rgba(0, 0, 0, 0.12);
+        box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14),
+        0 3px 1px -2px rgba(0, 0, 0, 0.2),
+        0 1px 5px 0 rgba(0, 0, 0, 0.12);
 
-        .snap-featured-course-title {
+        .n2018-featured-course-title {
             text-decoration: underline;
         }
     }
 }
 
 /* Featured course title. */
-.snap-featured-course-title {
+.n2018-featured-course-title {
     display: block;
     min-height: 25%;
     width: 100%;
@@ -3368,19 +3417,19 @@ table th img.iconhelp {
 // End Scrolling gradebook fixes
 
 td.mceIframeContainer > iframe {
-    max-width: 100%;
+    max-width:100%;
 }
 
-body.gecko .snap-form-required > fieldset,
-body.gecko .snap-form-advanced > fieldset {
+body.gecko .n2018-form-required > fieldset,
+body.gecko .n2018-form-advanced > fieldset {
     display: table-cell;
-    max-width: 100%;
+    max-width:100%;
 }
 
-body.ie .snap-form-required > fieldset,
-body.ie .snap-form-advanced > fieldset {
+body.ie .n2018-form-required > fieldset,
+body.ie .n2018-form-advanced > fieldset {
     table-layout: fixed;
-    max-width: 100%;
+    max-width:100%;
 }
 
 .felement.feditor,
@@ -3389,7 +3438,7 @@ table.mceLayout tr,
 td.mceIframeContainer,
 td.mceStatusbar {
     display: block;
-    max-width: 100%;
+    max-width:100%;
 }
 
 table.mceLayout {
@@ -3403,18 +3452,18 @@ table.mceLayout {
 }
 
 table.mceLayout tbody {
-    display: block;
+    display:block;
 }
 
 td.mceToolbar {
     width: 100% !important;
     position: relative;
     display: inline-block;
-    margin: 0 !important;
+    margin: 0px !important;
 }
 
 #page-mod-quiz-edit .instancename {
-    max-width: 16px;
+    max-width:16px;
 }
 
 #page-mod-quiz-edit .activityinstance {
@@ -3423,21 +3472,21 @@ td.mceToolbar {
 }
 
 // General toggle icons.
-button.snap-icon-toggle {
-    &,
-    &:hover,
-    &:link,
-    &:active,
-    &:focus {
+button.n2018-icon-toggle {
+    &, &:hover, &:link, &:active, &:focus {
+        color: $brand-primary;
         background: none;
         border: none;
         box-shadow: none;
         outline: none;
     }
+    &:focus {
+        border:2px solid $brand-primary;
+    }
 }
 
 // Cover image control.
-#snap-coverimagecontrol {
+#n2018-coverimagecontrol {
     float: right;
     margin-left: 1em;
     display: inline-block;
@@ -3450,12 +3499,12 @@ button.snap-icon-toggle {
     }
 }
 
-#snap-changecoverimageconfirmation {
+#n2018-changecoverimageconfirmation {
     position: relative;
     display: inline-block;
 }
 
-#snap-coverfiles {
+#n2018-coverfiles {
     display: block;
     position: absolute;
     top: 0;
@@ -3463,30 +3512,26 @@ button.snap-icon-toggle {
     opacity: 0;
 }
 
-label[for="snap-coverfiles"],
-#snap-changecoverimageconfirmation button {
+label[for="n2018-coverfiles"],
+#n2018-changecoverimageconfirmation button{
     position: relative;
     display: none;
 }
 
 body:not(.pagelayout-coursecategory) {
-    label[for="snap-coverfiles"],
-    #snap-changecoverimageconfirmation button {
-        top: -2.5em;
+    label[for="n2018-coverfiles"],
+    #n2018-changecoverimageconfirmation button{
+        top: -0.5em;
     }
 }
 
-#page-course-view-topics #page-header.mast-image .alert-warning {
-    margin-bottom: 2em;
-}
-
-label.state-visible[for="snap-coverfiles"],
-#snap-changecoverimageconfirmation.state-visible button {
+label.state-visible[for="n2018-coverfiles"],
+#n2018-changecoverimageconfirmation.state-visible button{
     display: inline-block;
     cursor: pointer;
 }
 
-label.state-visible[for="snap-coverfiles"] {
+label.state-visible[for="n2018-coverfiles"] {
     span {
         padding: 1em;
     }
@@ -3506,18 +3551,18 @@ label.state-visible[for="snap-coverfiles"] {
 }
 
 @include media-breakpoint-down(xs) {
-    label.state-visible[for="snap-coverfiles"] {
+    label.state-visible[for="n2018-coverfiles"] {
         span {
             display: none;
         }
     }
 }
 
-#snap-coverfiles {
+#n2018-coverfiles {
     cursor: pointer;
 }
 
-#snap-changecoverimageconfirmation.disabled .ok {
+#n2018-changecoverimageconfirmation.disabled .ok {
     &,
     &:hover,
     &:active,
@@ -3536,31 +3581,30 @@ label.state-visible[for="snap-coverfiles"] {
     background-color: rgba(255, 255, 255, 0.9);
 }
 
-#snap-coverimagecontrol.snap-js-enabled {
+#n2018-coverimagecontrol.n2018-js-enabled {
     opacity: 1;
 }
 
-.snap-alert-cover-image {
+.n2018-alert-cover-image {
     background-color: white;
     width: auto;
     text-align: left;
     margin: 1em 0;
 }
 
-#snap-changecoverimageconfirmation .ok.ajaxing:after {
+#n2018-changecoverimageconfirmation .ok.ajaxing:after {
     @include ajaxingwhite(inline-block, relative, 16px, 4px);
     margin: 0 0 -3px 0.5em;
 }
 
 body.pagelayout-frontpage {
-    .snap-alert-cover-image {
+    .n2018-alert-cover-image {
         margin: 1em 4%;
     }
 }
 
 #page-badges-criteria {
-    .statusbox,
-    ul.nav-tabs {
+    .statusbox, ul.nav-tabs {
         margin: 1em 0;
     }
 }
@@ -3574,51 +3618,4 @@ body.pagelayout-frontpage {
     overflow: visible;
     clip: auto;
     border: initial;
-}
-
-// Hides 'Blocks editing on' button in all the plagiarism settings pages.
-.path-admin-plagiarism .singlebutton {
-    display: none;
-}
-
-// Adjust the size of the message containers.
-#page-message-index .messaging-area-container .messaging-area .contacts-area .contacts .contact {
-    height: 23%;
-
-    .information .name {
-        overflow: hidden;
-        text-overflow: ellipsis;
-    }
-}
-
-// Auth icon align fix.
-#page-login-index .auth-icon,
-#page-site-index .auth-icon,
-#page-login-index .icon,
-#page-site-index .icon{
-    width: 24px;
-    height: 24px;
-    margin: 0;
-}
-
-// Center prev and next links for activities.
-section#region-main {
-    div.m-t-2.m-b-1 {
-        display: inline-flex;
-        width: 100%;
-
-        .row {
-            margin: 0 auto;
-            width: 100%;
-        }
-
-        .col-md-4 {
-            min-height: 8em;
-            text-align: justify;
-
-            .mdl-align {
-                padding: 0 0.5em;
-            }
-        }
-    }
 }

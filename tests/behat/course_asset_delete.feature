@@ -13,15 +13,15 @@
 # You should have received a copy of the GNU General Public License
 # along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 #
-# Tests deleting assets in snap.
+# Tests deleting assets in n2018.
 #
-# @package    theme_snap
+# @package    theme_n2018
 # @author     Guy Thomas
 # @copyright  2016 Blackboard Ltd
 # @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
 
-@theme @theme_snap
-Feature: When the moodle theme is set to Snap, teachers can delete course resources and activities without having to reload the page.
+@theme @theme_n2018
+Feature: When the moodle theme is set to N2018, teachers can delete course resources and activities without having to reload the page.
 
   Background:
     Given the following "courses" exist:
@@ -51,14 +51,14 @@ Feature: When the moodle theme is set to Snap, teachers can delete course resour
       | Include a topic section | 1 |
     And I am on site homepage
     And I should see "Test assignment1"
-    When I click on ".snap-activity[data-type='Assignment'] a.snap-edit-asset-more" "css_element"
-    And I click on ".snap-activity[data-type='Assignment'] a.js_snap_delete" "css_element"
+    When I click on ".n2018-activity[data-type='Assignment'] a.n2018-edit-asset-more" "css_element"
+    And I click on ".n2018-activity[data-type='Assignment'] a.js_n2018_delete" "css_element"
     Then I should see asset delete dialog
     And I cancel dialog
     Then I should not see asset delete dialog
     And I should see "Test assignment1"
-    When I click on ".snap-activity[data-type='Assignment'] a.snap-edit-asset-more" "css_element"
-    And I click on ".snap-activity[data-type='Assignment'] a.js_snap_delete" "css_element"
+    When I click on ".n2018-activity[data-type='Assignment'] a.n2018-edit-asset-more" "css_element"
+    And I click on ".n2018-activity[data-type='Assignment'] a.js_n2018_delete" "css_element"
     Then I should see asset delete dialog
     When I press "Delete Assign"
     Then I should not see "Test assignment1"
@@ -72,14 +72,14 @@ Feature: When the moodle theme is set to Snap, teachers can delete course resour
     And I am on the course main page for "C1"
     And I follow "Topic 1"
     Then "#section-1" "css_element" should exist
-    When I click on ".snap-activity[data-type='Assignment'] a.snap-edit-asset-more" "css_element"
-    And I click on ".snap-activity[data-type='Assignment'] a.js_snap_delete" "css_element"
+    When I click on ".n2018-activity[data-type='Assignment'] a.n2018-edit-asset-more" "css_element"
+    And I click on ".n2018-activity[data-type='Assignment'] a.js_n2018_delete" "css_element"
     Then I should see asset delete dialog
     And I cancel dialog
     Then I should not see asset delete dialog
     And I should see "Test assignment1"
-    When I click on ".snap-activity[data-type='Assignment'] a.snap-edit-asset-more" "css_element"
-    And I click on ".snap-activity[data-type='Assignment'] a.js_snap_delete" "css_element"
+    When I click on ".n2018-activity[data-type='Assignment'] a.n2018-edit-asset-more" "css_element"
+    And I click on ".n2018-activity[data-type='Assignment'] a.js_n2018_delete" "css_element"
     Then I should see asset delete dialog
     When I press "Delete Assign"
     Then I should not see "Test assignment1" in the "#section-1" "css_element"
@@ -94,5 +94,5 @@ Feature: When the moodle theme is set to Snap, teachers can delete course resour
     Given I log in as "student1"
     And I am on the course main page for "C1"
     And I follow "Topic 1"
-    Then ".snap-activity[data-type='Assignment'] a.snap-edit-asset-more" "css_element" should not exist
-    And ".snap-activity[data-type='Assignment'] a.js_snap_delete" "css_element" should not exist
+    Then ".n2018-activity[data-type='Assignment'] a.n2018-edit-asset-more" "css_element" should not exist
+    And ".n2018-activity[data-type='Assignment'] a.js_n2018_delete" "css_element" should not exist

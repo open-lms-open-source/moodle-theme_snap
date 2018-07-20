@@ -14,7 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
-namespace theme_snap\controller;
+namespace theme_n2018\controller;
 
 defined('MOODLE_INTERNAL') || die();
 
@@ -24,7 +24,7 @@ require_once($CFG->libdir . '/completionlib.php');
  * Page module controller.
  * Handles page module requests.
  *
- * @package   theme_snap
+ * @package   theme_n2018
  * @copyright Copyright (c) 2015 Moodlerooms Inc. (http://www.moodlerooms.com)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
@@ -60,7 +60,7 @@ class pagemod_controller extends controller_abstract {
         global $PAGE, $COURSE;
 
         $cm = $PAGE->cm;
-        $page = \theme_snap\local::get_page_mod($cm);
+        $page = \theme_n2018\local::get_page_mod($cm);
         $context = $PAGE->context;
 
         // Trigger module instance viewed event.

@@ -15,14 +15,14 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Snap core renderer.
+ * N2018 core renderer.
  *
- * @package   theme_snap
+ * @package   theme_n2018
  * @copyright Copyright (c) 2015 Moodlerooms Inc. (http://www.moodlerooms.com)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-namespace theme_snap\output;
+namespace theme_n2018\output;
 
 defined('MOODLE_INTERNAL') || die();
 require_once($CFG->libdir.'/coursecatlib.php');
@@ -31,25 +31,23 @@ require_once($CFG->dirroot.'/message/output/popup/lib.php');
 use stdClass;
 use context_course;
 use context_system;
-use coding_exception;
-use single_button;
 use DateTime;
 use html_writer;
 use moodle_url;
 use navigation_node;
 use user_picture;
-use theme_snap\local;
-use theme_snap\activity;
-use theme_snap\services\course;
-use theme_snap\renderables\settings_link;
-use theme_snap\renderables\bb_dashboard_link;
-use theme_snap\renderables\course_card;
-use theme_snap\renderables\course_toc;
-use theme_snap\renderables\featured_courses;
+use theme_n2018\local;
+use theme_n2018\activity;
+use theme_n2018\services\course;
+use theme_n2018\renderables\settings_link;
+use theme_n2018\renderables\bb_dashboard_link;
+use theme_n2018\renderables\course_card;
+use theme_n2018\renderables\course_toc;
+use theme_n2018\renderables\featured_courses;
 
 // We have to force include this class as it's on login and the auto loader may not have been updated via a cache dump.
-require_once($CFG->dirroot.'/theme/snap/classes/renderables/login_alternative_methods.php');
-use theme_snap\renderables\login_alternative_methods;
+require_once($CFG->dirroot.'/theme/n2018/classes/renderables/login_alternative_methods.php');
+use theme_n2018\renderables\login_alternative_methods;
 
 class core_renderer extends \theme_boost\output\core_renderer {
 
@@ -84,13 +82,13 @@ class core_renderer extends \theme_boost\output\core_renderer {
                 $modnames = get_module_types_names();
                 $modname = $modnames[$component];
                 $mod = get_module_metadata($COURSE, array($component => $modname), null);
-                if (!empty($mod) && isset($mod[$component]) && is_object($mod[$component]) && $mod[$component]->help) {
+                if ($mod[$component]->help) {
                     $helptext = format_text($mod[$component]->help, FORMAT_MARKDOWN);
                     $data = (object) [
                         'helptext' => $helptext,
                         'modtitle' => $mod[$component]->title
                     ];
-                    $collapsablehelp = $this->render_from_template('theme_snap/heading_help_collapse', $data);
+                    $collapsablehelp = $this->render_from_template('theme_n2018/heading_help_collapse', $data);
                     $classnames .= ' d-inline';
                 }
                 $heading = $this->heading($image.$text, $level, $classnames);
@@ -110,7 +108,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
      */
     public function course_toc() {
         $coursetoc = new course_toc();
-        return $this->render_from_template('theme_snap/course_toc', $coursetoc);
+        return $this->render_from_template('theme_n2018/course_toc', $coursetoc);
     }
 
     /**
@@ -122,7 +120,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
     public function get_course_image() {
         global $COURSE;
 
-        return \theme_snap\local::course_coverimage_url($COURSE->id);
+        return \theme_n2018\local::course_coverimage_url($COURSE->id);
     }
 
     /**
@@ -136,10 +134,10 @@ class core_renderer extends \theme_boost\output\core_renderer {
      */
     public function column_header_icon_link($langstring, $iconname, $url) {
         global $OUTPUT;
-        $text = get_string($langstring, 'theme_snap');
+        $text = get_string($langstring, 'theme_n2018');
         $iconurl = $OUTPUT->image_url($iconname, 'theme');
         $icon = '<img class="svg-icon" role="presentation" src="' .$iconurl. '">';
-        $link = '<a class="snap-personal-menu-more" href="' .$url. '"><small>' .$text. '</small>' .$icon. '</a>';
+        $link = '<a class="n2018-personal-menu-more" href="' .$url. '"><small>' .$text. '</small>' .$icon. '</a>';
         return $link;
     }
 
@@ -155,7 +153,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
      */
     public function mobile_menu_link($langstring, $iconname, $url) {
         global $OUTPUT;
-        $alt = get_string($langstring, 'theme_snap');
+        $alt = get_string($langstring, 'theme_n2018');
         $iconurl = $OUTPUT->image_url($iconname, 'theme');
         $icon = '<img class="svg-icon" alt="' .$alt. '" src="' .$iconurl. '">';
         $class = '';
@@ -194,15 +192,15 @@ class core_renderer extends \theme_boost\output\core_renderer {
             return '';
         }
         // @codingStandardsIgnoreStart
-        $gearicon = '<svg xmlns="http://www.w3.org/2000/svg" id="snap-admin-icon" viewBox="0 0 100 100">
-                        <title>'.get_string('admin', 'theme_snap').'</title>
+        $gearicon = '<svg xmlns="http://www.w3.org/2000/svg" id="n2018-admin-icon" viewBox="0 0 100 100">
+                        <title>'.get_string('admin', 'theme_n2018').'</title>
                         <path d="M85.2,54.9c0.2-1.4,0.3-2.9,0.3-4.5c0-1.5-0.1-3-0.3-4.5l9.6-7.5c0.9-0.7,1-1.9,0.6-2.9l-9.1-15.8c-0.6-1-1.8-1.3-2.8-1
                         l-11.3,4.6c-2.4-1.8-4.9-3.3-7.7-4.5l-1.8-12c-0.1-1-1-1.9-2.2-1.9H42.3c-1.1,0-2.1,0.9-2.2,1.9l-1.7,12.1c-2.8,1.1-5.3,2.7-7.7,4.5
                         l-11.3-4.6c-1-0.4-2.2,0-2.8,1L7.5,35.6c-0.6,1-0.3,2.2,0.6,2.9l9.6,7.5c-0.2,1.4-0.3,2.9-0.3,4.5c0,1.5,0.1,3,0.3,4.5L8,62.4
                         c-0.9,0.7-1,1.9-0.6,2.9l9.1,15.8c0.6,1,1.8,1.3,2.8,1l11.3-4.6c2.4,1.8,4.9,3.3,7.7,4.5L40,94.1c0.1,1,1,1.9,2.2,1.9h18.2
                         c1.1,0,2.1-0.9,2.2-1.9L64.3,82c2.8-1.1,5.3-2.7,7.7-4.5l11.3,4.6c1,0.4,2.2,0,2.8-1l9.1-15.8c0.6-1,0.3-2.2-0.6-2.9
                         C94.6,62.4,85.2,54.9,85.2,54.9z M51.4,34.6c8.8,0,15.9,7.1,15.9,15.9s-7.1,15.9-15.9,15.9s-15.9-7.1-15.9-15.9S42.6,34.6,51.4,34.6
-                        z" class="snap-gear-icon"/>
+                        z" class="n2018-gear-icon"/>
                     </svg>';
          // @codingStandardsIgnoreEnd
         $url = '#inst' . $settingslink->instanceid;
@@ -211,8 +209,8 @@ class core_renderer extends \theme_boost\output\core_renderer {
             'class' => 'pull-right',
             'data-toggle' => 'tooltip',
             'data-placement' => 'bottom',
-            'title' => get_string('admin', 'theme_snap'),
-            'aria-label' => get_string('admin', 'theme_snap'),
+            'title' => get_string('admin', 'theme_n2018'),
+            'aria-label' => get_string('admin', 'theme_n2018'),
         );
 
         return html_writer::link($url, $gearicon, $attributes);
@@ -244,7 +242,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
     protected function render_badge_count() {
         global $CFG;
         // Add the messages popover.
-        if (!empty($CFG->messaging) && !empty(get_config('theme_snap', 'messagestoggle'))) {
+        if (!empty($CFG->messaging) && !empty(get_config('theme_n2018', 'messagestoggle'))) {
             return '<span class="conversation_badge_count hidden"></span>';
         }
         return '';
@@ -259,9 +257,9 @@ class core_renderer extends \theme_boost\output\core_renderer {
             return '';
         }
 
-        $messagesheading = get_string('messages', 'theme_snap');
+        $messagesheading = get_string('messages', 'theme_n2018');
         $o = '<h2>'.$messagesheading.'</h2>';
-        $o .= '<div id="snap-personal-menu-messages"></div>';
+        $o .= '<div id="n2018-personal-menu-messages"></div>';
 
         $messagseurl = new moodle_url('/message/');
         $o .= $this->column_header_icon_link('viewmessaging', 'messages', $messagseurl);
@@ -280,9 +278,9 @@ class core_renderer extends \theme_boost\output\core_renderer {
             return '';
         }
 
-        $forumpostsheading = get_string('forumposts', 'theme_snap');
+        $forumpostsheading = get_string('forumposts', 'theme_n2018');
         $o = '<h2>'.$forumpostsheading.'</h2>
-        <div id="snap-personal-menu-forumposts"></div>';
+        <div id="n2018-personal-menu-forumposts"></div>';
         $forumurl = new moodle_url('/mod/forum/user.php', ['id' => $USER->id]);
         $o .= $this->column_header_icon_link('viewforumposts', 'forumposts', $forumurl);
         return $o;
@@ -299,7 +297,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
      * @param string $attributes
      * @return string
      */
-    public function snap_media_object($url, $image, $title, $meta, $content, $extraclasses = '', $attributes = '') {
+    public function n2018_media_object($url, $image, $title, $meta, $content, $extraclasses = '', $attributes = '') {
         $formatoptions = new stdClass;
         $formatoptions->filter = false;
         $title = format_text($title, FORMAT_HTML, $formatoptions);
@@ -308,13 +306,13 @@ class core_renderer extends \theme_boost\output\core_renderer {
         $metastr = '';
         // For forum posts meta is an array with the course title / forum name.
         if (is_array($meta)) {
-            $metastr = '<span class="snap-media-meta">';
+            $metastr = '<span class="n2018-media-meta">';
             foreach ($meta as $metaitem) {
                 $metastr .= $metaitem.'<br>';
             }
             $metastr .= '</span>';
         } else if ($meta) {
-            $metastr = '<span class="snap-media-meta">' .$meta.'</span>';
+            $metastr = '<span class="n2018-media-meta">' .$meta.'</span>';
         }
 
         $title = '<h3>' .$title. '</h3>' .$content;
@@ -326,7 +324,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
                 'class' => $extraclasses,
                 'attributes' => $attributes
         ];
-        return $this->render_from_template('theme_snap/media_object', $data);
+        return $this->render_from_template('theme_n2018/media_object', $data);
     }
 
 
@@ -344,10 +342,10 @@ class core_renderer extends \theme_boost\output\core_renderer {
     }
 
     /**
-     * Output moodle blocks and Snap wrapper with edit button.
+     * Output moodle blocks and N2018 wrapper with edit button.
      * @return string
      */
-    public function snap_blocks() {
+    public function n2018_blocks() {
         global $COURSE, $OUTPUT, $PAGE;
 
         $editblocks = '';
@@ -361,7 +359,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
                 $editstring = get_string('turneditingoff');
             } else {
                 $url->param('edit', 'on');
-                $editstring = get_string('editcoursecontent', 'theme_snap');
+                $editstring = get_string('editcoursecontent', 'theme_n2018');
             }
             $editblocks = '<div class="text-center"><a href="'.$url.'" class="btn btn-primary">'.$editstring.'</a></div><br>';
         }
@@ -376,20 +374,20 @@ class core_renderer extends \theme_boost\output\core_renderer {
 
     protected function render_callstoaction() {
 
-        $mobilemenu = '<div id="snap-pm-mobilemenu">';
-        $mobilemenu .= $this->mobile_menu_link('courses', 'courses', '#snap-pm-courses');
+        $mobilemenu = '<div id="n2018-pm-mobilemenu">';
+        $mobilemenu .= $this->mobile_menu_link('courses', 'courses', '#n2018-pm-courses');
         $deadlines = $this->render_deadlines();
         if (!empty($deadlines)) {
             $columns[] = $deadlines;
-            $mobilemenu .= $this->mobile_menu_link('deadlines', 'calendar', '#snap-personal-menu-deadlines');
+            $mobilemenu .= $this->mobile_menu_link('deadlines', 'calendar', '#n2018-personal-menu-deadlines');
         }
 
         $graded = $this->render_graded();
         $grading = $this->render_grading();
         if (empty($grading)) {
-            $gradebookmenulink = $this->mobile_menu_link('recentfeedback', 'grading', '#snap-personal-menu-graded');
+            $gradebookmenulink = $this->mobile_menu_link('recentfeedback', 'grading', '#n2018-personal-menu-graded');
         } else {
-            $gradebookmenulink = $this->mobile_menu_link('grading', 'grading', '#snap-personal-menu-grading');
+            $gradebookmenulink = $this->mobile_menu_link('grading', 'grading', '#n2018-personal-menu-grading');
         }
         if (!empty($grading)) {
             $columns[] = $grading;
@@ -402,13 +400,13 @@ class core_renderer extends \theme_boost\output\core_renderer {
         $messages = $this->render_messages();
         if (!empty($messages)) {
             $columns[] = $messages;
-            $mobilemenu .= $this->mobile_menu_link('messages', 'messages', '#snap-personal-menu-messages');
+            $mobilemenu .= $this->mobile_menu_link('messages', 'messages', '#n2018-personal-menu-messages');
         }
 
         $forumposts = $this->render_forumposts();
         if (!empty($forumposts)) {
             $columns[] = $forumposts;
-            $mobilemenu .= $this->mobile_menu_link('forumposts', 'forumposts', '#snap-personal-menu-forumposts');
+            $mobilemenu .= $this->mobile_menu_link('forumposts', 'forumposts', '#n2018-personal-menu-forumposts');
         }
 
         $mobilemenu .= '</div>';
@@ -468,9 +466,9 @@ class core_renderer extends \theme_boost\output\core_renderer {
             return '';
         }
 
-        $gradingheading = get_string('grading', 'theme_snap');
+        $gradingheading = get_string('grading', 'theme_n2018');
         $o = "<h2>$gradingheading</h2>";
-        $o .= '<div id="snap-personal-menu-grading"></div>';
+        $o .= '<div id="n2018-personal-menu-grading"></div>';
 
         return $o;
     }
@@ -486,9 +484,9 @@ class core_renderer extends \theme_boost\output\core_renderer {
             return '';
         }
 
-        $recentfeedback = get_string('recentfeedback', 'theme_snap');
+        $recentfeedback = get_string('recentfeedback', 'theme_n2018');
         $o = "<h2>$recentfeedback</h2>";
-        $o .= '<div id="snap-personal-menu-graded"></div>';
+        $o .= '<div id="n2018-personal-menu-graded"></div>';
         $url = new moodle_url('/grade/report/mygrades.php');
         $o .= $this->column_header_icon_link('viewmyfeedback', 'tick', $url);
         return $o;
@@ -505,9 +503,9 @@ class core_renderer extends \theme_boost\output\core_renderer {
             return '';
         }
 
-        $deadlinesheading = get_string('deadlines', 'theme_snap');
+        $deadlinesheading = get_string('deadlines', 'theme_n2018');
         $o = "<h2>$deadlinesheading</h2>";
-        $o .= '<div id="snap-personal-menu-deadlines"></div>';
+        $o .= '<div id="n2018-personal-menu-deadlines"></div>';
         $calurl = $CFG->wwwroot.'/calendar/view.php?view=month';
         $o .= $this->column_header_icon_link('viewcalendar', 'calendar', $calurl);
         return $o;
@@ -525,12 +523,12 @@ class core_renderer extends \theme_boost\output\core_renderer {
         $loginurl = $CFG->wwwroot.'/login/index.php';
         $loginatts = [
             'aria-haspopup' => 'true',
-            'class' => 'btn btn-primary snap-login-button js-snap-pm-trigger',
+            'class' => 'btn btn-default n2018-login-button js-n2018-pm-trigger',
         ];
-        if (!empty($CFG->alternateloginurl) or !empty($CFG->theme_snap_disablequicklogin)) {
+        if (!empty($CFG->alternateloginurl) or !empty($CFG->theme_n2018_disablequicklogin)) {
             $loginurl = $CFG->wwwroot.'/login/index.php';
             $loginatts = [
-                'class' => 'btn btn-primary snap-login-button',
+                'class' => 'btn btn-default n2018-login-button',
             ];
         }
         // This check is here for the front page login.
@@ -546,7 +544,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
      * @throws \moodle_exception
      */
     public function render_course_card(course_card $card) {
-        return $this->render_from_template('theme_snap/course_cards', $card);
+        return $this->render_from_template('theme_n2018/course_cards', $card);
     }
 
     /**
@@ -557,7 +555,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
         if (empty($methods->potentialidps)) {
             return '';
         }
-        return $this->render_from_template('theme_snap/login_alternative_methods', $methods);
+        return $this->render_from_template('theme_n2018/login_alternative_methods', $methods);
     }
 
     /**
@@ -577,7 +575,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
             ];
 
             if ($PAGE->pagetype !== 'login-index') {
-                return $this->render_from_template('theme_snap/login', $data);
+                return $this->render_from_template('theme_n2018/login', $data);
             } else {
                 return '';
             }
@@ -592,7 +590,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
 
         // User name and link to profile.
         $fullnamelink = '<a href="' .s($CFG->wwwroot). '/user/profile.php"
-                    title="' .s(get_string('viewyourprofile', 'theme_snap')). '"
+                    title="' .s(get_string('viewyourprofile', 'theme_n2018')). '"
                     class="h1" role="heading" aria-level="1">'
                     .format_string(fullname($USER)). '</a>';
 
@@ -600,7 +598,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
         $realfullnamelink = '';
         if (\core\session\manager::is_loggedinas()) {
             $realuser = \core\session\manager::get_realuser();
-            $realfullnamelink = '<br>' .get_string('via', 'theme_snap'). ' ' .format_string(fullname($realuser, true));
+            $realfullnamelink = '<br>' .get_string('via', 'theme_n2018'). ' ' .format_string(fullname($realuser, true));
         }
 
         // User quicklinks.
@@ -617,7 +615,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
             'title' => get_string('preferences')
         ];
         $logoutlink = [
-            'id' => 'snap-pm-logout',
+            'id' => 'n2018-pm-logout',
             'link' => s($CFG->wwwroot).'/login/logout.php?sesskey='.sesskey(),
             'title' => get_string('logout')
         ];
@@ -719,7 +717,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
             'updates' => $this->render_callstoaction()
         ];
 
-        return $this->render_from_template('theme_snap/personal_menu', $data);
+        return $this->render_from_template('theme_n2018/personal_menu', $data);
     }
 
     /**
@@ -745,14 +743,14 @@ class core_renderer extends \theme_boost\output\core_renderer {
             $userpicture->size = 100;
             $picture = $this->render($userpicture);
 
-            $menu = '<span class="hidden-xs-down">' .get_string('menu', 'theme_snap'). '</span>';
+            $menu = '<span class="hidden-xs-down">' .get_string('menu', 'theme_n2018'). '</span>';
             $badge = $this->render_badge_count();
             $linkcontent = $picture.$menu.$badge;
             $attributes = array(
                 'aria-haspopup' => 'true',
-                'class' => 'js-snap-pm-trigger snap-my-courses-menu',
-                'id' => 'snap-pm-trigger',
-                'aria-controls' => 'snap-pm',
+                'class' => 'js-n2018-pm-trigger n2018-my-courses-menu',
+                'id' => 'n2018-pm-trigger',
+                'aria-controls' => 'n2018-pm',
             );
             $output .= html_writer::link('#', $linkcontent, $attributes);
         }
@@ -786,7 +784,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
         global $PAGE;
         if (has_capability('moodle/course:changesummary', $PAGE->context)) {
             $vars = ['accepttypes' => local::supported_coverimage_typesstr()];
-            return $this->render_from_template('theme_snap/cover_image_selector', $vars);
+            return $this->render_from_template('theme_n2018/cover_image_selector', $vars);
         }
         return null;
     }
@@ -827,7 +825,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
         }
         $slides[0]->active = 'active';
         $data['slides'] = $slides;
-        return $this->render_from_template('theme_snap/carousel', $data);
+        return $this->render_from_template('theme_n2018/carousel', $data);
     }
 
     /**
@@ -871,13 +869,13 @@ class core_renderer extends \theme_boost\output\core_renderer {
 
         // For the front page we add the site strapline.
         if ($this->page->pagelayout == 'frontpage') {
-            $heading .= '<p class="snap-site-description">' . format_string($this->page->theme->settings->subtitle) . '</p>';
+            $heading .= '<p class="n2018-site-description">' . format_string($this->page->theme->settings->subtitle) . '</p>';
         }
         if ($this->page->user_is_editing() && $this->page->pagelayout == 'frontpage') {
-            $url = new moodle_url('/admin/settings.php', ['section' => 'themesettingsnap']);
+            $url = new moodle_url('/admin/settings.php', ['section' => 'themesettingn2018']);
             $link = html_writer::link($url,
-                            get_string('changefullname', 'theme_snap'),
-                            ['class' => 'btn btn-secondary btn-sm']);
+                            get_string('changefullname', 'theme_n2018'),
+                            ['class' => 'btn btn-default btn-sm']);
             $heading .= $link;
         }
         return $heading;
@@ -992,7 +990,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
 
             $imagestyle = '';
 
-            $imgarr = \theme_snap\local::extract_first_image($message);
+            $imgarr = \theme_n2018\local::extract_first_image($message);
             if ($imgarr) {
                 $imageurl   = s($imgarr['src']);
                 $imagestyle = " style=\"background-image:url('$imageurl')\"";
@@ -1001,21 +999,20 @@ class core_renderer extends \theme_boost\output\core_renderer {
             $name    = format_string($discussion->name, true, array('context' => $context));
             $date    = userdate($discussion->timemodified, get_string('strftimedatetime', 'langconfig'));
 
-            $message = format_text($message, $discussion->messageformat, ['context' => $context]);
-
-            $readmorebtn = "<a class='btn btn-secondary toggle' href='".
+            $readmorebtn = "<a class='btn btn-default toggle' href='".
                 $CFG->wwwroot."/mod/forum/discuss.php?d=".$discussion->discussion."'>".
-                get_string('readmore', 'theme_snap')."</a>";
+                get_string('readmore', 'theme_n2018')."</a>";
 
             $preview = '';
             $newsimage = '';
             if (!$imagestyle) {
-                $preview = html_to_text($message, 0, false);
+                $preview = format_text($message, $discussion->messageformat, ['context' => $context]);
+                $preview = html_to_text($preview, 0, false);
                 $preview = "<div class='news-article-preview'><p>".shorten_text($preview, 200)."</p>
                 <p class='text-right'>".$readmorebtn."</p></div>";
             } else {
                 $newsimage = '<div class="news-article-image toggle"'.$imagestyle.' title="'.
-                    get_string('readmore', 'theme_snap').'"></div>';
+                    get_string('readmore', 'theme_n2018').'"></div>';
             }
             $close = get_string('closebuttontitle', 'moodle');
             $output .= <<<HTML
@@ -1030,7 +1027,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
     {$preview}
     <div class="news-article-message" tabindex="-1">
         {$message}
-        <div><hr><a class="snap-action-icon snap-icon-close toggle" href="#">
+        <div><hr><a class="n2018-action-icon n2018-icon-close toggle" href="#">
         <small>{$close}</small></a></div>
     </div>
 </div>
@@ -1038,8 +1035,8 @@ HTML;
         }
         $actionlinks = html_writer::link(
             new moodle_url('/mod/forum/view.php', array('id' => $cm->id)),
-            get_string('morenews', 'theme_snap'),
-            array('class' => 'btn btn-secondary')
+            get_string('morenews', 'theme_n2018'),
+            array('class' => 'btn btn-default')
         );
         if (forum_user_can_post_discussion($forum, $currentgroup, $groupmode, $cm, $context)) {
             $actionlinks .= html_writer::link(
@@ -1056,14 +1053,14 @@ HTML;
     }
 
     /**
-     * add in additional classes that are used for Snap
+     * add in additional classes that are used for N2018
      * get rid of YUI stuff so we can style it with bootstrap
      *
      * @param array $additionalclasses
      * @return array|string
      */
     public function body_css_classes(array $additionalclasses = array()) {
-        global $PAGE, $COURSE, $SESSION, $CFG;
+        global $PAGE, $COURSE, $SESSION;
 
         $classes = parent::body_css_classes($additionalclasses);
         $classes = explode (' ', $classes);
@@ -1076,7 +1073,7 @@ HTML;
             $onfrontpage = ($PAGE->pagetype === 'site-index');
             $onuserdashboard = ($PAGE->pagetype === 'my-index');
             if ($openfixyafterlogin && !isguestuser() && ($onfrontpage || $onuserdashboard)) {
-                $classes[] = 'snap-pm-open';
+                $classes[] = 'n2018-pm-open';
             }
         }
         unset($SESSION->justloggedin);
@@ -1088,6 +1085,8 @@ HTML;
             'local-joulegrader-view',
             'blocks-conduit-view',
             'blocks-reports-view',
+            'grade-report-joulegrader-index',
+            'grade-report-nortongrader-index',
             'admin-setting-modsettinglti',
             'blocks-campusvue-view',
             'enrol-instances',
@@ -1112,63 +1111,16 @@ HTML;
 
         // Add resource display class.
         if (!empty($PAGE->theme->settings->resourcedisplay)) {
-            $classes[] = 'snap-resource-'.$PAGE->theme->settings->resourcedisplay;
+            $classes[] = 'n2018-resource-'.$PAGE->theme->settings->resourcedisplay;
         } else {
-            $classes[] = 'snap-resource-card';
+            $classes[] = 'n2018-resource-card';
         }
 
-        // Add theme-snap class so modules can customise css for snap.
-        $classes[] = 'theme-snap';
-
-        if (!empty($CFG->allowcategorythemes)) {
-            // This duplicates code triggered by allowcategorythemes, so no
-            // need to repeat it if that setting is on.
-            $catids = array_keys($PAGE->categories);
-            // Immediate parent category is always output by core code.
-            array_shift($catids);
-            foreach ($catids as $catid) {
-                $classes[] = 'category-' . $catid;
-            }
-            // Put class category-x on body when loading editcategory page on course.
-            // Categories and parent categories are added in ascendant order.
-            if (strpos($PAGE->url->get_path(), "course/editcategory.php") !== false && $PAGE->url->get_param('id') !== null) {
-                $parentcategories = self::get_parentcategories($PAGE->url->get_param('id'));
-                foreach ($parentcategories as $category) {
-                    $classes[] = 'category-' . $category;
-                }
-            }
-
-            // Put class category-x on body when loading add new course page.
-            // Categories and parent categories are added in ascendant order.
-            if (strpos($PAGE->url->get_path(), "course/edit.php") !== false && $PAGE->url->get_param('category') !== null) {
-                $parentcategories = self::get_parentcategories($PAGE->url->get_param('category'));
-                foreach ($parentcategories as $category) {
-                    $classes[] = 'category-' . $category;
-                }
-            }
-        }
-
-        // Remove duplicates if necessary.
-        $classes = array_unique($classes);
+        // Add theme-n2018 class so modules can customise css for n2018.
+        $classes[] = 'theme-n2018';
 
         $classes = implode(' ', $classes);
         return $classes;
-    }
-
-    /**
-     * Returns all parent categories hierarchy from a category id
-     * @param int $id
-     * @return array
-     * @throws \moodle_exception
-     */
-    private function get_parentcategories($id) {
-        global $DB;
-        $category = $DB->get_record('course_categories', array('id' => $id));
-        if (!$category) {
-            throw new \moodle_exception('unknowncategory');
-        }
-        $parentcategoryids = explode('/', trim($category->path, '/'));
-        return $parentcategoryids;
     }
 
     /**
@@ -1177,34 +1129,27 @@ HTML;
      * rather than inside them.
      */
     public function confirm($message, $continue, $cancel) {
-        // We need plain styling of confirm boxes on upgrade because we don't know which stylesheet we have (it could be
-        // from any previous version of Moodle).
-        if ($continue instanceof single_button) {
-            $continue->primary = true;
-        } else if (is_string($continue)) {
-            $continue = new single_button(new moodle_url($continue), get_string('continue'), 'post', true);
+        if (is_string($continue)) {
+            $continue = new \single_button(new moodle_url($continue), get_string('continue'), 'post');
         } else if ($continue instanceof moodle_url) {
-            $continue = new \single_button($continue, get_string('continue'), 'post', true);
-        } else {
-            throw new coding_exception(
+            $continue = new \single_button($continue, get_string('continue'), 'post');
+        } else if (!$continue instanceof \single_button) {
+            throw new \coding_exception(
                 'The continue param to $OUTPUT->confirm() must be either a URL (string/moodle_url) or a single_button instance.'
             );
         }
 
-        if ($cancel instanceof single_button) {
-            $output = '';
-        } else if (is_string($cancel)) {
-            $cancel = new single_button(new moodle_url($cancel), get_string('cancel'), 'get');
+        if (is_string($cancel)) {
+            $cancel = new \single_button(new moodle_url($cancel), get_string('cancel'), 'get');
         } else if ($cancel instanceof moodle_url) {
             $cancel = new \single_button($cancel, get_string('cancel'), 'get');
-        } else {
-            throw new coding_exception(
+        } else if (!$cancel instanceof \single_button) {
+            throw new \coding_exception(
                 'The cancel param to $OUTPUT->confirm() must be either a URL (string/moodle_url) or a single_button instance.'
             );
         }
 
-        $output = $this->box_start('generalbox snap-continue-cancel', 'notice');
-        $output .= html_writer::tag('h4', get_string('confirm'));
+        $output = $this->box_start('generalbox n2018-continue-cancel', 'notice');
         $output .= html_writer::tag('p', $message);
         $output .= html_writer::tag('div', $this->render($continue) . $this->render($cancel), array('class' => 'buttons'));
         $output .= $this->box_end();
@@ -1216,6 +1161,49 @@ HTML;
         // only need to provide one SVG, see MDL-47082.
         $imagename = \preg_replace('/-\d\d\d?$/', '', $imagename);
         return $this->page->theme->image_url($imagename, $component);
+    }
+
+    /**
+     * Override parent to (optionally) remove the nav block.
+     *
+     * Always show when Behat tests are running as it is used by core
+     * tests to navigate around the site.
+     *
+     * @todo For 2.7, when this will no longer be an option, we should
+     * automatically turn off the nav block to stop all this at the source.
+     */
+    public function blocks_for_region($region) {
+        $blockcontents = $this->page->blocks->get_content_for_region($region, $this);
+        if (!empty($this->page->theme->settings->hidenavblock) && !defined('BEHAT_SITE_RUNNING')) {
+            $blockcontents = array_filter($blockcontents, function ($bc) {
+                if (!$bc instanceof \block_contents) {
+                    return true;
+                }
+                $isnavblock = strpos($bc->attributes['class'], 'block_navigation') !== false;
+                return !$isnavblock;
+            });
+        }
+
+        $blocks = $this->page->blocks->get_blocks_for_region($region);
+
+        $lastblock = null;
+        $zones = array();
+        foreach ($blocks as $block) {
+            $zones[] = $block->title;
+        }
+        $output = '';
+
+        foreach ($blockcontents as $bc) {
+            if ($bc instanceof \block_contents) {
+                    $output .= $this->block($bc, $region);
+                    $lastblock = $bc->title;
+            } else if ($bc instanceof \block_move_target) {
+                $output .= $this->block_move_target($bc, $zones, $lastblock, $region);
+            } else {
+                throw new \coding_exception('Unexpected type of thing (' . get_class($bc) . ') found in list of block contents.');
+            }
+        }
+        return $output;
     }
 
     /**
@@ -1255,7 +1243,7 @@ HTML;
                 format_text($forumpath, FORMAT_HTML, $formatoptions)
             ];
             $formattedsubject = '<p>' .format_text($activity->content->subject, FORMAT_HTML, $formatoptions). '</p>';
-            $output .= $this->snap_media_object($url, $picture, $fullname, $meta, $formattedsubject);
+            $output .= $this->n2018_media_object($url, $picture, $fullname, $meta, $formattedsubject);
         }
         return $output;
     }
@@ -1273,7 +1261,7 @@ HTML;
         $datafromcache = ' data-from-cache="'.$fromcache.'" ';
 
         if (empty($events)) {
-            return '<p class="small"'.$datafromcache.'>' . get_string('nodeadlines', 'theme_snap') . '</p>';
+            return '<p class="small"'.$datafromcache.'>' . get_string('nodeadlines', 'theme_n2018') . '</p>';
         }
 
         $o = '';
@@ -1303,18 +1291,18 @@ HTML;
                 $meta = $this->friendly_datetime($deadline);
                 // Add completion meta data for students (exclude anyone who can grade them).
                 if (!has_capability('mod/assign:grade', $cm->context)) {
-                    /** @var \theme_snap_core_course_renderer $courserenderer */
+                    /** @var \theme_n2018_core_course_renderer $courserenderer */
                     $courserenderer = $PAGE->get_renderer('core', 'course', RENDERER_TARGET_GENERAL);
                     $activitymeta = activity::module_meta($cm);
-                    $meta .= '<div class="snap-completion-meta">' .
+                    $meta .= '<div class="n2018-completion-meta">' .
                         $courserenderer->submission_cta($cm, $activitymeta) .
                         '</div>';
                 }
-                $o .= $this->snap_media_object($cm->url, $modimage, $eventtitle, $meta, '', '', $datafromcache);
+                $o .= $this->n2018_media_object($cm->url, $modimage, $eventtitle, $meta, '', '', $datafromcache);
             }
         }
         if (empty($o)) {
-            return '<p>' . get_string('nodeadlines', 'theme_snap') . '</p>';
+            return '<p>' . get_string('nodeadlines', 'theme_n2018') . '</p>';
         }
         return $o;
     }
@@ -1339,7 +1327,7 @@ HTML;
                 if (!empty($PAGE->theme->settings->$image)) {
                     $url = $this->page->theme->setting_file_url($image, $image);
                     $img = '<!--Card image-->
-                    <img class="snap-feature-image" src="' .$url. '" alt="" role="presentation">';
+                    <img class="n2018-feature-image" src="' .$url. '" alt="" role="presentation">';
                 }
                 $features[] = $this->feature_spot_card($PAGE->theme->settings->$title, $img, $PAGE->theme->settings->$text);
             }
@@ -1349,7 +1337,7 @@ HTML;
         if ($fscount > 0) {
             $fstitle = '';
             if (!empty($PAGE->theme->settings->fs_heading)) {
-                $fstitle = '<h2 class="snap-feature-spots-heading">' .s($PAGE->theme->settings->fs_heading). '</h2>';
+                $fstitle = '<h2 class="n2018-feature-spots-heading">' .s($PAGE->theme->settings->fs_heading). '</h2>';
             }
 
             $colclass = '';
@@ -1363,19 +1351,19 @@ HTML;
             $cards = '';
             $i = 1;
             foreach ($features as $feature) {
-                $cards .= '<div class="' .$colclass. '" id="snap-feature-' .$i. '">' .$feature. '</div>';
+                $cards .= '<div class="' .$colclass. '" id="n2018-feature-' .$i. '">' .$feature. '</div>';
                 $i++;
             }
 
             $fsedit = '';
             if ($this->page->user_is_editing()) {
-                $url = new moodle_url('/admin/settings.php?section=themesettingsnap#themesnapfeaturespots');
-                $link = html_writer::link($url, get_string('featurespotsedit', 'theme_snap'), ['class' => 'btn btn-primary']);
+                $url = new moodle_url('/admin/settings.php?section=themesettingn2018#themen2018featurespots');
+                $link = html_writer::link($url, get_string('featurespotsedit', 'theme_n2018'), ['class' => 'btn btn-primary']);
                 $fsedit = '<p class="text-center">'.$link.'</p>';
             }
 
             // Build feature spots.
-            $featurespots = '<div id="snap-feature-spots">';
+            $featurespots = '<div id="n2018-feature-spots">';
             $featurespots .= $fstitle;
             $featurespots .= '<div class="row">' .$cards. '</div>';
             $featurespots .= $fsedit;
@@ -1395,14 +1383,14 @@ HTML;
      * @return string
      */
     protected function feature_spot_card($title, $image, $text) {
-        $card = '<div class="snap-feature">
+        $card = '<div class="n2018-feature">
             <!--Card content-->
-            <div class="snap-feature-block">
+            <div class="n2018-feature-block">
                 ' .$image. '
                 <!--Title-->
-                <h3 class="snap-feature-title h5">' .s($title). '</h3>
+                <h3 class="n2018-feature-title h5">' .s($title). '</h3>
                 <!--Content-->
-                <p class="snap-feature-text">' .s($text). '</p>
+                <p class="n2018-feature-text">' .s($text). '</p>
             </div>
             <!--/.Card content-->
         </div>';
@@ -1421,11 +1409,11 @@ HTML;
             return '';
         }
 
-        return $this->render_from_template('theme_snap/featured_courses', $fc);
+        return $this->render_from_template('theme_n2018/featured_courses', $fc);
     }
 
     /**
-     * Return snap modchooser modal.
+     * Return n2018 modchooser modal.
      * @return string
      */
     protected function course_modchooser() {
@@ -1437,12 +1425,6 @@ HTML;
         }
         // Retrieve all modules with associated metadata.
         $sectionreturn = null;
-
-        foreach ($modnames as $module => $name) {
-            if (is_callable('mr_off') && mr_off($module, '_MR_MODULES')) {
-                unset($modnames[$module]);
-            }
-        }
         $modules = get_module_metadata($COURSE, $modnames, $sectionreturn);
         foreach ($modules as $mod) {
             $help = !empty($mod->help) ? $mod->help : '';
@@ -1457,15 +1439,10 @@ HTML;
                     'help' => $helptext
                 ];
             } else {
-                // The name should be 'lti' instead of the module's URL which is the one we're getting.
-                $imageurl = $OUTPUT->image_url('icon', $mod->name);
-                if (strpos($mod->name, 'lti:') !== false) {
-                    $imageurl = $OUTPUT->image_url('icon', 'lti');
-                }
                 $activities[] = (object) [
                     'name' => $mod->name,
                     'title' => $mod->title,
-                    'icon' => ''.$imageurl,
+                    'icon' => ''.$OUTPUT->image_url('icon', $mod->name),
                     'link' => $mod->link .'&section=0', // Section is replaced by js.
                     'help' => $helptext
                 ];
@@ -1477,7 +1454,7 @@ HTML;
              'resources' => $resources
         ];
 
-        return $this->render_from_template('theme_snap/course_modchooser_modal', $data);
+        return $this->render_from_template('theme_n2018/course_modchooser_modal', $data);
     }
 
     /**
@@ -1497,7 +1474,7 @@ HTML;
         if ($item->key === 'courseadmin') {
             $this->add_switchroleto_navigation_node($item);
         }
-
+      
         return parent::render_navigation_node($item);;
     }
 
@@ -1515,7 +1492,7 @@ HTML;
         $coursecontext = context_course::instance($course->id);
         // Switch roles.
         $roles = array();
-        $assumedrole = $this->in_alternative_role();
+        $assumedrole = self::in_alternative_role();
         if ($assumedrole !== false) {
             $roles[0] = get_string('switchrolereturn');
         }
@@ -1536,6 +1513,7 @@ HTML;
             if ((count($roles) == 1 && array_key_exists(0, $roles)) || $assumedrole !== false) {
                 $switchroles->force_open();
             }
+
             foreach ($roles as $key => $name) {
                 $url = new moodle_url('/course/switchrole.php', array(
                     'id' => $course->id, 'sesskey' => sesskey(),
@@ -1557,15 +1535,17 @@ HTML;
      *
      * @return bool|int The role(int) if the user is in another role, false otherwise
      */
-    public function in_alternative_role() {
+    
+    
+    public static function in_alternative_role() {
         global $USER, $PAGE;
 
         $course = $PAGE->course;
         $coursecontext = context_course::instance($course->id);
 
         if (!empty($USER->access['rsw']) && is_array($USER->access['rsw'])) {
-            if (!empty($this->page->context) && !empty($USER->access['rsw'][$this->page->context->path])) {
-                return $USER->access['rsw'][$this->page->context->path];
+			if (!empty($PAGE->context) && !empty($USER->access['rsw'][$PAGE->context->path])) {
+				return $USER->access['rsw'][$PAGE->context->path];
             }
             foreach ($USER->access['rsw'] as $key => $role) {
                 if (strpos($coursecontext->path, $key) === 0) {
@@ -1575,12 +1555,12 @@ HTML;
         }
         return false;
     }
-
+    
     /**
-     * Return Snap's logo url for login.mustache
+     * Return N2018's logo url for login.mustache
      *
-     * @param int $maxwidth not used in Snap.
-     * @param int $maxheight not used in Snap.
+     * @param int $maxwidth not used in N2018.
+     * @param int $maxheight not used in N2018.
      * @return moodle_url|false
      */
     public function get_logo_url($maxwidth = null, $maxheight = 200) {
@@ -1596,7 +1576,7 @@ HTML;
         $filepath = $PAGE->theme->settings->logo;
         $syscontextid = context_system::instance()->id;
 
-        $url = moodle_url::make_file_url("$CFG->httpswwwroot/pluginfile.php", "/$syscontextid/theme_snap/logo/$itemid".$filepath);
+        $url = moodle_url::make_file_url("$CFG->httpswwwroot/pluginfile.php", "/$syscontextid/theme_n2018/logo/$itemid".$filepath);
         return $url;
     }
 
@@ -1642,7 +1622,7 @@ HTML;
 
         $intelliboardheading = get_string('intelliboardroot', 'local_intelliboard');
         $o = '<h2>' .$intelliboardheading. '</h2>';
-        $o .= '<div id="snap-personal-menu-intelliboard">'
+        $o .= '<div id="n2018-personal-menu-intelliboard">'
                 .$links.
                 '</div>';
 
@@ -1685,21 +1665,15 @@ HTML;
     /**
      * This renders the navbar.
      * Uses bootstrap compatible html.
-     * @param string $coverimage
      */
-    public function navbar($coverimage = '') {
+    public function navbar() {
         global $COURSE, $CFG;
 
         require_once($CFG->dirroot.'/course/lib.php');
 
         $breadcrumbs = '';
         $courseitem = null;
-        $attr['class'] = 'js-snap-pm-trigger';
-
-        if (!empty($coverimage)) {
-            $attr['class'] .= ' mast-breadcrumb';
-        }
-        $snapmycourses = html_writer::link('#', get_string('menu', 'theme_snap'), $attr);
+        $n2018mycourses = html_writer::link('#', get_string('menu', 'theme_n2018'), array('class' => 'js-n2018-pm-trigger'));
 
         foreach ($this->page->navbar->get_items() as $item) {
             $item->hideicon = true;
@@ -1722,9 +1696,9 @@ HTML;
                 continue;
             }
 
-            // Replace my courses none-link with link to snap personal menu.
+            // Replace my courses none-link with link to n2018 personal menu.
             if ($item->key === 'mycourses') {
-                $breadcrumbs .= '<li class="breadcrumb-item">' .$snapmycourses. '</li>';
+                $breadcrumbs .= '<li class="breadcrumb-item">' .$n2018mycourses. '</li>';
                 continue;
             }
 
@@ -1743,7 +1717,7 @@ HTML;
                     if ($COURSE->format == 'topics' || $COURSE->format == 'weeks') {
                         $url .= '#section-'.$sectionnumber;
                         if ($item->text == get_string('general')) {
-                            $item->text = get_string('introduction', 'theme_snap');
+                            $item->text = get_string('introduction', 'theme_n2018');
                         }
                     } else {
                         $url = course_get_url($COURSE, $sectionnumber);
@@ -1754,11 +1728,7 @@ HTML;
 
             // Only output breadcrumb items which have links.
             if ($item->action !== null) {
-                $attr = [];
-                if (!empty($coverimage)) {
-                    $attr = ['class' => 'mast-breadcrumb'];
-                }
-                $link = html_writer::link($item->action, $item->text, $attr);
+                $link = html_writer::link($item->action, $item->text);
                 $breadcrumbs .= '<li class="breadcrumb-item">' .$link. '</li>';
             }
         }

@@ -15,26 +15,26 @@
     along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 }}
 {{!
- @package   theme_snap
+ @package   theme_n2018
  @copyright Copyright (c) 2017 Blackboard Inc.
  @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
 }}
 
-<nav id="snap-pm" tabindex="-1">
-    <div id="snap-pm-inner">
+<nav id="n2018-pm" tabindex="-1">
+    <div id="n2018-pm-inner">
         <!-- Header -->
-        <header id="snap-pm-header" class="clearfix">
+        <header id="n2018-pm-header" class="clearfix">
             <div class="pull-right">
-                <a id="snap-pm-close" class="js-snap-pm-trigger snap-action-icon snap-icon-close" href="#">
+                <a id="n2018-pm-close" class="js-n2018-pm-trigger n2018-action-icon n2018-icon-close" href="#">
                         <small>{{#str}}closebuttontitle{{/str}}</small>
                 </a>
             </div>
             <!-- User details -->
-            <div class="snap-pm-user">
+            <div class="n2018-pm-user">
                 {{{userpicture}}}
                 {{{fullnamelink}}}
                 {{{realfullnamelink}}}
-                <div id="snap-pm-header-quicklinks">
+                <div id="n2018-pm-header-quicklinks">
                 {{#quicklinks}}
                     <a {{#id}}id="{{.}}" {{/id}}href="{{link}}">{{title}}</a>
                 {{/quicklinks}}
@@ -45,9 +45,9 @@
         </header>
 
         <!-- Content -->
-        <div id="snap-pm-content" class="row">
+        <div id="n2018-pm-content" class="row">
             <!-- Courses -->
-            <section id="snap-pm-courses" class="col-lg-9">
+            <section id="n2018-pm-courses" class="col-lg-9">
                 <h2 class="sr-only">{{#str}}courses{{/str}}</h2>
 
 {{!
@@ -56,27 +56,27 @@
 
                 {{#coursenav}}
                     <!-- Nav tabs -->
-                    <ul class="nav nav-tabs" role="tablist" id="snap-pm-courses-nav">
+                    <ul class="nav nav-tabs" role="tablist" id="n2018-pm-courses-nav">
                             <li class="nav-item">
-                                <a class="nav-link active" aria-expanded="true" aria-controls="snap-pm-courses-current" href="#snap-pm-courses-current" id="snap-pm-tab-current" role="tab" data-toggle="tab">{{#str}}courses{{/str}}</a>
+                                <a class="nav-link active" aria-expanded="true" aria-controls="n2018-pm-courses-current" href="#n2018-pm-courses-current" id="n2018-pm-tab-current" role="tab" data-toggle="tab">{{#str}}courses{{/str}}</a>
                             </li>
                             {{#pastcourselist}}
                                 <li class="nav-item">
-                                    <a class="nav-link" href="#snap-pm-courses-{{year}}" aria-controls="snap-pm-courses-{{year}}" id="snap-pm-tab-{{year}}" role="tab" data-toggle="tab">{{year}}</a>
+                                    <a class="nav-link" href="#n2018-pm-courses-{{year}}" aria-controls="n2018-pm-courses-{{year}}" id="n2018-pm-tab-{{year}}" role="tab" data-toggle="tab">{{year}}</a>
                                 </li>
                             {{/pastcourselist}}
                     </ul>
 
                     <!-- Tab panes -->
-                    <div class="tab-content" id="snap-pm-courses-content">
+                    <div class="tab-content" id="n2018-pm-courses-content">
                         <!-- Current courses -->
-                        {{> theme_snap/personal_menu_current_courses }}
+                        {{> theme_n2018/personal_menu_current_courses }}
 
                         <!-- Past courses by year -->
                         {{#pastcourselist}}
-                            <div id="snap-pm-courses-{{year}}" class="tab-pane clearfix" role="tabpanel" aria-labelledby="hsnap-pm-tab-{{year}}">
+                            <div id="n2018-pm-courses-{{year}}" class="tab-pane clearfix" role="tabpanel" aria-labelledby="hn2018-pm-tab-{{year}}">
                                 {{#courses}}
-                                    {{> theme_snap/course_cards }}
+                                    {{> theme_n2018/course_cards }}
                                 {{/courses}}
                             </div>
                         {{/pastcourselist}}
@@ -89,13 +89,13 @@
 
                 {{^coursenav}}
                 <!-- Current courses -->
-                {{> theme_snap/personal_menu_current_courses }}
+                {{> theme_n2018/personal_menu_current_courses }}
                 {{/coursenav}}
 
                 {{{browseallcourses}}}
             </section>
             <!-- Updates -->
-            <div id="snap-pm-updates" class="col-lg-3">
+            <div id="n2018-pm-updates" class="col-lg-3">
                 {{#updates}}
                     {{#update}}
                         <section>{{{.}}}</section>

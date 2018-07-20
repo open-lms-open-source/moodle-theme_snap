@@ -15,12 +15,12 @@
 #
 # Tests for availability of course tools section.
 #
-# @package   theme_snap
+# @package   theme_n2018
 # @copyright Copyright (c) 2016 Blackboard Inc.
 # @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
 
-@theme @theme_snap
-Feature: When the moodle theme is set to Snap, a course tools section is available.
+@theme @theme_n2018
+Feature: When the moodle theme is set to N2018, a course tools section is available.
 
   Background:
     Given the following "courses" exist:
@@ -51,9 +51,9 @@ Feature: When the moodle theme is set to Snap, a course tools section is availab
     And I am on the course main page for "C1"
     And I click on "a[href=\"#coursetools\"]" "css_element"
     Then I should see "Course Dashboard" in the "#coursetools" "css_element"
-    And "#snap-student-dashboard" "css_element" should exist
-    And ".snap-student-dashboard-progress" "css_element" <seecompletion> exist
-    And ".snap-student-dashboard-grade" "css_element" <seegrade> exist
+    And "#n2018-student-dashboard" "css_element" should exist
+    And ".n2018-student-dashboard-progress" "css_element" <seecompletion> exist
+    And ".n2018-student-dashboard-grade" "css_element" <seegrade> exist
     Examples:
       | format | completionenabled | gradebookaccessible | seecompletion | seegrade   |
       | topics | Enabled           | Allow               | should        | should     |
@@ -83,9 +83,9 @@ Feature: When the moodle theme is set to Snap, a course tools section is availab
     # first time - that's a core issue though.
     And I am on the course main page for "C1"
     Then I should see "Course Dashboard" in the "#coursetools" "css_element"
-    And "#snap-student-dashboard" "css_element" should exist
-    And ".snap-student-dashboard-progress" "css_element" <seecompletion> exist
-    And ".snap-student-dashboard-grade" "css_element" <seegrade> exist
+    And "#n2018-student-dashboard" "css_element" should exist
+    And ".n2018-student-dashboard-progress" "css_element" <seecompletion> exist
+    And ".n2018-student-dashboard-grade" "css_element" <seegrade> exist
     Examples:
       | completionenabled | gradebookaccessible | seecompletion | seegrade   |
       | Enabled           | Allow               | should        | should     |
@@ -110,39 +110,12 @@ Feature: When the moodle theme is set to Snap, a course tools section is availab
     # first time - that's a core issue though.
     And I am on the course main page for "C1"
     Then I should see "Course Dashboard" in the "#coursetools" "css_element"
-    And "#snap-student-dashboard" "css_element" should exist
-    And ".snap-student-dashboard-progress" "css_element" <seecompletion> exist
-    And ".snap-student-dashboard-grade" "css_element" <seegrade> exist
+    And "#n2018-student-dashboard" "css_element" should exist
+    And ".n2018-student-dashboard-progress" "css_element" <seecompletion> exist
+    And ".n2018-student-dashboard-grade" "css_element" <seegrade> exist
     Examples:
       | type    | completionenabled | gradebookaccessible | seecompletion | seegrade   |
       | general | Enabled           | Allow               | should        | should     |
       | general | Disabled          | Prohibit            | should not    | should not |
       | single  | Enabled           | Allow               | should        | should     |
       | single  | Disabled          | Prohibit            | should not    | should not |
-
-  @javascript
-  Scenario: Grade and progress are shown to students only when allowed by settings.
-    Given completion tracking is "Disabled" for course "C1"
-    And I set the following system permissions of "Student" role:
-      | capability                | permission            |
-      | gradereport/overview:view | Prohibit              |
-    When I log in as "student1"
-    And I am on the course main page for "C1"
-    And I click on "a[href=\"#coursetools\"]" "css_element"
-    And ".snap-student-dashboard-progress" "css_element" should not exist
-    And ".snap-student-dashboard-grade" "css_element" should not exist
-    Given completion tracking is "Enabled" for course "C1"
-    And I set the following system permissions of "Student" role:
-      | capability                | permission            |
-      | gradereport/overview:view | Allow                 |
-    And I am on the course main page for "C1"
-    And I click on "a[href=\"#coursetools\"]" "css_element"
-    And ".snap-student-dashboard-progress" "css_element" should exist
-    And ".snap-student-dashboard-grade" "css_element" should exist
-    Given the following config values are set as admin:
-      | showcoursegradepersonalmenu | 0 | theme_snap |
-    And I reload the page
-    And I am on the course main page for "C1"
-    And I click on "a[href=\"#coursetools\"]" "css_element"
-    And ".snap-student-dashboard-progress" "css_element" should exist
-    And ".snap-student-dashboard-grade" "css_element" should exist

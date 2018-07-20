@@ -19,7 +19,7 @@
  * This layout is baed on a moodle site index.php file but has been adapted to show news items in a different
  * way.
  *
- * @package   theme_snap
+ * @package   theme_n2018
  * @copyright Copyright (c) 2015 Moodlerooms Inc. (http://www.moodlerooms.com)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */

@@ -3,7 +3,7 @@
 // -------------------------
 
 // Reset core styles.
-.course_category_tree .category > .info,
+.course_category_tree .category>.info,
 .coursebox .info,
 .coursebox {
     background-color: transparent;
@@ -19,7 +19,7 @@
     border-bottom: 1px solid $gray-lighter;
 
     .coursename {
-        display: inline;
+        display : inline;
     }
     .info .coursename {
         font-size: $font-size-h6;
@@ -96,7 +96,7 @@
         max-width: 100%;
     }
     // Catagory descriptions.
-    .snap-category-description {
+    .n2018-category-description {
         max-width: 43.5em;
         padding: 2%;
         background-color: white;
@@ -117,7 +117,7 @@
 }
 
 // Catagory expand/collapse & associated icons.
-.snap-js-loaded .course_category_tree {
+.n2018-js-loaded .course_category_tree {
     .category.collapsed > .content {
         display: none;
     }
@@ -142,7 +142,7 @@
 .course_category_tree .collapsible-actions {
     visibility: hidden;
 }
-.snap-js-loaded .course_category_tree .collapsible-actions {
+.n2018-js-loaded .course_category_tree .collapsible-actions {
     visibility: visible;
 }
 

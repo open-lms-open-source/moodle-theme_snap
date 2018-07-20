@@ -15,12 +15,12 @@
 #
 # Tests for personal menu course feedback in course cards.
 #
-# @package    theme_snap
+# @package    theme_n2018
 # @copyright  Copyright (c) 2017 Moodlerooms Inc. (http://www.moodlerooms.com)
 # @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
 
-@theme @theme_snap
-Feature: When the moodle theme is set to Snap, students and teachers can open a personal menu where they can find
+@theme @theme_n2018
+Feature: When the moodle theme is set to N2018, students and teachers can open a personal menu where they can find
   a list of courses they are enrolled in with a feedback available or grade.
 
   Background:
@@ -38,7 +38,7 @@ Feature: When the moodle theme is set to Snap, students and teachers can open a 
       | user     | course | role    |
       | student1 | C1     | student |
     And the following config values are set as admin:
-      | showcoursegradepersonalmenu | <showgrades> | theme_snap |
+      | showcoursegradepersonalmenu | <showgrades> | theme_n2018 |
     And I log in as "student1"
     And I open the personal menu
     Then I should see "Course 1"

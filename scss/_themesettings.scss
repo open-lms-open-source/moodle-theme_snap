@@ -1,13 +1,10 @@
 // -------------------------
-// Snap theme setting page.
+// N2018 theme setting page.
 // -------------------------
 // -------------------------
 // Main form.
 // -------------------------
-
-/* stylelint-disable declaration-no-important*/
-
-#page-admin-setting-themesettingsnap {
+#page-admin-setting-themesettingn2018{
     #region-main,
     .settingsform {
         max-width: 100%;
@@ -19,7 +16,7 @@
     }
 
     .form-description,
-    .dndupload-message {
+    .dndupload-message  {
         font-size: small;
     }
 
@@ -44,7 +41,7 @@
 // -------------------------
 // Tab styles.
 // -------------------------
-#snap-admin-tabs {
+#n2018-admin-tabs {
     border-bottom: 0;
     .nav-item {
         float: none;
@@ -58,7 +55,7 @@
 // -------------------------
 // Tab - Basics.
 // -------------------------
-#page-admin-setting-themesettingsnap .tab-pane:not(#themesnapcolorcategories) {
+#page-admin-setting-themesettingn2018 {
 
     #admin-fullname,
     #admin-themecolor,
@@ -115,21 +112,14 @@
         margin-left: .5rem;
     }
 
-    #id_s_theme_snap_customcss {
+    #id_s_theme_n2018_customcss {
         font-family: $font-family-monospace;
     }
 }
-#page-admin-setting-themesettingsnap .tab-pane#themesnapcolorcategories {
-
-    #id_s_theme_snap_category_color {
-        font-family: monospace;
-    }
-}
-
 // -------------------------
 // Tab - Cover display.
 // -------------------------
-#themesnapcoverdisplay {
+#themen2018coverdisplay {
     @include make-row();
 
     div[id^="admin-slide_"] {
@@ -148,7 +138,7 @@
 // -------------------------
 // Tab - Personal menu.
 // -------------------------
-#themesnappersonalmenu {
+#themen2018personalmenu {
     @include make-row();
     .form-item {
         @include make-col(4);
@@ -158,7 +148,7 @@
 // -------------------------
 // Tab - Feature spots.
 // -------------------------
-#themesnapfeaturespots {
+#themen2018featurespots {
     .formsettingheading {
         font-family: $font-family-sans-serif;
     }
@@ -211,7 +201,7 @@
 // -------------------------
 // Tab - Featured courses.
 // -------------------------
-#themesnapfeaturedcourses {
+#themen2018featuredcourses {
 
     .formsettingheading {
         font-family: $font-family-sans-serif;
@@ -249,7 +239,7 @@
 // -------------------------
 // Tab - Course display.
 // -------------------------
-#themesnapcoursedisplay {
+#themen2018coursedisplay {
     @include make-row();
 
     .form-item {
@@ -257,10 +247,10 @@
         margin-bottom: 1rem;
     }
 
-    #s_theme_snap_leftnav_list,
-    #s_theme_snap_leftnav_top,
-    #s_theme_snap_resourcedisplay_list,
-    #s_theme_snap_resourcedisplay_card {
+    #s_theme_n2018_leftnav_list,
+    #s_theme_n2018_leftnav_top,
+    #s_theme_n2018_resourcedisplay_list,
+    #s_theme_n2018_resourcedisplay_card {
         @include make-col(6);
         text-align: center;
 
@@ -271,17 +261,17 @@
             display: block;
         }
     }
-    #s_theme_snap_leftnav_list:before {
+    #s_theme_n2018_leftnav_list:before {
         content: url("[[pix:theme|toc_list]]");
     }
-    #s_theme_snap_leftnav_top:before {
+    #s_theme_n2018_leftnav_top:before {
         content: url("[[pix:theme|toc_top]]");
     }
 
-    #s_theme_snap_resourcedisplay_list:before {
+    #s_theme_n2018_resourcedisplay_list:before {
         content: url("[[pix:theme|list]]");
     }
-    #s_theme_snap_resourcedisplay_card:before {
+    #s_theme_n2018_resourcedisplay_card:before {
         content: url("[[pix:theme|cards]]");
     }
 
@@ -300,7 +290,7 @@
 // -------------------------
 // Tab - Social media.
 // -------------------------
-#themesnapsocialmedia {
+#themen2018socialmedia {
     @include make-row();
     .form-item {
         @include make-col(6);

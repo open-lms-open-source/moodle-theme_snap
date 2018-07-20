@@ -13,15 +13,15 @@
 # You should have received a copy of the GNU General Public License
 # along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 #
-# Tests deleting sections in snap.
+# Tests deleting sections in n2018.
 #
-# @package    theme_snap
+# @package    theme_n2018
 # @author     Guy Thomas
 # @copyright  2016 Blackboard Ltd
 # @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
 
-@theme @theme_snap
-Feature: When the moodle theme is set to Snap, teachers can delete sections without having to reload the page.
+@theme @theme_n2018
+Feature: When the moodle theme is set to N2018, teachers can delete sections without having to reload the page.
 
   Background:
     Given the following "courses" exist:
@@ -56,12 +56,12 @@ Feature: When the moodle theme is set to Snap, teachers can delete sections with
 
     And I follow "Topic one"
     Then "#section-1" "css_element" should exist
-    When I click on "#section-1 .snap-section-editing.actions a.snap-delete" "css_element"
+    When I click on "#section-1 .n2018-section-editing.actions a.n2018-delete" "css_element"
     Then I should see section delete dialog
     And I cancel dialog
     Then I should not see section delete dialog
     And I should see "Topic one"
-    When I click on "#section-1 .snap-section-editing.actions a.snap-delete" "css_element"
+    When I click on "#section-1 .n2018-section-editing.actions a.n2018-delete" "css_element"
     Then I should see section delete dialog
     When I press "Delete Section"
     Then I should not see "Topic one" in the "#section-1" "css_element"
@@ -73,4 +73,4 @@ Feature: When the moodle theme is set to Snap, teachers can delete sections with
     Given I log in as "student1"
     And I am on the course main page for "C1"
     And I follow "Topic 1"
-    Then "#section-1 .snap-section-editing.actions a.snap-delete" "css_element" should not exist
+    Then "#section-1 .n2018-section-editing.actions a.n2018-delete" "css_element" should not exist

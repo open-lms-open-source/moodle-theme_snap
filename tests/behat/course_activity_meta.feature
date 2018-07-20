@@ -13,18 +13,18 @@
 # You should have received a copy of the GNU General Public License
 # along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 #
-# Tests for Snap personal menu.
+# Tests for N2018 personal menu.
 #
-# @package    theme_snap
+# @package    theme_n2018
 # @copyright  Copyright (c) 2017 Blackboard Inc.
 # @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
 
-@theme @theme_snap
-Feature: When the moodle theme is set to Snap, students see meta data against course activities.
+@theme @theme_n2018
+Feature: When the moodle theme is set to N2018, students see meta data against course activities.
 
   Background:
     Given the following config values are set as admin:
-      | theme | snap |
+      | theme | n2018 |
     And the following "courses" exist:
       | fullname | shortname | category | groupmode | theme |
       | Course 1 | C1 | 0 | 1 | |

@@ -15,101 +15,101 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 defined('MOODLE_INTERNAL') || die;// Main settings.
-use theme_snap\admin_setting_configradiobuttons;
+use theme_n2018\admin_setting_configradiobuttons;
 
-$snapsettings = new admin_settingpage('themesnapcoverdisplay', get_string('coverdisplay', 'theme_snap'));
+$n2018settings = new admin_settingpage('themen2018coverdisplay', get_string('coverdisplay', 'theme_n2018'));
 
-$name = 'theme_snap/cover_image';
-$heading = new lang_string('poster', 'theme_snap');
+$name = 'theme_n2018/cover_image';
+$heading = new lang_string('poster', 'theme_n2018');
 $description = '';
 $setting = new admin_setting_heading($name, $heading, $description);
-$snapsettings->add($setting);
+$n2018settings->add($setting);
 
 // Cover image file setting.
-$name = 'theme_snap/poster';
-$title = new lang_string('poster', 'theme_snap');
-$description = new lang_string('posterdesc', 'theme_snap');
+$name = 'theme_n2018/poster';
+$title = new lang_string('poster', 'theme_n2018');
+$description = new lang_string('posterdesc', 'theme_n2018');
 $opts = array('accepted_types' => array('.png', '.jpg', '.gif', '.webp', '.svg'));
 $setting = new admin_setting_configstoredfile($name, $title, $description, 'poster', 0, $opts);
-$setting->set_updatedcallback('theme_snap_process_site_coverimage');
-$snapsettings->add($setting);
+$setting->set_updatedcallback('theme_n2018_process_site_coverimage');
+$n2018settings->add($setting);
 
 // Cover carousel.
-$name = 'theme_snap/cover_carousel_heading';
-$heading = new lang_string('covercarousel', 'theme_snap');
-$description = new lang_string('covercarouseldescription', 'theme_snap');
+$name = 'theme_n2018/cover_carousel_heading';
+$heading = new lang_string('covercarousel', 'theme_n2018');
+$description = new lang_string('covercarouseldescription', 'theme_n2018');
 $setting = new admin_setting_heading($name, $heading, $description);
-$snapsettings->add($setting);
+$n2018settings->add($setting);
 
-$name = 'theme_snap/cover_carousel';
-$title = new lang_string('covercarouselon', 'theme_snap');
+$name = 'theme_n2018/cover_carousel';
+$title = new lang_string('covercarouselon', 'theme_n2018');
 $description = '';
 $default = $unchecked;
 $setting = new admin_setting_configcheckbox($name, $title, $description, $default, $checked, $unchecked);
-$snapsettings->add($setting);
+$n2018settings->add($setting);
 
 
-$name = 'theme_snap/slide_one_image';
-$title = new lang_string('coverimage', 'theme_snap');
+$name = 'theme_n2018/slide_one_image';
+$title = new lang_string('coverimage', 'theme_n2018');
 $description = '';
 $opts = array('accepted_types' => array('.png', '.jpg', '.gif', '.webp', '.svg'));
 $setting = new admin_setting_configstoredfile($name, $title, $description, 'slide_one_image', 0, $opts);
-$snapsettings->add($setting);
+$n2018settings->add($setting);
 
-$name = 'theme_snap/slide_two_image';
-$title = new lang_string('coverimage', 'theme_snap');
+$name = 'theme_n2018/slide_two_image';
+$title = new lang_string('coverimage', 'theme_n2018');
 $description = '';
 $opts = array('accepted_types' => array('.png', '.jpg', '.gif', '.webp', '.svg'));
 $setting = new admin_setting_configstoredfile($name, $title, $description, 'slide_two_image', 0, $opts);
-$snapsettings->add($setting);
+$n2018settings->add($setting);
 
-$name = 'theme_snap/slide_three_image';
-$title = new lang_string('coverimage', 'theme_snap');
+$name = 'theme_n2018/slide_three_image';
+$title = new lang_string('coverimage', 'theme_n2018');
 $description = '';
 $opts = array('accepted_types' => array('.png', '.jpg', '.gif', '.webp', '.svg'));
 $setting = new admin_setting_configstoredfile($name, $title, $description, 'slide_three_image', 0, $opts);
-$snapsettings->add($setting);
+$n2018settings->add($setting);
 
-$name = 'theme_snap/slide_one_title';
-$title = new lang_string('title', 'theme_snap');
+$name = 'theme_n2018/slide_one_title';
+$title = new lang_string('title', 'theme_n2018');
 $description = '';
 $default = '';
 $setting = new admin_setting_configtext($name, $title, $description, $default);
-$snapsettings->add($setting);
+$n2018settings->add($setting);
 
-$name = 'theme_snap/slide_two_title';
-$title = new lang_string('title', 'theme_snap');
+$name = 'theme_n2018/slide_two_title';
+$title = new lang_string('title', 'theme_n2018');
 $description = '';
 $default = '';
 $setting = new admin_setting_configtext($name, $title, $description, $default);
-$snapsettings->add($setting);
+$n2018settings->add($setting);
 
-$name = 'theme_snap/slide_three_title';
-$title = new lang_string('title', 'theme_snap');
+$name = 'theme_n2018/slide_three_title';
+$title = new lang_string('title', 'theme_n2018');
 $description = '';
 $default = '';
 $setting = new admin_setting_configtext($name, $title, $description, $default);
-$snapsettings->add($setting);
+$n2018settings->add($setting);
 
-$name = 'theme_snap/slide_one_subtitle';
-$title = new lang_string('subtitle', 'theme_snap');
+$name = 'theme_n2018/slide_one_subtitle';
+$title = new lang_string('subtitle', 'theme_n2018');
 $description = '';
 $default = '';
 $setting = new admin_setting_configtext($name, $title, $description, $default);
-$snapsettings->add($setting);
+$n2018settings->add($setting);
 
-$name = 'theme_snap/slide_two_subtitle';
-$title = new lang_string('subtitle', 'theme_snap');
+$name = 'theme_n2018/slide_two_subtitle';
+$title = new lang_string('subtitle', 'theme_n2018');
 $description = '';
 $default = '';
 $setting = new admin_setting_configtext($name, $title, $description, $default);
-$snapsettings->add($setting);
+$n2018settings->add($setting);
 
-$name = 'theme_snap/slide_three_subtitle';
-$title = new lang_string('subtitle', 'theme_snap');
+$name = 'theme_n2018/slide_three_subtitle';
+$title = new lang_string('subtitle', 'theme_n2018');
 $description = '';
 $default = '';
 $setting = new admin_setting_configtext($name, $title, $description, $default);
-$snapsettings->add($setting);
+$n2018settings->add($setting);
 
-$settings->add($snapsettings);
+$settings->add($n2018settings);

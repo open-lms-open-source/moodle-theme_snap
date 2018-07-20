@@ -16,8 +16,8 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-use theme_snap\webservice\definition_helper;
-use theme_snap\renderables\course_toc;
+use theme_n2018\webservice\definition_helper;
+use theme_n2018\renderables\course_toc;
 
 /**
  * Testable version of definition_helper.
@@ -156,7 +156,7 @@ class wsparam_notype {
  * @copyright Copyright (c) 2016 Blackboard Inc.
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class theme_snap_webservice_definition_helper_test extends advanced_testcase {
+class theme_n2018_webservice_definition_helper_test extends advanced_testcase {
 
     public function test_classname() {
         $this->resetAfterTest();
@@ -318,8 +318,7 @@ EOF;
     }
 
     public function test_convert_ws_param_no_type() {
-        $this->expectException('coding_exception');
-        $this->expectExceptionMessage('Type not specified');
+        $this->setExpectedException('coding_exception', 'Type not specified');
         new definition_helper_testable(new wsparam_notype());
     }
 
@@ -338,7 +337,7 @@ EOF;
         $definition = $helper->get_definition();
 
         // Wipe cache so we can test nothing in cache.
-        $cache = cache::make('theme_snap', 'webservicedefinitions');
+        $cache = cache::make('theme_n2018', 'webservicedefinitions');
         $data = $cache->delete($classname);
 
         // Test empty cache.

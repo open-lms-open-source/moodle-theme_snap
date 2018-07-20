@@ -16,75 +16,75 @@
 
 defined('MOODLE_INTERNAL') || die;// Main settings.
 
-use theme_snap\admin_setting_configcourseid;
-$snapsettings = new admin_settingpage('themesnapfeaturedcourses', get_string('featuredcourses', 'theme_snap'));
+use theme_n2018\admin_setting_configcourseid;
+$n2018settings = new admin_settingpage('themen2018featuredcourses', get_string('featuredcourses', 'theme_n2018'));
 
 // Featured courses instructions.
-$name = 'theme_snap/fc_instructions';
+$name = 'theme_n2018/fc_instructions';
 $heading = '';
-$description = get_string('featuredcourseshelp', 'theme_snap');
+$description = get_string('featuredcourseshelp', 'theme_n2018');
 $setting = new admin_setting_heading($name, $heading, $description);
-$snapsettings->add($setting);
+$n2018settings->add($setting);
 
 // Featured courses heading.
-$name = 'theme_snap/fc_heading';
-$title = new lang_string('featuredcoursesheading', 'theme_snap');
+$name = 'theme_n2018/fc_heading';
+$title = new lang_string('featuredcoursesheading', 'theme_n2018');
 $description = '';
-$default = new lang_string('featuredcourses', 'theme_snap');
+$default = new lang_string('featuredcourses', 'theme_n2018');
 $setting = new admin_setting_configtext($name, $title, $description, $default, PARAM_RAW_TRIMMED, 50);
-$snapsettings->add($setting);
+$n2018settings->add($setting);
 
 // Featured courses.
-$name = 'theme_snap/fc_one';
-$title = new lang_string('featuredcourseone', 'theme_snap');
+$name = 'theme_n2018/fc_one';
+$title = new lang_string('featuredcourseone', 'theme_n2018');
 $description = '';
 $default = '0';
 $setting = new admin_setting_configcourseid($name, $title, $description, $default, PARAM_RAW_TRIMMED);
-$snapsettings->add($setting);
+$n2018settings->add($setting);
 
-$name = 'theme_snap/fc_two';
-$title = new lang_string('featuredcoursetwo', 'theme_snap');
+$name = 'theme_n2018/fc_two';
+$title = new lang_string('featuredcoursetwo', 'theme_n2018');
 $setting = new admin_setting_configcourseid($name, $title, $description, $default, PARAM_RAW_TRIMMED);
-$snapsettings->add($setting);
+$n2018settings->add($setting);
 
-$name = 'theme_snap/fc_three';
-$title = new lang_string('featuredcoursethree', 'theme_snap');
+$name = 'theme_n2018/fc_three';
+$title = new lang_string('featuredcoursethree', 'theme_n2018');
 $setting = new admin_setting_configcourseid($name, $title, $description, $default, PARAM_RAW_TRIMMED);
-$snapsettings->add($setting);
+$n2018settings->add($setting);
 
-$name = 'theme_snap/fc_four';
-$title = new lang_string('featuredcoursefour', 'theme_snap');
+$name = 'theme_n2018/fc_four';
+$title = new lang_string('featuredcoursefour', 'theme_n2018');
 $setting = new admin_setting_configcourseid($name, $title, $description, $default, PARAM_RAW_TRIMMED);
-$snapsettings->add($setting);
+$n2018settings->add($setting);
 
-$name = 'theme_snap/fc_five';
-$title = new lang_string('featuredcoursefive', 'theme_snap');
+$name = 'theme_n2018/fc_five';
+$title = new lang_string('featuredcoursefive', 'theme_n2018');
 $setting = new admin_setting_configcourseid($name, $title, $description, $default, PARAM_RAW_TRIMMED);
-$snapsettings->add($setting);
+$n2018settings->add($setting);
 
-$name = 'theme_snap/fc_six';
-$title = new lang_string('featuredcoursesix', 'theme_snap');
+$name = 'theme_n2018/fc_six';
+$title = new lang_string('featuredcoursesix', 'theme_n2018');
 $setting = new admin_setting_configcourseid($name, $title, $description, $default, PARAM_RAW_TRIMMED);
-$snapsettings->add($setting);
+$n2018settings->add($setting);
 
-$name = 'theme_snap/fc_seven';
-$title = new lang_string('featuredcourseseven', 'theme_snap');
+$name = 'theme_n2018/fc_seven';
+$title = new lang_string('featuredcourseseven', 'theme_n2018');
 $setting = new admin_setting_configcourseid($name, $title, $description, $default, PARAM_RAW_TRIMMED);
-$snapsettings->add($setting);
+$n2018settings->add($setting);
 
-$name = 'theme_snap/fc_eight';
-$title = new lang_string('featuredcourseeight', 'theme_snap');
+$name = 'theme_n2018/fc_eight';
+$title = new lang_string('featuredcourseeight', 'theme_n2018');
 $setting = new admin_setting_configcourseid($name, $title, $description, $default, PARAM_RAW_TRIMMED);
-$snapsettings->add($setting);
+$n2018settings->add($setting);
 
 // Browse all courses link.
-$name = 'theme_snap/fc_browse_all';
-$title = new lang_string('featuredcoursesbrowseall', 'theme_snap');
-$description = new lang_string('featuredcoursesbrowsealldesc', 'theme_snap');
+$name = 'theme_n2018/fc_browse_all';
+$title = new lang_string('featuredcoursesbrowseall', 'theme_n2018');
+$description = new lang_string('featuredcoursesbrowsealldesc', 'theme_n2018');
 $checked = '1';
 $unchecked = '0';
 $default = $unchecked;
 $setting = new admin_setting_configcheckbox($name, $title, $description, $default, $checked, $unchecked);
-$snapsettings->add($setting);
+$n2018settings->add($setting);
 
-$settings->add($snapsettings);
+$settings->add($n2018settings);

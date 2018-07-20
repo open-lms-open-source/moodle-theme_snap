@@ -2,9 +2,6 @@
  * Print style sheet.
  *
  */
-
-/* stylelint-disable declaration-no-important*/
-
 @media print {
     body {
         color: $body-color;
@@ -24,15 +21,11 @@
         margin: 2cm;
     }
 
-    h1,
-    h2,
-    h3,
-    h4,
-    h5 {
+    h1,h2,h3,h4,h5 {
         page-break-after: avoid;
     }
 
-    // Printing a course page.
+     // Printing a course page.
     .path-course-view {
         .section {
             width: 100%;
@@ -42,33 +35,35 @@
             page-break-inside: auto;
         }
         // Section at the top of the printout.
-        .course-content > ul li.section.state-visible {
+        .course-content>ul li.section.state-visible {
             position: absolute;
+            top: 0;
             page-break-inside: avoid;
         }
         // Remove padding as edit commands are hidden.
-        .section li.snap-asset.snap-can-edit {
+        .section li.n2018-asset.n2018-can-edit {
             padding-bottom: 0 !important;
         }
         // Hide left toc.
-        #snap-course-wrapper > .row > .col-lg-3 {
+        #n2018-course-wrapper > .row > .col-lg-3 {
             display: none;
         }
         // Full width content.
-        #snap-course-wrapper > .row > .col-lg-9 {
+        #n2018-course-wrapper > .row > .col-lg-9 {
             width: 100%;
         }
         // Hide all the things!
         #page-header,
-        #snap-course-footer,
+        #xray-js-menu,
+        #n2018-course-footer,
         #course-toc,
         #toc-mobile-menu-toggle,
         .summary .edit-summary,
         .section_footer,
-        .snap-modchooser,
-        .snap-dropzone,
-        .snap-asset-actions,
-        .snap-section-editing {
+        .n2018-modchooser,
+        .n2018-dropzone,
+        .n2018-asset-actions,
+        .n2018-section-editing {
             display: none;
         }
     }

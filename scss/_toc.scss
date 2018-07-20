@@ -13,14 +13,12 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 /**
- * Snap Table of contents.
+ * N2018 Table of contents.
  *
- * @package   theme_snap
+ * @package   theme_n2018
  * @copyright Copyright (c) 2017 Blackboard Inc. (http://www.moodlerooms.com)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-
-/* stylelint-disable declaration-no-important*/
 
 // -------------------------
 // Course toc & appendicies.
@@ -50,31 +48,31 @@
     }
 
     /* Section currently displayed. */
-    .snap-visible-section a {
+    .n2018-visible-section a {
         color: $body-color;
         text-decoration: none;
     }
 
     /* Completed section icon. */
-    .snap-section-complete {
+    .n2018-section-complete {
         width: 1.3em;
         height: 1.3em;
     }
 
-    /* CSS mididots. */
-    .text + .text:before {
+     /* CSS mididots. */
+     .text + .text:before {
         content: " · ";
-    }
+     }
 
-    .text small {
-        font-weight: 300;
-    }
+     .text small {
+         font-weight: 300;
+     }
 }
 
 // -------------------------
 // Display when toc is part of page body.
 // -------------------------
-#snap-course-wrapper {
+#n2018-course-wrapper {
     margin: 0 4%;
 
     #course-toc,
@@ -106,10 +104,10 @@
                     border-radius: 50%;
                 }
             }
-            &.current .chapter-title:before {
+            &.current .chapter-title:before{
                 background-color: $brand-success;
             }
-            &.draft .chapter-title:before {
+            &.draft .chapter-title:before{
                 background-color: $brand-warning;
             }
         }
@@ -135,6 +133,8 @@
         content: '';
     }
 }
+
+
 
 // -------------------------
 // Display when toc is part of page header.
@@ -174,7 +174,7 @@
         }
     }
 
-    #chapters > :first-child {
+    #chapters >:first-child {
         list-style: none;
     }
 
@@ -199,34 +199,35 @@
     max-width: 100%;
 
     &:before {
-        content: '';
-        background: transparent url("[[pix:theme|search]]") no-repeat 50% 50%;
-        display: inline-block;
-        height: 1.5em;
-        width: 1.5em;
+    content: '';
+    background: transparent url("[[pix:theme|search]]") no-repeat 50% 50%;
+    display: inline-block;
+    height: 1.5em;
+    width: 1.5em;
 
-        // Magin numbers for positioning
-        margin-right: -2.5em;
-        margin-bottom: -0.3em;
+    // Magin numbers for positioning
+    margin-right: -2.5em;
+    margin-bottom: -0.3em;
     }
 }
 
 #toc-search-input {
-    border-radius: 50%;
-    width: 3em;
-    height: 3em;
-    padding: 0 1.5em;
-    background-color: transparent;
-    border: 1px solid transparent;
-    @include alakazam();
+     border: none;
+     border-radius: 50%;
+     width: 3em;
+     height: 3em;
+     padding: 0 1.5em;
+     background-color: transparent;
+     border: 1px solid transparent;
+     @include alakazam();
 
-    &.state-active,
-    &:focus {
+     &.state-active,
+     &:focus {
         border-radius: 0;
         box-shadow: none;
         width: 320px;
         background-color: white;
-    }
+     }
 }
 
 // Hidden list - always.
@@ -239,7 +240,7 @@
     position: absolute;
     width: 320px;
     z-index: 3;
-    background-color: rgba(255, 255, 255, 0.9);
+    background-color: rgba(255,255,255,0.9);
     box-shadow: 0 1px 4px rgba(0, 0, 0, 0.24);
 
     li {
@@ -290,7 +291,7 @@
 // -------------------------
 // Course search in left toc.
 // -------------------------
-#snap-course-wrapper {
+#n2018-course-wrapper {
     #toc-search-results {
         left: -0.7em;
     }
@@ -364,7 +365,7 @@
     }
 
     #toc-search,
-    #toc-desktop-menu-heading {
+    #toc-desktop-menu-heading{
         display: none;
     }
     // Small screen course tools and create new section links.

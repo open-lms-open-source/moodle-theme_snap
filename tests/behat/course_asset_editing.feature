@@ -15,13 +15,13 @@
 #
 # Tests for course resource and activity editing features.
 #
-# @package    theme_snap
+# @package    theme_n2018
 # @copyright  2015 Guy Thomas <gthomas@moodlerooms.com>
 # @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
 
 
-@theme @theme_snap
-Feature: When the moodle theme is set to Snap, teachers edit assets without entering edit mode.
+@theme @theme_n2018
+Feature: When the moodle theme is set to N2018, teachers edit assets without entering edit mode.
 
   Background:
    Given the following "courses" exist:
@@ -48,8 +48,8 @@ Feature: When the moodle theme is set to Snap, teachers edit assets without ente
     And I log in as "student1"
     And I am on the course main page for "C1"
     And I follow "Topic 1"
-   Then ".snap-activity[data-type='Assignment']" "css_element" should exist
-    And "div.dropdown snap-edit-more-dropdown" "css_element" should not exist
+   Then ".n2018-activity[data-type='Assignment']" "css_element" should exist
+    And "div.dropdown n2018-edit-more-dropdown" "css_element" should not exist
 
   @javascript
   Scenario: In read mode, non-editing teacher can see teacher's actions.
@@ -60,8 +60,8 @@ Feature: When the moodle theme is set to Snap, teachers edit assets without ente
     And I am on the course main page for "C1"
     And I follow "Topic 1"
    Then "#section-1" "css_element" should exist
-    And ".snap-activity[data-type='Assignment']" "css_element" should exist
-    And "div.dropdown snap-edit-more-dropdown" "css_element" should not exist
+    And ".n2018-activity[data-type='Assignment']" "css_element" should exist
+    And "div.dropdown n2018-edit-more-dropdown" "css_element" should not exist
 
   @javascript
   Scenario: In read mode, teacher hides then shows activity.
@@ -72,13 +72,13 @@ Feature: When the moodle theme is set to Snap, teachers edit assets without ente
     And I am on the course main page for "C1"
     And I follow "Topic 1"
    Then "#section-1" "css_element" should exist
-    And ".snap-activity[data-type='Assignment']" "css_element" should exist
-    And I click on ".snap-activity[data-type='Assignment'] a.snap-edit-asset-more" "css_element"
-    And I click on ".snap-activity[data-type='Assignment'] a.js_snap_hide" "css_element"
-   Then I wait until ".snap-activity[data-type='Assignment'].draft" "css_element" exists
-    And I click on ".snap-activity[data-type='Assignment'] a.snap-edit-asset-more" "css_element"
-    And I click on ".snap-activity[data-type='Assignment'] a.js_snap_show" "css_element"
-   Then I wait until ".snap-activity[data-type='Assignment'].draft" "css_element" does not exist
+    And ".n2018-activity[data-type='Assignment']" "css_element" should exist
+    And I click on ".n2018-activity[data-type='Assignment'] a.n2018-edit-asset-more" "css_element"
+    And I click on ".n2018-activity[data-type='Assignment'] a.js_n2018_hide" "css_element"
+   Then I wait until ".n2018-activity[data-type='Assignment'].draft" "css_element" exists
+    And I click on ".n2018-activity[data-type='Assignment'] a.n2018-edit-asset-more" "css_element"
+    And I click on ".n2018-activity[data-type='Assignment'] a.js_n2018_show" "css_element"
+   Then I wait until ".n2018-activity[data-type='Assignment'].draft" "css_element" does not exist
 
   @javascript
   Scenario: In read mode, teacher hides then shows resource.
@@ -86,22 +86,22 @@ Feature: When the moodle theme is set to Snap, teachers edit assets without ente
     And I am on the course main page for "C1"
     And I follow "Topic 1"
    Then "#section-1" "css_element" should exist
-    And "#snap-drop-file-1" "css_element" should exist
+    And "#n2018-drop-file-1" "css_element" should exist
     And I upload file "test_text_file.txt" to section 1
-    Then ".snap-resource[data-type='text']" "css_element" should exist
-    And ".snap-resource[data-type='text'].draft" "css_element" should not exist
-    And I click on ".snap-resource[data-type='text'] a.snap-edit-asset-more" "css_element"
-    And I click on ".snap-resource[data-type='text'] a.js_snap_hide" "css_element"
-   Then I wait until ".snap-resource[data-type='text'].draft" "css_element" exists
+    Then ".n2018-resource[data-type='text']" "css_element" should exist
+    And ".n2018-resource[data-type='text'].draft" "css_element" should not exist
+    And I click on ".n2018-resource[data-type='text'] a.n2018-edit-asset-more" "css_element"
+    And I click on ".n2018-resource[data-type='text'] a.js_n2018_hide" "css_element"
+   Then I wait until ".n2018-resource[data-type='text'].draft" "css_element" exists
     # This is to test that the change persists.
     And I reload the page
-    And ".snap-resource[data-type='text'].draft" "css_element" should exist
-    And I click on ".snap-resource[data-type='text'] a.snap-edit-asset-more" "css_element"
-    And I click on ".snap-resource[data-type='text'] a.js_snap_show" "css_element"
-   Then I wait until ".snap-resource[data-type='text'].draft" "css_element" does not exist
+    And ".n2018-resource[data-type='text'].draft" "css_element" should exist
+    And I click on ".n2018-resource[data-type='text'] a.n2018-edit-asset-more" "css_element"
+    And I click on ".n2018-resource[data-type='text'] a.js_n2018_show" "css_element"
+   Then I wait until ".n2018-resource[data-type='text'].draft" "css_element" does not exist
     # This is to test that the change persists.
     And I reload the page
-    And ".snap-resource[data-type='text'].draft" "css_element" should not exist
+    And ".n2018-resource[data-type='text'].draft" "css_element" should not exist
 
   @javascript
   Scenario: In read mode, teacher duplicates activity.
@@ -112,14 +112,14 @@ Feature: When the moodle theme is set to Snap, teachers edit assets without ente
     And I am on the course main page for "C1"
     And I follow "Topic 1"
    Then "#section-1" "css_element" should exist
-    And ".snap-activity[data-type='Assignment']" "css_element" should exist
-    And ".snap-activity[data-type='Assignment'] + .snap-activity[data-type='Assignment']" "css_element" should not exist
-    And I click on ".snap-activity[data-type='Assignment'] a.snap-edit-asset-more" "css_element"
-    And I click on ".snap-activity[data-type='Assignment'] a.js_snap_duplicate" "css_element"
-   Then I wait until ".snap-activity[data-type='Assignment'] + .snap-activity[data-type='Assignment']" "css_element" exists
+    And ".n2018-activity[data-type='Assignment']" "css_element" should exist
+    And ".n2018-activity[data-type='Assignment'] + .n2018-activity[data-type='Assignment']" "css_element" should not exist
+    And I click on ".n2018-activity[data-type='Assignment'] a.n2018-edit-asset-more" "css_element"
+    And I click on ".n2018-activity[data-type='Assignment'] a.js_n2018_duplicate" "css_element"
+   Then I wait until ".n2018-activity[data-type='Assignment'] + .n2018-activity[data-type='Assignment']" "css_element" exists
     # This is to test that the duplication persists.
     And I reload the page
-    And ".snap-activity[data-type='Assignment'] + .snap-activity[data-type='Assignment']" "css_element" should exist
+    And ".n2018-activity[data-type='Assignment'] + .n2018-activity[data-type='Assignment']" "css_element" should exist
 
   @javascript
   Scenario: In read mode, teacher duplicates resource.
@@ -127,14 +127,14 @@ Feature: When the moodle theme is set to Snap, teachers edit assets without ente
     And I am on the course main page for "C1"
     And I follow "Topic 1"
    Then "#section-1" "css_element" should exist
-    And "#snap-drop-file-1" "css_element" should exist
+    And "#n2018-drop-file-1" "css_element" should exist
     When I upload file "test_text_file.txt" to section 1
-    Then ".snap-resource[data-type='text']" "css_element" should exist
-    And ".snap-resource[data-type='text'] + .snap-resource[data-type='text']" "css_element" should not exist
-    And I click on ".snap-resource[data-type='text'] a.snap-edit-asset-more" "css_element"
-    And I click on ".snap-resource[data-type='text'] a.js_snap_duplicate" "css_element"
-   Then I wait until ".snap-resource[data-type='text'] + .snap-resource[data-type='text']" "css_element" exists
+    Then ".n2018-resource[data-type='text']" "css_element" should exist
+    And ".n2018-resource[data-type='text'] + .n2018-resource[data-type='text']" "css_element" should not exist
+    And I click on ".n2018-resource[data-type='text'] a.n2018-edit-asset-more" "css_element"
+    And I click on ".n2018-resource[data-type='text'] a.js_n2018_duplicate" "css_element"
+   Then I wait until ".n2018-resource[data-type='text'] + .n2018-resource[data-type='text']" "css_element" exists
         # This is to test that the duplication persists.
     And I reload the page
-   Then ".snap-resource[data-type='text'] + .snap-resource[data-type='text']" "css_element" should exist
+   Then ".n2018-resource[data-type='text'] + .n2018-resource[data-type='text']" "css_element" should exist
 

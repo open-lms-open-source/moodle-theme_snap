@@ -16,13 +16,13 @@
 }}
 
 {{!
- @package   theme_snap
+ @package   theme_n2018
  @copyright Copyright (c) 2017 Blackboard Inc.
  @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
 }}
 
 {{!
-    @template theme_snap/course_modchooser_modal
+    @template theme_n2018/course_modchooser_modal
     Example context (json):
     {
         "tabs": {
@@ -30,7 +30,7 @@
                 [{
                     "name":"modname",
                     "title":"Mod human name",
-                    "icon":"/theme/image.php/snap/assign/0/icon",
+                    "icon":"/theme/image.php/n2018/assign/0/icon",
                     "link":"http://google.com",
                     "help":"help text"
                 }],
@@ -38,7 +38,7 @@
                 [{
                     "name":"resourcename",
                     "title":"Mod human name",
-                    "icon":"/theme/image.php/snap/assign/0/icon",
+                    "icon":"/theme/image.php/n2018/assign/0/icon",
                     "link":"http://google.com",
                     "help":"help text"
                 }]
@@ -47,14 +47,14 @@
 }}
 
 <!-- Modal -->
-<div data-section="0" class="modal fade" id="snap-modchooser-modal" tabindex="-1" role="dialog" aria-labelledby="snap-modchooser-title" aria-hidden="true">
+<div data-section="0" class="modal fade" id="n2018-modchooser-modal" tabindex="-1" role="dialog" aria-labelledby="n2018-modchooser-title" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="{{#str}}closebuttontitle{{/str}}">
                     <span aria-hidden="true">&times;</span>
                 </button>
-                <h6 class="modal-title" id="snap-modchooser-title">{{#str}}addresourceoractivity, theme_snap{{/str}}</h6>
+                <h6 class="modal-title" id="n2018-modchooser-title">{{#str}}addresourceoractivity, theme_n2018{{/str}}</h6>
             </div>
             <!-- Nav tabs -->
             <ul class="nav nav-tabs" role="tablist">
@@ -64,44 +64,44 @@
                 <li class="nav-item">
                     <a class="nav-link" data-toggle="tab" href="#resources" role="tab">{{#str}}resources{{/str}}</a>
                 </li>
-                <li class="nav-item pull-right" id="snap-modchooser-help-tab">
-                    <a class="nav-link iconhelp" data-toggle="tab" href="#help" role="tab">{{#str}}helpguide, theme_snap{{/str}} {{#pix}}help, theme_snap, {{#str}}helpguide, theme_snap{{/str}}{{/pix}}</a>
+                <li class="nav-item pull-right" id="n2018-modchooser-help-tab">
+                    <a class="nav-link iconhelp" data-toggle="tab" href="#help" role="tab">{{#str}}helpguide, theme_n2018{{/str}} {{#pix}}help, theme_n2018, {{#str}}helpguide, theme_n2018{{/str}}{{/pix}}</a>
                 </li>
             </ul>
 
             <!-- Tab panes -->
-            <div class="tab-content snap-modchooser-tabs">
+            <div class="tab-content n2018-modchooser-tabs">
             <br>
             {{#tabs}}
                 <div class="tab-pane row text-center active" id="activites" role="tabpanel">
                     {{#activities}}
-                        <div class="col-xs-3 snap-modchooser-activity">
-                            <a class="snap-modchooser-addlink" href="{{{link}}}"><img src="{{icon}}" class="svg-icon" alt="" role="presentation"><br>{{title}}</a>
+                        <div class="col-xs-3 n2018-modchooser-activity">
+                            <a class="n2018-modchooser-addlink" href="{{{link}}}"><img src="{{icon}}" class="svg-icon" alt="" role="presentation"><br>{{title}}</a>
                         </div>
                     {{/activities}}
                 </div>
                 <div class="tab-pane row text-center" id="resources" role="tabpanel">
                     {{#resources}}
-                        <div class="col-xs-3 snap-modchooser-resource">
-                            <a class="snap-modchooser-addlink" href="{{{link}}}"><img src="{{icon}}" class="svg-icon" alt="" role="presentation"><br>{{title}}</a>
+                        <div class="col-xs-3 n2018-modchooser-resource">
+                            <a class="n2018-modchooser-addlink" href="{{{link}}}"><img src="{{icon}}" class="svg-icon" alt="" role="presentation"><br>{{title}}</a>
                         </div>
                     {{/resources}}
                 </div>
                 <div class="tab-pane row text-center" id="help" role="tabpanel">
                     {{#activities}}
-                        <div class="col-xs-3 snap-modchooser-activity" id="snap-modchooser_{{name}}">
-                            <a class="snap-modchooser-addlink" href="{{{link}}}"><img src="{{icon}}" class="svg-icon" alt="" role="presentation"><br>{{title}}</a>
+                        <div class="col-xs-3 n2018-modchooser-activity" id="n2018-modchooser_{{name}}">
+                            <a class="n2018-modchooser-addlink" href="{{{link}}}"><img src="{{icon}}" class="svg-icon" alt="" role="presentation"><br>{{title}}</a>
                         </div>
-                        <div class="col-xs-8 snap-modchooser-help">
+                        <div class="col-xs-8 n2018-modchooser-help">
                             {{{help}}}
                         </div>
                         <div class="col-xs-12"><hr></div>
                     {{/activities}}
                     {{#resources}}
-                        <div class="col-xs-3 snap-modchooser-resource" id="snap-modchooser_{{name}}">
-                            <a class="snap-modchooser-addlink" href="{{{link}}}"><img src="{{icon}}" class="svg-icon" alt="" role="presentation"><br>{{title}}</a>
+                        <div class="col-xs-3 n2018-modchooser-resource" id="n2018-modchooser_{{name}}">
+                            <a class="n2018-modchooser-addlink" href="{{{link}}}"><img src="{{icon}}" class="svg-icon" alt="" role="presentation"><br>{{title}}</a>
                         </div>
-                        <div class="col-xs-8 snap-modchooser-help">
+                        <div class="col-xs-8 n2018-modchooser-help">
                             {{{help}}}
                         </div>
                         <div class="col-xs-12"><hr></div>

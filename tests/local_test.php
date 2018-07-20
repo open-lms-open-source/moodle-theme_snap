@@ -17,24 +17,24 @@
 /**
  * Local Tests
  *
- * @package   theme_snap
+ * @package   theme_n2018
  * @copyright Copyright (c) 2015 Moodlerooms Inc. (http://www.moodlerooms.com)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-namespace theme_snap\tests;
+namespace theme_n2018\tests;
 
-use theme_snap\local;
-use theme_snap\snap_base_test;
+use theme_n2018\local;
+use theme_n2018\n2018_base_test;
 
 defined('MOODLE_INTERNAL') || die();
 
 /**
- * @package   theme_snap
+ * @package   theme_n2018
  * @copyright Copyright (c) 2015 Moodlerooms Inc. (http://www.moodlerooms.com)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class theme_snap_local_test extends snap_base_test {
+class theme_n2018_local_test extends n2018_base_test {
 
     public function setUp() {
         global $CFG;
@@ -80,10 +80,10 @@ class theme_snap_local_test extends snap_base_test {
         $COURSE = get_course(SITEID);
 
         $CFG->enabledevicedetection = false;
-        $CFG->theme = 'snap';
+        $CFG->theme = 'n2018';
 
         $theme = local::resolve_theme();
-        $this->assertEquals('snap', $theme);
+        $this->assertEquals('n2018', $theme);
 
         $CFG->allowcoursethemes = true;
         $CFG->allowcategorythemes = true;
@@ -388,7 +388,7 @@ class theme_snap_local_test extends snap_base_test {
 
     /**
      * Imitates an admin setting the site cover image via the
-     * Snap theme settings page. Creates a file, sets a theme
+     * N2018 theme settings page. Creates a file, sets a theme
      * setting with the filname, then calls the callback triggered
      * by submitting the form.
      *
@@ -406,28 +406,28 @@ class theme_snap_local_test extends snap_base_test {
 
         $filerecord = array(
             'contextid' => $syscontext->id,
-            'component' => 'theme_snap',
+            'component' => 'theme_n2018',
             'filearea'  => 'poster',
             'itemid'    => 0,
             'filepath'  => '/',
             'filename'  => $filename,
         );
 
-        $filepath = $CFG->dirroot.'/theme/snap/tests/fixtures/'.$filename;
+        $filepath = $CFG->dirroot.'/theme/n2018/tests/fixtures/'.$filename;
 
         $fs = \get_file_storage();
 
-        $fs->delete_area_files($syscontext->id, 'theme_snap', 'poster');
+        $fs->delete_area_files($syscontext->id, 'theme_n2018', 'poster');
 
         $fs->create_file_from_pathname($filerecord, $filepath);
-        \set_config('poster', $filename, 'theme_snap');
+        \set_config('poster', $filename, 'theme_n2018');
 
         local::process_coverimage($syscontext);
     }
 
     /**
      * Imitates an admin deleting the site cover image via the
-     * Snap theme settings page. Deletes a file, sets a theme
+     * N2018 theme settings page. Deletes a file, sets a theme
      * setting to blank, then calls the callback triggered
      * by submitting the form.
      *
@@ -442,9 +442,9 @@ class theme_snap_local_test extends snap_base_test {
         $syscontext = \context_system::instance();
         $fs = \get_file_storage();
 
-        $fs->delete_area_files($syscontext->id, 'theme_snap', 'coverimage');
+        $fs->delete_area_files($syscontext->id, 'theme_n2018', 'coverimage');
 
-        \set_config('poster', '', 'theme_snap');
+        \set_config('poster', '', 'theme_n2018');
         local::process_coverimage($syscontext);
     }
 
@@ -473,7 +473,7 @@ class theme_snap_local_test extends snap_base_test {
 
             $css = local::site_coverimage_css();
 
-            $this->assertContains('/theme_snap/coverimage/', $css);
+            $this->assertContains('/theme_n2018/coverimage/', $css);
 
             $ext = pathinfo($filename, PATHINFO_EXTENSION);
             $this->assertContains("/site-image.$ext", $css);
@@ -495,7 +495,7 @@ class theme_snap_local_test extends snap_base_test {
 
     /**
      * Imitates an admin setting the course cover image via the
-     * Snap theme settings page. Creates a file, sets a theme
+     * N2018 theme settings page. Creates a file, sets a theme
      * setting with the filname, then calls the callback triggered
      * by submitting the form.
      *
@@ -512,21 +512,21 @@ class theme_snap_local_test extends snap_base_test {
 
         $filerecord = array(
             'contextid' => $context->id,
-            'component' => 'theme_snap',
+            'component' => 'theme_n2018',
             'filearea'  => 'coverimage',
             'itemid'    => 0,
             'filepath'  => '/',
             'filename'  => $filename,
         );
 
-        $filepath = $CFG->dirroot.'/theme/snap/tests/fixtures/'.$filename;
+        $filepath = $CFG->dirroot.'/theme/n2018/tests/fixtures/'.$filename;
 
         $fs = \get_file_storage();
 
-        $fs->delete_area_files($context->id, 'theme_snap', 'coverimage');
+        $fs->delete_area_files($context->id, 'theme_n2018', 'coverimage');
 
         $fs->create_file_from_pathname($filerecord, $filepath);
-        \set_config('coverimage', $filename, 'theme_snap');
+        \set_config('coverimage', $filename, 'theme_n2018');
     }
 
     /**
@@ -563,16 +563,16 @@ class theme_snap_local_test extends snap_base_test {
             }
         }
         $fs = \get_file_storage();
-        $fs->delete_area_files($context->id, 'theme_snap', 'coverimage');
+        $fs->delete_area_files($context->id, 'theme_n2018', 'coverimage');
         $originalfile = local::course_coverimage($course->id);
         $coursecardimage = local::set_course_card_image($context, $originalfile);
         $this->assertFalse($coursecardimage);
-        $cardimages = $fs->get_area_files($context->id, 'theme_snap', 'coursecard', 0, "itemid, filepath, filename", false);
+        $cardimages = $fs->get_area_files($context->id, 'theme_n2018', 'coursecard', 0, "itemid, filepath, filename", false);
         $this->assertCount(5, $cardimages);
         $this->fake_course_image_setting_upload('bpd_bikes_1381px.jpg', $context);
         $originalfile = local::course_coverimage($course->id);
         local::set_course_card_image($context, $originalfile);
-        $cardimages = $fs->get_area_files($context->id, 'theme_snap', 'coursecard', 0, "itemid, filepath, filename", false);
+        $cardimages = $fs->get_area_files($context->id, 'theme_n2018', 'coursecard', 0, "itemid, filepath, filename", false);
         $this->assertCount(6, $cardimages);
         // Call 2 times this function should not duplicate the course card images.
         local::set_course_card_image($context, $originalfile);
@@ -581,7 +581,7 @@ class theme_snap_local_test extends snap_base_test {
         $id = $originalfile->get_id();
         $this->assertNotFalse(strpos($url, $id));
         local::course_card_clean_up($context);
-        $cardimages = $fs->get_area_files($context->id, 'theme_snap', 'coursecard', 0, "itemid, filepath, filename", false);
+        $cardimages = $fs->get_area_files($context->id, 'theme_n2018', 'coursecard', 0, "itemid, filepath, filename", false);
         $this->assertCount(0, $cardimages);
     }
 
@@ -895,7 +895,7 @@ class theme_snap_local_test extends snap_base_test {
 
         $this->resetAfterTest();
 
-        set_config('showcoursegradepersonalmenu', 1, 'theme_snap');
+        set_config('showcoursegradepersonalmenu', 1, 'theme_n2018');
 
         // Set up.
         $generator = $this->getDataGenerator();
@@ -961,7 +961,7 @@ class theme_snap_local_test extends snap_base_test {
         $this->assertNotEmpty($feedback->coursegrade);
 
         // Assert coursegrade property does not exist when disabled in settings.
-        set_config('showcoursegradepersonalmenu', 0, 'theme_snap');
+        set_config('showcoursegradepersonalmenu', 0, 'theme_n2018');
         $feedback = local::course_grade($course);
         $this->assertTrue(empty($feedback->coursegrade));
     }

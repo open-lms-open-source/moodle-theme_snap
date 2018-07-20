@@ -17,12 +17,12 @@
 /**
  * Renderer functions shared between multiple renderers.
  *
- * @package   theme_snap
+ * @package   theme_n2018
  * @copyright Copyright (c) 2015 Moodlerooms Inc. (http://www.moodlerooms.com)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-namespace theme_snap\output;
+namespace theme_n2018\output;
 
 defined('MOODLE_INTERNAL') || die();
 
@@ -31,7 +31,7 @@ use core_component;
 use html_writer;
 use moodle_url;
 use stdClass;
-use theme_snap\local;
+use theme_n2018\local;
 
 class shared extends \renderer_base {
 
@@ -143,7 +143,7 @@ class shared extends \renderer_base {
         $json = json_encode($handler->get_js_data());
         $script = <<<EOF
             <script>
-                var themeSnapCourseFileHandlers = $json;
+                var theme_n2018_course_file_handlers = $json;
             </script>
 EOF;
 
@@ -180,7 +180,7 @@ EOF;
         );
 
         $PAGE->requires->js('/course/dndupload.js');
-        $PAGE->requires->js_call_amd('theme_snap/dndupload-lazy', 'init', $vars);
+        $PAGE->requires->js_call_amd('theme_n2018/dndupload-lazy', 'init', $vars);
     }
 
 
@@ -247,7 +247,7 @@ EOF;
             'deleteassetconfirm',
             'deletesectionconfirm',
             'deletingsection'
-        ], 'theme_snap');
+        ], 'theme_n2018');
 
         // Include section-specific strings for formats which support sections.
         if (course_format_uses_sections($course->format)) {
@@ -277,7 +277,7 @@ EOF;
      * @return void
      */
     public static function page_requires_js() {
-        global $CFG, $PAGE, $COURSE, $USER, $OUTPUT;
+        global $CFG, $PAGE, $COURSE, $USER;
 
         $PAGE->requires->jquery();
         $PAGE->requires->js_amd_inline("require(['theme_boost/loader']);");
@@ -303,7 +303,7 @@ EOF;
             'movingstartedhelp',
             'notpublished',
             'visibility'
-        ), 'theme_snap');
+        ), 'theme_n2018');
 
         $PAGE->requires->strings_for_js([
             'ok',
@@ -315,7 +315,7 @@ EOF;
             'modshow',
             'hiddenoncoursepage',
             'showoncoursepage',
-            'switchrolereturn'
+        	'switchrolereturn'
         ], 'moodle');
 
         $PAGE->requires->strings_for_js([
@@ -370,17 +370,16 @@ EOF;
             'enablecompletion' => isloggedin() && $COURSE->enablecompletion
         ];
 
-        $mprocs = get_message_processors(true);
         $forcepwdchange = (bool) get_user_preferences('auth_forcepasswordchange', false);
-        $conversationbadgecountenabled = isloggedin() && isset($mprocs['badge']) && $PAGE->theme->settings->messagestoggle == 1;
+        $conversationbadgecountenabled = isloggedin() && !isset($mprocs['badge']) && $PAGE->theme->settings->messagestoggle == 1;
         $userid = $USER->id;
-        $manager = new \core_privacy\local\sitepolicy\manager();
-        $policyurlexist = $manager->is_defined();
-        $sitepolicyacceptreqd = isloggedin() && $policyurlexist && empty($USER->policyagreed) && !is_siteadmin();
-        $inalternativerole = $OUTPUT->in_alternative_role();
+        $sitepolicyacceptreqd = isloggedin() && $CFG->sitepolicy && empty($USER->policyagreed) && !is_siteadmin();
+        
+        $inalternativerole = \theme_n2018\output\core_renderer::in_alternative_role();
+        
         $initvars = [$coursevars, $pagehascoursecontent, get_max_upload_file_size($CFG->maxbytes), $forcepwdchange,
                      $conversationbadgecountenabled, $userid, $sitepolicyacceptreqd, $inalternativerole];
-        $PAGE->requires->js_call_amd('theme_snap/snap', 'snapInit', $initvars);
+        $PAGE->requires->js_call_amd('theme_n2018/n2018', 'n2018Init', $initvars);
 
         // Does the page have editable course content?
         if ($pagehascoursecontent && $PAGE->user_allowed_editing()) {
@@ -427,7 +426,7 @@ EOF;
 
         // Output warning.
         return ($OUTPUT->notification(get_string('warnsiteformatflexpage',
-                'theme_snap', $url->out())));
+                'theme_n2018', $url->out())));
     }
 
     /**
@@ -499,7 +498,7 @@ EOF;
      * @return string
      */
     public static function appendices() {
-        global $CFG, $COURSE, $PAGE, $OUTPUT, $DB;
+        global $CFG, $COURSE, $PAGE, $OUTPUT;
 
         $links = array();
         $localplugins = core_component::get_plugin_list('local');
@@ -518,7 +517,7 @@ EOF;
                     $enrolurl = $plugin->get_unenrolself_link($instance);
                     if ($enrolurl) {
                         $selfenrol = true;
-                        $enrolstr = get_string('unenrolme', 'theme_snap');
+                        $enrolstr = get_string('unenrolme', 'theme_n2018');
                         break;
                     }
                 } else {
@@ -543,19 +542,30 @@ EOF;
             if (!empty($coverimageurl)) {
                 $iconurl = $coverimageurl;
             }
-            $settingsicon = '<img src="'.$iconurl.'" class="snap-cover-icon svg-icon" alt="" role="presentation">';
+            $settingsicon = '<img src="'.$iconurl.'" class="n2018-cover-icon svg-icon" alt="" role="presentation">';
 
             $links[] = array(
                 'link' => 'course/edit.php?id='.$COURSE->id,
-                'title' => $settingsicon.get_string('editcoursesettings', 'theme_snap'),
+                'title' => $settingsicon.get_string('editcoursesettings', 'theme_n2018'),
             );
         }
 
+        // Norton grader if installed.
         $iconurl = $OUTPUT->image_url('joule_grader', 'theme');
         $gradebookicon = '<img src="'.$iconurl.'" class="svg-icon" alt="" role="presentation">';
+        if (array_key_exists('nortongrader', $localplugins)) {
+            if (has_capability('local/nortongrader:grade', $coursecontext)
+                || has_capability('local/nortongrader:view', $coursecontext)
+            ) {
+                $links[] = array(
+                    'link' => $CFG->wwwroot.'/local/nortongrader/view.php?courseid='.$COURSE->id,
+                    'title' => $gradebookicon.get_string('pluginname', 'local_nortongrader'),
+                );
+            }
+        }
 
         // Joule grader if installed.
-        if (array_key_exists('joulegrader', $localplugins)) {
+        if (array_key_exists('joulegrader', $localplugins) && !array_key_exists('nortongrader', $localplugins)) {
             if (has_capability('local/joulegrader:grade', $coursecontext)
                 || has_capability('local/joulegrader:view', $coursecontext)
             ) {
@@ -578,8 +588,7 @@ EOF;
         }
 
         // Participants.
-        if (course_can_view_participants($coursecontext)) {
-
+        if (has_capability('moodle/course:viewparticipants', $coursecontext)) {
             // Get count of course users.
             $usercount = count_enrolled_users($coursecontext, '', 0, true);
 
@@ -601,7 +610,7 @@ EOF;
                 $participanticons = '<img src="'.$iconurl.'" alt="" role="presentation">';
             }
 
-            $participanticons = '<div class="snap-participant-icons">'.$participanticons.'</div>';
+            $participanticons = '<div class="n2018-participant-icons">'.$participanticons.'</div>';
             $links[] = array(
                 'link' => 'user/index.php?id='.$COURSE->id.'&mode=1',
                 'title' => $participanticons.$usercount.' '.get_string('participants')
@@ -623,10 +632,10 @@ EOF;
         }
 
         // Personalised Learning Designer.
-        if (array_key_exists('pld', $localplugins) && has_capability('local/pld:editcourserules', $coursecontext)) {
+        if (array_key_exists('pld', $localplugins) && has_capability('moodle/course:update', $coursecontext)) {
             $iconurl = $OUTPUT->image_url('pld', 'theme');
             $pldicon = '<img src="'.$iconurl.'" class="svg-icon" alt="" role="presentation">';
-            $pldname = get_string('pld', 'theme_snap');
+            $pldname = get_string('pld', 'theme_n2018');
             $links[] = array(
                 'link' => 'local/pld/view.php?courseid='.$COURSE->id,
                 'title' => $pldicon.$pldname
@@ -689,37 +698,8 @@ EOF;
             }
         }
 
-        // Mediasite.
-        if ($COURSE->id > 1 && has_capability('mod/mediasite:courses7', $coursecontext) &&
-            \core_component::get_component_directory('mod_mediasite') !== null && is_callable('mr_on') &&
-            mr_on("mediasite", "_MR_MODULES")) {
-            require_once($CFG->dirroot . "/mod/mediasite/mediasitesite.php");
-            $iconurl = $OUTPUT->image_url('icon', 'mediasite');
-            $badgesicon = '<img src="'.$iconurl.'" class="svg-icon" alt="" role="presentation">';
-            $courseconfig = $DB->get_record('mediasite_course_config', array('course' => $COURSE->id));
-            if (!empty($courseconfig->mediasite_courses_enabled) && $courseconfig->mediasite_site) {
-                $site = new MediasiteSite($courseconfig->mediasite_site);
-                $url = new moodle_url(
-                    '/mod/mediasite/courses7.php',
-                    array('id' => $COURSE->id, 'siteid' => $courseconfig->mediasite_site)
-                );
-                $links[] = array(
-                    'link' => $url->out_as_local_url(false),
-                    'title' => $badgesicon . $site->get_integration_catalog_title()
-                );
-            } else {
-                foreach (get_mediasite_sites(true, false) as $site) {
-                    $url = new moodle_url('/mod/mediasite/courses7.php', array('id' => $COURSE->id, 'siteid' => $site->id));
-                    $links[] = array(
-                        'link' => $url->out_as_local_url(false),
-                        'title' => $badgesicon . $site->integration_catalog_title
-                    );
-                }
-            }
-        }
-
         // Output course tools section.
-        $coursetools = get_string('coursetools', 'theme_snap');
+        $coursetools = get_string('coursetools', 'theme_n2018');
         $iconurl = $OUTPUT->image_url('course_dashboard', 'theme');
         $coursetoolsicon = '<img src="'.$iconurl.'" class="svg-icon" alt="" role="presentation">';
         $o = '<h2>'.$coursetoolsicon.$coursetools.'</h2>';
@@ -789,11 +769,11 @@ EOF;
         $userpicture = new \user_picture($USER);
         $userpicture->link = false;
         $userpicture->alttext = false;
-        $userpicture->class = 'userpicture snap-icon'; // Icon class for margin.
+        $userpicture->class = 'userpicture n2018-icon'; // Icon class for margin.
         $userpicture->size = 100;
         $userpic = $OUTPUT->render($userpicture);
 
-        $userboard  = '<div id="snap-student-dashboard" class="row clearfix">';
+        $userboard  = '<div id="n2018-student-dashboard" class="row clearfix">';
         $userboard .= '<div class="col-xs-6">';
         $userboard .= '<h4 class="h6">' .s(fullname($USER)). '</h4>';
         $userboard .= $userpic;
@@ -802,15 +782,15 @@ EOF;
         // User progress.
         if ($COURSE->enablecompletion) {
             $progress = local::course_completion_progress($COURSE);
-            $userboard .= '<div class="col-xs-3 text-center snap-student-dashboard-progress">';
-            $userboard .= '<h4 class="h6">' .get_string('progress', 'theme_snap'). '</h6>';
-            $userboard .= '<div class="js-progressbar-circle snap-progress-circle" value="' .round($progress->progress). '"></div>';
+            $userboard .= '<div class="col-xs-3 text-center n2018-student-dashboard-progress">';
+            $userboard .= '<h4 class="h6">' .get_string('progress', 'theme_n2018'). '</h6>';
+            $userboard .= '<div class="js-progressbar-circle n2018-progress-circle" value="' .round($progress->progress). '"></div>';
             $userboard .= '</div>';
         }
 
         // User grade.
         if (has_capability('gradereport/overview:view', $coursecontext)) {
-            $grade = local::course_grade($COURSE, true);
+            $grade = local::course_grade($COURSE);
             $coursegrade = '-';
             if (isset($grade->coursegrade['percentage'])) {
                 $coursegrade = round($grade->coursegrade['percentage']);
@@ -818,16 +798,16 @@ EOF;
 
             $moodleurl = new moodle_url('/grade/report/user/index.php', ['id' => $COURSE->id, 'userid' => $USER->id]);
 
-            $userboard .= '<div class="col-xs-3 text-center snap-student-dashboard-grade">';
+            $userboard .= '<div class="col-xs-3 text-center n2018-student-dashboard-grade">';
             $userboard .= '<h4 class="h6">' . get_string('grade') . '</h6>';
             $userboard .= '<a href="' . $moodleurl . '">';
-            $userboard .= '<div class="js-progressbar-circle snap-progress-circle snap-progressbar-link" value="';
+            $userboard .= '<div class="js-progressbar-circle n2018-progress-circle n2018-progressbar-link" value="';
             $userboard .= s($coursegrade) . '"></div>';
             $userboard .= '</a>';
             $userboard .= '</div>';
         }
 
-        $userboard .= '</div><!- close .snap-user-dashboard ->';
+        $userboard .= '</div><!- close .n2018-user-dashboard ->';
         $userboard .= '<br>';
 
         $output .= $userboard;

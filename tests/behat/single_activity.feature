@@ -13,18 +13,18 @@
 # You should have received a copy of the GNU General Public License
 # along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 #
-# Tests that Single Activity format remains usable in Snap
+# Tests that Single Activity format remains usable in N2018
 #
-# @package   theme_snap
+# @package   theme_n2018
 # @author    Sam Chaffee
 # @copyright Copyright (c) 2017 Blackboard Inc. (http://www.blackboard.com)
 # @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
 
-@theme @theme_snap
-Feature: Use the Single Activity format in Snap
-  In order to use the Single Activity format in Snap
+@theme @theme_n2018
+Feature: Use the Single Activity format in N2018
+  In order to use the Single Activity format in N2018
   As a teacher
-  I need to be able to create a course using Single Activity format without errors in Snap
+  I need to be able to create a course using Single Activity format without errors in N2018
 
   Background:
   Given the following "categories" exist:
@@ -37,7 +37,7 @@ Feature: Use the Single Activity format in Snap
     And I click on "Browse all courses" "link"
     And I click on "Add a new course" "link"
     And I set the following fields to these values:
-      | Course full name | Test single activity in Snap|
+      | Course full name | Test single activity in N2018|
       | Course short name | TSAIS |
       | Course ID number | TC101 |
       | Course summary | This course has been created by automated tests. |

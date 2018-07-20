@@ -14,14 +14,14 @@
  * You should have received a copy of the GNU General Public License
  * along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
  *
- * @package   theme_snap
+ * @package   theme_n2018
  * @author    David Castro <david.castro@blackboard.com>
  * @copyright Copyright (c) 2017 Blackboard Inc.
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 /**
- * @module theme_snap/conversation_badge_count-lazy
+ * @module theme_n2018/conversation_badge_count-lazy
  */
 define(['jquery', 'core/ajax'],
     function($, Ajax) {
@@ -31,7 +31,7 @@ define(['jquery', 'core/ajax'],
          * Initialising function.
          * @param {int} userid The user id
          */
-        self.init = function(userid) {
+        self.init = function(userid){
             self.userid = userid;
             // Container.
             self.containerEl = $('.conversation_badge_count');

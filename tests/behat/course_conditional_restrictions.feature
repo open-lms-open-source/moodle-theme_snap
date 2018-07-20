@@ -15,13 +15,13 @@
 #
 # Tests for conditional resources.
 #
-# @package    theme_snap
+# @package    theme_n2018
 # @author     2015 Guy Thomas <gthomas@moodlerooms.com>
 # @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
 
 
-@theme @theme_snap
-Feature: When the moodle theme is set to Snap, conditional restrictions work as normal.
+@theme @theme_n2018
+Feature: When the moodle theme is set to N2018, conditional restrictions work as normal.
 
   Background:
   Given the following "courses" exist:
@@ -76,4 +76,4 @@ Feature: When the moodle theme is set to Snap, conditional restrictions work as 
     And I should see available from date of "tomorrow" in the 2nd asset within section 1
     And I go to course section 2
     And I should see available from date of "tomorrow" in section 2
-    And "#section-2 li.snap-activity" "css_element" should not exist
+    And "#section-2 li.n2018-activity" "css_element" should not exist

@@ -14,14 +14,14 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Snap variables.
+ * N2018 variables.
  *
- * @package   theme_snap
+ * @package   theme_n2018
  * @copyright Copyright (c) 2015 Moodlerooms Inc. (http://www.moodlerooms.com)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-// Snap specific overrides to Boost settings from
+// N2018 specific overrides to Boost settinsg from
 // theme/boost/scss/bootstrap/variables.scss
 
 $font-size-root: 18px;
@@ -31,12 +31,13 @@ $font-size-xs:   .6rem;
 
 // This needs some investigation of issues around IE11 and Moodle's autoprefixer implementaion.
 //$enable-flex:               true;
+$enable-rounded:        false;
 
 $brand-primary:         #ff7f41 !default;
-$brand-success:         #8bc34a;
-$brand-warning:         #ff9800;
-$brand-danger:          #e91e63;
-$brand-info:            #03a9f4;
+$brand-success:         #8BC34A;
+$brand-warning:         #FF9800;
+$brand-danger:          #E91E63;
+$brand-info:            #03A9F4;
 
 $body-bg:               #fff;
 $body-color:            #565656;
@@ -53,7 +54,7 @@ $modal-backdrop-bg:           #fff;
 $modal-backdrop-opacity:      .8;
 
 $breadcrumb-divider: "/";
-$breadcrumb-divider-rtl: "\005C";
+$breadcrumb-divider-rtl: '\\';
 
 $state-success-text:             $brand-success;
 $state-success-bg:               fade-out($brand-success, 0.9);
@@ -76,34 +77,20 @@ $footer-color-bg:                #f1f0ee;
 $user-content-max-width:         43.5em;
 
 // -------------------------
-// Button customisations
-// -------------------------
-
-$btn-secondary-color:           $brand-primary;
-
-$border-radius:          0;
-$border-radius-lg:       0;
-$border-radius-sm:       0;
-
-$btn-border-radius:          .25rem;
-$btn-border-radius-lg:       .3rem;
-$btn-border-radius-sm:       .2rem;
-
-// -------------------------
 // Colour variables for resources and activities.
 // -------------------------
 
-$color-word:                         #03a9f4; // Blue.
+$color-word:                         #03A9F4; // Blue.
 $color-powerpoint:                   #ff7300; // Orange.
 $color-excel:                        #009e51; // Green.
-$color-pdf:                          #f44336; // Red.
-$color-audio:                        #8bc34a; // Green.
-$color-video:                        #55b5cc; // Blue.
+$color-pdf:                          #F44336; // Red.
+$color-audio:                        #8BC34A; // Green.
+$color-video:                        #55B5CC; // Blue.
 $color-code:                         #f0652a; // Orange.
 
-$color-communication:                #8bc34a; // Foums, Chat
-$color-assignment:                   #03a9f4; // Assignment, workshop
-$color-quiz:                         #ffa000; // Quiz, choice, feedback
+$color-communication:                #8BC34A; // Foums, Chat
+$color-assignment:                   #03A9F4; // Assignment, workshop
+$color-quiz:                         #FFA000; // Quiz, choice, feedback
 $color-wiki:                         #009688; // Wiki, glossary
 
 
@@ -111,11 +98,11 @@ $color-wiki:                         #009688; // Wiki, glossary
 // Colour variables for the customisable mr_nav.
 // -------------------------
 
-$nav-bg:                            rgba(255, 255, 255, .95) !default;
+$nav-bg:                            rgba(255,255,255,.95) !default;
 $nav-color:                         $brand-primary !default;
 $nav-color-hover:                   darken($nav-color, 8%);
 
-$nav-button-bg:                     rgba(255, 255, 255, 0) !default;
+$nav-button-bg:                     rgba(255,255,255,0) !default;
 $nav-button-color:                  $nav-color !default;
 
 $nav-login-bg:                      $nav-button-bg;
@@ -125,3 +112,4 @@ $nav-login-color:                   $nav-button-color;
     $nav-login-color:               $nav-bg;
     $nav-login-bg:                  $nav-button-color;
 }
+

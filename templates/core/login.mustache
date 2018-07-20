@@ -94,9 +94,9 @@
 }}
 
 <div class="m-y-3 hidden-sm-down"></div>
-<div class="snap-login">
+<div class="n2018-login">
     {{#logourl}}
-    <h2 class="snap-logo-sitename text-center">{{sitename}}</h2>
+    <h2 class="n2018-logo-sitename text-center">{{sitename}}</h2>
     {{/logourl}}
     {{^logourl}}
     <h2 class="text-center">{{sitename}}</h2>
@@ -140,27 +140,18 @@
         <div class="potentialidplist">
             {{#identityproviders}}
                 <div class="potentialidp">
-                    <a href="{{url}}" title={{#quote}}{{name}}{{/quote}}>
-                        {{#iconurl}}
-                            <img class="auth-icon" src="{{iconurl}}"/>
-                        {{/iconurl}}
-                        {{^iconurl}}
-                            {{#pix}} /i/permissions, core {{/pix}}
-                        {{/iconurl}}
-                        {{name}}
-                    </a>
+                    <a href="{{url}}" title={{#quote}}{{name}}{{/quote}}>{{#icon}}{{>core/pix_icon}}{{/icon}}{{name}}</a>
                 </div>
             {{/identityproviders}}
         </div>
     {{/hasidentityproviders}}
-
 </div>
 
 {{#hasinstructions}}
-    <div class="js-only snap-login">
-        <div class="snap-login-instructions">
+    <div class="js-only n2018-login">
+        <div class="n2018-login-instructions">
             <a class="btn btn-primary btn-block iconhelp" href="#" data-toggle="modal" data-target="#login-help-modal">
-                {{#str}}helpwithlogin, theme_snap{{/str}} {{#pix}}help, theme_snap, {{#str}}helpwithlogin, theme_snap{{/str}} {{/pix}}
+                {{#str}}helpwithlogin, theme_n2018{{/str}} {{#pix}}help, theme_n2018, {{#str}}helpwithlogin, theme_n2018{{/str}} {{/pix}}
             </a>
             <!-- Modal -->
             <div class="modal fade" id="login-help-modal" tabindex="-1" role="dialog" aria-labelledby="login-help-modal-title" aria-hidden="true">
@@ -170,7 +161,7 @@
                     <button type="button" class="close" data-dismiss="modal" aria-label="{{#str}}closebuttontitle{{/str}}">
                       <span aria-hidden="true">&times;</span>
                     </button>
-                    <h5 class="modal-title" id="login-help-modal-title">{{#str}}helpwithlogin, theme_snap{{/str}}</h5>
+                    <h5 class="modal-title" id="login-help-modal-title">{{#str}}helpwithlogin, theme_n2018{{/str}}</h5>
                   </div>
                   <div class="modal-body summary">
                       <br>
@@ -182,15 +173,16 @@
         </div>
     </div>
 {{/hasinstructions}}
+
 {{#cansignup}}
-    <div class="snap-login">
+    <div class="n2018-login">
         <h5>{{#str}}firsttime{{/str}}</h5>
         <p><a class="btn btn-primary btn-block" href="{{signupurl}}">{{#str}}startsignup{{/str}}</a></p>
     </div>
 {{/cansignup}}
 
 {{#canloginasguest}}
-    <div class="snap-login">
+    <div class="n2018-login">
         <h5>{{#str}}someallowguest{{/str}}</h5>
         <form action="{{loginurl}}" method="post" id="guestlogin">
             <input type="hidden" name="username" value="guest" />
@@ -216,8 +208,4 @@
         {{/autofocusform}}
     {{/error}}
     });
-
-
-
 {{/js}}
-

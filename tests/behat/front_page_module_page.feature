@@ -15,12 +15,12 @@
 #
 # Tests for page module behaviour at front page.
 #
-# @package    theme_snap
+# @package    theme_n2018
 # @author     Guillermo Alvarez
 # @copyright  2017 Blackboard Ltd
 # @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
 
-@theme @theme_snap
+@theme @theme_n2018
 Feature: Open page (front page) module inline
   As any user
   I need to view page modules inline at front page.

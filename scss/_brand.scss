@@ -13,9 +13,9 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 /**
- * Snap user swatch.
+ * N2018 user swatch.
  *
- * @package   theme_snap
+ * @package   theme_n2018
  * @copyright Copyright (c) 2015 Moodlerooms Inc. (http://www.moodlerooms.com)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
@@ -25,7 +25,7 @@
 //
 //  1. Bootstrap 3 (less/bootstrap3/*.scss)
 //  2. Moodle overrides of Bootstrap  (less/moodle/*.scss)
-//  3. Snap theme (less/bootswatch/snap-*.scss)
+//  3. N2018 theme (less/bootswatch/n2018-*.scss)
 //
 // And in that order, this file will try to follow the order  and
 // general format of the sources that it overrides to make it
@@ -35,19 +35,17 @@
 // -------------------------
 // Reset - overwrites inline style tags
 
-/* stylelint-disable declaration-no-important*/
-
 .news-article-message *[style],
-.snap-image-summary *[style],
+.n2018-image-summary *[style],
 .summary-text *[style],
 .summary p[style],
 .summary div[style]:not(.media-responsive-pad):not(.oembed-responsive-pad),
 .sitetopic p[style],
 .sitetopic div[style]:not(.media-responsive-pad):not(.oembed-responsive-pad),
-.snap-activity .contentafterlink *[style],
+.n2018-activity .contentafterlink *[style],
 .signuppanel *[style],
 .signuppanel .text_to_html *[style],
-.snap-lightbox-description *[style] {
+.n2018-lightbox-description *[style] {
     color: inherit !important;
     font-size: inherit !important;
     line-height: inherit !important;
@@ -65,31 +63,31 @@ a {
 
 // Focus outline for keyboard tab users
 a,
-.dropdown-toggle {
-    &:focus {
+.dropdown-toggle{
+    &:focus{
         outline: 3px solid $brand-primary;
     }
-    &:active,
-    &:hover {
+    &:active, &:hover {
         outline: 0;
     }
 }
-.js-snap-asset-move:focus + label .svg-icon {
+.js-n2018-asset-move:focus + label .svg-icon {
     outline: 3px solid $brand-primary;
 }
 
 a:focus,
-a:hover {
+a:hover,{
     color: darken($brand-primary, 8%);
 }
 #admin-menu-trigger {
     &:hover,
     &:focus {
+        outline: 0;
         border-color: $brand-primary;
     }
 }
 
-.section li.snap-native .activityinstance .snap-asset-link a {
+.section li.n2018-native .activityinstance .n2018-asset-link a {
     color: $brand-primary;
 
     &:focus,
@@ -97,7 +95,7 @@ a:hover {
         color: darken($brand-primary, 8%);
     }
 }
-.snap-asset-link a {
+.n2018-asset-link a {
     color: $body-color;
     &:focus,
     &:hover {
@@ -127,37 +125,31 @@ a:hover {
 .contentafterlink,
 .contentwithoutlink,
 .user-grade td.feedbacktext,
-.snap-lightbox-description,
-#page-mod-book-print {
+.n2018-lightbox-description,
+#page-mod-book-print  {
     font-family: $font-family-serif;
 }
 
-h1,
-.h1,
-h2,
-.h2,
-h3,
-.h3,
-h4,
-.h4,
-h5,
-.h5,
-h6,
-.h6,
+h1, .h1,
+h2, .h2,
+h3, .h3,
+h4, .h4,
+h5, .h5,
+h6, .h6,
 legend,
 .mform legend a,
 .mform legend a:hover,
 .coursebox .info .coursename,
 .collapsibleregioncaption,
-.snap-featured-course-title,
+.n2018-featured-course-title,
 #coursetools-list a {
     font-family: $font-family-feature;
 }
 
 .form_autocomplete_selection,
 .form_autocomplete_suggestions,
-.snap-system-text,
-.snap-action-icon {
+.n2018-system-text,
+.n2018-action-icon {
     font-family: $font-family-system;
 }
 
@@ -183,17 +175,17 @@ legend,
 // Elements
 // -------------------------
 
-.snap-media-body p {
+.n2018-media-body p {
     font-family: $font-family-serif;
 }
 
 .courseinfo-teachers-more {
     &:hover {
-        border-color: $brand-primary;
+        border-color: $brand-primary ;
     }
 }
 
-.snap-unread-marker {
+.n2018-unread-marker {
     color: $brand-primary;
 }
 
@@ -273,6 +265,8 @@ input[type="reset"],
     }
 }
 
+
+
 .btn.btn-primary,
 .btn.btn-secondary,
 .btn.btn-success,
@@ -309,7 +303,7 @@ input[type="reset"],
 #page-login-index #page,
 .news-article-image,
 .news-article-preview,
-#snap-footer-alert,
+#n2018-footer-alert,
 #toc-mobile-menu-toggle {
     background-color: $brand-primary;
 
@@ -326,7 +320,7 @@ input[type="reset"],
         border-color: $brand-primary;
     }
     &:focus {
-        border: 3px solid $brand-primary;
+        border-bottom: 1px solid $brand-primary;
     }
 }
 
@@ -352,9 +346,9 @@ a[href="#sections"] {
 }
 
 // Catch all for mods we do not have colours for.
-li.snap-resource,
-li.snap-activity {
-    border-top-color: $brand-primary;
+li.n2018-resource,
+li.n2018-activity {
+    border-top-color: $brand-primary
 }
 
 // yui-bs overrides
@@ -467,7 +461,7 @@ li.snap-activity {
 }
 
 .progress .bar,
-.progress-bar:not(.progress-bar-info):not(.progress-bar-success):not(.progress-bar-warning):not(.progress-bar-danger) {
+.progress-bar:not(progress-bar-info):not(.progress-bar-success):not(.progress-bar-warning):not(.progress-bar-danger) {
     background-color: $brand-primary;
 }
 
@@ -498,7 +492,7 @@ li.snap-activity {
     border-bottom: 1px solid $brand-primary;
 }
 
-#snap-changecoverimageconfirmation.disabled .ok {
+#n2018-changecoverimageconfirmation.disabled .ok {
     &,
     &:hover,
     &:active,

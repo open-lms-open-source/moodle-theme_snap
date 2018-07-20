@@ -1,7 +1,6 @@
-/* stylelint-disable declaration-no-important*/
 .behat-site {
 
-    // We need to be able to see the navigation block in Snap or we can't fo things like follow the participants link and
+    // We need to be able to see the navigation block in N2018 or we can't fo things like follow the participants link and
     // log in as another user.
     #moodle-blocks {
         visibility: visible;
@@ -20,7 +19,7 @@
     }
 
     // Prevent the pop-up from covering other content, and causing Behat test failures in certain browsers.
-    #snap-footer-alert {
+    #n2018-footer-alert {
         position: relative;
         transition-property: none !important;
     }

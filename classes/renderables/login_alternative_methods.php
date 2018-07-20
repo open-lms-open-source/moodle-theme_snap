@@ -21,7 +21,7 @@
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-namespace theme_snap\renderables;
+namespace theme_n2018\renderables;
 
 defined('MOODLE_INTERNAL') || die();
 
@@ -36,12 +36,12 @@ class login_alternative_methods implements \renderable {
         $authsequence = get_enabled_auth_plugins(true);
         $potentialidps = [];
         foreach ($authsequence as $authname) {
-            if (isset($SESSION->snapwantsurl)) {
-                $urltogo = $SESSION->snapwantsurl;
+            if (isset($SESSION->n2018wantsurl)) {
+                $urltogo = $SESSION->n2018wantsurl;
             } else {
                 $urltogo = $CFG->wwwroot.'/';
             }
-            unset($SESSION->snapwantsurl);
+            unset($SESSION->n2018wantsurl);
 
             $authplugin = get_auth_plugin($authname);
             $potentialidps = array_merge($potentialidps, $authplugin->loginpage_idp_list($urltogo));
@@ -49,19 +49,10 @@ class login_alternative_methods implements \renderable {
 
         if (!empty($potentialidps)) {
             foreach ($potentialidps as $idp) {
-
-                $icon = $OUTPUT->image_url('i/permissions');
-
-                if (!empty($idp['iconurl'])) {
-                    $icon = $idp['iconurl'];
-                } else if (!empty($idp['icon'])) {
-                    $icon = $OUTPUT->image_url($idp['icon']->pix, $idp['icon']->component);
-                }
-
                 $this->potentialidps[] = (object) [
                     'url' => $idp['url']->out(),
                     'name' => $idp['name'],
-                    'icon' => $icon
+                    'icon' => $OUTPUT->image_url($idp['icon']->pix)
                 ];
             }
         }

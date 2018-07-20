@@ -14,9 +14,9 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
-namespace theme_snap\webservice;
+namespace theme_n2018\webservice;
 
-use theme_snap\services\course;
+use theme_n2018\services\course;
 
 defined('MOODLE_INTERNAL') || die();
 
@@ -48,7 +48,7 @@ class ws_course_toc_chapters extends \external_api {
                 [
                     'chapters' => new \external_multiple_structure(
                         new \external_single_structure(
-                            definition_helper::define_class_for_webservice('theme_snap\renderables\course_toc_chapter')
+                            definition_helper::define_class_for_webservice('theme_n2018\renderables\course_toc_chapter')
                         ),
                         'Table of content chapters',
                         true

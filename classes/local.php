@@ -15,12 +15,12 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 
-namespace theme_snap;
+namespace theme_n2018;
 
 defined('MOODLE_INTERNAL') || die();
 
-use \theme_snap\user_forums,
-    \theme_snap\course_total_grade,
+use \theme_n2018\user_forums,
+    \theme_n2018\course_total_grade,
     html_writer,
     cm_info;
 
@@ -33,11 +33,11 @@ require_once($CFG->dirroot.'/mod/forum/lib.php');
 require_once($CFG->dirroot.'/lib/enrollib.php');
 
 /**
- * General local snap functions.
+ * General local n2018 functions.
  *
  * Added to a class purely for the convenience of auto loading.
  *
- * @package   theme_snap
+ * @package   theme_n2018
  * @copyright Copyright (c) 2015 Moodlerooms Inc. (http://www.moodlerooms.com)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
@@ -70,18 +70,17 @@ class local {
     /**
      * Does this course have any visible feedback for current user?.
      * @param \stdClass $course
-     * @param bool $oncoursedashboard
      * @return object
      */
-    public static function course_grade($course, $oncoursedashboard = false) {
+    public static function course_grade($course) {
         global $USER;
 
         $failobj = (object) [
             'coursegrade' => false
         ];
 
-        $config = get_config('theme_snap');
-        if (empty($config->showcoursegradepersonalmenu) && $oncoursedashboard === false) {
+        $config = get_config('theme_n2018');
+        if (empty($config->showcoursegradepersonalmenu)) {
             // If not enabled, don't return data.
             return $failobj;
         }
@@ -187,7 +186,7 @@ class local {
 
     /**
      * This has been taken directly from the moodle_page class but modified to work independently.
-     * It's used by config.php so that hacks can be targetted at just the snap theme.
+     * It's used by config.php so that hacks can be targetted at just the n2018 theme.
      * Work out the theme this page should use.
      *
      * This depends on numerous $CFG settings, and the properties of this page.
@@ -287,7 +286,7 @@ class local {
      */
     protected static function get_cachestamp($key, $cache, $new = false) {
         $key = strval($key);
-        $muc = \cache::make('theme_snap', $cache);
+        $muc = \cache::make('theme_n2018', $cache);
         $cachestamp = $muc->get($key);
         if (!$cachestamp || $new) {
             if (defined('PHPUNIT_TEST') && PHPUNIT_TEST) {
@@ -360,7 +359,7 @@ class local {
         $courseuserstamp = self::course_user_completion_cachestamp($course->id, $USER->id);
 
         /** @var \cache_session $muc */
-        $muc = \cache::make('theme_snap', 'course_completion_progress');
+        $muc = \cache::make('theme_n2018', 'course_completion_progress');
         $cached = $muc->get($course->id.'_'.$USER->id);
         if ($cached && $cached->timestamp >= $coursestamp && $cached->timestamp >= $courseuserstamp) {
             $cached->fromcache = true; // Useful for debugging and unit testing.
@@ -462,7 +461,7 @@ class local {
             return $courseinfo;
         }
 
-        $showgrades = get_config('theme_snap', 'showcoursegradepersonalmenu');
+        $showgrades = get_config('theme_n2018', 'showcoursegradepersonalmenu');
 
         foreach ($courseids as $courseid) {
             if (!isset($courses[$courseid])) {
@@ -586,7 +585,6 @@ class local {
                        AND contexturl IS NULL
                        AND m.timecreated > :fromdate1
                        AND m.timeusertodeleted = 0
-                       AND m.notification = 0
         ) UNION ALL (
                 SELECT $select, 0 unread
                   FROM {message_read} m
@@ -595,7 +593,6 @@ class local {
                        AND contexturl IS NULL
                        AND m.timecreated > :fromdate2
                        AND m.timeusertodeleted = 0
-                       AND m.notification = 0
         )
           ORDER BY timecreated DESC";
 
@@ -629,10 +626,10 @@ class local {
 
         $messages = self::get_user_messages($USER->id);
         if (empty($messages)) {
-            return '<p class="small">' . get_string('nomessages', 'theme_snap') . '</p>';
+            return '<p class="small">' . get_string('nomessages', 'theme_n2018') . '</p>';
         }
 
-        $output = $PAGE->get_renderer('theme_snap', 'core', RENDERER_TARGET_GENERAL);
+        $output = $PAGE->get_renderer('theme_n2018', 'core', RENDERER_TARGET_GENERAL);
         $o = '';
         foreach ($messages as $message) {
             $url = new \moodle_url('/message/index.php', array(
@@ -653,13 +650,13 @@ class local {
             $meta = self::relative_time($message->timecreated);
             $unreadclass = '';
             if ($message->unread) {
-                $unreadclass = ' snap-unread';
-                $meta .= " <span class=snap-unread-marker>".get_string('unread', 'theme_snap')."</span>";
+                $unreadclass = ' n2018-unread';
+                $meta .= " <span class=n2018-unread-marker>".get_string('unread', 'theme_n2018')."</span>";
             }
 
             $info = '<p>'.format_string($message->smallmessage).'</p>';
 
-            $o .= $output->snap_media_object($url, $frompicture, $fromname, $meta, $info, $unreadclass);
+            $o .= $output->n2018_media_object($url, $frompicture, $fromname, $meta, $info, $unreadclass);
         }
         return $o;
     }
@@ -708,7 +705,7 @@ class local {
     public static function graded($onlyactive = true) {
         global $USER, $PAGE;
 
-        $output = $PAGE->get_renderer('theme_snap', 'core', RENDERER_TARGET_GENERAL);
+        $output = $PAGE->get_renderer('theme_n2018', 'core', RENDERER_TARGET_GENERAL);
         $grades = activity::events_graded($onlyactive);
 
         $o = '';
@@ -744,16 +741,16 @@ class local {
             $gradetitle = $cm->name. '<small><br>' .format_string($course->fullname). '</small>';
 
             $releasedon = isset($grade->timemodified) ? $grade->timemodified : $grade->timecreated;
-            $meta = get_string('released', 'theme_snap', $output->friendly_datetime($releasedon));
+            $meta = get_string('released', 'theme_n2018', $output->friendly_datetime($releasedon));
 
             $grade = new \grade_grade(array('itemid' => $grade->itemid, 'userid' => $USER->id));
             if (!$grade->is_hidden() || $canviewhiddengrade) {
-                $o .= $output->snap_media_object($url, $modimage, $gradetitle, $meta, '');
+                $o .= $output->n2018_media_object($url, $modimage, $gradetitle, $meta, '');
             }
         }
 
         if (empty($o)) {
-            return '<p class="small">'. get_string('nograded', 'theme_snap') . '</p>';
+            return '<p class="small">'. get_string('nograded', 'theme_n2018') . '</p>';
         }
         return $o;
     }
@@ -763,23 +760,16 @@ class local {
 
         $grading = self::all_ungraded($USER->id);
 
-        $output = $PAGE->get_renderer('theme_snap', 'core', RENDERER_TARGET_GENERAL);
+        if (empty($grading)) {
+            return '<p class="small">' . get_string('nograding', 'theme_n2018') . '</p>';
+        }
+
+        $output = $PAGE->get_renderer('theme_n2018', 'core', RENDERER_TARGET_GENERAL);
         $out = '';
-        foreach ($grading as $key => $ungraded) {
+        foreach ($grading as $ungraded) {
             $modinfo = get_fast_modinfo($ungraded->course);
             $course = $modinfo->get_course();
             $cm = $modinfo->get_cm($ungraded->coursemoduleid);
-            $groupmode = groups_get_activity_groupmode($cm);
-
-            $context = \context_module::instance($cm->id);
-
-            // Show grading in the personal menu only to the teachers with the proper access to the courses
-            // or the groups.
-            if ($groupmode == SEPARATEGROUPS && !has_capability('moodle/course:viewhiddenactivities', $context) &&
-                    $cm->uservisible != 1) {
-                unset($grading[$key]);
-                continue;
-            }
 
             $modimageurl = $output->image_url('icon', $cm->modname);
             $modname = get_string('modulename', 'mod_'.$cm->modname);
@@ -787,24 +777,20 @@ class local {
 
             $ungradedtitle = $cm->name. '<small><br>' .format_string($course->fullname). '</small>';
 
-            $xungraded = get_string('xungraded', 'theme_snap', $ungraded->ungraded);
+            $xungraded = get_string('xungraded', 'theme_n2018', $ungraded->ungraded);
 
-            $function = '\theme_snap\activity::'.$cm->modname.'_num_submissions';
+            $function = '\theme_n2018\activity::'.$cm->modname.'_num_submissions';
 
             $a['completed'] = call_user_func($function, $ungraded->course, $ungraded->instanceid);
             $a['participants'] = (self::course_participant_count($ungraded->course, $cm->modname));
-            $xofysubmitted = get_string('xofysubmitted', 'theme_snap', $a);
+            $xofysubmitted = get_string('xofysubmitted', 'theme_n2018', $a);
             $meta = $xofysubmitted.', '.$xungraded.'<br>';
 
             if (!empty($ungraded->closetime)) {
                 $meta .= $output->friendly_datetime($ungraded->closetime);
             }
 
-            $out .= $output->snap_media_object($cm->url, $modimage, $ungradedtitle, $meta, '');
-        }
-
-        if (empty($grading)) {
-            return '<p class="small">' . get_string('nograding', 'theme_snap') . '</p>';
+            $out .= $output->n2018_media_object($cm->url, $modimage, $ungradedtitle, $meta, '');
         }
 
         return $out;
@@ -851,7 +837,7 @@ class local {
 
         $grading = [];
         foreach ($mods as $mod) {
-            $class = '\theme_snap\activity';
+            $class = '\theme_n2018\activity';
             $method = $mod.'_ungraded';
             if (method_exists($class, $method)) {
                 $grading = array_merge($grading, call_user_func([$class, $method], $courseids, $since));
@@ -951,12 +937,12 @@ class local {
 
 
     /**
-     * Make url based on file for theme_snap components only.
+     * Make url based on file for theme_n2018 components only.
      *
      * @param stored_file $file
      * @return \moodle_url | bool
      */
-    private static function snap_pluginfile_url($file) {
+    private static function n2018_pluginfile_url($file) {
         if (!$file) {
             return false;
         } else {
@@ -1021,7 +1007,7 @@ class local {
      */
     public static function course_card_clean_up($context) {
         $fs = get_file_storage();
-        $fs->delete_area_files($context->id, 'theme_snap', 'coursecard');
+        $fs->delete_area_files($context->id, 'theme_n2018', 'coursecard');
     }
 
     /**
@@ -1048,13 +1034,13 @@ class local {
             }
             $id = $originalfile->get_id();
             $fs = get_file_storage();
-            $cardimage = $fs->get_file($context->id, 'theme_snap', 'coursecard', 0, '/', 'course-card-'.$id.'-'.$filename);
+            $cardimage = $fs->get_file($context->id, 'theme_n2018', 'coursecard', 0, '/', 'course-card-'.$id.'-'.$filename);
             if ($cardimage) {
                 return $cardimage;
             }
             $filespec = array(
                 'contextid' => $context->id,
-                'component' => 'theme_snap',
+                'component' => 'theme_n2018',
                 'filearea' => 'coursecard',
                 'itemid' => 0,
                 'filepath' => '/',
@@ -1076,7 +1062,7 @@ class local {
     public static function course_card_image_url($courseid) {
         $context = \context_course::instance($courseid);
         $fs = get_file_storage();
-        $cardimages = $fs->get_area_files($context->id, 'theme_snap', 'coursecard', 0, "itemid, filepath, filename", false);
+        $cardimages = $fs->get_area_files($context->id, 'theme_n2018', 'coursecard', 0, "itemid, filepath, filename", false);
         if ($cardimages) {
             /** @var \stored_file $cardimage */
             $cardimage = end($cardimages);
@@ -1084,12 +1070,12 @@ class local {
                 // The current card image has a bad name (from old code), so get rid of it.
                 self::course_card_clean_up($context);
             } else {
-                return self::snap_pluginfile_url($cardimage);
+                return self::n2018_pluginfile_url($cardimage);
             }
         }
         $originalfile = self::get_course_firstimage($courseid);
         $cardimage = self::set_course_card_image($context, $originalfile);
-        return self::snap_pluginfile_url($cardimage);
+        return self::n2018_pluginfile_url($cardimage);
     }
 
     /**
@@ -1109,7 +1095,7 @@ class local {
             }
         }
 
-        $files = $fs->get_area_files($contextid, 'theme_snap', 'coverimage', 0, "itemid, filepath, filename", false);
+        $files = $fs->get_area_files($contextid, 'theme_n2018', 'coverimage', 0, "itemid, filepath, filename", false);
         if (!$files) {
             return false;
         }
@@ -1153,7 +1139,7 @@ class local {
         if (!$file) {
             $file = self::process_coverimage(\context_coursecat::instance($catid));
         }
-        return self::snap_pluginfile_url($file);
+        return self::n2018_pluginfile_url($file);
     }
 
     /**
@@ -1167,7 +1153,7 @@ class local {
         if (!$file) {
             $file = self::process_coverimage(\context_course::instance($courseid));
         }
-        return self::snap_pluginfile_url($file);
+        return self::n2018_pluginfile_url($file);
     }
 
     /**
@@ -1187,7 +1173,7 @@ class local {
      */
     public static function site_coverimage_url() {
         $file = self::site_coverimage();
-        return self::snap_pluginfile_url($file);
+        return self::n2018_pluginfile_url($file);
     }
 
     /**
@@ -1196,14 +1182,14 @@ class local {
      * @return stored_file | bool (false)
      */
     public static function site_coverimage_original() {
-        $theme = \theme_config::load('snap');
+        $theme = \theme_config::load('n2018');
         $filename = $theme->settings->poster;
         if ($filename) {
             if (substr($filename, 0, 1) != '/') {
                 $filename = '/'.$filename;
             }
             $syscontextid = \context_system::instance()->id;
-            $fullpath = '/'.$syscontextid.'/theme_snap/poster/0'.$filename;
+            $fullpath = '/'.$syscontextid.'/theme_n2018/poster/0'.$filename;
             $fs = get_file_storage();
             return $fs->get_file_by_hash(sha1($fullpath));
         } else {
@@ -1304,7 +1290,7 @@ class local {
         }
 
         $fs = get_file_storage();
-        $fs->delete_area_files($context->id, 'theme_snap', 'coverimage');
+        $fs->delete_area_files($context->id, 'theme_n2018', 'coverimage');
 
         if (!$originalfile) {
             return false;
@@ -1316,7 +1302,7 @@ class local {
 
         $filespec = array(
             'contextid' => $context->id,
-            'component' => 'theme_snap',
+            'component' => 'theme_n2018',
             'filearea' => 'coverimage',
             'itemid' => 0,
             'filepath' => '/',
@@ -1373,9 +1359,10 @@ class local {
             $preview = $page->content;
             // Prevent img alt tags from being spat out by html_to_text by escaping them.
             $preview = str_replace('alt=', 'alt&#61;', $preview);
-            // Only formatting tags and links are allowed.
-            $preview = strip_tags($preview, '<b><i><em><mark><small><del><ins><sub><sup><style><a>');
-            $page->summary = shorten_text($preview, 200);
+            $wrapwidth = 0;
+            $listlinks = false;
+            $preview = html_to_text($preview, $wrapwidth, $listlinks);
+            $page->summary = s(shorten_text($preview, 200));
         }
 
         return ($page);
@@ -1609,7 +1596,7 @@ class local {
         if (count($sqls) > 1) {
             $sql .= "\n".' ORDER BY modified DESC';
         }
-        $sql = '-- Snap sql'."\n"."SELECT * FROM ($sql) x";
+        $sql = '-- N2018 sql'."\n"."SELECT * FROM ($sql) x";
         $posts = $DB->get_records_sql($sql, $params, 0, $limit);
 
         $activities = [];
@@ -1668,10 +1655,10 @@ class local {
         global $PAGE;
         $activities = self::recent_forum_activity();
         if (empty($activities)) {
-            return '<p class="small">' . get_string('noforumposts', 'theme_snap') . '</p>';
+            return '<p class="small">' . get_string('noforumposts', 'theme_n2018') . '</p>';
         }
         $activities = array_slice($activities, 0, 10);
-        $renderer = $PAGE->get_renderer('theme_snap', 'core', RENDERER_TARGET_GENERAL);
+        $renderer = $PAGE->get_renderer('theme_n2018', 'core', RENDERER_TARGET_GENERAL);
         return $renderer->recent_forum_activity($activities);
     }
 
@@ -1694,7 +1681,7 @@ class local {
      * @param $courseid
      */
     public static function add_calendar_change_stamp($courseid) {
-        $muc = \cache::make('theme_snap', 'generalstaticappcache');
+        $muc = \cache::make('theme_n2018', 'generalstaticappcache');
         $cached = $muc->get('calendarchangestamps');
         if ($cached) {
             $cached[$courseid] = microtime(true);
@@ -1709,7 +1696,7 @@ class local {
      * @return false|mixed
      */
     public static function get_calendar_change_stamps() {
-        $muc = \cache::make('theme_snap', 'generalstaticappcache');
+        $muc = \cache::make('theme_n2018', 'generalstaticappcache');
         $cached = $muc->get('calendarchangestamps');
         return $cached;
     }

@@ -15,9 +15,9 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Layout - course-index-category.
+ * Layout - course-index-catagory.
  *
- * @package   theme_snap
+ * @package   theme_n2018
  * @copyright Copyright (c) 2017 Blackboard Inc.
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
@@ -43,28 +43,27 @@ if (!empty($coverimagecss)) {
     ////////////////////////// MAIN  ///////////////////////////////
     -->
         <main id="moodle-page" class="clearfix">
-        <div id="page-header" class="clearfix snap-category-header <?php echo $mastimage; ?>">
-        <div class="breadcrumb-nav" aria-label="breadcrumb"><?php echo $OUTPUT->navbar($mastimage); ?></div>
+        <div id="page-header" class="clearfix n2018-category-header <?php echo $mastimage; ?>">
+        <div class="breadcrumb-nav" aria-label="breadcrumb"><?php echo $OUTPUT->navbar(); ?></div>
             <div id="page-mast">
             <?php
                 $categories = $PAGE->categories;
                 if (empty($categories)) {
-                    $catname = get_string('courses', 'theme_snap');
-                    $catname = format_text($catname);
-                    echo '<h1>' . html_to_text(s($catname)) . '</h1>';
+                    $catname = get_string('courses', 'theme_n2018');
+                    echo '<h1>' .s($catname). '</h1>';
                 } else {
                     // Get the current category name and description.
                     $cat = reset($categories);
                     $catid = $cat->id;
-                    $catname = format_text($cat->name);
+                    $catname = $cat->name;
                     $catdescription = $cat->description;
 
                     // Category edit link.
                     $editcatagory = '';
                     if (can_edit_in_category($catid)) {
                         $editurl = new moodle_url('/course/editcategory.php', ['id' => $catid]);
-                        $editcatagory = '<div><a href=" '.$editurl.' " class="btn btn-secondary btn-sm">'
-                                .get_string('categoryedit', 'theme_snap').'</a></div>';
+                        $editcatagory = '<div><a href=" '.$editurl.' " class="btn btn-default btn-sm">'
+                                .get_string('categoryedit', 'theme_n2018').'</a></div>';
                     }
 
                     // Category summary.
@@ -74,14 +73,14 @@ if (!empty($coverimagecss)) {
                         $catdescription = file_rewrite_pluginfile_urls($catdescription,
                             'pluginfile.php', $content->id, 'coursecat', 'description', null);
                         $options = array('noclean' => true, 'overflowdiv' => false);
-                        $catsummary = '<div class="snap-category-description">'
+                        $catsummary = '<div class="n2018-category-description">'
                             .format_text($catdescription, $cat->descriptionformat, $options).
                             $editcatagory.'</div>';
                     } else {
                         // No summary, output edit link.
                         $catsummary = $editcatagory;
                     }
-                    echo '<h1>' . html_to_text(s($catname)) . '</h1>';
+                    echo '<h1>' .s($catname). '</h1>';
                     echo $catsummary;
                 }
 
@@ -99,7 +98,7 @@ if (!empty($coverimagecss)) {
         <section id="region-main">
             <?php
             if ($manageurl) {
-                echo '<p><a class="btn btn-secondary btn-sm" href="' . $manageurl . '">';
+                echo '<p><a class="btn btn-default btn-sm" href="' . $manageurl . '">';
                 echo get_string('managecourses', 'moodle') . '</a></p>';
             }
             echo $OUTPUT->main_content();

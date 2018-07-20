@@ -16,7 +16,7 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-use theme_snap\webservice\ws_course_card;
+use theme_n2018\webservice\ws_course_card;
 
 /**
  * Test course card web service
@@ -24,7 +24,7 @@ use theme_snap\webservice\ws_course_card;
  * @copyright Copyright (c) 2016 Moodlerooms Inc. (http://www.moodlerooms.com)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class theme_snap_ws_course_card_test extends \advanced_testcase {
+class theme_n2018_ws_course_card_test extends \advanced_testcase {
 
     public function test_service_parameters() {
         $params = ws_course_card::service_parameters();

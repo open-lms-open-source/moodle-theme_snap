@@ -1,41 +1,41 @@
 // -------------------------
-//  Course footer - a footer in snap courses.
+//  Course footer - a footer in n2018 courses.
 // -------------------------
 // -------------------------
 // Course footer.
 // -------------------------
 
-#snap-course-footer {
+#n2018-course-footer {
     margin-top: 1em;
     padding: 1em 4%;
     background-color: $footer-color-bg;
 
-    .snap-media-object {
+    .n2018-media-object {
         font-weight: normal;
     }
 }
 
-#snap-course-footer-recent-activity,
-#snap-course-footer-about,
-#snap-course-footer-summary,
-#snap-course-footer-contacts {
+#n2018-course-footer-recent-activity,
+#n2018-course-footer-about,
+#n2018-course-footer-summary,
+#n2018-course-footer-contacts {
     padding-top: .5em;
 }
 
 // -------------------------
 //  About the course.
 // -------------------------
-#snap-course-footer-about {
+#n2018-course-footer-about {
     max-width: 43.5em;
 }
-#snap-course-footer-summary {
+#n2018-course-footer-summary {
     font-family: $font-family-serif;
 }
 // -------------------------
 //  Course contacts.
 // -------------------------
-#snap-course-footer-contacts {
-    .snap-media-object .userpicture {
+#n2018-course-footer-contacts {
+    .n2018-media-object .userpicture {
         width: 50px;
     }
 }
@@ -43,7 +43,7 @@
 // -------------------------
 //  Recent updates.
 // -------------------------
-#snap-course-footer-recent-activity {
+#n2018-course-footer-recent-activity {
     padding-top: .5em;
 
     h3 {
@@ -52,31 +52,31 @@
 
     // Grid content for various breakpoints.
     @include media-breakpoint-up(md) {
-        .snap-media-object {
+        .n2018-media-object {
             width: 23%;
             float: left;
         }
         // Clear every 4th.
-        & > .snap-media-object:nth-child(5n+1) {
+        & > .n2018-media-object:nth-child(5n+1) {
             clear: left;
         }
     }
     @include media-breakpoint-down(md) {
-        .snap-media-object {
+        .n2018-media-object {
             width: 48%;
             float: left;
         }
         // Clear every second.
-        & > .snap-media-object:nth-child(3n+1) {
+        & > .n2018-media-object:nth-child(3n+1) {
             clear: left;
         }
     }
 
-    .snap-media-object {
+    .n2018-media-object {
         margin-right: 2%;
         border-top: .3em solid $gray-light;
         // Mrooms forum output updates as media objects which we need to be 100%;
-        .snap-media-object {
+        .n2018-media-object {
             width: 100%;
             float: none;
             border: none;
@@ -128,18 +128,18 @@
 
     // Attempt to only show the most recent update.
     // This is complex.
-    // Snap also uses js to update the dom for recent updates.
+    // N2018 also uses js to update the dom for recent updates.
 
     // Hide things to start...
-    .snap-media-object .snap-media-object,
+    .n2018-media-object .n2018-media-object,
     li,
     .head,
     .info {
         display: none;
     }
     // Updates are shown in reverse order, and we want the most recent, i.e. the last.
-    .snap-media-object {
-        div.snap-media-object,
+    .n2018-media-object {
+        div.n2018-media-object,
         li,
         div.head {
             &:last-of-type {
@@ -150,8 +150,8 @@
 
     // Block display some elements account for dom inconsistansies.
     .head .info,
-    .snap-media-object.chat .head,
-    .snap-media-object.chat .userlist {
+    .n2018-media-object.chat .head,
+    .n2018-media-object.chat .userlist {
         display: block;
     }
 }

@@ -14,7 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
-namespace theme_snap;
+namespace theme_n2018;
 
 defined('MOODLE_INTERNAL') || die();
 
@@ -24,7 +24,7 @@ require_once($CFG->dirroot.'/mod/assign/locallib.php');
  * Activity functions.
  * These functions are in a class purely for auto loading convenience.
  *
- * @package   theme_snap
+ * @package   theme_n2018
  * @copyright Copyright (c) 2015 Moodlerooms Inc. (http://www.moodlerooms.com)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
@@ -38,8 +38,8 @@ class activity {
      */
     public static function module_meta(\cm_info $mod) {
         $methodname = $mod->modname . '_meta';
-        if (method_exists('theme_snap\\activity', $methodname)) {
-            $meta = call_user_func('theme_snap\\activity::' . $methodname, $mod);
+        if (method_exists('theme_n2018\\activity', $methodname)) {
+            $meta = call_user_func('theme_n2018\\activity::' . $methodname, $mod);
         } else {
             $meta = new activity_meta(); // Return empty activity meta.
         }
@@ -80,22 +80,22 @@ class activity {
         $meta = new activity_meta();
         $meta->submissionnotrequired = $submissionnotrequired;
         $meta->submitstrkey = $submitstrkey;
-        $meta->submittedstr = get_string($submitstrkey, 'theme_snap');
-        $meta->notsubmittedstr = get_string('not'.$submitstrkey, 'theme_snap');
-        if (get_string_manager()->string_exists($mod->modname.'draft', 'theme_snap')) {
-            $meta->draftstr = get_string($mod->modname.'draft', 'theme_snap');
+        $meta->submittedstr = get_string($submitstrkey, 'theme_n2018');
+        $meta->notsubmittedstr = get_string('not'.$submitstrkey, 'theme_n2018');
+        if (get_string_manager()->string_exists($mod->modname.'draft', 'theme_n2018')) {
+            $meta->draftstr = get_string($mod->modname.'draft', 'theme_n2018');
         } else {
-            $meta->drafstr = get_string('draft', 'theme_snap');
+            $meta->drafstr = get_string('draft', 'theme_n2018');
         }
 
-        if (get_string_manager()->string_exists($mod->modname.'reopened', 'theme_snap')) {
-            $meta->reopenedstr = get_string($mod->modname.'reopened', 'theme_snap');
+        if (get_string_manager()->string_exists($mod->modname.'reopened', 'theme_n2018')) {
+            $meta->reopenedstr = get_string($mod->modname.'reopened', 'theme_n2018');
         } else {
-            $meta->reopenedstr = get_string('reopened', 'theme_snap');
+            $meta->reopenedstr = get_string('reopened', 'theme_n2018');
         }
 
         // If module is not visible to the user then don't bother getting meta data.
-        if (!$mod->visibleoncoursepage) {
+        if (!$mod->uservisible) {
             return $meta;
         }
 
@@ -116,11 +116,11 @@ class activity {
             $methodnsubmissions = $mod->modname.'_num_submissions';
             $methodnungraded = $mod->modname.'_num_submissions_ungraded';
 
-            if (method_exists('theme_snap\\activity', $methodnsubmissions)) {
-                $meta->numsubmissions = call_user_func('theme_snap\\activity::'.$methodnsubmissions, $courseid, $mod->instance);
+            if (method_exists('theme_n2018\\activity', $methodnsubmissions)) {
+                $meta->numsubmissions = call_user_func('theme_n2018\\activity::'.$methodnsubmissions, $courseid, $mod->instance);
             }
-            if (method_exists('theme_snap\\activity', $methodnungraded)) {
-                $meta->numrequiregrading = call_user_func('theme_snap\\activity::'.$methodnungraded, $courseid, $mod->instance);
+            if (method_exists('theme_n2018\\activity', $methodnungraded)) {
+                $meta->numrequiregrading = call_user_func('theme_n2018\\activity::'.$methodnungraded, $courseid, $mod->instance);
             }
         } else {
             // Student - useful student meta data - only display if activity is available.
@@ -313,7 +313,7 @@ class activity {
             list($esql, $params) = get_enrolled_sql(\context_course::instance($courseid), 'mod/assign:submit', 0, true);
             $params['courseid'] = $courseid;
 
-            $sql = "-- Snap sql
+            $sql = "-- N2018 sql
                     SELECT cm.id AS coursemoduleid, a.id AS instanceid, a.course,
                            a.allowsubmissionsfromdate AS opentime, a.duedate AS closetime,
                            count(DISTINCT sb.userid) AS ungraded
@@ -394,7 +394,7 @@ class activity {
             list($graderids, $params) = get_enrolled_sql(\context_course::instance($courseid), 'moodle/grade:viewall');
             $params['courseid'] = $courseid;
 
-            $sql = "-- Snap SQL
+            $sql = "-- N2018 SQL
                     SELECT cm.id AS coursemoduleid, q.id AS instanceid, q.course,
                            q.timeopen AS opentime, q.timeclose AS closetime,
                            count(DISTINCT qa.userid) AS ungraded
@@ -484,7 +484,7 @@ class activity {
         $params['submitted'] = ASSIGN_SUBMISSION_STATUS_SUBMITTED;
         $params['courseid'] = $courseid;
 
-        $sql = "-- Snap sql
+        $sql = "-- N2018 sql
                  SELECT sb.assignment, count(sb.userid) AS total
                    FROM {assign_submission} sb
 
@@ -564,7 +564,7 @@ class activity {
             $params['courseid'] = $courseid;
 
             // Get the number of submissions for all $maintable activities in this course.
-            $sql = "-- Snap sql
+            $sql = "-- N2018 sql
                     SELECT m.id, COUNT(DISTINCT sb.userid) as totalsubmitted
                       FROM {".$maintable."} m
                       JOIN {".$submittable."} sb ON m.id = sb.$mainkey
@@ -604,7 +604,7 @@ class activity {
             $params['submitted'] = ASSIGN_SUBMISSION_STATUS_SUBMITTED;
 
             // Get the number of submissions for all assign activities in this course.
-            $sql = "-- Snap sql
+            $sql = "-- N2018 sql
                 SELECT m.id, COUNT(sb.userid) as totalsubmitted
                   FROM {assign} m
                   JOIN {assign_submission} sb
@@ -693,7 +693,7 @@ class activity {
 
         if (!isset($totalsbyquizid)) {
             // Results are not cached.
-            $sql = "-- Snap sql
+            $sql = "-- N2018 sql
                     SELECT q.id, count(DISTINCT qa.userid) as total
                       FROM {quiz} q
 
@@ -750,7 +750,7 @@ class activity {
 
         if ($mod->modname === 'assign') {
             $params = [$courseid, $USER->id];
-            $sql = "-- Snap sql
+            $sql = "-- N2018 sql
                 SELECT a.id AS instanceid, st.*
                     FROM {".$submissiontable."} st
 
@@ -764,7 +764,7 @@ class activity {
         } else {
             // Less effecient general purpose for other module types.
             $params = [$USER->id, $courseid, $USER->id];
-            $sql = "-- Snap sql
+            $sql = "-- N2018 sql
                 SELECT a.id AS instanceid, st.*
                     FROM {".$submissiontable."} st
 
@@ -870,7 +870,7 @@ class activity {
 
         if ($mod->modname != 'assign') {
             // Get moddates WITHOUT overrides.
-            $sql = "-- Snap sql
+            $sql = "-- N2018 sql
                     SELECT id, $timeopenfld AS timeopen, $timeclosefld as timeclose
                         FROM {" . $modname . "}
                     WHERE course = ?";
@@ -883,7 +883,7 @@ class activity {
             if ($groups[0]) {
                 list ($groupsql, $params) = $DB->get_in_or_equal($groups[0]);
 
-                $sql = "-- Snap sql
+                $sql = "-- N2018 sql
                     SELECT ma.id,
                       CASE
                       WHEN mao.allowsubmissionsfromdate IS NOT NULL
@@ -908,7 +908,7 @@ class activity {
 
             } else {
 
-                $sql = "-- Snap sql
+                $sql = "-- N2018 sql
                     SELECT ma.id,
                       CASE
                       WHEN mao.allowsubmissionsfromdate IS NOT NULL
@@ -1017,7 +1017,7 @@ class activity {
             return $grades[$courseid.'_'.$mod->modname][$mod->instance];
         }
 
-        $sql = "-- Snap sql
+        $sql = "-- N2018 sql
                 SELECT m.id AS instanceid, gg.*
 
                     FROM {".$mod->modname."} m
@@ -1077,7 +1077,7 @@ class activity {
         $onemonthago = time() - (DAYSECS * 31);
         $showfrom = $showfrom !== null ? $showfrom : $onemonthago;
 
-        $sql = "-- Snap sql
+        $sql = "-- N2018 sql
                 SELECT gg.*, gi.itemmodule, gi.iteminstance, gi.courseid, gi.itemtype
                   FROM {grade_grades} gg
                   JOIN {grade_items} gi
@@ -1179,8 +1179,8 @@ class activity {
         $ignorehidden = true
     ) {
 
-        \theme_snap\calendar\event\container::ovd_init();
-        $vault = \theme_snap\calendar\event\container::get_event_vault();
+        \theme_n2018\calendar\event\container::ovd_init();
+        $vault = \theme_n2018\calendar\event\container::get_event_vault();
 
         $timestartafterevent = null;
         $timesortafterevent = null;
@@ -1205,7 +1205,6 @@ class activity {
             $usersfilter,
             $groupsfilter,
             $coursesfilter,
-            null,
             $withduration,
             $ignorehidden
         );
@@ -1223,7 +1222,7 @@ class activity {
 
         $calendar = new \calendar_information(0, 0, 0, $tstart);
         $course = get_course(SITEID);
-        $calendar->set_sources($course, $courses);
+        $calendar->prepare_for_view($course, $courses);
 
         $withduration = true;
         $ignorehidden = true;
@@ -1306,7 +1305,7 @@ class activity {
         $cachekey = $cacheprefix.$user->id.'_'.($dstart + $dend).'_'.$limit;
 
         if (self::$phpunitallowcaching || !(defined('PHPUNIT_TEST') && PHPUNIT_TEST)) {
-            $muc = \cache::make('theme_snap', 'activity_deadlines');
+            $muc = \cache::make('theme_n2018', 'activity_deadlines');
             $cached = $muc->get($cachekey);
 
             if ($cached && $cached->timestamp >= time() - HOURSECS) {

@@ -15,13 +15,13 @@
 #
 # Tests for inline resource media.
 #
-# @package    theme_snap
+# @package    theme_n2018
 # @author     2015 Guy Thomas <gthomas@moodlerooms.com>
 # @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
 
 
-@theme @theme_snap
-Feature: When the moodle theme is set to Snap, clicking on a resource with a media file mime type will open the
+@theme @theme_n2018
+Feature: When the moodle theme is set to N2018, clicking on a resource with a media file mime type will open the
   resource inline.
 
   Background:
@@ -43,20 +43,20 @@ Feature: When the moodle theme is set to Snap, clicking on a resource with a med
     And I am on the course main page for "C1"
     And I follow "Topic 1"
     Then "#section-1" "css_element" should exist
-    And "#snap-drop-file-1" "css_element" should exist
+    And "#n2018-drop-file-1" "css_element" should exist
     And I upload file "test_mp3_file.mp3" to section 1
-    Then ".snap-resource[data-type='mp3']" "css_element" should exist
-    Then ".snap-resource[data-type='mp3']" "css_element" should exist
-    And I click on ".snap-edit-asset" "css_element"
+    Then ".n2018-resource[data-type='mp3']" "css_element" should exist
+    Then ".n2018-resource[data-type='mp3']" "css_element" should exist
+    And I click on ".n2018-edit-asset" "css_element"
     And I set the following fields to these values:
       | Completion tracking | 2 |
       | Student must view this activity to complete it | 1 |
     And I click on "#id_submitbutton2" "css_element"
     And "span.autocompletion img[title='Not completed: test mp3 file']" "css_element" should exist
-    And I click on ".snap-resource[data-type='mp3'] .snap-asset-link a" "css_element"
-    And I wait until "#snap-light-box" "css_element" is visible
-   Then "#snap-light-box" "css_element" should exist
-    And I click on "#snap-light-box-close" "css_element"
-   Then "#snap-light-box" "css_element" should not exist
+    And I click on ".n2018-resource[data-type='mp3'] .n2018-asset-link a" "css_element"
+    And I wait until "#n2018-light-box" "css_element" is visible
+   Then "#n2018-light-box" "css_element" should exist
+    And I click on "#n2018-light-box-close" "css_element"
+   Then "#n2018-light-box" "css_element" should not exist
     And "span.autocompletion img[title='Not completed: test mp3 file']" "css_element" should not exist
     And "span.autocompletion img[title='Completed: test mp3 file']" "css_element" should exist

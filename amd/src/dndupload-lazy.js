@@ -14,16 +14,16 @@
  * You should have received a copy of the GNU General Public License
  * along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
  *
- * @package   theme_snap
+ * @package   theme_n2018
  * @author    David Castro <david.castro@blackboard.com>
  * @copyright Copyright (c) 2017 Blackboard Inc.
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 /**
- * @module theme_snap/dndupload-lazy
+ * @module theme_n2018/dndupload-lazy
  */
-define(['jquery', 'core/yui', 'theme_snap/util'],
+define(['jquery', 'core/yui', 'theme_n2018/util'],
     function($, YUI, util) {
         var self = this;
 
@@ -33,15 +33,15 @@ define(['jquery', 'core/yui', 'theme_snap/util'],
          * Initialising function.
          * @param {array} options The course dnd options
          */
-        self.init = function(options) {
+        self.init = function(options){
             util.whenTrue(
                 function() {
-                    return typeof (M.course_dndupload) !== 'undefined';
+                    return typeof(M.course_dndupload) !== 'undefined';
                 },
                 function() {
                     self.dndupload = M.course_dndupload;
                     // Adding YUI 3 requirements here.
-                    YUI.use('node', 'event', 'json', 'anim', function(Y) {
+                    YUI.use('node', 'event', 'json', 'anim', function (Y) {
                         self.decorateCourseDNDUpload(Y, options);
                     });
 
@@ -55,9 +55,8 @@ define(['jquery', 'core/yui', 'theme_snap/util'],
          */
         self.decorateCourseDNDUpload = function(Y, options) {
             // Add the statically added file handlers.
-            /* global themeSnapCourseFileHandlers */
-            if (themeSnapCourseFileHandlers) {
-                options.handlers = themeSnapCourseFileHandlers;
+            if(theme_n2018_course_file_handlers) {
+                options.handlers = theme_n2018_course_file_handlers;
             } else {
                 options.handlers = {};
             }
@@ -78,9 +77,9 @@ define(['jquery', 'core/yui', 'theme_snap/util'],
 
             self.dndupload.init(Y, options);
 
-            $('.js-snap-drop-file').change(function() {
-                var sectionnumber = $(this).attr('id').replace('snap-drop-file-', '');
-                var section = Y.one('#section-' + sectionnumber);
+            $('.js-n2018-drop-file').change(function() {
+                var sectionnumber = $(this).attr('id').replace('n2018-drop-file-', '');
+                var section = Y.one('#section-'+sectionnumber);
 
                 var file;
                 for (var i = 0; i < this.files.length; i++) {

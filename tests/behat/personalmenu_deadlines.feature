@@ -13,15 +13,15 @@
 # You should have received a copy of the GNU General Public License
 # along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 #
-# Tests for Snap personal menu.
+# Tests for N2018 personal menu.
 #
-# @package    theme_snap
+# @package    theme_n2018
 # @copyright  Copyright (c) 2016 Moodlerooms Inc. (http://www.moodlerooms.com)
 # @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
 
 
-@theme @theme_snap
-Feature: When the moodle theme is set to Snap, students and teachers can find in their personal menu a list of deadlines
+@theme @theme_n2018
+Feature: When the moodle theme is set to N2018, students and teachers can find in their personal menu a list of deadlines
   for activities and the submission / attempt status thereof.
 
   Background:
@@ -30,7 +30,7 @@ Feature: When the moodle theme is set to Snap, students and teachers can find in
     And the following "courses" exist:
       | fullname | shortname | category | groupmode | theme |
       | Course 1 | C1 | 0 | 1 | |
-      | Course 2 | C2 | 0 | 1 | snap |
+      | Course 2 | C2 | 0 | 1 | n2018 |
     And the following "users" exist:
       | username | firstname | lastname | email |
       | teacher1 | Teacher | 1 | teacher1@example.com |
@@ -51,8 +51,8 @@ Feature: When the moodle theme is set to Snap, students and teachers can find in
       | assign   | C1     | assign2  | Test assignment2 | Test assignment 2 | 1                                   | 1                               | 1       | ##next week##   |
     And I log in as "student1"
     And I open the personal menu
-    And I should see "Not Submitted" in the "#snap-personal-menu-deadlines div.snap-media-object:first-of-type" "css_element"
-    And I should see "Not Submitted" in the "#snap-personal-menu-deadlines div.snap-media-object:nth-of-type(2)" "css_element"
+    And I should see "Not Submitted" in the "#n2018-personal-menu-deadlines div.n2018-media-object:first-of-type" "css_element"
+    And I should see "Not Submitted" in the "#n2018-personal-menu-deadlines div.n2018-media-object:nth-of-type(2)" "css_element"
     And I am on "Course 1" course homepage
     And I follow "Topic 1"
     And I wait until "#section-1" "css_element" is visible
@@ -65,9 +65,9 @@ Feature: When the moodle theme is set to Snap, students and teachers can find in
     And I follow "Submit assignment"
     And I press "Continue"
     And I open the personal menu
-    And I should see "Submitted" in the "#snap-personal-menu-deadlines div.snap-media-object:first-of-type" "css_element"
-    And I should not see "Not Submitted" in the "#snap-personal-menu-deadlines div.snap-media-object:first-of-type" "css_element"
-    And I should see "Not Submitted" in the "#snap-personal-menu-deadlines div.snap-media-object:nth-of-type(2)" "css_element"
+    And I should see "Submitted" in the "#n2018-personal-menu-deadlines div.n2018-media-object:first-of-type" "css_element"
+    And I should not see "Not Submitted" in the "#n2018-personal-menu-deadlines div.n2018-media-object:first-of-type" "css_element"
+    And I should see "Not Submitted" in the "#n2018-personal-menu-deadlines div.n2018-media-object:nth-of-type(2)" "css_element"
 
   @javascript
   Scenario: Teacher sees no submission status data against deadlines.
@@ -77,13 +77,13 @@ Feature: When the moodle theme is set to Snap, students and teachers can find in
       | assign   | C1     | assign2  | Test assignment2 | Test assignment 2 | 1                                   | 1                               | 1       | ##next week## |
     And I log in as "teacher1"
     And I open the personal menu
-    And I should not see "Submitted" in the "#snap-personal-menu-deadlines div.snap-media-object:first-of-type" "css_element"
-    And I should not see "Not Submitted" in the "#snap-personal-menu-deadlines div.snap-media-object:first-of-type" "css_element"
-    And I should not see "Submitted" in the "#snap-personal-menu-deadlines div.snap-media-object:nth-of-type(2)" "css_element"
-    And I should not see "Not Submitted" in the "#snap-personal-menu-deadlines div.snap-media-object:nth-of-type(2)" "css_element"
+    And I should not see "Submitted" in the "#n2018-personal-menu-deadlines div.n2018-media-object:first-of-type" "css_element"
+    And I should not see "Not Submitted" in the "#n2018-personal-menu-deadlines div.n2018-media-object:first-of-type" "css_element"
+    And I should not see "Submitted" in the "#n2018-personal-menu-deadlines div.n2018-media-object:nth-of-type(2)" "css_element"
+    And I should not see "Not Submitted" in the "#n2018-personal-menu-deadlines div.n2018-media-object:nth-of-type(2)" "css_element"
 
   @javascript
-  Scenario: Student sees correct submission status when the platform theme is different from snap and the course is forced to snap
+  Scenario: Student sees correct submission status when the platform theme is different from n2018 and the course is forced to n2018
     Given the following config values are set as admin:
       | theme | clean |
     Given the following "activities" exist:
@@ -103,14 +103,14 @@ Feature: When the moodle theme is set to Snap, students and teachers can find in
     And I follow "Submit assignment"
     And I press "Continue"
     And I open the personal menu
-    And I should see "Submitted" in the "#snap-personal-menu-deadlines div.snap-media-object:first-of-type" "css_element"
-    And I should not see "Not Submitted" in the "#snap-personal-menu-deadlines div.snap-media-object:first-of-type" "css_element"
-    And I should see "Not Submitted" in the "#snap-personal-menu-deadlines div.snap-media-object:nth-of-type(2)" "css_element"
+    And I should see "Submitted" in the "#n2018-personal-menu-deadlines div.n2018-media-object:first-of-type" "css_element"
+    And I should not see "Not Submitted" in the "#n2018-personal-menu-deadlines div.n2018-media-object:first-of-type" "css_element"
+    And I should see "Not Submitted" in the "#n2018-personal-menu-deadlines div.n2018-media-object:nth-of-type(2)" "css_element"
 
   @javascript
   Scenario: Extended deadline dates take priority over deadlines.
     Given the following config values are set as admin:
-      | theme | snap |
+      | theme | n2018 |
     Given the following "activities" exist:
       | activity | course | idnumber | name             | intro             | assignsubmission_onlinetext_enabled | assignfeedback_comments_enabled | section | duedate       |
       | assign   | C2     | assign1  | Test assignment1 | Test assignment 1 | 1                                   | 1                               | 1       | ##yesterday## |

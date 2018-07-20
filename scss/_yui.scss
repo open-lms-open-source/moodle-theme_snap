@@ -40,27 +40,19 @@
 
 // copied from theme/boost/scss/bootstrap/_nav.scss to avoid @inline explosion.
 %fake-nav {
-    padding-left: 0;
-    margin-bottom: 0;
-    list-style: none;
+  padding-left: 0;
+  margin-bottom: 0;
+  list-style: none;
 }
 
 %fake-nav-tabs {
-    border-bottom: $nav-tabs-border-width solid $nav-tabs-border-color;
-    @include clearfix();
+  border-bottom: $nav-tabs-border-width solid $nav-tabs-border-color;
+  @include clearfix();
 }
 
 
 .yui-skin-sam,
 .yui-bootstrapped {
-    .yuimenu {
-        a.yuimenuitemlabel {
-            &:hover,
-            &:focus {
-                background-color: $dropdown-link-hover-bg;
-            }
-        }
-    }
     .mask {
         background-color: $modal-backdrop-bg;
         opacity: $modal-backdrop-opacity;
@@ -124,16 +116,16 @@
         @extend %fake-nav;
         @extend %fake-nav-tabs;
         .yui3-tab-selected > a {
-            &,
-            &:hover,
-            &:focus {
-                color: $nav-tabs-active-link-hover-color;
-                background-color: $nav-tabs-active-link-hover-bg;
-                border: 1px solid $nav-tabs-border-color;
-                border-bottom-color: transparent;
-                cursor: default;
-                background-image: none;
-            }
+          &,
+          &:hover,
+          &:focus {
+            color: $nav-tabs-active-link-hover-color;
+            background-color: $nav-tabs-active-link-hover-bg;
+            border: 1px solid $nav-tabs-border-color;
+            border-bottom-color: transparent;
+            cursor: default;
+            background-image: none;
+          }
         }
         .yui3-tab-label {
             color: $brand-primary;
@@ -142,11 +134,11 @@
             border: 1px solid transparent;
             border-bottom-color: $nav-tabs-border-color;
             padding: $nav-link-padding;
-            &:hover,
-            &:focus {
-                color: $link-hover-color;
-                background-color: $nav-link-hover-bg;
-            }
+          &:hover,
+          &:focus {
+            color: $link-hover-color;
+            background-color: $nav-link-hover-bg;
+          }
         }
     }
     .yui3-tabview-content {
@@ -156,13 +148,13 @@
         }
     }
     .yui-panel-container {
-        &.shadow .underlay {
-            display: none;
-        }
+       &.shadow .underlay {
+           display: none;
+       }
         margin-top: 60px;
         .yui-panel {
             @extend .modal-content;
-            & > .container-close {
+            &> .container-close {
                 position: absolute;
                 top: 15px;
                 right: 15px;
@@ -268,7 +260,7 @@
         background-color: $dropdown-bg;
         border: 1px solid $dropdown-border-color;
         border-radius: $border-radius;
-        box-shadow: 0 6px 12px rgba(0, 0, 0, .175);
+        box-shadow: 0 6px 12px rgba(0,0,0,.175);
         a.yuimenuitemlabel {
             display: block;
             padding: 3px 20px;
@@ -312,7 +304,7 @@
         border: none;
         .yui3-widget-stdmod {
             overflow: auto;
-            box-shadow: 0 6px 12px rgba(0, 0, 0, .175);
+            box-shadow: 0 6px 12px rgba(0,0,0,.175);
         }
     }
     #dateselector-calendar-content {
@@ -332,36 +324,36 @@
                 margin-bottom: 0.6em;
             }
             .calnavleft,
-            .calnavright {
-                width: 25px;
-                height: 15px;
+            .calnavright{
+                width:25px;
+                height:15px;
                 top: 5px;
-                cursor: pointer;
+                cursor:pointer
             }
-            .calnavleft {
-                background: url(/theme/yui_image.php?file=2.9.0/sprite.png) no-repeat 0 -450px;
+            .calnavleft{
+                background:url(/theme/yui_image.php?file=2.9.0/sprite.png) no-repeat 0 -450px;
                 left: -10px;
-                margin-left: .4em;
+                margin-left:.4em;
             }
-            .calnavright {
-                background: url(/theme/yui_image.php?file=2.9.0/sprite.png) no-repeat 0 -500px;
+            .calnavright{
+                background:url(/theme/yui_image.php?file=2.9.0/sprite.png) no-repeat 0 -500px;
                 right: -10px;
-                margin-right: .4em;
+                margin-right:.4em;
             }
             td.calcell {
-                border: 1px solid #eee;
-                padding: 1px;
-                height: 1.6em;
-                line-height: 1.6em;
-                text-align: center;
-                vertical-align: middle;
-                white-space: nowrap;
-                a {
-                    color: $brand-primary;
-                    background-color: $modal-content-bg;
-                    display: block;
-                    text-decoration: none;
-                }
+               border: 1px solid #eee;
+               padding: 1px;
+               height: 1.6em;
+               line-height: 1.6em;
+               text-align: center;
+               vertical-align: middle;
+               white-space: nowrap;
+               a {
+                   color: $brand-primary;
+                   background-color: $modal-content-bg;
+                   display: block;
+                   text-decoration: none;
+               }
                 &.oom {
                     background-color: $table-bg-accent;
                     color: $text-muted;
@@ -401,13 +393,13 @@
         .yui-pg-next,
         .yui-pg-last,
         .yui-pg-page {
-            position: relative;
-            float: left; // Collapse white-space
-            padding: $pagination-padding-y $pagination-padding-x;
-            line-height: $line-height-base;
-            text-decoration: none;
-            margin-left: -1px;
-            border: 1px solid $pagination-border-color;
+                position: relative;
+                float: left; // Collapse white-space
+                padding: $pagination-padding-y $pagination-padding-x;
+                line-height: $line-height-base;
+                text-decoration: none;
+                margin-left: -1px;
+                border: 1px solid $pagination-border-color;
         }
         a {
             &.yui-pg-previous,
@@ -419,9 +411,9 @@
                 background-color: $pagination-bg;
                 &:hover,
                 &:focus {
-                    color: $pagination-hover-color;
-                    background-color: $pagination-hover-bg;
-                    border-color: $pagination-hover-border;
+                  color: $pagination-hover-color;
+                  background-color: $pagination-hover-bg;
+                  border-color: $pagination-hover-border;
                 }
             }
         }
@@ -433,10 +425,10 @@
             &.yui-pg-next,
             &.yui-pg-last,
             &.yui-pg-page:not(.yui-pg-current-page) {
-                color: $pagination-disabled-color;
-                background-color: $pagination-disabled-bg;
-                border-color: $pagination-disabled-border;
-                cursor: not-allowed;
+              color: $pagination-disabled-color;
+              background-color: $pagination-disabled-bg;
+              border-color: $pagination-disabled-border;
+              cursor: not-allowed;
             }
         }
         span.yui-pg-current-page {
@@ -497,6 +489,8 @@
         }
     }
 }
+
+
 
 // JS error messages
 .yui3-skin-sam .yui3-widget-mask,

@@ -17,7 +17,7 @@
 /**
  * Layout - course.
  *
- * @package   theme_snap
+ * @package   theme_n2018
  * @copyright Copyright (c) 2015 Moodlerooms Inc. (http://www.moodlerooms.com)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
@@ -50,7 +50,7 @@ if ($COURSE->id != SITEID && !empty($coverimagecss)) {
 -->
 <main id="moodle-page" class="clearfix">
 <div id="page-header" class="clearfix <?php echo $mastimage; ?>">
-    <div class="breadcrumb-nav" aria-label="breadcrumb"><?php echo $OUTPUT->navbar($mastimage); ?></div>
+    <div class="breadcrumb-nav" aria-label="breadcrumb"><?php echo $OUTPUT->navbar(); ?></div>
 
     <div id="page-mast">
     <?php
@@ -70,7 +70,7 @@ if ($COURSE->id != SITEID && !empty($coverimagecss)) {
 </div>
 <?php
 if ($tocformat && $leftnav) {
-    echo '<div id="snap-course-wrapper">';
+    echo '<div id="n2018-course-wrapper">';
     echo '<div class="row">';
     echo '<div class="col-lg-3">';
     echo $OUTPUT->course_toc();
@@ -83,7 +83,7 @@ if ($tocformat && $leftnav) {
 <?php
 echo $OUTPUT->course_content_header();
 $output = $PAGE->get_renderer('core', 'course');
-echo $output->snap_footer_alert();
+echo $output->n2018_footer_alert();
 echo $OUTPUT->course_modchooser();
 echo $OUTPUT->main_content();
 echo $OUTPUT->course_content_footer();
@@ -101,7 +101,7 @@ if ($tocformat && $leftnav) {
 if ($coursemainpage) {
     $coursefooter = $output->course_footer();
     if (!empty($coursefooter)) { ?>
-        <footer role="contentinfo" id="snap-course-footer"><?php echo $coursefooter ?></footer>
+        <footer role="contentinfo" id="n2018-course-footer"><?php echo $coursefooter ?></footer>
     <?php
     }
 } ?>

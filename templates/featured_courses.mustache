@@ -15,7 +15,7 @@
     along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 }}
 {{!
-    @template theme_snap/featured_courses
+    @template theme_n2018/featured_courses
 
 
     Example context (json):
@@ -34,22 +34,22 @@
         "editurl" : "http://someurl.local"
     }
 }}
-<div id="snap-featured-courses" class="text-center">
-    <h2 class="snap-featured-courses-heading">{{heading}}</h2>
+<div id="n2018-featured-courses" class="text-center">
+    <h2 class="n2018-featured-courses-heading">{{heading}}</h2>
     <div class="row text-center">
 
         {{#cards}}
-        {{> theme_snap/featured_course }}
+        {{> theme_n2018/featured_course }}
         {{/cards}}
 
     </div>
 
     {{#browseallurl}}
-    <p class="text-center"><a href="{{browseallurl}}" class="btn btn-primary">{{#str}}featuredcoursesbrowseall, theme_snap{{/str}}</a></p>
+    <p class="text-center"><a href="{{browseallurl}}" class="btn btn-primary">{{#str}}featuredcoursesbrowseall, theme_n2018{{/str}}</a></p>
     {{/browseallurl}}
 
     {{#editurl}}
-    <p class="text-center"><a href="{{editurl}}" class="btn btn-primary">{{#str}}featuredcoursesedit, theme_snap{{/str}}</a></p>
+    <p class="text-center"><a href="{{editurl}}" class="btn btn-primary">{{#str}}featuredcoursesedit, theme_n2018{{/str}}</a></p>
     {{/editurl}}
 
 </div>

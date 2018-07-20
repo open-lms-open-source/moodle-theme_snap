@@ -63,7 +63,7 @@ module.exports = function(grunt) {
         http: {
             prime_theme_cache: {
                 options: {
-                    url: 'http://joule2.dev/theme/styles.php/snap/-1/all',
+                    url: 'http://joule2.dev/theme/styles.php/n2018/-1/all',
                 }
             }
         },

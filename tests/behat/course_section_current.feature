@@ -13,15 +13,15 @@
 # You should have received a copy of the GNU General Public License
 # along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 #
-# Tests for toggle course section visibility in non edit mode in snap.
+# Tests for toggle course section visibility in non edit mode in n2018.
 #
-# @package    theme_snap
+# @package    theme_n2018
 # @copyright  2016 Blackboard Inc. <www.blackboard.com>
 # @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
 
 
-@theme @theme_snap
-Feature: Entering a Snap course without specifying a section will take you to the current section
+@theme @theme_n2018
+Feature: Entering a N2018 course without specifying a section will take you to the current section
 
   Background:
   Given the following "courses" exist:
@@ -48,12 +48,12 @@ Feature: Entering a Snap course without specifying a section will take you to th
     Given I log in as "teacher1"
     And I am on the course main page for "C1"
     Then I should see "Introduction" in the ".section.state-visible" "css_element"
-    And "#chapters li:nth-of-type(1).snap-visible-section" "css_element" should exist
+    And "#chapters li:nth-of-type(1).n2018-visible-section" "css_element" should exist
     And I follow "Topic 1"
     And I highlight section 1
     And I am on the course main page for "C1"
     And I should see "Untitled Topic" in the ".section.state-visible" "css_element"
-    And "#chapters li:nth-of-type(2).snap-visible-section" "css_element" should exist
+    And "#chapters li:nth-of-type(2).n2018-visible-section" "css_element" should exist
 
   @javascript
   Scenario: If the teacher highlights a hidden section, the default section 0 is displayed

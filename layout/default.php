@@ -17,7 +17,7 @@
 /**
  * Layout - default.
  *
- * @package   theme_snap
+ * @package   theme_n2018
  * @copyright Copyright (c) 2015 Moodlerooms Inc. (http://www.moodlerooms.com)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
@@ -25,7 +25,7 @@ defined('MOODLE_INTERNAL') || die();
 
 require(__DIR__.'/header.php');
 
-use theme_snap\local;
+use theme_n2018\local;
 
 // @codingStandardsIgnoreStart
 // Note, coding standards ignore is required so that we can have more readable indentation under php tags.
@@ -47,7 +47,7 @@ if ($COURSE->id != SITEID && !empty($coverimagecss)) {
 <main id="moodle-page" class="clearfix">
 <div id="page-header" class="clearfix <?php echo $mastimage; ?>">
     <?php if ($PAGE->pagetype !== 'site-index') { ?>
-        <div class="breadcrumb-nav" aria-label="breadcrumb"><?php echo $OUTPUT->navbar($mastimage); ?></div>
+        <div class="breadcrumb-nav" aria-label="breadcrumb"><?php echo $OUTPUT->navbar(); ?></div>
     <?php }
         if ($carousel) {
             // Front page carousel.
@@ -124,12 +124,11 @@ if ($PAGE->pagelayout === 'frontpage' && $PAGE->pagetype === 'site-index') {
     echo $OUTPUT->main_content();
 }
 
-echo $OUTPUT->activity_navigation();
 echo $OUTPUT->course_content_footer();
 
 if (stripos($PAGE->bodyclasses, 'format-singleactivity') !== false ) {
     // Shared renderer is only loaded if required at this point.
-    $output = \theme_snap\output\shared::course_tools();
+    $output = \theme_n2018\output\shared::course_tools();
     if (!empty($output)) {
         echo $output;
     }

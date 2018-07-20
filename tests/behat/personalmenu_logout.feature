@@ -15,12 +15,12 @@
 #
 # Tests for logout.
 #
-# @package    theme_snap
+# @package    theme_n2018
 # @author     2016 Guy Thomas <gthomas@moodlerooms.com>
 # @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
 
-@theme @theme_snap
-Feature: When the moodle theme is set to Snap, log out works via personal menu.
+@theme @theme_n2018
+Feature: When the moodle theme is set to N2018, log out works via personal menu.
 
   Background:
     Given the following "users" exist:

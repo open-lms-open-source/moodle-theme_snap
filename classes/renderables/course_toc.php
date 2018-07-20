@@ -21,7 +21,7 @@
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-namespace theme_snap\renderables;
+namespace theme_n2018\renderables;
 
 use context_course;
 use moodle_url;
@@ -33,8 +33,8 @@ require_once($CFG->dirroot.'/course/format/lib.php');
 
 class course_toc implements \renderable, \templatable{
 
-    use \theme_snap\output\general_section_trait;
-    use \theme_snap\renderables\trait_exportable;
+    use \theme_n2018\output\general_section_trait;
+    use \theme_n2018\renderables\trait_exportable;
 
     /**
      * @var bool
@@ -114,15 +114,14 @@ class course_toc implements \renderable, \templatable{
     protected function set_modules() {
         global $CFG, $PAGE;
 
-        // Set context first so $OUTPUT does not break later.
-        if (!isset($PAGE->context) && AJAX_SCRIPT) {
-            $PAGE->set_context(context_course::instance($this->course->id));
-        }
-
         // If course does not have any sections then exit - note, module search is not supported in course formats
         // that don't have sections.
         if (empty($this->numsections)) {
             return;
+        }
+
+        if (!isset($PAGE->context) && AJAX_SCRIPT) {
+            $PAGE->set_context(context_course::instance($this->course->id));
         }
 
         $modinfo = get_fast_modinfo($this->course);
@@ -187,12 +186,12 @@ class course_toc implements \renderable, \templatable{
             if ($canviewhidden) { // Teachers.
                 if ($conditional) {
                     $chapter->availabilityclass = 'text-warning';
-                    $chapter->availabilitystatus = get_string('conditional', 'theme_snap');
+                    $chapter->availabilitystatus = get_string('conditional', 'theme_n2018');
                     $chapter->classes .= 'conditional ';
                 }
                 if (!$thissection->visible) {
                     $chapter->availabilityclass = 'text-warning';
-                    $chapter->availabilitystatus = get_string('notpublished', 'theme_snap');
+                    $chapter->availabilitystatus = get_string('notpublished', 'theme_n2018');
                     $chapter->classes .= 'draft ';
                 }
             } else { // Students.
@@ -202,7 +201,7 @@ class course_toc implements \renderable, \templatable{
                 }
                 if ($conditional && $thissection->availableinfo) {
                     $chapter->availabilityclass = 'text-warning';
-                    $chapter->availabilitystatus = get_string('conditional', 'theme_snap');
+                    $chapter->availabilitystatus = get_string('conditional', 'theme_n2018');
                     $chapter->classes .= 'conditional ';
                 }
                 if (!$conditional && !$thissection->visible) {
@@ -216,12 +215,12 @@ class course_toc implements \renderable, \templatable{
 
             $chapter->title = get_section_name($this->course, $section);
             if ($chapter->title == get_string('general')) {
-                $chapter->title = get_string('introduction', 'theme_snap');
+                $chapter->title = get_string('introduction', 'theme_n2018');
             }
 
             if ($this->format->is_section_current($section)) {
                 $chapter->iscurrent = true;
-                $chapter->classes .= 'snap-visible-section current ';
+                $chapter->classes .= 'n2018-visible-section current ';
             }
 
             if ($chapter->outputlink) {
@@ -237,7 +236,16 @@ class course_toc implements \renderable, \templatable{
             }
 
             $chapter->progress = new course_toc_progress($this->course, $thissection);
-            $this->chapters->chapters[] = $chapter;
+            
+            /* @williamcss
+             * Este IF foi adicionado para esconder os tópicos para estudantes no menu - PRECISA SER REVISADO!
+             * Default:
+             * $this->chapters->chapters[] = $chapter;
+             */
+            
+            if ($canviewhidden || $thissection->visible) {
+            	$this->chapters->chapters[] = $chapter;
+            }
         }
     }
 
