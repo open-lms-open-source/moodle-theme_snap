@@ -24,6 +24,7 @@
  */
 
 require_once(__DIR__ . '/../../../../lib/behat/behat_base.php');
+use \Behat\Mink\Exception\ExpectationException;
 
 /**
  * New steps used to test the scrollback to the last activity/resource accessed.
@@ -35,11 +36,43 @@ require_once(__DIR__ . '/../../../../lib/behat/behat_base.php');
  */
 class behat_theme_snap_scroll_back extends behat_base {
 
+    private $scrollid;
+
     /**
      * @Given /^I reset session storage$/
      */
     public function reset_session_storage() {
         $session = $this->getSession();
         $session->getDriver()->evaluateScript('sessionStorage.clear();');
+    }
+
+    /**
+     * @Given /^The stored element scroll id matches the session storage id$/
+     * @param string $paramid expected id
+     * @throws ExpectationException
+     */
+    public function the_stored_id_matches() {
+
+        $scrollid = $this->scrollid;
+
+        $sessionid = $this->getSession()->getDriver()->evaluateScript(
+            "function(){ return sessionStorage.getItem('lastMod'); }()"
+        );
+
+        if ($sessionid === $scrollid) {
+            return;
+        } else {
+            throw new ExpectationException('The variable stored is: "'.$sessionid.'" not: "'.$scrollid.'"', $this->getSession());
+        }
+    }
+
+    /**
+     * @Given /^The id for element "(?P<element_string>(?:[^"]|\\")*)" "(?P<selector_string>[^"]*)" is saved for scrollback$/
+     * @param string $element Element we look for
+     * @param string $selectortype The type of what we look for
+     */
+    public function id_for_element_is_saved($element, $selectortype) {
+        $node = $this->get_selected_node($selectortype, $element);
+        $this->scrollid = $node->getAttribute('id');
     }
 }
