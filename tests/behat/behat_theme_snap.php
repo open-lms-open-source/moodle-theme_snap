@@ -1584,4 +1584,27 @@ class behat_theme_snap extends behat_base {
         $xpath .= "/a[contains(text(), 'Feedback available')]";
         $this->ensure_element_does_not_exist($xpath, 'xpath_element');
     }
+
+    /**
+     * Opens index login page.
+     *
+     * @Given /^I am on login page$/
+     */
+    public function i_am_on_login_page() {
+        $this->getSession()->visit($this->locate_path('/login/index.php'));
+    }
+
+    /**
+     * @Given /^I check element "(?P<element_string>(?:[^"]|\\")*)" has class "(?P<class_string>(?:[^"]|\\")*)"$/
+     * @param string $element
+     * @param string $class
+     * @throws Exception
+     */
+    public function i_check_element_has_class($element, $class) {
+        $session = $this->getSession();
+        $elementhasclass = $session->getDriver()->evaluateScript("$('".$element."').hasClass('".$class."');");
+        if (!$elementhasclass) {
+            throw new Exception("Class ".$class." was not found in element ".$element.".");
+        }
+    }
 }
