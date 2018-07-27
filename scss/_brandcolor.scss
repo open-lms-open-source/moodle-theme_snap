@@ -601,6 +601,12 @@ $lighter-grey-btn: #e6e6e6;
                 color: $nav-color;
             }
         }
+        #nav-intellicart-popover-container {
+            // Intellicart shopping icon.
+            .icon.fa-shopping-cart {
+                color: $nav-color;
+            }
+        }
         .conversation_badge_count {
             background-color: darken($nav-color, 8%);
         }

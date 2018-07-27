@@ -418,8 +418,12 @@ class core_renderer extends \theme_boost\output\core_renderer {
         } else {
             $sections = [];
             $intelliboard = $this->render_intelliboard();
+            $intellicart = $this->render_intellicart();
             if (!empty($intelliboard)) {
                 $sections[] = $intelliboard;
+            }
+            if (!empty($intellicart)) {
+                $sections[] = $intellicart;
             }
             foreach ($columns as $column) {
                 if (!empty($column)) {
@@ -608,6 +612,10 @@ class core_renderer extends \theme_boost\output\core_renderer {
             'link' => s($CFG->wwwroot). '/user/profile.php',
             'title' => get_string('profile')
         ];
+        $dashboardlink = [
+            'link' => s($CFG->wwwroot). '/my',
+            'title' => get_string('myhome')
+        ];
         $gradelink = [
             'link' => s($CFG->wwwroot). '/grade/report/overview/index.php',
             'title' => get_string('grades')
@@ -621,7 +629,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
             'link' => s($CFG->wwwroot).'/login/logout.php?sesskey='.sesskey(),
             'title' => get_string('logout')
         ];
-        $quicklinks = [$profilelink, $preferenceslink, $gradelink, $logoutlink];
+        $quicklinks = [$profilelink, $dashboardlink, $preferenceslink, $gradelink, $logoutlink];
 
         // Build up courses.
         $courseservice = course::service();
@@ -1672,15 +1680,59 @@ HTML;
     protected function render_notification_popups() {
         global $OUTPUT, $CFG;
 
+        $navoutput = '';
+        if (\core_component::get_component_directory('local_intellicart') !== null) {
+            require_once(__DIR__ . '/../../../../local/intellicart/lib.php');
+            $navoutput .= local_intellicart_render_navbar_output($OUTPUT);
+        }
         // We only want the notifications bell, not the messages badge so temporarilly disable messaging to exclude it.
         $messagingenabled = $CFG->messaging;
         $CFG->messaging = false;
-        $navoutput = message_popup_render_navbar_output($OUTPUT);
+        $navoutput .= message_popup_render_navbar_output($OUTPUT);
         $CFG->messaging = $messagingenabled;
         if (empty($navoutput)) {
             return '';
         }
         return $navoutput;
+    }
+
+    /**
+     * Render intellicart link in personal menu.
+     * @return string
+     */
+    protected function render_intellicart() {
+        global $PAGE, $OUTPUT;
+        $o = '';
+        $link = '';
+
+        // Prevent if no intellicart.
+        if (\core_component::get_component_directory('local_intellicart') === null) {
+            return $o;
+        }
+
+        // Intellicart adds a link to the flatnav.
+        $flatnav = $PAGE->flatnav->get_key_list();
+
+        // Student dashboard link.
+        if (in_array("intellicart_dashboard", $flatnav, true)) {
+            $node = $PAGE->flatnav->get("intellicart_dashboard");
+            $iconurl = $OUTPUT->image_url('intelliboard', 'theme');
+            $img = '<img class="svg-icon" role="presentation" src="'.s($iconurl).'">';
+            $link .= '<a href=" '. $node->action() .' ">'.$img.s($node->get_content()).'</a><br>';
+        }
+
+        // No links to display.
+        if (!$link) {
+            return $o;
+        }
+
+        $intellicartheading = get_string('intellicart', 'local_intellicart');
+        $o = '<h2>' .$intellicartheading. '</h2>';
+        $o .= '<div id="snap-personal-menu-intellicart">'
+            .$link.
+            '</div>';
+
+        return $o;
     }
 
     /**
