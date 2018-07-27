@@ -112,6 +112,25 @@
 }
 
 /**
+ * Intellicart plugin shopping cart.
+ */
+#nav-intellicart-popover-container {
+    display: inline-block;
+    float: none;
+
+    .icon.fa-shopping-cart {
+        font-size: 24px;
+        width: auto;
+        height: auto;
+        color: $nav-color;
+    }
+}
+
+#mr-nav .popover-region-container .intellicart-footer a {
+    color: white;
+}
+
+/**
  * Video js filter.
  */
 
