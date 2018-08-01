@@ -821,8 +821,11 @@ class local {
         $courses = enrol_get_all_users_courses($userid);
         $courseids = [];
         $capability = 'gradereport/grader:view';
+        $capabilitygrade = 'mod/assign:grade';
         foreach ($courses as $course) {
-            if (has_capability($capability, \context_course::instance($course->id), $userid)) {
+            $context = \context_course::instance($course->id);
+            if (has_capability($capability, $context, $userid) &&
+                has_capability($capabilitygrade, $context, $userid)) {
                 $courseids[] = $course->id;
             }
         }
