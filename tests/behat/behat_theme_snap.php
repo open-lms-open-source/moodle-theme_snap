@@ -414,6 +414,24 @@ class behat_theme_snap extends behat_base {
     }
 
     /**
+     * Restrict an assignment by date.
+     * @param string $assigntitle
+     * @param string $date
+     * @Given /^I restrict assignment "(?P<assigntitle_string>(?:[^"]|\\")*)" by date to "(?P<date_string>(?:[^"]|\\")*)"$/
+     */
+    public function i_restrict_assign_by_date($assigntitle, $date) {
+        $datetime = strtotime($date);
+        $xpath = "//li[contains(@class, 'modtype_assign')]//a/span[contains(text(), '{$assigntitle}')]";
+        $this->execute('behat_general::i_wait_seconds', [1]);
+        $this->execute('behat_general::i_click_on', [$xpath, 'xpath_element']);
+        $this->i_wait_until_is_visible('.assign-intro', 'css_element');
+        $this->execute('behat_general::i_click_on', ['#admin-menu-trigger', 'css_element']);
+        $this->i_wait_until_is_visible('.block_settings.state-visible', 'css_element');
+        $this->execute('behat_navigation::i_navigate_to_node_in', ['Edit settings', 'Assignment administration']);
+        $this->add_date_restriction($datetime, 'Save and return to course');
+    }
+
+    /**
      * Apply asset completion restriction to section when edit form is shown.
      * @param string $assettitle
      * @Given /^I apply asset completion restriction "(?P<asset_string>(?:[^"]|\\")*)" to section$/

@@ -47,13 +47,13 @@ Feature: When the moodle theme is set to Snap, conditional restrictions work as 
   Given I log in as "teacher1"
     And I am on the course main page for "C1"
     And I go to course section 1
-    And I restrict course asset "S1 Restricted - date past" by date to "yesterday"
-    And I restrict course asset "S1 Restricted - date future" by date to "tomorrow"
+    And I restrict assignment "S1 Restricted - date past" by date to "yesterday"
+    And I restrict assignment "S1 Restricted - date future" by date to "tomorrow"
     And I should see available from date of "yesterday" in the 1st asset within section 1
     And I should see available from date of "tomorrow" in the 2nd asset within section 1
     And I go to course section 2
-    And I restrict course asset "S2 Restricted - date past" by date to "yesterday"
-    And I restrict course asset "S2 Restricted - date future" by date to "tomorrow"
+    And I restrict assignment "S2 Restricted - date past" by date to "yesterday"
+    And I restrict assignment "S2 Restricted - date future" by date to "tomorrow"
     And I should see available from date of "yesterday" in the 1st asset within section 2
     And I should see available from date of "tomorrow" in the 2nd asset within section 2
     And I restrict course section 1 by date to "yesterday"
