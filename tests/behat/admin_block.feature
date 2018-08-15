@@ -16,7 +16,7 @@
 # Tests for visibility of admin block by user type and page.
 #
 # @package    theme_snap
-# @copyright Copyright (c) 2015 Blackboard Inc.
+# @copyright Copyright (c) 2015 Moodlerooms Inc.
 # @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
 
 

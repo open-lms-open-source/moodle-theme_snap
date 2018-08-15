@@ -61,7 +61,7 @@ $string['coursecontacts'] = 'Contatti corso';
 $string['coursedisplay'] = 'Visualizzazione corso';
 $string['coursefootertoggle'] = 'Piè di pagina corso';
 $string['coursefootertoggledesc'] = 'Il piè di pagina del corso fornisce agli utenti informazioni utili sulla pagina del corso, compresi i contatti, la descrizione e l\'attività recente.';
-$string['courseformatnotification'] = 'Il formato del corso corrente che si sta utilizzando non è completamente supportato dal tema Snap. Per ottimizzare l\'esperienza, Moodlerooms consiglia di utilizzare i formati del corso Argomenti o Settimanale con il tema Snap. Il formato del corso può essere modificato nelle <a href="{$a}">impostazioni del corso</a>.';
+$string['courseformatnotification'] = 'Il formato del corso corrente che si sta utilizzando non è completamente supportato dal tema Snap. Per ottimizzare l\'esperienza, Blackboard Open LMS consiglia di utilizzare i formati del corso Argomenti o Settimanale con il tema Snap. Il formato del corso può essere modificato nelle <a href="{$a}">impostazioni del corso</a>.';
 $string['coursefixydefaulttext'] = 'Non sei attualmente iscritto in nessun corso.<br>I corsi a cui sei iscritto verranno visualizzati qui.';
 $string['coursegrade'] = 'Voto del corso:';
 $string['coursenavigation'] = 'Navigazione corso';
@@ -78,7 +78,7 @@ $string['comingsoon'] = 'Presto disponibile!';
 $string['createsection'] = 'Crea sezione';
 $string['current'] = 'Corrente';
 $string['customcss'] = 'Personalizza CSS';
-$string['customcssdesc'] = 'Non bisogna dimenticare che avere ampio potere porta ampie responsabilità.  Rientra quindi nelle tue responsabilità risolvere qualsiasi problema causato da codice CSS inserito qui.  Il supporto tecnico di Moodlerooms non si occupa della risoluzione dei problemi, né fornisce assistenza in merito ai contenuti relativi a codice CSS.';
+$string['customcssdesc'] = 'Non bisogna dimenticare che avere ampio potere porta ampie responsabilità.  Rientra quindi nelle tue responsabilità risolvere qualsiasi problema causato da codice CSS inserito qui.  Il supporto tecnico di Blackboard Open LMS non si occupa della risoluzione dei problemi, né fornisce assistenza in merito ai contenuti relativi a codice CSS.';
 $string['customtopbar'] = 'Barra di navigazione';
 $string['customisenavbar'] = 'Modifica colori barra di navigazione';
 $string['customisenavbutton'] = 'Modifica colori pulsante I miei corsi';
@@ -178,7 +178,7 @@ $string['images'] = 'Immagini';
 $string['instagram'] = 'Instagram';
 $string['instagramdesc'] = 'URL dell\'account Instagram.';
 $string['introduction'] = 'Introduzione';
-$string['knowledgebase'] = 'Knowledge Base di Moodlerooms';
+$string['knowledgebase'] = 'Knowledge Base di Blackboard Open LMS';
 $string['list'] = 'Lista';
 $string['linkedin'] = 'LinkedIn';
 $string['linkedindesc'] = 'URL della pagina LinkedIn dell\'organizzazione.';
@@ -231,7 +231,7 @@ $string['pld'] = 'PLD';
 $string['pluginname'] = 'Snap';
 $string['poster'] = 'Immagine di copertina';
 $string['posterdesc'] = 'Un\'immagine grande dell\'intestazione per la pagina principale del sito. Le immagini orizzontali (1200 x 600 pixel) o più grandi forniscono risultati migliori.';
-$string['poweredbyrunby'] = 'Generato con <a href="http://moodlerooms.com/" target="_blank">Moodlerooms</a>,
+$string['poweredbyrunby'] = 'Generato con <a href="http://moodlerooms.com/" target="_blank">Blackboard Open LMS</a>,
      powered by <a href="http://www.moodle.com/" target="_blank">Moodle</a>.<br>
     Copyright &#169; 2017 Blackboard Inc, Tutti i diritti riservati.';
 $string['previoussection'] = 'Sezione precedente';

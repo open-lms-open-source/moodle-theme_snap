@@ -19,7 +19,7 @@
  *
  * @package   theme_snap
  * @category  test
- * @copyright Copyright (c) 2015 Moodlerooms Inc. (http://www.moodlerooms.com)
+ * @copyright Copyright (c) 2015 Blackboard Inc. (http://www.moodlerooms.com)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -37,21 +37,21 @@ use Behat\Gherkin\Node\TableNode,
  *
  * @package   theme_snap
  * @category  test
- * @copyright Copyright (c) 2015 Moodlerooms Inc. (http://www.moodlerooms.com)
+ * @copyright Copyright (c) 2015 Blackboard Inc. (http://www.moodlerooms.com)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class behat_theme_snap extends behat_base {
 
     /**
-     * Checks if running in a Moodlerooms system, skips the test if not.
+     * Checks if running in a Blackboard Open LMS system, skips the test if not.
      *
-     * @Given /^I am using Moodlerooms$/
+     * @Given /^I am using Blackboard Open LMS$/
      * @return void
      */
-    public function i_am_using_moodlerooms() {
+    public function i_am_using_blackboard_open_lms() {
         global $CFG;
         if (!file_exists($CFG->dirroot.'/local/mrooms')) {
-            throw new SkippedException("Skipping tests of Moodlerooms specific functionality");
+            throw new SkippedException("Skipping tests of Blackboard Open LMS specific functionality");
         }
     }
 

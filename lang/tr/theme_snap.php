@@ -61,7 +61,7 @@ $string['coursecontacts'] = 'Kurs Kişileri';
 $string['coursedisplay'] = 'Kurs ekranı';
 $string['coursefootertoggle'] = 'Kurs altbilgisi';
 $string['coursefootertoggledesc'] = 'Kurs altbilgisi, bir kurs sayfasında kullanıcılara kurs kişileri, kurs tanımı ve kurstaki son etkinlikler gibi gerekli bilgileri gösterir.';
-$string['courseformatnotification'] = 'Şu anda kullandığınız kurs biçimi Snap teması tarafından tam olarak desteklenmiyor. En iyi deneyim için Moodlerooms, Snap temasıyla birlikte Konular veya Haftalık kurs biçimlerinin kullanılmasını önermektedir. Kurs biçimi, <a href="{$a}">kurs ayarları</a> içinden değiştirilebilir.';
+$string['courseformatnotification'] = 'Şu anda kullandığınız kurs biçimi Snap teması tarafından tam olarak desteklenmiyor. En iyi deneyim için Blackboard Open LMS, Snap temasıyla birlikte Konular veya Haftalık kurs biçimlerinin kullanılmasını önermektedir. Kurs biçimi, <a href="{$a}">kurs ayarları</a> içinden değiştirilebilir.';
 $string['coursefixydefaulttext'] = 'Şu anda hiçbir kursa kayıtlı değilsiniz.<br>Kaydolduğunuz kurslar burada gösterilecektir.';
 $string['coursegrade'] = 'Kurs notu:';
 $string['coursenavigation'] = 'Kurs gezintisi';
@@ -78,7 +78,7 @@ $string['comingsoon'] = 'Yakında geliyor!';
 $string['createsection'] = 'Bölüm oluştur';
 $string['current'] = 'Mevcut';
 $string['customcss'] = 'Özel CSS';
-$string['customcssdesc'] = 'Lütfen büyük gücün büyük sorumluluk getirdiğini unutmayın. Buraya eklenen CSS ile ilgili her sorunu çözmek sizin sorumluluğunuzdadır. Moodlerooms Desteği, CSS ile ilgili içerikler konusunda yardım sağlamaz ve sorunları gidermez.';
+$string['customcssdesc'] = 'Lütfen büyük gücün büyük sorumluluk getirdiğini unutmayın. Buraya eklenen CSS ile ilgili her sorunu çözmek sizin sorumluluğunuzdadır. Blackboard Open LMS Desteği, CSS ile ilgili içerikler konusunda yardım sağlamaz ve sorunları gidermez.';
 $string['customtopbar'] = 'Gezinti çubuğu';
 $string['customisenavbar'] = 'Gezinti çubuğu renklerini değiştir';
 $string['customisenavbutton'] = 'Kurslarım düğmesi renklerini değiştir';
@@ -178,7 +178,7 @@ $string['images'] = 'Görüntüler';
 $string['instagram'] = 'Instagram';
 $string['instagramdesc'] = 'Instagram hesabınızın url\'si.';
 $string['introduction'] = 'Giriş';
-$string['knowledgebase'] = 'Moodlerooms Bilgi Bankası';
+$string['knowledgebase'] = 'Blackboard Open LMS Bilgi Bankası';
 $string['list'] = 'Liste';
 $string['linkedin'] = 'LinkedIn';
 $string['linkedindesc'] = 'Organizasyonunuzun LinkedIn url\'si.';
@@ -232,7 +232,7 @@ $string['pluginname'] = 'Snap';
 $string['poster'] = 'Kapak görüntüsü';
 $string['posterdesc'] = 'Sitenizin ön sayfası için büyük bir başlık görüntüsü. Yatay yönlendirilmiş (1200 x600 piksel) veya daha büyük resimler en iyisidir.';
 $string['poweredbyrunby'] = '<a href="http://www.moodle.com/" target="_blank">Moodle</a>.<br> tarafından desteklenen
-<a href="http://moodlerooms.com/" target="_blank">Moodlerooms</a> tarafından tasarlanmıştır.
+<a href="http://moodlerooms.com/" target="_blank">Blackboard Open LMS</a> tarafından tasarlanmıştır.
 Telif Hakkı &#169; 2017 Blackboard Inc, Tüm Hakları Saklıdır.';
 $string['previoussection'] = 'Bir önceki bölüm';
 $string['problemsfound'] = 'Bulunan Sorunlar';

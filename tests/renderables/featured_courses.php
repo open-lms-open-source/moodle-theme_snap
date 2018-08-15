@@ -24,7 +24,7 @@ use theme_snap\renderables\featured_courses;
  * Test course card service.
  * @package   theme_snap
  * @author    gthomas2
- * @copyright Copyright (c) 2016 Moodlerooms Inc. (http://www.moodlerooms.com)
+ * @copyright Copyright (c) 2016 Blackboard Inc. (http://www.moodlerooms.com)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class featured_courses_test extends \advanced_testcase {

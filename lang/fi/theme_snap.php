@@ -61,7 +61,7 @@ $string['coursecontacts'] = 'Osallistujaluettelo';
 $string['coursedisplay'] = 'Kurssinäkymä';
 $string['coursefootertoggle'] = 'Kurssin alatunniste';
 $string['coursefootertoggledesc'] = 'Kurssin alatunnisteessa näytetään käyttäjille kurssisivulla hyödyllisiä tietoja, muun muassa kurssin yhteyshenkilöt, kurssin kuvaus ja kurssin viimeisimmät aktiviteetit.';
-$string['courseformatnotification'] = 'Nykyinen kurssimuoto ei täysin tue Snap-teemaa. Parhaan mahdollisen käyttökokemuksen varmistamiseksi Moodlerooms suosittelee Aiheet- tai Viikoittain-kurssimuodon käyttämistä Snap-teeman kanssa. Kurssimuotoa voi vaihtaa <a href="{$a}">kurssin asetuksissa</a>.';
+$string['courseformatnotification'] = 'Nykyinen kurssimuoto ei täysin tue Snap-teemaa. Parhaan mahdollisen käyttökokemuksen varmistamiseksi Blackboard Open LMS suosittelee Aiheet- tai Viikoittain-kurssimuodon käyttämistä Snap-teeman kanssa. Kurssimuotoa voi vaihtaa <a href="{$a}">kurssin asetuksissa</a>.';
 $string['coursefixydefaulttext'] = 'Et ole tällä hetkellä rekisteröitynyt millekään kurssille.<br>Kurssit, joille olet rekisteröitynyt, näytetään tässä.';
 $string['coursegrade'] = 'Kurssin arvosana:';
 $string['coursenavigation'] = 'Kurssin siirtymisvalinnat';
@@ -78,7 +78,7 @@ $string['comingsoon'] = 'Tulossa pian!';
 $string['createsection'] = 'Luo osio';
 $string['current'] = 'Nykyinen';
 $string['customcss'] = 'Mukautettu CSS';
-$string['customcssdesc'] = 'Muista, että tehokkailla muokkaustoiminnoilla voi tehdä myös merkittäviä virheitä. Sinun täytyy itse korjata kaikki virheet, jotka johtuvat tässä lisäämästäsi CSS:stä. Moodleroomsin tuki auta CSS:ään liittyvän sisällön vianmäärityksessä.';
+$string['customcssdesc'] = 'Muista, että tehokkailla muokkaustoiminnoilla voi tehdä myös merkittäviä virheitä. Sinun täytyy itse korjata kaikki virheet, jotka johtuvat tässä lisäämästäsi CSS:stä. Blackboard Open LMSin tuki auta CSS:ään liittyvän sisällön vianmäärityksessä.';
 $string['customtopbar'] = 'Siirtymispalkki';
 $string['customisenavbar'] = 'Vaihda siirtymispalkin värit';
 $string['customisenavbutton'] = 'Vaihda Omat kurssini -painikkeen värit';
@@ -178,7 +178,7 @@ $string['images'] = 'Kuvat';
 $string['instagram'] = 'Instagram';
 $string['instagramdesc'] = 'Tämä on Instagram-tilisi URL-osoite.';
 $string['introduction'] = 'Johdanto';
-$string['knowledgebase'] = 'Moodlerooms-tietämyskanta';
+$string['knowledgebase'] = 'Blackboard Open LMS-tietämyskanta';
 $string['list'] = 'Luettelo';
 $string['linkedin'] = 'LinkedIn';
 $string['linkedindesc'] = 'Tämä on organisaation LinkedIn-tilin URL-osoite.';
@@ -231,7 +231,7 @@ $string['pld'] = 'PLD';
 $string['pluginname'] = 'Snap';
 $string['poster'] = 'Kansikuva';
 $string['posterdesc'] = 'Tämä on sivuston etusivulla näytettävä suuri ylätunnistekuva. Parhaiten toimivat vaakasuuntaiset kuvat, joiden koko on vähintään 1 200 x 600 pikseliä.';
-$string['poweredbyrunby'] = 'Kehitetty <a href="http://moodlerooms.com/" target="_blank">Moodleroomsilla</a>,
+$string['poweredbyrunby'] = 'Kehitetty <a href="http://moodlerooms.com/" target="_blank">Blackboard Open LMSilla</a>,
      jonka tarjoaa <a href="http://www.moodle.com/" target="_blank">Moodle</a>.<br>
     Copyright &#169; 2017 Blackboard Inc. Kaikki oikeudet pidätetään.';
 $string['previoussection'] = 'Edellinen osio';

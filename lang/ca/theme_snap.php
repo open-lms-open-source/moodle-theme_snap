@@ -61,7 +61,7 @@ $string['coursecontacts'] = 'Contactes del curs';
 $string['coursedisplay'] = 'Visualització del curs';
 $string['coursefootertoggle'] = 'Peu de pàgina del curs';
 $string['coursefootertoggledesc'] = 'El peu de pàgina del curs mostra informació útil als usuaris en una pàgina del curs que inclou els contactes, la descripció i l’activitat recent del curs.';
-$string['courseformatnotification'] = 'El format actual del curs que feu servir no és totalment compatible amb el tema Ajusta. Per a obtenir la millor experiència, Moodlerooms recomana utilitzar els formats de curs per Tema o Setmanals amb el tema Ajusta. El format del curs es pot canviar als <a href="{$a}">paràmetres del curs</a>.';
+$string['courseformatnotification'] = 'El format actual del curs que feu servir no és totalment compatible amb el tema Ajusta. Per a obtenir la millor experiència, Blackboard Open LMS recomana utilitzar els formats de curs per Tema o Setmanals amb el tema Ajusta. El format del curs es pot canviar als <a href="{$a}">paràmetres del curs</a>.';
 $string['coursefixydefaulttext'] = 'Actualment no us heu matriculat a cap curs.<br>Els cursos als quals us matriculeu es mostraran aquí.';
 $string['coursegrade'] = 'Qualificació del curs:';
 $string['coursenavigation'] = 'Navegació del curs';
@@ -78,7 +78,7 @@ $string['comingsoon'] = 'Properament';
 $string['createsection'] = 'Crea una secció';
 $string['current'] = 'Actual';
 $string['customcss'] = 'Personalitza CSS';
-$string['customcssdesc'] = 'Tingueu en compte que el poder ha d\'anar acompanyat d\'una gran responsabilitat. Tots els problemes causats pel CSS afegit aquí són la vostra responsabilitat, així com resoldre\'ls. L\'Ajuda de Moodlerooms no soluciona problemes ni proporciona cap ajuda amb continguts relacionats amb CSS.';
+$string['customcssdesc'] = 'Tingueu en compte que el poder ha d\'anar acompanyat d\'una gran responsabilitat. Tots els problemes causats pel CSS afegit aquí són la vostra responsabilitat, així com resoldre\'ls. L\'Ajuda de Blackboard Open LMS no soluciona problemes ni proporciona cap ajuda amb continguts relacionats amb CSS.';
 $string['customtopbar'] = 'Barra de navegació';
 $string['customisenavbar'] = 'Canvia els colors de la barra de navegació';
 $string['customisenavbutton'] = 'Canvia el color del botó Els meus cursos';
@@ -178,7 +178,7 @@ $string['images'] = 'Imatges';
 $string['instagram'] = 'Instagram';
 $string['instagramdesc'] = 'L’URL del vostre compte d’Instagram.';
 $string['introduction'] = 'Introducció';
-$string['knowledgebase'] = 'Base de coneixements de Moodlerooms';
+$string['knowledgebase'] = 'Base de coneixements de Blackboard Open LMS';
 $string['list'] = 'Llista';
 $string['linkedin'] = 'LinkedIn';
 $string['linkedindesc'] = 'L\'URL del perfil de LinkedIn de la vostra organització.';
@@ -231,7 +231,7 @@ $string['pld'] = 'PLD';
 $string['pluginname'] = 'Ajusta';
 $string['poster'] = 'Imatge de portada';
 $string['posterdesc'] = 'Una imatge de capçalera gran per a la pàgina principal del vostre lloc. Les imatges en format horitzontal de 1200 x 600 píxels o més van millor.';
-$string['poweredbyrunby'] = 'Creat amb <a href="http://moodlerooms.com/" target="_blank">Moodlerooms</a>,
+$string['poweredbyrunby'] = 'Creat amb <a href="http://moodlerooms.com/" target="_blank">Blackboard Open LMS</a>,
      amb tecnologia de <a href="http://www.moodle.com/" target="_blank">Moodle</a>.<br>
     Copyright&#169; 2017 Blackboard Inc, Tots els drets reservats.';
 $string['previoussection'] = 'Secció anterior';

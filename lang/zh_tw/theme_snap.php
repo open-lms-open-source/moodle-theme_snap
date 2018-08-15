@@ -61,7 +61,7 @@ $string['coursecontacts'] = '課程聯絡人';
 $string['coursedisplay'] = '課程顯示';
 $string['coursefootertoggle'] = '課程頁尾';
 $string['coursefootertoggledesc'] = '課程頁尾會在課程頁面中向使用者顯示實用資訊，包括課程聯絡人、課程描述和課程近期活動。';
-$string['courseformatnotification'] = 'Snap 主題無法完整支援您目前使用的課程格式。為了享有最佳使用體驗，Moodlerooms 建議您針對 Snap 主題使用「主題」或「每週」課程格式。您可以在「<a href="{$a}">課程設定</a>」中變更課程格式。';
+$string['courseformatnotification'] = 'Snap 主題無法完整支援您目前使用的課程格式。為了享有最佳使用體驗，Blackboard Open LMS 建議您針對 Snap 主題使用「主題」或「每週」課程格式。您可以在「<a href="{$a}">課程設定</a>」中變更課程格式。';
 $string['coursefixydefaulttext'] = '您目前未註冊任何課程。<br>您註冊的課程會在這裡顯示。';
 $string['coursegrade'] = '課程成績：';
 $string['coursenavigation'] = '課程瀏覽';
@@ -78,7 +78,7 @@ $string['comingsoon'] = '即將推出！';
 $string['createsection'] = '建立單元';
 $string['current'] = '目前';
 $string['customcss'] = '自訂 CSS';
-$string['customcssdesc'] = '請注意，掌握越大的權力，也意味著承擔更大的責任。您須負責解決這裡新增的 CSS 所造成的任何問題。Moodlerooms 支援不對 CSS 相關內容進行疑難排解，亦不提供任何協助。';
+$string['customcssdesc'] = '請注意，掌握越大的權力，也意味著承擔更大的責任。您須負責解決這裡新增的 CSS 所造成的任何問題。Blackboard Open LMS 支援不對 CSS 相關內容進行疑難排解，亦不提供任何協助。';
 $string['customtopbar'] = '瀏覽列';
 $string['customisenavbar'] = '變更瀏覽列色彩';
 $string['customisenavbutton'] = '變更我的課程按鈕的色彩';
@@ -178,7 +178,7 @@ $string['images'] = '影像';
 $string['instagram'] = 'Instagram';
 $string['instagramdesc'] = '您的 Instagram 帳戶 URL。';
 $string['introduction'] = '介紹';
-$string['knowledgebase'] = 'Moodlerooms 知識庫';
+$string['knowledgebase'] = 'Blackboard Open LMS 知識庫';
 $string['list'] = '清單';
 $string['linkedin'] = 'LinkedIn';
 $string['linkedindesc'] = '您組織的 LinkedIn URL。';
@@ -231,7 +231,7 @@ $string['pld'] = 'PLD';
 $string['pluginname'] = 'Snap';
 $string['poster'] = '封面影像';
 $string['posterdesc'] = '用於網站首頁的大型標題影像。橫向影像 (1200 x 600 像素或更大) 效果最佳。';
-$string['poweredbyrunby'] = '採用 <a href="http://moodlerooms.com/" target="_blank">Moodlerooms</a> 建置，
+$string['poweredbyrunby'] = '採用 <a href="http://moodlerooms.com/" target="_blank">Blackboard Open LMS</a> 建置，
      由 <a href="http://www.moodle.com/" target="_blank">Moodle</a> 所提供。<br>
     版權所有 &#169; 2017 Blackboard Inc，保留所有權利。';
 $string['previoussection'] = '上一單元';

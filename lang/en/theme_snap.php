@@ -18,7 +18,7 @@
  * Language strings
  *
  * @package   theme_snap
- * @copyright Copyright (c) 2015 Moodlerooms Inc. (http://www.moodlerooms.com)
+ * @copyright Copyright (c) 2015 Blackboard Inc. (http://www.moodlerooms.com)
  * @license   http://opensource.org/licenses/gpl-3.0.html GNU Public License
  */
 
@@ -69,7 +69,7 @@ $string['coursecontacts'] = 'Course Contacts';
 $string['coursedisplay'] = 'Course display';
 $string['coursefootertoggle'] = 'Course footer';
 $string['coursefootertoggledesc'] = 'The Course footer shows useful information to users on a course page including course contacts, course description and recent activity in the course.';
-$string['courseformatnotification'] = 'The current course format you are using is not fully supported by the Snap theme. For the best experience Moodlerooms recommends using the Topics or Weekly course formats with the Snap theme. The course format can be changed in the <a href="{$a}">course settings</a>.';
+$string['courseformatnotification'] = 'The current course format you are using is not fully supported by the Snap theme. For the best experience Blackboard Open LMS recommends using the Topics or Weekly course formats with the Snap theme. The course format can be changed in the <a href="{$a}">course settings</a>.';
 $string['coursefixydefaulttext'] = 'You are currently not enrolled in any courses.<br>Courses you are enrolled in will be shown here.';
 $string['coursegrade'] = 'Course grade:';
 $string['coursenavigation'] = 'Course navigation';
@@ -86,7 +86,7 @@ $string['comingsoon'] = 'Coming soon!';
 $string['createsection'] = 'Create section';
 $string['current'] = 'Current';
 $string['customcss'] = 'Custom CSS';
-$string['customcssdesc'] = 'Please be aware that with great power comes great responsibility.  Any issue caused by the CSS added here is your responsibility to resolve.  Moodlerooms Support does not troubleshoot nor provide any help with CSS-related content.';
+$string['customcssdesc'] = 'Please be aware that with great power comes great responsibility.  Any issue caused by the CSS added here is your responsibility to resolve. Blackboard Open LMS Support does not troubleshoot nor provide any help with CSS-related content.';
 $string['customtopbar'] = 'Navigation bar';
 $string['customisenavbar'] = 'Change navigation bar colors';
 $string['customisenavbutton'] = 'Change My Courses button colors';
@@ -200,7 +200,7 @@ Here is an example:<br>
 "12":"#CC0084",<br>
 "56":"#CC0087",<br>
 "89":"#CCF084"}';
-$string['knowledgebase'] = 'Moodlerooms Knowledge Base';
+$string['knowledgebase'] = 'Blackboard Open LMS Knowledge Base';
 $string['list'] = 'List';
 $string['linkedin'] = 'LinkedIn';
 $string['linkedindesc'] = 'The url of your organisation&#8217;s LinkedIn.';
@@ -253,7 +253,7 @@ $string['pld'] = 'PLD';
 $string['pluginname'] = 'Snap';
 $string['poster'] = 'Cover image';
 $string['posterdesc'] = 'A large header image for the front page of your site. Landscape images (1200 x 600 pixels) or larger work best.';
-$string['poweredbyrunby'] = 'Built with <a href="http://moodlerooms.com/" target="_blank">Moodlerooms</a>,
+$string['poweredbyrunby'] = 'Built with <a href="http://moodlerooms.com/" target="_blank">Blackboard Open LMS</a>,
      powered by <a href="http://www.moodle.com/" target="_blank">Moodle</a>.<br>
     Copyright &#169; 2017 Blackboard Inc, All Rights Reserved.';
 $string['previoussection'] = 'Previous section';

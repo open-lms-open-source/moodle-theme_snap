@@ -61,7 +61,7 @@ $string['coursecontacts'] = 'Kontakty kurzu';
 $string['coursedisplay'] = 'Zobrazení kurzu';
 $string['coursefootertoggle'] = 'Zápatí kurzu';
 $string['coursefootertoggledesc'] = 'Zápatí kurzu zobrazuje uživatelům na stránce kurzu užitečné informace, například kontakty kurzu, popis kurzu a poslední aktivity v kurzu.';
-$string['courseformatnotification'] = 'Formát aktuálního kurzu, který používáte, není motivem Snap plně podporován. Moodlerooms pro nejlepší práci s kurzem doporučuje používat s motivem Snap formát kurzu Témata nebo Týdně. Formát kurzu lze změnit v <a href="{$a}">nastavení kurzu</a>.';
+$string['courseformatnotification'] = 'Formát aktuálního kurzu, který používáte, není motivem Snap plně podporován. Blackboard Open LMS pro nejlepší práci s kurzem doporučuje používat s motivem Snap formát kurzu Témata nebo Týdně. Formát kurzu lze změnit v <a href="{$a}">nastavení kurzu</a>.';
 $string['coursefixydefaulttext'] = 'Aktuálně nejste registrováni v žádných kurzech.<br>Kurzy, do kterých jste registrováni, se budou zobrazovat zde.';
 $string['coursegrade'] = 'Klasifikace kurzu:';
 $string['coursenavigation'] = 'Navigace kurzu';
@@ -78,7 +78,7 @@ $string['comingsoon'] = 'Již brzy!';
 $string['createsection'] = 'Vytvořit sekci';
 $string['current'] = 'Aktuální';
 $string['customcss'] = 'Vlastní šablona stylů CSS';
-$string['customcssdesc'] = 'Upozorňujeme, že velké možnosti provází velká zodpovědnost. Pokud přidáním kódu CSS zde vznikne jakýkoli problém, bude na vás, abyste ho vyřešili. Podpora Moodlerooms neřeší problémy s obsahem týkajícím se kódu CSS ani k němu neposkytuje podporu.';
+$string['customcssdesc'] = 'Upozorňujeme, že velké možnosti provází velká zodpovědnost. Pokud přidáním kódu CSS zde vznikne jakýkoli problém, bude na vás, abyste ho vyřešili. Podpora Blackboard Open LMS neřeší problémy s obsahem týkajícím se kódu CSS ani k němu neposkytuje podporu.';
 $string['customtopbar'] = 'Navigační panel';
 $string['customisenavbar'] = 'Změnit barvy navigačního panelu';
 $string['customisenavbutton'] = 'Změnit barvy tlačítka Moje kurzy';
@@ -178,7 +178,7 @@ $string['images'] = 'Obrázky';
 $string['instagram'] = 'Instagram';
 $string['instagramdesc'] = 'Adresa URL vašeho účtu na Instagramu';
 $string['introduction'] = 'Úvod';
-$string['knowledgebase'] = 'Znalostní báze Moodlerooms';
+$string['knowledgebase'] = 'Znalostní báze Blackboard Open LMS';
 $string['list'] = 'Seznam';
 $string['linkedin'] = 'LinkedIn';
 $string['linkedindesc'] = 'Adresa URL profilu vaší organizace na LinkedInu';
@@ -231,7 +231,7 @@ $string['pld'] = 'PLD';
 $string['pluginname'] = 'Snap';
 $string['poster'] = 'Titulní obrázek';
 $string['posterdesc'] = 'Jedná se o velký obrázek v záhlaví titulní stránky vašeho webu. Nejlepší je použít obrázek na šířku (1200 x 600 pixelů nebo více).';
-$string['poweredbyrunby'] = 'Sestaveno pomocí <a href="http://moodlerooms.com/" target="_blank">Moodlerooms</a>,
+$string['poweredbyrunby'] = 'Sestaveno pomocí <a href="http://moodlerooms.com/" target="_blank">Blackboard Open LMS</a>,
     používá technologii <a href="http://www.moodle.com/" target="_blank">Moodle</a>.<br>
     Copyright &#169; 2017 Blackboard Inc, Všechna práva vyhrazena.';
 $string['previoussection'] = 'Předchozí sekce';

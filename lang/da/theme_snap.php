@@ -61,7 +61,7 @@ $string['coursecontacts'] = 'Kursuskontakter';
 $string['coursedisplay'] = 'Kursusvisning';
 $string['coursefootertoggle'] = 'Kursussidefod';
 $string['coursefootertoggledesc'] = 'Kursussidefoden viser brugere nyttige oplysninger på en kursusside, herunder kursuskontakter, kursusbeskrivelser og den seneste aktivitet i kurset.';
-$string['courseformatnotification'] = 'Det aktuelle kursusformat, som du bruger, understøttes ikke fuldt af Snap-temaet. For at få den bedst oplevelse anbefaler Moodlerooms at bruge kursusformaterne Emner eller Ugentligt sammen med Snap-temaet. Kursusformatet kan ændres i <a href="{$a}">kursusindstillinger</a>.';
+$string['courseformatnotification'] = 'Det aktuelle kursusformat, som du bruger, understøttes ikke fuldt af Snap-temaet. For at få den bedst oplevelse anbefaler Blackboard Open LMS at bruge kursusformaterne Emner eller Ugentligt sammen med Snap-temaet. Kursusformatet kan ændres i <a href="{$a}">kursusindstillinger</a>.';
 $string['coursefixydefaulttext'] = 'Du er ikke tilmeldt noget kursus i øjeblikket.<br>Kurser, som du er tilmeldt, vises her.';
 $string['coursegrade'] = 'Kursuskarakter:';
 $string['coursenavigation'] = 'Kursusnavigation';
@@ -78,7 +78,7 @@ $string['comingsoon'] = 'Kommer snart!';
 $string['createsection'] = 'Opret sektion';
 $string['current'] = 'Aktuel';
 $string['customcss'] = 'Brugerdefineret CSS';
-$string['customcssdesc'] = 'Husk, at der med store evner følger et stort ansvar. Det er dit ansvar at løse ethvert problem forårsaget af CSS, der tilføjes her. Moodlerooms Support fejlfinder ikke og yder ikke hjælp til CSS-relateret indhold.';
+$string['customcssdesc'] = 'Husk, at der med store evner følger et stort ansvar. Det er dit ansvar at løse ethvert problem forårsaget af CSS, der tilføjes her. Blackboard Open LMS Support fejlfinder ikke og yder ikke hjælp til CSS-relateret indhold.';
 $string['customtopbar'] = 'Navigationslinje';
 $string['customisenavbar'] = 'Ændr navigationslinjens farver';
 $string['customisenavbutton'] = 'Ændr farverne på knappen Mine kurser';
@@ -178,7 +178,7 @@ $string['images'] = 'Billeder';
 $string['instagram'] = 'Instagram';
 $string['instagramdesc'] = 'URL-adresse til din Instagram-konto.';
 $string['introduction'] = 'Introduktion';
-$string['knowledgebase'] = 'Moodlerooms-vidensbase';
+$string['knowledgebase'] = 'Blackboard Open LMS-vidensbase';
 $string['list'] = 'Liste';
 $string['linkedin'] = 'LinkedIn';
 $string['linkedindesc'] = 'URL-adresse til din organisations LinkedIn.';
@@ -231,7 +231,7 @@ $string['pld'] = 'PLD';
 $string['pluginname'] = 'Snap';
 $string['poster'] = 'Forsidebillede';
 $string['posterdesc'] = 'Et stort sidehovedbillede til dit websteds forside. Liggende billeder (1200 x 600 pixels) eller større fungerer bedst.';
-$string['poweredbyrunby'] = 'Designet med <a href="http://moodlerooms.com/" target="_blank">Moodlerooms</a>,
+$string['poweredbyrunby'] = 'Designet med <a href="http://moodlerooms.com/" target="_blank">Blackboard Open LMS</a>,
      leveret af <a href="http://www.moodle.com/" target="_blank">Moodle</a>.<br>
     Copyright &#169; 2017 Blackboard Inc, Alle rettigheder forbeholdes.';
 $string['previoussection'] = 'Forrige sektion';

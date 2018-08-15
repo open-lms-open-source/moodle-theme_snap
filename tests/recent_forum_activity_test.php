@@ -18,7 +18,7 @@
  * Local Tests
  *
  * @package   theme_snap
- * @copyright Copyright (c) 2015 Moodlerooms Inc. (http://www.moodlerooms.com)
+ * @copyright Copyright (c) 2015 Blackboard Inc. (http://www.moodlerooms.com)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -32,7 +32,7 @@ defined('MOODLE_INTERNAL') || die();
 
 /**
  * @package   theme_snap
- * @copyright Copyright (c) 2015 Moodlerooms Inc. (http://www.moodlerooms.com)
+ * @copyright Copyright (c) 2015 Blackboard Inc. (http://www.moodlerooms.com)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class theme_snap_recent_forum_activity_test extends \advanced_testcase {
@@ -430,7 +430,7 @@ class theme_snap_recent_forum_activity_test extends \advanced_testcase {
     }
 
     /**
-     * Test an anonymous Moodlerooms forum with one anonymous discussion & reply.
+     * Test an anonymous Open Forum with one anonymous discussion & reply.
      * @throws \coding_exception
      */
     public function test_hsuforum_anonymous() {
@@ -499,14 +499,14 @@ class theme_snap_recent_forum_activity_test extends \advanced_testcase {
     }
 
     /**
-     * Test qanda Moodlerooms forum.
+     * Test qanda Open Forum.
      */
     public function test_hsuforum_qanda() {
         self::test_forum_qanda('hsuforum');
     }
 
     /**
-     * Test qanda forum & Moodlerooms forum combined.
+     * Test qanda forum & Open Forum combined.
      */
     public function test_combined_qanda() {
         self::test_forum_qanda('forum');
@@ -514,7 +514,7 @@ class theme_snap_recent_forum_activity_test extends \advanced_testcase {
     }
 
     /**
-     * Test an Moodlerooms forum with one private reply.
+     * Test an Open Forum with one private reply.
      * @throws \coding_exception
      */
     public function test_hsuforum_private() {

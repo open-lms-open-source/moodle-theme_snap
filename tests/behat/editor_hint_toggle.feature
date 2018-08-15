@@ -1,5 +1,5 @@
 @theme @theme_snap
-Feature: the editor hint toggle should be ignored by Snap in Moodlerooms 2.9
+Feature: the editor hint toggle should be ignored by Snap in Blackboard Open LMS 2.9
   In order for users that have previously used this toggle to be put back to core experience
   As a teacher
   I need to see the editor hint messages in empty course sections

@@ -23,7 +23,7 @@ defined('MOODLE_INTERNAL') || die();
  * Handles requests for media elements that can be viewed inline.
  *
  * @package   theme_snap
- * @copyright Copyright (c) 2015 Moodlerooms Inc. (http://www.moodlerooms.com)
+ * @copyright Copyright (c) 2015 Blackboard Inc. (http://www.moodlerooms.com)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class mediaresource_controller extends controller_abstract {

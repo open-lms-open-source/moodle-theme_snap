@@ -61,7 +61,7 @@ $string['coursecontacts'] = 'Contacts de cours';
 $string['coursedisplay'] = 'Affichage du cours';
 $string['coursefootertoggle'] = 'Pied de page du cours';
 $string['coursefootertoggledesc'] = 'Le pied de page de cours affiche des informations utiles pour les utilisateurs sur une page de cours, notamment les contacts de cours, la description du cours et l\'activité récente dans le cours.';
-$string['courseformatnotification'] = 'Le format de cours que vous utilisez actuellement n\'est pas totalement pris en charge par le thème Snap. Moodlerooms recommande d\'utiliser les formats de cours Hebdomadaire et Rubrique avec le thème Snap pour bénéficier de la meilleure expérience. Le format de cours peut être modifié dans les <a href="{$a}">réglages du cours</a>.';
+$string['courseformatnotification'] = 'Le format de cours que vous utilisez actuellement n\'est pas totalement pris en charge par le thème Snap. Blackboard Open LMS recommande d\'utiliser les formats de cours Hebdomadaire et Rubrique avec le thème Snap pour bénéficier de la meilleure expérience. Le format de cours peut être modifié dans les <a href="{$a}">réglages du cours</a>.';
 $string['coursefixydefaulttext'] = 'Vous n\'êtes inscrit à aucun cours actuellement.<br>Les cours auxquels vous êtes inscrit sont affichés ici.';
 $string['coursegrade'] = 'Note du cours :';
 $string['coursenavigation'] = 'Navigation de cours';
@@ -78,7 +78,7 @@ $string['comingsoon'] = 'Bientôt disponible !';
 $string['createsection'] = 'Créer une section';
 $string['current'] = 'Actuelle';
 $string['customcss'] = 'CSS personnalisé';
-$string['customcssdesc'] = 'Vous êtes responsable des actions que vous exécutez. Il vous incombera de résoudre tout problème causé par le code CSS ajouté ici. L\'assistance Moodlerooms ne fournit aucun dépannage ni aucune aide concernant le contenu CSS.';
+$string['customcssdesc'] = 'Vous êtes responsable des actions que vous exécutez. Il vous incombera de résoudre tout problème causé par le code CSS ajouté ici. L\'assistance Blackboard Open LMS ne fournit aucun dépannage ni aucune aide concernant le contenu CSS.';
 $string['customtopbar'] = 'Barre de navigation';
 $string['customisenavbar'] = 'Modifier les couleurs de la barre de navigation';
 $string['customisenavbutton'] = 'Modifier les couleurs du bouton Mes cours';
@@ -178,7 +178,7 @@ $string['images'] = 'Images';
 $string['instagram'] = 'Instagram';
 $string['instagramdesc'] = 'URL de votre compte Instagram.';
 $string['introduction'] = 'Introduction';
-$string['knowledgebase'] = 'Base de connaissances Moodlerooms';
+$string['knowledgebase'] = 'Base de connaissances Blackboard Open LMS';
 $string['list'] = 'Liste';
 $string['linkedin'] = 'LinkedIn';
 $string['linkedindesc'] = 'URL de la page LinkedIn de votre organisation.';
@@ -231,7 +231,7 @@ $string['pld'] = 'CPP';
 $string['pluginname'] = 'Snap';
 $string['poster'] = 'Image de couverture';
 $string['posterdesc'] = 'Image d\'en-tête de grande taille destinée à la page d\'accueil de votre site. Les images en mode paysage (1200 pixels x 600 pixels ou plus) sont plus optimales.';
-$string['poweredbyrunby'] = 'Conçu avec <a href="http://moodlerooms.com/" target="_blank">Moodlerooms</a>,
+$string['poweredbyrunby'] = 'Conçu avec <a href="http://moodlerooms.com/" target="_blank">Blackboard Open LMS</a>,
      une technologie <a href="http://www.moodle.com/" target="_blank">Moodle</a>.<br>
     Copyright &#169; 2017 Blackboard Inc, tous droits réservés.';
 $string['previoussection'] = 'Section précédente';

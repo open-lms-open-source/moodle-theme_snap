@@ -16,7 +16,7 @@
 # Tests for availability of course tools section.
 #
 # @package   theme_snap
-# @copyright Copyright (c) 2016 Blackboard Inc.
+# @copyright Copyright (c) 2016 Moodlerooms Inc.
 # @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
 
 @theme @theme_snap
@@ -93,7 +93,7 @@ Feature: When the moodle theme is set to Snap, a course tools section is availab
 
   @javascript
   Scenario Outline: Course tools show automatically for single activity format set to hsuforum of types general / single.
-    Given I am using Moodlerooms
+    Given I am using Blackboard Open LMS
     And the course format for "C1" is set to "singleactivity" with the following settings:
       | name      | activitytype |
       | value     | hsuforum        |

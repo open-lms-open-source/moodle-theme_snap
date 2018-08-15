@@ -84,7 +84,7 @@ Feature: When the moodle theme is set to Snap, teachers only see block edit cont
 
   @javascript
   Scenario: In edit mode on a folderview course, teacher can see sections whilst editing on.
-    Given I am using Moodlerooms
+    Given I am using Blackboard Open LMS
     And the following "courses" exist:
       | fullname | shortname | category | format     |
       | Course 3 | C3        | 0        | folderview |

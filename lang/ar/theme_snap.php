@@ -61,7 +61,7 @@ $string['coursecontacts'] = 'جهات اتصال المقرر الدراسي';
 $string['coursedisplay'] = 'عرض المقرر الدراسي';
 $string['coursefootertoggle'] = 'تذييل المقرر الدراسي';
 $string['coursefootertoggledesc'] = 'يعرض تذييل المقرر الدراسي معلومات مفيدة للمستخدمين حول صفحة المقرر الدراسي بما في ذلك جهات اتصال المقرر الدراسي ووصف المقرر الدراسي والنشاط الحديث في المقرر الدراسي.';
-$string['courseformatnotification'] = 'تنسيق المقرر الدراسي الحالي الذي تستخدمه غير مدعوم بالكامل بواسطة النسق "محاذاة". لأفضل الممارسات، يوصي Moodlerooms باستخدام "الموضوعات" أو "تنسيقات الأسبوع للمقرر الدراسي" مع النسق "محاذاة". يمكن تغيير تنسيق المقرر الدراسي في <a href="{$a}">إعدادات المقرر الدراسي</a>.';
+$string['courseformatnotification'] = 'تنسيق المقرر الدراسي الحالي الذي تستخدمه غير مدعوم بالكامل بواسطة النسق "محاذاة". لأفضل الممارسات، يوصي Blackboard Open LMS باستخدام "الموضوعات" أو "تنسيقات الأسبوع للمقرر الدراسي" مع النسق "محاذاة". يمكن تغيير تنسيق المقرر الدراسي في <a href="{$a}">إعدادات المقرر الدراسي</a>.';
 $string['coursefixydefaulttext'] = 'أنت غير مسجل حاليًا في أي مقررات دراسية.<br>سيتم هنا عرض المقررات الدراسية التي أنت مسجل بها.';
 $string['coursegrade'] = 'تقدير المقرر الدراسي:';
 $string['coursenavigation'] = 'تنقل إلى المقرر الدراسي';
@@ -78,7 +78,7 @@ $string['comingsoon'] = 'يتوفر قريبًا!';
 $string['createsection'] = 'إنشاء قسم';
 $string['current'] = 'حالي';
 $string['customcss'] = 'CSS مخصص';
-$string['customcssdesc'] = 'يرجى العلم أن القدرات الكبيرة يصاحبها مسؤولية كبيرة. لذا فإن أي مشكلة تحدث بسبب إضافة CSS هنا يقع على عاتقك مسؤولية حلها. لا يقوم دعم Moodlerooms باستكشاف المشكلات وإصلاحها ولا يقوم بتقديم أي مساعدة بشأن المحتوى المتعلق بـ CSS.';
+$string['customcssdesc'] = 'يرجى العلم أن القدرات الكبيرة يصاحبها مسؤولية كبيرة. لذا فإن أي مشكلة تحدث بسبب إضافة CSS هنا يقع على عاتقك مسؤولية حلها. لا يقوم دعم Blackboard Open LMS باستكشاف المشكلات وإصلاحها ولا يقوم بتقديم أي مساعدة بشأن المحتوى المتعلق بـ CSS.';
 $string['customtopbar'] = 'شريط التنقل';
 $string['customisenavbar'] = 'تغيير ألوان شريط التنقل';
 $string['customisenavbutton'] = 'تغيير ألوان زر "المقررات الدراسية الخاصة بي"';
@@ -178,7 +178,7 @@ $string['images'] = 'الصور';
 $string['instagram'] = 'Instagram';
 $string['instagramdesc'] = 'عنوان url الخاص بحساب instagram الخاص بك.';
 $string['introduction'] = 'مقدمة';
-$string['knowledgebase'] = 'قاعدة معارف Moodlerooms';
+$string['knowledgebase'] = 'قاعدة معارف Blackboard Open LMS';
 $string['list'] = 'قائمة';
 $string['linkedin'] = 'LinkedIn';
 $string['linkedindesc'] = 'عنوان url لـ LinkedIn الخاص بمؤسستك.';
@@ -231,7 +231,7 @@ $string['pld'] = 'PLD';
 $string['pluginname'] = 'محاذاة';
 $string['poster'] = 'صورة الغلاف';
 $string['posterdesc'] = 'صورة رأس كبيرة لصفحة موقعك الأمامية. تعمل الصور الأفقية بحجم (1200 × 600 بكسل) أو الأكبر حجمًا بشكل أفضل.';
-$string['poweredbyrunby'] = 'مدمج مع <a href="http://moodlerooms.com/" target="_blank">Moodlerooms</a>،
+$string['poweredbyrunby'] = 'مدمج مع <a href="http://moodlerooms.com/" target="_blank">Blackboard Open LMS</a>،
      ومُشغّل بواسطة <a href="http://www.moodle.com/" target="_blank">Moodle</a>.<br>
     Copyright &#169; 2017 Blackboard Inc، جميع الحقوق محفوظة.';
 $string['previoussection'] = 'القسم السابق';

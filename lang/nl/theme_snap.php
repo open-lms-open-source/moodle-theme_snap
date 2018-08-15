@@ -61,7 +61,7 @@ $string['coursecontacts'] = 'Contactpersonen cursus';
 $string['coursedisplay'] = 'Cursusweergave';
 $string['coursefootertoggle'] = 'Cursusvoettekst';
 $string['coursefootertoggledesc'] = 'De voettekst van de cursus bevat nuttige informatie voor gebruikers op een cursuspagina, waaronder cursuscontactpersonen, cursusbeschrijving en recente activiteiten in de cursus.';
-$string['courseformatnotification'] = 'Het huidige cursusformaat dat je gebruikt, wordt niet volledig ondersteund door het thema Snap. Voor de beste ervaring beveelt Moodlerooms aan dat je de onderwerpen of wekelijkse cursusindelingen met het thema Snap gebruikt. Je kunt de cursusindeling wijzigen in de <a href="{$a}">cursusinstellingen</a>.';
+$string['courseformatnotification'] = 'Het huidige cursusformaat dat je gebruikt, wordt niet volledig ondersteund door het thema Snap. Voor de beste ervaring beveelt Blackboard Open LMS aan dat je de onderwerpen of wekelijkse cursusindelingen met het thema Snap gebruikt. Je kunt de cursusindeling wijzigen in de <a href="{$a}">cursusinstellingen</a>.';
 $string['coursefixydefaulttext'] = 'Je bent op dit moment niet ingeschreven bij een cursus.<br>Cursussen waarvoor je bent ingeschreven, worden hier getoond.';
 $string['coursegrade'] = 'Cursuscijfer:';
 $string['coursenavigation'] = 'Cursusnavigatie';
@@ -78,7 +78,7 @@ $string['comingsoon'] = 'Binnenkort!';
 $string['createsection'] = 'Sectie maken';
 $string['current'] = 'Huidige';
 $string['customcss'] = 'Aangepaste CSS';
-$string['customcssdesc'] = 'Wees je van je verantwoordelijkheid bewust. Elk probleem dat wordt veroorzaakt door de CSS die hier wordt toegevoegd, moet je zelf oplossen. Moodlerooms Support kan je niet helpen met CSS-inhoud.';
+$string['customcssdesc'] = 'Wees je van je verantwoordelijkheid bewust. Elk probleem dat wordt veroorzaakt door de CSS die hier wordt toegevoegd, moet je zelf oplossen. Blackboard Open LMS Support kan je niet helpen met CSS-inhoud.';
 $string['customtopbar'] = 'Navigatiebalk';
 $string['customisenavbar'] = 'Kleuren van navigatiebalk wijzigen';
 $string['customisenavbutton'] = 'Kleuren van de knop Mijn cursussen wijzigen';
@@ -178,7 +178,7 @@ $string['images'] = 'Afbeeldingen';
 $string['instagram'] = 'Instagram';
 $string['instagramdesc'] = 'De url van je instagram-account.';
 $string['introduction'] = 'Introductie';
-$string['knowledgebase'] = 'Moodlerooms Knowledge Base';
+$string['knowledgebase'] = 'Blackboard Open LMS Knowledge Base';
 $string['list'] = 'Lijst';
 $string['linkedin'] = 'LinkedIn';
 $string['linkedindesc'] = 'De url van de LinkedIn-account van je organisatie.';
@@ -231,7 +231,7 @@ $string['pld'] = 'PLD';
 $string['pluginname'] = 'Snap';
 $string['poster'] = 'Omslagafbeelding';
 $string['posterdesc'] = 'Een grote headerafbeelding voor de startpagina van je site. Liggende afbeeldingen (1200 x 600 pixels) of groter werken het beste.';
-$string['poweredbyrunby'] = 'Gebouwd met <a href="http://moodlerooms.com/" target="_blank">Moodlerooms</a>,
+$string['poweredbyrunby'] = 'Gebouwd met <a href="http://moodlerooms.com/" target="_blank">Blackboard Open LMS</a>,
      aangestuurd door <a href="http://www.moodle.com/" target="_blank">Moodle</a>.<br>
     Copyright &#169; 2017 Blackboard Inc, alle rechten voorbehouden.';
 $string['previoussection'] = 'Vorige sectie';

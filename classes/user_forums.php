@@ -25,7 +25,7 @@ defined('MOODLE_INTERNAL') || die();
  * Provides information on all forums a user has access to.
  *
  * @package   theme_snap
- * @copyright Copyright (c) 2015 Moodlerooms Inc. (http://www.moodlerooms.com)
+ * @copyright Copyright (c) 2015 Blackboard Inc. (http://www.moodlerooms.com)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class user_forums {
@@ -228,7 +228,7 @@ class user_forums {
      * there are query parameter limits in mssql and oracle.
      *
      * @param array $forums
-     * @param bool $hsufourm - is this a collection of Moodlerooms forums?
+     * @param bool $hsufourm - is this a collection of Open Forums?
      * @return mixed
      */
     protected function process_stale_forums(Array $forums, $hsuforum = false) {
