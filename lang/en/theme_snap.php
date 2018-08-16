@@ -318,3 +318,4 @@ $string['youtube'] = 'YouTube';
 $string['youtubedesc'] = 'The url of your youtube channel.';
 $string['showallsectionsdisabled'] = 'Due to its design language, "Show all sections on one page" isn\'t available in Snap.';
 $string['disabled'] = 'Disabled';
+$string['showappearancedisabled'] = 'Snap\'s design language prevents changes to "Appearance" settings.';
