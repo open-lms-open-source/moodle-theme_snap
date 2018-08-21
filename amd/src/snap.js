@@ -709,16 +709,23 @@ define(['jquery', 'core/log', 'theme_snap/headroom', 'theme_snap/util', 'theme_s
                         if ($("#page-course-edit").length) {
                             // We are in course editing form.
                             // Removing the "Show all sections in one page" from the course format form.
-                            str.get_strings([
-                                {key: 'showallsectionsdisabled', component: 'theme_snap'},
-                                {key: 'disabled', component: 'theme_snap'}
-                            ]).then(function(strings) {
-                                var strMessage = strings[0], strDisabled = strings[1];
-                                templates.render('theme_snap/form_alert', {
-                                    type: 'warning',
-                                    classes: '',
-                                    message: strMessage
-                                }).then(function(html) {
+                            var strDisabled = "";
+                            (function(){
+                                return str.get_strings([
+                                    {key: 'showallsectionsdisabled', component: 'theme_snap'},
+                                    {key: 'disabled', component: 'theme_snap'}
+                                ]);
+                            })()
+                                .then(function(strings) {
+                                    var strMessage = strings[0];
+                                    strDisabled = strings[1];
+                                    return templates.render('theme_snap/form_alert', {
+                                        type: 'warning',
+                                        classes: '',
+                                        message: strMessage
+                                    });
+                                })
+                                .then(function(html) {
                                     var op0 = $('[name="coursedisplay"] > option[value="0"]');
                                     var op1 = $('[name="coursedisplay"] > option[value="1"]');
                                     var selectNode =  $('[name="coursedisplay"]');
@@ -733,7 +740,6 @@ define(['jquery', 'core/log', 'theme_snap/headroom', 'theme_snap/util', 'theme_s
                                     // Add warning
                                     selectNode.parent().append(html);
                                 });
-                            });
                         }
 
                         $('.snap-form-advanced').prepend(availablity);
