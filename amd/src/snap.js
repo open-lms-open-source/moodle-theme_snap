@@ -747,6 +747,40 @@ define(['jquery', 'core/log', 'theme_snap/headroom', 'theme_snap/util', 'theme_s
                         if (onModSettings && errorElements.length) {
                             errorElements.closest('.collapsible').removeClass('collapsed');
                         }
+
+                        // Hide appearance menu from interface when editing a page-resource.
+                        if ($("#page-mod-page-mod").length) {
+                            // Chaining promises to get localized strings and render warning message.
+                            (function() {
+                                return str.get_strings([
+                                    {key: 'showappearancedisabled', component: 'theme_snap'}
+                                ]);
+                            })()
+                                .then(function(localizedstring){
+                                    return templates.render('theme_snap/form_alert', {
+                                        type: 'warning',
+                                        classes: '',
+                                        message: localizedstring
+                                    });
+                                })
+                                .then(function (html) {
+                                    // Disable checkboxes.
+                                    // Colors for disabling the divs.
+                                    var layoverbkcolor = "#f1f1f1";
+                                    var layovercolor = "#d5d5d5";
+                                    var cbxprintheading = $('[id="id_printheading"]');
+                                    cbxprintheading.attr('disabled', true);
+                                    cbxprintheading.parent().parent().parent().css('background-color', layoverbkcolor);
+                                    cbxprintheading.parent().parent().parent().css('color', layovercolor);
+                                    var cbxprintintro = $('[id="id_printintro"]');
+                                    cbxprintintro.attr('disabled', true);
+                                    cbxprintintro.parent().parent().parent().css('background-color', layoverbkcolor);
+                                    cbxprintintro.parent().parent().parent().css('color', layovercolor);
+                                    // Add warning.
+                                    var selectNode = $('[id="id_error_printheading"]');
+                                    selectNode.parent().parent().parent().append(html);
+                                });
+                        }
                     }
 
                     // Conversation counter for user badge.
