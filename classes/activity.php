@@ -25,7 +25,7 @@ require_once($CFG->dirroot.'/mod/assign/locallib.php');
  * These functions are in a class purely for auto loading convenience.
  *
  * @package   theme_snap
- * @copyright Copyright (c) 2015 Blackboard Inc. (http://www.moodlerooms.com)
+ * @copyright Copyright (c) 2015 Blackboard Inc. (http://www.blackboardopenlms.com)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class activity {

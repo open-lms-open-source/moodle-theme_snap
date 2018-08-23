@@ -16,7 +16,7 @@
 # Tests for inline resource media.
 #
 # @package    theme_snap
-# @author     2015 Guy Thomas <gthomas@moodlerooms.com>
+# @author     2015 Guy Thomas <osdev@blackboard.com>
 # @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
 
 

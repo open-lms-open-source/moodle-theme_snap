@@ -26,7 +26,7 @@ require_once($CFG->dirroot . '/mod/assign/tests/base_test.php');
  * Testing for theme/snap/classes/activity.php
  *
  * @package  theme_snap
- * @copyright  2017 Blackboard inc.
+ * @copyright  2017 Blackboard Inc.
  * @license  http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class theme_snap_acitvity_test extends snap_base_test {

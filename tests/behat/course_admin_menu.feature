@@ -16,8 +16,8 @@
 # Tests to make sure admin menu is only shown to relevant people on relevant pages.
 #
 # @package   theme_snap
-# @author    Guy Thomas <gthomas@moodlerooms.com>
-# @copyright Copyright (c) 2016 Moodlerooms Inc.
+# @author    Guy Thomas <osdev@blackboard.com>
+# @copyright Copyright (c) 2016 Blackboard Inc.
 # @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
 
 @theme @theme_snap

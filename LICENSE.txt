@@ -1,4 +1,4 @@
-                   Copyright (C) 2015 Moodlerooms
+                   Copyright (C) 2015 Blackboard
 
                      GNU GENERAL PUBLIC LICENSE
                        Version 3, 29 June 2007

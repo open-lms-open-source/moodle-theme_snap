@@ -16,7 +16,7 @@
 # Tests for availability of course tools section.
 #
 # @package   theme_snap
-# @copyright Copyright (c) 2016 Moodlerooms Inc.
+# @copyright Copyright (c) 2016 Blackboard Inc.
 # @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
 
 @theme @theme_snap

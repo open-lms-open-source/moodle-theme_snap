@@ -231,7 +231,7 @@ $string['pld'] = 'PLD';
 $string['pluginname'] = 'Snap';
 $string['poster'] = '封面影像';
 $string['posterdesc'] = '用於網站首頁的大型標題影像。橫向影像 (1200 x 600 像素或更大) 效果最佳。';
-$string['poweredbyrunby'] = '採用 <a href="http://moodlerooms.com/" target="_blank">Blackboard Open LMS</a> 建置，
+$string['poweredbyrunby'] = '採用 <a href="http://www.blackboardopenlms.com/" target="_blank">Blackboard Open LMS</a> 建置，
      由 <a href="http://www.moodle.com/" target="_blank">Moodle</a> 所提供。<br>
     版權所有 &#169; 2017 Blackboard Inc，保留所有權利。';
 $string['previoussection'] = '上一單元';

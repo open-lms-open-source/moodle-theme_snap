@@ -16,7 +16,7 @@
 # Tests for personal menu display on initial login.
 #
 # @package    theme_snap
-# @author     2016 Guy Thomas <gthomas@moodlerooms.com>
+# @author     2016 Guy Thomas <osdev@blackboard.com>
 # @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
 
 @theme @theme_snap

@@ -16,7 +16,7 @@
 # Tests for toggle course section visibility in non edit mode in snap.
 #
 # @package    theme_snap
-# @copyright  2015 Guy Thomas <gthomas@moodlerooms.com>
+# @copyright  2015 Guy Thomas <osdev@blackboard.com>
 # @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
 
 @theme @theme_snap

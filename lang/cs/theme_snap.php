@@ -231,7 +231,7 @@ $string['pld'] = 'PLD';
 $string['pluginname'] = 'Snap';
 $string['poster'] = 'Titulní obrázek';
 $string['posterdesc'] = 'Jedná se o velký obrázek v záhlaví titulní stránky vašeho webu. Nejlepší je použít obrázek na šířku (1200 x 600 pixelů nebo více).';
-$string['poweredbyrunby'] = 'Sestaveno pomocí <a href="http://moodlerooms.com/" target="_blank">Blackboard Open LMS</a>,
+$string['poweredbyrunby'] = 'Sestaveno pomocí <a href="http://www.blackboardopenlms.com/" target="_blank">Blackboard Open LMS</a>,
     používá technologii <a href="http://www.moodle.com/" target="_blank">Moodle</a>.<br>
     Copyright &#169; 2017 Blackboard Inc, Všechna práva vyhrazena.';
 $string['previoussection'] = 'Předchozí sekce';

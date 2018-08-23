@@ -231,7 +231,7 @@ $string['pld'] = 'PLD';
 $string['pluginname'] = 'Snap';
 $string['poster'] = 'Kansikuva';
 $string['posterdesc'] = 'Tämä on sivuston etusivulla näytettävä suuri ylätunnistekuva. Parhaiten toimivat vaakasuuntaiset kuvat, joiden koko on vähintään 1 200 x 600 pikseliä.';
-$string['poweredbyrunby'] = 'Kehitetty <a href="http://moodlerooms.com/" target="_blank">Blackboard Open LMSilla</a>,
+$string['poweredbyrunby'] = 'Kehitetty <a href="http://www.blackboardopenlms.com/" target="_blank">Blackboard Open LMSilla</a>,
      jonka tarjoaa <a href="http://www.moodle.com/" target="_blank">Moodle</a>.<br>
     Copyright &#169; 2017 Blackboard Inc. Kaikki oikeudet pidätetään.';
 $string['previoussection'] = 'Edellinen osio';
