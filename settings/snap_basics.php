@@ -32,7 +32,7 @@ if (!during_initial_install() && !empty(get_site()->fullname)) {
 $name = 'theme_snap/themecolor';
 $title = new lang_string('themecolor', 'theme_snap');
 $description = '';
-$default = '#ff7f41'; // Moodlerooms orange.
+$default = '#ff7f41'; // Blackboard Open LMS orange.
 $previewconfig = null;
 $setting = new admin_setting_configcolourpicker($name, $title, $description, $default, $previewconfig);
 $setting->set_updatedcallback('theme_reset_all_caches');
