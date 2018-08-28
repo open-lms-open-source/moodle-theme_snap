@@ -41,7 +41,7 @@ body:not(.behat-site) {
 }
 
 // Hide show description option. Use of nth-child pseudo selector due to lack of id in div.
-fieldset#id_general div.fcontainer:nth-child(2) div.form-group:nth-child(3) {
+body#page-mod-page-mod fieldset#id_general div.fcontainer:nth-child(2) div.form-group:nth-child(3) {
     display : none;
 }
 
