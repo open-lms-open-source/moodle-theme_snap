@@ -232,7 +232,7 @@ $string['pluginname'] = 'Snap';
 $string['poster'] = 'Image de couverture';
 $string['posterdesc'] = 'Image d\'en-tête de grande taille destinée à la page d\'accueil de votre site. Les images en mode paysage (1200 pixels x 600 pixels ou plus) sont plus optimales.';
 $string['poweredbyrunby'] = 'Conçu avec <a href="http://www.blackboardopenlms.com/" target="_blank">Blackboard Open LMS</a>,
-     une technologie <a href="http://www.moodle.com/" target="_blank">Moodle</a>.<br>
+     produit basé sur <a href="http://www.moodle.com/" target="_blank">Moodle</a>.<br>
     Copyright &#169; 2017 Blackboard Inc, tous droits réservés.';
 $string['previoussection'] = 'Section précédente';
 $string['problemsfound'] = 'Problèmes détectés';

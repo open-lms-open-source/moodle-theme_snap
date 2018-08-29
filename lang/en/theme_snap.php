@@ -254,7 +254,7 @@ $string['pluginname'] = 'Snap';
 $string['poster'] = 'Cover image';
 $string['posterdesc'] = 'A large header image for the front page of your site. Landscape images (1200 x 600 pixels) or larger work best.';
 $string['poweredbyrunby'] = 'Built with <a href="http://www.blackboardopenlms.com/" target="_blank">Blackboard Open LMS</a>,
-     powered by <a href="http://www.moodle.com/" target="_blank">Moodle</a>.<br>
+     <a href="http://www.moodle.com/" target="_blank">Moodle</a>-based product.<br>
     Copyright &#169; 2017 Blackboard Inc, All Rights Reserved.';
 $string['previoussection'] = 'Previous section';
 $string['privacy:metadata:theme_snap_course_favorites:courseid'] = 'The course ID of the course that the user favorited';

@@ -232,7 +232,7 @@ $string['pluginname'] = 'محاذاة';
 $string['poster'] = 'صورة الغلاف';
 $string['posterdesc'] = 'صورة رأس كبيرة لصفحة موقعك الأمامية. تعمل الصور الأفقية بحجم (1200 × 600 بكسل) أو الأكبر حجمًا بشكل أفضل.';
 $string['poweredbyrunby'] = 'مدمج مع <a href="http://www.blackboardopenlms.com/" target="_blank">Blackboard Open LMS</a>،
-     ومُشغّل بواسطة <a href="http://www.moodle.com/" target="_blank">Moodle</a>.<br>
+     والمنتج القائم على <a href="http://www.moodle.com/" target="_blank">Moodle</a>.<br>
     Copyright &#169; 2017 Blackboard Inc، جميع الحقوق محفوظة.';
 $string['previoussection'] = 'القسم السابق';
 $string['problemsfound'] = 'تم العثور على مشكلات';

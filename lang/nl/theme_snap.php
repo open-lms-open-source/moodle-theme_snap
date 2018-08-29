@@ -232,7 +232,7 @@ $string['pluginname'] = 'Snap';
 $string['poster'] = 'Omslagafbeelding';
 $string['posterdesc'] = 'Een grote headerafbeelding voor de startpagina van je site. Liggende afbeeldingen (1200 x 600 pixels) of groter werken het beste.';
 $string['poweredbyrunby'] = 'Gebouwd met <a href="http://www.blackboardopenlms.com/" target="_blank">Blackboard Open LMS</a>,
-     aangestuurd door <a href="http://www.moodle.com/" target="_blank">Moodle</a>.<br>
+     <a href="http://www.moodle.com/" target="_blank">Moodle</a>-gebaseerd product.<br>
     Copyright &#169; 2017 Blackboard Inc, alle rechten voorbehouden.';
 $string['previoussection'] = 'Vorige sectie';
 $string['problemsfound'] = 'Gevonden problemen';

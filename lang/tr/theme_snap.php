@@ -232,7 +232,7 @@ $string['pluginname'] = 'Snap';
 $string['poster'] = 'Kapak görüntüsü';
 $string['posterdesc'] = 'Sitenizin ön sayfası için büyük bir başlık görüntüsü. Yatay yönlendirilmiş (1200 x600 piksel) veya daha büyük resimler en iyisidir.';
 $string['poweredbyrunby'] = '<a href="http://www.moodle.com/" target="_blank">Moodle</a>.<br> tarafından desteklenen
-<a href="http://www.blackboardopenlms.com/" target="_blank">Blackboard Open LMS</a> tarafından tasarlanmıştır.
+<a href="http://www.blackboardopenlms.com/" target="_blank">Blackboard Open LMS</a> tabanlı ürün.
 Telif Hakkı &#169; 2017 Blackboard Inc, Tüm Hakları Saklıdır.';
 $string['previoussection'] = 'Bir önceki bölüm';
 $string['problemsfound'] = 'Bulunan Sorunlar';

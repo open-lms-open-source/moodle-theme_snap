@@ -232,7 +232,7 @@ $string['pluginname'] = 'Snap';
 $string['poster'] = 'Forsidebillede';
 $string['posterdesc'] = 'Et stort sidehovedbillede til dit websteds forside. Liggende billeder (1200 x 600 pixels) eller større fungerer bedst.';
 $string['poweredbyrunby'] = 'Designet med <a href="http://www.blackboardopenlms.com/" target="_blank">Blackboard Open LMS</a>,
-     leveret af <a href="http://www.moodle.com/" target="_blank">Moodle</a>.<br>
+     <a href="http://www.moodle.com/" target="_blank">Moodle</a>-baseret produkt.<br>
     Copyright &#169; 2017 Blackboard Inc, Alle rettigheder forbeholdes.';
 $string['previoussection'] = 'Forrige sektion';
 $string['problemsfound'] = 'Problemer fundet';

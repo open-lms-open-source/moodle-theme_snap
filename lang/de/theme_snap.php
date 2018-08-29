@@ -232,7 +232,7 @@ $string['pluginname'] = 'Snap';
 $string['poster'] = 'Titelbild';
 $string['posterdesc'] = 'Ein großes Bild im Kopfbereich der ersten Seite Ihre Website. Bilder im Querformat (1.200 x 600 Pixel) oder größer eignen sich am besten.';
 $string['poweredbyrunby'] = 'Entwickelt mit <a href="http://www.blackboardopenlms.com/" target="_blank">Blackboard Open LMS</a>,
-     unterstützt von <a href="http://www.moodle.com/" target="_blank">Moodle</a>.<br>
+     <a href="http://www.moodle.com/" target="_blank">Moodle</a>-basiertes produkt.<br>
     Copyright &#169; 2017 Blackboard Inc, Alle Rechte vorbehalten.';
 $string['previoussection'] = 'Vorheriger Abschnitt';
 $string['problemsfound'] = 'Probleme gefunden';
