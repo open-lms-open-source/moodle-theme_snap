@@ -288,9 +288,10 @@ trait format_section_trait {
             $ci = new \core_availability\info_section($section);
             $fullinfo = $ci->get_full_information();
             $formattedinfo = '';
+            $displayedinfo = $canviewhiddensections ? $fullinfo : $section->availableinfo;
             if ($fullinfo) {
                 $formattedinfo = \core_availability\info::format_info(
-                    $fullinfo, $section->course);
+                    $displayedinfo, $section->course);
             }
         }
 
