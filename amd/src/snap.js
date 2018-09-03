@@ -826,6 +826,22 @@ define(['jquery', 'core/log', 'theme_snap/headroom', 'theme_snap/util', 'theme_s
                         }
                     }
 
+                    // Add tab logic so search is focused before admin.
+                    var notificationsBtn = $('#nav-notification-popover-container > div.popover-region-toggle.nav-link');
+                    var searchButton = $('.search-input-wrapper.nav-link > div[role="button"]');
+                    var adminMenuTrigger = $('#admin-menu-trigger');
+                    var snapHome = $('#snap-home');
+                    if (notificationsBtn.length && searchButton.length && adminMenuTrigger.length && snapHome.length) {
+                        // Update tab events because all elements have tabindex="0" and they are rendered funny.
+                        require(
+                            [
+                                'theme_snap/rearrange_tab_handler-lazy'
+                            ], function(searchTabHandler) {
+                                searchTabHandler.init([notificationsBtn, searchButton, adminMenuTrigger, snapHome]);
+                            }
+                        );
+                    }
+
                     waitForFullScreenButton();
                 });
             }
