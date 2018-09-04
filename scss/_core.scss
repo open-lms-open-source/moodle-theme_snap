@@ -499,9 +499,9 @@ select,
         &,
         &:hover,
         &:focus {
-            color: $nav-tabs-active-link-hover-color;
-            background-color: $nav-tabs-active-link-hover-bg;
-            border: 1px solid $nav-tabs-active-link-hover-border-color;
+            color: $nav-tabs-link-active-color;
+            background-color: $nav-tabs-link-active-bg;
+            border: 1px solid $nav-tabs-link-active-border-color;
             border-bottom-color: transparent;
             cursor: default;
         }
@@ -1026,6 +1026,9 @@ header#page-header
     padding: 0;
     font-size: $font-size-sm;
     display: block;
+    li.breadcrumb-item {
+        display: inline-block;
+    }
 }
 
 @include media-breakpoint-down(md) {
@@ -1318,7 +1321,7 @@ header#page-header
 #frontpage-category-combo h2 {
     padding: 0.5em 0;
     text-align: center;
-    font-size: $font-size-h1;
+    font-size: $h1-font-size;
 }
 
 /* FRONT PAGE SITE NEWS */
@@ -1348,7 +1351,7 @@ header#page-header
 }
 
 .news-article-content h3 {
-    font-size: $font-size-h2;
+    font-size: $h2-font-size;
 }
 
 .news-article-image {
@@ -1710,7 +1713,7 @@ ul.events-new + ul.events-underway {
 
         .yui3-calendar-header-label {
             font-weight: 100;
-            font-size: $font-size-h4;
+            font-size: $h4-font-size;
         }
 
         .yui3-calendarnav-nextmonth,
@@ -1805,7 +1808,7 @@ ul.events-new + ul.events-underway {
 }
 
 .path-mod-workshop .collapsibleregioncaption {
-    font-size: $font-size-h3;
+    font-size: $h3-font-size;
     font-weight: 400;
 }
 
@@ -2093,7 +2096,7 @@ ul.events-new + ul.events-underway {
 
 .que h3.no,
 .que span.qno {
-    font-size: $font-size-h2;
+    font-size: $h2-font-size;
     font-weight: 400;
 }
 
