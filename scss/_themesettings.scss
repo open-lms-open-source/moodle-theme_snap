@@ -129,7 +129,7 @@
 // -------------------------
 // Tab - Cover display.
 // -------------------------
-#themesnapcoverdisplay {
+#themesnapcoverdisplay.active {
     @include make-row();
 
     div[id^="admin-slide_"] {
@@ -148,8 +148,10 @@
 // -------------------------
 // Tab - Personal menu.
 // -------------------------
-#themesnappersonalmenu {
-    @include make-row();
+#themesnappersonalmenu.active {
+    fieldset {
+        @include make-row();
+    }
     .form-item {
         @include make-col(4);
     }
@@ -158,7 +160,7 @@
 // -------------------------
 // Tab - Feature spots.
 // -------------------------
-#themesnapfeaturespots {
+#themesnapfeaturespots.active {
     .formsettingheading {
         font-family: $font-family-sans-serif;
     }
@@ -170,7 +172,7 @@
 
     #admin-fs_heading {
         input {
-            font-size: $font-size-h4;
+            font-size: $h4-font-size;
         }
     }
 
@@ -178,7 +180,7 @@
     #admin-fs_two_title,
     #admin-fs_three_title {
         input {
-            font-size: $font-size-h5;
+            font-size: $h5-font-size;
         }
     }
 
@@ -211,7 +213,7 @@
 // -------------------------
 // Tab - Featured courses.
 // -------------------------
-#themesnapfeaturedcourses {
+#themesnapfeaturedcourses.active {
 
     .formsettingheading {
         font-family: $font-family-sans-serif;
@@ -224,7 +226,7 @@
 
     #admin-fc_heading {
         input {
-            font-size: $font-size-h4;
+            font-size: $h4-font-size;
         }
     }
 
@@ -249,7 +251,7 @@
 // -------------------------
 // Tab - Course display.
 // -------------------------
-#themesnapcoursedisplay {
+#themesnapcoursedisplay.active {
     @include make-row();
 
     .form-item {
@@ -300,7 +302,7 @@
 // -------------------------
 // Tab - Social media.
 // -------------------------
-#themesnapsocialmedia {
+#themesnapsocialmedia.active {
     @include make-row();
     .form-item {
         @include make-col(6);

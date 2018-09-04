@@ -37,7 +37,7 @@ $lighter-grey-btn: #e6e6e6;
             color: #fff;
         }
     }
-    a:not(.btn):not(.dropdown-item):not(._blanktarget):not(.snap-due-date):not(.yui3-button):not(.mast-breadcrumb):not(.active),
+    a:not(.btn):not(.dropdown-item):not(._blanktarget):not(.snap-due-date):not(.yui3-button):not(.mast-breadcrumb):not(.active):not(.disabled),
     .btn-link,
     .fake-link {
         color: $brand-primary;
@@ -169,7 +169,6 @@ $lighter-grey-btn: #e6e6e6;
 
     #snap-pm-header {
         background-color: $brand-primary;
-
         .userpicture {
             box-shadow: 0 0 5em lighten($brand-primary, 8%);
         }
@@ -235,6 +234,7 @@ $lighter-grey-btn: #e6e6e6;
         // btn-secondary, btn-default.
         color: $brand-primary;
         border-color: $brand-primary;
+        background-color: transparent;
 
         &:hover:not(:disabled),
         &:focus:not(:disabled),
@@ -644,6 +644,14 @@ $lighter-grey-btn: #e6e6e6;
     .snap-dropzone > .snap-dropzone-label{
         &:focus {
             outline: 3px auto $brand-primary;
+        }
+    }
+
+    #snap-coverimagecontrol > label.btn-secondary.btn-sm {
+        background-color: rgba(255,255,255,0.7);
+        &:hover {
+            background-color: $brand-primary !important;
+            color: #fff;
         }
     }
 

@@ -26,6 +26,10 @@
 
 html {
     -webkit-font-smoothing: auto !important;
+    font-size: 18px;
+}
+#moodle-page {
+    font-size: 1.1rem;
 }
 
 // Snap Layout yo...
@@ -277,15 +281,19 @@ table,
 }
 
 .blockquote {
+    border-left: .25rem solid #eceeef;
     border-left-color: $brand-primary;
-    font-size: 1rem;
+    padding: .5rem 1rem;
 }
 
 .blockquote-reverse {
+    border-right: .25rem solid #eceeef;
     border-right-color: $brand-primary;
+    padding: .5rem 1rem;
 }
 
 blockquote {
+    font-size: 1rem;
     @extend .blockquote;
 }
 
@@ -499,9 +507,9 @@ select,
         &,
         &:hover,
         &:focus {
-            color: $nav-tabs-active-link-hover-color;
-            background-color: $nav-tabs-active-link-hover-bg;
-            border: 1px solid $nav-tabs-active-link-hover-border-color;
+            color: $nav-tabs-link-active-color;
+            background-color: $nav-tabs-link-active-bg;
+            border: 1px solid $nav-tabs-link-active-border-color;
             border-bottom-color: transparent;
             cursor: default;
         }
@@ -1026,6 +1034,9 @@ header#page-header
     padding: 0;
     font-size: $font-size-sm;
     display: block;
+    li.breadcrumb-item {
+        display: inline-block;
+    }
 }
 
 @include media-breakpoint-down(md) {
@@ -1201,7 +1212,10 @@ header#page-header
     }
 
     #moodle-page {
-        padding-top: 2em;
+        /* GT Mod - I've removed this because I don't like it - the cover image ends up appearing half way under
+        the fixed menu and it looks very poor IMO.
+         */
+        /*padding-top: 2em;*/
     }
 }
 
@@ -1318,7 +1332,7 @@ header#page-header
 #frontpage-category-combo h2 {
     padding: 0.5em 0;
     text-align: center;
-    font-size: $font-size-h1;
+    font-size: $h1-font-size;
 }
 
 /* FRONT PAGE SITE NEWS */
@@ -1348,7 +1362,7 @@ header#page-header
 }
 
 .news-article-content h3 {
-    font-size: $font-size-h2;
+    font-size: $h2-font-size;
 }
 
 .news-article-image {
@@ -1710,7 +1724,7 @@ ul.events-new + ul.events-underway {
 
         .yui3-calendar-header-label {
             font-weight: 100;
-            font-size: $font-size-h4;
+            font-size: $h4-font-size;
         }
 
         .yui3-calendarnav-nextmonth,
@@ -1805,7 +1819,7 @@ ul.events-new + ul.events-underway {
 }
 
 .path-mod-workshop .collapsibleregioncaption {
-    font-size: $font-size-h3;
+    font-size: $h3-font-size;
     font-weight: 400;
 }
 
@@ -2093,7 +2107,7 @@ ul.events-new + ul.events-underway {
 
 .que h3.no,
 .que span.qno {
-    font-size: $font-size-h2;
+    font-size: $h2-font-size;
     font-weight: 400;
 }
 
@@ -2738,7 +2752,27 @@ table#user-grades tr.avg td.cell {
         clear: both;
         border: 0;
         border-left: 3em solid;
-    }
+    };
+    &.alert-info {
+        color: $brand-info;
+        background-color: rgba($brand-info, .1);
+        border-color: $brand-info;
+    };
+    &.alert-success {
+        color: $brand-success;
+        background-color: rgba($brand-success, .1);
+        border-color: $brand-success;
+    };
+    &.alert-danger {
+        color: $brand-danger;
+        background-color: rgba($brand-danger, .1);
+        border-color: $brand-danger;
+    };
+    &.alert-warning {
+        color: $brand-warning;
+        background-color: rgba($brand-warning, .1);
+        border-color: $brand-warning;
+    };
 }
 
 #notice {
@@ -3620,5 +3654,11 @@ section#region-main {
                 padding: 0 0.5em;
             }
         }
+    }
+}
+
+.nav.nav-tabs {
+    .nav-item {
+        margin-left: 0.2em;
     }
 }

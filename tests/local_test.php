@@ -297,6 +297,7 @@ class theme_snap_local_test extends snap_base_test {
         $message->fullmessagehtml   = '<p>message body</p>';
         $message->smallmessage      = 'small message';
         $message->notification      = '0';
+        $message->courseid = SITEID;
 
         message_send($message);
         $aftersent = time();
@@ -336,6 +337,7 @@ class theme_snap_local_test extends snap_base_test {
         $message->fullmessagehtml   = '<p>message body</p>';
         $message->smallmessage      = 'small message';
         $message->notification      = '0';
+        $message->courseid = SITEID;
 
         $messageid = message_send($message);
 
@@ -372,6 +374,7 @@ class theme_snap_local_test extends snap_base_test {
         $message->fullmessagehtml   = '<p>message body</p>';
         $message->smallmessage      = 'small message';
         $message->notification      = '0';
+        $message->courseid = SITEID;
 
         message_send($message);
 
