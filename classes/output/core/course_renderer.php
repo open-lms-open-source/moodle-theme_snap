@@ -65,7 +65,11 @@ class course_renderer extends \core_course_renderer {
 
             if ($mod->modname === 'resource') {
                 // Default for resources/attatchments e.g. pdf, doc, etc.
-                $modclasses = array('snap-resource', 'snap-mime-'.$extension);
+                if ($mod->showdescription == '1' || !empty($mod->availability)) {
+                    $modclasses = array('snap-extended-resource', 'snap-mime-'.$extension);
+                } else {
+                    $modclasses = array('snap-resource', 'snap-mime-'.$extension);
+                }
                 if (in_array($extension, $this->snap_multimedia())) {
                     $modclasses[] = 'js-snap-media';
                 }
@@ -77,9 +81,17 @@ class course_renderer extends \core_course_renderer {
                 // Folder mod set to display on page.
                 $modclasses = array('snap-activity');
             } else if (plugin_supports('mod', $mod->modname, FEATURE_MOD_ARCHETYPE) === MOD_ARCHETYPE_RESOURCE) {
-                $modclasses = array('snap-resource');
+                if ((!empty($mod->showdescription) && $mod->showdescription == '1') || !empty($mod->availability)) {
+                    $modclasses = array('snap-extended-resource');
+                } else {
+                    $modclasses = array('snap-resource');
+                }
             } else if ($mod->modname === 'scorm') {
-                $modclasses = array('snap-resource');
+                if ($mod->showdescription == '1' || !empty($mod->availability)) {
+                    $modclasses = array('snap-extended-resource');
+                } else {
+                    $modclasses = array('snap-resource');
+                }
             } else if ($mod->modname !== 'label') {
                 $modclasses = array('snap-activity');
             }

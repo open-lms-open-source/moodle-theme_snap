@@ -1031,6 +1031,109 @@ body.snap-resource-card li.snap-resource {
 }
 
 // -------------------------
+// Snap extended resources
+// -------------------------
+.section li.snap-extended-resource {
+    margin: 1em 1%;
+    padding-bottom: 1em;
+    border-top-color: #3bcedb;
+
+    &:hover {
+        background-size: 50px auto;
+    }
+
+    // Resource cards are clickable with data-href, so add cursor pointer.
+    .asset-wrapper {
+        @include clearfix;
+        cursor: pointer;
+    }
+
+    .contentafterlink {
+        font-size: small;
+    }
+
+    &.snap-mime-document,
+    &.snap-mime-writer,
+    &.snap-mime-oth,
+    &.snap-mime-text {
+        border-top-color: $color-word;
+    }
+
+    &.snap-mime-powerpoint,
+    &.snap-mime-impress {
+        border-top-color: $color-powerpoint;
+    }
+
+    &.snap-mime-spreadsheet,
+    &.snap-mime-chart,
+    &.snap-mime-database,
+    &.snap-mime-calc {
+        border-top-color: $color-excel;
+    }
+
+    // ADOBE //
+    &.snap-mime-pdf,
+    &.snap-mime-eps,
+    &.snap-mime-flash {
+        border-top-color: $color-pdf;
+    }
+
+    &.snap-mime-flash {
+    }
+
+    // MULTIMEDIA //
+    &.snap-mime-mp3,
+    &.snap-mime-wav,
+    &.snap-mime-audio {
+        border-top-color: $color-audio;
+    }
+
+    &.snap-mime-mov,
+    &.snap-mime-wmv,
+    &.snap-mime-video,
+    &.snap-mime-quicktime,
+    &.snap-mime-mpeg,
+    &.snap-mime-avi {
+        border-top-color: $color-video;
+    }
+
+    &.modtype_lightboxgallery,
+    &.snap-mime-bmp {
+        border-top-color: #4abc96;
+    }
+
+    // MOODLE MODS //
+    &.modtype_url {
+        border-top-color: #999;
+    }
+
+    &.modtype_imscp,
+    &.modtype_scorm {
+        border-top-color: #f7981d;
+        background-image: url([[pix:core|/f/book]]);
+    }
+
+    &.modtype_folder {
+        border-top-color: #fed859;
+    }
+
+    // CODE & SYSTEM //
+    &.snap-mime-archive {
+        border-top-color: #fed859;
+    }
+
+    &.snap-mime-markup,
+    &.snap-mime-html,
+    &.snap-mime-sourcecode {
+        border-top-color: #f0652a;
+    }
+
+    &.snap-mime-text {
+        border-top-color: #f1bf26;
+    }
+}
+
+// -------------------------
 // Editing resources/activites
 // -------------------------
 /* EDIT SUMMARY */

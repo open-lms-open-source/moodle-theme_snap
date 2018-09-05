@@ -34,9 +34,9 @@ Feature: Activity navigation in Snap theme
       | teacher1  | Teacher    | 1         | teacher1@example.com  |
       | student1  | Student    | 1         | student1@example.com  |
     And the following "courses" exist:
-      | fullname | shortname | format |
-      | Course 1 | C1        | topics |
-      | Course 2 | C2        | topics |
+      | fullname | shortname | format | enablecompletion |
+      | Course 1 | C1        | topics |       1          |
+      | Course 2 | C2        | topics |       0          |
     And the following "course enrolments" exist:
       | user      | course  | role            |
       | student1  | C1      | student         |
@@ -316,3 +316,35 @@ Feature: Activity navigation in Snap theme
     Then "#prev-activity-link" "css_element" should not exist
     And "#next-activity-link" "css_element" should not exist
     And "Jump to..." "field" should not exist
+
+  @javascript
+  Scenario: Resources with visible description have a different class
+    Given I log in as "teacher1"
+    And I am on "Course 1" course homepage
+    And I follow "Topic 6"
+    And I wait until the page is ready
+    And I check element ".modtype_url" has class "snap-resource"
+    And I follow "Edit \"Url 1\""
+    And I expand all fieldsets
+    And I set the field "Display description on course page" to "1"
+    And I press "Save and return to course"
+    And I check element ".modtype_url" has class "snap-extended-resource"
+
+  @javascript
+  Scenario: Resources with access restriction have a different class
+    Given I log in as "teacher1"
+    And I am on "Course 1" course homepage
+    And I follow "Topic 2"
+    And I follow "Edit \"Forum 1\""
+    And I expand all fieldsets
+    And I set the field "Completion tracking" to "Show activity as complete when conditions are met"
+    And I set the following fields to these values:
+      | Completion tracking | Show activity as complete when conditions are met |
+      | Require view        | 1                                                 |
+    And I press "Save and return to course"
+    And I follow "Topic 6"
+    And I wait until the page is ready
+    And I check element ".modtype_url" has class "snap-resource"
+    And I restrict course asset "Url 1" by completion of "Forum 1"
+    And I reload the page
+    And I check element ".modtype_url" has class "snap-extended-resource"
