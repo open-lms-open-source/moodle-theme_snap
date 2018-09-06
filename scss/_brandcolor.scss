@@ -29,8 +29,15 @@ $light-grey-btn: #cccccc;
 $lighter-grey-btn: #e6e6e6;
 
 .theme-snap {
-
-    a:not(.btn):not(.dropdown-item):not(._blanktarget):not(.snap-due-date):not(.yui3-button):not(.mast-breadcrumb),
+    div.moodle-dialogue.filepicker a.nav-link.active {
+        color: #fff;
+        background-color: $brand-primary;
+        &:hover {
+            background-color: darken($brand-primary, 8%);
+            color: #fff;
+        }
+    }
+    a:not(.btn):not(.dropdown-item):not(._blanktarget):not(.snap-due-date):not(.yui3-button):not(.mast-breadcrumb):not(.active),
     .btn-link,
     .fake-link {
         color: $brand-primary;
