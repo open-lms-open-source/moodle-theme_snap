@@ -26,6 +26,11 @@
 
 html {
     -webkit-font-smoothing: auto !important;
+    font-size: 18px;
+}
+
+#moodle-page {
+    font-size: 1.1rem;
 }
 
 // Snap Layout yo...
@@ -277,15 +282,19 @@ table,
 }
 
 .blockquote {
+    border-left: .25rem solid #eceeef;
     border-left-color: $brand-primary;
-    font-size: 1rem;
+    padding: .5rem 1rem;
 }
 
 .blockquote-reverse {
+    border-right: .25rem solid #eceeef;
     border-right-color: $brand-primary;
+    padding: .5rem 1rem;
 }
 
 blockquote {
+    font-size: 1rem;
     @extend .blockquote;
 }
 
@@ -1204,7 +1213,10 @@ header#page-header
     }
 
     #moodle-page {
-        padding-top: 2em;
+        /* GT Mod - I've removed this because I don't like it - the cover image ends up appearing half way under
+        the fixed menu and it looks very poor IMO.
+         */
+        /*padding-top: 2em;*/
     }
 }
 
@@ -2741,7 +2753,27 @@ table#user-grades tr.avg td.cell {
         clear: both;
         border: 0;
         border-left: 3em solid;
-    }
+    };
+    &.alert-info {
+        color: $brand-info;
+        background-color: rgba($brand-info, .1);
+        border-color: $brand-info;
+    };
+    &.alert-success {
+        color: $brand-success;
+        background-color: rgba($brand-success, .1);
+        border-color: $brand-success;
+    };
+    &.alert-danger {
+        color: $brand-danger;
+        background-color: rgba($brand-danger, .1);
+        border-color: $brand-danger;
+    };
+    &.alert-warning {
+        color: $brand-warning;
+        background-color: rgba($brand-warning, .1);
+        border-color: $brand-warning;
+    };
 }
 
 #notice {
@@ -3623,5 +3655,11 @@ section#region-main {
                 padding: 0 0.5em;
             }
         }
+    }
+}
+
+.nav.nav-tabs {
+    .nav-item {
+        margin-left: 0.2em;
     }
 }

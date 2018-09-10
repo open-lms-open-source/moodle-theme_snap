@@ -30,7 +30,7 @@ $lighter-grey-btn: #e6e6e6;
 
 .theme-snap {
 
-    a:not(.btn):not(.dropdown-item):not(.snap-due-date):not(.yui3-button):not(.mast-breadcrumb),
+    a:not(.btn):not(.dropdown-item):not(.snap-due-date):not(.yui3-button):not(.mast-breadcrumb):not(.disabled),
     .btn-link,
     .fake-link {
         color: $brand-primary;
@@ -227,6 +227,7 @@ $lighter-grey-btn: #e6e6e6;
         // btn-secondary, btn-default.
         color: $brand-primary;
         border-color: $brand-primary;
+        background-color: transparent;
 
         &:hover:not(:disabled),
         &:focus:not(:disabled),
@@ -636,6 +637,14 @@ $lighter-grey-btn: #e6e6e6;
     .snap-dropzone > .snap-dropzone-label{
         &:focus {
             outline: 3px auto $brand-primary;
+        }
+    }
+
+    #snap-coverimagecontrol > label.btn-secondary.btn-sm {
+        background-color: rgba(255,255,255,0.7);
+        &:hover {
+            background-color: $brand-primary !important;
+            color: #fff;
         }
     }
 
