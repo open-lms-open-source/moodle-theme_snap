@@ -17,7 +17,7 @@
 /**
  * Course section actions.
  * @author    gthomas2
- * @copyright Copyright (c) 2016 Blackboard Inc. (http://www.blackboardopenlms.com)
+ * @copyright Copyright (c) 2016 Blackboard Inc. (http://www.blackboard.com)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -38,7 +38,7 @@ require_once(__DIR__ . '/../../../../lib/externallib.php');
  * section action and the course TOC.
  *
  * @author    gthomas2
- * @copyright Copyright (c) 2016 Blackboard Inc. (http://www.blackboardopenlms.com)
+ * @copyright Copyright (c) 2016 Blackboard Inc. (http://www.blackboard.com)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class ws_course_sections extends \external_api {

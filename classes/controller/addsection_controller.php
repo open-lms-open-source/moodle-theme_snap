@@ -23,7 +23,7 @@ defined('MOODLE_INTERNAL') || die();
  * Handles requests to add a new section
  *
  * @package   theme_snap
- * @copyright Copyright (c) 2015 Blackboard Inc. (http://www.blackboardopenlms.com)
+ * @copyright Copyright (c) 2015 Blackboard Inc. (http://www.blackboard.com)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class addsection_controller extends controller_abstract {

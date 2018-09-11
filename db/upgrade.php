@@ -22,7 +22,7 @@ require_once($CFG->dirroot.'/theme/snap/lib.php');
  * Theme upgrade
  *
  * @package   theme_snap
- * @copyright Copyright (c) 2015 Blackboard Inc. (http://www.blackboardopenlms.com)
+ * @copyright Copyright (c) 2015 Blackboard Inc. (http://www.blackboard.com)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 

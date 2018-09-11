@@ -18,7 +18,7 @@
  * Language strings
  *
  * @package   theme_snap
- * @copyright Copyright (c) 2015 Blackboard Inc. (http://www.blackboardopenlms.com)
+ * @copyright Copyright (c) 2015 Blackboard Inc. (http://www.blackboard.com)
  * @license   http://opensource.org/licenses/gpl-3.0.html GNU Public License
  */
 
@@ -253,7 +253,7 @@ $string['pld'] = 'PLD';
 $string['pluginname'] = 'Snap';
 $string['poster'] = 'Cover image';
 $string['posterdesc'] = 'A large header image for the front page of your site. Landscape images (1200 x 600 pixels) or larger work best.';
-$string['poweredbyrunby'] = 'Built with <a href="http://www.blackboardopenlms.com/" target="_blank">Blackboard Open LMS</a>,
+$string['poweredbyrunby'] = 'Built with <a href="http://www.blackboard.com/" target="_blank">Blackboard Open LMS</a>,
      <a href="http://www.moodle.com/" target="_blank">Moodle</a>-based product.<br>
     Copyright &#169; 2017 Blackboard Inc, All Rights Reserved.';
 $string['previoussection'] = 'Previous section';

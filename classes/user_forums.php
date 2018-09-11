@@ -25,7 +25,7 @@ defined('MOODLE_INTERNAL') || die();
  * Provides information on all forums a user has access to.
  *
  * @package   theme_snap
- * @copyright Copyright (c) 2015 Blackboard Inc. (http://www.blackboardopenlms.com)
+ * @copyright Copyright (c) 2015 Blackboard Inc. (http://www.blackboard.com)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class user_forums {

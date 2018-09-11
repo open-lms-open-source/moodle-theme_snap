@@ -21,7 +21,7 @@ defined('MOODLE_INTERNAL') || die();
 /**
  * Facilitates the null object pattern - https://www.wikiwand.com/en/Null_Object_pattern.
  * @author    gthomas2
- * @copyright Copyright (c) 2016 Blackboard Inc. (http://www.blackboardopenlms.com)
+ * @copyright Copyright (c) 2016 Blackboard Inc. (http://www.blackboard.com)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 trait null_object {

@@ -24,7 +24,7 @@ use theme_snap\local;
  * Test course card service.
  * @package   theme_snap
  * @author    gthomas2
- * @copyright Copyright (c) 2016 Blackboard Inc. (http://www.blackboardopenlms.com)
+ * @copyright Copyright (c) 2016 Blackboard Inc. (http://www.blackboard.com)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class theme_snap_services_course_test extends \advanced_testcase {

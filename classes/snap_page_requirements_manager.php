@@ -18,7 +18,7 @@
  * Snap page requirements manager.
  * Required for blacklisting core javascript / css.
  * @author    Guy Thomas
- * @copyright Copyright (c) 2016 Blackboard Inc. (http://www.blackboardopenlms.com)
+ * @copyright Copyright (c) 2016 Blackboard Inc. (http://www.blackboard.com)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
