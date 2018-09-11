@@ -89,9 +89,9 @@
                 &,
                 &:hover,
                 &:focus {
-                    color: $nav-tabs-active-link-hover-color;
-                    background-color: $nav-tabs-active-link-hover-bg;
-                    border: 1px solid $nav-tabs-active-link-hover-border-color;
+                    color: $nav-tabs-link-active-color;
+                    background-color: $nav-tabs-link-active-bg;
+                    border: 1px solid $nav-tabs-link-active-border-color;
                     border-bottom-color: transparent;
                     cursor: default;
                     background-image: none;
@@ -109,7 +109,7 @@
                 &:hover,
                 &:focus {
                     background-image: none;
-                    background-color: $nav-link-hover-bg;
+                    background-color: $nav-tabs-link-active-bg;
                     color: $link-hover-color;
                 }
             }
@@ -127,8 +127,8 @@
             &,
             &:hover,
             &:focus {
-                color: $nav-tabs-active-link-hover-color;
-                background-color: $nav-tabs-active-link-hover-bg;
+                color: $nav-tabs-link-active-color;
+                background-color: $nav-tabs-link-active-bg;
                 border: 1px solid $nav-tabs-border-color;
                 border-bottom-color: transparent;
                 cursor: default;
@@ -141,11 +141,11 @@
             background-color: $body-bg;
             border: 1px solid transparent;
             border-bottom-color: $nav-tabs-border-color;
-            padding: $nav-link-padding;
+            padding: $nav-link-padding-y $nav-link-padding-x;
             &:hover,
             &:focus {
                 color: $link-hover-color;
-                background-color: $nav-link-hover-bg;
+                background-color: $nav-tabs-link-active-bg;
             }
         }
     }
@@ -181,7 +181,7 @@
                 border: none;
                 margin: 0;
                 background-image: none;
-                font-size: $font-size-h4;
+                font-size: $h4-font-size;
                 font-weight: $headings-font-weight;
                 color: $headings-color;
                 line-height: $line-height-base;
@@ -210,7 +210,7 @@
         .yui3-panel-content {
             @extend .modal-content;
             .yui3-widget-hd {
-                font-size: $font-size-h4;
+                font-size: $h4-font-size;
                 font-weight: $headings-font-weight;
                 color: $headings-color;
                 line-height: $line-height-base;
@@ -435,7 +435,7 @@
             &.yui-pg-page:not(.yui-pg-current-page) {
                 color: $pagination-disabled-color;
                 background-color: $pagination-disabled-bg;
-                border-color: $pagination-disabled-border;
+                border-color: $pagination-disabled-border-color;
                 cursor: not-allowed;
             }
         }
@@ -507,7 +507,7 @@
 
 .moodle-dialogue-content .yui3-widget-hd h1 {
     @extend .modal-title;
-    font-size: $font-size-h4;
+    font-size: $h4-font-size;
     margin: 0;
 }
 

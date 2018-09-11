@@ -125,3 +125,6 @@ $nav-login-color:                   $nav-button-color;
     $nav-login-color:               $nav-bg;
     $nav-login-bg:                  $nav-button-color;
 }
+
+/* https://github.com/twbs/bootstrap/issues/22222#issuecomment-292819959 */
+$cursor-disabled: not-allowed;

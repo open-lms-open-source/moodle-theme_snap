@@ -110,11 +110,13 @@ Feature: When the moodle theme is set to Snap, sets a color per category.
     And I follow "Purge all caches"
     Then I log out
     Then I log in as "teacher1"
-    And I am on the course with shortname "C2"
+    # And I am on the course with shortname "C2" <- Removed this - this custom step is not part of Snap!
+    And I am on the course main page for "C2"
     And I check element "a" with color "#00FF00"
     Then I log out
     And I log in as "student1"
-    And I am on the course with shortname "C2"
+    # And I am on the course with shortname "C2"
+    And I am on the course main page for "C2"
     And I check element "a" with color "#00FF00"
 
 

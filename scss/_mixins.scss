@@ -8,9 +8,13 @@
     cursor: pointer;
     user-select: none;
     border: $input-btn-border-width solid transparent;
-    @include button-size($btn-padding-y, $btn-padding-x, $font-size-base, $btn-border-radius);
+    @include button-size($btn-padding-y, $btn-padding-x, $font-size-base, $btn-line-height, $btn-border-radius);
     @include transition(all .2s ease-in-out);
 
+    /*
+    
+    tab-focus mixin no longer available in BS4 - it was a webkit workaround, possibly no longer required.
+    
     &,
     &:active,
     &.active {
@@ -18,7 +22,7 @@
         &.focus {
             @include tab-focus();
         }
-    }
+    }*/
 
     @include hover-focus {
         text-decoration: none;

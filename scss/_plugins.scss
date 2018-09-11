@@ -18,10 +18,13 @@
         width: auto;
         height: auto;
         color: $nav-color;
+        margin: 0 0;
     }
     // Height for search input.
-    form > input {
+    form.search-input-form.expanded > input {
         height: auto;
+        margin-left: 1em;
+        margin-top: -4px;
     }
 }
 

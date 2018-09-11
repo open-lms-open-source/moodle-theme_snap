@@ -348,12 +348,24 @@ li.section:focus {
 }
 
 #snap-modchooser-modal {
-    .modal-header {
-        border-bottom: none;
+
+    .tab-content > .active {
+        display: flex;
     }
 
-    #snap-modchooser-help-tab .nav-link {
-        border: none;
+    .modal-header {
+        border-bottom: none;
+        button {
+            order: 2; // Push button to right.
+        }
+    }
+
+    #snap-modchooser-help-tab {
+        flex: 1;
+        text-align: right;
+        .nav-link {
+            border: none;
+        }
     }
 
     .snap-modchooser-addlink {

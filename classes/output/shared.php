@@ -689,9 +689,11 @@ EOF;
             }
         }
 
-        // Mediasite.
-        if ($COURSE->id > 1 && has_capability('mod/mediasite:courses7', $coursecontext) &&
-            \core_component::get_component_directory('mod_mediasite') !== null && is_callable('mr_on') &&
+        // Mediasite. (GT Mod - core component check needs to be first in evaluation or capability check error will
+        // occur when the module is not installed).
+        if ( \core_component::get_component_directory('mod_mediasite') !== null &&
+            $COURSE->id > 1 && has_capability('mod/mediasite:courses7', $coursecontext) &&
+            is_callable('mr_on') &&
             mr_on("mediasite", "_MR_MODULES")) {
             require_once($CFG->dirroot . "/mod/mediasite/mediasitesite.php");
             $iconurl = $OUTPUT->image_url('icon', 'mediasite');
