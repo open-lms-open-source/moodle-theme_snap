@@ -38,6 +38,7 @@ Feature: When the moodle theme is set to Snap, students and teachers have a conv
 
   @javascript
   Scenario: Snap user can see conversation count and messages.
+    And I skip because "This scenario randomly fails, it is going to be addressed in a separated ticket"
     Given I log in as "teacher1"
     Then ".conversation_badge_count.hidden" "css_element" should exist
     And I log out

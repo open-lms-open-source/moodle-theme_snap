@@ -69,7 +69,7 @@ Feature: When setting an erroneous field in settings, snap auto-expands area.
     And I set the field "id_cutoffdate_year" to "1980"
     Then I press "Save and display"
     And I wait until the page is ready
-    And I should see "Cut-off date must be after the allow submissions from date"
+    And I should see "Cut-off date cannot be earlier than the allow submissions from date."
 
   @javascript
   Scenario: Go to Assignment settings page and put Grading date before allow submissions from.
