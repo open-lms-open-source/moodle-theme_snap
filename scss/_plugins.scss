@@ -21,12 +21,10 @@
         margin: 0 0;
     }
     // Height for search input.
-    form.search-input-form.expanded > input {
+    form > input {
         height: auto;
-        padding-left: 0;
-        padding-right: 0;
-        border-left: 0;
-        border-right: 0;
+    }
+    form.search-input-form.expanded > input {
         margin-left: 1em;
         margin-top: -4px;
     }
