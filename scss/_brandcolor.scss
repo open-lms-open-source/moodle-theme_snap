@@ -48,6 +48,13 @@ $lighter-grey-btn: #e6e6e6;
         }
     }
 
+    .nav-pills, .nav-tabs {
+        a.nav-link.active {
+            background: $brand-primary;
+            color: #fff !importantß;
+        }
+    }
+
     .snap-dropzone-label:hover .fake-link {
         color: darken($brand-primary, 8%);
     }

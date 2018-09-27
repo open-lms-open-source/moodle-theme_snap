@@ -28,6 +28,7 @@ html {
     -webkit-font-smoothing: auto !important;
     font-size: 18px;
 }
+
 #moodle-page {
     font-size: 1.1rem;
 }
@@ -844,6 +845,8 @@ footer #moodle-footer
         background-color: $nav-login-bg;
         border-color: $nav-login-bg;
 
+        margin: 0 1rem;
+
         &:hover,
         &:focus {
             color: darken($nav-login-color, 8%);
@@ -1488,6 +1491,7 @@ span.calendar_event_global,
 li.calendar_event_global:before,
 td.calendar_event_global > a {
     background-color: $brand-success;
+    color: #fff !important;
 }
 
 span.calendar_event_course,
@@ -1496,6 +1500,7 @@ td.calendar_event_course > a {
 
     //salmon
     background-color: salmon;
+    color: #fff !important;
 }
 
 span.calendar_event_group,
@@ -1504,12 +1509,14 @@ td.calendar_event_group > a {
 
     // yellow
     background-color: #fdd652;
+    color: #fff !important;
 }
 
 span.calendar_event_user,
 li.calendar_event_user:before,
 td.calendar_event_user > a {
     background-color: $brand-info;
+    color: #fff !important;
 }
 
 td.calendar_event_global,
