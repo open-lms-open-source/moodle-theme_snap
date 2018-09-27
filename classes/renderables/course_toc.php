@@ -148,11 +148,6 @@ class course_toc implements \renderable, \templatable{
             }
             $module->url = '#section-'.$cm->sectionnum.'&module-'.$cm->id;
 
-            if ($this->course->format == 'folderview') {
-                // For folder view we will need to add a regular link causing the page to reload.
-                $module->url = $CFG->wwwroot.'/course/view.php?id='.
-                        $this->course->id.'&section='.$cm->sectionnum.'#module-'.$cm->id;
-            }
             $module->formattedname = $cm->get_formatted_name();
             $this->modules[] = $module;
         }
@@ -225,15 +220,7 @@ class course_toc implements \renderable, \templatable{
             }
 
             if ($chapter->outputlink) {
-                $singlepage = $this->course->format !== 'folderview';
-                if ($singlepage) {
-                    $chapter->url = '#section-'.$section;
-                } else if ($section > 0) {
-                    $chapter->url = course_get_url($this->course, $section, ['navigation' => true, 'sr' => $section]);
-                } else {
-                    // We need to create the url for section 0, or a hash will get returned.
-                    $chapter->url = new moodle_url('/course/view.php', ['id' => $this->course->id, 'section' => $section]);
-                }
+                $chapter->url = '#section-'.$section;
             }
 
             $chapter->progress = new course_toc_progress($this->course, $thissection);

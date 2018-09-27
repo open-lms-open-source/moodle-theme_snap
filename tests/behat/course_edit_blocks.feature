@@ -81,20 +81,3 @@ Feature: When the moodle theme is set to Snap, teachers only see block edit cont
     When I am on the course main page for "C1"
     And I follow "Course Dashboard"
     Then I should see "Edit blocks"
-
-  @javascript
-  Scenario: In edit mode on a folderview course, teacher can see sections whilst editing on.
-    Given I am using Blackboard Open LMS
-    And the following "courses" exist:
-      | fullname | shortname | category | format     |
-      | Course 3 | C3        | 0        | folderview |
-    And the following "course enrolments" exist:
-      | user     | course | role           |
-      | teacher1 | C3     | editingteacher |
-    Given I log in as "teacher1"
-    And I am on the course main page for "C3"
-    And I follow "Edit blocks"
-    And I should see "Add Topic"
-    And I should see "Add Resource"
-    And I should see "Topic Settings"
-    Then I should see "Topic 1" in the "#section-1 .content" "css_element"

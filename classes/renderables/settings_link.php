@@ -47,9 +47,9 @@ class settings_link implements \renderable {
         // Are we on the main course page?
         $oncoursepage = strpos($PAGE->pagetype, 'course-view') === 0;
 
-        // For any format other than topics, weeks, folderview or singleactivity, always output admin menu on main
+        // For any format other than topics, weeks, or singleactivity, always output admin menu on main
         // course page.
-        $formats = ['topics', 'weeks', 'folderview', 'singleactivity'];
+        $formats = ['topics', 'weeks', 'singleactivity'];
         if ($oncoursepage && !empty($COURSE->format) && !in_array($COURSE->format, $formats)) {
             $this->set_admin_menu_instance();
             return;

@@ -57,11 +57,6 @@ section#region-main
     }
 }
 
-// Do something different to support folderview...
-#page-course-view-folderview .type_course ul > li:first-child {
-    display: list-item;
-}
-
 // Blocks config pages when editing.
 .editing.pagelayout-admin {
     #region-main {
@@ -235,20 +230,6 @@ li.section:focus {
 
 .course-content .current {
     background-color: transparent;
-}
-
-.course-content .single-section ul.folderview li.section {
-    .right.side .editing_highlight img {
-        display: block;
-    }
-
-    .content .summary {
-        margin-right: 40px;
-    }
-}
-
-#page-course-view-folderview .content > h3 {
-    display: inline;
 }
 
 .sectionname {
@@ -498,8 +479,7 @@ li.section:focus {
 .editing #snap-add-new-section,
 #coursetools.state-visible,
 .editing #coursetools,
-.format-singleactivity #coursetools,
-#page-course-view-folderview #coursetools {
+.format-singleactivity #coursetools {
     visibility: visible;
     height: auto;
     width: auto;
@@ -526,10 +506,6 @@ body.format-flexpage .singlebutton {
 .section-modchooser {
     text-align: center;
     padding: 0;
-}
-
-.folderview-single-section #coursetools {
-    display: none;
 }
 
 /* MODS & RESOURCES IN COURSE */

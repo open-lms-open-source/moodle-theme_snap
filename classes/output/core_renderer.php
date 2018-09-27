@@ -1108,9 +1108,6 @@ HTML;
 
         if (!empty($PAGE->url)) {
             $section = $PAGE->url->param('section');
-            if ($COURSE->format === 'folderview' && !empty($section)) {
-                $classes[] = 'folderview-single-section';
-            }
         }
 
         // Add completion tracking class.
