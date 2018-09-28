@@ -281,7 +281,6 @@ $string['viewforumposts'] = 'Mostra els meu apunts als fòrums';
 $string['viewmessaging'] = 'Mostra els meus missatges';
 $string['vieworiginalimage'] = 'Mostra la imatge original';
 $string['visibility'] = 'Visibilitat';
-$string['warnsiteformatflexpage'] = 'El vostre lloc fa servir Flexpage a la pàgina principal. Flexpage no està optimitzat per a dispositius mòbils amb pantalles petites. Us recomanem que desactiveu Flexpage a la <a href="{$a}">configuració de la pàgina principal</a> si voleu que el vostre lloc estigui adaptat per a mòbils.';
 $string['xofyanswered'] = '{$a->completed} de {$a->participants} contestades';
 $string['xofyattempted'] = '{$a->completed} de {$a->participants} intentades';
 $string['xofycontributed'] = '{$a->completed} de {$a->participants} contribuïdes';

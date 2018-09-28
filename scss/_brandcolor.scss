@@ -288,13 +288,6 @@ $lighter-grey-btn: #e6e6e6;
         color: $brand-primary;
     }
 
-    // flexpage yui button shame
-    .format-flexpage .yui-button-checked button {
-        background-color: darken($brand-primary, 8%);
-        border-color: darken($brand-primary, 12%);
-        color: #fff;
-    }
-
     &#page-site-index #page-header,
     &#page-login-index #page,
     .news-article-image,

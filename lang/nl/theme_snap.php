@@ -281,7 +281,6 @@ $string['viewforumposts'] = 'Toon mijn forumberichten';
 $string['viewmessaging'] = 'Toon mijn berichten';
 $string['vieworiginalimage'] = 'Originele afbeelding weergeven';
 $string['visibility'] = 'Zichtbaarheid';
-$string['warnsiteformatflexpage'] = 'Je site gebruikt op de startpagina Flexpage. Flexpage is niet geoptimaliseerd voor apparaten met een klein scherm. Je wordt geadviseerd het gebruik van Flexpage uit te schakelen bij de <a href="{$a}">startpagina-instellingen</a> als je wilt dat je site geschikt is voor mobiele apparaten.';
 $string['xofyanswered'] = '{$a->completed} van {$a->participants} beantwoord';
 $string['xofyattempted'] = '{$a->completed} van {$a->participants} gepoogd';
 $string['xofycontributed'] = '{$a->completed} van {$a->participants} bijgedragen';

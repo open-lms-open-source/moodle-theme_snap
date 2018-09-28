@@ -281,7 +281,6 @@ $string['viewforumposts'] = '檢視我的論壇文章';
 $string['viewmessaging'] = '檢視我的訊息';
 $string['vieworiginalimage'] = '檢視原始影像';
 $string['visibility'] = '可見性';
-$string['warnsiteformatflexpage'] = '您的網站首頁是使用 Flexpage，此尚未針對小螢幕裝置進行最佳化。如果您希望網站適合用於行動裝置，建議您在<a href="{$a}">首頁設定</a>中停用 Flexpage。';
 $string['xofyanswered'] = '{$a->completed}/{$a->participants} 已回答';
 $string['xofyattempted'] = '{$a->completed}/{$a->participants} 已嘗試';
 $string['xofycontributed'] = '{$a->completed}/{$a->participants} 已發表';

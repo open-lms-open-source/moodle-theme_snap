@@ -281,7 +281,6 @@ $string['viewforumposts'] = 'Zobrazit moje příspěvky na fóru';
 $string['viewmessaging'] = 'Zobrazit moje zprávy';
 $string['vieworiginalimage'] = 'Zobrazit původní obrázek';
 $string['visibility'] = 'Viditelnost';
-$string['warnsiteformatflexpage'] = 'Váš web používá na titulní stránce formát Flexpage. Tento formát není optimalizován pro zařízení s malou obrazovkou. Doporučujeme vám v <a href="{$a}">nastavení titulní stránky</a> formát Flexpage vypnout, aby byl váš web přívětivější pro mobilní uživatele.';
 $string['xofyanswered'] = 'Odpovědělo {$a->completed} z {$a->participants} účastníků';
 $string['xofyattempted'] = 'Pokusilo se {$a->completed} z {$a->participants} účastníků';
 $string['xofycontributed'] = 'Přispělo {$a->completed} z {$a->participants} účastníků';

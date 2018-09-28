@@ -399,38 +399,6 @@ EOF;
     }
 
     /**
-     * Render a warning where flexpage is the course format for the front page.
-     *
-     * @author: Guy Thomas
-     * @date: 2014-07-17
-     * @param bool $adminsonly
-     * @return string
-     */
-    public static function flexpage_frontpage_warning($adminsonly = false) {
-        global $OUTPUT;
-
-        if ($adminsonly) {
-            if (!is_siteadmin()) {
-                // Only for admin users.
-                return '';
-            }
-        }
-
-        // Check to see if the front page course has a format of flexpage.
-        $fpage = get_site();
-        if ($fpage->format != 'flexpage') {
-            // Front page format is not flexpage.
-            return '';
-        }
-
-        $url = new moodle_url('/admin/settings.php', ['section' => 'frontpagesettings']);
-
-        // Output warning.
-        return ($OUTPUT->notification(get_string('warnsiteformatflexpage',
-                'theme_snap', $url->out())));
-    }
-
-    /**
      * Is the gradebook accessible - i.e. are there any reports accessible to this user
      * @return bool
      */

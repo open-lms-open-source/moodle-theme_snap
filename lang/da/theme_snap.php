@@ -281,7 +281,6 @@ $string['viewforumposts'] = 'Vis mine forumindlæg';
 $string['viewmessaging'] = 'Vis mine meddelelser';
 $string['vieworiginalimage'] = 'Vis originalt billede';
 $string['visibility'] = 'Synlighed';
-$string['warnsiteformatflexpage'] = 'Dit websted bruger Flexpage på forsiden. Flexpage er ikke optimeret til enheder med små skærme. Det anbefales, at du deaktiverer brugen af Flexpage i dine <a href="{$a}">forsideindstillinger</a>, hvis dit websted skal være mobilvenligt.';
 $string['xofyanswered'] = '{$a->completed} af {$a->participants} besvaret';
 $string['xofyattempted'] = '{$a->completed} af {$a->participants} forsøgt';
 $string['xofycontributed'] = '{$a->completed} af {$a->participants} bidraget';

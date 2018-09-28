@@ -74,13 +74,6 @@ $THEME->editor_sheets = array('editor');
 $THEME->rendererfactory = 'theme_overridden_renderer_factory';
 
 $THEME->layouts = array(
-    'format_flexpage' => array(
-        'file' => 'flexpage.php',
-        'regions' => array('side-top', 'side-pre', 'main', 'side-main-box', 'side-post'),
-        'defaultregion' => 'main',
-        'options' => array('langmenu' => true),
-    ),
-
     // Most backwards compatible layout without the blocks - this is the layout used by default.
     'base' => array(
         'file' => 'default.php',

@@ -10163,11 +10163,6 @@ li.section:focus {
     display: block;
 }
 
-/* Flex page - align edit button right */
-body.format-flexpage .singlebutton {
-    text-align: right;
-}
-
 .section-modchooser {
     text-align: center;
     padding: 0;
@@ -13945,12 +13940,6 @@ input[type="reset"][disabled],
 
 #show-toc {
     color: #03a9f4;
-}
-
-.format-flexpage .yui-button-checked button {
-    background-color: #038dcc;
-    border-color: #027fb8;
-    color: #fff;
 }
 
 #page-site-index #page-header,

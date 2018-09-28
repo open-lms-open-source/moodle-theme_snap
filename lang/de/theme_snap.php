@@ -281,7 +281,6 @@ $string['viewforumposts'] = 'Meine Forumbeiträge anzeigen';
 $string['viewmessaging'] = 'Meine Nachrichten anzeigen';
 $string['vieworiginalimage'] = 'Originalbild anzeigen';
 $string['visibility'] = 'Sichtbarkeit';
-$string['warnsiteformatflexpage'] = 'Auf der Startseite Ihrer Site wird Flexpage verwendet. Flexpage ist für Geräte mit kleinen Anzeigen nicht optimiert. Wenn Sie Ihre Seite besser auf mobile Geräte einstellen möchten, sollten Sie Flexpage unter <a href="{$a}">Startseiteneinstellungen</a> deaktivieren.';
 $string['xofyanswered'] = '{$a->completed} von {$a->participants} beantwortet';
 $string['xofyattempted'] = '{$a->completed} von {$a->participants} versucht';
 $string['xofycontributed'] = '{$a->completed} von {$a->participants} haben mitgewirkt';

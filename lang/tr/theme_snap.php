@@ -281,7 +281,6 @@ $string['viewforumposts'] = 'Forum gönderilerimi görüntüle';
 $string['viewmessaging'] = 'İletilerimi görüntüle';
 $string['vieworiginalimage'] = 'Orijinal görüntüyü görüntüle';
 $string['visibility'] = 'Görünürlük';
-$string['warnsiteformatflexpage'] = 'Siteniz ön sayfasında Flexpage kullanıyor. Flexpage küçük ekranlı cihazlar için optimize edilmemiştir. Sitenizin mobil cihazlarda kolay kullanılmasını istiyorsanız <a href="{$a}">ön sayfa ayarlarınızda</a> Flexpage kullanımını devre dışı bırakmanız önerilir.';
 $string['xofyanswered'] = '{$a->completed} / {$a->participants} Yanıtladı';
 $string['xofyattempted'] = '{$a->completed} / {$a->participants} Denedi';
 $string['xofycontributed'] = '{$a->completed} / {$a->participants} Katkıda bulundu';

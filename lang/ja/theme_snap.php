@@ -280,7 +280,6 @@ $string['viewforumposts'] = '私のフォーラム投稿を表示する';
 $string['viewmessaging'] = '私のメッセージを表示する';
 $string['vieworiginalimage'] = '元のイメージを表示する';
 $string['visibility'] = '表示';
-$string['warnsiteformatflexpage'] = 'このサイトでは、フロントページにFlexpageが使用されます。Flexpageは、画面が小さいデバイス向けに最適化されていません。サイトをモバイルデバイス対応にする場合は、<a href="{$a}">フロントページ設定</a>でFlexpageの使用を無効にすることをお勧めします。';
 $string['xofyanswered'] = '{$a->completed} / {$a->participants} 解答済み';
 $string['xofyattempted'] = '{$a->completed} / {$a->participants} 受験済み';
 $string['xofycontributed'] = '{$a->completed} / {$a->participants} 寄稿済み';

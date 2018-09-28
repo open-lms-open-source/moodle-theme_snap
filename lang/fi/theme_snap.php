@@ -281,7 +281,6 @@ $string['viewforumposts'] = 'Näytä omat keskustelualueen viestit';
 $string['viewmessaging'] = 'Näytä omat viestit';
 $string['vieworiginalimage'] = 'Näytä alkuperäinen kuva';
 $string['visibility'] = 'Näkyvyys';
-$string['warnsiteformatflexpage'] = 'Sivuston etusivulla on käytössä Flexpage-teema. Flexpage-teemaa ei ole optimoitu pienten laitteiden näytöille. Flexpage kannattaa poistaa käytöstä <a href="{$a}">etusivun asetuksissa</a>, jos haluat optimoida sivuston mobiilikäyttöön.';
 $string['xofyanswered'] = '{$a->completed}/{$a->participants} vastannut';
 $string['xofyattempted'] = '{$a->completed}/{$a->participants} yrittänyt';
 $string['xofycontributed'] = '{$a->completed}/{$a->participants} osallistunut';
