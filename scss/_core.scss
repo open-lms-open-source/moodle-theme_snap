@@ -3074,14 +3074,6 @@ http://css-spinners.com/css/spinner/three-quarters.css
     height: 32px;
 }
 
-/** folderview format **/
-#page-course-view-folderview {
-    &.jsenabled #tab_addBlock,
-    .section-navigation .jumpmenu {
-        display: none;
-    }
-}
-
 /** fix feedback field sizes on mobile devices **/
 @include media-breakpoint-down(sm) {
     .mform {

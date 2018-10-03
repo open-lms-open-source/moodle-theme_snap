@@ -5000,7 +5000,6 @@ a.skip-block {
 #page-my-index #moodle-blocks,
 #page-calendar-view #moodle-blocks,
 #moodle-blocks.state-visible,
-.format-folderview.path-course-view:not(.folderview-single-section) #moodle-blocks,
 .format-weeks.path-course-view.editing #moodle-blocks,
 .format-topics.path-course-view.editing #moodle-blocks {
     visibility: visible;
@@ -8878,12 +8877,6 @@ http://css-spinners.com/css/spinner/three-quarters.css
     height: 32px;
 }
 
-/** folderview format **/
-#page-course-view-folderview.jsenabled #tab_addBlock,
-#page-course-view-folderview .section-navigation .jumpmenu {
-    display: none;
-}
-
 /** fix feedback field sizes on mobile devices **/
 @media screen and (max-width: 767px) {
     .mform .fselect > select,
@@ -9741,10 +9734,6 @@ section#region-main
     display: block;
 }
 
-#page-course-view-folderview .type_course ul > li:first-child {
-    display: list-item;
-}
-
 .editing.pagelayout-admin #region-main {
     display: block;
 }
@@ -9944,18 +9933,6 @@ li.section:focus {
     background-color: transparent;
 }
 
-.course-content .single-section ul.folderview li.section .right.side .editing_highlight img {
-    display: block;
-}
-
-.course-content .single-section ul.folderview li.section .content .summary {
-    margin-right: 40px;
-}
-
-#page-course-view-folderview .content > h3 {
-    display: inline;
-}
-
 .sectionname {
     padding-top: 0;
     margin-top: 0;
@@ -9972,17 +9949,6 @@ li.section:focus {
     overflow: visible;
     clip: auto;
     border: initial;
-}
-
-.folderview .sectionname.accesshide {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    margin: -1px;
-    padding: 0;
-    overflow: hidden;
-    clip: rect(0, 0, 0, 0);
-    border: 0;
 }
 
 .path-course-view .section .summary {
@@ -10178,8 +10144,7 @@ li.section:focus {
 .editing #snap-add-new-section,
 #coursetools.state-visible,
 .editing #coursetools,
-.format-singleactivity #coursetools,
-#page-course-view-folderview #coursetools {
+.format-singleactivity #coursetools{
     visibility: visible;
     height: auto;
     width: auto;
@@ -10206,10 +10171,6 @@ body.format-flexpage .singlebutton {
 .section-modchooser {
     text-align: center;
     padding: 0;
-}
-
-.folderview-single-section #coursetools {
-    display: none;
 }
 
 /* MODS & RESOURCES IN COURSE */

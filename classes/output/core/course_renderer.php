@@ -307,7 +307,7 @@ class course_renderer extends \core_course_renderer {
         $output .= $assetlink.$postcontent.$contentpart.$snapcompletionmeta.$groupmeta.$completiontracking;
 
         // Bail at this point if we aren't using a supported format. (Folder view is only partially supported).
-        $supported = ['folderview', 'topics', 'weeks', 'site'];
+        $supported = ['topics', 'weeks', 'site'];
         if (!in_array($COURSE->format, $supported)) {
             return parent::course_section_cm($course, $completioninfo, $mod, $sectionreturn, $displayoptions).$assetmeta;
         }
