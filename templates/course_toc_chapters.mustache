@@ -38,7 +38,16 @@
                 <small class="published-status">{{availabilitystatus}}</small>
             </span>
         {{/availabilitystatus}}
-        {{> theme_snap/course_toc_progress }}
+        {{#progress}}{{#progress.total}}
+            <span class="text completionstatus outoftotal">
+                {{#completed}}
+                <img class="snap-section-complete" src="{{pixcompleted}}" alt="{{#str}}completed, completion{{/str}}" />
+                {{/completed}}
+                <small>
+                    {{#str}} progresstotal, completion, { "complete":  {{progress.complete}}, "total": {{progress.total}} } {{/str}}
+                </small>
+            </span>
+        {{/progress.total}}{{/progress}}
     </li>
     {{/chapters}}
 </ol>
