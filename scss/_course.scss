@@ -2018,3 +2018,15 @@ span.editinstructions {
 .path-grade-report #maincontent + .urlselect {
     left: 71vw;
 }
+
+body.path-course-index {
+    .add-course-btn-container {
+        margin-top: 1em;
+        width: 100%;
+        padding-top: 1em;
+        padding-left: 15px;
+    }
+    .course_category_tree {
+        margin: 15px;
+    }
+}

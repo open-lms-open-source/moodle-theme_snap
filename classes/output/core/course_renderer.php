@@ -1091,7 +1091,7 @@ class course_renderer extends \core_course_renderer {
             } else {
                 $url = new moodle_url('/course/edit.php', ['category' => $CFG->defaultrequestcategory, 'returnto' => 'topcat']);
             }
-            $output .= '<div class="text-center"><a class="btn btn-secondary" href="'.$url.'">'.
+            $output .= '<div class="add-course-btn-container"><a class="btn btn-secondary" href="'.$url.'">'.
                 get_string('addnewcourse', 'moodle').'</a></div>';
         }
 
