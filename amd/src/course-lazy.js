@@ -68,6 +68,7 @@ define(
 
             $(targmod).find('.instancename').prepend(searchpin);
             $(targmod).attr('tabindex', '-1').focus();
+            $('#course-toc').removeClass('state-visible');
         };
 
         /**

@@ -128,6 +128,9 @@ table.boxwidthwide {
         max-width: 30rem;
         width: 100%;
         background-color: rgba(255, 255, 255, 0.9);
+        #password {
+            margin-top: 1em;
+        }
     }
     // The site name.
     .snap-logo-sitename {
@@ -367,6 +370,9 @@ img.icon.hide {
 i.icon,
 p.tree_item:before {
     color: #999;
+}
+p.tree_item.hasicon i.nav-missing-icon:before {
+    content: '■'; // Where settings nav icon is missing use this.
 }
 
 .mediaplugin_videojs > div {
@@ -668,6 +674,11 @@ a.yui3-button,
 #page-header,
 #page-login-index #page {
     @include bg-cover;
+}
+
+#page-header {
+    overflow: hidden;
+    min-height: 250px;
 }
 
 .snap-media-object {
@@ -2985,6 +2996,9 @@ body.hascontinuecancel.path-site #page {
         min-width: 90%;
         height: 100%;
     }
+    video#player {
+        max-height: 50vh;
+    }
 }
 
 // -------------------------
@@ -3715,4 +3729,8 @@ section#region-main {
     .nav-item {
         margin-left: 0.2em;
     }
+}
+
+.modal-lg {
+    max-width: 900px;
 }
