@@ -216,6 +216,17 @@
             @include make-row();
             @include make-col(4);
             float: right;
+            // Undo make-col margins.
+            margin-left: 0;
+            margin-right: 0;
+            .plugincontentsummary {
+                width: 100%;
+            }
+        }
+        .assign-grading-summary,
+        .assign-submission-data {
+            margin-left: 1em;
+            width: calc(33.33% - 1em);
         }
     }
 
@@ -227,6 +238,9 @@
         background-color: $gray-lighter;
         font-family: $font-family-system;
     }
+    .submissionsdata {
+        width: 100%;
+    }
     // Add an indicator of progress for submissions.
     .submissions-status {
         border-bottom: .5em solid #999;
@@ -234,10 +248,44 @@
         margin-bottom: 1em;
     }
 
+    .submission-status-row {
+        display: flex;
+        span:nth-of-type(1) {
+            width: 76.66%;
+        }
+        span:nth-of-type(2) {
+            width: 33.33%;
+            text-align: right;
+        }
+    }
+
     .submissions-line {
         background-color: $brand-success;
         height: .5em;
         margin-bottom: -1.5em; // Height + submissions-status padding.
+    }
+
+    .plugin-submission-title {
+        width: 100%;
+    }
+
+    .statusdata, .gradingdata, .lastmodified {
+        font-size: 0.8em;
+        span {
+            margin-left: 0.5em;
+        }
+        margin-bottom: 1em;
+    }
+}
+
+.assign-submission-data a.btn {
+    margin: 1em 1em;
+}
+
+.needsgradingdata {
+    margin-right: 1em;
+    .badge {
+        margin-left: 0.25em;
     }
 }
 
@@ -259,40 +307,45 @@
     min-width: 1em;
 }
 
-.path-mod-assign [data-region="user-info"] {
-    h4 {
-        line-height: 1rem;
+.path-mod-assign {
+    [data-region="user-info"] {
+        h4 {
+            line-height: 1rem;
+        }
+        .img-rounded {
+            height: 40px;
+            border-radius: 100%;
+        }
     }
-    .img-rounded {
-        height: 40px;
-        border-radius: 100%;
+    [data-region="user-selector"] .alignment {
+        [data-region="input-field"] .form-control {
+            max-width: 255px;
+        }
+    }
+    #page-content [data-region="grade-panel"] .popout [data-region="popout-button"] img {
+        max-width: none;
+    }
+    [data-region="grade-panel"] .mform .fitem {
+        &:hover {
+            background-color: $modal-content-bg;
+        }
+        .felement {
+            float: none;
+            margin-top: .25rem;
+        }
+        &.has-popout {
+            padding: $spacer / 2;
+
+            &.popout {
+                // When actually popped out.
+                padding: $card-spacer-y $card-spacer-x;
+            }
+        }
     }
 }
 
 #advancedgrading-criteria td.remark {
     min-width: 150px;
-}
-
-.path-mod-assign #page-content [data-region="grade-panel"] .popout [data-region="popout-button"] img {
-    max-width: none;
-}
-
-.path-mod-assign [data-region="grade-panel"] .mform .fitem:hover {
-    background-color: $modal-content-bg;
-}
-
-.path-mod-assign [data-region="grade-panel"] .mform .fitem .felement {
-    float: none;
-    margin-top: .25rem;
-}
-
-.path-mod-assign [data-region="grade-panel"] .fitem.has-popout {
-    padding: $spacer / 2;
-
-    &.popout {
-        // When actually popped out.
-        padding: $card-spacer-y $card-spacer-x;
-    }
 }
 
 /**
@@ -536,4 +589,21 @@
 
 .completion-progresscell {
     text-align: center;
+}
+
+body.pagelayout-admin.path-mod {
+    // Hide mod forms until js kicks in.
+    .mform {
+        opacity: 0;
+    }
+    &.snap-js-loaded {
+        .mform {
+            opacity: 1;
+        }
+    }
+    &:not(.snap-js-loaded) #region-main:before {
+        @include ajaxing(block, relative, 200px, 20px);
+        background-image: none !important;
+        margin: 2em auto;
+    }
 }

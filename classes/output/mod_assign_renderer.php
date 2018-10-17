@@ -196,8 +196,10 @@ class mod_assign_renderer extends \mod_assign_renderer {
             }
             $submissionsdata = '<div class="submissions-status">';
             $submissionsdata .= get_string('submissions', 'assign').': ';
-            $submissionsdata .= $summary->submissionssubmittedcount.' / '.$summary->participantcount;
-            $submissionsdata .= '<span class="pull-right">'.$percentage.'</span>';
+            $submissionsdata .= '<div class="submission-status-row">';
+            $submissionsdata .= '<span>'.$summary->submissionssubmittedcount.' / '.$summary->participantcount.'</span>';
+            $submissionsdata .= '<span>'.$percentage.'</span>';
+            $submissionsdata .= '</div>';
             $submissionsdata .= '<br><div class="submissions-line" style="width:'.$percentage.'"></div>';
             $submissionsdata .= '</div>';
         }
@@ -288,12 +290,15 @@ class mod_assign_renderer extends \mod_assign_renderer {
         if ($status->submission->status === 'submitted') {
             $tick = '<i class="icon fa fa-check text-success fa-fw " aria-hidden="true" role="presentation"></i>';
         }
-        $statusdata .= '<div>'.$tick.get_string('submissionstatus', 'assign').': ';
+        $statusdata .= '<div>'.$tick.'<strong>'
+                .get_string('submissionstatus', 'assign').':</strong>';
+
+        $statusstr = '';
         if ($status->teamsubmissionenabled) {
             // Team.
             $group = $status->submissiongroup;
             if (!$group && $status->preventsubmissionnotingroup) {
-                $statusdata .= get_string('nosubmission', 'assign');
+                $statusstr = get_string('nosubmission', 'assign');
             } else if ($status->teamsubmission && $status->teamsubmission->status != ASSIGN_SUBMISSION_STATUS_NEW) {
                 $teamstatus = $status->teamsubmission->status;
                 $submissionsummary = get_string('submissionstatus_'.$teamstatus, 'assign');
@@ -319,27 +324,28 @@ class mod_assign_renderer extends \mod_assign_renderer {
                     $formatteduserstr = get_string('userswhoneedtosubmit', 'assign', $userstr);
                     $submissionsummary .= $this->output->container($formatteduserstr);
                 }
-                $statusdata .= $submissionsummary;
+                $statusstr = $submissionsummary;
             } else {
                 if (!$status->submissionsenabled) {
-                    $statusdata .= get_string('noonlinesubmissions', 'assign');
+                    $statusstr = get_string('noonlinesubmissions', 'assign');
                 } else {
-                    $statusdata .= get_string('nosubmission', 'assign');
+                    $statusstr = get_string('nosubmission', 'assign');
                 }
             }
         } else {
             // Single user.
             if ($status->submission && $status->submission->status != ASSIGN_SUBMISSION_STATUS_NEW) {
                 $statusstr = get_string('submissionstatus_'.$status->submission->status, 'assign');
-                $statusdata .= $statusstr;
             } else {
                 if (!$status->submissionsenabled) {
-                    $statusdata .= get_string('noonlinesubmissions', 'assign');
+                    $statusstr = get_string('noonlinesubmissions', 'assign');
                 } else {
-                    $statusdata .= get_string('noattempt', 'assign');
+                    $statusstr = get_string('noattempt', 'assign');
                 }
             }
         }
+
+        $statusdata .= '<span class="submissionstatus">'.$statusstr.'</span>';
 
         // Is locked?
         if ($status->locked) {
@@ -353,15 +359,16 @@ class mod_assign_renderer extends \mod_assign_renderer {
             $status->gradingstatus == ASSIGN_MARKING_WORKFLOW_STATE_RELEASED) {
                 $tick = '<i class="icon fa fa-check text-success fa-fw " aria-hidden="true" role="presentation"></i>';
         }
-        $gradingdata = '<div>'.$tick.get_string('gradingstatus', 'assign').': ';
+        $gradingdata = '<div>'.$tick.'<strong>'
+                .get_string('gradingstatus', 'assign').':</strong>';
         if ($status->gradingstatus == ASSIGN_GRADING_STATUS_GRADED ||
             $status->gradingstatus == ASSIGN_GRADING_STATUS_NOT_GRADED) {
-            $gradingdata .= get_string($status->gradingstatus, 'assign');
+            $gradingstatuslabel = get_string($status->gradingstatus, 'assign');
         } else {
             $gradingstatus = 'markingworkflowstate'.$status->gradingstatus;
-            $gradingdata .= get_string($gradingstatus, 'assign');
+            $gradingstatuslabel = get_string($gradingstatus, 'assign');
         }
-        $gradingdata .= '</div>';
+        $gradingdata .= '<span class="gradingstatus">'.$gradingstatuslabel.'</span></div>';
 
         // Show graders whether this submission is editable by students.
         if ($status->view == assign_submission_status::GRADER_VIEW) {
@@ -387,7 +394,7 @@ class mod_assign_renderer extends \mod_assign_renderer {
                         $plugin->has_user_summary() &&
                         $pluginshowsummary
                     ) {
-                            $submissiondata .= '<h4 class="h6">'.$plugin->get_name().'</h4>';
+                            $submissiondata .= '<h4 class="h6 plugin-submission-title">'.$plugin->get_name().'</h4>';
                             $displaymode = assign_submission_plugin_submission::SUMMARY;
                             $pluginsubmission = new assign_submission_plugin_submission($plugin,
                             $submission,
@@ -404,8 +411,10 @@ class mod_assign_renderer extends \mod_assign_renderer {
             $submissiondata .= '<div class="gradingdata">'.$gradingdata.'</div>';
 
             if ($submission->status != ASSIGN_SUBMISSION_STATUS_NEW) {
-                    $submissiondata .= '<div>' .get_string('timemodified', 'assign').': ';
-                    $submissiondata .= userdate($submission->timemodified).'</div>';
+                $calico = '<i class="icon fa fa-calendar fa-fw " aria-hidden="true" role="presentation"></i>';
+                $submissiondata .= '<div class="lastmodified">'.$calico.'<strong>' .get_string('timemodified', 'assign').
+                    ':</strong>';
+                $submissiondata .= '<span>'.userdate($submission->timemodified).'</span></div>';
             }
             $submissiondata .= '<br>';
 

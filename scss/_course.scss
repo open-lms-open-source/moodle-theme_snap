@@ -628,6 +628,12 @@ li.section:focus {
     }
 }
 
+.activity-navigation {
+    // Undo row negative margins.
+    margin-left: 15px;
+    margin-right: 15px;
+}
+
 /**
  * resourcelinkdetails = moodle putting filetype on screen if option selected
  * we do this by default in snap, so hide moodle version
@@ -736,9 +742,20 @@ li.section:focus {
     border-bottom: 1px solid #ccc;
 }
 
-
 .snap-native.modtype_book ol.bookmod-chapters {
     margin: 0;
+    &.list-bullets {
+        list-style-type: square;
+    }
+    &.list_none {
+        list-style-type: none;
+    }
+    &.list-indented {
+        list-style-type: none;
+        li {
+            padding-left: 1em;
+        }
+    }
 }
 
 .snap-resource-figure {
@@ -1184,6 +1201,10 @@ body.snap-resource-card li.snap-resource {
     }
 }
 
+.snap-completion-meta a:hover {
+    color: #fff;
+}
+
 // Activity dues date.
 .snap-due-date {
     font-size: inherit;
@@ -1313,6 +1334,10 @@ form.togglecompletion {
     width: 20px;
     height: 20px;
     margin: 0;
+
+    .btn {
+        font-size: 0.5em;
+    }
 }
 
 form.togglecompletion {
@@ -1419,6 +1444,12 @@ form.togglecompletion {
     .dropdown-menu a {
         font-weight: inherit;
         font-size: 0.8em;
+    }
+}
+
+.modtype_page, .modtype_label, .modtype_book {
+    .snap-asset-actions {
+        bottom: 20px;
     }
 }
 
@@ -2020,4 +2051,16 @@ span.editinstructions {
 // Fix urlselect in grade report.
 .path-grade-report #maincontent + .urlselect {
     left: 71vw;
+}
+
+body.path-course-index {
+    .add-course-btn-container {
+        margin-top: 1em;
+        width: 100%;
+        padding-top: 1em;
+        padding-left: 15px;
+    }
+    .course_category_tree {
+        margin: 15px;
+    }
 }
