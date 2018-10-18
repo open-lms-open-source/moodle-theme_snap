@@ -7,6 +7,7 @@
 
 .filemanager {
     font-family: $font-family-system;
+    max-width: 40em;
 
     .dndupload-message {
         font-size: small;
@@ -18,6 +19,10 @@
     .fp-pathbar,
     .fp-restrictions {
         display: none;
+    }
+
+    .fp-content {
+        border: 2px dashed #bbb;
     }
 }
 
