@@ -463,7 +463,7 @@ class activity {
             'gradetypetext' => GRADE_TYPE_TEXT,
         );
 
-        $sql = 'SELECT iteminstance
+        $sql = 'SELECT DISTINCT iteminstance
                 FROM {grade_items}
                 WHERE courseid = ?
                 AND itemtype = ?
