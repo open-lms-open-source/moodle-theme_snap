@@ -294,12 +294,12 @@ define(
 
                 // Make lightbox for list display of resources.
                 $(document).on('click', '.js-snap-media .snap-asset-link [href*="/mod/resource/view.php?id="]', function(e) {
-                    lightboxMedia($(this).closest('.snap-resource'));
+                    lightboxMedia($(this).closest('.snap-resource, .snap-extended-resource'));
                     e.preventDefault();
                 });
 
                 // Make resource cards clickable.
-                $(document).on('click', '.snap-resource-card .snap-resource', function(e) {
+                $(document).on('click', '.snap-resource-card .snap-resource, .snap-extended-resource', function(e) {
                     var trigger = $(e.target),
                         hreftarget = '_self',
                         link = $(trigger).closest('.snap-resource').find('.snap-asset-link a'),
