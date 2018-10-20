@@ -736,9 +736,20 @@ li.section:focus {
     border-bottom: 1px solid #ccc;
 }
 
-
 .snap-native.modtype_book ol.bookmod-chapters {
     margin: 0;
+    &.list-bullets {
+        list-style-type: square;
+    }
+    &.list_none {
+        list-style-type: none;
+    }
+    &.list-indented {
+        list-style-type: none;
+        li {
+            padding-left: 1em;
+        }
+    }
 }
 
 .snap-resource-figure {

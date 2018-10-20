@@ -790,8 +790,17 @@ class course_renderer extends \core_course_renderer {
     public function book_get_toc($chapters, $book, $cm) {
         $context = context_module::instance($cm->id);
 
+
+        switch ($book->numbering) {
+            case BOOK_NUM_BULLETS :  $numclass = 'list-bullets'; break;
+            case BOOK_NUM_INDENTED: $numclass = 'list-indented'; break;
+            case BOOK_NUM_NONE: $numclass = 'list-none'; break;
+            case BOOK_NUM_NUMBERS :
+            default : $numclass = 'list-numbers';
+        }
+
         $toc = "<h6>".get_string('chapters', 'theme_snap')."</h6>";
-        $toc .= "<ol class=bookmod-chapters>";
+        $toc .= '<ol class="bookmod-chapters '.$numclass.'">';
         $closemeflag = false; // Control for indented lists.
         $chapterlist = '';
         foreach ($chapters as $ch) {
