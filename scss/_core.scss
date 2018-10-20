@@ -666,6 +666,10 @@ a.yui3-button,
     @include bg-cover;
 }
 
+#page-header {
+    overflow: hidden;
+}
+
 .snap-media-object {
     @include clearfix;
     font-weight: 500;
