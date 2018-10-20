@@ -335,6 +335,12 @@ div.editor_atto_toolbar div.atto_group {
     background-color: $gray-lighter;
 }
 
+a[aria-controls="snap-collapse-help"] {
+    img {
+        margin-left: 1em;
+    }
+}
+
 #id_cancel {
     font-weight: 300;
     margin-left: 2em;
@@ -388,37 +394,42 @@ div.editor_atto_toolbar div.atto_group {
     }
 }
 
-.mform legend {
-    margin: 0;
-    font-size: 1.2rem;
-}
-
-.mform legend a,
-.mform legend a:hover {
-    color: $body-color;
-    text-decoration: none;
-}
-
-// Colapse/expand toggle on forms.
-.mform fieldset {
-    &.collapsible {
-        legend a.fheader {
-            padding: 0;
-            display: block;
-            background: none;
-            margin-left: 0;
-
-            &:after {
-                font-family: FontAwesome;
-                line-height: 1.5;
-                content: "\f106"; // up arrow default.
-                float: right;
-                margin-right: .4rem; // magic number to line up with help icons.
-            }
+// Allow for mod edit advanced options to appear at the side.
+form.mform {
+    &[action*="modedit.php"] {
+        display: flex;
+        clear: both;
+    }
+    legend {
+        margin: 0;
+        font-size: 1.2rem;
+        a, a:hover {
+            color: $body-color;
+            text-decoration: none;
         }
     }
-    &.collapsed legend a.fheader:after {
-        content: "\f107"; // down arrow to indicate can expand.
+
+    // Colapse/expand toggle on forms.
+    fieldset {
+        &.collapsible {
+            legend a.fheader {
+                padding: 0;
+                display: block;
+                background: none;
+                margin-left: 0;
+
+                &:after {
+                    font-family: FontAwesome;
+                    line-height: 1.5;
+                    content: "\f106"; // up arrow default.
+                    float: right;
+                    margin-right: .4rem; // magic number to line up with help icons.
+                }
+            }
+        }
+        &.collapsed legend a.fheader:after {
+            content: "\f107"; // down arrow to indicate can expand.
+        }
     }
 }
 
