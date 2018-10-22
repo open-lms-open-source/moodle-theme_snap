@@ -252,23 +252,6 @@
     }
 }
 
-body.path-mod-assign {
-    // Hide mod assign form until js kicks in.
-    .mform {
-        opacity: 0;
-    }
-    &.snap-js-loaded {
-        .mform {
-            opacity: 1;
-        }
-    }
-    &:not(.snap-js-loaded) #region-main:before {
-        @include ajaxing(block, relative, 200px, 20px);
-        background-image: none !important;
-        margin: 2em auto;
-    }
-}
-
 /**
  * Assign feedback PDF editor.
  * Prevent PDF edit area from displaying outside of dialogs.
@@ -564,4 +547,21 @@ body.path-mod-assign {
 
 .completion-progresscell {
     text-align: center;
+}
+
+body.pagelayout-admin.path-mod {
+    // Hide mod forms until js kicks in.
+    .mform {
+        opacity: 0;
+    }
+    &.snap-js-loaded {
+        .mform {
+            opacity: 1;
+        }
+    }
+    &:not(.snap-js-loaded) #region-main:before {
+        @include ajaxing(block, relative, 200px, 20px);
+        background-image: none !important;
+        margin: 2em auto;
+    }
 }
