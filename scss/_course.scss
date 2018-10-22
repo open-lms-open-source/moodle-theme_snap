@@ -1192,6 +1192,10 @@ body.snap-resource-card li.snap-resource {
     }
 }
 
+.snap-completion-meta a:hover {
+    color: #fff;
+}
+
 // Activity dues date.
 .snap-due-date {
     font-size: inherit;
@@ -1321,6 +1325,10 @@ form.togglecompletion {
     width: 20px;
     height: 20px;
     margin: 0;
+
+    .btn {
+        font-size: 0.5em;
+    }
 }
 
 form.togglecompletion {
