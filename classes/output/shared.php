@@ -698,7 +698,7 @@ EOF;
             $badgesicon = '<img src="'.$iconurl.'" class="svg-icon" alt="" role="presentation">';
             $courseconfig = $DB->get_record('mediasite_course_config', array('course' => $COURSE->id));
             if (!empty($courseconfig->mediasite_courses_enabled) && $courseconfig->mediasite_site) {
-                $site = new MediasiteSite($courseconfig->mediasite_site);
+                $site = new \Sonicfoundry\MediasiteSite($courseconfig->mediasite_site);
                 $url = new moodle_url(
                     '/mod/mediasite/courses7.php',
                     array('id' => $COURSE->id, 'siteid' => $courseconfig->mediasite_site)
