@@ -277,8 +277,6 @@ class theme_snap_local_test extends snap_base_test {
     }
 
     public function test_one_message() {
-        $this->markTestSkipped('Need to refactor due to messages API changes.');
-
         $this->resetAfterTest();
 
         $generator = $this->getDataGenerator();
@@ -315,8 +313,6 @@ class theme_snap_local_test extends snap_base_test {
 
 
     public function test_one_message_deleted() {
-        $this->markTestSkipped('Need to refactor due to messages API changes.');
-
         global $DB;
 
         $this->resetAfterTest();
@@ -354,8 +350,6 @@ class theme_snap_local_test extends snap_base_test {
     }
 
     public function test_one_message_user_deleted() {
-        $this->markTestSkipped('Need to refactor due to messages API changes.');
-
         $this->resetAfterTest();
 
         $generator = $this->getDataGenerator();
