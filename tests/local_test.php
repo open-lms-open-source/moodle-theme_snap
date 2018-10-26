@@ -343,8 +343,7 @@ class theme_snap_local_test extends snap_base_test {
         $actual = local::get_user_messages($userto->id);
         $this->assertCount(1, $actual);
 
-        $todelete = $DB->get_record('message', ['id' => $messageid]);
-        message_delete_message($todelete, $userto->id);
+        \core_message\api::delete_message($userto->id, $messageid);
         $actual = local::get_user_messages($userto->id);
         $this->assertCount(0, $actual);
     }
