@@ -277,8 +277,6 @@ class theme_snap_local_test extends snap_base_test {
     }
 
     public function test_one_message() {
-        $this->markTestSkipped('Need to refactor due to messages API changes.');
-
         $this->resetAfterTest();
 
         $generator = $this->getDataGenerator();
@@ -315,8 +313,6 @@ class theme_snap_local_test extends snap_base_test {
 
 
     public function test_one_message_deleted() {
-        $this->markTestSkipped('Need to refactor due to messages API changes.');
-
         global $DB;
 
         $this->resetAfterTest();
@@ -347,15 +343,12 @@ class theme_snap_local_test extends snap_base_test {
         $actual = local::get_user_messages($userto->id);
         $this->assertCount(1, $actual);
 
-        $todelete = $DB->get_record('message', ['id' => $messageid]);
-        message_delete_message($todelete, $userto->id);
+        \core_message\api::delete_message($userto->id, $messageid);
         $actual = local::get_user_messages($userto->id);
         $this->assertCount(0, $actual);
     }
 
     public function test_one_message_user_deleted() {
-        $this->markTestSkipped('Need to refactor due to messages API changes.');
-
         $this->resetAfterTest();
 
         $generator = $this->getDataGenerator();

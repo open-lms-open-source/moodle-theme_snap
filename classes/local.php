@@ -573,37 +573,41 @@ class local {
             $since = time() - (12 * WEEKSECS);
         }
 
-        $select  = 'm.id, m.useridfrom, m.useridto, m.subject, m.fullmessage, m.fullmessageformat, m.fullmessagehtml, '.
-                   'm.smallmessage, m.timecreated, m.notification, m.contexturl, m.contexturlname, '.
-                   \user_picture::fields('u', null, 'useridfrom', 'fromuser');
+        $select = \user_picture::fields('u', null, 'useridfrom', 'fromuser');
 
         $sql  = "
-        (
-                SELECT $select, 1 unread
-                  FROM {message} m
-            INNER JOIN {user} u ON u.id = m.useridfrom AND u.deleted = 0
-                 WHERE m.useridto = :userid1
-                       AND contexturl IS NULL
-                       AND m.timecreated > :fromdate1
-                       AND m.timeusertodeleted = 0
-                       AND m.notification = 0
-        ) UNION ALL (
-                SELECT $select, 0 unread
-                  FROM {message_read} m
-            INNER JOIN {user} u ON u.id = m.useridfrom AND u.deleted = 0
-                 WHERE m.useridto = :userid2
-                       AND contexturl IS NULL
-                       AND m.timecreated > :fromdate2
-                       AND m.timeusertodeleted = 0
-                       AND m.notification = 0
-        )
-          ORDER BY timecreated DESC";
+            SELECT m.id,
+                   m.useridfrom,
+                   m.subject,
+                   m.fullmessage,
+                   m.fullmessageformat,
+                   m.fullmessagehtml,
+                   m.smallmessage,
+                   m.timecreated,
+                   CASE WHEN mua.action = :actionread THEN 0 ELSE 1 END as unread,
+                   mcm.userid as useridto,
+                   {$select}
+              FROM {messages} m
+              JOIN {user} u ON u.id = m.useridfrom AND u.deleted = 0
+              JOIN {message_conversations} mc
+                ON mc.id = m.conversationid
+              JOIN {message_conversation_members} mcm
+                ON mcm.conversationid = mc.id
+         LEFT JOIN {message_user_actions} mua
+                ON (mua.messageid = m.id AND mua.userid = :userid1 AND mua.action = :actiondeleted)
+             WHERE mua.id is NULL
+               AND mcm.userid = :userid2
+               AND m.timecreated > :fromdate
+               AND m.useridfrom <> :userid3
+          ORDER BY m.timecreated DESC";
 
         $params = array(
             'userid1' => $userid,
             'userid2' => $userid,
-            'fromdate1' => $since,
-            'fromdate2' => $since,
+            'userid3' => $userid,
+            'fromdate' => $since,
+            'actiondeleted' => \core_message\api::MESSAGE_ACTION_DELETED,
+            'actionread' => \core_message\api::MESSAGE_ACTION_READ,
         );
 
         $records = $DB->get_records_sql($sql, $params, 0, 5);
