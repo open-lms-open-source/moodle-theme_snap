@@ -588,10 +588,10 @@ class local {
                    mcm.userid as useridto,
                    {$select}
               FROM {messages} m
-        INNER JOIN {user} u ON u.id = m.useridfrom AND u.deleted = 0
-        INNER JOIN {message_conversations} mc
+              JOIN {user} u ON u.id = m.useridfrom AND u.deleted = 0
+              JOIN {message_conversations} mc
                 ON mc.id = m.conversationid
-        INNER JOIN {message_conversation_members} mcm
+              JOIN {message_conversation_members} mcm
                 ON mcm.conversationid = mc.id
          LEFT JOIN {message_user_actions} mua
                 ON (mua.messageid = m.id AND mua.userid = :userid1 AND mua.action = :actiondeleted)
