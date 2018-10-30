@@ -584,7 +584,7 @@ class local {
                    m.fullmessagehtml,
                    m.smallmessage,
                    m.timecreated,
-                   CASE WHEN mua.action = :actionread THEN 0 ELSE 1 END as unread,
+                   CASE WHEN muar.id is NULL THEN 1 ELSE 0 END as unread,
                    mcm.userid as useridto,
                    {$select}
               FROM {messages} m
@@ -593,18 +593,18 @@ class local {
                 ON mc.id = m.conversationid
               JOIN {message_conversation_members} mcm
                 ON mcm.conversationid = mc.id
-         LEFT JOIN {message_user_actions} mua
-                ON (mua.messageid = m.id AND mua.userid = :userid1 AND mua.action = :actiondeleted)
-             WHERE mua.id is NULL
-               AND mcm.userid = :userid2
+         LEFT JOIN {message_user_actions} muad
+                ON (muad.messageid = m.id AND muad.userid = mcm.userid AND muad.action = :actiondeleted)
+         LEFT JOIN {message_user_actions} muar
+                ON (muar.messageid = m.id AND muar.userid = mcm.userid AND muar.action = :actionread)
+             WHERE muad.id is NULL
+               AND mcm.userid = :userid
                AND m.timecreated > :fromdate
-               AND m.useridfrom <> :userid3
+               AND m.useridfrom <> mcm.userid
           ORDER BY m.timecreated DESC";
 
         $params = array(
-            'userid1' => $userid,
-            'userid2' => $userid,
-            'userid3' => $userid,
+            'userid' => $userid,
             'fromdate' => $since,
             'actiondeleted' => \core_message\api::MESSAGE_ACTION_DELETED,
             'actionread' => \core_message\api::MESSAGE_ACTION_READ,

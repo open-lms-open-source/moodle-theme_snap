@@ -309,6 +309,13 @@ class theme_snap_local_test extends snap_base_test {
 
         $actual = local::get_user_messages($userto->id, $aftersent);
         $this->assertCount(0, $actual);
+
+        \core_message\api::mark_all_messages_as_read($userto->id);
+        $actual = local::get_user_messages($userto->id);
+        $this->assertCount(1, $actual);
+        foreach ($actual as $msg) {
+            $this->assertEquals(0, $msg->unread);
+        }
     }
 
 
