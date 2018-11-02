@@ -254,6 +254,14 @@
     .plugin-submission-title {
         width: 100%;
     }
+
+    .statusdata, .gradingdata, .lastmodified {
+        font-size: 0.8em;
+        span {
+            margin-left: 0.5em;
+        }
+        margin-bottom: 1em;
+    }
 }
 
 .assign-submission-data a.btn {
