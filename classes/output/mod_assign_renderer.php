@@ -387,7 +387,7 @@ class mod_assign_renderer extends \mod_assign_renderer {
                         $plugin->has_user_summary() &&
                         $pluginshowsummary
                     ) {
-                            $submissiondata .= '<h4 class="h6">'.$plugin->get_name().'</h4>';
+                            $submissiondata .= '<h4 class="h6 plugin-submission-title">'.$plugin->get_name().'</h4>';
                             $displaymode = assign_submission_plugin_submission::SUMMARY;
                             $pluginsubmission = new assign_submission_plugin_submission($plugin,
                             $submission,

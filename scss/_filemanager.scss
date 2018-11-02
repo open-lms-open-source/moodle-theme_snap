@@ -26,6 +26,12 @@
     }
 }
 
+// Make sure accepted file type information is on its own row and positioned nicely.
+div[data-fieldtype=filemanager] > p:nth-of-type(1) {
+    margin-top:1em;
+    width: 100%;
+}
+
 // Make filenames more reabable.
 .fp-filename {
     font-size: small;

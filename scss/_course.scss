@@ -628,6 +628,12 @@ li.section:focus {
     }
 }
 
+.activity-navigation {
+    // Undo row negative margins.
+    margin-left: 15px;
+    margin-right: 15px;
+}
+
 /**
  * resourcelinkdetails = moodle putting filetype on screen if option selected
  * we do this by default in snap, so hide moodle version
