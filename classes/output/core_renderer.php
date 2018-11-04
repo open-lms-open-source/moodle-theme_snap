@@ -1153,6 +1153,9 @@ HTML;
             }
         }
 
+        // Add page layout.
+        $classes[] = 'layout-'.$PAGE->pagelayout;
+
         // Remove duplicates if necessary.
         $classes = array_unique($classes);
 

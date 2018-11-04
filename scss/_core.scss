@@ -124,6 +124,9 @@ table.boxwidthwide {
         max-width: 30rem;
         width: 100%;
         background-color: rgba(255, 255, 255, 0.9);
+        #password {
+            margin-top: 1em;
+        }
     }
     // The site name.
     .snap-logo-sitename {
