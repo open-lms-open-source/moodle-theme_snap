@@ -439,11 +439,9 @@ define(['jquery', 'core/log', 'theme_snap/headroom', 'theme_snap/util', 'theme_s
 
             // Onclick for toggle of state-visible of admin block and mobile menu.
             $(document).on("click", "#admin-menu-trigger, #toc-mobile-menu-toggle", function(e) {
-                console.log('test');
                 var href = this.getAttribute('href');
-                // Make this only happen for settings button
-                if (this.getAttribute('id') == 'admin-menu-trigger') {
-                    console.log('admin menu trigger');
+                // Make this only happen for settings button.
+                if (this.getAttribute('id') === 'admin-menu-trigger') {
                     $(this).toggleClass('active');
                     $('#page').toggleClass('offcanvas');
                 }
@@ -571,7 +569,7 @@ define(['jquery', 'core/log', 'theme_snap/headroom', 'theme_snap/util', 'theme_s
                     bodyClasses(); // add body classes
 
                     // Make sure that the blocks are always within page-content for assig view page.
-                    $('#page-mod-assign-view #page-content').append($('#moodle-blocks'))
+                    $('#page-mod-assign-view #page-content').append($('#moodle-blocks'));
 
                     // Add a class to the body to show js is loaded.
                     $('body').addClass('snap-js-loaded');

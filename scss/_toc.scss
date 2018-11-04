@@ -322,7 +322,7 @@
     #course-toc {
         position: fixed !important;
         right: 0;
-        padding: 0 4%;
+        padding: 3em 4%;
         margin: 0;
         z-index: 66;
         background-color: transparent !important;
@@ -363,13 +363,25 @@
         }
     }
 
-    #toc-search,
     #toc-desktop-menu-heading {
         display: none;
+    }
+    #toc-search {
+        display: block;
+        width: 100%;
+        padding-left: 2em;
     }
     // Small screen course tools and create new section links.
     #page-header .toc-footer a {
         display: block;
+    }
+
+    #snap-course-wrapper nav#course-toc {
+        padding-top: 4em;
+    }
+
+    #toc-search-results {
+        margin-left: 2em;
     }
 }
 
