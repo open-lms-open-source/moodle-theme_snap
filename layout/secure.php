@@ -44,7 +44,7 @@ echo $OUTPUT->doctype() ?>
     </div>
 
     <div id="moodle-navbar">
-        <div class="nav-link  pull-xs-right">
+        <div class="nav-link float-md-right">
             <?php echo $OUTPUT->login_info(false) ?>
         </div>
     </div>
