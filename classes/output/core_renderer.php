@@ -1506,7 +1506,11 @@ HTML;
             $this->add_switchroleto_navigation_node($item);
         }
 
-        return parent::render_navigation_node($item);;
+        $content = parent::render_navigation_node($item);
+        if (strpos($content,'fa-fw fa-fw')) {
+            $content = str_replace('fa-fw fa-fw', 'fa-fw nav-missing-icon', $content);
+        }
+        return $content;
     }
 
     /**

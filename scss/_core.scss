@@ -367,6 +367,9 @@ i.icon,
 p.tree_item:before {
     color: #999;
 }
+p.tree_item.hasicon i.nav-missing-icon:before {
+    content: '■'; // Where settings nav icon is missing use this.
+}
 
 .mediaplugin_videojs > div {
     max-width: none !important;
