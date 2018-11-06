@@ -1444,6 +1444,12 @@ form.togglecompletion {
     }
 }
 
+.modtype_page, .modtype_label, .modtype_book {
+    .snap-asset-actions {
+        bottom: 20px;
+    }
+}
+
 .snap-resource {
     .snap-asset-actions {
         width: 100%;
