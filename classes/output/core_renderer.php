@@ -1410,7 +1410,7 @@ HTML;
                 <!--Title-->
                 <h3 class="snap-feature-title h5">' .s($title). '</h3>
                 <!--Content-->
-                <p class="snap-feature-text">' .s($text). '</p>
+                <p class="snap-feature-text">' .format_text($text). '</p>
             </div>
             <!--/.Card content-->
         </div>';
