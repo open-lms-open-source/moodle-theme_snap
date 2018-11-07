@@ -1028,6 +1028,9 @@ body.snap-resource-card li.snap-resource {
     // Resource cards are clickable with data-href, so add cursor pointer.
     .asset-wrapper {
         @include clearfix;
+    }
+    
+    &:not(.modtype_label) .asset-wrapper {
         cursor: pointer;
     }
 

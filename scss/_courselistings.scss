@@ -94,6 +94,9 @@
 #page-course-index {
     #region-main {
         max-width: 100%;
+        .row {
+            display: block;
+        }
     }
     // Catagory descriptions.
     .snap-category-description {

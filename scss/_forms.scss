@@ -355,7 +355,8 @@ div.editor_atto_toolbar div.atto_group {
 // -------------------------
 
 .snap-form-required {
-
+    flex: 0;
+    float: left;
     #id_name,
     #id_externalurl,
     #id_toolurl,
@@ -375,6 +376,8 @@ div.editor_atto_toolbar div.atto_group {
 }
 
 .snap-form-advanced {
+    flex: 0;
+    float: left;
     .snap-form-visibility {
         padding: 1em;
         background-color: #eee;
@@ -386,6 +389,18 @@ div.editor_atto_toolbar div.atto_group {
     legend {
         font-size: 1rem;
     }
+
+    #id_modstandardelshdr,
+    #id_overallfeedbackhdr {
+      .form-inline[data-fieldtype="editor"] div:first-child {
+        overflow: scroll;
+      }
+    }
+
+    .mceToolbar.mceLeft.mceFirst.mceLast{
+        overflow: scroll;
+    }
+
 }
 
 .mform legend {
