@@ -107,7 +107,8 @@ function theme_snap_set_category_colors($css, $theme) {
                 'brand-primary' => $colors[$category->id],
                 'nav-color' => $colors[$category->id],
                 'nav-button-color' => $colors[$category->id],
-                'nav-login-color' => !empty($theme->settings->navbarbuttonlink) ? $theme->settings->navbarbuttonlink : '#FFFFFF'
+                'nav-login-bg' => $colors[$category->id],
+                'nav-login-color' => '#FFFFFF'
             ]);
 
             try {
