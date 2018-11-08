@@ -1655,6 +1655,15 @@ ul.events-new + ul.events-underway {
 }
 
 #dateselector-calendar-panel {
+    #dateselector-calendar-content {
+        padding: 10px;
+    }
+
+    .yui3-calendar-header {
+        display: block;
+        padding-bottom: 10px;
+    }
+    
     .yui3-calendarbase {
         width: 350px !important;
     }
@@ -1688,14 +1697,17 @@ ul.events-new + ul.events-underway {
         width: 30px;
         background-repeat: no-repeat;
         background-position: center;
+        position: absolute;
     }
 
     .yui3-calendarnav-nextmonth {
         background-image: url("[[pix:theme|right-arrow]]");
+        right: 0;
     }
 
     .yui3-calendarnav-prevmonth {
         background-image: url("[[pix:theme|left-arrow]]");
+        left: 0;
     }
 
     .yui3-calendar-day,
