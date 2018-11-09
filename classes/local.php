@@ -1720,4 +1720,91 @@ class local {
         $cached = $muc->get('calendarchangestamps');
         return $cached;
     }
+
+    /**
+     * Slugifies the text.
+     * @param string $text
+     * @return string
+     */
+    private static function slugify(string $text) : string {
+        // Replace non letter or digits by -.
+        $text = preg_replace('~[^\pL\d]+~u', '-', $text);
+
+        // Transliterate.
+        $text = iconv('utf-8', 'us-ascii//TRANSLIT', $text);
+
+        // Remove unwanted characters.
+        $text = preg_replace('~[^-\w]+~', '', $text);
+
+        // Trim.
+        $text = trim($text, '-');
+
+        // Remove duplicate -.
+        $text = preg_replace('~-+~', '-', $text);
+
+        // Lowercase.
+        $text = strtolower($text);
+
+        // Prepend pbb to avoid use of reserved classes.
+        if (empty($text)) {
+            return '';
+        }
+
+        return $text;
+    }
+
+    /**
+     * Calculates the slugified class to apply for Profile based branding.
+     * @param \stdClass $user
+     * @return string|bool
+     */
+    public static function get_profile_based_branding_class($user) {
+        global $DB;
+
+        if (empty(get_config('theme_snap', 'pbb_enable')) || !isloggedin()) {
+            return false;
+        }
+
+        $cache = \cache::make('theme_snap', 'profile_based_branding');
+        $class = $cache->get('pbb_class');
+        if (!empty($class)) {
+            return $class;
+        }
+
+        $pbbfield = get_config('theme_snap', 'pbb_field');
+        list($type, $fieldnameorid) = !empty($pbbfield) ? explode('|', $pbbfield) : [null, null];
+        if (empty($type) || empty($fieldnameorid)) {
+            return false;
+        }
+
+        $value = '';
+        if ($type === 'user') {
+            $value = $user->{$fieldnameorid};
+        } else if ($type === 'profile') {
+            $sql = <<<SQL
+                  SELECT dat.data
+                    FROM {user_info_data} dat
+                   WHERE dat.userid = :userid AND dat.fieldid = :fieldid
+SQL;
+            $params = [
+                'userid' => $user->id,
+                'fieldid' => $fieldnameorid
+            ];
+            $value = $DB->get_field_sql($sql, $params);
+        }
+
+        if (!empty($value)) {
+            $class = 'snap-pbb-' . self::slugify($value);
+            $cache->set('pbb_class', $class);
+        }
+        return $class;
+    }
+
+    /**
+     * Cleans the profile based branding cache store.
+     */
+    public static function clean_profile_based_branding_cache() {
+        $cache = \cache::make('theme_snap', 'profile_based_branding');
+        $cache->purge();
+    }
 }

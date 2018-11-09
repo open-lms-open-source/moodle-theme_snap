@@ -1104,4 +1104,61 @@ class theme_snap_local_test extends snap_base_test {
         $actual = local::course_coverimage_url($course->id);
         $this->assertFalse($actual);
     }
+
+    public function test_get_profile_based_branding() {
+        global $DB;
+
+        $this->resetAfterTest();
+
+        $generator = $this->getDataGenerator();
+        $user = $generator->create_user();
+        $this->setUser($user);
+
+        // Setting is not enabled.
+        $this->assertFalse(local::get_profile_based_branding_class($user));
+
+        \set_config('pbb_enable', '1', 'theme_snap');
+
+        // Default field is department but nothing has been set.
+        $this->assertFalse(local::get_profile_based_branding_class($user));
+
+        $user->department = 'Marketing';
+        $DB->update_record('user', $user);
+
+        // First time, cache gets set and it should work.
+        $this->assertEquals('snap-pbb-marketing', local::get_profile_based_branding_class($user));
+
+        $user->department = 'Super Enterprise Sales';
+        $DB->update_record('user', $user);
+
+        // Even when changing user data using the database, if the event is not triggered, the value should be cached.
+        $this->assertEquals('snap-pbb-marketing', local::get_profile_based_branding_class($user));
+
+        \core\event\user_updated::create_from_userid($user->id)->trigger();
+
+        // Cache has been cleared, so the new value should match the one which was updated.
+        $this->assertEquals('snap-pbb-super-enterprise-sales', local::get_profile_based_branding_class($user));
+
+        // Filling up database with custom field data.
+        $catid = $DB->insert_record('user_info_category', (object) [
+            'name'       => 'Favourite things'
+        ]);
+        $fieldid = $DB->insert_record('user_info_field', (object) [
+            'shortname'  => 'favfood',
+            'name'       => 'Favourite food',
+            'categoryid' => $catid
+        ]);
+        $DB->insert_record('user_info_data', (object) [
+            'data'       => 'Banana split',
+            'fieldid'    => $fieldid,
+            'userid'     => $user->id
+        ]);
+
+        // Changing the used field to the custom field.
+        \set_config('pbb_field', 'profile|' . $fieldid, 'theme_snap');
+        local::clean_profile_based_branding_cache();
+
+        // Custom field is set as new value.
+        $this->assertEquals('snap-pbb-banana-split', local::get_profile_based_branding_class($user));
+    }
 }

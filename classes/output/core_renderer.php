@@ -1073,7 +1073,7 @@ HTML;
      * @return array|string
      */
     public function body_css_classes(array $additionalclasses = array()) {
-        global $PAGE, $COURSE, $SESSION, $CFG;
+        global $PAGE, $COURSE, $SESSION, $CFG, $USER;
 
         $classes = parent::body_css_classes($additionalclasses);
         $classes = explode (' ', $classes);
@@ -1157,6 +1157,12 @@ HTML;
 
         // Add page layout.
         $classes[] = 'layout-'.$PAGE->pagelayout;
+
+        // Profile based branding.
+        $pbbclass = local::get_profile_based_branding_class($USER);
+        if (!empty($pbbclass)) {
+            $classes[] = $pbbclass;
+        }
 
         // Remove duplicates if necessary.
         $classes = array_unique($classes);

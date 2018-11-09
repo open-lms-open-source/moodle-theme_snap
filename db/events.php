@@ -78,5 +78,11 @@ $observers = array(
     array (
         'eventname' => '\core\event\course_module_completion_updated',
         'callback'  => '\theme_snap\event_handlers::course_module_completion_updated'
-    )
+    ),
+
+    // User updated event for Profile based branding.
+    array (
+        'eventname' => '\core\event\user_updated',
+        'callback'  => '\theme_snap\event_handlers::user_updated'
+    ),
 );

@@ -845,6 +845,14 @@ define(['jquery', 'core/log', 'theme_snap/headroom', 'theme_snap/util', 'theme_s
                         );
                     }
 
+                    // Add setttings tab show behaviour to classes which want to do that.
+                    $('.snap-settings-tab-link').on('click', function() {
+                        var tab = $('a[href="' + $(this).attr('href') + '"].nav-link');
+                        if (tab.length) {
+                            tab.tab('show');
+                        }
+                    });
+
                     waitForFullScreenButton();
                 });
             }

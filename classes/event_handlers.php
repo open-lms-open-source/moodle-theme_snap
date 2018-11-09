@@ -135,4 +135,16 @@ class event_handlers {
         local::add_calendar_change_stamp($event->courseid);
     }
 
+    /**
+     * The user update event.
+     *
+     * Removes cache value for this user Profile based branding CSS class.
+     *
+     * @param \user_updated $event
+     */
+    public static function user_updated($event) {
+        $cache = \cache::make('theme_snap', 'profile_based_branding');
+        $cache->delete('pbb_class');
+    }
+
 }
