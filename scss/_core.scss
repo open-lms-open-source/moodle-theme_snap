@@ -1274,6 +1274,7 @@ header#page-header
 
         li {
             border-color: $gray-light;
+            background-color: $snap-carousel-buttons;
         }
         .active {
             background-color: $gray-light;
@@ -3321,6 +3322,16 @@ table th img.iconhelp {
     padding: 1em 0;
 }
 
+#snap-featured-courses {
+    background-color: $snap-featured-courses;
+}
+#snap-featured-courses a.snap-featured-course {
+    border-radius: 4px;
+}
+#snap-featured-courses .snap-featured-course-title {
+    border-radius: 0 0 4px 4px;
+}
+
 /* Featured course link. */
 .snap-featured-course {
     display: block;
@@ -3627,11 +3638,25 @@ body.pagelayout-frontpage {
 // Auth icon align fix.
 #page-login-index .auth-icon,
 #page-site-index .auth-icon,
-#page-login-index .icon,
 #page-site-index .icon{
     width: 24px;
     height: 24px;
     margin: 0;
+}
+
+/* Fix for news visualization in Snap front page. */
+#page-site-index .news-article-content h3 {
+    margin-top: 1em;
+}
+
+#page-site-index #news-articles a.btn.btn-secondary.toggle {
+    border: 1px solid white;
+    margin: 1em 0;
+    color: white;
+
+    &:focus {
+        outline: 3px white;
+    }
 }
 
 // Center prev and next links for activities.

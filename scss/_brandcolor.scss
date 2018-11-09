@@ -48,11 +48,13 @@ $lighter-grey-btn: #e6e6e6;
         }
     }
 
-    .nav-pills, .nav-tabs {
-        a.nav-link.active {
-            background: $brand-primary;
-            color: #fff !important;
-        }
+    #snap-pm-courses .nav-tabs a.nav-link.active {
+        color: darken($brand-primary, 8%);
+    }
+
+    .nav-pills a.nav-link.active {
+        background: $brand-primary;
+        color: #fff !important;
     }
 
     .snap-dropzone-label:hover .fake-link {
@@ -581,6 +583,8 @@ $lighter-grey-btn: #e6e6e6;
 
         a.snap-login-button {
             color: $nav-login-color;
+            background-color: $nav-login-bg;
+            border-color: $nav-login-bg;
         }
 
         .icon.fa-search {
