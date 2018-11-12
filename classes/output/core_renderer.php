@@ -575,9 +575,12 @@ class core_renderer extends \theme_boost\output\core_renderer {
             $action = s($CFG->wwwroot).'/login/index.php';
             $altlogins = $this->render_login_alternative_methods(new login_alternative_methods());
 
+            $logintoken = is_callable(['\\core\\session\\manager', 'get_login_token']) ?
+                    \core\session\manager::get_login_token() : '';
             $data = (object) [
                 'action' => $action,
-                'altlogins' => $altlogins
+                'altlogins' => $altlogins,
+                'logintoken' => $logintoken,
             ];
 
             if ($PAGE->pagetype !== 'login-index') {
