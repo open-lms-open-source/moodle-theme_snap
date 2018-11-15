@@ -140,6 +140,7 @@
         .form-defaultinfo {
             display: none;
         }
+        float: left;
     }
     #admin-slide_one_image,
     #admin-slide_one_title,
@@ -151,14 +152,12 @@
 // Tab - Personal menu.
 // -------------------------
 #themesnappersonalmenu.active {
-    fieldset {
-        @include make-row();
-    }
+
     .form-item {
         @include make-col(4);
+        float: left;
     }
 }
-
 // -------------------------
 // Tab - Feature spots.
 // -------------------------
@@ -308,5 +307,6 @@
     @include make-row();
     .form-item {
         @include make-col(6);
+        float: left;
     }
 }

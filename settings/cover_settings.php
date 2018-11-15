@@ -48,7 +48,6 @@ $default = $unchecked;
 $setting = new admin_setting_configcheckbox($name, $title, $description, $default, $checked, $unchecked);
 $snapsettings->add($setting);
 
-
 $name = 'theme_snap/slide_one_image';
 $title = new lang_string('coverimage', 'theme_snap');
 $description = '';
