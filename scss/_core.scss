@@ -31,6 +31,10 @@ html {
 
 #moodle-page {
     font-size: 1.1rem;
+
+    .mform > .form-group {
+        display: inline-block;
+    }
 }
 
 // Snap Layout yo...
@@ -453,7 +457,7 @@ hr {
 
 #page-header h1 {
     margin-top: 0;
-    line-height: 1;
+    line-height: 1.2;
 }
 
 #region-main textarea {
@@ -914,11 +918,22 @@ footer #moodle-footer
 #snap-home {
     display: inline-block;
     padding: .5em 0;
+    width: 19em;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
     // If logo image.
     &.logo {
-        display: block;
+        display: inline-block;
         height: 45px;
-        max-width: 250px;
+        #snap-home.logo {
+            max-width: 45%;
+            @media (max-width: 414px) {
+                .pull-right.js-only {
+                    margin-top: 3em;
+                }
+            }
+        }
         background-color: transparent;
         background-repeat: no-repeat;
         background-size: contain;
@@ -1019,6 +1034,9 @@ header#page-header
 #page-header {
     padding-top: 4em;
     padding-bottom: 0.5em;
+    @media (max-width: 620px) {
+        padding-top: 7em;
+    }
 }
 
 // Breadcrumb - not really a breadcrumb like on the web, but something moodley
@@ -1606,9 +1624,9 @@ li.calendar_event_user:before {
 
 .maincalendar .day .day {
     border-radius: 100%;
-    width: 4em;
-    height: 4em;
-    padding: 1.2em;
+    width: 3em;
+    height: 3em;
+    padding: 0.4em;
     border: 1px solid #fff;
     margin: 0 auto;
 }

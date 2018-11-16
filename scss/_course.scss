@@ -1419,6 +1419,8 @@ form.togglecompletion {
     .dropdown-menu a {
         font-weight: inherit;
         font-size: 0.8em;
+        overflow: hidden;
+        text-overflow: ellipsis;
     }
 }
 

@@ -113,8 +113,14 @@
     .course_category_tree {
         clear: both;
     }
-    .course_category_tree {
-        padding: 1rem 0;
+    @media (max-width: 575px) {
+        #region-main .row .col-sm-8.text-right {
+            text-align: center !important;
+            padding-top: 1em;
+        }
+        .course_category_tree {
+            padding: 1.25rem;
+        }
     }
 
 }
