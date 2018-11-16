@@ -549,7 +549,7 @@ EOF;
         if (course_can_view_participants($coursecontext)) {
 
             // Get count of course users.
-            $usercount = count_enrolled_users($coursecontext, '', 0, true);
+            $usercount = \theme_snap\local::count_enrolled_users($coursecontext, '', 0, true);
 
             // Build icon.
             $participanticons = '';

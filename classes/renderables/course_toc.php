@@ -99,7 +99,11 @@ class course_toc implements \renderable, \templatable{
         }
 
         $this->format  = course_get_format($course);
-        $this->course  = $this->format->get_course(); // Has additional fields.
+        $additionaloptions = $this->format->get_format_options(); // Has additional fields.
+        foreach ($additionaloptions as $additionaloption => $value) {
+            $course->$additionaloption = $value;
+        }
+        $this->course = $course;
         $this->numsections = $this->format->get_last_section_number();
 
         $this->set_modules();
