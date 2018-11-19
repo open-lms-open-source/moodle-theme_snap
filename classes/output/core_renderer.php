@@ -805,7 +805,6 @@ class core_renderer extends \theme_boost\output\core_renderer {
     /**
      * Cover carousel.
      * @return string
-     *
      */
     public function cover_carousel() {
         global $PAGE;
@@ -1156,6 +1155,9 @@ HTML;
             }
         }
 
+        // Add page layout.
+        $classes[] = 'layout-'.$PAGE->pagelayout;
+
         // Remove duplicates if necessary.
         $classes = array_unique($classes);
 
@@ -1410,7 +1412,7 @@ HTML;
                 <!--Title-->
                 <h3 class="snap-feature-title h5">' .s($title). '</h3>
                 <!--Content-->
-                <p class="snap-feature-text">' .s($text). '</p>
+                <p class="snap-feature-text">' .format_text($text). '</p>
             </div>
             <!--/.Card content-->
         </div>';
@@ -1506,7 +1508,11 @@ HTML;
             $this->add_switchroleto_navigation_node($item);
         }
 
-        return parent::render_navigation_node($item);;
+        $content = parent::render_navigation_node($item);
+        if (strpos($content, 'fa-fw fa-fw')) {
+            $content = str_replace('fa-fw fa-fw', 'fa-fw nav-missing-icon', $content);
+        }
+        return $content;
     }
 
     /**

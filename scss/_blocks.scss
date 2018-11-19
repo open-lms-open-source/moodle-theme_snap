@@ -129,9 +129,31 @@ body.path-site .block.block_settings {
 }
 
 /* Reset margin on setting block. */
-.block_settings .block_tree ul {
-    margin-left: 0;
-    padding-left: 20px;
+.block_settings {
+    > .card-body {
+        padding-left: 0;
+        padding-right: 0;
+
+        // This is inside card-body for specificity resasons.
+        .block_tree [aria-expanded="false"].loading {
+            background: none;
+
+            :after {
+                content: '';
+                margin-left: 0.5em;
+                @include ajaxing(inline-block, relative, 16px, 4px);
+            }
+        }
+    }
+    .footer {
+        padding: 0 1em;
+    }
+    .block_tree {
+        ul {
+            margin-left: 0;
+            padding-left: 20px;
+        }
+    }
 }
 
 /* icons in blocks */
