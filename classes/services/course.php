@@ -322,8 +322,9 @@ class course {
 
         $changedsectionhtml = [];
         $changedsections = array_merge($newlyavailablesections, $newlyunavailablesections);
+        $format = course_get_format($course);
+        $course = $format->get_course();
         if (!empty($changedsections)) {
-            $format = course_get_format($course);
             $formatrenderer = $format->get_renderer($PAGE);
             foreach ($changedsections as $sectionnumber) {
                 $section = $modinfo->get_section_info($sectionnumber);
@@ -357,7 +358,7 @@ class course {
         $unavailablesections = implode(',', $unavailablesections);
         $unavailablemods = implode(',', $unavailablemods);
 
-        $toc = new course_toc($course);
+        $toc = new course_toc($course, $format);
 
         // If the course format is different from topics or weeks then the $toc would have some empty values.
         $validformats = ['weeks', 'topics'];

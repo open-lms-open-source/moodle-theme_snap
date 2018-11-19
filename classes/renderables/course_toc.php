@@ -84,8 +84,9 @@ class course_toc implements \renderable, \templatable{
     /**
      * course_toc constructor.
      * @param null $course
+     * @params null $format
      */
-    public function __construct($course = null) {
+    public function __construct($course = null, $format = null) {
         global $COURSE;
         if (empty($course)) {
             $course = $COURSE;
@@ -98,11 +99,16 @@ class course_toc implements \renderable, \templatable{
             $this->formatsupportstoc = true;
         }
 
-        $this->format  = course_get_format($course);
-        $additionaloptions = $this->format->get_format_options(); // Has additional fields.
-        foreach ($additionaloptions as $additionaloption => $value) {
-            $course->$additionaloption = $value;
+        if ($format) {
+            $this->format  = $format;
+        } else {
+            $this->format  = course_get_format($course);
+            $additionaloptions = $this->format->get_format_options(); // Has additional fields.
+            foreach ($additionaloptions as $additionaloption => $value) {
+                $course->$additionaloption = $value;
+            }
         }
+
         $this->course = $course;
         $this->numsections = $this->format->get_last_section_number();
 
@@ -213,7 +219,7 @@ class course_toc implements \renderable, \templatable{
                 }
             }
 
-            $chapter->title = get_section_name($this->course, $section);
+            $chapter->title = $this->format->get_section_name($section);
             if ($chapter->title == get_string('general')) {
                 $chapter->title = get_string('introduction', 'theme_snap');
             }
