@@ -11,6 +11,7 @@
         </header>
         <div id="snap-pm-content">
             <form action='{{action}}'  method='post'>
+                <input type="hidden" name="logintoken" value="{{logintoken}}">
                 <div class="form-group">
                     <label class="form-control-label" for='username' >{{#str}}username{{/str}}</label>
                     <input class="form-control" autocapitalize='off' type='text' name='username' id='username' required>
