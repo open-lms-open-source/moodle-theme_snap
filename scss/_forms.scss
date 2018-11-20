@@ -361,7 +361,6 @@ a[aria-controls="snap-collapse-help"] {
 // -------------------------
 
 .snap-form-required {
-    flex: 0;
     float: left;
     #id_name,
     #id_externalurl,
@@ -382,7 +381,6 @@ a[aria-controls="snap-collapse-help"] {
 }
 
 .snap-form-advanced {
-    flex: 0;
     float: left;
     .snap-form-visibility {
         padding: 1em;
