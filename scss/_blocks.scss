@@ -133,6 +133,10 @@ body.path-site .block.block_settings {
     > .card-body {
         padding-left: 0;
         padding-right: 0;
+        @media (max-width: 651px) {
+            padding-top: 3rem;
+        }
+
 
         // This is inside card-body for specificity resasons.
         .block_tree [aria-expanded="false"].loading {
