@@ -58,5 +58,12 @@ $definitions = array(
         'simplekeys'         => true,
         'simpledata'         => false,
         'staticacceleration' => true
-    ]
+    ],
+    'profile_based_branding' => [
+        'mode'               => cache_store::MODE_SESSION,
+        'simplekeys'         => true,
+        'simpledata'         => false,
+        'staticacceleration' => false,
+    ],
 );
+

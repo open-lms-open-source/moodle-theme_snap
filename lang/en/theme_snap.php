@@ -318,3 +318,16 @@ $string['youtubedesc'] = 'The url of your youtube channel.';
 $string['showallsectionsdisabled'] = 'Due to its design language, "Show all sections on one page" isn\'t available in Snap.';
 $string['disabled'] = 'Disabled';
 $string['showappearancedisabled'] = 'Snap\'s design language prevents changes to "Appearance" settings.';
+$string['pbb'] = 'Profile based branding';
+$string['pbb_description'] = 'By enabling <strong>Profile based branding</strong>, you will be able to customize the branding experience for a specific group of users based on the chosen user profile field.
+<ul><li>The user field value will be <em>slugified</em>; converting all characters to lower case and separating them with a dash (-)</li>
+<li>The string <code>snap-pbb-</code> will be prepended</li>
+<li>This class will be added to the <code>body</code> Html tag</li></ul>
+For Example, the user field value <em>Blueberry Extravaganza</em> will be slugified to be <code>snap-pbb-blueberry-extravaganza</code><br /><br />
+This feature is used in conjunction with <a href="https://help.blackboard.com/Blackboard_Open_LMS/Administrator/Manage_a_Site/Course_and_Site_Design/Themes/Snap#advanced-branding_OTP-3" target="_blank">Custom CSS</a>,
+you\'ll need to add CSS selectors using the new classes in the <a class="snap-settings-tab-link" href="#themesnapbranding">Basics</a> section.';
+$string['pbb_enable'] = 'Enable Profile based branding';
+$string['pbb_enable_description'] = 'Only adds the class to the body tag if active.';
+$string['pbb_field'] = 'User field to use';
+$string['pbb_field_description'] = 'This field\'s value will be slugified and used as a CSS class name prepended by <code>snap-pbb-</code>.';
+$string['cachedef_profile_based_branding'] = 'Caching for Profile based branding.';
