@@ -1072,8 +1072,11 @@ header#page-header
 #page-header {
     padding-top: 4em;
     padding-bottom: 0.5em;
-    @media (max-width: 720px) {
+    @media (max-width: 1001px) {
         padding-top: 7em;
+    }
+    @media (max-width: 465px) {
+        padding-top: 10.5rem;
     }
 }
 
