@@ -31,6 +31,11 @@ html {
 
 #moodle-page {
     font-size: 1.1rem;
+
+    .mform > .form-group.fitem {
+        display: inline-block;
+        padding-top: 2em;
+    }
 }
 
 // Snap Layout yo...

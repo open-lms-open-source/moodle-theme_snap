@@ -410,7 +410,6 @@ a[aria-controls="snap-collapse-help"] {
 // Allow for mod edit advanced options to appear at the side.
 form.mform {
     &[action*="modedit.php"] {
-        display: flex;
         clear: both;
     }
     legend {

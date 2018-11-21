@@ -749,7 +749,7 @@ define(['jquery', 'core/log', 'theme_snap/headroom', 'theme_snap/util', 'theme_s
 
                         // Add save buttons.
                         var savebuttons = $("#mform1 > .form-group:last");
-                        $(mainForm).append(savebuttons);
+                        $('.mform').append(savebuttons);
 
                         // Expand collapsed fieldsets when editing a mod that has errors in it.
                         var errorElements = $('.form-group.has-danger');
