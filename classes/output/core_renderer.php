@@ -572,7 +572,13 @@ class core_renderer extends \theme_boost\output\core_renderer {
 
         if (!isloggedin() || isguestuser()) {
             // Return login form.
-            $action = s($CFG->wwwroot).'/login/index.php';
+            if (empty($CFG->loginhttps)) {
+                $wwwroot = $CFG->wwwroot;
+            } else {
+                $wwwroot = str_replace("http://", "https://", $CFG->wwwroot);
+            }
+
+            $action = s($wwwroot).'/login/index.php';
             $altlogins = $this->render_login_alternative_methods(new login_alternative_methods());
 
             $logintoken = is_callable(['\\core\\session\\manager', 'get_login_token']) ?
@@ -738,14 +744,9 @@ class core_renderer extends \theme_boost\output\core_renderer {
      *
      */
     public function personal_menu_trigger() {
-        global $CFG, $USER;
+        global $USER;
         $output = '';
         if (!isloggedin() || isguestuser()) {
-            if (empty($CFG->loginhttps)) {
-                $wwwroot = $CFG->wwwroot;
-            } else {
-                $wwwroot = str_replace("http://", "https://", $CFG->wwwroot);
-            }
             if (local::current_url_path() != '/login/index.php') {
                 $output .= $this->login_button();
             }
