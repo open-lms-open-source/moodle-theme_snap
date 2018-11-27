@@ -26,7 +26,7 @@ namespace theme_snap\output\core_course\management;
 
 defined('MOODLE_INTERNAL') || die();
 
-use html_writer;
+use coursecat;
 use course_in_list;
 
 /**
@@ -40,40 +40,17 @@ class renderer extends \theme_boost\output\core_course\management\renderer {
     /**
      * @inheritdoc
      */
-    public function grid_column_start($size, $id = null, $class = null) {
-        $bootstrapclass = 'd-flex flex-wrap px-3 mb-3';
+    public function course_listitem(coursecat $category, course_in_list $course, $selectedcourse) {
+        $html = parent::course_listitem($category, $course, $selectedcourse);
 
-        $yuigridclass = "col-sm";
+        $needle = 'class="float-left coursename" href="';
+        $hrefstart = strpos($html, $needle) + strlen($needle);
+        $hrefclose = strpos($html, '"', $hrefstart);
 
-        if (is_null($class)) {
-            $class = $yuigridclass . ' ' . $bootstrapclass;
-        } else {
-            $class .= ' ' . $yuigridclass . ' ' . $bootstrapclass;
-        }
-        $attributes = array();
-        if (!is_null($id)) {
-            $attributes['id'] = $id;
-        }
-        return html_writer::start_div($class . " grid_column_start", $attributes);
-    }
+        $newurl = substr($html, $hrefstart, $hrefclose - $hrefstart) . '#course-detail-title';
 
-    /**
-     * @inheritdoc
-     */
-    public function course_detail(course_in_list $course) {
-        $details = \core_course\management\helper::get_course_detail_array($course);
-        $fullname = $details['fullname']['value'];
+        $hashedhtml = substr_replace($html, $newurl, $hrefstart, $hrefclose - $hrefstart);
 
-        $html = html_writer::start_div('course-detail card w-100');
-        $html .= html_writer::tag('h3', $fullname, array('id' => 'course-detail-title',
-            'class' => 'card-header', 'tabindex' => '0'));
-        $html .= html_writer::start_div('card-body');
-        $html .= $this->course_detail_actions($course);
-        foreach ($details as $class => $data) {
-            $html .= $this->detail_pair($data['key'], $data['value'], $class);
-        }
-        $html .= html_writer::end_div();
-        $html .= html_writer::end_div();
-        return $html;
+        return $hashedhtml;
     }
 }
