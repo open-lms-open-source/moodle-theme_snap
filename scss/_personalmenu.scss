@@ -393,6 +393,8 @@ body.snap-pm-open {
 //  Personal menu updates.
 // -------------------------
 #snap-pm-updates {
+    width: unset;
+
     section {
         position: relative;
         border-bottom: 1px solid $gray-light;
