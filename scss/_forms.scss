@@ -378,6 +378,10 @@ a[aria-controls="snap-collapse-help"] {
         // Need !important to override the style tag set by JS.
         min-height: 250px !important;
     }
+
+    .form-inline[data-fieldtype="editor"] div:first-child {
+        overflow: scroll;
+    }
 }
 
 .snap-form-advanced {
