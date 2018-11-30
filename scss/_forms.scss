@@ -415,6 +415,10 @@ a[aria-controls="snap-collapse-help"] {
 form.mform {
     &[action*="modedit.php"] {
         clear: both;
+        .form-group.fitem {
+            display: inline-block;
+            padding-top: 2em;
+        }
     }
     legend {
         margin: 0;

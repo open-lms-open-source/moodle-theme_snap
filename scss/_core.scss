@@ -31,7 +31,9 @@ html {
 
 #moodle-page {
     font-size: 1.1rem;
+}
 
+#page-course-edit {
     .mform > .form-group.fitem {
         display: inline-block;
         padding-top: 2em;
@@ -2040,6 +2042,10 @@ ul.events-new + ul.events-underway {
 
 .questioncontainer.random .questioncontentcontainer {
     width: 100%;
+}
+
+#page-question-import .mform .form-inline br + label {
+    width: 95%;
 }
 
 #page-mod-quiz-edit .questioncontentcontainer div.randomquestionqlist {
