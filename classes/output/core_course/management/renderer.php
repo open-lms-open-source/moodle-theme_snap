@@ -41,8 +41,21 @@ class renderer extends \theme_boost\output\core_course\management\renderer {
      * @inheritdoc
      */
     public function course_listitem(coursecat $category, course_in_list $course, $selectedcourse) {
-        $html = parent::course_listitem($category, $course, $selectedcourse);
+        return $this->decorate_link_with_detail_hash(parent::course_listitem($category, $course, $selectedcourse));
+    }
 
+    /**
+     * @inheritdoc
+     */
+    public function search_listitem(course_in_list $course, $selectedcourse) {
+        return $this->decorate_link_with_detail_hash(parent::search_listitem($course, $selectedcourse));
+    }
+
+    /**
+     * @param $html
+     * @return string
+     */
+    private function decorate_link_with_detail_hash(string $html) : string {
         $needle = 'class="float-left coursename" href="';
         $hrefstart = strpos($html, $needle) + strlen($needle);
         $hrefclose = strpos($html, '"', $hrefstart);
