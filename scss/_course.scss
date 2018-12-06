@@ -1451,7 +1451,7 @@ form.togglecompletion {
 
 .modtype_page, .modtype_label, .modtype_book {
     .snap-asset-actions {
-        bottom: 20px;
+        bottom: 0px;
     }
 }
 
@@ -2066,3 +2066,9 @@ body.path-course-index {
         margin: 15px;
     }
 }
+
+//Bootstrap Pooper.js flip temporal fix
+.dropdown.snap-edit-more-dropdown .dropdown-menu.show {
+    display:table;
+}
+
