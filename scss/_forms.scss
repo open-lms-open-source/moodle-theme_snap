@@ -379,7 +379,7 @@ a[aria-controls="snap-collapse-help"] {
         min-height: 250px !important;
     }
 
-    .form-inline[data-fieldtype="editor"] div:first-child {
+    .form-inline[data-fieldtype="editor"] {
         overflow: scroll;
     }
 }
