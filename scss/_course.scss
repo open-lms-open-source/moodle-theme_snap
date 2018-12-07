@@ -2067,8 +2067,7 @@ body.path-course-index {
     }
 }
 
-//Bootstrap Pooper.js flip temporal fix
+// Fix options lenght in menu.
 .dropdown.snap-edit-more-dropdown .dropdown-menu.show {
-    display:table;
+    display: table;
 }
-
