@@ -214,6 +214,12 @@
             min-height: 100px;
         }
 
+        .assign-intro {
+            max-width: 100%;
+            padding-bottom: 2em;
+            word-wrap: break-word
+        }
+
         .groupselector,
         .assign-grading-summary,
         .assign-submission-data {
@@ -228,7 +234,9 @@
             }
         }
         .assign-grading-summary,
-        .assign-submission-data {
+        .assign-submission-data,
+        .groupselector {
+            margin-top: 0;
             margin-left: 1em;
             width: calc(33.33% - 1em);
         }
