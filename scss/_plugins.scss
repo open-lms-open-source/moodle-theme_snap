@@ -386,17 +386,29 @@
     }
 }
 
-.path-blocks-conduit .widgets {
-    white-space: normal;
-
-    input {
-        display: block;
-        margin: 8px 0 0 5px;
+.path-blocks-conduit {
+    .yui-dt table td {
+        vertical-align: middle;
+        &.yui-dt-col-action {
+            padding-right: 0;
+            padding-left: 0;
+            a {
+                margin-right: 0;
+                margin-left: 0.1em;
+                i {
+                    margin-right: 0;
+                }
+            }
+        }
     }
 
-    a {
-        display: block;
-        margin-top: -1.5em;
+    .widgets {
+        white-space: normal;
+
+        input {
+            display: inline-block;
+            margin: 8px 0 0 5px;
+        }
     }
 }
 

@@ -13055,17 +13055,7 @@ fieldset[disabled] #id_cancel:focus {
     display: block;
 }
 
-.path-blocks-conduit .widgets {
-    white-space: normal;
-}
-
-.path-blocks-conduit .widgets input {
-    display: block;
-    margin: 8px 0 0 5px;
-}
-
 .path-blocks-conduit .widgets a {
-    display: block;
     margin-top: -1.5em;
 }
 
