@@ -93,7 +93,7 @@ Feature: When the moodle theme is set to Snap, ajax failures due to log outs / e
     Given I log in as "teacher"
     And I am on the course main page for "C1"
     When I follow "Topic 1"
-    And I click on ".snap-activity[data-type='Assignment'] a.snap-edit-asset-more" "css_element"
+    And I click on ".snap-activity[data-type='Assignment'] span.snap-edit-asset-more" "css_element"
     And I log out via a separate window
     When I click on ".snap-activity[data-type='Assignment'] a.js_snap_hide" "css_element"
     Then I should see "You are logged out"
@@ -101,7 +101,7 @@ Feature: When the moodle theme is set to Snap, ajax failures due to log outs / e
     Given I log in as "teacher"
     And I am on the course main page for "C1"
     When I follow "Topic 1"
-    And I click on ".snap-activity[data-type='Assignment'] a.snap-edit-asset-more" "css_element"
+    And I click on ".snap-activity[data-type='Assignment'] span.snap-edit-asset-more" "css_element"
     And I log out via a separate window
     When I click on ".snap-activity[data-type='Assignment'] a.js_snap_duplicate" "css_element"
     Then I should see "You are logged out"

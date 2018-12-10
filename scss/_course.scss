@@ -1451,7 +1451,7 @@ form.togglecompletion {
 
 .modtype_page, .modtype_label, .modtype_book {
     .snap-asset-actions {
-        bottom: 20px;
+        bottom: 0px;
     }
 }
 
@@ -2065,4 +2065,9 @@ body.path-course-index {
     .course_category_tree {
         margin: 15px;
     }
+}
+
+// Fix options lenght in menu.
+.dropdown.snap-edit-more-dropdown .dropdown-menu.show {
+    display: table;
 }
