@@ -231,9 +231,9 @@ $string['pld'] = 'PLD';
 $string['pluginname'] = 'Ajusta';
 $string['poster'] = 'Imatge de portada';
 $string['posterdesc'] = 'Una imatge de capçalera gran per a la pàgina principal del vostre lloc. Les imatges en format horitzontal de 1200 x 600 píxels o més van millor.';
-$string['poweredbyrunby'] = 'Creat amb <a href="http://www.blackboard.com/" target="_blank">Blackboard Open LMS</a>,
-     <a href="http://www.moodle.com/" target="_blank">Moodle</a>-based product.<br>
-    Copyright&#169; 2017 Blackboard Inc, Tots els drets reservats.';
+$string['poweredbyrunby'] = 'Creat amb <a href="https://www.blackboard.com/blackboard-open-lms" target="_blank">Blackboard Open LMS</a>,
+     <a href="https://moodle.com/" target="_blank">Moodle</a>-based product.<br>
+    Copyright &#169; {$a} Blackboard Inc, Tots els drets reservats.';
 $string['previoussection'] = 'Secció anterior';
 $string['problemsfound'] = 'S’han trobat problemes';
 $string['progress'] = 'Progrés';

@@ -231,9 +231,9 @@ $string['pld'] = 'PLD';
 $string['pluginname'] = 'محاذاة';
 $string['poster'] = 'صورة الغلاف';
 $string['posterdesc'] = 'صورة رأس كبيرة لصفحة موقعك الأمامية. تعمل الصور الأفقية بحجم (1200 × 600 بكسل) أو الأكبر حجمًا بشكل أفضل.';
-$string['poweredbyrunby'] = 'مدمج مع <a href="http://www.blackboard.com/" target="_blank">Blackboard Open LMS</a>،
-     والمنتج القائم على <a href="http://www.moodle.com/" target="_blank">Moodle</a>.<br>
-    Copyright &#169; 2017 Blackboard Inc، جميع الحقوق محفوظة.';
+$string['poweredbyrunby'] = 'مدمج مع <a href="https://www.blackboard.com/blackboard-open-lms" target="_blank">Blackboard Open LMS</a>،
+     والمنتج القائم على <a href="https://moodle.com/" target="_blank">Moodle</a>.<br>
+    Copyright &#169; {$a} Blackboard Inc، جميع الحقوق محفوظة.';
 $string['previoussection'] = 'القسم السابق';
 $string['problemsfound'] = 'تم العثور على مشكلات';
 $string['progress'] = 'التقدم';

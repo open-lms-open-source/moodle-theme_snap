@@ -231,8 +231,8 @@ $string['pld'] = 'PLD';
 $string['pluginname'] = 'Snap';
 $string['poster'] = 'カバーイメージ';
 $string['posterdesc'] = 'サイトのフロントページ用の大きいヘッダイメージです。横向きイメージ (1200 x 600ピクセル) 以上が最適です。';
-$string['poweredbyrunby'] = '<a href="http://www.blackboard.com/" target="_blank">Blackboard Open LMS</a> (<a href="http://www.moodle.com/" target="_blank">Moodle</a>ベースの製品。<br>
-    Copyright &#169; 2017 Blackboard Inc, All Rights Reserved.';
+$string['poweredbyrunby'] = '<a href="https://www.blackboard.com/blackboard-open-lms" target="_blank">Blackboard Open LMS</a> (<a href="https://moodle.com/" target="_blank">Moodle</a>ベースの製品。<br>
+    Copyright &#169; {$a} Blackboard Inc, All Rights Reserved.';
 $string['previoussection'] = '前のセクション';
 $string['problemsfound'] = '問題が見つかりました。';
 $string['progress'] = '進捗';

@@ -231,7 +231,7 @@ $string['pld'] = 'PLD';
 $string['pluginname'] = 'Snap';
 $string['poster'] = 'Imagem de capa';
 $string['posterdesc'] = 'Uma imagem de cabeçalho grande para a página inicial do seu site. Imagens de paisagem (1200 x 600 pixels) ou maiores funcionam melhor.';
-$string['poweredbyrunby'] = 'Criado com o <a href="http://www.blackboard.com/" target="_blank">Blackboard Open LMS</a>, produto baseado em <a href="http://www.moodle.com/" target="_blank">Moodle</a>.<br>                                                                                                                                            Copyright &#169; 2017 Blackboard Inc. Todos os direitos reservados.';
+$string['poweredbyrunby'] = 'Criado com o <a href="https://www.blackboard.com/blackboard-open-lms" target="_blank">Blackboard Open LMS</a>, produto baseado em <a href="https://moodle.com/" target="_blank">Moodle</a>.<br>                                                                                                                                            Copyright &#169; {$a} Blackboard Inc. Todos os direitos reservados.';
 $string['previoussection'] = 'Seção anterior';
 $string['problemsfound'] = 'Problemas encontrados';
 $string['progress'] = 'Progresso';
