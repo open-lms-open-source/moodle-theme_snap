@@ -342,6 +342,7 @@ class course_renderer extends \core_course_renderer {
         // Hide/Show.
         // Not output for stealth activites.
         if (has_capability('moodle/course:activityvisibility', $modcontext) && !$mod->is_stealth()) {
+            $actions .= '<input class="sr-only" type="checkbox">';
             $hideaction = '<a href="'.new moodle_url($baseurl, array('hide' => $mod->id));
             $hideaction .= '" data-action="hide" class="dropdown-item editing_hide js_snap_hide">'.$str->hide.'</a>';
             $actionsadvanced[] = $hideaction;
