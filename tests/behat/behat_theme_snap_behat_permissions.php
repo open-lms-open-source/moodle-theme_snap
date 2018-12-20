@@ -81,4 +81,21 @@ class behat_theme_snap_behat_permissions extends behat_permissions {
         }
         $systemcontext->mark_dirty();
     }
+
+    /**
+     * @Given /^I set capability "(?P<capability_string>(?:[^"]|\\")*)" for students in the course$/
+     * Sets a specific capability for a student inside a course.
+     * @param string $capability
+     */
+    public function i_set_activityvisibility_capability_to_student ($capability) {
+        global $DB;
+
+        $DB->insert_record('role_capabilities', array(
+            'contextid' => 1,
+            'roleid' => 5,
+            'capability' => $capability,
+            'permission' => 1,
+            'timemodified' => time(),
+            'modifierid' => 0));
+    }
 }
