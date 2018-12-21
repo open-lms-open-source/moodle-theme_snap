@@ -122,10 +122,3 @@ Feature: When the moodle theme is set to Snap, sets a color per category.
     # And I am on the course with shortname "C2"
     And I am on the course main page for "C2"
     And I check element "a" with color "#00FF00"
-
-
-
-
-
-
-
