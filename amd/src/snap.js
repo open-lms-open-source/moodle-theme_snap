@@ -25,9 +25,9 @@
 /**
  * Main snap initialising function.
  */
-define(['jquery', 'core/log', 'theme_snap/headroom', 'theme_snap/util', 'theme_snap/personal_menu',
+define(['jquery', 'core/ajax', 'core/log', 'theme_snap/headroom', 'theme_snap/util', 'theme_snap/personal_menu',
         'theme_snap/cover_image', 'theme_snap/progressbar', 'core/templates', 'core/str'],
-    function($, log, Headroom, util, personalMenu, coverImage, ProgressBar, templates, str) {
+    function($, ajax, log, Headroom, util, personalMenu, coverImage, ProgressBar, templates, str) {
 
         'use strict';
 
@@ -857,6 +857,20 @@ define(['jquery', 'core/log', 'theme_snap/headroom', 'theme_snap/util', 'theme_s
                     if (window.location.hash === '#course-detail-title') {
                         $('#mr-nav').removeClass('headroom--pinned').addClass('headroom--unpinned');
                     }
+
+                    // Make a reload of the page after hiding an activity.
+                    $('.dropdown-item.editing_hide.js_snap_hide').click(function(e) {
+                        e.stopPropagation();
+                        $.ajax({
+                            type: "GET",
+                            success: function(data) {
+                                if (data.error) {
+                                    return;
+                                }
+                                $(document).ajaxStop(function() { location.reload(true); });
+                            }
+                        });
+                    });
 
                     waitForFullScreenButton();
                 });

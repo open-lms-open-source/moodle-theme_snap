@@ -53,6 +53,22 @@ Feature: When theme is set to Snap, and course:activityvisibility is set for stu
     Then I should see "Hide"
 
   @javascript
+  Scenario: Student should not see the activity after hiding it
+
+    When I log in as "admin"
+    And I am on "Course 1" course homepage
+    And I set capability "moodle/course:activityvisibility" for students in the course
+    And I log out
+
+    Given I log in as "student1"
+    And I am on "Course 1" course homepage
+    And I click on ".snap-activity[data-type='Assignment'] span.snap-edit-asset-more" "css_element"
+    When I click on ".snap-activity[data-type='Assignment'] a.js_snap_hide" "css_element"
+    And I wait "10" seconds
+    And I wait until the page is ready
+    And ".snap-activity[data-type='Assignment'] span.snap-edit-asset-more" "css_element" should not exist
+
+  @javascript
   Scenario: Student should not be able to hide an activity if the course doesn't have course:activityvisibility for students
 
     Given I log in as "student1"
