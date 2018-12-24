@@ -32,7 +32,6 @@ Feature: When the moodle theme is set to Snap, ajax failures due to log outs / e
 
   @javascript
   Scenario: Logged in user get's login status warning when logged out if personal menu is opened.
-    And I skip because "This scenario randomly fails, it is going to be addressed in a separated ticket"
     Given I log in as "teacher"
     And I am on site homepage
     And I log out via a separate window
@@ -43,7 +42,6 @@ Feature: When the moodle theme is set to Snap, ajax failures due to log outs / e
 
   @javascript
   Scenario: Teacher get's login status warning when trying to manage sections if logged out.
-    And I skip because "This scenario randomly fails, it is going to be addressed in a separated ticket"
     Given the following "courses" exist:
       | fullname | shortname | category | format |
       | Course 1 | C1        | 0        | topics |
@@ -57,7 +55,7 @@ Feature: When the moodle theme is set to Snap, ajax failures due to log outs / e
     Then "#section-2" "css_element" should exist
     And I log out via a separate window
     When I click on "#section-2 .snap-visibility.snap-hide" "css_element"
-    Then I should see "You are logged out"
+    Then "body#page-login-index" "css_element" should exist
     # Test logout msg when highlighting section
     And I log in as "teacher"
     And I am on the course main page for "C1"
@@ -65,7 +63,7 @@ Feature: When the moodle theme is set to Snap, ajax failures due to log outs / e
     Then "#section-2" "css_element" should exist
     And I log out via a separate window
     And I click on "#section-2 .snap-highlight" "css_element"
-    Then I should see "You are logged out"
+    Then "body#page-login-index" "css_element" should exist
     # Test logout msg when moving section
     And I log in as "teacher"
     And I am on the course main page for "C1"
@@ -79,7 +77,6 @@ Feature: When the moodle theme is set to Snap, ajax failures due to log outs / e
 
   @javascript
   Scenario: Teacher get's login status warning when trying to manage assets if logged out.
-    And I skip because "This scenario randomly fails, it is going to be addressed in a separated ticket"
     Given the following "courses" exist:
       | fullname | shortname | category | format |
       | Course 1 | C1        | 0        | topics |
@@ -96,15 +93,16 @@ Feature: When the moodle theme is set to Snap, ajax failures due to log outs / e
     And I click on ".snap-activity[data-type='Assignment'] span.snap-edit-asset-more" "css_element"
     And I log out via a separate window
     When I click on ".snap-activity[data-type='Assignment'] a.js_snap_hide" "css_element"
-    Then I should see "You are logged out"
+    And I wait until the page is ready
     # Test logout msg when attempting to duplicate asset
     Given I log in as "teacher"
     And I am on the course main page for "C1"
     When I follow "Topic 1"
     And I click on ".snap-activity[data-type='Assignment'] span.snap-edit-asset-more" "css_element"
     And I log out via a separate window
+    And I wait until the page is ready
     When I click on ".snap-activity[data-type='Assignment'] a.js_snap_duplicate" "css_element"
-    Then I should see "You are logged out"
+    Then "body#page-login-index" "css_element" should exist
     # Test logout msg when attempting to move asset
     Given I log in as "teacher"
     And I am on the course main page for "C1"
