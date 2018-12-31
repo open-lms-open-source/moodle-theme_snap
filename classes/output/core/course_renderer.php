@@ -134,6 +134,9 @@ class course_renderer extends \core_course_renderer {
             if (has_capability('moodle/course:update', $mod->context)) {
                 $modclasses [] = 'snap-can-edit';
             }
+            if (has_capability('moodle/course:viewhiddenactivities', $mod->context)) {
+                $modclasses [] = 'snap-can-view-hidden';
+            }
 
             $modclasses [] = 'snap-asset'; // Added to stop conflicts in flexpage.
             $modclasses [] = 'activity'; // Moodle needs this for drag n drop.
