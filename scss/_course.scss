@@ -576,6 +576,10 @@ li.section:focus {
         padding-bottom: 2em !important;
     }
 
+    &.draft:not(.snap-can-view-hidden) {
+        display: none;
+    }
+
     .asset-wrapper {
         height: auto;
         overflow-x: hidden;
@@ -1046,7 +1050,7 @@ body.snap-resource-card li.snap-resource {
     .asset-wrapper {
         @include clearfix;
     }
-    
+
     &:not(.modtype_label) .asset-wrapper {
         cursor: pointer;
     }

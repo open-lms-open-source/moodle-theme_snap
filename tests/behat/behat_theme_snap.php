@@ -67,6 +67,18 @@ class behat_theme_snap extends behat_base {
         $this->ensure_element_is_visible($element, $selectortype);
     }
 
+    /**
+     * Waits until the provided element selector is not visible.
+     *
+     * @Given /^I wait until "(?P<element_string>(?:[^"]|\\")*)" "(?P<selector_string>[^"]*)" is not visible$/
+     * @param string $element
+     * @param string $selectortype
+     * @return void
+     */
+    public function i_wait_until_not_visible($element, $selectortype) {
+        $this->ensure_element_not_visible($element, $selectortype);
+    }
+
     protected function upload_file($fixturefilename, $selector) {
         global $CFG;
         $fixturefilename = clean_param($fixturefilename, PARAM_FILE);
