@@ -698,11 +698,6 @@ a.yui3-button,
     @include bg-cover;
 }
 
-#page-header {
-    overflow: hidden;
-    min-height: 250px;
-}
-
 .snap-media-object {
     @include clearfix;
     font-weight: 500;
@@ -1323,7 +1318,7 @@ header#page-header
     }
 
     .carousel-indicators {
-        bottom: -50px;
+        bottom: -30px;
         transform: scale(1.3);
 
         li {
