@@ -1420,7 +1420,7 @@ class activity {
         $tmparr = [];
         foreach ($events as $event) {
             if ($event->timestart >= $todayts) {
-                if ($event->eventtype != 'close' && $event->eventtype != 'due') {
+                if ($event->eventtype != 'close' && $event->eventtype != 'due' && $event->eventtype != 'expectcompletionon') {
                     continue;
                 }
 

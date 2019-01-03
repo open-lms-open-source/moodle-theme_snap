@@ -37,6 +37,7 @@ class activity_retrieval_strategy extends \core_calendar\local\event\strategies\
     /**
      * Tweaks to core function - only get module level events, only get due, closing and opening events.
      * Also override assignment duedate with extension when present.
+     * UPDATE: get also expectcompletionon events
      *
      * @param array|int|boolean $users array of users, user id or boolean for all/no user events
      * @param array|int|boolean $groups array of groups, group id or boolean for all/no group events
@@ -270,7 +271,8 @@ class activity_retrieval_strategy extends \core_calendar\local\event\strategies\
 
                  WHERE ((m.visible = 1 OR m.visible IS NULL)
                    AND (e.modulename IS NOT NULL)
-                   AND (e.eventtype = 'open' OR e.eventtype = 'close' OR e.eventtype = 'due'))
+                   AND (e.eventtype = 'open' OR e.eventtype = 'close' OR e.eventtype = 'due'
+                    OR e.eventtype = 'expectcompletionon'))
                    AND
                  $whereclause
               ORDER BY " . ($ordersql ? $ordersql : "e.timestart");

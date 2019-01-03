@@ -28,9 +28,10 @@ Feature: When the moodle theme is set to Snap, students and teachers can find in
     Given the following config values are set as admin:
       | allowcoursethemes | 1 |
     And the following "courses" exist:
-      | fullname | shortname | category | groupmode | theme |
-      | Course 1 | C1 | 0 | 1 | |
-      | Course 2 | C2 | 0 | 1 | snap |
+      | fullname | shortname | category | groupmode | theme | enablecompletion |
+      | Course 1 | C1        | 0        | 1         |       | 0                 |
+      | Course 2 | C2        | 0        | 1         | snap  | 1                 |
+
     And the following "users" exist:
       | username | firstname | lastname | email |
       | teacher1 | Teacher | 1 | teacher1@example.com |
@@ -39,6 +40,7 @@ Feature: When the moodle theme is set to Snap, students and teachers can find in
     And the following "course enrolments" exist:
       | user | course | role |
       | teacher1 | C1 | editingteacher |
+      | teacher1 | C2 | editingteacher |
       | student1 | C1 | student |
       | student1 | C2 | student |
       | student2 | C2 | student |
@@ -127,3 +129,43 @@ Feature: When the moodle theme is set to Snap, students and teachers can find in
     And I do not see a personal menu deadline of "##next week##" for "Test assignment1"
     And I see a personal menu deadline of "##tomorrow##" for "Test assignment2"
 
+  @javascript
+  Scenario: Expected completed on activities that do not have due date are shown on deadlines
+    Given the following "activities" exist:
+      | activity    | name          | intro                       | course | idnumber   | section | completionexpected | duedate |
+      | assign      | Assignment 1  | Test assign description 1   | C2     | assign1    | 0       | ##tomorrow##       | ##next week## |
+      | forum       | Forum 1       | Test forum description      | C2     | forum1     | 0       | ##tomorrow##       |               |
+      | quiz        | Quiz 1        | Test quiz description       | C2     | quiz1      | 0       | ##tomorrow##       |               |
+    And I log in as "teacher1"
+    And I am on "Course 2" course homepage with editing mode on
+    # Set completion for Assignment 1.
+    Then I follow "Edit \"Assignment 1\""
+    And I expand all fieldsets
+    And I set the following fields to these values:
+      | Completion tracking | Show activity as complete when conditions are met |
+      | id_completionview   | 1                                                 |
+      | id_completionexpected_enabled | 1 |
+    And I press "Save and return to course"
+    # Set completion for Forum 1.
+    And I follow "Edit \"Forum 1\""
+    And I expand all fieldsets
+    And I set the following fields to these values:
+      | Completion tracking | Show activity as complete when conditions are met |
+      | completionpostsenabled    | 1 |
+      | id_completionexpected_enabled | 1 |
+    And I press "Save and return to course"
+    # Set completion for Quiz 1.
+    Then I follow "Edit \"Quiz 1\""
+    And I expand all fieldsets
+    And I set the following fields to these values:
+      | Completion tracking | Show activity as complete when conditions are met |
+      | id_completionview   | 1                                                 |
+      | id_completionexpected_enabled | 1 |
+    And I press "Save and return to course"
+    And I log out
+    Given I log in as "student2"
+    And I open the personal menu
+    And I see a personal menu deadline of "##tomorrow##" for "Assignment 1"
+    And I see a personal menu deadline of "##next week##" for "Assignment 1"
+    And I see a personal menu deadline of "##tomorrow##" for "Forum 1"
+    And I see a personal menu deadline of "##tomorrow##" for "Quiz 1"
