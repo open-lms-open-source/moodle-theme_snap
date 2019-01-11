@@ -3762,3 +3762,12 @@ section#region-main {
 #id_error_newpassword {
     color: #d9534f;
 }
+
+.activity-navigation {
+    .pull-right,
+    .pull-left {
+        a {
+            white-space: inherit;
+        }
+    }
+}
