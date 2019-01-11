@@ -543,19 +543,47 @@ class local {
      * @return int number of enrolled users.
      */
     public static function count_enrolled_users(\context $context, $withcapability = '', $groupid = 0, $onlyactive = false) {
-        global $DB;
+        global $DB, $USER;
 
         $capjoin = get_enrolled_with_capabilities_join(
             $context, '', $withcapability, $groupid, $onlyactive);
 
+        $sqlgroupsjoin = '';
+        $sqlgroupswhere = '';
+        $params = array();
+
+        $course = get_course($context->instanceid);
+        $groupmode = groups_get_course_groupmode($course);
+
+        if ($groupmode == SEPARATEGROUPS and !has_capability('moodle/site:accessallgroups', $context)) {
+            $params['userid'] = $USER->id;
+            $params['courseid2'] = $course->id;
+
+            $sqlgroupsjoin = "
+                     JOIN {groups_members} gm
+                       ON gm.userid = u.id
+                     JOIN {groups} g
+                       ON gm.groupid = g.id";
+            $sqlgroupswhere = "
+                      AND gm.groupid
+                       IN (SELECT g.id
+                     FROM {groups} g
+                     JOIN {groups_members} gm ON gm.groupid = g.id
+                    WHERE g.courseid = :courseid2
+                      AND gm.userid = :userid)";
+        }
+
         $sql = "SELECT COUNT(*)
                   FROM (SELECT DISTINCT u.id
                           FROM {user} u
+                               $sqlgroupsjoin
                                $capjoin->joins
-                         WHERE $capjoin->wheres AND u.deleted = 0) as uids
+                         WHERE $capjoin->wheres
+                               $sqlgroupswhere
+                           AND u.deleted = 0) as uids
                 ";
 
-        return $DB->count_records_sql($sql, $capjoin->params);
+        return $DB->count_records_sql($sql, array_merge($capjoin->params, $params));
     }
 
     /**

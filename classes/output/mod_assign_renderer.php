@@ -287,7 +287,8 @@ class mod_assign_renderer extends \mod_assign_renderer {
         // Status.
         // Add a tick if submitted.
         $tick = '';
-        if ($status->submission->status === 'submitted') {
+        if (is_object($status->submission) && property_exists($status->submission, 'status')
+                && $status->submission->status === 'submitted') {
             $tick = '<i class="icon fa fa-check text-success fa-fw " aria-hidden="true" role="presentation"></i>';
         }
         $statusdata .= '<div>'.$tick.'<strong>'
