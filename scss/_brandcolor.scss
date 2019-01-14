@@ -255,6 +255,14 @@ $lighter-grey-btn: #e6e6e6;
             outline: 3px auto $brand-primary;
         }
 
+        .paging.paging-morelink {
+            a:hover,
+            a:focus,
+            a:active {
+                color: #fff !important;
+            }
+            padding-top: 2em;
+        }
     }
 
     .btn.btn-secondary {
