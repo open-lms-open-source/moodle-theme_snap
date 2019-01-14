@@ -313,6 +313,8 @@ class activity {
             list($esql, $params) = get_enrolled_sql(\context_course::instance($courseid), 'mod/assign:submit', 0, true);
             $params['courseid'] = $courseid;
 
+            list($sqlgroupsjoin, $sqlgroupswhere, $groupparams) = self::get_groups_sql($courseid);
+
             $sql = "-- Snap sql
                     SELECT cm.id AS coursemoduleid, a.id AS instanceid, a.course,
                            a.allowsubmissionsfromdate AS opentime, a.duedate AS closetime,
@@ -351,6 +353,7 @@ class activity {
                  LEFT JOIN {grade_grades} gg
                         ON gg.itemid = gi.id
                        AND gg.userid = sb.userid
+                       $sqlgroupsjoin
 
 -- End of join required to make assignments classed as graded when done via gradebook
 
@@ -363,9 +366,10 @@ class activity {
                        )
 
                        AND (a.duedate = 0 OR a.duedate > $since)
+                       $sqlgroupswhere
                  $gradetypelimit
                  GROUP BY instanceid, a.course, opentime, closetime, coursemoduleid ORDER BY a.duedate ASC";
-            $rs = $DB->get_records_sql($sql, $params);
+            $rs = $DB->get_records_sql($sql, array_merge($params, $groupparams));
             $ungraded = array_merge($ungraded, $rs);
         }
 
@@ -603,6 +607,8 @@ class activity {
             $params['courseid'] = $courseid;
             $params['submitted'] = ASSIGN_SUBMISSION_STATUS_SUBMITTED;
 
+            list($sqlgroupsjoin, $sqlgroupswhere, $groupparams) = self::get_groups_sql($courseid);
+
             // Get the number of submissions for all assign activities in this course.
             $sql = "-- Snap sql
                 SELECT m.id, COUNT(sb.userid) as totalsubmitted
@@ -613,11 +619,13 @@ class activity {
 
                   JOIN ($esql) e
                     ON e.id = sb.userid
+                       $sqlgroupsjoin
 
                  WHERE m.course = :courseid
                        AND sb.status = :submitted
+                       $sqlgroupswhere
                  GROUP by m.id";
-            $modtotalsbyid['assign'][$courseid] = $DB->get_records_sql($sql, $params);
+            $modtotalsbyid['assign'][$courseid] = $DB->get_records_sql($sql, array_merge($params, $groupparams));
         }
         $totalsbyid = $modtotalsbyid['assign'][$courseid];
 
@@ -1443,6 +1451,42 @@ class activity {
         $USER = $origuser;
 
         return $eventsobj;
+    }
+
+    /**
+     * Returns the join and where statements required to validate the assignment submissions by groups on a course.
+     * @param integer $courseid
+     * @return array
+     */
+    private static function get_groups_sql($courseid) {
+        global $USER;
+
+        $sqlgroupsjoin = '';
+        $sqlgroupswhere = '';
+        $groupparams = array();
+
+        $course = get_course($courseid);
+        $groupmode = groups_get_course_groupmode($course);
+        $context = \context_course::instance($courseid);
+
+        if ($groupmode == SEPARATEGROUPS and !has_capability('moodle/site:accessallgroups', $context)) {
+            $groupparams['userid'] = $USER->id;
+            $groupparams['courseid2'] = $courseid;
+
+            $sqlgroupsjoin = "
+                    JOIN {groups_members} gm
+                      ON gm.userid = sb.userid
+                    JOIN {groups} g
+                      ON gm.groupid = g.id";
+            $sqlgroupswhere = "
+                     AND gm.groupid
+                      IN (SELECT g.id
+                    FROM {groups} g
+                    JOIN {groups_members} gm ON gm.groupid = g.id
+                   WHERE g.courseid = :courseid2
+                     AND gm.userid = :userid)";
+        }
+        return array($sqlgroupsjoin, $sqlgroupswhere, $groupparams);
     }
 
 }

@@ -195,3 +195,107 @@ Feature: When the moodle theme is set to Snap, students and teachers can open a 
       And I open the personal menu
       And I wait until "#snap-personal-menu-grading[data-content-loaded=\"1\"]" "css_element" is visible
       Then I should see "1 of 1 Submitted, 1 Ungraded"
+
+    @javascript
+    Scenario: Grading in the personal menu should show the correct information depending of teachers group capabilities.
+     When I log in as "admin"
+      And I close the personal menu
+      And I navigate to "Define roles" node in "Site administration > Users > Permissions"
+      And I follow "Non-editing teacher"
+      And I set the following system permissions of "Teacher" role:
+        | capability                                   | permission |
+        | moodle/site:accessallgroups                  | Prevent    |
+        | moodle/course:viewhiddenactivities           | Prevent    |
+        | moodle/course:ignoreavailabilityrestrictions | Prevent    |
+      And I log out
+      And I log in as "teacher1"
+      And I am on "Course 1" course homepage with editing mode on
+
+    Given the following "users" exist:
+        | username | firstname | lastname | email                |
+        | student2 | Student   | 2        | student2@example.com |
+      And the following "course enrolments" exist:
+        | user     | course | role           |
+        | student2 | C1     | student        |
+      And the following "groups" exist:
+        | name     | course | idnumber |
+        | G1       | C1     | GI1      |
+        | G2       | C1     | GI2      |
+      And the following "group members" exist:
+        | user     | group |
+        | student1 | GI1   |
+        | student2 | GI2   |
+        | teacher2 | GI1   |
+        | teacher3 | GI2   |
+
+      # Create assignment 1.
+      And I add a "Assignment" to section "1" and I fill the form with:
+        | Assignment name           | A1   |
+        | Description               | x    |
+        | Online text               | 1    |
+        | Group mode                | 1    |
+        | Students submit in groups | Yes  |
+      And I should see "A1"
+      And I log out
+
+      # Login as student from group 1 to submit an assignment.
+      And I log in as "student1"
+      And I open the personal menu
+      And I am on "Course 1" course homepage
+      And I follow "Topic 1"
+      And I should see "A1"
+      And I follow "Not Submitted"
+     When I follow "Add submission"
+      And I set the following fields to these values:
+        | Online text | I'm the student1 submission |
+      And I press "Save changes"
+      And I log out
+
+      And I log in as "teacher2"
+      And I open the personal menu
+      And I wait until "#snap-personal-menu-grading[data-content-loaded=\"1\"]" "css_element" is visible
+     Then I should see "1 of 1 Submitted, 1 Ungraded"
+      And I log out
+
+      And I log in as "teacher3"
+      And I open the personal menu
+      And I wait until "#snap-personal-menu-grading[data-content-loaded=\"1\"]" "css_element" is visible
+      Then I should see "You have no submissions to grade."
+      And I log out
+
+      And I log in as "teacher1"
+      And I open the personal menu
+      And I wait until "#snap-personal-menu-grading[data-content-loaded=\"1\"]" "css_element" is visible
+     Then I should see "1 of 2 Submitted, 1 Ungraded"
+      And I log out
+
+      #Log as student from group 2 to submit an assignment.
+      And I log in as "student2"
+      And I open the personal menu
+      And I am on "Course 1" course homepage
+      And I follow "Topic 1"
+      And I should see "A1"
+      And I follow "Not Submitted"
+     When I follow "Add submission"
+      And I set the following fields to these values:
+        | Online text | I'm the student2 submission |
+      And I press "Save changes"
+      And I log out
+
+      And I log in as "teacher2"
+      And I open the personal menu
+      And I wait until "#snap-personal-menu-grading[data-content-loaded=\"1\"]" "css_element" is visible
+     Then I should see "1 of 1 Submitted, 1 Ungraded"
+      And I log out
+
+      And I log in as "teacher3"
+      And I open the personal menu
+      And I wait until "#snap-personal-menu-grading[data-content-loaded=\"1\"]" "css_element" is visible
+     Then I should see "1 of 1 Submitted, 1 Ungraded"
+      And I log out
+
+      And I log in as "teacher1"
+      And I open the personal menu
+      And I wait until "#snap-personal-menu-grading[data-content-loaded=\"1\"]" "css_element" is visible
+     Then I should see "2 of 2 Submitted, 2 Ungraded"
+      And I log out
