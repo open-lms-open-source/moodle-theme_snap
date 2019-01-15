@@ -3771,3 +3771,36 @@ section#region-main {
         }
     }
 }
+
+#page-admin-tool-task-schedule_task section#region-main {
+  max-width: 100% !important;
+}
+
+// Readjust restriction block position when adding a new activity.
+.snap-form-advanced.col-md-4 {
+  .availability-field.fcontainer {
+    overflow: scroll;
+  }
+  .availability-inner .availability-group.form-group {
+    display: inline-grid;
+  }
+  .availability-inner .availability-item.d-sm-flex.align-items-center {
+    .availability-eye.col-form-label {
+      display: contents;
+    }
+    .d-inline-block.col-form-label.availability-delete.p-x-1 {
+      display: contents !important;
+    }
+    .form-inline.availability_completion.availability-plugincontrols,
+    .availability_date.availability-plugincontrols,
+    .d-inline-block.form-inline.availability_grade.availability-plugincontrols,
+    .form-inline.availability_group.availability-plugincontrols,
+    .form-inline.availability_profile.availability-plugincontrols,
+    .availability_releasecode.availability-plugincontrols {
+      margin-right: 0.5em;
+    }
+    span.label.label-warning {
+      margin-left: 0.5em;
+    }
+  }
+}

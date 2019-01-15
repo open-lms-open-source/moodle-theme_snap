@@ -97,6 +97,10 @@ div[data-fieldtype=filemanager] > p:nth-of-type(1) {
     margin-top: 10px;
 }
 
+#page-badges-newbadge .dndupload-arrow {
+    cursor: default;
+}
+
 .filepicker-filelist .filepicker-container,
 .filemanager .filemanager-container .fm-empty-container,
 .filemanager-container.dndupload-over .dndupload-target,
