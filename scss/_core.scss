@@ -3804,3 +3804,19 @@ section#region-main {
     }
   }
 }
+
+// Modify Snap resources cards content and title to have a scrollbar on it.
+body.snap-resource-card li.snap-resource {
+    height: 16.3em;
+    .asset-wrapper {
+        max-height: 9em;
+        overflow-y: hidden;
+        &:hover {
+            overflow-y: scroll;
+        }
+        .activityinstance {
+            width: 10em;
+            text-align: justify;
+        }
+    }
+}

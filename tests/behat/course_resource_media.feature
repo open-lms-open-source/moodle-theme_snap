@@ -74,7 +74,7 @@ Feature: When the moodle theme is set to Snap, clicking on a resource with a med
       | Description                                    | Description text for MP3 file |
       | showdescription                                | 1                   |
     And I click on "#id_submitbutton2" "css_element"
-    And I click on ".snap-extended-resource[data-type='mp3'] .snap-asset-link a" "css_element"
+    And I click on ".snap-resource[data-type='mp3'] .snap-asset-link a" "css_element"
     And I wait until "#snap-light-box" "css_element" is visible
     Then "#snap-light-box" "css_element" should exist
     And I should see "Description text for MP3 file"
