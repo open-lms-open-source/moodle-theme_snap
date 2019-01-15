@@ -351,7 +351,7 @@ li.section:focus {
 
     .snap-modchooser-addlink {
         display: block;
-        height: 90px;
+        height: 6.25em;
         overflow: hidden;
         font-size: .8em;
         font-family: $font-family-system;
@@ -1061,7 +1061,7 @@ body.snap-resource-card li.snap-resource {
     .asset-wrapper {
         @include clearfix;
     }
-    
+
     &:not(.modtype_label) .asset-wrapper {
         cursor: pointer;
     }
