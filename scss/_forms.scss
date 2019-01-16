@@ -401,12 +401,12 @@ a[aria-controls="snap-collapse-help"] {
     #id_modstandardelshdr,
     #id_overallfeedbackhdr {
       .form-inline[data-fieldtype="editor"] div:first-child {
-        overflow: scroll;
+          overflow: auto;
       }
     }
 
     .mceToolbar.mceLeft.mceFirst.mceLast{
-        overflow: scroll;
+        overflow: auto;
     }
 
 }
