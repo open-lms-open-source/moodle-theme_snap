@@ -122,7 +122,14 @@
             padding: 1.25rem;
         }
     }
-
+    .paging.paging-morelink {
+        padding-top: 2em;
+        a:hover,
+        a:focus,
+        a:active {
+          color: #fff;
+        }
+    }
 }
 
 // Catagory expand/collapse & associated icons.
