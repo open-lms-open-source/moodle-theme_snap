@@ -3432,6 +3432,11 @@ table th img.iconhelp {
     position: absolute;
     bottom: 0;
     padding: 0.5em 4%;
+    max-height: 15.2em;
+    overflow-y: hidden;
+    &:hover {
+        overflow-y: scroll;
+    }
 }
 
 // Scrolling gradebook fixes
@@ -3803,4 +3808,9 @@ section#region-main {
       margin-left: 0.5em;
     }
   }
+}
+
+// Fix to break-word on title site description.
+.snap-site-description {
+    overflow-wrap: break-word;
 }

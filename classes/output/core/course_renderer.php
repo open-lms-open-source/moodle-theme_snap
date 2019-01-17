@@ -230,11 +230,12 @@ class course_renderer extends \core_course_renderer {
         // Display the link to the module (or do nothing if module has no url).
         $cmname = $this->course_section_cm_name($mod, $displayoptions);
         $assetlink = '';
+        $assettype = '';
 
         if (!empty($cmname)) {
             // Activity/resource type.
             $snapmodtype = $this->get_mod_type($mod)[0];
-            $assetlink = '<div class="snap-assettype">'.$snapmodtype.'</div>';
+            $assettype = '<div class="snap-assettype">'.$snapmodtype.'</div>';
             // Asset link.
             $assetlink .= '<h4 class="snap-asset-link">'.$cmname.'</h4>';
         }
@@ -304,7 +305,8 @@ class course_renderer extends \core_course_renderer {
 
         // Build output.
         $postcontent = '<div class="snap-asset-meta" data-cmid="'.$mod->id.'">'.$assetmeta.$mod->afterlink.'</div>';
-        $output .= $assetlink.$postcontent.$contentpart.$snapcompletionmeta.$groupmeta.$completiontracking;
+        $content = '<div class="snap-asset-content">'.$assetlink.$postcontent.$contentpart.$snapcompletionmeta.$groupmeta.'</div>';
+        $output .= $assettype.$completiontracking.$content;
 
         // Bail at this point if we aren't using a supported format. (Folder view is only partially supported).
         $supported = ['topics', 'weeks', 'site'];
