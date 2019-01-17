@@ -576,6 +576,10 @@ li.section:focus {
         padding-bottom: 2em !important;
     }
 
+    &.draft:not(.snap-can-view-hidden) {
+        display: none;
+    }
+
     .asset-wrapper {
         height: auto;
         overflow-x: hidden;
