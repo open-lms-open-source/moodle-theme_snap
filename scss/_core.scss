@@ -3432,6 +3432,11 @@ table th img.iconhelp {
     position: absolute;
     bottom: 0;
     padding: 0.5em 4%;
+    max-height: 15.2em;
+    overflow-y: hidden;
+    &:hover {
+        overflow-y: scroll;
+    }
 }
 
 // Scrolling gradebook fixes
@@ -3808,15 +3813,23 @@ section#region-main {
 // Modify Snap resources cards content and title to have a scrollbar on it.
 body.snap-resource-card li.snap-resource {
     height: 16.3em;
+
     .asset-wrapper {
         max-height: 9em;
         overflow-y: hidden;
+
         &:hover {
             overflow-y: scroll;
         }
+
         .activityinstance {
             width: 10em;
             text-align: justify;
         }
     }
+}
+
+// Fix to break-word on title site description.
+.snap-site-description {
+    overflow-wrap: break-word;
 }

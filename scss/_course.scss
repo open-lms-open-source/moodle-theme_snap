@@ -820,7 +820,7 @@ li.section:focus {
 // Snap resources as cards.
 // -------------------------
 body.snap-resource-card li.snap-resource {
-    height: 200px;
+    height: 19.5em;
     width: 31%;
     margin: 1%;
     float: left;
@@ -835,9 +835,24 @@ body.snap-resource-card li.snap-resource {
     }
 
     // Resource cards are clickable with data-href, so add cursor pointer.
+    // Modify Snap resources cards content and title to have a scrollbar on it.
     .asset-wrapper {
         @include clearfix;
         cursor: pointer;
+        .snap-asset-content {
+            max-height: 9em;
+            overflow-y: hidden;
+            padding-right: 0.6em;
+            &:hover {
+                overflow-y: scroll;
+            }
+        }
+        .snap-assettype {
+            padding-bottom: 1.5em;
+        }
+        .snap-asset-actions {
+            display: flex;
+        }
     }
 
     .activityicon {
