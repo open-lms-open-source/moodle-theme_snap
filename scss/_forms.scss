@@ -400,12 +400,17 @@ a[aria-controls="snap-collapse-help"] {
 
     #id_modstandardelshdr,
     #id_overallfeedbackhdr {
-      .form-inline[data-fieldtype="editor"] div:first-child {
-          overflow: auto;
+      .form-inline[data-fieldtype="editor"] {
+          overflow-x: auto;
+          overflow-y: hidden;
+
+          div {
+              max-width: 100%;
+          }
       }
     }
 
-    .mceToolbar.mceLeft.mceFirst.mceLast{
+    .mceToolbar.mceLeft.mceFirst.mceLast {
         overflow: auto;
     }
 
