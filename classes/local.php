@@ -1122,7 +1122,11 @@ class local {
                 return self::snap_pluginfile_url($cardimage);
             }
         }
-        $originalfile = self::get_course_firstimage($courseid);
+        try {
+            $originalfile = self::get_course_firstimage($courseid);
+        } catch (\file_exception $e) {
+            $originalfile = false;
+        }
         $cardimage = self::set_course_card_image($context, $originalfile);
         return self::snap_pluginfile_url($cardimage);
     }
