@@ -10365,10 +10365,6 @@ li.section:focus {
     display: none;
 }
 
-.section li.snap-native .instancename {
-    font-size: 1.3em;
-}
-
 .section li.snap-native .contentafterlink {
     font-size: 1em;
     padding-bottom: 1em;
