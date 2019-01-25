@@ -1637,4 +1637,12 @@ class behat_theme_snap extends behat_base {
             throw new Exception("Class ".$class." was not found in element ".$element.".");
         }
     }
+    /**
+     * Purge snap caches.
+     *
+     * @Given /^I purge snap caches$/
+     */
+    public function i_purge_snap_caches() {
+        theme_reset_all_caches();
+    }
 }

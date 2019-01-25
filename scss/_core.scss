@@ -3792,6 +3792,7 @@ section#region-main {
   .availability-inner .availability-item.d-sm-flex.align-items-center {
     .availability-eye.col-form-label {
       display: contents;
+      position: absolute;
     }
     .d-inline-block.col-form-label.availability-delete.p-x-1 {
       display: contents !important;

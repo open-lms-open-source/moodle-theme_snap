@@ -23,7 +23,6 @@
 Feature: When the moodle theme is set to Snap, grading activities are shown only if user have grading capabilities.
 
   Background:
-    And I skip because "This scenario randomly fails, it is going to be addressed in a separated ticket"
     Given I log in as "admin"
     And I close the personal menu
     And I navigate to "Define roles" node in "Site administration > Users > Permissions"

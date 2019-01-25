@@ -108,7 +108,6 @@ Feature: When the moodle theme is set to Snap, students and teachers can open a 
 
     @javascript
     Scenario: Show grading in the personal menu only to the teachers with the proper access to the courses or the groups.
-      And I skip because "This scenario randomly fails, it is going to be addressed in a separated ticket"
       When I log in as "admin"
       And I close the personal menu
       And I navigate to "Define roles" node in "Site administration > Users > Permissions"
@@ -143,6 +142,7 @@ Feature: When the moodle theme is set to Snap, students and teachers can open a 
       And I expand all fieldsets
       And I click on "Add restriction..." "button"
       And I click on "Group" "button" in the "Add restriction..." "dialogue"
+      Then ".availability-item .availability-eye img" "css_element" should exist
       And I click on ".availability-item .availability-eye img" "css_element"
       And I set the field with xpath "//select[@name='id']" to "G1"
       And I press "Save and display"

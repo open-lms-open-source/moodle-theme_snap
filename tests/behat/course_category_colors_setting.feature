@@ -51,10 +51,9 @@ Feature: When the moodle theme is set to Snap, sets a color per category.
 
   @javascript
   Scenario: Load all classes in each category hierarchy.
-    And I skip because "This is failing in Bamboo, and is going to be researched if the test can be tested without relying in cache cleanup"
     Given I log in as "admin"
     And I follow "Browse all courses"
-    And I follow "Purge all caches"
+    And I purge snap caches
     And I wait until the page is ready
     And I check body for classes "theme-snap"
     And I follow "Miscellaneous"
@@ -70,10 +69,9 @@ Feature: When the moodle theme is set to Snap, sets a color per category.
 
   @javascript
   Scenario: Check category colors in hierarchy.
-    And I skip because "This is failing in Bamboo, and is going to be researched if the test can be tested without relying in cache cleanup"
     Given I log in as "admin"
     And I follow "Browse all courses"
-    And I follow "Purge all caches"
+    And I purge snap caches
     And I wait until the page is ready
     And I follow "Cat 5"
     And I check element "a.btn.btn-secondary" with color "#00FF00"
@@ -88,12 +86,11 @@ Feature: When the moodle theme is set to Snap, sets a color per category.
 
   @javascript
   Scenario: Check category colors from nearest parent in hierarchy.
-    And I skip because "This is failing in Bamboo, and is going to be researched if the test can be tested without relying in cache cleanup"
     Given the following config values are set as admin:
       | category_color | {"5":"#00FF00","10":"#FF0000"} | theme_snap |
     And I log in as "admin"
     And I follow "Browse all courses"
-    And I follow "Purge all caches"
+    And I purge snap caches
     And I wait until the page is ready
     And I follow "Cat 5"
     And I check element "a.btn.btn-secondary" with color "#00FF00"
@@ -108,10 +105,9 @@ Feature: When the moodle theme is set to Snap, sets a color per category.
 
   @javascript
   Scenario: Check category course color from nearest parent in hierarchy for teacher and student.
-    And I skip because "This is failing in Bamboo, and is going to be researched if the test can be tested without relying in cache cleanup"
     Given I log in as "admin"
     And I follow "Browse all courses"
-    And I follow "Purge all caches"
+    And I purge snap caches
     Then I log out
     Then I log in as "teacher1"
     # And I am on the course with shortname "C2" <- Removed this - this custom step is not part of Snap!
