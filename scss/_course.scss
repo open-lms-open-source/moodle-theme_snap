@@ -947,17 +947,22 @@ body.snap-resource-card li.snap-resource {
     }
 }
 
-body.snap-resource-card li.snap-resource.modtype_resource {
-    height: 19.5em;
-    // Modify Snap resources cards content and title to have a scrollbar on it.
-    .asset-wrapper {
-        .snap-asset-content {
-            max-height: 9em;
-            overflow-y: hidden;
-            padding-right: 0.6em;
-            overflow-wrap: break-word;
-            &:hover {
-                overflow-y: scroll;
+// Modify Snap resources cards content and title to have a scrollbar on it.
+body.snap-resource-card {
+    li.snap-resource.modtype_resource,
+    li.snap-resource.modtype_folder,
+    li.snap-resource.modtype_url,
+    li.snap-resource.modtype_lightboxgallery {
+        height: 19.5em;
+        .asset-wrapper {
+            .snap-asset-content {
+                max-height: 9em;
+                overflow-y: hidden;
+                padding-right: 0.6em;
+                overflow-wrap: break-word;
+                &:hover {
+                    overflow-y: scroll;
+                }
             }
         }
     }
