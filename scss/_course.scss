@@ -949,21 +949,30 @@ body.snap-resource-card li.snap-resource {
 
 // Modify Snap resources cards content and title to have a scrollbar on it.
 body.snap-resource-card {
-    li.snap-resource.modtype_resource,
-    li.snap-resource.modtype_folder,
-    li.snap-resource.modtype_url,
-    li.snap-resource.modtype_lightboxgallery {
-        height: 19.5em;
+    li.snap-resource.snap-resource-long {
+        height: 13.5em;
         .asset-wrapper {
             .snap-asset-content {
-                max-height: 9em;
+                max-height: 8em;
                 overflow-y: hidden;
                 padding-right: 0.6em;
                 overflow-wrap: break-word;
                 &:hover {
                     overflow-y: scroll;
                 }
+                h4.snap-asset-link {
+                    padding: 0.2em 0;
+                }
             }
+            .snap-asset-actions {
+                label, a, div {
+                    padding: 0;
+                }
+            }
+            .snap-assettype {
+                padding-bottom: 1em;
+            }
+
         }
     }
 }
