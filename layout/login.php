@@ -37,7 +37,13 @@ require(__DIR__.'/header.php');
 
 <section id="region-main">
 <?php
-echo $OUTPUT->main_content();
+if ($PAGE->title === get_string('restoredaccount')) {
+    echo html_writer::start_div('loginerror-restoredaccount');
+    echo $OUTPUT->main_content();
+    echo html_writer::end_div();
+} else {
+    echo $OUTPUT->main_content();
+}
 ?>
 </section>
 </main>
