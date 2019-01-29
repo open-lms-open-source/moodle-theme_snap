@@ -65,7 +65,7 @@ class course_renderer extends \core_course_renderer {
 
             if ($mod->modname === 'resource') {
                 // Default for resources/attatchments e.g. pdf, doc, etc.
-                $modclasses = array('snap-resource', 'snap-mime-'.$extension);
+                $modclasses = array('snap-resource', 'snap-mime-'.$extension, 'snap-resource-long');
                 if (in_array($extension, $this->snap_multimedia())) {
                     $modclasses[] = 'js-snap-media';
                 }
@@ -78,8 +78,11 @@ class course_renderer extends \core_course_renderer {
                 $modclasses = array('snap-activity');
             } else if (plugin_supports('mod', $mod->modname, FEATURE_MOD_ARCHETYPE) === MOD_ARCHETYPE_RESOURCE) {
                 $modclasses = array('snap-resource');
+                if ($mod->modname !== 'label') {
+                    $modclasses = array('snap-resource', 'snap-resource-long');
+                }
             } else if ($mod->modname === 'scorm') {
-                $modclasses = array('snap-resource');
+                $modclasses = array('snap-resource', 'snap-resource-long');
             } else if ($mod->modname !== 'label') {
                 $modclasses = array('snap-activity');
             }
