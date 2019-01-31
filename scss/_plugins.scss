@@ -490,6 +490,9 @@
 #page-mod-book-print {
     font-size: 18px !important;
     font-family: $font-family-serif !important;
+    p, div.book_chapter {
+        margin-right: 3em;
+    }
 }
 
 /**
