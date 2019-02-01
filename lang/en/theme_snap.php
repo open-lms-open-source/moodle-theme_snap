@@ -331,3 +331,6 @@ $string['pbb_enable_description'] = 'Only adds the class to the body tag if acti
 $string['pbb_field'] = 'User field to use';
 $string['pbb_field_description'] = 'This field\'s value will be slugified and used as a CSS class name prepended by <code>snap-pbb-</code>.';
 $string['cachedef_profile_based_branding'] = 'Caching for Profile based branding.';
+$string['cachedef_course_card_bg_image'] = 'Caching for course background image.';
+$string['cachedef_course_card_teacher_avatar'] = 'Caching for teacher avatars.';
+$string['cachedef_course_card_teacher_avatar_index'] = 'Caching for teacher avatars index.';
