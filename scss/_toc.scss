@@ -319,6 +319,11 @@
         z-index: 666;
     }
 
+    .path-course-view iframe#drift-widget {
+        bottom: 4em !important;
+        right: 0.7em !important;
+    }
+
     #course-toc {
         position: fixed !important;
         right: 0;
