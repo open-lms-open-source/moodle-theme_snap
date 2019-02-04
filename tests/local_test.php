@@ -25,6 +25,7 @@
 namespace theme_snap\tests;
 
 use theme_snap\local;
+use theme_snap\renderables\course_card;
 use theme_snap\snap_base_test;
 
 defined('MOODLE_INTERNAL') || die();
@@ -1160,5 +1161,150 @@ class theme_snap_local_test extends snap_base_test {
 
         // Custom field is set as new value.
         $this->assertEquals('snap-pbb-banana-split', local::get_profile_based_branding_class($user));
+    }
+
+    public function test_clean_course_card_bg_image_cache() {
+        $this->resetAfterTest();
+        list ($student, $teacher, $course, $group) = $this->course_group_user_setup();
+
+        $context = \context_course::instance($course->id);
+        $this->fake_course_image_setting_upload('bpd_bikes_1380px.jpg', $context);
+        $originalfile = local::course_coverimage($course->id);
+        local::set_course_card_image($context, $originalfile);
+
+        // Cache is filled when course card is created.
+        $ccard = new course_card($course);
+
+        /** @var \cache_application $cache */
+        $cache = \cache::make('theme_snap', 'course_card_bg_image');
+        $bgimage = $cache->get($context->id);
+        $this->assertEquals("background-image: url($bgimage);", $ccard->imagecss);
+
+        // Clearing caches.
+        local::course_card_clean_up($context);
+
+        $this->assertFalse($cache->get($context->id));
+
+        // Cache is filled when course card is created.
+        $ccard = new course_card($course);
+
+        $fixture = 'bpd_bikes_1381px.jpg';
+        $this->fake_course_image_setting_upload($fixture, $context);
+        $originalfile = local::course_coverimage($course->id);
+
+        // Cache is cleared when a new card image is set.
+        local::set_course_card_image($context, $originalfile);
+
+        $this->assertFalse($cache->get($context->id));
+
+        // Cache is filled when course card is created.
+        $ccard = new course_card($course);
+
+        $bgimage = $cache->get($context->id);
+        $this->assertNotFalse(strstr($bgimage, $fixture));
+
+        // Cache is used next time.
+        $ccard = new course_card($course);
+        $url = local::course_card_image_url($course->id);
+
+        $this->assertEquals("background-image: url($url);", $ccard->imagecss);
+    }
+
+    public function test_clean_course_card_teacher_avatar_cache() {
+        global $DB, $CFG;
+
+        $this->resetAfterTest();
+        /** @var \cache_application $avatarcache */
+        $avatarcache = \cache::make('theme_snap', 'course_card_teacher_avatar');
+        /** @var \cache_application $indexcache */
+        $indexcache = \cache::make('theme_snap', 'course_card_teacher_avatar_index');
+        list ($student, $teacher, $course, $group) = $this->course_group_user_setup();
+        $teachers = [$teacher];
+        $students = [$student];
+        $editingteachers = [];
+
+        $editingrole = $DB->get_record('role', ['shortname' => 'editingteacher']);
+        $teacherrole = $DB->get_record('role', ['shortname' => 'teacher']);
+
+        $CFG->coursecontact = $editingrole->id. ','. $teacherrole->id;
+
+        // Cache is filled when course card is created.
+        $ccard = new course_card($course);
+        // 1 teacher, 1 avatar.
+        $this->assertCount(1, $ccard->visibleavatars);
+
+        $userctxidx = $indexcache->get('idx');
+
+        $context = \context_course::instance($course->id);
+        $avatars = $avatarcache->get($context->id);
+
+        $this->assertCount(1, $userctxidx);
+        $this->assertCount(1, $userctxidx[$teacher->id]);
+        $this->assertCount(1, $avatars);
+
+        // Cache is used next time.
+        $ccard = new course_card($course);
+        $this->assertCount(1, $ccard->visibleavatars);
+        $this->assertCount(0, $ccard->hiddenavatars);
+        $this->assertFalse($ccard->showextralink);
+
+        // This enrols 10 more teachers and 10 more editing teachers, so 21 course contacts in total.
+        $this->create_extra_users($course->id, $students, $teachers, $editingteachers);
+
+        $this->assertFalse($avatarcache->get($context->id));
+
+        // Cache is filled when course card is created.
+        $ccard = new course_card($course);
+        $this->assertCount(4, $ccard->visibleavatars);
+        $this->assertCount(17, $ccard->hiddenavatars);
+        $this->assertTrue($ccard->showextralink);
+
+        $this->assertNotFalse($avatarcache->get($context->id));
+
+        // Cache is used next time.
+        $ccard = new course_card($course);
+        $this->assertCount(4, $ccard->visibleavatars);
+        $this->assertCount(17, $ccard->hiddenavatars);
+        $this->assertTrue($ccard->showextralink);
+
+        // Unenrolment causes indexes to be recalculated.
+        $menrol = enrol_get_plugin('manual');
+        $enrol = $DB->get_record('enrol', array('courseid' => $course->id, 'enrol' => 'manual'), '*', MUST_EXIST);
+        $menrol->unenrol_user($enrol, $teacher->id);
+
+        $this->assertFalse($avatarcache->get($context->id));
+
+        // Cache is filled when course card is created.
+        $ccard = new course_card($course);
+        $this->assertCount(4, $ccard->visibleavatars);
+        $this->assertCount(16, $ccard->hiddenavatars);
+        $this->assertTrue($ccard->showextralink);
+
+        $this->assertNotFalse($avatarcache->get($context->id));
+
+        // Cache is used next time.
+        $ccard = new course_card($course);
+        $this->assertCount(4, $ccard->visibleavatars);
+        $this->assertCount(16, $ccard->hiddenavatars);
+        $this->assertTrue($ccard->showextralink);
+
+        // User deletion causes indexes to be recalculated.
+        delete_user($editingteachers[0]);
+
+        $this->assertFalse($avatarcache->get($context->id));
+
+        // Cache is filled when course card is created.
+        $ccard = new course_card($course);
+        $this->assertCount(4, $ccard->visibleavatars);
+        $this->assertCount(15, $ccard->hiddenavatars);
+        $this->assertTrue($ccard->showextralink);
+
+        $this->assertNotFalse($avatarcache->get($context->id));
+
+        // Cache is used next time.
+        $ccard = new course_card($course);
+        $this->assertCount(4, $ccard->visibleavatars);
+        $this->assertCount(15, $ccard->hiddenavatars);
+        $this->assertTrue($ccard->showextralink);
     }
 }

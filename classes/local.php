@@ -1051,22 +1051,26 @@ class local {
 
     /**
      * Deletes all previous course card images.
-     * @param int $context
+     * @param \context_course $context
      * @return void
      */
     public static function course_card_clean_up($context) {
         $fs = get_file_storage();
         $fs->delete_area_files($context->id, 'theme_snap', 'coursecard');
+        self::clean_course_card_bg_image_cache($context->id);
     }
 
     /**
      * Creates a resized course card image when the cover image is too large, otherwise returns the original.
-     * @param int $context
+     * @param \context_course $context
      * @param stored_file|bool $originalfile
      * @return bool|stored_file
      */
     public static function set_course_card_image($context, $originalfile) {
         if ($originalfile) {
+            // Clean cache just in case image is updated.
+            self::clean_course_card_bg_image_cache($context->id);
+
             $finfo = $originalfile->get_imageinfo();
             $coursecardmaxwidth = 1000;
             $coursecardwidth = 720;
@@ -1106,7 +1110,7 @@ class local {
      * Get the cover image url for the course card.
      *
      * @param int $courseid
-     * @return bool|moodle_url
+     * @return bool|\moodle_url
      */
     public static function course_card_image_url($courseid) {
         $context = \context_course::instance($courseid);
@@ -1838,5 +1842,105 @@ SQL;
     public static function clean_profile_based_branding_cache() {
         $cache = \cache::make('theme_snap', 'profile_based_branding');
         $cache->purge();
+    }
+
+    /**
+     * Cleans the course bg image cache.
+     * @param null|int $contextid If null, cleans all course card images.
+     */
+    public static function clean_course_card_bg_image_cache($contextid = null) {
+        /** @var \cache_application $bgcache */
+        $bgcache = \cache::make('theme_snap', 'course_card_bg_image');
+        if (is_null($contextid)) {
+            $bgcache->purge();
+        } else {
+            $bgcache->delete($contextid);
+        }
+    }
+
+    /**
+     * Cleans the teacher course card avatars.
+     * @param null|int $contextid If null, cleans all teacher avatar images.
+     * @param null|int $userid If not null and found in stored user ids, cleans avatar images for course.
+     */
+    public static function clean_course_card_teacher_avatar_cache($contextid = null, $userid = null) {
+        /** @var \cache_application $avatarcache */
+        $avatarcache = \cache::make('theme_snap', 'course_card_teacher_avatar');
+        /** @var \cache_application $indexcache */
+        $indexcache = \cache::make('theme_snap', 'course_card_teacher_avatar_index');
+
+        if (PHPUNIT_TEST && !$indexcache->has('idx')) {
+            // Somehow, application caches complain if the value is not set when running in PHPUnit tests.
+            $indexcache->set('idx', []);
+        }
+
+        if (is_null($contextid) && is_null($userid)) {
+            // No params, purge all.
+            $avatarcache->purge();
+            return;
+        }
+
+        if (!is_null($contextid)) {
+            // In course context.
+
+            $userctxidx = $indexcache->get('idx');
+            if (!is_null($userid) && is_array($userctxidx)
+                && !empty($userctxidx[$userid]) && !empty($userctxidx[$userid][$contextid])) {
+                // Context + user.
+                $avatarcache->delete($contextid);
+                $userctxidx = self::remove_context_from_avatar_user_index($userctxidx, $contextid, $userid);
+                $indexcache->set('idx', $userctxidx);
+            } else {
+                // Only context.
+                $avatarcache->delete($contextid);
+                $userctxidx = self::remove_context_from_avatar_user_index($userctxidx, $contextid);
+                $indexcache->set('idx', $userctxidx);
+            }
+            // Always return, next conditional only makes sense if there is no context.
+            return;
+        }
+
+        if (!is_null($userid)) {
+            // Only user was specified.
+
+            $userctxidx = $indexcache->get('idx');
+            if (is_array($userctxidx) && !empty($userctxidx[$userid])) {
+                $contextids = array_keys($userctxidx[$userid]);
+                foreach ($contextids as $contextid) {
+                    $avatarcache->delete($contextid);
+                }
+                // Remove user id from index since all avatar caches have been cleansed.
+                unset($userctxidx[$userid]);
+                $indexcache->set('idx', $userctxidx);
+            }
+        }
+    }
+
+    /**
+     * Removes specific context id from avatar index.
+     * @param bool[][] $userctxidx First key is user id, second key is course context id.
+     * @param int $contextid
+     * @param null|int $userid
+     * @return bool[][] New index
+     */
+    private static function remove_context_from_avatar_user_index($userctxidx, $contextid, $userid = null) {
+        if (!is_array($userctxidx)) {
+            return $userctxidx;
+        }
+
+        // If user id is specified, only remove the specific context.
+        if (isset($userid)) {
+            if (!empty($userctxidx[$userid]) && !empty($userctxidx[$userid][$contextid])) {
+                unset($userctxidx[$userid][$contextid]);
+            }
+            return $userctxidx;
+        }
+
+        // Remove the specific context id for all users.
+        $userids = array_keys($userctxidx);
+        foreach ($userids as $uid) {
+            $userctxidx = self::remove_context_from_avatar_user_index($userctxidx, $contextid, $uid);
+        }
+        return $userctxidx;
     }
 }

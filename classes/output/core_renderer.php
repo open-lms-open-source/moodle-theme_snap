@@ -653,13 +653,13 @@ class core_renderer extends \theme_boost\output\core_renderer {
         $published = []; // Published course & favorites when user visible.
         $hidden = []; // Hidden courses.
         foreach ($currentcourses as $course) {
-            $ccard = new course_card($course->id);
+            $ccard = new course_card($course);
             if (isset($favorited[$course->id]) || $course->visible) {
                 $published[] = $ccard;
             }
         }
         foreach ($currentcourses as $course) {
-            $ccard = new course_card($course->id);
+            $ccard = new course_card($course);
             if (!isset($favorited[$course->id]) && !$course->visible) {
                 $hidden[] = $ccard;
             }
@@ -688,7 +688,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
             $courses = [];
             // Add course cards to each year.
             foreach ($yearcourses as $course) {
-                $ccard = new course_card($course->id);
+                $ccard = new course_card($course);
                 $ccard->archived = true;
                 $courses[] = $ccard;
             }

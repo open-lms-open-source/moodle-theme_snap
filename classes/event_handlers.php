@@ -23,8 +23,11 @@ use core\event\course_module_updated;
 use core\event\course_module_deleted;
 use core\event\course_module_completion_updated;
 use core\event\user_deleted;
-use core\event\user_graded;
+use core\event\user_updated;
 use core\event\base;
+use core\event\role_assigned;
+use core\event\role_unassigned;
+use core\event\user_enrolment_deleted;
 
 defined('MOODLE_INTERNAL') || die();
 
@@ -66,6 +69,9 @@ class event_handlers {
 
         $select = ['courseid' => $event->objectid];
         $DB->delete_records('theme_snap_course_favorites', $select);
+
+        local::clean_course_card_bg_image_cache($event->contextid);
+        local::clean_course_card_teacher_avatar_cache($event->contextid);
     }
 
     /**
@@ -80,6 +86,8 @@ class event_handlers {
 
         $select = ['userid' => $event->objectid];
         $DB->delete_records('theme_snap_course_favorites', $select);
+
+        local::clean_course_card_teacher_avatar_cache(null, $event->objectid);
     }
 
     /**
@@ -140,11 +148,64 @@ class event_handlers {
      *
      * Removes cache value for this user Profile based branding CSS class.
      *
-     * @param \user_updated $event
+     * @param user_updated $event
      */
     public static function user_updated($event) {
         $cache = \cache::make('theme_snap', 'profile_based_branding');
         $cache->delete('pbb_class');
+
+        local::clean_course_card_teacher_avatar_cache(null, $event->userid);
     }
 
+    /**
+     * Handles this kind of event.
+     * @param role_assigned $event
+     */
+    public static function role_assigned(role_assigned $event) {
+        $context = \context::instance_by_id($event->contextid, MUST_EXIST);
+        if ($context->contextlevel != CONTEXT_COURSE) {
+            return;
+        }
+
+        // Too many checks need to be done for determining if the new user is a
+        // course contact. Purging all avatars just in case.
+        local::clean_course_card_teacher_avatar_cache($context->id);
+    }
+
+    /**
+     * Handles this kind of event.
+     * @param role_unassigned $event
+     */
+    public static function role_unassigned(role_unassigned $event) {
+        $context = \context::instance_by_id($event->contextid, MUST_EXIST);
+        if ($context->contextlevel != CONTEXT_COURSE) {
+            return;
+        }
+
+        // Too many checks need to be done for determining if the user continues being a
+        // course contact. Purging all avatars if user is in course avatar index just in case.
+        local::clean_course_card_teacher_avatar_cache(
+            $context->id,
+            $event->relateduserid
+        );
+    }
+
+    /**
+     * Triggered via user_enrolment_deleted event.
+     *
+     * @param user_enrolment_deleted $event
+     */
+    public static function user_enrolment_deleted(user_enrolment_deleted $event) {
+        $context = \context::instance_by_id($event->contextid, MUST_EXIST);
+        if ($context->contextlevel != CONTEXT_COURSE) {
+            return;
+        }
+
+        // Too many checks need to be done for determining if the user continues being a
+        // course contact. Purging all avatars if user is in course avatar index just in case.
+        local::clean_course_card_teacher_avatar_cache(
+            $context->id,
+            $event->relateduserid
+        );
+    }
 }

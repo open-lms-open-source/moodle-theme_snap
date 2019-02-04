@@ -85,4 +85,18 @@ $observers = array(
         'eventname' => '\core\event\user_updated',
         'callback'  => '\theme_snap\event_handlers::user_updated'
     ),
+
+    // User enrolment handlers.
+    array (
+        'eventname' => '\core\event\role_assigned',
+        'callback'  => '\theme_snap\event_handlers::role_assigned'
+    ),
+    array (
+        'eventname' => '\core\event\role_unassigned',
+        'callback'  => '\theme_snap\event_handlers::role_unassigned'
+    ),
+    array (
+        'eventname'   => '\core\event\user_enrolment_deleted',
+        'callback'    => '\theme_snap\event_handlers::user_enrolment_deleted',
+    ),
 );

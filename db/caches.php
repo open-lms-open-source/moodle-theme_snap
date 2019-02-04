@@ -65,5 +65,20 @@ $definitions = array(
         'simpledata'         => false,
         'staticacceleration' => false,
     ],
+    'course_card_bg_image' => [
+        'mode'               => cache_store::MODE_APPLICATION,
+        'simplekeys'         => true,
+        'simpledata'         => true,
+    ],
+    'course_card_teacher_avatar' => [
+        'mode'               => cache_store::MODE_APPLICATION,
+        'simplekeys'         => true,
+        'simpledata'         => false,
+    ],
+    'course_card_teacher_avatar_index' => [
+        'mode'               => cache_store::MODE_APPLICATION,
+        'simplekeys'         => true,
+        'simpledata'         => false,
+    ],
 );
 
