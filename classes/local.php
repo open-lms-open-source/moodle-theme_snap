@@ -1869,8 +1869,8 @@ SQL;
         /** @var \cache_application $indexcache */
         $indexcache = \cache::make('theme_snap', 'course_card_teacher_avatar_index');
 
-        if (PHPUNIT_TEST && !$indexcache->has('idx')) {
-            // Somehow, application caches complain if the value is not set when running in PHPUnit tests.
+        if (self::duringtesting() && !$indexcache->has('idx')) {
+            // Somehow, application caches complain if the value is not set when running tests.
             $indexcache->set('idx', []);
         }
 
@@ -1942,5 +1942,16 @@ SQL;
             $userctxidx = self::remove_context_from_avatar_user_index($userctxidx, $contextid, $uid);
         }
         return $userctxidx;
+    }
+
+    /**
+     * Is this script running during testing?
+     *
+     * @return bool
+     */
+    public static function duringtesting() {
+        $runningphpunittest = defined('PHPUNIT_TEST') && PHPUNIT_TEST;
+        $runningbehattest = defined('BEHAT_SITE_RUNNING') && BEHAT_SITE_RUNNING;
+        return ($runningphpunittest || $runningbehattest);
     }
 }
