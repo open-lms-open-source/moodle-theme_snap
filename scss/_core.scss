@@ -3796,6 +3796,7 @@ section#region-main {
     display: inline-grid;
   }
   .availability-inner .availability-item.d-sm-flex.align-items-center {
+    flex-wrap: wrap;
     .availability-eye.col-form-label {
       display: contents;
       position: absolute;
