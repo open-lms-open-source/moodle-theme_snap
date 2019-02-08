@@ -174,7 +174,7 @@ class course {
 
         $userid = $userid !== null ? $userid : $USER->id;
 
-        $favorites = $this->favorites($userid, false, $fromcache);
+        $favorites = $this->favorites($userid, $fromcache);
         return !empty($favorites) && !empty($favorites[$courseid]);
     }
 
@@ -247,7 +247,7 @@ class course {
         $course = $this->coursebyshortname($courseshortname);
         $userid = $userid !== null ? $userid : $USER->id;
 
-        $favorited = $this->favorited($course->id, $userid);
+        $favorited = $this->favorited($course->id, $userid, false);
         if ($on) {
             if (!$favorited) {
                 $data = (object) [

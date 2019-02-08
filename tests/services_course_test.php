@@ -110,7 +110,7 @@ class theme_snap_services_course_test extends \advanced_testcase {
         $service->setfavorite($this->courses[0]->shortname, true, $this->user1->id);
         $service->setfavorite($this->courses[1]->shortname, true, $this->user1->id);
 
-        $favorites = $service->favorites($this->user1->id);
+        $favorites = $service->favorites($this->user1->id, false);
         $this->assertTrue(isset($favorites[$this->courses[0]->id]));
         $this->assertTrue(isset($favorites[$this->courses[1]->id]));
         $this->assertFalse(isset($favorites[$this->courses[2]->id]));
