@@ -28,8 +28,6 @@ use theme_snap\local;
 
 defined('MOODLE_INTERNAL') || die();
 
-require_once($CFG->libdir . '/coursecatlib.php');
-
 class course_card implements \renderable {
 
     /**

@@ -25,7 +25,6 @@
 namespace theme_snap\output;
 
 defined('MOODLE_INTERNAL') || die();
-require_once($CFG->libdir.'/coursecatlib.php');
 require_once($CFG->dirroot.'/message/output/popup/lib.php');
 
 use stdClass;

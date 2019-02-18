@@ -1012,17 +1012,16 @@ class course_renderer extends \core_course_renderer {
      */
     public function course_category($category) {
         global $CFG;
-        require_once($CFG->libdir. '/coursecatlib.php');
-        $coursecat = coursecat::get(is_object($category) ? $category->id : $category);
+        $coursecat = \core_course_category::get(is_object($category) ? $category->id : $category);
         $site = get_site();
         $output = '';
         $categoryselector = '';
         // NOTE - we output manage catagory button in the layout file in Snap.
 
         if (!$coursecat->id) {
-            if (coursecat::count_all() == 1) {
+            if (\core_course_category::count_all() == 1) {
                 // There exists only one category in the system, do not display link to it.
-                $coursecat = coursecat::get_default();
+                $coursecat = \core_course_category::get_default();
                 $strfulllistofcourses = get_string('fulllistofcourses');
                 $this->page->set_title("$site->shortname: $strfulllistofcourses");
             } else {
@@ -1031,15 +1030,15 @@ class course_renderer extends \core_course_renderer {
             }
         } else {
             $title = $site->shortname;
-            if (coursecat::count_all() > 1) {
+            if (\core_course_category::count_all() > 1) {
                 $title .= ": ". $coursecat->get_formatted_name();
             }
             $this->page->set_title($title);
 
             // Print the category selector.
-            if (coursecat::count_all() > 1) {
+            if (\core_course_category::count_all() > 1) {
                 $select = new \single_select(new moodle_url('/course/index.php'), 'categoryid',
-                        coursecat::make_categories_list(), $coursecat->id, null, 'switchcategory');
+                        \core_course_category::make_categories_list(), $coursecat->id, null, 'switchcategory');
                 $select->set_label(get_string('category').':');
                 $categoryselector .= $this->render($select);
             }
@@ -1110,7 +1109,7 @@ class course_renderer extends \core_course_renderer {
 
         $output .= $this->container_start('buttons');
         ob_start();
-        if (coursecat::count_all() == 1) {
+        if (\core_course_category::count_all() == 1) {
             print_course_request_buttons(\context_system::instance());
         } else {
             print_course_request_buttons($context);
