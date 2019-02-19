@@ -44,11 +44,11 @@ class theme_snap_course_management_test extends advanced_testcase {
         $PAGE->set_url('/course/management.php', ['categoryid' => $catrecord->id]);
         $renderer = $PAGE->get_renderer('core_course', 'management');
 
-        $rendercategory = coursecat::get($catrecord->id);
+        $rendercategory = core_course_category::get($catrecord->id);
         $courserecord = $generator->create_course([
             'category' => $catrecord->id
         ]);
-        $rendercourse = new course_in_list($courserecord);
+        $rendercourse = new core_course_list_element($courserecord);
 
         $html = $renderer->course_listitem($rendercategory, $rendercourse, $courserecord->id);
         $url = '/course/management.php?categoryid='.$catrecord->id.'&amp;courseid='.$courserecord->id.'#course-detail-title';

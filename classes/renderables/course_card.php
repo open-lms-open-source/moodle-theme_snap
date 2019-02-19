@@ -204,7 +204,7 @@ class course_card implements \renderable {
             $this->disperse_avatars($avatars);
             return;
         }
-        $clist = new \course_in_list($this->course);
+        $clist = new \core_course_list_element($this->course);
         $teachers = $clist->get_course_contacts();
         $avatars = [];
         $blankavatars = [];
