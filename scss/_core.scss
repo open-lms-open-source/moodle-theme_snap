@@ -3031,9 +3031,21 @@ body.hascontinuecancel.path-site #page {
     }
 }
 
-// -------------------------
-// The site footer - moodle-footer
-// -------------------------
+/* Prevent modal dialog to be seen behind the text and tool card content right fit */
+#page-admin-mod-lti-toolconfigure {
+    .moodle-dialogue-base.moodle-dialogue-confirm div.yui3-widget.yui3-panel {
+        z-index: 100 !important;
+    }
+    .tool-card-content {
+        .tool-card-body {
+            height: 5.5em;
+        }
+        .tool-card-footer {
+            padding-top: 0;
+        }
+    }
+}
+
 body:not(.pagelayout-course) #moodle-footer {
     margin-top: 2em;
 }
