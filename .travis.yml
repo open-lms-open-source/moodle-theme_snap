@@ -1,15 +1,13 @@
 language: php
 
-sudo: false
+sudo: true
 
 addons:
   firefox: "47.0.1"
-  postgresql: "9.3"
+  postgresql: "9.4"
   apt:
     packages:
-      - oracle-java8-installer
-      - oracle-java8-set-default
-      - chromium-chromedriver
+      - openjdk-8-jre-headless
 
 cache:
   directories:
@@ -17,8 +15,8 @@ cache:
     - $HOME/.npm
 
 php:
- - 7.1
  - 7.0
+ - 7.1
 
 env:
  global:
@@ -31,7 +29,7 @@ env:
 matrix:
     include:
       - env: MOODLE_BRANCH=master DB=pgsql
-    allow_failuers:
+    allow_failures:
       - env: MOODLE_BRANCH=master DB=pgsql
 
 before_install:
@@ -47,11 +45,12 @@ install:
 
 script:
   - moodle-plugin-ci phplint
-  - moodle-plugin-ci savepoints
-  - moodle-plugin-ci mustache
-  - moodle-plugin-ci grunt -t eslint
+  - moodle-plugin-ci phpcpd
   - moodle-plugin-ci phpmd
   - moodle-plugin-ci codechecker
   - moodle-plugin-ci validate
+  - moodle-plugin-ci savepoints
+  - moodle-plugin-ci mustache
+  - moodle-plugin-ci grunt
   - moodle-plugin-ci phpunit
-  - moodle-plugin-ci behat --profile chrome
+  - moodle-plugin-ci behat
