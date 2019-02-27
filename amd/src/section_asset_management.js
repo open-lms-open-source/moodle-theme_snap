@@ -138,6 +138,8 @@ define(['jquery', 'core/log', 'core/ajax', 'core/str', 'core/templates', 'core/n
                 footerAlert.hideAndReset();
                 $('.section-moving').removeClass('section-moving');
                 $('.asset-moving').removeClass('asset-moving');
+                $('.snap-activity.snap-asset a').removeAttr('tabindex');
+                $('.snap-activity.snap-asset button').removeAttr('disabled');
                 $('.js-snap-asset-move').removeAttr('checked');
                 movingObjects = [];
             };
@@ -948,20 +950,30 @@ define(['jquery', 'core/log', 'core/ajax', 'core/str', 'core/templates', 'core/n
                         }
                         log.debug('Moving this class', classes);
                         $(asset).addClass('asset-moving');
+                        $('.snap-activity.snap-asset button').attr('disabled','disabled');
+                        $(asset).find('button').removeAttr('disabled');
+                        $('.snap-activity.snap-asset .snap-asset-content a').attr('tabindex','-1');
+                        $(asset).find('a').removeAttr('tabindex');
+
                         $(asset).find('.js-snap-asset-move').prop('checked', 'checked');
 
                         $('body').addClass('snap-move-inprogress');
                         $('body').addClass('snap-move-asset');
+
                     }
 
                     if ($(this).prop('checked')) {
                         // Add asset to moving array.
                         movingObjects.push(asset);
+                        $(asset).find('a').removeAttr('tabindex');
+                        $(asset).find('button').removeAttr('disabled');
                         $(asset).addClass('asset-moving');
                     } else {
                         // Remove from moving array.
                         removeMovingObject(asset);
                         // Remove moving class
+                        $(asset).find('.snap-asset-content a').attr('tabindex','-1');
+                        $(asset).find('button').attr('disabled','disabled');
                         $(asset).removeClass('asset-moving');
                         if (movingObjects.length === 0) {
                             // Nothing is ticked for moving, cancel the move.
