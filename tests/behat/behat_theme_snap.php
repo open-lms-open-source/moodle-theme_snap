@@ -43,6 +43,64 @@ use Behat\Gherkin\Node\TableNode,
 class behat_theme_snap extends behat_base {
 
     /**
+     * Ensures that the provided node is visible and we can interact with it.
+     *
+     * @throws ExpectationException
+     * @param NodeElement $node
+     * @return void Throws an exception if it times out without the element being visible
+     */
+    protected function ensure_node_not_visible($node) {
+
+        if (!$this->running_javascript()) {
+            return;
+        }
+
+        // Exception if it timesout and the element is still there.
+        $msg = 'The "' . $node->getXPath() . '" xpath node is visible and it should be hidden';
+        $exception = new ExpectationException($msg, $this->getSession());
+
+        // It will stop spinning once the isVisible() method returns false.
+        $this->spin(
+            function($context, $args) {
+                if (!$args->isVisible()) {
+                    return true;
+                }
+                return false;
+            },
+            $node,
+            self::EXTENDED_TIMEOUT,
+            $exception,
+            true
+        );
+    }
+
+    /**
+     * Ensures that the provided element is not visible or does not exist.
+     *
+     * @throws ExpectationException
+     * @param string $element
+     * @param string $selectortype
+     * @return void
+     */
+    protected function ensure_element_not_visible($element, $selectortype) {
+
+        if (!$this->running_javascript()) {
+            return;
+        }
+
+        try {
+            $node = $this->get_selected_node($selectortype, $element);
+        } catch (ElementNotFoundException $e) {
+            // Element is not found - that's good enough!
+            return;
+        }
+
+        $this->ensure_node_not_visible($node);
+
+        return $node;
+    }
+
+    /**
      * Checks if running in a Blackboard Open LMS system, skips the test if not.
      *
      * @Given /^I am using Blackboard Open LMS$/
