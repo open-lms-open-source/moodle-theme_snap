@@ -26,8 +26,8 @@
  * Main snap initialising function.
  */
 define(['jquery', 'core/log', 'theme_snap/headroom', 'theme_snap/util', 'theme_snap/personal_menu',
-        'theme_snap/cover_image', 'theme_snap/progressbar', 'core/templates', 'core/str'],
-    function($, log, Headroom, util, personalMenu, coverImage, ProgressBar, templates, str) {
+        'theme_snap/cover_image', 'theme_snap/progressbar', 'core/templates', 'core/str', 'theme_snap/accessibility'],
+    function($, log, Headroom, util, personalMenu, coverImage, ProgressBar, templates, str, accessibility) {
 
         'use strict';
 
@@ -860,6 +860,7 @@ define(['jquery', 'core/log', 'theme_snap/headroom', 'theme_snap/util', 'theme_s
 
                     waitForFullScreenButton();
                 });
+                accessibility.init();
             }
         };
     }
