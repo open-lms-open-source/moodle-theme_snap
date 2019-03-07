@@ -167,9 +167,9 @@ class course_total_grade extends \grade_report_overview {
         }
 
         // Percentage grade for use with progressbar.js.
-        $percentage = round(grade_format_gradevalue($finalgrade,
-                $coursegrade->grade_item,
-                true, GRADE_DISPLAY_TYPE_PERCENTAGE), $this->decimals);
+        $percentage = grade_format_gradevalue($finalgrade,
+            $coursegrade->grade_item,
+            true, GRADE_DISPLAY_TYPE_PERCENTAGE);
 
         $value = grade_format_gradevalue($finalgrade, $coursegrade->grade_item);
         return array("value" => $value, "percentage" => $percentage);
