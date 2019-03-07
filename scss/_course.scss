@@ -342,8 +342,6 @@ li.section:focus {
     }
 
     #snap-modchooser-help-tab {
-        flex: 1;
-        text-align: right;
         .nav-link {
             border: none;
         }
@@ -371,6 +369,35 @@ li.section:focus {
 
     .snap-modchooser-help {
         text-align: left;
+    }
+}
+
+// Styles for accessible tabs.
+
+#snap-modchooser-modal,
+#snap-pm-accessible-tab {
+    ul.nav.nav-tabs {
+        li.tab {
+            margin-right: 0.3em;
+            border: 0.06em solid #ddd;
+        }
+
+        li.tab.active a.nav-link {
+            background-color: darken($brand-primary, 8%);
+            color: #fff;
+        }
+
+        .nav-link.active.show {
+            border: none;
+            color: #000;
+        }
+
+        a.nav-link {
+            color: #000;
+            padding: .5em 1.5em;
+            text-decoration: none;
+            border: none;
+        }
     }
 }
 

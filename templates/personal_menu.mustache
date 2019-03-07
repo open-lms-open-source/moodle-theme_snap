@@ -56,31 +56,33 @@
 
                 {{#coursenav}}
                     <!-- Nav tabs -->
+                <div id="snap-pm-accessible-tab">
                     <ul class="nav nav-tabs" role="tablist" id="snap-pm-courses-nav">
-                            <li class="nav-item">
-                                <a class="nav-link active" aria-expanded="true" aria-controls="snap-pm-courses-current" href="#snap-pm-courses-current" id="snap-pm-tab-current" role="tab" data-toggle="tab">{{#str}}courses{{/str}}</a>
+                            <li class="tab active">
+                                <a id="snap-pm-tab-current" class="nav-link" href="#snap-pm-courses-current" role="tab" aria-controls="snap-pm-courses-current" data-toggle="tab" tabindex="0">{{#str}}courses{{/str}}</a>
                             </li>
                             {{#pastcourselist}}
-                                <li class="nav-item">
-                                    <a class="nav-link" href="#snap-pm-courses-{{year}}" aria-controls="snap-pm-courses-{{year}}" id="snap-pm-tab-{{year}}" role="tab" data-toggle="tab">{{year}}</a>
+                                <li class="tab">
+                                    <a id="snap-pm-tab-{{year}}" class="nav-link" href="#snap-pm-courses-{{year}}" role="tab" aria-controls="snap-pm-courses-{{year}}" data-toggle="tab" tabindex="-1">{{year}}</a>
                                 </li>
                             {{/pastcourselist}}
                     </ul>
 
                     <!-- Tab panes -->
-                    <div class="tab-content" id="snap-pm-courses-content">
+                    <div class="tab-content" id="snap-pm-courses-content" aria-live="polite">
                         <!-- Current courses -->
                         {{> theme_snap/personal_menu_current_courses }}
 
                         <!-- Past courses by year -->
                         {{#pastcourselist}}
-                            <div id="snap-pm-courses-{{year}}" class="tab-pane clearfix" role="tabpanel" aria-labelledby="hsnap-pm-tab-{{year}}">
+                            <div id="snap-pm-courses-{{year}}" class="tab-pane fade in clearfix" role="tabpanel" aria-labelledby="hsnap-pm-tab-{{year}}" aria-hidden="false" tabindex="0">
                                 {{#courses}}
                                     {{> theme_snap/course_cards }}
                                 {{/courses}}
                             </div>
                         {{/pastcourselist}}
                     </div>
+                </div>
                 {{/coursenav}}
 
 {{!
