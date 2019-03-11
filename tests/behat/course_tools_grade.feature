@@ -83,7 +83,7 @@ Feature: When the moodle theme is set to Snap, a course tools section is availab
     And I am on "Course 1" course homepage
     And I grade the assignment "A1" in course "C1" as follows:
       | username | grade       | feedback                 |
-      | student1 | 50.32123    | I'm the teacher feedback |
+      | student1 | 50.32973    | I'm the teacher feedback |
       | student2 | 50.756      | I'm the teacher feedback |
     And I log out
         # By default, Gradebook displays grades with two decimals numbers.
@@ -91,9 +91,9 @@ Feature: When the moodle theme is set to Snap, a course tools section is availab
     And I open the personal menu
     And I am on "Course 1" course homepage
     And I follow "Course Dashboard"
-    And I should see "50.32%" in the ".progressbar-text" "css_element"
+    And I should see "50.33%" in the ".progressbar-text" "css_element"
     And I follow "Gradebook"
-    And I should see "50.32 %" in the "td.column-percentage" "css_element"
+    And I should see "50.33 %" in the "td.column-percentage" "css_element"
     And I log out
    Then I log in as "student2"
     And I open the personal menu
@@ -143,9 +143,9 @@ Feature: When the moodle theme is set to Snap, a course tools section is availab
     And I open the personal menu
     And I am on "Course 1" course homepage
     And I follow "Course Dashboard"
-    And I should see "50.321%" in the ".progressbar-text" "css_element"
+    And I should see "50.330%" in the ".progressbar-text" "css_element"
     And I follow "Gradebook"
-    And I should see "50.321 %" in the "td.column-percentage" "css_element"
+    And I should see "50.330 %" in the "td.column-percentage" "css_element"
     And I log out
     Then I log in as "student2"
     And I open the personal menu
@@ -154,4 +154,30 @@ Feature: When the moodle theme is set to Snap, a course tools section is availab
     And I should see "50.756%" in the ".progressbar-text" "css_element"
     And I follow "Gradebook"
     And I should see "50.756 %" in the "td.column-percentage" "css_element"
+    And I log out
+   Then I log in as "admin"
+    And I open the personal menu
+    And I am on "Course 1" course homepage
+    And I follow "Course Dashboard"
+    And I follow "Gradebook"
+    And I follow "Setup"
+    And I follow "Course grade settings"
+    And I set the field "Overall decimal points" to "4"
+    And I click on "Save changes" "button"
+    And I log out
+   Then I log in as "student1"
+    And I open the personal menu
+    And I am on "Course 1" course homepage
+    And I follow "Course Dashboard"
+    And I should see "50.3297%" in the ".progressbar-text" "css_element"
+    And I follow "Gradebook"
+    And I should see "50.3297 %" in the "td.column-percentage" "css_element"
+    And I log out
+   Then I log in as "student2"
+    And I open the personal menu
+    And I am on "Course 1" course homepage
+    And I follow "Course Dashboard"
+    And I should see "50.7560%" in the ".progressbar-text" "css_element"
+    And I follow "Gradebook"
+    And I should see "50.7560 %" in the "td.column-percentage" "css_element"
     And I log out

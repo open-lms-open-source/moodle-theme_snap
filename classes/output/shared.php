@@ -783,7 +783,7 @@ EOF;
             $grade = local::course_grade($COURSE, true);
             $coursegrade = '-';
             if (isset($grade->coursegrade['percentage'])) {
-                $coursegrade = $grade->coursegrade['percentage'];
+                $coursegrade = current(explode(' ', $grade->coursegrade['percentage']));
             }
 
             $moodleurl = new moodle_url('/grade/report/user/index.php', ['id' => $COURSE->id, 'userid' => $USER->id]);
