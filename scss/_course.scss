@@ -1982,6 +1982,10 @@ span.editinstructions {
     .actions {
         display: none;
     }
+
+    .snap-asset .contentafterlink .row > div {
+        position: unset;
+    }
 }
 
 .snap-asset {
