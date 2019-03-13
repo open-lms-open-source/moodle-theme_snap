@@ -336,3 +336,4 @@ $string['cachedef_course_card_teacher_avatar'] = 'Caching for teacher avatars.';
 $string['cachedef_course_card_teacher_avatar_index'] = 'Caching for teacher avatars index.';
 $string['accesforumstringdis'] = 'Display options';
 $string['accesforumstringmov'] = 'Move options';
+$string['accescalendarstring'] = 'Calendar';
