@@ -53,7 +53,7 @@ Feature: When the Moodle theme is set to Snap, core notifications messages shoul
     Given I log in as "teacher1"
     And I am on "Course 1" course homepage
     And I click on "li.modtype_quiz a.mod-link" "css_element"
-    And the "aria-label" attribute of "div.alert-danger button.close" "css_element" should contain "Close dialog"
+    And the "aria-label" attribute of "div.alert-danger button.close" "css_element" should contain "Close"
 
   @javascript
   Scenario: Success notification should have close dialog as aria-label attribute to be accessible
@@ -66,5 +66,5 @@ Feature: When the Moodle theme is set to Snap, core notifications messages shoul
       | subject            | message                       |
       | Test discussion 1  | Test discussion 1 description |
     And I should see "Your post was successfully added."
-    And the "aria-label" attribute of "div.alert-success button.close" "css_element" should contain "Close dialog"
+    And the "aria-label" attribute of "div.alert-success button.close" "css_element" should contain "Close"
 
