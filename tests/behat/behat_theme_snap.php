@@ -1703,4 +1703,17 @@ class behat_theme_snap extends behat_base {
     public function i_purge_snap_caches() {
         theme_reset_all_caches();
     }
+
+    /**
+     * Add a discussion on a forum.
+     *
+     * @Given /^I post to the discussion:$/
+     * @param TableNode $table
+     */
+    public function i_post_this_to_the_discussion(TableNode $table) {
+        // Fill form and post.
+        $this->execute('behat_forms::i_set_the_following_fields_to_these_values', $table);
+        $this->execute('behat_forms::press_button', get_string('posttoforum', 'forum'));
+        $this->execute('behat_general::i_wait_to_be_redirected');
+    }
 }

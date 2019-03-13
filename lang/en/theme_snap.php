@@ -334,3 +334,5 @@ $string['cachedef_profile_based_branding'] = 'Caching for Profile based branding
 $string['cachedef_course_card_bg_image'] = 'Caching for course background image.';
 $string['cachedef_course_card_teacher_avatar'] = 'Caching for teacher avatars.';
 $string['cachedef_course_card_teacher_avatar_index'] = 'Caching for teacher avatars index.';
+$string['accesforumstringdis'] = 'Display options';
+$string['accesforumstringmov'] = 'Move options';

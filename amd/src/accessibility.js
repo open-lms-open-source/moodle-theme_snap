@@ -23,12 +23,22 @@
 /**
  * JS code to assign attributes and expected behavior for elements in the Dom regarding accessibility.
  */
-define(['jquery'],
-    function($) {
+define(['jquery', 'core/str'],
+    function($, str) {
         return {
             init: function() {
-                // Add aria label to some DOM elements
-                $("i.fa-calendar").parent().attr("aria-label","Calendar");
+
+                str.get_strings([
+                    {key : 'accesforumstringdis', component : 'theme_snap'},
+                    {key : 'accesforumstringmov', component : 'theme_snap'}
+                ]).done(function(stringsjs) {
+                    // Add aria label to some DOM elements
+                    $("i.fa-calendar").parent().attr("aria-label","Calendar");
+                    if ($("#page-mod-forum-discuss")) {
+                        $(".displaymode form select.custom-select").attr("aria-label", stringsjs[0]);
+                        $(".movediscussion select.urlselect").attr("aria-label", stringsjs[1]);
+                    }
+                });
 
                 // Add accessibility for the tabs.
                 $(document).ready(function() {
