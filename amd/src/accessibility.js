@@ -30,10 +30,12 @@ define(['jquery', 'core/str'],
 
                 str.get_strings([
                     {key : 'accesforumstringdis', component : 'theme_snap'},
-                    {key : 'accesforumstringmov', component : 'theme_snap'}
+                    {key : 'accesforumstringmov', component : 'theme_snap'},
+                    {key : 'calendar', component : 'calendar'}
                 ]).done(function(stringsjs) {
                     // Add aria label to some DOM elements
-                    $("i.fa-calendar").parent().attr("aria-label","Calendar");
+                    $("i.fa-calendar").parent().attr("aria-label", stringsjs[2]);
+                    $("input[name='TimeEventSelector[calendar]']").attr('aria-label', stringsjs[2]);
                     if ($("#page-mod-forum-discuss")) {
                         $(".displaymode form select.custom-select").attr("aria-label", stringsjs[0]);
                         $(".movediscussion select.urlselect").attr("aria-label", stringsjs[1]);
