@@ -353,6 +353,10 @@
                 padding: $card-spacer-y $card-spacer-x;
             }
         }
+        div.form-inline.felement {
+            display: inline-block;
+        }
+
     }
 }
 
