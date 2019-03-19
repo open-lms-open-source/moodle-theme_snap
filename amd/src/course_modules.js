@@ -29,9 +29,10 @@ define(
         'core/ajax',
         'theme_snap/util',
         'theme_snap/ajax_notification',
-        'core/str'
+        'core/str',
+        'core/event'
     ],
-    function($, ajax, util, ajaxNotify, str) {
+    function($, ajax, util, ajaxNotify, str, Event) {
 
         /**
          * Module has been completed.
@@ -176,6 +177,7 @@ define(
                                         pageModContent.data('content-loaded', 1);
                                         pageMod.find('.contentafterlink .ajaxstatus').remove();
                                         revealPageMod(pageMod, data.completionhtml);
+                                        Event.notifyFilterContentUpdated('.pagemod-content');
                                     }
                                 });
                             }
