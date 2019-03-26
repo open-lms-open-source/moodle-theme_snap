@@ -51,3 +51,26 @@ Feature: When the Moodle theme is set to Snap, personal menu and course mod choo
     And the "aria-controls" attribute of "#modchooser-accessible-tab a#activites-tab" "css_element" should contain "activites"
     And the "aria-controls" attribute of "#modchooser-accessible-tab a#resources-tab" "css_element" should contain "resources"
     And the "aria-controls" attribute of "#modchooser-accessible-tab a#help-guide-tab" "css_element" should contain "help"
+
+  @javascript
+  Scenario: Press arrow keys should be an accessible way to display content correctly.
+    Given I log in as "admin"
+    And I am on the course main page for "C1"
+    And I click on "a.section-modchooser-link" "css_element"
+    And I click on "a#activites-tab" "css_element"
+    # 39 is the keystroke for right arrow key press.
+    And I press key "39" in "a#activites-tab" "css_element"
+    And the "aria-selected" attribute of "a#activites-tab" "css_element" should contain "false"
+    And the "aria-selected" attribute of "a#resources-tab" "css_element" should contain "true"
+    # 40 is the keystroke for down arrow key press.
+    And I press key "40" in "a#resources-tab" "css_element"
+    And the "aria-selected" attribute of "a#resources-tab" "css_element" should contain "false"
+    And the "aria-selected" attribute of "a#help-guide-tab" "css_element" should contain "true"
+    # 37 is the keystroke for left arrow key press.
+    And I press key "37" in "a#help-guide-tab" "css_element"
+    And the "aria-selected" attribute of "a#resources-tab" "css_element" should contain "true"
+    And the "aria-selected" attribute of "a#help-guide-tab" "css_element" should contain "false"
+    # 38 is the keystroke for up arrow key press.
+    And I press key "38" in "a#resources-tab" "css_element"
+    And the "aria-selected" attribute of "a#activites-tab" "css_element" should contain "true"
+    And the "aria-selected" attribute of "a#resources-tab" "css_element" should contain "false"
