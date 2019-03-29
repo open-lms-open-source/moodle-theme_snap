@@ -946,7 +946,7 @@ class activity {
         $tend = $todayts + (YEARSECS / 2);
 
         if ($phpunittest || !isset($eventsbymodinst[$courseid])) {
-            if ($COURSE->id = $courseid) {
+            if ($COURSE->id == $courseid) {
                 $coursesparam = [$courseid => $COURSE];
             } else {
                 $coursesparam = [$courseid => get_course($courseid)];
