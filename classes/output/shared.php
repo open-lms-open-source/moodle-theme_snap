@@ -381,7 +381,9 @@ EOF;
         $initvars = [$coursevars, $pagehascoursecontent, get_max_upload_file_size($CFG->maxbytes), $forcepwdchange,
                      $conversationbadgecountenabled, $userid, $sitepolicyacceptreqd, $inalternativerole];
         $PAGE->requires->js_call_amd('theme_snap/snap', 'snapInit', $initvars);
-
+        if (!empty($CFG->calendar_adminseesall) && is_siteadmin()) {
+            $PAGE->requires->js_call_amd('theme_snap/adminevents', 'init');
+        }
         // Does the page have editable course content?
         if ($pagehascoursecontent && $PAGE->user_allowed_editing()) {
             $canmanageacts = has_capability('moodle/course:manageactivities', context_course::instance($COURSE->id));
