@@ -1916,13 +1916,16 @@ SQL;
                 // Context + user.
                 $avatarcache->delete($contextid);
                 $userctxidx = self::remove_context_from_avatar_user_index($userctxidx, $contextid, $userid);
-                $indexcache->set('idx', $userctxidx);
             } else {
                 // Only context.
                 $avatarcache->delete($contextid);
                 $userctxidx = self::remove_context_from_avatar_user_index($userctxidx, $contextid);
-                $indexcache->set('idx', $userctxidx);
             }
+            // Save an empty array instead of boolean false which errors with cachestore_file.
+            if (!is_array($userctxidx)) {
+                $userctxidx = [];
+            }
+            $indexcache->set('idx', $userctxidx);
             // Always return, next conditional only makes sense if there is no context.
             return;
         }
