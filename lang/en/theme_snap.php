@@ -337,3 +337,5 @@ $string['cachedef_course_card_teacher_avatar_index'] = 'Caching for teacher avat
 $string['accesforumstringdis'] = 'Display options';
 $string['accesforumstringmov'] = 'Move options';
 $string['accescalendarstring'] = 'Calendar';
+$string['admineventwarning'] = 'To see events from all courses, ';
+$string['gotocalendarsnap'] = 'go to site calendar.';
