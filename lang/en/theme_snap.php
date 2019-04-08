@@ -339,3 +339,4 @@ $string['accesforumstringmov'] = 'Move options';
 $string['accescalendarstring'] = 'Calendar';
 $string['admineventwarning'] = 'To see events from all courses, ';
 $string['gotocalendarsnap'] = 'go to site calendar.';
+$string['quizattemptswarn'] = 'Excludes attempts from suspended users';

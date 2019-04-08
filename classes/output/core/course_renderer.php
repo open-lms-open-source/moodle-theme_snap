@@ -603,6 +603,10 @@ class course_renderer extends \core_course_renderer {
 
                 $content .= html_writer::link($url, $engagementstr);
             }
+            $suspended = \theme_snap\local::suspended_participant_count($COURSE->id, $mod->id);
+            if ($suspended) {
+                $content .= html_writer::tag('p', get_string("quizattemptswarn", "theme_snap"));
+            }
 
         } else {
             // Feedback meta.
