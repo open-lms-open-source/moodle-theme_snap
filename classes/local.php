@@ -530,6 +530,35 @@ class local {
     }
 
     /**
+     * Get total suspended participant count that
+     * attempts a quiz before being suspended
+     * @param $courseid
+     * @param $modid the id of the module
+     * @return int
+     */
+    public static function suspended_participant_count($courseid, $modid) {
+        global $DB;
+
+        $params['courseid'] = $courseid;
+        $params['modid'] = intval($modid);
+        $sql = "-- Snap SQL
+                    SELECT COUNT(ue.userid) as suspended
+                      FROM {user_enrolments} ue
+                      JOIN {course} c ON c.id = :courseid
+                      JOIN {modules} m ON m.name = 'quiz'
+                      JOIN {course_modules} cm ON c.id = cm.course
+                      JOIN {quiz_attempts} qa ON cm.instance = qa.quiz
+                      JOIN {enrol} en ON en.courseid = c.id
+                     WHERE en.id = ue.enrolid
+                       AND qa.userid = ue.userid
+                       AND ue.status = 1
+                       AND cm.module = m.id
+                       AND cm.id = :modid";
+        $suspendedusers = $DB->get_record_sql($sql, $params);
+        return $suspendedusers->suspended;
+    }
+
+    /**
      * Counts list of users enrolled given a context, skipping duplicate ids.
      * Inspired by count_enrolled_users found in lib/enrollib.php
      * Core method is counting duplicates because users can be enrolled into a course via different methods, hence,
@@ -543,7 +572,6 @@ class local {
      */
     public static function count_enrolled_users(\context $context, $withcapability = '', $groupid = 0, $onlyactive = false) {
         global $DB, $USER;
-
         $capjoin = get_enrolled_with_capabilities_join(
             $context, '', $withcapability, $groupid, $onlyactive);
 

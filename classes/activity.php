@@ -411,10 +411,15 @@ class activity {
 
 					  JOIN {quiz_attempts} qa ON qa.quiz = q.id
 					   AND qa.sumgrades IS NULL
+					   AND qa.preview = 0
 
--- Exclude those people who can grade quizzes
+-- Exclude those people who can grade quizzes and suspended users
 
-                     WHERE qa.userid NOT IN ($graderids)
+          		      JOIN {enrol} en ON en.courseid = q.course
+                      JOIN {user_enrolments} ue ON en.id = ue.enrolid
+                       AND qa.userid = ue.userid
+                     WHERE ue.status = 0
+                       AND qa.userid NOT IN ($graderids)
                        AND qa.state = 'finished'
                        AND (q.timeclose = 0 OR q.timeclose > $since)
                   GROUP BY instanceid, q.course, opentime, closetime, coursemoduleid
@@ -567,13 +572,23 @@ class activity {
             list($graderids, $params) = get_enrolled_sql(\context_course::instance($courseid), 'moodle/grade:viewall');
             $params['courseid'] = $courseid;
 
+            if ($maintable == 'quiz') {
+                $quizvalidation = "AND sb.preview = 0";
+            } else {
+                $quizvalidation = "";
+            }
             // Get the number of submissions for all $maintable activities in this course.
             $sql = "-- Snap sql
                     SELECT m.id, COUNT(DISTINCT sb.userid) as totalsubmitted
                       FROM {".$maintable."} m
                       JOIN {".$submittable."} sb ON m.id = sb.$mainkey
-                     WHERE m.course = :courseid
+                      JOIN {enrol} en ON en.courseid = m.course
+                      JOIN {user_enrolments} ue ON en.id = ue.enrolid
+                       AND sb.userid = ue.userid
+                     WHERE ue.status = 0
+                       AND m.course = :courseid
                            AND sb.userid NOT IN ($graderids)
+                           $quizvalidation
                            $extraselect
                      GROUP BY m.id";
             $modtotalsbyid[$maintable][$courseid] = $DB->get_records_sql($sql, $params);
@@ -709,10 +724,15 @@ class activity {
 
 					  JOIN {quiz_attempts} qa ON qa.quiz = q.id
 					   AND qa.sumgrades IS NULL
+					   AND qa.preview = 0
 
--- Exclude those people who can grade quizzes
+-- Exclude those people who can grade quizzes and suspended users
 
-                     WHERE qa.userid NOT IN ($graderids)
+                      JOIN {enrol} en ON en.courseid = q.course
+                      JOIN {user_enrolments} ue ON en.id = ue.enrolid
+                       AND qa.userid = ue.userid
+                     WHERE ue.status = 0
+                       AND qa.userid NOT IN ($graderids)
                        AND qa.state = 'finished'
                        AND q.course = :courseid
                      GROUP BY q.id";
