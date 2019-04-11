@@ -658,19 +658,24 @@ $lighter-grey-btn: #e6e6e6;
         }
     }
 
-    .fp-toolbar div  a.btn.btn-secondary.btn-sm,
-    .fp-viewbar > a.btn.btn-secondary.btn-sm{
+    .fp-toolbar div  button.btn.btn-secondary.btn-sm,
+    .fp-viewbar > button.btn.btn-secondary.btn-sm {
         color: $darker-grey-btn;
         border-color: $light-grey-btn;
 
         .icon {
             color: $dark-grey-btn;
+            text-align: right;
         }
 
-        &:hover{
+        &:hover {
             border-color: $dark-grey-btn;
             color: $dark-grey-btn;
             background-color: $lighter-grey-btn;
+        }
+
+        &:active {
+            color: lighten($brand-primary);
         }
 
     }
