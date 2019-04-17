@@ -24,6 +24,20 @@
     .fp-content {
         border: 2px dashed #bbb;
     }
+
+    .fp-iconview .fp-filename-field {
+        padding-right: 1em;
+    }
+
+    .fp-tableview .fp-folder.fp-hascontextmenu .fp-contextmenu {
+        float: right;
+    }
+
+    .fp-treeview .fp-folder.fp-hascontextmenu .fp-contextmenu,
+    .fp-tableview .fp-folder.fp-hascontextmenu .fp-contextmenu,
+    .fp-iconview .fp-filename-field {
+        position: initial;
+    }
 }
 
 // Make sure accepted file type information is on its own row and positioned nicely.
