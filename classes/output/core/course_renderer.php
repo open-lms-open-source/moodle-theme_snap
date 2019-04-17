@@ -923,7 +923,7 @@ class course_renderer extends \core_course_renderer {
         $actions = array_filter($actions, function($action) {
             return !($action instanceof \action_menu_filler);
         });
-        $rename = course_get_cm_rename_action($mod, $mod->indent, $sr);
+        $rename = core_course_inplace_editable($mod, $mod->indent, $sr);
         $edittitle = get_string('edittitle');
         $rename = str_replace('</a>', "$edittitle</a>", $rename);
         $actions['edit-rename'] = $rename;
