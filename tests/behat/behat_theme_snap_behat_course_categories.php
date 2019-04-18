@@ -28,7 +28,6 @@ use Behat\Gherkin\Node\TableNode as TableNode,
     Behat\Mink\Exception\ElementNotFoundException as ElementNotFoundException;
 
 require_once(__DIR__ . '/../../../../course/tests/behat/behat_course.php');
-require_once(__DIR__ . '/../../../../lib/coursecatlib.php');
 
 /**
  * Overrides to make behat course steps work with Snap.
@@ -118,7 +117,7 @@ class behat_theme_snap_behat_course_categories extends behat_base {
         }
 
         if (empty($data->parent)) {
-            $parent = coursecat::get(0);
+            $parent = core_course_category::get(0);
         } else {
             $parent = $DB->get_record('course_categories', array('id' => $data->parent));
         }

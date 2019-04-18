@@ -82,7 +82,7 @@ class container extends \core_calendar\local\event\container {
                 function ($dbrow) {
                     if (!empty($dbrow->categoryid)) {
                         // This is a category event. Check that the category is visible to this user.
-                        $category = \coursecat::get($dbrow->categoryid, IGNORE_MISSING, true);
+                        $category = \core_course_category::get($dbrow->categoryid, IGNORE_MISSING, true);
 
                         if (empty($category) || !$category->is_uservisible()) {
                             return true;
