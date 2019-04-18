@@ -442,7 +442,7 @@ trait format_section_trait {
      * @return string
      */
     private function change_num_sections($course) {
-        global $PAGE, $OUTPUT;
+        global $OUTPUT;
 
         $course = course_get_format($course)->get_course();
         $context = context_course::instance($course->id);

@@ -26,23 +26,23 @@ $danger: $red !default;
 $light: $gray-100 !default;
 $dark: $gray-800 !default;
 
-$brand-success: $success;
-$brand-info: $info;
-$brand-warning: $warning;
-$brand-danger: $danger;
+$brand-success: $success !default;
+$brand-info: $info !default;
+$brand-warning: $warning !default;
+$brand-danger: $danger !default;
 
 $spacer: 1rem !default;
 $spacer-x: $spacer !default;
 $spacer-y: $spacer !default;
 
-$gray-dark: $gray-900;
-$gray: $gray-700;
-$gray-light: $gray-600;
-$gray-lighter: $gray-300;
-$gray-lightest: $gray-100;
+$gray-dark: $gray-900 !default;
+$gray: $gray-700 !default;
+$gray-light: $gray-600 !default;
+$gray-lighter: $gray-300 !default;
+$gray-lightest: $gray-100 !default;
 
-$table-bg-hover: $table-hover-bg;
-$table-bg-accent: $table-accent-bg;
+$table-bg-hover: $table-hover-bg !default;
+$table-bg-accent: $table-accent-bg !default;
 
 $tag-default-bg: $gray-light !default;
 $tag-primary-bg: $brand-primary !default;
