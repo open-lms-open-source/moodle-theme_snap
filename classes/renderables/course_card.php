@@ -249,10 +249,19 @@ class course_card implements \renderable {
         }
 
         $avatars = array_merge($avatars, $blankavatars);
-        // Cached value of avatar array for the course.
-        $avatarcache->set($this->contextid, $avatars);
-        // Context ID + User ID index for handling unenrolments and deletions.
-        $indexcache->set('idx', $userctxidx);
+
+        if (!empty($avatars)) {
+            // Cached value of avatar array for the course.
+            $avatarcache->set($this->contextid, $avatars);
+        } else {
+            $avatarcache->delete($this->contextid);
+        }
+        if (!empty($userctxidx)) {
+            // Context ID + User ID index for handling unenrolments and deletions.
+            $indexcache->set('idx', $userctxidx);
+        } else {
+            $indexcache->delete('idx');
+        }
 
         $this->disperse_avatars($avatars);
     }
