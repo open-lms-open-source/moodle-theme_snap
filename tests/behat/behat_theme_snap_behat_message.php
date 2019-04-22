@@ -43,7 +43,7 @@ class behat_theme_snap_behat_message extends behat_message {
         $touser = $DB->get_record_select('user', $sqlselect, [$userfullname]);
         $smallmessage = shorten_text($messagecontent, 30);
         $subject = get_string_manager()->get_string('unreadnewmessage', 'message', fullname($fromuser), $touser->lang);
-        $message = new stdClass();
+        $message = new \core\message\message();
         $message->courseid = SITEID;
         $message->userfrom = $fromuser->id;
         $message->userto = $touser->id;

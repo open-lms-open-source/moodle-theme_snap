@@ -97,7 +97,7 @@ class admin_setting_configcolorcategory extends \admin_setting_configtext {
                     return get_string('error:categorycolorinvalidvalue', 'theme_snap', $categoryid);
                 }
                 try {
-                    \coursecat::get($categoryid);
+                    \core_course_category::get($categoryid);
                 } catch (\moodle_exception $e) {
                     return get_string('error:categorynotfound', 'theme_snap', $categoryid);
                 }

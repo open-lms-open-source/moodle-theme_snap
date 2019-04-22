@@ -1143,7 +1143,7 @@ class course_renderer extends \core_course_renderer {
         $courseteachers = '';
         $coursesummary = '';
 
-        $clist = new \course_in_list($COURSE);
+        $clist = new \core_course_list_element($COURSE);
         $teachers = $clist->get_course_contacts();
 
         if (!empty($teachers)) {

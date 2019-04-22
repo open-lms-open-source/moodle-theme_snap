@@ -25,7 +25,7 @@ Feature: When the moodle theme is set to Snap, grading activities are shown only
   Background:
     Given I log in as "admin"
     And I close the personal menu
-    And I navigate to "Define roles" node in "Site administration > Users > Permissions"
+    And I navigate to "Users > Permissions > Define roles" in site administration
     And I click on "Add a new role" "button"
     And I set the field with xpath "//select[@id = 'id_resettype']" to "Teacher"
     And I click on "Continue" "button"
