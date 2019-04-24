@@ -1460,6 +1460,7 @@ HTML;
             }
         }
         $modules = get_module_metadata($COURSE, $modnames, $sectionreturn);
+        $resources = [];
         foreach ($modules as $mod) {
             $help = !empty($mod->help) ? $mod->help : '';
             $helptext = format_text($help, FORMAT_MARKDOWN);

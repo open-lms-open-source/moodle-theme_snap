@@ -122,7 +122,7 @@ class course_renderer extends \core_course_renderer {
                 $modclasses [] = 'unavailable';
             }
             // TODO - can we add completion data.
-            if (has_capability('moodle/course:update', $mod->context)) {
+            if (has_any_capability(['moodle/course:update', 'moodle/course:manageactivities'], $mod->context)) {
                 $modclasses [] = 'snap-can-edit';
             }
             if (has_capability('moodle/course:viewhiddenactivities', $mod->context)) {
