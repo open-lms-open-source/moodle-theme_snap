@@ -28,7 +28,7 @@ Feature: When the moodle theme is set to Snap, admins can change the color of th
     Given I log in as "admin"
     And I am on site homepage
     And I click on "#admin-menu-trigger" "css_element"
-    And I navigate to "Snap" node in "Site administration>Appearance>Themes"
+    And I navigate to "Appearance > Themes > Snap" in site administration
     And I should see "Navigation bar"
     And I click on "Navigation bar" "link"
     And I should see "Change My Courses button colors"

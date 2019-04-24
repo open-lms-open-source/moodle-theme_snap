@@ -110,7 +110,7 @@ Feature: When the moodle theme is set to Snap, students and teachers can open a 
     Scenario: Show grading in the personal menu only to the teachers with the proper access to the courses or the groups.
       When I log in as "admin"
       And I close the personal menu
-      And I navigate to "Define roles" node in "Site administration > Users > Permissions"
+      And I navigate to "Users > Permissions > Define roles" in site administration
       And I follow "Non-editing teacher"
       And I set the following system permissions of "Teacher" role:
         | capability                                   | permission |
@@ -200,7 +200,7 @@ Feature: When the moodle theme is set to Snap, students and teachers can open a 
     Scenario: Grading in the personal menu should show the correct information depending of teachers group capabilities.
      When I log in as "admin"
       And I close the personal menu
-      And I navigate to "Define roles" node in "Site administration > Users > Permissions"
+      And I navigate to "Users > Permissions > Define roles" in site administration
       And I follow "Non-editing teacher"
       And I set the following system permissions of "Teacher" role:
         | capability                                   | permission |

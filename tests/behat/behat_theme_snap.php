@@ -497,7 +497,7 @@ class behat_theme_snap extends behat_base {
         $this->i_wait_until_is_visible('.assign-intro', 'css_element');
         $this->execute('behat_general::i_click_on', ['#admin-menu-trigger', 'css_element']);
         $this->i_wait_until_is_visible('.block_settings.state-visible', 'css_element');
-        $this->execute('behat_navigation::i_navigate_to_node_in', ['Edit settings', 'Assignment administration']);
+        $this->execute('behat_navigation::i_navigate_to_in_current_page_administration', 'Edit settings');
         $this->add_date_restriction($datetime, 'Save and return to course');
     }
 

@@ -39,7 +39,8 @@ Feature: When the moodle theme is set to Snap, course layout cannot be changed t
   Scenario: Teacher sees a warning message and is unable to choose incorrect course layout.
     And I log in as "teacher1"
     And I am on "Course 1" course homepage
-    And I navigate to "Edit settings" node in "Course administration"
+    And I click on "#admin-menu-trigger" "css_element"
+    And I navigate to "Edit settings" in current page administration
     And I click on "#id_courseformathdr" "css_element"
     Then I should see "Due to its design language, \"Show all sections on one page\" isn't available in Snap."
     And I click on "[name=\"coursedisplay\"]" "css_element"

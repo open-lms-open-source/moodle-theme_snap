@@ -31,12 +31,12 @@ Feature: The site displays only the language that user has selected for multilan
     And I log in as "admin"
     And I am on site homepage
     And I click on "#admin-menu-trigger" "css_element"
-    And I navigate to "Manage filters" node in "Site administration>Plugins>Filters"
+    And I navigate to "Plugins > Filters > Manage filters" in site administration
     And I click on "On" "option" in the "Multi-Language Content" "table_row"
     And I click on "Content and headings" "option" in the "Multi-Language Content" "table_row"
     And I am on site homepage
     And I click on "#admin-menu-trigger" "css_element"
-    And I navigate to "Edit settings" node in "Front page settings"
+    And I navigate to "Edit settings" in current page administration
     And I set the field with xpath "//select[@id='id_s__frontpageloggedin0']" to "Announcements"
     And I press "Save changes"
     And I log out
@@ -60,7 +60,7 @@ Feature: The site displays only the language that user has selected for multilan
     Given I log in as "admin"
     And I am on site homepage
     And I click on "#admin-menu-trigger" "css_element"
-    And I navigate to "Snap" node in "Site administration>Appearance>Themes"
+    And I navigate to "Appearance > Themes > Snap" in site administration
     And I set the field "Site footer" to "<span lang=\"en\" class=\"multilang\">English text</span><span lang=\"it\" class=\"multilang\">Italian text</span>"
     And I press "Save changes"
     And "#snap-footer-content" "css_element" should exist

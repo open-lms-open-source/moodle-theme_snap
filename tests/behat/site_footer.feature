@@ -36,7 +36,7 @@ Feature: As an admin, I should be able to set a site's footer on Snap theme.
       And "iframe" "css_element" should not be visible
       And I should not see "New footer"
       And I click on "#admin-menu-trigger" "css_element"
-      And I navigate to "Snap" node in "Site administration>Appearance>Themes"
+      And I navigate to "Appearance > Themes > Snap" in site administration
      Then I should see "Site footer"
       And I set the following fields to these values:
         | Site footer | <iframe></iframe> <p>New footer</p>|
