@@ -638,3 +638,12 @@ body.pagelayout-admin.path-mod {
         margin: 2em auto;
     }
 }
+
+.path-mod-page {
+    #id_appearancehdr {
+        input[readonly] {
+            pointer-events: none;
+            filter: grayscale(100%) opacity(0.5);
+        }
+    }
+}
