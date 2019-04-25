@@ -777,14 +777,18 @@ define(['jquery', 'core/log', 'theme_snap/headroom', 'theme_snap/util', 'theme_s
                                     // Colors for disabling the divs.
                                     var layoverbkcolor = "#f1f1f1";
                                     var layovercolor = "#d5d5d5";
-                                    var cbxprintheading = $('[id="id_printheading"]');
-                                    cbxprintheading.attr('disabled', true);
-                                    cbxprintheading.parent().parent().parent().css('background-color', layoverbkcolor);
-                                    cbxprintheading.parent().parent().parent().css('color', layovercolor);
-                                    var cbxprintintro = $('[id="id_printintro"]');
-                                    cbxprintintro.attr('disabled', true);
-                                    cbxprintintro.parent().parent().parent().css('background-color', layoverbkcolor);
-                                    cbxprintintro.parent().parent().parent().css('color', layovercolor);
+                                    var cBoxes = $('[id="id_printheading"], [id="id_printintro"]');
+
+                                    // Note we can't use 'disabled' for settings or they don't get submitted.
+                                    cBoxes.attr('readonly', true);
+                                    cBoxes.attr('tabindex', -1); // Prevent tabbing to change val.
+                                    cBoxes.click(function(e) {
+                                        e.preventDefault();
+                                        return false;
+                                    });
+                                    cBoxes.parent().parent().parent().css('background-color', layoverbkcolor);
+                                    cBoxes.parent().parent().parent().css('color', layovercolor);
+
                                     // Add warning.
                                     var selectNode = $('[id="id_error_printheading"]');
                                     selectNode.parent().parent().parent().append(html);
