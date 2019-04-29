@@ -41,7 +41,6 @@ Feature: When theme is set to Snap, and course:activityvisibility is set for stu
 
   @javascript
   Scenario: Student can hide an activity if it has course:activityvisibility capability
-    Given I skip because "fails randomly"
     When I log in as "admin"
     And I am on "Course 1" course homepage
     And I set capability "moodle/course:activityvisibility" for students in the course
@@ -54,7 +53,6 @@ Feature: When theme is set to Snap, and course:activityvisibility is set for stu
 
   @javascript
   Scenario: Student should not see the activity after hiding it
-    Given I skip because "fails randomly"
     When I log in as "admin"
     And I am on "Course 1" course homepage
     And I set capability "moodle/course:activityvisibility" for students in the course
@@ -68,7 +66,6 @@ Feature: When theme is set to Snap, and course:activityvisibility is set for stu
 
   @javascript
   Scenario: Student should not be able to hide an activity if the course doesn't have course:activityvisibility for students
-    Given I skip because "fails randomly"
     Given I log in as "student1"
     And I am on "Course 1" course homepage
     And ".snap-activity[data-type='Assignment'] span.snap-edit-asset-more" "css_element" should not exist
