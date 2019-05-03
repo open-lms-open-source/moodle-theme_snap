@@ -49,7 +49,8 @@ class ws_cover_image extends \external_api {
      */
     public static function service_returns() {
         $keys = [
-            'success' => new \external_value(PARAM_BOOL, 'Was the cover image successfully changed', VALUE_REQUIRED)
+            'success' => new \external_value(PARAM_BOOL, 'Was the cover image successfully changed', VALUE_REQUIRED),
+            'contrast' => new \external_value(PARAM_TEXT, 'The color contrast has a warning', VALUE_OPTIONAL)
         ];
 
         return new \external_single_structure($keys, 'coverimage');

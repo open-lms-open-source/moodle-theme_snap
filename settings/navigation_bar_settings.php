@@ -46,7 +46,8 @@ $title = new lang_string('navbarlink', 'theme_snap');
 $description = '';
 $default = '#ff7f41'; // Blackboard Open LMS orange.
 $previewconfig = null;
-$setting = new admin_setting_configcolourpicker($name, $title, $description, $default, $previewconfig);
+$setting = new \theme_snap\admin_setting_configcolorwithcontrast(
+    \theme_snap\admin_setting_configcolorwithcontrast::NAVIGATION_BAR, $name, $title, $description, $default, $previewconfig);
 $setting->set_updatedcallback('theme_reset_all_caches');
 $snapsettings->add($setting);
 
@@ -75,7 +76,9 @@ $title = new lang_string('navbarbuttonlink', 'theme_snap');
 $description = '';
 $default = '#ff7f41'; // Blackboard Open LMS orange.
 $previewconfig = null;
-$setting = new admin_setting_configcolourpicker($name, $title, $description, $default, $previewconfig);
+$setting = new \theme_snap\admin_setting_configcolorwithcontrast(
+    \theme_snap\admin_setting_configcolorwithcontrast::NAVIGATION_BAR_BUTTON,
+    $name, $title, $description, $default, $previewconfig);
 $setting->set_updatedcallback('theme_reset_all_caches');
 $snapsettings->add($setting);
 

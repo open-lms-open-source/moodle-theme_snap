@@ -182,6 +182,11 @@ define(['jquery', 'core/log', 'core/ajax', 'core/notification', 'theme_snap/ajax
                         args: {params: ajaxParams},
                         done: function(response) {
                             state1();
+                            if(response.contrast) {
+                                addCoverImageAlert('snap-alert-cover-image-size',
+                                    response.contrast
+                                );
+                            }
                             if (!response.success && response.warning) {
                                 addCoverImageAlert('snap-alert-cover-image-upload-failed', response.warning);
                             }

@@ -341,3 +341,9 @@ $string['admineventwarning'] = 'To see events from all courses, ';
 $string['gotocalendarsnap'] = 'go to site calendar.';
 $string['quizattemptswarn'] = 'Excludes attempts from suspended users';
 $string['quizfeedback'] = 'Feedback';
+
+$string['validratio'] = 'This combination of colors does comply with the WCAG 2.0 minimum ratio value 4.5:1';
+$string['invalidratio'] = 'This combination of colors does not comply with the WCAG 2.0 minimum ratio value 4.5:1. Value: "{$a}"';
+$string['imageinvalidratio'] = 'This image could have contrast problems due not compliance with the WCAG 2.0 minimum ratio value 4.5:1. AVG pixel Value: "{$a}"';
+$string['catinvalidratio'] = 'The following color categories do not comply with the WCAG 2.0 minimum ratio value 4.5:1 : "{$a}"';
+$string['imageinvalidratiocategory'] = 'This image could have contrast problems with the theme color due not compliance with the WCAG 2.0 minimum ratio value 4.5:1. AVG pixel Value: "{$a}"';
