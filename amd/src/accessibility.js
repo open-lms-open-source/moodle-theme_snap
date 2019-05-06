@@ -34,13 +34,11 @@ define(['jquery', 'core/str'],
                     {key : 'calendar', component : 'calendar'},
                     {key : 'quizfeedback', component : 'theme_snap'}
                 ]).done(function(stringsjs) {
-                    // Add aria label to some DOM elements
-                    if ($("#page-mod-quiz-review")) {
-                        $("div.feedback").attr("tabindex", "0").attr("aria-label", stringsjs[3]);
-                        $("div.specificfeedback").attr("tabindex", "0");
-                        $("div.generalfeedback").attr("tabindex", "0");
-                        $("div.rightanswer").attr("tabindex", "0");
-                    }
+                    // Add aria and accessibility attributes to needed DOM elements to accessibility features.
+                    $("div.feedback").attr("tabindex", "0").attr("aria-label", stringsjs[3]);
+                    $("div.specificfeedback").attr("tabindex", "0");
+                    $("div.generalfeedback").attr("tabindex", "0");
+                    $("div.rightanswer").attr("tabindex", "0");
                     $("i.fa-calendar").parent().attr("aria-label", stringsjs[2]);
                     $("input[name='TimeEventSelector[calendar]']").attr('aria-label', stringsjs[2]);
                     if ($("#page-mod-forum-discuss")) {
