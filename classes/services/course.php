@@ -157,6 +157,32 @@ class course {
             local::process_coverimage($context);
         } else if ($context->contextlevel === CONTEXT_COURSE || $context->contextlevel === CONTEXT_COURSECAT) {
             local::process_coverimage($context, $storedfile);
+
+            $finfo = $storedfile->get_imageinfo();
+            $imagemaincolor = \theme_snap_calculate_image_main_color($storedfile, $finfo);
+            $contrast = \theme_snap_evaluate_color_contrast($imagemaincolor, "#FFFFFF");
+
+            if ($context->contextlevel === CONTEXT_COURSECAT) {
+                $themecolor = get_config('theme_snap', 'themecolor');
+                $catconfig = get_config('theme_snap', 'category_color');
+                $catscolor = [];
+                $catid = $context->instanceid;
+                if (!empty($catconfig)) {
+                    $catscolor = json_decode($catconfig);
+                }
+                if (!empty($catscolor) && property_exists($catscolor, $catid)) {
+                    $themecolor = $catscolor->$catid;
+                }
+                $catcontrast = \theme_snap_evaluate_color_contrast($imagemaincolor, $themecolor);
+                if ($catcontrast < 4.5) {
+                    return ['success' => true, 'contrast' => get_string('imageinvalidratiocategory',
+                        'theme_snap', number_format((float)$catcontrast, 2))];
+                }
+            }
+            if ($contrast < 4.5) {
+                return ['success' => true, 'contrast' => get_string('imageinvalidratio',
+                    'theme_snap', number_format((float)$contrast, 2))];
+            }
         }
         return ['success' => $success];
     }

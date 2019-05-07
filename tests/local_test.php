@@ -1307,4 +1307,18 @@ class theme_snap_local_test extends snap_base_test {
         $this->assertCount(15, $ccard->hiddenavatars);
         $this->assertTrue($ccard->showextralink);
     }
+
+    public function test_snap_compare_colors() {
+
+        $this->resetAfterTest();
+
+        $color1 = '#AB2341';
+        $color2 = '#93FFFF';
+        $color3 = '#AAAAAA';
+        $color4 = '#FFFFFF';
+        $colorratio = theme_snap_calculate_luminosity_ratio($color1, $color2);
+        $this->assertTrue($colorratio >= 4.5);
+        $colorratio = theme_snap_calculate_luminosity_ratio($color3, $color4);
+        $this->assertFalse($colorratio >= 4.5);
+    }
 }
