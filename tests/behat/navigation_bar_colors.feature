@@ -45,4 +45,24 @@ Feature: When the moodle theme is set to Snap, admins can change the color of th
     And I check element "a.btn.btn-primary.snap-login-button.js-snap-pm-trigger" with color "#000000"
     And I check element "a.btn.btn-primary.snap-login-button.js-snap-pm-trigger" with property "background-color" = "#FF0000"
 
-
+  @javascript
+  Scenario: Go to Snap Navigation bar settings page, set colors for My Courses and Login button, and see contrast message.
+    Given I log in as "admin"
+    And I am on site homepage
+    And I click on "#admin-menu-trigger" "css_element"
+    And I navigate to "Appearance > Themes > Snap" in site administration
+    And I should see "Navigation bar"
+    And I click on "Navigation bar" "link"
+    And I should see "Change My Courses button colors"
+    And I should see "This color combination doesn't comply"
+    And I set the following fields to these values:
+      | s_theme_snap_navbarbuttoncolor  | #000000 |
+      | s_theme_snap_navbarbuttonlink   | #FFFFFF |
+      | s_theme_snap_navbarbg  | #000000 |
+      | s_theme_snap_navbarlink   | #FFFFFF |
+    And I click on "Save changes" "button"
+    And I wait until the page is ready
+    And I should see "Changes saved"
+    Then I click on "Navigation bar" "link"
+    And I should see "Change My Courses button colors"
+    And I should not see "This color combination doesn't comply"

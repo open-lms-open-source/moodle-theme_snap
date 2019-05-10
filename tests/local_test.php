@@ -27,6 +27,7 @@ namespace theme_snap\tests;
 use theme_snap\local;
 use theme_snap\renderables\course_card;
 use theme_snap\snap_base_test;
+use theme_snap\color_contrast;
 
 defined('MOODLE_INTERNAL') || die();
 
@@ -1316,9 +1317,9 @@ class theme_snap_local_test extends snap_base_test {
         $color2 = '#93FFFF';
         $color3 = '#AAAAAA';
         $color4 = '#FFFFFF';
-        $colorratio = theme_snap_calculate_luminosity_ratio($color1, $color2);
+        $colorratio = color_contrast::calculate_luminosity_ratio($color1, $color2);
         $this->assertTrue($colorratio >= 4.5);
-        $colorratio = theme_snap_calculate_luminosity_ratio($color3, $color4);
+        $colorratio = color_contrast::calculate_luminosity_ratio($color3, $color4);
         $this->assertFalse($colorratio >= 4.5);
     }
 }

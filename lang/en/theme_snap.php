@@ -343,7 +343,10 @@ $string['quizattemptswarn'] = 'Excludes attempts from suspended users';
 $string['quizfeedback'] = 'Feedback';
 
 $string['validratio'] = 'This combination of colors does comply with the WCAG 2.0 minimum ratio value 4.5:1';
-$string['invalidratio'] = 'This combination of colors does not comply with the WCAG 2.0 minimum ratio value 4.5:1. Value: "{$a}"';
-$string['imageinvalidratio'] = 'This image could have contrast problems due not compliance with the WCAG 2.0 minimum ratio value 4.5:1. AVG pixel Value: "{$a}"';
-$string['catinvalidratio'] = 'The following color categories do not comply with the WCAG 2.0 minimum ratio value 4.5:1 : "{$a}"';
-$string['imageinvalidratiocategory'] = 'This image could have contrast problems with the theme color due not compliance with the WCAG 2.0 minimum ratio value 4.5:1. AVG pixel Value: "{$a}"';
+$string['invalidratio'] = 'This color combination doesn\'t comply with the
+<a href="https://www.w3.org/TR/WCAG20-TECHS/G18.html" target="_blank">WCAG 2.0 minimum ratio value 4.5:1</a>. Value: "{$a}"';
+$string['imageinvalidratio'] = 'This image could have contrast problems due not compliance with the WCAG 2.0 minimum ratio value 4.5:1. Average pixel value: "{$a}"';
+$string['catinvalidratio'] = 'The following color categories don\'t comply with the
+<a href="https://www.w3.org/TR/WCAG20-TECHS/G18.html" target="_blank">WCAG 2.0 minimum ratio value 4.5:1</a> :
+Against site background color (white): "{$a->white}". Against navigation bar background color: "{$a->custombar}". Against My Courses button background color: "{$a->customnav}"';
+$string['imageinvalidratiocategory'] = 'This image could have contrast problems with the theme color due not compliance with the WCAG 2.0 minimum ratio value 4.5:1. Average pixel value: "{$a}"';

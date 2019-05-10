@@ -17,6 +17,7 @@
 namespace theme_snap;
 
 defined('MOODLE_INTERNAL') || die();
+use theme_snap\color_contrast;
 global $CFG;
 require_once($CFG->dirroot.'/theme/snap/lib.php');
 
@@ -55,7 +56,7 @@ class admin_setting_configcolorwithcontrast extends \admin_setting_configcolourp
         global $OUTPUT;
         $html = parent::output_html($data, $query);
 
-        $contrast = theme_snap_compare_colors($this->identifier);
+        $contrast = color_contrast::compare_colors($this->identifier);
         if ($contrast < 4.5) {
             $message = get_string('invalidratio', 'theme_snap', number_format((float)$contrast, 2));
             $html .= $OUTPUT->notification($message, \core\output\notification::NOTIFY_WARNING);
