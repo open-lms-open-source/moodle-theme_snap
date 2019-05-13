@@ -16,6 +16,8 @@
 
 namespace theme_snap;
 
+use grade_item;
+
 defined('MOODLE_INTERNAL') || die();
 
 require_once($CFG->dirroot.'/mod/assign/locallib.php');
@@ -164,19 +166,22 @@ class activity {
             }
 
             if ($graderow) {
-                $gradeitem = \grade_item::fetch(array(
-                    'itemtype' => 'mod',
-                    'itemmodule' => $mod->modname,
+                // Looking for a visible grade.
+                $gradeitems = grade_item::fetch_all([
+                    'courseid'     => $courseid,
+                    'itemtype'     => 'mod',
+                    'itemmodule'   => $mod->modname,
                     'iteminstance' => $mod->instance,
-                ));
-
-                $grade = new \grade_grade(array('itemid' => $gradeitem->id, 'userid' => $USER->id));
+                ]);
 
                 $coursecontext = \context_course::instance($courseid);
-                $canviewhiddengrade = has_capability('moodle/grade:viewhidden', $coursecontext);
-
-                if (!$grade->is_hidden() || $canviewhiddengrade) {
-                    $meta->grade = true;
+                foreach ($gradeitems as $gradeitem) {
+                    $grade = new \grade_grade(['itemid' => $gradeitem->id, 'userid' => $USER->id]);
+                    $canviewhiddengrade = has_capability('moodle/grade:viewhidden', $coursecontext);
+                    if (!$grade->is_hidden() || $canviewhiddengrade) {
+                        $meta->grade = true; // Found a visible grade, item is graded.
+                        break;
+                    }
                 }
             }
         }
@@ -1046,7 +1051,7 @@ class activity {
         }
 
         $sql = "-- Snap sql
-                SELECT m.id AS instanceid, gg.*
+                  SELECT DISTINCT m.id AS instanceid
 
                     FROM {".$mod->modname."} m
 

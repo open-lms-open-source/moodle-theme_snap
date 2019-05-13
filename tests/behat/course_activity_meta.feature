@@ -24,6 +24,7 @@ Feature: When the moodle theme is set to Snap, students see meta data against co
 
   Background:
     Given the following config values are set as admin:
+      | enableoutcomes | 1 |
       | theme | snap |
     And the following "courses" exist:
       | fullname | shortname | category | groupmode | theme |
@@ -32,10 +33,12 @@ Feature: When the moodle theme is set to Snap, students see meta data against co
       | username | firstname | lastname | email |
       | teacher1 | Teacher | 1 | teacher1@example.com |
       | student1 | Student | 1 | student1@example.com |
+      | student2 | Student | 2 | student2@example.com |
     And the following "course enrolments" exist:
       | user | course | role |
       | teacher1 | C1 | editingteacher |
       | student1 | C1 | student |
+      | student2 | C1 | student |
 
   @javascript
   Scenario: Student sees correct meta data against course activities
@@ -87,3 +90,84 @@ Feature: When the moodle theme is set to Snap, students see meta data against co
     And assignment entitled "Test assignment1" has feedback metadata
     And assignment entitled "Test assignment2" does not have feedback metadata
     And assignment entitled "Test assignment3" does not have feedback metadata
+
+  @javascript
+  Scenario: Student sees correct feedback with multiple outcomes configured
+    When I log in as "teacher1"
+    And I am on "Course 1" course homepage
+    And I click on "#admin-menu-trigger" "css_element"
+    And I navigate to "Legacy outcomes" in current page administration
+    And I follow "Edit outcomes"
+    And I press "Add a new outcome"
+    And I follow "Add a new scale"
+    And I set the following fields to these values:
+      | Name | 1337dom scale |
+      | Scale | Noob, Nub, 1337, HaXor |
+    And I press "Save changes"
+    And I am on "Course 1" course homepage
+    And I click on "#admin-menu-trigger" "css_element"
+    And I navigate to "Legacy outcomes" in current page administration
+    And I follow "Edit outcomes"
+    And I press "Add a new outcome"
+    And I set the following fields to these values:
+      | Full name | M8d skillZ! |
+      | Short name | skillZ! |
+      | Scale | 1337dom scale |
+    And I press "Save changes"
+    And I am on "Course 1" course homepage with editing mode on
+    And I add a "Assignment" to section "1" and I fill the form with:
+      | Assignment name | Test assignment name |
+      | Description | Submit your online text |
+      | assignsubmission_onlinetext_enabled | 1 |
+      | assignsubmission_file_enabled | 0 |
+      | M8d skillZ! | 1 |
+    And I log out
+    And I log in as "student1"
+    And I am on "Course 1" course homepage
+    And I follow "Topic 1"
+    And I click on "//a[@class='mod-link']//span[text()='Test assignment name']" "xpath_element"
+    And I press "Add submission"
+    And I set the following fields to these values:
+      | Online text | I'm the student1 submission |
+    And I press "Save changes"
+    And I log out
+    And I log in as "student2"
+    And I am on "Course 1" course homepage
+    And I follow "Topic 1"
+    And I click on "//a[@class='mod-link']//span[text()='Test assignment name']" "xpath_element"
+    When I press "Add submission"
+    And I set the following fields to these values:
+      | Online text | I'm the student2 submission |
+    And I press "Save changes"
+    And I log out
+    And I log in as "teacher1"
+    And I am on "Course 1" course homepage
+    And I follow "Topic 1"
+    And I click on "//a[@class='mod-link']//span[text()='Test assignment name']" "xpath_element"
+    And I click on "#admin-menu-trigger" "css_element"
+    And I navigate to "View all submissions" in current page administration
+    And I click on "Grade" "link" in the "Student 1" "table_row"
+    And I set the following fields to these values:
+      | Grade out of 100 | 50.0 |
+      | M8d skillZ! | 1337 |
+      | Feedback comments | I'm the teacher first feedback |
+    And I press "Save changes"
+    And I press "Ok"
+    And I click on "Edit settings" "link"
+    And I click on "#admin-menu-trigger" "css_element"
+    And I navigate to "View all submissions" in current page administration
+    Then I click on "Quick grading" "checkbox"
+    And I set the field "User grade" to "60.0"
+    And I press "Save all quick grading changes"
+    And I should see "The grade changes were saved"
+    And I press "Continue"
+    And I log out
+    And I log in as "student1"
+    And I am on "Course 1" course homepage
+    And I follow "Topic 1"
+    And assignment entitled "Test assignment name" has feedback metadata
+    And I log out
+    And I log in as "student2"
+    And I am on "Course 1" course homepage
+    And I follow "Topic 1"
+    And assignment entitled "Test assignment name" does not have feedback metadata
