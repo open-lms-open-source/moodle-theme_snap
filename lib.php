@@ -336,3 +336,27 @@ function theme_snap_get_pre_scss($theme) {
 
     return $scss;
 }
+
+/**
+ * Fragment API function to render couse sections.
+ * @param $args
+ * @return string
+ */
+function theme_snap_output_fragment_section($args) {
+    global $PAGE;
+    if (!empty($args['courseid']) && !empty($args['section'])) {
+        $course = get_course($args['courseid']);
+        $PAGE->set_context(\context_course::instance($course->id));
+        $format = course_get_format($args['courseid']);
+        $formatname = $format->get_format();
+        if ($formatname == 'weeks' || $formatname == 'topics') {
+            $course = $format->get_course();
+            $formatrenderer = $format->get_renderer($PAGE);
+            $modinfo = get_fast_modinfo($course);
+            $section = $modinfo->get_section_info($args['section']);
+            $html = $formatrenderer->course_section($course, $section, $modinfo);
+            return $html;
+        }
+    }
+    return '';
+}
