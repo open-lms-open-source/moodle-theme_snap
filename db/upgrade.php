@@ -100,25 +100,5 @@ function xmldb_theme_snap_upgrade($oldversion) {
         upgrade_plugin_savepoint(true, 2017122801, 'theme', 'snap');
     }
 
-    if ($oldversion < 2019051500) {
-
-        // Define table theme_snap_course_favorites to be dropped.
-        $table = new xmldb_table('theme_snap_course_favorites');
-        $index = new xmldb_index('userid-courseid', XMLDB_INDEX_UNIQUE, ['userid', 'courseid']);
-
-        // Conditionally launch drop index userid-courseid.
-        if ($dbman->index_exists($table, $index)) {
-            $dbman->drop_index($table, $index);
-        }
-
-        // Conditionally launch drop table for theme_snap_course_favorites.
-        if ($dbman->table_exists($table)) {
-            $dbman->drop_table($table);
-        }
-
-        // Snap savepoint reached.
-        upgrade_plugin_savepoint(true, 2019051500, 'theme', 'snap');
-    }
-
     return true;
 }
