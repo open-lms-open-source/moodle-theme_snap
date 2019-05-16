@@ -16,7 +16,7 @@
 
 namespace theme_snap;
 
-use Behat\Mink\Exception\Exception;
+use theme_snap\color_contrast;
 
 defined('MOODLE_INTERNAL') || die();
 
@@ -76,8 +76,14 @@ class admin_setting_configcolorcategory extends \admin_setting_configtext {
             'forceltr' => $this->get_force_ltr(),
         ];
         $element = '';
-        $contrastmessage = theme_snap_compare_cat_colors();
-        if (!empty($contrastmessage)) {
+        $failedcontrast = color_contrast::compare_cat_colors();
+        if (!empty($failedcontrast['white']) || !empty($failedcontrast['custombar']) || !empty($failedcontrast['customnav'])) {
+            $contrastmessage = get_string('catinvalidratio', 'theme_snap', [
+                    'white' => implode(', ', $failedcontrast['white']),
+                    'custombar' => implode(', ', $failedcontrast['custombar']),
+                    'customnav' => implode(', ', $failedcontrast['customnav'])
+                ]);
+
             $element .= $OUTPUT->notification($contrastmessage, \core\output\notification::NOTIFY_WARNING);
         }
         $element .= $OUTPUT->render_from_template('core_admin/setting_configtextarea', $context);

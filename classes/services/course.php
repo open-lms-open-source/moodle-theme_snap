@@ -21,6 +21,7 @@ defined('MOODLE_INTERNAL') || die();
 use theme_snap\renderables\course_card;
 use theme_snap\local;
 use theme_snap\renderables\course_toc;
+use theme_snap\color_contrast;
 
 require_once($CFG->dirroot.'/course/lib.php');
 
@@ -159,8 +160,8 @@ class course {
             local::process_coverimage($context, $storedfile);
 
             $finfo = $storedfile->get_imageinfo();
-            $imagemaincolor = \theme_snap_calculate_image_main_color($storedfile, $finfo);
-            $contrast = \theme_snap_evaluate_color_contrast($imagemaincolor, "#FFFFFF");
+            $imagemaincolor = color_contrast::calculate_image_main_color($storedfile, $finfo);
+            $contrast = color_contrast::evaluate_color_contrast($imagemaincolor, "#FFFFFF");
 
             if ($context->contextlevel === CONTEXT_COURSECAT) {
                 $themecolor = get_config('theme_snap', 'themecolor');
@@ -173,7 +174,7 @@ class course {
                 if (!empty($catscolor) && property_exists($catscolor, $catid)) {
                     $themecolor = $catscolor->$catid;
                 }
-                $catcontrast = \theme_snap_evaluate_color_contrast($imagemaincolor, $themecolor);
+                $catcontrast = color_contrast::evaluate_color_contrast($imagemaincolor, $themecolor);
                 if ($catcontrast < 4.5) {
                     return ['success' => true, 'contrast' => get_string('imageinvalidratiocategory',
                         'theme_snap', number_format((float)$catcontrast, 2))];

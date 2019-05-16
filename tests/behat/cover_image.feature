@@ -207,3 +207,51 @@ Feature: When the moodle theme is set to Snap, cover image can be set for site a
     And I log in as "user1"
     And I am on the course category page for category with idnumber "CAT1"
     Then I should not see "Change cover image"
+
+  @javascript
+  Scenario: A warning will be presented if the cover image in a course constrast is not compliant with WG3
+    Given the following "courses" exist:
+      | fullname | shortname | category | format |
+      | Course 1 | C1        | 0        | topics |
+    And the following "users" exist:
+      | username | firstname | lastname | email                |
+      | teacher1 | Teacher   | 1        | teacher1@example.com |
+    And the following "course enrolments" exist:
+      | user     | course | role           |
+      | teacher1 | C1     | editingteacher |
+    And I log in as "teacher1"
+    And I am on the course main page for "C1"
+    Then I should see "Change cover image"
+    And I should not see cover image in page header
+    And I upload cover image "testpng_small.png"
+    And I wait until ".btn.ok" "css_element" is visible
+    And I click on ".btn.ok" "css_element"
+    Then I should see "This image could have contrast problems due not compliance with the WCAG 2.0 minimum ratio value 4.5:1."
+    And I upload cover image "black_cover.jpg"
+    And I wait until ".btn.ok" "css_element" is visible
+    And I click on ".btn.ok" "css_element"
+    Then I should not see "This image could have contrast problems due not compliance with the WCAG 2.0 minimum ratio value 4.5:1."
+
+  @javascript
+  Scenario: A warning will be presented if the cover image in a category constrast is not compliant with WG3
+    Given the following "courses" exist:
+      | fullname | shortname | category | format |
+      | Course 1 | C1        | 0        | topics |
+    And the following "users" exist:
+      | username | firstname | lastname | email                |
+      | teacher1 | Teacher   | 1        | teacher1@example.com |
+    And the following "course enrolments" exist:
+      | user     | course | role           |
+      | teacher1 | C1     | editingteacher |
+    Given I log in as "admin"
+    And I am on course index
+    Then I should see "Change cover image"
+    And I should not see cover image in page header
+    And I upload cover image "testpng_small.png"
+    And I wait until ".btn.ok" "css_element" is visible
+    And I click on ".btn.ok" "css_element"
+    Then I should see "This image could have contrast problems with the theme color due not compliance with the WCAG 2.0 minimum ratio value 4.5:1"
+    And I upload cover image "black_cover.jpg"
+    And I wait until ".btn.ok" "css_element" is visible
+    And I click on ".btn.ok" "css_element"
+    Then I should not see "This image could have contrast problems with the theme color due not compliance with the WCAG 2.0 minimum ratio value 4.5:1"
