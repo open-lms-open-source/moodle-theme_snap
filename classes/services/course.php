@@ -222,10 +222,10 @@ class course {
         }
 
         if (!isset($favorites[$userid])) {
-            $favorites[$userid] = $DB->get_records('theme_snap_course_favorites',
-                ['userid' => $userid],
-                'courseid ASC',
-                'courseid'
+            $favorites[$userid] = $DB->get_records('favourite',
+                ['userid' => $userid, 'itemtype' => 'courses'],
+                'itemid ASC',
+                'itemid'
             );
         }
 
@@ -271,25 +271,19 @@ class course {
         global $USER, $DB;
 
         $course = $this->coursebyshortname($courseshortname);
+        $coursecontext = \context_course::instance($course->id);
         $userid = $userid !== null ? $userid : $USER->id;
+        $usercontext = \context_user::instance($userid);
 
         $favorited = $this->favorited($course->id, $userid, false);
+        $ufservice = \core_favourites\service_factory::get_service_for_user_context($usercontext);
         if ($on) {
             if (!$favorited) {
-                $data = (object) [
-                    'courseid' => $course->id,
-                    'userid' => $userid,
-                    'timefavorited' => time()
-                ];
-                $DB->insert_record('theme_snap_course_favorites', $data);
+                $ufservice->create_favourite('core_course', 'courses', $course->id, $coursecontext);
             }
         } else {
             if ($favorited) {
-                $select = [
-                    'courseid' => $course->id,
-                    'userid' => $userid
-                ];
-                $DB->delete_records('theme_snap_course_favorites', $select);
+                $ufservice->delete_favourite('core_course', 'courses', $course->id, $coursecontext);
             }
         }
         // Kill favorited cache and return if favorited.
