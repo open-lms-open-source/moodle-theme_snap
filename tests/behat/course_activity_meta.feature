@@ -92,6 +92,64 @@ Feature: When the moodle theme is set to Snap, students see meta data against co
     And assignment entitled "Test assignment3" does not have feedback metadata
 
   @javascript
+  Scenario: Student that belongs to a specific group sees correct meta data against course activities
+    And the following "users" exist:
+      | username | firstname | lastname | email         |
+      | student3 | Student   | 3 | student3@example.com |
+      | student4 | Student   | 4 | student4@example.com |
+    And the following "course enrolments" exist:
+      | user | course | role    |
+      | student3 | C1 | student |
+      | student4 | C1 | student |
+    And the following "groups" exist:
+      | name     | course | idnumber |
+      | G1       | C1     | GI1      |
+      | G2       | C1     | GI2      |
+    And the following "group members" exist:
+      | user     | group |
+      | student1 | GI1   |
+      | student2 | GI1   |
+      | student3 | GI2   |
+      | student4 | GI2   |
+
+    And I log in as "teacher1"
+    And I am on "Course 1" course homepage
+    And I follow "Topic 1"
+    # Create assignment 1.
+    And I add a "Assignment" to section "1" and I fill the form with:
+      | Assignment name                  | Test assign  |
+      | Description                      | Description  |
+      | Online text                      | 1            |
+      | Group mode                       | 1            |
+      | Students submit in groups        | Yes          |
+      | Require all group members submit | No           |
+    And I should see "Test assign"
+    And I log out
+    And I log in as "student1"
+    And I am on "Course 1" course homepage
+    And I follow "Topic 1"
+    And I wait until "#section-1" "css_element" is visible
+    And I should see "Test assign"
+    And assignment entitled "Test assign" shows as not submitted in metadata
+    And I follow "Not Submitted"
+    When I press "Add submission"
+    And I set the following fields to these values:
+      | Online text | I'm the student submission |
+    And I press "Save changes"
+    And I am on "Course 1" course homepage
+    And I follow "Topic 1"
+    And assignment entitled "Test assign" shows as submitted in metadata
+    And I log out
+    # Now we login as student2 and it must appear as submitted since is in the same group with student1.
+    And I log in as "student2"
+    And I am on "Course 1" course homepage
+    And I follow "Topic 1"
+    And I wait until "#section-1" "css_element" is visible
+    And I should see "Test assign"
+    And assignment entitled "Test assign" shows as submitted in metadata
+    And I log out
+
+  @javascript
   Scenario: Student sees correct feedback with multiple outcomes configured
     When I log in as "teacher1"
     And I am on "Course 1" course homepage

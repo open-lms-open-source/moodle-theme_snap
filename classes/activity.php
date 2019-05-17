@@ -825,6 +825,31 @@ class activity {
             return false;
         }
 
+        if ($mod->modname === 'assign') {
+            $parameter = [$courseid];
+            $sqlgrps = "-- Snap sql
+                SELECT st.*
+                    FROM {".$submissiontable."} st
+
+                    JOIN {".$mod->modname."} a
+                      ON a.id = st.$modfield
+
+                   WHERE NOT st.groupid = 0
+                     AND a.course = ?
+                     AND st.latest = 1
+                     AND a.teamsubmission = 1
+                ORDER BY $modfield DESC, st.id DESC";
+            $grpssubmissions = $DB->get_records_sql($sqlgrps, $parameter);
+
+            foreach ($grpssubmissions as $grpssub) {
+                if (groups_is_member($grpssub->groupid, $USER->id)) {
+                    if (array_key_exists($grpssub->assignment, $result)) {
+                        $result[$grpssub->assignment]->status = $grpssub->status;
+                    }
+                }
+            }
+        }
+
         foreach ($result as $r) {
             if (!isset($r->status)) {
                 $r->status = null;
