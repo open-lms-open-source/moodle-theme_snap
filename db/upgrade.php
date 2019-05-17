@@ -100,5 +100,27 @@ function xmldb_theme_snap_upgrade($oldversion) {
         upgrade_plugin_savepoint(true, 2017122801, 'theme', 'snap');
     }
 
+    if ($oldversion < 2019051501) {
+        $favourites = $DB->get_records('theme_snap_course_favorites');
+        foreach ($favourites as $key => $favourite) {
+            $userid = $favourite->userid;
+            $usercontext = \context_user::instance($userid);
+            $courseid = $favourite->courseid;
+            $coursecontext = \context_course::instance($courseid);
+
+            $conditions = ['component' => 'core_course',
+                'itemtype' => 'courses',
+                'itemid' => $courseid,
+                'userid' => $userid
+            ];
+            // Checks if the user already has marked as favourite that course via dashboard.
+            if (!$DB->record_exists('favourite', $conditions)) {
+                $ufservice = \core_favourites\service_factory::get_service_for_user_context($usercontext);
+                $ufservice->create_favourite('core_course', 'courses', $courseid, $coursecontext);
+            }
+        }
+        upgrade_plugin_savepoint(true, 2019051501, 'theme', 'snap');
+    }
+
     return true;
 }
