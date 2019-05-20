@@ -67,8 +67,8 @@ class event_handlers {
     public static function course_deleted(course_deleted $event) {
         global $DB;
 
-        $select = ['courseid' => $event->objectid];
-        $DB->delete_records('theme_snap_course_favorites', $select);
+        $select = ['itemid' => $event->objectid, 'component' => 'core_course'];
+        $DB->delete_records('favourite', $select);
 
         local::clean_course_card_bg_image_cache($event->contextid);
         local::clean_course_card_teacher_avatar_cache($event->contextid);
@@ -84,8 +84,8 @@ class event_handlers {
     public static function user_deleted($event) {
         global $DB;
 
-        $select = ['userid' => $event->objectid];
-        $DB->delete_records('theme_snap_course_favorites', $select);
+        $select = ['userid' => $event->objectid, 'component' => 'core_course'];
+        $DB->delete_records('favourite', $select);
 
         local::clean_course_card_teacher_avatar_cache(null, $event->objectid);
     }
