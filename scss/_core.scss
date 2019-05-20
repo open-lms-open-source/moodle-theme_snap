@@ -3835,3 +3835,47 @@ section#region-main {
 .snap-site-description {
     overflow-wrap: break-word;
 }
+
+// Fixes for course cards in the user dashboard.
+#page-my-index {
+    #region-main {
+        @media (max-width: 424px) {
+            form button.btn.btn-secondary {
+                margin-left: 1em;
+            }
+        }
+        @media (min-width: 425px) {
+            form button.btn.btn-secondary {
+                margin-left: 1.5em;
+            }
+        }
+        @media (min-width: 840px) {
+            form button.btn.btn-secondary {
+                margin-left: 2.5em;
+            }
+        }
+        @media (min-width: 1100px) {
+            form button.btn.btn-secondary {
+                margin-left: 3em;
+            }
+        }
+        @media (min-width: 1360px) {
+            form button.btn.btn-secondary {
+                margin-left: 4em;
+            }
+        }
+    }
+}
+
+.dashboard-card-deck {
+    @media (min-width: 576px) {
+        .dashboard-card {
+            width: calc(50% - #{$card-gutter});
+        }
+    }
+    @media (min-width: 840px) {
+        .dashboard-card {
+            width: calc(33.33% - #{$card-gutter});
+        }
+    }
+}
