@@ -550,4 +550,46 @@ class theme_snap_services_course_test extends \advanced_testcase {
         $this->assertEquals(COMPLETION_INCOMPLETE, $completiondata->completionstate);
 
     }
+
+    public function test_section_fragment() {
+        global $CFG, $DB;
+        require_once($CFG->dirroot .'/theme/snap/lib.php');
+        $topics = $this->getDataGenerator()->create_course(
+            array('numsections' => 5, 'format' => 'topics'),
+            array('createsections' => true));
+        $studentrole = $DB->get_record('role', array('shortname' => 'student'));
+        $teacherole = $DB->get_record('role', array('shortname' => 'editingteacher'));
+
+        $student = $this->getDataGenerator()->create_user();
+        $teacher = $this->getDataGenerator()->create_user();
+        $this->getDataGenerator()->enrol_user($student->id,
+            $topics->id,
+            'student');
+        $this->getDataGenerator()->enrol_user($teacher->id,
+            $topics->id,
+            'editingteacher');
+        $this->getDataGenerator()->create_module('assign', ['course' => $topics->id, 'section' => 1,
+            'name' => 'Section Assign']);
+        $params = ['courseid' => $topics->id, 'section' => 1];
+        $this->setUser($student);
+        $section = theme_snap_output_fragment_section($params);
+        $this->assertContains('aria-label="Topic 1"', $section);
+        // Section doesn't have the modchooser div.
+        $this->assertNotContains('snap-modchooser', $section);
+        $this->assertContains('Section Assign', $section);
+        $this->getDataGenerator()->create_module('forum', ['course' => $topics->id, 'section' => 2,
+            'name' => 'Fragment forum']);
+        $params['section'] = 2;
+        $section = theme_snap_output_fragment_section($params);
+        $this->assertContains('Fragment forum', $section);
+        $this->setUser($teacher);
+        // Missing param will result on empty text.
+        $params['section'] = '';
+        $section = theme_snap_output_fragment_section($params);
+        $this->assertEmpty($section);
+        $params['section'] = 2;
+        $section = theme_snap_output_fragment_section($params);
+        $this->assertContains('Fragment forum', $section);
+        $this->assertContains('snap-modchooser', $section);
+    }
 }
