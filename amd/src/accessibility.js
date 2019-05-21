@@ -31,11 +31,9 @@ define(['jquery', 'core/str'],
                 str.get_strings([
                     {key : 'accesforumstringdis', component : 'theme_snap'},
                     {key : 'accesforumstringmov', component : 'theme_snap'},
-                    {key : 'calendar', component : 'calendar'},
-                    {key : 'quizfeedback', component : 'theme_snap'}
+                    {key : 'calendar', component : 'calendar'}
                 ]).done(function(stringsjs) {
                     // Add aria attributes to needed DOM elements to new accessibility features.
-                    $("div.feedback").attr("aria-label", stringsjs[3]);
                     $("i.fa-calendar").parent().attr("aria-label", stringsjs[2]);
                     $("input[name='TimeEventSelector[calendar]']").attr('aria-label', stringsjs[2]);
                     if ($("#page-mod-forum-discuss")) {
@@ -48,11 +46,6 @@ define(['jquery', 'core/str'],
                 $(document).ready(function() {
                     new Tabpanel("snap-pm-accessible-tab");
                     new Tabpanel("modchooser-accessible-tab");
-                    // Add accessibility attributes to needed Dom elements to new accessibility features.
-                    $("div.feedback").attr("tabindex", "0");
-                    $("div.specificfeedback").attr("tabindex", "0");
-                    $("div.generalfeedback").attr("tabindex", "0");
-                    $("div.rightanswer").attr("tabindex", "0");
                 });
 
                 function Tabpanel(id) {
