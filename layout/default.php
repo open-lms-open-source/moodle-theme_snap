@@ -144,6 +144,8 @@ if (stripos($PAGE->bodyclasses, 'format-singleactivity') !== false ) {
 
 </div>
 </div>
+
+<?php echo $OUTPUT->standard_after_main_region_html() ?>
 <!-- close moodle js hooks -->
 <?php // @codingStandardsIgnoreEnd
 require(__DIR__.'/footer.php');
