@@ -3867,6 +3867,10 @@ section#region-main {
     }
 }
 
+.card-footer.dashboard-card-footer.border-0.bg-white {
+    background-color: transparent !important;
+}
+
 .dashboard-card-deck {
     @media (min-width: 576px) {
         .dashboard-card {
