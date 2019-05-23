@@ -375,6 +375,24 @@ p.tree_item.hasicon i.nav-missing-icon:before {
     content: '■'; // Where settings nav icon is missing use this.
 }
 
+// Adjust Page resource activity display when the content is a table.
+li.modtype_page.state-expanded div.pagemod-content {
+    overflow: auto;
+    tr {
+        th {
+            padding-right: 1em;
+        }
+        .mediaplugin_videojs {
+            width: 40em;
+        }
+    }
+    div.d-block {
+        margin-left: 25%;
+        margin-right: 25%;
+        width: 100%;
+    }
+}
+
 .mediaplugin_videojs > div {
     max-width: none !important;
 }
