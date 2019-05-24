@@ -3865,10 +3865,14 @@ section#region-main {
             }
         }
     }
-}
+    
+    .card-footer.dashboard-card-footer.border-0.bg-white {
+        background-color: transparent !important;
+    }
 
-.card-footer.dashboard-card-footer.border-0.bg-white {
-    background-color: transparent !important;
+    .dashboard-card-deck .dashboard-card a {
+        margin: 0 0.1em;
+    }
 }
 
 .dashboard-card-deck {
