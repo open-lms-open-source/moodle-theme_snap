@@ -2835,22 +2835,22 @@ table#user-grades tr.avg td.cell {
     };
     &.alert-info {
         color: $brand-info;
-        background-color: rgba($brand-info, .1);
+        background-color: rgba($brand-info, .05);
         border-color: $brand-info;
     };
     &.alert-success {
         color: $brand-success;
-        background-color: rgba($brand-success, .1);
+        background-color: rgba($brand-success, .05);
         border-color: $brand-success;
     };
     &.alert-danger {
         color: $brand-danger;
-        background-color: rgba($brand-danger, .1);
+        background-color: rgba($brand-danger, .05);
         border-color: $brand-danger;
     };
     &.alert-warning {
         color: $brand-warning;
-        background-color: rgba($brand-warning, .1);
+        background-color: rgba($brand-warning, .05);
         border-color: $brand-warning;
     };
 }
