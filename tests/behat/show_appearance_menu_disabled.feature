@@ -52,5 +52,5 @@ Feature: When the moodle theme is set to Snap and there is a page resource, appe
     And I wait until the page is ready
     And I expand all fieldsets
     And I should see "Snap's design language prevents changes to \"Appearance\" settings."
-    And the "//input[@id='id_printheading']" "xpath_element" should be disabled
-    And the "//input[@id='id_printintro']" "xpath_element" should be disabled
+    And the "//input[@id='id_printheading']" "xpath_element" should be readonly
+    And the "//input[@id='id_printintro']" "xpath_element" should be readonly

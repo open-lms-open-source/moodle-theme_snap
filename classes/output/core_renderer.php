@@ -254,7 +254,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
      * @return string
      */
     protected function render_messages() {
-        if ($this->page->theme->settings->messagestoggle == 0) {
+        if (empty($this->page->theme->settings->messagestoggle)) {
             return '';
         }
 
