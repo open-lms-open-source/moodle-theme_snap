@@ -3905,3 +3905,9 @@ section#region-main {
         }
     }
 }
+
+// Invalid feedback shown when saving some empty required form elements.
+.invalid-feedback {
+    color: $brand-danger;
+    font-family: $font-family-system;
+}
