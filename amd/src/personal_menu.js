@@ -187,6 +187,11 @@ define(['jquery', 'core/log', 'core/yui', 'theme_snap/pm_course_cards', 'theme_s
                         self.update();
                     }
                     event.preventDefault();
+
+                    // If there is a message drawer, dispatch event to avoid opening both elements.
+                    if ($('.message-drawer').length) {
+                        document.dispatchEvent(new Event("messages-drawer:toggle"));
+                    }
                 });
 
                 mobilePersonalMenuListeners();

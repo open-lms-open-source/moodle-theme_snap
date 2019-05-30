@@ -104,3 +104,21 @@
         }
     }
 }
+
+// Show message drawer in full width.
+#page-message-edit,
+#page-message-index {
+    .message-drawer {
+        width: 100%;
+    }
+}
+// Hide scrolling when the message drawer is present.
+#page-message-edit {
+    overflow: hidden;
+}
+// Set style for clickable messages as boost.
+div.message.clickable.bg-secondary {
+    background-color: #ced4da !important;
+    color: #373a3c !important;
+    border-radius: .25rem!important;
+}
