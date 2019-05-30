@@ -376,20 +376,20 @@ p.tree_item.hasicon i.nav-missing-icon:before {
 }
 
 // Adjust Page resource activity display when the content is a table.
-li.modtype_page.state-expanded div.pagemod-content {
-    overflow: auto;
-    tr {
-        th {
-            padding-right: 1em;
+li.modtype_page {
+    div.pagemod-content,
+    div.summary-text {
+        overflow: auto;
+        tr {
+            .mediaplugin_videojs {
+                width: 30em;
+                padding: 0 0.3em;
+            }
         }
-        .mediaplugin_videojs {
-            width: 40em;
+        div.d-block {
+            padding-left: 25%;
+            width: 100%;
         }
-    }
-    div.d-block {
-        margin-left: 25%;
-        margin-right: 25%;
-        width: 100%;
     }
 }
 
