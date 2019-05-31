@@ -39,7 +39,7 @@
             {{#advanced}}<abbr class="initialism text-info" title="{{#str}}advanced{{/str}}">!</abbr>{{/advanced}}
             {{{helpbutton}}}
         </span>
-        <div class="form-control-feedback" id="id_error_{{element.name}}" {{^error}} style="display: none;"{{/error}}>
+        <div class="form-control-feedback invalid-feedback" id="id_error_{{element.name}}" {{#error}} style="display: block;"{{/error}}>
             {{{error}}}
         </div>
     </div>
