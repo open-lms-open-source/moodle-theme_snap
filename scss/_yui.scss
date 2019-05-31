@@ -282,6 +282,7 @@
                 text-decoration: none;
                 color: $dropdown-link-hover-color;
                 background-color: $dropdown-link-hover-bg;
+                outline: 3px solid $nav-color;
             }
         }
         a.yuimenuitemlabel.yuimenuitemlabel-disabled {
