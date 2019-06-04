@@ -232,7 +232,7 @@ class course_toc implements \renderable, \templatable{
             if ($chapter->outputlink) {
                 $chapter->url = '#section-'.$section;
             }
-
+            $chapter->section = $section;
             $chapter->progress = new course_toc_progress($this->course, $thissection);
             $this->chapters->chapters[] = $chapter;
         }

@@ -184,7 +184,25 @@ define(
                 self.showSection();
                 $(document).on('snapTOCReplaced', function() {
                     self.setTOCVisibleSection();
+                    if (self.courseConfig.partialrender) {
+                        sectionAssetManagement.setTocObserver();
+                    }
                 });
+                // Sets the observers for rendering sections on demand.
+                if (self.courseConfig.partialrender) {
+                    var hash = $(location).attr('hash');
+                    var params = hash.split('&');
+                    var section = false;
+
+                    $.each(params, function(idx, param) {
+                        if (param.includes('section')) {
+                            section = param.split('#section-')[1];
+                        }
+                    });
+                    if (section) {
+                        sectionAssetManagement.renderAndFocusSection(section, 0);
+                    }
+                }
             }
         };
 

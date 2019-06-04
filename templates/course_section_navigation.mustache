@@ -22,15 +22,15 @@
 }}
 <nav class="section_footer">
     {{#previous}}
-    <a class="previous_section {{classes}}" href="#section-{{section}}">
-        <div class="nav_icon"><i class="icon-arrow-left"></i></div>
-        <span class="text"><span class="nav_guide">{{#str}}previoussection, theme_snap{{/str}}</span><br>{{{title}}}</span>
+    <a class="previous_section {{classes}}" href="#section-{{section}}" section-number="{{section}}">
+        <div class="nav_icon"><i class="icon-arrow-left" section-number="{{section}}"></i></div>
+        <span class="text"><span class="nav_guide" section-number="{{section}}">{{#str}}previoussection, theme_snap{{/str}}</span><br>{{{title}}}</span>
     </a>
     {{/previous}}
     {{#next}}
-    <a class="next_section {{classes}}" href="#section-{{section}}">
-        <div class="nav_icon"><i class="icon-arrow-right"></i></div>
-        <span class="text"><span class="nav_guide">{{#str}}nextsection, theme_snap{{/str}}</span><br>{{{title}}}</span>
+    <a class="next_section {{classes}}" href="#section-{{section}}" section-number="{{section}}">
+        <div class="nav_icon"><i class="icon-arrow-right" section-number="{{section}}"></i></div>
+        <span class="text"><span class="nav_guide" section-number="{{section}}">{{#str}}nextsection, theme_snap{{/str}}</span><br>{{{title}}}</span>
     </a>
     {{/next}}
 </nav>
