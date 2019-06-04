@@ -377,8 +377,7 @@ p.tree_item.hasicon i.nav-missing-icon:before {
 
 // Adjust Page resource activity display when the content is a table.
 li.modtype_page {
-    div.pagemod-content,
-    div.summary-text {
+    div.pagemod-content {
         overflow: auto;
         tr {
             .mediaplugin_videojs {
