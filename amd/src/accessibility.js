@@ -33,7 +33,7 @@ define(['jquery', 'core/str'],
                     {key : 'accesforumstringmov', component : 'theme_snap'},
                     {key : 'calendar', component : 'calendar'}
                 ]).done(function(stringsjs) {
-                    // Add aria attributes to needed DOM elements to new accessibility features.
+                    // Add strings to needed DOM elements to new accessibility features.
                     $("i.fa-calendar").parent().attr("aria-label", stringsjs[2]);
                     $("input[name='TimeEventSelector[calendar]']").attr('aria-label', stringsjs[2]);
                     if ($("#page-mod-forum-discuss")) {
@@ -42,8 +42,9 @@ define(['jquery', 'core/str'],
                     }
                 });
 
-                // Add accessibility for the tabs.
+                // Add accessibility for the tabs and necessary attributes to needed DOM elements to new accessibility features.
                 $(document).ready(function() {
+                    $("#page-mod-data-edit input[id*='url']").attr("type", "url").attr("autocomplete", "url");
                     new Tabpanel("snap-pm-accessible-tab");
                     new Tabpanel("modchooser-accessible-tab");
                 });
