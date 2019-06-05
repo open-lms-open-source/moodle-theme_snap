@@ -27,38 +27,70 @@ define(['jquery'],
     function($) {
         // Array to control which popovers are open.
         var openedpopovers = [];
+        // Maximum size in pixels to consider a mobile screen
+        var maxWidth = 560;
         return {
             init: function() {
+                // Listener for the admin block.
                 document.addEventListener("messages-drawer:toggle", function(){
-                    if ($('.snap-pm-open #snap-pm').is(':visible') ||
+                    if ($('#page-message-edit').length || $('#page-message-index').length) {
+                        if ($('.block_settings').hasClass('state-visible') ||
                             $('.block_settings').hasClass('state-visible')) {
-                        $('.message-drawer').hide();
-                    } else {
-                        $('.message-drawer').show();
+                            if ($(window).width() < maxWidth) {
+                                $('.message-drawer').hide();
+                            } else {
+                                $('.message-drawer').animate({width: '50%'}, 0);
+                            }
+                        } else {
+                            if ($(window).width() < maxWidth) {
+                                $('.message-drawer').show();
+                            } else {
+                                $('.message-drawer').animate({width: '100%'}, 0);
+                            }
+                        }
                     }
                 });
-
+                // Listener for the personal menu.
+                document.addEventListener("messages-drawer:pm-toggle", function(){
+                    if ($('#page-message-edit').length || $('#page-message-index').length) {
+                        if ($('.snap-pm-open').length) {
+                            $('.message-drawer').hide();
+                        } else {
+                            $('.message-drawer').show();
+                        }
+                    }
+                });
                 // Listeners for popovers.
                 var popover = $('div.popover-region');
                 popover.on('popoverregion:menuopened', function(){
-                    var popovername = $(this).attr("id");
-                    if (openedpopovers.indexOf(popovername) == -1) {
-                        openedpopovers.push(popovername);
-                    }
-                    // If there are open popovers, hide message-drawer.
-                    if (openedpopovers.length > 0)
-                    {
-                        $('.message-drawer').hide();
+                    if ($('#page-message-edit').length || $('#page-message-index').length) {
+                        var popovername = $(this).attr("id");
+                        if (openedpopovers.indexOf(popovername) == -1) {
+                            openedpopovers.push(popovername);
+                        }
+                        // If there are open popovers, hide message-drawer.
+                        if (openedpopovers.length > 0) {
+                            if ($(window).width() < maxWidth) {
+                                $('.message-drawer').hide();
+                            } else {
+                                $('.message-drawer').animate({width: '50%'}, 0);
+                            }
+                        }
                     }
                 }).bind();
                 popover.on('popoverregion:menuclosed', function(){
-                    var popovername = $(this).attr("id");
-                    var index = openedpopovers.indexOf(popovername);
-                    openedpopovers.splice(index, 1);
-                    // Only open drawer when there are no opened popovers.
-                    if (openedpopovers.length == 0)
-                    {
-                        $('.message-drawer').show();
+                    if ($('#page-message-edit').length || $('#page-message-index').length) {
+                        var popovername = $(this).attr("id");
+                        var index = openedpopovers.indexOf(popovername);
+                        openedpopovers.splice(index, 1);
+                        // Only open drawer when there are no opened popovers.
+                        if (openedpopovers.length == 0) {
+                            if ($(window).width() < maxWidth) {
+                                $('.message-drawer').show();
+                            } else {
+                                $('.message-drawer').animate({width: '100%'}, 0);
+                            }
+                        }
                     }
                 }).bind();
             }
