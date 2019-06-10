@@ -46,8 +46,8 @@
 </div>
 {{^element.frozen}}
 {{#js}}
-require(['theme_boost/form-display-errors'], function(module) {
-    module.enhance({{#quote}}{{element.id}}{{/quote}});
+require(['theme_snap/accessibility'], function(module) {
+    module.enhanceform({{#quote}}{{element.id}}{{/quote}});
 });
 {{/js}}
 {{/element.frozen}}
