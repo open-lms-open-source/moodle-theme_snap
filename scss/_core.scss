@@ -3919,3 +3919,14 @@ section#region-main {
         margin-right: 0.17em;
     }
 }
+
+// Fix width for tables when adding a new member to a group in a course.
+#page-group-members div#addmembersform form#assignform table {
+    table-layout: fixed;
+    #existingcell,
+    #buttonscell,
+    #potentialcell,
+    tr:nth-child(4) {
+        width: 25%;
+    }
+}
