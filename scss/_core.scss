@@ -3928,10 +3928,27 @@ section#region-main {
 // Fix width for tables when adding a new member to a group in a course.
 #page-group-members div#addmembersform form#assignform table {
     table-layout: fixed;
-    #existingcell,
-    #buttonscell,
-    #potentialcell,
-    tr:nth-child(4) {
-        width: 25%;
+
+    tr td:nth-child(4) {
+        width: 40%;
+        p {
+            word-break: break-word;
+        }
     }
+
+    #existingcell {
+        input#removeselect_clearbutton {
+            margin-top: 0.5em;
+        }
+        #userselector_options.collapsibleregion {
+            overflow: visible;
+        }
+    }
+
+    #potentialcell {
+        input#addselect_clearbutton {
+            margin-top: 0.5em;
+        }
+    }
+
 }
