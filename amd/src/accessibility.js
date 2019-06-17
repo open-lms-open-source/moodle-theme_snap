@@ -54,9 +54,35 @@ define(['jquery', 'core/str', 'core/event'],
                         $('input.form-control.is-invalid:first').focus();
                     });
 
+                    // Retrieve value from the input buttons from add/remove users in a group inside a course.
+                    var addtext = $('.groupmanagementtable #buttonscell p.arrow_button input[name="add"]').attr('value');
+                    var removetext = $(".groupmanagementtable #buttonscell p.arrow_button input[name='remove']").attr('value');
+
                     // Snap tab panels.
                     new Tabpanel("snap-pm-accessible-tab");
                     new Tabpanel("modchooser-accessible-tab");
+
+                    /**
+                     * Store the references outside the event handler.
+                     * Window reload to change the inputs value for Add and Remove buttons when adding new
+                     * members to a group.
+                     */
+                    var $window = $(window);
+
+                    function checkWidth() {
+                        var windowsize = $window.width();
+                        if (windowsize < 1220) {
+                            $(".groupmanagementtable #buttonscell p.arrow_button input[name='add']").attr("value", "+");
+                            $(".groupmanagementtable #buttonscell p.arrow_button input[name='remove']").attr("value", "-");
+                        } else if (windowsize > 1220) {
+                            $(".groupmanagementtable #buttonscell p.arrow_button input[name='add']").attr("value", addtext);
+                            $(".groupmanagementtable #buttonscell p.arrow_button input[name='remove']").attr("value", removetext);
+                        }
+                    }
+                    // Execute on load
+                    checkWidth();
+                    // Bind event listener
+                    $(window).resize(checkWidth);
                 });
 
                 /**
