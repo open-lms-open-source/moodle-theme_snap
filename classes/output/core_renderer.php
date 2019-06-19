@@ -1179,6 +1179,9 @@ HTML;
      */
     private function get_parentcategories($id) {
         global $DB;
+        if ($id == 0) {
+            return [];
+        }
         $category = $DB->get_record('course_categories', array('id' => $id));
         if (!$category) {
             throw new \moodle_exception('unknowncategory');
