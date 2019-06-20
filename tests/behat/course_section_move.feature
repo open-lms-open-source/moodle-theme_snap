@@ -36,6 +36,10 @@ Feature: When the moodle theme is set to Snap, teachers can move course sections
       | user | course | role |
       | teacher1 | C1 | editingteacher |
       | student1 | C1 | student |
+    And the following "activities" exist:
+      | activity | course               | idnumber | name             | intro                         | section |
+      | assign   | C1                   | assign1  | Test assignment1 | Test assignment description 1 | 1       |
+      | assign   | C1                   | assign2  | Test assignment2 | Test assignment description 2 | 1       |
 
   @javascript
   Scenario: In read mode, teacher moves section 1 before section 4 (section 3).
@@ -86,3 +90,16 @@ Feature: When the moodle theme is set to Snap, teachers can move course sections
     And I am on the course main page for "C1"
     And I follow "Topic 1"
     Then "a[title=Move section]" "css_element" should not exist
+
+  @javascript
+  Scenario: When entering the course, snap-footer-alert should not exist until the action of moving is done. And should disappear from the DOM after moving it.
+    Given I log in as "teacher1"
+    And I am on the course main page for "C1"
+    And "#snap-footer-alert" "css_element" should not exist
+    And I follow "Topic 1"
+    Then "#section-1" "css_element" should exist
+    And I click on ".snap-activity.modtype_assign .snap-asset-move img[title='Move \"Test assignment1\"']" "css_element"
+    Then I should see "Moving \"Test assignment1\""
+    And "#snap-footer-alert" "css_element" should exist
+    And I click on "li#section-1 li.snap-drop.asset-drop div.asset-wrapper a" "css_element"
+    And "#snap-footer-alert" "css_element" should not exist
