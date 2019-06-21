@@ -640,6 +640,7 @@ define(['jquery', 'core/log', 'theme_snap/headroom', 'theme_snap/util', 'theme_s
                     }
                     var onCourseSettings = $('body').attr('id') === 'page-course-edit';
                     var onSectionSettings = $('body').attr('id') === 'page-course-editsection';
+                    $('#page-mod-hvp-mod .h5p-editor-iframe').parent().css({"display": "block"});
                     var pageBlacklist = ['page-mod-hvp-mod'];
                     var pageNotInBlacklist = pageBlacklist.indexOf($('body').attr('id')) === -1;
 
