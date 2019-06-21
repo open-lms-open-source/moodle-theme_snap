@@ -166,4 +166,63 @@ class theme_snap_privacy_provider_testcase extends provider_testcase {
 
         $DB->insert_records('theme_snap_course_favorites', $favorites);
     }
+
+    /**
+     * Test that only users within a course context are fetched.
+     */
+    public function test_get_users_in_context() {
+
+        $user1 = $this->getDataGenerator()->create_user();
+        $user2 = $this->getDataGenerator()->create_user();
+        $course1 = $this->getDataGenerator()->create_course();
+        $this->getDataGenerator()->enrol_user($user1->id, $course1->id, 'student');
+        $this->getDataGenerator()->enrol_user($user2->id, $course1->id, 'student');
+
+        $context = \context_course::instance($course1->id);
+
+        $favorites = [];
+        $favorites[] = (object) ['userid' => $user1->id, 'courseid' => $course1->id, 'timefavorited' => time()];
+        $this->create_favorites($favorites);
+
+        $userlist = new \core_privacy\local\request\userlist($context, 'core_course');
+        provider::get_users_in_context($userlist);
+        $this->assertCount(1, $userlist->get_userids());
+
+        $favorites = [];
+        $favorites[] = (object) ['userid' => $user2->id, 'courseid' => $course1->id, 'timefavorited' => time()];
+        $this->create_favorites($favorites);
+        provider::get_users_in_context($userlist);
+        $this->assertCount(2, $userlist->get_userids());
+    }
+
+    /**
+     * Test that data for users in approved userlist is deleted.
+     */
+    public function test_delete_data_for_users() {
+        global $DB;
+
+        $user1 = $this->getDataGenerator()->create_user();
+        $user2 = $this->getDataGenerator()->create_user();
+        $course = $this->getDataGenerator()->create_course();
+        $this->getDataGenerator()->enrol_user($user1->id, $course->id, 'student');
+        $this->getDataGenerator()->enrol_user($user2->id, $course->id, 'student');
+
+        $context = \context_course::instance($course->id);
+
+        $favorites = [];
+
+        $favorites[] = (object) ['userid' => $user1->id, 'courseid' => $course->id, 'timefavorited' => time()];
+        $favorites[] = (object) ['userid' => $user2->id, 'courseid' => $course->id, 'timefavorited' => time()];
+
+        $this->create_favorites($favorites);
+        $this->assertEquals(2, $DB->count_records('theme_snap_course_favorites'));
+
+        $approveduserlist = new \core_privacy\local\request\approved_userlist($context, 'core_course', [$user1->id]);
+        provider::delete_data_for_users($approveduserlist);
+        $this->assertEquals(1, $DB->count_records('theme_snap_course_favorites', []));
+
+        $approveduserlist = new \core_privacy\local\request\approved_userlist($context, 'core_course', [$user2->id]);
+        provider::delete_data_for_users($approveduserlist);
+        $this->assertEquals(0, $DB->count_records('theme_snap_course_favorites', []));
+    }
 }
