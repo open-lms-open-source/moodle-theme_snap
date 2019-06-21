@@ -28,6 +28,14 @@ define(['jquery', 'core/templates'],
             var containerEl;
 
             /**
+             * Detach the container for footer alert, so it will not appear at the first load of the page,
+             * this to fix AX problems with unnecessary empty tags.
+             */
+            $(document).ready(function() {
+                containerEl.detach();
+            });
+
+            /**
              * Initialising function.
              */
             (function() {
@@ -88,6 +96,8 @@ define(['jquery', 'core/templates'],
              * @param {function} onCancel
              */
             this.show = function(onCancel) {
+                // Re-attach Snap footer alert, so it appears when moving an activity or a section.
+                containerEl.prependTo('section#region-main');
                 containerEl.addClass('snap-footer-alert-visible');
                 if (typeof (onCancel) === 'function') {
                     $('.snap-footer-alert-cancel').click(onCancel);
@@ -103,6 +113,8 @@ define(['jquery', 'core/templates'],
             this.hide = function() {
                 containerEl.removeClass('snap-footer-alert-visible');
                 $('.snap-footer-alert-cancel').removeClass('state-visible');
+                // Detach Snap footer alert after cancel button (When hiding the alert).
+                containerEl.detach();
             };
 
             /**
