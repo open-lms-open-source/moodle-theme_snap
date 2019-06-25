@@ -1141,6 +1141,9 @@ class local {
      */
     public static function course_card_image_url($courseid) {
         $context = \context_course::instance($courseid);
+        if (self::coverimage($context) === false) {
+            return false;
+        }
         $fs = get_file_storage();
         $cardimages = $fs->get_area_files($context->id, 'theme_snap', 'coursecard', 0, "itemid, filepath, filename", false);
         if ($cardimages) {
