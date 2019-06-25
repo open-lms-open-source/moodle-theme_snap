@@ -231,7 +231,7 @@ class course_renderer extends \core_course_renderer {
             $snapmodtype = $this->get_mod_type($mod)[0];
             $assettype = '<div class="snap-assettype">'.$snapmodtype.'</div>';
             // Asset link.
-            $assetlink .= '<h4 class="snap-asset-link">'.$cmname.'</h4>';
+            $assetlink .= '<h3 class="snap-asset-link">'.$cmname.'</h3>';
         }
 
         // Asset content.
@@ -807,7 +807,7 @@ class course_renderer extends \core_course_renderer {
                 $numclass = 'list-numbers';
         }
 
-        $toc = "<h6>".get_string('chapters', 'theme_snap')."</h6>";
+        $toc = "<h4>".get_string('chapters', 'theme_snap')."</h4>";
         $toc .= '<ol class="bookmod-chapters '.$numclass.'">';
         $closemeflag = false; // Control for indented lists.
         $chapterlist = '';

@@ -1513,6 +1513,11 @@ form.togglecompletion {
     }
 }
 
+// Modify H3 size so the chapter title inside a book activity has a correct size between the other words.
+.modtype_book .asset-wrapper .snap-asset-content .summary-text.row h4 {
+    font-size: 1em;
+}
+
 .snap-resource {
     .snap-asset-actions {
         width: 100%;
