@@ -1799,6 +1799,10 @@ span.editinstructions {
             font-weight: 300;
         }
     }
+
+    h3 {
+        font-size: inherit;
+    }
 }
 
 // -------------------------
@@ -1823,6 +1827,54 @@ span.editinstructions {
 
         img {
             margin-left: 25px;
+        }
+    }
+
+    #region-main #mform1 > div.form-group.fitem {
+        margin-left: 0;
+    }
+
+    fieldset {
+        abbr[title]:after {
+            content: '';
+        }
+    }
+
+    .mform .containsadvancedelements {
+
+        .fcontainer>.form-group {
+            width: 100%;
+            >div:first-child {
+                max-width: 30%;
+                min-width: 27%;
+                margin-right: 1em;
+                >.form-inline.felement {
+                    display: inline-block;
+                }
+            }
+        }
+
+        .fcontainer>.form-group:nth-child(5) {
+            >div:first-child {
+                display: inline-block;
+            }
+            div.form-inline {
+                display: inline-block;
+            }
+        }
+
+        .advanced.show {
+            display: inline-block;
+            >div:first-child {
+                display: inline-block;
+                .float-md-right.text-nowrap {
+                    float: right;
+                }
+            }
+            >.form-inline.felement {
+                display: inline-block;
+                max-width: 60%;
+            }
         }
     }
 }
