@@ -55,6 +55,7 @@ class event_handlers {
         $context = \context_course::instance($event->objectid);
 
         local::process_coverimage($context);
+        local::clean_course_card_bg_image_cache($event->contextid);
     }
 
     /**

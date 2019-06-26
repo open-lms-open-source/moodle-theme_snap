@@ -43,6 +43,9 @@ Feature: When the moodle theme is set to Snap, cover image can be set for site a
       | teacher2 | C1     | teacher        |
     And I log in as "teacher1"
     And I am on the course main page for "C1"
+    And I open the personal menu
+    And I should not see course card image in personal menu
+    And I close the personal menu
     Then I should see "Change cover image"
     And I should not see cover image in page header
     And I upload cover image "testpng_small.png"
@@ -59,6 +62,9 @@ Feature: When the moodle theme is set to Snap, cover image can be set for site a
     Then I should see cover image in page header
     And I reload the page
     Then I should see cover image in page header
+    And I open the personal menu
+    And I should see course card image in personal menu
+    And I close the personal menu
     # Test changing the image again
     And I upload cover image "bpd_bikes_1280px.jpg"
     And I wait until ".btn.ok" "css_element" is visible
@@ -69,12 +75,19 @@ Feature: When the moodle theme is set to Snap, cover image can be set for site a
     And I reload the page
     And I check element ".mast-image .breadcrumb a" with color "#FFFFFF"
     Then I should see cover image in page header
+    And I open the personal menu
+    And I should see course card image in personal menu
+    And I close the personal menu
     # Test deleting cover image
     And I click on "#admin-menu-trigger" "css_element"
     And I navigate to "Edit settings" in current page administration
     And I delete "rawcoverimage.jpg" from "Course image" filemanager
     And I press "Save and display"
     Then I should not see cover image in page header
+    And I reload the page
+    And I open the personal menu
+    And I should not see course card image in personal menu
+    And I close the personal menu
     # Test cover image can only be set on main course page
     And I am on the course main page for "C1"
     Then I should see "Change cover image"

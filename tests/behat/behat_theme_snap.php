@@ -986,6 +986,17 @@ class behat_theme_snap extends behat_base {
     }
 
     /**
+     * Get course card image for course card element.
+     * @return string
+     */
+    protected function coursecard_image() {
+        $session = $this->getSession();
+        return $session->evaluateScript(
+            "return jQuery('#snap-pm-courses-current-cards div[style*=\'background-image: url\']').css('background-image')"
+        );
+    }
+
+    /**
      * @Given /^I should see cover image in page header$/
      */
     public function  pageheader_has_cover_image() {
@@ -1004,6 +1015,31 @@ class behat_theme_snap extends behat_base {
         $bgimage = $this->pageheader_backgroundimage();
         if (!empty($bgimage) && $bgimage !== 'none') {
             $msg = '#page-header has a background image ('.$bgimage.')';
+            $exception = new ExpectationException($msg, $this->getSession());
+            throw $exception;
+        }
+    }
+
+
+    /**
+     * @Given /^I should see course card image in personal menu$/
+     */
+    public function personalmenu_has_coursecard_image() {
+        $ccimage = $this->coursecard_image();
+        if (empty($ccimage) || $ccimage === 'none') {
+            $msg = 'Course card does not have image ('.$ccimage.')';
+            $exception = new ExpectationException($msg, $this->getSession());
+            throw $exception;
+        }
+    }
+
+    /**
+     * @Given /^I should not see course card image in personal menu$/
+     */
+    public function personalmenu_does_not_have_coursecard_image() {
+        $ccimage = $this->coursecard_image();
+        if (!empty($ccimage) && $ccimage !== 'none') {
+            $msg = 'Course card has an image ('.$ccimage.')';
             $exception = new ExpectationException($msg, $this->getSession());
             throw $exception;
         }
