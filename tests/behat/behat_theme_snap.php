@@ -577,14 +577,14 @@ class behat_theme_snap extends behat_base {
             $baseselector = '//li[@id="section-'.$elementstr.'"]';
         } else if ($type === 'asset') {
             $baseselector = '(//li[contains(@class, \'snap-asset\')]'. // Selection when editing teacher.
-                '//h4[contains(@class, \'snap-asset-link\')]'.
+                '//h3[contains(@class, \'snap-asset-link\')]'.
                 '//span[contains(text(), \''.$elementstr.'\')]'.
-                '/parent::a/parent::h4/parent::div'.
+                '/parent::a/parent::h3/parent::div'.
                 '|'.
                 '//li[contains(@class, \'snap-asset\')]'. // Selection when anyone else.
-                '//h4[contains(@class, \'snap-asset-link\')]'.
+                '//h3[contains(@class, \'snap-asset-link\')]'.
                 '//*[contains(text(),  \''.$elementstr.'\')]'.
-                '/parent::h4/parent::div)';
+                '/parent::h3/parent::div)';
         } else {
             throw new coding_exception('Unknown element type ('.$type.')');
         }
@@ -1596,7 +1596,7 @@ class behat_theme_snap extends behat_base {
      * @return string
      */
     private function meta_assign_xpath($name) {
-        $xpath = "//span[contains(@class, 'instancename')][contains(text(), '$name')]/parent::a/parent::h4".
+        $xpath = "//span[contains(@class, 'instancename')][contains(text(), '$name')]/parent::a/parent::h3".
         "/parent::div//div[contains(@class, 'snap-completion-meta')]";
         return $xpath;
     }

@@ -83,7 +83,7 @@ Feature: Activity navigation in Snap theme
     And I click on "#section-5 a.snap-visibility.snap-hide" "css_element"
     # Set up book.
     And I follow "Introduction"
-    And I click on "//h4/a/span[contains(text(),'Book 1')]" "xpath_element"
+    And I click on "//h3/a/span[contains(text(),'Book 1')]" "xpath_element"
     And I should see "Add new chapter"
     And I set the following fields to these values:
       | Chapter title | Chapter 1                             |
@@ -94,7 +94,7 @@ Feature: Activity navigation in Snap theme
   Scenario: Step through activities in the course as a teacher.
     Given I log in as "teacher1"
     And I am on "Course 1" course homepage
-    And I click on "//h4/a/span[contains(text(),'Assignment 1')]" "xpath_element"
+    And I click on "//h3/a/span[contains(text(),'Assignment 1')]" "xpath_element"
     # The first activity won't have the previous activity link.
     Then "#prev-activity-link" "css_element" should not exist
     And I should see "Book 1" in the "#next-activity-link" "css_element"
@@ -161,7 +161,7 @@ Feature: Activity navigation in Snap theme
   Scenario: Step through activities in the course as a student.
     Given I log in as "student1"
     And I am on "Course 1" course homepage
-    When I click on "//h4/a/span[contains(text(),'Assignment 1')]" "xpath_element"
+    When I click on "//h3/a/span[contains(text(),'Assignment 1')]" "xpath_element"
     # The first activity won't have the previous activity link.
     Then "#prev-activity-link" "css_element" should not exist
     And I should see "Book 1" in the "#next-activity-link" "css_element"
@@ -216,7 +216,7 @@ Feature: Activity navigation in Snap theme
   Scenario: Jump to another activity as a teacher
     Given I log in as "teacher1"
     When I am on "Course 1" course homepage
-    When I click on "//h4/a/span[contains(text(),'Assignment 1')]" "xpath_element"
+    When I click on "//h3/a/span[contains(text(),'Assignment 1')]" "xpath_element"
     Then "Jump to..." "field" should exist
     # The current activity will not be listed.
     And the "Jump to..." select box should not contain "Assignment 1"
@@ -266,7 +266,7 @@ Feature: Activity navigation in Snap theme
   Scenario: Jump to another activity as a student
     Given I log in as "student1"
     And I am on "Course 1" course homepage
-    And I click on "//h4/a/span[contains(text(),'Assignment 1')]" "xpath_element"
+    And I click on "//h3/a/span[contains(text(),'Assignment 1')]" "xpath_element"
     And "Jump to..." "field" should exist
     # The current activity will not be listed.
     And the "Jump to..." select box should not contain "Assignment 1"
@@ -312,7 +312,7 @@ Feature: Activity navigation in Snap theme
   Scenario: Open an activity in a course that only has a single activity
     Given I log in as "student1"
     And I am on "Course 2" course homepage
-    And I click on "//h4/a/span[contains(text(),'Assignment 1')]" "xpath_element"
+    And I click on "//h3/a/span[contains(text(),'Assignment 1')]" "xpath_element"
     Then "#prev-activity-link" "css_element" should not exist
     And "#next-activity-link" "css_element" should not exist
     And "Jump to..." "field" should not exist

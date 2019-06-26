@@ -69,7 +69,7 @@ Feature: Activity navigation involving activities with access restrictions in Sn
   Scenario: Activity navigation involving activities with access restrictions
     Given I log in as "student1"
     And I am on "Course 1" course homepage
-    And I click on "//h4/a/span[contains(text(),'Assignment 1')]" "xpath_element"
+    And I click on "//h3/a/span[contains(text(),'Assignment 1')]" "xpath_element"
     Then I should see "Forum 1" in the "#next-activity-link" "css_element"
     # Activity that has access restriction should not show up in the dropdown.
     And the "Jump to..." select box should not contain "Chat 1"
