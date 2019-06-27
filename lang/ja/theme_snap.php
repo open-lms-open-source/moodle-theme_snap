@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * @copyright  Copyright (c) 2018 Blackboard Inc. (http://www.blackboard.com)
+ * @copyright  Copyright (c) 2019 Blackboard Inc. (http://www.blackboard.com)
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -49,6 +49,10 @@ $string['cachedef_course_completion_progress_ts'] = 'これは、コースまた
 $string['cachedef_webservicedefinitions'] = '自動生成されたウェブサービス定義のキャッシュ';
 $string['card'] = 'カード';
 $string['categoryedit'] = 'カテゴリを編集する';
+$string['category_color'] = 'カテゴリの色';
+$string['category_color_description'] = 'コースカテゴリの色。子コースは最も近い親カテゴリの設定を使用します';
+$string['category_color_palette'] = 'カラーパレット';
+$string['category_color_palette_description'] = '指定された色に対応する16進値を参照してください。これはすべての設定に影響を与えるわけではなく、ユーザが設定値を作成する上でのサンプルです。';
 $string['changecoverimage'] = 'カバーイメージを変更する';
 $string['changefullname'] = 'サイト名を変更する';
 $string['chapters'] = '章';
@@ -61,7 +65,7 @@ $string['coursecontacts'] = 'コース管理者';
 $string['coursedisplay'] = 'コース表示';
 $string['coursefootertoggle'] = 'コースフッタ';
 $string['coursefootertoggledesc'] = 'コースフッタには、コース管理者、コース説明、コースでの最近のアクティビティなど、コースページのユーザに役立つ情報が表示されます。';
-$string['courseformatnotification'] = '現在お使いのコース形式はSnap themeでは完全にサポートされていません。Blackboard Open LMSで最高のエクスペリエンスを実現するには、Snap themeのトピックまたは週次コースの形式を使用することをお勧めします。コース形式は<a href="{$a}">コース設定</a>で変更できます。';
+$string['courseformatnotification'] = '現在お使いのコース形式はSnapテーマでは完全にサポートされていません。Blackboard Open LMSで最高のエクスペリエンスを実現するには、トピックまたは週次コースの形式をSnapテーマと共に使用することをお勧めします。コース形式は<a href="{$a}">コース設定</a>で変更できます。';
 $string['coursefixydefaulttext'] = '現在どのコースにも登録されていません。<br>登録済みのコースはここに表示されます。';
 $string['coursegrade'] = 'コース評定 :';
 $string['coursenavigation'] = 'コースナビゲーション';
@@ -96,7 +100,7 @@ $string['deletingassetname'] = '{$a->type} "{$a->name}"を削除中';
 $string['deletesectionconfirm'] = 'セクションを削除する';
 $string['deletingsection'] = 'セクション「 {$a} 」の削除中';
 $string['draft'] = '学生には非公開';
-$string['dropzonelabel'] = '添付するファイルをドロップするか、<span class="btn-link">参照</span>する';
+$string['dropzonelabel'] = '添付するファイルをドロップ、または<span class="fake-link">参照</span>する';
 $string['due'] = '期日 {$a}';
 $string['edit'] = '"{$a}" を編集する';
 $string['editcoursecontent'] = 'ブロックを編集する';
@@ -104,8 +108,12 @@ $string['editcoursesettings'] = 'コース設定';
 $string['editcoursetopic'] = 'セクションを編集する';
 $string['editcustomfooter'] = 'フッタを編集する';
 $string['editcustommenu'] = 'カスタムメニューを編集する';
+$string['error:categorycolorinvalidjson'] = 'コースカテゴリのJSONフォーマットが正しくありません';
+$string['error:categorycolorinvalidvalue'] = 'カテゴリ"{$a}"のレコードIDまたはカラー値が無効です';
+$string['error:categorynotfound'] = 'ID"{$a}"のカテゴリレコードは見つかりませんでした';
 $string['error:coverimageexceedsmaxbytes'] = 'カバーイメージがサイトレベルの最大許容ファイルサイズ ({$a}) を超えています。';
 $string['error:coverimageresolutionlow'] = '最適な品質を得るためには、幅1024px以上の大きなイメージを推奨します。';
+$string['error:duplicatedcategoryids'] = 'JSONフォーマットが正しくありません。いくつかのIDが重複しています';
 $string['error:failedtochangeassetvisibility'] = 'アセットの表示/非表示に失敗しました';
 $string['error:failedtochangesectionvisibility'] = 'セクションの表示/非表示に失敗しました';
 $string['error:failedtohighlightsection'] = 'セクションの強調表示に失敗しました';
@@ -178,6 +186,15 @@ $string['images'] = 'イメージ';
 $string['instagram'] = 'Instagram';
 $string['instagramdesc'] = 'あなたのInstagramアカウントのURLです。';
 $string['introduction'] = 'イントロダクション';
+$string['jsontext'] = 'JSONテキスト';
+$string['jsontextdescription'] = 'テキストエリアは指定されたJSONを検証するため、既存のカテゴリのみが許可され、IDレコード (カテゴリレコード) としての数値のみが有効で、16進値のみを色として受け付けます。
+以下に例を示します。<br>
+{"1":"#FAAFFF",<br>
+"45":"#AFF",<br>
+"65":"#FFF228",<br>
+"12":"#CC0084",<br>
+"56":"#CC0087",<br>
+"89":"#CCF084"}';
 $string['knowledgebase'] = 'Blackboard Open LMSナレッジベース';
 $string['list'] = 'リスト';
 $string['linkedin'] = 'LinkedIn';
@@ -231,9 +248,13 @@ $string['pld'] = 'PLD';
 $string['pluginname'] = 'Snap';
 $string['poster'] = 'カバーイメージ';
 $string['posterdesc'] = 'サイトのフロントページ用の大きいヘッダイメージです。横向きイメージ (1200 x 600ピクセル) 以上が最適です。';
-$string['poweredbyrunby'] = '<a href="https://www.blackboard.com/blackboard-open-lms" target="_blank">Blackboard Open LMS</a> (<a href="https://moodle.com/" target="_blank">Moodle</a>ベースの製品。<br>
+$string['poweredbyrunby'] = '<a href="https://www.blackboard.com/blackboard-open-lms" target="_blank">Blackboard Open LMS</a> (<a href="https://moodle.com/" target="_blank">Moodle</a>ベースの製品) で構築しています。<br>
     Copyright &#169; {$a} Blackboard Inc, All Rights Reserved.';
 $string['previoussection'] = '前のセクション';
+$string['privacy:metadata:theme_snap_course_favorites:courseid'] = 'ユーザがお気に入りとしてマークしたコースのコースID';
+$string['privacy:metadata:theme_snap_course_favorites:userid'] = 'コースをお気に入りにマークしたユーザのユーザID';
+$string['privacy:metadata:theme_snap_course_favorites:timefavorited'] = 'ユーザがコースをお気に入りとしてマークしたときのタイムスタンプ';
+$string['privacy:metadata:theme_snap_course_favorites'] = 'Snapのユーザのコースのお気に入りを保存します';
 $string['problemsfound'] = '問題が見つかりました。';
 $string['progress'] = '進捗';
 $string['readmore'] = '詳細情報&nbsp;»';
@@ -248,6 +269,7 @@ $string['released'] = 'リリース済み : {$a}';
 $string['reopened'] = '再オープン';
 $string['resourcedisplay'] = 'リソース表示';
 $string['resourcedisplayhelp'] = '添付ファイルとリンクをコースにどのように表示するか選択します。';
+$string['search'] = 'コンテンツを検索する';
 $string['seriffont'] = 'Serifフォント';
 $string['seriffont_desc'] = 'このフォントは、ユーザが生成するコンテンツのほとんどに使用されます。Serifフォントを使用すると、コンテンツの読みやすさが増し、人間が書いたもののようになります。';
 $string['showcoursegradepersonalmenu'] = '評定';
@@ -287,3 +309,28 @@ $string['xofysubmitted'] = '{$a->completed} / {$a->participants} 提出済み';
 $string['xungraded'] = '{$a} 未採点';
 $string['youtube'] = 'YouTube';
 $string['youtubedesc'] = 'あなたのYouTubeチャンネルのURLです。';
+$string['showallsectionsdisabled'] = 'デザイン言語のため、Snapでは「1ページにすべてのセクションを表示する」は利用できません。';
+$string['disabled'] = '無効にされています';
+$string['showappearancedisabled'] = 'Snapの設計言語は"アピアランス"設定の変更を防ぎます。';
+$string['pbb'] = 'プロファイルベースのブランディング';
+$string['pbb_description'] = '<strong>プロファイルベースのブランディング</strong>を有効にすると、選択したユーザプロファイルフィールドに基づいて、特定のユーザグループのブランディング体験をカスタマイズすることができます。
+<ul><li>ユーザフィールド値は<em>スラッグ化され</em>て、すべての文字が小文字に変換され、それぞれがダッシュ (-) で区切られます</li>
+<li>文字列「<code>snap-pbb-</code>」が先頭に追加されます</li>
+<li>このクラスは<code>body</code> HTMLタグに追加されます</li></ul>
+たとえば、ユーザフィールド値<em>Blueberry Extravaganza</em>はスラッグ化されて次のように変換されます : <code>snap-pbb-blueberry-extravaganza</code><br /><br />
+この機能は<a href="https://help.blackboard.com/Blackboard_Open_LMS/Administrator/Manage_a_Site/Course_and_Site_Design/Themes/Snap#advanced-branding_OTP-3" target="_blank">Custom CSS</a>と組み合わせて使用され、
+<a class="snap-settings-tab-link" href="#themesnapbranding">基本</a>セクションの新しいクラスを使用してCSSセレクタを追加する必要があります。';
+$string['pbb_enable'] = 'プロファイルベースのブランディングを有効にする';
+$string['pbb_enable_description'] = 'アクティブな場合、bodyタグへのクラスの追加のみ行います。';
+$string['pbb_field'] = '使用するユーザフィールド';
+$string['pbb_field_description'] = 'このフィールドの値はスラッグ化され、<code>snap-pbb-</code>が先頭に追加されたCSSクラス名として使用されます。';
+$string['cachedef_profile_based_branding'] = 'プロファイルベースのブランディングのキャッシング。';
+$string['cachedef_course_card_bg_image'] = 'コースの背景イメージのキャッシング。';
+$string['cachedef_course_card_teacher_avatar'] = '教師のアバターのキャッシング。';
+$string['cachedef_course_card_teacher_avatar_index'] = '教師のアバターのインデックスのキャッシング。';
+$string['accesforumstringdis'] = '表示オプション';
+$string['accesforumstringmov'] = '移動オプション';
+$string['accescalendarstring'] = 'カレンダー';
+$string['admineventwarning'] = 'すべてのコースのイベントを見るには、 ';
+$string['gotocalendarsnap'] = 'サイトカレンダーに移動します。';
+$string['quizattemptswarn'] = '一時停止ユーザの受験を除外する';
