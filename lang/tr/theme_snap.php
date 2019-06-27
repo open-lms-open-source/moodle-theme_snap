@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * @copyright  Copyright (c) 2018 Blackboard Inc. (http://www.blackboard.com)
+ * @copyright  Copyright (c) 2019 Blackboard Inc. (http://www.blackboard.com)
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -49,6 +49,11 @@ $string['cachedef_course_completion_progress_ts'] = 'Bu da, bir kurs veya modül
 $string['cachedef_webservicedefinitions'] = 'Otomatik olarak üretilen web hizmeti tanımlarının önbelleğe alınması.';
 $string['card'] = 'Kart';
 $string['categoryedit'] = 'Kategoriyi düzenle';
+$string['category_color'] = 'Kategori rengi';
+$string['category_color_description'] = 'Kurs Kategorisi rengi. Alt kurslar, en yakın üst kategori yapılandırmasını alır';
+$string['category_color_palette'] = 'Renk paleti';
+$string['category_color_palette_description'] = 'Verilen renk için ilgili onaltılık değere bakın. Bu işlem,
+herhangi bir yapılandırmayı etkilemez. Sadece kullanıcıların yapılandırma değerini anlaması için bir örnektir.';
 $string['changecoverimage'] = 'Kapak görüntüsünü değiştir';
 $string['changefullname'] = 'Site adını değiştir';
 $string['chapters'] = 'Bölümler';
@@ -61,7 +66,7 @@ $string['coursecontacts'] = 'Kurs Kişileri';
 $string['coursedisplay'] = 'Kurs ekranı';
 $string['coursefootertoggle'] = 'Kurs altbilgisi';
 $string['coursefootertoggledesc'] = 'Kurs altbilgisi, bir kurs sayfasında kullanıcılara kurs kişileri, kurs tanımı ve kurstaki son etkinlikler gibi gerekli bilgileri gösterir.';
-$string['courseformatnotification'] = 'Şu anda kullandığınız kurs biçimi Snap teması tarafından tam olarak desteklenmiyor. En iyi deneyim için Blackboard Open LMS, Snap temasıyla birlikte Konular veya Haftalık kurs biçimlerinin kullanılmasını önermektedir. Kurs biçimi, <a href="{$a}">kurs ayarları</a> içinden değiştirilebilir.';
+$string['courseformatnotification'] = 'Şu anda kullandığınız kurs biçimi Snap teması tarafından tam olarak desteklenmiyor. Blackboard Open LMS, en iyi deneyim için Snap temasıyla birlikte Konular veya Haftalık kurs biçimlerinin kullanılmasını önerir. Kurs biçimi, <a href="{$a}">kurs ayarları</a> içinden değiştirilebilir.';
 $string['coursefixydefaulttext'] = 'Şu anda hiçbir kursa kayıtlı değilsiniz.<br>Kaydolduğunuz kurslar burada gösterilecektir.';
 $string['coursegrade'] = 'Kurs notu:';
 $string['coursenavigation'] = 'Kurs gezintisi';
@@ -78,7 +83,7 @@ $string['comingsoon'] = 'Yakında geliyor!';
 $string['createsection'] = 'Bölüm oluştur';
 $string['current'] = 'Mevcut';
 $string['customcss'] = 'Özel CSS';
-$string['customcssdesc'] = 'Lütfen büyük gücün büyük sorumluluk getirdiğini unutmayın. Buraya eklenen CSS ile ilgili her sorunu çözmek sizin sorumluluğunuzdadır. Blackboard Open LMS Desteği, CSS ile ilgili içerikler konusunda yardım sağlamaz ve sorunları gidermez.';
+$string['customcssdesc'] = 'Lütfen büyük gücün büyük sorumluluk getirdiğini unutmayın. Buraya eklenen CSS ile ilgili her sorunu çözme sorumluluğu sizindir. Blackboard Open LMS Desteği, CSS ile ilgili içerikler konusunda yardım sağlamaz ve sorunları gidermez.';
 $string['customtopbar'] = 'Gezinti çubuğu';
 $string['customisenavbar'] = 'Gezinti çubuğu renklerini değiştir';
 $string['customisenavbutton'] = 'Kurslarım düğmesi renklerini değiştir';
@@ -96,7 +101,7 @@ $string['deletingassetname'] = '{$a->type} "{$a->name}" siliniyor';
 $string['deletesectionconfirm'] = 'Bölümü Sil';
 $string['deletingsection'] = '"{$a}" bölümü siliniyor';
 $string['draft'] = 'Öğrencilere yayınlanmayan';
-$string['dropzonelabel'] = 'Eklenecek dosyaları bırak veya <span class="btn-link">gözat</span>';
+$string['dropzonelabel'] = 'Eklenecek dosyaları bırak veya <span class="fake-link">gözat</span>';
 $string['due'] = 'Teslim tarihi {$a}';
 $string['edit'] = '"{$a}" öğesini düzenle';
 $string['editcoursecontent'] = 'Blokları düzenle';
@@ -104,8 +109,12 @@ $string['editcoursesettings'] = 'Kurs ayarları';
 $string['editcoursetopic'] = 'Bölümü düzenle';
 $string['editcustomfooter'] = 'Altbilgiyi düzenle';
 $string['editcustommenu'] = 'Özel menüyü düzenle';
+$string['error:categorycolorinvalidjson'] = 'Kurs kategorileri için yanlış JSON biçimi';
+$string['error:categorycolorinvalidvalue'] = '"{$a}" kategorisi için kayıt kimliği veya renk değeri geçerli değil';
+$string['error:categorynotfound'] = '"{$a}" kimliğine sahip kategori kaydı bulunamadı';
 $string['error:coverimageexceedsmaxbytes'] = 'Kapak görüntüsü, site seviyesinde izin verilen maksimum dosya boyutunu ({$a}) aşıyor';
 $string['error:coverimageresolutionlow'] = 'En iyi görünüm için, en az 1024 piksel genişliğinde daha büyük bir görüntü kullanılmasını öneririz.';
+$string['error:duplicatedcategoryids'] = 'Yanlış JSON biçimi, bazı kimlikler yinelenmiş';
 $string['error:failedtochangeassetvisibility'] = 'Varlık gizlenemedi/gösterilemedi';
 $string['error:failedtochangesectionvisibility'] = 'Bölüm gizlenemedi/gösterilemedi';
 $string['error:failedtohighlightsection'] = 'Bölüm vurgulanamadı';
@@ -178,6 +187,16 @@ $string['images'] = 'Görüntüler';
 $string['instagram'] = 'Instagram';
 $string['instagramdesc'] = 'Instagram hesabınızın url\'si.';
 $string['introduction'] = 'Giriş';
+$string['jsontext'] = 'JSON Metni';
+$string['jsontextdescription'] = 'Metin alanı verilen JSON\'u doğruladığından, yalnızca mevcut kategorilere izin verilir,
+yalnızca kimlik kayıtları (kategori kayıtları) olan sayısal değerler geçerlidir ve renk olarak yalnızca onaltılık değerler kabul edilir.
+Örneğin:<br>
+{"1":"#FAAFFF",<br>
+"45":"#AFF",<br>
+"65":"#FFF228",<br>
+"12":"#CC0084",<br>
+"56":"#CC0087",<br>
+"89":"#CCF084"}';
 $string['knowledgebase'] = 'Blackboard Open LMS Bilgi Bankası';
 $string['list'] = 'Liste';
 $string['linkedin'] = 'LinkedIn';
@@ -231,10 +250,13 @@ $string['pld'] = 'PLD';
 $string['pluginname'] = 'Snap';
 $string['poster'] = 'Kapak görüntüsü';
 $string['posterdesc'] = 'Sitenizin ön sayfası için büyük bir başlık görüntüsü. Yatay yönlendirilmiş (1200 x600 piksel) veya daha büyük resimler en iyisidir.';
-$string['poweredbyrunby'] = '<a href="https://moodle.com/" target="_blank">Moodle</a>.<br> tarafından desteklenen
-<a href="https://www.blackboard.com/blackboard-open-lms" target="_blank">Blackboard Open LMS</a> tabanlı ürün.
-Telif Hakkı &#169; {$a} Blackboard Inc, Tüm Hakları Saklıdır.';
+$string['poweredbyrunby'] = '<a href="https://moodle.com/" target="_blank">Moodle</a> tabanlı bir ürün olan <a href="https://www.blackboard.com/blackboard-open-lms" target="_blank">Blackboard Open LMS</a> ile geliştirilmiştir.<br>
+    Telif Hakkı &#169; {$a} Blackboard Inc., Tüm Hakları Saklıdır.';
 $string['previoussection'] = 'Bir önceki bölüm';
+$string['privacy:metadata:theme_snap_course_favorites:courseid'] = 'Kullanıcının sık kullanılanlara eklediği kursun kimliği';
+$string['privacy:metadata:theme_snap_course_favorites:userid'] = 'Kursu sık kullanılanlara ekleyen kullanıcının kullanıcı kimliği';
+$string['privacy:metadata:theme_snap_course_favorites:timefavorited'] = 'Kullanıcının kursu sık kullanılanlara eklediği zamanı belirten zaman damgası';
+$string['privacy:metadata:theme_snap_course_favorites'] = 'Kullanıcının Snap için sık kullanılanlara eklediği kursları depolar';
 $string['problemsfound'] = 'Bulunan Sorunlar';
 $string['progress'] = 'İlerleme';
 $string['readmore'] = 'Daha fazlası için&nbsp;»';
@@ -249,6 +271,7 @@ $string['released'] = 'Yayınlanma tarihi: {$a}';
 $string['reopened'] = 'Yeniden açıldı';
 $string['resourcedisplay'] = 'Kaynak görüntüsü';
 $string['resourcedisplayhelp'] = 'Kursunuzda eklerin ve bağlantıların nasıl göründüğünü seçin.';
+$string['search'] = 'İçeriği ara';
 $string['seriffont'] = 'Serif yazı tipi';
 $string['seriffont_desc'] = 'Bu yazı tipi, kullanıcı tarafından üretilen içeriklerin çoğu için kullanılır. Serif yazı tipini kullanmak, kullanıcı tarafından üretilen içeriği daha okunur kılar ve bir insan tarafından yazıldığı hissini uyandırır.';
 $string['showcoursegradepersonalmenu'] = 'Notlar';
@@ -288,3 +311,28 @@ $string['xofysubmitted'] = '{$a->completed} / {$a->participants} Teslim etti';
 $string['xungraded'] = '{$a} Not Verilmeyen';
 $string['youtube'] = 'YouTube';
 $string['youtubedesc'] = 'Youtube kanalınızın url\'si.';
+$string['showallsectionsdisabled'] = 'Tasarım dili nedeniyle "Tüm bölümleri bir sayfada göster" seçeneği Snap\'te kullanılamaz.';
+$string['disabled'] = 'Devre Dışı';
+$string['showappearancedisabled'] = 'Snap\'in tasarım dili "Görünüm" ayarlarının değiştirilmesini önler.';
+$string['pbb'] = 'Profil tabanlı markalama';
+$string['pbb_description'] = '<strong>Profil tabanlı markalamayı</strong> etkinleştirerek seçilen kullanıcı profili alanına göre belirli bir kullanıcı grubu için markalama deneyimini özelleştirebilirsiniz.
+<ul><li>Kullanıcı alanı değeri <em>dizileştirilir</em>; yani tüm karakterler küçük harf halien getirilir ve tire (-) ile ayrılır</li>
+<li><code>snap-pbb-</code> dizesi başa eklenir</li>
+<li>Bu sınıf <code>body</code> Html etiketine eklenir</li></ul>
+Örneğin, kullanıcı alanı değeri <em>Blueberry Extravaganza</em>, <code>snap-pbb-blueberry-extravaganza</code> şeklinde dizileştirilir<br /><br />
+Bu özellik <a href="https://help.blackboard.com/Blackboard_Open_LMS/Administrator/Manage_a_Site/Course_and_Site_Design/Themes/Snap#advanced-branding_OTP-3" target="_blank">Özel CSS</a> ile birlikte kullanılır,
+<a class="snap-settings-tab-link" href="#themesnapbranding">Temeller</a> bölümündeki yeni sınıfları kullanarak CSS seçicilerini eklemeniz gerekir.';
+$string['pbb_enable'] = 'Profil tabanlı markalamayı etkinleştir';
+$string['pbb_enable_description'] = 'Etkinse body etiketine yalnızca sınıfı ekler.';
+$string['pbb_field'] = 'Kullanılacak kullanıcı alanı';
+$string['pbb_field_description'] = 'Bu alanın değeri dizileştirilir ve başına <code>snap-pbb-</code> eklenerek bir CSS sınıf adı olarak kullanılır.';
+$string['cachedef_profile_based_branding'] = 'Profil tabanlı markalama için önbelleğe alma.';
+$string['cachedef_course_card_bg_image'] = 'Kurs arka plan görüntüsü için önbelleğe alma.';
+$string['cachedef_course_card_teacher_avatar'] = 'Öğretmen avatarları için önbelleğe alma.';
+$string['cachedef_course_card_teacher_avatar_index'] = 'Öğretmen avatarları dizini için önbelleğe alma.';
+$string['accesforumstringdis'] = 'Görüntüleme seçenekleri';
+$string['accesforumstringmov'] = 'Seçenekleri taşı';
+$string['accescalendarstring'] = 'Takvim';
+$string['admineventwarning'] = 'Tüm kurslardaki olayları görmek için, ';
+$string['gotocalendarsnap'] = 'site takvimine gidin.';
+$string['quizattemptswarn'] = 'Askıya alınan kullanıcılara ait denemeleri hariç tutar';
