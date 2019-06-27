@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * @copyright  Copyright (c) 2018 Blackboard Inc. (http://www.blackboard.com)
+ * @copyright  Copyright (c) 2019 Blackboard Inc. (http://www.blackboard.com)
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -49,6 +49,10 @@ $string['cachedef_course_completion_progress_ts'] = 'Això s’utilitza perquè 
 $string['cachedef_webservicedefinitions'] = 'Emmagatzematge de la memòria cau per a les definicions autogenerades del servei web.';
 $string['card'] = 'Targeta';
 $string['categoryedit'] = 'Edita la categoria';
+$string['category_color'] = 'Color de categoria';
+$string['category_color_description'] = 'Color de categoria del curs. Els cursos secundaris adopten la configuració de la categoria primària més propera';
+$string['category_color_palette'] = 'Paleta de colors';
+$string['category_color_palette_description'] = 'Vegeu el valor hexadecimal corresponent del color determinat. No afectarà cap configuració; és només una mostra per ajudar els usuaris a crear un valor de configuració.';
 $string['changecoverimage'] = 'Canvia la imatge de portada';
 $string['changefullname'] = 'Canvia el nom del lloc';
 $string['chapters'] = 'Capítols';
@@ -61,7 +65,7 @@ $string['coursecontacts'] = 'Contactes del curs';
 $string['coursedisplay'] = 'Visualització del curs';
 $string['coursefootertoggle'] = 'Peu de pàgina del curs';
 $string['coursefootertoggledesc'] = 'El peu de pàgina del curs mostra informació útil als usuaris en una pàgina del curs que inclou els contactes, la descripció i l’activitat recent del curs.';
-$string['courseformatnotification'] = 'El format actual del curs que feu servir no és totalment compatible amb el tema Ajusta. Per a obtenir la millor experiència, Blackboard Open LMS recomana utilitzar els formats de curs per Tema o Setmanals amb el tema Ajusta. El format del curs es pot canviar als <a href="{$a}">paràmetres del curs</a>.';
+$string['courseformatnotification'] = 'El format actual del curs que feu servir no és totalment compatible amb el tema Snap. Per a obtenir la millor experiència, Blackboard Open LMS recomana utilitzar els formats de curs per Tema o Setmanals amb el tema Snap. El format del curs es pot canviar als <a href="{$a}">paràmetres del curs</a>.';
 $string['coursefixydefaulttext'] = 'Actualment no us heu matriculat a cap curs.<br>Els cursos als quals us matriculeu es mostraran aquí.';
 $string['coursegrade'] = 'Qualificació del curs:';
 $string['coursenavigation'] = 'Navegació del curs';
@@ -78,7 +82,7 @@ $string['comingsoon'] = 'Properament';
 $string['createsection'] = 'Crea una secció';
 $string['current'] = 'Actual';
 $string['customcss'] = 'Personalitza CSS';
-$string['customcssdesc'] = 'Tingueu en compte que el poder ha d\'anar acompanyat d\'una gran responsabilitat. Tots els problemes causats pel CSS afegit aquí són la vostra responsabilitat, així com resoldre\'ls. L\'Ajuda de Blackboard Open LMS no soluciona problemes ni proporciona cap ajuda amb continguts relacionats amb CSS.';
+$string['customcssdesc'] = 'Tingueu en compte que el poder ha d\'anar acompanyat d\'una gran responsabilitat. Resoldre els problemes causats pel CSS que heu afegit aquí és la vostra responsabilitat. El servei d\'assistència de Blackboard Open LMS no soluciona problemes ni proporciona cap ajuda en relació amb el CSS.';
 $string['customtopbar'] = 'Barra de navegació';
 $string['customisenavbar'] = 'Canvia els colors de la barra de navegació';
 $string['customisenavbutton'] = 'Canvia el color del botó Els meus cursos';
@@ -96,7 +100,7 @@ $string['deletingassetname'] = 'S’està suprimint {$a->type} "{$a->name}"';
 $string['deletesectionconfirm'] = 'Esborra la secció';
 $string['deletingsection'] = 'S’està suprimint "{$a}"';
 $string['draft'] = 'No publicat per als estudiants';
-$string['dropzonelabel'] = 'Deixeu anar fitxers per adjuntar o <span class="btn-link">navegueu</span>';
+$string['dropzonelabel'] = 'Deixeu anar fitxers per adjuntar o <span class="fake-link">navegueu</span>';
 $string['due'] = 'Data límit {$a}';
 $string['edit'] = 'Edita "{$a}"';
 $string['editcoursecontent'] = 'Edita els blocs';
@@ -104,8 +108,12 @@ $string['editcoursesettings'] = 'Paràmetres del curs';
 $string['editcoursetopic'] = 'Edita la secció';
 $string['editcustomfooter'] = 'Edita el peu de pàgina';
 $string['editcustommenu'] = 'Edita el menú personalitzat';
+$string['error:categorycolorinvalidjson'] = 'Format JSON incorrecte per a les categories de curs';
+$string['error:categorycolorinvalidvalue'] = 'L\'ID de registre o el valor de color per a la categoria "{$a}" no són vàlids';
+$string['error:categorynotfound'] = 'No s\'ha trobat el registre de categoria amb ID "{$a}"';
 $string['error:coverimageexceedsmaxbytes'] = 'La imatge de portada supera la mida màxima de fitxer permesa al nivell de lloc ({$a})';
 $string['error:coverimageresolutionlow'] = 'Si voleu que la qualitat sigui millor, us recomanem una imatge més gran de com a mínim 1024px d’ample.';
+$string['error:duplicatedcategoryids'] = 'Format JSON incorrecte: alguns ID estan duplicats';
 $string['error:failedtochangeassetvisibility'] = 'No s’ha pogut ocultar o mostrar el recurs';
 $string['error:failedtochangesectionvisibility'] = 'No s’ha pogut ocultar o mostrar la secció';
 $string['error:failedtohighlightsection'] = 'No s’ha pogut destacar la secció';
@@ -178,6 +186,15 @@ $string['images'] = 'Imatges';
 $string['instagram'] = 'Instagram';
 $string['instagramdesc'] = 'L’URL del vostre compte d’Instagram.';
 $string['introduction'] = 'Introducció';
+$string['jsontext'] = 'Text JSON';
+$string['jsontextdescription'] = 'L\'àrea de text valida el JSON determinat, de manera que només es permeten les categories existents, només són vàlids els valors numèrics com a registres d\'ID (registres de categoria) i només s\'accepten valors hexadecimals com a colors.
+A continuació se\'n mostra un exemple:<br>
+{"1":"#FAAFFF",<br>
+"45":"#AFF",<br>
+"65":"#FFF228",<br>
+"12":"#CC0084",<br>
+"56":"#CC0087",<br>
+"89":"#CCF084"}';
 $string['knowledgebase'] = 'Base de coneixements de Blackboard Open LMS';
 $string['list'] = 'Llista';
 $string['linkedin'] = 'LinkedIn';
@@ -228,13 +245,17 @@ $string['personalmenufeatures'] = 'Funcions de menú personal';
 $string['personalmenulogintoggle'] = 'Mostra el menú personal a l’inici de sessió';
 $string['personalmenulogintoggledesc'] = 'Obre el menú personal immediatament després d’iniciar la sessió';
 $string['pld'] = 'PLD';
-$string['pluginname'] = 'Ajusta';
+$string['pluginname'] = 'Snap';
 $string['poster'] = 'Imatge de portada';
 $string['posterdesc'] = 'Una imatge de capçalera gran per a la pàgina principal del vostre lloc. Les imatges en format horitzontal de 1200 x 600 píxels o més van millor.';
 $string['poweredbyrunby'] = 'Creat amb <a href="https://www.blackboard.com/blackboard-open-lms" target="_blank">Blackboard Open LMS</a>,
-     <a href="https://moodle.com/" target="_blank">Moodle</a>-based product.<br>
-    Copyright &#169; {$a} Blackboard Inc, Tots els drets reservats.';
+    amb tecnologia de <a href="https://moodle.com/" target="_blank">Moodle</a>.<br>
+    Copyright&#169; {$a} Blackboard Inc, Tots els drets reservats.';
 $string['previoussection'] = 'Secció anterior';
+$string['privacy:metadata:theme_snap_course_favorites:courseid'] = 'L\'ID del curs que l\'usuari ha marcat com a favorit';
+$string['privacy:metadata:theme_snap_course_favorites:userid'] = 'L\'ID de l\'usuari que va marcar el curs com a favorit';
+$string['privacy:metadata:theme_snap_course_favorites:timefavorited'] = 'L\'indicador de la data i l\'hora en què l\'usuari va marcar el curs com a favorit';
+$string['privacy:metadata:theme_snap_course_favorites'] = 'Emmagatzema els favorits de l\'usuari per a Snap';
 $string['problemsfound'] = 'S’han trobat problemes';
 $string['progress'] = 'Progrés';
 $string['readmore'] = 'Més informació&nbsp;»';
@@ -249,6 +270,7 @@ $string['released'] = 'Publicat: {$a}';
 $string['reopened'] = 'Reoberta';
 $string['resourcedisplay'] = 'Visualització de recurs';
 $string['resourcedisplayhelp'] = 'Seleccioneu com han d\'aparèixer els fitxers adjunts i els enllaços al vostre curs.';
+$string['search'] = 'Cerca contingut';
 $string['seriffont'] = 'Tipus de lletra Serif';
 $string['seriffont_desc'] = 'Aquesta font s’utilitza per a la major part del contingut generat per l’usuari. Si utilitzeu una font Serif, el contingut generat per l’usuari és més fàcil de llegir i sembla com si l’hagués escrit un humà.';
 $string['showcoursegradepersonalmenu'] = 'Qualificacions';
@@ -288,3 +310,28 @@ $string['xofysubmitted'] = '{$a->completed} de {$a->participants} trameses';
 $string['xungraded'] = '{$a} No qualificat';
 $string['youtube'] = 'YouTube';
 $string['youtubedesc'] = 'L’URL del vostre canal de YouTube';
+$string['showallsectionsdisabled'] = 'Pel seu llenguatge de disseny, l\'opció "Mostra totes les seccions en una pàgina" no està disponible al tema Snap.';
+$string['disabled'] = 'Inhabilitat';
+$string['showappearancedisabled'] = 'El llenguatge de disseny de Snap impedeix que es produeixin canvis en la configuració d\'"Aparença".';
+$string['pbb'] = 'Construcció de marca basada en el perfil';
+$string['pbb_description'] = 'En activar <strong>Construcció de marca basada en el perfil</strong>, podreu personalitzar l\'experiència de marca per a un grup d\'usuaris específic segons el camp de perfil d\'usuari escollit.
+<ul><li>El valor del camp d\'usuari se <em>simplificarà</em>; tots els caràcters es convertiran a minúscula i se separaran amb un guió (-)</li>
+<li>S\'hi afegirà el prefix <code>snap-pbb-</code></li>
+<li>Aquesta classe s\'afegirà a l\'etiqueta HTML <code>body</code></li></ul>
+Per exemple, el valor del camp d\'usuari <em>Blueberry Extravaganza</em> se simplificarà a <code>snap-pbb-blueberry-extravaganza</code><br /><br />
+Si aquesta funció es fa servir juntament amb <a href="https://help.blackboard.com/Blackboard_Open_LMS/Administrator/Manage_a_Site/Course_and_Site_Design/Themes/Snap#advanced-branding_OTP-3" target="_blank">Custom CSS</a>,
+haureu d\'afegir selectors CSS utilitzant les noves classes en la secció <a class="snap-settings-tab-link" href="#themesnapbranding">Basics</a>.';
+$string['pbb_enable'] = 'Habilita Construcció de marca basada en el perfil';
+$string['pbb_enable_description'] = 'Només afegeix la classe a l\'etiqueta "body" si està activa.';
+$string['pbb_field'] = 'Camp d\'usuari que s\'ha d\'utilitzar';
+$string['pbb_field_description'] = 'Es netejarà i simplificarà el valor del camp i es farà servir com un nom de classe CSS al qual se li anteposarà <code>snap-pbb-</code>.';
+$string['cachedef_profile_based_branding'] = 'Emmagatzemament en memòria cau de la construcció de marca basada en el perfil.';
+$string['cachedef_course_card_bg_image'] = 'Emmagatzemament en memòria cau de la imatge de fons del curs.';
+$string['cachedef_course_card_teacher_avatar'] = 'Emmagatzemament en memòria cau dels avatars dels professors.';
+$string['cachedef_course_card_teacher_avatar_index'] = 'Emmagatzemament en memòria cau de l\'índex dels avatars dels professors.';
+$string['accesforumstringdis'] = 'Visualitza les opcions';
+$string['accesforumstringmov'] = 'Opcions per moure';
+$string['accescalendarstring'] = 'Calendari';
+$string['admineventwarning'] = 'Per veure esdeveniments de tots els cursos, ';
+$string['gotocalendarsnap'] = 'aneu al calendari del lloc.';
+$string['quizattemptswarn'] = 'Exclou els intents dels usuaris amb la inscripció suspesa';
