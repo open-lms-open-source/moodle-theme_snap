@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * @copyright  Copyright (c) 2018 Blackboard Inc. (http://www.blackboard.com)
+ * @copyright  Copyright (c) 2019 Blackboard Inc. (http://www.blackboard.com)
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -49,6 +49,11 @@ $string['cachedef_course_completion_progress_ts'] = 'Používá se k zneplatněn
 $string['cachedef_webservicedefinitions'] = 'Ukládání do vyrovnávací paměti pro automaticky generované definice webových služeb';
 $string['card'] = 'Karta';
 $string['categoryedit'] = 'Upravit kategorii';
+$string['category_color'] = 'Barva kategorie';
+$string['category_color_description'] = 'Jedná se o barvu kategorie kurzu. Podřazené (asociované) kurzy přebírají konfiguraci nejbližší nadřazené kategorie';
+$string['category_color_palette'] = 'Paleta barev';
+$string['category_color_palette_description'] = 'Prohlédněte si odpovídající hexadecimální hodnotu dané barvy. Žádnou konfiguraci to neovlivní,
+jedná se jen o vzorek, který uživatelům pomáhá nastavit hodnotu konfigurace.';
 $string['changecoverimage'] = 'Změnit titulní obrázek';
 $string['changefullname'] = 'Změnit název webu';
 $string['chapters'] = 'Kapitoly';
@@ -61,7 +66,7 @@ $string['coursecontacts'] = 'Kontakty kurzu';
 $string['coursedisplay'] = 'Zobrazení kurzu';
 $string['coursefootertoggle'] = 'Zápatí kurzu';
 $string['coursefootertoggledesc'] = 'Zápatí kurzu zobrazuje uživatelům na stránce kurzu užitečné informace, například kontakty kurzu, popis kurzu a poslední aktivity v kurzu.';
-$string['courseformatnotification'] = 'Formát aktuálního kurzu, který používáte, není motivem Snap plně podporován. Blackboard Open LMS pro nejlepší práci s kurzem doporučuje používat s motivem Snap formát kurzu Témata nebo Týdně. Formát kurzu lze změnit v <a href="{$a}">nastavení kurzu</a>.';
+$string['courseformatnotification'] = 'Formát kurzu, který aktuálně používáte, není motivem Snap plně podporován. V Blackboard Open LMS se pro optimální prostředí doporučuje používat u motivu Snap formát kurzu Témata nebo Týdně. Formát kurzu lze změnit v <a href="{$a}">nastavení kurzu</a>.';
 $string['coursefixydefaulttext'] = 'Aktuálně nejste registrováni v žádných kurzech.<br>Kurzy, do kterých jste registrováni, se budou zobrazovat zde.';
 $string['coursegrade'] = 'Klasifikace kurzu:';
 $string['coursenavigation'] = 'Navigace kurzu';
@@ -96,7 +101,7 @@ $string['deletingassetname'] = 'Odstraňování: {$a->type} {$a->name}';
 $string['deletesectionconfirm'] = 'Odstranit část';
 $string['deletingsection'] = 'Odstraňování části {$a}';
 $string['draft'] = 'Nepublikováno pro studenty';
-$string['dropzonelabel'] = 'Přetáhněte soubory, které chcete připojit, nebo je <span class="btn-link">vyberte</span>';
+$string['dropzonelabel'] = 'Přetáhněte soubory, které chcete připojit, nebo je <span class="fake-link">vyberte</span>';
 $string['due'] = 'Termín: {$a}';
 $string['edit'] = 'Upravit {$a}';
 $string['editcoursecontent'] = 'Upravit bloky';
@@ -104,8 +109,12 @@ $string['editcoursesettings'] = 'Nastavení kurzu';
 $string['editcoursetopic'] = 'Upravit část';
 $string['editcustomfooter'] = 'Upravit zápatí';
 $string['editcustommenu'] = 'Upravit vlastní nabídku';
+$string['error:categorycolorinvalidjson'] = 'Nesprávný formát JSON pro kategorie kurzů';
+$string['error:categorycolorinvalidvalue'] = 'ID záznamu nebo hodnota barvy pro kategorii {$a} nejsou platné';
+$string['error:categorynotfound'] = 'Záznam kategorie s ID {$a} nebyl nalezen';
 $string['error:coverimageexceedsmaxbytes'] = 'Velikost titulního obrázku překračuje maximální povolenou velikost souboru na úrovni webu ({$a})';
 $string['error:coverimageresolutionlow'] = 'V zájmu co nejvyšší kvality doporučujeme použít větší obrázek o šířce alespoň 1024 px.';
+$string['error:duplicatedcategoryids'] = 'Nesprávný formát JSON, některá ID jsou duplicitní';
 $string['error:failedtochangeassetvisibility'] = 'Skrytí/zobrazení komponenty se nezdařilo';
 $string['error:failedtochangesectionvisibility'] = 'Skrytí/zobrazení části se nezdařilo';
 $string['error:failedtohighlightsection'] = 'Zvýraznění části se nezdařilo';
@@ -178,6 +187,16 @@ $string['images'] = 'Obrázky';
 $string['instagram'] = 'Instagram';
 $string['instagramdesc'] = 'Adresa URL vašeho účtu na Instagramu';
 $string['introduction'] = 'Úvod';
+$string['jsontext'] = 'Text JSON';
+$string['jsontextdescription'] = 'Textová oblast ověřuje zadaný soubor JSON. Povoleny jsou pouze existující kategorie.
+Jako záznamy ID (záznamy kategorií) jsou platné pouze číselné hodnoty a jako barvy se přijímají pouze hexadecimální hodnoty.
+Příklad:<br>
+{"1":"#FAAFFF",<br>
+"45":"#AFF",<br>
+"65":"#FFF228",<br>
+"12":"#CC0084",<br>
+"56":"#CC0087",<br>
+"89":"#CCF084"}';
 $string['knowledgebase'] = 'Znalostní báze Blackboard Open LMS';
 $string['list'] = 'Seznam';
 $string['linkedin'] = 'LinkedIn';
@@ -231,10 +250,14 @@ $string['pld'] = 'PLD';
 $string['pluginname'] = 'Snap';
 $string['poster'] = 'Titulní obrázek';
 $string['posterdesc'] = 'Jedná se o velký obrázek v záhlaví titulní stránky vašeho webu. Nejlepší je použít obrázek na šířku (1200 x 600 pixelů nebo více).';
-$string['poweredbyrunby'] = 'Sestaveno pomocí <a href="https://www.blackboard.com/blackboard-open-lms" target="_blank">Blackboard Open LMS</a>,
-    <a href="https://moodle.com/" target="_blank">Moodle</a>-založený produkt.<br>
-    Copyright &#169; {$a} Blackboard Inc, Všechna práva vyhrazena.';
+$string['poweredbyrunby'] = 'Sestaveno pomocí systému <a href="https://www.blackboard.com/blackboard-open-lms" target="_blank">Blackboard Open LMS</a>,
+    produkt používá technologii <a href="https://moodle.com/" target="_blank">Moodle</a>.<br>
+    Copyright &#169; {$a} Blackboard Inc., všechna práva vyhrazena.';
 $string['previoussection'] = 'Předchozí sekce';
+$string['privacy:metadata:theme_snap_course_favorites:courseid'] = 'ID kurzu, který uživatel přidal do oblíbených';
+$string['privacy:metadata:theme_snap_course_favorites:userid'] = 'ID uživatele, který kurz přidal do oblíbených';
+$string['privacy:metadata:theme_snap_course_favorites:timefavorited'] = 'Časové razítko informující, kdy uživatel přidal kurz do oblíbených';
+$string['privacy:metadata:theme_snap_course_favorites'] = 'Ukládá oblíbené kurzy uživatelů v motivu Snap.';
 $string['problemsfound'] = 'Nalezeny problémy';
 $string['progress'] = 'Průběh';
 $string['readmore'] = 'Další informace&nbsp;»';
@@ -249,6 +272,7 @@ $string['released'] = 'Vydáno: {$a}';
 $string['reopened'] = 'Znovu otevřeno';
 $string['resourcedisplay'] = 'Zobrazení zdrojů';
 $string['resourcedisplayhelp'] = 'Vyberte, jak se ve vašem kurzu budou zobrazovat přílohy a odkazy.';
+$string['search'] = 'Prohledat obsah';
 $string['seriffont'] = 'Písmo Serif';
 $string['seriffont_desc'] = 'Toto písmo je používáno pro většinu obsahu generovaného uživateli. S písmem serif je obsah generovaný uživateli čitelnější a více působí dojmem, že byl psán člověkem.';
 $string['showcoursegradepersonalmenu'] = 'Klasifikace';
@@ -288,3 +312,28 @@ $string['xofysubmitted'] = 'Odeslalo {$a->completed} z {$a->participants} účas
 $string['xungraded'] = 'Neklasifikováno: {$a}';
 $string['youtube'] = 'YouTube';
 $string['youtubedesc'] = 'Adresa URL vašeho kanálu na YouTube';
+$string['showallsectionsdisabled'] = 'V motivu Snap není z důvodu charakteru návrhu k dispozici možnost Zobrazit všechna témata na stránku.';
+$string['disabled'] = 'Zakázáno';
+$string['showappearancedisabled'] = 'Jazyk návrhu motivu Snap brání změnám nastavení Vzhled.';
+$string['pbb'] = 'Značky na základě profilu';
+$string['pbb_description'] = 'Pokud povolíte možnost <strong>Značky na základě profilu</strong>, budete moci přizpůsobit prostředí značek pro určitou skupinu uživatelů na základě vybraného pole uživatelského profilu.
+<ul><li>Hodnota uživatelského pole bude <em>„slugifikována“</em>: všechny znaky se převedou na malá písmena a odděleny budou spojovníkem (-).</li>
+<li>Jako předpona se připojí řetězec <code>snap-pbb-</code>.</li>
+<li>Tato třída bude přidána do značky <code>body</code> jazyka HTML.</li></ul>
+Hodnota uživatelského pole <em>Blueberry Extravaganza</em> bude například převedena na <code>snap-pbb-blueberry-extravaganza</code>.<br /><br />
+Tato funkce se používá spolu s možností <a href="https://help.blackboard.com/Blackboard_Open_LMS/Administrator/Manage_a_Site/Course_and_Site_Design/Themes/Snap#advanced-branding_OTP-3" target="_blank">Vlastní šablona stylů CSS</a>.
+Bude třeba přidat selektory CSS pomocí nových tříd v sekci <a class="snap-settings-tab-link" href="#themesnapbranding">Základy</a>.';
+$string['pbb_enable'] = 'Povolit značky na základě profilu';
+$string['pbb_enable_description'] = 'Přidá třídu do značky „body“ pouze, pokud je aktivní.';
+$string['pbb_field'] = 'Uživatelské pole k použití';
+$string['pbb_field_description'] = 'Hodnota tohoto pole bude „slugifikována“ a použita jako název třídy CSS s předponou <code>snap-pbb-</code>.';
+$string['cachedef_profile_based_branding'] = 'Vyrovnávací paměť pro značky na základě profilu';
+$string['cachedef_course_card_bg_image'] = 'Vyrovnávací paměť pro obrázek na pozadí kurzu';
+$string['cachedef_course_card_teacher_avatar'] = 'Vyrovnávací paměť pro avatary učitelů';
+$string['cachedef_course_card_teacher_avatar_index'] = 'Vyrovnávací paměť pro index avatarů učitelů';
+$string['accesforumstringdis'] = 'Možnosti zobrazení';
+$string['accesforumstringmov'] = 'Možnosti posunutí';
+$string['accescalendarstring'] = 'Kalendář';
+$string['admineventwarning'] = 'K zobrazení událostí ze všech kurzů, ';
+$string['gotocalendarsnap'] = 'přejít na kalendář stránek';
+$string['quizattemptswarn'] = 'Vylučuje pokusy od pozastavených uživatelů';
