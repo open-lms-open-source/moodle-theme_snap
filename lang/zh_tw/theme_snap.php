@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * @copyright  Copyright (c) 2018 Blackboard Inc. (http://www.blackboard.com)
+ * @copyright  Copyright (c) 2019 Blackboard Inc. (http://www.blackboard.com)
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -49,6 +49,11 @@ $string['cachedef_course_completion_progress_ts'] = '如果課程或模組的進
 $string['cachedef_webservicedefinitions'] = '快取自動產生的 Web 服務定義。';
 $string['card'] = '卡片';
 $string['categoryedit'] = '編輯類別';
+$string['category_color'] = '類別顏色';
+$string['category_color_description'] = '課程類別顏色。子課程會採用最接近的上層類別配置';
+$string['category_color_palette'] = '調色板';
+$string['category_color_palette_description'] = '查看所指顏色對應的十六進位值。這不會
+影響任何配置，僅做為範例來幫助使用者建立配置值。';
 $string['changecoverimage'] = '變更封面影像';
 $string['changefullname'] = '變更網站名稱';
 $string['chapters'] = '章節';
@@ -96,7 +101,7 @@ $string['deletingassetname'] = '正在刪除「{$a->name}」{$a->type}';
 $string['deletesectionconfirm'] = '刪除章節';
 $string['deletingsection'] = '正在刪除「{$a}」章節';
 $string['draft'] = '未向學員發佈';
-$string['dropzonelabel'] = '拖放檔案即可附加，或者<span class="btn-link">瀏覽</span>至檔案位置';
+$string['dropzonelabel'] = '拖曳檔案即可附加，或者<span class="fake-link">瀏覽</span>';
 $string['due'] = '{$a} 到期';
 $string['edit'] = '編輯「{$a}」';
 $string['editcoursecontent'] = '編輯區塊';
@@ -104,8 +109,12 @@ $string['editcoursesettings'] = '課程設定';
 $string['editcoursetopic'] = '編輯章節';
 $string['editcustomfooter'] = '編輯頁尾';
 $string['editcustommenu'] = '編輯自訂功能表';
+$string['error:categorycolorinvalidjson'] = '課程類別的 JSON 格式不正確';
+$string['error:categorycolorinvalidvalue'] = '類別「{$a}」的記錄編號或顏色值無效';
+$string['error:categorynotfound'] = '未找到編號「{$a}」的類別記錄';
 $string['error:coverimageexceedsmaxbytes'] = '封面影像超出網站層級允許的檔案大小上限 ({$a})';
 $string['error:coverimageresolutionlow'] = '為獲得最佳品質，我們建議使用更大的影像，寬度至少 1024px。';
+$string['error:duplicatedcategoryids'] = 'JSON 格式不正確，部分編號重複';
 $string['error:failedtochangeassetvisibility'] = '隱藏/顯示資產失敗';
 $string['error:failedtochangesectionvisibility'] = '隱藏/顯示章節失敗';
 $string['error:failedtohighlightsection'] = '反白顯示章節失敗';
@@ -178,6 +187,16 @@ $string['images'] = '影像';
 $string['instagram'] = 'Instagram';
 $string['instagramdesc'] = '您的 Instagram 帳戶 URL。';
 $string['introduction'] = '介紹';
+$string['jsontext'] = 'JSON 文字';
+$string['jsontextdescription'] = '文字區域會驗證所指的 JSON，因此只允許現有類別，
+只有數值才是有效的編號記錄 (類別記錄)，而且只接受十六進位值做為顏色。
+範例如下：<br>
+{"1":"#FAAFFF",<br>
+"45":"#AFF",<br>
+"65":"#FFF228",<br>
+"12":"#CC0084",<br>
+"56":"#CC0087",<br>
+"89":"#CCF084"}';
 $string['knowledgebase'] = 'Blackboard Open LMS 知識庫';
 $string['list'] = '清單';
 $string['linkedin'] = 'LinkedIn';
@@ -232,9 +251,13 @@ $string['pluginname'] = 'Snap';
 $string['poster'] = '封面影像';
 $string['posterdesc'] = '用於網站首頁的大型標題影像。橫向影像 (1200 x 600 像素或更大) 效果最佳。';
 $string['poweredbyrunby'] = '採用 <a href="https://www.blackboard.com/blackboard-open-lms" target="_blank">Blackboard Open LMS</a> 建置，
-     基于 <a href="https://moodle.com/" target="_blank">Moodle</a> 的产品。<br>
+    由 <a href="https://moodle.com/" target="_blank">Moodle</a> 所提供。<br>
     版權所有 &#169; {$a} Blackboard Inc，保留所有權利。';
 $string['previoussection'] = '上一單元';
+$string['privacy:metadata:theme_snap_course_favorites:courseid'] = '使用者已加入常用項目之課程的課程編號';
+$string['privacy:metadata:theme_snap_course_favorites:userid'] = '將課程加入常用項目之使用者的使用者編號';
+$string['privacy:metadata:theme_snap_course_favorites:timefavorited'] = '使用者將課程加入常用項目時的時間戳記';
+$string['privacy:metadata:theme_snap_course_favorites'] = '儲存使用者的 Snap 課程常用項目';
 $string['problemsfound'] = '找到的問題';
 $string['progress'] = '進度';
 $string['readmore'] = '閱讀更多&nbsp;»';
@@ -249,6 +272,7 @@ $string['released'] = '已發行：{$a}';
 $string['reopened'] = '已重新開啟';
 $string['resourcedisplay'] = '資源顯示';
 $string['resourcedisplayhelp'] = '選取附件和連結在課程中顯示的方式。';
+$string['search'] = '搜尋內容';
 $string['seriffont'] = '有襯線字型';
 $string['seriffont_desc'] = '此字型會用於使用者產生的大部分內容。使用有襯線字型會讓使用者產生的內容更好閱讀，看起來就像是手寫一般。';
 $string['showcoursegradepersonalmenu'] = '成績';
@@ -259,7 +283,7 @@ $string['sitedescription'] = '網站描述';
 $string['subtitle'] = '副標題';
 $string['subtitle_desc'] = '對使用者簡單描述您的網站。';
 $string['themecolor'] = '網站顏色';
-$string['themecolordesc'] = '亮色系的效果最好，讓您的網站有現代感。';
+$string['themecolordesc'] = '亮色系的效果最好，讓您的網站具有現代感。';
 $string['title'] = '標題';
 $string['top'] = '頂端';
 $string['topbarbgcolor'] = '瀏覽列顏色';
@@ -288,3 +312,28 @@ $string['xofysubmitted'] = '{$a->completed}/{$a->participants} 已送出';
 $string['xungraded'] = '{$a} 個未評分';
 $string['youtube'] = 'YouTube';
 $string['youtubedesc'] = '您的 YouTube 頻道 URL。';
+$string['showallsectionsdisabled'] = '由於設計語言的關係，無法在 Snap 中使用「在一個頁面上顯示全部章節」。';
+$string['disabled'] = '已停用';
+$string['showappearancedisabled'] = 'Snap 的設計語言會防止變更「外觀」設定。';
+$string['pbb'] = '以資訊為基礎的品牌塑造';
+$string['pbb_description'] = '啟用<strong>以資訊為基礎的品牌塑造</strong>後，您將能夠根據選擇的使用者資訊欄位自訂特定使用者群組的品牌塑造體驗。
+<ul><li>使用者欄位值將被 <em>slugified</em>；將所有字元轉換為小寫形式並以橫線 (-) 加以分隔</li>
+<li>前面將會加上 <code>snap-pbb-</code> 字串</li>
+<li>此類別會新增至 <code>body</code> Html 標籤</li></ul>
+例如，使用者欄位值 <em>Blueberry Extravaganza</em> 將被 slugified 為 <code>snap-pbb-blueberry-extravaganza</code><br /><br />
+此功能與 <a href="https://help.blackboard.com/Blackboard_Open_LMS/Administrator/Manage_a_Site/Course_and_Site_Design/Themes/Snap#advanced-branding_OTP-3" target="_blank">自訂 CSS</a> 搭配使用，
+您將需要使用<a class="snap-settings-tab-link" href="#themesnapbranding">基本資料</a>章節中的新類別，新增 CSS 選取器。';
+$string['pbb_enable'] = '啟用以資訊為基礎的品牌塑造';
+$string['pbb_enable_description'] = '僅將類別新增至 body 標籤 (如果使用)。';
+$string['pbb_field'] = '要使用的使用者欄位';
+$string['pbb_field_description'] = '此欄位的值將被 slugified，並在前面加上 <code>snap-pbb-</code> 作為 CSS 類別名稱。';
+$string['cachedef_profile_based_branding'] = '以資訊為基礎的品牌塑造的快取。';
+$string['cachedef_course_card_bg_image'] = '課程背景影像的快取。';
+$string['cachedef_course_card_teacher_avatar'] = '教師頭像的快取。';
+$string['cachedef_course_card_teacher_avatar_index'] = '教師頭像索引的快取。';
+$string['accesforumstringdis'] = '顯示選項';
+$string['accesforumstringmov'] = '移動選項';
+$string['accescalendarstring'] = '行事曆';
+$string['admineventwarning'] = '若要查看所有課程中的事件，';
+$string['gotocalendarsnap'] = '請前往網站行事曆。';
+$string['quizattemptswarn'] = '排除已暫停使用者的嘗試';
