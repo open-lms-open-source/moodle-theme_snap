@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * @copyright  Copyright (c) 2018 Blackboard Inc. (http://www.blackboard.com)
+ * @copyright  Copyright (c) 2019 Blackboard Inc. (http://www.blackboard.com)
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -49,6 +49,11 @@ $string['cachedef_course_completion_progress_ts'] = 'Viene utilizzato in modo da
 $string['cachedef_webservicedefinitions'] = 'Memorizzazione in cache per le definizioni del servizio web generate automaticamente.';
 $string['card'] = 'Scheda';
 $string['categoryedit'] = 'Modifica categoria';
+$string['category_color'] = 'Colore categoria';
+$string['category_color_description'] = 'Colore categoria del corso. I corsi secondari utilizzano la configurazione della categoria dell\'elemento principale più vicino.';
+$string['category_color_palette'] = 'Tavolozza dei colori';
+$string['category_color_palette_description'] = 'Vedere il valore esadecimale corrispondente per il colore specificato.
+L\'operazione non influisce sulla configurazione, si tratta solo di un esempio per aiutare gli utenti a creare il valore di configurazione.';
 $string['changecoverimage'] = 'Cambia immagine di copertina';
 $string['changefullname'] = 'Modifica nome sito';
 $string['chapters'] = 'Capitoli';
@@ -61,7 +66,7 @@ $string['coursecontacts'] = 'Contatti corso';
 $string['coursedisplay'] = 'Visualizzazione corso';
 $string['coursefootertoggle'] = 'Piè di pagina corso';
 $string['coursefootertoggledesc'] = 'Il piè di pagina del corso fornisce agli utenti informazioni utili sulla pagina del corso, compresi i contatti, la descrizione e l\'attività recente.';
-$string['courseformatnotification'] = 'Il formato del corso corrente che si sta utilizzando non è completamente supportato dal tema Snap. Per ottimizzare l\'esperienza, Blackboard Open LMS consiglia di utilizzare i formati del corso Argomenti o Settimanale con il tema Snap. Il formato del corso può essere modificato nelle <a href="{$a}">impostazioni del corso</a>.';
+$string['courseformatnotification'] = 'Il formato del corso attuale utilizzato non è completamente supportato dal tema Snap. Per garantire la migliore esperienza, Blackboard Open LMS consiglia di utilizzare i formati di corso Argomenti o Settimanale con il tema Snap. Il formato del corso è modificabile da <a href="{$a}">impostazioni del corso</a>.';
 $string['coursefixydefaulttext'] = 'Non sei attualmente iscritto in nessun corso.<br>I corsi a cui sei iscritto verranno visualizzati qui.';
 $string['coursegrade'] = 'Voto del corso:';
 $string['coursenavigation'] = 'Navigazione corso';
@@ -78,7 +83,7 @@ $string['comingsoon'] = 'Presto disponibile!';
 $string['createsection'] = 'Crea sezione';
 $string['current'] = 'Corrente';
 $string['customcss'] = 'Personalizza CSS';
-$string['customcssdesc'] = 'Non bisogna dimenticare che avere ampio potere porta ampie responsabilità.  Rientra quindi nelle tue responsabilità risolvere qualsiasi problema causato da codice CSS inserito qui.  Il supporto tecnico di Blackboard Open LMS non si occupa della risoluzione dei problemi, né fornisce assistenza in merito ai contenuti relativi a codice CSS.';
+$string['customcssdesc'] = 'Non bisogna dimenticare che avere ampio potere porta ampie responsabilità.  Rientra quindi nelle tue responsabilità risolvere qualsiasi problema causato da codice CSS inserito qui. Il supporto di Blackboard Open LMS non si occupa della risoluzione dei problemi, né fornisce assistenza in merito ai contenuti relativi a codice CSS.';
 $string['customtopbar'] = 'Barra di navigazione';
 $string['customisenavbar'] = 'Modifica colori barra di navigazione';
 $string['customisenavbutton'] = 'Modifica colori pulsante I miei corsi';
@@ -96,7 +101,7 @@ $string['deletingassetname'] = 'Eliminazione di {$a->type} "{$a->name}"';
 $string['deletesectionconfirm'] = 'Elimina sezione';
 $string['deletingsection'] = 'Eliminazione sezione "{$a}"';
 $string['draft'] = 'Non pubblicato per gli studenti';
-$string['dropzonelabel'] = 'Trascina i file da allegare o usa la funzione <span class="btn-link">Sfoglia</span>';
+$string['dropzonelabel'] = 'Trascinare i file da allegare o utilizzare <span class="fake-link">Sfoglia</span>';
 $string['due'] = 'Scadenza {$a}';
 $string['edit'] = 'Modifica "{$a}"';
 $string['editcoursecontent'] = 'Modifica blocchi';
@@ -104,8 +109,12 @@ $string['editcoursesettings'] = 'Impostazioni corso';
 $string['editcoursetopic'] = 'Modifica sezione';
 $string['editcustomfooter'] = 'Modifica piè di pagina';
 $string['editcustommenu'] = 'Modifica menu personalizzato';
+$string['error:categorycolorinvalidjson'] = 'Formato JSON non corretto per le categorie dei corsi';
+$string['error:categorycolorinvalidvalue'] = 'ID record o valore del colore per la categoria "{$a}" non validi';
+$string['error:categorynotfound'] = 'Impossibile trovare il record categoria con ID "{$a}"';
 $string['error:coverimageexceedsmaxbytes'] = 'L\'immagine di copertina supera le dimensioni file massime consentite a livello di sito ({$a})';
 $string['error:coverimageresolutionlow'] = 'Per la massima qualità, si consiglia una larghezza dell\'immagine di almeno 1024 px.';
+$string['error:duplicatedcategoryids'] = 'Formato JSON non corretto, alcuni ID sono duplicati';
 $string['error:failedtochangeassetvisibility'] = 'Impossibile nascondere/mostrare l\'asset';
 $string['error:failedtochangesectionvisibility'] = 'Impossibile nascondere/mostrare la sezione';
 $string['error:failedtohighlightsection'] = 'Impossibile evidenziare la sezione';
@@ -178,7 +187,17 @@ $string['images'] = 'Immagini';
 $string['instagram'] = 'Instagram';
 $string['instagramdesc'] = 'URL dell\'account Instagram.';
 $string['introduction'] = 'Introduzione';
-$string['knowledgebase'] = 'Knowledge Base di Blackboard Open LMS';
+$string['jsontext'] = 'Testo JSON';
+$string['jsontextdescription'] = 'L\'area di testo convalida il codice JSON fornito, in modo che siano ammesse solo categorie esistenti,
+siano validi solo valori numerici come record ID (record categoria) e siano accettati solo i colori come valori esadecimali.
+Ecco un esempio:<br>
+{"1":"#FAAFFF",<br>
+"45":"#AFF",<br>
+"65":"#FFF228",<br>
+"12":"#CC0084",<br>
+"56":"#CC0087",<br>
+"89":"#CCF084"}';
+$string['knowledgebase'] = 'Knowledge base Blackboard Open LMS';
 $string['list'] = 'Lista';
 $string['linkedin'] = 'LinkedIn';
 $string['linkedindesc'] = 'URL della pagina LinkedIn dell\'organizzazione.';
@@ -231,10 +250,14 @@ $string['pld'] = 'PLD';
 $string['pluginname'] = 'Snap';
 $string['poster'] = 'Immagine di copertina';
 $string['posterdesc'] = 'Un\'immagine grande dell\'intestazione per la pagina principale del sito. Le immagini orizzontali (1200 x 600 pixel) o più grandi forniscono risultati migliori.';
-$string['poweredbyrunby'] = 'Generato con <a href="https://www.blackboard.com/blackboard-open-lms" target="_blank">Blackboard Open LMS</a>,
-     prodotto basato su <a href="https://moodle.com/" target="_blank">Moodle</a>.<br>
-    Copyright &#169; {$a} Blackboard Inc, Tutti i diritti riservati.';
+$string['poweredbyrunby'] = 'Creato con <a href="http://www.blackboard.com/" target="_blank">Blackboard Open LMS</a>,
+     un prodotto basato su <a href="http://www.moodle.com/" target="_blank">Moodle</a>.<br>
+    Copyright &#169; {$a} Blackboard Inc., Tutti i diritti riservati.';
 $string['previoussection'] = 'Sezione precedente';
+$string['privacy:metadata:theme_snap_course_favorites:courseid'] = 'ID del corso che l\'utente ha contrassegnato come preferito';
+$string['privacy:metadata:theme_snap_course_favorites:userid'] = 'L\'ID utente dell\'utente che ha contrassegnato come preferito il corso';
+$string['privacy:metadata:theme_snap_course_favorites:timefavorited'] = 'Timestamp che indica quando l\'utente ha contrassegnato come preferito il corso';
+$string['privacy:metadata:theme_snap_course_favorites'] = 'Memorizza i preferiti del corso degli utenti per Snap';
 $string['problemsfound'] = 'Problemi rilevati';
 $string['progress'] = 'Avanzamento';
 $string['readmore'] = 'Continua a leggere&nbsp;»';
@@ -249,6 +272,7 @@ $string['released'] = 'Rilascio: {$a}';
 $string['reopened'] = 'Riaperto';
 $string['resourcedisplay'] = 'Visualizzazione risorsa';
 $string['resourcedisplayhelp'] = 'Selezionare la modalità di visualizzazione di allegati e collegamenti nel corso.';
+$string['search'] = 'Cerca contenuti';
 $string['seriffont'] = 'Carattere Serif';
 $string['seriffont_desc'] = 'Questo carattere viene utilizzato per la maggior parte dei contenuti generati dall\'utente. L\'utilizzo di un carattere Serif aumenta la leggibilità dei contenuti generati dall\'utente, al punto tale che sembrano scritti da una persona.';
 $string['showcoursegradepersonalmenu'] = 'Voti';
@@ -288,3 +312,28 @@ $string['xofysubmitted'] = '{$a->completed} di {$a->participants} consegnati';
 $string['xungraded'] = '{$a} non valutato';
 $string['youtube'] = 'YouTube';
 $string['youtubedesc'] = 'URL del canale YouTube.';
+$string['showallsectionsdisabled'] = 'Per via della sua lingua di progettazione, "Visualizza le sezioni nella stessa pagina" non è disponibile in Snap.';
+$string['disabled'] = 'Disabilitato';
+$string['showappearancedisabled'] = 'La lingua di progettazione di Snap impedisce le modifiche alle impostazioni di "Aspetto".';
+$string['pbb'] = 'Branding basato sul profilo';
+$string['pbb_description'] = 'Attivando il <strong>Profilo basato sul branding</strong>, si potrà personalizzare l\'esperienza di branding per un gruppo specifico di utenti in base al campo profilo utente scelto.
+<ul><li>Il valore del campo utente sarà <em>slugified</em>; convertire tutti i caratteri in minuscole e separarli con un trattino (-)</li>
+<li>La stringa <code>snap-pbb-</code> sarà anteposta</li>
+<li>Questa classe sarà aggiunta al <code>corpo</code> tag Html</li></ul>
+Ad esempio, il valore del campo utente <em>Blueberry Extravaganza</em> sarà slugified per essere <code>snap-pbb-blueberry-extravaganza</code><br /><br />
+Questa funzione è usata insieme a <a href="https://help.blackboard.com/Blackboard_Open_LMS/Administrator/Manage_a_Site/Course_and_Site_Design/Themes/Snap#advanced-branding_OTP-3" target="_blank"> CSS personalizzato</a>,
+in caso occorra aggiungere selettori CSS usando le nuove classi nella sezione <a class="snap-settings-tab-link" href="#themesnapbranding">Elementi di base</a>.';
+$string['pbb_enable'] = 'Attiva profilo in base al branding';
+$string['pbb_enable_description'] = 'Aggiunge solo la classe al tag del corpo se attivo.';
+$string['pbb_field'] = 'Campo utente da usare';
+$string['pbb_field_description'] = 'Il valore del campo sarà slugified e usato come nome di classe CSS anteposto da <code>snap-pbb-</code>.';
+$string['cachedef_profile_based_branding'] = 'Cache del branding basato sul profilo.';
+$string['cachedef_course_card_bg_image'] = 'Cache dell\'immagine di sfondo del corso.';
+$string['cachedef_course_card_teacher_avatar'] = 'Cache degli avatar dei docenti.';
+$string['cachedef_course_card_teacher_avatar_index'] = 'Cache dell\'indice degli avatar dei docenti.';
+$string['accesforumstringdis'] = 'Opzioni di visualizzazione';
+$string['accesforumstringmov'] = 'Opzioni di spostamento';
+$string['accescalendarstring'] = 'Calendario';
+$string['admineventwarning'] = 'Per visualizzare gli eventi da tutti i corsi, ';
+$string['gotocalendarsnap'] = 'aprire il calendario del sito.';
+$string['quizattemptswarn'] = 'Esclude i tentativi degli utenti sospesi';
