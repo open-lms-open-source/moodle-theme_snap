@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * @copyright  Copyright (c) 2018 Blackboard Inc. (http://www.blackboard.com)
+ * @copyright  Copyright (c) 2019 Blackboard Inc. (http://www.blackboard.com)
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -37,7 +37,7 @@ $string['appendices'] = 'Herramientas';
 $string['assigndraft'] = 'El borrador requiere su confirmación.';
 $string['assignreopened'] = 'Reabierto';
 $string['at'] = 'en';
-$string['attempted'] = 'Intentado';
+$string['attempted'] = 'Intentos';
 $string['basics'] = 'Aspectos básicos';
 $string['brandingheading'] = 'Creación de marca';
 $string['browse'] = 'Explorar';
@@ -49,6 +49,10 @@ $string['cachedef_course_completion_progress_ts'] = 'Se utiliza para que podamos
 $string['cachedef_webservicedefinitions'] = 'Almacenamiento en memoria caché de definiciones de servicio web generadas automáticamente';
 $string['card'] = 'Tarjeta';
 $string['categoryedit'] = 'Editar categoría';
+$string['category_color'] = 'Color de categoría';
+$string['category_color_description'] = 'Color de la categoría del curso. Los cursos hijo toman la configuración de la categoría padre más cercana.';
+$string['category_color_palette'] = 'Paleta de colores';
+$string['category_color_palette_description'] = 'Consulte el valor hexadecimal correspondiente para el color dado. Esto no afectará ninguna configuración, es solo una muestra para ayudar a los usuarios a crear el valor de configuración.';
 $string['changecoverimage'] = 'Cambiar imagen de tapa';
 $string['changefullname'] = 'Cambiar nombre del sitio';
 $string['chapters'] = 'Capítulos';
@@ -61,7 +65,7 @@ $string['coursecontacts'] = 'Contactos del curso';
 $string['coursedisplay'] = 'Visualización del curso';
 $string['coursefootertoggle'] = 'Pie de página del curso';
 $string['coursefootertoggledesc'] = 'El pie de página del curso muestra a los usuarios información útil en una página del curso, que incluye los contactos del curso, la descripción del curso y la actividad reciente del curso.';
-$string['courseformatnotification'] = 'El formato actual del curso que está usando no es completamente compatible con el tema de Snap. Para obtener la mejor experiencia, Blackboard Open LMS recomienda usar los formatos de cursos Temas o Semanalmente con el tema de Snap. El formato del curso se puede cambiar en los <a href="{$a}">ajustes del curso</a>.';
+$string['courseformatnotification'] = 'El formato actual del curso que está utilizando no es completamente compatible con el tema de Snap. Para obtener la mejor experiencia, Blackboard Open LMS recomienda utilizar los formatos de cursos Temas o Semanales con el tema de Snap. El formato del curso se puede cambiar en los <a href="{$a}">ajustes del curso</a>.';
 $string['coursefixydefaulttext'] = 'Actualmente, no está inscrito en ningún curso.<br>Los cursos en los que está inscrito se mostrarán aquí.';
 $string['coursegrade'] = 'Calificación del curso:';
 $string['coursenavigation'] = 'Navegación por los cursos';
@@ -78,7 +82,7 @@ $string['comingsoon'] = 'Próximamente';
 $string['createsection'] = 'Crear sección';
 $string['current'] = 'Actual';
 $string['customcss'] = 'CSS personalizado';
-$string['customcssdesc'] = 'Tenga en cuenta que más funcionalidad conlleva más responsabilidad. Si surge un problema con la CSS aquí agregada, será su responsabilidad resolverlo. El soporte técnico de Blackboard Open LMS no soluciona problemas ni brinda ayuda con contenido relacionado con CSS.';
+$string['customcssdesc'] = 'Tenga en cuenta que mayor funcionalidad conlleva mayor responsabilidad. Si surge un problema con la CSS aquí agregada, será su responsabilidad resolverlo. La asistencia técnica de Blackboard Open LMS no soluciona problemas ni brinda ayuda con contenido relativo a CSS.';
 $string['customtopbar'] = 'Barra de navegación';
 $string['customisenavbar'] = 'Cambiar los colores de la barra de navegación';
 $string['customisenavbutton'] = 'Cambiar los colores del botón Mis cursos';
@@ -96,7 +100,7 @@ $string['deletingassetname'] = 'Eliminación de {$a->type} "{$a->name}" en curso
 $string['deletesectionconfirm'] = 'Eliminar sección';
 $string['deletingsection'] = 'Eliminación de la sección "{$a}" en curso';
 $string['draft'] = 'No publicado a los estudiantes';
-$string['dropzonelabel'] = 'Suelte los archivos para adjuntar o <span class="btn-link">examine</span>';
+$string['dropzonelabel'] = 'Suelte los archivos para adjuntar o <span class="fake-link">examine</span>';
 $string['due'] = 'Vencimiento {$a}';
 $string['edit'] = 'Editar "{$a}"';
 $string['editcoursecontent'] = 'Editar bloques';
@@ -104,8 +108,12 @@ $string['editcoursesettings'] = 'Ajustes del curso';
 $string['editcoursetopic'] = 'Editar sección';
 $string['editcustomfooter'] = 'Editar pie de página';
 $string['editcustommenu'] = 'Editar menú personalizado';
+$string['error:categorycolorinvalidjson'] = 'Formato JSON incorrecto para las categorías de los cursos';
+$string['error:categorycolorinvalidvalue'] = 'El ID de registro o el valor de color de la categoría "{$a}" no son válidos.';
+$string['error:categorynotfound'] = 'No se encontró el registro de la categoría con ID "{$a}".';
 $string['error:coverimageexceedsmaxbytes'] = 'La imagen de tapa supera el tamaño de archivo máximo permitido den el nivel del sitio ({$a})';
 $string['error:coverimageresolutionlow'] = 'Para lograr la mejor calidad, se recomienda una imagen más grande de, al menos, 1024 píxeles de ancho.';
+$string['error:duplicatedcategoryids'] = 'Formato JSON incorrecto, algunos ID están duplicados.';
 $string['error:failedtochangeassetvisibility'] = 'Error al mostrar/ocultar activo';
 $string['error:failedtochangesectionvisibility'] = 'Error al mostrar/ocultar sección';
 $string['error:failedtohighlightsection'] = 'Error al seleccionar la sección';
@@ -178,6 +186,20 @@ $string['images'] = 'Imágenes';
 $string['instagram'] = 'Instagram';
 $string['instagramdesc'] = 'La URL de su cuenta de Instagram.';
 $string['introduction'] = 'Introducción';
+$string['jsontext'] = 'Texto JSON';
+$string['jsontextdescription'] = 'El área de texto valida el JSON dado; por lo tanto, solo se permiten categorías existentes, solo los valores numéricos como registros de ID (registros de categorías) son válidos y solo se aceptan valores hexadecimales como colores.
+Aquí hay un ejemplo:<br>
+{"1":"#FAAFFF",<br>
+
+"45":"#AFF",<br>
+
+"65":"#FFF228",<br>
+
+"12":"#CC0084",<br>
+
+"56":"#CC0087",<br>
+
+"89":"#CCF084"}';
 $string['knowledgebase'] = 'Base de conocimiento de Blackboard Open LMS';
 $string['list'] = 'Lista';
 $string['linkedin'] = 'LinkedIn';
@@ -232,9 +254,13 @@ $string['pluginname'] = 'Snap';
 $string['poster'] = 'Imagen de tapa';
 $string['posterdesc'] = 'Imagen de gran tamaño para la página principal del sitio. Las imágenes apaisadas (de 1200 x 600 píxeles) o de mayor tamaño son la mejor opción.';
 $string['poweredbyrunby'] = 'Diseñado con <a href="https://www.blackboard.com/blackboard-open-lms" target="_blank">Blackboard Open LMS</a>,
-     producto basado en <a href="https://moodle.com" target="_blank">Moodle</a>.<br>
+     un <a href="https://moodle.com/" target="_blank">producto basado en Moodle</a>.<br>
     Copyright &#169; {$a} Blackboard Inc. Todos los derechos reservados.';
 $string['previoussection'] = 'Sección anterior';
+$string['privacy:metadata:theme_snap_course_favorites:courseid'] = 'ID del curso de preferencia del usuario';
+$string['privacy:metadata:theme_snap_course_favorites:userid'] = 'ID de usuario de la persona que eligió el curso como favorito';
+$string['privacy:metadata:theme_snap_course_favorites:timefavorited'] = 'Marca de tiempo que indica cuándo el usuario eligió el curso como favorito';
+$string['privacy:metadata:theme_snap_course_favorites'] = 'Almacena los cursos favoritos de los usuarios para Snap';
 $string['problemsfound'] = 'Problemas encontrados';
 $string['progress'] = 'Progreso';
 $string['readmore'] = 'Leer más&nbsp;»';
@@ -249,6 +275,7 @@ $string['released'] = 'Publicado: {$a}';
 $string['reopened'] = 'Reabierto';
 $string['resourcedisplay'] = 'Visualización del recurso';
 $string['resourcedisplayhelp'] = 'Seleccione cómo desea que aparezcan los documentos adjuntos y los vínculos en el curso.';
+$string['search'] = 'Buscar contenido';
 $string['seriffont'] = 'Fuente serif';
 $string['seriffont_desc'] = 'Esta fuente se usa para la mayor parte del contenido generado por los usuarios. Si se usa una fuente serif, el contenido generado por los usuarios será más legible y dará la impresión de que fue escrito por una persona.';
 $string['showcoursegradepersonalmenu'] = 'Calificaciones';
@@ -282,9 +309,34 @@ $string['viewmessaging'] = 'Ver mis mensajes';
 $string['vieworiginalimage'] = 'Ver imagen original';
 $string['visibility'] = 'Visibilidad';
 $string['xofyanswered'] = '{$a->completed} de {$a->participants} respondidos';
-$string['xofyattempted'] = '{$a->completed} de {$a->participants} intentados';
+$string['xofyattempted'] = '{$a->completed} de {$a->participants} intentos';
 $string['xofycontributed'] = 'Se contribuyeron {$a->completed} de {$a->participants}.';
 $string['xofysubmitted'] = '{$a->completed} de {$a->participants} entregados';
 $string['xungraded'] = '{$a} sin calificar';
 $string['youtube'] = 'YouTube';
 $string['youtubedesc'] = 'La URL de su canal de YouTube.';
+$string['showallsectionsdisabled'] = 'Debido al lenguaje de diseño, “Mostrar todas las secciones en una página” no está disponible en Ajustar.';
+$string['disabled'] = 'Desactivado';
+$string['showappearancedisabled'] = 'El lenguaje de diseño de Snap evita los cambios a los ajustes de "Apariencia".';
+$string['pbb'] = 'Desarrollo de marca basado en el perfil';
+$string['pbb_description'] = 'Si habilita la opción <strong>Desarrollo de marca basado en el perfil</strong>, podrá personalizar la experiencia de generación de marca para un grupo específico de usuarios en función del campo de perfil de usuario elegido.
+<ul><li>El valor del campo de usuario <em>se convertirá en una línea de texto que formará parte de una URL identificable</em>; en la que todos los caracteres estarán en minúscula y separados con un guion (-)</li>
+<li>La cadena <code>snap-pbb-</code> se antepondrá</li>
+<li>Esta clase se agregará a la etiqueta de HTML <code>body</code></li></ul>
+Por ejemplo, el valor del campo de usuario <em>Blueberry Extravaganza</em> se transformará en la línea de texto <code>snap-pbb-blueberry-extravaganza</code> que formará parte de una URL identificable<br /><br />
+Esta función se utiliza junto con <a href="https://help.blackboard.com/Blackboard_Open_LMS/Administrator/Manage_a_Site/Course_and_Site_Design/Themes/Snap#advanced-branding_OTP-3" target="_blank">Custom CSS</a>,
+por lo que tendrá que agregar selectores CSS usando las clases nuevas en la sección Aspectos básicos<a class="snap-settings-tab-link" href="#themesnapbranding"></a>.';
+$string['pbb_enable'] = 'Habilitar la opción Desarrollo de marca basado en el perfil';
+$string['pbb_enable_description'] = 'Solo se agrega la clase a la etiqueta body si está activa.';
+$string['pbb_field'] = 'Campo del usuario que se utilizará';
+$string['pbb_field_description'] = 'Este valor del campo se convertirá en una línea de texto que formará parte de una URL identificable y se utilizará como el nombre de una clase de CSS antepuesto por <code>snap-pbb-</code>.';
+$string['cachedef_profile_based_branding'] = 'Almacenamiento en caché para el desarrollo de marca basado en el perfil.';
+$string['cachedef_course_card_bg_image'] = 'Almacenamiento en caché para la imagen de fondo del curso.';
+$string['cachedef_course_card_teacher_avatar'] = 'Almacenamiento en caché para los avatares de los profesores.';
+$string['cachedef_course_card_teacher_avatar_index'] = 'Almacenamiento en caché para el índice de los avatares de los profesores.';
+$string['accesforumstringdis'] = 'Opciones de visualización';
+$string['accesforumstringmov'] = 'Mover las opciones';
+$string['accescalendarstring'] = 'Calendario';
+$string['admineventwarning'] = 'Para ver los eventos de todos los cursos, ';
+$string['gotocalendarsnap'] = 'diríjase al calendario del sitio.';
+$string['quizattemptswarn'] = 'Excluye los intentos de los usuarios suspendidos';
