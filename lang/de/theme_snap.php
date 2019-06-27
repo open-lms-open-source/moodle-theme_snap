@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * @copyright  Copyright (c) 2018 Blackboard Inc. (http://www.blackboard.com)
+ * @copyright  Copyright (c) 2019 Blackboard Inc. (http://www.blackboard.com)
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -49,6 +49,10 @@ $string['cachedef_course_completion_progress_ts'] = 'Damit werden Zwischenspeich
 $string['cachedef_webservicedefinitions'] = 'Zwischenspeichern von automatisch erzeugten Webservice-Definitionen.';
 $string['card'] = 'Karte';
 $string['categoryedit'] = 'Kategorie bearbeiten';
+$string['category_color'] = 'Kategoriefarbe';
+$string['category_color_description'] = 'Farbe der Kurskategorie. Untergeordnete Kurse übernehmen die Konfiguration der nächstliegenden übergeordneten Kategorie.';
+$string['category_color_palette'] = 'Farbpalette';
+$string['category_color_palette_description'] = 'Siehe entsprechenden Hexadezimalwert für die betreffende Farbe. Dies hat keine Auswirkungen auf Konfigurationen, sondern nur ein Muster, um Nutzern/Nutzerinnen bei der Bestimmung des Konfigurationswerts zu helfen.';
 $string['changecoverimage'] = 'Titelbild ändern';
 $string['changefullname'] = 'Namen der Website bearbeiten';
 $string['chapters'] = 'Kapitel';
@@ -104,8 +108,12 @@ $string['editcoursesettings'] = 'Kurseinstellungen';
 $string['editcoursetopic'] = 'Abschnitt bearbeiten';
 $string['editcustomfooter'] = 'Fußzeile bearbeiten';
 $string['editcustommenu'] = 'Benutzerdefiniertes Menü bearbeiten';
+$string['error:categorycolorinvalidjson'] = 'Falsches JSON-Format für Kurskategorien';
+$string['error:categorycolorinvalidvalue'] = 'Die Datensatz-ID oder der Farbwert für Kategory „{$a}“ ist ungültig.';
+$string['error:categorynotfound'] = 'Das Kategoriedatensatz mit der ID „{$a}“ wurde nicht gefunden.';
 $string['error:coverimageexceedsmaxbytes'] = 'Titelbild überschreitet die auf Website-Ebene maximal zulässige Dateigröße ({$a})';
 $string['error:coverimageresolutionlow'] = 'Die besten Ergebnisse erzielen Sie mit einem größeren Bild mit einer Breite von mindestens 1.024 Pixel.';
+$string['error:duplicatedcategoryids'] = 'Falsches JSON-Format, einige IDs sind doppelt';
 $string['error:failedtochangeassetvisibility'] = 'Objekt kann nicht verborgen/angezeigt werden';
 $string['error:failedtochangesectionvisibility'] = 'Abschnitt kann nicht verborgen/angezeigt werden';
 $string['error:failedtohighlightsection'] = 'Abschnitt kann nicht hervorgehoben werden';
@@ -178,7 +186,16 @@ $string['images'] = 'Bilder';
 $string['instagram'] = 'Instagram';
 $string['instagramdesc'] = 'Die URL Ihres Instagram-Kontos.';
 $string['introduction'] = 'Einführung';
-$string['knowledgebase'] = 'Blackboard Open LMS Knowledge Base';
+$string['jsontext'] = 'JSON-Text';
+$string['jsontextdescription'] = 'Der angegebene JSON-Code wird im Textbereich validiert. Demnach gilt: Nur vorhandene Kategorien sind zulässig, als ID-Datensätze (Kategoriedatensätze) sind nur numerische Werte gültig und als Farben werden nur Hexadezimalwerte anerkennt.
+Hierzu ein Beispiel:<br>
+{"1":"#FAAFFF",<br>
+"45":"#AFF",<br>
+"65":"#FFF228",<br>
+"12":"#CC0084",<br>
+"56":"#CC0087",<br>
+"89":"#CCF084"}';
+$string['knowledgebase'] = 'Blackboard Open LMS Knowledge-Base';
 $string['list'] = 'Liste';
 $string['linkedin'] = 'LinkedIn';
 $string['linkedindesc'] = 'Die URL Ihres Unternehmens-LinkedIn.';
@@ -232,9 +249,13 @@ $string['pluginname'] = 'Snap';
 $string['poster'] = 'Titelbild';
 $string['posterdesc'] = 'Ein großes Bild im Kopfbereich der ersten Seite Ihre Website. Bilder im Querformat (1.200 x 600 Pixel) oder größer eignen sich am besten.';
 $string['poweredbyrunby'] = 'Entwickelt mit <a href="https://www.blackboard.com/blackboard-open-lms" target="_blank">Blackboard Open LMS</a>,
-     <a href="https://moodle.com/" target="_blank">Moodle</a>-basiertes produkt.<br>
-    Copyright &#169; {$a} Blackboard Inc, Alle Rechte vorbehalten.';
+    einem auf <a href="https://moodle.com/" target="_blank">Moodle</a> basierenden Produkt.<br>
+    Copyright &#169; {$a} Blackboard Inc. Alle Rechte vorbehalten.';
 $string['previoussection'] = 'Vorheriger Abschnitt';
+$string['privacy:metadata:theme_snap_course_favorites:courseid'] = 'Die Kurs-ID des Kurses, den der/die Nutzer/in bevorzugt hat';
+$string['privacy:metadata:theme_snap_course_favorites:userid'] = 'Die Nutzer-ID des Nutzers/der Nutzerin, der/die den Kurs bevorzugt hat';
+$string['privacy:metadata:theme_snap_course_favorites:timefavorited'] = 'Der Zeitstempel des Zeitpunkts, zu dem der/die Nutzer/in den Kurs bevorzugt hat';
+$string['privacy:metadata:theme_snap_course_favorites'] = 'Speichert die Kursfavoriten der Nutzer/innen für Snap';
 $string['problemsfound'] = 'Probleme gefunden';
 $string['progress'] = 'Fortschritt';
 $string['readmore'] = 'Mehr erfahren&nbsp;»';
@@ -249,6 +270,7 @@ $string['released'] = 'Version: {$a}';
 $string['reopened'] = 'Erneut geöffnet';
 $string['resourcedisplay'] = 'Anzeige von Ressourcen';
 $string['resourcedisplayhelp'] = 'Wählen Sie aus, welche Anhänge und Links in Ihrem Kurs erscheinen sollen.';
+$string['search'] = 'Inhalte suchen';
 $string['seriffont'] = 'Schriftart Serif';
 $string['seriffont_desc'] = 'Diese Schriftart wird für die meisten benutzergenerierten Inhalte verwendet. Eine Schriftart mit Serifen verbessert die Lesbarkeit von benutzergenerierten Inhalten und vermittelt das Gefühl menschlicher Handschrift.';
 $string['showcoursegradepersonalmenu'] = 'Bewertungen';
@@ -259,7 +281,7 @@ $string['sitedescription'] = 'Website-Beschreibung';
 $string['subtitle'] = 'Untertitel';
 $string['subtitle_desc'] = 'Kurze Beschreibung Ihrer Website für Nutzer/innen.';
 $string['themecolor'] = 'Website-Farbe';
-$string['themecolordesc'] = 'Helle Farben, die Ihrer Website ein modernes Aussehen verleihen, eignen sich am besten.';
+$string['themecolordesc'] = 'Helle Farben eignen sich am besten und verleihen Ihrer Website ein modernes Aussehen.';
 $string['title'] = 'Titel';
 $string['top'] = 'Oben';
 $string['topbarbgcolor'] = 'Farbe für Navigationsleiste';
@@ -288,3 +310,28 @@ $string['xofysubmitted'] = '{$a->completed} von {$a->participants} abgegeben';
 $string['xungraded'] = '{$a} nicht bewertet';
 $string['youtube'] = 'YouTube';
 $string['youtubedesc'] = 'Die URL Ihres YouTube-Kanals.';
+$string['showallsectionsdisabled'] = 'Aufgrund der Designsprache ist „Alle Abschnitte auf einer Seite anzeigen“ in Snap nicht verfügbar.';
+$string['disabled'] = 'Deaktiviert';
+$string['showappearancedisabled'] = 'Die Designsprache von Snap verhindert Änderungen an den Einstellungen von "Darstellung".';
+$string['pbb'] = 'Profilbasierte Marke';
+$string['pbb_description'] = 'Wenn Sie <strong>Profilbasierte Marke</strong> aktivieren, können Sie das Markenerlebnis für eine bestimmte Nutzergruppe auf der Grundlage des ausgewählten Nutzerprofil-Felds individuell anpassen.
+<ul><li>Der Feldwert für die Nutzerin/den Nutzer wird <em></em>in Kleinbuchstaben umgewandelt, die mit einem Gedankenstrich (-) voneinander getrennt werden.</li>
+<li>Die Zeichenfolge <code>snap-pbb-</code> wird der Zeichenfolge vorangestellt.</li>
+<li>Diese Klasse wird dem HTML-Tag <code>body</code> hinzugefügt.</li></ul>
+Beispiel: Der Nutzerfeld-Wert <em>Blueberry Extravaganza</em> wird in <code>snap-pbb-blueberry-extravaganza</code> konvertiert.<br /><br />
+Diese Funktion wird zusammen mit <a href="https://help.blackboard.com/Blackboard_Open_LMS/Administrator/Manage_a_Site/Course_and_Site_Design/Themes/Snap#advanced-branding_OTP-3" target="_blank">Custom CSS</a> eingesetzt.
+Sie müssen CSS-Selektoren mit den neuen Klassen im Abschnitt <a class="snap-settings-tab-link" href="#themesnapbranding">Basics</a> hinzufügen.';
+$string['pbb_enable'] = 'Profilbasierte Marke aktivieren';
+$string['pbb_enable_description'] = 'Fügt dem Body-Schlagwort die Klasse nur bei Aktivität hinzu.';
+$string['pbb_field'] = 'Zu verwendendes Nutzerfeld';
+$string['pbb_field_description'] = 'Der Wert dieses Felds wird konvertiert und als CSS-Klassenname mit vorangestelltem <code>snap-pbb-</code> verwendet.';
+$string['cachedef_profile_based_branding'] = 'Zwischenspeicherung für profilbasierte Marke.';
+$string['cachedef_course_card_bg_image'] = 'Zwischenspeicherung für Kurs-Hintergrundbild.';
+$string['cachedef_course_card_teacher_avatar'] = 'Zwischenspeicherung für Trainer-Avatare.';
+$string['cachedef_course_card_teacher_avatar_index'] = 'Zwischenspeicherung für den Index der Trainer-Avatare.';
+$string['accesforumstringdis'] = 'Anzeigeoptionen';
+$string['accesforumstringmov'] = 'Verschiebeoptionen';
+$string['accescalendarstring'] = 'Kalender';
+$string['admineventwarning'] = 'Wenn Ereignisse aus allen Kursen angezeigt werden sollen, ';
+$string['gotocalendarsnap'] = 'rufen Sie den Website-Kalender auf.';
+$string['quizattemptswarn'] = 'Versuche von gesperrten Nutzer(inne)n ausschließen';
