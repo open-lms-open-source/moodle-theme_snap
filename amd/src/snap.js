@@ -783,7 +783,7 @@ define(['jquery', 'core/log', 'theme_snap/headroom', 'theme_snap/util', 'theme_s
                                     // Colors for disabling the divs.
                                     var layoverbkcolor = "#f1f1f1";
                                     var layovercolor = "#d5d5d5";
-                                    var cBoxes = $('[id="id_printheading"], [id="id_printintro"]');
+                                    var cBoxes = $('[id="id_printheading"], [id="id_printintro"], [id="id_printlastmodified"]');
 
                                     // Note we can't use 'disabled' for settings or they don't get submitted.
                                     cBoxes.attr('readonly', true);
