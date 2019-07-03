@@ -3928,6 +3928,10 @@ section#region-main {
 // Fix width for tables when adding a new member to a group in a course.
 #page-group-members div#addmembersform form#assignform table {
     table-layout: fixed;
+    optgroup {
+        overflow-x: scroll;
+        padding-bottom: 1em;
+    }
 
     tr td:nth-child(4) {
         width: 40%;
