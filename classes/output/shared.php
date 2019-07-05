@@ -456,7 +456,8 @@ EOF;
                 $item->link = $CFG->wwwroot.'/'.$item->link;
             }
             // Generate linkhtml.
-            $o .= html_writer::link($item->link, $item->title);
+            $attributes = $item->attributes ?? null;
+            $o .= html_writer::link($item->link, $item->title, $attributes);
         }
         return $o;
     }
@@ -662,7 +663,7 @@ EOF;
         // Mediasite. (GT Mod - core component check needs to be first in evaluation or capability check error will
         // occur when the module is not installed).
         if ( \core_component::get_component_directory('mod_mediasite') !== null &&
-            $COURSE->id > 1 && has_capability('mod/mediasite:courses7', $coursecontext) &&
+            $COURSE->id != SITEID && has_capability('mod/mediasite:courses7', $coursecontext) &&
             is_callable('mr_on') &&
             mr_on("mediasite", "_MR_MODULES")) {
             require_once($CFG->dirroot . "/mod/mediasite/mediasitesite.php");
@@ -690,6 +691,24 @@ EOF;
             }
         }
 
+        if ( \core_component::get_component_directory('report_allylti') !== null &&
+            $COURSE->id != SITEID && has_capability('report/allylti:viewcoursereport', $coursecontext)
+        ) {
+
+            $url = new moodle_url('/report/allylti/launch.php', [
+                    'reporttype' => 'course',
+                    'report' => 'admin',
+                    'course' => $COURSE->id]
+            );
+
+            $iconurl = $OUTPUT->image_url('i/ally_logo', 'theme_snap');
+            $allyicon = '<img src="'.$iconurl.'" class="svg-icon" alt="" role="presentation">';
+            $links[] = [
+                'link' => $url->out_as_local_url(false),
+                'title' => $allyicon . get_string('coursereport', 'report_allylti'),
+                'attributes' => ['target' => '_blank']
+            ];
+        }
         // Output course tools section.
         $coursetools = get_string('coursetools', 'theme_snap');
         $iconurl = $OUTPUT->image_url('course_dashboard', 'theme');
