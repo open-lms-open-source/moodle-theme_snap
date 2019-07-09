@@ -360,3 +360,16 @@ function theme_snap_output_fragment_section($args) {
     }
     return '';
 }
+
+function theme_snap_course_module_background_deletion_recommended() {
+    // Check if recyclebin is installed.
+    $toolplugins = core_plugin_manager::instance()->get_installed_plugins("tool");
+    foreach ($toolplugins as $name => $version) {
+        if ($name == 'recyclebin') {
+            if (\tool_recyclebin\course_bin::is_enabled()) {
+                return true;
+            }
+        }
+    }
+    return false;
+}

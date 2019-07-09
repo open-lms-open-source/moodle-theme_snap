@@ -495,7 +495,7 @@ class course {
         $sectioninfo = $modinfo->get_section_info($sectionnumber);
 
         if (course_can_delete_section($course, $sectioninfo)) {
-            course_delete_section($course, $sectioninfo, true);
+            course_delete_section($course, $sectioninfo, true, true);
         }
         $toc = new \theme_snap\renderables\course_toc($course);
         return [
