@@ -1476,7 +1476,7 @@ HTML;
                     'link' => $mod->link .'&section=0', // Section is replaced by js.
                     'help' => $helptext
                 ];
-            } else {
+            } else if ($mod->archetype !== MOD_ARCHETYPE_SYSTEM) {
                 // The name should be 'lti' instead of the module's URL which is the one we're getting.
                 $imageurl = $OUTPUT->image_url('icon', $mod->name);
                 if (strpos($mod->name, 'lti:') !== false) {
