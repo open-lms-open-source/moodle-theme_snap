@@ -2008,6 +2008,10 @@ ul.events-new + ul.events-underway {
             opacity: 1;
         }
     }
+
+    .feedback {
+        word-break: break-all;
+    }
 }
 
 // Quiz setup form //
