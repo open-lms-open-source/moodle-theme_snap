@@ -87,6 +87,16 @@ Feature: When the moodle theme is set to Snap, a course tools section is availab
       | student2 | 50.756      | I'm the teacher feedback |
     And I log out
         # By default, Gradebook displays grades with two decimals numbers.
+    Then I log in as "admin"
+    And I open the personal menu
+    And I am on "Course 1" course homepage
+    And I follow "Course Dashboard"
+    And I follow "Gradebook"
+    And I follow "Setup"
+    And I follow "Course grade settings"
+    And I set the field "Grade display type" to "Percentage"
+    And I click on "Save changes" "button"
+    And I log out
    Then I log in as "student1"
     And I open the personal menu
     And I am on "Course 1" course homepage
@@ -180,4 +190,75 @@ Feature: When the moodle theme is set to Snap, a course tools section is availab
     And I should see "50.7560%" in the ".progressbar-text" "css_element"
     And I follow "Gradebook"
     And I should see "50.7560 %" in the "td.column-percentage" "css_element"
+    And I log out
+
+  @javascript
+  Scenario: Course tools should display the student grade with a letter when the gradebook is set as a letter for grading.
+    Given I log in as "student1"
+    And I open the personal menu
+    And I am on "Course 1" course homepage
+    And I follow "Introduction"
+    And I should see "A1"
+    And I follow "Not Submitted"
+    And I follow "Add submission"
+    And I set the following fields to these values:
+      | Online text | I'm the student1 submission |
+    And I press "Save changes"
+    And I follow "Submit assignment"
+    And I press "Continue"
+    And I log out
+    Then I log in as "teacher1"
+    And I open the personal menu
+    And I am on "Course 1" course homepage
+    And I grade the assignment "A1" in course "C1" as follows:
+      | username | grade       | feedback                 |
+      | student1 | 50.32973    | I'm the teacher feedback |
+    And I log out
+    Then I log in as "admin"
+    And I open the personal menu
+    And I am on "Course 1" course homepage
+    And I follow "Course Dashboard"
+    And I follow "Gradebook"
+    And I follow "Setup"
+    And I follow "Course grade settings"
+    And I set the field "Grade display type" to "Letter"
+    And I click on "Save changes" "button"
+    And I log out
+    Then I log in as "student1"
+    And I open the personal menu
+    And I am on "Course 1" course homepage
+    And I follow "Course Dashboard"
+    And I should see "F" in the ".progressbar-text" "css_element"
+    And I log out
+    Then I log in as "admin"
+    And I open the personal menu
+    And I am on "Course 1" course homepage
+    And I follow "Course Dashboard"
+    And I follow "Gradebook"
+    And I follow "Setup"
+    And I follow "Course grade settings"
+    And I set the field "Grade display type" to "Letter (real)"
+    And I click on "Save changes" "button"
+    And I log out
+    Then I log in as "student1"
+    And I open the personal menu
+    And I am on "Course 1" course homepage
+    And I follow "Course Dashboard"
+    And I should see "F" in the ".progressbar-text" "css_element"
+    And I log out
+    Then I log in as "admin"
+    And I open the personal menu
+    And I am on "Course 1" course homepage
+    And I follow "Course Dashboard"
+    And I follow "Gradebook"
+    And I follow "Setup"
+    And I follow "Course grade settings"
+    And I set the field "Grade display type" to "Letter (percentage)"
+    And I click on "Save changes" "button"
+    And I log out
+    Then I log in as "student1"
+    And I open the personal menu
+    And I am on "Course 1" course homepage
+    And I follow "Course Dashboard"
+    And I should see "F" in the ".progressbar-text" "css_element"
     And I log out

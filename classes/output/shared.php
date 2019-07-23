@@ -33,6 +33,10 @@ use moodle_url;
 use stdClass;
 use theme_snap\local;
 
+require_once($CFG->dirroot.'/grade/querylib.php');
+require_once($CFG->libdir.'/gradelib.php');
+require_once($CFG->dirroot.'/grade/lib.php');
+
 class shared extends \renderer_base {
 
     /**
@@ -784,7 +788,14 @@ EOF;
         if (has_capability('gradereport/overview:view', $coursecontext)) {
             $grade = local::course_grade($COURSE, true);
             $coursegrade = '-';
-            if (isset($grade->coursegrade['percentage'])) {
+            $gradeitem = \grade_item::fetch_course_item($COURSE->id);
+            $displayformat = $gradeitem->get_displaytype();
+            // If the display grade form is set as a letter, a letter will appear in the user grade dashboard.
+            if (($displayformat == GRADE_DISPLAY_TYPE_LETTER) ||
+                ($displayformat == GRADE_DISPLAY_TYPE_LETTER_REAL) ||
+                ($displayformat == GRADE_DISPLAY_TYPE_LETTER_PERCENTAGE)) {
+                $coursegrade = current(explode(' ', $grade->coursegrade['value']));
+            } else if (isset($grade->coursegrade['percentage'])) {
                 $coursegrade = current(explode(' ', $grade->coursegrade['percentage']));
             }
 
@@ -794,7 +805,7 @@ EOF;
             $userboard .= '<h4 class="h6">' . get_string('grade') . '</h6>';
             $userboard .= '<a href="' . $moodleurl . '">';
             $userboard .= '<div class="js-progressbar-circle snap-progress-circle snap-progressbar-link" value="';
-            $userboard .= s($coursegrade) . '"></div>';
+            $userboard .= s($coursegrade) . '"gradeformat="' . $displayformat . '" ></div>';
             $userboard .= '</a>';
             $userboard .= '</div>';
         }
