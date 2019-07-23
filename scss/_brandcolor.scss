@@ -45,6 +45,7 @@ $lighter-grey-btn: #e6e6e6;
         &:focus,
         &:hover {
             color: darken($brand-primary, 8%);
+            background: none;
         }
     }
 
