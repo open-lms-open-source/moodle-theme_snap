@@ -26,6 +26,8 @@ namespace theme_snap\output;
 
 defined('MOODLE_INTERNAL') || die();
 
+require_once($CFG->dirroot . '/course/format/weeks/renderer.php');
+
 class format_weeks_renderer extends \format_weeks_renderer {
 
     use format_section_trait;

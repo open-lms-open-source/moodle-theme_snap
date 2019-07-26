@@ -63,7 +63,7 @@ class ws_course_completion extends \external_api {
                         'id' => new \external_value(PARAM_INT, 'id'),
                         'html' => new \external_value(PARAM_RAW, 'html')
                     ],
-                   'Newly available mods', VALUE_REQUIRED
+                    'Newly available mods', VALUE_REQUIRED
                 )
             ),
             'toc' => new \external_single_structure(
