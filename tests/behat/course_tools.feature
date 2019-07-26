@@ -29,9 +29,11 @@ Feature: When the moodle theme is set to Snap, a course tools section is availab
     And the following "users" exist:
       | username | firstname | lastname | email                |
       | student1 | Student   | 1        | student1@example.com |
+      | teacher1 | Teacher   | 1        | teacher1@example.com |
     And the following "course enrolments" exist:
       | user     | course | role           |
       | student1 | C1     | student        |
+      | teacher1 | C1     | editingteacher |
 
   @javascript
   Scenario: Course tools link does not show for unsupported formats.
@@ -146,3 +148,16 @@ Feature: When the moodle theme is set to Snap, a course tools section is availab
     And I click on "a[href=\"#coursetools\"]" "css_element"
     And ".snap-student-dashboard-progress" "css_element" should exist
     And ".snap-student-dashboard-grade" "css_element" should exist
+
+  @javascript
+  Scenario: Course tools includes ally course lti report.
+    Given I am using Blackboard Open LMS
+    And I log in as "teacher1"
+    And I am on the course main page for "C1"
+    And I click on "a[href=\"#coursetools\"]" "css_element"
+    And "#coursetools a[href*=\"report/allylti/launch.php?reporttype=course\"]" "css_element" should exist
+    And I log out
+    And I log in as "student1"
+    And I am on the course main page for "C1"
+    And I click on "a[href=\"#coursetools\"]" "css_element"
+    And "#coursetools a[href*=\"report/allylti/launch.php?reporttype=course\"]" "css_element" should not exist
