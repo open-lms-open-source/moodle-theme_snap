@@ -305,7 +305,7 @@ define(['jquery', 'core/log', 'theme_snap/headroom', 'theme_snap/util', 'theme_s
          * Apply progressbar.js for circular progress displays.
          */
         var progressbarcircle = function() {
-            $('.js-progressbar-circle').each(function() {
+            $('.snap-student-dashboard-progress .js-progressbar-circle').each(function() {
                 var circle = new ProgressBar.Circle(this, {
                     color: 'inherit', // @gray.
                     easing: 'linear',
@@ -318,16 +318,73 @@ define(['jquery', 'core/log', 'theme_snap/headroom', 'theme_snap/util', 'theme_s
                 });
 
                 var value = ($(this).attr('value') / 100);
-                var endColor = '#8BC34A'; // green @brand-success.
+                var endColor = '#3d5c1f'; // green @brand-success.
                 if (value === 0 || $(this).attr('value') === '-') {
                   circle.setText('-');
                 } else {
                   if ($(this).attr('value') < 50) {
-                      endColor = '#FF9800'; // @brand-warning orange.
+                      endColor = '#b55600'; // @brand-warning orange.
                   } else {
-                      endColor = '#8BC34A'; // green @brand-success.
+                      endColor = '#3d5c1f'; // green @brand-success.
                   }
                   circle.setText($(this).attr('value') + '<small>%</small>');
+                }
+
+                circle.animate(value, {
+                    from: {
+                        color: '#999' // @gray-light.
+                    },
+                    to: {
+                        color: endColor
+                    },
+                    step: function(state, circle) {
+                        circle.path.setAttribute('stroke', state.color);
+                    }
+                });
+            });
+
+            $('.snap-student-dashboard-grade .js-progressbar-circle').each(function() {
+                var circle = new ProgressBar.Circle(this, {
+                    color: 'inherit', // @gray.
+                    easing: 'linear',
+                    strokeWidth: 6,
+                    trailWidth: 3,
+                    duration: 1400,
+                    text: {
+                        value: '0'
+                    }
+                });
+
+                var value = ($(this).attr('value') / 100);
+
+                var endColor = '#3d5c1f'; // green @brand-success.
+                if (value === 0 || $(this).attr('value') === '-') {
+                    circle.setText('-');
+                } else {
+                    if ($(this).attr('value') < 50) {
+                        endColor = '#b55600'; // @brand-warning orange.
+                    } else {
+                        endColor = '#3d5c1f'; // green @brand-success.
+                    }
+                    var nodeValue = $(this).attr('value');
+                    var gradeFormat = $(this).attr('gradeformat');
+
+                    /**
+                     * Definitions for gradebook.
+                     *
+                     * We need to display the % for all the grade formats which contains a % in the value.
+                     * GRADE_DISPLAY_TYPE_PERCENTAGE = 2
+                     * GRADE_DISPLAY_TYPE_PERCENTAGE_REAL = 21
+                     * GRADE_DISPLAY_TYPE_PERCENTAGE_LETTER = 23
+                     */
+                    var gradePercentage = gradeFormat == "2";
+                    var gradePercentageReal = gradeFormat == "21";
+                    var gradePercentageLetter = gradeFormat == "23";
+
+                    if (gradePercentage || gradePercentageReal || gradePercentageLetter) {
+                        nodeValue = nodeValue + '<small>%</small>';
+                    }
+                    circle.setText(nodeValue);
                 }
 
                 circle.animate(value, {
