@@ -726,7 +726,7 @@ class course_renderer extends \core_course_renderer {
         $close = get_string('closebuttontitle', 'moodle');
 
         // Identify content elements which should force an AJAX lazy load.
-        $elcontentblist = ['iframe', 'video', 'object', 'embed'];
+        $elcontentblist = ['iframe', 'video', 'object', 'embed', 'model-viewer'];
         $content = $page->content;
         $lazyload = false;
         foreach ($elcontentblist as $el) {
