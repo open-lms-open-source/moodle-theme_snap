@@ -29,6 +29,9 @@ $light-grey-btn: #cccccc;
 $lighter-grey-btn: #e6e6e6;
 
 .theme-snap {
+    .badge-primary {
+        background-color: $brand-primary !important;
+    }
     div.moodle-dialogue.filepicker a.nav-link.active {
         color: #fff;
         background-color: $brand-primary;
