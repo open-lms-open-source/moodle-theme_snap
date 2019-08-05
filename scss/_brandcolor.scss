@@ -32,6 +32,31 @@ $lighter-grey-btn: #e6e6e6;
     .badge-primary {
         background-color: $brand-primary !important;
     }
+    #snap-pm-accessible-tab {
+        ul.nav.nav-tabs {
+            li.tab {
+                margin-right: 0.3em;
+                border: 0.06em solid #ddd;
+            }
+
+            li.tab.active a.nav-link {
+                background-color: darken($brand-primary, 8%);
+                color: #fff;
+            }
+
+            .nav-link.active.show {
+                border: none;
+                color: #000;
+            }
+
+            a.nav-link {
+                color: #000;
+                padding: .5em 1.5em;
+                text-decoration: none;
+                border: none;
+            }
+        }
+    }
     div.moodle-dialogue.filepicker a.nav-link.active {
         color: #fff;
         background-color: $brand-primary;
