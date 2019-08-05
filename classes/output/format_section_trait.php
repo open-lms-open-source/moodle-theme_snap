@@ -498,7 +498,7 @@ trait format_section_trait {
         $output .= '</div>';
         $output .= '<div class="form-group">';
         $output .= '<label for="summary">'.get_string('contents', 'theme_snap').'</label>';
-        $output .= $OUTPUT->print_textarea(true, 10, 150, "100%",
+        $output .= $OUTPUT->print_textarea(true, 10, '', "100%",
             "auto", "summary", '', $course->id, true);
         $output .= '</div>';
         $output .= html_writer::empty_tag('input', array(
