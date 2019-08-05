@@ -511,7 +511,10 @@ form.mform {
         border-top: 1px solid #eee;
         text-align: center;
     }
+}
 
+@include media-breakpoint-down(lg) {
+    
     .snap-form-advanced {
         select {
             max-width: 140px !important;
