@@ -498,8 +498,7 @@ trait format_section_trait {
         $output .= '</div>';
         $output .= '<div class="form-group">';
         $output .= '<label for="summary">'.get_string('contents', 'theme_snap').'</label>';
-        $output .= $OUTPUT->print_textarea(true, 10, '', "100%",
-            "auto", "summary", '', $course->id, true);
+        $output .= $OUTPUT->print_textarea('newsectioneditor', 'edit-newsectioneditor', '', "100%", "auto");
         $output .= '</div>';
         $output .= html_writer::empty_tag('input', array(
             'type' => 'submit',
