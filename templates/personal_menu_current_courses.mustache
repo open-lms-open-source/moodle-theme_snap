@@ -21,7 +21,7 @@
 }}
 
 {{#currentcourselist}}
-    <div id="snap-pm-courses-current" class="tab-pane active" role="tabpanel" aria-labelledby="snap-pm-tab-current">
+    <div id="snap-pm-courses-current" class="tab-pane active" role="tabpanel" aria-label="snap-pm-tab-current">
         {{#published}}
             <div id="snap-pm-courses-current-cards" class="clearfix">
                 {{#courses}}
@@ -50,7 +50,7 @@
 }}
 
 {{^currentcourselist}}
-    <div id="snap-pm-courses-current" class="tab-pane clearfix active" role="tabpanel" aria-labelledby="snap-pm-tab-current">
+    <div id="snap-pm-courses-current" class="tab-pane clearfix active" role="tabpanel" aria-label="snap-pm-tab-current" tabindex="0">
         <h2>{{#str}}courses{{/str}}</h2>
         <p>{{#str}}coursefixydefaulttext, theme_snap{{/str}}</p>
     </div>

@@ -32,16 +32,18 @@ define(['jquery', 'core/str', 'core/event'],
                  * Module to get the strings from Snap to add the aria-label attribute to new accessibility features.
                  */
                 str.get_strings([
-                    {key : 'accesforumstringdis', component : 'theme_snap'},
-                    {key : 'accesforumstringmov', component : 'theme_snap'},
-                    {key : 'calendar', component : 'calendar'}
+                    {key : 'accessforumstringdis', component : 'theme_snap'},
+                    {key : 'accessforumstringmov', component : 'theme_snap'},
+                    {key : 'calendar', component : 'calendar'},
+                    {key : 'accessglobalsearchstring', component : 'theme_snap'}
                 ]).done(function(stringsjs) {
-                    $("i.fa-calendar").parent().attr("aria-label", stringsjs[2]);
-                    $("input[name='TimeEventSelector[calendar]']").attr('aria-label', stringsjs[2]);
                     if ($("#page-mod-forum-discuss")) {
                         $(".displaymode form select.custom-select").attr("aria-label", stringsjs[0]);
                         $(".movediscussion select.urlselect").attr("aria-label", stringsjs[1]);
                     }
+                    $("i.fa-calendar").parent().attr("aria-label", stringsjs[2]);
+                    $("input[name='TimeEventSelector[calendar]']").attr('aria-label', stringsjs[2]);
+                    $(".search-input-wrapper.nav-link div").attr('aria-label', stringsjs[3]);
                 });
 
                 $(document).ready(function() {

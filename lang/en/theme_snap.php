@@ -334,9 +334,10 @@ $string['cachedef_profile_based_branding'] = 'Caching for Profile based branding
 $string['cachedef_course_card_bg_image'] = 'Caching for course background image.';
 $string['cachedef_course_card_teacher_avatar'] = 'Caching for teacher avatars.';
 $string['cachedef_course_card_teacher_avatar_index'] = 'Caching for teacher avatars index.';
-$string['accesforumstringdis'] = 'Display options';
-$string['accesforumstringmov'] = 'Move options';
-$string['accescalendarstring'] = 'Calendar';
+$string['accessforumstringdis'] = 'Display options';
+$string['accessforumstringmov'] = 'Move options';
+$string['accesscalendarstring'] = 'Calendar';
+$string['accessglobalsearchstring'] = 'Search';
 $string['admineventwarning'] = 'To see events from all courses, ';
 $string['gotocalendarsnap'] = 'go to site calendar.';
 $string['quizattemptswarn'] = 'Excludes attempts from suspended users';
@@ -350,3 +351,4 @@ $string['catinvalidratio'] = 'The following color categories don\'t comply with 
 <a href="https://www.w3.org/TR/WCAG20-TECHS/G18.html" target="_blank">WCAG 2.0 minimum ratio value 4.5:1</a> :
 Against site background color (white): "{$a->white}". Against navigation bar background color: "{$a->custombar}". Against My Courses button background color: "{$a->customnav}"';
 $string['imageinvalidratiocategory'] = 'This image could have contrast problems with the theme color due not compliance with the WCAG 2.0 minimum ratio value 4.5:1. Average pixel value: "{$a}"';
+$string['browseallcourses'] = 'Browse all courses';
