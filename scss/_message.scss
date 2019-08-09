@@ -136,6 +136,18 @@
         color: $brand-primary;
     }
 }
+
+// Fix for personal menu hidden in IE 11 message page.
+.ie11#page-message-index {
+    #snap-pm {
+        position: relative;
+        z-index: 2;
+    }
+    .message-drawer {
+        z-index: 1;
+    }
+}
+
 // Hide scrolling when the message drawer is present.
 #page-message-edit {
     overflow: hidden;
