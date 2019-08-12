@@ -371,7 +371,9 @@ EOF;
             'ajaxurl' => '/course/rest.php',
             'unavailablesections' => $unavailablesections,
             'unavailablemods' => $unavailablemods,
-            'enablecompletion' => isloggedin() && $COURSE->enablecompletion
+            'enablecompletion' => isloggedin() && $COURSE->enablecompletion,
+            'format' => $COURSE->format,
+            'partialrender' => !empty(get_config('theme_snap', 'coursepartialrender')) ? true : false
         ];
 
         $mprocs = get_message_processors(true);

@@ -344,7 +344,7 @@ function theme_snap_get_pre_scss($theme) {
  */
 function theme_snap_output_fragment_section($args) {
     global $PAGE;
-    if (!empty($args['courseid']) && !empty($args['section'])) {
+    if (!empty($args['courseid']) && $args['section'] != '') {
         $course = get_course($args['courseid']);
         $PAGE->set_context(\context_course::instance($course->id));
         $format = course_get_format($args['courseid']);
