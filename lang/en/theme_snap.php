@@ -72,6 +72,8 @@ $string['coursefootertoggledesc'] = 'The Course footer shows useful information 
 $string['courseformatnotification'] = 'The current course format you are using is not fully supported by the Snap theme. For the best experience Blackboard Open LMS recommends using the Topics or Weekly course formats with the Snap theme. The course format can be changed in the <a href="{$a}">course settings</a>.';
 $string['coursefixydefaulttext'] = 'You are currently not enrolled in any courses.<br>Courses you are enrolled in will be shown here.';
 $string['coursegrade'] = 'Course grade:';
+$string['coursepartialrender'] = 'Course partial render';
+$string['coursepartialrenderdesc'] = 'Renders course sections using a web service, users will only see what they need.';
 $string['coursenavigation'] = 'Course navigation';
 $string['coursesummaryfilesunsuitable'] = 'Please empty your course summary files before you attempt to change the cover image';
 $string['coursetools'] = 'Course Dashboard';

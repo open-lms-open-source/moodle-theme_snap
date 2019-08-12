@@ -20,30 +20,211 @@
  */
 
 define(['jquery', 'core/log', 'core/ajax', 'core/str', 'core/templates', 'core/notification',
-    'theme_snap/util', 'theme_snap/ajax_notification', 'theme_snap/footer_alert'],
-    function($, log, ajax, str, templates, notification, util, ajaxNotify, footerAlert) {
+    'theme_snap/util', 'theme_snap/ajax_notification', 'theme_snap/footer_alert',
+    'core/event', 'core/fragment'],
+    function($, log, ajax, str, templates, notification, util, ajaxNotify, footerAlert, Event, fragment) {
+
+        var self = this;
+
+        /**
+         * Items being moved - actual dom elements.
+         * @type {array}
+         */
+        var movingObjects = [];
+
+        /**
+         * Item being moved - actual dom element.
+         * @type {object}
+         */
+        var movingObject;
+
+        /**
+         * @type {boolean}
+         */
+        var ajaxing = false;
+
+        var ajaxTracker;
+
+        /**
+         * Sets observers for the TOC elements.
+         */
+        var setTocObservers = function () {
+            if (self.courseConfig.format == 'weeks' || self.courseConfig.format == 'topics') {
+                $('#course-toc .chapter-title').click(function(e) {
+                    var link = $(e.target);
+                    var section = link.attr('href').split('#section-')[1];
+                    if (section) {
+                        getSection(section, 0);
+                    }
+                });
+
+                $('#toc-searchables li a').click(function(e) {
+                    var link = $(e.target);
+                    var urlParams = link.attr('href').split("&"),
+                        section = urlParams[0],
+                        mod = urlParams[1] || null;
+                    section = section.split('#section-')[1];
+                    getSection(section, mod);
+                });
+            }
+        };
+
+        /**
+         * Sets observers for the navigation arrows.
+         */
+        var setNavigationFooterObservers = function () {
+            if (self.courseConfig.format == 'weeks' || self.courseConfig.format == 'topics') {
+                $('.section_footer .next_section, .setion_footer .icon-arrow-right, ' +
+                    '.section_footer .previous_section, .section_footer .icon-arrow-left').click(function(e) {
+                    var link = $(e.target);
+                    var section = link.attr('section-number');
+                    if(typeof section !== 'undefined' && section.length > 0) {
+                        getSection(section, 0);
+                    }
+                });
+            }
+        };
+
+        /**
+         * Scroll to a mod via search
+         * @param {string} modid
+         */
+        var scrollToModule = function(modid) {
+            // sometimes we have a hash, sometimes we don't
+            // strip hash then add just in case
+            $('#toc-search-results').html('');
+            var targmod = $("#" + modid.replace('#', ''));
+            // http://stackoverflow.com/questions/6677035/jquery-scroll-to-element
+            util.scrollToElement(targmod);
+
+            var searchpin = $("#searchpin");
+            if (!searchpin.length) {
+                searchpin = $('<i id="searchpin"></i>');
+            }
+
+            $(targmod).find('.instancename').prepend(searchpin);
+            $(targmod).attr('tabindex', '-1').focus();
+            $('#course-toc').removeClass('state-visible');
+        };
+
+        /**
+         * Update moving message.
+         */
+        var updateMovingMessage = function() {
+            var title;
+            if (movingObjects.length === 1) {
+                var assetname = $(movingObjects[0]).find('.snap-asset-link .instancename').html();
+                assetname = assetname || M.util.get_string('pluginname', 'label', assetname);
+                title = M.util.get_string('moving', 'theme_snap', assetname);
+            } else {
+                title = M.util.get_string('movingcount', 'theme_snap', movingObjects.length);
+            }
+            footerAlert.setTitle(title);
+        };
+
+        /**
+         * Updates the drop zone with a descriptive text.
+         * @param sectionName
+         */
+        var updateSectionDropMsg = function (sectionName) {
+            if (typeof movingObjects !== 'undefined' && movingObjects.length > 0) {
+                $('.section-drop').each(function() {
+                    var sectionDropMsg = M.util.get_string('movingdropsectionhelp', 'theme_snap',
+                        {moving: sectionName, before: $(this).data('title')}
+                    );
+                    $(this).html(sectionDropMsg);
+                });
+                footerAlert.setSrNotice(M.util.get_string('movingstartedhelp', 'theme_snap', sectionName));
+
+            }
+        };
+
+        /**
+         * Gets a specific section for the current course and if an activity module is passed sets focus on it.
+         * @param section
+         * @param mod
+         */
+        var getSection = function (section, mod) {
+            var node = $('#section-' + section);
+            if (node.length == 0) {
+                var params = {courseid: self.courseConfig.id, section: section};
+                $('.sk-fading-circle').show();
+                // We need to prevent the DOM to show the default section.
+                $('.course-content .' + self.courseConfig.format + ' li[id^="section-"]').hide();
+                fragment.loadFragment('theme_snap', 'section', self.courseConfig.contextid, params).done(function(html) {
+                    var node = $(html);
+                    renderSection(section, node, mod);
+                });
+            }
+        };
+
+        /**
+         * This functions inserts a section node to the DOM.
+         * @param section
+         * @param html
+         * @param mod
+         */
+        var renderSection = function(section, html, mod) {
+            var anchor = $('.course-content .' + self.courseConfig.format);
+            var existingSections = [];
+            anchor.find('li[id^=section-]').each(function() {
+                existingSections.push(parseInt($(this).attr('id').split('section-')[1]));
+            });
+            var closest = existingSections.reduce(function(prev, curr) {
+                return (Math.abs(curr - section) < Math.abs(prev - section) ? curr : prev);
+            });
+
+            if (closest > section) {
+                anchor.find('#section-' + closest).before(html);
+
+            } else {
+                anchor.find('#section-' + closest).after(html);
+
+            }
+            // Hide loading animation.
+            $('.sk-fading-circle').hide();
+            // Notify filters about the new section.
+            Event.notifyFilterContentUpdated($('.course-content .' + self.courseConfig.format));
+            var sections = anchor.find('li[id^="section-"]');
+            // When not present the section, the first one will be shown as default, remove all classes to prevent that.
+            sections.removeClass('state-visible');
+            var id = '#section-' + section;
+            $(id).addClass('state-visible');
+            // Leave all course sections as they were.
+            sections.show();
+            // Set observers for navigation arrows.
+            $(id + ' .section_footer .next_section,' + id + ' .section_footer .previous_section').click(function(e) {
+                var link = $(e.target);
+                getSection(link.attr('section-number'), 0);
+            });
+
+            // Set observer for mod chooser.
+            $(id + ' .section-modchooser-link').click(function() {
+                // Grab the section number from the button.
+                var sectionNum = $(this).attr('data-section');
+                $('.snap-modchooser-addlink').each(function() {
+                    // Update section in mod link to current section.
+                    var newLink = this.href.replace(/(section=)[0-9]+/ig, '$1' + sectionNum);
+                    $(this).attr('href', newLink);
+                });
+            });
+
+            // If a module id has been passed as parameter, set focus.
+            if (mod != 0 && typeof mod !== 'undefined') {
+                scrollToModule(mod);
+            }
+            var sectionName = $('#region-main .section-moving').find('.sectionname').text();
+            if (typeof sectionName !== 'undefined' && sectionName.length > 0) {
+                updateSectionDropMsg(sectionName);
+            }
+        };
+
+
 
     return {
         init: function(courseLib) {
 
-            /**
-             * Items being moved - actual dom elements.
-             * @type {array}
-             */
-            var movingObjects = [];
-
-            /**
-             * Item being moved - actual dom element.
-             * @type {object}
-             */
-            var movingObject;
-
-            /**
-             * @type {boolean}
-             */
-            var ajaxing = false;
-
-            var ajaxTracker;
+            self.courseConfig = courseLib.courseConfig;
 
             /**
              * AJAX tracker class - for tracking chained AJAX requests (prevents behat intermittent faults).
@@ -116,7 +297,11 @@ define(['jquery', 'core/log', 'core/ajax', 'core/str', 'core/templates', 'core/n
              * @returns {number}
              */
             var sectionNumber = function(el) {
-                return (parseInt($(el).attr('id').replace('section-', '')));
+                if (self.courseConfig.partialrender) {
+                    return (parseInt($(el).attr('id').split('section-')[1]));
+                } else {
+                    return (parseInt($(el).attr('id').replace('section-', '')));
+                }
             };
 
             /**
@@ -157,21 +342,6 @@ define(['jquery', 'core/log', 'core/ajax', 'core/str', 'core/templates', 'core/n
                     // Don't pass in target, we want to abort the move!
                     stopMoving(false);
                 }, 2000);
-            };
-
-            /**
-             * Update moving message.
-             */
-            var updateMovingMessage = function() {
-                var title;
-                if (movingObjects.length === 1) {
-                    var assetname = $(movingObjects[0]).find('.snap-asset-link .instancename').html();
-                    assetname = assetname || M.util.get_string('pluginname', 'label', assetname);
-                    title = M.util.get_string('moving', 'theme_snap', assetname);
-                } else {
-                    title = M.util.get_string('movingcount', 'theme_snap', movingObjects.length);
-                }
-                footerAlert.setTitle(title);
             };
 
             /**
@@ -255,7 +425,11 @@ define(['jquery', 'core/log', 'core/ajax', 'core/str', 'core/templates', 'core/n
              */
             var getSectionTitle = function(section) {
                 // Get title from TOC.
-                return $('#chapters li:nth-of-type(' + (section + 1) + ') .chapter-title').html();
+                if (self.courseConfig.partialrender) {
+                    return  $('#course-toc #chapters > li a[href="#section-' + section + '"]').text();
+                } else {
+                    return $('#chapters li:nth-of-type(' + (section + 1) + ') .chapter-title').html();
+                }
             };
 
             /**
@@ -267,26 +441,42 @@ define(['jquery', 'core/log', 'core/ajax', 'core/str', 'core/templates', 'core/n
                 var dfd = $.Deferred();
                 var sections, totalSectionCount;
                 if (!selector) {
-                    selector = '#region-main .course-content > ul li.section';
+                    if (self.courseConfig.partialrender) {
+                        selector = '#course-toc #chapters > li a';
+                    } else {
+                        selector = '#region-main .course-content > ul li.section';
+                    }
                     sections = $(selector);
                     totalSectionCount = sections.length;
                 } else {
                     sections = $(selector);
-                    var allSections = $('#region-main .course-content > ul li.section');
+                    if (self.courseConfig.partialrender) {
+                        var allSections = $('#course-toc #chapters > li a');
+                    } else {
+                        var allSections = $('#region-main .course-content > ul li.section');
+                    }
                     totalSectionCount = allSections.length;
                 }
 
                 var completed = 0;
 
                 $.each(sections, function(idx, el) {
-                    var sectionNum = sectionNumber(el);
+                    if (self.courseConfig.partialrender) {
+                        var sectionNum = parseInt($(el).attr('href').split('#section-')[1]);
+                    } else {
+                        var sectionNum = sectionNumber(el);
+                    }
                     var previousSection = sectionNum - 1;
                     var nextSection = sectionNum + 1;
                     var previous = false;
                     var next = false;
                     var hidden, extraclasses;
                     if (previousSection > -1) {
-                        hidden = $('#section-' + previousSection).hasClass('hidden');
+                        if (self.courseConfig.partialrender) {
+                            hidden = $('#section-' + previousSection).hasClass('draft');
+                        } else {
+                            hidden = $('#section-' + previousSection).hasClass('hidden');
+                        }
                         extraclasses = hidden ? ' dimmed_text' : '';
                         previous = {
                             section: previousSection,
@@ -295,7 +485,11 @@ define(['jquery', 'core/log', 'core/ajax', 'core/str', 'core/templates', 'core/n
                         };
                     }
                     if (nextSection < totalSectionCount) {
-                        hidden = $('#section-' + nextSection).hasClass('hidden');
+                        if (self.courseConfig.partialrender) {
+                            hidden = $('#section-' + nextSection).hasClass('draft');
+                        } else {
+                            hidden = $('#section-' + nextSection).hasClass('hidden');
+                        }
                         extraclasses = hidden ? ' dimmed_text' : '';
                         next = {
                             section: nextSection,
@@ -309,7 +503,10 @@ define(['jquery', 'core/log', 'core/ajax', 'core/str', 'core/templates', 'core/n
                     };
                     templates.render('theme_snap/course_section_navigation', navigation)
                         .done(function(result) {
-                            $('#section-' + sectionNum + ' .section_footer').replaceWith(result);
+                            var target = $('#section-' + sectionNum + ' .section_footer');
+                            if (target.length > 0) {
+                                target.replaceWith(result);
+                            }
                             completed++;
                             if (completed === sections.length) {
                                 dfd.resolve();
@@ -324,22 +521,38 @@ define(['jquery', 'core/log', 'core/ajax', 'core/str', 'core/templates', 'core/n
              * Update sections.
              */
             var updateSections = function() {
+                if (courseLib.courseConfig.partialrender) {
+                    $.each($('#course-toc #chapters > li a[href!="#section-0"]'), function(idx, obj) {
 
-                // Renumber section ids, rename section titles.
-                $.each($('#region-main .course-content > ul li.section'), function(idx, obj) {
-                    $(obj).attr('id', 'section-' + idx);
-                    // Get title from TOC (note that its idx + 1 because first entry is
-                    // introduction.
-                    var chapterTitle = getSectionTitle(idx);
-                    // Update section title with corresponding TOC title - this is necessary
-                    // for weekly topic courses where the section title needs to stay the
-                    // same as the TOC.
-                    $('#section-' + idx + ' .content .sectionname').html(chapterTitle);
-                    // Update section data attribute to reflect new section idx.
-                    $(this).find('a.section-modchooser-link').attr('data-section', idx);
+                        var sectionName = $(obj).text();
+                        var sectionId = $(obj).attr('href').split('#section-')[1];
+                        var section = $('#region-main .course-content > ul li.section[aria-label="' + sectionName + '"]');
+                        section.attr('id', 'section-' + sectionId);
+                        $('#section-' + sectionId + ' .content .sectionname').html(sectionName);
+                        // Update section data attribute to reflect new section id.
+                        $(this).find('a.section-modchooser-link').attr('data-section', sectionId);
+                    });
+                } else {
+                    // Renumber section ids, rename section titles.
+                    $.each($('#region-main .course-content > ul li.section'), function(idx, obj) {
+                        $(obj).attr('id', 'section-' + idx);
+                        // Get title from TOC (note that its idx + 1 because first entry is
+                        // introduction.
+                        var chapterTitle = getSectionTitle(idx);
+                        // Update section title with corresponding TOC title - this is necessary
+                        // for weekly topic courses where the section title needs to stay the
+                        // same as the TOC.
+                        $('#section-' + idx + ' .content .sectionname').html(chapterTitle);
+                        // Update section data attribute to reflect new section idx.
+                        $(this).find('a.section-modchooser-link').attr('data-section', idx);
+                    });
+                }
+
+                updateSectionNavigation().done(function() {
+                    if (courseLib.courseConfig.partialrender) {
+                        setCourseSectionObervers();
+                    }
                 });
-
-                updateSectionNavigation();
             };
 
             /**
@@ -874,7 +1087,6 @@ define(['jquery', 'core/log', 'core/ajax', 'core/str', 'core/templates', 'core/n
 
                     log.debug('Moving this section', sectionName);
                     movingObjects = [section];
-
                     // This should never happen, but just in case...
                     $('.section-moving').removeClass('section-moving');
                     section.addClass('section-moving');
@@ -883,15 +1095,7 @@ define(['jquery', 'core/log', 'core/ajax', 'core/str', 'core/templates', 'core/n
 
                     var title = M.util.get_string('moving', 'theme_snap', sectionName);
                     footerAlert.setTitle(title);
-
-                    $('.section-drop').each(function() {
-                        var sectionDropMsg = M.util.get_string('movingdropsectionhelp', 'theme_snap',
-                            {moving: sectionName, before: $(this).data('title')}
-                        );
-                        $(this).html(sectionDropMsg);
-                    });
-
-                    footerAlert.setSrNotice(M.util.get_string('movingstartedhelp', 'theme_snap', sectionName));
+                    updateSectionDropMsg(sectionName);
                 });
             };
 
@@ -1010,6 +1214,14 @@ define(['jquery', 'core/log', 'core/ajax', 'core/str', 'core/templates', 'core/n
             };
 
             /**
+             * Set observers for TOC and navigation buttons in the footer.
+             */
+            var setCourseSectionObervers = function () {
+                setTocObservers();
+                setNavigationFooterObservers();
+            };
+
+            /**
              * Add listeners.
              */
             var addListeners = function() {
@@ -1021,6 +1233,9 @@ define(['jquery', 'core/log', 'core/ajax', 'core/str', 'core/templates', 'core/n
                 movePlaceListener();
                 assetEditListeners();
                 addAfterDrops();
+                if (courseLib.courseConfig.partialrender) {
+                    setCourseSectionObervers();
+                }
                 $('body').addClass('snap-course-listening');
             };
 
@@ -1054,6 +1269,19 @@ overrideCore();
 
             };
             initialise();
+        },
+
+        /**
+         * Exposed function that renders a specific course section and sets focus on an activity module.
+         * @param section
+         * @param mod
+         */
+        renderAndFocusSection: function(section, mod) {
+            getSection(section, mod);
+        },
+
+        setTocObserver: function() {
+            setTocObservers();
         }
     };
 

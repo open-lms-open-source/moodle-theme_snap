@@ -379,8 +379,15 @@ trait format_section_trait {
         // Now the list of sections..
         echo $this->start_section_list();
         $numsections = course_get_format($course)->get_last_section_number();
+        if (get_config('theme_snap', 'coursepartialrender')) {
+            echo $this->render_from_template('theme_snap/course_section_loading', []);
+            $startsection = !empty($course->marker) ? $course->marker : 0;
+            $sections[$startsection] = $modinfo->get_section_info($startsection);
+        } else {
+            $sections = $modinfo->get_section_info_all();
+        }
 
-        foreach ($modinfo->get_section_info_all() as $section => $thissection) {
+        foreach ($sections as $section => $thissection) {
 
             if ($section > $numsections) {
                 // Activities inside this section are 'orphaned', this section will be printed as 'stealth' below.

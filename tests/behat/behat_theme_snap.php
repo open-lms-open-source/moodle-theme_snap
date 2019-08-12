@@ -1092,7 +1092,13 @@ class behat_theme_snap extends behat_base {
         $title = $node->getHtml();
         // Title case version of type.
         $ttype = ucfirst($type);
-        $expectedtitle = '<span class="nav_guide">' . $ttype . ' section</span><br>'.htmlentities($linktitle);
+        if ($type == 'next') {
+            $sectionnumber = $section + 1;
+        } else {
+            $sectionnumber = $section - 1;
+        }
+        $expectedtitle = '<span class="nav_guide" section-number="' . $sectionnumber . '">' . $ttype
+            . ' section</span><br>'.htmlentities($linktitle);
         if (strtolower($title) !== strtolower($expectedtitle)) {
             $msg = $ttype.' title does not match expected "' . $expectedtitle . '"' . ' V "' . $title .
                     '" - selector = "'.$titleselector.'"';
