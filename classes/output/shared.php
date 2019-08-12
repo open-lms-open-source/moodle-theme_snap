@@ -382,8 +382,60 @@ EOF;
         $policyurlexist = $manager->is_defined();
         $sitepolicyacceptreqd = isloggedin() && $policyurlexist && empty($USER->policyagreed) && !is_siteadmin();
         $inalternativerole = $OUTPUT->in_alternative_role();
+        // Bring pre contents scss branding variables, to pass them to Snap init.
+        $pre = file_get_contents($CFG->dirroot . '/theme/snap/scss/pre.scss');
+        $lines = preg_split("/\r\n|\n|\r/", $pre);
+        $brandcolors = [];
+        foreach ($lines as $line) {
+            if (strpos($line, '$brand-primary:') === 0) {
+                $branding = [];
+                preg_match("/#.*;\$/", $line, $branding);
+                $brandcolors['primary'] = $branding[0];
+                continue;
+            }
+            if (strpos($line, '$brand-success:') === 0) {
+                $branding = [];
+                preg_match("/#.*;\$/", $line, $branding);
+                $brandcolors['success'] = $branding[0];
+                continue;
+            }
+            if (strpos($line, '$brand-warning:') === 0) {
+                $branding = [];
+                preg_match("/#.*;\$/", $line, $branding);
+                $brandcolors['warning'] = $branding[0];
+                continue;
+            }
+            if (strpos($line, '$brand-danger:') === 0) {
+                $branding = [];
+                preg_match("/#.*;\$/", $line, $branding);
+                $brandcolors['danger'] = $branding[0];
+                continue;
+            }
+            if (strpos($line, '$brand-info:') === 0) {
+                $branding = [];
+                preg_match("/#.*;\$/", $line, $branding);
+                $brandcolors['info'] = $branding[0];
+                continue;
+            }
+
+            $brandprimary = array_key_exists('primary', $brandcolors);
+            $brandsuccess = array_key_exists('success', $brandcolors);
+            $brandwarning = array_key_exists('warning', $brandcolors);
+            $branddanger = array_key_exists('danger', $brandcolors);
+            $brandinfo = array_key_exists('info', $brandcolors);
+
+            if ($brandprimary && $brandsuccess && $brandwarning && $branddanger && $brandinfo) {
+                break;
+            }
+        }
+        // Bring grading settings constants with percentage, to pass them to Snap init.
+        $gradingconstants = [];
+        $gradingconstants['gradepercentage'] = GRADE_DISPLAY_TYPE_PERCENTAGE;
+        $gradingconstants['gradepercentagereal'] = GRADE_DISPLAY_TYPE_PERCENTAGE_REAL;
+        $gradingconstants['gradepercentageletter'] = GRADE_DISPLAY_TYPE_PERCENTAGE_LETTER;
         $initvars = [$coursevars, $pagehascoursecontent, get_max_upload_file_size($CFG->maxbytes), $forcepwdchange,
-                     $conversationbadgecountenabled, $userid, $sitepolicyacceptreqd, $inalternativerole];
+                     $conversationbadgecountenabled, $userid, $sitepolicyacceptreqd, $inalternativerole, $brandcolors,
+                     $gradingconstants];
         $PAGE->requires->js_call_amd('theme_snap/snap', 'snapInit', $initvars);
         if (!empty($CFG->calendar_adminseesall) && is_siteadmin()) {
             $PAGE->requires->js_call_amd('theme_snap/adminevents', 'init');
