@@ -209,6 +209,10 @@
         }
     }
 
+    .assign-submission-data .fileuploadsubmissiontime {
+        float: left;
+    }
+
     // Larger screen layout.
     @include media-breakpoint-up(md) {
         .assign-intro,
