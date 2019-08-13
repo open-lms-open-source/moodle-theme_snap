@@ -1245,7 +1245,7 @@ class course_renderer extends \core_course_renderer {
      * @return string
      */
     public function print_teacher_profile($user) {
-        global $CFG, $OUTPUT;
+        global $CFG, $OUTPUT, $USER;
 
         $userpicture = new \user_picture($user);
         $userpicture->link = false;
@@ -1254,14 +1254,17 @@ class course_renderer extends \core_course_renderer {
         $picture = $this->render($userpicture);
 
         $fullname = '<a href="' .$CFG->wwwroot. '/user/profile.php?id=' .$user->id. '">'.format_string(fullname($user)).'</a>';
-        $messageicon = '<img class="svg-icon" alt="" role="presentation" src="' .$OUTPUT->image_url('messages', 'theme').' ">';
-        $message = '<br><small><a href="'.$CFG->wwwroot.
-                '/message/index.php?id='.$user->id.'">message'.$messageicon.'</a></small>';
-
         $data = (object) [
             'image' => $picture,
-            'content' => $fullname.$message
+            'content' => $fullname
         ];
+        if ($USER->id != $user->id) {
+            $messageicon = '<img class="svg-icon" alt="" role="presentation" src="'
+                .$OUTPUT->image_url('messages', 'theme').' ">';
+            $message = '<br><small><a href="'.$CFG->wwwroot.
+                '/message/index.php?id='.$user->id.'">message'.$messageicon.'</a></small>';
+            $data->content .= $message;
+        }
 
         return $this->render_from_template('theme_snap/media_object', $data);
     }
