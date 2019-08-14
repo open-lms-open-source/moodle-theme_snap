@@ -659,6 +659,11 @@ body.pagelayout-admin.path-mod {
     }
 }
 
-#edit-newsectioneditor_ifr {
+section#snap-add-new-section #edit-newsectioneditor_ifr {
     height: 13em !important;
+}
+
+section#snap-add-new-section form .form-group:nth-of-type(2) div:nth-child(2) {
+    overflow: scroll;
+    display: flex;
 }
