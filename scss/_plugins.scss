@@ -667,3 +667,10 @@ section#snap-add-new-section form .form-group:nth-of-type(2) div:nth-child(2) {
     overflow: scroll;
     display: flex;
 }
+
+/**
+ * Styling for atto_htmlplus.
+ */
+ .snap-form-required .editor_atto_wrap .CodeMirror.cm-s-default.CodeMirror-wrap {
+    z-index: 1;
+}
