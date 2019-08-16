@@ -373,7 +373,8 @@ EOF;
             'unavailablemods' => $unavailablemods,
             'enablecompletion' => isloggedin() && $COURSE->enablecompletion,
             'format' => $COURSE->format,
-            'partialrender' => !empty(get_config('theme_snap', 'coursepartialrender')) ? true : false
+            'partialrender' => !empty(get_config('theme_snap', 'coursepartialrender')) ? true : false,
+            'toctype' => get_config('theme_snap', 'leftnav')
         ];
 
         $mprocs = get_message_processors(true);

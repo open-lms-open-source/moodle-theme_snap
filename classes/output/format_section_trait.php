@@ -29,6 +29,7 @@ namespace theme_snap\output;
 defined('MOODLE_INTERNAL') || die();
 
 use context_course;
+use gradereport_singleview\local\ui\empty_element;
 use html_writer;
 use moodle_url;
 use stdClass;
@@ -251,7 +252,8 @@ trait format_section_trait {
         // Section drop zone.
         $caneditcourse = has_capability('moodle/course:update', $context);
         if ($caneditcourse && $section->section != 0) {
-            $o .= "<a class='snap-drop section-drop' data-title='".
+            $extradropclass = !empty(get_config('theme_snap', 'coursepartialrender')) ? 'partial-render' : '';
+            $o .= "<a class='snap-drop section-drop " . $extradropclass . "' data-title='".
                     s($sectiontitle)."' href='#'>_</a>";
         }
 
@@ -378,11 +380,29 @@ trait format_section_trait {
 
         // Now the list of sections..
         echo $this->start_section_list();
+        $canviewhidden = has_capability('moodle/course:viewhiddensections', context_course::instance($course->id));
         $numsections = course_get_format($course)->get_last_section_number();
         if (get_config('theme_snap', 'coursepartialrender')) {
             echo $this->render_from_template('theme_snap/course_section_loading', []);
-            $startsection = !empty($course->marker) ? $course->marker : 0;
-            $sections[$startsection] = $modinfo->get_section_info($startsection);
+            $startsectionid = 0;
+            if ($course->format == 'topics') {
+                $startsectionid = !empty($course->marker) ? $course->marker : 0;
+            } else if ($course->format == 'weeks') {
+                for ($i = 0; $i <= $numsections; $i++) {
+                    if (course_get_format($course)->is_section_current($i)) {
+                        $startsectionid = $i;
+                        break;
+                    }
+                }
+            }
+            $mainsection = $modinfo->get_section_info($startsectionid);
+            // Marker can be set to a deleted section.
+            if (!empty($mainsection) && (!empty($mainsection->visible) || $canviewhidden)) {
+                $sections[$startsectionid] = $mainsection;
+            } else {
+                $sections[0] = $modinfo->get_section_info(0);
+            }
+
         } else {
             $sections = $modinfo->get_section_info_all();
         }
@@ -393,8 +413,6 @@ trait format_section_trait {
                 // Activities inside this section are 'orphaned', this section will be printed as 'stealth' below.
                 continue;
             }
-
-            $canviewhidden = has_capability('moodle/course:viewhiddensections', context_course::instance($course->id));
 
             // Student check.
             if (!$canviewhidden) {
