@@ -1763,9 +1763,10 @@ HTML;
         $breadcrumbs = '';
         $courseitem = null;
         $attr['class'] = 'js-snap-pm-trigger';
-
+        $attrs['class'] = '';
         if (!empty($coverimage)) {
             $attr['class'] .= ' mast-breadcrumb';
+            $attrs['class'] .= ' mast-breadcrumb';
         }
         $snapmycourses = html_writer::link('#', get_string('menu', 'theme_snap'), $attr);
 
@@ -1777,16 +1778,18 @@ HTML;
                 continue;
             }
 
-            // For Admin users - When default home is set to dashboard, let admin access the site home page.
-            if ($item->key === 'myhome' && has_capability('moodle/site:config', context_system::instance())) {
+            // Add Breadcrumb links to all users types.
+            if ($item->key === 'myhome') {
                 $breadcrumbs .= '<li class="breadcrumb-item">';
-                $breadcrumbs .= html_writer::link(new moodle_url('/', ['redirect' => 0]), get_string('sitehome'));
+                $breadcrumbs .= html_writer::link(new moodle_url('/my'), get_string($item->key), $attrs);
                 $breadcrumbs .= '</li>';
                 continue;
             }
 
-            // Remove link to home/dashboard as site name/logo provides the same link.
-            if ($item->key === 'home' || $item->key === 'myhome' || $item->key === 'dashboard') {
+            if ($item->key === 'home') {
+                $breadcrumbs .= '<li class="breadcrumb-item">';
+                $breadcrumbs .= html_writer::link(new moodle_url('/'), get_string($item->key), $attrs);
+                $breadcrumbs .= '</li>';
                 continue;
             }
 
