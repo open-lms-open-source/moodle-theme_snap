@@ -749,9 +749,11 @@ EOF;
             }
         }
 
+        $config = get_config('tool_ally');
+        $configured = !empty($config) && !empty($config->key) && !empty($config->adminurl) && !empty($config->secret);
+
         if ( \core_component::get_component_directory('report_allylti') !== null &&
-            $COURSE->id != SITEID && has_capability('report/allylti:viewcoursereport', $coursecontext)
-        ) {
+            $COURSE->id != SITEID && has_capability('report/allylti:viewcoursereport', $coursecontext) && $configured) {
 
             $url = new moodle_url('/report/allylti/launch.php', [
                     'reporttype' => 'course',
