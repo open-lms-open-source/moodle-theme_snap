@@ -36,6 +36,8 @@ Feature: When the moodle theme is set to Snap, students and teachers can open a 
       | user | course | role |
       | teacher1 | C1 | editingteacher |
       | student1 | C1 | student |
+    And the following config values are set as admin:
+      | personalmenuadvancedfeedsenable | 0 | theme_snap |
 
   @javascript
   Scenario Outline: Teacher / Student can view personal menu on a mobile device.

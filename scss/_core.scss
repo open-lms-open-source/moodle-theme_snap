@@ -745,7 +745,7 @@ a.yui3-button,
 
         // for personal menu updates - need to re-visit when we re-use more widley
         // in the messaging system we ellispe text
-        p {
+        p, small {
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;

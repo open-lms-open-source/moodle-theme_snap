@@ -19,11 +19,16 @@ namespace theme_snap;
 
 defined('MOODLE_INTERNAL') || die();
 
+use moodle_url;
+use stdClass;
+use theme_snap\output\core_renderer;
 use \theme_snap\user_forums,
     \theme_snap\course_total_grade,
     html_writer,
     cm_info;
+use user_picture;
 
+global $CFG;
 require_once($CFG->dirroot.'/calendar/lib.php');
 require_once($CFG->libdir.'/completionlib.php');
 require_once($CFG->dirroot.'/grade/lib.php');
@@ -614,14 +619,15 @@ class local {
     }
 
     /**
-     * Get a user's messages read and unread.
-     *
      * @param int $userid
-     * @param int $since optional timestamp, only return newer messages
-     * @return message[]
+     * @param null|int $since optional timestamp, only return newer messages
+     * @param int $limitfrom
+     * @param int $limitnum
+     * @return array
+     * @throws \coding_exception
+     * @throws \dml_exception
      */
-
-    public static function get_user_messages($userid, $since = null) {
+    public static function get_user_messages($userid, $since = null, $limitfrom = 0, $limitnum = 3) {
         global $DB;
 
         if ($since === null) {
@@ -665,7 +671,7 @@ class local {
             'actionread' => \core_message\api::MESSAGE_ACTION_READ,
         );
 
-        $records = $DB->get_records_sql($sql, $params, 0, 5);
+        $records = $DB->get_records_sql($sql, $params, $limitfrom, $limitnum);
 
         $messages = array();
         foreach ($records as $record) {
@@ -684,15 +690,38 @@ class local {
      * @return string
      */
     public static function messages() {
-        global $USER, $PAGE;
+        global $PAGE;
 
-        $messages = self::get_user_messages($USER->id);
+        $messages = self::messages_data(true);
         if (empty($messages)) {
             return '<p class="small">' . get_string('nomessages', 'theme_snap') . '</p>';
         }
 
-        $output = $PAGE->get_renderer('theme_snap', 'core', RENDERER_TARGET_GENERAL);
         $o = '';
+        /** @var core_renderer $renderer */
+        $renderer = $PAGE->get_renderer('theme_snap', 'core', RENDERER_TARGET_GENERAL);
+        foreach ($messages as $message) {
+            $o .= $renderer->snap_media_object(
+                $message['actionUrl'],
+                $message['iconUrl'],
+                $message['title'],
+                $message['description'],
+                $message['subTitle']
+            );
+        }
+        return $o;
+    }
+
+    public static function messages_data($renderhtml = false, $limitfrom = 0, $limitnum = 5) {
+        global $USER, $PAGE;
+
+        $messages = self::get_user_messages($USER->id, null, $limitfrom, $limitnum);
+        if (empty($messages)) {
+            return [];
+        }
+
+        $output = $PAGE->get_renderer('theme_snap', 'core', RENDERER_TARGET_GENERAL);
+        $res = [];
         foreach ($messages as $message) {
             $url = new \moodle_url('/message/index.php', array(
                 'history' => 0,
@@ -700,12 +729,21 @@ class local {
                 'user2' => $message->useridfrom,
             ));
 
+            if (!$renderhtml) {
+                $url = $url->out();
+            }
+
             $fromuser = $message->get_fromuser();
             $userpicture = new \user_picture($fromuser);
             $userpicture->link = false;
             $userpicture->alttext = false;
             $userpicture->size = 100;
-            $frompicture = $output->render($userpicture);
+
+            if ($renderhtml) {
+                $frompicture = $output->render($userpicture);
+            } else {
+                $frompicture = $userpicture->get_url($PAGE)->out(false);
+            }
 
             $fromname = format_string(fullname($fromuser));
 
@@ -716,11 +754,23 @@ class local {
                 $meta .= " <span class=snap-unread-marker>".get_string('unread', 'theme_snap')."</span>";
             }
 
-            $info = '<p>'.format_string($message->smallmessage).'</p>';
+            $info = format_string($message->smallmessage);
+            if ($renderhtml) {
+                $info = '<p>'.$info.'</p>';
+            }
 
-            $o .= $output->snap_media_object($url, $frompicture, $fromname, $meta, $info, $unreadclass);
+            $res[] = [
+                'iconUrl'      => $frompicture,
+                'iconDesc'     => '',
+                'iconClass'    => 'userpicture',
+                'title'        => $fromname,
+                'subTitle'     => $info,
+                'actionUrl'    => $url,
+                'description'  => $meta,
+                'extraClasses' => $unreadclass,
+            ];
         }
-        return $o;
+        return $res;
     }
 
     /**
@@ -761,16 +811,18 @@ class local {
      * Get items which have been graded.
      *
      * @param bool $onlyactive - only show grades in courses actively enrolled on if true.
-     * @return string
+     * @param bool $renderhtml
+     * @return []
      * @throws \coding_exception
      */
-    public static function graded($onlyactive = true) {
+    public static function graded_data($onlyactive = true, $renderhtml = false) {
         global $USER, $PAGE;
 
+        /** @var \theme_snap\output\core_renderer $output */
         $output = $PAGE->get_renderer('theme_snap', 'core', RENDERER_TARGET_GENERAL);
         $grades = activity::events_graded($onlyactive);
 
-        $o = '';
+        $res = [];
         $enabledmods = \core_plugin_manager::instance()->get_enabled_plugins('mod');
         $enabledmods = array_keys($enabledmods);
         foreach ($grades as $grade) {
@@ -796,34 +848,79 @@ class local {
                 $url = $cm->url;
             }
 
+            if (!$renderhtml) {
+                $url = $url->out();
+            }
+
             $modimageurl = $output->image_url('icon', $cm->modname);
             $modname = get_string('modulename', 'mod_'.$cm->modname);
-            $modimage = \html_writer::img($modimageurl, $modname);
+            if ($renderhtml) {
+                $modimage = \html_writer::img($modimageurl, $modname);
+            } else {
+                $modimage = $modimageurl->out();
+            }
 
-            $gradetitle = $cm->name. '<small><br>' .format_string($course->fullname). '</small>';
+            $gradetitle = $cm->name;
+            $gradesubtitle = format_string($course->fullname);
 
             $releasedon = isset($grade->timemodified) ? $grade->timemodified : $grade->timecreated;
             $meta = get_string('released', 'theme_snap', $output->friendly_datetime($releasedon));
 
             $grade = new \grade_grade(array('itemid' => $grade->itemid, 'userid' => $USER->id));
             if (!$grade->is_hidden() || $canviewhiddengrade) {
-                $o .= $output->snap_media_object($url, $modimage, $gradetitle, $meta, '');
+                $res[] = [
+                    'iconUrl'      => $modimage,
+                    'iconDesc'     => $modname,
+                    'iconClass'    => '',
+                    'title'        => $gradetitle,
+                    'subTitle'     => $gradesubtitle,
+                    'actionUrl'    => $url,
+                    'description'  => $meta,
+                    'extraClasses' => '',
+                ];
             }
         }
 
-        if (empty($o)) {
+        return $res;
+    }
+
+    /**
+     * Get rendered items which have been graded.
+     *
+     * @param bool $onlyactive - only show grades in courses actively enrolled on if true.
+     * @return string
+     * @throws \coding_exception
+     */
+    public static function graded($onlyactive = true) {
+        global $PAGE;
+
+        $gradedarr = self::graded_data($onlyactive, true);
+        if (empty($gradedarr)) {
             return '<p class="small">'. get_string('nograded', 'theme_snap') . '</p>';
+        }
+
+        $o = '';
+        /** @var \theme_snap\output\core_renderer $output */
+        $output = $PAGE->get_renderer('theme_snap', 'core', RENDERER_TARGET_GENERAL);
+        foreach ($gradedarr as $gradeditem) {
+            $o .= $output->snap_media_object(
+                $gradeditem['actionUrl'],
+                $gradeditem['iconUrl'],
+                $gradeditem['title']. '<small><br>' .$gradeditem['subTitle']. '</small>',
+                $gradeditem['description'],
+                ''
+            );
         }
         return $o;
     }
 
-    public static function grading() {
+    public static function grading_data($renderhtml = false) {
         global $USER, $PAGE;
 
         $grading = self::all_ungraded($USER->id);
 
         $output = $PAGE->get_renderer('theme_snap', 'core', RENDERER_TARGET_GENERAL);
-        $out = '';
+        $res = [];
         foreach ($grading as $key => $ungraded) {
             $modinfo = get_fast_modinfo($ungraded->course);
             $course = $modinfo->get_course();
@@ -842,9 +939,14 @@ class local {
 
             $modimageurl = $output->image_url('icon', $cm->modname);
             $modname = get_string('modulename', 'mod_'.$cm->modname);
-            $modimage = \html_writer::img($modimageurl, $modname);
+            if ($renderhtml) {
+                $modimage = \html_writer::img($modimageurl, $modname);
+            } else {
+                $modimage = $modimageurl->out();
+            }
 
-            $ungradedtitle = $cm->name. '<small><br>' .format_string($course->fullname). '</small>';
+            $ungradedtitle = $cm->name;
+            $ungradedsubtitle = format_string($course->fullname);
 
             $xungraded = get_string('xungraded', 'theme_snap', $ungraded->ungraded);
 
@@ -859,14 +961,47 @@ class local {
                 $meta .= $output->friendly_datetime($ungraded->closetime);
             }
 
-            $out .= $output->snap_media_object($cm->url, $modimage, $ungradedtitle, $meta, '');
+            $url = $cm->url;
+            if (!$renderhtml) {
+                $url = $url->out();
+            }
+
+            $res[] = [
+                'iconUrl'      => $modimage,
+                'iconDesc'     => $modname,
+                'iconClass'    => '',
+                'title'        => $ungradedtitle,
+                'subTitle'     => $ungradedsubtitle,
+                'actionUrl'    => $url,
+                'description'  => $meta,
+                'extraClasses' => '',
+            ];
         }
 
-        if (empty($grading)) {
+        return $res;
+    }
+
+    public static function grading() {
+        global $PAGE;
+
+        $gradingarr = self::grading_data(true);
+        if (empty($gradingarr)) {
             return '<p class="small">' . get_string('nograding', 'theme_snap') . '</p>';
         }
 
-        return $out;
+        $o = '';
+        /** @var \theme_snap\output\core_renderer $output */
+        $output = $PAGE->get_renderer('theme_snap', 'core', RENDERER_TARGET_GENERAL);
+        foreach ($gradingarr as $gradingitem) {
+            $o .= $output->snap_media_object(
+                $gradingitem['actionUrl'],
+                $gradingitem['iconUrl'],
+                $gradingitem['title']. '<small><br>' .$gradingitem['subTitle']. '</small>',
+                $gradingitem['description'],
+                ''
+            );
+        }
+        return $o;
     }
 
     /**
@@ -1739,13 +1874,82 @@ class local {
      */
     public static function render_recent_forum_activity() {
         global $PAGE;
-        $activities = self::recent_forum_activity();
+        $activities = self::recent_forum_activity_data(true);
         if (empty($activities)) {
             return '<p class="small">' . get_string('noforumposts', 'theme_snap') . '</p>';
         }
-        $activities = array_slice($activities, 0, 10);
+
+        $o = '';
+        /** @var core_renderer $renderer */
         $renderer = $PAGE->get_renderer('theme_snap', 'core', RENDERER_TARGET_GENERAL);
-        return $renderer->recent_forum_activity($activities);
+        foreach ($activities as $activity) {
+            $o .= $renderer->snap_media_object(
+                $activity['actionUrl'],
+                $activity['iconUrl'],
+                $activity['title']. '<small><br>' .$activity['subTitle']. '</small>',
+                $activity['description'],
+                ''
+            );
+        }
+        return $o;
+    }
+
+    /**
+     * @param bool $renderhtml
+     * @return array
+     * @throws \coding_exception
+     * @throws \moodle_exception
+     */
+    public static function recent_forum_activity_data($renderhtml = false) {
+        global $PAGE, $OUTPUT;
+        $activities = self::recent_forum_activity();
+        if (empty($activities)) {
+            return [];
+        }
+        $res = [];
+        $formatoptions = new stdClass;
+        $formatoptions->filter = false;
+        foreach ($activities as $activity) {
+            $iconurl = '';
+            if (!empty($activity->user)) {
+                $userpicture = new user_picture($activity->user);
+                $userpicture->link = false;
+                $userpicture->alttext = false;
+                $userpicture->size = 32;
+
+                if ($renderhtml) {
+                    $iconurl = $OUTPUT->render($userpicture);
+                } else {
+                    $iconurl = $userpicture->get_url($PAGE)->out(false);
+                }
+            }
+
+            $url = new moodle_url(
+                '/mod/'.$activity->type.'/discuss.php',
+                ['d' => $activity->content->discussion],
+                'p'.$activity->content->id
+            );
+            if (!$renderhtml) {
+                $url = $url->out();
+            }
+            $fullname = fullname($activity->user);
+            $forumpath = $activity->courseshortname. ' / ' .$activity->forumname;
+            $formattedsubject = format_text($activity->content->subject, FORMAT_HTML, $formatoptions);
+            $description = self::relative_time($activity->timestamp)
+                . '<br>' . format_text($forumpath, FORMAT_HTML, $formatoptions);
+
+            $res[] = [
+                'iconUrl'      => $iconurl,
+                'iconDesc'     => '',
+                'iconClass'    => 'userpicture',
+                'title'        => $fullname,
+                'subTitle'     => $formattedsubject,
+                'actionUrl'    => $url,
+                'description'  => $description,
+                'extraClasses' => '',
+            ];
+        }
+        return $res;
     }
 
     /**
