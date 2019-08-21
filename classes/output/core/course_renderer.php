@@ -1169,8 +1169,8 @@ class course_renderer extends \core_course_renderer {
             if (empty($courseteachers)) {
                 $courseteachers = "<h5>".get_string('coursecontacts', 'theme_snap')."</h5>";
             }
-            $courseteachers .= '<br><a class="btn btn-outline-secondary btn-sm" href="'.$CFG->wwwroot.'/user/index.php?id='.
-                $COURSE->id.'">'.get_string('enrolledusers', 'enrol').'</a>';
+            $courseteachers .= '<br><a id="enrolled-users" class="btn btn-outline-secondary btn-sm"
+                href="'.$CFG->wwwroot.'/user/index.php?id='.$COURSE->id.'">'.get_string('enrolledusers', 'enrol').'</a>';
         }
 
         // Course cummary.
@@ -1191,8 +1191,8 @@ class course_renderer extends \core_course_renderer {
             if (empty($coursesummary)) {
                 $coursesummary = '<h5>'.get_string('aboutcourse', 'theme_snap').'</h5>';
             }
-            $coursesummary .= '<br><a class="btn btn-outline-secondary btn-sm" href="'.$CFG->wwwroot.'/course/edit.php?id='.
-                $COURSE->id.'#id_descriptionhdr">'.get_string('editsummary').'</a>';
+            $coursesummary .= '<br><a id="edit-summary" class="btn btn-outline-secondary btn-sm"
+            href="'.$CFG->wwwroot.'/course/edit.php?id='.$COURSE->id.'#id_descriptionhdr">'.get_string('editsummary').'</a>';
         }
 
         // Get recent activities on mods in the course.

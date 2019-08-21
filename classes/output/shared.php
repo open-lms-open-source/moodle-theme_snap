@@ -436,10 +436,17 @@ EOF;
         $gradingconstants['gradepercentage'] = GRADE_DISPLAY_TYPE_PERCENTAGE;
         $gradingconstants['gradepercentagereal'] = GRADE_DISPLAY_TYPE_PERCENTAGE_REAL;
         $gradingconstants['gradepercentageletter'] = GRADE_DISPLAY_TYPE_PERCENTAGE_LETTER;
+        $localplugins = core_component::get_plugin_list('local');
+        // Check if the plugins are installed to pass them as parameters to accessibility.js AMD module.
+        $localjoulegrader = array_key_exists('joulegrader', $localplugins);
+        $blockreports = array_key_exists('reports', core_component::get_plugin_list('block'));
+        $allyreport = (\core_component::get_component_directory('report_allylti') !== null);
         $initvars = [$coursevars, $pagehascoursecontent, get_max_upload_file_size($CFG->maxbytes), $forcepwdchange,
                      $conversationbadgecountenabled, $userid, $sitepolicyacceptreqd, $inalternativerole, $brandcolors,
                      $gradingconstants];
+        $initaxvars = [$localjoulegrader, $allyreport, $blockreports];
         $PAGE->requires->js_call_amd('theme_snap/snap', 'snapInit', $initvars);
+        $PAGE->requires->js_call_amd('theme_snap/accessibility', 'snapAxInit', $initaxvars);
         if (!empty($CFG->calendar_adminseesall) && is_siteadmin()) {
             $PAGE->requires->js_call_amd('theme_snap/adminevents', 'init');
         }

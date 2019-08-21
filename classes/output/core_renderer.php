@@ -137,7 +137,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
         global $OUTPUT;
         $text = get_string($langstring, 'theme_snap');
         $iconurl = $OUTPUT->image_url($iconname, 'theme');
-        $icon = '<img class="svg-icon" role="presentation" src="' .$iconurl. '">';
+        $icon = '<img class="svg-icon" role="presentation" src="' .$iconurl. '" alt="">';
         $link = '<a class="snap-personal-menu-more" href="' .$url. '"><small>' .$text. '</small>' .$icon. '</a>';
         return $link;
     }
@@ -603,9 +603,12 @@ class core_renderer extends \theme_boost\output\core_renderer {
         $picture = $this->render($userpicture);
 
         // User name and link to profile.
+        // To the DOM structure, only one H1 can exists in it, so this link
+        // can not act as a header, so no role="heading" attribute can be
+        // assigned to it.
         $fullnamelink = '<a href="' .s($CFG->wwwroot). '/user/profile.php"
                     title="' .s(get_string('viewyourprofile', 'theme_snap')). '"
-                    class="h1" role="heading" aria-level="1">'
+                    class="h1" aria-level="1" id="snap-pm-user-profile">'
                     .format_string(fullname($USER)). '</a>';
 
         // Real user when logged in as.
@@ -617,18 +620,22 @@ class core_renderer extends \theme_boost\output\core_renderer {
 
         // User quicklinks.
         $profilelink = [
+            'id' => 'snap-pm-profile',
             'link' => s($CFG->wwwroot). '/user/profile.php',
             'title' => get_string('profile')
         ];
         $dashboardlink = [
+            'id' => 'snap-pm-dashboard',
             'link' => s($CFG->wwwroot). '/my',
             'title' => get_string('myhome')
         ];
         $gradelink = [
+            'id' => 'snap-pm-grades',
             'link' => s($CFG->wwwroot). '/grade/report/overview/index.php',
             'title' => get_string('grades')
         ];
         $preferenceslink = [
+            'id' => 'snap-pm-preferences',
             'link' => s($CFG->wwwroot). '/user/preferences.php',
             'title' => get_string('preferences')
         ];
