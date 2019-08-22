@@ -1113,19 +1113,6 @@ header#page-header
     }
 }
 
-@include media-breakpoint-down(md) {
-    .breadcrumb li {
-        &:nth-last-child(n+4) {
-            display: none;
-        }
-
-        &:nth-last-child(3):before {
-            content: "";
-            padding: 0;
-        }
-    }
-}
-
 // SHAME - what is this?
 // -------------------------
 
