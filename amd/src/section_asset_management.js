@@ -165,9 +165,9 @@ define(['jquery', 'core/log', 'core/ajax', 'core/str', 'core/templates', 'core/n
                 $('.sk-fading-circle').show();
                 // We need to prevent the DOM to show the default section.
                 $('.course-content .' + self.courseConfig.format + ' li[id^="section-"]').hide();
-                fragment.loadFragment('theme_snap', 'section', self.courseConfig.contextid, params).done(function(html) {
+                fragment.loadFragment('theme_snap', 'section', self.courseConfig.contextid, params).done(function(html, js) {
                     var node = $(html);
-                    renderSection(section, node, mod);
+                    renderSection(section, node, mod, js);
                 });
             }
         };
@@ -178,26 +178,28 @@ define(['jquery', 'core/log', 'core/ajax', 'core/str', 'core/templates', 'core/n
          * @param html
          * @param mod
          */
-        var renderSection = function(section, html, mod) {
+        var renderSection = function(section, html, mod, js) {
             var anchor = $('.course-content .' + self.courseConfig.format);
             var existingSections = [];
             anchor.find('li[id^=section-]').each(function() {
                 existingSections.push(parseInt($(this).attr('id').split('section-')[1]));
             });
+            var tempnode = $('<div></div>');
+            templates.replaceNodeContents(tempnode, html, js);
             if (existingSections.length > 0) {
                 var closest = existingSections.reduce(function(prev, curr) {
                     return (Math.abs(curr - section) < Math.abs(prev - section) ? curr : prev);
                 });
 
                 if (closest > section) {
-                    anchor.find('#section-' + closest).before(html);
+                    anchor.find('#section-' + closest).before(tempnode);
 
                 } else {
-                    anchor.find('#section-' + closest).after(html);
+                    anchor.find('#section-' + closest).after(tempnode);
 
                 }
             } else {
-                $('.sk-fading-circle').after(html);
+                $('.sk-fading-circle').after(tempnode);
             }
             // Hide loading animation.
             $('.sk-fading-circle').hide();
@@ -259,6 +261,14 @@ define(['jquery', 'core/log', 'core/ajax', 'core/str', 'core/templates', 'core/n
 
             $('#course-toc #chapters li').removeClass('snap-visible-section');
             $('#course-toc .chapter-title[section-number="'+ section +'"]').parent('li').addClass('snap-visible-section');
+            $(id).find('ul.section').append(
+                '<li class="snap-drop asset-drop">' +
+                '<div class="asset-wrapper">' +
+                '<a href="#">' +
+                M.util.get_string('movehere', 'theme_snap') +
+                '</a>' +
+                '</div>' +
+                '</li>');
         };
 
 

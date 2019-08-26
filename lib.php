@@ -338,7 +338,7 @@ function theme_snap_get_pre_scss($theme) {
 }
 
 /**
- * Fragment API function to render couse sections.
+ * Fragment API function to render course sections.
  * @param $args
  * @return string
  */
@@ -354,6 +354,35 @@ function theme_snap_output_fragment_section($args) {
             $formatrenderer = $format->get_renderer($PAGE);
             $modinfo = get_fast_modinfo($course);
             $section = $modinfo->get_section_info($args['section']);
+
+            // We need to double check if the page has an instance of SharingCart.
+            // Current $PAGE object can't be modified.
+            $page = new moodle_page();
+            $page->set_course($course);
+            $page->set_pagelayout('course');
+            $page->set_pagetype('course-view-' . $formatname);
+            $page->initialise_theme_and_output();
+            $page->blocks->load_blocks();
+            $page->blocks->create_all_block_instances();
+            if ($page->blocks->is_block_present('sharing_cart') && !empty($section)) {
+                $sectionsjs = new stdClass();
+                $sectionsjs->id = $section->id;
+                $sectionsjs->name = $section->name;
+                $sectionsjs->num = $args['section'];
+                $PAGE->requires->js_call_amd('block_sharing_cart/script', 'init', [$course->id,
+                    [$sectionsjs], true]);
+                $PAGE->requires->strings_for_js(
+                    array('yes', 'no', 'ok', 'cancel', 'error', 'edit', 'move', 'delete', 'movehere'),
+                    'moodle'
+                );
+
+                $PAGE->requires->strings_for_js(
+                    array('copyhere', 'notarget', 'backup', 'restore', 'movedir', 'clipboard',
+                        'confirm_backup', 'confirm_backup_section', 'confirm_userdata', 'confirm_userdata_section',
+                        'confirm_delete', 'snap_dialog_restore'),
+                    'block_sharing_cart'
+                );
+            }
             $html = $formatrenderer->course_section($course, $section, $modinfo);
             return $html;
         }
