@@ -917,7 +917,7 @@ define(['jquery', 'core/log', 'theme_snap/headroom', 'theme_snap/util', 'theme_s
 
                     waitForFullScreenButton();
                 });
-                accessibility.init();
+                accessibility.snapAxInit();
                 messages.init();
             }
         };

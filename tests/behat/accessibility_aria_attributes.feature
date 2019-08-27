@@ -62,7 +62,7 @@ Feature: Elements for Snap should have the proper aria attributes.
     And the "aria-label" attribute of "#id_duedate_calendar" "css_element" should contain "Calendar"
 
   @javascript
-  Scenario: Elements in front page must contain the correct aria attributes
+  Scenario: Elements in front page must contain the correct attributes
     Given I log in as "admin"
     And I am on site homepage
     And I navigate to "Appearance > Themes > Snap" in site administration
@@ -76,3 +76,44 @@ Feature: Elements for Snap should have the proper aria attributes.
     And I am on site homepage
     And the "aria-label" attribute of "div.search-input-wrapper.nav-link div" "css_element" should contain "Search"
     And the "aria-label" attribute of "div#snap-featured-courses p.text-center a" "css_element" should contain "Browse all courses"
+    And the "id" attribute of "div#snap-featured-courses p.text-center a" "css_element" should contain "browse-all-courses-featured-courses"
+
+  @javascript
+  Scenario: Elements in personal menu must contain the correct attributes
+    Given I log in as "admin"
+    And I am on site homepage
+    And I open the personal menu
+    # New ID's for personal menu elements are for the most used elements. This ID's are being established in accessibility.js AMD file.
+    And the "id" attribute of "a.snap-personal-menu-more small#snap-pm-deadline" "css_element" should contain "snap-pm-deadline"
+    And the "id" attribute of "a.snap-personal-menu-more small#snap-pm-feedback" "css_element" should contain "snap-pm-feedback"
+    And the "id" attribute of "a.snap-personal-menu-more small#snap-pm-messages" "css_element" should contain "snap-pm-messages"
+    And the "id" attribute of "a.snap-personal-menu-more small#snap-pm-forum-posts" "css_element" should contain "snap-pm-forum-posts"
+    And the "id" attribute of "div.snap-pm-user a#snap-pm-user-profile" "css_element" should contain "snap-pm-user-profile"
+    And the "id" attribute of "div.snap-pm-user div#snap-pm-header-quicklinks a#snap-pm-profile" "css_element" should contain "snap-pm-profile"
+    And the "id" attribute of "div.snap-pm-user div#snap-pm-header-quicklinks a#snap-pm-dashboard" "css_element" should contain "snap-pm-dashboard"
+    And the "id" attribute of "div.snap-pm-user div#snap-pm-header-quicklinks a#snap-pm-preferences" "css_element" should contain "snap-pm-preferences"
+    And the "id" attribute of "div.snap-pm-user div#snap-pm-header-quicklinks a#snap-pm-grades" "css_element" should contain "snap-pm-grades"
+
+  @javascript
+  Scenario: Elements in course main view must contain the correct attributes
+    Given I log in as "admin"
+    And I am on the course main page for "C1"
+    And the "id" attribute of "div.toc-footer a#snap-new-section" "css_element" should contain "snap-new-section"
+    And the "id" attribute of "div.toc-footer a#snap-course-tools" "css_element" should contain "snap-course-tools"
+
+  @javascript
+  Scenario: Elements in course dashboard must contain the correct attributes
+    Given I log in as "admin"
+    And I am on the course main page for "C1"
+    And I click on "#snap-course-wrapper .toc-footer a:nth-child(2)" "css_element"
+    And the "id" attribute of "div#coursetools-list a#ct-course-settings" "css_element" should contain "ct-course-settings"
+    And the "id" attribute of "div#coursetools-list a#ct-open-grader" "css_element" should contain "ct-open-grader"
+    And the "id" attribute of "div#coursetools-list a#ct-course-gradebook" "css_element" should contain "ct-course-gradebook"
+    And the "id" attribute of "div#coursetools-list a#ct-participants-number" "css_element" should contain "ct-participants-number"
+    And the "id" attribute of "div#coursetools-list a#ct-open-reports" "css_element" should contain "ct-open-reports"
+    And the "id" attribute of "div#coursetools-list a#ct-pld" "css_element" should contain "ct-pld"
+    And the "id" attribute of "div#coursetools-list a#ct-competencies" "css_element" should contain "ct-competencies"
+    And the "id" attribute of "div#coursetools-list a#ct-badges" "css_element" should contain "ct-badges"
+
+
+
