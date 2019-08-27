@@ -354,3 +354,5 @@ $string['catinvalidratio'] = 'The following color categories don\'t comply with 
 Against site background color (white): "{$a->white}". Against navigation bar background color: "{$a->custombar}". Against My Courses button background color: "{$a->customnav}"';
 $string['imageinvalidratiocategory'] = 'This image could have contrast problems with the theme color due not compliance with the WCAG 2.0 minimum ratio value 4.5:1. Average pixel value: "{$a}"';
 $string['browseallcourses'] = 'Browse all courses';
+$string['lazyload_mod_page'] = 'Enable default lazy loading for page resources';
+$string['lazyload_mod_page_description'] = 'Given Snap renders pages on course sections, this can significantly increase course page load times for courses with many pages.';

@@ -725,17 +725,22 @@ class course_renderer extends \core_course_renderer {
         $readmore = get_string('readmore', 'theme_snap');
         $close = get_string('closebuttontitle', 'moodle');
 
-        // Identify content elements which should force an AJAX lazy load.
-        $elcontentblist = ['iframe', 'video', 'object', 'embed', 'model-viewer'];
-        $content = $page->content;
-        $lazyload = false;
-        foreach ($elcontentblist as $el) {
-            if (stripos($content, '<'.$el) !== false) {
-                $content = ''; // Don't include the content as it is likely to slow the page load down considerably.
-                $lazyload = true;
+        $content = '';
+        $contentloaded = 0;
+        if (empty(get_config('theme_snap', 'lazyload_mod_page'))) {
+            // Identify content elements which should force an AJAX lazy load.
+            $elcontentblist = ['iframe', 'video', 'object', 'embed', 'model-viewer'];
+            $content = $page->content;
+            $lazyload = false;
+            foreach ($elcontentblist as $el) {
+                if (stripos($content, '<'.$el) !== false) {
+                    $content = ''; // Don't include the content as it is likely to slow the page load down considerably.
+                    $lazyload = true;
+                }
             }
+            $contentloaded = !$lazyload ? 1 : 0;
         }
-        $contentloaded = !$lazyload ? 1 : 0;
+
         $pslinkclass = 'btn btn-secondary pagemod-readmore';
         $pmcontextattribute = 'data-pagemodcontext="'.$mod->context->id.'"';
 

@@ -59,3 +59,9 @@ $setting = new admin_setting_configcheckbox($name, $title, $description, $defaul
 $snapsettings->add($setting);
 
 $settings->add($snapsettings);
+
+$name = 'theme_snap/lazyload_mod_page';
+$title = get_string('lazyload_mod_page', 'theme_snap');
+$description = get_string('lazyload_mod_page_description', 'theme_snap');
+$setting = new admin_setting_configcheckbox($name, $title, $description, 1);
+$snapsettings->add($setting);
