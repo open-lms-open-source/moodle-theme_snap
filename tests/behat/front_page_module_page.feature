@@ -31,6 +31,8 @@ Feature: Open page (front page) module inline
       | student1 | Student   | 1        | student1@example.com |
     And completion tracking is "Enabled" for course "Acceptance test site"
     And debugging is turned off
+    And the following config values are set as admin:
+      | lazyload_mod_page | 0 | theme_snap |
 
   @javascript
   Scenario: Page mod is created and opened inline at the front page.

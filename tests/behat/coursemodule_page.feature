@@ -36,6 +36,8 @@ Feature: Open page module inline
       | user     | course | role    |
       | admin    | C1     | teacher |
       | student1 | C1     | student |
+    And the following config values are set as admin:
+      | lazyload_mod_page | 0 | theme_snap |
 
   @javascript
   Scenario: Page mod is created and opened inline.
