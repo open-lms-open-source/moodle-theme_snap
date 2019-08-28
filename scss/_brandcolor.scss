@@ -863,4 +863,17 @@ $lighter-grey-btn: #e6e6e6;
             40% { opacity: 1; }
         }
     }
+    .atto_morefontcolors_button > .dropdown-menu > li > a {
+        outline: none;
+        background: none;
+        &:hover,
+        &:focus {
+            div {
+                &:hover,
+                &:focus {
+                    outline: 3px solid $brand-primary;
+                }
+            }
+        }
+    }
 }
