@@ -206,13 +206,14 @@ class activity {
     public static function assign_meta(\cm_info $modinst) {
         global $DB;
         static $submissionsenabled;
+        static $coursequeried;
 
         $courseid = $modinst->course;
 
         // Get count of enabled submission plugins grouped by assignment id.
         // Note, under normal circumstances we only run this once but with PHP unit tests, assignments are being
         // created one after the other and so this needs to be run each time during a PHP unit test.
-        if (empty($submissionsenabled) || PHPUNIT_TEST) {
+        if (empty($submissionsenabled) || $coursequeried !== $courseid || PHPUNIT_TEST) {
             $sql = "SELECT a.id, count(1) AS submissionsenabled
                       FROM {assign} a
                       JOIN {assign_plugin_config} ac ON ac.assignment = a.id
@@ -223,6 +224,7 @@ class activity {
                        AND plugin!='comments'
                   GROUP BY a.id;";
             $submissionsenabled = $DB->get_records_sql($sql, array($courseid));
+            $coursequeried = $courseid;
         }
 
         $submitselect = '';
