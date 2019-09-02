@@ -24,6 +24,20 @@
 @theme @theme_snap
 Feature: When the moodle theme is set to Snap, message page should be accessible.
 
+  Background:
+    Given the following "courses" exist:
+      | fullname | shortname | category | format |
+      | Course 1 | C1        | 0        | topics |
+    And the following "users" exist:
+      | username | firstname | lastname | email                |
+      | teacher1 | Teacher   | 1        | teacher1@example.com |
+      | student1 | Student   | 1        | student1@example.com |
+    And the following "course enrolments" exist:
+      | user     | course | role           |
+      | admin    | C1     | editingteacher |
+      | teacher1 | C1     | editingteacher |
+      | student1 | C1     | student        |
+
   @javascript
   Scenario: In messages page, it must be possible to click the items.
 
@@ -41,3 +55,15 @@ Feature: When the moodle theme is set to Snap, message page should be accessible
     And I click on "div.header-container div[data-region='view-contacts'] a" "css_element"
     And I click on "div.header-container div[data-region='view-overview'] .ml-2 a" "css_element"
     And I should see "Settings"
+
+  @javascript
+  Scenario: When admin review messages preferences of other users, message drawer should not appear
+    Given I log in as "admin"
+    And I am on site homepage
+    And I navigate to "Users > Accounts > Browse list of users" in site administration
+    And I should see "Student 1"
+    And I follow "Student 1"
+    And I should see "Preferences"
+    And I click on "//span/a[contains(text(),\"Preferences\")]" "xpath_element"
+    And I follow "Message preferences"
+    Then ".message-drawer" "css_element" should not be visible
