@@ -346,3 +346,12 @@ $string['accescalendarstring'] = 'التقويم';
 $string['admineventwarning'] = 'لرؤية الأحداث من جميع المقررات الدراسية، ';
 $string['gotocalendarsnap'] = 'انتقل إلى تقويم الموقع.';
 $string['quizattemptswarn'] = 'استبعاد محاولات المستخدمين المعلقين';
+$string['quizfeedback'] = 'ملاحظات';
+$string['validratio'] = 'تتوافق تركيبة الألوان هذه مع قيمة النسبة الدنيا WCAG 2.0 4.5:1';
+$string['invalidratio'] = 'لا تتوافق تركيبة الألوان هذه مع
+<a href="https://www.w3.org/TR/WCAG20-TECHS/G18.html" target="_blank">قيمة النسبة الدنيا WCAG 2.0 4.5:1</a>. القيمة: "{$a}"';
+$string['imageinvalidratio'] = 'قد تواجه هذه الصورة مشكلات تباين بسبب عدم التوافق مع قيمة النسبة الدنيا WCAG 2.0 4.5:1. متوسط قيمة البكسل: "{$a}"';
+$string['catinvalidratio'] = 'لا تتوافق فئات الألوان التالية مع
+<a href="https://www.w3.org/TR/WCAG20-TECHS/G18.html" target="_blank">قيمة النسبة الدنيا WCAG 2.0 4.5:1</a> :
+مقابل لون خلفية الموقع (أبيض): "{$a->white}". مقابل لون خلفية شريط التنقل: "{$a->custombar}". مقابل لون خلفية زر المقررات الدراسية الخاصة بي: "{$a->customnav}"';
+$string['imageinvalidratiocategory'] = 'قد تواجه هذه الصورة مشاكل تباين مع لون الشكل بسبب عدم التوافق مع قيمة النسبة الدنيا WCAG 2.0 4.5:1. متوسط قيمة البكسل: "{$a}"';
