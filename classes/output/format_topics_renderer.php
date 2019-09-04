@@ -25,6 +25,7 @@
 namespace theme_snap\output;
 
 defined('MOODLE_INTERNAL') || die();
+require_once($CFG->dirroot . '/course/format/topics/renderer.php');
 
 class format_topics_renderer extends \format_topics_renderer {
 
