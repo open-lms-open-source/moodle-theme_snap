@@ -258,12 +258,16 @@ class core_renderer extends \theme_boost\output\core_renderer {
             return '';
         }
 
-        $messagesheading = get_string('messages', 'theme_snap');
-        $o = '<h2>'.$messagesheading.'</h2>';
-        $o .= '<div id="snap-personal-menu-messages"></div>';
+        $heading = get_string('messages', 'theme_snap');
+        if ($this->advanced_feeds_enabled()) {
+            $o = $this->render_feed_web_component('messages', $heading, get_string('nomessages', 'theme_snap'));
+        } else {
+            $o = '<h2>'.$heading.'</h2>';
+            $o .= '<div id="snap-personal-menu-messages"></div>';
+        }
 
-        $messagseurl = new moodle_url('/message/');
-        $o .= $this->column_header_icon_link('viewmessaging', 'messages', $messagseurl);
+        $url = new moodle_url('/message/');
+        $o .= $this->column_header_icon_link('viewmessaging', 'messages', $url);
         return $o;
     }
 
@@ -279,11 +283,18 @@ class core_renderer extends \theme_boost\output\core_renderer {
             return '';
         }
 
-        $forumpostsheading = get_string('forumposts', 'theme_snap');
-        $o = '<h2>'.$forumpostsheading.'</h2>
-        <div id="snap-personal-menu-forumposts"></div>';
-        $forumurl = new moodle_url('/mod/forum/user.php', ['id' => $USER->id]);
-        $o .= $this->column_header_icon_link('viewforumposts', 'forumposts', $forumurl);
+        $heading = get_string('forumposts', 'theme_snap');
+        if ($this->advanced_feeds_enabled()) {
+            $virtualpaging = true; // Web service retrieves all elements, need to do virtual paging.
+            $o = $this->render_feed_web_component('forumposts', $heading,
+                            get_string('noforumposts', 'theme_snap'), $virtualpaging);
+        } else {
+            $o = '<h2>'.$heading.'</h2>
+            <div id="snap-personal-menu-forumposts"></div>';
+        }
+
+        $url = new moodle_url('/mod/forum/user.php', ['id' => $USER->id]);
+        $o .= $this->column_header_icon_link('viewforumposts', 'forumposts', $url);
         return $o;
     }
 
@@ -373,6 +384,12 @@ class core_renderer extends \theme_boost\output\core_renderer {
         return $output;
     }
 
+    private function get_calltoaction_url($key) {
+        return '#snap-personal-menu-' .
+            ($this->advanced_feeds_enabled() ? 'feed-' : '') .
+            $key;
+    }
+
     protected function render_callstoaction() {
 
         $mobilemenu = '<div id="snap-pm-mobilemenu">';
@@ -386,9 +403,9 @@ class core_renderer extends \theme_boost\output\core_renderer {
         $graded = $this->render_graded();
         $grading = $this->render_grading();
         if (empty($grading)) {
-            $gradebookmenulink = $this->mobile_menu_link('recentfeedback', 'grading', '#snap-personal-menu-graded');
+            $gradebookmenulink = $this->mobile_menu_link('recentfeedback', 'grading', $this->get_calltoaction_url('graded'));
         } else {
-            $gradebookmenulink = $this->mobile_menu_link('grading', 'grading', '#snap-personal-menu-grading');
+            $gradebookmenulink = $this->mobile_menu_link('grading', 'grading', $this->get_calltoaction_url('grading'));
         }
         if (!empty($grading)) {
             $columns[] = $grading;
@@ -401,13 +418,13 @@ class core_renderer extends \theme_boost\output\core_renderer {
         $messages = $this->render_messages();
         if (!empty($messages)) {
             $columns[] = $messages;
-            $mobilemenu .= $this->mobile_menu_link('messages', 'messages', '#snap-personal-menu-messages');
+            $mobilemenu .= $this->mobile_menu_link('messages', 'messages', $this->get_calltoaction_url('messages'));
         }
 
         $forumposts = $this->render_forumposts();
         if (!empty($forumposts)) {
             $columns[] = $forumposts;
-            $mobilemenu .= $this->mobile_menu_link('forumposts', 'forumposts', '#snap-personal-menu-forumposts');
+            $mobilemenu .= $this->mobile_menu_link('forumposts', 'forumposts', $this->get_calltoaction_url('forumposts'));
         }
 
         $mobilemenu .= '</div>';
@@ -453,13 +470,26 @@ class core_renderer extends \theme_boost\output\core_renderer {
         return true;
     }
 
+    /**
+     * Is advanced feeds enabled?
+     *
+     * @return bool
+     */
+    private function advanced_feeds_enabled() {
+        if (property_exists($this->page->theme->settings, 'personalmenuadvancedfeedsenable')
+            && $this->page->theme->settings->personalmenuadvancedfeedsenable == 1) {
+            return true;
+        }
+        return false;
+    }
+
 
     /**
      * Render all grading CTAs for markers
      * @return string
      */
     protected function render_grading() {
-        global $USER, $OUTPUT;
+        global $USER;
 
         if (!$this->feedback_toggle_enabled()) {
             return '';
@@ -471,9 +501,15 @@ class core_renderer extends \theme_boost\output\core_renderer {
             return '';
         }
 
-        $gradingheading = get_string('grading', 'theme_snap');
-        $o = "<h2>$gradingheading</h2>";
-        $o .= '<div id="snap-personal-menu-grading"></div>';
+        $heading = get_string('grading', 'theme_snap');
+        if ($this->advanced_feeds_enabled()) {
+            $virtualpaging = true; // Web service retrieves all elements, need to do virtual paging.
+            $o = $this->render_feed_web_component('grading', $heading,
+                            get_string('nograding', 'theme_snap'), $virtualpaging);
+        } else {
+            $o = "<h2>$heading</h2>";
+            $o .= '<div id="snap-personal-menu-grading"></div>';
+        }
 
         return $o;
     }
@@ -484,14 +520,20 @@ class core_renderer extends \theme_boost\output\core_renderer {
      * @return string
      */
     protected function render_graded() {
-        global $OUTPUT;
         if (!$this->feedback_toggle_enabled()) {
             return '';
         }
 
-        $recentfeedback = get_string('recentfeedback', 'theme_snap');
-        $o = "<h2>$recentfeedback</h2>";
-        $o .= '<div id="snap-personal-menu-graded"></div>';
+        $heading = get_string('recentfeedback', 'theme_snap');
+        if ($this->advanced_feeds_enabled()) {
+            $virtualpaging = true; // Web service retrieves all elements, need to do virtual paging.
+            $o = $this->render_feed_web_component('graded', $heading,
+                            get_string('nograded', 'theme_snap'), $virtualpaging);
+        } else {
+            $o = "<h2>$heading</h2>";
+            $o .= '<div id="snap-personal-menu-graded"></div>';
+        }
+
         $url = new moodle_url('/grade/report/mygrades.php');
         $o .= $this->column_header_icon_link('viewmyfeedback', 'tick', $url);
         return $o;
@@ -1250,48 +1292,6 @@ HTML;
     }
 
     /**
-     * Render recent forum activity.
-     *
-     * @param array $activities
-     * @return string
-     */
-    public function recent_forum_activity(Array $activities) {
-        global $OUTPUT;
-        $output = '';
-        if (empty($activities)) {
-            return '';
-        }
-        $formatoptions = new stdClass;
-        $formatoptions->filter = false;
-        foreach ($activities as $activity) {
-            if (!empty($activity->user)) {
-                $userpicture = new user_picture($activity->user);
-                $userpicture->link = false;
-                $userpicture->alttext = false;
-                $userpicture->size = 32;
-                $picture = $OUTPUT->render($userpicture);
-            } else {
-                $picture = '';
-            }
-
-            $url = new moodle_url(
-                    '/mod/'.$activity->type.'/discuss.php',
-                    ['d' => $activity->content->discussion],
-                    'p'.$activity->content->id
-            );
-            $fullname = fullname($activity->user);
-            $forumpath = $activity->courseshortname. ' / ' .$activity->forumname;
-            $meta = [
-                local::relative_time($activity->timestamp),
-                format_text($forumpath, FORMAT_HTML, $formatoptions)
-            ];
-            $formattedsubject = '<p>' .format_text($activity->content->subject, FORMAT_HTML, $formatoptions). '</p>';
-            $output .= $this->snap_media_object($url, $picture, $fullname, $meta, $formattedsubject);
-        }
-        return $output;
-    }
-
-    /**
      * Return deadlines html for array of events.
      * @param stdClass $eventsobj
      * @return string
@@ -1849,5 +1849,33 @@ HTML;
         if (!empty($breadcrumbs)) {
             return '<ol class="breadcrumb">' .$breadcrumbs .'</ol>';
         }
+    }
+
+    /**
+     * @param string $feedkey
+     * @param string $title
+     * @param bool $virtualpaging
+     * @param bool $showreload
+     * @return string
+     */
+    private function render_feed_web_component($feedkey, $title, $emptymessage, $virtualpaging = false, $showreload = true) {
+        $pagesize = get_config('theme_snap', 'personalmenuadvancedfeedsperpage');
+        $pagesize = !empty($pagesize) ? $pagesize : 3;
+        $sesskey = sesskey();
+
+        $viewmoremsg = get_string('pmadvancedfeed_viewmore', 'theme_snap');
+        $reloadmsg = get_string('pmadvancedfeed_reload', 'theme_snap');
+        return <<<HTML
+<snap-feed elem-id="snap-personal-menu-feed-{$feedkey}"
+           title="{$title}"
+           feed-id="{$feedkey}"
+           show-reload="{$showreload}"
+           sess-key="{$sesskey}"
+           page-size="{$pagesize}"
+           virtual-paging="{$virtualpaging}"
+           empty-message="{$emptymessage}"
+           view-more-message="{$viewmoremsg}"
+           reload-message="{$reloadmsg}"></snap-feed>
+HTML;
     }
 }

@@ -108,6 +108,9 @@ define(['jquery', 'core/log', 'core/yui', 'theme_snap/pm_course_cards', 'theme_s
                 loadAjaxInfo('forumposts');
 
                 $(document).trigger('snapUpdatePersonalMenu');
+
+                // Triggering event for external PM open listeners.
+                document.dispatchEvent(new Event('snapPersonalMenuOpen'));
             };
 
             /**
@@ -123,7 +126,8 @@ define(['jquery', 'core/log', 'core/yui', 'theme_snap/pm_course_cards', 'theme_s
                     var sections = $("#snap-pm-content section");
                     var sectionWidth = $(sections).outerWidth();
                     var section = $(href);
-                    var targetSection = $("#snap-pm-updates section > div").index(section) + 1;
+                    var selector = "#snap-pm-updates section > div, #snap-pm-updates section > snap-feed > div";
+                    var targetSection = $(selector).index(section) + 1;
                     var position = sectionWidth * targetSection;
                     var sectionHeight = $(href).outerHeight() + 200;
 
