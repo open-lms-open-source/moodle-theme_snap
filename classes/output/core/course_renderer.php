@@ -300,7 +300,8 @@ class course_renderer extends \core_course_renderer {
         // Build output.
         $postcontent = '<div class="snap-asset-meta" data-cmid="'.$mod->id.'">'.$assetmeta.$mod->afterlink.'</div>';
         $content = '<div class="snap-asset-content">'.$assetlink.$postcontent.$contentpart.$snapcompletionmeta.$groupmeta.'</div>';
-        $output .= $assettype.$completiontracking.$content;
+        $cardicons = '<div class="snap-header-card-icons">'.$completiontracking.'</div>';
+        $output .= '<div class="snap-header-card">'.$assettype.$cardicons.'</div>'.$content;
 
         // Bail at this point if we aren't using a supported format. (Folder view is only partially supported).
         $supported = ['topics', 'weeks', 'site'];
@@ -905,7 +906,7 @@ class course_renderer extends \core_course_renderer {
         }
 
         if ($mod->uservisible) {
-            $output .= "<a $target class='mod-link' href='$url'>$activityimg<span class='instancename'>$instancename</span></a>";
+            $output .= "<a $target class='mod-link' href='$url'>$activityimg<p class='instancename'>$instancename</p></a>";
             $output .= $groupinglabel;
         } else {
             // We may be displaying this just in order to show information

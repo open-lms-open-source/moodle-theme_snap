@@ -731,13 +731,34 @@ define(['jquery', 'core/log', 'theme_snap/headroom', 'theme_snap/util', 'theme_s
                         var description = $("#mform1 fieldset:first .fitem_feditor:not(.required)");
 
                         if (onModSettings && description) {
-                            var editingassignment = $('body').attr('id') == 'page-mod-assign-mod';
-                            var editingchoice = $('body').attr('id') == 'page-mod-choice-mod';
-                            var editingturnitin = $('body').attr('id') == 'page-mod-turnitintool-mod';
-                            var editingworkshop = $('body').attr('id') == 'page-mod-workshop-mod';
-                            if (!editingchoice && !editingassignment && !editingturnitin && !editingworkshop) {
+                            var noNeedDescSelectors = [
+                                'body#page-mod-assign-mod',
+                                'body#page-mod-choice-mod',
+                                'body#page-mod-turnitintool-mod',
+                                'body#page-mod-workshop-mod',
+                            ];
+                            var addMultiMessageSelectors = [
+                                'body#page-mod-url-mod',
+                                'body#page-mod-resource-mod',
+                                'body#page-mod-folder-mod',
+                                'body#page-mod-imscp-mod',
+                                'body#page-mod-lightboxgallery-mod',
+                                'body#page-mod-scorm-mod',
+                            ];
+                            if ($(noNeedDescSelectors.join()).length === 0) {
                                 $(appendTo).append(description);
                                 $(appendTo).append($('#fitem_id_showdescription'));
+                            }
+                            // Resource cards - add a message to this type of activities, these activities will not display
+                            // any multimedia.
+                            if ($(addMultiMessageSelectors.join()).length > 0) {
+                                str.get_strings([
+                                    {key : 'multimediacard', component : 'theme_snap'}
+                                ]).done(function(stringsjs) {
+                                    var activityCards = stringsjs[0];
+                                    var cardmultimedia = $("[id='id_showdescription']").closest('.form-group');
+                                    $(cardmultimedia).append(activityCards);
+                                });
                             }
                         }
 
