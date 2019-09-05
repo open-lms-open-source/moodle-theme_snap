@@ -71,6 +71,14 @@ $functions = [
         'type'          => 'write',
         'ajax'          => true,
         'loginrequired' => true
-    ]
+    ],
+    'theme_snap_feed' => [
+        'classname'     => 'theme_snap\\webservice\\ws_feed',
+        'methodname'    => 'service',
+        'description'   => 'Personal Menu Feed',
+        'type'          => 'read',
+        'ajax'          => true,
+        'loginrequired' => true
+    ],
 ];
 

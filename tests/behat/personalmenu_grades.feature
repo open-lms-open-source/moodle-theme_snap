@@ -40,6 +40,8 @@ Feature: When the moodle theme is set to Snap, students and teachers can open a 
       | teacher2 | C1     | teacher        |
       | teacher3 | C1     | teacher        |
       | student1 | C1     | student        |
+    And the following config values are set as admin:
+      | personalmenuadvancedfeedsenable | 0 | theme_snap |
 
   @javascript
   Scenario: No assignments submitted or graded.

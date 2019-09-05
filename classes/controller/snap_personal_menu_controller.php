@@ -16,6 +16,8 @@
 
 namespace theme_snap\controller;
 
+use theme_snap\output\core_renderer;
+
 defined('MOODLE_INTERNAL') || die();
 
 /**
@@ -42,6 +44,7 @@ class snap_personal_menu_controller extends controller_abstract {
      */
     public function get_deadlines_action() {
         global $PAGE, $USER;
+        /** @var core_renderer $output */
         $output = $PAGE->get_renderer('theme_snap', 'core', RENDERER_TARGET_GENERAL);
         $deadlines = \theme_snap\activity::upcoming_deadlines($USER->id);
         return json_encode([

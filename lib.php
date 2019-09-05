@@ -227,6 +227,12 @@ function theme_snap_pluginfile($course, $cm, $context, $filearea, $args, $forced
     } else if (in_array($context->contextlevel, $coverimagecontexts)
         && $filearea == 'coverimage' || $filearea == 'coursecard') {
         theme_snap_send_file($context, $filearea, $args, $forcedownload, $options);
+    } else if ($filearea === 'vendorjs') {
+        $pluginpath = __DIR__.'/';
+        // Typically CDN fall backs would go in vendorjs.
+        $path = $pluginpath.'vendorjs/'.implode('/', $args);
+        send_file($path, basename($path));
+        return true;
     } else {
         send_file_not_found();
     }
@@ -401,4 +407,21 @@ function theme_snap_course_module_background_deletion_recommended() {
         }
     }
     return false;
+}
+
+/**
+ * Hook for adding things before footer.
+ */
+function theme_snap_before_footer() {
+    global $CFG, $PAGE;
+
+    $paths = [];
+
+    $paths['theme_snap/snapce'] = [
+        $CFG->wwwroot . '/pluginfile.php/' . $PAGE->context->id . '/theme_snap/vendorjs/snap-custom-elements/snap-ce'
+    ];
+
+    $PAGE->requires->js_call_amd('theme_snap/wcloader', 'init', [
+        'componentPaths' => json_encode($paths)
+    ]);
 }
