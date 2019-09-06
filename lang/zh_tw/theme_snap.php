@@ -337,3 +337,12 @@ $string['accescalendarstring'] = '行事曆';
 $string['admineventwarning'] = '若要查看所有課程中的事件，';
 $string['gotocalendarsnap'] = '請前往網站行事曆。';
 $string['quizattemptswarn'] = '排除已暫停使用者的嘗試';
+$string['quizfeedback'] = '意見回應';
+$string['validratio'] = '此顏色組合不符合 WCAG 2.0 最小比率值 4.5:1';
+$string['invalidratio'] = '此顏色組合不符合
+<a href="https://www.w3.org/TR/WCAG20-TECHS/G18.html" target="_blank">WCAG 2.0 最小比率值 4.5:1</a>。值：「{$a}」';
+$string['imageinvalidratio'] = '由於不符合 WCAG 2.0 最小比率值 4.5:1，此影像可能有對比度問題。平均像素值：「{$a}」';
+$string['catinvalidratio'] = '以下顏色類別不符合
+<a href="https://www.w3.org/TR/WCAG20-TECHS/G18.html" target="_blank">WCAG 2.0 最小比率值 4.5:1</a>：
+對照網站背景顏色 (白色)：「{$a->white}」。對照瀏覽列背景顏色：「{$a->custombar}」。對照「我的課程」按鈕背景顏色：「{$a->customnav}」';
+$string['imageinvalidratiocategory'] = '由於不符合 WCAG 2.0 最小比率值 4.5:1，此影像的主題顏色可能有對比度問題。平均像素值：「{$a}」';

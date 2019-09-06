@@ -334,3 +334,12 @@ $string['accescalendarstring'] = 'Kalender';
 $string['admineventwarning'] = 'For at se begivenheder fra alle kurser, ';
 $string['gotocalendarsnap'] = 'skal du gå til webstedets kalender.';
 $string['quizattemptswarn'] = 'Udelader forsøg fra suspenderede brugere';
+$string['quizfeedback'] = 'Feedback';
+$string['validratio'] = 'Denne kombination af farver overholder ikke , for WCAG 2.0-minimumsratioen, 4.5:1';
+$string['invalidratio'] = 'Denne kombination af farver overholder ikke
+<a href="https://www.w3.org/TR/WCAG20-TECHS/G18.html" target="_blank">WCAG 2.0-minimumsratioen, 4.5:1</a>. Værdi: "{$a}"';
+$string['imageinvalidratio'] = 'Dette billede kan have kontrastproblemer, da det ikke overholder WCAG 2.0-minimumsratioen, 4.5:1. Gennemsnitlig pixelværdi: "{$a}"';
+$string['catinvalidratio'] = 'Følgende farvekategorier overholder ikke
+<a href="https://www.w3.org/TR/WCAG20-TECHS/G18.html" target="_blank">WCAG 2.0-minimumsratioen, 4.5:1</a> :
+I forhold til baggrundsfarven (hvid): "{$a->white}". I forhold til navigationsbarens baggrundsfarven: "{$a->custombar}". I forhold til baggrundsfarven for Mine kurser-knappen: "{$a->customnav}"';
+$string['imageinvalidratiocategory'] = 'Dette billede kan have kontrastproblemer med temafarven, da det ikke overholder WCAG 2.0-minimumsratioen, 4.5:1. Gennemsnitlig pixelværdi: "{$a}"';
