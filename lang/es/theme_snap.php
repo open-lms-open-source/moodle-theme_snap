@@ -188,17 +188,11 @@ $string['instagramdesc'] = 'La URL de su cuenta de Instagram.';
 $string['introduction'] = 'Introducción';
 $string['jsontext'] = 'Texto JSON';
 $string['jsontextdescription'] = 'El área de texto valida el JSON dado; por lo tanto, solo se permiten categorías existentes, solo los valores numéricos como registros de ID (registros de categorías) son válidos y solo se aceptan valores hexadecimales como colores.
-Aquí hay un ejemplo:<br>
-{"1":"#FAAFFF",<br>
-
+Aquí hay un ejemplo:<br>{"1":"#FAAFFF",<br>
 "45":"#AFF",<br>
-
 "65":"#FFF228",<br>
-
 "12":"#CC0084",<br>
-
 "56":"#CC0087",<br>
-
 "89":"#CCF084"}';
 $string['knowledgebase'] = 'Base de conocimiento de Blackboard Open LMS';
 $string['list'] = 'Lista';
@@ -340,3 +334,11 @@ $string['accescalendarstring'] = 'Calendario';
 $string['admineventwarning'] = 'Para ver los eventos de todos los cursos, ';
 $string['gotocalendarsnap'] = 'diríjase al calendario del sitio.';
 $string['quizattemptswarn'] = 'Excluye los intentos de los usuarios suspendidos';
+$string['quizfeedback'] = 'Comentarios';
+$string['validratio'] = 'Esta combinación de colores sí cumple con el valor mínimo de relación de 4.5:1 de WCAG 2.0';
+$string['invalidratio'] = 'Esta combinación de colores no cumple con el
+<a href="https://www.w3.org/TR/WCAG20-TECHS/G18.html" target="_blank">valor mínimo de relación de 4.5:1 de WCAG 2.0</a>. Valor: "{$a}"';
+$string['imageinvalidratio'] = 'Esta imagen podría presentar problemas de contraste, ya que no cumple con valor mínimo de relación de 4.5:1 de WCAG 2.0. Valor promedio de pixel: "{$a}"';
+$string['catinvalidratio'] = 'Las siguientes categorías de colores no cumplen con el
+<a href="https://www.w3.org/TR/WCAG20-TECHS/G18.html" target="_blank">valor mínimo de relación de 4.5:1 de WCAG 2.0</a>: en contraste con el color de fondo del sitio (blanco): "{$a->white}"; en contraste con el color de fondo de la barra de navegación: "{$a->custombar}"; en contraste con el color de fondo del botón Mis cursos: "{$a->customnav}"';
+$string['imageinvalidratiocategory'] = 'Esta imagen podría presentar problemas de contraste con el color del tema, ya que no cumple con el valor mínimo de relación de 4.5:1 de WCAG 2.0. Valor promedio de pixel: "{$a}"';

@@ -337,3 +337,12 @@ $string['accescalendarstring'] = 'Kalenteri';
 $string['admineventwarning'] = 'Jos haluat nähdä kaikkien kurssien tapahtumat, ';
 $string['gotocalendarsnap'] = 'siirry sivuston kalenteriin.';
 $string['quizattemptswarn'] = 'Jättää pois jäädytettyjen käyttäjien suorituskerrat';
+$string['quizfeedback'] = 'Palaute';
+$string['validratio'] = 'Tämä väriyhdistelmä ei noudata WCAG 2.0:n minimisuhdearvoa 4.5:1';
+$string['invalidratio'] = 'Tämä väriyhdistelmä ei noudata
+<a href="https://www.w3.org/TR/WCAG20-TECHS/G18.html" target="_blank">WCAG 2.0:n minimisuhdearvoa 4.5:1</a>. Arvo: {$a}';
+$string['imageinvalidratio'] = 'Tässä kuvassa saattaa olla kontrastiongelmia, jotka johtuvat poikkeamisesta WCAG 2.0:n vähimmäismittasuhdearvosta 4.5:1.Keskimääräinen pikseliarvo: {$a}';
+$string['catinvalidratio'] = 'Seuraavat värikategoriat eivät noudata
+<a href="https://www.w3.org/TR/WCAG20-TECHS/G18.html" target="_blank">WCAG 2.0:n minimisuhdearvoa 4.5:1</a>:
+Sivun taustaväriä (valkoinen) vasten: {$a->white}. Siirtymispalkin taustaväriä vasten: {$a->custombar}. Omat kurssit -painikkeen taustaväriä vasten: {$a->customnav}';
+$string['imageinvalidratiocategory'] = 'Tässä kuvassa voi olla kontrastiongelmia teeman väriä vasten johtuen siitä, ettei se noudata WCAG 2.0:n minimimittasuhdearvoa 4.5:1. Keskimääräinen pikseliarvo: {$a}';

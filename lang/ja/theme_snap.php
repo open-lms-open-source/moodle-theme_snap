@@ -334,3 +334,12 @@ $string['accescalendarstring'] = 'カレンダー';
 $string['admineventwarning'] = 'すべてのコースのイベントを見るには、 ';
 $string['gotocalendarsnap'] = 'サイトカレンダーに移動します。';
 $string['quizattemptswarn'] = '一時停止ユーザの受験を除外する';
+$string['quizfeedback'] = 'フィードバック';
+$string['validratio'] = 'この色の組み合わせは、WCAG 2.0の最小比率値4.5:1に準拠しています';
+$string['invalidratio'] = 'この色の組み合わせは、
+<a href="https://www.w3.org/TR/WCAG20-TECHS/G18.html" target="_blank">WCAG 2.0の最小比率値4.5:1</a>に準拠していません。値 : 「{$a}」';
+$string['imageinvalidratio'] = 'このイメージは、WCAG 2.0の最小比率値4.5:1に準拠していないため、コントラストに問題がある可能性があります。平均ピクセル値 : 「{$a}」';
+$string['catinvalidratio'] = '以下の色のカテゴリは、
+<a href="https://www.w3.org/TR/WCAG20-TECHS/G18.html" target="_blank">WCAG 2.0の最小比率値4.5:1</a>に準拠していません :
+サイトの背景色 (白) に対して : 「{$a->white}」。ナビゲーションバーの背景色に対して : 「{$a->custombar}」。[マイコース]ボタンの背景色に対して : 「{$a->customnav}」';
+$string['imageinvalidratiocategory'] = 'このイメージは、WCAG 2.0最小比率値4.5:1に準拠していないため、テーマの色とのコントラストに問題がある可能性があります。平均ピクセル値 : 「{$a}」';

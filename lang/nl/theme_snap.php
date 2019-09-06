@@ -335,3 +335,12 @@ $string['accescalendarstring'] = 'Kalender';
 $string['admineventwarning'] = 'Om gebeurtenissen uit alle cursussen te zien, ';
 $string['gotocalendarsnap'] = 'ga je naar de agenda van de site.';
 $string['quizattemptswarn'] = 'Pogingen van geschorste gebruikers uitsluiten';
+$string['quizfeedback'] = 'Feedback';
+$string['validratio'] = 'Deze combinatie van kleuren voldoet niet aan de minimale ratiowaarde van 4.5:1 van WCAG 2.0';
+$string['invalidratio'] = 'Deze kleurencombinatie voldoet niet aan de
+<a href="https://www.w3.org/TR/WCAG20-TECHS/G18.html" target="_blank">minimale ratiowaarde van 4.5:1 van WCAG 2.0</a>. Waarde: "{$a}"';
+$string['imageinvalidratio'] = 'Deze afbeelding kan contrastproblemen veroorzaken omdat er niet wordt voldaan aan de minimale ratiowaarde van 4.5:1 van WCAG 2.0. Gemiddelde pixelwaarde: "{$a}"';
+$string['catinvalidratio'] = 'De volgende kleurcategorieën voldoen niet aan de
+<a href="https://www.w3.org/TR/WCAG20-TECHS/G18.html" target="_blank">minimale ratiowaarde van 4.5:1 van WCAG 2.0</a> :
+Achtergrondkleur van site (wit): "{$a->white}". Achtergrondkleur van navigatiebalk: "{$a->custombar}". Achtergrondkleur van knop Mijn cursussen: "{$a->customnav}"';
+$string['imageinvalidratiocategory'] = 'Deze afbeelding kan contrastproblemen veroorzaken omdat de themakleur niet voldoet aan de minimale ratiowaarde van 4.5:1 van WCAG 2.0. Gemiddelde pixelwaarde: "{$a}"';

@@ -342,3 +342,12 @@ $string['accescalendarstring'] = 'Calendário';
 $string['admineventwarning'] = 'Para ver eventos de todos os cursos, ';
 $string['gotocalendarsnap'] = 'vá para o calendário do site.';
 $string['quizattemptswarn'] = 'Exclui tentativas de usuários suspensos';
+$string['quizfeedback'] = 'Comentários';
+$string['validratio'] = 'Essa combinação de cores está em conformidade com o valor de proporção mínima do WCAG 2.0 4.5:1';
+$string['invalidratio'] = 'Essa combinação de cores não está em conformidade com o
+<a href="https://www.w3.org/TR/WCAG20-TECHS/G18.html" target="_blank">valor de proporção mínima do WCAG 2.0 4.5:1</a>. Valor: "{$a}"';
+$string['imageinvalidratio'] = 'Essa imagem pode ter problemas de contraste por causa da não conformidade com o valor de proporção mínima do WCAG 2.0 4.5:1. Valor médio de pixel: "{$a}"';
+$string['catinvalidratio'] = 'As seguintes categorias de cores não estão em conformidade com o
+<a href="https://www.w3.org/TR/WCAG20-TECHS/G18.html" target="_blank">valor de proporção mínima do WCAG 2.0 4.5:1</a> :
+em relação à cor de plano de fundo do site (branco): "{$a->white}". Em relação à cor de plano de fundo da barra de navegação: "{$a->custombar}". Em relação à cor de plano de fundo do botão Meus cursos: "{$a->customnav}"';
+$string['imageinvalidratiocategory'] = 'Essa imagem pode ter problemas de contraste com a cor do tema por causa da não conformidade com o valor de proporção mínima do WCAG 2.0 4.5:1. Valor médio de pixel: "{$a}"';

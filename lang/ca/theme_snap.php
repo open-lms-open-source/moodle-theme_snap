@@ -335,3 +335,12 @@ $string['accescalendarstring'] = 'Calendari';
 $string['admineventwarning'] = 'Per veure esdeveniments de tots els cursos, ';
 $string['gotocalendarsnap'] = 'aneu al calendari del lloc.';
 $string['quizattemptswarn'] = 'Exclou els intents dels usuaris amb la inscripció suspesa';
+$string['quizfeedback'] = 'Comentaris';
+$string['validratio'] = 'Aquesta combinació de colors no compleix amb el valor de relació mínima que estableix la WCAG 2.0 de 4,5:1';
+$string['invalidratio'] = 'Aquesta combinació de colors no compleix amb el
+<a href="https://www.w3.org/TR/WCAG20-TECHS/G18.html" target="_blank">valor de relació mínima que estableix la WCAG 2.0 de 4,5:1</a>. Valor: "{$a}"';
+$string['imageinvalidratio'] = 'Aquesta imatge pot tenir problemes de contrast amb el valor de relació mínima que estableix la WCAG 2.0 de 4,5:1. Valor mitjà del píxel: "{$a}"';
+$string['catinvalidratio'] = 'Aquestes categories de color no compleixen
+<a href="https://www.w3.org/TR/WCAG20-TECHS/G18.html" target="_blank">el valor de relació mínima que estableix la WCAG 2.0 de 4,5:1</a> :
+Contra un fons de color blanc: "{$a->white}". Contra el color de fons de la barra de navegació: "{$a->custombar}". Contra el color de fons del botó Els meus cursos: "{$a->customnav}"';
+$string['imageinvalidratiocategory'] = 'Aquesta imatge pot tenir problemes de contrast amb el color del tema amb el valor de la relació mínima que estableix la WCAG 2.0 de 4,5:1. Valor mitjà del píxel: "{$a}"';

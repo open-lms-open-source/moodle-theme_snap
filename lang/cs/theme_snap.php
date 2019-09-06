@@ -52,8 +52,7 @@ $string['categoryedit'] = 'Upravit kategorii';
 $string['category_color'] = 'Barva kategorie';
 $string['category_color_description'] = 'Jedná se o barvu kategorie kurzu. Podřazené (asociované) kurzy přebírají konfiguraci nejbližší nadřazené kategorie';
 $string['category_color_palette'] = 'Paleta barev';
-$string['category_color_palette_description'] = 'Prohlédněte si odpovídající hexadecimální hodnotu dané barvy. Žádnou konfiguraci to neovlivní,
-jedná se jen o vzorek, který uživatelům pomáhá nastavit hodnotu konfigurace.';
+$string['category_color_palette_description'] = 'Prohlédněte si odpovídající hexadecimální hodnotu dané barvy. Žádnou konfiguraci to neovlivní, jedná se jen o vzorek, který uživatelům pomáhá nastavit hodnotu konfigurace.';
 $string['changecoverimage'] = 'Změnit titulní obrázek';
 $string['changefullname'] = 'Změnit název webu';
 $string['chapters'] = 'Kapitoly';
@@ -337,3 +336,11 @@ $string['accescalendarstring'] = 'Kalendář';
 $string['admineventwarning'] = 'K zobrazení událostí ze všech kurzů, ';
 $string['gotocalendarsnap'] = 'přejít na kalendář stránek';
 $string['quizattemptswarn'] = 'Vylučuje pokusy od pozastavených uživatelů';
+$string['quizfeedback'] = 'Zpětná vazba';
+$string['validratio'] = 'Tato kombinace barev vyhovuje hodnotě minimálního poměru WCAG 2.0 – 4,5:1';
+$string['invalidratio'] = 'Tato kombinace barev nevyhovuje <a href="https://www.w3.org/TR/WCAG20-TECHS/G18.html" target="_blank">hodnotě minimálního poměru WCAG 2.0 – 4,5:1</a>. Hodnota: "{$a}"';
+$string['imageinvalidratio'] = 'Tento obrázek by mohl mít problémy s kontrastem, protože nevyhovuje hodnotě minimálního poměru WCAG 2.0 – 4,5:1. Průměrná hodnota pixelů: "{$a}"';
+$string['catinvalidratio'] = 'Následující kategorie barev nevyhovují
+<a href="https://www.w3.org/TR/WCAG20-TECHS/G18.html" target="_blank">hodnotě minimálního poměru WCAG 2.0 – 4,5:1</a>:
+Barva pozadí vůči webu (bílá): "{$a->white}". Barva pozadí vůči navigačnímu panelu: "{$a->custombar}". Barva pozadí vůči tlačítku Moje kurzy: "{$a->customnav}"';
+$string['imageinvalidratiocategory'] = 'Tento obrázek by mohl mít problémy s barvou motivu, protože nevyhovuje hodnotě minimálního poměru WCAG 2.0 – 4,5:1. Průměrná hodnota pixelů: "{$a}"';

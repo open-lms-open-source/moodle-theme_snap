@@ -335,3 +335,12 @@ $string['accescalendarstring'] = 'Kalender';
 $string['admineventwarning'] = 'Wenn Ereignisse aus allen Kursen angezeigt werden sollen, ';
 $string['gotocalendarsnap'] = 'rufen Sie den Website-Kalender auf.';
 $string['quizattemptswarn'] = 'Versuche von gesperrten Nutzer(inne)n ausschließen';
+$string['quizfeedback'] = 'Feedback';
+$string['validratio'] = 'Diese Farbkombination erfüllt das WCAG 2.0-Mindestverhältnis 4.5:1';
+$string['invalidratio'] = 'Diese Farbkombination erfüllt nicht das
+<a href="https://www.w3.org/TR/WCAG20-TECHS/G18.html" target="_blank">WCAG 2.0-Mindestverhältnis 4.5:1</a>. Wert: "{$a}"';
+$string['imageinvalidratio'] = 'Bei diesem Schaltflächensymbol können Probleme mit dem Kontrast auftreten, da das WCAG 2.0-Mindestverhältnis 4.5:1 nicht erfüllt ist. Durchschnittlicher Pixelwert: "{$a}"';
+$string['catinvalidratio'] = 'Folgende Farbkategorien erfüllen nicht das
+<a href="https://www.w3.org/TR/WCAG20-TECHS/G18.html" target="_blank">WCAG 2.0-Mindestverhältnis 4.5:1</a> :
+Gegenüber der Website-Hintergrundfarbe (weiß): "{$a->white}". Gegenüber der Hintergrundfarbe der Navigationsleiste: "{$a->custombar}". Gegenüber der Hintergrundfarbe der Schaltfläche „Meine Kurse“: "{$a->customnav}"';
+$string['imageinvalidratiocategory'] = 'Bei diesem Schaltflächensymbol können Kontrastprobleme mit der Designfarbe auftreten, da das WCAG 2.0-Mindestverhältnis 4.5:1 nicht erfüllt ist. Durchschnittlicher Pixelwert: "{$a}"';
