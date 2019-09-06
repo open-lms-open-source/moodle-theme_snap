@@ -37,8 +37,12 @@ Feature: When the moodle theme is set to Snap, teachers can toggle the currently
       | student1 | C1 | student |
 
   @javascript
-  Scenario: In read mode, teacher toggles section as current and student sees appropriate status.
-    Given I log in as "teacher1"
+  Scenario Outline: In read mode, teacher toggles section as current and student sees appropriate status.
+    Given I log in as "admin"
+    And the following config values are set as admin:
+      | coursepartialrender | <Option> | theme_snap |
+    And I log out
+    And I log in as "teacher1"
     And I am on the course main page for "C1"
     And I follow "Topic 2"
     Then "#section-2" "css_element" should exist
@@ -65,6 +69,10 @@ Feature: When the moodle theme is set to Snap, teachers can toggle the currently
     And I log in as "student1"
     And I am on the course main page for "C1"
     Then I should not see "Current" in the "#chapters li:nth-of-type(3)" "css_element"
+  Examples:
+    | Option     |
+    | 0          |
+    | 1          |
 
   @javascript
   # This scenario is necessary to make sure the correct error message comes back when an AJAX request fails but it is
@@ -79,11 +87,28 @@ Feature: When the moodle theme is set to Snap, teachers can toggle the currently
     And I click on "#section-1 .snap-highlight" "css_element"
     # Shame to have a 1 second pause here but this fails on CI intermittently without this pause.
     And I wait "1" seconds
-    Then I should see "Failed to highlight section"
+    And I should see "Failed to highlight section"
+    Then I log out
+    And I log in as "admin"
+    And the following config values are set as admin:
+      | coursepartialrender | 1 | theme_snap |
+    And I log out
+    And I log in as "teacher1"
+    And I am on the course main page for "C1"
+    And I follow "Topic 1"
+    And "#section-1 .snap-highlight" "css_element" should not exist
 
   @javascript
-  Scenario: Student cannot mark section current.
-    Given I log in as "student1"
+  Scenario Outline: Student cannot mark section current.
+    Given I log in as "admin"
+    And the following config values are set as admin:
+      | coursepartialrender | <Option> | theme_snap |
+    And I log out
+    And I log in as "student1"
     And I am on the course main page for "C1"
     And I follow "Topic 2"
     Then "#section-2 .snap-highlight" "css_element" should not exist
+  Examples:
+  | Option     |
+  | 0          |
+  | 1          |

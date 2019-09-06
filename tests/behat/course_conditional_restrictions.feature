@@ -45,8 +45,12 @@ Feature: When the moodle theme is set to Snap, conditional restrictions work as 
       | student1 | C1     | student        |
 
   @javascript
-  Scenario: Conditionally restricted section notices show for students only when restrictions not met but always show for teachers.
-  Given I log in as "teacher1"
+  Scenario Outline: Conditionally restricted section notices show for students only when restrictions not met but always show for teachers.
+  Given I log in as "admin"
+    And the following config values are set as admin:
+      | coursepartialrender | <Option> | theme_snap |
+    And I log out
+    And I log in as "teacher1"
     And I am on the course main page for "C1"
     And I go to course section 1
     And I restrict assignment "S1 Restricted - date past" by date to "yesterday"
@@ -97,3 +101,7 @@ Feature: When the moodle theme is set to Snap, conditional restrictions work as 
     And I am on the course main page for "C1"
     And I go to course section 4
     And I should not see availability info "Not available unless: The activity S3 Completion - view is marked complete" in "section" "4"
+  Examples:
+  | Option     |
+  | 0          |
+  | 1          |

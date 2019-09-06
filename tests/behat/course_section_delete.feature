@@ -41,8 +41,12 @@ Feature: When the moodle theme is set to Snap, teachers can delete sections with
       | assign   | C1     | assign2  | Test assignment2 | Test assignment description 2 | 2       | 1                                   |
 
   @javascript
-  Scenario: In read mode, on course, teacher can cancel / confirm delete section.
-    Given I log in as "teacher1"
+  Scenario Outline: In read mode, on course, teacher can cancel / confirm delete section.
+    Given I log in as "admin"
+    And the following config values are set as admin:
+      | coursepartialrender | <Option> | theme_snap |
+    And I log out
+    And I log in as "teacher1"
     And I am on the course main page for "C1"
 
     And I follow "Topic 1"
@@ -64,13 +68,25 @@ Feature: When the moodle theme is set to Snap, teachers can delete sections with
     When I click on "#section-1 .snap-section-editing.actions a.snap-delete" "css_element"
     Then I should see section delete dialog
     When I press "Delete Section"
-    Then I should not see "Topic one" in the "#section-1" "css_element"
+    Then I should not see "Topic one" in the "li[id^='section-']" "css_element"
     And I cannot see "Test assignment1" in course asset search
     And I can see "Test assignment2" in course asset search
+  Examples:
+    | Option     |
+    | 0          |
+    | 1          |
 
   @javascript
-  Scenario: Student cannot delete section.
-    Given I log in as "student1"
+  Scenario Outline: Student cannot delete section.
+    Given I log in as "admin"
+    And the following config values are set as admin:
+      | coursepartialrender | <Option> | theme_snap |
+    And I log out
+    And I log in as "student1"
     And I am on the course main page for "C1"
     And I follow "Topic 1"
     Then "#section-1 .snap-section-editing.actions a.snap-delete" "css_element" should not exist
+  Examples:
+    | Option     |
+    | 0          |
+    | 1          |

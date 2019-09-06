@@ -40,21 +40,29 @@ Feature: Open page module inline
       | lazyload_mod_page | 0 | theme_snap |
 
   @javascript
-  Scenario: Page mod is created and opened inline.
-    Given the following "activities" exist:
+  Scenario Outline: Page mod is created and opened inline.
+    Given I log in as "admin"
+    And the following config values are set as admin:
+      | coursepartialrender | <Option> | theme_snap |
+    And the following "activities" exist:
       | activity | course | idnumber | name       | intro        | content       | completion | completionview |
       | page     | C1     | page1    | Test page1 | Test page 1  | page content1 | 0          | 0              |
-    And I log in as "student1"
+    And I log out
+    Then I log in as "student1"
     And I am on the course main page for "C1"
     And I should not see "page content1"
     And I follow "Read more&nbsp;»"
     And I wait until ".pagemod-content[data-content-loaded=\"1\"]" "css_element" is visible
     # The above step basically waits for the page content to load up.
     And I should see "page content1"
+  Examples:
+  | Option     |
+  | 0          |
+  | 1          |
 
 
   @javascript
-  Scenario: Page mod completion updates on read more and affects availability for other modules and sections.
+  Scenario Outline: Page mod completion updates on read more and affects availability for other modules and sections.
     Given the following "activities" exist:
       | activity | course | idnumber  | name              | intro                 | content                 | completion | completionview | section |
       | page     | C1     | pagec     | Page completion   | Page completion intro | Page completion content | 2          | 1              | 0       |
@@ -64,6 +72,8 @@ Feature: Open page module inline
       | activity | course | idnumber     | name            | section |
       | assign   | C1     | assigntest   | Assignment Test | 2       |
     And I log in as "admin"
+    And the following config values are set as admin:
+      | coursepartialrender | <Option> | theme_snap |
     And I am on the course main page for "C1"
     # Restrict the second page module to only be accessible after the first page module is marked complete.
     And I restrict course asset "Page restricted" by completion of "Page completion"
@@ -118,4 +128,8 @@ Feature: Open page module inline
     Then I should not see availability info "Not available unless: The activity Page completion 2 is marked complete"
     And I should not see "Conditional" in the "#chapters li:nth-of-type(3)" "css_element"
     And I should see "Assignment Test"
+  Examples:
+  | Option     |
+  | 0          |
+  | 1          |
 
