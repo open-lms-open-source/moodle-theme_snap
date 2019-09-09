@@ -74,7 +74,7 @@ Feature: When the moodle theme is set to Snap, conditional restrictions work as 
     And I go to course section 4
     And I should see availability info "Not available unless: The activity S3 Completion - view is marked complete" in "section" "4"
     And I go to course section 3
-    And I click on "//li[contains(@class, 'modtype_assign')]//a/span[contains(text(), 'S3 Completion - view')]" "xpath_element"
+    And I click on "//li[contains(@class, 'modtype_assign')]//a/p[contains(text(), 'S3 Completion - view')]" "xpath_element"
     And I am on the course main page for "C1"
     And I go to course section 4
     And I should see availability info "Not available unless: The activity S3 Completion - view is marked complete" in "section" "4"
@@ -93,7 +93,7 @@ Feature: When the moodle theme is set to Snap, conditional restrictions work as 
     And I go to course section 4
     And I should see availability info "Not available unless: The activity S3 Completion - view is marked complete" in "section" "4"
     And I go to course section 3
-    And I click on "//li[contains(@class, 'modtype_assign')]//a/span[contains(text(), 'S3 Completion - view')]" "xpath_element"
+    And I click on "//li[contains(@class, 'modtype_assign')]//a/p[contains(text(), 'S3 Completion - view')]" "xpath_element"
     And I am on the course main page for "C1"
     And I go to course section 4
     And I should not see availability info "Not available unless: The activity S3 Completion - view is marked complete" in "section" "4"
