@@ -50,6 +50,13 @@ define(['jquery', 'core/log', 'core/ajax', 'core/str', 'core/templates', 'core/n
          * @type {Array}
          */
         var sectionsProcess = [];
+
+        /**
+         * Module html caching.
+         * @type object|null
+         */
+        var moduleCache = null;
+
         /**
          * Sets observers for the TOC elements.
          */
@@ -674,7 +681,8 @@ define(['jquery', 'core/log', 'core/ajax', 'core/str', 'core/templates', 'core/n
                         courseshortname: courseLib.courseConfig.shortname,
                         action: 'delete',
                         sectionnumber: sectionNum,
-                        value: 1
+                        value: 1,
+                        loadmodules: true,
                     };
 
                     log.debug('Making course/rest.php section delete request', params);
@@ -781,6 +789,9 @@ define(['jquery', 'core/log', 'core/ajax', 'core/str', 'core/templates', 'core/n
                                     return;
                                 } else {
                                     log.debug('Ajax request successful');
+
+                                    // Reset module cache.
+                                    moduleCache = null;
                                     if (action === 'delete') {
                                         // Remove asset from DOM.
                                         assetEl.remove();
@@ -1009,9 +1020,12 @@ define(['jquery', 'core/log', 'core/ajax', 'core/str', 'core/templates', 'core/n
                     }
 
                     // For toggling visibility.
-                    var toggle;
+                    var toggle, loadModules = true;
                     if (action === 'visibility') {
                         toggle = $(this).hasClass('snap-hide') ? 0 : 1;
+                        if (moduleCache && moduleCache.length > 0) {
+                            loadModules = false;
+                        }
                     } else {
                         // For toggling highlight/mark as current.
                         toggle = $(this).attr('aria-pressed') === 'true' ? 0 : 1;
@@ -1020,16 +1034,16 @@ define(['jquery', 'core/log', 'core/ajax', 'core/str', 'core/templates', 'core/n
                     var sectionActionsSelector = '#section-' + sectionNumber + ' .snap-section-editing';
                     var actionSelector = sectionActionsSelector + ' .snap-' + action;
 
-
                     // Make ajax call.
                     var ajaxPromises = ajax.call([
                         {
                             methodname: 'theme_snap_course_sections',
-                            args: {
+                            args : {
                                 courseshortname: courseLib.courseConfig.shortname,
                                 action: action,
                                 sectionnumber: sectionNumber,
-                                value: toggle
+                                value: toggle,
+                                loadmodules: loadModules,
                             }
                         }
                     ], true, true);
@@ -1058,6 +1072,15 @@ define(['jquery', 'core/log', 'core/ajax', 'core/str', 'core/templates', 'core/n
                             $(actionSelector).replaceWith(result);
                             $(actionSelector).focus();
                             // Update TOC.
+                            if (!loadModules && moduleCache && moduleCache.length > 0 && response.toc.modules.length === 0) {
+                                // Modules not loaded on request. Replacing them on the toc.
+                                response.toc.modules = moduleCache;
+                            }
+
+                            // Caching modules for future use.
+                            if (response.toc.modules) {
+                                moduleCache = response.toc.modules;
+                            }
                             return templates.render('theme_snap/course_toc', response.toc);
                         }).then(function(result) {
                             $('#course-toc').html($(result).html());
