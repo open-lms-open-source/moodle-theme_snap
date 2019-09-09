@@ -183,7 +183,7 @@ Feature: When the moodle theme is set to Snap, students see meta data against co
     And I log in as "student1"
     And I am on "Course 1" course homepage
     And I follow "Topic 1"
-    And I click on "//a[@class='mod-link']//span[text()='Test assignment name']" "xpath_element"
+    And I click on "//a[@class='mod-link']//p[text()='Test assignment name']" "xpath_element"
     And I press "Add submission"
     And I set the following fields to these values:
       | Online text | I'm the student1 submission |
@@ -192,7 +192,7 @@ Feature: When the moodle theme is set to Snap, students see meta data against co
     And I log in as "student2"
     And I am on "Course 1" course homepage
     And I follow "Topic 1"
-    And I click on "//a[@class='mod-link']//span[text()='Test assignment name']" "xpath_element"
+    And I click on "//a[@class='mod-link']//p[text()='Test assignment name']" "xpath_element"
     When I press "Add submission"
     And I set the following fields to these values:
       | Online text | I'm the student2 submission |
@@ -201,7 +201,7 @@ Feature: When the moodle theme is set to Snap, students see meta data against co
     And I log in as "teacher1"
     And I am on "Course 1" course homepage
     And I follow "Topic 1"
-    And I click on "//a[@class='mod-link']//span[text()='Test assignment name']" "xpath_element"
+    And I click on "//a[@class='mod-link']//p[text()='Test assignment name']" "xpath_element"
     And I click on "#admin-menu-trigger" "css_element"
     And I navigate to "View all submissions" in current page administration
     And I click on "Grade" "link" in the "Student 1" "table_row"

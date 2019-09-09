@@ -639,7 +639,6 @@ li.section:focus {
         .snap-asset-link {
             font-size: 1em;
             margin: 0;
-            padding: 0.5em 0;
             @include alakazam;
 
             // The link itself.
@@ -834,8 +833,48 @@ li.section:focus {
         margin-top: 0;
     }
 
+    /* mixin for multiline */
+    @mixin multiLineEllipsis($lineHeight: 1.2em, $lineCount: 1, $bgColor: white) {
+        overflow: hidden;
+        position: relative;
+        line-height: $lineHeight;
+        max-height: $lineHeight * $lineCount;
+        padding-right: 1em;
+        &:before {
+            content: '...';
+            position: absolute;
+            right: 0;
+            bottom: 0;
+        }
+        &:after {
+            content: '';
+            position: absolute;
+            right: 0;
+            width: 1em;
+            height: 1em;
+            margin-top: 0.2em;
+            background: $bgColor;
+        }
+    }
+
     .snap-asset-link {
         font-size: 1em;
+        a.mod-link {
+            cursor: pointer;
+            p.instancename {
+                @include multiLineEllipsis($lineHeight: 1.2em, $lineCount: 2, $bgColor: white);
+            }
+        }
+    }
+
+    div.contentafterlink div.no-overflow {
+        max-height: 4.2em;
+        overflow: hidden;
+        pointer-events: none;
+        p {
+            word-break: break-all;
+            @include multiLineEllipsis($lineHeight: 1.2em, $lineCount: 3, $bgColor: white);
+        }
     }
 }
 
@@ -860,9 +899,22 @@ body.snap-resource-card li.snap-resource {
     // Resource cards are clickable with data-href, so add cursor pointer.
     .asset-wrapper {
         @include clearfix;
-        cursor: pointer;
-        .snap-assettype {
+        .snap-header-card {
             padding-bottom: 1.5em;
+        }
+        .snap-assettype {
+            display: inline-block;
+            width: 60%;
+            height: 100%;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            pointer-events: none;
+        }
+        .snap-header-card-icons {
+            display: inline-block;
+            width: 40%;
+            height: 100%;
         }
         .snap-asset-actions {
             display: flex;
@@ -875,6 +927,7 @@ body.snap-resource-card li.snap-resource {
 
     .contentafterlink {
         font-size: small;
+        padding-top: 0.5em;
     }
 
     &.snap-mime-document,
@@ -977,24 +1030,17 @@ body.snap-resource-card li.snap-resource {
 // Modify Snap resources cards content and title to have a scrollbar on it.
 body.snap-resource-card {
     li.snap-resource.snap-resource-long {
-        height: 13.5em;
-        .asset-wrapper {
-            .snap-asset-content {
-                max-height: 8em;
-                overflow-y: hidden;
-                padding-right: 0.6em;
-                overflow-wrap: break-word;
-                &:hover {
-                    overflow-y: scroll;
-                }
-                h4.snap-asset-link {
-                    padding: 0.2em 0;
-                }
-            }
-            .snap-assettype {
-                padding-bottom: 1em;
-            }
-
+        height: 19.5em;
+    }
+    li.snap-resource.snap-resource-long.modtype_url,
+    li.snap-resource.snap-resource-long.modtype_folder,
+    li.snap-resource.snap-resource-long.modtype_resource,
+    li.snap-resource.snap-resource-long.modtype_imscp,
+    li.snap-resource.snap-resource-long.modtype_lightboxgallery,
+    li.snap-resource.snap-resource-long.modtype_scorm {
+        div.contentafterlink div.no-overflow img.img-responsive.atto_image_button_text-bottom,
+        div.mediaplugin.mediaplugin_videojs {
+            display: none;
         }
     }
 }
@@ -1239,6 +1285,7 @@ body.snap-resource-card {
 .snap-asset-meta {
     clear: both;
     padding: 0;
+    pointer-events: none;
 }
 
 // Activity data - e.g. Due date & Group info
