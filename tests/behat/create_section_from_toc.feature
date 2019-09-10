@@ -51,9 +51,13 @@ Feature: In the Snap theme, within a course, editing teachers can create a new s
       | student1 | course_social | student        |
 
   @javascript
-  Scenario: For editing teachers, ensure new section creation is available and works for topic courses but
+  Scenario Outline: For editing teachers, ensure new section creation is available and works for topic courses but
     not single activity or social course formats.
-  Given I log in as "teacher1"
+  Given I log in as "admin"
+  And the following config values are set as admin:
+    | coursepartialrender | <Option> | theme_snap |
+  And I log out
+  Then I log in as "teacher1"
     And I create a new section in course "course_topics"
    Then I should see "New section title" in the "#course-toc" "css_element"
 
@@ -68,6 +72,10 @@ Feature: In the Snap theme, within a course, editing teachers can create a new s
     And I log in as "student1"
     And I am on the course main page for "course_topics"
    Then I should see "New section title" in the "#course-toc" "css_element"
+  Examples:
+    | Option     |
+    | 0          |
+    | 1          |
 
   @javascript
   Scenario: For non editing teachers and students, ensure new section creation is not available for any course formats.
@@ -93,8 +101,12 @@ Feature: In the Snap theme, within a course, editing teachers can create a new s
 
 
    @javascript
-   Scenario: For editing teachers, ensure new section creation is available for week format and creates the section with a default title.
-   Given I log in as "teacher1"
+  Scenario Outline: For editing teachers, ensure new section creation is available for week format and creates the section with a default title.
+   Given I log in as "admin"
+   And the following config values are set as admin:
+     | coursepartialrender | <Option> | theme_snap |
+   And I log out
+    Then I log in as "teacher1"
     Then I am on the course main page for "course_weeks"
      And I follow "Create a new section"
     Then I should see "Title: 8 April - 14 April"
@@ -103,3 +115,7 @@ Feature: In the Snap theme, within a course, editing teachers can create a new s
      And I log in as "student1"
      And I am on the course main page for "course_weeks"
     Then I should see "8 April - 14 April" in the "#course-toc" "css_element"
+   Examples:
+     | Option     |
+     | 0          |
+     | 1          |

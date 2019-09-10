@@ -43,8 +43,10 @@ Feature: When the moodle theme is set to Snap, teachers can delete course resour
       | assign   | Acceptance test site | assign2  | Test assignment2 | Test assignment description 2 | 1       | 1                                   |
 
   @javascript
-  Scenario: In read mode, on front page, admin can cancel / confirm delete activity.
+  Scenario Outline: In read mode, on front page, admin can cancel / confirm delete activity.
     Given I log in as "admin"
+    And the following config values are set as admin:
+      | coursepartialrender | <Option> | theme_snap |
     And I am on site homepage
     And I click on "#admin-menu-trigger" "css_element"
     And I navigate to "Edit settings" in current page administration
@@ -66,10 +68,18 @@ Feature: When the moodle theme is set to Snap, teachers can delete course resour
     # This is to test that the deletion persists.
     And I reload the page
     Then I should not see "Test assignment1"
+  Examples:
+    | Option     |
+    | 0          |
+    | 1          |
 
   @javascript
-  Scenario: In read mode, on course, teacher can cancel / confirm delete activity.
-    Given I log in as "teacher1"
+  Scenario Outline: In read mode, on course, teacher can cancel / confirm delete activity.
+    Given I log in as "admin"
+    And the following config values are set as admin:
+      | coursepartialrender | <Option> | theme_snap |
+    And I log out
+    Then I log in as "teacher1"
     And I am on the course main page for "C1"
     And I follow "Topic 1"
     Then "#section-1" "css_element" should exist
@@ -89,11 +99,23 @@ Feature: When the moodle theme is set to Snap, teachers can delete course resour
     And I reload the page
     Then I should not see "Test assignment1" in the "#section-1" "css_element"
     And I cannot see "Test assignment1" in course asset search
+    Examples:
+    | Option     |
+    | 0          |
+    | 1          |
 
   @javascript
-  Scenario: Student cannot delete activity.
-    Given I log in as "student1"
+  Scenario Outline: Student cannot delete activity.
+    Given I log in as "admin"
+    And the following config values are set as admin:
+      | coursepartialrender | <Option> | theme_snap |
+    And I log out
+    Then I log in as "student1"
     And I am on the course main page for "C1"
     And I follow "Topic 1"
     Then ".snap-activity[data-type='Assignment'] span.snap-edit-asset-more" "css_element" should not exist
     And ".snap-activity[data-type='Assignment'] a.js_snap_delete" "css_element" should not exist
+  Examples:
+    | Option     |
+    | 0          |
+    | 1          |

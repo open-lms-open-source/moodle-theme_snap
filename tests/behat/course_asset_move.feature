@@ -50,17 +50,27 @@ Feature: When the moodle theme is set to Snap, teachers can move course resource
       | assign   | Acceptance test site | assign2  | Test assignment2 | Test assignment description 2 | 1       | 1                                   |
 
   @javascript
-  Scenario: In read mode, on front page, admin moves activity.
+  Scenario Outline: In read mode, on front page, admin moves activity.
     Given I log in as "admin"
+    And the following config values are set as admin:
+      | coursepartialrender | <Option> | theme_snap |
     And I am on site homepage
     And I click on ".snap-activity.modtype_assign .snap-asset-move img[title='Move \"Test assignment1\"']" "css_element"
     Then I should see "Moving \"Test assignment1\""
     And I click on "#region-main .sitetopic ul.section li.snap-drop.asset-drop div.asset-wrapper" "css_element"
     Then ".snap-activity.modtype_assign" "css_element" should appear after ".snap-activity.modtype_assign .snap-asset-move img[title='Move \"Test assignment2\"']" "css_element"
+    Examples:
+      | Option     |
+      | 0          |
+      | 1          |
 
   @javascript
-  Scenario: In read mode, on course, teacher moves activity.
-    Given I log in as "teacher1"
+  Scenario Outline: In read mode, on course, teacher moves activity.
+    Given I log in as "admin"
+    And the following config values are set as admin:
+      | coursepartialrender | <Option> | theme_snap |
+    And I log out
+    Then I log in as "teacher1"
     And I am on the course main page for "C1"
     And I follow "Topic 1"
     Then "#section-1" "css_element" should exist
@@ -68,10 +78,18 @@ Feature: When the moodle theme is set to Snap, teachers can move course resource
     Then I should see "Moving \"Test assignment1\""
     And I click on "li#section-1 li.snap-drop.asset-drop div.asset-wrapper" "css_element"
     Then ".snap-activity.modtype_assign" "css_element" should appear after ".snap-activity.modtype_assign .snap-asset-move img[title='Move \"Test assignment2\"']" "css_element"
+    Examples:
+      | Option     |
+      | 0          |
+      | 1          |
 
   @javascript
-  Scenario: In read mode, on course, teacher moves activity to a different section.
-    Given I log in as "teacher1"
+  Scenario Outline: In read mode, on course, teacher moves activity to a different section.
+  Given I log in as "admin"
+    And the following config values are set as admin:
+      | coursepartialrender | <Option> | theme_snap |
+    And I log out
+    Then I log in as "teacher1"
     And I am on the course main page for "C1"
     And I follow "Topic 1"
     Then "#section-1" "css_element" should exist
@@ -80,10 +98,18 @@ Feature: When the moodle theme is set to Snap, teachers can move course resource
     And I follow "Topic 2"
     And I click on "li#section-2 li.snap-drop.asset-drop div.asset-wrapper" "css_element"
     Then "li#section-2 .snap-activity.modtype_assign" "css_element" should appear before "li.snap-drop.asset-drop" "css_element"
+  Examples:
+  | Option     |
+  | 0          |
+  | 1          |
 
   @javascript
-  Scenario: In read mode, on course, teacher moves two activities to a different section.
-    Given I log in as "teacher1"
+  Scenario Outline: In read mode, on course, teacher moves two activities to a different section.
+    Given I log in as "admin"
+    And the following config values are set as admin:
+      | coursepartialrender | <Option> | theme_snap |
+    And I log out
+    Then I log in as "teacher1"
     And I am on the course main page for "C1"
     And I follow "Topic 1"
     Then "#section-1" "css_element" should exist
@@ -95,10 +121,22 @@ Feature: When the moodle theme is set to Snap, teachers can move course resource
     And I click on "li#section-2 li.snap-drop.asset-drop div.asset-wrapper" "css_element"
     Then "li#section-2 .snap-activity.modtype_assign" "css_element" should appear before "li.snap-drop.asset-drop" "css_element"
     And "li#section-2 .snap-activity.modtype_assign .snap-asset-move img[title='Move \"Test assignment1\"']" "css_element" should appear before "li#section-2 .snap-activity.modtype_assign .snap-asset-move img[title='Move \"Test assignment2\"']" "css_element"
+  Examples:
+  | Option     |
+  | 0          |
+  | 1          |
 
   @javascript
-  Scenario: Student cannot move activity.
-    Given I log in as "student1"
+  Scenario Outline: Student cannot move activity.
+    Given I log in as "admin"
+    And the following config values are set as admin:
+      | coursepartialrender | <Option> | theme_snap |
+    And I log out
+    Then I log in as "student1"
     And I am on the course main page for "C1"
     And I follow "Topic 1"
     Then ".snap-activity.modtype_assign .js-snap-asset-move" "css_element" should not exist
+    Examples:
+  | Option     |
+  | 0          |
+  | 1          |

@@ -625,6 +625,8 @@ define(['jquery', 'core/log', 'core/ajax', 'core/str', 'core/templates', 'core/n
                         }
                         $('#section-' + key + ' .content .sectionname').html(chapterTitle);
                         loadedSections.push(key);
+                        // Uodate the attribute.
+                        $(obj).find('a.section-modchooser-link').attr('data-section', key);
                     });
                     sectionsProcess = loadedSections;
                 } else {

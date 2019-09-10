@@ -44,8 +44,10 @@ Feature: Manual completion updates page wihout reload.
 
   @javascript
   # Done as one scenario for best performance.
-  Scenario: Assignment module is manually marked complete and releases restricted activities / sections.
+  Scenario Outline: Assignment module is manually marked complete and releases restricted activities / sections.
     Given I log in as "admin"
+    And the following config values are set as admin:
+      | coursepartialrender | <Option> | theme_snap |
     And I am on the course main page for "C1"
     # Restrict the second assign module to only be accessible after the first assign module is marked complete.
     And I restrict course asset "Test assignment2" by completion of "Test assignment1"
@@ -106,3 +108,7 @@ Feature: Manual completion updates page wihout reload.
     Then I should see "Conditional" in TOC item 1
     When I follow "Topic 1"
     Then I should see availability info "Not available unless: The activity Test assignment2 is marked complete"
+    Examples:
+      | Option     |
+      | 0          |
+      | 1          |
