@@ -623,6 +623,9 @@ define(['jquery', 'core/log', 'theme_snap/headroom', 'theme_snap/util', 'theme_s
                     // Make sure that the blocks are always within page-content for assig view page.
                     $('#page-mod-assign-view #page-content').append($('#moodle-blocks'));
 
+                    // Hide p tags that has multimedia to prevent unnecessary blank spaces in the card content.
+                    $('li.snap-resource.snap-resource-long div.contentafterlink div.no-overflow p:has(img)').css('display', 'none');
+
                     // Add a class to the body to show js is loaded.
                     $('body').addClass('snap-js-loaded');
                     // Apply progressbar.js for circluar progress display.

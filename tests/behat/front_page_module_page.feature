@@ -42,7 +42,7 @@ Feature: Open page (front page) module inline
      And I log in as "admin"
      And I am on site homepage
      And I should not see "page content1"
-     And I follow "Read more&nbsp;»"
+     And I click on ".contentafterlink .summary-text a" "css_element"
      And I should not see an error dialog
      And I wait until ".pagemod-content[data-content-loaded=\"1\"]" "css_element" is visible
      # The above step basically waits for the page content to load up.
@@ -69,14 +69,14 @@ Feature: Open page (front page) module inline
     And I am on site homepage
    Then I should not see "Page restricted intro"
     And I should see availability info "Not available unless: The activity Page completion is marked complete"
-    And I follow visible link "Read more&nbsp;»"
+    And I click on ".contentafterlink .summary-text a" "css_element"
     And I should not see an error dialog
     And I wait until ".pagemod-content[data-content-loaded=\"1\"]" "css_element" is visible
     # The above step basically waits for the page module content to load up.
    Then I should see "Page completion content"
     And I should not see availability info "Not available unless: The activity Page completion is marked complete"
     And I should see "Page restricted"
-    And I follow visible link "Read more&nbsp;»"
+    And I click on ".section.img-text li:nth-child(2) .contentafterlink .summary-text a" "css_element"
    Then I should see " Page restricted content"
 
   @javascript

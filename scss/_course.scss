@@ -833,48 +833,8 @@ li.section:focus {
         margin-top: 0;
     }
 
-    /* mixin for multiline */
-    @mixin multiLineEllipsis($lineHeight: 1.2em, $lineCount: 1, $bgColor: white) {
-        overflow: hidden;
-        position: relative;
-        line-height: $lineHeight;
-        max-height: $lineHeight * $lineCount;
-        padding-right: 1em;
-        &:before {
-            content: '...';
-            position: absolute;
-            right: 0;
-            bottom: 0;
-        }
-        &:after {
-            content: '';
-            position: absolute;
-            right: 0;
-            width: 1em;
-            height: 1em;
-            margin-top: 0.2em;
-            background: $bgColor;
-        }
-    }
-
     .snap-asset-link {
         font-size: 1em;
-        a.mod-link {
-            cursor: pointer;
-            p.instancename {
-                @include multiLineEllipsis($lineHeight: 1.2em, $lineCount: 2, $bgColor: white);
-            }
-        }
-    }
-
-    div.contentafterlink div.no-overflow {
-        max-height: 4.2em;
-        overflow: hidden;
-        pointer-events: none;
-        p {
-            word-break: break-all;
-            @include multiLineEllipsis($lineHeight: 1.2em, $lineCount: 3, $bgColor: white);
-        }
     }
 }
 
@@ -909,7 +869,6 @@ body.snap-resource-card li.snap-resource {
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
-            pointer-events: none;
         }
         .snap-header-card-icons {
             display: inline-block;
@@ -1027,20 +986,83 @@ body.snap-resource-card li.snap-resource {
     }
 }
 
-// Modify Snap resources cards content and title to have a scrollbar on it.
 body.snap-resource-card {
     li.snap-resource.snap-resource-long {
-        height: 19.5em;
+        height: 21em;
     }
+    // Hide multimedia content on resource cards description.
     li.snap-resource.snap-resource-long.modtype_url,
     li.snap-resource.snap-resource-long.modtype_folder,
     li.snap-resource.snap-resource-long.modtype_resource,
     li.snap-resource.snap-resource-long.modtype_imscp,
     li.snap-resource.snap-resource-long.modtype_lightboxgallery,
     li.snap-resource.snap-resource-long.modtype_scorm {
+        div.contentafterlink div.no-overflow img,
         div.contentafterlink div.no-overflow img.img-responsive.atto_image_button_text-bottom,
         div.mediaplugin.mediaplugin_videojs {
             display: none;
+        }
+    }
+
+    // Modify resource card structure to have ellipsis in the title and a gradient in the description.
+    .snap-resource-long {
+        /* mixin for multiline */
+        @mixin multiLineEllipsis($lineHeight: 1.25em, $lineCount: 1, $bgColor: white) {
+            overflow: hidden;
+            position: relative;
+            line-height: $lineHeight;
+            padding-right: 1em;
+            &:before {
+                content: '...';
+                position: absolute;
+                right: 0;
+                bottom: 0;
+            }
+            &:after {
+                content: '';
+                position: absolute;
+                right: 0;
+                width: 1em;
+                height: 1em;
+                margin-top: 0.2em;
+                background: $bgColor;
+            }
+        }
+
+        .snap-asset-link {
+            a.mod-link {
+                cursor: pointer;
+                p.instancename {
+                    max-height: 2.5em;
+                    @include multiLineEllipsis($lineHeight: 1.25em, $lineCount: 2, $bgColor: white);
+                }
+            }
+        }
+
+        div.contentafterlink {
+            .no-overflow {
+                word-wrap: break-word;
+                max-height: 4.2em;
+                overflow: hidden;
+                position: relative;
+            }
+            p.snap-resource-card-fadeout {
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                width: 100%;
+                text-align: center;
+                margin: 0;
+                color: transparent;
+                // The blank space that achieve the transparent gradient needs to be unselectable.
+                user-select: none; /* supported by Chrome and Opera */
+                -webkit-user-select: none; /* Safari */
+                -khtml-user-select: none; /* Konqueror HTML */
+                -moz-user-select: none; /* Firefox */
+                -ms-user-select: none; /* Internet Explorer/Edge */
+                /* "transparent" only works here because == rgba(0,0,0,0) */
+                background-image: linear-gradient(to bottom, transparent, white);
+            }
         }
     }
 }
@@ -1285,7 +1307,6 @@ body.snap-resource-card {
 .snap-asset-meta {
     clear: both;
     padding: 0;
-    pointer-events: none;
 }
 
 // Activity data - e.g. Due date & Group info
