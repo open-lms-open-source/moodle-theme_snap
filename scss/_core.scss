@@ -3951,3 +3951,25 @@ section#region-main {
 #page-admin-roles-check #userselector_options.collapsibleregion {
     overflow: visible;
 }
+
+#page-local-pld-view #actionEmailEditor form .form-group {
+    margin: auto;
+}
+
+#page-local-pld-view #txtActionEmailBodyBtn {
+    float: right !important;
+}
+
+#page-local-pld-view .ft {
+    justify-content: end !important;
+} .button-group button:nth-child(2) {
+      margin-left: 0.313em;
+  }
+
+#page-local-pld-view .moodle-dialogue-base .moodle-dialogue {
+    z-index: 2000 !important;
+}
+
+#page-local-pld-view .mform .form-inline .form-control, .mform .form-inline .custom-select #id_config_text {
+    width: 56em !important;
+}
