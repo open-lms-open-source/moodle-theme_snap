@@ -417,16 +417,8 @@ a[aria-controls="snap-collapse-help"] {
 }
 
 // Hide checkbox useless with this course format.
-#page-course-editsection.format-topics {
-    .snap-form-required {
-        .form-inline[data-fieldtype="defaultcustom"] {
-            .fdefaultcustom {
-                .form-check-inline {
-                    display: none;
-                }
-            }
-        }
-    }
+#page-course-editsection.format-topics .fdefaultcustom .form-check-inline{
+    display: none;
 }
 
 // Allow for mod edit advanced options to appear at the side.
