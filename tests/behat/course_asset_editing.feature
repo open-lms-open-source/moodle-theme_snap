@@ -105,8 +105,12 @@ Feature: When the moodle theme is set to Snap, teachers edit assets without ente
   | 1          |
 
   @javascript
-  Scenario: In read mode, teacher hides then shows resource.
-    Given I log in as "teacher1"
+  Scenario Outline: In read mode, teacher hides then shows resource.
+    Given I log in as "admin"
+    And the following config values are set as admin:
+      | coursepartialrender | <Option> | theme_snap |
+    And I log out
+    Then I log in as "teacher1"
     And I am on the course main page for "C1"
     And I follow "Topic 1"
     Then "#section-1" "css_element" should exist
@@ -127,6 +131,10 @@ Feature: When the moodle theme is set to Snap, teachers edit assets without ente
     And I reload the page
     And ".snap-resource[data-type='text'].draft" "css_element" should not exist
     Then I wait until ".snap-activity[data-type='Assignment'].draft" "css_element" does not exist
+  Examples:
+  | Option     |
+  | 0          |
+  | 1          |
 
   @javascript
   Scenario Outline: In read mode, teacher duplicates activity.
@@ -155,8 +163,12 @@ Feature: When the moodle theme is set to Snap, teachers edit assets without ente
   | 1          |
 
   @javascript
-  Scenario: In read mode, teacher duplicates resource.
-    Given I log in as "teacher1"
+  Scenario Outline: In read mode, teacher duplicates resource.
+    Given I log in as "admin"
+    And the following config values are set as admin:
+      | coursepartialrender | <Option> | theme_snap |
+    And I log out
+    Then I log in as "teacher1"
     And I am on the course main page for "C1"
     And I follow "Topic 1"
    Then "#section-1" "css_element" should exist
@@ -170,3 +182,7 @@ Feature: When the moodle theme is set to Snap, teachers edit assets without ente
         # This is to test that the duplication persists.
     And I reload the page
    Then ".snap-resource[data-type='text'] + .snap-resource[data-type='text']" "css_element" should exist
+    Examples:
+      | Option     |
+      | 0          |
+      | 1          |
