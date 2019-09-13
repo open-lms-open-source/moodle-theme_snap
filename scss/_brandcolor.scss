@@ -29,6 +29,12 @@ $light-grey-btn: #cccccc;
 $lighter-grey-btn: #e6e6e6;
 
 .theme-snap {
+    #user-notifications {
+        padding-top: 7rem;
+        display: block;
+        overflow: hidden;
+    }
+
     .badge-primary {
         background-color: $brand-primary !important;
     }
