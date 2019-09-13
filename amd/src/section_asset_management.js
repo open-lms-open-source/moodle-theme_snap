@@ -53,9 +53,15 @@ define(['jquery', 'core/log', 'core/ajax', 'core/str', 'core/templates', 'core/n
 
         /**
          * Module html caching.
-         * @type object|null
+         * @type {object|null}
          */
         var moduleCache = null;
+
+        /**
+         * Progress caching.
+         * @type {Array|null}
+         */
+        var progressCache = null;
 
         /**
          * Sets observers for the TOC elements.
@@ -826,6 +832,7 @@ define(['jquery', 'core/log', 'core/ajax', 'core/str', 'core/templates', 'core/n
 
                                     // Reset module cache.
                                     moduleCache = null;
+                                    progressCache = null;
                                     if (action === 'delete') {
                                         // Remove asset from DOM.
                                         assetEl.remove();
@@ -1057,7 +1064,7 @@ define(['jquery', 'core/log', 'core/ajax', 'core/str', 'core/templates', 'core/n
                     var toggle, loadModules = true;
                     if (action === 'visibility') {
                         toggle = $(this).hasClass('snap-hide') ? 0 : 1;
-                        if (moduleCache && moduleCache.length > 0) {
+                        if (moduleCache && moduleCache.length > 0 && progressCache && progressCache.length > 0) {
                             loadModules = false;
                         }
                     } else {
@@ -1106,15 +1113,31 @@ define(['jquery', 'core/log', 'core/ajax', 'core/str', 'core/templates', 'core/n
                             $(actionSelector).replaceWith(result);
                             $(actionSelector).focus();
                             // Update TOC.
-                            if (!loadModules && moduleCache && moduleCache.length > 0 && response.toc.modules.length === 0) {
-                                // Modules not loaded on request. Replacing them on the toc.
-                                response.toc.modules = moduleCache;
+                            if (!loadModules) {
+                                if (moduleCache && moduleCache.length > 0 && response.toc.modules.length === 0) {
+                                    // Modules not loaded on request. Replacing them on the toc.
+                                    response.toc.modules = moduleCache;
+                                }
+
+                                if (progressCache && progressCache.length > 0) {
+                                    var progressCacheCopy = progressCache.slice(0);
+                                    $.each(response.toc.chapters.chapters, function(index) {
+                                        response.toc.chapters.chapters[index].progress = progressCacheCopy.shift();
+                                    });
+                                }
                             }
 
-                            // Caching modules for future use.
-                            if (response.toc.modules) {
+                            if (loadModules) {
+                                // Caching modules for future use.
                                 moduleCache = response.toc.modules;
+
+                                // Caching progress for future use.
+                                progressCache = [];
+                                $.each(response.toc.chapters.chapters, function(index, value) {
+                                    progressCache.push(value.progress);
+                                });
                             }
+
                             return templates.render('theme_snap/course_toc', response.toc);
                         }).then(function(result) {
                             $('#course-toc').html($(result).html());
