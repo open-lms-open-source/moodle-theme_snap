@@ -81,6 +81,8 @@ class course_toc implements \renderable, \templatable{
      */
     protected $numsections;
 
+    private $loadmodules = true;
+
     /**
      * Constructor.
      * @param null|int $course
@@ -93,6 +95,8 @@ class course_toc implements \renderable, \templatable{
         if (empty($course)) {
             $course = $COURSE;
         }
+
+        $this->loadmodules = $loadmodules;
 
         $supportedformats = ['weeks', 'topics'];
         if (!in_array($course->format, $supportedformats)) {
@@ -119,7 +123,7 @@ class course_toc implements \renderable, \templatable{
             $PAGE->set_context(context_course::instance($this->course->id));
         }
 
-        if ($loadmodules) {
+        if ($this->loadmodules) {
             $this->set_modules();
         }
         $this->set_chapters();
@@ -235,7 +239,19 @@ class course_toc implements \renderable, \templatable{
                 $chapter->url = '#section-'.$section;
             }
             $chapter->section = $section;
-            $chapter->progress = new course_toc_progress($this->course, $thissection);
+
+            // Empty default progress.
+            $chapter->progress = (object) [
+                "progress" => (object) [
+                    "complete" => null,
+                    "total" => null,
+                ],
+                "completed" => null,
+                "pixcompleted" => null,
+            ];
+            if ($this->loadmodules) {
+                $chapter->progress = new course_toc_progress($this->course, $thissection);
+            }
             $this->chapters->chapters[] = $chapter;
         }
     }

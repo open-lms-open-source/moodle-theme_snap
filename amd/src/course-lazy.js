@@ -221,7 +221,14 @@ define(
                         var section = sections.attr('id').split('section-')[1];
                         if (self.courseConfig.toctype == 'top' && self.courseConfig.format == 'topics' && section > 0) {
                             var title = sections.find('.sectionname').text();
-                            sections.find('.sectionname').text(section + '. ' + title);
+                            var elements = $('.chapter-title');
+                            var tmpid = 0;
+                            $.each(elements, function(key, element) {
+                                if ($(element).attr('section-number') == section) {
+                                    tmpid = key;
+                                }
+                            });
+                            sections.find('.sectionname').text(tmpid + '. ' + title);
                         }
                     }
 

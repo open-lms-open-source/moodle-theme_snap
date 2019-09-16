@@ -53,9 +53,15 @@ define(['jquery', 'core/log', 'core/ajax', 'core/str', 'core/templates', 'core/n
 
         /**
          * Module html caching.
-         * @type object|null
+         * @type {object|null}
          */
         var moduleCache = null;
+
+        /**
+         * Progress caching.
+         * @type {Array|null}
+         */
+        var progressCache = null;
 
         /**
          * Sets observers for the TOC elements.
@@ -199,10 +205,10 @@ define(['jquery', 'core/log', 'core/ajax', 'core/str', 'core/templates', 'core/n
                 });
 
                 if (closest > section) {
-                    anchor.find('#section-' + closest).before(tempnode);
+                    anchor.find('#section-' + closest).before(tempnode.find('li[id^="section-"]'));
 
                 } else {
-                    anchor.find('#section-' + closest).after(tempnode);
+                    anchor.find('#section-' + closest).after(tempnode.find('li[id^="section-"]'));
 
                 }
             } else {
@@ -219,7 +225,15 @@ define(['jquery', 'core/log', 'core/ajax', 'core/str', 'core/templates', 'core/n
             $(id).addClass('state-visible');
             if (self.courseConfig.toctype == 'top' && self.courseConfig.format == 'topics' && section > 0) {
                 var title = $(id).find('.sectionname').text();
-                $(id).find('.sectionname').text(section + '. ' + title);
+                var elements = $('.chapter-title');
+                var tmpid = 0;
+                // Find the right toc element.
+                $.each(elements, function(key, element) {
+                    if ($(element).attr('href').split('#section-')[1] == section) {
+                        tmpid = key;
+                    }
+                });
+                $(id).find('.sectionname').text(tmpid + '. ' + title);
             }
             // Leave all course sections as they were.
             sections.show();
@@ -267,7 +281,8 @@ define(['jquery', 'core/log', 'core/ajax', 'core/str', 'core/templates', 'core/n
             }
 
             $('#course-toc #chapters li').removeClass('snap-visible-section');
-            $('#course-toc .chapter-title[section-number="'+ section +'"]').parent('li').addClass('snap-visible-section');
+            // Set link as current.
+            $('#course-toc .chapter-title[href="#section-'+ section +'"]').parent('li').addClass('snap-visible-section');
             $(id).find('ul.section').append(
                 '<li class="snap-drop asset-drop">' +
                 '<div class="asset-wrapper">' +
@@ -605,16 +620,20 @@ define(['jquery', 'core/log', 'core/ajax', 'core/str', 'core/templates', 'core/n
             /**
              * Update sections.
              */
-            var updateSections = function(current, target) {
+            var updateSections = function(current, target, predeleteSections, deletedSection) {
                 if (courseLib.courseConfig.partialrender) {
+                    var loadedSections = [];
                     var sections = [];
                     if (current != 0 && target != 0) {
                         $.each($('#course-toc #chapters > li a'), function (idx, obj) {
                             sections.push($(obj).attr('href').split('#section-')[1]);
                         });
+                        var newOrder = calculateSections(sections, current, target);
+                    } else {
+                        sections = predeleteSections;
+                        predeleteSections.splice(deletedSection, 1);
+                        var newOrder = predeleteSections;
                     }
-                    var newOrder = calculateSections(sections, current, target);
-                    var loadedSections = [];
                     $.each($('#region-main .course-content > ul li.section'), function(idx, obj) {
                         var value = $(obj).attr('id').split('section-')[1];
                         var key = newOrder.indexOf(value);
@@ -696,7 +715,10 @@ define(['jquery', 'core/log', 'core/ajax', 'core/str', 'core/templates', 'core/n
                             args: params
                         }
                     ], true, true);
-
+                    var sections = [];
+                    $.each($('#course-toc #chapters > li a'), function (idx, obj) {
+                        sections.push($(obj).attr('href').split('#section-')[1]);
+                    });
                     // Handle ajax promises.
                     ajaxPromises[0]
                         .done(function(response) {
@@ -707,13 +729,29 @@ define(['jquery', 'core/log', 'core/ajax', 'core/str', 'core/templates', 'core/n
                                     $(document).trigger('snapTOCReplaced');
                                     // Remove section from DOM.
                                     section.remove();
-                                    updateSections(0, 0);
-
+                                    updateSections(0, 0, sections, sectionNum);
                                     // Current section no longer exists so change location to previous section.
-                                    if (sectionNum >= $('.course-content > ul li.section').length) {
-                                        location.hash = 'section-' + (sectionNum - 1);
+                                    if (self.courseConfig.partialrender) {
+                                        var chapters = $('.chapter-title');
+                                        var ids = [];
+                                        $.each(chapters, function (key, element) {
+                                            ids.push($(element).attr('href').split('#section-')[1]);
+                                        });
+                                        var closest = ids.reduce(function(prev, curr) {
+                                            return (Math.abs(curr - sectionNum) < Math.abs(prev - sectionNum) ? curr : prev);
+                                        });
+                                        location.hash = 'section-' + closest;
+                                        if ($('li#section-' + closest).length == 1) {
+                                            courseLib.showSection();
+                                        } else {
+                                            getSection(closest, 0);
+                                        }
+                                    } else {
+                                        if (sectionNum >= $('.course-content > ul li.section').length) {
+                                            location.hash = 'section-' + (sectionNum - 1);
+                                        }
+                                        courseLib.showSection();
                                     }
-                                    courseLib.showSection();
                                     // We can't complete the action in the 'always' section because we want it to
                                     // definitely be called after the section is removed from the DOM.
                                     ajaxTracker.complete('section_delete');
@@ -794,6 +832,7 @@ define(['jquery', 'core/log', 'core/ajax', 'core/str', 'core/templates', 'core/n
 
                                     // Reset module cache.
                                     moduleCache = null;
+                                    progressCache = null;
                                     if (action === 'delete') {
                                         // Remove asset from DOM.
                                         assetEl.remove();
@@ -951,7 +990,7 @@ define(['jquery', 'core/log', 'core/ajax', 'core/str', 'core/templates', 'core/n
                                         $('#section-' + domTargetSection).before($('#section-' + currentSection));
 
                                         // Update section ids, next previous links, etc.
-                                        updateSections(currentSection, targetSection);
+                                        updateSections(currentSection, targetSection, [], null);
 
                                         // Navigate to section in its new location.
                                         location.hash = 'section-' + targetSection;
@@ -1025,7 +1064,7 @@ define(['jquery', 'core/log', 'core/ajax', 'core/str', 'core/templates', 'core/n
                     var toggle, loadModules = true;
                     if (action === 'visibility') {
                         toggle = $(this).hasClass('snap-hide') ? 0 : 1;
-                        if (moduleCache && moduleCache.length > 0) {
+                        if (moduleCache && moduleCache.length > 0 && progressCache && progressCache.length > 0) {
                             loadModules = false;
                         }
                     } else {
@@ -1074,15 +1113,31 @@ define(['jquery', 'core/log', 'core/ajax', 'core/str', 'core/templates', 'core/n
                             $(actionSelector).replaceWith(result);
                             $(actionSelector).focus();
                             // Update TOC.
-                            if (!loadModules && moduleCache && moduleCache.length > 0 && response.toc.modules.length === 0) {
-                                // Modules not loaded on request. Replacing them on the toc.
-                                response.toc.modules = moduleCache;
+                            if (!loadModules) {
+                                if (moduleCache && moduleCache.length > 0 && response.toc.modules.length === 0) {
+                                    // Modules not loaded on request. Replacing them on the toc.
+                                    response.toc.modules = moduleCache;
+                                }
+
+                                if (progressCache && progressCache.length > 0) {
+                                    var progressCacheCopy = progressCache.slice(0);
+                                    $.each(response.toc.chapters.chapters, function(index) {
+                                        response.toc.chapters.chapters[index].progress = progressCacheCopy.shift();
+                                    });
+                                }
                             }
 
-                            // Caching modules for future use.
-                            if (response.toc.modules) {
+                            if (loadModules) {
+                                // Caching modules for future use.
                                 moduleCache = response.toc.modules;
+
+                                // Caching progress for future use.
+                                progressCache = [];
+                                $.each(response.toc.chapters.chapters, function(index, value) {
+                                    progressCache.push(value.progress);
+                                });
                             }
+
                             return templates.render('theme_snap/course_toc', response.toc);
                         }).then(function(result) {
                             $('#course-toc').html($(result).html());

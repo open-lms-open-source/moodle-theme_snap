@@ -44,10 +44,8 @@ Feature: With topics format the option "Custom" on editing a section shouldn't b
   Scenario: As a teacher I shouldn't see the option "Custom" on editing a section with topics format.
     Given I log in as "teacher1"
     And I am on the course main page for "C1"
-    Then I should see "Introduction" in the ".section.state-visible" "css_element"
-    And I follow "Edit section"
+    And I click on "#section-0 .summary .edit-summary" "css_element"
     And I should not see "Custom" in the ".snap-form-required .fdefaultcustom .form-check-inline" "css_element"
-    And I am on the course main page for "C2"
-    Then I should see "Introduction" in the ".section.state-visible" "css_element"
-    And I follow "Edit section"
+    And I am on "Course 2" course homepage
+    And I click on "#section-1 .summary .edit-summary" "css_element"
     And I should see "Custom" in the ".snap-form-required .fdefaultcustom .form-check-inline" "css_element"
