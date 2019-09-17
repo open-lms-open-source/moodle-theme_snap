@@ -349,7 +349,7 @@ function theme_snap_get_pre_scss($theme) {
  * @return string
  */
 function theme_snap_output_fragment_section($args) {
-    global $PAGE;
+    global $PAGE, $CFG;
     if (!empty($args['courseid']) && $args['section'] != '') {
         $course = get_course($args['courseid']);
         $PAGE->set_context(\context_course::instance($course->id));
@@ -390,6 +390,13 @@ function theme_snap_output_fragment_section($args) {
                 );
             }
             $html = $formatrenderer->course_section($course, $section, $modinfo);
+            $PAGE->requires->js('/course/dndupload.js');
+            $vars = array(
+                array('courseid' => $course->id,
+                    'maxbytes' => get_max_upload_file_size($CFG->maxbytes, $course->maxbytes),
+                    'showstatus' => true)
+            );
+            $PAGE->requires->js_call_amd('theme_snap/dndupload-lazy', 'init', $vars);
             return $html;
         }
     }
