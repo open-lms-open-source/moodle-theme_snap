@@ -389,11 +389,15 @@ function theme_snap_output_fragment_section($args) {
                     'block_sharing_cart'
                 );
             }
+            $maxbytes = get_max_upload_file_size($CFG->maxbytes, $course->maxbytes);;
+            if (has_capability('moodle/course:ignorefilesizelimits', $PAGE->context)) {
+                $maxbytes = 0;
+            }
             $html = $formatrenderer->course_section($course, $section, $modinfo);
             $PAGE->requires->js('/course/dndupload.js');
             $vars = array(
                 array('courseid' => $course->id,
-                    'maxbytes' => get_max_upload_file_size($CFG->maxbytes, $course->maxbytes),
+                    'maxbytes' => $maxbytes,
                     'showstatus' => true)
             );
             $PAGE->requires->js_call_amd('theme_snap/dndupload-lazy', 'init', $vars);
