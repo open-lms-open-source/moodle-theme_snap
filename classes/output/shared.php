@@ -154,6 +154,10 @@ EOF;
         if (!isset($CFG->additionalhtmlfooter)) {
             $CFG->additionalhtmlfooter = '';
         }
+        $maxbytes = get_max_upload_file_size($CFG->maxbytes, $course->maxbytes);;
+        if (has_capability('moodle/course:ignorefilesizelimits', $PAGE->context)) {
+            $maxbytes = 0;
+        }
         // Note, we have to put the file handlers into the footer instead of passing them into the amd module as an
         // argument. If you pass large amounts of data into the amd arguments then it throws a debug error.
         $CFG->additionalhtmlfooter .= $script;
@@ -179,7 +183,7 @@ EOF;
         ], 'mod_label');
         $vars = array(
             array('courseid' => $course->id,
-                'maxbytes' => get_max_upload_file_size($CFG->maxbytes, $course->maxbytes),
+                'maxbytes' => $maxbytes,
                 'showstatus' => $showstatus)
         );
 
