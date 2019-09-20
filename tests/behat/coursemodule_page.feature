@@ -51,7 +51,7 @@ Feature: Open page module inline
     Then I log in as "student1"
     And I am on the course main page for "C1"
     And I should not see "page content1"
-    And I follow "Read more&nbsp;»"
+    And I click on "li .contentafterlink .summary-text a" "css_element"
     And I wait until ".pagemod-content[data-content-loaded=\"1\"]" "css_element" is visible
     # The above step basically waits for the page content to load up.
     And I should see "page content1"
@@ -100,7 +100,7 @@ Feature: Open page module inline
     # Make sure topic 1 show section availability info.
     Then I should see availability info "Not available unless: The activity Page completion is marked complete"
     And I follow "Introduction"
-    And I follow visible link "Read more&nbsp;»"
+    And I click on ".section.img-text li:nth-child(1) .contentafterlink .summary-text a" "css_element"
     And I wait until "#section-0 .pagemod-content[data-content-loaded=\"1\"]" "css_element" is visible
     # The above step basically waits for the page module content to load up.
     Then I should see "Page completion content"
@@ -119,7 +119,7 @@ Feature: Open page module inline
     Then I should see availability info "Not available unless: The activity Page completion 2 is marked complete"
     And I follow "Topic 1"
     And "span.autocompletion img[title='Not completed: Page completion 2']" "css_element" should exist
-    And I follow visible link "Read more&nbsp;»"
+    And I click on "li[aria-label='Topic 1'] .section.img-text li .contentafterlink .summary-text a" "css_element"
     And I wait until "#section-1 .pagemod-content[data-content-loaded=\"1\"]" "css_element" is visible
     Then "span.autocompletion img[title='Not completed: Page completion 2']" "css_element" should not exist
     And "span.autocompletion img[title='Completed: Page completion 2']" "css_element" should exist

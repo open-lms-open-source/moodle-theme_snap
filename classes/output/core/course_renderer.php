@@ -450,6 +450,23 @@ class course_renderer extends \core_course_renderer {
         }
         if ($mod->url) {
             if ($content) {
+                // Add extra content to create fadeout to resource cards activities and SCORM package.
+                if ((plugin_supports('mod', $mod->modname, FEATURE_MOD_ARCHETYPE) === MOD_ARCHETYPE_RESOURCE) ||
+                    $mod->modname === 'scorm') {
+                    $dom = new \DOMDocument();
+                    libxml_use_internal_errors(true);
+                    $dom->loadHTML($content);
+                    libxml_clear_errors();
+                    $divs = $dom->getElementsByTagName('div');
+                    foreach ($divs as $div) {
+                        if ($div->getAttribute('class') == 'no-overflow') {
+                            $fadeoutclass = $dom->createElement('p', '&nbsp;');
+                            $fadeoutclass->setAttribute('class', 'snap-resource-card-fadeout');
+                            $div->appendChild($fadeoutclass);
+                        }
+                    }
+                    $content = $dom->saveHTML();
+                }
                 // If specified, display extra content after link.
                 $output = html_writer::tag('div', $content, array('class' => trim('contentafterlink ' . $textclasses)));
             }
