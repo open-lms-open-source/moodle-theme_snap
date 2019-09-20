@@ -199,6 +199,9 @@ define(['jquery', 'core/log', 'core/ajax', 'core/str', 'core/templates', 'core/n
             });
             var tempnode = $('<div></div>');
             templates.replaceNodeContents(tempnode, html, js);
+            // Hide p tags that has multimedia to prevent unnecessary blank spaces in the card content.
+            tempnode.find('li.snap-resource.snap-resource-long div.contentafterlink ' +
+                'div.no-overflow p:has(img)').css('display', 'none');
             if (existingSections.length > 0) {
                 var closest = existingSections.reduce(function(prev, curr) {
                     return (Math.abs(curr - section) < Math.abs(prev - section) ? curr : prev);

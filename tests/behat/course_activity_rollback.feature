@@ -65,12 +65,12 @@ Feature: Course scrollback navigation in Snap theme
     And I reset session storage
     And I am on "Course 1" course homepage
     And The id for element "//*[@data-type='IMS content package']" "xpath_element" is saved for scrollback
-    And I click on "//*[@data-type='IMS content package']/div/div[1]/div[1]" "xpath_element"
+    And I click on ".modtype_imscp .snap-asset-content h3.snap-asset-link a" "css_element"
     And The stored element scroll id matches the session storage id
     And I follow "Introduction"
     And I wait until the page is ready
     And The id for element "//*[@data-type='IMS content package']" "xpath_element" is saved for scrollback
-    And I click on "//*[@data-type='IMS content package']/div" "xpath_element"
+    And I click on ".modtype_imscp .snap-asset-content h3.snap-asset-link a" "css_element"
     And The stored element scroll id matches the session storage id
     And I follow "Introduction"
     And I wait until the page is ready
