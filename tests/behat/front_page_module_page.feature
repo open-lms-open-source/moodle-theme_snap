@@ -68,7 +68,8 @@ Feature: Open page (front page) module inline
     And I log in as "student1"
     And I am on site homepage
    Then I should not see "Page restricted intro"
-    And I should see availability info "Not available unless: The activity Page completion is marked complete"
+    And I click on "//button[@class='snap-conditional-tag']" "xpath_element"
+    And I should see "Not available unless: The activity Page completion is marked complete"
     And I click on ".contentafterlink .summary-text a" "css_element"
     And I should not see an error dialog
     And I wait until ".pagemod-content[data-content-loaded=\"1\"]" "css_element" is visible

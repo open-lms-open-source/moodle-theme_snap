@@ -862,19 +862,6 @@ body.snap-resource-card li.snap-resource {
         .snap-header-card {
             padding-bottom: 1.5em;
         }
-        .snap-assettype {
-            display: inline-block;
-            width: 60%;
-            height: 100%;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-        .snap-header-card-icons {
-            display: inline-block;
-            width: 40%;
-            height: 100%;
-        }
         .snap-asset-actions {
             display: flex;
         }
@@ -1001,6 +988,48 @@ body.snap-resource-card {
         div.contentafterlink div.no-overflow img.img-responsive.atto_image_button_text-bottom,
         div.mediaplugin.mediaplugin_videojs {
             display: none;
+        }
+    }
+
+    // Modify restriction icon size and position for course cards.
+    .snap-header-card .snap-header-card-icons {
+        button#snap-restriction {
+            border: none;
+            padding: 0;
+            float: right;
+            margin: 0 2em;
+            background-color: transparent;
+            img#snap-restriction-icon {
+                width: 20px;
+                height: 20px;
+                float: right;
+            }
+            &:active {
+                outline: none;
+                border: none;
+                background-color: transparent;
+            }
+        }
+        #popover-content.hidden {
+            display: none;
+        }
+    }
+
+    .asset-wrapper {
+        .snap-assettype {
+            display: inline-block;
+            width: 60%;
+            height: 100%;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .snap-header-card-icons {
+            display: inline-block;
+            width: 40%;
+            height: 100%;
+            max-height: 1.01em;
+            margin-bottom: 0.1em;
         }
     }
 
