@@ -19,7 +19,7 @@
 # @author     2016 Guy Thomas <osdev@blackboard.com>
 # @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
 
-@theme @theme_snap
+@theme @theme_snap @theme_snap_personalmenu
 Feature: When the moodle theme is set to Snap, log out works via personal menu.
 
   Background:

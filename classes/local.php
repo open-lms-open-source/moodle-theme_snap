@@ -768,6 +768,7 @@ class local {
                 'actionUrl'    => $url,
                 'description'  => $meta,
                 'extraClasses' => $unreadclass,
+                'fromCache'    => 0,
             ];
         }
         return $res;
@@ -877,6 +878,7 @@ class local {
                     'actionUrl'    => $url,
                     'description'  => $meta,
                     'extraClasses' => '',
+                    'fromCache'    => 0,
                 ];
             }
         }
@@ -975,6 +977,7 @@ class local {
                 'actionUrl'    => $url,
                 'description'  => $meta,
                 'extraClasses' => '',
+                'fromCache'    => 0,
             ];
         }
 
@@ -1947,6 +1950,7 @@ class local {
                 'actionUrl'    => $url,
                 'description'  => $description,
                 'extraClasses' => '',
+                'fromCache'    => 0,
             ];
         }
         return $res;
@@ -2190,5 +2194,142 @@ SQL;
         $runningphpunittest = defined('PHPUNIT_TEST') && PHPUNIT_TEST;
         $runningbehattest = defined('BEHAT_SITE_RUNNING') && BEHAT_SITE_RUNNING;
         return ($runningphpunittest || $runningbehattest);
+    }
+
+    public static function deadlines() {
+        global $PAGE, $USER;
+        $eventsobj = \theme_snap\activity::upcoming_deadlines($USER->id);
+
+        $events = self::deadlines_data($eventsobj, true);
+        $fromcache = $eventsobj->fromcache ? 1 : 0;
+        $datafromcache = ' data-from-cache="'.$fromcache.'" ';
+        if (empty($events)) {
+            return '<p class="small"'.$datafromcache.'>' . get_string('nodeadlines', 'theme_snap') . '</p>';
+        }
+
+        $o = '';
+        /** @var core_renderer $renderer */
+        $renderer = $PAGE->get_renderer('theme_snap', 'core', RENDERER_TARGET_GENERAL);
+        foreach ($events as $event) {
+            $o .= $renderer->snap_media_object(
+                    $event['actionUrl'],
+                    $event['iconUrl'],
+                    $event['title'] . "<small {$datafromcache}><br>{$event['subTitle']}</small>",
+                    $event['description'],
+                    '',
+                    $datafromcache
+                );
+        }
+        return $o;
+    }
+
+    public static function deadlines_data($eventsobj, $renderhtml = false) {
+        global $PAGE;
+
+        $events = $eventsobj->events;
+        $fromcache = $eventsobj->fromcache ? 1 : 0;
+
+        $output = $PAGE->get_renderer('theme_snap', 'core', RENDERER_TARGET_GENERAL);
+
+        $res = [];
+        foreach ($events as $event) {
+            if (!empty($event->modulename)) {
+                list ($course, $cm) = get_course_and_cm_from_instance(
+                    $event->instance,
+                    $event->modulename,
+                    $event->courseid,
+                    $event->userid);
+
+                $eventtitle = $event->name;
+                $eventsubtitle = $event->coursefullname;
+
+                $modimageurl = $output->image_url('icon', $cm->modname);
+                $modname = get_string('modulename', 'mod_'.$cm->modname);
+                if ($renderhtml) {
+                    $modimage = \html_writer::img($modimageurl, $modname);
+                } else {
+                    $modimage = $modimageurl->out();
+                }
+
+                if (!empty($event->extensionduedate)) {
+                    // If we have an extension then always show this as the due date.
+                    $deadline = $event->extensionduedate + $event->timeduration;
+                } else {
+                    $deadline = $event->timestart + $event->timeduration;
+                }
+                if ($event->modulename === 'collaborate') {
+                    if ($event->timeduration == 0) {
+                        // No deadline for long duration collab rooms.
+                        continue;
+                    }
+                    $deadline = $event->timestart;
+                }
+
+                $meta = $output->friendly_datetime($deadline);
+                // Add completion meta data for students (exclude anyone who can grade them).
+                if (!has_capability('mod/assign:grade', $cm->context)) {
+                    /** @var \theme_snap_core_course_renderer $courserenderer */
+                    $courserenderer = $PAGE->get_renderer('core', 'course', RENDERER_TARGET_GENERAL);
+                    $activitymeta = activity::module_meta($cm);
+                    $meta .= '<div class="snap-completion-meta">' .
+                        $courserenderer->submission_cta($cm, $activitymeta) .
+                        '</div>';
+                }
+
+                $url = $cm->url;
+                if (!$renderhtml) {
+                    $url = $url->out();
+                }
+
+                $res[] = [
+                    'iconUrl'      => $modimage,
+                    'iconDesc'     => $modname,
+                    'iconClass'    => '',
+                    'title'        => $eventtitle,
+                    'subTitle'     => $eventsubtitle,
+                    'actionUrl'    => $url,
+                    'description'  => $meta,
+                    'extraClasses' => '',
+                    'fromCache'    => $fromcache,
+                ];
+            }
+        }
+        return $res;
+    }
+
+    /**
+     * @param string $feedid
+     * @param int $page
+     * @param int $pagesize
+     * @return array
+     * @throws \coding_exception
+     * @throws \moodle_exception
+     */
+    public static function get_feed(string $feedid, $page = 0, $pagesize = 3) : array {
+        global $USER;
+        switch ($feedid) {
+            case 'graded':
+                $res = self::graded_data();
+                break;
+            case 'grading':
+                $res = self::grading_data();
+                break;
+            case 'forumposts':
+                $res = self::recent_forum_activity_data();
+                break;
+            case 'messages':
+                $limitfrom = $page * $pagesize;
+                $res = self::messages_data(false, $limitfrom, $pagesize);
+                break;
+            case 'deadlines':
+                $res = self::deadlines_data(
+                    activity::upcoming_deadlines($USER->id)
+                );
+                break;
+            default:
+                $res = [];
+                break;
+        }
+        return $res;
     }
 }

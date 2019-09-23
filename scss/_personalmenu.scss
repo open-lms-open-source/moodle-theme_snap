@@ -415,3 +415,9 @@ body.snap-pm-open {
     display: block;
     text-align: right;
 }
+
+.snap-personal-menu-feed-loading {
+    &:after {
+        @include ajaxing(inline-block, relative, 20px, 6px);
+    }
+}

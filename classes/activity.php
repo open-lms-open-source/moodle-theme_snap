@@ -1343,7 +1343,7 @@ class activity {
      * @param int $tend
      * @param string $cacheprefix
      * @param int $limit
-     * @return stdClass
+     * @return object
      */
     public static function user_activity_events($userorid, array $courses, $tstart, $tend, $cacheprefix = '',
                                                 $limit = 40) {
@@ -1403,8 +1403,9 @@ class activity {
         $tmparr = [];
         foreach ($events as $event) {
 
-            /** @var cm_info $cminfo */
-            list ($course, $cminfo) = get_course_and_cm_from_instance($event->instance, $event->modulename);
+            /** @var \cm_info $cminfo */
+            list ($course, $cminfo) = get_course_and_cm_from_instance(
+                    $event->instance, $event->modulename,  $courses[$event->courseid], $event->userid);
             unset($course);
 
             // We are only interested in modules with valid instances.

@@ -20,7 +20,7 @@
 # @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
 
 
-@theme @theme_snap
+@theme @theme_snap @theme_snap_personalmenu
 Feature: When the moodle theme is set to Snap, students and teachers can open a personal menu which features a
   list of courses they are enrolled in with a progress bar indication completion (if completion tracking is enabled).
 

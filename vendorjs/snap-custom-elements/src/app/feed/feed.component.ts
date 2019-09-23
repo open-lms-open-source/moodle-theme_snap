@@ -9,13 +9,13 @@ import {animate, query, stagger, style, transition, trigger} from "@angular/anim
   template: `
       <h2>{{ title }}</h2>
       <div id="{{ elemId }}" [@growIn]="feedItemTotal">
-          <div class="snap-media-object feeditem {{feedItem.extraClasses}}" *ngFor="let feedItem of feedItems">
+          <div class="snap-media-object feeditem {{feedItem.extraClasses}}" *ngFor="let feedItem of feedItems" [attr.data-from-cache]="feedItem.fromCache">
               <img *ngIf="feedItem.iconUrl !== ''" src="{{feedItem.iconUrl}}" alt="{{feedItem.iconDesc}}" [className]="feedItem.iconClass">
               <div class="snap-media-body">
                   <a href="{{feedItem.actionUrl}}">
                       <h3>
                           {{feedItem.title}}
-                          <small>
+                          <small [attr.data-from-cache]="feedItem.fromCache">
                               <br>
                               {{feedItem.subTitle}}
                           </small>
@@ -35,6 +35,7 @@ import {animate, query, stagger, style, transition, trigger} from "@angular/anim
          (click)="resetFeed($event)">
           <small>{{reloadMessage}}</small>
       </a>
+      <span *ngIf="fetchingData" class="snap-personal-menu-more snap-personal-menu-feed-loading"></span>
   `,
   animations: [
     trigger('growIn', [
@@ -70,12 +71,14 @@ export class FeedComponent implements OnInit {
   @Input() emptyMessage: string;
   @Input() viewMoreMessage: string;
   @Input() reloadMessage: string;
+  @Input() initialValue?: string;
 
   nextPage: number;
   feedItems: FeedItem[];
   feedItemTotal: number;
   resetInProgress: boolean;
   viewMoreEnabled: boolean;
+  fetchingData: boolean;
 
   private feedItemCache: FeedItem[];
 
@@ -84,13 +87,34 @@ export class FeedComponent implements OnInit {
 
   ngOnInit() {
     this.feedItems = [];
-    if (document.querySelectorAll('body.snap-pm-open').length > 0) {
-      this.resetFeed();
+    if (this.initialValue) {
+      let initialItems = JSON.parse(this.decodeHtmlSpecialChars(this.initialValue));
+      if (initialItems.length > 0) {
+        this.nextPage = 0;
+        this.feedItemCache = [];
+        this.resetInProgress = true;
+
+        if (this.virtualPaging) {
+          this.feedItemCache = initialItems;
+          this.nextPage = 1;
+          this.processVirtualPaging();
+        } else {
+          this.processNextPage(initialItems);
+        }
+      } else {
+        this.feedItemTotal = 0;
+        this.nextPage = -1;
+      }
+    } else {
+      if (document.querySelectorAll('body.snap-pm-open').length > 0) {
+        this.resetFeed();
+      }
     }
   }
 
   getFeed(event?: Event): void {
     this.viewMoreEnabled = false;
+    this.fetchingData = true;
 
     if (event) {
       event.preventDefault();
@@ -98,6 +122,7 @@ export class FeedComponent implements OnInit {
 
     if (this.processVirtualPaging()) {
       this.viewMoreEnabled = true;
+      this.fetchingData = false;
       return;
     }
 
@@ -118,6 +143,7 @@ export class FeedComponent implements OnInit {
         }
 
         this.viewMoreEnabled = true;
+        this.fetchingData = false;
       });
   }
 
@@ -130,12 +156,13 @@ export class FeedComponent implements OnInit {
       return true;
     }
 
+    const pageSize = +this.pageSize; // Somehow this.pageSize is sometimes a string.
     const totalItems: number = this.feedItemCache.length;
-    const nextStartIdx: number = this.pageSize * (this.nextPage - 1);
+    const nextStartIdx: number = pageSize * (this.nextPage - 1);
     const lastIdx: number = totalItems;
     if (nextStartIdx <= lastIdx) {
       let start: number = nextStartIdx,
-          end: number = nextStartIdx + this.pageSize;
+          end: number = nextStartIdx + pageSize;
       end = end > lastIdx ? lastIdx : end;
       const newFeedItems: FeedItem[] = this.feedItemCache.slice(start, end);
       this.processNextPage(newFeedItems);
@@ -165,10 +192,35 @@ export class FeedComponent implements OnInit {
       event.preventDefault();
     }
 
+    if (this.resetInProgress) {
+      return;
+    }
+
     this.nextPage = 0;
     this.feedItemCache = [];
     this.resetInProgress = true;
 
     this.getFeed();
+  }
+
+  decodeHtmlSpecialChars(str: string): string {
+    const map = {
+      '&amp;': '&',
+      '&#038;': "&",
+      '&lt;': '<',
+      '&gt;': '>',
+      '&quot;': '"',
+      '&#039;': "'",
+      '&#8217;': "’",
+      '&#8216;': "‘",
+      '&#8211;': "–",
+      '&#8212;': "—",
+      '&#8230;': "…",
+      '&#8221;': '”'
+    };
+
+    return str.replace(/\&[\w\d\#]{2,5}\;/g, function (m) {
+      return map[m];
+    });
   }
 }

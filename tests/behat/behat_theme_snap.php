@@ -1607,7 +1607,8 @@ class behat_theme_snap extends behat_base {
      */
     private function personal_menu_deadline_xpath($deadline, $eventname) {
         $deadline = calendar_day_representation($deadline);
-        $xpath = "//div[@id='snap-personal-menu-deadlines']//h3[contains(text(), '$eventname')]/parent::a/parent::div".
+        $ids = "@id='snap-personal-menu-deadlines'|@id='snap-personal-menu-feed-deadlines'";
+        $xpath = "//div[$ids]//h3[contains(text(), '$eventname')]/parent::a/parent::div".
             "/parent::div//time[contains(text(), '$deadline')]";
         return $xpath;
     }
@@ -1757,5 +1758,34 @@ class behat_theme_snap extends behat_base {
         $this->execute('behat_forms::i_set_the_following_fields_to_these_values', $table);
         $this->execute('behat_forms::press_button', get_string('posttoforum', 'forum'));
         $this->execute('behat_general::i_wait_to_be_redirected');
+    }
+
+    /**
+     * @param string $activityname - assign name
+     * @param string $activity - activity type
+     * @Given /^Activity "(?P<activity>(?:[^"]|\\")*)" "(?P<activityname>(?:[^"]|\\")*)" is deleted$/
+     * @return array
+     */
+    public function activity_is_deleted($activity, $activityname) {
+        global $DB;
+        $activityid = $DB->get_field($activity, 'id', ['name' => $activityname], MUST_EXIST);
+        $cm = get_coursemodule_from_instance($activity, $activityid, 0, false, MUST_EXIST);
+        course_delete_module($cm->id, true);
+    }
+
+    /**
+     * Opens the course homepage.
+     *
+     * @Given /^I am on activity "(?P<activity>(?:[^"]|\\")*)" "(?P<activityname>(?:[^"]|\\")*)" page$/
+     * @throws coding_exception
+     * @param string $coursefullname The full name of the course.
+     * @return void
+     */
+    public function i_am_on_activity_page($activity, $activityname) {
+        global $DB;
+        $activityid = $DB->get_field($activity, 'id', ['name' => $activityname], MUST_EXIST);
+        $cm = get_coursemodule_from_instance($activity, $activityid, 0, false, MUST_EXIST);
+        $url = new moodle_url('/mod/' . $activity . '/view.php', ['id' => $cm->id]);
+        $this->getSession()->visit($this->locate_path($url->out_as_local_url(false)));
     }
 }
