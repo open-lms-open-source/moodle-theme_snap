@@ -623,6 +623,11 @@ define(['jquery', 'core/log', 'theme_snap/headroom', 'theme_snap/util', 'theme_s
                     // Make sure that the blocks are always within page-content for assig view page.
                     $('#page-mod-assign-view #page-content').append($('#moodle-blocks'));
 
+                    // Append resource card fadeout to content resource card.
+                    $('.snap-resource-long .contentafterlink .snap-resource-card-fadeout').each(function() {
+                        $(this).appendTo($(this).prevAll('.snap-resource-long .contentafterlink .no-overflow'));
+                    });
+
                     // Hide p tags that has multimedia to prevent unnecessary blank spaces in the card content.
                     $('li.snap-resource.snap-resource-long div.contentafterlink div.no-overflow p:has(img)').css('display', 'none');
 
