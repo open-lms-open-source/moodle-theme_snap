@@ -41,7 +41,7 @@ define(['jquery', 'core/yui', 'theme_snap/util'],
                 function() {
                     self.dndupload = M.course_dndupload;
                     // Adding YUI 3 requirements here.
-                    YUI.use('node', 'event', 'json', 'anim', function(Y) {
+                    YUI.use('node', 'event', 'json', 'anim', 'moodle-core-notification-alert', function(Y) {
                         self.decorateCourseDNDUpload(Y, options);
                     });
 
@@ -87,6 +87,7 @@ define(['jquery', 'core/yui', 'theme_snap/util'],
                     // Get file and trigger upload.
                     file = this.files.item(i);
                     self.dndupload.handle_file(file, section, sectionnumber);
+
                 }
             });
         };
