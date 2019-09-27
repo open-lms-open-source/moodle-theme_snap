@@ -1021,12 +1021,20 @@ footer #moodle-footer
     position: relative;
     left: 0;
     transition: all 0.4s 0s ease;
-
     // When admin block is open
     &.offcanvas {
         left: -200px;
     }
 }
+
+// We target only google Chorme
+#page-site-index.editing.chrome #moodle-blocks,
+#page-my-index.editing.chrome #moodle-blocks,
+.editing.chrome #moodle-blocks{
+    overflow-y: auto;
+}
+
+
 
 #moodle-blocks {
     max-width: 60.5em;
@@ -3985,3 +3993,4 @@ section#region-main {
 #page-local-pld-view #id_config_text_ifr {
     height: 15em !important;
 }
+
