@@ -72,6 +72,7 @@ Feature: When the moodle theme is set to Snap, teachers can upload files as reso
     And I upload file "600KB_file.mp3" to section 1
     Then ".snap-resource[data-type='text']" "css_element" should exist
     And ".snap-resource[data-type='mp3']" "css_element" should not exist
+    And I should see "The file '600KB_file.mp3' is too large and cannot be uploaded"
     And I log out
     And I log in as "admin"
     And I am on "Course 1" course homepage
