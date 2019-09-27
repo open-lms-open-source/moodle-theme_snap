@@ -170,9 +170,9 @@ define(
             var section = false;
             var mod = 0;
             $.each(params, function(idx, param) {
-                if (param.includes('section')) {
+                if (param.indexOf('section') != -1) {
                     section = param.split('section-')[1];
-                } else if (param.includes('module')) {
+                } else if (param.indexOf('module') != -1) {
                     mod = param.split('module-')[1];
                 }
             });

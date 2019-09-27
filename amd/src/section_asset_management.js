@@ -172,7 +172,7 @@ define(['jquery', 'core/log', 'core/ajax', 'core/str', 'core/templates', 'core/n
          */
         var getSection = function (section, mod) {
             var node = $('#section-' + section);
-            if (node.length == 0 && !sectionsProcess.includes(section)) {
+            if (node.length == 0 && sectionsProcess.indexOf(section) == -1) {
                 sectionsProcess.push(section);
                 var params = {courseid: self.courseConfig.id, section: section};
                 $('.sk-fading-circle').show();
