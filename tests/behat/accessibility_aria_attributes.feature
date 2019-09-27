@@ -115,5 +115,8 @@ Feature: Elements for Snap should have the proper aria attributes.
     And the "id" attribute of "div#coursetools-list a#ct-competencies" "css_element" should contain "ct-competencies"
     And the "id" attribute of "div#coursetools-list a#ct-badges" "css_element" should contain "ct-badges"
 
-
-
+    @javascript
+    Scenario: When creating a new activity in Snap, the mod chooser should have a specific ID
+      Given I log in as "admin"
+      And I am on the course main page for "C1"
+      And the "id" attribute of "//li[@id='section-0']//div[@class='content']//div[@class='col-sm-6 snap-modchooser']" "xpath_element" should contain "snap-create-activity"
