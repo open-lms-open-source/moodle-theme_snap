@@ -564,7 +564,7 @@ trait format_section_trait {
         $mcclass = 'js-only section-modchooser-link btn btn-link';
         $mcdataattributes = 'data-section="'.$section.'" data-toggle="modal" data-target="#snap-modchooser-modal"';
         $modchooser = '
-        <div class="col-sm-6 snap-modchooser">
+        <div class="col-sm-6 snap-modchooser" id="snap-create-activity">
             <a href="#" class="'.$mcclass.'" '.$mcdataattributes.'>'.$icon.get_string('addresourceoractivity', 'theme_snap').'</a>
         </div>';
 
