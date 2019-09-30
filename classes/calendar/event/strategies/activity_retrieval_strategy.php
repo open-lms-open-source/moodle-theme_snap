@@ -62,7 +62,7 @@ class activity_retrieval_strategy extends \core_calendar\local\event\strategies\
         $limitnum,
         $ignorehidden
     ) {
-        global $DB;
+        global $DB, $CFG;
 
         $params = array();
         // Quick test.
@@ -251,8 +251,18 @@ class activity_retrieval_strategy extends \core_calendar\local\event\strategies\
         }
 
         // Build the WHERE condition for the sub-query.
+        $subqueryfrom = '{event} ev ';
         if (!empty($subqueryconditions)) {
-            $subquerywhere = 'WHERE ' . implode(" OR ", $subqueryconditions);
+            if (!empty($CFG->core_calendar_use_subquery_union_event_strategy)) {
+                $unionstartquery = "
+                                SELECT modulename, instance, eventtype, priority
+                                  FROM {event} ev
+                                 WHERE ";
+                $subqueryunion = $unionstartquery . implode(" UNION $unionstartquery ", $subqueryconditions);
+                $subqueryfrom = "($subqueryunion) ev";
+            } else {
+                $subqueryfrom .= 'WHERE ' . implode(" OR ", $subqueryconditions);
+            }
         }
 
         // Merge subquery parameters to the parameters of the main query.
@@ -265,8 +275,7 @@ class activity_retrieval_strategy extends \core_calendar\local\event\strategies\
                             ev.instance,
                             ev.eventtype,
                             MIN(ev.priority) as priority
-                       FROM {event} ev
-                      $subquerywhere
+                       FROM $subqueryfrom
                    GROUP BY ev.modulename, ev.instance, ev.eventtype";
 
         $assignoverride = '';
