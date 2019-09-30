@@ -7,4 +7,5 @@ export class FeedItem {
   actionUrl: string;
   description: string;
   extraClasses: string;
+  fromCache: number;
 }

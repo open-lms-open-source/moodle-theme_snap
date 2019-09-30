@@ -38,7 +38,6 @@ use moodle_url;
 use navigation_node;
 use user_picture;
 use theme_snap\local;
-use theme_snap\activity;
 use theme_snap\services\course;
 use theme_snap\renderables\settings_link;
 use theme_snap\renderables\bb_dashboard_link;
@@ -397,7 +396,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
         $deadlines = $this->render_deadlines();
         if (!empty($deadlines)) {
             $columns[] = $deadlines;
-            $mobilemenu .= $this->mobile_menu_link('deadlines', 'calendar', '#snap-personal-menu-deadlines');
+            $mobilemenu .= $this->mobile_menu_link('deadlines', 'calendar', $this->get_calltoaction_url('deadlines'));
         }
 
         $graded = $this->render_graded();
@@ -550,9 +549,16 @@ class core_renderer extends \theme_boost\output\core_renderer {
             return '';
         }
 
-        $deadlinesheading = get_string('deadlines', 'theme_snap');
-        $o = "<h2>$deadlinesheading</h2>";
-        $o .= '<div id="snap-personal-menu-deadlines"></div>';
+        $heading = get_string('deadlines', 'theme_snap');
+        if ($this->advanced_feeds_enabled()) {
+            $virtualpaging = true; // Web service retrieves all elements, need to do virtual paging.
+            $o = $this->render_feed_web_component('deadlines', $heading,
+                get_string('nodeadlines', 'theme_snap'), $virtualpaging);
+        } else {
+            $o = "<h2>$heading</h2>";
+            $o .= '<div id="snap-personal-menu-deadlines"></div>';
+        }
+
         $calurl = $CFG->wwwroot.'/calendar/view.php?view=month';
         $o .= $this->column_header_icon_link('viewcalendar', 'calendar', $calurl);
         return $o;
@@ -1292,65 +1298,6 @@ HTML;
     }
 
     /**
-     * Return deadlines html for array of events.
-     * @param stdClass $eventsobj
-     * @return string
-     */
-    public function deadlines(stdClass $eventsobj) {
-        global $PAGE;
-
-        $events = $eventsobj->events;
-        $fromcache = $eventsobj->fromcache ? 1 : 0;
-        $datafromcache = ' data-from-cache="'.$fromcache.'" ';
-
-        if (empty($events)) {
-            return '<p class="small"'.$datafromcache.'>' . get_string('nodeadlines', 'theme_snap') . '</p>';
-        }
-
-        $o = '';
-        foreach ($events as $event) {
-            if (!empty($event->modulename)) {
-                list ($course, $cm) = get_course_and_cm_from_instance($event->instance, $event->modulename);
-
-                $eventtitle = $event->name .'<small'.$datafromcache.'><br>' .$event->coursefullname. '</small>';
-
-                $modimageurl = $this->image_url('icon', $event->modulename);
-                $modname = get_string('modulename', $event->modulename);
-                $modimage = \html_writer::img($modimageurl, $modname);
-                if (!empty($event->extensionduedate)) {
-                    // If we have an extension then always show this as the due date.
-                    $deadline = $event->extensionduedate + $event->timeduration;
-                } else {
-                    $deadline = $event->timestart + $event->timeduration;
-                }
-                if ($event->modulename === 'collaborate') {
-                    if ($event->timeduration == 0) {
-                        // No deadline for long duration collab rooms.
-                        continue;
-                    }
-                    $deadline = $event->timestart;
-                }
-
-                $meta = $this->friendly_datetime($deadline);
-                // Add completion meta data for students (exclude anyone who can grade them).
-                if (!has_capability('mod/assign:grade', $cm->context)) {
-                    /** @var \theme_snap_core_course_renderer $courserenderer */
-                    $courserenderer = $PAGE->get_renderer('core', 'course', RENDERER_TARGET_GENERAL);
-                    $activitymeta = activity::module_meta($cm);
-                    $meta .= '<div class="snap-completion-meta">' .
-                        $courserenderer->submission_cta($cm, $activitymeta) .
-                        '</div>';
-                }
-                $o .= $this->snap_media_object($cm->url, $modimage, $eventtitle, $meta, '', '', $datafromcache);
-            }
-        }
-        if (empty($o)) {
-            return '<p>' . get_string('nodeadlines', 'theme_snap') . '</p>';
-        }
-        return $o;
-    }
-
-    /**
      * Return feature spot cards html.
      *
      * @return string
@@ -1859,12 +1806,23 @@ HTML;
      * @return string
      */
     private function render_feed_web_component($feedkey, $title, $emptymessage, $virtualpaging = false, $showreload = true) {
+        global $CFG;
         $pagesize = get_config('theme_snap', 'personalmenuadvancedfeedsperpage');
         $pagesize = !empty($pagesize) ? $pagesize : 3;
         $sesskey = sesskey();
 
         $viewmoremsg = get_string('pmadvancedfeed_viewmore', 'theme_snap');
         $reloadmsg = get_string('pmadvancedfeed_reload', 'theme_snap');
+
+        $initialvalue = '';
+        if ((defined('BEHAT_SITE_RUNNING') && BEHAT_SITE_RUNNING)
+            // There is no easy way to have e2e testing when requesting services is asynchronous,
+            // so for testing purposes, we'll populate the component data when the page is being rendered.
+            || !empty($CFG->theme_snap_prepopulate_advanced_feeds)
+        ) {
+            $initialvalue = htmlspecialchars(json_encode(local::get_feed($feedkey, 0, $pagesize)));
+            $initialvalue = "initial-value=\"{$initialvalue}\"";
+        }
         return <<<HTML
 <snap-feed elem-id="snap-personal-menu-feed-{$feedkey}"
            title="{$title}"
@@ -1875,7 +1833,9 @@ HTML;
            virtual-paging="{$virtualpaging}"
            empty-message="{$emptymessage}"
            view-more-message="{$viewmoremsg}"
-           reload-message="{$reloadmsg}"></snap-feed>
+           reload-message="{$reloadmsg}"
+           {$initialvalue}
+></snap-feed>
 HTML;
     }
 }

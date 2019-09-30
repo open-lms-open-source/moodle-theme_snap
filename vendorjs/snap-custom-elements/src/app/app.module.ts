@@ -6,6 +6,8 @@ import {AppComponent} from './app.component';
 import {FeedComponent} from './feed/feed.component';
 import {createCustomElement} from "@angular/elements";
 import {HttpClientModule} from "@angular/common/http";
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment';
 
 @NgModule({
   declarations: [
@@ -16,6 +18,7 @@ import {HttpClientModule} from "@angular/common/http";
     BrowserModule,
     BrowserAnimationsModule,
     HttpClientModule,
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
   ],
   entryComponents: [
     FeedComponent,

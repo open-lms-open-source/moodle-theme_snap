@@ -19,7 +19,7 @@
 # @copyright  Copyright (c) 2017 Blackboard Inc. (http://www.blackboard.com)
 # @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
 
-@theme @theme_snap
+@theme @theme_snap @theme_snap_personalmenu
 Feature: When the moodle theme is set to Snap, students and teachers can open a personal menu where they can find
   a list of courses they are enrolled in with a feedback available or grade.
 
@@ -53,6 +53,6 @@ Feature: When the moodle theme is set to Snap, students and teachers can open a 
     When I open the personal menu
     Then <finalstep>
     Examples:
-    | showgrades | finalstep                                              |
+    | showgrades | finalstep                                                |
     | 1          | I should see "70" in the "div.coursegrade" "css_element" |
     | 0          | "div.coursegrade" "css_element" should not exist         |
