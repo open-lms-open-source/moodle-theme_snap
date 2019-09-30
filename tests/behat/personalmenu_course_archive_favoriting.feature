@@ -19,7 +19,7 @@
 # @copyright  Copyright (c) 2017 Blackboard Inc.
 # @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
 
-@theme @theme_snap
+@theme @theme_snap @theme_snap_personalmenu
 Feature: When the moodle theme is set to Snap, expired courses appear in an archive section within the personal menu.
   For non archived courses, it is possible to favorite and un-favorite them.
 

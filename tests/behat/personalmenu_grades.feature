@@ -20,7 +20,7 @@
 # @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
 
 
-@theme @theme_snap @_bug_phantomjs
+@theme @theme_snap @_bug_phantomjs @theme_snap_personalmenu
 Feature: When the moodle theme is set to Snap, students and teachers can open a personal menu which shows a
   grades / grading column showing them things that have recently had feedback or have recently been submitted.
 
@@ -40,30 +40,40 @@ Feature: When the moodle theme is set to Snap, students and teachers can open a 
       | teacher2 | C1     | teacher        |
       | teacher3 | C1     | teacher        |
       | student1 | C1     | student        |
-    And the following config values are set as admin:
-      | personalmenuadvancedfeedsenable | 0 | theme_snap |
 
   @javascript
-  Scenario: No assignments submitted or graded.
+  Scenario Outline: No assignments submitted or graded.
     Given the following "activities" exist:
       | activity | course | idnumber | name                 | intro                         | assignsubmission_onlinetext_enabled |
       | assign   | C1     | assign1  | Test assignment1     | Test assignment description 1 | 1                                   |
       | assign   | C1     | assign2  | Test assignment2     | Test assignment description 2 | 1                                   |
+    And the following config values are set as admin:
+      | personalmenuadvancedfeedsenable | <enadvfeeds> | theme_snap |
     And I log in as "teacher1"
+    And I <waitclause>
     And I open the personal menu
    Then I should see "You have no submissions to grade."
     And I follow "Log out"
     And I log in as "student1"
+    And I <waitclause>
     And I open the personal menu
     And I should see "You have no recent feedback."
     And I should see "Feedback"
+    And Activity "assign" "Test assignment1" is deleted
+    And Activity "assign" "Test assignment2" is deleted
+    Examples:
+      | enadvfeeds | waitclause                                          |
+      | 0          | wait until the page is ready                        |
+      | 1          | wait until "snap-feed" custom element is registered |
 
   @javascript
-  Scenario: 1 out of 2 assignments are submitted by student and graded by teacher.
+  Scenario Outline: 1 out of 2 assignments are submitted by student and graded by teacher.
     Given the following "activities" exist:
-      | activity | course | idnumber | name                 | intro                       | assignsubmission_onlinetext_enabled | assignfeedback_comments_enabled | section |
-      | assign   | C1     | assign1  | Test assignment1 | Test assignment description 1 | 1 | 1 | 1 |
-      | assign   | C1     | assign2  | Test assignment2 | Test assignment description 2 | 1 | 1 | 1 |
+      | activity | course | idnumber | name             | intro                         | assignsubmission_onlinetext_enabled | assignfeedback_comments_enabled | section |
+      | assign   | C1     | assign1  | Test assignment1 | Test assignment description 1 | 1                                   | 1                               | 1       |
+      | assign   | C1     | assign2  | Test assignment2 | Test assignment description 2 | 1                                   | 1                               | 1       |
+    And the following config values are set as admin:
+      | personalmenuadvancedfeedsenable | <enadvfeeds> | theme_snap |
 
     And I log in as "student1"
     And I open the personal menu
@@ -91,25 +101,34 @@ Feature: When the moodle theme is set to Snap, students and teachers can open a 
     And I log out
     And I log in as "teacher1"
     And I open the personal menu
-    And I wait until "#snap-personal-menu-grading[data-content-loaded=\"1\"]" "css_element" is visible
+    And I wait until "#snap-personal-menu-<dataloadselectorstr>" "css_element" is visible
     # The above waits until the snap personal menu column is loaded.
    Then I should see "1 of 1 Submitted, 1 Ungraded"
     And I grade the assignment "Test assignment1" in course "C1" as follows:
       | username | grade | feedback                 |
       | student1 | 50    | I'm the teacher feedback |
     And I close the personal menu
+    And I reload the page
     And I open the personal menu
-    And I wait until "#snap-personal-menu-grading[data-content-loaded=\"1\"]" "css_element" is visible
+    And I wait until "#snap-personal-menu-<dataloadselectorstr>" "css_element" is visible
     # The above waits until the snap personal menu column is loaded.
    Then I should see "You have no submissions to grade."
     And I follow "Log out"
     And I log in as "student1"
     And I open the personal menu
-    And I should see "Test assignment1" in the "#snap-personal-menu-graded" "css_element"
+    And I should see "Test assignment1" in the "#snap-personal-menu-<selectorstr>" "css_element"
     And I should see "Feedback"
+    And Activity "assign" "Test assignment1" is deleted
+    And Activity "assign" "Test assignment2" is deleted
+    Examples:
+      | enadvfeeds | selectorstr  | dataloadselectorstr                |
+      | 0          | graded       | grading[data-content-loaded=\"1\"] |
+      | 1          | feed-graded  | feed-grading                       |
 
-    @javascript
+  @javascript
     Scenario: Show grading in the personal menu only to the teachers with the proper access to the courses or the groups.
+      Given the following config values are set as admin:
+        | personalmenuadvancedfeedsenable | 0 | theme_snap |
       When I log in as "admin"
       And I close the personal menu
       And I navigate to "Users > Permissions > Define roles" in site administration
@@ -173,7 +192,7 @@ Feature: When the moodle theme is set to Snap, students and teachers can open a 
       And I am on "Course 1" course homepage
       And I follow "Topic 1"
       And I should see "A1"
-      And I follow "Not Submitted"
+      And I am on activity "assign" "A1" page
       When I follow "Add submission"
       And I set the following fields to these values:
         | Online text | I'm the student submission |
@@ -200,6 +219,8 @@ Feature: When the moodle theme is set to Snap, students and teachers can open a 
 
     @javascript
     Scenario: Grading in the personal menu should show the correct information depending of teachers group capabilities.
+      Given the following config values are set as admin:
+        | personalmenuadvancedfeedsenable | 0 | theme_snap |
      When I log in as "admin"
       And I close the personal menu
       And I navigate to "Users > Permissions > Define roles" in site administration
@@ -246,7 +267,7 @@ Feature: When the moodle theme is set to Snap, students and teachers can open a 
       And I am on "Course 1" course homepage
       And I follow "Topic 1"
       And I should see "A1"
-      And I follow "Not Submitted"
+      And I am on activity "assign" "A1" page
      When I follow "Add submission"
       And I set the following fields to these values:
         | Online text | I'm the student1 submission |

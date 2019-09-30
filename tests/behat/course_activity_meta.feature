@@ -65,7 +65,7 @@ Feature: When the moodle theme is set to Snap, students see meta data against co
     And assignment entitled "Test assignment3" shows as not submitted in metadata
     And assignment entitled "Test assignment3" is overdue in metadata
     And assignment entitled "Test assignment3" does not have feedback metadata
-    And I follow "Not Submitted"
+    And I am on activity "assign" "Test assignment1" page
     When I press "Add submission"
     And I set the following fields to these values:
       | Online text | I'm the student submission |
@@ -94,10 +94,13 @@ Feature: When the moodle theme is set to Snap, students see meta data against co
     And assignment entitled "Test assignment1" has feedback metadata
     And assignment entitled "Test assignment2" does not have feedback metadata
     And assignment entitled "Test assignment3" does not have feedback metadata
-  Examples:
-  | Option     |
-  | 0          |
-  | 1          |
+    And Activity "assign" "Test assignment1" is deleted
+    And Activity "assign" "Test assignment2" is deleted
+    And Activity "assign" "Test assignment3" is deleted
+    Examples:
+      | Option     |
+      | 0          |
+      | 1          |
 
   @javascript
   Scenario Outline: Student that belongs to a specific group sees correct meta data against course activities
@@ -142,7 +145,7 @@ Feature: When the moodle theme is set to Snap, students see meta data against co
     And I wait until "#section-1" "css_element" is visible
     And I should see "Test assign"
     And assignment entitled "Test assign" shows as not submitted in metadata
-    And I follow "Not Submitted"
+    And I am on activity "assign" "Test assign" page
     When I press "Add submission"
     And I set the following fields to these values:
       | Online text | I'm the student submission |
@@ -160,9 +163,9 @@ Feature: When the moodle theme is set to Snap, students see meta data against co
     And assignment entitled "Test assign" shows as submitted in metadata
     And I log out
     Examples:
-  | Option     |
-  | 0          |
-  | 1          |
+      | Option     |
+      | 0          |
+      | 1          |
 
   @javascript
   Scenario Outline: Student sees correct feedback with multiple outcomes configured
@@ -248,7 +251,7 @@ Feature: When the moodle theme is set to Snap, students see meta data against co
     And I am on "Course 1" course homepage
     And I follow "Topic 1"
     And assignment entitled "Test assignment name" does not have feedback metadata
-  Examples:
-  | Option     |
-  | 0          |
-  | 1          |
+    Examples:
+      | Option     |
+      | 0          |
+      | 1          |

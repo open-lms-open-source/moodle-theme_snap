@@ -69,6 +69,7 @@ class ws_feed extends external_api {
                 'actionUrl'    => new external_value(PARAM_URL, 'Feed item action url'),
                 'description'  => new external_value(PARAM_RAW, 'Feed item description'),
                 'extraClasses' => new external_value(PARAM_RAW, 'Feed item extra CSS classes'),
+                'fromCache'    => new external_value(PARAM_INT, 'Data from cache flag'),
             ])
         );
     }
@@ -78,7 +79,7 @@ class ws_feed extends external_api {
      * @param null|int $page
      * @return array
      */
-    public static function service($feedid, $page = 0, $pagesize = 5) {
+    public static function service($feedid, $page = 0, $pagesize = 3) {
         $params = self::validate_parameters(self::service_parameters(), [
             'feedid' => $feedid,
             'page' => $page,
@@ -87,51 +88,6 @@ class ws_feed extends external_api {
 
         self::validate_context(\context_system::instance());
 
-        switch ($params['feedid']) {
-            case 'graded':
-                $res = local::graded_data();
-                break;
-            case 'grading':
-                $res = local::grading_data();
-                break;
-            case 'forumposts':
-                $res = local::recent_forum_activity_data();
-                break;
-            case 'messages':
-                $limitfrom = $page * $pagesize;
-                $res = local::messages_data(false, $limitfrom, $pagesize);
-                break;
-            default:
-                $res = self::test_feed($params['page'], $params['pagesize']);
-                break;
-        }
-        return $res;
-    }
-
-    private static function test_feed($page, $pagesize) {
-        $numitems = 33;
-
-        $feeditemmodel = [
-            'iconUrl'      => '',
-            'iconDesc'     => '',
-            'iconClass'    => '',
-            'title'        => 'Test feed item ',
-            'subTitle'     => 'Test feed subtitle ',
-            'actionUrl'    => 'http://google.com',
-            'description'  => 'A feed test took place',
-            'extraClasses' => '',
-        ];
-
-        $res = [];
-        $startpageidx = (($page * $pagesize) + 1);
-        $endpageidx = ((($page + 1) * $pagesize));
-        for ($i = $startpageidx; $i <= $numitems && $i <= $endpageidx; $i++) {
-            $feeditem = $feeditemmodel;
-            $feeditem['title'] .= $i;
-            $feeditem['subTitle'] .= $i;
-            $res[] = $feeditem;
-        }
-
-        return $res;
+        return local::get_feed($params['feedid'], $params['page'], $params['pagesize']);
     }
 }

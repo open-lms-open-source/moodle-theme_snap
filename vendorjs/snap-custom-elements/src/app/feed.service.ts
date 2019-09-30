@@ -1,7 +1,5 @@
 import {Injectable} from '@angular/core';
 
-import {FeedItem} from './feed-item';
-
 import {Observable, of} from 'rxjs';
 
 import {HttpClient, HttpHeaders} from '@angular/common/http';
@@ -50,10 +48,7 @@ export class FeedService {
       );
   }
 
-  /** Log a HeroService message with the MessageService */
-  private log(message: string) {
-    console.log(`FeedService: ${message}`);
-  }
+  private log(message: string) {}
 
   /**
    * Handle Http operation that failed.
