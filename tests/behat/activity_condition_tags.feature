@@ -59,7 +59,7 @@ Feature: When the moodle theme is set to Snap, activity restriction tags are sho
     And I set the field with xpath "//span[@class=\"p-r-1\"][text()=\"Grade\"]//following-sibling::span//select" to "Test assignment2"
     Then I click on "//input[@id=\"id_submitbutton2\"]" "xpath_element"
     And I wait until the page is ready
-    And I click on "//button[@class='snap-conditional-tag']" "xpath_element"
+    And I click on "//a[@class='snap-conditional-tag']" "xpath_element"
     Then I should see "You have a grade in Test assignment2"
 
   @javascript
@@ -79,7 +79,7 @@ Feature: When the moodle theme is set to Snap, activity restriction tags are sho
     And I set the field with xpath "//span[@class=\"accesshide\"][text()=\"Required restrictions \"]//following-sibling::select" to "all"
     Then I click on "//input[@id=\"id_submitbutton2\"]" "xpath_element"
     And I wait until the page is ready
-    And I click on "//button[@class='snap-conditional-tag']" "xpath_element"
+    And I click on "//a[@class='snap-conditional-tag']" "xpath_element"
     Then I should see "You have a grade in Test assignment2"
     Then I should see "You belong to Group1"
 
@@ -100,6 +100,6 @@ Feature: When the moodle theme is set to Snap, activity restriction tags are sho
     And I set the field with xpath "//span[@class=\"accesshide\"][text()=\"Required restrictions \"]//following-sibling::select" to "any"
     Then I click on "//input[@id=\"id_submitbutton2\"]" "xpath_element"
     And I wait until the page is ready
-    And I click on "//button[@class='snap-conditional-tag']" "xpath_element"
+    And I click on "//a[@class='snap-conditional-tag']" "xpath_element"
     Then I should see "You have a grade in Test assignment2"
     Then I should see "You belong to Group1"

@@ -94,7 +94,7 @@ Feature: Open page module inline
     And I should see "Conditional" in the "#chapters li:nth-of-type(2)" "css_element"
     And I should see "Conditional" in the "#chapters li:nth-of-type(3)" "css_element"
     And "span.autocompletion img[title='Not completed: Page completion']" "css_element" should exist
-    And I click on "//button[@class='snap-conditional-tag']" "xpath_element"
+    And I click on "//a[@class='snap-conditional-tag']" "xpath_element"
     And I should see "Not available unless: The activity Page completion is marked complete"
     And I follow "Topic 1"
     And "#chapters li:nth-of-type(2).snap-visible-section" "css_element" should exist
