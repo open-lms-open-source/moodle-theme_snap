@@ -195,7 +195,7 @@ class course_renderer extends \core_course_renderer {
      */
     public function course_section_cm($course, &$completioninfo, cm_info $mod, $sectionreturn, $displayoptions = array()) {
 
-        global $COURSE;
+        global $COURSE, $OUTPUT;
 
         $output = '';
         // We return empty string (because course module will not be displayed at all)
@@ -250,6 +250,14 @@ class course_renderer extends \core_course_renderer {
         $completiontracking .= $this->course_section_cm_completion($course, $completioninfo, $mod, $displayoptions);
         $completiontracking .= '</div>';
 
+        // Add specific class if the completion tracking is disabled for an activity.
+        $completion = $completioninfo->is_enabled($mod);
+        if ($completion == COMPLETION_TRACKING_NONE) {
+            $completiontracking = '<div class="disabled-snap-asset-completion-tracking">';
+            $completiontracking .= $this->course_section_cm_completion($course, $completioninfo, $mod, $displayoptions);
+            $completiontracking .= '</div>';
+        }
+
         // Draft & Stealth tags.
         $stealthtag = '';
         $drafttag = '';
@@ -285,22 +293,26 @@ class course_renderer extends \core_course_renderer {
 
         $canviewhidden = has_capability('moodle/course:viewhiddenactivities', $mod->context);
         // If the module isn't available, or we are a teacher (can view hidden activities) then get availability
-        // info.
-        $conditionalmeta = '';
+        // info. Restrictions will appear on click over a lock image inside the activity header.
+        $coursetoolsicon = '';
         if (!$mod->available || $canviewhidden) {
             $availabilityinfo = $this->course_section_cm_availability($mod, $displayoptions);
             if ($availabilityinfo) {
-                $conditionalmeta .= '<div class="snap-conditional-tag">'.$availabilityinfo.'</div>';
+                $restrictionsource = '<img title="" id="snap-restriction-icon" aria-hidden="true" class="svg-icon" src="';
+                $restrictionsource .= $this->output->image_url('lock', 'theme').'"/>';
+                $coursetoolsicon .= '<button tabindex="0" class="snap-conditional-tag" role="button" data-toggle="popover"';
+                $coursetoolsicon .= "data-trigger='focus' data-placement='right' data-content='".$availabilityinfo."'";
+                $coursetoolsicon .= 'id="snap-restriction" data-html="true">'.$restrictionsource.'</button>';
             }
         }
 
         // Add draft, contitional.
-        $assetmeta = $stealthtag.$drafttag.$conditionalmeta;
+        $assetmeta = $stealthtag.$drafttag;
 
         // Build output.
         $postcontent = '<div class="snap-asset-meta" data-cmid="'.$mod->id.'">'.$assetmeta.$mod->afterlink.'</div>';
         $content = '<div class="snap-asset-content">'.$assetlink.$postcontent.$contentpart.$snapcompletionmeta.$groupmeta.'</div>';
-        $cardicons = '<div class="snap-header-card-icons">'.$completiontracking.'</div>';
+        $cardicons = '<div class="snap-header-card-icons">'.$completiontracking.$coursetoolsicon.'</div>';
         $output .= '<div class="snap-header-card">'.$assettype.$cardicons.'</div>'.$content;
 
         // Bail at this point if we aren't using a supported format. (Folder view is only partially supported).
