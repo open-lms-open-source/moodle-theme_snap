@@ -65,7 +65,7 @@ Feature: Manual completion updates page wihout reload.
     # Log in as student to test manual completion releases restrictions.
     And I log in as "student1"
     And I am on the course main page for "C1"
-    And I click on "//button[@class='snap-conditional-tag']" "xpath_element"
+    And I click on "//a[@class='snap-conditional-tag']" "xpath_element"
     And I should see "Not available unless: The activity Test assignment1 is marked complete"
     When I follow "Topic 1"
     And I should see "Not available unless: The activity Test assignment2 is marked complete"

@@ -994,12 +994,15 @@ body.snap-resource-card {
 
     // Modify restriction icon size and position for course cards.
     .snap-header-card .snap-header-card-icons {
-        button#snap-restriction {
-            border: none;
+        a#snap-restriction {
             padding: 0;
-            float: right;
             margin: 0 2em;
+            float: right;
+            border: none;
+            outline: none;
             background-color: transparent;
+            transition: all .2s ease-in-out;
+            cursor: pointer;
             img#snap-restriction-icon {
                 width: 20px;
                 height: 20px;
@@ -1010,9 +1013,9 @@ body.snap-resource-card {
                 border: none;
                 background-color: transparent;
             }
-        }
-        #popover-content.hidden {
-            display: none;
+            &:hover {
+                transform: scale(1.1);
+            }
         }
     }
 
