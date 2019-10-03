@@ -49,12 +49,14 @@ Feature: Open page (front page) module inline
      And I should see "page content1"
 
   @javascript
-  Scenario: Page mod completion updates on read more and affects availability for other modules at the front page.
+  Scenario Outline: Page mod completion updates on read more and affects availability for other modules at the front page.
     Given the following "activities" exist:
       | activity | course               | idnumber  | name              | intro                 | content                 | section |
       | page     | Acceptance test site | pagec     | Page completion   | Page completion intro | Page completion content | 1       |
       | page     | Acceptance test site | pager     | Page restricted   | Page restricted intro | Page restricted content | 1       |
    Then I log in as "admin"
+    And the following config values are set as admin:
+      | resourcedisplay | <Option> | theme_snap |
     And I am on site homepage
     # Sometimes the page activity is not being created with the correct completion options, so I have to do it manually
     And I follow "Edit \"Page completion\""
@@ -79,6 +81,10 @@ Feature: Open page (front page) module inline
     And I should see "Page restricted"
     And I click on ".section.img-text li:nth-child(2) .contentafterlink .summary-text a" "css_element"
    Then I should see " Page restricted content"
+    Examples:
+      | Option     |
+      | 0          |
+      | 1          |
 
   @javascript
   Scenario: Page mod should be visible at the front page for users that are not logged in.

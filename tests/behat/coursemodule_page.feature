@@ -74,6 +74,7 @@ Feature: Open page module inline
     And I log in as "admin"
     And the following config values are set as admin:
       | coursepartialrender | <Option> | theme_snap |
+      | resourcedisplay     | <Option> | theme_snap |
     And I am on the course main page for "C1"
     # Restrict the second page module to only be accessible after the first page module is marked complete.
     And I restrict course asset "Page restricted" by completion of "Page completion"

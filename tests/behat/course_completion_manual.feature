@@ -48,6 +48,7 @@ Feature: Manual completion updates page wihout reload.
     Given I log in as "admin"
     And the following config values are set as admin:
       | coursepartialrender | <Option> | theme_snap |
+      | resourcedisplay     | <Option> | theme_snap |
     And I am on the course main page for "C1"
     # Restrict the second assign module to only be accessible after the first assign module is marked complete.
     And I restrict course asset "Test assignment2" by completion of "Test assignment1"
