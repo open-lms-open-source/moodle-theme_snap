@@ -47,7 +47,11 @@ Feature: When the moodle theme is set to Snap, activity restriction tags are sho
       | assign   | C1     | assign2  | Test assignment2 | Test assignment 2 | 1                                   | 1                               | 1       | ##next week##   |
 
   @javascript
-  Scenario: User sees the grade restriction.
+  Scenario Outline: User sees the grade restriction.
+    Given I log in as "admin"
+    And the following config values are set as admin:
+      | resourcedisplay | <Option> | theme_snap |
+    And I log out
     Given I log in as "teacher1"
     And I am on the course main page for "C1"
     And I follow "Topic 1"
@@ -61,9 +65,18 @@ Feature: When the moodle theme is set to Snap, activity restriction tags are sho
     And I wait until the page is ready
     And I click on "//a[@class='snap-conditional-tag']" "xpath_element"
     Then I should see "You have a grade in Test assignment2"
+    Examples:
+      | Option     |
+      | 0          |
+      | 1          |
+
 
   @javascript
-  Scenario: User sees all restrictions when matching all restrictions.
+  Scenario Outline: User sees all restrictions when matching all restrictions.
+    Given I log in as "admin"
+    And the following config values are set as admin:
+      | resourcedisplay | <Option> | theme_snap |
+    And I log out
     Given I log in as "teacher1"
     And I am on the course main page for "C1"
     And I follow "Topic 1"
@@ -82,9 +95,18 @@ Feature: When the moodle theme is set to Snap, activity restriction tags are sho
     And I click on "//a[@class='snap-conditional-tag']" "xpath_element"
     Then I should see "You have a grade in Test assignment2"
     Then I should see "You belong to Group1"
+  Examples:
+  | Option     |
+  | 0          |
+  | 1          |
+
 
   @javascript
-  Scenario: User sees all restrictions when matching any restrictions.
+  Scenario Outline: User sees all restrictions when matching any restrictions.
+    Given I log in as "admin"
+    And the following config values are set as admin:
+      | resourcedisplay | <Option> | theme_snap |
+    And I log out
     Given I log in as "teacher1"
     And I am on the course main page for "C1"
     And I follow "Topic 1"
@@ -103,3 +125,7 @@ Feature: When the moodle theme is set to Snap, activity restriction tags are sho
     And I click on "//a[@class='snap-conditional-tag']" "xpath_element"
     Then I should see "You have a grade in Test assignment2"
     Then I should see "You belong to Group1"
+    Examples:
+      | Option     |
+      | 0          |
+      | 1          |

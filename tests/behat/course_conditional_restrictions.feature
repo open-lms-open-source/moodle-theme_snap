@@ -31,8 +31,6 @@ Feature: When the moodle theme is set to Snap, conditional restrictions work as 
       | activity | course | idnumber | name                        | intro                     | section | assignsubmission_onlinetext_enabled | completion | completionview |
       | assign   | C1     | assign1  | S1 Restricted               | Restricted by date past   | 1       | 1                                   | 1          | 0              |
       | assign   | C1     | assign2  | S2 Restricted               | Restricted by date future | 1       | 1                                   | 1          | 0              |
-      | assign   | C1     | assign3  | S1 Restricted - section 2   | Restricted by date past   | 2       | 1                                   | 1          | 0              |
-      | assign   | C1     | assign4  | S2 Restricted - section 2   | Restricted by date future | 2       | 1                                   | 1          | 0              |
       | assign   | C1     | assign5  | S3 Completion - view        | View completion active    | 3       | 1                                   | 1          | 1              |
       | assign   | C1     | assign6  | S4 Activity                 | View completion active    | 4       | 1                                   | 1          | 1              |
     And the following "users" exist:
@@ -49,6 +47,7 @@ Feature: When the moodle theme is set to Snap, conditional restrictions work as 
   Given I log in as "admin"
     And the following config values are set as admin:
       | coursepartialrender | <Option> | theme_snap |
+      | resourcedisplay     | <Option> | theme_snap |
     And I log out
     And I log in as "teacher1"
     And I am on the course main page for "C1"

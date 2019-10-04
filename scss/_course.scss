@@ -973,6 +973,86 @@ body.snap-resource-card li.snap-resource {
     }
 }
 
+// -----------------------------------------------------------
+// Icons view - Activity header.
+// -----------------------------------------------------------
+body.snap-resource-list,
+body.snap-resource-card {
+    // Establish 60% for title and 40% for icons in the activity header.
+    .asset-wrapper {
+        .snap-assettype {
+            display: inline-block;
+            width: 60%;
+            height: 100%;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .snap-header-card-icons {
+            display: inline-block;
+            width: 40%;
+            height: 100%;
+            max-height: 1.01em;
+            margin-bottom: 0.1em;
+        }
+    }
+    // Modify restriction icon size and position for course cards.
+    .snap-header-card {
+        padding-bottom: 1em;
+        .snap-header-card-icons {
+            a#snap-restriction {
+                padding: 0;
+                float: right;
+                display: inline-block;
+                border: none;
+                outline: none;
+                background-color: transparent;
+                transition: all .2s ease-in-out;
+                cursor: pointer;
+                img#snap-restriction-icon {
+                    width: 20px;
+                    height: 20px;
+                    float: right;
+                }
+                &:active {
+                    outline: none;
+                    border: none;
+                    background-color: transparent;
+                }
+                &:hover {
+                    transform: scale(1.1);
+                }
+            }
+            .snap-asset-completion-tracking {
+                display: inline-block;
+                float: right;
+            }
+        }
+    }
+}
+
+// We need to establish to 100% the width for the icons for these activities, because the asset type will not appear in the card.
+// This will happen in list and card views.
+body.snap-resource-list {
+    li.modtype_label,
+    li.modtype_resource,
+    li.modtype_folder,
+    li.modtype_url {
+        .snap-header-card-icons {
+            width: 100%;
+        }
+    }
+}
+
+body.snap-resource-card {
+    li.modtype_label .snap-header-card-icons {
+            width: 100%;
+    }
+}
+
+// -----------------------------------------------------------
+// Cards view - Ellipsis title and gradient content.
+// -----------------------------------------------------------
 body.snap-resource-card {
     li.snap-resource.snap-resource-long {
         height: 21em;
@@ -989,51 +1069,6 @@ body.snap-resource-card {
         div.contentafterlink div.no-overflow iframe,
         div.mediaplugin.mediaplugin_videojs {
             display: none;
-        }
-    }
-
-    // Modify restriction icon size and position for course cards.
-    .snap-header-card .snap-header-card-icons {
-        a#snap-restriction {
-            padding: 0;
-            margin: 0 2em;
-            float: right;
-            border: none;
-            outline: none;
-            background-color: transparent;
-            transition: all .2s ease-in-out;
-            cursor: pointer;
-            img#snap-restriction-icon {
-                width: 20px;
-                height: 20px;
-                float: right;
-            }
-            &:active {
-                outline: none;
-                border: none;
-                background-color: transparent;
-            }
-            &:hover {
-                transform: scale(1.1);
-            }
-        }
-    }
-
-    .asset-wrapper {
-        .snap-assettype {
-            display: inline-block;
-            width: 60%;
-            height: 100%;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-        .snap-header-card-icons {
-            display: inline-block;
-            width: 40%;
-            height: 100%;
-            max-height: 1.01em;
-            margin-bottom: 0.1em;
         }
     }
 
@@ -1093,8 +1128,9 @@ body.snap-resource-card {
                 -khtml-user-select: none; /* Konqueror HTML */
                 -moz-user-select: none; /* Firefox */
                 -ms-user-select: none; /* Internet Explorer/Edge */
-                /* "transparent" only works here because == rgba(0,0,0,0) */
-                background-image: linear-gradient(to bottom, transparent, white);
+                // Transparent needs to be set the color to white with 0 alpha to achieve the gradient. This is because for Safari
+                // transparent is a black color with 0 alpha and this will cause a bug.
+                background-image: linear-gradient(to bottom, rgba(255,255,255,0) 0%, white);
             }
         }
     }
@@ -1476,15 +1512,6 @@ body.snap-resource-card {
 
 // TODO - in course_renderer figure out if completion tracking enabled.
 // If so - add 1.3em gutter to slat to stop overlapping.
-
-.snap-asset-completion-tracking {
-    position: absolute;
-    top: 0.5em;
-    right: 1em;
-    display: block;
-    line-height: 0;
-}
-
 /* Completion actions */
 
 span.autocompletion img,
