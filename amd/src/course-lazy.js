@@ -216,7 +216,9 @@ define(
                     });
                     // Current section might be hidden, at this point should be visible.
                     var sections = $('.course-content li[id^="section-"]');
-                    if (sections.length == 1) {
+                    var urlParams = location.hash.split("&"),
+                        sectionParam = urlParams[0];
+                    if (sections.length == 1 && sectionParam != '#coursetools') {
                         sections.addClass('state-visible');
                         var section = sections.attr('id').split('section-')[1];
                         if (self.courseConfig.toctype == 'top' && self.courseConfig.format == 'topics' && section > 0) {

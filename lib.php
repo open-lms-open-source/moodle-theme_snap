@@ -370,7 +370,8 @@ function theme_snap_output_fragment_section($args) {
             $page->initialise_theme_and_output();
             $page->blocks->load_blocks();
             $page->blocks->create_all_block_instances();
-            if ($page->blocks->is_block_present('sharing_cart') && !empty($section)) {
+            if ($page->blocks->is_block_present('sharing_cart') && !empty($section) &&
+                file_exists($CFG->dirroot . '/blocks/sharing_cart/amd/src/script.js')) {
                 $sectionsjs = new stdClass();
                 $sectionsjs->id = $section->id;
                 $sectionsjs->name = $section->name;
