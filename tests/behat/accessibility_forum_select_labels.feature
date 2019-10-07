@@ -38,7 +38,6 @@ Feature: Aria label validation for core forum options.
 
   @javascript
   Scenario: A teacher can see the attributes of the selectors.
-    And I skip because "This test is failing randomly"
     Given the following "activities" exist:
       | activity   | name                   | intro             | course | idnumber     | groupmode |
       | forum      | Test forum 1           | Test forum 1      | C1     | forum        | 0         |
@@ -53,7 +52,7 @@ Feature: Aria label validation for core forum options.
     And I log in as "teacher1"
     And I am on "Course 1" course homepage
     And I click on ".modtype_forum .mod-link" "css_element"
-    And I click on ".topic.starter a" "css_element"
+    And I click on "//td[@class='topic starter']//a[contains(text(),'Discussion 1')]" "xpath_element"
     And ".displaymode form .custom-select" "css_element" should exist
     And the "aria-label" attribute of ".displaymode form select.custom-select" "css_element" should contain "Display options"
     And the "aria-label" attribute of ".movediscussion select.urlselect" "css_element" should contain "Move options"
