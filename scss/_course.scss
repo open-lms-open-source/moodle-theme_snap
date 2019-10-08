@@ -992,8 +992,7 @@ body.snap-resource-card {
             display: inline-block;
             width: 40%;
             height: 100%;
-            max-height: 1.01em;
-            margin-bottom: 0.1em;
+            max-height: 1.4em;
         }
     }
     // Modify restriction icon size and position for course cards.
@@ -1037,7 +1036,10 @@ body.snap-resource-list {
     li.modtype_label,
     li.modtype_resource,
     li.modtype_folder,
-    li.modtype_url {
+    li.modtype_url,
+    li.modtype_imscp,
+    li.modtype_lightboxgallery,
+    li.modtype_scorm {
         .snap-header-card-icons {
             width: 100%;
         }
@@ -1045,8 +1047,11 @@ body.snap-resource-list {
 }
 
 body.snap-resource-card {
-    li.modtype_label .snap-header-card-icons {
+    li.modtype_label,
+    li.modtype_folder {
+        .snap-header-card-icons {
             width: 100%;
+        }
     }
 }
 
