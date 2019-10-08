@@ -207,7 +207,8 @@ define(['jquery', 'core/log', 'core/ajax', 'core/str', 'core/templates', 'core/n
             tempnode.find('li.snap-resource.snap-resource-long div.contentafterlink ' +
                 'div.no-overflow p:has(img)').css('display', 'none');
             // Remove from Dom the completion tracking when it is disabled for an activity.
-            tempnode.find('.snap-header-card .snap-header-card-icons .disabled-snap-asset-completion-tracking').remove();
+            tempnode.find('body.snap-resource-card .snap-header-card ' +
+                '.snap-header-card-icons .disabled-snap-asset-completion-tracking').remove();
             if (existingSections.length > 0) {
                 var closest = existingSections.reduce(function(prev, curr) {
                     return (Math.abs(curr - section) < Math.abs(prev - section) ? curr : prev);
