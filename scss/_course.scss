@@ -1048,10 +1048,13 @@ body.snap-resource-list {
 
 body.snap-resource-card {
     li.modtype_label,
-    li.modtype_folder {
+    li.snap-activity.modtype_folder {
         .snap-header-card-icons {
             width: 100%;
         }
+    }
+    li.snap-resource-long.modtype_folder .snap-header-card-icons {
+        width: 40%;
     }
 }
 
