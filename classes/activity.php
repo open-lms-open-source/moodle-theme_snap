@@ -705,6 +705,17 @@ class activity {
     }
 
     /**
+     * Get number of contributors to the database
+     *
+     * @param int $courseid
+     * @param int $modid
+     * @return int
+     */
+    public static function data_num_submissions($courseid, $modid) {
+        return self::std_num_submissions($courseid, $modid, 'data', 'dataid', 'data_records');
+    }
+
+    /**
      * Get number of ungraded quiz attempts for specific quiz
      *
      * @param int $courseid
