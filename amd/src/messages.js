@@ -44,10 +44,11 @@ define(['jquery'],
         };
 
         return {
-            init: function(userId) {
+            init: function(userId, isAdmin) {
                 // Listener for the admin block.
                 var messageUserId = getParam('id');
-                if (!messageUserId || userId === messageUserId) {
+                if (!messageUserId || userId === messageUserId ||
+                        (!isAdmin && userId != messageUserId)) {
                     document.addEventListener("messages-drawer:toggle", function () {
                         if ($('#page-message-edit').length || $('#page-message-index').length) {
                             if ($('.block_settings').hasClass('state-visible') ||

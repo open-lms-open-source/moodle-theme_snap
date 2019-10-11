@@ -575,10 +575,11 @@ define(['jquery', 'core/log', 'theme_snap/headroom', 'theme_snap/util', 'theme_s
              * @param {bool} inAlternativeRole
              * @param {string} brandColors
              * @param {int} gradingConstants
+             * @param {boolean} isAdmin
              */
             snapInit: function(courseConfig, pageHasCourseContent, siteMaxBytes, forcePassChange,
                                messageBadgeCountEnabled, userId, sitePolicyAcceptReqd, inAlternativeRole,
-                               brandColors, gradingConstants) {
+                               brandColors, gradingConstants, isAdmin) {
 
                 // Set up.
 
@@ -947,7 +948,7 @@ define(['jquery', 'core/log', 'theme_snap/headroom', 'theme_snap/util', 'theme_s
                     waitForFullScreenButton();
                 });
                 accessibility.snapAxInit();
-                messages.init(userId);
+                messages.init(userId, isAdmin);
             }
         };
     }
