@@ -1049,6 +1049,7 @@ class course_renderer extends \core_course_renderer {
      */
     public function course_category($category) {
         global $CFG;
+        $basecategory = \core_course_category::get(0);
         $coursecat = \core_course_category::get(is_object($category) ? $category->id : $category);
         $site = get_site();
         $output = '';
@@ -1056,7 +1057,7 @@ class course_renderer extends \core_course_renderer {
         // NOTE - we output manage catagory button in the layout file in Snap.
 
         if (!$coursecat->id) {
-            if (\core_course_category::count_all() == 1) {
+            if (\core_course_category::is_simple_site() == 1) {
                 // There exists only one category in the system, do not display link to it.
                 $coursecat = \core_course_category::get_default();
                 $strfulllistofcourses = get_string('fulllistofcourses');
@@ -1067,13 +1068,13 @@ class course_renderer extends \core_course_renderer {
             }
         } else {
             $title = $site->shortname;
-            if (\core_course_category::count_all() > 1) {
+            if ($basecategory->get_children_count() > 1) {
                 $title .= ": ". $coursecat->get_formatted_name();
             }
             $this->page->set_title($title);
 
             // Print the category selector.
-            if (\core_course_category::count_all() > 1) {
+            if ($basecategory->get_children_count() > 1) {
                 $select = new \single_select(new moodle_url('/course/index.php'), 'categoryid',
                         \core_course_category::make_categories_list(), $coursecat->id, null, 'switchcategory');
                 $select->set_label(get_string('category').':');
@@ -1146,7 +1147,7 @@ class course_renderer extends \core_course_renderer {
 
         $output .= $this->container_start('buttons');
         ob_start();
-        if (\core_course_category::count_all() == 1) {
+        if (\core_course_category::is_simple_site() == 1) {
             print_course_request_buttons(\context_system::instance());
         } else {
             print_course_request_buttons($context);

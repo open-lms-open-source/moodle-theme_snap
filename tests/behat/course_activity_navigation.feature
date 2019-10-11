@@ -72,6 +72,7 @@ Feature: Activity navigation in Snap theme
     # Stealth activity.
     And I follow "Topic 2"
     And I follow "Edit \"Forum 1\""
+    And I expand all fieldsets
     And I set the field "Visibility" to "Make available but not shown on course page"
     And I press "Save and return to course"
     # Hidden activity.

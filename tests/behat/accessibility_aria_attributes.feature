@@ -64,8 +64,14 @@ Feature: Elements for Snap should have the proper aria attributes.
   @javascript
   Scenario: Elements in front page must contain the correct attributes
     Given I log in as "admin"
+    And the following config values are set as admin:
+    | linkadmincategories | 0 |
     And I am on site homepage
-    And I navigate to "Appearance > Themes > Snap" in site administration
+    And I click on "#admin-menu-trigger" "css_element"
+    And I expand "Site administration" node
+    And I expand "Appearance" node
+    And I expand "Themes" node
+    And I follow "Snap"
     And I click on "form#adminsettings div.settingsform div.row ul#snap-admin-tabs li:nth-child(5)" "css_element"
     And I set the field with xpath "//div[@class='form-text defaultsnext']//input[@id='id_s_theme_snap_fc_one']" to "1"
     And I set the field with xpath "//div[@class='form-text defaultsnext']//input[@id='id_s_theme_snap_fc_two']" to "2"

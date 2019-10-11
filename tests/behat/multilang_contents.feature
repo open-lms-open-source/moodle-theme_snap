@@ -25,13 +25,17 @@ Feature: The site displays only the language that user has selected for multilan
   Background:
     Given the following config values are set as admin:
       | theme | snap |
+      | linkadmincategories | 0 |
     And the following "courses" exist:
       | fullname | shortname | idnumber |
       | Course 1 | Course 1  | C1       |
     And I log in as "admin"
     And I am on site homepage
     And I click on "#admin-menu-trigger" "css_element"
-    And I navigate to "Plugins > Filters > Manage filters" in site administration
+    And I expand "Site administration" node
+    And I expand "Plugins" node
+    And I expand "Filters" node
+    And I follow "Manage filters"
     And I click on "On" "option" in the "Multi-Language Content" "table_row"
     And I click on "Content and headings" "option" in the "Multi-Language Content" "table_row"
     And I am on site homepage
@@ -60,7 +64,10 @@ Feature: The site displays only the language that user has selected for multilan
     Given I log in as "admin"
     And I am on site homepage
     And I click on "#admin-menu-trigger" "css_element"
-    And I navigate to "Appearance > Themes > Snap" in site administration
+    And I expand "Site administration" node
+    And I expand "Appearance" node
+    And I expand "Themes" node
+    And I follow "Snap"
     And I set the field "Site footer" to "<span lang=\"en\" class=\"multilang\">English text</span><span lang=\"it\" class=\"multilang\">Italian text</span>"
     And I press "Save changes"
     And "#snap-footer-content" "css_element" should exist

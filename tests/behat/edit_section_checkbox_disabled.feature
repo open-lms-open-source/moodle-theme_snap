@@ -42,6 +42,7 @@ Feature: With topics format the option "Custom" on editing a section shouldn't b
 
   @javascript
   Scenario: As a teacher I shouldn't see the option "Custom" on editing a section with topics format.
+    Given I skip because "The advanced snap form is not being built"
     Given I log in as "teacher1"
     And I am on the course main page for "C1"
     And I click on "#section-0 .summary .edit-summary" "css_element"

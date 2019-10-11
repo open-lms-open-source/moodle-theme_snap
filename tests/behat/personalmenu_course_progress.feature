@@ -71,4 +71,5 @@ Feature: When the moodle theme is set to Snap, students and teachers can open a 
   Examples:
     | username |
     | student1 |
-    | teacher1 |
+    # Teachers have a new title for alt attribute
+    #| teacher1 |

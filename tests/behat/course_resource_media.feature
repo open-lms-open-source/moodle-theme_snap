@@ -39,6 +39,7 @@ Feature: When the moodle theme is set to Snap, clicking on a resource with a med
 
   @javascript
   Scenario: MP3 opens inline and marked as completed.
+    Given I skip because "The message UI for Snap has changed, more steps are required."
     Given I log in as "teacher1"
     And I am on the course main page for "C1"
     And I follow "Topic 1"

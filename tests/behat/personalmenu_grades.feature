@@ -131,7 +131,11 @@ Feature: When the moodle theme is set to Snap, students and teachers can open a 
         | personalmenuadvancedfeedsenable | 0 | theme_snap |
       When I log in as "admin"
       And I close the personal menu
-      And I navigate to "Users > Permissions > Define roles" in site administration
+      And I click on "#admin-menu-trigger" "css_element"
+      And I expand "Site administration" node
+      And I expand "Users" node
+      And I expand "Permissions" node
+      And I follow "Define roles"
       And I follow "Non-editing teacher"
       And I set the following system permissions of "Teacher" role:
         | capability                                   | permission |
@@ -223,7 +227,11 @@ Feature: When the moodle theme is set to Snap, students and teachers can open a 
         | personalmenuadvancedfeedsenable | 0 | theme_snap |
      When I log in as "admin"
       And I close the personal menu
-      And I navigate to "Users > Permissions > Define roles" in site administration
+      And I click on "#admin-menu-trigger" "css_element"
+      And I expand "Site administration" node
+      And I expand "Users" node
+      And I expand "Permissions" node
+      And I follow "Define roles"
       And I follow "Non-editing teacher"
       And I set the following system permissions of "Teacher" role:
         | capability                                   | permission |

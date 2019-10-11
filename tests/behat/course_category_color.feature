@@ -29,13 +29,18 @@ Feature: When the moodle theme is set to Snap, admins can change the color for a
       |  5 | Cat  5 |     0    |   CAT5   |   Test      |
       | 10 | Cat 10 |   CAT5   |   CAT10  |   Test      |
       | 20 | Cat 20 |   CAT20  |   CAT20  |   Test      |
+    And the following config values are set as admin:
+      | linkadmincategories | 0 |
 
   @javascript
   Scenario: Go to Snap settings page and put a wrong JSON text in it.
     Given I log in as "admin"
     And I am on site homepage
     And I click on "#admin-menu-trigger" "css_element"
-    And I navigate to "Appearance > Themes > Snap" in site administration
+    And I expand "Site administration" node
+    And I expand "Appearance" node
+    And I expand "Themes" node
+    And I follow "Snap"
     And I should see "Category color"
     And I click on "Category color" "link"
     And I should see "JSON Text"
@@ -53,7 +58,10 @@ Feature: When the moodle theme is set to Snap, admins can change the color for a
     Given I log in as "admin"
     And I am on site homepage
     And I click on "#admin-menu-trigger" "css_element"
-    And I navigate to "Appearance > Themes > Snap" in site administration
+    And I expand "Site administration" node
+    And I expand "Appearance" node
+    And I expand "Themes" node
+    And I follow "Snap"
     And I should see "Category color"
     And I click on "Category color" "link"
     And I should see "JSON Text"
@@ -73,7 +81,10 @@ Feature: When the moodle theme is set to Snap, admins can change the color for a
     Given I log in as "admin"
     And I am on site homepage
     And I click on "#admin-menu-trigger" "css_element"
-    And I navigate to "Appearance > Themes > Snap" in site administration
+    And I expand "Site administration" node
+    And I expand "Appearance" node
+    And I expand "Themes" node
+    And I follow "Snap"
     And I should see "Category color"
     And I click on "Category color" "link"
     And I should see "JSON Text"
@@ -92,7 +103,10 @@ Feature: When the moodle theme is set to Snap, admins can change the color for a
     Given I log in as "admin"
     And I am on site homepage
     And I click on "#admin-menu-trigger" "css_element"
-    And I navigate to "Appearance > Themes > Snap" in site administration
+    And I expand "Site administration" node
+    And I expand "Appearance" node
+    And I expand "Themes" node
+    And I follow "Snap"
     And I should see "Category color"
     And I click on "Category color" "link"
     And I should see "JSON Text"
@@ -109,17 +123,20 @@ Feature: When the moodle theme is set to Snap, admins can change the color for a
   @javascript
   Scenario: Go to Snap settings page and put a wrong JSON text with duplicated IDs.
     Given I log in as "admin"
-      And I am on site homepage
-      And I click on "#admin-menu-trigger" "css_element"
-    And I navigate to "Appearance > Themes > Snap" in site administration
-      And I should see "Category color"
-      And I click on "Category color" "link"
-      And I should see "JSON Text"
-      And I set the following fields to these values:
-        |  Color palette | #FFAAFF                          |
-        |    JSON Text   | {"10":"#FAAFFF", "10":"#0DAA00"} |
-      And I click on "Save changes" "button"
-      And I wait until the page is ready
-      And I should see "Some settings were not changed due to an error."
-      And I click on "Category color" "link"
-      And I should see "Incorrect JSON format, some IDs are duplicated"
+    And I am on site homepage
+    And I click on "#admin-menu-trigger" "css_element"
+    And I expand "Site administration" node
+    And I expand "Appearance" node
+    And I expand "Themes" node
+    And I follow "Snap"
+    And I should see "Category color"
+    And I click on "Category color" "link"
+    And I should see "JSON Text"
+    And I set the following fields to these values:
+      |  Color palette | #FFAAFF                          |
+      |    JSON Text   | {"10":"#FAAFFF", "10":"#0DAA00"} |
+    And I click on "Save changes" "button"
+    And I wait until the page is ready
+    And I should see "Some settings were not changed due to an error."
+    And I click on "Category color" "link"
+    And I should see "Incorrect JSON format, some IDs are duplicated"
