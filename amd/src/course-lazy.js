@@ -104,6 +104,17 @@ define(
             var urlParams = location.hash.split("&"),
                 section = urlParams[0],
                 mod = urlParams[1] || null;
+            if (section == '') {
+            	var qs = location.search.substring(1);
+            	sparameters = qs.split('&');
+            	for (let param of sparameters) {
+            		if (param.indexOf('section=') >= 0) {
+            			param.replace(param)
+            			section = '#' + param.replace('=', '-');
+            			break;
+            		}
+            	}
+            }
 
             if (section !== '' && section !== sectionSetByServer) {
                 $(sectionSetByServer).removeClass('state-visible');
@@ -176,6 +187,18 @@ define(
                     mod = param.split('module-')[1];
                 }
             });
+            
+            if (!section) {
+            	var qs = location.search.substring(1);
+            	sparameters = qs.split('&');
+            	for (let param of sparameters) {
+            		if (param.indexOf('section=') >= 0) {
+            			param.replace(param)
+            			section = param.replace('section=', '');
+            			break;
+            		}
+            	}
+            }
             if (section && $('.chapters .chapter-title[href="#section-' + section + '"]').length > 0) {
                 sectionAssetManagement.renderAndFocusSection(section, mod);
             }
