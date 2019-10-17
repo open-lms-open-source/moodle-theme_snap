@@ -41,6 +41,9 @@ Feature: When the moodle theme is set to Snap, conditional restrictions work as 
       | user     | course | role           |
       | teacher1 | C1     | editingteacher |
       | student1 | C1     | student        |
+    And the following "groups" exist:
+      | course | name   | idnumber |
+      | C1     | Grou'p1 | Group1   |
 
   @javascript
   Scenario Outline: Conditionally restricted section notices show for students only when restrictions not met but always show for teachers.
@@ -100,3 +103,21 @@ Feature: When the moodle theme is set to Snap, conditional restrictions work as 
   | Option     |
   | 0          |
   | 1          |
+
+  @javascript
+  Scenario Outline: Activities with belonging to a group restriction, should be displayed correctly when the group has a apostrophe in the group name
+    Given I log in as "admin"
+    And the following config values are set as admin:
+      | coursepartialrender | <Option> | theme_snap |
+      | resourcedisplay     | <Option> | theme_snap |
+    And I log out
+    And I log in as "teacher1"
+    And I am on the course main page for "C1"
+    And I go to course section 1
+    And I restrict course asset "S1 Restricted" by belong to the group "Grou'p1"
+    And I click on "//a[@class='snap-conditional-tag']" "xpath_element"
+    And I should see "Not available unless: You belong to Grou'p1"
+    Examples:
+      | Option     |
+      | 0          |
+      | 1          |
