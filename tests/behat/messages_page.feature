@@ -44,7 +44,7 @@ Feature: When the moodle theme is set to Snap, message page should be accessible
     Given I log in as "admin"
     And I am on site homepage
     And I click on ".js-snap-pm-trigger.snap-my-courses-menu" "css_element"
-    And I click on "#snap-pm-updates section:nth-child(4) a.snap-personal-menu-more" "css_element"
+    And I click on "//a[small[contains(@id, \"snap-pm-messages\")]]" "xpath_element"
     And I should see "Starred"
     And I should see "Group"
     And I should see "Private"
@@ -67,3 +67,22 @@ Feature: When the moodle theme is set to Snap, message page should be accessible
     And I click on "//span/a[contains(text(),\"Preferences\")]" "xpath_element"
     And I follow "Message preferences"
     Then ".message-drawer" "css_element" should not be visible
+
+  @javascript
+  Scenario: In personal menu preferences page, it must be possible to click the items.
+    Given I log in as "admin"
+    And I am on site homepage
+    And I click on ".js-snap-pm-trigger.snap-my-courses-menu" "css_element"
+    And I click on "//a[@id=\"snap-pm-preferences\"]" "xpath_element"
+    And I follow "Message preferences"
+    And I should see "Settings"
+    And I should see "Privacy"
+    And I should see "Notification preferences"
+
+  @javascript
+  Scenario: When selecting messages of a contact, it must be possible to click the items.
+    Given I log in as "admin"
+    And I am on the course main page for "C1"
+    And I wait until the page is ready
+    And I click on "//a[contains(text(),\"Teacher 1\")]/following-sibling::small/a" "xpath_element"
+    And ".message-drawer" "css_element" should be visible

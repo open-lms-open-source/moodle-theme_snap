@@ -30,25 +30,10 @@ define(['jquery'],
         // Maximum size in pixels to consider a mobile screen
         var maxWidth = 560;
 
-        var getParam = function(name){
-            name = name.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");
-            var regexS = "[\\?&]" + name + "=([^&#]*)";
-            var regex = new RegExp(regexS);
-            var results = regex.exec(window.location.href);
-            if (results === null) {
-                return "";
-            }
-            else {
-                return results[1];
-            }
-        };
-
         return {
-            init: function(userId, isAdmin) {
+            init: function() {
                 // Listener for the admin block.
-                var messageUserId = getParam('id');
-                if (!messageUserId || userId === messageUserId ||
-                        (!isAdmin && userId != messageUserId)) {
+                if ($('.preferences-page-container').length === 0) {
                     document.addEventListener("messages-drawer:toggle", function () {
                         if ($('#page-message-edit').length || $('#page-message-index').length) {
                             if ($('.block_settings').hasClass('state-visible') ||
