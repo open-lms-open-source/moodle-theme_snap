@@ -1358,6 +1358,7 @@ class activity {
      */
     public static function user_activity_events($userorid, array $courses, $tstart, $tend, $cacheprefix = '',
                                                 $limit = 40) {
+        global $DB;
 
         $retobj = (object) [
             'timestamp' => null,
@@ -1394,6 +1395,23 @@ class activity {
                             $cachefresh = false;
                         }
                     }
+                }
+                $cmids = [];
+                foreach ($cached->events as $event) {
+                    if (!empty($event->actionurl)) {
+                        $cmids[] = $event->actionurl->get_param("id");
+                    }
+                }
+                if (!empty($cmids)) {
+                    list($insql, $params) = $DB->get_in_or_equal($cmids);
+                    $sql = "SELECT deletioninprogress
+                          FROM {course_modules}
+                         WHERE id $insql
+                           AND deletioninprogress = 1";
+                    $deletioninprogress = $DB->get_record_sql($sql, $params);
+                }
+                if (!empty($deletioninprogress)) {
+                    $cachefresh = false;
                 }
 
                 if ($cachefresh) {

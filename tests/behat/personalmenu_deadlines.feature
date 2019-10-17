@@ -254,3 +254,33 @@ Feature: When the moodle theme is set to Snap, students and teachers can find in
       | enadvfeeds | waitclause                                          |
       | 0          | wait until the page is ready                        |
       | 1          | wait until "snap-feed" custom element is registered |
+
+  @javascript
+  Scenario Outline: As student i shouln't see deadlines of activities in the recycle bin.
+    Given the following "activities" exist:
+      | activity | course | idnumber | name             | intro             | assignsubmission_onlinetext_enabled | assignfeedback_comments_enabled | section | duedate         |
+      | assign   | C1     | assign1  | Assignment 1 | Test assignment 1 | 1                                   | 1                               | 0       | ##tomorrow##    |
+    And the following config values are set as admin:
+      | personalmenuadvancedfeedsenable | <enadvfeeds> | theme_snap      |
+      | coursebinenable                 | 1            | tool_recyclebin |
+      | coursebinexpiry                 | 604800       | tool_recyclebin |
+    And I log in as "student1"
+    And I <waitclause>
+    And I open the personal menu
+    And I see a personal menu deadline of "##tomorrow##" for "Assignment 1"
+    And I log out
+    And I log in as "teacher1"
+    And I am on "Course 1" course homepage with editing mode on
+    And I click on ".snap-activity[data-type='Assignment'] span.snap-edit-asset-more" "css_element"
+    And I click on ".snap-activity[data-type='Assignment'] a.js_snap_delete" "css_element"
+    Then I should see asset delete dialog
+    When I press "Delete Assign"
+    And I log out
+    And I log in as "student1"
+    And I <waitclause>
+    And I open the personal menu
+    And "#snap-personal-menu-<selectorstr> div.snap-media-object:first-of-type" "css_element" should not exist
+    Examples:
+      | enadvfeeds | selectorstr     | waitclause                                          |
+      | 0          | deadlines       | wait until the page is ready                        |
+      | 1          | feed-deadlines  | wait until "snap-feed" custom element is registered |
