@@ -579,7 +579,7 @@ define(['jquery', 'core/log', 'theme_snap/headroom', 'theme_snap/util', 'theme_s
              */
             snapInit: function(courseConfig, pageHasCourseContent, siteMaxBytes, forcePassChange,
                                messageBadgeCountEnabled, userId, sitePolicyAcceptReqd, inAlternativeRole,
-                               brandColors, gradingConstants, isAdmin) {
+                               brandColors, gradingConstants) {
 
                 // Set up.
 
@@ -948,7 +948,7 @@ define(['jquery', 'core/log', 'theme_snap/headroom', 'theme_snap/util', 'theme_s
                     waitForFullScreenButton();
                 });
                 accessibility.snapAxInit();
-                messages.init(userId, isAdmin);
+                messages.init();
             }
         };
     }

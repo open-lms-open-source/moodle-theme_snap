@@ -445,18 +445,9 @@ EOF;
         $localjoulegrader = array_key_exists('joulegrader', $localplugins);
         $blockreports = array_key_exists('reports', core_component::get_plugin_list('block'));
         $allyreport = (\core_component::get_component_directory('report_allylti') !== null);
-        // Check if the current user is an admin or not.
-        $admins = get_admins();
-        $isadmin = false;
-        foreach ($admins as $user) {
-            if ($user->id === $userid) {
-                $isadmin = true;
-                break;
-            }
-        }
         $initvars = [$coursevars, $pagehascoursecontent, get_max_upload_file_size($CFG->maxbytes), $forcepwdchange,
                      $conversationbadgecountenabled, $userid, $sitepolicyacceptreqd, $inalternativerole, $brandcolors,
-                     $gradingconstants, $isadmin];
+                     $gradingconstants];
         $initaxvars = [$localjoulegrader, $allyreport, $blockreports];
         $PAGE->requires->js_call_amd('theme_snap/snap', 'snapInit', $initvars);
         $PAGE->requires->js_call_amd('theme_snap/accessibility', 'snapAxInit', $initaxvars);
