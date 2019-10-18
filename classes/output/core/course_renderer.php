@@ -300,18 +300,9 @@ class course_renderer extends \core_course_renderer {
             if ($availabilityinfo) {
                 $restrictionsource = '<img title="" id="snap-restriction-icon" aria-hidden="true" class="svg-icon" src="';
                 $restrictionsource .= $this->output->image_url('lock', 'theme').'"/>';
-                $coursetoolsicon = html_writer::tag('a', $restrictionsource, [
-                    'tabindex' => '0',
-                    'class' => 'snap-conditional-tag',
-                    'role' => 'button',
-                    'data-toggle' => 'popover',
-                    'data-trigger' => 'focus',
-                    'data-placement' => 'right',
-                    'id' => 'snap-restriction',
-                    'data-html' => 'true',
-                    'clickable' => 'true',
-                    'data-content' => $availabilityinfo
-                ]);
+                $coursetoolsicon .= '<a tabindex="0" class="snap-conditional-tag" role="button" data-toggle="popover"';
+                $coursetoolsicon .= "data-trigger='focus' data-placement='right' data-content='".$availabilityinfo."'";
+                $coursetoolsicon .= 'id="snap-restriction" data-html="true">'.$restrictionsource.'</a>';
             }
         }
 
