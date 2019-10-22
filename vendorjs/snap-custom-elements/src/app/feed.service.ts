@@ -22,7 +22,7 @@ export class FeedService {
     private http: HttpClient) {
   }
 
-  getFeed(sessKey: string|undefined, feedId: string, page: number, pageSize: number): Observable<MoodleRes[]> {
+  getFeed(sessKey: string|undefined, feedId: string, page: number, pageSize: number, maxId: number): Observable<MoodleRes[]> {
     const errorRes : MoodleRes[] = [{
       error: "No session key present",
       data: undefined
@@ -37,7 +37,8 @@ export class FeedService {
       args: {
         feedid: feedId,
         page: page,
-        pagesize: pageSize
+        pagesize: pageSize,
+        maxId: maxId
       }
     }];
 

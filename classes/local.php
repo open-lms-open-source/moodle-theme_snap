@@ -623,17 +623,21 @@ class local {
      * @param null|int $since optional timestamp, only return newer messages
      * @param int $limitfrom
      * @param int $limitnum
+     * @param int $maxid
      * @return array
      * @throws \coding_exception
      * @throws \dml_exception
      */
-    public static function get_user_messages($userid, $since = null, $limitfrom = 0, $limitnum = 3) {
+    public static function get_user_messages($userid, $since = null, $limitfrom = 0, $limitnum = 3, $maxid = -1) {
         global $DB;
 
         if ($since === null) {
             $since = time() - (12 * WEEKSECS);
         }
-
+        $lastmessage = '';
+        if ($maxid >= 0) {
+            $lastmessage = 'AND m.id < '.($maxid + 1);
+        }
         $select = \user_picture::fields('u', null, 'useridfrom', 'fromuser');
 
         $sql  = "
@@ -662,6 +666,7 @@ class local {
                AND mcm.userid = :userid
                AND m.timecreated > :fromdate
                AND m.useridfrom <> mcm.userid
+               $lastmessage
           ORDER BY m.timecreated DESC";
 
         $params = array(
@@ -677,7 +682,7 @@ class local {
         foreach ($records as $record) {
             $message = new message($record);
             $message->set_fromuser(\user_picture::unalias($record, null, 'useridfrom', 'fromuser'));
-
+            $message->uniqueid = $record->id;
             $messages[] = $message;
         }
         return $messages;
@@ -712,10 +717,10 @@ class local {
         return $o;
     }
 
-    public static function messages_data($renderhtml = false, $limitfrom = 0, $limitnum = 5) {
+    public static function messages_data($renderhtml = false, $limitfrom = 0, $limitnum = 5, $maxid = -1) {
         global $USER, $PAGE;
 
-        $messages = self::get_user_messages($USER->id, null, $limitfrom, $limitnum);
+        $messages = self::get_user_messages($USER->id, null, $limitfrom, $limitnum, $maxid);
         if (empty($messages)) {
             return [];
         }
@@ -769,6 +774,7 @@ class local {
                 'description'  => $meta,
                 'extraClasses' => $unreadclass,
                 'fromCache'    => 0,
+                'messageid'    => $message->uniqueid
             ];
         }
         return $res;
@@ -2349,11 +2355,12 @@ SQL;
      * @param string $feedid
      * @param int $page
      * @param int $pagesize
+     * @param int $maxid
      * @return array
      * @throws \coding_exception
      * @throws \moodle_exception
      */
-    public static function get_feed(string $feedid, $page = 0, $pagesize = 3) : array {
+    public static function get_feed(string $feedid, $page = 0, $pagesize = 3, $maxid = -1) : array {
         global $USER;
         switch ($feedid) {
             case 'graded':
@@ -2367,7 +2374,7 @@ SQL;
                 break;
             case 'messages':
                 $limitfrom = $page * $pagesize;
-                $res = self::messages_data(false, $limitfrom, $pagesize);
+                $res = self::messages_data(false, $limitfrom, $pagesize, $maxid);
                 break;
             case 'deadlines':
                 $res = self::deadlines_data(

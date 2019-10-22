@@ -320,6 +320,41 @@ class theme_snap_local_test extends snap_base_test {
         }
     }
 
+    public function test_max_id_message() {
+        $this->resetAfterTest();
+
+        $generator = $this->getDataGenerator();
+
+        $userfrom = $generator->create_user();
+        $userto = $generator->create_user();
+
+        $messages = [];
+        $msg = 0;
+        for ($msg = 0; $msg < 5; $msg++) {
+            $messages[$msg] = new \core\message\message();
+            $messages[$msg]->component         = 'moodle';
+            $messages[$msg]->name              = 'instantmessage';
+            $messages[$msg]->userfrom          = $userfrom;
+            $messages[$msg]->userto            = $userto;
+            $messages[$msg]->subject           = 'message subject ' . $msg;
+            $messages[$msg]->fullmessage       = 'message body ' . $msg;
+            $messages[$msg]->fullmessageformat = FORMAT_MARKDOWN;
+            $messages[$msg]->fullmessagehtml   = '<p>message body '. $msg .'</p>';
+            $messages[$msg]->smallmessage      = 'small message ' . $msg;
+            $messages[$msg]->notification      = 0;
+            $messages[$msg]->courseid = SITEID;
+        }
+        $messageids = [];
+        foreach ($messages as $message) {
+            $messageids[] = message_send($message);
+        }
+
+        for ($msg = 4; $msg >= 0; $msg--) {
+            $actual = local::get_user_messages($userto->id, null, 0, count($messageids), $messageids[$msg]);
+            $this->assertCount($msg + 1, $actual);
+            $this->assertEquals('message subject '. $msg, $actual[count($actual) - 1]->subject);
+        }
+    }
 
     public function test_one_message_deleted() {
         global $DB;

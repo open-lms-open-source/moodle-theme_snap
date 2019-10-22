@@ -8,4 +8,5 @@ export class FeedItem {
   description: string;
   extraClasses: string;
   fromCache: number;
+  itemId: number;
 }

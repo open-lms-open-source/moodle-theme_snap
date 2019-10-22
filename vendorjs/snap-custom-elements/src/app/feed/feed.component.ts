@@ -126,7 +126,8 @@ export class FeedComponent implements OnInit {
       return;
     }
 
-    this.feedService.getFeed(this.sessKey, this.feedId, this.nextPage, this.pageSize)
+    const maxId: number = this.feedItems[0] && this.feedItems[0].itemId || -1;
+    this.feedService.getFeed(this.sessKey, this.feedId, this.nextPage, this.pageSize, maxId)
       .subscribe(feedResponse => {
         if (feedResponse[0].error) {
           return;
