@@ -456,7 +456,6 @@ class theme_snap_acitvity_test extends snap_base_test {
         $calendar = new \calendar_information(0, 0, 0, $tstart);
         $course = get_course(SITEID);
         $courses = enrol_get_my_courses();
-
         $calendar->set_sources($course, $courses);
         $eventsobj = activity::user_activity_events($student, $courses, $tstart, $tend, 'allcourses');
         $events = $eventsobj->events;
