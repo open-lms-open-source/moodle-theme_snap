@@ -530,6 +530,25 @@ class behat_theme_snap extends behat_base {
     }
 
     /**
+     * Apply asset completion restriction when edit form is shown.
+     * @param string $group
+     * @param string $savestr
+     */
+    protected function apply_group_restriction($group, $savestr) {
+        /** @var behat_general $helper */
+        $helper = behat_context_helper::get('behat_general');
+        /** @var behat_forms $formhelper */
+        $formhelper = behat_context_helper::get('behat_forms');
+        $formhelper->i_expand_all_fieldsets();
+        $helper->i_click_on('Add restriction...', 'button');
+        $helper->should_be_visible('Add restriction...', 'dialogue');
+        $helper->i_click_on_in_the('Group', 'button', 'Add restriction...', 'dialogue');
+        $formhelper->i_set_the_field_with_xpath_to('//select[@name=\'id\']', $group);
+        $formhelper->press_button($savestr);
+        $helper->wait_until_the_page_is_ready();
+    }
+
+    /**
      * Restrict a course asset by date.
      * @param string $asset1
      * @param string $asset2
@@ -540,6 +559,20 @@ class behat_theme_snap extends behat_base {
         $helper = behat_context_helper::get('behat_general');
         $helper->i_click_on('img[alt=\'Edit "' . $asset1 . '"\']', 'css_element');
         $this->apply_completion_restriction($asset2, 'Save and return to course');
+    }
+
+    /**
+     * Restrict a course asset by belonging to a group.
+     * @param string $asset1
+     * @param string $group1
+     * @codingStandardsIgnoreLine
+     * @Given /^I restrict course asset "(?P<asset1_string>(?:[^"]|\\")*)" by belong to the group "(?P<group1_string>(?:[^"]|\\")*)"$/
+     */
+    public function i_restrict_asset_by_belong_to_group($asset1, $group1) {
+        /** @var behat_general $helper */
+        $helper = behat_context_helper::get('behat_general');
+        $helper->i_click_on('img[alt=\'Edit "' . $asset1 . '"\']', 'css_element');
+        $this->apply_group_restriction($group1, 'Save and return to course');
     }
 
     /**
