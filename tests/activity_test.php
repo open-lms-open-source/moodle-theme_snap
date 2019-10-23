@@ -456,6 +456,7 @@ class theme_snap_acitvity_test extends snap_base_test {
         $calendar = new \calendar_information(0, 0, 0, $tstart);
         $course = get_course(SITEID);
         $courses = enrol_get_my_courses();
+
         $calendar->set_sources($course, $courses);
         $eventsobj = activity::user_activity_events($student, $courses, $tstart, $tend, 'allcourses');
         $events = $eventsobj->events;
@@ -472,6 +473,34 @@ class theme_snap_acitvity_test extends snap_base_test {
         $this->assertTrue($eventsobj->fromcache);
         $this->assertEquals($due, $snapevent->timestart);
         $this->assertEquals($due, $snapevent->timesort);
+
+        $course = reset($courses);
+        $this->setAdminUser();
+        \core_course\management\helper::action_course_hide_by_record((int)$course->id);
+        $this->setUser($student);
+
+        $courses = enrol_get_my_courses();
+        $eventsobj = activity::user_activity_events($student, $courses, $tstart, $tend, 'allcourses');
+        $events = $eventsobj->events;
+        $snapevent = reset($events);
+        // Assert from cache.
+        $this->assertFalse($eventsobj->fromcache);
+        $this->assertEmpty($snapevent);
+        $this->assertEmpty($eventsobj->courses);
+
+        $this->setAdminUser();
+        \core_course\management\helper::action_course_show_by_record((int)$course->id);
+        $this->setUser($student);
+
+        $courses = enrol_get_my_courses();
+        $eventsobj = activity::user_activity_events($student, $courses, $tstart, $tend, 'allcourses');
+        $events = $eventsobj->events;
+        $snapevent = reset($events);
+        // Assert from cache.
+        $this->assertFalse($eventsobj->fromcache);
+        $this->assertEquals($due, $snapevent->timestart);
+        $this->assertEquals($due, $snapevent->timesort);
+        $this->assertCount(1, $eventsobj->courses);
 
         // Test group override invalidates cache and overrides due date.
         $this->override_assign_group_duedate($assign->id, $group->id, $ovdgroupdue, 1);

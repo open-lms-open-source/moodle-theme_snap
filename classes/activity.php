@@ -1363,6 +1363,7 @@ class activity {
         $retobj = (object) [
             'timestamp' => null,
             'events' => [],
+            'courses' => [],
             'fromcache' => false
         ];
 
@@ -1380,7 +1381,6 @@ class activity {
         if (self::$phpunitallowcaching || !(defined('PHPUNIT_TEST') && PHPUNIT_TEST)) {
             $muc = \cache::make('theme_snap', 'activity_deadlines');
             $cached = $muc->get($cachekey);
-
             if ($cached && $cached->timestamp >= time() - HOURSECS) {
 
                 $cachestamps = local::get_calendar_change_stamps();
@@ -1388,7 +1388,15 @@ class activity {
                 $activitiesstamp = $cached->timestamp;
                 $cachefresh = true; // Until proven otherwise.
 
+                $coursecache = [];
                 foreach ($courses as $courseid => $course) {
+                    if ($course->visible) {
+                        $coursecache[$courseid] = $course->shortname;
+                    }
+
+                    if ($course->visible && !isset($cached->courses[$courseid])) {
+                        $cachefresh = false;
+                    }
                     if (isset($cachestamps[$courseid])) {
                         $stamp = $cachestamps[$courseid];
                         if ($stamp > $activitiesstamp) {
@@ -1401,7 +1409,11 @@ class activity {
                     if (!empty($event->actionurl)) {
                         $cmids[] = $event->actionurl->get_param("id");
                     }
+                    if (!isset($courses[$event->courseid]) || $courses[$event->courseid]->visible == 0) {
+                        $cachefresh = false;
+                    }
                 }
+
                 if (!empty($cmids)) {
                     list($insql, $params) = $DB->get_in_or_equal($cmids);
                     $sql = "SELECT deletioninprogress
@@ -1445,18 +1457,29 @@ class activity {
             if (!$cminfo->uservisible) {
                 continue;
             }
+
             if ($event->eventtype === 'close') {
                 // Revert the addition of e.g. "(Quiz closes)" to the event name.
                 $event->name = $cminfo->name;
             }
 
             if (isset($courses[$event->courseid])) {
+                if ($courses[$event->courseid]->visible == 0) {
+                    continue;
+                }
                 $course = $courses[$event->courseid];
                 $event->coursefullname = format_string($course->fullname);
             }
 
             $tmparr[$event->id] = $event;
 
+        }
+        if (!isset($coursecache)) {
+            foreach ($courses as $courseid => $course) {
+                if ($course->visible) {
+                    $coursecache[$courseid] = $course->shortname;
+                }
+            }
         }
         $events = $tmparr;
         unset($tmparr);
@@ -1465,6 +1488,7 @@ class activity {
         $retobj->events = $events;
 
         if (self::$phpunitallowcaching || !(defined('PHPUNIT_TEST') && PHPUNIT_TEST)) {
+            $retobj->courses = $coursecache;
             $muc->set($cachekey, $retobj);
         }
 
