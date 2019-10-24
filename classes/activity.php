@@ -1363,6 +1363,7 @@ class activity {
         $retobj = (object) [
             'timestamp' => null,
             'events' => [],
+            'courses' => [],
             'fromcache' => false
         ];
 
@@ -1388,7 +1389,13 @@ class activity {
                 $activitiesstamp = $cached->timestamp;
                 $cachefresh = true; // Until proven otherwise.
 
+                $coursecache = [];
                 foreach ($courses as $courseid => $course) {
+                    $coursecache[$courseid] = $course->shortname;
+
+                    if (!isset($cached->courses[$courseid])) {
+                        $cachefresh = false;
+                    }
                     if (isset($cachestamps[$courseid])) {
                         $stamp = $cachestamps[$courseid];
                         if ($stamp > $activitiesstamp) {
@@ -1400,6 +1407,9 @@ class activity {
                 foreach ($cached->events as $event) {
                     if (!empty($event->actionurl)) {
                         $cmids[] = $event->actionurl->get_param("id");
+                    }
+                    if (!isset($courses[$event->courseid])) {
+                        $cachefresh = false;
                     }
                 }
                 if (!empty($cmids)) {
@@ -1458,6 +1468,11 @@ class activity {
             $tmparr[$event->id] = $event;
 
         }
+        if (!isset($coursecache)) {
+            foreach ($courses as $courseid => $course) {
+                $coursecache[$courseid] = $course->shortname;
+            }
+        }
         $events = $tmparr;
         unset($tmparr);
 
@@ -1465,6 +1480,7 @@ class activity {
         $retobj->events = $events;
 
         if (self::$phpunitallowcaching || !(defined('PHPUNIT_TEST') && PHPUNIT_TEST)) {
+            $retobj->courses = $coursecache;
             $muc->set($cachekey, $retobj);
         }
 
