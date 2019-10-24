@@ -50,7 +50,7 @@ Feature: Setting for mod_book should not appear on Snap.
   @javascript
   Scenario: As a teacher I should see the setting Subcharter.
     Given I log in as "teacher1"
-       And the following "activities" exist:
+    And the following "activities" exist:
       | activity   | name         | intro                       | course | idnumber  | section |
       | book       | Book 1       | Test book description       | C1     | book1     | 0       |
     And I am on "Course 1" course homepage
