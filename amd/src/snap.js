@@ -716,7 +716,7 @@ define(['jquery', 'core/log', 'theme_snap/headroom', 'theme_snap/util', 'theme_s
                         ];
                         vital = vital.join();
 
-                        $('#mform1 > fieldset').not(vital).wrapAll('<div class="snap-form-advanced col-md-4" />');
+                        $('form[id^="mform1"] > fieldset').not(vital).wrapAll('<div class="snap-form-advanced col-md-4" />');
 
                         // Add expand all to advanced column.
                         $(".snap-form-advanced").append($(".collapsible-actions"));
@@ -726,10 +726,10 @@ define(['jquery', 'core/log', 'theme_snap/headroom', 'theme_snap/util', 'theme_s
                         }
 
                         // Sanitize required input into a single fieldset
-                        var mainForm = $("#mform1 fieldset:first");
-                        var appendTo = $("#mform1 fieldset:first .fcontainer");
+                        var mainForm = $('form[id^="mform1"] fieldset:first');
+                        var appendTo = $('form[id^="mform1"] fieldset:first .fcontainer');
 
-                        var required = $("#mform1 > fieldset").not("#mform1 > fieldset:first");
+                        var required = $('form[id^="mform1"] > fieldset').not('form[id^="mform1"] > fieldset:first');
                         for (var i = 0; i < required.length; i++) {
                             var content = $(required[i]).find('.fcontainer');
                             $(appendTo).append(content);
@@ -737,7 +737,7 @@ define(['jquery', 'core/log', 'theme_snap/headroom', 'theme_snap/util', 'theme_s
                         }
                         $(mainForm).wrap('<div class="snap-form-required col-md-8" />');
 
-                        var description = $("#mform1 fieldset:first .fitem_feditor:not(.required)");
+                        var description = $('form[id^="mform1"] fieldset:first .fitem_feditor:not(.required)');
 
                         if (onModSettings && description) {
                             var noNeedDescSelectors = [
@@ -831,7 +831,7 @@ define(['jquery', 'core/log', 'theme_snap/headroom', 'theme_snap/util', 'theme_s
                         $('.snap-form-advanced').prepend(availablity);
 
                         // Add save buttons.
-                        var savebuttons = $("#mform1 > .form-group:last");
+                        var savebuttons = $('form[id^="mform1"] > .form-group:last');
                         $(mainForm).append(savebuttons);
 
                         // Expand collapsed fieldsets when editing a mod that has errors in it.
