@@ -482,10 +482,9 @@
     .bookprev {
         text-align: left;
     }
-    #id_general .fcontainer .checkbox {
-        display: none;
-    }
-
+}
+#page-mod-book-mod.path-mod-book #id_general .fcontainer .checkbox {
+    display: none;
 }
 
 // Book mod grid.
