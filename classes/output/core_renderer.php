@@ -957,8 +957,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
 
 
     /**
-     * Renders custom menu as a simple list.
-     * Any nesting gets flattened.
+     * Renders custom menu as a navigation bar.
      *
      * @return string
      */
@@ -966,45 +965,17 @@ class core_renderer extends \theme_boost\output\core_renderer {
         if (!$menu->has_children()) {
             return '';
         }
-        $content = '';
+
+        // We need to create this part of HTML here or multiple nav tags will exist for each item.
+        $content = '<nav class="navbar navbar-expand-lg navbar-light">';
+        $content .= '<div class="collapse navbar-collapse clearfix" id="snap-navbar-content">';
         foreach ($menu->get_children() as $item) {
-            $content .= $this->render_custom_menu_item($item);
+            $context = $item->export_for_template($this);
+            $content .= $this->render_from_template('theme_snap/custom_menu_item', $context);
         }
-        $class = 'list-unstyled';
-        $count = substr_count($content, '<li>');
-        if ($count > 11) {
-            $class .= ' list-large';
-        }
-        $content = html_writer::tag('ul', $content, array('class' => $class));
 
-        return $content;
+        return $content.'</nav>'.'</ul>';
     }
-
-
-    /**
-     * Output custom menu items as flat list.
-     *
-     * @return string
-     */
-    protected function render_custom_menu_item(\custom_menu_item $menunode) {
-        $content = html_writer::start_tag('li');
-        if ($menunode->get_url() !== null) {
-            $url = $menunode->get_url();
-            $content .= html_writer::link($url, $menunode->get_text(), array('title' => $menunode->get_title()));
-        } else {
-            $content .= $menunode->get_text();
-        }
-
-        $content .= html_writer::end_tag('li');
-
-        if ($menunode->has_children()) {
-            foreach ($menunode->get_children() as $menunode) {
-                $content .= $this->render_custom_menu_item($menunode);
-            }
-        }
-        return $content;
-    }
-
 
     /**
      * Alternative rendering of front page news, called from layout/faux_site_index.php which
