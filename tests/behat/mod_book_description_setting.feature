@@ -55,4 +55,4 @@ Feature: Setting for mod_book should not appear on Snap.
       | book       | Book 1       | Test book description       | C1     | book1     | 0       |
     And I am on "Course 1" course homepage
     And I click on "//h3/a/p[contains(text(),'Book 1')]" "xpath_element"
-    Then I should see "Subchapter"
+    Then ".checkbox #id_subchapter" "css_element" should exist
