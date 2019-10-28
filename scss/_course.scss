@@ -1966,7 +1966,7 @@ span.editinstructions {
         }
     }
 
-    #region-main #mform1 > div.form-group.fitem {
+    #region-main form[id^="mform1"] > div.form-group.fitem {
         margin-left: 0;
     }
 
