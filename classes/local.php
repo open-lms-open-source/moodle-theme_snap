@@ -1898,6 +1898,40 @@ class local {
     }
 
     /**
+     * Returns the group ID's for a set of Forums or Open Forums within a course.
+     * @param array $activities
+     * @return array $groupsid
+     */
+    public static function get_groups_ids($activities) {
+        global $DB;
+        $discussions = [];
+        $groupsid = [];
+
+        // We need to get the ID of the discussions so we can
+        // find the Forum ID and later the group ID.
+        foreach ($activities as $activity) {
+            $discussions[] = $activity->content->discussion;
+        }
+
+        list($insql, $params) = $DB->get_in_or_equal($discussions);
+        // SQL for forums.
+        $sqlforum = "SELECT id, groupid
+                       FROM {forum_discussions}
+                      WHERE id $insql";
+
+        // SQL for hsuforums.
+        $sqlhsuforum = "SELECT id, groupid
+                          FROM {hsuforum_discussions}
+                         WHERE id $insql";
+
+        // We save both types of forums in the array $groupsid.
+        $groupsid['forum'] = $DB->get_records_sql($sqlforum, $params);
+        $groupsid['hsuforum'] = $DB->get_records_sql($sqlhsuforum, $params);
+
+        return $groupsid;
+    }
+
+    /**
      * @param bool $renderhtml
      * @return array
      * @throws \coding_exception
@@ -1912,7 +1946,21 @@ class local {
         $res = [];
         $formatoptions = new stdClass;
         $formatoptions->filter = false;
+
+        $groupsid = self::get_groups_ids($activities);
+
         foreach ($activities as $activity) {
+            // We get the group ID for each activity.
+            $groupid = $groupsid[$activity->type][$activity->content->discussion]->groupid;
+            // Now we validate if the current user is member of the group stored in $groupid above.
+            $validation = groups_is_member($groupid);
+            if (!$validation) {
+                // If the user is not a member of the group, we must take the recent forum activity from
+                // showing up in the user personal menu.
+                unset($activity, $activities);
+                continue;
+            }
+
             $iconurl = '';
             if (!empty($activity->user)) {
                 $userpicture = new user_picture($activity->user);
