@@ -1954,7 +1954,7 @@ class local {
             $groupid = $groupsid[$activity->type][$activity->content->discussion]->groupid;
             // Now we validate if the current user is member of the group stored in $groupid above.
             $validation = groups_is_member($groupid);
-            if (!$validation) {
+            if (!$validation && $groupid !== '-1') {
                 // If the user is not a member of the group, we must take the recent forum activity from
                 // showing up in the user personal menu.
                 unset($activity, $activities);
