@@ -38,7 +38,7 @@ export class FeedService {
         feedid: feedId,
         page: page,
         pagesize: pageSize,
-        maxId: maxId
+        maxid: maxId
       }
     }];
 
