@@ -108,8 +108,8 @@
 // Show message drawer in full width.
 #page-message-edit,
 #page-message-index {
-    .message-drawer {
-        width: 100%;
+    .message-app.drawer {
+        visibility : hidden;
         height: calc(100% - 7em);
         top: 6em;
         left: 0;
@@ -124,7 +124,7 @@
     .custom-radio .custom-control-input:checked~.custom-control-label::before {
         background-color: $brand-primary;
     }
-    .message-drawer.bg-light {
+    .message-app.drawer.bg-light {
         padding: 1em;
         .body-container {
             border: 1px solid #dee2e6;
