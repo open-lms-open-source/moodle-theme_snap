@@ -152,9 +152,34 @@
 #page-message-edit {
     overflow: hidden;
 }
-// Set style for clickable messages as boost.
-div.message.clickable.bg-secondary {
-    background-color: #ced4da !important;
-    color: #373a3c !important;
-    border-radius: .25rem!important;
+// Fixes for Inherited boost styles for the message app page.
+.message-app {
+    .message {
+        &.send .tail {
+            border-bottom-color: lighten($brand-primary) !important;
+        }
+    }
+    .message.bg-secondary {
+        background-color: lighten($brand-primary) !important;
+        color: #373a3c !important;
+    }
+    .message.rounded {
+        border-radius: .25rem!important;
+    }
+    &.main {
+        min-height: 600px !important;
+    }
+    a[data-action="view-contact"] {
+        img.rounded-circle {
+            // Need to use px b/c height is hard coded in template.
+            max-width: 38px;
+        }
+    }
+
+    [data-region="confirm-dialogue-container"]
+    [data-region="confirm-dialogue"]
+    [data-region="delete-messages-for-all-users-toggle-container"]
+    label.custom-control-label.text-muted::before {
+        background-color: transparent;
+    }
 }
