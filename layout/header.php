@@ -16,7 +16,7 @@
 
 /**
  * Layout - header.
- * This layout is baed on a moodle site index.php file but has been adapted to show news items in a different
+ * This layout is based on a Moodle site index.php file but has been adapted to show news items in a different
  * way.
  *
  * @package   theme_snap
@@ -55,7 +55,7 @@ if ($PAGE->pagetype === 'site-index' && !empty($PAGE->theme->settings->cover_car
     // Output is html from template, but can be empty if no slides.
     $carousel = $OUTPUT->cover_carousel();
 }
-// Cover images for the site, catagory or course.
+// Cover images for the site, category or course.
 $coverimagecss = '';
 if ($PAGE->context->contextlevel === CONTEXT_COURSECAT) {
     if ($PAGE->pagelayout === 'coursecategory') {

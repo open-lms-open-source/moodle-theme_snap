@@ -813,7 +813,6 @@ nav #mr-nav
 footer #moodle-footer
 
  ****************************/
-#mr-nav,
 #page-header,
 #region-main,
 #moodle-footer,
@@ -839,66 +838,69 @@ footer #moodle-footer
 // -------------------------
 
 #mr-nav {
+    #snap-header {
+        padding: .5em 4%;
+    }
     position: fixed;
     width: 100vw;
     z-index: 23;
-    padding: .5em 4%;
     background-color: $nav-bg;
+    top: 0;
 
-    //headroom js http://wicky.nillia.ms/headroom.js/
-    &.headroom--unpinned {
-        will-change: transform;
-        animation-name: snap-rise;
-        animation-timing-function: ease-in-out;
-        animation-duration: 0.4s;
-        animation-fill-mode: forwards;
-    }
-
-    &.headroom--pinned {
-
-        // firefox no like this animation :(
-        /*
-        animation-name: snap-drop;
-        animation-timing-function: cubic-bezier(.694, .0482, .335, 1);
-        animation-duration: 0.33s;
-        */
-    }
-
-    .popover-region-notifications > div > .icon {
-        color: $nav-color;
-
-        &:hover {
-            color: $nav-color-hover;
+        //headroom js http://wicky.nillia.ms/headroom.js/
+        &.headroom--unpinned {
+            will-change: transform;
+            animation-name: snap-rise;
+            animation-timing-function: ease-in-out;
+            animation-duration: 0.4s;
+            animation-fill-mode: forwards;
         }
-    }
 
-    a {
-        color: $nav-color;
+        &.headroom--pinned {
 
-        &:hover,
-        &:focus {
-            color: $nav-color-hover;
+            // firefox no like this animation :(
+            /*
+            animation-name: snap-drop;
+            animation-timing-function: cubic-bezier(.694, .0482, .335, 1);
+            animation-duration: 0.33s;
+            */
         }
-    }
 
-    .popover-region-container a {
-        color: $brand-primary;
+        .popover-region-notifications > div > .icon {
+            color: $nav-color;
 
-        &:hover {
-            color: darken($brand-primary, 8%);
+            &:hover {
+                color: $nav-color-hover;
+            }
         }
-        &:focus {
-            color: darken($brand-primary, 30%);
-            text-decoration: underline;
+
+        a {
+            color: $nav-color;
+
+            &:hover,
+            &:focus {
+                color: $nav-color-hover;
+            }
         }
-    }
 
-    .snap-login-button {
-        color: $nav-login-color;
-        background-color: $nav-login-bg;
-        border-color: $nav-login-bg;
+        .popover-region-container a {
+            color: $brand-primary;
 
-        margin: 0 1rem;
+            &:hover {
+                color: darken($brand-primary, 8%);
+            }
+            &:focus {
+                color: darken($brand-primary, 30%);
+                text-decoration: underline;
+            }
+        }
+
+        .snap-login-button {
+            color: $nav-login-color;
+            background-color: $nav-login-bg;
+            border-color: $nav-login-bg;
+
+            margin: 0 1rem;
 
         &:hover,
         &:focus {
@@ -1108,7 +1110,7 @@ header#page-header
     padding: .5em 0;
     float: none;
     @include media-breakpoint-up(md) {
-        margin-top: -0.5em;
+        margin-top: 2em;
     }
 }
 
@@ -1733,7 +1735,7 @@ ul.events-new + ul.events-underway {
         display: block;
         padding-bottom: 10px;
     }
-    
+
     .yui3-calendarbase {
         width: 350px !important;
     }
@@ -3887,7 +3889,7 @@ section#region-main {
             }
         }
     }
-    
+
     .card-footer.dashboard-card-footer.border-0.bg-white {
         background-color: transparent !important;
     }
@@ -3995,3 +3997,68 @@ section#region-main {
     height: 15em !important;
 }
 
+// -------------------------
+// Snap custom menu.
+// -------------------------
+
+header#mr-nav {
+    #snap-custom-menu nav.navbar {
+        background-color: rgba($brand-primary, 0.8);
+        div#snap-navbar-content {
+            max-width: 60em;
+            li.nav-item {
+                width: 11em;
+                padding: 0.4em;
+                list-style: none;
+                &:hover {
+                    outline: 0;
+                }
+                div.dropdown-menu {
+                    background-color: rgba($brand-primary, 0.8);
+                }
+                a {
+                    color: white;
+                    font-weight: bold;
+                    white-space: nowrap;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    &:focus,
+                    &:hover {
+                        background-color: darken(rgba($brand-primary, 0.9), 10%);
+                        outline: darken($brand-primary, 10%);
+                    }
+                }
+                .dropdown-toggle::after {
+                    position: absolute;
+                    right: 0.5em;
+                    top: 50%;
+                    margin-top: -0.1em;
+                }
+            }
+        }
+    }
+}
+
+@media (min-width: 1120px) {
+    header#mr-nav #snap-custom-menu {
+        display: block;
+    }
+    footer#moodle-footer div#snap-custom-menu {
+        display: none;
+    }
+}
+
+@media (max-width: 1120px) {
+    header#mr-nav #snap-custom-menu {
+        display: none;
+    }
+    footer#moodle-footer div#snap-custom-menu {
+        display: block;
+        div#snap-navbar-content {
+            display: block !important;
+            li.nav-item {
+                list-style: none;
+            }
+        }
+    }
+}

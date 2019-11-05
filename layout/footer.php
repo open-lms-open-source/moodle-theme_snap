@@ -38,14 +38,6 @@ if ($this->page->user_is_editing() && $PAGE->pagetype == 'site-index') {
     $footnote .= '<p class="text-right">'.$link.'</p>';
 }
 
-$custommenu = $OUTPUT->custom_menu();
-if (!empty($custommenu) && $this->page->user_is_editing() && $PAGE->pagetype == 'site-index') {
-    $url = new moodle_url('/admin/settings.php', ['section' => 'themesettings'], 'id_s__custommenuitems');
-    $link = html_writer::link($url, get_string('editcustommenu', 'theme_snap'), ['class' => 'btn btn-primary btn-sm']);
-    $custommenu .= '<p class="text-right">'.$link.'</p>';
-}
-
-
 /* Snap main footer. */
 echo '<div id="snap-site-footer">';
 if (!empty($footnote)) {
@@ -75,17 +67,7 @@ if (!empty($socialmedialinks)) {
 }
 echo '</div>';
 ?>
-
-
-<?php
-/* Moodle custom menu. */
-if (!empty($custommenu)) {
-    echo '<div id="moodle-custom-menu"><br>';
-    echo $custommenu;
-    echo '</div>';
-}
-?>
-
+    
 <div class="row">
     <div id="mrooms-footer" class="helplink col-sm-6">
         <small>
