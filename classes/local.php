@@ -774,7 +774,7 @@ class local {
                 'description'  => $meta,
                 'extraClasses' => $unreadclass,
                 'fromCache'    => 0,
-                'messageid'    => $message->uniqueid
+                'itemId'    => $message->uniqueid
             ];
         }
         return $res;
