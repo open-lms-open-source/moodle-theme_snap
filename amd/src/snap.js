@@ -485,7 +485,7 @@ define(['jquery', 'core/log', 'theme_snap/headroom', 'theme_snap/util', 'theme_s
                 $(href).toggleClass('state-visible').focus();
                 e.preventDefault();
 
-                if ($('.message-drawer').length) {
+                if ($('.message-app.main').length === 0) {
                     document.dispatchEvent(new Event("messages-drawer:toggle"));
                 }
             });

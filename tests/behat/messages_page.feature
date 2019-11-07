@@ -40,21 +40,22 @@ Feature: When the moodle theme is set to Snap, message page should be accessible
 
   @javascript
   Scenario: In messages page, it must be possible to click the items.
-    Given I skip because "The message UI for Snap has changed, more steps are required."
     Given I log in as "admin"
     And I am on site homepage
     And I click on ".js-snap-pm-trigger.snap-my-courses-menu" "css_element"
     And I click on "//a[small[contains(@id, \"snap-pm-messages\")]]" "xpath_element"
+    And ".message-app.main" "css_element" should be visible
+    # A message drawer floating div gets renderer but outside of the window
+    And I check element ".message-app.drawer" with property "right" = "-320px"
     And I should see "Starred"
     And I should see "Group"
     And I should see "Private"
-    And "div.header-container div[data-region='view-overview'] div.text-right.mt-3 a[data-route='view-contacts']" "css_element" should exist
-    And I click on "div.header-container div[data-region='view-overview'] div.text-right.mt-3 a" "css_element"
+    And "div.panel-header-container div[data-region='view-overview'] a[data-route='view-contacts']" "css_element" should exist
+    And I click on "div.panel-header-container div[data-region='view-overview'] a[data-route='view-contacts']" "css_element"
     And I should see "Contacts"
     And I should see "Requests"
-    And I click on "div.header-container div[data-region='view-contacts'] a" "css_element"
-    And I click on "div.header-container div[data-region='view-overview'] .ml-2 a" "css_element"
-    And I should see "Settings"
+    And I click on "div.message-app.main div.body-container a[data-action='show-contacts-section']" "css_element"
+    And I click on "div.message-app.main div.body-container a[data-action='show-requests-section']" "css_element"
 
   @javascript
   Scenario: When admin review messages preferences of other users, message drawer should not appear
@@ -73,7 +74,7 @@ Feature: When the moodle theme is set to Snap, message page should be accessible
     And I should see "Preferences"
     And I click on "//span/a[contains(text(),\"Preferences\")]" "xpath_element"
     And I follow "Message preferences"
-    Then ".message-drawer" "css_element" should not be visible
+    Then ".message-app.drawer" "css_element" should not be visible
 
   @javascript
   Scenario: In personal menu preferences page, it must be possible to click the items.
@@ -85,12 +86,14 @@ Feature: When the moodle theme is set to Snap, message page should be accessible
     And I should see "Settings"
     And I should see "Privacy"
     And I should see "Notification preferences"
+    And CSS element ".message-app.drawer" is full width
 
   @javascript
   Scenario: When selecting messages of a contact, it must be possible to click the items.
-    Given I skip because "It's failing since we merge 3.7"
     Given I log in as "admin"
     And I am on the course main page for "C1"
     And I wait until the page is ready
     And I click on "//a[contains(text(),\"Teacher 1\")]/following-sibling::small/a" "xpath_element"
-    And ".message-drawer" "css_element" should be visible
+    And ".message-app.main" "css_element" should be visible
+    # A message drawer floating div gets renderer but outside of the window
+    And I check element ".message-app.drawer" with property "right" = "-320px"

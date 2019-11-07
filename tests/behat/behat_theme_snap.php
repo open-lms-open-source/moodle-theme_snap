@@ -1821,4 +1821,26 @@ class behat_theme_snap extends behat_base {
         $url = new moodle_url('/mod/' . $activity . '/view.php', ['id' => $cm->id]);
         $this->getSession()->visit($this->locate_path($url->out_as_local_url(false)));
     }
+
+    /**
+     * Checks if a css element have a full width.
+     *
+     * @Given /^CSS element "(?P<element_string>(?:[^"]|\\")*)" is full width$/
+     * @param string $element css element to be checked
+     * @throws Exception
+     */
+    public function css_element_is_full_width($element) {
+        $session = $this->getSession();
+        $elementwidth = $session->getDriver()->evaluateScript(
+            'window.getComputedStyle(document.querySelectorAll("'
+            . $element . '")[0], null).getPropertyValue("width");');
+        $windowwidth = $session->getDriver()->evaluateScript('window.screen.width;');
+
+        $elementwidth = str_replace("px", "", $elementwidth);
+
+        if ($elementwidth < $windowwidth) {
+            throw new Exception("Element " . $element . " is not full width. Expected " .
+                $windowwidth . ", actual " . $elementwidth);
+        }
+    }
 }

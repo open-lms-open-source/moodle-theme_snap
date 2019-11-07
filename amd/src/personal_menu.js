@@ -193,7 +193,7 @@ define(['jquery', 'core/log', 'core/yui', 'theme_snap/pm_course_cards', 'theme_s
                     event.preventDefault();
 
                     // If there is a message drawer, dispatch event to avoid opening both elements.
-                    if ($('.message-drawer').length) {
+                    if ($('.message-app.main').length === 0) {
                         document.dispatchEvent(new Event("messages-drawer:pm-toggle"));
                     }
                 });
