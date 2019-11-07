@@ -285,3 +285,12 @@ body.path-site .block.block_settings {
         padding-top: 2em;
     }
 }
+
+/* My overview block */
+.block-myoverview {
+    @media (min-width: 1100px) {
+        .dashboard-card-deck:not(.fixed-width-cards) .dashboard-card {
+            width: calc(33.33% - #{$card-gutter});
+        }
+    }
+}
