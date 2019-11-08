@@ -233,6 +233,21 @@ class behat_theme_snap extends behat_base {
     }
 
     /**
+     * @param string $shortname - course shortname
+     * @Given /^I create a new section in course "(?P<shortname>(?:[^"]|\\")*)" with content$/
+     * @return array
+     */
+    public function i_create_a_new_section_in_course_with_content($shortname) {
+        $this->i_am_on_course_page($shortname);
+
+        $this->execute('behat_general::click_link', ['Create a new section']);
+        $this->execute('behat_forms::i_set_the_field_to', ['Title', 'New section with content']);
+        $javascript = "document.getElementById('summary-editor').value='<p>New section contents</p>'";
+        $this->getSession()->executeScript($javascript);
+        $this->execute('behat_general::i_click_on', ['Create section', 'button']);
+    }
+
+    /**
      * I follow "Menu" fails randomly on occasions, this custom step is an alternative to resolve that issue.
      * It also avoids a failure if the menu is already open.
      * @Given /^I open the personal menu$/
