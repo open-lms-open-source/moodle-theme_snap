@@ -110,8 +110,9 @@
 #page-message-index {
     .message-app.drawer {
         visibility : hidden;
-        height: calc(100% - 7em);
-        top: 6em;
+        height: calc(100% - 10em);
+        top: 10em;
+        z-index: 1;
         left: 0;
         @media (max-width: 560px) {
             top: 8em;
@@ -149,7 +150,7 @@
 }
 
 // Hide scrolling when the message drawer is present.
-#page-message-edit {
+#page-message-edit:not(.snap-pm-open) {
     overflow: hidden;
 }
 // Fixes for Inherited boost styles for the message app page.
