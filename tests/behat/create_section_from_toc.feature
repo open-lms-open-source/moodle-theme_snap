@@ -119,3 +119,19 @@ Feature: In the Snap theme, within a course, editing teachers can create a new s
      | Option     |
      | 0          |
      | 1          |
+
+  @javascript
+  Scenario Outline: For editing teachers, ensure new section creation works when using content.
+    Given I log in as "admin"
+    And the following config values are set as admin:
+      | coursepartialrender | <Option> | theme_snap |
+    And I log out
+    Then I log in as "teacher1"
+    And I create a new section in course "course_topics" with content
+    Then I follow "New section with content"
+    Then I should see "New section with content"
+    Then I should see "New section contents"
+    Examples:
+      | Option     |
+      | 0          |
+      | 1          |

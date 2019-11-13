@@ -52,8 +52,11 @@ class addsection_controller extends controller_abstract {
         require_once($CFG->dirroot.'/course/lib.php');
 
         $sectioname = optional_param('newsection', '', PARAM_TEXT);
-        $summary = optional_param('summary', '', PARAM_RAW);
+        $summary = optional_param_array('summary', '', PARAM_RAW);
+
         $sectioname = $sectioname === '' ? null : $sectioname;
+        $summarytext = !empty($summary['text']) ? $summary['text'] : '';
+        $summaryformat = !empty($summary['format']) ? $summary['format'] : FORMAT_HTML;
 
         require_sesskey();
 
@@ -66,8 +69,8 @@ class addsection_controller extends controller_abstract {
         $modinfo = get_fast_modinfo($course);
         $section = $modinfo->get_section_info($numsections, MUST_EXIST);
         $DB->set_field('course_sections', 'name', $sectioname, array('id' => $section->id));
-        $DB->set_field('course_sections', 'summary', $summary, array('id' => $section->id));
-        $DB->set_field('course_sections', 'summaryformat', FORMAT_HTML, array('id' => $section->id));
+        $DB->set_field('course_sections', 'summary', $summarytext, array('id' => $section->id));
+        $DB->set_field('course_sections', 'summaryformat', $summaryformat, array('id' => $section->id));
         rebuild_course_cache($course->id);
 
         redirect(course_get_url($course, $section->section));
