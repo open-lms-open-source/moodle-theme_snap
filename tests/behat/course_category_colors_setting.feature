@@ -108,7 +108,6 @@ Feature: When the moodle theme is set to Snap, sets a color per category.
 
   @javascript
   Scenario: Check category course color from nearest parent in hierarchy for teacher and student.
-    And I skip because "It's failing since we merged 3.7"
     Given I log in as "admin"
     And I follow "Browse all courses"
     And I purge snap caches
@@ -117,6 +116,15 @@ Feature: When the moodle theme is set to Snap, sets a color per category.
     # And I am on the course with shortname "C2" <- Removed this - this custom step is not part of Snap!
     And I am on the course main page for "C2"
     And I check element "a" with color "#00FF00"
+    And I follow "Create learning activity"
+    And I follow "Resources"
+    # The tabs color is by design 8% darker than the category color.
+    And I check element "a.nav-link.active.show" with property "background-color" = "#00D600"
+    And I follow "Help guide"
+    And I check element "a.nav-link.active.show" with property "background-color" = "#00D600"
+    And I follow "Activities"
+    And I check element "a.nav-link.active.show" with property "background-color" = "#00D600"
+    And I click on "button.close" "css_element"
     Then I log out
     And I log in as "student1"
     # And I am on the course with shortname "C2"
