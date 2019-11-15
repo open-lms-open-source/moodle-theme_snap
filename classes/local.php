@@ -347,8 +347,10 @@ class local {
             'fromcache' => false, // Useful for debugging and unit testing.
             'render' => false // Template flag.
         ];
+        $completioninfo = new \completion_info($course);
 
-        if (!isloggedin() || isguestuser() || !$CFG->enablecompletion || !$course->enablecompletion) {
+        if (!isloggedin() || isguestuser() || !$CFG->enablecompletion || !$course->enablecompletion ||
+            !$completioninfo->is_tracked_user($USER->id)) {
             // Can't get completion progress for users who aren't logged in.
             // Or if completion tracking is not enabled at site / course level.
             // Don't even bother with the cache, just return empty object.
@@ -371,7 +373,6 @@ class local {
             return $cached;
         }
 
-        $completioninfo = new \completion_info($course);
         $trackcount = 0;
         $compcount = 0;
         if ($completioninfo->is_enabled()) {
