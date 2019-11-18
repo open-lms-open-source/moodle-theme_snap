@@ -947,7 +947,11 @@ body.snap-resource-card li.snap-resource {
     }
 
     &.modtype_scorm {
-        background-image: url([[pix:core|/f/scorm]]);
+        background-image: url([[pix:scorm|icon]]);
+    }
+
+    &.modtype_imscp {
+        background-image: url([[pix:imscp|icon]]);
     }
 
     &.modtype_folder {
