@@ -43,7 +43,8 @@ Feature: Aria label validation for core forum options.
       | forum      | Test forum 1           | Test forum 1      | C1     | forum        | 0         |
     And I log in as "student1"
     And I am on "Course 1" course homepage
-    And I click on ".modtype_forum .mod-link" "css_element"
+    And I wait until the page is ready
+    And I click on "//h3/a/p[contains(text(),'Test forum 1')]" "xpath_element"
     And I add a new discussion to "Test forum 1" forum with:
       | Subject | Discussion 1 |
       | Message | Test post message |

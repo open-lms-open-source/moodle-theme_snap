@@ -44,7 +44,8 @@ Feature: In Open forums while using Snap, the student should see the options
 
     And I log in as "student1"
     And I am on "Course 1" course homepage
-    And I click on "li.modtype_hsuforum a.mod-link" "css_element"
+    And I wait until the page is ready
+    And I click on "//h3/a/p[contains(text(),'Test forum name')]" "xpath_element"
     And I add a new discussion to "Test forum name" Open Forum with:
       | Subject | Forum discussion 1                    |
       | Message | How awesome is this forum discussion? |
@@ -65,7 +66,8 @@ Feature: In Open forums while using Snap, the student should see the options
     Scenario: An user not enrolled to the course should not be able to subscribe to a post in a forum
     And I log in as "admin"
     And I am on "Course 1" course homepage
-    And I click on "li.modtype_hsuforum a.mod-link" "css_element"
+    And I wait until the page is ready
+    And I click on "//h3/a/p[contains(text(),'Test forum name')]" "xpath_element"
     And I should see "Subscribe to this forum"
     And I click on "div.subscribeforum-url a" "css_element"
     And I should see "Subscribe to this forum"
