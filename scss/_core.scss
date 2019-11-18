@@ -4004,43 +4004,59 @@ section#region-main {
 header#mr-nav {
     #snap-custom-menu nav.navbar {
         background-color: rgba($brand-primary, 0.8);
-        div#snap-navbar-content {
-            max-width: 60em;
+        width: 100%;
+        ul#snap-navbar-content {
+            margin: 0;
+            padding: 0;
             li.nav-item {
-                width: 11em;
-                padding: 0.4em;
                 list-style: none;
+                max-width: 11em;
                 &:hover {
                     outline: 0;
                 }
                 div.dropdown-menu {
                     background-color: rgba($brand-primary, 0.8);
+                    border: 0;
+                    margin-top: 0 !important; // This margin needs to be override to remove the marging of 2px that it has by default.
+                    a.dropdown-item {
+                        height: 2.75;
+                        vertical-align: middle;
+                    }
                 }
                 a {
+                    display: block;
+                    text-decoration: none;
                     color: white;
                     font-weight: bold;
-                    white-space: nowrap;
                     overflow: hidden;
+                    white-space: nowrap;
                     text-overflow: ellipsis;
+                    max-width: 11em;
                     &:focus,
                     &:hover {
                         background-color: darken(rgba($brand-primary, 0.9), 10%);
                         outline: darken($brand-primary, 10%);
                     }
                 }
-                .dropdown-toggle::after {
-                    position: absolute;
-                    right: 0.5em;
-                    top: 50%;
-                    margin-top: -0.1em;
+                a.nav-link {
+                    height: 50px;
+                    vertical-align: middle;
+                }
+                .dropdown-toggle {
+                    &::after {
+                        position: absolute;
+                        right: 0;
+                        top: 50%;
+                        margin-top: -0.1em;
+                    }
                 }
             }
         }
     }
 }
 
-@media (min-width: 1120px) {
-    header#mr-nav #snap-custom-menu {
+@media (min-width: 992px) {
+    header#mr-nav div#snap-custom-menu {
         display: block;
     }
     footer#moodle-footer div#snap-custom-menu {
@@ -4048,16 +4064,37 @@ header#mr-nav {
     }
 }
 
-@media (max-width: 1120px) {
-    header#mr-nav #snap-custom-menu {
+@media (max-width: 992px) {
+    header#mr-nav div#snap-custom-menu {
         display: none;
     }
     footer#moodle-footer div#snap-custom-menu {
         display: block;
-        div#snap-navbar-content {
-            display: block !important;
-            li.nav-item {
-                list-style: none;
+        nav.navbar {
+            max-height: 100%;
+            ul#snap-navbar-content {
+                display: grid !important; // Need to override this to display the custom menu in the footer as a vertical list.
+                li.nav-item {
+                    list-style-type: none;
+                }
+                li.nav-item.dropdown.show div.dropdown-menu.show {
+                    margin-left: 1rem!important;
+                    margin-top: 0 !important; // These margins needs to be override as well to modify the position of the dropdown items.
+                    display: block;
+                    position: static;
+                    background-color: transparent;
+                    border: none;
+                    a.dropdown-item:focus {
+                        outline: $brand-primary;
+                        background-color: transparent;
+                    }
+                    .dropdown-toggle::after {
+                        position: absolute;
+                        right: 0.5em;
+                        top: 50%;
+                        margin-top: -0.1em;
+                    }
+                }
             }
         }
     }

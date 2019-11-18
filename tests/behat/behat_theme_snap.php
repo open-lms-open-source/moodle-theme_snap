@@ -1858,4 +1858,31 @@ class behat_theme_snap extends behat_base {
                 $windowwidth . ", actual " . $elementwidth);
         }
     }
+
+    /**
+     * Generic field setter.
+     *
+     * Internal API method, a generic *I set "VALUE" to "FIELD" field*
+     * could be created based on it.
+     *
+     * @param string $fieldlocator The pointer to the field, it will depend on the field type.
+     * @param string $value
+     * @return void
+     */
+    protected function set_field_value($fieldlocator, $value) {
+
+        // We delegate to behat_form_field class, it will
+        // guess the type properly as it is a select tag.
+        $field = behat_field_manager::get_form_field_from_label($fieldlocator, $this);
+        $field->set_value($value);
+    }
+
+    /**
+     * Sets the specified multi-line value to the field
+     *
+     * @Given /^I set the text field  "(?P<field_string>(?:[^"]|\\")*)" with multi-line text:/
+     */
+    public function i_set_the_text_field_with_multi_line_text($field, \Behat\Gherkin\Node\PyStringNode $value) {
+        $this->set_field_value($field, $value);
+    }
 }
