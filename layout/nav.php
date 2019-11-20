@@ -68,11 +68,6 @@ echo html_writer::link($CFG->wwwroot, $sitefullname, $attrs);
 </div>
 <?php
 $custommenu = $OUTPUT->custom_menu();
-if (!empty($custommenu) && $this->page->user_is_editing() && $PAGE->pagetype == 'site-index') {
-    $url = new moodle_url('/admin/settings.php', ['section' => 'themesettings'], 'id_s__custommenuitems');
-    $link = html_writer::link($url, get_string('editcustommenu', 'theme_snap'), ['class' => 'btn btn-primary btn-sm']);
-    $custommenu .= '<p class="text-right">'.$link.'</p>';
-}
 
 /* Moodle custom menu. */
 if (!empty($custommenu)) {

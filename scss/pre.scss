@@ -130,6 +130,8 @@ $nav-button-color:                  $nav-color !default;
 $nav-login-bg:                      $nav-button-bg;
 $nav-login-color:                   $nav-button-color;
 
+$custom-menu-text-color:            #fff;
+
 @if (alpha($nav-button-bg) == 0) {
     $nav-login-color:               $nav-bg;
     $nav-login-bg:                  $nav-button-color;
