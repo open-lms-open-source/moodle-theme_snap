@@ -4041,11 +4041,12 @@ header#mr-nav {
                 a.nav-link {
                     height: 50px;
                     vertical-align: middle;
+                    padding-right: 1.53em;
                 }
                 .dropdown-toggle {
                     &::after {
                         position: absolute;
-                        right: 0;
+                        right: 0.9em;
                         top: 50%;
                         margin-top: -0.1em;
                     }
@@ -4076,23 +4077,36 @@ header#mr-nav {
                 display: grid !important; // Need to override this to display the custom menu in the footer as a vertical list.
                 li.nav-item {
                     list-style-type: none;
-                }
-                li.nav-item.dropdown.show div.dropdown-menu.show {
-                    margin-left: 1rem!important;
-                    margin-top: 0 !important; // These margins needs to be override as well to modify the position of the dropdown items.
-                    display: block;
-                    position: static;
-                    background-color: transparent;
-                    border: none;
-                    a.dropdown-item:focus {
-                        outline: $brand-primary;
-                        background-color: transparent;
+                    a.nav-link,
+                    a.dropdown-item {
+                        &:hover,
+                        &:active {
+                            outline: 0;
+                        }
+                        &:focus,
+                        &:hover,
+                        &:active {
+                            background-color: transparent;
+                        }
                     }
-                    .dropdown-toggle::after {
-                        position: absolute;
-                        right: 0.5em;
-                        top: 50%;
-                        margin-top: -0.1em;
+                    a.dropdown-item {
+                        max-width: 11em;
+                        overflow: hidden;
+                        white-space: nowrap;
+                        text-overflow: ellipsis;
+                    }
+                    a.nav-link {
+                        white-space: nowrap;
+                    }
+                }
+                li.nav-item.dropdown.show {
+                    div.dropdown-menu.show {
+                        margin-left: 1rem!important;
+                        margin-top: 0 !important; // These margins needs to be override as well to modify the position of the dropdown items.
+                        display: block;
+                        position: static;
+                        background-color: transparent;
+                        border: none;
                     }
                 }
             }
