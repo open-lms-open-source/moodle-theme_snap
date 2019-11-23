@@ -2323,11 +2323,9 @@ SQL;
                 $meta = $output->friendly_datetime($deadline);
                 // Add completion meta data for students (exclude anyone who can grade them).
                 if (!has_capability('mod/assign:grade', $cm->context)) {
-                    /** @var \theme_snap_core_course_renderer $courserenderer */
-                    $courserenderer = $PAGE->get_renderer('core', 'course', RENDERER_TARGET_GENERAL);
                     $activitymeta = activity::module_meta($cm);
                     $meta .= '<div class="snap-completion-meta">' .
-                        $courserenderer->submission_cta($cm, $activitymeta) .
+                        \theme_snap\output\core\course_renderer::submission_cta($cm, $activitymeta) .
                         '</div>';
                 }
 

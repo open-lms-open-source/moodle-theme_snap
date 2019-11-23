@@ -39,6 +39,7 @@ use theme_snap\activity_meta;
 
 require_once($CFG->dirroot . "/mod/book/locallib.php");
 require_once($CFG->libdir . "/gradelib.php");
+require_once($CFG->dirroot . '/course/renderer.php');
 
 class course_renderer extends \core_course_renderer {
     /**
@@ -554,13 +555,12 @@ class course_renderer extends \core_course_renderer {
      * @param cm_info $mod
      * @param activity_meta $meta
      * @return string
-     * @throws coding_exception
+     * @throws \coding_exception
      */
-    public function submission_cta(cm_info $mod, activity_meta $meta) {
+    public static function submission_cta(cm_info $mod, activity_meta $meta) {
         global $CFG;
 
         if (empty($meta->submissionnotrequired)) {
-            $class = 'snap-assignment-stage';
             $url = $CFG->wwwroot.'/mod/'.$mod->modname.'/view.php?id='.$mod->id;
 
             if ($meta->submitted) {
@@ -659,7 +659,7 @@ class course_renderer extends \core_course_renderer {
             }
             // @codingStandardsIgnoreLine
             /* @var cm_info $mod */
-            $content .= $this->submission_cta($mod, $meta);
+            $content .= self::submission_cta($mod, $meta);
         }
 
         // Activity due date.
