@@ -18,6 +18,7 @@ defined('MOODLE_INTERNAL') || die();
 
 use \theme_snap\activity,
     \theme_snap\snap_base_test;
+use theme_snap\local;
 
 global $CFG;
 require_once($CFG->dirroot . '/mod/assign/tests/base_test.php');
@@ -1610,6 +1611,47 @@ class theme_snap_acitvity_test extends snap_base_test {
 
         $actual = activity::quiz_ungraded([$course->id], $sixmonthsago);
         $this->assertCount(0, $actual);
+    }
+
+    public function test_snap_deadlines_feed_size() {
+        global $CFG;
+
+        $this->resetAfterTest();
+
+        activity::$phpunitallowcaching = true;
+
+        $dg = $this->getDataGenerator();
+        $student = $dg->create_user();
+        $teacher = $dg->create_user();
+        $course = $dg->create_course();
+        $group = $dg->create_group((object)['courseid' => $course->id]);
+        $dg->enrol_user($student->id, $course->id, 'student');
+        $dg->create_group_member((object)['groupid' => $group->id, 'userid' => $student->id]);
+        $dg->enrol_user($teacher->id, $course->id, 'teacher');
+
+        $this->setUser($teacher);
+
+        $tz = new \DateTimeZone(\core_date::get_user_timezone($student));
+        $today = new \DateTime('today', $tz);
+        $todayts = $today->getTimestamp();
+
+        $assigninstances = [];
+
+        for ($t = 0; $t < 2; $t++) {
+            $assigninstances[] = $this->create_assignment($course->id, $todayts)->get_instance();
+        }
+        for ($t = 0; $t < 20; $t++) {
+            $assigninstances[] = $this->create_assignment($course->id, ($todayts + WEEKSECS))->get_instance();
+        }
+
+        // No setting, should be 5.
+        $deadlines = local::get_feed('deadlines');
+        $this->assertCount(5, $deadlines);
+
+        // With setting, we get more.
+        $CFG->snap_advanced_feeds_max_deadlines = 10;
+        $deadlines = local::get_feed('deadlines');
+        $this->assertCount(10, $deadlines);
     }
 
 }
