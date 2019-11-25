@@ -230,7 +230,7 @@ define(['jquery', 'core/log', 'core/ajax', 'core/str', 'core/templates', 'core/n
             var id = '#section-' + section;
             $(id).addClass('state-visible');
             if (self.courseConfig.toctype == 'top' && self.courseConfig.format == 'topics' && section > 0) {
-                var title = $(id).find('.sectionname').text();
+                var title = $(id).find('.sectionname').html();
                 var elements = $('.chapter-title');
                 var tmpid = 0;
                 // Find the right toc element.
@@ -239,7 +239,7 @@ define(['jquery', 'core/log', 'core/ajax', 'core/str', 'core/templates', 'core/n
                         tmpid = key;
                     }
                 });
-                $(id).find('.sectionname').text(tmpid + '. ' + title);
+                $(id).find('.sectionname').html(tmpid + '. ' + title);
             }
             // Leave all course sections as they were.
             sections.show();
