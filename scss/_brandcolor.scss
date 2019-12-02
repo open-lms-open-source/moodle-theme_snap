@@ -877,6 +877,37 @@ $lighter-grey-btn: #e6e6e6;
             }
         }
     }
+
+    // -------------------------
+    // Custom menu.
+    // -------------------------
+    header#mr-nav {
+        #snap-custom-menu nav.navbar {
+            background-color: $brand-primary;
+            opacity: 0.8;
+            ul#snap-navbar-content {
+                li.nav-item {
+                    div.dropdown-menu {
+                        background-color: $brand-primary;
+                        opacity: 0.8;
+                    }
+                    a {
+                        color: $custom-menu-text-color;
+                        &:focus,
+                        &:hover {
+                            background-color: darken($brand-primary, 10%);
+                            opacity: 0.9;
+                            outline: darken($brand-primary, 10%);
+                        }
+                    }
+                }
+                li.nav-item.dropdown.show {
+                    background-color: darken($brand-primary, 10%);
+                    opacity: 0.9;
+                }
+            }
+        }
+    }
 }
 
 #page-course-loginas.theme-snap #user-notifications {

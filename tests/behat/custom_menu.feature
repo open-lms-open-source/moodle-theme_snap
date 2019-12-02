@@ -11,7 +11,7 @@
 # GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License
-# along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+# along with Moodle. If not, see <http://www.gnu.org/licenses/>.
 #
 # Tests for toggle course section visibility in non edit mode in snap.
 #
@@ -24,18 +24,9 @@
 Feature: When the Moodle theme is set to Snap, custom menu should exist for the site.
 
   Background:
-    Given the following "users" exist:
-      | username  | firstname  | lastname  | email                 |
-      | teacher1  | Teacher    | 1         | teacher1@example.com  |
-    And the following "courses" exist:
-      | fullname | shortname | format |
-      | Course 1 | C1        | topics |
-    And the following "course enrolments" exist:
-      | user      | course  | role            |
-      | teacher1  | C1      | editingteacher  |
-    And the following config values are set as admin:
+    Given the following config values are set as admin:
       | linkadmincategories | 0 |
-    Given I log in as "admin"
+    And I log in as "admin"
     And I am on site homepage
     And I click on "#admin-menu-trigger" "css_element"
     And I expand "Site administration" node
@@ -54,7 +45,6 @@ Feature: When the Moodle theme is set to Snap, custom menu should exist for the 
     And I click on "Save changes" "button"
     And I log out
 
-
   @javascript
   Scenario: Custom menu should exists with the necessary items.
     Given I log in as "teacher1"
@@ -68,30 +58,35 @@ Feature: When the Moodle theme is set to Snap, custom menu should exist for the 
     And I should see "Moodle development"
     # Check that ### works as a divider
     And "//header[@id='mr-nav']//div[@id='snap-custom-menu']//ul[@id='snap-navbar-content']//li[@class='nav-item dropdown show']//div[@class='dropdown-menu show']//div[@class='dropdown-divider']" "xpath_element" should exist
-    And I log out
 
   @javascript
-  Scenario: Custom menu should exists in the header for window full width.
-    # 28" size monitor
-    Given I change window size to "2518x456"
-    And I log in as "teacher1"
+  Scenario: Check custom menu background and text color.
+    Given I log in as "admin"
     And I am on site homepage
-    And I should see "Moodle community" in the "//header[@id='mr-nav']//div[@id='snap-custom-menu']" "xpath_element"
-    And I should not see "Moodle community" in the "//footer[@id='moodle-footer']//div[@id='snap-custom-menu']" "xpath_element"
-    And I log out
+    And I click on "#admin-menu-trigger" "css_element"
+    And I expand "Site administration" node
+    And I expand "Appearance" node
+    And I expand "Themes" node
+    And I follow "Snap"
+    # Check that the custom menu has the same color as the site color.
+    And I check element ".theme-snap header#mr-nav #snap-custom-menu nav.navbar" with property "background-color" = "#FF7F41"
+    # Check that the text color have white color as a default color.
+    And I check element ".theme-snap header#mr-nav #snap-custom-menu nav.navbar ul#snap-navbar-content li.nav-item a" with color "#FFFFFF"
 
   @javascript
   Scenario: Custom menu should exists in the footer for small screen sizes.
   # Tablet size
     Given I change window size to "768x456"
-    And I log in as "teacher1"
+    And I log in as "Admin"
     And I am on site homepage
     And I should not see "Moodle community" in the "//header[@id='mr-nav']//div[@id='snap-custom-menu']" "xpath_element"
     And I should see "Moodle community" in the "//footer[@id='moodle-footer']//div[@id='snap-custom-menu']" "xpath_element"
-    And I log out
 
-
-
-
-
-
+  @javascript
+  Scenario: Custom menu should exists in the header for window full width.
+  # 28" size monitor
+    Given I change window size to "2518x456"
+    And I log in as "Admin"
+    And I am on site homepage
+    And I should see "Moodle community" in the "//header[@id='mr-nav']//div[@id='snap-custom-menu']" "xpath_element"
+    And I should not see "Moodle community" in the "//footer[@id='moodle-footer']//div[@id='snap-custom-menu']" "xpath_element"

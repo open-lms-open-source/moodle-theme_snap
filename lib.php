@@ -335,6 +335,13 @@ function theme_snap_get_pre_scss($theme) {
             $settings['nav-button-color'] = $settings['brand-primary'];
         }
     }
+    if (!empty($theme->settings->customisecustommenu)) {
+        if (!empty($theme->settings->custommenutext)) {
+            $settings['custom-menu-text-color'] = $theme->settings->custommenutext;
+        } else {
+            $settings['custom-menu-text-color'] = $settings['brand-primary'];
+        }
+    }
 
     foreach ($settings as $key => $value) {
         $scss .= '$' . $key . ': ' . $value . ";\n";

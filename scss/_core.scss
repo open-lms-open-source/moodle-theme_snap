@@ -4003,7 +4003,6 @@ section#region-main {
 
 header#mr-nav {
     #snap-custom-menu nav.navbar {
-        background-color: rgba($brand-primary, 0.8);
         width: 100%;
         ul#snap-navbar-content {
             margin: 0;
@@ -4015,28 +4014,17 @@ header#mr-nav {
                     outline: 0;
                 }
                 div.dropdown-menu {
-                    background-color: rgba($brand-primary, 0.8);
                     border: 0;
                     margin-top: 0 !important; // This margin needs to be override to remove the marging of 2px that it has by default.
-                    a.dropdown-item {
-                        height: 2.75;
-                        vertical-align: middle;
-                    }
                 }
                 a {
                     display: block;
                     text-decoration: none;
-                    color: white;
                     font-weight: bold;
                     overflow: hidden;
                     white-space: nowrap;
                     text-overflow: ellipsis;
                     max-width: 11em;
-                    &:focus,
-                    &:hover {
-                        background-color: darken(rgba($brand-primary, 0.9), 10%);
-                        outline: darken($brand-primary, 10%);
-                    }
                 }
                 a.nav-link {
                     height: 50px;
@@ -4053,6 +4041,16 @@ header#mr-nav {
                 }
             }
         }
+    }
+}
+
+// Snap custom menu fix for IE11.
+.ie11 header#mr-nav #snap-custom-menu nav.navbar {
+    max-height: 100%;
+    padding-bottom: 0;
+    padding-top: 0;
+    ul#snap-navbar-content li.nav-item a.nav-link {
+        max-height: 100%;
     }
 }
 
