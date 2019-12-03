@@ -925,13 +925,10 @@ class course_renderer extends \core_course_renderer {
                     $url .= "&amp;redirect=1";
                 }
             } else {
-                $url .= "&amp;redirect=1";
-                $target = "target='_blank'";
+                $url .= "&amp;forceview=1";
             }
         }
         if ($mod->modname === 'url') {
-            // Set the url to redirect 1 to avoid intermediate pages.
-            $url .= "&amp;redirect=1";
             $target = "target='_blank'";
         }
 
