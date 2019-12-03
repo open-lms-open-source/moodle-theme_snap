@@ -110,7 +110,19 @@ define(['jquery', 'core/log', 'core/yui', 'theme_snap/pm_course_cards', 'theme_s
                 $(document).trigger('snapUpdatePersonalMenu');
 
                 // Triggering event for external PM open listeners.
-                document.dispatchEvent(new Event('snapPersonalMenuOpen'));
+                // Try/catch added to ensure browser compatibility for webcomponents.
+                try {
+                    document.dispatchEvent(new Event('snapPersonalMenuOpen'));
+                } catch(error) {
+                    log.error(error.message);
+                    try {
+                        var evt = document.createEvent("Event");
+                        evt.initEvent('snapPersonalMenuOpen', true, true);
+                        document.dispatchEvent(evt);
+                    } catch(err) {
+                        log.error(err.message);
+                    }
+                }
             };
 
             /**

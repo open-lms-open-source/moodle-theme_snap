@@ -436,9 +436,15 @@ function theme_snap_before_footer() {
 
     $paths = [];
 
-    $paths['theme_snap/snapce'] = [
-        $CFG->wwwroot . '/pluginfile.php/' . $PAGE->context->id . '/theme_snap/vendorjs/snap-custom-elements/snap-ce'
-    ];
+    if (core_useragent::is_ie()) {
+        $paths['theme_snap/snapce'] = [
+            $CFG->wwwroot . '/pluginfile.php/' . $PAGE->context->id . '/theme_snap/vendorjs/snap-custom-elements/snap-ce-es5'
+        ];
+    } else {
+        $paths['theme_snap/snapce'] = [
+            $CFG->wwwroot . '/pluginfile.php/' . $PAGE->context->id . '/theme_snap/vendorjs/snap-custom-elements/snap-ce'
+        ];
+    }
 
     $PAGE->requires->js_call_amd('theme_snap/wcloader', 'init', [
         'componentPaths' => json_encode($paths)
