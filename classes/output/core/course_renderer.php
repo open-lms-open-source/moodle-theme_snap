@@ -485,9 +485,11 @@ class course_renderer extends \core_course_renderer {
                 $output = html_writer::tag('div', $content, array('class' => trim('contentafterlink ' . $textclasses)));
             }
         } else {
+            $snapmodtype = $this->get_mod_type($mod)[0];
+            $assettype = '<div class="snap-assettype">'.$snapmodtype.'</div>';
             // No link, so display only content.
-            $output = html_writer::tag('div', $accesstext . $content,
-            array('class' => 'contentwithoutlink ' . $textclasses));
+            $output = html_writer::tag('div', $assettype . $accesstext . $content,
+                array('class' => 'contentwithoutlink ' . $textclasses));
         }
         return $output;
     }

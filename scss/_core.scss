@@ -4111,3 +4111,8 @@ header#mr-nav {
         }
     }
 }
+
+// Change font size for header Folder activity with inline content.
+li.snap-activity.modtype_folder div#folder_tree0 #ygtvcontentel1 > div > h3 {
+    font-size: 1em;
+}
