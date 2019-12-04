@@ -37,17 +37,18 @@ Feature: When the moodle theme is set to Snap, the users see an intermediate pag
       | user      | course  | role            |
       | teacher1  | C1      | editingteacher  |
     And the following "activities" exist:
-      | activity   | name         | intro                       | course | idnumber  | section | showdescription | Select files                                 |
-      | url        | Url 1        | Test url description        | C1     | url1      | 0       | 1               |                                              |
-      | resource   | Resource 1   | Test resource description   | C1     | resource1 | 0       | 1               | theme/snap/tests/fixtures/test_text_file.txt |
+      | activity   | name         | intro                       | course | idnumber  | section | showdescription |
+      | url        | Url 1        | Test url description        | C1     | url1      | 0       | 1               |
+      | resource   | Resource 1   | Test resource description   | C1     | resource1 | 0       | 1               |
 
-  #@javascript
   Scenario: As a teacher I should see an intermediate page with the description in mod_url.
     Given I log in as "teacher1"
     And I am on "Course 1" course homepage
-    And I follow "Url 1"
+    And I click on ".modtype_url a.mod-link" "css_element"
     And I should see "Test url description"
+    And "http://moodle.org/" "link" should exist
     And I am on "Course 1" course homepage
     And I wait until the page is ready
-    And I follow "Resource 1"
+    And I click on ".modtype_resource a.mod-link" "css_element"
     Then I should see "Test resource description"
+    And "resource1.txt" "link" should exist

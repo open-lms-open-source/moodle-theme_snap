@@ -929,6 +929,8 @@ class course_renderer extends \core_course_renderer {
             }
         }
         if ($mod->modname === 'url') {
+            // Set the url to forceview 1 to see intermediate page with description.
+            $url .= "&amp;forceview=1";
             $target = "target='_blank'";
         }
 
