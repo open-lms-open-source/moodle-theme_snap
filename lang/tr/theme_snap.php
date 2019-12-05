@@ -250,7 +250,7 @@ $string['pld'] = 'PLD';
 $string['pluginname'] = 'Snap';
 $string['poster'] = 'Kapak görüntüsü';
 $string['posterdesc'] = 'Sitenizin ön sayfası için büyük bir başlık görüntüsü. Yatay yönlendirilmiş (1200 x600 piksel) veya daha büyük resimler en iyisidir.';
-$string['poweredbyrunby'] = '<a href="https://moodle.com/" target="_blank">Moodle</a> tabanlı bir ürün olan <a href="https://www.blackboard.com/blackboard-open-lms" target="_blank">Blackboard Open LMS</a> ile geliştirilmiştir.<br>
+$string['poweredbyrunby'] = '<a href="https://moodle.com/" target="_blank" rel="noopener">Moodle</a> tabanlı bir ürün olan <a href="https://www.blackboard.com/blackboard-open-lms" target="_blank" rel="noopener">Blackboard Open LMS</a> ile geliştirilmiştir.<br>
     Telif Hakkı &#169; {$a} Blackboard Inc., Tüm Hakları Saklıdır.';
 $string['previoussection'] = 'Bir önceki bölüm';
 $string['privacy:metadata:theme_snap_course_favorites:courseid'] = 'Kullanıcının sık kullanılanlara eklediği kursun kimliği';
