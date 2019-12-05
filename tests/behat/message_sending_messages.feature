@@ -52,14 +52,12 @@ Feature: Snap message send messages
       | messagingminpoll | 1 |
 
   Scenario: Send a message to a group conversation in snap
-    And I skip because "It's failing since we merged 3.7.3, this will be worked on the ticket INT-15371"
     Given I log in as "student1"
     And I am on site homepage
     And I click on ".js-snap-pm-trigger.snap-my-courses-menu" "css_element"
     And I follow "View my messages"
     And I click on "//span[contains(text(),\"Group\")]" "xpath_element"
-    And "Group 1" "group_message" should exist
-    And I select "Group 1" conversation in messaging
+    And I click on ".rounded-circle[alt='Group 1']" "css_element"
     When I send "Hi!" message in the message area
     Then I should see "Hi!" in the ".message.clickable[data-region='message']" "css_element"
     And I log out
@@ -68,48 +66,43 @@ Feature: Snap message send messages
     And I click on ".js-snap-pm-trigger.snap-my-courses-menu" "css_element"
     And I follow "View my messages"
     And I should see "(1)" in the ".section[data-region='view-overview-group-messages']" "css_element"
-    And "Group 1" "group_message" should exist
     And I should see "1" in the ".badge-primary[data-region='section-unread-count'][aria-label='There are 1 unread conversations']" "css_element"
     And I should see "1" in the ".badge-primary[data-region='unread-count'][aria-label='There are 1 unread messages']" "css_element"
-    And I select "Group 1" conversation in messaging
+    And I click on ".rounded-circle[alt='Group 1']" "css_element"
     Then I should see "Hi!" in the ".message.clickable[data-region='message']" "css_element"
     Then ".badge-primary.hidden[data-region='unread-count'][aria-label='There are 1 unread messages']" "css_element" should exist
     Then ".badge-primary.hidden[data-region='section-unread-count'][aria-label='There are 1 unread conversations']" "css_element" should exist
 
   Scenario: Send a message to a starred conversation in snap
-    And I skip because "It's failing since we merged 3.7.3, this will be worked on the ticket INT-15371"
     Given I log in as "student1"
     And I am on site homepage
     And I click on ".js-snap-pm-trigger.snap-my-courses-menu" "css_element"
     And I follow "View my messages"
     And I click on "//span[contains(text(),\"Group\")]" "xpath_element"
-    Then "Group 1" "group_message" should exist
-    And I select "Group 1" conversation in messaging
+    And I click on ".rounded-circle[alt='Group 1']" "css_element"
     And I click on "conversation-actions-menu-button" "button"
     And I click on "Star" "link" in the "//div[@data-region='header-container']" "xpath_element"
     And I click on "//span[contains(text(),\"Starred\")]" "xpath_element"
     And I should see "Group 1"
-    And I select "Group 1" conversation in messaging
+    And I click on ".rounded-circle[alt='Group 1']" "css_element"
     And I send "Hi!" message in the message area
     Then I should see "Hi!" in the ".message.clickable[data-region='message']" "css_element"
     And I click on "//span[contains(text(),\"Group\")]" "xpath_element"
-    And I should not see "Group 1" in the "Group" "group_message_tab"
+    And I should see "No group conversations"
     And I log out
     And I log in as "student2"
     And I am on site homepage
     And I click on ".js-snap-pm-trigger.snap-my-courses-menu" "css_element"
     And I follow "View my messages"
     And I should see "(1)" in the ".section[data-region='view-overview-favourites']" "css_element"
-    And "Group 1" "group_message" should exist
     And I should see "1" in the ".badge-primary[data-region='section-unread-count'][aria-label='There are 1 unread conversations']" "css_element"
     And I should see "1" in the ".badge-primary[data-region='unread-count'][aria-label='There are 1 unread messages']" "css_element"
-    And I select "Group 1" conversation in messaging
+    And I click on ".rounded-circle[alt='Group 1']" "css_element"
     Then I should see "Hi!" in the ".message.clickable[data-region='message']" "css_element"
     Then ".badge-primary.hidden[data-region='unread-count'][aria-label='There are 1 unread messages']" "css_element" should exist
     Then ".badge-primary.hidden[data-region='section-unread-count'][aria-label='There are 1 unread conversations']" "css_element" should exist
 
   Scenario: Send a message to a private conversation via contacts in snap
-    And I skip because "It's failing since we merged 3.7.3, this will be worked on the ticket INT-15371"
     Given the following "message contacts" exist:
       | user     | contact |
       | student1 | student2 |
@@ -139,17 +132,15 @@ Feature: Snap message send messages
     And I click on ".js-snap-pm-trigger.snap-my-courses-menu" "css_element"
     And I follow "View my messages"
     And I should see "(2)" in the ".section[data-region='view-overview-messages']" "css_element"
-    And "Student 1" "group_message" should exist
-    And "Student 3" "group_message" should exist
     And I should see "2" in the ".badge-primary[data-region='section-unread-count'][aria-label='There are 2 unread conversations']" "css_element"
     And I should see "1" in the ".badge-primary[data-region='unread-count'][aria-label='There are 1 unread messages']" "css_element"
     And I should see "2" in the ".badge-primary[data-region='unread-count'][aria-label='There are 2 unread messages']" "css_element"
-    And I select "Student 3" conversation in messaging
+    And I click on ".rounded-circle[alt='Student 3']" "css_element"
     And I should see "Hello!" in the ".d-flex[data-region='day-messages-container']" "css_element"
     And I should see "How are you?" in the ".d-flex[data-region='day-messages-container']" "css_element"
     Then ".badge-primary.hidden[data-region='unread-count'][aria-label='There are 2 unread messages']" "css_element" should exist
     And I should see "1" in the ".badge-primary[data-region='section-unread-count'][aria-label='There are 2 unread conversations']" "css_element"
-    And I select "Student 1" conversation in messaging
-    And I should see "Hi!" in the ".d-flex[data-region='day-messages-container']" "css_element"
+    And I click on ".rounded-circle[alt='Student 1']" "css_element"
+    Then I should see "Hi!" in the ".d-flex[data-region='day-messages-container']" "css_element"
     Then ".badge-primary.hidden[data-region='unread-count'][aria-label='There are 1 unread messages']" "css_element" should exist
     Then ".badge-primary.hidden[data-region='section-unread-count'][aria-label='There are 2 unread conversations']" "css_element" should exist
