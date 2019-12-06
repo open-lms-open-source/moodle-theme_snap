@@ -67,5 +67,9 @@ $description = get_string('pbb_field_description', 'theme_snap');
 $setting = new admin_setting_configselect($name, $title, $description, 'user|department', $fields);
 $setting->set_updatedcallback('\\theme_snap\\local::clean_profile_based_branding_cache');
 $snapsettings->add($setting);
+// Only show pbb field if pbb is enabled.
+$tohide = 'theme_snap/pbb_field';
+$dependency = 'theme_snap/pbb_enable';
+$settings->hide_if($tohide, $dependency, 'notchecked');
 
 $settings->add($snapsettings);
