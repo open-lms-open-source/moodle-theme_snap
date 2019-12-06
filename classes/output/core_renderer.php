@@ -1808,4 +1808,21 @@ HTML;
 ></snap-feed>
 HTML;
     }
+
+    /**
+     * Renders a div that is only shown when there are configured custom menu items.
+     *
+     * @return string
+     */
+    public function custom_menu_spacer() {
+        global $CFG, $PAGE;
+        $pagestospace = [
+            'message-index',
+        ];
+        $spacer = '';
+        if (!empty($CFG->custommenuitems) && in_array($PAGE->pagetype, $pagestospace)) {
+            $spacer = '<div class="snap-custom-menu-spacer"></div>';
+        }
+        return $spacer;
+    }
 }

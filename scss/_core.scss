@@ -847,60 +847,60 @@ footer #moodle-footer
     background-color: $nav-bg;
     top: 0;
 
-        //headroom js http://wicky.nillia.ms/headroom.js/
-        &.headroom--unpinned {
-            will-change: transform;
-            animation-name: snap-rise;
-            animation-timing-function: ease-in-out;
-            animation-duration: 0.4s;
-            animation-fill-mode: forwards;
+    //headroom js http://wicky.nillia.ms/headroom.js/
+    &.headroom--unpinned {
+        will-change: transform;
+        animation-name: snap-rise;
+        animation-timing-function: ease-in-out;
+        animation-duration: 0.4s;
+        animation-fill-mode: forwards;
+    }
+
+    &.headroom--pinned {
+
+        // firefox no like this animation :(
+        /*
+        animation-name: snap-drop;
+        animation-timing-function: cubic-bezier(.694, .0482, .335, 1);
+        animation-duration: 0.33s;
+        */
+    }
+
+    .popover-region-notifications > div > .icon {
+        color: $nav-color;
+
+        &:hover {
+            color: $nav-color-hover;
         }
+    }
 
-        &.headroom--pinned {
+    a {
+        color: $nav-color;
 
-            // firefox no like this animation :(
-            /*
-            animation-name: snap-drop;
-            animation-timing-function: cubic-bezier(.694, .0482, .335, 1);
-            animation-duration: 0.33s;
-            */
+        &:hover,
+        &:focus {
+            color: $nav-color-hover;
         }
+    }
 
-        .popover-region-notifications > div > .icon {
-            color: $nav-color;
+    .popover-region-container a {
+        color: $brand-primary;
 
-            &:hover {
-                color: $nav-color-hover;
-            }
+        &:hover {
+            color: darken($brand-primary, 8%);
         }
-
-        a {
-            color: $nav-color;
-
-            &:hover,
-            &:focus {
-                color: $nav-color-hover;
-            }
+        &:focus {
+            color: darken($brand-primary, 30%);
+            text-decoration: underline;
         }
+    }
 
-        .popover-region-container a {
-            color: $brand-primary;
+    .snap-login-button {
+        color: $nav-login-color;
+        background-color: $nav-login-bg;
+        border-color: $nav-login-bg;
 
-            &:hover {
-                color: darken($brand-primary, 8%);
-            }
-            &:focus {
-                color: darken($brand-primary, 30%);
-                text-decoration: underline;
-            }
-        }
-
-        .snap-login-button {
-            color: $nav-login-color;
-            background-color: $nav-login-bg;
-            border-color: $nav-login-bg;
-
-            margin: 0 1rem;
+        margin: 0 1rem;
 
         &:hover,
         &:focus {
@@ -908,7 +908,6 @@ footer #moodle-footer
             background-color: darken($nav-login-bg, 8%);
             border-color: darken($nav-login-bg, 8%);
         }
-
     }
 }
 
@@ -4060,6 +4059,10 @@ header#mr-nav {
     }
     footer#moodle-footer div#snap-custom-menu {
         display: none;
+    }
+    // Spacer to be shown conditionally when custom menu has items to show.
+    .snap-custom-menu-spacer {
+        padding-top: 3.25em;
     }
 }
 
