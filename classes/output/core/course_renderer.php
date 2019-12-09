@@ -893,7 +893,6 @@ class course_renderer extends \core_course_renderer {
     public function course_section_cm_name(cm_info $mod, $displayoptions = array()) {
 
         $output = '';
-
         // Nothing to be displayed to the user.
         if (!$mod->uservisible && empty($mod->availableinfo)) {
             return $output;
@@ -915,7 +914,8 @@ class course_renderer extends \core_course_renderer {
 
         // Multimedia mods we want to open in the same window.
         $snapmultimedia = $this->snap_multimedia();
-
+        
+        $resourcedisplay = get_config('theme_snap', 'resourcedisplay');
         if ($mod->modname === 'resource') {
             $extension = $this->get_mod_type($mod)[1];
             if (in_array($extension, $snapmultimedia) ) {
@@ -925,13 +925,21 @@ class course_renderer extends \core_course_renderer {
                     $url .= "&amp;redirect=1";
                 }
             } else {
-                $url .= "&amp;forceview=1";
+                if ($resourcedisplay == 'card') {
+                    $url .= "&amp;forceview=1";
+                } else {
+                    $target = "target='_blank'";
+                }
             }
         }
         if ($mod->modname === 'url') {
-            // Set the url to forceview 1 to see intermediate page with description.
-            $url .= "&amp;forceview=1";
-            $target = "target='_blank'";
+            if ($resourcedisplay == 'card') {
+                // Set the url to forceview 1 to see intermediate page with description.
+                $url .= "&amp;forceview=1";
+            } else {
+                $url .= "&amp;redirect=1";
+                $target = "target='_blank'";
+            }
         }
 
         if ($mod->uservisible) {
