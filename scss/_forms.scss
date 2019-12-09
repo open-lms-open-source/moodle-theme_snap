@@ -560,3 +560,9 @@ form.mform {
         }
     }
 }
+// Chat graphic glitch fix for Safari.
+#page-mod-chat-gui_header_js-chatinput.safari {
+    #inputForm input#input_chat_message {
+        margin: 0.5em;
+    }
+}
