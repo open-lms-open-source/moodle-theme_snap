@@ -143,7 +143,13 @@ class behat_theme_snap_category_colors extends behat_base {
      * @return array|bool
      */
     private static function rgb2array($rgb) {
-        preg_match("/rgb\\((\\d{1,3}), (\\d{1,3}), (\\d{1,3})\\)/", $rgb, $vals);
+        if (strpos($rgb, 'rgba') !== false) {
+            $pattern = '~^rgba?\((25[0-5]|2[0-4]\d|1\d{2}|\d\d?)\s*,\s*(25[0-5]|2[0-4]\d|1\d{2}|\d\d?)\s*,' .
+            '\s*(25[0-5]|2[0-4]\d|1\d{2}|\d\d?)\s*(?:,\s*([01]\.?\d*?))?\)$~';
+            preg_match($pattern, $rgb, $vals);
+        } else {
+            preg_match("/rgb\\((\\d{1,3}), (\\d{1,3}), (\\d{1,3})\\)/", $rgb, $vals);
+        }
         if (!isset($vals[1])) {
             return false;
         }
