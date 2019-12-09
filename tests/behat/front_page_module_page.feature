@@ -50,7 +50,6 @@ Feature: Open page (front page) module inline
 
   @javascript
   Scenario Outline: Page mod completion updates on read more and affects availability for other modules at the front page.
-    And I skip because "It's failing since we merged 3.7"
     Given the following "activities" exist:
       | activity | course               | idnumber  | name              | intro                 | content                 | section |
       | page     | Acceptance test site | pagec     | Page completion   | Page completion intro | Page completion content | 1       |
@@ -89,7 +88,6 @@ Feature: Open page (front page) module inline
 
   @javascript
   Scenario: Page mod should be visible at the front page for users that are not logged in.
-    And I skip because "It's failing since we merged 3.7.3, this will be worked on the ticket INT-15371"
     Given the following "activities" exist:
       | activity | course               | idnumber | name       | intro        | content       | completion | completionview | section |
       | page     | Acceptance test site | page1    | Test page1 | Test page 1  | page content1 | 0          | 0              | 1       |
@@ -99,7 +97,7 @@ Feature: Open page (front page) module inline
     And I should not see "page content1"
     And I log out
     And I should not see "page content1"
-   Then I follow visible link "Read more&nbsp;"
+    Then I click on ".pagemod-readmore" "css_element"
     And I should not see an error dialog
     And I wait until ".pagemod-content[data-content-loaded=\"1\"]" "css_element" is visible
     And I should see "page content1"
