@@ -250,8 +250,8 @@ $string['pld'] = 'PLD';
 $string['pluginname'] = 'Snap';
 $string['poster'] = 'รูปภาพหน้าปก';
 $string['posterdesc'] = 'ภาพส่วนหัวขนาดใหญ่สำหรับหน้าแรกของเว็บไซต์ของคุณ ภาพแนวนอน (1200 x 600 พิกเซล) หรือใหญ่กว่าทำงานได้ดีที่สุด';
-$string['poweredbyrunby'] = 'สร้างด้วย <a href="https://www.blackboard.com/blackboard-open-lms" target="_blank"> LMS แบบเปิดกระดานดำ </a>
-<a href="https://moodle.com/" target="_blank"> Moodle </a> - ผลิตภัณฑ์ตาม - <br>
+$string['poweredbyrunby'] = 'สร้างด้วย <a href="https://www.blackboard.com/blackboard-open-lms" target="_blank" rel="noopener"> LMS แบบเปิดกระดานดำ </a>
+<a href="https://moodle.com/" target="_blank" rel="noopener"> Moodle </a> - ผลิตภัณฑ์ตาม - <br>
 ลิขสิทธิ์ &#169; {$a} Blackboard Inc. สงวนลิขสิทธิ์';
 $string['previoussection'] = 'ส่วนก่อนหน้า';
 $string['privacy:metadata:theme_snap_course_favorites:courseid'] = 'ID รายวิชาของรายวิชาที่ผู้ใช้งานชื่นชอบ';

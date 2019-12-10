@@ -248,8 +248,8 @@ $string['pld'] = 'PLD';
 $string['pluginname'] = 'Snap';
 $string['poster'] = 'Titelbild';
 $string['posterdesc'] = 'Ein großes Bild im Kopfbereich der ersten Seite Ihre Website. Bilder im Querformat (1.200 x 600 Pixel) oder größer eignen sich am besten.';
-$string['poweredbyrunby'] = 'Entwickelt mit <a href="https://www.blackboard.com/blackboard-open-lms" target="_blank">Blackboard Open LMS</a>,
-    einem auf <a href="https://moodle.com/" target="_blank">Moodle</a> basierenden Produkt.<br>
+$string['poweredbyrunby'] = 'Entwickelt mit <a href="https://www.blackboard.com/blackboard-open-lms" target="_blank" rel="noopener">Blackboard Open LMS</a>,
+    einem auf <a href="https://moodle.com/" target="_blank" rel="noopener">Moodle</a> basierenden Produkt.<br>
     Copyright &#169; {$a} Blackboard Inc. Alle Rechte vorbehalten.';
 $string['previoussection'] = 'Vorheriger Abschnitt';
 $string['privacy:metadata:theme_snap_course_favorites:courseid'] = 'Die Kurs-ID des Kurses, den der/die Nutzer/in bevorzugt hat';
