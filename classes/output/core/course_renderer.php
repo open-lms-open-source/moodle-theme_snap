@@ -914,7 +914,7 @@ class course_renderer extends \core_course_renderer {
 
         // Multimedia mods we want to open in the same window.
         $snapmultimedia = $this->snap_multimedia();
-        
+
         $resourcedisplay = get_config('theme_snap', 'resourcedisplay');
         if ($mod->modname === 'resource') {
             $extension = $this->get_mod_type($mod)[1];
