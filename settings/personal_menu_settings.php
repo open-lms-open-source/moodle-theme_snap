@@ -86,5 +86,9 @@ $pmfeedperpagechoices = [
 ];
 $setting = new admin_setting_configselect($name, $title, $description, $default, $pmfeedperpagechoices);
 $snapsettings->add($setting);
+// Only show per page option if advanced feeds are enabled.
+$tohide = 'theme_snap/personalmenuadvancedfeedsperpage';
+$dependency = 'theme_snap/personalmenuadvancedfeedsenable';
+$settings->hide_if($tohide, $dependency, 'notchecked');
 
 $settings->add($snapsettings);
