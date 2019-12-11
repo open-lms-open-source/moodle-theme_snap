@@ -23,8 +23,8 @@
 /**
  * JS code to manage hide/show of full width messages drawer.
  */
-define(['jquery'],
-    function($) {
+define(['jquery', 'core/pubsub', 'core/url'],
+    function($, PubSub, URL) {
         // Array to control which popovers are open.
         var openedpopovers = [];
         // Maximum size in pixels to consider a mobile screen
@@ -98,6 +98,11 @@ define(['jquery'],
                             }
                         }
                     }).bind();
+                // Listener for the page user profile to load messages URL.
+                } else if ($('#page-user-profile').length != 0) {
+                    PubSub.subscribe("message-drawer-create-conversation-with-user", function (userId) {
+                        window.location = URL.relativeUrl("/message/index.php?id=" + userId);
+                    });
                 }
             }
         };

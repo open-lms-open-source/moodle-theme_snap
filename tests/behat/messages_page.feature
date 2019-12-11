@@ -97,3 +97,14 @@ Feature: When the moodle theme is set to Snap, message page should be accessible
     And ".message-app.main" "css_element" should be visible
     # A message drawer floating div gets renderer but outside of the window
     And I check element ".message-app.drawer" with property "right" = "-320px"
+
+  @javascript
+  Scenario: When selecting messages in profile, a new messages window opens.
+    Given I log in as "admin"
+    And I open the personal menu
+    And I click on "//a[@id=\"snap-pm-profile\"]" "xpath_element"
+    And I wait until the page is ready
+    And I click on "//a[@id=\"message-user-button\"]" "xpath_element"
+    And I wait until the page is ready
+    And I check body for classes "theme-snap"
+    And "body#page-message-index" "css_element" should exist
