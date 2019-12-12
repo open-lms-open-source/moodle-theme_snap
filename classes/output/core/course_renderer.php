@@ -917,7 +917,7 @@ class course_renderer extends \core_course_renderer {
         $snapmultimedia = $this->snap_multimedia();
 
         $resourcedisplay = get_config('theme_snap', 'resourcedisplay');
-        $displaydescription= get_config('theme_snap', 'displaydescription');
+        $displaydescription = get_config('theme_snap', 'displaydescription');
         if ($mod->modname === 'resource') {
             $extension = $this->get_mod_type($mod)[1];
             if (in_array($extension, $snapmultimedia) ) {
