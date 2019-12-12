@@ -25,8 +25,10 @@ Feature: When the moodle theme is set to Snap, the users see an intermediate pag
 
   Background:
     Given the following config values are set as admin:
-      | allowstealth | 1    |
-      | theme        | snap |
+      | theme           | snap |
+    And the following config values are set as admin:
+      | resourcedisplay    | card | theme_snap |
+      | displaydescription | 1    | theme_snap |
     Given the following "users" exist:
       | username  | firstname  | lastname  | email                 |
       | teacher1  | Teacher    | 1         | teacher1@example.com  |
@@ -52,3 +54,11 @@ Feature: When the moodle theme is set to Snap, the users see an intermediate pag
     And I click on ".modtype_resource a.mod-link" "css_element"
     Then I should see "Test resource description"
     And "resource1.txt" "link" should exist
+    And the following config values are set as admin:
+      | resourcedisplay | list | theme_snap |
+    And I am on "Course 1" course homepage
+    And I wait until the page is ready
+    And I click on ".modtype_url a.mod-link" "css_element"
+    And I should not see "Test url description"
+    And "http://moodle.org/" "link" should not exist
+    
