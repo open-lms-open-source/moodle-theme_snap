@@ -15,7 +15,7 @@
       "prefix": "snap",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-angular:browser",
+          "builder": "@angular-builders/custom-webpack:browser",
           "options": {
             "outputPath": "dist/snap-custom-elements",
             "index": "src/index.html",
@@ -34,7 +34,13 @@
               {
                 "input": "node_modules/document-register-element/build/document-register-element.js"
               }
-            ]
+            ],
+            "customWebpackConfig": {
+              "path": "./extra-webpack.config.js",
+              "mergeStrategies": {
+                "externals": "replace"
+              }
+            }
           },
           "configurations": {
             "production": {

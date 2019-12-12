@@ -8,8 +8,7 @@
     "lint": "ng lint",
     "e2e": "ng e2e",
     "build": "ng build --prod --output-hashing=none",
-    "package": "cat ./dist/snap-custom-elements/runtime-es2015.js ./dist/snap-custom-elements/polyfills-es2015.js ./dist/snap-custom-elements/scripts.js ./dist/snap-custom-elements/main-es2015.js > snap-ce.js",
-    "package-es5": "cat ./dist/snap-custom-elements/runtime-es5.js ./dist/snap-custom-elements/polyfills-es5.js ./dist/snap-custom-elements/scripts.js ./dist/snap-custom-elements/main-es5.js > snap-ce-es5.js"
+    "package": "./build-ce.sh"
   },
   "private": true,
   "dependencies": {
@@ -28,13 +27,14 @@
     "zone.js": "~0.9.1"
   },
   "devDependencies": {
+    "@angular-builders/custom-webpack": "^8.4.1",
     "@angular-devkit/build-angular": "~0.802.2",
     "@angular/cli": "~8.2.2",
     "@angular/compiler-cli": "~8.2.8",
     "@angular/language-service": "~8.2.8",
-    "@types/node": "~8.9.4",
     "@types/jasmine": "~3.3.8",
     "@types/jasminewd2": "~2.0.3",
+    "@types/node": "~8.9.4",
     "codelyzer": "^5.0.0",
     "jasmine-core": "~3.4.0",
     "jasmine-spec-reporter": "~4.2.1",
