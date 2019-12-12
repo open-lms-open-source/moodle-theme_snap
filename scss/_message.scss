@@ -184,3 +184,8 @@
         background-color: transparent;
     }
 }
+
+// Hide the message drawer when in profile view.
+body#page-user-profile .message-app.drawer {
+    visibility: hidden;
+}
