@@ -46,7 +46,7 @@ $name = 'theme_snap/displaydescription';
 $title = new lang_string('displaydescription', 'theme_snap');
 $default = $unchecked;
 $description = new lang_string('displaydescriptionhelp', 'theme_snap');
-$setting = new admin_setting_configcheckbox($name, $title, $description, $default, $radios);
+$setting = new admin_setting_configcheckbox($name, $title, $description, $default, $checked, $unchecked);
 $snapsettings->add($setting);
 
 // Course footer on/off.
