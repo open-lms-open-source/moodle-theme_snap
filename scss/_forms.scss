@@ -398,16 +398,17 @@ a[aria-controls="snap-collapse-help"] {
         font-size: 1rem;
     }
 
+    fieldset[id^="id_category_"],
     #id_modstandardelshdr,
     #id_overallfeedbackhdr {
-      .form-inline[data-fieldtype="editor"] {
-          overflow-x: auto;
-          overflow-y: hidden;
+        .form-inline[data-fieldtype="editor"] {
+            overflow-x: auto;
+            overflow-y: hidden;
 
-          div {
-              max-width: 100%;
-          }
-      }
+            div {
+                max-width: 100%;
+            }
+        }
     }
 
     .mceToolbar.mceLeft.mceFirst.mceLast {
