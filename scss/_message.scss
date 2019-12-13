@@ -189,3 +189,15 @@
 body#page-user-profile .message-app.drawer {
     visibility: hidden;
 }
+
+// Fix for message page to modify visibility on search input for mobile view"
+@media (max-width: 575px) {
+    #page-message-index #region-main div[role="main"] {
+        div.alert.alert-warning.alert-block.fade.in {
+            margin-top: 4em;
+        }
+        .message-app.main {
+            margin-top: 3em;
+        }
+    }
+}
