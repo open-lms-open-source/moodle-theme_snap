@@ -27,7 +27,7 @@ $darker-grey-btn: #999999;
 $dark-grey-btn: #adadad;
 $light-grey-btn: #cccccc;
 $lighter-grey-btn: #e6e6e6;
-$custom-menu-text-color: rgba(255, 255, 255, 0) !default; // Need to define this with rgba or the variable won't work.
+$custom-menu-text-color: rgb(255, 255, 255) !default; // Need to define this with rgb or the variable won't work.
 
 .theme-snap {
     .badge-primary {
