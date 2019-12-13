@@ -75,6 +75,9 @@ function theme_snap_set_category_colors($css, $theme) {
     $tag = '/**setting:categorycolors**/';
     $replacement = '';
 
+    // Get custom menu text color from database.
+    $dbcustommenutextcolor = get_config("theme_snap", "custommenutext");
+    $dbcustommenutextcoloractive = get_config("theme_snap", "customisecustommenu");
     // Get category colors from database.
     $categorycolors = array();
     $dbcategorycolors = get_config("theme_snap", "category_color");
@@ -108,7 +111,8 @@ function theme_snap_set_category_colors($css, $theme) {
                 'nav-color' => $colors[$category->id],
                 'nav-button-color' => $colors[$category->id],
                 'nav-login-bg' => $colors[$category->id],
-                'nav-login-color' => '#FFFFFF'
+                'nav-login-color' => '#FFFFFF',
+                'custom-menu-text-color' => $dbcustommenutextcoloractive ? $dbcustommenutextcolor : '#FFFFFF'
             ]);
 
             try {
