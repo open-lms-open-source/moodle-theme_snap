@@ -205,6 +205,15 @@ define(['jquery', 'core/log', 'core/ajax', 'core/str', 'core/templates', 'core/n
             });
             // Remove from Dom the completion tracking when it is disabled for an activity.
             tempnode.find('.snap-header-card .snap-header-card-icons .disabled-snap-asset-completion-tracking').remove();
+            // Prepend asset type when activity is a folder to appear in the card header instead of the content.
+            var folderAssetTypeContent = $('li.snap-activity.modtype_folder div.contentwithoutlink div.snap-assettype');
+            var folderAssetTypeHeader = $('li.snap-activity.modtype_folder div.activityinstance div.snap-header-card');
+            folderAssetTypeContent.prependTo(folderAssetTypeHeader);
+            // Modify Folder tree activity with inline content to have a H3 tag and have the same behavior that the
+            // folder with content in a separate page has.
+            $('li.snap-activity.modtype_folder #ygtvcontentel1 > div > span.fp-filename').each(function () {
+                $(this).replaceWith("<h3>"+$(this).text()+"</h3>");
+            });
             if (existingSections.length > 0) {
                 var closest = existingSections.reduce(function(prev, curr) {
                     return (Math.abs(curr - section) < Math.abs(prev - section) ? curr : prev);

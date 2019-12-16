@@ -632,6 +632,17 @@ define(['jquery', 'core/log', 'theme_snap/headroom', 'theme_snap/util', 'theme_s
                     // Remove from Dom the completion tracking when it is disabled for an activity.
                     $('.snap-header-card .snap-header-card-icons .disabled-snap-asset-completion-tracking').remove();
 
+                    // Prepend asset type when activity is a folder to appear in the card header instead of the content.
+                    var folderAssetTypeContent = $('li.snap-activity.modtype_folder div.contentwithoutlink div.snap-assettype');
+                    var folderAssetTypeHeader = $('li.snap-activity.modtype_folder div.activityinstance div.snap-header-card');
+                    folderAssetTypeContent.prependTo(folderAssetTypeHeader);
+
+                    // Modify Folder tree activity with inline content to have a H3 tag and have the same behavior that the
+                    // folder with content in a separate page has.
+                    $('li.snap-activity.modtype_folder #ygtvcontentel1 > div > span.fp-filename').each(function () {
+                        $(this).replaceWith("<h3>"+$(this).text()+"</h3>");
+                    });
+
                     // Add a class to the body to show js is loaded.
                     $('body').addClass('snap-js-loaded');
                     // Apply progressbar.js for circluar progress display.

@@ -1039,7 +1039,6 @@ body.snap-resource-card {
 body.snap-resource-list {
     li.modtype_label,
     li.modtype_resource,
-    li.modtype_folder,
     li.modtype_url,
     li.modtype_imscp,
     li.modtype_lightboxgallery,
@@ -1051,8 +1050,7 @@ body.snap-resource-list {
 }
 
 body.snap-resource-card {
-    li.modtype_label,
-    li.snap-activity.modtype_folder {
+    li.modtype_label {
         .snap-header-card-icons {
             width: 100%;
         }

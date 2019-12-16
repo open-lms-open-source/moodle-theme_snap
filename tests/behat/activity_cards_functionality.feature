@@ -11,7 +11,7 @@
 # GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License
-# along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+# along with Moodle. If not, see <http://www.gnu.org/licenses/>.
 #
 # Test to check that no multimedia files appears at a card description content.
 #
@@ -21,7 +21,7 @@
 # @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
 
 @theme @theme_snap
-Feature: Check that multimedia files does not appear for activity cards.
+Feature: Check functionality in activity cards.
   Background:
     Given the following "users" exist:
       | username  | firstname  | lastname  | email                 |
@@ -84,5 +84,40 @@ Feature: Check that multimedia files does not appear for activity cards.
       | Option     |
       | 1          |
 
+  @javascript
+  Scenario Outline: For activity cards, folder activity should always display "Folder" activity type when content is displayed inline or not.
+    Given I log in as "admin"
+    And the following config values are set as admin:
+      | resourcedisplay | <Option> | theme_snap |
+    And I log out
+    Given I log in as "teacher1"
+    # in the following setting, display 0 = "On a separate page", 1 = "Inline on a course page".
+    And the following "activities" exist:
+      | activity | name               | intro                   | course | idnumber | display | showexpanded |
+      | folder   | Test folder name 1 | Test folder description | C1     | folder1  | 1       | 1            |
+      | folder   | Test folder name 2 | Test folder description | C1     | folder2  | 0       | 1            |
+    And I am on "Course 1" course homepage with editing mode on
+    Then "li.snap-resource-long.modtype_folder div.snap-header-card div.snap-assettype" "css_element" should exist
+    Then "li.snap-activity.modtype_folder div.snap-header-card div.snap-assettype" "css_element" should exist
+    Examples:
+      | Option     |
+      | 0          |
+      | 1          |
 
-
+  @javascript
+  Scenario Outline: For activity cards, when content is displayed inline the tree needs to start with a H3 tag
+    Given I log in as "admin"
+    And the following config values are set as admin:
+      | resourcedisplay | <Option> | theme_snap |
+    And I log out
+    Given I log in as "teacher1"
+    # in the following setting, display 0 = "On a separate page", 1 = "Inline on a course page".
+    And the following "activities" exist:
+      | activity | name               | intro                   | course | idnumber | display | showexpanded |
+      | folder   | Test folder name 1 | Test folder description | C1     | folder1  | 1       | 1            |
+    And I am on "Course 1" course homepage with editing mode on
+    Then "li.snap-activity.modtype_folder div#folder_tree0 #ygtvcontentel1 > div > h3" "css_element" should exist
+    Examples:
+      | Option     |
+      | 0          |
+      | 1          |
