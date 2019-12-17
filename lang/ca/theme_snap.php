@@ -68,6 +68,8 @@ $string['coursefootertoggledesc'] = 'El peu de pàgina del curs mostra informaci
 $string['courseformatnotification'] = 'El format actual del curs que feu servir no és totalment compatible amb el tema Snap. Per a obtenir la millor experiència, Blackboard Open LMS recomana utilitzar els formats de curs per Tema o Setmanals amb el tema Snap. El format del curs es pot canviar als <a href="{$a}">paràmetres del curs</a>.';
 $string['coursefixydefaulttext'] = 'Actualment no us heu matriculat a cap curs.<br>Els cursos als quals us matriculeu es mostraran aquí.';
 $string['coursegrade'] = 'Qualificació del curs:';
+$string['coursepartialrender'] = 'Habilita la càrrega lenta per a les seccions del curs';
+$string['coursepartialrenderdesc'] = 'Si s\'habilita, les seccions del curs es carreguen a petició quan les selecciona un usuari. Això ajuda a fer que els cursos amb una gran quantitat de continguts es carreguin més ràpidament.';
 $string['coursenavigation'] = 'Navegació del curs';
 $string['coursesummaryfilesunsuitable'] = 'Buideu els fitxers de resum abans d’intentar canviar la imatge de portada';
 $string['coursetools'] = 'Quadre de comandament del curs';
@@ -244,12 +246,16 @@ $string['personalmenu'] = 'Menú personal';
 $string['personalmenufeatures'] = 'Funcions de menú personal';
 $string['personalmenulogintoggle'] = 'Mostra el menú personal a l’inici de sessió';
 $string['personalmenulogintoggledesc'] = 'Obre el menú personal immediatament després d’iniciar la sessió';
+$string['personalmenuadvancedfeedsenable'] = 'Habilita els canals de continguts avançats (experimental)';
+$string['personalmenuadvancedfeedsenabledesc'] = 'Els canals de continguts avançats carreguen alguns elements del menú personal que permeten reduir el temps de càrrega i actualitzen el contingut a petició.';
+$string['personalmenuadvancedfeedsperpage'] = 'Recompte dels elements de canals de continguts avançats mostrats';
+$string['personalmenuadvancedfeedsperpagedesc'] = 'Trieu el nombre d\'elements que es mostraran al canal de continguts. Els usuaris poden seleccionar <strong>Mostra\'n més</strong> perquè es mostrin elements addicionals.';
 $string['pld'] = 'PLD';
 $string['pluginname'] = 'Snap';
 $string['poster'] = 'Imatge de portada';
 $string['posterdesc'] = 'Una imatge de capçalera gran per a la pàgina principal del vostre lloc. Les imatges en format horitzontal de 1200 x 600 píxels o més van millor.';
-$string['poweredbyrunby'] = 'Creat amb <a href="https://www.blackboard.com/blackboard-open-lms" target="_blank" rel="noopener">Blackboard Open LMS</a>,
-    amb tecnologia de <a href="https://moodle.com/" target="_blank" rel="noopener">Moodle</a>.<br>
+$string['poweredbyrunby'] = 'Creat amb <a href="https://www.blackboard.com/blackboard-open-lms" target="_blank">Blackboard Open LMS</a>,
+    amb tecnologia de <a href="https://moodle.com/" target="_blank">Moodle</a>.<br>
     Copyright&#169; {$a} Blackboard Inc, Tots els drets reservats.';
 $string['previoussection'] = 'Secció anterior';
 $string['privacy:metadata:theme_snap_course_favorites:courseid'] = 'L\'ID del curs que l\'usuari ha marcat com a favorit';
@@ -269,7 +275,7 @@ $string['region-side-top'] = 'Capdamunt';
 $string['released'] = 'Publicat: {$a}';
 $string['reopened'] = 'Reoberta';
 $string['resourcedisplay'] = 'Visualització de recurs';
-$string['resourcedisplayhelp'] = 'Seleccioneu com han d\'aparèixer els fitxers adjunts i els enllaços al vostre curs.';
+$string['resourcedisplayhelp'] = 'Seleccioneu com han d\'aparèixer els fitxers adjunts i els enllaços al vostre curs. El tema Snap no admet fitxers multimèdia a l\'activitat petita i la descripció de les targetes de recursos.';
 $string['search'] = 'Cerca contingut';
 $string['seriffont'] = 'Tipus de lletra Serif';
 $string['seriffont_desc'] = 'Aquesta font s’utilitza per a la major part del contingut generat per l’usuari. Si utilitzeu una font Serif, el contingut generat per l’usuari és més fàcil de llegir i sembla com si l’hagués escrit un humà.';
@@ -329,9 +335,10 @@ $string['cachedef_profile_based_branding'] = 'Emmagatzemament en memòria cau de
 $string['cachedef_course_card_bg_image'] = 'Emmagatzemament en memòria cau de la imatge de fons del curs.';
 $string['cachedef_course_card_teacher_avatar'] = 'Emmagatzemament en memòria cau dels avatars dels professors.';
 $string['cachedef_course_card_teacher_avatar_index'] = 'Emmagatzemament en memòria cau de l\'índex dels avatars dels professors.';
-$string['accesforumstringdis'] = 'Visualitza les opcions';
-$string['accesforumstringmov'] = 'Opcions per moure';
-$string['accescalendarstring'] = 'Calendari';
+$string['accessforumstringdis'] = 'Opcions de visualització';
+$string['accessforumstringmov'] = 'Opcions per moure';
+$string['accesscalendarstring'] = 'Calendari';
+$string['accessglobalsearchstring'] = 'Cerca';
 $string['admineventwarning'] = 'Per veure esdeveniments de tots els cursos, ';
 $string['gotocalendarsnap'] = 'aneu al calendari del lloc.';
 $string['quizattemptswarn'] = 'Exclou els intents dels usuaris amb la inscripció suspesa';
@@ -344,3 +351,8 @@ $string['catinvalidratio'] = 'Aquestes categories de color no compleixen
 <a href="https://www.w3.org/TR/WCAG20-TECHS/G18.html" target="_blank">el valor de relació mínima que estableix la WCAG 2.0 de 4,5:1</a> :
 Contra un fons de color blanc: "{$a->white}". Contra el color de fons de la barra de navegació: "{$a->custombar}". Contra el color de fons del botó Els meus cursos: "{$a->customnav}"';
 $string['imageinvalidratiocategory'] = 'Aquesta imatge pot tenir problemes de contrast amb el color del tema amb el valor de la relació mínima que estableix la WCAG 2.0 de 4,5:1. Valor mitjà del píxel: "{$a}"';
+$string['lazyload_mod_page'] = 'Habilita la càrrega lenta per defecte per als recursos de pàgina';
+$string['lazyload_mod_page_description'] = 'Si s\'habilita, aquesta opció disminueix considerablement els temps de càrrega de les pàgines del curs per als cursos amb moltes pàgines.';
+$string['pmadvancedfeed_viewmore'] = 'Mostra\'n més';
+$string['pmadvancedfeed_reload'] = 'Refresca';
+$string['multimediacard'] = 'Els fitxers multimèdia no es mostraran a les visualitzacions de targeta d\'activitat per al tema Snap. Això s\'aplicarà a la pàgina principal i a les pàgines del curs només per a l\'activitat petita i les targetes de recursos.';
