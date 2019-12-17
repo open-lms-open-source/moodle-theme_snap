@@ -68,6 +68,8 @@ $string['coursefootertoggledesc'] = 'Le pied de page de cours affiche des inform
 $string['courseformatnotification'] = 'Le format de cours que vous utilisez actuellement n\'est pas totalement pris en charge par le thème Snap. Blackboard Open LMS recommande d\'utiliser les formats de cours Hebdomadaire et Rubrique avec le thème Snap pour bénéficier de la meilleure expérience. Le format de cours peut être modifié dans les <a href="{$a}">réglages du cours</a>.';
 $string['coursefixydefaulttext'] = 'Vous n\'êtes inscrit à aucun cours actuellement.<br>Les cours auxquels vous êtes inscrit sont affichés ici.';
 $string['coursegrade'] = 'Note du cours :';
+$string['coursepartialrender'] = 'Activer le chargement différé des sections de cours';
+$string['coursepartialrenderdesc'] = 'Si ce paramètre est activé, les sections de cours sont chargées lorsque l\'utilisateur les sélectionne. Cela permet de charger les cours volumineux plus rapidement.';
 $string['coursenavigation'] = 'Navigation de cours';
 $string['coursesummaryfilesunsuitable'] = 'Videz vos fichiers de cours avant de tenter de modifier l\'image de couverture';
 $string['coursetools'] = 'Tableau de bord du cours';
@@ -243,12 +245,16 @@ $string['personalmenu'] = 'Menu personnel';
 $string['personalmenufeatures'] = 'Fonctionnalités du menu personnel';
 $string['personalmenulogintoggle'] = 'Afficher le menu personnel lors de la connexion';
 $string['personalmenulogintoggledesc'] = 'Ouvre immédiatement le menu personnel après la connexion';
+$string['personalmenuadvancedfeedsenable'] = 'Activer les flux avancés (expérimental)';
+$string['personalmenuadvancedfeedsenabledesc'] = 'Les flux avancés chargent des éléments de menu personnalisés, ce qui permet de réduire les temps de chargement et d\'actualiser le contenu sur demande.';
+$string['personalmenuadvancedfeedsperpage'] = 'Nombre d\'éléments d\'affichage des flux avancés';
+$string['personalmenuadvancedfeedsperpagedesc'] = 'Choisissez le nombre d\'éléments à afficher dans le flux. Les utilisateurs pourront sélectionner l\'option <strong>Voir plus</strong> pour afficher davantage d\'éléments.';
 $string['pld'] = 'CPP';
 $string['pluginname'] = 'Snap';
 $string['poster'] = 'Image de couverture';
 $string['posterdesc'] = 'Image d\'en-tête de grande taille destinée à la page d\'accueil de votre site. Les images en mode paysage (1200 pixels x 600 pixels ou plus) sont plus optimales.';
-$string['poweredbyrunby'] = 'Conçu avec <a href="https://www.blackboard.com/blackboard-open-lms" target="_blank" rel="noopener">Blackboard Open LMS</a>,
-     une technologie <a href="https://moodle.com/" target="_blank" rel="noopener">Moodle</a>.<br>
+$string['poweredbyrunby'] = 'Conçu avec <a href="https://www.blackboard.com/blackboard-open-lms" target="_blank">Blackboard Open LMS</a>,
+     une technologie <a href="https://moodle.com/" target="_blank">Moodle</a>.<br>
     Copyright &#169; {$a} Blackboard Inc, tous droits réservés.';
 $string['previoussection'] = 'Section précédente';
 $string['privacy:metadata:theme_snap_course_favorites:courseid'] = 'Identifiant du cours que l\'utilisateur a ajouté à ses favoris';
@@ -268,7 +274,7 @@ $string['region-side-top'] = 'Haut';
 $string['released'] = 'Version : {$a}';
 $string['reopened'] = 'Réouvert';
 $string['resourcedisplay'] = 'Affichage des ressources';
-$string['resourcedisplayhelp'] = 'Sélectionnez le mode d\'affichage des pièces jointes et des liens dans votre cours.';
+$string['resourcedisplayhelp'] = 'Sélectionnez le mode d\'affichage des pièces jointes et des liens dans votre cours. Le thème Snap ne prend pas en charge les fichiers multimédias dans la brève description des fiches de ressources et d\'activité.';
 $string['search'] = 'Rechercher du contenu';
 $string['seriffont'] = 'Police Serif';
 $string['seriffont_desc'] = 'Cette police est utilisée pour la plupart du contenu généré par l\'utilisateur. L\'utilisation d\'une police Serif rend le contenu généré par l\'utilisateur plus lisible, et donne l\'impression qu\'il a été rédigé à la main.';
@@ -328,9 +334,10 @@ $string['cachedef_profile_based_branding'] = 'Mise en cache de la personnalisati
 $string['cachedef_course_card_bg_image'] = 'Mise en cache de l\'image d\'arrière plan du cours.';
 $string['cachedef_course_card_teacher_avatar'] = 'Mise en cache des avatars des enseignants.';
 $string['cachedef_course_card_teacher_avatar_index'] = 'Mise en cache de l\'index des avatars des enseignants.';
-$string['accesforumstringdis'] = 'Options d\'affichage';
-$string['accesforumstringmov'] = 'Déplacer les options';
-$string['accescalendarstring'] = 'Calendrier';
+$string['accessforumstringdis'] = 'Options d\'affichage';
+$string['accessforumstringmov'] = 'Déplacer les options';
+$string['accesscalendarstring'] = 'Calendrier';
+$string['accessglobalsearchstring'] = 'Recherche';
 $string['admineventwarning'] = 'Pour afficher les événements de tous les cours, ';
 $string['gotocalendarsnap'] = 'accédez au calendrier du site.';
 $string['quizattemptswarn'] = 'Les tentatives des utilisateurs suspendus sont exclues';
@@ -343,3 +350,8 @@ $string['catinvalidratio'] = 'Les catégories de couleurs suivantes ne respecten
 <a href="https://www.w3.org/TR/WCAG20-TECHS/G18.html" target="_blank">valeur de proportion minimum WCAG 2.0 de 4.5:1</a> :
 Couleur d\'arrière-plan du site (blanc) : « {$a->white} ». Couleur d\'arrière-plan de la barre de navigation : « {$a->custombar} ». Couleur d\'arrière-plan du bouton Mes cours : « {$a->customnav} »';
 $string['imageinvalidratiocategory'] = 'Cette image ne respectant pas la valeur de proportion minimum WCAG 2.0 de 4.5:1, elle peut présenter des problèmes de contraste avec la couleur du thème. Valeur moyenne de pixels : « {$a} »';
+$string['lazyload_mod_page'] = 'Activer le chargement différé par défaut pour les ressources des pages';
+$string['lazyload_mod_page_description'] = 'Lorsque ce paramètre est activé, il réduit de manière significative le temps de chargement des cours composés de nombreuses pages.';
+$string['pmadvancedfeed_viewmore'] = 'Voir plus';
+$string['pmadvancedfeed_reload'] = 'Actualiser';
+$string['multimediacard'] = 'Les fichiers multimédias ne s\'afficheront pas dans la fiche d\'activité pour le thème Snap. Ceci sera appliqué à la page d\'accueil et aux pages de cours uniquement pour les brèves fiches de ressource et d\'activité.';
