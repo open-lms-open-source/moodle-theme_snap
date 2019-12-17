@@ -68,6 +68,8 @@ $string['coursefootertoggledesc'] = 'De voettekst van de cursus bevat nuttige in
 $string['courseformatnotification'] = 'De huidige cursusstructuur die je gebruikt, wordt niet volledig ondersteund door het thema Snap. Voor de beste ervaring adviseert Blackboard Open LMS dat je de cursusstructuur Onderwerpen of Wekelijks gebruikt met het thema Snap. Je kunt de cursusstructuur wijzigen in de <a href="{$a}">cursusinstellingen</a>.';
 $string['coursefixydefaulttext'] = 'Je bent op dit moment niet ingeschreven bij een cursus.<br>Cursussen waarvoor je bent ingeschreven, worden hier getoond.';
 $string['coursegrade'] = 'Cursuscijfer:';
+$string['coursepartialrender'] = 'Vertraagd laden inschakelen voor cursussecties';
+$string['coursepartialrenderdesc'] = 'Als deze optie is ingeschakeld, worden cursussecties op aanvraag geladen wanneer de gebruiker deze selecteert. Zo kunnen cursussen met een grote hoeveelheid inhoud sneller worden geladen.';
 $string['coursenavigation'] = 'Cursusnavigatie';
 $string['coursesummaryfilesunsuitable'] = 'Maak je cursussamenvattingsbestanden leeg voordat je probeert de omslagafbeelding te wijzigen';
 $string['coursetools'] = 'Cursusdashboard';
@@ -244,12 +246,16 @@ $string['personalmenu'] = 'Persoonlijk menu';
 $string['personalmenufeatures'] = 'Functies persoonlijk menu';
 $string['personalmenulogintoggle'] = 'Toon persoonlijk menu bij het aanmelden';
 $string['personalmenulogintoggledesc'] = 'Opent het persoonlijke menu onmiddellijk na het aanmelden';
+$string['personalmenuadvancedfeedsenable'] = 'Geavanceerde feeds inschakelen (experimenteel)';
+$string['personalmenuadvancedfeedsenabledesc'] = 'Met geavanceerde feeds worden bepaalde persoonlijke menu-items geladen, waardoor inhoud sneller op aanvraag wordt weergegeven en vernieuwd.';
+$string['personalmenuadvancedfeedsperpage'] = 'Aantal weergegeven items in geavanceerde feeds';
+$string['personalmenuadvancedfeedsperpagedesc'] = 'Kies het aantal items dat je in de feed wilt weergeven. Gebruikers kunnen <strong>Meer weergeven</strong> selecteren om meer items weer te geven.';
 $string['pld'] = 'PLD';
 $string['pluginname'] = 'Snap';
 $string['poster'] = 'Omslagafbeelding';
 $string['posterdesc'] = 'Een grote headerafbeelding voor de startpagina van je site. Liggende afbeeldingen (1200 x 600 pixels) of groter werken het beste.';
-$string['poweredbyrunby'] = 'Gebouwd met <a href="https://www.blackboard.com/blackboard-open-lms" target="_blank" rel="noopener">Blackboard Open LMS</a>,
-    een op <a href="https://moodle.com/" target="_blank" rel="noopener">Moodle</a> gebaseerd product.<br>
+$string['poweredbyrunby'] = 'Gebouwd met <a href="https://www.blackboard.com/blackboard-open-lms" target="_blank">Blackboard Open LMS</a>,
+    een op <a href="https://moodle.com/" target="_blank">Moodle</a> gebaseerd product.<br>
     Copyright &#169; {$a} Blackboard Inc., Alle rechten voorbehouden.';
 $string['previoussection'] = 'Vorige sectie';
 $string['privacy:metadata:theme_snap_course_favorites:courseid'] = 'De cursus-ID van de cursus die de gebruiker als favoriet heeft ingesteld';
@@ -269,7 +275,7 @@ $string['region-side-top'] = 'Bovenaan';
 $string['released'] = 'Release: {$a}';
 $string['reopened'] = 'Heropend';
 $string['resourcedisplay'] = 'Bronweergave';
-$string['resourcedisplayhelp'] = 'Selecteer hoe bijlagen en koppelingen in je cursus moeten worden weergegeven.';
+$string['resourcedisplayhelp'] = 'Selecteer hoe bijlagen en koppelingen in je cursus moeten worden weergegeven. Het Snap-thema biedt geen ondersteuning voor multimediabestanden in de beschrijving van kleine activiteit- en bronkaarten.';
 $string['search'] = 'Inhoud zoeken';
 $string['seriffont'] = 'Lettertype Serif';
 $string['seriffont_desc'] = 'Dit lettertype wordt gebruikt voor de meeste door gebruikers gegenereerde inhoud. Gebruik een serif-lettertype om door gebruikers gemaakte inhoud beter leesbaar te maken, en de inhoud meer te doen aanvoelen alsof hij door een mens is geschreven.';
@@ -329,9 +335,10 @@ $string['cachedef_profile_based_branding'] = 'Caching voor profielgebaseerde opm
 $string['cachedef_course_card_bg_image'] = 'Caching voor achtergrondafbeelding cursus.';
 $string['cachedef_course_card_teacher_avatar'] = 'Caching voor avatars docent.';
 $string['cachedef_course_card_teacher_avatar_index'] = 'Caching voor index van avatars docent.';
-$string['accesforumstringdis'] = 'Toonopties';
-$string['accesforumstringmov'] = 'Verplaatsopties';
-$string['accescalendarstring'] = 'Kalender';
+$string['accessforumstringdis'] = 'Weergaveopties';
+$string['accessforumstringmov'] = 'Verplaatsopties';
+$string['accesscalendarstring'] = 'Kalender';
+$string['accessglobalsearchstring'] = 'Zoeken';
 $string['admineventwarning'] = 'Om gebeurtenissen uit alle cursussen te zien, ';
 $string['gotocalendarsnap'] = 'ga je naar de agenda van de site.';
 $string['quizattemptswarn'] = 'Pogingen van geschorste gebruikers uitsluiten';
@@ -344,3 +351,8 @@ $string['catinvalidratio'] = 'De volgende kleurcategorieën voldoen niet aan de
 <a href="https://www.w3.org/TR/WCAG20-TECHS/G18.html" target="_blank">minimale ratiowaarde van 4.5:1 van WCAG 2.0</a> :
 Achtergrondkleur van site (wit): "{$a->white}". Achtergrondkleur van navigatiebalk: "{$a->custombar}". Achtergrondkleur van knop Mijn cursussen: "{$a->customnav}"';
 $string['imageinvalidratiocategory'] = 'Deze afbeelding kan contrastproblemen veroorzaken omdat de themakleur niet voldoet aan de minimale ratiowaarde van 4.5:1 van WCAG 2.0. Gemiddelde pixelwaarde: "{$a}"';
+$string['lazyload_mod_page'] = 'Standaard vertraagd laden inschakelen voor paginabronnen';
+$string['lazyload_mod_page_description'] = 'Als deze optie is ingeschakeld, wordt de laadtijd van cursuspagina\'s aanzienlijk korter voor cursussen met veel pagina\'s.';
+$string['pmadvancedfeed_viewmore'] = 'Meer weergeven';
+$string['pmadvancedfeed_reload'] = 'Vernieuwen';
+$string['multimediacard'] = 'Multimediabestanden worden niet weergegeven in de activiteitkaartweergaven voor het Snap-thema. Dit wordt alleen toegepast op de startpagina en cursuspagina\'s voor kleine activiteit- en bronkaarten.';
