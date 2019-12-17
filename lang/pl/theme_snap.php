@@ -69,6 +69,8 @@ $string['coursefootertoggledesc'] = 'W stopce na stronie kursu wyświetlane są 
 $string['courseformatnotification'] = 'Aktualnie używany format kursu nie jest w pełni obsługiwany przez motyw Snap. W celu uzyskania najlepszych rezultatów Blackboard Open LMS zaleca stosowanie z motywem Snap formatów kursu Tematy lub Tygodniowy. Format kursu można zmienić w <a href="{$a}">ustawieniach kursu</a>.';
 $string['coursefixydefaulttext'] = 'Nie uczestniczysz obecnie w żadnym kursie.<br>Kursy, w których uczestniczysz, będą wyświetlone tutaj.';
 $string['coursegrade'] = 'Ocena z kursu:';
+$string['coursepartialrender'] = 'Włącz ładowanie opóźnione dla sekcji kursu';
+$string['coursepartialrenderdesc'] = 'Jeśli ta opcja jest włączona, sekcje kursu są ładowane na żądanie po wybraniu przez użytkownika. Pozwala to szybciej ładować kursy zawierające duże ilości danych.';
 $string['coursenavigation'] = 'Nawigacja kursu';
 $string['coursesummaryfilesunsuitable'] = 'Opróżnij pliki podsumowania kursu, zanim podejmiesz próbę zmiany obrazu na pierwszą stronę';
 $string['coursetools'] = 'Pulpit kursu';
@@ -246,12 +248,16 @@ $string['personalmenu'] = 'Menu osobiste';
 $string['personalmenufeatures'] = 'Funkcje menu osobistego';
 $string['personalmenulogintoggle'] = 'Pokaż menu osobiste podczas logowania';
 $string['personalmenulogintoggledesc'] = 'Otwiera menu osobiste natychmiast po zalogowaniu.';
+$string['personalmenuadvancedfeedsenable'] = 'Włącz zaawansowane źródła (eksperymentalne)';
+$string['personalmenuadvancedfeedsenabledesc'] = 'Zaawansowane źródła ładują osobiste elementy menu, które umożliwiają szybsze ładowanie i odświeżania treści na żądanie.';
+$string['personalmenuadvancedfeedsperpage'] = 'Liczba wyświetlanych elementów zaawansowanego źródła';
+$string['personalmenuadvancedfeedsperpagedesc'] = 'Wybierz liczbę elementów wyświetlanych w źródle. Użytkownicy mogą wybrać opcję <strong>Zobacz więcej</strong>, aby wyświetlić dodatkowe elementy.';
 $string['pld'] = 'PLD';
 $string['pluginname'] = 'Snap';
 $string['poster'] = 'Obraz na pierwszą stronę';
 $string['posterdesc'] = 'Duży obraz nagłówka wyświetlany na stronie głównej witryny. Najlepiej wyglądają obrazy w orientacji poziomej 1200 na 600 pikseli lub większe.';
-$string['poweredbyrunby'] = 'Utworzono przy użyciu <a href="https://www.blackboard.com/blackboard-open-lms" target="_blank" rel="noopener">Blackboard Open LMS</a>,
-    w oparciu o technologię <a href="https://moodle.com/" target="_blank" rel="noopener">Moodle</a>.<br>
+$string['poweredbyrunby'] = 'Utworzono przy użyciu <a href="https://www.blackboard.com/blackboard-open-lms" target="_blank">Blackboard Open LMS</a>,
+    w oparciu o technologię <a href="https://moodle.com/" target="_blank">Moodle</a>.<br>
     Copyright &#169; {$a} Blackboard Inc., Wszelkie prawa zastrzeżone.';
 $string['previoussection'] = 'Poprzednia sekcja';
 $string['privacy:metadata:theme_snap_course_favorites:courseid'] = 'Identyfikator kursu, który użytkownik oznaczył jako ulubiony';
@@ -271,7 +277,7 @@ $string['region-side-top'] = 'Góra';
 $string['released'] = 'Wydanie: {$a}';
 $string['reopened'] = 'Ponownie otwarte';
 $string['resourcedisplay'] = 'Wyświetlanie zasobu';
-$string['resourcedisplayhelp'] = 'Wybierz sposób wyświetlania załączników i łączy w kursie.';
+$string['resourcedisplayhelp'] = 'Wybierz sposób wyświetlania załączników i łączy w kursie. Kompozycja Snap nie obsługuje plików multimedialnych w opisie małych kart aktywności i zasobów.';
 $string['search'] = 'Przeszukaj zawartość';
 $string['seriffont'] = 'Czcionka Serif';
 $string['seriffont_desc'] = 'Czcionka używana w większości materiałów opracowanych przez użytkowników. Użycie czcionki szeryfowej zwiększa czytelność materiałów opracowanych przez użytkowników i sprawia, że wyglądają one jak pisane przez człowieka.';
@@ -331,15 +337,24 @@ $string['cachedef_profile_based_branding'] = 'Buforowanie na potrzeby oznakowani
 $string['cachedef_course_card_bg_image'] = 'Buforowanie obrazu tła kursu.';
 $string['cachedef_course_card_teacher_avatar'] = 'Buforowanie awatarów nauczycieli.';
 $string['cachedef_course_card_teacher_avatar_index'] = 'Buforowanie indeksu awatarów nauczycieli.';
+$string['accessforumstringdis'] = 'Wyświetl opcje';
+$string['accessforumstringmov'] = 'Opcje przenoszenia';
+$string['accesscalendarstring'] = 'Kalendarz';
+$string['accessglobalsearchstring'] = 'Szukaj';
 $string['admineventwarning'] = 'Aby wyświetlić wydarzenia ze wszystkich kursów, ';
 $string['gotocalendarsnap'] = 'przejdź do witryny kalendarza.';
 $string['quizattemptswarn'] = 'Wyklucza podejścia zawieszonych użytkowników';
 $string['quizfeedback'] = 'Informacja zwrotna';
 $string['validratio'] = 'Ta kombinacja kolorów jest zgodna z minimalną wartością współczynnika wg normy WCAG 2.0 równą 4,5:1';
-$string['invalidratio'] = 'Ta kombinacja kolorów jest niezgodna z
+$string['invalidratio'] = 'Ta kombinacja kolorów jest niezgodna z 
 <a href="https://www.w3.org/TR/WCAG20-TECHS/G18.html" target="_blank">minimalną wartością współczynnika wg normy WCAG 2.0 równą 4,5:1</a>. Wartość: „{$a}”';
 $string['imageinvalidratio'] = 'Ten obraz może być przyczyną problemów z kontrastem ze względu na niezgodność z minimalną wartością współczynnika wg normy WCAG 2.0 równą 4,5:1. Średnia wartość pikseli: „{$a}”';
-$string['catinvalidratio'] = 'Następujące kategorie kolorów są niezgodne z
+$string['catinvalidratio'] = 'Następujące kategorie kolorów są niezgodne z 
 <a href="https://www.w3.org/TR/WCAG20-TECHS/G18.html" target="_blank">minimalną wartością współczynnika wg normy WCAG 2.0 równą 4,5:1</a>:
 W odniesieniu do koloru tła witryny (biały): „{$a->white}”. W odniesieniu do koloru tła paska nawigacyjnego: „{$a->custombar}”. W odniesieniu do koloru tła przycisku Moje kursy: „{$a->customnav}”';
 $string['imageinvalidratiocategory'] = 'Przy tym kolorze motywu ten obraz może być przyczyną problemów z kontrastem ze względu na niezgodność z minimalną wartością współczynnika wg normy WCAG 2.0 równą 4,5:1. Średnia wartość pikseli: „{$a}”';
+$string['lazyload_mod_page'] = 'Włącz domyślne ładowanie opóźnione zasobów stron';
+$string['lazyload_mod_page_description'] = 'Włączenie tego ustawienia pozwala znacząco skrócić czasy ładowania stron kursu w przypadku kursów wielostronicowych.';
+$string['pmadvancedfeed_viewmore'] = 'Zobacz więcej';
+$string['pmadvancedfeed_reload'] = 'Odśwież';
+$string['multimediacard'] = 'Pliki multimedialne nie będą wyświetlane w widokach kart aktywności w kompozycji Snap. Będą one używane na stronie głównej i stronach kursu tylko w przypadku małych kart aktywności i zasobów.';
