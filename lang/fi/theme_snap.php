@@ -69,6 +69,8 @@ $string['coursefootertoggledesc'] = 'Kurssin alatunnisteessa näytetään käytt
 $string['courseformatnotification'] = 'Snap-teema ei tue täysin käyttämääsi nykyistä teemaa. Jotta voit käyttää Blackboard Open LMS:ää parhaalla mahdollisella tavalla, suosittelemme, että käytät Snap-teemassa Aiheet- tai Viikoittainen-kurssimuotoa. Voit vaihtaa kurssimuotoa <a href="{$a}">kurssin asetuksissa</a>.';
 $string['coursefixydefaulttext'] = 'Et ole tällä hetkellä rekisteröitynyt millekään kurssille.<br>Kurssit, joille olet rekisteröitynyt, näytetään tässä.';
 $string['coursegrade'] = 'Kurssin arvosana:';
+$string['coursepartialrender'] = 'Ota kurssiosioiden valikoiva lataus käyttöön';
+$string['coursepartialrenderdesc'] = 'Jos tämä on käytössä, kurssiosiot ladataan vasta, kun käyttäjä valitsee niitä. Tämä nopeuttaa paljon sisältöä sisältävien kurssien latautumista.';
 $string['coursenavigation'] = 'Kurssin siirtymisvalinnat';
 $string['coursesummaryfilesunsuitable'] = 'Tyhjennä kurssin kuvauksen tiedostot, ennen kuin yrität vaihtaa kansikuvaa';
 $string['coursetools'] = 'Kurssin koontinäyttö';
@@ -246,12 +248,16 @@ $string['personalmenu'] = 'Henkilökohtainen valikko';
 $string['personalmenufeatures'] = 'Henkilökohtaisen valikon toiminnot';
 $string['personalmenulogintoggle'] = 'Näytä henkilökohtainen valikko kirjauduttaessa';
 $string['personalmenulogintoggledesc'] = 'Avaa henkilökohtaisen valikon heti kirjautumisen jälkeen';
+$string['personalmenuadvancedfeedsenable'] = 'Ota kehittyneet syötteet käyttöön (testausvaiheessa)';
+$string['personalmenuadvancedfeedsenabledesc'] = 'Kehittyneet syötteet lataavat joitain henkilökohtaisia valikkokohteita, mikä mahdollistaa nopeammat latausajat ja päivittää sisältöä tarpeen mukaan.';
+$string['personalmenuadvancedfeedsperpage'] = 'Kehittyneiden syötteiden näytettävien kohteiden määrä';
+$string['personalmenuadvancedfeedsperpagedesc'] = 'Valitse, montako kohdetta syötteessä näytetään. Käyttäjät näyttää lisää kohteita valitsemalla <strong>Näytä lisää</strong>.';
 $string['pld'] = 'PLD';
 $string['pluginname'] = 'Snap';
 $string['poster'] = 'Kansikuva';
 $string['posterdesc'] = 'Tämä on sivuston etusivulla näytettävä suuri ylätunnistekuva. Parhaiten toimivat vaakasuuntaiset kuvat, joiden koko on vähintään 1 200 x 600 pikseliä.';
-$string['poweredbyrunby'] = 'Luotu <a href="https://www.blackboard.com/blackboard-open-lms" target="_blank" rel="noopener">Blackboard Open LMS:llä</a>,
-     joka on <a href="https://moodle.com/" target="_blank" rel="noopener">Moodleen</a> perustuva tuote.<br>
+$string['poweredbyrunby'] = 'Luotu <a href="https://www.blackboard.com/blackboard-open-lms" target="_blank">Blackboard Open LMS:llä</a>,
+     joka on <a href="https://moodle.com/" target="_blank">Moodleen</a> perustuva tuote.<br>
     Copyright &#169; {$a} Blackboard Inc. Kaikki oikeudet pidätetään.';
 $string['previoussection'] = 'Edellinen osio';
 $string['privacy:metadata:theme_snap_course_favorites:courseid'] = 'Käyttäjän suosikkeihin lisäämän kurssin tunnus';
@@ -271,7 +277,7 @@ $string['region-side-top'] = 'Yläosa';
 $string['released'] = 'Julkaistu: {$a}';
 $string['reopened'] = 'Avattu uudelleen';
 $string['resourcedisplay'] = 'Aineistonäyttö';
-$string['resourcedisplayhelp'] = 'Valitse, miten liitteet ja linkit näytetään kurssilla.';
+$string['resourcedisplayhelp'] = 'Valitse, miten liitteet ja linkit näytetään kurssilla. Snap-teema ei tue multimediatiedostoja pienissä aktiviteeteissa ja aineistokorttien kuvauksissa.';
 $string['search'] = 'Etsi sisältöä';
 $string['seriffont'] = 'Serif-fontti';
 $string['seriffont_desc'] = 'Tätä fonttia käytetään suurimmassa osassa käyttäjän luomaa sisältöä. Serif-fontin käyttäminen käyttäjän luomassa sisällössä parantaa luettavuutta ja saa tekstin näyttämään ihmisen kirjoittamalta.';
@@ -331,9 +337,10 @@ $string['cachedef_profile_based_branding'] = 'Tämä profiiliperusteinen bränd�
 $string['cachedef_course_card_bg_image'] = 'Tämä on kurssin taustakuvan välimuistipalvelu.';
 $string['cachedef_course_card_teacher_avatar'] = 'Tämä on opettajien avatareiden välimuistipalvelu.';
 $string['cachedef_course_card_teacher_avatar_index'] = 'Tämä on opettajien avatareiden indeksin välimuistipalvelu.';
-$string['accesforumstringdis'] = 'Näyttöasetukset';
-$string['accesforumstringmov'] = 'Siirtämisasetukset';
-$string['accescalendarstring'] = 'Kalenteri';
+$string['accessforumstringdis'] = 'Näyttöasetukset';
+$string['accessforumstringmov'] = 'Siirtämisasetukset';
+$string['accesscalendarstring'] = 'Kalenteri';
+$string['accessglobalsearchstring'] = 'Hae';
 $string['admineventwarning'] = 'Jos haluat nähdä kaikkien kurssien tapahtumat, ';
 $string['gotocalendarsnap'] = 'siirry sivuston kalenteriin.';
 $string['quizattemptswarn'] = 'Jättää pois jäädytettyjen käyttäjien suorituskerrat';
@@ -346,3 +353,8 @@ $string['catinvalidratio'] = 'Seuraavat värikategoriat eivät noudata
 <a href="https://www.w3.org/TR/WCAG20-TECHS/G18.html" target="_blank">WCAG 2.0:n minimisuhdearvoa 4.5:1</a>:
 Sivun taustaväriä (valkoinen) vasten: {$a->white}. Siirtymispalkin taustaväriä vasten: {$a->custombar}. Omat kurssit -painikkeen taustaväriä vasten: {$a->customnav}';
 $string['imageinvalidratiocategory'] = 'Tässä kuvassa voi olla kontrastiongelmia teeman väriä vasten johtuen siitä, ettei se noudata WCAG 2.0:n minimimittasuhdearvoa 4.5:1. Keskimääräinen pikseliarvo: {$a}';
+$string['lazyload_mod_page'] = 'Ota sivuaineistojen valikoiva lataus käyttöön';
+$string['lazyload_mod_page_description'] = 'Jos tämä asetus on käytössä, se nopeuttaa merkittävästi sivujen latausaikoja kursseilla, joilla on monia sivuja.';
+$string['pmadvancedfeed_viewmore'] = 'Näytä lisää';
+$string['pmadvancedfeed_reload'] = 'Päivitä';
+$string['multimediacard'] = 'Multimediatiedostoja ei näytetä Snap-teeman aktiviteettikorttinäkymissä. Tätä käytetään vain aloitussivulla ja kurssisivuilla vian pienissä aktiviteeteissa ja aineistokorteissa.';
