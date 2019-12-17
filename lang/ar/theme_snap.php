@@ -69,6 +69,8 @@ $string['coursefootertoggledesc'] = 'يعرض تذييل المقرر الدرا
 $string['courseformatnotification'] = 'تنسيق المقرر الدراسي الحالي الذي تستخدمه غير مدعوم بشكل كامل من قبل سمة Snap. وللحصول على أفضل تجربة، ينصح Blackboard Open LMS باستخدام موضوعات أو تنسيقات المقرر الدراسي الأسبوعية مع سمة Snap. يمكن تغيير تنسيق المقرر الدراسي في <a href="{$a}">إعدادات المقرر الدراسي</a>.';
 $string['coursefixydefaulttext'] = 'أنت غير مسجل حاليًا في أي مقررات دراسية.<br>سيتم هنا عرض المقررات الدراسية التي أنت مسجل بها.';
 $string['coursegrade'] = 'تقدير المقرر الدراسي:';
+$string['coursepartialrender'] = 'تمكين التحميل البطيء لأقسام المقرر الدراسي';
+$string['coursepartialrenderdesc'] = 'في حالة التمكين، يتم تحميل أقسام المقرر الدراسي عند الطلب من قبل المستخدم. ويساعد هذا الإجراء المقررات الدراسية التي تحتوي على كميات كبيرة من المحتوى على التحميل بشكل أسرع.';
 $string['coursenavigation'] = 'تنقل إلى المقرر الدراسي';
 $string['coursesummaryfilesunsuitable'] = 'يرجى تفريغ ملفات تلخيص المقررات الدراسية الخاصة بك قبل محاولة تغيير صورة الغلاف';
 $string['coursetools'] = 'لوحة المقرر الدراسي';
@@ -255,12 +257,16 @@ $string['personalmenu'] = 'القائمة الشخصية';
 $string['personalmenufeatures'] = 'ميزات القائمة الشخصية';
 $string['personalmenulogintoggle'] = 'إظهار القائمة الشخصية عند تسجيل الدخول';
 $string['personalmenulogintoggledesc'] = 'فتح القائمة الشخصية مباشرة بعد تسجيل الدخول';
+$string['personalmenuadvancedfeedsenable'] = 'تمكين المواجز المتقدمة (تجريبي)';
+$string['personalmenuadvancedfeedsenabledesc'] = 'تقوم المواجز المتقدمة بتحميل بعض عناصر القائمة الشخصية التي تتيح أوقات تحميل أسرع وتحديث المحتوى حسب الطلب.';
+$string['personalmenuadvancedfeedsperpage'] = 'عدد مرات عرض عناصر المواجز المتقدمة';
+$string['personalmenuadvancedfeedsperpagedesc'] = 'اختر عدد العناصر المراد عرضها في الموجز. يمكن للمستخدمين تحديد <strong>عرض المزيد</strong> لعرض عناصر إضافية.';
 $string['pld'] = 'PLD';
 $string['pluginname'] = 'محاذاة';
 $string['poster'] = 'صورة الغلاف';
 $string['posterdesc'] = 'صورة رأس كبيرة لصفحة موقعك الأمامية. تعمل الصور الأفقية بحجم (1200 × 600 بكسل) أو الأكبر حجمًا بشكل أفضل.';
-$string['poweredbyrunby'] = 'تم الإنشاء بواسطة <a href="https://www.blackboard.com/blackboard-open-lms" target="_blank" rel="noopener">Blackboard Open LMS</a>,
-     المنتج المستند إلى <a href="https://moodle.com/" target="_blank" rel="noopener">Moodle</a>.<br>
+$string['poweredbyrunby'] = 'تم الإنشاء بواسطة <a href="https://www.blackboard.com/blackboard-open-lms" target="_blank">Blackboard Open LMS</a>,
+     المنتج المستند إلى <a href="https://moodle.com/" target="_blank">Moodle</a>.<br>
     Copyright &#169; {$a} Blackboard Inc، جميع الحقوق محفوظة.';
 $string['previoussection'] = 'القسم السابق';
 $string['privacy:metadata:theme_snap_course_favorites:courseid'] = 'معرف المقرر الدراسي الخاص بالمقرر الدراسي الذي يفضله المستخدم';
@@ -280,7 +286,7 @@ $string['region-side-top'] = 'أعلى';
 $string['released'] = 'المحرَّر: {$a}';
 $string['reopened'] = 'تم إعادة الفتح';
 $string['resourcedisplay'] = 'عرض المورد';
-$string['resourcedisplayhelp'] = 'تحدد طريقة ظهور المرفقات والروابط في مقررك الدراسي.';
+$string['resourcedisplayhelp'] = 'حدد كيفية ظهور المرفقات والروابط في مقررك الدراسي. لا تدعم السمة Snap ملفات الوسائط المتعددة في وصف بطاقات الموارد والأنشطة الصغيرة.';
 $string['search'] = 'محتويات البحث';
 $string['seriffont'] = 'خط Serif';
 $string['seriffont_desc'] = 'يُستخدم هذا الخط لمعظم المحتويات المنشأة بواسطة المستخدم. علمًا بأن استخدام خط Serif يجعل المحتويات المنشأة بواسطة المستخدم أكثر قابلية للقراءة وتبدو كما لو أنها مكتوبة بخط اليد.';
@@ -340,6 +346,10 @@ $string['cachedef_profile_based_branding'] = 'التخزين المؤقت للع
 $string['cachedef_course_card_bg_image'] = 'التخزين المؤقت لصورة خلفية المقرر الدراسي.';
 $string['cachedef_course_card_teacher_avatar'] = 'التخزين المؤقت للأشكال الرمزية للمعلم.';
 $string['cachedef_course_card_teacher_avatar_index'] = 'التخزين المؤقت لفهرس الأشكال الرمزية للمعلم.';
+$string['accessforumstringdis'] = 'خيارات العرض';
+$string['accessforumstringmov'] = 'خيارات النقل';
+$string['accesscalendarstring'] = 'التقويم';
+$string['accessglobalsearchstring'] = 'بحث';
 $string['admineventwarning'] = 'لرؤية الأحداث من جميع المقررات الدراسية، ';
 $string['gotocalendarsnap'] = 'انتقل إلى تقويم الموقع.';
 $string['quizattemptswarn'] = 'استبعاد محاولات المستخدمين المعلقين';
@@ -352,3 +362,8 @@ $string['catinvalidratio'] = 'لا تتوافق فئات الألوان التا
 <a href="https://www.w3.org/TR/WCAG20-TECHS/G18.html" target="_blank">قيمة النسبة الدنيا WCAG 2.0 4.5:1</a> :
 مقابل لون خلفية الموقع (أبيض): "{$a->white}". مقابل لون خلفية شريط التنقل: "{$a->custombar}". مقابل لون خلفية زر المقررات الدراسية الخاصة بي: "{$a->customnav}"';
 $string['imageinvalidratiocategory'] = 'قد تواجه هذه الصورة مشاكل تباين مع لون الشكل بسبب عدم التوافق مع قيمة النسبة الدنيا WCAG 2.0 4.5:1. متوسط قيمة البكسل: "{$a}"';
+$string['lazyload_mod_page'] = 'تمكين التحميل البطيء الافتراضي لموارد الصفحات';
+$string['lazyload_mod_page_description'] = 'في حالة التمكين، يقوم الإعداد بتقليل أوقات تحميل صفحات المقرر الدراسي بشكل كبير فيما يخص المقررات الدراسية التي تحتوي على العديد من الصفحات.';
+$string['pmadvancedfeed_viewmore'] = 'عرض المزيد';
+$string['pmadvancedfeed_reload'] = 'تحديث';
+$string['multimediacard'] = 'لن يتم عرض ملفات الوسائط المتعددة في طرق عرض بطاقة النشاط الخاصة بالسمة Snap. وسيتم تطبيق هذا في الصفحة الرئيسية وصفحات المقرر الدراسي فقط لبطاقات الموارد والأنشطة الصغيرة.';
