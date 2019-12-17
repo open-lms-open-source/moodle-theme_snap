@@ -69,6 +69,8 @@ $string['coursefootertoggledesc'] = 'O rodapé do curso mostra informações út
 $string['courseformatnotification'] = 'O formato de curso que você está usando atualmente não é totalmente suportado pelo tema Snap. Para a melhor experiência, o Blackboard Open LMS recomenda utilizar os formatos de curso Tópicos ou Semanal com o tema Snap. O formato do curso pode ser alterado nas <a href="{$a}">configurações do curso</a>.';
 $string['coursefixydefaulttext'] = 'Você não está inscrito em nenhum curso.<br>Os cursos nos quais você estiver inscrito serão exibidos aqui.';
 $string['coursegrade'] = 'Nota do curso:';
+$string['coursepartialrender'] = 'Habilitar o carregamento lento para seções do curso';
+$string['coursepartialrenderdesc'] = 'Se esta opção estiver habilitada, as seções do curso serão carregadas sob demanda quando selecionadas por um usuário. Isso ajuda cursos com grandes quantidades de conteúdo a carregar mais rapidamente.';
 $string['coursenavigation'] = 'Navegação do curso';
 $string['coursesummaryfilesunsuitable'] = 'Esvazie seus arquivos de resumo do curso antes de tentar alterar a imagem da capa';
 $string['coursetools'] = 'Painel do curso';
@@ -251,12 +253,16 @@ $string['personalmenu'] = 'Menu pessoal';
 $string['personalmenufeatures'] = 'Recursos do menu pessoal';
 $string['personalmenulogintoggle'] = 'Mostrar menu pessoal ao fazer login';
 $string['personalmenulogintoggledesc'] = 'Abre o menu pessoal imediatamente após o login';
+$string['personalmenuadvancedfeedsenable'] = 'Habilitar feeds avançados (experimental)';
+$string['personalmenuadvancedfeedsenabledesc'] = 'Os feeds avançados carregam alguns itens de menus pessoais, o que permite tempos de carregamento mais rápidos e atualiza o conteúdo sob demanda.';
+$string['personalmenuadvancedfeedsperpage'] = 'Contagem de exibição de itens de feeds avançados';
+$string['personalmenuadvancedfeedsperpagedesc'] = 'Escolha o número de itens a serem exibidos no feed. Os usuários podem selecionar <strong>Visualizar mais</strong> para exibir itens adicionais.';
 $string['pld'] = 'PLD';
 $string['pluginname'] = 'Snap';
 $string['poster'] = 'Imagem de capa';
 $string['posterdesc'] = 'Uma imagem de cabeçalho grande para a página inicial do seu site. Imagens de paisagem (1200 x 600 pixels) ou maiores funcionam melhor.';
-$string['poweredbyrunby'] = 'Criado com <a href="https://www.blackboard.com/blackboard-open-lms" target="_blank" rel="noopener">Blackboard Open LMS</a>,
-    um produto baseado no <a href="https://moodle.com/" target="_blank" rel="noopener">Moodle</a>.<br>
+$string['poweredbyrunby'] = 'Criado com <a href="https://www.blackboard.com/blackboard-open-lms" target="_blank">Blackboard Open LMS</a>,
+    um produto baseado no <a href="https://moodle.com/" target="_blank">Moodle</a>.<br>
     Copyright &#169; {$a} Blackboard Inc., Todos os direitos reservados.';
 $string['previoussection'] = 'Seção anterior';
 $string['privacy:metadata:theme_snap_course_favorites:courseid'] = 'O código do curso marcado como favorito pelo usuário';
@@ -276,7 +282,7 @@ $string['region-side-top'] = 'Início';
 $string['released'] = 'Disponibilizado: {$a}';
 $string['reopened'] = 'Reaberto';
 $string['resourcedisplay'] = 'Exibição do recurso';
-$string['resourcedisplayhelp'] = 'Selecione como os anexos e os links aparecem no seu curso.';
+$string['resourcedisplayhelp'] = 'Selecione como os anexos e os links aparecem no seu curso. O tema Snap não é compatível com arquivos multimídia na descrição de cartões de atividades e recursos pequenos.';
 $string['search'] = 'Pesquisar conteúdo';
 $string['seriffont'] = 'Fonte Serif';
 $string['seriffont_desc'] = 'Esta fonte é usada para a maioria dos conteúdos gerados pelo usuário. Usar uma fonte serif torna o conteúdo gerado pelo usuário mais legível, dando a impressão de ter sido escrito por uma pessoa.';
@@ -336,9 +342,10 @@ $string['cachedef_profile_based_branding'] = 'Armazenamento em cache para marca 
 $string['cachedef_course_card_bg_image'] = 'Armazenamento em cache para imagem de plano de fundo do curso.';
 $string['cachedef_course_card_teacher_avatar'] = 'Armazenamento em cache para avatares do professor.';
 $string['cachedef_course_card_teacher_avatar_index'] = 'Armazenamento em cache para índice de avatares do professor.';
-$string['accesforumstringdis'] = 'Exibir opções';
-$string['accesforumstringmov'] = 'Mover opções';
-$string['accescalendarstring'] = 'Calendário';
+$string['accessforumstringdis'] = 'Opções de visualização';
+$string['accessforumstringmov'] = 'Mover opções';
+$string['accesscalendarstring'] = 'Calendário';
+$string['accessglobalsearchstring'] = 'Busca';
 $string['admineventwarning'] = 'Para ver eventos de todos os cursos, ';
 $string['gotocalendarsnap'] = 'vá para o calendário do site.';
 $string['quizattemptswarn'] = 'Exclui tentativas de usuários suspensos';
@@ -351,3 +358,8 @@ $string['catinvalidratio'] = 'As seguintes categorias de cores não estão em co
 <a href="https://www.w3.org/TR/WCAG20-TECHS/G18.html" target="_blank">valor de proporção mínima do WCAG 2.0 4.5:1</a> :
 em relação à cor de plano de fundo do site (branco): "{$a->white}". Em relação à cor de plano de fundo da barra de navegação: "{$a->custombar}". Em relação à cor de plano de fundo do botão Meus cursos: "{$a->customnav}"';
 $string['imageinvalidratiocategory'] = 'Essa imagem pode ter problemas de contraste com a cor do tema por causa da não conformidade com o valor de proporção mínima do WCAG 2.0 4.5:1. Valor médio de pixel: "{$a}"';
+$string['lazyload_mod_page'] = 'Habilitar carregamento lento padrão para recursos da página';
+$string['lazyload_mod_page_description'] = 'Se esta opção estiver habilitada, esta configuração diminuirá significativamente os tempos de carregamento de páginas dos cursos que tiverem muitas páginas.';
+$string['pmadvancedfeed_viewmore'] = 'Ver mais';
+$string['pmadvancedfeed_reload'] = 'Atualizar';
+$string['multimediacard'] = 'Os arquivos multimídia não serão exibidos nas visualizações dos cartões de atividades com o tema Snap. Isso será aplicado na página inicial e nas páginas do curso apenas para os cartões de atividades e recursos pequenos.';
