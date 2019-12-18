@@ -121,6 +121,16 @@
     #id_s_theme_snap_customcss {
         font-family: $font-family-monospace;
     }
+
+    // These form items are a checkbox which makes other bigger items disappear,
+    // so this style makes the item preseve the height of the form row.
+    #admin-personalmenuadvancedfeedsenable {
+        min-height: 13.1em;
+    }
+
+    #admin-pbb_enable {
+        min-height: 12em;
+    }
 }
 #page-admin-setting-themesettingsnap .tab-pane#themesnapcolorcategories {
 
@@ -307,6 +317,15 @@
 // -------------------------
 #themesnapsocialmedia.active {
     @include make-row();
+    .form-item {
+        @include make-col(6);
+        float: left;
+    }
+}
+// -------------------------
+// Tab - Profile based branding.
+// -------------------------
+#themesnappbb.active {
     .form-item {
         @include make-col(6);
         float: left;
