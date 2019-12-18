@@ -69,6 +69,8 @@ $string['coursefootertoggledesc'] = 'Il piè di pagina del corso fornisce agli u
 $string['courseformatnotification'] = 'Il formato del corso attuale utilizzato non è completamente supportato dal tema Snap. Per garantire la migliore esperienza, Blackboard Open LMS consiglia di utilizzare i formati di corso Argomenti o Settimanale con il tema Snap. Il formato del corso è modificabile da <a href="{$a}">impostazioni del corso</a>.';
 $string['coursefixydefaulttext'] = 'Non sei attualmente iscritto in nessun corso.<br>I corsi a cui sei iscritto verranno visualizzati qui.';
 $string['coursegrade'] = 'Voto del corso:';
+$string['coursepartialrender'] = 'Abilita il caricamento lazy per le sezioni dei corsi';
+$string['coursepartialrenderdesc'] = 'Se abilitato, le sezioni dei corsi si caricano su richiesta quando selezionate da un utente. In questo modo, i corsi più ricchi di contenuti si caricheranno più velocemente.';
 $string['coursenavigation'] = 'Navigazione corso';
 $string['coursesummaryfilesunsuitable'] = 'Svuotare i file riepilogativi del corso prima di modificare l\'immagine di copertina';
 $string['coursetools'] = 'Dashboard corso';
@@ -246,12 +248,16 @@ $string['personalmenu'] = 'Menu personale';
 $string['personalmenufeatures'] = 'Elementi del menu personale';
 $string['personalmenulogintoggle'] = 'Mostra menu personale al login';
 $string['personalmenulogintoggledesc'] = 'Apre il menu personale subito dopo il login';
+$string['personalmenuadvancedfeedsenable'] = 'Abilita Feed avanzati (sperimentale)';
+$string['personalmenuadvancedfeedsenabledesc'] = 'Feed avanzati carica elementi personali del menu che consentono di velocizzare i tempi di caricamento e di aggiornamento dei contenuti su richiesta.';
+$string['personalmenuadvancedfeedsperpage'] = 'Numero di elementi Feed avanzati visualizzati';
+$string['personalmenuadvancedfeedsperpagedesc'] = 'Scegli il numero di elementi da visualizzare nel feed. Gli utenti possono selezionare <strong>Visualizza altro</strong> per visualizzare altri elementi.';
 $string['pld'] = 'PLD';
 $string['pluginname'] = 'Snap';
 $string['poster'] = 'Immagine di copertina';
 $string['posterdesc'] = 'Un\'immagine grande dell\'intestazione per la pagina principale del sito. Le immagini orizzontali (1200 x 600 pixel) o più grandi forniscono risultati migliori.';
-$string['poweredbyrunby'] = 'Creato con <a href="http://www.blackboard.com/blackboard-open-lms" target="_blank" rel="noopener">Blackboard Open LMS</a>,
-     un prodotto basato su <a href="http://www.moodle.com/" target="_blank" rel="noopener">Moodle</a>.<br>
+$string['poweredbyrunby'] = 'Creato con <a href="http://www.blackboard.com/" target="_blank">Blackboard Open LMS</a>,
+     un prodotto basato su <a href="http://www.moodle.com/" target="_blank">Moodle</a>.<br>
     Copyright &#169; {$a} Blackboard Inc., Tutti i diritti riservati.';
 $string['previoussection'] = 'Sezione precedente';
 $string['privacy:metadata:theme_snap_course_favorites:courseid'] = 'ID del corso che l\'utente ha contrassegnato come preferito';
@@ -271,7 +277,7 @@ $string['region-side-top'] = 'In alto';
 $string['released'] = 'Rilascio: {$a}';
 $string['reopened'] = 'Riaperto';
 $string['resourcedisplay'] = 'Visualizzazione risorsa';
-$string['resourcedisplayhelp'] = 'Selezionare la modalità di visualizzazione di allegati e collegamenti nel corso.';
+$string['resourcedisplayhelp'] = 'Seleziona la modalità di visualizzazione di allegati e collegamenti nel corso. Il tema Snap non supporta file multimediali nella scheda descrizione attività e risorse.';
 $string['search'] = 'Cerca contenuti';
 $string['seriffont'] = 'Carattere Serif';
 $string['seriffont_desc'] = 'Questo carattere viene utilizzato per la maggior parte dei contenuti generati dall\'utente. L\'utilizzo di un carattere Serif aumenta la leggibilità dei contenuti generati dall\'utente, al punto tale che sembrano scritti da una persona.';
@@ -331,9 +337,10 @@ $string['cachedef_profile_based_branding'] = 'Cache del branding basato sul prof
 $string['cachedef_course_card_bg_image'] = 'Cache dell\'immagine di sfondo del corso.';
 $string['cachedef_course_card_teacher_avatar'] = 'Cache degli avatar dei docenti.';
 $string['cachedef_course_card_teacher_avatar_index'] = 'Cache dell\'indice degli avatar dei docenti.';
-$string['accesforumstringdis'] = 'Opzioni di visualizzazione';
-$string['accesforumstringmov'] = 'Opzioni di spostamento';
-$string['accescalendarstring'] = 'Calendario';
+$string['accessforumstringdis'] = 'Opzioni di visualizzazione';
+$string['accessforumstringmov'] = 'Opzioni di spostamento';
+$string['accesscalendarstring'] = 'Calendario';
+$string['accessglobalsearchstring'] = 'Cerca';
 $string['admineventwarning'] = 'Per visualizzare gli eventi da tutti i corsi, ';
 $string['gotocalendarsnap'] = 'aprire il calendario del sito.';
 $string['quizattemptswarn'] = 'Esclude i tentativi degli utenti sospesi';
@@ -346,3 +353,8 @@ $string['catinvalidratio'] = 'Le seguenti categorie di colore non rispettano il
 <a href="https://www.w3.org/TR/WCAG20-TECHS/G18.html" target="_blank"> il valore minimo di proporzioni WCAG 2.0 di 4.5:1</a> :
 Rispetto al colore dello sfondo del sito (bianco): "{$a->white}".Rispetto al colore dello sfondo della barra di navigazione: "{$a->custombar}". Rispetto al colore dello sfondo del pulsante I miei corsi: "{$a->customnav}"';
 $string['imageinvalidratiocategory'] = 'Questa immagine potrebbe riscontrare problemi di contrasto con il colore del tema poiché non rispetta il valore minimo di proporzioni WCAG 2.0 di 4.5.1. Valore medio dei pixel: "{$a}"';
+$string['lazyload_mod_page'] = 'Abilita il caricamento lazy predefinito per le risorse della pagina';
+$string['lazyload_mod_page_description'] = 'Se abilitata, questa impostazione riduce in modo significativo i tempi di caricamento delle pagine per i corsi con molte pagine.';
+$string['pmadvancedfeed_viewmore'] = 'Visualizza altro';
+$string['pmadvancedfeed_reload'] = 'Aggiorna';
+$string['multimediacard'] = 'I file multimediali non verranno visualizzati nella scheda delle attività per il tema Snap. Questo vale solo per la home page e per le pagine dei corsi per le schede delle attività e delle risorse.';

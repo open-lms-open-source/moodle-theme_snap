@@ -69,6 +69,8 @@ $string['coursefootertoggledesc'] = '課程頁尾會在課程頁面中向使用�
 $string['courseformatnotification'] = 'Snap 主題無法完整支援您目前使用的課程格式。為了享有最佳使用體驗，Blackboard Open LMS 建議您針對 Snap 主題使用「主題」或「每週」課程格式。您可以在「<a href="{$a}">課程設定</a>」中變更課程格式。';
 $string['coursefixydefaulttext'] = '您目前未註冊任何課程。<br>您註冊的課程會在這裡顯示。';
 $string['coursegrade'] = '課程成績：';
+$string['coursepartialrender'] = '啟用延遲載入課程區段';
+$string['coursepartialrenderdesc'] = '若啟用，課程區段會在使用者選取時隨需載入。如此有助於加快載入有大量內容的課程。';
 $string['coursenavigation'] = '課程瀏覽';
 $string['coursesummaryfilesunsuitable'] = '請先清空您的課程摘要檔案，再嘗試變更封面影像';
 $string['coursetools'] = '課程儀表板';
@@ -246,12 +248,16 @@ $string['personalmenu'] = '個人功能表';
 $string['personalmenufeatures'] = '個人功能表功能';
 $string['personalmenulogintoggle'] = '登入時顯示個人功能表';
 $string['personalmenulogintoggledesc'] = '登入後立即開啟個人功能表';
+$string['personalmenuadvancedfeedsenable'] = '啟用進階摘要 (實驗功能)';
+$string['personalmenuadvancedfeedsenabledesc'] = '進階摘要會載入一些私人功能表項目，以便加快載入的時間，並隨需重新整理內容。';
+$string['personalmenuadvancedfeedsperpage'] = '進階摘要項目顯示計數';
+$string['personalmenuadvancedfeedsperpagedesc'] = '選擇摘要中要顯示的項目數。使用者可以選取<strong>觀看更多</strong>來顯示其他項目。';
 $string['pld'] = 'PLD';
 $string['pluginname'] = 'Snap';
 $string['poster'] = '封面影像';
 $string['posterdesc'] = '用於網站首頁的大型標題影像。橫向影像 (1200 x 600 像素或更大) 效果最佳。';
-$string['poweredbyrunby'] = '採用 <a href="https://www.blackboard.com/blackboard-open-lms" target="_blank" rel="noopener">Blackboard Open LMS</a> 建置，
-    由 <a href="https://moodle.com/" target="_blank" rel="noopener">Moodle</a> 所提供。<br>
+$string['poweredbyrunby'] = '採用 <a href="https://www.blackboard.com/blackboard-open-lms" target="_blank">Blackboard Open LMS</a> 建置，
+    由 <a href="https://moodle.com/" target="_blank">Moodle</a> 所提供。<br>
     版權所有 &#169; {$a} Blackboard Inc，保留所有權利。';
 $string['previoussection'] = '上一單元';
 $string['privacy:metadata:theme_snap_course_favorites:courseid'] = '使用者已加入常用項目之課程的課程編號';
@@ -271,7 +277,7 @@ $string['region-side-top'] = '頂端';
 $string['released'] = '已發行：{$a}';
 $string['reopened'] = '已重新開啟';
 $string['resourcedisplay'] = '資源顯示';
-$string['resourcedisplayhelp'] = '選取附件和連結在課程中顯示的方式。';
+$string['resourcedisplayhelp'] = '選取附件和連結在課程中顯示的方式。在小型活動和資源卡描述中，Snap 主題不支援多媒體檔案。';
 $string['search'] = '搜尋內容';
 $string['seriffont'] = '有襯線字型';
 $string['seriffont_desc'] = '此字型會用於使用者產生的大部分內容。使用有襯線字型會讓使用者產生的內容更好閱讀，看起來就像是手寫一般。';
@@ -331,9 +337,10 @@ $string['cachedef_profile_based_branding'] = '以資訊為基礎的品牌塑造�
 $string['cachedef_course_card_bg_image'] = '課程背景影像的快取。';
 $string['cachedef_course_card_teacher_avatar'] = '教師頭像的快取。';
 $string['cachedef_course_card_teacher_avatar_index'] = '教師頭像索引的快取。';
-$string['accesforumstringdis'] = '顯示選項';
-$string['accesforumstringmov'] = '移動選項';
-$string['accescalendarstring'] = '行事曆';
+$string['accessforumstringdis'] = '顯示選項';
+$string['accessforumstringmov'] = '移動選項';
+$string['accesscalendarstring'] = '行事曆';
+$string['accessglobalsearchstring'] = '搜尋';
 $string['admineventwarning'] = '若要查看所有課程中的事件，';
 $string['gotocalendarsnap'] = '請前往網站行事曆。';
 $string['quizattemptswarn'] = '排除已暫停使用者的嘗試';
@@ -346,3 +353,8 @@ $string['catinvalidratio'] = '以下顏色類別不符合
 <a href="https://www.w3.org/TR/WCAG20-TECHS/G18.html" target="_blank">WCAG 2.0 最小比率值 4.5:1</a>：
 對照網站背景顏色 (白色)：「{$a->white}」。對照瀏覽列背景顏色：「{$a->custombar}」。對照「我的課程」按鈕背景顏色：「{$a->customnav}」';
 $string['imageinvalidratiocategory'] = '由於不符合 WCAG 2.0 最小比率值 4.5:1，此影像的主題顏色可能有對比度問題。平均像素值：「{$a}」';
+$string['lazyload_mod_page'] = '啟用頁面資源的預設延遲載入';
+$string['lazyload_mod_page_description'] = '若啟用，此設定可幫助有許多頁面的課程大幅縮短頁面載入時間。';
+$string['pmadvancedfeed_viewmore'] = '觀看更多';
+$string['pmadvancedfeed_reload'] = '重新整理';
+$string['multimediacard'] = '多媒體檔案不會在 Snap 主題的活動卡檢視中顯示。此設定只會套用至小型活動和資源卡的首頁和課程頁面。';

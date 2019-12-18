@@ -69,6 +69,8 @@ $string['coursefootertoggledesc'] = 'Kurs altbilgisi, bir kurs sayfasında kulla
 $string['courseformatnotification'] = 'Şu anda kullandığınız kurs biçimi Snap teması tarafından tam olarak desteklenmiyor. Blackboard Open LMS, en iyi deneyim için Snap temasıyla birlikte Konular veya Haftalık kurs biçimlerinin kullanılmasını önerir. Kurs biçimi, <a href="{$a}">kurs ayarları</a> içinden değiştirilebilir.';
 $string['coursefixydefaulttext'] = 'Şu anda hiçbir kursa kayıtlı değilsiniz.<br>Kaydolduğunuz kurslar burada gösterilecektir.';
 $string['coursegrade'] = 'Kurs notu:';
+$string['coursepartialrender'] = 'Kurs bölümleri için yavaş yüklemeyi etkinleştir';
+$string['coursepartialrenderdesc'] = 'Etkinleştirildiğinde, kurs bölümleri bir kullanıcı tarafından seçildiğinde istek üzerine yüklenir. Bu, büyük miktarda içeriğe sahip kursların daha hızlı yüklenmesine yardımcı olur.';
 $string['coursenavigation'] = 'Kurs gezintisi';
 $string['coursesummaryfilesunsuitable'] = 'Kapak resmini değiştirmeden önce lütfen kurs özeti dosyalarınızı boşaltın';
 $string['coursetools'] = 'Kurs Panosu';
@@ -246,11 +248,15 @@ $string['personalmenu'] = 'Kişisel menü';
 $string['personalmenufeatures'] = 'Kişisel menü özellikleri';
 $string['personalmenulogintoggle'] = 'Oturum açma sonrasında kişisel menüyü göster';
 $string['personalmenulogintoggledesc'] = 'Oturum açılır açılmaz kişisel menüyü açar';
+$string['personalmenuadvancedfeedsenable'] = 'Gelişmiş beslemeleri etkinleştir (Deneysel)';
+$string['personalmenuadvancedfeedsenabledesc'] = 'Gelişmiş beslemeler, daha kısa yükleme süresi sağlayan ve istek üzerine içeriği yenileyebilen bazı kişisel menü öğelerini yükler.';
+$string['personalmenuadvancedfeedsperpage'] = 'Gelişmiş beslemelerde öğe görüntüleme sayısı';
+$string['personalmenuadvancedfeedsperpagedesc'] = 'Beslemede gösterilecek öğe sayısını seçin. Kullanıcılar ek öğeleri görüntülemek için <strong>Daha fazla görüntüle</strong>\'yi seçebilir.';
 $string['pld'] = 'PLD';
 $string['pluginname'] = 'Snap';
 $string['poster'] = 'Kapak görüntüsü';
 $string['posterdesc'] = 'Sitenizin ön sayfası için büyük bir başlık görüntüsü. Yatay yönlendirilmiş (1200 x600 piksel) veya daha büyük resimler en iyisidir.';
-$string['poweredbyrunby'] = '<a href="https://moodle.com/" target="_blank" rel="noopener">Moodle</a> tabanlı bir ürün olan <a href="https://www.blackboard.com/blackboard-open-lms" target="_blank" rel="noopener">Blackboard Open LMS</a> ile geliştirilmiştir.<br>
+$string['poweredbyrunby'] = '<a href="https://moodle.com/" target="_blank">Moodle</a> tabanlı bir ürün olan <a href="https://www.blackboard.com/blackboard-open-lms" target="_blank">Blackboard Open LMS</a> ile geliştirilmiştir.<br>
     Telif Hakkı &#169; {$a} Blackboard Inc., Tüm Hakları Saklıdır.';
 $string['previoussection'] = 'Bir önceki bölüm';
 $string['privacy:metadata:theme_snap_course_favorites:courseid'] = 'Kullanıcının sık kullanılanlara eklediği kursun kimliği';
@@ -270,7 +276,7 @@ $string['region-side-top'] = 'Üst';
 $string['released'] = 'Yayınlanma tarihi: {$a}';
 $string['reopened'] = 'Yeniden açıldı';
 $string['resourcedisplay'] = 'Kaynak görüntüsü';
-$string['resourcedisplayhelp'] = 'Kursunuzda eklerin ve bağlantıların nasıl göründüğünü seçin.';
+$string['resourcedisplayhelp'] = 'Kursunuzda eklerin ve bağlantıların nasıl göründüğünü seçin. Snap teması, küçük etkinlik ve kaynak kartlarının açıklamasındaki multimedya dosyalarını desteklemez.';
 $string['search'] = 'İçeriği ara';
 $string['seriffont'] = 'Serif yazı tipi';
 $string['seriffont_desc'] = 'Bu yazı tipi, kullanıcı tarafından üretilen içeriklerin çoğu için kullanılır. Serif yazı tipini kullanmak, kullanıcı tarafından üretilen içeriği daha okunur kılar ve bir insan tarafından yazıldığı hissini uyandırır.';
@@ -330,15 +336,21 @@ $string['cachedef_profile_based_branding'] = 'Profil tabanlı markalama için ö
 $string['cachedef_course_card_bg_image'] = 'Kurs arka plan görüntüsü için önbelleğe alma.';
 $string['cachedef_course_card_teacher_avatar'] = 'Öğretmen avatarları için önbelleğe alma.';
 $string['cachedef_course_card_teacher_avatar_index'] = 'Öğretmen avatarları dizini için önbelleğe alma.';
+$string['accessforumstringdis'] = 'Görüntüleme seçenekleri';
+$string['accessforumstringmov'] = 'Seçenekleri taşı';
+$string['accesscalendarstring'] = 'Takvim';
+$string['accessglobalsearchstring'] = 'Ara';
 $string['admineventwarning'] = 'Tüm kurslardaki olayları görmek için, ';
 $string['gotocalendarsnap'] = 'site takvimine gidin.';
 $string['quizattemptswarn'] = 'Askıya alınan kullanıcılara ait denemeleri hariç tutar';
 $string['quizfeedback'] = 'Geri Bildirim';
 $string['validratio'] = 'Bu renk kombinasyonu WCAG 2.0 minimum oran değeri 4.5:1\'e uygun değil';
-$string['invalidratio'] = 'Bu renk kombinasoynu
-<a href="https://www.w3.org/TR/WCAG20-TECHS/G18.html" target="_blank">WCAG 2.0 minimum oran değeri 4.5:1</a>\'e uygun değil. Değer: "{$a}"';
+$string['invalidratio'] = 'Bu renk kombinasoynu <a href="https://www.w3.org/TR/WCAG20-TECHS/G18.html" target="_blank">WCAG 2.0 minimum oran değeri 4.5:1</a>\'e uygun değil. Değer: "{$a}"';
 $string['imageinvalidratio'] = 'WCAG 2.0 minimum oran değeri 4.5:1\'e uygun olmadığından dolayı bu resimde kontrast sorunları olabilir. Ortalama piksel değeri: "{$a}"';
-$string['catinvalidratio'] = 'Aşağıdaki renk kategorileri
-<a href="https://www.w3.org/TR/WCAG20-TECHS/G18.html" target="_blank">WCAG 2.0 minimum oran değeri 4.5:1</a>\'e uygun değil :
-Site arka plan rengine (beyaz) uygun değil: "{$a->white}". Navigasyon çubuğu arka plan rengine uygun değil: "{$a->custombar}". Kurslarım düğmesi arka plan rengine uygun değil: "{$a->customnav}"';
+$string['catinvalidratio'] = 'Aşağıdaki renk kategorileri <a href="https://www.w3.org/TR/WCAG20-TECHS/G18.html" target="_blank">WCAG 2.0 minimum oran değeri 4.5:1</a>\'e uygun değil :Site arka plan rengine (beyaz) uygun değil: "{$a->white}". Navigasyon çubuğu arka plan rengine uygun değil: "{$a->custombar}". Kurslarım düğmesi arka plan rengine uygun değil: "{$a->customnav}"';
 $string['imageinvalidratiocategory'] = 'WCAG 2.0 minimum oran değeri 4.5:1\'e uygun olmadığından dolayı bu resimde tema rengiyle kontrast sorunları olabilir. Ortalama piksel değeri: "{$a}"';
+$string['lazyload_mod_page'] = 'Sayfa kaynakları için varsayılan yavaş yüklemeyi etkinleştir';
+$string['lazyload_mod_page_description'] = 'Etkinleştirildiğinde, bu ayar çok sayfalı kurslar için kurs sayfası yükleme sürelerini önemli ölçüde kısaltır.';
+$string['pmadvancedfeed_viewmore'] = 'Daha fazla görüntüle';
+$string['pmadvancedfeed_reload'] = 'Yenile';
+$string['multimediacard'] = 'Snap teması için etkinlik kartı görünümlerinde multimedya dosyaları gösterilmez. Bu, ana sayfa ve kurs sayfalarında yalnızca küçük etkinlik ve kaynak kartları için uygulanır.';

@@ -68,6 +68,8 @@ $string['coursefootertoggledesc'] = 'コースフッタには、コース管理�
 $string['courseformatnotification'] = '現在お使いのコース形式はSnapテーマでは完全にサポートされていません。Blackboard Open LMSで最高のエクスペリエンスを実現するには、トピックまたは週次コースの形式をSnapテーマと共に使用することをお勧めします。コース形式は<a href="{$a}">コース設定</a>で変更できます。';
 $string['coursefixydefaulttext'] = '現在どのコースにも登録されていません。<br>登録済みのコースはここに表示されます。';
 $string['coursegrade'] = 'コース評定 :';
+$string['coursepartialrender'] = 'コースセクションの遅延読み込みを有効にする';
+$string['coursepartialrenderdesc'] = '有効にした場合、コースセクションの読み込みは、学生が選択したときにオンデマンドで行われます。これにより、コンテンツが大量にあるコースの読み込みが速くなります。';
 $string['coursenavigation'] = 'コースナビゲーション';
 $string['coursesummaryfilesunsuitable'] = 'カバーイメージを変更する前に、コース概要ファイルを空にしてください';
 $string['coursetools'] = 'コースダッシュボード';
@@ -244,11 +246,15 @@ $string['personalmenu'] = 'パーソナルメニュー';
 $string['personalmenufeatures'] = 'パーソナルメニュー機能';
 $string['personalmenulogintoggle'] = 'ログイン時に個人用メニューを表示する';
 $string['personalmenulogintoggledesc'] = 'ログイン後は個人用メニューを開く';
+$string['personalmenuadvancedfeedsenable'] = '高度なフィードを有効にする (実験的)';
+$string['personalmenuadvancedfeedsenabledesc'] = '高度なフィードでは、読み込み時間の高速化を可能にし、コンテンツをオンデマンドでリフレッシュする、個人的なメニュー項目が読み込みまれます。';
+$string['personalmenuadvancedfeedsperpage'] = '高度なフィード項目の表示数';
+$string['personalmenuadvancedfeedsperpagedesc'] = 'フィードで表示する項目の数を選択します。ユーザは[<strong>さらに表示</strong>]を選択して追加項目を表示できます。';
 $string['pld'] = 'PLD';
 $string['pluginname'] = 'Snap';
 $string['poster'] = 'カバーイメージ';
 $string['posterdesc'] = 'サイトのフロントページ用の大きいヘッダイメージです。横向きイメージ (1200 x 600ピクセル) 以上が最適です。';
-$string['poweredbyrunby'] = '<a href="https://www.blackboard.com/blackboard-open-lms" target="_blank" rel="noopener">Blackboard Open LMS</a> (<a href="https://moodle.com/" target="_blank" rel="noopener">Moodle</a>ベースの製品) で構築しています。<br>
+$string['poweredbyrunby'] = '<a href="https://www.blackboard.com/blackboard-open-lms" target="_blank">Blackboard Open LMS</a> (<a href="https://moodle.com/" target="_blank">Moodle</a>ベースの製品) で構築しています。<br>
     Copyright &#169; {$a} Blackboard Inc, All Rights Reserved.';
 $string['previoussection'] = '前のセクション';
 $string['privacy:metadata:theme_snap_course_favorites:courseid'] = 'ユーザがお気に入りとしてマークしたコースのコースID';
@@ -268,7 +274,7 @@ $string['region-side-top'] = '上';
 $string['released'] = 'リリース済み : {$a}';
 $string['reopened'] = '再オープン';
 $string['resourcedisplay'] = 'リソース表示';
-$string['resourcedisplayhelp'] = '添付ファイルとリンクをコースにどのように表示するか選択します。';
+$string['resourcedisplayhelp'] = '添付ファイルとリンクをコースにどのように表示するか選択します。Snapテーマでは、小さいアクティビティとリソースカードの説明にあるマルチメディアファイルをサポートしていません。';
 $string['search'] = 'コンテンツを検索する';
 $string['seriffont'] = 'Serifフォント';
 $string['seriffont_desc'] = 'このフォントは、ユーザが生成するコンテンツのほとんどに使用されます。Serifフォントを使用すると、コンテンツの読みやすさが増し、人間が書いたもののようになります。';
@@ -328,6 +334,10 @@ $string['cachedef_profile_based_branding'] = 'プロファイルベースのブ�
 $string['cachedef_course_card_bg_image'] = 'コースの背景イメージのキャッシング。';
 $string['cachedef_course_card_teacher_avatar'] = '教師のアバターのキャッシング。';
 $string['cachedef_course_card_teacher_avatar_index'] = '教師のアバターのインデックスのキャッシング。';
+$string['accessforumstringdis'] = '表示オプション';
+$string['accessforumstringmov'] = '移動オプション';
+$string['accesscalendarstring'] = 'カレンダー';
+$string['accessglobalsearchstring'] = '検索';
 $string['admineventwarning'] = 'すべてのコースのイベントを見るには、 ';
 $string['gotocalendarsnap'] = 'サイトカレンダーに移動します。';
 $string['quizattemptswarn'] = '一時停止ユーザの受験を除外する';
@@ -340,3 +350,8 @@ $string['catinvalidratio'] = '以下の色のカテゴリは、
 <a href="https://www.w3.org/TR/WCAG20-TECHS/G18.html" target="_blank">WCAG 2.0の最小比率値4.5:1</a>に準拠していません :
 サイトの背景色 (白) に対して : 「{$a->white}」。ナビゲーションバーの背景色に対して : 「{$a->custombar}」。[マイコース]ボタンの背景色に対して : 「{$a->customnav}」';
 $string['imageinvalidratiocategory'] = 'このイメージは、WCAG 2.0最小比率値4.5:1に準拠していないため、テーマの色とのコントラストに問題がある可能性があります。平均ピクセル値 : 「{$a}」';
+$string['lazyload_mod_page'] = 'ページリソースのデフォルトの遅延読み込みを有効にする';
+$string['lazyload_mod_page_description'] = '有効にした場合、この設定は、大量のページがあるコースページの読み込み時間を大幅に短縮します。';
+$string['pmadvancedfeed_viewmore'] = 'さらに表示する';
+$string['pmadvancedfeed_reload'] = 'リフレッシュ';
+$string['multimediacard'] = 'マルチメディアファイルは、Snapテーマのアクティビティカード表示では表示されません。これは小さいアクティビティとリソースカードのホームページとコースページにのみ適用されます。';
