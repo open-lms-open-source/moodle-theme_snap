@@ -1442,9 +1442,12 @@ class activity {
         $tmparr = [];
         foreach ($events as $event) {
 
+            // Validation added to prevent array offset.
+            $courseid = array_key_exists($event->courseid, $courses) ? $courses[$event->courseid] : 0;
+
             /** @var \cm_info $cminfo */
             list ($course, $cminfo) = get_course_and_cm_from_instance(
-                    $event->instance, $event->modulename,  $courses[$event->courseid], $event->userid);
+                    $event->instance, $event->modulename,  $courseid, $event->userid);
             unset($course);
 
             // We are only interested in modules with valid instances.
