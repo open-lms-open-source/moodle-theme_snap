@@ -1805,6 +1805,7 @@ HTML;
            view-more-message="{$viewmoremsg}"
            reload-message="{$reloadmsg}"
            {$initialvalue}
+           www-root="{$CFG->wwwroot}"
 ></snap-feed>
 HTML;
     }
