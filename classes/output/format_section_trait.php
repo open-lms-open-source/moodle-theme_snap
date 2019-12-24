@@ -467,7 +467,6 @@ trait format_section_trait {
      * @return string
      */
     private function change_num_sections($course) {
-        global $OUTPUT;
 
         $course = course_get_format($course)->get_course();
         $context = context_course::instance($course->id);
@@ -523,7 +522,23 @@ trait format_section_trait {
         $output .= '</div>';
         $output .= '<div class="form-group">';
         $output .= '<label for="summary">'.get_string('contents', 'theme_snap').'</label>';
-        $output .= $OUTPUT->print_textarea('summary', 'summary-editor', '', 15, 65);
+
+        $options = array(
+            'subdirs' => 0,
+            'maxbytes' => 0,
+            'maxfiles' => EDITOR_UNLIMITED_FILES,
+            'context' => $context,
+        );
+        $draftitemid = file_get_submitted_draft_itemid('summary');
+        $currenttext = file_prepare_draft_area($draftitemid, $context->id, 'course', 'section', null, $options);
+
+        $output .= $this->print_editor('summary', 'summary-editor', $currenttext, $draftitemid, $options);
+        $output .= html_writer::empty_tag('input', array(
+            'type' => 'hidden',
+            'name' => 'draftitemid',
+            'value' => $draftitemid,
+        ));
+
         $output .= '</div>';
         $output .= html_writer::empty_tag('input', array(
             'type' => 'submit',
@@ -534,6 +549,69 @@ trait format_section_trait {
         $output .= html_writer::end_tag('form');
         $output .= '</section>';
         return $output;
+    }
+
+    /**
+     * Returns the HTML for an editor with file management
+     *
+     * @param string $id The id to use fort he textarea element
+     * @param string $name Name to use for the textarea element
+     * @param string $currenttext Initial content to display in the textarea
+     * @param int $draftitemid the id of the draft area to use
+     * @param array $options text and file options ('subdirs'=>false, 'forcehttps'=>false)
+     * @return string
+     */
+    private function print_editor($name, $id, $currenttext, $draftitemid, $options) {
+        global $OUTPUT;
+
+        editors_head_setup();
+        $editor = editors_get_preferred_editor(FORMAT_HTML);
+        $editor->set_text($currenttext);
+
+        $args = new stdClass();
+        $args->accepted_types = array('image');
+        $args->return_types = (FILE_INTERNAL | FILE_EXTERNAL);
+        $args->context = $options['context'];
+        $args->env = 'filepicker';
+
+        $imageoptions = initialise_filepicker($args);
+        $imageoptions->context = $options['context'];
+        $imageoptions->client_id = uniqid();
+        $imageoptions->maxbytes = $options['maxfiles'];
+        $imageoptions->env = 'editor';
+        $imageoptions->itemid = $draftitemid;
+
+        $args->accepted_types = array('video', 'audio');
+        $mediaoptions = initialise_filepicker($args);
+        $mediaoptions->context = $options['context'];
+        $mediaoptions->client_id = uniqid();
+        $mediaoptions->maxbytes  = $options['maxfiles'];
+        $mediaoptions->env = 'editor';
+        $mediaoptions->itemid = $draftitemid;
+
+        $args->accepted_types = '*';
+        $linkoptions = initialise_filepicker($args);
+        $linkoptions->context = $options['context'];
+        $linkoptions->client_id = uniqid();
+        $linkoptions->maxbytes  = $options['maxfiles'];
+        $linkoptions->env = 'editor';
+        $linkoptions->itemid = $draftitemid;
+
+        $fpoptions['image'] = $imageoptions;
+        $fpoptions['media'] = $mediaoptions;
+        $fpoptions['link'] = $linkoptions;
+
+        $editor->use_editor('summary-editor', $options, $fpoptions);
+
+        $context = [
+            'id' => $id,
+            'name' => $name,
+            'value' => $currenttext,
+            'rows' => 15,
+            'cols' => 65
+        ];
+
+        return $OUTPUT->render_from_template('core_form/editor_textarea', $context);
     }
 
     /**

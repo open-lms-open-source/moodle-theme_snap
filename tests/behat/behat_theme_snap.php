@@ -238,13 +238,44 @@ class behat_theme_snap extends behat_base {
      * @return array
      */
     public function i_create_a_new_section_in_course_with_content($shortname) {
-        $this->i_am_on_course_page($shortname);
+        global $USER, $CFG;
 
+        $origuser = $USER;
+        $USER = $this->get_session_user();
+
+        $context = context_user::instance($USER->id);
+
+        $fs = get_file_storage();
+        // Prepare file record object.
+        $fileinfo = array(
+            'contextid' => $context->id,
+            'component' => 'user',
+            'filearea' => 'private',
+            'itemid' => 0,
+            'filepath' => '/',
+            'filename' => 'test.png');
+
+        $fs->create_file_from_pathname($fileinfo, $CFG->dirroot . "/theme/snap/tests/fixtures/testpng.png");
+
+        $this->i_am_on_course_page($shortname);
         $this->execute('behat_general::click_link', ['Create a new section']);
-        $this->execute('behat_forms::i_set_the_field_to', ['Title', 'New section with content']);
-        $javascript = "document.getElementById('summary-editor').value='<p>New section contents</p>'";
+        $this->execute('behat_general::i_click_on', ['Insert or edit image', 'button']);
+        $this->execute('behat_general::i_click_on', ['Browse repositories...', 'button']);
+        $this->execute('behat_general::i_click_on', ['Private files', 'link', '.fp-repo-area', 'css_element']);
+        $this->execute('behat_general::i_click_on', ['test.png', 'link']);
+        $this->execute('behat_general::i_click_on', ['Select this file', 'button']);
+        $this->execute('behat_forms::i_set_the_field_to', ['Describe this image', 'File test']);
+        $this->execute('behat_general::wait_until_the_page_is_ready');
+        $javascript = "document.querySelector('button.atto_image_urlentrysubmit').click()";
         $this->getSession()->executeScript($javascript);
+
+        $this->execute('behat_forms::i_set_the_field_to', ['Title', 'New section with content']);
+        $javascript = "var value = document.getElementById('summary-editor').value;";
+        $javascript .= "document.getElementById('summary-editor').value = value + '<p>New section contents</p>'";
+        $this->getSession()->executeScript($javascript);
+
         $this->execute('behat_general::i_click_on', ['Create section', 'button']);
+        $USER = $origuser;
     }
 
     /**

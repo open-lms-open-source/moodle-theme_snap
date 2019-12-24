@@ -131,6 +131,7 @@ Feature: In the Snap theme, within a course, editing teachers can create a new s
     Then I follow "New section with content"
     Then I should see "New section with content"
     Then I should see "New section contents"
+    Then "div.summary img" "css_element" should exist
     Examples:
       | Option     |
       | 0          |

@@ -53,6 +53,7 @@ class addsection_controller extends controller_abstract {
 
         $sectioname = optional_param('newsection', '', PARAM_TEXT);
         $summary = optional_param_array('summary', '', PARAM_RAW);
+        $draftitemid = required_param('draftitemid', PARAM_INT);
 
         $sectioname = $sectioname === '' ? null : $sectioname;
         $summarytext = !empty($summary['text']) ? $summary['text'] : '';
@@ -60,14 +61,23 @@ class addsection_controller extends controller_abstract {
 
         require_sesskey();
 
-        $courseid = $PAGE->context->get_course_context()->instanceid;
+        $context = $PAGE->context->get_course_context();
+        $courseid = $context->instanceid;
 
         $course = course_get_format($courseid)->get_course();
         $numsections = course_get_format($courseid)->get_last_section_number() + 1;
         course_create_sections_if_missing($course, range(0, $numsections));
 
+        $options = array(
+            'subdirs' => 0,
+            'maxbytes' => 0,
+            'maxfiles' => -1,
+            'context' => $context,
+        );
         $modinfo = get_fast_modinfo($course);
         $section = $modinfo->get_section_info($numsections, MUST_EXIST);
+        $summarytext = file_save_draft_area_files($draftitemid, $context->id, 'course', 'section',
+                                                  $section->id, $options, $summarytext);
         $DB->set_field('course_sections', 'name', $sectioname, array('id' => $section->id));
         $DB->set_field('course_sections', 'summary', $summarytext, array('id' => $section->id));
         $DB->set_field('course_sections', 'summaryformat', $summaryformat, array('id' => $section->id));
