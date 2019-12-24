@@ -22,7 +22,7 @@ export class FeedService {
     private http: HttpClient) {
   }
 
-  getFeed(sessKey: string|undefined, feedId: string, page: number, pageSize: number, maxId: number): Observable<MoodleRes[]> {
+  getFeed(wwwRoot: string, sessKey: string|undefined, feedId: string, page: number, pageSize: number, maxId: number): Observable<MoodleRes[]> {
     const errorRes : MoodleRes[] = [{
       error: "No session key present",
       data: undefined
@@ -42,7 +42,7 @@ export class FeedService {
       }
     }];
 
-    return this.http.post<MoodleRes[]>(`${this.moodleAjaxUrl}?sesskey=${sessKey}`, body, this.httpOptions)
+    return this.http.post<MoodleRes[]>(`${wwwRoot}${this.moodleAjaxUrl}?sesskey=${sessKey}`, body, this.httpOptions)
       .pipe(
         tap(_ => this.log('fetched feed')),
         catchError(this.handleError<MoodleRes[]>('getFeed', errorRes))

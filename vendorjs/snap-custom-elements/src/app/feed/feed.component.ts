@@ -72,6 +72,7 @@ export class FeedComponent implements OnInit {
   @Input() viewMoreMessage: string;
   @Input() reloadMessage: string;
   @Input() initialValue?: string;
+  @Input() wwwRoot: string;
 
   nextPage: number;
   feedItems: FeedItem[];
@@ -126,7 +127,7 @@ export class FeedComponent implements OnInit {
       return;
     }
     const maxId: number = !this.resetInProgress && this.feedItems[0] && this.feedItems[0].itemId || -1;
-    this.feedService.getFeed(this.sessKey, this.feedId, this.nextPage, this.pageSize, maxId)
+    this.feedService.getFeed(this.wwwRoot, this.sessKey, this.feedId, this.nextPage, this.pageSize, maxId)
       .subscribe(feedResponse => {
         if (feedResponse[0].error) {
           return;

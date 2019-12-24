@@ -438,6 +438,10 @@ function theme_snap_course_module_background_deletion_recommended() {
 function theme_snap_before_footer() {
     global $CFG, $PAGE;
 
+    if (empty(get_config('theme_snap', 'personalmenuadvancedfeedsenable'))) {
+        return;
+    }
+
     $paths = [];
 
     if (core_useragent::is_ie()) {
