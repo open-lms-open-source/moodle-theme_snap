@@ -235,6 +235,11 @@ body.path-site .block.block_settings {
     .card-title {
         visibility: hidden;
     }
+
+    // Hide a possible second gear menu
+    .block-controls {
+        visibility: hidden;
+    }
 }
 
 #page-content .block_settings.state-visible,
