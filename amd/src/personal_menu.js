@@ -160,12 +160,31 @@ define(['jquery', 'core/log', 'core/yui', 'theme_snap/pm_course_cards', 'theme_s
                     if (window.innerWidth >= 992) {
                         // If equal or larger than Bootstrap 992 large breakpoint, clear left positions of sections.
                         $('#snap-pm-content').removeAttr('style');
+
+                        if ($("#snap-pm-courses div#snap-personal-menu-intelliboard").length > 0) {
+                            var section = $('div#snap-personal-menu-intelliboard').closest('section');
+                            section.prependTo('#snap-pm-updates');
+                        }
+                        if ($("#snap-pm-courses div#snap-personal-menu-intellicart").length > 0) {
+                            var section = $('div#snap-personal-menu-intellicart').closest('section');
+                            section.prependTo('#snap-pm-updates');
+                        }
                         return;
                     }
                     var activeLink = $('#snap-pm-mobilemenu a.state-active');
                     if (!activeLink || !activeLink.length) {
                         return;
                     }
+
+                    if ($("#snap-pm-updates div#snap-personal-menu-intelliboard").length > 0) {
+                        var section = $('div#snap-personal-menu-intelliboard').closest('section');
+                        section.appendTo('section#snap-pm-courses');
+                    }
+                    if ($("#snap-pm-updates div#snap-personal-menu-intellicart").length > 0) {
+                        var section = $('div#snap-personal-menu-intellicart').closest('section');
+                        section.appendTo('section#snap-pm-courses');
+                    }
+
                     var href = activeLink.attr('href');
                     var posHeight = getSectionCoords(href);
 
@@ -203,6 +222,18 @@ define(['jquery', 'core/log', 'core/yui', 'theme_snap/pm_course_cards', 'theme_s
                         self.update();
                     }
                     event.preventDefault();
+
+                    // Intelliboard and intellicart should be displayed under the courses on a small screen.
+                    if (window.innerWidth < 992) {
+                        if ($("#snap-pm-updates div#snap-personal-menu-intelliboard").length > 0) {
+                            var section = $('div#snap-personal-menu-intelliboard').closest('section');
+                            section.appendTo('section#snap-pm-courses');
+                        }
+                        if ($("#snap-pm-updates div#snap-personal-menu-intellicart").length > 0) {
+                            var section = $('div#snap-personal-menu-intellicart').closest('section');
+                            section.appendTo('section#snap-pm-courses');
+                        }
+                    }
 
                     // If there is a message drawer, dispatch event to avoid opening both elements.
                     if ($('.message-app.main').length === 0) {
