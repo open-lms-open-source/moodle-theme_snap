@@ -230,7 +230,9 @@ class course_renderer extends \core_course_renderer {
         if (!empty($cmname)) {
             // Activity/resource type.
             $snapmodtype = $this->get_mod_type($mod)[0];
-            if (strcmp($snapmodtype, 'Page') == 0 || strcmp($snapmodtype, 'Book') == 0) {
+            $pagecurrentstr = get_string('modulename', 'mod_page');
+            $bookcurrentstr = get_string('modulename', 'mod_book');
+            if (strcmp($snapmodtype, $pagecurrentstr) == 0 || strcmp($snapmodtype, $bookcurrentstr) == 0) {
                 $snapmodtype = '';
             }
             $assettype = '<div class="snap-assettype">'.$snapmodtype.'</div>';
