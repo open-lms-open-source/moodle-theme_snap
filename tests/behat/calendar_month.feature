@@ -18,7 +18,7 @@
 # @copyright Copyright (c) 2015 Blackboard Inc. (http://www.blackboard.com)
 # @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
 
-@theme @theme_snap
+@theme @theme_snap @theme_snap_calendar
 Feature: When a user clicks on next or previous month link in the calendar block, then
   the page redirects and the calendar block must be visible.
 

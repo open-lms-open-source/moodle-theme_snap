@@ -20,7 +20,7 @@
 # @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
 
 
-@theme @theme_snap @_bug_phantomjs @theme_snap_personalmenu
+@theme @theme_snap @_bug_phantomjs @theme_snap_personalmenu @theme_snap_grading
 Feature: When the moodle theme is set to Snap, students and teachers can open a personal menu which shows a
   grades / grading column showing them things that have recently had feedback or have recently been submitted.
 

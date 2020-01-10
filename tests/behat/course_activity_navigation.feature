@@ -19,7 +19,7 @@
 # @author     2017 Jun Pataleta <jun@moodle.com>
 # @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
 
-@theme @theme_snap
+@theme @theme_snap @theme_snap_course
 Feature: Activity navigation in Snap theme
   In order to quickly switch between activities
   As a user

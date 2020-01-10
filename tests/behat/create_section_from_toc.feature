@@ -18,7 +18,7 @@
 # @copyright Copyright (c) 2015 Blackboard Inc. (http://www.blackboard.com)
 # @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
 
-@theme @theme_snap
+@theme @theme_snap @theme_snap_course_section
 Feature: In the Snap theme, within a course, editing teachers can create a new section by clicking on a
   link in the TOC which reveals a form.
   This requires the course to use the weeks and topics format.

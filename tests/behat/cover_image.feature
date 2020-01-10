@@ -20,7 +20,7 @@
 # @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
 
 
-@theme @theme_snap
+@theme @theme_snap @theme_snap_color_check
 Feature: When the moodle theme is set to Snap, cover image can be set for site and courses.
 
   Background:

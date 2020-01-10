@@ -19,7 +19,7 @@
 # @copyright Copyright (c) 2016 Blackboard Inc.
 # @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
 
-@theme @theme_snap
+@theme @theme_snap @theme_snap_course
 Feature: When the moodle theme is set to Snap, a course tools section is available.
 
   Background:
@@ -69,7 +69,6 @@ Feature: When the moodle theme is set to Snap, a course tools section is availab
 
   @javascript
   Scenario Outline: Course tools show automatically for single activity format.
-    And I skip because "It's failing since we merged 3.7"
     Given the course format for "C1" is set to "singleactivity" with the following settings:
       | name      | activitytype |
       | value     | forum        |

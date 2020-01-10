@@ -20,7 +20,7 @@
 # @copyright  Copyright (c) 2019 Blackboard Inc. (http://www.blackboard.com)
 # @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
 
-@theme @theme_snap @snap_custom_menu
+@theme @theme_snap @snap_custom_menu @theme_snap_color_check
 Feature: When the Moodle theme is set to Snap, custom menu should exist for the site.
 
   Background:

@@ -19,7 +19,7 @@
 # @copyright  Copyright (c) 2018 Blackboard Inc.
 # @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
 
-@theme @theme_snap
+@theme @theme_snap @theme_snap_footer
 Feature: As an admin, I should be able to set a site's footer on Snap theme.
 
   Background:

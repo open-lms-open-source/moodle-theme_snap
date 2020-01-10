@@ -21,7 +21,7 @@
 # @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
 
 
-@theme @theme_snap
+@theme @theme_snap @theme_snap_ax
 Feature: Elements for Snap should have the proper aria attributes.
 
   Background:

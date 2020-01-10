@@ -20,7 +20,7 @@
 # @copyright  Copyright (c) 2019 Blackboard Inc. (http://www.blackboard.com)
 # @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
   
-@theme @theme_snap
+@theme @theme_snap @theme_snap_ax
 Feature: When the Moodle theme is set to Snap, personal menu and course mod chooser should be accessible tabs.
 
   Background:

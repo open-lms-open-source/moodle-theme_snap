@@ -21,12 +21,11 @@
 # @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
 
 
-@theme @theme_snap
+@theme @theme_snap @theme_snap_ax
 Feature: When the Moodle theme is set to Snap, core notifications messages should have a specific aria attribute to
   screen readers functionality.
 
   Background:
-    And I skip because "It's failing since we merged 3.7"
     Given the following "users" exist:
       | username  | firstname  | lastname  | email                 |
       | teacher1  | Teacher    | 1         | teacher1@example.com  |

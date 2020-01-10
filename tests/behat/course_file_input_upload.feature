@@ -20,7 +20,7 @@
 # @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
 
 
-@theme @theme_snap
+@theme @theme_snap @theme_snap_course
 Feature: When the moodle theme is set to Snap, teachers can upload files as resources directly to the current
   course section from a simple file input element in either read or edit mode.
 

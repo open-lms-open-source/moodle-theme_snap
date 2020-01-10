@@ -20,7 +20,7 @@
 # @copyright  2016 Blackboard Ltd
 # @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
 
-@theme @theme_snap
+@theme @theme_snap @theme_snap_course @theme_snap_course_section
 Feature: When the moodle theme is set to Snap, teachers can delete sections without having to reload the page.
 
   Background:

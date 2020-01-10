@@ -19,7 +19,7 @@
 # @copyright  2015 Guy Thomas <osdev@blackboard.com>
 # @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
 
-@theme @theme_snap
+@theme @theme_snap @theme_snap_course @theme_snap_course
 Feature: When the moodle theme is set to Snap, teachers can toggle the visibility of course sections in read mode and
   edit mode.
 

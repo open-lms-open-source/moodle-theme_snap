@@ -19,7 +19,8 @@
 # @author     David Castro <david.castro@blackboard.com>
 # @copyright  Copyright (c) 2019 Blackboard Inc. (http://www.blackboard.com)
 # @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
-@theme @theme_snap
+
+@theme @theme_snap @theme_snap_course @theme_snap_course
 Feature: When the moodle theme is set to Snap, section titles can be clicked for editing section information.
 
   Background:

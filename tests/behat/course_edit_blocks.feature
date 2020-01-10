@@ -20,7 +20,7 @@
 # @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
 
 
-@theme @theme_snap
+@theme @theme_snap @theme_snap_course
 Feature: When the moodle theme is set to Snap, teachers only see block edit controls when in edit mode.
 
   Background:

@@ -20,7 +20,7 @@
 # @copyright Copyright (c) 2016 Blackboard Inc.
 # @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
 
-@theme @theme_snap
+@theme @theme_snap @theme_snap_course
 Feature: When the moodle theme is set to Snap, students do not see the course admin menu for 'topics',
   'weeks' and 'singleactivity' - for any other format they do.
 

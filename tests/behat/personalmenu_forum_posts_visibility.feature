@@ -20,7 +20,7 @@
 # @copyright  Copyright (c) 2019 Blackboard Inc. (http://www.blackboard.com)
 # @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
 
-@theme @theme_snap
+@theme @theme_snap @theme_snap_personalmenu
 Feature: A student should not see any recent forum activity
   on his personal menu if he is not part of the posted group
 

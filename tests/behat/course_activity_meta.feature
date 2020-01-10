@@ -19,7 +19,7 @@
 # @copyright  Copyright (c) 2017 Blackboard Inc.
 # @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
 
-@theme @theme_snap
+@theme @theme_snap @theme_snap_course
 Feature: When the moodle theme is set to Snap, students see meta data against course activities.
 
   Background:

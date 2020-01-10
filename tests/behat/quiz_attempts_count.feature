@@ -21,7 +21,7 @@
 # @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
 
 
-@theme @theme_snap
+@theme @theme_snap @theme_snap_quiz
 Feature: Quiz attempts from suspended users and previews from admin or teachers
   should not be count.
 

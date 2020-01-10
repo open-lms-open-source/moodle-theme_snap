@@ -19,7 +19,7 @@
 # @author     Juan Felipe Martinez <juan.martinez@blackboard.com>
 # @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
 
-@theme @theme_snap
+@theme @theme_snap @theme_snap_course
 Feature: Course scrollback navigation in Snap theme
 
   Background:

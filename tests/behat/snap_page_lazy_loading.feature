@@ -19,7 +19,7 @@
 # @author     Diego Casas <diego.casas@blackboard.com>
 # @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
 
-@theme @theme_snap
+@theme @theme_snap @theme_snap_lazy_loading
 Feature: When the moodle theme is set to Snap course pages can be rendered using lazy loading.
   Background:
     Given the following "courses" exist:
