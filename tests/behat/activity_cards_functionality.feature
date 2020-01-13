@@ -100,9 +100,9 @@ Feature: Check functionality in activity cards.
     Then "li.snap-resource-long.modtype_folder div.snap-header-card div.snap-assettype" "css_element" should exist
     Then "li.snap-activity.modtype_folder div.snap-header-card div.snap-assettype" "css_element" should exist
     Examples:
-      | Option     |
-      | 0          |
-      | 1          |
+      | Option   |
+      | card     |
+      | list     |
 
   @javascript
   Scenario Outline: For activity cards, when content is displayed inline the tree needs to start with a H3 tag
@@ -115,9 +115,10 @@ Feature: Check functionality in activity cards.
     And the following "activities" exist:
       | activity | name               | intro                   | course | idnumber | display | showexpanded |
       | folder   | Test folder name 1 | Test folder description | C1     | folder1  | 1       | 1            |
-    And I am on "Course 1" course homepage with editing mode on
+    And I am on "Course 1" course homepage
+    And I wait "1" seconds
     Then "li.snap-activity.modtype_folder div#folder_tree0 #ygtvcontentel1 > div > h3" "css_element" should exist
     Examples:
-      | Option     |
-      | 0          |
-      | 1          |
+      | Option   |
+      | card     |
+      | list     |
