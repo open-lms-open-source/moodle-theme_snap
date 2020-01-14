@@ -633,13 +633,20 @@ define(['jquery', 'core/log', 'theme_snap/headroom', 'theme_snap/util', 'theme_s
                     $('.snap-header-card .snap-header-card-icons .disabled-snap-asset-completion-tracking').remove();
 
                     // Prepend asset type when activity is a folder to appear in the card header instead of the content.
-                    var folderAssetTypeContent = $('li.snap-activity.modtype_folder div.contentwithoutlink div.snap-assettype');
-                    var folderAssetTypeHeader = $('li.snap-activity.modtype_folder div.activityinstance div.snap-header-card');
-                    folderAssetTypeContent.prependTo(folderAssetTypeHeader);
+                    var folders = $('li.snap-activity.modtype_folder');
+                    $.each(folders, function (index, folder) {
+                        var content = $(folder).find('div.contentwithoutlink div.snap-assettype');
+                        if (content.length > 0) {
+                            if ($(folder).find('div.activityinstance div.snap-header-card .asset-type').length == 0) {
+                                var folderAssetTypeHeader = $(folder).find('div.activityinstance div.snap-header-card');
+                                content.prependTo(folderAssetTypeHeader);
+                            }
+                        }
+                    });
 
                     // Modify Folder tree activity with inline content to have a H3 tag and have the same behavior that the
                     // folder with content in a separate page has.
-                    $('li.snap-activity.modtype_folder #ygtvcontentel1 > div > span.fp-filename').each(function () {
+                    $('li.snap-activity.modtype_folder td[id^="ygtvcontentel"] > div > span.fp-filename').each(function () {
                         $(this).replaceWith("<h3>"+$(this).text()+"</h3>");
                     });
 
