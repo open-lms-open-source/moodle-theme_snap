@@ -352,7 +352,6 @@ $string['admineventwarning'] = 'To see events from all courses, ';
 $string['gotocalendarsnap'] = 'go to site calendar.';
 $string['quizattemptswarn'] = 'Excludes attempts from suspended users';
 $string['quizfeedback'] = 'Feedback';
-
 $string['validratio'] = 'This combination of colors does comply with the WCAG 2.0 minimum ratio value 4.5:1';
 $string['invalidratio'] = 'This color combination doesn\'t comply with the
 <a href="https://www.w3.org/TR/WCAG20-TECHS/G18.html" target="_blank">WCAG 2.0 minimum ratio value 4.5:1</a>. Value: "{$a}"';
