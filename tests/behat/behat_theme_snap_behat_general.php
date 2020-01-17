@@ -295,4 +295,67 @@ class behat_theme_snap_behat_general extends behat_general {
             return true;
         }
     }
+
+    /**
+     * Checks, that the first specified element appears after the second one.
+     * Copied from BehatGeneral in mahara/testing/frameworks/behat/classes/BehatGeneral.php
+     *
+     * @codingStandardsIgnoreLine
+     * @Then /^"(?P<following_element_string>(?:[^"]|\\")*)" "(?P<selector1_string>(?:[^"]|\\")*)" should appear after "(?P<preceding_element_string>(?:[^"]|\\")*)" "(?P<selector2_string>(?:[^"]|\\")*)"$/
+     * @throws ExpectationException
+     * @param string $postelement The locator of the latest element
+     * @param string $postselectortype The selector type of the latest element
+     * @param string $preelement The locator of the preceding element
+     * @param string $preselectortype The selector type of the preceding element
+     */
+    public function theme_behat_should_appear_after(
+        string $postelement,
+        string $postselectortype,
+        string $preelement,
+        string $preselectortype
+    ) {
+        // We allow postselectortype as a non-text based selector.
+        list($postselector, $postlocator) = $this->transform_selector($postselectortype, $postelement);
+        list($preselector, $prelocator) = $this->transform_selector($preselectortype, $preelement);
+
+        $postxpath = $this->find($postselector, $postlocator)->getXpath();
+        $prexpath = $this->find($preselector, $prelocator)->getXpath();
+
+        // Using preceding xpath axe to find it.
+        $msg = '"'.$postelement.'" "'.$postselectortype.'" does not appear after "'.$preelement.'" "'.$preselectortype.'"';
+        $xpath = $postxpath.'/preceding::*[contains(., '.$prexpath.')]';
+        if (!$this->getSession()->getDriver()->find($xpath)) {
+            throw new ExpectationException($msg, $this->getSession());
+        }
+    }
+
+    /**
+     * Checks, that the first specified element appears before the second one.
+     * Copied from BehatGeneral in mahara/testing/frameworks/behat/classes/BehatGeneral.php
+     *
+     * @codingStandardsIgnoreLine
+     * @Given /^"(?P<preceding_element_string>(?:[^"]|\\")*)" "(?P<selector1_string>(?:[^"]|\\")*)" should appear before "(?P<following_element_string>(?:[^"]|\\")*)" "(?P<selector2_string>(?:[^"]|\\")*)"$/
+     * @throws ExpectationException
+     * @param string $preelement The locator of the preceding element
+     * @param string $preselectortype The locator of the preceding element
+     * @param string $postelement The locator of the latest element
+     * @param string $postselectortype The selector type of the latest element
+     *
+     */
+    public function theme_snap_should_appear_before($preelement, $preselectortype, $postelement, $postselectortype) {
+
+        // We allow postselectortype as a non-text based selector.
+        list($preselector, $prelocator) = $this->transform_selector($preselectortype, $preelement);
+        list($postselector, $postlocator) = $this->transform_selector($postselectortype, $postelement);
+
+        $prexpath = $this->find($preselector, $prelocator)->getXpath();
+        $postxpath = $this->find($postselector, $postlocator)->getXpath();
+
+        // Using following xpath axe to find it.
+        $msg = '"'.$preelement.'" "'.$preselectortype.'" does not appear before "'.$postelement.'" "'.$postselectortype.'"';
+        $xpath = $prexpath.'/following::*[contains(., '.$postxpath.')]';
+        if (!$this->getSession()->getDriver()->find($xpath)) {
+            throw new ExpectationException($msg, $this->getSession());
+        }
+    }
 }
