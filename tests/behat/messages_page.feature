@@ -21,7 +21,7 @@
 # @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
 
 
-@theme @theme_snap
+@theme @theme_snap @snap_message
 Feature: When the moodle theme is set to Snap, message page should be accessible.
 
   Background:

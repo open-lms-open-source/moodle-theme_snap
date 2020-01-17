@@ -144,3 +144,20 @@ Feature: Snap message send messages
     Then I should see "Hi!" in the ".d-flex[data-region='day-messages-container']" "css_element"
     Then ".badge-primary.hidden[data-region='unread-count'][aria-label='There are 1 unread messages']" "css_element" should exist
     Then ".badge-primary.hidden[data-region='section-unread-count'][aria-label='There are 2 unread conversations']" "css_element" should exist
+
+  Scenario: Message bubble should have a specific color instead of site color.
+    Given I log in as "student1"
+    And I am on site homepage
+    And I click on ".js-snap-pm-trigger.snap-my-courses-menu" "css_element"
+    And I follow "View my messages"
+    And I click on "//span[contains(text(),\"Group\")]" "xpath_element"
+    And I click on ".rounded-circle[alt='Group 1']" "css_element"
+    And I click on "conversation-actions-menu-button" "button"
+    And I click on "Star" "link" in the "//div[@data-region='header-container']" "xpath_element"
+    And I click on "//span[contains(text(),\"Starred\")]" "xpath_element"
+    And I should see "Group 1"
+    And I click on ".rounded-circle[alt='Group 1']" "css_element"
+    And I send "Hi!" message in the message area
+    Then I should see "Hi!" in the ".message.clickable[data-region='message']" "css_element"
+    And I check element ".message-app .message.bg-secondary" with property "background-color" = "#E6E6E6"
+    And I check element ".message-app .message.send .tail" with property "border-bottom-color" = "#E6E6E6"
