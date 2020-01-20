@@ -154,14 +154,15 @@
     overflow: hidden;
 }
 // Fixes for Inherited boost styles for the message app page.
+// Message background #E6E6E6 to better AX over the message view.
 .message-app {
     .message {
         &.send .tail {
-            border-bottom-color: lighten($brand-primary) !important;
+            border-bottom-color: #E6E6E6 !important;
         }
     }
     .message.bg-secondary {
-        background-color: lighten($brand-primary) !important;
+        background-color: #E6E6E6 !important;
         color: #373a3c !important;
     }
     .message.rounded {
