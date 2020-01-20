@@ -4125,3 +4125,10 @@ li.snap-activity.modtype_folder div[id^="folder_tree"] {
         }
     }
 }
+
+// Modify table layout for definition field for Glossary activities when a video is inserted.
+// Table was not respecting the max-width for the definition field.
+#page-mod-glossary-view .glossarydisplay .entrybox table.glossarypost {
+    table-layout: fixed;
+    width: 100%;
+}
