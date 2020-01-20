@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * @copyright  Copyright (c) 2019 Blackboard Inc. (http://www.blackboard.com)
+ * @copyright  Copyright (c) 2020 Blackboard Inc. (http://www.blackboard.com)
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -88,6 +88,8 @@ $string['customcssdesc'] = 'Wees je van je verantwoordelijkheid bewust. Elk prob
 $string['customtopbar'] = 'Navigatiebalk';
 $string['customisenavbar'] = 'Kleuren van navigatiebalk wijzigen';
 $string['customisenavbutton'] = 'Kleuren van de knop Mijn cursussen wijzigen';
+$string['customisecustommenu'] = 'Aangepaste menukleur wijzigen';
+$string['custommenutext'] = 'Aangepaste menukleur';
 $string['deadlines'] = 'Deadlines';
 $string['deadlinestoggle'] = 'Deadlines';
 $string['deadlinestoggledesc'] = 'Gebruikers alle aanstaande deadlines voor activiteiten tonen voor cursussen waarvoor ze zijn ingeschreven.';
@@ -254,8 +256,8 @@ $string['pld'] = 'PLD';
 $string['pluginname'] = 'Snap';
 $string['poster'] = 'Omslagafbeelding';
 $string['posterdesc'] = 'Een grote headerafbeelding voor de startpagina van je site. Liggende afbeeldingen (1200 x 600 pixels) of groter werken het beste.';
-$string['poweredbyrunby'] = 'Gebouwd met <a href="https://www.blackboard.com/blackboard-open-lms" target="_blank">Blackboard Open LMS</a>,
-    een op <a href="https://moodle.com/" target="_blank">Moodle</a> gebaseerd product.<br>
+$string['poweredbyrunby'] = 'Gebouwd met <a href="https://www.blackboard.com/blackboard-open-lms" target="_blank" rel="noopener">Blackboard Open LMS</a>,
+    een op <a href="https://moodle.com/" target="_blank" rel="noopener">Moodle</a> gebaseerd product.<br>
     Copyright &#169; {$a} Blackboard Inc., Alle rechten voorbehouden.';
 $string['previoussection'] = 'Vorige sectie';
 $string['privacy:metadata:theme_snap_course_favorites:courseid'] = 'De cursus-ID van de cursus die de gebruiker als favoriet heeft ingesteld';
@@ -276,6 +278,8 @@ $string['released'] = 'Release: {$a}';
 $string['reopened'] = 'Heropend';
 $string['resourcedisplay'] = 'Bronweergave';
 $string['resourcedisplayhelp'] = 'Selecteer hoe bijlagen en koppelingen in je cursus moeten worden weergegeven. Het Snap-thema biedt geen ondersteuning voor multimediabestanden in de beschrijving van kleine activiteit- en bronkaarten.';
+$string['displaydescription'] = 'Toon beschrijving';
+$string['displaydescriptionhelp'] = 'Selecteer om als eerste een beschrijving van de bron en URL-activiteiten weer te geven op een nieuwe pagina. Leerlingen openen inhoud vanuit de beschrijving.';
 $string['search'] = 'Inhoud zoeken';
 $string['seriffont'] = 'Lettertype Serif';
 $string['seriffont_desc'] = 'Dit lettertype wordt gebruikt voor de meeste door gebruikers gegenereerde inhoud. Gebruik een serif-lettertype om door gebruikers gemaakte inhoud beter leesbaar te maken, en de inhoud meer te doen aanvoelen alsof hij door een mens is geschreven.';
