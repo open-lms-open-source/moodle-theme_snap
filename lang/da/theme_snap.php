@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * @copyright  Copyright (c) 2019 Blackboard Inc. (http://www.blackboard.com)
+ * @copyright  Copyright (c) 2020 Blackboard Inc. (http://www.blackboard.com)
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -88,6 +88,8 @@ $string['customcssdesc'] = 'Husk, at der med store evner følger et stort ansvar
 $string['customtopbar'] = 'Navigationslinje';
 $string['customisenavbar'] = 'Ændr navigationslinjens farver';
 $string['customisenavbutton'] = 'Ændr farverne på knappen Mine kurser';
+$string['customisecustommenu'] = 'Skift tekstfarve for brugerdefineret menu';
+$string['custommenutext'] = 'Tekstfarve for brugerdefineret menu';
 $string['deadlines'] = 'Deadlines';
 $string['deadlinestoggle'] = 'Deadlines';
 $string['deadlinestoggledesc'] = 'Vis brugere kommende aktivitetsdeadlines fra kurser, som de er tilmeldt.';
@@ -253,9 +255,9 @@ $string['pld'] = 'PLD';
 $string['pluginname'] = 'Snap';
 $string['poster'] = 'Forsidebillede';
 $string['posterdesc'] = 'Et stort sidehovedbillede til dit websteds forside. Liggende billeder (1200 x 600 pixels) eller større fungerer bedst.';
-$string['poweredbyrunby'] = 'Bygget med<a href="https://www.blackboard.com/blackboard-open-lms" target="_blank">Blackboard Open LMS</a>,
-    a <a href="https://moodle.com/" target="_blank">Moodle</a>-baseret produkt.<br>
-    Copyright &#169; {$a} Blackboard Inc, alle rettigheder forbeholdes.';
+$string['poweredbyrunby'] = 'Bygget med <a href="https://www.blackboard.com/blackboard-open-lms" target="_blank" rel="noopener">Blackboard Open LMS</a>,
+    et <a href="https://moodle.com/" target="_blank" rel="noopener">Moodle</a>-baseret produkt.<br>
+    Copyright &#169; {$a} Blackboard Inc., alle rettigheder forbeholdes.';
 $string['previoussection'] = 'Forrige sektion';
 $string['privacy:metadata:theme_snap_course_favorites:courseid'] = 'Kursus-id\'et for det kursus, brugeren har markeret som favorit';
 $string['privacy:metadata:theme_snap_course_favorites:userid'] = 'Bruger-id\'et for den bruger, der har markeret kurset om favorit';
@@ -275,6 +277,8 @@ $string['released'] = 'Frigivet: {$a}';
 $string['reopened'] = 'Genåbnet';
 $string['resourcedisplay'] = 'Ressourcevisning';
 $string['resourcedisplayhelp'] = 'Vælg, hvordan vedhæftede filer og links vises i dit kursus. Snap-temaet understøtter ikke multimediefiler i de små aktivitets- og ressourcekorts beskrivelse.';
+$string['displaydescription'] = 'Vis beskrivelse';
+$string['displaydescriptionhelp'] = 'Vælg for at vise en beskrivelse af ressourcer og URL-aktiviteter på en ny side først. Studerende vil få adgang til indhold via beskrivelsen.';
 $string['search'] = 'Søg i indhold';
 $string['seriffont'] = 'Serif-skrifttype';
 $string['seriffont_desc'] = 'Denne skrifttype bruges til det meste brugergenererede indhold. En Serif-skrifttype gør brugergenereret indhold mere tydeligt, og det ligner noget, som er skrevet af en person.';
