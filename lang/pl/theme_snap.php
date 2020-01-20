@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * @copyright  Copyright (c) 2019 Blackboard Inc. (http://www.blackboard.com)
+ * @copyright  Copyright (c) 2020 Blackboard Inc. (http://www.blackboard.com)
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -89,6 +89,8 @@ $string['customcssdesc'] = 'Należy pamiętać, że duże możliwości wiążą 
 $string['customtopbar'] = 'Pasek nawigacji';
 $string['customisenavbar'] = 'Zmień kolory paska nawigacyjnego';
 $string['customisenavbutton'] = 'Zmień kolory przycisków Moje kursy';
+$string['customisecustommenu'] = 'Zmień niestandardowy kolor tekstu menu';
+$string['custommenutext'] = 'Niestandardowy kolor tekstu menu';
 $string['deadlines'] = 'Terminy końcowe';
 $string['deadlinestoggle'] = 'Terminy końcowe';
 $string['deadlinestoggledesc'] = 'Pokazuj użytkownikom zbliżające się terminy realizacji aktywności w ramach kursów, na które są zapisani.';
@@ -256,8 +258,8 @@ $string['pld'] = 'PLD';
 $string['pluginname'] = 'Snap';
 $string['poster'] = 'Obraz na pierwszą stronę';
 $string['posterdesc'] = 'Duży obraz nagłówka wyświetlany na stronie głównej witryny. Najlepiej wyglądają obrazy w orientacji poziomej 1200 na 600 pikseli lub większe.';
-$string['poweredbyrunby'] = 'Utworzono przy użyciu <a href="https://www.blackboard.com/blackboard-open-lms" target="_blank">Blackboard Open LMS</a>,
-    w oparciu o technologię <a href="https://moodle.com/" target="_blank">Moodle</a>.<br>
+$string['poweredbyrunby'] = 'Utworzono przy użyciu <a href="https://www.blackboard.com/blackboard-open-lms" target="_blank" rel="noopener">Blackboard Open LMS</a>,
+    w oparciu o technologię <a href="https://moodle.com/" target="_blank" rel="noopener">Moodle</a>.<br>
     Copyright &#169; {$a} Blackboard Inc., Wszelkie prawa zastrzeżone.';
 $string['previoussection'] = 'Poprzednia sekcja';
 $string['privacy:metadata:theme_snap_course_favorites:courseid'] = 'Identyfikator kursu, który użytkownik oznaczył jako ulubiony';
@@ -278,6 +280,8 @@ $string['released'] = 'Wydanie: {$a}';
 $string['reopened'] = 'Ponownie otwarte';
 $string['resourcedisplay'] = 'Wyświetlanie zasobu';
 $string['resourcedisplayhelp'] = 'Wybierz sposób wyświetlania załączników i łączy w kursie. Kompozycja Snap nie obsługuje plików multimedialnych w opisie małych kart aktywności i zasobów.';
+$string['displaydescription'] = 'Wyświetl opis';
+$string['displaydescriptionhelp'] = 'Wybierz tę opcję, aby najpierw wyświetlić opis działań dotyczących zasobów i adresów URL na nowej stronie. Studenci uzyskają dostęp do treści z opisu.';
 $string['search'] = 'Przeszukaj zawartość';
 $string['seriffont'] = 'Czcionka Serif';
 $string['seriffont_desc'] = 'Czcionka używana w większości materiałów opracowanych przez użytkowników. Użycie czcionki szeryfowej zwiększa czytelność materiałów opracowanych przez użytkowników i sprawia, że wyglądają one jak pisane przez człowieka.';
@@ -346,9 +350,11 @@ $string['gotocalendarsnap'] = 'przejdź do witryny kalendarza.';
 $string['quizattemptswarn'] = 'Wyklucza podejścia zawieszonych użytkowników';
 $string['quizfeedback'] = 'Informacja zwrotna';
 $string['validratio'] = 'Ta kombinacja kolorów jest zgodna z minimalną wartością współczynnika wg normy WCAG 2.0 równą 4,5:1';
-$string['invalidratio'] = 'Ta kombinacja kolorów jest niezgodna z <a href="https://www.w3.org/TR/WCAG20-TECHS/G18.html" target="_blank">minimalną wartością współczynnika wg normy WCAG 2.0 równą 4,5:1</a>. Wartość: „{$a}”';
+$string['invalidratio'] = 'Ta kombinacja kolorów jest niezgodna z
+<a href="https://www.w3.org/TR/WCAG20-TECHS/G18.html" target="_blank">minimalną wartością współczynnika wg normy WCAG 2.0 równą 4,5:1</a>. Wartość: „{$a}”';
 $string['imageinvalidratio'] = 'Ten obraz może być przyczyną problemów z kontrastem ze względu na niezgodność z minimalną wartością współczynnika wg normy WCAG 2.0 równą 4,5:1. Średnia wartość pikseli: „{$a}”';
-$string['catinvalidratio'] = 'Następujące kategorie kolorów są niezgodne z <a href="https://www.w3.org/TR/WCAG20-TECHS/G18.html" target="_blank">minimalną wartością współczynnika wg normy WCAG 2.0 równą 4,5:1</a>:
+$string['catinvalidratio'] = 'Następujące kategorie kolorów są niezgodne z
+<a href="https://www.w3.org/TR/WCAG20-TECHS/G18.html" target="_blank">minimalną wartością współczynnika wg normy WCAG 2.0 równą 4,5:1</a>:
 W odniesieniu do koloru tła witryny (biały): „{$a->white}”. W odniesieniu do koloru tła paska nawigacyjnego: „{$a->custombar}”. W odniesieniu do koloru tła przycisku Moje kursy: „{$a->customnav}”';
 $string['imageinvalidratiocategory'] = 'Przy tym kolorze motywu ten obraz może być przyczyną problemów z kontrastem ze względu na niezgodność z minimalną wartością współczynnika wg normy WCAG 2.0 równą 4,5:1. Średnia wartość pikseli: „{$a}”';
 $string['lazyload_mod_page'] = 'Włącz domyślne ładowanie opóźnione zasobów stron';

@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * @copyright  Copyright (c) 2019 Blackboard Inc. (http://www.blackboard.com)
+ * @copyright  Copyright (c) 2020 Blackboard Inc. (http://www.blackboard.com)
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -88,6 +88,8 @@ $string['customcssdesc'] = '大きな力には大きな責任が伴うことに�
 $string['customtopbar'] = 'ナビゲーションバー';
 $string['customisenavbar'] = 'ナビゲーションバーの色を変更する';
 $string['customisenavbutton'] = '[マイコース]ボタンの色を変更する';
+$string['customisecustommenu'] = 'カスタムメニューのテキストの色を変更する';
+$string['custommenutext'] = 'カスタムメニューのテキストの色';
 $string['deadlines'] = '終了日時';
 $string['deadlinestoggle'] = '期限';
 $string['deadlinestoggledesc'] = 'ユーザに対して、登録済みコースの今後の活動の終了日時が表示されます。';
@@ -254,7 +256,7 @@ $string['pld'] = 'PLD';
 $string['pluginname'] = 'Snap';
 $string['poster'] = 'カバーイメージ';
 $string['posterdesc'] = 'サイトのフロントページ用の大きいヘッダイメージです。横向きイメージ (1200 x 600ピクセル) 以上が最適です。';
-$string['poweredbyrunby'] = '<a href="https://www.blackboard.com/blackboard-open-lms" target="_blank">Blackboard Open LMS</a> (<a href="https://moodle.com/" target="_blank">Moodle</a>ベースの製品) で構築しています。<br>
+$string['poweredbyrunby'] = '<a href="https://www.blackboard.com/blackboard-open-lms" target="_blank" rel="noopener">Blackboard Open LMS</a> (<a href="https://moodle.com/" target="_blank" rel="noopener">Moodle</a>ベースの製品) で構築しています。<br>
     Copyright &#169; {$a} Blackboard Inc, All Rights Reserved.';
 $string['previoussection'] = '前のセクション';
 $string['privacy:metadata:theme_snap_course_favorites:courseid'] = 'ユーザがお気に入りとしてマークしたコースのコースID';
@@ -275,6 +277,8 @@ $string['released'] = 'リリース済み : {$a}';
 $string['reopened'] = '再オープン';
 $string['resourcedisplay'] = 'リソース表示';
 $string['resourcedisplayhelp'] = '添付ファイルとリンクをコースにどのように表示するか選択します。Snapテーマでは、小さいアクティビティとリソースカードの説明にあるマルチメディアファイルをサポートしていません。';
+$string['displaydescription'] = '説明を表示する';
+$string['displaydescriptionhelp'] = '選択すると、最初に新しいページにリソースとURLアクティビティの説明が表示されます。学生は、説明からコンテンツにアクセスします。';
 $string['search'] = 'コンテンツを検索する';
 $string['seriffont'] = 'Serifフォント';
 $string['seriffont_desc'] = 'このフォントは、ユーザが生成するコンテンツのほとんどに使用されます。Serifフォントを使用すると、コンテンツの読みやすさが増し、人間が書いたもののようになります。';

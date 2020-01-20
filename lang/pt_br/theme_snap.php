@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * @copyright  Copyright (c) 2019 Blackboard Inc. (http://www.blackboard.com)
+ * @copyright  Copyright (c) 2020 Blackboard Inc. (http://www.blackboard.com)
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -89,6 +89,8 @@ $string['customcssdesc'] = 'Saiba que com grandes poderes vêm grandes responsab
 $string['customtopbar'] = 'Barra de navegação';
 $string['customisenavbar'] = 'Alterar as cores da barra de navegação';
 $string['customisenavbutton'] = 'Alterar as cores do botão Meus Cursos';
+$string['customisecustommenu'] = 'Mudar cor do texto do menu personalizado';
+$string['custommenutext'] = 'Cor do texto do menu personalizado';
 $string['deadlines'] = 'Prazos';
 $string['deadlinestoggle'] = 'Prazos';
 $string['deadlinestoggledesc'] = 'Mostra aos usuários os prazos de atividades futuras dos cursos nos quais eles estão inscritos.';
@@ -261,8 +263,8 @@ $string['pld'] = 'PLD';
 $string['pluginname'] = 'Snap';
 $string['poster'] = 'Imagem de capa';
 $string['posterdesc'] = 'Uma imagem de cabeçalho grande para a página inicial do seu site. Imagens de paisagem (1200 x 600 pixels) ou maiores funcionam melhor.';
-$string['poweredbyrunby'] = 'Criado com <a href="https://www.blackboard.com/blackboard-open-lms" target="_blank">Blackboard Open LMS</a>,
-    um produto baseado no <a href="https://moodle.com/" target="_blank">Moodle</a>.<br>
+$string['poweredbyrunby'] = 'Criado com <a href="https://www.blackboard.com/blackboard-open-lms" target="_blank" rel="noopener">Blackboard Open LMS</a>,
+    um produto baseado no <a href="https://moodle.com/" target="_blank" rel="noopener">Moodle</a>.<br>
     Copyright &#169; {$a} Blackboard Inc., Todos os direitos reservados.';
 $string['previoussection'] = 'Seção anterior';
 $string['privacy:metadata:theme_snap_course_favorites:courseid'] = 'O código do curso marcado como favorito pelo usuário';
@@ -283,6 +285,8 @@ $string['released'] = 'Disponibilizado: {$a}';
 $string['reopened'] = 'Reaberto';
 $string['resourcedisplay'] = 'Exibição do recurso';
 $string['resourcedisplayhelp'] = 'Selecione como os anexos e os links aparecem no seu curso. O tema Snap não é compatível com arquivos multimídia na descrição de cartões de atividades e recursos pequenos.';
+$string['displaydescription'] = 'Mostrar descrição';
+$string['displaydescriptionhelp'] = 'Selecione para mostrar uma descrição do recurso e atividades de URL em uma nova página primeiro. Os alunos acessarão conteúdo da descrição.';
 $string['search'] = 'Pesquisar conteúdo';
 $string['seriffont'] = 'Fonte Serif';
 $string['seriffont_desc'] = 'Esta fonte é usada para a maioria dos conteúdos gerados pelo usuário. Usar uma fonte serif torna o conteúdo gerado pelo usuário mais legível, dando a impressão de ter sido escrito por uma pessoa.';

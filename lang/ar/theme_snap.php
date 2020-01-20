@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * @copyright  Copyright (c) 2019 Blackboard Inc. (http://www.blackboard.com)
+ * @copyright  Copyright (c) 2020 Blackboard Inc. (http://www.blackboard.com)
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -89,6 +89,8 @@ $string['customcssdesc'] = 'يرجى العلم أن القدرات الكبير
 $string['customtopbar'] = 'شريط التنقل';
 $string['customisenavbar'] = 'تغيير ألوان شريط التنقل';
 $string['customisenavbutton'] = 'تغيير ألوان زر "المقررات الدراسية الخاصة بي"';
+$string['customisecustommenu'] = 'تغيير لون نص القائمة المخصص';
+$string['custommenutext'] = 'لون نص القائمة المخصص';
 $string['deadlines'] = 'المواعيد النهائية';
 $string['deadlinestoggle'] = 'المواعيد النهائية';
 $string['deadlinestoggledesc'] = 'تعرض للمستخدمين أي مواعيد نهائية للأنشطة القادمة الموجودة في المقررات الدراسية المسجلة.';
@@ -265,8 +267,8 @@ $string['pld'] = 'PLD';
 $string['pluginname'] = 'محاذاة';
 $string['poster'] = 'صورة الغلاف';
 $string['posterdesc'] = 'صورة رأس كبيرة لصفحة موقعك الأمامية. تعمل الصور الأفقية بحجم (1200 × 600 بكسل) أو الأكبر حجمًا بشكل أفضل.';
-$string['poweredbyrunby'] = 'تم الإنشاء بواسطة <a href="https://www.blackboard.com/blackboard-open-lms" target="_blank">Blackboard Open LMS</a>,
-     المنتج المستند إلى <a href="https://moodle.com/" target="_blank">Moodle</a>.<br>
+$string['poweredbyrunby'] = 'تم الإنشاء بواسطة <a href="https://www.blackboard.com/blackboard-open-lms" target="_blank" rel="noopener">Blackboard Open LMS</a>,
+     وهو منتج مستند إلى <a href="https://moodle.com/" target="_blank" rel="noopener">Moodle</a>.<br>
     Copyright &#169; {$a} Blackboard Inc، جميع الحقوق محفوظة.';
 $string['previoussection'] = 'القسم السابق';
 $string['privacy:metadata:theme_snap_course_favorites:courseid'] = 'معرف المقرر الدراسي الخاص بالمقرر الدراسي الذي يفضله المستخدم';
@@ -287,6 +289,8 @@ $string['released'] = 'المحرَّر: {$a}';
 $string['reopened'] = 'تم إعادة الفتح';
 $string['resourcedisplay'] = 'عرض المورد';
 $string['resourcedisplayhelp'] = 'حدد كيفية ظهور المرفقات والروابط في مقررك الدراسي. لا تدعم السمة Snap ملفات الوسائط المتعددة في وصف بطاقات الموارد والأنشطة الصغيرة.';
+$string['displaydescription'] = 'عرض الوصف';
+$string['displaydescriptionhelp'] = 'حدد لإظهار وصف لأنشطة المورد وعنوان URL في صفحة جديدة أولاً. وسيقوم الطلاب بالوصول إلى المحتوى من الوصف.';
 $string['search'] = 'محتويات البحث';
 $string['seriffont'] = 'خط Serif';
 $string['seriffont_desc'] = 'يُستخدم هذا الخط لمعظم المحتويات المنشأة بواسطة المستخدم. علمًا بأن استخدام خط Serif يجعل المحتويات المنشأة بواسطة المستخدم أكثر قابلية للقراءة وتبدو كما لو أنها مكتوبة بخط اليد.';

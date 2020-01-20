@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * @copyright  Copyright (c) 2019 Blackboard Inc. (http://www.blackboard.com)
+ * @copyright  Copyright (c) 2020 Blackboard Inc. (http://www.blackboard.com)
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -88,6 +88,8 @@ $string['customcssdesc'] = 'Tingueu en compte que el poder ha d\'anar acompanyat
 $string['customtopbar'] = 'Barra de navegació';
 $string['customisenavbar'] = 'Canvia els colors de la barra de navegació';
 $string['customisenavbutton'] = 'Canvia el color del botó Els meus cursos';
+$string['customisecustommenu'] = 'Canvia el color del text del menú personalitzat';
+$string['custommenutext'] = 'Color del text del menú personalitzat';
 $string['deadlines'] = 'Dates límit';
 $string['deadlinestoggle'] = 'Dates límit';
 $string['deadlinestoggledesc'] = 'Mostra als usuaris totes les properes dates límit d\'activitats dels cursos als quals s\'han matriculat.';
@@ -254,8 +256,8 @@ $string['pld'] = 'PLD';
 $string['pluginname'] = 'Snap';
 $string['poster'] = 'Imatge de portada';
 $string['posterdesc'] = 'Una imatge de capçalera gran per a la pàgina principal del vostre lloc. Les imatges en format horitzontal de 1200 x 600 píxels o més van millor.';
-$string['poweredbyrunby'] = 'Creat amb <a href="https://www.blackboard.com/blackboard-open-lms" target="_blank">Blackboard Open LMS</a>,
-    amb tecnologia de <a href="https://moodle.com/" target="_blank">Moodle</a>.<br>
+$string['poweredbyrunby'] = 'Creat amb <a href="https://www.blackboard.com/blackboard-open-lms" target="_blank" rel="noopener">Blackboard Open LMS</a>,
+    amb tecnologia de <a href="https://moodle.com/" target="_blank" rel="noopener">Moodle</a>.<br>
     Copyright&#169; {$a} Blackboard Inc, Tots els drets reservats.';
 $string['previoussection'] = 'Secció anterior';
 $string['privacy:metadata:theme_snap_course_favorites:courseid'] = 'L\'ID del curs que l\'usuari ha marcat com a favorit';
@@ -276,6 +278,8 @@ $string['released'] = 'Publicat: {$a}';
 $string['reopened'] = 'Reoberta';
 $string['resourcedisplay'] = 'Visualització de recurs';
 $string['resourcedisplayhelp'] = 'Seleccioneu com han d\'aparèixer els fitxers adjunts i els enllaços al vostre curs. El tema Snap no admet fitxers multimèdia a l\'activitat petita i la descripció de les targetes de recursos.';
+$string['displaydescription'] = 'Descripció de la pantalla';
+$string['displaydescriptionhelp'] = 'Seleccioneu-ho perquè es mostri primer una descripció del recurs i les activitats URL en una pàgina nova. Els estudiants accediran al contingut des de la descripció.';
 $string['search'] = 'Cerca contingut';
 $string['seriffont'] = 'Tipus de lletra Serif';
 $string['seriffont_desc'] = 'Aquesta font s’utilitza per a la major part del contingut generat per l’usuari. Si utilitzeu una font Serif, el contingut generat per l’usuari és més fàcil de llegir i sembla com si l’hagués escrit un humà.';

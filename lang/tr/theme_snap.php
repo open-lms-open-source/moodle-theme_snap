@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * @copyright  Copyright (c) 2019 Blackboard Inc. (http://www.blackboard.com)
+ * @copyright  Copyright (c) 2020 Blackboard Inc. (http://www.blackboard.com)
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -89,6 +89,8 @@ $string['customcssdesc'] = 'Lütfen büyük gücün büyük sorumluluk getirdiğ
 $string['customtopbar'] = 'Gezinti çubuğu';
 $string['customisenavbar'] = 'Gezinti çubuğu renklerini değiştir';
 $string['customisenavbutton'] = 'Kurslarım düğmesi renklerini değiştir';
+$string['customisecustommenu'] = 'Özel menü metin rengini değiştirme';
+$string['custommenutext'] = 'Özel menü metin rengi';
 $string['deadlines'] = 'Bitiş Tarihleri';
 $string['deadlinestoggle'] = 'Bitiş Tarihleri';
 $string['deadlinestoggledesc'] = 'Kullanıcılara kaydolunan kursların varsa yaklaşan etkinlik bitiş tarihlerini gösterin.';
@@ -277,6 +279,8 @@ $string['released'] = 'Yayınlanma tarihi: {$a}';
 $string['reopened'] = 'Yeniden açıldı';
 $string['resourcedisplay'] = 'Kaynak görüntüsü';
 $string['resourcedisplayhelp'] = 'Kursunuzda eklerin ve bağlantıların nasıl göründüğünü seçin. Snap teması, küçük etkinlik ve kaynak kartlarının açıklamasındaki multimedya dosyalarını desteklemez.';
+$string['displaydescription'] = 'Açıklamayı göster';
+$string['displaydescriptionhelp'] = 'Önce yeni bir sayfada kaynak ve URL etkinliklerinin açıklamasını göstermek için bunu seçin. Öğrenciler içeriğe açıklamadan erişirler.';
 $string['search'] = 'İçeriği ara';
 $string['seriffont'] = 'Serif yazı tipi';
 $string['seriffont_desc'] = 'Bu yazı tipi, kullanıcı tarafından üretilen içeriklerin çoğu için kullanılır. Serif yazı tipini kullanmak, kullanıcı tarafından üretilen içeriği daha okunur kılar ve bir insan tarafından yazıldığı hissini uyandırır.';
@@ -345,9 +349,12 @@ $string['gotocalendarsnap'] = 'site takvimine gidin.';
 $string['quizattemptswarn'] = 'Askıya alınan kullanıcılara ait denemeleri hariç tutar';
 $string['quizfeedback'] = 'Geri Bildirim';
 $string['validratio'] = 'Bu renk kombinasyonu WCAG 2.0 minimum oran değeri 4.5:1\'e uygun değil';
-$string['invalidratio'] = 'Bu renk kombinasoynu <a href="https://www.w3.org/TR/WCAG20-TECHS/G18.html" target="_blank">WCAG 2.0 minimum oran değeri 4.5:1</a>\'e uygun değil. Değer: "{$a}"';
+$string['invalidratio'] = 'Bu renk kombinasoynu
+<a href="https://www.w3.org/TR/WCAG20-TECHS/G18.html" target="_blank">WCAG 2.0 minimum oran değeri 4.5:1</a>\'e uygun değil. Değer: "{$a}"';
 $string['imageinvalidratio'] = 'WCAG 2.0 minimum oran değeri 4.5:1\'e uygun olmadığından dolayı bu resimde kontrast sorunları olabilir. Ortalama piksel değeri: "{$a}"';
-$string['catinvalidratio'] = 'Aşağıdaki renk kategorileri <a href="https://www.w3.org/TR/WCAG20-TECHS/G18.html" target="_blank">WCAG 2.0 minimum oran değeri 4.5:1</a>\'e uygun değil :Site arka plan rengine (beyaz) uygun değil: "{$a->white}". Navigasyon çubuğu arka plan rengine uygun değil: "{$a->custombar}". Kurslarım düğmesi arka plan rengine uygun değil: "{$a->customnav}"';
+$string['catinvalidratio'] = 'Aşağıdaki renk kategorileri
+<a href="https://www.w3.org/TR/WCAG20-TECHS/G18.html" target="_blank">WCAG 2.0 minimum oran değeri 4.5:1</a>\'e uygun değil :
+Site arka plan rengine (beyaz) uygun değil: "{$a->white}". Navigasyon çubuğu arka plan rengine uygun değil: "{$a->custombar}". Kurslarım düğmesi arka plan rengine uygun değil: "{$a->customnav}"';
 $string['imageinvalidratiocategory'] = 'WCAG 2.0 minimum oran değeri 4.5:1\'e uygun olmadığından dolayı bu resimde tema rengiyle kontrast sorunları olabilir. Ortalama piksel değeri: "{$a}"';
 $string['lazyload_mod_page'] = 'Sayfa kaynakları için varsayılan yavaş yüklemeyi etkinleştir';
 $string['lazyload_mod_page_description'] = 'Etkinleştirildiğinde, bu ayar çok sayfalı kurslar için kurs sayfası yükleme sürelerini önemli ölçüde kısaltır.';
