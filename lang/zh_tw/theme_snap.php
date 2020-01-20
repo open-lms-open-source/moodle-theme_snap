@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * @copyright  Copyright (c) 2019 Blackboard Inc. (http://www.blackboard.com)
+ * @copyright  Copyright (c) 2020 Blackboard Inc. (http://www.blackboard.com)
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -89,6 +89,8 @@ $string['customcssdesc'] = '請注意，掌握越大的權力，也意味著承�
 $string['customtopbar'] = '瀏覽列';
 $string['customisenavbar'] = '變更瀏覽列色彩';
 $string['customisenavbutton'] = '變更我的課程按鈕的色彩';
+$string['customisecustommenu'] = '變更自訂功能表文字顏色';
+$string['custommenutext'] = '自訂功能表文字顏色';
 $string['deadlines'] = '截止時間';
 $string['deadlinestoggle'] = '截止時間';
 $string['deadlinestoggledesc'] = '對使用者顯示已註冊課程的任何近期活動截止日期。';
@@ -256,8 +258,8 @@ $string['pld'] = 'PLD';
 $string['pluginname'] = 'Snap';
 $string['poster'] = '封面影像';
 $string['posterdesc'] = '用於網站首頁的大型標題影像。橫向影像 (1200 x 600 像素或更大) 效果最佳。';
-$string['poweredbyrunby'] = '採用 <a href="https://www.blackboard.com/blackboard-open-lms" target="_blank">Blackboard Open LMS</a> 建置，
-    由 <a href="https://moodle.com/" target="_blank">Moodle</a> 所提供。<br>
+$string['poweredbyrunby'] = '採用 <a href="https://www.blackboard.com/blackboard-open-lms" target="_blank" rel="noopener">Blackboard Open LMS</a> 建置，
+    由 <a href="https://moodle.com/" target="_blank" rel="noopener">Moodle</a> 所提供。<br>
     版權所有 &#169; {$a} Blackboard Inc，保留所有權利。';
 $string['previoussection'] = '上一單元';
 $string['privacy:metadata:theme_snap_course_favorites:courseid'] = '使用者已加入常用項目之課程的課程編號';
@@ -278,6 +280,8 @@ $string['released'] = '已發行：{$a}';
 $string['reopened'] = '已重新開啟';
 $string['resourcedisplay'] = '資源顯示';
 $string['resourcedisplayhelp'] = '選取附件和連結在課程中顯示的方式。在小型活動和資源卡描述中，Snap 主題不支援多媒體檔案。';
+$string['displaydescription'] = '顯示說明';
+$string['displaydescriptionhelp'] = '選取此選項，以首先在新頁面中顯示資源和 URL 活動的說明。學員將從說明中存取內容。';
 $string['search'] = '搜尋內容';
 $string['seriffont'] = '有襯線字型';
 $string['seriffont_desc'] = '此字型會用於使用者產生的大部分內容。使用有襯線字型會讓使用者產生的內容更好閱讀，看起來就像是手寫一般。';
