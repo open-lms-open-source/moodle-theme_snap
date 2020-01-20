@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * @copyright  Copyright (c) 2019 Blackboard Inc. (http://www.blackboard.com)
+ * @copyright  Copyright (c) 2020 Blackboard Inc. (http://www.blackboard.com)
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -88,6 +88,8 @@ $string['customcssdesc'] = 'Bitte berücksichtigen Sie, dass größere Befugnis 
 $string['customtopbar'] = 'Navigationsleiste';
 $string['customisenavbar'] = 'Farben der Navigationsleiste ändern';
 $string['customisenavbutton'] = 'Farben der Schaltfläche "Meine Kurse" ändern';
+$string['customisecustommenu'] = 'Textfarbe des benutzerdefinierten Menüs ändern';
+$string['custommenutext'] = 'Textfarbe des benutzerdefinierten Menüs';
 $string['deadlines'] = 'Termine';
 $string['deadlinestoggle'] = 'Termine';
 $string['deadlinestoggledesc'] = 'Anstehende Termine für Aktivitäten in belegten Kursen für alle Nutzer/innen anzeigen.';
@@ -276,6 +278,8 @@ $string['released'] = 'Version: {$a}';
 $string['reopened'] = 'Erneut geöffnet';
 $string['resourcedisplay'] = 'Anzeige von Ressourcen';
 $string['resourcedisplayhelp'] = 'Wählen Sie aus, welche Anhänge und Links in Ihrem Kurs erscheinen sollen. Das Snap-Design unterstützt keine Multimedia-Dateien in der Beschreibung der Kurzaktivitäts- und Ressourcenkarten.';
+$string['displaydescription'] = 'Beschreibung anzeigen';
+$string['displaydescriptionhelp'] = 'Wählen Sie aus, dass erst eine Beschreibung der Ressourcen- und URL-Aktivitäten auf einer neuen Seite angezeigt werden. Die Teilnehmer greifen über die Beschreibung auf Inhalte zu.';
 $string['search'] = 'Inhalte suchen';
 $string['seriffont'] = 'Schriftart Serif';
 $string['seriffont_desc'] = 'Diese Schriftart wird für die meisten benutzergenerierten Inhalte verwendet. Eine Schriftart mit Serifen verbessert die Lesbarkeit von benutzergenerierten Inhalten und vermittelt das Gefühl menschlicher Handschrift.';
