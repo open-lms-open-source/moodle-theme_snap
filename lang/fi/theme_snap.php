@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * @copyright  Copyright (c) 2019 Blackboard Inc. (http://www.blackboard.com)
+ * @copyright  Copyright (c) 2020 Blackboard Inc. (http://www.blackboard.com)
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -89,6 +89,8 @@ $string['customcssdesc'] = 'Muista, että tehokkailla muokkaustoiminnoilla voi t
 $string['customtopbar'] = 'Siirtymispalkki';
 $string['customisenavbar'] = 'Vaihda siirtymispalkin värit';
 $string['customisenavbutton'] = 'Vaihda Omat kurssini -painikkeen värit';
+$string['customisecustommenu'] = 'Vaihda mukautetun valikon tekstin väriä';
+$string['custommenutext'] = 'Mukautetun valikon tekstin väri';
 $string['deadlines'] = 'Määräajat';
 $string['deadlinestoggle'] = 'Määräajat';
 $string['deadlinestoggledesc'] = 'Näytä käyttäjille rekisteröityneiden kurssien tulevien aktiviteettien määräajat.';
@@ -256,8 +258,8 @@ $string['pld'] = 'PLD';
 $string['pluginname'] = 'Snap';
 $string['poster'] = 'Kansikuva';
 $string['posterdesc'] = 'Tämä on sivuston etusivulla näytettävä suuri ylätunnistekuva. Parhaiten toimivat vaakasuuntaiset kuvat, joiden koko on vähintään 1 200 x 600 pikseliä.';
-$string['poweredbyrunby'] = 'Luotu <a href="https://www.blackboard.com/blackboard-open-lms" target="_blank">Blackboard Open LMS:llä</a>,
-     joka on <a href="https://moodle.com/" target="_blank">Moodleen</a> perustuva tuote.<br>
+$string['poweredbyrunby'] = 'Luotu <a href="https://www.blackboard.com/blackboard-open-lms" target="_blank" rel="noopener">Blackboard Open LMS:llä</a>,
+     joka on <a href="https://moodle.com/" target="_blank" rel="noopener">Moodleen</a> perustuva tuote.<br>
     Copyright &#169; {$a} Blackboard Inc. Kaikki oikeudet pidätetään.';
 $string['previoussection'] = 'Edellinen osio';
 $string['privacy:metadata:theme_snap_course_favorites:courseid'] = 'Käyttäjän suosikkeihin lisäämän kurssin tunnus';
@@ -278,6 +280,8 @@ $string['released'] = 'Julkaistu: {$a}';
 $string['reopened'] = 'Avattu uudelleen';
 $string['resourcedisplay'] = 'Aineistonäyttö';
 $string['resourcedisplayhelp'] = 'Valitse, miten liitteet ja linkit näytetään kurssilla. Snap-teema ei tue multimediatiedostoja pienissä aktiviteeteissa ja aineistokorttien kuvauksissa.';
+$string['displaydescription'] = 'Näytä kuvaus';
+$string['displaydescriptionhelp'] = 'Jos haluat näyttää aineiston kuvauksen ja URL-aktiviteetit ensin uudella sivulla, valitse tämä. Opiskelijat käyttävät sisältöä kuvauksesta.';
 $string['search'] = 'Etsi sisältöä';
 $string['seriffont'] = 'Serif-fontti';
 $string['seriffont_desc'] = 'Tätä fonttia käytetään suurimmassa osassa käyttäjän luomaa sisältöä. Serif-fontin käyttäminen käyttäjän luomassa sisällössä parantaa luettavuutta ja saa tekstin näyttämään ihmisen kirjoittamalta.';
