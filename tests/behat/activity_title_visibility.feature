@@ -20,8 +20,8 @@
 # @copyright  Copyright (c) 2019 Blackboard Inc. (http://www.blackboard.com)
 # @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
 
-@theme @theme_snap
-Feature: Title of Page and Book activities should not
+@theme @theme_snap @theme_snap_activity_title_visibility
+Feature: Title of Page, Book and Label activities should not
   be display at the top when added to a course
 
   Background:
@@ -38,15 +38,43 @@ Feature: Title of Page and Book activities should not
       | teacher1  | C1      | editingteacher  |
     And the following "activities" exist:
       | activity   | name         | intro                       | course | idnumber  | section |
-      | book       | TestB 1       | Test book description       | C1     | book1     | 0       |
-      | page       | TestP 1       | Test page description       | C1     | page1     | 0       |
+      | book       | TestB 1      | Test book description       | C1     | book1     | 0       |
+      | page       | TestP 1      | Test page description       | C1     | page1     | 0       |
+      | label      | TestL 1      | Test label description      | C1     | label1    | 0       |
+    And I log in as "admin"
+    And the following config values are set as admin:
+      | resourcedisplay | card | theme_snap |
+    And I log out
 
   @javascript
-  Scenario: After an activity, such as book or a page, has been added to any course a user should
-    not see the title when visiting the course homepage
+  Scenario: The user should not see book title when visiting the course homepage, after a book
+    activity was added.
     Given I log in as "student1"
     And I am on "Course 1" course homepage
     And I should not see "Book"
+    And I log out
+    And I log in as "teacher1"
+    And I am on "Course 1" course homepage
+    And I should not see "Book"
+
+  @javascript
+  Scenario: The user should not see page title when visiting the course homepage, after a page
+    activity was added.
+    Given I log in as "student1"
     And I am on "Course 1" course homepage
     And I should not see "Page"
     And I log out
+    And I log in as "teacher1"
+    And I am on "Course 1" course homepage
+    And I should not see "Page"
+
+  @javascript
+  Scenario: The user should not see label title when visiting the course homepage, after a label
+    activity was added.
+    Given I log in as "student1"
+    And I am on "Course 1" course homepage
+    And I should not see "Label"
+    And I log out
+    And I log in as "teacher1"
+    And I am on "Course 1" course homepage
+    And I should not see "Label"
