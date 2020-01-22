@@ -488,7 +488,13 @@ class course_renderer extends \core_course_renderer {
             }
         } else {
             $snapmodtype = $this->get_mod_type($mod)[0];
+            // Label title should not be displayed in the activity card header.
+            $labelcurrentstr = get_string('modulename', 'mod_label');
+            if (strcmp($snapmodtype, $labelcurrentstr) == 0) {
+                $snapmodtype = '';
+            }
             $assettype = '<div class="snap-assettype">'.$snapmodtype.'</div>';
+
             // No link, so display only content.
             $output = html_writer::tag('div', $assettype . $accesstext . $content,
                 array('class' => 'contentwithoutlink ' . $textclasses));
