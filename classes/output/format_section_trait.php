@@ -484,7 +484,8 @@ trait format_section_trait {
         $defaulttitle = get_string('title', 'theme_snap');
         $sectionnum = course_get_format($course)->get_last_section_number();
         if ($course->format === 'topics') {
-            $required = 'required';
+            // Make sure that section does not have leading or trailing spaces and at least one character.
+            $required = 'required pattern="\S(.*\S)?"';
         } else {
             // Take this part of code from /course/format/weeks/lib.php on functions
             // @codingStandardsIgnoreLine
