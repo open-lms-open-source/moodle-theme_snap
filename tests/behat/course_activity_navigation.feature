@@ -317,3 +317,27 @@ Feature: Activity navigation in Snap theme
     Then "#prev-activity-link" "css_element" should not exist
     And "#next-activity-link" "css_element" should not exist
     And "Jump to..." "field" should not exist
+  @javascript
+  Scenario: Shouldn't be able jump to another activity on quiz attempt.
+    Given the following "question categories" exist:
+      | contextlevel | reference | name           |
+      | Course       | C1        | Test questions |
+    And the following "questions" exist:
+      | questioncategory | qtype       | name  | questiontext    |
+      | Test questions   | truefalse   | TF1   | First question  |
+      | Test questions   | truefalse   | TF2   | Second question |
+    And quiz "Quiz 1" contains the following questions:
+      | question | page | maxmark |
+      | TF1      | 1    |         |
+      | TF2      | 1    | 3.0     |
+    And I log in as "student1"
+    And I am on "Course 1" course homepage
+    And I click on "Topic 4" "text"
+    And I click on "//h3/a/p[contains(text(),'Quiz 1')]" "xpath_element"
+    And "#prev-activity-link" "css_element" should be visible
+    And "#next-activity-link" "css_element" should be visible
+    And "Jump to..." "field" should be visible
+    And I click on "Attempt quiz now" "text"
+    And "#prev-activity-link" "css_element" should not be visible
+    And "#next-activity-link" "css_element" should not be visible
+    And "Jump to..." "field" should not be visible

@@ -664,6 +664,14 @@ li.section:focus {
     margin-right: 15px;
 }
 
+#page-mod-quiz-attempt {
+    #region-main {
+        .activity-navigation {
+            display: none;
+        }
+    }
+}
+
 /**
  * resourcelinkdetails = moodle putting filetype on screen if option selected
  * we do this by default in snap, so hide moodle version
