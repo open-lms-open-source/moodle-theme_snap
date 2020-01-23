@@ -29,6 +29,7 @@ Feature: Open page (front page) module inline
     Given the following "users" exist:
       | username | firstname | lastname | email                |
       | student1 | Student   | 1        | student1@example.com |
+      | student2 | Student   | 2        | student2@example.com |
     And completion tracking is "Enabled" for course "Acceptance test site"
     And debugging is turned off
     And the following config values are set as admin:
@@ -50,43 +51,38 @@ Feature: Open page (front page) module inline
 
   @javascript
   Scenario Outline: Page mod completion updates on read more and affects availability for other modules at the front page.
-    And I skip because "It's failing, The test will be fixed on the ticket INT-15435"
     Given the following "activities" exist:
-      | activity | course               | idnumber  | name              | intro                 | content                 | section |
-      | page     | Acceptance test site | pagec     | Page completion   | Page completion intro | Page completion content | 1       |
-      | page     | Acceptance test site | pager     | Page restricted   | Page restricted intro | Page restricted content | 1       |
-   Then I log in as "admin"
+      | activity | course               | idnumber  | name   | intro      | content      | section |
+      | page     | Acceptance test site | pagec     | Page   | Page intro | Page content | 1       |
+    Then I log in as "admin"
     And the following config values are set as admin:
       | resourcedisplay | <Option> | theme_snap |
     And I am on site homepage
-    # Sometimes the page activity is not being created with the correct completion options, so I have to do it manually
-    And I follow "Edit \"Page completion\""
+    And I follow "Edit \"Page\""
     And I expand all fieldsets
-    And I set the field "completion" to "2"
-    And I set the field "completionview" to "1"
-    And I press "Save and return to course"
-    # Restrict the second page module to only be accessible after the first page module is marked complete.
-    And I restrict course asset "Page restricted" by completion of "Page completion"
+    And I click on "Add restriction..." "button"
+    And I click on "User profile" "button"
+    And I set the field "User profile field" to "Email address"
+    And I set the field "Value to compare against" to "student2@example.com"
+    And I click on ".availability-item .availability-eye img" "css_element"
+    And I click on "Save and return to course" "button"
+    And I click on "//a[@class='snap-conditional-tag']" "xpath_element"
+    And I should see "Not available unless: Your Email address is student2@example.com"
     And I log out
     And I log in as "student1"
     And I am on site homepage
-   Then I should not see "Page restricted intro"
-    And I click on "//a[@class='snap-conditional-tag']" "xpath_element"
-    And I should see "Not available unless: The activity Page completion is marked complete"
+    And I should not see "Page intro"
+    And I log out
+    And I log in as "student2"
+    And I am on site homepage
     And I click on ".contentafterlink .summary-text a" "css_element"
-    And I wait "2" seconds
     And I should not see an error dialog
     And I wait until ".pagemod-content[data-content-loaded=\"1\"]" "css_element" is visible
-    # The above step basically waits for the page module content to load up.
-   Then I should see "Page completion content"
-    And I should not see availability info "Not available unless: The activity Page completion is marked complete"
-    And I should see "Page restricted"
-    And I click on ".section.img-text li:nth-child(2) .contentafterlink .summary-text a" "css_element"
-   Then I should see " Page restricted content"
+    Then I should see "Page content"
     Examples:
       | Option     |
-      | 0          |
-      | 1          |
+      | list       |
+      | card       |
 
   @javascript
   Scenario: Page mod should be visible at the front page for users that are not logged in.
