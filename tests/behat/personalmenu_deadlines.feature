@@ -142,7 +142,7 @@ Feature: When the moodle theme is set to Snap, students and teachers can find in
   @javascript
   Scenario Outline: Student sees correct submission status when the platform theme is different from snap and the course is forced to snap
     Given the following config values are set as admin:
-      | theme | clean |
+      | theme | classic |
     Given the following "activities" exist:
       | activity | course | idnumber | name             | intro             | assignsubmission_onlinetext_enabled | assignfeedback_comments_enabled | section | duedate         |
       | assign   | C2     | assign1  | Test assignment1 | Test assignment 1 | 1                                   | 1                               | 1       | ##tomorrow##    |
