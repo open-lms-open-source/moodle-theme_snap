@@ -58,7 +58,7 @@ Feature: When the moodle theme is set to Snap, section names should not be empty
     And I press "Save changes"
     And "body#page-course-editsection" "css_element" should exist
     #Names with trailing spaces not allowed
-    And I set the section name to "  Topic one"
+    And I set the section name to "Topic one   "
     And I press "Save changes"
     And "body#page-course-editsection" "css_element" should exist
     #Valid name is allowed
@@ -98,6 +98,48 @@ Feature: When the moodle theme is set to Snap, section names should not be empty
     And I wait until the page is ready
     And "section#snap-add-new-section" "css_element" should not be visible
     And I follow "New section"
+    Examples:
+      | Option     |
+      | 0          |
+      | 1          |
+
+  @javascript
+  Scenario Outline: When creating a section in weekly format, the name should be at least one character.
+    Given I log in as "admin"
+    And the following config values are set as admin:
+      | coursepartialrender | <Option> | theme_snap |
+    And I am on the course main page for "C1"
+    And I navigate to "Edit settings" in current page administration
+    And I expand all fieldsets
+    And the field "id_format" matches value "Topics format"
+    And I set the following fields to these values:
+      | id_startdate_day | 1 |
+      | id_startdate_month | January |
+      | id_startdate_year | 2020 |
+      | id_format | Weekly format |
+      | id_enddate_enabled | 0 |
+    And I press "Save and display"
+    And I should see "1 January - 7 January"
+    And I log out
+    And I log in as "teacher1"
+    And I am on the course main page for "C1"
+    And I follow "1 January - 7 January"
+    And I click on "#section-1 .edit-summary" "css_element"
+    #"Only spaces" name not allowed
+    And I set the field "Custom" to "1"
+    And I set the section name to "  "
+    And I press "Save changes"
+    And "body#page-course-editsection" "css_element" should exist
+    #Names with leading spaces allowed
+    And I set the section name to "  Topic one"
+    And I press "Save changes"
+    And I should see "Topic one"
+    #Names with trailing spaces allowed
+    And I follow "8 January - 14 January"
+    And I click on "#section-2 .edit-summary" "css_element"
+    And I set the section name to "Topic two   "
+    And I press "Save changes"
+    And I should see "Topic two"
     Examples:
       | Option     |
       | 0          |
