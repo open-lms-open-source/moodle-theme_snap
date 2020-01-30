@@ -58,3 +58,20 @@ Feature: When the moodle theme is set to Snap course pages can be rendered using
       | lazyload | class                                       |
       | 0        | .pagemod-content[data-content-loaded=\"1\"] |
       | 1        | .pagemod-content[data-content-loaded=\"0\"] |
+
+  @javascript
+  Scenario: Check the file tree of a folder when lazy load is active
+    Given the following config values are set as admin:
+      | coursepartialrender | 1 | theme_snap |
+    And the following "activities" exist:
+      | activity | name               | intro                   | course | idnumber | showexpanded | section | display |
+      | folder   | Test folder name 1 | Test folder description | C1     | folder1  | 1            | 0       | 1       |
+      | folder   | Test folder name 2 | Test folder description | C1     | folder2  | 1            | 1       | 1       |
+    And I log in as "teacher1"
+    And I am on the course "C1"
+
+    Then ".modtype_folder table" "css_element" should exist
+    And I follow "Topic 1"
+    Then ".modtype_folder table" "css_element" should exist
+    And I follow "Introduction"
+    Then ".modtype_folder table" "css_element" should exist

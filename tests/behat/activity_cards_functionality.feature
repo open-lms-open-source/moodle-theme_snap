@@ -117,7 +117,7 @@ Feature: Check functionality in activity cards.
       | folder   | Test folder name 1 | Test folder description | C1     | folder1  | 1       | 1            |
     And I am on "Course 1" course homepage
     And I wait "1" seconds
-    Then "li.snap-activity.modtype_folder div#folder_tree0 #ygtvcontentel1 > div > h3" "css_element" should exist
+    Then "li.snap-activity.modtype_folder div#folder_tree[id^='folder_tree'] #ygtvcontentel1 > div > h3" "css_element" should exist
     Examples:
       | Option   |
       | card     |
