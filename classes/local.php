@@ -1969,21 +1969,24 @@ class local {
             $discussions[] = $activity->content->discussion;
         }
 
-        list($insql, $params) = $DB->get_in_or_equal($discussions);
+        [$insql, $params] = $DB->get_in_or_equal($discussions);
         // SQL for forums.
         $sqlforum = "SELECT id, groupid
                        FROM {forum_discussions}
                       WHERE id $insql";
-
-        // SQL for hsuforums.
-        $sqlhsuforum = "SELECT id, groupid
-                          FROM {hsuforum_discussions}
-                         WHERE id $insql";
-
         // We save both types of forums in the array $groupsid.
         $groupsid['forum'] = $DB->get_records_sql($sqlforum, $params);
-        $groupsid['hsuforum'] = $DB->get_records_sql($sqlhsuforum, $params);
 
+        if (!get_config('hsuforum')) {
+            $groupsid['hsuforum'] = [];
+        } else {
+            // SQL for hsuforums.
+            $sqlhsuforum = "SELECT id, groupid
+                              FROM {hsuforum_discussions}
+                             WHERE id $insql";
+
+            $groupsid['hsuforum'] = $DB->get_records_sql($sqlhsuforum, $params);
+        }
         return $groupsid;
     }
 
