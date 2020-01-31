@@ -215,7 +215,7 @@ define(['jquery', 'core/log', 'core/ajax', 'core/str', 'core/templates', 'core/n
                 existingSections.push(parseInt($(this).attr('id').split('section-')[1]));
             });
             var tempnode = $('<div></div>');
-            templates.replaceNodeContents(tempnode, html, js);
+            templates.replaceNodeContents(tempnode, html, '');
             // Append resource card fadeout to content resource card.
             tempnode.find('.snap-resource-long .contentafterlink .snap-resource-card-fadeout').each(function() {
                 $(this).appendTo($(this).prevAll('.snap-resource-long .contentafterlink .no-overflow'));
@@ -237,6 +237,8 @@ define(['jquery', 'core/log', 'core/ajax', 'core/str', 'core/templates', 'core/n
             } else {
                 $('.sk-fading-circle').after(tempnode);
             }
+            templates.runTemplateJS(js);
+
             // Hide loading animation.
             $('.sk-fading-circle').hide();
             // Notify filters about the new section.
