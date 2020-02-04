@@ -410,7 +410,7 @@ function theme_snap_output_fragment_section($args) {
             $vars = array(
                 array('courseid' => $course->id,
                     'maxbytes' => $maxbytes,
-                    'showstatus' => true)
+                    'showstatus' => false)
             );
             $PAGE->requires->js_call_amd('theme_snap/dndupload-lazy', 'init', $vars);
             return $html;
