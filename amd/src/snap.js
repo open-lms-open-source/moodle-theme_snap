@@ -696,6 +696,13 @@ define(['jquery', 'core/log', 'theme_snap/headroom', 'theme_snap/util', 'theme_s
                             $(sname).removeAttr('pattern');
                             return true;
                         });
+                    // Make sure that in other formats, "only spaces" name is not available.
+                    } else {
+                        $('#id_name_value').attr("pattern", "(.|\\s)*\\S(.|\\s)*");
+                        $('#id_cancel').on('click', function() {
+                            $(sname).removeAttr('pattern');
+                            return true;
+                        });
                     }
 
                     // Book mod print button, only show if print link already present.
