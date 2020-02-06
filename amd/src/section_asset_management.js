@@ -1454,11 +1454,72 @@ define(['jquery', 'core/log', 'core/ajax', 'core/str', 'core/templates', 'core/n
             };
 
             /**
+             * Make an Ajax request for caching the TOC so it's not so expensive to hide and show sections.
+             */
+            var cacheTOC = function() {
+                if ($('.snap-section-editing.actions').length === 0) {
+                    // Only cache the TOC if there are sections.
+                    return;
+                }
+
+                var action = 'toc';
+
+                var trigger = $('#region-main');
+
+                if (!ajaxTracker.start('section_' + action, trigger)) {
+                    // Request already in progress.
+                    return;
+                }
+
+                // Make ajax call.
+                var ajaxPromises = ajax.call([
+                    {
+                        methodname: 'theme_snap_course_sections',
+                        args : {
+                            courseshortname: courseLib.courseConfig.shortname,
+                            action: action,
+                            sectionnumber: 0,
+                            value: 0,
+                            loadmodules: 0,
+                        }
+                    }
+                ], true, true);
+
+                // Handle ajax promises.
+                ajaxPromises[0]
+                .fail(function(response) {
+                    var errMessage, errAction;
+                    errMessage = M.util.get_string('error:failedtotoc', 'theme_snap');
+                    errAction = M.util.get_string('action:sectiontoc', 'theme_snap');
+                    ajaxNotify.ifErrorShowBestMsg(response, errAction, errMessage).done(function() {
+                        // Allow another request now this has finished.
+                        ajaxTracker.complete('section_' + action);
+                    });
+                }).always(function() {
+                    $(trigger).removeClass('ajaxing');
+                }).done(function(response) {
+                    // Caching modules for future use.
+                    moduleCache = response.toc.modules;
+
+                    // Caching progress for future use.
+                    progressCache = [];
+                    $.each(response.toc.chapters.chapters, function(index, value) {
+                        progressCache.push(value.progress);
+                    });
+
+                    ajaxTracker.complete('section_' + action);
+                });
+            };
+
+            /**
              * Initialise script.
              */
             var initialise = function() {
                 // Add listeners.
                 addListeners();
+
+                // Cache TOC.
+                cacheTOC();
 
                 // Override core functions
                 util.whenTrue(function() {

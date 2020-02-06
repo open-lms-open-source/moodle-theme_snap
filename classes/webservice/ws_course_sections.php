@@ -101,6 +101,8 @@ class ws_course_sections extends \external_api {
                 return $service->set_section_visibility($courseshortname, $sectionnumber, $value, $loadmodules);
             case 'delete' :
                 return $service->delete_section($courseshortname, $sectionnumber);
+            case 'toc':
+                return $service->toc($courseshortname);
         }
         throw new \coding_exception('Invalid action selected :' . $action);
     }

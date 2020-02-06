@@ -327,7 +327,7 @@ class course {
             $PAGE->set_context(\context_course::instance($course->id));
         }
 
-        list ($unavailablesections, $unavailablemods) = local::conditionally_unavailable_elements($course);
+        [$unavailablesections, $unavailablemods] = local::conditionally_unavailable_elements($course);
 
         $newlyavailablesections = array_diff($previouslyunavailablesections, $unavailablesections);
         $intersectunavailable = array_intersect($previouslyunavailablesections, $unavailablesections);
@@ -507,6 +507,26 @@ class course {
     }
 
     /**
+     * Get course TOC.
+     * @param string $shortname Course short name
+     * @return array
+     * @throws \coding_exception
+     */
+    public function toc($shortname) {
+        global $OUTPUT;
+        $course = $this->coursebyshortname($shortname);
+
+        $nullformat = null;
+        $loadmodules = true;
+        $toc = new \theme_snap\renderables\course_toc($course, $nullformat, $loadmodules);
+
+        return [
+            'toc' => $toc->export_for_template($OUTPUT)
+        ];
+    }
+
+
+    /**
      * Toggle module completion state.
      * @param int $id (cmid)
      * @param int $completionstate
@@ -519,7 +539,7 @@ class course {
         global $DB, $PAGE;
 
         // Get course-modules entry.
-        list ($course, $cminfo) = get_course_and_cm_from_cmid($id);
+        [$course, $cminfo] = get_course_and_cm_from_cmid($id);
 
         // Get renderer for completion HTML.
         $context = \context_module::instance($id);

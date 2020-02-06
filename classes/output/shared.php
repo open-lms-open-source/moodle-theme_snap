@@ -248,10 +248,12 @@ EOF;
             'action:changesectionvisibility',
             'action:duplicateasset',
             'action:highlightsectionvisibility',
+            'action:sectiontoc',
             'error:failedtochangesectionvisibility',
             'error:failedtohighlightsection',
             'error:failedtochangeassetvisibility',
             'error:failedtoduplicateasset',
+            'error:failedtotoc',
             'deleteassetconfirm',
             'deletesectionconfirm',
             'deletingsection'
