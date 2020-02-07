@@ -19,15 +19,16 @@
  @copyright Copyright (c) 2016 Blackboard Inc. (http://www.blackboard.com)
  @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
 }}
-<div class="subcontent potentialidps">
-    <h6>{{# str }} potentialidps, auth {{/ str }}</h6>
-    <div class="potentialidplist">
-        {{#potentialidps}}
-            <div class="potentialidp"><a class="btn btn-primary btn-block" href="{{{url}}}">
-            {{#icon}}
-                <img class="auth-icon" src="{{icon}}"/>
-            {{/icon}}
-            {{name}}</a></div>
-        {{/potentialidps}}
+<form action='{{action}}'  method='post'>
+    <input type="hidden" name="logintoken" value="{{logintoken}}">
+    <div class="form-group">
+        <label class="form-control-label" for='username' >{{#str}}username{{/str}}</label>
+        <input class="form-control" autocapitalize='off' type='text' name='username' id='username' required>
     </div>
-</div>
+    <div class="form-group">
+        <label class="form-control-label" for='password'>{{#str}}password{{/str}}</label>
+        <input class="form-control" type='password' name='password' id='password' required>
+    </div>
+    <br>
+    <input type='submit' class="btn btn-primary btn-block" value='{{#str}}login{{/str}}'>
+</form>

@@ -85,9 +85,21 @@ body.snap-pm-open {
 // Personal Menu as login form.
 // -------------------------
 .snap-pm-login-form {
-    #snap-pm-content {
+    .snap-pm-section {
+        display: flex;
+        flex-direction: row;
+        margin: 2em -8px;
+        justify-content: center;
+    }
+    .horizontal-divider {
+        display: none;
+    }
+    .potentialidp {
+        padding: 1em 0 0;
+    }
+    .snap-pm-content {
         width: 23em;
-        margin: 2em auto;
+        margin: 2em;
     }
     label {
         font-weight: 300;
@@ -98,6 +110,18 @@ body.snap-pm-open {
         position: fixed;
         bottom: 0;
         right: 2%;
+    }
+    @media (max-width: 767px) {
+        .snap-pm-section {
+            display: grid;
+            flex-wrap: wrap;
+        }
+        .vertical-divider {
+            display: none;
+        }
+        .horizontal-divider {
+            display: block;
+        }
     }
 }
 
@@ -420,4 +444,17 @@ body.snap-pm-open {
     &:after {
         @include ajaxing(inline-block, relative, 20px, 6px);
     }
+}
+.snap-log-in-more {
+    padding: 1em;
+    display: block;
+    text-align: center;
+}
+.snap-log-in-loading-spinner {
+    &:after {
+        @include ajaxingwhite(inline-block, relative, 10em, 2em);
+    }
+}
+.snap-login-option{
+    display:none
 }
