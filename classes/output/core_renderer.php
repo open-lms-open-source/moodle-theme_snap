@@ -1816,11 +1816,18 @@ HTML;
      * @return string
      */
     public function custom_menu_spacer() {
-        global $CFG;
+        global $CFG, $PAGE;
         $spacer = '';
+
         if (!empty($CFG->custommenuitems)) {
             $spacer  = '<div class="snap-custom-menu-spacer"></div>';
-            $spacer .= '<style> div.card-body {margin-top: 3em;}</style>';
+
+            // Style to fix the block settings menu when custom menu is active.
+            $css = 'div.card-body {margin-top: 3em;}';
+            if ($PAGE->pagetype == 'admin-purgecaches' || $PAGE->pagetype == 'login-logout') {
+                $css .= '#page-admin-purgecaches #notice, #notice.snap-continue-cancel {margin-top: 1.2em;}';
+            }
+            $spacer .= "<style> {$css} </style>";
         }
         return $spacer;
     }
