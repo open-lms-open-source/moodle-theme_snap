@@ -51,6 +51,13 @@ use theme_snap\renderables\login_alternative_methods;
 
 class core_renderer extends \theme_boost\output\core_renderer {
 
+    /* Login option rendering variables */
+    const ENABLED_LOGIN_BOTH = '0';
+    const ENABLED_LOGIN_MOODLE = '1';
+    const ENABLED_LOGIN_ALTERNATIVE = '2';
+    const ORDER_LOGIN_MOODLE_FIRST = '0';
+    const ORDER_LOGIN_ALTERNATIVE_FIRST = '1';
+
     /**
      * Copied from outputrenderer.php
      * Heading with attached help button (same title text)
@@ -610,6 +617,26 @@ class core_renderer extends \theme_boost\output\core_renderer {
         }
         return $this->render_from_template('theme_snap/login_alternative_methods', $methods);
     }
+    public function render_login_base_method() {
+        global $CFG;
+        // Return login form.
+        if (empty($CFG->loginhttps)) {
+            $wwwroot = $CFG->wwwroot;
+        } else {
+            $wwwroot = str_replace("http://", "https://", $CFG->wwwroot);
+        }
+
+        $action = s($wwwroot).'/login/index.php';
+
+        $logintoken = is_callable(['\\core\\session\\manager', 'get_login_token']) ?
+            \core\session\manager::get_login_token() : '';
+
+        $data = (object) [
+            'action' => $action,
+            'logintoken' => $logintoken,
+        ];
+        return $this->render_from_template('theme_snap/login_base_methods', $data);
+    }
 
     /**
      * Personal menu or authenticate form.
@@ -618,23 +645,42 @@ class core_renderer extends \theme_boost\output\core_renderer {
         global $PAGE, $USER, $CFG;
 
         if (!isloggedin() || isguestuser()) {
-            // Return login form.
-            if (empty($CFG->loginhttps)) {
-                $wwwroot = $CFG->wwwroot;
-            } else {
-                $wwwroot = str_replace("http://", "https://", $CFG->wwwroot);
+            $enabledlogin = get_config('theme_snap', 'enabledlogin');
+            $enabledloginorder = get_config('theme_snap', 'enabledloginorder');
+            switch ($enabledlogin) {
+                default:
+                    $baselogin = $this->render_login_base_method();
+                    $altlogins = $this->render_login_alternative_methods(new login_alternative_methods());
+                    if ($enabledloginorder == self::ORDER_LOGIN_ALTERNATIVE_FIRST) {
+                        $data = (object) [
+                            'baselogin' => $altlogins,
+                            'divider' => $altlogins ? true : false,
+                            'altlogins' => $baselogin
+                        ];
+                    } else {
+                        $data = (object) [
+                            'baselogin' => $baselogin,
+                            'divider' => $altlogins ? true : false,
+                            'altlogins' => $altlogins
+                        ];
+                    }
+                    break;
+                case self::ENABLED_LOGIN_MOODLE:
+                    $data = (object) [
+                        'baselogin' => $this->render_login_base_method(),
+                        'divider' => false,
+                        'altlogins' => ''
+                    ];
+                    break;
+                case self::ENABLED_LOGIN_ALTERNATIVE:
+                    $altlogins = $this->render_login_alternative_methods(new login_alternative_methods());
+                    $data = (object) [
+                        'baselogin' => $altlogins ? : $this->render_login_base_method(),
+                        'divider' => false,
+                        'altlogins' => ''
+                    ];
+                    break;
             }
-
-            $action = s($wwwroot).'/login/index.php';
-            $altlogins = $this->render_login_alternative_methods(new login_alternative_methods());
-
-            $logintoken = is_callable(['\\core\\session\\manager', 'get_login_token']) ?
-                    \core\session\manager::get_login_token() : '';
-            $data = (object) [
-                'action' => $action,
-                'altlogins' => $altlogins,
-                'logintoken' => $logintoken,
-            ];
 
             if ($PAGE->pagetype !== 'login-index') {
                 return $this->render_from_template('theme_snap/login', $data);

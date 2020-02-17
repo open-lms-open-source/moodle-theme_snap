@@ -33,4 +33,4 @@ Feature: When the moodle theme is set to Snap, personal menu's login form has ht
   Scenario: User login form uses https when loginhttps is enabled
     Given I am on site homepage
     And I follow "Log in"
-    Then "#snap-pm-content > form[action*='https']" "css_element" should be visible
+    Then ".snap-pm-content > form[action*='https']" "css_element" should be visible

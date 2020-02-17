@@ -905,6 +905,13 @@ $custom-menu-text-color: rgb(255, 255, 255) !default; // Need to define this wit
             }
         }
     }
+    .snap-pm-section {
+        .vertical-divider {
+            width: 2px;
+            margin: 6px 0;
+            background: $brand-primary;
+        }
+    }
 }
 
 #page-course-loginas.theme-snap #user-notifications {

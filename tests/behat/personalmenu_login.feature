@@ -106,6 +106,7 @@ Feature: When the moodle theme is set to Snap,
     When I follow "Courses"
     And I am on "Course 1" course homepage
     # The above will trigger a redirect to the login page.
+    And I wait until ".snap-log-in-loading-spinner" "css_element" is not visible
     And I set the field "username" to "teacher1"
     And I set the field "password" to "teacher1"
     And I press "Log in"

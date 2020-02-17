@@ -368,3 +368,13 @@ $string['lazyload_mod_page_description'] = 'If enabled, this setting significant
 $string['pmadvancedfeed_viewmore'] = 'View more';
 $string['pmadvancedfeed_reload'] = 'Refresh';
 $string['multimediacard'] = 'Multimedia files won\'t be displayed in the activity card views for the Snap theme. This will be applied in homepage and course pages only for the small activity and resource cards.';
+$string['enabledlogin'] = 'Displayed login options';
+$string['enabledlogindesc'] = 'Select the login options that should be displayed.';
+$string['moodlelogin'] = 'Display Moodle login only';
+$string['alternativelogin'] = 'Display alternative login options only';
+$string['bothlogin'] = 'Display both login options';
+$string['enabledloginorder'] = 'Login options order';
+$string['enabledloginorderdesc'] = 'Select which login option should be displayed first.';
+$string['moodleloginfirst'] = 'Display Moodle login first';
+$string['alternativeloginfirst'] = 'Display alternative login options first';
+

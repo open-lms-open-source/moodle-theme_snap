@@ -32,6 +32,7 @@ use html_writer;
 use moodle_url;
 use stdClass;
 use theme_snap\local;
+use theme_snap\renderables\login_alternative_methods;
 
 require_once($CFG->dirroot.'/grade/querylib.php');
 require_once($CFG->libdir.'/gradelib.php');
@@ -451,11 +452,19 @@ EOF;
                      $conversationbadgecountenabled, $userid, $sitepolicyacceptreqd, $inalternativerole, $brandcolors,
                      $gradingconstants];
         $initaxvars = [$localjoulegrader, $allyreport, $blockreports];
+        $alternativelogins = new login_alternative_methods();
+        if ($alternativelogins->potentialidps) {
+            $loginvars = [get_config('theme_snap', 'enabledlogin'), get_config('theme_snap', 'enabledloginorder')];
+        } else {
+            $enabledlogin = \theme_snap\output\core_renderer::ENABLED_LOGIN_MOODLE;
+            $loginvars = [$enabledlogin, null];
+        }
         $PAGE->requires->js_call_amd('theme_snap/snap', 'snapInit', $initvars);
         $PAGE->requires->js_call_amd('theme_snap/accessibility', 'snapAxInit', $initaxvars);
         if (!empty($CFG->calendar_adminseesall) && is_siteadmin()) {
             $PAGE->requires->js_call_amd('theme_snap/adminevents', 'init');
         }
+        $PAGE->requires->js_call_amd('theme_snap/login_render-lazy', 'loginRender', $loginvars);
         // Does the page have editable course content?
         if ($pagehascoursecontent && $PAGE->user_allowed_editing()) {
             $canmanageacts = has_capability('moodle/course:manageactivities', context_course::instance($COURSE->id));

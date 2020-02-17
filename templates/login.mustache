@@ -9,27 +9,26 @@
             </div>
             <h1>{{#str}}login{{/str}}</h1>
         </header>
-        <div id="snap-pm-content">
-            <form action='{{action}}'  method='post'>
-                <input type="hidden" name="logintoken" value="{{logintoken}}">
-                <div class="form-group">
-                    <label class="form-control-label" for='username' >{{#str}}username{{/str}}</label>
-                    <input class="form-control" autocapitalize='off' type='text' name='username' id='username' required>
+        <div class ="snap-pm-section">
+            {{#baselogin}}
+                <div class="snap-pm-content">
+                    {{{.}}}
                 </div>
-                <div class="form-group">
-                    <label class="form-control-label" for='password'>{{#str}}password{{/str}}</label>
-                    <input class="form-control" type='password' name='password' id='password' required>
+            {{/baselogin}}
+            {{#divider}}
+                <div class="vertical-divider"></div>
+                <div class="horizontal-divider">
+                    <hr></hr>
                 </div>
-                <br>
-                <input type='submit' class="btn btn-primary btn-block" value='{{#str}}login{{/str}}'>
-            </form>
+            {{/divider}}
             {{#altlogins}}
-            <br><hr><br>
-                {{{.}}}
+                <div class="snap-pm-content">
+                    {{{.}}}
+                </div>
             {{/altlogins}}
-            <div id="snap-pm-login-help">
-                <a class="btn btn-primary" href="{{action}}"><i class="fa fa-info-circle" aria-hidden="true"></i> {{#str}}help{{/str}}</a>
-            </div>
+        </div>
+        <div id="snap-pm-login-help">
+            <a class="btn btn-primary" href="{{action}}"><i class="fa fa-info-circle" aria-hidden="true"></i> {{#str}}help{{/str}}</a>
         </div>
     </div>
 </div>
