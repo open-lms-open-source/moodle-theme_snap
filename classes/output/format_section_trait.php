@@ -131,7 +131,7 @@ trait format_section_trait {
      * @param bool $onsectionpage true if being printed on a section page
      * @return array of links with edit controls
      */
-    protected function section_edit_controls($course, $section, $onsectionpage = false) {
+    protected function section_edit_control_items($course, $section, $onsectionpage = false) {
 
         if ($section->section === 0) {
             return [];
@@ -258,7 +258,7 @@ trait format_section_trait {
         }
 
         // Section editing commands.
-        $sectiontoolsarray = $this->section_edit_controls($course, $section, $sectionreturn);
+        $sectiontoolsarray = $this->section_edit_control_items($course, $section, $sectionreturn);
 
         if (has_capability('moodle/course:update', $context)) {
             if (!empty($sectiontoolsarray)) {
