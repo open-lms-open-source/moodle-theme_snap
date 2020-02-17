@@ -58,6 +58,7 @@ class theme_snap_custom_menu_spacing extends advanced_testcase {
             $CFG->custommenuitems = 'Blackboard
 -Blackboard|http://blackboard.com';
             $spacer = '<div class="snap-custom-menu-spacer"></div>';
+            $spacer .= '<style> div.card-body {margin-top: 3em;}</style>';
         }
 
         $PAGE->set_url($url);
@@ -72,7 +73,7 @@ class theme_snap_custom_menu_spacing extends advanced_testcase {
         $this->review_if_spacer_exists('/index.php', false);
     }
 
-    public function test_spacing_applied_message_index() {
-        $this->review_if_spacer_exists('/message/index.php');
+    public function test_spacing_applied() {
+        $this->review_if_spacer_exists('/index.php');
     }
 }

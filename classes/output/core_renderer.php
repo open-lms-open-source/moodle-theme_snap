@@ -1816,13 +1816,11 @@ HTML;
      * @return string
      */
     public function custom_menu_spacer() {
-        global $CFG, $PAGE;
-        $pagestospace = [
-            'message-index',
-        ];
+        global $CFG;
         $spacer = '';
-        if (!empty($CFG->custommenuitems) && in_array($PAGE->pagetype, $pagestospace)) {
-            $spacer = '<div class="snap-custom-menu-spacer"></div>';
+        if (!empty($CFG->custommenuitems)) {
+            $spacer  = '<div class="snap-custom-menu-spacer"></div>';
+            $spacer .= '<style> div.card-body {margin-top: 3em;}</style>';
         }
         return $spacer;
     }

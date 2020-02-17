@@ -49,6 +49,9 @@ if ($COURSE->id != SITEID && !empty($coverimagecss)) {
 ////////////////////////// MAIN  ///////////////////////////////
 -->
 <main id="moodle-page" class="clearfix">
+<?php
+echo $OUTPUT->custom_menu_spacer();
+?>
 <div id="page-header" class="clearfix <?php echo $mastimage; ?>">
     <div class="breadcrumb-nav" aria-label="breadcrumb"><?php echo $OUTPUT->navbar($mastimage); ?></div>
 

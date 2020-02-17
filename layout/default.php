@@ -45,6 +45,9 @@ if ($COURSE->id != SITEID && !empty($coverimagecss)) {
 ////////////////////////// MAIN  ///////////////////////////////
 -->
 <main id="moodle-page" class="clearfix">
+<?php
+echo $OUTPUT->custom_menu_spacer();
+?>
 <div id="page-header" class="clearfix <?php echo $mastimage; ?>">
     <?php if ($PAGE->pagetype !== 'site-index') { ?>
         <div class="breadcrumb-nav" aria-label="breadcrumb"><?php echo $OUTPUT->navbar($mastimage); ?></div>
@@ -71,9 +74,6 @@ if ($COURSE->id != SITEID && !empty($coverimagecss)) {
         } // End else.
     ?>
 </div>
-<?php
-echo $OUTPUT->custom_menu_spacer();
-?>
 <section id="region-main">
 <?php
 echo $OUTPUT->course_content_header();
