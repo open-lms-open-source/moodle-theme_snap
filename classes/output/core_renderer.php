@@ -1863,12 +1863,17 @@ HTML;
      */
     public function custom_menu_spacer() {
         global $CFG, $PAGE;
-        $pagestospace = [
-            'message-index',
-        ];
         $spacer = '';
-        if (!empty($CFG->custommenuitems) && in_array($PAGE->pagetype, $pagestospace)) {
-            $spacer = '<div class="snap-custom-menu-spacer"></div>';
+
+        if (!empty($CFG->custommenuitems)) {
+            $spacer  = '<div class="snap-custom-menu-spacer"></div>';
+
+            // Style to fix the block settings menu when custom menu is active.
+            $css = 'div.card-body {margin-top: 3em;}';
+            if ($PAGE->pagetype == 'admin-purgecaches' || $PAGE->pagetype == 'login-logout') {
+                $css .= '#page-admin-purgecaches #notice, #notice.snap-continue-cancel {margin-top: 1.2em;}';
+            }
+            $spacer .= "<style> {$css} </style>";
         }
         return $spacer;
     }
