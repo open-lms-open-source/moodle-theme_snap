@@ -4039,6 +4039,13 @@ header#mr-nav {
                         margin-top: -0.1em;
                     }
                 }
+                // Animation and rotation of caret dropdown for custom menu.
+                .dropdown-toggle[aria-expanded="true"]:after {
+                    transform: rotate(180deg);
+                }
+                .dropdown-toggle:after {
+                    transition: 0.5s;
+                }
             }
         }
     }
@@ -4110,6 +4117,13 @@ header#mr-nav {
                         background-color: transparent;
                         border: none;
                     }
+                }
+                // Animation and rotation of caret dropdown for custom menu.
+                .dropdown-toggle[aria-expanded="true"]:after {
+                    transform: rotate(180deg);
+                }
+                .dropdown-toggle:after {
+                    transition: 0.5s;
                 }
             }
         }
