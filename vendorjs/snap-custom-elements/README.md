@@ -2,7 +2,6 @@
 
 This project holds Snap custom elements which are used by the Snap theme.
 
-
 ## Adding a new element
 
 ```bash
@@ -15,7 +14,10 @@ The generated element will be found in:
 ## Building the library for use with the Snap theme
 
 ```bash
-npm run build && npm run package && npm run package-es5
+npm run build && npm run package
 ```
 
-This will generate `theme/snap/vendorjs/snap-custom-elements/snap-ce.js`.
+This will generate:
+
+* `theme/snap/vendorjs/snap-custom-elements/snap-ce.js`.
+* `theme/snap/vendorjs/snap-custom-elements/snap-ce-es5.js`.
