@@ -442,6 +442,11 @@ class mod_assign_renderer extends \mod_assign_renderer {
                     } else {
                         $submissiondata .= '<a href="'.$url.'" role="button" class="btn btn-primary">'
                             .get_string('editsubmission', 'assign').'</a>';
+
+                        $urlparams = array('id' => $status->coursemoduleid, 'action' => 'removesubmissionconfirm');
+                        $url = new moodle_url('/mod/assign/view.php', $urlparams);
+                        $submissiondata .= '<a href="'.$url.'" role="button" class="btn btn-primary">'
+                            .get_string('removesubmission', 'assign').'</a>';
                     }
                 }
 
