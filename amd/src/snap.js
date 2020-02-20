@@ -92,6 +92,24 @@ define(['jquery', 'core/log', 'theme_snap/headroom', 'theme_snap/util', 'theme_s
         };
 
         /**
+         * Change save and cancel buttons from forms to the bottom on mobile mode.
+         */
+        $(window).on('resize', function() {
+            mobileFormChecker();
+        });
+
+        var mobileFormChecker = function() {
+            var savebuttonsformrequired = $('div[role=main] .mform div.snap-form-required fieldset > div.form-group.fitem');
+            var savebuttonsformadvanced = $('div[role=main] .mform div.snap-form-advanced > div:nth-of-type(3)');
+            var width = $(window).width();
+            if (width < 767) {
+                $('.snap-form-advanced').append(savebuttonsformrequired);
+            } else if (width > 767)  {
+                $('.snap-form-required fieldset#id_general').append(savebuttonsformadvanced);
+            }
+        };
+
+        /**
          * move PHP errors into header
          *
          * @author Guy Thomas
@@ -620,6 +638,7 @@ define(['jquery', 'core/log', 'theme_snap/headroom', 'theme_snap/util', 'theme_s
                     addListeners(); // essential
                     applyBlockHash(); // change location hash if necessary
                     bodyClasses(); // add body classes
+                    mobileFormChecker();
 
                     // Make sure that the blocks are always within page-content for assig view page.
                     $('#page-mod-assign-view #page-content').append($('#moodle-blocks'));
@@ -979,6 +998,13 @@ define(['jquery', 'core/log', 'theme_snap/headroom', 'theme_snap/util', 'theme_s
                     // Unpin headroom when url has #course-detail-title.
                     if (window.location.hash === '#course-detail-title') {
                         $('#mr-nav').removeClass('headroom--pinned').addClass('headroom--unpinned');
+                    }
+
+                    // Re position submit buttons for forms when using mobile mode at the bottom of the form.
+                    var savebuttonsformrequired = $('div[role=main] .mform div.snap-form-required fieldset > div.form-group.fitem');
+                    var width = $(window).width();
+                    if (width < 767) {
+                        $('.snap-form-advanced').append(savebuttonsformrequired);
                     }
 
                     waitForFullScreenButton();
