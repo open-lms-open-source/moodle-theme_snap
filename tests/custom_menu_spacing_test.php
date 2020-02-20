@@ -59,10 +59,8 @@ class theme_snap_custom_menu_spacing extends advanced_testcase {
 -Blackboard|http://blackboard.com';
             $spacer = '<div class="snap-custom-menu-spacer"></div>';
 
-            $css = 'div.card-body {margin-top: 3em;}';
-            if ($url == '/login/logout.php' || $url == '/admin/purgecaches.php') {
-                $css .= '#page-admin-purgecaches #notice, #notice.snap-continue-cancel {margin-top: 1.2em;}';
-            }
+            $css = '#page-content .block_settings.state-visible div.card-body {margin-top: 3em;}';
+            $css .= '#page-admin-purgecaches #notice, #notice.snap-continue-cancel {margin-top: 1.2em;}';
             $spacer .= "<style> {$css} </style>";
         }
 
@@ -80,13 +78,5 @@ class theme_snap_custom_menu_spacing extends advanced_testcase {
 
     public function test_spacing_applied() {
         $this->review_if_spacer_exists('/index.php');
-    }
-
-    public function test_spacing_applied_logout() {
-        $this->review_if_spacer_exists('/login/logout.php');
-    }
-
-    public function test_spacing_applied_purgecache() {
-        $this->review_if_spacer_exists('/admin/purgecaches.php');
     }
 }
