@@ -1869,10 +1869,9 @@ HTML;
             $spacer  = '<div class="snap-custom-menu-spacer"></div>';
 
             // Style to fix the block settings menu when custom menu is active.
-            $css = 'div.card-body {margin-top: 3em;}';
-            if ($PAGE->pagetype == 'admin-purgecaches' || $PAGE->pagetype == 'login-logout') {
-                $css .= '#page-admin-purgecaches #notice, #notice.snap-continue-cancel {margin-top: 1.2em;}';
-            }
+            $css = '#page-content .block_settings.state-visible div.card-body {margin-top: 3em;}';
+            $css .= '#page-admin-purgecaches #notice, #notice.snap-continue-cancel {margin-top: 1.2em;}';
+
             $spacer .= "<style> {$css} </style>";
         }
         return $spacer;
