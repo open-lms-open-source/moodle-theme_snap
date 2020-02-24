@@ -523,6 +523,9 @@
         .singlebutton > form[action*="editpage.php"] {
             display: none;
         }
+        .form-check > .text-nowrap {
+            white-space: unset!important;
+        }
     }
     // Unstyle secondary navtabs.
     .nav.nav-tabs + .nav-tabs {
