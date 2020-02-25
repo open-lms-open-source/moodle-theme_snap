@@ -53,8 +53,10 @@ define(['jquery', 'core/str', 'core/event'],
                     {key : 'coursereport', component : 'report_allylti'}
                 ]).done(function(stringsjs) {
                     if ($("#page-mod-forum-discuss")) {
-                        $(".displaymode form select.custom-select").attr("aria-label", stringsjs[0]);
-                        $(".movediscussion select.urlselect").attr("aria-label", stringsjs[1]);
+                        $("div[data-content='forum-discussion'] div.singleselect form.form-inline " +
+                            "select.custom-select.singleselect").attr("aria-label", stringsjs[0]);
+                        $("div[data-content='forum-discussion'] div.movediscussionoption " +
+                            "select.custom-select.urlselect").attr("aria-label", stringsjs[1]);
                     }
                     $("i.fa-calendar").parent().attr("aria-label", stringsjs[2]);
                     $("input[name='TimeEventSelector[calendar]']").attr('aria-label', stringsjs[2]);
