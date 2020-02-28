@@ -705,7 +705,7 @@ $custom-menu-text-color: rgb(255, 255, 255) !default; // Need to define this wit
         }
 
         &:active {
-            color: lighten($brand-primary);
+            //color: lighten($brand-primary);
         }
 
     }
