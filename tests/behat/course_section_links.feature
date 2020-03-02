@@ -44,7 +44,9 @@ Feature: When the moodle theme is set to Snap, section titles can be clicked for
     And I log in as "teacher1"
     And I am on the course main page for "C1"
     And I follow "Topic 1"
-    Then I should see "Untitled Topic" in the "#section-1 .content .sectionname a" "css_element"
+    And I wait until the page is ready
+    Then "#section-1 .content .sectionname .sectionnumber" "css_element" should exist
+    Then I should see "<title>" in the "#section-1 .content .sectionname" "css_element"
     And I click on "#section-1 .content .sectionname a" "css_element"
     And I set the section name to "Super topic 1"
     And I press "Save changes"
@@ -52,8 +54,8 @@ Feature: When the moodle theme is set to Snap, section titles can be clicked for
     Then "#section-1 .content .sectionname a" "css_element" should not exist
     Then I should see "Super topic 1" in the "#section-1 .content .sectionname" "css_element"
     Examples:
-      | coursepartialrender     | leftnav |
-      | 0                       | list    |
-      | 1                       | list    |
-      | 0                       | top     |
-      | 1                       | top     |
+      | coursepartialrender     | leftnav | title             |
+      | 0                       | top     | Untitled Topic    |
+      | 1                       | list    | Untitled Topic    |
+      | 0                       | top     | Untitled Topic    |
+      | 1                       | top     | 1.Untitled Topic  |
