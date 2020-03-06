@@ -54,7 +54,7 @@ class behat_theme_snap_behat_forms extends behat_forms {
                 "[not(contains(concat(' ', @class, ' '), ' collapse-all '))]";
 
             $collapseexpandlink = $this->find('xpath', $expandallxpath,
-                false, false, self::REDUCED_TIMEOUT);
+                false, false, behat_base::get_reduced_timeout());
             $collapseexpandlink->click();
 
         } catch (ElementNotFoundException $e) {
@@ -64,7 +64,7 @@ class behat_theme_snap_behat_forms extends behat_forms {
                     "//a[contains(concat(' ', @class, ' '), ' fheader ') and @aria-expanded = 'false']";
 
                 $collapseexpandlink = $this->find('xpath', $expandonlysection,
-                    false, false, self::REDUCED_TIMEOUT);
+                    false, false, behat_base::get_reduced_timeout());
                 $collapseexpandlink->click();
                 // @codingStandardsIgnoreStart
             } catch (Exception $e) {
