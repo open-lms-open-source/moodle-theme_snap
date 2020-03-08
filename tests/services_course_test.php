@@ -323,7 +323,6 @@ class theme_snap_services_course_test extends \advanced_testcase {
 
     public function test_course_toc_chapters_escaped_chars() {
         global $OUTPUT, $DB;
-        $this->markTestSkipped('Started to fail since the 3.8.1 merge');
         $titles = [ "This & that", "This < that", "This > that", "This & & that"];
         $generator = $this->getDataGenerator();
 
@@ -347,7 +346,7 @@ class theme_snap_services_course_test extends \advanced_testcase {
         $chapters = $this->courseservice->course_toc_chapters('testcourse');
 
         $tochtml = $OUTPUT->render_from_template('theme_snap/course_toc_chapters',
-            (object) ['chapters' => $chapters->chapters, 'listlarge' => (count($chapters) > 9)]);
+            (object) ['chapters' => $chapters->chapters, 'listlarge' => (count($chapters->chapters) > 9)]);
         $pattern = '/>(.*)<\/a>/';
         preg_match_all($pattern, $tochtml, $matches);
         for ($x = 0; $x < count($titles); $x++) {
