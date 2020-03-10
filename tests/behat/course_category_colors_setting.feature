@@ -51,7 +51,6 @@ Feature: When the moodle theme is set to Snap, sets a color per category.
 
   @javascript
   Scenario: Load all classes in each category hierarchy.
-    And I skip because "It's failing since we merged 3.7"
     Given I log in as "admin"
     And I follow "Browse all courses"
     And I purge snap caches
@@ -70,7 +69,6 @@ Feature: When the moodle theme is set to Snap, sets a color per category.
 
   @javascript
   Scenario: Check category colors in hierarchy.
-    And I skip because "It's failing since we merged 3.7"
     Given I log in as "admin"
     And I follow "Browse all courses"
     And I purge snap caches
@@ -88,7 +86,6 @@ Feature: When the moodle theme is set to Snap, sets a color per category.
 
   @javascript
   Scenario: Check category colors from nearest parent in hierarchy.
-    And I skip because "It's failing since we merged 3.7"
     Given the following config values are set as admin:
       | category_color | {"5":"#00FF00","10":"#FF0000"} | theme_snap |
     And I log in as "admin"
