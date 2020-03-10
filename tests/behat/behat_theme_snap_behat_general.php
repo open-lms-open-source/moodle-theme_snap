@@ -55,7 +55,7 @@ class behat_theme_snap_behat_general extends behat_general {
         // Giving preference to the reliability of the results rather than to the performance.
         try {
             if ($container) {
-                $nodes = $this->find_all('xpath', $xpath, false, $container, self::REDUCED_TIMEOUT);
+                $nodes = $this->find_all('xpath', $xpath, false, $container, behat_base::get_reduced_timeout());
             } else {
                 $nodes = $this->find_all('xpath', $xpath);
             }
@@ -132,7 +132,7 @@ class behat_theme_snap_behat_general extends behat_general {
                 return true;
             },
             array('nodes' => $nodes, 'text' => $text, 'element' => $element, 'selectortype' => $selectortype),
-            self::REDUCED_TIMEOUT,
+            behat_base::get_reduced_timeout(),
             false,
             true
         );

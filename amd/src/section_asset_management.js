@@ -258,7 +258,8 @@ define(['jquery', 'core/log', 'core/ajax', 'core/str', 'core/templates', 'core/n
                         tmpid = key;
                     }
                 });
-                $(id).find('.sectionname').html(tmpid + '. ' + title);
+                $(id).find('.sectionname').html(title);
+                $(id).find('.sectionnumber').html(tmpid + '.');
             }
             // Leave all course sections as they were.
             sections.show();

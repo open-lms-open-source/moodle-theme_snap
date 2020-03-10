@@ -11726,7 +11726,7 @@ fieldset[disabled] a#changenumsections .reduce-sections {
     height: 1.5em;
 }
 
-#snap-course-wrapper .sectionname:before {
+#snap-course-wrapper .sectionnumber:before {
     content: '';
 }
 

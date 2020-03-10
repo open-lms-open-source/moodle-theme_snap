@@ -198,7 +198,7 @@ section#region-main
 }
 
 .format-topics:not(.no-number-toc) {
-    li.section .sectionname:before {
+    li.section .sectionname .sectionnumber:before {
         content: counter(annotation-list) ".\00a0";
     }
 
