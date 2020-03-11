@@ -53,10 +53,10 @@ Feature: When the moodle theme is set to Snap, section titles can be clicked for
     And I follow "Super topic 1"
     Then "#section-1 .content .sectionname a" "css_element" should not exist
     Then I should see "Super topic 1" in the "#section-1 .content .sectionname" "css_element"
-    Then "#section-1 .content .sectionname .sectionnumber" "css_element" should exist
+    Then "#section-1 .content .sectionname .sectionnumber" "css_element" <customtitlenumber> exist
     Examples:
-      | coursepartialrender     | leftnav | title             |
-      | 0                       | list     | Untitled Topic    |
-      | 1                       | list    | Untitled Topic    |
-      | 0                       | top     | Untitled Topic    |
-      | 1                       | top     | 1.Untitled Topic  |
+      | coursepartialrender     | leftnav | title             | customtitlenumber |
+      | 0                       | list    | Untitled Topic    | should not        |
+      | 1                       | list    | Untitled Topic    | should not        |
+      | 0                       | top     | Untitled Topic    | should            |
+      | 1                       | top     | 1.Untitled Topic  | should            |
