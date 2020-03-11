@@ -247,7 +247,9 @@ trait format_section_trait {
             $o .= "<a href='$url' title='".s(get_string('editcoursetopic', 'theme_snap'))."'>";
             $o .= get_string('defaulttopictitle', 'theme_snap')."</a></h2>";
         } else {
-            if ($section->section != 0) {
+            $leftnav = get_config('theme_snap', 'leftnav');
+            $leftnavtop = $leftnav === 'top';
+            if ($section->section != 0 && $leftnavtop != 0 ) {
                 $sectiontitle = '<span class=\'sectionnumber\'></span>' . $sectiontitle;
             }
             $o .= "<div tabindex='0'>" . $output->heading($sectiontitle, 2, 'sectionname' . $classes) . "</div>";
