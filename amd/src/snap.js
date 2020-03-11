@@ -705,8 +705,8 @@ define(['jquery', 'core/log', 'theme_snap/headroom', 'theme_snap/util', 'theme_s
                         usedefaultname.value = '1';
                         usedefaultname.checked = true;
                         sname.required = "required";
-                        // Make sure that section does not have leading or trailing spaces and at least one character.
-                        $(sname).attr("pattern", "\\S(.*\\S)?");
+                        // Make sure that section does have at least one character.
+                        $(sname).attr("pattern", ".*\\S+.*");
                         $(usedefaultname).parent().css('display', 'none');
 
                         // Enable the cancel button.
@@ -717,7 +717,7 @@ define(['jquery', 'core/log', 'theme_snap/headroom', 'theme_snap/util', 'theme_s
                         });
                     // Make sure that in other formats, "only spaces" name is not available.
                     } else {
-                        $('#id_name_value').attr("pattern", "(.|\\s)*\\S(.|\\s)*");
+                        $('#id_name_value').attr("pattern", ".*\\S+.*");
                         $('#id_cancel').on('click', function() {
                             $(sname).removeAttr('pattern');
                             return true;
