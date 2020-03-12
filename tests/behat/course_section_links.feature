@@ -45,7 +45,7 @@ Feature: When the moodle theme is set to Snap, section titles can be clicked for
     And I am on the course main page for "C1"
     And I follow "Topic 1"
     And I wait until the page is ready
-    Then "#section-1 .content .sectionname .sectionnumber" "css_element" should exist
+    Then "#section-1 .content .sectionname .sectionnumber" "css_element" <titlenumber> exist
     Then I should see "<title>" in the "#section-1 .content .sectionname" "css_element"
     And I click on "#section-1 .content .sectionname a" "css_element"
     And I set the section name to "Super topic 1"
@@ -53,10 +53,10 @@ Feature: When the moodle theme is set to Snap, section titles can be clicked for
     And I follow "Super topic 1"
     Then "#section-1 .content .sectionname a" "css_element" should not exist
     Then I should see "Super topic 1" in the "#section-1 .content .sectionname" "css_element"
-    Then "#section-1 .content .sectionname .sectionnumber" "css_element" <customtitlenumber> exist
+    Then "#section-1 .content .sectionname .sectionnumber" "css_element" <titlenumber> exist
     Examples:
-      | coursepartialrender     | leftnav | title             | customtitlenumber |
-      | 0                       | list    | Untitled Topic    | should not        |
-      | 1                       | list    | Untitled Topic    | should not        |
-      | 0                       | top     | Untitled Topic    | should            |
-      | 1                       | top     | 1.Untitled Topic  | should            |
+      | coursepartialrender     | leftnav | title             | titlenumber |
+      | 0                       | list    | Untitled Topic    | should not  |
+      | 1                       | list    | Untitled Topic    | should not  |
+      | 0                       | top     | Untitled Topic    | should      |
+      | 1                       | top     | 1.Untitled Topic  | should      |
