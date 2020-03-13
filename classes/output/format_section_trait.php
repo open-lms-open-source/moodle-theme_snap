@@ -241,14 +241,17 @@ trait format_section_trait {
 
         // Untitled topic title.
         $testemptytitle = get_string('topic').' '.$section->section;
+        $leftnav = get_config('theme_snap', 'leftnav');
+        $leftnavtop = $leftnav === 'top';
         if ($sectiontitle == $testemptytitle && has_capability('moodle/course:update', $context)) {
             $url = new moodle_url('/course/editsection.php', array('id' => $section->id, 'sr' => $sectionreturn));
-            $o .= "<h2 class='sectionname'><span class='sectionnumber'></span>";
+            $o .= "<h2 class='sectionname'>";
+            if ($section->section != 0 && $leftnavtop != 0 ) {
+                $o .= "<span class='sectionnumber'></span>";
+            }
             $o .= "<a href='$url' title='".s(get_string('editcoursetopic', 'theme_snap'))."'>";
             $o .= get_string('defaulttopictitle', 'theme_snap')."</a></h2>";
         } else {
-            $leftnav = get_config('theme_snap', 'leftnav');
-            $leftnavtop = $leftnav === 'top';
             if ($section->section != 0 && $leftnavtop != 0 ) {
                 $sectiontitle = '<span class=\'sectionnumber\'></span>' . $sectiontitle;
             }
