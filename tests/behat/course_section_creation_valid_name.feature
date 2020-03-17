@@ -39,29 +39,32 @@ Feature: When the moodle theme is set to Snap, section names should not be empty
       | assign   | C1     | assign2  | Test assignment2 | Test assignment description 2 | 2       | 1                                   |
 
   @javascript
-  Scenario Outline: When editing a section name, the name should be at least one character and neither leading nor trailing spaces.
+  Scenario Outline: When editing a section name, the name should be at least one character.
     Given I log in as "admin"
     And the following config values are set as admin:
       | coursepartialrender | <Option> | theme_snap |
     And I log out
     And I log in as "teacher1"
     And I am on the course main page for "C1"
-
     And I follow "Topic 1"
     And I click on "#section-1 .edit-summary" "css_element"
     #"Only spaces" name not allowed
     And I set the section name to "  "
     And I press "Save changes"
     And "body#page-course-editsection" "css_element" should exist
-    #Names with leading spaces not allowed
+    #Names with leading spaces are allowed
     And I set the section name to "  Topic one"
     And I press "Save changes"
-    And "body#page-course-editsection" "css_element" should exist
-    #Names with trailing spaces not allowed
+    And I wait until the page is ready
+    And "body#page-course-editsection" "css_element" should not exist
+    #Names with trailing spaces are allowed too
+    And I click on "#section-1 .edit-summary" "css_element"
     And I set the section name to "Topic one   "
     And I press "Save changes"
-    And "body#page-course-editsection" "css_element" should exist
+    And I wait until the page is ready
+    And "body#page-course-editsection" "css_element" should not exist
     #Valid name is allowed
+    And I click on "#section-1 .edit-summary" "css_element"
     Then I set the section name to "Topic one"
     And I press "Save changes"
     And I wait until the page is ready
@@ -72,7 +75,7 @@ Feature: When the moodle theme is set to Snap, section names should not be empty
     | 1          |
 
   @javascript
-  Scenario Outline: When creating a section, the name should be at least one character and neither leading nor trailing spaces.
+  Scenario Outline: When creating a section, the name should be at least one character.
     Given I log in as "admin"
     And the following config values are set as admin:
       | coursepartialrender | <Option> | theme_snap |
@@ -84,15 +87,19 @@ Feature: When the moodle theme is set to Snap, section names should not be empty
     And I set the field with xpath "//input[@id=\"newsection\"]" to " "
     And I press "Create section"
     And "section#snap-add-new-section" "css_element" should be visible
-    #Names with leading spaces not allowed
+    #Names with leading spaces are allowed
     And I set the field with xpath "//input[@id=\"newsection\"]" to "  New section"
     And I press "Create section"
-    And "section#snap-add-new-section" "css_element" should be visible
-    #Names with trailing spaces not allowed
-    And I set the field with xpath "//input[@id=\"newsection\"]" to "New section "
+    And I wait until the page is ready
+    And "section#snap-add-new-section" "css_element" should not be visible
+    #Names with trailing spaces are allowed
+    And I click on "#snap-new-section" "css_element"
+    And I set the field with xpath "//input[@id=\"newsection\"]" to "New section    "
     And I press "Create section"
-    And "section#snap-add-new-section" "css_element" should be visible
+    And I wait until the page is ready
+    And "section#snap-add-new-section" "css_element" should not be visible
     #Valid name is allowed
+    And I click on "#snap-new-section" "css_element"
     And I set the field with xpath "//input[@id=\"newsection\"]" to "New section"
     And I press "Create section"
     And I wait until the page is ready
