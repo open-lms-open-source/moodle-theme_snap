@@ -738,7 +738,30 @@ class core_renderer extends \theme_boost\output\core_renderer {
             'link' => s($CFG->wwwroot).'/login/logout.php?sesskey='.sesskey(),
             'title' => get_string('logout')
         ];
-        $quicklinks = [$profilelink, $dashboardlink, $preferenceslink, $gradelink, $logoutlink];
+        $courseid = $PAGE->course->id;
+        $returnurl = $PAGE->url->get_path() . '?' . $PAGE->url->get_query_string();
+        if (!is_role_switched($courseid)) {
+            $link = '/course/switchrole.php?id='.$courseid.'&sesskey='.sesskey().'&switchrole=-1&returnurl='.$returnurl;
+            $switchrole = [
+                'id' => 'snap-pm-switchroleto',
+                'link' => s($CFG->wwwroot) . $link,
+                'title' => get_string('switchroleto')
+            ];
+        } else {
+            $link = '/course/switchrole.php?id='.$courseid.'&sesskey='.sesskey().'&switchrole=0&returnurl='.$returnurl;
+            $switchrole = [
+                'id' => 'snap-pm-switchrolereturn',
+                'link' => s($CFG->wwwroot) . $link,
+                'title' => get_string('switchrolereturn')
+            ];
+        }
+
+        $coursecontext = context_course::instance($courseid);
+        if (has_capability('moodle/role:switchroles', $coursecontext) || is_role_switched($courseid)) {
+            $quicklinks = [$profilelink, $dashboardlink, $preferenceslink, $gradelink, $switchrole, $logoutlink];
+        } else {
+            $quicklinks = [$profilelink, $dashboardlink, $preferenceslink, $gradelink, $logoutlink];
+        }
 
         // Build up courses.
         $courseservice = course::service();
@@ -1489,59 +1512,11 @@ HTML;
             }
         }
 
-        if ($item->key === 'courseadmin') {
-            $this->add_switchroleto_navigation_node($item);
-        }
-
         $content = parent::render_navigation_node($item);
         if (strpos($content, 'fa-fw fa-fw')) {
             $content = str_replace('fa-fw fa-fw', 'fa-fw nav-missing-icon', $content);
         }
         return $content;
-    }
-
-    /**
-     * Adds a switch role menu to a navigation node.
-     * Inspiration taken from : lib/navigationlib.php
-     * https://github.com/moodle/moodle/commit/70b03eff02a261b16130c52aca5cd87ebd810b5e
-     *
-     * @param navigation_node $item
-     */
-    private function add_switchroleto_navigation_node(navigation_node $item) {
-        global $PAGE;
-
-        $course = $PAGE->course;
-        $coursecontext = context_course::instance($course->id);
-        // Switch roles.
-        $roles = array();
-        $assumedrole = $this->in_alternative_role();
-        if ($assumedrole !== false) {
-            $roles[0] = get_string('switchrolereturn');
-        }
-
-        if (has_capability('moodle/role:switchroles', $coursecontext)) {
-            $availableroles = get_switchable_roles($coursecontext);
-            if (is_array($availableroles)) {
-                foreach ($availableroles as $key => $role) {
-                    if ($assumedrole == (int)$key) {
-                        continue;
-                    }
-                    $roles[$key] = $role;
-                }
-            }
-        }
-        if (is_array($roles) && count($roles) > 0) {
-            $switchroles = $item->add(get_string('switchroleto'), null, navigation_node::TYPE_CONTAINER, null, 'switchroleto');
-            if ((count($roles) == 1 && array_key_exists(0, $roles)) || $assumedrole !== false) {
-                $switchroles->force_open();
-            }
-            foreach ($roles as $key => $name) {
-                $url = new moodle_url('/course/switchrole.php', array(
-                    'id' => $course->id, 'sesskey' => sesskey(),
-                    'switchrole' => $key, 'returnurl' => $PAGE->url->out_as_local_url(false)));
-                $switchroles->add($name, $url, navigation_node::TYPE_SETTING, null, $key, new \pix_icon('i/switchrole', ''));
-            }
-        }
     }
 
     /**
