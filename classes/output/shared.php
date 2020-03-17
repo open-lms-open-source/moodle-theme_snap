@@ -325,8 +325,7 @@ EOF;
             'modhide',
             'modshow',
             'hiddenoncoursepage',
-            'showoncoursepage',
-            'switchrolereturn'
+            'showoncoursepage'
         ], 'moodle');
 
         $PAGE->requires->strings_for_js([
@@ -391,7 +390,6 @@ EOF;
         $manager = new \core_privacy\local\sitepolicy\manager();
         $policyurlexist = $manager->is_defined();
         $sitepolicyacceptreqd = isloggedin() && $policyurlexist && empty($USER->policyagreed) && !is_siteadmin();
-        $inalternativerole = $OUTPUT->in_alternative_role();
         // Bring pre contents scss branding variables, to pass them to Snap init.
         $pre = file_get_contents($CFG->dirroot . '/theme/snap/scss/pre.scss');
         $lines = preg_split("/\r\n|\n|\r/", $pre);
@@ -449,7 +447,7 @@ EOF;
         $blockreports = array_key_exists('reports', core_component::get_plugin_list('block'));
         $allyreport = (\core_component::get_component_directory('report_allylti') !== null);
         $initvars = [$coursevars, $pagehascoursecontent, get_max_upload_file_size($CFG->maxbytes), $forcepwdchange,
-                     $conversationbadgecountenabled, $userid, $sitepolicyacceptreqd, $inalternativerole, $brandcolors,
+                     $conversationbadgecountenabled, $userid, $sitepolicyacceptreqd, $brandcolors,
                      $gradingconstants];
         $initaxvars = [$localjoulegrader, $allyreport, $blockreports];
         $alternativelogins = new login_alternative_methods();

@@ -738,8 +738,10 @@ class core_renderer extends \theme_boost\output\core_renderer {
             'link' => s($CFG->wwwroot).'/login/logout.php?sesskey='.sesskey(),
             'title' => get_string('logout')
         ];
+
         $courseid = $PAGE->course->id;
-        $returnurl = $PAGE->url->get_path() . '?' . $PAGE->url->get_query_string();
+        $returnurl = $PAGE->url->out_as_local_url(false);
+        $returnurl = urlencode($returnurl);
         if (!is_role_switched($courseid)) {
             $link = '/course/switchrole.php?id='.$courseid.'&sesskey='.sesskey().'&switchrole=-1&returnurl='.$returnurl;
             $switchrole = [
@@ -1517,37 +1519,6 @@ HTML;
             $content = str_replace('fa-fw fa-fw', 'fa-fw nav-missing-icon', $content);
         }
         return $content;
-    }
-
-    /**
-     * Determine whether the user is assuming another role
-     * Inspiration taken from : lib/navigationlib.php
-     * https://github.com/moodle/moodle/commit/70b03eff02a261b16130c52aca5cd87ebd810b5e
-     *
-     * This function checks to see if the user is assuming another role by means of
-     * role switching. In doing this we compare each RSW key (context path) against
-     * the current context path. This ensures that we can provide the switching
-     * options against both the course and any page shown under the course.
-     *
-     * @return bool|int The role(int) if the user is in another role, false otherwise
-     */
-    public function in_alternative_role() {
-        global $USER, $PAGE;
-
-        $course = $PAGE->course;
-        $coursecontext = context_course::instance($course->id);
-
-        if (!empty($USER->access['rsw']) && is_array($USER->access['rsw'])) {
-            if (!empty($this->page->context) && !empty($USER->access['rsw'][$this->page->context->path])) {
-                return $USER->access['rsw'][$this->page->context->path];
-            }
-            foreach ($USER->access['rsw'] as $key => $role) {
-                if (strpos($coursecontext->path, $key) === 0) {
-                    return $role;
-                }
-            }
-        }
-        return false;
     }
 
     /**
