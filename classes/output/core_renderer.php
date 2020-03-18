@@ -741,19 +741,28 @@ class core_renderer extends \theme_boost\output\core_renderer {
 
         $courseid = $PAGE->course->id;
         $returnurl = $PAGE->url->out_as_local_url(false);
-        $returnurl = urlencode($returnurl);
         if (!is_role_switched($courseid)) {
-            $link = '/course/switchrole.php?id='.$courseid.'&sesskey='.sesskey().'&switchrole=-1&returnurl='.$returnurl;
+            $link = new moodle_url('/course/switchrole.php', array(
+                'id' => $courseid,
+                'sesskey' => sesskey(),
+                'switchrole' => -1,
+                'returnurl' => $returnurl
+            ));
             $switchrole = [
                 'id' => 'snap-pm-switchroleto',
-                'link' => s($CFG->wwwroot) . $link,
+                'link' => $link->out(false),
                 'title' => get_string('switchroleto')
             ];
         } else {
-            $link = '/course/switchrole.php?id='.$courseid.'&sesskey='.sesskey().'&switchrole=0&returnurl='.$returnurl;
+            $link = new moodle_url('/course/switchrole.php', array(
+                'id' => $courseid,
+                'sesskey' => sesskey(),
+                'switchrole' => 0,
+                'returnurl' => $returnurl
+            ));
             $switchrole = [
                 'id' => 'snap-pm-switchrolereturn',
-                'link' => s($CFG->wwwroot) . $link,
+                'link' => $link->out(false),
                 'title' => get_string('switchrolereturn')
             ];
         }
