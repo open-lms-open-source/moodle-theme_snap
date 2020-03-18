@@ -739,40 +739,45 @@ class core_renderer extends \theme_boost\output\core_renderer {
             'title' => get_string('logout')
         ];
 
-        $courseid = $PAGE->course->id;
-        $returnurl = $PAGE->url->out_as_local_url(false);
-        if (!is_role_switched($courseid)) {
-            $link = new moodle_url('/course/switchrole.php', array(
-                'id' => $courseid,
-                'sesskey' => sesskey(),
-                'switchrole' => -1,
-                'returnurl' => $returnurl
-            ));
-            $switchrole = [
-                'id' => 'snap-pm-switchroleto',
-                'link' => $link->out(false),
-                'title' => get_string('switchroleto')
-            ];
-        } else {
-            $link = new moodle_url('/course/switchrole.php', array(
-                'id' => $courseid,
-                'sesskey' => sesskey(),
-                'switchrole' => 0,
-                'returnurl' => $returnurl
-            ));
-            $switchrole = [
-                'id' => 'snap-pm-switchrolereturn',
-                'link' => $link->out(false),
-                'title' => get_string('switchrolereturn')
-            ];
-        }
+        $quicklinks = [
+            $profilelink,
+            $dashboardlink,
+            $preferenceslink,
+            $gradelink
+        ];
 
+        $courseid = $PAGE->course->id;
         $coursecontext = context_course::instance($courseid);
         if (has_capability('moodle/role:switchroles', $coursecontext) || is_role_switched($courseid)) {
-            $quicklinks = [$profilelink, $dashboardlink, $preferenceslink, $gradelink, $switchrole, $logoutlink];
-        } else {
-            $quicklinks = [$profilelink, $dashboardlink, $preferenceslink, $gradelink, $logoutlink];
+            $returnurl = $PAGE->url->out_as_local_url(false);
+            if (!is_role_switched($courseid)) {
+                $link = new moodle_url('/course/switchrole.php', array(
+                    'id' => $courseid,
+                    'sesskey' => sesskey(),
+                    'switchrole' => -1,
+                    'returnurl' => $returnurl
+                ));
+                $switchrole = [
+                    'id' => 'snap-pm-switchroleto',
+                    'link' => $link->out(false),
+                    'title' => get_string('switchroleto')
+                ];
+            } else {
+                $link = new moodle_url('/course/switchrole.php', array(
+                    'id' => $courseid,
+                    'sesskey' => sesskey(),
+                    'switchrole' => 0,
+                    'returnurl' => $returnurl
+                ));
+                $switchrole = [
+                    'id' => 'snap-pm-switchrolereturn',
+                    'link' => $link->out(false),
+                    'title' => get_string('switchrolereturn')
+                ];
+            }
+            $quicklinks[] = $switchrole;
         }
+        $quicklinks[] = $logoutlink;
 
         // Build up courses.
         $courseservice = course::service();
