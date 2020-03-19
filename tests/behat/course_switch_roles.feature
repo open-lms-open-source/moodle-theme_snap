@@ -40,14 +40,19 @@ Feature: When the moodle theme is set to Snap, switching between roles should be
       | teacher1 | C1     | editingteacher |
     And I log in as "teacher1"
     And I am on the course main page for "C1"
-    And I click on "#admin-menu-trigger" "css_element"
-    And I navigate to "Switch role to... > Guest" in current page administration
+    And I click on "#snap-pm-trigger" "css_element"
+    And I follow "Switch role to..."
     And I wait until the page is ready
+    Then I should see "Switch role to..."
+    Then I should see "Student"
+    And I click on "Student" "button"
+    And I wait until the page is ready
+    And I click on "#snap-pm-trigger" "css_element"
     Then I should see "Return to my normal role"
-    Then "#admin-menu-trigger" "css_element" should not be visible
-    And I click on "#returntonormalrole" "css_element"
+    And I follow "Return to my normal role"
     And I wait until the page is ready
-    And I should not see "Return to my normal role"
     Then "#admin-menu-trigger" "css_element" should be visible
     And I click on "#admin-menu-trigger" "css_element"
     Then I should see "Course administration"
+    And I click on "#snap-pm-trigger" "css_element"
+    Then I should see "Switch role to..."
