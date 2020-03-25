@@ -377,4 +377,5 @@ $string['enabledloginorder'] = 'Login options order';
 $string['enabledloginorderdesc'] = 'Select which login option should be displayed first.';
 $string['moodleloginfirst'] = 'Display Moodle login first';
 $string['alternativeloginfirst'] = 'Display alternative login options first';
+$string['alternativeloginoptions'] = 'Alternative login options';
 
