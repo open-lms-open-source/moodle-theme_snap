@@ -55,7 +55,11 @@ class login_alternative_methods implements \renderable {
                 if (!empty($idp['iconurl'])) {
                     $icon = $idp['iconurl'];
                 } else if (!empty($idp['icon'])) {
-                    $icon = $OUTPUT->image_url($idp['icon']->pix, $idp['icon']->component);
+                    if (gettype($idp) == 'object') {
+                        $icon = $OUTPUT->image_url($idp['icon']->pix, $idp['icon']->component);
+                    } else if (gettype($idp) == 'string') {
+                        $icon = $idp['icon'];
+                    }
                 }
 
                 $this->potentialidps[] = (object) [

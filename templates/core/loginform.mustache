@@ -96,8 +96,8 @@
 }}
 
 <div class="m-y-3 hidden-sm-down"></div>
-<div class="row" id="logins">
-    <div class="snap-login snap-login-option" id="base-login">
+<div class="row snap-login-row"  id="logins">
+    <div class="snap-login snap-login-option snap-login-cell" id="base-login">
         {{#logourl}}
         <h2 class="snap-logo-sitename text-center">{{sitename}}</h2>
         {{/logourl}}
@@ -140,14 +140,14 @@
         </form>
     </div>
     {{#hasidentityproviders}}
-        <div class="snap-login snap-login-option" id="alt-login">
+        <div class="snap-login snap-login-option snap-login-cell" id="alt-login">
                 <h5>{{#str}} potentialidps, auth {{/str}}</h5>
                 <div class="potentialidplist">
                     {{#identityproviders}}
                         <div class="potentialidp">
                             <a href="{{url}}"  class="btn btn-primary btn-block" title={{#quote}}{{name}}{{/quote}}>
                                 {{#iconurl}}
-                                    <img class="auth-icon" src="{{iconurl}}"/>
+                                    <img class="auth-icon" src="{{iconurl}}" onerror="this.style.display='none'"/>
                                 {{/iconurl}}
                                 {{^iconurl}}
                                     {{#pix}} /i/permissions, core {{/pix}}
@@ -163,7 +163,7 @@
 </div>
 
 {{#hasinstructions}}
-    <div class="js-only snap-login ">
+    <div class="js-only snap-login  snap-login-box ">
         <div class="snap-login-instructions">
             <a class="btn btn-primary btn-block iconhelp" href="#" data-toggle="modal" data-target="#login-help-modal">
                 {{#str}}helpwithlogin, theme_snap{{/str}} {{#pix}}help, theme_snap, {{#str}}helpwithlogin, theme_snap{{/str}} {{/pix}}
@@ -189,14 +189,14 @@
     </div>
 {{/hasinstructions}}
 {{#cansignup}}
-    <div class="snap-login snap-login-option">
+    <div class="snap-login snap-login-option snap-login-box">
         <h5>{{#str}}firsttime{{/str}}</h5>
         <p><a class="btn btn-primary btn-block" href="{{signupurl}}">{{#str}}startsignup{{/str}}</a></p>
     </div>
 {{/cansignup}}
 
 {{#canloginasguest}}
-    <div class="snap-login snap-login-option">
+    <div class="snap-login snap-login-option snap-login-box">
         <h5>{{#str}}someallowguest{{/str}}</h5>
         <form action="{{loginurl}}" method="post" id="guestlogin">
             <input type="hidden" name="username" value="guest" />

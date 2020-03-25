@@ -120,14 +120,26 @@ table.boxwidthwide {
     // The login box.
     .snap-login {
         padding: 1em 4%;
-        margin: 2em auto;
         max-width: 30rem;
         width: 100%;
         background-color: rgba(255, 255, 255, 0.9);
         #password {
             margin-top: 1em;
         }
+        .potentialidp {
+            margin-bottom: .5em;
+        }
     }
+    .snap-login-cell {
+        margin: 2em;
+    }
+    .snap-login-box {
+        margin: 2em auto;
+    }
+    .snap-login-row {
+        justify-content: center;
+    }
+
     // The site name.
     .snap-logo-sitename {
         text-indent: 100%;
