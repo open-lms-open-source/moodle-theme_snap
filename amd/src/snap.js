@@ -547,9 +547,10 @@ define(['jquery', 'core/log', 'theme_snap/headroom', 'theme_snap/util', 'theme_s
                     supportsTouch = true;
                 }
                 if (!supportsTouch) {
-                    $(document).on('ready', function() {
-                        $('[data-toggle="tooltip"]').tooltip();
-                    });
+                    var tooltipNode = $('[data-toggle="tooltip"]');
+                    if ($.isFunction(tooltipNode.tooltip)) {
+                        tooltipNode.tooltip();
+                    }
                 }
             });
         };
