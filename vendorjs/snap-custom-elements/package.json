@@ -8,34 +8,34 @@
     "lint": "ng lint",
     "e2e": "ng e2e",
     "build": "ng build --prod --output-hashing=none",
-    "package": "./build-ce.sh"
+    "package": "bash build-ce.sh"
   },
   "private": true,
   "dependencies": {
-    "@angular/animations": "~8.2.8",
-    "@angular/common": "~8.2.8",
-    "@angular/compiler": "~8.2.8",
-    "@angular/core": "~8.2.8",
-    "@angular/elements": "^8.2.8",
-    "@angular/forms": "~8.2.8",
-    "@angular/platform-browser": "~8.2.8",
-    "@angular/platform-browser-dynamic": "~8.2.8",
-    "@angular/router": "~8.2.8",
+    "@angular/animations": "~9.1.1",
+    "@angular/common": "~9.1.1",
+    "@angular/compiler": "~9.1.1",
+    "@angular/core": "~9.1.1",
+    "@angular/elements": "^9.1.1",
+    "@angular/forms": "~9.1.1",
+    "@angular/platform-browser": "~9.1.1",
+    "@angular/platform-browser-dynamic": "~9.1.1",
+    "@angular/router": "~9.1.1",
     "document-register-element": "^1.7.2",
-    "rxjs": "~6.4.0",
+    "rxjs": "~6.5.5",
     "tslib": "^1.10.0",
-    "zone.js": "~0.9.1"
+    "zone.js": "~0.10.2"
   },
   "devDependencies": {
     "@angular-builders/custom-webpack": "^8.4.1",
-    "@angular-devkit/build-angular": "~0.802.2",
-    "@angular/cli": "~8.2.2",
-    "@angular/compiler-cli": "~8.2.8",
-    "@angular/language-service": "~8.2.8",
+    "@angular-devkit/build-angular": "~0.901.1",
+    "@angular/cli": "~9.1.1",
+    "@angular/compiler-cli": "~9.1.1",
+    "@angular/language-service": "~9.1.1",
     "@types/jasmine": "~3.3.8",
     "@types/jasminewd2": "~2.0.3",
-    "@types/node": "~8.9.4",
-    "codelyzer": "^5.0.0",
+    "@types/node": "^12.11.1",
+    "codelyzer": "^5.1.2",
     "jasmine-core": "~3.4.0",
     "jasmine-spec-reporter": "~4.2.1",
     "karma": "~4.1.0",
@@ -46,6 +46,6 @@
     "protractor": "~5.4.0",
     "ts-node": "~7.0.0",
     "tslint": "~5.15.0",
-    "typescript": "~3.5.3"
+    "typescript": "~3.8.3"
   }
 }

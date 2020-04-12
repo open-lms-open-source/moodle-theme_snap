@@ -534,9 +534,9 @@ define(['jquery', 'core/log', 'theme_snap/headroom', 'theme_snap/util', 'theme_s
                 e.preventDefault();
             });
 
-            // Bootstrap js elements
+            // Bootstrap js elements.
 
-            // Iniitalise core bootsrtap tooltip js
+            // Iniitalise core bootstrap tooltip js.
             $(function() {
                 var supportsTouch = false;
                 if ('ontouchstart' in window) {
@@ -547,7 +547,9 @@ define(['jquery', 'core/log', 'theme_snap/headroom', 'theme_snap/util', 'theme_s
                     supportsTouch = true;
                 }
                 if (!supportsTouch) {
-                    $('[data-toggle="tooltip"]').tooltip();
+                    $(document).on('ready', function() {
+                        $('[data-toggle="tooltip"]').tooltip();
+                    });
                 }
             });
         };
