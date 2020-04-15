@@ -664,11 +664,12 @@ define(['jquery', 'core/log', 'core/ajax', 'core/str', 'core/templates', 'core/n
                         var value = $(obj).attr('id').split('section-')[1];
                         var key = newOrder.indexOf(value);
                         var chapterTitle = getSectionTitle(key);
+                        var fullTitle = chapterTitle;
                         $(obj).attr('id', 'section-' + key);
                         if (self.courseConfig.toctype == 'top' && self.courseConfig.format == 'topics' && key > 0) {
-                            chapterTitle = key + '. ' + chapterTitle;
+                            fullTitle = `<span class='sectionnumber'> ${key}.</span>${chapterTitle}`;
                         }
-                        $('#section-' + key + ' .content .sectionname').html(chapterTitle);
+                        $('#section-' + key + ' .content .sectionname').html(fullTitle);
                         loadedSections.push(key);
                         // Uodate the attribute.
                         $(obj).find('a.section-modchooser-link').attr('data-section', key);
@@ -684,7 +685,11 @@ define(['jquery', 'core/log', 'core/ajax', 'core/str', 'core/templates', 'core/n
                         // Update section title with corresponding TOC title - this is necessary
                         // for weekly topic courses where the section title needs to stay the
                         // same as the TOC.
-                        $('#section-' + idx + ' .content .sectionname').html(chapterTitle);
+                        var fullTitle = chapterTitle;
+                        if (self.courseConfig.toctype == 'top' && self.courseConfig.format == 'topics' && idx > 0) {
+                            fullTitle = `<span class='sectionnumber'></span>${chapterTitle}`;
+                        }
+                        $('#section-' + idx + ' .content .sectionname').html(fullTitle);
                         // Update section data attribute to reflect new section idx.
                         $(this).find('a.section-modchooser-link').attr('data-section', idx);
                     });
