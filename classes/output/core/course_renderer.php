@@ -659,7 +659,9 @@ class course_renderer extends \core_course_renderer {
                     $url = new \moodle_url('/mod/'.$mod->modname.'/view.php?id='.$mod->id);
                 }
                 $feedbackavailable = get_string('feedbackavailable', 'theme_snap');
-                $content .= html_writer::link($url, $feedbackavailable);
+                if ($mod->modname != 'lesson') {
+                    $content .= html_writer::link($url, $feedbackavailable);
+                }
             }
 
             // If submissions are not allowed, return the content.

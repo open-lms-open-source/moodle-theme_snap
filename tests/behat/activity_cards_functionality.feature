@@ -122,3 +122,37 @@ Feature: Check functionality in activity cards.
       | Option   |
       | card     |
       | list     |
+
+  @javascript
+  Scenario: For activity cards, when the activity is a lesson the card should not display feedback link.
+    Given I log in as "admin"
+    And I am on "Course 1" course homepage
+    And I add a "Lesson" to section "0" and I fill the form with:
+      | Name | Test lesson |
+      | Description | Test lesson description |
+    And I click on "//h3/a/p[contains(text(),'Test lesson')]" "xpath_element"
+    And I follow "Add a question page"
+    And I set the field "Select a question type" to "Short answer"
+    And I press "Add a question page"
+    And I set the following fields to these values:
+      | Page title | Short answer question |
+      | Page contents | Paper is made from trees. |
+      | id_answer_editor_0 | True |
+      | id_response_editor_0 | Correct |
+      | id_jumpto_0 | Next page |
+      | id_answer_editor_1 | False |
+      | id_response_editor_1 | Wrong |
+      | id_jumpto_1 | This page |
+    And I press "Save page"
+    And I log out
+    Given I log in as "student1"
+    And I am on "Course 1" course homepage
+    And I click on "//h3/a/p[contains(text(),'Test lesson')]" "xpath_element"
+    And I set the following fields to these values:
+      | id_answer | True |
+    And I press "Submit"
+    And I press "Continue"
+    And I am on "Course 1" course homepage
+    Then I should not see "Feedback available"
+
+
