@@ -105,7 +105,7 @@ Feature: When the moodle theme is set to Snap, sets a color per category.
 
   @javascript
   Scenario: Check category course color from nearest parent in hierarchy for teacher and student.
-    And I skip because "This test is failing for 3.8"
+    And I skip because "This test is failing for 3.8. To be fixed in INT-15793"
     Given I log in as "admin"
     And I follow "Browse all courses"
     And I purge snap caches

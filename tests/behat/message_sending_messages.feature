@@ -146,7 +146,7 @@ Feature: Snap message send messages
     Then ".badge-primary.hidden[data-region='section-unread-count'][aria-label='There are 2 unread conversations']" "css_element" should exist
 
   Scenario: Message bubble should have a specific color instead of site color.
-    And I skip because "This test is failing for 3.8"
+    And I skip because "This test is failing for 3.8. To be fixed in INT-15793"
     Given I log in as "student1"
     And I am on site homepage
     And I click on ".js-snap-pm-trigger.snap-my-courses-menu" "css_element"

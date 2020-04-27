@@ -429,7 +429,7 @@ class theme_snap_services_course_test extends \advanced_testcase {
     // Records for favorite courses should not exist when the user is deleted.
     public function test_user_deletion() {
         global $DB;
-        $this->markTestSkipped('Started to fail after the 3.7.1 merge');
+        $this->markTestSkipped('Started to fail after the 3.7.1 merge. To be fixed in INT-15845');
         $service = $this->courseservice;
         $service->setfavorite($this->courses[0]->shortname, true, $this->user1->id);
         $service->setfavorite($this->courses[1]->shortname, true, $this->user1->id);
@@ -443,7 +443,7 @@ class theme_snap_services_course_test extends \advanced_testcase {
     // Records for favorite courses should not exist when the course is deleted.
     public function test_course_deletion() {
         global $DB;
-        $this->markTestSkipped('Started to fail after the 3.7.1 merge');
+        $this->markTestSkipped('Started to fail after the 3.7.1 merge. To be fixed in INT-15845');
         $service = $this->courseservice;
         $service->setfavorite($this->courses[0]->shortname, true, $this->user1->id);
         $service->setfavorite($this->courses[1]->shortname, true, $this->user1->id);

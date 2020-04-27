@@ -40,7 +40,7 @@ Feature: When the moodle theme is set to Snap, message page should be accessible
 
   @javascript
   Scenario: In messages page, it must be possible to click the items.
-    And I skip because "This test is failing for 3.8"
+    And I skip because "This test is failing for 3.8. To be fixed in INT-15793"
     Given I log in as "admin"
     And I am on site homepage
     And I click on ".js-snap-pm-trigger.snap-my-courses-menu" "css_element"
@@ -60,7 +60,7 @@ Feature: When the moodle theme is set to Snap, message page should be accessible
 
   @javascript
   Scenario: When admin review messages preferences of other users, message drawer should not appear
-    Given I skip because "Current error from core breaks the test"
+    Given I skip because "Current error from core breaks the test. To be fixed in INT-15793"
     Given I log in as "admin"
     And the following config values are set as admin:
       | linkadmincategories | 0 |
@@ -79,7 +79,7 @@ Feature: When the moodle theme is set to Snap, message page should be accessible
 
   @javascript
   Scenario: In personal menu preferences page, it must be possible to click the items.
-    And I skip because "This test is failing for 3.8"
+    And I skip because "This test is failing for 3.8. To be fixed in INT-15793"
     Given I log in as "admin"
     And I am on site homepage
     And I click on ".js-snap-pm-trigger.snap-my-courses-menu" "css_element"
@@ -92,7 +92,7 @@ Feature: When the moodle theme is set to Snap, message page should be accessible
 
   @javascript
   Scenario: When selecting messages of a contact, it must be possible to click the items.
-    And I skip because "This test is failing for 3.8"
+    And I skip because "This test is failing for 3.8. To be fixed in INT-15793"
     Given I log in as "admin"
     And I am on the course main page for "C1"
     And I wait until the page is ready

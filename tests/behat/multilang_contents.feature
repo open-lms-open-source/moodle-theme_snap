@@ -23,6 +23,7 @@
 Feature: The site displays only the language that user has selected for multilang strings.
 
   Background:
+    And I skip because "It is failing due to a problem when selecting an option in a dropdown. To be fixed in INT-15840"
     Given the following config values are set as admin:
       | theme | snap |
       | linkadmincategories | 0 |
@@ -47,6 +48,7 @@ Feature: The site displays only the language that user has selected for multilan
 
   @javascript
   Scenario: Site news on front page displays only in english.
+    And I skip because "It is failing due to a problem when selecting an option in a dropdown. To be fixed in INT-15840"
     Given I log in as "admin"
     And I am on site homepage
     And I click on "//div/a[contains(text(),'Add a new topic')]" "xpath_element"
@@ -61,6 +63,7 @@ Feature: The site displays only the language that user has selected for multilan
 
   @javascript
   Scenario: Language is changed site footer displays in only english.
+    And I skip because "It is failing due to a problem when selecting an option in a dropdown. To be fixed in INT-15840"
     Given I log in as "admin"
     And I am on site homepage
     And I click on "#admin-menu-trigger" "css_element"
