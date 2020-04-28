@@ -1495,6 +1495,9 @@ HTML;
                 $imageurl = $OUTPUT->image_url('icon', $mod->name);
                 if (strpos($mod->name, 'lti:') !== false) {
                     $imageurl = $OUTPUT->image_url('icon', 'lti');
+                    if (preg_match('/src="([^"]*)"/i', $mod->icon, $matches)) {
+                        $imageurl = $matches[1]; // Use the custom icon.
+                    }
                 }
                 $activities[] = (object) [
                     'name' => $mod->name,
@@ -1512,6 +1515,15 @@ HTML;
         ];
 
         return $this->render_from_template('theme_snap/course_modchooser_modal', $data);
+    }
+
+    /**
+     * Only for Unit testing purposes.
+     */
+    public function testhelper_course_modchooser() {
+        if (defined('PHPUNIT_TEST') && PHPUNIT_TEST) {
+            return $this->course_modchooser();
+        }
     }
 
     /**
