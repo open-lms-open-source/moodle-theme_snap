@@ -43,7 +43,7 @@ class behat_accessibility extends behat_base {
      * @return void
      */
     public function run_accessiblity_test() {
-        $axeurl = (new \moodle_url('/node_modules/axe-core/axe.min.js'))->out(false);
+        $axeurl = (new \moodle_url('/theme/snap/tests/behat/axe.min.js'))->out(false);
         $runaxe = <<<EOF
 (() => {
     // Inject the axe content.

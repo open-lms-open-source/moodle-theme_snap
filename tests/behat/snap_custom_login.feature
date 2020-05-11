@@ -20,17 +20,10 @@
 # @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
 
 
-@theme @theme_snap @theme_snap_login @axe
+@theme @theme_snap @theme_snap_login
 Feature: When the moodle theme is set to Snap, the custom snap login form should be shown.
 
   @javascript
   Scenario: The login template must contain the custom snap form.
     Given I am on login page
     And I check element "#login" has class "snap-custom-form"
-
-
-  @javascript
-  Scenario: Login page must be accessible
-    Given I am on login page
-    Then I should not see any accessibility violations
-
