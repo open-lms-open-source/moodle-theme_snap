@@ -725,9 +725,9 @@ define(['jquery', 'core/log', 'core/ajax', 'core/str', 'core/templates', 'core/n
 
                     var delProgress = M.util.get_string('deletingsection', 'theme_snap', sectionName);
 
-                    footerAlert.setTitle(delProgress);
                     footerAlert.addAjaxLoading('');
                     footerAlert.show();
+                    footerAlert.setTitle(delProgress);
 
                     var params = {
                         courseshortname: courseLib.courseConfig.shortname,
