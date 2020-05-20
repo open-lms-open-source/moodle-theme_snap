@@ -181,7 +181,11 @@ define(
                                     }
                                 });
                             }
-                        });
+                        }).then(
+                            ()=>{
+                                $(document).trigger('snap-course-content-loaded');
+                            }
+                        );
                     } else {
                         revealPageMod(pageMod);
                     }
