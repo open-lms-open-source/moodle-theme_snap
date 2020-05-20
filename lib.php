@@ -117,7 +117,7 @@ function theme_snap_set_category_colors($css, $theme) {
 
             try {
                 $compiled = $compiler->to_css();
-            } catch (\Leafo\ScssPhp\Exception $e) {
+            } catch (Exception $e) {
                 $compiled = '';
                 debugging('Error while compiling SCSS: ' . $e->getMessage(), DEBUG_DEVELOPER);
             }
