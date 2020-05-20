@@ -27,4 +27,3 @@ Feature: When the moodle theme is set to Snap, the custom snap login form should
   Scenario: The login template must contain the custom snap form.
     Given I am on login page
     And I check element "#login" has class "snap-custom-form"
-
