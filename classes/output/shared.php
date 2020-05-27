@@ -383,9 +383,9 @@ EOF;
             'toctype' => get_config('theme_snap', 'leftnav')
         ];
 
-        $mprocs = get_message_processors(true);
         $forcepwdchange = (bool) get_user_preferences('auth_forcepasswordchange', false);
-        $conversationbadgecountenabled = isloggedin() && isset($mprocs['badge']) && $PAGE->theme->settings->messagestoggle == 1;
+        $conversationbadgecountenabled = isloggedin() && $PAGE->theme->settings->messagestoggle == 1;
+
         $userid = $USER->id;
         $manager = new \core_privacy\local\sitepolicy\manager();
         $policyurlexist = $manager->is_defined();
