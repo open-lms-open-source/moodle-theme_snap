@@ -31,10 +31,12 @@ Feature: When the moodle theme is set to Snap, students and teachers have a conv
       | username | firstname | lastname | email |
       | teacher1 | Teacher | 1 | teacher1@example.com |
       | student1 | Student | 1 | student1@example.com |
+      | student2 | Student | 2 | student2@example.com |
     And the following "course enrolments" exist:
       | user | course | role |
       | teacher1 | C1 | editingteacher |
       | student1 | C1 | student |
+      | student2 | C1 | student |
 
   @javascript
   Scenario Outline: Snap user can see conversation count and messages.
@@ -50,8 +52,19 @@ Feature: When the moodle theme is set to Snap, students and teachers have a conv
     And I log in as "teacher1"
     And I <waitclause>
     Then ".conversation_badge_count" "css_element" should exist
+    And I close the personal menu
+    Then I should see "1" in the ".conversation_badge_count" "css_element"
     And I open the personal menu
     And I should see "Test message!" in the "#snap-personal-menu-<selectorstr>" "css_element"
+    And I log out
+    And I log in as "student2"
+    And I send "Test message from student 2!" message to "Teacher 1" user
+    And I log out
+    And I log in as "teacher1"
+    And I <waitclause>
+    Then ".conversation_badge_count" "css_element" should exist
+    And I close the personal menu
+    Then I should see "2" in the ".conversation_badge_count" "css_element"
     Examples:
       | enadvfeeds | selectorstr    | waitclause                                          |
       | 0          | messages       | wait until the page is ready                        |
