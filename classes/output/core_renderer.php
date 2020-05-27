@@ -1363,8 +1363,11 @@ HTML;
         $fsnames = array("fs_one", "fs_two", "fs_three");
         $features = array();
         // Note - we are using underscores in the settings to make easier to read.
+
         foreach ($fsnames as $feature) {
             $title = $feature . '_title';
+            $link = $feature . '_title_link';
+            $cbopeninnewtab = $feature . '_title_link_cb';
             $text = $feature . '_text';
             $image = $feature . '_image';
             if (!empty($PAGE->theme->settings->$title) && !empty($PAGE->theme->settings->$text)) {
@@ -1372,10 +1375,17 @@ HTML;
                 if (!empty($PAGE->theme->settings->$image)) {
                     $url = $this->page->theme->setting_file_url($image, $image);
                     $img = '<!--Card image-->
-                    <img class="snap-feature-image" src="' .$url. '" alt="" role="presentation">';
+                    <div class="snap-feature-image-wrap">
+                        <img class="snap-feature-image" src="' .$url. '" alt="" role="presentation">
+                    </div>';
                 }
-                $features[] = $this->feature_spot_card($PAGE->theme->settings->$title, $img, $PAGE->theme->settings->$text);
+                $features[] = $this->feature_spot_card($PAGE->theme->settings->$title,
+                    $PAGE->theme->settings->$link,
+                    $PAGE->theme->settings->$cbopeninnewtab,
+                    $img,
+                    $PAGE->theme->settings->$text);
             }
+
         }
 
         $fscount = count($features);
@@ -1423,22 +1433,37 @@ HTML;
      * Return feature spot card html.
      *
      * @param string $title
+     * @param string $link
+     * @param string $cbopeninnewtab
      * @param string $image
      * @param string $text
      * @return string
      */
-    protected function feature_spot_card($title, $image, $text) {
-        $card = '<div class="snap-feature">
-            <!--Card content-->
-            <div class="snap-feature-block">
-                ' .$image. '
-                <!--Title-->
-                <h3 class="snap-feature-title h5">' .s($title). '</h3>
-                <!--Content-->
-                <p class="snap-feature-text">' .format_text($text). '</p>
-            </div>
-            <!--/.Card content-->
-        </div>';
+    protected function feature_spot_card($title, $link, $cbopeninnewtab, $image, $text) {
+
+        $target = '';
+
+        if ($cbopeninnewtab) {
+            $target = "target='_blank'";
+        }
+
+        // Title with link.
+        $linktitle = '<a ' .$target. ' class="snap-feature-link h5" href="' .s($link). '">' .s($title). '</a>';
+        // Title without link.
+        $nolinktitle = '<h3 class="snap-feature-title h5">' .s($title). '</h3>';
+        // Content text for feature spots.
+        $fscontenttext = '<p class="snap-feature-text">' .format_text($text). '</p>';
+
+        if ($link) {
+            $card = '<div class="snap-feature">
+                        <div class="snap-feature-block">' .$image.$linktitle.$fscontenttext. '</div>
+                    </div>';
+        } else {
+            $card = '<div class="snap-feature">
+                        <div class="snap-feature-block">' .$image.$nolinktitle.$fscontenttext. '</div>
+                    </div>';
+        }
+
         return $card;
     }
 
