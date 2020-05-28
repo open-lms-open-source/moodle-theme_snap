@@ -3422,7 +3422,17 @@ table th img.iconhelp {
     }
 
     .snap-feature-image {
-        max-width: 200px;
+        max-width: 12.5em;
+    }
+
+    a.snap-feature-link {
+        display: block;
+    }
+
+    div.snap-feature-image-wrap {
+        width: 12.5em;
+        height: 7.5em;
+        margin: 0 auto;
     }
 }
 
