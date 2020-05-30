@@ -684,3 +684,21 @@ section#snap-add-new-section #summary-editor_parent #summary-editor_tbl {
 #page-local-pld-view #id_config_text_ifr {
     height: 19em !important;
 }
+
+#page-blocks-conduit-view.theme-snap cqm-main {
+    a.nav-link.active {
+        background-color: lighten($nav-color, 40%);
+    }
+    a.nav-link {
+        color: $gray!important;
+        font-weight: 500;
+    }
+    cqm-file-list .card-header {
+        background-color: lighten($nav-color, 40%);
+        h5 {
+            color: $nav-color;
+            font-weight: 500;
+        }
+    }
+
+}
