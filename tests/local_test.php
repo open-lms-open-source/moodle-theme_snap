@@ -351,6 +351,9 @@ class theme_snap_local_test extends snap_base_test {
 
         for ($msg = 4; $msg >= 0; $msg--) {
             $actual = local::get_user_messages($userto->id, null, 0, count($messageids), $messageids[$msg]);
+            usort($actual, function ($a, $b) {
+                return $a->uniqueid > $b->uniqueid;
+            });
             $this->assertCount($msg + 1, $actual);
             $this->assertEquals('message subject '. $msg, $actual[count($actual) - 1]->subject);
         }
