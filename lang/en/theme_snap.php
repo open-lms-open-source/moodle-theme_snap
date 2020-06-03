@@ -70,7 +70,7 @@ $string['coursecontacts'] = 'Course Contacts';
 $string['coursedisplay'] = 'Course display';
 $string['coursefootertoggle'] = 'Course footer';
 $string['coursefootertoggledesc'] = 'The Course footer shows useful information to users on a course page including course contacts, course description and recent activity in the course.';
-$string['courseformatnotification'] = 'The current course format you are using is not fully supported by the Snap theme. For the best experience Blackboard Open LMS recommends using the Topics or Weekly course formats with the Snap theme. The course format can be changed in the <a href="{$a}">course settings</a>.';
+$string['courseformatnotification'] = 'The current course format you are using is not fully supported by the Snap theme. For the best experience Open LMS recommends using the Topics or Weekly course formats with the Snap theme. The course format can be changed in the <a href="{$a}">course settings</a>.';
 $string['coursefixydefaulttext'] = 'You are currently not enrolled in any courses.<br>Courses you are enrolled in will be shown here.';
 $string['coursegrade'] = 'Course grade:';
 $string['coursepartialrender'] = 'Enable lazy loading for course sections';
@@ -89,7 +89,7 @@ $string['comingsoon'] = 'Coming soon!';
 $string['createsection'] = 'Create section';
 $string['current'] = 'Current';
 $string['customcss'] = 'Custom CSS';
-$string['customcssdesc'] = 'Please be aware that with great power comes great responsibility.  Any issue caused by the CSS added here is your responsibility to resolve. Blackboard Open LMS Support does not troubleshoot nor provide any help with CSS-related content.';
+$string['customcssdesc'] = 'Please be aware that with great power comes great responsibility.  Any issue caused by the CSS added here is your responsibility to resolve. Open LMS Support does not troubleshoot nor provide any help with CSS-related content.';
 $string['customtopbar'] = 'Navigation bar';
 $string['customisenavbar'] = 'Change navigation bar colors';
 $string['customisenavbutton'] = 'Change My Courses button colors';
@@ -214,7 +214,7 @@ Here is an example:<br>
 "12":"#CC0084",<br>
 "56":"#CC0087",<br>
 "89":"#CCF084"}';
-$string['knowledgebase'] = 'Blackboard Open LMS Knowledge Base';
+$string['knowledgebase'] = 'Open LMS Knowledge Base';
 $string['list'] = 'List';
 $string['linkedin'] = 'LinkedIn';
 $string['linkedindesc'] = 'The url of your organisation&#8217;s LinkedIn.';
@@ -271,9 +271,9 @@ $string['pld'] = 'PLD';
 $string['pluginname'] = 'Snap';
 $string['poster'] = 'Cover image';
 $string['posterdesc'] = 'A large header image for the front page of your site. Landscape images (1200 x 600 pixels) or larger work best.';
-$string['poweredbyrunby'] = 'Built with <a href="https://www.blackboard.com/blackboard-open-lms" target="_blank" rel="noopener">Blackboard Open LMS</a>,
+$string['poweredbyrunby'] = 'Built with <a href="https://www.blackboard.com/blackboard-open-lms" target="_blank" rel="noopener">Open LMS</a>,
     a <a href="https://moodle.com/" target="_blank" rel="noopener">Moodle</a>-based product.<br>
-    Copyright &#169; {$a} Blackboard Inc., All Rights Reserved.';
+    Copyright &#169; {$a} Open LMS, All Rights Reserved.';
 $string['previoussection'] = 'Previous section';
 $string['privacy:metadata:theme_snap_course_favorites:courseid'] = 'The course ID of the course that the user favorited';
 $string['privacy:metadata:theme_snap_course_favorites:userid'] = 'The user ID of the user that favorited the course';
