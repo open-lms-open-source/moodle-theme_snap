@@ -68,7 +68,7 @@ class settings_link implements \renderable {
             // Editing teachers are identified as people who can manage activities and non editing teachers as those who
             // can view the gradebook. As editing teachers are almost certain to also be able to view the gradebook, the
             // grader:view capability is checked first.
-            $caps = ['gradereport/grader:view', 'moodle/course:manageactivities'];
+            $caps = ['gradereport/grader:view', 'moodle/course:manageactivities', 'moodle/site:configview'];
             $canmanageacts = has_any_capability($caps, $PAGE->context);
             $isstudent = !$canmanageacts && !is_role_switched($COURSE->id);
             if ($isstudent) {
