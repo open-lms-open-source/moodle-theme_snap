@@ -228,6 +228,13 @@ li.section:focus {
     border: 0;
 }
 
+.course-content {
+    ul.weeks,
+    ul.topics {
+        list-style: none;
+    }
+}
+
 .course-content .current {
     background-color: transparent;
 }
