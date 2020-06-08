@@ -147,7 +147,7 @@ $string['featurethreetitle'] = 'Feature 3 title';
 $string['featureonetitlelink'] = 'Feature 1 title link';
 $string['featuretwotitlelink'] = 'Feature 2 title link';
 $string['featurethreetitlelink'] = 'Feature 3 title link';
-$string['featuretitlelinkdesc'] = 'Type the URL you want to link this feature spot to. You can add external or internal links inside your site. For adding an internal link, please copy it from the site URL after /. For example, to have a link to a course, it would be "course/view.php?id=160". To add an external link start the link with https://';
+$string['featuretitlelinkdesc'] = 'Type the URL you want to link this feature spot to. You can add external or internal links inside your site. For adding an internal link, please copy it from the site URL including /. For example, to have a link to a course, it would be "/course/view.php?id=160". To add an external link start the link with https://';
 $string['featureonetitlecb'] = 'Feature 1 open in a new window';
 $string['featuretwotitlecb'] = 'Feature 2 open in a new window';
 $string['featurethreetitlecb'] = 'Feature 3 open in a new window';

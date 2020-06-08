@@ -74,19 +74,20 @@ $snapsettings->add($setting);
 $name = 'theme_snap/fs_one_title_link';
 $title = new lang_string('featureonetitlelink', 'theme_snap');
 $description = new lang_string('featuretitlelinkdesc', 'theme_snap');
-$setting = new admin_setting_configtext($name, $title, $description, '');
+$linkvalidation = '/(https|http)\:\/\/[a-zA-Z0-9\-\.]+\.[a-zA-Z]{2,3}(\/\S*)?|^\/|^\s*$/';
+$setting = new admin_setting_configtext($name, $title, $description, '', $linkvalidation);
 $snapsettings->add($setting);
 
 $name = 'theme_snap/fs_two_title_link';
 $title = new lang_string('featuretwotitlelink', 'theme_snap');
 $description = new lang_string('featuretitlelinkdesc', 'theme_snap');
-$setting = new admin_setting_configtext($name, $title, $description, '');
+$setting = new admin_setting_configtext($name, $title, $description, '', $linkvalidation);
 $snapsettings->add($setting);
 
 $name = 'theme_snap/fs_three_title_link';
 $title = new lang_string('featurethreetitlelink', 'theme_snap');
 $description = new lang_string('featuretitlelinkdesc', 'theme_snap');
-$setting = new admin_setting_configtext($name, $title, $description, '');
+$setting = new admin_setting_configtext($name, $title, $description, '', $linkvalidation);
 $snapsettings->add($setting);
 
 // Feature spot title checkbox new window links.
