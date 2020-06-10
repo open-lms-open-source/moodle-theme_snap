@@ -28,17 +28,16 @@ Feature: Correct functionality of feature spots in the front page with every pos
       | fullname | shortname | category | format |
       | Course 1 | C1        | 0        | topics |
     And the following config values are set as admin:
-      | fs_heading           | Heading for feature spots  | theme_snap |
-      | fs_one_title         | Title for spot 1           | theme_snap |
-      | fs_two_title         | Title for spot 2           | theme_snap |
-      | fs_three_title       | Title for spot 3           | theme_snap |
-      | fs_one_text          | Content for spot 1         | theme_snap |
-      | fs_two_text          | Content for spot 2         | theme_snap |
-      | fs_three_text        | Content for spot 3         | theme_snap |
-      | fs_one_title_link    | www.moodle.com             | theme_snap |
-      | fs_three_title_link  | course/view.php?id=1       | theme_snap |
-      | fs_one_title_link_cb | 1                          | theme_snap |
-
+      | fs_heading           | Heading for feature spots | theme_snap |
+      | fs_one_title         | Title for spot 1          | theme_snap |
+      | fs_two_title         | Title for spot 2          | theme_snap |
+      | fs_three_title       | Title for spot 3          | theme_snap |
+      | fs_one_text          | Content for spot 1        | theme_snap |
+      | fs_two_text          | Content for spot 2        | theme_snap |
+      | fs_three_text        | Content for spot 3        | theme_snap |
+      | fs_one_title_link    | https://www.moodle.com    | theme_snap |
+      | fs_three_title_link  | /course/view.php?id=1     | theme_snap |
+      | fs_one_title_link_cb | 1                         | theme_snap |
   @javascript
   Scenario: Snap Feature spots are correctly configured. Just for text and title.
     Given I log in as "admin"
@@ -47,17 +46,39 @@ Feature: Correct functionality of feature spots in the front page with every pos
     And I should see "Title for spot 1"
     And I should see "Title for spot 2"
     And I should see "Title for spot 3"
-
   @javascript
   Scenario: Snap Feature spots have links as a title.
     Given I log in as "admin"
     And I am on site homepage
     And ".snap-feature-block a.snap-feature-link" "css_element" should exist
-    And the "href" attribute of "//div[@class='snap-feature-block']//a[contains(text(), 'Title for spot 1')]" "xpath_element" should contain "www.moodle.com"
+    And the "href" attribute of "//div[@class='snap-feature-block']//a[contains(text(), 'Title for spot 1')]" "xpath_element" should contain "https://www.moodle.com"
     And the "href" attribute of "//div[@class='snap-feature-block']//a[contains(text(), 'Title for spot 3')]" "xpath_element" should contain "course/view.php?id=1"
-
   @javascript
   Scenario: Snap Feature spots title links opens in a new window when the checkbox is checked.
     Given I log in as "admin"
     And I am on site homepage
     And the "target" attribute of "//div[@class='snap-feature-block']//a[contains(text(), 'Title for spot 1')]" "xpath_element" should contain "_blank"
+  @javascript
+  Scenario: Snap Feature spots settings page validate that the links exists as links, internal and external.
+    Given I log in as "admin"
+    And the following config values are set as admin:
+      | linkadmincategories | 0 |
+    And I am on site homepage
+    And I click on "#admin-menu-trigger" "css_element"
+    And I expand "Site administration" node
+    And I expand "Appearance" node
+    And I expand "Themes" node
+    And I follow "Snap"
+    And I click on "form#adminsettings div.settingsform div.row ul#snap-admin-tabs li:nth-child(4)" "css_element"
+    And I set the field with xpath "//div[@class='form-text defaultsnext']//input[@id='id_s_theme_snap_fs_one_title_link']" to "testnolink"
+    And I press "Save changes"
+    And I should see "Some settings were not changed due to an error."
+    And I click on "form#adminsettings div.settingsform div.row ul#snap-admin-tabs li:nth-child(4)" "css_element"
+    And I should see "This value is not valid"
+    And I set the field with xpath "//div[@class='form-text defaultsnext']//input[@id='id_s_theme_snap_fs_one_title_link']" to "/course/view.php?id=1"
+    And I press "Save changes"
+    And I should see "Changes saved"
+    And I click on "form#adminsettings div.settingsform div.row ul#snap-admin-tabs li:nth-child(4)" "css_element"
+    And I set the field with xpath "//div[@class='form-text defaultsnext']//input[@id='id_s_theme_snap_fs_one_title_link']" to "http://www.google.com"
+    And I press "Save changes"
+    And I should see "Changes saved"
