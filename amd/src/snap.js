@@ -696,6 +696,38 @@ define(['jquery', 'core/log', 'theme_snap/headroom', 'theme_snap/util', 'theme_s
                         }
                     }
 
+                    // Add extra padding when the error validation message appears at the moment of enter a not valid
+                    // URL for feature spots.
+                    var firstlinkerror = $('#page-admin-setting-themesettingsnap #themesnapfeaturespots' +
+                        ' #admin-fs_one_title_link span.error');
+                    var secondlinkerror = $('#page-admin-setting-themesettingsnap #themesnapfeaturespots' +
+                        ' #admin-fs_two_title_link span.error');
+                    var thirdlinkerror = $('#page-admin-setting-themesettingsnap #themesnapfeaturespots' +
+                        ' #admin-fs_three_title_link span.error');
+                    var titlelinksettingone = $('#page-admin-setting-themesettingsnap #themesnapfeaturespots' +
+                        ' #admin-fs_one_title_link .form-label');
+                    var titlelinksettingtwo = $('#page-admin-setting-themesettingsnap #themesnapfeaturespots' +
+                        ' #admin-fs_two_title_link .form-label');
+                    var titlelinksettingthree = $('#page-admin-setting-themesettingsnap #themesnapfeaturespots' +
+                        ' #admin-fs_three_title_link .form-label');
+                    var linktitlestyle = {'padding-bottom': '2.1em'};
+
+                    // We need to modify the padding of these elements depending on the case, because when validating
+                    // the link and throwing an error, this will create an extra height to the parent and can break
+                    // the visualization of the settings page for Feature spots.
+                    if ((firstlinkerror).length) {
+                        titlelinksettingtwo.css(linktitlestyle);
+                        titlelinksettingthree.css(linktitlestyle);
+                    }
+                    if ((secondlinkerror).length) {
+                        titlelinksettingone.css(linktitlestyle);
+                        titlelinksettingthree.css(linktitlestyle);
+                    }
+                    if ((thirdlinkerror).length) {
+                        titlelinksettingone.css(linktitlestyle);
+                        titlelinksettingtwo.css(linktitlestyle);
+                    }
+
                     if ($('body').hasClass('snap-pm-open')) {
                         personalMenu.update();
                     }
