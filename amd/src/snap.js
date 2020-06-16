@@ -593,13 +593,14 @@ define(['jquery', 'core/log', 'theme_snap/headroom', 'theme_snap/util', 'theme_s
              * @param {bool} messageBadgeCountEnabled
              * @param {int} userId
              * @param {bool} sitePolicyAcceptReqd
+             * @param {bool} inAlternativeRole
              * @param {string} brandColors
              * @param {int} gradingConstants
              * @param {boolean} isAdmin
              */
             snapInit: function(courseConfig, pageHasCourseContent, siteMaxBytes, forcePassChange,
-                               messageBadgeCountEnabled, userId, sitePolicyAcceptReqd, brandColors,
-                               gradingConstants) {
+                               messageBadgeCountEnabled, userId, sitePolicyAcceptReqd, inAlternativeRole,
+                               brandColors, gradingConstants) {
 
                 // Set up.
 
@@ -979,6 +980,22 @@ define(['jquery', 'core/log', 'theme_snap/headroom', 'theme_snap/util', 'theme_s
                                 $('#snap-coverfiles').trigger('click');
                             }
                         });
+                    }
+
+                    // Review if settings block is missing.
+                    if (!$('.block_settings').length) {
+                        // Hide admin icon.
+                        $('#admin-menu-trigger').hide();
+                        if (inAlternativeRole) {
+                            // Handle possible alternative role.
+                            require(
+                                [
+                                    'theme_snap/alternative_role_handler-lazy'
+                                ], function(alternativeRoleHandler) {
+                                    alternativeRoleHandler.init(courseConfig.id);
+                                }
+                            );
+                        }
                     }
 
                     // Add tab logic so search is focused before admin.
