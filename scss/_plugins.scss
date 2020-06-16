@@ -702,3 +702,17 @@ section#snap-add-new-section #summary-editor_parent #summary-editor_tbl {
     }
 
 }
+
+#page-mod-choice-report.theme-snap {
+    .responseaction {
+        margin: 1em;
+        label {
+            margin-left: 1em;
+            margin-right: 1em;
+        }
+    }
+}
+
+#page-mod-data-view form#portfolio-add-button {
+    display: block;
+}
