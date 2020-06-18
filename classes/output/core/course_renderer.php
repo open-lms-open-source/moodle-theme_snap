@@ -100,9 +100,15 @@ class course_renderer extends \core_course_renderer {
             }
 
             // Is this mod draft?
-            if (!$mod->visible && !$mod->visibleold) {
+            // We don't need visibleold as a condition here since it can affect a
+            // module merged from a course to another, and the draft class won't be applied.
+            // The "Not published to students" message won't be displayed next to the course module so teachers do not
+            // realize that the content is not available to students.
+
+            if (!$mod->visible) {
                 $modclasses [] = 'draft';
             }
+
             // Is this mod stealth?
             if ($mod->is_stealth()) {
                 $modclasses [] = 'stealth';

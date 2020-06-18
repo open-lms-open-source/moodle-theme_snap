@@ -125,6 +125,7 @@ Feature: Check functionality in activity cards.
 
   @javascript
   Scenario: For activity cards, when the activity is a lesson the card should not display feedback link.
+    Given I skip because "This is failing randomly while accessing the activity as a student, to be fixed in INT-15909"
     Given I log in as "admin"
     And I am on "Course 1" course homepage
     And I add a "Lesson" to section "0" and I fill the form with:
