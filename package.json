@@ -4,8 +4,8 @@
   "devDependencies": {
     "grunt": "~0.4.1",
     "grunt-contrib-watch": "^0.6.1",
-    "grunt-exec": "~0.4.2",
-    "grunt-http": "^2.2.0",
+    "grunt-exec": "^0.4.7",
+    "grunt-http": "^2.3.3",
     "grunt-load-gruntfile": "^0.0.2"
   }
 }
