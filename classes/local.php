@@ -2387,4 +2387,49 @@ SQL;
         }
         return $res;
     }
+
+    /**
+     * This Validates if the settings are being shown on snap personal menu.
+     */
+    public static function show_setting_menu() {
+        global $PAGE, $COURSE;
+
+        // Are we on the main course page?
+        $oncoursepage = strpos($PAGE->pagetype, 'course-view') === 0;
+
+        // For any format other than topics, weeks, or singleactivity, always output admin menu on main
+        // course page.
+        $formats = ['topics', 'weeks', 'singleactivity'];
+        if ($oncoursepage && !empty($COURSE->format) && !in_array($COURSE->format, $formats)) {
+            return false;
+        }
+
+        // Page path blacklist for admin menu.
+        $adminblockblacklist = ['/user/profile.php'];
+        if (in_array(self::current_url_path(), $adminblockblacklist)) {
+            return false;
+        }
+
+        // Admin users always see the admin menu with the exception of blacklisted pages.
+        // The admin menu shows up for other users if they are a teacher in the current course.
+        if (!is_siteadmin()) {
+            // We don't want students to see the admin menu ever.
+            // Editing teachers are identified as people who can manage activities and non editing teachers as those who
+            // can view the gradebook. As editing teachers are almost certain to also be able to view the gradebook, the
+            // grader:view capability is checked first.
+            $caps = ['gradereport/grader:view', 'moodle/course:manageactivities'];
+            $canmanageacts = has_any_capability($caps, $PAGE->context);
+            $isstudent = !$canmanageacts && !is_role_switched($COURSE->id);
+
+            if ($isstudent) {
+                return false;
+            }
+        }
+
+        if (!$PAGE->blocks->is_block_present('settings')) {
+            return false;
+        }
+
+        return true;
+    }
 }

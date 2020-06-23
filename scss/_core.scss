@@ -4178,3 +4178,13 @@ li.snap-activity.modtype_folder div[id^="folder_tree"] {
         display: block;
     }
 }
+
+.snap-page-heading-button {
+    float: right;
+    display: grid;
+    grid-gap: 0.5rem;
+}
+
+.snap-page-heading-button div {
+    float: right;
+}
