@@ -67,3 +67,15 @@ Feature: When the moodle theme is set to Snap, the login options should be shown
       | order |   loginoption1    | loginoption2    |   pmoption1    | pmoption2      |
       |   0     |   #base-login     | #alt-login      |   form         | .potentialidps |
       |   1     |   #alt-login      | #base-login     | .potentialidps | form           |
+
+  @javascript
+  Scenario: Help button should redirect to login page
+    Given the following config values are set as admin:
+      |  config           |   value   | plugin     |
+      | enabledlogin      |   0       | theme_snap |
+      | enabledloginorder |   1       | theme_snap |
+    And I am on site homepage
+    And I click on "#page-mast .js-snap-pm-trigger" "css_element"
+    And "#snap-pm-login-help" "css_element" should exist
+    And I click on "#snap-pm-login-help" "css_element"
+    And "#page-login-index" "css_element" should exist

@@ -683,6 +683,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
             }
 
             if ($PAGE->pagetype !== 'login-index') {
+                $data->action = $CFG->wwwroot . '/login/index.php';
                 return $this->render_from_template('theme_snap/login', $data);
             } else {
                 return '';
