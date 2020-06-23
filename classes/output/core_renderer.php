@@ -236,7 +236,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
             return '';
         }
 
-        $linkcontent = $this->render(new \pix_icon('sso', get_string('blackboard', 'local_geniusws'), 'local_geniusws')).
+        $linkcontent = $this->render(new \pix_icon('sso', get_string('openlms', 'local_geniusws'), 'local_geniusws')).
                 get_string('dashboard', 'local_geniusws');
         $html = html_writer::link($bblink->loginurl, $linkcontent, ['class' => 'bb_dashboard_link hidden-md-down']);
         return $html;
