@@ -2350,3 +2350,33 @@ body.path-course-index {
 .modtype_page .asset-wrapper .snap-asset-completion-tracking {
     margin-right: 0.3em;
 }
+
+// Forum grading modal.
+#page-mod-forum-view {
+    .layout.fullscreen {
+        height: 100vh;
+        position: fixed;
+        top:0px;
+        left: 0px;
+        z-index: 1040;
+        width: 100vw;
+        margin: 0;
+        opacity: 1;
+        background: #FFFF;
+        & > div {
+            height: 100%;
+            width: 100%;
+        }
+       .grader-grading_navigation.navbar {
+            box-shadow:0 2px 4px rgba(0,0,0,.08)
+        }
+    }
+
+    .grader-grading-panel {
+        right: 0px;
+        box-shadow: -2px 2px 4px rgba(0, 0, 0, 0.08);
+        padding: 0;
+        visibility: visible;
+        opacity: 1;
+    }
+}
