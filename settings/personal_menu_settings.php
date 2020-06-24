@@ -86,9 +86,23 @@ $pmfeedperpagechoices = [
 ];
 $setting = new admin_setting_configselect($name, $title, $description, $default, $pmfeedperpagechoices);
 $snapsettings->add($setting);
-// Only show per page option if advanced feeds are enabled.
-$tohide = 'theme_snap/personalmenuadvancedfeedsperpage';
-$dependency = 'theme_snap/personalmenuadvancedfeedsenable';
-$settings->hide_if($tohide, $dependency, 'notchecked');
+
+$name = 'theme_snap/personalmenuadvancedfeedslifetime';
+$title = new lang_string('personalmenuadvancedfeedslifetime', 'theme_snap');
+$description = new lang_string('personalmenuadvancedfeedslifetimedesc', 'theme_snap');
+$default = 30 * MINSECS;
+$setting = new admin_setting_configduration($name, $title, $description, $default, MINSECS);
+$snapsettings->add($setting);
 
 $settings->add($snapsettings);
+
+// Advanced feeds hidden settings.
+$dependency = 'theme_snap/personalmenuadvancedfeedsenable';
+// Only show per page option if advanced feeds are enabled.
+$tohide     = 'theme_snap/personalmenuadvancedfeedsperpage';
+$settings->hide_if($tohide, $dependency, 'notchecked');
+// Only show life time if advanced feeds are enabled.
+$tohide     = 'theme_snap/personalmenuadvancedfeedslifetime';
+$settings->hide_if($tohide, $dependency, 'notchecked');
+
+

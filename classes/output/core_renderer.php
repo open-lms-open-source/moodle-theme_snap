@@ -1902,6 +1902,8 @@ HTML;
         global $CFG;
         $pagesize = get_config('theme_snap', 'personalmenuadvancedfeedsperpage');
         $pagesize = !empty($pagesize) ? $pagesize : 3;
+        $maxlifetime = get_config('theme_snap', 'personalmenuadvancedfeedslifetime');
+        $maxlifetime = is_number($maxlifetime) ? $maxlifetime : 30 * MINSECS;
         $sesskey = sesskey();
 
         $viewmoremsg = get_string('pmadvancedfeed_viewmore', 'theme_snap');
@@ -1929,6 +1931,7 @@ HTML;
            reload-message="{$reloadmsg}"
            {$initialvalue}
            www-root="{$CFG->wwwroot}"
+           max-life-time="$maxlifetime"
 ></snap-feed>
 HTML;
     }

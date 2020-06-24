@@ -27,12 +27,12 @@ import {animate, query, stagger, style, transition, trigger} from "@angular/anim
           </div>
           <p class="small" *ngIf="feedItemTotal == 0">{{emptyMessage}}</p>
       </div>
-      <a *ngIf="viewMoreEnabled && nextPage >= 0" [attr.href]="'#'" class="snap-personal-menu-more"
+      <a *ngIf="viewMoreEnabled && nextPage >= 0" href="javascript: void(0);" class="snap-personal-menu-more"
          (click)="getFeed($event)">
           <small>{{viewMoreMessage}}</small>
       </a>
-      <a *ngIf="nextPage === -1 && showReload" [attr.href]="'#'" class="snap-personal-menu-more"
-         (click)="resetFeed($event)">
+      <a *ngIf="nextPage === -1 && showReload" href="javascript: void(0);" class="snap-personal-menu-more"
+         (click)="purgeDataAndResetFeed()">
           <small>{{reloadMessage}}</small>
       </a>
       <span *ngIf="fetchingData" class="snap-personal-menu-more snap-personal-menu-feed-loading"></span>
@@ -73,6 +73,7 @@ export class FeedComponent implements OnInit {
   @Input() reloadMessage: string;
   @Input() initialValue?: string;
   @Input() wwwRoot: string;
+  @Input() maxLifeTime?: number;
 
   nextPage: number;
   feedItems: FeedItem[];
@@ -87,6 +88,9 @@ export class FeedComponent implements OnInit {
   }
 
   ngOnInit() {
+    // Initialize caching for feed service.
+    this.initFeedService();
+
     this.feedItems = [];
     if (this.initialValue) {
       let initialItems = JSON.parse(this.decodeHtmlSpecialChars(this.initialValue));
@@ -110,6 +114,17 @@ export class FeedComponent implements OnInit {
       if (document.querySelectorAll('body.snap-pm-open').length > 0) {
         this.resetFeed();
       }
+    }
+  }
+
+  /**
+   * Purge all data from previous session and set max life time for new data.
+   */
+  private initFeedService() {
+    this.feedService.purgeOtherDataInLocalCache(this.sessKey);
+
+    if (this.maxLifeTime !== null && this.maxLifeTime !== undefined && this.maxLifeTime >= 0) {
+      this.feedService.setMaxLifeTime(+this.maxLifeTime); // Adding the plus sign b/c sometimes this.maxLifeTime is a string.
     }
   }
 
@@ -202,6 +217,18 @@ export class FeedComponent implements OnInit {
     this.resetInProgress = true;
 
     this.getFeed();
+  }
+
+  purgeDataAndResetFeed(event?: Event): void {
+    if (event) {
+      event.preventDefault();
+    }
+
+    const lastPage = this.nextPage > 0 ? this.nextPage : 1;
+    for (let page = 0; page < lastPage; page++) {
+      this.feedService.purgeDataInLocalCache(this.sessKey, this.feedId, page, this.pageSize);
+    }
+    this.resetFeed();
   }
 
   decodeHtmlSpecialChars(str: string): string {

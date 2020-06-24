@@ -1,6 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { FeedComponent } from './feed.component';
+import {HttpClientTestingModule} from "@angular/common/http/testing";
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 
 describe('FeedComponent', () => {
   let component: FeedComponent;
@@ -8,7 +10,8 @@ describe('FeedComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ FeedComponent ]
+      declarations: [ FeedComponent ],
+      imports: [HttpClientTestingModule, BrowserAnimationsModule],
     })
     .compileComponents();
   }));

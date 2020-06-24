@@ -14,7 +14,7 @@ The generated element will be found in:
 ## Building the library for use with the Snap theme
 
 ```bash
-npm run build && npm run package
+npm run test-and-build
 ```
 
 This will generate:
