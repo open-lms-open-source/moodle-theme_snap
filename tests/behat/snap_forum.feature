@@ -49,7 +49,7 @@ Feature: When the moodle theme is set to Snap, core forums displays correctly.
     And I am on "Course 1" course homepage
     And I follow "Topic 1"
     And I click on ".forum .instancename:contains('Test forum name')" "css_element"
-    And ".snap-page-heading-button .action-menu a:contains('Settings')" "css_element" should <exist>
+    And "#region-main .action-menu-trigger" "css_element" should <exist>
     And I log out
     Examples:
       | user     | exist     |
