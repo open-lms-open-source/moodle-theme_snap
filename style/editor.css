@@ -6214,9 +6214,8 @@ footer #moodle-footer
         */
 }
 
-.bb_dashboard_link img {
+.genius_dashboard_link img {
     width: 1em;
-    height: 1em;
     margin-right: 0.25em;
 }
 
@@ -11954,7 +11953,7 @@ fieldset[disabled] a#changenumsections .reduce-sections {
 .snap-pm-open #page,
 .snap-pm-open #moodle-footer,
 .snap-pm-open #fixy-trigger,
-.snap-pm-open .bb_dashboard_link,
+.snap-pm-open .genius_dashboard_link,
 .snap-pm-open #admin-menu-trigger,
 .snap-pm-open #newmessageoverlay,
 .snap-pm-open #snap-home,

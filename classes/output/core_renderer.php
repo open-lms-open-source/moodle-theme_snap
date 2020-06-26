@@ -40,7 +40,7 @@ use user_picture;
 use theme_snap\local;
 use theme_snap\services\course;
 use theme_snap\renderables\settings_link;
-use theme_snap\renderables\bb_dashboard_link;
+use theme_snap\renderables\genius_dashboard_link;
 use theme_snap\renderables\course_card;
 use theme_snap\renderables\course_toc;
 use theme_snap\renderables\featured_courses;
@@ -226,19 +226,19 @@ class core_renderer extends \theme_boost\output\core_renderer {
 
     /**
      * Link to genius, only shown if needed.
-     * @param bb_dashboard_link $bblink
+     * @param genius_dashboard_link $geniuslink
      *
      * @return string
      */
-    public function render_bb_dashboard_link(bb_dashboard_link $bblink) {
+    public function render_genius_dashboard_link(genius_dashboard_link $geniuslink) {
 
-        if (!$bblink->output) {
+        if (!$geniuslink->output) {
             return '';
         }
 
         $linkcontent = $this->render(new \pix_icon('sso', get_string('openlms', 'local_geniusws'), 'local_geniusws')).
                 get_string('dashboard', 'local_geniusws');
-        $html = html_writer::link($bblink->loginurl, $linkcontent, ['class' => 'bb_dashboard_link hidden-md-down']);
+        $html = html_writer::link($geniuslink->loginurl, $linkcontent, ['class' => 'genius_dashboard_link hidden-md-down']);
         return $html;
     }
 
@@ -783,7 +783,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
 
         // Build up courses.
         $courseservice = course::service();
-        list($pastcourses, $favorited, $notfavorited) = $courseservice->my_courses_split_by_favorites();
+        [$pastcourses, $favorited, $notfavorited] = $courseservice->my_courses_split_by_favorites();
         // If we have past course, the template needs a variable.
         $coursenav = !empty($pastcourses);
 

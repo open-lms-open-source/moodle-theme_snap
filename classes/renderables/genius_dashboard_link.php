@@ -26,7 +26,7 @@ use local_geniusws\navigation;
 
 defined('MOODLE_INTERNAL') || die();
 
-class bb_dashboard_link implements \renderable {
+class genius_dashboard_link implements \renderable {
 
     /**
      * @var bool $output - are we ok to output the genius link.
