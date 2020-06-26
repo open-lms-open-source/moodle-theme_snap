@@ -55,3 +55,23 @@ Feature: When the moodle theme is set to Snap, core forums displays correctly.
       | user     | exist     |
       | student1 | exist     |
       | teacher1 | not exist |
+
+  @javascript
+  Scenario: Settings option in discussions is shown correctly for experimental ui
+    Given I log in as "student1"
+    And I open the personal menu
+    And I wait for the personal menu to be loaded
+    And I click on "Preference" "link"
+    And I click on "Forum preference" "link"
+    And I set the following fields to these values:
+      | Use experimental nested discussion view             | 1 |
+    And I press "Save changes"
+    And I am on "Course 1" course homepage
+    And I follow "Topic 1"
+    And I click on ".forum .instancename:contains('Test forum name')" "css_element"
+    And I add a new discussion to "Test forum name" forum with:
+      | Subject | Discussion 1 |
+      | Message | Discussion contents 1, first message |
+    And I click on "Discussion 1" "link"
+    And "button[aria-controls=\"discussion-settings-drawer\"]" "css_element" should exist
+    And I log out

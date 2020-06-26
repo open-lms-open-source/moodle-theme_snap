@@ -4202,3 +4202,18 @@ li.snap-activity.modtype_folder div[id^="folder_tree"] {
 .snap-page-heading-button div {
     float: right;
 }
+
+[data-region=right-hand-drawer].drawer {
+    z-index: 1020;
+    position: fixed;
+    top: 3.5em;
+    right: 0;
+    height: calc(100% - 3.5em);
+    width: 22.3em;
+    -webkit-box-shadow: -2px 2px 4px rgba(0,0,0,.08);
+    box-shadow: -2px 2px 4px rgba(0,0,0,.08);
+    padding: 0;
+    visibility: visible;
+    opacity: 1;
+}
+
