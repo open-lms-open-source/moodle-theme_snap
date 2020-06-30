@@ -27,6 +27,7 @@ $string['action:changeassetvisibility'] = 'vaihda sivun näkyvyyttä';
 $string['action:duplicateasset'] = 'päällekkäinen sivu';
 $string['action:changesectionvisibility'] = 'vaihda osion näkyvyyttä';
 $string['action:highlightsectionvisibility'] = 'korosta osion näkyvyys';
+$string['action:sectiontoc'] = 'hae osion sisällysluettelo';
 $string['addanewsection'] = 'Luo uusi osio';
 $string['addresourceoractivity'] = 'Luo oppimisaktiviteetti';
 $string['admin'] = 'Ylläpito';
@@ -66,7 +67,7 @@ $string['coursecontacts'] = 'Osallistujaluettelo';
 $string['coursedisplay'] = 'Kurssinäkymä';
 $string['coursefootertoggle'] = 'Kurssin alatunniste';
 $string['coursefootertoggledesc'] = 'Kurssin alatunnisteessa näytetään käyttäjille kurssisivulla hyödyllisiä tietoja, muun muassa kurssin yhteyshenkilöt, kurssin kuvaus ja kurssin viimeisimmät aktiviteetit.';
-$string['courseformatnotification'] = 'Snap-teema ei tue täysin käyttämääsi nykyistä teemaa. Jotta voit käyttää Blackboard Open LMS:ää parhaalla mahdollisella tavalla, suosittelemme, että käytät Snap-teemassa Aiheet- tai Viikoittainen-kurssimuotoa. Voit vaihtaa kurssimuotoa <a href="{$a}">kurssin asetuksissa</a>.';
+$string['courseformatnotification'] = 'Snap-teema ei tue täysin käyttämääsi nykyistä kurssimuotoa. Jotta voit käyttää Open LMS:ää parhaalla mahdollisella tavalla, suosittelemme, että käytät Snap-teemassa Aiheet- tai Viikoittainen-kurssimuotoa. Voit vaihtaa kurssimuotoa <a href="{$a}">kurssin asetuksissa</a>.';
 $string['coursefixydefaulttext'] = 'Et ole tällä hetkellä rekisteröitynyt millekään kurssille.<br>Kurssit, joille olet rekisteröitynyt, näytetään tässä.';
 $string['coursegrade'] = 'Kurssin arvosana:';
 $string['coursepartialrender'] = 'Ota kurssiosioiden valikoiva lataus käyttöön';
@@ -85,7 +86,7 @@ $string['comingsoon'] = 'Tulossa pian!';
 $string['createsection'] = 'Luo osio';
 $string['current'] = 'Nykyinen';
 $string['customcss'] = 'Mukautettu CSS';
-$string['customcssdesc'] = 'Muista, että tehokkailla muokkaustoiminnoilla voi tehdä myös merkittäviä virheitä. Sinun täytyy itse korjata kaikki virheet, jotka johtuvat tässä lisäämästäsi CSS:stä. Blackboard Open LMS:n tuki auta CSS:ään liittyvän sisällön vianmäärityksessä.';
+$string['customcssdesc'] = 'Muista, että tehokkailla muokkaustoiminnoilla voi tehdä myös merkittäviä virheitä. Käyttäjän on korjattava kaikki virheet, jotka johtuvat tässä lisätystä CSS-koodista. Open LMS:n tuki ei auta CSS-sisällön vianmäärityksessä.';
 $string['customtopbar'] = 'Siirtymispalkki';
 $string['customisenavbar'] = 'Vaihda siirtymispalkin värit';
 $string['customisenavbutton'] = 'Vaihda Omat kurssini -painikkeen värit';
@@ -124,6 +125,7 @@ $string['error:failedtochangesectionvisibility'] = 'Osion näyttäminen/piilotta
 $string['error:failedtohighlightsection'] = 'Osion korostaminen epäonnistui';
 $string['error:failedtoduplicateasset'] = 'Kopiointi epäonnistui';
 $string['error:failedtodeleteasset'] = 'Sivun poistaminen epäonnistui';
+$string['error:failedtotoc'] = 'Sisällysluettelon hakeminen epäonnistui.';
 $string['extension'] = 'Tiedostomuoto: {$a}';
 $string['facebook'] = 'Facebook';
 $string['facebookdesc'] = 'Tämä on Facebook-sivusi URL-osoite.';
@@ -139,6 +141,14 @@ $string['featurespotsheading'] = 'Toimintomainosten otsikko';
 $string['featureonetitle'] = 'Toiminnon 1 otsikko';
 $string['featuretwotitle'] = 'Toiminnon 2 otsikko';
 $string['featurethreetitle'] = 'Toiminnon 3 otsikko';
+$string['featureonetitlelink'] = 'Toiminnon 1 otsikon linkki';
+$string['featuretwotitlelink'] = 'Toiminnon 2 otsikon linkki';
+$string['featurethreetitlelink'] = 'Toiminnon 3 otsikon linkki';
+$string['featuretitlelinkdesc'] = 'Kirjoita verkko-osoite, johon haluat linkittää tämän toiminnon esittelyn. Voit lisätä sivustoosi ulkoisia tai sisäisiä linkkejä. Voit lisätä sisäisen linkin kopioimalla sen verkko-osoitteesta merkin / jälkeen. Esimerkiksi kurssin linkissä haluttu osoite olisi course/view.php?id=160. Voit lisätä ulkoisen linkin aloittamalla linkin https://.';
+$string['featureonetitlecb'] = 'Toiminto 1 avautuu uudessa ikkunassa';
+$string['featuretwotitlecb'] = 'Toiminto 2 avautuu uudessa ikkunassa';
+$string['featurethreetitlecb'] = 'Toiminto 3 avautuu uudessa ikkunassa';
+$string['featuretitlecbdesc'] = 'Jos tämä on käytössä, esittelyyn lisätty linkki avataan uudessa ikkunassa';
 $string['featureonetext'] = 'Toiminnon 1 sisältö';
 $string['featuretwotext'] = 'Toiminnon 2 sisältö';
 $string['featurethreetext'] = 'Toiminnon 3 sisältö';
@@ -201,7 +211,7 @@ Esimerkki:<br>
 "12":"#CC0084",<br>
 "56":"#CC0087",<br>
 "89":"#CCF084"}';
-$string['knowledgebase'] = 'Blackboard Open LMS -tietämyskanta';
+$string['knowledgebase'] = 'Open LMS -tietämyskanta';
 $string['list'] = 'Luettelo';
 $string['linkedin'] = 'LinkedIn';
 $string['linkedindesc'] = 'Tämä on organisaation LinkedIn-tilin URL-osoite.';
@@ -258,9 +268,9 @@ $string['pld'] = 'PLD';
 $string['pluginname'] = 'Snap';
 $string['poster'] = 'Kansikuva';
 $string['posterdesc'] = 'Tämä on sivuston etusivulla näytettävä suuri ylätunnistekuva. Parhaiten toimivat vaakasuuntaiset kuvat, joiden koko on vähintään 1 200 x 600 pikseliä.';
-$string['poweredbyrunby'] = 'Luotu <a href="https://www.blackboard.com/blackboard-open-lms" target="_blank" rel="noopener">Blackboard Open LMS:llä</a>,
+$string['poweredbyrunby'] = 'Luotu <a href="https://www.blackboard.com/blackboard-open-lms" target="_blank" rel="noopener">Open LMS:llä</a>,
      joka on <a href="https://moodle.com/" target="_blank" rel="noopener">Moodleen</a> perustuva tuote.<br>
-    Copyright &#169; {$a} Blackboard Inc. Kaikki oikeudet pidätetään.';
+    Copyright &#169; {$a} Open LMS. Kaikki oikeudet pidätetään.';
 $string['previoussection'] = 'Edellinen osio';
 $string['privacy:metadata:theme_snap_course_favorites:courseid'] = 'Käyttäjän suosikkeihin lisäämän kurssin tunnus';
 $string['privacy:metadata:theme_snap_course_favorites:userid'] = 'Suosikkeihin kurssin lisänneen käyttäjän käyttäjätunnus';
@@ -362,3 +372,13 @@ $string['lazyload_mod_page_description'] = 'Jos tämä asetus on käytössä, se
 $string['pmadvancedfeed_viewmore'] = 'Näytä lisää';
 $string['pmadvancedfeed_reload'] = 'Päivitä';
 $string['multimediacard'] = 'Multimediatiedostoja ei näytetä Snap-teeman aktiviteettikorttinäkymissä. Tätä käytetään vain aloitussivulla ja kurssisivuilla vian pienissä aktiviteeteissa ja aineistokorteissa.';
+$string['enabledlogin'] = 'Näytetyt kirjautumisvaihtoehdot';
+$string['enabledlogindesc'] = 'Valitse näytettävät kirjautumisvaihtoehdot.';
+$string['moodlelogin'] = 'Näytä vain Moodle-kirjautuminen';
+$string['alternativelogin'] = 'Näytä vain vaihtoehtoiset kirjautumistavat';
+$string['bothlogin'] = 'Näytä molemmat kirjautumisvaihtoehdot';
+$string['enabledloginorder'] = 'Kirjautumisvaihtoehtojen järjestys';
+$string['enabledloginorderdesc'] = 'Valitse, kumpi kirjautumisvaihtoehto näytetään ensimmäisenä.';
+$string['moodleloginfirst'] = 'Näytä Moodle-kirjautuminen ensimmäisenä';
+$string['alternativeloginfirst'] = 'Näytä vaihtoehtoiset kirjautumistavat ensin';
+$string['alternativeloginoptions'] = 'Vaihtoehtoiset kirjautumistavat';
