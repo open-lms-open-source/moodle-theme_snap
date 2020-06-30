@@ -27,6 +27,7 @@ $string['action:changeassetvisibility'] = 'canvia la visibilitat del recurs';
 $string['action:duplicateasset'] = 'duplica el recurs';
 $string['action:changesectionvisibility'] = 'canvia la visibilitat de la secció';
 $string['action:highlightsectionvisibility'] = 'destaca la visibilitat de la secció';
+$string['action:sectiontoc'] = 'obté l\'índex de la secció';
 $string['addanewsection'] = 'Crea una secció nova';
 $string['addresourceoractivity'] = 'Crea activitats d\'aprenentatge';
 $string['admin'] = 'Admin';
@@ -65,7 +66,7 @@ $string['coursecontacts'] = 'Contactes del curs';
 $string['coursedisplay'] = 'Visualització del curs';
 $string['coursefootertoggle'] = 'Peu de pàgina del curs';
 $string['coursefootertoggledesc'] = 'El peu de pàgina del curs mostra informació útil als usuaris en una pàgina del curs que inclou els contactes, la descripció i l’activitat recent del curs.';
-$string['courseformatnotification'] = 'El format actual del curs que feu servir no és totalment compatible amb el tema Snap. Per a obtenir la millor experiència, Blackboard Open LMS recomana utilitzar els formats de curs per Tema o Setmanals amb el tema Snap. El format del curs es pot canviar als <a href="{$a}">paràmetres del curs</a>.';
+$string['courseformatnotification'] = 'El format actual del curs que feu servir no és totalment compatible amb el tema Snap. Per a obtenir la millor experiència, Open LMS recomana utilitzar els formats de curs per Tema o Setmanals amb el tema Snap. El format del curs es pot canviar als <a href="{$a}">paràmetres del curs</a>.';
 $string['coursefixydefaulttext'] = 'Actualment no us heu matriculat a cap curs.<br>Els cursos als quals us matriculeu es mostraran aquí.';
 $string['coursegrade'] = 'Qualificació del curs:';
 $string['coursepartialrender'] = 'Habilita la càrrega lenta per a les seccions del curs';
@@ -84,7 +85,7 @@ $string['comingsoon'] = 'Properament';
 $string['createsection'] = 'Crea una secció';
 $string['current'] = 'Actual';
 $string['customcss'] = 'Personalitza CSS';
-$string['customcssdesc'] = 'Tingueu en compte que el poder ha d\'anar acompanyat d\'una gran responsabilitat. Resoldre els problemes causats pel CSS que heu afegit aquí és la vostra responsabilitat. El servei d\'assistència de Blackboard Open LMS no soluciona problemes ni proporciona cap ajuda en relació amb el CSS.';
+$string['customcssdesc'] = 'Tingueu en compte que el poder ha d\'anar acompanyat d\'una gran responsabilitat. Resoldre els problemes causats pel CSS que heu afegit aquí és la vostra responsabilitat. El servei d\'assistència d\'Open LMS no soluciona problemes ni proporciona cap ajuda en relació amb el CSS.';
 $string['customtopbar'] = 'Barra de navegació';
 $string['customisenavbar'] = 'Canvia els colors de la barra de navegació';
 $string['customisenavbutton'] = 'Canvia el color del botó Els meus cursos';
@@ -123,6 +124,7 @@ $string['error:failedtochangesectionvisibility'] = 'No s’ha pogut ocultar o mo
 $string['error:failedtohighlightsection'] = 'No s’ha pogut destacar la secció';
 $string['error:failedtoduplicateasset'] = 'No s’ha pogut duplicar';
 $string['error:failedtodeleteasset'] = 'Error en suprimir l\'element';
+$string['error:failedtotoc'] = 'No s’ha pogut obtenir el TOC.';
 $string['extension'] = 'Pròrroga {$a}';
 $string['facebook'] = 'Facebook';
 $string['facebookdesc'] = 'L’URL de la vostra pàgina de Facebook';
@@ -138,6 +140,14 @@ $string['featurespotsheading'] = 'Encapçalament d\'espots de presentació de fu
 $string['featureonetitle'] = 'Títol de la funció 1';
 $string['featuretwotitle'] = 'Títol de la funció 2';
 $string['featurethreetitle'] = 'Títol de la funció 3';
+$string['featureonetitlelink'] = 'Enllaç del títol de la funció 1';
+$string['featuretwotitlelink'] = 'Enllaç del títol de la funció 2';
+$string['featurethreetitlelink'] = 'Enllaç del títol de la funció 3';
+$string['featuretitlelinkdesc'] = 'Introduïu l\'URL al qual voleu enllaçar aquest espot de presentació de la funció. Podeu afegir enllaços externs i interns al vostre lloc. Si voleu afegir-hi un enllaç intern, copieu-lo de l\'URL del lloc després de "/". Per exemple, per obtenir l\'enllaç d\'un curs, s\'ha de copiar "course/view.php?id=160". Per afegir-hi un enllaç extern, l\'enllaç ha de començar amb "https://"';
+$string['featureonetitlecb'] = 'La funció 1 s\'obre en una finestra nova';
+$string['featuretwotitlecb'] = 'La funció 2 s\'obre en una finestra nova';
+$string['featurethreetitlecb'] = 'La funció 3 s\'obre en una finestra nova';
+$string['featuretitlecbdesc'] = 'Si està habilitat, l\'enllaç inclòs a l\'espot de presentació de la funció s\'obre en una finestra nova';
 $string['featureonetext'] = 'Contingut de la funció 1';
 $string['featuretwotext'] = 'Contingut de la funció 2';
 $string['featurethreetext'] = 'Contingut de la funció 3';
@@ -199,7 +209,7 @@ A continuació se\'n mostra un exemple:<br>
 "12":"#CC0084",<br>
 "56":"#CC0087",<br>
 "89":"#CCF084"}';
-$string['knowledgebase'] = 'Base de coneixements de Blackboard Open LMS';
+$string['knowledgebase'] = 'Base de coneixements d\'Open LMS';
 $string['list'] = 'Llista';
 $string['linkedin'] = 'LinkedIn';
 $string['linkedindesc'] = 'L\'URL del perfil de LinkedIn de la vostra organització.';
@@ -258,7 +268,7 @@ $string['poster'] = 'Imatge de portada';
 $string['posterdesc'] = 'Una imatge de capçalera gran per a la pàgina principal del vostre lloc. Les imatges en format horitzontal de 1200 x 600 píxels o més van millor.';
 $string['poweredbyrunby'] = 'Creat amb <a href="https://www.blackboard.com/blackboard-open-lms" target="_blank" rel="noopener">Blackboard Open LMS</a>,
     amb tecnologia de <a href="https://moodle.com/" target="_blank" rel="noopener">Moodle</a>.<br>
-    Copyright&#169; {$a} Blackboard Inc, Tots els drets reservats.';
+    Copyright&#169; {$a} Open LMS, Tots els drets reservats.';
 $string['previoussection'] = 'Secció anterior';
 $string['privacy:metadata:theme_snap_course_favorites:courseid'] = 'L\'ID del curs que l\'usuari ha marcat com a favorit';
 $string['privacy:metadata:theme_snap_course_favorites:userid'] = 'L\'ID de l\'usuari que va marcar el curs com a favorit';
@@ -360,3 +370,13 @@ $string['lazyload_mod_page_description'] = 'Si s\'habilita, aquesta opció dismi
 $string['pmadvancedfeed_viewmore'] = 'Mostra\'n més';
 $string['pmadvancedfeed_reload'] = 'Refresca';
 $string['multimediacard'] = 'Els fitxers multimèdia no es mostraran a les visualitzacions de targeta d\'activitat per al tema Snap. Això s\'aplicarà a la pàgina principal i a les pàgines del curs només per a l\'activitat petita i les targetes de recursos.';
+$string['enabledlogin'] = 'Opcions d\'inici de sessió que es mostren';
+$string['enabledlogindesc'] = 'Seleccioneu les opcions d\'inici de sessió que s\'han de mostrar.';
+$string['moodlelogin'] = 'Mostra només l\'inici de la sessió de Moodle';
+$string['alternativelogin'] = 'Mostra només les opcions alternatives d\'inici de sessió';
+$string['bothlogin'] = 'Mostra les dues opcions d\'inici de sessió';
+$string['enabledloginorder'] = 'Ordre de les opcions d\'inici de sessió';
+$string['enabledloginorderdesc'] = 'Seleccioneu quina opció d\'inici de sessió s\'ha de mostrar primer.';
+$string['moodleloginfirst'] = 'Mostra l\'inici de la sessió de Moodle primer';
+$string['alternativeloginfirst'] = 'Mostra les opcions alternatives d\'inici de sessió primer';
+$string['alternativeloginoptions'] = 'Opcions alternatives d\'inici de sessió';
