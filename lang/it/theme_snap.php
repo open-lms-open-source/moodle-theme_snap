@@ -27,6 +27,7 @@ $string['action:changeassetvisibility'] = 'modifica visibilità asset';
 $string['action:duplicateasset'] = 'duplica asset';
 $string['action:changesectionvisibility'] = 'cambia visibilità sezione';
 $string['action:highlightsectionvisibility'] = 'evidenzia visibilità delle sezioni';
+$string['action:sectiontoc'] = 'ottieni sommario sezione';
 $string['addanewsection'] = 'Crea una nuova sezione';
 $string['addresourceoractivity'] = 'Crea attività di apprendimento';
 $string['admin'] = 'Amministratore';
@@ -66,7 +67,7 @@ $string['coursecontacts'] = 'Contatti corso';
 $string['coursedisplay'] = 'Visualizzazione corso';
 $string['coursefootertoggle'] = 'Piè di pagina corso';
 $string['coursefootertoggledesc'] = 'Il piè di pagina del corso fornisce agli utenti informazioni utili sulla pagina del corso, compresi i contatti, la descrizione e l\'attività recente.';
-$string['courseformatnotification'] = 'Il formato del corso attuale utilizzato non è completamente supportato dal tema Snap. Per garantire la migliore esperienza, Blackboard Open LMS consiglia di utilizzare i formati di corso Argomenti o Settimanale con il tema Snap. Il formato del corso è modificabile da <a href="{$a}">impostazioni del corso</a>.';
+$string['courseformatnotification'] = 'L\'attuale formato del corso in uso non è completamente supportato dal tema Snap. Per un\'esperienza ottimale, Open LMS consiglia di utilizzare gli argomenti o i formati del corso settimanale con il tema Snap. È possibile modificare il formato del corso nelle <a href="{$a}">impostazioni del corso</a>.';
 $string['coursefixydefaulttext'] = 'Non sei attualmente iscritto in nessun corso.<br>I corsi a cui sei iscritto verranno visualizzati qui.';
 $string['coursegrade'] = 'Voto del corso:';
 $string['coursepartialrender'] = 'Abilita il caricamento lazy per le sezioni dei corsi';
@@ -85,7 +86,7 @@ $string['comingsoon'] = 'Presto disponibile!';
 $string['createsection'] = 'Crea sezione';
 $string['current'] = 'Corrente';
 $string['customcss'] = 'Personalizza CSS';
-$string['customcssdesc'] = 'Non bisogna dimenticare che avere ampio potere porta ampie responsabilità.  Rientra quindi nelle tue responsabilità risolvere qualsiasi problema causato da codice CSS inserito qui. Il supporto di Blackboard Open LMS non si occupa della risoluzione dei problemi, né fornisce assistenza in merito ai contenuti relativi a codice CSS.';
+$string['customcssdesc'] = 'Da un grande potere derivano grandi responsabilità. È necessario risolvere i problemi causati dal codice CSS aggiunto qui. Il supporto Open LMS non risolve i problemi né fornisce alcun aiuto per i contenuti relativi ai CSS.';
 $string['customtopbar'] = 'Barra di navigazione';
 $string['customisenavbar'] = 'Modifica colori barra di navigazione';
 $string['customisenavbutton'] = 'Modifica colori pulsante I miei corsi';
@@ -124,6 +125,7 @@ $string['error:failedtochangesectionvisibility'] = 'Impossibile nascondere/mostr
 $string['error:failedtohighlightsection'] = 'Impossibile evidenziare la sezione';
 $string['error:failedtoduplicateasset'] = 'Duplicazione non riuscita';
 $string['error:failedtodeleteasset'] = 'Impossibile eliminare l\'asset';
+$string['error:failedtotoc'] = 'Impossibile ottenere il sommario.';
 $string['extension'] = 'Estensione {$a}';
 $string['facebook'] = 'Facebook';
 $string['facebookdesc'] = 'URL della pagina Facebook.';
@@ -139,6 +141,14 @@ $string['featurespotsheading'] = 'Intestazione aree funzione';
 $string['featureonetitle'] = 'Titolo funzionalità 1';
 $string['featuretwotitle'] = 'Titolo funzionalità 2';
 $string['featurethreetitle'] = 'Titolo funzionalità 3';
+$string['featureonetitlelink'] = 'Link titolo funzionalità 1';
+$string['featuretwotitlelink'] = 'Link titolo funzionalità 2';
+$string['featurethreetitlelink'] = 'Link titolo funzionalità 3';
+$string['featuretitlelinkdesc'] = 'Digitare l\'URL a cui collegare questa funzione spot. È possibile aggiungere collegamenti esterni o interni nel sito. Per aggiungere un collegamento interno, copiarlo dall\'URL del sito, nella parte che segue il simbolo /. Ad esempio, per ottenere un collegamento a un corso, usare "course/view.php?id=160". Per aggiungere un collegamento esterno, iniziare il collegamento con https://';
+$string['featureonetitlecb'] = 'La funzione 1 viene aperta in una nuova finestra';
+$string['featuretwotitlecb'] = 'La funzione 2 viene aperta in una nuova finestra';
+$string['featurethreetitlecb'] = 'La funzione 3 viene aperta in una nuova finestra';
+$string['featuretitlecbdesc'] = 'Se questa opzione è abilitata, il collegamento aggiunto al punto in primo piano verrà aperto in una nuova finestra';
 $string['featureonetext'] = 'Contenuto funzionalità 1';
 $string['featuretwotext'] = 'Contenuto funzionalità 2';
 $string['featurethreetext'] = 'Contenuto funzionalità 3';
@@ -201,7 +211,7 @@ Ecco un esempio:<br>
 "12":"#CC0084",<br>
 "56":"#CC0087",<br>
 "89":"#CCF084"}';
-$string['knowledgebase'] = 'Knowledge base Blackboard Open LMS';
+$string['knowledgebase'] = 'Apri Knowledge Base LMS';
 $string['list'] = 'Lista';
 $string['linkedin'] = 'LinkedIn';
 $string['linkedindesc'] = 'URL della pagina LinkedIn dell\'organizzazione.';
@@ -258,9 +268,9 @@ $string['pld'] = 'PLD';
 $string['pluginname'] = 'Snap';
 $string['poster'] = 'Immagine di copertina';
 $string['posterdesc'] = 'Un\'immagine grande dell\'intestazione per la pagina principale del sito. Le immagini orizzontali (1200 x 600 pixel) o più grandi forniscono risultati migliori.';
-$string['poweredbyrunby'] = 'Creato con <a href="https://www.blackboard.com/blackboard-open-lms" target="_blank" rel="noopener">Blackboard Open LMS</a>,
-     un prodotto basato su <a href="https://moodle.com/" target="_blank" rel="noopener">Moodle</a>.<br>
-    Copyright &#169; {$a} Blackboard Inc., Tutti i diritti riservati.';
+$string['poweredbyrunby'] = 'Realizzato con <a href="https://www.blackboard.com/blackboard-open-lms" target="_blank" rel="noopener">Open LMS</a>,
+    un <a href="https://moodle.com/" target="_blank" rel="noopener">prodotto basato su Moodle</a>.<br>
+    Copyright &#169; {$a} Open LMS, tutti i diritti riservati.';
 $string['previoussection'] = 'Sezione precedente';
 $string['privacy:metadata:theme_snap_course_favorites:courseid'] = 'ID del corso che l\'utente ha contrassegnato come preferito';
 $string['privacy:metadata:theme_snap_course_favorites:userid'] = 'L\'ID utente dell\'utente che ha contrassegnato come preferito il corso';
@@ -362,3 +372,13 @@ $string['lazyload_mod_page_description'] = 'Se abilitata, questa impostazione ri
 $string['pmadvancedfeed_viewmore'] = 'Visualizza altro';
 $string['pmadvancedfeed_reload'] = 'Aggiorna';
 $string['multimediacard'] = 'I file multimediali non verranno visualizzati nella scheda delle attività per il tema Snap. Questo vale solo per la home page e per le pagine dei corsi per le schede delle attività e delle risorse.';
+$string['enabledlogin'] = 'Opzioni di accesso visualizzate';
+$string['enabledlogindesc'] = 'Selezionare le opzioni di accesso da visualizzare.';
+$string['moodlelogin'] = 'Visualizza solo l\'accesso Moodle';
+$string['alternativelogin'] = 'Visualizza solo le opzioni di accesso alternative';
+$string['bothlogin'] = 'Visualizza entrambe le opzioni di accesso';
+$string['enabledloginorder'] = 'Ordine delle opzioni di accesso';
+$string['enabledloginorderdesc'] = 'Selezionare l\'opzione di accesso da visualizzare per prima.';
+$string['moodleloginfirst'] = 'Visualizza prima l\'accesso Moodle';
+$string['alternativeloginfirst'] = 'Visualizza prima le opzioni di accesso alternative';
+$string['alternativeloginoptions'] = 'Opzioni di accesso alternative';
