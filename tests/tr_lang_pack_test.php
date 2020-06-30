@@ -49,7 +49,7 @@ class theme_snap_tr_lang_pack_test extends advanced_testcase  {
         }
 
         $message = 'There are discrepancies on the use of the tr language. ';
-        $message .= 'Make sure you run theme/snap/cli/fix_tr_lang_string.php to fix them.';
+        $message .= 'Make sure you run theme/snap/cli/fix_tr_lang_strings.php to fix them.';
         $this->assertEmpty($discrepancies, $message);
     }
 }
