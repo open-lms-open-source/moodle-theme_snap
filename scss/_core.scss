@@ -1022,12 +1022,6 @@ footer #moodle-footer
     }
 }
 
-.bb_dashboard_link img {
-    width: 1em;
-    height: 1em;
-    margin-right: 0.25em;
-}
-
 #page {
     margin: 0;
     padding: 0;
@@ -3775,10 +3769,30 @@ body.pagelayout-frontpage {
 // Auth icon align fix.
 #page-login-index .auth-icon,
 #page-site-index .auth-icon,
-#page-site-index .icon{
+#page-site-index .icon {
     width: 24px;
     height: 24px;
     margin: 0;
+}
+
+// Genius dashboard link.
+#page-site-index .genius_dashboard_link {
+    img.icon {
+        height: 1.5em;
+        width: auto;
+        margin-right: 0.25em;
+        font-size: inherit;
+        margin-bottom: 0.1em;
+        @include alakazam;
+    }
+    &:hover,
+    &:focus {
+        img.icon {
+            transform: scale(1.2);
+        }
+        color: darken($nav-button-color, 8%);
+    }
+
 }
 
 /* Fix for news visualization in Snap front page. */

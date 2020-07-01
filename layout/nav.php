@@ -27,7 +27,7 @@
 defined('MOODLE_INTERNAL') || die();
 
 use theme_snap\renderables\settings_link;
-use theme_snap\renderables\bb_dashboard_link;
+use theme_snap\renderables\genius_dashboard_link;
 
 ?>
 <header id='mr-nav' class='clearfix moodle-has-zindex'>
@@ -51,7 +51,7 @@ echo html_writer::link($CFG->wwwroot, $sitefullname, $attrs);
 <div class="pull-right js-only">
     <?php
     if (class_exists('local_geniusws\navigation')) {
-        $bblink = new bb_dashboard_link();
+        $bblink = new genius_dashboard_link();
         echo $OUTPUT->render($bblink);
     }
 
