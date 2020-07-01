@@ -125,6 +125,7 @@ Feature: Check functionality in activity cards.
 
   @javascript
   Scenario: For activity cards, when the activity is a lesson the card should not display feedback link.
+    Given I skip because "This is failing randomly while accessing the activity as a student, to be fixed in INT-15909"
     Given I log in as "admin"
     And I am on "Course 1" course homepage
     And I add a "Lesson" to section "0" and I fill the form with:
@@ -147,7 +148,7 @@ Feature: Check functionality in activity cards.
     And I log out
     Given I log in as "student1"
     And I am on "Course 1" course homepage
-    And I click on "//h3/a/p[contains(text(),'Test lesson')]" "xpath_element"
+    And I click on "//h3/a[@class='mod-link']" "xpath_element"
     And I set the following fields to these values:
       | id_answer | True |
     And I press "Submit"

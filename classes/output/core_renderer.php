@@ -744,8 +744,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
             $profilelink,
             $dashboardlink,
             $preferenceslink,
-            $gradelink,
-            $logoutlink
+            $gradelink
         ];
 
         $courseid = $PAGE->course->id;
