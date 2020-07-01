@@ -27,6 +27,7 @@ $string['action:changeassetvisibility'] = 'zichtbaarheid van set wijzigen';
 $string['action:duplicateasset'] = 'dubbele set';
 $string['action:changesectionvisibility'] = 'zichtbaarheid van secties wijzigen';
 $string['action:highlightsectionvisibility'] = 'zichtbaarheid van sectie markeren';
+$string['action:sectiontoc'] = 'sectie met inhoudsopgave ophalen';
 $string['addanewsection'] = 'Een nieuwe sectie maken';
 $string['addresourceoractivity'] = 'Leeractiviteit maken';
 $string['admin'] = 'Beheerder';
@@ -65,7 +66,7 @@ $string['coursecontacts'] = 'Contactpersonen cursus';
 $string['coursedisplay'] = 'Cursusweergave';
 $string['coursefootertoggle'] = 'Cursusvoettekst';
 $string['coursefootertoggledesc'] = 'De voettekst van de cursus bevat nuttige informatie voor gebruikers op een cursuspagina, waaronder cursuscontactpersonen, cursusbeschrijving en recente activiteiten in de cursus.';
-$string['courseformatnotification'] = 'De huidige cursusstructuur die je gebruikt, wordt niet volledig ondersteund door het thema Snap. Voor de beste ervaring adviseert Blackboard Open LMS dat je de cursusstructuur Onderwerpen of Wekelijks gebruikt met het thema Snap. Je kunt de cursusstructuur wijzigen in de <a href="{$a}">cursusinstellingen</a>.';
+$string['courseformatnotification'] = 'De huidige cursusstructuur die je gebruikt, wordt niet volledig ondersteund door het thema Snap. Voor de beste ervaring adviseert Open LMS dat je de cursusstructuur Onderwerpen of Wekelijks gebruikt met het thema Snap. Je kunt de cursusstructuur wijzigen in de <a href="{$a}">cursusinstellingen</a>.';
 $string['coursefixydefaulttext'] = 'Je bent op dit moment niet ingeschreven bij een cursus.<br>Cursussen waarvoor je bent ingeschreven, worden hier getoond.';
 $string['coursegrade'] = 'Cursuscijfer:';
 $string['coursepartialrender'] = 'Vertraagd laden inschakelen voor cursussecties';
@@ -84,7 +85,7 @@ $string['comingsoon'] = 'Binnenkort!';
 $string['createsection'] = 'Sectie maken';
 $string['current'] = 'Huidige';
 $string['customcss'] = 'Aangepaste CSS';
-$string['customcssdesc'] = 'Wees je van je verantwoordelijkheid bewust. Elk probleem dat wordt veroorzaakt door de CSS die hier wordt toegevoegd, moet je zelf oplossen. Blackboard Open LMS Support kan je niet helpen met CSS-inhoud.';
+$string['customcssdesc'] = 'Wees je bewust van je verantwoordelijkheid. Elk probleem dat wordt veroorzaakt door de CSS die hier wordt toegevoegd, moet je zelf oplossen. Open LMS Support kan je niet helpen met CSS-inhoud.';
 $string['customtopbar'] = 'Navigatiebalk';
 $string['customisenavbar'] = 'Kleuren van navigatiebalk wijzigen';
 $string['customisenavbutton'] = 'Kleuren van de knop Mijn cursussen wijzigen';
@@ -123,6 +124,7 @@ $string['error:failedtochangesectionvisibility'] = 'Kan sectie niet verbergen/to
 $string['error:failedtohighlightsection'] = 'Kan sectie niet markeren';
 $string['error:failedtoduplicateasset'] = 'Kan niet dupliceren';
 $string['error:failedtodeleteasset'] = 'Kan set niet verwijderen';
+$string['error:failedtotoc'] = 'Kan de inhoudsopgave niet ophalen.';
 $string['extension'] = 'Extensie {$a}';
 $string['facebook'] = 'Facebook';
 $string['facebookdesc'] = 'De url van je Facebook-pagina.';
@@ -138,6 +140,14 @@ $string['featurespotsheading'] = 'Titel uitgelichte spots';
 $string['featureonetitle'] = 'Uitgelichte spot 1 titel';
 $string['featuretwotitle'] = 'Uitgelichte spot 2 titel';
 $string['featurethreetitle'] = 'Uitgelichte spot 3 titel';
+$string['featureonetitlelink'] = 'Titelkoppeling functie 1';
+$string['featuretwotitlelink'] = 'Titelkoppeling functie 2';
+$string['featurethreetitlelink'] = 'Titelkoppeling functie 3';
+$string['featuretitlelinkdesc'] = 'Typ de URL waaraan je dit functiepunt wilt koppelen. Je kunt externe of interne koppelingen toevoegen binnen de site. Als je een interne koppeling wilt toevoegen, kopieer je deze uit de site-URL, het gedeelte na /. Als je bijvoorbeeld een koppeling naar een cursus wilt toevoegen, ziet die eruit als "course/view.php?id=160". Als je een externe koppeling wilt toevoegen, begin je de koppeling met https://';
+$string['featureonetitlecb'] = 'Functie 1 geopend in een nieuw venster';
+$string['featuretwotitlecb'] = 'Functie 2 geopend in een nieuw venster';
+$string['featurethreetitlecb'] = 'Functie 3 geopend in een nieuw venster';
+$string['featuretitlecbdesc'] = 'Indien ingeschakeld, wordt de koppeling die is toegevoegd aan het functiepunt in een nieuw venster geopend.';
 $string['featureonetext'] = 'Uitgelichte spot 1 inhoud';
 $string['featuretwotext'] = 'Uitgelichte spot 2 inhoud';
 $string['featurethreetext'] = 'Uitgelichte spot 3 inhoud';
@@ -199,7 +209,7 @@ Voorbeeld:<br>
 "12":"#CC0084",<br>
 "56":"#CC0087",<br>
 "89":"#CCF084"}';
-$string['knowledgebase'] = 'Blackboard Open LMS Knowledge Base';
+$string['knowledgebase'] = 'Open LMS Knowledge Base';
 $string['list'] = 'Lijst';
 $string['linkedin'] = 'LinkedIn';
 $string['linkedindesc'] = 'De url van de LinkedIn-account van je organisatie.';
@@ -256,9 +266,9 @@ $string['pld'] = 'PLD';
 $string['pluginname'] = 'Snap';
 $string['poster'] = 'Omslagafbeelding';
 $string['posterdesc'] = 'Een grote headerafbeelding voor de startpagina van je site. Liggende afbeeldingen (1200 x 600 pixels) of groter werken het beste.';
-$string['poweredbyrunby'] = 'Gebouwd met <a href="https://www.blackboard.com/blackboard-open-lms" target="_blank" rel="noopener">Blackboard Open LMS</a>,
+$string['poweredbyrunby'] = 'Gebouwd met <a href="https://www.blackboard.com/blackboard-open-lms" target="_blank" rel="noopener">Open LMS</a>,
     een op <a href="https://moodle.com/" target="_blank" rel="noopener">Moodle</a> gebaseerd product.<br>
-    Copyright &#169; {$a} Blackboard Inc., Alle rechten voorbehouden.';
+    Copyright &#169; {$a} Open LMS, alle rechten voorbehouden.';
 $string['previoussection'] = 'Vorige sectie';
 $string['privacy:metadata:theme_snap_course_favorites:courseid'] = 'De cursus-ID van de cursus die de gebruiker als favoriet heeft ingesteld';
 $string['privacy:metadata:theme_snap_course_favorites:userid'] = 'De gebruikers-ID van de gebruiker die de cursus als favoriet heeft ingesteld';
@@ -360,3 +370,13 @@ $string['lazyload_mod_page_description'] = 'Als deze optie is ingeschakeld, word
 $string['pmadvancedfeed_viewmore'] = 'Meer weergeven';
 $string['pmadvancedfeed_reload'] = 'Vernieuwen';
 $string['multimediacard'] = 'Multimediabestanden worden niet weergegeven in de activiteitkaartweergaven voor het Snap-thema. Dit wordt alleen toegepast op de startpagina en cursuspagina\'s voor kleine activiteit- en bronkaarten.';
+$string['enabledlogin'] = 'Weergegeven aanmeldingsopties';
+$string['enabledlogindesc'] = 'Selecteer de aanmeldingsopties die moeten worden weergegeven.';
+$string['moodlelogin'] = 'Alleen Moodle-aanmelding weergeven';
+$string['alternativelogin'] = 'Alleen alternatieve aanmeldingsopties weergeven';
+$string['bothlogin'] = 'Beide aanmeldingsopties weergeven';
+$string['enabledloginorder'] = 'Volgorde van aanmeldingsopties';
+$string['enabledloginorderdesc'] = 'Selecteer welke aanmeldingsoptie als eerste moet worden weergegeven.';
+$string['moodleloginfirst'] = 'Moodle-aanmelding als eerste weergeven';
+$string['alternativeloginfirst'] = 'Alternatieve aanmeldingsopties als eerste weergeven';
+$string['alternativeloginoptions'] = 'Alternatieve aanmeldingsopties';

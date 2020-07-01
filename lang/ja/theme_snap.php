@@ -27,6 +27,7 @@ $string['action:changeassetvisibility'] = 'アセットの視認性をコント�
 $string['action:duplicateasset'] = 'アセットを複製する';
 $string['action:changesectionvisibility'] = 'セクションの視認性をコントロールする';
 $string['action:highlightsectionvisibility'] = 'セクションの可視性を強調表示する';
+$string['action:sectiontoc'] = 'セクションの目次を取得する';
 $string['addanewsection'] = '新しい問題を作成する ...';
 $string['addresourceoractivity'] = '学習アクティビティを作成する';
 $string['admin'] = '管理';
@@ -65,7 +66,7 @@ $string['coursecontacts'] = 'コース管理者';
 $string['coursedisplay'] = 'コース表示';
 $string['coursefootertoggle'] = 'コースフッタ';
 $string['coursefootertoggledesc'] = 'コースフッタには、コース管理者、コース説明、コースでの最近のアクティビティなど、コースページのユーザに役立つ情報が表示されます。';
-$string['courseformatnotification'] = '現在お使いのコース形式はSnapテーマでは完全にサポートされていません。Blackboard Open LMSで最高のエクスペリエンスを実現するには、トピックまたは週次コースの形式をSnapテーマと共に使用することをお勧めします。コース形式は<a href="{$a}">コース設定</a>で変更できます。';
+$string['courseformatnotification'] = '現在お使いのコース形式はSnapテーマでは完全にサポートされていません。Open LMSで最高のエクスペリエンスを実現するには、トピックまたは週次コースの形式をSnapテーマと共に使用することをお勧めします。コース形式は<a href="{$a}">コース設定</a>で変更できます。';
 $string['coursefixydefaulttext'] = '現在どのコースにも登録されていません。<br>登録済みのコースはここに表示されます。';
 $string['coursegrade'] = 'コース評定 :';
 $string['coursepartialrender'] = 'コースセクションの遅延読み込みを有効にする';
@@ -84,7 +85,7 @@ $string['comingsoon'] = '準備中です！';
 $string['createsection'] = 'セクションを作成する';
 $string['current'] = '処理後';
 $string['customcss'] = 'カスタムCSS';
-$string['customcssdesc'] = '大きな力には大きな責任が伴うことに注意してください。ここで追加されたCSSによって問題が生じた場合、あなたが解決する責任があります。Blackboard Open LMSサポートはCSS関連のコンテンツに関してトラブルシューティングやヘルプを提供しません。';
+$string['customcssdesc'] = '大きな力には大きな責任が伴うことに注意してください。ここで追加されたCSSによって問題が生じた場合、あなたが解決する責任があります。Open LMSサポートはCSS関連のコンテンツに関してトラブルシューティングやヘルプを提供しません。';
 $string['customtopbar'] = 'ナビゲーションバー';
 $string['customisenavbar'] = 'ナビゲーションバーの色を変更する';
 $string['customisenavbutton'] = '[マイコース]ボタンの色を変更する';
@@ -123,6 +124,7 @@ $string['error:failedtochangesectionvisibility'] = 'セクションの表示/非
 $string['error:failedtohighlightsection'] = 'セクションの強調表示に失敗しました';
 $string['error:failedtoduplicateasset'] = '複製に失敗しました';
 $string['error:failedtodeleteasset'] = 'アセットの削除に失敗しました';
+$string['error:failedtotoc'] = 'TOCの取得に失敗しました。';
 $string['extension'] = '拡張子 {$a}';
 $string['facebook'] = 'Facebook';
 $string['facebookdesc'] = 'あなたのFacebookページのURL。';
@@ -138,6 +140,14 @@ $string['featurespotsheading'] = '注目スポットのヘッダ';
 $string['featureonetitle'] = '注目スポット1のタイトル';
 $string['featuretwotitle'] = '注目スポット2のタイトル';
 $string['featurethreetitle'] = '注目スポット3のタイトル';
+$string['featureonetitlelink'] = '注目スポット1のタイトルのリンク';
+$string['featuretwotitlelink'] = '注目スポット2のタイトルのリンク';
+$string['featurethreetitlelink'] = '注目スポット3のタイトルのリンク';
+$string['featuretitlelinkdesc'] = 'この注目スポットをリンクするURLを入力します。サイト内に外部または内部のリンクを追加できます。内部リンクを追加する場合は、サイトURLから「/」の後をコピーしてください。たとえば、コースへのリンクの場合、「course/view.php?id=160」のようになります。外部リンクを追加する場合は、リンクをhttps://で開始します。';
+$string['featureonetitlecb'] = '注目スポット1を新しいウィンドウで開く';
+$string['featuretwotitlecb'] = '注目スポット2を新しいウィンドウで開く';
+$string['featurethreetitlecb'] = '注目スポット3を新しいウィンドウで開く';
+$string['featuretitlecbdesc'] = '有効にすると、注目スポットに追加されたリンクは新しいウィンドウで開かれます。';
 $string['featureonetext'] = '注目スポット1の内容';
 $string['featuretwotext'] = '注目スポット2の内容';
 $string['featurethreetext'] = '注目スポット3の内容';
@@ -199,7 +209,7 @@ $string['jsontextdescription'] = 'テキストエリアは指定されたJSONを
 "12":"#CC0084",<br>
 "56":"#CC0087",<br>
 "89":"#CCF084"}';
-$string['knowledgebase'] = 'Blackboard Open LMSナレッジベース';
+$string['knowledgebase'] = 'Open LMSナレッジベース';
 $string['list'] = 'リスト';
 $string['linkedin'] = 'LinkedIn';
 $string['linkedindesc'] = 'あなたの組織のLinkedInのURLです。';
@@ -256,8 +266,9 @@ $string['pld'] = 'PLD';
 $string['pluginname'] = 'Snap';
 $string['poster'] = 'カバーイメージ';
 $string['posterdesc'] = 'サイトのフロントページ用の大きいヘッダイメージです。横向きイメージ (1200 x 600ピクセル) 以上が最適です。';
-$string['poweredbyrunby'] = '<a href="https://www.blackboard.com/blackboard-open-lms" target="_blank" rel="noopener">Blackboard Open LMS</a> (<a href="https://moodle.com/" target="_blank" rel="noopener">Moodle</a>ベースの製品) で構築しています。<br>
-    Copyright &#169; {$a} Blackboard Inc, All Rights Reserved.';
+$string['poweredbyrunby'] = '<a href="https://www.blackboard.com/blackboard-open-lms" target="_blank" rel="noopener">Open LMS</a>,
+    (<a href="https://moodle.com/" target="_blank" rel="noopener">Moodle</a>ベースの製品) で構築しています。<br>
+    Copyright &#169; {$a} Open LMS, All Rights Reserved.';
 $string['previoussection'] = '前のセクション';
 $string['privacy:metadata:theme_snap_course_favorites:courseid'] = 'ユーザがお気に入りとしてマークしたコースのコースID';
 $string['privacy:metadata:theme_snap_course_favorites:userid'] = 'コースをお気に入りにマークしたユーザのユーザID';
@@ -359,3 +370,13 @@ $string['lazyload_mod_page_description'] = '有効にした場合、この設定
 $string['pmadvancedfeed_viewmore'] = 'さらに表示する';
 $string['pmadvancedfeed_reload'] = 'リフレッシュ';
 $string['multimediacard'] = 'マルチメディアファイルは、Snapテーマのアクティビティカード表示では表示されません。これは小さいアクティビティとリソースカードのホームページとコースページにのみ適用されます。';
+$string['enabledlogin'] = '表示するログインオプション';
+$string['enabledlogindesc'] = '表示する必要があるログインオプションを選択します。';
+$string['moodlelogin'] = 'Moodleログインのみ表示';
+$string['alternativelogin'] = '代替ログインオプションのみ表示';
+$string['bothlogin'] = '両方のログインオプションを表示';
+$string['enabledloginorder'] = 'ログインオプションの順番';
+$string['enabledloginorderdesc'] = '最初に表示するログインオプションを選択します。';
+$string['moodleloginfirst'] = '最初にMoodleログインを表示する';
+$string['alternativeloginfirst'] = '最初に代替ログインオプションを表示する';
+$string['alternativeloginoptions'] = '代替ログインオプション';

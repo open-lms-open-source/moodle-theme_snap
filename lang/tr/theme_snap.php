@@ -27,6 +27,7 @@ $string['action:changeassetvisibility'] = 'varlık görünürlüğünü değişt
 $string['action:duplicateasset'] = 'varlığı kopyala';
 $string['action:changesectionvisibility'] = 'bölüm görünürlüğünü değiştir';
 $string['action:highlightsectionvisibility'] = 'bölüm görünürlüğünü vurgula';
+$string['action:sectiontoc'] = 'bölümün içindekiler tablosunu al';
 $string['addanewsection'] = 'Yeni bir bölüm oluştur';
 $string['addresourceoractivity'] = 'Öğrenim etkinliği oluştur';
 $string['admin'] = 'Yönetici';
@@ -85,7 +86,7 @@ $string['comingsoon'] = 'Yakında geliyor!';
 $string['createsection'] = 'Bölüm oluştur';
 $string['current'] = 'Mevcut';
 $string['customcss'] = 'Özel CSS';
-$string['customcssdesc'] = 'Lütfen büyük gücün büyük sorumluluk getirdiğini unutmayın. Buraya eklenen CSS ile ilgili her sorunu çözme sorumluluğu sizindir. Blackboard Open LMS Desteği, CSS ile ilgili içerikler konusunda yardım sağlamaz ve sorunları gidermez.';
+$string['customcssdesc'] = 'Yetki arttıkça sorumluluğun da artacağını lütfen unutmayın. Buraya eklenen CSS ile ilgili her sorunu çözme sorumluluğu size aittir. Open LMS Desteği, CSS ile ilgili içerikler konusunda yardım sağlamaz ve sorunları gidermez.';
 $string['customtopbar'] = 'Gezinti çubuğu';
 $string['customisenavbar'] = 'Gezinti çubuğu renklerini değiştir';
 $string['customisenavbutton'] = 'Derslerim düğmesi renklerini değiştir';
@@ -103,7 +104,7 @@ $string['deletingasset'] = '{$a} siliniyor';
 $string['deletingassetname'] = '{$a->type} "{$a->name}" siliniyor';
 $string['deletesectionconfirm'] = 'Bölümü Sil';
 $string['deletingsection'] = '"{$a}" bölümü siliniyor';
-$string['draft'] = 'Öğrencilere yayınlanmayan';
+$string['draft'] = 'Öğrencilere yayımlanmayan';
 $string['dropzonelabel'] = 'Eklenecek dosyaları bırak veya <span class="fake-link">gözat</span>';
 $string['due'] = 'Teslim tarihi {$a}';
 $string['edit'] = '"{$a}" öğesini düzenle';
@@ -123,6 +124,7 @@ $string['error:failedtochangesectionvisibility'] = 'Bölüm gizlenemedi/gösteri
 $string['error:failedtohighlightsection'] = 'Bölüm vurgulanamadı';
 $string['error:failedtoduplicateasset'] = 'Kopyalanamadı';
 $string['error:failedtodeleteasset'] = 'Varlık silinemedi';
+$string['error:failedtotoc'] = 'İçindekiler tablosu alınamadı.';
 $string['extension'] = 'Uzantı {$a}';
 $string['facebook'] = 'Facebook';
 $string['facebookdesc'] = 'Facebook sayfanızın url\'si.';
@@ -138,6 +140,14 @@ $string['featurespotsheading'] = 'Özellik noktaları başlığı';
 $string['featureonetitle'] = 'Özellik 1 başlığı';
 $string['featuretwotitle'] = 'Özellik 2 başlığı';
 $string['featurethreetitle'] = 'Özellik 3 başlığı';
+$string['featureonetitlelink'] = 'Özellik 1 başlık bağlantısı';
+$string['featuretwotitlelink'] = 'Özellik 2 başlık bağlantısı';
+$string['featurethreetitlelink'] = 'Özellik 3 başlık bağlantısı';
+$string['featuretitlelinkdesc'] = 'Bu özellik noktasını bağlamak istediğiniz URL\'yi yazın. Sitenize haricî veya dâhilî bağlantılar ekleyebilirsiniz. Dâhilî bağlantı eklemek için lütfen site URL\'sinde / işaretinden sonra gelen kısmı kopyalayın. Örneğin, bir kursa bağlantı vermek için "course/view.php?id=160" kullanılır. Haricî bir bağlantı eklemek için bağlantıyı https:// ile başlatın';
+$string['featureonetitlecb'] = 'Özellik 1\'i yeni pencerede aç';
+$string['featuretwotitlecb'] = 'Özellik 2\'yi yeni pencerede aç';
+$string['featurethreetitlecb'] = 'Özellik 3\'ü yeni pencerede aç';
+$string['featuretitlecbdesc'] = 'Bu ayar etkinleştirilirse belirtilen noktaya eklenen bağlantı, yeni bir pencerede açılır';
 $string['featureonetext'] = 'Özellik 1 içeriği';
 $string['featuretwotext'] = 'Özellik 2 içeriği';
 $string['featurethreetext'] = 'Özellik 3 içeriği';
@@ -242,7 +252,7 @@ $string['nomessages'] = 'Hiç iletiniz yok.';
 $string['notanswered'] = 'Yanıtlanmayan';
 $string['notattempted'] = 'Denenmeyen';
 $string['notcontributed'] = 'Katkıda bulunulmayan';
-$string['notpublished'] = 'Öğrencilere yayınlanmayan';
+$string['notpublished'] = 'Öğrencilere yayımlanmayan';
 $string['notsubmitted'] = 'Teslim edilmeyen';
 $string['overdue'] = 'Süresi geçmiş';
 $string['personalmenu'] = 'Kişisel menü';
@@ -257,8 +267,9 @@ $string['pld'] = 'PLD';
 $string['pluginname'] = 'Snap';
 $string['poster'] = 'Kapak görüntüsü';
 $string['posterdesc'] = 'Sitenizin ön sayfası için büyük bir başlık görüntüsü. Yatay yönlendirilmiş (1200 x600 piksel) veya daha büyük resimler en iyisidir.';
-$string['poweredbyrunby'] = '<a href="https://moodle.com/" target="_blank">Moodle</a> tabanlı bir ürün olan <a href="https://www.blackboard.com/blackboard-open-lms" target="_blank">Blackboard Open LMS</a> ile geliştirilmiştir.<br>
-    Telif Hakkı &#169; {$a} Blackboard Inc., Tüm Hakları Saklıdır.';
+$string['poweredbyrunby'] = '<a href="https://moodle.com/" target="_blank" rel="noopener">Moodle</a> tabanlı bir ürün olan
+    <a href="https://www.blackboard.com/blackboard-open-lms" target="_blank" rel="noopener">Open LMS</a> ile oluşturulmuştur.<br>
+    Telif Hakkı &#169; {$a} Open LMS, Tüm Hakları Saklıdır.';
 $string['previoussection'] = 'Bir önceki bölüm';
 $string['privacy:metadata:theme_snap_course_favorites:courseid'] = 'Kullanıcının sık kullanılanlara eklediği dersin kimliği';
 $string['privacy:metadata:theme_snap_course_favorites:userid'] = 'Dersi sık kullanılanlara ekleyen kullanıcının kullanıcı kimliği';
@@ -274,7 +285,7 @@ $string['region-side-main-box'] = 'Ana';
 $string['region-side-post'] = 'Sağ';
 $string['region-side-pre'] = 'Sol';
 $string['region-side-top'] = 'Üst';
-$string['released'] = 'Yayınlanma tarihi: {$a}';
+$string['released'] = 'Yayımlanma tarihi: {$a}';
 $string['reopened'] = 'Yeniden açıldı';
 $string['resourcedisplay'] = 'Kaynak görüntüsü';
 $string['resourcedisplayhelp'] = 'Dersinizde eklerin ve bağlantıların nasıl göründüğünü seçin. Snap teması, küçük etkinlik ve kaynak kartlarının açıklamasındaki multimedya dosyalarını desteklemez.';
@@ -325,12 +336,12 @@ $string['disabled'] = 'Devre Dışı';
 $string['showappearancedisabled'] = 'Snap\'in tasarım dili "Görünüm" ayarlarının değiştirilmesini önler.';
 $string['pbb'] = 'Profil tabanlı markalama';
 $string['pbb_description'] = '<strong>Profil tabanlı markalamayı</strong> etkinleştirerek seçilen kullanıcı profili alanına göre belirli bir kullanıcı grubu için markalama deneyimini özelleştirebilirsiniz.
-<ul><li>Kullanıcı alanı değeri <em>dizileştirilir</em>; yani tüm karakterler küçük harf halien getirilir ve tire (-) ile ayrılır</li>
+<ul><li>Kullanıcı alanı değeri <em>dizileştirilir</em>; yani tüm karakterler küçük harf hâline getirilir ve tire (-) ile ayrılır</li>
 <li><code>snap-pbb-</code> dizesi başa eklenir</li>
 <li>Bu sınıf <code>body</code> Html etiketine eklenir</li></ul>
 Örneğin, kullanıcı alanı değeri <em>Blueberry Extravaganza</em>, <code>snap-pbb-blueberry-extravaganza</code> şeklinde dizileştirilir<br /><br />
 Bu özellik <a href="https://help.blackboard.com/Blackboard_Open_LMS/Administrator/Manage_a_Site/Course_and_Site_Design/Themes/Snap#advanced-branding_OTP-3" target="_blank">Özel CSS</a> ile birlikte kullanılır,
-<a class="snap-settings-tab-link" href="#themesnapbranding">Temeller</a> bölümündeki yeni sınıfları kullanarak CSS seçicilerini eklemeniz gerekir.';
+<a class="snap-settings-tab-link" href="#themesnapbranding">Temeller</a> bölümündeki yeni sınıfları kullanarak CSS seçicileri eklemeniz gerekir.';
 $string['pbb_enable'] = 'Profil tabanlı markalamayı etkinleştir';
 $string['pbb_enable_description'] = 'Etkinse body etiketine yalnızca sınıfı ekler.';
 $string['pbb_field'] = 'Kullanılacak kullanıcı alanı';
@@ -348,15 +359,23 @@ $string['gotocalendarsnap'] = 'site takvimine gidin.';
 $string['quizattemptswarn'] = 'Askıya alınan kullanıcılara ait denemeleri hariç tutar';
 $string['quizfeedback'] = 'Geri Bildirim';
 $string['validratio'] = 'Bu renk kombinasyonu WCAG 2.0 minimum oran değeri 4.5:1\'e uygun değil';
-$string['invalidratio'] = 'Bu renk kombinasoynu
-<a href="https://www.w3.org/TR/WCAG20-TECHS/G18.html" target="_blank">WCAG 2.0 minimum oran değeri 4.5:1</a>\'e uygun değil. Değer: "{$a}"';
+$string['invalidratio'] = 'Bu renk kombinasoynu <a href="https://www.w3.org/TR/WCAG20-TECHS/G18.html" target="_blank">WCAG 2.0 minimum oran değeri 4.5:1</a>\'e uygun değil. Değer: "{$a}"';
 $string['imageinvalidratio'] = 'WCAG 2.0 minimum oran değeri 4.5:1\'e uygun olmadığından dolayı bu resimde kontrast sorunları olabilir. Ortalama piksel değeri: "{$a}"';
-$string['catinvalidratio'] = 'Aşağıdaki renk kategorileri
-<a href="https://www.w3.org/TR/WCAG20-TECHS/G18.html" target="_blank">WCAG 2.0 minimum oran değeri 4.5:1</a>\'e uygun değil :
-Site arka plan rengine (beyaz) uygun değil: "{$a->white}". Navigasyon çubuğu arka plan rengine uygun değil: "{$a->custombar}". Derslerım düğmesi arka plan rengine uygun değil: "{$a->customnav}"';
+$string['catinvalidratio'] = 'Aşağıdaki renk kategorileri <a href="https://www.w3.org/TR/WCAG20-TECHS/G18.html" target="_blank">WCAG 2.0 minimum oran değeri 4.5:1</a>\'e uygun değil :
+Site arka plan rengine (beyaz) uygun değil: "{$a->white}". Navigasyon çubuğu arka plan rengine uygun değil: "{$a->custombar}". Kurslarım düğmesi arka plan rengine uygun değil: "{$a->customnav}"';
 $string['imageinvalidratiocategory'] = 'WCAG 2.0 minimum oran değeri 4.5:1\'e uygun olmadığından dolayı bu resimde tema rengiyle kontrast sorunları olabilir. Ortalama piksel değeri: "{$a}"';
 $string['lazyload_mod_page'] = 'Sayfa kaynakları için varsayılan yavaş yüklemeyi etkinleştir';
 $string['lazyload_mod_page_description'] = 'Etkinleştirildiğinde, bu ayar çok sayfalı dersler için ders sayfası yükleme sürelerini önemli ölçüde kısaltır.';
 $string['pmadvancedfeed_viewmore'] = 'Daha fazla görüntüle';
 $string['pmadvancedfeed_reload'] = 'Yenile';
 $string['multimediacard'] = 'Snap teması için etkinlik kartı görünümlerinde multimedya dosyaları gösterilmez. Bu, ana sayfa ve ders sayfalarında yalnızca küçük etkinlik ve kaynak kartları için uygulanır.';
+$string['enabledlogin'] = 'Görüntülenen oturum açma seçenekleri';
+$string['enabledlogindesc'] = 'Görüntülenmesi gereken oturum açma seçeneklerini seçin.';
+$string['moodlelogin'] = 'Yalnızca Moodle oturumunu görüntüle';
+$string['alternativelogin'] = 'Yalnızca alternatif oturum seçeneklerini görüntüle';
+$string['bothlogin'] = 'Her iki oturumun seçeneğini görüntüle';
+$string['enabledloginorder'] = 'Oturum açma seçeneklerinin sırası';
+$string['enabledloginorderdesc'] = 'İlk olarak hangi oturum açma seçeneğinin görüntüleneceğini seçin.';
+$string['moodleloginfirst'] = 'Önce Moodle oturumunu görüntüle';
+$string['alternativeloginfirst'] = 'Önce alternatif oturum açma seçeneklerini görüntüle';
+$string['alternativeloginoptions'] = 'Alternatif oturum açma seçenekleri';
