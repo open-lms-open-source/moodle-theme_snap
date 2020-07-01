@@ -711,6 +711,10 @@ define(['jquery', 'core/log', 'theme_snap/headroom', 'theme_snap/util', 'theme_s
                         ' #admin-fs_two_title_link .form-label');
                     var titlelinksettingthree = $('#page-admin-setting-themesettingsnap #themesnapfeaturespots' +
                         ' #admin-fs_three_title_link .form-label');
+                    // Create an extra Div to wrap title links settings to avoid line break.
+                    $('#page-admin-setting-themesettingsnap #themesnapfeaturespots ' +
+                        '#admin-fs_three_title').nextUntil('#page-admin-setting-themesettingsnap #themesnapfeaturespots ' +
+                        '#admin-fs_one_title_link_cb').wrapAll("<div class=fs-title-links></div>");
                     var linktitlestyle = {'padding-bottom': '2.1em'};
 
                     // We need to modify the padding of these elements depending on the case, because when validating
