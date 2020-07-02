@@ -22,7 +22,7 @@
 
 
 @theme @theme_snap @snap_message
-Feature: When the moodle theme is set to Snap, message page should be accessible.
+Feature: When the Moodle theme is set to Snap, message page should be accessible.
 
   Background:
     Given the following "courses" exist:
@@ -40,14 +40,11 @@ Feature: When the moodle theme is set to Snap, message page should be accessible
 
   @javascript
   Scenario: In messages page, it must be possible to click the items.
-    And I skip because "This test is failing for 3.8. To be fixed in INT-15793"
     Given I log in as "admin"
     And I am on site homepage
     And I click on ".js-snap-pm-trigger.snap-my-courses-menu" "css_element"
     And I click on "//a[small[contains(@id, \"snap-pm-messages\")]]" "xpath_element"
     And ".message-app.main" "css_element" should be visible
-    # A message drawer floating div gets renderer but outside of the window
-    And I check element ".message-app.drawer" with property "right" = "-320px"
     And I should see "Starred"
     And I should see "Group"
     And I should see "Private"
@@ -60,7 +57,6 @@ Feature: When the moodle theme is set to Snap, message page should be accessible
 
   @javascript
   Scenario: When admin review messages preferences of other users, message drawer should not appear
-    Given I skip because "Current error from core breaks the test. To be fixed in INT-15793"
     Given I log in as "admin"
     And the following config values are set as admin:
       | linkadmincategories | 0 |
@@ -79,35 +75,31 @@ Feature: When the moodle theme is set to Snap, message page should be accessible
 
   @javascript
   Scenario: In personal menu preferences page, it must be possible to click the items.
-    And I skip because "This test is failing for 3.8. To be fixed in INT-15793"
     Given I log in as "admin"
     And I am on site homepage
     And I click on ".js-snap-pm-trigger.snap-my-courses-menu" "css_element"
-    And I click on "//a[@id=\"snap-pm-preferences\"]" "xpath_element"
+    And I click on "//a[@id='snap-pm-preferences']" "xpath_element"
     And I follow "Message preferences"
     And I should see "Settings"
     And I should see "Privacy"
     And I should see "Notification preferences"
-    And CSS element ".message-app.drawer" is full width
+    And CSS element ".drawer .message-app" is full width
 
   @javascript
   Scenario: When selecting messages of a contact, it must be possible to click the items.
-    And I skip because "This test is failing for 3.8. To be fixed in INT-15793"
     Given I log in as "admin"
     And I am on the course main page for "C1"
     And I wait until the page is ready
     And I click on "//a[contains(text(),\"Teacher 1\")]/following-sibling::small/a" "xpath_element"
     And ".message-app.main" "css_element" should be visible
-    # A message drawer floating div gets renderer but outside of the window
-    And I check element ".message-app.drawer" with property "right" = "-320px"
 
   @javascript
   Scenario: When selecting messages in profile, a new messages window opens.
     Given I log in as "admin"
     And I open the personal menu
-    And I click on "//a[@id=\"snap-pm-profile\"]" "xpath_element"
+    And I click on "//a[@id='snap-pm-profile']" "xpath_element"
     And I wait until the page is ready
-    And I click on "//a[@id=\"message-user-button\"]" "xpath_element"
+    And I click on "//a[@id='message-user-button']" "xpath_element"
     And I wait until the page is ready
     And I check body for classes "theme-snap"
     And "body#page-message-index" "css_element" should exist

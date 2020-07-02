@@ -108,8 +108,7 @@
 // Show message drawer in full width.
 #page-message-edit,
 #page-message-index {
-    .message-app.drawer {
-        visibility : hidden;
+    .drawer .message-app {
         height: calc(100% - 10em);
         top: 10em;
         z-index: 1;
@@ -125,7 +124,7 @@
     .custom-radio .custom-control-input:checked~.custom-control-label::before {
         background-color: $brand-primary;
     }
-    .message-app.drawer.bg-light {
+    .drawer.bg-white .message-app {
         padding: 1em;
         .body-container {
             border: 1px solid #dee2e6;
@@ -135,6 +134,10 @@
     [data-region="button-text"],
     [data-region="searchable"] {
         color: $brand-primary;
+    }
+
+    .message-app .body-container > * {
+        position: relative;
     }
 }
 
@@ -149,10 +152,6 @@
     }
 }
 
-// Hide scrolling when the message drawer is present.
-#page-message-edit:not(.snap-pm-open) {
-    overflow: hidden;
-}
 // Fixes for Inherited boost styles for the message app page.
 // Message background #E6E6E6 to better AX over the message view.
 .message-app {
@@ -187,7 +186,7 @@
 }
 
 // Hide the message drawer when in profile view.
-body#page-user-profile .message-app.drawer {
+body#page-user-profile .drawer .message-app {
     visibility: hidden;
 }
 
