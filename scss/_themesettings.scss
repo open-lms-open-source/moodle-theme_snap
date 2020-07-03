@@ -219,10 +219,20 @@
         }
     }
 
-    #admin-fs_one_title_link,
-    #admin-fs_two_title_link,
-    #admin-fs_three_title_link {
-        height: 14em;
+    // To avoid unnecessary line break in the settings page.
+    admin-fs_one_title_link,
+    admin-fs_two_title_link,
+    admin-fs_three_title_link,
+    #admin-fs_one_title_link_cb,
+    #admin-fs_two_title_link_cb,
+    #admin-fs_three_title_link_cb {
+        .form-shortname {
+            display: none;
+        }
+    }
+
+    .fs-title-links {
+        display: inline-block;
     }
 
     #admin-fs_one_title_link,
