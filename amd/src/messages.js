@@ -35,22 +35,22 @@ define(['jquery', 'core/pubsub', 'core/url'],
                 // Listener for the admin block.
                 if ($('.preferences-page-container').length === 0 && $('.message-app.main').length === 0 &&
                         ($('#page-message-edit').length != 0 || $('#page-message-index').length != 0)) {
-                    $('.message-app.drawer').css('visibility', 'visible');
-                    $('.message-app.drawer').animate({width: '100%'}, 0);
+                    var drawermessage = $('.drawer .message-app');
+                    drawermessage.css('visibility', 'visible');
+                    drawermessage.animate({width: '100%'}, 0);
                     document.addEventListener("messages-drawer:toggle", function () {
                         if ($('#page-message-edit').length || $('#page-message-index').length) {
-                            if ($('.block_settings').hasClass('state-visible') ||
-                                $('.block_settings').hasClass('state-visible')) {
+                            if ($('.block_settings').hasClass('state-visible')) {
                                 if ($(window).width() < maxWidth) {
-                                    $('.message-app.drawer').hide();
+                                    $('.drawer .message-app').hide();
                                 } else {
-                                    $('.message-app.drawer').animate({width: '50%'}, 0);
+                                    $('.drawer .message-app').animate({width: '50%'}, 0);
                                 }
                             } else {
                                 if ($(window).width() < maxWidth) {
-                                    $('.message-app.drawer').show();
+                                    $('.drawer .message-app').show();
                                 } else {
-                                    $('.message-app.drawer').animate({width: '100%'}, 0);
+                                    $('.drawer .message-app').animate({width: '100%'}, 0);
                                 }
                             }
                         }
@@ -59,9 +59,9 @@ define(['jquery', 'core/pubsub', 'core/url'],
                     document.addEventListener("messages-drawer:pm-toggle", function () {
                         if ($('#page-message-edit').length || $('#page-message-index').length) {
                             if ($('.snap-pm-open').length) {
-                                $('.message-app.drawer').hide();
+                                $('.drawer .message-app').hide();
                             } else {
-                                $('.message-app.drawer').show();
+                                $('.drawer .message-app').show();
                             }
                         }
                     });
@@ -76,9 +76,9 @@ define(['jquery', 'core/pubsub', 'core/url'],
                             // If there are open popovers, hide message-drawer.
                             if (openedpopovers.length > 0) {
                                 if ($(window).width() < maxWidth) {
-                                    $('.message-app.drawer').hide();
+                                    $('.drawer .message-app').hide();
                                 } else {
-                                    $('.message-app.drawer').animate({width: '50%'}, 0);
+                                    $('.drawer .message-app').animate({width: '50%'}, 0);
                                 }
                             }
                         }
@@ -91,9 +91,9 @@ define(['jquery', 'core/pubsub', 'core/url'],
                             // Only open drawer when there are no opened popovers.
                             if (openedpopovers.length == 0) {
                                 if ($(window).width() < maxWidth) {
-                                    $('.message-app.drawer').show();
+                                    $('.drawer .message-app').show();
                                 } else {
-                                    $('.message-app.drawer').animate({width: '100%'}, 0);
+                                    $('.drawer .message-app').animate({width: '100%'}, 0);
                                 }
                             }
                         }
