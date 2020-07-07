@@ -51,7 +51,10 @@ $definitions = array(
         'mode'               => cache_store::MODE_SESSION,
         'simplekeys'         => true,
         'simpledata'         => false,
-        'staticacceleration' => false
+        'staticacceleration' => false,
+        'invalidationevents' => [
+            'groupmemberschanged',
+        ]
     ],
     'generalstaticappcache' => [
         'mode'               => cache_store::MODE_APPLICATION,

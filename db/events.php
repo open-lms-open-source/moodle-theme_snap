@@ -24,79 +24,89 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-$observers = array(
-    array (
+$observers = [
+    [
         'eventname' => '\core\event\course_updated',
         'callback'  => '\theme_snap\event_handlers::course_updated',
-    ),
-    array (
+    ],
+    [
         'eventname' => '\core\event\course_deleted',
-        'callback'  => '\theme_snap\event_handlers::course_deleted'
-    ),
-    array (
+        'callback'  => '\theme_snap\event_handlers::course_deleted',
+    ],
+    [
         'eventname' => '\core\event\user_deleted',
-        'callback'  => '\theme_snap\event_handlers::user_deleted'
-    ),
+        'callback'  => '\theme_snap\event_handlers::user_deleted',
+    ],
 
     // Calendar events.
-    array (
+    [
         'eventname' => '\core\event\calendar_event_created',
-        'callback' => '\theme_snap\event_handlers::calendar_change',
-    ),
-    array (
+        'callback'  => '\theme_snap\event_handlers::calendar_change',
+    ],
+    [
         'eventname' => '\core\event\calendar_event_updated',
-        'callback' => '\theme_snap\event_handlers::calendar_change'
-    ),
-    array (
+        'callback'  => '\theme_snap\event_handlers::calendar_change',
+    ],
+    [
         'eventname' => '\core\event\calendar_event_deleted',
-        'callback' => '\theme_snap\event_handlers::calendar_change'
-    ),
-    array (
+        'callback'  => '\theme_snap\event_handlers::calendar_change',
+    ],
+    [
         'eventname' => '\mod_assign\event\extension_granted',
-        'callback' => '\theme_snap\event_handlers::calendar_change'
-    ),
+        'callback'  => '\theme_snap\event_handlers::calendar_change',
+    ],
 
     // All events affecting course completion at course level.
-    array (
+    [
         'eventname' => '\core\event\course_completion_updated',
-        'callback'  => '\theme_snap\event_handlers::course_completion_updated'
-    ),
-    array (
+        'callback'  => '\theme_snap\event_handlers::course_completion_updated',
+    ],
+    [
         'eventname' => '\core\event\course_module_created',
-        'callback'  => '\theme_snap\event_handlers::course_module_created'
-    ),
-    array (
+        'callback'  => '\theme_snap\event_handlers::course_module_created',
+    ],
+    [
         'eventname' => '\core\event\course_module_updated',
-        'callback'  => '\theme_snap\event_handlers::course_module_updated'
-    ),
-    array (
+        'callback'  => '\theme_snap\event_handlers::course_module_updated',
+    ],
+    [
         'eventname' => '\core\event\course_module_deleted',
-        'callback'  => '\theme_snap\event_handlers::course_module_deleted'
-    ),
+        'callback'  => '\theme_snap\event_handlers::course_module_deleted',
+    ],
 
     // User level course completion events.
-    array (
+    [
         'eventname' => '\core\event\course_module_completion_updated',
-        'callback'  => '\theme_snap\event_handlers::course_module_completion_updated'
-    ),
+        'callback'  => '\theme_snap\event_handlers::course_module_completion_updated',
+    ],
 
     // User updated event for Profile based branding.
-    array (
+    [
         'eventname' => '\core\event\user_updated',
-        'callback'  => '\theme_snap\event_handlers::user_updated'
-    ),
+        'callback'  => '\theme_snap\event_handlers::user_updated',
+    ],
 
     // User enrolment handlers.
-    array (
+    [
         'eventname' => '\core\event\role_assigned',
-        'callback'  => '\theme_snap\event_handlers::role_assigned'
-    ),
-    array (
+        'callback'  => '\theme_snap\event_handlers::role_assigned',
+    ],
+    [
         'eventname' => '\core\event\role_unassigned',
-        'callback'  => '\theme_snap\event_handlers::role_unassigned'
-    ),
-    array (
-        'eventname'   => '\core\event\user_enrolment_deleted',
-        'callback'    => '\theme_snap\event_handlers::user_enrolment_deleted',
-    ),
-);
+        'callback'  => '\theme_snap\event_handlers::role_unassigned',
+    ],
+    [
+        'eventname' => '\core\event\user_enrolment_deleted',
+        'callback'  => '\theme_snap\event_handlers::user_enrolment_deleted',
+    ],
+
+    // Group member events, activity group overrides may make activity_deadlines cache invalid.
+    [
+        'eventname' => '\core\event\group_member_added',
+        'callback'  => '\theme_snap\event_handlers::group_member_added',
+    ],
+    [
+        'eventname' => '\core\event\group_member_removed',
+        'callback'  => '\theme_snap\event_handlers::group_member_removed',
+    ],
+];
