@@ -1343,11 +1343,10 @@ header#page-header
     }
 
     .carousel-indicators {
-        bottom: -30px;
+        bottom: -50px;
         transform: scale(1.3);
 
         li {
-            border-color: $gray-light;
             background-color: $snap-carousel-buttons;
         }
         .active {
