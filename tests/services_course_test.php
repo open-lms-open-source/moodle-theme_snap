@@ -429,32 +429,32 @@ class theme_snap_services_course_test extends \advanced_testcase {
     // Records for favorite courses should not exist when the user is deleted.
     public function test_user_deletion() {
         global $DB;
-        $this->markTestSkipped('Started to fail after the 3.7.1 merge. To be fixed in INT-15845');
         $service = $this->courseservice;
         $service->setfavorite($this->courses[0]->shortname, true, $this->user1->id);
         $service->setfavorite($this->courses[1]->shortname, true, $this->user1->id);
-        $favorites = $DB->get_records('favourite', array('userid' => $this->user1->id));
+        $params = array('userid' => $this->user1->id, 'component' => 'core_course');
+        $favorites = $DB->get_records('favourite', $params);
         $this->assertNotEmpty($favorites);
         delete_user($this->user1);
-        $favorites = $DB->get_records('favourite', array('userid' => $this->user1->id));
+        $favorites = $DB->get_records('favourite', $params);
         $this->assertEmpty($favorites);
     }
 
     // Records for favorite courses should not exist when the course is deleted.
     public function test_course_deletion() {
         global $DB;
-        $this->markTestSkipped('Started to fail after the 3.7.1 merge. To be fixed in INT-15845');
         $service = $this->courseservice;
         $service->setfavorite($this->courses[0]->shortname, true, $this->user1->id);
         $service->setfavorite($this->courses[1]->shortname, true, $this->user1->id);
-        $favorites = $DB->count_records('favourite', array('userid' => $this->user1->id));
+        $params = array('userid' => $this->user1->id, 'component' => 'core_course');
+        $favorites = $DB->count_records('favourite', $params);
         $this->assertEquals(2, $favorites);
         $this->assertNotEmpty($favorites);
         delete_course($this->courses[0], false);
-        $favorites = $DB->count_records('favourite', array('userid' => $this->user1->id));
+        $favorites = $DB->count_records('favourite', $params);
         $this->assertEquals(1, $favorites);
         delete_course($this->courses[1], false);
-        $favorites = $DB->get_records('favourite', array('userid' => $this->user1->id));
+        $favorites = $DB->get_records('favourite', $params);
         $this->assertEmpty($favorites);
     }
 
