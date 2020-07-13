@@ -947,22 +947,34 @@ footer #moodle-footer
         }
         color: darken($nav-button-color, 8%);
     }
+}
 
-    // Core alerts badge.
+// Core alerts badge.
+.badge-count-container {
+    display: inline-block;
+    float: none;
+
+    .icon.fa-comment {
+        color: $nav-color;
+        font-size: 24px;
+        position: relative;
+    }
     .conversation_badge_count {
         height: 18px;
         width: 18px;
         border-radius: 50%;
-        padding: 0;
-        line-height: inherit;
-        color: white;
-        position: absolute;
-        left: .33em; // Magic number.
-        top: .6em; // Magic number.
-        font-size: 10px;
+        color: white !important; // Override core color preset for anchors.
+        font-size: x-small;
+        font-weight: bold;
         display: flex;
         justify-content: center;
         align-items: center;
+        position: absolute;
+        right: -0.5em; // Magic number.
+        top: -0.5em; // Magic number.
+        border-color: rgba(255,255,255,0.75);
+        border-style: solid;
+        border-width: 1px;
 
         &.hidden {
             display: none;

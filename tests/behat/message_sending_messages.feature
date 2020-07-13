@@ -162,3 +162,44 @@ Feature: Snap message send messages
     Then I should see "Hi!" in the ".message.clickable[data-region='message']" "css_element"
     And I check element ".message-app .message.bg-secondary" with property "background-color" = "#E6E6E6"
     And I check element ".message-app .message.send .tail" with property "border-bottom-color" = "#E6E6E6"
+
+  @javascript
+  Scenario: When a user has unread conversations, a notification should appear in the message icon on the navigation bar
+  and should redirect to the message page.
+    Given the following "message contacts" exist:
+      | user     | contact |
+      | student1 | student2 |
+      | student3 | student2 |
+    And I log in as "student1"
+    And I am on site homepage
+    And I click on ".js-snap-pm-trigger.snap-my-courses-menu" "css_element"
+    And I follow "View my messages"
+    And I click on "Contacts" "link"
+    And I click on "Student 2" "link" in the "//*[@data-section='contacts']" "xpath_element"
+    When I send "Hi!" message in the message area
+    Then I should see "Hi!" in the ".message.clickable[data-region='message']" "css_element"
+    And I log out
+    And I log in as "student3"
+    And I am on site homepage
+    And I click on ".js-snap-pm-trigger.snap-my-courses-menu" "css_element"
+    And I follow "View my messages"
+    And I click on "Contacts" "link"
+    And I click on "Student 2" "link" in the "//*[@data-section='contacts']" "xpath_element"
+    When I send "Hello!" message in the message area
+    Then I should see "Hello!" in the ".d-flex[data-region='day-messages-container']" "css_element"
+    And I log out
+    And I log in as "student2"
+    And I am on site homepage
+    And "#mr-nav .badge-count-container .snap-message-count" "css_element" should exist
+    And "//a[@class='snap-message-count']//div[text()='2']" "xpath_element" should exist
+    And the "aria-label" attribute of "#mr-nav .badge-count-container .snap-message-count i.icon.fa-comment" "css_element" should contain "Open messaging drawer. There are 2 unread conversations"
+    And I click on "#mr-nav .badge-count-container .snap-message-count" "css_element"
+    And I should see "(2)" in the ".section[data-region='view-overview-messages']" "css_element"
+    And I should see "2" in the ".badge-primary[data-region='section-unread-count'][aria-label='There are 2 unread conversations']" "css_element"
+    # Now we need to see that the unread message notification disappears after the message are read.
+    And I click on ".message-app .panel-body-container .view-overview-body div[data-region='view-overview-messages'] .list-group[data-region='content-container'] a.list-group-item:nth-child(1)" "css_element"
+    Then I should see "Hello!" in the ".d-flex[data-region='day-messages-container']" "css_element"
+    And I click on ".message-app .panel-body-container .view-overview-body div[data-region='view-overview-messages'] .list-group[data-region='content-container'] a.list-group-item:nth-child(2)" "css_element"
+    Then I should see "Hi!" in the ".d-flex[data-region='day-messages-container']" "css_element"
+    And I am on site homepage
+    And the "aria-label" attribute of "#mr-nav .badge-count-container .snap-message-count i.icon.fa-comment" "css_element" should contain "Open messaging drawer. There are 0 unread conversations"
