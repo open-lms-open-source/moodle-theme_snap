@@ -388,4 +388,5 @@ $string['enabledloginorderdesc'] = 'Select which login option should be displaye
 $string['moodleloginfirst'] = 'Display Moodle login first';
 $string['alternativeloginfirst'] = 'Display alternative login options first';
 $string['alternativeloginoptions'] = 'Alternative login options';
+$string['openmessagedrawer'] = 'Open messaging drawer. ';
 

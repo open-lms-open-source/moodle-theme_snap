@@ -56,6 +56,7 @@ echo html_writer::link($CFG->wwwroot, $sitefullname, $attrs);
     }
 
     echo $OUTPUT->personal_menu_trigger();
+    echo $OUTPUT->render_message_icon();
     echo $OUTPUT->render_notification_popups();
 
     $settingslink = new settings_link();

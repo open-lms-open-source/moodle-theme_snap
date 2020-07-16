@@ -246,11 +246,31 @@ class core_renderer extends \theme_boost\output\core_renderer {
      * Badge counter for new messages.
      * @return string
      */
-    protected function render_badge_count() {
-        global $CFG;
-        // Add the messages popover.
+    protected function render_message_icon() {
+        global $CFG, $USER;
+
+        // Add the messages icon with message count.
+        // The icon should not be displayed if the user is not logged in.
+        if (!isloggedin() || isguestuser() || user_not_fully_set_up($USER) ||
+            get_user_preferences('auth_forcepasswordchange') ||
+            (!$USER->policyagreed && !is_siteadmin() &&
+                ($manager = new \core_privacy\local\sitepolicy\manager()) && $manager->is_defined())) {
+            return '';
+        }
+
         if (!empty($CFG->messaging) && !empty(get_config('theme_snap', 'messagestoggle'))) {
-            return '<span class="conversation_badge_count hidden"></span>';
+            $url = new \moodle_url($CFG->wwwroot."/message/");
+            // Get number of unread conversations.
+            $unreadcount = \core_message\api::count_unread_conversations($USER);
+            $unreadconversationsstr = get_string('unreadconversations', 'core_message', $unreadcount);
+            $ariaopenmessagedrawer = get_string('openmessagedrawer', 'theme_snap');
+            return '<div class="badge-count-container">
+                        <a class="snap-message-count" href="'.$url.'">
+                            <i class="icon fa fa-comment fa-fw" aria-label="'.$ariaopenmessagedrawer.$unreadconversationsstr.'">
+                                <div class="conversation_badge_count hidden"></div>
+                            </i>
+                        </a>
+                    </div>';
         }
         return '';
     }
@@ -898,8 +918,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
             $picture = $this->render($userpicture);
 
             $menu = '<span class="hidden-xs-down">' .get_string('menu', 'theme_snap'). '</span>';
-            $badge = $this->render_badge_count();
-            $linkcontent = $picture.$menu.$badge;
+            $linkcontent = $picture.$menu;
             $attributes = array(
                 'aria-haspopup' => 'true',
                 'class' => 'js-snap-pm-trigger snap-my-courses-menu',
