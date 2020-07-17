@@ -27,9 +27,12 @@ Feature: Snap message send messages
   I need to be able to send a message
 
   Background:
-    Given the following "courses" exist:
+    Given I create the following course categories:
+      | id | name   | category | idnumber | description |
+      |  5 | Cat 5  |     0    |   CAT5   |   Test      |
+    And the following "courses" exist:
       | fullname | shortname | category | groupmode |
-      | Course 1 | C1        | 0        | 1         |
+      | Course 1 | C1        | CAT5     | 1         |
     And the following "users" exist:
       | username | firstname | lastname | email                |
       | student1 | Student   | 1        | student1@example.com |
@@ -203,3 +206,14 @@ Feature: Snap message send messages
     Then I should see "Hi!" in the ".d-flex[data-region='day-messages-container']" "css_element"
     And I am on site homepage
     And the "aria-label" attribute of "#mr-nav .badge-count-container .snap-message-count i.icon.fa-comment" "css_element" should contain "Open messaging drawer. There are 0 unread conversations"
+
+  @javascript
+  Scenario: Message icon should change its color when the category color changes.
+    Given the following config values are set as admin:
+      | category_color | {"5":"#510038"} | theme_snap |
+    And I log in as "admin"
+    And I follow "Browse all courses"
+    And I purge snap caches
+    And I wait until the page is ready
+    And I follow "Cat 5"
+    And I check element ".badge-count-container .icon.fa-comment" with color "#510038"

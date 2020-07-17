@@ -647,8 +647,11 @@ $custom-menu-text-color: rgb(255, 255, 255) !default; // Need to define this wit
                 color: $nav-color;
             }
         }
-        .conversation_badge_count {
-            background-color: #FF0000; // Red icon to help with visual aid for AX.
+        .badge-count-container .icon.fa-comment {
+            color: $brand-primary;
+            .conversation_badge_count {
+                background-color: #FF0000; // Red icon to help with visual aid for AX.
+            }
         }
     }
 
