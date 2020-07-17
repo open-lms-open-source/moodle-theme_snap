@@ -790,7 +790,13 @@ class course_renderer extends \core_course_renderer {
             $contentloaded = !$lazyload ? 1 : 0;
         }
 
-        $pslinkclass = 'btn btn-secondary pagemod-readmore';
+        $pagenewwindow = get_config('theme_snap', 'design_mod_page');
+        // Check for mod page design setting to open the content inline on the same page or in another window.
+        if ($pagenewwindow) {
+            $pslinkclass = 'btn btn-secondary pagemod-readmore';
+        } else {
+            $pslinkclass = 'btn btn-secondary';
+        }
         $pmcontextattribute = 'data-pagemodcontext="'.$mod->context->id.'"';
 
         $o = "

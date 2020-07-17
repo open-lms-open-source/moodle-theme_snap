@@ -389,4 +389,6 @@ $string['moodleloginfirst'] = 'Display Moodle login first';
 $string['alternativeloginfirst'] = 'Display alternative login options first';
 $string['alternativeloginoptions'] = 'Alternative login options';
 $string['openmessagedrawer'] = 'Open messaging drawer. ';
+$string['design_mod_page'] = 'Enable previous design for page resources';
+$string['design_mod_page_description'] = 'If enabled, page resource content will be displayed inside the same page, course or front page.';
 

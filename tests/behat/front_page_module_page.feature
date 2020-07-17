@@ -20,7 +20,7 @@
 # @copyright  2017 Blackboard Ltd
 # @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
 
-@theme @theme_snap
+@theme @theme_snap @snap_page_resource
 Feature: Open page (front page) module inline
   As any user
   I need to view page modules inline at front page.
@@ -34,6 +34,7 @@ Feature: Open page (front page) module inline
     And debugging is turned off
     And the following config values are set as admin:
       | lazyload_mod_page | 0 | theme_snap |
+      | design_mod_page   | 1 | theme_snap |
 
   @javascript
   Scenario: Page mod is created and opened inline at the front page.

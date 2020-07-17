@@ -387,8 +387,13 @@ p.tree_item.hasicon i.nav-missing-icon:before {
     content: '■'; // Where settings nav icon is missing use this.
 }
 
-// Adjust Page resource activity display when the content is a table.
+// Adjust Page resource activity display.
 li.modtype_page {
+    div.summary-text p {
+        padding-top: 1em !important; // Override summary-text core inherit property.
+    }
+
+    // Adjust Page resource content when it is a table.
     div.pagemod-content {
         overflow: auto;
         tr {
@@ -399,6 +404,7 @@ li.modtype_page {
         }
         div.d-block {
             padding-left: 25%;
+            padding-right: 25%;
             width: 100%;
         }
     }

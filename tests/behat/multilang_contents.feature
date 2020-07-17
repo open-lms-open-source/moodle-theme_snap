@@ -13,7 +13,7 @@
 # You should have received a copy of the GNU General Public License
 # along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 #
-# Tests for navigation between activities with restrictions.
+# Test for multilang strings in Snap.
 #
 # @package    theme_snap
 # @author     2018 Rafael Becerra <rafael.becerrarodriguez@blackboard.com>

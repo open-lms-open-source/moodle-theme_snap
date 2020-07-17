@@ -13,13 +13,13 @@
 # You should have received a copy of the GNU General Public License
 # along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 #
-# Tests for navigation between activities with restrictions.
+# Test lazy loading for page resources.
 #
 # @package    theme_snap
 # @author     Diego Casas <diego.casas@blackboard.com>
 # @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
 
-@theme @theme_snap @theme_snap_lazy_loading
+@theme @theme_snap @theme_snap_lazy_loading @snap_page_resource
 Feature: When the moodle theme is set to Snap course pages can be rendered using lazy loading.
   Background:
     Given the following "courses" exist:
@@ -29,13 +29,11 @@ Feature: When the moodle theme is set to Snap course pages can be rendered using
       | username  | firstname  | lastname  | email                 |
       | teacher1  | Teacher    | 1         | teacher1@example.com  |
       | student1  | Student    | 1         | student1@example.com  |
-
     And the following "course enrolments" exist:
       | user      | course  | role            |
       | student1  | C1      | student         |
       | teacher1  | C1      | editingteacher  |
       | admin     | C1      | editingteacher  |
-
     And I log in as "admin"
     And I am on "Course 1" course homepage with editing mode on
     And I add a "Page" to section "1" and I fill the form with:
@@ -48,6 +46,7 @@ Feature: When the moodle theme is set to Snap course pages can be rendered using
   Scenario Outline: Check if Page content is being lazy loaded
     Given the following config values are set as admin:
       | lazyload_mod_page | <lazyload> | theme_snap |
+      | design_mod_page   | 1          | theme_snap |
     And I log in as "teacher1"
     And I am on the course "C1"
     And I follow "Topic 1"
@@ -69,7 +68,6 @@ Feature: When the moodle theme is set to Snap course pages can be rendered using
       | folder   | Test folder name 2 | Test folder description | C1     | folder2  | 1            | 1       | 1       |
     And I log in as "teacher1"
     And I am on the course "C1"
-
     Then ".modtype_folder table" "css_element" should exist
     And I follow "Topic 1"
     Then ".modtype_folder table" "css_element" should exist
