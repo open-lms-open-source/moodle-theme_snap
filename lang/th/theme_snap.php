@@ -267,7 +267,7 @@ $string['pld'] = 'PLD';
 $string['pluginname'] = 'Snap';
 $string['poster'] = 'รูปภาพหน้าปก';
 $string['posterdesc'] = 'ภาพส่วนหัวขนาดใหญ่สำหรับหน้าแรกของเว็บไซต์ของคุณ ภาพแนวนอน (1200 x 600 พิกเซล) หรือใหญ่กว่าทำงานได้ดีที่สุด';
-$string['poweredbyrunby'] = 'สร้างด้วย <a href="https://www.blackboard.com/blackboard-open-lms" target="_blank" rel="noopener">LMS แบบเปิด</a>,
+$string['poweredbyrunby'] = 'สร้างด้วย <a href="https://www.openlms.net/" target="_blank" rel="noopener">LMS แบบเปิด</a>,
     <a href="https://moodle.com/" target="_blank" rel="noopener">ผลิตภัณฑ์แบบ</a>Moodle<br>
     ลิขสิทธิ์ &#169; {$a} LMS แบบเปิด สงวนลิขสิทธิ์ทั้งหมด';
 $string['previoussection'] = 'ส่วนก่อนหน้า';

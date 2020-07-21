@@ -277,7 +277,7 @@ $string['pld'] = 'PLD';
 $string['pluginname'] = 'محاذاة';
 $string['poster'] = 'صورة الغلاف';
 $string['posterdesc'] = 'صورة رأس كبيرة لصفحة موقعك الأمامية. تعمل الصور الأفقية بحجم (1200 × 600 بكسل) أو الأكبر حجمًا بشكل أفضل.';
-$string['poweredbyrunby'] = 'تم الإنشاء بواسطة <a href="https://www.blackboard.com/blackboard-open-lms" target="_blank" rel="noopener">Open LMS</a>,
+$string['poweredbyrunby'] = 'تم الإنشاء بواسطة <a href="https://www.openlms.net/" target="_blank" rel="noopener">Open LMS</a>,
      وهو منتج مستند إلى <a href="https://moodle.com/" target="_blank" rel="noopener">Moodle</a>.<br>
     Copyright &#169; {$a} Open LMS، جميع الحقوق محفوظة.';
 $string['previoussection'] = 'القسم السابق';
