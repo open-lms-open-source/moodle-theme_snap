@@ -3,6 +3,11 @@ import {Component, OnInit, ViewEncapsulation, Input, HostListener} from '@angula
 import {FeedService} from '../feed.service';
 import {FeedItem} from "../feed-item";
 import {animate, query, stagger, style, transition, trigger} from "@angular/animations";
+import {StringService} from "../string.service";
+import {MoodleService} from "../moodle.service";
+import {ErrorReporterService} from "../error-reporter.service";
+import {FeedErrorModalComponent} from "../feed-error-modal/feed-error-modal.component"
+import {MoodleRes} from "../moodle.res";
 
 @Component({
   selector: 'snap-feed',
@@ -26,6 +31,17 @@ import {animate, query, stagger, style, transition, trigger} from "@angular/anim
               </div>
           </div>
           <p class="small" *ngIf="feedItemTotal == 0">{{emptyMessage}}</p>
+      </div>
+      <div class="alert alert-danger alert-block fade in" role="alert" *ngIf="feedError === true">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">×</button>
+        {{strings['errorgettingfeed']}}
+        <a
+          *ngIf="errorMsg && feedError"
+          class="view-more-error"
+          (click)="reportError(errorMsg)"
+        >
+          {{strings['viewmore']}}
+        </a>
       </div>
       <a *ngIf="viewMoreEnabled && nextPage >= 0" href="javascript: void(0);" class="snap-personal-menu-more"
          (click)="getFeed($event)">
@@ -57,7 +73,10 @@ import {animate, query, stagger, style, transition, trigger} from "@angular/anim
       ])
     ])
   ],
-  styles: [],
+  styles: [`
+    .view-more-error {
+    cursor: pointer;
+  }`],
   encapsulation: ViewEncapsulation.None
 })
 export class FeedComponent implements OnInit {
@@ -81,13 +100,28 @@ export class FeedComponent implements OnInit {
   resetInProgress: boolean;
   viewMoreEnabled: boolean;
   fetchingData: boolean;
+  feedError: boolean;
+  errorMsg: string;
+  strings: string[];
+
 
   private feedItemCache: FeedItem[];
 
-  constructor(private feedService: FeedService) {
+  constructor(
+    private feedService: FeedService,
+    private stringService: StringService,
+    private moodleService: MoodleService,
+    private errorReporterService: ErrorReporterService,
+  ) {
   }
 
   ngOnInit() {
+    this.moodleService.sessKey = this.sessKey;
+    this.moodleService.wwwRoot = this.wwwRoot;
+    this.feedError = false;
+    this.errorMsg = null;
+    this.getStrings();
+
     // Initialize caching for feed service.
     this.initFeedService();
 
@@ -131,6 +165,8 @@ export class FeedComponent implements OnInit {
   getFeed(event?: Event): void {
     this.viewMoreEnabled = false;
     this.fetchingData = true;
+    this.feedError = false;
+    this.errorMsg = null;
 
     if (event) {
       event.preventDefault();
@@ -144,7 +180,12 @@ export class FeedComponent implements OnInit {
     const maxId: number = !this.resetInProgress && this.feedItems[0] && this.feedItems[0].itemId || -1;
     this.feedService.getFeed(this.wwwRoot, this.sessKey, this.feedId, this.nextPage, this.pageSize, maxId)
       .subscribe(feedResponse => {
-        if (feedResponse[0].error) {
+        if (feedResponse === undefined || feedResponse[0].error) {
+          this.viewMoreEnabled = false;
+          this.fetchingData = false;
+          this.feedError = true;
+          let singleMoodleRes: any = feedResponse[0];
+          this.errorMsg = singleMoodleRes;
           return;
         }
 
@@ -250,5 +291,19 @@ export class FeedComponent implements OnInit {
     return str.replace(/\&[\w\d\#]{2,5}\;/g, function (m) {
       return map[m];
     });
+  }
+
+  getStrings() {
+    this.strings = [];
+    this.stringService.getStrings([
+      'viewmore',
+      'errorgettingfeed'
+    ]).subscribe(strings => {
+      this.strings = strings;
+    });
+  }
+
+  reportError(error: string) {
+    this.errorReporterService.relayError(error);
   }
 }

@@ -893,7 +893,8 @@ class core_renderer extends \theme_boost\output\core_renderer {
             'currentcourselist' => $currentcourselist,
             'pastcourselist' => $pastcourselist,
             'browseallcourses' => $browseallcourses,
-            'updates' => $this->render_callstoaction()
+            'updates' => $this->render_callstoaction(),
+            'advancedfeeds' => $this->advanced_feeds_enabled()
         ];
 
         return $this->render_from_template('theme_snap/personal_menu', $data);
