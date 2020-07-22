@@ -16,7 +16,7 @@
 # Tests course edting mode.
 #
 # @package    theme_snap
-# @copyright Copyright (c) 2015 Blackboard Inc. (http://www.blackboard.com)
+# @copyright  Copyright (c) 2015 Open LMS. (https://www.openlms.net)
 # @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
 
 
@@ -54,6 +54,20 @@ Feature: When the moodle theme is set to Snap, teachers only see block edit cont
 
     # edit mode persists if course accessed directly via menu
     # (this is basically to check it works without the &notifyeditingon parameter
+    Given I am on the course main page for "C1"
+    Then course page should be in edit mode
+
+    # Edit mode should persist even if there are iframes in a section summary.
+    # First add a section with an iframe which points to the host root.
+    And I follow "Turn editing off"
+    And I follow "Topic 1"
+    And I click on "#section-1 .edit-summary" "css_element"
+    And I set the section summary to "<iframe src=\"/\"></iframe>"
+    And I press "Save changes"
+    And I follow "Course Dashboard"
+    And I follow "Edit blocks"
+    Then course page should be in edit mode
+    # Reload the course page. We should still be in editing mode.
     Given I am on the course main page for "C1"
     Then course page should be in edit mode
 
