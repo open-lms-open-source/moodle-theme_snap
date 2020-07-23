@@ -29,7 +29,6 @@ namespace theme_snap\output;
 defined('MOODLE_INTERNAL') || die();
 
 use context_course;
-use gradereport_singleview\local\ui\empty_element;
 use html_writer;
 use moodle_url;
 use stdClass;
@@ -173,7 +172,7 @@ trait format_section_trait {
      * @return string HTML to output.
      */
     protected function section_header($section, $course, $onsectionpage, $sectionreturn=null) {
-        global $PAGE, $USER, $CFG;
+        global $PAGE, $USER;
 
         $o = '';
         $sectionstyle = '';
@@ -312,7 +311,16 @@ trait format_section_trait {
 
         // Section summary/body text.
         $o .= "<div class='summary'>";
-        $summarytext = $this->format_summary_text($section);
+
+        // SHAME: Inhibiting section html under certain circumstances.
+        // H5P fix, sometimes instructors will try to embed iframes pointing to other courses,
+        // this can damage the current course editing state, so let's not render section summaries.
+        // Anyways, no course content appears when editing is on when using Snap.
+        $notifyeditingon = optional_param('notifyeditingon', 0, PARAM_INT);
+        $editingflag = optional_param('edit', '', PARAM_ALPHA);
+        if (empty($notifyeditingon) && empty($editingflag)) {
+            $summarytext = $this->format_summary_text($section);
+        }
 
         $canupdatecourse = has_capability('moodle/course:update', $context);
 

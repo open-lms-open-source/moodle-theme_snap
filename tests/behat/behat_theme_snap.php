@@ -499,6 +499,15 @@ class behat_theme_snap extends behat_base {
     }
 
     /**
+     * Whilst editing a section, set the section summary.
+     * @param string $name
+     * @Given /^I set the section summary to "(?P<summary_string>(?:[^"]|\\")*)"$/
+     */
+    public function i_set_section_summary_to($summary) {
+        $this->execute('behat_forms::i_set_the_field_to', ['summary_editor[text]', $summary]);
+    }
+
+    /**
      * Restrict a course section by date.
      * @param int $section
      * @param string $date
