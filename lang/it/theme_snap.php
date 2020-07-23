@@ -268,7 +268,7 @@ $string['pld'] = 'PLD';
 $string['pluginname'] = 'Snap';
 $string['poster'] = 'Immagine di copertina';
 $string['posterdesc'] = 'Un\'immagine grande dell\'intestazione per la pagina principale del sito. Le immagini orizzontali (1200 x 600 pixel) o più grandi forniscono risultati migliori.';
-$string['poweredbyrunby'] = 'Realizzato con <a href="https://www.blackboard.com/blackboard-open-lms" target="_blank" rel="noopener">Open LMS</a>,
+$string['poweredbyrunby'] = 'Realizzato con <a href="https://www.openlms.net/" target="_blank" rel="noopener">Open LMS</a>,
     un <a href="https://moodle.com/" target="_blank" rel="noopener">prodotto basato su Moodle</a>.<br>
     Copyright &#169; {$a} Open LMS, tutti i diritti riservati.';
 $string['previoussection'] = 'Sezione precedente';

@@ -266,7 +266,7 @@ $string['pld'] = 'PLD';
 $string['pluginname'] = 'Snap';
 $string['poster'] = 'Omslagafbeelding';
 $string['posterdesc'] = 'Een grote headerafbeelding voor de startpagina van je site. Liggende afbeeldingen (1200 x 600 pixels) of groter werken het beste.';
-$string['poweredbyrunby'] = 'Gebouwd met <a href="https://www.blackboard.com/blackboard-open-lms" target="_blank" rel="noopener">Open LMS</a>,
+$string['poweredbyrunby'] = 'Gebouwd met <a href="https://www.openlms.net/" target="_blank" rel="noopener">Open LMS</a>,
     een op <a href="https://moodle.com/" target="_blank" rel="noopener">Moodle</a> gebaseerd product.<br>
     Copyright &#169; {$a} Open LMS, alle rechten voorbehouden.';
 $string['previoussection'] = 'Vorige sectie';
