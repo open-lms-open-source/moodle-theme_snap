@@ -99,7 +99,7 @@ define(['jquery', 'core/pubsub', 'core/url'],
                         }
                     }).bind();
                 // Listener for the page user profile to load messages URL.
-                } else if ($('#page-user-profile').length != 0) {
+                } else if ($('#page-user-profile').length != 0 || $('.userprofile #message-user-button').length != 0) {
                     PubSub.subscribe("message-drawer-create-conversation-with-user", function (userId) {
                         window.location = URL.relativeUrl("/message/index.php?id=" + userId);
                     });

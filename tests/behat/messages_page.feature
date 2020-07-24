@@ -45,6 +45,8 @@ Feature: When the Moodle theme is set to Snap, message page should be accessible
     And I click on ".js-snap-pm-trigger.snap-my-courses-menu" "css_element"
     And I click on "//a[small[contains(@id, \"snap-pm-messages\")]]" "xpath_element"
     And ".message-app.main" "css_element" should be visible
+    # A message drawer floating div gets renderer but outside of the window
+    Then ".drawer .message-app" "css_element" should not be visible
     And I should see "Starred"
     And I should see "Group"
     And I should see "Private"
@@ -71,11 +73,10 @@ Feature: When the Moodle theme is set to Snap, message page should be accessible
     And I should see "Preferences"
     And I click on "//span/a[contains(text(),\"Preferences\")]" "xpath_element"
     And I follow "Message preferences"
-    Then ".message-app.drawer" "css_element" should not be visible
+    Then ".drawer .message-app" "css_element" should not be visible
 
   @javascript
   Scenario: In personal menu preferences page, it must be possible to click the items.
-    And I skip because "The scenario started to fail after the integration of the fix, to be fixed in INT-16071."
     Given I log in as "admin"
     And I am on site homepage
     And I click on ".js-snap-pm-trigger.snap-my-courses-menu" "css_element"
@@ -84,7 +85,7 @@ Feature: When the Moodle theme is set to Snap, message page should be accessible
     And I should see "Settings"
     And I should see "Privacy"
     And I should see "Notification preferences"
-    And CSS element ".drawer .message-app" is full width
+    Then ".drawer .message-app" "css_element" should be visible
 
   @javascript
   Scenario: When selecting messages of a contact, it must be possible to click the items.
@@ -93,6 +94,8 @@ Feature: When the Moodle theme is set to Snap, message page should be accessible
     And I wait until the page is ready
     And I click on "//a[contains(text(),\"Teacher 1\")]/following-sibling::small/a" "xpath_element"
     And ".message-app.main" "css_element" should be visible
+    # A message drawer floating div gets renderer but outside of the window
+    Then ".drawer .message-app" "css_element" should not be visible
 
   @javascript
   Scenario: When selecting messages in profile, a new messages window opens.
