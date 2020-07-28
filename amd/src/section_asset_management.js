@@ -1248,6 +1248,8 @@ define(['jquery', 'core/log', 'core/ajax', 'core/str', 'core/templates', 'core/n
                         $('#section-' + sectionNumber).addClass('hidden');
                     } else {
                         $('#section-' + sectionNumber).removeClass('hidden');
+                        $('#section-' + sectionNumber + ' .snap-activity .snap-stealth-tag').remove();
+                        $('#section-' + sectionNumber + ' .snap-activity').removeClass('stealth');
                     }
 
                     // Update the section navigation either side of the current section.
