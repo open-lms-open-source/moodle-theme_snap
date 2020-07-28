@@ -56,7 +56,7 @@ define(['jquery', 'core/yui', 'theme_snap/util'],
         self.decorateCourseDNDUpload = function(Y, options) {
             // Add the statically added file handlers.
             /* global themeSnapCourseFileHandlers */
-            if (themeSnapCourseFileHandlers) {
+            if (typeof(themeSnapCourseFileHandlers) != "undefined" && themeSnapCourseFileHandlers) {
                 options.handlers = themeSnapCourseFileHandlers;
             } else {
                 options.handlers = {};
