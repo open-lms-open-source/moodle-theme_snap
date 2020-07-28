@@ -318,7 +318,7 @@ trait format_section_trait {
         // Anyways, no course content appears when editing is on when using Snap.
         $notifyeditingon = optional_param('notifyeditingon', 0, PARAM_INT);
         $editingflag = optional_param('edit', '', PARAM_ALPHA);
-        if (empty($notifyeditingon) && empty($editingflag)) {
+        if (!$USER->editing && empty($notifyeditingon) && empty($editingflag)) {
             $summarytext = $this->format_summary_text($section);
         }
 
