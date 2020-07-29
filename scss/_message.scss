@@ -119,10 +119,14 @@
         }
     }
     .switch input:checked + label::before {
+        background-color: rgba($brand-primary, 0.3);
+    }
+    .switch input:checked + label::after {
         background-color: $brand-primary;
     }
     .custom-radio .custom-control-input:checked~.custom-control-label::before {
         background-color: $brand-primary;
+        border-color: rgba($brand-primary, 0.3);
     }
     .drawer.bg-white .message-app {
         padding: 1em;
