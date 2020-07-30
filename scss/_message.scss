@@ -141,12 +141,27 @@
     }
 
     .message-app .body-container > * {
-        position: relative;
+        position: absolute;
     }
 }
 
+#page-message-edit [data-region=right-hand-drawer].drawer {
+    .message-app{
+        width: 100%!important;
+    }
+    position: inherit;
+    width: 100%;
+}
+
+#page-user-profile [data-region=right-hand-drawer].drawer, .path-course-view
+[data-region=right-hand-drawer].drawer {
+    visibility: hidden;
+}
 // Fix for personal menu hidden in IE 11 message page.
 .ie11#page-message-index {
+    #region-main div[role="main"] .message-app.main > .container-fluid {
+        position: inherit;
+    }
     #snap-pm {
         position: relative;
         z-index: 2;
