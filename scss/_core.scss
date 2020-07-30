@@ -3426,6 +3426,7 @@ table th img.iconhelp {
     }
 
     .snap-feature-image {
+        object-fit: contain;
         max-width: 12.5em;
     }
 
@@ -3434,6 +3435,7 @@ table th img.iconhelp {
     }
 
     div.snap-feature-image-wrap {
+        display: flex;
         width: 12.5em;
         height: 7.5em;
         margin: 0 auto;
