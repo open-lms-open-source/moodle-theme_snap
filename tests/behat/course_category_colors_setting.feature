@@ -121,7 +121,7 @@ Feature: When the moodle theme is set to Snap, sets a color per category.
     And I check element "#help-guide-tab" with property "background-color" = "#00D600"
     And I follow "Activities"
     And I check element "#activites-tab" with property "background-color" = "#00D600"
-    And I click on "button.close" "css_element"
+    And I click on "//div[@id='modchooser-accessible-tab']//button[@class='close']" "xpath_element"
     Then I log out
     And I log in as "student1"
     # And I am on the course with shortname "C2"
