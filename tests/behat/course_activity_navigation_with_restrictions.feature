@@ -60,7 +60,7 @@ Feature: Activity navigation involving activities with access restrictions in Sn
     # And I click on "Edit settings" "link" in the "Chat 1" activity.
     And I expand all fieldsets
     And I click on "Add restriction..." "button"
-    And I click on "Activity completion" "button" in the "Add restriction..." "dialogue"
+    And I click on "//button[text()=\"Activity completion\"]" "xpath_element"
     And I set the field "Activity or resource" to "Forum 1"
     And I press "Save and return to course"
     And I log out
