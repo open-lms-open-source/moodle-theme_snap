@@ -4222,17 +4222,36 @@ li.snap-activity.modtype_folder div[id^="folder_tree"] {
     float: right;
 }
 
-[data-region=right-hand-drawer].drawer {
-    z-index: 1020;
+.theme-snap [data-region=right-hand-drawer].drawer {
+    z-index: 12;
     position: fixed;
-    top: 3.5em;
     right: 0;
-    height: calc(100% - 3.5em);
+    height: 100%;
     width: 22.3em;
     -webkit-box-shadow: -2px 2px 4px rgba(0,0,0,.08);
     box-shadow: -2px 2px 4px rgba(0,0,0,.08);
     padding: 0;
     visibility: visible;
     opacity: 1;
+}
+
+.theme-snap .snap-drawer-headroom {
+    top: 6em;
+    @media (max-width: 992px) {
+        top: 3.5em;
+    }
+    @media (max-width: 792px) {
+        top: 5.5em;
+    }
+    @media (max-width: 767px) {
+        top: 4em;
+    }
+    @media (max-width: 666px) {
+        top: 6.5em;
+    }
+}
+
+.theme-snap .snap-drawer-no-headroom {
+    top: 0em;
 }
 

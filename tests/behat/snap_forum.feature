@@ -42,6 +42,15 @@ Feature: When the moodle theme is set to Snap, core forums displays correctly.
       | Forum type  | Standard forum for general use |
       | Description | Test forum description         |
     And I log out
+    And I log in as "student1"
+    And I open the personal menu
+    And I wait for the personal menu to be loaded
+    And I click on "Preference" "link"
+    And I click on "Forum preference" "link"
+    And I set the following fields to these values:
+      | Use experimental nested discussion view             | 1 |
+    And I press "Save changes"
+    And I log out
 
   @javascript
   Scenario Outline: Settings option is shown correctly
@@ -57,15 +66,8 @@ Feature: When the moodle theme is set to Snap, core forums displays correctly.
       | teacher1 | not exist |
 
   @javascript
-  Scenario: Settings option in discussions is shown correctly for experimental ui
+  Scenario Outline: Settings option in discussions is shown correctly for experimental ui in different screen sizes
     Given I log in as "student1"
-    And I open the personal menu
-    And I wait for the personal menu to be loaded
-    And I click on "Preference" "link"
-    And I click on "Forum preference" "link"
-    And I set the following fields to these values:
-      | Use experimental nested discussion view             | 1 |
-    And I press "Save changes"
     And I am on "Course 1" course homepage
     And I follow "Topic 1"
     And I click on ".forum .instancename:contains('Test forum name')" "css_element"
@@ -74,4 +76,14 @@ Feature: When the moodle theme is set to Snap, core forums displays correctly.
       | Message | Discussion contents 1, first message |
     And I click on "Discussion 1" "link"
     And "button[aria-controls=\"discussion-settings-drawer\"]" "css_element" should exist
+    And I click on "[id^=toggle-discussion-settings-drawer]" "css_element"
+    And I change window size to "<size>"
+    And I check element "#discussion-settings-drawer" with property "top" = "<Top>"
     And I log out
+    Examples:  // Top is converted to px as 1em = 19.8
+      | size      | Top   |
+      | 1920x1080 |   6em |
+      |  992x1080 | 3.5em |
+      |  790x1080 | 5.5em |
+      |  765x1080 |   4em |
+      |  665x1080 | 6.5em |

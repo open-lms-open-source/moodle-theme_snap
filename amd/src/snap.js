@@ -425,6 +425,15 @@ define(['jquery', 'core/log', 'theme_snap/headroom', 'theme_snap/util', 'theme_s
             // Show fixed header on scroll down
             // using headroom js - http://wicky.nillia.ms/headroom.js/
             var myElement = document.querySelector("#mr-nav");
+            // Functions added to trigger on pin and unpin actions for the nav bar
+            var onPin = () => {
+                $('.snap-drawer-no-headroom').addClass('snap-drawer-headroom');
+                $('.snap-drawer-headroom').removeClass('snap-drawer-no-headroom');
+            };
+            var onUnpin = () => {
+                $('.snap-drawer-headroom').addClass('snap-drawer-no-headroom');
+                $('.snap-drawer-no-headroom').removeClass('snap-drawer-headroom');
+            };
             // Construct an instance of Headroom, passing the element.
             var headroom = new Headroom(myElement, {
                 "tolerance": 5,
@@ -440,7 +449,9 @@ define(['jquery', 'core/log', 'theme_snap/headroom', 'theme_snap/util', 'theme_s
                     top: "headroom--top",
                     // when below offset
                     notTop: "headroom--not-top"
-                }
+                },
+                "onPin": onPin,
+                "onUnpin": onUnpin
             });
             // When not signed in always show mr-nav?
             if (!$('.notloggedin').length) {
