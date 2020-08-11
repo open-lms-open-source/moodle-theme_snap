@@ -96,6 +96,8 @@ class behat_theme_snap_category_colors extends behat_base {
         if (strpos($elementvalue, 'rgb') !== false) {
             $elementvalue = self::rgb2array($elementvalue);
             $value = self::hex2rgb($value);
+        } else {
+            $value = self::unit_converter($element, $value);
         }
 
         if ($elementvalue !== $value) {
@@ -161,4 +163,24 @@ class behat_theme_snap_category_colors extends behat_base {
         return $color;
     }
 
+    /**
+     * Function to convert relative units to absolute units.
+     *
+     * @param string $element
+     * @param string $value
+     * @return string
+     */
+    private function unit_converter($element, $value) {
+        $amount = floatval($value);
+        $unit = explode($amount, $value)[1];
+        if ($unit == 'em') { // Converts em to px.
+            $session = $this->getSession();
+            $fontsize = $session->getDriver()->evaluateScript(
+                'window.getComputedStyle(document.querySelectorAll("'
+                . $element . '")[0], null).getPropertyValue("font-size");'); // Return font size in px.
+            $fontsize = floatval($fontsize);
+            return ($amount * $fontsize).'px';
+        }
+        return $value;
+    }
 }
