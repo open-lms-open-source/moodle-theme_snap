@@ -739,32 +739,41 @@ class core_renderer extends \theme_boost\output\core_renderer {
             'link' => s($CFG->wwwroot). '/user/profile.php',
             'title' => get_string('profile')
         ];
+        $quicklinks = [$profilelink];
+        // We need to verify the existence of My Account plugin in the code base to display this.
+        if ((has_capability('moodle/site:config', context_system::instance())) &&
+            (\core_component::get_component_directory('local_myaccount') !== null) &&
+            is_callable('mr_on') &&
+            mr_on("myaccount", "_MR_LOCAL")) {
+            $myaccountlink = [
+                'id' => 'snap-pm-myaccount',
+                'link' => s($CFG->wwwroot) . '/local/myaccount/view.php?controller=default',
+                'title' => get_string('myaccount', 'local_myaccount')
+            ];
+            $quicklinks[] = $myaccountlink;
+        }
         $dashboardlink = [
             'id' => 'snap-pm-dashboard',
             'link' => s($CFG->wwwroot). '/my',
             'title' => get_string('myhome')
         ];
+        $quicklinks[] = $dashboardlink;
         $gradelink = [
             'id' => 'snap-pm-grades',
             'link' => s($CFG->wwwroot). '/grade/report/overview/index.php',
             'title' => get_string('grades')
         ];
+        $quicklinks[] = $gradelink;
         $preferenceslink = [
             'id' => 'snap-pm-preferences',
             'link' => s($CFG->wwwroot). '/user/preferences.php',
             'title' => get_string('preferences')
         ];
+        $quicklinks[] = $preferenceslink;
         $logoutlink = [
             'id' => 'snap-pm-logout',
             'link' => s($CFG->wwwroot).'/login/logout.php?sesskey='.sesskey(),
             'title' => get_string('logout')
-        ];
-
-        $quicklinks = [
-            $profilelink,
-            $dashboardlink,
-            $preferenceslink,
-            $gradelink
         ];
 
         $courseid = $PAGE->course->id;
