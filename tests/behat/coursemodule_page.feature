@@ -131,13 +131,19 @@ Feature: Open page module inline
   | 1          | card     |
 
   @javascript
-  Scenario: Page mod is opened in a new window by default.
+  Scenario Outline: Page mod is opened in a new window by default.
     Given the following "activities" exist:
       | activity | course  | idnumber  | name   | intro      | content      | section |
       | page     | C1      | pagec     | Page   | Page intro | Page content | 0       |
     And I log in as "admin"
     And I am on the course main page for "C1"
-    And I click on "li .contentafterlink .summary-text a" "css_element"
+    And I click on "<Page resource selector>" "css_element"
     # Page content will be opened in a new window.
     And I wait until the page is ready
-    And I should see "Page content"
+    Then I should see "Page content"
+    Examples:
+      | Page resource selector                                            |
+      # Open with read more button link.
+      | li .contentafterlink .summary-text a                              |
+      # Open with page resource title link.
+      | li[data-type='Page'] h3.snap-asset-link a.mod-link p.instancename |
