@@ -858,6 +858,9 @@ footer #moodle-footer
 #mr-nav {
     #snap-header {
         padding: .5em 4%;
+        .pull-right.js-only .nav-link {
+            padding: .5rem .5rem;
+        }
     }
     position: fixed;
     width: 100vw;
@@ -963,6 +966,7 @@ footer #moodle-footer
     .icon.fa-comment {
         font-size: 24px;
         position: relative;
+        margin: 0;
 
         &:before {
             content: "\f0e5";
@@ -1227,8 +1231,8 @@ header#page-header
 #admin-menu-trigger {
     width: 30px;
     height: 30px;
-    margin-left: .75em;
-    margin-top: .5em;
+    margin-top: .3em;
+    margin-left: .4em;
 }
 
 #page-report-outline-user .section {
@@ -3787,8 +3791,7 @@ body.pagelayout-frontpage {
 
 // Auth icon align fix.
 #page-login-index .auth-icon,
-#page-site-index .auth-icon,
-#page-site-index .icon {
+#page-site-index .auth-icon {
     width: 24px;
     height: 24px;
     margin: 0;
