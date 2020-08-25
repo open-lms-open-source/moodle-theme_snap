@@ -207,7 +207,7 @@ define(
          */
         var init = function() {
             sectionAssetManagement.init(self);
-            courseModules.init();
+            courseModules.init(courseConfig);
 
             // Only load the conditionals library if it's enabled for the course, viva la HTTP2!
             if (self.courseConfig.enablecompletion) {

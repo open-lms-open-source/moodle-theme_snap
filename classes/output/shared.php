@@ -380,8 +380,9 @@ EOF;
             'unavailablemods' => $unavailablemods,
             'enablecompletion' => isloggedin() && $COURSE->enablecompletion,
             'format' => $COURSE->format,
-            'partialrender' => !empty(get_config('theme_snap', 'coursepartialrender')) ? true : false,
-            'toctype' => get_config('theme_snap', 'leftnav')
+            'partialrender' => !empty(get_config('theme_snap', 'coursepartialrender')),
+            'toctype' => get_config('theme_snap', 'leftnav'),
+            'loadPageInCourse' => !empty(get_config('theme_snap', 'design_mod_page')),
         ];
 
         $forcepwdchange = (bool) get_user_preferences('auth_forcepasswordchange', false);
