@@ -552,26 +552,32 @@ EOF;
      * @return string
      */
     public static function appendices() {
-        global $CFG, $COURSE, $PAGE, $OUTPUT, $DB;
+        global $CFG, $COURSE, $OUTPUT, $DB;
 
-        $links = array();
+        $links = [];
         $localplugins = core_component::get_plugin_list('local');
         $coursecontext = context_course::instance($COURSE->id);
 
         // Course enrolment link.
-        $enrollink = '';
+        /** @var \enrol_plugin[] $plugins */
         $plugins   = enrol_get_plugins(true);
         $instances = enrol_get_instances($COURSE->id, true);
         $selfenrol = false;
+        // These plugins may allow self (un)enroll links to be shown.
+        $allowedenrollplugins = [];
+        $allowedenrollplugins['self'] = true;
+        $allowedenrollplugins['manual'] = true;
         foreach ($instances as $instance) { // Need to check enrolment methods for self enrol.
-            if ($instance->enrol === 'self') {
+            if (isset($allowedenrollplugins[$instance->enrol])) { // Will show links for methods which allow it.
                 $plugin = $plugins[$instance->enrol];
                 if (is_enrolled($coursecontext)) {
                     // Prepare unenrolment link.
                     $enrolurl = $plugin->get_unenrolself_link($instance);
                     if ($enrolurl) {
                         $selfenrol = true;
-                        $enrolstr = get_string('unenrolme', 'theme_snap');
+                        $iconurl = $OUTPUT->image_url('i/unenrolme', 'theme_snap');
+                        $enrolicon = '<img src="'.$iconurl.'" class="svg-icon" alt="" role="presentation">';
+                        $enrolstr = $enrolicon . get_string('unenrolme', 'theme_snap');
                         break;
                     }
                 } else {
@@ -579,14 +585,13 @@ EOF;
                         // Prepare enrolment link.
                         $selfenrol = true;
                         $enrolurl = new moodle_url('/enrol/index.php', ['id' => $COURSE->id]);
-                        $enrolstr = get_string('enrolme', 'core_enrol');
+                        $iconurl = $OUTPUT->image_url('i/enrolme', 'theme_snap');
+                        $enrolicon = '<img src="'.$iconurl.'" class="svg-icon" alt="" role="presentation">';
+                        $enrolstr = $enrolicon . get_string('enrolme', 'core_enrol');
                         break;
                     }
                 }
             }
-        }
-        if ($selfenrol) {
-            $enrollink = '<div class="text-center"><a href="'.$enrolurl.'" class="btn btn-primary">'.$enrolstr.'</a></div><br>';
         }
 
         // Course settings.
@@ -795,12 +800,20 @@ EOF;
                 'attributes' => ['target' => '_blank']
             ];
         }
+
+        // Add enrol link as the last item in the dashboard links.
+        if ($selfenrol) {
+            $links[] = [
+                'link'  => $enrolurl->out_as_local_url(false),
+                'title' => $enrolstr,
+            ];
+        }
+
         // Output course tools section.
         $coursetools = get_string('coursetools', 'theme_snap');
         $iconurl = $OUTPUT->image_url('course_dashboard', 'theme');
         $coursetoolsicon = '<img src="'.$iconurl.'" class="svg-icon" alt="" role="presentation">';
         $o = '<h2>'.$coursetoolsicon.$coursetools.'</h2>';
-        $o .= $enrollink;
         $o .= self::print_student_dashboard();
         $o .= '<div id="coursetools-list">' .self::render_appendices($links). '</div><hr>';
 
