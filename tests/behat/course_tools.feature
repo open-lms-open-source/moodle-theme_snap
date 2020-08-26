@@ -203,4 +203,4 @@ Feature: When the moodle theme is set to Snap, a course tools section is availab
     And I log in as "admin"
     And I am on the course main page for "C1"
     And I click on "a[href=\"#coursetools\"]" "css_element"
-    Then I should see "Enrol me in this course"
+    Then I should see "Enrol me"

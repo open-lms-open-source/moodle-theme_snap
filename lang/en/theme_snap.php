@@ -322,6 +322,7 @@ $string['topicactions'] = 'Topic actions';
 $string['twitter'] = 'Twitter';
 $string['twitterdesc'] = 'The url of your twitter account.';
 $string['unenrolme'] = 'Unenrol me';
+$string['enrolme'] = 'Enrol me';
 $string['unread'] = 'unread';
 $string['unsupportedcoverimagetype'] = 'Unsupported cover image type ({$a})';
 $string['via'] = 'via';

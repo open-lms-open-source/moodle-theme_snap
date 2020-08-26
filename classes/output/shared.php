@@ -587,7 +587,7 @@ EOF;
                         $enrolurl = new moodle_url('/enrol/index.php', ['id' => $COURSE->id]);
                         $iconurl = $OUTPUT->image_url('i/enrolme', 'theme_snap');
                         $enrolicon = '<img src="'.$iconurl.'" class="svg-icon" alt="" role="presentation">';
-                        $enrolstr = $enrolicon . get_string('enrolme', 'core_enrol');
+                        $enrolstr = $enrolicon . get_string('enrolme', 'theme_snap');
                         break;
                     }
                 }
