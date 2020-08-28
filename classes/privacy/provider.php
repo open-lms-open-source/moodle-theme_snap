@@ -106,6 +106,7 @@ class provider implements metadata_provider, request_provider,
 
             $subcontext = ['theme_snap-course-favorites'];
         }
+        $favorites->close();
 
         writer::with_context($context)->export_data($subcontext, (object) ['favorites' => $data]);
     }
