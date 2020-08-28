@@ -16,7 +16,7 @@
 /**
  * Steps definitions to open and close action menus.
  *
- * @package    core
+ * @package    theme_snap
  * @category   test
  * @copyright  2020 Andrew Nicols <andrew@nicols.co.uk>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
@@ -28,14 +28,14 @@ require_once(__DIR__ . '/../../../../lib/behat/behat_base.php');
 /**
  * Steps definitions to assist with accessibility testing.
  *
- * @package    core
+ * @package    theme_snap
  * @category   test
  * @copyright  2020 Andrew Nicols <andrew@nicols.co.uk>
  * Taken from https://github.com/andrewnicols/moodle/commit/2af7d173254e47956ac86166083cb1708a1a5980
  * And modified by Rafael Becerra <rafael.becerra@openlms.com> to work with our environment.
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class behat_accessibility extends behat_base {
+class behat_theme_snap_accessibility extends behat_base {
     /**
      * Open the action menu in
      *
