@@ -20,7 +20,7 @@
 # @copyright  Copyright (c) 2020 Open LMS
 # @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
 
-@theme_snap @local_myaccount
+@theme @theme_snap @local_myaccount
 Feature: Correct visualization of the general view for My Account plugin only for an Administrator in Snap theme.
 
   Background:
