@@ -41,6 +41,7 @@ Feature: When the moodle theme is set to Snap, core forums displays correctly.
       | Forum name  | Test forum name                |
       | Forum type  | Standard forum for general use |
       | Description | Test forum description         |
+      | Whole forum grading > Type | Point           |
     And I log out
     And I log in as "student1"
     And I open the personal menu
@@ -87,3 +88,27 @@ Feature: When the moodle theme is set to Snap, core forums displays correctly.
       |  790x1080 | 5.5em |
       |  765x1080 |   4em |
       |  665x1080 | 6.5em |
+
+  @javascript
+  Scenario: Grading Buttons are usable for teachers.
+    Given I log in as "student1"
+    And I am on "Course 1" course homepage
+    And I follow "Topic 1"
+    And I click on ".forum .instancename:contains('Test forum name')" "css_element"
+    And I add a new discussion to "Test forum name" forum with:
+      | Subject | Discussion 1 |
+      | Message | Discussion contents 1, first message |
+    And I log out
+    And I log in as "teacher1"
+    And I am on "Course 1" course homepage with editing mode on
+    And I follow "Topic 1"
+    And I click on ".forum .instancename:contains('Test forum name')" "css_element"
+    And I click on "Grade users" "button"
+    And I set the following fields to these values:
+      | Grade | 75 |
+    And I click on "Save" "button"
+    And I wait "1" seconds
+    When I click on "Close grader" "button"
+    Then I should see "Course 1"
+    Then I should see "Test forum name"
+    Then I should see "Test forum description"

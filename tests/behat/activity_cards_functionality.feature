@@ -106,6 +106,7 @@ Feature: Check functionality in activity cards.
 
   @javascript
   Scenario Outline: For activity cards, when content is displayed inline the tree needs to start with a H3 tag
+    Given I skip because "is going to be reviewed in INT-16260"
     Given I log in as "admin"
     And the following config values are set as admin:
       | resourcedisplay | <Option> | theme_snap |

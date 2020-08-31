@@ -4245,6 +4245,10 @@ li.snap-activity.modtype_folder div[id^="folder_tree"] {
     opacity: 1;
 }
 
+#page-mod-forum-view.theme-snap [data-region=right-hand-drawer].drawer {
+    position: absolute;
+}
+
 .theme-snap .snap-drawer-headroom {
     top: 6em;
     @media (max-width: 992px) {

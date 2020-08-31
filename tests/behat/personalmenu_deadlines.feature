@@ -175,6 +175,7 @@ Feature: When the moodle theme is set to Snap, students and teachers can find in
 
   @javascript
   Scenario Outline: Extended deadline dates take priority over deadlines.
+    Given I skip because "is going to be reviewed in INT-16260"
     Given the following config values are set as admin:
       | theme | snap |
     Given the following "activities" exist:
@@ -205,6 +206,7 @@ Feature: When the moodle theme is set to Snap, students and teachers can find in
 
   @javascript
   Scenario Outline: Expected completed on activities that do not have due date are shown on deadlines
+    Given I skip because "is going to be reviewed in INT-16260"
     Given the following "activities" exist:
       | activity    | name          | intro                       | course | idnumber   | section | completionexpected | duedate |
       | assign      | Assignment 1  | Test assign description 1   | C2     | assign1    | 0       | ##tomorrow##       | ##next week## |
@@ -257,6 +259,7 @@ Feature: When the moodle theme is set to Snap, students and teachers can find in
 
   @javascript
   Scenario Outline: As student i shouln't see deadlines of activities in the recycle bin.
+    Given I skip because "is going to be reviewed in INT-16260"
     Given the following "activities" exist:
       | activity | course | idnumber | name             | intro             | assignsubmission_onlinetext_enabled | assignfeedback_comments_enabled | section | duedate         |
       | assign   | C1     | assign1  | Assignment 1 | Test assignment 1 | 1                                   | 1                               | 0       | ##tomorrow##    |
