@@ -106,7 +106,12 @@ class course_renderer extends \core_course_renderer {
             // realize that the content is not available to students.
 
             if (!$mod->visible) {
-                $modclasses [] = 'draft';
+                // If the section is hidden check the visibleold to prevent
+                // the message will be displayed in all modules.
+                $section = $mod->get_section_info();
+                if ($section->visible || (!$section->visible && !$mod->visibleold)) {
+                    $modclasses [] = 'draft';
+                }
             }
 
             // Is this mod stealth?

@@ -1482,6 +1482,11 @@ body.snap-resource-card {
     font-size: $font-size-sm;
 }
 
+// Hide draft tag if the sections has hidden class.
+li.section.hidden .snap-asset.draft .snap-draft-tag {
+    display: none !important;
+}
+
 // Show draft for mods & sections.
 .hidden .content .snap-draft-section,
 .snap-asset.draft .snap-draft-tag {
