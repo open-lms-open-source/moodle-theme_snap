@@ -747,7 +747,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
             mr_on("myaccount", "_MR_LOCAL")) {
             $myaccountlink = [
                 'id' => 'snap-pm-myaccount',
-                'link' => s($CFG->wwwroot) . '/local/myaccount/view.php?controller=default',
+                'link' => s($CFG->wwwroot) . '/local/myaccount/view.php?controller=default&action=view',
                 'title' => get_string('myaccount', 'local_myaccount')
             ];
             $quicklinks[] = $myaccountlink;

@@ -13,7 +13,7 @@
 # You should have received a copy of the GNU General Public License
 # along with Moodle. If not, see <http://www.gnu.org/licenses/>.
 #
-# Tests for toggle course section visibility in non edit mode in snap.
+# Tests for My Account general view.
 #
 # @package    local_myaccount
 # @autor      Rafael Becerra
@@ -59,4 +59,26 @@ Feature: Correct visualization of the general view for My Account plugin only fo
     And I should see "Open LMS Public roadmap"
     And I should see "Open LMS Community"
     And I should see "Open LMS Latest Releases"
-    And I should see "Users Turbo Mode"
+    And I should see "Open bot"
+
+  @javascript
+  Scenario: As an Admin, I'm redirected to specific pages to change Site logo or Site full name in Snap.
+    Given I am using Blackboard Open LMS
+    And I log in as "admin"
+    And I open the personal menu
+    And I wait for the personal menu to be loaded
+    And I should see "My Account"
+    And I click on "div.snap-pm-user a#snap-pm-myaccount" "css_element"
+    # Check the existence of the first view in the page - General.
+    And I should see "General"
+    And I click on "a#myaccount-logo-link" "css_element"
+    And I click on "Basics" "link"
+    # This is only to verify that the logo in the My Account view, is a link redirecting to Snap settings page.
+    And I should see "Logo"
+    And I am on my account default page
+    # Verify that the full name site name in the My Account view, is a link redirecting to the Front settings page.
+    And I click on "a#myaccount-sitename-link" "css_element"
+    And I set the field with xpath "//*[@id='id_s__fullname']" to "Site full name test"
+    And I press "Save changes"
+    And I am on my account default page
+    And I should see "Site full name test"
