@@ -4247,6 +4247,7 @@ li.snap-activity.modtype_folder div[id^="folder_tree"] {
 
 #page-mod-forum-view.theme-snap [data-region=right-hand-drawer].drawer {
     position: absolute;
+    z-index: 0;
 }
 
 .theme-snap .snap-drawer-headroom {

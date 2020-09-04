@@ -104,6 +104,7 @@ Feature: When the moodle theme is set to Snap, core forums displays correctly.
     And I follow "Topic 1"
     And I click on ".forum .instancename:contains('Test forum name')" "css_element"
     And I click on "Grade users" "button"
+    And I should see "The grade to award the student"
     And I set the following fields to these values:
       | Grade | 75 |
     And I click on "Save" "button"
