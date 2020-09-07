@@ -100,6 +100,31 @@ Feature: When the moodle theme is set to Snap, teachers can toggle the visibilit
       | 1          |
 
   @javascript
+  Scenario Outline: In read mode, teacher hides section and hide an activity.
+    Given I log in as "admin"
+    And the following config values are set as admin:
+      | coursepartialrender | <Option> | theme_snap |
+    And I am on the course main page for "C1"
+    And I add a "Assignment" to section "1" and I fill the form with:
+      | Assignment name | Assignment One          |
+      | Description     | Submit your online text |
+      | visible         | 0                       |
+    And I am on the course main page for "C1"
+    And I follow "Topic 1"
+    Then I should see "Not published to students"
+    And I click on "#section-1 .snap-visibility.snap-hide" "css_element"
+    And I wait until "#section-1 .snap-visibility.snap-show" "css_element" exists
+    Then ".snap-asset.draft .snap-draft-tag" "css_element" should not be visible
+    And I click on "#section-1 .snap-visibility.snap-show" "css_element"
+    And I wait until "#section-1 .snap-visibility.snap-hide" "css_element" exists
+    Then ".snap-asset.draft .snap-draft-tag" "css_element" should be visible
+    Then I should see "Not published to students"
+    Examples:
+      | Option     |
+      | 0          |
+      | 1          |
+
+  @javascript
   Scenario: Teacher loses teacher capability whilst course open and receives the correct error message when trying to
   hide section.
     Given I log in as "teacher1"
