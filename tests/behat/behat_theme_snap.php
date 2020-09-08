@@ -1925,4 +1925,13 @@ class behat_theme_snap extends behat_base {
     public function i_set_the_text_field_with_multi_line_text($field, \Behat\Gherkin\Node\PyStringNode $value) {
         $this->set_field_value($field, $value);
     }
+
+    /**
+     * Opens My Account default page.
+     *
+     * @Given /^I am on my account default page$/
+     */
+    public function i_am_on_myaccount_default_page() {
+        $this->getSession()->visit($this->locate_path('/local/myaccount/view.php?controller=default&action=view'));
+    }
 }
