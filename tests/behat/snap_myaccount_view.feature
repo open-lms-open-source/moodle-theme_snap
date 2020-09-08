@@ -55,7 +55,8 @@ Feature: Correct visualization of the general view for My Account plugin only fo
     # Check the existence of the first view in the page - General.
     And I should see "General"
     # Check for the existence of the main icons for this view.
-    And I should see "Create a Support ticket"
+    # We need to hide this for the moment, since not all clients create their tickets through Zendesk. Please uncomment when a proper solution is found.
+    # And I should see "Create a Support ticket"
     And I should see "Open LMS Public roadmap"
     And I should see "Open LMS Community"
     And I should see "Open LMS Latest Releases"
@@ -82,3 +83,25 @@ Feature: Correct visualization of the general view for My Account plugin only fo
     And I press "Save changes"
     And I am on my account default page
     And I should see "Site full name test"
+
+  @javascript
+  Scenario: As an Admin, I change drift subscription and the Open bot icon should change.
+    Given I log in as "admin"
+    And I go to my profile page
+    And I should see "Drift subscription"
+    And I follow "Drift subscription"
+    And the field "Drift subscription" matches value "1"
+    And I set the field "Drift subscription" to "0"
+    And I press "Save changes"
+    And the field "Drift subscription" matches value "0"
+    And I am on site homepage
+    And I am on my account default page
+    And I should see "Enable Open bot"
+    And I click on "a#myaccount-openbot-nosub" "css_element"
+    And I should see "Drift Integration Plugin"
+    And the field "Drift subscription" matches value "0"
+    And I set the field "Drift subscription" to "1"
+    And I press "Save changes"
+    And I am on my account default page
+    # This is to rectify that the drift subscription is turned off, a different icon will appear in My Account general view.
+    And I should see "Open bot"
