@@ -217,3 +217,18 @@ Feature: Snap message send messages
     And I wait until the page is ready
     And I follow "Cat 5"
     And I check element ".badge-count-container .icon.fa-comment" with color "#510038"
+
+  @javascript
+  Scenario: Send a message from course participants.
+    Given the following "message contacts" exist:
+      | user     | contact |
+      | student1 | student2 |
+    And I log in as "student1"
+    And I am on "Course 1" course homepage
+    And I click on "#snap-course-tools" "css_element"
+    And I click on "#ct-participants-number" "css_element"
+    Then I wait until the page is ready
+    Then I click on "//a[contains(text(),'Student 2')]" "xpath_element"
+    Then I wait until the page is ready
+    And I click on "#message-user-button" "css_element"
+    Then "//div[contains(@class, 'header-container')]//strong[contains(text(), 'Student 2')]" "xpath_element" should be visible

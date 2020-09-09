@@ -101,7 +101,13 @@ define(['jquery', 'core/pubsub', 'core/url'],
                 // Listener for the page user profile to load messages URL.
                 } else if ($('#page-user-profile').length != 0 || $('.userprofile #message-user-button').length != 0) {
                     PubSub.subscribe("message-drawer-create-conversation-with-user", function (userId) {
-                        window.location = URL.relativeUrl("/message/index.php?id=" + userId);
+                        let processedId = '';
+                        if (typeof userId === 'object' && userId.userid) {
+                            processedId = parseInt(userId.userid);
+                        } else {
+                            processedId = parseInt(userId);
+                        }
+                        window.location = URL.relativeUrl("/message/index.php?id=" + processedId);
                     });
                 }
             }
