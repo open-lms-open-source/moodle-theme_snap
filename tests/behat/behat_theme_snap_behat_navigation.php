@@ -97,7 +97,7 @@ EOF;
         // Throw exception if no node found.
         if (!$nodetoclick) {
             throw new ExpectationException('Navigation node "' . $nodetext . '" not found under "' .
-                implode($parentnodes, ' > ') . '"', $this->getSession());
+                implode(' > ', $parentnodes) . '"', $this->getSession());
         }
 
         $settings = $this->find('css', '.block_settings');

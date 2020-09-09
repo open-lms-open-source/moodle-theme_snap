@@ -206,8 +206,7 @@ class course_renderer extends \core_course_renderer {
      * @return string
      */
     public function course_section_cm($course, &$completioninfo, cm_info $mod, $sectionreturn, $displayoptions = array()) {
-
-        global $COURSE, $OUTPUT;
+        global $COURSE;
 
         $output = '';
         // We return empty string (because course module will not be displayed at all)
@@ -608,8 +607,7 @@ class course_renderer extends \core_course_renderer {
      * @return string
      */
     protected function module_meta_html(cm_info $mod) {
-
-        global $COURSE, $OUTPUT;
+        global $COURSE;
 
         $content = '';
 
@@ -715,7 +713,6 @@ class course_renderer extends \core_course_renderer {
      * @return string
      */
     protected function mod_image_html($mod) {
-        global $OUTPUT;
         if (!$mod->uservisible) {
                 return "";
         }
@@ -743,7 +740,7 @@ class course_renderer extends \core_course_renderer {
         $img = format_text('<img src="' .$imgsrc. '" alt="' .$modname. '"/>');
         $icon = '<img title="' .get_string('vieworiginalimage', 'theme_snap'). '"
                 alt="' .get_string('vieworiginalimage', 'theme_snap'). '"
-                src="' .$OUTPUT->image_url('arrow-expand', 'theme'). '">';
+                src="' .$this->output->image_url('arrow-expand', 'theme'). '">';
         $imglink = '<a class="snap-expand-link" href="' .$imgsrc. '" target="_blank">' .$icon. '</a>';
 
         $output = '<figure class="snap-resource-figure figure">'
@@ -1012,8 +1009,7 @@ class course_renderer extends \core_course_renderer {
      * @throws moodle_exception
      */
     public function snap_footer_alert() {
-        global $OUTPUT;
-        return $OUTPUT->render_from_template('theme_snap/footer_alert', null);
+        return $this->output->render_from_template('theme_snap/footer_alert', null);
     }
 
     /**
@@ -1023,14 +1019,14 @@ class course_renderer extends \core_course_renderer {
      * @throws \coding_exception
      */
     public function course_format_warning() {
-        global $COURSE, $PAGE, $OUTPUT;
+        global $COURSE;
 
         $format = $COURSE->format;
         if (in_array($format, ['weeks', 'topics'])) {
             return '';
         }
 
-        if (!$PAGE->user_is_editing()) {
+        if (!$this->page->user_is_editing()) {
             return '';
         }
 
@@ -1039,7 +1035,7 @@ class course_renderer extends \core_course_renderer {
         }
 
         $url = new moodle_url('/course/edit.php', ['id' => $COURSE->id]);
-        return $OUTPUT->notification(get_string('courseformatnotification', 'theme_snap', $url->out()));
+        return $this->output->notification(get_string('courseformatnotification', 'theme_snap', $url->out()));
     }
 
     /**
@@ -1208,10 +1204,10 @@ class course_renderer extends \core_course_renderer {
      */
 
     public function course_footer() {
-        global $DB, $COURSE, $CFG, $PAGE;
+        global $DB, $COURSE, $CFG;
 
         // Check toggle switch.
-        if (empty($PAGE->theme->settings->coursefootertoggle)) {
+        if (empty($this->page->theme->settings->coursefootertoggle)) {
             return false;
         }
 
@@ -1321,7 +1317,7 @@ class course_renderer extends \core_course_renderer {
      * @return string
      */
     public function print_teacher_profile($user) {
-        global $CFG, $OUTPUT, $USER;
+        global $CFG, $USER;
 
         $userpicture = new \user_picture($user);
         $userpicture->link = false;
@@ -1336,7 +1332,7 @@ class course_renderer extends \core_course_renderer {
         ];
         if ($USER->id != $user->id) {
             $messageicon = '<img class="svg-icon" alt="" role="presentation" src="'
-                .$OUTPUT->image_url('messages', 'theme').' ">';
+                .$this->output->image_url('messages', 'theme').' ">';
             $message = '<br><small><a href="'.$CFG->wwwroot.
                 '/message/index.php?id='.$user->id.'">message'.$messageicon.'</a></small>';
             $data->content .= $message;
@@ -1352,7 +1348,7 @@ class course_renderer extends \core_course_renderer {
      * @return string
      */
     public function get_mod_recent_activity($context) {
-        global $COURSE, $OUTPUT;
+        global $COURSE;
         $viewfullnames = has_capability('moodle/site:viewfullnames', $context);
         $recentactivity = array();
         $timestart = time() - (86400 * 7); // Only show last 7 days activity.
@@ -1386,7 +1382,7 @@ class course_renderer extends \core_course_renderer {
             foreach ($recentactivity as $modname => $moduleactivity) {
                 // Get mod icon, empty alt as title already there.
                 $img = html_writer::tag('img', '', array(
-                    'src' => $OUTPUT->image_url('icon', $modname),
+                    'src' => $this->output->image_url('icon', $modname),
                     'alt' => '',
                 ));
 

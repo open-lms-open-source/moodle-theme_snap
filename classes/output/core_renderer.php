@@ -140,12 +140,15 @@ class core_renderer extends \theme_boost\output\core_renderer {
      * @return string
      */
     public function column_header_icon_link($langstring, $iconname, $url) {
+        // @codingStandardsIgnoreStart
+        // Core renderer has not $output attribute, but code checker requires it.
         global $OUTPUT;
         $text = get_string($langstring, 'theme_snap');
         $iconurl = $OUTPUT->image_url($iconname, 'theme');
         $icon = '<img class="svg-icon" role="presentation" src="' .$iconurl. '" alt="">';
         $link = '<a class="snap-personal-menu-more" href="' .$url. '"><small>' .$text. '</small>' .$icon. '</a>';
         return $link;
+        // @codingStandardsIgnoreEnd
     }
 
 
@@ -159,6 +162,8 @@ class core_renderer extends \theme_boost\output\core_renderer {
      * @return string
      */
     public function mobile_menu_link($langstring, $iconname, $url) {
+        // @codingStandardsIgnoreStart
+        // Core renderer has not $output attribute, but code checker requires it.
         global $OUTPUT;
         $alt = get_string($langstring, 'theme_snap');
         $iconurl = $OUTPUT->image_url($iconname, 'theme');
@@ -169,6 +174,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
         }
         $link = '<a href="' .$url. '" class="' .$class. '">' .$icon. '</a>';
         return $link;
+        // @codingStandardsIgnoreEnd
     }
 
     /**
@@ -180,11 +186,14 @@ class core_renderer extends \theme_boost\output\core_renderer {
      * @return string
      */
     public function social_menu_link($iconname, $url) {
+        // @codingStandardsIgnoreStart
+        // Core renderer has not $output attribute, but code checker requires it.
         global $OUTPUT;
         $iconurl = $OUTPUT->image_url($iconname, 'theme');
         $icon = '<img class="svg-icon" title="' .$iconname. '" alt="' .$iconname. '" src="' .$iconurl. '">';
         $link = '<a href="' .$url. '" target="_blank">' .$icon. '</a>';
         return $link;
+        // @codingStandardsIgnoreEnd
     }
 
     /**
@@ -194,7 +203,6 @@ class core_renderer extends \theme_boost\output\core_renderer {
      * @return string
      */
     public function render_settings_link(settings_link $settingslink) {
-        global $OUTPUT;
         if (!$settingslink->output) {
             return '';
         }
@@ -384,15 +392,17 @@ class core_renderer extends \theme_boost\output\core_renderer {
      * @return string
      */
     public function snap_blocks() {
-        global $COURSE, $OUTPUT, $PAGE;
+        // @codingStandardsIgnoreStart
+        // Core renderer has not $output attribute, but code checker requires it.
+        global $COURSE, $OUTPUT;
 
         $editblocks = '';
 
-        $oncoursepage = strpos($PAGE->pagetype, 'course-view') === 0;
+        $oncoursepage = strpos($this->page->pagetype, 'course-view') === 0;
         $coursecontext = \context_course::instance($COURSE->id);
         if ($oncoursepage && has_capability('moodle/course:update', $coursecontext)) {
             $url = new \moodle_url('/course/view.php', ['id' => $COURSE->id, 'sesskey' => sesskey()]);
-            if ($PAGE->user_is_editing()) {
+            if ($this->page->user_is_editing()) {
                 $url->param('edit', 'off');
                 $editstring = get_string('turneditingoff');
             } else {
@@ -408,6 +418,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
         $output .= '</div>';
 
         return $output;
+        // @codingStandardsIgnoreEnd
     }
 
     private function get_calltoaction_url($key) {
@@ -662,7 +673,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
      * Personal menu or authenticate form.
      */
     public function personal_menu() {
-        global $PAGE, $USER, $CFG;
+        global $USER, $CFG;
 
         if (!isloggedin() || isguestuser()) {
             $enabledlogin = get_config('theme_snap', 'enabledlogin');
@@ -702,7 +713,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
                     break;
             }
 
-            if ($PAGE->pagetype !== 'login-index') {
+            if ($this->page->pagetype !== 'login-index') {
                 $data->action = $CFG->wwwroot . '/login/index.php';
                 return $this->render_from_template('theme_snap/login', $data);
             } else {
@@ -776,10 +787,10 @@ class core_renderer extends \theme_boost\output\core_renderer {
             'title' => get_string('logout')
         ];
 
-        $courseid = $PAGE->course->id;
+        $courseid = $this->page->course->id;
         $coursecontext = context_course::instance($courseid);
         if (has_capability('moodle/role:switchroles', $coursecontext) || is_role_switched($courseid)) {
-            $returnurl = $PAGE->url->out_as_local_url(false);
+            $returnurl = $this->page->url->out_as_local_url(false);
             if (!is_role_switched($courseid)) {
                 $link = new moodle_url('/course/switchrole.php', array(
                     'id' => $courseid,
@@ -964,8 +975,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
      * @throws \moodle_exception
      */
     public function cover_image_selector() {
-        global $PAGE;
-        if (has_capability('moodle/course:changesummary', $PAGE->context)) {
+        if (has_capability('moodle/course:changesummary', $this->page->context)) {
             $vars = ['accepttypes' => local::supported_coverimage_typesstr()];
             return $this->render_from_template('theme_snap/cover_image_selector', $vars);
         }
@@ -977,9 +987,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
      * @return string
      */
     public function cover_carousel() {
-        global $PAGE;
-
-        if (empty($PAGE->theme->settings->cover_carousel)) {
+        if (empty($this->page->theme->settings->cover_carousel)) {
             return '';
         }
 
@@ -990,14 +998,14 @@ class core_renderer extends \theme_boost\output\core_renderer {
             $image = $slidename . '_image';
             $title = $slidename . '_title';
             $subtitle = $slidename . '_subtitle';
-            if (!empty($PAGE->theme->settings->$image) && !empty($PAGE->theme->settings->$title)) {
+            if (!empty($this->page->theme->settings->$image) && !empty($this->page->theme->settings->$title)) {
                 $slide = (object) [
                     'index' => $i++,
                     'active' => '',
                     'name' => $slidename,
-                    'image' => $PAGE->theme->setting_file_url($image, $image),
-                    'title' => $PAGE->theme->settings->$title,
-                    'subtitle' => $PAGE->theme->settings->$subtitle
+                    'image' => $this->page->theme->setting_file_url($image, $image),
+                    'title' => $this->page->theme->settings->$title,
+                    'subtitle' => $this->page->theme->settings->$subtitle
                 ];
                 $slides[] = $slide;
             }
@@ -1017,7 +1025,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
      * @return string
      */
     public function page_heading($tag = 'h1') {
-        global $COURSE, $PAGE;
+        global $COURSE;
 
         $heading = $this->page->heading;
 
@@ -1213,18 +1221,18 @@ HTML;
      * @return array|string
      */
     public function body_css_classes(array $additionalclasses = array()) {
-        global $PAGE, $COURSE, $SESSION, $CFG, $USER;
+        global $COURSE, $SESSION, $CFG, $USER;
 
         $classes = parent::body_css_classes($additionalclasses);
         $classes = explode (' ', $classes);
 
-        $classes[] = 'device-type-'.$PAGE->devicetypeinuse;
+        $classes[] = 'device-type-'.$this->page->devicetypeinuse;
 
         $forcepasschange = get_user_preferences('auth_forcepasswordchange');
         if (isset($SESSION->justloggedin) && empty($forcepasschange)) {
-            $openfixyafterlogin = !empty($PAGE->theme->settings->personalmenulogintoggle);
-            $onfrontpage = ($PAGE->pagetype === 'site-index');
-            $onuserdashboard = ($PAGE->pagetype === 'my-index');
+            $openfixyafterlogin = !empty($this->page->theme->settings->personalmenulogintoggle);
+            $onfrontpage = ($this->page->pagetype === 'site-index');
+            $onuserdashboard = ($this->page->pagetype === 'my-index');
             if ($openfixyafterlogin && !isguestuser() && ($onfrontpage || $onuserdashboard)) {
                 $classes[] = 'snap-pm-open';
             }
@@ -1243,13 +1251,13 @@ HTML;
             'enrol-instances',
             'admin-report-eventlist-index',
         );
-        if (in_array($PAGE->pagetype, $killyuipages)) {
+        if (in_array($this->page->pagetype, $killyuipages)) {
             $classes = array_diff ($classes, ['yui-skin-sam', 'yui3-skin-sam']);
             $classes [] = 'yui-bootstrapped';
         }
 
-        if (!empty($PAGE->url)) {
-            $section = $PAGE->url->param('section');
+        if (!empty($this->page->url)) {
+            $section = $this->page->url->param('section');
         }
 
         // Add completion tracking class.
@@ -1258,8 +1266,8 @@ HTML;
         }
 
         // Add resource display class.
-        if (!empty($PAGE->theme->settings->resourcedisplay)) {
-            $classes[] = 'snap-resource-'.$PAGE->theme->settings->resourcedisplay;
+        if (!empty($this->page->theme->settings->resourcedisplay)) {
+            $classes[] = 'snap-resource-'.$this->page->theme->settings->resourcedisplay;
         } else {
             $classes[] = 'snap-resource-card';
         }
@@ -1275,7 +1283,7 @@ HTML;
         if (!empty($CFG->allowcategorythemes)) {
             // This duplicates code triggered by allowcategorythemes, so no
             // need to repeat it if that setting is on.
-            $catids = array_keys($PAGE->categories);
+            $catids = array_keys($this->page->categories);
             // Immediate parent category is always output by core code.
             array_shift($catids);
             foreach ($catids as $catid) {
@@ -1283,8 +1291,9 @@ HTML;
             }
             // Put class category-x on body when loading editcategory page on course.
             // Categories and parent categories are added in ascendant order.
-            if (strpos($PAGE->url->get_path(), "course/editcategory.php") !== false && $PAGE->url->get_param('id') !== null) {
-                $parentcategories = self::get_parentcategories($PAGE->url->get_param('id'));
+            if (strpos($this->page->url->get_path(), "course/editcategory.php") !== false
+                && $this->page->url->get_param('id') !== null) {
+                $parentcategories = self::get_parentcategories($this->page->url->get_param('id'));
                 foreach ($parentcategories as $category) {
                     $classes[] = 'category-' . $category;
                 }
@@ -1292,8 +1301,9 @@ HTML;
 
             // Put class category-x on body when loading add new course page.
             // Categories and parent categories are added in ascendant order.
-            if (strpos($PAGE->url->get_path(), "course/edit.php") !== false && $PAGE->url->get_param('category') !== null) {
-                $parentcategories = self::get_parentcategories($PAGE->url->get_param('category'));
+            if (strpos($this->page->url->get_path(), "course/edit.php") !== false
+                && $this->page->url->get_param('category') !== null) {
+                $parentcategories = self::get_parentcategories($this->page->url->get_param('category'));
                 foreach ($parentcategories as $category) {
                     $classes[] = 'category-' . $category;
                 }
@@ -1301,7 +1311,7 @@ HTML;
         }
 
         // Add page layout.
-        $classes[] = 'layout-'.$PAGE->pagelayout;
+        $classes[] = 'layout-'.$this->page->pagelayout;
 
         // Profile based branding.
         $pbbclass = local::get_profile_based_branding_class($USER);
@@ -1351,7 +1361,8 @@ HTML;
             $continue = new \single_button($continue, get_string('continue'), 'post', true);
         } else {
             throw new coding_exception(
-                'The continue param to $OUTPUT->confirm() must be either a URL (string/moodle_url) or a single_button instance.'
+                'The continue param to $OUTPUT->confirm() must be either a URL (string/moodle_url) '
+                . 'or a single_button instance.'
             );
         }
 
@@ -1363,7 +1374,8 @@ HTML;
             $cancel = new \single_button($cancel, get_string('cancel'), 'get');
         } else {
             throw new coding_exception(
-                'The cancel param to $OUTPUT->confirm() must be either a URL (string/moodle_url) or a single_button instance.'
+                'The cancel param to $OUTPUT->confirm() must be either a URL (string/moodle_url) '
+                . 'or a single_button instance.'
             );
         }
 
@@ -1388,8 +1400,6 @@ HTML;
      * @return string
      */
     public function feature_spot_cards() {
-        global $PAGE;
-
         $fsnames = array("fs_one", "fs_two", "fs_three");
         $features = array();
         // Note - we are using underscores in the settings to make easier to read.
@@ -1400,20 +1410,20 @@ HTML;
             $cbopeninnewtab = $feature . '_title_link_cb';
             $text = $feature . '_text';
             $image = $feature . '_image';
-            if (!empty($PAGE->theme->settings->$title) && !empty($PAGE->theme->settings->$text)) {
+            if (!empty($this->page->theme->settings->$title) && !empty($this->page->theme->settings->$text)) {
                 $img = '';
-                if (!empty($PAGE->theme->settings->$image)) {
+                if (!empty($this->page->theme->settings->$image)) {
                     $url = $this->page->theme->setting_file_url($image, $image);
                     $img = '<!--Card image-->
                     <div class="snap-feature-image-wrap">
                         <img class="snap-feature-image" src="' .$url. '" alt="" role="presentation">
                     </div>';
                 }
-                $features[] = $this->feature_spot_card($PAGE->theme->settings->$title,
-                    $PAGE->theme->settings->$link,
-                    $PAGE->theme->settings->$cbopeninnewtab,
+                $features[] = $this->feature_spot_card($this->page->theme->settings->$title,
+                    $this->page->theme->settings->$link,
+                    $this->page->theme->settings->$cbopeninnewtab,
                     $img,
-                    $PAGE->theme->settings->$text);
+                    $this->page->theme->settings->$text);
             }
 
         }
@@ -1421,8 +1431,8 @@ HTML;
         $fscount = count($features);
         if ($fscount > 0) {
             $fstitle = '';
-            if (!empty($PAGE->theme->settings->fs_heading)) {
-                $fstitle = '<h2 class="snap-feature-spots-heading">' .s($PAGE->theme->settings->fs_heading). '</h2>';
+            if (!empty($this->page->theme->settings->fs_heading)) {
+                $fstitle = '<h2 class="snap-feature-spots-heading">' .s($this->page->theme->settings->fs_heading). '</h2>';
             }
 
             $colclass = '';
@@ -1517,7 +1527,9 @@ HTML;
      * @return string
      */
     protected function course_modchooser() {
-        global $OUTPUT, $COURSE;
+        // @codingStandardsIgnoreStart
+        // Core renderer has not $output attribute, but code checker requires it.
+        global $COURSE, $OUTPUT;
         // Check to see if user can add menus and there are modules to add.
         if (!has_capability('moodle/course:manageactivities', context_course::instance($COURSE->id))
                 || !($modnames = get_module_types_names()) || empty($modnames)) {
@@ -1570,6 +1582,7 @@ HTML;
         ];
 
         return $this->render_from_template('theme_snap/course_modchooser_modal', $data);
+        // @codingStandardsIgnoreEnd
     }
 
     /**
@@ -1614,9 +1627,7 @@ HTML;
      * @param navigation_node $item
      */
     private function add_switchroleto_navigation_node(navigation_node $item) {
-        global $PAGE;
-
-        $course = $PAGE->course;
+        $course = $this->page->course;
         $coursecontext = context_course::instance($course->id);
         // Switch roles.
         $roles = array();
@@ -1644,7 +1655,7 @@ HTML;
             foreach ($roles as $key => $name) {
                 $url = new moodle_url('/course/switchrole.php', array(
                     'id' => $course->id, 'sesskey' => sesskey(),
-                    'switchrole' => $key, 'returnurl' => $PAGE->url->out_as_local_url(false)));
+                    'switchrole' => $key, 'returnurl' => $this->page->url->out_as_local_url(false)));
                 $switchroles->add($name, $url, navigation_node::TYPE_SETTING, null, $key, new \pix_icon('i/switchrole', ''));
             }
         }
@@ -1663,9 +1674,9 @@ HTML;
      * @return bool|int The role(int) if the user is in another role, false otherwise
      */
     public function in_alternative_role() {
-        global $USER, $PAGE;
+        global $USER;
 
-        $course = $PAGE->course;
+        $course = $this->page->course;
         $coursecontext = context_course::instance($course->id);
 
         if (!empty($USER->access['rsw']) && is_array($USER->access['rsw'])) {
@@ -1689,8 +1700,8 @@ HTML;
      * @return moodle_url|false
      */
     public function get_logo_url($maxwidth = null, $maxheight = 200) {
-        global $PAGE, $CFG;
-        if (empty($PAGE->theme->settings->logo)) {
+        global $CFG;
+        if (empty($this->page->theme->settings->logo)) {
             return false;
         }
 
@@ -1698,7 +1709,7 @@ HTML;
         // bit that strips the protocol from the url.
 
         $itemid = theme_get_revision();
-        $filepath = $PAGE->theme->settings->logo;
+        $filepath = $this->page->theme->settings->logo;
         $syscontextid = context_system::instance()->id;
 
         $url = moodle_url::make_file_url("$CFG->httpswwwroot/pluginfile.php", "/$syscontextid/theme_snap/logo/$itemid".$filepath);
@@ -1710,7 +1721,6 @@ HTML;
      * @return string
      */
     protected function render_intelliboard() {
-        global $PAGE;
         $o = '';
         $links = '';
 
@@ -1720,23 +1730,23 @@ HTML;
         }
 
         // Intelliboard adds links to the flatnav we use to check wich links to output.
-        $flatnav = $PAGE->flatnav->get_key_list();
+        $flatnav = $this->page->flatnav->get_key_list();
 
         // Student dashboard link.
         if (in_array("intelliboard_student", $flatnav, true)) {
-            $node = $PAGE->flatnav->get("intelliboard_student");
+            $node = $this->page->flatnav->get("intelliboard_student");
             $links .= $this->render_intelliboard_link($node->get_content(), $node->action(), 'intelliboard_learner');
         }
 
         // Instructor dashboard link.
         if (in_array("intelliboard_instructor", $flatnav, true)) {
-            $node = $PAGE->flatnav->get("intelliboard_instructor");
+            $node = $this->page->flatnav->get("intelliboard_instructor");
             $links .= $this->render_intelliboard_link($node->get_content(), $node->action(), 'intelliboard');
         }
 
         // Competency dashboard link.
         if (in_array("intelliboard_competency", $flatnav, true)) {
-            $node = $PAGE->flatnav->get("intelliboard_competency");
+            $node = $this->page->flatnav->get("intelliboard_competency");
             $links .= $this->render_intelliboard_link($node->get_content(), $node->action(), 'intelliboard_competencies');
         }
 
@@ -1762,11 +1772,14 @@ HTML;
      * @return string
      */
     public function render_intelliboard_link($name, $url, $icon) {
+        // @codingStandardsIgnoreStart
+        // Core renderer has not $output attribute, but code checker requires it.
         global $OUTPUT;
         $iconurl = $OUTPUT->image_url($icon, 'theme');
         $img = '<img class="svg-icon" role="presentation" src="'.$iconurl.'">';
         $o = '<a href=" '.$url.' ">'.$img.s($name).'</a><br>';
         return $o;
+        // @codingStandardsIgnoreEnd
     }
 
     /**
@@ -1774,7 +1787,9 @@ HTML;
      * @return string notification popup area.
      */
     protected function render_notification_popups() {
-        global $OUTPUT, $CFG;
+        // @codingStandardsIgnoreStart
+        // Core renderer has not $output attribute, but code checker requires it.
+        global $CFG, $OUTPUT;
 
         $navoutput = '';
         if (\core_component::get_component_directory('local_intellicart') !== null) {
@@ -1790,6 +1805,7 @@ HTML;
             return '';
         }
         return $navoutput;
+        // @codingStandardsIgnoreEnd
     }
 
     /**
@@ -1797,7 +1813,9 @@ HTML;
      * @return string
      */
     protected function render_intellicart() {
-        global $PAGE, $OUTPUT;
+        // @codingStandardsIgnoreStart
+        // Core renderer has not $output attribute, but code checker requires it.
+        global $OUTPUT;
         $o = '';
         $link = '';
 
@@ -1807,11 +1825,11 @@ HTML;
         }
 
         // Intellicart adds a link to the flatnav.
-        $flatnav = $PAGE->flatnav->get_key_list();
+        $flatnav = $this->page->flatnav->get_key_list();
 
         // Student dashboard link.
         if (in_array("intellicart_dashboard", $flatnav, true)) {
-            $node = $PAGE->flatnav->get("intellicart_dashboard");
+            $node = $this->page->flatnav->get("intellicart_dashboard");
             $iconurl = $OUTPUT->image_url('intelliboard', 'theme');
             $img = '<img class="svg-icon" role="presentation" src="'.s($iconurl).'">';
             $link .= '<a href=" '. $node->action() .' ">'.$img.s($node->get_content()).'</a><br>';
@@ -1829,6 +1847,7 @@ HTML;
             '</div>';
 
         return $o;
+        // @codingStandardsIgnoreEnd
     }
 
     /**
@@ -1971,7 +1990,7 @@ HTML;
      * @return string
      */
     public function custom_menu_spacer() {
-        global $CFG, $PAGE;
+        global $CFG;
         $spacer = '';
 
         if (!empty($CFG->custommenuitems)) {

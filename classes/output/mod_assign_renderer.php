@@ -227,7 +227,7 @@ class mod_assign_renderer extends \mod_assign_renderer {
      * @return string
      */
     public function render_assign_submission_status(\assign_submission_status $status) {
-        global $USER, $OUTPUT;
+        global $USER;
 
         // User picture and name.
         $userpicture = new \user_picture($USER);
@@ -235,7 +235,7 @@ class mod_assign_renderer extends \mod_assign_renderer {
         $userpicture->alttext = false;
         $userpicture->class = 'userpicture';
         $userpicture->size = 35;
-        $userpic = $OUTPUT->render($userpicture).' '.s(fullname($USER));
+        $userpic = $this->output->render($userpicture).' '.s(fullname($USER));
 
         $o = '';
         $statusdata = '';
