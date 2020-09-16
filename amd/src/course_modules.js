@@ -296,8 +296,17 @@ define(
                 listenManualCompletion();
 
                 // Add toggle class for hide/show activities/resources - additional to moodle adding dim.
-                $(document).on("click", '[data-action=hide],[data-action=show]', function() {
-                    $(this).closest('li.activity').toggleClass('draft');
+                $(document).on("click", '[data-action=hide],[data-action=show],[data-action=stealth]', function() {
+                    if ($(this).attr('data-action') === 'hide' ) {
+                        $(this).closest('li.activity').addClass('draft');
+                        $(this).closest('li.activity').removeClass('stealth');
+                    } else if ($(this).attr('data-action') === 'stealth') {
+                        $(this).closest('li.activity').removeClass('draft');
+                        $(this).closest('li.activity').addClass('stealth');
+                    } else if ($(this).attr('data-action') === 'show') {
+                        $(this).closest('li.activity').removeClass('draft');
+                        $(this).closest('li.activity').removeClass('stealth');
+                    }
                 });
 
                 // Make lightbox for list display of resources.

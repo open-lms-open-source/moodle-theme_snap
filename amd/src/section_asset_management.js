@@ -871,10 +871,21 @@ define(['jquery', 'core/log', 'core/ajax', 'core/str', 'core/templates', 'core/n
                                         $('#toc-searchables li[data-id="' + cmid + '"]').remove();
                                     } else if (action === 'show') {
                                         assetEl.removeClass('draft');
+                                        assetEl.removeClass('stealth');
                                     } else if (action === 'hide') {
+                                        if (assetEl.closest('.section.hidden').length > 0) {
+                                            assetEl.removeClass('stealth-section-hidden');
+                                        }
+                                        assetEl.removeClass('stealth');
                                         assetEl.addClass('draft');
                                     } else if (action === 'duplicate') {
                                         assetEl.replaceWith(response);
+                                    } else if (action === 'stealth') {
+                                        if (assetEl.closest('.section.hidden').length > 0) {
+                                            assetEl.addClass('stealth-section-hidden');
+                                        }
+                                        assetEl.addClass('stealth');
+                                        assetEl.removeClass('draft');
                                     }
                                 }
                             });
@@ -1048,7 +1059,8 @@ define(['jquery', 'core/log', 'core/ajax', 'core/str', 'core/templates', 'core/n
                 var actionSelectors = '.snap-asset-actions .js_snap_hide, ';
                 actionSelectors += '.snap-asset-actions .js_snap_show, ';
                 actionSelectors += '.snap-asset-actions .js_snap_delete, ';
-                actionSelectors += '.snap-asset-actions .js_snap_duplicate';
+                actionSelectors += '.snap-asset-actions .js_snap_duplicate,';
+                actionSelectors += '.snap-asset-actions .js_snap_stealth';
 
                 $(document).on('click', actionSelectors, function(e) {
                     assetAction(e, this);
@@ -1248,8 +1260,7 @@ define(['jquery', 'core/log', 'core/ajax', 'core/str', 'core/templates', 'core/n
                         $('#section-' + sectionNumber).addClass('hidden');
                     } else {
                         $('#section-' + sectionNumber).removeClass('hidden');
-                        $('#section-' + sectionNumber + ' .snap-activity .snap-stealth-tag').remove();
-                        $('#section-' + sectionNumber + ' .snap-activity').removeClass('stealth');
+                        $('#section-' + sectionNumber + ' .stealth-section-hidden').removeClass('stealth');
                     }
 
                     // Update the section navigation either side of the current section.
