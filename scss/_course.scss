@@ -1482,14 +1482,28 @@ body.snap-resource-card {
     font-size: $font-size-sm;
 }
 
-// Hide draft tag if the sections has hidden class.
-li.section.hidden .snap-asset.draft .snap-draft-tag {
+// Hide stealth tag, unless asset has class stealth (can be added by js).
+.snap-stealth-tag {
     display: none !important;
+}
+
+// Hide draft and stealth tag if the sections has hidden class.
+li.section.hidden {
+    .snap-asset.draft .snap-draft-tag,
+    .snap-asset.stealth .snap-stealth-tag,{
+        display: none !important;
+    }
+}
+
+// Show stealth tag when the section is hidden and the activiti has the snap-stealth-tag.
+li.section.hidden .snap-asset.stealth-section-hidden .snap-stealth-tag {
+    display: block !important;
 }
 
 // Show draft for mods & sections.
 .hidden .content .snap-draft-section,
-.snap-asset.draft .snap-draft-tag {
+.snap-asset.draft .snap-draft-tag,
+.snap-asset.stealth .snap-stealth-tag {
     display: block !important; // SHAME - overcome bad overspecificity...
 }
 
@@ -1524,6 +1538,55 @@ li.section.hidden .snap-asset.draft .snap-draft-tag {
             display: none;
         }
         .editing_show {
+            display: block;
+        }
+    }
+}
+
+// Stealth options in the dropdown.
+.snap-asset {
+    &.stealth {
+        .editing_makeunavailable {
+            display: block;
+        }
+        .editing_makeavailable {
+            display: none;
+        }
+    }
+    &.draft {
+        .editing_makeunavailable {
+            display: none;
+        }
+        .editing_makeavailable {
+            display: block;
+        }
+    }
+}
+
+// Hide the stealth options when the activity is visible.
+.snap-asset {
+    .editing_makeunavailable,
+    .editing_makeavailable {
+        display: none;
+    }
+}
+
+.section.hidden .snap-asset {
+    &.stealth,
+    &.draft,
+    & {
+        .editing_makeavailable {
+            display: block;
+        }
+        .editing_makeunavailable {
+            display: none;
+        }
+    }
+    &.stealth-section-hidden {
+        .editing_makeavailable {
+            display: none;
+        }
+        .editing_makeunavailable {
             display: block;
         }
     }

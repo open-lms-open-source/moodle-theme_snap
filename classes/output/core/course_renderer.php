@@ -104,11 +104,10 @@ class course_renderer extends \core_course_renderer {
             // module merged from a course to another, and the draft class won't be applied.
             // The "Not published to students" message won't be displayed next to the course module so teachers do not
             // realize that the content is not available to students.
-
+            $section = $mod->get_section_info();
             if (!$mod->visible) {
                 // If the section is hidden check the visibleold to prevent
                 // the message will be displayed in all modules.
-                $section = $mod->get_section_info();
                 if ($section->visible || (!$section->visible && !$mod->visibleold)) {
                     $modclasses [] = 'draft';
                 }
@@ -117,6 +116,9 @@ class course_renderer extends \core_course_renderer {
             // Is this mod stealth?
             if ($mod->is_stealth()) {
                 $modclasses [] = 'stealth';
+            }
+            if ($mod->visible && $section && !$section->visible) {
+                $modclasses [] = 'stealth-section-hidden';
             }
 
             $canviewhidden = has_capability('moodle/course:viewhiddenactivities', $mod->context);
@@ -206,7 +208,7 @@ class course_renderer extends \core_course_renderer {
      * @return string
      */
     public function course_section_cm($course, &$completioninfo, cm_info $mod, $sectionreturn, $displayoptions = array()) {
-        global $COURSE;
+        global $COURSE, $CFG;
 
         $output = '';
         // We return empty string (because course module will not be displayed at all)
@@ -277,13 +279,10 @@ class course_renderer extends \core_course_renderer {
         // Draft & Stealth tags.
         $stealthtag = '';
         $drafttag = '';
-        if ($mod->is_stealth()) {
-            // Stealth tag.
-            $stealthtag = '<div class="snap-stealth-tag">'.get_string('hiddenoncoursepage', 'moodle').'</div>';
-        } else {
-            // Draft status - always output, shown via css of parent.
-            $drafttag = '<div class="snap-draft-tag">'.get_string('draft', 'theme_snap').'</div>';
-        }
+        // Stealth tag.
+        $stealthtag = '<div class="snap-stealth-tag">'.get_string('hiddenoncoursepage', 'moodle').'</div>';
+        // Draft status - always output, shown via css of parent.
+        $drafttag = '<div class="snap-draft-tag">'.get_string('draft', 'theme_snap').'</div>';
 
         // Group.
         $groupmeta = '';
@@ -353,7 +352,8 @@ class course_renderer extends \core_course_renderer {
         $modcontext = context_module::instance($mod->id);
         $baseurl = new moodle_url('/course/mod.php', array('sesskey' => sesskey()));
 
-        $str = get_strings(array('delete', 'move', 'duplicate', 'hide', 'show', 'roles'), 'moodle');
+        $str = get_strings(array('delete', 'move', 'duplicate', 'hide', 'show', 'roles',
+            'makeavailable', 'makeunavailable'), 'moodle');
         // TODO - add snap strings here.
 
         // Move, Edit, Delete.
@@ -374,8 +374,7 @@ class course_renderer extends \core_course_renderer {
         }
 
         // Hide/Show.
-        // Not output for stealth activites.
-        if (has_capability('moodle/course:activityvisibility', $modcontext) && !$mod->is_stealth()) {
+        if (has_capability('moodle/course:activityvisibility', $modcontext)) {
             $actions .= '<input class="sr-only" type="checkbox">';
             $hideaction = '<a href="'.new moodle_url($baseurl, array('hide' => $mod->id));
             $hideaction .= '" data-action="hide" class="dropdown-item editing_hide js_snap_hide">'.$str->hide.'</a>';
@@ -383,6 +382,25 @@ class course_renderer extends \core_course_renderer {
             $showaction = '<a href="'.new moodle_url($baseurl, array('show' => $mod->id));
             $showaction .= '" data-action="show" class="dropdown-item editing_show js_snap_show">'.$str->show.'</a>';
             $actionsadvanced[] = $showaction;
+
+            // Stealth action.
+            $courseformat = course_get_format($mod->get_course());
+            $allowstealthformat = $courseformat->allow_stealth_module_visibility($mod, $mod->get_section_info());
+            $allowstealth = !empty($CFG->allowstealth) && $allowstealthformat;
+            $sectionvisible = $mod->get_section_info()->visible;
+            if ($mod->is_stealth() || (!$sectionvisible || $allowstealth)) {
+                $makeunavailable = '<a href="'.new moodle_url($baseurl, array('hide' => $mod->id));
+                $makeunavailable .= '" data-action="hide" class="dropdown-item editing_makeunavailable js_snap_hide">' .
+                    $str->makeunavailable . '</a>';
+                $actionsadvanced[] = $makeunavailable;
+            }
+            if ((!$sectionvisible || $allowstealth) && $mod->has_view()) {
+                $action = $sectionvisible ? 'stealth' : 'show';
+                $actionstealth = '<a href="'.new moodle_url($baseurl, array($action => $mod->id));
+                $actionstealth .= '" data-action="stealth" class="dropdown-item editing_makeavailable js_snap_stealth">' .
+                    $str->makeavailable.'</a>';
+                $actionsadvanced[] = $actionstealth;
+            }
         }
 
         // Duplicate.

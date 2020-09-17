@@ -341,3 +341,45 @@ Feature: Activity navigation in Snap theme
     And "#prev-activity-link" "css_element" should not be visible
     And "#next-activity-link" "css_element" should not be visible
     And "Jump to..." "field" should not be visible
+
+  @javascript
+  Scenario: Set the activity as stealth from the activity quick menu.
+    And I log in as "admin"
+    And I am on "Course 1" course homepage
+    And I follow "Topic 2"
+    And I click on ".snap-activity[data-type='Forum'] span.snap-edit-asset-more" "css_element"
+    And I should not see "Make available"
+    And I click on ".snap-activity[data-type='Forum'] a.editing_makeunavailable.js_snap_hide" "css_element"
+    Then I wait until ".snap-activity[data-type='Forum'].draft" "css_element" exists
+    And I click on ".snap-activity[data-type='Forum'] span.snap-edit-asset-more" "css_element"
+    And I should see "Make available"
+    And I click on ".snap-activity[data-type='Forum'] a.js_snap_stealth" "css_element"
+    Then I wait until ".snap-activity[data-type='Forum'].stealth" "css_element" exists
+    And I should see "Available but not shown on course page"
+    And I click on ".snap-activity[data-type='Forum'] span.snap-edit-asset-more" "css_element"
+    And I should not see "Make available"
+    And I should not see "Hide"
+    And I should see "Make unavailable"
+    And I click on ".snap-activity[data-type='Forum'] a.editing_makeunavailable.js_snap_hide" "css_element"
+    Then I wait until ".snap-activity[data-type='Forum'].draft" "css_element" exists
+    And I should see "Not published to students"
+  @javascript
+  Scenario: Set the activity as stealth from the activity quick menu when the section is hidden.
+    Given the following config values are set as admin:
+      | allowstealth | 0    |
+    And I log in as "admin"
+    And I am on "Course 1" course homepage
+    And I follow "Topic 2"
+    And I click on "#section-2 .snap-visibility.snap-hide" "css_element"
+    And I wait until "#section-2 .snap-visibility.snap-show" "css_element" exists
+    And I am on "Course 1" course homepage
+    And I follow "Topic 2"
+    And I click on ".snap-activity[data-type='Forum'] span.snap-edit-asset-more" "css_element"
+    And I should see "Make available"
+    And I click on ".snap-activity[data-type='Forum'] a.js_snap_stealth" "css_element"
+    Then I wait until ".snap-activity[data-type='Forum'].stealth" "css_element" exists
+    And I should see "Available but not shown on course page"
+    And I click on ".snap-activity[data-type='Forum'] span.snap-edit-asset-more" "css_element"
+    And I should not see "Make available"
+    And I should not see "Hide"
+    And I should see "Make unavailable"
