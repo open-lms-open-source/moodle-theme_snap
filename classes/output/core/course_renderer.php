@@ -385,19 +385,16 @@ class course_renderer extends \core_course_renderer {
 
             // Stealth action.
             $courseformat = course_get_format($mod->get_course());
-            $allowstealthformat = $courseformat->allow_stealth_module_visibility($mod, $mod->get_section_info());
-            $allowstealth = !empty($CFG->allowstealth) && $allowstealthformat;
-            $sectionvisible = $mod->get_section_info()->visible;
-            if ($mod->is_stealth() || (!$sectionvisible || $allowstealth)) {
-                $makeunavailable = '<a href="'.new moodle_url($baseurl, array('hide' => $mod->id));
-                $makeunavailable .= '" data-action="hide" class="dropdown-item editing_makeunavailable js_snap_hide">' .
-                    $str->makeunavailable . '</a>';
-                $actionsadvanced[] = $makeunavailable;
-            }
-            if ((!$sectionvisible || $allowstealth) && $mod->has_view()) {
-                $action = $sectionvisible ? 'stealth' : 'show';
+
+            $makeunavailable = '<a href="'.new moodle_url($baseurl, array('hide' => $mod->id));
+            $makeunavailable .= '" data-action="hide" class="dropdown-item editing_makeunavailable js_snap_hide">' .
+                $str->makeunavailable . '</a>';
+            $actionsadvanced[] = $makeunavailable;
+
+            if (!empty($CFG->allowstealth) && $mod->has_view()) {
+                $action = 'stealth';
                 $actionstealth = '<a href="'.new moodle_url($baseurl, array($action => $mod->id));
-                $actionstealth .= '" data-action="stealth" class="dropdown-item editing_makeavailable js_snap_stealth">' .
+                $actionstealth .= '" data-action="' . $action . '" class="dropdown-item editing_makeavailable js_snap_stealth">' .
                     $str->makeavailable.'</a>';
                 $actionsadvanced[] = $actionstealth;
             }

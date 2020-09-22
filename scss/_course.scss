@@ -1493,9 +1493,12 @@ li.section.hidden {
     .snap-asset.stealth .snap-stealth-tag,{
         display: none !important;
     }
+    .snap-asset.stealth.stealth-section-hidden .snap-stealth-tag,{
+        display: block !important;
+    }
 }
 
-// Show stealth tag when the section is hidden and the activiti has the snap-stealth-tag.
+// Show stealth tag when the section is hidden and the activity has the snap-stealth-tag.
 li.section.hidden .snap-asset.stealth-section-hidden .snap-stealth-tag {
     display: block !important;
 }
@@ -1544,7 +1547,7 @@ li.section.hidden .snap-asset.stealth-section-hidden .snap-stealth-tag {
 }
 
 // Stealth options in the dropdown.
-.snap-asset {
+li.section:not(.hidden) .snap-asset {
     &.stealth {
         .editing_makeunavailable {
             display: block;
@@ -1568,27 +1571,6 @@ li.section.hidden .snap-asset.stealth-section-hidden .snap-stealth-tag {
     .editing_makeunavailable,
     .editing_makeavailable {
         display: none;
-    }
-}
-
-.section.hidden .snap-asset {
-    &.stealth,
-    &.draft,
-    & {
-        .editing_makeavailable {
-            display: block;
-        }
-        .editing_makeunavailable {
-            display: none;
-        }
-    }
-    &.stealth-section-hidden {
-        .editing_makeavailable {
-            display: none;
-        }
-        .editing_makeunavailable {
-            display: block;
-        }
     }
 }
 
