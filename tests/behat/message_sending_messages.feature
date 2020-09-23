@@ -220,10 +220,7 @@ Feature: Snap message send messages
 
   @javascript
   Scenario: Send a message from course participants.
-    Given the following "message contacts" exist:
-      | user     | contact |
-      | student1 | student2 |
-    And I log in as "student1"
+    Given I log in as "student1"
     And I am on "Course 1" course homepage
     And I click on "#snap-course-tools" "css_element"
     And I click on "#ct-participants-number" "css_element"

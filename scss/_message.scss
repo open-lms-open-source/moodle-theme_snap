@@ -220,3 +220,27 @@ body#page-user-profile .drawer .message-app {
         }
     }
 }
+
+// Fix for message page to use the page height and scrolls to show messages.
+#page-message-index {
+    #page {
+        height: 100%;
+        overflow: hidden;
+    }
+    #page-content {
+        height: 90%;
+    }
+    #region-main .message-app .col-4 {
+        height: 100%;
+        .panel-body-container {
+            height: 90%;
+            overflow: scroll;
+        }
+    }
+    #moodle-page {
+        height: 100%;
+        .message-app .view-overview-body .section {
+            max-height: 80%;
+        }
+    }
+}

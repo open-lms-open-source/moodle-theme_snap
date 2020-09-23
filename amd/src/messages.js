@@ -23,8 +23,8 @@
 /**
  * JS code to manage hide/show of full width messages drawer.
  */
-define(['jquery', 'core/pubsub', 'core/url'],
-    function($, PubSub, URL) {
+define(['jquery', 'core/pubsub'],
+    function($, PubSub) {
         // Array to control which popovers are open.
         var openedpopovers = [];
         // Maximum size in pixels to consider a mobile screen
@@ -100,16 +100,24 @@ define(['jquery', 'core/pubsub', 'core/url'],
                     }).bind();
                 // Listener for the page user profile to load messages URL.
                 } else if ($('#page-user-profile').length != 0 || $('.userprofile #message-user-button').length != 0) {
-                    PubSub.subscribe("message-drawer-create-conversation-with-user", function (userId) {
-                        let processedId = '';
-                        if (typeof userId === 'object' && userId.userid) {
-                            processedId = parseInt(userId.userid);
-                        } else {
-                            processedId = parseInt(userId);
-                        }
-                        window.location = URL.relativeUrl("/message/index.php?id=" + processedId);
+                    PubSub.subscribe("message-drawer-create-conversation-with-user", function (args) {
+                        this.redirectToMessage(args);
+                    });
+                    // The drawer in snap will always open in a new window
+                    PubSub.subscribe("message-drawer-show-conversation", function (args) {
+                        this.redirectToMessage(args);
                     });
                 }
+            },
+            redirectToMessage : function(args) {
+                let processedId = '';
+                if (typeof args === 'object' && args.userid) {
+                    processedId = parseInt(args.userid);
+                } else {
+                    processedId = parseInt(args);
+                }
+                const moodleurl = M.cfg.wwwroot;
+                window.location = moodleurl.concat('/message/index.php?id=', processedId);
             }
         };
     }
