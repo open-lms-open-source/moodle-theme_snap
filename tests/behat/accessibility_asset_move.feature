@@ -11,21 +11,20 @@
 # GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License
-# along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+# along with Moodle. If not, see <http://www.gnu.org/licenses/>.
 #
 # Tests for toggle course section visibility in non edit mode in snap.
 #
 # @package    theme_snap
 # @autor      Oscar Nadjar
-# @copyright Copyright (c) 2019 Blackboard Inc. (http://www.blackboard.com)
+# @copyright  Copyright (c) 2020 Open LMS
 # @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
 
 
 @theme @theme_snap @theme_snap_ax
-Feature: When the moodle theme is set to Snap, on moving assets some links shouldn't be reached.
+Feature: When the Moodle theme is set to Snap, on moving assets some links shouldn't be reached.
 
   Background:
-    Given I skip because "And I set the following fields to these values: Is failing in the build, to be fixed in INT-16120"
     Given I log in as "admin"
     And I am on site homepage
     And I click on "#admin-menu-trigger" "css_element"
