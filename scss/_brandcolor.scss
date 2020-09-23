@@ -706,11 +706,6 @@ $custom-menu-text-color: rgb(255, 255, 255) !default; // Need to define this wit
             color: $dark-grey-btn;
             background-color: $lighter-grey-btn;
         }
-
-        &:active {
-            //color: lighten($brand-primary);
-        }
-
     }
 
     .fp-viewbar > a.btn.btn-secondary.btn-sm.checked {
