@@ -873,17 +873,11 @@ define(['jquery', 'core/log', 'core/ajax', 'core/str', 'core/templates', 'core/n
                                         assetEl.removeClass('draft');
                                         assetEl.removeClass('stealth');
                                     } else if (action === 'hide') {
-                                        if (assetEl.closest('.section.hidden').length > 0) {
-                                            assetEl.removeClass('stealth-section-hidden');
-                                        }
                                         assetEl.removeClass('stealth');
                                         assetEl.addClass('draft');
                                     } else if (action === 'duplicate') {
                                         assetEl.replaceWith(response);
                                     } else if (action === 'stealth') {
-                                        if (assetEl.closest('.section.hidden').length > 0) {
-                                            assetEl.addClass('stealth-section-hidden');
-                                        }
                                         assetEl.addClass('stealth');
                                         assetEl.removeClass('draft');
                                     }
@@ -1261,6 +1255,7 @@ define(['jquery', 'core/log', 'core/ajax', 'core/str', 'core/templates', 'core/n
                     } else {
                         $('#section-' + sectionNumber).removeClass('hidden');
                         $('#section-' + sectionNumber + ' .stealth-section-hidden').removeClass('stealth');
+                        $('#section-' + sectionNumber + ' .stealth-section-hidden').removeClass('stealth-section-hidden');
                     }
 
                     // Update the section navigation either side of the current section.
