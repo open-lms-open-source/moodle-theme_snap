@@ -21,7 +21,7 @@
 # @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
 
 
-@theme @theme_snap @snap_message @javascript
+@theme @theme_snap @theme_snap_message @javascript
 Feature: Snap managing contacts
   In order to chat with fellow users
   As a user

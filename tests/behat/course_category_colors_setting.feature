@@ -24,7 +24,6 @@
 Feature: When the moodle theme is set to Snap, sets a color per category.
 
   Background:
-
     Given the following "users" exist:
       | username | firstname | lastname | email                |
       | teacher1 | Teacher   | 1        | teacher1@example.com |
@@ -53,7 +52,6 @@ Feature: When the moodle theme is set to Snap, sets a color per category.
   Scenario: Load all classes in each category hierarchy.
     Given I log in as "admin"
     And I follow "Browse all courses"
-    And I purge snap caches
     And I wait until the page is ready
     And I check body for classes "theme-snap"
     And I follow "Miscellaneous"
@@ -70,9 +68,13 @@ Feature: When the moodle theme is set to Snap, sets a color per category.
   @javascript
   Scenario: Check category colors in hierarchy.
     Given I log in as "admin"
-    And I follow "Browse all courses"
     And I purge snap caches
     And I wait until the page is ready
+    And I log out
+    And I wait until the page is ready
+    And I log in as "admin"
+    And I wait until the page is ready
+    And I follow "Browse all courses"
     And I follow "Cat 5"
     And I check element "a.btn.btn-secondary" with color "#00FF00"
     And I follow "Cat 10"
@@ -88,9 +90,14 @@ Feature: When the moodle theme is set to Snap, sets a color per category.
   Scenario: Check category colors from nearest parent in hierarchy.
     Given the following config values are set as admin:
       | category_color | {"5":"#00FF00","10":"#FF0000"} | theme_snap |
-    And I log in as "admin"
-    And I follow "Browse all courses"
+    Given I log in as "admin"
     And I purge snap caches
+    And I wait until the page is ready
+    And I log out
+    And I wait until the page is ready
+    And I log in as "admin"
+    And I wait until the page is ready
+    And I follow "Browse all courses"
     And I wait until the page is ready
     And I follow "Cat 5"
     And I check element "a.btn.btn-secondary" with color "#00FF00"
@@ -106,12 +113,13 @@ Feature: When the moodle theme is set to Snap, sets a color per category.
   @javascript
   Scenario: Check category course color from nearest parent in hierarchy for teacher and student.
     Given I log in as "admin"
-    And I follow "Browse all courses"
     And I purge snap caches
-    Then I log out
+    And I wait until the page is ready
+    And I log out
     Then I log in as "teacher1"
-    # And I am on the course with shortname "C2" <- Removed this - this custom step is not part of Snap!
+    And I wait until the page is ready
     And I am on the course main page for "C2"
+    And I wait until the page is ready
     And I check element "a" with color "#00FF00"
     And I follow "Create learning activity"
     And I follow "Resources"
@@ -124,6 +132,5 @@ Feature: When the moodle theme is set to Snap, sets a color per category.
     And I click on "//div[@id='modchooser-accessible-tab']//button[@class='close']" "xpath_element"
     Then I log out
     And I log in as "student1"
-    # And I am on the course with shortname "C2"
     And I am on the course main page for "C2"
     And I check element "a" with color "#00FF00"
