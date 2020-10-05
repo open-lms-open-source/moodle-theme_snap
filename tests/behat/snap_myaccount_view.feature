@@ -86,6 +86,7 @@ Feature: Correct visualization of the general view for My Account plugin only fo
 
   @javascript
   Scenario: As an Admin, I change drift subscription and the Open bot icon should change.
+    Given I am using Blackboard Open LMS
     Given I log in as "admin"
     And I go to my profile page
     And I should see "Drift subscription"
