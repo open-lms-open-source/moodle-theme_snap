@@ -1598,6 +1598,8 @@ HTML;
      * Override parent function so that all courses (except the front page) skip the 'turn editing on' button.
      */
     protected function render_navigation_node(navigation_node $item) {
+        global $COURSE;
+
         if ($item->action instanceof moodle_url) {
             // Hide the course 'turn editing on' link.
             $iscoursepath = $item->action->get_path() === '/course/view.php';
@@ -1608,8 +1610,18 @@ HTML;
             }
         }
 
+        $context = context_course::instance($COURSE->id);
         if ($item->key === 'courseadmin') {
+            if (has_capability('moodle/contentbank:access', $context)) {
+                $this->add_contentbank_navigation_node($item, $context->id);
+            }
             $this->add_switchroleto_navigation_node($item);
+        }
+
+        if ($item->key === 'frontpage') {
+            if (has_capability('moodle/contentbank:access', $context)) {
+                $this->add_contentbank_navigation_node($item, 1);
+            }
         }
 
         $content = parent::render_navigation_node($item);
@@ -1617,6 +1629,17 @@ HTML;
             $content = str_replace('fa-fw fa-fw', 'fa-fw nav-missing-icon', $content);
         }
         return $content;
+    }
+
+    /**
+     * Adds a content bank link to a navigation node.
+     *
+     * @param navigation_node $item
+     * @param int $contextid
+     */
+    private function add_contentbank_navigation_node(navigation_node $item, $contextid) {
+        $url = new moodle_url('/contentbank/index.php', array('contextid' => $contextid));
+        $item->add(get_string('contentbank'), $url, navigation_node::TYPE_CUSTOM, null, 'contentbank');
     }
 
     /**
