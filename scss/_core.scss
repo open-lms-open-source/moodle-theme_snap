@@ -4270,3 +4270,8 @@ li.snap-activity.modtype_folder div[id^="folder_tree"] {
     top: 0em;
 }
 
+// Fix for H5P in Snap to see all the contents type in the Add dropdown content bank. Mimic Boost behavior for these type of dropdowns.
+#page-contentbank.theme-snap .content-bank-container .cb-toolbar-container .dropdown-menu.dropdown-scrollable {
+    overflow-y: auto;
+    max-height: 210px;
+}
