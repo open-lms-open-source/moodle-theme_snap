@@ -16,8 +16,8 @@
 # Tests for sending messages in snap.
 #
 # @package    theme_snap
-# @autor      Rafael Monterroza rafael.monterroza@blackboard.com
-# @copyright  Copyright (c) 2019 Blackboard Inc. (http://www.blackboard.com)
+# @autor      Rafael Monterroza rafael.monterroza@openlms.net
+# @copyright  Copyright (c) 2019 OpenLMS
 # @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
 
 
@@ -233,3 +233,25 @@ Feature: Snap message send messages
     Then I wait until the page is ready
     And I click on "#message-user-button" "css_element"
     Then "//div[contains(@class, 'header-container')]//strong[contains(text(), 'Student 2')]" "xpath_element" should be visible
+
+  @javascript
+  Scenario: Opening a direct message through the personal menu should open the message directly in the message page.
+    Given the following "message contacts" exist:
+      | user     | contact |
+      | student1 | student2 |
+      | student3 | student2 |
+    And I log in as "student1"
+    And I am on site homepage
+    And I click on ".js-snap-pm-trigger.snap-my-courses-menu" "css_element"
+    And I follow "View my messages"
+    And I click on "Contacts" "link"
+    And I click on "Student 2" "link" in the "//*[@data-section='contacts']" "xpath_element"
+    When I send "Hi!" message in the message area
+    Then I should see "Hi!" in the ".message.clickable[data-region='message']" "css_element"
+    And I log out
+    And I log in as "student2"
+    And I am on site homepage
+    And I click on ".js-snap-pm-trigger.snap-my-courses-menu" "css_element"
+    And I click on "#snap-personal-menu-feed-messages > div > div > a" "css_element"
+    # To check that the message is opened directly.
+    And I should see "Hi!" in the "//div[@class='body-container position-relative']//div[@data-region='view-conversation']//div[@data-region='content-message-container']//div[@data-region='message']//div[@data-region='text-container']//p" "xpath_element"

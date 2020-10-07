@@ -598,6 +598,11 @@ $custom-menu-text-color: rgb(255, 255, 255) !default; // Need to define this wit
         }
     }
 
+    // This background color helps to know when the delete-messages-for-all-users input checkbox is checked.
+    .message-app .view-conversation .custom-checkbox .custom-control-input:checked~.custom-control-label::after {
+        background-color: $brand-primary;
+    }
+
     // -------------------------
     // Navigation bar
     // -------------------------

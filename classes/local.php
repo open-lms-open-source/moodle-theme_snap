@@ -729,14 +729,17 @@ class local {
         $output = $PAGE->get_renderer('theme_snap', 'core', RENDERER_TARGET_GENERAL);
         $res = [];
         foreach ($messages as $message) {
+            // This URL will be to redirect the user to an unread message through the personal menu feed and open
+            // the specific message in the message index page.
             $url = new \moodle_url('/message/index.php', array(
-                'history' => 0,
-                'user1' => $message->useridto,
-                'user2' => $message->useridfrom,
-            ));
+                'viewing' => 'unread',
+                'user2' => $message->useridfrom)
+            );
 
             if (!$renderhtml) {
-                $url = $url->out();
+                // We need to pass out() as false because is adding a amp; in the url and generating a bug where
+                // the message in the personal menu was not redirecting the user to the specific message.
+                $url = $url->out(false);
             }
 
             $fromuser = $message->get_fromuser();
