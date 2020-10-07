@@ -1598,7 +1598,7 @@ HTML;
      * Override parent function so that all courses (except the front page) skip the 'turn editing on' button.
      */
     protected function render_navigation_node(navigation_node $item) {
-        global $COURSE;
+        global $COURSE, $SITE;
 
         if ($item->action instanceof moodle_url) {
             // Hide the course 'turn editing on' link.
@@ -1610,17 +1610,18 @@ HTML;
             }
         }
 
-        $context = context_course::instance($COURSE->id);
         if ($item->key === 'courseadmin') {
-            if (has_capability('moodle/contentbank:access', $context)) {
-                $this->add_contentbank_navigation_node($item, $context->id);
-            }
             $this->add_switchroleto_navigation_node($item);
         }
 
-        if ($item->key === 'frontpage') {
-            if (has_capability('moodle/contentbank:access', $context)) {
-                $this->add_contentbank_navigation_node($item, 1);
+        if ($COURSE->id !== $SITE->id) {
+            $context = context_course::instance($COURSE->id);
+        } else {
+            $context = context_system::instance();
+        }
+        if (has_capability('moodle/contentbank:access', $context)) {
+            if ($item->key === 'frontpage' || $item->key === 'courseadmin') {
+                $this->add_contentbank_navigation_node($item, $context->id);
             }
         }
 

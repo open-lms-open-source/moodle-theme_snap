@@ -27,13 +27,26 @@ Feature: When the moodle theme is set to Snap, the content bank link should show
     Given the following "courses" exist:
       | fullname | shortname | category | format |
       | Course 1 | C1        | 0        | topics |
+    And the following "users" exist:
+      | username | firstname | lastname | email                |
+      | teacher1 | Teacher   | 1        | teacher1@example.com |
+    And the following "course enrolments" exist:
+      | user     | course | role           |
+      | admin    | C1     | editingteacher |
+      | teacher1 | C1     | editingteacher |
+    And I assign "teacher1" the role of "editingteacher" in the frontpage
 
   @javascript
   Scenario: Users can see the content bank link.
     And I log in as "admin"
-    And I am on the course main page for "C1"
+    And I am on front page
     And I click on "#admin-menu-trigger" "css_element"
     And I should see "Content bank"
+    And I log out
+    And I log in as "teacher1"
     And I am on front page
+    And I click on "#admin-menu-trigger" "css_element"
+    And I should not see "Content bank"
+    And I am on the course main page for "C1"
     And I click on "#admin-menu-trigger" "css_element"
     And I should see "Content bank"
