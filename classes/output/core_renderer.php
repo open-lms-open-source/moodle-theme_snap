@@ -74,7 +74,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
      */
     public function heading_with_help($text, $helpidentifier, $component = 'moodle', $icon = '', $iconalt = '',
                                       $level = 2, $classnames = null) {
-        global $COURSE;
+        global $USER;
         $image = '';
         if ($icon) {
             $image = $this->pix_icon($icon, $iconalt, $component, array('class' => 'icon iconlarge'));
@@ -88,7 +88,10 @@ class core_renderer extends \theme_boost\output\core_renderer {
                 // Get mod help text.
                 $modnames = get_module_types_names();
                 $modname = $modnames[$component];
-                $mod = get_module_metadata($COURSE, array($component => $modname), null);
+                $contentitemservice = new \core_course\local\service\content_item_service(
+                    new \core_course\local\repository\content_item_readonly_repository()
+                );
+                $mod = $contentitemservice->get_content_items_by_name_pattern($USER, $modname);
                 if (!empty($mod) && isset($mod[$component]) && is_object($mod[$component]) && $mod[$component]->help) {
                     $helptext = format_text($mod[$component]->help, FORMAT_MARKDOWN);
                     $data = (object) [
@@ -1529,7 +1532,7 @@ HTML;
     protected function course_modchooser() {
         // @codingStandardsIgnoreStart
         // Core renderer has not $output attribute, but code checker requires it.
-        global $COURSE, $OUTPUT;
+        global $COURSE, $OUTPUT, $USER;
         // Check to see if user can add menus and there are modules to add.
         if (!has_capability('moodle/course:manageactivities', context_course::instance($COURSE->id))
                 || !($modnames = get_module_types_names()) || empty($modnames)) {
@@ -1543,9 +1546,12 @@ HTML;
                 unset($modnames[$module]);
             }
         }
-        $modules = get_module_metadata($COURSE, $modnames, $sectionreturn);
+        $contentitemservice = new \core_course\local\service\content_item_service(
+            new \core_course\local\repository\content_item_readonly_repository()
+        );
+        $contentitems = $contentitemservice->get_content_items_for_user_in_course($USER, $COURSE);
         $resources = [];
-        foreach ($modules as $mod) {
+        foreach ($contentitems as $mod) {
             $help = !empty($mod->help) ? $mod->help : '';
             $helptext = format_text($help, FORMAT_MARKDOWN);
 
