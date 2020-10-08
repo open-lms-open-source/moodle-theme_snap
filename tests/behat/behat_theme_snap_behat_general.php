@@ -358,4 +358,25 @@ class behat_theme_snap_behat_general extends behat_general {
             throw new ExpectationException($msg, $this->getSession());
         }
     }
+
+    /**
+     * Assigns a role to a user in the frontpage
+     *
+     * @codingStandardsIgnoreLine
+     * @Given /^I assign "([^"]*)" the role of "([^"]*)" in the frontpage$/
+     * @throws ExpectationException
+     * @param string $user
+     * @param string $role
+     */
+    public function theme_snap_i_assign_user_the_role_of_role_in_the_frontpage($user, $role) {
+        global $SITE, $DB;
+
+        $context = context_course::instance($SITE->id);
+        $roles = get_assignable_roles($context, ROLENAME_SHORT, false);
+        $roleid = array_search($role, $roles);
+
+        $user = $DB->get_record('user', array('username' => $user), '*', MUST_EXIST);
+
+        role_assign($roleid, $user->id, $context->id);
+    }
 }
