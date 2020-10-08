@@ -75,7 +75,6 @@ class theme_snap_local_test extends snap_base_test {
      * any tests for resolve_theme in core code.
      */
     public function test_resolve_theme() {
-        $this->markTestSkipped('Failing after 3.9.2 merge, to be reviewed in INT-16297');
         global $CFG, $COURSE;
 
         $this->resetAfterTest();
@@ -95,32 +94,32 @@ class theme_snap_local_test extends snap_base_test {
         $generator = $this->getDataGenerator();
         $cat1 = $generator->create_category((object)['name' => 'cat1']);
         $cat2 = $generator->create_category((object)['name' => 'cat2', 'parent' => $cat1->id]);
-        $cat3 = $generator->create_category((object)['name' => 'cat3', 'parent' => $cat2->id, 'theme' => 'clean']);
+        $cat3 = $generator->create_category((object)['name' => 'cat3', 'parent' => $cat2->id, 'theme' => 'classic']);
         $course1 = $generator->create_course((object) ['category' => $cat3->id]);
 
         $COURSE = $course1;
         $theme = local::resolve_theme();
-        $this->assertEquals('clean', $theme);
+        $this->assertEquals('classic', $theme);
 
-        $cat4 = $generator->create_category((object)['name' => 'cat4', 'theme' => 'more']);
+        $cat4 = $generator->create_category((object)['name' => 'cat4', 'theme' => 'boost']);
         $cat5 = $generator->create_category((object)['name' => 'cat5', 'parent' => $cat4->id]);
         $cat6 = $generator->create_category((object)['name' => 'cat6', 'parent' => $cat5->id]);
         $course2 = $generator->create_course((object) ['category' => $cat6->id]);
 
         $COURSE = $course2;
         $theme = local::resolve_theme();
-        $this->assertEquals('more', $theme);
+        $this->assertEquals('boost', $theme);
 
-        $course3 = $generator->create_course((object) ['category' => $cat1->id, 'theme' => 'clean']);
+        $course3 = $generator->create_course((object) ['category' => $cat1->id, 'theme' => 'classic']);
         $COURSE = $course3;
         $theme = local::resolve_theme();
-        $this->assertEquals('clean', $theme);
+        $this->assertEquals('classic', $theme);
 
-        $user1 = $generator->create_user(['theme' => 'more']);
+        $user1 = $generator->create_user(['theme' => 'boost']);
         $COURSE = get_course(SITEID);
         $this->setUser($user1);
         $theme = local::resolve_theme();
-        $this->assertEquals('more', $theme);
+        $this->assertEquals('boost', $theme);
 
     }
 
