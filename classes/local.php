@@ -2333,6 +2333,10 @@ SQL;
                 }
 
                 $url = $cm->url;
+                if (empty($url)) {
+                    $csinfo = $cm->get_section_info();
+                    $url = new moodle_url('/course/view.php', ['id' => $cm->course], 'section-' . $csinfo->section);
+                }
                 if (!$renderhtml) {
                     $url = $url->out();
                 }
