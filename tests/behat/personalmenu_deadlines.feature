@@ -175,7 +175,6 @@ Feature: When the moodle theme is set to Snap, students and teachers can find in
 
   @javascript
   Scenario Outline: Extended deadline dates take priority over deadlines.
-    Given I skip because "is going to be reviewed in INT-16260"
     Given the following config values are set as admin:
       | theme | snap |
     Given the following "activities" exist:
@@ -206,15 +205,15 @@ Feature: When the moodle theme is set to Snap, students and teachers can find in
 
   @javascript
   Scenario Outline: Expected completed on activities that do not have due date are shown on deadlines
-    Given I skip because "is going to be reviewed in INT-16260"
     Given the following "activities" exist:
-      | activity    | name          | intro                       | course | idnumber   | section | completionexpected | duedate |
+      | activity    | name          | intro                       | course | idnumber   | section | completionexpected | duedate       |
       | assign      | Assignment 1  | Test assign description 1   | C2     | assign1    | 0       | ##tomorrow##       | ##next week## |
       | forum       | Forum 1       | Test forum description      | C2     | forum1     | 0       | ##tomorrow##       |               |
       | quiz        | Quiz 1        | Test quiz description       | C2     | quiz1      | 0       | ##tomorrow##       |               |
+      | label       | Label 1       | Label 1                     | C2     | label1     | 0       | ##tomorrow##       |               |
     And the following config values are set as admin:
       | personalmenuadvancedfeedsenable  | <enadvfeeds> | theme_snap |
-      | personalmenuadvancedfeedsperpage | 5 | theme_snap |
+      | personalmenuadvancedfeedsperpage | 6 | theme_snap |
     And I log in as "teacher1"
     And I am on "Course 2" course homepage with editing mode on
     # Set completion for Assignment 1.
@@ -241,6 +240,13 @@ Feature: When the moodle theme is set to Snap, students and teachers can find in
       | id_completionview   | 1                                                 |
       | id_completionexpected_enabled | 1 |
     And I press "Save and return to course"
+    # Set completion for Quiz 1.
+    Then I follow "Edit \"Label 1\""
+    And I expand all fieldsets
+    And I set the following fields to these values:
+      | Completion tracking | Students can manually mark the activity as completed |
+      | id_completionexpected_enabled | 1 |
+    And I press "Save and return to course"
     And I log out
     Given I log in as "student2"
     And I <waitclause>
@@ -249,9 +255,11 @@ Feature: When the moodle theme is set to Snap, students and teachers can find in
     And I see a personal menu deadline of "##next week##" for "Assignment 1"
     And I see a personal menu deadline of "##tomorrow##" for "Forum 1"
     And I see a personal menu deadline of "##tomorrow##" for "Quiz 1"
+    And I see a personal menu deadline of "##tomorrow##" for "Label 1"
     And Activity "assign" "Assignment 1" is deleted
     And Activity "forum" "Forum 1" is deleted
     And Activity "quiz" "Quiz 1" is deleted
+    And Activity "label" "Label 1" is deleted
     Examples:
       | enadvfeeds | waitclause                                          |
       | 0          | wait until the page is ready                        |
@@ -259,7 +267,6 @@ Feature: When the moodle theme is set to Snap, students and teachers can find in
 
   @javascript
   Scenario Outline: As student i shouln't see deadlines of activities in the recycle bin.
-    Given I skip because "is going to be reviewed in INT-16260"
     Given the following "activities" exist:
       | activity | course | idnumber | name             | intro             | assignsubmission_onlinetext_enabled | assignfeedback_comments_enabled | section | duedate         |
       | assign   | C1     | assign1  | Assignment 1 | Test assignment 1 | 1                                   | 1                               | 0       | ##tomorrow##    |

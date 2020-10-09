@@ -1695,9 +1695,9 @@ class behat_theme_snap extends behat_base {
      */
     private function personal_menu_deadline_xpath($deadline, $eventname) {
         $deadline = calendar_day_representation($deadline);
-        $ids = "@id='snap-personal-menu-deadlines'|@id='snap-personal-menu-feed-deadlines'";
-        $xpath = "//div[$ids]//h3[contains(text(), '$eventname')]/parent::a/parent::div".
-            "/parent::div//time[contains(text(), '$deadline')]";
+        $ids = "@id='snap-personal-menu-deadlines' or @id='snap-personal-menu-feed-deadlines'";
+        $xpath = "//div[$ids]//h3[contains(text(), '$eventname')]/parent::a/parent::div" .
+            "//time[contains(text(), '$deadline')]";
         return $xpath;
     }
 
