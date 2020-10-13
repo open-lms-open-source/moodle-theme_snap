@@ -680,6 +680,21 @@ EOF;
             }
         }
 
+        // New Open reports if installed and visible.
+        if (array_key_exists('reports', core_component::get_plugin_list('block'))
+                && !empty($CFG->block_reports_enable_dashboardce)) {
+            $iconurl = $OUTPUT->image_url('open_reports_ce', 'theme');
+            $reportsicon = '<img src="'.$iconurl.'" class="svg-icon" alt="" role="presentation">';
+            if (has_capability('block/reports:viewown', $coursecontext, null, false)
+                || has_capability('block/reports:view', $coursecontext)
+            ) {
+                $links[] = array(
+                    'link' => $CFG->wwwroot.'/blocks/reports/view.php?action=dashboardce&courseid='.$COURSE->id,
+                    'title' => $reportsicon.get_string('openreports', 'block_reports')
+                );
+            }
+        }
+
         // Personalised Learning Designer.
         if (array_key_exists('pld', $localplugins) && has_capability('local/pld:editcourserules', $coursecontext)) {
             $iconurl = $OUTPUT->image_url('pld', 'theme');
