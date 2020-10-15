@@ -33,7 +33,6 @@ defined('MOODLE_INTERNAL') || die();
  */
 class theme_snap_course_management_test extends advanced_testcase {
     public function test_link_updated_with_hash() {
-        $this->markTestSkipped('Failing after 3.9.2 merge, to be reviewed in INT-16297');
         global $PAGE, $CFG;
 
         $this->resetAfterTest(true);
