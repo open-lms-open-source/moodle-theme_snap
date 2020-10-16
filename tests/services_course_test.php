@@ -178,7 +178,6 @@ class theme_snap_services_course_test extends \advanced_testcase {
     }
 
     public function test_course_completion() {
-        $this->markTestSkipped('Failing after 3.9.2 merge, to be reviewed in INT-16297');
         global $DB;
 
         $this->resetAfterTest();
