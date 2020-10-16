@@ -192,12 +192,6 @@ define(['jquery', 'core/log', 'core/ajax', 'core/str', 'core/templates', 'core/n
                             }
                         }
                     });
-                    // Modify Folder tree activity with inline content to have a H3 tag and have the same behavior that the
-                    // folder with content in a separate page has.
-                    $('#section-' + section + ' li.snap-activity.modtype_folder div[id^="folder_tree"] ' +
-                        '> ul > li > div > span.fp-filename').each(function () {
-                        $(this).replaceWith("<h3>"+$(this).text()+"</h3>");
-                    });
                 });
             }
         };

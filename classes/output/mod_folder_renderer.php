@@ -25,6 +25,8 @@
 
 namespace theme_snap\output;
 
+use html_writer;
+
 defined('MOODLE_INTERNAL') || die();
 
 require_once($CFG->dirroot.'/mod/folder/renderer.php');
@@ -33,12 +35,17 @@ class mod_folder_renderer extends \mod_folder_renderer {
     public function render_folder_tree(\folder_tree $tree) {
         // The folder tree render is overwritten to avoid that 2 folders have the same ID, when lazy load is enabled.
         $treecounter = $tree->context->id;
-
         $content = '';
         $id = 'folder_tree'. ($treecounter);
         $content .= '<div id="'.$id.'" class="filemanager">';
         $content .= $this->htmllize_tree($tree, array('files' => array(), 'subdirs' => array($tree->dir)));
         $content .= '</div>';
+
+        // Replace the span tag with the H3 tag to avoid a violation in the header structure for accessibility.
+        $replace = html_writer::tag('h3', s($tree->folder->name), array('class' => 'fp-filename'));
+        $search = html_writer::tag('span', s($tree->folder->name), array('class' => 'fp-filename'));
+        $content = str_replace($search, $replace, $content);
+
         $showexpanded = true;
         if (empty($tree->folder->showexpanded)) {
             $showexpanded = false;

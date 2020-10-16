@@ -677,12 +677,6 @@ define(['jquery', 'core/log', 'theme_snap/headroom', 'theme_snap/util', 'theme_s
                         }
                     });
 
-                    // Modify Folder tree activity with inline content to have a H3 tag and have the same behavior that the
-                    // folder with content in a separate page has.
-                    $('li.snap-activity.modtype_folder td[id^="ygtvcontentel"] > div > span.fp-filename').each(function () {
-                        $(this).replaceWith("<h3>"+$(this).text()+"</h3>");
-                    });
-
                     // Add a class to the body to show js is loaded.
                     $('body').addClass('snap-js-loaded');
                     // Apply progressbar.js for circluar progress display.
