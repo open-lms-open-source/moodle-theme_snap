@@ -706,6 +706,10 @@ $custom-menu-text-color: rgb(255, 255, 255) !default; // Need to define this wit
             text-align: right;
         }
 
+        &.checked .icon {
+            color: #fff;
+        }
+
         &:hover {
             border-color: $dark-grey-btn;
             color: $dark-grey-btn;
@@ -713,7 +717,8 @@ $custom-menu-text-color: rgb(255, 255, 255) !default; // Need to define this wit
         }
     }
 
-    .fp-viewbar > a.btn.btn-secondary.btn-sm.checked {
+    .fp-viewbar > a.btn.btn-secondary.btn-sm.checked,
+    .fp-viewbar > button.btn.btn-secondary.btn-sm.checked {
         background-color: $brand-primary;
         border-color: $brand-primary;
         outline-color: $brand-primary;

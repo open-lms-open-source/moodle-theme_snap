@@ -45,7 +45,6 @@ Feature: When adding a submission in an assignment, file picker options should e
     And I press "Add submission"
     And "button#addbtn" "css_element" should exist
     And "button#createfolderbtn" "css_element" should exist
-    And "button#addbtn" "css_element" should exist
     And "button#displayiconsbtn" "css_element" should exist
     And "button#displaydetailsbtn" "css_element" should exist
     And "button#displaytreebtn" "css_element" should exist
