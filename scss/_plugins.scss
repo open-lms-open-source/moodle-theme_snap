@@ -182,6 +182,13 @@
 }
 
 /**
+ * Mod h5p.
+ */
+#page-mod-hvp-mod.theme-snap iframe.h5p-editor-iframe {
+    z-index: 21 !important; // Overwrite inline style.
+}
+
+/**
  * Mod assignment.
  */
 #page-mod-assign-view {
