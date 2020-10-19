@@ -148,6 +148,10 @@ section#region-main
         text-align: center;
         border: 1px solid #eee;
         border-radius: $btn-border-radius;
+        display: block;
+        white-space: nowrap;
+        overflow-y: hidden;
+        text-overflow: ellipsis;
 
         .snap-participant-icons,
         img.svg-icon {
