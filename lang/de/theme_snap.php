@@ -143,7 +143,7 @@ $string['featurethreetitle'] = 'Funktion 3 – Titel';
 $string['featureonetitlelink'] = 'Link für Funktion 1 – Titel';
 $string['featuretwotitlelink'] = 'Link für Funktion 2 – Titel';
 $string['featurethreetitlelink'] = 'Link für Funktion 3 – Titel';
-$string['featuretitlelinkdesc'] = 'Geben Sie die URL ein, mit der dieser Funktions-Spot verknüpft werden soll. Sie können externe oder interne Links innerhalb Ihrer Website hinzufügen. Zum Hinzufügen eines internen Links kopieren Sie diesen von der URL nach dem "/". Beispiel: Bei einem Link zu einem Kurs wäre dies "course/view.php?id=160". Zum Hinzufügen eines externen Links beginnen Sie diesen mit "https://".';
+$string['featuretitlelinkdesc'] = 'Geben Sie die URL ein, mit der dieser Funktions-Spot verknüpft werden soll. Sie können externe oder interne Links innerhalb Ihrer Website hinzufügen. Zum Hinzufügen eines internen Links kopieren Sie diesen von der URL ab dem „/“. Beispiel: Bei einem Link zu einem Kurs wäre dies „/course/view.php?id=160“. Zum Hinzufügen eines externen Links beginnen Sie diesen mit „https://“.';
 $string['featureonetitlecb'] = 'Funktion 1 in einem neuen Fenster öffnen';
 $string['featuretwotitlecb'] = 'Funktion 2 in einem neuen Fenster öffnen';
 $string['featurethreetitlecb'] = 'Funktion 3 in einem neuen Fenster öffnen';
