@@ -53,7 +53,7 @@ $string['categoryedit'] = 'แก้ไขประเภท';
 $string['category_color'] = 'ประเภทสี';
 $string['category_color_description'] = 'รายวิชาประเภทสี รายวิชาเด็กใช้การกำหนดค่าระดับสูงขึ้นไปที่ใกล้ที่สุด';
 $string['category_color_palette'] = 'จานสี';
-$string['category_color_palette_description'] = 'ดูค่าเลขฐานสิบหกที่สอดคล้องกันสำหรับสีที่กำหนด สิ่งนี้เคยชิน 
+$string['category_color_palette_description'] = 'ดูค่าเลขฐานสิบหกที่สอดคล้องกันสำหรับสีที่กำหนด สิ่งนี้เคยชิน
 ส่งผลกระทบต่อการกำหนดค่าใด ๆ เป็นเพียงตัวอย่างเพื่อช่วยให้ผู้ใช้งานสร้างค่าการกำหนดค่า';
 $string['changecoverimage'] = 'เปลี่ยนภาพหน้าปก';
 $string['changefullname'] = 'เปลี่ยนชื่อเว็บไซต์';
@@ -78,7 +78,7 @@ $string['coursetools'] = 'กระดานรายงานความเค
 $string['coverdisplay'] = 'ดิสเพลย์หน้าปก';
 $string['covercarousel'] = 'ภาพสไลด์หน้าปก';
 $string['covercarouselon'] = 'ใช้ภาพสไลด์หน้าปก';
-$string['covercarouseldescription'] = '<p> ภาพสไลด์เป็นชุดแบนเนอร์หมุนหรือสไลด์โชว์ที่ปรากฏในหน้าแรกของเว็บไซต์ของคุณแทนที่จะเป็นภาพหน้าปก </p> 
+$string['covercarouseldescription'] = '<p> ภาพสไลด์เป็นชุดแบนเนอร์หมุนหรือสไลด์โชว์ที่ปรากฏในหน้าแรกของเว็บไซต์ของคุณแทนที่จะเป็นภาพหน้าปก </p>
 <p> เพิ่มภาพได้สูงสุด 3 ภาพชื่อเรื่องสำหรับแต่ละสไลด์และคำบรรยายเสริม รูปภาพขนาด 1200 x 600 พิกเซลทำงานได้ดีที่สุด </p>';
 $string['coverimage'] = 'รูปภาพหน้าปก';
 $string['covervideo'] = 'ปกวิดีโอ';
@@ -96,7 +96,7 @@ $string['deadlines'] = 'กำหนดเวลา';
 $string['deadlinestoggle'] = 'กำหนดเวลา';
 $string['deadlinestoggledesc'] = 'แสดงกำหนดเวลากิจกรรมที่จะเกิดขึ้นกับผู้ใช้งานจากรายวิชาที่ลงทะเบียน';
 $string['defaultsummary'] = 'ใช้พื้นที่นี้เพื่ออธิบายว่าหัวข้อนี้เกี่ยวกับอะไร - ด้วยข้อความรูปภาพเสียงและวิดีโอ';
-$string['defaultintrosummary'] = 'ยินดีต้อนรับสู่รายวิชาใหม่ของคุณ {$a} 
+$string['defaultintrosummary'] = 'ยินดีต้อนรับสู่รายวิชาใหม่ของคุณ {$a}
 <br> เริ่มต้นด้วยการอธิบายรายวิชาของคุณเกี่ยวกับการใช้ข้อความรูปภาพเสียงและวิดีโอ';
 $string['defaulttopictitle'] = 'หัวข้อไม่มีชื่อ';
 $string['debugerrors'] = 'แก้ไขข้อผิดพลาด';
@@ -135,7 +135,7 @@ $string['favorite'] = 'ที่ชื่นชอบ {$a}';
 $string['favorited'] = 'รายการโปรด {$a}';
 $string['featurespots'] = 'คุณสมบัติเด่น';
 $string['featurespotsedit'] = 'แก้ไขจุดที่น่าสนใจ';
-$string['featurespotshelp'] = '<p>เพิ่มจุดสนใจได้สูงสุด 3 จุดในหน้าแรกของเว็บไซต์ของคุณเพื่อเน้นประโยชน์หลัก ๆ ของผู้ใช้งานปัจจุบันและผู้มีโอกาสเป็นลูกค้า </p> 
+$string['featurespotshelp'] = '<p>เพิ่มจุดสนใจได้สูงสุด 3 จุดในหน้าแรกของเว็บไซต์ของคุณเพื่อเน้นประโยชน์หลัก ๆ ของผู้ใช้งานปัจจุบันและผู้มีโอกาสเป็นลูกค้า </p>
 <p>เพิ่มชื่อเนื้อหาและรูปภาพที่เป็นตัวเลือกสำหรับแต่ละคุณสมบัติ รูปภาพควรจะเป็นสี่เหลี่ยมจัตุรัสและต้องไม่ใหญ่กว่า 200px คูณ 200px</p>';
 $string['featurespotsheading'] = 'ส่วนหัวคุณสมบัติจุด';
 $string['featureonetitle'] = 'คุณสมบัติ 1 ชื่อ';
@@ -202,8 +202,8 @@ $string['instagram'] = 'Instagram';
 $string['instagramdesc'] = 'URL ของบัญชี Instagram ของคุณ';
 $string['introduction'] = 'บทนำ';
 $string['jsontext'] = 'ข้อความ JSON';
-$string['jsontextdescription'] = 'พื้นที่ข้อความตรวจสอบความถูกต้องของ JSON ที่กำหนดดังนั้นอนุญาตเฉพาะประเภทที่มีอยู่เท่านั้น 
-เฉพาะค่าตัวเลขในฐานะที่เป็น id (เรคคอร์ดประเภท) ที่ถูกต้องและยอมรับเฉพาะค่าเลขฐานสิบหกเป็นสี 
+$string['jsontextdescription'] = 'พื้นที่ข้อความตรวจสอบความถูกต้องของ JSON ที่กำหนดดังนั้นอนุญาตเฉพาะประเภทที่มีอยู่เท่านั้น
+เฉพาะค่าตัวเลขในฐานะที่เป็น id (เรคคอร์ดประเภท) ที่ถูกต้องและยอมรับเฉพาะค่าเลขฐานสิบหกเป็นสี
 นี่คือตัวอย่าง:<br>
 {"1":"#FAAFFF",<br>
 "45":"#AFF",<br>
@@ -336,12 +336,12 @@ $string['showallsectionsdisabled'] = 'เนื่องจากภาษาก
 $string['disabled'] = 'ปิดใช้งาน';
 $string['showappearancedisabled'] = 'ภาษาการออกแบบของ Snap ป้องกันการเปลี่ยนแปลงการตั้งค่า "ลักษณะ"';
 $string['pbb'] = 'การสร้างแบรนด์ตามโปรไฟล์';
-$string['pbb_description'] = 'ด้วยการเปิดใช้งาน <strong>การสร้างแบรนด์ตามโปรไฟล์</strong> คุณจะสามารถปรับแต่งประสบการณ์การสร้างแบรนด์สำหรับกลุ่มผู้ใช้งานที่เฉพาะเจาะจงตามฟิลด์โปรไฟล์ผู้ใช้งานที่เลือก 
-<ul><li>ค่าฟิลด์ผู้ใช้งานจะเป็น <em>ที่มี slugified</em>; การแปลงอักขระทั้งหมดเป็นตัวพิมพ์เล็กและแยกด้วยเส้นประ (-)</li> 
-<li>สตริง <code>snap-pbb-</code> จะได้รับการเติม</li> 
-<li>คลาสนี้จะถูกเพิ่มไว้ใน <code>เนื้อหา</code> แท็ก Html</li></ul> 
-ตัวอย่างเช่นค่าฟิลด์ผู้ใช้งาน <em>Blueberry Extravaganza</em> จะถูก slugified ให้เป็น <code>snap-pbb-blueberry-extravaganza</code><br /><br /> 
-คุณลักษณะนี้ใช้ร่วมกับ <a href="https://help.blackboard.com/Blackboard_Open_LMS/Administrator/Manage_a_Site/Course_and_Site_Design/Themes/Snap#advanced-branding_OTP-3" target="_blank"> CSS ที่กำหนดเอง</a> 
+$string['pbb_description'] = 'ด้วยการเปิดใช้งาน <strong>การสร้างแบรนด์ตามโปรไฟล์</strong> คุณจะสามารถปรับแต่งประสบการณ์การสร้างแบรนด์สำหรับกลุ่มผู้ใช้งานที่เฉพาะเจาะจงตามฟิลด์โปรไฟล์ผู้ใช้งานที่เลือก
+<ul><li>ค่าฟิลด์ผู้ใช้งานจะเป็น <em>ที่มี slugified</em>; การแปลงอักขระทั้งหมดเป็นตัวพิมพ์เล็กและแยกด้วยเส้นประ (-)</li>
+<li>สตริง <code>snap-pbb-</code> จะได้รับการเติม</li>
+<li>คลาสนี้จะถูกเพิ่มไว้ใน <code>เนื้อหา</code> แท็ก Html</li></ul>
+ตัวอย่างเช่นค่าฟิลด์ผู้ใช้งาน <em>Blueberry Extravaganza</em> จะถูก slugified ให้เป็น <code>snap-pbb-blueberry-extravaganza</code><br /><br />
+คุณลักษณะนี้ใช้ร่วมกับ <a href="https://help.blackboard.com/Blackboard_Open_LMS/Administrator/Manage_a_Site/Course_and_Site_Design/Themes/Snap#advanced-branding_OTP-3" target="_blank"> CSS ที่กำหนดเอง</a>
 คุณจะต้องเพิ่มตัวเลือก CSS โดยใช้คลาสใหม่ในส่วน <a class="snap-settings-tab-link" href="#themesnapbranding">พื้นฐาน</a>';
 $string['pbb_enable'] = 'เปิดใช้งานการสร้างตราสินค้าตามโปรไฟล์';
 $string['pbb_enable_description'] = 'เพิ่มคลาสให้กับแท็กเนื้อความถ้าเปิดใช้งาน';
