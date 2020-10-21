@@ -143,7 +143,7 @@ $string['featurethreetitle'] = 'Titre de la fonctionnalité 3';
 $string['featureonetitlelink'] = 'Lien du titre de la fonctionnalité 1';
 $string['featuretwotitlelink'] = 'Lien du titre de la fonctionnalité 2';
 $string['featurethreetitlelink'] = 'Lien du titre de la fonctionnalité 3';
-$string['featuretitlelinkdesc'] = 'Saisissez l\'URL à laquelle vous souhaitez lier cet emplacement de fonctionnalité. Vous pouvez ajouter des liens externes et internes sur votre site. Pour ajouter un lien externe, copiez-le à partir de l\'URL du site après la barre oblique (« / »). Par exemple, pour ajouter un lien vers un cours « course/view.php?id=160 ». Pour ajouter un lien externe, le lien doit commencer par https://';
+$string['featuretitlelinkdesc'] = 'Saisissez l\'URL à laquelle vous souhaitez lier cet emplacement de fonctionnalité. Vous pouvez ajouter des liens externes et internes sur votre site. Pour ajouter un lien externe, copiez-le à partir de l\'URL du site en incluant la barre oblique (« / »). Par exemple, pour ajouter un lien vers un cours, copiez « /course/view.php?id=160 ». Pour ajouter un lien externe, le lien doit commencer par https://';
 $string['featureonetitlecb'] = 'La fonctionnalité 1 s\'ouvre dans une nouvelle fenêtre';
 $string['featuretwotitlecb'] = 'La fonctionnalité 2 s\'ouvre dans une nouvelle fenêtre';
 $string['featurethreetitlecb'] = 'La fonctionnalité 3 s\'ouvre dans une nouvelle fenêtre';
