@@ -144,7 +144,7 @@ $string['featurethreetitle'] = 'Toiminnon 3 otsikko';
 $string['featureonetitlelink'] = 'Toiminnon 1 otsikon linkki';
 $string['featuretwotitlelink'] = 'Toiminnon 2 otsikon linkki';
 $string['featurethreetitlelink'] = 'Toiminnon 3 otsikon linkki';
-$string['featuretitlelinkdesc'] = 'Kirjoita verkko-osoite, johon haluat linkittää tämän toiminnon esittelyn. Voit lisätä sivustoosi ulkoisia tai sisäisiä linkkejä. Voit lisätä sisäisen linkin kopioimalla sen verkko-osoitteesta merkin / jälkeen. Esimerkiksi kurssin linkissä haluttu osoite olisi course/view.php?id=160. Voit lisätä ulkoisen linkin aloittamalla linkin https://.';
+$string['featuretitlelinkdesc'] = 'Kirjoita verkko-osoite, johon haluat linkittää tämän toiminnon esittelyn. Voit lisätä sivustoosi ulkoisia tai sisäisiä linkkejä. Voit lisätä sisäisen linkin kopioimalla verkko-osoitteesta merkin / ja sen jälkeisen osan. Esimerkiksi kurssin linkin tapauksessa kopioitu osa olisi /course/view.php?id=160. Voit lisätä ulkoisen linkin aloittamalla linkin https://';
 $string['featureonetitlecb'] = 'Toiminto 1 avautuu uudessa ikkunassa';
 $string['featuretwotitlecb'] = 'Toiminto 2 avautuu uudessa ikkunassa';
 $string['featurethreetitlecb'] = 'Toiminto 3 avautuu uudessa ikkunassa';
