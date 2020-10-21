@@ -143,7 +143,7 @@ $string['featurethreetitle'] = 'Uitgelichte spot 3 titel';
 $string['featureonetitlelink'] = 'Titelkoppeling functie 1';
 $string['featuretwotitlelink'] = 'Titelkoppeling functie 2';
 $string['featurethreetitlelink'] = 'Titelkoppeling functie 3';
-$string['featuretitlelinkdesc'] = 'Typ de URL waaraan je dit functiepunt wilt koppelen. Je kunt externe of interne koppelingen toevoegen binnen de site. Als je een interne koppeling wilt toevoegen, kopieer je deze uit de site-URL, het gedeelte na /. Als je bijvoorbeeld een koppeling naar een cursus wilt toevoegen, ziet die eruit als "course/view.php?id=160". Als je een externe koppeling wilt toevoegen, begin je de koppeling met https://';
+$string['featuretitlelinkdesc'] = 'Typ de URL waaraan je dit functiepunt wilt koppelen. Je kunt externe of interne koppelingen toevoegen binnen de site. Als je een interne koppeling wilt toevoegen, kopieer je deze uit de site-URL met /. Als je bijvoorbeeld een koppeling naar een cursus wilt toevoegen, ziet die eruit als "course/view.php?id=160". Als je een externe koppeling wilt toevoegen, begin je de koppeling met https://';
 $string['featureonetitlecb'] = 'Functie 1 geopend in een nieuw venster';
 $string['featuretwotitlecb'] = 'Functie 2 geopend in een nieuw venster';
 $string['featurethreetitlecb'] = 'Functie 3 geopend in een nieuw venster';
