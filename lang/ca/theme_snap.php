@@ -143,7 +143,7 @@ $string['featurethreetitle'] = 'Títol de la funció 3';
 $string['featureonetitlelink'] = 'Enllaç del títol de la funció 1';
 $string['featuretwotitlelink'] = 'Enllaç del títol de la funció 2';
 $string['featurethreetitlelink'] = 'Enllaç del títol de la funció 3';
-$string['featuretitlelinkdesc'] = 'Introduïu l\'URL al qual voleu enllaçar aquest espot de presentació de la funció. Podeu afegir enllaços externs i interns al vostre lloc. Si voleu afegir-hi un enllaç intern, copieu-lo de l\'URL del lloc després de "/". Per exemple, per obtenir l\'enllaç d\'un curs, s\'ha de copiar "course/view.php?id=160". Per afegir-hi un enllaç extern, l\'enllaç ha de començar amb "https://"';
+$string['featuretitlelinkdesc'] = 'Introduïu l\'URL al qual voleu enllaçar aquest espot de presentació de la funció. Podeu afegir enllaços externs i interns al vostre lloc. Si voleu afegir-hi un enllaç intern, copieu-lo de l\'URL del lloc, sense oblidar la "/". Per exemple, per obtenir l\'enllaç d\'un curs, s\'ha de copiar "/course/view.php?id=160". Per afegir-hi un enllaç extern, l\'enllaç ha de començar amb "https://"';
 $string['featureonetitlecb'] = 'La funció 1 s\'obre en una finestra nova';
 $string['featuretwotitlecb'] = 'La funció 2 s\'obre en una finestra nova';
 $string['featurethreetitlecb'] = 'La funció 3 s\'obre en una finestra nova';
@@ -266,7 +266,7 @@ $string['pld'] = 'PLD';
 $string['pluginname'] = 'Snap';
 $string['poster'] = 'Imatge de portada';
 $string['posterdesc'] = 'Una imatge de capçalera gran per a la pàgina principal del vostre lloc. Les imatges en format horitzontal de 1200 x 600 píxels o més van millor.';
-$string['poweredbyrunby'] = 'Creat amb <a href="https://www.openlms.net/" target="_blank" rel="noopener">Blackboard Open LMS</a>,
+$string['poweredbyrunby'] = 'Creat amb <a href="https://www.openlms.net/" target="_blank" rel="noopener">Open LMS</a>,
     amb tecnologia de <a href="https://moodle.com/" target="_blank" rel="noopener">Moodle</a>.<br>
     Copyright&#169; {$a} Open LMS, Tots els drets reservats.';
 $string['previoussection'] = 'Secció anterior';
