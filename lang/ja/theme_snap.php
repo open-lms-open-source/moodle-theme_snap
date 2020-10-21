@@ -143,7 +143,7 @@ $string['featurethreetitle'] = '注目スポット3のタイトル';
 $string['featureonetitlelink'] = '注目スポット1のタイトルのリンク';
 $string['featuretwotitlelink'] = '注目スポット2のタイトルのリンク';
 $string['featurethreetitlelink'] = '注目スポット3のタイトルのリンク';
-$string['featuretitlelinkdesc'] = 'この注目スポットをリンクするURLを入力します。サイト内に外部または内部のリンクを追加できます。内部リンクを追加する場合は、サイトURLから「/」の後をコピーしてください。たとえば、コースへのリンクの場合、「course/view.php?id=160」のようになります。外部リンクを追加する場合は、リンクをhttps://で開始します。';
+$string['featuretitlelinkdesc'] = 'この注目スポットをリンクするURLを入力します。サイト内に外部または内部のリンクを追加できます。内部リンクを追加する場合は、サイトURLから「/」を含めてコピーしてください。たとえば、コースへのリンクの場合、「/course/view.php?id=160」のようになります。外部リンクを追加する場合は、リンクをhttps://で開始します。';
 $string['featureonetitlecb'] = '注目スポット1を新しいウィンドウで開く';
 $string['featuretwotitlecb'] = '注目スポット2を新しいウィンドウで開く';
 $string['featurethreetitlecb'] = '注目スポット3を新しいウィンドウで開く';
