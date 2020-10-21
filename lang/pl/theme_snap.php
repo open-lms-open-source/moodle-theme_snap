@@ -360,9 +360,11 @@ $string['gotocalendarsnap'] = 'przejdź do witryny kalendarza.';
 $string['quizattemptswarn'] = 'Wyklucza podejścia zawieszonych użytkowników';
 $string['quizfeedback'] = 'Informacja zwrotna';
 $string['validratio'] = 'Ta kombinacja kolorów jest zgodna z minimalną wartością współczynnika wg normy WCAG 2.0 równą 4,5:1';
-$string['invalidratio'] = 'Ta kombinacja kolorów jest niezgodna z <a href="https://www.w3.org/TR/WCAG20-TECHS/G18.html" target="_blank">minimalną wartością współczynnika wg normy WCAG 2.0 równą 4,5:1</a>. Wartość: „{$a}”';
+$string['invalidratio'] = 'Ta kombinacja kolorów jest niezgodna z 
+<a href="https://www.w3.org/TR/WCAG20-TECHS/G18.html" target="_blank">minimalną wartością współczynnika wg normy WCAG 2.0 równą 4,5:1</a>. Wartość: „{$a}”';
 $string['imageinvalidratio'] = 'Ten obraz może być przyczyną problemów z kontrastem ze względu na niezgodność z minimalną wartością współczynnika wg normy WCAG 2.0 równą 4,5:1. Średnia wartość pikseli: „{$a}”';
-$string['catinvalidratio'] = 'Następujące kategorie kolorów są niezgodne z <a href="https://www.w3.org/TR/WCAG20-TECHS/G18.html" target="_blank">minimalną wartością współczynnika wg normy WCAG 2.0 równą 4,5:1</a>:
+$string['catinvalidratio'] = 'Następujące kategorie kolorów są niezgodne z 
+<a href="https://www.w3.org/TR/WCAG20-TECHS/G18.html" target="_blank">minimalną wartością współczynnika wg normy WCAG 2.0 równą 4,5:1</a>:
 W odniesieniu do koloru tła witryny (biały): „{$a->white}”. W odniesieniu do koloru tła paska nawigacyjnego: „{$a->custombar}”. W odniesieniu do koloru tła przycisku Moje kursy: „{$a->customnav}”';
 $string['imageinvalidratiocategory'] = 'Przy tym kolorze motywu ten obraz może być przyczyną problemów z kontrastem ze względu na niezgodność z minimalną wartością współczynnika wg normy WCAG 2.0 równą 4,5:1. Średnia wartość pikseli: „{$a}”';
 $string['lazyload_mod_page'] = 'Włącz domyślne ładowanie opóźnione zasobów stron';
