@@ -143,7 +143,7 @@ $string['featurethreetitle'] = 'Título de función 3';
 $string['featureonetitlelink'] = 'Enlace de título de función 1';
 $string['featuretwotitlelink'] = 'Enlace de título de función 2';
 $string['featurethreetitlelink'] = 'Enlace de título de función 3';
-$string['featuretitlelinkdesc'] = 'Escriba la URL a la cual desea vincular este punto de función. Puede agregar enlaces internos o externos en su sitio. Para agregar un enlace interno, cópielo desde la URL del sitio después de /. Por ejemplo, el caso de un enlace a un curso sería "course/view.php?id=160". Para agregar un enlace externo, inicie el enlace con https://';
+$string['featuretitlelinkdesc'] = 'Escriba la URL con la cual desea vincular este punto de función. Puede agregar enlaces internos o externos en su sitio. Para agregar un enlace interno, cópielo de la URL del sitio e incluya una /. Por ejemplo, un enlace a un curso debería verse así: "/course/view.php?id=160". Para agregar un enlace externo, este debe comenzar con https://';
 $string['featureonetitlecb'] = 'Abrir función 1 en una ventana nueva';
 $string['featuretwotitlecb'] = 'Abrir función 2 en una ventana nueva';
 $string['featurethreetitlecb'] = 'Abrir función 3 en una ventana nueva';
