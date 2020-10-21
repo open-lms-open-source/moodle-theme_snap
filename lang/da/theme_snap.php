@@ -143,7 +143,7 @@ $string['featurethreetitle'] = 'Titel til funktion 3';
 $string['featureonetitlelink'] = 'Titellink til funktion 1';
 $string['featuretwotitlelink'] = 'Titellink til funktion 2';
 $string['featurethreetitlelink'] = 'Titellink til funktion 3';
-$string['featuretitlelinkdesc'] = 'Skriv den URL, du vil linke dette funktionssted til. Du kan tilføje eksterne eller interne links på dit websted. For at tilføje et internt link skal du kopiere det fra webstedets URL efter /. Hvis du for eksempel skal et link til et kursus, ville det være "kursus/view.php?id=160". For at tilføje et eksternt link skal du starte linket med https://';
+$string['featuretitlelinkdesc'] = 'Skriv den URL, du vil linke dette funktionssted til. Du kan tilføje eksterne eller interne links på dit websted. For at tilføje et internt link skal du kopiere det fra webstedets URL inklusive /. Hvis du for eksempel skal have et link til et kursus, vil det være "/kursus/view.php?id=160". For at tilføje et eksternt link skal du starte linket med https://';
 $string['featureonetitlecb'] = 'Funktion 1 er åben i et nyt vindue';
 $string['featuretwotitlecb'] = 'Funktion 2 er åben i et nyt vindue';
 $string['featurethreetitlecb'] = 'Funktion 3 er åben i et nyt vindue';
@@ -265,7 +265,7 @@ $string['pld'] = 'PLD';
 $string['pluginname'] = 'Snap';
 $string['poster'] = 'Forsidebillede';
 $string['posterdesc'] = 'Et stort sidehovedbillede til dit websteds forside. Liggende billeder (1200 x 600 pixels) eller større fungerer bedst.';
-$string['poweredbyrunby'] = 'Skabt med <a href="https://www.openlms.net/" target="_blank" rel="noopener">Blackboard Open LMS</a>,
+$string['poweredbyrunby'] = 'Skabt med <a href="https://www.openlms.net/" target="_blank" rel="noopener">Open LMS</a>,
     et <a href="https://moodle.com/" target="_blank" rel="noopener">Moodle</a>-baseret produkt.<br>
     Copyright &#169; {$a} Open LMS, alle rettigheder forbeholdes.';
 $string['previoussection'] = 'Forrige sektion';
