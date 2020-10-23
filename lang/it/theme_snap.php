@@ -144,7 +144,7 @@ $string['featurethreetitle'] = 'Titolo funzionalità 3';
 $string['featureonetitlelink'] = 'Link titolo funzionalità 1';
 $string['featuretwotitlelink'] = 'Link titolo funzionalità 2';
 $string['featurethreetitlelink'] = 'Link titolo funzionalità 3';
-$string['featuretitlelinkdesc'] = 'Digitare l\'URL a cui collegare questa funzione spot. È possibile aggiungere collegamenti esterni o interni nel sito. Per aggiungere un collegamento interno, copiarlo dall\'URL del sito, nella parte che segue il simbolo /. Ad esempio, per ottenere un collegamento a un corso, usare "course/view.php?id=160". Per aggiungere un collegamento esterno, iniziare il collegamento con https://';
+$string['featuretitlelinkdesc'] = 'Digitare l\'URL a cui collegare questa funzione spot. È possibile aggiungere collegamenti esterni o interni nel sito. Per aggiungere un collegamento interno, copiarlo dall\'URL del sito includendo il simbolo /. Ad esempio, per ottenere un collegamento a un corso, usare "course/view.php?id=160". Per aggiungere un collegamento esterno, iniziare il collegamento con https://';
 $string['featureonetitlecb'] = 'La funzione 1 viene aperta in una nuova finestra';
 $string['featuretwotitlecb'] = 'La funzione 2 viene aperta in una nuova finestra';
 $string['featurethreetitlecb'] = 'La funzione 3 viene aperta in una nuova finestra';

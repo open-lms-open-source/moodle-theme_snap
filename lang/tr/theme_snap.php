@@ -143,7 +143,7 @@ $string['featurethreetitle'] = 'Özellik 3 başlığı';
 $string['featureonetitlelink'] = 'Özellik 1 başlık bağlantısı';
 $string['featuretwotitlelink'] = 'Özellik 2 başlık bağlantısı';
 $string['featurethreetitlelink'] = 'Özellik 3 başlık bağlantısı';
-$string['featuretitlelinkdesc'] = 'Bu özellik noktasını bağlamak istediğiniz URL\'yi yazın. Sitenize haricî veya dâhilî bağlantılar ekleyebilirsiniz. Dâhilî bağlantı eklemek için lütfen site URL\'sinde / işaretinden sonra gelen kısmı kopyalayın. Örneğin, bir kursa bağlantı vermek için "course/view.php?id=160" kullanılır. Haricî bir bağlantı eklemek için bağlantıyı https:// ile başlatın';
+$string['featuretitlelinkdesc'] = 'Bu özellik noktasını bağlamak istediğiniz URL\'yi yazın. Sitenize haricî veya dâhilî bağlantılar ekleyebilirsiniz. Dâhilî bağlantı eklemek için lütfen / işaretini de içerecek şekilde site URL\'sinden bağlantıyı kopyalayın. Örneğin, bir kursa bağlantı vermek için "course/view.php?id=160" kullanılır. Haricî bir bağlantı eklemek için bağlantıyı https:// ile başlatın';
 $string['featureonetitlecb'] = 'Özellik 1\'i yeni pencerede aç';
 $string['featuretwotitlecb'] = 'Özellik 2\'yi yeni pencerede aç';
 $string['featurethreetitlecb'] = 'Özellik 3\'ü yeni pencerede aç';
@@ -359,9 +359,11 @@ $string['gotocalendarsnap'] = 'site takvimine gidin.';
 $string['quizattemptswarn'] = 'Askıya alınan kullanıcılara ait denemeleri hariç tutar';
 $string['quizfeedback'] = 'Geri Bildirim';
 $string['validratio'] = 'Bu renk kombinasyonu WCAG 2.0 minimum oran değeri 4.5:1\'e uygun değil';
-$string['invalidratio'] = 'Bu renk kombinasoynu <a href="https://www.w3.org/TR/WCAG20-TECHS/G18.html" target="_blank">WCAG 2.0 minimum oran değeri 4.5:1</a>\'e uygun değil. Değer: "{$a}"';
+$string['invalidratio'] = 'Bu renk kombinasoynu
+<a href="https://www.w3.org/TR/WCAG20-TECHS/G18.html" target="_blank">WCAG 2.0 minimum oran değeri 4.5:1</a>\'e uygun değil. Değer: "{$a}"';
 $string['imageinvalidratio'] = 'WCAG 2.0 minimum oran değeri 4.5:1\'e uygun olmadığından dolayı bu resimde kontrast sorunları olabilir. Ortalama piksel değeri: "{$a}"';
-$string['catinvalidratio'] = 'Aşağıdaki renk kategorileri <a href="https://www.w3.org/TR/WCAG20-TECHS/G18.html" target="_blank">WCAG 2.0 minimum oran değeri 4.5:1</a>\'e uygun değil :
+$string['catinvalidratio'] = 'Aşağıdaki renk kategorileri
+<a href="https://www.w3.org/TR/WCAG20-TECHS/G18.html" target="_blank">WCAG 2.0 minimum oran değeri 4.5:1</a>\'e uygun değil :
 Site arka plan rengine (beyaz) uygun değil: "{$a->white}". Navigasyon çubuğu arka plan rengine uygun değil: "{$a->custombar}". Kurslarım düğmesi arka plan rengine uygun değil: "{$a->customnav}"';
 $string['imageinvalidratiocategory'] = 'WCAG 2.0 minimum oran değeri 4.5:1\'e uygun olmadığından dolayı bu resimde tema rengiyle kontrast sorunları olabilir. Ortalama piksel değeri: "{$a}"';
 $string['lazyload_mod_page'] = 'Sayfa kaynakları için varsayılan yavaş yüklemeyi etkinleştir';

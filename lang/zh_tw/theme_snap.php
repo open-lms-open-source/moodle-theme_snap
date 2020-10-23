@@ -144,7 +144,7 @@ $string['featurethreetitle'] = '特性 3 標題';
 $string['featureonetitlelink'] = '特性 1 標題連結';
 $string['featuretwotitlelink'] = '特性 2 標題連結';
 $string['featurethreetitlelink'] = '特性 3 標題連結';
-$string['featuretitlelinkdesc'] = '輸入要連結此重要特性的 URL。您可以在網站內新增外部或內部連結。若要新增內部連結，請複製網站 URL 中「/」之後的部分。例如，若是課程的連結，則會是「course/view.php?id=160」。若要新增外部連結，則以 https:// 作為連結開頭';
+$string['featuretitlelinkdesc'] = '輸入要連結此重要特性的 URL。您可以在網站內新增外部或內部連結。若要新增內部連結，請複製包含「/」在內的網站 URL。例如，若要新增課程連結，可使用「/course/view.php?id=160」。若要新增外部連結，則以 https:// 作為連結開頭';
 $string['featureonetitlecb'] = '特性 1 在新視窗開啟';
 $string['featuretwotitlecb'] = '特性 2 在新視窗開啟';
 $string['featurethreetitlecb'] = '特性 3 在新視窗開啟';

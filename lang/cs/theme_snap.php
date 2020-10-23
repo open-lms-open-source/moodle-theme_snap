@@ -53,7 +53,8 @@ $string['categoryedit'] = 'Upravit kategorii';
 $string['category_color'] = 'Barva kategorie';
 $string['category_color_description'] = 'Jedná se o barvu kategorie kurzu. Podřazené (asociované) kurzy přebírají konfiguraci nejbližší nadřazené kategorie';
 $string['category_color_palette'] = 'Paleta barev';
-$string['category_color_palette_description'] = 'Prohlédněte si odpovídající hexadecimální hodnotu dané barvy. Žádnou konfiguraci to neovlivní, jedná se jen o vzorek, který uživatelům pomáhá nastavit hodnotu konfigurace.';
+$string['category_color_palette_description'] = 'Prohlédněte si odpovídající hexadecimální hodnotu dané barvy. Žádnou konfiguraci to neovlivní,
+jedná se jen o vzorek, který uživatelům pomáhá nastavit hodnotu konfigurace.';
 $string['changecoverimage'] = 'Změnit titulní obrázek';
 $string['changefullname'] = 'Změnit název webu';
 $string['chapters'] = 'Kapitoly';
@@ -143,7 +144,7 @@ $string['featurethreetitle'] = 'Nadpis prvku 3';
 $string['featureonetitlelink'] = 'Titulní odkaz prvku 1';
 $string['featuretwotitlelink'] = 'Titulní odkaz prvku 2';
 $string['featurethreetitlelink'] = 'Titulní odkaz prvku 3';
-$string['featuretitlelinkdesc'] = 'Zadejte adresu URL, na kterou bude tento zvláštní prvek odkazovat. Můžete přidat externí odkazy, nebo interní odkazy v rámci vašeho webu. Pokud chcete přidat interní odkaz, zkopírujte část z adresy URL webu za lomítkem (/). Pokud chcete například použít odkaz na kurz, bude vypadat zhruba takto: „course/view.php?id=160“. Externí odkaz bude začínat textem „https://“.';
+$string['featuretitlelinkdesc'] = 'Zadejte adresu URL, na kterou bude tento zvláštní prvek odkazovat. Můžete přidat externí odkazy, nebo interní odkazy v rámci vašeho webu. Pokud chcete přidat interní odkaz, zkopírujte část z adresy URL webu včetně lomítka (/). Pokud chcete například použít odkaz na kurz, bude vypadat zhruba takto: „/course/view.php?id=160“. Externí odkaz bude začínat textem „https://“.';
 $string['featureonetitlecb'] = 'Otevření prvku 1 v novém okně';
 $string['featuretwotitlecb'] = 'Otevření prvku 2 v novém okně';
 $string['featurethreetitlecb'] = 'Otevření prvku 3 v novém okně';
@@ -201,7 +202,8 @@ $string['instagram'] = 'Instagram';
 $string['instagramdesc'] = 'Adresa URL vašeho účtu na Instagramu';
 $string['introduction'] = 'Úvod';
 $string['jsontext'] = 'Text JSON';
-$string['jsontextdescription'] = 'Textová oblast ověřuje zadaný soubor JSON. Povoleny jsou pouze existující kategorie. Jako záznamy ID (záznamy kategorií) jsou platné pouze číselné hodnoty a jako barvy se přijímají pouze hexadecimální hodnoty.
+$string['jsontextdescription'] = 'Textová oblast ověřuje zadaný soubor JSON. Povoleny jsou pouze existující kategorie.
+Jako záznamy ID (záznamy kategorií) jsou platné pouze číselné hodnoty a jako barvy se přijímají pouze hexadecimální hodnoty.
 Příklad:<br>
 {"1":"#FAAFFF",<br>
 "45":"#AFF",<br>
@@ -360,7 +362,8 @@ $string['quizfeedback'] = 'Zpětná vazba';
 $string['validratio'] = 'Tato kombinace barev vyhovuje hodnotě minimálního poměru WCAG 2.0 – 4,5:1';
 $string['invalidratio'] = 'Tato kombinace barev nevyhovuje <a href="https://www.w3.org/TR/WCAG20-TECHS/G18.html" target="_blank">hodnotě minimálního poměru WCAG 2.0 – 4,5:1</a>. Hodnota: "{$a}"';
 $string['imageinvalidratio'] = 'Tento obrázek by mohl mít problémy s kontrastem, protože nevyhovuje hodnotě minimálního poměru WCAG 2.0 – 4,5:1. Průměrná hodnota pixelů: "{$a}"';
-$string['catinvalidratio'] = 'Následující kategorie barev nevyhovují <a href="https://www.w3.org/TR/WCAG20-TECHS/G18.html" target="_blank">hodnotě minimálního poměru WCAG 2.0 – 4,5:1</a>:
+$string['catinvalidratio'] = 'Následující kategorie barev nevyhovují
+<a href="https://www.w3.org/TR/WCAG20-TECHS/G18.html" target="_blank">hodnotě minimálního poměru WCAG 2.0 – 4,5:1</a>:
 Barva pozadí vůči webu (bílá): "{$a->white}". Barva pozadí vůči navigačnímu panelu: "{$a->custombar}". Barva pozadí vůči tlačítku Moje kurzy: "{$a->customnav}"';
 $string['imageinvalidratiocategory'] = 'Tento obrázek by mohl mít problémy s barvou motivu, protože nevyhovuje hodnotě minimálního poměru WCAG 2.0 – 4,5:1. Průměrná hodnota pixelů: "{$a}"';
 $string['lazyload_mod_page'] = 'Povolit výchozí „líné“ načítání zdrojů stránky';

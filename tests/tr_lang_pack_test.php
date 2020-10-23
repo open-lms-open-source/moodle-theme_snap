@@ -25,6 +25,14 @@
 defined('MOODLE_INTERNAL') || die();
 
 class theme_snap_tr_lang_pack_test extends advanced_testcase  {
+
+    /**
+     * Setup for each test.
+     */
+    protected function setUp() {
+        $this->resetAfterTest();
+    }
+
     public function test_tr_lang_pack_correct() {
         global $CFG;
 
