@@ -16,8 +16,8 @@
 # Tests for visibility of grading activities only if user have grading capabilities.
 #
 # @package    theme_snap
-# @author     Juan Ibarra <juan.ibarra@blackboard.com>
-# @copyright  Copyright (c) 2020 Blackboard Inc. (http://www.blackboard.com)
+# @author     Juan Ibarra <juan.ibarra@openlms.net>
+# @copyright  Copyright (c) 2020 Open LMS.
 # @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
 
 @theme @theme_snap @_file_upload
@@ -35,6 +35,8 @@ Feature: When the moodle theme is set to Snap, a student can remove a submitted 
       | user     | course | role           |
       | teacher1 | C1     | editingteacher |
       | student1 | C1     | student        |
+    And the following config values are set as admin:
+      | design_activity_chooser | 1 | theme_snap |
     Then I log in as "teacher1"
     And I am on "Course 1" course homepage with editing mode on
     And I add a "Assignment" to section "1" and I fill the form with:

@@ -16,7 +16,7 @@
 # Tests for Snap personal menu.
 #
 # @package    theme_snap
-# @copyright  Copyright (c) 2017 Blackboard Inc.
+# @copyright  Copyright (c) 2017 Open LMS.
 # @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
 
 @theme @theme_snap @theme_snap_course
@@ -39,6 +39,8 @@ Feature: When the moodle theme is set to Snap, students see meta data against co
       | teacher1 | C1 | editingteacher |
       | student1 | C1 | student |
       | student2 | C1 | student |
+    And the following config values are set as admin:
+      | design_activity_chooser | 1 | theme_snap |
 
   @javascript
   Scenario Outline: Student sees correct meta data against course activities
@@ -232,7 +234,7 @@ Feature: When the moodle theme is set to Snap, students see meta data against co
       | M8d skillZ! | 1337 |
       | Feedback comments | I'm the teacher first feedback |
     And I press "Save changes"
-    And I press "Ok"
+    And I click on "#page-mod-assign-grader div.modal-footer > button[data-action='cancel']" "css_element"
     And I click on "Edit settings" "link"
     And I click on "#admin-menu-trigger" "css_element"
     And I navigate to "View all submissions" in current page administration

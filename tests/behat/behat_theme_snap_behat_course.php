@@ -16,7 +16,7 @@
 
 /**
  * Overrides for behat course.
- * @copyright Copyright (c) 2017 Blackboard Inc.
+ * @copyright Copyright (c) 2017 Open LMS.
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -30,7 +30,7 @@ require_once(__DIR__ . '/../../../../course/tests/behat/behat_course.php');
 /**
  * Overrides to make behat course steps work with Snap.
  *
- * @copyright Copyright (c) 2017 Blackboard Inc.
+ * @copyright Copyright (c) 2017 Open LMS.
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class behat_theme_snap_behat_course extends behat_course {
@@ -41,7 +41,10 @@ class behat_theme_snap_behat_course extends behat_course {
             return parent::i_add_to_section($activity, $section);
         }
 
-        $xpath = "//*[@id='snap-modchooser-modal']//a[text()='$activity']";
+        $snapoldactivitychooser = get_config('theme_snap', 'design_activity_chooser');
+        if ($snapoldactivitychooser) {
+            $xpath = "//*[@id='snap-modchooser-modal']//a[text()='$activity']";
+        }
 
         $node = $this->find('xpath', $xpath);
         $href = $node->getAttribute('href');

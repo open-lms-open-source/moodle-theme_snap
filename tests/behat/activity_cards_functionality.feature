@@ -16,8 +16,8 @@
 # Test to check that no multimedia files appears at a card description content.
 #
 # @package    theme_snap
-# @author     Rafael Becerra rafael.becerrarodriguez@blackboard.com
-# @copyright  Copyright (c) 2019 Blackboard Inc. (http://www.blackboard.com)
+# @author     Rafael Becerra rafael.becerrarodriguez@openlms.net
+# @copyright  Copyright (c) 2019 Open LMS
 # @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
 
 @theme @theme_snap @theme_snap_activity_cards
@@ -34,6 +34,8 @@ Feature: Check functionality in activity cards.
       | user      | course  | role            |
       | teacher1  | C1      | editingteacher  |
       | student1  | C1      | student         |
+    And the following config values are set as admin:
+      | design_activity_chooser | 1 | theme_snap |
 
   @javascript
   Scenario: Add an image to an activity card, student and teacher should not see the image in the content.

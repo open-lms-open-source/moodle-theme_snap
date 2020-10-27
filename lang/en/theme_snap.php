@@ -396,4 +396,6 @@ $string['alternativeloginoptions'] = 'Alternative login options';
 $string['openmessagedrawer'] = 'Open messaging drawer. ';
 $string['design_mod_page'] = 'Enable previous design for page resources';
 $string['design_mod_page_description'] = 'If enabled, page resource content will be displayed inside the same page, course or front page.';
+$string['design_activity_chooser'] = 'Roll back to the original design for the activity chooser';
+$string['design_activity_chooser_description'] = 'If enabled, the activity chooser will be displayed with the original design. This will affect the course and front pages.';
 

@@ -4404,3 +4404,8 @@ li.snap-activity.modtype_folder div[id^="folder_tree"] {
         }
     }
 }
+
+// Activity chooser wrapper button - Maintain old and new style for it.
+#snap-create-activity .section-modchooser-link {
+    width: 100%;
+}

@@ -16,7 +16,7 @@
 # Test auto-expand area with error in settings page for modules
 #
 # @package   theme_snap
-# @copyright Copyright (c) 2018 Blackboard Inc. (http://www.blackboard.com)
+# @copyright Copyright (c) 2018 Open LMS.
 # @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
 
 
@@ -27,6 +27,8 @@ Feature: When setting an erroneous field in settings, snap auto-expands area.
     Given the following "courses" exist:
       | fullname | shortname | format | category | groupmode | enablecompletion |
       | Course 1 | C1        | topics | 0        | 1         | 1                |
+    And the following config values are set as admin:
+      | design_activity_chooser | 1 | theme_snap |
     Then I log in as "admin"
     And I am on "Course 1" course homepage with editing mode on
     And I add a "Assignment" to section "1" and I fill the form with:

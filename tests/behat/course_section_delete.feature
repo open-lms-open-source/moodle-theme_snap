@@ -17,7 +17,7 @@
 #
 # @package    theme_snap
 # @author     Guy Thomas
-# @copyright  2016 Blackboard Ltd
+# @copyright  2016 Open LMS.
 # @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
 
 @theme @theme_snap @theme_snap_course @theme_snap_course_section
