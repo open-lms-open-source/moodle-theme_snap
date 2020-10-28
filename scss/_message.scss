@@ -124,7 +124,7 @@
     .switch input:checked + label::after {
         background-color: $brand-primary;
     }
-    .custom-radio .custom-control-input:checked~.custom-control-label::before {
+    .custom-radio .custom-control-input:checked ~ .custom-control-label::before {
         background-color: $brand-primary;
         border-color: rgba($brand-primary, 0.3);
     }
@@ -132,7 +132,7 @@
         padding: 1em;
         .body-container {
             border: 1px solid #dee2e6;
-            box-shadow: 0px 2px 6px rgba(0,0,0,.08);
+            box-shadow: 0 2px 6px rgba(0, 0, 0, .08);
         }
     }
     [data-region="button-text"],
@@ -146,14 +146,15 @@
 }
 
 #page-message-edit [data-region=right-hand-drawer].drawer {
-    .message-app{
-        width: 100%!important;
+    .message-app {
+        width: 100% !important;
     }
     position: inherit;
     width: 100%;
 }
 
-#page-user-profile [data-region=right-hand-drawer].drawer, .path-course-view
+#page-user-profile [data-region=right-hand-drawer].drawer,
+.path-course-view
 [data-region=right-hand-drawer].drawer {
     visibility: hidden;
 }
@@ -176,15 +177,15 @@
 .message-app {
     .message {
         &.send .tail {
-            border-bottom-color: #E6E6E6 !important;
+            border-bottom-color: #e6e6e6 !important;
         }
     }
     .message.send {
-        background-color: #E6E6E6 !important;
+        background-color: #e6e6e6 !important;
         color: #373a3c !important;
     }
     .message.rounded {
-        border-radius: .25rem!important;
+        border-radius: .25rem !important;
     }
     &.main {
         min-height: 600px !important;

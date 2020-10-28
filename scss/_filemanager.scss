@@ -52,7 +52,7 @@
 
 // Make sure accepted file type information is on its own row and positioned nicely.
 div[data-fieldtype=filemanager] > p:nth-of-type(1) {
-    margin-top:1em;
+    margin-top: 1em;
     width: 100%;
 }
 
@@ -72,7 +72,7 @@ div[data-fieldtype=filemanager] > p:nth-of-type(1) {
 }
 
 // Fix for file picker in Snap, not showing all the repositories.
-.moodle-dialogue-base .moodle-dialogue.filepicker  {
+.moodle-dialogue-base .moodle-dialogue.filepicker {
     overflow: scroll;
 }
 

@@ -232,7 +232,7 @@
         .assign-intro {
             max-width: 100%;
             padding-bottom: 2em;
-            word-wrap: break-word
+            word-wrap: break-word;
         }
 
         .groupselector,
@@ -296,7 +296,9 @@
         width: 100%;
     }
 
-    .statusdata, .gradingdata, .lastmodified {
+    .statusdata,
+    .gradingdata,
+    .lastmodified {
         font-size: 0.8em;
         span {
             margin-left: 0.5em;
@@ -532,7 +534,7 @@
             display: none;
         }
         .form-check > .text-nowrap {
-            white-space: normal!important;
+            white-space: normal !important;
         }
     }
     // Unstyle secondary navtabs.
@@ -698,7 +700,7 @@ section#snap-add-new-section #summary-editor_parent #summary-editor_tbl {
         background-color: rgba($nav-color, 0.1);
     }
     a.nav-link {
-        color: $gray!important;
+        color: $gray !important;
         font-weight: 500;
     }
     cqm-file-list .card-header {
@@ -719,7 +721,7 @@ section#snap-add-new-section #summary-editor_parent #summary-editor_tbl {
             margin-right: 1em;
         }
     }
-    
+
     .downloadreport ul li {
         list-style: none;
         padding: 0 20px;
