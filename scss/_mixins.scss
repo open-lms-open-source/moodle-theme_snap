@@ -12,9 +12,9 @@
     @include transition(all .2s ease-in-out);
 
     /*
-    
+
     tab-focus mixin no longer available in BS4 - it was a webkit workaround, possibly no longer required.
-    
+
     &,
     &:active,
     &.active {

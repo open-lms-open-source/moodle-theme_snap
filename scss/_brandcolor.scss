@@ -23,9 +23,9 @@
 // Everything affected by brand-color choice to allow per category customisation.
 // Wrap in a .theme-snap class so that it can be replaced with .category-x later.
 
-$darker-grey-btn: #999999;
+$darker-grey-btn: #999;
 $dark-grey-btn: #adadad;
-$light-grey-btn: #cccccc;
+$light-grey-btn: #ccc;
 $lighter-grey-btn: #e6e6e6;
 $custom-menu-text-color: rgb(255, 255, 255) !default; // Need to define this with rgb or the variable won't work.
 
@@ -33,6 +33,7 @@ $custom-menu-text-color: rgb(255, 255, 255) !default; // Need to define this wit
     .badge-primary {
         background-color: $brand-primary !important;
     }
+
     #snap-modchooser-modal,
     #snap-pm-accessible-tab {
         ul.nav.nav-tabs {
@@ -59,14 +60,17 @@ $custom-menu-text-color: rgb(255, 255, 255) !default; // Need to define this wit
             }
         }
     }
+
     div.moodle-dialogue.filepicker a.nav-link.active {
         color: #fff;
         background-color: $brand-primary;
+
         &:hover {
             background-color: darken($brand-primary, 8%);
             color: #fff;
         }
     }
+
     a:not(.btn):not(.dropdown-item):not(._blanktarget):not(.snap-due-date):not(.yui3-button):not(.mast-breadcrumb):not(.active):not(.disabled),
     .btn-link,
     .fake-link {
@@ -97,6 +101,7 @@ $custom-menu-text-color: rgb(255, 255, 255) !default; // Need to define this wit
         &:focus {
             outline: 3px solid $brand-primary;
         }
+
         &:active,
         &:hover {
             outline: 0;
@@ -127,6 +132,7 @@ $custom-menu-text-color: rgb(255, 255, 255) !default; // Need to define this wit
         &:focus {
             color: $brand-primary;
         }
+
         &:focus {
             border: 2px solid $brand-primary;
         }
@@ -156,6 +162,7 @@ $custom-menu-text-color: rgb(255, 255, 255) !default; // Need to define this wit
             color: darken($brand-primary, 8%);
         }
     }
+
     .snap-asset-link a {
         &:focus,
         &:hover {
@@ -208,6 +215,7 @@ $custom-menu-text-color: rgb(255, 255, 255) !default; // Need to define this wit
 
     #snap-pm-header {
         background-color: $brand-primary;
+
         .userpicture {
             box-shadow: 0 0 5em lighten($brand-primary, 8%);
         }
@@ -225,6 +233,7 @@ $custom-menu-text-color: rgb(255, 255, 255) !default; // Need to define this wit
             a:visited {
                 color: $brand-primary;
             }
+
             a:focus,
             a:hover {
                 color: darken($brand-primary, 8%);
@@ -241,6 +250,7 @@ $custom-menu-text-color: rgb(255, 255, 255) !default; // Need to define this wit
         color: #fff;
         background-color: $brand-primary;
         border-color: $brand-primary;
+
         &:hover,
         &:focus,
         &:active,
@@ -368,6 +378,7 @@ $custom-menu-text-color: rgb(255, 255, 255) !default; // Need to define this wit
         &:hover {
             border-color: $brand-primary;
         }
+
         &:focus {
             border-bottom: 1px solid $brand-primary;
             outline: 3px auto $brand-primary;
@@ -506,6 +517,7 @@ $custom-menu-text-color: rgb(255, 255, 255) !default; // Need to define this wit
 
     .dropdown-menu > li > a {
         display: block;
+
         &:hover,
         &:focus {
             background-color: $brand-primary;
@@ -599,7 +611,7 @@ $custom-menu-text-color: rgb(255, 255, 255) !default; // Need to define this wit
     }
 
     // This background color helps to know when the delete-messages-for-all-users input checkbox is checked.
-    .message-app .view-conversation .custom-checkbox .custom-control-input:checked~.custom-control-label::after {
+    .message-app .view-conversation .custom-checkbox .custom-control-input:checked ~ .custom-control-label::after {
         background-color: $brand-primary;
     }
 
@@ -609,6 +621,7 @@ $custom-menu-text-color: rgb(255, 255, 255) !default; // Need to define this wit
     #mr-nav {
         a {
             color: $nav-color;
+
             &:hover,
             &:focus {
                 color: darken($nav-color, 8%);
@@ -625,8 +638,9 @@ $custom-menu-text-color: rgb(255, 255, 255) !default; // Need to define this wit
             color: $nav-color;
         }
 
-        .popover-region-notifications > div >.icon {
+        .popover-region-notifications > div > .icon {
             color: $nav-color;
+
             &:hover {
                 color: darken($nav-color, 8%);
             }
@@ -646,14 +660,17 @@ $custom-menu-text-color: rgb(255, 255, 255) !default; // Need to define this wit
                 color: $nav-color;
             }
         }
+
         #nav-intellicart-popover-container {
             // Intellicart shopping icon.
             .icon.fa-shopping-cart {
                 color: $nav-color;
             }
         }
+
         .badge-count-container .icon.fa-comment {
             color: $nav-color;
+
             .conversation_badge_count {
                 background-color: $nav-color;
             }
@@ -665,8 +682,7 @@ $custom-menu-text-color: rgb(255, 255, 255) !default; // Need to define this wit
     // Grader Report
     // -------------------------
     span.letter.active,
-    .initialbar .letter.active
-    {
+    .initialbar .letter.active {
         background-color: $brand-primary;
         border-color: $brand-primary;
     }
@@ -682,21 +698,22 @@ $custom-menu-text-color: rgb(255, 255, 255) !default; // Need to define this wit
     .categoryname,
     .summary > p,
     .atto_group > button,
-    .snap-dropzone > .snap-dropzone-label{
+    .snap-dropzone > .snap-dropzone-label {
         &:focus {
             outline: 3px auto $brand-primary;
         }
     }
 
     #snap-coverimagecontrol > label.btn-secondary.btn-sm {
-        background-color: rgba(255,255,255,0.7);
+        background-color: rgba(255, 255, 255, 0.7);
+
         &:hover {
             background-color: $brand-primary !important;
             color: #fff;
         }
     }
 
-    .fp-toolbar div  button.btn.btn-secondary.btn-sm,
+    .fp-toolbar div button.btn.btn-secondary.btn-sm,
     .fp-viewbar > button.btn.btn-secondary.btn-sm {
         color: $darker-grey-btn;
         border-color: $light-grey-btn;
@@ -728,9 +745,10 @@ $custom-menu-text-color: rgb(255, 255, 255) !default; // Need to define this wit
         background-color: $lighter-grey-btn;
     }
 
-    .visibleifjs a.btn{
+    .visibleifjs a.btn {
         color: $brand-primary;
-        &:hover{
+
+        &:hover {
             color: darken($brand-primary, 8%);
         }
     }
@@ -763,119 +781,155 @@ $custom-menu-text-color: rgb(255, 255, 255) !default; // Need to define this wit
             -webkit-animation: sk-circleFadeDelay 1.2s infinite ease-in-out both;
             animation: sk-circleFadeDelay 1.2s infinite ease-in-out both;
         }
+
         .sk-fading-circle .sk-circle2 {
             -webkit-transform: rotate(30deg);
             -ms-transform: rotate(30deg);
             transform: rotate(30deg);
         }
+
         .sk-fading-circle .sk-circle3 {
             -webkit-transform: rotate(60deg);
             -ms-transform: rotate(60deg);
             transform: rotate(60deg);
         }
+
         .sk-fading-circle .sk-circle4 {
             -webkit-transform: rotate(90deg);
             -ms-transform: rotate(90deg);
             transform: rotate(90deg);
         }
+
         .sk-fading-circle .sk-circle5 {
             -webkit-transform: rotate(120deg);
             -ms-transform: rotate(120deg);
             transform: rotate(120deg);
         }
+
         .sk-fading-circle .sk-circle6 {
             -webkit-transform: rotate(150deg);
             -ms-transform: rotate(150deg);
             transform: rotate(150deg);
         }
+
         .sk-fading-circle .sk-circle7 {
             -webkit-transform: rotate(180deg);
             -ms-transform: rotate(180deg);
             transform: rotate(180deg);
         }
+
         .sk-fading-circle .sk-circle8 {
             -webkit-transform: rotate(210deg);
             -ms-transform: rotate(210deg);
             transform: rotate(210deg);
         }
+
         .sk-fading-circle .sk-circle9 {
             -webkit-transform: rotate(240deg);
             -ms-transform: rotate(240deg);
             transform: rotate(240deg);
         }
+
         .sk-fading-circle .sk-circle10 {
             -webkit-transform: rotate(270deg);
             -ms-transform: rotate(270deg);
             transform: rotate(270deg);
         }
+
         .sk-fading-circle .sk-circle11 {
             -webkit-transform: rotate(300deg);
             -ms-transform: rotate(300deg);
             transform: rotate(300deg);
         }
+
         .sk-fading-circle .sk-circle12 {
             -webkit-transform: rotate(330deg);
             -ms-transform: rotate(330deg);
             transform: rotate(330deg);
         }
+
         .sk-fading-circle .sk-circle2:before {
             -webkit-animation-delay: -1.1s;
             animation-delay: -1.1s;
         }
+
         .sk-fading-circle .sk-circle3:before {
             -webkit-animation-delay: -1s;
             animation-delay: -1s;
         }
+
         .sk-fading-circle .sk-circle4:before {
             -webkit-animation-delay: -0.9s;
             animation-delay: -0.9s;
         }
+
         .sk-fading-circle .sk-circle5:before {
             -webkit-animation-delay: -0.8s;
             animation-delay: -0.8s;
         }
+
         .sk-fading-circle .sk-circle6:before {
             -webkit-animation-delay: -0.7s;
             animation-delay: -0.7s;
         }
+
         .sk-fading-circle .sk-circle7:before {
             -webkit-animation-delay: -0.6s;
             animation-delay: -0.6s;
         }
+
         .sk-fading-circle .sk-circle8:before {
             -webkit-animation-delay: -0.5s;
             animation-delay: -0.5s;
         }
+
         .sk-fading-circle .sk-circle9:before {
             -webkit-animation-delay: -0.4s;
             animation-delay: -0.4s;
         }
+
         .sk-fading-circle .sk-circle10:before {
             -webkit-animation-delay: -0.3s;
             animation-delay: -0.3s;
         }
+
         .sk-fading-circle .sk-circle11:before {
             -webkit-animation-delay: -0.2s;
             animation-delay: -0.2s;
         }
+
         .sk-fading-circle .sk-circle12:before {
             -webkit-animation-delay: -0.1s;
             animation-delay: -0.1s;
         }
 
         @-webkit-keyframes sk-circleFadeDelay {
-            0%, 39%, 100% { opacity: 0; }
-            40% { opacity: 1; }
+            0%,
+            39%,
+            100% {
+                opacity: 0;
+            }
+            40% {
+                opacity: 1;
+            }
         }
 
         @keyframes sk-circleFadeDelay {
-            0%, 39%, 100% { opacity: 0; }
-            40% { opacity: 1; }
+            0%,
+            39%,
+            100% {
+                opacity: 0;
+            }
+            40% {
+                opacity: 1;
+            }
         }
     }
+
     .atto_morefontcolors_button > .dropdown-menu > li > a {
         outline: none;
         background: none;
+
         &:hover,
         &:focus {
             div {
@@ -893,13 +947,16 @@ $custom-menu-text-color: rgb(255, 255, 255) !default; // Need to define this wit
     header#mr-nav {
         #snap-custom-menu nav.navbar {
             background-color: rgba($brand-primary, 0.8);
+
             ul#snap-navbar-content {
                 li.nav-item {
                     div.dropdown-menu {
                         background-color: rgba($brand-primary, 0.8);
                     }
+
                     a {
                         color: $custom-menu-text-color;
+
                         &:focus,
                         &:hover {
                             background-color: darken(rgba($brand-primary, 0.9), 10%);
@@ -907,12 +964,14 @@ $custom-menu-text-color: rgb(255, 255, 255) !default; // Need to define this wit
                         }
                     }
                 }
+
                 li.nav-item.dropdown.show {
                     background-color: darken(rgba($brand-primary, 0.9), 10%);
                 }
             }
         }
     }
+
     .snap-pm-section {
         .vertical-divider {
             width: 2px;

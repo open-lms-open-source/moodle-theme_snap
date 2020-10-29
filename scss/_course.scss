@@ -1162,7 +1162,7 @@ body.snap-resource-card {
                 -ms-user-select: none; /* Internet Explorer/Edge */
                 // Transparent needs to be set the color to white with 0 alpha to achieve the gradient. This is because for Safari
                 // transparent is a black color with 0 alpha and this will cause a bug.
-                background-image: linear-gradient(to bottom, rgba(255,255,255,0) 0%, white);
+                background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0) 0%, white);
             }
         }
     }
@@ -1306,9 +1306,6 @@ body.snap-resource-card {
     &.snap-mime-eps,
     &.snap-mime-flash {
         border-top-color: $color-pdf;
-    }
-
-    &.snap-mime-flash {
     }
 
     // MULTIMEDIA //
@@ -1494,10 +1491,10 @@ body.snap-resource-card {
 // Hide draft and stealth tag if the sections has hidden class.
 li.section.hidden {
     .snap-asset.draft .snap-draft-tag,
-    .snap-asset.stealth .snap-stealth-tag,{
+    .snap-asset.stealth .snap-stealth-tag {
         display: none !important;
     }
-    .snap-asset.stealth.stealth-section-hidden .snap-stealth-tag,{
+    .snap-asset.stealth.stealth-section-hidden .snap-stealth-tag {
         display: block !important;
     }
 }
@@ -1717,9 +1714,11 @@ form.togglecompletion {
     }
 }
 
-.modtype_page, .modtype_label, .modtype_book {
+.modtype_page,
+.modtype_label,
+.modtype_book {
     .snap-asset-actions {
-        bottom: 0px;
+        bottom: 0;
     }
 }
 
@@ -1987,9 +1986,9 @@ span.editinstructions {
         // Questionnaire.
         span div a img,
         // Glossary.
-        > div a img,
+        & > div a img,
         // Workshop.
-        > a img {
+        & > a img {
             margin-left: 25px;
         }
 
@@ -2052,20 +2051,20 @@ span.editinstructions {
 
     .mform .containsadvancedelements {
 
-        .fcontainer>.form-group {
+        .fcontainer > .form-group {
             width: 100%;
-            >div:first-child {
+            > div:first-child {
                 max-width: 30%;
                 min-width: 27%;
                 margin-right: 1em;
-                >.form-inline.felement {
+                > .form-inline.felement {
                     display: inline-block;
                 }
             }
         }
 
-        .fcontainer>.form-group:nth-child(5) {
-            >div:first-child {
+        .fcontainer > .form-group:nth-child(5) {
+            > div:first-child {
                 display: inline-block;
             }
             div.form-inline {
@@ -2075,13 +2074,13 @@ span.editinstructions {
 
         .advanced.show {
             display: inline-block;
-            >div:first-child {
+            > div:first-child {
                 display: inline-block;
                 .float-md-right.text-nowrap {
                     float: right;
                 }
             }
-            >.form-inline.felement {
+            > .form-inline.felement {
                 display: inline-block;
                 max-width: 60%;
             }
@@ -2410,24 +2409,24 @@ body.path-course-index {
     .layout.fullscreen {
         height: 100vh;
         position: fixed;
-        top:0px;
-        left: 0px;
+        top: 0;
+        left: 0;
         z-index: 1040;
         width: 100vw;
         margin: 0;
         opacity: 1;
-        background: #FFFF;
+        background: #ffff;
         & > div {
             height: 100%;
             width: 100%;
         }
         .grader-grading_navigation.navbar {
-            box-shadow:0 2px 4px rgba(0,0,0,.08)
+            box-shadow: 0 2px 4px rgba(0, 0, 0, .08);
         }
     }
 
     .grader-grading-panel {
-        right: 0px;
+        right: 0;
         box-shadow: -2px 2px 4px rgba(0, 0, 0, 0.08);
         padding: 0;
         visibility: visible;

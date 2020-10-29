@@ -42,7 +42,7 @@ body:not(.behat-site) {
 
 // Hide show description option. Use of nth-child pseudo selector due to lack of id in div.
 body#page-mod-page-mod fieldset#id_general div.fcontainer:nth-child(2) div.form-group:nth-child(3) {
-    display : none;
+    display: none;
 }
 
 .mform fieldset {
@@ -418,7 +418,7 @@ a[aria-controls="snap-collapse-help"] {
 }
 
 // Hide checkbox useless with this course format.
-#page-course-editsection.format-topics .fdefaultcustom .form-check-inline{
+#page-course-editsection.format-topics .fdefaultcustom .form-check-inline {
     display: none;
 }
 
@@ -430,7 +430,8 @@ form.mform {
     legend {
         margin: 0;
         font-size: 1.2rem;
-        a, a:hover {
+        a,
+        a:hover {
             color: $body-color;
             text-decoration: none;
         }
@@ -520,7 +521,7 @@ form.mform {
 }
 
 @include media-breakpoint-down(lg) {
-    
+
     .snap-form-advanced {
         select {
             max-width: 140px !important;

@@ -73,8 +73,7 @@
     #admin-headingfont,
     #admin-seriffont,
     #admin-enabledlogin,
-    #admin-enabledloginorder
-    {
+    #admin-enabledloginorder {
         width: 50%;
         float: left;
     }
@@ -220,9 +219,9 @@
     }
 
     // To avoid unnecessary line break in the settings page.
-    admin-fs_one_title_link,
-    admin-fs_two_title_link,
-    admin-fs_three_title_link,
+    #admin-fs_one_title_link,
+    #admin-fs_two_title_link,
+    #admin-fs_three_title_link,
     #admin-fs_one_title_link_cb,
     #admin-fs_two_title_link_cb,
     #admin-fs_three_title_link_cb {
