@@ -1587,8 +1587,34 @@ HTML;
              'resources' => $resources
         ];
 
-        return $this->render_from_template('theme_snap/course_modchooser_modal', $data);
+        $snapoldactivitychooser = get_config('theme_snap', 'design_activity_chooser');
+        if ($snapoldactivitychooser) {
+            return $this->render_from_template('theme_snap/course_modchooser_modal', $data);
+        } else {
+            return $this->course_activitychooser($COURSE->id);
+        }
         // @codingStandardsIgnoreEnd
+    }
+
+    /**
+     * Build the HTML for the module chooser javascript popup.
+     *
+     * @param int $courseid The course id to fetch modules for.
+     * @return string
+     */
+    public function course_activitychooser($courseid) {
+
+        if (!$this->page->requires->should_create_one_time_item_now('core_course_modchooser')) {
+            return '';
+        }
+
+        // Build an object of config settings that we can then hook into in the Activity Chooser.
+        $chooserconfig = (object) [
+            'tabmode' => get_config('core', 'activitychoosertabmode'),
+        ];
+        $this->page->requires->js_call_amd('core_course/activitychooser', 'init', [$courseid, $chooserconfig]);
+
+        return '';
     }
 
     /**

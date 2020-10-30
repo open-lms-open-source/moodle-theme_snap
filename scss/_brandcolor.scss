@@ -276,7 +276,8 @@ $custom-menu-text-color: rgb(255, 255, 255) !default; // Need to define this wit
     a.yui3-button,
     .yui-button button,
     .header-button-group .btn,
-    &#page-site-index .section-modchooser-link .section-modchooser-text {
+    &#page-site-index .section-modchooser-link .section-modchooser-text,
+    button[data-favourited="true"] i.fa-star {
 
         // Imitate btn.btn-secondary CSS for buttons without proper
         // Bootstrap classes applied to them, and override colors for

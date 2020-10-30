@@ -655,14 +655,29 @@ trait format_section_trait {
 
         $iconurl = $OUTPUT->image_url('move_here', 'theme');
         $icon = '<img src="'.$iconurl.'" class="svg-icon" role="presentation" alt=""><br>';
-        // Slamour Aug 2017
-        // Add button to pick launch modchooser.
+        // Slamour Aug 2017.
+        $snapoldactivitychooser = get_config('theme_snap', 'design_activity_chooser');
+        $straddmod = get_string('addresourceoractivity', 'theme_snap');
+        $mclinkcontent = $icon.$straddmod;
         $mcclass = 'js-only section-modchooser-link btn btn-link';
         $mcdataattributes = 'data-section="'.$section.'" data-toggle="modal" data-target="#snap-modchooser-modal"';
-        $modchooser = '
-        <div class="col-sm-6 snap-modchooser" id="snap-create-activity">
-            <a href="#" class="'.$mcclass.'" '.$mcdataattributes.'>'.$icon.get_string('addresourceoractivity', 'theme_snap').'</a>
-        </div>';
+
+        if ($snapoldactivitychooser) {
+            // Render link for launch old snap mod chooser. Left as an anchor to try to maintain how Snap rendered this.
+            $modchoosercontent = '<a href="#" class="'.$mcclass.'" '.$mcdataattributes.'>'.$mclinkcontent.'</a>';
+        } else {
+            // Render button for new core mod chooser.
+            $modchoosercontent = html_writer::tag('button', $mclinkcontent, [
+                'class' => $mcclass,
+                'data-action' => 'open-chooser',
+                'data-sectionid' => $section,
+            ]);
+        }
+
+        $modchooser = html_writer::tag('div', $modchoosercontent, [
+            'class' => 'col-sm-6 snap-modchooser',
+            'id' => 'snap-create-activity'
+        ]);
 
         // Add zone for quick uploading of files.
         $upload = '<div class="col-sm-6">

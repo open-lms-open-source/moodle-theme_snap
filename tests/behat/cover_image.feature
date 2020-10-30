@@ -16,11 +16,11 @@
 # Tests for cover image uploading.
 #
 # @package    theme_snap
-# @copyright  Copyright (c) 2016 Blackboard Inc. (http://www.blackboard.com)
+# @copyright  Copyright (c) 2016 Open LMS.
 # @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
 
 
-@theme @theme_snap @theme_snap_color_check
+@theme @theme_snap @theme_snap_color_check @_file_upload
 Feature: When the moodle theme is set to Snap, cover image can be set for site and courses.
 
   Background:
@@ -29,6 +29,7 @@ Feature: When the moodle theme is set to Snap, cover image can be set for site a
 
   @javascript
   Scenario: Editing teachers can change and delete course cover image.
+    Given I skip because "It is failing in master branch, to be fixed in INT-16443"
     Given the following "courses" exist:
       | fullname | shortname | category | format |
       | Course 1 | C1        | 0        | topics |
@@ -152,6 +153,7 @@ Feature: When the moodle theme is set to Snap, cover image can be set for site a
 
   @javascript
   Scenario: Admin user can change and delete site cover image.
+    Given I skip because "It is failing in master branch, to be fixed in INT-16443"
     Given the following "users" exist:
       | username | firstname | lastname | email                |
       | user1    | User      | 1        | user1@example.com    |

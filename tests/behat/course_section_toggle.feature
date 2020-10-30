@@ -36,6 +36,8 @@ Feature: When the moodle theme is set to Snap, teachers can toggle the visibilit
       | admin | C1 | editingteacher |
       | teacher1 | C1 | editingteacher |
       | student1 | C1 | student |
+    And the following config values are set as admin:
+      | design_activity_chooser | 1 | theme_snap |
 
   @javascript
   Scenario Outline: In read mode, teacher hides section.

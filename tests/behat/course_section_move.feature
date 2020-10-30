@@ -40,6 +40,8 @@ Feature: When the moodle theme is set to Snap, teachers can move course sections
       | activity | course               | idnumber | name             | intro                         | section |
       | assign   | C1                   | assign1  | Test assignment1 | Test assignment description 1 | 1       |
       | assign   | C1                   | assign2  | Test assignment2 | Test assignment description 2 | 1       |
+    And the following config values are set as admin:
+      | design_activity_chooser | 1 | theme_snap |
 
   @javascript
   Scenario Outline: In read mode, teacher moves section 1 before section 4 (section 3).

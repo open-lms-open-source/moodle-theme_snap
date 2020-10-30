@@ -16,8 +16,8 @@
 # Tests for toggle course section visibility in non edit mode in snap.
 #
 # @package    theme_snap
-# @author     Rafael Becerra rafael.becerrarodriguez@blackboard.com
-# @copyright  Copyright (c) 2019 Blackboard Inc. (http://www.blackboard.com)
+# @author     Rafael Becerra rafael.becerrarodriguez@openlms.net
+# @copyright  Copyright (c) 2019 Open LMS
 # @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
 
 @theme @theme_snap @theme_snap_ax
@@ -34,8 +34,10 @@ Feature: Check that the correct tab order and focus exists for the page.
       | user      | course  | role            |
       | teacher1  | C1      | editingteacher  |
     And the following "activities" exist:
-      | activity | course               | idnumber | name             | intro                         | section |
+      | activity | course               | idnumber | name        | intro                         | section |
       | assign   | C1                   | assign1  | assignment1 | Test assignment description 1 | 0       |
+    And the following config values are set as admin:
+      | design_activity_chooser | 1 | theme_snap |
 
   @javascript
   Scenario: Tabindex -1 exists for unnecessary focus order in the course dashboard.

@@ -16,7 +16,7 @@
 # Tests for Snap personal menu.
 #
 # @package    theme_snap
-# @copyright  Copyright (c) 2015 Blackboard Inc. (http://www.blackboard.com)
+# @copyright  Copyright (c) 2015 Open LMS.
 # @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
 
 
@@ -40,6 +40,8 @@ Feature: When the moodle theme is set to Snap, students and teachers can open a 
       | teacher2 | C1     | teacher        |
       | teacher3 | C1     | teacher        |
       | student1 | C1     | student        |
+    And the following config values are set as admin:
+      | design_activity_chooser | 1 | theme_snap |
 
   @javascript
   Scenario Outline: No assignments submitted or graded.
