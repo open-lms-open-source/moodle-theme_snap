@@ -29,6 +29,9 @@ Feature: As an admin, I should be able to set a site's footer on Snap theme.
       And the following "users" exist:
         | username | firstname | lastname | email |
         | user1    | User1     | 1        | user1@example.com |
+    And the following "courses" exist:
+      | fullname | shortname | format |
+      | Course 1 | C1        | topics |
 
   @javascript
   Scenario: Admin sets a footer and it should be visible in the platform for other users.
@@ -56,3 +59,25 @@ Feature: As an admin, I should be able to set a site's footer on Snap theme.
      Then I should see "New footer"
       And "iframe" "css_element" should be visible
       And I log out
+
+  @javascript
+  Scenario: To top button renderer on the footer must appear when user scroll to the bottom.
+    Given I log in as "admin"
+    And I am on site homepage
+    And "#goto-top-link" "css_element" should exist
+    And "#goto-top-link" "css_element" should not be visible
+    And I scroll to the bottom
+    And "#goto-top-link" "css_element" should be visible
+    And I click on "#goto-top-link > a" "css_element"
+    And "#goto-top-link" "css_element" should not be visible
+
+  @javascript
+  Scenario: To top button renderer on the footer must appear when user scroll to the bottom on a course.
+    Given I log in as "admin"
+    And I am on "Course 1" course homepage
+    And "#goto-top-link" "css_element" should exist
+    And "#goto-top-link" "css_element" should not be visible
+    And I scroll to the bottom
+    And "#goto-top-link" "css_element" should be visible
+    And I click on "#goto-top-link > a" "css_element"
+    And "#goto-top-link" "css_element" should not be visible

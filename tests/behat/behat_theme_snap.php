@@ -1934,4 +1934,24 @@ class behat_theme_snap extends behat_base {
     public function i_am_on_myaccount_default_page() {
         $this->getSession()->visit($this->locate_path('/local/myaccount/view.php?controller=default&action=view'));
     }
+
+    /**
+     * Scroll page to the bottom.
+     *
+     * @When I scroll to the bottom
+     *
+     */
+    public function i_scroll_to_bottom() {
+        $function = <<<JS
+          (function(){
+              window.scrollTo(0,document.body.scrollHeight);
+              return 1;
+          })()
+JS;
+        try {
+            $this->getSession()->wait(5000, $function);
+        } catch (Exception $e) {
+            throw new \Exception("scrollIntoBottom failed");
+        }
+    }
 }
