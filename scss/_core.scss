@@ -4413,3 +4413,11 @@ li.snap-activity.modtype_folder div[id^="folder_tree"] {
 #snap-create-activity .section-modchooser-link {
     width: 100%;
 }
+
+// Go to top button Snap Mobile
+@media (max-width: 991px)  {
+    #goto-top-link {
+        bottom: 5em;
+        right: 0.7em;
+    }
+}
