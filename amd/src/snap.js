@@ -1071,6 +1071,11 @@ define(['jquery', 'core/log', 'theme_snap/headroom', 'theme_snap/util', 'theme_s
                 });
                 accessibility.snapAxInit();
                 messages.init();
+
+                // Smooth scroll for go to top button.
+                $("div#goto-top-link > a").click(function() {
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                });
             }
         };
     }

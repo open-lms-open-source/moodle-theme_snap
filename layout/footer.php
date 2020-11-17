@@ -102,7 +102,7 @@ if (!empty($custommenu)) {
 $tittle = get_string('totop', 'theme_boost');
 echo
     '<div id="goto-top-link">
-        <a class="btn btn-light" role="button" href="#">
+        <a class="btn btn-light" role="button" href="javascript:void(0)">
             <i class="icon fa fa-arrow-up fa-fw" title="' . $tittle .'" aria-label="'. $tittle .'"></i>
         </a>
     </div>'

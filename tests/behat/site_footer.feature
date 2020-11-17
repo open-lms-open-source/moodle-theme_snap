@@ -69,15 +69,22 @@ Feature: As an admin, I should be able to set a site's footer on Snap theme.
     And I scroll to the bottom
     And "#goto-top-link" "css_element" should be visible
     And I click on "#goto-top-link > a" "css_element"
+    And I wait until "#goto-top-link" "css_element" is not visible
     And "#goto-top-link" "css_element" should not be visible
 
   @javascript
-  Scenario: To top button renderer on the footer must appear when user scroll to the bottom on a course.
+  Scenario: To top button renderer on the footer must appear when user scroll to the bottom on a course and stay on the same section.
     Given I log in as "admin"
     And I am on "Course 1" course homepage
     And "#goto-top-link" "css_element" should exist
     And "#goto-top-link" "css_element" should not be visible
+    And I should see "Welcome to your new course"
+    And I follow "Topic 1"
+    And I should see "Untitled Topic"
+    And I should not see "Welcome to your new course"
     And I scroll to the bottom
     And "#goto-top-link" "css_element" should be visible
     And I click on "#goto-top-link > a" "css_element"
-    And "#goto-top-link" "css_element" should not be visible
+    And I wait until "#goto-top-link" "css_element" is not visible
+    And I should see "Untitled Topic"
+    And I should not see "Welcome to your new course"
