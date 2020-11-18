@@ -72,7 +72,7 @@ body.snap-pm-open {
     #snap-pm-header-quicklinks {
         a:after {
             content: '-';
-            display: inline-block;
+            display: inherit;
             margin: 0 .5em;
         }
         a:last-of-type:after {

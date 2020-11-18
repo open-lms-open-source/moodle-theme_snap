@@ -219,6 +219,10 @@ $custom-menu-text-color: rgb(255, 255, 255) !default; // Need to define this wit
         .userpicture {
             box-shadow: 0 0 5em lighten($brand-primary, 8%);
         }
+        // This is to improve the accessibility on the links in the personal menu.
+        a:focus {
+            outline: 3px solid darken($brand-primary, 20%);
+        }
     }
 
     .courseinfo-teachers-more {
