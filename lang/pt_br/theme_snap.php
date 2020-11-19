@@ -59,6 +59,7 @@ $string['changecoverimage'] = 'Alterar imagem de capa';
 $string['changefullname'] = 'Alterar nome do site';
 $string['chapters'] = 'Capítulos';
 $string['choosereadme'] = '<div class="clearfix"><div class="theme_screenshot"><h2>Dividir</h2><img class=img-polaroid src="snap/pix/screenshot.jpg" /></div></div>';
+$string['close'] = 'Fechar';
 $string['conditional'] = 'Condicional';
 $string['contents'] = 'Conteúdo';
 $string['contributed'] = 'Contribuído';
@@ -114,6 +115,8 @@ $string['editcoursesettings'] = 'Configurações do curso';
 $string['editcoursetopic'] = 'Editar seção';
 $string['editcustomfooter'] = 'Editar rodapé';
 $string['editcustommenu'] = 'Editar menu personalizado';
+$string['error'] = 'Erro';
+$string['errorgettingfeed'] = 'Ocorreu um erro ao obter os itens do feed.';
 $string['error:categorycolorinvalidjson'] = 'Formato JSON incorreto para categorias de cursos';
 $string['error:categorycolorinvalidvalue'] = 'O código de registro ou o valor da cor para a categoria "{$a}" não são válidos';
 $string['error:categorynotfound'] = 'O registro de categoria com código "{$a}" não foi encontrado';
@@ -269,13 +272,15 @@ $string['personalmenuadvancedfeedsenable'] = 'Habilitar feeds avançados (experi
 $string['personalmenuadvancedfeedsenabledesc'] = 'Os feeds avançados carregam alguns itens de menus pessoais, o que permite tempos de carregamento mais rápidos e atualiza o conteúdo sob demanda.';
 $string['personalmenuadvancedfeedsperpage'] = 'Contagem de exibição de itens de feeds avançados';
 $string['personalmenuadvancedfeedsperpagedesc'] = 'Escolha o número de itens a serem exibidos no feed. Os usuários podem selecionar <strong>Visualizar mais</strong> para exibir itens adicionais.';
+$string['personalmenuadvancedfeedslifetime'] = 'Duração avançada dos feeds';
+$string['personalmenuadvancedfeedslifetimedesc'] = 'Escolha a duração em que os feeds permanecerão em cache no navegador após fazer login. Configurar o valor como 0 não salvará os feeds em cache no navegador.';
 $string['pld'] = 'PLD';
 $string['pluginname'] = 'Snap';
 $string['poster'] = 'Imagem de capa';
 $string['posterdesc'] = 'Uma imagem de cabeçalho grande para a página inicial do seu site. Imagens de paisagem (1200 x 600 pixels) ou maiores funcionam melhor.';
-$string['poweredbyrunby'] = 'Criado com <a href="https://br.openlms.net/" target="_blank" rel="noopener">Open LMS</a>,
-    um produto baseado no <a href="https://moodle.com/" target="_blank" rel="noopener">Moodle</a>.<br>
-    Copyright &#169; {$a} Open LMS, Todos os direitos reservados.';
+$string['poweredbyrunby'] = 'Criado com <a href="https://www.openlms.net/" target="_blank" rel="noopener">Open LMS</a>,
+    um produto com base em <a href="https://moodle.com/" target="_blank" rel="noopener">Moodle</a>.<br>
+    Copyright &#169; {$a} Open LMS, todos os direitos reservados.';
 $string['previoussection'] = 'Seção anterior';
 $string['privacy:metadata:theme_snap_course_favorites:courseid'] = 'O código do curso marcado como favorito pelo usuário';
 $string['privacy:metadata:theme_snap_course_favorites:userid'] = 'O código do usuário que marcou o curso como favorito';
@@ -319,10 +324,12 @@ $string['topicactions'] = 'Ações no tópico';
 $string['twitter'] = 'Twitter';
 $string['twitterdesc'] = 'O URL de sua conta do Twitter.';
 $string['unenrolme'] = 'Cancelar minha inscrição';
+$string['enrolme'] = 'Inscreva-me';
 $string['unread'] = 'não lida';
 $string['unsupportedcoverimagetype'] = 'Tipo de imagem de capa incompatível  ({$a})';
 $string['via'] = 'via';
 $string['viewcourse'] = 'Visualizar curso';
+$string['viewmore'] = 'Ver mais';
 $string['viewyourprofile'] = 'Visualizar seu perfil';
 $string['viewmyfeedback'] = 'Ver meus comentários';
 $string['viewcalendar'] = 'Visualizar meu calendário';
@@ -387,3 +394,6 @@ $string['enabledloginorderdesc'] = 'Selecione qual opção de login deve ser exi
 $string['moodleloginfirst'] = 'Exibir login do Moodle primeiro';
 $string['alternativeloginfirst'] = 'Exibir opções de login alternativo primeiro';
 $string['alternativeloginoptions'] = 'Opções de login alternativo';
+$string['openmessagedrawer'] = 'Abrir a caixa de mensagens. ';
+$string['design_mod_page'] = 'Ativar o design anterior para os recursos de página';
+$string['design_mod_page_description'] = 'Se ativado, o conteúdo do recurso da página será exibido dentro da mesma página, curso ou página inicial.';
