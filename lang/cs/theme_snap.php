@@ -53,12 +53,13 @@ $string['categoryedit'] = 'Upravit kategorii';
 $string['category_color'] = 'Barva kategorie';
 $string['category_color_description'] = 'Jedná se o barvu kategorie kurzu. Podřazené (asociované) kurzy přebírají konfiguraci nejbližší nadřazené kategorie';
 $string['category_color_palette'] = 'Paleta barev';
-$string['category_color_palette_description'] = 'Prohlédněte si odpovídající hexadecimální hodnotu dané barvy. Žádnou konfiguraci to neovlivní,
+$string['category_color_palette_description'] = 'Prohlédněte si odpovídající hexadecimální hodnotu dané barvy. Žádnou konfiguraci to neovlivní, 
 jedná se jen o vzorek, který uživatelům pomáhá nastavit hodnotu konfigurace.';
 $string['changecoverimage'] = 'Změnit titulní obrázek';
 $string['changefullname'] = 'Změnit název webu';
 $string['chapters'] = 'Kapitoly';
 $string['choosereadme'] = '<div class="clearfix"><div class="theme_screenshot"><h2>Snap</h2><img class=img-polaroid src="snap/pix/screenshot.jpg" /></div></div>';
+$string['close'] = 'Zavřít';
 $string['conditional'] = 'Podmíněné';
 $string['contents'] = 'Obsah';
 $string['contributed'] = 'Přispěno';
@@ -114,6 +115,8 @@ $string['editcoursesettings'] = 'Nastavení kurzu';
 $string['editcoursetopic'] = 'Upravit část';
 $string['editcustomfooter'] = 'Upravit zápatí';
 $string['editcustommenu'] = 'Upravit vlastní nabídku';
+$string['error'] = 'Chyba';
+$string['errorgettingfeed'] = 'Při načítání položek kanálu došlo k chybě.';
 $string['error:categorycolorinvalidjson'] = 'Nesprávný formát JSON pro kategorie kurzů';
 $string['error:categorycolorinvalidvalue'] = 'ID záznamu nebo hodnota barvy pro kategorii {$a} nejsou platné';
 $string['error:categorynotfound'] = 'Záznam kategorie s ID {$a} nebyl nalezen';
@@ -202,7 +205,7 @@ $string['instagram'] = 'Instagram';
 $string['instagramdesc'] = 'Adresa URL vašeho účtu na Instagramu';
 $string['introduction'] = 'Úvod';
 $string['jsontext'] = 'Text JSON';
-$string['jsontextdescription'] = 'Textová oblast ověřuje zadaný soubor JSON. Povoleny jsou pouze existující kategorie.
+$string['jsontextdescription'] = 'Textová oblast ověřuje zadaný soubor JSON. Povoleny jsou pouze existující kategorie. 
 Jako záznamy ID (záznamy kategorií) jsou platné pouze číselné hodnoty a jako barvy se přijímají pouze hexadecimální hodnoty.
 Příklad:<br>
 {"1":"#FAAFFF",<br>
@@ -264,6 +267,8 @@ $string['personalmenuadvancedfeedsenable'] = 'Povolit pokročilé kanály (exper
 $string['personalmenuadvancedfeedsenabledesc'] = 'Pokročilé kanály načítají určité položky osobní nabídky, což umožňuje kratší dobu načítání a obnovuje obsah na vyžádání.';
 $string['personalmenuadvancedfeedsperpage'] = 'Počet zobrazených položek pokročilých kanálů';
 $string['personalmenuadvancedfeedsperpagedesc'] = 'Vyberte počet položek, které se v kanálu zobrazí. Uživatelé mohou další položky zobrazit výběrem možnosti <strong>Zobrazit více</strong>.';
+$string['personalmenuadvancedfeedslifetime'] = 'Rozšířená životnost kanálů';
+$string['personalmenuadvancedfeedslifetimedesc'] = 'Určete dobu, po kterou budou kanály po přihlášení uloženy ve vyrovnávací paměti prohlížeče. Když nastavíte hodnotu 0, kanály se do vyrovnávací paměti prohlížeče nebudou ukládat.';
 $string['pld'] = 'PLD';
 $string['pluginname'] = 'Snap';
 $string['poster'] = 'Titulní obrázek';
@@ -314,10 +319,12 @@ $string['topicactions'] = 'Akce tématu';
 $string['twitter'] = 'Twitter';
 $string['twitterdesc'] = 'Adresa URL vašeho účtu na Twitteru';
 $string['unenrolme'] = 'Zrušit moji registraci do kurzu';
+$string['enrolme'] = 'Zaregistrovat se';
 $string['unread'] = 'nepřečtené';
 $string['unsupportedcoverimagetype'] = 'Nepodporovaný typ titulního obrázku ({$a})';
 $string['via'] = 'prostřednictvím';
 $string['viewcourse'] = 'Zobrazit kurz';
+$string['viewmore'] = 'Zobrazit více';
 $string['viewyourprofile'] = 'Zobrazit profil';
 $string['viewmyfeedback'] = 'Zobrazit moji zpětnou vazbu';
 $string['viewcalendar'] = 'Zobrazit můj kalendář';
@@ -362,7 +369,7 @@ $string['quizfeedback'] = 'Zpětná vazba';
 $string['validratio'] = 'Tato kombinace barev vyhovuje hodnotě minimálního poměru WCAG 2.0 – 4,5:1';
 $string['invalidratio'] = 'Tato kombinace barev nevyhovuje <a href="https://www.w3.org/TR/WCAG20-TECHS/G18.html" target="_blank">hodnotě minimálního poměru WCAG 2.0 – 4,5:1</a>. Hodnota: "{$a}"';
 $string['imageinvalidratio'] = 'Tento obrázek by mohl mít problémy s kontrastem, protože nevyhovuje hodnotě minimálního poměru WCAG 2.0 – 4,5:1. Průměrná hodnota pixelů: "{$a}"';
-$string['catinvalidratio'] = 'Následující kategorie barev nevyhovují
+$string['catinvalidratio'] = 'Následující kategorie barev nevyhovují 
 <a href="https://www.w3.org/TR/WCAG20-TECHS/G18.html" target="_blank">hodnotě minimálního poměru WCAG 2.0 – 4,5:1</a>:
 Barva pozadí vůči webu (bílá): "{$a->white}". Barva pozadí vůči navigačnímu panelu: "{$a->custombar}". Barva pozadí vůči tlačítku Moje kurzy: "{$a->customnav}"';
 $string['imageinvalidratiocategory'] = 'Tento obrázek by mohl mít problémy s barvou motivu, protože nevyhovuje hodnotě minimálního poměru WCAG 2.0 – 4,5:1. Průměrná hodnota pixelů: "{$a}"';
@@ -381,3 +388,6 @@ $string['enabledloginorderdesc'] = 'Vyberte, která možnost přihlášení má 
 $string['moodleloginfirst'] = 'Zobrazit nejdříve přihlášení přes Moodle';
 $string['alternativeloginfirst'] = 'Zobrazit nejdříve alternativní možnosti přihlášení';
 $string['alternativeloginoptions'] = 'Alternativní možnosti přihlášení';
+$string['openmessagedrawer'] = 'Otevře šuplík zpráv. ';
+$string['design_mod_page'] = 'Povolit předchozí vzhled zdrojů stránek';
+$string['design_mod_page_description'] = 'Pokud je tato možnost povolena, bude se obsah zdrojů stránek zobrazovat v rámci stejné stránky, kurzu nebo titulní stránky.';
