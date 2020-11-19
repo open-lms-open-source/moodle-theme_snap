@@ -58,6 +58,7 @@ $string['changecoverimage'] = 'カバーイメージを変更する';
 $string['changefullname'] = 'サイト名を変更する';
 $string['chapters'] = '章';
 $string['choosereadme'] = '<div class="clearfix"><div class="theme_screenshot"><h2>Snap</h2><img class=img-polaroid src="snap/pix/screenshot.jpg" /></div></div>';
+$string['close'] = '閉じる';
 $string['conditional'] = '条件付き';
 $string['contents'] = 'コンテンツ';
 $string['contributed'] = '寄稿済み';
@@ -113,6 +114,8 @@ $string['editcoursesettings'] = 'コース設定';
 $string['editcoursetopic'] = 'セクションを編集する';
 $string['editcustomfooter'] = 'フッタを編集する';
 $string['editcustommenu'] = 'カスタムメニューを編集する';
+$string['error'] = 'エラー';
+$string['errorgettingfeed'] = 'フィード項目の取得中にエラーが発生しました。';
 $string['error:categorycolorinvalidjson'] = 'コースカテゴリのJSONフォーマットが正しくありません';
 $string['error:categorycolorinvalidvalue'] = 'カテゴリ"{$a}"のレコードIDまたはカラー値が無効です';
 $string['error:categorynotfound'] = 'ID"{$a}"のカテゴリレコードは見つかりませんでした';
@@ -262,11 +265,13 @@ $string['personalmenuadvancedfeedsenable'] = '高度なフィードを有効に�
 $string['personalmenuadvancedfeedsenabledesc'] = '高度なフィードでは、読み込み時間の高速化を可能にし、コンテンツをオンデマンドでリフレッシュする、個人的なメニュー項目が読み込みまれます。';
 $string['personalmenuadvancedfeedsperpage'] = '高度なフィード項目の表示数';
 $string['personalmenuadvancedfeedsperpagedesc'] = 'フィードで表示する項目の数を選択します。ユーザは[<strong>さらに表示</strong>]を選択して追加項目を表示できます。';
+$string['personalmenuadvancedfeedslifetime'] = '高度なフィードの有効期間';
+$string['personalmenuadvancedfeedslifetimedesc'] = 'ログイン後にフィードがブラウザにキャッシュされる時間を選択します。0を選択するとフィードはブラウザにキャッシュされません。';
 $string['pld'] = 'PLD';
 $string['pluginname'] = 'Snap';
 $string['poster'] = 'カバーイメージ';
 $string['posterdesc'] = 'サイトのフロントページ用の大きいヘッダイメージです。横向きイメージ (1200 x 600ピクセル) 以上が最適です。';
-$string['poweredbyrunby'] = '<a href="https://jp.openlms.net/" target="_blank" rel="noopener">Open LMS</a>,
+$string['poweredbyrunby'] = '<a href="https://www.openlms.net/" target="_blank" rel="noopener">Open LMS</a>,
     (<a href="https://moodle.com/" target="_blank" rel="noopener">Moodle</a>ベースの製品) で構築しています。<br>
     Copyright &#169; {$a} Open LMS, All Rights Reserved.';
 $string['previoussection'] = '前のセクション';
@@ -312,10 +317,12 @@ $string['topicactions'] = 'トピックアクション';
 $string['twitter'] = 'Twitter';
 $string['twitterdesc'] = 'あなたのTwitterアカウントのURLです。';
 $string['unenrolme'] = '登録抹消する';
+$string['enrolme'] = '受講登録する';
 $string['unread'] = '未読';
 $string['unsupportedcoverimagetype'] = 'サポートされていないカバーイメージタイプ ({$a}) です';
 $string['via'] = '方法 :';
 $string['viewcourse'] = 'コースを表示する';
+$string['viewmore'] = 'さらに表示する';
 $string['viewyourprofile'] = 'プロファイルを表示する';
 $string['viewmyfeedback'] = '私のフィードバックを表示する';
 $string['viewcalendar'] = '私の予定表を表示する';
@@ -380,3 +387,6 @@ $string['enabledloginorderdesc'] = '最初に表示するログインオプシ�
 $string['moodleloginfirst'] = '最初にMoodleログインを表示する';
 $string['alternativeloginfirst'] = '最初に代替ログインオプションを表示する';
 $string['alternativeloginoptions'] = '代替ログインオプション';
+$string['openmessagedrawer'] = 'メッセージングドロワーを開きます。 ';
+$string['design_mod_page'] = 'ページリソースの以前のデザインを有効にする';
+$string['design_mod_page_description'] = '有効にすると、ページリソースのコンテンツが、同じページ、コース、またはフロントページに表示されます。';
