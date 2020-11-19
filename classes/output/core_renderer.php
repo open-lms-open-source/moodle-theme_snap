@@ -2060,4 +2060,12 @@ HTML;
         }
         return $spacer;
     }
+
+    public function secure_layout_language_menu() {
+        if (get_config('core', 'langmenuinsecurelayout')) {
+            return $this->lang_menu();
+        } else {
+            return '';
+        }
+    }
 }
