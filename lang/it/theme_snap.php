@@ -59,6 +59,7 @@ $string['changecoverimage'] = 'Cambia immagine di copertina';
 $string['changefullname'] = 'Modifica nome sito';
 $string['chapters'] = 'Capitoli';
 $string['choosereadme'] = '<div class="clearfix"><div class="theme_screenshot"><h2>Snap</h2><img class=img-polaroid src="snap/pix/screenshot.jpg" /></div></div>';
+$string['close'] = 'Chiudi';
 $string['conditional'] = 'Condizionale';
 $string['contents'] = 'Contenuti';
 $string['contributed'] = 'Con contributo';
@@ -114,6 +115,8 @@ $string['editcoursesettings'] = 'Impostazioni corso';
 $string['editcoursetopic'] = 'Modifica sezione';
 $string['editcustomfooter'] = 'Modifica piè di pagina';
 $string['editcustommenu'] = 'Modifica menu personalizzato';
+$string['error'] = 'Errore';
+$string['errorgettingfeed'] = 'Si è verificato un errore durante il recupero degli elementi del feed.';
 $string['error:categorycolorinvalidjson'] = 'Formato JSON non corretto per le categorie dei corsi';
 $string['error:categorycolorinvalidvalue'] = 'ID record o valore del colore per la categoria "{$a}" non validi';
 $string['error:categorynotfound'] = 'Impossibile trovare il record categoria con ID "{$a}"';
@@ -264,12 +267,14 @@ $string['personalmenuadvancedfeedsenable'] = 'Abilita Feed avanzati (sperimental
 $string['personalmenuadvancedfeedsenabledesc'] = 'Feed avanzati carica elementi personali del menu che consentono di velocizzare i tempi di caricamento e di aggiornamento dei contenuti su richiesta.';
 $string['personalmenuadvancedfeedsperpage'] = 'Numero di elementi Feed avanzati visualizzati';
 $string['personalmenuadvancedfeedsperpagedesc'] = 'Scegli il numero di elementi da visualizzare nel feed. Gli utenti possono selezionare <strong>Visualizza altro</strong> per visualizzare altri elementi.';
+$string['personalmenuadvancedfeedslifetime'] = 'Durata dei feed avanzati';
+$string['personalmenuadvancedfeedslifetimedesc'] = 'Scegliere l\'intervallo temporale durante il quale i feed rimarranno salvati nella cache del browser dopo il login. Se si imposta il valore su 0, i feed non saranno salvati nella cache del browser.';
 $string['pld'] = 'PLD';
 $string['pluginname'] = 'Snap';
 $string['poster'] = 'Immagine di copertina';
 $string['posterdesc'] = 'Un\'immagine grande dell\'intestazione per la pagina principale del sito. Le immagini orizzontali (1200 x 600 pixel) o più grandi forniscono risultati migliori.';
 $string['poweredbyrunby'] = 'Realizzato con <a href="https://www.openlms.net/" target="_blank" rel="noopener">Open LMS</a>,
-    un <a href="https://moodle.com/" target="_blank" rel="noopener">prodotto basato su Moodle</a>.<br>
+    un prodotto basato su <a href="https://moodle.com/" target="_blank" rel="noopener">Moodle</a>.<br>
     Copyright &#169; {$a} Open LMS, tutti i diritti riservati.';
 $string['previoussection'] = 'Sezione precedente';
 $string['privacy:metadata:theme_snap_course_favorites:courseid'] = 'ID del corso che l\'utente ha contrassegnato come preferito';
@@ -314,10 +319,12 @@ $string['topicactions'] = 'Azioni argomento';
 $string['twitter'] = 'Twitter';
 $string['twitterdesc'] = 'URL dell\'account Twitter.';
 $string['unenrolme'] = 'Annulla la mia iscrizione';
+$string['enrolme'] = 'Iscrivimi';
 $string['unread'] = 'non letto';
 $string['unsupportedcoverimagetype'] = 'Tipo di immagine di copertina non supportato ({$a})';
 $string['via'] = 'via';
 $string['viewcourse'] = 'Visualizza corso';
+$string['viewmore'] = 'Visualizza altro';
 $string['viewyourprofile'] = 'Visualizza il profilo';
 $string['viewmyfeedback'] = 'Visualizza il mio feedback';
 $string['viewcalendar'] = 'Visualizza il mio calendario';
@@ -382,3 +389,6 @@ $string['enabledloginorderdesc'] = 'Selezionare l\'opzione di accesso da visuali
 $string['moodleloginfirst'] = 'Visualizza prima l\'accesso Moodle';
 $string['alternativeloginfirst'] = 'Visualizza prima le opzioni di accesso alternative';
 $string['alternativeloginoptions'] = 'Opzioni di accesso alternative';
+$string['openmessagedrawer'] = 'Aprire il cassetto dei messaggi. ';
+$string['design_mod_page'] = 'Abilita la struttura precedente per le risorse della pagina';
+$string['design_mod_page_description'] = 'Abilitando questa opzione, i contenuti delle risorse della pagina vengono visualizzati all\'interno della stessa pagina, dello stesso corso o della stessa pagina home.';
