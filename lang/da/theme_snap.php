@@ -58,6 +58,7 @@ $string['changecoverimage'] = 'Skift coverbillede';
 $string['changefullname'] = 'Skift webstednavn';
 $string['chapters'] = 'Kapitler';
 $string['choosereadme'] = '<div class="clearfix"><div class="theme_screenshot"><h2>Fastgør</h2><img class=img-polaroid src="snap/pix/screenshot.jpg" /></div></div>';
+$string['close'] = 'Luk';
 $string['conditional'] = 'Betinget';
 $string['contents'] = 'Indhold';
 $string['contributed'] = 'Bidraget';
@@ -113,6 +114,8 @@ $string['editcoursesettings'] = 'Kursusindstillinger';
 $string['editcoursetopic'] = 'Rediger sektion';
 $string['editcustomfooter'] = 'Rediger sidefod';
 $string['editcustommenu'] = 'Rediger brugerdefineret menu';
+$string['error'] = 'Fejl';
+$string['errorgettingfeed'] = 'Der opstod en fejl under hentning af feedelementer.';
 $string['error:categorycolorinvalidjson'] = 'Forkert JSON-format for kursuskategorier';
 $string['error:categorycolorinvalidvalue'] = 'Post-ID eller farveværdi for kategorien "{$a}" er ikke gyldigt';
 $string['error:categorynotfound'] = 'Kategoriposten med ID\'et "{$a}" er ikke blevet fundet';
@@ -261,11 +264,13 @@ $string['personalmenuadvancedfeedsenable'] = 'Aktivér Avancerede feeds (eksperi
 $string['personalmenuadvancedfeedsenabledesc'] = 'Avancerede feeds indlæser nogle personlige menuelementer, som tillader hurtigere indlæsningstider og opdaterer indhold efter behov.';
 $string['personalmenuadvancedfeedsperpage'] = 'Antal viste elementer i "Avancerede feeds"';
 $string['personalmenuadvancedfeedsperpagedesc'] = 'Vælg det antal elementer, der skal vises i feedet. Brugere kan vælge <strong>Vis flere</strong>, for at vise yderligere elementer.';
+$string['personalmenuadvancedfeedslifetime'] = 'Levetid for avancerede feeds';
+$string['personalmenuadvancedfeedslifetimedesc'] = 'Vælg, hvor længe feeds cachelagres i browseren efter login. Hvis værdien indstilles til 0, cachelagres feeds ikke i browseren.';
 $string['pld'] = 'PLD';
 $string['pluginname'] = 'Snap';
 $string['poster'] = 'Forsidebillede';
 $string['posterdesc'] = 'Et stort sidehovedbillede til dit websteds forside. Liggende billeder (1200 x 600 pixels) eller større fungerer bedst.';
-$string['poweredbyrunby'] = 'Skabt med <a href="https://www.openlms.net/" target="_blank" rel="noopener">Open LMS</a>,
+$string['poweredbyrunby'] = 'Skabt med<a href="https://www.openlms.net/" target="_blank" rel="noopener">Open LMS</a>,
     et <a href="https://moodle.com/" target="_blank" rel="noopener">Moodle</a>-baseret produkt.<br>
     Copyright &#169; {$a} Open LMS, alle rettigheder forbeholdes.';
 $string['previoussection'] = 'Forrige sektion';
@@ -311,10 +316,12 @@ $string['topicactions'] = 'Emnehandlinger';
 $string['twitter'] = 'Twitter';
 $string['twitterdesc'] = 'URL-adresse til din Twitter-konto.';
 $string['unenrolme'] = 'Frameld mig';
+$string['enrolme'] = 'Tilmeld mig';
 $string['unread'] = 'ulæst';
 $string['unsupportedcoverimagetype'] = 'Ikke-understøttet forsidebilledetype ({$a})!';
 $string['via'] = 'via';
 $string['viewcourse'] = 'Vis kursus';
+$string['viewmore'] = 'Vis mere';
 $string['viewyourprofile'] = 'Se din profil';
 $string['viewmyfeedback'] = 'Vis min feedback';
 $string['viewcalendar'] = 'Vis min kalender';
@@ -379,3 +386,6 @@ $string['enabledloginorderdesc'] = 'Vælg hvilken login-mulighed skal vises før
 $string['moodleloginfirst'] = 'Vis Moodle-login først';
 $string['alternativeloginfirst'] = 'Vis alternative login-muligheder først';
 $string['alternativeloginoptions'] = 'Alternative login-muligheder';
+$string['openmessagedrawer'] = 'Åbn meddelelsesskuffe. ';
+$string['design_mod_page'] = 'Aktivér forrige design for sideressourcer';
+$string['design_mod_page_description'] = 'Hvis sideressourceindhold er aktiveret, vises det på den samme side, kursus eller forside.';
