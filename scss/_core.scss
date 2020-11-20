@@ -4415,9 +4415,15 @@ li.snap-activity.modtype_folder div[id^="folder_tree"] {
 }
 
 // Go to top button Snap Mobile
-@media (max-width: 991px)  {
+@media (max-width: 991px) {
     #goto-top-link {
         bottom: 5em;
         right: 0.7em;
     }
+}
+
+// Fix for snap links with unnecessary box shadow and white background while focus.
+.theme-snap a:not([class]):focus {
+    box-shadow: none;
+    background-color: transparent;
 }
