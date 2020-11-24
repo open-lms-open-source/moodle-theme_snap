@@ -59,6 +59,7 @@ $string['changecoverimage'] = 'تغيير صورة الغلاف';
 $string['changefullname'] = 'تغيير اسم الموقع';
 $string['chapters'] = 'الفصول';
 $string['choosereadme'] = '<div class="clearfix"><div class="theme_screenshot"><h2>محاذاة</h2><img class=img-polaroid src="snap/pix/screenshot.jpg" /></div></div>';
+$string['close'] = 'إغلاق';
 $string['conditional'] = 'شرطي';
 $string['contents'] = 'المحتويات';
 $string['contributed'] = 'ممنوح';
@@ -114,6 +115,8 @@ $string['editcoursesettings'] = 'إعدادات المقرر الدراسي';
 $string['editcoursetopic'] = 'تحرير قسم';
 $string['editcustomfooter'] = 'تحرير التذييل';
 $string['editcustommenu'] = 'تحرير القائمة المخصصة';
+$string['error'] = 'خطأ';
+$string['errorgettingfeed'] = 'حدث خطأ أثناء جلب عناصر الموجز.';
 $string['error:categorycolorinvalidjson'] = 'تنسيق JSON لفئات المقرر الدراسي غير صحيح';
 $string['error:categorycolorinvalidvalue'] = 'معرف السجل أو قيمة اللون للفئة "{$a}" غير صالحة';
 $string['error:categorynotfound'] = 'لم يتم العثور على سجل الفئة بمعرف "{$a}"';
@@ -273,11 +276,13 @@ $string['personalmenuadvancedfeedsenable'] = 'تمكين المواجز المت
 $string['personalmenuadvancedfeedsenabledesc'] = 'تقوم المواجز المتقدمة بتحميل بعض عناصر القائمة الشخصية التي تتيح أوقات تحميل أسرع وتحديث المحتوى حسب الطلب.';
 $string['personalmenuadvancedfeedsperpage'] = 'عدد مرات عرض عناصر المواجز المتقدمة';
 $string['personalmenuadvancedfeedsperpagedesc'] = 'اختر عدد العناصر المراد عرضها في الموجز. يمكن للمستخدمين تحديد <strong>عرض المزيد</strong> لعرض عناصر إضافية.';
+$string['personalmenuadvancedfeedslifetime'] = 'عمر المواجز المتقدمة';
+$string['personalmenuadvancedfeedslifetimedesc'] = 'اختر مقدار الوقت الذي سيتم فيه تخزين المواجز مؤقتًا في المستعرض بعد تسجيل الدخول. لن يؤدي تعيين القيمة إلى 0 إلى تخزين المواجز في المستعرض مؤقتًا.';
 $string['pld'] = 'PLD';
 $string['pluginname'] = 'محاذاة';
 $string['poster'] = 'صورة الغلاف';
 $string['posterdesc'] = 'صورة رأس كبيرة لصفحة موقعك الأمامية. تعمل الصور الأفقية بحجم (1200 × 600 بكسل) أو الأكبر حجمًا بشكل أفضل.';
-$string['poweredbyrunby'] = 'تم الإنشاء بواسطة <a href="https://www.openlms.net/" target="_blank" rel="noopener">Open LMS</a>,
+$string['poweredbyrunby'] = 'تم الإنشاء بواسطة <a href="https://www.openlms.net/" target="_blank" rel="noopener">Open LMS</a>،,
      وهو منتج مستند إلى <a href="https://moodle.com/" target="_blank" rel="noopener">Moodle</a>.<br>
     Copyright &#169; {$a} Open LMS، جميع الحقوق محفوظة.';
 $string['previoussection'] = 'القسم السابق';
@@ -323,10 +328,12 @@ $string['topicactions'] = 'إجراءات الموضوع';
 $string['twitter'] = 'Twitter';
 $string['twitterdesc'] = 'عنوان url الخاص بحسابك على twitter.';
 $string['unenrolme'] = 'إلغاء تسجيلي';
+$string['enrolme'] = 'سجلني';
 $string['unread'] = 'غير مقروء';
 $string['unsupportedcoverimagetype'] = 'نوع صورة الغلاف ({$a}) غير مدعوم';
 $string['via'] = 'عبر';
 $string['viewcourse'] = 'عرض المقرر الدراسي';
+$string['viewmore'] = 'عرض المزيد';
 $string['viewyourprofile'] = 'عرض ملف تعريفك';
 $string['viewmyfeedback'] = 'عرض ملاحظاتي';
 $string['viewcalendar'] = 'عرض تقويمي';
@@ -391,3 +398,6 @@ $string['enabledloginorderdesc'] = 'حدد خيار تسجيل الدخول ال
 $string['moodleloginfirst'] = 'عرض تسجيل الدخول إلى Moodle أولًا';
 $string['alternativeloginfirst'] = 'عرض خيارات تسجيل الدخول البديلة أولًا';
 $string['alternativeloginoptions'] = 'خيارات تسجيل الدخول البديلة';
+$string['openmessagedrawer'] = 'فتح درج المراسلة. ';
+$string['design_mod_page'] = 'تمكين التصميم السابق لموارد الصفحة';
+$string['design_mod_page_description'] = 'في حالة التمكين، سيتم عرض محتوى مورد الصفحة داخل نفس الصفحة أو المقرر الدراسي أو الصفحة الأمامية.';

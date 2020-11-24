@@ -59,6 +59,7 @@ $string['changecoverimage'] = 'Vaihda kansikuva';
 $string['changefullname'] = 'Muuta sivuston nimeä';
 $string['chapters'] = 'Luvut';
 $string['choosereadme'] = '<div class="clearfix"><div class="theme_screenshot"><h2>Snap</h2><img class=img-polaroid src="snap/pix/screenshot.jpg" /></div></div>';
+$string['close'] = 'Sulje';
 $string['conditional'] = 'Ehdollinen';
 $string['contents'] = 'Sisältö';
 $string['contributed'] = 'Osallistunut';
@@ -114,6 +115,8 @@ $string['editcoursesettings'] = 'Kurssiasetukset';
 $string['editcoursetopic'] = 'Muokkaa osiota';
 $string['editcustomfooter'] = 'Muokkaa alatunnistetta';
 $string['editcustommenu'] = 'Muokkaa mukautettua valikkoa';
+$string['error'] = 'Virhe';
+$string['errorgettingfeed'] = 'Syötteen kohteiden hakemisessa tapahtui virhe.';
 $string['error:categorycolorinvalidjson'] = 'Virheellinen JSON-muoto kurssikategorioille';
 $string['error:categorycolorinvalidvalue'] = 'Tallenteen tunnus tai väriarvo kategorialle "{$a}" ei kelpaa';
 $string['error:categorynotfound'] = 'Kategorian tallennetta tunnuksella "{$a}" ei löytynyt';
@@ -264,13 +267,15 @@ $string['personalmenuadvancedfeedsenable'] = 'Ota kehittyneet syötteet käyttö
 $string['personalmenuadvancedfeedsenabledesc'] = 'Kehittyneet syötteet lataavat joitain henkilökohtaisia valikkokohteita, mikä mahdollistaa nopeammat latausajat ja päivittää sisältöä tarpeen mukaan.';
 $string['personalmenuadvancedfeedsperpage'] = 'Kehittyneiden syötteiden näytettävien kohteiden määrä';
 $string['personalmenuadvancedfeedsperpagedesc'] = 'Valitse, montako kohdetta syötteessä näytetään. Käyttäjät näyttää lisää kohteita valitsemalla <strong>Näytä lisää</strong>.';
+$string['personalmenuadvancedfeedslifetime'] = 'Kehittyneiden syötteiden elinikä';
+$string['personalmenuadvancedfeedslifetimedesc'] = 'Valitse, kuinka pitkäksi aikaa syötteet tallennetaan selaimen välimuistiin kirjautumisen jälkeen. Jos annat arvoksi 0, syötteitä ei tallenneta selaimen välimuistiin.';
 $string['pld'] = 'PLD';
 $string['pluginname'] = 'Snap';
 $string['poster'] = 'Kansikuva';
 $string['posterdesc'] = 'Tämä on sivuston etusivulla näytettävä suuri ylätunnistekuva. Parhaiten toimivat vaakasuuntaiset kuvat, joiden koko on vähintään 1 200 x 600 pikseliä.';
 $string['poweredbyrunby'] = 'Luotu <a href="https://www.openlms.net/" target="_blank" rel="noopener">Open LMS:llä</a>,
-     joka on <a href="https://moodle.com/" target="_blank" rel="noopener">Moodleen</a> perustuva tuote.<br>
-    Copyright &#169; {$a} Open LMS. Kaikki oikeudet pidätetään.';
+    joka on <a href="https://moodle.com/" target="_blank" rel="noopener">Moodle</a>-pohjainen tuote.<br>
+    Copyright &#169; {$a} Open LMS, kaikki oikeudet pidätetään.';
 $string['previoussection'] = 'Edellinen osio';
 $string['privacy:metadata:theme_snap_course_favorites:courseid'] = 'Käyttäjän suosikkeihin lisäämän kurssin tunnus';
 $string['privacy:metadata:theme_snap_course_favorites:userid'] = 'Suosikkeihin kurssin lisänneen käyttäjän käyttäjätunnus';
@@ -314,10 +319,12 @@ $string['topicactions'] = 'Aiheen toiminnot';
 $string['twitter'] = 'Twitter';
 $string['twitterdesc'] = 'Tämä on Twitter-tilisi URL-osoite.';
 $string['unenrolme'] = 'Poista rekisteröityminen';
+$string['enrolme'] = 'Rekisteröi minut';
 $string['unread'] = 'lukematta';
 $string['unsupportedcoverimagetype'] = 'Kansikuvatyyppiä {$a} ei tueta';
 $string['via'] = '-';
 $string['viewcourse'] = 'Näytä kurssi';
+$string['viewmore'] = 'Näytä lisää';
 $string['viewyourprofile'] = 'Näytä profiili';
 $string['viewmyfeedback'] = 'Näytä oma palaute';
 $string['viewcalendar'] = 'Näytä oma kalenteri';
@@ -382,3 +389,6 @@ $string['enabledloginorderdesc'] = 'Valitse, kumpi kirjautumisvaihtoehto näytet
 $string['moodleloginfirst'] = 'Näytä Moodle-kirjautuminen ensimmäisenä';
 $string['alternativeloginfirst'] = 'Näytä vaihtoehtoiset kirjautumistavat ensin';
 $string['alternativeloginoptions'] = 'Vaihtoehtoiset kirjautumistavat';
+$string['openmessagedrawer'] = 'Avaa viestintävalikko. ';
+$string['design_mod_page'] = 'Ota käyttöön sivuaineistojen vanha ulkoasu';
+$string['design_mod_page_description'] = 'Jos tämä on käytössä, sivuaineistojen sisältö näytetään samalla sivulla, kurssilla tai etusivulla.';

@@ -58,6 +58,7 @@ $string['changecoverimage'] = 'Canvia la imatge de portada';
 $string['changefullname'] = 'Canvia el nom del lloc';
 $string['chapters'] = 'Capítols';
 $string['choosereadme'] = '<div class="clearfix"><div class="theme_screenshot"><h2>Snap</h2><img class=img-polaroid src="snap/pix/screenshot.jpg" /></div></div>';
+$string['close'] = 'Tanca';
 $string['conditional'] = 'Condicional';
 $string['contents'] = 'Continguts';
 $string['contributed'] = 'Contribuït';
@@ -113,6 +114,8 @@ $string['editcoursesettings'] = 'Paràmetres del curs';
 $string['editcoursetopic'] = 'Edita la secció';
 $string['editcustomfooter'] = 'Edita el peu de pàgina';
 $string['editcustommenu'] = 'Edita el menú personalitzat';
+$string['error'] = 'Error';
+$string['errorgettingfeed'] = 'S\'ha produït un error en obtenir els elements del canal de continguts.';
 $string['error:categorycolorinvalidjson'] = 'Format JSON incorrecte per a les categories de curs';
 $string['error:categorycolorinvalidvalue'] = 'L\'ID de registre o el valor de color per a la categoria "{$a}" no són vàlids';
 $string['error:categorynotfound'] = 'No s\'ha trobat el registre de categoria amb ID "{$a}"';
@@ -262,11 +265,13 @@ $string['personalmenuadvancedfeedsenable'] = 'Habilita els canals de continguts 
 $string['personalmenuadvancedfeedsenabledesc'] = 'Els canals de continguts avançats carreguen alguns elements del menú personal que permeten reduir el temps de càrrega i actualitzen el contingut a petició.';
 $string['personalmenuadvancedfeedsperpage'] = 'Recompte dels elements de canals de continguts avançats mostrats';
 $string['personalmenuadvancedfeedsperpagedesc'] = 'Trieu el nombre d\'elements que es mostraran al canal de continguts. Els usuaris poden seleccionar <strong>Mostra\'n més</strong> perquè es mostrin elements addicionals.';
+$string['personalmenuadvancedfeedslifetime'] = 'Durada dels canals de continguts avançats';
+$string['personalmenuadvancedfeedslifetimedesc'] = 'Trieu la quantitat de temps que es desaran els canals de continguts a la memòria cau del navegador després d\'iniciar la sessió. Si l\'establiu en el valor 0, no s\'hi desaran.';
 $string['pld'] = 'PLD';
 $string['pluginname'] = 'Snap';
 $string['poster'] = 'Imatge de portada';
 $string['posterdesc'] = 'Una imatge de capçalera gran per a la pàgina principal del vostre lloc. Les imatges en format horitzontal de 1200 x 600 píxels o més van millor.';
-$string['poweredbyrunby'] = 'Creat amb <a href="https://www.openlms.net/" target="_blank" rel="noopener">Open LMS</a>,
+$string['poweredbyrunby'] = 'Creat amb <a href="https://www.openlms.net/" target="_blank" rel="noopener"> Open LMS</a>,
     amb tecnologia de <a href="https://moodle.com/" target="_blank" rel="noopener">Moodle</a>.<br>
     Copyright&#169; {$a} Open LMS, Tots els drets reservats.';
 $string['previoussection'] = 'Secció anterior';
@@ -312,10 +317,12 @@ $string['topicactions'] = 'Accions de tema';
 $string['twitter'] = 'Twitter';
 $string['twitterdesc'] = 'L’URL del vostre compte de Twitter.';
 $string['unenrolme'] = 'Cancel·la la matrícula';
+$string['enrolme'] = 'Inscriu-me';
 $string['unread'] = 'no llegit';
 $string['unsupportedcoverimagetype'] = 'El tipus d’imatge de portada no és compatible ({$a})';
 $string['via'] = 'via';
 $string['viewcourse'] = 'Mostra el curs';
+$string['viewmore'] = 'Mostra\'n més';
 $string['viewyourprofile'] = 'Mostra el vostre perfil';
 $string['viewmyfeedback'] = 'Mostra els meus comentaris';
 $string['viewcalendar'] = 'Mostra el meu calendari';
@@ -380,3 +387,6 @@ $string['enabledloginorderdesc'] = 'Seleccioneu quina opció d\'inici de sessió
 $string['moodleloginfirst'] = 'Mostra l\'inici de la sessió de Moodle primer';
 $string['alternativeloginfirst'] = 'Mostra les opcions alternatives d\'inici de sessió primer';
 $string['alternativeloginoptions'] = 'Opcions alternatives d\'inici de sessió';
+$string['openmessagedrawer'] = 'Obre el calaix de missatgeria. ';
+$string['design_mod_page'] = 'Activa el disseny anterior per a recursos de pàgina';
+$string['design_mod_page_description'] = 'Si s\'activa, el contingut dels recursos de pàgina es mostrarà a dins de la mateixa pàgina, curs o portada.';
