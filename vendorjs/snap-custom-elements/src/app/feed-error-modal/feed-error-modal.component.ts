@@ -5,13 +5,13 @@ import {ErrorReporterService} from "../error-reporter.service";
 @Component({
   selector: 'feed-error-modal',
   template: `
-    <button id="openErrorModalButton" [hidden]="true" data-toggle="modal" data-target="#errorModal"></button>
+    <button id="snapOpenErrorModalButton" [hidden]="true" data-toggle="modal" data-target="#snapErrorModal"></button>
     <!-- Modal -->
-    <div class="modal fade" id="errorModal" tabindex="-1" role="dialog" aria-labelledby="errorModalLabel" aria-hidden="true">
+    <div class="modal fade" id="snapErrorModal" tabindex="-1" role="dialog" aria-labelledby="snapErrorModalLabel" aria-hidden="true">
       <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="errorModallLabel">{{strings['error']}}</h5>
+            <h5 class="modal-title" id="snapErrorModalLabel">{{strings['error']}}</h5>
             <button type="button" class="close" data-dismiss="modal" [attr.aria-label]="strings['close']">
               <span aria-hidden="true">&times;</span>
             </button>
@@ -30,7 +30,7 @@ import {ErrorReporterService} from "../error-reporter.service";
         </div>
       </div>
     </div>
-`,
+  `,
   styles: [
     '.feed-dialog-exception .def-report-exception-param {margin-bottom: .5em;}',
     '.feed-dialog-exception .param-stacktrace label {display: block;margin: 0;padding: 3px 1em; width: 150px;}',
@@ -85,6 +85,6 @@ export class FeedErrorModalComponent implements OnInit {
       data.message = error;
       this.error = data;
     }
-    document.getElementById("openErrorModalButton").click();
+    document.getElementById("snapOpenErrorModalButton").click();
   }
 }
