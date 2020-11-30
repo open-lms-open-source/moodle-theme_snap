@@ -136,5 +136,8 @@
       }
     }
   },
-  "defaultProject": "snap-custom-elements"
+  "defaultProject": "snap-custom-elements",
+  "cli": {
+    "analytics": false
+  }
 }
