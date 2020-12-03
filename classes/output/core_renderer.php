@@ -2068,4 +2068,16 @@ HTML;
             return '';
         }
     }
+
+    /**
+     * Wrapper for header elements and create the necessary elements for content bank in Snap.
+     * Taken from core in lib/outputrenderers.php, full_header() function.
+     *
+     * @return string.
+     */
+    public function snap_content_bank() {
+        $header = new stdClass();
+        $header->headeractions = $this->page->get_header_actions();
+        return $this->render_from_template('core/full_header', $header);
+    }
 }

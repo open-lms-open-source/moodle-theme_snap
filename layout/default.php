@@ -65,6 +65,10 @@ echo $OUTPUT->custom_menu_spacer();
             if ($PAGE->pagetype === 'site-index') {
                 echo $OUTPUT->login_button();
             }
+            // Content bank for Snap.
+            if ($PAGE->pagetype === 'contentbank') {
+                echo $OUTPUT->snap_content_bank();
+            }
         ?>
         </div>
         <?php

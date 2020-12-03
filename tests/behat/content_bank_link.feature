@@ -13,13 +13,13 @@
 # You should have received a copy of the GNU General Public License
 # along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 #
-# Tests for role switching features on course home page.
+# Test for content bank link in the front page menu and course admin menu.
 #
 # @package    theme_snap
 # @copyright  Copyright (c) 2020 Open LMS.
 # @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
 
-@theme @theme_snap @theme_snap_course
+@theme @theme_snap @theme_snap_course @theme_snap_contentbank
 Feature: When the moodle theme is set to Snap, the content bank link should show in front page
   menu and course administration menu.
 

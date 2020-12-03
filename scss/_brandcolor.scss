@@ -991,3 +991,14 @@ $custom-menu-text-color: rgb(255, 255, 255) !default; // Need to define this wit
     display: block;
     overflow: hidden;
 }
+
+#page-contentbank.theme-snap #page-mast .dropdown-toggle > i[title="Actions menu"] {
+    color: $brand-primary;
+}
+
+#moodle-footer #page-footer a:focus {
+    outline: 3px solid $brand-primary;
+    box-shadow: none;
+    background-color: transparent;
+    color: white;
+}
