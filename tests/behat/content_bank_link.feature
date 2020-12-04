@@ -13,15 +13,15 @@
 # You should have received a copy of the GNU General Public License
 # along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 #
-# Test for content bank link in the front page menu and course admin menu.
+# Test for content bank link in the front page menu, course admin menu and category settings.
 #
 # @package    theme_snap
 # @copyright  Copyright (c) 2020 Open LMS.
 # @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
 
 @theme @theme_snap @theme_snap_course @theme_snap_contentbank
-Feature: When the moodle theme is set to Snap, the content bank link should show in front page
-  menu and course administration menu.
+Feature: When the Moodle theme is set to Snap, the content bank link should show in front page
+  menu, course administration menu and category settings.
 
   Background:
     Given the following "courses" exist:
@@ -40,6 +40,11 @@ Feature: When the moodle theme is set to Snap, the content bank link should show
   Scenario: Users can see the content bank link.
     And I log in as "admin"
     And I am on front page
+    And I click on "#admin-menu-trigger" "css_element"
+    And I should see "Content bank"
+    And I open the personal menu
+    And I click on "Browse all courses" "link"
+    And I follow "Manage courses"
     And I click on "#admin-menu-trigger" "css_element"
     And I should see "Content bank"
     And I log out

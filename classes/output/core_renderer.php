@@ -1642,19 +1642,26 @@ HTML;
             }
         }
 
-        if ($item->key === 'courseadmin') {
-            $this->add_switchroleto_navigation_node($item);
-        }
+        // Bank content link where necessary (Front page - Course page - Category settings).
+        $context = context_system::instance();
+
+        $coursecatcontext = $this->page->context->contextlevel === CONTEXT_COURSECAT;
 
         if ($COURSE->id !== $SITE->id) {
             $context = context_course::instance($COURSE->id);
-        } else {
-            $context = context_system::instance();
         }
+        if ($coursecatcontext) {
+            $context = $this->page->context;
+        }
+
         if (has_capability('moodle/contentbank:access', $context)) {
-            if ($item->key === 'frontpage' || $item->key === 'courseadmin') {
+            if ($item->key === 'frontpage' || $item->key === 'courseadmin' || $item->key === 'categorysettings') {
                 $this->add_contentbank_navigation_node($item, $context->id);
             }
+        }
+
+        if ($item->key === 'courseadmin') {
+            $this->add_switchroleto_navigation_node($item);
         }
 
         $content = parent::render_navigation_node($item);
@@ -1672,7 +1679,7 @@ HTML;
      */
     private function add_contentbank_navigation_node(navigation_node $item, $contextid) {
         $url = new moodle_url('/contentbank/index.php', array('contextid' => $contextid));
-        $item->add(get_string('contentbank'), $url, navigation_node::TYPE_CUSTOM, null, 'contentbank');
+        $item->add(get_string('contentbank'), $url, navigation_node::TYPE_CUSTOM, null, 'contentbank', new \pix_icon('brush', ''));
     }
 
     /**
