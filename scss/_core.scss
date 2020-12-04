@@ -4412,6 +4412,41 @@ li.snap-activity.modtype_folder div[id^="folder_tree"] {
             }
         }
     }
+
+    // Fix for the cog menu to rename and delete options for a h5p file in the content bank.
+    #page-mast {
+        header#page-header.row {
+            padding: 0;
+            display: inline-block;
+            width: 10%;
+            vertical-align: middle;
+            background-image: none;
+
+            .col-12.pt-3.pb-3,
+            .card-body.p-2 {
+                padding: 0 !important;
+            }
+
+            .d-sm-flex.align-items-center {
+                float: right;
+            }
+        }
+
+        h1:not([class]) {
+            display: inline-block;
+            width: 90%;
+            margin: 0;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            vertical-align: middle;
+            padding-right: 0.5em;
+        }
+
+        .dropdown-toggle > i[title="Actions menu"] {
+
+        }
+    }
 }
 
 // Activity chooser wrapper button - Maintain old and new style for it.
