@@ -4467,3 +4467,18 @@ li.snap-activity.modtype_folder div[id^="folder_tree"] {
     box-shadow: none;
     background-color: transparent;
 }
+
+// We are hiding the save and cancel buttons from the content bank edit new or existing content from the top of the form.
+// To avoid problems with UX/UI with duplicated submit buttons in the page.
+#page-contentbank-edit {
+    #coolh5peditor > div:nth-child(2) {
+        display: none;
+    }
+    #coolh5peditor > div:nth-child(5) {
+        padding-top: 1.5em;
+        margin-left: 0;
+    }
+    #coolh5peditor #id_cancel {
+        margin-left: 0;
+    }
+}
