@@ -1002,3 +1002,17 @@ $custom-menu-text-color: rgb(255, 255, 255) !default; // Need to define this wit
     background-color: transparent;
     color: white;
 }
+
+#page-contentbank-edit #coolh5peditor #id_cancel {
+    color: $brand-primary;
+    border: 1px solid $brand-primary;
+    background-color: transparent;
+
+    &:hover,
+    &:focus {
+        color: #fff;
+        text-decoration: none;
+        border: 1px solid $brand-primary;
+        background-color: $brand-primary;
+    }
+}
