@@ -324,9 +324,8 @@ $custom-menu-text-color: rgb(255, 255, 255) !default; // Need to define this wit
         &:focus,
         &:active,
         &.active {
-            text-decoration: underline;
-            color: darken($brand-primary, 8%);
-            background-color: #fff;
+            background-color: $brand-primary;
+            color: #fff;
         }
     }
 
@@ -984,35 +983,15 @@ $custom-menu-text-color: rgb(255, 255, 255) !default; // Need to define this wit
             background: $brand-primary;
         }
     }
-}
 
-#page-course-loginas.theme-snap #user-notifications {
-    padding-top: 7rem;
-    display: block;
-    overflow: hidden;
-}
+    #action-menu-toggle-0 > i[title="Actions menu"] {
+        color: $brand-primary;
+    }
 
-#page-contentbank.theme-snap #page-mast .dropdown-toggle > i[title="Actions menu"] {
-    color: $brand-primary;
-}
-
-#moodle-footer #page-footer a:focus {
-    outline: 3px solid $brand-primary;
-    box-shadow: none;
-    background-color: transparent;
-    color: white;
-}
-
-#page-contentbank-edit #coolh5peditor #id_cancel {
-    color: $brand-primary;
-    border: 1px solid $brand-primary;
-    background-color: transparent;
-
-    &:hover,
-    &:focus {
-        color: #fff;
-        text-decoration: none;
-        border: 1px solid $brand-primary;
-        background-color: $brand-primary;
+    #moodle-footer #page-footer a:focus {
+        outline: 3px solid $brand-primary !important;
+        box-shadow: none;
+        background-color: transparent;
+        color: white;
     }
 }
