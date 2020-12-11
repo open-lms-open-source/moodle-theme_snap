@@ -2937,6 +2937,12 @@ table#user-grades tr.avg td.cell {
     margin-top: 3em;
 }
 
+#page-course-loginas.theme-snap #user-notifications {
+    padding-top: 7rem;
+    display: block;
+    overflow: hidden;
+}
+
 // bootstrap labels
 .label {
     font-weight: normal;
@@ -4480,5 +4486,11 @@ li.snap-activity.modtype_folder div[id^="folder_tree"] {
     }
     #coolh5peditor #id_cancel {
         margin-left: 0;
+        border: 1px solid !important;
+
+        &:focus,
+        &:hover {
+            text-decoration: none;
+        }
     }
 }
