@@ -1918,7 +1918,7 @@ HTML;
      * Uses bootstrap compatible html.
      * @param string $coverimage
      */
-    public function navbar($coverimage = '') {
+    public function snapnavbar($coverimage = '') {
         global $COURSE, $CFG;
 
         require_once($CFG->dirroot.'/course/lib.php');
@@ -1935,11 +1935,6 @@ HTML;
 
         foreach ($this->page->navbar->get_items() as $item) {
             $item->hideicon = true;
-
-            // Remove link to current page - n.b. needs improving.
-            if ($item->action == $this->page->url) {
-                continue;
-            }
 
             // Add Breadcrumb links to all users types.
             if ($item->key === 'myhome') {

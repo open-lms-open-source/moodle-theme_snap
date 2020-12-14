@@ -44,7 +44,7 @@ if (!empty($coverimagecss)) {
     -->
         <main id="moodle-page" class="clearfix">
         <div id="page-header" class="clearfix snap-category-header <?php echo $mastimage; ?>">
-        <div class="breadcrumb-nav" aria-label="breadcrumb"><?php echo $OUTPUT->navbar($mastimage); ?></div>
+        <div class="breadcrumb-nav" aria-label="breadcrumb"><?php echo $OUTPUT->snapnavbar($mastimage); ?></div>
             <div id="page-mast">
             <?php
                 $categories = $PAGE->categories;

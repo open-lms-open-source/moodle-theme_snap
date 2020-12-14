@@ -16,6 +16,12 @@
     // Links inside the course management page with unnecessary box shadow added by core in 3.9.
     a {
         box-shadow: none;
+
+        &:hover,
+        &:active,
+        &:focus {
+            background-color: transparent;
+        }
     }
 }
 
