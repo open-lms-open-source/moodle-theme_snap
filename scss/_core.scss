@@ -4494,3 +4494,13 @@ li.snap-activity.modtype_folder div[id^="folder_tree"] {
         }
     }
 }
+
+// Fix for Quiz submit buttons position and spacing.
+#page-mod-quiz-summary {
+    .confirmation-buttons {
+        justify-content: flex-end !important; // Need to override core justify-content-around.
+    }
+    .confirmation-buttons > input[type="button"] {
+        margin: .25rem;
+    }
+}
