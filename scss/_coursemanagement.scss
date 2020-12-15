@@ -16,11 +16,23 @@
     // Links inside the course management page with unnecessary box shadow added by core in 3.9.
     a {
         box-shadow: none;
+    }
 
+    // We need to specify the exact elements that needs to have a transparent background,
+    // since core create some buttons as anchors and that may cause a problem.
+    // Had to separate this in two otherwise it won't work.
+    #category-listing ul.ml-1.list-unstyled a.categoryname {
         &:hover,
         &:active,
         &:focus {
-            background-color: transparent;
+            background-color: transparent !important;
+        }
+    }
+    #course-listing ul.ml.course-list a.coursename {
+        &:hover,
+        &:active,
+        &:focus {
+            background-color: transparent !important;
         }
     }
 }

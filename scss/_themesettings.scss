@@ -39,6 +39,11 @@
             display: none;
         }
     }
+
+    // Fix position for panels in the page.
+    #adminsettings div.row {
+        flex-wrap: nowrap;
+    }
 }
 
 // -------------------------
