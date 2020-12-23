@@ -1954,4 +1954,26 @@ JS;
             throw new \Exception("scrollIntoBottom failed");
         }
     }
+
+    /**
+     * Document should open in a new tab.
+     *
+     * @When /^The document should open in a new tab$/
+     */
+    public function document_should_open_in_new_tab() {
+        $session     = $this->getSession();
+        $windownames = $session->getWindowNames();
+        // Need to wait if for some reason the tab have some delay being opened.
+        $ttw     = 40;
+        while ((count($session->getWindowNames()) < 2 && $ttw > 0) == true) {
+            $session->wait(1000);
+            $ttw--;
+        }
+        if (count($windownames) < 2) {
+            throw new \ErrorException("Expected to see at least 2 windows opened");
+        }
+
+        // Switch to the new window.
+        $session->switchToWindow($windownames[1]);
+    }
 }
