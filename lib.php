@@ -397,7 +397,10 @@ function theme_snap_output_fragment_section($args) {
                 $PAGE->requires->strings_for_js(
                     array('copyhere', 'notarget', 'backup', 'restore', 'movedir', 'clipboard',
                         'confirm_backup', 'confirm_backup_section', 'confirm_userdata',
-                        'confirm_delete', 'snap_dialog_restore'),
+                        'confirm_delete', 'clicktomove', 'folder_string',
+                        'activity_string', 'delete_folder', 'modal_checkbox',
+                        'modal_confirm_backup', 'modal_confirm_delete', 'backup_heavy_load_warning_message',
+                        'snap_dialog_restore'),
                     'block_sharing_cart'
                 );
             }
