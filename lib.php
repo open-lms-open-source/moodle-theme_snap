@@ -396,7 +396,7 @@ function theme_snap_output_fragment_section($args) {
 
                 $PAGE->requires->strings_for_js(
                     array('copyhere', 'notarget', 'backup', 'restore', 'movedir', 'clipboard',
-                        'confirm_backup', 'confirm_backup_section', 'confirm_userdata', 'confirm_userdata_section',
+                        'confirm_backup', 'confirm_backup_section', 'confirm_userdata',
                         'confirm_delete', 'snap_dialog_restore'),
                     'block_sharing_cart'
                 );
