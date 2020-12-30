@@ -986,8 +986,13 @@ class course_renderer extends \core_course_renderer {
             }
         }
 
+        $onclicklti = $this->theme_snap_lti_get_launch_container($mod);
+
         if ($mod->uservisible) {
-            $output .= "<a $target class='mod-link' href='$url'>$activityimg<p class='instancename'>$instancename</p></a>";
+            $output .= "<a $target $onclicklti class='mod-link' href='$url'>"
+                            .$activityimg.
+                            "<p class='instancename'>$instancename</p>
+                        </a>";
             $output .= $groupinglabel;
         } else {
             // We may be displaying this just in order to show information
@@ -1411,5 +1416,67 @@ class course_renderer extends \core_course_renderer {
             }
         }
         return $output;
+    }
+
+    /**
+     * Get LTI launch container.
+     *
+     * @param cm_info $mod
+     * @return string
+     */
+    public function theme_snap_lti_get_launch_container(cm_info $mod) {
+        global $DB, $CFG;
+        require_once($CFG->dirroot.'/mod/lti/lib.php');
+        require_once($CFG->dirroot.'/mod/lti/locallib.php');
+
+        // LTI launch container for Snap.
+        if (!$lti = $DB->get_record('lti', array('id' => $mod->instance),
+            'icon, secureicon, intro, introformat, name, typeid, toolurl, launchcontainer')) {
+            return null;
+        }
+
+        $info = new \cached_cm_info();
+
+        if ($mod->showdescription) {
+            // Convert intro to html. Do not filter cached version, filters run at display time.
+            $info->content = format_module_intro('lti', $lti, $mod->id, false);
+        }
+
+        if (!empty($lti->typeid)) {
+            $toolconfig = lti_get_type_config($lti->typeid);
+        } else if ($tool = lti_get_tool_by_url_match($lti->toolurl)) {
+            $toolconfig = lti_get_type_config($tool->id);
+        } else {
+            $toolconfig = array();
+        }
+
+        // We want to use the right icon based on whether the
+        // current page is being requested over http or https.
+        if (lti_request_is_using_ssl() &&
+            (!empty($lti->secureicon) || (isset($toolconfig['secureicon']) && !empty($toolconfig['secureicon'])))) {
+            if (!empty($lti->secureicon)) {
+                $info->iconurl = new moodle_url($lti->secureicon);
+            } else {
+                $info->iconurl = new moodle_url($toolconfig['secureicon']);
+            }
+        } else if (!empty($lti->icon)) {
+            $info->iconurl = new moodle_url($lti->icon);
+        } else if (isset($toolconfig['icon']) && !empty($toolconfig['icon'])) {
+            $info->iconurl = new moodle_url($toolconfig['icon']);
+        }
+
+        // For some reason Snap wasn't doing this right with some external tools,
+        // with this we are creating the same behavior that core does, launching the content in a new window on click.
+        $launchcontainer = lti_get_launch_container($lti, $toolconfig);
+        $onclicklti = '';
+        if (($launchcontainer == LTI_LAUNCH_CONTAINER_WINDOW) && ($mod->modname === 'lti')) {
+            if ($mod->onclick) {
+                $launchurl = new moodle_url('/mod/lti/launch.php', array('id' => $mod->id));
+                $onclickltiurl = 'window.open("' . $launchurl->out(false) . '", "lti-'.$mod->id.'"); return false;';
+                $onclicklti = "onclick='$onclickltiurl'";
+            }
+        }
+
+        return $onclicklti;
     }
 }
