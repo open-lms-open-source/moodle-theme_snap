@@ -4494,3 +4494,11 @@ li.snap-activity.modtype_folder div[id^="folder_tree"] {
         }
     }
 }
+
+// Course categories should be displayed greyed out when they are hidden.
+// Course category - Course - Course profiles user profile.
+#page-course-index-category.theme-snap #moodle-page #region-main .dimmed_category .info .categoryname.aabtn a,
+#page-course-index-category.theme-snap #moodle-page #region-main .dimmed_category .info a.aalink.dimmed,
+#page-user-profile.theme-snap #moodle-page #region-main .profile_tree li a.dimmed {
+    color: #6c757d;
+}
