@@ -4504,3 +4504,14 @@ li.snap-activity.modtype_folder div[id^="folder_tree"] {
         margin: .25rem;
     }
 }
+
+// Course categories should be displayed greyed out when they are hidden.
+#page-course-index-category.theme-snap #moodle-page #region-main .dimmed_category .info .categoryname.aabtn a {
+    color: var(--gray); // Gray Bootstrap from theme/boost/style/moodle.css.
+}
+
+// Fix for Scorm exit button to be clickable.
+#page-mod-scorm-player .snap-page-heading-button {
+    z-index: 10;
+    position: relative;
+}
