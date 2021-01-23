@@ -16,7 +16,9 @@
 
 namespace theme_snap;
 
+use dml_exception;
 use grade_item;
+use stdClass;
 
 defined('MOODLE_INTERNAL') || die();
 
@@ -1287,10 +1289,12 @@ class activity {
      * Note - only deals with due, open, close event types.
      * @param int $tstart
      * @param int $tend
-     * @param \stdClass[] $courses
+     * @param stdClass[] $courses
+     * @param int $limit
      * @return array
+     * @throws dml_exception
      */
-    public static function get_calendar_activity_events($tstart, $tend, array $courses, $limit = 40) {
+    public static function get_calendar_activity_events($tstart, $tend, array $courses, $limit = 200) {
 
         $calendar = new \calendar_information(0, 0, 0, $tstart);
         $course = get_course(SITEID);
@@ -1357,7 +1361,7 @@ class activity {
      * @return object
      */
     public static function user_activity_events($userorid, array $courses, $tstart, $tend, $cacheprefix = '',
-                                                $limit = 40) {
+                                                $limit = 200) {
         global $DB;
 
         $retobj = (object) [
@@ -1376,19 +1380,19 @@ class activity {
         $dstart = strtotime(date('Y-m-d', $tstart));
         $dend = strtotime(date('Y-m-d', $tend));
 
-        $cachekey = $cacheprefix.$user->id.'_'.($dstart + $dend).'_'.$limit;
+        $freshkey = $user->id.'_'.($dstart + $dend).'_'.$limit;
+        $cachekey = $user->id.'_'.$cacheprefix;
 
         if (self::$phpunitallowcaching || !(defined('PHPUNIT_TEST') && PHPUNIT_TEST)) {
             $muc = \cache::make('theme_snap', 'activity_deadlines');
             $cached = $muc->get($cachekey);
-
-            if ($cached && $cached->timestamp >= time() - HOURSECS) {
-
+            $cachefresh = false;
+            if ($cached && $cached->key !== $freshkey) {
+                $cachefresh = false;
+            } else if ($cached && $cached->timestamp >= time() - HOURSECS) {
                 $cachestamps = local::get_calendar_change_stamps();
-
                 $activitiesstamp = $cached->timestamp;
                 $cachefresh = true; // Until proven otherwise.
-
                 $coursecache = [];
                 foreach ($courses as $courseid => $course) {
                     $coursecache[$courseid] = $course->shortname;
@@ -1423,11 +1427,11 @@ class activity {
                 if (!empty($deletioninprogress)) {
                     $cachefresh = false;
                 }
+            }
 
-                if ($cachefresh) {
-                    $cached->fromcache = true; // Useful for debugging and unit testing.
-                    return $cached;
-                }
+            if ($cachefresh) {
+                $cached->fromcache = true; // Useful for debugging and unit testing.
+                return $cached;
             }
         }
 
@@ -1484,6 +1488,7 @@ class activity {
 
         if (self::$phpunitallowcaching || !(defined('PHPUNIT_TEST') && PHPUNIT_TEST)) {
             $retobj->courses = $coursecache;
+            $retobj->key = $freshkey;
             $muc->set($cachekey, $retobj);
         }
 
@@ -1495,9 +1500,9 @@ class activity {
      *
      * All deadlines from today, then any from the next 6 months up to the
      * max requested.
-     * @param \stdClass|integer $userorid
+     * @param stdClass|integer $userorid
      * @param integer $maxdeadlines
-     * @return array
+     * @return stdClass
      */
     public static function upcoming_deadlines($userorid, $maxdeadlines = 5) {
 
