@@ -37,7 +37,7 @@ export class FeedService {
     this.maxLifeTime = maxLifeTime;
   }
 
-  getFeed(wwwRoot: string, sessKey: string|undefined, feedId: string, page: number, pageSize: number, maxId: number): Observable<MoodleRes[]> {
+  getFeed(wwwRoot: string, sessKey: string|undefined, feedId: string, page: number, pageSize: number, maxId: number, courseId: number): Observable<MoodleRes[]> {
     const errorRes : MoodleRes[] = [{
       error: "No session key present",
       data: undefined
@@ -53,6 +53,7 @@ export class FeedService {
     feedServiceArgs.feedid = feedId;
     feedServiceArgs.page = page;
     feedServiceArgs.pagesize = pageSize;
+    feedServiceArgs.courseId = courseId;
 
     moodleResKey.args = feedServiceArgs;
     const cachedRes = this.findDataInLocalCache(moodleResKey);
@@ -67,10 +68,10 @@ export class FeedService {
         feedid: feedId,
         page: page,
         pagesize: pageSize,
-        maxid: maxId
+        maxid: maxId,
+        courseid: courseId ?? undefined
       }
     }];
-
     return this.http.post<MoodleRes[]>(`${wwwRoot}${this.moodleAjaxUrl}?sesskey=${sessKey}`, body, this.httpOptions)
       .pipe(
         map(res => this.storeDataInLocalCache(moodleResKey, res)),
@@ -124,7 +125,7 @@ export class FeedService {
   }
 
   public storeDataInLocalCache(moodleResKey: MoodleResKey, res: MoodleRes[]) : MoodleRes[] {
-    if (localStorage === undefined || this.maxLifeTime === 0) {
+    if (localStorage === undefined || this.maxLifeTime === 0 || res[0].error) {
       return res;
     }
 
@@ -139,7 +140,7 @@ export class FeedService {
     return res;
   }
 
-  public purgeDataInLocalCache(sessKey: string|undefined, feedId: string, page: number, pageSize: number) {
+  public purgeDataInLocalCache(sessKey: string|undefined, feedId: string, page: number, pageSize: number, courseId: number) {
     if (localStorage === undefined || this.maxLifeTime === 0) {
       return;
     }
@@ -151,6 +152,7 @@ export class FeedService {
     feedServiceArgs.feedid = feedId;
     feedServiceArgs.page = page;
     feedServiceArgs.pagesize = pageSize;
+    feedServiceArgs.courseId = courseId;
 
     moodleResKey.args = feedServiceArgs;
 

@@ -1016,7 +1016,7 @@ class activity {
             } else {
                 $coursesparam = [$courseid => get_course($courseid)];
             }
-            $cachepfx = 'course'.$courseid.'_';
+            $cachepfx = 'course_'.$courseid;
             $eventsobj = self::user_activity_events($USER, $coursesparam, $tstart, $tend, $cachepfx, 1000);
             $events = $eventsobj->events;
             $eventsfromcache = $eventsobj->fromcache;
@@ -1361,7 +1361,7 @@ class activity {
      * @return object
      */
     public static function user_activity_events($userorid, array $courses, $tstart, $tend, $cacheprefix = '',
-                                                $limit = 200) {
+                                                $limit = 500) {
         global $DB;
 
         $retobj = (object) [
@@ -1502,10 +1502,10 @@ class activity {
      * max requested.
      * @param stdClass|integer $userorid
      * @param integer $maxdeadlines
+     * @param integer $courseid
      * @return stdClass
      */
-    public static function upcoming_deadlines($userorid, $maxdeadlines = 5) {
-
+    public static function upcoming_deadlines($userorid, $maxdeadlines = 500, $courseid = 0) {
         global $USER;
         $origuser = $USER;
         $user = local::get_user($userorid);
@@ -1517,9 +1517,26 @@ class activity {
         $tomorrow = new \DateTime('tomorrow', $tz);
         $tomorrowts = $tomorrow->getTimestamp();
 
+        $cacheprefix = 'deadlines';
         $courses = enrol_get_users_courses($user->id, true);
+        if ($courseid !== 0) {
+            $foundacourse = false;
+            foreach ($courses as $id => $course) {
+                if ($id == $courseid) {
+                    // We should only get deadlines for enrolled users, b/c they are the ones who get calendar updates.
+                    $courses = [$courseid => get_course($courseid)];
+                    $cacheprefix .= '_course_' . $courseid;
+                    $foundacourse = true;
+                    break;
+                }
+            }
+            if (!$foundacourse) {
+                // The user is not enrolled on this course, let's clean up the course lists.
+                $courses = [];
+            }
+        }
 
-        $eventsobj = self::user_activity_events($user, $courses, $todayts, $todayts + (YEARSECS / 2), 'deadlines');
+        $eventsobj = self::user_activity_events($user, $courses, $todayts, $todayts + (YEARSECS / 2), $cacheprefix);
 
         $events = $eventsobj->events;
         uasort($events, function($e1, $e2) {

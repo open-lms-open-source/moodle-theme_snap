@@ -2362,11 +2362,12 @@ SQL;
      * @param int $page
      * @param int $pagesize
      * @param int $maxid
+     * @param int $courseid
      * @return array
      * @throws \coding_exception
      * @throws \moodle_exception
      */
-    public static function get_feed(string $feedid, $page = 0, $pagesize = 3, $maxid = -1) : array {
+    public static function get_feed(string $feedid, $page = 0, $pagesize = 3, $maxid = -1, $courseid = 0) : array {
         global $USER, $CFG;
         switch ($feedid) {
             case 'graded':
@@ -2383,9 +2384,9 @@ SQL;
                 $res = self::messages_data(false, $limitfrom, $pagesize, $maxid);
                 break;
             case 'deadlines':
-                $limit = !empty($CFG->snap_advanced_feeds_max_deadlines) ? $CFG->snap_advanced_feeds_max_deadlines : 5;
+                $limit = !empty($CFG->snap_advanced_feeds_max_deadlines) ? $CFG->snap_advanced_feeds_max_deadlines : 500;
                 $res = self::deadlines_data(
-                    activity::upcoming_deadlines($USER->id, $limit)
+                    activity::upcoming_deadlines($USER->id, $limit, $courseid)
                 );
                 break;
             default:
