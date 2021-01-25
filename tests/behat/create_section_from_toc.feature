@@ -136,3 +136,30 @@ Feature: In the Snap theme, within a course, editing teachers can create a new s
       | Option     |
       | 0          |
       | 1          |
+
+  @javascript
+  Scenario Outline: While creating a new section, it should exists a functional cancel button on the form.
+    Given I log in as "admin"
+    And the following config values are set as admin:
+      | coursepartialrender | <Option> | theme_snap |
+    And I am on the course main page for "course_topics"
+    And I follow "Create a new section"
+    # Visibility of the cancel button.
+    And I should see "Cancel"
+    And I follow "Cancel"
+    # Cancel button should return the user to the main section of the course.
+    And I should see "Introduction"
+    And I follow "Topic 4"
+    # Make Topic 4 the current section.
+    And I click on "#section-4 a.snap-highlight" "css_element"
+    # Go to a different topic than the highlighted one and open the create a new section form.
+    And I follow "Topic 1"
+    And I follow "Create a new section"
+    And I follow "Cancel"
+    # The redirect of the cancel button should be to the highlighted section.
+    And I should see "Topic 4"
+
+    Examples:
+      | Option     |
+      | 0          |
+      | 1          |

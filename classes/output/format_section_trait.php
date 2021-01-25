@@ -20,7 +20,7 @@
  * Used for section outputs.
  *
  * @package   theme_snap
- * @copyright Copyright (c) 2015 Blackboard Inc. (http://www.blackboard.com)
+ * @copyright Copyright (c) 2015 Open LMS. (http://www.openlms.net)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -45,11 +45,11 @@ trait format_section_trait {
     /**
      * Based on get_nav_links function in class format_section_renderer_base
      * This function has been modified to provide a link to section 0
-     * Generate next/previous section links for naviation
+     * Generate next/previous section links for navigation
      *
      * @param stdClass $course The course entry from DB
      * @param array $sections The course_sections entries from the DB
-     * @param int $sectionno The section number in the coruse which is being dsiplayed
+     * @param int $sectionno The section number in the course which is being displayed
      * @return array associative array with previous and next section link
      */
     protected function get_nav_links($course, $sections, $sectionno) {
@@ -532,7 +532,7 @@ trait format_section_trait {
         $output .= '<div class="form-group">';
         $output .= "<label for='newsection' class='sr-only'>".get_string('title', 'theme_snap')."</label>";
         if ($course->format === 'topics') {
-            $output .= '<input class="h3" id="newsection" type="text" maxlength="250" name="newsection" '.$required;
+            $output .= '<input id="newsection" type="text" maxlength="250" name="newsection" '.$required;
             $output .= ' placeholder="'.s(get_string('title', 'theme_snap')).'">';
         } else {
             $output .= '<h3>'.$defaulttitle.': '.$datesection.'</h3>';
@@ -564,6 +564,12 @@ trait format_section_trait {
             'name' => 'addtopic',
             'value' => get_string('createsection', 'theme_snap'),
         ));
+
+        $courseurl = new moodle_url('/course/view.php', array('id' => $course->id));
+        $message = get_string('cancel');
+        $attr = array('class' => 'btn btn-secondary', 'id' => 'cancel-new-section');
+        $output .= html_writer::link($courseurl, $message, $attr);
+
         $output .= html_writer::end_tag('form');
         $output .= '</section>';
         return $output;
