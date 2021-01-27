@@ -512,6 +512,15 @@
         }
     }
 }
+@include media-breakpoint-up(md) {
+    #page-mod-book-view.editing .book_toc .d-flex {
+        display: block !important;
+    }
+
+    #page-mod-book-view.editing .book_toc .text-truncate {
+        white-space: normal;
+    }
+}
 
 // Print style guide for book
 #page-mod-book-print {
