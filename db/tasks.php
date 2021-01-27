@@ -15,20 +15,23 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Theme plugin version definition.
+ * Scheduled tasks.
  *
  * @package   theme_snap
- * @copyright Copyright (c) 2015 Blackboard Inc. (http://www.blackboard.com)
+ * @copyright Copyright (c) 2021 Open LMS (https://www.openlms.net)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-defined('MOODLE_INTERNAL') || die;
+defined('MOODLE_INTERNAL') || die();
 
-$plugin->version   = 2020061103;
-$plugin->requires  = 2020061500;
-$plugin->release   = '3.9.3';
-$plugin->maturity  = MATURITY_STABLE;
-$plugin->component = 'theme_snap';
-$plugin->dependencies = [
-    'theme_boost' => '2018051400'
+$tasks = [
+    [
+        'classname' => '\theme_snap\task\refresh_deadline_caches_task',
+        'blocking'  => 0,
+        'minute'    => 'R',
+        'hour'      => '1',
+        'day'       => '*',
+        'dayofweek' => '1-5',
+        'month'     => '*'
+    ],
 ];

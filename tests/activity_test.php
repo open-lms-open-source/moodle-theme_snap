@@ -914,7 +914,7 @@ class theme_snap_acitvity_test extends snap_base_test {
         }
 
         $deadlines = activity::upcoming_deadlines($student);
-        $this->assertCount(5, $deadlines->events);
+        $this->assertCount(22, $deadlines->events);
         $this->assertFalse($deadlines->fromcache);
         $deadlines = activity::upcoming_deadlines($student);
         $this->assertTrue($deadlines->fromcache);
@@ -951,7 +951,7 @@ class theme_snap_acitvity_test extends snap_base_test {
         }
 
         $deadlines = activity::upcoming_deadlines($student);
-        $this->assertCount(20, $deadlines->events);
+        $this->assertCount(25, $deadlines->events);
         $this->assertFalse($deadlines->fromcache);
         $deadlines = activity::upcoming_deadlines($student);
         $this->assertTrue($deadlines->fromcache);
@@ -1019,7 +1019,7 @@ class theme_snap_acitvity_test extends snap_base_test {
      * Test upcoming deadlines
      */
     public function test_upcoming_deadlines_timezones() {
-        global $DB;
+        global $DB, $CFG;
 
         $this->resetAfterTest();
 
@@ -1083,8 +1083,8 @@ class theme_snap_acitvity_test extends snap_base_test {
 
         // 5 items should be shown as final deadline 3rd quiz gets cut off and assignment with past deadline should not
         // show.
-        $actual = activity::upcoming_deadlines($student->id)->events;
         $expected = 5;
+        $actual = activity::upcoming_deadlines($student->id, $expected)->events;
 
         // Check deadlines are listed in appropriate order.
         $this->assertCount($expected, $actual);
@@ -1132,8 +1132,8 @@ class theme_snap_acitvity_test extends snap_base_test {
             $tzoneusers[$offset] = $generator->create_user(['timezone' => $tz]);
             $generator->enrol_user($tzoneusers[$offset]->id, $course->id, $studentrole->id);
             $this->setUser($tzoneusers[$offset]);
-            $actual = activity::upcoming_deadlines($tzoneusers[$offset])->events;
             $expected = 5;
+            $actual = activity::upcoming_deadlines($tzoneusers[$offset], $expected)->events;
             $this->assertCount($expected, $actual);
         }
 
@@ -1644,9 +1644,9 @@ class theme_snap_acitvity_test extends snap_base_test {
             $assigninstances[] = $this->create_assignment($course->id, ($todayts + WEEKSECS))->get_instance();
         }
 
-        // No setting, should be 5.
+        // No setting, should be 22.
         $deadlines = local::get_feed('deadlines');
-        $this->assertCount(5, $deadlines);
+        $this->assertCount(22, $deadlines);
 
         // With setting, we get more.
         $CFG->snap_advanced_feeds_max_deadlines = 10;

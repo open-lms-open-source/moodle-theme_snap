@@ -93,6 +93,8 @@ export class FeedComponent implements OnInit {
   @Input() initialValue?: string;
   @Input() wwwRoot: string;
   @Input() maxLifeTime?: number;
+  @Input() waitForPersonalMenu?: boolean;
+  @Input() courseId?: number;
 
   nextPage: number;
   feedItems: FeedItem[];
@@ -145,7 +147,7 @@ export class FeedComponent implements OnInit {
         this.nextPage = -1;
       }
     } else {
-      if (document.querySelectorAll('body.snap-pm-open').length > 0) {
+      if (!this.waitForPersonalMenu || document.querySelectorAll('body.snap-pm-open').length > 0) {
         this.resetFeed();
       }
     }
@@ -178,7 +180,7 @@ export class FeedComponent implements OnInit {
       return;
     }
     const maxId: number = !this.resetInProgress && this.feedItems[0] && this.feedItems[0].itemId || -1;
-    this.feedService.getFeed(this.wwwRoot, this.sessKey, this.feedId, this.nextPage, this.pageSize, maxId)
+    this.feedService.getFeed(this.wwwRoot, this.sessKey, this.feedId, this.nextPage, this.pageSize, maxId, this.courseId)
       .subscribe(feedResponse => {
         if (feedResponse === undefined || feedResponse[0].error) {
           this.viewMoreEnabled = false;
@@ -267,7 +269,7 @@ export class FeedComponent implements OnInit {
 
     const lastPage = this.nextPage > 0 ? this.nextPage : 1;
     for (let page = 0; page < lastPage; page++) {
-      this.feedService.purgeDataInLocalCache(this.sessKey, this.feedId, page, this.pageSize);
+      this.feedService.purgeDataInLocalCache(this.sessKey, this.feedId, page, this.pageSize, this.courseId);
     }
     this.resetFeed();
   }

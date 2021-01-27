@@ -16,7 +16,9 @@
 
 namespace theme_snap;
 
+use dml_exception;
 use grade_item;
+use stdClass;
 
 defined('MOODLE_INTERNAL') || die();
 
@@ -1014,7 +1016,7 @@ class activity {
             } else {
                 $coursesparam = [$courseid => get_course($courseid)];
             }
-            $cachepfx = 'course'.$courseid.'_';
+            $cachepfx = 'course_'.$courseid;
             $eventsobj = self::user_activity_events($USER, $coursesparam, $tstart, $tend, $cachepfx, 1000);
             $events = $eventsobj->events;
             $eventsfromcache = $eventsobj->fromcache;
@@ -1287,10 +1289,12 @@ class activity {
      * Note - only deals with due, open, close event types.
      * @param int $tstart
      * @param int $tend
-     * @param \stdClass[] $courses
+     * @param stdClass[] $courses
+     * @param int $limit
      * @return array
+     * @throws dml_exception
      */
-    public static function get_calendar_activity_events($tstart, $tend, array $courses, $limit = 40) {
+    public static function get_calendar_activity_events($tstart, $tend, array $courses, $limit = 200) {
 
         $calendar = new \calendar_information(0, 0, 0, $tstart);
         $course = get_course(SITEID);
@@ -1357,7 +1361,7 @@ class activity {
      * @return object
      */
     public static function user_activity_events($userorid, array $courses, $tstart, $tend, $cacheprefix = '',
-                                                $limit = 40) {
+                                                $limit = 500) {
         global $DB;
 
         $retobj = (object) [
@@ -1376,19 +1380,19 @@ class activity {
         $dstart = strtotime(date('Y-m-d', $tstart));
         $dend = strtotime(date('Y-m-d', $tend));
 
-        $cachekey = $cacheprefix.$user->id.'_'.($dstart + $dend).'_'.$limit;
+        $freshkey = $user->id.'_'.($dstart + $dend).'_'.$limit;
+        $cachekey = $user->id.'_'.$cacheprefix;
 
         if (self::$phpunitallowcaching || !(defined('PHPUNIT_TEST') && PHPUNIT_TEST)) {
             $muc = \cache::make('theme_snap', 'activity_deadlines');
             $cached = $muc->get($cachekey);
-
-            if ($cached && $cached->timestamp >= time() - HOURSECS) {
-
+            $cachefresh = false;
+            if ($cached && $cached->key !== $freshkey) {
+                $cachefresh = false;
+            } else if ($cached && $cached->timestamp >= time() - HOURSECS) {
                 $cachestamps = local::get_calendar_change_stamps();
-
                 $activitiesstamp = $cached->timestamp;
                 $cachefresh = true; // Until proven otherwise.
-
                 $coursecache = [];
                 foreach ($courses as $courseid => $course) {
                     $coursecache[$courseid] = $course->shortname;
@@ -1423,11 +1427,11 @@ class activity {
                 if (!empty($deletioninprogress)) {
                     $cachefresh = false;
                 }
+            }
 
-                if ($cachefresh) {
-                    $cached->fromcache = true; // Useful for debugging and unit testing.
-                    return $cached;
-                }
+            if ($cachefresh) {
+                $cached->fromcache = true; // Useful for debugging and unit testing.
+                return $cached;
             }
         }
 
@@ -1484,6 +1488,7 @@ class activity {
 
         if (self::$phpunitallowcaching || !(defined('PHPUNIT_TEST') && PHPUNIT_TEST)) {
             $retobj->courses = $coursecache;
+            $retobj->key = $freshkey;
             $muc->set($cachekey, $retobj);
         }
 
@@ -1495,12 +1500,12 @@ class activity {
      *
      * All deadlines from today, then any from the next 6 months up to the
      * max requested.
-     * @param \stdClass|integer $userorid
+     * @param stdClass|integer $userorid
      * @param integer $maxdeadlines
-     * @return array
+     * @param integer $courseid
+     * @return stdClass
      */
-    public static function upcoming_deadlines($userorid, $maxdeadlines = 5) {
-
+    public static function upcoming_deadlines($userorid, $maxdeadlines = 500, $courseid = 0) {
         global $USER;
         $origuser = $USER;
         $user = local::get_user($userorid);
@@ -1512,9 +1517,26 @@ class activity {
         $tomorrow = new \DateTime('tomorrow', $tz);
         $tomorrowts = $tomorrow->getTimestamp();
 
+        $cacheprefix = 'deadlines';
         $courses = enrol_get_users_courses($user->id, true);
+        if ($courseid !== 0) {
+            $foundacourse = false;
+            foreach ($courses as $id => $course) {
+                if ($id == $courseid) {
+                    // We should only get deadlines for enrolled users, b/c they are the ones who get calendar updates.
+                    $courses = [$courseid => get_course($courseid)];
+                    $cacheprefix .= '_course_' . $courseid;
+                    $foundacourse = true;
+                    break;
+                }
+            }
+            if (!$foundacourse) {
+                // The user is not enrolled on this course, let's clean up the course lists.
+                $courses = [];
+            }
+        }
 
-        $eventsobj = self::user_activity_events($user, $courses, $todayts, $todayts + (YEARSECS / 2), 'deadlines');
+        $eventsobj = self::user_activity_events($user, $courses, $todayts, $todayts + (YEARSECS / 2), $cacheprefix);
 
         $events = $eventsobj->events;
         uasort($events, function($e1, $e2) {

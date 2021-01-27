@@ -94,6 +94,13 @@ $default = 30 * MINSECS;
 $setting = new admin_setting_configduration($name, $title, $description, $default, MINSECS);
 $snapsettings->add($setting);
 
+$name = 'theme_snap/personalmenurefreshdeadlines';
+$title = new lang_string('personalmenurefreshdeadlines', 'theme_snap');
+$description = new lang_string('personalmenurefreshdeadlinesdesc', 'theme_snap');
+$default = !$checked;
+$setting = new admin_setting_configcheckbox($name, $title, $description, $default, $checked, $unchecked);
+$snapsettings->add($setting);
+
 $settings->add($snapsettings);
 
 // Advanced feeds hidden settings.
@@ -104,5 +111,3 @@ $settings->hide_if($tohide, $dependency, 'notchecked');
 // Only show life time if advanced feeds are enabled.
 $tohide     = 'theme_snap/personalmenuadvancedfeedslifetime';
 $settings->hide_if($tohide, $dependency, 'notchecked');
-
-

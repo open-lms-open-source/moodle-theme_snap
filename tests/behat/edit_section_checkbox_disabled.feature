@@ -47,5 +47,6 @@ Feature: With topics format the option "Custom" on editing a section shouldn't b
     And I click on "#section-0 .summary .edit-summary" "css_element"
     And I should not see "Custom" in the ".snap-form-required .fdefaultcustom .form-check-inline" "css_element"
     And I am on "Course 2" course homepage
+    And I click on "a[href=\"#section-1\"].chapter-title" "css_element"
     And I click on "#section-1 .summary .edit-summary" "css_element"
     And I should see "Custom" in the ".snap-form-required .fdefaultcustom .form-check-inline" "css_element"

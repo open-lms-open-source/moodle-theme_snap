@@ -51,7 +51,8 @@ class ws_feed extends external_api {
             'feedid' => new external_value(PARAM_TEXT, 'Feed identifier', VALUE_REQUIRED),
             'page' => new external_value(PARAM_INT, 'Page', VALUE_DEFAULT),
             'pagesize' => new external_value(PARAM_INT, 'Page size', VALUE_DEFAULT),
-            'maxid' => new external_value(PARAM_INT, 'Max item id', VALUE_DEFAULT)
+            'maxid' => new external_value(PARAM_INT, 'Max item id', VALUE_DEFAULT),
+            'courseid' => new external_value(PARAM_INT, 'Course id', VALUE_DEFAULT, 0),
         ];
         return new external_function_parameters($parameters);
     }
@@ -81,17 +82,19 @@ class ws_feed extends external_api {
      * @param null|int $page
      * @param null|int $pagesize
      * @param int $maxid
+     * @param int $courseid
      * @return array
      */
-    public static function service($feedid, $page = 0, $pagesize = 3, $maxid = -1) {
+    public static function service($feedid, $page = 0, $pagesize = 3, $maxid = -1, $courseid = 0) {
         $params = self::validate_parameters(self::service_parameters(), [
             'feedid' => $feedid,
             'page' => $page,
             'pagesize' => $pagesize,
-            'maxid' => $maxid
+            'maxid' => $maxid,
+            'courseid' => $courseid,
         ]);
         self::validate_context(\context_system::instance());
 
-        return local::get_feed($params['feedid'], $params['page'], $params['pagesize'], $params['maxid']);
+        return local::get_feed($params['feedid'], $params['page'], $params['pagesize'], $params['maxid'], $params['courseid']);
     }
 }

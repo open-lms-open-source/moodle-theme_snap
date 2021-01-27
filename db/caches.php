@@ -48,7 +48,7 @@ $definitions = array(
     ],
     // This is used to cache deadlines per user.
     'activity_deadlines' => [
-        'mode'               => cache_store::MODE_SESSION,
+        'mode'               => cache_store::MODE_APPLICATION,
         'simplekeys'         => true,
         'simpledata'         => false,
         'staticacceleration' => false,
