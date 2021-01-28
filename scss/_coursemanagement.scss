@@ -35,6 +35,10 @@
             background-color: transparent !important;
         }
     }
+
+    #course-category-listings .listitem[data-visible="0"] > div > a {
+        color: var(--gray);
+    }
 }
 
 // Wrapper around the 3 colums of data.
