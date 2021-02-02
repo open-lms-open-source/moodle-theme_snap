@@ -78,8 +78,13 @@ Feature: In the Snap theme, within a course, editing teachers can create a new s
 
   @javascript
   Scenario: For non editing teachers and students, ensure new section creation is not available for any course formats.
-    Given I skip because "It is failing in master branch, to be fixed in INT-16443"
-  Given I log in as "teacher2"
+  Given I log in as "admin"
+    And I am on the course main page for "course_single"
+    And I set the following fields to these values:
+    | Forum name | Single Forum Course |
+    And I press "Save and display"
+    And I log out
+   Then I log in as "teacher2"
     And I am on the course main page for "course_topics"
    Then I should not see "Create a new section" in the "#page-header" "css_element"
     And I am on the course main page for "course_weeks"

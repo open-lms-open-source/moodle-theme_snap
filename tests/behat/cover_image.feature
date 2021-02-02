@@ -29,7 +29,6 @@ Feature: When the moodle theme is set to Snap, cover image can be set for site a
 
   @javascript
   Scenario: Editing teachers can change and delete course cover image.
-    Given I skip because "It is failing in master branch, to be fixed in INT-16443"
     Given the following "courses" exist:
       | fullname | shortname | category | format |
       | Course 1 | C1        | 0        | topics |
@@ -82,7 +81,10 @@ Feature: When the moodle theme is set to Snap, cover image can be set for site a
     # Test deleting cover image
     And I click on "#admin-menu-trigger" "css_element"
     And I navigate to "Edit settings" in current page administration
-    And I delete "rawcoverimage.jpg" from "Course image" filemanager
+    And I scroll to the base of id "id_overviewfiles_filemanager_fieldset"
+    And I click on ".filemanager-container .fp-file > a" "css_element"
+    And I click on "div.moodle-dialogue-focused button.fp-file-delete.btn" "css_element"
+    And I click on "div.fp-dlg button.fp-dlg-butconfirm" "css_element"
     And I press "Save and display"
     Then I should not see cover image in page header
     And I reload the page
@@ -153,7 +155,6 @@ Feature: When the moodle theme is set to Snap, cover image can be set for site a
 
   @javascript
   Scenario: Admin user can change and delete site cover image.
-    Given I skip because "It is failing in master branch, to be fixed in INT-16443"
     Given the following "users" exist:
       | username | firstname | lastname | email                |
       | user1    | User      | 1        | user1@example.com    |
@@ -187,7 +188,9 @@ Feature: When the moodle theme is set to Snap, cover image can be set for site a
     And I expand "Themes" node
     And I follow "Snap"
     And I follow "Cover display"
-    And I delete "rawcoverimage.png" from "Cover image" filemanager
+    And I click on ".filemanager-container .fp-file > a" "css_element"
+    And I click on "div.moodle-dialogue-focused button.fp-file-delete.btn" "css_element"
+    And I click on "div.fp-dlg button.fp-dlg-butconfirm" "css_element"
     And I press "Save changes"
     And I am on site homepage
     Then I should not see cover image in page header

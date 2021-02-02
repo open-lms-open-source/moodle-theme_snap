@@ -29,6 +29,7 @@ require_once(__DIR__ . '/../../../../lib/behat/behat_base.php');
 use Behat\Gherkin\Node\TableNode,
     Behat\Mink\Element\NodeElement,
     Behat\Mink\Exception\ExpectationException,
+    Behat\MinkExtension\Context\MinkContext,
     Moodle\BehatExtension\Exception\SkippedException,
     core\message\message;
 
@@ -1952,6 +1953,27 @@ JS;
             $this->getSession()->wait(5000, $function);
         } catch (Exception $e) {
             throw new \Exception("scrollIntoBottom failed");
+        }
+    }
+
+    /**
+     * Scroll element into view and align bottom of element with the bottom of the visible area.
+     *
+     * @When I scroll to the base of id :id
+     *
+     */
+    public function i_scroll_into_view_base($id) {
+        $function = <<<JS
+          (function(){
+              var elem = document.getElementById("$id");
+              elem.scrollIntoView(false);
+              return 1;
+          })()
+JS;
+        try {
+            $this->getSession()->wait(5000, $function);
+        } catch (Exception $e) {
+            throw new \Exception("scrollIntoView failed");
         }
     }
 
