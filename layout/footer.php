@@ -90,7 +90,10 @@ if (!empty($custommenu)) {
                 echo $OUTPUT->page_doc_link();
                 echo "<br>";
             }
-            echo get_string('poweredbyrunby', 'theme_snap', date('Y', time()));
+            echo get_string('poweredbyrunby', 'theme_snap', (object) [
+                    'subdomain' => $this->get_poweredby_subdomain(),
+                    'year'      => date('Y', time())
+            ]);
             ?>
         </small>
     </div>
