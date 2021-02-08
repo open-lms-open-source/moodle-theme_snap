@@ -273,9 +273,9 @@ $string['pld'] = 'PLD';
 $string['pluginname'] = 'Snap';
 $string['poster'] = 'รูปภาพหน้าปก';
 $string['posterdesc'] = 'ภาพส่วนหัวขนาดใหญ่สำหรับหน้าแรกของเว็บไซต์ของคุณ ภาพแนวนอน (1200 x 600 พิกเซล) หรือใหญ่กว่าทำงานได้ดีที่สุด';
-$string['poweredbyrunby'] = 'สร้างด้วย <a href="https://www.openlms.net/" target="_blank" rel="noopener">Open LMS</a>,
-    <a href="https://moodle.com/" target="_blank" rel="noopener">ผลิตภัณฑ์จาก</a>Moodle<br>
-    ลิขสิทธิ์ &#169; {$a} Open LMS สงวนลิขสิทธิ์ทั้งหมด';
+$string['poweredbyrunby'] = 'สร้างด้วย <a href="https://{$a->subdomain}.openlms.net/" target="_blank" rel="noopener">Open LMS</a>,
+<a href="https://moodle.com/" target="_blank" rel="noopener">ผลิตภัณฑ์จาก</a>Moodle<br>
+ลิขสิทธิ์ &#169; {$a->year} เปิด LMS สงวนลิขสิทธิ์ทั้งหมด';
 $string['previoussection'] = 'ส่วนก่อนหน้า';
 $string['privacy:metadata:theme_snap_course_favorites:courseid'] = 'ID รายวิชาของรายวิชาที่ผู้ใช้งานชื่นชอบ';
 $string['privacy:metadata:theme_snap_course_favorites:userid'] = 'ID ผู้ใช้งานของผู้ใช้งานที่ชื่นชอบรายวิชา';

@@ -273,8 +273,8 @@ $string['pluginname'] = 'Snap';
 $string['poster'] = 'Kapak görüntüsü';
 $string['posterdesc'] = 'Sitenizin ön sayfası için büyük bir başlık görüntüsü. Yatay yönlendirilmiş (1200 x600 piksel) veya daha büyük resimler en iyisidir.';
 $string['poweredbyrunby'] = '<a href="https://moodle.com/" target="_blank" rel="noopener">Moodle</a> tabanlı bir ürün olan
-    <a href="https://www.openlms.net/" target="_blank" rel="noopener">Open LMS</a> ile oluşturulmuştur.<br>
-    Telif Hakkı &#169; {$a} Open LMS, Tüm Hakları Saklıdır.';
+<a href="https://{$a->subdomain}.openlms.net/" target="_blank" rel="noopener">Open LMS</a> ile oluşturulmuştur.<br>
+Telif Hakkı &#169; {$a->year} Open LMS, Tüm Hakları Saklıdır.';
 $string['previoussection'] = 'Bir önceki bölüm';
 $string['privacy:metadata:theme_snap_course_favorites:courseid'] = 'Kullanıcının sık kullanılanlara eklediği dersin kimliği';
 $string['privacy:metadata:theme_snap_course_favorites:userid'] = 'Dersi sık kullanılanlara ekleyen kullanıcının kullanıcı kimliği';

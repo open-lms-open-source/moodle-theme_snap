@@ -270,9 +270,9 @@ $string['pld'] = 'PLD';
 $string['pluginname'] = 'Snap';
 $string['poster'] = 'Forsidebillede';
 $string['posterdesc'] = 'Et stort sidehovedbillede til dit websteds forside. Liggende billeder (1200 x 600 pixels) eller større fungerer bedst.';
-$string['poweredbyrunby'] = 'Skabt med<a href="https://www.openlms.net/" target="_blank" rel="noopener">Open LMS</a>,
-    et <a href="https://moodle.com/" target="_blank" rel="noopener">Moodle</a>-baseret produkt.<br>
-    Copyright &#169; {$a} Open LMS, alle rettigheder forbeholdes.';
+$string['poweredbyrunby'] = 'Skabt med<a href="https://{$a->subdomain}.openlms.net/" target="_blank" rel="noopener">Open LMS</a>,
+et <a href="https://moodle.com/" target="_blank" rel="noopener">Moodle</a>-baseret produkt.<br>
+Copyright &#169; {$a->year} Open LMS, alle rettigheder forbeholdes.';
 $string['previoussection'] = 'Forrige sektion';
 $string['privacy:metadata:theme_snap_course_favorites:courseid'] = 'Kursus-id\'et for det kursus, brugeren har markeret som favorit';
 $string['privacy:metadata:theme_snap_course_favorites:userid'] = 'Bruger-id\'et for den bruger, der har markeret kurset om favorit';

@@ -273,9 +273,9 @@ $string['pld'] = 'PLD';
 $string['pluginname'] = 'Snap';
 $string['poster'] = '封面影像';
 $string['posterdesc'] = '用於網站首頁的大型標題影像。橫向影像 (1200 x 600 像素或更大) 效果最佳。';
-$string['poweredbyrunby'] = '採用 <a href="https://www.openlms.net/" target="_blank" rel="noopener">Open LMS</a> 建置，
-    由 <a href="https://moodle.com/" target="_blank" rel="noopener">Moodle</a> 所提供。<br>
-    版權所有 &#169; {$a} Open LMS，保留所有權利。';
+$string['poweredbyrunby'] = '採用 <a href="https://{$a->subdomain}.openlms.net/" target="_blank" rel="noopener">Open LMS</a> 建置，
+由 <a href="https://moodle.com/" target="_blank" rel="noopener">Moodle</a> 所提供。<br>
+版權所有 &#169; {$a->year} Open LMS，保留所有權利。';
 $string['previoussection'] = '上一單元';
 $string['privacy:metadata:theme_snap_course_favorites:courseid'] = '使用者已加入常用項目之課程的課程編號';
 $string['privacy:metadata:theme_snap_course_favorites:userid'] = '將課程加入常用項目之使用者的使用者編號';
