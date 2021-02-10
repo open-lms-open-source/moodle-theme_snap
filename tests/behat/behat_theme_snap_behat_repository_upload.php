@@ -72,7 +72,7 @@ class behat_theme_snap_behat_repository_upload extends behat_repository_upload {
         // catching the exception thrown by behat_base::find() in case is not multiple.
         try {
             // Looking for the add button inside the specified filemanager.
-            $add = $this->find('css', 'div.fp-btn-add button', $exception, $filemanagernode);
+            $add = $this->find('css', 'div.fp-btn-add a', $exception, $filemanagernode);
         } catch (Exception $e) {
             // Otherwise should be a single-file filepicker form element.
             $add = $this->find('css', 'input.fp-btn-choose', $exception, $filemanagernode);

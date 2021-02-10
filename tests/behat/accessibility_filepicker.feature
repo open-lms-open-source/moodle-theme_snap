@@ -43,7 +43,7 @@ Feature: When adding a submission in an assignment, file picker options should e
     And I am on the course main page for "C1"
     And I click on "li.modtype_assign a.mod-link" "css_element"
     And I press "Add submission"
-    And "button#addbtn" "css_element" should exist
+    And "a#addbtn" "css_element" should exist
     And "button#createfolderbtn" "css_element" should exist
     And "button#displayiconsbtn" "css_element" should exist
     And "button#displaydetailsbtn" "css_element" should exist
