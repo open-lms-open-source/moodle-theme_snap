@@ -2038,24 +2038,4 @@ HTML;
         $header->headeractions = $this->page->get_header_actions();
         return $this->render_from_template('core/full_header', $header);
     }
-
-    /**
-     * Gets the subdomain to use to link to the Open LMS site.
-     * @return string
-     */
-    public function get_poweredby_subdomain() {
-        // Currently supported subdomains.
-        $subdomains = [
-            'es' => 'es',
-            'fr' => 'fr',
-            'ja' => 'jp',
-            'pt_br' => 'br',
-        ];
-
-        if (isset($subdomains[current_language()])) {
-            return $subdomains[current_language()];
-        }
-        // Default subdomain.
-        return 'www';
-    }
 }

@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * @copyright  Copyright (c) 2021 Open LMS (https://www.openlms.net)
+ * @copyright  Copyright (c) 2020 Blackboard Inc. (http://www.blackboard.com)
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -53,14 +53,15 @@ $string['categoryedit'] = '編輯類別';
 $string['category_color'] = '類別顏色';
 $string['category_color_description'] = '課程類別顏色。子課程會採用最接近的上層類別配置';
 $string['category_color_palette'] = '調色板';
-$string['category_color_palette_description'] = '查看所指顏色對應的十六進位值。這不會影響任何配置，僅做為範例來幫助使用者建立配置值。';
+$string['category_color_palette_description'] = '查看所指顏色對應的十六進位值。這不會
+影響任何配置，僅做為範例來幫助使用者建立配置值。';
 $string['changecoverimage'] = '變更封面影像';
 $string['changefullname'] = '變更網站名稱';
 $string['chapters'] = '章節';
 $string['choosereadme'] = '<div class="clearfix"><div class="theme_screenshot"><h2>Snap</h2><img class=img-polaroid src="snap/pix/screenshot.jpg" /></div></div>';
 $string['close'] = '關閉';
 $string['conditional'] = '條件式';
-$string['contents'] = '內容';
+$string['contents'] = '目錄';
 $string['contributed'] = '已發表';
 $string['courses'] = '課程';
 $string['coursecontacts'] = '課程聯絡人';
@@ -179,7 +180,7 @@ $string['footnotedesc'] = '頁尾會跨整個網站顯示。這裡最適合放�
 $string['forcepwdwarningpersonalmenu'] = '您必須先<a href="{$a}">變更您的密碼</a>，才能使用個人功能表。';
 $string['forumauthor'] = '作者';
 $string['forumlastpost'] = '最新文章';
-$string['forumpicturegroup'] = '群組';
+$string['forumpicturegroup'] = '小組';
 $string['forumreplies'] = '回應';
 $string['forumtopic'] = '主題';
 $string['forumposts'] = '論壇文章';
@@ -241,7 +242,7 @@ $string['movingcount'] = '正在移動 {$a} 個物件';
 $string['movefailed'] = '「{$a}」移動失敗';
 $string['move'] = '移動「{$a}」';
 $string['movehere'] = '移到這裡';
-$string['movesection'] = '移動單元';
+$string['movesection'] = '移動章節';
 $string['navbarbg'] = '背景顏色';
 $string['navbarlink'] = '文字顏色';
 $string['navbarbuttoncolor'] = '背景顏色';
@@ -272,9 +273,9 @@ $string['pld'] = 'PLD';
 $string['pluginname'] = 'Snap';
 $string['poster'] = '封面影像';
 $string['posterdesc'] = '用於網站首頁的大型標題影像。橫向影像 (1200 x 600 像素或更大) 效果最佳。';
-$string['poweredbyrunby'] = '採用 <a href="https://{$a->subdomain}.openlms.net/" target="_blank" rel="noopener">Open LMS</a> 建置，
-由 <a href="https://moodle.com/" target="_blank" rel="noopener">Moodle</a> 所提供。<br>
-版權所有 &#169; {$a->year} Open LMS，保留所有權利。';
+$string['poweredbyrunby'] = '採用 <a href="https://www.openlms.net/" target="_blank" rel="noopener">Open LMS</a> 建置，
+    由 <a href="https://moodle.com/" target="_blank" rel="noopener">Moodle</a> 所提供。<br>
+    版權所有 &#169; {$a} Open LMS，保留所有權利。';
 $string['previoussection'] = '上一單元';
 $string['privacy:metadata:theme_snap_course_favorites:courseid'] = '使用者已加入常用項目之課程的課程編號';
 $string['privacy:metadata:theme_snap_course_favorites:userid'] = '將課程加入常用項目之使用者的使用者編號';
@@ -287,8 +288,8 @@ $string['recentactivity'] = '近期活動';
 $string['recentfeedback'] = '意見回應';
 $string['region-main'] = '主區域';
 $string['region-side-main-box'] = '主區域';
-$string['region-side-post'] = '右側';
-$string['region-side-pre'] = '左側';
+$string['region-side-post'] = '右';
+$string['region-side-pre'] = '左';
 $string['region-side-top'] = '頂端';
 $string['released'] = '已發行：{$a}';
 $string['reopened'] = '已重新開啟';
@@ -308,7 +309,7 @@ $string['subtitle'] = '副標題';
 $string['subtitle_desc'] = '對使用者簡單描述您的網站。';
 $string['themecolor'] = '網站顏色';
 $string['themecolordesc'] = '亮色系的效果最好，讓您的網站具有現代感。';
-$string['title'] = '頭銜';
+$string['title'] = '標題';
 $string['top'] = '頂端';
 $string['topbarbgcolor'] = '瀏覽列顏色';
 $string['topbarlinkcolor'] = '瀏覽列連結和圖示顏色';
@@ -323,7 +324,7 @@ $string['unread'] = '未讀';
 $string['unsupportedcoverimagetype'] = '不支援的封面影像類型 ({$a})';
 $string['via'] = '經由';
 $string['viewcourse'] = '檢視課程';
-$string['viewmore'] = '觀看更多';
+$string['viewmore'] = '檢視更多';
 $string['viewyourprofile'] = '檢視您的資訊';
 $string['viewmyfeedback'] = '檢視我的意見回應';
 $string['viewcalendar'] = '檢視我的行事曆';
@@ -391,5 +392,3 @@ $string['alternativeloginoptions'] = '替代登入選項';
 $string['openmessagedrawer'] = '開啟隱藏式傳訊選單。';
 $string['design_mod_page'] = '針對頁面資源啟用先前的設計';
 $string['design_mod_page_description'] = '若啟用，頁面資源內容將會在相同頁面、課程或首頁內顯示。';
-$string['design_activity_chooser'] = '復原至活動選擇器的原始設計';
-$string['design_activity_chooser_description'] = '若啟用，將以原始設計顯示活動選擇器。這將影響課程和首頁。';

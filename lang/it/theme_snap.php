@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * @copyright  Copyright (c) 2021 Open LMS (https://www.openlms.net)
+ * @copyright  Copyright (c) 2020 Blackboard Inc. (http://www.blackboard.com)
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -33,7 +33,7 @@ $string['addresourceoractivity'] = 'Crea attività di apprendimento';
 $string['admin'] = 'Amministratore';
 $string['advancedbrandingheading'] = 'Branding avanzato';
 $string['ago'] = 'fa';
-$string['answered'] = 'Risposta';
+$string['answered'] = 'Risposta fornita';
 $string['appendices'] = 'Strumenti';
 $string['assigndraft'] = 'La bozza richiede la tua conferma';
 $string['assignreopened'] = 'Riaperto';
@@ -86,7 +86,7 @@ $string['covervideo'] = 'Video di copertina';
 $string['comingsoon'] = 'Presto disponibile!';
 $string['createsection'] = 'Crea sezione';
 $string['current'] = 'Corrente';
-$string['customcss'] = 'CSS Personalizzato';
+$string['customcss'] = 'Personalizza CSS';
 $string['customcssdesc'] = 'Da un grande potere derivano grandi responsabilità. È necessario risolvere i problemi causati dal codice CSS aggiunto qui. Il supporto Open LMS non risolve i problemi né fornisce alcun aiuto per i contenuti relativi ai CSS.';
 $string['customtopbar'] = 'Barra di navigazione';
 $string['customisenavbar'] = 'Modifica colori barra di navigazione';
@@ -102,7 +102,7 @@ $string['defaultintrosummary'] = 'Benvenuto nel tuo nuovo corso {$a}.
 $string['defaulttopictitle'] = 'Argomento senza titolo';
 $string['debugerrors'] = 'Errori di debug';
 $string['deleteassetconfirm'] = 'Elimina {$a}';
-$string['deletingasset'] = 'Eliminazione di {$a}';
+$string['deletingasset'] = 'Eliminazione di {$a} in corso';
 $string['deletingassetname'] = 'Eliminazione di {$a->type} "{$a->name}"';
 $string['deletesectionconfirm'] = 'Elimina sezione';
 $string['deletingsection'] = 'Eliminazione sezione "{$a}"';
@@ -181,10 +181,10 @@ $string['forcepwdwarningpersonalmenu'] = 'È necessario <a href="{$a}">modificar
 $string['forumauthor'] = 'Autore';
 $string['forumlastpost'] = 'Ultimo messaggio';
 $string['forumpicturegroup'] = 'Gruppo';
-$string['forumreplies'] = 'Repliche';
+$string['forumreplies'] = 'Risposte';
 $string['forumtopic'] = 'Argomento';
-$string['forumposts'] = 'Interventi nei Forum';
-$string['forumpoststoggle'] = 'Interventi nei Forum';
+$string['forumposts'] = 'Messaggi del forum';
+$string['forumpoststoggle'] = 'Messaggi del forum';
 $string['forumpoststoggledesc'] = 'Mostra agli utenti i 10 post più recenti dei loro corsi';
 $string['fullname'] = 'Nome sito';
 $string['fullnamedesc'] = 'Il nome del sito.';
@@ -215,10 +215,10 @@ Ecco un esempio:<br>
 "56":"#CC0087",<br>
 "89":"#CCF084"}';
 $string['knowledgebase'] = 'Apri Knowledge Base LMS';
-$string['list'] = 'Liste';
+$string['list'] = 'Lista';
 $string['linkedin'] = 'LinkedIn';
 $string['linkedindesc'] = 'URL della pagina LinkedIn dell\'organizzazione.';
-$string['leftnav'] = 'Indice';
+$string['leftnav'] = 'Sommario';
 $string['leftnavdesc'] = 'Selezionare la posizione di visualizzazione del sommario. L\'elenco consente maggiore spazio per il contenuto e risulta particolarmente funzionale per i corsi che coprono molti argomenti.';
 $string['loading'] = 'Caricamento in corso...';
 $string['loggedinasguest'] = 'Eseguito accesso come ospite';
@@ -253,12 +253,12 @@ $string['noforumposts'] = 'Non ci sono messaggi del forum rilevanti.';
 $string['nograded'] = 'Nessun feedback recente.';
 $string['nograding'] = 'Nessuna consegna da valutare.';
 $string['nomessages'] = 'Non ci sono messaggi.';
-$string['notanswered'] = 'Risposta non data';
+$string['notanswered'] = 'Senza risposta';
 $string['notattempted'] = 'Non tentato';
 $string['notcontributed'] = 'Senza contributo';
 $string['notpublished'] = 'Non pubblicato per gli studenti';
 $string['notsubmitted'] = 'Non consegnato';
-$string['overdue'] = 'Fuori tempo massimo';
+$string['overdue'] = 'In ritardo';
 $string['personalmenu'] = 'Menu personale';
 $string['personalmenufeatures'] = 'Elementi del menu personale';
 $string['personalmenulogintoggle'] = 'Mostra menu personale al login';
@@ -273,9 +273,9 @@ $string['pld'] = 'PLD';
 $string['pluginname'] = 'Snap';
 $string['poster'] = 'Immagine di copertina';
 $string['posterdesc'] = 'Un\'immagine grande dell\'intestazione per la pagina principale del sito. Le immagini orizzontali (1200 x 600 pixel) o più grandi forniscono risultati migliori.';
-$string['poweredbyrunby'] = 'Realizzato con <a href="https://{$a->subdomain}.openlms.net/" target="_blank" rel="noopener">Open LMS</a>,
-un prodotto basato su <a href="https://moodle.com/" target="_blank" rel="noopener">Moodle</a>.<br>
-Copyright #169; {$a->year} Open LMS, tutti i diritti riservati.';
+$string['poweredbyrunby'] = 'Realizzato con <a href="https://www.openlms.net/" target="_blank" rel="noopener">Open LMS</a>,
+    un prodotto basato su <a href="https://moodle.com/" target="_blank" rel="noopener">Moodle</a>.<br>
+    Copyright &#169; {$a} Open LMS, tutti i diritti riservati.';
 $string['previoussection'] = 'Sezione precedente';
 $string['privacy:metadata:theme_snap_course_favorites:courseid'] = 'ID del corso che l\'utente ha contrassegnato come preferito';
 $string['privacy:metadata:theme_snap_course_favorites:userid'] = 'L\'ID utente dell\'utente che ha contrassegnato come preferito il corso';
@@ -285,12 +285,12 @@ $string['problemsfound'] = 'Problemi rilevati';
 $string['progress'] = 'Avanzamento';
 $string['readmore'] = 'Continua a leggere&nbsp;»';
 $string['recentactivity'] = 'Attività recente';
-$string['recentfeedback'] = 'Commento';
+$string['recentfeedback'] = 'Feedback';
 $string['region-main'] = 'Principale';
 $string['region-side-main-box'] = 'Principale';
-$string['region-side-post'] = 'Destro';
-$string['region-side-pre'] = 'Sinistro';
-$string['region-side-top'] = 'Superiore';
+$string['region-side-post'] = 'Destra';
+$string['region-side-pre'] = 'Sinistra';
+$string['region-side-top'] = 'In alto';
 $string['released'] = 'Rilascio: {$a}';
 $string['reopened'] = 'Riaperto';
 $string['resourcedisplay'] = 'Visualizzazione risorsa';
@@ -303,14 +303,14 @@ $string['seriffont_desc'] = 'Questo carattere viene utilizzato per la maggior pa
 $string['showcoursegradepersonalmenu'] = 'Voti';
 $string['showcoursegradepersonalmenudesc'] = 'Mostra agli utenti il voto delle schede del corso nel menu personale';
 $string['socialmedia'] = 'Social media';
-$string['submitted'] = 'Consegne';
+$string['submitted'] = 'Consegnato';
 $string['sitedescription'] = 'Descrizione del sito';
 $string['subtitle'] = 'Sottotitolo';
 $string['subtitle_desc'] = 'Breve descrizione del sito per gli utenti.';
 $string['themecolor'] = 'Colore del sito';
 $string['themecolordesc'] = 'I colori vivaci sono più efficaci e conferiscono al sito un aspetto più moderno.';
 $string['title'] = 'Titolo';
-$string['top'] = 'Superiore';
+$string['top'] = 'In alto';
 $string['topbarbgcolor'] = 'Colore barra di navigazione';
 $string['topbarlinkcolor'] = 'Collegamento e colore icona della barra di navigazione';
 $string['topbarbuttoncolor'] = 'Sfondo I miei corsi';
@@ -340,7 +340,7 @@ $string['xungraded'] = '{$a} non valutato';
 $string['youtube'] = 'YouTube';
 $string['youtubedesc'] = 'URL del canale YouTube.';
 $string['showallsectionsdisabled'] = 'Per via della sua lingua di progettazione, "Visualizza le sezioni nella stessa pagina" non è disponibile in Snap.';
-$string['disabled'] = 'Disattivato';
+$string['disabled'] = 'Disabilitato';
 $string['showappearancedisabled'] = 'La lingua di progettazione di Snap impedisce le modifiche alle impostazioni di "Aspetto".';
 $string['pbb'] = 'Branding basato sul profilo';
 $string['pbb_description'] = 'Attivando il <strong>Profilo basato sul branding</strong>, si potrà personalizzare l\'esperienza di branding per un gruppo specifico di utenti in base al campo profilo utente scelto.
@@ -358,14 +358,14 @@ $string['cachedef_profile_based_branding'] = 'Cache del branding basato sul prof
 $string['cachedef_course_card_bg_image'] = 'Cache dell\'immagine di sfondo del corso.';
 $string['cachedef_course_card_teacher_avatar'] = 'Cache degli avatar dei docenti.';
 $string['cachedef_course_card_teacher_avatar_index'] = 'Cache dell\'indice degli avatar dei docenti.';
-$string['accessforumstringdis'] = 'Opzioni';
+$string['accessforumstringdis'] = 'Opzioni di visualizzazione';
 $string['accessforumstringmov'] = 'Opzioni di spostamento';
 $string['accesscalendarstring'] = 'Calendario';
-$string['accessglobalsearchstring'] = 'Ricerca';
-$string['admineventwarning'] = 'Per visualizzare gli eventi da tutti i corsi,';
+$string['accessglobalsearchstring'] = 'Cerca';
+$string['admineventwarning'] = 'Per visualizzare gli eventi da tutti i corsi, ';
 $string['gotocalendarsnap'] = 'aprire il calendario del sito.';
 $string['quizattemptswarn'] = 'Esclude i tentativi degli utenti sospesi';
-$string['quizfeedback'] = 'Commento';
+$string['quizfeedback'] = 'Feedback';
 $string['validratio'] = 'Questa combinazione di colori rispetta il valore minimo di proporzioni WCAG 2.0 di 4.5:1';
 $string['invalidratio'] = 'Questa combinazione di colori non rispetta
 <a href="https://www.w3.org/TR/WCAG20-TECHS/G18.html" target="_blank"> il valore minimo di proporzioni WCAG 2.0 di 4.5:1</a>. Valore: "{$a}"';
@@ -389,8 +389,6 @@ $string['enabledloginorderdesc'] = 'Selezionare l\'opzione di accesso da visuali
 $string['moodleloginfirst'] = 'Visualizza prima l\'accesso Moodle';
 $string['alternativeloginfirst'] = 'Visualizza prima le opzioni di accesso alternative';
 $string['alternativeloginoptions'] = 'Opzioni di accesso alternative';
-$string['openmessagedrawer'] = 'Aprire il cassetto dei messaggi.';
+$string['openmessagedrawer'] = 'Aprire il cassetto dei messaggi. ';
 $string['design_mod_page'] = 'Abilita la struttura precedente per le risorse della pagina';
 $string['design_mod_page_description'] = 'Abilitando questa opzione, i contenuti delle risorse della pagina vengono visualizzati all\'interno della stessa pagina, dello stesso corso o della stessa pagina home.';
-$string['design_activity_chooser'] = 'Esegui roll back al progetto originale per il selettore attività';
-$string['design_activity_chooser_description'] = 'Attivando questa opzione, il selettore attività apparirà con il progetto originale, interessando il corso e le pagine home.';

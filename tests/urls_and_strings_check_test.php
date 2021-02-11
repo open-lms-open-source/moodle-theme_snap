@@ -35,30 +35,28 @@ class theme_snap_urls_and_strings_check_test extends advanced_testcase  {
     }
 
     /**
-     * @dataProvider getsubdomains
+     * @dataProvider geturls
      *
      * @param string $language
      * @param string $snapstring
-     * @param string $expectedsubdomain
+     * @param string $url
      */
-    public function test_strings_specific_subdomain_correct($language, $snapstring, $expectedsubdomain) {
-        global $PAGE, $SESSION;
-        /** @var core_renderer $renderer */
-        $renderer = $PAGE->get_renderer('theme_snap', 'core', RENDERER_TARGET_GENERAL);
-        $SESSION->forcelang = $language;
-        $subdomain = $renderer->get_poweredby_subdomain();
+    public function test_strings_specific_url_correct($language, $snapstring, $url) {
+
+        $stringcontent = get_string_manager()->get_string($snapstring, 'theme_snap', null, $language);
+        $containsstring = strpos($stringcontent, $url);
         $message = 'This language pack has a specific redirection URL, please double check and fix it. ';
         $message .= 'String key = ' . $snapstring . '. Language pack = ' . $language;
-        $this->assertSame($expectedsubdomain, $subdomain, $message);
+        $this->assertNotFalse($containsstring, $message);
     }
 
-    public function getsubdomains() {
+    public function geturls() {
         return [
-            // Follow the pattern [language, string key, subdomain].
-            ['es', 'poweredbyrunby', 'es'],
-            ['fr', 'poweredbyrunby', 'fr'],
-            ['ja', 'poweredbyrunby', 'jp'],
-            ['pt_br', 'poweredbyrunby', 'br'],
+            // Follow the pattern [language, string key, URL].
+            ['es', 'poweredbyrunby', 'es.openlms.net'],
+            ['fr', 'poweredbyrunby', 'fr.openlms.net'],
+            ['ja', 'poweredbyrunby', 'jp.openlms.net'],
+            ['pt_br', 'poweredbyrunby', 'br.openlms.net'],
         ];
     }
 

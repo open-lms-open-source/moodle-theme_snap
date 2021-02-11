@@ -15,14 +15,14 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * @copyright  Copyright (c) 2021 Open LMS (https://www.openlms.net)
+ * @copyright  Copyright (c) 2020 Blackboard Inc. (http://www.blackboard.com)
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 defined('MOODLE_INTERNAL') || die();
 
 $string['aboutcourse'] = 'O kurzu';
-$string['activity'] = 'Aktivity';
+$string['activity'] = 'Aktivita';
 $string['action:changeassetvisibility'] = 'změnit viditelnost komponenty';
 $string['action:duplicateasset'] = 'duplicitní komponenta';
 $string['action:changesectionvisibility'] = 'změnit viditelnost části';
@@ -101,17 +101,17 @@ $string['defaultintrosummary'] = 'Vítejte ve svém novém kurzu {$a}.
 <br>Začněte tím, že svůj kurz popíšete. Můžete použít text, obrázky, zvuk i video.';
 $string['defaulttopictitle'] = 'Téma bez názvu';
 $string['debugerrors'] = 'Ladit chyby';
-$string['deleteassetconfirm'] = 'Odstranit {$a}';
-$string['deletingasset'] = 'Odstraňuji {$a}';
+$string['deleteassetconfirm'] = 'Odstranit: {$a}';
+$string['deletingasset'] = 'Odstraňování: {$a}';
 $string['deletingassetname'] = 'Odstraňování: {$a->type} {$a->name}';
 $string['deletesectionconfirm'] = 'Odstranit část';
 $string['deletingsection'] = 'Odstraňování části {$a}';
-$string['draft'] = 'Nepublikováno studentům';
+$string['draft'] = 'Nepublikováno pro studenty';
 $string['dropzonelabel'] = 'Přetáhněte soubory, které chcete připojit, nebo je <span class="fake-link">vyberte</span>';
 $string['due'] = 'Termín: {$a}';
 $string['edit'] = 'Upravit {$a}';
 $string['editcoursecontent'] = 'Upravit bloky';
-$string['editcoursesettings'] = 'Nastavení hodnocení v kurzu';
+$string['editcoursesettings'] = 'Nastavení kurzu';
 $string['editcoursetopic'] = 'Upravit část';
 $string['editcustomfooter'] = 'Upravit zápatí';
 $string['editcustommenu'] = 'Upravit vlastní nabídku';
@@ -180,7 +180,7 @@ $string['footnotedesc'] = 'Zápatí se zobrazí v rámci celého webu. Jedná se
 $string['forcepwdwarningpersonalmenu'] = 'Osobní nabídku budete moci používat až po <a href="{$a}">změně hesla</a>.';
 $string['forumauthor'] = 'Autor';
 $string['forumlastpost'] = 'Poslední příspěvek';
-$string['forumpicturegroup'] = 'Tým';
+$string['forumpicturegroup'] = 'Skupina';
 $string['forumreplies'] = 'Odpovědi';
 $string['forumtopic'] = 'Téma';
 $string['forumposts'] = 'Příspěvky ve fóru';
@@ -189,7 +189,7 @@ $string['forumpoststoggledesc'] = 'Zobrazí uživatelům 10 nejnovějších př�
 $string['fullname'] = 'Název webu';
 $string['fullnamedesc'] = 'Název vašeho webu.';
 $string['graderadviseuserreport'] = 'Sestava klasifikátora nefunguje dobře na mobilních zařízeních. Doporučujeme místo ní použít sestavu uživatele.';
-$string['grading'] = 'Známkování';
+$string['grading'] = 'Klasifikace';
 $string['help'] = 'Nápověda';
 $string['helpguide'] = 'Pomocný průvodce';
 $string['headingfont'] = 'Písmo nadpisů';
@@ -217,7 +217,7 @@ Příklad:<br>
 $string['knowledgebase'] = 'Znalostní báze Open LMS';
 $string['list'] = 'Seznam';
 $string['linkedin'] = 'LinkedIn';
-$string['linkedindesc'] = 'URL profilu vaší organizace na LinkedInu.';
+$string['linkedindesc'] = 'Adresa URL profilu vaší organizace na LinkedInu';
 $string['leftnav'] = 'Obsah';
 $string['leftnavdesc'] = 'Vyberte, kde se má zobrazit obsah. Seznam poskytuje více prostoru pro obsah a je vhodný pro kurzy, které mají mnoho témat.';
 $string['loading'] = 'Načítání...';
@@ -233,14 +233,14 @@ $string['messageread'] = 'Zpráva přečtena';
 $string['messages'] = 'Zprávy';
 $string['messagestoggle'] = 'Zprávy';
 $string['messagestoggledesc'] = 'Zobrazí uživatelům nejnovější zprávy, které obdrželi během posledních 12 týdnů.';
-$string['more'] = 'Podrobněji';
+$string['more'] = 'Více';
 $string['morenews'] = 'Více zpráv';
 $string['movingstartedhelp'] = 'Přejděte na místo, kam chcete umístit sekci {$a}';
 $string['movingdropsectionhelp'] = 'Umístit sekci {$a->moving} před sekci {$a->before}';
 $string['moving'] = 'Přesouvá se {$a}';
 $string['movingcount'] = 'Přesouvání {$a} objektů';
 $string['movefailed'] = 'Nepodařilo se přesunout {$a}';
-$string['move'] = 'Přesunout položku {$a}';
+$string['move'] = 'Přesunout {$a}';
 $string['movehere'] = 'Přesunout sem';
 $string['movesection'] = 'Přesunout část';
 $string['navbarbg'] = 'Barva pozadí';
@@ -258,7 +258,7 @@ $string['notattempted'] = 'Bez pokusů';
 $string['notcontributed'] = 'Nepřispěno';
 $string['notpublished'] = 'Nepublikováno studentům';
 $string['notsubmitted'] = 'Neodesláno';
-$string['overdue'] = 'Překročen časový limit';
+$string['overdue'] = 'Zpožděný';
 $string['personalmenu'] = 'Osobní nabídka';
 $string['personalmenufeatures'] = 'Prvky osobní nabídky';
 $string['personalmenulogintoggle'] = 'Zobrazit osobní nabídku při přihlášení';
@@ -273,9 +273,9 @@ $string['pld'] = 'PLD';
 $string['pluginname'] = 'Snap';
 $string['poster'] = 'Titulní obrázek';
 $string['posterdesc'] = 'Jedná se o velký obrázek v záhlaví titulní stránky vašeho webu. Nejlepší je použít obrázek na šířku (1200 x 600 pixelů nebo více).';
-$string['poweredbyrunby'] = 'Sestaveno pomocí systému <a href="https://{$a->subdomain}.openlms.net/" target="_blank" rel="noopener">Open LMS</a>,
-který používá technologii <a href="https://moodle.com/" target="_blank" rel="noopener">Moodle</a>.<br>
-&#169; {$a->year} Open LMS, všechna práva vyhrazena.';
+$string['poweredbyrunby'] = 'Sestaveno pomocí systému <a href="https://www.openlms.net/" target="_blank" rel="noopener">Open LMS</a>,
+    který používá technologii <a href="https://moodle.com/" target="_blank" rel="noopener">Moodle</a>.<br>
+    Copyright &#169; {$a} Open LMS, všechna práva vyhrazena.';
 $string['previoussection'] = 'Předchozí sekce';
 $string['privacy:metadata:theme_snap_course_favorites:courseid'] = 'ID kurzu, který uživatel přidal do oblíbených';
 $string['privacy:metadata:theme_snap_course_favorites:userid'] = 'ID uživatele, který kurz přidal do oblíbených';
@@ -285,12 +285,12 @@ $string['problemsfound'] = 'Nalezeny problémy';
 $string['progress'] = 'Průběh';
 $string['readmore'] = 'Další informace&nbsp;»';
 $string['recentactivity'] = 'Nedávná aktivita';
-$string['recentfeedback'] = 'Dotazníky';
+$string['recentfeedback'] = 'Zpětná vazba';
 $string['region-main'] = 'Hlavní';
 $string['region-side-main-box'] = 'Hlavní';
-$string['region-side-post'] = 'Doprava';
-$string['region-side-pre'] = 'Doleva';
-$string['region-side-top'] = 'Nahoru (top)';
+$string['region-side-post'] = 'Vpravo';
+$string['region-side-pre'] = 'Vlevo';
+$string['region-side-top'] = 'Nahoře';
 $string['released'] = 'Vydáno: {$a}';
 $string['reopened'] = 'Znovu otevřeno';
 $string['resourcedisplay'] = 'Zobrazení zdrojů';
@@ -300,17 +300,17 @@ $string['displaydescriptionhelp'] = 'Vyberte, pokud chcete na nové stránce jak
 $string['search'] = 'Prohledat obsah';
 $string['seriffont'] = 'Písmo Serif';
 $string['seriffont_desc'] = 'Toto písmo je používáno pro většinu obsahu generovaného uživateli. S písmem serif je obsah generovaný uživateli čitelnější a více působí dojmem, že byl psán člověkem.';
-$string['showcoursegradepersonalmenu'] = 'Hodnocení';
+$string['showcoursegradepersonalmenu'] = 'Klasifikace';
 $string['showcoursegradepersonalmenudesc'] = 'Zobrazí uživatelům jejich klasifikaci na kartách kurzů v osobní nabídce';
 $string['socialmedia'] = 'Sociální sítě';
-$string['submitted'] = 'Odevzdáno';
+$string['submitted'] = 'Odesláno';
 $string['sitedescription'] = 'Popis webu';
 $string['subtitle'] = 'Podtitul';
 $string['subtitle_desc'] = 'Krátce uživatelům popište tento web.';
 $string['themecolor'] = 'Barva webu';
 $string['themecolordesc'] = 'Nejlépe fungují jasné barvy, které také dodávají vašemu webu moderní vzhled.';
-$string['title'] = 'Titul';
-$string['top'] = 'Nahoru (top)';
+$string['title'] = 'Název';
+$string['top'] = 'Nahoře';
 $string['topbarbgcolor'] = 'Barva navigačního panelu';
 $string['topbarlinkcolor'] = 'Barva ikony a odkazu navigačního panelu';
 $string['topbarbuttoncolor'] = 'Pozadí stránky Moje kurzy';
@@ -340,7 +340,7 @@ $string['xungraded'] = 'Neklasifikováno: {$a}';
 $string['youtube'] = 'YouTube';
 $string['youtubedesc'] = 'Adresa URL vašeho kanálu na YouTube';
 $string['showallsectionsdisabled'] = 'V motivu Snap není z důvodu charakteru návrhu k dispozici možnost Zobrazit všechna témata na stránku.';
-$string['disabled'] = 'Vypnuto';
+$string['disabled'] = 'Zakázáno';
 $string['showappearancedisabled'] = 'Jazyk návrhu motivu Snap brání změnám nastavení Vzhled.';
 $string['pbb'] = 'Značky na základě profilu';
 $string['pbb_description'] = 'Pokud povolíte možnost <strong>Značky na základě profilu</strong>, budete moci přizpůsobit prostředí značek pro určitou skupinu uživatelů na základě vybraného pole uživatelského profilu.
@@ -358,20 +358,20 @@ $string['cachedef_profile_based_branding'] = 'Vyrovnávací paměť pro značky 
 $string['cachedef_course_card_bg_image'] = 'Vyrovnávací paměť pro obrázek na pozadí kurzu';
 $string['cachedef_course_card_teacher_avatar'] = 'Vyrovnávací paměť pro avatary učitelů';
 $string['cachedef_course_card_teacher_avatar_index'] = 'Vyrovnávací paměť pro index avatarů učitelů';
-$string['accessforumstringdis'] = 'Způsob zobrazení';
+$string['accessforumstringdis'] = 'Možnosti zobrazení';
 $string['accessforumstringmov'] = 'Možnosti přesunutí';
 $string['accesscalendarstring'] = 'Kalendář';
 $string['accessglobalsearchstring'] = 'Hledat';
-$string['admineventwarning'] = 'K zobrazení událostí ze všech kurzů,';
+$string['admineventwarning'] = 'K zobrazení událostí ze všech kurzů, ';
 $string['gotocalendarsnap'] = 'přejít na kalendář stránek';
 $string['quizattemptswarn'] = 'Vylučuje pokusy od pozastavených uživatelů';
-$string['quizfeedback'] = 'Dotazníky';
+$string['quizfeedback'] = 'Zpětná vazba';
 $string['validratio'] = 'Tato kombinace barev vyhovuje hodnotě minimálního poměru WCAG 2.0 – 4,5:1';
-$string['invalidratio'] = 'Tato kombinace barev nevyhovuje
-<a href="https://www.w3.org/TR/WCAG20-TECHS/G18.html" target="_blank">hodnotě minimálního poměru WCAG 2.0 – 4,5:1</a>. Hodnota: „{$a}“';
+$string['invalidratio'] = 'Tato kombinace barev nevyhovuje <a href="https://www.w3.org/TR/WCAG20-TECHS/G18.html" target="_blank">hodnotě minimálního poměru WCAG 2.0 – 4,5:1</a>. Hodnota: "{$a}"';
 $string['imageinvalidratio'] = 'Tento obrázek by mohl mít problémy s kontrastem, protože nevyhovuje hodnotě minimálního poměru WCAG 2.0 – 4,5:1. Průměrná hodnota pixelů: "{$a}"';
 $string['catinvalidratio'] = 'Následující kategorie barev nevyhovují
-<a href="https://www.w3.org/TR/WCAG20-TECHS/G18.html" target="_blank">hodnotě minimálního poměru WCAG 2.0 – 4,5:1</a>: Barva pozadí vůči webu (bílá): „{$a->white}“. Barva pozadí vůči navigačnímu panelu: „{$a->custombar}“. Barva pozadí vůči tlačítku Moje kurzy: „{$a->customnav}“';
+<a href="https://www.w3.org/TR/WCAG20-TECHS/G18.html" target="_blank">hodnotě minimálního poměru WCAG 2.0 – 4,5:1</a>:
+Barva pozadí vůči webu (bílá): "{$a->white}". Barva pozadí vůči navigačnímu panelu: "{$a->custombar}". Barva pozadí vůči tlačítku Moje kurzy: "{$a->customnav}"';
 $string['imageinvalidratiocategory'] = 'Tento obrázek by mohl mít problémy s barvou motivu, protože nevyhovuje hodnotě minimálního poměru WCAG 2.0 – 4,5:1. Průměrná hodnota pixelů: "{$a}"';
 $string['lazyload_mod_page'] = 'Povolit výchozí „líné“ načítání zdrojů stránky';
 $string['lazyload_mod_page_description'] = 'Pokud je tato možnost povolena, výrazně se sníží doba načítání kurzů, které mají mnoho stránek.';
@@ -388,8 +388,6 @@ $string['enabledloginorderdesc'] = 'Vyberte, která možnost přihlášení má 
 $string['moodleloginfirst'] = 'Zobrazit nejdříve přihlášení přes Moodle';
 $string['alternativeloginfirst'] = 'Zobrazit nejdříve alternativní možnosti přihlášení';
 $string['alternativeloginoptions'] = 'Alternativní možnosti přihlášení';
-$string['openmessagedrawer'] = 'Otevře šuplík zpráv.';
+$string['openmessagedrawer'] = 'Otevře šuplík zpráv. ';
 $string['design_mod_page'] = 'Povolit předchozí vzhled zdrojů stránek';
 $string['design_mod_page_description'] = 'Pokud je tato možnost povolena, bude se obsah zdrojů stránek zobrazovat v rámci stejné stránky, kurzu nebo titulní stránky.';
-$string['design_activity_chooser'] = 'Vrátit se zpět k původnímu designu voliče aktivity';
-$string['design_activity_chooser_description'] = 'Pokud je tato možnost povolena, volič aktivity se bude zobrazovat v původním designu. Projeví se to v kurzu i na titulních stránkách.';
