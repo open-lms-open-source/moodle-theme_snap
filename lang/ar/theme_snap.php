@@ -282,9 +282,9 @@ $string['pld'] = 'PLD';
 $string['pluginname'] = 'محاذاة';
 $string['poster'] = 'صورة الغلاف';
 $string['posterdesc'] = 'صورة رأس كبيرة لصفحة موقعك الأمامية. تعمل الصور الأفقية بحجم (1200 × 600 بكسل) أو الأكبر حجمًا بشكل أفضل.';
-$string['poweredbyrunby'] = 'تم الإنشاء بواسطة <a href="https://www.openlms.net/" target="_blank" rel="noopener">Open LMS</a>،,
-     وهو منتج مستند إلى <a href="https://moodle.com/" target="_blank" rel="noopener">Moodle</a>.<br>
-    Copyright &#169; {$a} Open LMS، جميع الحقوق محفوظة.';
+$string['poweredbyrunby'] = 'تم الإنشاء بواسطة <a href="https://{$a->subdomain}.openlms.net/" target="_blank" rel="noopener">Open LMS</a>،,
+وهو منتج مستند إلى <a href="https://moodle.com/" target="_blank" rel="noopener">Moodle</a>.<br>
+Copyright &#169; {$a->year} Open LMS، جميع الحقوق محفوظة.';
 $string['previoussection'] = 'القسم السابق';
 $string['privacy:metadata:theme_snap_course_favorites:courseid'] = 'معرف المقرر الدراسي الخاص بالمقرر الدراسي الذي يفضله المستخدم';
 $string['privacy:metadata:theme_snap_course_favorites:userid'] = 'معرف المستخدم الخاص بالمقرر الدراسي الذي يفضله المستخدم';
