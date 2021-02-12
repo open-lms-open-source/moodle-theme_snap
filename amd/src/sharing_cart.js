@@ -337,7 +337,12 @@ export default class SharingCartForSnap {
             });
 
             $('a.snap-sharing-cart').unbind().click(function () {
-                on_section_backup($(this).attr('id'));
+                const sectionId = $(this).attr('id');
+                const section = _this.courseSections.find(section => section['id'] === sectionId);
+                const sectionNumber = section['num'];
+                const courseId = course.id;
+                const sectionName = section['name'] === null ? undefined : section['name'];
+                on_section_backup(sectionId, sectionNumber, courseId, sectionName);
             });
         }
     };
