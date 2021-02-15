@@ -273,9 +273,9 @@ $string['pld'] = 'PLD';
 $string['pluginname'] = 'Snap';
 $string['poster'] = 'Kansikuva';
 $string['posterdesc'] = 'Tämä on sivuston etusivulla näytettävä suuri ylätunnistekuva. Parhaiten toimivat vaakasuuntaiset kuvat, joiden koko on vähintään 1 200 x 600 pikseliä.';
-$string['poweredbyrunby'] = 'Luotu <a href="https://www.openlms.net/" target="_blank" rel="noopener">Open LMS:llä</a>,
-    joka on <a href="https://moodle.com/" target="_blank" rel="noopener">Moodle</a>-pohjainen tuote.<br>
-    Copyright &#169; {$a} Open LMS, kaikki oikeudet pidätetään.';
+$string['poweredbyrunby'] = 'Luotu <a href="https://{$a->subdomain}.openlms.net/" target="_blank" rel="noopener">Open LMS:llä</a>,
+joka on <a href="https://moodle.com/" target="_blank" rel="noopener">Moodle</a>-pohjainen tuote.<br>
+Copyright &#169; {$a->year} Open LMS, kaikki oikeudet pidätetään.';
 $string['previoussection'] = 'Edellinen osio';
 $string['privacy:metadata:theme_snap_course_favorites:courseid'] = 'Käyttäjän suosikkeihin lisäämän kurssin tunnus';
 $string['privacy:metadata:theme_snap_course_favorites:userid'] = 'Suosikkeihin kurssin lisänneen käyttäjän käyttäjätunnus';

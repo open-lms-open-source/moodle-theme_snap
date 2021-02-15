@@ -278,9 +278,9 @@ $string['pld'] = 'PLD';
 $string['pluginname'] = 'Snap';
 $string['poster'] = 'Imagem de capa';
 $string['posterdesc'] = 'Uma imagem de cabeçalho grande para a página inicial do seu site. Imagens de paisagem (1200 x 600 pixels) ou maiores funcionam melhor.';
-$string['poweredbyrunby'] = 'Criado com <a href="https://br.openlms.net/" target="_blank" rel="noopener">Open LMS</a>,
-    um produto com base em <a href="https://moodle.com/" target="_blank" rel="noopener">Moodle</a>.<br>
-    Copyright &#169; {$a} Open LMS, todos os direitos reservados.';
+$string['poweredbyrunby'] = 'Criado com <a href="https://{$a->subdomain}.openlms.net/" target="_blank" rel="noopener">Open LMS</a>,
+um produto com base em <a href="https://moodle.com/" target="_blank" rel="noopener">Moodle</a>.<br>
+Copyright &#169; {$a->year} Open LMS, todos os direitos reservados.';
 $string['previoussection'] = 'Seção anterior';
 $string['privacy:metadata:theme_snap_course_favorites:courseid'] = 'O código do curso marcado como favorito pelo usuário';
 $string['privacy:metadata:theme_snap_course_favorites:userid'] = 'O código do usuário que marcou o curso como favorito';

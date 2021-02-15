@@ -273,9 +273,9 @@ $string['pld'] = 'PLD';
 $string['pluginname'] = 'Snap';
 $string['poster'] = 'Titulní obrázek';
 $string['posterdesc'] = 'Jedná se o velký obrázek v záhlaví titulní stránky vašeho webu. Nejlepší je použít obrázek na šířku (1200 x 600 pixelů nebo více).';
-$string['poweredbyrunby'] = 'Sestaveno pomocí systému <a href="https://www.openlms.net/" target="_blank" rel="noopener">Open LMS</a>,
-    který používá technologii <a href="https://moodle.com/" target="_blank" rel="noopener">Moodle</a>.<br>
-    Copyright &#169; {$a} Open LMS, všechna práva vyhrazena.';
+$string['poweredbyrunby'] = 'Sestaveno pomocí systému <a href="https://{$a->subdomain}.openlms.net/" target="_blank" rel="noopener">Open LMS</a>,
+který používá technologii <a href="https://moodle.com/" target="_blank" rel="noopener">Moodle</a>.<br>
+Copyright &#169; {$a->year} Open LMS, všechna práva vyhrazena.';
 $string['previoussection'] = 'Předchozí sekce';
 $string['privacy:metadata:theme_snap_course_favorites:courseid'] = 'ID kurzu, který uživatel přidal do oblíbených';
 $string['privacy:metadata:theme_snap_course_favorites:userid'] = 'ID uživatele, který kurz přidal do oblíbených';
