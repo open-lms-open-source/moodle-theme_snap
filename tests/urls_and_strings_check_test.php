@@ -43,6 +43,9 @@ class theme_snap_urls_and_strings_check_test extends advanced_testcase  {
      */
     public function test_strings_specific_subdomain_correct($language, $snapstring, $expectedsubdomain) {
         global $PAGE, $SESSION;
+        if (!get_string_manager()->translation_exists($language)) {
+            $this->markTestSkipped('Lang pack not installed');
+        }
         /** @var core_renderer $renderer */
         $renderer = $PAGE->get_renderer('theme_snap', 'core', RENDERER_TARGET_GENERAL);
         $SESSION->forcelang = $language;
