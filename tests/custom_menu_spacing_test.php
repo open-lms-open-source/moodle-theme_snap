@@ -37,7 +37,7 @@ class theme_snap_custom_menu_spacing extends advanced_testcase {
     /**
      * Setup for each test.
      */
-    protected function setUp() {
+    protected function setUp():void {
         global $CFG;
         $CFG->theme = 'snap';
         $this->resetAfterTest(true);

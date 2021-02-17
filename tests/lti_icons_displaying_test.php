@@ -37,7 +37,7 @@ class theme_snap_lti_icons_displaying extends advanced_testcase {
     /**
      * Setup for each test.
      */
-    protected function setUp() {
+    protected function setUp():void {
         global $CFG;
         require_once($CFG->dirroot . '/mod/lti/locallib.php');
         $CFG->theme = 'snap';
