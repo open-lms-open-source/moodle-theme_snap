@@ -30,7 +30,7 @@ class theme_snap_urls_and_strings_check_test extends advanced_testcase  {
     /**
      * Setup for each test.
      */
-    protected function setUp() {
+    protected function setUp():void {
         $this->resetAfterTest();
     }
 

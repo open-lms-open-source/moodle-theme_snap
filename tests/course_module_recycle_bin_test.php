@@ -52,7 +52,7 @@ class theme_snap_course_module_recyclebin_tests extends advanced_testcase {
     /**
      * Setup for each test.
      */
-    protected function setUp() {
+    protected function setUp():void {
         global $CFG;
 
         $CFG->theme = 'snap';

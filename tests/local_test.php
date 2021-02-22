@@ -38,7 +38,7 @@ defined('MOODLE_INTERNAL') || die();
  */
 class theme_snap_local_test extends snap_base_test {
 
-    public function setUp() {
+    public function setUp(): void {
         global $CFG;
         require_once($CFG->dirroot.'/mod/assign/tests/base_test.php');
     }

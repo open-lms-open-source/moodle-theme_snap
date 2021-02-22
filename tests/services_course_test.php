@@ -48,7 +48,7 @@ class theme_snap_services_course_test extends \advanced_testcase {
      * Pre-requisites for tests.
      * @throws \coding_exception
      */
-    public function setUp() {
+    public function setUp(): void {
         global $CFG, $DB;
 
         require_once($CFG->dirroot . '/mod/forum/lib.php');
