@@ -16,7 +16,7 @@
 # Tests for visibility of activity restriction tags.
 #
 # @package    theme_snap
-# @copyright Copyright (c) 2018 Blackboard Inc.
+# @copyright Copyright (c) 2018 Open LMS
 # @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
 
 

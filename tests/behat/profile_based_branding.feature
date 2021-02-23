@@ -16,7 +16,7 @@
 # Basic test for Profile based branding.
 #
 # @package   theme_snap
-# @copyright Copyright (c) 2018 Blackboard Inc. (http://www.blackboard.com)
+# @copyright Copyright (c) 2018 Open LMS (https://www.openlms.net)
 # @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
 
 

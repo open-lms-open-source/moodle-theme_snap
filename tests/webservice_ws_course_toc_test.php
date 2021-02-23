@@ -20,8 +20,8 @@ use theme_snap\webservice\ws_course_sections;
 
 /**
  * Test course toc
- * @author    Sebastian Gracia <sebastian.gracia@blackboard.com>
- * @copyright Copyright (c) 2020 Blackboard Inc. (http://www.blackboard.com)
+ * @author    Sebastian Gracia
+ * @copyright Copyright (c) 2020 Open LMS (https://www.openlms.net)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class theme_snap_ws_course_roc extends \advanced_testcase {

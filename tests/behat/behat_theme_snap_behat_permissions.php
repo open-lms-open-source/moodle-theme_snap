@@ -16,8 +16,8 @@
 
 /**
  * Overrides for behat navigation.
- * @author    David Castro <david.castro@blackboard.com>
- * @copyright Copyright (c) 2017 Blackboard Inc.
+ * @author    David Castro <david.castro@openlms.net>
+ * @copyright Copyright (c) 2017 Open LMS
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -31,8 +31,8 @@ require_once(__DIR__ . '/../../../../lib/tests/behat/behat_permissions.php');
 /**
  * Overrides to make behat permissions work with Snap.
  *
- * @author    David Castro <david.castro@blackboard.com>
- * @copyright Copyright (c) 2017 Blackboard Inc.
+ * @author    David Castro <david.castro@openlms.net>
+ * @copyright Copyright (c) 2017 Open LMS
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class behat_theme_snap_behat_permissions extends behat_permissions {

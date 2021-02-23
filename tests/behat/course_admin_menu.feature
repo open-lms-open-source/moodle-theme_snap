@@ -16,7 +16,7 @@
 # Tests to make sure admin menu is only shown to relevant people on relevant pages.
 #
 # @package   theme_snap
-# @author    Guy Thomas <osdev@blackboard.com>
+# @author    Guy Thomas
 # @copyright Copyright (c) 2016 Open LMS.
 # @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
 

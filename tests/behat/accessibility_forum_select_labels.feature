@@ -17,7 +17,7 @@
 #
 # @package    theme_snap
 # @autor      Oscar Nadjar
-# @copyright  Copyright (c) 2019 Blackboard Inc. (http://www.blackboard.com)
+# @copyright  Copyright (c) 2019 Open LMS (https://www.openlms.net)
 # @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
 
 @theme @theme_snap @theme_snap_ax

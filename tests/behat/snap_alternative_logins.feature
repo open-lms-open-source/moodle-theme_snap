@@ -16,7 +16,7 @@
 # Tests for personal menu display on initial login.
 #
 # @package    theme_snap
-# @author     2020 Diego Casas <diego.casas@blackboard.com>
+# @author     2020 Diego Casas
 # @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
 
 @theme @theme_snap @theme_snap_login

@@ -1,6 +1,6 @@
 #Contributors
 
-##Blackboard Open LMS
+##Open LMS
 Stuart Lamour, David Scotson, Guy Thomas, Corey Wallis, Mark Nielsen, Sam Chaffee
 
 ##Community

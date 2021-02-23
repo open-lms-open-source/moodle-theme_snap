@@ -19,7 +19,7 @@
  *
  * @package   theme_snap
  * @category  test
- * @copyright Copyright (c) 2019 Blackboard Inc.
+ * @copyright Copyright (c) 2019 Open LMS
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -32,7 +32,7 @@ use Behat\Mink\Exception\ExpectationException as ExpectationException;
  *
  * @package   theme_snap
  * @category  test
- * @copyright Copyright (c) 2019 Blackboard Inc.
+ * @copyright Copyright (c) 2019 Open LMS
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class behat_theme_snap_custom_elements extends behat_base {

@@ -18,7 +18,7 @@
  * Language strings
  *
  * @package   theme_snap
- * @copyright Copyright (c) 2015 Blackboard Inc. (http://www.blackboard.com)
+ * @copyright Copyright (c) 2015 Open LMS (https://www.openlms.net)
  * @license   http://opensource.org/licenses/gpl-3.0.html GNU Public License
  */
 
