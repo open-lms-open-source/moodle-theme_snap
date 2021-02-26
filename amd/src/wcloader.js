@@ -17,8 +17,8 @@
  * Web components loader.
  *
  * @package   theme_snap
- * @author    David Castro <osdev@blackboard.com>
- * @copyright Copyright (c) 2019 Blackboard Inc.
+ * @author    David Castro
+ * @copyright Copyright (c) 2019 Open LMS
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 

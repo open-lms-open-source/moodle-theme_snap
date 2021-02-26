@@ -20,8 +20,8 @@ use theme_snap\webservice\ws_feed;
 
 /**
  * Test ws_feed web service
- * @author    Oscar Nadjar <oscar.nadjar@blackboard.com>
- * @copyright Copyright (c) 2020 Blackboard Inc. (http://www.blackboard.com)
+ * @author    Oscar Nadjar <oscar.nadjar@openlms.net>
+ * @copyright Copyright (c) 2020 Open LMS (https://www.openlms.net)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class theme_snap_ws_feed_test extends \advanced_testcase {

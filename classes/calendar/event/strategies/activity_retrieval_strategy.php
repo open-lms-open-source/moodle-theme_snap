@@ -18,7 +18,7 @@
  * Raw event retrieval strategy.
  *
  * @package    theme_snap
- * @copyright  2017 Ryan Wyllie <ryan@moodle.com> / 2017 Blackboard Inc
+ * @copyright  2017 Ryan Wyllie <ryan@moodle.com> / 2017 Open LMS
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 

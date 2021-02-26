@@ -16,7 +16,7 @@
 
 /**
  * Overrides for behat blocks.
- * @copyright Copyright (c) 2017 Blackboard Inc.
+ * @copyright Copyright (c) 2017 Open LMS
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -30,7 +30,7 @@ require_once(__DIR__ . '/../../../../blocks/tests/behat/behat_blocks.php');
 /**
  * Overrides to make behat block steps work with Snap.
  *
- * @copyright Copyright (c) 2017 Blackboard Inc.
+ * @copyright Copyright (c) 2017 Open LMS
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class behat_theme_snap_behat_blocks extends behat_blocks {

@@ -18,7 +18,7 @@
  * Custom menu spacing tests for Snap.
  *
  * @package   theme_snap
- * @copyright Copyright (c) 2019 Blackboard Inc. (http://www.blackboard.com)
+ * @copyright Copyright (c) 2019 Open LMS (https://www.openlms.net)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -30,7 +30,7 @@ defined('MOODLE_INTERNAL') || die();
  * Custom menu spacing tests for Snap.
  *
  * @package   theme_snap
- * @copyright Copyright (c) 2019 Blackboard Inc. (http://www.blackboard.com)
+ * @copyright Copyright (c) 2019 Open LMS (https://www.openlms.net)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class theme_snap_custom_menu_spacing extends advanced_testcase {
@@ -55,8 +55,8 @@ class theme_snap_custom_menu_spacing extends advanced_testcase {
         $this->resetAfterTest(true);
         $spacer = '';
         if ($exists) {
-            $CFG->custommenuitems = 'Blackboard
--Blackboard|http://blackboard.com';
+            $CFG->custommenuitems = 'Open LMS
+-Open LMS|https://openlms.net';
             $spacer = '<div class="snap-custom-menu-spacer"></div>';
 
             $css = '#page-content .block_settings.state-visible div.card-body {margin-top: 3em;}';

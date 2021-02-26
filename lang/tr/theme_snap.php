@@ -68,7 +68,7 @@ $string['coursecontacts'] = 'Ders Kişileri';
 $string['coursedisplay'] = 'Ders ekranı';
 $string['coursefootertoggle'] = 'Ders altbilgisi';
 $string['coursefootertoggledesc'] = 'Ders altbilgisi, bir ders sayfasında kullanıcılara ders kişileri, ders tanımı ve dersteki son etkinlikler gibi gerekli bilgileri gösterir.';
-$string['courseformatnotification'] = 'Şu anda kullandığınız ders biçimi Snap teması tarafından tam olarak desteklenmiyor. Blackboard Open LMS, en iyi deneyim için Snap temasıyla birlikte Konular veya Haftalık ders biçimlerinin kullanılmasını önerir. Ders biçimi, <a href="{$a}">ders ayarları</a> içinden değiştirilebilir.';
+$string['courseformatnotification'] = 'Şu anda kullandığınız ders biçimi Snap teması tarafından tam olarak desteklenmiyor. Open LMS, en iyi deneyim için Snap temasıyla birlikte Konular veya Haftalık ders biçimlerinin kullanılmasını önerir. Ders biçimi, <a href="{$a}">ders ayarları</a> içinden değiştirilebilir.';
 $string['coursefixydefaulttext'] = 'Şu anda hiçbir kursa kayıtlı değilsiniz.<br>Kaydolduğunuz kurslar burada gösterilecektir.';
 $string['coursegrade'] = 'Ders notu:';
 $string['coursepartialrender'] = 'Ders bölümleri için yavaş yüklemeyi etkinleştir';
@@ -213,7 +213,7 @@ yalnızca kimlik kayıtları (kategori kayıtları) olan sayısal değerler geç
 "12":"#CC0084",<br>
 "56":"#CC0087",<br>
 "89":"#CCF084"}';
-$string['knowledgebase'] = 'Blackboard Open LMS Bilgi Bankası';
+$string['knowledgebase'] = 'Open LMS Bilgi Bankası';
 $string['list'] = 'Liste';
 $string['linkedin'] = 'LinkedIn';
 $string['linkedindesc'] = 'Organizasyonunuzun LinkedIn url\'si.';

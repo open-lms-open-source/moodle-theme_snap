@@ -18,7 +18,7 @@
  * Event vault class
  *
  * @package    theme_snap
- * @copyright  2017 Ryan Wyllie <ryan@moodle.com> / 2017 Blackboard Inc
+ * @copyright  2017 Ryan Wyllie <ryan@moodle.com> / 2017 Open LMS
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -39,7 +39,7 @@ use core_calendar\local\event\entities\event_interface;
  * This is a repository. It's called a vault to reduce confusion because
  * Moodle has already taken the name repository. Vault is cooler anyway.
  *
- * @copyright  2017 Ryan Wyllie <ryan@moodle.com> / 2017 Blackboard Inc
+ * @copyright  2017 Ryan Wyllie <ryan@moodle.com> / 2017 Open LMS
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class event_vault extends \core_calendar\local\event\data_access\event_vault {

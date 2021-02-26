@@ -16,7 +16,7 @@
 # Tests for availability of course tools section.
 #
 # @package   theme_snap
-# @copyright Copyright (c) 2019 Blackboard Inc.
+# @copyright Copyright (c) 2019 Open LMS
 # @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
 
 @theme @theme_snap @theme_snap_grading @theme_snap_course

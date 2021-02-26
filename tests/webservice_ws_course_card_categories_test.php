@@ -20,8 +20,8 @@ use theme_snap\webservice\ws_course_card;
 
 /**
  * Test course card web service
- * @author    diego casas <diego.casas@blackboard.com>
- * @copyright Copyright (c) 2019 Blackboard Inc. (http://www.blackboard.com)
+ * @author    diego casas
+ * @copyright Copyright (c) 2019 Open LMS (https://www.openlms.net)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class theme_snap_ws_course_card_categories_test extends \advanced_testcase {
