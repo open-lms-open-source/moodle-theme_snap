@@ -2010,6 +2010,26 @@ ul.events-new + ul.events-underway {
     color: #fff;
 }
 
+// Centers Quiz navigation buttons on the attempt and review page.
+#page-mod-quiz-attempt.theme-snap,
+#page-mod-quiz-review.theme-snap {
+    #mod_quiz_navblock,
+    div.qn_buttons.clearfix.allquestionsononepage,
+    div.qn_buttons.clearfix.multipages {
+        display: flex !important; // Overrides display block on .block_fake section from core.
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+    }
+
+    @media (max-width: 767px) {
+        div.qn_buttons.clearfix.allquestionsononepage,
+        div.qn_buttons.clearfix.multipages {
+            display: inline-block !important;
+        }
+    }
+}
+
 #page-mod-quiz-edit .section .activity .actions {
     position: absolute;
     right: 0;
@@ -2249,20 +2269,6 @@ ul.events-new + ul.events-underway {
     font-size: $font-size-sm;
     color: $gray-light;
     padding-right: 2%;
-}
-
-// Adding region main to overwite boost extend alert on quiz elements.
-#region-main {
-    .que .formulation,
-    .formulation .incorrect,
-    .formulation .correct {
-        border: 0;
-        background-color: transparent;
-        width: 100%;
-        margin: 0;
-        padding: 0;
-        color: $gray;
-    }
 }
 
 .que .qtext {
