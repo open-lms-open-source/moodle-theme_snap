@@ -16,7 +16,7 @@
 # Tests for course resource and activity editing features.
 #
 # @package    theme_snap
-# @copyright  2015 Guy Thomas <osdev@blackboard.com>
+# @copyright  2015 Guy Thomas
 # @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
 
 

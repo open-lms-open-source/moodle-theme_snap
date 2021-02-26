@@ -16,7 +16,7 @@
 # Tests for navigation between activities.
 #
 # @package    theme_snap
-# @author     Juan Felipe Martinez <juan.martinez@blackboard.com>
+# @author     Juan Felipe Martinez
 # @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
 
 @theme @theme_snap @theme_snap_course

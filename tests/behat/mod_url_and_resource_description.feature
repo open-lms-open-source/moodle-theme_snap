@@ -16,8 +16,8 @@
 # Test for intermediate page in file and url activities
 #
 # @package    theme_snap
-# @author     Fabian Batioja <fabian.batioja@blackboard.com>
-# @copyright  Copyright (c) 2019 Blackboard Inc. (http://www.blackboard.com)
+# @author     Fabian Batioja <fabian.batioja@openlms.net>
+# @copyright  Copyright (c) 2019 Open LMS (https://www.openlms.net)
 # @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
 
 @theme @theme_snap @_file_upload

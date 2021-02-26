@@ -16,7 +16,7 @@
 # Tests deleting sections in snap.
 #
 # @package    theme_snap
-# @author     Juan Ibarra <juan.ibarra@blackboard.com>
+# @author     Juan Ibarra <juan.ibarra@openlms.net>
 # @copyright  2019 Blackboard Ltd
 # @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
 

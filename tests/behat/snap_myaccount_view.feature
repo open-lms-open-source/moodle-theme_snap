@@ -33,7 +33,7 @@ Feature: Correct visualization of the general view for My Account plugin only fo
 
   @javascript
   Scenario: As a Student, I'm not able to see the My Account link in the personal menu in Snap.
-    Given I am using Blackboard Open LMS
+    Given I am using Open LMS
     And I log in as "student1"
     And I open the personal menu
     And I wait for the personal menu to be loaded
@@ -46,7 +46,7 @@ Feature: Correct visualization of the general view for My Account plugin only fo
 
   @javascript
   Scenario: As an admin, I'm able to see and enter to the My Account page under personal menu.
-    Given I am using Blackboard Open LMS
+    Given I am using Open LMS
     Given I log in as "admin"
     And I open the personal menu
     And I wait for the personal menu to be loaded
@@ -64,7 +64,7 @@ Feature: Correct visualization of the general view for My Account plugin only fo
 
   @javascript
   Scenario: As an Admin, I'm redirected to specific pages to change Site logo or Site full name in Snap.
-    Given I am using Blackboard Open LMS
+    Given I am using Open LMS
     And I log in as "admin"
     And I open the personal menu
     And I wait for the personal menu to be loaded
@@ -86,7 +86,7 @@ Feature: Correct visualization of the general view for My Account plugin only fo
 
   @javascript
   Scenario: As an Admin, I change drift subscription and the Open bot icon should change.
-    Given I am using Blackboard Open LMS
+    Given I am using Open LMS
     Given I log in as "admin"
     And I go to my profile page
     And I should see "Drift subscription"

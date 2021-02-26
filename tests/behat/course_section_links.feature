@@ -16,8 +16,8 @@
 # Tests for toggle course section visibility in non edit mode in snap.
 #
 # @package    theme_snap
-# @author     David Castro <david.castro@blackboard.com>
-# @copyright  Copyright (c) 2019 Blackboard Inc. (http://www.blackboard.com)
+# @author     David Castro <david.castro@openlms.net>
+# @copyright  Copyright (c) 2019 Open LMS (https://www.openlms.net)
 # @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
 
 @theme @theme_snap @theme_snap_course @theme_snap_course

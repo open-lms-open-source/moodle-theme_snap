@@ -17,8 +17,8 @@
 # should not be visible.
 #
 # @package    theme_snap
-# @autor      Oscar Nadjar <oscar.nadjar@blackboard.com>
-# @copyright  Copyright (c) 2019 Blackboard Inc. (http://www.blackboard.com)
+# @autor      Oscar Nadjar <oscar.nadjar@openlms.net>
+# @copyright  Copyright (c) 2019 Open LMS (https://www.openlms.net)
 # @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
 
 

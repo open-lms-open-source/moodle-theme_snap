@@ -23,8 +23,8 @@ defined('MOODLE_INTERNAL') || die();
 /**
  * Class to render a text box which validates a JSON string for categories color configuration.
  * @package theme_snap
- * @author jonathan.garcia@blackboard.com
- * @copyright Blackboard Inc, 2018
+ * @author jonathan.garcia@openlms.net
+ * @copyright Open LMS, 2018
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 

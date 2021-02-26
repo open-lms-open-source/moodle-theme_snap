@@ -16,8 +16,8 @@
 
 /**
  * Renderable for course toc footer.
- * @author    Guy Thomas <osdev@blackboard.com>
- * @copyright Copyright (c) 2016 Blackboard Inc.
+ * @author    Guy Thomas
+ * @copyright Copyright (c) 2016 Open LMS
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 namespace theme_snap\renderables;

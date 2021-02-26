@@ -15,8 +15,8 @@
  * along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
  *
  * @package   theme_snap
- * @author    Juan Ibarra juan.ibarra@blackboard.com
- * @copyright Copyright (c) 2019 Blackboard Inc. (http://www.blackboard.com)
+ * @author    Juan Ibarra juan.ibarra@openlms.net
+ * @copyright Copyright (c) 2019 Open LMS (https://www.openlms.net)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 

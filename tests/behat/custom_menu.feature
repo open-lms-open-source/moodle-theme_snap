@@ -16,8 +16,8 @@
 # Tests for toggle course section visibility in non edit mode in snap.
 #
 # @package    theme_snap
-# @author     Rafael Becerra rafael.becerrarodriguez@blackboard.com
-# @copyright  Copyright (c) 2019 Blackboard Inc. (http://www.blackboard.com)
+# @author     Rafael Becerra rafael.becerrarodriguez@openlms.net
+# @copyright  Copyright (c) 2019 Open LMS (https://www.openlms.net)
 # @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
 
 @theme @theme_snap @snap_custom_menu @theme_snap_color_check

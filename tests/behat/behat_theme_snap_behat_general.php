@@ -16,8 +16,8 @@
 
 /**
  * Overrides for behat navigation.
- * @author    Guy Thomas <osdev@blackboard.com>
- * @copyright Copyright (c) 2017 Blackboard Inc.
+ * @author    Guy Thomas
+ * @copyright Copyright (c) 2017 Open LMS
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -32,8 +32,8 @@ require_once(__DIR__ . '/../../../../lib/tests/behat/behat_general.php');
 /**
  * Overrides to fix intermittent failures.
  *
- * @author    Guy Thomas <osdev@blackboard.com>
- * @copyright Copyright (c) 2017 Blackboard Inc.
+ * @author    Guy Thomas
+ * @copyright Copyright (c) 2017 Open LMS
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class behat_theme_snap_behat_general extends behat_general {

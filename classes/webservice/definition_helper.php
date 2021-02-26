@@ -17,8 +17,8 @@
 /**
  * Definition helper to make classes available via webservices.
  *
- * @author    Guy Thomas <osdev@blackboard.com>
- * @copyright Copyright (c) 2016 Blackboard Inc.
+ * @author    Guy Thomas
+ * @copyright Copyright (c) 2016 Open LMS
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 namespace theme_snap\webservice;
@@ -39,8 +39,8 @@ require_once($CFG->dirroot.'/lib/externallib.php');
  * Note: If you are using this class, please be aware that you need to purge caches to force new definitions when
  * classes change. To ensure this happens for a release you can simply version bump your plugin.
  *
- * @author    Guy Thomas <osdev@blackboard.com>
- * @copyright Copyright (c) 2016 Blackboard Inc.
+ * @author    Guy Thomas
+ * @copyright Copyright (c) 2016 Open LMS
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class definition_helper {

@@ -16,8 +16,8 @@
 # Tests for managing contacts in snap.
 #
 # @package    theme_snap
-# @autor      Rafael Monterroza rafael.monterroza@blackboard.com
-# @copyright  Copyright (c) 2019 Blackboard Inc. (http://www.blackboard.com)
+# @autor      Rafael Monterroza rafael.monterroza@openlms.net
+# @copyright  Copyright (c) 2019 Open LMS (https://www.openlms.net)
 # @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
 
 
