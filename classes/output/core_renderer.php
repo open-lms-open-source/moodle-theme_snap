@@ -431,6 +431,10 @@ class core_renderer extends \theme_boost\output\core_renderer {
             $key;
     }
 
+    public function edit_button(moodle_url $url) {
+        return '';
+    }
+
     protected function render_callstoaction() {
 
         $mobilemenu = '<div id="snap-pm-mobilemenu">';
