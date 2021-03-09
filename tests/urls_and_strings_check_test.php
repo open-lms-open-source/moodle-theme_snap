@@ -102,4 +102,13 @@ class theme_snap_urls_and_strings_check_test extends advanced_testcase  {
             ['zh_tw', 'poweredbyrunby'],
         ];
     }
+
+    public function test_edit_button () {
+        global $PAGE;
+
+        $renderer = $PAGE->get_renderer('theme_snap', 'core', RENDERER_TARGET_GENERAL);
+        $url = new moodle_url('course/view.php', ['id' => 1]);
+        $editbutton = $renderer->edit_button($url);
+        $this->assertEquals('', $editbutton);
+    }
 }
