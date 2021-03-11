@@ -858,6 +858,10 @@ class theme_snap_acitvity_test extends snap_base_test {
         $deadlines = activity::upcoming_deadlines($teacher->id)->events;
         $this->assertCount(1, $deadlines);
 
+        // Site managers should be able to get deadlines for courses.
+        $deadlines = activity::upcoming_deadlines(get_admin())->events;
+        $this->assertCount(0, $deadlines);
+
         $this->setUser($student);
         $deadlines = activity::upcoming_deadlines($student->id)->events;
         $this->assertCount(1, $deadlines);
@@ -1653,6 +1657,22 @@ class theme_snap_acitvity_test extends snap_base_test {
         $CFG->snap_advanced_feeds_max_deadlines = 10;
         $deadlines = local::get_feed('deadlines');
         $this->assertCount(10, $deadlines);
+    }
+
+    public function test_upcoming_deadlines_site_admins() {
+        $this->resetAfterTest();
+
+        [$student, $teacher, $course, $group] = $this->course_group_user_setup();
+
+        $this->create_assignment($course->id, time());
+
+        // Site admins behave like any other user, but they should only get their own deadlines.
+        $deadlines = activity::upcoming_deadlines(get_admin())->events;
+        $this->assertCount(0, $deadlines);
+
+        // Site admins behave like any other user can get deadlines of specific courses.
+        $deadlines = activity::upcoming_deadlines(get_admin(), 500, $course->id)->events;
+        $this->assertCount(1, $deadlines);
     }
 
 }
