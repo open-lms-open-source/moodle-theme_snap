@@ -4521,3 +4521,7 @@ li.snap-activity.modtype_folder div[id^="folder_tree"] {
     z-index: 10;
     position: relative;
 }
+// Fix for tags' color in hsuforums
+#page-mod-hsuforum-discuss .tag_list .badge-info {
+    color: white;
+}
