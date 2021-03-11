@@ -24,6 +24,7 @@
 
 namespace theme_snap\task;
 
+use context_course;
 use core\task\scheduled_task;
 use core_date;
 use theme_snap\activity;
@@ -43,15 +44,7 @@ class refresh_deadline_caches_task extends scheduled_task {
     }
 
     public function execute() {
-        global $DB, $CFG;
-
-        $currenttheme = $CFG->theme;
-        if ($currenttheme == 'snap'
-            && empty(get_config('theme_snap', 'deadlinestoggle'))
-        ) {
-            // Skip if in Snap and deadlines are off.
-            return;
-        }
+        global $DB;
 
         if (empty(get_config('theme_snap', 'personalmenurefreshdeadlines'))) {
             // Skip, setting is off.
@@ -71,9 +64,31 @@ SQL;
             'deleted'   => 0,
             'yesterday' => strtotime(date('Y-m-d', $yesterdayts))
         ]);
+        $blockinstances = []; // Local cache of instances in courses.
+        $snapfeedsdeadlinesconfig = base64_encode(serialize((object) [
+            'feedtype' => 'deadlines'
+        ]));
         foreach ($users as $userid => $user) {
             // This populates deadline caches or does nothing if run the same day.
             activity::upcoming_deadlines($userid);
+            $courses = enrol_get_users_courses($user->id, true);
+
+            // Give a helping hand populating caches for course snap feeds blocks.
+            foreach ($courses as $course) {
+                if (!isset($blockinstances[$course->id])) {
+                    $contextcourse = context_course::instance($course->id);
+                    $parentcontextid = $contextcourse->id;
+                    $blockinstances[$course->id] = $DB->record_exists('block_instances', [
+                        'blockname'       => 'snapfeeds',
+                        'parentcontextid' => $parentcontextid,
+                        'configdata'      => $snapfeedsdeadlinesconfig,
+                    ]);
+                }
+
+                if ($blockinstances[$course->id]) {
+                    activity::upcoming_deadlines($userid, 500, $course);
+                }
+            }
         }
     }
 }
