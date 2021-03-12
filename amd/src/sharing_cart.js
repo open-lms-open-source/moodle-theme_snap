@@ -338,7 +338,8 @@ export default class SharingCartForSnap {
 
             $('a.snap-sharing-cart').unbind().click(function () {
                 const sectionId = $(this).attr('id');
-                const section = _this.courseSections.find(section => section['id'] === sectionId);
+                const section = _this.courseSections ? _this.courseSections.find(section => section['id'] === sectionId)
+                    : {num: 0, name: undefined};
                 const sectionNumber = section['num'];
                 const courseId = course.id;
                 const sectionName = section['name'] === null ? undefined : section['name'];
