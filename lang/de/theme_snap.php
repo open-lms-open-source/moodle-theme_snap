@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * @copyright  Copyright (c) 2020 Blackboard Inc. (http://www.blackboard.com)
+ * @copyright  Copyright (c) 2021 Open LMS (https://www.openlms.net)
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -34,7 +34,7 @@ $string['admin'] = 'Administrator';
 $string['advancedbrandingheading'] = 'Erweitertes Branding';
 $string['ago'] = 'vor';
 $string['answered'] = 'Beantwortet';
-$string['appendices'] = 'Tools';
+$string['appendices'] = 'Werkzeuge';
 $string['assigndraft'] = 'Entwurf erfordert Ihre Bestätigung';
 $string['assignreopened'] = 'Erneut geöffnet';
 $string['at'] = 'um';
@@ -53,7 +53,8 @@ $string['categoryedit'] = 'Kategorie bearbeiten';
 $string['category_color'] = 'Kategoriefarbe';
 $string['category_color_description'] = 'Farbe der Kurskategorie. Untergeordnete Kurse übernehmen die Konfiguration der nächstliegenden übergeordneten Kategorie.';
 $string['category_color_palette'] = 'Farbpalette';
-$string['category_color_palette_description'] = 'Siehe entsprechenden Hexadezimalwert für die betreffende Farbe. Dies hat keine Auswirkungen auf Konfigurationen, sondern nur ein Muster, um Nutzern/Nutzerinnen bei der Bestimmung des Konfigurationswerts zu helfen.';
+$string['category_color_palette_description'] = 'Siehe entsprechenden Hexadezimalwert für die betreffende Farbe. Dies hat keine
+Auswirkungen auf Konfigurationen, sondern ist nur ein Muster, um Nutzern/innen bei der Bestimmung des Konfigurationswertes zu helfen.';
 $string['changecoverimage'] = 'Titelbild ändern';
 $string['changefullname'] = 'Namen der Website bearbeiten';
 $string['chapters'] = 'Kapitel';
@@ -105,13 +106,13 @@ $string['deletingasset'] = '{$a} wird gelöscht';
 $string['deletingassetname'] = '{$a->type} "{$a->name}" wird gelöscht';
 $string['deletesectionconfirm'] = 'Abschnitt löschen';
 $string['deletingsection'] = 'Abschnitt "{$a}" wird gelöscht';
-$string['draft'] = 'Für Teilnehmer/innen nicht bereitgestellt';
+$string['draft'] = 'Für Teilnehmer nicht veröffentlicht';
 $string['dropzonelabel'] = 'Anzuhängende Dateien ablegen oder <span class="btn-link">durchsuchen</span>';
 $string['due'] = 'Fällig {$a}';
 $string['edit'] = '"{$a}" bearbeiten';
 $string['editcoursecontent'] = 'Blöcke bearbeiten';
 $string['editcoursesettings'] = 'Kurseinstellungen';
-$string['editcoursetopic'] = 'Abschnitt bearbeiten';
+$string['editcoursetopic'] = 'Sitzung bearbeiten';
 $string['editcustomfooter'] = 'Fußzeile bearbeiten';
 $string['editcustommenu'] = 'Benutzerdefiniertes Menü bearbeiten';
 $string['error'] = 'Fehler';
@@ -177,7 +178,7 @@ $string['feedbacktoggledesc'] = 'Lernenden aktuelles Feedback und Lehrenden aktu
 $string['footnote'] = 'Fußzeile der Website';
 $string['footnotedesc'] = 'Eine Fußzeile für Ihre Website. Dieser Bereich eignet sich besonders gut für Links zu Hilfe, Support und weiteren Websites, über die Ihr Unternehmen verfügt und auf die Sie die Lernenden/Lehrenden aufmerksam machen möchten, also z. B. Bibliothek und E-Mail-Adresse.';
 $string['forcepwdwarningpersonalmenu'] = 'Sie müssen <a href="{$a}">Ihr Kennwort ändern</a>, bevor Sie das Menü "Persönlich" verwenden können.';
-$string['forumauthor'] = 'Autor';
+$string['forumauthor'] = 'Autor/in';
 $string['forumlastpost'] = 'Letzter Eintrag';
 $string['forumpicturegroup'] = 'Gruppe';
 $string['forumreplies'] = 'Antworten';
@@ -204,7 +205,8 @@ $string['instagram'] = 'Instagram';
 $string['instagramdesc'] = 'Die URL Ihres Instagram-Kontos.';
 $string['introduction'] = 'Einführung';
 $string['jsontext'] = 'JSON-Text';
-$string['jsontextdescription'] = 'Der angegebene JSON-Code wird im Textbereich validiert. Demnach gilt: Nur vorhandene Kategorien sind zulässig, als ID-Datensätze (Kategoriedatensätze) sind nur numerische Werte gültig und als Farben werden nur Hexadezimalwerte anerkennt.
+$string['jsontextdescription'] = 'Der angegebene JSON-Code wird im Textbereich validiert. Demnach gilt: Nur vorhandene Kategorien sind zulässig,
+als ID-Datensätze (Kategoriedatensätze) sind nur numerische Werte gültig und als Farben werden nur Hexadezimalwerte anerkennt.
 Hierzu ein Beispiel:<br>
 {"1":"#FAAFFF",<br>
 "45":"#AFF",<br>
@@ -231,7 +233,7 @@ $string['messageread'] = 'Mitteilungstext';
 $string['messages'] = 'Mitteilungen';
 $string['messagestoggle'] = 'Mitteilungen';
 $string['messagestoggledesc'] = 'Für Nutzer/innen die neuesten, in den letzten 12 Wochen erhaltenen Mitteilungen anzeigen.';
-$string['more'] = 'Mehr';
+$string['more'] = 'More';
 $string['morenews'] = 'Mehr Nachrichten';
 $string['movingstartedhelp'] = 'Navigiert zu dem Ort, an dem Abschnitt "{$a}" platziert werden soll';
 $string['movingdropsectionhelp'] = 'Platziert Abschnitt "{$a->moving}" vor Abschnitt "{$a->before}"';
@@ -271,9 +273,9 @@ $string['pld'] = 'PLD';
 $string['pluginname'] = 'Snap';
 $string['poster'] = 'Titelbild';
 $string['posterdesc'] = 'Ein großes Bild im Kopfbereich der ersten Seite Ihre Website. Bilder im Querformat (1.200 x 600 Pixel) oder größer eignen sich am besten.';
-$string['poweredbyrunby'] = 'Entwickelt mit <a href="https://{$a->subdomain}.openlms.net/" target="_blank" rel="noopener">Open LMS</a>,
+$string['poweredbyrunby'] = 'Entwickelt mit <a href="https://www.openlms.net/" target="_blank" rel="noopener">Open LMS</a>,
 einem auf <a href="https://moodle.com/" target="_blank" rel="noopener">Moodle</a> basierenden Produkt.<br>
-Copyright &#169; {$a->year} Open LMS, Alle Rechte vorbehalten.';
+Copyright &#169; {$a} Open LMS, Alle Rechte vorbehalten.';
 $string['previoussection'] = 'Vorheriger Abschnitt';
 $string['privacy:metadata:theme_snap_course_favorites:courseid'] = 'Die Kurs-ID des Kurses, den der/die Nutzer/in bevorzugt hat';
 $string['privacy:metadata:theme_snap_course_favorites:userid'] = 'Die Nutzer-ID des Nutzers/der Nutzerin, der/die den Kurs bevorzugt hat';
@@ -342,7 +344,7 @@ $string['disabled'] = 'Deaktiviert';
 $string['showappearancedisabled'] = 'Die Designsprache von Snap verhindert Änderungen an den Einstellungen von "Darstellung".';
 $string['pbb'] = 'Profilbasierte Marke';
 $string['pbb_description'] = 'Wenn Sie <strong>Profilbasierte Marke</strong> aktivieren, können Sie das Markenerlebnis für eine bestimmte Nutzergruppe auf der Grundlage des ausgewählten Nutzerprofil-Felds individuell anpassen.
-<ul><li>Der Feldwert für die Nutzerin/den Nutzer wird <em></em>in Kleinbuchstaben umgewandelt, die mit einem Gedankenstrich (-) voneinander getrennt werden.</li>
+<ul><li>Der Feldwert für den/die Nutzer/in wird <em></em>in Kleinbuchstaben umgewandelt, die mit einem Gedankenstrich (-) voneinander getrennt werden.</li>
 <li>Die Zeichenfolge <code>snap-pbb-</code> wird der Zeichenfolge vorangestellt.</li>
 <li>Diese Klasse wird dem HTML-Tag <code>body</code> hinzugefügt.</li></ul>
 Beispiel: Der Nutzerfeld-Wert <em>Blueberry Extravaganza</em> wird in <code>snap-pbb-blueberry-extravaganza</code> konvertiert.<br /><br />
@@ -360,17 +362,17 @@ $string['accessforumstringdis'] = 'Anzeigeoptionen';
 $string['accessforumstringmov'] = 'Verschiebeoptionen';
 $string['accesscalendarstring'] = 'Kalender';
 $string['accessglobalsearchstring'] = 'Suche';
-$string['admineventwarning'] = 'Wenn Ereignisse aus allen Kursen angezeigt werden sollen, ';
+$string['admineventwarning'] = 'Wenn Ereignisse aus allen Kursen angezeigt werden sollen,';
 $string['gotocalendarsnap'] = 'rufen Sie den Website-Kalender auf.';
 $string['quizattemptswarn'] = 'Versuche von gesperrten Nutzer(inne)n ausschließen';
 $string['quizfeedback'] = 'Feedback';
 $string['validratio'] = 'Diese Farbkombination erfüllt das WCAG 2.0-Mindestverhältnis 4.5:1';
 $string['invalidratio'] = 'Diese Farbkombination erfüllt nicht das
-<a href="https://www.w3.org/TR/WCAG20-TECHS/G18.html" target="_blank">WCAG 2.0-Mindestverhältnis 4.5:1</a>. Wert: "{$a}"';
+<a href="https://www.w3.org/TR/WCAG20-TECHS/G18.html" target="_blank">WCAG 2.0-Mindestverhältnis 4.5:1</a>. Wert: „{$a}“';
 $string['imageinvalidratio'] = 'Bei diesem Schaltflächensymbol können Probleme mit dem Kontrast auftreten, da das WCAG 2.0-Mindestverhältnis 4.5:1 nicht erfüllt ist. Durchschnittlicher Pixelwert: "{$a}"';
 $string['catinvalidratio'] = 'Folgende Farbkategorien erfüllen nicht das
-<a href="https://www.w3.org/TR/WCAG20-TECHS/G18.html" target="_blank">WCAG 2.0-Mindestverhältnis 4.5:1</a> :
-Gegenüber der Website-Hintergrundfarbe (weiß): "{$a->white}". Gegenüber der Hintergrundfarbe der Navigationsleiste: "{$a->custombar}". Gegenüber der Hintergrundfarbe der Schaltfläche „Meine Kurse“: "{$a->customnav}"';
+<a href="https://www.w3.org/TR/WCAG20-TECHS/G18.html" target="_blank">WCAG 2.0-Mindestverhältnis 4.5:1</a>:
+Gegenüber der Website-Hintergrundfarbe (weiß): „{$a->white}“. Gegenüber der Hintergrundfarbe der Navigationsleiste: „{$a->custombar}“. Gegenüber der Hintergrundfarbe der Schaltfläche „Meine Kurse“: „{$a->customnav}“';
 $string['imageinvalidratiocategory'] = 'Bei diesem Schaltflächensymbol können Kontrastprobleme mit der Designfarbe auftreten, da das WCAG 2.0-Mindestverhältnis 4.5:1 nicht erfüllt ist. Durchschnittlicher Pixelwert: "{$a}"';
 $string['lazyload_mod_page'] = '"Lazy Loading" als Standard für Seitenressourcen aktivieren';
 $string['lazyload_mod_page_description'] = 'Wenn diese Einstellung aktiviert ist, werden bei Kursen mit vielen Seiten die Kursseiten erheblich schneller geladen.';
@@ -387,6 +389,8 @@ $string['enabledloginorderdesc'] = 'Geben Sie an, welche Anmeldeoption zuerst an
 $string['moodleloginfirst'] = 'Moodle-Anmeldung zuerst anzeigen';
 $string['alternativeloginfirst'] = 'Alternative Anmeldeoptionen zuerst anzeigen';
 $string['alternativeloginoptions'] = 'Alternative Anmeldeoptionen';
-$string['openmessagedrawer'] = 'Öffnen Sie die Messaging-Schublade. ';
+$string['openmessagedrawer'] = 'Öffnen Sie die Messaging-Schublade.';
 $string['design_mod_page'] = 'Vorheriges Design für Seitenressourcen aktivieren';
 $string['design_mod_page_description'] = 'Wenn diese Option aktiviert ist, wird der Seitenressourceninhalt auf derselben Seite, Kurs- oder Startseite angezeigt.';
+$string['design_activity_chooser'] = 'Zurücksetzen auf das ursprüngliche Design für die Aktivitätsauswahl';
+$string['design_activity_chooser_description'] = 'Wenn diese Option aktiviert ist, wird die Aktivitätsauswahl im ursprünglichen Design angezeigt. Dies wirkt sich auf die Kurs- und Startseiten aus.';
