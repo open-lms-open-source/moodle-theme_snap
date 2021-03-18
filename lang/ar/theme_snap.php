@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * @copyright  Copyright (c) 2020 Blackboard Inc. (http://www.blackboard.com)
+ * @copyright  Copyright (c) 2021 Open LMS (https://www.openlms.net)
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -54,7 +54,7 @@ $string['category_color'] = 'لون الفئة';
 $string['category_color_description'] = 'لون فئة المقرر الدراسي. تتخذ المقررات الدراسية الفرعية أقرب تكوين للفئة الأساسية';
 $string['category_color_palette'] = 'لوح الألوان';
 $string['category_color_palette_description'] = 'انظر القيمة الست عشرية المقابلة للون المحددر. لن
- يؤثر هذا على أي تكوين، فهو هو مجرد نموذج لمساعدة المستخدمين على إنشاء قيمة التكوين.';
+يؤثر هذا على أي تكوين، فهو هو مجرد نموذج لمساعدة المستخدمين على إنشاء قيمة التكوين.';
 $string['changecoverimage'] = 'تغيير صورة الغلاف';
 $string['changefullname'] = 'تغيير اسم الموقع';
 $string['chapters'] = 'الفصول';
@@ -262,7 +262,7 @@ $string['noforumposts'] = 'ليس لديك مشاركات منتديات ذات 
 $string['nograded'] = 'ليس لديك ملاحظات حديثة.';
 $string['nograding'] = 'ليس لديك تقديمات للتقدير.';
 $string['nomessages'] = 'ليس لديك رسائل.';
-$string['notanswered'] = 'لم تتم الإجابة عنه';
+$string['notanswered'] = 'لم تتم إجابته';
 $string['notattempted'] = 'لم يتم إجراء محاولة';
 $string['notcontributed'] = 'غير ممنوح';
 $string['notpublished'] = 'لم يتم نشره للطلاب';
@@ -282,9 +282,9 @@ $string['pld'] = 'PLD';
 $string['pluginname'] = 'محاذاة';
 $string['poster'] = 'صورة الغلاف';
 $string['posterdesc'] = 'صورة رأس كبيرة لصفحة موقعك الأمامية. تعمل الصور الأفقية بحجم (1200 × 600 بكسل) أو الأكبر حجمًا بشكل أفضل.';
-$string['poweredbyrunby'] = 'تم الإنشاء بواسطة <a href="https://{$a->subdomain}.openlms.net/" target="_blank" rel="noopener">Open LMS</a>،,
+$string['poweredbyrunby'] = 'تم الإنشاء بواسطة <a href="https://www.openlms.net/" target="_blank" rel="noopener">Open LMS</a>،,
 وهو منتج مستند إلى <a href="https://moodle.com/" target="_blank" rel="noopener">Moodle</a>.<br>
-Copyright &#169; {$a->year} Open LMS، جميع الحقوق محفوظة.';
+Copyright #169; {$a} Open LMS، جميع الحقوق محفوظة.';
 $string['previoussection'] = 'القسم السابق';
 $string['privacy:metadata:theme_snap_course_favorites:courseid'] = 'معرف المقرر الدراسي الخاص بالمقرر الدراسي الذي يفضله المستخدم';
 $string['privacy:metadata:theme_snap_course_favorites:userid'] = 'معرف المستخدم الخاص بالمقرر الدراسي الذي يفضله المستخدم';
@@ -371,7 +371,7 @@ $string['accessforumstringdis'] = 'خيارات العرض';
 $string['accessforumstringmov'] = 'خيارات النقل';
 $string['accesscalendarstring'] = 'التقويم';
 $string['accessglobalsearchstring'] = 'بحث';
-$string['admineventwarning'] = 'لرؤية الأحداث من جميع المقررات الدراسية، ';
+$string['admineventwarning'] = 'لرؤية الأحداث من جميع المقررات الدراسية،';
 $string['gotocalendarsnap'] = 'انتقل إلى تقويم الموقع.';
 $string['quizattemptswarn'] = 'استبعاد محاولات المستخدمين المعلقين';
 $string['quizfeedback'] = 'ملاحظات';
@@ -398,6 +398,8 @@ $string['enabledloginorderdesc'] = 'حدد خيار تسجيل الدخول ال
 $string['moodleloginfirst'] = 'عرض تسجيل الدخول إلى Moodle أولًا';
 $string['alternativeloginfirst'] = 'عرض خيارات تسجيل الدخول البديلة أولًا';
 $string['alternativeloginoptions'] = 'خيارات تسجيل الدخول البديلة';
-$string['openmessagedrawer'] = 'فتح درج المراسلة. ';
+$string['openmessagedrawer'] = 'فتح درج المراسلة.';
 $string['design_mod_page'] = 'تمكين التصميم السابق لموارد الصفحة';
 $string['design_mod_page_description'] = 'في حالة التمكين، سيتم عرض محتوى مورد الصفحة داخل نفس الصفحة أو المقرر الدراسي أو الصفحة الأمامية.';
+$string['design_activity_chooser'] = 'العودة إلى التصميم الأصلي لمنتقي النشاط';
+$string['design_activity_chooser_description'] = 'في حالة التمكين، سيتم عرض منتقي النشاط بالتصميم الأصلي. وسيؤثر هذا على المقرر الدراسي والصفحات الأولى.';
