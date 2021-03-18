@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * @copyright  Copyright (c) 2020 Blackboard Inc. (http://www.blackboard.com)
+ * @copyright  Copyright (c) 2021 Open LMS (https://www.openlms.net)
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -53,7 +53,8 @@ $string['categoryedit'] = 'Rediger kategori';
 $string['category_color'] = 'Kategorifarve';
 $string['category_color_description'] = 'Farve for kursuskategori. Underordnede kurser tager den nærmeste overordnede kategorikonfiguration';
 $string['category_color_palette'] = 'Farvepalet';
-$string['category_color_palette_description'] = 'Se den tilsvarende hexidecimale værdi for den givne farve. Dette påvirker ikke nogen konfigurationer, men er blot en prøve, der kan hjælpe brugere med at opbygge konfigurationsværdien.';
+$string['category_color_palette_description'] = 'Se den tilsvarende hexidecimale værdi for den givne farve. Dette påvirker
+ikke nogen konfigurationer, men er blot en prøve, der kan hjælpe brugere med at opbygge konfigurationsværdien.';
 $string['changecoverimage'] = 'Skift coverbillede';
 $string['changefullname'] = 'Skift webstednavn';
 $string['chapters'] = 'Kapitler';
@@ -78,7 +79,7 @@ $string['coursetools'] = 'Dashboard for kursus';
 $string['coverdisplay'] = 'Forsidevisning';
 $string['covercarousel'] = 'Forsidekarussel';
 $string['covercarouselon'] = 'Brug forsidekarrusel';
-$string['covercarouseldescription'] = '<p>Karrusellen er et sæt roterende bannere eller et diasshow, der vises på dit websteds hjemmeside i stedet for forsidebilledet.</p>
+$string['covercarouseldescription'] = '<p>Karrusellen er et sæt roterende bannere eller et diasshow, der vises på dit websteds startside i stedet for forsidebilledet.</p>
 <p>Tilføj op til 3 billeder, en titel til hvert dias og en valgfri undertekst. Billeder på 1200 x 600 pixels fungerer bedst.</p>';
 $string['coverimage'] = 'Forsidebillede';
 $string['covervideo'] = 'Forsidevideo';
@@ -95,9 +96,9 @@ $string['custommenutext'] = 'Tekstfarve for brugerdefineret menu';
 $string['deadlines'] = 'Deadlines';
 $string['deadlinestoggle'] = 'Deadlines';
 $string['deadlinestoggledesc'] = 'Vis brugere kommende aktivitetsdeadlines fra kurser, som de er tilmeldt.';
-$string['defaultsummary'] = 'Brug dette område til at beskrive, hvad dette emne omhandler – med tekst, billeder, lyd & video.';
+$string['defaultsummary'] = 'Brug dette område til at beskrive, hvad dette emne omhandler – med tekst, billeder, lyd og video.';
 $string['defaultintrosummary'] = 'Velkommen til dit nye kursus {$a}.
-<br>Begynd med at beskrive dit kursus ved hjælp af tekst, billeder, lyd & video.';
+<br>Begynd med at beskrive dit kursus ved hjælp af tekst, billeder, lyd og video.';
 $string['defaulttopictitle'] = 'Emne uden titel';
 $string['debugerrors'] = 'Fejlfinding';
 $string['deleteassetconfirm'] = 'Slet {$a}';
@@ -214,10 +215,10 @@ $string['jsontextdescription'] = 'Tekstområdet validerer den givne JSON, så ku
 $string['knowledgebase'] = 'Open LMS-vidensbase';
 $string['list'] = 'Liste';
 $string['linkedin'] = 'LinkedIn';
-$string['linkedindesc'] = 'URL-adresse til din organisations LinkedIn.';
+$string['linkedindesc'] = 'URL-adressen til din organisation&#8217;s LinkedIn-side.';
 $string['leftnav'] = 'Indholdsfortegnelse';
 $string['leftnavdesc'] = 'Vælg, hvor indholdsfortegnelsen skal vises. Lister giver mere plads til indhold og fungerer godt til kurser med mange emner.';
-$string['loading'] = 'Indlæser...';
+$string['loading'] = 'Indlæser ...';
 $string['loggedinasguest'] = 'Du er logget ind som gæst';
 $string['loggedoutmsg'] = 'Du er logget af i øjeblikket. Hvis du ønsker at fortsætte med at bruge dette websted, skal du logge på igen.';
 $string['loggedoutmsgtitle'] = 'Du er logget af';
@@ -255,7 +256,7 @@ $string['notattempted'] = 'Ikke forsøgt';
 $string['notcontributed'] = 'Ikke bidraget';
 $string['notpublished'] = 'Ikke udgivet til studerende';
 $string['notsubmitted'] = 'Ikke indsendt';
-$string['overdue'] = 'Forfaldsdatoen er overskredet';
+$string['overdue'] = 'Overskredet';
 $string['personalmenu'] = 'Personlig menu';
 $string['personalmenufeatures'] = 'Personlige menufunktioner';
 $string['personalmenulogintoggle'] = 'Vis personlig menu ved login';
@@ -270,9 +271,9 @@ $string['pld'] = 'PLD';
 $string['pluginname'] = 'Snap';
 $string['poster'] = 'Forsidebillede';
 $string['posterdesc'] = 'Et stort sidehovedbillede til dit websteds forside. Liggende billeder (1200 x 600 pixels) eller større fungerer bedst.';
-$string['poweredbyrunby'] = 'Skabt med<a href="https://{$a->subdomain}.openlms.net/" target="_blank" rel="noopener">Open LMS</a>,
+$string['poweredbyrunby'] = 'Skabt med<a href="https://www.openlms.net/" target="_blank" rel="noopener">Open LMS</a>,
 et <a href="https://moodle.com/" target="_blank" rel="noopener">Moodle</a>-baseret produkt.<br>
-Copyright &#169; {$a->year} Open LMS, alle rettigheder forbeholdes.';
+Copyright &#169; {$a} Open LMS, alle rettigheder forbeholdes.';
 $string['previoussection'] = 'Forrige sektion';
 $string['privacy:metadata:theme_snap_course_favorites:courseid'] = 'Kursus-id\'et for det kursus, brugeren har markeret som favorit';
 $string['privacy:metadata:theme_snap_course_favorites:userid'] = 'Bruger-id\'et for den bruger, der har markeret kurset om favorit';
@@ -302,7 +303,7 @@ $string['showcoursegradepersonalmenudesc'] = 'Vis brugere deres karakter i kursu
 $string['socialmedia'] = 'Sociale medier';
 $string['submitted'] = 'Sendt';
 $string['sitedescription'] = 'Beskrivelse af websted';
-$string['subtitle'] = 'Undertekst';
+$string['subtitle'] = 'Undertitel';
 $string['subtitle_desc'] = 'Beskriv kort dit websted for brugere.';
 $string['themecolor'] = 'Webstedsfarve';
 $string['themecolordesc'] = 'Klare farver fungerer bedst og giver dit websted et moderne udseende.';
@@ -345,7 +346,7 @@ $string['pbb_description'] = 'Ved at aktivere <strong>Profilbaseret branding</st
 <li>Strengen <code>snap-pbb-</code> vil blive sat forrest</li>
 <li>Denne klasse vil blive føjet til <code>brødtekstens</code> html-kode</li></ul>
 For eksempel vil brugerfeltsværdien <em>Blueberry Extravaganza</em> blive gjort læsbart til at være <code>snap-pbb-blueberry-extravaganza</code><br /><br />
-Denne funktion bruges sammen med <a href="https://help.blackboard.com/Blackboard_Open_LMS/Administrator/Manage_a_Site/Course_and_Site_Design/Themes/Snap#advanced-branding_OTP-3" target="_blank">Custom CSS</a>,
+Denne funktion bruges sammen med <a href="https://help.blackboard.com/Blackboard_Open_LMS/Administrator/Manage_a_Site/Course_and_Site_Design/Themes/Snap#advanced-branding_OTP-3" target="_blank">Tilpas CSS</a>,
 Du skal tilføje CSS-vælgere ved hjælp af den nye klasse i sektionen <a class="snap-settings-tab-link" href="#themesnapbranding">Grundlæggende</a>.';
 $string['pbb_enable'] = 'Aktivér profilbaseret branding';
 $string['pbb_enable_description'] = 'Tilføjer kun klassen til tagget for brødtekst, hvis det er aktivt.';
@@ -358,17 +359,17 @@ $string['cachedef_course_card_teacher_avatar_index'] = 'Cachelagring for indeks 
 $string['accessforumstringdis'] = 'Indstillinger for visning';
 $string['accessforumstringmov'] = 'Flyt indstillinger';
 $string['accesscalendarstring'] = 'Kalender';
-$string['accessglobalsearchstring'] = 'Søg';
-$string['admineventwarning'] = 'For at se begivenheder fra alle kurser, ';
+$string['accessglobalsearchstring'] = 'Søgning';
+$string['admineventwarning'] = 'For at se begivenheder fra alle kurser,';
 $string['gotocalendarsnap'] = 'skal du gå til webstedets kalender.';
 $string['quizattemptswarn'] = 'Udelader forsøg fra suspenderede brugere';
 $string['quizfeedback'] = 'Feedback';
 $string['validratio'] = 'Denne kombination af farver overholder ikke , for WCAG 2.0-minimumsratioen, 4.5:1';
 $string['invalidratio'] = 'Denne kombination af farver overholder ikke
-<a href="https://www.w3.org/TR/WCAG20-TECHS/G18.html" target="_blank">WCAG 2.0-minimumsratioen, 4.5:1</a>. Værdi: "{$a}"';
+<a href="https://www.w3.org/TR/WCAG20-TECHS/G18.html" target="_blank">Værdien for WCAG 2.0-minimumsforholdet 4.5:1</a>. Værdi: "{$a}"';
 $string['imageinvalidratio'] = 'Dette billede kan have kontrastproblemer, da det ikke overholder WCAG 2.0-minimumsratioen, 4.5:1. Gennemsnitlig pixelværdi: "{$a}"';
 $string['catinvalidratio'] = 'Følgende farvekategorier overholder ikke
-<a href="https://www.w3.org/TR/WCAG20-TECHS/G18.html" target="_blank">WCAG 2.0-minimumsratioen, 4.5:1</a> :
+<a href="https://www.w3.org/TR/WCAG20-TECHS/G18.html" target="_blank">Værdien for WCAG 2.0-minimumsforholdet 4.5:1</a> :
 I forhold til baggrundsfarven (hvid): "{$a->white}". I forhold til navigationsbarens baggrundsfarven: "{$a->custombar}". I forhold til baggrundsfarven for Mine kurser-knappen: "{$a->customnav}"';
 $string['imageinvalidratiocategory'] = 'Dette billede kan have kontrastproblemer med temafarven, da det ikke overholder WCAG 2.0-minimumsratioen, 4.5:1. Gennemsnitlig pixelværdi: "{$a}"';
 $string['lazyload_mod_page'] = 'Aktivér udskudt indlæsning som standard for sidens resourcer';
@@ -386,6 +387,8 @@ $string['enabledloginorderdesc'] = 'Vælg hvilken login-mulighed skal vises før
 $string['moodleloginfirst'] = 'Vis Moodle-login først';
 $string['alternativeloginfirst'] = 'Vis alternative login-muligheder først';
 $string['alternativeloginoptions'] = 'Alternative login-muligheder';
-$string['openmessagedrawer'] = 'Åbn meddelelsesskuffe. ';
+$string['openmessagedrawer'] = 'Åbn meddelelsesskuffe.';
 $string['design_mod_page'] = 'Aktivér forrige design for sideressourcer';
 $string['design_mod_page_description'] = 'Hvis sideressourceindhold er aktiveret, vises det på den samme side, kursus eller forside.';
+$string['design_activity_chooser'] = 'Rul tilbage til aktivitetsvælgerens oprindelige design';
+$string['design_activity_chooser_description'] = 'Hvis dette er aktiveret, vises aktivitetsvælgeren med det oprindelige design. Dette vil ændre kursus- og forsiderne.';
