@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * @copyright  Copyright (c) 2020 Open LMS (https://www.openlms.net)
+ * @copyright  Copyright (c) 2021 Open LMS (https://www.openlms.net)
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -53,7 +53,8 @@ $string['categoryedit'] = 'Editar categoría';
 $string['category_color'] = 'Color de categoría';
 $string['category_color_description'] = 'Color de la categoría del curso. Los cursos hijo toman la configuración de la categoría padre más cercana.';
 $string['category_color_palette'] = 'Paleta de colores';
-$string['category_color_palette_description'] = 'Consulte el valor hexadecimal correspondiente para el color dado. Esto no afectará ninguna configuración, es solo una muestra para ayudar a los usuarios a crear el valor de configuración.';
+$string['category_color_palette_description'] = 'Consulte el valor hexadecimal correspondiente para el color dado. Esto no
+afectará ninguna configuración, es solo una muestra para ayudar a los usuarios a crear el valor de configuración.';
 $string['changecoverimage'] = 'Cambiar imagen de tapa';
 $string['changefullname'] = 'Cambiar nombre del sitio';
 $string['chapters'] = 'Capítulos';
@@ -95,9 +96,9 @@ $string['custommenutext'] = 'Color del texto del menú personalizado';
 $string['deadlines'] = 'Fechas límite';
 $string['deadlinestoggle'] = 'Fechas límite';
 $string['deadlinestoggledesc'] = 'Mostrar a los usuarios las fechas límite de actividades próximas de los cursos en los que está inscrito.';
-$string['defaultsummary'] = 'Utilice esta área para describir de qué se trata el tema con texto, imágenes, audio y video.';
+$string['defaultsummary'] = 'Utilice esta área para describir de qué se trata el tema con texto, imágenes, audio y vídeo.';
 $string['defaultintrosummary'] = 'Bienvenido a su nuevo curso {$a}.
-<br>Comience por describir de qué se trata el curso con texto, imágenes, audio y video.';
+<br>Comience por describir de qué se trata el curso con texto, imágenes, audio y vídeo.';
 $string['defaulttopictitle'] = 'Tema sin título';
 $string['debugerrors'] = 'Depurar errores';
 $string['deleteassetconfirm'] = 'Eliminar {$a}';
@@ -137,7 +138,7 @@ $string['favorite'] = 'Favorito {$a}';
 $string['favorited'] = '{$a} en favoritos';
 $string['featurespots'] = 'Puntos de funciones';
 $string['featurespotsedit'] = 'Editar puntos de funciones';
-$string['featurespotshelp'] = '<p>Agregue un máximo de 3 puntos de funciones a la página principal de su sitio para resaltar los principales beneficios para los usuarios existentes y potenciales.</p>
+$string['featurespotshelp'] = '<p>Agregue un máximo de 3 puntos de funciones a la página principal de su sitio#8217;s para resaltar los principales beneficios para los usuarios existentes y potenciales.</p>
 <p>Agregue un título, contenido y una imagen opcional para cada función. Las imágenes deben ser cuadradas y no tener más de 200 x 200 píxeles.</p>';
 $string['featurespotsheading'] = 'Encabezado de puntos de funciones';
 $string['featureonetitle'] = 'Título de función 1';
@@ -158,7 +159,7 @@ $string['featureoneimage'] = 'Imagen de función 1';
 $string['featuretwoimage'] = 'Imagen de función 2';
 $string['featurethreeimage'] = 'Imagen de función 3';
 $string['featuredcourses'] = 'Cursos destacados';
-$string['featuredcourseshelp'] = 'Resalte hasta 8 cursos destacados para la página principal de su sitio. Escriba el id. del curso para destacar un curso.';
+$string['featuredcourseshelp'] = 'Resalte hasta 8 cursos destacados para la página principal de su sitio#8217;s . Escriba el id. del curso para destacar un curso.';
 $string['featuredcoursesheading'] = 'Encabezado de cursos destacados';
 $string['featuredcourseone'] = 'Curso destacado 1';
 $string['featuredcoursetwo'] = 'Curso destacado 2';
@@ -204,8 +205,10 @@ $string['instagram'] = 'Instagram';
 $string['instagramdesc'] = 'La URL de su cuenta de Instagram.';
 $string['introduction'] = 'Introducción';
 $string['jsontext'] = 'Texto JSON';
-$string['jsontextdescription'] = 'El área de texto valida el JSON dado; por lo tanto, solo se permiten categorías existentes, solo los valores numéricos como registros de ID (registros de categorías) son válidos y solo se aceptan valores hexadecimales como colores.
-Aquí hay un ejemplo:<br>{"1":"#FAAFFF",<br>
+$string['jsontextdescription'] = 'El área de texto valida el JSON dado; por lo tanto, solo se permiten categorías existentes,
+solo los valores numéricos como registros de ID (registros de categorías) son válidos y solo se aceptan valores hexadecimales como colores.
+Aquí hay un ejemplo:<br>
+{"1":"#FAAFFF",<br>
 "45":"#AFF",<br>
 "65":"#FFF228",<br>
 "12":"#CC0084",<br>
@@ -214,7 +217,7 @@ Aquí hay un ejemplo:<br>{"1":"#FAAFFF",<br>
 $string['knowledgebase'] = 'Base de conocimiento de Open LMS';
 $string['list'] = 'Lista';
 $string['linkedin'] = 'LinkedIn';
-$string['linkedindesc'] = 'La URL de la cuenta de LinkedIn de su organización.';
+$string['linkedindesc'] = 'La URL de la cuenta de LinkedIn de su organización&#8217;s.';
 $string['leftnav'] = 'Tabla de contenido';
 $string['leftnavdesc'] = 'Seleccione la ubicación en la que desea que aparezca la tabla de contenido. Una lista ofrece más lugar para el contenido y funciona bien en el caso de cursos con muchos temas.';
 $string['loading'] = 'Cargando...';
@@ -223,7 +226,7 @@ $string['loggedoutmsg'] = 'En este momento está desconectado. Si desea continua
 $string['loggedoutmsgtitle'] = 'Está desconectado.';
 $string['loggedoutfailmsg'] = 'Debe estar conectado para {$a}.';
 $string['loginform'] = 'Inicio de sesión';
-$string['logo'] = 'Logotipo';
+$string['logo'] = 'Logo';
 $string['logodesc'] = 'El logotipo se ve en el encabezado en todo el sitio.';
 $string['menu'] = 'Mis cursos';
 $string['messageread'] = 'Mensaje leído';
@@ -282,7 +285,7 @@ $string['problemsfound'] = 'Problemas encontrados';
 $string['progress'] = 'Progreso';
 $string['readmore'] = 'Leer más&nbsp;»';
 $string['recentactivity'] = 'Actividad reciente';
-$string['recentfeedback'] = 'Retroalimentación';
+$string['recentfeedback'] = 'Comentarios';
 $string['region-main'] = 'Principal';
 $string['region-side-main-box'] = 'Principal';
 $string['region-side-post'] = 'Derecha';
@@ -337,7 +340,7 @@ $string['xungraded'] = '{$a} sin calificar';
 $string['youtube'] = 'YouTube';
 $string['youtubedesc'] = 'La URL de su canal de YouTube.';
 $string['showallsectionsdisabled'] = 'Debido al lenguaje de diseño, “Mostrar todas las secciones en una página” no está disponible en Ajustar.';
-$string['disabled'] = 'Desactivado';
+$string['disabled'] = 'Deshabilitada';
 $string['showappearancedisabled'] = 'El lenguaje de diseño de Snap evita los cambios a los ajustes de "Apariencia".';
 $string['pbb'] = 'Desarrollo de marca basado en el perfil';
 $string['pbb_description'] = 'Si habilita la opción <strong>Desarrollo de marca basado en el perfil</strong>, podrá personalizar la experiencia de generación de marca para un grupo específico de usuarios en función del campo de perfil de usuario elegido.
@@ -345,8 +348,8 @@ $string['pbb_description'] = 'Si habilita la opción <strong>Desarrollo de marca
 <li>La cadena <code>snap-pbb-</code> se antepondrá</li>
 <li>Esta clase se agregará a la etiqueta de HTML <code>body</code></li></ul>
 Por ejemplo, el valor del campo de usuario <em>Blueberry Extravaganza</em> se transformará en la línea de texto <code>snap-pbb-blueberry-extravaganza</code> que formará parte de una URL identificable<br /><br />
-Esta función se utiliza junto con <a href="https://help.blackboard.com/Blackboard_Open_LMS/Administrator/Manage_a_Site/Course_and_Site_Design/Themes/Snap#advanced-branding_OTP-3" target="_blank">Custom CSS</a>,
-por lo que tendrá que agregar selectores CSS usando las clases nuevas en la sección Aspectos básicos<a class="snap-settings-tab-link" href="#themesnapbranding"></a>.';
+Esta función se utiliza junto con <a href=\'https://help.blackboard.com/Blackboard_Open_LMS/Administrator/Manage_a_Site/Course_and_Site_Design/Themes/Snap#advanced-branding_OTP-3\' target=\'_blank\'>Custom CSS</a>,
+por lo que tendrá que agregar selectores CSS usando las clases nuevas en la sección Aspectos básicos<a class=\'snap-settings-tab-link\' href=\'#themesnapbranding\'></a>.';
 $string['pbb_enable'] = 'Habilitar la opción Desarrollo de marca basado en el perfil';
 $string['pbb_enable_description'] = 'Solo se agrega la clase a la etiqueta body si está activa.';
 $string['pbb_field'] = 'Campo del usuario que se utilizará';
@@ -355,20 +358,20 @@ $string['cachedef_profile_based_branding'] = 'Almacenamiento en caché para el d
 $string['cachedef_course_card_bg_image'] = 'Almacenamiento en caché para la imagen de fondo del curso.';
 $string['cachedef_course_card_teacher_avatar'] = 'Almacenamiento en caché para los avatares de los profesores.';
 $string['cachedef_course_card_teacher_avatar_index'] = 'Almacenamiento en caché para el índice de los avatares de los profesores.';
-$string['accessforumstringdis'] = 'Mostrar opciones';
+$string['accessforumstringdis'] = 'Opciones';
 $string['accessforumstringmov'] = 'Mover opciones';
 $string['accesscalendarstring'] = 'Calendario';
 $string['accessglobalsearchstring'] = 'Buscar';
-$string['admineventwarning'] = 'Para ver los eventos de todos los cursos, ';
+$string['admineventwarning'] = 'Para ver los eventos de todos los cursos,';
 $string['gotocalendarsnap'] = 'diríjase al calendario del sitio.';
 $string['quizattemptswarn'] = 'Excluye los intentos de los usuarios suspendidos';
 $string['quizfeedback'] = 'Comentarios';
 $string['validratio'] = 'Esta combinación de colores sí cumple con el valor mínimo de relación de 4.5:1 de WCAG 2.0';
 $string['invalidratio'] = 'Esta combinación de colores no cumple con el
-<a href="https://www.w3.org/TR/WCAG20-TECHS/G18.html" target="_blank">valor mínimo de relación de 4.5:1 de WCAG 2.0</a>. Valor: "{$a}"';
+<a href=\'https://www.w3.org/TR/WCAG20-TECHS/G18.html\' target=\'_blank\'>valor mínimo de relación de 4.5:1 de WCAG 2.0</a>. Valor: \'{$a}\'';
 $string['imageinvalidratio'] = 'Esta imagen podría presentar problemas de contraste, ya que no cumple con valor mínimo de relación de 4.5:1 de WCAG 2.0. Valor promedio de pixel: "{$a}"';
 $string['catinvalidratio'] = 'Las siguientes categorías de colores no cumplen con el
-<a href="https://www.w3.org/TR/WCAG20-TECHS/G18.html" target="_blank">valor mínimo de relación de 4.5:1 de WCAG 2.0</a>: en contraste con el color de fondo del sitio (blanco): "{$a->white}"; en contraste con el color de fondo de la barra de navegación: "{$a->custombar}"; en contraste con el color de fondo del botón Mis cursos: "{$a->customnav}"';
+<a href=\'https://www.w3.org/TR/WCAG20-TECHS/G18.html\' target=\'_blank\'>valor mínimo de relación de 4.5:1 de WCAG 2.0</a>: en contraste con el color de fondo del sitio (blanco): \'{$a->white}\'; en contraste con el color de fondo de la barra de navegación: \'{$a->custombar}\'; en contraste con el color de fondo del botón Mis cursos: \'{$a->customnav}\'';
 $string['imageinvalidratiocategory'] = 'Esta imagen podría presentar problemas de contraste con el color del tema, ya que no cumple con el valor mínimo de relación de 4.5:1 de WCAG 2.0. Valor promedio de pixel: "{$a}"';
 $string['lazyload_mod_page'] = 'Habilitar la carga diferida predeterminada para los recursos de página';
 $string['lazyload_mod_page_description'] = 'Si se habilita esta opción, este ajuste reduce significativamente el tiempo de carga de las páginas de los cursos con muchas páginas.';
@@ -385,6 +388,8 @@ $string['enabledloginorderdesc'] = 'Seleccione la opción de inicio de sesión q
 $string['moodleloginfirst'] = 'Mostrar inicio de sesión de Moodle primero';
 $string['alternativeloginfirst'] = 'Mostrar opciones de inicio de sesión alternativas primero';
 $string['alternativeloginoptions'] = 'Opciones de inicio de sesión alternativas';
-$string['openmessagedrawer'] = 'Abra el cuadro de mensaje. ';
+$string['openmessagedrawer'] = 'Abra el cuadro de mensaje.';
 $string['design_mod_page'] = 'Habilitar el diseño previo para los recursos de la página';
 $string['design_mod_page_description'] = 'Si se habilita esta opción, el contenido de los recursos de la página se mostrará dentro de la misma página, curso o página principal.';
+$string['design_activity_chooser'] = 'Volver al diseño original del selector de actividad';
+$string['design_activity_chooser_description'] = 'Si se habilita esta opción, el selector de actividad se mostrará con el diseño original. Esto afectará al curso y a las páginas principales.';

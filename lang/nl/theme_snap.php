@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * @copyright  Copyright (c) 2020 Open LMS (https://www.openlms.net)
+ * @copyright  Copyright (c) 2021 Open LMS (https://www.openlms.net)
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -30,26 +30,26 @@ $string['action:highlightsectionvisibility'] = 'zichtbaarheid van sectie markere
 $string['action:sectiontoc'] = 'sectie met inhoudsopgave ophalen';
 $string['addanewsection'] = 'Een nieuwe sectie maken';
 $string['addresourceoractivity'] = 'Leeractiviteit maken';
-$string['admin'] = 'Beheerder';
+$string['admin'] = 'Beheer';
 $string['advancedbrandingheading'] = 'Geavanceerd opmaak toevoegen';
 $string['ago'] = 'geleden';
 $string['answered'] = 'Beantwoord';
-$string['appendices'] = 'Tools';
+$string['appendices'] = 'Hulpmiddelen';
 $string['assigndraft'] = 'Klad vereist je bevestiging';
 $string['assignreopened'] = 'Heropend';
 $string['at'] = 'om';
-$string['attempted'] = 'Poging';
+$string['attempted'] = 'Poging gedaan';
 $string['basics'] = 'Basisinstellingen';
 $string['brandingheading'] = 'Opmaak toevoegen';
 $string['browse'] = 'Bladeren';
-$string['browseallcourses'] = 'Bladeren in alle curssusen';
+$string['browseallcourses'] = 'Bladeren in alle cursussen';
 $string['cachedef_activity_deadlines'] = 'Cache-opslag voor deadlines voor gebruikersactiviteiten.';
 $string['cachedef_generalstaticappcache'] = 'Snap algemene cache op statisch toepassingsniveau';
 $string['cachedef_course_completion_progress'] = 'Dit wordt gebruikt om voltooiigingsgegevens per cursus/gebruiker in de cache op te slaan.';
 $string['cachedef_course_completion_progress_ts'] = 'Dit wordt gebruikt om caches op sessieniveau ongeldig te kunnen verklaren indien de voltooiingsinstellingen voor een cursus of module veranderen.';
 $string['cachedef_webservicedefinitions'] = 'Caching voor automatisch gegenereerde webservicedefinities.';
 $string['card'] = 'Kaart';
-$string['categoryedit'] = 'Categorie bewerken';
+$string['categoryedit'] = 'Bewerk categorie';
 $string['category_color'] = 'Categoriekleur';
 $string['category_color_description'] = 'Cursuscategoriekleur. Onderliggende cursussen nemen de configuratie van de dichtstbijzijnde bovenliggende categorie over.';
 $string['category_color_palette'] = 'Kleurenpalet';
@@ -58,11 +58,11 @@ $string['changecoverimage'] = 'Omslagafbeelding wijzigen';
 $string['changefullname'] = 'Wijzig sitenaam';
 $string['chapters'] = 'Hoofdstukken';
 $string['choosereadme'] = '<div class="clearfix"><div class="theme_screenshot"><h2>Snap</h2><img class=img-polaroid src="snap/pix/screenshot.jpg" />';
-$string['close'] = 'Sluiten';
+$string['close'] = 'Sluit';
 $string['conditional'] = 'Voorwaardelijk';
 $string['contents'] = 'Inhoud';
 $string['contributed'] = 'Bijgedragen';
-$string['courses'] = 'Cursussen';
+$string['courses'] = 'Cursus';
 $string['coursecontacts'] = 'Contactpersonen cursus';
 $string['coursedisplay'] = 'Cursusweergave';
 $string['coursefootertoggle'] = 'Cursusvoettekst';
@@ -97,11 +97,11 @@ $string['deadlinestoggle'] = 'Deadlines';
 $string['deadlinestoggledesc'] = 'Gebruikers alle aanstaande deadlines voor activiteiten tonen voor cursussen waarvoor ze zijn ingeschreven.';
 $string['defaultsummary'] = 'Gebruik dit gebied om het onderwerp te beschrijven, met tekst, afbeeldingen, audio en video.';
 $string['defaultintrosummary'] = 'Welkom bij je nieuwe cursus {$a}.
-<br>Beschrijf als eerste waar je cursus over gaat aan de hand van tekst, afbeeldingen, audio en video.';
+<br>Beschrijf om te beginnen waar je cursus over gaat aan de hand van tekst, afbeeldingen, audio en video.';
 $string['defaulttopictitle'] = 'Naamloos onderwerp';
 $string['debugerrors'] = 'Fouten oplossen';
-$string['deleteassetconfirm'] = '{$a} verwijderen';
-$string['deletingasset'] = 'Bezig met verwijderen van {$a}';
+$string['deleteassetconfirm'] = 'Verwijder {$a}';
+$string['deletingasset'] = '{$a} verwijderen';
 $string['deletingassetname'] = 'Bezig met verwijderen van {$a->type} "{$a->name}"';
 $string['deletesectionconfirm'] = 'Sectie verwijderen';
 $string['deletingsection'] = 'Sectie {$a} verwijderen';
@@ -138,7 +138,7 @@ $string['favorited'] = 'Als favoriet gekozen {$a}';
 $string['featurespots'] = 'Uitgelichte spots';
 $string['featurespotsedit'] = 'Uitgelichte spots bewerken';
 $string['featurespotshelp'] = '<p>Je kunt maximaal 3 uitgelichte spots op de startpagina van je site plaatsen om de belangrijkste voordelen aan je huidige en potentiële gebruikers te tonen.</p>
-<p>Je kunt een titel, inhoud en een optionele afbeelding toevoegen voor elke uitgelichte spot. Afbeeldingen moeten vierkant zijn en niet groter dan 200 px x 200 px.</p>';
+<p>Je kunt een titel, inhoud en een optionele afbeelding toevoegen voor elke uitgelichte spot. Afbeeldingen moeten een vierkant zijn en mogen niet groter zijn dan 200 px x 200 px.</p>';
 $string['featurespotsheading'] = 'Titel uitgelichte spots';
 $string['featureonetitle'] = 'Uitgelichte spot 1 titel';
 $string['featuretwotitle'] = 'Uitgelichte spot 2 titel';
@@ -188,8 +188,8 @@ $string['forumpoststoggledesc'] = 'Gebruikers de tien meest recente forumbericht
 $string['fullname'] = 'Sitenaam';
 $string['fullnamedesc'] = 'De naam van je site.';
 $string['graderadviseuserreport'] = 'Het "beoordelingsrapport" werkt niet goed op mobiele apparaten. In plaats daarvan wordt het "gebruikersrapport" geadviseerd';
-$string['grading'] = 'Beoordelen';
-$string['help'] = 'Hulp';
+$string['grading'] = 'Beoordeling';
+$string['help'] = 'Help';
 $string['helpguide'] = 'Handleiding';
 $string['headingfont'] = 'Lettertype koptekst';
 $string['headingfont_desc'] = 'Dit lettertype wordt gebruikt in de kopteksten (elementen h1 - h6) op de gehele site. Als je een aangepast weblettertype gebruikt, vergeet dit dan niet toe te voegen aan het extra moodle-html-formulier.';
@@ -205,7 +205,7 @@ $string['instagramdesc'] = 'De url van je instagram-account.';
 $string['introduction'] = 'Introductie';
 $string['jsontext'] = 'JSON-tekst';
 $string['jsontextdescription'] = 'Het tekstgebied valideert de desbetreffende JSON, waardoor alleen bestaande categorieën zijn toegestaan, alleen numerieke waarden geldig zijn voor ID-records (categorierecords) en alleen hexadecimale waarden worden geaccepteerd als kleuren.
-Voorbeeld:<br>
+Voorbeeld::<br>
 {"1":"#FAAFFF",<br>
 "45":"#AFF",<br>
 "65":"#FFF228",<br>
@@ -215,7 +215,7 @@ Voorbeeld:<br>
 $string['knowledgebase'] = 'Open LMS Knowledge Base';
 $string['list'] = 'Lijst';
 $string['linkedin'] = 'LinkedIn';
-$string['linkedindesc'] = 'De url van de LinkedIn-account van je organisatie.';
+$string['linkedindesc'] = 'De URL van de LinkedIn-account van je organisatie.';
 $string['leftnav'] = 'Inhoudstafel';
 $string['leftnavdesc'] = 'Selecteer waar de inhoudsopgave moet worden weergegeven. De lijst biedt meer ruimte voor inhoud en werkt goed voor cursussen met veel onderwerpen.';
 $string['loading'] = 'Laden...';
@@ -223,7 +223,7 @@ $string['loggedinasguest'] = 'Je bent aangemeld als gast';
 $string['loggedoutmsg'] = 'Je bent momenteel afgemeld. Als je deze site wilt blijven gebruiken, moet je je weer aanmelden.';
 $string['loggedoutmsgtitle'] = 'Je bent afgemeld';
 $string['loggedoutfailmsg'] = 'Je moet aangemeld zijn om te {$a}.';
-$string['loginform'] = 'Aanmelden';
+$string['loginform'] = 'Login';
 $string['logo'] = 'Logo';
 $string['logodesc'] = 'Je logo wordt weergegeven in de koptekst op de gehele site.';
 $string['menu'] = 'Mijn cursussen';
@@ -231,21 +231,21 @@ $string['messageread'] = 'Bericht gelezen';
 $string['messages'] = 'Berichten';
 $string['messagestoggle'] = 'Berichten';
 $string['messagestoggledesc'] = 'Gebruikers hun meest recente berichten tonen die ze in de afgelopen 12 weken hebben ontvangen.';
-$string['more'] = 'Meer';
+$string['more'] = 'More';
 $string['morenews'] = 'Meer nieuws';
 $string['movingstartedhelp'] = 'Navigeer naar waar je een sectie wilt plaatsen "{$a}"';
 $string['movingdropsectionhelp'] = 'Plaats sectie "{$a->moving}" voor sectie "{$a->before}"';
 $string['moving'] = '"{$a}" verplaatsen';
 $string['movingcount'] = '{$a} objecten verplaatsen';
 $string['movefailed'] = 'Verplaatsen mislukt voor "{$a}"';
-$string['move'] = 'Verplaats "{$a}"';
+$string['move'] = '\'{$a}\' verplaatsen';
 $string['movehere'] = 'Verplaats naar hier';
 $string['movesection'] = 'Sectie verplaatsen';
 $string['navbarbg'] = 'Achtergrondkleur';
 $string['navbarlink'] = 'Tekstkleur';
 $string['navbarbuttoncolor'] = 'Achtergrondkleur';
 $string['navbarbuttonlink'] = 'Tekstkleur';
-$string['nextsection'] = 'Volgende sectie';
+$string['nextsection'] = 'Nieuwe sectie';
 $string['nodeadlines'] = 'Je hebt geen komende deadlines.';
 $string['noforumposts'] = 'Je hebt geen relevante forumberichten.';
 $string['nograded'] = 'Je hebt geen recente feedback.';
@@ -283,12 +283,12 @@ $string['problemsfound'] = 'Gevonden problemen';
 $string['progress'] = 'Voortgang';
 $string['readmore'] = 'Meer lezen&nbsp;»';
 $string['recentactivity'] = 'Recente activiteit';
-$string['recentfeedback'] = 'Feedback';
+$string['recentfeedback'] = 'Feedbackformulieren';
 $string['region-main'] = 'Hoofd';
 $string['region-side-main-box'] = 'Hoofd';
 $string['region-side-post'] = 'Rechts';
 $string['region-side-pre'] = 'Links';
-$string['region-side-top'] = 'Bovenaan';
+$string['region-side-top'] = 'Naar boven';
 $string['released'] = 'Release: {$a}';
 $string['reopened'] = 'Heropend';
 $string['resourcedisplay'] = 'Bronweergave';
@@ -301,14 +301,14 @@ $string['seriffont_desc'] = 'Dit lettertype wordt gebruikt voor de meeste door g
 $string['showcoursegradepersonalmenu'] = 'Cijfers';
 $string['showcoursegradepersonalmenudesc'] = 'Gebruikers hun cijfer tonen in cursuskaarten in het persoonlijke menu';
 $string['socialmedia'] = 'Social media';
-$string['submitted'] = 'Ingezonden';
+$string['submitted'] = 'Ingestuurd';
 $string['sitedescription'] = 'Sitebeschrijving';
 $string['subtitle'] = 'Ondertitel';
 $string['subtitle_desc'] = 'Geef je gebruikers een korte beschrijving van je site.';
 $string['themecolor'] = 'Sitekleur';
 $string['themecolordesc'] = 'Felle kleuren werken het best en geven je site een moderne uitstraling.';
 $string['title'] = 'Titel';
-$string['top'] = 'Boven';
+$string['top'] = 'Naar boven';
 $string['topbarbgcolor'] = 'Kleur van navigatiebalk';
 $string['topbarlinkcolor'] = 'Kleur van navigatiebalkkoppeling en -pictogram';
 $string['topbarbuttoncolor'] = 'Achtergrond van Mijn cursussen';
@@ -317,12 +317,12 @@ $string['topicactions'] = 'Onderwerpacties';
 $string['twitter'] = 'Twitter';
 $string['twitterdesc'] = 'De url van je Twitter-account.';
 $string['unenrolme'] = 'Maak mijn inschrijving ongedaan';
-$string['enrolme'] = 'Schrijf mij in';
+$string['enrolme'] = 'Laat me in de cursus';
 $string['unread'] = 'ongelezen';
 $string['unsupportedcoverimagetype'] = 'Afbeeldingstype voor omslag ({$a}) niet ondersteund';
 $string['via'] = 'via';
 $string['viewcourse'] = 'Cursus bekijken';
-$string['viewmore'] = 'Meer weergeven';
+$string['viewmore'] = 'Bekijk meer';
 $string['viewyourprofile'] = 'Je profiel bekijken';
 $string['viewmyfeedback'] = 'Mijn feedback bekijken';
 $string['viewcalendar'] = 'Toon mijn kalender';
@@ -342,7 +342,7 @@ $string['disabled'] = 'Uitgeschakeld';
 $string['showappearancedisabled'] = 'De ontwerptaal van Snap voorkomt wijzigingen van weergave-instellingen.';
 $string['pbb'] = 'Profielgebaseerde opmaak';
 $string['pbb_description'] = 'Schakel <strong>Profielgebaseerde opmaak</strong> in om de opmaak voor een specifieke groep gebruikers te baseren op het gekozen gebruikersprofielveld.
-<ul><li>Er wordt <em>slugification</em> toegepast op de waarde van het gebruikersveld; hierbij worden alle tekens omgezet in kleine tekens en worden ze van elkaar gescheiden met een koppelstreepje (-)</li>
+<ul><li>Er wordt <em>slugification</em> toegepast op de waarde van het gebruikersveld; hierbij worden alle tekens omgezet in kleine tekens en worden ze van elkaar gescheiden met een koppelteken (-)</li>
 <li>De tekenreeks <code>snap-pbb-</code>wordt toegevoegd als voorvoegsel</li>
 <li>Deze klasse wordt toegevoegd aan de HTML-tag <code>body</code></li></ul>
 De waarde <em>Blueberry Extravaganza</em> voor het gebruikersveld ziet er na slugification bijvoorbeeld uit als <code>snap-pbb-blueberry-extravaganza</code><br /><br />
@@ -356,14 +356,14 @@ $string['cachedef_profile_based_branding'] = 'Caching voor profielgebaseerde opm
 $string['cachedef_course_card_bg_image'] = 'Caching voor achtergrondafbeelding cursus.';
 $string['cachedef_course_card_teacher_avatar'] = 'Caching voor avatars docent.';
 $string['cachedef_course_card_teacher_avatar_index'] = 'Caching voor index van avatars docent.';
-$string['accessforumstringdis'] = 'Weergaveopties';
+$string['accessforumstringdis'] = 'Weergave-opties';
 $string['accessforumstringmov'] = 'Verplaatsopties';
 $string['accesscalendarstring'] = 'Kalender';
-$string['accessglobalsearchstring'] = 'Zoeken';
-$string['admineventwarning'] = 'Om gebeurtenissen uit alle cursussen te zien, ';
+$string['accessglobalsearchstring'] = 'Zoek';
+$string['admineventwarning'] = 'Om gebeurtenissen uit alle cursussen te zien,';
 $string['gotocalendarsnap'] = 'ga je naar de agenda van de site.';
 $string['quizattemptswarn'] = 'Pogingen van geschorste gebruikers uitsluiten';
-$string['quizfeedback'] = 'Feedback';
+$string['quizfeedback'] = 'Feedbackformulieren';
 $string['validratio'] = 'Deze combinatie van kleuren voldoet niet aan de minimale ratiowaarde van 4.5:1 van WCAG 2.0';
 $string['invalidratio'] = 'Deze kleurencombinatie voldoet niet aan de
 <a href="https://www.w3.org/TR/WCAG20-TECHS/G18.html" target="_blank">minimale ratiowaarde van 4.5:1 van WCAG 2.0</a>. Waarde: "{$a}"';
@@ -374,8 +374,8 @@ Achtergrondkleur van site (wit): "{$a->white}". Achtergrondkleur van navigatieba
 $string['imageinvalidratiocategory'] = 'Deze afbeelding kan contrastproblemen veroorzaken omdat de themakleur niet voldoet aan de minimale ratiowaarde van 4.5:1 van WCAG 2.0. Gemiddelde pixelwaarde: "{$a}"';
 $string['lazyload_mod_page'] = 'Standaard vertraagd laden inschakelen voor paginabronnen';
 $string['lazyload_mod_page_description'] = 'Als deze optie is ingeschakeld, wordt de laadtijd van cursuspagina\'s aanzienlijk korter voor cursussen met veel pagina\'s.';
-$string['pmadvancedfeed_viewmore'] = 'Meer weergeven';
-$string['pmadvancedfeed_reload'] = 'Vernieuwen';
+$string['pmadvancedfeed_viewmore'] = 'Bekijk meer';
+$string['pmadvancedfeed_reload'] = 'Verversen';
 $string['multimediacard'] = 'Multimediabestanden worden niet weergegeven in de activiteitkaartweergaven voor het Snap-thema. Dit wordt alleen toegepast op de startpagina en cursuspagina\'s voor kleine activiteit- en bronkaarten.';
 $string['enabledlogin'] = 'Weergegeven aanmeldingsopties';
 $string['enabledlogindesc'] = 'Selecteer de aanmeldingsopties die moeten worden weergegeven.';
@@ -387,6 +387,8 @@ $string['enabledloginorderdesc'] = 'Selecteer welke aanmeldingsoptie als eerste 
 $string['moodleloginfirst'] = 'Moodle-aanmelding als eerste weergeven';
 $string['alternativeloginfirst'] = 'Alternatieve aanmeldingsopties als eerste weergeven';
 $string['alternativeloginoptions'] = 'Alternatieve aanmeldingsopties';
-$string['openmessagedrawer'] = 'Berichtenlade openen. ';
+$string['openmessagedrawer'] = 'Berichtenlade openen.';
 $string['design_mod_page'] = 'Vorig ontwerp voor paginabronnen inschakelen';
 $string['design_mod_page_description'] = 'Indien ingeschakeld wordt de paginabroninhoud op dezelfde pagina, in de cursus of op de beginpagina weergegeven.';
+$string['design_activity_chooser'] = 'Terug naar het oorspronkelijke ontwerp voor de activiteitenkiezer';
+$string['design_activity_chooser_description'] = 'Als deze optie is ingeschakeld, wordt de activiteitenkiezer weergegeven met het oorspronkelijke ontwerp. Dit heeft invloed op de cursus en de startpagina\'s.';

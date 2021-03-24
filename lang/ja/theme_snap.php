@@ -15,14 +15,14 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * @copyright  Copyright (c) 2020 Open LMS (https://www.openlms.net)
+ * @copyright  Copyright (c) 2021 Open LMS (https://www.openlms.net)
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 defined('MOODLE_INTERNAL') || die();
 
 $string['aboutcourse'] = 'このコースについて';
-$string['activity'] = '活動';
+$string['activity'] = 'アクティビティ';
 $string['action:changeassetvisibility'] = 'アセットの視認性をコントロールする';
 $string['action:duplicateasset'] = 'アセットを複製する';
 $string['action:changesectionvisibility'] = 'セクションの視認性をコントロールする';
@@ -41,7 +41,7 @@ $string['at'] = '場所 :';
 $string['attempted'] = '受験済み';
 $string['basics'] = '基本';
 $string['brandingheading'] = 'ブランディング';
-$string['browse'] = '参照';
+$string['browse'] = '閲覧';
 $string['browseallcourses'] = 'すべてのコースを参照する';
 $string['cachedef_activity_deadlines'] = 'ユーザ活動期限のキャッシュストア';
 $string['cachedef_generalstaticappcache'] = '一般的な静的アプリケーションレベルのキャッシュをスナップする';
@@ -58,7 +58,7 @@ $string['changecoverimage'] = 'カバーイメージを変更する';
 $string['changefullname'] = 'サイト名を変更する';
 $string['chapters'] = '章';
 $string['choosereadme'] = '<div class="clearfix"><div class="theme_screenshot"><h2>Snap</h2><img class=img-polaroid src="snap/pix/screenshot.jpg" /></div></div>';
-$string['close'] = '閉じる';
+$string['close'] = 'クローズ';
 $string['conditional'] = '条件付き';
 $string['contents'] = 'コンテンツ';
 $string['contributed'] = '寄稿済み';
@@ -79,7 +79,7 @@ $string['coverdisplay'] = 'カバー表示';
 $string['covercarousel'] = 'カバーカルーセル';
 $string['covercarouselon'] = 'カバーカルーセルを使用する';
 $string['covercarouseldescription'] = '<p>カルーセルは回転バナーのセット、またはスライドショーで、カバーイメージの代わりにサイトのホームページに表示されます。</p>
-<p>最大3つのイメージ、各スライドのタイトル、オプションのサブタイトルを追加します。1200 x 600ピクセルのイメージが最適です。</p>';
+<p>最大3つの画像、各スライドのタイトル、オプションのサブタイトルを追加します。1200 x 600ピクセルの画像が最適です。</p>';
 $string['coverimage'] = 'カバーイメージ';
 $string['covervideo'] = 'カバービデオ';
 $string['comingsoon'] = '準備中です！';
@@ -92,12 +92,12 @@ $string['customisenavbar'] = 'ナビゲーションバーの色を変更する';
 $string['customisenavbutton'] = '[マイコース]ボタンの色を変更する';
 $string['customisecustommenu'] = 'カスタムメニューのテキストの色を変更する';
 $string['custommenutext'] = 'カスタムメニューのテキストの色';
-$string['deadlines'] = '終了日時';
+$string['deadlines'] = '期限';
 $string['deadlinestoggle'] = '期限';
 $string['deadlinestoggledesc'] = 'ユーザに対して、登録済みコースの今後の活動の終了日時が表示されます。';
 $string['defaultsummary'] = 'この領域では、テキスト、画像、音声、動画を使用してこのトピックを説明します。';
 $string['defaultintrosummary'] = '新しいコース {$a} へようこそ。
-<p>テキスト、画像、音声、動画を使用して、コースについて説明します。';
+<br>テキスト、画像、音声、動画を使用して、コースについて説明します。';
 $string['defaulttopictitle'] = '無題のトピック';
 $string['debugerrors'] = 'デバッグエラー';
 $string['deleteassetconfirm'] = '{$a} を削除する';
@@ -138,7 +138,7 @@ $string['favorited'] = 'お気に入りとしてマーク {$a}';
 $string['featurespots'] = '注目スポット';
 $string['featurespotsedit'] = '注目スポットを編集する';
 $string['featurespotshelp'] = '<p>既存および潜在的ユーザに主なメリットを強調するため、サイトのフロントページに最大3つの注目スポットを強調表示します。</p>
-<p>それぞれの注目スポットのタイトル、内容、オプションのイメージを追加します。イメージは四角形で、サイズは最大200px x 200pxとします。</p>';
+<p>それぞれの注目スポットのタイトル、内容、オプションの画像を追加します。画像は四角形で、サイズは最大200px x 200pxとします。</p>';
 $string['featurespotsheading'] = '注目スポットのヘッダ';
 $string['featureonetitle'] = '注目スポット1のタイトル';
 $string['featuretwotitle'] = '注目スポット2のタイトル';
@@ -177,7 +177,7 @@ $string['feedbacktoggledesc'] = '学習者に最新のフィードバックを�
 $string['footnote'] = 'サイトフッタ';
 $string['footnotedesc'] = 'フッタはサイト全体にわたって表示されます。ヘルプ、サポート、および学習者や教育者と共有したい組織所有のその他のサイト (ライブラリやメールアドレスなど) へのリンクを配置するのに最適な場所です。';
 $string['forcepwdwarningpersonalmenu'] = 'パーソナルメニューを使用する前に、<a href="{$a}">パスワードを変更する</a>必要があります。';
-$string['forumauthor'] = '作者';
+$string['forumauthor'] = '著者';
 $string['forumlastpost'] = '最新の投稿';
 $string['forumpicturegroup'] = 'グループ';
 $string['forumreplies'] = '返信';
@@ -213,12 +213,12 @@ $string['jsontextdescription'] = 'テキストエリアは指定されたJSONを
 "56":"#CC0087",<br>
 "89":"#CCF084"}';
 $string['knowledgebase'] = 'Open LMSナレッジベース';
-$string['list'] = 'リスト';
+$string['list'] = '一覧から選ぶ';
 $string['linkedin'] = 'LinkedIn';
 $string['linkedindesc'] = 'あなたの組織のLinkedInのURLです。';
 $string['leftnav'] = '目次';
 $string['leftnavdesc'] = '目次を表示する場所を選択します。リストの方が多くの目次を表示でき、トピックの多いコースに適しています。';
-$string['loading'] = '読み込み中...';
+$string['loading'] = 'ロード中...';
 $string['loggedinasguest'] = 'ゲストとしてログインしています';
 $string['loggedoutmsg'] = 'あなたは現在ログアウトしています。引き続きこのサイトを使用するには、ログインしてください。';
 $string['loggedoutmsgtitle'] = 'ログアウトされました';
@@ -288,7 +288,7 @@ $string['region-main'] = 'メイン';
 $string['region-side-main-box'] = 'メイン';
 $string['region-side-post'] = '右';
 $string['region-side-pre'] = '左';
-$string['region-side-top'] = '上';
+$string['region-side-top'] = '上揃え';
 $string['released'] = 'リリース済み : {$a}';
 $string['reopened'] = '再オープン';
 $string['resourcedisplay'] = 'リソース表示';
@@ -298,7 +298,7 @@ $string['displaydescriptionhelp'] = '選択すると、最初に新しいペー�
 $string['search'] = 'コンテンツを検索する';
 $string['seriffont'] = 'Serifフォント';
 $string['seriffont_desc'] = 'このフォントは、ユーザが生成するコンテンツのほとんどに使用されます。Serifフォントを使用すると、コンテンツの読みやすさが増し、人間が書いたもののようになります。';
-$string['showcoursegradepersonalmenu'] = '評定';
+$string['showcoursegradepersonalmenu'] = '成績';
 $string['showcoursegradepersonalmenudesc'] = 'パーソナルメニューのコースカードにユーザの評定を表示します';
 $string['socialmedia'] = 'ソーシャルメディア';
 $string['submitted'] = '提出済み';
@@ -308,7 +308,7 @@ $string['subtitle_desc'] = 'サイトについてユーザに簡単に説明し�
 $string['themecolor'] = 'サイトの色';
 $string['themecolordesc'] = '明るい色が最適です。サイトがモダンな印象になります。';
 $string['title'] = 'タイトル';
-$string['top'] = '上';
+$string['top'] = '上揃え';
 $string['topbarbgcolor'] = 'ナビゲーションバーの色';
 $string['topbarlinkcolor'] = 'ナビゲーションバーのリンクとアイコンの色';
 $string['topbarbuttoncolor'] = 'マイコースの背景';
@@ -360,7 +360,7 @@ $string['accessforumstringdis'] = '表示オプション';
 $string['accessforumstringmov'] = '移動オプション';
 $string['accesscalendarstring'] = 'カレンダー';
 $string['accessglobalsearchstring'] = '検索';
-$string['admineventwarning'] = 'すべてのコースのイベントを見るには、 ';
+$string['admineventwarning'] = 'すべてのコースのイベントを見るには、';
 $string['gotocalendarsnap'] = 'サイトカレンダーに移動します。';
 $string['quizattemptswarn'] = '一時停止ユーザの受験を除外する';
 $string['quizfeedback'] = 'フィードバック';
@@ -387,6 +387,8 @@ $string['enabledloginorderdesc'] = '最初に表示するログインオプシ�
 $string['moodleloginfirst'] = '最初にMoodleログインを表示する';
 $string['alternativeloginfirst'] = '最初に代替ログインオプションを表示する';
 $string['alternativeloginoptions'] = '代替ログインオプション';
-$string['openmessagedrawer'] = 'メッセージングドロワーを開きます。 ';
+$string['openmessagedrawer'] = 'メッセージングドロワーを開きます。';
 $string['design_mod_page'] = 'ページリソースの以前のデザインを有効にする';
 $string['design_mod_page_description'] = '有効にすると、ページリソースのコンテンツが、同じページ、コース、またはフロントページに表示されます。';
+$string['design_activity_chooser'] = '活動チューザのオリジナルのデザインにロールバックする';
+$string['design_activity_chooser_description'] = '有効にすると、活動チューザがオリジナルのデザインで表示されます。これは、コースとフロントページに影響を与えます。';
