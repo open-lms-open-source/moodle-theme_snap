@@ -3589,9 +3589,10 @@ td.mceIframeContainer > iframe {
     max-width: 100%;
 }
 
+// The gecko class is to determine the usage of Firefox browser.
 body.gecko .snap-form-required > fieldset,
 body.gecko .snap-form-advanced > fieldset {
-    display: table-cell;
+    display: block;
     max-width: 100%;
 }
 
