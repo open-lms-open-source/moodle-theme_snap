@@ -391,6 +391,17 @@ li.modtype_page {
     // Adjust Page resource content when it is a table.
     div.pagemod-content {
         overflow: auto;
+
+        // Hide scrollbar but keep functionality.
+        &::-webkit-scrollbar {
+            display: none;
+        }
+        -ms-overflow-style: none;  // IE and Edge.
+        scrollbar-width: none;  // Firefox.
+
+        .row {
+            margin: 0;
+        }
         tr {
             .mediaplugin_videojs {
                 width: 30em;
