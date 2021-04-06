@@ -173,7 +173,7 @@ define(
                                         return;
                                     } else {
                                         // No errors, reveal page mod.
-                                        pageModContent.prepend(data.html);
+                                        pageModContent.prepend('<div class="row">' + data.html + '</div>');
                                         pageModContent.data('content-loaded', 1);
                                         pageMod.find('.contentafterlink .ajaxstatus').remove();
                                         revealPageMod(pageMod, data.completionhtml);
