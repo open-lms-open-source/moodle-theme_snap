@@ -598,70 +598,75 @@ li.section:focus {
 // -------------------------
 //  Assets in snap.
 // -------------------------
-.section li.snap-asset {
-    display: block;
-    position: relative;
-    padding: 0;
-    margin: 0 auto;
-    height: auto;
-    font-family: $font-family-system;
-    background-color: #fff;
-    border: 1px solid $gray-lighter;
-    border-top-width: 0.3em;
-
-    // For editors add space for editong tools.
-    &.snap-can-edit {
-        padding-bottom: 2em !important;
+.section {
+    li.snap-asset.modtype_page .activityinstance {
+        margin-bottom: 1em;
     }
-
-    &.draft:not(.snap-can-view-hidden) {
-        display: none;
-    }
-
-    .asset-wrapper {
-        height: auto;
-        overflow-x: hidden;
-        overflow-y: auto;
-        position: static;
-        padding: 0.5em 1em;
-    }
-
-    .snap-assettype {
-        font-size: $font-size-sm;
-        text-transform: uppercase;
-    }
-
-    .activityinstance {
+    li.snap-asset {
+        display: block;
+        position: relative;
         padding: 0;
+        margin: 0 auto;
         height: auto;
-        background-color: rgba(255, 255, 255, 0.9);
-        @include clearfix;
+        font-family: $font-family-system;
+        background-color: #fff;
+        border: 1px solid $gray-lighter;
+        border-top-width: 0.3em;
 
-        .activityicon {
-            float: left;
-            width: 38px;
-            height: 38px;
-            margin-top: -5px; // magic number.
-            margin-right: 0.5em;
-            @include alakazam;
+        // For editors add space for editong tools.
+        &.snap-can-edit {
+            padding-bottom: 2em !important;
         }
 
-        // Link to the mod (headings in snap).
-        .snap-asset-link {
-            font-size: 1em;
-            margin: 0;
-            @include alakazam;
+        &.draft:not(.snap-can-view-hidden) {
+            display: none;
+        }
 
-            // The link itself.
-            a {
-                color: $body-color;
+        .asset-wrapper {
+            height: auto;
+            overflow-x: hidden;
+            overflow-y: auto;
+            position: static;
+            padding: 0.5em 1em;
+        }
 
-                &:hover,
-                &:focus {
-                    text-decoration: none;
+        .snap-assettype {
+            font-size: $font-size-sm;
+            text-transform: uppercase;
+        }
 
-                    .activityicon {
-                        transform: scale(1.25);
+        .activityinstance {
+            padding: 0;
+            height: auto;
+            background-color: rgba(255, 255, 255, 0.9);
+            @include clearfix;
+
+            .activityicon {
+                float: left;
+                width: 38px;
+                height: 38px;
+                margin-top: -5px; // magic number.
+                margin-right: 0.5em;
+                @include alakazam;
+            }
+
+            // Link to the mod (headings in snap).
+            .snap-asset-link {
+                font-size: 1em;
+                margin: 0;
+                @include alakazam;
+
+                // The link itself.
+                a {
+                    color: $body-color;
+
+                    &:hover,
+                    &:focus {
+                        text-decoration: none;
+
+                        .activityicon {
+                            transform: scale(1.25);
+                        }
                     }
                 }
             }
