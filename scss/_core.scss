@@ -317,6 +317,10 @@ blockquote {
     @extend .blockquote;
 }
 
+img {
+    max-width: 100%;
+    height: auto;
+}
 
 // Stop images shrinking to nothing on Chrome
 table img {
