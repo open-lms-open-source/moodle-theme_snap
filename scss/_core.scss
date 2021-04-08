@@ -317,6 +317,8 @@ blockquote {
     @extend .blockquote;
 }
 
+// Although this is kinda general, we need to leave like it is,
+// because Snap is using these width and heights for some designs.
 img {
     max-width: 100%;
     height: auto;
@@ -4535,4 +4537,12 @@ li.snap-activity.modtype_folder div[id^="folder_tree"] {
 // Fix for tags' color in hsuforums
 #page-mod-hsuforum-discuss .tag_list .badge-info {
     color: white;
+}
+
+// Do not limit the width of the image for Drag and drop onto image quizzes type.
+#page-question-type-ddimageortext #id_previewareaheader .ddarea.que.ddimageortext {
+    img.dropbackground,
+    img.droppreview {
+        max-width: none !important;
+    }
 }
