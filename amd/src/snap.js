@@ -59,6 +59,9 @@ define(['jquery', 'core/log', 'theme_snap/headroom', 'theme_snap/util', 'theme_s
         var GRADE_DISPLAY_TYPE_PERCENTAGE = '';
         var GRADE_DISPLAY_TYPE_PERCENTAGE_REAL = '';
         var GRADE_DISPLAY_TYPE_PERCENTAGE_LETTER = '';
+        var GRADE_DISPLAY_TYPE_REAL = '';
+        var GRADE_DISPLAY_TYPE_REAL_PERCENTAGE = '';
+        var GRADE_DISPLAY_TYPE_REAL_LETTER = '';
 
         /**
          * Get all url parameters from href
@@ -334,7 +337,7 @@ define(['jquery', 'core/log', 'theme_snap/headroom', 'theme_snap/util', 'theme_s
         /**
          * Apply progressbar.js for circular progress displays.
          */
-        var createColoredDataCircle = function(nodePointer, dataCallback) {
+        var createColoredDataCircle = function(nodePointer, dataCallback, valueCallback = null) {
             var circle = new ProgressBar.Circle(nodePointer, {
                 color: 'inherit', // @gray.
                 easing: 'linear',
@@ -345,7 +348,6 @@ define(['jquery', 'core/log', 'theme_snap/headroom', 'theme_snap/util', 'theme_s
                     value: '0'
                 }
             });
-
             var value = ($(nodePointer).attr('value') / 100);
             var endColor = brandColorSuccess; // Green @brand-success.
             if (value === 0 || $(nodePointer).attr('value') === '-') {
@@ -356,8 +358,14 @@ define(['jquery', 'core/log', 'theme_snap/headroom', 'theme_snap/util', 'theme_s
                 }
                 circle.setText(dataCallback(nodePointer));
             }
+            var valueAnimate = 0;
 
-            circle.animate(value, {
+            if (valueCallback === null) {
+                valueAnimate = value;
+            } else {
+                valueAnimate = valueCallback(nodePointer);
+            }
+            circle.animate(valueAnimate, {
                 from: {
                     color: '#999' // @gray-light.
                 },
@@ -393,6 +401,18 @@ define(['jquery', 'core/log', 'theme_snap/headroom', 'theme_snap/util', 'theme_s
                         nodeValue = nodeValue + '<small>%</small>';
                     }
                     return nodeValue;
+                }, function (nodePointer){
+                    var valueAnimate = $(nodePointer).attr('value');
+                    var gradeFormat = $(nodePointer).attr('gradeformat');
+
+                    if (gradeFormat == GRADE_DISPLAY_TYPE_REAL
+                        || gradeFormat == GRADE_DISPLAY_TYPE_REAL_PERCENTAGE
+                        || gradeFormat == GRADE_DISPLAY_TYPE_REAL_LETTER) {
+                        valueAnimate = 0;
+                    } else {
+                        valueAnimate = ($(nodePointer).attr('value') / 100);
+                    }
+                    return valueAnimate;
                 });
             });
         };
@@ -622,6 +642,9 @@ define(['jquery', 'core/log', 'theme_snap/headroom', 'theme_snap/util', 'theme_s
                 GRADE_DISPLAY_TYPE_PERCENTAGE = gradingConstants['gradepercentage'];
                 GRADE_DISPLAY_TYPE_PERCENTAGE_REAL = gradingConstants['gradepercentagereal'];
                 GRADE_DISPLAY_TYPE_PERCENTAGE_LETTER = gradingConstants['gradepercentageletter'];
+                GRADE_DISPLAY_TYPE_REAL = gradingConstants['gradereal'];
+                GRADE_DISPLAY_TYPE_REAL_PERCENTAGE = gradingConstants['graderealpercentage'];
+                GRADE_DISPLAY_TYPE_REAL_LETTER = gradingConstants['graderealletter'];
 
                 M.cfg.context = courseConfig.contextid;
                 M.snapTheme = {forcePassChange: forcePassChange};
