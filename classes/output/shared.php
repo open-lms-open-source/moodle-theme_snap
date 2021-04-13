@@ -444,6 +444,9 @@ EOF;
         $gradingconstants['gradepercentage'] = GRADE_DISPLAY_TYPE_PERCENTAGE;
         $gradingconstants['gradepercentagereal'] = GRADE_DISPLAY_TYPE_PERCENTAGE_REAL;
         $gradingconstants['gradepercentageletter'] = GRADE_DISPLAY_TYPE_PERCENTAGE_LETTER;
+        $gradingconstants['gradereal'] = GRADE_DISPLAY_TYPE_REAL;
+        $gradingconstants['graderealpercentage'] = GRADE_DISPLAY_TYPE_REAL_PERCENTAGE;
+        $gradingconstants['graderealletter'] = GRADE_DISPLAY_TYPE_REAL_LETTER;
         $localplugins = core_component::get_plugin_list('local');
         // Check if the plugins are installed to pass them as parameters to accessibility.js AMD module.
         $localjoulegrader = array_key_exists('joulegrader', $localplugins);
