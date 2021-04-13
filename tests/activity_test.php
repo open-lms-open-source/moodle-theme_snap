@@ -19,6 +19,7 @@ defined('MOODLE_INTERNAL') || die();
 use \theme_snap\activity,
     \theme_snap\snap_base_test;
 use theme_snap\local;
+use theme_snap\task\refresh_deadline_caches_task;
 
 global $CFG;
 require_once($CFG->dirroot . '/mod/assign/tests/base_test.php');
@@ -112,7 +113,7 @@ class theme_snap_acitvity_test extends snap_base_test {
         // Restore user.
         $USER = $origuser;
 
-        list ($course, $cm) = get_course_and_cm_from_instance($instance->id, 'quiz');
+        [$course, $cm] = get_course_and_cm_from_instance($instance->id, 'quiz');
         return new \quiz($instance, $cm, $course);
     }
 
@@ -148,7 +149,7 @@ class theme_snap_acitvity_test extends snap_base_test {
         if (empty($extendeddue)) {
             $extendeddue = time() + (DAYSECS * 2);
         }
-        list ($course, $cm) = get_course_and_cm_from_instance($assignid, 'assign');
+        [$course, $cm] = get_course_and_cm_from_instance($assignid, 'assign');
         $cm = \cm_info::create($cm);
         $assignobj = new \assign($cm->context, $cm, $course);
 
@@ -211,7 +212,7 @@ class theme_snap_acitvity_test extends snap_base_test {
     private function override_assign_general($fkeyfield, $ovdfield, $ovdval, $elementid, $typefield, $typeid,
                                              $sortorder = null) {
         $ovdfunc = function($assign, $overridedata) {
-            list ($course, $cm) = get_course_and_cm_from_instance($assign->id, 'assign');
+            [$course, $cm] = get_course_and_cm_from_instance($assign->id, 'assign');
             $cm = \cm_info::create($cm);
             $assignobj = new \assign($cm->context, $cm, $course);
 
@@ -280,7 +281,7 @@ class theme_snap_acitvity_test extends snap_base_test {
         $this->setAdminUser();
 
         $assign = $DB->get_record('assign', ['id' => $assignid]);
-        list ($course, $cm) = get_course_and_cm_from_instance($assign->id, 'assign');
+        [$course, $cm] = get_course_and_cm_from_instance($assign->id, 'assign');
         $assignobj = new \assign($cm->context, $cm, $course);
 
         usleep(1); // We have to sleep for 1 microsecond so that the cache can be invalidated.
@@ -358,13 +359,13 @@ class theme_snap_acitvity_test extends snap_base_test {
         $ovduserdue = $due + (DAYSECS * 2);
         $extension = $due + (WEEKSECS * 2);
 
-        list ($student, $teacher, $course, $group) = $this->course_group_user_setup();
+        [$student, $teacher, $course, $group] = $this->course_group_user_setup();
 
         $this->setUser($teacher);
 
         $assignobj = $this->create_assignment($course->id, $due);
 
-        list ($course, $cm) = get_course_and_cm_from_instance($assignobj->get_instance()->id, 'assign');
+        [$course, $cm] = get_course_and_cm_from_instance($assignobj->get_instance()->id, 'assign');
 
         return [
             'due' => $due,
@@ -567,7 +568,7 @@ class theme_snap_acitvity_test extends snap_base_test {
 
         $this->resetAfterTest();
 
-        list ($student, $teacher, $course, $group) = $this->course_group_user_setup();
+        [$student, $teacher, $course, $group] = $this->course_group_user_setup();
 
         $timeclose1 = time();
         $timeclose2 = time() + (2 * DAYSECS);
@@ -850,7 +851,7 @@ class theme_snap_acitvity_test extends snap_base_test {
     public function test_upcoming_deadlines() {
         $this->resetAfterTest();
 
-        list ($student, $teacher, $course, $group) = $this->course_group_user_setup();
+        [$student, $teacher, $course, $group] = $this->course_group_user_setup();
 
         $this->create_assignment($course->id, time());
 
@@ -1023,7 +1024,7 @@ class theme_snap_acitvity_test extends snap_base_test {
      * Test upcoming deadlines
      */
     public function test_upcoming_deadlines_timezones() {
-        global $DB, $CFG;
+        global $DB;
 
         $this->resetAfterTest();
 
@@ -1596,7 +1597,7 @@ class theme_snap_acitvity_test extends snap_base_test {
 
         $sixmonthsago = time() - YEARSECS / 2;
 
-        list ($student, $teacher, $course, $group) = $this->course_group_user_setup();
+        [$student, $teacher, $course, $group] = $this->course_group_user_setup();
 
         $this->setUser($student);
 
@@ -1672,6 +1673,66 @@ class theme_snap_acitvity_test extends snap_base_test {
         // Site admins behave like any other user can get deadlines of specific courses.
         $deadlines = activity::upcoming_deadlines(get_admin(), 500, $course->id)->events;
         $this->assertCount(1, $deadlines);
+    }
+
+    public function test_refresh_deadline_caches_task() {
+        global $CFG;
+
+        $this->resetAfterTest();
+
+        activity::$phpunitallowcaching = true;
+
+        $dg = $this->getDataGenerator();
+        $student = $dg->create_user([
+            'lastlogin' => (new \DateTime('1 week ago', core_date::get_server_timezone_object()))->getTimestamp()
+        ]);
+        $teacher = $dg->create_user();
+        $course = $dg->create_course();
+        $group = $dg->create_group((object)['courseid' => $course->id]);
+        $dg->enrol_user($student->id, $course->id, 'student');
+        $dg->create_group_member((object)['groupid' => $group->id, 'userid' => $student->id]);
+        $dg->enrol_user($teacher->id, $course->id, 'teacher');
+
+        $this->setUser($teacher);
+
+        $tz = new \DateTimeZone(\core_date::get_user_timezone($student));
+        $today = new \DateTime('today', $tz);
+        $todayts = $today->getTimestamp();
+
+        $assigninstances = [];
+
+        for ($t = 0; $t < 2; $t++) {
+            $assigninstances[] = $this->create_assignment($course->id, $todayts)->get_instance();
+        }
+        for ($t = 0; $t < 20; $t++) {
+            $assigninstances[] = $this->create_assignment($course->id, ($todayts + WEEKSECS))->get_instance();
+        }
+
+        // The task should refresh deadline data for users who logged in within the last 6 months by default.
+        set_config('personalmenurefreshdeadlines', '1', 'theme_snap');
+        $task = new refresh_deadline_caches_task();
+        $task->execute();
+
+        // We get cached data now.
+        $deadlines = activity::upcoming_deadlines($student);
+        $this->assertCount(22, $deadlines->events);
+        $this->assertTrue($deadlines->fromcache);
+
+        // Change the window for reviewing last login.
+        $CFG->theme_snap_refresh_deadlines_last_login = '1 day ago';
+
+        // Clear deadlines cache data for the student.
+        $cachekey = $student->id.'_deadlines';
+        $muc      = \cache::make('theme_snap', 'activity_deadlines');
+        $muc->delete($cachekey);
+
+        // Run the task again.
+        $task->execute();
+
+        // No cache this time.
+        $deadlines = activity::upcoming_deadlines($student);
+        $this->assertCount(22, $deadlines->events);
+        $this->assertFalse($deadlines->fromcache);
     }
 
 }
