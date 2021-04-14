@@ -39,32 +39,42 @@ defined('MOODLE_INTERNAL') || die();
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class refresh_deadline_caches_task extends scheduled_task {
+
+    /**
+     * {@inheritDoc}
+     */
     public function get_name() {
         return get_string('refreshdeadlinestask', 'theme_snap');
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public function execute() {
-        global $DB;
+        global $DB, $CFG;
 
         if (empty(get_config('theme_snap', 'personalmenurefreshdeadlines'))) {
             // Skip, setting is off.
             return;
         }
 
+        $lastlogindateformat = empty($CFG->theme_snap_refresh_deadlines_last_login) ?
+            '6 months ago' : $CFG->theme_snap_refresh_deadlines_last_login;
+
         // Fill deadlines for users who logged in yesterday.
-        $query = <<<SQL
+        $query                    = <<<SQL
   SELECT u.id, u.lastlogin
     FROM {user} u
    WHERE u.deleted = :deleted
-     AND u.lastlogin >= :yesterday
+     AND u.lastlogin >= :lastlogints
 SQL;
-        $yesterday = new \DateTime('yesterday', core_date::get_server_timezone_object());
-        $yesterdayts = $yesterday->getTimestamp();
-        $users = $DB->get_recordset_sql($query, [
-            'deleted'   => 0,
-            'yesterday' => strtotime(date('Y-m-d', $yesterdayts))
+        $lastlogindate            = new \DateTime($lastlogindateformat, core_date::get_server_timezone_object());
+        $lastlogints              = $lastlogindate->getTimestamp();
+        $users                    = $DB->get_recordset_sql($query, [
+            'deleted'             => 0,
+            'lastlogints'         => strtotime(date('Y-m-d', $lastlogints))
         ]);
-        $blockinstances = []; // Local cache of instances in courses.
+        $blockinstances           = []; // Local cache of instances in courses.
         $snapfeedsdeadlinesconfig = base64_encode(serialize((object) [
             'feedtype' => 'deadlines'
         ]));
@@ -78,7 +88,15 @@ SQL;
                 if (!isset($blockinstances[$course->id])) {
                     $contextcourse = context_course::instance($course->id);
                     $parentcontextid = $contextcourse->id;
-                    $blockinstances[$course->id] = $DB->record_exists('block_instances', [
+                    $query = <<<SQL
+   SELECT *
+     FROM {block_instances}
+    WHERE blockname = :blockname
+      AND parentcontextid = :parentcontextid
+      AND configdata = :configdata
+SQL;
+
+                    $blockinstances[$course->id] = $DB->record_exists_sql($query, [
                         'blockname'       => 'snapfeeds',
                         'parentcontextid' => $parentcontextid,
                         'configdata'      => $snapfeedsdeadlinesconfig,
