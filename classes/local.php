@@ -2287,6 +2287,7 @@ SQL;
         $events = $eventsobj->events;
         $fromcache = $eventsobj->fromcache ? 1 : 0;
 
+        /** @var core_renderer $output */
         $output = $PAGE->get_renderer('theme_snap', 'core', RENDERER_TARGET_GENERAL);
 
         $res = [];
