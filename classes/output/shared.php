@@ -923,9 +923,13 @@ EOF;
             $gradeitem = \grade_item::fetch_course_item($COURSE->id);
             $displayformat = $gradeitem->get_displaytype();
             // If the display grade form is set as a letter, a letter will appear in the user grade dashboard.
-            if (($displayformat == GRADE_DISPLAY_TYPE_LETTER) ||
+            if ((isset($grade->coursegrade)) &&
+                (($displayformat == GRADE_DISPLAY_TYPE_REAL) ||
+                ($displayformat == GRADE_DISPLAY_TYPE_REAL_PERCENTAGE) ||
+                ($displayformat == GRADE_DISPLAY_TYPE_REAL_LETTER) ||
+                ($displayformat == GRADE_DISPLAY_TYPE_LETTER) ||
                 ($displayformat == GRADE_DISPLAY_TYPE_LETTER_REAL) ||
-                ($displayformat == GRADE_DISPLAY_TYPE_LETTER_PERCENTAGE)) {
+                ($displayformat == GRADE_DISPLAY_TYPE_LETTER_PERCENTAGE))) {
                 $coursegrade = current(explode(' ', $grade->coursegrade['value']));
             } else if (isset($grade->coursegrade['percentage'])) {
                 $coursegrade = current(explode(' ', $grade->coursegrade['percentage']));
