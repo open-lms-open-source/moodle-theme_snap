@@ -1550,7 +1550,7 @@ class local {
             self::course_card_clean_up($context);
             self::set_course_card_image($context, $originalfile);
         }
-        if ($finfo['mimetype'] == 'image/jpeg' && $finfo['width'] > 1380) {
+        if (!empty($finfo) && $finfo['mimetype'] == 'image/jpeg' && $finfo['width'] > 1380) {
             return image::resize($newfile, false, 1280);
         } else {
             return $newfile;
