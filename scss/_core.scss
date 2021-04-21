@@ -419,6 +419,11 @@ li.modtype_page {
             padding-right: 25%;
             width: 100%;
         }
+
+        #pagemod-content-container,
+        .d-block {
+            float: left;
+        }
     }
 }
 
