@@ -824,7 +824,7 @@ class course_renderer extends \core_course_renderer {
         </div>
 
         <div class=pagemod-content tabindex='-1' data-content-loaded={$contentloaded}>
-            <div class='row' id='pagemod-content-container'>
+            <div id='pagemod-content-container'>
                 {$content}
             </div>
             <div class='d-block'><hr><a  class='snap-action-icon snap-icon-close' href='#'>
