@@ -2033,7 +2033,6 @@ ul.events-new + ul.events-underway {
     #mod_quiz_navblock,
     div.qn_buttons.clearfix.allquestionsononepage,
     div.qn_buttons.clearfix.multipages {
-        display: flex !important; // Overrides display block on .block_fake section from core.
         justify-content: center;
         align-items: center;
         text-align: center;
