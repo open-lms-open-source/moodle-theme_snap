@@ -253,18 +253,20 @@ $string['personalmenu'] = 'Henkilökohtainen valikko';
 $string['personalmenufeatures'] = 'Henkilökohtaisen valikon toiminnot';
 $string['personalmenulogintoggle'] = 'Näytä henkilökohtainen valikko kirjauduttaessa';
 $string['personalmenulogintoggledesc'] = 'Avaa henkilökohtaisen valikon heti kirjautumisen jälkeen';
-$string['personalmenuadvancedfeedsenable'] = 'Ota kehittyneet syötteet käyttöön (testausvaiheessa)';
+$string['personalmenuadvancedfeedsenable'] = 'Ota käyttöön mukautetut syötteet';
 $string['personalmenuadvancedfeedsenabledesc'] = 'Kehittyneet syötteet lataavat joitain henkilökohtaisia valikkokohteita, mikä mahdollistaa nopeammat latausajat ja päivittää sisältöä tarpeen mukaan.';
 $string['personalmenuadvancedfeedsperpage'] = 'Kehittyneiden syötteiden näytettävien kohteiden määrä';
 $string['personalmenuadvancedfeedsperpagedesc'] = 'Valitse, montako kohdetta syötteessä näytetään. Käyttäjät näyttää lisää kohteita valitsemalla <strong>Näytä lisää</strong>.';
 $string['personalmenuadvancedfeedslifetime'] = 'Kehittyneiden syötteiden elinikä';
 $string['personalmenuadvancedfeedslifetimedesc'] = 'Valitse, kuinka pitkäksi aikaa syötteet tallennetaan selaimen välimuistiin kirjautumisen jälkeen. Jos annat arvoksi 0, syötteitä ei tallenneta selaimen välimuistiin.';
+$string['personalmenurefreshdeadlines'] = 'Päivitä määräpäivät ajastetun tehtävän avulla.';
+$string['personalmenurefreshdeadlinesdesc'] = 'Kun tehtävä suoritetaan, määräpäivätiedot päivitetään nopeampien sivun latausaikojen saamiseksi.';
 $string['pld'] = 'PLD';
 $string['pluginname'] = 'Snap';
 $string['poster'] = 'Kansikuva';
 $string['posterdesc'] = 'Tämä on sivuston etusivulla näytettävä suuri ylätunnistekuva. Parhaiten toimivat vaakasuuntaiset kuvat, joiden koko on vähintään 1 200 x 600 pikseliä.';
-$string['poweredbyrunby'] = 'Luotu <a href="https://{$a->subdomain}.openlms.net/" target="_blank" rel="noopener">Open LMS:llä</a>,
-joka on <a href="https://moodle.com/" target="_blank" rel="noopener">Moodle</a>-pohjainen tuote.<br>
+$string['poweredbyrunby'] = 'Tehty käyttämällä tuotetta <a href="https://{$a->subdomain}.openlms.net/" target="_blank" rel="noopener">Open LMS</a>,
+joka perustuu <a href="https://moodle.com/" target="_blank" rel="noopener">Moodleen</a>.<br>
 Copyright &#169; {$a->year} Open LMS, kaikki oikeudet pidätetään.';
 $string['previoussection'] = 'Edellinen osio';
 $string['privacy:metadata:theme_snap_course_favorites:courseid'] = 'Käyttäjän suosikkeihin lisäämän kurssin tunnus';
@@ -375,3 +377,4 @@ $string['design_mod_page'] = 'Ota käyttöön sivuaineistojen vanha ulkoasu';
 $string['design_mod_page_description'] = 'Jos tämä on käytössä, sivuaineistojen sisältö näytetään samalla sivulla, kurssilla tai etusivulla.';
 $string['design_activity_chooser'] = 'Palaa takaisin aktiviteettivalitsimen alkuperäiseen muotoiluun';
 $string['design_activity_chooser_description'] = 'Jos asetus valitaan, aktiviteettivalitsin näytetään alkuperäisen asetuksen mukaisena. Tämä vaikuttaa kurssin sivuihin ja etusivuun.';
+$string['refreshdeadlinestask'] = 'Päivitä määräpäivien välimuistissa olevat tiedot. Tämä pitää suorittaa ennen kuin kaikki käyttäjät kirjautuvat sisään.';
