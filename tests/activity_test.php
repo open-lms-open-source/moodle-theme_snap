@@ -1676,7 +1676,7 @@ class theme_snap_acitvity_test extends snap_base_test {
     }
 
     public function test_refresh_deadline_caches_task() {
-        global $CFG;
+        global $CFG, $DB;
 
         $this->resetAfterTest();
 
@@ -1708,6 +1708,25 @@ class theme_snap_acitvity_test extends snap_base_test {
             $assigninstances[] = $this->create_assignment($course->id, ($todayts + WEEKSECS))->get_instance();
         }
 
+        // Snap feeds block test for deadlines refresh. This works w.o the block b/c we use only DB data.
+        $snapdeadlinesconfigdata = (object) [
+            'feedtype' => 'deadlines'
+        ];
+        $time = new DateTime("now", core_date::get_user_timezone_object());
+
+        $blockinsert = (object) [
+            'blockname' => 'snapfeeds',
+            'parentcontextid' => context_course::instance($course->id)->id,
+            'pagetypepattern' => 'course-view-*',
+            'defaultregion' => 'side-pre',
+            'defaultweight' => 1,
+            'configdata' => base64_encode(serialize($snapdeadlinesconfigdata)),
+            'showinsubcontexts' => 1,
+            'timecreated' => $time->getTimestamp(),
+            'timemodified' => $time->getTimestamp()
+        ];
+        $DB->insert_record('block_instances', $blockinsert);
+
         // The task should refresh deadline data for users who logged in within the last 6 months by default.
         set_config('personalmenurefreshdeadlines', '1', 'theme_snap');
         $task = new refresh_deadline_caches_task();
@@ -1715,6 +1734,16 @@ class theme_snap_acitvity_test extends snap_base_test {
 
         // We get cached data now.
         $deadlines = activity::upcoming_deadlines($student);
+        $this->assertCount(22, $deadlines->events);
+        $this->assertTrue($deadlines->fromcache);
+
+        // We get cached data now for the course too.
+        $deadlines = activity::upcoming_deadlines($student, 500, $course);
+        $this->assertCount(22, $deadlines->events);
+        $this->assertTrue($deadlines->fromcache);
+
+        // We get cached data now for the course id too.
+        $deadlines = activity::upcoming_deadlines($student, 500, $course->id);
         $this->assertCount(22, $deadlines->events);
         $this->assertTrue($deadlines->fromcache);
 
@@ -1726,11 +1755,20 @@ class theme_snap_acitvity_test extends snap_base_test {
         $muc      = \cache::make('theme_snap', 'activity_deadlines');
         $muc->delete($cachekey);
 
+        // Clear deadlines cache data for the student and the course.
+        $cachekey = $student->id.'_deadlines_course_'.$course->id;
+        $muc      = \cache::make('theme_snap', 'activity_deadlines');
+        $muc->delete($cachekey);
+
         // Run the task again.
         $task->execute();
 
         // No cache this time.
         $deadlines = activity::upcoming_deadlines($student);
+        $this->assertCount(22, $deadlines->events);
+        $this->assertFalse($deadlines->fromcache);
+
+        $deadlines = activity::upcoming_deadlines($student, 500, $course);
         $this->assertCount(22, $deadlines->events);
         $this->assertFalse($deadlines->fromcache);
     }

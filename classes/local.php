@@ -1658,6 +1658,33 @@ class local {
     }
 
     /**
+     * Get course by id.
+     * @param stdClass|int $courseorid
+     * @return stdClass|false
+     */
+    public static function get_course($courseorid = 0) {
+        global $COURSE;
+
+        if ($courseorid === 0) {
+            return false;
+        }
+
+        if (is_object($courseorid)) {
+            return $courseorid;
+        } else if (is_number($courseorid)) {
+            if (intval($courseorid) === $COURSE->id) {
+                $course = $COURSE;
+            } else {
+                $course = get_course($courseorid);
+            }
+        } else {
+            throw new \coding_exception('paramater $courseorid must be an object or an integer or a numeric string');
+        }
+
+        return $course;
+    }
+
+    /**
      * Some moodle functions don't work correctly with specific userids and this provides a hacky workaround.
      *
      * Temporarily swaps global USER variable.
