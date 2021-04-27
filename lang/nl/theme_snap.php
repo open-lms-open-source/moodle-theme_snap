@@ -261,19 +261,21 @@ $string['personalmenu'] = 'Persoonlijk menu';
 $string['personalmenufeatures'] = 'Functies persoonlijk menu';
 $string['personalmenulogintoggle'] = 'Toon persoonlijk menu bij het aanmelden';
 $string['personalmenulogintoggledesc'] = 'Opent het persoonlijke menu onmiddellijk na het aanmelden';
-$string['personalmenuadvancedfeedsenable'] = 'Geavanceerde feeds inschakelen (experimenteel)';
+$string['personalmenuadvancedfeedsenable'] = 'Geavanceerde feeds inschakelen';
 $string['personalmenuadvancedfeedsenabledesc'] = 'Met geavanceerde feeds worden bepaalde persoonlijke menu-items geladen, waardoor inhoud sneller op aanvraag wordt weergegeven en vernieuwd.';
 $string['personalmenuadvancedfeedsperpage'] = 'Aantal weergegeven items in geavanceerde feeds';
 $string['personalmenuadvancedfeedsperpagedesc'] = 'Kies het aantal items dat je in de feed wilt weergeven. Gebruikers kunnen <strong>Meer weergeven</strong> selecteren om meer items weer te geven.';
 $string['personalmenuadvancedfeedslifetime'] = 'Levensduur geavanceerde feeds';
 $string['personalmenuadvancedfeedslifetimedesc'] = 'Kies hoe lang de feeds in de browsercache blijven opgeslagen na het aanmelden. Als de waarde op 0 wordt ingesteld, worden de feeds niet opgeslagen in de browsercache.';
+$string['personalmenurefreshdeadlines'] = 'Deadlines vernieuwen met een geplande taak.';
+$string['personalmenurefreshdeadlinesdesc'] = 'Bij de uitvoering van deze taak worden de data van deadlines vernieuwd om de laadtijd van pagina’s te verkorten.';
 $string['pld'] = 'PLD';
 $string['pluginname'] = 'Snap';
 $string['poster'] = 'Omslagafbeelding';
 $string['posterdesc'] = 'Een grote headerafbeelding voor de startpagina van je site. Liggende afbeeldingen (1200 x 600 pixels) of groter werken het beste.';
 $string['poweredbyrunby'] = 'Gebouwd met <a href="https://{$a->subdomain}.openlms.net/" target="_blank" rel="noopener">Open LMS</a>,
 een op <a href="https://moodle.com/" target="_blank" rel="noopener">Moodle</a> gebaseerd product.<br>
-Copyright &#169; {$a->year} Open LMS, alle rechten voorbehouden.';
+Copyright &#169; {$a} Open LMS, alle rechten voorbehouden.';
 $string['previoussection'] = 'Vorige sectie';
 $string['privacy:metadata:theme_snap_course_favorites:courseid'] = 'De cursus-ID van de cursus die de gebruiker als favoriet heeft ingesteld';
 $string['privacy:metadata:theme_snap_course_favorites:userid'] = 'De gebruikers-ID van de gebruiker die de cursus als favoriet heeft ingesteld';
@@ -392,3 +394,4 @@ $string['design_mod_page'] = 'Vorig ontwerp voor paginabronnen inschakelen';
 $string['design_mod_page_description'] = 'Indien ingeschakeld wordt de paginabroninhoud op dezelfde pagina, in de cursus of op de beginpagina weergegeven.';
 $string['design_activity_chooser'] = 'Terug naar het oorspronkelijke ontwerp voor de activiteitenkiezer';
 $string['design_activity_chooser_description'] = 'Als deze optie is ingeschakeld, wordt de activiteitenkiezer weergegeven met het oorspronkelijke ontwerp. Dit heeft invloed op de cursus en de startpagina\'s.';
+$string['refreshdeadlinestask'] = 'Vernieuwt de data van deadlines in de cache. Voer deze taak uit voordat alle gebruikers zich aanmelden.';
