@@ -4542,10 +4542,11 @@ li.snap-activity.modtype_folder div[id^="folder_tree"] {
     color: white;
 }
 
-// Do not limit the width of the image for Drag and drop onto image quizzes type.
-#page-question-type-ddimageortext #id_previewareaheader .ddarea.que.ddimageortext {
-    img.dropbackground,
-    img.droppreview {
-        max-width: none !important;
-    }
+// Do not limit the width of the image for Drag and drop onto image quizzes type, for editing, preview and attempt.
+#page-question-type-ddimageortext #id_previewareaheader .ddarea.que.ddimageortext img.dropbackground,
+#page-question-type-ddimageortext #id_previewareaheader .ddarea.que.ddimageortext img.droppreview,
+#page-question-preview .droparea .dropzones img.draghome,
+#page-mod-quiz-attempt .droparea .dropzones img.draghome {
+    max-width: none !important;
 }
+
