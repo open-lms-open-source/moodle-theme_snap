@@ -260,19 +260,21 @@ $string['personalmenu'] = 'Menu personnel';
 $string['personalmenufeatures'] = 'Fonctionnalités du menu personnel';
 $string['personalmenulogintoggle'] = 'Afficher le menu personnel lors de la connexion';
 $string['personalmenulogintoggledesc'] = 'Ouvre immédiatement le menu personnel après la connexion';
-$string['personalmenuadvancedfeedsenable'] = 'Activer les flux avancés (expérimental)';
+$string['personalmenuadvancedfeedsenable'] = 'Activer les flux avancés';
 $string['personalmenuadvancedfeedsenabledesc'] = 'Les flux avancés chargent des éléments de menu personnalisés, ce qui permet de réduire les temps de chargement et d\'actualiser le contenu sur demande.';
 $string['personalmenuadvancedfeedsperpage'] = 'Nombre d\'éléments d\'affichage des flux avancés';
 $string['personalmenuadvancedfeedsperpagedesc'] = 'Choisissez le nombre d\'éléments à afficher dans le flux. Les utilisateurs pourront sélectionner l\'option <strong>Voir plus</strong> pour afficher davantage d\'éléments.';
 $string['personalmenuadvancedfeedslifetime'] = 'Durée de vie des flux avancés';
 $string['personalmenuadvancedfeedslifetimedesc'] = 'Choisissez la durée pendant laquelle les flux seront mis en cache dans le navigateur après connexion. Sélectionner une valeur de 0 empêchera la mise en cache des flux dans le navigateur.';
+$string['personalmenurefreshdeadlines'] = 'Actualiser les échéances à l\'aide d\'une tâche planifiée.';
+$string['personalmenurefreshdeadlinesdesc'] = 'Lorsque la tâche s\'exécute, les données d\'échéance seront actualisées pour permettre un chargement plus rapide des pages.';
 $string['pld'] = 'CPP';
 $string['pluginname'] = 'Snap';
 $string['poster'] = 'Image de couverture';
 $string['posterdesc'] = 'Image d\'en-tête de grande taille destinée à la page d\'accueil de votre site. Les images en mode paysage (1200 pixels x 600 pixels ou plus) sont plus optimales.';
-$string['poweredbyrunby'] = 'Conçu avec <a href="https://{$a->subdomain}.openlms.net/" target="_blank" rel="noopener">Open LMS</a>,
+$string['poweredbyrunby'] = 'Conçu avec <a href="https://www.openlms.net/" target="_blank" rel="noopener">Open LMS</a>,
 une technologie <a href="https://moodle.com/" target="_blank" rel="noopener">Moodle</a>.<br>
-Copyright &#169; {$a->year} Open LMS, tous droits réservés.';
+Copyright &#169; {$a} Open LMS, tous droits réservés.';
 $string['previoussection'] = 'Section précédente';
 $string['privacy:metadata:theme_snap_course_favorites:courseid'] = 'Identifiant du cours que l\'utilisateur a ajouté à ses favoris';
 $string['privacy:metadata:theme_snap_course_favorites:userid'] = 'Identifiant de l\'utilisateur qui a ajouté le cours à ses favoris';
@@ -391,3 +393,4 @@ $string['design_mod_page'] = 'Activer la conception précédente pour les ressou
 $string['design_mod_page_description'] = 'Lorsque cette option est activée, le contenu de la ressource de page est affiché au sein de la même page, du même cours ou de la même page d\'accueil.';
 $string['design_activity_chooser'] = 'Revenir au design original pour le choix de l’activité';
 $string['design_activity_chooser_description'] = 'Si cette option est activée, le sélecteur d’activité s’affichera sous son aspect d’origine. Cela affectera le cours et les premières pages.';
+$string['refreshdeadlinestask'] = 'Actualiser les échéances des données mises en cache. Cette tâche doit être exécutée avant que tous les utilisateurs se connectent.';
