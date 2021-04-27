@@ -86,7 +86,7 @@ $string['covervideo'] = 'Video di copertina';
 $string['comingsoon'] = 'Presto disponibile!';
 $string['createsection'] = 'Crea sezione';
 $string['current'] = 'Corrente';
-$string['customcss'] = 'CSS Personalizzato';
+$string['customcss'] = 'Personalizza CSS';
 $string['customcssdesc'] = 'Da un grande potere derivano grandi responsabilità. È necessario risolvere i problemi causati dal codice CSS aggiunto qui. Il supporto Open LMS non risolve i problemi né fornisce alcun aiuto per i contenuti relativi ai CSS.';
 $string['customtopbar'] = 'Barra di navigazione';
 $string['customisenavbar'] = 'Modifica colori barra di navigazione';
@@ -263,19 +263,21 @@ $string['personalmenu'] = 'Menu personale';
 $string['personalmenufeatures'] = 'Elementi del menu personale';
 $string['personalmenulogintoggle'] = 'Mostra menu personale al login';
 $string['personalmenulogintoggledesc'] = 'Apre il menu personale subito dopo il login';
-$string['personalmenuadvancedfeedsenable'] = 'Abilita Feed avanzati (sperimentale)';
+$string['personalmenuadvancedfeedsenable'] = 'Abilita Feed avanzati';
 $string['personalmenuadvancedfeedsenabledesc'] = 'Feed avanzati carica elementi personali del menu che consentono di velocizzare i tempi di caricamento e di aggiornamento dei contenuti su richiesta.';
 $string['personalmenuadvancedfeedsperpage'] = 'Numero di elementi Feed avanzati visualizzati';
 $string['personalmenuadvancedfeedsperpagedesc'] = 'Scegli il numero di elementi da visualizzare nel feed. Gli utenti possono selezionare <strong>Visualizza altro</strong> per visualizzare altri elementi.';
 $string['personalmenuadvancedfeedslifetime'] = 'Durata dei feed avanzati';
 $string['personalmenuadvancedfeedslifetimedesc'] = 'Scegliere l\'intervallo temporale durante il quale i feed rimarranno salvati nella cache del browser dopo il login. Se si imposta il valore su 0, i feed non saranno salvati nella cache del browser.';
+$string['personalmenurefreshdeadlines'] = 'Aggiorna le scadenze usando le attività pianificate.';
+$string['personalmenurefreshdeadlinesdesc'] = 'Quando l’attività è in corso, i dati delle scadenze saranno aggiornati con tempi di caricamento pagina più rapidi.';
 $string['pld'] = 'PLD';
 $string['pluginname'] = 'Snap';
 $string['poster'] = 'Immagine di copertina';
 $string['posterdesc'] = 'Un\'immagine grande dell\'intestazione per la pagina principale del sito. Le immagini orizzontali (1200 x 600 pixel) o più grandi forniscono risultati migliori.';
 $string['poweredbyrunby'] = 'Realizzato con <a href="https://{$a->subdomain}.openlms.net/" target="_blank" rel="noopener">Open LMS</a>,
 un prodotto basato su <a href="https://moodle.com/" target="_blank" rel="noopener">Moodle</a>.<br>
-Copyright &#169; {$a->year} Open LMS, tutti i diritti riservati.';
+Copyright #169; {$a} Open LMS, tutti i diritti riservati.';
 $string['previoussection'] = 'Sezione precedente';
 $string['privacy:metadata:theme_snap_course_favorites:courseid'] = 'ID del corso che l\'utente ha contrassegnato come preferito';
 $string['privacy:metadata:theme_snap_course_favorites:userid'] = 'L\'ID utente dell\'utente che ha contrassegnato come preferito il corso';
@@ -394,3 +396,4 @@ $string['design_mod_page'] = 'Abilita la struttura precedente per le risorse del
 $string['design_mod_page_description'] = 'Abilitando questa opzione, i contenuti delle risorse della pagina vengono visualizzati all\'interno della stessa pagina, dello stesso corso o della stessa pagina home.';
 $string['design_activity_chooser'] = 'Esegui roll back al progetto originale per il selettore attività';
 $string['design_activity_chooser_description'] = 'Attivando questa opzione, il selettore attività apparirà con il progetto originale, interessando il corso e le pagine home.';
+$string['refreshdeadlinestask'] = 'Aggiorna i dati cache scadenze prima di ogni accesso utente.';
