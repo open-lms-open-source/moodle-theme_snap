@@ -263,19 +263,21 @@ $string['personalmenu'] = 'Osobní nabídka';
 $string['personalmenufeatures'] = 'Prvky osobní nabídky';
 $string['personalmenulogintoggle'] = 'Zobrazit osobní nabídku při přihlášení';
 $string['personalmenulogintoggledesc'] = 'Otevře osobní nabídku hned po přihlášení.';
-$string['personalmenuadvancedfeedsenable'] = 'Povolit pokročilé kanály (experimentální)';
+$string['personalmenuadvancedfeedsenable'] = 'Povolit pokročilé zdroje';
 $string['personalmenuadvancedfeedsenabledesc'] = 'Pokročilé kanály načítají určité položky osobní nabídky, což umožňuje kratší dobu načítání a obnovuje obsah na vyžádání.';
 $string['personalmenuadvancedfeedsperpage'] = 'Počet zobrazených položek pokročilých kanálů';
 $string['personalmenuadvancedfeedsperpagedesc'] = 'Vyberte počet položek, které se v kanálu zobrazí. Uživatelé mohou další položky zobrazit výběrem možnosti <strong>Zobrazit více</strong>.';
 $string['personalmenuadvancedfeedslifetime'] = 'Rozšířená životnost kanálů';
 $string['personalmenuadvancedfeedslifetimedesc'] = 'Určete dobu, po kterou budou kanály po přihlášení uloženy ve vyrovnávací paměti prohlížeče. Když nastavíte hodnotu 0, kanály se do vyrovnávací paměti prohlížeče nebudou ukládat.';
+$string['personalmenurefreshdeadlines'] = 'Obnovení termínů pomocí naplánované úlohy.';
+$string['personalmenurefreshdeadlinesdesc'] = 'Po spuštění úlohy se data termínu obnoví, aby se zrychlilo načítání stránek.';
 $string['pld'] = 'PLD';
 $string['pluginname'] = 'Snap';
 $string['poster'] = 'Titulní obrázek';
 $string['posterdesc'] = 'Jedná se o velký obrázek v záhlaví titulní stránky vašeho webu. Nejlepší je použít obrázek na šířku (1200 x 600 pixelů nebo více).';
 $string['poweredbyrunby'] = 'Sestaveno pomocí systému <a href="https://{$a->subdomain}.openlms.net/" target="_blank" rel="noopener">Open LMS</a>,
 který používá technologii <a href="https://moodle.com/" target="_blank" rel="noopener">Moodle</a>.<br>
-Copyright &#169; {$a->year} Open LMS, všechna práva vyhrazena.';
+&#169; {$a->year} Open LMS, všechna práva vyhrazena.';
 $string['previoussection'] = 'Předchozí sekce';
 $string['privacy:metadata:theme_snap_course_favorites:courseid'] = 'ID kurzu, který uživatel přidal do oblíbených';
 $string['privacy:metadata:theme_snap_course_favorites:userid'] = 'ID uživatele, který kurz přidal do oblíbených';
@@ -393,3 +395,4 @@ $string['design_mod_page'] = 'Povolit předchozí vzhled zdrojů stránek';
 $string['design_mod_page_description'] = 'Pokud je tato možnost povolena, bude se obsah zdrojů stránek zobrazovat v rámci stejné stránky, kurzu nebo titulní stránky.';
 $string['design_activity_chooser'] = 'Vrátit se zpět k původnímu designu voliče aktivity';
 $string['design_activity_chooser_description'] = 'Pokud je tato možnost povolena, volič aktivity se bude zobrazovat v původním designu. Projeví se to v kurzu i na titulních stránkách.';
+$string['refreshdeadlinestask'] = 'Obnovení termínů uložených v mezipaměti. Tato funkce by měla být spuštěna před přihlášením všech uživatelů.';
