@@ -319,10 +319,10 @@ class activity {
         foreach ($courseids as $courseid) {
 
             // Get the assignments that need grading.
-            list($esql, $params) = get_enrolled_sql(\context_course::instance($courseid), 'mod/assign:submit', 0, true);
+            [$esql, $params] = get_enrolled_sql(\context_course::instance($courseid), 'mod/assign:submit', 0, true);
             $params['courseid'] = $courseid;
 
-            list($sqlgroupsjoin, $sqlgroupswhere, $groupparams) = self::get_groups_sql($courseid);
+            [$sqlgroupsjoin, $sqlgroupswhere, $groupparams] = self::get_groups_sql($courseid);
 
             $sql = "-- Snap sql
                     SELECT cm.id AS coursemoduleid, a.id AS instanceid, a.course,
@@ -404,7 +404,7 @@ class activity {
         foreach ($courseids as $courseid) {
 
             // Get people who are typically not students (people who can view grader report) so that we can exclude them!
-            list($graderids, $params) = get_enrolled_sql(\context_course::instance($courseid), 'moodle/grade:viewall');
+            [$graderids, $params] = get_enrolled_sql(\context_course::instance($courseid), 'moodle/grade:viewall');
             $params['courseid'] = $courseid;
 
             $sql = "-- Snap SQL
@@ -497,7 +497,7 @@ class activity {
 
         // Get grading information for remaining of assigns.
         $coursecontext = \context_course::instance($courseid);
-        list($esql, $params) = get_enrolled_sql($coursecontext, 'mod/assign:submit', 0, true);
+        [$esql, $params] = get_enrolled_sql($coursecontext, 'mod/assign:submit', 0, true);
 
         $params['submitted'] = ASSIGN_SUBMISSION_STATUS_SUBMITTED;
         $params['courseid'] = $courseid;
@@ -578,7 +578,7 @@ class activity {
             // Results are not cached, so lets get them.
 
             // Get people who are typically not students (people who can view grader report) so that we can exclude them!
-            list($graderids, $params) = get_enrolled_sql(\context_course::instance($courseid), 'moodle/grade:viewall');
+            [$graderids, $params] = get_enrolled_sql(\context_course::instance($courseid), 'moodle/grade:viewall');
             $params['courseid'] = $courseid;
 
             if ($maintable == 'quiz') {
@@ -627,11 +627,11 @@ class activity {
         if (!isset($modtotalsbyid['assign'][$courseid])) {
             // Results are not cached, so lets get them.
 
-            list($esql, $params) = get_enrolled_sql(\context_course::instance($courseid), 'mod/assign:submit', 0, true);
+            [$esql, $params] = get_enrolled_sql(\context_course::instance($courseid), 'mod/assign:submit', 0, true);
             $params['courseid'] = $courseid;
             $params['submitted'] = ASSIGN_SUBMISSION_STATUS_SUBMITTED;
 
-            list($sqlgroupsjoin, $sqlgroupswhere, $groupparams) = self::get_groups_sql($courseid);
+            [$sqlgroupsjoin, $sqlgroupswhere, $groupparams] = self::get_groups_sql($courseid);
 
             // Get the number of submissions for all assign activities in this course.
             $sql = "-- Snap sql
@@ -731,7 +731,7 @@ class activity {
 
         $coursecontext = \context_course::instance($courseid);
         // Get people who are typically not students (people who can view grader report) so that we can exclude them!
-        list($graderids, $params) = get_enrolled_sql($coursecontext, 'moodle/grade:viewall');
+        [$graderids, $params] = get_enrolled_sql($coursecontext, 'moodle/grade:viewall');
         $params['courseid'] = $courseid;
 
         if (!isset($totalsbyquizid)) {
@@ -954,7 +954,7 @@ class activity {
             $groups = groups_get_user_groups($courseid);
 
             if ($groups[0]) {
-                list ($groupsql, $params) = $DB->get_in_or_equal($groups[0]);
+                [$groupsql, $params] = $DB->get_in_or_equal($groups[0]);
 
                 $sql = "-- Snap sql
                     SELECT ma.id,
@@ -1143,7 +1143,7 @@ class activity {
             $courses = enrol_get_my_courses();
             $courseids = array_keys($courses);
             $courseids[] = SITEID;
-            list ($coursesql, $params) = $DB->get_in_or_equal($courseids);
+            [$coursesql, $params] = $DB->get_in_or_equal($courseids);
             $coursesql = 'AND gi.courseid '.$coursesql;
         }
 
@@ -1191,7 +1191,7 @@ class activity {
 
         $duedateinfo = (object) ['duedate' => null, 'extended' => false];
 
-        list ($course, $cminfo) = get_course_and_cm_from_instance($assignid, 'assign');
+        [$course, $cminfo] = get_course_and_cm_from_instance($assignid, 'assign');
         unset($course);
 
         // Check overrides.
@@ -1308,7 +1308,7 @@ class activity {
         // the calendar apis get_events method.
         // Existing functions that were using the old calendar_get_events() were passing a mixture of array, int,
         // boolean for these parameters, but with the new API method, only null and arrays are accepted.
-        list($userparam, $groupparam, $courseparam) = array_map(function($param) {
+        [$userparam, $groupparam, $courseparam] = array_map(function($param) {
             // If parameter is true, return null.
             if ($param === true) {
                 return null;
@@ -1417,7 +1417,7 @@ class activity {
                     }
                 }
                 if (!empty($cmids)) {
-                    list($insql, $params) = $DB->get_in_or_equal($cmids);
+                    [$insql, $params] = $DB->get_in_or_equal($cmids);
                     $sql = "SELECT deletioninprogress
                           FROM {course_modules}
                          WHERE id $insql
@@ -1449,8 +1449,7 @@ class activity {
             // Validation added to prevent array offset.
             $courseid = array_key_exists($event->courseid, $courses) ? $courses[$event->courseid] : 0;
 
-            /** @var \cm_info $cminfo */
-            list ($course, $cminfo) = get_course_and_cm_from_instance(
+            [$course, $cminfo] = get_course_and_cm_from_instance(
                     $event->instance, $event->modulename,  $courseid, $event->userid);
             unset($course);
 
@@ -1502,10 +1501,10 @@ class activity {
      * max requested.
      * @param stdClass|integer $userorid
      * @param integer $maxdeadlines
-     * @param integer $courseid
+     * @param stdClass|integer $courseorid
      * @return stdClass
      */
-    public static function upcoming_deadlines($userorid, $maxdeadlines = 500, $courseid = 0) {
+    public static function upcoming_deadlines($userorid, $maxdeadlines = 500, $courseorid = 0) {
         global $USER;
         $origuser = $USER;
         $user = local::get_user($userorid);
@@ -1519,10 +1518,12 @@ class activity {
 
         $cacheprefix = 'deadlines';
         $courses = enrol_get_users_courses($user->id, true);
-        if ($courseid !== 0) {
-            if (is_siteadmin() || isset($courses[$courseid])) {
-                $courses = [$courseid => get_course($courseid)];
-                $cacheprefix .= '_course_' . $courseid;
+        if ($courseorid !== 0) {
+            $course = local::get_course($courseorid);
+            if ($course !== false &&
+                (is_siteadmin() || isset($courses[$course->id]))) {
+                $courses = [$course->id => $course];
+                $cacheprefix .= '_course_' . $course->id;
             } else {
                 // The user is not enrolled on this course, let's clean up the course lists.
                 $courses = [];
