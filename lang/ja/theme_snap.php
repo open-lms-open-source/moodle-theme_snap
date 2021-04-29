@@ -261,18 +261,20 @@ $string['personalmenu'] = 'パーソナルメニュー';
 $string['personalmenufeatures'] = 'パーソナルメニュー機能';
 $string['personalmenulogintoggle'] = 'ログイン時に個人用メニューを表示する';
 $string['personalmenulogintoggledesc'] = 'ログイン後は個人用メニューを開く';
-$string['personalmenuadvancedfeedsenable'] = '高度なフィードを有効にする (実験的)';
+$string['personalmenuadvancedfeedsenable'] = '高度なフィードを有効にする';
 $string['personalmenuadvancedfeedsenabledesc'] = '高度なフィードでは、読み込み時間の高速化を可能にし、コンテンツをオンデマンドでリフレッシュする、個人的なメニュー項目が読み込みまれます。';
 $string['personalmenuadvancedfeedsperpage'] = '高度なフィード項目の表示数';
 $string['personalmenuadvancedfeedsperpagedesc'] = 'フィードで表示する項目の数を選択します。ユーザは[<strong>さらに表示</strong>]を選択して追加項目を表示できます。';
 $string['personalmenuadvancedfeedslifetime'] = '高度なフィードの有効期間';
 $string['personalmenuadvancedfeedslifetimedesc'] = 'ログイン後にフィードがブラウザにキャッシュされる時間を選択します。0を選択するとフィードはブラウザにキャッシュされません。';
+$string['personalmenurefreshdeadlines'] = 'スケジュールタスクを使用して終了日時をリフレッシュします。';
+$string['personalmenurefreshdeadlinesdesc'] = 'タスクを実行したときに、終了日時データはより速いページロード時間でリフレッシュされます。';
 $string['pld'] = 'PLD';
 $string['pluginname'] = 'Snap';
 $string['poster'] = 'カバーイメージ';
 $string['posterdesc'] = 'サイトのフロントページ用の大きいヘッダイメージです。横向きイメージ (1200 x 600ピクセル) 以上が最適です。';
 $string['poweredbyrunby'] = '<a href="https://{$a->subdomain}.openlms.net/" target="_blank" rel="noopener">Open LMS</a>,
-(<a href="https://moodle.com/" target="_blank" rel="noopener">Moodle</a>ベースの製品) で構築しています。<br>
+a <a href="https://moodle.com/" target="_blank" rel="noopener">Moodle</a>ベースの製品) で構築しています。<br>
 Copyright &#169; {$a->year} Open LMS, All Rights Reserved.';
 $string['previoussection'] = '前のセクション';
 $string['privacy:metadata:theme_snap_course_favorites:courseid'] = 'ユーザがお気に入りとしてマークしたコースのコースID';
@@ -392,3 +394,4 @@ $string['design_mod_page'] = 'ページリソースの以前のデザインを�
 $string['design_mod_page_description'] = '有効にすると、ページリソースのコンテンツが、同じページ、コース、またはフロントページに表示されます。';
 $string['design_activity_chooser'] = '活動チューザのオリジナルのデザインにロールバックする';
 $string['design_activity_chooser_description'] = '有効にすると、活動チューザがオリジナルのデザインで表示されます。これは、コースとフロントページに影響を与えます。';
+$string['refreshdeadlinestask'] = '終了日時のキャッシュされたデータをリフレッシュします。これはすべてのユーザがログインする前に実行される必要があります。';

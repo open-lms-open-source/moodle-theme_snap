@@ -29,7 +29,7 @@ class theme_snap_tr_lang_pack_test extends advanced_testcase  {
     /**
      * Setup for each test.
      */
-    protected function setUp():void {
+    protected function setUp(): void {
         $this->resetAfterTest();
     }
 
@@ -42,21 +42,19 @@ class theme_snap_tr_lang_pack_test extends advanced_testcase  {
         // Array is contained in "Strings" attribute.
         $stringsarr = $stringsarr['Strings'];
 
-        $string = [];
         $discrepancies = 0;
-        $langfilelocation = $CFG->dirroot . '/theme/snap/lang/tr/theme_snap.php';
-        require_once($langfilelocation);
+        $CFG->lang = 'tr';
 
         foreach ($stringsarr as $stringitem) {
             $stringid = $stringitem['Stringid'];
             $stringlocal = $stringitem['Local'];
-
-            if ($string[$stringid] !== $stringlocal) {
+            $expected = get_string($stringid, 'theme_snap');
+            if ($expected !== $stringlocal) {
                 $discrepancies++;
             }
         }
 
-        $message = 'There are discrepancies on the use of the tr language. ';
+        $message = "There are $discrepancies discrepancies on the use of the tr language. ";
         $message .= 'Make sure you run theme/snap/cli/fix_tr_lang_strings.php to fix them.';
         $this->assertEmpty($discrepancies, $message);
     }
