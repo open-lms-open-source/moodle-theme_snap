@@ -263,18 +263,20 @@ $string['personalmenu'] = 'Menú personal';
 $string['personalmenufeatures'] = 'Características del menú personal';
 $string['personalmenulogintoggle'] = 'Mostrar menú personal en el inicio de sesión';
 $string['personalmenulogintoggledesc'] = 'Abre el menú personal inmediatamente después de iniciar sesión.';
-$string['personalmenuadvancedfeedsenable'] = 'Habilitar las fuentes avanzadas (experimental)';
+$string['personalmenuadvancedfeedsenable'] = 'Habilitar las fuentes avanzadas';
 $string['personalmenuadvancedfeedsenabledesc'] = 'Las fuentes avanzadas cargan algunos elementos del menú personal, lo que permite tiempos de carga más rápidos y actualiza el contenido bajo demanda.';
 $string['personalmenuadvancedfeedsperpage'] = 'Recuento de visualización de elementos de fuentes avanzadas';
 $string['personalmenuadvancedfeedsperpagedesc'] = 'Seleccione el número de elementos que desea mostrar en la fuente. Los usuarios pueden seleccionar <strong>Ver más</strong> para mostrar elementos adicionales.';
 $string['personalmenuadvancedfeedslifetime'] = 'Duración de fuentes avanzadas';
 $string['personalmenuadvancedfeedslifetimedesc'] = 'Elija la cantidad de tiempo que se almacenarán las fuentes en la memoria caché del navegador después del inicio de sesión. Si el valor es 0, las fuentes no se almacenarán.';
+$string['personalmenurefreshdeadlines'] = 'Actualice las fechas límite usando una tarea programada.';
+$string['personalmenurefreshdeadlinesdesc'] = 'Cuando la tarea se ejecute, los datos de la fecha límite se actualizarán para que los tiempos de carga de la página sean más rápidos.';
 $string['pld'] = 'PLD';
 $string['pluginname'] = 'Snap';
 $string['poster'] = 'Imagen de tapa';
 $string['posterdesc'] = 'Imagen de gran tamaño para la página principal del sitio. Las imágenes apaisadas (de 1200 x 600 píxeles) o de mayor tamaño son la mejor opción.';
 $string['poweredbyrunby'] = 'Diseñado con <a href="https://{$a->subdomain}.openlms.net/" target="_blank" rel="noopener">Open LMS</a>,
-un producto basado en <a href="https://moodle.com/" target="_blank" rel="noopener">Moodle</a>.<br>
+un producto de <a href="https://moodle.com/" target="_blank" rel="noopener">Moodle</a>.<br>
 Copyright &#169; {$a->year} Open LMS, todos los derechos reservados.';
 $string['previoussection'] = 'Sección anterior';
 $string['privacy:metadata:theme_snap_course_favorites:courseid'] = 'ID del curso de preferencia del usuario';
@@ -393,3 +395,4 @@ $string['design_mod_page'] = 'Habilitar el diseño previo para los recursos de l
 $string['design_mod_page_description'] = 'Si se habilita esta opción, el contenido de los recursos de la página se mostrará dentro de la misma página, curso o página principal.';
 $string['design_activity_chooser'] = 'Volver al diseño original del selector de actividad';
 $string['design_activity_chooser_description'] = 'Si se habilita esta opción, el selector de actividad se mostrará con el diseño original. Esto afectará al curso y a las páginas principales.';
+$string['refreshdeadlinestask'] = 'Actualice los datos de la caché de las fechas límite. Esto debe ejecutarse antes de que todos los usuarios se conecten.';

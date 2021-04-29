@@ -213,7 +213,7 @@ yalnızca kimlik kayıtları (kategori kayıtları) olan sayısal değerler geç
 "12":"#CC0084",<br>
 "56":"#CC0087",<br>
 "89":"#CCF084"}';
-$string['knowledgebase'] = 'Open LMS Bilgi Bankası';
+$string['knowledgebase'] = 'Blackboard Open LMS Bilgi Bankası';
 $string['list'] = 'Liste';
 $string['linkedin'] = 'LinkedIn';
 $string['linkedindesc'] = 'Organizasyonunuzun LinkedIn url\'si.';
@@ -262,12 +262,14 @@ $string['personalmenu'] = 'Kişisel menü';
 $string['personalmenufeatures'] = 'Kişisel menü özellikleri';
 $string['personalmenulogintoggle'] = 'Oturum açma sonrasında kişisel menüyü göster';
 $string['personalmenulogintoggledesc'] = 'Oturum açılır açılmaz kişisel menüyü açar';
-$string['personalmenuadvancedfeedsenable'] = 'Gelişmiş beslemeleri etkinleştir (Deneysel)';
+$string['personalmenuadvancedfeedsenable'] = 'Gelişmiş beslemeleri etkinleştir';
 $string['personalmenuadvancedfeedsenabledesc'] = 'Gelişmiş beslemeler, daha kısa yükleme süresi sağlayan ve istek üzerine içeriği yenileyebilen bazı kişisel menü öğelerini yükler.';
 $string['personalmenuadvancedfeedsperpage'] = 'Gelişmiş beslemelerde öğe görüntüleme sayısı';
 $string['personalmenuadvancedfeedsperpagedesc'] = 'Beslemede gösterilecek öğe sayısını seçin. Kullanıcılar ek öğeleri görüntülemek için <strong>Daha fazla görüntüle</strong>\'yi seçebilir.';
 $string['personalmenuadvancedfeedslifetime'] = 'Gelişmiş akış kullanım süresi';
 $string['personalmenuadvancedfeedslifetimedesc'] = 'Akışların oturum açma sonrasında tarayıcıda ne kadar süreyle önbellekte tutulacağını seçin. "0" değeri atandığında akışlar tarayıcıda önbellekte tutulmaz.';
+$string['personalmenurefreshdeadlines'] = 'Zamanlanmış görev kullanarak bitiş tarihlerini yenile';
+$string['personalmenurefreshdeadlinesdesc'] = 'Görev çalıştığında daha hızlı sayfa yükleme süreleri için bitiş tarihi verileri yenilenecektir.';
 $string['pld'] = 'PLD';
 $string['pluginname'] = 'Snap';
 $string['poster'] = 'Kapak görüntüsü';
@@ -393,3 +395,4 @@ $string['design_mod_page'] = 'Sayfa kaynakları için önceki tasarımı etkinle
 $string['design_mod_page_description'] = 'Bu ayar etkinleştirilirse sayfa kaynağı içeriği; aynı sayfa, kurs veya ön sayfa içerisinde görüntülenir.';
 $string['design_activity_chooser'] = 'Etkinlik seçici için orijinal tasarıma geri dön';
 $string['design_activity_chooser_description'] = 'Bu ayar etkinleştirilirse etkinlik seçici orijinal tasarımda görüntülenir. Bu, kursu ve ön sayfaları etkiler.';
+$string['refreshdeadlinestask'] = 'Bitiş tarihlerinin önbellek verilerini yenile. Bu, tüm kullanıcılar oturum açmadan önce çalıştırılmalıdır.';

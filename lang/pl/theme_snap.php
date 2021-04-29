@@ -85,7 +85,7 @@ $string['covervideo'] = 'Film tytułowy';
 $string['comingsoon'] = 'Już wkrótce!';
 $string['createsection'] = 'Utwórz sekcję';
 $string['current'] = 'Bieżąca';
-$string['customcss'] = 'Niestandardowy CSS';
+$string['customcss'] = 'Niestandardowe reguły CSS';
 $string['customcssdesc'] = 'Należy pamiętać, że duże możliwości wiążą się z poważną odpowiedzialnością. Wszelkie problemy spowodowane przez arkusz CSS dodany w tym miejscu trzeba rozwiązywać we własnym zakresie. Dział pomocy technicznej Open LMS nie zajmuje się rozwiązywaniem problemów wynikających z użycia arkuszy CSS ani nie pomaga w ich rozwiązywaniu.';
 $string['customtopbar'] = 'Pasek nawigacji';
 $string['customisenavbar'] = 'Zmień kolory paska nawigacyjnego';
@@ -262,18 +262,20 @@ $string['personalmenu'] = 'Menu osobiste';
 $string['personalmenufeatures'] = 'Funkcje menu osobistego';
 $string['personalmenulogintoggle'] = 'Pokaż menu osobiste podczas logowania';
 $string['personalmenulogintoggledesc'] = 'Otwiera menu osobiste natychmiast po zalogowaniu.';
-$string['personalmenuadvancedfeedsenable'] = 'Włącz zaawansowane źródła (eksperymentalne)';
+$string['personalmenuadvancedfeedsenable'] = 'Włącz zaawansowane strumienie';
 $string['personalmenuadvancedfeedsenabledesc'] = 'Zaawansowane źródła ładują osobiste elementy menu, które umożliwiają szybsze ładowanie i odświeżania treści na żądanie.';
 $string['personalmenuadvancedfeedsperpage'] = 'Liczba wyświetlanych elementów zaawansowanego źródła';
 $string['personalmenuadvancedfeedsperpagedesc'] = 'Wybierz liczbę elementów wyświetlanych w źródle. Użytkownicy mogą wybrać opcję <strong>Zobacz więcej</strong>, aby wyświetlić dodatkowe elementy.';
 $string['personalmenuadvancedfeedslifetime'] = 'Żywotność zaawansowanego kanału';
 $string['personalmenuadvancedfeedslifetimedesc'] = 'Wybierz, jak długo kanały będą buforowane w przeglądarce po zalogowaniu. Ustawienie wartości na 0 nie spowoduje buforowania kanałów w przeglądarce.';
+$string['personalmenurefreshdeadlines'] = 'Odświeżaj terminy za pomocą zaplanowanego zadania.';
+$string['personalmenurefreshdeadlinesdesc'] = 'Kiedy zadanie zostanie uruchomione, dane o terminach będą odświeżane w celu skrócenia czasu ładowania strony.';
 $string['pld'] = 'PLD';
 $string['pluginname'] = 'Snap';
 $string['poster'] = 'Obraz na pierwszą stronę';
 $string['posterdesc'] = 'Duży obraz nagłówka wyświetlany na stronie głównej witryny. Najlepiej wyglądają obrazy w orientacji poziomej 1200 na 600 pikseli lub większe.';
-$string['poweredbyrunby'] = 'Utworzono przy użyciu <a href="https://{$a->subdomain}.openlms.net/" target="_blank" rel="noopener">Open LMS</a>,
-w oparciu o technologię <a href="https://moodle.com/" target="_blank" rel="noopener">Moodle</a>.<br>
+$string['poweredbyrunby'] = 'Utworzono za pomocą<a href="https://{$a->subdomain}.openlms.net/" target="_blank" rel="noopener">produktu opartego na Open LMS</a>,
+a <a href="https://moodle.com/" target="_blank" rel="noopener">Moodle</a>-.<br>
 Prawa autorskie &#169; {$a->year} Open LMS, Wszelkie prawa zastrzeżone.';
 $string['previoussection'] = 'Poprzednia sekcja';
 $string['privacy:metadata:theme_snap_course_favorites:courseid'] = 'Identyfikator kursu, który użytkownik oznaczył jako ulubiony';
@@ -393,3 +395,4 @@ $string['design_mod_page'] = 'Włącz poprzedni projekt zasobów strony';
 $string['design_mod_page_description'] = 'Jeśli zawartość zasobów strony jest włączona, będzie wyświetlana na tej samej stronie, kursie lub stronie głównej.';
 $string['design_activity_chooser'] = 'Cofnij do oryginalnego projektu dla selektora aktywności';
 $string['design_activity_chooser_description'] = 'Jeśli opcja ta jest włączona, selektor aktywności będzie wyświetlany w oryginalnym wyglądzie. Będzie to miało wpływ na stronę główną i stronę kursu.';
+$string['refreshdeadlinestask'] = 'Odśwież zbuforowane dane o terminach. To zadanie powinno być uruchamiane przed zalogowaniem się wszystkich użytkowników.';

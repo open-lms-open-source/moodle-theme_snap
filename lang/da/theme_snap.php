@@ -261,19 +261,21 @@ $string['personalmenu'] = 'Personlig menu';
 $string['personalmenufeatures'] = 'Personlige menufunktioner';
 $string['personalmenulogintoggle'] = 'Vis personlig menu ved login';
 $string['personalmenulogintoggledesc'] = 'Åbner den personlige menu, så snart der er logget ind';
-$string['personalmenuadvancedfeedsenable'] = 'Aktivér Avancerede feeds (eksperimenterende)';
+$string['personalmenuadvancedfeedsenable'] = 'Aktivér Avancerede feeds';
 $string['personalmenuadvancedfeedsenabledesc'] = 'Avancerede feeds indlæser nogle personlige menuelementer, som tillader hurtigere indlæsningstider og opdaterer indhold efter behov.';
 $string['personalmenuadvancedfeedsperpage'] = 'Antal viste elementer i "Avancerede feeds"';
 $string['personalmenuadvancedfeedsperpagedesc'] = 'Vælg det antal elementer, der skal vises i feedet. Brugere kan vælge <strong>Vis flere</strong>, for at vise yderligere elementer.';
 $string['personalmenuadvancedfeedslifetime'] = 'Levetid for avancerede feeds';
 $string['personalmenuadvancedfeedslifetimedesc'] = 'Vælg, hvor længe feeds cachelagres i browseren efter login. Hvis værdien indstilles til 0, cachelagres feeds ikke i browseren.';
+$string['personalmenurefreshdeadlines'] = 'Opdater deadlines ved hjælp af planlagt opgave.';
+$string['personalmenurefreshdeadlinesdesc'] = 'Når opgaven kører, genindlæses deadlinefata med henblik på hurtigere indlæsningstider.';
 $string['pld'] = 'PLD';
 $string['pluginname'] = 'Snap';
 $string['poster'] = 'Forsidebillede';
 $string['posterdesc'] = 'Et stort sidehovedbillede til dit websteds forside. Liggende billeder (1200 x 600 pixels) eller større fungerer bedst.';
-$string['poweredbyrunby'] = 'Skabt med<a href="https://{$a->subdomain}.openlms.net/" target="_blank" rel="noopener">Open LMS</a>,
+$string['poweredbyrunby'] = 'Oprettet med <a href="https://{$a->subdomain}.openlms.net/" target="_blank" rel="noopener">Open LMS</a>,
 et <a href="https://moodle.com/" target="_blank" rel="noopener">Moodle</a>-baseret produkt.<br>
-Copyright &#169; {$a->year} Open LMS, alle rettigheder forbeholdes.';
+Copyright &#169; {$a->year} Open LMS, Alle rettigheder forbeholdes.';
 $string['previoussection'] = 'Forrige sektion';
 $string['privacy:metadata:theme_snap_course_favorites:courseid'] = 'Kursus-id\'et for det kursus, brugeren har markeret som favorit';
 $string['privacy:metadata:theme_snap_course_favorites:userid'] = 'Bruger-id\'et for den bruger, der har markeret kurset om favorit';
@@ -392,3 +394,4 @@ $string['design_mod_page'] = 'Aktivér forrige design for sideressourcer';
 $string['design_mod_page_description'] = 'Hvis sideressourceindhold er aktiveret, vises det på den samme side, kursus eller forside.';
 $string['design_activity_chooser'] = 'Rul tilbage til aktivitetsvælgerens oprindelige design';
 $string['design_activity_chooser_description'] = 'Hvis dette er aktiveret, vises aktivitetsvælgeren med det oprindelige design. Dette vil ændre kursus- og forsiderne.';
+$string['refreshdeadlinestask'] = 'Genindlæs cachelagrede deadlinedata. Dette bør køres, før alle brugere logger ind.';
