@@ -72,7 +72,7 @@ $custommenu = $OUTPUT->custom_menu();
 
 /* Moodle custom menu. */
 if (!empty($custommenu)) {
-    echo '<div id="snap-custom-menu">';
+    echo '<div id="snap-custom-menu-header">';
     echo $custommenu;
     echo '</div>';
 }

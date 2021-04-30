@@ -949,10 +949,10 @@ $custom-menu-text-color: rgb(255, 255, 255) !default; // Need to define this wit
     // Custom menu.
     // -------------------------
     header#mr-nav {
-        #snap-custom-menu nav.navbar {
+        #snap-custom-menu-header nav.navbar {
             background-color: rgba($brand-primary, 0.8);
 
-            ul#snap-navbar-content {
+            ul.snap-navbar-content {
                 li.nav-item {
                     div.dropdown-menu {
                         background-color: rgba($brand-primary, 0.8);

@@ -52,20 +52,20 @@ Feature: When the Moodle theme is set to Snap, custom menu should exist for the 
     And I should see "Moodle community"
     And I should see "Moodle.com"
     # Submenu will be shown when the dropdown is clicked.
-    And I click on "//header[@id='mr-nav']//div[@id='snap-custom-menu']//ul[@id='snap-navbar-content']//li[@class='nav-item dropdown']//a[@class='nav-link dropdown-toggle']" "xpath_element"
+    And I click on "//header[@id='mr-nav']//div[@id='snap-custom-menu-header']//ul[@class='navbar-collapse clearfix snap-navbar-content']//li[@class='nav-item dropdown']//a[@class='nav-link dropdown-toggle']" "xpath_element"
     And I should see "Moodle free support"
     And I should see "Moodle Docs"
     And I should see "Moodle development"
     # Check that ### works as a divider
-    And "//header[@id='mr-nav']//div[@id='snap-custom-menu']//ul[@id='snap-navbar-content']//li[@class='nav-item dropdown show']//div[@class='dropdown-menu show']//div[@class='dropdown-divider']" "xpath_element" should exist
+    And "//header[@id='mr-nav']//div[@id='snap-custom-menu-header']//ul[@class='navbar-collapse clearfix snap-navbar-content']//li[@class='nav-item dropdown show']//div[@class='dropdown-menu show']//div[@class='dropdown-divider']" "xpath_element" should exist
 
   @javascript
   Scenario: Check custom menu background and text color.
     Given I log in as "admin"
     # Check that the custom menu has the same color as the site color.
-    And I check element ".theme-snap header#mr-nav #snap-custom-menu nav.navbar" with property "background-color" = "#FF7F41"
+    And I check element ".theme-snap header#mr-nav #snap-custom-menu-header nav.navbar" with property "background-color" = "#FF7F41"
     # Check that the text color have white color as a default color.
-    And I check element ".theme-snap header#mr-nav #snap-custom-menu nav.navbar ul#snap-navbar-content li.nav-item a" with color "#FFFFFF"
+    And I check element ".theme-snap header#mr-nav #snap-custom-menu-header nav.navbar ul.snap-navbar-content li.nav-item a" with color "#FFFFFF"
 
   @javascript
   Scenario: Custom menu should exists in the footer for small screen sizes.
@@ -73,8 +73,8 @@ Feature: When the Moodle theme is set to Snap, custom menu should exist for the 
     Given I change window size to "768x456"
     And I log in as "Admin"
     And I am on site homepage
-    And I should not see "Moodle community" in the "//header[@id='mr-nav']//div[@id='snap-custom-menu']" "xpath_element"
-    And I should see "Moodle community" in the "//footer[@id='moodle-footer']//div[@id='snap-custom-menu']" "xpath_element"
+    And I should not see "Moodle community" in the "//header[@id='mr-nav']//div[@id='snap-custom-menu-header']" "xpath_element"
+    And I should see "Moodle community" in the "//footer[@id='moodle-footer']//div[@id='snap-custom-menu-footer']" "xpath_element"
 
   @javascript
   Scenario: Custom menu should exists in the header for window full width.
@@ -82,5 +82,5 @@ Feature: When the Moodle theme is set to Snap, custom menu should exist for the 
     Given I change window size to "2518x456"
     And I log in as "Admin"
     And I am on site homepage
-    And I should see "Moodle community" in the "//header[@id='mr-nav']//div[@id='snap-custom-menu']" "xpath_element"
-    And I should not see "Moodle community" in the "//footer[@id='moodle-footer']//div[@id='snap-custom-menu']" "xpath_element"
+    And I should see "Moodle community" in the "//header[@id='mr-nav']//div[@id='snap-custom-menu-header']" "xpath_element"
+    And I should not see "Moodle community" in the "//footer[@id='moodle-footer']//div[@id='snap-custom-menu-footer']" "xpath_element"
