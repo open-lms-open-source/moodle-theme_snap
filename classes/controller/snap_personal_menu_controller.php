@@ -16,6 +16,8 @@
 
 namespace theme_snap\controller;
 
+use theme_snap\output\core_renderer;
+
 defined('MOODLE_INTERNAL') || die();
 
 /**
@@ -23,7 +25,7 @@ defined('MOODLE_INTERNAL') || die();
  * Handles requests regarding user deadlines and other CTAs.
  *
  * @package   theme_snap
- * @copyright Copyright (c) 2015 Blackboard Inc. (http://www.blackboard.com)
+ * @copyright Copyright (c) 2015 Open LMS (https://www.openlms.net)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class snap_personal_menu_controller extends controller_abstract {
@@ -41,11 +43,8 @@ class snap_personal_menu_controller extends controller_abstract {
      * @return string
      */
     public function get_deadlines_action() {
-        global $PAGE, $USER;
-        $output = $PAGE->get_renderer('theme_snap', 'core', RENDERER_TARGET_GENERAL);
-        $deadlines = \theme_snap\activity::upcoming_deadlines($USER->id);
         return json_encode([
-            'html' => $output->deadlines($deadlines)
+            'html' => \theme_snap\local::deadlines()
         ]);
     }
 

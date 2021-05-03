@@ -18,8 +18,8 @@
  * Cache definition for snap.
  *
  * @package   theme_snap
- * @author    Guy Thomas <osdev@blackboard.com>
- * @copyright Copyright (c) 2016 Blackboard Inc.
+ * @author    Guy Thomas
+ * @copyright Copyright (c) 2016 Open LMS
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -48,10 +48,13 @@ $definitions = array(
     ],
     // This is used to cache deadlines per user.
     'activity_deadlines' => [
-        'mode'               => cache_store::MODE_SESSION,
+        'mode'               => cache_store::MODE_APPLICATION,
         'simplekeys'         => true,
         'simpledata'         => false,
-        'staticacceleration' => false
+        'staticacceleration' => false,
+        'invalidationevents' => [
+            'groupmemberschanged',
+        ]
     ],
     'generalstaticappcache' => [
         'mode'               => cache_store::MODE_APPLICATION,

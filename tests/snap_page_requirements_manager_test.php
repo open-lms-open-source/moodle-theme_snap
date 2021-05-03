@@ -16,8 +16,8 @@
 
 /**
  * Test snap requirements manager
- * @author    Guy Thomas <osdev@blackboard.com>
- * @copyright Copyright (c) 2016 Blackboard Inc.
+ * @author    Guy Thomas
+ * @copyright Copyright (c) 2016 Open LMS
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -27,21 +27,21 @@ use theme_snap\snap_page_requirements_manager;
 
 /**
  * Class theme_snap_snap_page_requirements_manager_test
- * @author    Guy Thomas <osdev@blackboard.com>
- * @copyright Copyright (c) 2016 Blackboard Inc.
+ * @author    Guy Thomas
+ * @copyright Copyright (c) 2016 Open LMS
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class theme_snap_snap_page_requirements_manager_test extends \advanced_testcase {
 
     /**
-     * Test clean theme does not black list M.core_completion.init.
+     * Test classic theme does not black list M.core_completion.init.
      */
-    public function test_js_init_call_clean() {
+    public function test_js_init_call_classic() {
         global $CFG, $PAGE;
 
         $this->resetAfterTest();
 
-        $CFG->theme = 'clean';
+        $CFG->theme = 'classic';
         $PAGE->initialise_theme_and_output();
 
         $PAGE->requires->js_init_call('M.core_completion.init');
@@ -68,14 +68,14 @@ class theme_snap_snap_page_requirements_manager_test extends \advanced_testcase 
     }
 
     /**
-     * Integration test - Test clean theme does not use snap page requirements manager.
+     * Integration test - Test classic theme does not use snap page requirements manager.
      */
-    public function test_clean_theme_regular_requirements_manager() {
+    public function test_classic_theme_regular_requirements_manager() {
         global $CFG, $PAGE;
 
         $this->resetAfterTest();
 
-        $CFG->theme = 'clean';
+        $CFG->theme = 'classic';
 
         $PAGE->initialise_theme_and_output();
         $this->assertInstanceOf('page_requirements_manager', $PAGE->requires);

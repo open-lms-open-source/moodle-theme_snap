@@ -16,11 +16,11 @@
 # Tests course heading links back to course.
 #
 # @package    theme_snap
-# @copyright Copyright (c) 2015 Blackboard Inc. (http://www.blackboard.com)
+# @copyright Copyright (c) 2015 Open LMS (https://www.openlms.net)
 # @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
 
 
-@theme @theme_snap
+@theme @theme_snap @theme_snap_course
 Feature: When the moodle theme is set to Snap, users can link back to the course main page by clicking the page heading.
 
   Background:

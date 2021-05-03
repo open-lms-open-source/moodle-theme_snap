@@ -16,7 +16,7 @@
  * Moodle blocks.
  *
  * @package   theme_snap
- * @copyright Copyright (c) 2015 Blackboard Inc. (http://www.blackboard.com)
+ * @copyright Copyright (c) 2015 Open LMS (https://www.openlms.net)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -235,6 +235,11 @@ body.path-site .block.block_settings {
     .card-title {
         visibility: hidden;
     }
+
+    // Hide a possible second gear menu
+    .block-controls {
+        visibility: hidden;
+    }
 }
 
 #page-content .block_settings.state-visible,
@@ -280,5 +285,14 @@ body.path-site .block.block_settings {
     }
     #region-main {
         padding-top: 2em;
+    }
+}
+
+/* My overview block */
+.block-myoverview {
+    @media (min-width: 1100px) {
+        .dashboard-card-deck:not(.fixed-width-cards) .dashboard-card {
+            width: calc(33.33% - #{$card-gutter});
+        }
     }
 }

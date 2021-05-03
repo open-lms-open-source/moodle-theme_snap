@@ -16,8 +16,8 @@
 
 /**
  * Overrides for behat navigation.
- * @author    Guy Thomas <osdev@blackboard.com>
- * @copyright Copyright (c) 2017 Blackboard Inc.
+ * @author    Guy Thomas
+ * @copyright Copyright (c) 2017 Open LMS
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -31,8 +31,8 @@ require_once(__DIR__ . '/../../../../lib/tests/behat/behat_navigation.php');
 /**
  * Overrides to make behat navigation work with Snap.
  *
- * @author    Guy Thomas <osdev@blackboard.com>
- * @copyright Copyright (c) 2017 Blackboard Inc.
+ * @author    Guy Thomas
+ * @copyright Copyright (c) 2017 Open LMS
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class behat_theme_snap_behat_navigation extends behat_navigation {
@@ -97,7 +97,7 @@ EOF;
         // Throw exception if no node found.
         if (!$nodetoclick) {
             throw new ExpectationException('Navigation node "' . $nodetext . '" not found under "' .
-                implode($parentnodes, ' > ') . '"', $this->getSession());
+                implode(' > ', $parentnodes) . '"', $this->getSession());
         }
 
         $settings = $this->find('css', '.block_settings');

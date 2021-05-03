@@ -16,17 +16,16 @@
 # Tests for visibility of grading activities only if user have grading capabilities.
 #
 # @package    theme_snap
-# @copyright  Copyright (c) 2018 Blackboard Inc. (http://www.blackboard.com)
+# @copyright  Copyright (c) 2018 Open LMS (https://www.openlms.net)
 # @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
 
-@theme @theme_snap
+@theme @theme_snap @theme_snap_grading
 Feature: When the moodle theme is set to Snap, grading activities are shown only if user have grading capabilities.
 
   Background:
-    And I skip because "this scenario randomly fails"
     Given I log in as "admin"
     And I close the personal menu
-    And I navigate to "Users > Permissions > Define roles" in site administration
+    And I navigate to "Users > Permissions > Define roles" in current page administration
     And I click on "Add a new role" "button"
     And I set the field with xpath "//select[@id = 'id_resettype']" to "Teacher"
     And I click on "Continue" "button"
@@ -59,14 +58,14 @@ Feature: When the moodle theme is set to Snap, grading activities are shown only
     Then I log out
     Given I log in as "student1"
     And I am on "Course 1" course homepage
-    And I click on "//a[@class='mod-link']//span[text()='Assignment One']" "xpath_element"
+    And I click on "//a[@class='mod-link']//p[text()='Assignment One']" "xpath_element"
     When I press "Add submission"
     And I upload "lib/tests/fixtures/empty.txt" file to "File submissions" filemanager
     And I press "Save changes"
     Then I log out
     Given I log in as "student1"
     And I am on "Course 2" course homepage
-    And I click on "//a[@class='mod-link']//span[text()='Assignment Two']" "xpath_element"
+    And I click on "//a[@class='mod-link']//p[text()='Assignment Two']" "xpath_element"
     When I press "Add submission"
     And I upload "lib/tests/fixtures/empty.txt" file to "File submissions" filemanager
     And I press "Save changes"
@@ -74,7 +73,6 @@ Feature: When the moodle theme is set to Snap, grading activities are shown only
 
   @javascript
   Scenario: User sees empty grading section
-    And I skip because "this scenario randomly fails"
     Given I log in as "teacher1"
     And I close the personal menu
     And I follow "My Courses"

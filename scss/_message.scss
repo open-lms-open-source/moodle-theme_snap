@@ -108,10 +108,10 @@
 // Show message drawer in full width.
 #page-message-edit,
 #page-message-index {
-    .message-drawer {
-        width: 100%;
-        height: calc(100% - 7em);
-        top: 6em;
+    .drawer .message-app {
+        height: calc(100% - 10em);
+        top: 10em;
+        z-index: 1;
         left: 0;
         @media (max-width: 560px) {
             top: 8em;
@@ -119,26 +119,50 @@
         }
     }
     .switch input:checked + label::before {
+        background-color: rgba($brand-primary, 0.3);
+    }
+    .switch input:checked + label::after {
         background-color: $brand-primary;
     }
-    .custom-radio .custom-control-input:checked~.custom-control-label::before {
+    .custom-radio .custom-control-input:checked ~ .custom-control-label::before {
         background-color: $brand-primary;
+        border-color: rgba($brand-primary, 0.3);
     }
-    .message-drawer.bg-light {
+    .drawer.bg-white .message-app {
         padding: 1em;
         .body-container {
             border: 1px solid #dee2e6;
-            box-shadow: 0px 2px 6px rgba(0,0,0,.08);
+            box-shadow: 0 2px 6px rgba(0, 0, 0, .08);
         }
     }
     [data-region="button-text"],
     [data-region="searchable"] {
         color: $brand-primary;
     }
+
+    .message-app .body-container > * {
+        position: absolute;
+    }
 }
 
+#page-message-edit [data-region=right-hand-drawer].drawer {
+    .message-app {
+        width: 100% !important;
+    }
+    position: inherit;
+    width: 100%;
+}
+
+#page-user-profile [data-region=right-hand-drawer].drawer,
+.path-course-view
+[data-region=right-hand-drawer].drawer {
+    visibility: hidden;
+}
 // Fix for personal menu hidden in IE 11 message page.
 .ie11#page-message-index {
+    #region-main div[role="main"] .message-app.main > .container-fluid {
+        position: inherit;
+    }
     #snap-pm {
         position: relative;
         z-index: 2;
@@ -148,13 +172,76 @@
     }
 }
 
-// Hide scrolling when the message drawer is present.
-#page-message-edit {
-    overflow: hidden;
+// Fixes for Inherited boost styles for the message app page.
+// Message background #E6E6E6 to better AX over the message view.
+.message-app {
+    .message {
+        &.send .tail {
+            border-bottom-color: #e6e6e6 !important;
+        }
+    }
+    .message.send {
+        background-color: #e6e6e6 !important;
+        color: #373a3c !important;
+    }
+    .message.rounded {
+        border-radius: .25rem !important;
+    }
+    &.main {
+        min-height: 600px !important;
+    }
+    a[data-action="view-contact"] {
+        img.rounded-circle {
+            // Need to use px b/c height is hard coded in template.
+            max-width: 38px;
+        }
+    }
+
+    [data-region="confirm-dialogue-container"]
+    [data-region="confirm-dialogue"]
+    [data-region="delete-messages-for-all-users-toggle-container"]
+    label.custom-control-label.text-muted::before {
+        background-color: transparent;
+    }
 }
-// Set style for clickable messages as boost.
-div.message.clickable.bg-secondary {
-    background-color: #ced4da !important;
-    color: #373a3c !important;
-    border-radius: .25rem!important;
+
+// Hide the message drawer when in profile view.
+body#page-user-profile .drawer .message-app {
+    visibility: hidden;
+}
+
+// Fix for message page to modify visibility on search input for mobile view"
+@media (max-width: 575px) {
+    #page-message-index #region-main div[role="main"] {
+        div.alert.alert-warning.alert-block.fade.in {
+            margin-top: 4em;
+        }
+        .message-app.main {
+            margin-top: 3em;
+        }
+    }
+}
+
+// Fix for message page to use the page height and scrolls to show messages.
+#page-message-index {
+    #page {
+        height: 100%;
+        overflow: hidden;
+    }
+    #page-content {
+        height: 90%;
+    }
+    #region-main .message-app .col-4 {
+        height: 100%;
+        .panel-body-container {
+            height: 90%;
+            overflow: scroll;
+        }
+    }
+    #moodle-page {
+        height: 100%;
+        .message-app .view-overview-body .section {
+            max-height: 80%;
+        }
+    }
 }

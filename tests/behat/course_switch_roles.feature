@@ -16,16 +16,46 @@
 # Tests for role switching features on course home page.
 #
 # @package    theme_snap
-# @copyright  Copyright (c) 2018 Blackboard Inc. (http://www.blackboard.com)
+# @copyright  Copyright (c) 2018 Open LMS (https://www.openlms.net)
 # @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
 
-
-@theme @theme_snap
+@theme @theme_snap @theme_snap_course
 Feature: When the moodle theme is set to Snap, switching between roles should be possible.
 
   Background:
     Given the following config values are set as admin:
       | defaulthomepage | 0 |
+
+  @javascript
+  Scenario: Teacher can switch to guest role and back in course personal menu.
+    Given the following "courses" exist:
+      | fullname | shortname | category | format |
+      | Course 1 | C1        | 0        | topics |
+    And the following "users" exist:
+      | username | firstname | lastname | email                |
+      | teacher1 | Teacher   | 1        | teacher1@example.com |
+    And the following "course enrolments" exist:
+      | user     | course | role           |
+      | admin    | C1     | editingteacher |
+      | teacher1 | C1     | editingteacher |
+    And I log in as "teacher1"
+    And I am on the course main page for "C1"
+    And I click on "#snap-pm-trigger" "css_element"
+    And I follow "Switch role to..."
+    And I wait until the page is ready
+    Then I should see "Switch role to..."
+    Then I should see "Student"
+    And I click on "Student" "button"
+    And I wait until the page is ready
+    And I click on "#snap-pm-trigger" "css_element"
+    Then I should see "Return to my normal role"
+    And I follow "Return to my normal role"
+    And I wait until the page is ready
+    Then "#admin-menu-trigger" "css_element" should be visible
+    And I click on "#admin-menu-trigger" "css_element"
+    Then I should see "Course administration"
+    And I click on "#snap-pm-trigger" "css_element"
+    Then I should see "Switch role to..."
 
   @javascript
   Scenario: Teacher can switch to guest role and back in course front page.

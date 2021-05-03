@@ -28,7 +28,7 @@ require_once($CFG->dirroot.'/course/lib.php');
 /**
  * Course service class.
  * @author    gthomas2
- * @copyright Copyright (c) 2016 Blackboard Inc. (http://www.blackboard.com)
+ * @copyright Copyright (c) 2016 Open LMS (https://www.openlms.net)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class course {
@@ -327,7 +327,7 @@ class course {
             $PAGE->set_context(\context_course::instance($course->id));
         }
 
-        list ($unavailablesections, $unavailablemods) = local::conditionally_unavailable_elements($course);
+        [$unavailablesections, $unavailablemods] = local::conditionally_unavailable_elements($course);
 
         $newlyavailablesections = array_diff($previouslyunavailablesections, $unavailablesections);
         $intersectunavailable = array_intersect($previouslyunavailablesections, $unavailablesections);
@@ -456,11 +456,12 @@ class course {
      * @param string $shortname
      * @param int $sectionnumber
      * @param boolean $visible
+     * @param bool $loadmodules Should modules be loaded.
      * @return array
      * @throws \moodle_exception
      * @throws \required_capability_exception
      */
-    public function set_section_visibility($shortname, $sectionnumber, $visible) {
+    public function set_section_visibility($shortname, $sectionnumber, $visible, $loadmodules = true) {
         global $OUTPUT;
         $course = $this->coursebyshortname($shortname);
         $context = \context_course::instance($course->id);
@@ -471,7 +472,9 @@ class course {
         $modinfo = get_fast_modinfo($course);
         $section = $modinfo->get_section_info($sectionnumber);
         $actionmodel = new \theme_snap\renderables\course_action_section_visibility($course, $section);
-        $toc = new \theme_snap\renderables\course_toc($course);
+
+        $nullformat = null;
+        $toc = new \theme_snap\renderables\course_toc($course, $nullformat, $loadmodules);
 
         return [
             'actionmodel' => $actionmodel->export_for_template($OUTPUT),
@@ -504,6 +507,26 @@ class course {
     }
 
     /**
+     * Get course TOC.
+     * @param string $shortname Course short name
+     * @return array
+     * @throws \coding_exception
+     */
+    public function toc($shortname) {
+        global $OUTPUT;
+        $course = $this->coursebyshortname($shortname);
+
+        $nullformat = null;
+        $loadmodules = true;
+        $toc = new \theme_snap\renderables\course_toc($course, $nullformat, $loadmodules);
+
+        return [
+            'toc' => $toc->export_for_template($OUTPUT)
+        ];
+    }
+
+
+    /**
      * Toggle module completion state.
      * @param int $id (cmid)
      * @param int $completionstate
@@ -516,7 +539,7 @@ class course {
         global $DB, $PAGE;
 
         // Get course-modules entry.
-        list ($course, $cminfo) = get_course_and_cm_from_cmid($id);
+        [$course, $cminfo] = get_course_and_cm_from_cmid($id);
 
         // Get renderer for completion HTML.
         $context = \context_module::instance($id);

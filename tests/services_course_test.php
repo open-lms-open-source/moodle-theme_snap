@@ -24,7 +24,7 @@ use theme_snap\local;
  * Test course card service.
  * @package   theme_snap
  * @author    gthomas2
- * @copyright Copyright (c) 2016 Blackboard Inc. (http://www.blackboard.com)
+ * @copyright Copyright (c) 2016 Open LMS (https://www.openlms.net)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class theme_snap_services_course_test extends \advanced_testcase {
@@ -48,7 +48,7 @@ class theme_snap_services_course_test extends \advanced_testcase {
      * Pre-requisites for tests.
      * @throws \coding_exception
      */
-    public function setUp() {
+    public function setUp(): void {
         global $CFG, $DB;
 
         require_once($CFG->dirroot . '/mod/forum/lib.php');
@@ -323,7 +323,6 @@ class theme_snap_services_course_test extends \advanced_testcase {
 
     public function test_course_toc_chapters_escaped_chars() {
         global $OUTPUT, $DB;
-
         $titles = [ "This & that", "This < that", "This > that", "This & & that"];
         $generator = $this->getDataGenerator();
 
@@ -347,7 +346,7 @@ class theme_snap_services_course_test extends \advanced_testcase {
         $chapters = $this->courseservice->course_toc_chapters('testcourse');
 
         $tochtml = $OUTPUT->render_from_template('theme_snap/course_toc_chapters',
-            (object) ['chapters' => $chapters->chapters, 'listlarge' => (count($chapters) > 9)]);
+            (object) ['chapters' => $chapters->chapters, 'listlarge' => (count($chapters->chapters) > 9)]);
         $pattern = '/>(.*)<\/a>/';
         preg_match_all($pattern, $tochtml, $matches);
         for ($x = 0; $x < count($titles); $x++) {
@@ -430,32 +429,32 @@ class theme_snap_services_course_test extends \advanced_testcase {
     // Records for favorite courses should not exist when the user is deleted.
     public function test_user_deletion() {
         global $DB;
-
         $service = $this->courseservice;
         $service->setfavorite($this->courses[0]->shortname, true, $this->user1->id);
         $service->setfavorite($this->courses[1]->shortname, true, $this->user1->id);
-        $favorites = $DB->get_records('favourite', array('userid' => $this->user1->id));
+        $params = array('userid' => $this->user1->id, 'component' => 'core_course');
+        $favorites = $DB->get_records('favourite', $params);
         $this->assertNotEmpty($favorites);
         delete_user($this->user1);
-        $favorites = $DB->get_records('favourite', array('userid' => $this->user1->id));
+        $favorites = $DB->get_records('favourite', $params);
         $this->assertEmpty($favorites);
     }
 
     // Records for favorite courses should not exist when the course is deleted.
     public function test_course_deletion() {
         global $DB;
-
         $service = $this->courseservice;
         $service->setfavorite($this->courses[0]->shortname, true, $this->user1->id);
         $service->setfavorite($this->courses[1]->shortname, true, $this->user1->id);
-        $favorites = $DB->count_records('favourite', array('userid' => $this->user1->id));
+        $params = array('userid' => $this->user1->id, 'component' => 'core_course');
+        $favorites = $DB->count_records('favourite', $params);
         $this->assertEquals(2, $favorites);
         $this->assertNotEmpty($favorites);
         delete_course($this->courses[0], false);
-        $favorites = $DB->count_records('favourite', array('userid' => $this->user1->id));
+        $favorites = $DB->count_records('favourite', $params);
         $this->assertEquals(1, $favorites);
         delete_course($this->courses[1], false);
-        $favorites = $DB->get_records('favourite', array('userid' => $this->user1->id));
+        $favorites = $DB->get_records('favourite', $params);
         $this->assertEmpty($favorites);
     }
 

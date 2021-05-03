@@ -16,7 +16,7 @@
  * Snap core swatch.
  *
  * @package   theme_snap
- * @copyright Copyright (c) 2015 Blackboard Inc. (http://www.blackboard.com)
+ * @copyright Copyright (c) 2015 Open LMS (https://www.openlms.net)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -42,7 +42,7 @@ body:not(.behat-site) {
 
 // Hide show description option. Use of nth-child pseudo selector due to lack of id in div.
 body#page-mod-page-mod fieldset#id_general div.fcontainer:nth-child(2) div.form-group:nth-child(3) {
-    display : none;
+    display: none;
 }
 
 .mform fieldset {
@@ -231,6 +231,9 @@ input[type="checkbox"] {
     .editor_atto_wrap {
         margin-bottom: 1em;
     }
+    #cancel-new-section {
+        margin-left: 1em;
+    }
 }
 
 // -------------------------
@@ -398,22 +401,28 @@ a[aria-controls="snap-collapse-help"] {
         font-size: 1rem;
     }
 
+    fieldset[id^="id_category_"],
     #id_modstandardelshdr,
     #id_overallfeedbackhdr {
-      .form-inline[data-fieldtype="editor"] {
-          overflow-x: auto;
-          overflow-y: hidden;
+        .form-inline[data-fieldtype="editor"] {
+            overflow-x: auto;
+            overflow-y: hidden;
 
-          div {
-              max-width: 100%;
-          }
-      }
+            div {
+                max-width: 100%;
+            }
+        }
     }
 
     .mceToolbar.mceLeft.mceFirst.mceLast {
         overflow: auto;
     }
 
+}
+
+// Hide checkbox useless with this course format.
+#page-course-editsection.format-topics .fdefaultcustom .form-check-inline {
+    display: none;
 }
 
 // Allow for mod edit advanced options to appear at the side.
@@ -424,7 +433,8 @@ form.mform {
     legend {
         margin: 0;
         font-size: 1.2rem;
-        a, a:hover {
+        a,
+        a:hover {
             color: $body-color;
             text-decoration: none;
         }
@@ -514,7 +524,7 @@ form.mform {
 }
 
 @include media-breakpoint-down(lg) {
-    
+
     .snap-form-advanced {
         select {
             max-width: 140px !important;
@@ -553,5 +563,11 @@ form.mform {
         &:last-child {
             display: block;
         }
+    }
+}
+// Chat graphic glitch fix for Safari.
+#page-mod-chat-gui_header_js-chatinput.safari {
+    #inputForm input#input_chat_message {
+        margin: 0.5em;
     }
 }

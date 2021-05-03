@@ -17,7 +17,7 @@
 /**
  * Alternative login methods renderable.
  * @author    gthomas2
- * @copyright Copyright (c) 2016 Blackboard Inc. (http://www.blackboard.com)
+ * @copyright Copyright (c) 2016 Open LMS (https://www.openlms.net)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -55,7 +55,11 @@ class login_alternative_methods implements \renderable {
                 if (!empty($idp['iconurl'])) {
                     $icon = $idp['iconurl'];
                 } else if (!empty($idp['icon'])) {
-                    $icon = $OUTPUT->image_url($idp['icon']->pix, $idp['icon']->component);
+                    if (gettype($idp) == 'object') {
+                        $icon = $OUTPUT->image_url($idp['icon']->pix, $idp['icon']->component);
+                    } else if (gettype($idp) == 'string') {
+                        $icon = $idp['icon'];
+                    }
                 }
 
                 $this->potentialidps[] = (object) [

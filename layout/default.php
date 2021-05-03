@@ -18,7 +18,7 @@
  * Layout - default.
  *
  * @package   theme_snap
- * @copyright Copyright (c) 2015 Blackboard Inc. (http://www.blackboard.com)
+ * @copyright Copyright (c) 2015 Open LMS (https://www.openlms.net)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 defined('MOODLE_INTERNAL') || die();
@@ -45,9 +45,12 @@ if ($COURSE->id != SITEID && !empty($coverimagecss)) {
 ////////////////////////// MAIN  ///////////////////////////////
 -->
 <main id="moodle-page" class="clearfix">
+<?php
+echo $OUTPUT->custom_menu_spacer();
+?>
 <div id="page-header" class="clearfix <?php echo $mastimage; ?>">
     <?php if ($PAGE->pagetype !== 'site-index') { ?>
-        <div class="breadcrumb-nav" aria-label="breadcrumb"><?php echo $OUTPUT->navbar($mastimage); ?></div>
+        <div class="breadcrumb-nav" aria-label="breadcrumb"><?php echo $OUTPUT->snapnavbar($mastimage); ?></div>
     <?php }
         if ($carousel) {
             // Front page carousel.
@@ -62,6 +65,10 @@ if ($COURSE->id != SITEID && !empty($coverimagecss)) {
             if ($PAGE->pagetype === 'site-index') {
                 echo $OUTPUT->login_button();
             }
+            // Content bank for Snap.
+            if ($PAGE->pagetype === 'contentbank') {
+                echo $OUTPUT->snap_content_bank();
+            }
         ?>
         </div>
         <?php
@@ -71,7 +78,6 @@ if ($COURSE->id != SITEID && !empty($coverimagecss)) {
         } // End else.
     ?>
 </div>
-
 <section id="region-main">
 <?php
 echo $OUTPUT->course_content_header();
@@ -115,9 +121,13 @@ if ($hasadminbutton) {
         }
     }
 }
-
+echo "<div class='snap-page-heading-button' >";
 echo $OUTPUT->page_heading_button();
-
+// Validation added to check if settings option should be displayed;
+$buildregionmainsettings = !$PAGE->include_region_main_settings_in_header_actions() && !local::show_setting_menu() ;
+$regionmainsettingsmenu = $buildregionmainsettings ? $OUTPUT->region_main_settings_menu() : false;
+echo $regionmainsettingsmenu;
+echo "</div>";
 if ($PAGE->pagelayout === 'frontpage' && $PAGE->pagetype === 'site-index') {
     require(__DIR__.'/faux_site_index.php');
 } else {

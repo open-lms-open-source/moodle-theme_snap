@@ -19,7 +19,7 @@
 # @author     2017 Jun Pataleta <jun@moodle.com>
 # @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
 
-@theme @theme_snap
+@theme @theme_snap @theme_snap_course
 Feature: Activity navigation in Snap theme
   In order to quickly switch between activities
   As a user
@@ -72,6 +72,7 @@ Feature: Activity navigation in Snap theme
     # Stealth activity.
     And I follow "Topic 2"
     And I follow "Edit \"Forum 1\""
+    And I expand all fieldsets
     And I set the field "Visibility" to "Make available but not shown on course page"
     And I press "Save and return to course"
     # Hidden activity.
@@ -83,7 +84,7 @@ Feature: Activity navigation in Snap theme
     And I click on "#section-5 a.snap-visibility.snap-hide" "css_element"
     # Set up book.
     And I follow "Introduction"
-    And I click on "//h3/a/span[contains(text(),'Book 1')]" "xpath_element"
+    And I click on "//h3/a/p[contains(text(),'Book 1')]" "xpath_element"
     And I should see "Add new chapter"
     And I set the following fields to these values:
       | Chapter title | Chapter 1                             |
@@ -94,7 +95,7 @@ Feature: Activity navigation in Snap theme
   Scenario: Step through activities in the course as a teacher.
     Given I log in as "teacher1"
     And I am on "Course 1" course homepage
-    And I click on "//h3/a/span[contains(text(),'Assignment 1')]" "xpath_element"
+    And I click on "//h3/a/p[contains(text(),'Assignment 1')]" "xpath_element"
     # The first activity won't have the previous activity link.
     Then "#prev-activity-link" "css_element" should not exist
     And I should see "Book 1" in the "#next-activity-link" "css_element"
@@ -161,7 +162,7 @@ Feature: Activity navigation in Snap theme
   Scenario: Step through activities in the course as a student.
     Given I log in as "student1"
     And I am on "Course 1" course homepage
-    When I click on "//h3/a/span[contains(text(),'Assignment 1')]" "xpath_element"
+    When I click on "//h3/a/p[contains(text(),'Assignment 1')]" "xpath_element"
     # The first activity won't have the previous activity link.
     Then "#prev-activity-link" "css_element" should not exist
     And I should see "Book 1" in the "#next-activity-link" "css_element"
@@ -216,7 +217,7 @@ Feature: Activity navigation in Snap theme
   Scenario: Jump to another activity as a teacher
     Given I log in as "teacher1"
     When I am on "Course 1" course homepage
-    When I click on "//h3/a/span[contains(text(),'Assignment 1')]" "xpath_element"
+    When I click on "//h3/a/p[contains(text(),'Assignment 1')]" "xpath_element"
     Then "Jump to..." "field" should exist
     # The current activity will not be listed.
     And the "Jump to..." select box should not contain "Assignment 1"
@@ -266,7 +267,7 @@ Feature: Activity navigation in Snap theme
   Scenario: Jump to another activity as a student
     Given I log in as "student1"
     And I am on "Course 1" course homepage
-    And I click on "//h3/a/span[contains(text(),'Assignment 1')]" "xpath_element"
+    And I click on "//h3/a/p[contains(text(),'Assignment 1')]" "xpath_element"
     And "Jump to..." "field" should exist
     # The current activity will not be listed.
     And the "Jump to..." select box should not contain "Assignment 1"
@@ -312,7 +313,53 @@ Feature: Activity navigation in Snap theme
   Scenario: Open an activity in a course that only has a single activity
     Given I log in as "student1"
     And I am on "Course 2" course homepage
-    And I click on "//h3/a/span[contains(text(),'Assignment 1')]" "xpath_element"
+    And I click on "//h3/a/p[contains(text(),'Assignment 1')]" "xpath_element"
     Then "#prev-activity-link" "css_element" should not exist
     And "#next-activity-link" "css_element" should not exist
     And "Jump to..." "field" should not exist
+  @javascript
+  Scenario: Shouldn't be able jump to another activity on quiz attempt.
+    Given the following "question categories" exist:
+      | contextlevel | reference | name           |
+      | Course       | C1        | Test questions |
+    And the following "questions" exist:
+      | questioncategory | qtype       | name  | questiontext    |
+      | Test questions   | truefalse   | TF1   | First question  |
+      | Test questions   | truefalse   | TF2   | Second question |
+    And quiz "Quiz 1" contains the following questions:
+      | question | page | maxmark |
+      | TF1      | 1    |         |
+      | TF2      | 1    | 3.0     |
+    And I log in as "student1"
+    And I am on "Course 1" course homepage
+    And I click on "Topic 4" "text"
+    And I click on "//h3/a/p[contains(text(),'Quiz 1')]" "xpath_element"
+    And "#prev-activity-link" "css_element" should be visible
+    And "#next-activity-link" "css_element" should be visible
+    And "Jump to..." "field" should be visible
+    And I click on "Attempt quiz now" "text"
+    And "#prev-activity-link" "css_element" should not be visible
+    And "#next-activity-link" "css_element" should not be visible
+    And "Jump to..." "field" should not be visible
+
+  @javascript
+  Scenario: Set the activity as stealth from the activity quick menu.
+    And I log in as "admin"
+    And I am on "Course 1" course homepage
+    And I follow "Topic 2"
+    And I click on ".snap-activity[data-type='Forum'] span.snap-edit-asset-more" "css_element"
+    And I should not see "Make available"
+    And I click on ".snap-activity[data-type='Forum'] a.editing_makeunavailable.js_snap_hide" "css_element"
+    Then I wait until ".snap-activity[data-type='Forum'].draft" "css_element" exists
+    And I click on ".snap-activity[data-type='Forum'] span.snap-edit-asset-more" "css_element"
+    And I should see "Make available"
+    And I click on ".snap-activity[data-type='Forum'] a.js_snap_stealth" "css_element"
+    Then I wait until ".snap-activity[data-type='Forum'].stealth" "css_element" exists
+    And I should see "Available but not shown on course page"
+    And I click on ".snap-activity[data-type='Forum'] span.snap-edit-asset-more" "css_element"
+    And I should not see "Make available"
+    And I should not see "Hide"
+    And I should see "Make unavailable"
+    And I click on ".snap-activity[data-type='Forum'] a.editing_makeunavailable.js_snap_hide" "css_element"
+    Then I wait until ".snap-activity[data-type='Forum'].draft" "css_element" exists
+    And I should see "Not published to students"

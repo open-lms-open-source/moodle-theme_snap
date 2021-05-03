@@ -20,7 +20,7 @@
 # @copyright  2017 Blackboard Ltd
 # @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
 
-@theme @theme_snap
+@theme @theme_snap @snap_page_resource
 Feature: Open page (front page) module inline
   As any user
   I need to view page modules inline at front page.
@@ -29,8 +29,12 @@ Feature: Open page (front page) module inline
     Given the following "users" exist:
       | username | firstname | lastname | email                |
       | student1 | Student   | 1        | student1@example.com |
+      | student2 | Student   | 2        | student2@example.com |
     And completion tracking is "Enabled" for course "Acceptance test site"
     And debugging is turned off
+    And the following config values are set as admin:
+      | lazyload_mod_page | 0 | theme_snap |
+      | design_mod_page   | 1 | theme_snap |
 
   @javascript
   Scenario: Page mod is created and opened inline at the front page.
@@ -40,42 +44,46 @@ Feature: Open page (front page) module inline
      And I log in as "admin"
      And I am on site homepage
      And I should not see "page content1"
-     And I follow "Read more&nbsp;»"
+     And I click on ".contentafterlink .summary-text a" "css_element"
      And I should not see an error dialog
      And I wait until ".pagemod-content[data-content-loaded=\"1\"]" "css_element" is visible
      # The above step basically waits for the page content to load up.
      And I should see "page content1"
 
   @javascript
-  Scenario: Page mod completion updates on read more and affects availability for other modules at the front page.
+  Scenario Outline: Page mod completion updates on read more and affects availability for other modules at the front page.
     Given the following "activities" exist:
-      | activity | course               | idnumber  | name              | intro                 | content                 | section |
-      | page     | Acceptance test site | pagec     | Page completion   | Page completion intro | Page completion content | 1       |
-      | page     | Acceptance test site | pager     | Page restricted   | Page restricted intro | Page restricted content | 1       |
-   Then I log in as "admin"
+      | activity | course               | idnumber  | name   | intro      | content      | section |
+      | page     | Acceptance test site | pagec     | Page   | Page intro | Page content | 1       |
+    Then I log in as "admin"
+    And the following config values are set as admin:
+      | resourcedisplay | <Option> | theme_snap |
     And I am on site homepage
-    # Sometimes the page activity is not being created with the correct completion options, so I have to do it manually
-    And I follow "Edit \"Page completion\""
+    And I follow "Edit \"Page\""
     And I expand all fieldsets
-    And I set the field "completion" to "2"
-    And I set the field "completionview" to "1"
-    And I press "Save and return to course"
-    # Restrict the second page module to only be accessible after the first page module is marked complete.
-    And I restrict course asset "Page restricted" by completion of "Page completion"
+    And I click on "Add restriction..." "button"
+    And I click on "User profile" "button"
+    And I set the field "User profile field" to "Email address"
+    And I set the field "Value to compare against" to "student2@example.com"
+    And I click on ".availability-item .availability-eye img" "css_element"
+    And I click on "Save and return to course" "button"
+    And I click on "//a[@class='snap-conditional-tag']" "xpath_element"
+    And I should see "Not available unless: Your Email address is student2@example.com"
     And I log out
     And I log in as "student1"
     And I am on site homepage
-   Then I should not see "Page restricted intro"
-    And I should see availability info "Not available unless: The activity Page completion is marked complete"
-    And I follow visible link "Read more&nbsp;»"
+    And I should not see "Page intro"
+    And I log out
+    And I log in as "student2"
+    And I am on site homepage
+    And I click on ".contentafterlink .summary-text a" "css_element"
     And I should not see an error dialog
     And I wait until ".pagemod-content[data-content-loaded=\"1\"]" "css_element" is visible
-    # The above step basically waits for the page module content to load up.
-   Then I should see "Page completion content"
-    And I should not see availability info "Not available unless: The activity Page completion is marked complete"
-    And I should see "Page restricted"
-    And I follow visible link "Read more&nbsp;»"
-   Then I should see " Page restricted content"
+    Then I should see "Page content"
+    Examples:
+      | Option     |
+      | list       |
+      | card       |
 
   @javascript
   Scenario: Page mod should be visible at the front page for users that are not logged in.
@@ -88,7 +96,7 @@ Feature: Open page (front page) module inline
     And I should not see "page content1"
     And I log out
     And I should not see "page content1"
-   Then I follow visible link "Read more&nbsp;"
+    Then I click on ".pagemod-readmore" "css_element"
     And I should not see an error dialog
     And I wait until ".pagemod-content[data-content-loaded=\"1\"]" "css_element" is visible
     And I should see "page content1"

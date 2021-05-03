@@ -16,11 +16,11 @@
 # Tests for toggle course section visibility in non edit mode in snap.
 #
 # @package    theme_snap
-# @author     Rafael Becerra rafael.becerrarodriguez@blackboard.com
-# @copyright  Copyright (c) 2019 Blackboard Inc. (http://www.blackboard.com)
+# @author     Rafael Becerra rafael.becerrarodriguez@openlms.net
+# @copyright  Copyright (c) 2019 Open LMS.
 # @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
 
-@theme @theme_snap
+@theme @theme_snap @theme_snap_ax
 Feature: Check that the correct attributes exists for URL field in a database activity template.
 
   Background:
@@ -33,6 +33,8 @@ Feature: Check that the correct attributes exists for URL field in a database ac
     And the following "course enrolments" exist:
       | user      | course  | role            |
       | teacher1  | C1      | editingteacher  |
+    And the following config values are set as admin:
+      | design_activity_chooser | 1 | theme_snap |
 
   @javascript
   Scenario: Url type and Url autocomplete should exists for input Url in the "Add entry" for Database activity.

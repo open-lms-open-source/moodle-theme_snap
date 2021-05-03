@@ -64,6 +64,55 @@ class behat_theme_snap_behat_repository_upload extends behat_repository_upload {
         return $filepickercontainer;
     }
 
+    protected function open_add_file_window($filemanagernode, $repositoryname) {
+
+        $exception = new ExpectationException('No files can be added to the specified filemanager', $this->getSession());
+
+        // We should deal with single-file and multiple-file filemanagers,
+        // catching the exception thrown by behat_base::find() in case is not multiple.
+        try {
+            // Looking for the add button inside the specified filemanager.
+            $add = $this->find('css', 'div.fp-btn-add a', $exception, $filemanagernode);
+        } catch (Exception $e) {
+            // Otherwise should be a single-file filepicker form element.
+            $add = $this->find('css', 'input.fp-btn-choose', $exception, $filemanagernode);
+        }
+        $this->ensure_node_is_visible($add);
+        $add->click();
+
+        // Wait for the default repository (if any) to load. This checks that
+        // the relevant div exists and that it does not include the loading image.
+        $this->ensure_element_exists(
+            "//div[contains(concat(' ', normalize-space(@class), ' '), ' file-picker ')]" .
+            "//div[contains(concat(' ', normalize-space(@class), ' '), ' fp-content ')]" .
+            "[not(descendant::div[contains(concat(' ', normalize-space(@class), ' '), ' fp-content-loading ')])]",
+            'xpath_element');
+
+        // Getting the repository link and opening it.
+        $repoexception = new ExpectationException('The "' . $repositoryname . '" repository has not been found',
+            $this->getSession());
+
+        // Avoid problems with both double and single quotes in the same string.
+        $repositoryname = behat_context_helper::escape($repositoryname);
+
+        // Here we don't need to look inside the selected element because there can only be one modal window.
+        $repositorylink = $this->find(
+            'xpath',
+            "//div[contains(concat(' ', normalize-space(@class), ' '), ' fp-repo-area ')]" .
+            "//descendant::span[contains(concat(' ', normalize-space(@class), ' '), ' fp-repo-name ')]" .
+            "[normalize-space(.)=$repositoryname]",
+            $repoexception
+        );
+
+        // Selecting the repo.
+        $this->ensure_node_is_visible($repositorylink);
+        if (!$repositorylink->getParent()->getParent()->hasClass('active')) {
+            // If the repository link is active, then the repository is already loaded.
+            // Clicking it while it's active causes issues, so only click it when it isn't (see MDL-51014).
+            $repositorylink->click();
+        }
+    }
+
     protected function upload_file_to_filemanager($filepath, $filemanagerelement, TableNode $data, $overwriteaction = false) {
         global $CFG;
 
@@ -121,7 +170,7 @@ class behat_theme_snap_behat_repository_upload extends behat_repository_upload {
         $submit->press();
 
         // We wait for all the JS to finish as it is performing an action.
-        $this->getSession()->wait(self::TIMEOUT, self::PAGE_READY_JS);
+        $this->getSession()->wait(behat_base::get_timeout(), self::PAGE_READY_JS);
 
         if ($overwriteaction !== false) {
             $overwritebutton = $this->find_button($overwriteaction);
@@ -129,7 +178,7 @@ class behat_theme_snap_behat_repository_upload extends behat_repository_upload {
             $overwritebutton->click();
 
             // We wait for all the JS to finish.
-            $this->getSession()->wait(self::TIMEOUT, self::PAGE_READY_JS);
+            $this->getSession()->wait(behat_base::get_timeout(), self::PAGE_READY_JS);
         }
 
     }

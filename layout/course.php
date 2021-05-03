@@ -18,7 +18,7 @@
  * Layout - course.
  *
  * @package   theme_snap
- * @copyright Copyright (c) 2015 Blackboard Inc. (http://www.blackboard.com)
+ * @copyright Copyright (c) 2015 Open LMS (https://www.openlms.net)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -49,8 +49,11 @@ if ($COURSE->id != SITEID && !empty($coverimagecss)) {
 ////////////////////////// MAIN  ///////////////////////////////
 -->
 <main id="moodle-page" class="clearfix">
+<?php
+echo $OUTPUT->custom_menu_spacer();
+?>
 <div id="page-header" class="clearfix <?php echo $mastimage; ?>">
-    <div class="breadcrumb-nav" aria-label="breadcrumb"><?php echo $OUTPUT->navbar($mastimage); ?></div>
+    <div class="breadcrumb-nav" aria-label="breadcrumb"><?php echo $OUTPUT->snapnavbar($mastimage); ?></div>
 
     <div id="page-mast">
     <?php

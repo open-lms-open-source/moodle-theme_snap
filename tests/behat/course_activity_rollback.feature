@@ -16,10 +16,10 @@
 # Tests for navigation between activities.
 #
 # @package    theme_snap
-# @author     Juan Felipe Martinez <juan.martinez@blackboard.com>
+# @author     Juan Felipe Martinez
 # @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
 
-@theme @theme_snap
+@theme @theme_snap @theme_snap_course
 Feature: Course scrollback navigation in Snap theme
 
   Background:
@@ -47,14 +47,14 @@ Feature: Course scrollback navigation in Snap theme
     And I reset session storage
     And I am on "Course 1" course homepage
     And The id for element "//*[@data-type='IMS content package']" "xpath_element" is saved for scrollback
-    And I click on "//h3/a/span[contains(text(),'Imscp 1')]" "xpath_element"
+    And I click on "//h3/a/p[contains(text(),'Imscp 1')]" "xpath_element"
     And The stored element scroll id matches the session storage id
     And I follow "Introduction"
     And I wait until the page is ready
     And I am on "Course 1" course homepage
     And I follow "Topic 1"
     And The id for element "//*[@data-type='Assignment']" "xpath_element" is saved for scrollback
-    And I click on "//h3/a/span[contains(text(),'Assignment 1')]" "xpath_element"
+    And I click on "//h3/a/p[contains(text(),'Assignment 1')]" "xpath_element"
     And The stored element scroll id matches the session storage id
     And I follow "Topic 1"
     And I wait until the page is ready
@@ -65,12 +65,12 @@ Feature: Course scrollback navigation in Snap theme
     And I reset session storage
     And I am on "Course 1" course homepage
     And The id for element "//*[@data-type='IMS content package']" "xpath_element" is saved for scrollback
-    And I click on "//*[@data-type='IMS content package']/div/div[1]/div[1]" "xpath_element"
+    And I click on ".modtype_imscp .snap-asset-content h3.snap-asset-link a" "css_element"
     And The stored element scroll id matches the session storage id
     And I follow "Introduction"
     And I wait until the page is ready
     And The id for element "//*[@data-type='IMS content package']" "xpath_element" is saved for scrollback
-    And I click on "//*[@data-type='IMS content package']/div" "xpath_element"
+    And I click on ".modtype_imscp .snap-asset-content h3.snap-asset-link a" "css_element"
     And The stored element scroll id matches the session storage id
     And I follow "Introduction"
     And I wait until the page is ready

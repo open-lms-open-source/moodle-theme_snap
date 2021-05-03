@@ -18,13 +18,15 @@
  * Snap weeks format renderer.
  *
  * @package   theme_snap
- * @copyright Copyright (c) 2015 Blackboard Inc. (http://www.blackboard.com)
+ * @copyright Copyright (c) 2015 Open LMS (https://www.openlms.net)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 namespace theme_snap\output;
 
 defined('MOODLE_INTERNAL') || die();
+
+require_once($CFG->dirroot . '/course/format/weeks/renderer.php');
 
 class format_weeks_renderer extends \format_weeks_renderer {
 

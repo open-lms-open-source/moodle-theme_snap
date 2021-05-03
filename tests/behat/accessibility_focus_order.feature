@@ -16,11 +16,11 @@
 # Tests for toggle course section visibility in non edit mode in snap.
 #
 # @package    theme_snap
-# @author     Rafael Becerra rafael.becerrarodriguez@blackboard.com
-# @copyright  Copyright (c) 2019 Blackboard Inc. (http://www.blackboard.com)
+# @author     Rafael Becerra rafael.becerrarodriguez@openlms.net
+# @copyright  Copyright (c) 2019 Open LMS
 # @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
 
-@theme @theme_snap
+@theme @theme_snap @theme_snap_ax
 Feature: Check that the correct tab order and focus exists for the page.
 
   Background:
@@ -33,6 +33,11 @@ Feature: Check that the correct tab order and focus exists for the page.
     And the following "course enrolments" exist:
       | user      | course  | role            |
       | teacher1  | C1      | editingteacher  |
+    And the following "activities" exist:
+      | activity | course               | idnumber | name        | intro                         | section |
+      | assign   | C1                   | assign1  | assignment1 | Test assignment description 1 | 0       |
+    And the following config values are set as admin:
+      | design_activity_chooser | 1 | theme_snap |
 
   @javascript
   Scenario: Tabindex -1 exists for unnecessary focus order in the course dashboard.
@@ -46,7 +51,16 @@ Feature: Check that the correct tab order and focus exists for the page.
     And I log in as "teacher1"
     And I am on "Course 1" course homepage
     And I click on "//li[@id='section-0']//div[@class='content']//div[@class='col-sm-6 snap-modchooser']//a" "xpath_element"
-    And I click on "div.tab-pane.row.text-center.fade.active.in div:nth-child(3) a" "css_element"
+    And I click on "div.tab-pane.row.text-center.fade.active.in div:nth-child(5) a" "css_element"
     And I click on "Save and display" "button"
     Then the focused element is "input.form-control.is-invalid" "css_element"
+
+  @javascript
+  Scenario: On mobile view, submit buttons should appear after the advance form at the bottom of the form.
+    Given I change window size to "658x852"
+    And I log in as "admin"
+    And I am on "Course 1" course homepage
+    And I follow "Edit \"assignment1\""
+    Then "div[role=main] .mform div.snap-form-required fieldset > div.form-group.fitem" "css_element" should appear after "div[role=main] .mform div.snap-form-advanced" "css_element"
+
 

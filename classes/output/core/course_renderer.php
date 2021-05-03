@@ -19,7 +19,7 @@
  * Overrides core course renderer.
  *
  * @package   theme_snap
- * @copyright Copyright (c) 2015 Blackboard Inc. (http://www.blackboard.com)
+ * @copyright Copyright (c) 2015 Open LMS (https://www.openlms.net)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -39,6 +39,7 @@ use theme_snap\activity_meta;
 
 require_once($CFG->dirroot . "/mod/book/locallib.php");
 require_once($CFG->libdir . "/gradelib.php");
+require_once($CFG->dirroot . '/course/renderer.php');
 
 class course_renderer extends \core_course_renderer {
     /**
@@ -99,12 +100,25 @@ class course_renderer extends \core_course_renderer {
             }
 
             // Is this mod draft?
-            if (!$mod->visible && !$mod->visibleold) {
-                $modclasses [] = 'draft';
+            // We don't need visibleold as a condition here since it can affect a
+            // module merged from a course to another, and the draft class won't be applied.
+            // The "Not published to students" message won't be displayed next to the course module so teachers do not
+            // realize that the content is not available to students.
+            $section = $mod->get_section_info();
+            if (!$mod->visible) {
+                // If the section is hidden check the visibleold to prevent
+                // the message will be displayed in all modules.
+                if ($section->visible || (!$section->visible && !$mod->visibleold)) {
+                    $modclasses [] = 'draft';
+                }
             }
+
             // Is this mod stealth?
             if ($mod->is_stealth()) {
                 $modclasses [] = 'stealth';
+            }
+            if ($mod->visible && $section && !$section->visible) {
+                $modclasses [] = 'stealth-section-hidden';
             }
 
             $canviewhidden = has_capability('moodle/course:viewhiddenactivities', $mod->context);
@@ -194,8 +208,7 @@ class course_renderer extends \core_course_renderer {
      * @return string
      */
     public function course_section_cm($course, &$completioninfo, cm_info $mod, $sectionreturn, $displayoptions = array()) {
-
-        global $COURSE;
+        global $COURSE, $CFG;
 
         $output = '';
         // We return empty string (because course module will not be displayed at all)
@@ -229,6 +242,11 @@ class course_renderer extends \core_course_renderer {
         if (!empty($cmname)) {
             // Activity/resource type.
             $snapmodtype = $this->get_mod_type($mod)[0];
+            $pagecurrentstr = get_string('modulename', 'mod_page');
+            $bookcurrentstr = get_string('modulename', 'mod_book');
+            if (strcmp($snapmodtype, $pagecurrentstr) == 0 || strcmp($snapmodtype, $bookcurrentstr) == 0) {
+                $snapmodtype = '';
+            }
             $assettype = '<div class="snap-assettype">'.$snapmodtype.'</div>';
             // Asset link.
             $assetlink .= '<h3 class="snap-asset-link">'.$cmname.'</h3>';
@@ -250,16 +268,21 @@ class course_renderer extends \core_course_renderer {
         $completiontracking .= $this->course_section_cm_completion($course, $completioninfo, $mod, $displayoptions);
         $completiontracking .= '</div>';
 
+        // Add specific class if the completion tracking is disabled for an activity.
+        $completion = $completioninfo->is_enabled($mod);
+        if ($completion == COMPLETION_TRACKING_NONE) {
+            $completiontracking = '<div class="disabled-snap-asset-completion-tracking">';
+            $completiontracking .= $this->course_section_cm_completion($course, $completioninfo, $mod, $displayoptions);
+            $completiontracking .= '</div>';
+        }
+
         // Draft & Stealth tags.
         $stealthtag = '';
         $drafttag = '';
-        if ($mod->is_stealth()) {
-            // Stealth tag.
-            $stealthtag = '<div class="snap-stealth-tag">'.get_string('hiddenoncoursepage', 'moodle').'</div>';
-        } else {
-            // Draft status - always output, shown via css of parent.
-            $drafttag = '<div class="snap-draft-tag">'.get_string('draft', 'theme_snap').'</div>';
-        }
+        // Stealth tag.
+        $stealthtag = '<div class="snap-stealth-tag">'.get_string('hiddenoncoursepage', 'moodle').'</div>';
+        // Draft status - always output, shown via css of parent.
+        $drafttag = '<div class="snap-draft-tag">'.get_string('draft', 'theme_snap').'</div>';
 
         // Group.
         $groupmeta = '';
@@ -285,22 +308,36 @@ class course_renderer extends \core_course_renderer {
 
         $canviewhidden = has_capability('moodle/course:viewhiddenactivities', $mod->context);
         // If the module isn't available, or we are a teacher (can view hidden activities) then get availability
-        // info.
-        $conditionalmeta = '';
+        // info. Restrictions will appear on click over a lock image inside the activity header.
+        $coursetoolsicon = '';
         if (!$mod->available || $canviewhidden) {
             $availabilityinfo = $this->course_section_cm_availability($mod, $displayoptions);
             if ($availabilityinfo) {
-                $conditionalmeta .= '<div class="snap-conditional-tag">'.$availabilityinfo.'</div>';
+                $restrictionsource = '<img title="" id="snap-restriction-icon" aria-hidden="true" class="svg-icon" src="';
+                $restrictionsource .= $this->output->image_url('lock', 'theme').'"/>';
+                $coursetoolsicon = html_writer::tag('a', $restrictionsource, [
+                    'tabindex' => '0',
+                    'class' => 'snap-conditional-tag',
+                    'role' => 'button',
+                    'data-toggle' => 'popover',
+                    'data-trigger' => 'focus',
+                    'data-placement' => 'right',
+                    'id' => 'snap-restriction',
+                    'data-html' => 'true',
+                    'clickable' => 'true',
+                    'data-content' => $availabilityinfo
+                ]);
             }
         }
 
         // Add draft, contitional.
-        $assetmeta = $stealthtag.$drafttag.$conditionalmeta;
+        $assetmeta = $stealthtag.$drafttag;
 
         // Build output.
         $postcontent = '<div class="snap-asset-meta" data-cmid="'.$mod->id.'">'.$assetmeta.$mod->afterlink.'</div>';
         $content = '<div class="snap-asset-content">'.$assetlink.$postcontent.$contentpart.$snapcompletionmeta.$groupmeta.'</div>';
-        $output .= $assettype.$completiontracking.$content;
+        $cardicons = '<div class="snap-header-card-icons">'.$completiontracking.$coursetoolsicon.'</div>';
+        $output .= '<div class="snap-header-card">'.$assettype.$cardicons.'</div>'.$content;
 
         // Bail at this point if we aren't using a supported format. (Folder view is only partially supported).
         $supported = ['topics', 'weeks', 'site'];
@@ -315,7 +352,8 @@ class course_renderer extends \core_course_renderer {
         $modcontext = context_module::instance($mod->id);
         $baseurl = new moodle_url('/course/mod.php', array('sesskey' => sesskey()));
 
-        $str = get_strings(array('delete', 'move', 'duplicate', 'hide', 'show', 'roles'), 'moodle');
+        $str = get_strings(array('delete', 'move', 'duplicate', 'hide', 'show', 'roles',
+            'makeavailable', 'makeunavailable'), 'moodle');
         // TODO - add snap strings here.
 
         // Move, Edit, Delete.
@@ -336,8 +374,7 @@ class course_renderer extends \core_course_renderer {
         }
 
         // Hide/Show.
-        // Not output for stealth activites.
-        if (has_capability('moodle/course:activityvisibility', $modcontext) && !$mod->is_stealth()) {
+        if (has_capability('moodle/course:activityvisibility', $modcontext)) {
             $actions .= '<input class="sr-only" type="checkbox">';
             $hideaction = '<a href="'.new moodle_url($baseurl, array('hide' => $mod->id));
             $hideaction .= '" data-action="hide" class="dropdown-item editing_hide js_snap_hide">'.$str->hide.'</a>';
@@ -345,6 +382,22 @@ class course_renderer extends \core_course_renderer {
             $showaction = '<a href="'.new moodle_url($baseurl, array('show' => $mod->id));
             $showaction .= '" data-action="show" class="dropdown-item editing_show js_snap_show">'.$str->show.'</a>';
             $actionsadvanced[] = $showaction;
+
+            // Stealth action.
+            $courseformat = course_get_format($mod->get_course());
+
+            $makeunavailable = '<a href="'.new moodle_url($baseurl, array('hide' => $mod->id));
+            $makeunavailable .= '" data-action="hide" class="dropdown-item editing_makeunavailable js_snap_hide">' .
+                $str->makeunavailable . '</a>';
+            $actionsadvanced[] = $makeunavailable;
+
+            if (!empty($CFG->allowstealth) && $mod->has_view()) {
+                $action = 'stealth';
+                $actionstealth = '<a href="'.new moodle_url($baseurl, array($action => $mod->id));
+                $actionstealth .= '" data-action="' . $action . '" class="dropdown-item editing_makeavailable js_snap_stealth">' .
+                    $str->makeavailable.'</a>';
+                $actionsadvanced[] = $actionstealth;
+            }
         }
 
         // Duplicate.
@@ -449,13 +502,27 @@ class course_renderer extends \core_course_renderer {
         }
         if ($mod->url) {
             if ($content) {
+                // Add extra content to create fadeout to resource cards activities and SCORM package.
+                if ((plugin_supports('mod', $mod->modname, FEATURE_MOD_ARCHETYPE) === MOD_ARCHETYPE_RESOURCE) ||
+                    $mod->modname === 'scorm') {
+                        $fadeoutcard = "<p class='snap-resource-card-fadeout'>&nbsp;</p>";
+                        $content .= $fadeoutcard;
+                }
                 // If specified, display extra content after link.
                 $output = html_writer::tag('div', $content, array('class' => trim('contentafterlink ' . $textclasses)));
             }
         } else {
+            $snapmodtype = $this->get_mod_type($mod)[0];
+            // Label title should not be displayed in the activity card header.
+            $labelcurrentstr = get_string('modulename', 'mod_label');
+            if (strcmp($snapmodtype, $labelcurrentstr) == 0) {
+                $snapmodtype = '';
+            }
+            $assettype = '<div class="snap-assettype">'.$snapmodtype.'</div>';
+
             // No link, so display only content.
-            $output = html_writer::tag('div', $accesstext . $content,
-            array('class' => 'contentwithoutlink ' . $textclasses));
+            $output = html_writer::tag('div', $assettype . $accesstext . $content,
+                array('class' => 'contentwithoutlink ' . $textclasses));
         }
         return $output;
     }
@@ -523,13 +590,12 @@ class course_renderer extends \core_course_renderer {
      * @param cm_info $mod
      * @param activity_meta $meta
      * @return string
-     * @throws coding_exception
+     * @throws \coding_exception
      */
-    public function submission_cta(cm_info $mod, activity_meta $meta) {
+    public static function submission_cta(cm_info $mod, activity_meta $meta) {
         global $CFG;
 
         if (empty($meta->submissionnotrequired)) {
-            $class = 'snap-assignment-stage';
             $url = $CFG->wwwroot.'/mod/'.$mod->modname.'/view.php?id='.$mod->id;
 
             if ($meta->submitted) {
@@ -556,8 +622,7 @@ class course_renderer extends \core_course_renderer {
      * @return string
      */
     protected function module_meta_html(cm_info $mod) {
-
-        global $COURSE, $OUTPUT;
+        global $COURSE;
 
         $content = '';
 
@@ -618,7 +683,9 @@ class course_renderer extends \core_course_renderer {
                     $url = new \moodle_url('/mod/'.$mod->modname.'/view.php?id='.$mod->id);
                 }
                 $feedbackavailable = get_string('feedbackavailable', 'theme_snap');
-                $content .= html_writer::link($url, $feedbackavailable);
+                if ($mod->modname != 'lesson') {
+                    $content .= html_writer::link($url, $feedbackavailable);
+                }
             }
 
             // If submissions are not allowed, return the content.
@@ -628,7 +695,7 @@ class course_renderer extends \core_course_renderer {
             }
             // @codingStandardsIgnoreLine
             /* @var cm_info $mod */
-            $content .= $this->submission_cta($mod, $meta);
+            $content .= self::submission_cta($mod, $meta);
         }
 
         // Activity due date.
@@ -661,7 +728,6 @@ class course_renderer extends \core_course_renderer {
      * @return string
      */
     protected function mod_image_html($mod) {
-        global $OUTPUT;
         if (!$mod->uservisible) {
                 return "";
         }
@@ -689,7 +755,7 @@ class course_renderer extends \core_course_renderer {
         $img = format_text('<img src="' .$imgsrc. '" alt="' .$modname. '"/>');
         $icon = '<img title="' .get_string('vieworiginalimage', 'theme_snap'). '"
                 alt="' .get_string('vieworiginalimage', 'theme_snap'). '"
-                src="' .$OUTPUT->image_url('arrow-expand', 'theme'). '">';
+                src="' .$this->output->image_url('arrow-expand', 'theme'). '">';
         $imglink = '<a class="snap-expand-link" href="' .$imgsrc. '" target="_blank">' .$icon. '</a>';
 
         $output = '<figure class="snap-resource-figure figure">'
@@ -725,18 +791,29 @@ class course_renderer extends \core_course_renderer {
         $readmore = get_string('readmore', 'theme_snap');
         $close = get_string('closebuttontitle', 'moodle');
 
-        // Identify content elements which should force an AJAX lazy load.
-        $elcontentblist = ['iframe', 'video', 'object', 'embed'];
-        $content = $page->content;
-        $lazyload = false;
-        foreach ($elcontentblist as $el) {
-            if (stripos($content, '<'.$el) !== false) {
-                $content = ''; // Don't include the content as it is likely to slow the page load down considerably.
-                $lazyload = true;
+        $content = '';
+        $contentloaded = 0;
+        if (empty(get_config('theme_snap', 'lazyload_mod_page'))) {
+            // Identify content elements which should force an AJAX lazy load.
+            $elcontentblist = ['iframe', 'video', 'object', 'embed', 'model-viewer'];
+            $content = $page->content;
+            $lazyload = false;
+            foreach ($elcontentblist as $el) {
+                if (stripos($content, '<'.$el) !== false) {
+                    $content = ''; // Don't include the content as it is likely to slow the page load down considerably.
+                    $lazyload = true;
+                }
             }
+            $contentloaded = !$lazyload ? 1 : 0;
         }
-        $contentloaded = !$lazyload ? 1 : 0;
-        $pslinkclass = 'btn btn-secondary pagemod-readmore';
+
+        $pagenewwindow = get_config('theme_snap', 'design_mod_page');
+        // Check for mod page design setting to open the content inline on the same page or in another window.
+        if ($pagenewwindow) {
+            $pslinkclass = 'btn btn-secondary pagemod-readmore';
+        } else {
+            $pslinkclass = 'btn btn-secondary';
+        }
         $pmcontextattribute = 'data-pagemodcontext="'.$mod->context->id.'"';
 
         $o = "
@@ -747,7 +824,9 @@ class course_renderer extends \core_course_renderer {
         </div>
 
         <div class=pagemod-content tabindex='-1' data-content-loaded={$contentloaded}>
-            {$content}
+            <div id='pagemod-content-container'>
+                {$content}
+            </div>
             <div class='d-block'><hr><a  class='snap-action-icon snap-icon-close' href='#'>
             <small>$close</small></a></div>
         </div>";
@@ -880,6 +959,8 @@ class course_renderer extends \core_course_renderer {
         // Multimedia mods we want to open in the same window.
         $snapmultimedia = $this->snap_multimedia();
 
+        $resourcedisplay = get_config('theme_snap', 'resourcedisplay');
+        $displaydescription = get_config('theme_snap', 'displaydescription');
         if ($mod->modname === 'resource') {
             $extension = $this->get_mod_type($mod)[1];
             if (in_array($extension, $snapmultimedia) ) {
@@ -889,18 +970,31 @@ class course_renderer extends \core_course_renderer {
                     $url .= "&amp;redirect=1";
                 }
             } else {
+                if ($resourcedisplay == 'card' && $displaydescription) {
+                    $url .= "&amp;forceview=1";
+                } else {
+                    $url .= "&amp;redirect=1";
+                    $target = "target='_blank'";
+                }
+            }
+        }
+        if ($mod->modname === 'url') {
+            if ($resourcedisplay == 'card' && $displaydescription) {
+                // Set the url to forceview 1 to see intermediate page with description.
+                $url .= "&amp;forceview=1";
+            } else {
                 $url .= "&amp;redirect=1";
                 $target = "target='_blank'";
             }
         }
-        if ($mod->modname === 'url') {
-            // Set the url to redirect 1 to avoid intermediate pages.
-            $url .= "&amp;redirect=1";
-            $target = "target='_blank'";
-        }
+
+        $onclicklti = $this->theme_snap_lti_get_launch_container($mod);
 
         if ($mod->uservisible) {
-            $output .= "<a $target class='mod-link' href='$url'>$activityimg<span class='instancename'>$instancename</span></a>";
+            $output .= "<a $target $onclicklti class='mod-link' href='$url'>"
+                            .$activityimg.
+                            "<p class='instancename'>$instancename</p>
+                        </a>";
             $output .= $groupinglabel;
         } else {
             // We may be displaying this just in order to show information
@@ -937,8 +1031,7 @@ class course_renderer extends \core_course_renderer {
      * @throws moodle_exception
      */
     public function snap_footer_alert() {
-        global $OUTPUT;
-        return $OUTPUT->render_from_template('theme_snap/footer_alert', null);
+        return $this->output->render_from_template('theme_snap/footer_alert', null);
     }
 
     /**
@@ -948,14 +1041,14 @@ class course_renderer extends \core_course_renderer {
      * @throws \coding_exception
      */
     public function course_format_warning() {
-        global $COURSE, $PAGE, $OUTPUT;
+        global $COURSE;
 
         $format = $COURSE->format;
         if (in_array($format, ['weeks', 'topics'])) {
             return '';
         }
 
-        if (!$PAGE->user_is_editing()) {
+        if (!$this->page->user_is_editing()) {
             return '';
         }
 
@@ -964,7 +1057,7 @@ class course_renderer extends \core_course_renderer {
         }
 
         $url = new moodle_url('/course/edit.php', ['id' => $COURSE->id]);
-        return $OUTPUT->notification(get_string('courseformatnotification', 'theme_snap', $url->out()));
+        return $this->output->notification(get_string('courseformatnotification', 'theme_snap', $url->out()));
     }
 
     /**
@@ -1016,6 +1109,7 @@ class course_renderer extends \core_course_renderer {
      */
     public function course_category($category) {
         global $CFG;
+        $basecategory = \core_course_category::get(0);
         $coursecat = \core_course_category::get(is_object($category) ? $category->id : $category);
         $site = get_site();
         $output = '';
@@ -1023,7 +1117,7 @@ class course_renderer extends \core_course_renderer {
         // NOTE - we output manage catagory button in the layout file in Snap.
 
         if (!$coursecat->id) {
-            if (\core_course_category::count_all() == 1) {
+            if (\core_course_category::is_simple_site() == 1) {
                 // There exists only one category in the system, do not display link to it.
                 $coursecat = \core_course_category::get_default();
                 $strfulllistofcourses = get_string('fulllistofcourses');
@@ -1034,13 +1128,13 @@ class course_renderer extends \core_course_renderer {
             }
         } else {
             $title = $site->shortname;
-            if (\core_course_category::count_all() > 1) {
+            if ($basecategory->get_children_count() > 1) {
                 $title .= ": ". $coursecat->get_formatted_name();
             }
             $this->page->set_title($title);
 
             // Print the category selector.
-            if (\core_course_category::count_all() > 1) {
+            if ($basecategory->get_children_count() > 1) {
                 $select = new \single_select(new moodle_url('/course/index.php'), 'categoryid',
                         \core_course_category::make_categories_list(), $coursecat->id, null, 'switchcategory');
                 $select->set_label(get_string('category').':');
@@ -1113,7 +1207,7 @@ class course_renderer extends \core_course_renderer {
 
         $output .= $this->container_start('buttons');
         ob_start();
-        if (\core_course_category::count_all() == 1) {
+        if (\core_course_category::is_simple_site() == 1) {
             print_course_request_buttons(\context_system::instance());
         } else {
             print_course_request_buttons($context);
@@ -1132,10 +1226,10 @@ class course_renderer extends \core_course_renderer {
      */
 
     public function course_footer() {
-        global $DB, $COURSE, $CFG, $PAGE;
+        global $DB, $COURSE, $CFG;
 
         // Check toggle switch.
-        if (empty($PAGE->theme->settings->coursefootertoggle)) {
+        if (empty($this->page->theme->settings->coursefootertoggle)) {
             return false;
         }
 
@@ -1169,8 +1263,8 @@ class course_renderer extends \core_course_renderer {
             if (empty($courseteachers)) {
                 $courseteachers = "<h5>".get_string('coursecontacts', 'theme_snap')."</h5>";
             }
-            $courseteachers .= '<br><a class="btn btn-outline-secondary btn-sm" href="'.$CFG->wwwroot.'/user/index.php?id='.
-                $COURSE->id.'">'.get_string('enrolledusers', 'enrol').'</a>';
+            $courseteachers .= '<br><a id="enrolled-users" class="btn btn-outline-secondary btn-sm"
+                href="'.$CFG->wwwroot.'/user/index.php?id='.$COURSE->id.'">'.get_string('enrolledusers', 'enrol').'</a>';
         }
 
         // Course cummary.
@@ -1191,8 +1285,8 @@ class course_renderer extends \core_course_renderer {
             if (empty($coursesummary)) {
                 $coursesummary = '<h5>'.get_string('aboutcourse', 'theme_snap').'</h5>';
             }
-            $coursesummary .= '<br><a class="btn btn-outline-secondary btn-sm" href="'.$CFG->wwwroot.'/course/edit.php?id='.
-                $COURSE->id.'#id_descriptionhdr">'.get_string('editsummary').'</a>';
+            $coursesummary .= '<br><a id="edit-summary" class="btn btn-outline-secondary btn-sm"
+            href="'.$CFG->wwwroot.'/course/edit.php?id='.$COURSE->id.'#id_descriptionhdr">'.get_string('editsummary').'</a>';
         }
 
         // Get recent activities on mods in the course.
@@ -1245,7 +1339,7 @@ class course_renderer extends \core_course_renderer {
      * @return string
      */
     public function print_teacher_profile($user) {
-        global $CFG, $OUTPUT;
+        global $CFG, $USER;
 
         $userpicture = new \user_picture($user);
         $userpicture->link = false;
@@ -1254,14 +1348,17 @@ class course_renderer extends \core_course_renderer {
         $picture = $this->render($userpicture);
 
         $fullname = '<a href="' .$CFG->wwwroot. '/user/profile.php?id=' .$user->id. '">'.format_string(fullname($user)).'</a>';
-        $messageicon = '<img class="svg-icon" alt="" role="presentation" src="' .$OUTPUT->image_url('messages', 'theme').' ">';
-        $message = '<br><small><a href="'.$CFG->wwwroot.
-                '/message/index.php?id='.$user->id.'">message'.$messageicon.'</a></small>';
-
         $data = (object) [
             'image' => $picture,
-            'content' => $fullname.$message
+            'content' => $fullname
         ];
+        if ($USER->id != $user->id) {
+            $messageicon = '<img class="svg-icon" alt="" role="presentation" src="'
+                .$this->output->image_url('messages', 'theme').' ">';
+            $message = '<br><small><a href="'.$CFG->wwwroot.
+                '/message/index.php?id='.$user->id.'">message'.$messageicon.'</a></small>';
+            $data->content .= $message;
+        }
 
         return $this->render_from_template('theme_snap/media_object', $data);
     }
@@ -1273,7 +1370,7 @@ class course_renderer extends \core_course_renderer {
      * @return string
      */
     public function get_mod_recent_activity($context) {
-        global $COURSE, $OUTPUT;
+        global $COURSE;
         $viewfullnames = has_capability('moodle/site:viewfullnames', $context);
         $recentactivity = array();
         $timestart = time() - (86400 * 7); // Only show last 7 days activity.
@@ -1307,7 +1404,7 @@ class course_renderer extends \core_course_renderer {
             foreach ($recentactivity as $modname => $moduleactivity) {
                 // Get mod icon, empty alt as title already there.
                 $img = html_writer::tag('img', '', array(
-                    'src' => $OUTPUT->image_url('icon', $modname),
+                    'src' => $this->output->image_url('icon', $modname),
                     'alt' => '',
                 ));
 
@@ -1321,5 +1418,67 @@ class course_renderer extends \core_course_renderer {
             }
         }
         return $output;
+    }
+
+    /**
+     * Get LTI launch container.
+     *
+     * @param cm_info $mod
+     * @return string
+     */
+    public function theme_snap_lti_get_launch_container(cm_info $mod) {
+        global $DB, $CFG;
+        require_once($CFG->dirroot.'/mod/lti/lib.php');
+        require_once($CFG->dirroot.'/mod/lti/locallib.php');
+
+        // LTI launch container for Snap.
+        if (!$lti = $DB->get_record('lti', array('id' => $mod->instance),
+            'icon, secureicon, intro, introformat, name, typeid, toolurl, launchcontainer')) {
+            return null;
+        }
+
+        $info = new \cached_cm_info();
+
+        if ($mod->showdescription) {
+            // Convert intro to html. Do not filter cached version, filters run at display time.
+            $info->content = format_module_intro('lti', $lti, $mod->id, false);
+        }
+
+        if (!empty($lti->typeid)) {
+            $toolconfig = lti_get_type_config($lti->typeid);
+        } else if ($tool = lti_get_tool_by_url_match($lti->toolurl)) {
+            $toolconfig = lti_get_type_config($tool->id);
+        } else {
+            $toolconfig = array();
+        }
+
+        // We want to use the right icon based on whether the
+        // current page is being requested over http or https.
+        if (lti_request_is_using_ssl() &&
+            (!empty($lti->secureicon) || (isset($toolconfig['secureicon']) && !empty($toolconfig['secureicon'])))) {
+            if (!empty($lti->secureicon)) {
+                $info->iconurl = new moodle_url($lti->secureicon);
+            } else {
+                $info->iconurl = new moodle_url($toolconfig['secureicon']);
+            }
+        } else if (!empty($lti->icon)) {
+            $info->iconurl = new moodle_url($lti->icon);
+        } else if (isset($toolconfig['icon']) && !empty($toolconfig['icon'])) {
+            $info->iconurl = new moodle_url($toolconfig['icon']);
+        }
+
+        // For some reason Snap wasn't doing this right with some external tools,
+        // with this we are creating the same behavior that core does, launching the content in a new window on click.
+        $launchcontainer = lti_get_launch_container($lti, $toolconfig);
+        $onclicklti = '';
+        if (($launchcontainer == LTI_LAUNCH_CONTAINER_WINDOW) && ($mod->modname === 'lti')) {
+            if ($mod->onclick) {
+                $launchurl = new moodle_url('/mod/lti/launch.php', array('id' => $mod->id));
+                $onclickltiurl = 'window.open("' . $launchurl->out(false) . '", "lti-'.$mod->id.'"); return false;';
+                $onclicklti = "onclick='$onclickltiurl'";
+            }
+        }
+
+        return $onclicklti;
     }
 }

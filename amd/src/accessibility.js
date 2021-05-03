@@ -15,8 +15,8 @@
  * along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
  *
  * @package   theme_snap
- * @author    Oscar Nadjar oscar.nadjar@blackboard.com
- * @copyright Copyright (c) 2019 Blackboard Inc. (http://www.blackboard.com)
+ * @author    Oscar Nadjar oscar.nadjar@openlms.net
+ * @copyright Copyright (c) 2019 Open LMS (https://www.openlms.net)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -26,7 +26,7 @@
 define(['jquery', 'core/str', 'core/event'],
     function($, str, Event) {
         return {
-            init: function() {
+            snapAxInit: function(localJouleGrader, allyReport, blockReports) {
 
                 /**
                  * Module to get the strings from Snap to add the aria-label attribute to new accessibility features.
@@ -35,15 +35,86 @@ define(['jquery', 'core/str', 'core/event'],
                     {key : 'accessforumstringdis', component : 'theme_snap'},
                     {key : 'accessforumstringmov', component : 'theme_snap'},
                     {key : 'calendar', component : 'calendar'},
-                    {key : 'accessglobalsearchstring', component : 'theme_snap'}
+                    {key : 'accessglobalsearchstring', component : 'theme_snap'},
+                    {key : 'viewcalendar', component : 'theme_snap'},
+                    {key : 'viewmyfeedback', component : 'theme_snap'},
+                    {key : 'viewmessaging', component : 'theme_snap'},
+                    {key : 'viewforumposts', component : 'theme_snap'},
+                    {key : 'editcoursesettings', component : 'theme_snap'},
+                    {key : 'pluginname', component : 'local_joulegrader'},
+                    {key : 'gradebook', component : 'local_joulegrader'},
+                    {key : 'gradebook', component : 'core_grades'},
+                    {key : 'numparticipants', component : 'core_message'},
+                    {key : 'joulereports', component : 'block_reports'},
+                    {key : 'pld', component : 'theme_snap'},
+                    {key : 'competencies', component : 'core_competency'},
+                    {key : 'outcomes', component : 'core_outcome'},
+                    {key : 'badges', component : 'core_badges'},
+                    {key : 'coursereport', component : 'report_allylti'}
                 ]).done(function(stringsjs) {
                     if ($("#page-mod-forum-discuss")) {
-                        $(".displaymode form select.custom-select").attr("aria-label", stringsjs[0]);
-                        $(".movediscussion select.urlselect").attr("aria-label", stringsjs[1]);
+                        $("div[data-content='forum-discussion'] div.singleselect form.form-inline " +
+                            "select.custom-select.singleselect").attr("aria-label", stringsjs[0]);
+                        $("div[data-content='forum-discussion'] div.movediscussionoption " +
+                            "select.custom-select.urlselect").attr("aria-label", stringsjs[1]);
                     }
                     $("i.fa-calendar").parent().attr("aria-label", stringsjs[2]);
                     $("input[name='TimeEventSelector[calendar]']").attr('aria-label', stringsjs[2]);
                     $(".search-input-wrapper.nav-link div").attr('aria-label', stringsjs[3]);
+
+                    // Add needed ID's for personal menu links.
+                    $('#snap-pm-updates section a.snap-personal-menu-more small:contains("' + stringsjs[4] + '")')
+                        .attr("id", "snap-pm-deadline");
+                    $('#snap-pm-updates section a.snap-personal-menu-more small:contains("' + stringsjs[5] + '")')
+                        .attr("id", "snap-pm-feedback");
+                    $('#snap-pm-updates section a.snap-personal-menu-more small:contains("' + stringsjs[6] + '")')
+                        .attr("id", "snap-pm-messages");
+                    $('#snap-pm-updates section a.snap-personal-menu-more small:contains("' + stringsjs[7] + '")')
+                        .attr("id", "snap-pm-forum-posts");
+
+                    // Add needed ID's for course dashboard.
+                    // These ID's were added for the most used elements in the course dashboard.
+
+                    // There is not a lang string that contains {$a} participants with capital P, and this function helps with that.
+                    // Taken from https://css-tricks.com/snippets/jquery/make-jquery-contains-case-insensitive/
+                    $.expr[":"].contains = $.expr.createPseudo(function(arg) {
+                        return function(elem) {
+                            return $(elem).text().toUpperCase().indexOf(arg.toUpperCase()) >= 0;
+                        };
+                    });
+                    var ctparticipantsnumber = stringsjs[12].split(" ");
+                    $('section#coursetools div#coursetools-list a:contains("' + stringsjs[8] + '")')
+                        .attr("id", "ct-course-settings");
+                    $('section#coursetools div#coursetools-list a:contains("' + ctparticipantsnumber[1] + '")')
+                        .attr("id", "ct-participants-number");
+                    $('section#coursetools div#coursetools-list a:contains("' + stringsjs[14] + '")')
+                        .attr("id", "ct-pld");
+                    $('section#coursetools div#coursetools-list a:contains("' + stringsjs[15] + '")')
+                        .attr("id", "ct-competencies");
+                    $('section#coursetools div#coursetools-list a:contains("' + stringsjs[16] + '")')
+                        .attr("id", "ct-outcomes");
+                    $('section#coursetools div#coursetools-list a:contains("' + stringsjs[17] + '")')
+                        .attr("id", "ct-badges");
+
+                    // Check if the plugins are installed to pass the strings. These parameters are being passed from
+                    // $initaxvars in snap/classes/output/shared.php. More validations can be added if needed.
+                    if (localJouleGrader) {
+                        $('section#coursetools div#coursetools-list a:contains("' + stringsjs[9] + '")')
+                            .attr("id", "ct-open-grader");
+                        $('section#coursetools div#coursetools-list a:contains("' + stringsjs[10] + '")')
+                            .attr("id", "ct-course-gradebook");
+                    } else {
+                        $('section#coursetools div#coursetools-list a:contains("' + stringsjs[11] + '")')
+                            .attr("id", "ct-course-gradebook");
+                    }
+                    if (blockReports) {
+                        $('section#coursetools div#coursetools-list a:contains("' + stringsjs[13] + '")')
+                            .attr("id", "ct-open-reports");
+                    }
+                    if (allyReport) {
+                        $('section#coursetools div#coursetools-list a:contains("' + stringsjs[18] + '")')
+                            .attr("id", "ct-ally");
+                    }
                 });
 
                 $(document).ready(function() {

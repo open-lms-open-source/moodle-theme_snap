@@ -19,7 +19,7 @@
 # @author     2017 Jun Pataleta <jun@moodle.com>
 # @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
 
-@theme @theme_snap
+@theme @theme_snap @theme_snap_course
 Feature: Activity navigation involving activities with access restrictions in Snap theme
   In order to quickly switch to another activity that has access restrictions
   As a student
@@ -57,10 +57,10 @@ Feature: Activity navigation involving activities with access restrictions in Sn
     And I press "Save and return to course"
     # Require Forum 1 to be completed first before Chat 1 can be accessed.
     And I follow "Edit \"Chat 1\""
-#    And I click on "Edit settings" "link" in the "Chat 1" activity
+    # And I click on "Edit settings" "link" in the "Chat 1" activity.
     And I expand all fieldsets
     And I click on "Add restriction..." "button"
-    And I click on "Activity completion" "button" in the "Add restriction..." "dialogue"
+    And I click on "//button[text()=\"Activity completion\"]" "xpath_element"
     And I set the field "Activity or resource" to "Forum 1"
     And I press "Save and return to course"
     And I log out
@@ -69,7 +69,7 @@ Feature: Activity navigation involving activities with access restrictions in Sn
   Scenario: Activity navigation involving activities with access restrictions
     Given I log in as "student1"
     And I am on "Course 1" course homepage
-    And I click on "//h3/a/span[contains(text(),'Assignment 1')]" "xpath_element"
+    And I click on "//h3/a/p[contains(text(),'Assignment 1')]" "xpath_element"
     Then I should see "Forum 1" in the "#next-activity-link" "css_element"
     # Activity that has access restriction should not show up in the dropdown.
     And the "Jump to..." select box should not contain "Chat 1"

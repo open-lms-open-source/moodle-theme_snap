@@ -15,7 +15,7 @@
  * along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
  *
  * @package   theme_snap
- * @copyright Copyright (c) 2016 Blackboard Inc. (http://www.blackboard.com)
+ * @copyright Copyright (c) 2016 Open LMS (https://www.openlms.net)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -104,6 +104,16 @@ define(
             var urlParams = location.hash.split("&"),
                 section = urlParams[0],
                 mod = urlParams[1] || null;
+            if (section == '') {
+                var qs = location.search.substring(1);
+                var sparameters = qs.split('&');
+                sparameters.forEach(function(param) {
+                    if (param.indexOf('section=') >= 0) {
+                        param.replace(param);
+                        section = '#' + param.replace('=', '-');
+                    }
+                });
+            }
 
             if (section !== '' && section !== sectionSetByServer) {
                 $(sectionSetByServer).removeClass('state-visible');
@@ -162,11 +172,42 @@ define(
         };
 
         /**
+         * Captures hash parameters and triggers the render method.
+         */
+        var renderFromHash = function () {
+            var hash = $(location).attr('hash');
+            var params = hash.replace('#','').split('&');
+            var section = false;
+            var mod = 0;
+            $.each(params, function(idx, param) {
+                if (param.indexOf('section') != -1) {
+                    section = param.split('section-')[1];
+                } else if (param.indexOf('module') != -1) {
+                    mod = param.split('module-')[1];
+                }
+            });
+
+            if (!section) {
+                var qs = location.search.substring(1);
+                var sparameters = qs.split('&');
+                sparameters.forEach(function(param) {
+                    if (param.indexOf('section=') >= 0) {
+                        param.replace(param);
+                        section = param.replace('section=', '');
+                    }
+                });
+            }
+            if (section && $('.chapters .chapter-title[href="#section-' + section + '"]').length > 0) {
+                sectionAssetManagement.renderAndFocusSection(section, mod);
+            }
+        };
+
+        /**
          * Initialise course JS.
          */
         var init = function() {
             sectionAssetManagement.init(self);
-            courseModules.init();
+            courseModules.init(courseConfig);
 
             // Only load the conditionals library if it's enabled for the course, viva la HTTP2!
             if (self.courseConfig.enablecompletion) {
@@ -190,18 +231,32 @@ define(
                 });
                 // Sets the observers for rendering sections on demand.
                 if (self.courseConfig.partialrender) {
-                    var hash = $(location).attr('hash');
-                    var params = hash.split('&');
-                    var section = false;
-
-                    $.each(params, function(idx, param) {
-                        if (param.includes('section')) {
-                            section = param.split('#section-')[1];
-                        }
+                    renderFromHash();
+                    $(window).on('hashchange',function(){
+                        renderFromHash();
                     });
-                    if (section) {
-                        sectionAssetManagement.renderAndFocusSection(section, 0);
+                    // Current section might be hidden, at this point should be visible.
+                    var sections = $('.course-content li[id^="section-"]');
+                    var urlParams = location.hash.split("&"),
+                        sectionParam = urlParams[0];
+                    if (sections.length == 1 && sectionParam != '#coursetools') {
+                        sections.addClass('state-visible');
+                        var section = sections.attr('id').split('section-')[1];
+                        if (self.courseConfig.toctype == 'top' && self.courseConfig.format == 'topics' && section > 0) {
+                            var title = sections.find('.sectionname').html();
+                            var elements = $('.chapter-title');
+                            var tmpid = 0;
+                            $.each(elements, function(key, element) {
+                                if ($(element).attr('section-number') == section) {
+                                    tmpid = key;
+                                }
+                            });
+                            sections.find('.sectionname').html(title);
+                            sections.find('.sectionnumber').html(tmpid + '.');
+                        }
                     }
+
+
                 }
             }
         };

@@ -20,7 +20,7 @@
  * way.
  *
  * @package   theme_snap
- * @copyright Copyright (c) 2015 Blackboard Inc. (http://www.blackboard.com)
+ * @copyright Copyright (c) 2015 Open LMS (https://www.openlms.net)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 defined('MOODLE_INTERNAL') || die();
@@ -32,11 +32,6 @@ defined('MOODLE_INTERNAL') || die();
 /* Custom footer edit buttons. */
 $footnote = empty($PAGE->theme->settings->footnote) ? '' : $PAGE->theme->settings->footnote;
 $footnote = format_text($footnote, FORMAT_HTML, ['noclean' => true]);
-if ($this->page->user_is_editing() && $PAGE->pagetype == 'site-index') {
-    $url = new moodle_url('/admin/settings.php', ['section' => 'themesettingsnap'], 'admin-footnote');
-    $link = html_writer::link($url, get_string('editcustomfooter', 'theme_snap'), ['class' => 'btn btn-primary btn-sm']);
-    $footnote .= '<p class="text-right">'.$link.'</p>';
-}
 
 $custommenu = $OUTPUT->custom_menu();
 if (!empty($custommenu) && $this->page->user_is_editing() && $PAGE->pagetype == 'site-index') {
@@ -76,11 +71,12 @@ if (!empty($socialmedialinks)) {
 echo '</div>';
 ?>
 
-
 <?php
 /* Moodle custom menu. */
+/* We need to render the custom menu in the footer in mobile views. */
+
 if (!empty($custommenu)) {
-    echo '<div id="moodle-custom-menu"><br>';
+    echo '<div id="snap-custom-menu"><br>';
     echo $custommenu;
     echo '</div>';
 }
@@ -94,7 +90,10 @@ if (!empty($custommenu)) {
                 echo $OUTPUT->page_doc_link();
                 echo "<br>";
             }
-            echo get_string('poweredbyrunby', 'theme_snap', date('Y', time()));
+            echo get_string('poweredbyrunby', 'theme_snap', (object) [
+                    'subdomain' => $this->get_poweredby_subdomain(),
+                    'year'      => date('Y', time())
+            ]);
             ?>
         </small>
     </div>
@@ -102,7 +101,15 @@ if (!empty($custommenu)) {
         <?php echo $OUTPUT->lang_menu(); ?>
     </div>
 </div>
-
+<?php
+$tittle = get_string('totop', 'theme_boost');
+echo
+    '<div id="goto-top-link">
+        <a class="btn btn-light" role="button" href="javascript:void(0)">
+            <i class="icon fa fa-arrow-up fa-fw" title="' . $tittle .'" aria-label="'. $tittle .'"></i>
+        </a>
+    </div>'
+?>
 <div id="page-footer">
 <br/>
 <?php echo $OUTPUT->standard_footer_html(); ?>

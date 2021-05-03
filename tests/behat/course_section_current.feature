@@ -16,11 +16,11 @@
 # Tests for toggle course section visibility in non edit mode in snap.
 #
 # @package    theme_snap
-# @copyright  2016 Blackboard Inc. <www.blackboard.com>
+# @copyright  2016 Open LMS (https://www.openlms.net)
 # @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
 
 
-@theme @theme_snap
+@theme @theme_snap @theme_snap_course @theme_snap_course_section
 Feature: Entering a Snap course without specifying a section will take you to the current section
 
   Background:
@@ -38,14 +38,26 @@ Feature: Entering a Snap course without specifying a section will take you to th
       | student1 | C1     | student        |
 
   @javascript
-  Scenario: Before a topic is highlighted, section 0 is the default
-    Given I log in as "teacher1"
+  Scenario Outline: Before a topic is highlighted, section 0 is the default
+    Given I log in as "admin"
+    And the following config values are set as admin:
+      | coursepartialrender | <Option> | theme_snap |
+    And I log out
+    And I log in as "teacher1"
     And I am on the course main page for "C1"
     Then I should see "Introduction" in the ".section.state-visible" "css_element"
+  Examples:
+    | Option     |
+    | 0          |
+    | 1          |
 
   @javascript
-  Scenario: Once a topic is highlighted, that section is shown on entering the course
-    Given I log in as "teacher1"
+  Scenario Outline: Once a topic is highlighted, that section is shown on entering the course
+    Given I log in as "admin"
+    And the following config values are set as admin:
+      | coursepartialrender | <Option> | theme_snap |
+    And I log out
+    And I log in as "teacher1"
     And I am on the course main page for "C1"
     Then I should see "Introduction" in the ".section.state-visible" "css_element"
     And "#chapters li:nth-of-type(1).snap-visible-section" "css_element" should exist
@@ -54,10 +66,18 @@ Feature: Entering a Snap course without specifying a section will take you to th
     And I am on the course main page for "C1"
     And I should see "Untitled Topic" in the ".section.state-visible" "css_element"
     And "#chapters li:nth-of-type(2).snap-visible-section" "css_element" should exist
+  Examples:
+    | Option     |
+    | 0          |
+    | 1          |
 
   @javascript
-  Scenario: If the teacher highlights a hidden section, the default section 0 is displayed
-    Given I log in as "teacher1"
+  Scenario Outline: If the teacher highlights a hidden section, the default section 0 is displayed
+    Given I log in as "admin"
+    And the following config values are set as admin:
+      | coursepartialrender | <Option> | theme_snap |
+    And I log out
+    And I log in as "teacher1"
     And I am on the course main page for "C1"
     Then I should see "Introduction" in the ".section.state-visible" "css_element"
     And I follow "Topic 1"
@@ -70,10 +90,18 @@ Feature: Entering a Snap course without specifying a section will take you to th
     And I am on the course main page for "C1"
     Then I should see "Introduction" in the ".section.state-visible" "css_element"
     And I should see "Not available" in TOC item 1
+  Examples:
+    | Option     |
+    | 0          |
+    | 1          |
 
   @javascript
-  Scenario: Conditionally restricted section will not be shown on load, default to section 0
-  Given I log in as "teacher1"
+  Scenario Outline: Conditionally restricted section will not be shown on load, default to section 0
+  Given I log in as "admin"
+    And the following config values are set as admin:
+      | coursepartialrender | <Option> | theme_snap |
+    And I log out
+    And I log in as "teacher1"
     And I am on the course main page for "C1"
     And I go to course section 1
     And I highlight section 1
@@ -86,5 +114,7 @@ Feature: Entering a Snap course without specifying a section will take you to th
     And I am on the course main page for "C1"
     Then I should see "Introduction" in the ".section.state-visible" "css_element"
     And I should see "Conditional" in TOC item 1
-
-
+  Examples:
+    | Option     |
+    | 0          |
+    | 1          |

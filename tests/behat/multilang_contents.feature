@@ -13,10 +13,11 @@
 # You should have received a copy of the GNU General Public License
 # along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 #
-# Tests for navigation between activities with restrictions.
+# Test for multilang strings in Snap.
 #
 # @package    theme_snap
-# @author     2018 Rafael Becerra <rafael.becerrarodriguez@blackboard.com>
+# @copyright  Copyright (c) 2020 Open LMS. (https://www.openlms.net)
+# @author     2018 Rafael Becerra <rafael.becerrarodriguez@openlms.net>
 # @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
 
 @theme @theme_snap
@@ -25,13 +26,17 @@ Feature: The site displays only the language that user has selected for multilan
   Background:
     Given the following config values are set as admin:
       | theme | snap |
+      | linkadmincategories | 0 |
     And the following "courses" exist:
       | fullname | shortname | idnumber |
       | Course 1 | Course 1  | C1       |
     And I log in as "admin"
     And I am on site homepage
     And I click on "#admin-menu-trigger" "css_element"
-    And I navigate to "Plugins > Filters > Manage filters" in site administration
+    And I expand "Site administration" node
+    And I expand "Plugins" node
+    And I expand "Filters" node
+    And I follow "Manage filters"
     And I click on "On" "option" in the "Multi-Language Content" "table_row"
     And I click on "Content and headings" "option" in the "Multi-Language Content" "table_row"
     And I am on site homepage
@@ -57,25 +62,19 @@ Feature: The site displays only the language that user has selected for multilan
 
   @javascript
   Scenario: Language is changed site footer displays in only english.
-    Given I log in as "admin"
-    And I am on site homepage
-    And I click on "#admin-menu-trigger" "css_element"
-    And I navigate to "Appearance > Themes > Snap" in site administration
-    And I set the field "Site footer" to "<span lang=\"en\" class=\"multilang\">English text</span><span lang=\"it\" class=\"multilang\">Italian text</span>"
-    And I press "Save changes"
-    And "#snap-footer-content" "css_element" should exist
-    And "//div[contains(text(),'English text')]" "xpath_element" should exist
+    Given the following config values are set as admin:
+      | footnote | <span lang="en" class="multilang">English text</span><span lang="it" class="multilang">Italian text</span> | theme_snap |
+    When I log in as "admin"
+    Then "#snap-footer-content" "css_element" should exist
+    Then "//div[contains(text(),'English text')]" "xpath_element" should exist
     And I log out
 
   @javascript
   Scenario: Course header for the category displays in only english.
-    Given I log in as "admin"
+    Given the following "categories" exist:
+      | category | name                                                                                                       | idnumber | sortorder |
+      | 0        | <span lang="en" class="multilang">English text</span><span lang="it" class="multilang">Italian text</span> | 1        | 1         |
+    When I log in as "admin"
     And I am on course index
-    And I click on "//p/a[contains(text(),'Manage courses')]" "xpath_element"
-    And I click on "//div/a[@id='dropdown-1']" "xpath_element"
-    And I click on "//div/a[@class='dropdown-item action-edit menu-action']" "xpath_element"
-    And I set the field "Category name" to "<span lang=\"en\" class=\"multilang\">English text</span><span lang=\"it\" class=\"multilang\">Italian text</span>"
-    And I press "Save changes"
-    And I am on course index
-    And "//h1/div[contains(text(),'English text')]" "xpath_element" should exist
+    Then "//div/h3/a[contains(text(),'English text')]" "xpath_element" should exist
     And I log out

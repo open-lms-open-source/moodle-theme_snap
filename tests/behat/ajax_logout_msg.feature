@@ -29,6 +29,8 @@ Feature: When the moodle theme is set to Snap, ajax failures due to log outs / e
     And the following "users" exist:
       | username | firstname | lastname | email                |
       | teacher  | Test      | teacher  | teacher@example.com  |
+    And the following config values are set as admin:
+      | personalmenuadvancedfeedsenable | 0 | theme_snap |
 
   @javascript
   Scenario: Logged in user get's login status warning when logged out if personal menu is opened.

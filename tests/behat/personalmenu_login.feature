@@ -16,10 +16,10 @@
 # Tests for personal menu display on initial login.
 #
 # @package    theme_snap
-# @author     2016 Guy Thomas <osdev@blackboard.com>
+# @author     2016 Guy Thomas
 # @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
 
-@theme @theme_snap
+@theme @theme_snap @theme_snap_personalmenu
 Feature: When the moodle theme is set to Snap,
           users can open and close the personal menu,
           and optionally open the personal menu on login
@@ -106,6 +106,7 @@ Feature: When the moodle theme is set to Snap,
     When I follow "Courses"
     And I am on "Course 1" course homepage
     # The above will trigger a redirect to the login page.
+    And I wait until ".snap-log-in-loading-spinner" "css_element" is not visible
     And I set the field "username" to "teacher1"
     And I set the field "password" to "teacher1"
     And I press "Log in"

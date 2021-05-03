@@ -15,10 +15,10 @@
 #
 #
 # @package    theme_snap
-# @copyright Copyright (c) 2015 Blackboard Inc. (http://www.blackboard.com)
+# @copyright  Copyright (c) 2015 Open LMS (https://www.openlms.net)
 # @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
 
-@theme @theme_snap
+@theme @theme_snap @theme_snap_calendar
 Feature: When a user clicks on next or previous month link in the calendar block, then
   the page redirects and the calendar block must be visible.
 
@@ -39,8 +39,10 @@ Feature: When a user clicks on next or previous month link in the calendar block
     or in the previous month link
   Given I log in as "teacher1"
     And I am on the course main page for "course_topics"
-   Then I add the "Calendar" block
-   Then I follow "Course Dashboard"
+    Then I follow "Course Dashboard"
+    And I follow "Edit blocks"
+    And I set the field with xpath "//select[@class = 'custom-select singleselect']" to "Calendar"
+    And I wait until the page is ready
     And I should see "Calendar"
     And I click on ".arrow_link.next" "css_element"
    Then I should see "Calendar"
@@ -50,8 +52,10 @@ Feature: When a user clicks on next or previous month link in the calendar block
     or in the previous month link
   Given I log in as "teacher1"
    Then I am on the course main page for "course_topics"
-   Then I add the "Calendar" block
-   Then I follow "Course Dashboard"
+    Then I follow "Course Dashboard"
+    And I follow "Edit blocks"
+    And I set the field with xpath "//select[@class = 'custom-select singleselect']" to "Calendar"
+    And I wait until the page is ready
     And I should see "Calendar"
     And I follow "Previous month"
    Then I should see "Calendar"

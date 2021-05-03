@@ -16,15 +16,14 @@
 # Tests for visibility of activity restriction tags.
 #
 # @package    theme_snap
-# @copyright Copyright (c) 2018 Blackboard Inc.
+# @copyright Copyright (c) 2018 Open LMS
 # @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
 
 
-@theme @theme_snap
+@theme @theme_snap @theme_snap_login
 Feature: When the moodle theme is set to Snap, the custom snap login form should be shown.
 
   @javascript
   Scenario: The login template must contain the custom snap form.
     Given I am on login page
     And I check element "#login" has class "snap-custom-form"
-

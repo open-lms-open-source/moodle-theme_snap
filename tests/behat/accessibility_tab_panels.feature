@@ -16,11 +16,11 @@
 # Tests for toggle course section visibility in non edit mode in snap.
 #
 # @package    theme_snap
-# @author     Rafael Becerra rafael.becerrarodriguez@blackboard.com
-# @copyright  Copyright (c) 2019 Blackboard Inc. (http://www.blackboard.com)
+# @author     Rafael Becerra rafael.becerrarodriguez@openlms.net
+# @copyright  Copyright (c) 2019 Open LMS.
 # @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
   
-@theme @theme_snap
+@theme @theme_snap @theme_snap_ax
 Feature: When the Moodle theme is set to Snap, personal menu and course mod chooser should be accessible tabs.
 
   Background:
@@ -35,6 +35,8 @@ Feature: When the Moodle theme is set to Snap, personal menu and course mod choo
       | user      | course  | role            |
       | teacher1  | C1      | editingteacher  |
       | teacher1  | C2      | editingteacher  |
+    And the following config values are set as admin:
+      | design_activity_chooser | 1 | theme_snap |
 
   @javascript
   Scenario: Personal menu tab should have a specific aria-controls attribute to be accessible.

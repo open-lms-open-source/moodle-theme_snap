@@ -16,12 +16,12 @@
 # Tests for toggle course section visibility in non edit mode in snap.
 #
 # @package    theme_snap
-# @author     Rafael Becerra rafael.becerrarodriguez@blackboard.com
-# @copyright  Copyright (c) 2019 Blackboard Inc. (http://www.blackboard.com)
+# @author     Rafael Becerra rafael.becerrarodriguez@openlms.net
+# @copyright  Copyright (c) 2019 Open LMS.
 # @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
 
 
-@theme @theme_snap
+@theme @theme_snap @theme_snap_ax
 Feature: When the Moodle theme is set to Snap, core notifications messages should have a specific aria attribute to
   screen readers functionality.
 
@@ -40,6 +40,8 @@ Feature: When the Moodle theme is set to Snap, core notifications messages shoul
     And the following "activities" exist:
       | activity   | name   | intro              | course | idnumber |
       | quiz       | Quiz 1 | Quiz 1 description | C1     | quiz1    |
+    And the following config values are set as admin:
+      | design_activity_chooser | 1 | theme_snap |
     And I log in as "admin"
     And I am on "Course 1" course homepage with editing mode on
     And I add a "Open Forum" to section "1" and I fill the form with:

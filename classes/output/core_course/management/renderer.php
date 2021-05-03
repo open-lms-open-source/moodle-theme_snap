@@ -18,13 +18,14 @@
  * Renderers to align Moodle's HTML with that expected by Bootstrap.
  *
  * @package   theme_snap
- * @copyright Copyright (c) 2018 Blackboard Inc. (http://www.blackboard.com)
+ * @copyright Copyright (c) 2018 Open LMS (https://www.openlms.net)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 namespace theme_snap\output\core_course\management;
 
 defined('MOODLE_INTERNAL') || die();
+require_once($CFG->dirroot . "/course/classes/management_renderer.php");
 
 use core_course_category;
 use core_course_list_element;
@@ -33,10 +34,10 @@ use core_course_list_element;
  * Main renderer for the course management pages.
  *
  * @package   theme_snap
- * @copyright Copyright (c) 2018 Blackboard Inc. (http://www.blackboard.com)
+ * @copyright Copyright (c) 2018 Open LMS (https://www.openlms.net)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class renderer extends \theme_boost\output\core_course\management\renderer {
+class renderer extends \core_course_management_renderer {
     /**
      * @inheritdoc
      */
@@ -56,7 +57,7 @@ class renderer extends \theme_boost\output\core_course\management\renderer {
      * @return string
      */
     private function decorate_link_with_detail_hash(string $html) : string {
-        $needle = 'class="float-left coursename" href="';
+        $needle = 'class="float-left coursename aalink" href="';
         $hrefstart = strpos($html, $needle) + strlen($needle);
         $hrefclose = strpos($html, '"', $hrefstart);
 

@@ -16,10 +16,10 @@
 # Tests for personal menu display on initial login.
 #
 # @package    theme_snap
-# @copyright  Copyright (c) 2018 Blackboard Inc. (http://www.blackboard.com)
+# @copyright  Copyright (c) 2018 Open LMS (https://www.openlms.net)
 # @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
 
-@theme @theme_snap
+@theme @theme_snap @theme_snap_personalmenu
 Feature: When the moodle theme is set to Snap, personal menu's login form has https action.
 
   Background:
@@ -33,4 +33,4 @@ Feature: When the moodle theme is set to Snap, personal menu's login form has ht
   Scenario: User login form uses https when loginhttps is enabled
     Given I am on site homepage
     And I follow "Log in"
-    Then "#snap-pm-content > form[action*='https']" "css_element" should be visible
+    Then ".snap-pm-content > form[action*='https']" "css_element" should be visible

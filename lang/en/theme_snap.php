@@ -18,7 +18,7 @@
  * Language strings
  *
  * @package   theme_snap
- * @copyright Copyright (c) 2015 Blackboard Inc. (http://www.blackboard.com)
+ * @copyright Copyright (c) 2015 Open LMS (https://www.openlms.net)
  * @license   http://opensource.org/licenses/gpl-3.0.html GNU Public License
  */
 
@@ -28,6 +28,7 @@ $string['action:changeassetvisibility'] = 'change asset visibility';
 $string['action:duplicateasset'] = 'duplicate asset';
 $string['action:changesectionvisibility'] = 'change section visibility';
 $string['action:highlightsectionvisibility'] = 'highlight section visibility';
+$string['action:sectiontoc'] = 'get section table of contents';
 $string['addanewsection'] = 'Create a new section';
 $string['addresourceoractivity'] = 'Create learning activity';
 $string['admin'] = 'Admin';
@@ -61,6 +62,7 @@ $string['changecoverimage'] = 'Change cover image';
 $string['changefullname'] = 'Change site name';
 $string['chapters'] = 'Chapters';
 $string['choosereadme'] = '<div class="clearfix"><div class="theme_screenshot"><h2>Snap</h2><img class=img-polaroid src="snap/pix/screenshot.jpg" /></div></div>';
+$string['close'] = 'Close';
 $string['conditional'] = 'Conditional';
 $string['contents'] = 'Contents';
 $string['contributed'] = 'Contributed';
@@ -69,11 +71,11 @@ $string['coursecontacts'] = 'Course Contacts';
 $string['coursedisplay'] = 'Course display';
 $string['coursefootertoggle'] = 'Course footer';
 $string['coursefootertoggledesc'] = 'The Course footer shows useful information to users on a course page including course contacts, course description and recent activity in the course.';
-$string['courseformatnotification'] = 'The current course format you are using is not fully supported by the Snap theme. For the best experience Blackboard Open LMS recommends using the Topics or Weekly course formats with the Snap theme. The course format can be changed in the <a href="{$a}">course settings</a>.';
+$string['courseformatnotification'] = 'The current course format you are using is not fully supported by the Snap theme. For the best experience Open LMS recommends using the Topics or Weekly course formats with the Snap theme. The course format can be changed in the <a href="{$a}">course settings</a>.';
 $string['coursefixydefaulttext'] = 'You are currently not enrolled in any courses.<br>Courses you are enrolled in will be shown here.';
 $string['coursegrade'] = 'Course grade:';
-$string['coursepartialrender'] = 'Course partial render';
-$string['coursepartialrenderdesc'] = 'Renders course sections using a web service, users will only see what they need.';
+$string['coursepartialrender'] = 'Enable lazy loading for course sections';
+$string['coursepartialrenderdesc'] = 'If enabled, course sections load on demand when selected by a user. This helps courses with large amounts of content load faster.';
 $string['coursenavigation'] = 'Course navigation';
 $string['coursesummaryfilesunsuitable'] = 'Please empty your course summary files before you attempt to change the cover image';
 $string['coursetools'] = 'Course Dashboard';
@@ -88,10 +90,12 @@ $string['comingsoon'] = 'Coming soon!';
 $string['createsection'] = 'Create section';
 $string['current'] = 'Current';
 $string['customcss'] = 'Custom CSS';
-$string['customcssdesc'] = 'Please be aware that with great power comes great responsibility.  Any issue caused by the CSS added here is your responsibility to resolve. Blackboard Open LMS Support does not troubleshoot nor provide any help with CSS-related content.';
+$string['customcssdesc'] = 'Please be aware that with great power comes great responsibility.  Any issue caused by the CSS added here is your responsibility to resolve. Open LMS Support does not troubleshoot nor provide any help with CSS-related content.';
 $string['customtopbar'] = 'Navigation bar';
 $string['customisenavbar'] = 'Change navigation bar colors';
 $string['customisenavbutton'] = 'Change My Courses button colors';
+$string['customisecustommenu'] = 'Change custom menu text color';
+$string['custommenutext'] = 'Custom menu text color';
 $string['deadlines'] = 'Deadlines';
 $string['deadlinestoggle'] = 'Deadlines';
 $string['deadlinestoggledesc'] = 'Show users any upcoming activity deadlines from enrolled courses.';
@@ -114,6 +118,8 @@ $string['editcoursesettings'] = 'Course settings';
 $string['editcoursetopic'] = 'Edit section';
 $string['editcustomfooter'] = 'Edit footer';
 $string['editcustommenu'] = 'Edit custom menu';
+$string['error'] = 'Error';
+$string['errorgettingfeed'] = 'Error occurred while getting feed items.';
 $string['error:categorycolorinvalidjson'] = 'Incorrect JSON format for course categories';
 $string['error:categorycolorinvalidvalue'] = 'Record id or color value for category "{$a}" aren\'t valid';
 $string['error:categorynotfound'] = 'The category record with id "{$a}" hasn\'t been found';
@@ -125,6 +131,7 @@ $string['error:failedtochangesectionvisibility'] = 'Failed to hide/show section'
 $string['error:failedtohighlightsection'] = 'Failed to highlight section';
 $string['error:failedtoduplicateasset'] = 'Failed to duplicate';
 $string['error:failedtodeleteasset'] = 'Failed to delete asset';
+$string['error:failedtotoc'] = 'Failed to get TOC.';
 $string['extension'] = 'Extension {$a}';
 $string['facebook'] = 'Facebook';
 $string['facebookdesc'] = 'The url of your facebook page.';
@@ -140,6 +147,14 @@ $string['featurespotsheading'] = 'Feature spots heading';
 $string['featureonetitle'] = 'Feature 1 title';
 $string['featuretwotitle'] = 'Feature 2 title';
 $string['featurethreetitle'] = 'Feature 3 title';
+$string['featureonetitlelink'] = 'Feature 1 title link';
+$string['featuretwotitlelink'] = 'Feature 2 title link';
+$string['featurethreetitlelink'] = 'Feature 3 title link';
+$string['featuretitlelinkdesc'] = 'Type the URL you want to link this feature spot to. You can add external or internal links inside your site. For adding an internal link, please copy it from the site URL including /. For example, to have a link to a course, it would be "/course/view.php?id=160". To add an external link start the link with https://';
+$string['featureonetitlecb'] = 'Feature 1 open in a new window';
+$string['featuretwotitlecb'] = 'Feature 2 open in a new window';
+$string['featurethreetitlecb'] = 'Feature 3 open in a new window';
+$string['featuretitlecbdesc'] = 'If enabled, the link added to the featured spot will be opened in a new window';
 $string['featureonetext'] = 'Feature 1 content';
 $string['featuretwotext'] = 'Feature 2 content';
 $string['featurethreetext'] = 'Feature 3 content';
@@ -202,7 +217,7 @@ Here is an example:<br>
 "12":"#CC0084",<br>
 "56":"#CC0087",<br>
 "89":"#CCF084"}';
-$string['knowledgebase'] = 'Blackboard Open LMS Knowledge Base';
+$string['knowledgebase'] = 'Open LMS Knowledge Base';
 $string['list'] = 'List';
 $string['linkedin'] = 'LinkedIn';
 $string['linkedindesc'] = 'The url of your organisation&#8217;s LinkedIn.';
@@ -251,13 +266,21 @@ $string['personalmenu'] = 'Personal menu';
 $string['personalmenufeatures'] = 'Personal menu features';
 $string['personalmenulogintoggle'] = 'Show personal menu on login';
 $string['personalmenulogintoggledesc'] = 'Opens the personal menu immediately after login';
+$string['personalmenuadvancedfeedsenable'] = 'Enable Advanced feeds';
+$string['personalmenuadvancedfeedsenabledesc'] = 'Advanced feeds loads some personal menu items which allows faster load times and refreshes content on demand.';
+$string['personalmenuadvancedfeedsperpage'] = 'Advanced feeds item display count';
+$string['personalmenuadvancedfeedsperpagedesc'] = 'Choose the number of items to display in the feed. Users can select <strong>View more</strong> to display additional items.';
+$string['personalmenuadvancedfeedslifetime'] = 'Advanced feeds life time';
+$string['personalmenuadvancedfeedslifetimedesc'] = 'Choose the amount of time the feeds will be cached in the browser after login. Setting the value to 0 won\'t cache the feeds in the browser.';
+$string['personalmenurefreshdeadlines'] = 'Refresh deadlines using scheduled task.';
+$string['personalmenurefreshdeadlinesdesc'] = 'When the task runs, deadline data will be refreshed for faster page load times.';
 $string['pld'] = 'PLD';
 $string['pluginname'] = 'Snap';
 $string['poster'] = 'Cover image';
 $string['posterdesc'] = 'A large header image for the front page of your site. Landscape images (1200 x 600 pixels) or larger work best.';
-$string['poweredbyrunby'] = 'Built with <a href="https://www.blackboard.com/blackboard-open-lms" target="_blank">Blackboard Open LMS</a>,
-    a <a href="https://moodle.com/" target="_blank">Moodle</a>-based product.<br>
-    Copyright &#169; {$a} Blackboard Inc., All Rights Reserved.';
+$string['poweredbyrunby'] = 'Built with <a href="https://{$a->subdomain}.openlms.net/" target="_blank" rel="noopener">Open LMS</a>,
+    a <a href="https://moodle.com/" target="_blank" rel="noopener">Moodle</a>-based product.<br>
+    Copyright &#169; {$a->year} Open LMS, All Rights Reserved.';
 $string['previoussection'] = 'Previous section';
 $string['privacy:metadata:theme_snap_course_favorites:courseid'] = 'The course ID of the course that the user favorited';
 $string['privacy:metadata:theme_snap_course_favorites:userid'] = 'The user ID of the user that favorited the course';
@@ -276,7 +299,9 @@ $string['region-side-top'] = 'Top';
 $string['released'] = 'Released: {$a}';
 $string['reopened'] = 'Reopened';
 $string['resourcedisplay'] = 'Resource display';
-$string['resourcedisplayhelp'] = 'Select how attachments and links appear in your course.';
+$string['resourcedisplayhelp'] = 'Select how attachments and links appear in your course. The Snap theme doesn\'t support multimedia files in the small activity and resource cards\' description.';
+$string['displaydescription'] = 'Display description';
+$string['displaydescriptionhelp'] = 'Select to show a description of resource and URL activities in a new page first. Students will access content from the description.';
 $string['search'] = 'Search contents';
 $string['seriffont'] = 'Serif font';
 $string['seriffont_desc'] = 'This font is used for most user generated content. Using a serif font makes user generated content more readable, and feel like it is written by a human.';
@@ -299,10 +324,12 @@ $string['topicactions'] = 'Topic actions';
 $string['twitter'] = 'Twitter';
 $string['twitterdesc'] = 'The url of your twitter account.';
 $string['unenrolme'] = 'Unenrol me';
+$string['enrolme'] = 'Enrol me';
 $string['unread'] = 'unread';
 $string['unsupportedcoverimagetype'] = 'Unsupported cover image type ({$a})';
 $string['via'] = 'via';
 $string['viewcourse'] = 'View Course';
+$string['viewmore'] = 'View more';
 $string['viewyourprofile'] = 'View your profile';
 $string['viewmyfeedback'] = 'View my feedback';
 $string['viewcalendar'] = 'View my calendar';
@@ -344,7 +371,6 @@ $string['admineventwarning'] = 'To see events from all courses, ';
 $string['gotocalendarsnap'] = 'go to site calendar.';
 $string['quizattemptswarn'] = 'Excludes attempts from suspended users';
 $string['quizfeedback'] = 'Feedback';
-
 $string['validratio'] = 'This combination of colors does comply with the WCAG 2.0 minimum ratio value 4.5:1';
 $string['invalidratio'] = 'This color combination doesn\'t comply with the
 <a href="https://www.w3.org/TR/WCAG20-TECHS/G18.html" target="_blank">WCAG 2.0 minimum ratio value 4.5:1</a>. Value: "{$a}"';
@@ -354,3 +380,24 @@ $string['catinvalidratio'] = 'The following color categories don\'t comply with 
 Against site background color (white): "{$a->white}". Against navigation bar background color: "{$a->custombar}". Against My Courses button background color: "{$a->customnav}"';
 $string['imageinvalidratiocategory'] = 'This image could have contrast problems with the theme color due not compliance with the WCAG 2.0 minimum ratio value 4.5:1. Average pixel value: "{$a}"';
 $string['browseallcourses'] = 'Browse all courses';
+$string['lazyload_mod_page'] = 'Enable default lazy loading for page resources';
+$string['lazyload_mod_page_description'] = 'If enabled, this setting significantly decreases course page load times for courses with many pages.';
+$string['pmadvancedfeed_viewmore'] = 'View more';
+$string['pmadvancedfeed_reload'] = 'Refresh';
+$string['multimediacard'] = 'Multimedia files won\'t be displayed in the activity card views for the Snap theme. This will be applied in homepage and course pages only for the small activity and resource cards.';
+$string['enabledlogin'] = 'Displayed login options';
+$string['enabledlogindesc'] = 'Select the login options that should be displayed.';
+$string['moodlelogin'] = 'Display Moodle login only';
+$string['alternativelogin'] = 'Display alternative login options only';
+$string['bothlogin'] = 'Display both login options';
+$string['enabledloginorder'] = 'Login options order';
+$string['enabledloginorderdesc'] = 'Select which login option should be displayed first.';
+$string['moodleloginfirst'] = 'Display Moodle login first';
+$string['alternativeloginfirst'] = 'Display alternative login options first';
+$string['alternativeloginoptions'] = 'Alternative login options';
+$string['openmessagedrawer'] = 'Open messaging drawer. ';
+$string['design_mod_page'] = 'Enable previous design for page resources';
+$string['design_mod_page_description'] = 'If enabled, page resource content will be displayed inside the same page, course or front page.';
+$string['design_activity_chooser'] = 'Roll back to the original design for the activity chooser';
+$string['design_activity_chooser_description'] = 'If enabled, the activity chooser will be displayed with the original design. This will affect the course and front pages.';
+$string['refreshdeadlinestask'] = 'Refresh deadlines cached data. This should be run before all users login.';

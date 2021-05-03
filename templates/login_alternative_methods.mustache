@@ -16,14 +16,18 @@
 }}
 {{!
  @package   theme_snap
- @copyright Copyright (c) 2016 Blackboard Inc. (http://www.blackboard.com)
+ @copyright Copyright (c) 2016 Open LMS (https://www.openlms.net)
  @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
 }}
 <div class="subcontent potentialidps">
     <h6>{{# str }} potentialidps, auth {{/ str }}</h6>
     <div class="potentialidplist">
         {{#potentialidps}}
-            <div class="potentialidp"><a href="{{{url}}}"><img class="auth-icon" src="{{{icon}}}" /> {{name}}</a></div>
+            <div class="potentialidp"><a class="btn btn-primary btn-block" href="{{{url}}}">
+            {{#icon}}
+                <img class="auth-icon" src="{{icon}}"/>
+            {{/icon}}
+            {{name}}</a></div>
         {{/potentialidps}}
     </div>
 </div>

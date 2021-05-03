@@ -19,7 +19,7 @@
  *
  * @package   theme_snap
  * @category  test
- * @copyright Copyright (c) 2018 Blackboard Inc.
+ * @copyright Copyright (c) 2018 Open LMS
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -30,7 +30,7 @@ require_once(__DIR__ . '/../../../../lib/behat/behat_base.php');
  *
  * @package   theme_snap
  * @category  test
- * @copyright Copyright (c) 2018 Blackboard Inc.
+ * @copyright Copyright (c) 2018 Open LMS
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class behat_theme_snap_category_colors extends behat_base {
@@ -80,9 +80,8 @@ class behat_theme_snap_category_colors extends behat_base {
     /**
      * Checks if css element have a property with input value.
      *
-     * @Given /^I check \
-     *        element "(?P<element_string>(?:[^"]|\\")*)" with \
-     *        property "(?P<property_string>(?:[^"]|\\")*)" = "(?P<value_string>(?:[^"]|\\")*)"$/
+     * @codingStandardsIgnoreLine
+     * @Given /^I check element "(?P<element_string>(?:[^"]|\\")*)" with property "(?P<property_string>(?:[^"]|\\")*)" = "(?P<value_string>(?:[^"]|\\")*)"$/
      * @param string $element element to be checked
      * @param string $property property to be checked
      * @param string $value value of the property
@@ -97,6 +96,8 @@ class behat_theme_snap_category_colors extends behat_base {
         if (strpos($elementvalue, 'rgb') !== false) {
             $elementvalue = self::rgb2array($elementvalue);
             $value = self::hex2rgb($value);
+        } else {
+            $value = self::unit_converter($element, $value);
         }
 
         if ($elementvalue !== $value) {
@@ -144,7 +145,13 @@ class behat_theme_snap_category_colors extends behat_base {
      * @return array|bool
      */
     private static function rgb2array($rgb) {
-        preg_match("/rgb\\((\\d{1,3}), (\\d{1,3}), (\\d{1,3})\\)/", $rgb, $vals);
+        if (strpos($rgb, 'rgba') !== false) {
+            $pattern = '~^rgba?\((25[0-5]|2[0-4]\d|1\d{2}|\d\d?)\s*,\s*(25[0-5]|2[0-4]\d|1\d{2}|\d\d?)\s*,' .
+            '\s*(25[0-5]|2[0-4]\d|1\d{2}|\d\d?)\s*(?:,\s*([01]\.?\d*?))?\)$~';
+            preg_match($pattern, $rgb, $vals);
+        } else {
+            preg_match("/rgb\\((\\d{1,3}), (\\d{1,3}), (\\d{1,3})\\)/", $rgb, $vals);
+        }
         if (!isset($vals[1])) {
             return false;
         }
@@ -156,4 +163,24 @@ class behat_theme_snap_category_colors extends behat_base {
         return $color;
     }
 
+    /**
+     * Function to convert relative units to absolute units.
+     *
+     * @param string $element
+     * @param string $value
+     * @return string
+     */
+    private function unit_converter($element, $value) {
+        $amount = floatval($value);
+        $unit = explode($amount, $value)[1];
+        if ($unit == 'em') { // Converts em to px.
+            $session = $this->getSession();
+            $fontsize = $session->getDriver()->evaluateScript(
+                'window.getComputedStyle(document.querySelectorAll("'
+                . $element . '")[0], null).getPropertyValue("font-size");'); // Return font size in px.
+            $fontsize = floatval($fontsize);
+            return ($amount * $fontsize).'px';
+        }
+        return $value;
+    }
 }

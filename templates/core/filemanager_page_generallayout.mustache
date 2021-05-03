@@ -7,9 +7,9 @@
         <div class="filemanager-toolbar icon-no-spacing">
             <div class="fp-toolbar">
                 <div class="fp-btn-add">
-                    <button id="addbtn" title="{{#str}}addfile, repository{{/str}}" class="btn btn-secondary btn-sm" href="#">
+                    <a id="addbtn" title="{{#str}}addfile, repository{{/str}}" class="btn btn-secondary btn-sm" href="#">
                         {{#pix}}a/add_file{{/pix}}
-                    </button>
+                    </a>
                 </div>
                 <div class="fp-btn-mkdir">
                     <button id="createfolderbtn" title="{{#str}}makeafolder{{/str}}" class="btn btn-secondary btn-sm" href="#">
@@ -19,6 +19,11 @@
                 <div class="fp-btn-download">
                     <button id="downloadfolderbtn" title="{{#str}}downloadfolder, repository{{/str}}" class="btn btn-secondary btn-sm" href="#">
                         {{#pix}}a/download_all{{/pix}}
+                    </button>
+                </div>
+                <div class="fp-btn-delete">
+                    <button id="deletebtn" role="button" title="{{#str}}delete{{/str}}" class="btn btn-secondary btn-sm" href="#">
+                        {{#pix}}i/trash{{/pix}}
                     </button>
                 </div>
                 <span class="fp-img-downloading">

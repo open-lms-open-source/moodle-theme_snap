@@ -15,6 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 namespace theme_snap;
+use cache_helper;
 use core\event\course_updated;
 use core\event\course_deleted;
 use core\event\course_completion_updated;
@@ -28,6 +29,8 @@ use core\event\base;
 use core\event\role_assigned;
 use core\event\role_unassigned;
 use core\event\user_enrolment_deleted;
+use core\event\group_member_added;
+use core\event\group_member_removed;
 
 defined('MOODLE_INTERNAL') || die();
 
@@ -37,7 +40,7 @@ defined('MOODLE_INTERNAL') || die();
  * This class contains all the event handlers used by Snap.
  *
  * @package   theme_snap
- * @copyright Copyright (c) 2015 Blackboard Inc. (http://www.blackboard.com)
+ * @copyright Copyright (c) 2015 Open LMS (https://www.openlms.net)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -208,5 +211,31 @@ class event_handlers {
             $context->id,
             $event->relateduserid
         );
+    }
+
+    /**
+     * This group member event may make activity_deadlines cache invalid.
+     * @param group_member_added $event
+     */
+    public static function group_member_added(group_member_added $event) {
+        $context = \context::instance_by_id($event->contextid, MUST_EXIST);
+        if ($context->contextlevel != CONTEXT_COURSE) {
+            return;
+        }
+
+        cache_helper::purge_by_event('groupmemberschanged');
+    }
+
+    /**
+     * This group member event may make activity_deadlines cache invalid.
+     * @param group_member_removed $event
+     */
+    public static function group_member_removed(group_member_removed $event) {
+        $context = \context::instance_by_id($event->contextid, MUST_EXIST);
+        if ($context->contextlevel != CONTEXT_COURSE) {
+            return;
+        }
+
+        cache_helper::purge_by_event('groupmemberschanged');
     }
 }

@@ -16,10 +16,10 @@
 # Tests for Snap personal menu.
 #
 # @package    theme_snap
-# @copyright  Copyright (c) 2017 Blackboard Inc.
+# @copyright  Copyright (c) 2017 Open LMS.
 # @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
 
-@theme @theme_snap
+@theme @theme_snap @theme_snap_course
 Feature: When the moodle theme is set to Snap, students see meta data against course activities.
 
   Background:
@@ -39,14 +39,20 @@ Feature: When the moodle theme is set to Snap, students see meta data against co
       | teacher1 | C1 | editingteacher |
       | student1 | C1 | student |
       | student2 | C1 | student |
+    And the following config values are set as admin:
+      | design_activity_chooser | 1 | theme_snap |
 
   @javascript
-  Scenario: Student sees correct meta data against course activities
+  Scenario Outline: Student sees correct meta data against course activities
     Given the following "activities" exist:
       | activity | course | idnumber | name             | intro             | assignsubmission_onlinetext_enabled | assignfeedback_comments_enabled | section | duedate         |
       | assign   | C1     | assign1  | Test assignment1 | Test assignment 1 | 1                                   | 1                               | 1       | ##tomorrow##    |
       | assign   | C1     | assign2  | Test assignment2 | Test assignment 2 | 1                                   | 1                               | 1       | ##next week##   |
       | assign   | C1     | assign3  | Test assignment3 | Test assignment 3 | 1                                   | 1                               | 1       | ##yesterday##   |
+    And I log in as "admin"
+    And the following config values are set as admin:
+      | coursepartialrender | <Option> | theme_snap |
+    And I log out
     And I log in as "student1"
     And I am on "Course 1" course homepage
     And I follow "Topic 1"
@@ -61,7 +67,7 @@ Feature: When the moodle theme is set to Snap, students see meta data against co
     And assignment entitled "Test assignment3" shows as not submitted in metadata
     And assignment entitled "Test assignment3" is overdue in metadata
     And assignment entitled "Test assignment3" does not have feedback metadata
-    And I follow "Not Submitted"
+    And I am on activity "assign" "Test assignment1" page
     When I press "Add submission"
     And I set the following fields to these values:
       | Online text | I'm the student submission |
@@ -90,9 +96,16 @@ Feature: When the moodle theme is set to Snap, students see meta data against co
     And assignment entitled "Test assignment1" has feedback metadata
     And assignment entitled "Test assignment2" does not have feedback metadata
     And assignment entitled "Test assignment3" does not have feedback metadata
+    And Activity "assign" "Test assignment1" is deleted
+    And Activity "assign" "Test assignment2" is deleted
+    And Activity "assign" "Test assignment3" is deleted
+    Examples:
+      | Option     |
+      | 0          |
+      | 1          |
 
   @javascript
-  Scenario: Student that belongs to a specific group sees correct meta data against course activities
+  Scenario Outline: Student that belongs to a specific group sees correct meta data against course activities
     And the following "users" exist:
       | username | firstname | lastname | email         |
       | student3 | Student   | 3 | student3@example.com |
@@ -111,7 +124,10 @@ Feature: When the moodle theme is set to Snap, students see meta data against co
       | student2 | GI1   |
       | student3 | GI2   |
       | student4 | GI2   |
-
+    And I log in as "admin"
+    And the following config values are set as admin:
+      | coursepartialrender | <Option> | theme_snap |
+    And I log out
     And I log in as "teacher1"
     And I am on "Course 1" course homepage
     And I follow "Topic 1"
@@ -131,7 +147,7 @@ Feature: When the moodle theme is set to Snap, students see meta data against co
     And I wait until "#section-1" "css_element" is visible
     And I should see "Test assign"
     And assignment entitled "Test assign" shows as not submitted in metadata
-    And I follow "Not Submitted"
+    And I am on activity "assign" "Test assign" page
     When I press "Add submission"
     And I set the following fields to these values:
       | Online text | I'm the student submission |
@@ -148,10 +164,18 @@ Feature: When the moodle theme is set to Snap, students see meta data against co
     And I should see "Test assign"
     And assignment entitled "Test assign" shows as submitted in metadata
     And I log out
+    Examples:
+      | Option     |
+      | 0          |
+      | 1          |
 
   @javascript
-  Scenario: Student sees correct feedback with multiple outcomes configured
-    When I log in as "teacher1"
+  Scenario Outline: Student sees correct feedback with multiple outcomes configured
+    Given I log in as "admin"
+    And the following config values are set as admin:
+      | coursepartialrender | <Option> | theme_snap |
+    And I log out
+    Then I log in as "teacher1"
     And I am on "Course 1" course homepage
     And I click on "#admin-menu-trigger" "css_element"
     And I navigate to "Legacy outcomes" in current page administration
@@ -183,7 +207,7 @@ Feature: When the moodle theme is set to Snap, students see meta data against co
     And I log in as "student1"
     And I am on "Course 1" course homepage
     And I follow "Topic 1"
-    And I click on "//a[@class='mod-link']//span[text()='Test assignment name']" "xpath_element"
+    And I click on "//a[@class='mod-link']//p[text()='Test assignment name']" "xpath_element"
     And I press "Add submission"
     And I set the following fields to these values:
       | Online text | I'm the student1 submission |
@@ -192,7 +216,7 @@ Feature: When the moodle theme is set to Snap, students see meta data against co
     And I log in as "student2"
     And I am on "Course 1" course homepage
     And I follow "Topic 1"
-    And I click on "//a[@class='mod-link']//span[text()='Test assignment name']" "xpath_element"
+    And I click on "//a[@class='mod-link']//p[text()='Test assignment name']" "xpath_element"
     When I press "Add submission"
     And I set the following fields to these values:
       | Online text | I'm the student2 submission |
@@ -201,7 +225,7 @@ Feature: When the moodle theme is set to Snap, students see meta data against co
     And I log in as "teacher1"
     And I am on "Course 1" course homepage
     And I follow "Topic 1"
-    And I click on "//a[@class='mod-link']//span[text()='Test assignment name']" "xpath_element"
+    And I click on "//a[@class='mod-link']//p[text()='Test assignment name']" "xpath_element"
     And I click on "#admin-menu-trigger" "css_element"
     And I navigate to "View all submissions" in current page administration
     And I click on "Grade" "link" in the "Student 1" "table_row"
@@ -210,7 +234,7 @@ Feature: When the moodle theme is set to Snap, students see meta data against co
       | M8d skillZ! | 1337 |
       | Feedback comments | I'm the teacher first feedback |
     And I press "Save changes"
-    And I press "Ok"
+    And I click on "#page-mod-assign-grader div.modal-footer > button[data-action='cancel']" "css_element"
     And I click on "Edit settings" "link"
     And I click on "#admin-menu-trigger" "css_element"
     And I navigate to "View all submissions" in current page administration
@@ -229,3 +253,7 @@ Feature: When the moodle theme is set to Snap, students see meta data against co
     And I am on "Course 1" course homepage
     And I follow "Topic 1"
     And assignment entitled "Test assignment name" does not have feedback metadata
+    Examples:
+      | Option     |
+      | 0          |
+      | 1          |

@@ -16,10 +16,10 @@
 # Tests for availability of course tools section.
 #
 # @package   theme_snap
-# @copyright Copyright (c) 2019 Blackboard Inc.
+# @copyright Copyright (c) 2019 Open LMS
 # @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
 
-@theme @theme_snap
+@theme @theme_snap @theme_snap_grading @theme_snap_course
 Feature: When the moodle theme is set to Snap, a course tools section is available and it should display correctly
   the grade information about the student.
 
@@ -120,7 +120,7 @@ Feature: When the moodle theme is set to Snap, a course tools section is availab
     And I follow "Gradebook"
     And I follow "Setup"
     And I follow "Course grade settings"
-    And I set the field "Overall decimal points" to "0"
+    And I set the field "Overall decimal places" to "0"
     And I click on "Save changes" "button"
     And I log out
    Then I log in as "student1"
@@ -146,7 +146,7 @@ Feature: When the moodle theme is set to Snap, a course tools section is availab
     And I follow "Gradebook"
     And I follow "Setup"
     And I follow "Course grade settings"
-    And I set the field "Overall decimal points" to "3"
+    And I set the field "Overall decimal places" to "3"
     And I click on "Save changes" "button"
     And I log out
     Then I log in as "student1"
@@ -172,7 +172,7 @@ Feature: When the moodle theme is set to Snap, a course tools section is availab
     And I follow "Gradebook"
     And I follow "Setup"
     And I follow "Course grade settings"
-    And I set the field "Overall decimal points" to "4"
+    And I set the field "Overall decimal places" to "4"
     And I click on "Save changes" "button"
     And I log out
    Then I log in as "student1"

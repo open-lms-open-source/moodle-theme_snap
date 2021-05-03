@@ -16,10 +16,10 @@
 # Tests for courses in the Snap personal menu.
 #
 # @package    theme_snap
-# @copyright  Copyright (c) 2015 Blackboard Inc. (http://www.blackboard.com)
+# @copyright  Copyright (c) 2015 Open LMS (https://www.openlms.net)
 # @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
 
-@theme @theme_snap
+@theme @theme_snap @theme_snap_personalmenu
 Feature: When the moodle theme is set to Snap, students and teachers can open a personal menu with a list of courses
   they are enrolled in to give them easy access.
 

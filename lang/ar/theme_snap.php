@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * @copyright  Copyright (c) 2019 Blackboard Inc. (http://www.blackboard.com)
+ * @copyright  Copyright (c) 2021 Open LMS (https://www.openlms.net)
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -27,6 +27,7 @@ $string['action:changeassetvisibility'] = 'تغيير مرئية الأصل';
 $string['action:duplicateasset'] = 'تكرار الأصل';
 $string['action:changesectionvisibility'] = 'تغيير مرئية القسم';
 $string['action:highlightsectionvisibility'] = 'تمييز مرئية القسم';
+$string['action:sectiontoc'] = 'الحصول على جدول محتويات القسم';
 $string['addanewsection'] = 'إنشاء قسم جديد';
 $string['addresourceoractivity'] = 'إنشاء نشاط التعليم';
 $string['admin'] = 'المسؤول';
@@ -53,11 +54,12 @@ $string['category_color'] = 'لون الفئة';
 $string['category_color_description'] = 'لون فئة المقرر الدراسي. تتخذ المقررات الدراسية الفرعية أقرب تكوين للفئة الأساسية';
 $string['category_color_palette'] = 'لوح الألوان';
 $string['category_color_palette_description'] = 'انظر القيمة الست عشرية المقابلة للون المحددر. لن
- يؤثر هذا على أي تكوين، فهو هو مجرد نموذج لمساعدة المستخدمين على إنشاء قيمة التكوين.';
+يؤثر هذا على أي تكوين، فهو هو مجرد نموذج لمساعدة المستخدمين على إنشاء قيمة التكوين.';
 $string['changecoverimage'] = 'تغيير صورة الغلاف';
 $string['changefullname'] = 'تغيير اسم الموقع';
 $string['chapters'] = 'الفصول';
 $string['choosereadme'] = '<div class="clearfix"><div class="theme_screenshot"><h2>محاذاة</h2><img class=img-polaroid src="snap/pix/screenshot.jpg" /></div></div>';
+$string['close'] = 'إغلاق';
 $string['conditional'] = 'شرطي';
 $string['contents'] = 'المحتويات';
 $string['contributed'] = 'ممنوح';
@@ -66,9 +68,11 @@ $string['coursecontacts'] = 'جهات اتصال المقرر الدراسي';
 $string['coursedisplay'] = 'عرض المقرر الدراسي';
 $string['coursefootertoggle'] = 'تذييل المقرر الدراسي';
 $string['coursefootertoggledesc'] = 'يعرض تذييل المقرر الدراسي معلومات مفيدة للمستخدمين حول صفحة المقرر الدراسي بما في ذلك جهات اتصال المقرر الدراسي ووصف المقرر الدراسي والنشاط الحديث في المقرر الدراسي.';
-$string['courseformatnotification'] = 'تنسيق المقرر الدراسي الحالي الذي تستخدمه غير مدعوم بشكل كامل من قبل سمة Snap. وللحصول على أفضل تجربة، ينصح Blackboard Open LMS باستخدام موضوعات أو تنسيقات المقرر الدراسي الأسبوعية مع سمة Snap. يمكن تغيير تنسيق المقرر الدراسي في <a href="{$a}">إعدادات المقرر الدراسي</a>.';
+$string['courseformatnotification'] = 'تنسيق المقرر الدراسي الحالي الذي تستخدمه غير مدعوم بشكل كامل من قبل سمة Snap. وللحصول على أفضل تجربة، يوصي Open LMS باستخدام موضوعات أو تنسيقات المقرر الدراسي الأسبوعية مع سمة Snap. يمكن تغيير تنسيق المقرر الدراسي في <a href="{$a}">إعدادات المقرر الدراسي</a>.';
 $string['coursefixydefaulttext'] = 'أنت غير مسجل حاليًا في أي مقررات دراسية.<br>سيتم هنا عرض المقررات الدراسية التي أنت مسجل بها.';
 $string['coursegrade'] = 'تقدير المقرر الدراسي:';
+$string['coursepartialrender'] = 'تمكين التحميل البطيء لأقسام المقرر الدراسي';
+$string['coursepartialrenderdesc'] = 'في حالة التمكين، يتم تحميل أقسام المقرر الدراسي عند الطلب من قبل المستخدم. ويساعد هذا الإجراء المقررات الدراسية التي تحتوي على كميات كبيرة من المحتوى على التحميل بشكل أسرع.';
 $string['coursenavigation'] = 'تنقل إلى المقرر الدراسي';
 $string['coursesummaryfilesunsuitable'] = 'يرجى تفريغ ملفات تلخيص المقررات الدراسية الخاصة بك قبل محاولة تغيير صورة الغلاف';
 $string['coursetools'] = 'لوحة المقرر الدراسي';
@@ -83,10 +87,12 @@ $string['comingsoon'] = 'يتوفر قريبًا!';
 $string['createsection'] = 'إنشاء قسم';
 $string['current'] = 'حالي';
 $string['customcss'] = 'CSS مخصص';
-$string['customcssdesc'] = 'يرجى العلم أن القدرات الكبيرة يصاحبها مسؤولية كبيرة. لذا فإن أي مشكلة تحدث بسبب إضافة CSS هنا يقع على عاتقك مسؤولية حلها. لا يقوم دعم Blackboard Open LMS باستكشاف المشكلات وإصلاحها ولا يقوم بتقديم أي مساعدة بشأن المحتوى المتعلق بـ CSS.';
+$string['customcssdesc'] = 'يرجى الانتباه إلى أن القوة الكبيرة تصاحبها مسؤولية كبيرة. وبالتالي تقع على عاتقك مسؤولية حل أي مشكلة تسببها Css المضافة هنا. ولا يقوم دعم Open LMS باستكشاف الأخطاء وإصلاحها ولا يوفر أي مساعدة بشأن المحتوى المتعلق بـ CSS.';
 $string['customtopbar'] = 'شريط التنقل';
 $string['customisenavbar'] = 'تغيير ألوان شريط التنقل';
 $string['customisenavbutton'] = 'تغيير ألوان زر "المقررات الدراسية الخاصة بي"';
+$string['customisecustommenu'] = 'تغيير لون نص القائمة المخصص';
+$string['custommenutext'] = 'لون نص القائمة المخصص';
 $string['deadlines'] = 'المواعيد النهائية';
 $string['deadlinestoggle'] = 'المواعيد النهائية';
 $string['deadlinestoggledesc'] = 'تعرض للمستخدمين أي مواعيد نهائية للأنشطة القادمة الموجودة في المقررات الدراسية المسجلة.';
@@ -109,6 +115,8 @@ $string['editcoursesettings'] = 'إعدادات المقرر الدراسي';
 $string['editcoursetopic'] = 'تحرير قسم';
 $string['editcustomfooter'] = 'تحرير التذييل';
 $string['editcustommenu'] = 'تحرير القائمة المخصصة';
+$string['error'] = 'خطأ';
+$string['errorgettingfeed'] = 'حدث خطأ أثناء جلب عناصر الموجز.';
 $string['error:categorycolorinvalidjson'] = 'تنسيق JSON لفئات المقرر الدراسي غير صحيح';
 $string['error:categorycolorinvalidvalue'] = 'معرف السجل أو قيمة اللون للفئة "{$a}" غير صالحة';
 $string['error:categorynotfound'] = 'لم يتم العثور على سجل الفئة بمعرف "{$a}"';
@@ -120,6 +128,7 @@ $string['error:failedtochangesectionvisibility'] = 'فشل إخفاء/إظهار
 $string['error:failedtohighlightsection'] = 'فشل تمييز القسم';
 $string['error:failedtoduplicateasset'] = 'فشل التكرار';
 $string['error:failedtodeleteasset'] = 'فشل حذف الأصل';
+$string['error:failedtotoc'] = 'فشل في الحصول على TOC.';
 $string['extension'] = 'تمديد {$a}';
 $string['facebook'] = 'Facebook';
 $string['facebookdesc'] = 'عنوان url الخاص بصفحتك على facebook.';
@@ -135,6 +144,14 @@ $string['featurespotsheading'] = 'عنوان مواضع الميزات';
 $string['featureonetitle'] = 'عنوان الميزة 1';
 $string['featuretwotitle'] = 'عنوان الميزة 2';
 $string['featurethreetitle'] = 'عنوان الميزة 3';
+$string['featureonetitlelink'] = 'رابط عنوان الميزة 1';
+$string['featuretwotitlelink'] = 'رابط عنوان الميزة 2';
+$string['featurethreetitlelink'] = 'رابط عنوان الميزة 3';
+$string['featuretitlelinkdesc'] = 'اكتب عنوان URL الذي تريد ربط موضع هذه الميزة به. يمكنك إضافة روابط خارجية أو داخلية داخل موقعك. لإضافة رابط داخلي، يرجى نسخه من عنوان URL الخاص بالموقع بما في ذلك /. على سبيل المثال، للحصول على رابط لمقرر دراسي ما، سيكون "course/view.php?id=160". ولإضافة رابط خارجي، ابدأ الرابط بـ https://';
+$string['featureonetitlecb'] = 'تفتح الميزة 1 في نافذة جديدة';
+$string['featuretwotitlecb'] = 'تفتح الميزة 2 في نافذة جديدة';
+$string['featurethreetitlecb'] = 'تفتح الميزة 3 في نافذة جديدة';
+$string['featuretitlecbdesc'] = 'في حالة التمكين، سيتم فتح الرابط الذي تمت إضافته إلى الموضع المميز في نافذة جديدة';
 $string['featureonetext'] = 'محتوى الميزة 1';
 $string['featuretwotext'] = 'محتوى الميزة 2';
 $string['featurethreetext'] = 'محتوى الميزة 3';
@@ -206,7 +223,7 @@ $string['jsontextdescription'] = 'تقوم منطقة النص بالتحقق م
 
 
 "89":"#CCF084"}';
-$string['knowledgebase'] = 'قاعدة معارف Blackboard Open LMS';
+$string['knowledgebase'] = 'فتح قاعدة معارف Open LMS';
 $string['list'] = 'قائمة';
 $string['linkedin'] = 'LinkedIn';
 $string['linkedindesc'] = 'عنوان url لـ LinkedIn الخاص بمؤسستك.';
@@ -245,7 +262,7 @@ $string['noforumposts'] = 'ليس لديك مشاركات منتديات ذات 
 $string['nograded'] = 'ليس لديك ملاحظات حديثة.';
 $string['nograding'] = 'ليس لديك تقديمات للتقدير.';
 $string['nomessages'] = 'ليس لديك رسائل.';
-$string['notanswered'] = 'لم تتم الإجابة عنه';
+$string['notanswered'] = 'لم تتم إجابته';
 $string['notattempted'] = 'لم يتم إجراء محاولة';
 $string['notcontributed'] = 'غير ممنوح';
 $string['notpublished'] = 'لم يتم نشره للطلاب';
@@ -255,13 +272,21 @@ $string['personalmenu'] = 'القائمة الشخصية';
 $string['personalmenufeatures'] = 'ميزات القائمة الشخصية';
 $string['personalmenulogintoggle'] = 'إظهار القائمة الشخصية عند تسجيل الدخول';
 $string['personalmenulogintoggledesc'] = 'فتح القائمة الشخصية مباشرة بعد تسجيل الدخول';
+$string['personalmenuadvancedfeedsenable'] = 'قم بتمكين الموجزات المتقدمة';
+$string['personalmenuadvancedfeedsenabledesc'] = 'تقوم المواجز المتقدمة بتحميل بعض عناصر القائمة الشخصية التي تتيح أوقات تحميل أسرع وتحديث المحتوى حسب الطلب.';
+$string['personalmenuadvancedfeedsperpage'] = 'عدد مرات عرض عناصر المواجز المتقدمة';
+$string['personalmenuadvancedfeedsperpagedesc'] = 'اختر عدد العناصر المراد عرضها في الموجز. يمكن للمستخدمين تحديد <strong>عرض المزيد</strong> لعرض عناصر إضافية.';
+$string['personalmenuadvancedfeedslifetime'] = 'عمر المواجز المتقدمة';
+$string['personalmenuadvancedfeedslifetimedesc'] = 'اختر مقدار الوقت الذي سيتم فيه تخزين المواجز مؤقتًا في المستعرض بعد تسجيل الدخول. لن يؤدي تعيين القيمة إلى 0 إلى تخزين المواجز في المستعرض مؤقتًا.';
+$string['personalmenurefreshdeadlines'] = 'حَدِّث المواعيد النهائية باستخدام التكليف الدراسي المجدول.';
+$string['personalmenurefreshdeadlinesdesc'] = 'عند تشغيل المهمة، سيتم تحديث بيانات الموعد النهائي للحصول على أوقات تحميل أسرع للصفحات.';
 $string['pld'] = 'PLD';
 $string['pluginname'] = 'محاذاة';
 $string['poster'] = 'صورة الغلاف';
 $string['posterdesc'] = 'صورة رأس كبيرة لصفحة موقعك الأمامية. تعمل الصور الأفقية بحجم (1200 × 600 بكسل) أو الأكبر حجمًا بشكل أفضل.';
-$string['poweredbyrunby'] = 'تم الإنشاء بواسطة <a href="https://www.blackboard.com/blackboard-open-lms" target="_blank">Blackboard Open LMS</a>,
-     المنتج المستند إلى <a href="https://moodle.com/" target="_blank">Moodle</a>.<br>
-    Copyright &#169; {$a} Blackboard Inc، جميع الحقوق محفوظة.';
+$string['poweredbyrunby'] = 'أُنشئ باستخدام <a href="https://{$a->subdomain}.openlms.net/" target="_blank" rel="noopener">نظام إدارة التعلم المفتوح</a>,
+a <a href="https://moodle.com/" target="_blank" rel="noopener">مُنتج قائم على</a>- Moodle.<br>
+حقوق الطبع والنشر &#169؛ {$a->year} نظام إدارة التعلم المفتوح، جميع الحقوق محفوظة.';
 $string['previoussection'] = 'القسم السابق';
 $string['privacy:metadata:theme_snap_course_favorites:courseid'] = 'معرف المقرر الدراسي الخاص بالمقرر الدراسي الذي يفضله المستخدم';
 $string['privacy:metadata:theme_snap_course_favorites:userid'] = 'معرف المستخدم الخاص بالمقرر الدراسي الذي يفضله المستخدم';
@@ -280,7 +305,9 @@ $string['region-side-top'] = 'أعلى';
 $string['released'] = 'المحرَّر: {$a}';
 $string['reopened'] = 'تم إعادة الفتح';
 $string['resourcedisplay'] = 'عرض المورد';
-$string['resourcedisplayhelp'] = 'تحدد طريقة ظهور المرفقات والروابط في مقررك الدراسي.';
+$string['resourcedisplayhelp'] = 'حدد كيفية ظهور المرفقات والروابط في مقررك الدراسي. لا تدعم السمة Snap ملفات الوسائط المتعددة في وصف بطاقات الموارد والأنشطة الصغيرة.';
+$string['displaydescription'] = 'عرض الوصف';
+$string['displaydescriptionhelp'] = 'حدد لإظهار وصف لأنشطة المورد وعنوان URL في صفحة جديدة أولاً. وسيقوم الطلاب بالوصول إلى المحتوى من الوصف.';
 $string['search'] = 'محتويات البحث';
 $string['seriffont'] = 'خط Serif';
 $string['seriffont_desc'] = 'يُستخدم هذا الخط لمعظم المحتويات المنشأة بواسطة المستخدم. علمًا بأن استخدام خط Serif يجعل المحتويات المنشأة بواسطة المستخدم أكثر قابلية للقراءة وتبدو كما لو أنها مكتوبة بخط اليد.';
@@ -303,10 +330,12 @@ $string['topicactions'] = 'إجراءات الموضوع';
 $string['twitter'] = 'Twitter';
 $string['twitterdesc'] = 'عنوان url الخاص بحسابك على twitter.';
 $string['unenrolme'] = 'إلغاء تسجيلي';
+$string['enrolme'] = 'سجلني';
 $string['unread'] = 'غير مقروء';
 $string['unsupportedcoverimagetype'] = 'نوع صورة الغلاف ({$a}) غير مدعوم';
 $string['via'] = 'عبر';
 $string['viewcourse'] = 'عرض المقرر الدراسي';
+$string['viewmore'] = 'عرض المزيد';
 $string['viewyourprofile'] = 'عرض ملف تعريفك';
 $string['viewmyfeedback'] = 'عرض ملاحظاتي';
 $string['viewcalendar'] = 'عرض تقويمي';
@@ -340,9 +369,40 @@ $string['cachedef_profile_based_branding'] = 'التخزين المؤقت للع
 $string['cachedef_course_card_bg_image'] = 'التخزين المؤقت لصورة خلفية المقرر الدراسي.';
 $string['cachedef_course_card_teacher_avatar'] = 'التخزين المؤقت للأشكال الرمزية للمعلم.';
 $string['cachedef_course_card_teacher_avatar_index'] = 'التخزين المؤقت لفهرس الأشكال الرمزية للمعلم.';
-$string['accesforumstringdis'] = 'خيارات العرض';
-$string['accesforumstringmov'] = 'خيارات النقل';
-$string['accescalendarstring'] = 'التقويم';
-$string['admineventwarning'] = 'لرؤية الأحداث من جميع المقررات الدراسية، ';
+$string['accessforumstringdis'] = 'خيارات العرض';
+$string['accessforumstringmov'] = 'خيارات النقل';
+$string['accesscalendarstring'] = 'التقويم';
+$string['accessglobalsearchstring'] = 'بحث';
+$string['admineventwarning'] = 'لرؤية الأحداث من جميع المقررات الدراسية،';
 $string['gotocalendarsnap'] = 'انتقل إلى تقويم الموقع.';
 $string['quizattemptswarn'] = 'استبعاد محاولات المستخدمين المعلقين';
+$string['quizfeedback'] = 'ملاحظات';
+$string['validratio'] = 'تتوافق تركيبة الألوان هذه مع قيمة النسبة الدنيا WCAG 2.0 4.5:1';
+$string['invalidratio'] = 'لا تتوافق تركيبة الألوان هذه مع
+<a href="https://www.w3.org/TR/WCAG20-TECHS/G18.html" target="_blank">قيمة النسبة الدنيا WCAG 2.0 4.5:1</a>. القيمة: "{$a}"';
+$string['imageinvalidratio'] = 'قد تواجه هذه الصورة مشكلات تباين بسبب عدم التوافق مع قيمة النسبة الدنيا WCAG 2.0 4.5:1. متوسط قيمة البكسل: "{$a}"';
+$string['catinvalidratio'] = 'لا تتوافق فئات الألوان التالية مع
+<a href="https://www.w3.org/TR/WCAG20-TECHS/G18.html" target="_blank">قيمة النسبة الدنيا WCAG 2.0 4.5:1</a> :
+مقابل لون خلفية الموقع (أبيض): "{$a->white}". مقابل لون خلفية شريط التنقل: "{$a->custombar}". مقابل لون خلفية زر المقررات الدراسية الخاصة بي: "{$a->customnav}"';
+$string['imageinvalidratiocategory'] = 'قد تواجه هذه الصورة مشاكل تباين مع لون الشكل بسبب عدم التوافق مع قيمة النسبة الدنيا WCAG 2.0 4.5:1. متوسط قيمة البكسل: "{$a}"';
+$string['lazyload_mod_page'] = 'تمكين التحميل البطيء الافتراضي لموارد الصفحات';
+$string['lazyload_mod_page_description'] = 'في حالة التمكين، يقوم الإعداد بتقليل أوقات تحميل صفحات المقرر الدراسي بشكل كبير فيما يخص المقررات الدراسية التي تحتوي على العديد من الصفحات.';
+$string['pmadvancedfeed_viewmore'] = 'عرض المزيد';
+$string['pmadvancedfeed_reload'] = 'تحديث';
+$string['multimediacard'] = 'لن يتم عرض ملفات الوسائط المتعددة في طرق عرض بطاقة النشاط الخاصة بالسمة Snap. وسيتم تطبيق هذا في الصفحة الرئيسية وصفحات المقرر الدراسي فقط لبطاقات الموارد والأنشطة الصغيرة.';
+$string['enabledlogin'] = 'خيارات تسجيل الدخول التي تم عرضها';
+$string['enabledlogindesc'] = 'حدد خيارات تسجيل الدخول التي يجب عرضها.';
+$string['moodlelogin'] = 'عرض تسجيل الدخول إلى Moodle فقط';
+$string['alternativelogin'] = 'عرض خيارات تسجيل الدخول البديلة فقط';
+$string['bothlogin'] = 'عرض كلًا من خيارات تسجيل الدخول';
+$string['enabledloginorder'] = 'ترتيب خيارات تسجيل الدخول';
+$string['enabledloginorderdesc'] = 'حدد خيار تسجيل الدخول الذي يجب عرضه أولًا.';
+$string['moodleloginfirst'] = 'عرض تسجيل الدخول إلى Moodle أولًا';
+$string['alternativeloginfirst'] = 'عرض خيارات تسجيل الدخول البديلة أولًا';
+$string['alternativeloginoptions'] = 'خيارات تسجيل الدخول البديلة';
+$string['openmessagedrawer'] = 'فتح درج المراسلة.';
+$string['design_mod_page'] = 'تمكين التصميم السابق لموارد الصفحة';
+$string['design_mod_page_description'] = 'في حالة التمكين، سيتم عرض محتوى مورد الصفحة داخل نفس الصفحة أو المقرر الدراسي أو الصفحة الأمامية.';
+$string['design_activity_chooser'] = 'العودة إلى التصميم الأصلي لمنتقي النشاط';
+$string['design_activity_chooser_description'] = 'في حالة التمكين، سيتم عرض منتقي النشاط بالتصميم الأصلي. وسيؤثر هذا على المقرر الدراسي والصفحات الأولى.';
+$string['refreshdeadlinestask'] = 'قم بتحديث المواعيد النهائية للبيانات المُخَزّنة مؤقتًا. ينبغي تشغيل ذلك قبل تسجيل دخول جميع المستخدمين.';

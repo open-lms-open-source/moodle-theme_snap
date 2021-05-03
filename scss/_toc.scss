@@ -16,7 +16,7 @@
  * Snap Table of contents.
  *
  * @package   theme_snap
- * @copyright Copyright (c) 2017 Blackboard Inc. (http://www.blackboard.com)
+ * @copyright Copyright (c) 2017 Open LMS (https://www.openlms.net)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -336,6 +336,7 @@
 
         #chapters,
         .toc-footer,
+        #toc-search,
         #toc-desktop-menu-heading {
             display: none;
         }
@@ -351,6 +352,14 @@
         padding-top: 1em;
         background-color: white !important;
         overflow-y: scroll;
+
+        #chapters {
+            margin-top: 3rem;
+        }
+
+        #toc-search {
+            display: block;
+        }
 
         #chapters,
         .toc-footer {

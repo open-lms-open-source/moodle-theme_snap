@@ -16,11 +16,11 @@
 # Tests for inline resource media.
 #
 # @package    theme_snap
-# @author     2015 Guy Thomas <osdev@blackboard.com>
+# @author     2015 Guy Thomas
 # @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
 
 
-@theme @theme_snap
+@theme @theme_snap @theme_snap_course
 Feature: When the moodle theme is set to Snap, clicking on a resource with a media file mime type will open the
   resource inline.
 
@@ -38,7 +38,7 @@ Feature: When the moodle theme is set to Snap, clicking on a resource with a med
       | student1 | C1 | student |
 
   @javascript
-  Scenario: MP3 opens inline and marked as completed.
+  Scenario: MP3 opens inline, teacher cannot complete activity.
     Given I log in as "teacher1"
     And I am on the course main page for "C1"
     And I follow "Topic 1"
@@ -51,14 +51,14 @@ Feature: When the moodle theme is set to Snap, clicking on a resource with a med
       | Completion tracking | 2 |
       | Student must view this activity to complete it | 1 |
     And I click on "#id_submitbutton2" "css_element"
-    And "span.autocompletion img[title='Not completed: test mp3 file']" "css_element" should exist
+    And "span.autocompletion img[title='The system marks this item complete according to conditions: test mp3 file']" "css_element" should exist
     And I click on ".snap-resource[data-type='mp3'] .snap-asset-link a" "css_element"
     And I wait until "#snap-light-box" "css_element" is visible
    Then "#snap-light-box" "css_element" should exist
     And I click on "#snap-light-box-close" "css_element"
    Then "#snap-light-box" "css_element" should not exist
-    And "span.autocompletion img[title='Not completed: test mp3 file']" "css_element" should not exist
-    And "span.autocompletion img[title='Completed: test mp3 file']" "css_element" should exist
+    And "span.autocompletion img[title='Completed: test mp3 file']" "css_element" should not exist
+    And "span.autocompletion img[title='The system marks this item complete according to conditions: test mp3 file']" "css_element" should exist
 
   @javascript
   Scenario: MP3 opens inline with its description.

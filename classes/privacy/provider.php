@@ -19,7 +19,7 @@
  *
  * @package    theme_snap
  * @author     Sam Chaffee
- * @copyright  Copyright (c) 2018 Blackboard Inc. (http://www.blackboard.com)
+ * @copyright  Copyright (c) 2018 Open LMS (https://www.openlms.net)
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -41,7 +41,7 @@ defined('MOODLE_INTERNAL') || die();
  * Privacy implementation for the Snap theme.
  *
  * @package    theme_snap
- * @copyright  Copyright (c) 2018 Blackboard Inc. (http://www.blackboard.com)
+ * @copyright  Copyright (c) 2018 Open LMS (https://www.openlms.net)
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class provider implements metadata_provider, request_provider,
@@ -106,6 +106,7 @@ class provider implements metadata_provider, request_provider,
 
             $subcontext = ['theme_snap-course-favorites'];
         }
+        $favorites->close();
 
         writer::with_context($context)->export_data($subcontext, (object) ['favorites' => $data]);
     }

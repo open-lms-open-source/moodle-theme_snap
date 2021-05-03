@@ -40,6 +40,7 @@
 #nav-notification-popover-container {
     display: inline-block;
     float: none;
+    width: 2.35em;
     // Bell icon.
     .icon.fa-bell {
         font-size: 24px;
@@ -69,8 +70,7 @@
         border-radius: 50%;
         padding: 0;
         line-height: inherit;
-        top: 0;
-        left: 0;
+        right: 0.2em;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -82,7 +82,6 @@
 
     .popover-region-container {
         top: 2.5rem;
-        height: auto;
         width: 300px;
         text-align: left;
     }
@@ -132,6 +131,7 @@
         width: auto;
         height: auto;
         color: $nav-color;
+        margin: 0;
     }
 
     .popover-region-container {
@@ -182,6 +182,13 @@
 }
 
 /**
+ * Mod h5p.
+ */
+#page-mod-hvp-mod.theme-snap iframe.h5p-editor-iframe {
+    z-index: 21 !important; // Overwrite inline style.
+}
+
+/**
  * Mod assignment.
  */
 #page-mod-assign-view {
@@ -225,7 +232,7 @@
         .assign-intro {
             max-width: 100%;
             padding-bottom: 2em;
-            word-wrap: break-word
+            word-wrap: break-word;
         }
 
         .groupselector,
@@ -289,7 +296,9 @@
         width: 100%;
     }
 
-    .statusdata, .gradingdata, .lastmodified {
+    .statusdata,
+    .gradingdata,
+    .lastmodified {
         font-size: 0.8em;
         span {
             margin-left: 0.5em;
@@ -482,7 +491,9 @@
     .bookprev {
         text-align: left;
     }
-
+}
+#page-mod-book-mod.path-mod-book #id_general .fcontainer .checkbox {
+    display: none;
 }
 
 // Book mod grid.
@@ -501,6 +512,15 @@
         }
     }
 }
+
+#page-mod-book-view.editing .book_toc .d-flex {
+    display: block !important;
+}
+
+#page-mod-book-view.editing .book_toc .text-truncate {
+    white-space: normal;
+}
+
 
 // Print style guide for book
 #page-mod-book-print {
@@ -521,6 +541,9 @@
     &#page-mod-lesson-view {
         .singlebutton > form[action*="editpage.php"] {
             display: none;
+        }
+        .form-check > .text-nowrap {
+            white-space: normal !important;
         }
     }
     // Unstyle secondary navtabs.
@@ -659,11 +682,63 @@ body.pagelayout-admin.path-mod {
     }
 }
 
-section#snap-add-new-section #edit-newsectioneditor_ifr {
+section#snap-add-new-section #summary-editor_ifr {
     height: 13em !important;
 }
 
-section#snap-add-new-section form .form-group:nth-of-type(2) div:nth-child(2) {
-    overflow: scroll;
-    display: flex;
+section#snap-add-new-section #summary-editor_parent #summary-editor_tbl {
+    display: table;
+    flex-flow: row wrap;
+    align-items: center;
+    border-collapse: collapse;
+}
+
+/**
+ * Styling for atto_htmlplus.
+ */
+.snap-form-required .editor_atto_wrap .CodeMirror.cm-s-default.CodeMirror-wrap {
+    z-index: 1;
+}
+
+#page-local-pld-view #id_config_text_ifr {
+    height: 19em !important;
+}
+
+#page-blocks-conduit-view.theme-snap cqm-main {
+    a.nav-link.active {
+        background-color: rgba($nav-color, 0.1);
+    }
+    a.nav-link {
+        color: $gray !important;
+        font-weight: 500;
+    }
+    cqm-file-list .card-header {
+        background-color: rgba($nav-color, 0.1);
+        h5 {
+            color: $nav-color;
+            font-weight: 500;
+        }
+    }
+
+}
+
+#page-mod-choice-report.theme-snap {
+    .responseaction {
+        margin: 1em;
+        label {
+            margin-left: 1em;
+            margin-right: 1em;
+        }
+    }
+
+    .downloadreport ul li {
+        list-style: none;
+        padding: 0 20px;
+        display: inline;
+        float: left;
+    }
+}
+
+#page-mod-data-view form#portfolio-add-button {
+    display: block;
 }

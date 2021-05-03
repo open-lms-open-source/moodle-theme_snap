@@ -15,40 +15,23 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Genius link renderable.
- * @author    gthomas2
- * @copyright Copyright (c) 2015 Blackboard Inc. (http://www.blackboard.com)
+ * Scheduled tasks.
+ *
+ * @package   theme_snap
+ * @copyright Copyright (c) 2021 Open LMS (https://www.openlms.net)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-namespace theme_snap\renderables;
-use local_geniusws\navigation;
-
 defined('MOODLE_INTERNAL') || die();
 
-class bb_dashboard_link implements \renderable {
-
-    /**
-     * @var bool $output - are we ok to output the genius link.
-     */
-    public $output = false;
-
-    /**
-     * @var string - local login url.
-     */
-    public $loginurl;
-
-    /**
-     * @throws coding_exception
-     */
-    public function __construct() {
-        global $USER;
-
-        if (!navigation::dashboard_link_viewable($USER)) {
-            return;
-        }
-
-        $this->output = true;
-        $this->loginurl = navigation::login_url();
-    }
-}
+$tasks = [
+    [
+        'classname' => '\theme_snap\task\refresh_deadline_caches_task',
+        'blocking'  => 0,
+        'minute'    => 'R',
+        'hour'      => '1',
+        'day'       => '*',
+        'dayofweek' => '1-5',
+        'month'     => '*'
+    ],
+];

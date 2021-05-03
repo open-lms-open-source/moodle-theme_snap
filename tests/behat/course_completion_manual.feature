@@ -16,12 +16,12 @@
 # Tests for manual completion.
 #
 # @package   theme_snap
-# @author    Guy Thomas <osdev@blackboard.com>
-# @copyright Copyright (c) 2016 Blackboard Inc.
+# @author    Guy Thomas
+# @copyright Copyright (c) 2016 Open LMS
 # @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
 
 
-@theme @theme_snap
+@theme @theme_snap @theme_snap_course
 Feature: Manual completion updates page wihout reload.
 
   Background:
@@ -44,8 +44,11 @@ Feature: Manual completion updates page wihout reload.
 
   @javascript
   # Done as one scenario for best performance.
-  Scenario: Assignment module is manually marked complete and releases restricted activities / sections.
+  Scenario Outline: Assignment module is manually marked complete and releases restricted activities / sections.
     Given I log in as "admin"
+    And the following config values are set as admin:
+      | coursepartialrender | <Option> | theme_snap |
+      | resourcedisplay     | <Option> | theme_snap |
     And I am on the course main page for "C1"
     # Restrict the second assign module to only be accessible after the first assign module is marked complete.
     And I restrict course asset "Test assignment2" by completion of "Test assignment1"
@@ -63,8 +66,10 @@ Feature: Manual completion updates page wihout reload.
     # Log in as student to test manual completion releases restrictions.
     And I log in as "student1"
     And I am on the course main page for "C1"
-    And I should see availability info "Not available unless: The activity Test assignment1 is marked complete" in "asset" "Test assignment2"
+    And I click on "//a[@class='snap-conditional-tag']" "xpath_element"
+    And I should see "Not available unless: The activity Test assignment1 is marked complete"
     When I follow "Topic 1"
+    And I should see "Not available unless: The activity Test assignment2 is marked complete"
     Then I should see availability info "Not available unless: The activity Test assignment2 is marked complete" in "section" "1"
     And I should not see "Test assignment3"
     When I follow "Topic 2"
@@ -106,3 +111,7 @@ Feature: Manual completion updates page wihout reload.
     Then I should see "Conditional" in TOC item 1
     When I follow "Topic 1"
     Then I should see availability info "Not available unless: The activity Test assignment2 is marked complete"
+    Examples:
+      | Option     |
+      | 0          |
+      | 1          |

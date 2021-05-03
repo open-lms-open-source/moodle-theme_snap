@@ -15,8 +15,8 @@
  * along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
  *
  * @package   theme_snap
- * @author    David Castro <david.castro@blackboard.com>
- * @copyright Copyright (c) 2017 Blackboard Inc.
+ * @author    David Castro <david.castro@openlms.net>
+ * @copyright Copyright (c) 2017 Open LMS
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -41,7 +41,7 @@ define(['jquery', 'core/yui', 'theme_snap/util'],
                 function() {
                     self.dndupload = M.course_dndupload;
                     // Adding YUI 3 requirements here.
-                    YUI.use('node', 'event', 'json', 'anim', function(Y) {
+                    YUI.use('node', 'event', 'json', 'anim', 'moodle-core-notification-alert', function(Y) {
                         self.decorateCourseDNDUpload(Y, options);
                     });
 
@@ -56,7 +56,7 @@ define(['jquery', 'core/yui', 'theme_snap/util'],
         self.decorateCourseDNDUpload = function(Y, options) {
             // Add the statically added file handlers.
             /* global themeSnapCourseFileHandlers */
-            if (themeSnapCourseFileHandlers) {
+            if (typeof(themeSnapCourseFileHandlers) != "undefined" && themeSnapCourseFileHandlers) {
                 options.handlers = themeSnapCourseFileHandlers;
             } else {
                 options.handlers = {};
@@ -87,6 +87,7 @@ define(['jquery', 'core/yui', 'theme_snap/util'],
                     // Get file and trigger upload.
                     file = this.files.item(i);
                     self.dndupload.handle_file(file, section, sectionnumber);
+
                 }
             });
         };

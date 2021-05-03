@@ -17,7 +17,7 @@
 /**
  * Course section actions.
  * @author    gthomas2
- * @copyright Copyright (c) 2016 Blackboard Inc. (http://www.blackboard.com)
+ * @copyright Copyright (c) 2016 Open LMS (https://www.openlms.net)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -38,7 +38,7 @@ require_once(__DIR__ . '/../../../../lib/externallib.php');
  * section action and the course TOC.
  *
  * @author    gthomas2
- * @copyright Copyright (c) 2016 Blackboard Inc. (http://www.blackboard.com)
+ * @copyright Copyright (c) 2016 Open LMS (https://www.openlms.net)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class ws_course_sections extends \external_api {
@@ -52,6 +52,10 @@ class ws_course_sections extends \external_api {
             'sectionnumber' => new \external_value(PARAM_INT, 'Section number', VALUE_REQUIRED),
             'value' => new \external_value(PARAM_INT,
                     'Value corresponding to action - e.g. visibility 0 is hide, highlight 1 would highlight the section',
+                    VALUE_REQUIRED),
+            'loadmodules' => new \external_value(PARAM_BOOL,
+                    'Should modules be returned, if false, the modules array will be empty. ' .
+                    '(Only available for section visibility)',
                     VALUE_REQUIRED)
         ];
         return new \external_function_parameters($parameters);
@@ -79,19 +83,26 @@ class ws_course_sections extends \external_api {
 
     /**
      * @param string $courseshortname
-     * @param string $unavailablesections
-     * @param string $unavailablemods
+     * @param string $action
+     * @param int $sectionnumber
+     * @param int $value
+     * @param bool $loadmodules only used when action == 'visibility'
      * @return array
+     * @throws \coding_exception
+     * @throws \moodle_exception
+     * @throws \required_capability_exception
      */
-    public static function service($courseshortname, $action, $sectionnumber, $value) {
+    public static function service($courseshortname, $action, $sectionnumber, $value, $loadmodules) {
         $service = course::service();
         switch ($action) {
             case 'highlight' :
                 return $service->highlight_section($courseshortname, $sectionnumber, $value);
             case 'visibility' :
-                return $service->set_section_visibility($courseshortname, $sectionnumber, $value);
+                return $service->set_section_visibility($courseshortname, $sectionnumber, $value, $loadmodules);
             case 'delete' :
                 return $service->delete_section($courseshortname, $sectionnumber);
+            case 'toc':
+                return $service->toc($courseshortname);
         }
         throw new \coding_exception('Invalid action selected :' . $action);
     }

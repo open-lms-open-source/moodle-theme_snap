@@ -15,8 +15,8 @@
  * along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
  *
  * @package   theme_snap
- * @author    Guy Thomas <osdev@blackboard.com>
- * @copyright Copyright (c) 2016 Blackboard Inc.
+ * @author    Guy Thomas
+ * @copyright Copyright (c) 2016 Open LMS
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -173,7 +173,7 @@ define(
                                         return;
                                     } else {
                                         // No errors, reveal page mod.
-                                        pageModContent.prepend(data.html);
+                                        pageModContent.find('#pagemod-content-container').prepend(data.html);
                                         pageModContent.data('content-loaded', 1);
                                         pageMod.find('.contentafterlink .ajaxstatus').remove();
                                         revealPageMod(pageMod, data.completionhtml);
@@ -181,7 +181,11 @@ define(
                                     }
                                 });
                             }
-                        });
+                        }).then(
+                            ()=>{
+                                $(document).trigger('snap-course-content-loaded');
+                            }
+                        );
                     } else {
                         revealPageMod(pageMod);
                     }
@@ -283,15 +287,26 @@ define(
 
         return {
 
-            init: function() {
+            init: function(courseConfig) {
 
-                // Listeners
-                listenPageModuleReadMore();
+                // Listeners.
+                if (courseConfig.loadPageInCourse) {
+                    listenPageModuleReadMore();
+                }
                 listenManualCompletion();
 
                 // Add toggle class for hide/show activities/resources - additional to moodle adding dim.
-                $(document).on("click", '[data-action=hide],[data-action=show]', function() {
-                    $(this).closest('li.activity').toggleClass('draft');
+                $(document).on("click", '[data-action=hide],[data-action=show],[data-action=stealth]', function() {
+                    if ($(this).attr('data-action') === 'hide' ) {
+                        $(this).closest('li.activity').addClass('draft');
+                        $(this).closest('li.activity').removeClass('stealth');
+                    } else if ($(this).attr('data-action') === 'stealth') {
+                        $(this).closest('li.activity').removeClass('draft');
+                        $(this).closest('li.activity').addClass('stealth');
+                    } else if ($(this).attr('data-action') === 'show') {
+                        $(this).closest('li.activity').removeClass('draft');
+                        $(this).closest('li.activity').removeClass('stealth');
+                    }
                 });
 
                 // Make lightbox for list display of resources.
@@ -311,7 +326,9 @@ define(
                     }
 
                     // Excludes any clicks in the actions menu, on links or forms.
-                    var selector = '.snap-asset-completion-tracking, .snap-asset-actions, .contentafterlink a, .ally-actions';
+                    var selector = '.snap-asset-completion-tracking, ' +
+                        '.snap-asset-actions, .contentafterlink a, .ally-actions, ' +
+                        '.snap-header-card, .contentafterlink, .snap-asset-meta';
                     var withintarget = $(trigger).closest(selector).length;
                     if (!withintarget) {
                         if ($(this).hasClass('js-snap-media')) {

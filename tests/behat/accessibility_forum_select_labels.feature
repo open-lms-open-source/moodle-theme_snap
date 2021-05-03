@@ -17,10 +17,10 @@
 #
 # @package    theme_snap
 # @autor      Oscar Nadjar
-# @copyright  Copyright (c) 2019 Blackboard Inc. (http://www.blackboard.com)
+# @copyright  Copyright (c) 2019 Open LMS (https://www.openlms.net)
 # @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
 
-@theme @theme_snap
+@theme @theme_snap @theme_snap_ax
 Feature: Aria label validation for core forum options.
 
   Background:
@@ -43,16 +43,18 @@ Feature: Aria label validation for core forum options.
       | forum      | Test forum 1           | Test forum 1      | C1     | forum        | 0         |
     And I log in as "student1"
     And I am on "Course 1" course homepage
-    And I click on ".modtype_forum .mod-link" "css_element"
-    And I click on "div.forumaddnew button.btn" "css_element"
-    And I post to the discussion:
+    And I wait until the page is ready
+    And I click on "//h3/a/p[contains(text(),'Test forum 1')]" "xpath_element"
+    And I add a new discussion to "Test forum 1" forum with:
       | Subject | Discussion 1 |
       | Message | Test post message |
     And I log out
     And I log in as "teacher1"
     And I am on "Course 1" course homepage
-    And I click on ".modtype_forum .mod-link" "css_element"
-    And I click on ".topic.starter a" "css_element"
-    And ".displaymode form .custom-select" "css_element" should exist
-    And the "aria-label" attribute of ".displaymode form select.custom-select" "css_element" should contain "Display options"
-    And the "aria-label" attribute of ".movediscussion select.urlselect" "css_element" should contain "Move options"
+    And I wait until the page is ready
+    And I click on "//h3/a/p[contains(text(),'Test forum 1')]" "xpath_element"
+    And I click on "//th//a[contains(text(),'Discussion 1')]" "xpath_element"
+    And "div[data-content='forum-discussion'] div.singleselect" "css_element" should exist
+    And "div[data-content='forum-discussion'] div.movediscussionoption" "css_element" should exist
+    And the "aria-label" attribute of "div[data-content='forum-discussion'] div.singleselect form.form-inline select.custom-select.singleselect" "css_element" should contain "Display options"
+    And the "aria-label" attribute of "div[data-content='forum-discussion'] div.movediscussionoption select.custom-select.urlselect" "css_element" should contain "Move options"

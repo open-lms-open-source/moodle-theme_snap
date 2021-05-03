@@ -16,7 +16,7 @@
 # Tests for visibility of activity restriction tags.
 #
 # @package    theme_snap
-# @copyright Copyright (c) 2018 Blackboard Inc.
+# @copyright Copyright (c) 2018 Open LMS
 # @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
 
 
@@ -47,7 +47,11 @@ Feature: When the moodle theme is set to Snap, activity restriction tags are sho
       | assign   | C1     | assign2  | Test assignment2 | Test assignment 2 | 1                                   | 1                               | 1       | ##next week##   |
 
   @javascript
-  Scenario: User sees the grade restriction.
+  Scenario Outline: User sees the grade restriction.
+    Given I log in as "admin"
+    And the following config values are set as admin:
+      | resourcedisplay | <Option> | theme_snap |
+    And I log out
     Given I log in as "teacher1"
     And I am on the course main page for "C1"
     And I follow "Topic 1"
@@ -59,10 +63,20 @@ Feature: When the moodle theme is set to Snap, activity restriction tags are sho
     And I set the field with xpath "//span[@class=\"p-r-1\"][text()=\"Grade\"]//following-sibling::span//select" to "Test assignment2"
     Then I click on "//input[@id=\"id_submitbutton2\"]" "xpath_element"
     And I wait until the page is ready
+    And I click on "//a[@class='snap-conditional-tag']" "xpath_element"
     Then I should see "You have a grade in Test assignment2"
+    Examples:
+      | Option     |
+      | 0          |
+      | 1          |
+
 
   @javascript
-  Scenario: User sees all restrictions when mathcing all restrictions.
+  Scenario Outline: User sees all restrictions when matching all restrictions.
+    Given I log in as "admin"
+    And the following config values are set as admin:
+      | resourcedisplay | <Option> | theme_snap |
+    And I log out
     Given I log in as "teacher1"
     And I am on the course main page for "C1"
     And I follow "Topic 1"
@@ -78,11 +92,21 @@ Feature: When the moodle theme is set to Snap, activity restriction tags are sho
     And I set the field with xpath "//span[@class=\"accesshide\"][text()=\"Required restrictions \"]//following-sibling::select" to "all"
     Then I click on "//input[@id=\"id_submitbutton2\"]" "xpath_element"
     And I wait until the page is ready
+    And I click on "//a[@class='snap-conditional-tag']" "xpath_element"
     Then I should see "You have a grade in Test assignment2"
     Then I should see "You belong to Group1"
+  Examples:
+  | Option     |
+  | 0          |
+  | 1          |
+
 
   @javascript
-  Scenario: User sees all restrictions when mathcing any restrictions.
+  Scenario Outline: User sees all restrictions when matching any restrictions.
+    Given I log in as "admin"
+    And the following config values are set as admin:
+      | resourcedisplay | <Option> | theme_snap |
+    And I log out
     Given I log in as "teacher1"
     And I am on the course main page for "C1"
     And I follow "Topic 1"
@@ -98,5 +122,10 @@ Feature: When the moodle theme is set to Snap, activity restriction tags are sho
     And I set the field with xpath "//span[@class=\"accesshide\"][text()=\"Required restrictions \"]//following-sibling::select" to "any"
     Then I click on "//input[@id=\"id_submitbutton2\"]" "xpath_element"
     And I wait until the page is ready
+    And I click on "//a[@class='snap-conditional-tag']" "xpath_element"
     Then I should see "You have a grade in Test assignment2"
     Then I should see "You belong to Group1"
+    Examples:
+      | Option     |
+      | 0          |
+      | 1          |

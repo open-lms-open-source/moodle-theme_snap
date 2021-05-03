@@ -16,7 +16,7 @@
 # Tests for site policy redirects.
 #
 # @package    theme_snap
-# @copyright  Copyright (c) 2017 Blackboard Inc.
+# @copyright  Copyright (c) 2017 Open LMS
 # @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
 
 @theme @theme_snap
@@ -32,7 +32,7 @@ Feature: As an authenticated non-admin user, opening the snap personal menu redi
       | student1 | Student | 1 | student1@example.com |
 
   @javascript
-  Scenario: Opening personal menu redirects to site policy page appropriately when personal menu set to show on login.
+  Scenario: Login redirects to site policy page appropriately when personal menu set to show on login.
     Accepting the site policy prevents redirect on next login.
     Given I log in as "student1"
     And I have been redirected to the site policy page
@@ -42,19 +42,19 @@ Feature: As an authenticated non-admin user, opening the snap personal menu redi
     Then I am currently on the default site home page
 
   @javascript
-  Scenario: Opening personal menu redirects to site policy page appropriately when personal menu set to not show on login.
+  Scenario: Login redirects to site policy page appropriately when personal menu set to not show on login.
     Accepting the site policy prevents redirect next time personal menu is opened.
     Given the following config values are set as admin:
       | personalmenulogintoggle | 0 | theme_snap |
-    And I skip because "Site policy changes in core changed functionality"
     And I log in as "student1"
-    And I am currently on the default site home page
-    When I open the personal menu
     Then I have been redirected to the site policy page
     And I press "Yes"
     And I log out
-    When I log in as "student1"
-    Then I am currently on the default site home page
+    Then I log in as "student1"
+    And I am currently on the default site home page
+    When I open the personal menu
+    And I wait until the page is ready
+    Then I should not see "You must agree to this policy to continue using this site. Do you agree?"
 
   @javascript
   Scenario: Opening personal menu does not redirect when logged in as admin user.

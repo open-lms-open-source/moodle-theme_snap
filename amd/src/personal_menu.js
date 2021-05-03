@@ -15,7 +15,7 @@
  * along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
  *
  * @package   theme_snap
- * @copyright Copyright (c) 2016 Blackboard Inc. (http://www.blackboard.com)
+ * @copyright Copyright (c) 2016 Open LMS (https://www.openlms.net)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -108,6 +108,21 @@ define(['jquery', 'core/log', 'core/yui', 'theme_snap/pm_course_cards', 'theme_s
                 loadAjaxInfo('forumposts');
 
                 $(document).trigger('snapUpdatePersonalMenu');
+
+                // Triggering event for external PM open listeners.
+                // Try/catch added to ensure browser compatibility for webcomponents.
+                try {
+                    document.dispatchEvent(new Event('snapPersonalMenuOpen'));
+                } catch(error) {
+                    log.error(error.message);
+                    try {
+                        var evt = document.createEvent("Event");
+                        evt.initEvent('snapPersonalMenuOpen', true, true);
+                        document.dispatchEvent(evt);
+                    } catch(err) {
+                        log.error(err.message);
+                    }
+                }
             };
 
             /**
@@ -123,7 +138,8 @@ define(['jquery', 'core/log', 'core/yui', 'theme_snap/pm_course_cards', 'theme_s
                     var sections = $("#snap-pm-content section");
                     var sectionWidth = $(sections).outerWidth();
                     var section = $(href);
-                    var targetSection = $("#snap-pm-updates section > div").index(section) + 1;
+                    var selector = "#snap-pm-updates section > div, #snap-pm-updates section > snap-feed > div";
+                    var targetSection = $(selector).index(section) + 1;
                     var position = sectionWidth * targetSection;
                     var sectionHeight = $(href).outerHeight() + 200;
 
@@ -144,12 +160,31 @@ define(['jquery', 'core/log', 'core/yui', 'theme_snap/pm_course_cards', 'theme_s
                     if (window.innerWidth >= 992) {
                         // If equal or larger than Bootstrap 992 large breakpoint, clear left positions of sections.
                         $('#snap-pm-content').removeAttr('style');
+
+                        if ($("#snap-pm-courses div#snap-personal-menu-intelliboard").length > 0) {
+                            var section = $('div#snap-personal-menu-intelliboard').closest('section');
+                            section.prependTo('#snap-pm-updates');
+                        }
+                        if ($("#snap-pm-courses div#snap-personal-menu-intellicart").length > 0) {
+                            var section = $('div#snap-personal-menu-intellicart').closest('section');
+                            section.prependTo('#snap-pm-updates');
+                        }
                         return;
                     }
                     var activeLink = $('#snap-pm-mobilemenu a.state-active');
                     if (!activeLink || !activeLink.length) {
                         return;
                     }
+
+                    if ($("#snap-pm-updates div#snap-personal-menu-intelliboard").length > 0) {
+                        var section = $('div#snap-personal-menu-intelliboard').closest('section');
+                        section.appendTo('section#snap-pm-courses');
+                    }
+                    if ($("#snap-pm-updates div#snap-personal-menu-intellicart").length > 0) {
+                        var section = $('div#snap-personal-menu-intellicart').closest('section');
+                        section.appendTo('section#snap-pm-courses');
+                    }
+
                     var href = activeLink.attr('href');
                     var posHeight = getSectionCoords(href);
 
@@ -188,8 +223,20 @@ define(['jquery', 'core/log', 'core/yui', 'theme_snap/pm_course_cards', 'theme_s
                     }
                     event.preventDefault();
 
+                    // Intelliboard and intellicart should be displayed under the courses on a small screen.
+                    if (window.innerWidth < 992) {
+                        if ($("#snap-pm-updates div#snap-personal-menu-intelliboard").length > 0) {
+                            var section = $('div#snap-personal-menu-intelliboard').closest('section');
+                            section.appendTo('section#snap-pm-courses');
+                        }
+                        if ($("#snap-pm-updates div#snap-personal-menu-intellicart").length > 0) {
+                            var section = $('div#snap-personal-menu-intellicart').closest('section');
+                            section.appendTo('section#snap-pm-courses');
+                        }
+                    }
+
                     // If there is a message drawer, dispatch event to avoid opening both elements.
-                    if ($('.message-drawer').length) {
+                    if ($('.message-app.main').length === 0) {
                         document.dispatchEvent(new Event("messages-drawer:pm-toggle"));
                     }
                 });

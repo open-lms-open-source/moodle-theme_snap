@@ -16,11 +16,11 @@
 # Test the Category color setting for snap.
 #
 # @package   theme_snap
-# @copyright Copyright (c) 2018 Blackboard Inc. (http://www.blackboard.com)
+# @copyright Copyright (c) 2018 Open LMS (https://www.openlms.net)
 # @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
 
 
-@theme @theme_snap
+@theme @theme_snap @theme_snap_color_check
 Feature: When the moodle theme is set to Snap, a color contrast checker can be viewed.
 
   Background:
@@ -29,13 +29,18 @@ Feature: When the moodle theme is set to Snap, a color contrast checker can be v
       |  5 | Cat  5 |     0    |   CAT5   |   Test      |
       | 10 | Cat 10 |   CAT5   |   CAT10  |   Test      |
       | 20 | Cat 20 |   CAT20  |   CAT20  |   Test      |
+    And the following config values are set as admin:
+      | linkadmincategories | 0 |
 
   @javascript
   Scenario: Go to Snap settings page, put a color in theme color and see contrast message.
     Given I log in as "admin"
     And I am on site homepage
     And I click on "#admin-menu-trigger" "css_element"
-    And I navigate to "Appearance > Themes > Snap" in site administration
+    And I expand "Site administration" node
+    And I expand "Appearance" node
+    And I expand "Themes" node
+    And I follow "Snap"
     And I set the following fields to these values:
       |  Site color |      #FFAAAA                   |
     And I click on "Save changes" "button"
@@ -47,7 +52,10 @@ Feature: When the moodle theme is set to Snap, a color contrast checker can be v
     Given I log in as "admin"
     And I am on site homepage
     And I click on "#admin-menu-trigger" "css_element"
-    And I navigate to "Appearance > Themes > Snap" in site administration
+    And I expand "Site administration" node
+    And I expand "Appearance" node
+    And I expand "Themes" node
+    And I follow "Snap"
     And I should see "Category color"
     And I click on "Category color" "link"
     And I should see "JSON Text"
@@ -66,7 +74,10 @@ Feature: When the moodle theme is set to Snap, a color contrast checker can be v
     Given I log in as "admin"
     And I am on site homepage
     And I click on "#admin-menu-trigger" "css_element"
-    And I navigate to "Appearance > Themes > Snap" in site administration
+    And I expand "Site administration" node
+    And I expand "Appearance" node
+    And I expand "Themes" node
+    And I follow "Snap"
     And I should see "Category color"
     And I click on "Category color" "link"
     And I should see "JSON Text"

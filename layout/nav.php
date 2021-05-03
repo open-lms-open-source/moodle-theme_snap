@@ -16,21 +16,22 @@
 
 /**
  * Layout - nav.
- * This layout is baed on a moodle site index.php file but has been adapted to show news items in a different
+ * This layout is based on a Moodle site index.php file but has been adapted to show news items in a different
  * way.
  *
  * @package   theme_snap
- * @copyright Copyright (c) 2015 Blackboard Inc. (http://www.blackboard.com)
+ * @copyright Copyright (c) 2015 Open LMS (https://www.openlms.net)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 defined('MOODLE_INTERNAL') || die();
 
 use theme_snap\renderables\settings_link;
-use theme_snap\renderables\bb_dashboard_link;
+use theme_snap\renderables\genius_dashboard_link;
 
 ?>
 <header id='mr-nav' class='clearfix moodle-has-zindex'>
+<div id="snap-header">
 <?php
 $sitefullname = format_string($SITE->fullname);
 $attrs = array(
@@ -50,11 +51,12 @@ echo html_writer::link($CFG->wwwroot, $sitefullname, $attrs);
 <div class="pull-right js-only">
     <?php
     if (class_exists('local_geniusws\navigation')) {
-        $bblink = new bb_dashboard_link();
+        $bblink = new genius_dashboard_link();
         echo $OUTPUT->render($bblink);
     }
 
     echo $OUTPUT->personal_menu_trigger();
+    echo $OUTPUT->render_message_icon();
     echo $OUTPUT->render_notification_popups();
 
     $settingslink = new settings_link();
@@ -64,6 +66,17 @@ echo html_writer::link($CFG->wwwroot, $sitefullname, $attrs);
     echo '</span>';
     ?>
 </div>
+</div>
+<?php
+$custommenu = $OUTPUT->custom_menu();
+
+/* Moodle custom menu. */
+if (!empty($custommenu)) {
+    echo '<div id="snap-custom-menu">';
+    echo $custommenu;
+    echo '</div>';
+}
+?>
 </header>
 
 <?php

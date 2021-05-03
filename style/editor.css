@@ -4928,21 +4928,21 @@ a.disabled {
  * Snap variables.
  *
  * @package   theme_snap
- * @copyright Copyright (c) 2015 Blackboard Inc. (http://www.blackboard.com)
+ * @copyright Copyright (c) 2015 Open LMS (https://www.openlms.net)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 /**
  * Main swatch - includes all snap swatch files.
  *
  * @package   theme_snap
- * @copyright Copyright (c) 2015 Blackboard Inc. (http://www.blackboard.com)
+ * @copyright Copyright (c) 2015 Open LMS (https://www.openlms.net)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 /**
  * Moodle blocks.
  *
  * @package   theme_snap
- * @copyright Copyright (c) 2015 Blackboard Inc. (http://www.blackboard.com)
+ * @copyright Copyright (c) 2015 Open LMS (https://www.openlms.net)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 @media screen and (min-width: 768px) {
@@ -5183,7 +5183,7 @@ body.path-site .block.block_settings {
  * Snap core swatch.
  *
  * @package   theme_snap
- * @copyright Copyright (c) 2015 Blackboard Inc. (http://www.blackboard.com)
+ * @copyright Copyright (c) 2015 Open LMS (https://www.openlms.net)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 html {
@@ -6214,9 +6214,8 @@ footer #moodle-footer
         */
 }
 
-.bb_dashboard_link img {
+.genius_dashboard_link img {
     width: 1em;
-    height: 1em;
     margin-right: 0.25em;
 }
 
@@ -9699,7 +9698,7 @@ label.state-visible[for="snap-coverfiles"] .spinner-three-quarters,
  * Snap course swatch.
  *
  * @package   theme_snap
- * @copyright Copyright (c) 2015 Blackboard Inc. (http://www.blackboard.com)
+ * @copyright Copyright (c) 2015 Open LMS (https://www.openlms.net)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 /***************
@@ -11640,7 +11639,7 @@ fieldset[disabled] a#changenumsections .reduce-sections {
  * Snap Table of contents.
  *
  * @package   theme_snap
- * @copyright Copyright (c) 2017 Blackboard Inc. (http://www.blackboard.com)
+ * @copyright Copyright (c) 2017 Open LMS (https://www.openlms.net)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 #course-toc {
@@ -11726,7 +11725,7 @@ fieldset[disabled] a#changenumsections .reduce-sections {
     height: 1.5em;
 }
 
-#snap-course-wrapper .sectionname:before {
+#snap-course-wrapper .sectionnumber:before {
     content: '';
 }
 
@@ -11954,7 +11953,7 @@ fieldset[disabled] a#changenumsections .reduce-sections {
 .snap-pm-open #page,
 .snap-pm-open #moodle-footer,
 .snap-pm-open #fixy-trigger,
-.snap-pm-open .bb_dashboard_link,
+.snap-pm-open .genius_dashboard_link,
 .snap-pm-open #admin-menu-trigger,
 .snap-pm-open #newmessageoverlay,
 .snap-pm-open #snap-home,
@@ -12308,7 +12307,10 @@ fieldset[disabled] a#changenumsections .reduce-sections {
 .fixy .callstoaction #snap-personal-menu-deadlines,
 .fixy .callstoaction #snap-personal-menu-graded,
 .fixy .callstoaction #snap-personal-menu-grading,
-.fixy .callstoaction #snap-personal-menu-messages {
+.fixy .callstoaction #snap-personal-menu-messages,
+.fixy .callstoaction #snap-personal-menu-feed-graded,
+.fixy .callstoaction #snap-personal-menu-feed-grading,
+.fixy .callstoaction #snap-personal-menu-feed-messages {
     min-height: 50px;
 }
 
@@ -12525,7 +12527,7 @@ button.snap-icon-toggle.favoritetoggle:focus {
  * Snap core swatch.
  *
  * @package   theme_snap
- * @copyright Copyright (c) 2015 Blackboard Inc. (http://www.blackboard.com)
+ * @copyright Copyright (c) 2015 Open LMS (https://www.openlms.net)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 body:not(.behat-site)#page-mod-resource-mod #id_optionssection,
@@ -13193,7 +13195,7 @@ fieldset[disabled] .path-admin-tool-lp [data-region="filtercompetencies"] button
  * Moodle user profile page.
  *
  * @package   theme_snap
- * @copyright Copyright (c) 2017 Blackboard Inc. (http://www.blackboard.com)
+ * @copyright Copyright (c) 2017 Open LMS (https://www.openlms.net)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 #page-user-profile,
@@ -13354,7 +13356,7 @@ fieldset[disabled] .path-admin-tool-lp [data-region="filtercompetencies"] button
  * Snap user swatch.
  *
  * @package   theme_snap
- * @copyright Copyright (c) 2015 Blackboard Inc. (http://www.blackboard.com)
+ * @copyright Copyright (c) 2015 Open LMS (https://www.openlms.net)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 .news-article-message *[style],

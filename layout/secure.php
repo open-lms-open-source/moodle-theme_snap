@@ -20,7 +20,7 @@
  * way.
  *
  * @package   theme_snap
- * @copyright Copyright (c) 2015 Blackboard Inc. (http://www.blackboard.com)
+ * @copyright Copyright (c) 2015 Open LMS (https://www.openlms.net)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 defined('MOODLE_INTERNAL') || die();
@@ -42,14 +42,15 @@ echo $OUTPUT->doctype() ?>
     <div class="navbar-header">
         <span class="navbar-brand"><?php echo $SITE->shortname; ?></span>
     </div>
-
     <div id="moodle-navbar">
         <div class="nav-link float-md-right">
-            <?php echo $OUTPUT->login_info(false) ?>
+            <?php echo $OUTPUT->secure_layout_login_info() ?>
         </div>
     </div>
 </nav>
-
+<div class="container-langmenu">
+    <?php echo $OUTPUT->secure_layout_language_menu() ?>
+</div>
 <div id="page" class="container">
 
 <div id="page">

@@ -15,8 +15,8 @@
  * along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
  *
  * @package   theme_snap
- * @author    David Castro <david.castro@blackboard.com>
- * @copyright Copyright (c) 2018 Blackboard Inc. (http://www.blackboard.com)
+ * @author    David Castro <david.castro@openlms.net>
+ * @copyright Copyright (c) 2018 Open LMS (https://www.openlms.net)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -34,10 +34,10 @@ define(['jquery', 'core/templates'],
 
                 templates.render('theme_snap/return_to_normal_role', {
                     switchroleurl: M.cfg.wwwroot + '/course/switchrole.php?'
-                    + 'id=' + courseId
-                    + '&sesskey=' + M.cfg.sesskey
-                    + '&switchrole=0'
-                    + '&returnurl=' + returnURL
+                        + 'id=' + courseId
+                        + '&sesskey=' + M.cfg.sesskey
+                        + '&switchrole=0'
+                        + '&returnurl=' + returnURL
                 }).then(function(html) {
                     $('#admin-menu-trigger').parent().append(html);
                 });

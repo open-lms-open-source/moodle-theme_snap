@@ -18,15 +18,15 @@
  * Theme plugin version definition.
  *
  * @package   theme_snap
- * @copyright Copyright (c) 2015 Blackboard Inc. (http://www.blackboard.com)
+ * @copyright Copyright (c) 2015 Open LMS (https://www.openlms.net)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 defined('MOODLE_INTERNAL') || die;
 
-$plugin->version   = 2019051501;
-$plugin->requires  = 2018120300;
-$plugin->release   = '3.6.3';
+$plugin->version   = 2020061103;
+$plugin->requires  = 2020061500;
+$plugin->release   = '3.9.3';
 $plugin->maturity  = MATURITY_STABLE;
 $plugin->component = 'theme_snap';
 $plugin->dependencies = [

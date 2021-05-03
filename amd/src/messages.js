@@ -15,84 +15,109 @@
  * along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
  *
  * @package   theme_snap
- * @author    Juan Ibarra juan.ibarra@blackboard.com
- * @copyright Copyright (c) 2019 Blackboard Inc. (http://www.blackboard.com)
+ * @author    Juan Ibarra juan.ibarra@openlms.net
+ * @copyright Copyright (c) 2019 Open LMS (https://www.openlms.net)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 /**
  * JS code to manage hide/show of full width messages drawer.
  */
-define(['jquery'],
-    function($) {
+define(['jquery', 'core/pubsub'],
+    function($, PubSub) {
         // Array to control which popovers are open.
         var openedpopovers = [];
         // Maximum size in pixels to consider a mobile screen
         var maxWidth = 560;
+
         return {
             init: function() {
                 // Listener for the admin block.
-                document.addEventListener("messages-drawer:toggle", function(){
-                    if ($('#page-message-edit').length || $('#page-message-index').length) {
-                        if ($('.block_settings').hasClass('state-visible') ||
-                            $('.block_settings').hasClass('state-visible')) {
-                            if ($(window).width() < maxWidth) {
-                                $('.message-drawer').hide();
+                if ($('.preferences-page-container').length === 0 && $('.message-app.main').length === 0 &&
+                        ($('#page-message-edit').length != 0 || $('#page-message-index').length != 0)) {
+                    var drawermessage = $('.drawer .message-app');
+                    drawermessage.css('visibility', 'visible');
+                    drawermessage.animate({width: '100%'}, 0);
+                    document.addEventListener("messages-drawer:toggle", function () {
+                        if ($('#page-message-edit').length || $('#page-message-index').length) {
+                            if ($('.block_settings').hasClass('state-visible')) {
+                                if ($(window).width() < maxWidth) {
+                                    $('.drawer .message-app').hide();
+                                } else {
+                                    $('.drawer .message-app').animate({width: '50%'}, 0);
+                                }
                             } else {
-                                $('.message-drawer').animate({width: '50%'}, 0);
-                            }
-                        } else {
-                            if ($(window).width() < maxWidth) {
-                                $('.message-drawer').show();
-                            } else {
-                                $('.message-drawer').animate({width: '100%'}, 0);
-                            }
-                        }
-                    }
-                });
-                // Listener for the personal menu.
-                document.addEventListener("messages-drawer:pm-toggle", function(){
-                    if ($('#page-message-edit').length || $('#page-message-index').length) {
-                        if ($('.snap-pm-open').length) {
-                            $('.message-drawer').hide();
-                        } else {
-                            $('.message-drawer').show();
-                        }
-                    }
-                });
-                // Listeners for popovers.
-                var popover = $('div.popover-region');
-                popover.on('popoverregion:menuopened', function(){
-                    if ($('#page-message-edit').length || $('#page-message-index').length) {
-                        var popovername = $(this).attr("id");
-                        if (openedpopovers.indexOf(popovername) == -1) {
-                            openedpopovers.push(popovername);
-                        }
-                        // If there are open popovers, hide message-drawer.
-                        if (openedpopovers.length > 0) {
-                            if ($(window).width() < maxWidth) {
-                                $('.message-drawer').hide();
-                            } else {
-                                $('.message-drawer').animate({width: '50%'}, 0);
+                                if ($(window).width() < maxWidth) {
+                                    $('.drawer .message-app').show();
+                                } else {
+                                    $('.drawer .message-app').animate({width: '100%'}, 0);
+                                }
                             }
                         }
-                    }
-                }).bind();
-                popover.on('popoverregion:menuclosed', function(){
-                    if ($('#page-message-edit').length || $('#page-message-index').length) {
-                        var popovername = $(this).attr("id");
-                        var index = openedpopovers.indexOf(popovername);
-                        openedpopovers.splice(index, 1);
-                        // Only open drawer when there are no opened popovers.
-                        if (openedpopovers.length == 0) {
-                            if ($(window).width() < maxWidth) {
-                                $('.message-drawer').show();
+                    });
+                    // Listener for the personal menu.
+                    document.addEventListener("messages-drawer:pm-toggle", function () {
+                        if ($('#page-message-edit').length || $('#page-message-index').length) {
+                            if ($('.snap-pm-open').length) {
+                                $('.drawer .message-app').hide();
                             } else {
-                                $('.message-drawer').animate({width: '100%'}, 0);
+                                $('.drawer .message-app').show();
                             }
                         }
-                    }
-                }).bind();
+                    });
+                    // Listeners for popovers.
+                    var popover = $('div.popover-region');
+                    popover.on('popoverregion:menuopened', function () {
+                        if ($('#page-message-edit').length || $('#page-message-index').length) {
+                            var popovername = $(this).attr("id");
+                            if (openedpopovers.indexOf(popovername) == -1) {
+                                openedpopovers.push(popovername);
+                            }
+                            // If there are open popovers, hide message-drawer.
+                            if (openedpopovers.length > 0) {
+                                if ($(window).width() < maxWidth) {
+                                    $('.drawer .message-app').hide();
+                                } else {
+                                    $('.drawer .message-app').animate({width: '50%'}, 0);
+                                }
+                            }
+                        }
+                    }).bind();
+                    popover.on('popoverregion:menuclosed', function () {
+                        if ($('#page-message-edit').length || $('#page-message-index').length) {
+                            var popovername = $(this).attr("id");
+                            var index = openedpopovers.indexOf(popovername);
+                            openedpopovers.splice(index, 1);
+                            // Only open drawer when there are no opened popovers.
+                            if (openedpopovers.length == 0) {
+                                if ($(window).width() < maxWidth) {
+                                    $('.drawer .message-app').show();
+                                } else {
+                                    $('.drawer .message-app').animate({width: '100%'}, 0);
+                                }
+                            }
+                        }
+                    }).bind();
+                // Listener for the page user profile to load messages URL.
+                } else if ($('#page-user-profile').length != 0 || $('.userprofile #message-user-button').length != 0) {
+                    PubSub.subscribe("message-drawer-create-conversation-with-user", function (args) {
+                        this.redirectToMessage(args);
+                    });
+                    // The drawer in snap will always open in a new window
+                    PubSub.subscribe("message-drawer-show-conversation", function (args) {
+                        this.redirectToMessage(args);
+                    });
+                }
+            },
+            redirectToMessage : function(args) {
+                let processedId = '';
+                if (typeof args === 'object' && args.userid) {
+                    processedId = parseInt(args.userid);
+                } else {
+                    processedId = parseInt(args);
+                }
+                const moodleurl = M.cfg.wwwroot;
+                window.location = moodleurl.concat('/message/index.php?id=', processedId);
             }
         };
     }

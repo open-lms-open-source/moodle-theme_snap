@@ -20,7 +20,7 @@
  * Unfortunatly tried to keep as close to original renderer for maintainability.
  *
  * @package   theme_snap
- * @copyright Copyright (c) 2017 Blackboard Inc.
+ * @copyright Copyright (c) 2017 Open LMS
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -195,7 +195,7 @@ class mod_assign_renderer extends \mod_assign_renderer {
                 $percentage = round(($summary->submissionssubmittedcount / $summary->participantcount), 3) * 100 . '%';
             }
             $submissionsdata = '<div class="submissions-status">';
-            $submissionsdata .= get_string('submissions', 'assign').': ';
+            $submissionsdata .= get_string('gradeitem:submissions', 'assign').': ';
             $submissionsdata .= '<div class="submission-status-row">';
             $submissionsdata .= '<span>'.$summary->submissionssubmittedcount.' / '.$summary->participantcount.'</span>';
             $submissionsdata .= '<span>'.$percentage.'</span>';
@@ -227,7 +227,7 @@ class mod_assign_renderer extends \mod_assign_renderer {
      * @return string
      */
     public function render_assign_submission_status(\assign_submission_status $status) {
-        global $USER, $OUTPUT;
+        global $USER;
 
         // User picture and name.
         $userpicture = new \user_picture($USER);
@@ -235,7 +235,7 @@ class mod_assign_renderer extends \mod_assign_renderer {
         $userpicture->alttext = false;
         $userpicture->class = 'userpicture';
         $userpicture->size = 35;
-        $userpic = $OUTPUT->render($userpicture).' '.s(fullname($USER));
+        $userpic = $this->output->render($userpicture).' '.s(fullname($USER));
 
         $o = '';
         $statusdata = '';
@@ -442,6 +442,11 @@ class mod_assign_renderer extends \mod_assign_renderer {
                     } else {
                         $submissiondata .= '<a href="'.$url.'" role="button" class="btn btn-primary">'
                             .get_string('editsubmission', 'assign').'</a>';
+
+                        $urlparams = array('id' => $status->coursemoduleid, 'action' => 'removesubmissionconfirm');
+                        $url = new moodle_url('/mod/assign/view.php', $urlparams);
+                        $submissiondata .= '<a href="'.$url.'" role="button" class="btn btn-primary">'
+                            .get_string('removesubmission', 'assign').'</a>';
                     }
                 }
 

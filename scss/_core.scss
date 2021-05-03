@@ -16,7 +16,7 @@
  * Snap core swatch.
  *
  * @package   theme_snap
- * @copyright Copyright (c) 2015 Blackboard Inc. (http://www.blackboard.com)
+ * @copyright Copyright (c) 2015 Open LMS (https://www.openlms.net)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 // overwrite some global CSS from a turnitin mod
@@ -120,14 +120,26 @@ table.boxwidthwide {
     // The login box.
     .snap-login {
         padding: 1em 4%;
-        margin: 2em auto;
         max-width: 30rem;
         width: 100%;
         background-color: rgba(255, 255, 255, 0.9);
         #password {
             margin-top: 1em;
         }
+        .potentialidp {
+            margin-bottom: .5em;
+        }
     }
+    .snap-login-cell {
+        margin: 2em;
+    }
+    .snap-login-box {
+        margin: 2em auto;
+    }
+    .snap-login-row {
+        justify-content: center;
+    }
+
     // The site name.
     .snap-logo-sitename {
         text-indent: 100%;
@@ -148,7 +160,7 @@ table.boxwidthwide {
 
     .collapsible-actions,
     .ftoggler {
-        display: none;
+        display: block;
     }
     // Inputs to full width.
     .mform .form-inline .form-control,
@@ -305,7 +317,8 @@ blockquote {
     @extend .blockquote;
 }
 
-
+// Although this is kinda general, we need to leave like it is,
+// because Snap is using these width and heights for some designs.
 img {
     max-width: 100%;
     height: auto;
@@ -375,10 +388,26 @@ p.tree_item.hasicon i.nav-missing-icon:before {
     content: '■'; // Where settings nav icon is missing use this.
 }
 
-// Adjust Page resource activity display when the content is a table.
+// Adjust Page resource activity display.
 li.modtype_page {
+    div.summary-text p {
+        padding-top: 1em !important; // Override summary-text core inherit property.
+    }
+
+    // Adjust Page resource content when it is a table.
     div.pagemod-content {
         overflow: auto;
+
+        // Hide scrollbar but keep functionality.
+        &::-webkit-scrollbar {
+            display: none;
+        }
+        -ms-overflow-style: none;  // IE and Edge.
+        scrollbar-width: none;  // Firefox.
+
+        .row {
+            margin: 0;
+        }
         tr {
             .mediaplugin_videojs {
                 width: 30em;
@@ -387,6 +416,13 @@ li.modtype_page {
         }
         div.d-block {
             padding-left: 25%;
+            padding-right: 25%;
+            width: 100%;
+        }
+
+        #pagemod-content-container,
+        .d-block {
+            float: left;
             width: 100%;
         }
     }
@@ -745,7 +781,8 @@ a.yui3-button,
 
         // for personal menu updates - need to re-visit when we re-use more widley
         // in the messaging system we ellispe text
-        p {
+        p,
+        small {
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
@@ -813,7 +850,6 @@ nav #mr-nav
 footer #moodle-footer
 
  ****************************/
-#mr-nav,
 #page-header,
 #region-main,
 #moodle-footer,
@@ -839,11 +875,17 @@ footer #moodle-footer
 // -------------------------
 
 #mr-nav {
+    #snap-header {
+        padding: .5em 4%;
+        .pull-right.js-only .nav-link {
+            padding: .5rem .5rem;
+        }
+    }
     position: fixed;
     width: 100vw;
     z-index: 23;
-    padding: .5em 4%;
     background-color: $nav-bg;
+    top: 0;
 
     //headroom js http://wicky.nillia.ms/headroom.js/
     &.headroom--unpinned {
@@ -906,7 +948,6 @@ footer #moodle-footer
             background-color: darken($nav-login-bg, 8%);
             border-color: darken($nav-login-bg, 8%);
         }
-
     }
 }
 
@@ -934,22 +975,42 @@ footer #moodle-footer
         }
         color: darken($nav-button-color, 8%);
     }
+}
 
-    // Core alerts badge.
+// Core alerts badge.
+.badge-count-container {
+    display: inline-block;
+    float: none;
+
+    // we want to maintain the position along the Intellicart or notification icons when
+    // these icons don't exists in the Snap header.
+    a.snap-message-count {
+        padding: .5rem .5rem;
+        display: block;
+    }
+
+    .icon.fa-comment {
+        font-size: 24px;
+        position: relative;
+        margin: 0;
+
+        &:before {
+            content: "\f0e5";
+        }
+    }
     .conversation_badge_count {
         height: 18px;
         width: 18px;
         border-radius: 50%;
-        padding: 0;
-        line-height: inherit;
-        color: white;
-        position: absolute;
-        left: .33em; // Magic number.
-        top: .6em; // Magic number.
-        font-size: 10px;
+        color: white !important; // Override core color preset for anchors.
+        font-size: x-small;
+        font-family: $font-family-system;
         display: flex;
         justify-content: center;
         align-items: center;
+        position: absolute;
+        right: -0.5em; // Magic number.
+        top: -0.5em; // Magic number.
 
         &.hidden {
             display: none;
@@ -1009,23 +1070,24 @@ footer #moodle-footer
     }
 }
 
-.bb_dashboard_link img {
-    width: 1em;
-    height: 1em;
-    margin-right: 0.25em;
-}
-
 #page {
     margin: 0;
     padding: 0;
     position: relative;
     left: 0;
     transition: all 0.4s 0s ease;
-
     // When admin block is open
     &.offcanvas {
         left: -200px;
     }
+}
+
+// We target only google Chorme
+#page-site-index.editing.chrome #moodle-blocks,
+#page-my-index.editing.chrome #moodle-blocks,
+.format-topics.path-course-view.editing.chrome #moodle-blocks,
+.editing.chrome #moodle-blocks {
+    overflow-y: auto;
 }
 
 #moodle-blocks {
@@ -1099,7 +1161,7 @@ header#page-header
     padding: .5em 0;
     float: none;
     @include media-breakpoint-up(md) {
-        margin-top: -0.5em;
+        margin-top: -.75em;
     }
 }
 
@@ -1110,19 +1172,6 @@ header#page-header
     display: block;
     li.breadcrumb-item {
         display: inline-block;
-    }
-}
-
-@include media-breakpoint-down(md) {
-    .breadcrumb li {
-        &:nth-last-child(n+4) {
-            display: none;
-        }
-
-        &:nth-last-child(3):before {
-            content: "";
-            padding: 0;
-        }
     }
 }
 
@@ -1206,8 +1255,8 @@ header#page-header
 #admin-menu-trigger {
     width: 30px;
     height: 30px;
-    margin-left: .75em;
-    margin-top: .5em;
+    margin-top: .3em;
+    margin-left: .4em;
 }
 
 #page-report-outline-user .section {
@@ -1301,6 +1350,7 @@ header#page-header
         }
     }
 }
+
 @include media-breakpoint-up(md) {
     #page-site-index #page-mast {
         width: 50%;
@@ -1340,11 +1390,10 @@ header#page-header
     }
 
     .carousel-indicators {
-        bottom: -30px;
+        bottom: -50px;
         transform: scale(1.3);
 
         li {
-            border-color: $gray-light;
             background-color: $snap-carousel-buttons;
         }
         .active {
@@ -1737,7 +1786,7 @@ ul.events-new + ul.events-underway {
         display: block;
         padding-bottom: 10px;
     }
-    
+
     .yui3-calendarbase {
         width: 350px !important;
     }
@@ -1972,10 +2021,30 @@ ul.events-new + ul.events-underway {
     overflow: hidden;
 }
 
-.path-mod-quiz #mod_quiz_navblock .qnbutton:hover, .path-mod-quiz #mod_quiz_navblock .qnbutton:focus {
+.path-mod-quiz #mod_quiz_navblock .qnbutton:hover,
+.path-mod-quiz #mod_quiz_navblock .qnbutton:focus {
     background-color: $brand-primary;
     border: 1px solid $brand-primary;
-    color: #ffffff;
+    color: #fff;
+}
+
+// Centers Quiz navigation buttons on the attempt and review page.
+#page-mod-quiz-attempt.theme-snap,
+#page-mod-quiz-review.theme-snap {
+    #mod_quiz_navblock,
+    div.qn_buttons.clearfix.allquestionsononepage,
+    div.qn_buttons.clearfix.multipages {
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+    }
+
+    @media (max-width: 767px) {
+        div.qn_buttons.clearfix.allquestionsononepage,
+        div.qn_buttons.clearfix.multipages {
+            display: inline-block !important;
+        }
+    }
 }
 
 #page-mod-quiz-edit .section .activity .actions {
@@ -2010,7 +2079,7 @@ ul.events-new + ul.events-underway {
     }
 
     .feedback {
-        word-break: break-all;
+        word-break: break-word;
     }
 }
 
@@ -2217,20 +2286,6 @@ ul.events-new + ul.events-underway {
     font-size: $font-size-sm;
     color: $gray-light;
     padding-right: 2%;
-}
-
-// Adding region main to overwite boost extend alert on quiz elements.
-#region-main {
-    .que .formulation,
-    .formulation .incorrect,
-    .formulation .correct {
-        border: 0;
-        background-color: transparent;
-        width: 100%;
-        margin: 0;
-        padding: 0;
-        color: $gray;
-    }
 }
 
 .que .qtext {
@@ -2577,6 +2632,15 @@ table#user-grades tr.avg td.cell {
     background: none;
 }
 
+#page-blocks-reports-view {
+    #report-schema-browser-table-box {
+        position: absolute;
+    }
+    #report-schema-browser-column-box {
+        float: right;
+    }
+}
+
 .report-category-overlay .yui3-widget {
     width: inherit !important;
     min-width: 220px;
@@ -2905,6 +2969,12 @@ table#user-grades tr.avg td.cell {
     margin-top: 3em;
 }
 
+#page-course-loginas.theme-snap #user-notifications {
+    padding-top: 7rem;
+    display: block;
+    overflow: hidden;
+}
+
 // bootstrap labels
 .label {
     font-weight: normal;
@@ -2986,6 +3056,10 @@ body.hascontinuecancel.path-site #page {
     display: block;
     width: 100%;
     margin-top: 1em;
+
+    &:hover {
+        text-decoration: underline;
+    }
 }
 
 .next_section {
@@ -3413,7 +3487,19 @@ table th img.iconhelp {
     }
 
     .snap-feature-image {
-        max-width: 200px;
+        object-fit: contain;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    a.snap-feature-link {
+        display: block;
+    }
+
+    div.snap-feature-image-wrap {
+        display: flex;
+        height: 7.5em;
+        margin: 0 auto;
     }
 }
 
@@ -3533,9 +3619,10 @@ td.mceIframeContainer > iframe {
     max-width: 100%;
 }
 
+// The gecko class is to determine the usage of Firefox browser.
 body.gecko .snap-form-required > fieldset,
 body.gecko .snap-form-advanced > fieldset {
-    display: table-cell;
+    display: block;
     max-width: 100%;
 }
 
@@ -3755,11 +3842,30 @@ body.pagelayout-frontpage {
 
 // Auth icon align fix.
 #page-login-index .auth-icon,
-#page-site-index .auth-icon,
-#page-site-index .icon{
+#page-site-index .auth-icon {
     width: 24px;
     height: 24px;
     margin: 0;
+}
+
+// Genius dashboard link.
+#page-site-index .genius_dashboard_link {
+    img.icon {
+        height: 1.5em;
+        width: auto;
+        margin-right: 0.25em;
+        font-size: inherit;
+        margin-bottom: 0.1em;
+        @include alakazam;
+    }
+    &:hover,
+    &:focus {
+        img.icon {
+            transform: scale(1.2);
+        }
+        color: darken($nav-button-color, 8%);
+    }
+
 }
 
 /* Fix for news visualization in Snap front page. */
@@ -3823,38 +3929,38 @@ section#region-main {
 }
 
 #page-admin-tool-task-schedule_task section#region-main {
-  max-width: 100% !important;
+    max-width: 100% !important;
 }
 
 // Readjust restriction block position when adding a new activity.
 .snap-form-advanced.col-md-4 {
-  .availability-field.fcontainer {
-    overflow: scroll;
-  }
-  .availability-inner .availability-group.form-group {
-    display: inline-grid;
-  }
-  .availability-inner .availability-item.d-sm-flex.align-items-center {
-    flex-wrap: wrap;
-    .availability-eye.col-form-label {
-      display: contents;
-      position: absolute;
+    .availability-field.fcontainer {
+        overflow: scroll;
     }
-    .d-inline-block.col-form-label.availability-delete.p-x-1 {
-      display: contents !important;
+    .availability-inner .availability-group.form-group {
+        display: inline-grid;
     }
-    .form-inline.availability_completion.availability-plugincontrols,
-    .availability_date.availability-plugincontrols,
-    .d-inline-block.form-inline.availability_grade.availability-plugincontrols,
-    .form-inline.availability_group.availability-plugincontrols,
-    .form-inline.availability_profile.availability-plugincontrols,
-    .availability_releasecode.availability-plugincontrols {
-      margin-right: 0.5em;
+    .availability-inner .availability-item.d-sm-flex.align-items-center {
+        flex-wrap: wrap;
+        .availability-eye.col-form-label {
+            display: contents;
+            position: absolute;
+        }
+        .d-inline-block.col-form-label.availability-delete.p-x-1 {
+            display: contents !important;
+        }
+        .form-inline.availability_completion.availability-plugincontrols,
+        .availability_date.availability-plugincontrols,
+        .d-inline-block.form-inline.availability_grade.availability-plugincontrols,
+        .form-inline.availability_group.availability-plugincontrols,
+        .form-inline.availability_profile.availability-plugincontrols,
+        .availability_releasecode.availability-plugincontrols {
+            margin-right: 0.5em;
+        }
+        span.label.label-warning {
+            margin-left: 0.5em;
+        }
     }
-    span.label.label-warning {
-      margin-left: 0.5em;
-    }
-  }
 }
 
 // Fix to break-word on title site description.
@@ -3891,7 +3997,7 @@ section#region-main {
             }
         }
     }
-    
+
     .card-footer.dashboard-card-footer.border-0.bg-white {
         background-color: transparent !important;
     }
@@ -3964,3 +4070,498 @@ section#region-main {
 #page-admin-roles-check #userselector_options.collapsibleregion {
     overflow: visible;
 }
+
+#page-local-pld-view #actionEmailEditor form .form-group {
+    margin: auto;
+}
+
+#page-local-pld-view #txtActionEmailBodyBtn {
+    float: right !important;
+}
+
+#page-local-pld-view .ft {
+    justify-content: normal !important;
+}
+.button-group button:nth-child(2) {
+    margin-left: 0.313em;
+}
+
+// This z-index value allows the moodle dialogue (Image and file repository window) be usable
+// for both Atto and TinyMCE html editors.
+#page-local-pld-view .moodle-dialogue-base .moodle-dialogue {
+    z-index: 300005 !important;
+}
+
+#page-local-pld-view .mform .form-inline .form-control,
+.mform .form-inline .custom-select #id_config_text {
+    width: 56em !important;
+}
+
+#page-local-pld-view #id_config_texteditable {
+    height: 15em !important;
+}
+
+#page-local-pld-view #id_config_text {
+    height: 15em !important;
+}
+
+#page-local-pld-view #id_config_text_ifr {
+    height: 15em !important;
+}
+
+// -------------------------
+// Snap custom menu.
+// -------------------------
+
+header#mr-nav {
+    #snap-custom-menu nav.navbar {
+        width: 100%;
+        ul#snap-navbar-content {
+            margin: 0;
+            padding: 0;
+            li.nav-item {
+                list-style: none;
+                max-width: 11em;
+                &:hover {
+                    outline: 0;
+                }
+                div.dropdown-menu {
+                    border: 0;
+                    margin-top: 0 !important; // This margin needs to be override to remove the marging of 2px that it has by default.
+                }
+                a {
+                    display: block;
+                    text-decoration: none;
+                    font-weight: bold;
+                    overflow: hidden;
+                    white-space: nowrap;
+                    text-overflow: ellipsis;
+                    max-width: 11em;
+                }
+                a.nav-link {
+                    height: 50px;
+                    vertical-align: middle;
+                    padding-right: 1.53em;
+                }
+                .dropdown-toggle {
+                    &::after {
+                        position: absolute;
+                        right: 0.9em;
+                        top: 50%;
+                        margin-top: -0.1em;
+                    }
+                }
+                // Animation and rotation of caret dropdown for custom menu.
+                .dropdown-toggle[aria-expanded="true"]:after {
+                    transform: rotate(180deg);
+                }
+                .dropdown-toggle:after {
+                    transition: 0.5s;
+                }
+            }
+        }
+    }
+}
+
+// Snap custom menu fix for IE11.
+.ie11 header#mr-nav #snap-custom-menu nav.navbar {
+    max-height: 100%;
+    padding-bottom: 0;
+    padding-top: 0;
+    ul#snap-navbar-content li.nav-item a.nav-link {
+        max-height: 100%;
+    }
+}
+
+@media (min-width: 992px) {
+    header#mr-nav div#snap-custom-menu {
+        display: block;
+    }
+    footer#moodle-footer div#snap-custom-menu {
+        display: none;
+    }
+    // Spacer to be shown conditionally when custom menu has items to show.
+    .snap-custom-menu-spacer {
+        padding-top: 3.25em;
+    }
+}
+
+@media (max-width: 992px) {
+    header#mr-nav div#snap-custom-menu {
+        display: none;
+    }
+    footer#moodle-footer div#snap-custom-menu {
+        display: block;
+        nav.navbar {
+            max-height: 100%;
+            ul#snap-navbar-content {
+                display: grid !important; // Need to override this to display the custom menu in the footer as a vertical list.
+                li.nav-item {
+                    list-style-type: none;
+                    a.nav-link,
+                    a.dropdown-item {
+                        &:hover,
+                        &:active {
+                            outline: 0;
+                        }
+                        &:focus,
+                        &:hover,
+                        &:active {
+                            background-color: transparent;
+                        }
+                    }
+                    a.dropdown-item {
+                        max-width: 11em;
+                        overflow: hidden;
+                        white-space: nowrap;
+                        text-overflow: ellipsis;
+                    }
+                    a.nav-link {
+                        white-space: nowrap;
+                    }
+                }
+                li.nav-item.dropdown.show {
+                    div.dropdown-menu.show {
+                        margin-left: 1rem !important;
+                        margin-top: 0 !important; // These margins needs to be override as well to modify the position of the dropdown items.
+                        display: block;
+                        position: static;
+                        background-color: transparent;
+                        border: none;
+                    }
+                }
+                // Animation and rotation of caret dropdown for custom menu.
+                .dropdown-toggle[aria-expanded="true"]:after {
+                    transform: rotate(180deg);
+                }
+                .dropdown-toggle:after {
+                    transition: 0.5s;
+                }
+            }
+        }
+    }
+}
+
+// Change font size for header Folder activity with inline content.
+li.snap-activity.modtype_folder div[id^="folder_tree"] {
+    td[id^="ygtvcontentel"] > div,
+    > ul > li > div {
+        > h3 {
+            font-size: 1em;
+        }
+    }
+}
+
+// Modify table layout for definition field for Glossary activities when a video is inserted.
+// Table was not respecting the max-width for the definition field.
+#page-mod-glossary-view .glossarydisplay .entrybox table.glossarypost {
+    table-layout: fixed;
+    width: 100%;
+}
+
+// Need to override the max-width of the submit buttons on the form when creating an activity to modify its position for mobile mode.
+@media (max-width: 767px) {
+    div[role=main] .mform .snap-form-advanced input {
+        max-width: fit-content !important;
+    }
+    div[role=main] .mform div.snap-form-advanced > div:nth-of-type(3) > div.form-inline.felement {
+        display: block;
+    }
+}
+
+.snap-page-heading-button {
+    float: right;
+    display: grid;
+    grid-gap: 0.5rem;
+}
+
+.snap-page-heading-button div {
+    float: right;
+}
+
+.theme-snap [data-region=right-hand-drawer].drawer {
+    z-index: 12;
+    position: fixed;
+    right: 0;
+    height: 100%;
+    width: 22.3em;
+    -webkit-box-shadow: -2px 2px 4px rgba(0, 0, 0, .08);
+    box-shadow: -2px 2px 4px rgba(0, 0, 0, .08);
+    padding: 0;
+    visibility: visible;
+    opacity: 1;
+}
+
+#page-mod-forum-view.theme-snap [data-region=right-hand-drawer].drawer {
+    position: absolute;
+    z-index: 0;
+}
+
+.theme-snap .snap-drawer-headroom {
+    top: 6em;
+    @media (max-width: 992px) {
+        top: 3.5em;
+    }
+    @media (max-width: 792px) {
+        top: 5.5em;
+    }
+    @media (max-width: 767px) {
+        top: 4em;
+    }
+    @media (max-width: 666px) {
+        top: 6.5em;
+    }
+}
+
+.theme-snap .snap-drawer-no-headroom {
+    top: 0;
+}
+
+.theme-snap.layout-secure .container-langmenu {
+    margin-right: .5rem;
+    margin-top:  .5rem;
+    text-align: right;
+}
+// -------------------------
+// Content bank page.
+// -------------------------
+#page-contentbank.theme-snap {
+    // Fix for H5P in Snap to see all the contents type in the Add dropdown content bank. Mimic Boost behavior for these type of dropdowns.
+    .content-bank-container .cb-toolbar-container .dropdown-menu.dropdown-scrollable {
+        overflow-y: auto;
+        max-height: 210px;
+    }
+
+    // Grid view.
+    .content-bank-container.view-grid {
+        .cb-content-wrapper {
+            padding: .5rem;
+            min-height: 140px;
+            max-height: 500px;
+            overflow-x: auto;
+            flex-wrap: wrap;
+        }
+        .cb-heading,
+        .cb-date,
+        .cb-size,
+        .cb-type {
+            display: none;
+        }
+        .cb-listitem {
+            max-width: 120px;
+            min-width: 120px;
+            margin-bottom: .5rem;
+
+            .cb-file.cb-column.position-relative {
+                padding: .5rem;
+
+                .cb-thumbnail {
+                    width: 64px;
+                    height: 64px;
+                    margin-left: auto;
+                    margin-right: auto;
+                    margin-bottom: .5rem;
+                    background-repeat: no-repeat;
+                    background-position: center;
+                    background-size: cover;
+                }
+
+                span.cb-name {
+                    word-break: break-all;
+                    text-align: center;
+                    font-size: .9375rem;
+                }
+            }
+        }
+    }
+
+    // List view.
+    .content-bank-container.view-list {
+        .cb-content-wrapper {
+            padding: 0 .5rem;
+            flex-direction: column;
+            flex-wrap: nowrap;
+        }
+
+        .cb-heading {
+            position: sticky;
+            top: 0;
+            z-index: 1;
+
+            .cb-btnsort.dir-none .default,
+            .cb-btnsort.dir-asc .asc,
+            .cb-btnsort.dir-desc .desc {
+                display: block;
+            }
+            .cb-btnsort span {
+                display: none;
+            }
+        }
+
+        .cb-heading,
+        .cb-listitem {
+            display: flex;
+            flex-wrap: wrap;
+            width: 100%;
+            border-bottom: 1px solid #dee2e6;
+            .cb-column {
+                display: flex;
+                padding: .25rem;
+            }
+        }
+
+        .cb-file.cb-column,
+        .cb-date.cb-column,
+        .cb-size.cb-column {
+            border-right: 1px solid #dee2e6;
+        }
+
+        // Content bank table responsive.
+        @media (min-width: 576px) {
+            .cb-file,
+            .cb-date {
+                flex: 0 0 35%;
+                max-width: 35%;
+            }
+            .cb-size,
+            .cb-type {
+                flex: 0 0 15%;
+                max-width: 15%;
+            }
+            .cb-column.last {
+                border-right: 0;
+            }
+        }
+        @media (max-width: 767.98px) {
+            .cb-column {
+                flex: 0 0 50%;
+                max-width: 50%;
+            }
+        }
+
+        .cb-listitem {
+            .cb-thumbnail {
+                width: 24px;
+                height: 24px;
+                background-repeat: no-repeat;
+                background-position: center;
+                -webkit-background-size: cover;
+                background-size: cover;
+                margin-right: .5rem;
+            }
+            span.cb-name {
+                word-break: break-all;
+                font-size: .9375rem;
+            }
+        }
+    }
+
+    // Fix for the cog menu to rename and delete options for a h5p file in the content bank.
+    #page-mast {
+        header#page-header.row {
+            padding: 0;
+            display: inline-block;
+            width: 10%;
+            vertical-align: middle;
+            background-image: none;
+
+            .col-12.pt-3.pb-3,
+            .card-body.p-2 {
+                padding: 0 !important;
+            }
+
+            .d-sm-flex.align-items-center {
+                float: right;
+            }
+        }
+
+        h1:not([class]) {
+            display: inline-block;
+            width: 90%;
+            margin: 0;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            vertical-align: middle;
+            padding-right: 0.5em;
+        }
+
+        .dropdown-toggle > i[title="Actions menu"] {
+
+        }
+    }
+}
+
+// Activity chooser wrapper button - Maintain old and new style for it.
+#snap-create-activity .section-modchooser-link {
+    width: 100%;
+}
+
+// Go to top button Snap Mobile
+@media (max-width: 991px) {
+    #goto-top-link {
+        bottom: 5em;
+        right: 0.7em;
+    }
+}
+
+// Fix for snap links with unnecessary box shadow and white background while focus.
+.theme-snap a:not([class]):focus {
+    box-shadow: none;
+    background-color: transparent;
+}
+
+// We are hiding the save and cancel buttons from the content bank edit new or existing content from the top of the form.
+// To avoid problems with UX/UI with duplicated submit buttons in the page.
+#page-contentbank-edit {
+    #coolh5peditor > div:nth-child(2) {
+        display: none;
+    }
+    #coolh5peditor > div:nth-child(5) {
+        padding-top: 1.5em;
+        margin-left: 0;
+    }
+    #coolh5peditor #id_cancel {
+        margin-left: 0;
+        border: 1px solid !important;
+
+        &:focus,
+        &:hover {
+            text-decoration: none;
+        }
+    }
+}
+
+// Fix for Quiz submit buttons position and spacing.
+#page-mod-quiz-summary {
+    .confirmation-buttons {
+        justify-content: flex-end !important; // Need to override core justify-content-around.
+    }
+    .confirmation-buttons > input[type="button"] {
+        margin: .25rem;
+    }
+}
+
+// Course categories should be displayed greyed out when they are hidden.
+#page-course-index-category.theme-snap #moodle-page #region-main .dimmed_category .info .categoryname.aabtn a {
+    color: var(--gray); // Gray Bootstrap from theme/boost/style/moodle.css.
+}
+
+// Fix for Scorm exit button to be clickable.
+#page-mod-scorm-player .snap-page-heading-button {
+    z-index: 10;
+    position: relative;
+}
+// Fix for tags' color in hsuforums
+#page-mod-hsuforum-discuss .tag_list .badge-info {
+    color: white;
+}
+
+// Do not limit the width of the image for Drag and drop onto image quizzes type, for editing, preview and attempt.
+#page-question-type-ddimageortext #id_previewareaheader .ddarea.que.ddimageortext img.dropbackground,
+#page-question-type-ddimageortext #id_previewareaheader .ddarea.que.ddimageortext img.droppreview,
+#page-question-preview .droparea .dropzones img.draghome,
+#page-mod-quiz-attempt .droparea .dropzones img.draghome {
+    max-width: none !important;
+}
+

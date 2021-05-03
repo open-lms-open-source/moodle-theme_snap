@@ -18,7 +18,7 @@
  * Overrides for behat forms. Modified from core behat_forms.
  *
  * @copyright  2012 David Monllaó
- * @copyright Copyright (c) 2018 Blackboard Inc.
+ * @copyright Copyright (c) 2018 Open LMS
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -34,7 +34,7 @@ require_once(__DIR__ . '/../../../../lib/tests/behat/behat_forms.php');
  * Overrides to make behat forms steps work with Snap.
  *
  * @copyright  2012 David Monllaó
- * @copyright Copyright (c) 2018 Blackboard Inc.
+ * @copyright Copyright (c) 2018 Open LMS
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class behat_theme_snap_behat_forms extends behat_forms {
@@ -54,7 +54,7 @@ class behat_theme_snap_behat_forms extends behat_forms {
                 "[not(contains(concat(' ', @class, ' '), ' collapse-all '))]";
 
             $collapseexpandlink = $this->find('xpath', $expandallxpath,
-                false, false, self::REDUCED_TIMEOUT);
+                false, false, behat_base::get_reduced_timeout());
             $collapseexpandlink->click();
 
         } catch (ElementNotFoundException $e) {
@@ -64,7 +64,7 @@ class behat_theme_snap_behat_forms extends behat_forms {
                     "//a[contains(concat(' ', @class, ' '), ' fheader ') and @aria-expanded = 'false']";
 
                 $collapseexpandlink = $this->find('xpath', $expandonlysection,
-                    false, false, self::REDUCED_TIMEOUT);
+                    false, false, behat_base::get_reduced_timeout());
                 $collapseexpandlink->click();
                 // @codingStandardsIgnoreStart
             } catch (Exception $e) {

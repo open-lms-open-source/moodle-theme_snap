@@ -18,7 +18,7 @@
  * Wrap core Moodle class.
  *
  * @package    theme_snap
- * @copyright  2017 Blackboard Inc
+ * @copyright  2017 Open LMS
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -36,7 +36,7 @@ use core_calendar\local\event\mappers\event_mapper;
 /**
  * Snap event container.
  *
- * @copyright 2017 Blackboard Inc
+ * @copyright 2017 Open LMS
  * @license http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class container extends \core_calendar\local\event\container {

@@ -18,7 +18,7 @@
  * Snap settings.
  *
  * @package   theme_snap
- * @copyright Copyright (c) 2018 Blackboard Inc. (http://www.blackboard.com)
+ * @copyright Copyright (c) 2018 Open LMS (https://www.openlms.net)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -67,5 +67,9 @@ $description = get_string('pbb_field_description', 'theme_snap');
 $setting = new admin_setting_configselect($name, $title, $description, 'user|department', $fields);
 $setting->set_updatedcallback('\\theme_snap\\local::clean_profile_based_branding_cache');
 $snapsettings->add($setting);
+// Only show pbb field if pbb is enabled.
+$tohide = 'theme_snap/pbb_field';
+$dependency = 'theme_snap/pbb_enable';
+$settings->hide_if($tohide, $dependency, 'notchecked');
 
 $settings->add($snapsettings);
