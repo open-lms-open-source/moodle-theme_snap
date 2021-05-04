@@ -1016,8 +1016,7 @@ class activity {
             } else {
                 $coursesparam = [$courseid => get_course($courseid)];
             }
-            $cachepfx = 'course_'.$courseid;
-            $eventsobj = self::user_activity_events($USER, $coursesparam, $tstart, $tend, $cachepfx, 1000);
+            $eventsobj = self::user_activity_events($coursesparam, $tstart, $tend, 'incourse', 1000);
             $events = $eventsobj->events;
             $eventsfromcache = $eventsobj->fromcache;
             $eventsbymodinst[$courseid] = self::hash_events_by_module_instance($events);
@@ -1350,19 +1349,17 @@ class activity {
     }
 
     /**
-     * Return user's deadlines from calendar.
+     * Return deadlines from calendar associated to a set of courses.
      *
-     * @param int|stdClass $userorid
      * @param stdClass[] $courses array of courses hashed by course id.
      * @param int $tstart
      * @param int $tend
-     * @param string $cacheprefix
+     * @param string $cachesuffix
      * @param int $limit
      * @return object
      */
-    public static function user_activity_events($userorid, array $courses, $tstart, $tend, $cacheprefix = '',
-                                                $limit = 500) {
-        global $DB;
+    public static function user_activity_events(array $courses, $tstart, $tend, $cachesuffix = '', $limit = 500) {
+        global $DB, $USER;
 
         $retobj = (object) [
             'timestamp' => null,
@@ -1371,8 +1368,7 @@ class activity {
             'fromcache' => false
         ];
 
-        $user = local::get_user($userorid);
-        if (!$user) {
+        if (empty($courses)) {
             return $retobj;
         }
 
@@ -1380,8 +1376,20 @@ class activity {
         $dstart = strtotime(date('Y-m-d', $tstart));
         $dend = strtotime(date('Y-m-d', $tend));
 
-        $freshkey = $user->id.'_'.($dstart + $dend).'_'.$limit;
-        $cachekey = $user->id.'_'.$cacheprefix;
+        // Cache key HAS to have courses.
+        $cachekey = self::get_id_indexed_array_cache_key($courses);
+
+        // It also can have group ids for this user within the courses.
+        $groupkey = self::get_user_group_cache_key($USER, $courses);
+        if (!empty($groupkey)) {
+            $cachekey .= '_' . $groupkey;
+        }
+
+        // And an optional suffix.
+        if (!empty($cachesuffix)) {
+            $cachekey .= '_' . $cachesuffix;
+        }
+        $freshkey = $cachekey.'_'.($dstart + $dend).'_'.$limit;
 
         if (self::$phpunitallowcaching || !(defined('PHPUNIT_TEST') && PHPUNIT_TEST)) {
             $muc = \cache::make('theme_snap', 'activity_deadlines');
@@ -1433,10 +1441,6 @@ class activity {
                 $cached->fromcache = true; // Useful for debugging and unit testing.
                 return $cached;
             }
-        }
-
-        if (empty($courses)) {
-            return $retobj;
         }
 
         $events = self::get_calendar_activity_events($tstart, $tend, $courses, $limit);
@@ -1507,6 +1511,17 @@ class activity {
     public static function upcoming_deadlines($userorid, $maxdeadlines = 500, $courseorid = 0) {
         global $USER;
         $origuser = $USER;
+
+        // The user is set here to:
+        // * Assign categories to the calendar that the user has access to
+        // * Assign groups to the calendar that the user belongs to
+        // See: \calendar_information::set_sources.
+        // It is safe to assume that b/c the user is enrolled in the courses specified,
+        // all enrolled users would need to be able to access the corresponding categories, hence,
+        // we can cache deadlines for courses without worrying about categories.
+        //
+        // However, we do need to worry about groups. Which is why we cache the group ids too.
+        // See \theme_snap\activity::user_activity_events.
         $user = local::get_user($userorid);
         $USER = $user;
 
@@ -1516,21 +1531,19 @@ class activity {
         $tomorrow = new \DateTime('tomorrow', $tz);
         $tomorrowts = $tomorrow->getTimestamp();
 
-        $cacheprefix = 'deadlines';
         $courses = enrol_get_users_courses($user->id, true);
         if ($courseorid !== 0) {
             $course = local::get_course($courseorid);
             if ($course !== false &&
                 (is_siteadmin() || isset($courses[$course->id]))) {
                 $courses = [$course->id => $course];
-                $cacheprefix .= '_course_' . $course->id;
             } else {
                 // The user is not enrolled on this course, let's clean up the course lists.
                 $courses = [];
             }
         }
 
-        $eventsobj = self::user_activity_events($user, $courses, $todayts, $todayts + (YEARSECS / 2), $cacheprefix);
+        $eventsobj = self::user_activity_events($courses, $todayts, $todayts + (YEARSECS / 2), 'deadlines');
 
         $events = $eventsobj->events;
         uasort($events, function($e1, $e2) {
@@ -1606,4 +1619,28 @@ class activity {
         return array($sqlgroupsjoin, $sqlgroupswhere, $groupparams);
     }
 
+    /**
+     * Generates a hash key from an 'id' indexed array.
+     * @param array $idindexedarray
+     * @return string
+     */
+    public static function get_id_indexed_array_cache_key(array $idindexedarray) {
+        ksort($idindexedarray);
+        return !empty($idindexedarray) ? sha1(implode(',', array_keys($idindexedarray))) : '';
+    }
+
+    /**
+     * Get the cache key associated to the user's group ids in the specified courses.
+     * @param mixed $user
+     * @param \stdClass[] $courses Array of courses indexed by id.
+     * @return string
+     */
+    public static function get_user_group_cache_key($user, array $courses) {
+        $groupids = array_reduce(array_keys($courses), function($carry, $courseid) use ($user) {
+            $groupings = groups_get_user_groups($courseid, $user->id);
+            // Grouping 0 is all groups.
+            return array_merge($carry, $groupings[0]);
+        }, []);
+        return self::get_id_indexed_array_cache_key(array_flip($groupids));
+    }
 }

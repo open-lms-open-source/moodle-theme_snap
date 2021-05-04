@@ -40,6 +40,8 @@ defined('MOODLE_INTERNAL') || die();
  */
 class refresh_deadline_caches_task extends scheduled_task {
 
+    private $cachekeys;
+
     /**
      * {@inheritDoc}
      */
@@ -78,13 +80,24 @@ SQL;
         $snapfeedsdeadlinesconfig = base64_encode(serialize((object) [
             'feedtype' => 'deadlines'
         ]));
+
+        $this->cachekeys = [];
         foreach ($users as $userid => $user) {
+            $courses = enrol_get_users_courses($userid, true);
+
+            if ($this->has_or_add_cachekey($user, $courses)) {
+                continue;
+            }
+
             // This populates deadline caches or does nothing if run the same day.
             activity::upcoming_deadlines($userid);
-            $courses = enrol_get_users_courses($user->id, true);
 
             // Give a helping hand populating caches for course snap feeds blocks.
-            foreach ($courses as $course) {
+            foreach ($courses as $courseid => $course) {
+                if ($this->has_or_add_cachekey($user, [$courseid => $course])) {
+                    continue;
+                }
+
                 if (!isset($blockinstances[$course->id])) {
                     $contextcourse = context_course::instance($course->id);
                     $parentcontextid = $contextcourse->id;
@@ -108,5 +121,29 @@ SQL;
                 }
             }
         }
+    }
+
+    /**
+     * Looks for a key and adds it to the index if not present.
+     * @param \stdClass[] $courses
+     * @return bool true if present, false if had to add it.
+     */
+    private function has_or_add_cachekey($user, array $courses): bool {
+        // Cache key HAS to have courses.
+        $cachekey = activity::get_id_indexed_array_cache_key($courses);
+
+        // It also can have group ids for this user within the courses.
+        $groupkey = activity::get_user_group_cache_key($user, $courses);
+        if (!empty($groupkey)) {
+            $cachekey .= '_' . $groupkey;
+        }
+
+        if (isset($this->cachekeys[$cachekey])) {
+            // Cache is already populated for this user and their courses.
+            return true;
+        }
+
+        $this->cachekeys[$cachekey] = true;
+        return false;
     }
 }
