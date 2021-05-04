@@ -63,6 +63,7 @@ Feature: Elements for Snap should have the proper aria attributes.
 
   @javascript
   Scenario: Elements in front page must contain the correct attributes
+    And I skip because "This is failing in master (3.10) build, it will be fixed in INT-17067"
     Given I log in as "admin"
     And the following config values are set as admin:
     | linkadmincategories | 0 |

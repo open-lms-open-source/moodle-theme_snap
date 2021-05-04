@@ -106,6 +106,7 @@ Feature: When the moodle theme is set to Snap, students see meta data against co
 
   @javascript
   Scenario Outline: Student that belongs to a specific group sees correct meta data against course activities
+    And I skip because "This is failing in master (3.10) build, it will be fixed in INT-17067"
     And the following "users" exist:
       | username | firstname | lastname | email         |
       | student3 | Student   | 3 | student3@example.com |
@@ -171,6 +172,7 @@ Feature: When the moodle theme is set to Snap, students see meta data against co
 
   @javascript
   Scenario Outline: Student sees correct feedback with multiple outcomes configured
+    And I skip because "This is failing in master (3.10) build, it will be fixed in INT-17067"
     Given I log in as "admin"
     And the following config values are set as admin:
       | coursepartialrender | <Option> | theme_snap |

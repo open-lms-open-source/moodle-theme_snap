@@ -76,7 +76,7 @@ echo '</div>';
 /* We need to render the custom menu in the footer in mobile views. */
 
 if (!empty($custommenu)) {
-    echo '<div id="snap-custom-menu"><br>';
+    echo '<div id="snap-custom-menu-footer"><br>';
     echo $custommenu;
     echo '</div>';
 }

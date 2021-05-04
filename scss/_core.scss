@@ -4114,9 +4114,9 @@ section#region-main {
 // -------------------------
 
 header#mr-nav {
-    #snap-custom-menu nav.navbar {
+    #snap-custom-menu-header nav.navbar {
         width: 100%;
-        ul#snap-navbar-content {
+        ul.snap-navbar-content {
             margin: 0;
             padding: 0;
             li.nav-item {
@@ -4164,20 +4164,20 @@ header#mr-nav {
 }
 
 // Snap custom menu fix for IE11.
-.ie11 header#mr-nav #snap-custom-menu nav.navbar {
+.ie11 header#mr-nav #snap-custom-menu-header nav.navbar {
     max-height: 100%;
     padding-bottom: 0;
     padding-top: 0;
-    ul#snap-navbar-content li.nav-item a.nav-link {
+    ul.snap-navbar-content li.nav-item a.nav-link {
         max-height: 100%;
     }
 }
 
 @media (min-width: 992px) {
-    header#mr-nav div#snap-custom-menu {
+    header#mr-nav div#snap-custom-menu-header {
         display: block;
     }
-    footer#moodle-footer div#snap-custom-menu {
+    footer#moodle-footer div#snap-custom-menu-footer {
         display: none;
     }
     // Spacer to be shown conditionally when custom menu has items to show.
@@ -4187,14 +4187,14 @@ header#mr-nav {
 }
 
 @media (max-width: 992px) {
-    header#mr-nav div#snap-custom-menu {
+    header#mr-nav div#snap-custom-menu-header {
         display: none;
     }
-    footer#moodle-footer div#snap-custom-menu {
+    footer#moodle-footer div#snap-custom-menu-footer {
         display: block;
         nav.navbar {
             max-height: 100%;
-            ul#snap-navbar-content {
+            ul.snap-navbar-content {
                 display: grid !important; // Need to override this to display the custom menu in the footer as a vertical list.
                 li.nav-item {
                     list-style-type: none;
