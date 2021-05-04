@@ -4565,3 +4565,8 @@ li.snap-activity.modtype_folder div[id^="folder_tree"] {
     max-width: none !important;
 }
 
+// Change color contrast for quiz timer in a quiz attempt.
+#page-mod-quiz-attempt.theme-snap #quiz-timer-wrapper #quiz-timer {
+    color: $gray-900;
+}
+
