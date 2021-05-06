@@ -1053,11 +1053,11 @@ define(['jquery', 'core/log', 'theme_snap/headroom', 'theme_snap/util', 'theme_s
                         }
                     }
 
-                    // Add tab logic so search is focused before admin.
-                    var customMenu = $('ul#snap-navbar-content li:first-child a');
+                    // Add tab logic order to navigation bar icons, part of this order is being taken from the layout nav.php file.
+                    var customMenu = $('ul.snap-navbar-content li:first-child a');
                     var moodlePage = $("#moodle-page a:first");
                     var notificationsBtn = $('#nav-notification-popover-container > div.popover-region-toggle.nav-link');
-                    var searchButton = $('.search-input-wrapper.nav-link > div[role="button"]');
+                    var searchButton = $('#mr-nav .simplesearchform a.btn.btn-open');
                     var adminMenuTrigger = $('#admin-menu-trigger');
 
                     var lastElement;
@@ -1077,7 +1077,7 @@ define(['jquery', 'core/log', 'theme_snap/headroom', 'theme_snap/util', 'theme_s
                         );
                     }
 
-                    // Add setttings tab show behaviour to classes which want to do that.
+                    // Add settings tab show behaviour to classes which want to do that.
                     $('.snap-settings-tab-link').on('click', function() {
                         var tab = $('a[href="' + $(this).attr('href') + '"].nav-link');
                         if (tab.length) {

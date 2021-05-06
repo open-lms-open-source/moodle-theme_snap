@@ -48,7 +48,7 @@ if (!empty($PAGE->theme->settings->logo)) {
 echo html_writer::link($CFG->wwwroot, $sitefullname, $attrs);
 ?>
 
-<div class="pull-right js-only">
+<div class="pull-right js-only row">
     <?php
     if (class_exists('local_geniusws\navigation')) {
         $bblink = new genius_dashboard_link();
@@ -60,10 +60,10 @@ echo html_writer::link($CFG->wwwroot, $sitefullname, $attrs);
     echo $OUTPUT->render_notification_popups();
 
     $settingslink = new settings_link();
-    echo $OUTPUT->render($settingslink);
     echo '<span class="hidden-md-down">';
     echo core_renderer::search_box();
     echo '</span>';
+    echo $OUTPUT->render($settingslink);
     ?>
 </div>
 </div>

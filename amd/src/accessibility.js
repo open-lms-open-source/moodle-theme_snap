@@ -32,25 +32,25 @@ define(['jquery', 'core/str', 'core/event'],
                  * Module to get the strings from Snap to add the aria-label attribute to new accessibility features.
                  */
                 str.get_strings([
-                    {key : 'accessforumstringdis', component : 'theme_snap'},
-                    {key : 'accessforumstringmov', component : 'theme_snap'},
-                    {key : 'calendar', component : 'calendar'},
-                    {key : 'accessglobalsearchstring', component : 'theme_snap'},
-                    {key : 'viewcalendar', component : 'theme_snap'},
-                    {key : 'viewmyfeedback', component : 'theme_snap'},
-                    {key : 'viewmessaging', component : 'theme_snap'},
-                    {key : 'viewforumposts', component : 'theme_snap'},
-                    {key : 'editcoursesettings', component : 'theme_snap'},
-                    {key : 'pluginname', component : 'local_joulegrader'},
-                    {key : 'gradebook', component : 'local_joulegrader'},
-                    {key : 'gradebook', component : 'core_grades'},
-                    {key : 'numparticipants', component : 'core_message'},
-                    {key : 'joulereports', component : 'block_reports'},
-                    {key : 'pld', component : 'theme_snap'},
-                    {key : 'competencies', component : 'core_competency'},
-                    {key : 'outcomes', component : 'core_outcome'},
-                    {key : 'badges', component : 'core_badges'},
-                    {key : 'coursereport', component : 'report_allylti'}
+                    {key: 'accessforumstringdis', component: 'theme_snap'},
+                    {key: 'accessforumstringmov', component: 'theme_snap'},
+                    {key: 'calendar', component: 'calendar'},
+                    {key: 'accessglobalsearchstring', component: 'theme_snap'},
+                    {key: 'viewcalendar', component: 'theme_snap'},
+                    {key: 'viewmyfeedback', component: 'theme_snap'},
+                    {key: 'viewmessaging', component: 'theme_snap'},
+                    {key: 'viewforumposts', component: 'theme_snap'},
+                    {key: 'editcoursesettings', component: 'theme_snap'},
+                    {key: 'pluginname', component: 'local_joulegrader'},
+                    {key: 'gradebook', component: 'local_joulegrader'},
+                    {key: 'gradebook', component: 'core_grades'},
+                    {key: 'numparticipants', component: 'core_message'},
+                    {key: 'joulereports', component: 'block_reports'},
+                    {key: 'pld', component: 'theme_snap'},
+                    {key: 'competencies', component: 'core_competency'},
+                    {key: 'outcomes', component: 'core_outcome'},
+                    {key: 'badges', component: 'core_badges'},
+                    {key: 'coursereport', component: 'report_allylti'}
                 ]).done(function(stringsjs) {
                     if ($("#page-mod-forum-discuss")) {
                         $("div[data-content='forum-discussion'] div.singleselect form.form-inline " +
@@ -60,7 +60,12 @@ define(['jquery', 'core/str', 'core/event'],
                     }
                     $("i.fa-calendar").parent().attr("aria-label", stringsjs[2]);
                     $("input[name='TimeEventSelector[calendar]']").attr('aria-label', stringsjs[2]);
-                    $(".search-input-wrapper.nav-link div").attr('aria-label', stringsjs[3]);
+                    var searchbutton = $("#mr-nav .simplesearchform a.btn.btn-open");
+                    $(searchbutton).attr({
+                        title: stringsjs[3],
+                        'aria-label': stringsjs[3],
+                    });
+
 
                     // Add needed ID's for personal menu links.
                     $('#snap-pm-updates section a.snap-personal-menu-more small:contains("' + stringsjs[4] + '")')
@@ -227,8 +232,7 @@ define(['jquery', 'core/str', 'core/event'],
                             tabIndex = this.$tabs.index($tab);
                             if (tabIndex === 0) {
                                 $newTab = this.$tabs.last();
-                            }
-                            else {
+                            } else {
                                 $newTab = this.$tabs.eq(tabIndex - 1);
                             }
                             this.switchTabs($tab, $newTab);
@@ -238,10 +242,9 @@ define(['jquery', 'core/str', 'core/event'],
                         case this.keys.right:
                         case this.keys.down: {
                             tabIndex = this.$tabs.index($tab);
-                            if (tabIndex === this.$tabs.length-1) {
+                            if (tabIndex === this.$tabs.length - 1) {
                                 $newTab = this.$tabs.first();
-                            }
-                            else {
+                            } else {
                                 $newTab = this.$tabs.eq(tabIndex + 1);
                             }
                             this.switchTabs($tab, $newTab);

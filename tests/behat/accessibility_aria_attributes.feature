@@ -63,7 +63,6 @@ Feature: Elements for Snap should have the proper aria attributes.
 
   @javascript
   Scenario: Elements in front page must contain the correct attributes
-    And I skip because "This is failing in master (3.10) build, it will be fixed in INT-17067"
     Given I log in as "admin"
     And the following config values are set as admin:
     | linkadmincategories | 0 |
@@ -81,7 +80,7 @@ Feature: Elements for Snap should have the proper aria attributes.
     And I set the field with xpath "//*[@id='id_s_theme_snap_fc_browse_all']" to "1"
     And I press "Save changes"
     And I am on site homepage
-    And the "aria-label" attribute of "div.search-input-wrapper.nav-link div" "css_element" should contain "Search"
+    And the "aria-label" attribute of "#mr-nav .simplesearchform a.btn.btn-open" "css_element" should contain "Search"
     And the "aria-label" attribute of "div#snap-featured-courses p.text-center a" "css_element" should contain "Browse all courses"
     And the "id" attribute of "div#snap-featured-courses p.text-center a" "css_element" should contain "browse-all-courses-featured-courses"
 
