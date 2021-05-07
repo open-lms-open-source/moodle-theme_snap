@@ -461,7 +461,7 @@ class theme_snap_acitvity_test extends snap_base_test {
         $courses = enrol_get_my_courses();
         $calendar->set_sources($course, $courses);
 
-        $eventsobj = activity::user_activity_events($student, $courses, $tstart, $tend, 'allcourses');
+        $eventsobj = activity::user_activity_events($courses, $tstart, $tend, 'allcourses');
         $events = $eventsobj->events;
         $snapevent = reset($events);
         $this->assertEquals($due, $snapevent->timestart);
@@ -470,7 +470,7 @@ class theme_snap_acitvity_test extends snap_base_test {
         $this->assertFalse($eventsobj->fromcache);
 
         // Test that getting the events again recovers them from cache and that they are populated.
-        $eventsobj = activity::user_activity_events($student, $courses, $tstart, $tend, 'allcourses');
+        $eventsobj = activity::user_activity_events($courses, $tstart, $tend, 'allcourses');
         $events = $eventsobj->events;
         $snapevent = reset($events);
         // Assert from cache.
@@ -486,7 +486,7 @@ class theme_snap_acitvity_test extends snap_base_test {
         $this->setUser($student);
 
         $courses = enrol_get_my_courses();
-        $eventsobj = activity::user_activity_events($student, $courses, $tstart, $tend, 'allcourses');
+        $eventsobj = activity::user_activity_events($courses, $tstart, $tend, 'allcourses');
         $events = $eventsobj->events;
         $snapevent = reset($events);
         // Assert from cache.
@@ -499,7 +499,7 @@ class theme_snap_acitvity_test extends snap_base_test {
         $this->setUser($student);
 
         $courses = enrol_get_my_courses();
-        $eventsobj = activity::user_activity_events($student, $courses, $tstart, $tend, 'allcourses');
+        $eventsobj = activity::user_activity_events($courses, $tstart, $tend, 'allcourses');
         $events = $eventsobj->events;
         $snapevent = reset($events);
 
@@ -512,7 +512,7 @@ class theme_snap_acitvity_test extends snap_base_test {
         // Test group override invalidates cache and overrides due date.
         $this->override_assign_group_duedate($assign->id, $group->id, $ovdgroupdue, 1);
 
-        $eventsobj = activity::user_activity_events($student, $courses, $tstart, $tend, 'allcourses');
+        $eventsobj = activity::user_activity_events($courses, $tstart, $tend, 'allcourses');
         $events = $eventsobj->events;
         $snapevent = reset($events);
         // Assert not from cache.
@@ -520,7 +520,7 @@ class theme_snap_acitvity_test extends snap_base_test {
         $this->assertEquals($ovdgroupdue, $snapevent->timestart);
         $this->assertEquals($ovdgroupdue, $snapevent->timesort);
 
-        $eventsobj = activity::user_activity_events($student, $courses, $tstart, $tend, 'allcourses');
+        $eventsobj = activity::user_activity_events($courses, $tstart, $tend, 'allcourses');
         $events = $eventsobj->events;
         $snapevent = reset($events);
         // Assert from cache.
@@ -531,7 +531,7 @@ class theme_snap_acitvity_test extends snap_base_test {
         // Test user override invalidates cache and trumps group override.
         $this->override_assign_user_duedate($assign->id, $student->id, $ovduserdue);
 
-        $eventsobj = activity::user_activity_events($student, $courses, $tstart, $tend, 'allcourses');
+        $eventsobj = activity::user_activity_events($courses, $tstart, $tend, 'allcourses');
         $events = $eventsobj->events;
         $snapevent = reset($events);
         // Assert not from cache.
@@ -539,7 +539,7 @@ class theme_snap_acitvity_test extends snap_base_test {
         $this->assertEquals($ovduserdue, $snapevent->timestart);
         $this->assertEquals($ovduserdue, $snapevent->timesort);
 
-        $eventsobj = activity::user_activity_events($student, $courses, $tstart, $tend, 'allcourses');
+        $eventsobj = activity::user_activity_events($courses, $tstart, $tend, 'allcourses');
         $events = $eventsobj->events;
         $snapevent = reset($events);
         // Assert from cache.
@@ -549,7 +549,7 @@ class theme_snap_acitvity_test extends snap_base_test {
 
         // Test extension set invalidates cache and trumps all overrides.
         $this->extend_assign_deadline($assign->id, $student->id, $extension);
-        $eventsobj = activity::user_activity_events($student, $courses, $tstart, $tend, 'allcourses');
+        $eventsobj = activity::user_activity_events($courses, $tstart, $tend, 'allcourses');
         $events = $eventsobj->events;
         $snapevent = reset($events);
         // Assert not from cache.
@@ -1751,14 +1751,15 @@ class theme_snap_acitvity_test extends snap_base_test {
         // Change the window for reviewing last login.
         $CFG->theme_snap_refresh_deadlines_last_login = '1 day ago';
 
-        // Clear deadlines cache data for the student.
-        $cachekey = $student->id.'_deadlines';
+        // Clear deadlines cache data for the course.
+        $cachekey =
+            activity::get_id_indexed_array_cache_key([$course->id => true]) . '_' .
+            activity::get_id_indexed_array_cache_key([$group->id => true]) . '_' .
+            'deadlines';
         $muc      = \cache::make('theme_snap', 'activity_deadlines');
-        $muc->delete($cachekey);
-
-        // Clear deadlines cache data for the student and the course.
-        $cachekey = $student->id.'_deadlines_course_'.$course->id;
-        $muc      = \cache::make('theme_snap', 'activity_deadlines');
+        $entry    = $muc->get($cachekey);
+        // Just making sure we cached stuff in the first place.
+        $this->assertEquals($course->shortname, $entry->courses[$course->id]);
         $muc->delete($cachekey);
 
         // Run the task again.
@@ -1769,9 +1770,10 @@ class theme_snap_acitvity_test extends snap_base_test {
         $this->assertCount(22, $deadlines->events);
         $this->assertFalse($deadlines->fromcache);
 
+        // It's the same as getting deadlines for a single course.
         $deadlines = activity::upcoming_deadlines($student, 500, $course);
         $this->assertCount(22, $deadlines->events);
-        $this->assertFalse($deadlines->fromcache);
+        $this->assertTrue($deadlines->fromcache);
     }
 
 }
