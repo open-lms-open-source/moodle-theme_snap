@@ -985,22 +985,29 @@ define(['jquery', 'core/log', 'theme_snap/headroom', 'theme_snap/util', 'theme_s
                                         message: localizedstring
                                     });
                                 })
-                                .then(function (html) {
+                                // eslint-disable-next-line promise/always-return
+                                .then(function(html) {
                                     // Disable checkboxes.
                                     // Colors for disabling the divs.
                                     var layoverbkcolor = "#f1f1f1";
                                     var layovercolor = "#d5d5d5";
-                                    var cBoxes = $('[id="id_printheading"], [id="id_printintro"], [id="id_printlastmodified"]');
+                                    var pageInputs = $('[id="id_printheading"], [id="id_printintro"],' +
+                                        ' [id="id_printlastmodified"], [id="id_display"],' +
+                                        ' [id="id_popupwidth"], [id="id_popupheight"]');
+
+                                    // This will help with disable the multiple options for the select, and let the one by default.
+                                    // Allowing to submit the form.
+                                    $('#id_display option:not(:selected)').attr('disabled', true);
 
                                     // Note we can't use 'disabled' for settings or they don't get submitted.
-                                    cBoxes.attr('readonly', true);
-                                    cBoxes.attr('tabindex', -1); // Prevent tabbing to change val.
-                                    cBoxes.click(function(e) {
+                                    pageInputs.attr('readonly', true);
+                                    pageInputs.attr('tabindex', -1); // Prevent tabbing to change val.
+                                    pageInputs.click(function(e) {
                                         e.preventDefault();
                                         return false;
                                     });
-                                    cBoxes.parent().parent().parent().css('background-color', layoverbkcolor);
-                                    cBoxes.parent().parent().parent().css('color', layovercolor);
+                                    pageInputs.parent().parent().parent().css('background-color', layoverbkcolor);
+                                    pageInputs.parent().parent().parent().css('color', layovercolor);
 
                                     // Add warning.
                                     var selectNode = $('[id="id_error_printheading"]');
