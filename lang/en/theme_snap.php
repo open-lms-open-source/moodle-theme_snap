@@ -401,3 +401,5 @@ $string['design_mod_page_description'] = 'If enabled, page resource content will
 $string['design_activity_chooser'] = 'Roll back to the original design for the activity chooser';
 $string['design_activity_chooser_description'] = 'If enabled, the activity chooser will be displayed with the original design. This will affect the course and front pages.';
 $string['refreshdeadlinestask'] = 'Refresh deadlines cached data. This should be run before all users login.';
+$string['activityrestriction'] = 'Activity restriction';
+$string['hideandshowactioncb'] = 'Hide and show activity checkbox action';
