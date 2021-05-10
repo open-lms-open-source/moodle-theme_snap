@@ -57,7 +57,6 @@ Feature: When the moodle theme is set to Snap, expired courses appear in an arch
 
   @javascript
   Scenario: User can navigate to and from archived courses sections.
-    And I skip because "This is failing in master (3.10) build, it will be fixed in INT-17067"
     Given I log in as "student1"
     And I open the personal menu
     And I should see "Courses"
@@ -68,7 +67,7 @@ Feature: When the moodle theme is set to Snap, expired courses appear in an arch
     And I should not see "Past-course 1"
     And I should not see "Past-course 2"
     And I should not see "Past-course 3"
-    And I follow "##last year##Y##"
+    And I click on "#snap-pm-accessible-tab .nav-tabs li:nth-child(2)" "css_element"
     And I should see "Past-course 1"
     And I should see "Past-course 2"
     And I should see "Past-course 3"
@@ -82,7 +81,6 @@ Feature: When the moodle theme is set to Snap, expired courses appear in an arch
 
   @javascript
   Scenario: User can favorite courses in current / hidden section but not archive sections.
-    And I skip because "This is failing in master (3.10) build, it will be fixed in INT-17067"
     Given I log in as "student1"
     And I open the personal menu
     And I should see "Courses"
@@ -98,7 +96,7 @@ Feature: When the moodle theme is set to Snap, expired courses appear in an arch
     Then Course card "C3" appears before "C1"
     And Course card "C1" appears before "C2"
     # Make sure archived courses can not be favorited.
-    And I follow "##last year##Y##"
+    And I click on "#snap-pm-accessible-tab .nav-tabs li:nth-child(2)" "css_element"
     And Favorite toggle does not exist for course "PC1"
     And Favorite toggle does not exist for course "PC2"
     And Favorite toggle does not exist for course "PC3"
@@ -126,7 +124,7 @@ Feature: When the moodle theme is set to Snap, expired courses appear in an arch
     And I toggle course card favorite "CH"
     Then Course card "CH" is not favorited
     # Make sure archived courses can not be favorited.
-    And I follow "##last year##Y##"
+    And I click on "#snap-pm-accessible-tab .nav-tabs li:nth-child(2)" "css_element"
     And Favorite toggle does not exist for course "PC1"
     And Favorite toggle does not exist for course "PC2"
     And Favorite toggle does not exist for course "PC3"

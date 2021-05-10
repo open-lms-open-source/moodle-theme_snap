@@ -1195,7 +1195,9 @@ class behat_theme_snap extends behat_base {
         }
         $node = $this->find('css', $baseselector);
         $href = $node->getAttribute('href');
-        if ($href !== $linkhref) {
+        // Full course link, find the #href only.
+        $data = explode('#', $href);
+        if (count($data) != 2 || '#' . $data[1] != $linkhref) {
             $msg = $ttype.' navigation href does not match expected "' . $linkhref . '"' . ' V "' . $href .
                         '" - selector = "'.$baseselector.'"';
             throw new ExpectationException($msg, $this->getSession());

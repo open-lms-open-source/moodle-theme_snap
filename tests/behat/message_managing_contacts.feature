@@ -52,14 +52,13 @@ Feature: Snap managing contacts
       | messagingminpoll  | 1 |
 
   Scenario: Send a 'contact request' to add a contact in snap
-    And I skip because "This is failing in master (3.10) build, it will be fixed in INT-17067"
     Given I log in as "student1"
     And I am on site homepage
     And I click on ".js-snap-pm-trigger.snap-my-courses-menu" "css_element"
     And I follow "View my messages"
     And I click on "Search" "field"
     And I set the field with xpath "//*[@data-region='search-input']" to "Student 4"
-    And I click on ".btn-outline-secondary[data-action='search']" "css_element"
+    And I click on ".btn-submit[data-action='search']" "css_element"
     And I click on "span.matchtext" "css_element"
     And I click on "conversation-actions-menu-button" "button"
     And I click on "Add to contacts" "link" in the "//div[@data-region='header-container']" "xpath_element"
@@ -71,7 +70,7 @@ Feature: Snap managing contacts
     And I follow "View my messages"
     And I click on "Search" "field"
     And I set the field with xpath "//*[@data-region='search-input']" to "Student 4"
-    And I click on ".btn-outline-secondary[data-action='search']" "css_element"
+    And I click on ".btn-submit[data-action='search']" "css_element"
     And I click on "span.matchtext" "css_element"
     And I click on "conversation-actions-menu-button" "button"
     And I click on "Add to contacts" "link" in the "//div[@data-region='header-container']" "xpath_element"
@@ -98,14 +97,13 @@ Feature: Snap managing contacts
     Then I should see "Student 4" in the "//*[@data-section='contacts']" "xpath_element"
 
   Scenario: Decline a 'contact request' in snap
-    And I skip because "This is failing in master (3.10) build, it will be fixed in INT-17067"
     Given I log in as "student1"
     And I am on site homepage
     And I click on ".js-snap-pm-trigger.snap-my-courses-menu" "css_element"
     And I follow "View my messages"
     And I click on "Search" "field"
     And I set the field with xpath "//*[@data-region='search-input']" to "Student 3"
-    And I click on ".btn-outline-secondary[data-action='search']" "css_element"
+    And I click on ".btn-submit[data-action='search']" "css_element"
     And I click on "span.matchtext" "css_element"
     And I click on "conversation-actions-menu-button" "button"
     And I click on "Add to contacts" "link" in the "//div[@data-region='header-container']" "xpath_element"

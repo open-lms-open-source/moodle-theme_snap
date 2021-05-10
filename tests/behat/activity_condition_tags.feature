@@ -48,7 +48,6 @@ Feature: When the moodle theme is set to Snap, activity restriction tags are sho
 
   @javascript
   Scenario Outline: User sees the grade restriction.
-    And I skip because "This is failing in master (3.10) build, it will be fixed in INT-17067"
     Given I log in as "admin"
     And the following config values are set as admin:
       | resourcedisplay | <Option> | theme_snap |
@@ -61,7 +60,7 @@ Feature: When the moodle theme is set to Snap, activity restriction tags are sho
     And I click on "//fieldset[@id=\"id_availabilityconditionsheader\"]" "xpath_element"
     And I click on "//button[text()=\"Add restriction...\"]" "xpath_element"
     And I click on "//button[@id=\"availability_addrestriction_grade\"]" "xpath_element"
-    And I set the field with xpath "//span[@class=\"p-r-1\"][text()=\"Grade\"]//following-sibling::span//select" to "Test assignment2"
+    And I set the field with xpath "//span[@class=\"pr-3\"][text()=\"Grade\"]//following-sibling::span//select" to "Test assignment2"
     Then I click on "//input[@id=\"id_submitbutton2\"]" "xpath_element"
     And I wait until the page is ready
     And I click on "//a[@class='snap-conditional-tag']" "xpath_element"
@@ -74,7 +73,6 @@ Feature: When the moodle theme is set to Snap, activity restriction tags are sho
 
   @javascript
   Scenario Outline: User sees all restrictions when matching all restrictions.
-    And I skip because "This is failing in master (3.10) build, it will be fixed in INT-17067"
     Given I log in as "admin"
     And the following config values are set as admin:
       | resourcedisplay | <Option> | theme_snap |
@@ -87,10 +85,10 @@ Feature: When the moodle theme is set to Snap, activity restriction tags are sho
     And I click on "//fieldset[@id=\"id_availabilityconditionsheader\"]" "xpath_element"
     And I click on "//button[text()=\"Add restriction...\"]" "xpath_element"
     And I click on "//button[@id=\"availability_addrestriction_grade\"]" "xpath_element"
-    And I set the field with xpath "//span[@class=\"p-r-1\"][text()=\"Grade\"]//following-sibling::span//select" to "Test assignment2"
+    And I set the field with xpath "//span[@class=\"pr-3\"][text()=\"Grade\"]//following-sibling::span//select" to "Test assignment2"
     Then I click on "//button[text()=\"Add restriction...\"]" "xpath_element"
     And I click on "//button[@id=\"availability_addrestriction_group\"]" "xpath_element"
-    And I set the field with xpath "//span[@class=\"p-r-1\"][text()=\"Group\"]//following-sibling::span//select" to "Group1"
+    And I set the field with xpath "//span[@class=\"pr-3\"][text()=\"Group\"]//following-sibling::span//select" to "Group1"
     And I set the field with xpath "//span[@class=\"accesshide\"][text()=\"Required restrictions \"]//following-sibling::select" to "all"
     Then I click on "//input[@id=\"id_submitbutton2\"]" "xpath_element"
     And I wait until the page is ready
@@ -105,7 +103,6 @@ Feature: When the moodle theme is set to Snap, activity restriction tags are sho
 
   @javascript
   Scenario Outline: User sees all restrictions when matching any restrictions.
-    And I skip because "This is failing in master (3.10) build, it will be fixed in INT-17067"
     Given I log in as "admin"
     And the following config values are set as admin:
       | resourcedisplay | <Option> | theme_snap |
@@ -118,10 +115,10 @@ Feature: When the moodle theme is set to Snap, activity restriction tags are sho
     And I click on "//fieldset[@id=\"id_availabilityconditionsheader\"]" "xpath_element"
     And I click on "//button[text()=\"Add restriction...\"]" "xpath_element"
     And I click on "//button[@id=\"availability_addrestriction_grade\"]" "xpath_element"
-    And I set the field with xpath "//span[@class=\"p-r-1\"][text()=\"Grade\"]//following-sibling::span//select" to "Test assignment2"
+    And I set the field with xpath "//span[@class=\"pr-3\"][text()=\"Grade\"]//following-sibling::span//select" to "Test assignment2"
     Then I click on "//button[text()=\"Add restriction...\"]" "xpath_element"
     And I click on "//button[@id=\"availability_addrestriction_group\"]" "xpath_element"
-    And I set the field with xpath "//span[@class=\"p-r-1\"][text()=\"Group\"]//following-sibling::span//select" to "Group1"
+    And I set the field with xpath "//span[@class=\"pr-3\"][text()=\"Group\"]//following-sibling::span//select" to "Group1"
     And I set the field with xpath "//span[@class=\"accesshide\"][text()=\"Required restrictions \"]//following-sibling::select" to "any"
     Then I click on "//input[@id=\"id_submitbutton2\"]" "xpath_element"
     And I wait until the page is ready

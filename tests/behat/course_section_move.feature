@@ -45,7 +45,6 @@ Feature: When the moodle theme is set to Snap, teachers can move course sections
 
   @javascript
   Scenario Outline: In read mode, teacher moves section 1 before section 4 (section 3).
-    And I skip because "This is failing in master (3.10) build, it will be fixed in INT-17067"
     Given I log in as "admin"
     And the following config values are set as admin:
       | coursepartialrender | <Option> | theme_snap |
