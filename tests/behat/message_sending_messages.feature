@@ -194,7 +194,9 @@ Feature: Snap message send messages
     And I am on site homepage
     And "#mr-nav .badge-count-container .snap-message-count" "css_element" should exist
     And "//a[@class='snap-message-count']//div[text()='2']" "xpath_element" should exist
-    And the "aria-label" attribute of "#mr-nav .badge-count-container .snap-message-count i.icon.fa-comment" "css_element" should contain "Open messaging drawer. There are 2 unread conversations"
+    # Title and aria-label attributes should be the same to aid with accessibility.
+    And the "aria-label" attribute of "#mr-nav .badge-count-container a.snap-message-count" "css_element" should contain "Open messaging drawer. There are 2 unread conversations"
+    And the "title" attribute of "#mr-nav .badge-count-container a.snap-message-count" "css_element" should contain "Open messaging drawer. There are 2 unread conversations"
     And I click on "#mr-nav .badge-count-container .snap-message-count" "css_element"
     And I should see "(2)" in the ".section[data-region='view-overview-messages']" "css_element"
     And I should see "2" in the ".badge-primary[data-region='section-unread-count'][aria-label='There are 2 unread conversations']" "css_element"
@@ -204,7 +206,8 @@ Feature: Snap message send messages
     And I click on ".message-app .panel-body-container .view-overview-body div[data-region='view-overview-messages'] .list-group[data-region='content-container'] a.list-group-item:nth-child(2)" "css_element"
     Then I should see "Hi!" in the ".d-flex[data-region='day-messages-container']" "css_element"
     And I am on site homepage
-    And the "aria-label" attribute of "#mr-nav .badge-count-container .snap-message-count i.icon.fa-comment" "css_element" should contain "Open messaging drawer. There are 0 unread conversations"
+    And the "title" attribute of "#mr-nav .badge-count-container a.snap-message-count" "css_element" should contain "Open messaging drawer. There are 0 unread conversations"
+    And the "aria-label" attribute of "#mr-nav .badge-count-container a.snap-message-count" "css_element" should contain "Open messaging drawer. There are 0 unread conversations"
 
   @javascript
   Scenario: Message icon should change its color when the category color changes.
