@@ -313,8 +313,15 @@ class course_renderer extends \core_course_renderer {
         if (!$mod->available || $canviewhidden) {
             $availabilityinfo = $this->course_section_cm_availability($mod, $displayoptions);
             if ($availabilityinfo) {
-                $restrictionsource = '<img title="" id="snap-restriction-icon" aria-hidden="true" class="svg-icon" src="';
-                $restrictionsource .= $this->output->image_url('lock', 'theme').'"/>';
+                $ariaconditionaltag = get_string('activityrestriction', 'theme_snap');
+                $conditionaltagsrc = $this->output->image_url('lock', 'theme');
+                $restrictionsource = html_writer::tag('img', '', [
+                    'id' => 'snap-restriction-icon',
+                    'class' => 'svg-icon',
+                    'title' => $ariaconditionaltag,
+                    'aria-hidden' => 'true',
+                    'src' => $conditionaltagsrc
+                ]);
                 $coursetoolsicon = html_writer::tag('a', $restrictionsource, [
                     'tabindex' => '0',
                     'class' => 'snap-conditional-tag',
@@ -325,12 +332,13 @@ class course_renderer extends \core_course_renderer {
                     'id' => 'snap-restriction',
                     'data-html' => 'true',
                     'clickable' => 'true',
-                    'data-content' => $availabilityinfo
+                    'data-content' => $availabilityinfo,
+                    'aria-label' => $ariaconditionaltag
                 ]);
             }
         }
 
-        // Add draft, contitional.
+        // Add draft, conditional.
         $assetmeta = $stealthtag.$drafttag;
 
         // Build output.
@@ -375,7 +383,8 @@ class course_renderer extends \core_course_renderer {
 
         // Hide/Show.
         if (has_capability('moodle/course:activityvisibility', $modcontext)) {
-            $actions .= '<input class="sr-only" type="checkbox">';
+            $ariacbaction = get_string('hideandshowactioncb', 'theme_snap');
+            $actions .= '<input class="sr-only" type="checkbox" aria-label="'.$ariacbaction.'">';
             $hideaction = '<a href="'.new moodle_url($baseurl, array('hide' => $mod->id));
             $hideaction .= '" data-action="hide" class="dropdown-item editing_hide js_snap_hide">'.$str->hide.'</a>';
             $actionsadvanced[] = $hideaction;

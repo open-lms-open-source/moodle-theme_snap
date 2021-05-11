@@ -48,6 +48,7 @@ Feature: Elements for Snap should have the proper aria attributes.
       | activity | course               | idnumber | name             | intro                         | section | assignsubmission_onlinetext_enabled | completion | completionview |
       | assign   | C1                   | assign1  | Test assignment1 | Test assignment description 1 | 1       | 1                                   | 1          | 0              |
       | assign   | Acceptance test site | assign1  | Test assignment1 | Test assignment description 1 | 1       | 1                                   | 0          | 0              |
+      | assign   | C1                   | assign2  | Test assignment2 | Test assignment description 2 | 1       | 1                                   | 1          | 0              |
 
   @javascript
   Scenario: All calendar's anchors must contain the aria-label attribute
@@ -121,8 +122,24 @@ Feature: Elements for Snap should have the proper aria attributes.
     And the "id" attribute of "div#coursetools-list a#ct-competencies" "css_element" should contain "ct-competencies"
     And the "id" attribute of "div#coursetools-list a#ct-badges" "css_element" should contain "ct-badges"
 
-    @javascript
-    Scenario: When creating a new activity in Snap, the mod chooser should have a specific ID
-      Given I log in as "admin"
-      And I am on the course main page for "C1"
-      And the "id" attribute of "//li[@id='section-0']//div[@class='content']//div[@class='col-sm-6 snap-modchooser']" "xpath_element" should contain "snap-create-activity"
+  @javascript
+  Scenario: When creating a new activity in Snap, the mod chooser should have a specific ID
+    Given I log in as "admin"
+    And I am on the course main page for "C1"
+    And the "id" attribute of "//li[@id='section-0']//div[@class='content']//div[@class='col-sm-6 snap-modchooser']" "xpath_element" should contain "snap-create-activity"
+
+  @javascript
+  Scenario: When an activity have a restriction, the lock icon should have the needed aria attributes.
+    Given I log in as "teacher1"
+    And I am on the course main page for "C1"
+    And I follow "Topic 1"
+    And I click on "//a[img[contains(@title, 'Test assignment1')]]" "xpath_element"
+    And I wait until the page is ready
+    And I click on "//fieldset[@id=\"id_availabilityconditionsheader\"]" "xpath_element"
+    And I click on "//button[text()=\"Add restriction...\"]" "xpath_element"
+    And I click on "//button[@id=\"availability_addrestriction_grade\"]" "xpath_element"
+    And I set the field with xpath "//span[@class=\"pr-3\"][text()=\"Grade\"]//following-sibling::span//select" to "Test assignment2"
+    Then I click on "//input[@id=\"id_submitbutton2\"]" "xpath_element"
+    And I wait until the page is ready
+    And the "aria-label" attribute of ".snap-header-card-icons a#snap-restriction" "css_element" should contain "Activity restriction"
+    And the "title" attribute of ".snap-header-card-icons a#snap-restriction img#snap-restriction-icon" "css_element" should contain "Activity restriction"
