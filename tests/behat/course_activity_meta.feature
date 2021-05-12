@@ -259,3 +259,84 @@ Feature: When the moodle theme is set to Snap, students see meta data against co
       | Option     |
       | 0          |
       | 1          |
+
+  @javascript
+  Scenario: Correct pending submissions for grading in course view for Snap
+    Given I log in as "teacher1"
+    And I am on "Course 1" course homepage
+    And I navigate to "Edit settings" in current page administration
+    And I expand all fieldsets
+    And I set the field "Group mode" to "Separate groups"
+    And I press "Save and display"
+    And I am on "Course 1" course homepage with editing mode on
+    Given the following "users" exist:
+      | username | firstname | lastname | email                |
+      | student3 | Student   | 3        | student3@example.com |
+
+    And the following "course enrolments" exist:
+      | user     | course | role           |
+      | student2 | C1     | student        |
+      | student3 | C1     | student        |
+
+    And the following "groups" exist:
+      | name     | course | idnumber |
+      | G1       | C1     | GI1      |
+      | G2       | C1     | GI2      |
+    And the following "group members" exist:
+      | user     | group |
+      | student1 | GI1   |
+      | student2 | GI2   |
+      | teacher1 | GI1   |
+      | student3 | GI1   |
+
+    # Create assignment 1.
+    And I add a "Assignment" to section "1" and I fill the form with:
+      | Assignment name           | A1   |
+      | Description               | x    |
+      | Online text               | 1    |
+      | Group mode                | 1    |
+    And I should see "A1"
+    And I log out
+    # Login as student from group 1 to submit an assignment.
+    And I log in as "student1"
+    And I am on "Course 1" course homepage
+    And I follow "Topic 1"
+    And I should see "A1"
+    And I am on activity "assign" "A1" page
+    When I follow "Add submission"
+    And I set the following fields to these values:
+      | Online text | I'm the student1 submission |
+    And I press "Save changes"
+    And I log out
+    #Log as student from group 2 to submit an assignment.
+    And I log in as "student2"
+    And I am on "Course 1" course homepage
+    And I follow "Topic 1"
+    And I should see "A1"
+    And I am on activity "assign" "A1" page
+    When I follow "Add submission"
+    And I set the following fields to these values:
+      | Online text | I'm the student2 submission |
+    And I press "Save changes"
+    And I log out
+    # Make sure we see the entire user and submission count with the right permissions.
+    Given I log in as "admin"
+    Given the following "permission overrides" exist:
+      | capability                  | permission   | role           | contextlevel | reference |
+      | moodle/site:accessallgroups | Allow        | editingteacher | Course       | C1        |
+    And I log out
+    And I log in as "teacher1"
+    And I am on "Course 1" course homepage
+    And I follow "Topic 1"
+    And I should see "2 of 3 Submitted, 2 Ungraded"
+    And I log out
+    Given I log in as "admin"
+    # Make sure we see the entire user and submission count with the right permissions.
+    Then the following "permission overrides" exist:
+      | capability                  | permission   | role           | contextlevel | reference |
+      | moodle/site:accessallgroups | Prohibit     | editingteacher | Course       | C1        |
+    And I log out
+    And I log in as "teacher1"
+    And I am on "Course 1" course homepage
+    And I follow "Topic 1"
+    Then I should see "1 of 2 Submitted, 1 Ungraded"
