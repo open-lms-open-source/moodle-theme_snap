@@ -464,7 +464,7 @@ class activity {
         }
 
         // Use cache to return number of assigns yet to be graded.
-        if (!empty($totalsbyid)) {
+        if (!empty($totalsbyid) && !local::duringtesting()) {
             if (isset($totalsbyid[$modid])) {
                 return intval($totalsbyid[$modid]->total);
             } else {
@@ -494,10 +494,12 @@ class activity {
         if (!isset($hasgrades[$modid])) {
             return 0;
         }
+        list($course, $cm) = (get_course_and_cm_from_instance($modid, 'assign', $courseid));
+        $currentgroup = groups_get_activity_group($cm, true);
 
         // Get grading information for remaining of assigns.
         $coursecontext = \context_course::instance($courseid);
-        [$esql, $params] = get_enrolled_sql($coursecontext, 'mod/assign:submit', 0, true);
+        [$esql, $params] = get_enrolled_sql($coursecontext, 'mod/assign:submit', $currentgroup, true);
 
         $params['submitted'] = ASSIGN_SUBMISSION_STATUS_SUBMITTED;
         $params['courseid'] = $courseid;

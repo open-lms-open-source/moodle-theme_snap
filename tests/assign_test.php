@@ -321,4 +321,84 @@ class theme_snap_assign_test extends mod_assign_base_testcase {
         $actual = local::courseinfo([$this->course->id]);
         $this->assertCount(1, $actual);
     }
+
+    /**
+     * Checks the user metadata for ungraded submission, numbers will change based on user role permissions.
+     * @throws coding_exception
+     * @throws dml_exception
+     * @throws moodle_exception
+     */
+    public function test_assing_data_group_mode() {
+        global $DB;
+        $this->resetAfterTest(true);
+
+        $this->course = $this->getDataGenerator()->create_course(['groupmode' => SEPARATEGROUPS]);
+        $groupdata = new stdClass();
+        $groupdata->courseid = $this->course->id;
+        $groupdata->name = 'group1';
+        $group1id = groups_create_group($groupdata);
+        $groupdata->name = 'group2';
+        $group2id = groups_create_group($groupdata);
+
+        for ($i = 0; $i < 7; $i++) {
+            $student = $this->getDataGenerator()->create_user();
+            $this->getDataGenerator()->enrol_user($student->id, $this->course->id, 'student');
+            groups_add_member($i < 5 ? $group1id : $group2id, $student);
+            $students[] = $student;
+        }
+        for ($i = 0; $i < 2; $i++) {
+            $teacher = $this->getDataGenerator()->create_user();
+            $this->getDataGenerator()->enrol_user($teacher->id, $this->course->id, 'editingteacher');
+            groups_add_member($group1id, $teacher);
+            $teachers[] = $teacher;
+        }
+
+        $this->setUser($teachers[0]);
+        $assign = $this->create_instance(['assignsubmission_onlinetext_enabled' => 1, 'groupmode' => SEPARATEGROUPS]);
+
+        $data = new stdClass();
+        $data->onlinetext_editor = array('itemid' => file_get_unused_draft_itemid(),
+            'text' => 'Submission text',
+            'format' => FORMAT_HTML);
+        $this->create_user_submission($students[0], $assign, $data);
+
+        $this->setUser($teachers[0]);
+        $modinfo = get_fast_modinfo($this->course);
+        $assigncm = $modinfo->instances['assign'][$assign->get_instance()->id];
+        $meta = activity::assign_meta($assigncm);
+        $this->assertEquals(1, $meta->numrequiregrading);
+
+        $this->create_user_submission($students[5], $assign, $data);
+        $this->create_user_submission($students[6], $assign, $data);
+
+        $this->setUser($teachers[0]);
+        $meta = activity::assign_meta($assigncm);
+        $this->assertEquals(3, $meta->numrequiregrading);
+
+        $this->setAdminUser();
+        $teacherrole = $DB->get_record('role', array('shortname' => 'editingteacher'));
+        $coursecontext = context_course::instance($this->course->id);
+        role_change_permission($teacherrole->id, $coursecontext, 'moodle/site:accessallgroups', CAP_PROHIBIT);
+
+        // Changing permissions to prohibit will result on the editing teacher only seeing the submission of its group.
+        $this->setUser($teachers[0]);
+        $meta = activity::assign_meta($assigncm);
+        $this->assertEquals(1, $meta->numrequiregrading);
+    }
+
+    /**
+     * Creates a submission for the given user and sets its status to submitted
+     * @param $user Object User
+     * @param $assign Object Assign object
+     * @param $data Object User submission data
+     */
+
+    public function create_user_submission($user, $assign, $data) {
+        $this->setUser($user);
+        $submission = $assign->get_user_submission($user->id, true);
+        $plugin = $assign->get_submission_plugin_by_type('onlinetext');
+        $plugin->save($submission, $data);
+        $submission->status = ASSIGN_SUBMISSION_STATUS_SUBMITTED;
+        $assign->testable_update_submission($submission, $user->id, true, false);
+    }
 }
