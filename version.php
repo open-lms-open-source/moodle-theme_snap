@@ -30,5 +30,5 @@ $plugin->release   = '3.9.3';
 $plugin->maturity  = MATURITY_STABLE;
 $plugin->component = 'theme_snap';
 $plugin->dependencies = [
-    'theme_boost' => '2018051400'
+    'theme_boost' => '2020110900'
 ];

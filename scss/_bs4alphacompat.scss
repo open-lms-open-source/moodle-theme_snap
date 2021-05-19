@@ -225,7 +225,7 @@ input[disabled] {
     cursor: not-allowed;
 }
 
-.row-fluid {
+.row {
   @include make-row();
 }
 
