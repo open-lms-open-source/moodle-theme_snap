@@ -1291,78 +1291,13 @@ class activity {
      * @param int $tstart
      * @param int $tend
      * @param stdClass[] $courses
-     * @param int $limit
-     * @return array
-     * @throws dml_exception
-     */
-    public static function get_calendar_activity_events($tstart, $tend, array $courses, $limit = 200) {
-
-        $calendar = new \calendar_information(0, 0, 0, $tstart);
-        $course = get_course(SITEID);
-        $calendar->set_sources($course, $courses);
-
-        $withduration = true;
-        $ignorehidden = true;
-        $mapper = \core_calendar\local\event\container::get_event_mapper();
-
-        // Normalise the users, groups and courses parameters so that they are compliant with
-        // the calendar apis get_events method.
-        // Existing functions that were using the old calendar_get_events() were passing a mixture of array, int,
-        // boolean for these parameters, but with the new API method, only null and arrays are accepted.
-        [$userparam, $groupparam, $courseparam] = array_map(function($param) {
-            // If parameter is true, return null.
-            if ($param === true) {
-                return null;
-            }
-
-            // If parameter is false, return an empty array.
-            if ($param === false) {
-                return [];
-            }
-
-            // If the parameter is a scalar value, enclose it in an array.
-            if (!is_array($param)) {
-                return [$param];
-            }
-
-            // No normalisation required.
-            return $param;
-        }, [$calendar->users, $calendar->groups, $calendar->courses]);
-
-        $events = self::get_events(
-            $tstart,
-            $tend,
-            null,
-            null,
-            null,
-            null,
-            $limit,
-            null,
-            $userparam,
-            $groupparam,
-            $courseparam,
-            $withduration,
-            $ignorehidden
-        );
-
-        return array_reduce($events, function($carry, $event) use ($mapper) {
-            return $carry + [$event->get_id() => $mapper->from_event_to_stdclass($event)];
-        }, []);
-    }
-
-    /**
-     * Return deadlines from calendar associated to a set of courses.
-     *
-     * @param stdClass[] $courses array of courses hashed by course id.
-     * @param int $tstart
-     * @param int $tend
      * @param string $cachesuffix
      * @param int $limit
      * @return object
+     * @throws dml_exception
      */
-    public static function user_activity_events(array $courses, $tstart, $tend, $cachesuffix = '', $limit = 500) {
+    public static function get_calendar_activity_events($tstart, $tend, array $courses, $cachesuffix = '', $limit = 200) {
         global $DB, $USER;
-
         $retobj = (object) [
             'timestamp' => null,
             'events' => [],
@@ -1445,12 +1380,111 @@ class activity {
             }
         }
 
-        $events = self::get_calendar_activity_events($tstart, $tend, $courses, $limit);
+        $calendar = new \calendar_information(0, 0, 0, $tstart);
+        $course = get_course(SITEID);
+        $calendar->set_sources($course, $courses);
+
+        $withduration = true;
+        $ignorehidden = true;
+        $mapper = \core_calendar\local\event\container::get_event_mapper();
+
+        // Normalise the users, groups and courses parameters so that they are compliant with
+        // the calendar apis get_events method.
+        // Existing functions that were using the old calendar_get_events() were passing a mixture of array, int,
+        // boolean for these parameters, but with the new API method, only null and arrays are accepted.
+        [$userparam, $groupparam, $courseparam] = array_map(function($param) {
+            // If parameter is true, return null.
+            if ($param === true) {
+                return null;
+            }
+
+            // If parameter is false, return an empty array.
+            if ($param === false) {
+                return [];
+            }
+
+            // If the parameter is a scalar value, enclose it in an array.
+            if (!is_array($param)) {
+                return [$param];
+            }
+
+            // No normalisation required.
+            return $param;
+        }, [$calendar->users, $calendar->groups, $calendar->courses]);
+
+        $events = self::get_events(
+            $tstart,
+            $tend,
+            null,
+            null,
+            null,
+            null,
+            $limit,
+            null,
+            $userparam,
+            $groupparam,
+            $courseparam,
+            $withduration,
+            $ignorehidden
+        );
+
+        $events = array_reduce($events, function($carry, $event) use ($mapper) {
+            return $carry + [$event->get_id() => $mapper->from_event_to_stdclass($event)];
+        }, []);
+
+        if (!isset($coursecache)) {
+            foreach ($courses as $courseid => $course) {
+                $coursecache[$courseid] = $course->shortname;
+            }
+        }
+
+        $retobj->timestamp = microtime(true);
+        $retobj->events = $events;
+
+        if (self::$phpunitallowcaching || !(defined('PHPUNIT_TEST') && PHPUNIT_TEST)) {
+            $retobj->courses = $coursecache;
+            $retobj->key = $freshkey;
+            $muc->set($cachekey, $retobj);
+        }
+
+        return $retobj;
+    }
+
+    /**
+     * Return deadlines from calendar associated to a set of courses.
+     *
+     * @param stdClass[] $courses array of courses hashed by course id.
+     * @param int $tstart
+     * @param int $tend
+     * @param string $cachesuffix
+     * @param int $limit
+     * @param boolean $skipcmchecks Skip course module checks
+     * @return object
+     */
+    public static function user_activity_events(array $courses, $tstart, $tend, $cachesuffix = '', $limit = 500,
+                                                $skipcmchecks = false) {
+        $retobj = (object) [
+            'timestamp' => null,
+            'events' => [],
+            'courses' => [],
+            'fromcache' => false
+        ];
+
+        if (empty($courses)) {
+            return $retobj;
+        }
+
+        $retobj = self::get_calendar_activity_events($tstart, $tend, $courses, $cachesuffix, $limit);
+
+        if ($skipcmchecks) {
+            // Skip CM checks. This should only be done for populating caches or getting data that does not need formatting.
+            return $retobj;
+        }
 
         // Filter down array and also modify event name if necessary;
         // Note, filter_array cannot be used here as we need to modify the event name, not just filter.
         $tmparr = [];
-        foreach ($events as $event) {
+        foreach ($retobj->events as $event) {
 
             // Validation added to prevent array offset.
             $courseid = array_key_exists($event->courseid, $courses) ? $courses[$event->courseid] : 0;
@@ -1480,22 +1514,8 @@ class activity {
             $tmparr[$event->id] = $event;
 
         }
-        if (!isset($coursecache)) {
-            foreach ($courses as $courseid => $course) {
-                $coursecache[$courseid] = $course->shortname;
-            }
-        }
-        $events = $tmparr;
+        $retobj->events = $tmparr;
         unset($tmparr);
-
-        $retobj->timestamp = microtime(true);
-        $retobj->events = $events;
-
-        if (self::$phpunitallowcaching || !(defined('PHPUNIT_TEST') && PHPUNIT_TEST)) {
-            $retobj->courses = $coursecache;
-            $retobj->key = $freshkey;
-            $muc->set($cachekey, $retobj);
-        }
 
         return $retobj;
     }
@@ -1508,9 +1528,10 @@ class activity {
      * @param stdClass|integer $userorid
      * @param integer $maxdeadlines
      * @param stdClass|integer $courseorid
+     * @param boolean $skipcmchecks Skip course module checks
      * @return stdClass
      */
-    public static function upcoming_deadlines($userorid, $maxdeadlines = 500, $courseorid = 0) {
+    public static function upcoming_deadlines($userorid, $maxdeadlines = 500, $courseorid = 0, $skipcmchecks = false) {
         global $USER;
         $origuser = $USER;
 
@@ -1545,7 +1566,8 @@ class activity {
             }
         }
 
-        $eventsobj = self::user_activity_events($courses, $todayts, $todayts + (YEARSECS / 2), 'deadlines');
+        $eventsobj = self::user_activity_events(
+            $courses, $todayts, $todayts + (YEARSECS / 2), 'deadlines', $maxdeadlines, $skipcmchecks);
 
         $events = $eventsobj->events;
         uasort($events, function($e1, $e2) {

@@ -401,7 +401,7 @@ class theme_snap_acitvity_test extends snap_base_test {
         $course = get_course(SITEID);
         $courses = enrol_get_my_courses();
         $calendar->set_sources($course, $courses);
-        $events = activity::get_calendar_activity_events($tstart, $tend, $courses);
+        $events = activity::get_calendar_activity_events($tstart, $tend, $courses)->events;
         $snapevent = reset($events);
         $this->assertEquals($due, $snapevent->timestart);
         $this->assertEquals($due, $snapevent->timesort);
@@ -409,7 +409,7 @@ class theme_snap_acitvity_test extends snap_base_test {
         // Test extension set.
         $this->extend_assign_deadline($assign->id, $student->id, $extension);
         // Test that the Snap calendar includes extensions to assignments.
-        $events = activity::get_calendar_activity_events($tstart, $tend, $courses);
+        $events = activity::get_calendar_activity_events($tstart, $tend, $courses)->events;
         $snapevent = reset($events);
         $this->assertEquals($extension, $snapevent->timestart);
         $this->assertEquals($extension, $snapevent->timesort);
