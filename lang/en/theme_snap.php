@@ -404,3 +404,4 @@ $string['refreshdeadlinestask'] = 'Refresh deadlines cached data. This should be
 $string['refreshdeadlinestaskoff'] = 'Didn\'t look for data to populate. Please turn on the setting "Refresh deadlines using scheduled task" in Snap\'s Personal menu settings to allow this task to populate deadlines cached data.';
 $string['activityrestriction'] = 'Activity restriction';
 $string['hideandshowactioncb'] = 'Hide and show activity checkbox action';
+$string['retryfeed'] = 'This feed is currently unavailable, please check back later. Feed: {$a}';

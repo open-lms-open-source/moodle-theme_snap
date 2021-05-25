@@ -74,6 +74,7 @@ class refresh_deadline_caches_task extends scheduled_task {
     FROM {user} u
    WHERE u.deleted = :deleted
      AND u.lastlogin >= :lastlogints
+ORDER BY u.lastlogin DESC
 SQL;
         $lastlogindate            = new \DateTime($lastlogindateformat, core_date::get_server_timezone_object());
         $lastlogints              = $lastlogindate->getTimestamp();
@@ -129,6 +130,7 @@ SQL;
                 }
             }
         }
+        $users->close();
     }
 
     /**
