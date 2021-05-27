@@ -13,7 +13,7 @@
 # You should have received a copy of the GNU General Public License
 # along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 #
-# Tests for Calendar's anchors aria-label attribute
+# Tests for aria-label and attributes regarding accessibility.
 #
 # @package    theme_snap
 # @autor      Oscar Nadjar
@@ -141,5 +141,5 @@ Feature: Elements for Snap should have the proper aria attributes.
     And I set the field with xpath "//span[@class=\"pr-3\"][text()=\"Grade\"]//following-sibling::span//select" to "Test assignment2"
     Then I click on "//input[@id=\"id_submitbutton2\"]" "xpath_element"
     And I wait until the page is ready
-    And the "aria-label" attribute of ".snap-header-card-icons a#snap-restriction" "css_element" should contain "Activity restriction"
-    And the "title" attribute of ".snap-header-card-icons a#snap-restriction img#snap-restriction-icon" "css_element" should contain "Activity restriction"
+    And the "aria-label" attribute of ".snap-header-card-icons a[id^='snap-restriction-']" "css_element" should contain "Activity restriction"
+    And the "title" attribute of ".snap-header-card-icons a[id^='snap-restriction-'] img" "css_element" should contain "Activity restriction"
