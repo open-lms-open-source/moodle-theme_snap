@@ -2095,14 +2095,37 @@ ul.events-new + ul.events-underway {
     }
 }
 
-// Quiz setup form //
-#page-mod-quiz-mod #id_reviewoptionshdr .fitem {
-    width: 100%;
-    float: none;
-}
-
-#page-mod-quiz-mod #id_reviewoptionshdr fieldset.fgroup {
-    margin: 1em 0;
+// Quiz setup form.
+#page-mod-quiz-mod {
+    #id_reviewoptionshdr {
+        .review_option_item. {
+            height: 1.3em;
+        }
+        .form-group {
+            width: auto;
+        }
+        .form-check {
+            display: inline-block;
+            vertical-align: middle;
+        }
+        .btn-link {
+            float: right;
+            display: inline-block;
+            vertical-align: middle;
+            line-height: 0;
+        }
+        a[aria-controls="id_reviewoptionshdr"] {
+            display: inline;
+        }
+    }
+    #id_overallfeedbackhdr {
+        .btn-link {
+            float: right;
+        }
+        a[aria-controls="id_overallfeedbackhdr"] {
+            display: inline;
+        }
+    }
 }
 
 #page-mod-quiz-edit div.question div.qnum {
