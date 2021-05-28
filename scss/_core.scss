@@ -3842,6 +3842,14 @@ body.pagelayout-frontpage {
     display: none;
 }
 
+// Hide 'Blocks editing on' button in Payment management pages.
+#page-admin-payment-accounts,
+#page-admin-payment-manage_account {
+    .snap-page-heading-button {
+        display: none;
+    }
+}
+
 // Adjust the size of the message containers.
 #page-message-index .messaging-area-container .messaging-area .contacts-area .contacts .contact {
     height: 23%;
