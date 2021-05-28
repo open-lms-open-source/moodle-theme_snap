@@ -315,8 +315,9 @@ class course_renderer extends \core_course_renderer {
             if ($availabilityinfo) {
                 $ariaconditionaltag = get_string('activityrestriction', 'theme_snap');
                 $conditionaltagsrc = $this->output->image_url('lock', 'theme');
+                $datamodcontext = $mod->context->id;
+                $conditionaliconid = "snap-restriction-$datamodcontext";
                 $restrictionsource = html_writer::tag('img', '', [
-                    'id' => 'snap-restriction-icon',
                     'class' => 'svg-icon',
                     'title' => $ariaconditionaltag,
                     'aria-hidden' => 'true',
@@ -329,7 +330,7 @@ class course_renderer extends \core_course_renderer {
                     'data-toggle' => 'popover',
                     'data-trigger' => 'focus',
                     'data-placement' => 'right',
-                    'id' => 'snap-restriction',
+                    'id' => $conditionaliconid,
                     'data-html' => 'true',
                     'clickable' => 'true',
                     'data-content' => $availabilityinfo,
