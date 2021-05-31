@@ -994,4 +994,13 @@ $custom-menu-text-color: rgb(255, 255, 255) !default; // Need to define this wit
         background-color: transparent;
         color: white;
     }
+
+    .section_footer {
+        .previous_section,
+        .next_section {
+            .nav_guide {
+                color: $brand-primary;
+            }
+        }
+    }
 }
