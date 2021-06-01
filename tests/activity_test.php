@@ -383,7 +383,6 @@ class theme_snap_acitvity_test extends snap_base_test {
     }
 
     public function test_get_calendar_activity_events() {
-        $this->markTestSkipped("Started to fail since 3.10.1 Merge");
         $this->resetAfterTest();
 
         $vars = $this->assign_activity_test_setup();
@@ -430,8 +429,10 @@ class theme_snap_acitvity_test extends snap_base_test {
         // (with the exception of the timestart + timesort fields).
         unset($snapevent->timestart);
         unset($snapevent->timesort);
+        unset($snapevent->timeusermidnight);
         unset($coreevent->timestart);
         unset($coreevent->timesort);
+        unset($coreevent->timeusermidnight);
         $this->assertEquals($snapevent, $coreevent);
     }
 
