@@ -68,19 +68,27 @@
         }
         // Hide and show eye icons.
         .listitem[data-visible="1"] {
-            .action-hide {
-                display: inline;
-            }
-            .action-show {
-                display: none;
+            > div {
+                .item-actions {
+                    .action-show {
+                        display: none;
+                    }
+                    .action-hide {
+                        display: inline;
+                    }
+                }
             }
         }
         .listitem[data-visible="0"] {
-            .action-hide {
-                display: none;
-            }
-            .action-show {
-                display: inline;
+            > div {
+                .item-actions {
+                    .action-show {
+                        display: inline;
+                    }
+                    .action-hide {
+                        display: none;
+                    }
+                }
             }
         }
 
