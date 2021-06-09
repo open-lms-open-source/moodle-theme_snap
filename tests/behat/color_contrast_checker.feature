@@ -59,7 +59,6 @@ Feature: When the moodle theme is set to Snap, a color contrast checker can be v
     And I should see "Category color"
     And I click on "Category color" "link"
     And I should see "JSON Text"
-    And I set the field "JSON Text" to "aaa"
     And I set the following fields to these values:
       |  Color palette |      #FFAAFF                   |
       |    JSON Text   | {"5":"#FAAFFF","10":"#FABCF0"} |

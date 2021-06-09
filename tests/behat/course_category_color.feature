@@ -65,7 +65,6 @@ Feature: When the moodle theme is set to Snap, admins can change the color for a
     And I should see "Category color"
     And I click on "Category color" "link"
     And I should see "JSON Text"
-    And I set the field "JSON Text" to "aaa"
     And I set the following fields to these values:
       |  Color palette |      #FFAAFF                   |
       |    JSON Text   | {"5":"#FAAFFF","10":"#FABCF0"} |
@@ -88,7 +87,6 @@ Feature: When the moodle theme is set to Snap, admins can change the color for a
     And I should see "Category color"
     And I click on "Category color" "link"
     And I should see "JSON Text"
-    And I set the field "JSON Text" to "aaa"
     And I set the following fields to these values:
       |  Color palette |      #FFAAFF     |
       |    JSON Text   | {"70":"#FAAFFF"} |
@@ -110,7 +108,6 @@ Feature: When the moodle theme is set to Snap, admins can change the color for a
     And I should see "Category color"
     And I click on "Category color" "link"
     And I should see "JSON Text"
-    And I set the field "JSON Text" to "aaa"
     And I set the following fields to these values:
       |  Color palette |    #FFAAFF   |
       |    JSON Text   | {"20":"#FA"} |
