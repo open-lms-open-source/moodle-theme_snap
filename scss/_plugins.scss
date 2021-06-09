@@ -724,3 +724,11 @@ section#snap-add-new-section #summary-editor_parent #summary-editor_tbl {
 #page-local-ccm-view #ccm-nav .nav-link.active {
     border-bottom: 4px solid $brand-primary;
 }
+
+#page-local-ccm-view .local_ccm-item.selected {
+    border: 1px solid $brand-primary;
+}
+
+#page-local-ccm-view  i.icon, p.tree_item {
+    color: $brand-primary;
+}
