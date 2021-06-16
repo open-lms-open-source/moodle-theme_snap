@@ -168,7 +168,7 @@ class behat_theme_snap_behat_general extends behat_general {
             sleep(2);
             $nodes = $this->get_nodes_containing_text($text);
             if (empty($nodes)) {
-                throw new ExpectationException('"' . $text . '" text was not found in the page', $this->getSession());
+                throw new ExpectationException('"' . $text . '" text was not found in the page [Snap behat]', $this->getSession());
             }
             $this->check_text_visible_in_nodes($nodes, $text);
         }

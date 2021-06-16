@@ -666,7 +666,7 @@ trait format_section_trait {
         $straddmod = get_string('addresourceoractivity', 'theme_snap');
         $mclinkcontent = $icon.$straddmod;
         $mcclass = 'js-only section-modchooser-link btn btn-link';
-        $mcdataattributes = 'data-section="'.$section.'" data-toggle="modal" data-target="#snap-modchooser-modal"';
+        $mcdataattributes = 'data-sectionid="'.$section.'" data-toggle="modal" data-target="#snap-modchooser-modal"';
 
         if ($snapoldactivitychooser) {
             // Render link for launch old snap mod chooser. Left as an anchor to try to maintain how Snap rendered this.

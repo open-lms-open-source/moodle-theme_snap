@@ -267,7 +267,7 @@ define(
         var modchooserSectionLinks = function() {
             $('.section-modchooser-link').click(function() {
                 // Grab the section number from the button.
-                var sectionNum = $(this).attr('data-section');
+                var sectionNum = $(this).attr('data-sectionid');
                 $('.snap-modchooser-addlink').each(function() {
                     // Update section in mod link to current section.
                     var newLink = this.href.replace(/(section=)[0-9]+/ig, '$1' + sectionNum);

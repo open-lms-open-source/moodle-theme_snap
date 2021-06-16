@@ -277,7 +277,7 @@ define(['jquery', 'core/log', 'core/ajax', 'core/str', 'core/templates', 'core/n
             // Set observer for mod chooser.
             $(id + ' .section-modchooser-link').click(function() {
                 // Grab the section number from the button.
-                var sectionNum = $(this).attr('data-section');
+                var sectionNum = $(this).attr('data-sectionid');
                 $('.snap-modchooser-addlink').each(function() {
                     // Update section in mod link to current section.
                     var newLink = this.href.replace(/(section=)[0-9]+/ig, '$1' + sectionNum);
@@ -665,8 +665,8 @@ define(['jquery', 'core/log', 'core/ajax', 'core/str', 'core/templates', 'core/n
                         }
                         $('#section-' + key + ' .content .sectionname').html(fullTitle);
                         loadedSections.push(key);
-                        // Uodate the attribute.
-                        $(obj).find('a.section-modchooser-link').attr('data-section', key);
+                        // Update the attribute.
+                        $(obj).find('.section-modchooser-link').attr('data-sectionid', key);
                     });
                     sectionsProcess = loadedSections;
                 } else {
@@ -685,7 +685,7 @@ define(['jquery', 'core/log', 'core/ajax', 'core/str', 'core/templates', 'core/n
                         }
                         $('#section-' + idx + ' .content .sectionname').html(fullTitle);
                         // Update section data attribute to reflect new section idx.
-                        $(this).find('a.section-modchooser-link').attr('data-section', idx);
+                        $(this).find('.section-modchooser-link').attr('data-sectionid', idx);
                     });
                 }
 

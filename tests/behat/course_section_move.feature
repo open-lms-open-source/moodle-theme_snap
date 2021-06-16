@@ -73,8 +73,9 @@ Feature: When the moodle theme is set to Snap, teachers can move course sections
     # The data-section attribute of the moved section module link should match the section number.
     # This is done so activities are created in the correct section.
     When I follow "My & < > Topic"
-    Then "#section-3 a.section-modchooser-link[data-section=\"3\"]" "css_element" should exist
-  Examples:
+    And "#section-3 a.section-modchooser-link[data-sectionid=\"3\"]" "css_element" should be visible
+
+    Examples:
   | Option     |
   | 0          |
   | 1          |
