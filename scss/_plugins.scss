@@ -751,4 +751,15 @@ section#snap-add-new-section #summary-editor_parent #summary-editor_tbl {
             color: white;
         }
     }
+
+    // Although this looks too general, we need to apply these to all of the following elements in the #page-local-ccm-view page.
+    small,
+    strong,
+    button,
+    p,
+    a,
+    span,
+    span div {
+        font-family: $font-family-system;
+    }
 }
