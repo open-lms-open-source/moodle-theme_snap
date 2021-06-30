@@ -1023,6 +1023,34 @@ class theme_snap_acitvity_test extends snap_base_test {
     }
 
     /**
+     * Test upcoming deadline works with queries limited.
+     */
+    public function test_upcoming_deadlines_limit_queries() {
+        global $CFG;
+        $CFG->theme_snap_max_concurrent_deadline_queries = -1;
+
+        $this->resetAfterTest();
+        // If the Exception is not thrown the test will fail.
+        $this->expectExceptionMessage('This feed is currently unavailable, please check back later. Feed: Deadlines');
+
+        [$student, $teacher, $course, $group] = $this->course_group_user_setup();
+
+        $this->create_assignment($course->id, time());
+
+        // This must trigger the exception and reset the counter the max concurrent counter to 0.
+        $deadlines = activity::upcoming_deadlines($teacher->id)->events;
+
+        // It should work as excpected after the counter reset.
+        $this->setUser($student);
+        $deadlines = activity::upcoming_deadlines($student->id)->events;
+        $this->assertCount(1, $deadlines);
+
+        $this->setUser($teacher);
+        $deadlines = activity::upcoming_deadlines($teacher->id)->events;
+        $this->assertCount(1, $deadlines);
+    }
+
+    /**
      * Test upcoming deadlines
      */
     public function test_upcoming_deadlines_timezones() {

@@ -32,7 +32,7 @@ import {MoodleRes} from "../moodle.res";
           </div>
           <p class="small" *ngIf="feedItemTotal == 0">{{emptyMessage}}</p>
       </div>
-      <div class="alert alert-danger alert-block fade in" role="alert" *ngIf="feedError === true">
+      <div class="alert alert-danger alert-block fade in" role="alert" *ngIf="feedError === true && !retryFeed">
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">×</button>
         {{strings['errorgettingfeed']}}
         <a
@@ -51,7 +51,9 @@ import {MoodleRes} from "../moodle.res";
          (click)="purgeDataAndResetFeed()">
           <small>{{reloadMessage}}</small>
       </a>
-      <span *ngIf="fetchingData" class="snap-personal-menu-more snap-personal-menu-feed-loading"></span>
+      <span *ngIf="fetchingData" class="snap-personal-menu-more snap-personal-menu-feed-loading">
+        <a class="small text-muted">{{loadingFeed}} </a>
+      </span>
   `,
   animations: [
     trigger('growIn', [
@@ -95,6 +97,7 @@ export class FeedComponent implements OnInit {
   @Input() maxLifeTime?: number;
   @Input() waitForPersonalMenu?: boolean;
   @Input() courseId?: number;
+  @Input() loadingFeed?: string;
 
   nextPage: number;
   feedItems: FeedItem[];
@@ -103,6 +106,7 @@ export class FeedComponent implements OnInit {
   viewMoreEnabled: boolean;
   fetchingData: boolean;
   feedError: boolean;
+  retryFeed: boolean;
   errorMsg: string;
   strings: string[];
 
@@ -169,6 +173,7 @@ export class FeedComponent implements OnInit {
     this.fetchingData = true;
     this.feedError = false;
     this.errorMsg = null;
+    this.retryFeed = false;
 
     if (event) {
       event.preventDefault();
@@ -184,8 +189,16 @@ export class FeedComponent implements OnInit {
       .subscribe(feedResponse => {
         if (feedResponse === undefined || feedResponse[0].error) {
           this.viewMoreEnabled = false;
-          this.fetchingData = false;
+
           this.feedError = true;
+          if (feedResponse[0].exception && feedResponse[0].exception.errorcode === 'retryfeed') {
+            this.retryFeed = true;
+            setTimeout(() => {
+              this.getFeed();
+            }, 5000);
+          } else {
+            this.fetchingData = false;
+          }
           let singleMoodleRes: any = feedResponse[0];
           this.errorMsg = singleMoodleRes;
           return;

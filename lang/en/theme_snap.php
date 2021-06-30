@@ -405,3 +405,4 @@ $string['refreshdeadlinestaskoff'] = 'Didn\'t look for data to populate. Please 
 $string['activityrestriction'] = 'Activity restriction';
 $string['hideandshowactioncb'] = 'Hide and show activity checkbox action';
 $string['retryfeed'] = 'This feed is currently unavailable, please check back later. Feed: {$a}';
+$string['loadingfeed'] = 'Loading...may take time';
