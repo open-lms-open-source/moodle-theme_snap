@@ -74,9 +74,21 @@ export class FeedService {
     }];
     return this.http.post<MoodleRes[]>(`${wwwRoot}${this.moodleAjaxUrl}?sesskey=${sessKey}`, body, this.httpOptions)
       .pipe(
+        map(res => this.extractData(res)),
         map(res => this.storeDataInLocalCache(moodleResKey, res)),
         catchError(this.handleError<MoodleRes[]>('getFeed', errorRes))
       );
+  }
+
+  public extractData(response: any) : MoodleRes[] {
+    if (!response.length) {
+      // Single response with error arrived.
+      let singleMoodleRes: MoodleRes = response;
+      return [singleMoodleRes]
+    }
+
+    let multiMoodleRes: MoodleRes[] = response;
+    return multiMoodleRes;
   }
 
   /**
