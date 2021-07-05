@@ -1026,6 +1026,10 @@ footer #moodle-footer
     }
 }
 
+// -------------------------
+// Snap logo & mobile view.
+// -------------------------
+// Logo and title.
 #snap-home {
     display: inline-block;
     padding: .5em 0;
@@ -1037,18 +1041,110 @@ footer #moodle-footer
     &.logo {
         display: inline-block;
         height: 45px;
-        #snap-home.logo {
-            max-width: 45%;
-            @media (max-width: 414px) {
-                .pull-right.js-only {
-                    margin-top: 3em;
-                }
-            }
-        }
+        max-width: 20%;
         background-color: transparent;
         background-repeat: no-repeat;
         background-size: contain;
         background-position: left center;
+    }
+}
+
+@media (max-width: 767px) {
+    #snap-home {
+        padding-top: .8em;
+    }
+}
+
+@media (max-width: 919px) {
+    #snap-home {
+        width: 11em;
+    }
+}
+
+@media (max-width: 500px) {
+    #snap-home {
+        width: 5em;
+    }
+}
+
+@media (max-width: 335px) {
+    #snap-home {
+        width: 3.5em;
+    }
+}
+
+// Right icons Snap header.
+// Not likely to have a device with this resolution, but we need to cover it.
+@media (max-width: 360px) {
+    .pull-right.js-only.row .genius_dashboard_link {
+        width: 2.3em !important;
+    }
+}
+
+@media (max-width: 390px) {
+    #mr-nav {
+        padding: 0;
+    }
+    .pull-right.js-only.row {
+        .genius_dashboard_link,
+        .badge-count-container,
+        #nav-intellicart-popover-container,
+        #nav-notification-popover-container,
+        span.hidden-md-down {
+            width: 2.3em;
+        }
+        span.hidden-md-down .simplesearchform a {
+            padding-left: 0.2em;
+        }
+    }
+}
+
+@media (max-width: 415px) {
+    #snap-header {
+        padding-left: 0.2em !important;
+    }
+    #snap-home.logo {
+        max-width: 15%;
+    }
+}
+
+@media (max-width: 650px) {
+    #snap-header {
+        .pull-right.js-only.row {
+            #snap-pm-trigger {
+                margin-right: 0;
+                padding-left: 0;
+                padding-right: 0;
+                span.hidden-xs-down {
+                    display: none;
+                }
+                &:after {
+                    content: "\25BC";
+                }
+            }
+            .genius_dashboard_link {
+                color: transparent;
+                white-space: nowrap;
+                width: 3.3em;
+                padding-top: 0.6em;
+                img.icon {
+                    font-size: 1.3rem;
+                }
+                &:after {
+                    content: "";
+                }
+            }
+        }
+    }
+}
+
+@media (max-width: 767px) {
+    #snap-header {
+        .pull-right.js-only.row {
+            .hidden-md-down a[aria-label="Search"] i.fa-search {
+                font-size: 1.6rem;
+            }
+        }
     }
 }
 
@@ -1083,7 +1179,7 @@ footer #moodle-footer
     }
 }
 
-// We target only google Chorme
+// We target only google Chrome
 #page-site-index.editing.chrome #moodle-blocks,
 #page-my-index.editing.chrome #moodle-blocks,
 .format-topics.path-course-view.editing.chrome #moodle-blocks,
@@ -1141,7 +1237,7 @@ header#page-header
 		h1 - a hopefully useful name for this page
 
  ****************************/
-// page-heaer - a big box with possibly useful stuff in it
+// page-header - a big box with possibly useful stuff in it
 // -------------------------
 
 #page-header {
@@ -1194,7 +1290,7 @@ header#page-header
 
  ****************************/
 
-// If the page has an image - courses & catagories.
+// If the page has an image - courses & categories.
 .mast-image {
     .breadcrumb {
         li,
@@ -1333,6 +1429,7 @@ header#page-header
         display: inline-block;
         padding: 1em 2%;
         margin: 10em 4% 1em;
+        overflow-wrap: break-word;
     }
 
     #moodle-page {
@@ -3904,11 +4001,16 @@ body.pagelayout-frontpage {
         }
         color: darken($nav-button-color, 8%);
     }
-
 }
 
 #mr-nav .genius_dashboard_link {
-    padding-top: 0.65em;
+    padding-top: 0.45em;
+}
+
+@media (max-width: 767px) {
+    #mr-nav .genius_dashboard_link {
+        padding-top: 0.75em;
+    }
 }
 
 /* Fix for news visualization in Snap front page. */
