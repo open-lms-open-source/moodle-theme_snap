@@ -83,6 +83,7 @@ class ce_render_helper {
 
         $viewmoremsg = get_string('pmadvancedfeed_viewmore', 'theme_snap');
         $reloadmsg = get_string('pmadvancedfeed_reload', 'theme_snap');
+        $loadingfeed = get_string('loadingfeed', 'theme_snap');
 
         $initialvalue = '';
         if ((defined('BEHAT_SITE_RUNNING') && BEHAT_SITE_RUNNING)
@@ -115,6 +116,8 @@ class ce_render_helper {
            max-life-time="$maxlifetime"
            wait-for-personal-menu="{$waitforpm}"
            {$courseidatt}
+           loading-feed="{$loadingfeed}"
+
 ></snap-feed>
 HTML;
     }

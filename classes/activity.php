@@ -1412,6 +1412,13 @@ class activity {
             return $param;
         }, [$calendar->users, $calendar->groups, $calendar->courses]);
 
+        // This will keep count of the amount of concurrent queries made to the events table.
+        // The amount of queries can be stated using the flag $CFG->theme_snap_max_concurrent_deadline_queries.
+        // If the amount is reached, an exception will be thrown.
+        // It's default to INF, i.e., it's disabled.
+        self::start_deadline_query();
+
+        // I present to you, the events query.
         $events = self::get_events(
             $tstart,
             $tend,
@@ -1427,6 +1434,9 @@ class activity {
             $withduration,
             $ignorehidden
         );
+
+        // Quickly reduce query count to allow other users to run the query.
+        self::end_deadline_query();
 
         $events = array_reduce($events, function($carry, $event) use ($mapper) {
             return $carry + [$event->get_id() => $mapper->from_event_to_stdclass($event)];
@@ -1666,5 +1676,59 @@ class activity {
             return array_merge($carry, $groupings[0]);
         }, []);
         return self::get_id_indexed_array_cache_key(array_flip($groupids));
+    }
+
+    private static function start_deadline_query() {
+        $locktype = 'theme_snap_activity_deadlines_cache';
+        $resource = 'query_count';
+        self::run_within_lock($locktype, $resource, function($lock) {
+            global $CFG;
+            $muc = \cache::make('theme_snap', 'activity_deadlines');
+            $querycount = $muc->get('query_count');
+
+            if ($querycount !== false) {
+                $maxqueries = !empty($CFG->theme_snap_max_concurrent_deadline_queries) ?
+                    $CFG->theme_snap_max_concurrent_deadline_queries : INF;
+                if ($querycount >= $maxqueries) {
+                    $lock->release();
+                    throw new \moodle_exception(
+                        'retryfeed', 'theme_snap', '', get_string('deadlines', 'theme_snap'));
+                }
+            } else {
+                $querycount = 0;
+            }
+            $muc->set('query_count', $querycount + 1);
+        });
+    }
+
+    private static function end_deadline_query() {
+        $locktype = 'theme_snap_activity_deadlines_cache';
+        $resource = 'query_count';
+        self::run_within_lock($locktype, $resource, function($lock) {
+            $muc = \cache::make('theme_snap', 'activity_deadlines');
+            $querycount = $muc->get('query_count');
+
+            if ($querycount !== false) {
+                if ($querycount > 0) {
+                    $muc->set('query_count', $querycount - 1);
+                } else {
+                    // We won't fail if the query count is 0 or negative. Just reset it.
+                    // There could be locking issues.
+                    $muc->set('query_count', 0);
+                }
+            }
+        });
+    }
+
+    private static function run_within_lock($locktype, $resource, $callable) {
+        $timeout = 5;
+        $lockfactory = \core\lock\lock_config::get_lock_factory($locktype);
+        if ($lock = $lockfactory->get_lock($resource, $timeout)) {
+            $callable($lock);
+            $lock->release();
+        } else {
+            // We did not get access to the resource in time, give up.
+            throw new \moodle_exception('locktimeout');
+        }
     }
 }
