@@ -46,7 +46,7 @@ $definitions = array(
         'simpledata'         => false,
         'staticacceleration' => false
     ],
-    // This is used to cache deadlines per user.
+    // This is used to cache deadlines per courses and groups.
     'activity_deadlines' => [
         'mode'               => cache_store::MODE_APPLICATION,
         'simplekeys'         => true,
