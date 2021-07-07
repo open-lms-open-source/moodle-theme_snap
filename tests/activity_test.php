@@ -118,6 +118,43 @@ class theme_snap_acitvity_test extends snap_base_test {
     }
 
     /**
+     * Create a Label
+     * @param $courseid
+     * @param null $duedate
+     * @param array $opts
+     * @return stdClass
+     */
+    protected function create_label($courseid, $duedate = null, $opts = []) {
+        global $USER, $CFG;
+
+        if (empty($duedate)) {
+            $duedate = time() + DAYSECS;
+        }
+        $CFG->enableavailability = true;
+
+        $params = [
+            'course' => $courseid,
+            'completionexpected' => $duedate,
+            'grade' => 100,
+            'completion' => 2,
+            'completionview' => 1
+        ];
+        foreach ($opts as $key => $val) {
+            // Overwrite or add opt vals to params.
+            $params[$key] = $val;
+        }
+
+        $origuser = $USER;
+        $USER = get_admin();
+        $CFG->enablecompletion = 1;
+
+        $label = $this->getDataGenerator()->create_module('label', $params);
+        // Restore user.
+        $USER = $origuser;
+        return $label;
+    }
+
+    /**
      * Assert that deadlines array contains specific assignment id.
      * @param array $deadlines
      * @param int $assignid
@@ -1687,6 +1724,40 @@ class theme_snap_acitvity_test extends snap_base_test {
         $CFG->snap_advanced_feeds_max_deadlines = 10;
         $deadlines = local::get_feed('deadlines');
         $this->assertCount(10, $deadlines);
+    }
+
+    public function test_snap_deadlines_feed_url() {
+        global $CFG;
+        $this->resetAfterTest();
+
+        activity::$phpunitallowcaching = false;
+        $this->setAdminUser();
+        $dg = $this->getDataGenerator();
+        $student = $dg->create_user();
+        $teacher = $dg->create_user();
+        $course = $dg->create_course(['enablecompletion' => 1]);
+        $dg->enrol_user($student->id, $course->id, 'student');
+        $dg->enrol_user($teacher->id, $course->id, 'teacher');
+
+        $tz = new \DateTimeZone(\core_date::get_user_timezone($student));
+        $today = new \DateTime('today', $tz);
+        $todayts = $today->getTimestamp();
+
+        $labels = [];
+
+        for ($t = 0; $t < 2; $t++) {
+            $url = new \moodle_url('/mod/label/view.php', ['id' => $this->create_label($course->id, $todayts)->cmid]);
+            $urls[] = $url->out();
+        }
+        for ($t = 0; $t < 2; $t++) {
+            $url = new \moodle_url('/mod/label/view.php', ['id' => $this->create_label($course->id, $todayts + WEEKSECS)->cmid]);
+            $urls[] = $url->out();
+        }
+        $this->setUser($student);
+        $deadlines = local::get_feed('deadlines');
+        for ($i = 0; $i < 3; $i++) {
+            $this->assertEquals($urls[$i], $deadlines[$i]['actionUrl']);
+        }
     }
 
     public function test_upcoming_deadlines_site_admins() {

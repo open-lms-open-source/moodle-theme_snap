@@ -294,3 +294,22 @@ Feature: When the moodle theme is set to Snap, students and teachers can find in
       | enadvfeeds | selectorstr     | waitclause                                          |
       | 0          | deadlines       | wait until the page is ready                        |
       | 1          | feed-deadlines  | wait until "snap-feed" custom element is registered |
+
+  @javascript
+  Scenario Outline: Activities that dont provide metadata do not show empty links.
+    Given the following "activities" exist:
+      | activity    | name          | intro                       | course | idnumber   | section | completionexpected | completion |
+      | page        | Page 1        | Test quiz description       | C2     | quiz1      | 0       | ##tomorrow##       |      1     |
+      | label       | Label 1       | Label 1                     | C2     | label1     | 0       | ##tomorrow##       |      1     |
+    And the following config values are set as admin:
+      | personalmenuadvancedfeedsenable | <enadvfeeds> | theme_snap      |
+    And I log in as "student1"
+    And I <waitclause>
+    And I open the personal menu
+    And I see a personal menu deadline of "##tomorrow##" for "Page 1"
+    And I see a personal menu deadline of "##tomorrow##" for "Label 1"
+    And "#snap-pm-updates .snap-media-body .snap-completion-meta a" "css_element" should not exist
+    Examples:
+      | enadvfeeds | waitclause                                          |
+      | 0          | wait until the page is ready                        |
+      | 1          | wait until "snap-feed" custom element is registered |

@@ -2377,12 +2377,16 @@ SQL;
                 // Add completion meta data for students (exclude anyone who can grade them).
                 if (!has_capability('mod/assign:grade', $cm->context)) {
                     $activitymeta = activity::module_meta($cm);
-                    $meta .= '<div class="snap-completion-meta">' .
-                        \theme_snap\output\core\course_renderer::submission_cta($cm, $activitymeta) .
+                    // Empty object with no metadata will generate empty links.
+                    $metalink = $activitymeta == new activity_meta() ? '' :
+                        \theme_snap\output\core\course_renderer::submission_cta($cm, $activitymeta);
+
+                    $meta .= '<div class="snap-completion-meta">' . $metalink .
                         '</div>';
                 }
+                $url = !empty($event->actionurl) && ($event->actionurl instanceof \moodle_url) ?
+                    $event->actionurl : $cm->url;
 
-                $url = $cm->url;
                 if (empty($url)) {
                     $csinfo = $cm->get_section_info();
                     $url = new moodle_url('/course/view.php', ['id' => $cm->course], 'section-' . $csinfo->section);
