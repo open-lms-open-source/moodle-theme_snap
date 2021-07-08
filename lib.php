@@ -229,7 +229,7 @@ function theme_snap_pluginfile($course, $cm, $context, $filearea, $args, $forced
         $theme = theme_config::load('snap');
         return $theme->setting_file_serve($filearea, $args, $forcedownload, $options);
     } else if (in_array($context->contextlevel, $coverimagecontexts)
-        && $filearea == 'coverimage' || $filearea == 'coursecard') {
+            && $filearea == 'coverimage' || $filearea == 'coursecard') {
         theme_snap_send_file($context, $filearea, $args, $forcedownload, $options);
     } else if ($filearea === 'vendorjs') {
         $pluginpath = __DIR__.'/';
@@ -237,6 +237,11 @@ function theme_snap_pluginfile($course, $cm, $context, $filearea, $args, $forced
         $path = $pluginpath.'vendorjs/'.implode('/', $args);
         send_file($path, basename($path));
         return true;
+    } else if ($filearea === 'hvp' || $filearea === 'hvpcustomcss') {
+        // Call to serve H5P Custom CSS.
+        $theme = theme_config::load('snap');
+        $hvpcustomcss = $theme->settings->hvpcustomcss;
+        theme_snap_serve_hvp_css($args[1], $hvpcustomcss);
     } else {
         send_file_not_found();
     }
@@ -460,4 +465,40 @@ function theme_snap_before_footer() {
     $PAGE->requires->js_call_amd('theme_snap/wcloader', 'init', [
         'componentPaths' => json_encode($paths)
     ]);
+}
+
+/**
+ * Serves the H5P Custom CSS.
+ *
+ * @param type $filename The filename.
+ * @param type $hvcustomcss The custom css if exists.
+ */
+function theme_snap_serve_hvp_css($filename, $hvpcustomcss=false) {
+    global $CFG;
+    // For min_enable_zlib_compression.
+    require_once($CFG->dirroot.'/lib/configonlylib.php');
+
+    if (!empty($hvpcustomcss)) {
+        $hvptext = (string)$hvpcustomcss;
+        $md5content = md5($hvptext);
+
+        // One day only - the lifetime may get incremented.
+        $days = 1;
+        $lifetime = 60 * 60 * 24 * $days;
+
+        header('HTTP/1.1 200 OK');
+        header('Etag: "' . $md5content . '"');
+        header('Content-Disposition: inline; filename="' . $filename . '"');
+        header('Expires: ' . gmdate('D, d M Y H:i:s', time() + $lifetime) . ' GMT');
+        header('Pragma: ');
+        header('Cache-Control: public, max-age=' . $lifetime);
+        header('Accept-Ranges: none');
+        header('Content-Type: text/css; charset=utf-8');
+        if (!min_enable_zlib_compression()) {
+            header('Content-Length: ' . strlen($hvptext));
+        }
+
+        echo $hvptext;
+        die;
+    }
 }
