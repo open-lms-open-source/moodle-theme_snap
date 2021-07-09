@@ -39,4 +39,5 @@ if ($ADMIN->fulltree) {
     require('settings/navigation_bar_settings.php');
     require('settings/categories_color_settings.php');
     require('settings/profile_based_branding.php');
+    require('settings/snap_hvp_settings.php');
 }

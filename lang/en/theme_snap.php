@@ -406,3 +406,5 @@ $string['activityrestriction'] = 'Activity restriction';
 $string['hideandshowactioncb'] = 'Hide and show activity checkbox action';
 $string['retryfeed'] = 'This feed is currently unavailable, please check back later. Feed: {$a}';
 $string['loadingfeed'] = 'Loading...may take time';
+$string['hvpcustomcss'] = 'H5P Custom CSS';
+$string['hvpcustomcssdesc'] = 'Custom CSS for the H5P module (moodle.org/plugins/mod_hvp) if installed.';
