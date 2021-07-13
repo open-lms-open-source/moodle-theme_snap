@@ -41,7 +41,9 @@ class theme_snap_hvp_customcss_test extends snap_base_test {
         require_once($CFG->dirroot . '/theme/snap/classes/mod_hvp_renderer.php');
         $content = 'hvpcustomcss';
         $target = 1;
-        $hvpobj = null;
+        $hvpurl = null;
+        $urlstartswith = 'http';
+        $urlendswith = '.css';
 
         $this->resetAfterTest();
 
@@ -51,13 +53,15 @@ class theme_snap_hvp_customcss_test extends snap_base_test {
 
         // Use and get object from class theme_snap_mod_hvp_renderer.
         $snaphvp = new theme_snap_mod_hvp_renderer($page, $target);
+        $this->assertIsObject($snaphvp);
+
         if ($snaphvp) {
-            $hvpobj = $snaphvp->get_style_url($content);
+            $hvpurl = (string) $snaphvp->get_style_url($content);
         }
 
-        // Test asserting that hvpobj is an object and has certain attributes.
-        $this->assertIsObject($hvpobj, 'It is not a valid object.');
-        $this->assertObjectHasAttribute('path', $hvpobj);
-        $this->assertObjectHasAttribute('slashargument', $hvpobj);
+        // Test asserting that hvpurl is a string and has certain attributes.
+        $this->assertIsString($hvpurl, 'It is not a valid string.');
+        $this->assertStringStartsWith($urlstartswith, $hvpurl);
+        $this->assertStringEndsWith($urlendswith, $hvpurl);
     }
 }

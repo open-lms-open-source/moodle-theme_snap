@@ -65,9 +65,14 @@ if (file_exists($h5prenderer)) {
             $itemid = md5($content);
 
             $url = \moodle_url::make_file_url("$CFG->wwwroot/pluginfile.php",
-                "/$syscontext->id/theme_snap/$content/$itemid/themehvp.css");
+                "/$syscontext->id/theme_snap/$content/$itemid/hvpcustomcss.css");
 
-            return $url;
+            if ($this->get_is_valid($url)) {
+                return $url;
+            } else {
+                $url = "$CFG->wwwroot/mod/hvp/styles.css";
+                return $url;
+            }
         }
 
         /**
@@ -86,6 +91,31 @@ if (file_exists($h5prenderer)) {
                 return $setting;
             } else {
                 return format_string($setting);
+            }
+        }
+
+        /**
+         * Verify that generated url has a valid status.
+         *
+         * @param string $url CSS generated url.
+         * @return bool.
+         */
+        static public function get_is_valid($url) {
+            $handle = curl_init($url);
+            curl_setopt($handle,  CURLOPT_RETURNTRANSFER, true);
+
+            // Get element.
+            $response = curl_exec($handle);
+
+            // Check for 404 (file not found).
+            $httpcode = curl_getinfo($handle, CURLINFO_HTTP_CODE);
+            curl_close($handle);
+
+            // If the css has loaded successfully without any redirection or error.
+            if ($httpcode >= 200 && $httpcode < 300) {
+                return true;
+            } else {
+                return false;
             }
         }
 
