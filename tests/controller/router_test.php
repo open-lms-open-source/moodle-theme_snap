@@ -51,23 +51,19 @@ class router_test extends \basic_testcase {
         $this->assertEquals('test_action', $method);
     }
 
-    /**
-     * @expectedException \coding_exception
-     */
     public function test_non_public_action() {
         $controller = new private_action_test_helper();
         $router     = new router();
         $router->add_controller($controller);
+        $this->expectException(\coding_exception::class);
         $router->route_action('test');
     }
 
-    /**
-     * @expectedException \coding_exception
-     */
     public function test_route_fail() {
         $controller = $this->createPartialMock('\theme_snap\controller\controller_abstract', array('init', 'require_capability'));
         $router     = new router();
         $router->add_controller($controller);
+        $this->expectException(\coding_exception::class);
         $router->route_action('test');
     }
 }

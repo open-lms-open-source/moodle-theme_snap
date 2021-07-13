@@ -52,9 +52,9 @@ class theme_snap_course_management_test extends advanced_testcase {
 
         $html = $renderer->course_listitem($rendercategory, $rendercourse, $courserecord->id);
         $url = '/course/management.php?categoryid='.$catrecord->id.'&amp;courseid='.$courserecord->id.'#course-detail-title';
-        $this->assertContains($url, $html);
+        $this->assertStringContainsString($url, $html);
 
         $html = $renderer->search_listitem($rendercourse, $courserecord->id);
-        $this->assertContains($url, $html);
+        $this->assertStringContainsString($url, $html);
     }
 }
