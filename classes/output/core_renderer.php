@@ -2063,4 +2063,24 @@ HTML;
         // Default subdomain.
         return 'www';
     }
+
+    /**
+     * @param $pathurl string url.
+     *
+     * @return bool result
+     */
+    public function get_path_hiddentoc($pathurl = false) {
+        $path = false;
+        $listhidden = array(
+            'pluginxp' => '/blocks/xp/index.php'
+        );
+
+        if (!empty($pathurl)) {
+            if (in_array($pathurl, $listhidden)) {
+                $path = true;
+            }
+        }
+
+        return $path;
+    }
 }

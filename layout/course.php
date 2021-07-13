@@ -75,10 +75,17 @@ echo $OUTPUT->custom_menu_spacer();
 if ($tocformat && $leftnav) {
     echo '<div id="snap-course-wrapper">';
     echo '<div class="row">';
-    echo '<div class="col-lg-3">';
-    echo $OUTPUT->course_toc();
-    echo '</div>';
-    echo '<div class="col-lg-9">';
+    // If current path is a level up view, we hide TOC.
+    $pathurl = $PAGE->url->get_path();
+    $pathurl = $OUTPUT->get_path_hiddentoc($pathurl);
+    if ($pathurl === true) {
+        echo '<div class="col-lg-12">';
+    } else {
+        echo '<div class="col-lg-3">';
+        echo $OUTPUT->course_toc();
+        echo '</div>';
+        echo '<div class="col-lg-9">';
+    }
 }
 ?>
 <section id="region-main">
