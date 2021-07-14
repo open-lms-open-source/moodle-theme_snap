@@ -61,4 +61,5 @@ class theme_snap_ws_course_roc extends \advanced_testcase {
         $this->assertEquals($expected['toc']->footer, $serviceresult['toc']->footer);
         $this->assertEquals($expected['toc']->chapters, $serviceresult['toc']->chapters);
     }
+
 }
