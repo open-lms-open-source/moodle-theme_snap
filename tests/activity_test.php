@@ -1738,24 +1738,29 @@ class theme_snap_acitvity_test extends snap_base_test {
             $assigninstances[] = $this->create_assignment($course->id, ($todayts + WEEKSECS))->get_instance();
         }
 
-        // Snap feeds block test for deadlines refresh. This works w.o the block b/c we use only DB data.
-        $snapdeadlinesconfigdata = (object) [
-            'feedtype' => 'deadlines'
-        ];
-        $time = new DateTime("now", core_date::get_user_timezone_object());
+        $snapfeedsblockexists = (get_config('block_snapfeeds') !== false) ||
+            (is_callable('mr_on') and mr_on('snapfeeds', 'block'));
 
-        $blockinsert = (object) [
-            'blockname' => 'snapfeeds',
-            'parentcontextid' => context_course::instance($course->id)->id,
-            'pagetypepattern' => 'course-view-*',
-            'defaultregion' => 'side-pre',
-            'defaultweight' => 1,
-            'configdata' => base64_encode(serialize($snapdeadlinesconfigdata)),
-            'showinsubcontexts' => 1,
-            'timecreated' => $time->getTimestamp(),
-            'timemodified' => $time->getTimestamp()
-        ];
-        $DB->insert_record('block_instances', $blockinsert);
+        if ($snapfeedsblockexists) {
+            // Snap feeds block test for deadlines refresh. This works w.o the block b/c we use only DB data.
+            $snapdeadlinesconfigdata = (object) [
+                'feedtype' => 'deadlines'
+            ];
+            $time = new DateTime("now", core_date::get_user_timezone_object());
+
+            $blockinsert = (object) [
+                'blockname' => 'snapfeeds',
+                'parentcontextid' => context_course::instance($course->id)->id,
+                'pagetypepattern' => 'course-view-*',
+                'defaultregion' => 'side-pre',
+                'defaultweight' => 1,
+                'configdata' => base64_encode(serialize($snapdeadlinesconfigdata)),
+                'showinsubcontexts' => 1,
+                'timecreated' => $time->getTimestamp(),
+                'timemodified' => $time->getTimestamp()
+            ];
+            $DB->insert_record('block_instances', $blockinsert);
+        }
 
         // The task should refresh deadline data for users who logged in within the last 6 months by default.
         set_config('personalmenurefreshdeadlines', '1', 'theme_snap');
@@ -1767,15 +1772,17 @@ class theme_snap_acitvity_test extends snap_base_test {
         $this->assertCount(22, $deadlines->events);
         $this->assertTrue($deadlines->fromcache);
 
-        // We get cached data now for the course too.
-        $deadlines = activity::upcoming_deadlines($student, 500, $course);
-        $this->assertCount(22, $deadlines->events);
-        $this->assertTrue($deadlines->fromcache);
+        if ($snapfeedsblockexists) {
+            // We get cached data now for the course too.
+            $deadlines = activity::upcoming_deadlines($student, 500, $course);
+            $this->assertCount(22, $deadlines->events);
+            $this->assertTrue($deadlines->fromcache);
 
-        // We get cached data now for the course id too.
-        $deadlines = activity::upcoming_deadlines($student, 500, $course->id);
-        $this->assertCount(22, $deadlines->events);
-        $this->assertTrue($deadlines->fromcache);
+            // We get cached data now for the course id too.
+            $deadlines = activity::upcoming_deadlines($student, 500, $course->id);
+            $this->assertCount(22, $deadlines->events);
+            $this->assertTrue($deadlines->fromcache);
+        }
 
         // Change the window for reviewing last login.
         $CFG->theme_snap_refresh_deadlines_last_login = '1 day ago';
@@ -1799,10 +1806,12 @@ class theme_snap_acitvity_test extends snap_base_test {
         $this->assertCount(22, $deadlines->events);
         $this->assertFalse($deadlines->fromcache);
 
-        // It's the same as getting deadlines for a single course.
-        $deadlines = activity::upcoming_deadlines($student, 500, $course);
-        $this->assertCount(22, $deadlines->events);
-        $this->assertTrue($deadlines->fromcache);
+        if ($snapfeedsblockexists) {
+            // It's the same as getting deadlines for a single course.
+            $deadlines = activity::upcoming_deadlines($student, 500, $course);
+            $this->assertCount(22, $deadlines->events);
+            $this->assertTrue($deadlines->fromcache);
+        }
     }
 
 }

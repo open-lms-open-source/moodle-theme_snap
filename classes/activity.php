@@ -1728,7 +1728,13 @@ class activity {
             $lock->release();
         } else {
             // We did not get access to the resource in time, give up.
-            throw new \moodle_exception('locktimeout');
+            throw new \moodle_exception(
+                'retryfeed', 'theme_snap', '', get_string('deadlines', 'theme_snap'));
         }
+    }
+
+    public static function reset_deadline_query_count() {
+        $muc = \cache::make('theme_snap', 'activity_deadlines');
+        $muc->set('query_count', 0);
     }
 }

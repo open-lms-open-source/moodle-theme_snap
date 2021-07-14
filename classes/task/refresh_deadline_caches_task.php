@@ -59,6 +59,9 @@ class refresh_deadline_caches_task extends scheduled_task {
         $muc = \cache::make('theme_snap', 'activity_deadlines');
         $muc->purge();
 
+        // Reset query count.
+        activity::reset_deadline_query_count();
+
         if (empty(get_config('theme_snap', 'personalmenurefreshdeadlines'))) {
             mtrace(get_string('refreshdeadlinestaskoff', 'theme_snap'));
             // Skip, setting is off.
@@ -67,6 +70,10 @@ class refresh_deadline_caches_task extends scheduled_task {
 
         $lastlogindateformat = empty($CFG->theme_snap_refresh_deadlines_last_login) ?
             '6 months ago' : $CFG->theme_snap_refresh_deadlines_last_login;
+
+        $maxduration = empty($CFG->theme_snap_refresh_deadlines_max_duration) ?
+            (6 * HOURSECS) : $CFG->theme_snap_refresh_deadlines_max_duration;
+        $starttime = time();
 
         // Fill deadlines for users who logged in yesterday.
         $query                    = <<<SQL
@@ -86,12 +93,19 @@ SQL;
         $snapfeedsdeadlinesconfig = base64_encode(serialize((object) [
             'feedtype' => 'deadlines'
         ]));
+        $snapfeedsblockexists     = (get_config('block_snapfeeds') !== false) ||
+            (is_callable('mr_on') and mr_on('snapfeeds', 'block'));
 
         $this->cachekeys = [];
         // We should skip CM checks to only populate caches for events.
         // This flag should only be used for testing.
         $skipcmchecks = empty($CFG->theme_snap_include_cm_checks_in_deadlines_task);
         foreach ($users as $userid => $user) {
+            if ((time() - $starttime) > $maxduration) {
+                // Max duration reached. Bye bye.
+                break;
+            }
+
             $courses = enrol_get_users_courses($userid, true);
 
             if ($this->has_or_add_cachekey($user, $courses)) {
@@ -101,8 +115,18 @@ SQL;
             // This populates deadline caches or does nothing if run the same day.
             activity::upcoming_deadlines($userid, 500, 0, $skipcmchecks);
 
+            if (!$snapfeedsblockexists) {
+                // No need to populate deadline data for courses if the block is not present.
+                continue;
+            }
+
             // Give a helping hand populating caches for course snap feeds blocks.
             foreach ($courses as $courseid => $course) {
+                if ((time() - $starttime) > $maxduration) {
+                    // Max duration reached. Bye bye.
+                    break 2;
+                }
+
                 if ($this->has_or_add_cachekey($user, [$courseid => $course])) {
                     continue;
                 }
