@@ -47,7 +47,7 @@ class theme_snap_snap_page_requirements_manager_test extends \advanced_testcase 
         $PAGE->requires->js_init_call('M.core_completion.init');
 
         $endcode = $PAGE->requires->get_end_code();
-        $this->assertContains('M.core_completion.init', $endcode);
+        $this->assertStringContainsString('M.core_completion.init', $endcode);
     }
 
     /**
@@ -64,7 +64,7 @@ class theme_snap_snap_page_requirements_manager_test extends \advanced_testcase 
         $PAGE->requires->js_init_call('M.core_completion.init');
 
         $endcode = $PAGE->requires->get_end_code();
-        $this->assertNotContains('M.core_completion.init', $endcode);
+        $this->assertStringNotContainsString('M.core_completion.init', $endcode);
     }
 
     /**

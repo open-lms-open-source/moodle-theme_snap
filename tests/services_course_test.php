@@ -377,7 +377,7 @@ class theme_snap_services_course_test extends \advanced_testcase {
 
         // Check that action model has toggled after highlight.
         $this->assertEquals('aria-pressed="true"', $actionmodel->ariapressed);
-        $this->assertContains('marker=0', $actionmodel->url);
+        $this->assertStringContainsString('marker=0', $actionmodel->url);
 
         // Unhiglight the section.
         $highlight = $this->courseservice->highlight_section('testcourse', 3, false);
@@ -386,7 +386,7 @@ class theme_snap_services_course_test extends \advanced_testcase {
 
         // Check that action model now corresponds to unhighlighted state.
         $this->assertEquals('aria-pressed="false"', $actionmodel->ariapressed);
-        $this->assertContains('marker=3', $actionmodel->url);
+        $this->assertStringContainsString('marker=3', $actionmodel->url);
     }
 
     public function test_set_section_visibility() {
@@ -413,7 +413,7 @@ class theme_snap_services_course_test extends \advanced_testcase {
         // Check that action model has toggled after section hidden.
         $this->assertEquals('snap-visibility snap-show', $actionmodel->class);
         $this->assertEquals('Show topic', $actionmodel->title);
-        $this->assertContains('show=3', $actionmodel->url);
+        $this->assertStringContainsString('show=3', $actionmodel->url);
 
         // Unhide the section.
         $visibility = $this->courseservice->set_section_visibility('testcourse', 3, true);
@@ -423,7 +423,7 @@ class theme_snap_services_course_test extends \advanced_testcase {
         // Check that action model now corresponds to unhighlighted state.
         $this->assertEquals('snap-visibility snap-hide', $actionmodel->class);
         $this->assertEquals('Hide topic', $actionmodel->title);
-        $this->assertContains('hide=3', $actionmodel->url);
+        $this->assertStringContainsString('hide=3', $actionmodel->url);
     }
 
     // Records for favorite courses should not exist when the user is deleted.
@@ -572,15 +572,15 @@ class theme_snap_services_course_test extends \advanced_testcase {
         $params = ['courseid' => $topics->id, 'section' => 1];
         $this->setUser($student);
         $section = theme_snap_output_fragment_section($params);
-        $this->assertContains('aria-label="Topic 1"', $section);
+        $this->assertStringContainsString('aria-label="Topic 1"', $section);
         // Section doesn't have the modchooser div.
-        $this->assertNotContains('snap-modchooser', $section);
-        $this->assertContains('Section Assign', $section);
+        $this->assertStringNotContainsString('snap-modchooser', $section);
+        $this->assertStringContainsString('Section Assign', $section);
         $this->getDataGenerator()->create_module('forum', ['course' => $topics->id, 'section' => 2,
             'name' => 'Fragment forum']);
         $params['section'] = 2;
         $section = theme_snap_output_fragment_section($params);
-        $this->assertContains('Fragment forum', $section);
+        $this->assertStringContainsString('Fragment forum', $section);
         $this->setUser($teacher);
         // Missing param will result on empty text.
         $params['section'] = '';
@@ -588,7 +588,7 @@ class theme_snap_services_course_test extends \advanced_testcase {
         $this->assertEmpty($section);
         $params['section'] = 2;
         $section = theme_snap_output_fragment_section($params);
-        $this->assertContains('Fragment forum', $section);
-        $this->assertContains('snap-modchooser', $section);
+        $this->assertStringContainsString('Fragment forum', $section);
+        $this->assertStringContainsString('snap-modchooser', $section);
     }
 }

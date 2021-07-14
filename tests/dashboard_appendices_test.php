@@ -55,32 +55,32 @@ class theme_snap_dashboard_appendices_testcase extends advanced_testcase {
         // By default, is not listed for admins nor teachers, nor students.
         $this->setAdminUser();
         $appendicesoutput = \theme_snap\output\shared::appendices();
-        $this->assertNotContains('blocks/reports/view.php?action=dashboardce', $appendicesoutput);
+        $this->assertStringNotContainsString('blocks/reports/view.php?action=dashboardce', $appendicesoutput);
         $this->setUser($student->id);
         $appendicesoutput = \theme_snap\output\shared::appendices();
-        $this->assertNotContains('blocks/reports/view.php?action=dashboardce', $appendicesoutput);
+        $this->assertStringNotContainsString('blocks/reports/view.php?action=dashboardce', $appendicesoutput);
         $this->setUser($teacher->id);
         $appendicesoutput = \theme_snap\output\shared::appendices();
-        $this->assertNotContains('blocks/reports/view.php?action=dashboardce', $appendicesoutput);
+        $this->assertStringNotContainsString('blocks/reports/view.php?action=dashboardce', $appendicesoutput);
 
         // When the flag is present, the option get listed.
         $CFG->block_reports_enable_dashboardce = true;
         // For admin.
         $this->setAdminUser();
         $appendicesoutput = \theme_snap\output\shared::appendices();
-        $this->assertContains('blocks/reports/view.php?action=dashboardce', $appendicesoutput);
+        $this->assertStringContainsString('blocks/reports/view.php?action=dashboardce', $appendicesoutput);
         // For student.
         $this->setUser($student->id);
         // Simulate being inside the course.
         $COURSE = $course;
         $appendicesoutput = \theme_snap\output\shared::appendices();
-        $this->assertContains('blocks/reports/view.php?action=dashboardce', $appendicesoutput);
+        $this->assertStringContainsString('blocks/reports/view.php?action=dashboardce', $appendicesoutput);
         // For teacher.
         $this->setUser($teacher->id);
         // Simulate being inside the course.
         $COURSE = $course;
         $appendicesoutput = \theme_snap\output\shared::appendices();
-        $this->assertContains('blocks/reports/view.php?action=dashboardce', $appendicesoutput);
+        $this->assertStringContainsString('blocks/reports/view.php?action=dashboardce', $appendicesoutput);
 
     }
 }

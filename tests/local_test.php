@@ -125,16 +125,16 @@ class theme_snap_local_test extends snap_base_test {
 
     public function test_get_course_color() {
         $actual = local::get_course_color(1);
-        $this->assertContains('c4ca42', $actual);
+        $this->assertStringContainsString('c4ca42', $actual);
 
         $actual = local::get_course_color(10);
-        $this->assertContains('d3d944', $actual);
+        $this->assertStringContainsString('d3d944', $actual);
 
         $actual = local::get_course_color(100);
-        $this->assertContains('f89913', $actual);
+        $this->assertStringContainsString('f89913', $actual);
 
         $actual = local::get_course_color(1000);
-        $this->assertContains('a9b7ba', $actual);
+        $this->assertStringContainsString('a9b7ba', $actual);
     }
 
     public function test_simpler_time() {
@@ -522,10 +522,10 @@ class theme_snap_local_test extends snap_base_test {
 
             $css = local::site_coverimage_css();
 
-            $this->assertContains('/theme_snap/coverimage/', $css);
+            $this->assertStringContainsString('/theme_snap/coverimage/', $css);
 
             $ext = pathinfo($filename, PATHINFO_EXTENSION);
-            $this->assertContains("/site-image.$ext", $css);
+            $this->assertStringContainsString("/site-image.$ext", $css);
 
             if ($shouldberesized) {
                 $image = local::site_coverimage();
@@ -738,13 +738,13 @@ class theme_snap_local_test extends snap_base_test {
         $pagemod = local::get_page_mod($cm);
 
         // Ensure summary contains text.
-        $this->assertContains($testtext, $pagemod->summary);
+        $this->assertStringContainsString($testtext, $pagemod->summary);
 
         // Ensure summary contains text without tags.
-        $this->assertNotContains('<p>'.$testtext.'</p>', $pagemod->summary);
+        $this->assertStringNotContainsString('<p>'.$testtext.'</p>', $pagemod->summary);
 
         // Ensure summary does not contain any images.
-        $this->assertNotContains('<img', $pagemod->summary);
+        $this->assertStringNotContainsString('<img', $pagemod->summary);
 
         // Make sure summary text has been shortened with elipsis.
         $this->assertStringEndsWith('...', $pagemod->summary);
@@ -754,8 +754,8 @@ class theme_snap_local_test extends snap_base_test {
                          '<img src="http://fakeurl.local/img2.png" alt="image 2" />';
         $DB->update_record('page', $page);
         $pagemod = local::get_page_mod($cm);
-        $this->assertNotContains('image 1', $pagemod->summary);
-        $this->assertNotContains('image 2', $pagemod->summary);
+        $this->assertStringNotContainsString('image 1', $pagemod->summary);
+        $this->assertStringNotContainsString('image 2', $pagemod->summary);
     }
 
     /**
@@ -782,10 +782,10 @@ class theme_snap_local_test extends snap_base_test {
         $pagemod = local::get_page_mod($cm);
 
         // Ensure summary contains text and is sitll within tags.
-        $this->assertContains('<p>' . $testtext . '</p>', $pagemod->summary);
+        $this->assertStringContainsString('<p>' . $testtext . '</p>', $pagemod->summary);
 
         // Ensure summary contains images.
-        $this->assertContains('<img', $pagemod->summary);
+        $this->assertStringContainsString('<img', $pagemod->summary);
 
         // Make sure summary text can be greater than 200 chars.
         $this->assertGreaterThan(200, strlen($pagemod->summary));
