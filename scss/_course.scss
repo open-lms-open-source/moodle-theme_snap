@@ -1568,7 +1568,7 @@ li.section.hidden .snap-asset.stealth-section-hidden .snap-stealth-tag {
 }
 
 // Stealth options in the dropdown.
-li.section:not(.hidden) .snap-asset {
+li.section .snap-asset {
     &.stealth {
         .editing_makeunavailable {
             display: block;
@@ -1581,9 +1581,29 @@ li.section:not(.hidden) .snap-asset {
         .editing_makeunavailable {
             display: none;
         }
-        .editing_makeavailable {
+    }
+}
+
+li.section:not(.hidden) .snap-asset {
+    &.draft {
+        .editing_makeavailable.js_snap_stealth {
             display: block;
         }
+        .editing_makeavailable.js_snap_stealthshow {
+            display: none;
+        }
+    }
+}
+
+li.section.hidden .snap-asset {
+    &.stealth {
+        .editing_makeavailable.js_snap_stealthshow {
+            display: none;
+        }
+    }
+
+    .editing_makeavailable.js_snap_stealthshow {
+        display: block;
     }
 }
 
