@@ -407,6 +407,13 @@ class course_renderer extends \core_course_renderer {
                 $actionstealth .= '" data-action="' . $action . '" class="dropdown-item editing_makeavailable js_snap_stealth">' .
                     $str->makeavailable.'</a>';
                 $actionsadvanced[] = $actionstealth;
+
+                $action = 'show';
+                $actionstealthshow = '<a href="'.new moodle_url($baseurl, array($action => $mod->id));
+                $actionstealthshow .= '" data-action="' . $action .
+                        '" class="dropdown-item editing_makeavailable js_snap_stealthshow">' .
+                    $str->makeavailable.'</a>';
+                $actionsadvanced[] = $actionstealthshow;
             }
         }
 
