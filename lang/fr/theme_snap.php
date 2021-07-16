@@ -272,9 +272,9 @@ $string['pld'] = 'CPP';
 $string['pluginname'] = 'Snap';
 $string['poster'] = 'Image de couverture';
 $string['posterdesc'] = 'Image d\'en-tête de grande taille destinée à la page d\'accueil de votre site. Les images en mode paysage (1200 pixels x 600 pixels ou plus) sont plus optimales.';
-$string['poweredbyrunby'] = 'Conçu avec <a href="https://{$a->subdomain}.openlms.net/" target="_blank" rel="noopener">Open LMS</a>,
+$string['poweredbyrunby'] = 'Conçu avec <a href="https://www.openlms.net/" target="_blank" rel="noopener">Open LMS</a>,
 une technologie <a href="https://moodle.com/" target="_blank" rel="noopener">Moodle</a>.<br>
-Copyright &#169; {$a->year} Open LMS, tous droits réservés.';
+Copyright &#169; {$a} Open LMS, tous droits réservés.';
 $string['previoussection'] = 'Section précédente';
 $string['privacy:metadata:theme_snap_course_favorites:courseid'] = 'Identifiant du cours que l\'utilisateur a ajouté à ses favoris';
 $string['privacy:metadata:theme_snap_course_favorites:userid'] = 'Identifiant de l\'utilisateur qui a ajouté le cours à ses favoris';
@@ -394,3 +394,6 @@ $string['design_mod_page_description'] = 'Lorsque cette option est activée, le 
 $string['design_activity_chooser'] = 'Revenir au design original pour le choix de l’activité';
 $string['design_activity_chooser_description'] = 'Si cette option est activée, le sélecteur d’activité s’affichera sous son aspect d’origine. Cela affectera le cours et les premières pages.';
 $string['refreshdeadlinestask'] = 'Actualiser les échéances des données mises en cache. Cette tâche doit être exécutée avant que tous les utilisateurs se connectent.';
+$string['refreshdeadlinestaskoff'] = 'Aucune recherche de données à remplir n’a été effectuée. Veuillez activer le paramètre « Actualiser les dates limites à l\'aide d\'une tâche planifiée » dans les paramètres du menu personnel de Snap pour permettre à cette tâche de renseigner les données mises en cache des dates limites.';
+$string['activityrestriction'] = 'Restriction d\'activité';
+$string['hideandshowactioncb'] = 'Masquer et afficher l\'action de la case à cocher d\'activité';
