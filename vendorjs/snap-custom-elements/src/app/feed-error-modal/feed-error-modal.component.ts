@@ -70,16 +70,30 @@ export class FeedErrorModalComponent implements OnInit {
 
   displayError(error: any) {
     let data = {message: null, backtrace: null};
+    let errorObject = null;
     if (typeof error == 'object') {
-      if (undefined !== error.exception.debuginfo) {
-        data.backtrace = error.exception.debuginfo.trim() + " \n";
+      errorObject = error;
+      if (undefined !==  error.exception) {
+        errorObject = error.exception;
       }
 
-      if (undefined !== error.exception.backtrace) {
-        data.backtrace += error.exception.backtrace + " \n";
+      data.message = errorObject.message  + "<br>";
+      if (typeof errorObject.error == 'string') {
+        data.message += errorObject.error;
       }
 
-      data.message = error.exception.message;
+      if (undefined !== errorObject.errorcode) {
+        data.backtrace = errorObject.errorcode + " \n";
+      }
+      if (undefined !== errorObject.debuginfo) {
+        data.backtrace += errorObject.debuginfo.trim() + " \n";
+      }
+      if (undefined !== errorObject.backtrace) {
+        data.backtrace += errorObject.backtrace + " \n";
+      } else if (undefined !== errorObject.stacktrace) {
+        data.backtrace += errorObject.stacktrace + " \n";
+      }
+
       this.error = data;
     } else {
       data.message = error;
