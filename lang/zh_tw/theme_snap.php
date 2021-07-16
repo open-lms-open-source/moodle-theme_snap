@@ -396,3 +396,6 @@ $string['design_mod_page_description'] = '若啟用，頁面資源內容將會�
 $string['design_activity_chooser'] = '復原至活動選擇器的原始設計';
 $string['design_activity_chooser_description'] = '若啟用，將以原始設計顯示活動選擇器。這將影響課程和首頁。';
 $string['refreshdeadlinestask'] = '重新整理截止時間快取資料。這應該在所有使用者登入前執行。';
+$string['refreshdeadlinestaskoff'] = '沒有尋找要填入的資料。請在 Snap 的個人功能表設定中開啟設定「使用排定任務重新整理截止日期」，以允許此任務填入截止日期快取資料。';
+$string['activityrestriction'] = '活動限制';
+$string['hideandshowactioncb'] = '隱藏和顯示活動核取方塊動作';
