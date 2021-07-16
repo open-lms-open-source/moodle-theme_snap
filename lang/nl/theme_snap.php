@@ -275,7 +275,7 @@ $string['poster'] = 'Omslagafbeelding';
 $string['posterdesc'] = 'Een grote headerafbeelding voor de startpagina van je site. Liggende afbeeldingen (1200 x 600 pixels) of groter werken het beste.';
 $string['poweredbyrunby'] = 'Gebouwd met <a href="https://{$a->subdomain}.openlms.net/" target="_blank" rel="noopener">Open LMS</a>,
 een op <a href="https://moodle.com/" target="_blank" rel="noopener">Moodle</a> gebaseerd product.<br>
-Copyright &#169; {$a->year} Open LMS, alle rechten voorbehouden.';
+Copyright &#169; {$a} Open LMS, alle rechten voorbehouden.';
 $string['previoussection'] = 'Vorige sectie';
 $string['privacy:metadata:theme_snap_course_favorites:courseid'] = 'De cursus-ID van de cursus die de gebruiker als favoriet heeft ingesteld';
 $string['privacy:metadata:theme_snap_course_favorites:userid'] = 'De gebruikers-ID van de gebruiker die de cursus als favoriet heeft ingesteld';
@@ -395,3 +395,6 @@ $string['design_mod_page_description'] = 'Indien ingeschakeld wordt de paginabro
 $string['design_activity_chooser'] = 'Terug naar het oorspronkelijke ontwerp voor de activiteitenkiezer';
 $string['design_activity_chooser_description'] = 'Als deze optie is ingeschakeld, wordt de activiteitenkiezer weergegeven met het oorspronkelijke ontwerp. Dit heeft invloed op de cursus en de startpagina\'s.';
 $string['refreshdeadlinestask'] = 'Vernieuwt de data van deadlines in de cache. Voer deze taak uit voordat alle gebruikers zich aanmelden.';
+$string['refreshdeadlinestaskoff'] = 'Er is niet gezocht naar in te vullen gegevens. Schakel de instelling \'Deadlines verversen met geplande taak\' in de instellingen van het persoonlijke menu van Snap in, zodat deze taak de deadlines met gegevens in cache kan vullen.';
+$string['activityrestriction'] = 'Beperking van activiteit';
+$string['hideandshowactioncb'] = 'Selectievakje activiteit verbergen en weergeven';
