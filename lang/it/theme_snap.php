@@ -277,7 +277,7 @@ $string['poster'] = 'Immagine di copertina';
 $string['posterdesc'] = 'Un\'immagine grande dell\'intestazione per la pagina principale del sito. Le immagini orizzontali (1200 x 600 pixel) o più grandi forniscono risultati migliori.';
 $string['poweredbyrunby'] = 'Realizzato con <a href="https://{$a->subdomain}.openlms.net/" target="_blank" rel="noopener">Open LMS</a>,
 un prodotto basato su <a href="https://moodle.com/" target="_blank" rel="noopener">Moodle</a>.<br>
-Copyright &#169; {$a->year} Open LMS, tutti i diritti riservati.';
+Copyright #169; {$a} Open LMS, tutti i diritti riservati.';
 $string['previoussection'] = 'Sezione precedente';
 $string['privacy:metadata:theme_snap_course_favorites:courseid'] = 'ID del corso che l\'utente ha contrassegnato come preferito';
 $string['privacy:metadata:theme_snap_course_favorites:userid'] = 'L\'ID utente dell\'utente che ha contrassegnato come preferito il corso';
@@ -397,3 +397,6 @@ $string['design_mod_page_description'] = 'Abilitando questa opzione, i contenuti
 $string['design_activity_chooser'] = 'Esegui roll back al progetto originale per il selettore attività';
 $string['design_activity_chooser_description'] = 'Attivando questa opzione, il selettore attività apparirà con il progetto originale, interessando il corso e le pagine home.';
 $string['refreshdeadlinestask'] = 'Aggiorna i dati cache scadenze prima di ogni accesso utente.';
+$string['refreshdeadlinestaskoff'] = 'Dati da inserire non cercati. Attivare "Aggiorna scadenze mediante attività pianificate" nelle impostazioni menu Personale di Snap per consentire a questa attività di inserire i dati cache delle scadenze.';
+$string['activityrestriction'] = 'Limite attività';
+$string['hideandshowactioncb'] = 'Nascondi e mostra azione casella di controllo attività';
