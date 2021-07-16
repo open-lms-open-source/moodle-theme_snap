@@ -396,3 +396,6 @@ $string['design_mod_page_description'] = 'Jeśli zawartość zasobów strony jes
 $string['design_activity_chooser'] = 'Cofnij do oryginalnego projektu dla selektora aktywności';
 $string['design_activity_chooser_description'] = 'Jeśli opcja ta jest włączona, selektor aktywności będzie wyświetlany w oryginalnym wyglądzie. Będzie to miało wpływ na stronę główną i stronę kursu.';
 $string['refreshdeadlinestask'] = 'Odśwież zbuforowane dane o terminach. To zadanie powinno być uruchamiane przed zalogowaniem się wszystkich użytkowników.';
+$string['refreshdeadlinestaskoff'] = 'Nie szukano danych do wprowadzenia. Włącz funkcję „Odśwież terminy dla zaplanowanych zadań” w ustawieniach menu osobistego Snap, aby w ramach zadania móc wprowadzać scachowane dane dotyczące terminów.';
+$string['activityrestriction'] = 'Ograniczenie aktywności';
+$string['hideandshowactioncb'] = 'Ukryj i pokaż pole wyboru dla aktywności';
