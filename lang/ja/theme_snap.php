@@ -275,7 +275,7 @@ $string['poster'] = 'カバーイメージ';
 $string['posterdesc'] = 'サイトのフロントページ用の大きいヘッダイメージです。横向きイメージ (1200 x 600ピクセル) 以上が最適です。';
 $string['poweredbyrunby'] = '<a href="https://{$a->subdomain}.openlms.net/" target="_blank" rel="noopener">Open LMS</a>,
 a <a href="https://moodle.com/" target="_blank" rel="noopener">Moodle</a>ベースの製品) で構築しています。<br>
-Copyright &#169; {$a->year} Open LMS, All Rights Reserved.';
+Copyright &#169; {$a} Open LMS, All Rights Reserved.';
 $string['previoussection'] = '前のセクション';
 $string['privacy:metadata:theme_snap_course_favorites:courseid'] = 'ユーザがお気に入りとしてマークしたコースのコースID';
 $string['privacy:metadata:theme_snap_course_favorites:userid'] = 'コースをお気に入りにマークしたユーザのユーザID';
@@ -395,3 +395,6 @@ $string['design_mod_page_description'] = '有効にすると、ページリソ�
 $string['design_activity_chooser'] = '活動チューザのオリジナルのデザインにロールバックする';
 $string['design_activity_chooser_description'] = '有効にすると、活動チューザがオリジナルのデザインで表示されます。これは、コースとフロントページに影響を与えます。';
 $string['refreshdeadlinestask'] = '終了日時のキャッシュされたデータをリフレッシュします。これはすべてのユーザがログインする前に実行される必要があります。';
+$string['refreshdeadlinestaskoff'] = '投入するデータを検索しませんでした。Snapの個人メニュー設定の「スケジュール済みタスクを使用して期限をリフレッシュ」設定をオンにし、このタスクが期限キャッシュデータを投入できるようにします。';
+$string['activityrestriction'] = 'アクティビティの制限';
+$string['hideandshowactioncb'] = 'アクティビティのチェックボックスアクションを非表示および表示します';
