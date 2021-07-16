@@ -277,7 +277,7 @@ $string['poster'] = 'Titulní obrázek';
 $string['posterdesc'] = 'Jedná se o velký obrázek v záhlaví titulní stránky vašeho webu. Nejlepší je použít obrázek na šířku (1200 x 600 pixelů nebo více).';
 $string['poweredbyrunby'] = 'Vytvořeno pomocí <a href="https://{$a->subdomain}.openlms.net/" target="_blank" rel="noopener">Open LMS</a>,
 a <a href="https://moodle.com/" target="_blank" rel="noopener">produkt založený na systému Moodle</a>.<br>
-Autorská práva &#169; {$a->rok} Open LMS, všechna práva vyhrazena.';
+Copyright &#169; {$a->year} Open LMS, všechna práva vyhrazena.';
 $string['previoussection'] = 'Předchozí sekce';
 $string['privacy:metadata:theme_snap_course_favorites:courseid'] = 'ID kurzu, který uživatel přidal do oblíbených';
 $string['privacy:metadata:theme_snap_course_favorites:userid'] = 'ID uživatele, který kurz přidal do oblíbených';
