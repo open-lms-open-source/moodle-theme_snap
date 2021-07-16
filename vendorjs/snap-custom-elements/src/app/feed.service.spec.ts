@@ -6,6 +6,10 @@ import {MoodleRes} from "./moodle.res";
 import {MoodleResKey} from "./moodle-res-key";
 import {FeedServiceArgs} from "./feed-service-args";
 import {CachedMoodleRes} from "./cached-moodle-res";
+import {StringService} from "./string.service";
+import {MockStringService} from "./string.service.spec";
+import {ErrorReporterService} from "./error-reporter.service";
+import {MockErrorReporterService} from "./error-reporter.service.spec";
 
 describe('FeedService', () => {
   let feedService: FeedService;
@@ -61,6 +65,12 @@ describe('FeedService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule],
+      providers: [
+        {
+          provide: ErrorReporterService,
+          useClass: MockErrorReporterService
+        }
+      ]
     });
 
     httpTestingController = TestBed.inject(HttpTestingController);
@@ -78,7 +88,7 @@ describe('FeedService', () => {
     const sessKey = 'TestSessionCacheTest';
     const testUrl = `http://moodle.test/lib/ajax/service.php?sesskey=${sessKey}`
 
-    feedService.getFeed('http://moodle.test', sessKey, 'messages', 0, 3, -1)
+    feedService.getFeed('http://moodle.test', sessKey, 'messages', 0, 3, -1, 0)
       .subscribe(data =>
         // When observable resolves, result should match test data.
         expect(data).toEqual(testData)
@@ -97,7 +107,7 @@ describe('FeedService', () => {
     httpTestingController.verify();
 
     // We have a cached value, so the first request should linger as a result.
-    feedService.getFeed('http://moodle.test', sessKey, 'messages', 0, 3, -1)
+    feedService.getFeed('http://moodle.test', sessKey, 'messages', 0, 3, -1, 0)
       .subscribe(data =>
         // When observable resolves, result should match test data.
         expect(data).toEqual(testData)
@@ -107,10 +117,10 @@ describe('FeedService', () => {
     httpTestingController.expectNone(testUrl);
 
     // Purge the caches.
-    feedService.purgeDataInLocalCache(sessKey, 'messages', 0, 3);
+    feedService.purgeDataInLocalCache(sessKey, 'messages', 0, 3, 0);
 
     // We have a cached value, so the first request should linger as a result.
-    feedService.getFeed('http://moodle.test', sessKey, 'messages', 0, 3, -1)
+    feedService.getFeed('http://moodle.test', sessKey, 'messages', 0, 3, -1, 0)
       .subscribe(data =>
         // When observable resolves, result should match test data.
         expect(data).toEqual(emptyTestData)
@@ -135,7 +145,7 @@ describe('FeedService', () => {
     // Now we set 0 so there is no caching.
     feedService.setMaxLifeTime(0);
 
-    feedService.getFeed('http://moodle.test', sessKey, 'messages', 0, 3, -1)
+    feedService.getFeed('http://moodle.test', sessKey, 'messages', 0, 3, -1, 0)
       .subscribe(data =>
         // When observable resolves, result should match test data.
         expect(data).toEqual(testData)
@@ -154,7 +164,7 @@ describe('FeedService', () => {
     httpTestingController.verify();
 
     // We have a cached value, so the first request should linger as a result.
-    feedService.getFeed('http://moodle.test', sessKey, 'messages', 0, 3, -1)
+    feedService.getFeed('http://moodle.test', sessKey, 'messages', 0, 3, -1, 0)
       .subscribe(data =>
         // When observable resolves, result should match test data.
         expect(data).toEqual(testData)
@@ -198,7 +208,7 @@ describe('FeedService', () => {
     feedService.setMaxLifeTime(10); // 10 seconds.
 
     // We have a cached value, but it exeeds max life time, it should be cleared and a new request made.
-    feedService.getFeed('http://moodle.test', sessKey, 'messages', 0, 3, -1)
+    feedService.getFeed('http://moodle.test', sessKey, 'messages', 0, 3, -1, 0)
       .subscribe(data =>
         // When observable resolves, result should match test data.
         expect(data).toEqual(emptyTestData)
