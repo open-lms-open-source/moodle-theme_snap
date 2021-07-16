@@ -397,3 +397,6 @@ $string['design_mod_page_description'] = 'Wenn diese Option aktiviert ist, wird 
 $string['design_activity_chooser'] = 'Zurücksetzen auf das ursprüngliche Design für die Aktivitätsauswahl';
 $string['design_activity_chooser_description'] = 'Wenn diese Option aktiviert ist, wird die Aktivitätsauswahl im ursprünglichen Design angezeigt. Dies wirkt sich auf die Kurs- und Startseiten aus.';
 $string['refreshdeadlinestask'] = 'Aktualisieren Sie die zwischengespeicherten Daten der Termine. Diese Aktion sollte ausgeführt werden, bevor sich alle Nutzer/innen anmelden.';
+$string['refreshdeadlinestaskoff'] = 'Es wurde nicht nach Daten zum Auffüllen gesucht. Bitte aktivieren Sie die Option „Abgabetermine mit geplanter Aufgabe aktualisieren“ in den Einstellungen des Menüs „Persönlich“ von Snap, damit diese Aufgabe die zu den Abgabeterminen zwischengespeicherten Daten auffüllen kann.';
+$string['activityrestriction'] = 'Aktivitätsbeschränkung';
+$string['hideandshowactioncb'] = 'Aktivitäts-Checkbox-Aktion ausblenden und anzeigen';
