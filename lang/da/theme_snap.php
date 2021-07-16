@@ -395,3 +395,6 @@ $string['design_mod_page_description'] = 'Hvis sideressourceindhold er aktiveret
 $string['design_activity_chooser'] = 'Rul tilbage til aktivitetsvælgerens oprindelige design';
 $string['design_activity_chooser_description'] = 'Hvis dette er aktiveret, vises aktivitetsvælgeren med det oprindelige design. Dette vil ændre kursus- og forsiderne.';
 $string['refreshdeadlinestask'] = 'Genindlæs cachelagrede deadlinedata. Dette bør køres, før alle brugere logger ind.';
+$string['refreshdeadlinestaskoff'] = 'Søgte ikke efter data til udfyldning. Slå indstillingen "Refresh deadlines using scheduled task" (Opdater tidsfrister med planlagt opgave) i de personlige menuindstillinger i Snap, så denne opgave kan udfylde cachelagrede deadlinedata.';
+$string['activityrestriction'] = 'Aktivitetsbegrænsning';
+$string['hideandshowactioncb'] = 'Handling for afkrydsningsfelt til at skjule og vise aktiviteter';
