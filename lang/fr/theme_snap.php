@@ -394,3 +394,6 @@ $string['design_mod_page_description'] = 'Lorsque cette option est activée, le 
 $string['design_activity_chooser'] = 'Revenir au design original pour le choix de l’activité';
 $string['design_activity_chooser_description'] = 'Si cette option est activée, le sélecteur d’activité s’affichera sous son aspect d’origine. Cela affectera le cours et les premières pages.';
 $string['refreshdeadlinestask'] = 'Actualiser les échéances des données mises en cache. Cette tâche doit être exécutée avant que tous les utilisateurs se connectent.';
+$string['refreshdeadlinestaskoff'] = 'Aucune recherche de données à remplir n’a été effectuée. Veuillez activer le paramètre « Actualiser les dates limites à l\'aide d\'une tâche planifiée » dans les paramètres du menu personnel de Snap pour permettre à cette tâche de renseigner les données mises en cache des dates limites.';
+$string['activityrestriction'] = 'Restriction d\'activité';
+$string['hideandshowactioncb'] = 'Masquer et afficher l\'action de la case à cocher d\'activité';

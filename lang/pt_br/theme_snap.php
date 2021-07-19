@@ -396,3 +396,6 @@ $string['design_mod_page_description'] = 'Se ativado, o conteúdo do recurso da 
 $string['design_activity_chooser'] = 'Reverter para o design original do seletor de atividade';
 $string['design_activity_chooser_description'] = 'Se estiver habilitado, o seletor de atividade será exibido com o design original. Isso afetará o curso e as páginas iniciais.';
 $string['refreshdeadlinestask'] = 'Atualizar dados em cache de prazos de entrega. Deve ser executado antes do login de todos os usuários.';
+$string['refreshdeadlinestaskoff'] = 'Não procurou dados para preencher. Ative a configuração "Atualizar prazos usando a tarefa programada" nas configurações do menu Pessoal do Snap para permitir que essa tarefa preencha os dados de prazos armazenados em cache.';
+$string['activityrestriction'] = 'Restrição de atividade';
+$string['hideandshowactioncb'] = 'Ocultar e mostrar ação da caixa de seleção de atividade';

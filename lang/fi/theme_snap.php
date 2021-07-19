@@ -378,3 +378,6 @@ $string['design_mod_page_description'] = 'Jos tämä on käytössä, sivuaineist
 $string['design_activity_chooser'] = 'Palaa takaisin aktiviteettivalitsimen alkuperäiseen muotoiluun';
 $string['design_activity_chooser_description'] = 'Jos asetus valitaan, aktiviteettivalitsin näytetään alkuperäisen asetuksen mukaisena. Tämä vaikuttaa kurssin sivuihin ja etusivuun.';
 $string['refreshdeadlinestask'] = 'Päivitä määräpäivien välimuistissa olevat tiedot. Tämä pitää suorittaa ennen kuin kaikki käyttäjät kirjautuvat sisään.';
+$string['refreshdeadlinestaskoff'] = 'Ei etsitty tietoja täytettäväksi. Kytke päälle asetus ”Päivitä määräajat käyttäen ajoitettuja tehtäviä” Snapin henkilökohtaisen valikon asetuksissa, jotta tämä tehtävä voi täyttää määräaikojen välimuistiin tallennetut tiedot.';
+$string['activityrestriction'] = 'Aktiviteetin rajoitus';
+$string['hideandshowactioncb'] = 'Piilota ja näytä aktiviteetin valintaruudun toiminto';

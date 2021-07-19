@@ -395,3 +395,6 @@ $string['design_mod_page_description'] = '有効にすると、ページリソ�
 $string['design_activity_chooser'] = '活動チューザのオリジナルのデザインにロールバックする';
 $string['design_activity_chooser_description'] = '有効にすると、活動チューザがオリジナルのデザインで表示されます。これは、コースとフロントページに影響を与えます。';
 $string['refreshdeadlinestask'] = '終了日時のキャッシュされたデータをリフレッシュします。これはすべてのユーザがログインする前に実行される必要があります。';
+$string['refreshdeadlinestaskoff'] = '投入するデータを検索しませんでした。Snapの個人メニュー設定の「スケジュール済みタスクを使用して期限をリフレッシュ」設定をオンにし、このタスクが期限キャッシュデータを投入できるようにします。';
+$string['activityrestriction'] = 'アクティビティの制限';
+$string['hideandshowactioncb'] = 'アクティビティのチェックボックスアクションを非表示および表示します';

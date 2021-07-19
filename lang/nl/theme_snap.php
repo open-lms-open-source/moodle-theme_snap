@@ -395,3 +395,6 @@ $string['design_mod_page_description'] = 'Indien ingeschakeld wordt de paginabro
 $string['design_activity_chooser'] = 'Terug naar het oorspronkelijke ontwerp voor de activiteitenkiezer';
 $string['design_activity_chooser_description'] = 'Als deze optie is ingeschakeld, wordt de activiteitenkiezer weergegeven met het oorspronkelijke ontwerp. Dit heeft invloed op de cursus en de startpagina\'s.';
 $string['refreshdeadlinestask'] = 'Vernieuwt de data van deadlines in de cache. Voer deze taak uit voordat alle gebruikers zich aanmelden.';
+$string['refreshdeadlinestaskoff'] = 'Er is niet gezocht naar in te vullen gegevens. Schakel de instelling \'Deadlines verversen met geplande taak\' in de instellingen van het persoonlijke menu van Snap in, zodat deze taak de deadlines met gegevens in cache kan vullen.';
+$string['activityrestriction'] = 'Beperking van activiteit';
+$string['hideandshowactioncb'] = 'Selectievakje activiteit verbergen en weergeven';

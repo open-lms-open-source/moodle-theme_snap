@@ -397,3 +397,6 @@ $string['design_mod_page_description'] = 'Abilitando questa opzione, i contenuti
 $string['design_activity_chooser'] = 'Esegui roll back al progetto originale per il selettore attività';
 $string['design_activity_chooser_description'] = 'Attivando questa opzione, il selettore attività apparirà con il progetto originale, interessando il corso e le pagine home.';
 $string['refreshdeadlinestask'] = 'Aggiorna i dati cache scadenze prima di ogni accesso utente.';
+$string['refreshdeadlinestaskoff'] = 'Dati da inserire non cercati. Attivare "Aggiorna scadenze mediante attività pianificate" nelle impostazioni menu Personale di Snap per consentire a questa attività di inserire i dati cache delle scadenze.';
+$string['activityrestriction'] = 'Limite attività';
+$string['hideandshowactioncb'] = 'Nascondi e mostra azione casella di controllo attività';

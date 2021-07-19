@@ -396,3 +396,6 @@ $string['design_mod_page_description'] = 'Si se habilita esta opción, el conten
 $string['design_activity_chooser'] = 'Volver al diseño original del selector de actividad';
 $string['design_activity_chooser_description'] = 'Si se habilita esta opción, el selector de actividad se mostrará con el diseño original. Esto afectará al curso y a las páginas principales.';
 $string['refreshdeadlinestask'] = 'Actualice los datos de la caché de las fechas límite. Esto debe ejecutarse antes de que todos los usuarios se conecten.';
+$string['refreshdeadlinestaskoff'] = 'No se han buscado datos para introducir. Active el ajuste "Actualizar fechas límite utilizando tareas programadas" en la configuración del menú Personal de Snap para permitir a esta tarea introducir los datos de fechas límite en caché.';
+$string['activityrestriction'] = 'Restricción de actividad';
+$string['hideandshowactioncb'] = 'Ocultar y mostrar acción de casilla de verificación de actividad';

@@ -395,3 +395,6 @@ $string['design_mod_page_description'] = 'Si s\'activa, el contingut dels recurs
 $string['design_activity_chooser'] = 'Torna al disseny original per al selector d\'activitat';
 $string['design_activity_chooser_description'] = 'Si s\'activa, el selector d\'activitat es mostrarà amb el disseny original. Afectarà el curs i les pàgines de portada.';
 $string['refreshdeadlinestask'] = 'Actualitza les dades de terminis a la memòria cau. S\'ha d\'executar abans que tots els usuaris iniciïn sessió.';
+$string['refreshdeadlinestaskoff'] = 'No s\'han cercat dades per a omplir. Activeu el paràmetre "Actualitza els terminis mitjançant una tasca programada" en els paràmetres del menú Personal de Snap per permetre que aquesta tasca ompli les dades de terminis de la memòria cau.';
+$string['activityrestriction'] = 'Restricció d\'activitat';
+$string['hideandshowactioncb'] = 'Oculta i mostra l\'acció de la casella de selecció d\'activitat';
