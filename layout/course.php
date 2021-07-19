@@ -40,6 +40,9 @@ $mastimage = '';
 if ($COURSE->id != SITEID && !empty($coverimagecss)) {
     $mastimage = 'mast-image';
 }
+// Check if in current path we must to hide TOC.
+$pathurl = $PAGE->url->get_path();
+$pathurl = $OUTPUT->get_path_hiddentoc($pathurl);
 ?>
 <!-- Moodle js hooks -->
 <div id="page">
@@ -65,7 +68,7 @@ echo $OUTPUT->custom_menu_spacer();
     echo $OUTPUT->course_header();
     // Note, there is no blacklisting for the edit blocks button on course pages.
     echo $OUTPUT->page_heading_button();
-    if ($tocformat && !$leftnav) {
+    if ($tocformat && !$leftnav && !$pathurl) {
         echo $OUTPUT->course_toc();
     }
     ?>
@@ -76,8 +79,6 @@ if ($tocformat && $leftnav) {
     echo '<div id="snap-course-wrapper">';
     echo '<div class="row">';
     // If current path is a level up view, we hide TOC.
-    $pathurl = $PAGE->url->get_path();
-    $pathurl = $OUTPUT->get_path_hiddentoc($pathurl);
     if ($pathurl === true) {
         echo '<div class="col-lg-12">';
     } else {
