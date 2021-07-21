@@ -104,7 +104,6 @@ if ($hasadminbutton) {
         '/user/profile/index.php',
         '/mnet/service/enrol/index.php',
         '/local/mrooms/view.php',
-        '/local/xray/view.php'
     );
     $pagepath = local::current_url_path();
 
