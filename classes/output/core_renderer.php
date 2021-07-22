@@ -913,6 +913,24 @@ class core_renderer extends \theme_boost\output\core_renderer {
             $browseallcourses = $this->column_header_icon_link('browseallcourses', 'courses', $url);
         }
 
+        $maxcourses = !empty($CFG->theme_snap_bar_limit) ?
+            $CFG->theme_snap_bar_limit : local::DEFAULT_COMPLETION_COURSE_LIMIT;
+        $lowlimit = $maxcourses - 5;
+        $courselimitclass = false;
+        if (!empty($currentcourselist['published']['count'])) {
+            $coursescount = $currentcourselist['published']['count'];
+        } else {
+            $coursescount = 0;
+        }
+
+        if ($coursescount > $maxcourses) {
+            $courselimitclass = 'danger';
+            $warningstring = get_string('courselimitstrdanger', 'theme_snap');
+        } else if ($coursescount >= $lowlimit && $coursescount <= $maxcourses) {
+            $courselimitclass = 'warning';
+            $warningstring = get_string('courselimitstrwarning', 'theme_snap', $maxcourses);
+        }
+
         $data = (object) [
             'userpicture' => $picture,
             'fullnamelink' => $fullnamelink,
@@ -925,6 +943,11 @@ class core_renderer extends \theme_boost\output\core_renderer {
             'updates' => $this->render_callstoaction(),
             'advancedfeeds' => $this->advanced_feeds_enabled()
         ];
+
+        if ($courselimitclass) {
+            $data->courselimitclass = $courselimitclass;
+            $data->courselimitstr = $warningstring;
+        }
 
         return $this->render_from_template('theme_snap/personal_menu', $data);
     }
