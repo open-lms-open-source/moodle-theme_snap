@@ -25,6 +25,7 @@
 namespace theme_snap\tests;
 
 use theme_snap\local;
+use theme_snap\output\core_renderer;
 use theme_snap\user_forums;
 use core_component;
 
@@ -658,6 +659,38 @@ class theme_snap_recent_forum_activity_test extends \advanced_testcase {
     public function test_combined_group_posts() {
         $this->test_forum_group_posts('forum');
         $this->test_forum_group_posts('hsuforum', 5, 4, 2);
+    }
+
+    /**
+     * Test site news date on front page
+     */
+    public function test_site_news_date() {
+        global $SITE, $DB;
+        $this->resetAfterTest();
+
+        $forum = forum_get_course_forum($SITE->id, 'news');
+        $user = $this->getDataGenerator()->create_user();
+        $courseid = 1; // Id for home "course".
+        $discussion = $this->create_discussion('forum', $courseid, $user->id, $forum->id);
+
+        // Set new Moodle Page and set context.
+        $page = new \moodle_page();
+        $page->set_context(\context_system::instance());
+
+        $target = null;
+        $renderer = new core_renderer($page, $target);
+        $output = $renderer->site_frontpage_news();
+        $dateparsed = userdate($discussion->timemodified, get_string('strftimedatetime', 'langconfig'));
+        $this->assertStringContainsString($dateparsed, $output);
+
+        $newtimestamp = time();
+        $updatediscussion = new \stdClass();
+        $updatediscussion->id = $discussion->id;
+        $updatediscussion->timemodified = $newtimestamp;
+        $DB->update_record('forum_discussions', $updatediscussion);
+
+        $output = $renderer->site_frontpage_news();
+        $this->assertStringContainsString(userdate($newtimestamp, get_string('strftimedatetime', 'langconfig')), $output);
     }
 
     /**
