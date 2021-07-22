@@ -32,7 +32,7 @@ if (!during_initial_install() && !empty(get_site()->fullname)) {
 $name = 'theme_snap/themecolor';
 $title = new lang_string('themecolor', 'theme_snap');
 $description = '';
-$default = '#ff7f41'; // Open LMS orange.
+$default = '#82009E'; // Open LMS EDU Purple - To pass WCAG color contrast ratio check.
 $previewconfig = null;
 $setting = new \theme_snap\admin_setting_configcolorwithcontrast(
     \theme_snap\admin_setting_configcolorwithcontrast::BASICS, $name, $title, $description, $default, $previewconfig);

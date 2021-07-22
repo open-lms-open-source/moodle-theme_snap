@@ -63,7 +63,7 @@ Feature: When the Moodle theme is set to Snap, custom menu should exist for the 
   Scenario: Check custom menu background and text color.
     Given I log in as "admin"
     # Check that the custom menu has the same color as the site color.
-    And I check element ".theme-snap header#mr-nav #snap-custom-menu-header nav.navbar" with property "background-color" = "#FF7F41"
+    And I check element ".theme-snap header#mr-nav #snap-custom-menu-header nav.navbar" with property "background-color" = "#82009E"
     # Check that the text color have white color as a default color.
     And I check element ".theme-snap header#mr-nav #snap-custom-menu-header nav.navbar ul.snap-navbar-content li.nav-item a" with color "#FFFFFF"
 

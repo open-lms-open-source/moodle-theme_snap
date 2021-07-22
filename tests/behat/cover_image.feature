@@ -274,8 +274,8 @@ Feature: When the moodle theme is set to Snap, cover image can be set for site a
     And I upload cover image "testpng_small.png"
     And I wait until ".btn.ok" "css_element" is visible
     And I click on ".btn.ok" "css_element"
-    Then I should see "This image could have contrast problems with the theme color due not compliance with the WCAG 2.0 minimum ratio value 4.5:1"
+    Then I should see "This image could have contrast problems due not compliance with the WCAG 2.0 minimum ratio value 4.5:1"
     And I upload cover image "black_cover.jpg"
     And I wait until ".btn.ok" "css_element" is visible
     And I click on ".btn.ok" "css_element"
-    Then I should not see "This image could have contrast problems with the theme color due not compliance with the WCAG 2.0 minimum ratio value 4.5:1"
+    Then I should not see "This image could have contrast problems due not compliance with the WCAG 2.0 minimum ratio value 4.5:1"
