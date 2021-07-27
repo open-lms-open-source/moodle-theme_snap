@@ -1189,7 +1189,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
             }
 
             $name    = format_string($discussion->name, true, array('context' => $context));
-            $date    = userdate($discussion->timemodified, get_string('strftimedatetime', 'langconfig'));
+            $date    = userdate($discussion->modified, get_string('strftimedatetime', 'langconfig'));
 
             $message = format_text($message, $discussion->messageformat, ['context' => $context]);
 
