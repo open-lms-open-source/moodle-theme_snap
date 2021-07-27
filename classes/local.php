@@ -472,8 +472,9 @@ class local {
         // We do not support meta data for people who have a crazy number of courses!
         $maxcourses = !empty($CFG->theme_snap_max_pm_completion_courses) ?
             $CFG->theme_snap_max_pm_completion_courses : self::DEFAULT_COMPLETION_COURSE_LIMIT;
-
-        if (count($courses) > self::DEFAULT_COMPLETION_COURSE_LIMIT) {
+        $barlimit = !empty($CFG->theme_snap_bar_limit) ?
+            $CFG->theme_snap_bar_limit : self::DEFAULT_COMPLETION_COURSE_LIMIT;
+        if (count($courses) > $barlimit) {
             return $courseinfo;
         }
 

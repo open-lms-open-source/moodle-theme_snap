@@ -408,3 +408,5 @@ $string['retryfeed'] = 'This feed is currently unavailable, please check back la
 $string['loadingfeed'] = 'Loading...may take time';
 $string['hvpcustomcss'] = 'H5P Custom CSS';
 $string['hvpcustomcssdesc'] = 'Custom CSS for the H5P module (moodle.org/plugins/mod_hvp) if installed.';
+$string['courselimitstrdanger'] = 'Course limit reached progress bar will not be displayed.';
+$string['courselimitstrwarning'] = 'If more than {$a} courses are listed progress bar will not be displayed';

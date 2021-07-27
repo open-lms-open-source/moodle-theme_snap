@@ -44,7 +44,12 @@
 
 
         </header>
-
+{{#courselimitstr}}
+    <div class='alert alert-block alert-{{courselimitclass}} fade in'>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">×</button>
+        {{courselimitstr}}
+    </div>
+{{/courselimitstr}}
         <!-- Content -->
         <div id="snap-pm-content" class="row">
             <!-- Courses -->
