@@ -52,7 +52,9 @@ echo html_writer::link($CFG->wwwroot, $sitefullname, $attrs);
     <?php
     if (class_exists('local_geniusws\navigation')) {
         $bblink = new genius_dashboard_link();
+        echo '<div id="genius_link_wrapper">';
         echo $OUTPUT->render($bblink);
+        echo '</div>';
     }
 
     echo $OUTPUT->personal_menu_trigger();
