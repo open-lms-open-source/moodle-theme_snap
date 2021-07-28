@@ -50,4 +50,14 @@ class theme_snap_activity_deadlines_cache_test extends advanced_testcase {
 
         $this->assertEmpty($muc->get('test123'));
     }
+
+    public function test_reset_deadlines_counter_task() {
+        $muc = \cache::make('theme_snap', 'activity_deadlines');
+        $muc->set('query_count', random_int(1, 100));
+
+        $task = new \theme_snap\task\reset_deadlines_query_count_task();
+        $task->execute();
+
+        $this->assertEquals(0, intval($muc->get('query_count')));
+    }
 }
