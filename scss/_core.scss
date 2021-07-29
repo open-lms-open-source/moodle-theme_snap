@@ -865,7 +865,6 @@ footer #moodle-footer
     #region-main,
     #moodle-footer,
     #moodle-blocks {
-        padding-left: 15px;
         padding-right: 15px;
     }
 }
@@ -983,6 +982,7 @@ footer #moodle-footer
 .badge-count-container {
     display: inline-block;
     float: none;
+    width: 2.35em;
 
     // we want to maintain the position along the Intellicart or notification icons when
     // these icons don't exists in the Snap header.
@@ -1027,13 +1027,14 @@ footer #moodle-footer
 }
 
 // -------------------------
-// Snap logo & mobile view.
+// Snap header logo & mobile view.
 // -------------------------
 // Logo and title.
 #snap-home {
     display: inline-block;
     padding: .5em 0;
     width: 19em;
+    max-width: 20%;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -1041,7 +1042,6 @@ footer #moodle-footer
     &.logo {
         display: inline-block;
         height: 45px;
-        max-width: 20%;
         background-color: transparent;
         background-repeat: no-repeat;
         background-size: contain;
@@ -1049,72 +1049,44 @@ footer #moodle-footer
     }
 }
 
-@media (max-width: 767px) {
-    #snap-home {
-        padding-top: .8em;
-    }
-}
-
-@media (max-width: 919px) {
-    #snap-home {
-        width: 11em;
-    }
-}
-
-@media (max-width: 500px) {
-    #snap-home {
-        width: 5em;
-    }
-}
-
-@media (max-width: 335px) {
-    #snap-home {
-        width: 3.5em;
-    }
-}
-
 // Right icons Snap header.
 // Not likely to have a device with this resolution, but we need to cover it.
-@media (max-width: 360px) {
-    .pull-right.js-only.row .genius_dashboard_link {
-        width: 2.3em !important;
-    }
-}
-
-@media (max-width: 390px) {
-    #mr-nav {
-        padding: 0;
-    }
-    .pull-right.js-only.row {
-        .genius_dashboard_link,
-        .badge-count-container,
-        #nav-intellicart-popover-container,
-        #nav-notification-popover-container,
-        span.hidden-md-down {
-            width: 2.3em;
-        }
-        span.hidden-md-down .simplesearchform a {
-            padding-left: 0.2em;
-        }
-    }
-}
-
-@media (max-width: 415px) {
+@media (max-width: 330px) {
     #snap-header {
-        padding-left: 0.2em !important;
-    }
-    #snap-home.logo {
-        max-width: 15%;
+        padding-left: 1% !important;
     }
 }
 
-@media (max-width: 650px) {
+@media (max-width: 375px) {
+    #mr-nav {
+        padding-right: 0;
+        #snap-header {
+            #snap-pm-trigger {
+                padding-left: 0;
+            }
+        }
+    }
+}
+
+// sm: 576px.
+@include media-breakpoint-down(sm) {
+    #snap-header {
+        #snap-pm-trigger {
+            margin-right: 0;
+            padding-right: 0;
+            margin-bottom: 0;
+        }
+        #admin-menu-trigger {
+            margin-left: .2em;
+        }
+    }
+}
+
+// md: 768px.
+@include media-breakpoint-down(md) {
     #snap-header {
         .pull-right.js-only.row {
             #snap-pm-trigger {
-                margin-right: 0;
-                padding-left: 0;
-                padding-right: 0;
                 span.hidden-xs-down {
                     display: none;
                 }
@@ -1122,27 +1094,25 @@ footer #moodle-footer
                     content: "\25BC";
                 }
             }
+            .hidden-md-down {
+                a[aria-label="Search"] {
+                    padding-left: 0;
+                    padding-right: 0;
+                    i.fa-search {
+                        font-size: 1.6rem;
+                    }
+                }
+            }
             .genius_dashboard_link {
                 color: transparent;
                 white-space: nowrap;
-                width: 3.3em;
-                padding-top: 0.6em;
+                width: 2em;
                 img.icon {
                     font-size: 1.3rem;
                 }
                 &:after {
                     content: "";
                 }
-            }
-        }
-    }
-}
-
-@media (max-width: 767px) {
-    #snap-header {
-        .pull-right.js-only.row {
-            .hidden-md-down a[aria-label="Search"] i.fa-search {
-                font-size: 1.6rem;
             }
         }
     }
@@ -1429,7 +1399,7 @@ header#page-header
         display: inline-block;
         padding: 1em 2%;
         margin: 10em 4% 1em;
-        overflow-wrap: break-word;
+        word-break: break-word;
     }
 
     #moodle-page {
@@ -3985,31 +3955,27 @@ body.pagelayout-frontpage {
 }
 
 // Genius dashboard link.
-#page-site-index .genius_dashboard_link {
-    img.icon {
-        height: 1.5em;
-        width: auto;
-        margin-right: 0.25em;
-        font-size: inherit;
-        margin-bottom: 0.1em;
-        @include alakazam;
-    }
-    &:hover,
-    &:focus {
-        img.icon {
-            transform: scale(1.2);
+#snap-header {
+    #genius_link_wrapper {
+        display: flex;
+        align-items: center;
+        .genius_dashboard_link {
+            img.icon {
+                height: 1.5em;
+                width: auto;
+                margin-right: 0.25em;
+                font-size: inherit;
+                margin-bottom: 0.1em;
+                @include alakazam;
+            }
+            &:hover,
+            &:focus {
+                img.icon {
+                    transform: scale(1.2);
+                }
+                color: darken($nav-button-color, 8%);
+            }
         }
-        color: darken($nav-button-color, 8%);
-    }
-}
-
-#mr-nav .genius_dashboard_link {
-    padding-top: 0.45em;
-}
-
-@media (max-width: 767px) {
-    #mr-nav .genius_dashboard_link {
-        padding-top: 0.75em;
     }
 }
 
