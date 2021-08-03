@@ -743,7 +743,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
         // assigned to it.
         $fullnamelink = '<a href="' .s($CFG->wwwroot). '/user/profile.php"
                     title="' .s(get_string('viewyourprofile', 'theme_snap')). '"
-                    class="h1" aria-level="1" id="snap-pm-user-profile">'
+                    class="h1" id="snap-pm-user-profile">'
                     .format_string(fullname($USER)). '</a>';
 
         // Real user when logged in as.

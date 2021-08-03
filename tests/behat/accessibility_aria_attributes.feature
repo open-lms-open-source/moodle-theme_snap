@@ -22,6 +22,7 @@
 
 
 @theme @theme_snap @theme_snap_ax
+# We need to test the accessibility in the most used Snap views through a special step for cat.aria, wcag412 tags.
 Feature: Elements for Snap should have the proper aria attributes.
 
   Background:
@@ -51,6 +52,7 @@ Feature: Elements for Snap should have the proper aria attributes.
       | assign   | C1                   | assign2  | Test assignment2 | Test assignment description 2 | 1       | 1                                   | 1          | 0              |
 
   @javascript
+  # This is a scenario for a core view.
   Scenario: All calendar's anchors must contain the aria-label attribute
     Given I log in as "teacher1"
     And I am on the course main page for "C1"
@@ -62,7 +64,7 @@ Feature: Elements for Snap should have the proper aria attributes.
     And the "aria-label" attribute of "#id_gradingduedate_calendar" "css_element" should contain "Calendar"
     And the "aria-label" attribute of "#id_duedate_calendar" "css_element" should contain "Calendar"
 
-  @javascript
+  @javascript @accessibility
   Scenario: Elements in front page must contain the correct attributes
     Given I log in as "admin"
     And the following config values are set as admin:
@@ -84,8 +86,9 @@ Feature: Elements for Snap should have the proper aria attributes.
     And the "aria-label" attribute of "#mr-nav .simplesearchform a.btn.btn-open" "css_element" should contain "Search"
     And the "aria-label" attribute of "div#snap-featured-courses p.text-center a" "css_element" should contain "Browse all courses"
     And the "id" attribute of "div#snap-featured-courses p.text-center a" "css_element" should contain "browse-all-courses-featured-courses"
+    And the page should meet "cat.aria, wcag412" accessibility standards
 
-  @javascript
+  @javascript @accessibility
   Scenario: Elements in personal menu must contain the correct attributes
     Given I log in as "admin"
     And I am on site homepage
@@ -100,15 +103,18 @@ Feature: Elements for Snap should have the proper aria attributes.
     And the "id" attribute of "div.snap-pm-user div#snap-pm-header-quicklinks a#snap-pm-dashboard" "css_element" should contain "snap-pm-dashboard"
     And the "id" attribute of "div.snap-pm-user div#snap-pm-header-quicklinks a#snap-pm-preferences" "css_element" should contain "snap-pm-preferences"
     And the "id" attribute of "div.snap-pm-user div#snap-pm-header-quicklinks a#snap-pm-grades" "css_element" should contain "snap-pm-grades"
+    # Aria allowed attributes https://github.com/dequelabs/axe-core/blob/v3.5.5/doc/rule-descriptions.md#best-practices-rules.
+    And the page should meet "cat.aria, wcag412" accessibility standards
 
-  @javascript
+  @javascript @accessibility
   Scenario: Elements in course main view must contain the correct attributes
     Given I log in as "admin"
     And I am on the course main page for "C1"
     And the "id" attribute of "div.toc-footer a#snap-new-section" "css_element" should contain "snap-new-section"
     And the "id" attribute of "div.toc-footer a#snap-course-tools" "css_element" should contain "snap-course-tools"
+    And the page should meet "cat.aria, wcag412" accessibility standards
 
-  @javascript
+  @javascript @accessibility
   Scenario: Elements in course dashboard must contain the correct attributes
     Given I log in as "admin"
     And I am on the course main page for "C1"
@@ -121,6 +127,7 @@ Feature: Elements for Snap should have the proper aria attributes.
     And the "id" attribute of "div#coursetools-list a#ct-pld" "css_element" should contain "ct-pld"
     And the "id" attribute of "div#coursetools-list a#ct-competencies" "css_element" should contain "ct-competencies"
     And the "id" attribute of "div#coursetools-list a#ct-badges" "css_element" should contain "ct-badges"
+    And the page should meet "cat.aria, wcag412" accessibility standards
 
   @javascript
   Scenario: When creating a new activity in Snap, the mod chooser should have a specific ID
@@ -128,7 +135,7 @@ Feature: Elements for Snap should have the proper aria attributes.
     And I am on the course main page for "C1"
     And the "id" attribute of "//li[@id='section-0']//div[@class='content']//div[@class='col-sm-6 snap-modchooser']" "xpath_element" should contain "snap-create-activity"
 
-  @javascript
+  @javascript @accessibility
   Scenario: When an activity have a restriction, the lock icon should have the needed aria attributes.
     Given I log in as "teacher1"
     And I am on the course main page for "C1"
@@ -143,3 +150,4 @@ Feature: Elements for Snap should have the proper aria attributes.
     And I wait until the page is ready
     And the "aria-label" attribute of ".snap-header-card-icons a[id^='snap-restriction-']" "css_element" should contain "Activity restriction"
     And the "title" attribute of ".snap-header-card-icons a[id^='snap-restriction-'] img" "css_element" should contain "Activity restriction"
+    And the page should meet "cat.aria, wcag412" accessibility standards
