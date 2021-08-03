@@ -1061,7 +1061,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
 
         $heading = $this->page->heading;
 
-        if ($this->page->pagelayout == 'mypublic') {
+        if ($this->page->pagelayout == 'mypublic' && $COURSE->id == SITEID) {
             // For the user profile page message button we need to call 2.9 content_header.
             $heading = parent::context_header();
         } else if ($COURSE->id != SITEID && stripos($heading, format_string($COURSE->fullname)) === 0) {
