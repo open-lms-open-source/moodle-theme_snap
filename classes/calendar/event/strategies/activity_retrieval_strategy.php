@@ -308,22 +308,21 @@ class activity_retrieval_strategy extends \core_calendar\local\event\strategies\
         $sql = "-- Snap sql
         ";
         $sql .= "SELECT {$selectfields}
-                  FROM {event} e
-            INNER JOIN ($subquery) fe
-                    ON e.modulename = fe.modulename
-                       AND e.instance = fe.instance
-                       AND e.eventtype = fe.eventtype
-                       AND (e.priority = fe.priority OR (e.priority IS NULL AND fe.priority IS NULL))
-             LEFT JOIN {modules} m
-                    ON e.modulename = m.name
-             $assignoverride
-
-                 WHERE ((m.visible = 1 OR m.visible IS NULL)
-                   AND (e.modulename IS NOT NULL)
-                   AND (e.eventtype = 'open' OR e.eventtype = 'close' OR e.eventtype = 'due'
-                    OR e.eventtype = 'expectcompletionon'))
-                   AND
-                 $whereclause
+                   FROM {event} e
+             INNER JOIN ($subquery) fe
+                     ON e.modulename = fe.modulename
+                        AND e.instance = fe.instance
+                        AND e.eventtype = fe.eventtype
+                        AND (e.priority = fe.priority OR (e.priority IS NULL AND fe.priority IS NULL))
+              LEFT JOIN {modules} m
+                     ON e.modulename = m.name
+                     $assignoverride
+               WHERE ((m.visible = 1 OR m.visible IS NULL)
+                     AND (e.modulename IS NOT NULL)
+                     AND (e.eventtype = 'open' OR e.eventtype = 'close' OR e.eventtype = 'due'
+                      OR e.eventtype = 'expectcompletionon'))
+                     AND $whereclause
+                     AND e.modulename != 'label'
               ORDER BY " . ($ordersql ? $ordersql : "e.timestart");
 
         if (!empty($whereparams)) {

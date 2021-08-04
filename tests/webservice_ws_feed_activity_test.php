@@ -70,6 +70,73 @@ class theme_snap_ws_feed_test extends \advanced_testcase {
         $this->assertEquals($serviceresult[0]['subTitle'], 'Message5');
     }
 
+    public function test_feed_deadline() {
+        global $DB;
+        $this->resetAfterTest();
+
+        $this->setAdminUser();
+        $student = $this->getDataGenerator()->create_user();
+        $course = $this->getDataGenerator()->create_course();
+        $record = new stdClass();
+        $record->course = $course;
+
+        $studentrole = $DB->get_record('role', array('shortname' => 'student'));
+        $this->getDataGenerator()->enrol_user($student->id, $course->id, $studentrole->id);
+
+        // Create a activity, e.g. an Assign activty.
+        $assignmodulename = 'assign';
+        $assignactivityname = 'Assignment';
+        $assign = $this->getDataGenerator()->create_module($assignmodulename, $record);
+        $this->getDataGenerator()->create_event(array(
+            'userid' => $student->id,
+            'modulename' => $assignmodulename,
+            'eventtype' => 'due',
+            'instance' => $assign->id,
+        ));
+
+        $this->setUser($student);
+        $deadlines = ws_feed::service('deadlines');
+
+        $this->assertCount(1, $deadlines);
+        $this->assertEqualsIgnoringCase($assignactivityname, $deadlines[0]['iconDesc']);
+
+        // Create a second activity, e.g. a Quiz activity.
+        $this->setAdminUser();
+        $quizmodulename = 'quiz';
+        $quiz = $this->getDataGenerator()->create_module($quizmodulename, $record);
+        $this->getDataGenerator()->create_event(array(
+            'userid' => $student->id,
+            'modulename' => $quizmodulename,
+            'eventtype' => 'due',
+            'instance' => $quiz->id,
+        ));
+
+        $this->setUser($student);
+        $deadlines = ws_feed::service('deadlines');
+
+        $this->assertCount(2, $deadlines);
+        $this->assertEqualsIgnoringCase($assignactivityname, $deadlines[0]['iconDesc']);
+        $this->assertEqualsIgnoringCase($quizmodulename, $deadlines[1]['iconDesc']);
+
+        // Create a label activity and verify that it is not being returned by web service.
+        $this->setAdminUser();
+        $labelmodulename = 'label';
+        $label = $this->getDataGenerator()->create_module($labelmodulename, $record);
+        $this->getDataGenerator()->create_event(array(
+            'userid' => $student->id,
+            'modulename' => $labelmodulename,
+            'eventtype' => 'due',
+            'instance' => $label->id,
+        ));
+
+        $this->setUser($student);
+        $deadlines = ws_feed::service('deadlines');
+
+        $this->assertCount(2, $deadlines);
+        $this->assertEqualsIgnoringCase($assignactivityname, $deadlines[0]['iconDesc']);
+        $this->assertEqualsIgnoringCase($quizmodulename, $deadlines[1]['iconDesc']);
+    }
+
     public function create_message(array $users, $messagetype, $message, $time, $subject = 'No subject') {
         global $DB;
 
