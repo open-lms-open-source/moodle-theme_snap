@@ -481,8 +481,8 @@ class behat_theme_snap extends behat_base {
 
         $formcontext->i_expand_all_fieldsets();
         $generalcontext->i_click_on('Add restriction...', 'button');
-        $generalcontext->should_be_visible('//div[text()="Add restriction..."]', 'xpath_element');
-        $generalcontext->i_click_on('//button[text()="Date"]', 'xpath_element');
+        $generalcontext->should_be_visible('Add restriction...', 'dialogue');
+        $generalcontext->i_click_on_in_the('Date', 'button', 'Add restriction...', 'dialogue');
         $formcontext->i_set_the_field_to('day', $day);
         $formcontext->i_set_the_field_with_xpath_to('//select[@name=\'x[month]\']', $month);
         $formcontext->i_set_the_field_to('year', $year);
@@ -578,8 +578,8 @@ class behat_theme_snap extends behat_base {
         $formhelper = behat_context_helper::get('behat_forms');
         $formhelper->i_expand_all_fieldsets();
         $helper->i_click_on('Add restriction...', 'button');
-        $helper->should_be_visible('//div[text()="Add restriction..."]', 'xpath_element');
-        $helper->i_click_on('//button[text()="Activity completion"]', 'xpath_element');
+        $helper->should_be_visible('Add restriction...', 'dialogue');
+        $helper->i_click_on_in_the('Activity completion', 'button', 'Add restriction...', 'dialogue');
         $formhelper->i_set_the_field_with_xpath_to('//select[@name=\'cm\']', $assettitle);
         $formhelper->press_button($savestr);
         $helper->wait_until_the_page_is_ready();
@@ -597,8 +597,8 @@ class behat_theme_snap extends behat_base {
         $formhelper = behat_context_helper::get('behat_forms');
         $formhelper->i_expand_all_fieldsets();
         $helper->i_click_on('Add restriction...', 'button');
-        $helper->should_be_visible('//div[text()="Add restriction..."]', 'xpath_element');
-        $helper->i_click_on('//button[text()="Group"]', 'xpath_element');
+        $helper->should_be_visible('Add restriction...', 'dialogue');
+        $helper->i_click_on_in_the('Group', 'button', 'Add restriction...', 'dialogue');
         $formhelper->i_set_the_field_with_xpath_to('//select[@name=\'id\']', $group);
         $formhelper->press_button($savestr);
         $helper->wait_until_the_page_is_ready();
