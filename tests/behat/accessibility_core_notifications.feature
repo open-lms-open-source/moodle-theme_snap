@@ -13,7 +13,7 @@
 # You should have received a copy of the GNU General Public License
 # along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 #
-# Tests for toggle course section visibility in non edit mode in snap.
+# Tests for core notifications messages in Snap.
 #
 # @package    theme_snap
 # @author     Rafael Becerra rafael.becerrarodriguez@openlms.net
