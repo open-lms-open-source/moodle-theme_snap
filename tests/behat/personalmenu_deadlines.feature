@@ -255,7 +255,6 @@ Feature: When the moodle theme is set to Snap, students and teachers can find in
     And I see a personal menu deadline of "##next week##" for "Assignment 1"
     And I see a personal menu deadline of "##tomorrow##" for "Forum 1"
     And I see a personal menu deadline of "##tomorrow##" for "Quiz 1"
-    And I see a personal menu deadline of "##tomorrow##" for "Label 1"
     And Activity "assign" "Assignment 1" is deleted
     And Activity "forum" "Forum 1" is deleted
     And Activity "quiz" "Quiz 1" is deleted
@@ -307,7 +306,6 @@ Feature: When the moodle theme is set to Snap, students and teachers can find in
     And I <waitclause>
     And I open the personal menu
     And I see a personal menu deadline of "##tomorrow##" for "Page 1"
-    And I see a personal menu deadline of "##tomorrow##" for "Label 1"
     And "#snap-pm-updates .snap-media-body .snap-completion-meta a" "css_element" should not exist
     Examples:
       | enadvfeeds | waitclause                                          |

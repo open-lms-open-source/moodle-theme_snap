@@ -1727,7 +1727,6 @@ class theme_snap_acitvity_test extends snap_base_test {
     }
 
     public function test_snap_deadlines_feed_url() {
-        global $CFG;
         $this->resetAfterTest();
 
         activity::$phpunitallowcaching = false;
@@ -1743,14 +1742,14 @@ class theme_snap_acitvity_test extends snap_base_test {
         $today = new \DateTime('today', $tz);
         $todayts = $today->getTimestamp();
 
-        $labels = [];
-
         for ($t = 0; $t < 2; $t++) {
-            $url = new \moodle_url('/mod/label/view.php', ['id' => $this->create_label($course->id, $todayts)->cmid]);
+            $quiz = $this->create_quiz($course->id, $todayts);
+            $url = new \moodle_url('/mod/quiz/view.php', ['id' => $quiz->get_cmid()]);
             $urls[] = $url->out();
         }
         for ($t = 0; $t < 2; $t++) {
-            $url = new \moodle_url('/mod/label/view.php', ['id' => $this->create_label($course->id, $todayts + WEEKSECS)->cmid]);
+            $quiz = $this->create_quiz($course->id, $todayts + WEEKSECS);
+            $url = new \moodle_url('/mod/quiz/view.php', ['id' => $quiz->get_cmid()]);
             $urls[] = $url->out();
         }
         $this->setUser($student);
