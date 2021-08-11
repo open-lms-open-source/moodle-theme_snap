@@ -170,8 +170,13 @@ class ws_course_cards_categories extends \external_api
                 $params = array_merge($params, $allowedparams);
             }
         }
+        if ($DB->get_dbfamily() === 'postgres') {
+            $yearfield = 'EXTRACT(YEAR FROM TO_TIMESTAMP(c.enddate)) AS cat_year';
+        } else {
+            $yearfield = 'YEAR(FROM_UNIXTIME(c.enddate)) AS cat_year';
+        }
 
-        $sql = "SELECT DISTINCT YEAR(FROM_UNIXTIME(c.enddate)) AS cat_year , COUNT(*) AS courses, MIN(c.enddate) AS stamp
+        $sql = "SELECT DISTINCT $yearfield , COUNT(*) AS courses, MIN(c.enddate) AS stamp
               FROM {course} c
               JOIN ($courseidsql) en ON (en.courseid = c.id)
               $timeaccessjoin
