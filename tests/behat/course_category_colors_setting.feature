@@ -21,6 +21,9 @@
 
 
 @theme @theme_snap @theme_snap_color_check @theme_snap_course
+# Some scenarios will be testing AX through special steps depending on the needed rules.
+# https://github.com/dequelabs/axe-core/blob/v3.5.5/doc/rule-descriptions.md#best-practices-rules.
+# Color contrast: cat.color.
 Feature: When the moodle theme is set to Snap, sets a color per category.
 
   Background:
@@ -87,7 +90,7 @@ Feature: When the moodle theme is set to Snap, sets a color per category.
     And I follow "Cat 30"
     And I check element "a.btn.btn-secondary" with color "#FF0000"
 
-  @javascript
+  @javascript @accessibility
   Scenario: Check category colors from nearest parent in hierarchy.
     Given the following config values are set as admin:
       | category_color | {"5":"#00FF00","10":"#FF0000"} | theme_snap |
@@ -110,8 +113,9 @@ Feature: When the moodle theme is set to Snap, sets a color per category.
     And I follow "Browse all courses"
     And I follow "Cat 30"
     And I check element "a.btn.btn-secondary" with color "#82009E"
+    And the page should meet "cat.color" accessibility standards
 
-  @javascript
+  @javascript @accessibility
   Scenario: Check category course color from nearest parent in hierarchy for teacher and student.
     Given I log in as "admin"
     And I purge snap caches
@@ -135,3 +139,4 @@ Feature: When the moodle theme is set to Snap, sets a color per category.
     And I log in as "student1"
     And I am on the course main page for "C2"
     And I check element "a" with color "#82009E"
+    And the page should meet "cat.color" accessibility standards

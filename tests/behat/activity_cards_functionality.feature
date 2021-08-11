@@ -21,6 +21,11 @@
 # @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
 
 @theme @theme_snap @theme_snap_activity_cards
+# Some scenarios will be testing AX through special steps depending on the needed rules.
+# https://github.com/dequelabs/axe-core/blob/v3.5.5/doc/rule-descriptions.md#best-practices-rules.
+# Aria attributes: cat.aria, wcag412 tags.
+# Unique attributes, mainly ID's: cat.parsing, wcag411 tags.
+# Alternate texts: cat.text-alternatives, wcag111, section508, section508.22.a.
 Feature: Check functionality in activity cards.
   Background:
     Given the following "users" exist:
@@ -37,7 +42,7 @@ Feature: Check functionality in activity cards.
     And the following config values are set as admin:
       | design_activity_chooser | 1 | theme_snap |
 
-  @javascript
+  @javascript @accessibility
   Scenario: Add an image to an activity card, student and teacher should not see the image in the content.
     Given I log in as "teacher1"
     And I am on "Course 1" course homepage with editing mode on
@@ -57,8 +62,10 @@ Feature: Check functionality in activity cards.
     And I am on "Course 1" course homepage with editing mode on
     And I follow "Topic 1"
     And "img.img-responsive atto_image_button_text-bottom" "css_element" should not exist
+    And the page should meet "cat.aria, wcag412" accessibility standards
+    And the page should meet "cat.parsing, wcag411" accessibility standards
 
-  @javascript
+  @javascript @accessibility
   Scenario Outline: Add an image to an activity card, student and teacher should see the image in the content, when activity display is set as list in Snap settings.
     Given I log in as "admin"
     And the following config values are set as admin:
@@ -82,6 +89,9 @@ Feature: Check functionality in activity cards.
     And I am on "Course 1" course homepage with editing mode on
     And I follow "Topic 1"
     And "img.img-responsive.atto_image_button_text-bottom" "css_element" should exist
+    And the page should meet "cat.aria, wcag412" accessibility standards
+    And the page should meet "cat.parsing, wcag411" accessibility standards
+    And the page should meet "cat.text-alternatives, wcag111, section508, section508.22.a" accessibility standards
     Examples:
       | Option     |
       | 1          |

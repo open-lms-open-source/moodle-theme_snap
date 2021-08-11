@@ -21,6 +21,11 @@
 # @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
   
 @theme @theme_snap @theme_snap_ax
+# Some scenarios will be testing AX through special steps depending on the needed rules.
+# https://github.com/dequelabs/axe-core/blob/v3.5.5/doc/rule-descriptions.md#best-practices-rules.
+# Aria attributes: cat.aria, wcag412 tags.
+# Unique attributes, mainly ID's: cat.parsing, wcag411 tags.
+# Keyboard: cat.keyboard.
 Feature: When the Moodle theme is set to Snap, personal menu and course mod chooser should be accessible tabs.
 
   Background:
@@ -45,7 +50,7 @@ Feature: When the Moodle theme is set to Snap, personal menu and course mod choo
     And I open the personal menu
     And the "aria-controls" attribute of "#snap-pm-accessible-tab a#snap-pm-tab-current" "css_element" should contain "snap-pm-courses-current"
 
-  @javascript
+  @javascript @accessibility
   Scenario: Course mod chooser tab should have a specific aria-controls attribute to be accessible.
     Given I log in as "admin"
     And I am on the course main page for "C1"
@@ -53,8 +58,10 @@ Feature: When the Moodle theme is set to Snap, personal menu and course mod choo
     And the "aria-controls" attribute of "#modchooser-accessible-tab a#activites-tab" "css_element" should contain "activites"
     And the "aria-controls" attribute of "#modchooser-accessible-tab a#resources-tab" "css_element" should contain "resources"
     And the "aria-controls" attribute of "#modchooser-accessible-tab a#help-guide-tab" "css_element" should contain "help"
+    And the page should meet "cat.aria, wcag412" accessibility standards
+    And the page should meet "cat.parsing, wcag411" accessibility standards
 
-  @javascript
+  @javascript @accessibility
   Scenario: Press arrow keys should be an accessible way to display content correctly.
     Given I log in as "admin"
     And I am on the course main page for "C1"
@@ -72,3 +79,4 @@ Feature: When the Moodle theme is set to Snap, personal menu and course mod choo
     And I press the up key
     And the "aria-selected" attribute of "a#activites-tab" "css_element" should contain "true"
     And the "aria-selected" attribute of "a#resources-tab" "css_element" should contain "false"
+    And the page should meet "cat.keyboard" accessibility standards

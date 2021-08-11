@@ -21,6 +21,10 @@
 # @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
 
 @theme @theme_snap @theme_snap_ax
+# Some scenarios will be testing AX through special steps depending on the needed rules.
+# https://github.com/dequelabs/axe-core/blob/v3.5.5/doc/rule-descriptions.md#best-practices-rules.
+# Focusable elements of hidden elements: cat.name-role-value, wcag412.
+# Forms: cat.forms, wcag21aa, wcag135.
 Feature: Check that the correct tab order and focus exists for the page.
 
   Background:
@@ -39,14 +43,15 @@ Feature: Check that the correct tab order and focus exists for the page.
     And the following config values are set as admin:
       | design_activity_chooser | 1 | theme_snap |
 
-  @javascript
+  @javascript @accessibility
   Scenario: Tabindex -1 exists for unnecessary focus order in the course dashboard.
     And I log in as "teacher1"
     And I am on "Course 1" course homepage
     And I click on "#snap-course-wrapper .toc-footer a:nth-child(2)" "css_element"
     And the "tabindex" attribute of "//aside[@id='block-region-side-pre']//a[@class='sr-only sr-only-focusable']" "xpath_element" should contain "-1"
+    And the page should meet "cat.name-role-value, wcag412" accessibility standards
 
-  @javascript
+  @javascript @accessibility
   Scenario: Focus should be over the input with an error after submitting a form with a required field in blank.
     And I log in as "teacher1"
     And I am on "Course 1" course homepage
@@ -54,6 +59,7 @@ Feature: Check that the correct tab order and focus exists for the page.
     And I click on "div.tab-pane.row.text-center.fade.active.in div:nth-child(5) a" "css_element"
     And I click on "Save and display" "button"
     Then the focused element is "input.form-control.is-invalid" "css_element"
+    And the page should meet "cat.forms, wcag21aa, wcag135" accessibility standards
 
   @javascript
   Scenario: On mobile view, submit buttons should appear after the advance form at the bottom of the form.
