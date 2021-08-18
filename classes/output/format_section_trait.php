@@ -680,9 +680,11 @@ trait format_section_trait {
             ]);
         }
 
+        // We need to be sure not having the same ID for every modchooser if multiple sections exists.
+        $modchooserid = "snap-create-activity-$section";
         $modchooser = html_writer::tag('div', $modchoosercontent, [
             'class' => 'col-sm-6 snap-modchooser',
-            'id' => 'snap-create-activity'
+            'id' => $modchooserid
         ]);
 
         // Add zone for quick uploading of files.

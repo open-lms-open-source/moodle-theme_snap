@@ -20,6 +20,10 @@
 # @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
 
 @theme @theme_snap @theme_snap_course
+# Some scenarios will be testing AX through special steps depending on the needed rules.
+# https://github.com/dequelabs/axe-core/blob/v3.5.5/doc/rule-descriptions.md#best-practices-rules.
+# Aria attributes: cat.aria, wcag412 tags.
+# Unique attributes, mainly ID's: cat.parsing, wcag411 tags.
 Feature: Activity navigation in Snap theme
   In order to quickly switch between activities
   As a user
@@ -91,7 +95,8 @@ Feature: Activity navigation in Snap theme
       | Content       | In the beginning... blah, blah, blah. |
     And I press "Save changes"
     And I log out
-  @javascript
+
+  @javascript @accessibility
   Scenario: Step through activities in the course as a teacher.
     Given I log in as "teacher1"
     And I am on "Course 1" course homepage
@@ -158,6 +163,10 @@ Feature: Activity navigation in Snap theme
     And I should see "Wiki 1" in the "#prev-activity-link" "css_element"
     # The last activity won't have the next activity link.
     And "#next-activity-link" "css_element" should not exist
+    # Check AX on aria attributes and ID's when multiple activities exists in the same section.
+    And the page should meet "cat.aria, wcag412" accessibility standards
+    And the page should meet "cat.parsing, wcag411" accessibility standards
+
   @javascript
   Scenario: Step through activities in the course as a student.
     Given I log in as "student1"

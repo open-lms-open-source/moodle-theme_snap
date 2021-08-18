@@ -20,9 +20,11 @@
 # @copyright  Copyright (c) 2019 Open LMS (https://www.openlms.net)
 # @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
 
-
 @theme @theme_snap @theme_snap_ax
-# We need to test the accessibility in the most used Snap views through a special step for cat.aria, wcag412 tags.
+# Some scenarios will be testing AX through special steps depending on the needed rules.
+# https://github.com/dequelabs/axe-core/blob/v3.5.5/doc/rule-descriptions.md#best-practices-rules.
+# Aria attributes: cat.aria, wcag412 tags.
+# Unique attributes, mainly ID's: cat.parsing, wcag411 tags.
 Feature: Elements for Snap should have the proper aria attributes.
 
   Background:
@@ -65,7 +67,7 @@ Feature: Elements for Snap should have the proper aria attributes.
     And the "aria-label" attribute of "#id_duedate_calendar" "css_element" should contain "Calendar"
 
   @javascript @accessibility
-  Scenario: Elements in front page must contain the correct attributes
+  Scenario: Elements in front page must comply with the accessibility standards.
     Given I log in as "admin"
     And the following config values are set as admin:
     | linkadmincategories | 0 |
@@ -83,57 +85,32 @@ Feature: Elements for Snap should have the proper aria attributes.
     And I set the field with xpath "//*[@id='id_s_theme_snap_fc_browse_all']" to "1"
     And I press "Save changes"
     And I am on site homepage
-    And the "aria-label" attribute of "#mr-nav .simplesearchform a.btn.btn-open" "css_element" should contain "Search"
-    And the "aria-label" attribute of "div#snap-featured-courses p.text-center a" "css_element" should contain "Browse all courses"
-    And the "id" attribute of "div#snap-featured-courses p.text-center a" "css_element" should contain "browse-all-courses-featured-courses"
     And the page should meet "cat.aria, wcag412" accessibility standards
+    And the page should meet "cat.parsing, wcag411" accessibility standards
 
   @javascript @accessibility
-  Scenario: Elements in personal menu must contain the correct attributes
+  Scenario: Elements in personal menu must comply with the accessibility standards.
     Given I log in as "admin"
     And I am on site homepage
     And I open the personal menu
     # New ID's for personal menu elements are for the most used elements. This ID's are being established in accessibility.js AMD file.
-    And the "id" attribute of "a.snap-personal-menu-more small#snap-pm-deadline" "css_element" should contain "snap-pm-deadline"
-    And the "id" attribute of "a.snap-personal-menu-more small#snap-pm-feedback" "css_element" should contain "snap-pm-feedback"
-    And the "id" attribute of "a.snap-personal-menu-more small#snap-pm-messages" "css_element" should contain "snap-pm-messages"
-    And the "id" attribute of "a.snap-personal-menu-more small#snap-pm-forum-posts" "css_element" should contain "snap-pm-forum-posts"
-    And the "id" attribute of "div.snap-pm-user a#snap-pm-user-profile" "css_element" should contain "snap-pm-user-profile"
-    And the "id" attribute of "div.snap-pm-user div#snap-pm-header-quicklinks a#snap-pm-profile" "css_element" should contain "snap-pm-profile"
-    And the "id" attribute of "div.snap-pm-user div#snap-pm-header-quicklinks a#snap-pm-dashboard" "css_element" should contain "snap-pm-dashboard"
-    And the "id" attribute of "div.snap-pm-user div#snap-pm-header-quicklinks a#snap-pm-preferences" "css_element" should contain "snap-pm-preferences"
-    And the "id" attribute of "div.snap-pm-user div#snap-pm-header-quicklinks a#snap-pm-grades" "css_element" should contain "snap-pm-grades"
-    # Aria allowed attributes https://github.com/dequelabs/axe-core/blob/v3.5.5/doc/rule-descriptions.md#best-practices-rules.
     And the page should meet "cat.aria, wcag412" accessibility standards
+    And the page should meet "cat.parsing, wcag411" accessibility standards
 
   @javascript @accessibility
-  Scenario: Elements in course main view must contain the correct attributes
+  Scenario: Elements in course main view must comply with the accessibility standards.
     Given I log in as "admin"
     And I am on the course main page for "C1"
-    And the "id" attribute of "div.toc-footer a#snap-new-section" "css_element" should contain "snap-new-section"
-    And the "id" attribute of "div.toc-footer a#snap-course-tools" "css_element" should contain "snap-course-tools"
     And the page should meet "cat.aria, wcag412" accessibility standards
+    And the page should meet "cat.parsing, wcag411" accessibility standards
 
   @javascript @accessibility
-  Scenario: Elements in course dashboard must contain the correct attributes
+  Scenario: Elements in course dashboard must comply with the accessibility standards.
     Given I log in as "admin"
     And I am on the course main page for "C1"
     And I click on "#snap-course-wrapper .toc-footer a:nth-child(2)" "css_element"
-    And the "id" attribute of "div#coursetools-list a#ct-course-settings" "css_element" should contain "ct-course-settings"
-    And the "id" attribute of "div#coursetools-list a#ct-open-grader" "css_element" should contain "ct-open-grader"
-    And the "id" attribute of "div#coursetools-list a#ct-course-gradebook" "css_element" should contain "ct-course-gradebook"
-    And the "id" attribute of "div#coursetools-list a#ct-participants-number" "css_element" should contain "ct-participants-number"
-    And the "id" attribute of "div#coursetools-list a#ct-open-reports" "css_element" should contain "ct-open-reports"
-    And the "id" attribute of "div#coursetools-list a#ct-pld" "css_element" should contain "ct-pld"
-    And the "id" attribute of "div#coursetools-list a#ct-competencies" "css_element" should contain "ct-competencies"
-    And the "id" attribute of "div#coursetools-list a#ct-badges" "css_element" should contain "ct-badges"
     And the page should meet "cat.aria, wcag412" accessibility standards
-
-  @javascript
-  Scenario: When creating a new activity in Snap, the mod chooser should have a specific ID
-    Given I log in as "admin"
-    And I am on the course main page for "C1"
-    And the "id" attribute of "//li[@id='section-0']//div[@class='content']//div[@class='col-sm-6 snap-modchooser']" "xpath_element" should contain "snap-create-activity"
+    And the page should meet "cat.parsing, wcag411" accessibility standards
 
   @javascript @accessibility
   Scenario: When an activity have a restriction, the lock icon should have the needed aria attributes.
@@ -148,6 +125,48 @@ Feature: Elements for Snap should have the proper aria attributes.
     And I set the field with xpath "//span[@class=\"pr-3\"][text()=\"Grade\"]//following-sibling::span//select" to "Test assignment2"
     Then I click on "//input[@id=\"id_submitbutton2\"]" "xpath_element"
     And I wait until the page is ready
-    And the "aria-label" attribute of ".snap-header-card-icons a[id^='snap-restriction-']" "css_element" should contain "Activity restriction"
-    And the "title" attribute of ".snap-header-card-icons a[id^='snap-restriction-'] img" "css_element" should contain "Activity restriction"
+    And the page should meet "cat.aria, wcag412" accessibility standards
+    And the page should meet "cat.parsing, wcag411" accessibility standards
+
+  @javascript @accessibility
+  Scenario: Check accessibility on the Snap settings page.
+    Given I log in as "admin"
+    And the following config values are set as admin:
+      | linkadmincategories | 0 |
+    And I am on site homepage
+    And I click on "#admin-menu-trigger" "css_element"
+    And I expand "Site administration" node
+    And I expand "Appearance" node
+    And I expand "Themes" node
+    And I follow "Snap"
+    # We need to test it in each view or else it will fail.
+    # Cover display.
+    And I click on "form#adminsettings div.settingsform div.row ul#snap-admin-tabs li:nth-child(2)" "css_element"
+    And the page should meet "cat.aria, wcag412" accessibility standards
+    # Personal menu.
+    And I click on "form#adminsettings div.settingsform div.row ul#snap-admin-tabs li:nth-child(3)" "css_element"
+    And the page should meet "cat.aria, wcag412" accessibility standards
+    # Feature spots.
+    And I click on "form#adminsettings div.settingsform div.row ul#snap-admin-tabs li:nth-child(4)" "css_element"
+    And the page should meet "cat.aria, wcag412" accessibility standards
+    # Featured courses.
+    And I click on "form#adminsettings div.settingsform div.row ul#snap-admin-tabs li:nth-child(5)" "css_element"
+    And the page should meet "cat.aria, wcag412" accessibility standards
+    # Course display.
+    And I click on "form#adminsettings div.settingsform div.row ul#snap-admin-tabs li:nth-child(6)" "css_element"
+    And the page should meet "cat.aria, wcag412" accessibility standards
+    # Social media.
+    And I click on "form#adminsettings div.settingsform div.row ul#snap-admin-tabs li:nth-child(7)" "css_element"
+    And the page should meet "cat.aria, wcag412" accessibility standards
+    # Navigation bar.
+    And I click on "form#adminsettings div.settingsform div.row ul#snap-admin-tabs li:nth-child(8)" "css_element"
+    And the page should meet "cat.aria, wcag412" accessibility standards
+    # Category color.
+    And I click on "form#adminsettings div.settingsform div.row ul#snap-admin-tabs li:nth-child(9)" "css_element"
+    And the page should meet "cat.aria, wcag412" accessibility standards
+    # Profile based branding.
+    And I click on "form#adminsettings div.settingsform div.row ul#snap-admin-tabs li:nth-child(10)" "css_element"
+    And the page should meet "cat.aria, wcag412" accessibility standards
+    # H5P Custom CSS.
+    And I click on "form#adminsettings div.settingsform div.row ul#snap-admin-tabs li:nth-child(11)" "css_element"
     And the page should meet "cat.aria, wcag412" accessibility standards
