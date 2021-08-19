@@ -71,7 +71,7 @@ class theme_snap_ws_feed_test extends \advanced_testcase {
     }
 
     public function test_feed_deadline() {
-        global $DB;
+        global $DB, $CFG;
         $this->resetAfterTest();
 
         $this->setAdminUser();
@@ -83,7 +83,7 @@ class theme_snap_ws_feed_test extends \advanced_testcase {
         $studentrole = $DB->get_record('role', array('shortname' => 'student'));
         $this->getDataGenerator()->enrol_user($student->id, $course->id, $studentrole->id);
 
-        // Create a activity, e.g. an Assign activty.
+        // Create an activity, e.g. an Assign activity.
         $assignmodulename = 'assign';
         $assignactivityname = 'Assignment';
         $assign = $this->getDataGenerator()->create_module($assignmodulename, $record);
@@ -132,9 +132,79 @@ class theme_snap_ws_feed_test extends \advanced_testcase {
         $this->setUser($student);
         $deadlines = ws_feed::service('deadlines');
 
+        // Try all the possible combinations of disabling activities (8 in total).
+
+        // No activities disabled.
+        $this->assertCount(3, $deadlines);
+        $this->assertEqualsIgnoringCase($assignactivityname, $deadlines[0]['iconDesc']);
+        $this->assertEqualsIgnoringCase($quizmodulename, $deadlines[1]['iconDesc']);
+        $this->assertEqualsIgnoringCase($labelmodulename, $deadlines[2]['iconDesc']);
+
+        // Disable the assign activity.
+        $CFG->theme_snap_disable_deadline_mods = ['assign'];
+
+        $deadlinescache = \cache::make('theme_snap', 'activity_deadlines');
+        $deadlinescache->purge();
+        $deadlines = ws_feed::service('deadlines');
+
+        $this->assertCount(2, $deadlines);
+        $this->assertEqualsIgnoringCase($quizmodulename, $deadlines[0]['iconDesc']);
+        $this->assertEqualsIgnoringCase($labelmodulename, $deadlines[1]['iconDesc']);
+
+        // Disable the quiz activity.
+        $CFG->theme_snap_disable_deadline_mods = ['quiz'];
+
+        $deadlinescache->purge();
+        $deadlines = ws_feed::service('deadlines');
+
+        $this->assertCount(2, $deadlines);
+        $this->assertEqualsIgnoringCase($assignactivityname, $deadlines[0]['iconDesc']);
+        $this->assertEqualsIgnoringCase($labelmodulename, $deadlines[1]['iconDesc']);
+
+        // Disable the label activity.
+        $CFG->theme_snap_disable_deadline_mods = ['label'];
+
+        $deadlinescache->purge();
+        $deadlines = ws_feed::service('deadlines');
+
         $this->assertCount(2, $deadlines);
         $this->assertEqualsIgnoringCase($assignactivityname, $deadlines[0]['iconDesc']);
         $this->assertEqualsIgnoringCase($quizmodulename, $deadlines[1]['iconDesc']);
+
+        // Disable the assign and quiz activities.
+        $CFG->theme_snap_disable_deadline_mods = ['assign', 'quiz'];
+
+        $deadlinescache->purge();
+        $deadlines = ws_feed::service('deadlines');
+
+        $this->assertCount(1, $deadlines);
+        $this->assertEqualsIgnoringCase($labelmodulename, $deadlines[0]['iconDesc']);
+
+        // Disable the assign and label activities.
+        $CFG->theme_snap_disable_deadline_mods = ['assign', 'label'];
+
+        $deadlinescache->purge();
+        $deadlines = ws_feed::service('deadlines');
+
+        $this->assertCount(1, $deadlines);
+        $this->assertEqualsIgnoringCase($quizmodulename, $deadlines[0]['iconDesc']);
+
+        // Disable the quiz and label activities.
+        $CFG->theme_snap_disable_deadline_mods = ['quiz', 'label'];
+
+        $deadlinescache->purge();
+        $deadlines = ws_feed::service('deadlines');
+
+        $this->assertCount(1, $deadlines);
+        $this->assertEqualsIgnoringCase($assignactivityname, $deadlines[0]['iconDesc']);
+
+        // Disable all the created activities.
+        $CFG->theme_snap_disable_deadline_mods = ['assign', 'quiz', 'label'];
+
+        $deadlinescache->purge();
+        $deadlines = ws_feed::service('deadlines');
+
+        $this->assertCount(0, $deadlines);
     }
 
     public function create_message(array $users, $messagetype, $message, $time, $subject = 'No subject') {
