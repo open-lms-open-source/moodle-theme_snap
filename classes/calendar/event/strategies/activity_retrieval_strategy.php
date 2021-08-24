@@ -304,6 +304,18 @@ class activity_retrieval_strategy extends \core_calendar\local\event\strategies\
             }
         }
 
+        // Disable activities in the Deadlines feed, as set in $CFG->theme_snap_disable_deadline_mods.
+        if (!empty($CFG->theme_snap_disable_deadline_mods)) {
+            $disabledmods = $CFG->theme_snap_disable_deadline_mods;
+
+            // Make the query clause "AND e.modulename NOT IN (disabled mods)".
+            $equal = false;
+            list($insql, $inparams) = $DB->get_in_or_equal($disabledmods, SQL_PARAMS_NAMED, 'dism', $equal);
+            $disabledmodssql = "AND e.modulename $insql";
+        } else {
+            $disabledmodssql = '';
+        }
+
         // Build the main query.
         $sql = "-- Snap sql
         ";
@@ -322,11 +334,15 @@ class activity_retrieval_strategy extends \core_calendar\local\event\strategies\
                      AND (e.eventtype = 'open' OR e.eventtype = 'close' OR e.eventtype = 'due'
                       OR e.eventtype = 'expectcompletionon'))
                      AND $whereclause
-                     AND e.modulename != 'label'
+                     $disabledmodssql
               ORDER BY " . ($ordersql ? $ordersql : "e.timestart");
 
         if (!empty($whereparams)) {
             $params = array_merge($params, $whereparams);
+        }
+
+        if (!empty($inparams)) {
+            $params = array_merge($params, $inparams);
         }
 
         $events = $DB->get_records_sql($sql, $params, $offset, $limitnum);
