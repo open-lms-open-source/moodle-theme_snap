@@ -37,3 +37,134 @@ PARTICULAR PURPOSE.  See the GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License along with
 this program.  If not, see <http://www.gnu.org/licenses/>.
+
+## Configuration flags
+
+This section documents the Snap configuration flags. These flags have the form
+`$CFG->theme_snap_flag_name`, where `flag_name` is replaced by the name
+of the flag. These flags are accessed with the global configuration object
+`$CFG`.
+
+The configuration flags are presented here in alphabetical order.
+
+### The `theme_snap_bar_limit` flag
+
+The purpose of this flag is to set the maximum amount of Courses that a Student
+can have with the Progress Bar of those Courses being displayed in the Snap
+personal menu (accessed by clicking on 'My Courses'). If a Student is enrolled
+in more courses than this number, then no single Course will have its Progress
+Bar displayed. In other case, all the Courses will have their Progress Bar
+displayed. This is done so as to avoid degrading site performance when a
+Student has many courses.
+
+This flag is set as an integer:
+
+   - `$CFG->theme_snap_bar_limit = 55` means that the Progress Bar will be
+   displayed for up to 55 Courses. If a Student is enrolled in 56 or more
+   Courses, then the Progress Bar of those Courses won't be displayed.
+
+### The `theme_snap_disable_deadline_mods` flag
+
+The purpose of this flag is to disable selected Activities from being shown in
+the Deadlines feed in the Snap personal menu. This does not disable individual
+Activities but rather this disables Activities by their type. For example, you
+can use this flag to disable Assignment and Quiz activities from being shown in
+the Deadlines feed.
+
+This flag is set as an array of strings:
+
+   - `$CFG->theme_snap_disable_deadline_mods = ['assign', 'quiz']` means that
+   both Assignment and Quiz Activities will not be shown in the Deadlines feed.
+   Note in this usage, that there is no prefix being used. For example, to
+   disable the component `mod_label`, it should be done as
+   `$CFG->theme_snap_disable_deadline_mods = ['label']`, without the prefix
+   `mod_`.
+
+### The `theme_snap_disablequicklogin` flag
+
+The purpose of this flag is to disable Snap's quick login, which is a login
+mechanism that can be quicker than a regular login.
+
+This flag is set as a boolean value:
+
+   - `$CFG->theme_snap_disablequicklogin = true` means that Snap's quick login
+   is disabled.
+   - `$CFG->theme_snap_disablequicklogin = false` means that Snap's quick login
+   is enabled. Setting this flag to `false` has the same effect as not setting
+   the flag at all.
+
+### The `theme_snap_include_cm_checks_in_deadlines_task` flag
+
+This flag is an auxiliary flag that should only be used for testing. Its
+purpose is to skip over Course Module checks when refreshing the Deadlines
+cache.
+
+This flag is set as a boolean value:
+
+   - `$CFG->theme_snap_include_cm_checks_in_deadlines_task = true` means that
+   Course Module checks are skipped.
+   - `$CFG->theme_snap_include_cm_checks_in_deadlines_task = false` means that
+   Course Module checks are performed.
+
+### The `theme_snap_max_concurrent_deadline_queries` flag
+
+The purpose of this flag is to set the maximum amount of concurrent Deadline
+queries. An exception is thrown if the amount of concurrent Deadline queries
+is above this number. By default this maximum amount is equal to the PHP
+constant INF which means infinite concurrent Deadline queries.
+
+This flag is set as an integer:
+
+   - `$CFG->theme_snap_max_concurrent_deadline_queries = 700` means that 700
+   concurrent Deadline queries can be performed at a maximum.
+
+### The `theme_snap_max_pm_completion_courses` flag
+
+The purpose of this flag is to set the maximum amount of Courses that will have
+their Progress Bar displayed in the Snap personal menu. The default amount is
+currently set at 100. This flag can be used along with the flag
+`theme_snap_bar_limit`.
+
+This flag is set as an integer:
+
+   - `$CFG->theme_snap_max_pm_completion_courses = 15` means that only the
+   first 15 Courses will have their Progress Bar displayed in the Snap personal
+   menu.
+
+### The `theme_snap_max_pm_completion_time_courses` flag
+
+The purpose of this flag is to set the maximum amount of time in seconds, that
+the calculations for the Progress Bar of the Courses in the Snap personal menu
+can last. Only the Progress Bars calculated within this time window will be
+rendered. The default is currently 15 seconds.
+
+This flag is set as a double:
+
+   - `$CFG->theme_snap_max_pm_completion_time_courses = 20.9` means that only
+   the Progress Bars that manage to be calculated within the first 20.9 seconds
+   of the calculation, will be rendered.
+
+### The `theme_snap_refresh_deadlines_last_login` flag
+
+The purpose of this flag is to set the relative date of the last login, from
+which the refresh Deadlines cache task will be executed. By default this is set
+to six months in the past.
+
+This flag is set as a string:
+
+   - `$CFG->theme_snap_refresh_deadlines_last_login = '2 weeks 1 hour ago'`
+   means that the Deadlines feed will be refreshed for users whose last login
+   is dated 2 weeks and 1 hour ago, or more time in the past. Notice in this
+   usage, that the string complies with PHP's relative datetime format.
+
+### The `theme_snap_refresh_deadlines_max_duration` flag
+
+The purpose of this flag is to set a maximum duration for the refresh Deadlines
+cache task, in seconds. By default this duration is of 6 hours. This flag can
+be used along with the flag `$CFG->theme_snap_refresh_deadlines_last_login`.
+
+This flag is set as an integer:
+
+   - `$CFG->theme_snap_refresh_deadlines_max_duration = 10800` means that the
+   refresh Deadlines cache task can take up to 3 hours to be executed. The task
+   stops if this amount of time passes.
