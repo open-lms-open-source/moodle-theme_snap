@@ -777,3 +777,11 @@ section#snap-add-new-section #summary-editor_parent #summary-editor_tbl {
         color: white;
     }
 }
+// Drag and drop text question fix for Snap.
+.que.ddwtos .draghome, .que.ddwtos .drop.active {
+    max-width: 80%;
+    overflow-wrap: anywhere;
+    height: fit-content!important;
+    hyphens: auto;
+    line-height: unset!important;
+}
