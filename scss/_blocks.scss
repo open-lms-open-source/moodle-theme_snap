@@ -283,8 +283,13 @@ body.path-site .block.block_settings {
     #page-header {
         display: none;
     }
+    @media (min-width: 768px) {
+        #region-main {
+            padding-top: 3.5em;
+        }
+    }
     #region-main {
-        padding-top: 3.5em;
+        padding-top: 4.25em;
     }
 }
 
