@@ -938,7 +938,7 @@ EOF;
             $moodleurl = new moodle_url('/grade/report/user/index.php', ['id' => $COURSE->id, 'userid' => $USER->id]);
 
             $userboard .= '<div class="col-xs-3 text-center snap-student-dashboard-grade">';
-            $userboard .= '<h4 class="h6">' . get_string('grade') . '</h6>';
+            $userboard .= '<h4 class="h6">' . get_string('gradenoun') . '</h6>';
             $userboard .= '<a href="' . $moodleurl . '">';
             $userboard .= '<div class="js-progressbar-circle snap-progress-circle snap-progressbar-link" value="';
             $userboard .= s($coursegrade) . '"gradeformat="' . $displayformat . '" ></div>';

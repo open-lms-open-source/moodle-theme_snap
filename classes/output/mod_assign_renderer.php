@@ -212,7 +212,7 @@ class mod_assign_renderer extends \mod_assign_renderer {
         // Grade button.
         $urlparams = array('id' => $summary->coursemoduleid, 'action' => 'grader');
         $url = new moodle_url('/mod/assign/view.php', $urlparams);
-        $o .= '<a href="'.$url.'" role="button" class="btn btn-primary">'.get_string('grade').'</a>';
+        $o .= '<a href="'.$url.'" role="button" class="btn btn-primary">'.get_string('gradeverb').'</a>';
         // Close assign-grading-summary.
         $o .= '</div>';
         return $o;

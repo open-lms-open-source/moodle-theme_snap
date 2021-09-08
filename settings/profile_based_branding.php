@@ -39,11 +39,11 @@ $setting = new admin_setting_configcheckbox($name, $title, $description, 0);
 $snapsettings->add($setting);
 
 $fields = [
-    'user|institution' => get_user_field_name('institution'),
-    'user|department' => get_user_field_name('department'),
-    'user|address' => get_user_field_name('address'),
-    'user|city' => get_user_field_name('city'),
-    'user|country' => get_user_field_name('country'),
+    'user|institution' => \core_user\fields::get_display_name('institution'),
+    'user|department' => \core_user\fields::get_display_name('department'),
+    'user|address' => \core_user\fields::get_display_name('address'),
+    'user|city' => \core_user\fields::get_display_name('city'),
+    'user|country' => \core_user\fields::get_display_name('country'),
 ];
 
 // Get the profile fields which are string type.
