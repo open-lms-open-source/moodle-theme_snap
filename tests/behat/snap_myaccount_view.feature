@@ -32,7 +32,7 @@ Feature: Correct visualization of the general view for My Account plugin only fo
       | linkadmincategories | 0 |
 
   @javascript
-  Scenario: As a Student, I'm not able to see the My Account link in the personal menu in Snap.
+  Scenario: As a Student in Snap, I'm not able to see the My Account link in the personal menu in Snap.
     Given I am using Open LMS
     And I log in as "student1"
     And I open the personal menu
@@ -45,7 +45,7 @@ Feature: Correct visualization of the general view for My Account plugin only fo
     And I should not see "My Account"
 
   @javascript
-  Scenario: As an admin, I'm able to see and enter to the My Account page under personal menu.
+  Scenario: As an admin in Snap, I'm able to see and enter to the My Account page under personal menu.
     Given I am using Open LMS
     Given I log in as "admin"
     And I open the personal menu
@@ -55,15 +55,13 @@ Feature: Correct visualization of the general view for My Account plugin only fo
     # Check the existence of the first view in the page - General.
     And I should see "General"
     # Check for the existence of the main icons for this view.
-    # We need to hide this for the moment, since not all clients create their tickets through Zendesk. Please uncomment when a proper solution is found.
-    # And I should see "Create a Support ticket"
     And I should see "Open LMS Public roadmap"
     And I should see "Open LMS Community"
     And I should see "Open LMS Latest Releases"
     And I should see "Open bot"
 
   @javascript
-  Scenario: As an Admin, I'm redirected to specific pages to change Site logo or Site full name in Snap.
+  Scenario: As an Admin in Snap, I'm redirected to specific pages to change Site logo or Site full name in Snap.
     Given I am using Open LMS
     And I log in as "admin"
     And I open the personal menu
@@ -85,7 +83,7 @@ Feature: Correct visualization of the general view for My Account plugin only fo
     And I should see "Site full name test"
 
   @javascript
-  Scenario: As an Admin, I change drift subscription and the Open bot icon should change.
+  Scenario: As an Admin in Snap, I change drift subscription and the Open bot icon should change.
     Given I am using Open LMS
     Given I log in as "admin"
     And I go to my profile page
@@ -98,11 +96,11 @@ Feature: Correct visualization of the general view for My Account plugin only fo
     And I am on site homepage
     And I am on my account default page
     And I should see "Enable Open bot"
-    And I click on "a#myaccount-openbot-nosub" "css_element"
+    And I click on "a#myaccount-openbot-sub" "css_element"
     And I should see "Drift Integration Plugin"
     And the field "Drift subscription" matches value "0"
     And I set the field "Drift subscription" to "1"
     And I press "Save changes"
     And I am on my account default page
-    # This is to rectify that the drift subscription is turned off, a different icon will appear in My Account general view.
+    # This is to rectify that the drift subscription is turned on, a different icon will appear in My Account general view.
     And I should see "Open bot"
