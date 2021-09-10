@@ -24,77 +24,86 @@
 defined('MOODLE_INTERNAL') || die();
 
 $functions = [
-    'theme_snap_course_card' => [
-        'classname'     => 'theme_snap\\webservice\\ws_course_card',
-        'methodname'    => 'service',
-        'description'   => 'Course card renderable data',
-        'type'          => 'read',
-        'ajax'          => true,
-        'loginrequired' => true
+    'theme_snap_course_card'              => [
+        'classname'       => 'theme_snap\\webservice\\ws_course_card',
+        'methodname'      => 'service',
+        'description'     => 'Course card renderable data',
+        'type'            => 'read',
+        'ajax'            => true,
+        'loginrequired'   => true,
+        'readonlysession' => true, // We don't modify the session.
     ],
-    'theme_snap_cover_image' => [
-        'classname'     => 'theme_snap\\webservice\\ws_cover_image',
-        'methodname'    => 'service',
-        'description'   => 'Cover image modifier',
-        'type'          => 'write',
-        'ajax'          => true,
-        'loginrequired' => true
+    'theme_snap_cover_image'              => [
+        'classname'       => 'theme_snap\\webservice\\ws_cover_image',
+        'methodname'      => 'service',
+        'description'     => 'Cover image modifier',
+        'type'            => 'write',
+        'ajax'            => true,
+        'loginrequired'   => true,
+        'readonlysession' => true, // We don't modify the session.
     ],
-    'theme_snap_course_completion' => [
-        'classname'     => 'theme_snap\\webservice\\ws_course_completion',
-        'methodname'    => 'service',
-        'description'   => 'Course completion updater',
-        'type'          => 'write',
-        'ajax'          => true,
-        'loginrequired' => true
+    'theme_snap_course_completion'        => [
+        'classname'       => 'theme_snap\\webservice\\ws_course_completion',
+        'methodname'      => 'service',
+        'description'     => 'Course completion updater',
+        'type'            => 'write',
+        'ajax'            => true,
+        'loginrequired'   => true,
+        'readonlysession' => true, // We don't modify the session.
     ],
-    'theme_snap_course_toc_chapters' => [
-        'classname'     => 'theme_snap\\webservice\\ws_course_toc_chapters',
-        'methodname'    => 'service',
-        'description'   => 'Get course TOC chapters',
-        'type'          => 'read',
-        'ajax'          => true,
-        'loginrequired' => true
+    'theme_snap_course_toc_chapters'      => [
+        'classname'       => 'theme_snap\\webservice\\ws_course_toc_chapters',
+        'methodname'      => 'service',
+        'description'     => 'Get course TOC chapters',
+        'type'            => 'read',
+        'ajax'            => true,
+        'loginrequired'   => true,
+        'readonlysession' => true, // We don't modify the session.
     ],
-    'theme_snap_course_sections' => [
-        'classname'     => 'theme_snap\\webservice\\ws_course_sections',
-        'methodname'    => 'service',
-        'description'   => 'Manage course sections',
-        'type'          => 'write',
-        'ajax'          => true,
-        'loginrequired' => true
+    'theme_snap_course_sections'          => [
+        'classname'       => 'theme_snap\\webservice\\ws_course_sections',
+        'methodname'      => 'service',
+        'description'     => 'Manage course sections',
+        'type'            => 'write',
+        'ajax'            => true,
+        'loginrequired'   => true,
+        'readonlysession' => true, // We don't modify the session.
     ],
     'theme_snap_course_module_completion' => [
-        'classname'     => 'theme_snap\\webservice\\ws_course_module_completion',
-        'methodname'    => 'service',
-        'description'   => 'Course module completion',
-        'type'          => 'write',
-        'ajax'          => true,
-        'loginrequired' => true
+        'classname'       => 'theme_snap\\webservice\\ws_course_module_completion',
+        'methodname'      => 'service',
+        'description'     => 'Course module completion',
+        'type'            => 'write',
+        'ajax'            => true,
+        'loginrequired'   => true,
+        'readonlysession' => true, // We don't modify the session.
     ],
-    'theme_snap_course_cards_categories' => [
-        'classname'     => 'theme_snap\\webservice\\ws_course_cards_categories',
-        'methodname'    => 'service',
-        'description'   => 'Course cards sorting categories',
-        'type'          => 'read',
-        'ajax'          => true,
-        'loginrequired' => true
+    'theme_snap_course_cards_categories'  => [
+        'classname'       => 'theme_snap\\webservice\\ws_course_cards_categories',
+        'methodname'      => 'service',
+        'description'     => 'Course cards sorting categories',
+        'type'            => 'read',
+        'ajax'            => true,
+        'loginrequired'   => true,
+        'readonlysession' => true, // We don't modify the session.
     ],
-    'theme_snap_course_cards_data' => [
-        'classname'     => 'theme_snap\\webservice\\ws_course_cards_data',
-        'methodname'    => 'service',
-        'description'   => 'Course card renderable data for web components',
-        'type'          => 'read',
-        'ajax'          => true,
-        'loginrequired' => true
+    'theme_snap_course_cards_data'        => [
+        'classname'       => 'theme_snap\\webservice\\ws_course_cards_data',
+        'methodname'      => 'service',
+        'description'     => 'Course card renderable data for web components',
+        'type'            => 'read',
+        'ajax'            => true,
+        'loginrequired'   => true,
+        'readonlysession' => true, // We don't modify the session.
     ],
-    'theme_snap_feed' => [
-        'classname'     => 'theme_snap\\webservice\\ws_feed',
-        'methodname'    => 'service',
-        'description'   => 'Personal Menu Feed',
-        'type'          => 'read',
-        'ajax'          => true,
-        'loginrequired' => true
-    ]
+    'theme_snap_feed'                     => [
+        'classname'       => 'theme_snap\\webservice\\ws_feed',
+        'methodname'      => 'service',
+        'description'     => 'Personal Menu Feed',
+        'type'            => 'read',
+        'ajax'            => true,
+        'loginrequired'   => true,
+        'readonlysession' => true, // We don't modify the session.
+    ],
 ];
 
