@@ -32,7 +32,7 @@ $font-size-xs:   .6rem;
 // -------------------------
 // Course cards size in the user dashboard.
 // -------------------------
-$grid-gutter-width:     1.7rem !default;
+$grid-gutter-width:     1.7 * $font-size-root !default; // Original: 1.7rem (changed to comply with scssphp 1.4.1)
 $card-group-margin:     ($grid-gutter-width / 2) !default;
 $card-deck-margin:      $card-group-margin !default;
 $card-gutter:           $card-deck-margin * 2;
