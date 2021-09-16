@@ -1461,6 +1461,7 @@ header#page-header
     .carousel-indicators {
         margin: 0 auto;
         bottom: -10px;
+        z-index: auto;
         li {
             background-color: $snap-carousel-buttons;
             width: 35px;
