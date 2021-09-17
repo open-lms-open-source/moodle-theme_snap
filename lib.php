@@ -392,8 +392,7 @@ function theme_snap_output_fragment_section($args) {
                 $sectionsjs->id = $section->id;
                 $sectionsjs->name = $section->name;
                 $sectionsjs->num = $args['section'];
-                $PAGE->requires->js_call_amd('block_sharing_cart/script', 'init', [$course->id,
-                    [$sectionsjs], true]);
+                $PAGE->requires->js_call_amd('block_sharing_cart/script', 'init', [[$sectionsjs], true]);
                 $PAGE->requires->strings_for_js(
                     array('yes', 'no', 'ok', 'cancel', 'error', 'edit', 'move', 'delete', 'movehere'),
                     'moodle'
