@@ -70,10 +70,6 @@ Feature: Correct visualization of the general view for My Account plugin only fo
     And I click on "div.snap-pm-user a#snap-pm-myaccount" "css_element"
     # Check the existence of the first view in the page - General.
     And I should see "General"
-    And I click on "a#myaccount-logo-link" "css_element"
-    And I click on "Basics" "link"
-    # This is only to verify that the logo in the My Account view, is a link redirecting to Snap settings page.
-    And I should see "Logo"
     And I am on my account default page
     # Verify that the full name site name in the My Account view, is a link redirecting to the Front settings page.
     And I click on "a#myaccount-sitename-link" "css_element"

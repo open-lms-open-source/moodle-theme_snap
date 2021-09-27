@@ -772,16 +772,22 @@ section#snap-add-new-section #summary-editor_parent #summary-editor_tbl {
         font-family: $font-family-system;
     }
 
-    .ccm-step-indicator{
+    .ccm-step-indicator {
         background-color: $brand-primary;
         color: white;
     }
 }
 // Drag and drop text question fix for Snap.
-.que.ddwtos .draghome, .que.ddwtos .drop.active {
+.que.ddwtos .draghome,
+.que.ddwtos .drop.active {
     max-width: 80%;
     overflow-wrap: anywhere;
-    height: fit-content!important;
+    height: fit-content !important;
     hyphens: auto;
-    line-height: unset!important;
+    line-height: unset !important;
+}
+
+#page-local-myaccount-view div.mr_html_tabs > ul > li.nav-item a.nav-link.active,
+#page-admin-local-myaccount-view div.mr_html_tabs > ul > li.nav-item a.nav-link.active {
+    background-color: $brand-primary;
 }
