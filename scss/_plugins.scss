@@ -791,3 +791,15 @@ section#snap-add-new-section #summary-editor_parent #summary-editor_tbl {
 #page-admin-local-myaccount-view div.mr_html_tabs > ul > li.nav-item a.nav-link.active {
     background-color: $brand-primary;
 }
+
+#page-local-myaccount-view .myaccount-iconlinks {
+    max-width: 11em;
+    width: 11em;
+    &:hover,
+    &:focus-within {
+        background-color: $brand-primary;
+        a {
+            color: white;
+        }
+    }
+}
