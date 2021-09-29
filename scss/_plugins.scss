@@ -803,3 +803,16 @@ section#snap-add-new-section #summary-editor_parent #summary-editor_tbl {
         }
     }
 }
+
+// Change font for My Account view.
+#myaccount-general-information,
+#myaccount-servicedata-information {
+    p,
+    a {
+        font-family: $font-family-system;
+    }
+}
+
+#page-admin-local-myaccount-view #mr-nav #snap-header {
+    padding-bottom: 0.4em;
+}
