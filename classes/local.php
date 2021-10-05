@@ -659,7 +659,7 @@ class local {
         if ($maxid >= 0) {
             $lastmessage = 'AND m.id < '.($maxid + 1);
         }
-        $select = \user_picture::fields('u', null, 'useridfrom', 'fromuser');
+        $select = \core_user\fields::for_userpic()->get_sql('u', false, 'fromuser', 'useridfrom', false)->selects;
 
         $sql  = "
             SELECT m.id,
