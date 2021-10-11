@@ -4714,3 +4714,14 @@ div[id^=snap-create-activity-] .section-modchooser-link {
     }
 }
 
+// Fix icons position for user profile fields page in Snap.
+#page-admin-user-profile-index .categorieslist div[id^="category-"] {
+    tr:first-child td.col-3 a:nth-child(2),
+    tbody tr:last-child td.col-3 a:nth-child(3) {
+        margin-right: 0.4em;
+    }
+}
+
+#page-admin-user-profile-index .categorieslist div[id^="category-"] td.col-3 .icon {
+    margin-right: 0;
+}
