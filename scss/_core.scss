@@ -4431,7 +4431,7 @@ li.snap-activity.modtype_folder div[id^="folder_tree"] {
 
 .theme-snap.layout-secure .container-langmenu {
     margin-right: .5rem;
-    margin-top:  .5rem;
+    margin-top: .5rem;
     text-align: right;
 }
 // -------------------------
@@ -4716,12 +4716,40 @@ div[id^=snap-create-activity-] .section-modchooser-link {
 
 // Fix icons position for user profile fields page in Snap.
 #page-admin-user-profile-index .categorieslist div[id^="category-"] {
+    td.col-3 .icon {
+        margin-right: 0;
+    }
     tr:first-child td.col-3 a:nth-child(2),
     tbody tr:last-child td.col-3 a:nth-child(3) {
         margin-right: 0.4em;
     }
 }
 
-#page-admin-user-profile-index .categorieslist div[id^="category-"] td.col-3 .icon {
-    margin-right: 0;
+// Change custom switch control labels background color for notification and message settings page.
+// Taking care of any possible properties that can affect the color.
+.theme-snap#page-message-notificationpreferences,
+.theme-snap#page-message-index {
+    .custom-control-input:focus ~ .custom-control-label::before {
+        border-color: $brand-primary !important;
+        box-shadow: 0 0 0 0.2rem rgba($brand-primary, 0.25) !important;
+    }
+
+    .custom-control-input:checked ~ .custom-control-label::before {
+        border-color: $brand-primary !important;
+        background-color: $brand-primary !important;
+    }
+
+    .custom-control-input:active ~ .custom-control-label::before {
+        background-color: $brand-primary !important;
+        border-color: $brand-primary !important;
+    }
+
+    .custom-control-input:focus:not(:checked) ~ .custom-control-label::before {
+        border-color: $brand-primary !important;
+    }
+
+    .custom-control-input-green:not(:disabled):active ~ .custom-control-label::before {
+        background-color: $brand-primary !important;
+        border-color: $brand-primary !important;
+    }
 }
