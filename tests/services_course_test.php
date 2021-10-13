@@ -179,7 +179,6 @@ class theme_snap_services_course_test extends \advanced_testcase {
 
     public function test_course_completion() {
         global $DB;
-        $this->markTestSkipped('To be fixed in INT-17422.');
         $this->resetAfterTest();
 
         // Enable avaibility.
@@ -487,7 +486,6 @@ class theme_snap_services_course_test extends \advanced_testcase {
 
     public function test_module_toggle_completion() {
         global $DB;
-        $this->markTestSkipped('To be fixed in INT-17422.');
 
         $service = $this->courseservice;
         $this->resetAfterTest();
@@ -552,7 +550,6 @@ class theme_snap_services_course_test extends \advanced_testcase {
     }
 
     public function test_section_fragment() {
-        $this->markTestSkipped('To be fixed in INT-17422.');
         global $CFG, $DB;
         require_once($CFG->dirroot .'/theme/snap/lib.php');
         $topics = $this->getDataGenerator()->create_course(
