@@ -48,6 +48,7 @@ class mod_assign_renderer extends \mod_assign_renderer {
      * @return string
      */
     public function render_assign_header(\assign_header $header) {
+        global $USER;
         $o = '';
 
         if ($header->subpage) {
@@ -63,6 +64,13 @@ class mod_assign_renderer extends \mod_assign_renderer {
         if ($header->preface) {
             $o .= $header->preface;
         }
+
+        // Show the activity information output component.
+        $modinfo = get_fast_modinfo($header->assign->course);
+        $cm = $modinfo->get_cm($header->coursemoduleid);
+        $cmcompletion = \core_completion\cm_completion_details::get_instance($cm, $USER->id);
+        $activitydates = \core\activity_dates::get_dates_for_module($cm, $USER->id);
+        $o .= $this->output->activity_information($cm, $cmcompletion, $activitydates);
 
         if ($header->showintro) {
             $o .= '<div class="assign-intro">';
