@@ -388,6 +388,50 @@
             }
         }
     }
+
+    cqm-main {
+        a.nav-link.active {
+            background-color: rgba($nav-color, 0.1);
+            &:hover {
+                outline: 2px solid $brand-primary;
+            }
+        }
+        a.nav-link {
+            color: $gray !important;
+            font-weight: 500;
+        }
+
+        // Overwrite the gray color just for this element.
+        a.action-view-report.menu-action.nav-link {
+            color: $brand-primary !important;
+        }
+
+        cqm-file-list .card-header {
+            background-color: rgba($nav-color, 0.1);
+            h3 {
+                color: $nav-color;
+                font-weight: 500;
+            }
+        }
+    }
+
+    div.panel-heading:focus-within {
+        outline: 0;
+        box-shadow: 0 0 0 0.2rem rgba($brand-primary, 0.75);
+    }
+
+    i.icon {
+        color: $brand-primary;
+
+        &:focus,
+        &:focus-visible {
+            outline: 2px solid $brand-primary;
+        }
+    }
+
+    i.icon:before {
+        display: grid;
+    }
 }
 
 .path-blocks-conduit {
@@ -689,24 +733,6 @@ section#snap-add-new-section #summary-editor_parent #summary-editor_tbl {
 
 #page-local-pld-view #id_config_text_ifr {
     height: 19em !important;
-}
-
-#page-blocks-conduit-view.theme-snap cqm-main {
-    a.nav-link.active {
-        background-color: rgba($nav-color, 0.1);
-    }
-    a.nav-link {
-        color: $gray !important;
-        font-weight: 500;
-    }
-    cqm-file-list .card-header {
-        background-color: rgba($nav-color, 0.1);
-        h5 {
-            color: $nav-color;
-            font-weight: 500;
-        }
-    }
-
 }
 
 #page-mod-choice-report.theme-snap {
