@@ -51,14 +51,6 @@ Feature: When the Moodle theme is set to Snap, core notifications messages shoul
     And I log out
 
   @javascript
-  Scenario: Error notification should have close dialog as aria-label attribute to be accessible
-    And I skip because "this test will be fixed in INT-17527"
-    Given I log in as "teacher1"
-    And I am on "Course 1" course homepage
-    And I click on "li.modtype_quiz a.mod-link" "css_element"
-    And the "aria-label" attribute of "div.alert-danger button.close" "css_element" should contain "Close"
-
-  @javascript
   Scenario: Success notification should have close dialog as aria-label attribute to be accessible
     When I log in as "student1"
     And I am on "Course 1" course homepage
