@@ -286,6 +286,21 @@
     }
 }
 
+.path-mod-assign {
+    .automatic-completion-conditions span.badge {
+        border-radius: 0.25rem !important; // Overwrite boost style.
+        padding: 0.4em;
+    }
+
+    .automatic-completion-conditions {
+        margin-top: 1em;
+    }
+
+    .badge-success {
+        @include tag-variant($tag-success-bg);
+    }
+}
+
 .assign-submission-data a.btn {
     margin: 1em 1em;
 }
