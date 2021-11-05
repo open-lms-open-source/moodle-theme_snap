@@ -873,3 +873,38 @@ section#snap-add-new-section #summary-editor_parent #summary-editor_tbl {
         }
     }
 }
+
+/**
+ * Styling for block_accessibility.
+ * The colors come directly from the block styles.
+ */
+.theme-snap {
+    .summary.block_accessreview {
+        background-color: #fff;
+    }
+
+    .block_accessreview_success,
+    .block_accessreview_danger {
+        p,
+        a {
+            font-weight: 400; // By default the block will change the texts to a bold text, this avoid that change.
+        }
+    }
+
+    // We need to override the default values for Snap when these classes exists.
+    .block_accessreview_success .block_accessreview_view {
+        color: #1e451e;
+        background-color: #d7e6d7 !important;
+    }
+
+    .block_accessreview_danger .block_accessreview_view {
+        color: #6e211e;
+        background-color: #f6d9d8 !important;
+    }
+
+    .block_accessreview_view {
+        margin-bottom: 1.5em;
+        font-size: 15px;
+        padding-left: 2em !important;
+    }
+}
