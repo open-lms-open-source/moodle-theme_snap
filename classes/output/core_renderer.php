@@ -754,9 +754,11 @@ class core_renderer extends \theme_boost\output\core_renderer {
         }
 
         // User quicklinks.
+        // We need to access the User id page.
+        $userid = $USER->id;
         $profilelink = [
             'id' => 'snap-pm-profile',
-            'link' => s($CFG->wwwroot). '/user/profile.php',
+            'link' => s($CFG->wwwroot). '/user/profile.php?id=' .$userid,
             'title' => get_string('profile')
         ];
         $quicklinks = [$profilelink];
