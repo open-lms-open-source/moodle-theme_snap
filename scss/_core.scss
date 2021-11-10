@@ -519,10 +519,6 @@ hr {
     line-height: 1.2;
 }
 
-#region-main textarea {
-    font-family: $font-family-serif;
-}
-
 // Roboto robot voice for system text
 label,
 .label,
@@ -1165,7 +1161,6 @@ footer #moodle-footer
 }
 
 #region-main {
-    font-family: $font-family-serif;
     max-width: 60.5em;
     padding-top: 1em;
     float: none;

@@ -43,16 +43,6 @@
     border: inherit;
 }
 
-#region-main,
-#region-main textarea,
-.contentafterlink,
-.contentwithoutlink,
-.user-grade td.feedbacktext,
-.snap-lightbox-description,
-#page-mod-book-print {
-    font-family: $font-family-serif;
-}
-
 h1,
 .h1,
 h2,
@@ -80,10 +70,6 @@ legend,
 .snap-system-text,
 .snap-action-icon {
     font-family: $font-family-system;
-}
-
-.snap-media-body p {
-    font-family: $font-family-serif;
 }
 
 #page-mod-quiz-review .arrow_link,

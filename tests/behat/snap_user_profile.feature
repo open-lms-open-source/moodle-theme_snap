@@ -11,9 +11,9 @@
 # GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License
-# along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+# along with Moodle. If not, see <http://www.gnu.org/licenses/>.
 #
-# Tests for courses in the Snap personal menu.
+# Tests for the user profile page.
 #
 # @package    theme_snap
 # @copyright  Copyright (c) 2021 Open LMS (https://www.openlms.net)

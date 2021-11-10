@@ -75,12 +75,14 @@
     #admin-navbarbuttonlink,
     #admin-logo,
     #admin-favicon,
-    #admin-headingfont,
-    #admin-seriffont,
     #admin-enabledlogin,
     #admin-enabledloginorder {
         width: 50%;
         float: left;
+    }
+
+    #admin-headingfont {
+        width: 100%;
     }
 
     #admin-customisenavbutton,
