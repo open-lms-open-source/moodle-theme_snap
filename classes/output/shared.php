@@ -155,7 +155,7 @@ EOF;
         if (!isset($CFG->additionalhtmlfooter)) {
             $CFG->additionalhtmlfooter = '';
         }
-        $maxbytes = get_max_upload_file_size($CFG->maxbytes, $course->maxbytes);;
+        $maxbytes = get_max_upload_file_size($CFG->maxbytes, $course->maxbytes);
         if (has_capability('moodle/course:ignorefilesizelimits', $PAGE->context)) {
             $maxbytes = 0;
         }

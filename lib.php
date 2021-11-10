@@ -408,7 +408,7 @@ function theme_snap_output_fragment_section($args) {
                     'block_sharing_cart'
                 );
             }
-            $maxbytes = get_max_upload_file_size($CFG->maxbytes, $course->maxbytes);;
+            $maxbytes = get_max_upload_file_size($CFG->maxbytes, $course->maxbytes);
             if (has_capability('moodle/course:ignorefilesizelimits', $PAGE->context)) {
                 $maxbytes = 0;
             }
