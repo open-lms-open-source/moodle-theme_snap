@@ -1217,7 +1217,7 @@ header#page-header
         padding-top: 7em;
     }
     @media (max-width: 465px) {
-        padding-top: 10.5rem;
+        padding-top: 7.5rem;
     }
 }
 
@@ -1229,6 +1229,11 @@ header#page-header
     float: none;
     @include media-breakpoint-up(md) {
         margin-top: -.75em;
+    }
+    @media (max-width: 768px) {
+        .breadcrumb:not(:empty) {
+            border: none;
+        }
     }
 }
 

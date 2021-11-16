@@ -853,7 +853,8 @@ section#snap-add-new-section #summary-editor_parent #summary-editor_tbl {
     #myaccount-general-information,
     #myaccount-servicedata-information {
         p,
-        a {
+        a,
+        small {
             font-family: $font-family-system;
         }
     }
@@ -863,13 +864,19 @@ section#snap-add-new-section #summary-editor_parent #summary-editor_tbl {
     }
 
     #myaccount-mobilemenu {
-        a {
-            &.state-active {
-                border-bottom: 2px solid $brand-primary;
-            }
-            i.icon {
-                color: $brand-primary;
-            }
+        a:not(.state-active) i.icon {
+            color: $brand-primary;
+            font-size: 30px;
+            opacity: 0.4;
+        }
+        a.state-active i.icon {
+            color: $brand-primary;
+            line-height: 1.7;
+            border: 2px solid $brand-primary;
+            border-radius: 50%;
+            width: 35px;
+            height: 35px;
+            font-size: 20px;
         }
     }
 }
