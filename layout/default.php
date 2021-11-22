@@ -98,7 +98,6 @@ if ($hasadminbutton) {
         '/grade/edit/scale/index.php',
         '/outcome/admin.php',
         '/mod/assign/adminmanageplugins.php',
-        '/message/defaultoutputs.php',
         '/theme/index.php',
         '/user/editadvanced.php',
         '/user/profile/index.php',
