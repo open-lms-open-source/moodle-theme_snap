@@ -161,6 +161,15 @@
 }
 
 /**
+ * Mod certificate.
+ */
+#page-mod-certificate-view {
+    .snap-page-heading-button {
+        display: none;
+    }
+}
+
+/**
  * Mod h5p.
  */
 #page-mod-hvp-mod.theme-snap iframe.h5p-editor-iframe {
