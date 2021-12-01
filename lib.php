@@ -322,15 +322,6 @@ function theme_snap_get_pre_scss($theme) {
     $fallbacksans = 'Roboto, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif';
     $settings['font-family-feature'] = $userfontsans . $fallbacksans;
 
-    $userfontserif = $theme->settings->seriffont;
-    if (empty($userfontserif) || in_array($userfontserif, ['Georgia', '"Georgia"'])) {
-        $userfontserif = '';
-    } else {
-        $userfontserif .= ",";
-    }
-    $fallbackserif = 'Georgia,"Times New Roman", Times, serif';
-    $settings['font-family-serif'] = $userfontserif . $fallbackserif;
-
     if (!empty($theme->settings->customisenavbar)) {
         $settings['nav-bg'] = !empty($theme->settings->navbarbg) ? $theme->settings->navbarbg : '#ffffff';
         $settings['nav-color'] = !empty($theme->settings->navbarlink) ? $theme->settings->navbarlink : $settings['brand-primary'];

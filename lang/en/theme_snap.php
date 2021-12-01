@@ -196,7 +196,7 @@ $string['grading'] = 'Grading';
 $string['help'] = 'Help';
 $string['helpguide'] = 'Help guide';
 $string['headingfont'] = 'Heading font';
-$string['headingfont_desc'] = 'This font is used in the headings (h1 - h6 elements) across your site. If you are including a custom webfont remember to add it to the moodle extra html form.';
+$string['headingfont_desc'] = 'This font (sans-serif) is used in the headings (h1 - h6 elements) across your site. If you are including a custom webfont remember to add it to the moodle extra html form. If you want to modify fonts of other elements, please make use of the Custom CSS option, for examples on how to do this, please take a look at this <a href="https://help.openlms.net/en/administrator/manage-a-site/snap-font-family-with-custom-css/" target="_blank">documentation</a>.';
 $string['helpwithlogin'] = 'Help with login';
 $string['helpwithloginandguest'] = 'Help with login / guest access';
 $string['hiddencoursestoggle'] = 'Hidden courses';
@@ -303,8 +303,6 @@ $string['resourcedisplayhelp'] = 'Select how attachments and links appear in you
 $string['displaydescription'] = 'Display description';
 $string['displaydescriptionhelp'] = 'Select to show a description of resource and URL activities in a new page first. Students will access content from the description.';
 $string['search'] = 'Search contents';
-$string['seriffont'] = 'Serif font';
-$string['seriffont_desc'] = 'This font is used for most user generated content. Using a serif font makes user generated content more readable, and feel like it is written by a human.';
 $string['showcoursegradepersonalmenu'] = 'Grades';
 $string['showcoursegradepersonalmenudesc'] = 'Show users their grade in course cards in the personal menu';
 $string['socialmedia'] = 'Social media';

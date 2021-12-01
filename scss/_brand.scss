@@ -121,16 +121,6 @@ a:hover {
     }
 }
 
-#region-main,
-#region-main textarea,
-.contentafterlink,
-.contentwithoutlink,
-.user-grade td.feedbacktext,
-.snap-lightbox-description,
-#page-mod-book-print {
-    font-family: $font-family-serif;
-}
-
 h1,
 .h1,
 h2,
@@ -181,10 +171,6 @@ legend,
 
 // Elements
 // -------------------------
-
-.snap-media-body p {
-    font-family: $font-family-serif;
-}
 
 .courseinfo-teachers-more {
     &:hover {

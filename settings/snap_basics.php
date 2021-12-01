@@ -101,15 +101,6 @@ $setting = new admin_setting_configtext($name, $title, $description, $default);
 $setting->set_updatedcallback('theme_reset_all_caches');
 $snapsettings->add($setting);
 
-// Serif font setting.
-$name = 'theme_snap/seriffont';
-$title = new lang_string('seriffont', 'theme_snap');
-$description = new lang_string('seriffont_desc', 'theme_snap');
-$default = '"Georgia"';
-$setting = new admin_setting_configtext($name, $title, $description, $default);
-$setting->set_updatedcallback('theme_reset_all_caches');
-$snapsettings->add($setting);
-
 // Custom CSS file.
 $name = 'theme_snap/customcss';
 $title = new lang_string('customcss', 'theme_snap');
