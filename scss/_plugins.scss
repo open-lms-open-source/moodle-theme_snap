@@ -735,6 +735,10 @@ section#snap-add-new-section #summary-editor_parent #summary-editor_tbl {
     display: block;
 }
 
+
+/**
+ * CCM Plugin.
+ */
 #page-local-ccm-view {
     #ccm-nav .nav-link.active {
         border-bottom: 4px solid $brand-primary;
@@ -782,6 +786,7 @@ section#snap-add-new-section #summary-editor_parent #summary-editor_tbl {
         color: white;
     }
 }
+
 // Drag and drop text question fix for Snap.
 .que.ddwtos .draghome,
 .que.ddwtos .drop.active {
@@ -877,5 +882,21 @@ section#snap-add-new-section #summary-editor_parent #summary-editor_tbl {
         margin-bottom: 1.5em;
         font-size: 15px;
         padding-left: 2em !important;
+    }
+}
+
+/**
+ * Open reports.
+ */
+#page-blocks-reports-view {
+    .dropdown ul.dropdown-menu li button {
+        &:focus,
+        &:hover {
+            background-color: $brand-primary;
+            color: white;
+        }
+    }
+    input[type="checkbox"] {
+        accent-color: $brand-primary;
     }
 }
