@@ -58,6 +58,14 @@ class core_renderer extends \theme_boost\output\core_renderer {
     const ORDER_LOGIN_MOODLE_FIRST = '0';
     const ORDER_LOGIN_ALTERNATIVE_FIRST = '1';
 
+
+    /**
+     * @var array|string[]
+     */
+    private array $listhidden = [
+        'pluginxp' => '/blocks/xp/index.php'
+    ];
+
     /**
      * Copied from outputrenderer.php
      * Heading with attached help button (same title text)
@@ -2090,22 +2098,20 @@ HTML;
     }
 
     /**
-     * @param $pathurl string url.
+     * @param $pathurl string.
      *
-     * @return bool result
+     * @return bool $path
      */
-    public function get_path_hiddentoc($pathurl = false) {
+    public function get_path_hiddentoc($pathurl = false): bool {
+
         $path = false;
-        $listhidden = array(
-            'pluginxp' => '/blocks/xp/index.php'
-        );
+        $listhidden = $this->listhidden ?? [];
 
         if (!empty($pathurl)) {
             if (in_array($pathurl, $listhidden)) {
                 $path = true;
             }
         }
-
         return $path;
     }
 }
