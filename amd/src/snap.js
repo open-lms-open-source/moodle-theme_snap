@@ -1106,6 +1106,19 @@ define(['jquery', 'core/log', 'theme_snap/headroom', 'theme_snap/util', 'theme_s
                 $("div#goto-top-link > a").click(function() {
                     window.scrollTo({ top: 0, behavior: 'smooth' });
                 });
+
+                // Blocks selectors to remove 'editing' class because is not necessary to access their settings.
+                var noneditingblocks = {};
+                noneditingblocks['blockxp'] = '#page-blocks-xp-index';
+
+                // Remove 'editing' class actions.
+                for (var block in noneditingblocks) {
+                    var blockisediting = $(noneditingblocks[block]).hasClass('editing');
+                    if (blockisediting === true) {
+                        $(noneditingblocks[block]).removeClass('editing');
+                    }
+                }
+
             }
         };
     }
