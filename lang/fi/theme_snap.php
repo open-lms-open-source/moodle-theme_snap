@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * @copyright  Copyright (c) 2021 Open LMS (https://www.openlms.net)
+ * @copyright  Copyright (c) 2022 Open LMS (https://www.openlms.net)
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -191,7 +191,7 @@ $string['grading'] = 'Arviointi';
 $string['help'] = 'Ohje';
 $string['helpguide'] = 'Ohjeopas';
 $string['headingfont'] = 'Otsikon fontti';
-$string['headingfont_desc'] = 'Tätä fonttia käytetään koko sivuston otsikoissa (elementit h1 - h6). Jos haluat sisällyttää mukautetun verkkofontin, muista lisätä se Moodlen extra html -lomakkeeseen.';
+$string['headingfont_desc'] = 'Tätä kirjasinta (sans-serif) käytetään otsikoissa (elementeissä h1–h6) koko sivustossa. Jos sisällytät mukautetun verkkokirjasimen, muista lisätä se moodle extra html -lomakkeeseen. Jos haluat muokata muiden elementtien kirjasimia, käytä Mukautettu CSS -valintaa. Esimerkkejä on tässä <a href="https://help.openlms.net/en/administrator/manage-a-site/snap-font-family-with-custom-css/" target="_blank">ohjeessa</a>.';
 $string['helpwithlogin'] = 'Apua kirjautumiseen';
 $string['helpwithloginandguest'] = 'Apua kirjautumiseen / vierailijakäyttöön';
 $string['hiddencoursestoggle'] = 'Piilotetut kurssit';
@@ -290,8 +290,6 @@ $string['resourcedisplayhelp'] = 'Valitse, miten liitteet ja linkit näytetään
 $string['displaydescription'] = 'Näytä kuvaus';
 $string['displaydescriptionhelp'] = 'Jos haluat näyttää aineiston kuvauksen ja URL-aktiviteetit ensin uudella sivulla, valitse tämä. Opiskelijat käyttävät sisältöä kuvauksesta.';
 $string['search'] = 'Etsi sisältöä';
-$string['seriffont'] = 'Serif-fontti';
-$string['seriffont_desc'] = 'Tätä fonttia käytetään suurimmassa osassa käyttäjän luomaa sisältöä. Serif-fontin käyttäminen käyttäjän luomassa sisällössä parantaa luettavuutta ja saa tekstin näyttämään ihmisen kirjoittamalta.';
 $string['showcoursegradepersonalmenu'] = 'Arvioinnit';
 $string['showcoursegradepersonalmenudesc'] = 'Näyttää käyttäjille heidän arvosanansa henkilökohtaisen valikon kurssikorteissa';
 $string['socialmedia'] = 'Sosiaalinen media';
@@ -378,6 +376,13 @@ $string['design_mod_page_description'] = 'Jos tämä on käytössä, sivuaineist
 $string['design_activity_chooser'] = 'Palaa takaisin aktiviteettivalitsimen alkuperäiseen muotoiluun';
 $string['design_activity_chooser_description'] = 'Jos asetus valitaan, aktiviteettivalitsin näytetään alkuperäisen asetuksen mukaisena. Tämä vaikuttaa kurssin sivuihin ja etusivuun.';
 $string['refreshdeadlinestask'] = 'Päivitä määräpäivien välimuistissa olevat tiedot. Tämä pitää suorittaa ennen kuin kaikki käyttäjät kirjautuvat sisään.';
+$string['resetdeadlinesquerycounttask'] = 'Nollaa määräaikojen kyselymäärä';
 $string['refreshdeadlinestaskoff'] = 'Ei etsitty tietoja täytettäväksi. Kytke päälle asetus ”Päivitä määräajat käyttäen ajoitettuja tehtäviä” Snapin henkilökohtaisen valikon asetuksissa, jotta tämä tehtävä voi täyttää määräaikojen välimuistiin tallennetut tiedot.';
 $string['activityrestriction'] = 'Aktiviteetin rajoitus';
 $string['hideandshowactioncb'] = 'Piilota ja näytä aktiviteetin valintaruudun toiminto';
+$string['retryfeed'] = 'Tämä syöte ei ole tällä hetkellä saatavilla, palaa myöhemmin uudelleen. Syöte: {$a}';
+$string['loadingfeed'] = 'Ladataan... saattaa kestää hetken';
+$string['hvpcustomcss'] = 'H5P:n mukautettu CSS';
+$string['hvpcustomcssdesc'] = 'Mukautettu CSS H5P-moduulille (moodle.org/plugins/mod_hvp), jos se on asennettu.';
+$string['courselimitstrdanger'] = 'Kurssiraja saavutettu -edistymispalkkia ei näytetä.';
+$string['courselimitstrwarning'] = 'Jos yli {$a} kurssia luetellaan, edistymispalkkia ei näytetä.';
