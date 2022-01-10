@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * @copyright  Copyright (c) 2021 Open LMS (https://www.openlms.net)
+ * @copyright  Copyright (c) 2022 Open LMS (https://www.openlms.net)
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -192,7 +192,7 @@ $string['grading'] = 'Qualificació';
 $string['help'] = 'Ajuda';
 $string['helpguide'] = 'Guia d\'ajuda';
 $string['headingfont'] = 'Font de la capçalera';
-$string['headingfont_desc'] = 'Aquesta font es fa servir per a les capçaleres (elements h1-h6) per tot el vostre lloc. Si voleu incloure una font web, recordeu afegir-la al formulari d’html addicional de moodle.';
+$string['headingfont_desc'] = 'Aquest tipus de lletra (Sans Serif) s\'utilitza als encapçalaments (elements h1-h6) del vostre lloc. Si incloeu un tipus de lletra web personalitzat, recordeu que cal afegir-lo al formulari HTML addicional de Moodle. Si voleu modificar els tipus de lletra d\'altres elements, feu servir l\'opció de CSS personalitzat; per obtenir exemples sobre com fer-ho, doneu una ullada a aquesta <a href="https://help.openlms.net/en/administrator/manage-a-site/snap-font-family-with-custom-css/" target="_blank">documentació</a>.';
 $string['helpwithlogin'] = 'Ajuda amb l’inici de sessió';
 $string['helpwithloginandguest'] = 'Ajuda amb l’inici de sessió / accés de convidat';
 $string['hiddencoursestoggle'] = 'Cursos ocults';
@@ -298,8 +298,6 @@ $string['resourcedisplayhelp'] = 'Seleccioneu com han d\'aparèixer els fitxers 
 $string['displaydescription'] = 'Descripció de la pantalla';
 $string['displaydescriptionhelp'] = 'Seleccioneu-ho perquè es mostri primer una descripció del recurs i les activitats URL en una pàgina nova. Els estudiants accediran al contingut des de la descripció.';
 $string['search'] = 'Cerca contingut';
-$string['seriffont'] = 'Tipus de lletra Serif';
-$string['seriffont_desc'] = 'Aquesta font s’utilitza per a la major part del contingut generat per l’usuari. Si utilitzeu una font Serif, el contingut generat per l’usuari és més fàcil de llegir i sembla com si l’hagués escrit un humà.';
 $string['showcoursegradepersonalmenu'] = 'Notes';
 $string['showcoursegradepersonalmenudesc'] = 'Mostra la seva qualificació als usuaris en targetes de curs al menú pesonal';
 $string['socialmedia'] = 'Xarxes socials';
@@ -395,6 +393,13 @@ $string['design_mod_page_description'] = 'Si s\'activa, el contingut dels recurs
 $string['design_activity_chooser'] = 'Torna al disseny original per al selector d\'activitat';
 $string['design_activity_chooser_description'] = 'Si s\'activa, el selector d\'activitat es mostrarà amb el disseny original. Afectarà el curs i les pàgines de portada.';
 $string['refreshdeadlinestask'] = 'Actualitza les dades de terminis a la memòria cau. S\'ha d\'executar abans que tots els usuaris iniciïn sessió.';
+$string['resetdeadlinesquerycounttask'] = 'Restablir el recompte de consultes de terminis';
 $string['refreshdeadlinestaskoff'] = 'No s\'han cercat dades per a omplir. Activeu el paràmetre "Actualitza els terminis mitjançant una tasca programada" en els paràmetres del menú Personal de Snap per permetre que aquesta tasca ompli les dades de terminis de la memòria cau.';
 $string['activityrestriction'] = 'Restricció d\'activitat';
 $string['hideandshowactioncb'] = 'Oculta i mostra l\'acció de la casella de selecció d\'activitat';
+$string['retryfeed'] = 'Aquest canal no està disponible actualment; torneu-ho a comprovar més tard. Canal {$a}';
+$string['loadingfeed'] = 'S\'està carregant... pot trigar temps';
+$string['hvpcustomcss'] = 'CSS personalitzat H5P';
+$string['hvpcustomcssdesc'] = 'CSS personalitzat per al mòdul H5P (moodle.org/plugins/mod_hvp) si està instal·lat.';
+$string['courselimitstrdanger'] = 'La barra de progrés de límit de curs assolit no es mostrarà.';
+$string['courselimitstrwarning'] = 'Si hi ha més de {$a} cursos a la llista, no es mostrarà la barra de progrés';
