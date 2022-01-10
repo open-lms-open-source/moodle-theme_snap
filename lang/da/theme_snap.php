@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * @copyright  Copyright (c) 2021 Open LMS (https://www.openlms.net)
+ * @copyright  Copyright (c) 2022 Open LMS (https://www.openlms.net)
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -193,7 +193,7 @@ $string['grading'] = 'Karaktergivning';
 $string['help'] = 'Hjælp';
 $string['helpguide'] = 'Hjælpeguide';
 $string['headingfont'] = 'Overskriftens skrifttype';
-$string['headingfont_desc'] = 'Denne skrifttype bruges i overskrifter (h1- til h6-elementer) på hele dit websted. Hvis du medtager en tilpasset internetskrifttype, skal den tilføjes i den ekstra Moodle HTML-formular.';
+$string['headingfont_desc'] = 'Denne skrifttype (sans-serif) bruges i overskrifterne (h1-h6-elementer) på tværs af dit websted. Hvis du inkluderer en brugerdefineret webfont, skal du huske at tilføje den til moodles ekstra html-formular. Hvis du vil ændre skrifttype for andre elementer, skal du gøre brug af indstillingen Brugerdefineret CSS. Se eksempler på, hvordan du gør dette, i denne <a href="https://help.openlms.net/en/administrator/manage-a-site/snap-font-family-with-custom-css/" target="_blank">dokumentation</a> .';
 $string['helpwithlogin'] = 'Hjælp med login';
 $string['helpwithloginandguest'] = 'Hjælp med login/gæsteadgang';
 $string['hiddencoursestoggle'] = 'Skjulte kurser';
@@ -298,8 +298,6 @@ $string['resourcedisplayhelp'] = 'Vælg, hvordan vedhæftede filer og links vise
 $string['displaydescription'] = 'Vis beskrivelse';
 $string['displaydescriptionhelp'] = 'Vælg for at vise en beskrivelse af ressourcer og URL-aktiviteter på en ny side først. Studerende vil få adgang til indhold via beskrivelsen.';
 $string['search'] = 'Søg i indhold';
-$string['seriffont'] = 'Serif-skrifttype';
-$string['seriffont_desc'] = 'Denne skrifttype bruges til det meste brugergenererede indhold. En Serif-skrifttype gør brugergenereret indhold mere tydeligt, og det ligner noget, som er skrevet af en person.';
 $string['showcoursegradepersonalmenu'] = 'Karakterer';
 $string['showcoursegradepersonalmenudesc'] = 'Vis brugere deres karakter i kursuskort i den personlige menu';
 $string['socialmedia'] = 'Sociale medier';
@@ -395,6 +393,13 @@ $string['design_mod_page_description'] = 'Hvis sideressourceindhold er aktiveret
 $string['design_activity_chooser'] = 'Rul tilbage til aktivitetsvælgerens oprindelige design';
 $string['design_activity_chooser_description'] = 'Hvis dette er aktiveret, vises aktivitetsvælgeren med det oprindelige design. Dette vil ændre kursus- og forsiderne.';
 $string['refreshdeadlinestask'] = 'Genindlæs cachelagrede deadlinedata. Dette bør køres, før alle brugere logger ind.';
+$string['resetdeadlinesquerycounttask'] = 'Nulstil tidsfrister, forespørgselstæller';
 $string['refreshdeadlinestaskoff'] = 'Søgte ikke efter data til udfyldning. Slå indstillingen "Refresh deadlines using scheduled task" (Opdater tidsfrister med planlagt opgave) i de personlige menuindstillinger i Snap, så denne opgave kan udfylde cachelagrede deadlinedata.';
 $string['activityrestriction'] = 'Aktivitetsbegrænsning';
 $string['hideandshowactioncb'] = 'Handling for afkrydsningsfelt til at skjule og vise aktiviteter';
+$string['retryfeed'] = 'Dette feed er ikke tilgængeligt i øjeblikket - prøv senere. Feed: {$a}';
+$string['loadingfeed'] = 'Indlæser... kan tage noget tid';
+$string['hvpcustomcss'] = 'H5P Brugerdefineret CSS';
+$string['hvpcustomcssdesc'] = 'Brugerdefineret CSS til H5P-modulet (moodle.org/plugins/mod_hvp), hvis det er installeret.';
+$string['courselimitstrdanger'] = 'Statuslinjen for opnået kursusgrænse vises ikke.';
+$string['courselimitstrwarning'] = 'Hvis der er angivet mere end {$a} kurser, vises statuslinjen ikke';
