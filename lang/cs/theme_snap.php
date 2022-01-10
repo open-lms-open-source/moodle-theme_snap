@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * @copyright  Copyright (c) 2021 Open LMS (https://www.openlms.net)
+ * @copyright  Copyright (c) 2022 Open LMS (https://www.openlms.net)
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -193,7 +193,7 @@ $string['grading'] = 'Známkování';
 $string['help'] = 'Nápověda';
 $string['helpguide'] = 'Pomocný průvodce';
 $string['headingfont'] = 'Písmo nadpisů';
-$string['headingfont_desc'] = 'Toto písmo bude používáno v nadpisech (elementy h1 až h6) napříč vaším webem. Pokud se chystáte zahrnout vlastní webové písmo, nezapomeňte ho přidat do formuláře extra html moodle.';
+$string['headingfont_desc'] = 'Toto písmo (sans-serif) je používáno v nadpisech (prvky h1 až h6) na celém webu. Pokud se chystáte zahrnout vlastní webové písmo, nezapomeňte jej přidat do formuláře moodle extra html. Pokud chcete upravit písma jiných prvků, použijte možnost Vlastní šablona stylů CSS. Příklady, jak postupovat, naleznete v této <a href="https://help.openlms.net/en/administrator/manage-a-site/snap-font-family-with-custom-css/" target="_blank">dokumentaci</a>.';
 $string['helpwithlogin'] = 'Pomoc s přihlášením';
 $string['helpwithloginandguest'] = 'Pomoc s přihlášením/přístupem hosta';
 $string['hiddencoursestoggle'] = 'Skryté kurzy';
@@ -277,7 +277,7 @@ $string['poster'] = 'Titulní obrázek';
 $string['posterdesc'] = 'Jedná se o velký obrázek v záhlaví titulní stránky vašeho webu. Nejlepší je použít obrázek na šířku (1200 x 600 pixelů nebo více).';
 $string['poweredbyrunby'] = 'Vytvořeno pomocí <a href="https://{$a->subdomain}.openlms.net/" target="_blank" rel="noopener">Open LMS</a>,
 a <a href="https://moodle.com/" target="_blank" rel="noopener">produkt založený na systému Moodle</a>.<br>
-Copyright &#169; {$a->year} Open LMS, všechna práva vyhrazena.';
+Autorská práva &#169; {$a->rok} Open LMS, všechna práva vyhrazena.';
 $string['previoussection'] = 'Předchozí sekce';
 $string['privacy:metadata:theme_snap_course_favorites:courseid'] = 'ID kurzu, který uživatel přidal do oblíbených';
 $string['privacy:metadata:theme_snap_course_favorites:userid'] = 'ID uživatele, který kurz přidal do oblíbených';
@@ -300,8 +300,6 @@ $string['resourcedisplayhelp'] = 'Vyberte, jak se ve vašem kurzu budou zobrazov
 $string['displaydescription'] = 'Zobrazit popis';
 $string['displaydescriptionhelp'] = 'Vyberte, pokud chcete na nové stránce jako první zobrazit popis zdroje a aktivit adresy URL. Studenti se k obsahu dostanou přes tento popis.';
 $string['search'] = 'Prohledat obsah';
-$string['seriffont'] = 'Písmo Serif';
-$string['seriffont_desc'] = 'Toto písmo je používáno pro většinu obsahu generovaného uživateli. S písmem serif je obsah generovaný uživateli čitelnější a více působí dojmem, že byl psán člověkem.';
 $string['showcoursegradepersonalmenu'] = 'Hodnocení';
 $string['showcoursegradepersonalmenudesc'] = 'Zobrazí uživatelům jejich klasifikaci na kartách kurzů v osobní nabídce';
 $string['socialmedia'] = 'Sociální sítě';
@@ -396,6 +394,13 @@ $string['design_mod_page_description'] = 'Pokud je tato možnost povolena, bude 
 $string['design_activity_chooser'] = 'Vrátit se zpět k původnímu designu voliče aktivity';
 $string['design_activity_chooser_description'] = 'Pokud je tato možnost povolena, volič aktivity se bude zobrazovat v původním designu. Projeví se to v kurzu i na titulních stránkách.';
 $string['refreshdeadlinestask'] = 'Obnovení termínů uložených v mezipaměti. Tato funkce by měla být spuštěna před přihlášením všech uživatelů.';
+$string['resetdeadlinesquerycounttask'] = 'Vynulovat počet dotazů na termíny';
 $string['refreshdeadlinestaskoff'] = 'Data k vyplnění nebyla vyhledána. V nastavení Osobní nabídky aplikace Snap zapněte nastavení „Obnovit termíny pomocí naplánované úlohy“, aby tato úloha umožnila vyplnit data termínů uložená v mezipaměti.';
 $string['activityrestriction'] = 'Omezení aktivit';
 $string['hideandshowactioncb'] = 'Skrýt a zobrazit akci zaškrtávacího políčka aktivity';
+$string['retryfeed'] = 'Tento zdroj je momentálně nedostupný, zkontrolujte jej později. Zdroj: {$a}';
+$string['loadingfeed'] = 'Probíhá načítání... může to chvíli trvat';
+$string['hvpcustomcss'] = 'Vlastní šablona stylů CSS H5P';
+$string['hvpcustomcssdesc'] = 'Vlastní šablona stylů CSS pro modul H5P (moodle.org/plugins/mod_hvp), pokud je nainstalován.';
+$string['courselimitstrdanger'] = 'Ukazatel průběhu dosaženého limitu kurzu se nezobrazí.';
+$string['courselimitstrwarning'] = 'Pokud je uvedeno více než {$a} kurzů, ukazatel průběhu se nezobrazí.';
