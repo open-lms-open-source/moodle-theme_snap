@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * @copyright  Copyright (c) 2021 Open LMS (https://www.openlms.net)
+ * @copyright  Copyright (c) 2022 Open LMS (https://www.openlms.net)
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -192,7 +192,7 @@ $string['grading'] = 'Évaluation';
 $string['help'] = 'Aide';
 $string['helpguide'] = 'Guide d\'aide';
 $string['headingfont'] = 'Police de titre';
-$string['headingfont_desc'] = 'Cette police est utilisée dans les titres (éléments T1-T6) sur l\'ensemble de votre site. Si vous ajoutez une police Web personnalisée, n\'oubliez pas de l\'ajouter au formulaire HTML supplémentaire de Moodle.';
+$string['headingfont_desc'] = 'Cette police (sans-serif) est utilisée dans les titres (éléments h1 à h6) de votre site. Si vous incluez une police Web personnalisée, n\'oubliez pas de l\'ajouter au formulaire HTML supplémentaire Moodle. Si vous souhaitez modifier les polices d\'autres éléments, utilisez l\'option CSS personnalisé. Pour obtenir des exemples sur la façon de procéder, consultez la documentation <a href=« https://help.openlms.net/en/administrator/manage-a-site/snap-font-family-with-custom-css/" target="_blank »></a>.';
 $string['helpwithlogin'] = 'Aide à la connexion';
 $string['helpwithloginandguest'] = 'Aide à la connexion/l\'accès anonyme';
 $string['hiddencoursestoggle'] = 'Cours masqués';
@@ -272,9 +272,9 @@ $string['pld'] = 'CPP';
 $string['pluginname'] = 'Snap';
 $string['poster'] = 'Image de couverture';
 $string['posterdesc'] = 'Image d\'en-tête de grande taille destinée à la page d\'accueil de votre site. Les images en mode paysage (1200 pixels x 600 pixels ou plus) sont plus optimales.';
-$string['poweredbyrunby'] = 'Conçu avec <a href="https://{$a->subdomain}.openlms.net/" target="_blank" rel="noopener">Open LMS</a>,
+$string['poweredbyrunby'] = 'Conçu avec <a href="https://www.openlms.net/" target="_blank" rel="noopener">Open LMS</a>,
 une technologie <a href="https://moodle.com/" target="_blank" rel="noopener">Moodle</a>.<br>
-Copyright &#169; {$a->year} Open LMS, tous droits réservés.';
+Copyright &#169; {$a} Open LMS, tous droits réservés.';
 $string['previoussection'] = 'Section précédente';
 $string['privacy:metadata:theme_snap_course_favorites:courseid'] = 'Identifiant du cours que l\'utilisateur a ajouté à ses favoris';
 $string['privacy:metadata:theme_snap_course_favorites:userid'] = 'Identifiant de l\'utilisateur qui a ajouté le cours à ses favoris';
@@ -297,8 +297,6 @@ $string['resourcedisplayhelp'] = 'Sélectionnez le mode d\'affichage des pièces
 $string['displaydescription'] = 'Afficher la description';
 $string['displaydescriptionhelp'] = 'Choisissez d\'afficher une description de la ressource et des activités URL dans une nouvelle page d\'abord. Les étudiants accéderont au contenu depuis la description.';
 $string['search'] = 'Rechercher du contenu';
-$string['seriffont'] = 'Police Serif';
-$string['seriffont_desc'] = 'Cette police est utilisée pour la plupart du contenu généré par l\'utilisateur. L\'utilisation d\'une police Serif rend le contenu généré par l\'utilisateur plus lisible, et donne l\'impression qu\'il a été rédigé à la main.';
 $string['showcoursegradepersonalmenu'] = 'Notes';
 $string['showcoursegradepersonalmenudesc'] = 'Montrer aux utilisateurs leur note dans les cartes de cours dans le menu personnel';
 $string['socialmedia'] = 'Réseau social';
@@ -394,6 +392,13 @@ $string['design_mod_page_description'] = 'Lorsque cette option est activée, le 
 $string['design_activity_chooser'] = 'Revenir au design original pour le choix de l’activité';
 $string['design_activity_chooser_description'] = 'Si cette option est activée, le sélecteur d’activité s’affichera sous son aspect d’origine. Cela affectera le cours et les premières pages.';
 $string['refreshdeadlinestask'] = 'Actualiser les échéances des données mises en cache. Cette tâche doit être exécutée avant que tous les utilisateurs se connectent.';
+$string['resetdeadlinesquerycounttask'] = 'Réinitialiser le nombre de requêtes d\'échéance';
 $string['refreshdeadlinestaskoff'] = 'Aucune recherche de données à remplir n’a été effectuée. Veuillez activer le paramètre « Actualiser les dates limites à l\'aide d\'une tâche planifiée » dans les paramètres du menu personnel de Snap pour permettre à cette tâche de renseigner les données mises en cache des dates limites.';
 $string['activityrestriction'] = 'Restriction d\'activité';
 $string['hideandshowactioncb'] = 'Masquer et afficher l\'action de la case à cocher d\'activité';
+$string['retryfeed'] = 'Ce flux est actuellement indisponible, veuillez réessayer plus tard. Flux : {$a}';
+$string['loadingfeed'] = 'En cours de chargement... L\'opération peut prendre du temps.';
+$string['hvpcustomcss'] = 'CSS personnalisé H5P';
+$string['hvpcustomcssdesc'] = 'CSS personnalisé pour le module H5P (moodle.org/plugins/mod_hvp) s\'il est installé.';
+$string['courselimitstrdanger'] = 'La barre de progression de la limite de cours atteinte ne s\'affichera pas.';
+$string['courselimitstrwarning'] = 'Si plus de {$a} cours sont répertoriés, la barre de progression ne s\'affichera pas';
