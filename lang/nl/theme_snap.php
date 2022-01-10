@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * @copyright  Copyright (c) 2021 Open LMS (https://www.openlms.net)
+ * @copyright  Copyright (c) 2022 Open LMS (https://www.openlms.net)
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -192,7 +192,7 @@ $string['grading'] = 'Beoordeling';
 $string['help'] = 'Help';
 $string['helpguide'] = 'Handleiding';
 $string['headingfont'] = 'Lettertype koptekst';
-$string['headingfont_desc'] = 'Dit lettertype wordt gebruikt in de kopteksten (elementen h1 - h6) op de gehele site. Als je een aangepast weblettertype gebruikt, vergeet dit dan niet toe te voegen aan het extra moodle-html-formulier.';
+$string['headingfont_desc'] = 'Dit lettertype (sans-serif) wordt gebruikt in de koppen (elementen h1 - h6) op jouw site. Als je een aangepast weblettertype wilt gebruiken, vergeet dit dan niet toe te voegen aan het aanvullend HTML-formulier van Moodle. Als je lettertypen of andere elementen wilt aanpassen, maak dan gebruik van de optie Aangepaste CSS. Zie voor voorbeelden van hoe je dit doet <a href="https://help.openlms.net/en/administrator/manage-a-site/snap-font-family-with-custom-css/" target="_blank">documentation</a>.';
 $string['helpwithlogin'] = 'Hulp bij aanmelden';
 $string['helpwithloginandguest'] = 'Hulp bij aanmelden/gastentoegang';
 $string['hiddencoursestoggle'] = 'Verborgen cursussen';
@@ -275,7 +275,7 @@ $string['poster'] = 'Omslagafbeelding';
 $string['posterdesc'] = 'Een grote headerafbeelding voor de startpagina van je site. Liggende afbeeldingen (1200 x 600 pixels) of groter werken het beste.';
 $string['poweredbyrunby'] = 'Gebouwd met <a href="https://{$a->subdomain}.openlms.net/" target="_blank" rel="noopener">Open LMS</a>,
 een op <a href="https://moodle.com/" target="_blank" rel="noopener">Moodle</a> gebaseerd product.<br>
-Copyright &#169; {$a->year} Open LMS, alle rechten voorbehouden.';
+Copyright &#169; {$a} Open LMS, alle rechten voorbehouden.';
 $string['previoussection'] = 'Vorige sectie';
 $string['privacy:metadata:theme_snap_course_favorites:courseid'] = 'De cursus-ID van de cursus die de gebruiker als favoriet heeft ingesteld';
 $string['privacy:metadata:theme_snap_course_favorites:userid'] = 'De gebruikers-ID van de gebruiker die de cursus als favoriet heeft ingesteld';
@@ -298,8 +298,6 @@ $string['resourcedisplayhelp'] = 'Selecteer hoe bijlagen en koppelingen in je cu
 $string['displaydescription'] = 'Toon beschrijving';
 $string['displaydescriptionhelp'] = 'Selecteer om als eerste een beschrijving van de bron en URL-activiteiten weer te geven op een nieuwe pagina. Leerlingen openen inhoud vanuit de beschrijving.';
 $string['search'] = 'Inhoud zoeken';
-$string['seriffont'] = 'Lettertype Serif';
-$string['seriffont_desc'] = 'Dit lettertype wordt gebruikt voor de meeste door gebruikers gegenereerde inhoud. Gebruik een serif-lettertype om door gebruikers gemaakte inhoud beter leesbaar te maken, en de inhoud meer te doen aanvoelen alsof hij door een mens is geschreven.';
 $string['showcoursegradepersonalmenu'] = 'Cijfers';
 $string['showcoursegradepersonalmenudesc'] = 'Gebruikers hun cijfer tonen in cursuskaarten in het persoonlijke menu';
 $string['socialmedia'] = 'Social media';
@@ -395,6 +393,13 @@ $string['design_mod_page_description'] = 'Indien ingeschakeld wordt de paginabro
 $string['design_activity_chooser'] = 'Terug naar het oorspronkelijke ontwerp voor de activiteitenkiezer';
 $string['design_activity_chooser_description'] = 'Als deze optie is ingeschakeld, wordt de activiteitenkiezer weergegeven met het oorspronkelijke ontwerp. Dit heeft invloed op de cursus en de startpagina\'s.';
 $string['refreshdeadlinestask'] = 'Vernieuwt de data van deadlines in de cache. Voer deze taak uit voordat alle gebruikers zich aanmelden.';
+$string['resetdeadlinesquerycounttask'] = 'Deadlinewaarden opnieuw instellen';
 $string['refreshdeadlinestaskoff'] = 'Er is niet gezocht naar in te vullen gegevens. Schakel de instelling \'Deadlines verversen met geplande taak\' in de instellingen van het persoonlijke menu van Snap in, zodat deze taak de deadlines met gegevens in cache kan vullen.';
 $string['activityrestriction'] = 'Beperking van activiteit';
 $string['hideandshowactioncb'] = 'Selectievakje activiteit verbergen en weergeven';
+$string['retryfeed'] = 'Deze feed is momenteel niet beschikbaar. Probeer het later opnieuw. Feed: {$a}';
+$string['loadingfeed'] = 'Bezig met laden...even geduld aub';
+$string['hvpcustomcss'] = 'Aangepaste CSS voor H5P';
+$string['hvpcustomcssdesc'] = 'Aangepaste CSS voor de H5P-module (moodle.org/plugins/mod_hvp) indien geïnstalleerd.';
+$string['courselimitstrdanger'] = 'De voortgangsbalk voor het bereiken van de cursuslimiet wordt niet weergegeven.';
+$string['courselimitstrwarning'] = 'Als er meer dan {$a} cursussen worden vermeld, wordt de voortgangsbalk niet weergegeven';
