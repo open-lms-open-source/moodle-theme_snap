@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * @copyright  Copyright (c) 2021 Open LMS (https://www.openlms.net)
+ * @copyright  Copyright (c) 2022 Open LMS (https://www.openlms.net)
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -396,6 +396,13 @@ $string['design_mod_page_description'] = 'Bu ayar etkinleştirilirse sayfa kayna
 $string['design_activity_chooser'] = 'Etkinlik seçici için orijinal tasarıma geri dön';
 $string['design_activity_chooser_description'] = 'Bu ayar etkinleştirilirse etkinlik seçici orijinal tasarımda görüntülenir. Bu, kursu ve ön sayfaları etkiler.';
 $string['refreshdeadlinestask'] = 'Bitiş tarihlerinin önbellek verilerini yenile. Bu, tüm kullanıcılar oturum açmadan önce çalıştırılmalıdır.';
+$string['resetdeadlinesquerycounttask'] = 'Teslim tarihlerini sorgulama sayımını sıfırla';
 $string['refreshdeadlinestaskoff'] = 'Doldurmak için veri aranmadı. Önbelleğe alınmış son tarih verilerini doldurmak için lütfen Snap’in Kişisel menü ayarlarındaki “Son tarihleri planlanan görevi kullanarak yenile” ayarını açın.';
 $string['activityrestriction'] = 'Etkinlik kısıtlama';
 $string['hideandshowactioncb'] = 'Etkinlik onay kutusu eylemini gizle ve göster';
+$string['retryfeed'] = 'Bu akış şu anda kullanılamıyor, lütfen daha sonra tekrar kontrol edin. Akış: {$a}';
+$string['loadingfeed'] = 'Yükleniyor... İşlem zaman alabilir';
+$string['hvpcustomcss'] = 'H5P Özel CSS';
+$string['hvpcustomcssdesc'] = 'Yüklüyse H5P modülü (moodle.org/plugins/mod_hvp) için özel CSS.';
+$string['courselimitstrdanger'] = 'Kurs sınırına ulaşıldı, ilerleme çubuğu görüntülenmez.';
+$string['courselimitstrwarning'] = '{$a} adetten fazla kurs listelenirse ilerleme çubuğu görüntülenmez';

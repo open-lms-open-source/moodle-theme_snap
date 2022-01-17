@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * @copyright  Copyright (c) 2021 Open LMS (https://www.openlms.net)
+ * @copyright  Copyright (c) 2022 Open LMS (https://www.openlms.net)
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -192,7 +192,7 @@ $string['grading'] = '採点';
 $string['help'] = 'ヘルプ';
 $string['helpguide'] = 'ヘルプガイド';
 $string['headingfont'] = '見出しのフォント';
-$string['headingfont_desc'] = 'このフォントは、サイト全体の見出し (h1 - h6要素) で使用されます。カスタムWebフォントを含めている場合は、必ずMoodleの特別HTMLフォームに追加してください。';
+$string['headingfont_desc'] = 'このフォント (サンセリフ) は、サイト全体の見出し (h1～h6エレメント) で使用されます。カスタムウェブフォントを含める場合は、Moodle追加HTMLフォームに追加してください。他のエレメントのフォントを変更する場合は、カスタムCSSオプションを使用してください。この方法の例については、<a href="https://help.openlms.net/en/administrator/manage-a-site/snap-font-family-with-custom-css/" target="_blank">ドキュメント</a>を参照してください。';
 $string['helpwithlogin'] = 'ログインのヘルプ';
 $string['helpwithloginandguest'] = 'ログイン/ゲストアクセスのヘルプ';
 $string['hiddencoursestoggle'] = '非表示のコース';
@@ -298,8 +298,6 @@ $string['resourcedisplayhelp'] = '添付ファイルとリンクをコースに�
 $string['displaydescription'] = '説明を表示する';
 $string['displaydescriptionhelp'] = '選択すると、最初に新しいページにリソースとURLアクティビティの説明が表示されます。学生は、説明からコンテンツにアクセスします。';
 $string['search'] = 'コンテンツを検索する';
-$string['seriffont'] = 'Serifフォント';
-$string['seriffont_desc'] = 'このフォントは、ユーザが生成するコンテンツのほとんどに使用されます。Serifフォントを使用すると、コンテンツの読みやすさが増し、人間が書いたもののようになります。';
 $string['showcoursegradepersonalmenu'] = '成績';
 $string['showcoursegradepersonalmenudesc'] = 'パーソナルメニューのコースカードにユーザの評定を表示します';
 $string['socialmedia'] = 'ソーシャルメディア';
@@ -395,6 +393,13 @@ $string['design_mod_page_description'] = '有効にすると、ページリソ�
 $string['design_activity_chooser'] = '活動チューザのオリジナルのデザインにロールバックする';
 $string['design_activity_chooser_description'] = '有効にすると、活動チューザがオリジナルのデザインで表示されます。これは、コースとフロントページに影響を与えます。';
 $string['refreshdeadlinestask'] = '終了日時のキャッシュされたデータをリフレッシュします。これはすべてのユーザがログインする前に実行される必要があります。';
+$string['resetdeadlinesquerycounttask'] = '期限のクエリ数をリセットする';
 $string['refreshdeadlinestaskoff'] = '投入するデータを検索しませんでした。Snapの個人メニュー設定の「スケジュール済みタスクを使用して期限をリフレッシュ」設定をオンにし、このタスクが期限キャッシュデータを投入できるようにします。';
 $string['activityrestriction'] = 'アクティビティの制限';
 $string['hideandshowactioncb'] = 'アクティビティのチェックボックスアクションを非表示および表示します';
+$string['retryfeed'] = 'このフィードは現在利用できません。後でもう一度確認してください。フィード: {$a}';
+$string['loadingfeed'] = 'ロード中...時間がかかる場合があります';
+$string['hvpcustomcss'] = 'H5PカスタムCSS';
+$string['hvpcustomcssdesc'] = 'H5Pモジュール (moodle.org/plugins/mod_hvp) 用のカスタムCSS (インストールされている場合)。';
+$string['courselimitstrdanger'] = 'コースの制限に到達しました。進行状況バーが表示されなくなります。';
+$string['courselimitstrwarning'] = '{$a} を超えるコースがリストされている場合、進行状況バーは表示されません';

@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * @copyright  Copyright (c) 2021 Open LMS (https://www.openlms.net)
+ * @copyright  Copyright (c) 2022 Open LMS (https://www.openlms.net)
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -193,7 +193,7 @@ $string['grading'] = 'Calificación';
 $string['help'] = 'Ayuda';
 $string['helpguide'] = 'Guía de ayuda';
 $string['headingfont'] = 'Fuente del encabezado';
-$string['headingfont_desc'] = 'Esta fuente se usa en los encabezados (elementos h1 - h6) en todo el sitio. Si incluye una fuente web personalizada, recuerde agregarla al formulario html extra de Moodle.';
+$string['headingfont_desc'] = 'Esta fuente (sans-serif) se usa en los encabezados (elementos H1-H6) de su sitio. Si incluye una fuente web personalizada, recuerde añadirla al formulario HTML adicional de Moodle. Si desea modificar las fuentes de otros elementos, utilice la opción de CSS personalizado. Para obtener ejemplos sobre cómo hacerlo, consulte esta <a href="https://help.openlms.net/en/administrator/manage-a-site/snap-font-family-with-custom-css/" target="_blank">documentación</a>.';
 $string['helpwithlogin'] = 'Ayuda para iniciar sesión';
 $string['helpwithloginandguest'] = 'Ayuda para iniciar sesión/con acceso de invitado';
 $string['hiddencoursestoggle'] = 'Cursos ocultos';
@@ -300,8 +300,6 @@ $string['resourcedisplayhelp'] = 'Seleccione cómo desea que aparezcan los docum
 $string['displaydescription'] = 'Mostrar descripción';
 $string['displaydescriptionhelp'] = 'Seleccione esta opción para mostrar primero una descripción de las actividades del recurso y de la URL en una página nueva. Los estudiantes podrán acceder al contenido desde la descripción.';
 $string['search'] = 'Buscar contenido';
-$string['seriffont'] = 'Fuente serif';
-$string['seriffont_desc'] = 'Esta fuente se usa para la mayor parte del contenido generado por los usuarios. Si se usa una fuente serif, el contenido generado por los usuarios será más legible y dará la impresión de que fue escrito por una persona.';
 $string['showcoursegradepersonalmenu'] = 'Calificaciones';
 $string['showcoursegradepersonalmenudesc'] = 'Mostrar a los usuarios su calificación en las tarjetas del curso, en el menú personal.';
 $string['socialmedia'] = 'Redes sociales';
@@ -396,6 +394,13 @@ $string['design_mod_page_description'] = 'Si se habilita esta opción, el conten
 $string['design_activity_chooser'] = 'Volver al diseño original del selector de actividad';
 $string['design_activity_chooser_description'] = 'Si se habilita esta opción, el selector de actividad se mostrará con el diseño original. Esto afectará al curso y a las páginas principales.';
 $string['refreshdeadlinestask'] = 'Actualice los datos de la caché de las fechas límite. Esto debe ejecutarse antes de que todos los usuarios se conecten.';
+$string['resetdeadlinesquerycounttask'] = 'Restablecer el recuento de consultas de plazos';
 $string['refreshdeadlinestaskoff'] = 'No se han buscado datos para introducir. Active el ajuste "Actualizar fechas límite utilizando tareas programadas" en la configuración del menú Personal de Snap para permitir a esta tarea introducir los datos de fechas límite en caché.';
 $string['activityrestriction'] = 'Restricción de actividad';
 $string['hideandshowactioncb'] = 'Ocultar y mostrar acción de casilla de verificación de actividad';
+$string['retryfeed'] = 'Esta fuente no está disponible en este momento. Vuelva a intentarlo más tarde. Fuente: {$a}';
+$string['loadingfeed'] = 'Cargando... puede llevar tiempo';
+$string['hvpcustomcss'] = 'CSS personalizado de H5P';
+$string['hvpcustomcssdesc'] = 'CSS personalizado para el módulo H5P (moodle.org/plugins/mod_hvp) si está instalado.';
+$string['courselimitstrdanger'] = 'La barra de progreso del límite del curso alcanzado no se mostrará.';
+$string['courselimitstrwarning'] = 'Si se enumeran más de {$a} cursos, no se mostrará la barra de progreso';

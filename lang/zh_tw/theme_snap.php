@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * @copyright  Copyright (c) 2021 Open LMS (https://www.openlms.net)
+ * @copyright  Copyright (c) 2022 Open LMS (https://www.openlms.net)
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -192,7 +192,7 @@ $string['grading'] = '評分';
 $string['help'] = '說明';
 $string['helpguide'] = '說明指南';
 $string['headingfont'] = '標題字型';
-$string['headingfont_desc'] = '此字型會用於整個網站的標題 (h1 - h6 元素)。如果您要包括自訂網站字型，請記得將其加入 Moodle 額外的 html 表單。';
+$string['headingfont_desc'] = '這個字型 (Sans-Serif) 已用於整個網站中的標題 (h1 - h6 元素)。如果您使用自訂的網頁字型，請記得將其加入至 Moodle 額外 HTML 表單中。若要修改其他元素的字型，請善用自訂 CSS 選項，如需該選項的使用範例，請參考這份<a href="https://help.openlms.net/en/administrator/manage-a-site/snap-font-family-with-custom-css/" target="_blank">文件</a>中的相關說明。';
 $string['helpwithlogin'] = '登入說明';
 $string['helpwithloginandguest'] = '登入/訪客存取說明';
 $string['hiddencoursestoggle'] = '隱藏的課程';
@@ -299,8 +299,6 @@ $string['resourcedisplayhelp'] = '選取附件和連結在課程中顯示的方�
 $string['displaydescription'] = '顯示說明';
 $string['displaydescriptionhelp'] = '選取此選項，以首先在新頁面中顯示資源和 URL 活動的說明。學員將從說明中存取內容。';
 $string['search'] = '搜尋內容';
-$string['seriffont'] = '有襯線字型';
-$string['seriffont_desc'] = '此字型會用於使用者產生的大部分內容。使用有襯線字型會讓使用者產生的內容更好閱讀，看起來就像是手寫一般。';
 $string['showcoursegradepersonalmenu'] = '成績';
 $string['showcoursegradepersonalmenudesc'] = '在個人功能表的課程卡片中，向使用者顯示其成績';
 $string['socialmedia'] = '社交媒體';
@@ -396,6 +394,13 @@ $string['design_mod_page_description'] = '若啟用，頁面資源內容將會�
 $string['design_activity_chooser'] = '復原至活動選擇器的原始設計';
 $string['design_activity_chooser_description'] = '若啟用，將以原始設計顯示活動選擇器。這將影響課程和首頁。';
 $string['refreshdeadlinestask'] = '重新整理截止時間快取資料。這應該在所有使用者登入前執行。';
+$string['resetdeadlinesquerycounttask'] = '重設期限查詢次數';
 $string['refreshdeadlinestaskoff'] = '沒有尋找要填入的資料。請在 Snap 的個人功能表設定中開啟設定「使用排定任務重新整理截止日期」，以允許此任務填入截止日期快取資料。';
 $string['activityrestriction'] = '活動限制';
 $string['hideandshowactioncb'] = '隱藏和顯示活動核取方塊動作';
+$string['retryfeed'] = '這項摘要目前無法使用，請稍後再試。摘要：{$a}';
+$string['loadingfeed'] = '載入中，可能會需要一些時間';
+$string['hvpcustomcss'] = 'H5P 自訂 CSS';
+$string['hvpcustomcssdesc'] = '自訂 H5P 模組的 CSS (moodle.org/plugins/mod_hvp)，若已安裝該模組。';
+$string['courselimitstrdanger'] = '不會顯示已達課程限制的進度列。';
+$string['courselimitstrwarning'] = '如果已列出超過 {$a} 個課程，則不會顯示進度列';

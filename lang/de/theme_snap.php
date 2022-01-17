@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * @copyright  Copyright (c) 2021 Open LMS (https://www.openlms.net)
+ * @copyright  Copyright (c) 2022 Open LMS (https://www.openlms.net)
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -193,7 +193,7 @@ $string['grading'] = 'Wird bewertet';
 $string['help'] = 'Hilfe';
 $string['helpguide'] = 'Hilfe-Leitfaden';
 $string['headingfont'] = 'Schriftart für die Überschrift';
-$string['headingfont_desc'] = 'Diese Schriftart wird in den Überschriften (Elemente h1 - h6) auf Ihrer Website verwendet. Wenn Sie einen benutzerdefinierten Webfont verwenden möchten, müssen Sie diesen in das Moodle-HTML-Zusatzformular einfügen.';
+$string['headingfont_desc'] = 'Diese Schriftart (Sans Serif) wird in den Überschriften (Elemente h1–h6) auf Ihrer Website verwendet. Wenn Sie eine benutzerdefinierte Webfont einfügen, denken Sie daran, diese dem Moodle Extra-HTML-Formular hinzuzufügen. Wenn Sie Schriftarten anderer Elemente ändern möchten, nutzen Sie bitte die Option „CSS-Anpassungen“. Beispiele dazu finden Sie in dieser <a href="https://help.openlms.net/en/administrator/manage-a-site/snap-font-family-with-custom-css/" target="_blank">Dokumentation</a>.';
 $string['helpwithlogin'] = 'Hilfe beim Anmelden';
 $string['helpwithloginandguest'] = 'Hilfe beim Anmelden/Gästezugriff';
 $string['hiddencoursestoggle'] = 'Ausgeblendete Kurse';
@@ -300,8 +300,6 @@ $string['resourcedisplayhelp'] = 'Wählen Sie aus, welche Anhänge und Links in 
 $string['displaydescription'] = 'Beschreibung anzeigen';
 $string['displaydescriptionhelp'] = 'Wählen Sie aus, dass erst eine Beschreibung der Ressourcen- und URL-Aktivitäten auf einer neuen Seite angezeigt werden. Die Teilnehmer greifen über die Beschreibung auf Inhalte zu.';
 $string['search'] = 'Inhalte suchen';
-$string['seriffont'] = 'Schriftart Serif';
-$string['seriffont_desc'] = 'Diese Schriftart wird für die meisten benutzergenerierten Inhalte verwendet. Eine Schriftart mit Serifen verbessert die Lesbarkeit von benutzergenerierten Inhalten und vermittelt das Gefühl menschlicher Handschrift.';
 $string['showcoursegradepersonalmenu'] = 'Bewertungen';
 $string['showcoursegradepersonalmenudesc'] = 'Nutzer/innen ihre Bewertung auf Kurskarten im Menü "Persönlich" anzeigen';
 $string['socialmedia'] = 'Soziale Medien';
@@ -397,6 +395,13 @@ $string['design_mod_page_description'] = 'Wenn diese Option aktiviert ist, wird 
 $string['design_activity_chooser'] = 'Zurücksetzen auf das ursprüngliche Design für die Aktivitätsauswahl';
 $string['design_activity_chooser_description'] = 'Wenn diese Option aktiviert ist, wird die Aktivitätsauswahl im ursprünglichen Design angezeigt. Dies wirkt sich auf die Kurs- und Startseiten aus.';
 $string['refreshdeadlinestask'] = 'Aktualisieren Sie die zwischengespeicherten Daten der Termine. Diese Aktion sollte ausgeführt werden, bevor sich alle Nutzer/innen anmelden.';
+$string['resetdeadlinesquerycounttask'] = 'Anzahl der Terminanfragen zurücksetzen';
 $string['refreshdeadlinestaskoff'] = 'Es wurde nicht nach Daten zum Auffüllen gesucht. Bitte aktivieren Sie die Option „Abgabetermine mit geplanter Aufgabe aktualisieren“ in den Einstellungen des Menüs „Persönlich“ von Snap, damit diese Aufgabe die zu den Abgabeterminen zwischengespeicherten Daten auffüllen kann.';
 $string['activityrestriction'] = 'Aktivitätsbeschränkung';
 $string['hideandshowactioncb'] = 'Aktivitäts-Checkbox-Aktion ausblenden und anzeigen';
+$string['retryfeed'] = 'Dieser Feed ist derzeit nicht verfügbar. Bitte versuchen Sie es später noch einmal. Feed: {$a}';
+$string['loadingfeed'] = 'Ladevorgang läuft... Dies kann einige Zeit in Anspruch nehmen';
+$string['hvpcustomcss'] = 'H5P CSS-Anpassungen';
+$string['hvpcustomcssdesc'] = 'CSS-Anpassungen für das H5P-Modul (moodle.org/plugins/mod_hvp), falls installiert.';
+$string['courselimitstrdanger'] = 'Der Fortschrittsbalken „Kurslimit erreicht“ wird nicht angezeigt.';
+$string['courselimitstrwarning'] = 'Wenn mehr als {$a} Kurse aufgeführt sind, wird kein Fortschrittsbalken angezeigt';
