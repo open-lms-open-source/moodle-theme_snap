@@ -820,10 +820,12 @@ section#snap-add-new-section #summary-editor_parent #summary-editor_tbl {
 
     // Change font for My Account view.
     #myaccount-general-information,
-    #myaccount-servicedata-information {
+    #myaccount-servicedata-information,
+    #myaccount-accessibility-information {
         p,
         a,
-        small {
+        small,
+        span {
             font-family: $font-family-system;
         }
     }
