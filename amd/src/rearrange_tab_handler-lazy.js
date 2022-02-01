@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
  *
- * @package   theme_snap
+ * @package
  * @author    David Castro <david.castro@openlms.net>
  * @copyright Copyright (c) 2018 Open LMS (https://www.openlms.net)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
@@ -49,6 +49,7 @@ define(function() {
         return {
             /**
              * Initialising function.
+             * @param {array} nodes
              */
             init: function(nodes) {
                 for (var i = 0; i < nodes.length; i++) {

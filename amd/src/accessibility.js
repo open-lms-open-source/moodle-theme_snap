@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
  *
- * @package   theme_snap
+ * @package
  * @author    Oscar Nadjar oscar.nadjar@openlms.net
  * @copyright Copyright (c) 2019 Open LMS (https://www.openlms.net)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
@@ -147,6 +147,9 @@ define(['jquery', 'core/str', 'core/event'],
                      */
                     var $window = $(window);
 
+                    /**
+                     * Modifies attributes depending on the window size.
+                     */
                     function checkWidth() {
                         var windowsize = $window.width();
                         if (windowsize < 1220) {
@@ -166,6 +169,7 @@ define(['jquery', 'core/str', 'core/event'],
                 /**
                  * Add needed accessibility for tabs inside Snap.
                  * This makes use of Bootstrap accessible tab panel with WAI-ARIA with the arrow keys binding codes.
+                 * @param {string} id
                  */
                 function Tabpanel(id) {
                     this._id = id;
@@ -263,6 +267,7 @@ define(['jquery', 'core/str', 'core/event'],
             /**
              * Custom form error event handler to manipulate the bootstrap markup and show
              * nicely styled errors in an mform focusing the necessary elements in the form.
+             * @param {string} elementid
              */
             enhanceform: function(elementid) {
                 var element = document.getElementById(elementid);
