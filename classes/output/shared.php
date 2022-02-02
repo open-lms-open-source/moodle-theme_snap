@@ -452,10 +452,12 @@ EOF;
         $localjoulegrader = array_key_exists('joulegrader', $localplugins);
         $blockreports = array_key_exists('reports', core_component::get_plugin_list('block'));
         $allyreport = (\core_component::get_component_directory('report_allylti') !== null);
+        $localcatalogue = array_key_exists('catalogue', $localplugins);
+
         $initvars = [$coursevars, $pagehascoursecontent, get_max_upload_file_size($CFG->maxbytes), $forcepwdchange,
                      $conversationbadgecountenabled, $userid, $sitepolicyacceptreqd, $inalternativerole, $brandcolors,
                      $gradingconstants];
-        $initaxvars = [$localjoulegrader, $allyreport, $blockreports];
+        $initaxvars = [$localjoulegrader, $allyreport, $blockreports, $localcatalogue];
         $alternativelogins = new login_alternative_methods();
         if ($alternativelogins->potentialidps) {
             $loginvars = [get_config('theme_snap', 'enabledlogin'), get_config('theme_snap', 'enabledloginorder')];
@@ -763,6 +765,17 @@ EOF;
                     'title' => $badgesicon.get_string('badges', 'badges')
                 );
             }
+        }
+
+        // Local catalogue if enabled.
+        if (array_key_exists('catalogue', $localplugins) && has_capability('local/catalogue:admingear', $coursecontext)) {
+            $iconurl = $OUTPUT->image_url('catalogue', 'theme');
+            $localcatalogueicon = '<img src="'.$iconurl.'" class="svg-icon" alt="" role="presentation">';
+            $localcataloguename = get_string('pluginname', 'local_catalogue');
+            $links[] = array(
+                'link' => 'local/catalogue/index.php',
+                'title' => $localcatalogueicon.$localcataloguename
+            );
         }
 
         // Mediasite. (GT Mod - core component check needs to be first in evaluation or capability check error will
