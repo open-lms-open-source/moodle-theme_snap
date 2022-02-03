@@ -24,6 +24,7 @@ Feature: When the moodle theme is set to Snap, teachers can toggle the visibilit
   edit mode.
 
   Background:
+    Given I skip because "It will be reviewed on the ticket INT-17833"
     Given the following "courses" exist:
       | fullname | shortname | category | format |
       | Course 1 | C1        | 0        | topics |
