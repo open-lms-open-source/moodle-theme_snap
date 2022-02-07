@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
  *
- * @package   theme_snap
+ * @package
  * @copyright Copyright (c) 2015 Open LMS (https://www.openlms.net)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
@@ -107,13 +107,13 @@ define(['jquery', 'core/log', 'theme_snap/headroom', 'theme_snap/util', 'theme_s
             var width = $(window).width();
             if (width < 767) {
                 $('.snap-form-advanced').append(savebuttonsformrequired);
-            } else if (width > 767)  {
+            } else if (width > 767) {
                 $('.snap-form-required fieldset#id_general').append(savebuttonsformadvanced);
             }
         };
 
         /**
-         * move PHP errors into header
+         * Move PHP errors into header
          *
          * @author Guy Thomas
          * @date 2014-05-19
@@ -251,13 +251,13 @@ define(['jquery', 'core/log', 'theme_snap/headroom', 'theme_snap/util', 'theme_s
         };
 
         /**
-         * search course modules
+         * Search course modules
          *
          * @author Stuart Lamour
          * @param {array} dataList
          */
         var tocSearchCourse = function(dataList) {
-            // keep search input open
+            // Keep search input open
             var i;
             var ua = window.navigator.userAgent;
             if (ua.indexOf('MSIE ') || ua.indexOf('Trident/')) {
@@ -336,6 +336,9 @@ define(['jquery', 'core/log', 'theme_snap/headroom', 'theme_snap/util', 'theme_s
 
         /**
          * Apply progressbar.js for circular progress displays.
+         * @param {node} nodePointer
+         * @param {function} dataCallback
+         * @param {function} valueCallback
          */
         var createColoredDataCircle = function(nodePointer, dataCallback, valueCallback = null) {
             var circle = new ProgressBar.Circle(nodePointer, {
@@ -401,7 +404,7 @@ define(['jquery', 'core/log', 'theme_snap/headroom', 'theme_snap/util', 'theme_s
                         nodeValue = nodeValue + '<small>%</small>';
                     }
                     return nodeValue;
-                }, function (nodePointer){
+                }, function(nodePointer) {
                     var valueAnimate = $(nodePointer).attr('value');
                     var gradeFormat = $(nodePointer).attr('gradeformat');
 
@@ -459,15 +462,15 @@ define(['jquery', 'core/log', 'theme_snap/headroom', 'theme_snap/util', 'theme_s
                 "tolerance": 5,
                 "offset": 100,
                 "classes": {
-                    // when element is initialised
+                    // When element is initialised
                     initial: "headroom",
-                    // when scrolling up
+                    // When scrolling up
                     pinned: "headroom--pinned",
-                    // when scrolling down
+                    // When scrolling down
                     unpinned: "headroom--unpinned",
-                    // when above offset
+                    // When above offset
                     top: "headroom--top",
-                    // when below offset
+                    // When below offset
                     notTop: "headroom--not-top"
                 },
                 "onPin": onPin,
@@ -493,7 +496,7 @@ define(['jquery', 'core/log', 'theme_snap/headroom', 'theme_snap/util', 'theme_s
                     // 40 down arrow
                     // Register listener for exiting search result.
                     $('#toc-search-results a').last().blur(function() {
-                        $(this).off('blur'); // unregister listener
+                        $(this).off('blur'); // Unregister listener
                         $("#toc-search-input").val('');
                         $('#toc-search-results').html('');
                         $("#toc-search-input").removeClass('state-active');
@@ -571,7 +574,7 @@ define(['jquery', 'core/log', 'theme_snap/headroom', 'theme_snap/util', 'theme_s
             $(function() {
                 var supportsTouch = false;
                 if ('ontouchstart' in window) {
-                    // iOS & android
+                    // IOS & android
                     supportsTouch = true;
                 } else if (window.navigator.msPointerEnabled) {
                     // Win8
@@ -627,7 +630,6 @@ define(['jquery', 'core/log', 'theme_snap/headroom', 'theme_snap/util', 'theme_s
              * @param {bool} inAlternativeRole
              * @param {string} brandColors
              * @param {int} gradingConstants
-             * @param {boolean} isAdmin
              */
             snapInit: function(courseConfig, pageHasCourseContent, siteMaxBytes, forcePassChange,
                                messageBadgeCountEnabled, userId, sitePolicyAcceptReqd, inAlternativeRole,
@@ -636,15 +638,15 @@ define(['jquery', 'core/log', 'theme_snap/headroom', 'theme_snap/util', 'theme_s
                 // Set up.
 
                 // Branding colors. New colors can be set up if necessary.
-                brandColorSuccess = brandColors['success'];
-                brandColorWarning = brandColors['warning'];
+                brandColorSuccess = brandColors.success;
+                brandColorWarning = brandColors.warning;
                 // Grading constants for percentage.
-                GRADE_DISPLAY_TYPE_PERCENTAGE = gradingConstants['gradepercentage'];
-                GRADE_DISPLAY_TYPE_PERCENTAGE_REAL = gradingConstants['gradepercentagereal'];
-                GRADE_DISPLAY_TYPE_PERCENTAGE_LETTER = gradingConstants['gradepercentageletter'];
-                GRADE_DISPLAY_TYPE_REAL = gradingConstants['gradereal'];
-                GRADE_DISPLAY_TYPE_REAL_PERCENTAGE = gradingConstants['graderealpercentage'];
-                GRADE_DISPLAY_TYPE_REAL_LETTER = gradingConstants['graderealletter'];
+                GRADE_DISPLAY_TYPE_PERCENTAGE = gradingConstants.gradepercentage;
+                GRADE_DISPLAY_TYPE_PERCENTAGE_REAL = gradingConstants.gradepercentagereal;
+                GRADE_DISPLAY_TYPE_PERCENTAGE_LETTER = gradingConstants.gradepercentageletter;
+                GRADE_DISPLAY_TYPE_REAL = gradingConstants.gradereal;
+                GRADE_DISPLAY_TYPE_REAL_PERCENTAGE = gradingConstants.graderealpercentage;
+                GRADE_DISPLAY_TYPE_REAL_LETTER = gradingConstants.graderealletter;
 
                 M.cfg.context = courseConfig.contextid;
                 M.snapTheme = {forcePassChange: forcePassChange};
@@ -670,11 +672,11 @@ define(['jquery', 'core/log', 'theme_snap/headroom', 'theme_snap/util', 'theme_s
                 // When document has loaded.
                 /* eslint-disable complexity */
                 $(document).ready(function() {
-                    movePHPErrorsToHeader(); // boring
-                    setForumStrings(); // whatever
-                    addListeners(); // essential
-                    applyBlockHash(); // change location hash if necessary
-                    bodyClasses(); // add body classes
+                    movePHPErrorsToHeader(); // Boring
+                    setForumStrings(); // Whatever
+                    addListeners(); // Essential
+                    applyBlockHash(); // Change location hash if necessary
+                    bodyClasses(); // Add body classes
                     mobileFormChecker();
 
                     // Make sure that the blocks are always within page-content for assig view page.
@@ -690,7 +692,7 @@ define(['jquery', 'core/log', 'theme_snap/headroom', 'theme_snap/util', 'theme_s
 
                     // Prepend asset type when activity is a folder to appear in the card header instead of the content.
                     var folders = $('li.snap-activity.modtype_folder');
-                    $.each(folders, function (index, folder) {
+                    $.each(folders, function(index, folder) {
                         var content = $(folder).find('div.contentwithoutlink div.snap-assettype');
                         if (content.length > 0) {
                             if ($(folder).find('div.activityinstance div.snap-header-card .asset-type').length == 0) {
@@ -726,7 +728,8 @@ define(['jquery', 'core/log', 'theme_snap/headroom', 'theme_snap/util', 'theme_s
 
                         // Hide advanced feeds additional life time setting when advanced feeds are disabled.
                         var changeNodeVisibilityOnChecked = function(selectorToCheck, selectorToChange) {
-                            var nodeToCheck = $(selectorToCheck), nodeToChange = $(selectorToChange);
+                            var nodeToCheck = $(selectorToCheck),
+nodeToChange = $(selectorToChange);
                             if (nodeToCheck.is(':checked')) {
                                 nodeToChange.show();
                                 return;
@@ -818,7 +821,7 @@ define(['jquery', 'core/log', 'theme_snap/headroom', 'theme_snap/util', 'theme_s
                         }
                     }
 
-                    var modSettingsIdRe = /^page-mod-.*-mod$/; // e.g. #page-mod-resource-mod or #page-mod-forum-mod
+                    var modSettingsIdRe = /^page-mod-.*-mod$/; // E.g. #page-mod-resource-mod or #page-mod-forum-mod
                     var onModSettings = modSettingsIdRe.test($('body').attr('id')) && location.href.indexOf("modedit") > -1;
                     if (!onModSettings) {
                         modSettingsIdRe = /^page-mod-.*-general$/;
@@ -892,7 +895,7 @@ define(['jquery', 'core/log', 'theme_snap/headroom', 'theme_snap/util', 'theme_s
                             // any multimedia.
                             if ($(addMultiMessageSelectors.join()).length > 0) {
                                 str.get_strings([
-                                    {key : 'multimediacard', component : 'theme_snap'}
+                                    {key: 'multimediacard', component: 'theme_snap'}
                                 ]).done(function(stringsjs) {
                                     var activityCards = stringsjs[0];
                                     var cardmultimedia = $("[id='id_showdescription']").closest('.form-group');
@@ -926,7 +929,7 @@ define(['jquery', 'core/log', 'theme_snap/headroom', 'theme_snap/util', 'theme_s
                             // We are in course editing form.
                             // Removing the "Show all sections in one page" from the course format form.
                             var strDisabled = "";
-                            (function(){
+                            (function() {
                                 return str.get_strings([
                                     {key: 'showallsectionsdisabled', component: 'theme_snap'},
                                     {key: 'disabled', component: 'theme_snap'}
@@ -944,15 +947,15 @@ define(['jquery', 'core/log', 'theme_snap/headroom', 'theme_snap/util', 'theme_s
                                 .then(function(html) {
                                     var op0 = $('[name="coursedisplay"] > option[value="0"]');
                                     var op1 = $('[name="coursedisplay"] > option[value="1"]');
-                                    var selectNode =  $('[name="coursedisplay"]');
+                                    var selectNode = $('[name="coursedisplay"]');
                                     // Disable option 0
-                                    op0.attr('disabled','disabled');
+                                    op0.attr('disabled', 'disabled');
                                     // Add "(Disabled)" to option text
                                     op0.append(' (' + strDisabled + ')');
                                     // Remove selection attribute
                                     op0.removeAttr("selected");
                                     // Select option 1
-                                    op1.attr('selected','selected');
+                                    op1.attr('selected', 'selected');
                                     // Add warning
                                     selectNode.parent().append(html);
                                 });
@@ -978,7 +981,7 @@ define(['jquery', 'core/log', 'theme_snap/headroom', 'theme_snap/util', 'theme_s
                                     {key: 'showappearancedisabled', component: 'theme_snap'}
                                 ]);
                             })()
-                                .then(function(localizedstring){
+                                .then(function(localizedstring) {
                                     return templates.render('theme_snap/form_alert', {
                                         type: 'warning',
                                         classes: '',
@@ -1030,7 +1033,7 @@ define(['jquery', 'core/log', 'theme_snap/headroom', 'theme_snap/util', 'theme_s
                     // Listen to cover image label key press for accessible usage.
                     var focustarget = $('#snap-coverimagecontrol label');
                     if (focustarget && focustarget.length) {
-                        focustarget.keypress(function (e) {
+                        focustarget.keypress(function(e) {
                             if (e.which === 13) {
                                 $('#snap-coverfiles').trigger('click');
                             }
@@ -1104,12 +1107,12 @@ define(['jquery', 'core/log', 'theme_snap/headroom', 'theme_snap/util', 'theme_s
 
                 // Smooth scroll for go to top button.
                 $("div#goto-top-link > a").click(function() {
-                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                    window.scrollTo({top: 0, behavior: 'smooth'});
                 });
 
                 // Blocks selectors to remove 'editing' class because is not necessary to access their settings.
                 var noneditingblocks = {};
-                noneditingblocks['blockxp'] = '#page-blocks-xp-index';
+                noneditingblocks.blockxp = '#page-blocks-xp-index';
 
                 // Remove 'editing' class actions.
                 for (var block in noneditingblocks) {

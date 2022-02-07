@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
  *
- * @package   theme_snap
+ * @package
  * @copyright Copyright (c) 2015 Open LMS (https://www.openlms.net)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
@@ -150,7 +150,7 @@ define(['jquery', 'core/log', 'core/ajax', 'core/str', 'core/templates', 'core/n
 
         /**
          * Updates the drop zone with a descriptive text.
-         * @param sectionName
+         * @param {string} sectionName
          */
         var updateSectionDropMsg = function (sectionName) {
             if (typeof movingObjects !== 'undefined' && movingObjects.length > 0) {
@@ -167,8 +167,8 @@ define(['jquery', 'core/log', 'core/ajax', 'core/str', 'core/templates', 'core/n
 
         /**
          * Gets a specific section for the current course and if an activity module is passed sets focus on it.
-         * @param section
-         * @param mod
+         * @param {string} section
+         * @param {string} mod
          */
         var getSection = function (section, mod) {
             var node = $('#section-' + section);
@@ -198,9 +198,10 @@ define(['jquery', 'core/log', 'core/ajax', 'core/str', 'core/templates', 'core/n
 
         /**
          * This functions inserts a section node to the DOM.
-         * @param section
-         * @param html
-         * @param mod
+         * @param {string} section
+         * @param {node} html
+         * @param {string} mod
+         * @param {string} js
          */
         var renderSection = function(section, html, mod, js) {
             var anchor = $('.course-content .' + self.courseConfig.format);
@@ -621,9 +622,9 @@ define(['jquery', 'core/log', 'core/ajax', 'core/str', 'core/templates', 'core/n
 
             /**
              * Calculates how the sections are ordered after moving.
-             * @param sections
-             * @param oldIndex
-             * @param newIndex
+             * @param {array} sections
+             * @param {int} oldIndex
+             * @param {int} newIndex
              * @returns {array}
              */
             var calculateSections = function (sections, oldIndex, newIndex) {
@@ -639,6 +640,10 @@ define(['jquery', 'core/log', 'core/ajax', 'core/str', 'core/templates', 'core/n
 
             /**
              * Update sections.
+             * @param {int} current
+             * @param {int} target
+             * @param {array} predeleteSections
+             * @param {string} deletedSection
              */
             var updateSections = function(current, target, predeleteSections, deletedSection) {
                 if (courseLib.courseConfig.partialrender) {
@@ -1542,8 +1547,8 @@ overrideCore();
 
         /**
          * Exposed function that renders a specific course section and sets focus on an activity module.
-         * @param section
-         * @param mod
+         * @param {string} section
+         * @param {string} mod
          */
         renderAndFocusSection: function(section, mod) {
             getSection(section, mod);

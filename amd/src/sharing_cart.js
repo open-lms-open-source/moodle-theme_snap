@@ -16,7 +16,7 @@
 /**
  *  Sharing Cart
  *
- *  @package    theme_snap
+ *  @package
  *  @copyright  Copyright (c) 2020 Open LMS (https://www.openlms.net)
  *  @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
@@ -39,7 +39,7 @@ export default class SharingCartForSnap {
     };
     /**
      * Sets a create command pointer
-     * @param create_command
+     * @param {string} create_command
      */
     setCreateCommand = (create_command) => {
         this.create_command = create_command;
@@ -63,7 +63,7 @@ export default class SharingCartForSnap {
     };
     /**
      * Adds a spinner when necessary
-     * @param spinner
+     * @param {function} spinner
      */
     addSpinner = (spinner) => {
         if (this.snapSpinner) {
@@ -149,7 +149,9 @@ export default class SharingCartForSnap {
 
     /**
      *
-     * @param $activity
+     * @param {node} $activity
+     * @param {object} iconBackup
+     * @param {function} on_backup
      */
     add_backup_command = ($activity, iconBackup, on_backup) => {
         var $menu = $activity.find("ul[role='menu']");

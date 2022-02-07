@@ -16,7 +16,7 @@
  *
  * Web components loader.
  *
- * @package   theme_snap
+ * @package
  * @author    David Castro
  * @copyright Copyright (c) 2019 Open LMS
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
@@ -28,7 +28,7 @@ define([],
         return {
             /**
              * Initializes this module.
-             * @param componentPaths
+             * @param {string} componentPaths
              */
             init: function(componentPaths) {
                 var compPathsObject = JSON.parse(componentPaths);
