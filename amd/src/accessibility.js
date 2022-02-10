@@ -26,7 +26,7 @@
 define(['jquery', 'core/str', 'core/event'],
     function($, str, Event) {
         return {
-            snapAxInit: function(localJouleGrader, allyReport, blockReports) {
+            snapAxInit: function(localJouleGrader, allyReport, blockReports, localCatalogue) {
 
                 /**
                  * Module to get the strings from Snap to add the aria-label attribute to new accessibility features.
@@ -50,7 +50,8 @@ define(['jquery', 'core/str', 'core/event'],
                     {key: 'competencies', component: 'core_competency'},
                     {key: 'outcomes', component: 'core_outcome'},
                     {key: 'badges', component: 'core_badges'},
-                    {key: 'coursereport', component: 'report_allylti'}
+                    {key: 'coursereport', component: 'report_allylti'},
+                    {key: 'pluginname', component: 'local_catalogue'}
                 ]).done(function(stringsjs) {
                     if ($("#page-mod-forum-discuss")) {
                         $("div[data-content='forum-discussion'] div.singleselect form.form-inline " +
@@ -119,6 +120,10 @@ define(['jquery', 'core/str', 'core/event'],
                     if (allyReport) {
                         $('section#coursetools div#coursetools-list a:contains("' + stringsjs[18] + '")')
                             .attr("id", "ct-ally");
+                    }
+                    if (localCatalogue) {
+                        $('section#coursetools div#coursetools-list a:contains("' + stringsjs[19] + '")')
+                            .attr("id", "ct-open-catalogue");
                     }
                 });
 
