@@ -4754,3 +4754,46 @@ div[id^=snap-create-activity-] .section-modchooser-link {
         border-color: $brand-primary !important;
     }
 }
+
+// Upgrade settings form design for Snap.
+// Blue core color. Not adding this with the $brand-primary variable, since
+// when new settings are added from Moodle upgrade, new checkboxes can be added and
+// changing those could be problematic.
+#page-admin-upgradesettings {
+    .form-submit.btn-primary {
+        color: #fff;
+        background-color: $blue;
+        border-color: $blue;
+    }
+
+    &:hover,
+    &:focus,
+    &:active,
+    &.active {
+        color: #fff;
+        background-color: #0069d9;
+        border-color: #0069d9;
+        text-decoration: none;
+    }
+}
+
+#page-admin-index {
+    table#plugins-check,
+    table#serverstatus,
+    table#otherserverstatus {
+        td,
+        th {
+            border: none;
+        }
+    }
+}
+
+#page-admin-index,
+#page-admin-upgradesettings {
+    #page-footer {
+        background-color: $body-color;
+        color: $gray-300; // Footer text color.
+        padding: 1em 4%;
+        margin-top: 2em;
+    }
+}
