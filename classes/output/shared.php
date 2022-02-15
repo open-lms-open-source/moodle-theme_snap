@@ -695,7 +695,7 @@ EOF;
             ) {
                 $links[] = array(
                     'link' => $CFG->wwwroot.'/blocks/reports/view.php?action=dashboardce&courseid='.$COURSE->id,
-                    'title' => $reportsicon.get_string('openreports', 'block_reports')
+                    'title' => $reportsicon.'Open Reports '.get_string('experimental', 'block_reports')
                 );
             }
         }
