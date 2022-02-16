@@ -4764,16 +4764,16 @@ div[id^=snap-create-activity-] .section-modchooser-link {
         color: #fff;
         background-color: $blue;
         border-color: $blue;
-    }
 
-    &:hover,
-    &:focus,
-    &:active,
-    &.active {
-        color: #fff;
-        background-color: #0069d9;
-        border-color: #0069d9;
-        text-decoration: none;
+        &:hover,
+        &:focus {
+            color: #fff;
+            background-color: #0069d9;
+            border-color: #0069d9;
+            text-decoration: none;
+            outline: none;
+            box-shadow: none;
+        }
     }
 }
 
