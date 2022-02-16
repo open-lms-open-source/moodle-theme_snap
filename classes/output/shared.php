@@ -680,7 +680,7 @@ EOF;
             ) {
                 $links[] = array(
                     'link' => $CFG->wwwroot.'/blocks/reports/view.php?action=dashboard&courseid='.$COURSE->id,
-                    'title' => $reportsicon.get_string('joulereports', 'block_reports')
+                    'title' => $reportsicon.'Open Reports'
                 );
             }
         }
@@ -695,7 +695,8 @@ EOF;
             ) {
                 $links[] = array(
                     'link' => $CFG->wwwroot.'/blocks/reports/view.php?action=dashboardce&courseid='.$COURSE->id,
-                    'title' => $reportsicon.'Open Reports '.get_string('experimental', 'block_reports')
+                    'title' => $reportsicon.'Open Reports ('.get_string('experimental',
+                            'block_reports').')'
                 );
             }
         }

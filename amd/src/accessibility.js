@@ -45,13 +45,13 @@ define(['jquery', 'core/str', 'core/event'],
                     {key: 'gradebook', component: 'local_joulegrader'},
                     {key: 'gradebook', component: 'core_grades'},
                     {key: 'numparticipants', component: 'core_message'},
-                    {key: 'joulereports', component: 'block_reports'},
                     {key: 'pld', component: 'theme_snap'},
                     {key: 'competencies', component: 'core_competency'},
                     {key: 'outcomes', component: 'core_outcome'},
                     {key: 'badges', component: 'core_badges'},
                     {key: 'coursereport', component: 'report_allylti'},
-                    {key: 'pluginname', component: 'local_catalogue'}
+                    {key: 'pluginname', component: 'local_catalogue'},
+                    {key: 'experimental', component: 'block_reports'}
                 ]).done(function(stringsjs) {
                     if ($("#page-mod-forum-discuss")) {
                         $("div[data-content='forum-discussion'] div.singleselect form.form-inline " +
@@ -93,13 +93,13 @@ define(['jquery', 'core/str', 'core/event'],
                         .attr("id", "ct-course-settings");
                     $('section#coursetools div#coursetools-list a:contains("' + ctparticipantsnumber[1] + '")')
                         .attr("id", "ct-participants-number");
-                    $('section#coursetools div#coursetools-list a:contains("' + stringsjs[14] + '")')
+                    $('section#coursetools div#coursetools-list a:contains("' + stringsjs[13] + '")')
                         .attr("id", "ct-pld");
-                    $('section#coursetools div#coursetools-list a:contains("' + stringsjs[15] + '")')
+                    $('section#coursetools div#coursetools-list a:contains("' + stringsjs[14] + '")')
                         .attr("id", "ct-competencies");
-                    $('section#coursetools div#coursetools-list a:contains("' + stringsjs[16] + '")')
+                    $('section#coursetools div#coursetools-list a:contains("' + stringsjs[15] + '")')
                         .attr("id", "ct-outcomes");
-                    $('section#coursetools div#coursetools-list a:contains("' + stringsjs[17] + '")')
+                    $('section#coursetools div#coursetools-list a:contains("' + stringsjs[16] + '")')
                         .attr("id", "ct-badges");
 
                     // Check if the plugins are installed to pass the strings. These parameters are being passed from
@@ -114,15 +114,17 @@ define(['jquery', 'core/str', 'core/event'],
                             .attr("id", "ct-course-gradebook");
                     }
                     if (blockReports) {
-                        $('section#coursetools div#coursetools-list a:contains("' + stringsjs[13] + '")')
+                        $('section#coursetools div#coursetools-list a:contains("' + 'Open Reports' + '")')
                             .attr("id", "ct-open-reports");
+                        $('section#coursetools div#coursetools-list a:contains("' + stringsjs[19] + '")')
+                            .attr("id", "ct-open-reports-experimental");
                     }
                     if (allyReport) {
-                        $('section#coursetools div#coursetools-list a:contains("' + stringsjs[18] + '")')
+                        $('section#coursetools div#coursetools-list a:contains("' + stringsjs[17] + '")')
                             .attr("id", "ct-ally");
                     }
                     if (localCatalogue) {
-                        $('section#coursetools div#coursetools-list a:contains("' + stringsjs[19] + '")')
+                        $('section#coursetools div#coursetools-list a:contains("' + stringsjs[18] + '")')
                             .attr("id", "ct-open-catalogue");
                     }
                 });
