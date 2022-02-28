@@ -1122,6 +1122,18 @@ nodeToChange = $(selectorToChange);
                     }
                 }
 
+                // Check Toggle Completion to force redirect to URL.
+                const toggleCompletion = '.togglecompletion';
+                const delay = 1500;
+                $(toggleCompletion).on('submit', function() {
+                    var shouldReload = $(toggleCompletion).hasClass('forcereload');
+                    if (shouldReload === true) {
+                        setTimeout(function () {
+                            location.reload(true);
+                        }, delay);
+                    }
+                });
+
             }
         };
     }

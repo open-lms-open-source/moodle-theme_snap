@@ -199,9 +199,10 @@ class course_renderer extends \core_course_renderer {
      * @param cm_info $mod module to show completion for
      * @param array $displayoptions display options, not used in core
      * @return string
+     * @throws \dml_exception
      */
     public function course_section_cm_completion($course, &$completioninfo, cm_info $mod, $displayoptions = array()) {
-        global $CFG, $USER;
+        global $CFG, $USER, $DB;
 
         $output = '';
 
@@ -294,7 +295,19 @@ class course_renderer extends \core_course_renderer {
                 if (!empty($CFG->enableavailability) &&
                     \core_availability\info::completion_value_used($course, $mod->id)) {
                     $extraclass = ' preventjs';
+
                 }
+                // Check if we should force reload current page to trigger PLD events.
+                $conditions = ['plugin' => 'local_pld', 'name' => 'version'];
+                $pld = $DB->record_exists('config_plugins', $conditions);
+                if (!empty($pld)) {
+                    require_once($CFG->dirroot.'/local/pld/model/action.php');
+                    $actionpld = \local_pld_action::course_should_reload($course->id);
+                    if (is_array($actionpld) && !empty($actionpld['forcereload'])) {
+                        $extraclass .= ' forcereload';
+                    }
+                }
+
                 $output .= html_writer::start_tag('form', array('method' => 'post',
                     'action' => new moodle_url('/course/togglecompletion.php'),
                     'class' => 'togglecompletion'. $extraclass));
