@@ -1277,6 +1277,7 @@ class course_renderer extends \core_course_renderer {
      */
     public function course_category($category) {
         global $CFG;
+        $this->page->blocks->add_region('side-pre');
         $basecategory = \core_course_category::get(0);
         $coursecat = \core_course_category::get(is_object($category) ? $category->id : $category);
         $site = get_site();

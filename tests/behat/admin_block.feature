@@ -106,3 +106,12 @@ Feature: When the moodle theme is set to Snap, the admin block will only be show
     And I log in as "advuser"
     And I am on site homepage
     Then "#admin-menu-trigger" "css_element" should not exist
+
+  @javascript
+  Scenario: Gear icon and admin menu should appear on Category and My account page.
+    Given I log in as "admin"
+    And I am on site homepage
+    And I am on my account default page
+    And "#admin-menu-trigger" "css_element" should exist
+    And I am on course index
+    And "#admin-menu-trigger" "css_element" should exist
