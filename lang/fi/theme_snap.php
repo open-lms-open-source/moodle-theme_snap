@@ -191,7 +191,7 @@ $string['grading'] = 'Arviointi';
 $string['help'] = 'Ohje';
 $string['helpguide'] = 'Ohjeopas';
 $string['headingfont'] = 'Otsikon fontti';
-$string['headingfont_desc'] = 'Tätä kirjasinta (sans-serif) käytetään otsikoissa (elementeissä h1–h6) koko sivustossa. Jos sisällytät mukautetun verkkokirjasimen, muista lisätä se moodle extra html -lomakkeeseen. Jos haluat muokata muiden elementtien kirjasimia, käytä Mukautettu CSS -valintaa. Esimerkkejä on tässä <a href="https://help.openlms.net/en/administrator/manage-a-site/snap-font-family-with-custom-css/" target="_blank">ohjeessa</a>.';
+$string['headingfont_desc'] = 'Tätä kirjasinta (sans-serif) käytetään otsikoissa (elementeissä h1–h6) koko sivustossa. Jos sisällytät mukautetun verkkokirjasimen, muista lisätä se Moodle additional HTML -lomakkeeseen. Jos haluat muokata muiden elementtien kirjasimia, käytä Mukautettu CSS -valintaa. Esimerkkejä on tässä <a href="https://help.openlms.net/en/administrator/manage-a-site/snap-font-family-with-custom-css/" target="_blank">ohjeessa</a>.';
 $string['helpwithlogin'] = 'Apua kirjautumiseen';
 $string['helpwithloginandguest'] = 'Apua kirjautumiseen / vierailijakäyttöön';
 $string['hiddencoursestoggle'] = 'Piilotetut kurssit';

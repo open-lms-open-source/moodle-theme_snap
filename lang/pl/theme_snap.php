@@ -192,7 +192,7 @@ $string['grading'] = 'Ocenianie';
 $string['help'] = 'Pomoc';
 $string['helpguide'] = 'Podręcznik pomocy';
 $string['headingfont'] = 'Czcionka nagłówka';
-$string['headingfont_desc'] = 'Ta czcionka (sans-serif) jest używana w nagłówkach (elementy h1–h6) w całej witrynie. Jeśli dołączasz niestandardową czcionkę internetową, pamiętaj, aby dodać ją do formularza moodle extra html. Jeśli chcesz zmodyfikować czcionki innych elementów, skorzystaj z opcji Niestandardowe CSS. Przykłady znajdziesz w <a href="https://help.openlms.net/en/administrator/manage-a-site/snap-font-family-with-custom-css/" target="_blank">dokumentacji</a>.';
+$string['headingfont_desc'] = 'Ta czcionka (sans-serif) jest używana w nagłówkach (elementy h1–h6) w całej witrynie. Jeśli dołączasz niestandardową czcionkę internetową, pamiętaj, aby dodać ją do formularza Moodle additional HTML. Jeśli chcesz zmodyfikować czcionki innych elementów, skorzystaj z opcji Niestandardowe CSS. Przykłady znajdziesz w <a href="https://help.openlms.net/en/administrator/manage-a-site/snap-font-family-with-custom-css/" target="_blank">dokumentacji</a>.';
 $string['helpwithlogin'] = 'Pomoc w logowaniu';
 $string['helpwithloginandguest'] = 'Pomoc w logowaniu / uzyskiwaniu dostępu gościa';
 $string['hiddencoursestoggle'] = 'Ukryte kursy';
