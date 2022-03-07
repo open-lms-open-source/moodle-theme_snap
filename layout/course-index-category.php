@@ -106,9 +106,12 @@ if (!empty($coverimagecss)) {
             ?>
         </section>
         </main>
+        <?php
+        echo $OUTPUT->custom_block_region('side-pre');
+        ?>
     </div>
 </div>
-<!-- close moodle js hooks -->
+    <!-- close moodle js hooks -->
 <?php
 // @codingStandardsIgnoreEnd
 require(__DIR__.'/footer.php');
