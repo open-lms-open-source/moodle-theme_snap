@@ -192,7 +192,7 @@ $string['grading'] = 'Évaluation';
 $string['help'] = 'Aide';
 $string['helpguide'] = 'Guide d\'aide';
 $string['headingfont'] = 'Police de titre';
-$string['headingfont_desc'] = 'Cette police (sans-serif) est utilisée dans les titres (éléments h1 à h6) de votre site. Si vous incluez une police Web personnalisée, n\'oubliez pas de l\'ajouter au formulaire HTML supplémentaire Moodle. Si vous souhaitez modifier les polices d\'autres éléments, utilisez l\'option CSS personnalisé. Pour obtenir des exemples sur la façon de procéder, consultez la documentation <a href=« https://help.openlms.net/en/administrator/manage-a-site/snap-font-family-with-custom-css/" target="_blank »></a>.';
+$string['headingfont_desc'] = 'Cette police (sans-serif) est utilisée dans les titres (éléments h1 à h6) de votre site. Si vous incluez une police Web personnalisée, n\'oubliez pas de l\'ajouter au formulaire HTML supplémentaire Moodle. Si vous souhaitez modifier les polices d\'autres éléments, utilisez l\'option CSS personnalisé. Pour obtenir des exemples sur la façon de procéder, consultez la <a href="https://help.openlms.net/en/administrator/manage-a-site/snap-font-family-with-custom-css/" target="_blank">documentation</a>.';
 $string['helpwithlogin'] = 'Aide à la connexion';
 $string['helpwithloginandguest'] = 'Aide à la connexion/l\'accès anonyme';
 $string['hiddencoursestoggle'] = 'Cours masqués';

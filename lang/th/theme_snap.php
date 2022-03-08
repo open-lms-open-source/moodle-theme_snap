@@ -193,7 +193,7 @@ $string['grading'] = 'การให้เกรด';
 $string['help'] = 'ความช่วยเหลือ';
 $string['helpguide'] = 'คู่มือช่วยเหลือ';
 $string['headingfont'] = 'หัวเรื่องตัวอักษร';
-$string['headingfont_desc'] = 'ฟอนต์นี้ (sans-serif) จะใช้ในหัวเรื่อง (องค์ประกอบ h1 - h6) ทั่วทั้งไซต์ของคุณ หากคุณรวมการจดจำเว็บฟอนต์ที่กำหนดเองว่าจะเพิ่มไปยังฟอร์ม moodle extra html หากคุณต้องการปรับแต่งฟอนต์ขององค์ประกอบอื่น โปรดใช้ตัวเลือก CSS แบบกำหนดเอง สำหรับตัวอย่างเกี่ยวกับวิธีการดำเนินการ โปรดดูที่ <a href="https://help.openlms.net/en/administrator/manage-a-site/snap-font-family-with-custom-css/" target="_blank">เอกสารนี้</a>';
+$string['headingfont_desc'] = 'ฟอนต์นี้ (sans-serif) จะใช้ในหัวเรื่อง (องค์ประกอบ h1 - h6) ทั่วทั้งไซต์ของคุณ หากคุณรวมการจดจำเว็บฟอนต์ที่กำหนดเองว่าจะเพิ่มไปยังฟอร์ม Moodle additional HTML หากคุณต้องการปรับแต่งฟอนต์ขององค์ประกอบอื่น โปรดใช้ตัวเลือก CSS แบบกำหนดเอง สำหรับตัวอย่างเกี่ยวกับวิธีการดำเนินการ โปรดดูที่ <a href="https://help.openlms.net/en/administrator/manage-a-site/snap-font-family-with-custom-css/" target="_blank">เอกสารนี้</a>';
 $string['helpwithlogin'] = 'ช่วยในการเข้าสู่ระบบ';
 $string['helpwithloginandguest'] = 'ช่วยเหลือเกี่ยวกับการเข้าสู่ระบบ / การเข้าถึงในฐานะบุคคลทั่วไป';
 $string['hiddencoursestoggle'] = 'รายวิชาที่ซ่อนอยู่';

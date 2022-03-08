@@ -193,7 +193,7 @@ $string['grading'] = 'Známkování';
 $string['help'] = 'Nápověda';
 $string['helpguide'] = 'Pomocný průvodce';
 $string['headingfont'] = 'Písmo nadpisů';
-$string['headingfont_desc'] = 'Toto písmo (sans-serif) je používáno v nadpisech (prvky h1 až h6) na celém webu. Pokud se chystáte zahrnout vlastní webové písmo, nezapomeňte jej přidat do formuláře moodle extra html. Pokud chcete upravit písma jiných prvků, použijte možnost Vlastní šablona stylů CSS. Příklady, jak postupovat, naleznete v této <a href="https://help.openlms.net/en/administrator/manage-a-site/snap-font-family-with-custom-css/" target="_blank">dokumentaci</a>.';
+$string['headingfont_desc'] = 'Toto písmo (sans-serif) je používáno v nadpisech (prvky h1 až h6) na celém webu. Pokud se chystáte zahrnout vlastní webové písmo, nezapomeňte jej přidat do formuláře Moodle additional HTML. Pokud chcete upravit písma jiných prvků, použijte možnost Vlastní šablona stylů CSS. Příklady, jak postupovat, naleznete v této <a href="https://help.openlms.net/en/administrator/manage-a-site/snap-font-family-with-custom-css/" target="_blank">dokumentaci</a>.';
 $string['helpwithlogin'] = 'Pomoc s přihlášením';
 $string['helpwithloginandguest'] = 'Pomoc s přihlášením/přístupem hosta';
 $string['hiddencoursestoggle'] = 'Skryté kurzy';
