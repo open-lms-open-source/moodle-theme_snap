@@ -68,6 +68,10 @@ Feature: When the moodle theme is set to Snap, a course tools section is availab
       | weeks  | Disabled          | Prohibit            | should not    | should not |
       | weeks  | Enabled           | Prohibit            | should        | should not |
       | weeks  | Disabled          | Allow               | should not    | should     |
+      | tiles  | Enabled           | Allow               | should        | should     |
+      | tiles  | Disabled          | Prohibit            | should not    | should not |
+      | tiles  | Enabled           | Prohibit            | should        | should not |
+      | tiles  | Disabled          | Allow               | should not    | should     |
 
   @javascript
   Scenario Outline: Course tools show automatically for single activity format.

@@ -499,7 +499,7 @@ li.section:focus {
 }
 
 .course-content > ul li.section,
-#coursetools,
+#coursetools, #tiles-section,
 #snap-add-new-section {
     visibility: hidden;
     height: 0;
@@ -533,7 +533,7 @@ li.section:focus {
 .course-content > ul li.section.state-visible,
 #snap-add-new-section.state-visible,
 .editing #snap-add-new-section,
-#coursetools.state-visible,
+#coursetools.state-visible, #tiles-section.state-visible,
 .editing #coursetools,
 .format-singleactivity #coursetools {
     visibility: visible;
@@ -557,6 +557,11 @@ li.section:focus {
 .section-modchooser {
     text-align: center;
     padding: 0;
+}
+
+div#coursetools-header-tiles {
+    display: flex;
+    justify-content: space-between;
 }
 
 /* MODS & RESOURCES IN COURSE */

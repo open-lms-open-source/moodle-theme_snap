@@ -845,7 +845,20 @@ EOF;
         $coursetools = get_string('coursetools', 'theme_snap');
         $iconurl = $OUTPUT->image_url('course_dashboard', 'theme');
         $coursetoolsicon = '<img src="'.$iconurl.'" class="svg-icon" alt="" role="presentation">';
-        $o = '<h2>'.$coursetoolsicon.$coursetools.'</h2>';
+
+        if ($COURSE->format === 'tiles') {
+            $courseurl = new moodle_url('/course/view.php', ['id' => $COURSE->id]);
+            $courseurl .= '#tiles-section';
+
+            $o = '<div id="coursetools-header-tiles">';
+            $o .= '<h2>' . $coursetoolsicon . $coursetools . '</h2>';
+            $o .= '<h2><a class="navigation-arrow" href="' . $courseurl . '">
+                       <i class="icon fa fa-home fa-fw " title="Course home" aria-label="Course home"></i>
+                   </a></h2>';
+            $o .= '</div>';
+        } else {
+            $o = '<h2>' . $coursetoolsicon . $coursetools . '</h2>';
+        }
         $o .= self::print_student_dashboard();
         $o .= '<div id="coursetools-list">' .self::render_appendices($links). '</div><hr>';
 
