@@ -96,7 +96,8 @@ define(
                 sectionSetByServer = '#' + $('.section.main.state-visible.set-by-server').attr('id');
                 $('.section.main.state-visible.set-by-server').removeClass('set-by-server');
             } else {
-                $('.course-content .section.main, #moodle-blocks,#coursetools, #snap-add-new-section').removeClass('state-visible');
+                $('.course-content .section.main, #moodle-blocks,#coursetools, #snap-add-new-section,' +
+                    '#tiles-section').removeClass('state-visible');
             }
 
             // We know the params at 0 is a section id.
@@ -147,6 +148,9 @@ define(
                     $('#section-0').addClass('state-visible').focus();
                 }
                 scrollBack();
+            }
+            if (section == '' && self.courseConfig.format == 'tiles') {
+                $('#tiles-section').addClass('state-visible').focus();
             }
 
             // Store last activity/resource accessed on sessionStorage
