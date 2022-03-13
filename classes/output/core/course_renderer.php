@@ -1212,7 +1212,7 @@ class course_renderer extends \core_course_renderer {
         global $COURSE;
 
         $format = $COURSE->format;
-        if (in_array($format, ['weeks', 'topics'])) {
+        if (in_array($format, ['weeks', 'topics', 'tiles'])) {
             return '';
         }
 

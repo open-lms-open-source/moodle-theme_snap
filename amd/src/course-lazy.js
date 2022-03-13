@@ -158,6 +158,13 @@ define(
                 sessionStorage.setItem('lastMod', $(this).parents('[id^=module]').attr('id'));
             });
 
+            // Snap with Format Tiles should allow add-remove blocks in editing mode.
+            const moodleBlocks = '#moodle-blocks';
+            let tilesEditing = $(moodleBlocks).hasClass('editing-tiles');
+            if (tilesEditing === true) {
+                $(moodleBlocks).addClass('state-visible');
+            }
+
             this.setTOCVisibleSection();
         };
 

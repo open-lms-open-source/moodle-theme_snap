@@ -362,7 +362,7 @@ function theme_snap_output_fragment_section($args) {
         $PAGE->set_context(\context_course::instance($course->id));
         $format = course_get_format($args['courseid']);
         $formatname = $format->get_format();
-        if ($formatname == 'weeks' || $formatname == 'topics') {
+        if ($formatname == 'weeks' || $formatname == 'topics' || $formatname == 'tiles') {
             $course = $format->get_course();
             $formatrenderer = $format->get_renderer($PAGE);
             $modinfo = get_fast_modinfo($course);

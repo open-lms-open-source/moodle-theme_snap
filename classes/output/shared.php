@@ -980,4 +980,42 @@ EOF;
         return $output;
 
     }
+
+    /**
+     * @param $courseid
+     * @param $courseformat
+     * @param $pagetype
+     * @return false|string
+     * @throws \coding_exception
+     * @throws \moodle_exception
+     */
+    public static function render_edit_mode($courseid, $courseformat, $pagetype) {
+        global $USER;
+        if (empty($courseid) || empty($courseformat) || empty($pagetype)) {
+            return false;
+        }
+
+        $acceptedformats = ['tiles'];
+        $renderer = '';
+        if (in_array($courseformat, $acceptedformats)) {
+            $oncoursepage = strpos($pagetype, 'course-view') === 0;
+            $coursecontext = \context_course::instance($courseid);
+            if ($oncoursepage && has_capability('moodle/course:update', $coursecontext)) {
+                $url = new \moodle_url('/course/view.php', ['id' => $courseid, 'sesskey' => sesskey()]);
+                if (!empty($USER->editing)) {
+                    $url->param('edit', 'off');
+                    $editstring = get_string('turneditingoff');
+                } else {
+                    $url->param('edit', 'on');
+                    $editstring = get_string('turneditingon');
+                }
+                $renderer = '<div id="snap-editmode" class="snap-editmode">';
+                $renderer .= '<div class="text-center">';
+                $renderer .= '<a href="' . $url . '" class="btn btn-primary">' . $editstring . '</a>';
+                $renderer .= '</div><br></div>';
+            }
+        }
+
+        return $renderer;
+    }
 }
