@@ -31,13 +31,6 @@ Feature: When the moodle theme is set to Snap,
     And I am on site homepage
 
   @javascript
-  Scenario: User opens and closes login menu using call-to-action button on site homepage
-    Given I click on "#page-mast .js-snap-pm-trigger" "css_element"
-    Then ".snap-pm-login-form" "css_element" should be visible
-    And I follow "Close"
-    Then ".snap-pm-login-form" "css_element" should not be visible
-
-  @javascript
   Scenario: User logs in and does not see the personal menu, if option turned off
     Given the following config values are set as admin:
       | personalmenulogintoggle | 0 | theme_snap |
