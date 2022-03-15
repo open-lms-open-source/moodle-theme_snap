@@ -624,7 +624,7 @@ EOF;
             ) {
                 $links[] = array(
                     'link' => 'local/joulegrader/view.php?courseid='.$COURSE->id,
-                    'title' => $gradebookicon.get_string('pluginname', 'local_joulegrader'),
+                    'title' => $gradebookicon.'Open Grader',
                 );
             }
         }

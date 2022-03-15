@@ -41,7 +41,6 @@ define(['jquery', 'core/str', 'core/event'],
                     {key: 'viewmessaging', component: 'theme_snap'},
                     {key: 'viewforumposts', component: 'theme_snap'},
                     {key: 'editcoursesettings', component: 'theme_snap'},
-                    {key: 'pluginname', component: 'local_joulegrader'},
                     {key: 'gradebook', component: 'local_joulegrader'},
                     {key: 'gradebook', component: 'core_grades'},
                     {key: 'numparticipants', component: 'core_message'},
@@ -93,38 +92,38 @@ define(['jquery', 'core/str', 'core/event'],
                         .attr("id", "ct-course-settings");
                     $('section#coursetools div#coursetools-list a:contains("' + ctparticipantsnumber[1] + '")')
                         .attr("id", "ct-participants-number");
-                    $('section#coursetools div#coursetools-list a:contains("' + stringsjs[13] + '")')
+                    $('section#coursetools div#coursetools-list a:contains("' + stringsjs[12] + '")')
                         .attr("id", "ct-pld");
-                    $('section#coursetools div#coursetools-list a:contains("' + stringsjs[14] + '")')
+                    $('section#coursetools div#coursetools-list a:contains("' + stringsjs[13] + '")')
                         .attr("id", "ct-competencies");
-                    $('section#coursetools div#coursetools-list a:contains("' + stringsjs[15] + '")')
+                    $('section#coursetools div#coursetools-list a:contains("' + stringsjs[14] + '")')
                         .attr("id", "ct-outcomes");
-                    $('section#coursetools div#coursetools-list a:contains("' + stringsjs[16] + '")')
+                    $('section#coursetools div#coursetools-list a:contains("' + stringsjs[15] + '")')
                         .attr("id", "ct-badges");
 
                     // Check if the plugins are installed to pass the strings. These parameters are being passed from
                     // $initaxvars in snap/classes/output/shared.php. More validations can be added if needed.
                     if (localJouleGrader) {
-                        $('section#coursetools div#coursetools-list a:contains("' + stringsjs[9] + '")')
+                        $('section#coursetools div#coursetools-list a:contains("' + 'Open Grader' + '")')
                             .attr("id", "ct-open-grader");
-                        $('section#coursetools div#coursetools-list a:contains("' + stringsjs[10] + '")')
+                        $('section#coursetools div#coursetools-list a:contains("' + stringsjs[9] + '")')
                             .attr("id", "ct-course-gradebook");
                     } else {
-                        $('section#coursetools div#coursetools-list a:contains("' + stringsjs[11] + '")')
+                        $('section#coursetools div#coursetools-list a:contains("' + stringsjs[10] + '")')
                             .attr("id", "ct-course-gradebook");
                     }
                     if (blockReports) {
                         $('section#coursetools div#coursetools-list a:contains("' + 'Open Reports' + '")')
                             .attr("id", "ct-open-reports");
-                        $('section#coursetools div#coursetools-list a:contains("' + stringsjs[19] + '")')
+                        $('section#coursetools div#coursetools-list a:contains("' + stringsjs[18] + '")')
                             .attr("id", "ct-open-reports-experimental");
                     }
                     if (allyReport) {
-                        $('section#coursetools div#coursetools-list a:contains("' + stringsjs[17] + '")')
+                        $('section#coursetools div#coursetools-list a:contains("' + stringsjs[16] + '")')
                             .attr("id", "ct-ally");
                     }
                     if (localCatalogue) {
-                        $('section#coursetools div#coursetools-list a:contains("' + stringsjs[18] + '")')
+                        $('section#coursetools div#coursetools-list a:contains("' + stringsjs[15] + '")')
                             .attr("id", "ct-open-catalogue");
                     }
                 });

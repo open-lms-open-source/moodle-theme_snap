@@ -729,7 +729,7 @@ class course_renderer extends \core_course_renderer {
             }
             return [$filetype, $ext];
         } else {
-            return [$mod->modfullname, null];
+            return [$mod->modplural, null];
         }
     }
 
