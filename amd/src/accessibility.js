@@ -87,7 +87,7 @@ define(['jquery', 'core/str', 'core/event'],
                             return $(elem).text().toUpperCase().indexOf(arg.toUpperCase()) >= 0;
                         };
                     });
-                    var ctparticipantsnumber = stringsjs[12].split(" ");
+                    var ctparticipantsnumber = stringsjs[11].split(" ");
                     $('section#coursetools div#coursetools-list a:contains("' + stringsjs[8] + '")')
                         .attr("id", "ct-course-settings");
                     $('section#coursetools div#coursetools-list a:contains("' + ctparticipantsnumber[1] + '")')
@@ -123,7 +123,7 @@ define(['jquery', 'core/str', 'core/event'],
                             .attr("id", "ct-ally");
                     }
                     if (localCatalogue) {
-                        $('section#coursetools div#coursetools-list a:contains("' + stringsjs[15] + '")')
+                        $('section#coursetools div#coursetools-list a:contains("' + stringsjs[17] + '")')
                             .attr("id", "ct-open-catalogue");
                     }
                 });
