@@ -845,6 +845,7 @@ EOF;
         $coursetools = get_string('coursetools', 'theme_snap');
         $iconurl = $OUTPUT->image_url('course_dashboard', 'theme');
         $coursetoolsicon = '<img src="'.$iconurl.'" class="svg-icon" alt="" role="presentation">';
+        $coursehomealttext = get_string('tilesformatcoursehomealttext', 'theme_snap');
 
         if ($COURSE->format === 'tiles') {
             $courseurl = new moodle_url('/course/view.php', ['id' => $COURSE->id]);
@@ -852,9 +853,10 @@ EOF;
 
             $o = '<div id="coursetools-header-tiles">';
             $o .= '<h2>' . $coursetoolsicon . $coursetools . '</h2>';
-            $o .= '<h2><a class="navigation-arrow" href="' . $courseurl . '">
-                       <i class="icon fa fa-home fa-fw " title="Course home" aria-label="Course home"></i>
-                   </a></h2>';
+            $o .= '<div><a href="' . $courseurl . '">
+                       <i class="icon fa fa-home fa-fw fa-2x"
+                        title="'.$coursehomealttext.'" aria-label="'.$coursehomealttext.'"></i>
+                   </a></div>';
             $o .= '</div>';
         } else {
             $o = '<h2>' . $coursetoolsicon . $coursetools . '</h2>';
