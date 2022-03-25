@@ -5,7 +5,6 @@ Feature: View activity completion in the assignment activity
   I need to be able to view my assignment completion progress
 
   Background:
-    Given I skip because "This tests needs to be checked for the undefined steps and the failing scenario in INT-17837"
     Given the following "users" exist:
       | username | firstname | lastname | email                |
       | student1 | Vinnie    | Student1 | student1@example.com |
@@ -70,7 +69,7 @@ Feature: View activity completion in the assignment activity
     And I navigate to "View all submissions" in current page administration
     And I click on "Grade" "link" in the "Vinnie Student1" "table_row"
     And I set the field "Grade out of 100" to "33"
-    And I set the field "Notify students" to "0"
+    And I set the field "Notify student" to "0"
     And I press "Save changes"
     And I log out
     When I am on the "Music history" "assign activity" page logged in as student1
