@@ -874,7 +874,7 @@ EOF;
      * @return string
      */
     public static function course_tools($forceshow = false) {
-        global $PAGE, $DB;
+        global $PAGE, $DB, $USER, $COURSE;
 
         $output = '';
 
@@ -893,7 +893,11 @@ EOF;
         }
 
         if ($showtools) {
-            $output = '<section id="coursetools" class="clearfix" tabindex="-1">';
+            if (!empty($USER->editing) && $COURSE->format == 'tiles') {
+                $output = '<section id="coursetools" class="clearfix editing-tiles" tabindex="-1">';
+            } else {
+                $output = '<section id="coursetools" class="clearfix" tabindex="-1">';
+            }
             $output .= self::appendices();
             $output .= '</section>';
         }
@@ -1009,11 +1013,12 @@ EOF;
                     $editstring = get_string('turneditingoff');
                 } else {
                     $url->param('edit', 'on');
-                    $editstring = get_string('turneditingon');
+                    $editstring = get_string('editmodetiles', 'theme_snap');
                 }
+                $btneditmode = '<a href="' . $url . '" class="btn btn-primary btn-editing">' . $editstring . '</a>';
                 $renderer = '<div id="snap-editmode" class="snap-editmode">';
                 $renderer .= '<div class="text-center">';
-                $renderer .= '<a href="' . $url . '" class="btn btn-primary">' . $editstring . '</a>';
+                $renderer .= $btneditmode;
                 $renderer .= '</div><br></div>';
             }
         }

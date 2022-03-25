@@ -27,9 +27,10 @@ define(
         'jquery',
         'theme_snap/util',
         'theme_snap/section_asset_management',
-        'theme_snap/course_modules'
+        'theme_snap/course_modules',
+        'core/str'
     ],
-    function($, util, sectionAssetManagement, courseModules) {
+    function($, util, sectionAssetManagement, courseModules, str) {
 
     /**
      * Return class(has private and public methods).
@@ -158,14 +159,53 @@ define(
                 sessionStorage.setItem('lastMod', $(this).parents('[id^=module]').attr('id'));
             });
 
-            // Snap with Format Tiles should allow add-remove blocks in editing mode.
-            const moodleBlocks = '#moodle-blocks';
-            let tilesEditing = $(moodleBlocks).hasClass('editing-tiles');
-            if (tilesEditing === true) {
-                $(moodleBlocks).addClass('state-visible');
+            // Snap with Format Tiles should allow add-remove blocks in editing mode only in Dashboard.
+            let btnEditing = '.btn-editing';
+            let editModeHeader = '#snap-editmode-header';
+            var hideInEditing = {};
+            hideInEditing.moodleBlocks = '#moodle-blocks';
+            hideInEditing.courseTools = '#coursetools';
+            for (var hiddenSection in hideInEditing) {
+                let tilesEditing = $(hideInEditing[hiddenSection]).hasClass('editing-tiles');
+                if (tilesEditing === true) {
+                    $(hideInEditing[hiddenSection]).removeClass('state-visible');
+                    $(hideInEditing[hiddenSection]).addClass('d-none');
+                }
+                let tilesDashboard = $('#snap-course-tools').hasClass('tiles-dashboard');
+                let ToolParameter = checkToolParameter();
+                if (tilesDashboard === true && ToolParameter === true) {
+                    $(hideInEditing[hiddenSection]).addClass('state-visible');
+                    $(hideInEditing[hiddenSection]).removeClass('d-none');
+                    let urlEditing = document.querySelector(btnEditing).href;
+                    let existToolParameter = urlEditing.includes(hideInEditing.courseTools);
+                    if (existToolParameter === false) {
+                        str.get_strings([
+                            {key : 'editcoursecontent', component : 'theme_snap'},
+                            {key : 'editmodetiles', component : 'theme_snap'},
+                            {key : 'turneditingoff', component : 'moodle'},
+                            {key : 'turneditingon', component : 'moodle'},
+                        ]).done(function(stringsjs) {
+                            let btnEditText = document.querySelector(btnEditing).text;
+                            if (btnEditText == stringsjs[1]) {
+                                document.querySelector(btnEditing).innerHTML = stringsjs[0];
+                            } else {
+                                document.querySelector(btnEditing).innerHTML = stringsjs[2];
+                            }
+                        });
+                        document.querySelector(btnEditing).href = urlEditing + '#coursetools';
+                        $(editModeHeader).addClass('d-none');
+                    }
+                }
             }
 
             this.setTOCVisibleSection();
+        };
+
+        /**
+         * Check if current url is having 'coursetools' on it.
+         */
+        var checkToolParameter = function() {
+            return window.location.href.indexOf('coursetools') != -1;
         };
 
         /**

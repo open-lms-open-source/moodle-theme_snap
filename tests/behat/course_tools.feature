@@ -53,7 +53,7 @@ Feature: When the moodle theme is set to Snap, a course tools section is availab
       | gradereport/overview:view | <gradebookaccessible> |
     When I log in as "student1"
     And I am on the course main page for "C1"
-    And I click on "a[href=\"#coursetools\"]" "css_element"
+    And I click on "#snap-course-tools" "css_element"
     Then I should see "Course Dashboard" in the "#coursetools" "css_element"
     And "#snap-student-dashboard" "css_element" should exist
     And ".snap-student-dashboard-progress" "css_element" <seecompletion> exist

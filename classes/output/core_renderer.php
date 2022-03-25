@@ -410,6 +410,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
         global $COURSE, $OUTPUT;
 
         $editblocks = '';
+        $output = '';
 
         $oncoursepage = strpos($this->page->pagetype, 'course-view') === 0;
         $coursecontext = \context_course::instance($COURSE->id);
@@ -426,15 +427,15 @@ class core_renderer extends \theme_boost\output\core_renderer {
                 $editblocks = '<div class="text-center"><a href="' . $url . '" class="btn btn-primary">' . $editstring . '</a></div><br>';
             }
 
-            $output = '<div id="moodle-blocks" class="clearfix">';
+            $output .= '<div id="moodle-blocks" class="clearfix">';
             $output .= $editblocks;
             $output .= $OUTPUT->blocks('side-pre');
             $output .= '</div>';
         } else {
             if ($oncoursepage && $this->page->user_is_editing()) {
-                $output = '<div id="moodle-blocks" class="clearfix editing-tiles">';
+                $output .= '<div id="moodle-blocks" class="clearfix editing-tiles">';
             } else {
-                $output = '<div id="moodle-blocks" class="clearfix">';
+                $output .= '<div id="moodle-blocks" class="clearfix">';
             }
             $output .= $OUTPUT->blocks('side-pre');
             $output .= '</div>';
