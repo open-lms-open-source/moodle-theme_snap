@@ -39,8 +39,6 @@ Feature: When the moodle theme is set to Snap, students see meta data against co
       | teacher1 | C1 | editingteacher |
       | student1 | C1 | student |
       | student2 | C1 | student |
-    And the following config values are set as admin:
-      | design_activity_chooser | 1 | theme_snap |
 
   @javascript
   Scenario Outline: Student sees correct meta data against course activities

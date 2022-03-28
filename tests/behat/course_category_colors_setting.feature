@@ -50,7 +50,6 @@ Feature: When the moodle theme is set to Snap, sets a color per category.
       | category_color | {"5":"#00FF00","30":"#FF0000"} | theme_snap |
     And the following config values are set as admin:
       | allowcategorythemes     | true | theme_snap |
-      | design_activity_chooser | 1    | theme_snap |
 
   @javascript
   Scenario: Load all classes in each category hierarchy.
@@ -113,30 +112,4 @@ Feature: When the moodle theme is set to Snap, sets a color per category.
     And I follow "Browse all courses"
     And I follow "Cat 30"
     And I check element "a.btn.btn-secondary" with color "#82009E"
-    And the page should meet "cat.color" accessibility standards
-
-  @javascript @accessibility
-  Scenario: Check category course color from nearest parent in hierarchy for teacher and student.
-    Given I log in as "admin"
-    And I purge snap caches
-    And I wait until the page is ready
-    And I log out
-    Then I log in as "teacher1"
-    And I wait until the page is ready
-    And I am on the course main page for "C2"
-    And I wait until the page is ready
-    And I check element "a" with color "#82009E"
-    And I click on "//li[@id='section-0']//div[@class='content']//div[@class='col-sm-6 snap-modchooser']//a" "xpath_element"
-    And I follow "Resources"
-    # The tabs color is by design 8% darker than the category color.
-    And I check element "#resources-tab" with property "background-color" = "#600075"
-    And I follow "Help guide"
-    And I check element "#help-guide-tab" with property "background-color" = "#600075"
-    And I follow "Activities"
-    And I check element "#activites-tab" with property "background-color" = "#600075"
-    And I click on "//div[@id='modchooser-accessible-tab']//button[@class='close']" "xpath_element"
-    Then I log out
-    And I log in as "student1"
-    And I am on the course main page for "C2"
-    And I check element "a" with color "#82009E"
     And the page should meet "cat.color" accessibility standards

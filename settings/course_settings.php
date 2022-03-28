@@ -79,11 +79,4 @@ $description = get_string('design_mod_page_description', 'theme_snap');
 $setting = new admin_setting_configcheckbox($name, $title, $description, 0);
 $snapsettings->add($setting);
 
-// Choose design for mod chooser.
-$name = 'theme_snap/design_activity_chooser';
-$title = get_string('design_activity_chooser', 'theme_snap');
-$description = get_string('design_activity_chooser_description', 'theme_snap');
-$setting = new admin_setting_configcheckbox($name, $title, $description, 0);
-$snapsettings->add($setting);
-
 $settings->add($snapsettings);

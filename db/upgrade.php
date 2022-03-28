@@ -123,5 +123,10 @@ function xmldb_theme_snap_upgrade($oldversion) {
         upgrade_plugin_savepoint(true, 2019051501, 'theme', 'snap');
     }
 
+    if ($oldversion < 2022042800) {
+        unset_config('design_activity_chooser', 'theme_snap');
+        upgrade_plugin_savepoint(true, 2022042800, 'theme', 'snap');
+    }
+
     return true;
 }

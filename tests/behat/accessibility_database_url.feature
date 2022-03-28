@@ -33,8 +33,6 @@ Feature: Check that the correct attributes exists for URL field in a database ac
     And the following "course enrolments" exist:
       | user      | course  | role            |
       | teacher1  | C1      | editingteacher  |
-    And the following config values are set as admin:
-      | design_activity_chooser | 1 | theme_snap |
 
   @javascript
   Scenario: Url type and Url autocomplete should exists for input Url in the "Add entry" for Database activity.

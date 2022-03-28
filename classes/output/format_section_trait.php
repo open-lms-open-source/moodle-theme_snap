@@ -662,23 +662,16 @@ trait format_section_trait {
         $iconurl = $OUTPUT->image_url('move_here', 'theme');
         $icon = '<img src="'.$iconurl.'" class="svg-icon" role="presentation" alt=""><br>';
         // Slamour Aug 2017.
-        $snapoldactivitychooser = get_config('theme_snap', 'design_activity_chooser');
         $straddmod = get_string('addresourceoractivity', 'theme_snap');
         $mclinkcontent = $icon.$straddmod;
         $mcclass = 'js-only section-modchooser-link btn btn-link';
-        $mcdataattributes = 'data-sectionid="'.$section.'" data-toggle="modal" data-target="#snap-modchooser-modal"';
 
-        if ($snapoldactivitychooser) {
-            // Render link for launch old snap mod chooser. Left as an anchor to try to maintain how Snap rendered this.
-            $modchoosercontent = '<a href="#" class="'.$mcclass.'" '.$mcdataattributes.'>'.$mclinkcontent.'</a>';
-        } else {
-            // Render button for new core mod chooser.
-            $modchoosercontent = html_writer::tag('button', $mclinkcontent, [
-                'class' => $mcclass,
-                'data-action' => 'open-chooser',
-                'data-sectionid' => $section,
-            ]);
-        }
+        // Render button for new core mod chooser.
+        $modchoosercontent = html_writer::tag('button', $mclinkcontent, [
+            'class' => $mcclass,
+            'data-action' => 'open-chooser',
+            'data-sectionid' => $section,
+        ]);
 
         // We need to be sure not having the same ID for every modchooser if multiple sections exists.
         $modchooserid = "snap-create-activity-$section";

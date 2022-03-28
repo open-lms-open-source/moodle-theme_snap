@@ -36,16 +36,12 @@ Feature: Setting for mod_book should not appear on Snap.
       | user      | course  | role            |
       | student1  | C1      | student         |
       | teacher1  | C1      | editingteacher  |
-    And the following config values are set as admin:
-      | design_activity_chooser | 1 | theme_snap |
 
   @javascript
   Scenario: As a teacher I should not see the setting Display description on course page.
     Given I log in as "teacher1"
     And I am on the course main page for "C1"
-    And I click on "//li[@id='section-0']//div[@class='content']//div[@class='col-sm-6 snap-modchooser']//a" "xpath_element"
-    And I follow "Resources"
-    And I follow "Book"
+    And I add a "Book" to section "0"
     And "#id_general .fcontainer .checkbox" "css_element" should exist
     And I should not see "Display description on course page"
 

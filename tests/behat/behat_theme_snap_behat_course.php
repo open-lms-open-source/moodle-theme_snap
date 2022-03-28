@@ -40,16 +40,32 @@ class behat_theme_snap_behat_course extends behat_course {
         if ($this->getSession()->getPage()->find('css', 'body#page-site-index') && (int)$section <= 1) {
             return parent::i_add_to_section($activity, $section);
         }
+        $this->execute('behat_general::i_click_on',
+            array("//li/a[@section-number='$section']", 'xpath_element'));
 
-        $snapoldactivitychooser = get_config('theme_snap', 'design_activity_chooser');
-        if ($snapoldactivitychooser) {
-            $xpath = "//*[@id='snap-modchooser-modal']//a[text()='$activity']";
-        }
+        $this->execute("behat_theme_snap_behat_course::i_open_the_activity_chooser_of_the_section", $section);
+        $xpath = "(//div[@data-region]/a[div[contains(text(),'$activity')]])[1]";
 
         $node = $this->find('xpath', $xpath);
         $href = $node->getAttribute('href');
         $url = new moodle_url($href);
         $url->param('section', $section);
         $this->getSession()->visit($this->locate_path($url->out_as_local_url(false)));
+    }
+
+    /**
+     * Open the activity chooser of the a section in a course.
+     *
+     * @Given /^I open the activity chooser of the section "(?P<section_number>\d+)"$/
+     * @param int $section The section number
+     * @throws ExpectationException
+     * @throws \Behat\Mink\Exception\ElementNotFoundException
+     */
+    public function i_open_the_activity_chooser_of_the_section(int $section) {
+        $this->execute('behat_general::i_click_on',
+            array("//button[@data-action='open-chooser' and @data-sectionid='$section']", 'xpath_element'));
+
+        $node = $this->get_selected_node('xpath_element', '//div[@data-region="modules"]');
+        $this->ensure_node_is_visible($node);
     }
 }

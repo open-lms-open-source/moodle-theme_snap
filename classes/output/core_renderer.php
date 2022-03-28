@@ -1632,17 +1632,7 @@ HTML;
             }
         }
 
-        $data['tabs'] = (object) [
-             'activities' => $activities,
-             'resources' => $resources
-        ];
-
-        $snapoldactivitychooser = get_config('theme_snap', 'design_activity_chooser');
-        if ($snapoldactivitychooser) {
-            return $this->render_from_template('theme_snap/course_modchooser_modal', $data);
-        } else {
-            return $this->course_activitychooser($COURSE->id);
-        }
+        return $this->course_activitychooser($COURSE->id);
         // @codingStandardsIgnoreEnd
     }
 

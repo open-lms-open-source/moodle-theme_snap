@@ -39,8 +39,6 @@ Feature: Check functionality in activity cards.
       | user      | course  | role            |
       | teacher1  | C1      | editingteacher  |
       | student1  | C1      | student         |
-    And the following config values are set as admin:
-      | design_activity_chooser | 1 | theme_snap |
 
   @javascript @accessibility
   Scenario: Add an image to an activity card, student and teacher should not see the image in the content.

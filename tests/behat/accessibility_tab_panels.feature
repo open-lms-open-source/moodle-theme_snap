@@ -40,8 +40,6 @@ Feature: When the Moodle theme is set to Snap, personal menu and course mod choo
       | user      | course  | role            |
       | teacher1  | C1      | editingteacher  |
       | teacher1  | C2      | editingteacher  |
-    And the following config values are set as admin:
-      | design_activity_chooser | 1 | theme_snap |
 
   @javascript
   Scenario: Personal menu tab should have a specific aria-controls attribute to be accessible.
@@ -49,34 +47,3 @@ Feature: When the Moodle theme is set to Snap, personal menu and course mod choo
     And I am on the course main page for "C1"
     And I open the personal menu
     And the "aria-controls" attribute of "#snap-pm-accessible-tab a#snap-pm-tab-current" "css_element" should contain "snap-pm-courses-current"
-
-  @javascript @accessibility
-  Scenario: Course mod chooser tab should have a specific aria-controls attribute to be accessible.
-    Given I log in as "admin"
-    And I am on the course main page for "C1"
-    And I click on "a.section-modchooser-link" "css_element"
-    And the "aria-controls" attribute of "#modchooser-accessible-tab a#activites-tab" "css_element" should contain "activites"
-    And the "aria-controls" attribute of "#modchooser-accessible-tab a#resources-tab" "css_element" should contain "resources"
-    And the "aria-controls" attribute of "#modchooser-accessible-tab a#help-guide-tab" "css_element" should contain "help"
-    And the page should meet "cat.aria, wcag412" accessibility standards
-    And the page should meet "cat.parsing, wcag411" accessibility standards
-
-  @javascript @accessibility
-  Scenario: Press arrow keys should be an accessible way to display content correctly.
-    Given I log in as "admin"
-    And I am on the course main page for "C1"
-    And I click on "a.section-modchooser-link" "css_element"
-    And I click on "a#activites-tab" "css_element"
-    And I press the right key
-    And the "aria-selected" attribute of "a#activites-tab" "css_element" should contain "false"
-    And the "aria-selected" attribute of "a#resources-tab" "css_element" should contain "true"
-    And I press the down key
-    And the "aria-selected" attribute of "a#resources-tab" "css_element" should contain "false"
-    And the "aria-selected" attribute of "a#help-guide-tab" "css_element" should contain "true"
-    And I press the left key
-    And the "aria-selected" attribute of "a#resources-tab" "css_element" should contain "true"
-    And the "aria-selected" attribute of "a#help-guide-tab" "css_element" should contain "false"
-    And I press the up key
-    And the "aria-selected" attribute of "a#activites-tab" "css_element" should contain "true"
-    And the "aria-selected" attribute of "a#resources-tab" "css_element" should contain "false"
-    And the page should meet "cat.keyboard" accessibility standards

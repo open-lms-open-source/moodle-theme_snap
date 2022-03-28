@@ -40,8 +40,6 @@ Feature: When the moodle theme is set to Snap, teachers can move course sections
       | activity | course               | idnumber | name             | intro                         | section |
       | assign   | C1                   | assign1  | Test assignment1 | Test assignment description 1 | 1       |
       | assign   | C1                   | assign2  | Test assignment2 | Test assignment description 2 | 1       |
-    And the following config values are set as admin:
-      | design_activity_chooser | 1 | theme_snap |
 
   @javascript
   Scenario Outline: In read mode, teacher moves section 1 before section 4 (section 3).
@@ -73,7 +71,7 @@ Feature: When the moodle theme is set to Snap, teachers can move course sections
     # The data-section attribute of the moved section module link should match the section number.
     # This is done so activities are created in the correct section.
     When I follow "My & < > Topic"
-    And "#section-3 a.section-modchooser-link[data-sectionid=\"3\"]" "css_element" should be visible
+    And "//button[contains(text(),'Create learning activity') and @data-sectionid=3]" "xpath" should be visible
 
     Examples:
   | Option     |
@@ -100,10 +98,10 @@ Feature: When the moodle theme is set to Snap, teachers can move course sections
     And the editing teacher role is removed from course "C1" for "teacher1"
     And I follow "Place section \"My & < > Topic\" before section \"Topic 4\""
     Then I should see "Sorry, but you do not currently have permissions to do that (Move sections)"
-  Examples:
-    | Option     |
-    | 0          |
-    | 1          |
+    Examples:
+      | Option     |
+      | 0          |
+      | 1          |
 
   @javascript
   Scenario Outline: In read mode, student cannot move sections.
@@ -115,10 +113,10 @@ Feature: When the moodle theme is set to Snap, teachers can move course sections
     And I am on the course main page for "C1"
     And I follow "Topic 1"
     Then "a[title=Move section]" "css_element" should not exist
-  Examples:
-    | Option     |
-    | 0          |
-    | 1          |
+    Examples:
+      | Option     |
+      | 0          |
+      | 1          |
 
 
   @javascript

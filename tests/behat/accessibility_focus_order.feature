@@ -40,8 +40,6 @@ Feature: Check that the correct tab order and focus exists for the page.
     And the following "activities" exist:
       | activity | course               | idnumber | name        | intro                         | section |
       | assign   | C1                   | assign1  | assignment1 | Test assignment description 1 | 0       |
-    And the following config values are set as admin:
-      | design_activity_chooser | 1 | theme_snap |
 
   @javascript @accessibility
   Scenario: Tabindex -1 exists for unnecessary focus order in the course dashboard.
@@ -55,8 +53,7 @@ Feature: Check that the correct tab order and focus exists for the page.
   Scenario: Focus should be over the input with an error after submitting a form with a required field in blank.
     And I log in as "teacher1"
     And I am on "Course 1" course homepage
-    And I click on "//li[@id='section-0']//div[@class='content']//div[@class='col-sm-6 snap-modchooser']//a" "xpath_element"
-    And I click on "div.tab-pane.row.text-center.fade.active.in div:nth-child(5) a" "css_element"
+    And I add a "Assignment" to section "0"
     And I click on "Save and display" "button"
     Then the focused element is "input.form-control.is-invalid" "css_element"
     And the page should meet "cat.forms, wcag21aa, wcag135" accessibility standards

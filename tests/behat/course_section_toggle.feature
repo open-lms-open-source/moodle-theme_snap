@@ -36,8 +36,6 @@ Feature: When the moodle theme is set to Snap, teachers can toggle the visibilit
       | admin | C1 | editingteacher |
       | teacher1 | C1 | editingteacher |
       | student1 | C1 | student |
-    And the following config values are set as admin:
-      | design_activity_chooser | 1 | theme_snap |
 
   @javascript
   Scenario Outline: In read mode, teacher hides section.
@@ -72,10 +70,10 @@ Feature: When the moodle theme is set to Snap, teachers can toggle the visibilit
     # Make sure that the navigation either side of section 2 does not have the dimmed class - i.e. to reflect section 2's visible status.
     And the previous navigation for section "3" shows as visible
     And the next navigation for section "1" shows as visible
-  Examples:
-  | Option     |
-  | 0          |
-  | 1          |
+    Examples:
+      | Option     |
+      | 0          |
+      | 1          |
 
   @javascript
   Scenario Outline: In read mode, teacher hides section and show an activity.
@@ -86,6 +84,7 @@ Feature: When the moodle theme is set to Snap, teachers can toggle the visibilit
     And I follow "Topic 1"
     And I click on "#section-1 .snap-visibility.snap-hide" "css_element"
     And I wait until "#section-1 .snap-visibility.snap-show" "css_element" exists
+    And I reload the page
     And I add a "Assignment" to section "1" and I fill the form with:
       | Assignment name | Assignment One          |
       | Description     | Submit your online text |
@@ -161,7 +160,7 @@ Feature: When the moodle theme is set to Snap, teachers can toggle the visibilit
     And I am on the course main page for "C1"
     And I follow "Topic 2"
     Then "#section-2 .snap-visibility" "css_element" should not exist
-  Examples:
-  | Option     |
-  | 0          |
-  | 1          |
+    Examples:
+      | Option     |
+      | 0          |
+      | 1          |
