@@ -57,7 +57,7 @@ Feature: When the moodle theme is set to Snap with course format tiles, a course
     And I am on the course main page for "C1"
     Then "Course Dashboard" "link" should be visible
     And "Edit blocks" "link" should not be visible
-    And "Edit course content" "link" should not be visible
+    And "Edit content" "link" should not be visible
     When I click on "Course Dashboard" "link"
     And I wait until the page is ready
     And "Edit blocks" "link" should not be visible
@@ -67,37 +67,37 @@ Feature: When the moodle theme is set to Snap with course format tiles, a course
     Given I log in as "teacher1"
     And I am on the course main page for "C1"
     Then "Course Dashboard" "link" should be visible
-    And "Edit course content" "link" should be visible
+    And "Edit content" "link" should be visible
     And "Edit blocks" "link" should not be visible
     When I click on "Course Dashboard" "link"
     And I wait until the page is ready
     And "Edit blocks" "link" should be visible
-    And "Edit course content" "link" should not be visible
+    And "Edit content" "link" should not be visible
 
   @javascript
   Scenario: As teacher you can switch between edit mode on and edit mode off.
     Given I log in as "teacher1"
     And I am on the course main page for "C1"
-    And "Edit course content" "link" should be visible
+    And "Edit content" "link" should be visible
     Then "Course Dashboard" "link" should be visible
     And "Edit blocks" "link" should not be visible
     And "Turn editing off" "link" should not be visible
     And I should not see "Add an activity or resource"
-    When I click on "Edit course content" "link"
+    When I click on "Edit content" "link"
     And I wait until the page is ready
-    Then "Edit course content" "link" should not be visible
+    Then "Edit content" "link" should not be visible
     And "Edit blocks" "link" should not be visible
     And I should see "Add an activity or resource"
     And "Turn editing off" "link" should be visible
     When I click on "Turn editing off" "link"
     And I wait until the page is ready
-    Then "Edit course content" "link" should be visible
+    Then "Edit content" "link" should be visible
     And "Turn editing off" "link" should not be visible
     And I should not see "Add an activity or resource"
     When I click on "Course Dashboard" "link"
     And I wait until the page is ready
     Then "Edit blocks" "link" should be visible
-    And "Edit course content" "link" should not be visible
+    And "Edit content" "link" should not be visible
     And I should not see "Add a block"
     When I click on "Edit blocks" "link"
     And I wait until the page is ready
@@ -107,8 +107,8 @@ Feature: When the moodle theme is set to Snap with course format tiles, a course
     When I am on the course main page for "C1"
     Then "Edit blocks" "link" should not be visible
     And "Turn editing off" "link" should be visible
-    And "Edit course content" "link" should not be visible
+    And "Edit content" "link" should not be visible
     When I click on "Turn editing off" "link"
     And I wait until the page is ready
     Then "Turn editing off" "link" should not be visible
-    And "Edit course content" "link" should be visible
+    And "Edit content" "link" should be visible

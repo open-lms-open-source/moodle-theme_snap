@@ -71,7 +71,7 @@ Feature: When the moodle theme is set to Snap, a student can remove a submitted 
     And I should see "Are you sure you want to remove the submission data?"
     And I press "Continue"
     Then I wait until the page is ready
-    Then I press "Edit submission"
+    And I press "Add submission"
     And "//img[contains(@title, \"empty.txt\")]" "xpath_element" should not exist
 
   @javascript
@@ -99,7 +99,7 @@ Feature: When the moodle theme is set to Snap, a student can remove a submitted 
     And I should see "Are you sure you want to remove the submission data?"
     And I press "Continue"
     Then I wait until the page is ready
-    Then I press "Edit submission"
+    And I press "Add submission"
     And I should not see "I'm the student online text submission"
 
   @javascript
@@ -129,6 +129,6 @@ Feature: When the moodle theme is set to Snap, a student can remove a submitted 
     And I should see "Are you sure you want to remove the submission data?"
     And I press "Continue"
     Then I wait until the page is ready
-    Then I press "Edit submission"
+    And I press "Add submission"
     And I should not see "I'm the student online text submission"
     And "//img[contains(@title, \"empty.txt\")]" "xpath_element" should not exist
