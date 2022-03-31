@@ -159,11 +159,10 @@ define(
                 sessionStorage.setItem('lastMod', $(this).parents('[id^=module]').attr('id'));
             });
 
-            // Snap with Format Tiles should allow add-remove blocks in editing mode only in Dashboard.
-            let btnEditing = '.btn-editing';
+            // Snap with Format Tiles should allow add-remove blocks only in Dashboard.
             let editModeHeader = '#snap-editmode-header';
+            let btnEditing = '.btn-editing';
             var hideInEditing = {};
-            hideInEditing.moodleBlocks = '#moodle-blocks';
             hideInEditing.courseTools = '#coursetools';
             for (var hiddenSection in hideInEditing) {
                 let tilesEditing = $(hideInEditing[hiddenSection]).hasClass('editing-tiles');
