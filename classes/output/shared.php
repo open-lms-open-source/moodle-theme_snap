@@ -1015,9 +1015,11 @@ EOF;
                     $url->param('edit', 'on');
                     $editstring = get_string('editmodetiles', 'theme_snap');
                 }
-                $btneditmode = '<a href="' . $url . '" class="btn btn-primary btn-editing">' . $editstring . '</a>';
+
+                $btneditmode = '<a href="'.$url.'" class="btn btn-primary btn-editing
+                    edit-course-content mr-4">'.$editstring.'</a>';
                 $renderer = '<div id="snap-editmode" class="snap-editmode">';
-                $renderer .= '<div class="text-center">';
+                $renderer .= '<div id="edit-course-content-footer">';
                 $renderer .= $btneditmode;
                 $renderer .= '</div><br></div>';
             }

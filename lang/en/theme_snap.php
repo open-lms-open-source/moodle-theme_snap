@@ -407,4 +407,4 @@ $string['hvpcustomcssdesc'] = 'Custom CSS for the H5P module (moodle.org/plugins
 $string['courselimitstrdanger'] = 'Course limit reached progress bar will not be displayed.';
 $string['courselimitstrwarning'] = 'If more than {$a} courses are listed progress bar will not be displayed';
 $string['tilesformatcoursehomealttext'] = 'Course home';
-$string['editmodetiles'] = 'Edit course content';
+$string['editmodetiles'] = 'Edit content';
