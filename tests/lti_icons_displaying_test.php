@@ -21,11 +21,12 @@
  * @copyright Copyright (c) 2020 Open LMS. (http://www.openlms.net)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-
+namespace theme_snap;
+defined('MOODLE_INTERNAL') || die();
 use theme_snap\output\core_renderer;
 
-defined('MOODLE_INTERNAL') || die();
-
+global $CFG;
+require_once($CFG->dirroot . '/mod/lti/locallib.php');
 /**
  * LTI icons displaying correctly in Snap.
  *
@@ -33,13 +34,12 @@ defined('MOODLE_INTERNAL') || die();
  * @copyright Copyright (c) 2020 Open LMS. (http://www.openlms.net)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class theme_snap_lti_icons_displaying extends advanced_testcase {
+class lti_icons_displaying_test extends \advanced_testcase {
     /**
      * Setup for each test.
      */
     protected function setUp():void {
         global $CFG;
-        require_once($CFG->dirroot . '/mod/lti/locallib.php');
         $CFG->theme = 'snap';
         $this->resetAfterTest(true);
     }
@@ -53,7 +53,7 @@ class theme_snap_lti_icons_displaying extends advanced_testcase {
         $this->resetAfterTest();
         $this->setAdminUser();
 
-        $type = new stdClass();
+        $type = new \stdClass();
         $type->state = LTI_TOOL_STATE_CONFIGURED;
         $type->name = "Test tool";
         $type->description = "Example description";
@@ -61,7 +61,7 @@ class theme_snap_lti_icons_displaying extends advanced_testcase {
         $type->baseurl = $this->getExternalTestFileUrl('/test.html');
         $type->coursevisible = LTI_COURSEVISIBLE_ACTIVITYCHOOSER;
 
-        $type2 = new stdClass();
+        $type2 = new \stdClass();
         $type2->state = LTI_TOOL_STATE_CONFIGURED;
         $type2->name = "Test tool two";
         $type2->description = "Example description";
@@ -70,7 +70,7 @@ class theme_snap_lti_icons_displaying extends advanced_testcase {
         $type2->coursevisible = LTI_COURSEVISIBLE_ACTIVITYCHOOSER;
         $type2->icon = 'http://www.example.com/1/example_folder/exampleicon.jpg';
 
-        $config = new stdClass();
+        $config = new \stdClass();
         $typeid = lti_add_type($type, $config);
         $type2id = lti_add_type($type2, $config);
 

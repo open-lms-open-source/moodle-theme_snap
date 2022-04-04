@@ -24,8 +24,6 @@
 
 namespace theme_snap\output;
 
-defined('MOODLE_INTERNAL') || die();
-
 class core_renderer_ajax extends \core_renderer_ajax {
 
     public function image_url($imagename, $component = 'moodle') {

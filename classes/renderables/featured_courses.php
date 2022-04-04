@@ -15,7 +15,8 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 namespace theme_snap\renderables;
-
+// Prepare for code checker update. Will be remove on INT-17966.
+// @codingStandardsIgnoreLine
 defined('MOODLE_INTERNAL') || die();
 
 use theme_snap\local,

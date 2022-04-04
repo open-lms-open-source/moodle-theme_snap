@@ -44,8 +44,7 @@ use theme_snap\services\course;
  * @copyright Copyright (c) 2019 Open LMS (https://www.openlms.net)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class ws_course_cards_data extends \external_api
-{
+class ws_course_cards_data extends \external_api {
     /**
      * @return external_function_parameters
      */

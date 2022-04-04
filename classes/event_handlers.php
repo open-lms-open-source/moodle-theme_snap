@@ -32,8 +32,6 @@ use core\event\user_enrolment_deleted;
 use core\event\group_member_added;
 use core\event\group_member_removed;
 
-defined('MOODLE_INTERNAL') || die();
-
 /**
  * Event handlers.
  *

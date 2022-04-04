@@ -20,8 +20,7 @@
  * @copyright 2020 Open LMS. (https://www.openlms.net)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-
-defined('MOODLE_INTERNAL') || die();
+namespace theme_snap;
 
 /**
  * Testing for activity deadlines cache.
@@ -30,7 +29,7 @@ defined('MOODLE_INTERNAL') || die();
  * @copyright 2020 Open LMS. (https://www.openlms.net)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class theme_snap_activity_deadlines_cache_test extends advanced_testcase {
+class activity_deadlines_cache_test extends \advanced_testcase {
 
     public function test_cache_is_purged_on_group_changes() {
         $this->resetAfterTest();

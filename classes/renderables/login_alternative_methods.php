@@ -23,8 +23,6 @@
 
 namespace theme_snap\renderables;
 
-defined('MOODLE_INTERNAL') || die();
-
 class login_alternative_methods implements \renderable {
 
     public $potentialidps = [];

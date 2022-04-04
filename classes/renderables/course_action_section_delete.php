@@ -25,8 +25,6 @@ namespace theme_snap\renderables;
 use moodle_url;
 use section_info;
 
-defined('MOODLE_INTERNAL') || die();
-
 class course_action_section_delete extends course_action_section_base {
 
     /**

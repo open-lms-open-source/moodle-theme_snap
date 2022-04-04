@@ -23,10 +23,7 @@
  */
 
 namespace theme_snap\renderables;
-
 use context_course;
-
-defined('MOODLE_INTERNAL') || die();
 
 /**
  * Renderable class for course section navigation.

@@ -20,9 +20,7 @@
  * @copyright Copyright (c) 2016 Open LMS
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-
-defined('MOODLE_INTERNAL') || die();
-
+namespace theme_snap;
 use theme_snap\snap_page_requirements_manager;
 
 /**
@@ -31,7 +29,7 @@ use theme_snap\snap_page_requirements_manager;
  * @copyright Copyright (c) 2016 Open LMS
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class theme_snap_snap_page_requirements_manager_test extends \advanced_testcase {
+class snap_page_requirements_manager_test extends \advanced_testcase {
 
     /**
      * Test classic theme does not black list M.core_completion.init.

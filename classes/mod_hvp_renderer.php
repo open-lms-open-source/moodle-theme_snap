@@ -81,7 +81,7 @@ if (file_exists($h5prenderer)) {
          * @param string $setting settings H5P Custom CSS.
          * @param string $format false as default.
          */
-        static public function get_settings($setting, $format = false) {
+        public static function get_settings($setting, $format = false) {
             global $CFG;
             require_once($CFG->dirroot . '/lib/weblib.php');
 
@@ -100,7 +100,7 @@ if (file_exists($h5prenderer)) {
          * @param string $url CSS generated url.
          * @return bool.
          */
-        static public function get_is_valid($url) {
+        public static function get_is_valid($url) {
             $handle = curl_init($url);
             curl_setopt($handle,  CURLOPT_RETURNTRANSFER, true);
 

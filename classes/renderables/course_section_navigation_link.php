@@ -24,8 +24,6 @@
 
 namespace theme_snap\renderables;
 
-defined('MOODLE_INTERNAL') || die();
-
 /**
  * Renderable class for navigation link.
  * @package   theme_snap

@@ -21,8 +21,7 @@
  * @copyright Copyright (c) 2018 Open LMS (https://www.openlms.net)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-
-defined('MOODLE_INTERNAL') || die();
+namespace theme_snap;
 
 /**
  * Course management renderer tests for Snap.
@@ -31,7 +30,7 @@ defined('MOODLE_INTERNAL') || die();
  * @copyright Copyright (c) 2018 Open LMS (https://www.openlms.net)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class theme_snap_course_management_test extends advanced_testcase {
+class course_management_test extends \advanced_testcase {
     public function test_link_updated_with_hash() {
         global $PAGE, $CFG;
 
@@ -44,11 +43,11 @@ class theme_snap_course_management_test extends advanced_testcase {
         $PAGE->set_url('/course/management.php', ['categoryid' => $catrecord->id]);
         $renderer = $PAGE->get_renderer('core_course', 'management');
 
-        $rendercategory = core_course_category::get($catrecord->id);
+        $rendercategory = \core_course_category::get($catrecord->id);
         $courserecord = $generator->create_course([
             'category' => $catrecord->id
         ]);
-        $rendercourse = new core_course_list_element($courserecord);
+        $rendercourse = new \core_course_list_element($courserecord);
 
         $html = $renderer->course_listitem($rendercategory, $rendercourse, $courserecord->id);
         $url = '/course/management.php?categoryid='.$catrecord->id.'&amp;courseid='.$courserecord->id.'#course-detail-title';

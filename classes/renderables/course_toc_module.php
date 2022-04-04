@@ -23,8 +23,6 @@
 
 namespace theme_snap\renderables;
 
-defined('MOODLE_INTERNAL') || die();
-
 class course_toc_module implements \renderable {
 
     /**

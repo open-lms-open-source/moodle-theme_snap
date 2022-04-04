@@ -13,9 +13,7 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
-
-defined('MOODLE_INTERNAL') || die();
-
+namespace theme_snap;
 use theme_snap\webservice\ws_feed;
 
 /**
@@ -24,16 +22,16 @@ use theme_snap\webservice\ws_feed;
  * @copyright Copyright (c) 2020 Open LMS (https://www.openlms.net)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class theme_snap_ws_feed_test extends \advanced_testcase {
+class webservice_ws_feed_activity_test extends \advanced_testcase {
 
     public function test_service_parameters() {
         $params = ws_feed::service_parameters();
-        $this->assertTrue($params instanceof external_function_parameters);
+        $this->assertTrue($params instanceof \external_function_parameters);
     }
 
     public function test_service_returns() {
         $returns = ws_feed::service_returns();
-        $this->assertTrue($returns instanceof external_multiple_structure);
+        $this->assertTrue($returns instanceof \external_multiple_structure);
     }
 
     public function test_service_message() {
@@ -77,7 +75,7 @@ class theme_snap_ws_feed_test extends \advanced_testcase {
         $this->setAdminUser();
         $student = $this->getDataGenerator()->create_user();
         $course = $this->getDataGenerator()->create_course();
-        $record = new stdClass();
+        $record = new \stdClass();
         $record->course = $course;
 
         $studentrole = $DB->get_record('role', array('shortname' => 'student'));
@@ -219,7 +217,7 @@ class theme_snap_ws_feed_test extends \advanced_testcase {
             $userids);
 
         // Ok, send the message.
-        $record = new stdClass();
+        $record = new \stdClass();
         $record->useridfrom = $users[0]->id;
         $record->conversationid = $conversation->id;
         $record->subject = $subject;

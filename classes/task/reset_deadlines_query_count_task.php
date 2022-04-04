@@ -23,13 +23,10 @@
  */
 
 namespace theme_snap\task;
-
 use context_course;
 use core\task\scheduled_task;
 use core_date;
 use theme_snap\activity;
-
-defined('MOODLE_INTERNAL') || die();
 
 /**
  * Deadlines query count reset task.

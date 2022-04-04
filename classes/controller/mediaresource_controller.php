@@ -16,8 +16,6 @@
 
 namespace theme_snap\controller;
 
-defined('MOODLE_INTERNAL') || die();
-
 /**
  * Deadlines Controller.
  * Handles requests for media elements that can be viewed inline.

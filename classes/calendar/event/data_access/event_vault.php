@@ -23,9 +23,6 @@
  */
 
 namespace theme_snap\calendar\event\data_access;
-
-defined('MOODLE_INTERNAL') || die();
-
 use core_calendar\local\event\entities\event_interface;
 
 /**

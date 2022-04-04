@@ -18,8 +18,6 @@ namespace theme_snap;
 
 use theme_snap\color_contrast;
 
-defined('MOODLE_INTERNAL') || die();
-
 /**
  * Class to render a text box which validates a JSON string for categories color configuration.
  * @package theme_snap

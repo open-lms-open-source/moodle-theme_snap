@@ -26,8 +26,6 @@ namespace theme_snap\renderables;
 use theme_snap\services\course;
 use theme_snap\local;
 
-defined('MOODLE_INTERNAL') || die();
-
 class course_card implements \renderable {
 
     /**
@@ -234,7 +232,7 @@ class course_card implements \renderable {
                 }
                 $userctxidx[$userid][$this->contextid] = true;
 
-                $teacheruser = $teacherusers [$userid];
+                $teacheruser = $teacherusers[$userid];
                 $userpicture = new \user_picture($teacheruser);
                 $userpicture->link = false;
                 $userpicture->size = 100;

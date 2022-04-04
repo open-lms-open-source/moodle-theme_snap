@@ -21,10 +21,8 @@
  * @copyright Copyright (c) 2019 Open LMS (https://www.openlms.net)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-
+namespace theme_snap;
 use theme_snap\output\core_renderer;
-
-defined('MOODLE_INTERNAL') || die();
 
 /**
  * Custom menu spacing tests for Snap.
@@ -33,7 +31,7 @@ defined('MOODLE_INTERNAL') || die();
  * @copyright Copyright (c) 2019 Open LMS (https://www.openlms.net)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class theme_snap_custom_menu_spacing extends advanced_testcase {
+class custom_menu_spacing_test extends \advanced_testcase {
     /**
      * Setup for each test.
      */

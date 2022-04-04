@@ -75,7 +75,7 @@ class definition_helper {
         }
 
         $this->set_use_namespaces($classorobject);
-        $this->_define_class_for_webservice($classorobject);
+        $this->define_class_for_webservice_internal($classorobject);
         $this->cache_definition($this->classname, $this->definition);
     }
 
@@ -423,7 +423,7 @@ class definition_helper {
      * @param $classorobject
      * @throws coding_exception
      */
-    private function _define_class_for_webservice($classorobject) {
+    private function define_class_for_webservice_internal($classorobject) {
         $reflect = new \ReflectionClass($classorobject);
         $public = $reflect->getProperties(\ReflectionProperty::IS_PUBLIC);
         $this->definition = [];

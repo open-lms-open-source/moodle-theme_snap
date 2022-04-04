@@ -71,7 +71,7 @@ class behat_theme_snap_custom_elements extends behat_base {
             $defaultcondition = true;
             $conditions = [
                 "document.readyState == 'complete'",           // Page is ready.
-                "typeof $ != 'undefined'",                     // jQuery is loaded.
+                "typeof $ != 'undefined'",                     // Here jQuery is loaded.
                 "!$.active",                                   // No ajax request is active.
                 "$('#page').css('display') == 'block'",        // Page is displayed (no progress bar).
                 "$('.loading-mask').css('display') == 'none'", // Page is not loading (no black mask loading page).

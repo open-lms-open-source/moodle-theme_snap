@@ -26,8 +26,6 @@ namespace theme_snap\output;
 
 use theme_snap\renderables\course_toc;
 
-defined('MOODLE_INTERNAL') || die();
-
 class toc_renderer extends \theme_boost\output\core_renderer {
 
     /**

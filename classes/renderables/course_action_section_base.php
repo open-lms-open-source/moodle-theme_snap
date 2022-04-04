@@ -25,8 +25,6 @@ namespace theme_snap\renderables;
 use moodle_url;
 use section_info;
 
-defined('MOODLE_INTERNAL') || die();
-
 abstract class course_action_section_base implements \renderable, \templatable {
 
     use trait_exportable;

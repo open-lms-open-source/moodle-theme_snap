@@ -21,7 +21,7 @@
  * @copyright 2022 Open LMS. (https://www.openlms.net)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-
+namespace theme_snap;
 defined('MOODLE_INTERNAL') || die();
 
 require_once(__DIR__ . '/../../../lib/badgeslib.php');
@@ -32,7 +32,7 @@ require_once(__DIR__ . '/../../../lib/badgeslib.php');
  * @copyright 2022 Open LMS. (https://www.openlms.net)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class render_edit_mode_testcase extends advanced_testcase {
+class render_edit_mode_test extends \advanced_testcase {
 
     /**
      * @throws coding_exception
@@ -48,7 +48,7 @@ class render_edit_mode_testcase extends advanced_testcase {
         $teacher = $this->getDataGenerator()->create_user();
         $studentrole = $DB->get_record('role', array('shortname' => 'student'));
         $teacherrole = $DB->get_record('role', array('shortname' => 'teacher'));
-        $coursecontext = context_course::instance($course->id);
+        $coursecontext = \context_course::instance($course->id);
         $PAGE->set_pagetype('course-view-' . $course->format);
         // Assign capability for viewing course for students.
         assign_capability('moodle/course:view', CAP_ALLOW, $studentrole->id, $coursecontext->id, true);

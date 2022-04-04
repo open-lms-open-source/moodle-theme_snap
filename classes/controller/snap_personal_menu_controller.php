@@ -18,8 +18,6 @@ namespace theme_snap\controller;
 
 use theme_snap\output\core_renderer;
 
-defined('MOODLE_INTERNAL') || die();
-
 /**
  * Deadlines Controller.
  * Handles requests regarding user deadlines and other CTAs.

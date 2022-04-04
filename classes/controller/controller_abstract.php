@@ -16,8 +16,6 @@
 
 namespace theme_snap\controller;
 
-defined('MOODLE_INTERNAL') || die();
-
 /**
  * Controller Abstract.
  * Controllers handle requests.  Any methods that end with "_action"

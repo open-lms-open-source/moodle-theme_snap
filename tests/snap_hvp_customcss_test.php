@@ -13,7 +13,7 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
-
+namespace theme_snap;
 defined('MOODLE_INTERNAL') || die();
 
 use \theme_snap\snap_base_test;
@@ -29,7 +29,7 @@ require_once($CFG->dirroot . '/mod/assign/tests/base_test.php');
  * @copyright Copyright (c) 2021 Open LMS (https://www.openlms.net)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class theme_snap_hvp_customcss_test extends snap_base_test {
+class snap_hvp_customcss_test extends snap_base_test {
 
     /**
      * Testing renderer Custom CSS for H5P activities.
@@ -52,7 +52,7 @@ class theme_snap_hvp_customcss_test extends snap_base_test {
         $page->set_context(CONTEXT_SYSTEM);
 
         // Use and get object from class theme_snap_mod_hvp_renderer.
-        $snaphvp = new theme_snap_mod_hvp_renderer($page, $target);
+        $snaphvp = new \theme_snap_mod_hvp_renderer($page, $target);
         $this->assertIsObject($snaphvp);
 
         if ($snaphvp) {

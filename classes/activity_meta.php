@@ -15,10 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 namespace theme_snap;
-
 use \theme_snap\traits\null_object;
-
-defined('MOODLE_INTERNAL') || die();
 
 /**
  * Activity meta data.

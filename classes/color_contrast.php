@@ -17,8 +17,6 @@
 
 namespace theme_snap;
 
-defined('MOODLE_INTERNAL') || die();
-
 /**
  * Functions to calculate color contrast.
  *

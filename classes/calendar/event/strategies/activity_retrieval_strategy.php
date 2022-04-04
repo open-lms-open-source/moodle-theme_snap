@@ -24,8 +24,6 @@
 
 namespace theme_snap\calendar\event\strategies;
 
-defined('MOODLE_INTERNAL') || die();
-
 /**
  * Extend core raw event retrieval strategy to cope with assignment extensions.
  *
