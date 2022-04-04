@@ -22,8 +22,6 @@
  */
 namespace theme_snap;
 
-defined('MOODLE_INTERNAL') || die();
-
 abstract class snap_base_test extends \advanced_testcase {
     /**
      * Setup course with a group and users.

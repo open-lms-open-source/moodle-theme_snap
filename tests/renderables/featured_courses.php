@@ -15,9 +15,6 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 namespace theme_snap\tests\renderables;
-
-defined('MOODLE_INTERNAL') || die();
-
 use theme_snap\renderables\featured_courses;
 
 /**

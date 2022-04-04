@@ -22,7 +22,7 @@
  * @copyright  1999 onwards Martin Dougiamas  {@link http://moodle.com}
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-
+namespace theme_snap;
 defined('MOODLE_INTERNAL') || die();
 
 use \theme_snap\local;
@@ -37,7 +37,7 @@ require_once($CFG->dirroot . '/mod/assign/tests/base_test.php');
  * @copyright  1999 onwards Martin Dougiamas  {@link http://moodle.com}
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class theme_snap_assign_test extends mod_assign_base_testcase {
+class assign_test extends \mod_assign_base_testcase {
 
     public function test_assign_reopened_and_resubmitted() {
         $this->setUser($this->editingteachers[0]);
@@ -51,7 +51,7 @@ class theme_snap_assign_test extends mod_assign_base_testcase {
         // Add a submission.
         $this->setUser($this->students[0]);
         $submission = $assign->get_user_submission($this->students[0]->id, true);
-        $data = new stdClass();
+        $data = new \stdClass();
         $data->onlinetext_editor = array('itemid' => file_get_unused_draft_itemid(),
                                          'text' => 'Submission text',
                                          'format' => FORMAT_HTML);
@@ -64,7 +64,7 @@ class theme_snap_assign_test extends mod_assign_base_testcase {
 
         // Mark the submission.
         $this->setUser($this->teachers[0]);
-        $data = new stdClass();
+        $data = new \stdClass();
         $data->grade = '50.0';
         $assign->testable_apply_grade_to_user($data, $this->students[0]->id, 0);
         // TODO remove this next line when the above is fixed  to stop triggering debug messages.
@@ -89,7 +89,7 @@ class theme_snap_assign_test extends mod_assign_base_testcase {
         // Add another submission.
         $this->setUser($this->students[0]);
         $submission = $assign->get_user_submission($this->students[0]->id, true);
-        $data = new stdClass();
+        $data = new \stdClass();
         $data->onlinetext_editor = array('itemid' => file_get_unused_draft_itemid(),
                                          'text' => 'Submission text 2',
                                          'format' => FORMAT_HTML);
@@ -177,7 +177,7 @@ class theme_snap_assign_test extends mod_assign_base_testcase {
         // Add a submission.
         $this->setUser($this->students[0]);
         $submission = $assign->get_user_submission($this->students[0]->id, true);
-        $data = new stdClass();
+        $data = new \stdClass();
         $data->onlinetext_editor = array('itemid' => file_get_unused_draft_itemid(),
                                          'text' => 'Submission text',
                                          'format' => FORMAT_HTML);
@@ -213,7 +213,7 @@ class theme_snap_assign_test extends mod_assign_base_testcase {
         // Add a submission.
         $this->setUser($this->students[0]);
         $submission = $assign->get_user_submission($this->students[0]->id, true);
-        $data = new stdClass();
+        $data = new \stdClass();
         $data->onlinetext_editor = array('itemid' => file_get_unused_draft_itemid(),
                                          'text' => 'Submission text',
                                          'format' => FORMAT_HTML);
@@ -226,7 +226,7 @@ class theme_snap_assign_test extends mod_assign_base_testcase {
 
         // Mark the submission.
         $this->setUser($this->teachers[0]);
-        $data = new stdClass();
+        $data = new \stdClass();
         $data->grade = '50.0';
         $assign->testable_apply_grade_to_user($data, $this->students[0]->id, 0);
 
@@ -333,7 +333,7 @@ class theme_snap_assign_test extends mod_assign_base_testcase {
         $this->resetAfterTest(true);
 
         $this->course = $this->getDataGenerator()->create_course(['groupmode' => SEPARATEGROUPS]);
-        $groupdata = new stdClass();
+        $groupdata = new \stdClass();
         $groupdata->courseid = $this->course->id;
         $groupdata->name = 'group1';
         $group1id = groups_create_group($groupdata);
@@ -356,7 +356,7 @@ class theme_snap_assign_test extends mod_assign_base_testcase {
         $this->setUser($teachers[0]);
         $assign = $this->create_instance(['assignsubmission_onlinetext_enabled' => 1, 'groupmode' => SEPARATEGROUPS]);
 
-        $data = new stdClass();
+        $data = new \stdClass();
         $data->onlinetext_editor = array('itemid' => file_get_unused_draft_itemid(),
             'text' => 'Submission text',
             'format' => FORMAT_HTML);
@@ -377,7 +377,7 @@ class theme_snap_assign_test extends mod_assign_base_testcase {
 
         $this->setAdminUser();
         $teacherrole = $DB->get_record('role', array('shortname' => 'editingteacher'));
-        $coursecontext = context_course::instance($this->course->id);
+        $coursecontext = \context_course::instance($this->course->id);
         role_change_permission($teacherrole->id, $coursecontext, 'moodle/site:accessallgroups', CAP_PROHIBIT);
 
         // Changing permissions to prohibit will result on the editing teacher only seeing the submission of its group.

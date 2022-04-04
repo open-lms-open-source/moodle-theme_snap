@@ -13,9 +13,7 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
-
-defined('MOODLE_INTERNAL') || die();
-
+namespace theme_snap;
 use theme_snap\services\course;
 use theme_snap\renderables\course_card;
 use theme_snap\local;
@@ -27,7 +25,7 @@ use theme_snap\local;
  * @copyright Copyright (c) 2016 Open LMS (https://www.openlms.net)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class theme_snap_services_course_test extends \advanced_testcase {
+class services_course_test extends \advanced_testcase {
 
     /**
      * @var stdClass
@@ -239,9 +237,9 @@ class theme_snap_services_course_test extends \advanced_testcase {
         $this->assertContains($page2cm->id, $previouslyunavailablemods);
 
         // View page1 to trigger completion.
-        $context = context_module::instance($page1->cmid);
+        $context = \context_module::instance($page1->cmid);
         page_view($page1, $course, $page1cm, $context);
-        $completion = new completion_info($course);
+        $completion = new \completion_info($course);
         $completiondata = $completion->get_data($page1cm);
         $this->assertEquals(COMPLETION_COMPLETE, $completiondata->completionstate);
 
@@ -279,9 +277,9 @@ class theme_snap_services_course_test extends \advanced_testcase {
         $page = $generator->create_module('page', array('course' => $course->id, 'name' => 'test page'));
 
         $toc = $this->courseservice->course_toc('testlistlarge');
-        $this->assertTrue($toc->modules[0] instanceof theme_snap\renderables\course_toc_module);
+        $this->assertTrue($toc->modules[0] instanceof \theme_snap\renderables\course_toc_module);
         $this->assertTrue($toc->modules[0]->url === '#section-0&module-'.$page->cmid);
-        $this->assertTrue($toc instanceof theme_snap\renderables\course_toc);
+        $this->assertTrue($toc instanceof \theme_snap\renderables\course_toc);
         $this->assertEquals(true, $toc->formatsupportstoc);
         $this->assertEquals('list-large', $toc->chapters->listlarge);
         $this->assertCount(11, $toc->chapters->chapters);
@@ -317,7 +315,7 @@ class theme_snap_services_course_test extends \advanced_testcase {
         $chapters = $this->courseservice->course_toc_chapters('testcourse');
 
         $this->assertCount(3, $chapters->chapters);
-        $this->assertTrue($chapters->chapters[0] instanceof theme_snap\renderables\course_toc_chapter);
+        $this->assertTrue($chapters->chapters[0] instanceof \theme_snap\renderables\course_toc_chapter);
     }
 
     public function test_course_toc_chapters_escaped_chars() {
@@ -371,8 +369,8 @@ class theme_snap_services_course_test extends \advanced_testcase {
         $this->assertTrue(isset($highlight['toc']));
         $actionmodel = $highlight['actionmodel'];
         $toc = $highlight['toc'];
-        $this->assertTrue($actionmodel instanceof theme_snap\renderables\course_action_section_highlight);
-        $this->assertTrue($toc instanceof theme_snap\renderables\course_toc);
+        $this->assertTrue($actionmodel instanceof \theme_snap\renderables\course_action_section_highlight);
+        $this->assertTrue($toc instanceof \theme_snap\renderables\course_toc);
 
         // Check that action model has toggled after highlight.
         $this->assertEquals('aria-pressed="true"', $actionmodel->ariapressed);
@@ -381,7 +379,7 @@ class theme_snap_services_course_test extends \advanced_testcase {
         // Unhiglight the section.
         $highlight = $this->courseservice->highlight_section('testcourse', 3, false);
         $actionmodel = $highlight['actionmodel'];
-        $this->assertTrue($actionmodel instanceof theme_snap\renderables\course_action_section_highlight);
+        $this->assertTrue($actionmodel instanceof \theme_snap\renderables\course_action_section_highlight);
 
         // Check that action model now corresponds to unhighlighted state.
         $this->assertEquals('aria-pressed="false"', $actionmodel->ariapressed);
@@ -406,8 +404,8 @@ class theme_snap_services_course_test extends \advanced_testcase {
         $this->assertTrue(isset($visibility['toc']));
         $actionmodel = $visibility['actionmodel'];
         $toc = $visibility['toc'];
-        $this->assertTrue($actionmodel instanceof theme_snap\renderables\course_action_section_visibility);
-        $this->assertTrue($toc instanceof theme_snap\renderables\course_toc);
+        $this->assertTrue($actionmodel instanceof \theme_snap\renderables\course_action_section_visibility);
+        $this->assertTrue($toc instanceof \theme_snap\renderables\course_toc);
 
         // Check that action model has toggled after section hidden.
         $this->assertEquals('snap-visibility snap-show', $actionmodel->class);
@@ -417,7 +415,7 @@ class theme_snap_services_course_test extends \advanced_testcase {
         // Unhide the section.
         $visibility = $this->courseservice->set_section_visibility('testcourse', 3, true);
         $actionmodel = $visibility['actionmodel'];
-        $this->assertTrue($actionmodel instanceof theme_snap\renderables\course_action_section_visibility);
+        $this->assertTrue($actionmodel instanceof \theme_snap\renderables\course_action_section_visibility);
 
         // Check that action model now corresponds to unhighlighted state.
         $this->assertEquals('snap-visibility snap-hide', $actionmodel->class);
@@ -519,7 +517,7 @@ class theme_snap_services_course_test extends \advanced_testcase {
             array('completion' => 1, 'completionview' => 0));
         $modinfo = get_fast_modinfo($course);
         $page1cm = $modinfo->get_cm($page1->cmid);
-        $completion = new completion_info($course);
+        $completion = new \completion_info($course);
         $completiondata = $completion->get_data($page1cm);
         $this->assertEquals(COMPLETION_INCOMPLETE, $completiondata->completionstate);
 
@@ -530,7 +528,7 @@ class theme_snap_services_course_test extends \advanced_testcase {
         get_fast_modinfo($course, 0, true);
         $modinfo = get_fast_modinfo($course);
         $page1cm = $modinfo->get_cm($page1->cmid);
-        $completion = new completion_info($course);
+        $completion = new \completion_info($course);
         $completiondata = $completion->get_data($page1cm);
         // Assert complete.
         $this->assertEquals(COMPLETION_COMPLETE, $completiondata->completionstate);
@@ -542,7 +540,7 @@ class theme_snap_services_course_test extends \advanced_testcase {
         get_fast_modinfo($course, 0, true);
         $modinfo = get_fast_modinfo($course);
         $page1cm = $modinfo->get_cm($page1->cmid);
-        $completion = new completion_info($course);
+        $completion = new \completion_info($course);
         $completiondata = $completion->get_data($page1cm);
         // Assert incomplete.
         $this->assertEquals(COMPLETION_INCOMPLETE, $completiondata->completionstate);

@@ -25,9 +25,6 @@
  */
 
 namespace theme_snap\output;
-
-defined('MOODLE_INTERNAL') || die();
-
 use context_course;
 use html_writer;
 use moodle_url;

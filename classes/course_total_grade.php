@@ -64,7 +64,7 @@ class course_total_grade extends \grade_report_overview {
         $this->user = $user;
 
         if (empty($CFG->gradebookroles)) {
-            print_error('norolesdefined', 'grades');
+            throw new \moodle_exception('norolesdefined', 'grades');
         }
 
         $this->courseid  = $course->id;

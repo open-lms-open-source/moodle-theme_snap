@@ -13,9 +13,7 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
-
-defined('MOODLE_INTERNAL') || die();
-
+namespace theme_snap;
 use \theme_snap\snap_base_test;
 
 /**
@@ -26,7 +24,7 @@ use \theme_snap\snap_base_test;
  * @copyright Copyright (c) 2021 Open LMS (https://www.openlms.net)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class theme_snap_toc_renderer_test extends snap_base_test {
+class snap_toc_renderer_test extends snap_base_test {
 
     /**
      * Testing TOC Renderer for Snap.
@@ -39,7 +37,7 @@ class theme_snap_toc_renderer_test extends snap_base_test {
 
         // Set new Moodle Page and set context.
         $page = new \moodle_page();
-        $page->set_context(CONTEXT_SYSTEM);
+        $page->set_context(\CONTEXT_SYSTEM);
 
         // Get configuration for xp block.
         $blockxp = get_config('block_xp');

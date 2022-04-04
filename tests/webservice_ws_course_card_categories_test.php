@@ -13,9 +13,7 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
-
-defined('MOODLE_INTERNAL') || die();
-
+namespace theme_snap;
 use theme_snap\webservice\ws_course_card;
 
 /**
@@ -24,16 +22,16 @@ use theme_snap\webservice\ws_course_card;
  * @copyright Copyright (c) 2019 Open LMS (https://www.openlms.net)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class theme_snap_ws_course_card_categories_test extends \advanced_testcase {
+class webservice_ws_course_card_categories_test extends \advanced_testcase {
 
     public function test_service_parameters() {
         $params = \theme_snap\webservice\ws_course_cards_categories::service_parameters();
-        $this->assertTrue($params instanceof external_function_parameters);
+        $this->assertTrue($params instanceof \external_function_parameters);
     }
 
     public function test_service_returns() {
         $returns = \theme_snap\webservice\ws_course_cards_categories::service_returns();
-        $this->assertTrue($returns instanceof external_multiple_structure);
+        $this->assertTrue($returns instanceof \external_multiple_structure);
     }
 
     public function test_service() {

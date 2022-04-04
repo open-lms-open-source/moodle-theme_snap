@@ -24,8 +24,6 @@
 namespace theme_snap\renderables;
 use local_geniusws\navigation;
 
-defined('MOODLE_INTERNAL') || die();
-
 class genius_dashboard_link implements \renderable {
 
     /**

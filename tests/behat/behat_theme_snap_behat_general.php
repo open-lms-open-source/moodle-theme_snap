@@ -141,7 +141,6 @@ class behat_theme_snap_behat_general extends behat_general {
     public function assert_page_contains_text($text) {
         $nodes = $this->get_nodes_containing_text($text);
         if (empty($nodes)) {
-            // Try again!
             $this->wait_for_pending_js();
             sleep(2);
             $nodes = $this->get_nodes_containing_text($text);
@@ -212,7 +211,6 @@ class behat_theme_snap_behat_general extends behat_general {
 
         $nodes = $this->get_nodes_containing_text($text, $container);
         if (empty($nodes)) {
-            // Try again!
             $this->wait_for_pending_js();
             sleep(2);
             $nodes = $this->get_nodes_containing_text($text, $container);
@@ -300,8 +298,9 @@ class behat_theme_snap_behat_general extends behat_general {
      * Checks, that the first specified element appears after the second one.
      * Copied from BehatGeneral in mahara/testing/frameworks/behat/classes/BehatGeneral.php
      *
-     * @codingStandardsIgnoreLine
+     * @codingStandardsIgnoreStart
      * @Then /^"(?P<following_element_string>(?:[^"]|\\")*)" "(?P<selector1_string>(?:[^"]|\\")*)" should appear after "(?P<preceding_element_string>(?:[^"]|\\")*)" "(?P<selector2_string>(?:[^"]|\\")*)"$/
+     * @codingStandardsIgnoreEnd
      * @throws ExpectationException
      * @param string $postelement The locator of the latest element
      * @param string $postselectortype The selector type of the latest element
@@ -333,8 +332,9 @@ class behat_theme_snap_behat_general extends behat_general {
      * Checks, that the first specified element appears before the second one.
      * Copied from BehatGeneral in mahara/testing/frameworks/behat/classes/BehatGeneral.php
      *
-     * @codingStandardsIgnoreLine
+     * @codingStandardsIgnoreStart
      * @Given /^"(?P<preceding_element_string>(?:[^"]|\\")*)" "(?P<selector1_string>(?:[^"]|\\")*)" should appear before "(?P<following_element_string>(?:[^"]|\\")*)" "(?P<selector2_string>(?:[^"]|\\")*)"$/
+     * @codingStandardsIgnoreEnd
      * @throws ExpectationException
      * @param string $preelement The locator of the preceding element
      * @param string $preselectortype The locator of the preceding element

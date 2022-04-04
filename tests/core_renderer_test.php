@@ -20,9 +20,7 @@
  * @copyright Copyright (c) 2021 Open LMS
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-
-defined('MOODLE_INTERNAL') || die();
-
+namespace theme_snap;
 
 /**
  * Class theme_snap_core_renderer_testcase
@@ -30,7 +28,7 @@ defined('MOODLE_INTERNAL') || die();
  * @copyright Copyright (c) 2021 Open LMS
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class theme_snap_core_renderer_testcase extends \advanced_testcase {
+class core_renderer_test extends \advanced_testcase {
 
     /**
      * Test heading should show only h1 tags on site level.

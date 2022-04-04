@@ -15,10 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 namespace theme_snap\controller;
-
 use coding_exception;
-
-defined('MOODLE_INTERNAL') || die();
 
 /**
  * Controller Router.

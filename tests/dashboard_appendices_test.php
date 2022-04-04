@@ -20,7 +20,7 @@
  * @copyright 2020 Open LMS. (https://www.openlms.net)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-
+namespace theme_snap;
 defined('MOODLE_INTERNAL') || die();
 
 require_once(__DIR__ . '/../../../lib/badgeslib.php');
@@ -31,7 +31,7 @@ require_once(__DIR__ . '/../../../lib/badgeslib.php');
  * @copyright 2020 Open LMS. (https://www.openlms.net)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class theme_snap_dashboard_appendices_testcase extends advanced_testcase {
+class dashboard_appendices_test extends \advanced_testcase {
 
     public function test_dashboard_shows_open_reports_experimental() {
         global $CFG, $DB, $COURSE;
@@ -42,7 +42,7 @@ class theme_snap_dashboard_appendices_testcase extends advanced_testcase {
         $teacher = $this->getDataGenerator()->create_user();
         $studentrole = $DB->get_record('role', array('shortname' => 'student'));
         $teacherrole = $DB->get_record('role', array('shortname' => 'teacher'));
-        $coursecontext = context_course::instance($course->id);
+        $coursecontext = \context_course::instance($course->id);
         // Assign capability for viewing reports for students.
         assign_capability('block/reports:viewown', CAP_ALLOW, $studentrole->id, $coursecontext->id, true);
         // Assign capability for viewing reports for teachers.

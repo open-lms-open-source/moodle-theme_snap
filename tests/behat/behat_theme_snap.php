@@ -366,7 +366,7 @@ class behat_theme_snap extends behat_base {
                         'assignfeedbackcomments_editor[format]' => FORMAT_HTML
                     ];
                     if (!$commentsplugin->save_settings($formdata)) {
-                        print_error($commentsplugin->get_error());
+                        throw new moodle_exception($commentsplugin->get_error());
                         $USER = $origuser;
                         return false;
                     }
@@ -621,8 +621,9 @@ class behat_theme_snap extends behat_base {
      * Restrict a course asset by belonging to a group.
      * @param string $asset1
      * @param string $group1
-     * @codingStandardsIgnoreLine
+     * @codingStandardsIgnoreStart
      * @Given /^I restrict course asset "(?P<asset1_string>(?:[^"]|\\")*)" by belong to the group "(?P<group1_string>(?:[^"]|\\")*)"$/
+     * @codingStandardsIgnoreEnd
      */
     public function i_restrict_asset_by_belong_to_group($asset1, $group1) {
         /** @var behat_general $helper */
@@ -685,8 +686,9 @@ class behat_theme_snap extends behat_base {
      * @param string $type
      * @param string $elementstr
      * @throws ExpectationException
-     * @codingStandardsIgnoreLine
+     * @codingStandardsIgnoreStart
      * @Given /^I should see availability info "(?P<str>(?:[^"]|\\")*)" in "(?P<elementtype>section|asset)" "(?P<elementstr>(?:[^"]|\\")*)"$/
+     * @codingStandardsIgnoreEnd
      */
     public function i_see_availabilityinfo_in($str, $type, $elementstr) {
         $this->i_see_availabilityinfo($str, $this->base_selector_availabilityinfo($type, $elementstr));
@@ -723,8 +725,9 @@ class behat_theme_snap extends behat_base {
      * @param string $type
      * @param string $elementstr
      * @throws ExpectationException
-     * @codingStandardsIgnoreLine
+     * @codingStandardsIgnoreStart
      * @Given /^I should not see availability info "(?P<str>(?:[^"]|\\")*)" in "(?P<elementtype>section|asset)" "(?P<elementstr>(?:[^"]|\\")*)"$/
+     * @codingStandardsIgnoreEnd
      */
     public function i_dont_see_availabilityinfo_in($str, $type, $elementstr) {
         $this->i_dont_see_availabilityinfo($str, $this->base_selector_availabilityinfo($type, $elementstr));
@@ -735,8 +738,9 @@ class behat_theme_snap extends behat_base {
      * @param string $date
      * @param string $element
      * @param string $selectortype
-     * @codingStandardsIgnoreLine
+     * @codingStandardsIgnoreStart
      * @Given /^I should see available from date of "(?P<date_string>(?:[^"]|\\")*)" in "(?P<element_string>(?:[^"]|\\")*)" "(?P<locator_string>(?:[^"]|\\")*)"$/
+     * @codingStandardsIgnoreEnd
      */
     public function i_should_see_available_from_in_element($date, $element, $selectortype) {
         $datetime = strtotime($date);
@@ -756,8 +760,9 @@ class behat_theme_snap extends behat_base {
      * @param string $date
      * @param string $element
      * @param string $selectortype
-     * @codingStandardsIgnoreLine
+     * @codingStandardsIgnoreStart
      * @Given /^I should not see available from date of "(?P<date_string>(?:[^"]|\\")*)" in "(?P<element_string>(?:[^"]|\\")*)" "(?P<locator_string>(?:[^"]|\\")*)"$/
+     * @codingStandardsIgnoreEnd
      */
     public function i_should_not_see_available_from_in_element($date, $element, $selectortype) {
         $datetime = strtotime($date);
@@ -789,8 +794,9 @@ class behat_theme_snap extends behat_base {
      * @param string $date
      * @param string $nthasset
      * @param int $section
-     * @codingStandardsIgnoreLine
+     * @codingStandardsIgnoreStart
      * @Given /^I should see available from date of "(?P<date_string>(?:[^"]|\\")*)" in the (?P<nthasset_string>(?:\d+st|\d+nd|\d+rd|\d+th)) asset within section (?P<section_int>(?:\d+))$/
+     * @codingStandardsIgnoreEnd
      */
     public function i_should_see_available_from_in_asset($date, $nthasset, $section) {
         $nthasset = intval($nthasset);
@@ -803,8 +809,9 @@ class behat_theme_snap extends behat_base {
      * @param string $date
      * @param string $nthasset
      * @param int $section
-     * @codingStandardsIgnoreLine
+     * @codingStandardsIgnoreStart
      * @Given /^I should not see available from date of "(?P<date_string>(?:[^"]|\\")*)" in the (?P<nthasset_string>(?:\d+st|\d+nd|\d+rd|\d+th)) asset within section (?P<section_int>(?:\d+))$/
+     * @codingStandardsIgnoreStart
      */
     public function i_should_not_see_available_from_in_asset($date, $nthasset, $section) {
         $nthasset = intval($nthasset);
@@ -1137,8 +1144,9 @@ class behat_theme_snap extends behat_base {
     /**
      * Toggles completion tracking for specific course.
      *
-     * @codingStandardsIgnoreLine
+     * @codingStandardsIgnoreStart
      * @When /^completion tracking is "(?P<completion_status_string>Enabled|Disabled)" for course "(?P<course_string>(?:[^"]|\\")*)"$/
+     * @codingStandardsIgnoreEnd
      * @param string $completionstatus The status, enabled or disabled.
      * @param string $courseshortname The shortname for the course where completion tracking is to be enabled / disabled.
      */
@@ -1205,8 +1213,9 @@ class behat_theme_snap extends behat_base {
     }
 
     /**
-     * @codingStandardsIgnoreLine
+     * @codingStandardsIgnoreStart
      * @Given /^the previous navigation for section "(?P<section_int>(?:[^"]|\\")*)" is for "(?P<title_str>(?:[^"]|\\")*)" linking to "(?P<link_str>(?:[^"]|\\")*)"$/
+     * @codingStandardsIgnoreEnd
      * @param int $section
      * @param string $linktitle
      * @param string $linkhref
@@ -1216,8 +1225,9 @@ class behat_theme_snap extends behat_base {
     }
 
     /**
-     * @codingStandardsIgnoreLine
+     * @codingStandardsIgnoreStart
      * @Given /^the next navigation for section "(?P<section_int>(?:[^"]|\\")*)" is for "(?P<title_str>(?:[^"]|\\")*)" linking to "(?P<link_str>(?:[^"]|\\")*)"$/
+     * @codingStandardsIgnoreEnd
      * @param int $section
      * @param string $linktitle
      * @param string $linkhref
@@ -1320,8 +1330,9 @@ class behat_theme_snap extends behat_base {
     }
 
     /**
-     * @codingStandardsIgnoreLine
+     * @codingStandardsIgnoreStart
      * @Given /^the course format for "(?P<shortname_string>(?:[^"]|\\")*)" is set to "(?P<format_string>(?:[^"]|\\")*)" with the following settings:$/
+     * @codingStandardsIgnoreEnd
      * @param string $shortname
      * @param string $format
      */
@@ -1411,8 +1422,9 @@ class behat_theme_snap extends behat_base {
     }
 
     /**
-     * @codingStandardsIgnoreLine
+     * @codingStandardsIgnoreStart
      * @Given /^the editing teacher role is removed from course "(?P<shortname_string>(?:[^"]|\\")*)" for "(?P<username_string>(?:[^"]|\\")*)"$/
+     * @codingStandardsIgnoreEnd
      * @param string $shortname
      * @param string $username
      */
@@ -1559,8 +1571,9 @@ class behat_theme_snap extends behat_base {
      * Core step copied from completion/tests/behat/behat_completion.php to fix bug MDL-57452
      * Checks if the activity with specified name is marked as complete.
      *
-     * @codingStandardsIgnoreLine
+     * @codingStandardsIgnoreStart
      * @Given /^the "(?P<activityname_string>(?:[^"]|\\")*)" "(?P<activitytype_string>(?:[^"]|\\")*)" activity with "(manual|auto)" completion should be marked as complete \(core_fix\)$/
+     * @codingStandardsIgnoreEnd
      */
     public function activity_marked_as_complete($activityname, $activitytype, $completiontype) {
         if ($completiontype == "manual") {
@@ -1581,8 +1594,9 @@ class behat_theme_snap extends behat_base {
     /**
      * Checks if the activity with specified name is not marked as complete.
      * Core step copied from completion/tests/behat/behat_completion.php to fix bug MDL-57452
-     * @codingStandardsIgnoreLine
+     * @codingStandardsIgnoreStart
      * @Given /^the "(?P<activityname_string>(?:[^"]|\\")*)" "(?P<activitytype_string>(?:[^"]|\\")*)" activity with "(manual|auto)" completion should be marked as not complete \(core_fix\)$/
+     * @codingStandardsIgnoreEnd
      */
     public function activity_marked_as_not_complete($activityname, $activitytype, $completiontype) {
         if ($completiontype == "manual") {
@@ -1655,8 +1669,9 @@ class behat_theme_snap extends behat_base {
     }
 
     /**
-     * @codingStandardsIgnoreLine
+     * @codingStandardsIgnoreStart
      * @Given /^deadline for assignment "(?P<name_string>(?:[^"]|\\")*)" in course "(?P<shortname_string>(?:[^"]|\\")*)" is extended to "(?P<date_string>(?:[^"]|\\")*)" for "(?P<uname_string>(?:[^"]|\\")*)"$/
+     * @codingStandardsIgnoreEnd
      * @param string $shortname
      * @param string $format
      * #param string $username
@@ -1715,8 +1730,9 @@ class behat_theme_snap extends behat_base {
     }
 
     /**
-     * @codingStandardsIgnoreLine
+     * @codingStandardsIgnoreStart
      * @Given /^I do not see a personal menu deadline of "(?P<deadline_int>(?:[^"]|\\")*)" for "(?P<eventname_string>(?:[^"]|\\")*)"$/
+     * @codingStandardsIgnoreEnd
      * @param int $deadline
      * @param string $eventname
      */

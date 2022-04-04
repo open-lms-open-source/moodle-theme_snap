@@ -23,8 +23,6 @@
 
 namespace theme_snap\renderables;
 
-defined('MOODLE_INTERNAL') || die();
-
 use stdClass;
 
 trait trait_exportable {

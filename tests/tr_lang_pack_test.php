@@ -21,10 +21,9 @@
  * @copyright Copyright (c) 2020 Open LMS (https://www.openlms.net)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
+namespace theme_snap;
 
-defined('MOODLE_INTERNAL') || die();
-
-class theme_snap_tr_lang_pack_test extends advanced_testcase  {
+class tr_lang_pack_test extends \advanced_testcase {
 
     /**
      * Setup for each test.

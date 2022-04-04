@@ -23,9 +23,6 @@
  */
 
 namespace theme_snap\calendar\event;
-
-defined('MOODLE_INTERNAL') || die();
-
 use theme_snap\calendar\event\data_access\event_vault;
 use theme_snap\calendar\event\strategies\activity_retrieval_strategy;
 use core_calendar\action_factory;

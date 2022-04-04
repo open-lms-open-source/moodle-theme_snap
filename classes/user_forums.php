@@ -19,8 +19,6 @@ namespace theme_snap;
 
 use theme_snap\local;
 
-defined('MOODLE_INTERNAL') || die();
-
 /**
  * Provides information on all forums a user has access to.
  *

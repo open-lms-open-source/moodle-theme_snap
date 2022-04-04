@@ -22,10 +22,9 @@
  * @copyright Copyright (c) 2020 Open LMS (https://www.openlms.net)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
+namespace theme_snap;
 
-defined('MOODLE_INTERNAL') || die();
-
-class theme_snap_urls_and_strings_check_test extends advanced_testcase  {
+class urls_and_strings_check_test extends \advanced_testcase {
 
     /**
      * Setup for each test.
@@ -107,7 +106,7 @@ class theme_snap_urls_and_strings_check_test extends advanced_testcase  {
         global $PAGE;
 
         $renderer = $PAGE->get_renderer('theme_snap', 'core', RENDERER_TARGET_GENERAL);
-        $url = new moodle_url('course/view.php', ['id' => 1]);
+        $url = new \moodle_url('course/view.php', ['id' => 1]);
         $editbutton = $renderer->edit_button($url);
         $this->assertEquals('', $editbutton);
     }

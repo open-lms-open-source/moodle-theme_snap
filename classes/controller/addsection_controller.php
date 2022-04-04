@@ -16,8 +16,6 @@
 
 namespace theme_snap\controller;
 
-defined('MOODLE_INTERNAL') || die();
-
 /**
  * Add section Controller.
  * Handles requests to add a new section

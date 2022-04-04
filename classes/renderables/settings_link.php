@@ -24,8 +24,6 @@
 namespace theme_snap\renderables;
 use theme_snap\local;
 
-defined('MOODLE_INTERNAL') || die();
-
 class settings_link implements \renderable {
 
     /**

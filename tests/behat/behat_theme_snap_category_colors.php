@@ -80,8 +80,9 @@ class behat_theme_snap_category_colors extends behat_base {
     /**
      * Checks if css element have a property with input value.
      *
-     * @codingStandardsIgnoreLine
+     * @codingStandardsIgnoreStart
      * @Given /^I check element "(?P<element_string>(?:[^"]|\\")*)" with property "(?P<property_string>(?:[^"]|\\")*)" = "(?P<value_string>(?:[^"]|\\")*)"$/
+     * @codingStandardsIgnoreEnd
      * @param string $element element to be checked
      * @param string $property property to be checked
      * @param string $value value of the property

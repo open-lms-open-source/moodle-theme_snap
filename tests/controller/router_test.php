@@ -22,7 +22,7 @@
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-namespace theme_snap\tests\controller;
+namespace theme_snap\controller;
 
 use theme_snap\controller\controller_abstract;
 use theme_snap\controller\router;

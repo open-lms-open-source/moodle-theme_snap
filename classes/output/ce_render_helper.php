@@ -26,8 +26,6 @@ namespace theme_snap\output;
 
 use theme_snap\local;
 
-defined('MOODLE_INTERNAL') || die();
-
 /**
  * Snap custom elements renderer class.
  *

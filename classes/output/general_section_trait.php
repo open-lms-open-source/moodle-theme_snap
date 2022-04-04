@@ -24,8 +24,6 @@
 
 namespace theme_snap\output;
 
-defined('MOODLE_INTERNAL') || die();
-
 trait general_section_trait {
 
     /**

@@ -13,7 +13,7 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
-
+namespace theme_snap;
 defined('MOODLE_INTERNAL') || die();
 
 use \theme_snap\activity,
@@ -31,7 +31,7 @@ require_once($CFG->dirroot . '/mod/assign/tests/base_test.php');
  * @copyright  2017 Open LMS
  * @license  http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class theme_snap_acitvity_test extends snap_base_test {
+class activity_test extends snap_base_test {
 
     /**
      * Crete an assign module instance.
@@ -870,7 +870,7 @@ class theme_snap_acitvity_test extends snap_base_test {
             ]
         ];
 
-        $events = phpunit_util::call_internal_method(null, 'hash_events_by_module_instance', [$events],
+        $events = \phpunit_util::call_internal_method(null, 'hash_events_by_module_instance', [$events],
             '\theme_snap\activity');
 
         $this->assertCount(3, $events['assign']['1000']);
@@ -1784,7 +1784,7 @@ class theme_snap_acitvity_test extends snap_base_test {
 
         $dg = $this->getDataGenerator();
         $student = $dg->create_user([
-            'lastlogin' => (new \DateTime('1 week ago', core_date::get_server_timezone_object()))->getTimestamp()
+            'lastlogin' => (new \DateTime('1 week ago', \core_date::get_server_timezone_object()))->getTimestamp()
         ]);
         $teacher = $dg->create_user();
         $course = $dg->create_course();
@@ -1816,11 +1816,11 @@ class theme_snap_acitvity_test extends snap_base_test {
             $snapdeadlinesconfigdata = (object) [
                 'feedtype' => 'deadlines'
             ];
-            $time = new DateTime("now", core_date::get_user_timezone_object());
+            $time = new \DateTime("now", \core_date::get_user_timezone_object());
 
             $blockinsert = (object) [
                 'blockname' => 'snapfeeds',
-                'parentcontextid' => context_course::instance($course->id)->id,
+                'parentcontextid' => \context_course::instance($course->id)->id,
                 'pagetypepattern' => 'course-view-*',
                 'defaultregion' => 'side-pre',
                 'defaultweight' => 1,

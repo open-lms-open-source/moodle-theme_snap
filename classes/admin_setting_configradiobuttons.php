@@ -16,8 +16,6 @@
 
 namespace theme_snap;
 
-defined('MOODLE_INTERNAL') || die();
-
 /**
  * Class to render radio buttons in settings pages.
  * @package theme_snap

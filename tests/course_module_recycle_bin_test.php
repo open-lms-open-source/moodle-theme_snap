@@ -21,8 +21,7 @@
  * @copyright  Copyright (c) 2019 Open LMS (https://www.openlms.net)
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-
-defined('MOODLE_INTERNAL') || die();
+namespace theme_snap;
 use theme_snap\services\course;
 
 /**
@@ -32,7 +31,7 @@ use theme_snap\services\course;
  * @copyright  Copyright (c) 2019 Open LMS (https://www.openlms.net)
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class theme_snap_course_module_recyclebin_tests extends advanced_testcase {
+class course_module_recycle_bin_test extends \advanced_testcase {
 
     /**
      * @var stdClass $course

@@ -1164,7 +1164,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
         require_once($CFG->dirroot.'/mod/forum/lib.php');
 
         if (!$forum = forum_get_course_forum($SITE->id, 'news')) {
-            print_error('cannotfindorcreateforum', 'forum');
+            throw new moodle_exception('cannotfindorcreateforum', 'forum');
         }
         $cm      = get_coursemodule_from_instance('forum', $forum->id, $SITE->id, false, MUST_EXIST);
         $context = \context_module::instance($cm->id, MUST_EXIST);
@@ -1306,7 +1306,7 @@ HTML;
         );
         if (in_array($this->page->pagetype, $killyuipages)) {
             $classes = array_diff ($classes, ['yui-skin-sam', 'yui3-skin-sam']);
-            $classes [] = 'yui-bootstrapped';
+            $classes[] = 'yui-bootstrapped';
         }
 
         if (!empty($this->page->url)) {

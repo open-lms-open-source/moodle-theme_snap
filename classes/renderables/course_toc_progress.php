@@ -22,9 +22,6 @@
  */
 
 namespace theme_snap\renderables;
-
-defined('MOODLE_INTERNAL') || die();
-
 use theme_snap\output\shared;
 
 class course_toc_progress {

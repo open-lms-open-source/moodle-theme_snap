@@ -109,16 +109,16 @@ class course_renderer extends \core_course_renderer {
                 // If the section is hidden check the visibleold to prevent
                 // the message will be displayed in all modules.
                 if ($section->visible || (!$section->visible && !$mod->visibleold)) {
-                    $modclasses [] = 'draft';
+                    $modclasses[] = 'draft';
                 }
             }
 
             // Is this mod stealth?
             if ($mod->is_stealth()) {
-                $modclasses [] = 'stealth';
+                $modclasses[] = 'stealth';
             }
             if ($mod->visible && $section && !$section->visible) {
-                $modclasses [] = 'stealth-section-hidden';
+                $modclasses[] = 'stealth-section-hidden';
             }
 
             $canviewhidden = has_capability('moodle/course:viewhiddenactivities', $mod->context);
@@ -130,24 +130,24 @@ class course_renderer extends \core_course_renderer {
             }
 
             if ($availabilityinfo !== '' && !$mod->uservisible || $canviewhidden) {
-                $modclasses [] = 'conditional';
+                $modclasses[] = 'conditional';
             }
             if (!$mod->available && !$mod->uservisible) {
-                $modclasses [] = 'unavailable';
+                $modclasses[] = 'unavailable';
             }
             // TODO - can we add completion data.
             if (has_any_capability(['moodle/course:update', 'moodle/course:manageactivities'], $mod->context)) {
-                $modclasses [] = 'snap-can-edit';
+                $modclasses[] = 'snap-can-edit';
             }
             if (has_capability('moodle/course:viewhiddenactivities', $mod->context)) {
-                $modclasses [] = 'snap-can-view-hidden';
+                $modclasses[] = 'snap-can-view-hidden';
             }
 
-            $modclasses [] = 'snap-asset'; // Added to stop conflicts in flexpage.
-            $modclasses [] = 'activity'; // Moodle needs this for drag n drop.
-            $modclasses [] = $mod->modname;
-            $modclasses [] = "modtype_$mod->modname";
-            $modclasses [] = $mod->extraclasses;
+            $modclasses[] = 'snap-asset'; // Added to stop conflicts in flexpage.
+            $modclasses[] = 'activity'; // Moodle needs this for drag n drop.
+            $modclasses[] = $mod->modname;
+            $modclasses[] = "modtype_$mod->modname";
+            $modclasses[] = $mod->extraclasses;
 
             $attr['data-type'] = $snapmodtype;
             $attr['class'] = implode(' ', $modclasses);
@@ -711,7 +711,7 @@ class course_renderer extends \core_course_renderer {
     protected function get_mod_type(cm_info $mod) {
         if ($mod->modname === 'resource') {
             // Get file type from icon
-            // (note, I also tried this using a combo of substr and strpos and preg_match was much faster!)
+            // (note, I also tried this using a combo of substr and strpos and preg_match was much faster!).
             $matches = array();
             preg_match ('#/(\w+)-#', $mod->icon, $matches);
             $filetype = $matches[1];
@@ -1423,7 +1423,7 @@ class course_renderer extends \core_course_renderer {
                 if (!isset($teacherusers[$teacher['user']->id])) {
                     continue;
                 }
-                $teacheruser = $teacherusers [$teacher['user']->id];
+                $teacheruser = $teacherusers[$teacher['user']->id];
                 $courseteachers .= $this->print_teacher_profile($teacheruser);
             }
         }

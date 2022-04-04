@@ -13,7 +13,7 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
-
+namespace theme_snap;
 defined('MOODLE_INTERNAL') || die();
 
 use theme_snap\webservice\definition_helper;
@@ -52,7 +52,7 @@ class definition_helper_testable extends definition_helper {
      * @return mixed
      */
     public function __call($name, $arguments) {
-        $reflection = new ReflectionObject($this);
+        $reflection = new \ReflectionObject($this);
         $parentreflection = $reflection->getParentClass();
         $method = $parentreflection->getMethod($name);
         $method->setAccessible(true);
@@ -156,7 +156,7 @@ class wsparam_notype {
  * @copyright Copyright (c) 2016 Open LMS
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class theme_snap_webservice_definition_helper_test extends advanced_testcase {
+class webservice_definition_helper extends \advanced_testcase {
 
     public function test_classname() {
         $this->resetAfterTest();
@@ -183,7 +183,7 @@ class theme_snap_webservice_definition_helper_test extends advanced_testcase {
         $definitionhelper = new definition_helper($toc);
         $definition = $definitionhelper->get_definition();
         $this->assertTrue(isset($definition['formatsupportstoc']));
-        $this->assertTrue($definition['formatsupportstoc'] instanceof external_value);
+        $this->assertTrue($definition['formatsupportstoc'] instanceof \external_value);
     }
 
     public function test_wsdocs() {
@@ -269,7 +269,7 @@ EOF;
         $this->assertTrue(is_object($obj));
         $this->assertFalse($isarr);
         $this->assertTrue(!empty($obj->complete));
-        $this->assertTrue($obj->complete instanceof external_value);
+        $this->assertTrue($obj->complete instanceof \external_value);
         $this->assertTrue(!empty($obj->complete->type));
         $this->assertTrue(!empty($obj->complete->required));
         $this->assertTrue(!empty($obj->complete->desc));
@@ -308,7 +308,7 @@ EOF;
         $this->assertTrue(is_object($obj));
         $this->assertTrue($isarr);
         $this->assertTrue(!empty($obj->complete));
-        $this->assertTrue($obj->complete instanceof external_value);
+        $this->assertTrue($obj->complete instanceof \external_value);
         $this->assertTrue(!empty($obj->complete->type));
         $this->assertTrue(!empty($obj->complete->required));
         $this->assertTrue(!empty($obj->complete->desc));
@@ -328,7 +328,7 @@ EOF;
         $definition = $helper->get_definition();
         $this->assertArrayHasKey('something', $definition);
         $something = $definition['something'];
-        $this->assertTrue($something instanceof external_value);
+        $this->assertTrue($something instanceof \external_value);
         $this->assertEmpty($something->desc);
     }
 
@@ -338,7 +338,7 @@ EOF;
         $definition = $helper->get_definition();
 
         // Wipe cache so we can test nothing in cache.
-        $cache = cache::make('theme_snap', 'webservicedefinitions');
+        $cache = \cache::make('theme_snap', 'webservicedefinitions');
         $data = $cache->delete($classname);
 
         // Test empty cache.
