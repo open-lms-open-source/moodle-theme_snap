@@ -849,7 +849,6 @@ EOF;
 
         if ($COURSE->format === 'tiles') {
             $courseurl = new moodle_url('/course/view.php', ['id' => $COURSE->id]);
-            $courseurl .= '#tiles-section';
 
             $o = '<div id="coursetools-header-tiles">';
             $o .= '<h2>' . $coursetoolsicon . $coursetools . '</h2>';
