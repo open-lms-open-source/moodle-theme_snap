@@ -906,6 +906,10 @@ section#snap-add-new-section #summary-editor_parent #summary-editor_tbl {
 /**
  * Tiles course format.
  */
+#page-course-edit.format-tiles #tilesinfo .col-md-9 {
+    flex: none;
+    max-width: 100%;
+}
 #page-course-view-tiles {
     // Styles for Dashboard, progress indicator and edit course content link.
     #headerabovetiles {
@@ -1120,6 +1124,9 @@ section#snap-add-new-section #summary-editor_parent #summary-editor_tbl {
     // While on editing mode for card view.
     &.editing {
         ul.section.subtiles {
+            li.activity.fullwidth div.completioncheckbox {
+                position: relative;
+            }
             .subtile_inner {
                 .editing_move {
                     top: 5px;
