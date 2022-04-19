@@ -37,7 +37,7 @@ require_once($CFG->dirroot . '/mod/assign/tests/base_test.php');
  * @copyright  1999 onwards Martin Dougiamas  {@link http://moodle.com}
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class assign_test extends \mod_assign_base_testcase {
+class assign_test extends \mod_assign\base_test {
 
     public function test_assign_reopened_and_resubmitted() {
         $this->setUser($this->editingteachers[0]);
