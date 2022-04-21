@@ -55,7 +55,7 @@ define(
          * @param {string} modid
          */
         var scrollToModule = function(modid) {
-            // sometimes we have a hash, sometimes we don't
+            // Sometimes we have a hash, sometimes we don't
             // strip hash then add just in case
             $('#toc-search-results').html('');
             var targmod = $("#" + modid.replace('#', ''));
@@ -81,6 +81,14 @@ define(
             $('#chapters li').removeClass('snap-visible-section');
             $('#chapters a[href$="' + currentSectionId + '"]').parent('li').addClass('snap-visible-section');
             $(document).trigger('snapContentRevealed');
+        };
+
+        /**
+         * Check if current url is having specific parameter on it.
+         * @param {string} checkParameter
+         */
+        var checkToolParameter = function(checkParameter) {
+            return window.location.href.indexOf(checkParameter) != -1;
         };
 
         /**
@@ -121,6 +129,49 @@ define(
                 $(sectionSetByServer).removeClass('state-visible');
             }
 
+            // Dashboard in Tiles should be hidden except in #coursetools section.
+            let editModeHeader = '#snap-editmode-header';
+            let btnEditing = '.btn-editing';
+            let courseTools = '#coursetools';
+            let tilesEditing = $(courseTools).hasClass('editing-tiles');
+            if (tilesEditing) {
+                $(courseTools).removeClass('state-visible');
+                $(courseTools).addClass('d-none');
+            }
+            let sectionParameter = checkToolParameter('section-0');
+            let dashboardParameter = checkToolParameter('coursetools');
+            if (sectionParameter && !dashboardParameter) {
+                $('#tiles-section').addClass('state-visible');
+                $(courseTools).removeClass('state-visible');
+                $(courseTools).addClass('d-none');
+            }
+            if (!sectionParameter && dashboardParameter) {
+                let tilesDashboard = $('#snap-course-tools').hasClass('tiles-dashboard');
+                if (tilesDashboard) {
+                    $('#tiles-section').removeClass('state-visible');
+                    $(courseTools).addClass('state-visible');
+                    $(courseTools).removeClass('d-none');
+                    let urlEditing = document.querySelector(btnEditing).href;
+                    let existToolParameter = urlEditing.includes('#coursetools');
+                    if (!existToolParameter) {
+                        str.get_strings([
+                            {key: 'editcoursecontent', component: 'theme_snap'},
+                            {key: 'editmodetiles', component: 'theme_snap'},
+                            {key: 'turneditingoff', component: 'moodle'},
+                        ]).done(function(stringsjs) {
+                            let btnEditText = document.querySelector(btnEditing).text;
+                            if (btnEditText == stringsjs[1]) {
+                                document.querySelector(btnEditing).innerHTML = stringsjs[0];
+                            } else {
+                                document.querySelector(btnEditing).innerHTML = stringsjs[2];
+                            }
+                        });
+                        document.querySelector(btnEditing).href = urlEditing + '#coursetools';
+                        $(editModeHeader).addClass('d-none');
+                    }
+                }
+            }
+
             // Course tools special section.
             if (section == '#coursetools') {
                 $('#moodle-blocks').addClass('state-visible');
@@ -159,64 +210,20 @@ define(
                 sessionStorage.setItem('lastMod', $(this).parents('[id^=module]').attr('id'));
             });
 
-            // Snap with Format Tiles should allow add-remove blocks only in Dashboard.
-            let editModeHeader = '#snap-editmode-header';
-            let btnEditing = '.btn-editing';
-            var hideInEditing = {};
-            hideInEditing.courseTools = '#coursetools';
-            for (var hiddenSection in hideInEditing) {
-                let tilesEditing = $(hideInEditing[hiddenSection]).hasClass('editing-tiles');
-                if (tilesEditing === true) {
-                    $(hideInEditing[hiddenSection]).removeClass('state-visible');
-                    $(hideInEditing[hiddenSection]).addClass('d-none');
-                }
-                let tilesDashboard = $('#snap-course-tools').hasClass('tiles-dashboard');
-                let ToolParameter = checkToolParameter();
-                if (tilesDashboard === true && ToolParameter === true) {
-                    $(hideInEditing[hiddenSection]).addClass('state-visible');
-                    $(hideInEditing[hiddenSection]).removeClass('d-none');
-                    let urlEditing = document.querySelector(btnEditing).href;
-                    let existToolParameter = urlEditing.includes(hideInEditing.courseTools);
-                    if (existToolParameter === false) {
-                        str.get_strings([
-                            {key : 'editcoursecontent', component : 'theme_snap'},
-                            {key : 'editmodetiles', component : 'theme_snap'},
-                            {key : 'turneditingoff', component : 'moodle'},
-                            {key : 'turneditingon', component : 'moodle'},
-                        ]).done(function(stringsjs) {
-                            let btnEditText = document.querySelector(btnEditing).text;
-                            if (btnEditText == stringsjs[1]) {
-                                document.querySelector(btnEditing).innerHTML = stringsjs[0];
-                            } else {
-                                document.querySelector(btnEditing).innerHTML = stringsjs[2];
-                            }
-                        });
-                        document.querySelector(btnEditing).href = urlEditing + '#coursetools';
-                        $(editModeHeader).addClass('d-none');
-                    }
-                }
-            }
 
             this.setTOCVisibleSection();
-        };
-
-        /**
-         * Check if current url is having 'coursetools' on it.
-         */
-        var checkToolParameter = function() {
-            return window.location.href.indexOf('coursetools') != -1;
         };
 
         /**
          * Scroll to the last activity or resource accessed,
          * if there is nothing stored in session go to page top.
          */
-        var scrollBack = function () {
+        var scrollBack = function() {
             var storedmod = sessionStorage.getItem('lastMod');
-            if(storedmod === null){
+            if (storedmod === null) {
                 window.scrollTo(0, 0);
             } else {
-                util.scrollToElement($('#'+storedmod+''));
+                util.scrollToElement($('#' + storedmod + ''));
                 sessionStorage.removeItem('lastMod');
             }
         };
@@ -224,9 +231,9 @@ define(
         /**
          * Captures hash parameters and triggers the render method.
          */
-        var renderFromHash = function () {
+        var renderFromHash = function() {
             var hash = $(location).attr('hash');
-            var params = hash.replace('#','').split('&');
+            var params = hash.replace('#', '').split('&');
             var section = false;
             var mod = 0;
             $.each(params, function(idx, param) {
@@ -282,7 +289,7 @@ define(
                 // Sets the observers for rendering sections on demand.
                 if (self.courseConfig.partialrender) {
                     renderFromHash();
-                    $(window).on('hashchange',function(){
+                    $(window).on('hashchange', function() {
                         renderFromHash();
                     });
                     // Current section might be hidden, at this point should be visible.
