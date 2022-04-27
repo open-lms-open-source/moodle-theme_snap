@@ -138,7 +138,7 @@ define(
                 $(courseTools).removeClass('state-visible');
                 $(courseTools).addClass('d-none');
             }
-            let sectionParameter = checkToolParameter('section-0');
+            let sectionParameter = checkToolParameter('section-');
             let dashboardParameter = checkToolParameter('coursetools');
             if (sectionParameter && !dashboardParameter) {
                 $('#tiles-section').addClass('state-visible');
