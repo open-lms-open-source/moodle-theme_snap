@@ -21,6 +21,7 @@ defined('MOODLE_INTERNAL') || die();
 
 use moodle_url;
 use stdClass;
+use stored_file;
 use theme_snap\output\core_renderer;
 use \theme_snap\user_forums,
     \theme_snap\course_total_grade,
@@ -1493,7 +1494,7 @@ class local {
         if (!$coverurl) {
             return '';
         }
-        return "#page-site-index #page-header, #page-login-index #page {background-image: url($coverurl);}";
+        return "#page-site-index #page-header {background-image: url($coverurl);}";
     }
 
     /**
@@ -2494,5 +2495,83 @@ SQL;
         }
 
         return true;
+    }
+
+    /**
+     * Get login background image file.
+     *
+     * @return stored_file | bool (false)
+     */
+    public static function login_backgroundimage () {
+        $theme = \theme_config::load('snap');
+        $filename = $theme->settings->loginbgimg;
+        if ($filename) {
+            if (substr($filename, 0, 1) != '/') {
+                $filename = '/'.$filename;
+            }
+            $syscontextid = \context_system::instance()->id;
+            $fullpath = '/'.$syscontextid.'/theme_snap/loginbgimg/0'.$filename;
+            $fs = get_file_storage();
+            return $fs->get_file_by_hash(sha1($fullpath));
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * Get login background image for context
+     *
+     * @param \context $context
+     * @return bool|stored_file
+     * @throws \coding_exception
+     */
+    public static function login_backgroundimage_context ($context) {
+        $contextid = $context->id;
+        $fs = get_file_storage();
+
+        if ($context->contextlevel === CONTEXT_SYSTEM) {
+            if (!self::login_backgroundimage()) {
+                return false;
+            }
+        }
+
+        $files = $fs->get_area_files($contextid, 'theme_snap', 'loginbgimg', 0, "itemid, filepath, filename", false);
+        if (!$files) {
+            return false;
+        }
+        return (end($files));
+    }
+
+    /**
+     * Get processed login background image.
+     *
+     * @return stored_file|bool
+     */
+    public static function login_backgroundimage_processed() {
+        $context = \context_system::instance();
+        return (self::login_backgroundimage_context($context));
+    }
+
+    /**
+     * Get cover image url for front page.
+     *
+     * @return bool|moodle_url
+     */
+    public static function login_backgroundimage_url() {
+        $file = self::login_backgroundimage_processed();
+        return self::snap_pluginfile_url($file);
+    }
+
+    /**
+     * Adds the site cover image to CSS.
+     *
+     * @return string cover image CSS
+     */
+    public static function login_backgroundimage_css() {
+        $loginbgimage = self::login_backgroundimage_url();
+        if (!$loginbgimage) {
+            return '';
+        }
+        return "#page-login-index #page {background-image: url($loginbgimage);}";
     }
 }

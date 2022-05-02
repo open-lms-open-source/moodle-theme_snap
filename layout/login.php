@@ -37,6 +37,31 @@ require(__DIR__.'/header.php');
 
 <section id="region-main">
 <?php
+
+$context = context_system::instance();
+
+$fs = get_file_storage();
+$files = $fs->get_area_files($context->id, 'theme_snap', 'loginbgimg', 0);
+
+$slideshowImgs = array();
+foreach ($files as $file) {
+    $filename = $file->get_filename();
+    if($filename != ".")
+    {
+        $url = moodle_url::make_pluginfile_url($file->get_contextid(), $file->get_component(), $file->get_filearea(), $file->get_itemid(), $file->get_filepath(), $file->get_filename());
+        $slideshowImgs[] = preg_replace('|^https?://|i', '//', $url->out(false));
+    }
+}
+
+$templatecontext = [
+    'slideshowImgs' => !empty($slideshowImgs) ? json_encode($slideshowImgs) : null
+];
+
+$selected_template = get_config('theme_snap', 'loginpagetemplate');
+if ($selected_template === 'Snap') {
+    echo $OUTPUT->render_from_template('theme_snap/login_bg_image', $templatecontext);
+}
+
 if ($PAGE->title === get_string('restoredaccount')) {
     echo html_writer::start_div('loginerror-restoredaccount');
     echo $OUTPUT->main_content();

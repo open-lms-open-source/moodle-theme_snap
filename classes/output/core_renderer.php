@@ -27,6 +27,7 @@ namespace theme_snap\output;
 defined('MOODLE_INTERNAL') || die();
 require_once($CFG->dirroot.'/message/output/popup/lib.php');
 
+use core_auth\output\login;
 use stdClass;
 use context_course;
 use context_system;
@@ -1069,6 +1070,39 @@ class core_renderer extends \theme_boost\output\core_renderer {
         $slides[0]->active = 'active';
         $data['slides'] = $slides;
         return $this->render_from_template('theme_snap/carousel', $data);
+    }
+
+    /**
+     * Login background slide images.
+     * @return string
+     */
+    public function login_bg_slides() {
+        if (empty($this->page->theme->settings->loginbgimage)) {
+            return '';
+        }
+
+        $slidenames = array("loginsettingbgimage_one", "loginsettingbgimage_two", "loginsettingbgimage_three");
+        $slides = array();
+        $i = 0;
+        foreach ($slidenames as $slidename) {
+            $image = $slidename . '_image';
+            if (!empty($this->page->theme->settings->$image)) {
+                $slide = (object) [
+                    'index' => $i++,
+                    'active' => '',
+                    'name' => $slidename,
+                    'image' => $this->page->theme->setting_file_url($image, $image),
+                ];
+                $slides[] = $slide;
+            }
+        }
+        if (empty($slides)) {
+            return '';
+        }
+        $slides[0]->active = 'active';
+        $data['slides'] = $slides;
+
+        return $this->render_from_template('theme_snap/login_bg_image', $data);
     }
 
     /**

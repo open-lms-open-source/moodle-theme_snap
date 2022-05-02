@@ -18,6 +18,44 @@ defined('MOODLE_INTERNAL') || die;// Main settings.
 
 $snapsettings = new admin_settingpage('themesnaplogin', get_string('loginsetting', 'theme_snap'));
 
+// Select login background image.
+$name = 'theme_snap/loginbgimgheading';
+$title = new lang_string('loginbgimgheading', 'theme_snap');
+$description = new lang_string('loginbgimgheadingdesc', 'theme_snap');
+$setting = new admin_setting_heading($name, $title, $description);
+$snapsettings->add($setting);
+
+$templates = array (
+    'snap_template' => $OUTPUT->image_url('snap_template', 'theme_snap'),
+);
+$snaptemplatetitle = get_string('snap_template', 'theme_snap');
+$template_description =
+    '<div class="snap-template container float-left">
+            <div id="snap_login_templates" class="row">
+                <div id="snap_template_img" class="col=4">
+                    <a target="_blank" href='.$templates['snap_template'].'>
+                        <img class="img-responsive" src="'.$templates['snap_template'].'" alt="'.$snaptemplatetitle.'">
+                    </a>
+                    <div class="text-center">Snap Template</div>
+                </div>
+            </div>
+        </div>';
+
+$name = 'theme_snap/loginpagetemplate';
+$title = new lang_string('loginpagetemplate', 'theme_snap');
+$setting = new admin_setting_configselect($name, $title, $template_description,'Snap template',
+    array('Snap' => get_string('snap_template', 'theme_snap')));
+$setting->set_updatedcallback('theme_reset_all_caches');
+$snapsettings->add($setting);
+
+$name = 'theme_snap/loginbgimg';
+$title = get_string('loginbgimg', 'theme_snap');
+$description = get_string('loginbgimgdesc', 'theme_snap');
+$opts = array('accepted_types' => array('.png', '.jpg'), 'maxfiles' => 3);
+$setting = new admin_setting_configstoredfile($name, $title, $description, 'loginbgimg', 0, $opts);
+$setting->set_updatedcallback('theme_reset_all_caches');
+$snapsettings->add($setting);
+
 // Alternative login Settings.
 $name = 'theme_snap/alternativeloginoptionsheading';
 $title = new lang_string('alternativeloginoptions', 'theme_snap');

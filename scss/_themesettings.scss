@@ -368,3 +368,20 @@
         float: left;
     }
 }
+
+// -------------------------
+// Tab - Login page.
+// -------------------------
+#themesnaplogin.active {
+    div[id^="admin-loginsettingbgimage_"] {
+        float: left;
+        width: 33%;
+    }
+    #snap_login_templates {
+        padding: 3em 0;
+        a .img-responsive {
+            margin-right: 3em;
+            width: 350px;
+        }
+    }
+}
