@@ -40,5 +40,4 @@ if ($ADMIN->fulltree) {
     require('settings/categories_color_settings.php');
     require('settings/profile_based_branding.php');
     require('settings/snap_hvp_settings.php');
-    require('settings/login_settings.php');
 }

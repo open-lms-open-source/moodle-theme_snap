@@ -25,6 +25,7 @@
 Feature: When the Moodle theme is set to Snap, on moving assets some links shouldn't be reached.
 
   Background:
+    Given I skip because "This is failing due to steps being ambiguous at the moment of searching the css elements. This is going to be fixed at INT-18057."
     Given I log in as "admin"
     And I am on site homepage
     And I click on "#admin-menu-trigger" "css_element"

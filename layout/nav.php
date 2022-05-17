@@ -73,13 +73,10 @@ echo html_writer::link($CFG->wwwroot, $sitefullname, $attrs);
 $custommenu = $OUTPUT->custom_menu();
 
 /* Moodle custom menu. */
-/* Hide it for the login index page. */
 if (!empty($custommenu)) {
-    if (!($PAGE->pagetype === 'login-index')) {
-        echo '<div id="snap-custom-menu-header">';
-        echo $custommenu;
-        echo '</div>';
-    }
+    echo '<div id="snap-custom-menu-header">';
+    echo $custommenu;
+    echo '</div>';
 }
 ?>
 </header>

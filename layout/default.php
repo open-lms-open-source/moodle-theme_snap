@@ -62,6 +62,9 @@ echo $OUTPUT->custom_menu_spacer();
         <?php
             echo $OUTPUT->page_heading();
             echo $OUTPUT->course_header();
+            if ($PAGE->pagetype === 'site-index') {
+                echo $OUTPUT->login_button();
+            }
             // Content bank for Snap.
             if ($PAGE->pagetype === 'contentbank') {
                 echo $OUTPUT->snap_content_bank();
