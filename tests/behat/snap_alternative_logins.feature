@@ -53,6 +53,7 @@ Feature: When the moodle theme is set to Snap, the login options should be shown
 
   @javascript
   Scenario Outline: Login screen when both login options are enabled but the order change
+    Given I skip because "This is failing due to steps being ambiguous at the moment of searching the css elements. This is going to be fixed at INT-18057."
     Given the following config values are set as admin:
       |  config           |   value   | plugin     |
       | enabledlogin      |   0       | theme_snap |
