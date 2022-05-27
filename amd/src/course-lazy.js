@@ -170,6 +170,11 @@ define(
                         $(editModeHeader).addClass('d-none');
                     }
                 }
+                // Remove class d-none to show Course Dashboard after clicking in a section first.
+                let snapCourseDashboard = $('#snap-course-tools').hasClass('snap-course-dashboard');
+                if (snapCourseDashboard) {
+                    $(courseTools).removeClass('d-none');
+                }
             }
 
             // Course tools special section.
