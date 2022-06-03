@@ -25,7 +25,6 @@
 Feature: When the Moodle theme is set to Snap, on moving assets some links shouldn't be reached.
 
   Background:
-    Given I skip because "This is failing due to steps being ambiguous at the moment of searching the css elements. This is going to be fixed at INT-18057."
     Given I log in as "admin"
     And I am on site homepage
     And I click on "#admin-menu-trigger" "css_element"
@@ -60,7 +59,7 @@ Feature: When the Moodle theme is set to Snap, on moving assets some links shoul
     And the "tabindex" attribute of ".snap-asset .mod-link" "css_element" should contain "-1"
     And the "tabindex" attribute of ".snap-asset .snap-completion-meta a" "css_element" should contain "-1"
     And I click on "li.snap-activity:not(.asset-moving) a.snap-move-note" "css_element"
-    Then "//li[contains(@class, 'snap-activity')]//p[contains(text(), \"Test assignment1\")]" "xpath_element" should appear after "//li[contains(@class, 'snap-activity')]//p[contains(text(), \"Test assignment2\")]" "xpath_element"
+    Then "//li[contains(@class, 'snap-activity')]//p[contains(text(), \"Test assignment1\")]" "xpath_element" should appear after the "//li[contains(@class, 'snap-activity')]//p[contains(text(), \"Test assignment2\")]" "xpath_element"
 
   @javascript
   Scenario: In read mode, on course, when teacher try move an activity, anchor links tabindex attribute should exists and value is -1 and button disabled.
@@ -73,4 +72,4 @@ Feature: When the Moodle theme is set to Snap, on moving assets some links shoul
     And the "tabindex" attribute of ".snap-asset .mod-link" "css_element" should contain "-1"
     And the "tabindex" attribute of ".snap-asset .snap-completion-meta a" "css_element" should contain "-1"
     And I click on "li.snap-activity:not(.asset-moving) a.snap-move-note" "css_element"
-    Then "//li[contains(@class, 'snap-activity')]//p[contains(text(), \"Test assignment1\")]" "xpath_element" should appear after "//li[contains(@class, 'snap-activity')]//p[contains(text(), \"Test assignment2\")]" "xpath_element"
+    Then "//li[contains(@class, 'snap-activity')]//p[contains(text(), \"Test assignment1\")]" "xpath_element" should appear after the "//li[contains(@class, 'snap-activity')]//p[contains(text(), \"Test assignment2\")]" "xpath_element"

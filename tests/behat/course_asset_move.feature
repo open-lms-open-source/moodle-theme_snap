@@ -24,7 +24,6 @@
 Feature: When the moodle theme is set to Snap, teachers can move course resources and activities without using drag and drop.
 
   Background:
-    Given I skip because "This is failing due to steps being ambiguous at the moment of searching the css elements. This is going to be fixed at INT-18057."
     Given I log in as "admin"
     And I am on site homepage
     And I click on "#admin-menu-trigger" "css_element"
@@ -59,7 +58,7 @@ Feature: When the moodle theme is set to Snap, teachers can move course resource
     And I click on ".snap-activity.modtype_assign .snap-asset-move img[title='Move \"Test assignment1\"']" "css_element"
     Then I should see "Moving \"Test assignment1\""
     And I click on "#region-main .sitetopic ul.section li.snap-drop.asset-drop div.asset-wrapper" "css_element"
-    Then ".snap-activity.modtype_assign" "css_element" should appear after ".snap-activity.modtype_assign .snap-asset-move img[title='Move \"Test assignment2\"']" "css_element"
+    Then ".snap-activity.modtype_assign" "css_element" should appear after the ".snap-activity.modtype_assign .snap-asset-move img[title='Move \"Test assignment2\"']" "css_element"
     Examples:
       | Option     |
       | 0          |
@@ -78,7 +77,7 @@ Feature: When the moodle theme is set to Snap, teachers can move course resource
     And I click on ".snap-activity.modtype_assign .snap-asset-move img[title='Move \"Test assignment1\"']" "css_element"
     Then I should see "Moving \"Test assignment1\""
     And I click on "li#section-1 li.snap-drop.asset-drop div.asset-wrapper" "css_element"
-    Then ".snap-activity.modtype_assign" "css_element" should appear after ".snap-activity.modtype_assign .snap-asset-move img[title='Move \"Test assignment2\"']" "css_element"
+    Then ".snap-activity.modtype_assign" "css_element" should appear after the ".snap-activity.modtype_assign .snap-asset-move img[title='Move \"Test assignment2\"']" "css_element"
     Examples:
       | Option     |
       | 0          |
@@ -98,7 +97,7 @@ Feature: When the moodle theme is set to Snap, teachers can move course resource
     Then I should see "Moving \"Test assignment1\""
     And I follow "Topic 2"
     And I click on "li#section-2 li.snap-drop.asset-drop div.asset-wrapper" "css_element"
-    Then "li#section-2 .snap-activity.modtype_assign" "css_element" should appear before "li.snap-drop.asset-drop" "css_element"
+    Then "li#section-2 .snap-activity.modtype_assign" "css_element" should appear before the "li.snap-drop.asset-drop" "css_element"
   Examples:
   | Option     |
   | 0          |
@@ -120,8 +119,8 @@ Feature: When the moodle theme is set to Snap, teachers can move course resource
     Then I should see "Moving 2 objects"
     And I follow "Topic 2"
     And I click on "li#section-2 li.snap-drop.asset-drop div.asset-wrapper" "css_element"
-    Then "li#section-2 .snap-activity.modtype_assign" "css_element" should appear before "li.snap-drop.asset-drop" "css_element"
-    And "li#section-2 .snap-activity.modtype_assign .snap-asset-move img[title='Move \"Test assignment1\"']" "css_element" should appear before "li#section-2 .snap-activity.modtype_assign .snap-asset-move img[title='Move \"Test assignment2\"']" "css_element"
+    Then "li#section-2 .snap-activity.modtype_assign" "css_element" should appear before the "li.snap-drop.asset-drop" "css_element"
+    And "li#section-2 .snap-activity.modtype_assign .snap-asset-move img[title='Move \"Test assignment1\"']" "css_element" should appear before the "li#section-2 .snap-activity.modtype_assign .snap-asset-move img[title='Move \"Test assignment2\"']" "css_element"
   Examples:
   | Option     |
   | 0          |

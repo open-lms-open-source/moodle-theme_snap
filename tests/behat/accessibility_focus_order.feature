@@ -60,11 +60,10 @@ Feature: Check that the correct tab order and focus exists for the page.
 
   @javascript
   Scenario: On mobile view, submit buttons should appear after the advance form at the bottom of the form.
-    Given I skip because "This is failing due to steps being ambiguous at the moment of searching the css elements. This is going to be fixed at INT-18057."
     Given I change window size to "658x852"
     And I log in as "admin"
     And I am on "Course 1" course homepage
     And I follow "Edit \"assignment1\""
-    Then "div[role=main] .mform div.snap-form-required fieldset > div.form-group.fitem" "css_element" should appear after "div[role=main] .mform div.snap-form-advanced" "css_element"
+    Then "div[role=main] .mform div.snap-form-advanced > div.form-group.fitem [data-fieldtype='group']" "css_element" should appear after the "div[role=main] .mform div.snap-form-advanced div.collapsible-actions" "css_element"
 
 
