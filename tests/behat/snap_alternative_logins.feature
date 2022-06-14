@@ -53,17 +53,16 @@ Feature: When the moodle theme is set to Snap, the login options should be shown
 
   @javascript
   Scenario Outline: Login screen when both login options are enabled but the order change
-    Given I skip because "This is failing due to steps being ambiguous at the moment of searching the css elements. This is going to be fixed at INT-18057."
     Given the following config values are set as admin:
       |  config           |   value   | plugin     |
       | enabledlogin      |   0       | theme_snap |
       | enabledloginorder |  <order>  | theme_snap |
     Given I am on login page
     And I wait until ".snap-log-in-loading-spinner" "css_element" is not visible
-    And "<loginoption1>" "css_element" should appear before "<loginoption2>" "css_element"
+    And "<loginoption1>" "css_element" should appear before the "<loginoption2>" "css_element"
     And I am on site homepage
     Then I click on "#page-mast .js-snap-pm-trigger" "css_element"
-    And ".snap-pm-content <pmoption1>" "css_element" should appear before ".snap-pm-content <pmoption2>" "css_element"
+    And ".snap-pm-content <pmoption1>" "css_element" should appear before the ".snap-pm-content <pmoption2>" "css_element"
     Examples:
       | order |   loginoption1    | loginoption2    |   pmoption1    | pmoption2      |
       |   0     |   #base-login     | #alt-login      |   form         | .potentialidps |

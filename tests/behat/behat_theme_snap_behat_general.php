@@ -299,7 +299,7 @@ class behat_theme_snap_behat_general extends behat_general {
      * Copied from BehatGeneral in mahara/testing/frameworks/behat/classes/BehatGeneral.php
      *
      * @codingStandardsIgnoreStart
-     * @Then /^"(?P<following_element_string>(?:[^"]|\\")*)" "(?P<selector1_string>(?:[^"]|\\")*)" should appear after "(?P<preceding_element_string>(?:[^"]|\\")*)" "(?P<selector2_string>(?:[^"]|\\")*)"$/
+     * @Then /^"(?P<following_element_string>(?:[^"]|\\")*)" "(?P<selector1_string>(?:[^"]|\\")*)" should appear after the "(?P<preceding_element_string>(?:[^"]|\\")*)" "(?P<selector2_string>(?:[^"]|\\")*)"$/
      * @codingStandardsIgnoreEnd
      * @throws ExpectationException
      * @param string $postelement The locator of the latest element
@@ -333,7 +333,7 @@ class behat_theme_snap_behat_general extends behat_general {
      * Copied from BehatGeneral in mahara/testing/frameworks/behat/classes/BehatGeneral.php
      *
      * @codingStandardsIgnoreStart
-     * @Given /^"(?P<preceding_element_string>(?:[^"]|\\")*)" "(?P<selector1_string>(?:[^"]|\\")*)" should appear before "(?P<following_element_string>(?:[^"]|\\")*)" "(?P<selector2_string>(?:[^"]|\\")*)"$/
+     * @Given /^"(?P<preceding_element_string>(?:[^"]|\\")*)" "(?P<selector1_string>(?:[^"]|\\")*)" should appear before the "(?P<following_element_string>(?:[^"]|\\")*)" "(?P<selector2_string>(?:[^"]|\\")*)"$/
      * @codingStandardsIgnoreEnd
      * @throws ExpectationException
      * @param string $preelement The locator of the preceding element
