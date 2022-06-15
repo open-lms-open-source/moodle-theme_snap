@@ -1680,6 +1680,14 @@ HTML;
             if ($iscoursepath && $iseditlink && !$isfrontpage) {
                 return '';
             }
+
+            // Remove links for Reports and Question Bank for INT-18042.
+            $isreportslink = $item->key === 'coursereports';
+            $isquestionbanklink = $item->key === 'questionbank';
+            if ($isreportslink || $isquestionbanklink) {
+                $item->action = null;
+            }
+
         }
 
         // Bank content link where necessary (Front page - Course page - Category settings).
