@@ -1250,7 +1250,9 @@ class activity {
         array $groupsfilter = null,
         array $coursesfilter = null,
         $withduration = true,
-        $ignorehidden = true
+        $ignorehidden = true,
+        callable $filter = null,
+        ?string $searchvalue = null
     ) {
 
         \theme_snap\calendar\event\container::ovd_init();

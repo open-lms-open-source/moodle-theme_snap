@@ -102,7 +102,7 @@ if (!empty($custommenu)) {
     </div>
 </div>
 <?php
-$tittle = get_string('totop', 'theme_boost');
+$tittle = get_string('totop', 'theme_snap');
 echo
     '<div id="goto-top-link">
         <a class="btn btn-light" role="button" href="javascript:void(0)">

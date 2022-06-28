@@ -61,7 +61,8 @@ class event_vault extends \core_calendar\local\event\data_access\event_vault {
         array $categoriesfilter = null,
         $withduration = true,
         $ignorehidden = true,
-        callable $filter = null
+        callable $filter = null,
+        ?string $searchvalue = null
     ) {
 
         $this->usersfilter = $usersfilter;

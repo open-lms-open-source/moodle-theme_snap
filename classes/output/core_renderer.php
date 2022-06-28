@@ -1403,7 +1403,7 @@ HTML;
      * #notice.box.generalbox that have buttons after them,
      * rather than inside them.
      */
-    public function confirm($message, $continue, $cancel) {
+    public function confirm($message, $continue, $cancel, array $displayoptions = []) {
         // We need plain styling of confirm boxes on upgrade because we don't know which stylesheet we have (it could be
         // from any previous version of Moodle).
         if ($continue instanceof single_button) {
