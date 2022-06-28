@@ -26,25 +26,25 @@ $setting = new admin_setting_heading($name, $title, $description);
 $snapsettings->add($setting);
 
 $templates = array (
-    'snap_template' => $OUTPUT->image_url('snap_template', 'theme_snap'),
+    'classic_template' => $OUTPUT->image_url('classic_template', 'theme_snap'),
 );
-$snaptemplatetitle = get_string('snap_template', 'theme_snap');
-$template_description =
-    '<div class="snap-template container float-left">
-            <div id="snap_login_templates" class="row">
-                <div id="snap_template_img" class="col=4">
-                    <a target="_blank" href='.$templates['snap_template'].'>
-                        <img class="img-responsive" src="'.$templates['snap_template'].'" alt="'.$snaptemplatetitle.'">
-                    </a>
-                    <div class="text-center">Snap Template</div>
-                </div>
+$snaptemplatetitle = get_string('classic_template', 'theme_snap');
+$templatedescription =
+    '<div class="snap-classic-template container float-left">
+        <div id="snap_classic_login_templates" class="row">
+            <div id="snap_classic_template_img" class="col=4">
+                <a target="_blank" href='.$templates['classic_template'].'>
+                    <img class="img-responsive" src="'.$templates['classic_template'].'" alt="'.$snaptemplatetitle.'">
+                </a>
+                <div class="text-center">' . $snaptemplatetitle . '</div>
             </div>
-        </div>';
+        </div>
+    </div>';
 
 $name = 'theme_snap/loginpagetemplate';
 $title = new lang_string('loginpagetemplate', 'theme_snap');
-$setting = new admin_setting_configselect($name, $title, $template_description,'Snap template',
-    array('Snap' => get_string('snap_template', 'theme_snap')));
+$setting = new admin_setting_configselect($name, $title, $templatedescription, 'Snap template',
+    array('classic' => get_string('classic_template', 'theme_snap')));
 $setting->set_updatedcallback('theme_reset_all_caches');
 $snapsettings->add($setting);
 

@@ -31,27 +31,11 @@
     }
 }}
 
-<div id="snap-site-carousel" class="carousel slide" data-ride="carousel">
-    <ol class="carousel-indicators js-only">
-        {{#slides}}
-            <li data-target="#snap-site-carousel" data-slide-to="{{index}}" class="{{active}}"></li>
-        {{/slides}}
-    </ol>
-    <div class="carousel-inner">
-        {{#slides}}
-            <div class="carousel-item carousel-{{name}} {{active}}">
-                <div class="carousel-slide" style="background-image:url({{{image}}});"></div>
-            </div>
-        {{/slides}}
-        <div class="carousel-controls">
-            <a class="carousel-control-prev" href="#snap-site-carousel" role="button" data-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="sr-only">Previous slide</span>
-            </a>
-            <a class="carousel-control-next" href="#snap-site-carousel" role="button" data-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="sr-only">Next slide</span>
-            </a>
+<div class="carousel-inner" style="display:none">
+    {{#slides}}
+        <div id="carousel-item-{{index}}" class="carousel-item carousel-{{name}} {{active}}">
+            <img class="carousel-slide" src="{{{image}}}">
         </div>
-    </div>
+    {{/slides}}
+</div>
 </div>

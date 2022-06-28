@@ -54,8 +54,6 @@ $carousel = false;
 if ($PAGE->pagetype === 'site-index' && !empty($PAGE->theme->settings->cover_carousel)) {
     // Output is html from template, but can be empty if no slides.
     $carousel = $OUTPUT->cover_carousel();
-} else if ($PAGE->pagetype === 'login-index' && !empty($PAGE->theme->settings->loginbgimage)) {
-    $carousel = $OUTPUT->login_bg_slides();
 }
 
 // Cover images for the site, login, category or course.
@@ -66,8 +64,6 @@ if ($PAGE->context->contextlevel === CONTEXT_COURSECAT) {
     }
 } else if ($PAGE->pagelayout === 'frontpage') {
     $coverimagecss = \theme_snap\local::site_coverimage_css();
-} else if ($PAGE->pagelayout === 'login') {
-    $coverimagecss = \theme_snap\local::login_backgroundimage_css();
 } else {
     $coverimagecss = \theme_snap\local::course_coverimage_css($COURSE->id);
 }

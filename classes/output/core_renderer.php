@@ -1074,24 +1074,27 @@ class core_renderer extends \theme_boost\output\core_renderer {
 
     /**
      * Login background slide images.
+     * @param integer $part
      * @return string
      */
     public function login_bg_slides() {
-        if (empty($this->page->theme->settings->loginbgimage)) {
+        if (empty($this->page->theme->settings->loginbgimg)) {
             return '';
         }
-
-        $slidenames = array("loginsettingbgimage_one", "loginsettingbgimage_two", "loginsettingbgimage_three");
-        $slides = array();
+        $fs = get_file_storage();
+        $files = $fs->get_area_files(\context_system::instance()->id, 'theme_snap', 'loginbgimg');
         $i = 0;
-        foreach ($slidenames as $slidename) {
-            $image = $slidename . '_image';
-            if (!empty($this->page->theme->settings->$image)) {
+        $slides = [];
+
+        foreach ($files as $file) {
+            if ($file->get_filename() != '.') {
                 $slide = (object) [
                     'index' => $i++,
                     'active' => '',
-                    'name' => $slidename,
-                    'image' => $this->page->theme->setting_file_url($image, $image),
+                    'name' => $file->get_filename(),
+                    'image' => moodle_url::make_pluginfile_url($file->get_contextid(), $file->get_component(),
+                        $file->get_filearea(), $file->get_itemid(), $file->get_filepath(), $file->get_filename(),
+                        false)->out(false)
                 ];
                 $slides[] = $slide;
             }
@@ -1101,9 +1104,24 @@ class core_renderer extends \theme_boost\output\core_renderer {
         }
         $slides[0]->active = 'active';
         $data['slides'] = $slides;
-
         return $this->render_from_template('theme_snap/login_bg_image', $data);
     }
+
+    public function login_carousel_first() {
+        if (empty($this->page->theme->settings->loginbgimg)) {
+            return '';
+        }
+        $fs = get_file_storage();
+        $files = $fs->get_area_files(\context_system::instance()->id, 'theme_snap', 'loginbgimg',
+            false, "itemid, filepath, filename", true, 0, 0, 1);
+        $url = '';
+        foreach ($files as $file) {
+            $url = moodle_url::make_pluginfile_url($file->get_contextid(), $file->get_component(), $file->get_filearea(),
+                $file->get_itemid(), $file->get_filepath(), $file->get_filename(), false)->out(false);
+        }
+        return $url;
+    }
+
 
     /**
      * Get page heading.

@@ -221,7 +221,7 @@ function theme_snap_pluginfile($course, $cm, $context, $filearea, $args, $forced
         'slide_one_image',
         'slide_two_image',
         'slide_three_image',
-        'loginbgimg_image'
+        'loginbgimg'
     ];
 
     if ($context->contextlevel == CONTEXT_SYSTEM && in_array($filearea, $sysfileareas)) {

@@ -412,6 +412,6 @@ $string['loginsetting'] = 'Login page';
 $string['loginbgimgheading'] = 'Login page template';
 $string['loginbgimgheadingdesc'] = 'Snap allows to change between different templates to be displayed in the login page. Please select between different options in the dropdown menu below.';
 $string['loginpagetemplate'] = 'Select login page template to be used';
-$string['snap_template'] = 'Snap template';
+$string['classic_template'] = 'Classic template';
 $string['loginbgimg'] = 'Login background image';
 $string['loginbgimgdesc'] = 'Select the images that will appear in the login page as background images.';
