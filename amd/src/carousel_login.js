@@ -24,21 +24,25 @@
  */
 define(['jquery'],
     function($) {
-        var changeImg = function (id) {
-            var imgsrc = $('#carousel-item-' + id + ' img').attr('src');
-            $('#page').css('background-image', 'url(' + imgsrc + ')');
-        };
         /**
          * AMD return object.
          */
         return {
-            init: function () {
-                var id = 0;
-                setInterval(function () {
-                    id++;
-                    id = (id === 3) ? 0 : id;
-                    changeImg(id);
-                }, 5000);
+            init: function() {
+                let id = 0;
+                let imgs = $('div[id^="carousel-item-"]');
+                if (imgs !== undefined && imgs.length > 1) {
+                    let sources = [];
+                    imgs.each(function(key, imgNode) {
+                        let node = $(imgNode);
+                        sources.push(node.find('img').attr('src'));
+                    });
+                    setInterval(function () {
+                        id = ((id === 3) || id >= sources.length) ? 0 : id;
+                        $('#page').css('background-image', 'url(' + sources[id] + ')');
+                        id++;
+                    }, 5000);
+                }
             }
         };
     }

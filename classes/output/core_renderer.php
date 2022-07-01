@@ -1112,14 +1112,14 @@ class core_renderer extends \theme_boost\output\core_renderer {
             return '';
         }
         $fs = get_file_storage();
-        $files = $fs->get_area_files(\context_system::instance()->id, 'theme_snap', 'loginbgimg',
-            false, "itemid, filepath, filename", true, 0, 0, 1);
-        $url = '';
+        $files = $fs->get_area_files(\context_system::instance()->id, 'theme_snap', 'loginbgimg');
         foreach ($files as $file) {
-            $url = moodle_url::make_pluginfile_url($file->get_contextid(), $file->get_component(), $file->get_filearea(),
-                $file->get_itemid(), $file->get_filepath(), $file->get_filename(), false)->out(false);
+            if ($file->get_filename() != '.') {
+                return moodle_url::make_pluginfile_url($file->get_contextid(), $file->get_component(), $file->get_filearea(),
+                    $file->get_itemid(), $file->get_filepath(), $file->get_filename(), false)->out(false);
+            }
         }
-        return $url;
+        return ''; // Empty return to avoid errors.
     }
 
 
