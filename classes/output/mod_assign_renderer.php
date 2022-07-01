@@ -30,14 +30,14 @@ defined('MOODLE_INTERNAL') || die();
 
 use html_writer;
 use moodle_url;
-use assign_submission_status;
+use mod_assign\output\renderer;
+use mod_assign\output\assign_header;
+use mod_assign\output\assign_submission_status;
 use assign_submission_plugin_submission;
 use assign_feedback_plugin_feedback;
 use theme_snap\activity;
 
-require_once($CFG->dirroot.'/mod/assign/renderer.php');
-
-class mod_assign_renderer extends \mod_assign_renderer {
+class mod_assign_renderer extends renderer {
 
     /**
      * Copied from assign/renderer.php
@@ -47,7 +47,7 @@ class mod_assign_renderer extends \mod_assign_renderer {
      * @param assign_header $header
      * @return string
      */
-    public function render_assign_header(\assign_header $header) {
+    public function render_assign_header(assign_header $header) {
         global $USER;
         $o = '';
 
@@ -96,7 +96,7 @@ class mod_assign_renderer extends \mod_assign_renderer {
      * @param assign_header $header
      * @return string
      */
-    public function render_assign_duedate(\assign_header $header) {
+    public function render_assign_duedate(assign_header $header) {
         global $USER;
 
         $status = $header->assign;
@@ -234,7 +234,7 @@ class mod_assign_renderer extends \mod_assign_renderer {
      * @param assign_submission_status $status
      * @return string
      */
-    public function render_assign_submission_status(\assign_submission_status $status) {
+    public function render_assign_submission_status(assign_submission_status $status) {
         global $USER;
 
         // User picture and name.
