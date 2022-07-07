@@ -59,10 +59,11 @@ if ($PAGE->title === get_string('restoredaccount')) {
 </div>
 <?php
 if (!empty(get_config('theme_snap', 'loginbgimg'))) {
-    echo $OUTPUT->login_bg_slides();
-    $PAGE->requires->js_call_amd('theme_snap/carousel_login', 'init');
+    $images = $OUTPUT->login_bg_slides();
+    $PAGE->requires->js_call_amd('theme_snap/carousel_login', 'init', ['images' => $images]);
 }
 ?>
+</div>
 </div>
 <!-- close moodle js hooks -->
 

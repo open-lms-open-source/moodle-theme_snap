@@ -53,7 +53,7 @@ $title = get_string('loginbgimg', 'theme_snap');
 $description = get_string('loginbgimgdesc', 'theme_snap');
 $opts = array('accepted_types' => array('.png', '.jpg'), 'maxfiles' => 3);
 $setting = new admin_setting_configstoredfile($name, $title, $description, 'loginbgimg', 0, $opts);
-$setting->set_updatedcallback('theme_reset_all_caches');
+$setting->set_updatedcallback('theme_snap_resize_bgimage_after_save');
 $snapsettings->add($setting);
 
 // Alternative login Settings.

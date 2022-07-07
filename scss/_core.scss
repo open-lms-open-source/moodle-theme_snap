@@ -120,7 +120,7 @@ table.boxwidthwide {
     // The login box.
     .snap-login {
         padding: 1em 4%;
-        max-width: 30rem;
+        max-width: 25rem;
         width: 100%;
         background-color: rgba(255, 255, 255, 0.9);
         #password {
@@ -130,8 +130,9 @@ table.boxwidthwide {
             margin-bottom: .5em;
         }
     }
-    .snap-login-cell {
-        margin: 2em;
+    .snap-login-option {
+        background-color: #fff;
+        border-radius: 5px;
     }
     .snap-login-box {
         margin: 2em auto;
@@ -148,12 +149,54 @@ table.boxwidthwide {
         background-position: center center;
         background-size: contain;
         background-repeat: no-repeat;
-        padding: 1em 0;
+        padding: 0.5em 0;
         margin-bottom: 0.5em;
     }
     .loginerror-restoredaccount {
         background-color: white;
         padding: 1em;
+    }
+    .loginerrors .alert-danger {
+        border-radius: 5px;
+        font-size: 0.8em;
+        padding: 0.65rem 1.25rem;
+    }
+    #base-login form#login {
+        input#username,
+        input#password {
+            border-radius: 5px;
+            font-size: 0.8em;
+        }
+        a.btn-link {
+            padding-left: 0;
+            text-align: left;
+        }
+        button#loginbtn {
+            width: 30%;
+            font-size: 0.8em;
+        }
+    }
+    #snap-alt-login {
+        h2 {
+            font-size: 1.1rem;
+        }
+        .potentialidplist {
+            img[title$="Mahara"] {
+                padding: .375rem .75rem !important;
+            }
+        }
+    }
+    #snap-guest-login {
+        padding: 0;
+        h2 {
+            font-size: 1.1rem;
+        }
+        form#guestlogin {
+            button#guestloginbtn {
+                width: 50%;
+                font-size: 0.8em;
+            }
+        }
     }
 }
 #page-login-signup {
