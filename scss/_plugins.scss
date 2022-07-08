@@ -1145,37 +1145,22 @@ section#snap-add-new-section #summary-editor_parent #summary-editor_tbl {
     }
 }
 
-#page-local-pld-view {
-
-    section#region-main {
-        padding-left: 0;
-        padding-right: 0;
-    }
-    #moodle-footer {
-        margin-top: 0;
-    }
-    .box.py-3.boxwidthwide {
-        padding-bottom: 0!important;
-    }
+.theme-snap {
     pld-main {
-        ul#myTab {
-            margin-left: 10%;
+        ul#pld_tab {
+            margin-left: 20%;
             border: none;
         }
 
-        #myTab li.nav-item a {
+        .nav-tabs .nav-link {
             border: none;
-            color: inherit;
             text-transform: uppercase;
-            font-size: large;
+            font-size: medium;
         }
 
-        #myTab li.nav-item a.active {
-            border-bottom: 5px $brand-primary solid;
+        .nav-tabs .nav-link.active {
+            border-bottom: 5px $brand-primary solid ;
             border-radius: 5px;
-            margin-right: 1em;
-            color: $brand-primary;
-            font-weight: 500;
         }
 
         select.custom-select {
@@ -1196,7 +1181,7 @@ section#snap-add-new-section #summary-editor_parent #summary-editor_tbl {
             background: white;
             border: none;
         }
-        div.btn.btn-secondary.btn-ins {
+        .btn.btn-secondary.btn-ins {
             background: $brand-primary;
             color: white;
         }
@@ -1206,9 +1191,15 @@ section#snap-add-new-section #summary-editor_parent #summary-editor_tbl {
             border-color: $brand-primary;
             color: white;
         }
+        button.btn.btn-secondary.dropdown-toggle.dropdown-toggle-split {
+            min-width: 0;
+        }
         .btn.btn-secondary, .btn.btn-secondary:focus, .btn.btn-secondary:focus:not(:disabled) {
             color: $brand-primary;
             background: white;
+            font-size: medium;
+            min-height: 2.5em;
+            min-width: 9em;
         }
 
         a:focus, .dropdown-toggle:focus,
