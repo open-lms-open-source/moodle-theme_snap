@@ -217,3 +217,4 @@ if ($runningbehattest) {
 }
 
 $THEME->requiredblocks = $requiredblocks;
+$THEME->haseditswitch = false;
