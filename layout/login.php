@@ -26,7 +26,16 @@ defined('MOODLE_INTERNAL') || die();
 require(__DIR__.'/header.php');
 ?>
 <!-- moodle js hooks -->
-<div id="page">
+<?php
+$fullscreenclasses = '';
+if (empty(get_config('theme_snap', 'loginbgimg'))) {
+    echo '<div id="page">';
+} else {
+    $imgsrc = $OUTPUT->login_carousel_first();
+    echo '<div id="page" style="background-image: url('.$imgsrc.');">';
+    echo '<div id="snap-login-carousel" class="carousel slide">';
+}
+?>
 <div id="page-content">
 <!--
 ////////////////////////// MAIN  ///////////////////////////////
@@ -48,6 +57,12 @@ if ($PAGE->title === get_string('restoredaccount')) {
 </section>
 </main>
 </div>
+<?php
+if (!empty(get_config('theme_snap', 'loginbgimg'))) {
+    echo $OUTPUT->login_bg_slides();
+    $PAGE->requires->js_call_amd('theme_snap/carousel_login', 'init');
+}
+?>
 </div>
 <!-- close moodle js hooks -->
 

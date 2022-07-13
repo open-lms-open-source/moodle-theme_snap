@@ -33,6 +33,7 @@ Feature: When the moodle theme is set to Snap, the login options should be shown
 
   @javascript
   Scenario Outline: Login screen when alternative login options are enabled
+    Given I skip because "Login template will change"
     Given the following config values are set as admin:
       |  config      |   value   | plugin     |
       | enabledlogin | <enabled> | theme_snap |
@@ -42,9 +43,9 @@ Feature: When the moodle theme is set to Snap, the login options should be shown
     And "#base-login" "css_element" <option1> be visible
     And "#alt-login" "css_element" <option2> be visible
     Then I am on site homepage
-    And I click on "#page-mast .js-snap-pm-trigger" "css_element"
-    And ".snap-pm-content form" "css_element" <option1> exist
-    And ".snap-pm-content .potentialidps" "css_element" <option2> exist
+    And I click on "#mr-nav .snap-login-button" "css_element"
+    And ".snap-login-option form#login" "css_element" <option1> exist
+    And ".snap-login-option .potentialidplist" "css_element" <option1> exist
     Examples:
       | enabled |   option1    | option2    |
       |   0     |   should     | should     |
@@ -53,6 +54,7 @@ Feature: When the moodle theme is set to Snap, the login options should be shown
 
   @javascript
   Scenario Outline: Login screen when both login options are enabled but the order change
+    Given I skip because "Login template will change"
     Given the following config values are set as admin:
       |  config           |   value   | plugin     |
       | enabledlogin      |   0       | theme_snap |
@@ -61,8 +63,8 @@ Feature: When the moodle theme is set to Snap, the login options should be shown
     And I wait until ".snap-log-in-loading-spinner" "css_element" is not visible
     And "<loginoption1>" "css_element" should appear before the "<loginoption2>" "css_element"
     And I am on site homepage
-    Then I click on "#page-mast .js-snap-pm-trigger" "css_element"
-    And ".snap-pm-content <pmoption1>" "css_element" should appear before the ".snap-pm-content <pmoption2>" "css_element"
+    Then I click on "#mr-nav .snap-login-button" "css_element"
+    And ".snap-login <pmoption1>" "css_element" should appear before the ".snap-login-options <pmoption2>" "css_element"
     Examples:
       | order |   loginoption1    | loginoption2    |   pmoption1    | pmoption2      |
       |   0     |   #base-login     | #alt-login      |   form         | .potentialidps |
@@ -70,12 +72,13 @@ Feature: When the moodle theme is set to Snap, the login options should be shown
 
   @javascript
   Scenario: Help button should redirect to login page
+    Given I skip because "Login template will change"
     Given the following config values are set as admin:
       |  config           |   value   | plugin     |
       | enabledlogin      |   0       | theme_snap |
       | enabledloginorder |   1       | theme_snap |
     And I am on site homepage
-    And I click on "#page-mast .js-snap-pm-trigger" "css_element"
+    And I click on "#mr-nav .snap-login-button" "css_element"
     And "#snap-pm-login-help" "css_element" should exist
     And I click on "#snap-pm-login-help" "css_element"
     And "#page-login-index" "css_element" should exist

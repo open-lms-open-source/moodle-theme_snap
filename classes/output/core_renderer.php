@@ -27,6 +27,7 @@ namespace theme_snap\output;
 defined('MOODLE_INTERNAL') || die();
 require_once($CFG->dirroot.'/message/output/popup/lib.php');
 
+use core_auth\output\login;
 use stdClass;
 use context_course;
 use context_system;
@@ -642,7 +643,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
         $loginurl = $CFG->wwwroot.'/login/index.php';
         $loginatts = [
             'aria-haspopup' => 'true',
-            'class' => 'btn btn-primary snap-login-button js-snap-pm-trigger',
+            'class' => 'btn btn-primary snap-login-button',
         ];
         if (!empty($CFG->alternateloginurl) or !empty($CFG->theme_snap_disablequicklogin)) {
             $loginurl = $CFG->wwwroot.'/login/index.php';
@@ -1070,6 +1071,57 @@ class core_renderer extends \theme_boost\output\core_renderer {
         $data['slides'] = $slides;
         return $this->render_from_template('theme_snap/carousel', $data);
     }
+
+    /**
+     * Login background slide images.
+     * @param integer $part
+     * @return string
+     */
+    public function login_bg_slides() {
+        if (empty($this->page->theme->settings->loginbgimg)) {
+            return '';
+        }
+        $fs = get_file_storage();
+        $files = $fs->get_area_files(\context_system::instance()->id, 'theme_snap', 'loginbgimg');
+        $i = 0;
+        $slides = [];
+
+        foreach ($files as $file) {
+            if ($file->get_filename() != '.') {
+                $slide = (object) [
+                    'index' => $i++,
+                    'active' => '',
+                    'name' => $file->get_filename(),
+                    'image' => moodle_url::make_pluginfile_url($file->get_contextid(), $file->get_component(),
+                        $file->get_filearea(), $file->get_itemid(), $file->get_filepath(), $file->get_filename(),
+                        false)->out(false)
+                ];
+                $slides[] = $slide;
+            }
+        }
+        if (empty($slides)) {
+            return '';
+        }
+        $slides[0]->active = 'active';
+        $data['slides'] = $slides;
+        return $this->render_from_template('theme_snap/login_bg_image', $data);
+    }
+
+    public function login_carousel_first() {
+        if (empty($this->page->theme->settings->loginbgimg)) {
+            return '';
+        }
+        $fs = get_file_storage();
+        $files = $fs->get_area_files(\context_system::instance()->id, 'theme_snap', 'loginbgimg');
+        foreach ($files as $file) {
+            if ($file->get_filename() != '.') {
+                return moodle_url::make_pluginfile_url($file->get_contextid(), $file->get_component(), $file->get_filearea(),
+                    $file->get_itemid(), $file->get_filepath(), $file->get_filename(), false)->out(false);
+            }
+        }
+        return ''; // Empty return to avoid errors.
+    }
+
 
     /**
      * Get page heading.

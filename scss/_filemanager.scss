@@ -50,13 +50,30 @@
     }
 }
 
+// We want to show this specific restriction in order to let the user know how many files they can upload.
+#themesnaplogin.active #admin-loginbgimg .filemanager {
+    max-width: 100%;
+    .fp-restrictions {
+        display: block;
+        span {
+            font-size: .9375rem;
+        }
+    }
+    .filemanager-toolbar {
+        padding: 1em 0;
+        height: auto;
+        width: auto;
+        position: unset;
+    }
+}
+
 // Make sure accepted file type information is on its own row and positioned nicely.
 div[data-fieldtype=filemanager] > p:nth-of-type(1) {
     margin-top: 1em;
     width: 100%;
 }
 
-// Make filenames more reabable.
+// Make filenames more readable.
 .fp-filename {
     font-size: small;
     line-height: 1;
@@ -66,7 +83,6 @@ div[data-fieldtype=filemanager] > p:nth-of-type(1) {
 }
 
 // Code below moved from other scss files.
-
 .chooserdialogue .moodle-dialogue-wrap .moodle-dialogue-bd {
     background: $body-bg;
 }

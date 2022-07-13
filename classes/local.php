@@ -21,6 +21,7 @@ defined('MOODLE_INTERNAL') || die();
 
 use moodle_url;
 use stdClass;
+use stored_file;
 use theme_snap\output\core_renderer;
 use \theme_snap\user_forums,
     \theme_snap\course_total_grade,
@@ -1493,7 +1494,7 @@ class local {
         if (!$coverurl) {
             return '';
         }
-        return "#page-site-index #page-header, #page-login-index #page {background-image: url($coverurl);}";
+        return "#page-site-index #page-header {background-image: url($coverurl);}";
     }
 
     /**
