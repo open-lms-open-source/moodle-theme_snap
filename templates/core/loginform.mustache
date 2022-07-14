@@ -135,31 +135,45 @@
                 placeholder={{#quote}}{{#str}}password{{/str}}{{/quote}}
                 {{^passwordautocomplete}}autocomplete="off"{{/passwordautocomplete}}>
             <br>
-            <button type="submit" class="btn btn-primary btn-block" id="loginbtn">{{#str}}login{{/str}}</button>
             <a class="small btn btn-link btn-block" href="{{forgotpasswordurl}}">{{#str}}forgotten{{/str}}</a>
+            <button type="submit" class="btn btn-primary btn-block" id="loginbtn">{{#str}}login{{/str}}</button>
         </form>
-    </div>
-    {{#hasidentityproviders}}
-        <div class="snap-login snap-login-option snap-login-cell" id="alt-login">
-                <h5>{{#str}} potentialidps, auth {{/str}}</h5>
+        {{!Alternative login options}}
+        {{#hasidentityproviders}}
+            <hr>
+            <div id="snap-alt-login">
+                <h2>{{#str}} potentialidps, auth {{/str}}</h2>
                 <div class="potentialidplist">
                     {{#identityproviders}}
-                        <div class="potentialidp">
-                            <a href="{{url}}"  class="btn btn-primary btn-block" title={{#quote}}{{name}}{{/quote}}>
-                                {{#iconurl}}
-                                    <img class="auth-icon" src="{{iconurl}}" onerror="this.style.display='none'"/>
-                                {{/iconurl}}
-                                {{^iconurl}}
-                                    {{#pix}} /i/permissions, core {{/pix}}
-                                {{/iconurl}}
-                                {{name}}
-                            </a>
-                        </div>
+                    <div class="potentialidp">
+                        <a href="{{url}}"  class="btn btn-secondary btn-block" title={{#quote}}{{name}}{{/quote}} role="button">
+                            {{#iconurl}}
+                                <img class="auth-icon" src="{{iconurl}}" onerror="this.style.display='none'"/>
+                            {{/iconurl}}
+                            {{^iconurl}}
+                                {{#pix}} /i/permissions, core {{/pix}}
+                            {{/iconurl}}
+                            {{name}}
+                        </a>
+                    </div>
                     {{/identityproviders}}
                 </div>
-        </div>
-    {{/hasidentityproviders}}
+            </div>
+        {{/hasidentityproviders}}
 
+        {{!Login as a guest}}
+        {{#canloginasguest}}
+            <hr>
+            <div class="snap-login snap-login-option snap-login-box" id="snap-guest-login">
+                <h2>{{#str}}someallowguest{{/str}}</h2>
+                <form action="{{loginurl}}" method="post" id="guestlogin">
+                    <input type="hidden" name="username" value="guest" />
+                    <input type="hidden" name="password" value="guest" />
+                    <button class="btn btn-secondary btn-block" id="guestloginbtn" type="submit">{{#str}}loginguest{{/str}}</button>
+                </form>
+            </div>
+        {{/canloginasguest}}
+    </div>
 </div>
 
 {{#hasinstructions}}
@@ -195,16 +209,6 @@
     </div>
 {{/cansignup}}
 
-{{#canloginasguest}}
-    <div class="snap-login snap-login-option snap-login-box">
-        <h5>{{#str}}someallowguest{{/str}}</h5>
-        <form action="{{loginurl}}" method="post" id="guestlogin">
-            <input type="hidden" name="username" value="guest" />
-            <input type="hidden" name="password" value="guest" />
-            <button class="btn btn-secondary btn-block" type="submit">{{#str}}loginguest{{/str}}</button>
-        </form>
-    </div>
-{{/canloginasguest}}
 <span class="snap-log-in-more snap-log-in-loading-spinner"></span>
 
 {{#js}}

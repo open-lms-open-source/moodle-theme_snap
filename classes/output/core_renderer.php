@@ -1074,8 +1074,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
 
     /**
      * Login background slide images.
-     * @param integer $part
-     * @return string
+     * @return array
      */
     public function login_bg_slides() {
         if (empty($this->page->theme->settings->loginbgimg)) {
@@ -1083,28 +1082,16 @@ class core_renderer extends \theme_boost\output\core_renderer {
         }
         $fs = get_file_storage();
         $files = $fs->get_area_files(\context_system::instance()->id, 'theme_snap', 'loginbgimg');
-        $i = 0;
-        $slides = [];
+        $images = [];
 
         foreach ($files as $file) {
             if ($file->get_filename() != '.') {
-                $slide = (object) [
-                    'index' => $i++,
-                    'active' => '',
-                    'name' => $file->get_filename(),
-                    'image' => moodle_url::make_pluginfile_url($file->get_contextid(), $file->get_component(),
-                        $file->get_filearea(), $file->get_itemid(), $file->get_filepath(), $file->get_filename(),
-                        false)->out(false)
-                ];
-                $slides[] = $slide;
+                $images[] = moodle_url::make_pluginfile_url($file->get_contextid(), $file->get_component(),
+                    $file->get_filearea(), $file->get_itemid(), $file->get_filepath(), $file->get_filename(),
+                    false)->out(false);
             }
         }
-        if (empty($slides)) {
-            return '';
-        }
-        $slides[0]->active = 'active';
-        $data['slides'] = $slides;
-        return $this->render_from_template('theme_snap/login_bg_image', $data);
+        return $images;
     }
 
     public function login_carousel_first() {

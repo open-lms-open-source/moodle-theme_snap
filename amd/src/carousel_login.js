@@ -28,18 +28,12 @@ define(['jquery'],
          * AMD return object.
          */
         return {
-            init: function() {
+            init: function(images) {
                 let id = 0;
-                let imgs = $('div[id^="carousel-item-"]');
-                if (imgs !== undefined && imgs.length > 1) {
-                    let sources = [];
-                    imgs.each(function(key, imgNode) {
-                        let node = $(imgNode);
-                        sources.push(node.find('img').attr('src'));
-                    });
+                if (images !== undefined && images.length > 1) {
                     setInterval(function () {
-                        id = ((id === 3) || id >= sources.length) ? 0 : id;
-                        $('#page').css('background-image', 'url(' + sources[id] + ')');
+                        id = ((id === 3) || id >= images.length) ? 0 : id;
+                        $('#page').css('background-image', 'url(' + images[id] + ')');
                         id++;
                     }, 5000);
                 }

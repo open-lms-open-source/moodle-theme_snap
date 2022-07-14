@@ -21,7 +21,7 @@
  * @copyright Copyright (c) 2015 Open LMS (https://www.openlms.net)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-
+use theme_snap\image;
 /**
  * Process site cover image.
  *
@@ -489,5 +489,16 @@ function theme_snap_serve_hvp_css($filename, $hvpcustomcss=false) {
 
         echo $hvptext;
         die;
+    }
+}
+
+function theme_snap_resize_bgimage_after_save() {
+    if (!empty(get_config('theme_snap', 'loginbgimg'))) {
+        $fs = get_file_storage();
+        $files = $fs->get_area_files(\context_system::instance()->id, 'theme_snap', 'loginbgimg');
+        foreach ($files as $file) {
+            image::resize($file, false, 1920);
+            $file->delete();
+        }
     }
 }
