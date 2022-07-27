@@ -645,12 +645,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
             'aria-haspopup' => 'true',
             'class' => 'btn btn-primary snap-login-button',
         ];
-        if (!empty($CFG->alternateloginurl) or !empty($CFG->theme_snap_disablequicklogin)) {
-            $loginurl = $CFG->wwwroot.'/login/index.php';
-            $loginatts = [
-                'class' => 'btn btn-primary snap-login-button',
-            ];
-        }
+
         // This check is here for the front page login.
         if (!isloggedin() || isguestuser()) {
             $output = html_writer::link($loginurl, get_string('login'), $loginatts);
@@ -705,49 +700,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
         global $USER, $CFG;
 
         if (!isloggedin() || isguestuser()) {
-            $enabledlogin = get_config('theme_snap', 'enabledlogin');
-            $enabledloginorder = get_config('theme_snap', 'enabledloginorder');
-            switch ($enabledlogin) {
-                default:
-                    $baselogin = $this->render_login_base_method();
-                    $altlogins = $this->render_login_alternative_methods(new login_alternative_methods());
-                    if ($enabledloginorder == self::ORDER_LOGIN_ALTERNATIVE_FIRST) {
-                        $data = (object) [
-                            'baselogin' => $altlogins,
-                            'divider' => $altlogins ? true : false,
-                            'altlogins' => $baselogin
-                        ];
-                    } else {
-                        $data = (object) [
-                            'baselogin' => $baselogin,
-                            'divider' => $altlogins ? true : false,
-                            'altlogins' => $altlogins
-                        ];
-                    }
-                    break;
-                case self::ENABLED_LOGIN_MOODLE:
-                    $data = (object) [
-                        'baselogin' => $this->render_login_base_method(),
-                        'divider' => false,
-                        'altlogins' => ''
-                    ];
-                    break;
-                case self::ENABLED_LOGIN_ALTERNATIVE:
-                    $altlogins = $this->render_login_alternative_methods(new login_alternative_methods());
-                    $data = (object) [
-                        'baselogin' => $altlogins ? : $this->render_login_base_method(),
-                        'divider' => false,
-                        'altlogins' => ''
-                    ];
-                    break;
-            }
-
-            if ($this->page->pagetype !== 'login-index') {
-                $data->action = $CFG->wwwroot . '/login/index.php';
-                return $this->render_from_template('theme_snap/login', $data);
-            } else {
-                return '';
-            }
+            return '';
         }
 
         // User image.

@@ -80,19 +80,6 @@ This flag is set as an array of strings:
    `$CFG->theme_snap_disable_deadline_mods = ['label']`, without the prefix
    `mod_`.
 
-### The `theme_snap_disablequicklogin` flag
-
-The purpose of this flag is to disable Snap's quick login, which is a login
-mechanism that can be quicker than a regular login.
-
-This flag is set as a boolean value:
-
-   - `$CFG->theme_snap_disablequicklogin = true` means that Snap's quick login
-   is disabled.
-   - `$CFG->theme_snap_disablequicklogin = false` means that Snap's quick login
-   is enabled. Setting this flag to `false` has the same effect as not setting
-   the flag at all.
-
 ### The `theme_snap_include_cm_checks_in_deadlines_task` flag
 
 This flag is an auxiliary flag that should only be used for testing. Its
