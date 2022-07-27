@@ -1127,6 +1127,7 @@ nodeToChange = $(selectorToChange);
                 // Smooth scroll for go to top button.
                 $("div#goto-top-link > a").click(function() {
                     window.scrollTo({top: 0, behavior: 'smooth'});
+                    $('body').find('a, [tabindex=0]').first().focus();
                 });
 
                 // Blocks selectors to remove 'editing' class because is not necessary to access their settings.
