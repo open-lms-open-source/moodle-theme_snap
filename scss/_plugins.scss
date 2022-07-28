@@ -915,7 +915,7 @@ section#snap-add-new-section #summary-editor_parent #summary-editor_tbl {
     max-width: 100%;
 }
 #page-course-view-tiles {
-    // Styles for Dashboard, progress indicator and edit course content link.
+    // Styles for Dashboard, progress indicator, filter buttons and edit course content link.
     #headerabovetiles {
         & > div:nth-child(1) {
             float: left;
@@ -930,6 +930,20 @@ section#snap-add-new-section #summary-editor_parent #summary-editor_tbl {
             div.progress-indic {
                 padding-top: 1.5em;
             }
+        }
+        #filterbuttons {
+            top: 3em;
+            @media (max-width: 600px) {
+                top: 7em;
+                display: flex;
+            }
+        }
+    }
+
+    #snap-tiles-with-filter-buttons {
+        min-height: 110px;
+        @media (max-width: 600px) {
+            min-height: 145px;
         }
     }
 
