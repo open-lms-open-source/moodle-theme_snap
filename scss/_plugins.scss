@@ -1163,11 +1163,22 @@ section#snap-add-new-section #summary-editor_parent #summary-editor_tbl {
     }
 }
 
-.theme-snap {
+#page-local-pld-view.theme-snap {
     pld-main {
         ul#pld_tab {
-            margin-left: 20%;
             border: none;
+        }
+
+        i.icon-actions {
+            color: $brand-primary;
+        }
+
+        a.btn-link.help-icon-btn.notifications {
+            color: #ddd;
+        }
+
+        a.btn-link.help-icon-btn.notifications:hover {
+            color: $brand-primary;
         }
 
         .nav-tabs .nav-link {
