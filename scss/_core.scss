@@ -3665,7 +3665,7 @@ table th img.iconhelp {
     max-height: 15.2em;
     overflow-y: hidden;
     &:hover {
-        overflow-y: scroll;
+        overflow-y: auto;
     }
 }
 
