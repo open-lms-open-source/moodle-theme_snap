@@ -942,7 +942,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
             $userpicture = new user_picture($USER);
             $userpicture->link = false;
             $userpicture->alttext = false;
-            $userpicture->size = 100;
+            $userpicture->size = 40;
             $picture = $this->render($userpicture);
 
             $menu = '<span class="hidden-xs-down">' .get_string('menu', 'theme_snap'). '</span>';

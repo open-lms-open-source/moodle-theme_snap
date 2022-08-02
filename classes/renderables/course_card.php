@@ -235,7 +235,7 @@ class course_card implements \renderable {
                 $teacheruser = $teacherusers[$userid];
                 $userpicture = new \user_picture($teacheruser);
                 $userpicture->link = false;
-                $userpicture->size = 100;
+                $userpicture->size = 35;
                 $teacherpicture = $OUTPUT->render($userpicture);
 
                 if (stripos($teacherpicture, 'defaultuserpic') === false) {
