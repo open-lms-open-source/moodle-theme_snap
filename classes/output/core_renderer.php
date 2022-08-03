@@ -1198,6 +1198,8 @@ class core_renderer extends \theme_boost\output\core_renderer {
         }
 
         $output .= html_writer::start_div('', array('id' => 'news-articles'));
+
+        $counter = 0;
         foreach ($discussions as $discussion) {
             if (!forum_user_can_see_discussion($forum, $discussion, $context)) {
                 continue;
@@ -1233,16 +1235,26 @@ class core_renderer extends \theme_boost\output\core_renderer {
                     get_string('readmore', 'theme_snap').'"></div>';
             }
             $close = get_string('closebuttontitle', 'moodle');
-            $output .= <<<HTML
-<div class="news-article clearfix">
-    {$newsimage}
+
+            $newsinner = <<<HTML
     <div class="news-article-inner">
         <div class="news-article-content">
             <h3 class='toggle'><a href="$CFG->wwwroot/mod/forum/discuss.php?d=$discussion->discussion">{$name}</a></h3>
             <em class="news-article-date">{$date}</em>
         </div>
     </div>
-    {$preview}
+HTML;
+
+            if ($counter % 2 === 0) {
+                $newsordered = $newsinner . $preview . $newsimage;
+            } else {
+                $newsordered = $newsimage . $preview . $newsinner;
+            }
+            $counter++;
+
+            $output .= <<<HTML
+<div class="news-article clearfix">
+    {$newsordered}
     <div class="news-article-message" tabindex="-1">
         {$message}
         <div><hr><a class="snap-action-icon snap-icon-close toggle" href="#">
