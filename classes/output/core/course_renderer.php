@@ -709,7 +709,7 @@ class course_renderer extends \core_course_renderer {
      * @return stdClass | string
      */
     protected function get_mod_type(cm_info $mod) {
-        if ($mod->modname === 'resource' && !empty($mod->icon)) {
+        if ($mod->modname === 'resource') {
             // Get file type from icon
             // (note, I also tried this using a combo of substr and strpos and preg_match was much faster!).
             $matches = array();
@@ -739,7 +739,7 @@ class course_renderer extends \core_course_renderer {
      * @return bool
      */
     protected function is_image_mod(cm_info $mod) {
-        if ($mod->modname == 'resource' && !empty($mod->icon)) {
+        if ($mod->modname == 'resource') {
             $matches = array();
             preg_match ('#/(\w+)-#', $mod->icon, $matches);
             $filetype = $matches[1];
