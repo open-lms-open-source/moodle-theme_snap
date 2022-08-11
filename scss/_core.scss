@@ -1003,9 +1003,9 @@ footer #moodle-footer
     color: $nav-button-color;
     background-color: $nav-button-bg;
 
-    .userpicture {
+    .userpicture, .userinitials.size-40 {
         width: 40px;
-        height: auto;
+        height: 40px;
         @include alakazam;
     }
     &:hover,
