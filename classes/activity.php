@@ -1038,13 +1038,7 @@ class activity {
                     if ($event->eventtype === 'open') {
                         $timeopen = $event->timestart;
                     } else if (($event->eventtype === 'close' || $event->eventtype === 'due')) {
-                        // Get the overrride due date when event is not from override.
-                        if ($event->modulename == 'assign' && $event->groupid == null &&
-                            !empty($mod->customdata['duedate']) && !empty($mod->customdata['allowsubmissionsfromdate'])) {
-                            $timeclose = $mod->customdata['duedate'];
-                        } else {
-                            $timeclose = $event->timestart + $event->timeduration;
-                        }
+                        $timeclose = $event->timestart + $event->timeduration;
                     }
 
                 }
@@ -1072,15 +1066,6 @@ class activity {
                     $moddates[$courseid . '_' . $modname][$event->instance] = $instdates;
                 }
             }
-            // Get the override due date when no event exist.
-        } else if ($mod->modname == 'assign' && $groups[0] &&
-            !empty($mod->customdata['duedate']) && !empty($mod->customdata['allowsubmissionsfromdate'])) {
-            $instdates = (object)[
-                'id' => $modinst,
-                'timeopen' => $mod->customdata['allowsubmissionsfromdate'],
-                'timeclose' => $mod->customdata['duedate']
-            ];
-            $moddates[$courseid . '_' . $modname][$modinst]  = $instdates;
         }
 
         return $moddates[$courseid.'_'.$modname][$modinst];
