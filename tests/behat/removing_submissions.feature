@@ -36,7 +36,7 @@ Feature: When the moodle theme is set to Snap, a student can remove a submitted 
       | teacher1 | C1     | editingteacher |
       | student1 | C1     | student        |
     Then I log in as "teacher1"
-    And I am on "Course 1" course homepage with editing mode on
+    And I am on "Course 1" course homepage
     And I add a "Assignment" to section "1" and I fill the form with:
       | Assignment name | Assignment One |
       | Description | Submit your file |

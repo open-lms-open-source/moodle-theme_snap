@@ -709,7 +709,7 @@ class course_renderer extends \core_course_renderer {
      * @return stdClass | string
      */
     protected function get_mod_type(cm_info $mod) {
-        if ($mod->modname === 'resource') {
+        if ($mod->modname === 'resource' && !empty($mod->icon)) {
             // Get file type from icon
             // (note, I also tried this using a combo of substr and strpos and preg_match was much faster!).
             $matches = array();
@@ -739,7 +739,7 @@ class course_renderer extends \core_course_renderer {
      * @return bool
      */
     protected function is_image_mod(cm_info $mod) {
-        if ($mod->modname == 'resource') {
+        if ($mod->modname == 'resource' && !empty($mod->icon)) {
             $matches = array();
             preg_match ('#/(\w+)-#', $mod->icon, $matches);
             $filetype = $matches[1];
@@ -1377,9 +1377,9 @@ class course_renderer extends \core_course_renderer {
         $output .= $this->container_start('buttons');
         ob_start();
         if (\core_course_category::is_simple_site() == 1) {
-            print_course_request_buttons(\context_system::instance());
+            snap_print_course_request_buttons(\context_system::instance());
         } else {
-            print_course_request_buttons($context);
+            snap_print_course_request_buttons($context);
         }
         $output .= ob_get_contents();
         ob_end_clean();
@@ -1587,6 +1587,107 @@ class course_renderer extends \core_course_renderer {
             }
         }
         return $output;
+    }
+
+    /**
+     * Renders HTML to display a list of course modules in a course section
+     * Also displays "move here" controls in Javascript-disabled mode.
+     * Copied from course/rederer.php
+     *
+     * @deprecated since 4.0 MDL-72656 - use core_course output components instead.
+     *
+     * This function calls {@link core_course_renderer::course_section_cm()}
+     *
+     * @param stdClass $course course object
+     * @param int|stdClass|section_info $section relative section number or section object
+     * @param int $sectionreturn section number to return to
+     * @param int $displayoptions
+     * @return void
+     */
+
+    public function course_section_cm_list($course, $section, $sectionreturn = null, $displayoptions = []) {
+        global $USER;
+        $output = '';
+
+        $format = course_get_format($course);
+        $modinfo = $format->get_modinfo();
+
+        if (is_object($section)) {
+            $section = $modinfo->get_section_info($section->section);
+        } else {
+            $section = $modinfo->get_section_info($section);
+        }
+        $completioninfo = new \completion_info($course);
+
+        // Check if we are currently in the process of moving a module with JavaScript disabled.
+        $ismoving = $format->show_editor() && ismoving($course->id);
+
+        if ($ismoving) {
+            $strmovefull = strip_tags(get_string("movefull", "", "'$USER->activitycopyname'"));
+        }
+
+        // Get the list of modules visible to user (excluding the module being moved if there is one).
+        $moduleshtml = [];
+        if (!empty($modinfo->sections[$section->section])) {
+            foreach ($modinfo->sections[$section->section] as $modnumber) {
+                $mod = $modinfo->cms[$modnumber];
+
+                if ($ismoving and $mod->id == $USER->activitycopy) {
+                    // Do not display moving mod.
+                    continue;
+                }
+
+                if ($modulehtml = $this->course_section_cm_list_item($course,
+                    $completioninfo, $mod, $sectionreturn, $displayoptions)) {
+                    $moduleshtml[$modnumber] = $modulehtml;
+                }
+            }
+        }
+
+        $sectionoutput = '';
+        if (!empty($moduleshtml) || $ismoving) {
+            foreach ($moduleshtml as $modnumber => $modulehtml) {
+                if ($ismoving) {
+                    $movingurl = new \moodle_url('/course/mod.php', array('moveto' => $modnumber, 'sesskey' => sesskey()));
+                    $sectionoutput .= html_writer::tag('li',
+                        html_writer::link($movingurl, '', array('title' => $strmovefull, 'class' => 'movehere')),
+                        array('class' => 'movehere'));
+                }
+
+                $sectionoutput .= $modulehtml;
+            }
+
+            if ($ismoving) {
+                $movingurl = new \moodle_url('/course/mod.php', array('movetosection' => $section->id, 'sesskey' => sesskey()));
+                $sectionoutput .= html_writer::tag('li',
+                    html_writer::link($movingurl, '', array('title' => $strmovefull, 'class' => 'movehere')),
+                    array('class' => 'movehere'));
+            }
+        }
+
+        // Always output the section module list.
+        $output .= html_writer::tag('ul', $sectionoutput, array('class' => 'section img-text'));
+
+        return $output;
+    }
+
+    /**
+     * Checks if course module has any conditions that may make it unavailable for
+     * all or some of the students
+     * Copied from course/rederer.php
+     * @deprecated since Moodle 4.0 MDL-72656 - please do not use this function any more.
+     *
+     * @param cm_info $mod
+     * @return bool
+     */
+    public function is_cm_conditionally_hidden(cm_info $mod) {
+        global $CFG;
+        $conditionalhidden = false;
+        if (!empty($CFG->enableavailability)) {
+            $info = new \core_availability\info_module($mod);
+            $conditionalhidden = !$info->is_available_for_all();
+        }
+        return $conditionalhidden;
     }
 
     /**

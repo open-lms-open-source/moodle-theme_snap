@@ -28,7 +28,7 @@ Feature: When setting an erroneous field in settings, snap auto-expands area.
       | fullname | shortname | format | category | groupmode | enablecompletion |
       | Course 1 | C1        | topics | 0        | 1         | 1                |
     Then I log in as "admin"
-    And I am on "Course 1" course homepage with editing mode on
+    And I am on "Course 1" course homepage
     And I add a "Assignment" to section "1" and I fill the form with:
       | Assignment name | Assignment One    |
       | Description     | Test description  |
@@ -37,7 +37,7 @@ Feature: When setting an erroneous field in settings, snap auto-expands area.
   @javascript
   Scenario: Go to Assignment settings page and put wrong max grade.
     Given I log in as "admin"
-    And I am on "Course 1" course homepage with editing mode on
+    And I am on "Course 1" course homepage
     And I follow "Topic 1"
     And I click on ".snap-activity[data-type='Assignment']  a.snap-edit-asset" "css_element"
     And I expand all fieldsets
@@ -49,7 +49,7 @@ Feature: When setting an erroneous field in settings, snap auto-expands area.
   @javascript
   Scenario: Go to Assignment settings page and put text on Grade to pass input.
     Given I log in as "admin"
-    And I am on "Course 1" course homepage with editing mode on
+    And I am on "Course 1" course homepage
     And I follow "Topic 1"
     And I click on ".snap-activity[data-type='Assignment']  a.snap-edit-asset" "css_element"
     And I expand all fieldsets
@@ -61,7 +61,7 @@ Feature: When setting an erroneous field in settings, snap auto-expands area.
   @javascript
   Scenario: Go to Assignment settings page and put Cut-off date before allow submissions from.
     Given I log in as "admin"
-    And I am on "Course 1" course homepage with editing mode on
+    And I am on "Course 1" course homepage
     And I follow "Topic 1"
     And I click on ".snap-activity[data-type='Assignment']  a.snap-edit-asset" "css_element"
     And I expand all fieldsets
@@ -74,7 +74,7 @@ Feature: When setting an erroneous field in settings, snap auto-expands area.
   @javascript
   Scenario: Go to Assignment settings page and put Grading date before allow submissions from.
     Given I log in as "admin"
-    And I am on "Course 1" course homepage with editing mode on
+    And I am on "Course 1" course homepage
     And I follow "Topic 1"
     And I click on ".snap-activity[data-type='Assignment']  a.snap-edit-asset" "css_element"
     And I expand all fieldsets

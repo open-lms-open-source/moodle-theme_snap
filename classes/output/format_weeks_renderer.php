@@ -30,5 +30,4 @@ use format_weeks\output\renderer;
 class format_weeks_renderer extends renderer {
 
     use format_section_trait;
-
 }

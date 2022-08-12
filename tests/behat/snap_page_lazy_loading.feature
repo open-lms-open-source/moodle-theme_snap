@@ -35,7 +35,7 @@ Feature: When the moodle theme is set to Snap course pages can be rendered using
       | teacher1  | C1      | editingteacher  |
       | admin     | C1      | editingteacher  |
     And I log in as "admin"
-    And I am on "Course 1" course homepage with editing mode on
+    And I am on "Course 1" course homepage
     And I add a "Page" to section "1" and I fill the form with:
       | Name         | Test Page        |
       | Description  | Test description |

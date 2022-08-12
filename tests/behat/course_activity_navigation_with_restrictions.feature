@@ -46,7 +46,7 @@ Feature: Activity navigation involving activities with access restrictions in Sn
       | chat        | Chat 1        | Test chat description       | C1     | chat1      | 0       |
       | quiz        | Quiz 1        | Test quiz description       | C1     | quiz1      | 0       |
     And I log in as "teacher1"
-    And I am on "Course 1" course homepage with editing mode on
+    And I am on "Course 1" course homepage
     # Set completion for Forum 1.
     And I follow "Edit \"Forum 1\""
     And I expand all fieldsets

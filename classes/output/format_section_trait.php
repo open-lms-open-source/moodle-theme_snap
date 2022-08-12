@@ -26,6 +26,8 @@
 
 namespace theme_snap\output;
 use context_course;
+use core_courseformat\output\local\content;
+use renderable;
 use html_writer;
 use moodle_url;
 use stdClass;
@@ -38,6 +40,29 @@ use theme_snap\renderables\course_section_navigation;
 trait format_section_trait {
 
     use general_section_trait;
+
+    /**
+     * New moodle 4.0 render_content function.
+     * @param renderable $widget
+     */
+
+    public function render_content(renderable $widget) {
+        // We need access to format and course to avoid more queries.
+        $reflectionf = new \ReflectionClass($widget);
+        $property = $reflectionf->getProperty('format');
+        $property->setAccessible(true);
+        $format = $property->getValue($widget);
+        $reflectioncourse = new \ReflectionClass($format);
+        $property = $reflectioncourse->getProperty('course');
+        $property->setAccessible(true);
+        $course = $property->getValue($format);
+
+        if ($widget instanceof content) {
+            $this->print_multiple_section_page($course, null, null, null, null);
+        } else {
+            return parent::render($widget);
+        }
+    }
 
     /**
      * Based on get_nav_links function in class format_section_renderer_base
@@ -376,9 +401,12 @@ trait format_section_trait {
         if (!$PAGE->user_is_editing()) {
             $output .= $this->render(new course_section_navigation($course, $modinfo->get_section_info_all(), $section->section));
         }
-        $output .= $this->section_footer();
+        $output .= html_writer::end_tag('div');
+        $output .= html_writer::end_tag('li');
         return $output;
     }
+
+
 
     // Basically unchanged from the core version adds some navigation with course_section_navigation renderable.
     public function print_multiple_section_page($course, $sections, $mods, $modnames, $modnamesused) {
@@ -392,8 +420,8 @@ trait format_section_trait {
         // Copy activity clipboard..
         echo $this->course_activity_clipboard($course, 0);
 
-        // Now the list of sections..
-        echo $this->start_section_list();
+        // Now the list of sections.
+        echo html_writer::start_tag('ul', ['class' => 'sections']);
         $canviewhidden = has_capability('moodle/course:viewhiddensections', context_course::instance($course->id));
         $numsections = course_get_format($course)->get_last_section_number();
         if (get_config('theme_snap', 'coursepartialrender')) {
@@ -744,5 +772,57 @@ trait format_section_trait {
         return $this->render_from_template('theme_snap/course_action_section', $data);
     }
 
+    /**
+     * Show if something is on on the course clipboard (moving around)
+     * Copied from course/format/classes/output/section_renderer.php
+     * @deprecated since 4.0 MDL-72656 - use core_course output components instead.
+     *
+     * While the non ajax course eidtion is still supported, the old clipboard will be
+     * emulated by core_courseformat\output\local\content\section\cmlist.
+     *
+     * @param stdClass $course The course entry from DB
+     * @param int $sectionno The section number in the course which is being displayed
+     * @return string HTML to output.
+     */
+    protected function course_activity_clipboard($course, $sectionno = null) {
+        global $USER;
+        $o = '';
+        // If currently moving a file then show the current clipboard.
+        if (ismoving($course->id)) {
+            $url = new moodle_url(
+                '/course/mod.php',
+                array(
+                    'sesskey' => sesskey(),
+                    'cancelcopy' => true,
+                    'sr' => $sectionno,
+                )
+            );
 
+            $o .= html_writer::start_tag('div', array('class' => 'clipboard'));
+            $o .= strip_tags(get_string('activityclipboard', '', $USER->activitycopyname));
+            $o .= ' (' . html_writer::link($url, get_string('cancel')) . ')';
+            $o .= html_writer::end_tag('div');
+        }
+
+        return $o;
+    }
+
+    /**
+     * Generate html for a section summary text
+     * Copied from course/format/classes/output/section_renderer.php
+     * @deprecated since 4.0 MDL-72656 - use core_course output components instead.
+     *
+     * @param stdClass $section The course_section entry from DB
+     * @return string HTML to output.
+     */
+    protected function format_summary_text($section) {
+        $format = course_get_format($section->course);
+        if (!($section instanceof section_info)) {
+            $modinfo = $format->get_modinfo();
+            $section = $modinfo->get_section_info($section->section);
+        }
+        $summaryclass = $format->get_output_classname('content\\section\\summary');
+        $summary = new $summaryclass($format, $section);
+        return $summary->format_summary_text();
+    }
 }

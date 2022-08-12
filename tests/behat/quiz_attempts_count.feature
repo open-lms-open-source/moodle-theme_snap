@@ -43,7 +43,7 @@ Feature: Quiz attempts from suspended users and previews from admin or teachers
       | contextlevel | reference | name           |
       | Course       | C1        | Test questions |
     When I log in as "teacher1"
-    And I am on "Course 1" course homepage with editing mode on
+    And I am on "Course 1" course homepage
     And the following "activities" exist:
       | activity   | name   | intro              | course | idnumber |
       | quiz       | Quiz | Quiz 1 description | C1     | quiz1    |

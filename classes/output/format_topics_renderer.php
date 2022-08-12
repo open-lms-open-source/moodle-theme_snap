@@ -30,5 +30,4 @@ use format_topics\output\renderer;
 class format_topics_renderer extends renderer {
 
     use format_section_trait;
-
 }

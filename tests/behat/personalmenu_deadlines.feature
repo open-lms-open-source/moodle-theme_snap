@@ -215,7 +215,7 @@ Feature: When the moodle theme is set to Snap, students and teachers can find in
       | personalmenuadvancedfeedsenable  | <enadvfeeds> | theme_snap |
       | personalmenuadvancedfeedsperpage | 6 | theme_snap |
     And I log in as "teacher1"
-    And I am on "Course 2" course homepage with editing mode on
+    And I am on "Course 2" course homepage
     # Set completion for Assignment 1.
     Then I follow "Edit \"Assignment 1\""
     And I expand all fieldsets
@@ -279,7 +279,7 @@ Feature: When the moodle theme is set to Snap, students and teachers can find in
     And I see a personal menu deadline of "##tomorrow##" for "Assignment 1"
     And I log out
     And I log in as "teacher1"
-    And I am on "Course 1" course homepage with editing mode on
+    And I am on "Course 1" course homepage
     And I click on ".snap-activity[data-type='Assignment'] span.snap-edit-asset-more" "css_element"
     And I click on ".snap-activity[data-type='Assignment'] a.js_snap_delete" "css_element"
     Then I should see asset delete dialog
