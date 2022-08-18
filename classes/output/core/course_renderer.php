@@ -608,7 +608,7 @@ class course_renderer extends \core_course_renderer {
             $moreicon = "<img title='".get_string('more', 'theme_snap')."' alt='".get_string('more', 'theme_snap').
                     "' class='svg-icon' src='".$this->output->image_url('more', 'theme')."'/>";
             $advancedactions = '<div class="dropdown snap-edit-more-dropdown">';
-            $advancedactions .= '<span class="dropdown-toggle snap-edit-asset-more" ';
+            $advancedactions .= '<span class="snap-edit-asset-more" ';
             $advancedactions .= 'data-toggle="dropdown" data-boundary="window" data-offset="-10,12"';
             $advancedactions .= 'aria-expanded="false" aria-haspopup="true">'.$moreicon.'</span>';
             $advancedactions .= '<div class="dropdown-menu" role="menu">';
