@@ -547,6 +547,25 @@ define(['jquery', 'core/log', 'theme_snap/headroom', 'theme_snap/util', 'theme_s
                 $('#course-toc').removeClass('state-visible');
             });
 
+            // Reset videos, when changing section (INT-18208).
+            $(document).on("click", ".section_footer a, .chapter-title, .toc-footer a", function() {
+                const videos = $('[title="watch"], .video-js, iframe:not([id])');
+                for (let i = 0; i < videos.length; i++) {
+                    if (videos[i].classList.contains('video-js')) {
+                        if (videos[i].classList.contains('vjs-playing')) {
+                            let videoButton = videos[i].querySelector('.vjs-play-control.vjs-control.vjs-button');
+                            videoButton.click(); // Stop for videos using video-js Plugin.
+                        }
+                    } else if (videos[i].nodeName === 'IFRAME') {
+                        if (videos[i].src.includes("vimeo")) {
+                            videos[i].src += ""; // Stop for Vimeo embedded videos.
+                        }
+                    } else {
+                        videos[i].querySelector('iframe').src += ""; // Stop for Youtube embedded videos.
+                    }
+                }
+            });
+
             $(document).on("click", ".news-article .toggle", function(e) {
                 var $news = $(this).closest('.news-article');
                 util.scrollToElement($news);
@@ -1128,7 +1147,7 @@ nodeToChange = $(selectorToChange);
                 $(toggleCompletion).on('submit', function() {
                     var shouldReload = $(toggleCompletion).hasClass('forcereload');
                     if (shouldReload === true) {
-                        setTimeout(function () {
+                        setTimeout(function() {
                             location.reload(true);
                         }, delay);
                     }
