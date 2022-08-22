@@ -452,14 +452,10 @@ form.mform {
                 &:after {
                     font-family: FontAwesome;
                     line-height: 1.5;
-                    content: "\f106"; // up arrow default.
                     float: right;
                     margin-right: .4rem; // magic number to line up with help icons.
                 }
             }
-        }
-        &.collapsed legend a.fheader:after {
-            content: "\f107"; // down arrow to indicate can expand.
         }
     }
 }
