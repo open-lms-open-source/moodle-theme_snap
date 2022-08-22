@@ -72,7 +72,7 @@ Feature: Activity navigation in Snap theme
       | assign     | Assignment 1 | Test assignment description | C2     | assign21  | 0       |
     And I log in as "admin"
     And I reset session storage
-    And I am on "Course 1" course homepage with editing mode on
+    And I am on "Course 1" course homepage
     # Stealth activity.
     And I follow "Topic 2"
     And I follow "Edit \"Forum 1\""
@@ -347,7 +347,7 @@ Feature: Activity navigation in Snap theme
     And "#prev-activity-link" "css_element" should be visible
     And "#next-activity-link" "css_element" should be visible
     And "Jump to..." "field" should be visible
-    And I click on "Attempt quiz now" "text"
+    And I click on "Attempt quiz" "text"
     And "#prev-activity-link" "css_element" should not be visible
     And "#next-activity-link" "css_element" should not be visible
     And "Jump to..." "field" should not be visible

@@ -80,7 +80,7 @@ Feature: When the moodle theme is set to Snap, cover image can be set for site a
     And I close the personal menu
     # Test deleting cover image
     And I click on "#admin-menu-trigger" "css_element"
-    And I navigate to "Edit settings" in current page administration
+    And I navigate to "Settings" in current page administration
     And I scroll to the base of id "id_overviewfiles_filemanager_fieldset"
     And I click on ".filemanager-container .fp-file > a" "css_element"
     And I click on "div.moodle-dialogue-focused button.fp-file-delete.btn" "css_element"

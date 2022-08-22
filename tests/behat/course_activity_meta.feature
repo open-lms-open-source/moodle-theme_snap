@@ -194,7 +194,7 @@ Feature: When the moodle theme is set to Snap, students see meta data against co
       | Short name | skillZ! |
       | Scale | 1337dom scale |
     And I press "Save changes"
-    And I am on "Course 1" course homepage with editing mode on
+    And I am on "Course 1" course homepage
     And I add a "Assignment" to section "1" and I fill the form with:
       | Assignment name | Test assignment name |
       | Description | Submit your online text |
@@ -259,11 +259,11 @@ Feature: When the moodle theme is set to Snap, students see meta data against co
   Scenario: Correct pending submissions for grading in course view for Snap
     Given I log in as "teacher1"
     And I am on "Course 1" course homepage
-    And I navigate to "Edit settings" in current page administration
+    And I navigate to "Settings" in current page administration
     And I expand all fieldsets
     And I set the field "Group mode" to "Separate groups"
     And I press "Save and display"
-    And I am on "Course 1" course homepage with editing mode on
+    And I am on "Course 1" course homepage
     Given the following "users" exist:
       | username | firstname | lastname | email                |
       | student3 | Student   | 3        | student3@example.com |

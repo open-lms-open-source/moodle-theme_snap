@@ -41,7 +41,7 @@ Feature: The site displays only the language that user has selected for multilan
     And I click on "Content and headings" "option" in the "Multi-Language Content" "table_row"
     And I am on site homepage
     And I click on "#admin-menu-trigger" "css_element"
-    And I navigate to "Edit settings" in current page administration
+    And I navigate to "Settings" in current page administration
     And I set the field with xpath "//select[@id='id_s__frontpageloggedin0']" to "Announcements"
     And I press "Save changes"
     And I log out

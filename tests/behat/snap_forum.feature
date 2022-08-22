@@ -36,7 +36,7 @@ Feature: When the moodle theme is set to Snap, core forums displays correctly.
       | teacher1 | C1     | editingteacher |
       | student1 | C1     | student        |
     And I log in as "teacher1"
-    And I am on "Course 1" course homepage with editing mode on
+    And I am on "Course 1" course homepage
     And I add a "Forum" to section "1" and I fill the form with:
       | Forum name  | Test forum name                |
       | Forum type  | Standard forum for general use |
@@ -100,7 +100,7 @@ Feature: When the moodle theme is set to Snap, core forums displays correctly.
       | Message | Discussion contents 1, first message |
     And I log out
     And I log in as "teacher1"
-    And I am on "Course 1" course homepage with editing mode on
+    And I am on "Course 1" course homepage
     And I follow "Topic 1"
     And I click on ".forum .instancename:contains('Test forum name')" "css_element"
     And I click on "Grade users" "button"

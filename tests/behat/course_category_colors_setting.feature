@@ -37,10 +37,12 @@ Feature: When the moodle theme is set to Snap, sets a color per category.
       | 10 | Cat 10 |   CAT5   |   CAT10  |   Test      |
       | 20 | Cat 20 |   CAT10  |   CAT20  |   Test      |
       | 30 | Cat 30 |   CAT30  |   CAT30  |   Test      |
+      | 40 | Miscellaneous |   misc  |   misc  |   Test      |
     And the following "courses" exist:
       | fullname | shortname | category | format |
-      | Course 1 | C1        | 0        | topics |
-      | Course 2 | C2        | CAT20    | topics |
+      | Course 1 | C1        |     0    | topics |
+      | Course 2 | C2        |   CAT20  | topics |
+      | Course 3 | C3        |   misc   | topics |
     And the following "course enrolments" exist:
       | user     | course | role           |
       | admin    | C2     | editingteacher |
@@ -58,7 +60,7 @@ Feature: When the moodle theme is set to Snap, sets a color per category.
     And I wait until the page is ready
     And I check body for classes "theme-snap"
     And I follow "Miscellaneous"
-    And I check body for classes "theme-snap,category-1"
+    And I check body for classes "theme-snap,category-40"
     And I follow "Courses"
     And I follow "Browse all courses"
     And I follow "Cat 5"

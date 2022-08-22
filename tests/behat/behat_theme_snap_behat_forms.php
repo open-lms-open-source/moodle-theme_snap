@@ -47,21 +47,21 @@ class behat_theme_snap_behat_forms extends behat_forms {
         // We already know that we waited for the DOM and the JS to be loaded, even the editor
         // so, we will use the reduced timeout as it is a common task and we should save time.
         try {
-
+            $this->wait_for_pending_js();
             // Expand all fieldsets link - which will only be there if there is more than one collapsible section.
             $expandallxpath = "//div[@class='collapsible-actions']" .
-                "//a[contains(concat(' ', @class, ' '), ' collapseexpand ')]" .
-                "[not(contains(concat(' ', @class, ' '), ' collapse-all '))]";
+                "//a[contains(concat(' ', @class, ' '), ' collapsed ')]" .
+                "//span[contains(concat(' ', @class, ' '), ' expandall ')]";
 
             $collapseexpandlink = $this->find('xpath', $expandallxpath,
                 false, false, behat_base::get_reduced_timeout());
             $collapseexpandlink->click();
-
+            $this->wait_for_pending_js();
         } catch (ElementNotFoundException $e) {
             // Try explanding only one section.
             try {
                 $expandonlysection = "//legend[@class='ftoggler']" .
-                    "//a[contains(concat(' ', @class, ' '), ' fheader ') and @aria-expanded = 'false']";
+                    "//a[contains(concat(' ', @class, ' '), ' icons-collapse-expand ') and @aria-expanded = 'false']";
 
                 $collapseexpandlink = $this->find('xpath', $expandonlysection,
                     false, false, behat_base::get_reduced_timeout());

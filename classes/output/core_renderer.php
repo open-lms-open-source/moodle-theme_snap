@@ -1695,7 +1695,8 @@ HTML;
         }
 
         if (has_capability('moodle/contentbank:access', $context)) {
-            if ($item->key === 'frontpage' || $item->key === 'courseadmin' || $item->key === 'categorysettings') {
+            if (!in_array('contentbank', $item->get_children_key_list()) &&
+                ($item->key === 'frontpage' || $item->key === 'courseadmin' || $item->key === 'categorysettings')) {
                 $this->add_contentbank_navigation_node($item, $context->id);
             }
         }
@@ -1833,23 +1834,23 @@ HTML;
         }
 
         // Intelliboard adds links to the flatnav we use to check wich links to output.
-        $flatnav = $this->page->flatnav->get_key_list();
-
+        $nav = $this->page->navigation->find('myprofile', navigation_node::TYPE_ROOTNODE);
+        $navlist = $nav->get_children_key_list();
         // Student dashboard link.
-        if (in_array("intelliboard_student", $flatnav, true)) {
-            $node = $this->page->flatnav->get("intelliboard_student");
+        if (in_array("intelliboard_student", $navlist, true)) {
+            $node = $nav->get("intelliboard_student");
             $links .= $this->render_intelliboard_link($node->get_content(), $node->action(), 'intelliboard_learner');
         }
 
         // Instructor dashboard link.
-        if (in_array("intelliboard_instructor", $flatnav, true)) {
-            $node = $this->page->flatnav->get("intelliboard_instructor");
+        if (in_array("intelliboard_instructor", $navlist, true)) {
+            $node = $nav->get("intelliboard_instructor");
             $links .= $this->render_intelliboard_link($node->get_content(), $node->action(), 'intelliboard');
         }
 
         // Competency dashboard link.
-        if (in_array("intelliboard_competency", $flatnav, true)) {
-            $node = $this->page->flatnav->get("intelliboard_competency");
+        if (in_array("intelliboard_competency", $navlist, true)) {
+            $node = $nav->get("intelliboard_competency");
             $links .= $this->render_intelliboard_link($node->get_content(), $node->action(), 'intelliboard_competencies');
         }
 
@@ -1928,11 +1929,12 @@ HTML;
         }
 
         // Intellicart adds a link to the flatnav.
-        $flatnav = $this->page->flatnav->get_key_list();
+        $nav = $this->page->navigation->find('myprofile', navigation_node::TYPE_ROOTNODE);
+        $navlist = $nav->get_children_key_list();
 
         // Student dashboard link.
-        if (in_array("intellicart_dashboard", $flatnav, true)) {
-            $node = $this->page->flatnav->get("intellicart_dashboard");
+        if (in_array("intellicart_dashboard", $navlist, true)) {
+            $node = $nav->get("intellicart_dashboard");
             $iconurl = $OUTPUT->image_url('intelliboard', 'theme');
             $img = '<img class="svg-icon" role="presentation" src="'.s($iconurl).'">';
             $link .= '<a href=" '. $node->action() .' ">'.$img.s($node->get_content()).'</a><br>';

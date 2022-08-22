@@ -38,7 +38,7 @@ Feature: When setting an html content on course sections (introduction, labels, 
   @javascript
   Scenario: Set an html content to section description and check for color.
     Given I log in as "admin"
-    And I am on "Course 1" course homepage with editing mode on
+    And I am on "Course 1" course homepage
     And I click on ".edit-summary" "css_element"
     And I set the field "Summary" to "<div id=\"test_html\"style=\"background: #f0f8ff;color: #1e90ff;\">Test text <strong>New Changes</strong>"
     And I press "Save changes"
@@ -48,7 +48,7 @@ Feature: When setting an html content on course sections (introduction, labels, 
   @javascript
   Scenario: Set simple content to section description and check for color.
     Given I log in as "admin"
-    And I am on "Course 1" course homepage with editing mode on
+    And I am on "Course 1" course homepage
     And I click on ".edit-summary" "css_element"
     And I set the field "Summary" to "Test summary"
     And I press "Save changes"

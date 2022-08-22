@@ -49,7 +49,7 @@ Feature: When the moodle theme is set to Snap, teachers can delete course resour
       | coursepartialrender | <Option> | theme_snap |
     And I am on site homepage
     And I click on "#admin-menu-trigger" "css_element"
-    And I navigate to "Edit settings" in current page administration
+    And I navigate to "Settings" in current page administration
     And I set the following fields to these values:
       | Include a topic section | 1 |
     And I am on site homepage

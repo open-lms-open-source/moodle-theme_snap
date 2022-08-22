@@ -27,7 +27,7 @@ Feature: When the moodle theme is set to Snap, teachers can move course resource
     Given I log in as "admin"
     And I am on site homepage
     And I click on "#admin-menu-trigger" "css_element"
-    And I navigate to "Edit settings" in current page administration
+    And I navigate to "Settings" in current page administration
     And I set the following fields to these values:
       | Include a topic section | 1 |
     And I log out

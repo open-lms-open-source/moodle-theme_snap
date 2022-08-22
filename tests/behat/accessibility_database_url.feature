@@ -37,7 +37,7 @@ Feature: Check that the correct attributes exists for URL field in a database ac
   @javascript
   Scenario: Url type and Url autocomplete should exists for input Url in the "Add entry" for Database activity.
     And I log in as "teacher1"
-    And I am on "Course 1" course homepage with editing mode on
+    And I am on "Course 1" course homepage
     # Create database activity and allow editing of
     # approved entries.
     And I add a "Database" to section "1" and I fill the form with:

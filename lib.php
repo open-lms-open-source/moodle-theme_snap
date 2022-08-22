@@ -502,3 +502,32 @@ function theme_snap_resize_bgimage_after_save() {
         }
     }
 }
+
+/**
+ * Print the buttons relating to course requests.
+ * Copied from course/lib.php.
+ * @param context $context current page context.
+ * @deprecated since Moodle 4.0
+ * @todo Final deprecation MDL-73976
+ */
+function snap_print_course_request_buttons($context) {
+    global $CFG, $DB, $OUTPUT;
+    if (empty($CFG->enablecourserequests)) {
+        return;
+    }
+    if (course_request::can_request($context)) {
+        // Print a button to request a new course.
+        $params = [];
+        if ($context instanceof context_coursecat) {
+            $params['category'] = $context->instanceid;
+        }
+        echo $OUTPUT->single_button(new moodle_url('/course/request.php', $params),
+            get_string('requestcourse'), 'get');
+    }
+    // Print a button to manage pending requests.
+    if (has_capability('moodle/site:approvecourse', $context)) {
+        $disabled = !$DB->record_exists('course_request', array());
+        echo $OUTPUT->single_button(new moodle_url('/course/pending.php'), get_string('coursespending'),
+            'get', array('disabled' => $disabled));
+    }
+}

@@ -144,7 +144,7 @@ Feature: When the moodle theme is set to Snap, students and teachers can open a 
         | moodle/course:ignoreavailabilityrestrictions | Prevent    |
       And I log out
       And I log in as "teacher1"
-      And I am on "Course 1" course homepage with editing mode on
+      And I am on "Course 1" course homepage
 
       Given the following "groups" exist:
         | name     | course | idnumber |
@@ -171,7 +171,7 @@ Feature: When the moodle theme is set to Snap, students and teachers can open a 
       And I click on ".availability-item .availability-eye img" "css_element"
       And I set the field with xpath "//select[@name='id']" to "G1"
       And I press "Save and display"
-      And I am on "Course 1" course homepage with editing mode on
+      And I am on "Course 1" course homepage
 
       # Set restriction to assignment 2.
       And I add a "Assignment" to section "1" and I fill the form with:
@@ -240,7 +240,7 @@ Feature: When the moodle theme is set to Snap, students and teachers can open a 
         | moodle/course:ignoreavailabilityrestrictions | Prevent    |
       And I log out
       And I log in as "teacher1"
-      And I am on "Course 1" course homepage with editing mode on
+      And I am on "Course 1" course homepage
 
     Given the following "users" exist:
         | username | firstname | lastname | email                |

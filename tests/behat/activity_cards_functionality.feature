@@ -43,7 +43,7 @@ Feature: Check functionality in activity cards.
   @javascript @accessibility
   Scenario: Add an image to an activity card, student and teacher should not see the image in the content.
     Given I log in as "teacher1"
-    And I am on "Course 1" course homepage with editing mode on
+    And I am on "Course 1" course homepage
     And I add a "Folder" to section "1" and I fill the form with:
       | Name         | Test Page        |
       | Description | <p>Test Content</p><img src="https://download.moodle.org/unittest/test.jpg" alt="test image" width="200" height="150" class="img-responsive atto_image_button_text-bottom"> |
@@ -57,7 +57,7 @@ Feature: Check functionality in activity cards.
     And "img.img-responsive atto_image_button_text-bottom" "css_element" should not exist
     And I log out
     Given I log in as "student1"
-    And I am on "Course 1" course homepage with editing mode on
+    And I am on "Course 1" course homepage
     And I follow "Topic 1"
     And "img.img-responsive atto_image_button_text-bottom" "css_element" should not exist
     And the page should meet "cat.aria, wcag412" accessibility standards
@@ -70,7 +70,7 @@ Feature: Check functionality in activity cards.
       | resourcedisplay | <Option> | theme_snap |
     And I log out
     Given I log in as "teacher1"
-    And I am on "Course 1" course homepage with editing mode on
+    And I am on "Course 1" course homepage
     And I add a "Folder" to section "1" and I fill the form with:
       | Name         | Test Page        |
       | Description | <p>Test Content</p><img src="https://download.moodle.org/unittest/test.jpg" alt="test image" width="200" height="150" class="img-responsive atto_image_button_text-bottom"> |
@@ -84,7 +84,7 @@ Feature: Check functionality in activity cards.
     And "img.img-responsive.atto_image_button_text-bottom" "css_element" should exist
     And I log out
     Given I log in as "student1"
-    And I am on "Course 1" course homepage with editing mode on
+    And I am on "Course 1" course homepage
     And I follow "Topic 1"
     And "img.img-responsive.atto_image_button_text-bottom" "css_element" should exist
     And the page should meet "cat.aria, wcag412" accessibility standards
@@ -106,7 +106,7 @@ Feature: Check functionality in activity cards.
       | activity | name               | intro                   | course | idnumber | display | showexpanded |
       | folder   | Test folder name 1 | Test folder description | C1     | folder1  | 1       | 1            |
       | folder   | Test folder name 2 | Test folder description | C1     | folder2  | 0       | 1            |
-    And I am on "Course 1" course homepage with editing mode on
+    And I am on "Course 1" course homepage
     Then "li.snap-resource-long.modtype_folder div.snap-header-card div.snap-assettype" "css_element" should exist
     Then "li.snap-activity.modtype_folder div.snap-header-card div.snap-assettype" "css_element" should exist
     Examples:
