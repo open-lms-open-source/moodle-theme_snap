@@ -1021,6 +1021,12 @@ class core_renderer extends \theme_boost\output\core_renderer {
             return '';
         }
         $slides[0]->active = 'active';
+        $carouselsronlytext = get_string('covercarouselsronly', 'theme_snap');
+        $carouselplaybutton = get_string('covercarouselplaybutton', 'theme_snap');
+        $carouselpausebutton = get_string('covercarouselpausebutton', 'theme_snap');
+        $data = ['carouselsronlytext' => $carouselsronlytext,
+                'carouselplaybutton' => $carouselplaybutton,
+                'carouselpausebutton' => $carouselpausebutton];
         $data['slides'] = $slides;
         return $this->render_from_template('theme_snap/carousel', $data);
     }

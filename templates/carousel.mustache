@@ -41,23 +41,21 @@
     }
 }}
 
-<div id="snap-site-carousel" class="carousel slide" data-ride="carousel">
-    <ol class="carousel-indicators js-only">
-    {{#slides}}
-            <li data-target="#snap-site-carousel" data-slide-to="{{index}}" class="{{active}}"></li>
-    {{/slides}}
-    </ol>
-    <div class="carousel-inner">
-        {{#slides}}
-            <div class="carousel-item carousel-{{name}} {{active}}">
-                <div class="carousel-slide" style="background-image:url({{{image}}});">
-                    <div class="carousel-caption d-none d-md-block">
-                        <h1>{{title}}</h1>
-                        <p>{{subtitle}}</p>
-                    </div>
-                </div>
-            </div>
-        {{/slides}}
+<section id="snap-site-carousel" class="carousel slide" data-ride="carousel">
+    <p class="sr-only">{{carouselsronlytext}}</p>
+
+    <!-- Pause/resume button. -->
+    <div id="carousel-play-resume-buttons">
+        <button id="play-button" role="button" class="btn btn-default btn-xs" aria-label="{{carouselplaybutton}}">
+            <span class="icon fa fa-play fa-fw"></span>
+        </button>
+        <button id="pause-button" role="button" class="btn btn-default btn-xs" aria-label="{{carouselpausebutton}}">
+            <span class="icon fa fa-pause fa-fw"></span>
+        </button>
+    </div>
+
+    <div class="carousel-inner" id="snap-carousel-container">
+        <!-- Previous and next buttons. -->
         <div class="carousel-controls">
             <a class="carousel-control-prev" href="#snap-site-carousel" role="button" data-slide="prev">
                 <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -68,5 +66,21 @@
                 <span class="sr-only">Next slide</span>
             </a>
         </div>
+        <!-- Carousel slides. -->
+        {{#slides}}
+            <div class="carousel-item carousel-{{name}} {{active}}">
+                <div class="carousel-slide" style="background-image:url({{{image}}});">
+                    <div class="carousel-caption d-none d-md-block">
+                        <h1>{{title}}</h1>
+                        <p>{{subtitle}}</p>
+                    </div>
+                </div>
+            </div>
+        {{/slides}}
     </div>
-</div>
+    <div class="carousel-indicators js-only">
+        {{#slides}}
+            <button data-target="#snap-site-carousel" data-slide-to="{{index}}" class="{{active}}" aria-label="slide-{{index}}"></button>
+        {{/slides}}
+    </div>
+</section>

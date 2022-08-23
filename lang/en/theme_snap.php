@@ -84,6 +84,9 @@ $string['covercarousel'] = 'Cover carousel';
 $string['covercarouselon'] = 'Use Cover carousel';
 $string['covercarouseldescription'] = '<p>The carousel is a set of rotating banners, or a slideshow, that displays on the homepage of your site instead of the cover image.</p>
 <p>Add up to 3 images, a title for each slide, and an optional subtitle. Images of 1200 x 600 pixels work best.</p>';
+$string['covercarouselsronly'] = 'This is a carousel with auto-rotating slides. Activate any of the buttons to disable rotation. Use Next and Previous buttons to navigate, or jump to a slide using the slide dots.';
+$string['covercarouselplaybutton'] = 'Resume auto-rotating slides for the carousel.';
+$string['covercarouselpausebutton'] = 'Pause auto-rotating slides for the carousel.';
 $string['coverimage'] = 'Cover image';
 $string['covervideo'] = 'Cover video';
 $string['comingsoon'] = 'Coming soon!';
