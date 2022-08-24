@@ -146,7 +146,7 @@
                 <div class="potentialidplist">
                     {{#identityproviders}}
                     <div class="potentialidp">
-                        <a href="{{url}}"  class="btn btn-secondary btn-block" title={{#quote}}{{name}}{{/quote}} role="button">
+                        <a class="btn btn-secondary btn-block" role="button" href="{{url}}" title={{#quote}}{{name}}{{/quote}}>
                             {{#iconurl}}
                                 <img class="auth-icon" src="{{iconurl}}" onerror="this.style.display='none'"/>
                             {{/iconurl}}
@@ -173,11 +173,20 @@
                 </form>
             </div>
         {{/canloginasguest}}
+
+        {{!Create new account}}
+        {{#cansignup}}
+            <div class="snap-login snap-login-option snap-login-box" id="snap-signup">
+                <hr>
+                <h2>{{#str}}firsttime{{/str}}</h2>
+                <p><a class="btn btn-primary btn-block" id="signupbtn" role="button" href="{{signupurl}}">{{#str}}startsignup{{/str}}</a></p>
+            </div>
+        {{/cansignup}}
     </div>
 </div>
 
 {{#hasinstructions}}
-    <div class="js-only snap-login  snap-login-box ">
+    <div class="js-only snap-login snap-login-option snap-login-box" id="snap-login-help">
         <div class="snap-login-instructions">
             <a class="btn btn-primary btn-block iconhelp" href="#" data-toggle="modal" data-target="#login-help-modal">
                 {{#str}}helpwithlogin, theme_snap{{/str}} {{#pix}}help, theme_snap, {{#str}}helpwithlogin, theme_snap{{/str}} {{/pix}}
@@ -202,12 +211,6 @@
         </div>
     </div>
 {{/hasinstructions}}
-{{#cansignup}}
-    <div class="snap-login snap-login-option snap-login-box">
-        <h5>{{#str}}firsttime{{/str}}</h5>
-        <p><a class="btn btn-primary btn-block" href="{{signupurl}}">{{#str}}startsignup{{/str}}</a></p>
-    </div>
-{{/cansignup}}
 
 <span class="snap-log-in-more snap-log-in-loading-spinner"></span>
 

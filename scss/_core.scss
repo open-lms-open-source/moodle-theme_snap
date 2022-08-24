@@ -172,7 +172,7 @@ table.boxwidthwide {
             text-align: left;
         }
         button#loginbtn {
-            width: 30%;
+            width: auto;
             font-size: 0.8em;
         }
     }
@@ -186,18 +186,28 @@ table.boxwidthwide {
             }
         }
     }
-    #snap-guest-login {
+    #snap-guest-login,
+    #snap-signup {
         padding: 0;
         h2 {
             font-size: 1.1rem;
         }
-        form#guestlogin {
-            button#guestloginbtn {
-                width: 50%;
-                font-size: 0.8em;
-            }
+        button#guestloginbtn,
+        a#signupbtn {
+            width: auto;
+            font-size: 0.8em;
         }
     }
+
+    #snap-signup a#signupbtn {
+        width: 60%;
+    }
+
+    #base-login,
+    #snap-login-help {
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, .2);
+    }
+
     // Page background when login Stylish template is selected.
     .page-stylish-background {
         background-repeat: no-repeat;
@@ -212,19 +222,59 @@ table.boxwidthwide {
     }
 }
 #page-login-signup {
-
-    .collapsible-actions,
-    .ftoggler {
-        display: block;
+    #page-header {
+        padding-top: 3em;
     }
-    // Inputs to full width.
-    .mform .form-inline .form-control,
-    .mform .form-inline .custom-select {
+    #notice {
+        box-shadow: 0 4px 8px 0 rgba(0,0,0,.2);
+        border-radius: 5px;
+        background-color: #fff;
+        width: 70%;
+        Font-size: 1em;
+        color: $body-color;
+    }
+    .snap-login {
+        padding: 0;
         width: 100%;
+        max-width: inherit;
+        h2 {
+            text-align: inherit !important;
+        }
+        form.mform {
+            padding-top: 1em;
+            .collapsible-actions,
+            fieldset.collapsible legend.ftoggler {
+                display: none;
+            }
+            fieldset#id_createuserandpass,
+            fieldset#id_supplyinfo {
+                margin-left: 0;
+                float: left;
+                width: 50%;
+            }
+            > div.form-group.fitem > div.form-inline.felement {
+                display: block;
+            }
+            .form-inline .form-control,
+            .form-inline .custom-select {
+                width: 100%;
+                max-width: inherit;
+            }
+            #id_cancel {
+                border: 1px solid $brand-primary;
+            }
+        }
     }
-    // Disable hiding of form.
-    .jsenabled .mform .collapsed .fcontainer {
-        display: block !important;
+    @media (max-width: 425px) {
+        .snap-login form.mform {
+            fieldset#id_createuserandpass,
+            fieldset#id_supplyinfo {
+                width: 100%;
+            }
+            .btn-cancel {
+                margin: 0;
+            }
+        }
     }
 }
 // Additional div when login Stylish template is selected.

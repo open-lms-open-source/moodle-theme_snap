@@ -75,7 +75,7 @@ $custommenu = $OUTPUT->custom_menu();
 /* Moodle custom menu. */
 /* Hide it for the login index page. */
 if (!empty($custommenu)) {
-    if (!($PAGE->pagetype === 'login-index')) {
+    if (!($PAGE->pagetype === 'login-index') && !($PAGE->pagetype === 'login-signup')) {
         echo '<div id="snap-custom-menu-header">';
         echo $custommenu;
         echo '</div>';
