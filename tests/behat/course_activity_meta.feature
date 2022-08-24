@@ -335,3 +335,27 @@ Feature: When the moodle theme is set to Snap, students see meta data against co
     And I am on "Course 1" course homepage
     And I follow "Topic 1"
     Then I should see "1 of 2 Submitted, 1 Ungraded"
+
+  @javascript
+  Scenario: Check that the forum Due date is being shown in the Course main page
+    And I log in as "teacher1"
+    And I am on "Course 1" course homepage
+    And I add a "Forum" to section "1" and I fill the form with:
+      | Forum name  | Test forum name                |
+      | Description | Test forum description         |
+      | Whole forum grading > Type | Point           |
+      | Due date               | ##1 January 2000 08:00## |
+    And I add a "Forum" to section "1" and I fill the form with:
+      | Forum name  | Test forum name 2                |
+      | Description | Test forum 2 description         |
+      | Whole forum grading > Type | Point           |
+      | Due date               | ##2 January 2000 08:00## |
+    Then I should see "Due 1 January 2000"
+    Then I should see "Due 2 January 2000"
+    And I log out
+    And I log in as "student1"
+    And I am on "Course 1" course homepage
+    And I follow "Topic 1"
+    Then I should see "Due 1 January 2000"
+    Then I should see "Due 2 January 2000"
+    And I log out

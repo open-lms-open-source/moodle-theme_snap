@@ -298,6 +298,22 @@ class activity {
     }
 
     /**
+     * Get forum module meta data
+     *
+     * @param cm_info $modinst - module instance
+     * @return string
+     */
+    public static function forum_meta(\cm_info $modinst) {
+        $meta = new activity_meta();
+        $courseid = $modinst->course;
+        $activitydates = self::instance_activity_dates($courseid, $modinst, 'timemodified', 'duedate');
+        $meta->timeopen = $activitydates->timeopen;
+        $meta->timeclose = $activitydates->timeclose;
+        $meta->timesfromcache = !empty($activitydates->fromcache);
+        return $meta;
+    }
+
+    /**
      * Get all assignments (for all courses) waiting to be graded.
      *
      * @param array $courseids
