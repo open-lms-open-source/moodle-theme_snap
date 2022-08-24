@@ -1017,6 +1017,13 @@ footer #moodle-footer
     }
 }
 
+#mr-nav #snap-pm-trigger:hover {
+    text-decoration: none;
+    .hidden-xs-down {
+        text-decoration: underline;
+    }
+}
+
 // Core alerts badge.
 .badge-count-container {
     display: inline-block;
