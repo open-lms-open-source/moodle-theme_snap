@@ -27,3 +27,20 @@ Feature: When the moodle theme is set to Snap, the custom snap login form should
   Scenario: The login template must contain the custom snap form.
     Given I am on login page
     And I check element "#login" has class "snap-custom-form"
+
+  @javascript
+  Scenario: The login template must change when the Stylish template is selected.
+    Given I log in as "admin"
+    And I am on site homepage
+    And I click on "#admin-menu-trigger" "css_element"
+    And I expand "Site administration" node
+    And I expand "Appearance" node
+    And I click on "Category: Themes" "link"
+    And I follow "Snap"
+    And I click on "Login page" "link"
+    And I should see "Stylish template"
+    And I set the field with xpath "//select[@id='id_s_theme_snap_loginpagetemplate']" to "Stylish"
+    And I click on "Save changes" "button"
+    And I log out
+    And I am on login page
+    Then ".page-stylish-login" "css_element" should exist

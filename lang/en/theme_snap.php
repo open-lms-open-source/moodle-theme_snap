@@ -415,3 +415,4 @@ $string['loginpagetemplate'] = 'Select login page template to be used';
 $string['classic_template'] = 'Classic template';
 $string['loginbgimg'] = 'Login background image';
 $string['loginbgimgdesc'] = 'Select the images that will appear in the login page as background images.';
+$string['stylish_template'] = 'Stylish template';

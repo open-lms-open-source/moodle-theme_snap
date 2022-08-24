@@ -25,10 +25,13 @@ $description = new lang_string('loginbgimgheadingdesc', 'theme_snap');
 $setting = new admin_setting_heading($name, $title, $description);
 $snapsettings->add($setting);
 
+// Select login template.
 $templates = array (
     'classic_template' => $OUTPUT->image_url('classic_template', 'theme_snap'),
+    'stylish_template' => $OUTPUT->image_url('stylish_template', 'theme_snap'),
 );
 $snaptemplatetitle = get_string('classic_template', 'theme_snap');
+$snapstylishtemplatetitle = get_string('stylish_template', 'theme_snap');
 $templatedescription =
     '<div class="snap-classic-template container float-left">
         <div id="snap_classic_login_templates" class="row">
@@ -38,13 +41,19 @@ $templatedescription =
                 </a>
                 <div class="text-center">' . $snaptemplatetitle . '</div>
             </div>
+            <div id="snap_stylish_template_img" class="col=4">
+                <a target="_blank" href='.$templates['stylish_template'].'>
+                    <img class="img-responsive" src="'.$templates['stylish_template'].'" alt="'.$snapstylishtemplatetitle.'">
+                </a>
+                <div class="text-center">' . $snapstylishtemplatetitle . '</div>
+            </div>
         </div>
     </div>';
 
 $name = 'theme_snap/loginpagetemplate';
 $title = new lang_string('loginpagetemplate', 'theme_snap');
 $setting = new admin_setting_configselect($name, $title, $templatedescription, 'Snap template',
-    array('classic' => get_string('classic_template', 'theme_snap')));
+    array('classic' => get_string('classic_template', 'theme_snap'), 'stylish' => get_string('stylish_template', 'theme_snap')));
 $setting->set_updatedcallback('theme_reset_all_caches');
 $snapsettings->add($setting);
 
