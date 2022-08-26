@@ -85,16 +85,5 @@ $enabledloginchoices = [
 $setting = new admin_setting_configselect($name, $title, $description, $default, $enabledloginchoices);
 $snapsettings->add($setting);
 
-// Enabled login options order.
-$name = 'theme_snap/enabledloginorder';
-$title = new lang_string('enabledloginorder', 'theme_snap');
-$description = new lang_string('enabledloginorderdesc', 'theme_snap');
-$default = '0';
-$enabledloginchoices = [
-    \theme_snap\output\core_renderer::ORDER_LOGIN_MOODLE_FIRST      => new lang_string('moodleloginfirst', 'theme_snap'),
-    \theme_snap\output\core_renderer::ORDER_LOGIN_ALTERNATIVE_FIRST => new lang_string('alternativeloginfirst', 'theme_snap')
-];
-$setting = new admin_setting_configselect($name, $title, $description, $default, $enabledloginchoices);
-$snapsettings->add($setting);
 
 $settings->add($snapsettings);
