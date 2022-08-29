@@ -382,7 +382,8 @@ EOF;
             'format' => $COURSE->format,
             'partialrender' => !empty(get_config('theme_snap', 'coursepartialrender')),
             'toctype' => get_config('theme_snap', 'leftnav'),
-            'loadPageInCourse' => !empty(get_config('theme_snap', 'design_mod_page')),
+            // Tiles format always loads the page into the course (INT-18117).
+            'loadPageInCourse' => !empty(get_config('theme_snap', 'design_mod_page')) && ($COURSE->format != 'tiles'),
         ];
 
         $forcepwdchange = (bool) get_user_preferences('auth_forcepasswordchange', false);
