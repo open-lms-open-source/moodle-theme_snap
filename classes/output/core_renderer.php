@@ -56,8 +56,6 @@ class core_renderer extends \theme_boost\output\core_renderer {
     const ENABLED_LOGIN_BOTH = '0';
     const ENABLED_LOGIN_MOODLE = '1';
     const ENABLED_LOGIN_ALTERNATIVE = '2';
-    const ORDER_LOGIN_MOODLE_FIRST = '0';
-    const ORDER_LOGIN_ALTERNATIVE_FIRST = '1';
 
 
     /**

@@ -28,12 +28,28 @@ require(__DIR__.'/header.php');
 <!-- moodle js hooks -->
 <?php
 $fullscreenclasses = '';
+// Check if there is a background image configured for the login.
 if (empty(get_config('theme_snap', 'loginbgimg'))) {
-    echo '<div id="page">';
+    if (get_config('theme_snap', 'loginpagetemplate') == "stylish") {
+        // If the login template is Stylish, then add a new div called page-stylish-content
+        // and a new class called page-stylish-login.
+        echo '<div id="page">';
+        echo '<div id="page-stylish-content" class="page-stylish-login">';
+    } else {
+        echo '<div id="page">';
+    }
 } else {
-    $imgsrc = $OUTPUT->login_carousel_first();
-    echo '<div id="page" style="background-image: url('.$imgsrc.');">';
-    echo '<div id="snap-login-carousel" class="carousel slide">';
+    if (get_config('theme_snap', 'loginpagetemplate') == "stylish") {
+        // If the login template is Stylish and there are images for the background
+        // add a new class called page-stylish-background and a new class called page-stylish-login.
+        $imgsrc = $OUTPUT->login_carousel_first();
+        echo '<div id="page" class="page-stylish-background" style="background-image: url('.$imgsrc.');">';
+        echo '<div id="snap-login-carousel" class="carousel slide page-stylish-login">';
+    } else {
+        $imgsrc = $OUTPUT->login_carousel_first();
+        echo '<div id="page" style="background-image: url('.$imgsrc.');">';
+        echo '<div id="snap-login-carousel" class="carousel slide">';
+    }
 }
 ?>
 <div id="page-content">
