@@ -461,7 +461,7 @@ EOF;
         $initaxvars = [$localjoulegrader, $allyreport, $blockreports, $localcatalogue];
         $alternativelogins = new login_alternative_methods();
         if ($alternativelogins->potentialidps) {
-            $loginvars = [get_config('theme_snap', 'enabledlogin'), get_config('theme_snap', 'enabledloginorder')];
+            $loginvars = [get_config('theme_snap', 'enabledlogin')];
         } else {
             $enabledlogin = \theme_snap\output\core_renderer::ENABLED_LOGIN_MOODLE;
             $loginvars = [$enabledlogin, null];

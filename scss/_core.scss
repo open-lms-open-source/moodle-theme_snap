@@ -198,6 +198,18 @@ table.boxwidthwide {
             }
         }
     }
+    // Page background when login Stylish template is selected.
+    .page-stylish-background {
+        background-repeat: no-repeat;
+        background-size: 50% 100% !important;
+        background-position: right top !important;
+        background-color: #ffffff !important;
+
+        @media (max-width: 750px) {
+            background-position: center top !important;
+            background-size: cover !important;
+        }
+    }
 }
 #page-login-signup {
 
@@ -214,6 +226,22 @@ table.boxwidthwide {
     .jsenabled .mform .collapsed .fcontainer {
         display: block !important;
     }
+}
+// Additional div when login Stylish template is selected.
+#page-login-index .page-stylish-login {
+    background: white;
+    width: 50%;
+
+    @media (max-width: 750px) {
+        background: transparent;
+        width: 100%;
+    }
+
+    // When a user is already logged and try to login from another window.
+    #notice.snap-continue-cancel {
+        position: relative;
+    }
+
 }
 
 // -------------------------
