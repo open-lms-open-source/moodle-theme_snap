@@ -98,11 +98,13 @@ function theme_snap_set_category_colors($css, $theme) {
 
         $themedirectory = realpath(core_component::get_component_directory('theme_snap'));
         $brandscss = file_get_contents($themedirectory . '/scss/_brandcolor.scss');
+        $pluginscss = file_get_contents($themedirectory . '/scss/_pluginscategory.scss');
         foreach ($categories as $category) {
             $compiler = new core_scss();
             // Rewrite wrapper class with current category id.
             $categoryselector = '.category-' . $category->id . ' {';
             $scss = str_replace('.theme-snap {', $categoryselector, $brandscss);
+            $scss .= str_replace('.theme-snap {', $categoryselector, $pluginscss);
             $compiler->append_raw_scss($scss);
             $compiler->add_variables([
                 'brand-primary' => $colors[$category->id],
@@ -110,7 +112,9 @@ function theme_snap_set_category_colors($css, $theme) {
                 'nav-button-color' => $colors[$category->id],
                 'nav-login-bg' => $colors[$category->id],
                 'nav-login-color' => '#FFFFFF',
-                'custom-menu-text-color' => $dbcustommenutextcoloractive ? $dbcustommenutextcolor : '#FFFFFF'
+                'custom-menu-text-color' => $dbcustommenutextcoloractive ? $dbcustommenutextcolor : '#FFFFFF',
+                'body-color' => '#565656',
+                'gray-light' => '#6a737b'
             ]);
 
             try {
