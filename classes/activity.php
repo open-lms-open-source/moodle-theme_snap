@@ -973,6 +973,7 @@ class activity {
 
             if ($groups[0]) {
                 [$groupsql, $params] = $DB->get_in_or_equal($groups[0]);
+                $sortorder = count($groups[0]) > 1 ? 'AND maog.sortorder = 1' : "";
 
                 $sql = "-- Snap sql
                     SELECT ma.id,
@@ -984,13 +985,19 @@ class activity {
                       ELSE ma.allowsubmissionsfromdate
                       END
                       END AS timeopen,
-                          ma.duedate as timeclose
-
-                     FROM {assign} ma
+                      CASE
+                      WHEN mao.duedate IS NOT NULL
+                      THEN mao.duedate
+                      ELSE CASE WHEN maog.duedate IS NOT NULL
+                      THEN maog.duedate
+                      ELSE ma.duedate
+                      END
+                      END AS timeclose
+                    FROM {assign} ma
 
                 LEFT JOIN {assign_overrides} mao ON mao.assignid = ma.id AND mao.userid = ? AND mao.groupid IS NULL
                 LEFT JOIN {assign_overrides} maog ON maog.assignid = ma.id AND maog.groupid $groupsql
-                      AND maog.sortorder = 1
+                      $sortorder
 
                     WHERE course = ?";
 
@@ -1006,7 +1013,11 @@ class activity {
                       THEN mao.allowsubmissionsfromdate
                       ELSE ma.allowsubmissionsfromdate
                       END AS timeopen,
-                          ma.duedate as timeclose
+                      CASE
+                      WHEN mao.duedate IS NOT NULL
+                      THEN mao.duedate
+                      ELSE ma.duedate
+                      END AS timeclose
                      FROM {assign} ma
 
                 LEFT JOIN {assign_overrides} mao ON mao.assignid = ma.id AND mao.userid = ? AND mao.groupid IS NULL
@@ -1038,6 +1049,29 @@ class activity {
             $events = $eventsobj->events;
             $eventsfromcache = $eventsobj->fromcache;
             $eventsbymodinst[$courseid] = self::hash_events_by_module_instance($events);
+        }
+
+        if ($mod->modname == 'assign') {
+            foreach ($moddates[$courseid . '_' . $modname] as $assign) {
+                $assigninstance = $assign->id;
+                $dates = $moddates[$courseid . '_' . $modname][$assigninstance];
+                // Check if there is any extension.
+                $flags = $DB->get_record('assign_user_flags', array('assignment' => $assigninstance, 'userid' => $USER->id));
+                if (!empty($flags->extensionduedate)) {
+                    // If there is an extension, then assign the duedate of the extension.
+                    $timeclose = $flags->extensionduedate;
+                } else {
+                    $timeclose = $dates->timeclose;
+                }
+                $timeopen = $dates->timeopen;
+                $instdates = (object)[
+                    'timeopen' => $timeopen,
+                    'timeclose' => $timeclose,
+                    'fromcache' => false
+                ];
+                $moddates[$courseid . '_' . $modname][$assigninstance] = $instdates;
+            }
+            return $moddates[$courseid.'_'.$modname][$modinst];
         }
 
         // Extract opening time and closing time from events.
