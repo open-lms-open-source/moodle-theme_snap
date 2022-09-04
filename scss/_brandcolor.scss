@@ -1082,4 +1082,8 @@ $custom-menu-text-color: rgb(255, 255, 255) !default; // Need to define this wit
     .bordered-div {
         border-color: $brand-primary;
     }
+
+    ngb-modal-window.modal {
+        z-index: 1055;
+    }
 }
