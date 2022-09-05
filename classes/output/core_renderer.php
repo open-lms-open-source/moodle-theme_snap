@@ -1015,10 +1015,24 @@ class core_renderer extends \theme_boost\output\core_renderer {
                 $slides[] = $slide;
             }
         }
+        $carouselhidecontrols = '';
+        $carouselindicatorsbtn = count($slides);
+        if ($carouselindicatorsbtn < 2) {
+            // Add a class to hide the control buttons when only exists one slide,
+            // with two or three the play and pause buttons will be displayed.
+            $carouselhidecontrols = 'carouselhidecontrols';
+        }
         if (empty($slides)) {
             return '';
         }
         $slides[0]->active = 'active';
+        $carouselsronlytext = get_string('covercarouselsronly', 'theme_snap');
+        $carouselplaybutton = get_string('covercarouselplaybutton', 'theme_snap');
+        $carouselpausebutton = get_string('covercarouselpausebutton', 'theme_snap');
+        $data = ['carouselsronlytext' => $carouselsronlytext,
+                'carouselplaybutton' => $carouselplaybutton,
+                'carouselpausebutton' => $carouselpausebutton,
+                'carouselhidecontrols' => $carouselhidecontrols];
         $data['slides'] = $slides;
         return $this->render_from_template('theme_snap/carousel', $data);
     }
