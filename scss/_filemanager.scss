@@ -130,9 +130,11 @@ div[data-fieldtype=filemanager] > p:nth-of-type(1) {
     padding: 0 0 8px;
 }
 
-.dndupload-arrow {
+.theme-snap .dndupload-arrow {
     cursor: pointer;
-    background-image: url("[[pix:resource|icon]]");
+    // The upload file icon in the file managers had a repeat bug as a background image.
+    // This prevents this for any file manager that uses this class in Snap.
+    background: url("[[pix:resource|icon]]") center no-repeat;
     background-size: 60px 60px;
     margin-top: 10px;
 }
