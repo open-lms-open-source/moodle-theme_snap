@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+ * along with Moodle. If not, see <http://www.gnu.org/licenses/>.
  *
  * @package
  * @author    Oscar Nadjar oscar.nadjar@openlms.net
@@ -170,6 +170,57 @@ define(['jquery', 'core/str', 'core/event'],
                     checkWidth();
                     // Bind event listener
                     $(window).resize(checkWidth);
+
+                    /**
+                     * Change for the active carousel slide.
+                     */
+                    function carouselAriaCurrentValue() {
+                        var carouselindicator = $('#snap-site-carousel .carousel-indicators button');
+                        carouselindicator.click(function (e) {
+                            var element = $(e.target);
+                            carouselindicator.attr('aria-current', false);
+                            element.attr('aria-current', true);
+                        });
+
+                        /**
+                         * Listener to change aria-current value dynamically.
+                         */
+                        var targetNode = document.getElementById('snap-carousel-container');
+
+                        // Options for the observer (which mutations to observe)
+                        var config = { attributes: true, childList: true, subtree: true };
+
+                        // Callback function to execute when mutations are observed
+                        var callback = () => {
+                            $('.carousel-indicators button').attr('aria-current', false);
+                            $('.carousel-indicators button.active').attr('aria-current', true);
+                        };
+
+                        // Create an observer instance linked to the callback function
+                        var observer = new MutationObserver(callback);
+
+                        // Start observing the target node for configured mutations
+                        observer.observe(targetNode, config);
+                    }
+                    carouselAriaCurrentValue();
+
+                    /**
+                     * Creates a pause and resume cycles for Snap's carousel.
+                     */
+                    function carouselPausePlay() {
+                        $('#snap-site-carousel').carousel({
+                            interval: 6000,
+                            pause: "false"
+                        });
+
+                        $('#play-button').click(function () {
+                            $('#snap-site-carousel').carousel('cycle');
+                        });
+                        $('#pause-button').click(function () {
+                            $('#snap-site-carousel').carousel('pause');
+                        });
+                    }
+                    carouselPausePlay();
                 });
 
                 /**

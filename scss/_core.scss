@@ -1583,10 +1583,12 @@ header#page-header
         margin: 0 auto;
         bottom: -10px;
         z-index: auto;
-        li {
+        button {
             background-color: $snap-carousel-buttons;
             width: 35px;
             height: 5px;
+            margin-right: 0.5em;
+            border: none;
         }
         .active {
             background-color: $brand-primary;
@@ -1601,6 +1603,32 @@ header#page-header
             padding: 1em 2%;
             margin-top: 2em;
         }
+    }
+
+    #carousel-play-resume-buttons {
+        margin-left: 100px;
+        position: absolute;
+        bottom: 2em;
+        z-index: 1;
+        #play-button,
+        #pause-button {
+            border-color: $brand-primary;
+            background-color: white;
+            color: $brand-primary;
+            &:active,
+            &:focus,
+            &:hover {
+                background-color: $brand-primary;
+                color: white;
+            }
+            span.icon {
+                margin: 0 auto;
+            }
+        }
+    }
+
+    .carouselhidecontrols {
+        display: none;
     }
 }
 
