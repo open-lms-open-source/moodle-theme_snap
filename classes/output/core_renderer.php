@@ -1197,7 +1197,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
             return $output.'</div>';
         }
 
-        $output .= html_writer::start_div('', array('id' => 'news-articles'));
+        $output .= html_writer::start_div('', array('id' => 'news-articles', 'role' => 'group', 'aria-label' => 'news article'));
 
         $counter = 0;
         foreach ($discussions as $discussion) {
