@@ -110,7 +110,8 @@ function theme_snap_set_category_colors($css, $theme) {
                 'nav-button-color' => $colors[$category->id],
                 'nav-login-bg' => $colors[$category->id],
                 'nav-login-color' => '#FFFFFF',
-                'custom-menu-text-color' => $dbcustommenutextcoloractive ? $dbcustommenutextcolor : '#FFFFFF'
+                'custom-menu-text-color' => $dbcustommenutextcoloractive ? $dbcustommenutextcolor : '#FFFFFF',
+                'gray-light' => '#6a737b'
             ]);
 
             try {
