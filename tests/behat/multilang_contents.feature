@@ -48,6 +48,7 @@ Feature: The site displays only the language that user has selected for multilan
 
   @javascript
   Scenario: Site news on front page displays only in english.
+    Given I skip because "It will be fixed in INT-18296"
     Given I log in as "admin"
     And I am on site homepage
     And I click on "//div/a[contains(text(),'Add a new topic')]" "xpath_element"
@@ -62,6 +63,7 @@ Feature: The site displays only the language that user has selected for multilan
 
   @javascript
   Scenario: Language is changed site footer displays in only english.
+    Given I skip because "It will be fixed in INT-18296"
     Given the following config values are set as admin:
       | footnote | <span lang="en" class="multilang">English text</span><span lang="it" class="multilang">Italian text</span> | theme_snap |
     When I log in as "admin"
