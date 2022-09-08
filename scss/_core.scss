@@ -4946,3 +4946,10 @@ div[id^=snap-create-activity-] .section-modchooser-link {
         margin-top: 2em;
     }
 }
+
+#frontpagesettings, p[id^=expandable_branch_] {
+    h2 {
+        font-size: 1em;
+        display: inline-block;
+    }
+}
