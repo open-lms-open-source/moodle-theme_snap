@@ -44,7 +44,7 @@ $snapsettings->add($setting);
 $name = 'theme_snap/navbarlink';
 $title = new lang_string('navbarlink', 'theme_snap');
 $description = '';
-$default = '#ff7f41'; // Open LMS orange.
+$default = '#82009E'; // Open LMS EDU Purple - To pass WCAG color contrast ratio check.
 $previewconfig = null;
 $setting = new \theme_snap\admin_setting_configcolorwithcontrast(
     \theme_snap\admin_setting_configcolorwithcontrast::NAVIGATION_BAR, $name, $title, $description, $default, $previewconfig);
@@ -74,7 +74,7 @@ $snapsettings->add($setting);
 $name = 'theme_snap/navbarbuttonlink';
 $title = new lang_string('navbarbuttonlink', 'theme_snap');
 $description = '';
-$default = '#ff7f41'; // Open LMS orange.
+$default = '#82009E'; // Open LMS EDU Purple - To pass WCAG color contrast ratio check.
 $previewconfig = null;
 $setting = new \theme_snap\admin_setting_configcolorwithcontrast(
     \theme_snap\admin_setting_configcolorwithcontrast::NAVIGATION_BAR_BUTTON,
@@ -95,7 +95,7 @@ $snapsettings->add($setting);
 $name = 'theme_snap/custommenutext';
 $title = new lang_string('custommenutext', 'theme_snap');
 $description = '';
-$default = '#ffffff'; // Open LMS orange.
+$default = '#ffffff';
 $previewconfig = null;
 $setting = new admin_setting_configcolourpicker($name, $title, $description, $default, $previewconfig);
 $setting->set_updatedcallback('theme_reset_all_caches');
