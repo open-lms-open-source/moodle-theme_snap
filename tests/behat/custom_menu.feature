@@ -84,3 +84,22 @@ Feature: When the Moodle theme is set to Snap, custom menu should exist for the 
     And I am on site homepage
     And I should see "Moodle community" in the "//header[@id='mr-nav']//div[@id='snap-custom-menu-header']" "xpath_element"
     And I should not see "Moodle community" in the "//footer[@id='moodle-footer']//div[@id='snap-custom-menu-footer']" "xpath_element"
+
+  @javascript
+  Scenario: In the different login pages (forgot password, sign up and login index) the custom menu should not be displayed.
+    Given I am on login page
+    And I should not see "Moodle community"
+    And I am on forgot password page
+    And I should not see "Moodle community"
+    And I log in as "admin"
+    And I am on site homepage
+    And I click on "#admin-menu-trigger" "css_element"
+    And I expand "Site administration" node
+    And I expand "Plugins" node
+    And I expand "Authentication" node
+    And I follow "Manage authentication"
+    And I set the field with xpath "//select[@id='id_s__registerauth']" to "Email-based self-registration"
+    And I click on "Save changes" "button"
+    And I log out
+    And I am on sign up page
+    And I should not see "Moodle community"

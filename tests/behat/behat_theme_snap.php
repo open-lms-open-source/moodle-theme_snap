@@ -1833,6 +1833,24 @@ class behat_theme_snap extends behat_base {
     }
 
     /**
+     * Opens forgot password page.
+     *
+     * @Given /^I am on forgot password page$/
+     */
+    public function i_am_on_forgot_password_page() {
+        $this->getSession()->visit($this->locate_path('/login/forgot_password.php'));
+    }
+
+    /**
+     * Opens sign up page.
+     *
+     * @Given /^I am on sign up page$/
+     */
+    public function i_am_on_signup_page() {
+        $this->getSession()->visit($this->locate_path('/login/signup.php'));
+    }
+
+    /**
      * @Given /^I check element "(?P<element_string>(?:[^"]|\\")*)" has class "(?P<class_string>(?:[^"]|\\")*)"$/
      * @param string $element
      * @param string $class
