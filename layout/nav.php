@@ -73,9 +73,11 @@ echo html_writer::link($CFG->wwwroot, $sitefullname, $attrs);
 $custommenu = $OUTPUT->custom_menu();
 
 /* Moodle custom menu. */
-/* Hide it for the login index page. */
+/* Hide it for the login index, login sign up and login forgot password pages. */
 if (!empty($custommenu)) {
-    if (!($PAGE->pagetype === 'login-index') && !($PAGE->pagetype === 'login-signup')) {
+    if (!($PAGE->pagetype === 'login-index') &&
+        !($PAGE->pagetype === 'login-signup') &&
+        !($PAGE->pagetype === 'login-forgot_password')) {
         echo '<div id="snap-custom-menu-header">';
         echo $custommenu;
         echo '</div>';

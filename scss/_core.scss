@@ -220,18 +220,16 @@ table.boxwidthwide {
             background-size: cover !important;
         }
     }
+    #notice {
+        background-color: #fff;
+        Font-size: 1em;
+        color: $body-color;
+        padding-top: 5em !important;
+    }
 }
 #page-login-signup {
     #page-header {
         padding-top: 3em;
-    }
-    #notice {
-        box-shadow: 0 4px 8px 0 rgba(0,0,0,.2);
-        border-radius: 5px;
-        background-color: #fff;
-        width: 70%;
-        Font-size: 1em;
-        color: $body-color;
     }
     .snap-login {
         padding: 0;
@@ -292,6 +290,41 @@ table.boxwidthwide {
         position: relative;
     }
 
+}
+// Information notice in the sign up and forgot password pages.
+#page-login-signup,
+#page-login-forgot_password {
+    #notice {
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, .2);
+        border-radius: 5px;
+        background-color: #fff;
+        width: 70%;
+        Font-size: 1em;
+        color: $body-color;
+    }
+}
+
+// Styles for page-login-forgot_password page.
+#page-login-forgot_password {
+    #page-header {
+        padding-top: 3em;
+    }
+    #id_searchbyemail,
+    #id_searchbyusername {
+        > legend {
+            display: none;
+        }
+        input#id_username,
+        input#id_email {
+            border-radius: 5px;
+            font-size: .8em;
+        }
+    }
+    #id_searchbyusername {
+        > div > div:nth-child(2) {
+            display: none;
+        }
+    }
 }
 
 // -------------------------

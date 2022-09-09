@@ -33,8 +33,7 @@ $templates = array (
 $snaptemplatetitle = get_string('classic_template', 'theme_snap');
 $snapstylishtemplatetitle = get_string('stylish_template', 'theme_snap');
 $templatedescription =
-    '<div class="snap-classic-template container float-left">
-        <div id="snap_classic_login_templates" class="row">
+        '<div id="snap_login_templates" class="row">
             <div id="snap_classic_template_img" class="col=4">
                 <a target="_blank" href='.$templates['classic_template'].'>
                     <img class="img-responsive" src="'.$templates['classic_template'].'" alt="'.$snaptemplatetitle.'">
@@ -47,8 +46,7 @@ $templatedescription =
                 </a>
                 <div class="text-center">' . $snapstylishtemplatetitle . '</div>
             </div>
-        </div>
-    </div>';
+        </div>';
 
 $name = 'theme_snap/loginpagetemplate';
 $title = new lang_string('loginpagetemplate', 'theme_snap');
