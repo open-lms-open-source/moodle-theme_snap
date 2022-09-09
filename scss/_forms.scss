@@ -412,6 +412,11 @@ a[aria-controls="snap-collapse-help"] {
                 max-width: 100%;
             }
         }
+        .form-inline[data-fieldtype="date_selector"] {
+            .fdate_selector {
+                flex-wrap: wrap;
+            }
+        }
     }
 
     .mceToolbar.mceLeft.mceFirst.mceLast {
