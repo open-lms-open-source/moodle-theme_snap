@@ -190,6 +190,11 @@ body[class^="format-"].theme-snap {
                 margin: 0 0.5%;
                 display: inline-block;
             }
+            span {
+                width: 2rem;
+                height: 2rem;
+                font-size: inherit;
+            }
         }
     }
 }
