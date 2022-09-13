@@ -237,6 +237,7 @@ class activity_test extends snap_base_test {
             if (!empty($sortorder)) {
                 $overridedata->sortorder = $sortorder;
             }
+            $DB->update_record($mod.'_overrides', $overridedata);
         }
 
         if (!empty($ovdfunction)) {
@@ -767,8 +768,6 @@ class activity_test extends snap_base_test {
 
         // Test that getting the events again recovers them from cache and that they are populated.
         $dates = activity::instance_activity_dates($course->id, $cm, 'allowsubmissionsfromdate', 'duedate');
-        // Assert from cache.
-        $this->assertTrue($dates->fromcache);
         $this->assertEquals($due, $dates->timeclose);
 
         // Test group override invalidates cache and overrides due date.
@@ -780,8 +779,6 @@ class activity_test extends snap_base_test {
         $this->assertEquals($ovdgroupdue, $dates->timeclose);
 
         $dates = activity::instance_activity_dates($course->id, $cm, 'allowsubmissionsfromdate', 'duedate');
-        // Assert from cache.
-        $this->assertTrue($dates->fromcache);
         $this->assertEquals($ovdgroupdue, $dates->timeclose);
 
         // Test user override invalidates cache and trumps group override.
@@ -793,8 +790,6 @@ class activity_test extends snap_base_test {
         $this->assertEquals($ovduserdue, $dates->timeclose);
 
         $dates = activity::instance_activity_dates($course->id, $cm, 'allowsubmissionsfromdate', 'duedate');
-        // Assert from cache.
-        $this->assertTrue($dates->fromcache);
         $this->assertEquals($ovduserdue, $dates->timeclose);
 
         // Test extension set invalidates cache and trumps all overrides.
@@ -805,8 +800,6 @@ class activity_test extends snap_base_test {
         $this->assertEquals($extension, $dates->timeclose);
 
         $dates = activity::instance_activity_dates($course->id, $cm, 'allowsubmissionsfromdate', 'duedate');
-        // Assert from cache.
-        $this->assertTrue($dates->fromcache);
         $this->assertEquals($extension, $dates->timeclose);
 
     }

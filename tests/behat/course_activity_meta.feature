@@ -359,3 +359,109 @@ Feature: When the moodle theme is set to Snap, students see meta data against co
     Then I should see "Due 1 January 2000"
     Then I should see "Due 2 January 2000"
     And I log out
+
+  @javascript
+  Scenario: Show due date in assignments to group members with group overrides
+    Given the following "activities" exist:
+      | activity | course | idnumber | name             | intro             | assignsubmission_onlinetext_enabled | assignfeedback_comments_enabled | section | duedate         | allowsubmissionsfromdate |
+      | assign   | C1     | assign1  | Test assignment 1 | Test assignment 1 | 1                                   | 1                               | 1       | ##1 January 2000 08:00##    |##1 January 2000 08:00##|
+      | assign   | C1     | assign2  | Test assignment 2 | Test assignment 2 | 1                                   | 1                               | 1       | ##2 January 2000 08:00##    |##1 January 2000 08:00##|
+      | assign   | C1     | assign3  | Test assignment 3 | Test assignment 3 | 1                                   | 1                               | 1       | ##3 January 2000 08:00##    |##1 January 2000 08:00##|
+    And the following "groups" exist:
+      | name     | course | idnumber |
+      | Group1       | C1     | G1      |
+      | Group2       | C1     | G2      |
+    And the following "group members" exist:
+      | user     | group |
+      | student1 | G1   |
+      | student2 | G2   |
+    And I log in as "admin"
+    And I am on "Course 1" course homepage
+    And I follow "Topic 1"
+    Then I should see "Due 1 January 2000"
+    And I should see "Due 2 January 2000"
+    And I should see "Due 3 January 2000"
+    Then I am on activity "assign" "Test assignment 1" page
+    And I click on "#admin-menu-trigger" "css_element"
+    And I follow "Group overrides"
+    And I press "Add group override"
+    And I set the following fields to these values:
+      | Override group | Group1             |
+      | Due date               | ##1 December 2000 08:00## |
+    And I press "Save"
+    Then I am on "Course 1" course homepage
+    Then I am on activity "assign" "Test assignment 2" page
+    And I click on "#admin-menu-trigger" "css_element"
+    And I follow "Group overrides"
+    And I press "Add group override"
+    And I set the following fields to these values:
+      | Override group | Group1             |
+      | Due date               | ##2 December 2000 08:00## |
+    And I press "Save"
+    Then I am on "Course 1" course homepage
+    And I follow "Topic 1"
+    And I should see "Due 1 January 2000"
+    And I should see "Due 2 January 2000"
+    And I should see "Due 3 January 2000"
+    And I log in as "student1"
+    And I am on "Course 1" course homepage
+    And I follow "Topic 1"
+    Then I should see "Due 1 December 2000"
+    And I should see "Due 2 December 2000"
+    And I should see "Due 3 January 2000"
+    And I log in as "student2"
+    And I am on "Course 1" course homepage
+    And I follow "Topic 1"
+    Then I should see "Due 1 January 2000"
+    And I should see "Due 2 January 2000"
+    And I should see "Due 3 January 2000"
+    And I log in as "admin"
+    And I am on "Course 1" course homepage
+    And I am on activity "assign" "Test assignment 2" page
+    And I click on "#admin-menu-trigger" "css_element"
+    And I follow "Edit settings"
+    And I set the following fields to these values:
+      | Due date               | disabled |
+    And I press "Save and return to course"
+    And I follow "Topic 1"
+    Then I should see "Due 1 January 2000"
+    And I should not see "Due 2 January 2000"
+    And I should see "Due 3 January 2000"
+    And I log in as "student1"
+    And I am on "Course 1" course homepage
+    And I follow "Topic 1"
+    Then I should see "Due 1 December 2000"
+    And I should see "Due 2 December 2000"
+    And I should see "Due 3 January 2000"
+    And I log in as "student2"
+    And I am on "Course 1" course homepage
+    And I follow "Topic 1"
+    Then I should see "Due 1 January 2000"
+    And I should not see "Due 2 January 2000"
+    And I should see "Due 3 January 2000"
+    And I log in as "admin"
+    And I am on "Course 1" course homepage
+    And I am on activity "assign" "Test assignment 2" page
+    And I click on "#admin-menu-trigger" "css_element"
+    And I follow "Edit settings"
+    And I set the following fields to these values:
+      | Due date               | ##5 January 2000 08:00## |
+    And I press "Save and return to course"
+    And I am on "Course 1" course homepage
+    And I follow "Topic 1"
+    Then I should see "Due 1 January 2000"
+    And I should see "Due 5 January 2000"
+    And I should see "Due 3 January 2000"
+    And I log in as "student1"
+    And I am on "Course 1" course homepage
+    And I follow "Topic 1"
+    Then I should see "Due 1 December 2000"
+    And I should see "Due 2 December 2000"
+    And I should see "Due 3 January 2000"
+    And I log in as "student2"
+    And I am on "Course 1" course homepage
+    And I follow "Topic 1"
+    Then I should see "Due 1 January 2000"
+    And I should see "Due 5 January 2000"
+    And I should see "Due 3 January 2000"
+    And I log out
