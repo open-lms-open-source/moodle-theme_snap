@@ -157,6 +157,11 @@ body[class^="format-"].theme-snap {
 #coursetools-list {
     @include clearfix;
 
+    #ct-participants-number span.userinitials {
+        display: inline-block;
+        line-height: 36px;
+    }
+
     a {
         width: 32%;
         margin: 0.5%;
