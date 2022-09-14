@@ -995,7 +995,7 @@ class course_renderer extends \core_course_renderer {
             <div id='pagemod-content-container'>
                 {$content}
             </div>
-            <div class='d-block'><hr><a  class='snap-action-icon snap-icon-close' href='#'>
+            <div class='d-block'><hr><a  class='snap-action-icon snap-icon-close' href='#' role='button'>
             <small>$close</small></a></div>
         </div>";
 
