@@ -1231,7 +1231,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
                 $preview = "<div class='news-article-preview'><p>".shorten_text($preview, 200)."</p>
                 <p class='text-right'>".$readmorebtn."</p></div>";
             } else {
-                $newsimage = '<div class="news-article-image toggle"'.$imagestyle.' title="'.
+                $newsimage = '<div class="news-article-image toggle" role="button"'.$imagestyle.' title="'.
                     get_string('readmore', 'theme_snap').'"></div>';
             }
             $close = get_string('closebuttontitle', 'moodle');
