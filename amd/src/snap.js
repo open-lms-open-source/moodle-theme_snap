@@ -27,8 +27,8 @@
  */
 define(['jquery', 'core/log', 'theme_snap/headroom', 'theme_snap/util', 'theme_snap/personal_menu',
         'theme_snap/cover_image', 'theme_snap/progressbar', 'core/templates', 'core/str', 'theme_snap/accessibility',
-        'theme_snap/messages'],
-    function($, log, Headroom, util, personalMenu, coverImage, ProgressBar, templates, str, accessibility, messages) {
+        'theme_snap/messages', 'theme_snap/scroll'],
+    function($, log, Headroom, util, personalMenu, coverImage, ProgressBar, templates, str, accessibility, messages, Scroll) {
 
         'use strict';
 
@@ -587,9 +587,12 @@ define(['jquery', 'core/log', 'theme_snap/headroom', 'theme_snap/util', 'theme_s
                 e.preventDefault();
             });
 
+            // Initialise the scroll event listener.
+            (new Scroll()).init();
+
             // Bootstrap js elements.
 
-            // Iniitalise core bootstrap tooltip js.
+            // Initialise core bootstrap tooltip js.
             $(function() {
                 var supportsTouch = false;
                 if ('ontouchstart' in window) {
