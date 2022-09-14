@@ -642,6 +642,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
         $loginatts = [
             'aria-haspopup' => 'true',
             'class' => 'btn btn-primary snap-login-button',
+            'role' => 'button',
         ];
 
         // This check is here for the front page login.
