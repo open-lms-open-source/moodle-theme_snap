@@ -2169,6 +2169,16 @@ span.editinstructions {
             width: auto;
         }
     }
+    #participants {
+        tbody .cell.c1 {
+            vertical-align: inherit;
+        }
+        span.userinitials {
+            display: inline-block;
+            line-height: 36px;
+            text-align-last: center;
+        }
+    }
 }
 
 // -------------------------
