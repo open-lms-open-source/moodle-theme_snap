@@ -24,6 +24,7 @@
 defined('MOODLE_INTERNAL') || die();
 
 require(__DIR__.'/header.php');
+global $SESSION;
 ?>
 <!-- moodle js hooks -->
 <?php
@@ -80,6 +81,12 @@ if ($PAGE->title === get_string('restoredaccount')) {
 if (!empty(get_config('theme_snap', 'loginbgimg'))) {
     $images = $OUTPUT->login_bg_slides();
     $PAGE->requires->js_call_amd('theme_snap/carousel_login', 'init', ['images' => $images]);
+}
+// Set wantsutl to null to prevent redirect to draftfile after login.
+if (isset($SESSION->wantsurl)) {
+    if (preg_match('/draftfile/', $SESSION->wantsurl)) {
+        $SESSION->wantsurl = null;
+    }
 }
 ?>
 </div>
