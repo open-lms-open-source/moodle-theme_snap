@@ -1198,7 +1198,8 @@ class core_renderer extends \theme_boost\output\core_renderer {
             return $output.'</div>';
         }
 
-        $output .= html_writer::start_div('', array('id' => 'news-articles', 'role' => 'group', 'aria-label' => 'news article'));
+        $output .= html_writer::start_div('', array('id' => 'news-articles', 'role' => 'group',
+            'aria-label' => get_string('arialabelnewsarticle', 'theme_snap')));
 
         $counter = 0;
         foreach ($discussions as $discussion) {
