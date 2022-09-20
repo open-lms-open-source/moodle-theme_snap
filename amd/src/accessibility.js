@@ -146,6 +146,11 @@ define(['jquery', 'core/str', 'core/event'],
                     new Tabpanel("snap-pm-accessible-tab");
                     new Tabpanel("modchooser-accessible-tab");
 
+                    // Wrapping for dropdown elements in the actionable elements in an activity for PLD and Sharing cart.
+                    if( $(".dropdown-item.editing_pld").closest(".pld-dropdown").length == 0 ) {
+                        $(".dropdown-item.editing_pld").wrap("<li class='pld-dropdown'></li>");
+                    }
+
                     /**
                      * Store the references outside the event handler.
                      * Window reload to change the inputs value for Add and Remove buttons when adding new
