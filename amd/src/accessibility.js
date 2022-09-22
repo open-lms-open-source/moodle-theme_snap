@@ -146,6 +146,11 @@ define(['jquery', 'core/str', 'core/event'],
                     new Tabpanel("snap-pm-accessible-tab");
                     new Tabpanel("modchooser-accessible-tab");
 
+                    // Wrapping for dropdown elements in the actionable elements in an activity for PLD and Sharing cart.
+                    if( $(".dropdown-item.editing_pld").closest(".pld-dropdown").length == 0 ) {
+                        $(".dropdown-item.editing_pld").wrap("<li class='pld-dropdown'></li>");
+                    }
+
                     /**
                      * Store the references outside the event handler.
                      * Window reload to change the inputs value for Add and Remove buttons when adding new
@@ -221,44 +226,6 @@ define(['jquery', 'core/str', 'core/event'],
                         });
                     }
                     carouselPausePlay();
-
-                    // Removes Unnecessary Aria attributes
-                    $('div.snap-asset-actions div.snap-edit-more-dropdown div.dropdown-menu').removeAttr("role");
-
-                    // Add missing Aria attributes
-                    $(".block_conduit ul.unlist div.c0 i.icon").attr("aria-hidden", "true");
-                    var ariaid = $("#settingsnav ul.block_tree").attr("id");
-                    $("#settingsnav ul.block_tree li.depth_1").attr("aria-control", ariaid);
-
-                    // Mark up content as a list
-                    $(".block_conduit div.card-body div.card-text").replaceWith(function() {
-                        return "<li class='card-text content mt-3 unlist'>" + this.innerHTML + "</li>";
-                    });
-                    var assetdropdown = $("div.snap-asset-actions div.snap-edit-more-dropdown div.dropdown-menu");
-                    assetdropdown.replaceWith(function() {
-                        return "<ul class='dropdown-menu'>" + this.innerHTML + "</ul>";
-                    });
-
-                    var assetdropdownitems = $("div.snap-asset-actions div.snap-edit-more-dropdown ul.dropdown-menu a");
-                    var item, result;
-                    $(assetdropdownitems).each(function(i) {
-                        item = assetdropdownitems[i];
-                        result = item.outerHTML.replace("<a", "<li");
-                        result = result.replace("</a>", "</li>");
-                        $(item).replaceWith(result);
-                    });
-
-                    // Mark buttons as such
-                    $("div.snap-asset-actions div.snap-edit-more-dropdown ul.dropdown-menu li").attr("role", "button");
-                    $("div.snap-asset-actions .snap-asset-move img").attr("role", "button");
-                    $("div.snap-asset-actions a.snap-edit-asset").attr("role", "button");
-                    $("#settingsnav ul.block_tree li.depth_1").attr("role", "button");
-
-                    // Mark headings as such
-                    $("#settingsnav ul.block_tree li.depth_1 p#frontpagesettings span," +
-                    "#settingsnav ul.block_tree li.depth_1 p[id^=expandable_branch_] span").replaceWith(function() {
-                        return "<h2>" + this.innerHTML + "</h2>";
-                    });
                 });
 
                 /**
