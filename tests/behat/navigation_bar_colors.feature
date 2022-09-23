@@ -64,7 +64,7 @@ Feature: When the moodle theme is set to Snap, admins can change the color of th
     And I should see "Navigation bar"
     And I click on "Navigation bar" "link"
     And I should see "Change My Courses button colors"
-    And I should see "This color combination doesn't comply"
+    And I should not see "This color combination doesn't comply"
     And I set the following fields to these values:
       | s_theme_snap_navbarbuttoncolor  | #000000 |
       | s_theme_snap_navbarbuttonlink   | #FFFFFF |

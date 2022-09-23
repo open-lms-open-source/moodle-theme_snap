@@ -51,10 +51,13 @@ Feature: Check that the correct tab order and focus exists for the page.
 
   @javascript @accessibility
   Scenario: Focus should be over the input with an error after submitting a form with a required field in blank.
-    Given I skip because "It will be improved in INT-18324"
     And I log in as "teacher1"
     And I am on "Course 1" course homepage
     And I add a "Assignment" to section "0"
+    And I click on "Save and display" "button"
+    # To indicate that the form has failed.
+    Then "#id_error_name" "css_element" should be visible
+    # Fire a second form save to check that the input with the error is indeed focused.
     And I click on "Save and display" "button"
     Then the focused element is "input.form-control.is-invalid" "css_element"
     And the page should meet "cat.forms, wcag21aa, wcag135" accessibility standards
