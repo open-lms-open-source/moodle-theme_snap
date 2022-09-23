@@ -1708,7 +1708,7 @@ form.togglecompletion {
     .snap-edit-more-dropdown,
     .snap-asset-move {
         display: inline-block !important;
-        padding: 0.3em 7%;
+        padding: 0 7%;
         text-align: center;
         width: 33%;
         cursor: pointer;
@@ -1738,12 +1738,16 @@ form.togglecompletion {
     }
 
     .svg-icon {
-        border-radius: 100%;
-        border: 1px solid white;
         width: 1.75em;
         height: 1.75em;
         background-color: white;
+        margin: 0;
         @include alakazam;
+    }
+
+    button.snap-edit-asset-more {
+        border: none;
+        background-color: white;
     }
 
     // When checkbox for moving is checked

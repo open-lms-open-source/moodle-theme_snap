@@ -642,6 +642,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
         $loginatts = [
             'aria-haspopup' => 'true',
             'class' => 'btn btn-primary snap-login-button',
+            'role' => 'button',
         ];
 
         // This check is here for the front page login.
@@ -1197,7 +1198,10 @@ class core_renderer extends \theme_boost\output\core_renderer {
             return $output.'</div>';
         }
 
-        $output .= html_writer::start_div('', array('id' => 'news-articles'));
+        $output .= html_writer::start_div('', array('id' => 'news-articles', 'role' => 'group',
+            'aria-label' => get_string('arialabelnewsarticle', 'theme_snap')));
+
+        $counter = 0;
         foreach ($discussions as $discussion) {
             if (!forum_user_can_see_discussion($forum, $discussion, $context)) {
                 continue;
@@ -1229,20 +1233,30 @@ class core_renderer extends \theme_boost\output\core_renderer {
                 $preview = "<div class='news-article-preview'><p>".shorten_text($preview, 200)."</p>
                 <p class='text-right'>".$readmorebtn."</p></div>";
             } else {
-                $newsimage = '<div class="news-article-image toggle"'.$imagestyle.' title="'.
+                $newsimage = '<div class="news-article-image toggle" role="button"'.$imagestyle.' title="'.
                     get_string('readmore', 'theme_snap').'"></div>';
             }
             $close = get_string('closebuttontitle', 'moodle');
-            $output .= <<<HTML
-<div class="news-article clearfix">
-    {$newsimage}
+
+            $newsinner = <<<HTML
     <div class="news-article-inner">
         <div class="news-article-content">
             <h3 class='toggle'><a href="$CFG->wwwroot/mod/forum/discuss.php?d=$discussion->discussion">{$name}</a></h3>
             <em class="news-article-date">{$date}</em>
         </div>
     </div>
-    {$preview}
+HTML;
+
+            if ($counter % 2 === 0) {
+                $newsordered = $newsinner . $preview . $newsimage;
+            } else {
+                $newsordered = $newsimage . $preview . $newsinner;
+            }
+            $counter++;
+
+            $output .= <<<HTML
+<div class="news-article clearfix">
+    {$newsordered}
     <div class="news-article-message" tabindex="-1">
         {$message}
         <div><hr><a class="snap-action-icon snap-icon-close toggle" href="#">

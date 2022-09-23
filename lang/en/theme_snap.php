@@ -37,6 +37,7 @@ $string['advancedbrandingheadingdesc'] = '';
 $string['ago'] = 'ago';
 $string['answered'] = 'Answered';
 $string['appendices'] = 'Tools';
+$string['arialabelnewsarticle'] = 'news article';
 $string['assigndraft'] = 'Draft requires your confirmation';
 $string['assignreopened'] = 'Reopened';
 $string['at'] = 'at';

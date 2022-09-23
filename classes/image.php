@@ -74,14 +74,19 @@ class image {
         $tmpimage = tempnam(sys_get_temp_dir(), 'tmpimg');
         \file_put_contents($tmpimage, $originalfile->get_content());
 
-        if (!$newheight) {
+        if (!$newheight && (isset($imageinfo->height) && isset($imageinfo->width))) {
             $m = $imageinfo->height / $imageinfo->width; // Multiplier to work out $newheight.
             $newheight = $newwidth * $m;
-        } else if (!$newwidth) {
+        } else if (!$newwidth && (isset($imageinfo->height) && isset($imageinfo->width))) {
             $m = $imageinfo->width / $imageinfo->height; // Multiplier to work out $newwidth.
             $newwidth = $newheight * $m;
         }
         $t = null;
+
+        if (!isset($imageinfo->mimetype)) {
+            unlink ($tmpimage);
+            return false;
+        }
         switch ($imageinfo->mimetype) {
             case 'image/gif':
                 if (\function_exists('imagecreatefromgif')) {

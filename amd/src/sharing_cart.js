@@ -154,7 +154,7 @@ export default class SharingCartForSnap {
      * @param {function} on_backup
      */
     add_backup_command = ($activity, iconBackup, on_backup) => {
-        var $menu = $activity.find("ul[role='menu']");
+        var $menu = $activity.find("div.snap-edit-more-dropdown ul.dropdown-menu");
 
         if($menu.length)
         {
@@ -181,7 +181,7 @@ export default class SharingCartForSnap {
         else
         {
             var $backup = this.create_command("backup");
-            $menu = $activity.find('div[role="menu"]');
+            $menu = $activity.find('div.snap-edit-more-dropdown ul.dropdown-menu');
             if($menu.length)
             {
                 const cssClass = iconBackup.css;
@@ -193,7 +193,6 @@ export default class SharingCartForSnap {
                 {
                     var $button = $menu.find('.editing_backup');
                     if ($button.length == 0) {
-                        $menu.append($backup.attr("role", "menuitem"));
                         $backup.append($("<span class='menu-action-text'/>").append($backup.attr('title')));
                     }
                 }

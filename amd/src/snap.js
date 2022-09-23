@@ -569,10 +569,14 @@ define(['jquery', 'core/log', 'theme_snap/headroom', 'theme_snap/util', 'theme_s
             $(document).on("click", ".news-article .toggle", function(e) {
                 var $news = $(this).closest('.news-article');
                 util.scrollToElement($news);
-                $(".news-article").not($news).removeClass('state-expanded');
+                $(".news-article").not($news).removeClass('state-expanded').attr('aria-expanded', 'false');
                 $(".news-article-message").css('display', 'none');
 
                 $news.toggleClass('state-expanded');
+                if (!$news.attr('state-expanded')) {
+                    $news.focus();
+                    $news.attr('aria-expanded', 'false');
+                }
                 $('.state-expanded').find('.news-article-message').slideDown("fast", function() {
                     // Animation complete.
                     if ($news.is('.state-expanded')) {
@@ -1130,6 +1134,7 @@ nodeToChange = $(selectorToChange);
                 // Smooth scroll for go to top button.
                 $("div#goto-top-link > a").click(function() {
                     window.scrollTo({top: 0, behavior: 'smooth'});
+                    $('body').find('a, [tabindex=0]').first().focus();
                 });
 
                 // Blocks selectors to remove 'editing' class because is not necessary to access their settings.
