@@ -450,7 +450,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
             $key;
     }
 
-    public function edit_button(moodle_url $url) {
+    public function edit_button(moodle_url $url, string $method = 'post') {
         return '';
     }
 
