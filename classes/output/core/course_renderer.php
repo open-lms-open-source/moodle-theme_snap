@@ -519,11 +519,9 @@ class course_renderer extends \core_course_renderer {
         // Move, Edit, Delete.
         if (has_capability('moodle/course:manageactivities', $modcontext)) {
             $movealt = s(get_string('move', 'theme_snap', $mod->get_formatted_name()));
-            $moveicon = '<img title="'.$movealt.'" aria-hidden="true" class="svg-icon" src="';
-            $moveicon .= $this->output->image_url('move', 'theme').'"/>';
+            $moveicon = '<i title="'.$movealt.'" alt="'.$movealt.'" class="icon fa fa-arrow-right fa-fw"></i>';
             $editalt = s(get_string('edit', 'theme_snap', $mod->get_formatted_name()));
-            $editicon = '<img title="'.$editalt.'" alt="'.$editalt.'" class="svg-icon" src="';
-            $editicon .= $this->output->image_url('edit', 'theme').'"/>';
+            $editicon = '<i title="'.$editalt.'" alt="'.$editalt.'" class="icon fa fa-pencil fa-fw"></i>';
             $actions .= '<input id="snap-move-mod-'.$mod->id.'" class="js-snap-asset-move sr-only" role="button" type="checkbox">';
             $actions .= '<label class="snap-asset-move" for="snap-move-mod-'.$mod->id.'">';
             $actions .= '<span class="sr-only">'.$movealt.'</span>'.$moveicon.'</label>';
@@ -605,8 +603,7 @@ class course_renderer extends \core_course_renderer {
 
         $advancedactions = '';
         if (!empty($actionsadvanced)) {
-            $moreicon = "<img title='".get_string('more', 'theme_snap')."' alt='".get_string('more', 'theme_snap').
-                    "' class='svg-icon' src='".$this->output->image_url('more', 'theme')."'/>";
+            $moreicon = '<i class="icon fa fa-ellipsis-v fa-fw"></i>';
             $advancedactions = '<div class="dropdown snap-edit-more-dropdown">';
             $advancedactions .= '<button class="dropdown-toggle snap-edit-asset-more" ';
             $advancedactions .= 'data-toggle="dropdown" data-boundary="window" data-offset="-10,12"';

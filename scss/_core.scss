@@ -4408,7 +4408,7 @@ header#mr-nav {
                 }
                 div.dropdown-menu {
                     border: 0;
-                    margin-top: 0 !important; // This margin needs to be override to remove the marging of 2px that it has by default.
+                    margin-top: 0 !important; // This margin needs to be override to remove the margin of 2px that it has by default.
                 }
                 a {
                     display: block;
@@ -4784,6 +4784,10 @@ div[id^=snap-create-activity-] .section-modchooser-link {
         bottom: 5em;
         right: 0.7em;
     }
+}
+
+#goto-top-link i.icon {
+    color: #696969;
 }
 
 // Fix for snap links with unnecessary box shadow and white background while focus.
