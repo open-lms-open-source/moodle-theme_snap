@@ -21,7 +21,7 @@
 
 define(['jquery', 'core/log', 'core/ajax', 'core/str', 'core/templates', 'core/notification',
     'theme_snap/util', 'theme_snap/ajax_notification', 'theme_snap/footer_alert',
-    'core/event', 'core/fragment'],
+    'core_filters/events', 'core/fragment'],
     function($, log, ajax, str, templates, notification, util, ajaxNotify, footerAlert, Event, fragment) {
 
         var self = this;
@@ -204,7 +204,7 @@ define(['jquery', 'core/log', 'core/ajax', 'core/str', 'core/templates', 'core/n
          * @param {string} js
          */
         var renderSection = function(section, html, mod, js) {
-            var anchor = $('.course-content .' + self.courseConfig.format);
+            var anchor = $('.course-content');
             var existingSections = [];
             anchor.find('li[id^=section-]').each(function() {
                 existingSections.push(parseInt($(this).attr('id').split('section-')[1]));
