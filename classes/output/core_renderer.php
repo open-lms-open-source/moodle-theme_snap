@@ -261,12 +261,11 @@ class core_renderer extends \theme_boost\output\core_renderer {
     }
 
     public function activity_header() {
-        global $PAGE, $OUTPUT;
-        $renderer = $PAGE->get_renderer('hsuforum');
-        $header = $PAGE->activityheader;
+        $renderer = $this->page->get_renderer('hsuforum');
+        $header = $this->page->activityheader;
         $headercontext = $header->export_for_template($renderer);
         if (!empty($headercontext)) {
-            return $OUTPUT->render_from_template('core/activity_header', $headercontext);
+            return $this->render_from_template('core/activity_header', $headercontext);
         }
         return '';
     }
