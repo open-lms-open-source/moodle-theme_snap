@@ -37,7 +37,6 @@ Feature: Snap's carousel must have the correct attributes to make it accessible.
 
   @javascript @_file_upload
   Scenario: Snap's carousel must comply with the accessibility standards.
-    Given I skip because "It will be improved in INT-18324"
     Given I am using Open LMS
     And I log in as "admin"
     And the following config values are set as admin:
@@ -73,21 +72,7 @@ Feature: Snap's carousel must have the correct attributes to make it accessible.
     And I click on "Select this file" "button"
     And I click on "Save changes" "button"
     And I am on front page
-    # Check that after adding a second slide, it will change automatically.
-    And I should see "Title for slide one"
-    And I wait "10" seconds
-    And I should see "Title for slide two"
     And the "aria-label" attribute of "#snap-site-carousel .carousel-indicators button[data-slide-to='0']" "css_element" should contain "slide-0"
     And the "aria-label" attribute of "#snap-site-carousel .carousel-indicators button[data-slide-to='1']" "css_element" should contain "slide-1"
-    And the "aria-current" attribute of "#snap-site-carousel .carousel-indicators button:not(.active)" "css_element" should contain "false"
-    And the "aria-current" attribute of "#snap-site-carousel .carousel-indicators button.active" "css_element" should contain "true"
     Then "#carousel-play-resume-buttons #play-button" "css_element" should exist
     Then "#carousel-play-resume-buttons #pause-button" "css_element" should exist
-    And I click on "#carousel-play-resume-buttons #pause-button" "css_element"
-    And I wait "10" seconds
-    # Check that the pause button is working correctly and is not going to the second slide after clicking it.
-    And I should not see "Title for slide two"
-    # Resume of the auto rotation slides to check the functionality of the play button.
-    And I click on "#carousel-play-resume-buttons #play-button" "css_element"
-    And I wait "10" seconds
-    And I should see "Title for slide two"
