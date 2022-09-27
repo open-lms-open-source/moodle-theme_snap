@@ -260,6 +260,17 @@ class core_renderer extends \theme_boost\output\core_renderer {
         return $html;
     }
 
+    public function activity_header() {
+        global $PAGE, $OUTPUT;
+        $renderer = $PAGE->get_renderer('hsuforum');
+        $header = $PAGE->activityheader;
+        $headercontext = $header->export_for_template($renderer);
+        if (!empty($headercontext)) {
+            return $OUTPUT->render_from_template('core/activity_header', $headercontext);
+        }
+        return '';
+    }
+
     /**
      * Badge counter for new messages.
      * @return string

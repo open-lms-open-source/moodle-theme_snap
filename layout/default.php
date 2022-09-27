@@ -126,12 +126,12 @@ echo "</div>";
 if ($PAGE->pagelayout === 'frontpage' && $PAGE->pagetype === 'site-index') {
     require(__DIR__.'/faux_site_index.php');
 } else {
+    echo $OUTPUT->activity_header();
     echo $OUTPUT->main_content();
 }
 
 echo $OUTPUT->activity_navigation();
 echo $OUTPUT->course_content_footer();
-
 if (stripos($PAGE->bodyclasses, 'format-singleactivity') !== false ) {
     // Shared renderer is only loaded if required at this point.
     $output = \theme_snap\output\shared::course_tools();
