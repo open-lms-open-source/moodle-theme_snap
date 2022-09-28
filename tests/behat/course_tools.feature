@@ -172,7 +172,7 @@ Feature: When the moodle theme is set to Snap, a course tools section is availab
   Scenario: Course tools show enrol and unenrol links.
     Given I log in as "admin"
     And I am on the course main page for "C1"
-    When I add "Self enrolment" enrolment method with:
+    When I add "Self enrolment" enrolment method in "C1" with:
       | Custom instance name | Test student enrolment |
       | Enrolment key        | moodle_rules           |
     And I log out
