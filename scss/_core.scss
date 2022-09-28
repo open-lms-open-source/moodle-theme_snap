@@ -2301,9 +2301,7 @@ ul.events-new + ul.events-underway {
 }
 
 #page-mod-quiz-edit .section .activity .actions {
-    position: absolute;
-    right: 0;
-    top: 0;
+    display: flex;
 }
 
 #page-mod-quiz-review {
@@ -2467,11 +2465,6 @@ ul.events-new + ul.events-underway {
 #page-mod-quiz-edit .menu-action-text,
 #page-mod-quiz-edit .toggle-display.textmenu {
     white-space: nowrap;
-}
-
-// Stop quiz instance name from being cuttoff
-#page-mod-quiz-edit ul.slots .activityinstance span.instancename {
-    overflow: visible;
 }
 
 @include media-breakpoint-up(lg) {
@@ -3937,13 +3930,12 @@ td.mceToolbar {
     margin: 0 !important;
 }
 
-#page-mod-quiz-edit .instancename {
-    max-width: 16px;
-}
-
 #page-mod-quiz-edit .activityinstance {
     overflow: hidden;
     max-width: 81%;
+    span.instancename {
+        height: 1.5em !important; // Not elegant but we need to override core.
+    }
 }
 
 // General toggle icons.
@@ -4545,6 +4537,10 @@ li.snap-activity.modtype_folder div[id^="folder_tree"] {
 #page-mod-glossary-view .glossarydisplay .entrybox table.glossarypost {
     table-layout: fixed;
     width: 100%;
+}
+
+#page-mod-glossary-view div[role="main"] div.singlebutton {
+    margin-bottom: 1em;
 }
 
 // Need to override the max-width of the submit buttons on the form when creating an activity to modify its position for mobile mode.
