@@ -545,7 +545,9 @@ EOF;
             }
             // Generate linkhtml.
             $attributes = $item->attributes ?? null;
+            $o .= '<li>';
             $o .= html_writer::link($item->link, $item->title, $attributes);
+            $o .= '</li>';
         }
         return $o;
     }
@@ -862,7 +864,7 @@ EOF;
             $o = '<h2>' . $coursetoolsicon . $coursetools . '</h2>';
         }
         $o .= self::print_student_dashboard();
-        $o .= '<div id="coursetools-list">' .self::render_appendices($links). '</div><hr>';
+        $o .= '<ul id="coursetools-list">' .self::render_appendices($links). '</ul><hr>';
 
         return $o;
     }

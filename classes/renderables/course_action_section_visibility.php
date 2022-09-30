@@ -50,11 +50,13 @@ class course_action_section_visibility extends course_action_section_base {
                 $url->param('hide', $section->section);
                 $this->url = $url;
                 $this->class .= ' snap-hide';
+                $this->arialabel = "aria-label='".get_string('hidefromothers', 'format_'.$course->format)."'";
             } else {
                 $this->title = get_string('showfromothers', 'format_'.$course->format);
                 $url->param('show',  $section->section);
                 $this->url = $url;
                 $this->class .= ' snap-show';
+                $this->arialabel = "aria-label='".get_string('showfromothers', 'format_'.$course->format)."'";
             }
         }
     }

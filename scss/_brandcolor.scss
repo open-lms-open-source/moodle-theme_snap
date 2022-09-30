@@ -1003,4 +1003,18 @@ $custom-menu-text-color: rgb(255, 255, 255) !default; // Need to define this wit
             }
         }
     }
+
+    #coursetools-list li {
+        &:hover,
+        &:focus {
+            background-color: $brand-primary;
+            a {
+                color: white;
+            }
+        }
+    }
+
+    &#page-mod-hsuforum-view .floating-label textarea:focus-visible {
+        outline-color: $brand-primary;
+    }
 }
