@@ -1,8 +1,6 @@
 @theme @theme_snap
-Feature: View activity completion in the assignment activity
+Feature: View activity activity header and completion information in activities
   In order to have visibility of assignment completion requirements
-  As a student
-  I need to be able to view my assignment completion progress
 
   Background:
     Given the following "users" exist:
@@ -35,7 +33,8 @@ Feature: View activity completion in the assignment activity
       | completionusegrade  | 1                                                 |
       | completionsubmit    | 1                                                 |
     And I press "Save and display"
-    Then "Music history" should have the "View" completion condition
+    Then ".activity-header" "css_element" should exist
+    And "Music history" should have the "View" completion condition
     And "Music history" should have the "Make a submission" completion condition
     And "Music history" should have the "Receive a grade" completion condition
 
@@ -66,7 +65,7 @@ Feature: View activity completion in the assignment activity
     And the "Receive a grade" completion condition of "Music history" is displayed as "todo"
     And I log out
     And I am on the "Music history" "assign activity" page logged in as teacher1
-    And I navigate to "View all submissions" in current page administration
+    And I follow "View all submissions"
     And I click on "Grade" "link" in the "Vinnie Student1" "table_row"
     And I set the field "Grade out of 100" to "33"
     And I set the field "Notify student" to "0"

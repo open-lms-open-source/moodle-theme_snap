@@ -52,29 +52,11 @@ Feature: Title of Page, Book and Label activities should not
     Given I log in as "student1"
     And I am on "Course 1" course homepage
     And I should not see "Book"
-    And I log out
-    And I log in as "teacher1"
-    And I am on "Course 1" course homepage
-    And I should not see "Book"
-
-  @javascript
-  Scenario: The user should not see page title when visiting the course homepage, after a page
-    activity was added.
-    Given I log in as "student1"
-    And I am on "Course 1" course homepage
     And I should not see "Page"
-    And I log out
-    And I log in as "teacher1"
-    And I am on "Course 1" course homepage
-    And I should not see "Page"
-
-  @javascript
-  Scenario: The user should not see label title when visiting the course homepage, after a label
-    activity was added.
-    Given I log in as "student1"
-    And I am on "Course 1" course homepage
     And I should not see "Label"
     And I log out
     And I log in as "teacher1"
     And I am on "Course 1" course homepage
+    And I should not see "Book"
+    And I should not see "Page"
     And I should not see "Label"
