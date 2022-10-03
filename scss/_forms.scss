@@ -48,6 +48,9 @@ body#page-mod-page-mod fieldset#id_general div.fcontainer:nth-child(2) div.form-
 .mform fieldset {
     margin-left: 0;
     border: none;
+    .fcontainer.collapseable .col-form-label {
+        padding-left: unset;
+    }
 }
 
 .form-label .form-shortname {
