@@ -54,7 +54,7 @@ Feature: When the Moodle theme is set to Snap, on moving assets some links shoul
   Scenario: In read mode, on front page, when admin try move an activity, anchor link tabindex attribute should exists and value is -1.
     Given I log in as "admin"
     And I am on site homepage
-    And I click on ".snap-activity.modtype_assign .snap-asset-move img[title='Move \"Test assignment2\"']" "css_element"
+    And I click on ".snap-activity.modtype_assign .snap-asset-move i[title='Move \"Test assignment2\"']" "css_element"
     Then I should see "Moving \"Test assignment2\""
     And the "tabindex" attribute of ".snap-asset .mod-link" "css_element" should contain "-1"
     And the "tabindex" attribute of ".snap-asset .snap-completion-meta a" "css_element" should contain "-1"
@@ -67,7 +67,7 @@ Feature: When the Moodle theme is set to Snap, on moving assets some links shoul
     And I am on the course main page for "C1"
     And I follow "Topic 1"
     Then "#section-1" "css_element" should exist
-    And I click on ".snap-activity.modtype_assign .snap-asset-move img[title='Move \"Test assignment2\"']" "css_element"
+    And I click on ".snap-activity.modtype_assign .snap-asset-move i[title='Move \"Test assignment2\"']" "css_element"
     Then I should see "Moving \"Test assignment2\""
     And the "tabindex" attribute of ".snap-asset .mod-link" "css_element" should contain "-1"
     And the "tabindex" attribute of ".snap-asset .snap-completion-meta a" "css_element" should contain "-1"

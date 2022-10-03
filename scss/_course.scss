@@ -1715,7 +1715,7 @@ form.togglecompletion {
 
         &:hover,
         &:focus {
-            .svg-icon {
+            .icon {
                 transform: scale(1.1);
                 border-color: $gray-light;
             }
@@ -1737,21 +1737,13 @@ form.togglecompletion {
         }
     }
 
-    .svg-icon {
-        width: 1.75em;
-        height: 1.75em;
-        background-color: white;
-        margin: 0;
-        @include alakazam;
-    }
-
     button.snap-edit-asset-more {
         border: none;
         background-color: white;
     }
 
     // When checkbox for moving is checked
-    input[type=checkbox]:checked + .svg-icon {
+    input[type=checkbox]:checked + .icon {
         background-color: $brand-success !important;
     }
 
@@ -1766,6 +1758,13 @@ form.togglecompletion {
         font-size: 0.8em;
         overflow: hidden;
         text-overflow: ellipsis;
+    }
+
+    label.snap-asset-move .icon,
+    a.snap-edit-asset .icon,
+    .dropdown-toggle .icon {
+        font-size: 1.3em;
+        color: #6c757d;
     }
 }
 
