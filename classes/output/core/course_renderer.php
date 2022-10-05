@@ -30,7 +30,6 @@ defined('MOODLE_INTERNAL') || die();
 use cm_info;
 use context_course;
 use context_module;
-use core_courseformat\base as course_format;
 use html_writer;
 use moodle_url;
 use coursecat;
