@@ -276,7 +276,7 @@ trait format_section_trait {
             if ($section->section != 0 && $leftnavtop != 0 ) {
                 $sectiontitle = '<span class=\'sectionnumber\'></span>' . $sectiontitle;
             }
-            $o .= "<div tabindex='0'>" . $output->heading($sectiontitle, 2, 'sectionname' . $classes) . "</div>";
+            $o .= "<div>" . $output->heading($sectiontitle, 2, 'sectionname' . $classes) . "</div>";
         }
 
         // Section drop zone.
@@ -332,7 +332,8 @@ trait format_section_trait {
         }
 
         // Section summary/body text.
-        $o .= "<div class='summary'>";
+        $summarylabel = get_string('summarylabel', 'theme_snap');
+        $o .= "<div class='summary' role='group' aria-label='$summarylabel'>";
 
         // SHAME: Inhibiting section html under certain circumstances.
         // H5P fix, sometimes instructors will try to embed iframes pointing to other courses,
@@ -348,13 +349,13 @@ trait format_section_trait {
 
         // Welcome message when no summary text.
         if (empty($summarytext) && $canupdatecourse) {
-            $summarytext = "<p tabindex='0'>".get_string('defaultsummary', 'theme_snap')."</p>";
+            $summarytext = "<p>".get_string('defaultsummary', 'theme_snap')."</p>";
             if ($section->section == 0) {
                 $editorname = format_string(fullname($USER));
-                $summarytext = "<p tabindex='0'>".get_string('defaultintrosummary', 'theme_snap', $editorname)."</p>";
+                $summarytext = "<p>".get_string('defaultintrosummary', 'theme_snap', $editorname)."</p>";
             }
         } else {
-            $summarytext = "<div tabindex='0'>" . $summarytext . "</div>";
+            $summarytext = "<div>" . $summarytext . "</div>";
         }
 
         $o .= $summarytext;

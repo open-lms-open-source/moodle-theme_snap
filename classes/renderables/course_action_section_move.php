@@ -40,6 +40,7 @@ class course_action_section_move extends course_action_section_base {
             $this->url = '#section-'.$section->section;
             $sectionname = !empty($section->name) ? $section->name : get_section_name($course, $section);
             $this->title = s(get_string('move', 'theme_snap', $sectionname));
+            $this->arialabel = "aria-label='".s(get_string('move', 'theme_snap', $sectionname))."'";
         }
     }
 }

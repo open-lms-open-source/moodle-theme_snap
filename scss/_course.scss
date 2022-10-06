@@ -162,7 +162,7 @@ body[class^="format-"].theme-snap {
         line-height: 36px;
     }
 
-    a {
+    li {
         width: 32%;
         margin: 0.5%;
         float: left;
@@ -175,6 +175,8 @@ body[class^="format-"].theme-snap {
         white-space: nowrap;
         overflow-y: hidden;
         text-overflow: ellipsis;
+        list-style-type: none;
+        box-shadow: 0 2px 3px 0 rgba(0, 0, 0, .2);
 
         .snap-participant-icons,
         img.svg-icon {
@@ -696,6 +698,9 @@ li.section:focus {
                         }
                     }
                 }
+            }
+            .contentafterlink p a {
+                font-weight: 500;
             }
         }
     }
@@ -1758,6 +1763,11 @@ form.togglecompletion {
         font-size: 0.8em;
         overflow: hidden;
         text-overflow: ellipsis;
+    }
+
+    input.sr-only[type="checkbox"],
+    span.sr-only {
+        display: none;
     }
 
     label.snap-asset-move .icon,

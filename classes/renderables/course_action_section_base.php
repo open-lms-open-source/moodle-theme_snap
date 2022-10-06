@@ -49,6 +49,11 @@ abstract class course_action_section_base implements \renderable, \templatable {
      */
     public $ariapressed;
 
+    /**
+     * @var string
+     */
+    public $arialabel;
+
     abstract public function __construct($course, section_info $section, $onsectionpage = false);
 
 }

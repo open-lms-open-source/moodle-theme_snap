@@ -1086,4 +1086,17 @@ $custom-menu-text-color: rgb(255, 255, 255) !default; // Need to define this wit
     ngb-modal-window.modal {
         z-index: 1055;
     }
+    #coursetools-list li {
+        &:hover,
+        &:focus {
+            background-color: $brand-primary;
+            a {
+                color: white;
+            }
+        }
+    }
+
+    &#page-mod-hsuforum-view .floating-label textarea:focus-visible {
+        outline-color: $brand-primary;
+    }
 }

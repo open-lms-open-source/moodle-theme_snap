@@ -153,6 +153,8 @@ class course_renderer extends \core_course_renderer {
             $attr['class'] = implode(' ', $modclasses);
             $attr['id'] = 'module-' . $mod->id;
             $attr['data-modcontext'] = $mod->context->id;
+            $attr['role'] = 'group';
+            $attr['aria-label'] = $snapmodtype . ' ' . get_string('activity', 'theme_snap');
 
             $output .= html_writer::tag('li', $modulehtml, $attr);
         }
