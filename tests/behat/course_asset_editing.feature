@@ -186,3 +186,24 @@ Feature: When the moodle theme is set to Snap, teachers edit assets without ente
       | Option     |
       | 0          |
       | 1          |
+
+  @javascript
+  Scenario: In read mode, teacher can copy activity to sharing cart.
+    Given the following "activities" exist:
+      | activity | course | idnumber | name            | intro           | section | assignsubmission_onlinetext_enabled |
+      | assign   | C1     | assign1  | Test assignment | Test assignment | 1       | 1|
+    And I log in as "admin"
+    And I am on "Course 1" course homepage
+    Then I follow "Course Dashboard"
+    And I follow "Edit blocks"
+    And I set the field with xpath "//select[@class = 'custom-select singleselect']" to "Sharing Cart"
+    And I wait until the page is ready
+    And I should see "Sharing Cart"
+    And I log out
+    And I log in as "teacher1"
+    And I am on "Course 1" course homepage
+    And I follow "Topic 1"
+    And I click on ".snap-activity[data-type='Assignment'] button.snap-edit-asset-more" "css_element"
+    Then I should see "Copy to Sharing Cart"
+    And I click on ".snap-activity[data-type='Assignment'] a.editing_backup" "css_element"
+    Then I should see "Are you sure you want to copy this"
