@@ -419,5 +419,5 @@ $string['loginbgimgheadingdesc'] = 'Snap allows to change between different temp
 $string['loginpagetemplate'] = 'Select login page template to be used';
 $string['classic_template'] = 'Classic template';
 $string['loginbgimg'] = 'Login background image';
-$string['loginbgimgdesc'] = 'Select the images that will appear in the login page as background images.';
+$string['loginbgimgdesc'] = 'Select the images that will appear in the login page as background images. To have a better experience with the images displayed, please upload images with aspect ratio of 16:9 and with a resolution of 1280×720 pixels or higher.';
 $string['stylish_template'] = 'Stylish template';

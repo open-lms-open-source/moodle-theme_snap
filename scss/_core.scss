@@ -211,8 +211,8 @@ table.boxwidthwide {
     // Page background when login Stylish template is selected.
     .page-stylish-background {
         background-repeat: no-repeat;
-        background-size: 50% 100% !important;
-        background-position: right top !important;
+        background-size: cover !important;
+        background-position: center !important;
         background-color: #ffffff !important;
 
         @media (max-width: 750px) {
