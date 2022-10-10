@@ -93,10 +93,10 @@ Feature: When the moodle theme is set to Snap, teachers edit assets without ente
     And I follow "Topic 1"
     Then "#section-1" "css_element" should exist
     And ".snap-activity[data-type='Assignment']" "css_element" should exist
-    And I click on ".snap-activity[data-type='Assignment'] span.snap-edit-asset-more" "css_element"
+    And I click on ".snap-activity[data-type='Assignment'] button.snap-edit-asset-more" "css_element"
     And I click on ".snap-activity[data-type='Assignment'] a.js_snap_hide" "css_element"
     Then I wait until ".snap-activity[data-type='Assignment'].draft" "css_element" exists
-    And I click on ".snap-activity[data-type='Assignment'] span.snap-edit-asset-more" "css_element"
+    And I click on ".snap-activity[data-type='Assignment'] button.snap-edit-asset-more" "css_element"
     And I click on ".snap-activity[data-type='Assignment'] a.js_snap_show" "css_element"
     Then I wait until ".snap-activity[data-type='Assignment'].draft" "css_element" does not exist
   Examples:
@@ -118,13 +118,13 @@ Feature: When the moodle theme is set to Snap, teachers edit assets without ente
     And I upload file "test_text_file.txt" to section 1
     Then ".snap-resource[data-type='text']" "css_element" should exist
     And ".snap-resource[data-type='text'].draft" "css_element" should not exist
-    And I click on ".snap-resource[data-type='text'] span.snap-edit-asset-more" "css_element"
+    And I click on ".snap-resource[data-type='text'] button.snap-edit-asset-more" "css_element"
     And I click on ".snap-resource[data-type='text'] a.js_snap_hide" "css_element"
     Then I wait until ".snap-resource[data-type='text'].draft" "css_element" exists
     # This is to test that the change persists.
     And I reload the page
     And ".snap-resource[data-type='text'].draft" "css_element" should exist
-    And I click on ".snap-resource[data-type='text'] span.snap-edit-asset-more" "css_element"
+    And I click on ".snap-resource[data-type='text'] button.snap-edit-asset-more" "css_element"
     And I click on ".snap-resource[data-type='text'] a.js_snap_show" "css_element"
     Then I wait until ".snap-resource[data-type='text'].draft" "css_element" does not exist
     # This is to test that the change persists.
@@ -151,7 +151,7 @@ Feature: When the moodle theme is set to Snap, teachers edit assets without ente
    Then "#section-1" "css_element" should exist
     And ".snap-activity[data-type='Assignment']" "css_element" should exist
     And ".snap-activity[data-type='Assignment'] + .snap-activity[data-type='Assignment']" "css_element" should not exist
-    And I click on ".snap-activity[data-type='Assignment'] span.snap-edit-asset-more" "css_element"
+    And I click on ".snap-activity[data-type='Assignment'] button.snap-edit-asset-more" "css_element"
     And I click on ".snap-activity[data-type='Assignment'] a.js_snap_duplicate" "css_element"
    Then I wait until ".snap-activity[data-type='Assignment'] + .snap-activity[data-type='Assignment']" "css_element" exists
     # This is to test that the duplication persists.
@@ -176,7 +176,7 @@ Feature: When the moodle theme is set to Snap, teachers edit assets without ente
     When I upload file "test_text_file.txt" to section 1
     Then ".snap-resource[data-type='text']" "css_element" should exist
     And ".snap-resource[data-type='text'] + .snap-resource[data-type='text']" "css_element" should not exist
-    And I click on ".snap-resource[data-type='text'] span.snap-edit-asset-more" "css_element"
+    And I click on ".snap-resource[data-type='text'] button.snap-edit-asset-more" "css_element"
     And I click on ".snap-resource[data-type='text'] a.js_snap_duplicate" "css_element"
    Then I wait until ".snap-resource[data-type='text'] + .snap-resource[data-type='text']" "css_element" exists
         # This is to test that the duplication persists.
@@ -186,3 +186,24 @@ Feature: When the moodle theme is set to Snap, teachers edit assets without ente
       | Option     |
       | 0          |
       | 1          |
+
+  @javascript
+  Scenario: In read mode, teacher can copy activity to sharing cart.
+    Given the following "activities" exist:
+      | activity | course | idnumber | name            | intro           | section | assignsubmission_onlinetext_enabled |
+      | assign   | C1     | assign1  | Test assignment | Test assignment | 1       | 1|
+    And I log in as "admin"
+    And I am on "Course 1" course homepage
+    Then I follow "Course Dashboard"
+    And I follow "Edit blocks"
+    And I set the field with xpath "//select[@class = 'custom-select singleselect']" to "Sharing Cart"
+    And I wait until the page is ready
+    And I should see "Sharing Cart"
+    And I log out
+    And I log in as "teacher1"
+    And I am on "Course 1" course homepage
+    And I follow "Topic 1"
+    And I click on ".snap-activity[data-type='Assignment'] button.snap-edit-asset-more" "css_element"
+    Then I should see "Copy to Sharing Cart"
+    And I click on ".snap-activity[data-type='Assignment'] a.editing_backup" "css_element"
+    Then I should see "Are you sure you want to copy this"
