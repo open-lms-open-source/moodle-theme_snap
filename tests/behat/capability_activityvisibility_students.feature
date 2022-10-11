@@ -47,7 +47,7 @@ Feature: When theme is set to Snap, and course:activityvisibility is set for stu
 
     Given I log in as "student1"
     And I am on "Course 1" course homepage
-    And I click on ".snap-activity[data-type='Assignment'] span.snap-edit-asset-more" "css_element"
+    And I click on ".snap-activity[data-type='Assignment'] button.snap-edit-asset-more" "css_element"
     Then I should see "Hide"
 
   @javascript
@@ -59,14 +59,14 @@ Feature: When theme is set to Snap, and course:activityvisibility is set for stu
 
     Given I log in as "student1"
     And I am on "Course 1" course homepage
-    And I click on ".snap-activity[data-type='Assignment'] span.snap-edit-asset-more" "css_element"
+    And I click on ".snap-activity[data-type='Assignment'] button.snap-edit-asset-more" "css_element"
     When I click on ".snap-activity[data-type='Assignment'] a.js_snap_hide" "css_element"
-    And I wait until ".snap-activity[data-type='Assignment'] span.snap-edit-asset-more" "css_element" is not visible
+    And I wait until ".snap-activity[data-type='Assignment'] button.snap-edit-asset-more" "css_element" is not visible
 
   @javascript
   Scenario: Student should not be able to hide an activity if the course doesn't have course:activityvisibility for students
     Given I log in as "student1"
     And I am on "Course 1" course homepage
-    And ".snap-activity[data-type='Assignment'] span.snap-edit-asset-more" "css_element" should not exist
+    And ".snap-activity[data-type='Assignment'] button.snap-edit-asset-more" "css_element" should not exist
 
 

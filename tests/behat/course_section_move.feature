@@ -130,7 +130,7 @@ Feature: When the moodle theme is set to Snap, teachers can move course sections
     And "#snap-footer-alert" "css_element" should not exist
     And I follow "Topic 1"
     Then "#section-1" "css_element" should exist
-    And I click on ".snap-activity.modtype_assign .snap-asset-move img[title='Move \"Test assignment1\"']" "css_element"
+    And I click on ".snap-activity.modtype_assign .snap-asset-move i[title='Move \"Test assignment1\"']" "css_element"
     Then I should see "Moving \"Test assignment1\""
     And "#snap-footer-alert" "css_element" should exist
     And I click on "li#section-1 li.snap-drop.asset-drop div.asset-wrapper a" "css_element"

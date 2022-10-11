@@ -93,10 +93,10 @@ Feature: When the moodle theme is set to Snap, teachers edit assets without ente
     And I follow "Topic 1"
     Then "#section-1" "css_element" should exist
     And ".snap-activity[data-type='Assignment']" "css_element" should exist
-    And I click on ".snap-activity[data-type='Assignment'] span.snap-edit-asset-more" "css_element"
+    And I click on ".snap-activity[data-type='Assignment'] button.snap-edit-asset-more" "css_element"
     And I click on ".snap-activity[data-type='Assignment'] a.js_snap_hide" "css_element"
     Then I wait until ".snap-activity[data-type='Assignment'].draft" "css_element" exists
-    And I click on ".snap-activity[data-type='Assignment'] span.snap-edit-asset-more" "css_element"
+    And I click on ".snap-activity[data-type='Assignment'] button.snap-edit-asset-more" "css_element"
     And I click on ".snap-activity[data-type='Assignment'] a.js_snap_show" "css_element"
     Then I wait until ".snap-activity[data-type='Assignment'].draft" "css_element" does not exist
   Examples:
@@ -118,13 +118,13 @@ Feature: When the moodle theme is set to Snap, teachers edit assets without ente
     And I upload file "test_text_file.txt" to section 1
     Then ".snap-resource[data-type='text']" "css_element" should exist
     And ".snap-resource[data-type='text'].draft" "css_element" should not exist
-    And I click on ".snap-resource[data-type='text'] span.snap-edit-asset-more" "css_element"
+    And I click on ".snap-resource[data-type='text'] button.snap-edit-asset-more" "css_element"
     And I click on ".snap-resource[data-type='text'] a.js_snap_hide" "css_element"
     Then I wait until ".snap-resource[data-type='text'].draft" "css_element" exists
     # This is to test that the change persists.
     And I reload the page
     And ".snap-resource[data-type='text'].draft" "css_element" should exist
-    And I click on ".snap-resource[data-type='text'] span.snap-edit-asset-more" "css_element"
+    And I click on ".snap-resource[data-type='text'] button.snap-edit-asset-more" "css_element"
     And I click on ".snap-resource[data-type='text'] a.js_snap_show" "css_element"
     Then I wait until ".snap-resource[data-type='text'].draft" "css_element" does not exist
     # This is to test that the change persists.
@@ -151,7 +151,7 @@ Feature: When the moodle theme is set to Snap, teachers edit assets without ente
    Then "#section-1" "css_element" should exist
     And ".snap-activity[data-type='Assignment']" "css_element" should exist
     And ".snap-activity[data-type='Assignment'] + .snap-activity[data-type='Assignment']" "css_element" should not exist
-    And I click on ".snap-activity[data-type='Assignment'] span.snap-edit-asset-more" "css_element"
+    And I click on ".snap-activity[data-type='Assignment'] button.snap-edit-asset-more" "css_element"
     And I click on ".snap-activity[data-type='Assignment'] a.js_snap_duplicate" "css_element"
    Then I wait until ".snap-activity[data-type='Assignment'] + .snap-activity[data-type='Assignment']" "css_element" exists
     # This is to test that the duplication persists.
@@ -176,7 +176,7 @@ Feature: When the moodle theme is set to Snap, teachers edit assets without ente
     When I upload file "test_text_file.txt" to section 1
     Then ".snap-resource[data-type='text']" "css_element" should exist
     And ".snap-resource[data-type='text'] + .snap-resource[data-type='text']" "css_element" should not exist
-    And I click on ".snap-resource[data-type='text'] span.snap-edit-asset-more" "css_element"
+    And I click on ".snap-resource[data-type='text'] button.snap-edit-asset-more" "css_element"
     And I click on ".snap-resource[data-type='text'] a.js_snap_duplicate" "css_element"
    Then I wait until ".snap-resource[data-type='text'] + .snap-resource[data-type='text']" "css_element" exists
         # This is to test that the duplication persists.

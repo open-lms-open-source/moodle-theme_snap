@@ -128,7 +128,7 @@ define(['jquery', 'core/str', 'core/event'],
                             .attr("id", "ct-open-catalogue");
                     }
 
-                    $('[id^="page-course"] #snap-course-wrapper' +
+                    $('[id^="page-course"] .course-content' +
                         ' .content ul.section.img-text').attr('role', 'group').attr('aria-label', stringsjs[19]);
                 });
 
