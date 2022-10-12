@@ -26,11 +26,13 @@
 
 namespace theme_snap\output;
 use context_course;
+use core_courseformat\base as course_format;
 use core_courseformat\output\local\content;
 use renderable;
 use html_writer;
 use moodle_url;
 use stdClass;
+use theme_snap\output\core\course_renderer;
 use theme_snap\renderables\course_action_section_move;
 use theme_snap\renderables\course_action_section_visibility;
 use theme_snap\renderables\course_action_section_delete;
@@ -40,6 +42,35 @@ use theme_snap\renderables\course_section_navigation;
 trait format_section_trait {
 
     use general_section_trait;
+
+    /**
+     * Renders HTML to display one course module for display within a section.
+     *
+     * @deprecated since 4.0 - use core_course output components or course_format::course_section_updated_cm_item instead.
+     *
+     * This function calls:
+     * {@link core_course_renderer::course_section_cm()}
+     *
+     * @param stdClass $course
+     * @param \completion_info $completioninfo
+     * @param \cm_info $mod
+     * @param int|null $sectionreturn
+     * @param array $displayoptions
+     * @return String
+     */
+    public function course_section_updated_cm_item(
+        course_format $format,
+        \section_info $section,
+        \cm_info $cm,
+        array $displayoptions = []
+    ) {
+        global $PAGE;
+        $course = $format->get_course();
+        $completioninfo = new \completion_info($course);
+        $render = new course_renderer($PAGE, null);
+        return $render->course_section_cm_list_item($course, $completioninfo, $cm, $format->get_section_number(),
+            $displayoptions);
+    }
 
     /**
      * New moodle 4.0 render_content function.
@@ -818,7 +849,7 @@ trait format_section_trait {
      */
     protected function format_summary_text($section) {
         $format = course_get_format($section->course);
-        if (!($section instanceof section_info)) {
+        if (!($section instanceof \section_info)) {
             $modinfo = $format->get_modinfo();
             $section = $modinfo->get_section_info($section->section);
         }
