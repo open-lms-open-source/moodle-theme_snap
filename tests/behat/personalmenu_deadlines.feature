@@ -280,7 +280,7 @@ Feature: When the moodle theme is set to Snap, students and teachers can find in
     And I log out
     And I log in as "teacher1"
     And I am on "Course 1" course homepage
-    And I click on ".snap-activity[data-type='Assignment'] span.snap-edit-asset-more" "css_element"
+    And I click on ".snap-activity[data-type='Assignment'] button.snap-edit-asset-more" "css_element"
     And I click on ".snap-activity[data-type='Assignment'] a.js_snap_delete" "css_element"
     Then I should see asset delete dialog
     When I press "Delete Assign"

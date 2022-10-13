@@ -613,7 +613,7 @@ class behat_theme_snap extends behat_base {
     public function i_restrict_asset_by_completion($asset1, $asset2) {
         /** @var behat_general $helper */
         $helper = behat_context_helper::get('behat_general');
-        $helper->i_click_on('img[alt=\'Edit "' . $asset1 . '"\']', 'css_element');
+        $helper->i_click_on('i[alt=\'Edit "' . $asset1 . '"\']', 'css_element');
         $this->apply_completion_restriction($asset2, 'Save and return to course');
     }
 
@@ -628,7 +628,7 @@ class behat_theme_snap extends behat_base {
     public function i_restrict_asset_by_belong_to_group($asset1, $group1) {
         /** @var behat_general $helper */
         $helper = behat_context_helper::get('behat_general');
-        $helper->i_click_on('img[alt=\'Edit "' . $asset1 . '"\']', 'css_element');
+        $helper->i_click_on('i[alt=\'Edit "' . $asset1 . '"\']', 'css_element');
         $this->apply_group_restriction($group1, 'Save and return to course');
     }
 

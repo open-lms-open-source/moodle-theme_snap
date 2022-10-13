@@ -80,7 +80,7 @@ Feature: Activity navigation in Snap theme
     And I set the field "Visibility" to "Make available but not shown on course page"
     And I press "Save and return to course"
     # Hidden activity.
-    And I click on ".snap-activity[data-type='Glossary'] span.snap-edit-asset-more" "css_element"
+    And I click on ".snap-activity[data-type='Glossary'] button.snap-edit-asset-more" "css_element"
     And I click on ".snap-activity[data-type='Glossary'] a.js_snap_hide" "css_element"
     # Hidden section.
     And I follow "Topic 5"
@@ -357,16 +357,16 @@ Feature: Activity navigation in Snap theme
     And I log in as "admin"
     And I am on "Course 1" course homepage
     And I follow "Topic 2"
-    And I click on ".snap-activity[data-type='Forum'] span.snap-edit-asset-more" "css_element"
+    And I click on ".snap-activity[data-type='Forum'] button.snap-edit-asset-more" "css_element"
     And I should not see "Make available"
     And I click on ".snap-activity[data-type='Forum'] a.editing_makeunavailable.js_snap_hide" "css_element"
     Then I wait until ".snap-activity[data-type='Forum'].draft" "css_element" exists
-    And I click on ".snap-activity[data-type='Forum'] span.snap-edit-asset-more" "css_element"
+    And I click on ".snap-activity[data-type='Forum'] button.snap-edit-asset-more" "css_element"
     And I should see "Make available"
     And I click on ".snap-activity[data-type='Forum'] a.js_snap_stealth" "css_element"
     Then I wait until ".snap-activity[data-type='Forum'].stealth" "css_element" exists
     And I should see "Available but not shown on course page"
-    And I click on ".snap-activity[data-type='Forum'] span.snap-edit-asset-more" "css_element"
+    And I click on ".snap-activity[data-type='Forum'] button.snap-edit-asset-more" "css_element"
     And I should not see "Make available"
     And I should not see "Hide"
     And I should see "Make unavailable"
@@ -381,13 +381,13 @@ Feature: Activity navigation in Snap theme
     And I follow "Topic 4"
     And I click on "li#section-4 div.snap-section-editing > a.snap-visibility.snap-hide" "css_element"
     And "li.draft.snap-visible-section span.text.text-warning small.published-status" "css_element" should exist
-    And I click on ".snap-activity[data-type='External tool'] span.snap-edit-asset-more" "css_element"
+    And I click on ".snap-activity[data-type='External tool'] button.snap-edit-asset-more" "css_element"
     And I should see "Make available"
     And I should not see "Hide"
     And I click on ".snap-activity[data-type='External tool'] a.js_snap_stealthshow" "css_element"
     Then I wait until ".snap-activity[data-type='External tool'].stealth" "css_element" exists
     And I should see "Available but not shown on course page"
-    And I click on ".snap-activity[data-type='External tool'] span.snap-edit-asset-more" "css_element"
+    And I click on ".snap-activity[data-type='External tool'] button.snap-edit-asset-more" "css_element"
     And I should not see "Make available"
     And I should not see "Hide"
     And I hover ".snap-activity[data-type='External tool'] a.editing_makeunavailable.js_snap_hide" "css_element"
@@ -395,6 +395,6 @@ Feature: Activity navigation in Snap theme
     And I click on ".snap-activity[data-type='External tool'] a.editing_makeunavailable.js_snap_hide" "css_element"
     And I reload the page
     And I should not see "Available but not shown on course page"
-    And I click on ".snap-activity[data-type='External tool'] span.snap-edit-asset-more" "css_element"
+    And I click on ".snap-activity[data-type='External tool'] button.snap-edit-asset-more" "css_element"
     And I should see "Make available"
     And I should not see "Hide"

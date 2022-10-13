@@ -92,7 +92,7 @@ Feature: When the moodle theme is set to Snap, ajax failures due to log outs / e
     Given I log in as "teacher"
     And I am on the course main page for "C1"
     When I follow "Topic 1"
-    And I click on ".snap-activity[data-type='Assignment'] span.snap-edit-asset-more" "css_element"
+    And I click on ".snap-activity[data-type='Assignment'] button.snap-edit-asset-more" "css_element"
     And I log out via a separate window
     When I click on ".snap-activity[data-type='Assignment'] a.js_snap_hide" "css_element"
     And I wait until the page is ready
@@ -100,7 +100,7 @@ Feature: When the moodle theme is set to Snap, ajax failures due to log outs / e
     Given I log in as "teacher"
     And I am on the course main page for "C1"
     When I follow "Topic 1"
-    And I click on ".snap-activity[data-type='Assignment'] span.snap-edit-asset-more" "css_element"
+    And I click on ".snap-activity[data-type='Assignment'] button.snap-edit-asset-more" "css_element"
     And I log out via a separate window
     And I wait until the page is ready
     When I click on ".snap-activity[data-type='Assignment'] a.js_snap_duplicate" "css_element"
@@ -110,7 +110,7 @@ Feature: When the moodle theme is set to Snap, ajax failures due to log outs / e
     And I am on the course main page for "C1"
     And I follow "Topic 1"
     Then "#section-1" "css_element" should exist
-    And I click on ".snap-activity.modtype_assign .snap-asset-move img[title='Move \"Test assignment\"']" "css_element"
+    And I click on ".snap-activity.modtype_assign .snap-asset-move i[title='Move \"Test assignment\"']" "css_element"
     Then I should see "Moving \"Test assignment\""
     And I log out via a separate window
     When I click on "li#section-1 li.snap-drop.asset-drop div.asset-wrapper" "css_element"
