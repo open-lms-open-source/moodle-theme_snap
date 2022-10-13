@@ -52,14 +52,14 @@ Feature: In Open forums while using Snap, the student should see the options
     And I should see "Export"
     And I should see "View posters"
     And I should see "Unsubscribe from this forum"
-    And I click on "div.exportdiscussions-url a" "css_element"
+    And I click on "li.exportdiscussions-url a" "css_element"
     And I should see "Export attachments"
     And I click on "Cancel" "button"
-    And I click on "div.subscribeforum-url a" "css_element"
+    And I click on "li.subscribeforum-url a" "css_element"
     And I should see "Subscribe to this forum"
-    And I click on "div.subscribeforum-url a" "css_element"
+    And I click on "li.subscribeforum-url a" "css_element"
     And I should see "Unsubscribe from this forum"
-    And I click on "div.viewposters-url a" "css_element"
+    And I click on "li.viewposters-url a" "css_element"
     And I should see "View posters"
 
     @javascript
@@ -69,7 +69,7 @@ Feature: In Open forums while using Snap, the student should see the options
     And I wait until the page is ready
     And I click on "//h3/a/p[contains(text(),'Test forum name')]" "xpath_element"
     And I should see "Subscribe to this forum"
-    And I click on "div.subscribeforum-url a" "css_element"
+    And I click on "li.subscribeforum-url a" "css_element"
     And I should see "Subscribe to this forum"
     And I should see "Sorry, only enrolled users are allowed to subscribe to forum post notifications."
 
