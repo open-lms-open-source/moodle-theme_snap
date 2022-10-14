@@ -178,7 +178,6 @@ class services_course_test extends \advanced_testcase {
     public function test_course_completion() {
         global $DB;
         $this->resetAfterTest();
-        $this->markTestSkipped('Failing after 4.0 merge. To be reviewed in INT-18144');
 
         // Enable avaibility.
         // If not enabled all conditional fields will be ignored.
@@ -549,7 +548,6 @@ class services_course_test extends \advanced_testcase {
     }
 
     public function test_section_fragment() {
-        $this->markTestSkipped('Failing after 4.0 merge. To be reviewed in INT-18144');
         global $CFG, $DB;
         require_once($CFG->dirroot .'/theme/snap/lib.php');
         $topics = $this->getDataGenerator()->create_course(
