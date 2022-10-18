@@ -519,7 +519,7 @@ $custom-menu-text-color: rgb(255, 255, 255) !default; // Need to define this wit
         background-color: $brand-primary;
     }
 
-    .dropdown-menu > li > a {
+    .dropdown-menu:not(.asset-edit-menu) > li > a {
         display: block;
 
         &:hover,
