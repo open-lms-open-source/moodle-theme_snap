@@ -50,7 +50,15 @@ Feature: Activity navigation involving activities with access restrictions in Sn
     # Set completion for Forum 1.
     And I follow "Edit \"Forum 1\""
     And I expand all fieldsets
+    And I set the field "Completion tracking" to "Do not indicate activity completion"
+    And I should not see "Expect completed on"
+    And I should not see "Require replies"
+    And I set the field "Completion tracking" to "  Students can manually mark the activity as completed"
+    And I should see "Expect completed on"
+    And I should not see "Require replies"
     And I set the field "Completion tracking" to "Show activity as complete when conditions are met"
+    And I should see "Expect completed on"
+    And I should see "Require replies"
     And I set the following fields to these values:
       | Completion tracking | Show activity as complete when conditions are met |
       | Require view        | 1                                                 |
