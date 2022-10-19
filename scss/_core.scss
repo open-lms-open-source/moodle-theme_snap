@@ -5005,3 +5005,12 @@ body.scrolled #goto-top-link {
     visibility: visible;
     transition: visibility 0s ease 0s, opacity .7s ease .1s;
 }
+
+body[id^="page-mod-"][id$="-view"] #region-main .tertiary-navigation .row .navitem {
+    display: inline-flex;
+    margin-right: 1.5em;
+}
+
+#page-mod-assign-view #region-main .tertiary-navigation .row {
+    display: none;
+}
