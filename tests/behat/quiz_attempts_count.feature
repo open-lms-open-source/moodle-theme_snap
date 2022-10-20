@@ -68,7 +68,7 @@ Feature: Quiz attempts from suspended users and previews from admin or teachers
     And I log in as "student1"
     And I am on "Course 1" course homepage
     And I click on ".snap-asset-link a" "css_element"
-    And I press "Attempt quiz now"
+    And I press "Attempt quiz"
     And I click on "True" "radio" in the "First question" "question"
     And I click on "False" "radio" in the "Second question" "question"
     And I press "Finish attempt ..."
@@ -83,7 +83,7 @@ Feature: Quiz attempts from suspended users and previews from admin or teachers
     And I log in as "student2"
     And I am on "Course 1" course homepage
     And I click on ".snap-asset-link a" "css_element"
-    And I press "Attempt quiz now"
+    And I press "Attempt quiz"
     And I click on "True" "radio" in the "First question" "question"
     And I click on "False" "radio" in the "Second question" "question"
     And I press "Finish attempt ..."

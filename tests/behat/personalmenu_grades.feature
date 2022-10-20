@@ -92,6 +92,7 @@ Feature: When the moodle theme is set to Snap, students and teachers can open a 
     #And I follow "Test assignment1"
 
     And I follow "Not Submitted"
+    And I reload the page
    When I follow "Add submission"
     And I set the following fields to these values:
       | Online text | I'm the student submission |
@@ -197,6 +198,7 @@ Feature: When the moodle theme is set to Snap, students and teachers can open a 
       And I follow "Topic 1"
       And I should see "A1"
       And I am on activity "assign" "A1" page
+      And I reload the page
       When I follow "Add submission"
       And I set the following fields to these values:
         | Online text | I'm the student submission |
@@ -276,6 +278,7 @@ Feature: When the moodle theme is set to Snap, students and teachers can open a 
       And I follow "Topic 1"
       And I should see "A1"
       And I am on activity "assign" "A1" page
+      And I reload the page
      When I follow "Add submission"
       And I set the following fields to these values:
         | Online text | I'm the student1 submission |
@@ -307,6 +310,7 @@ Feature: When the moodle theme is set to Snap, students and teachers can open a 
       And I follow "Topic 1"
       And I should see "A1"
       And I follow "Not Submitted"
+      And I reload the page
      When I follow "Add submission"
       And I set the following fields to these values:
         | Online text | I'm the student2 submission |

@@ -58,6 +58,7 @@ Feature: When the moodle theme is set to Snap, a course tools section is availab
     And I follow "Introduction"
     And I should see "A1"
     And I follow "Not Submitted"
+    And I reload the page
     And I follow "Add submission"
     And I set the following fields to these values:
       | Online text | I'm the student1 submission |
@@ -71,6 +72,7 @@ Feature: When the moodle theme is set to Snap, a course tools section is availab
     And I follow "Introduction"
     And I should see "A1"
     And I follow "Not Submitted"
+    And I reload the page
     And I follow "Add submission"
     And I set the following fields to these values:
       | Online text | I'm the student2 submission |
@@ -92,8 +94,8 @@ Feature: When the moodle theme is set to Snap, a course tools section is availab
     And I am on "Course 1" course homepage
     And I follow "Course Dashboard"
     And I follow "Gradebook"
-    And I follow "Setup"
-    And I follow "Course grade settings"
+    And I click on "#admin-menu-trigger" "css_element"
+    And I navigate to "Setup > Course grade settings" in current page administration
     And I set the field "Grade display type" to "Percentage"
     And I click on "Save changes" "button"
     And I log out
@@ -118,8 +120,8 @@ Feature: When the moodle theme is set to Snap, a course tools section is availab
     And I am on "Course 1" course homepage
     And I follow "Course Dashboard"
     And I follow "Gradebook"
-    And I follow "Setup"
-    And I follow "Course grade settings"
+    And I click on "#admin-menu-trigger" "css_element"
+    And I navigate to "Setup > Course grade settings" in current page administration
     And I set the field "Overall decimal places" to "0"
     And I click on "Save changes" "button"
     And I log out
@@ -144,8 +146,8 @@ Feature: When the moodle theme is set to Snap, a course tools section is availab
     And I am on "Course 1" course homepage
     And I follow "Course Dashboard"
     And I follow "Gradebook"
-    And I follow "Setup"
-    And I follow "Course grade settings"
+    And I click on "#admin-menu-trigger" "css_element"
+    And I navigate to "Setup > Course grade settings" in current page administration
     And I set the field "Overall decimal places" to "3"
     And I click on "Save changes" "button"
     And I log out
@@ -170,8 +172,8 @@ Feature: When the moodle theme is set to Snap, a course tools section is availab
     And I am on "Course 1" course homepage
     And I follow "Course Dashboard"
     And I follow "Gradebook"
-    And I follow "Setup"
-    And I follow "Course grade settings"
+    And I click on "#admin-menu-trigger" "css_element"
+    And I navigate to "Setup > Course grade settings" in current page administration
     And I set the field "Overall decimal places" to "4"
     And I click on "Save changes" "button"
     And I log out
@@ -200,6 +202,7 @@ Feature: When the moodle theme is set to Snap, a course tools section is availab
     And I follow "Introduction"
     And I should see "A1"
     And I follow "Not Submitted"
+    And I reload the page
     And I follow "Add submission"
     And I set the following fields to these values:
       | Online text | I'm the student1 submission |
@@ -219,8 +222,8 @@ Feature: When the moodle theme is set to Snap, a course tools section is availab
     And I am on "Course 1" course homepage
     And I follow "Course Dashboard"
     And I follow "Gradebook"
-    And I follow "Setup"
-    And I follow "Course grade settings"
+    And I click on "#admin-menu-trigger" "css_element"
+    And I navigate to "Setup > Course grade settings" in current page administration
     And I set the field "Grade display type" to "Letter"
     And I click on "Save changes" "button"
     And I log out
@@ -235,8 +238,8 @@ Feature: When the moodle theme is set to Snap, a course tools section is availab
     And I am on "Course 1" course homepage
     And I follow "Course Dashboard"
     And I follow "Gradebook"
-    And I follow "Setup"
-    And I follow "Course grade settings"
+    And I click on "#admin-menu-trigger" "css_element"
+    And I navigate to "Setup > Course grade settings" in current page administration
     And I set the field "Grade display type" to "Letter (real)"
     And I click on "Save changes" "button"
     And I log out
@@ -251,8 +254,8 @@ Feature: When the moodle theme is set to Snap, a course tools section is availab
     And I am on "Course 1" course homepage
     And I follow "Course Dashboard"
     And I follow "Gradebook"
-    And I follow "Setup"
-    And I follow "Course grade settings"
+    And I click on "#admin-menu-trigger" "css_element"
+    And I navigate to "Setup > Course grade settings" in current page administration
     And I set the field "Grade display type" to "Letter (percentage)"
     And I click on "Save changes" "button"
     And I log out

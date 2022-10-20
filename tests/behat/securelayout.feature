@@ -46,7 +46,7 @@ Feature: Page displaying with secure layout
       | logininfoinsecurelayout | 1 |
     And I am on "Course 1" course homepage
     And I click on ".snap-asset-link a" "css_element"
-    And I press "Attempt quiz now"
+    And I press "Preview quiz"
     Then I should see "You are logged in as Admin User" in the "nav" "css_element"
     But "Logout" "link" should not exist
 
@@ -57,5 +57,5 @@ Feature: Page displaying with secure layout
       | custommenuitems | -This is a custom item\|/customurl/ |
     And I am on "Course 1" course homepage
     And I click on ".snap-asset-link a" "css_element"
-    And I press "Attempt quiz now"
+    And I press "Preview quiz"
     Then I should not see "This is a custom item" in the "nav" "css_element"

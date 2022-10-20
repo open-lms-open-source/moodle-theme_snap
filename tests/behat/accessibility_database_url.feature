@@ -45,10 +45,11 @@ Feature: Check that the correct attributes exists for URL field in a database ac
       | Description       | Test               |
     And I click on "li.modtype_data a.mod-link" "css_element"
     # To generate the default templates.
-    And I click on "//div[@class='fieldadd']//select[@class='custom-select singleselect']//option[@value='url']" "xpath_element"
+    And I click on "//div[contains(@class, 'fieldadd') and contains(@class, 'navitem')]//select[@class='custom-select singleselect']//option[@value='url']" "xpath_element"
     And I set the field "Field name" to "Data URL"
     And I click on "Add" "button"
     And I should see "Field added"
-    And I click on "//a[contains(@title, 'Add entry')]" "xpath_element"
+    And I follow "Database"
+    And I click on "Add entry" "button"
     And the "type" attribute of "input.mod-data-input.form-control.d-inline" "css_element" should contain "url"
     And the "autocomplete" attribute of "input.mod-data-input.form-control.d-inline" "css_element" should contain "url"

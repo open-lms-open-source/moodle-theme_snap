@@ -59,6 +59,7 @@ Feature: When the moodle theme is set to Snap, grading activities are shown only
     Given I log in as "student1"
     And I am on "Course 1" course homepage
     And I click on "//a[@class='mod-link']//p[text()='Assignment One']" "xpath_element"
+    And I reload the page
     When I press "Add submission"
     And I upload "lib/tests/fixtures/empty.txt" file to "File submissions" filemanager
     And I press "Save changes"
@@ -66,6 +67,7 @@ Feature: When the moodle theme is set to Snap, grading activities are shown only
     Given I log in as "student1"
     And I am on "Course 2" course homepage
     And I click on "//a[@class='mod-link']//p[text()='Assignment Two']" "xpath_element"
+    And I reload the page
     When I press "Add submission"
     And I upload "lib/tests/fixtures/empty.txt" file to "File submissions" filemanager
     And I press "Save changes"

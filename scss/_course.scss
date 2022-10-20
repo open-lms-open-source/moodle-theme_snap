@@ -2516,3 +2516,13 @@ body.path-course-index {
         overflow-y: auto;
     }
 }
+
+body[id^='page-mod-data'] {
+    .secondary-navigation {
+        margin-bottom: 1em;
+    }
+
+    .tertiary-navigation {
+        margin-bottom: 1em;
+    }
+}

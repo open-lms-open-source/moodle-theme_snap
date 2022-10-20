@@ -28,6 +28,11 @@ Feature: Snap's carousel must have the correct attributes to make it accessible.
       | slide_one_title     | Title for slide one | theme_snap |
       | slide_two_title     | Title for slide two | theme_snap |
       | cover_carousel      | 1                   | theme_snap |
+    And the following config values are set as admin:
+      | defaulthomepage | 0                           |
+    And the following "blocks" exist:
+      | blockname     | contextlevel | reference |
+      | private_files | System       |   1       |
     And I log in as "admin"
     And I close the personal menu
     And I follow "Manage private files..."
@@ -50,7 +55,7 @@ Feature: Snap's carousel must have the correct attributes to make it accessible.
     And I click on "form#adminsettings div.settingsform div.row ul#snap-admin-tabs li:nth-child(2)" "css_element"
     And I click on "#themesnapcoverdisplay #admin-slide_one_image div[id^='filemanager-'] .filemanager-container .dndupload-message .dndupload-arrow" "css_element"
     And I click on "Private files" "link" in the ".fp-repo-area" "css_element"
-    And I click on "gd-logo.png" "link"
+    And I click on "//p[contains(text(),'gd-logo.png')]" "xpath_element"
     And I click on "Select this file" "button"
     And I click on "Save changes" "button"
     # Check the existence of the carousel in the front page.

@@ -80,7 +80,7 @@ Feature: Snap managing contacts
     And I am on site homepage
     And I click on ".js-snap-pm-trigger.snap-my-courses-menu" "css_element"
     And I follow "View my messages"
-    Then I should see "2" in the ".bg-primary[data-region='contact-request-count'][aria-label='There are 2 pending contact requests']" "css_element"
+    Then I should see "2" in the ".bg-primary[data-region='contact-request-count']" "css_element"
     And I click on "Contacts" "link"
     Then I should see "2" in the "//div[@data-region='view-contacts']//*[@data-region='contact-request-count']" "xpath_element"
     And I click on "Requests" "link_or_button"
@@ -113,7 +113,7 @@ Feature: Snap managing contacts
     And I am on site homepage
     And I click on ".js-snap-pm-trigger.snap-my-courses-menu" "css_element"
     And I follow "View my messages"
-    Then I should see "1" in the ".bg-primary[data-region='contact-request-count'][aria-label='There are 1 pending contact requests']" "css_element"
+    Then I should see "1" in the ".bg-primary[data-region='contact-request-count']" "css_element"
     And I click on "Contacts" "link"
     Then I should see "1" in the "//div[@data-region='view-contacts']//*[@data-region='contact-request-count']" "xpath_element"
     And I click on "Requests" "link_or_button"

@@ -25,8 +25,8 @@ Feature: Entering a Snap course without specifying a section will take you to th
 
   Background:
   Given the following "courses" exist:
-      | fullname | shortname | category | format |
-      | Course 1 | C1        | 0        | topics |
+      | fullname | shortname | category | format | hiddensections|
+      | Course 1 | C1        | 0        | topics |     0         |
     And the following "users" exist:
       | username | firstname | lastname | email                |
       | teacher1 | Teacher   | 1        | teacher1@example.com |
