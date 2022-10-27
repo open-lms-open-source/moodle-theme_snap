@@ -541,9 +541,13 @@
     // Remove duplicate page edit button.
     &#page-mod-lesson-edit,
     &#page-mod-lesson-view {
-        .singlebutton > form[action*="editpage.php"] {
-            display: none;
+        .tertiary-navigation .navitem {
+            margin-bottom: 25px;
         }
+        .tertiary-navigation .navitem:not(:last-child) {
+            margin-right: 20px;
+        }
+
         .form-check > .text-nowrap {
             white-space: normal !important;
         }
