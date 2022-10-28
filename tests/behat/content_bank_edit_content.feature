@@ -24,13 +24,19 @@
 Feature: When the Moodle theme is set to Snap, the content in the content bank can be renamed or deleted if needed.
 
   Background:
-    Given I log in as "admin"
+    Given the following config values are set as admin:
+      | defaulthomepage | 0                           |
+    And the following "blocks" exist:
+      | blockname     | contextlevel | reference |
+      | private_files | System       |   1       |
+    And I log in as "admin"
     And I close the personal menu
     And I follow "Manage private files..."
     And I upload "h5p/tests/fixtures/filltheblanks.h5p" file to "Files" filemanager
     And I click on "Save changes" "button"
     And I am on site homepage
-    And I turn editing mode on
+    And I click on "#admin-menu-trigger" "css_element"
+    And I follow "Turn editing on"
     And I add the "Navigation" block if not present
     And I configure the "Navigation" block
     And I set the following fields to these values:
@@ -41,35 +47,35 @@ Feature: When the Moodle theme is set to Snap, the content in the content bank c
     And I click on "Upload" "link"
     And I click on "Choose a file..." "button"
     And I click on "Private files" "link" in the ".fp-repo-area" "css_element"
-    And I click on "filltheblanks.h5p" "link"
+    And I click on "//p[contains(text(),'filltheblanks.h5p')]" "xpath_element"
     And I click on "Select this file" "button"
     And I click on "Save changes" "button"
 
   @javascript
   Scenario: Admins can delete content from the content bank
-    Given I open the action menu in "region-main-settings-menu" "region"
+    Given I click on "#dropdown-actions" "css_element"
     And I should see "Delete"
-    When I choose "Delete" in the open action menu
+    When I click on "a[data-action='deletecontent']" "css_element"
     And I should see "Are you sure you want to delete the content 'filltheblanks.h5p'"
     And I click on "Cancel" "button" in the "Delete content" "dialogue"
     Then I should see "filltheblanks.h5p"
-    And I open the action menu in "region-main-settings-menu" "region"
-    And I choose "Delete" in the open action menu
+    And I click on "#dropdown-actions" "css_element"
+    And I click on "a[data-action='deletecontent']" "css_element"
     And I click on "Delete" "button" in the "Delete content" "dialogue"
     And I wait until the page is ready
     And I should see "The content has been deleted."
-    And I should not see "filltheblanks.h5p"
+    And "//div[contains(@class, 'core_contentbank_viewcontent')]/h2[contains(text(), 'filltheblanks.h5p')]" "xpath_element" should not exist
 
   @javascript
   Scenario: Admins can rename content from the content bank
-    Given I open the action menu in "region-main-settings-menu" "region"
+    Given I click on "#dropdown-actions" "css_element"
     And I should see "Rename"
-    When I choose "Rename" in the open action menu
+    When I click on "a[data-action='renamecontent']" "css_element"
     And I should see "Rename content"
     And I click on "Cancel" "button" in the "Rename content" "dialogue"
     Then I should see "filltheblanks.h5p"
-    And I open the action menu in "region-main-settings-menu" "region"
-    And I choose "Rename" in the open action menu
+    And I click on "#dropdown-actions" "css_element"
+    And I click on "a[data-action='renamecontent']" "css_element"
     And I set the field "Content name" to "newfile.h5p"
     And I click on "Rename" "button" in the "Rename content" "dialogue"
     And I wait until the page is ready

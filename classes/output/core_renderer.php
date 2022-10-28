@@ -1731,7 +1731,7 @@ HTML;
         }
 
         if (has_capability('moodle/contentbank:access', $context)) {
-            if (!in_array('contentbank', $item->get_children_key_list()) &&
+            if (!in_array('contentbank', $item->get_children_key_list(), true) &&
                 ($item->key === 'frontpage' || $item->key === 'courseadmin' || $item->key === 'categorysettings')) {
                 $this->add_contentbank_navigation_node($item, $context->id);
             }

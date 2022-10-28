@@ -42,11 +42,12 @@ Feature: Use the Single Activity format in Snap
       | Course ID number | TC101 |
       | Course summary | This course has been created by automated tests. |
       | Format  | Single activity format |
+    And I wait "3" seconds
+    And I expand all fieldsets
     And I wait until "#id_activitytype" "css_element" is visible
     And I set the following fields to these values:
       | Type of activity | Glossary |
     And I press "Save and display"
-    And I press "Proceed to course content"
     And I set the following fields to these values:
       | Name | Glossary test |
       | Description | G1     |

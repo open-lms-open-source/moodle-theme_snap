@@ -1030,6 +1030,7 @@ nodeToChange = $(selectorToChange);
 
                                     // Note we can't use 'disabled' for settings or they don't get submitted.
                                     pageInputs.attr('readonly', true);
+                                    $('#id_display').attr('disabled', true);
                                     pageInputs.attr('tabindex', -1); // Prevent tabbing to change val.
                                     pageInputs.click(function(e) {
                                         e.preventDefault();
@@ -1039,8 +1040,8 @@ nodeToChange = $(selectorToChange);
                                     pageInputs.parent().parent().parent().css('color', layovercolor);
 
                                     // Add warning.
-                                    var selectNode = $('[id="id_error_printheading"]');
-                                    selectNode.parent().parent().parent().append(html);
+                                    var selectNode = $('#id_appearancehdrcontainer');
+                                    selectNode.append(html);
                                 });
                         }
                     }

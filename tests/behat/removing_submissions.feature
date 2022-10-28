@@ -51,6 +51,7 @@ Feature: When the moodle theme is set to Snap, a student can remove a submitted 
     And I am on "Course 1" course homepage
     And I follow "Topic 1"
     And I click on "//a[@class='mod-link']//p[text()='Assignment One']" "xpath_element"
+    And I reload the page
     And I press "Add submission"
     And I wait until the page is ready
     And I upload "lib/tests/fixtures/empty.txt" file to "File submissions" filemanager
@@ -66,7 +67,7 @@ Feature: When the moodle theme is set to Snap, a student can remove a submitted 
     And "//img[contains(@title, \"empty.txt\")]" "xpath_element" should exist
     And I press "Cancel"
     Then I press "Remove submission"
-    And I should see "Are you sure you want to remove the submission data?"
+    And I should see "Are you sure you want to remove your submission?"
     And I press "Continue"
     Then I wait until the page is ready
     And I press "Add submission"
@@ -78,6 +79,7 @@ Feature: When the moodle theme is set to Snap, a student can remove a submitted 
     And I am on "Course 1" course homepage
     And I follow "Topic 1"
     And I click on "//a[@class='mod-link']//p[text()='Assignment One']" "xpath_element"
+    And I reload the page
     And I press "Add submission"
     And I wait until the page is ready
     And I set the following fields to these values:
@@ -94,7 +96,7 @@ Feature: When the moodle theme is set to Snap, a student can remove a submitted 
     And I should see "I'm the student online text submission"
     And I press "Cancel"
     Then I press "Remove submission"
-    And I should see "Are you sure you want to remove the submission data?"
+    And I should see "Are you sure you want to remove your submission?"
     And I press "Continue"
     Then I wait until the page is ready
     And I press "Add submission"
@@ -106,6 +108,7 @@ Feature: When the moodle theme is set to Snap, a student can remove a submitted 
     And I am on "Course 1" course homepage
     And I follow "Topic 1"
     And I click on "//a[@class='mod-link']//p[text()='Assignment One']" "xpath_element"
+    And I reload the page
     And I press "Add submission"
     And I wait until the page is ready
     And I set the following fields to these values:
@@ -124,7 +127,7 @@ Feature: When the moodle theme is set to Snap, a student can remove a submitted 
     And "//img[contains(@title, \"empty.txt\")]" "xpath_element" should exist
     And I press "Cancel"
     Then I press "Remove submission"
-    And I should see "Are you sure you want to remove the submission data?"
+    And I should see "Are you sure you want to remove your submission?"
     And I press "Continue"
     Then I wait until the page is ready
     And I press "Add submission"

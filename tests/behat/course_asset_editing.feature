@@ -24,7 +24,8 @@
 Feature: When the moodle theme is set to Snap, teachers edit assets without entering edit mode.
 
   Background:
-   Given the following "courses" exist:
+    Given I skip because "It will be reviewed in INT-18499"
+    Given the following "courses" exist:
       | fullname | shortname | category | format |
       | Course 1 | C1        | 0        | topics |
     And the following "users" exist:

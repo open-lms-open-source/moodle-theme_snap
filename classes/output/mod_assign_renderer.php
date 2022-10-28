@@ -105,7 +105,8 @@ class mod_assign_renderer extends renderer {
         // View all submissions link.
         $urlparams = array('id' => $summary->coursemoduleid, 'action' => 'grading');
         $url = new moodle_url('/mod/assign/view.php', $urlparams);
-        $o .= '<a href="'.$url.'" class="pull-right btn btn-link">'.get_string('viewgrading', 'mod_assign').'</a>';
+        $o .= '<a id="view_all_submissions_snap" href="'.$url.'" class="pull-right btn btn-link">'.
+            get_string('viewgrading', 'mod_assign') . '</a>';
         // Grade button.
         $urlparams = array('id' => $summary->coursemoduleid, 'action' => 'grader');
         $url = new moodle_url('/mod/assign/view.php', $urlparams);

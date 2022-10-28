@@ -66,6 +66,7 @@ Feature: When the moodle theme is set to Snap, students see meta data against co
     And assignment entitled "Test assignment3" is overdue in metadata
     And assignment entitled "Test assignment3" does not have feedback metadata
     And I am on activity "assign" "Test assignment1" page
+    And I reload the page
     When I press "Add submission"
     And I set the following fields to these values:
       | Online text | I'm the student submission |
@@ -146,6 +147,7 @@ Feature: When the moodle theme is set to Snap, students see meta data against co
     And I should see "Test assign"
     And assignment entitled "Test assign" shows as not submitted in metadata
     And I am on activity "assign" "Test assign" page
+    And I reload the page
     When I press "Add submission"
     And I set the following fields to these values:
       | Online text | I'm the student submission |
@@ -177,7 +179,7 @@ Feature: When the moodle theme is set to Snap, students see meta data against co
     And I am on "Course 1" course homepage
     And I click on "#admin-menu-trigger" "css_element"
     And I navigate to "Legacy outcomes" in current page administration
-    And I follow "Edit outcomes"
+    And I click on "//*[contains(text(),'Manage outcomes')]" "xpath_element"
     And I press "Add a new outcome"
     And I follow "Add a new scale"
     And I set the following fields to these values:
@@ -187,7 +189,7 @@ Feature: When the moodle theme is set to Snap, students see meta data against co
     And I am on "Course 1" course homepage
     And I click on "#admin-menu-trigger" "css_element"
     And I navigate to "Legacy outcomes" in current page administration
-    And I follow "Edit outcomes"
+    And I click on "//*[contains(text(),'Manage outcomes')]" "xpath_element"
     And I press "Add a new outcome"
     And I set the following fields to these values:
       | Full name | M8d skillZ! |
@@ -206,6 +208,7 @@ Feature: When the moodle theme is set to Snap, students see meta data against co
     And I am on "Course 1" course homepage
     And I follow "Topic 1"
     And I click on "//a[@class='mod-link']//p[text()='Test assignment name']" "xpath_element"
+    And I reload the page
     And I press "Add submission"
     And I set the following fields to these values:
       | Online text | I'm the student1 submission |
@@ -215,6 +218,7 @@ Feature: When the moodle theme is set to Snap, students see meta data against co
     And I am on "Course 1" course homepage
     And I follow "Topic 1"
     And I click on "//a[@class='mod-link']//p[text()='Test assignment name']" "xpath_element"
+    And I reload the page
     When I press "Add submission"
     And I set the following fields to these values:
       | Online text | I'm the student2 submission |
@@ -224,17 +228,15 @@ Feature: When the moodle theme is set to Snap, students see meta data against co
     And I am on "Course 1" course homepage
     And I follow "Topic 1"
     And I click on "//a[@class='mod-link']//p[text()='Test assignment name']" "xpath_element"
-    And I click on "#admin-menu-trigger" "css_element"
-    And I navigate to "View all submissions" in current page administration
+    And I click on "#view_all_submissions_snap" "css_element"
     And I click on "Grade" "link" in the "Student 1" "table_row"
     And I set the following fields to these values:
       | Grade out of 100 | 50.0 |
       | M8d skillZ! | 1337 |
       | Feedback comments | I'm the teacher first feedback |
     And I press "Save changes"
-    And I click on "Edit settings" "link"
-    And I click on "#admin-menu-trigger" "css_element"
-    And I navigate to "View all submissions" in current page administration
+    And I follow "Assignment: Test assignment name"
+     And I click on "#view_all_submissions_snap" "css_element"
     Then I click on "Quick grading" "checkbox"
     And I set the field "User grade" to "60.0"
     And I press "Save all quick grading changes"
@@ -298,6 +300,7 @@ Feature: When the moodle theme is set to Snap, students see meta data against co
     And I follow "Topic 1"
     And I should see "A1"
     And I am on activity "assign" "A1" page
+    And I reload the page
     When I follow "Add submission"
     And I set the following fields to these values:
       | Online text | I'm the student1 submission |
@@ -309,6 +312,7 @@ Feature: When the moodle theme is set to Snap, students see meta data against co
     And I follow "Topic 1"
     And I should see "A1"
     And I am on activity "assign" "A1" page
+    And I reload the page
     When I follow "Add submission"
     And I set the following fields to these values:
       | Online text | I'm the student2 submission |
@@ -383,7 +387,8 @@ Feature: When the moodle theme is set to Snap, students see meta data against co
     And I should see "Due 3 January 2000"
     Then I am on activity "assign" "Test assignment 1" page
     And I click on "#admin-menu-trigger" "css_element"
-    And I follow "Group overrides"
+    And I follow "Overrides"
+    And I select "Group overrides" from the "jump" singleselect
     And I press "Add group override"
     And I set the following fields to these values:
       | Override group | Group1             |
@@ -392,7 +397,8 @@ Feature: When the moodle theme is set to Snap, students see meta data against co
     Then I am on "Course 1" course homepage
     Then I am on activity "assign" "Test assignment 2" page
     And I click on "#admin-menu-trigger" "css_element"
-    And I follow "Group overrides"
+    And I follow "Overrides"
+    And I select "Group overrides" from the "jump" singleselect
     And I press "Add group override"
     And I set the following fields to these values:
       | Override group | Group1             |
@@ -419,7 +425,7 @@ Feature: When the moodle theme is set to Snap, students see meta data against co
     And I am on "Course 1" course homepage
     And I am on activity "assign" "Test assignment 2" page
     And I click on "#admin-menu-trigger" "css_element"
-    And I follow "Edit settings"
+    And I follow "Settings"
     And I set the following fields to these values:
       | Due date               | disabled |
     And I press "Save and return to course"
@@ -443,7 +449,7 @@ Feature: When the moodle theme is set to Snap, students see meta data against co
     And I am on "Course 1" course homepage
     And I am on activity "assign" "Test assignment 2" page
     And I click on "#admin-menu-trigger" "css_element"
-    And I follow "Edit settings"
+    And I follow "Settings"
     And I set the following fields to these values:
       | Due date               | ##5 January 2000 08:00## |
     And I press "Save and return to course"

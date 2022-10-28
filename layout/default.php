@@ -127,6 +127,12 @@ if ($PAGE->pagelayout === 'frontpage' && $PAGE->pagetype === 'site-index') {
     require(__DIR__.'/faux_site_index.php');
 } else {
     echo $OUTPUT->activity_header();
+    if ($PAGE->has_secondary_navigation() && $PAGE->pagetype == 'mod-data-view') {
+        $tablistnav = $PAGE->has_tablist_secondary_navigation();
+        $moremenu = new \core\navigation\output\more_menu($PAGE->secondarynav, 'nav-tabs', true, $tablistnav);
+        $secondarynavigation = $moremenu->export_for_template($OUTPUT);
+        echo $OUTPUT->render_from_template('theme_snap/secondary_navigation', ['secondarymoremenu' => $secondarynavigation]);
+    }
     echo $OUTPUT->main_content();
 }
 
