@@ -4291,6 +4291,12 @@ section#region-main {
     .dashboard-card-deck .dashboard-card a {
         margin: 0 0.1em;
     }
+
+    #moodle-blocks .block_myoverview .block-cards{
+        [data-region="filter"] {
+            flex-wrap: wrap;
+        }
+    }
 }
 
 .dashboard-card-deck {
