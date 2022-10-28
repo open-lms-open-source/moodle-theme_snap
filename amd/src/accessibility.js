@@ -128,8 +128,10 @@ define(['jquery', 'core/str', 'core/event'],
                             .attr("id", "ct-open-catalogue");
                     }
 
+                    // Add ARIA attributes.
                     $('[id^="page-course"] .course-content' +
                         ' .content ul.section.img-text').attr('role', 'group').attr('aria-label', stringsjs[19]);
+                    $('div[role="main"] div.sitetopic ul.section.img-text').attr('role', 'presentation');
                 });
 
                 $(document).ready(function() {
