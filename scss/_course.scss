@@ -173,7 +173,7 @@ body[class^="format-"].theme-snap {
         border-radius: $btn-border-radius;
         display: block;
         white-space: nowrap;
-        overflow-y: hidden;
+        overflow-y: clip;
         text-overflow: ellipsis;
         list-style-type: none;
         box-shadow: 0 2px 3px 0 rgba(0, 0, 0, .2);
