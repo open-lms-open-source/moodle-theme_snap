@@ -650,7 +650,6 @@ class core_renderer extends \theme_boost\output\core_renderer {
         $output = '';
         $loginurl = $CFG->wwwroot.'/login/index.php';
         $loginatts = [
-            'aria-haspopup' => 'true',
             'class' => 'btn btn-primary snap-login-button',
             'role' => 'button',
         ];
