@@ -498,7 +498,7 @@ function theme_snap_resize_bgimage_after_save() {
         $fs = get_file_storage();
         $files = $fs->get_area_files(\context_system::instance()->id, 'theme_snap', 'loginbgimg');
         foreach ($files as $file) {
-            image::resize($file, false, 1920);
+            image::resize($file, false, 1280, 720);
             $file->delete();
         }
     }
