@@ -45,12 +45,28 @@ if (!($PAGE->pagetype === 'login-signup')) {
         if (get_config('theme_snap', 'loginpagetemplate') == "stylish") {
             // If the login template is Stylish and there are images for the background
             // add a new class called page-stylish-background and a new class called page-stylish-login.
-            $imgsrc = $OUTPUT->login_carousel_first();
-            echo '<div id="page" class="page-stylish-background" style="background-image: url('.$imgsrc.');">';
+            $imgsrc = $OUTPUT->login_bg_slides();
+            $imageinitialurl = '';
+            $imagid = 1;
+            foreach ($imgsrc as $image) {
+                $imageinitialurl = ($imagid == count($imgsrc)) ?
+                    $imageinitialurl.'url('.$image.')' :
+                    $imageinitialurl.'url('.$image.'),';
+                $imagid ++;
+            }
+            echo '<div id="page" class="page-stylish-background" style="background-image: '.$imageinitialurl.';">';
             echo '<div id="snap-login-carousel" class="carousel slide page-stylish-login">';
         } else {
-            $imgsrc = $OUTPUT->login_carousel_first();
-            echo '<div id="page" style="background-image: url('.$imgsrc.');">';
+            $imgsrc = $OUTPUT->login_bg_slides();
+            $imageinitialurl = '';
+            $imagid = 1;
+            foreach ($imgsrc as $image) {
+                $imageinitialurl = ($imagid == count($imgsrc)) ?
+                    $imageinitialurl.'url('.$image.')' :
+                    $imageinitialurl.'url('.$image.'),';
+                $imagid ++;
+            }
+            echo '<div id="page" style="background-image: '.$imageinitialurl.';">';
             echo '<div id="snap-login-carousel" class="carousel slide">';
         }
     }
