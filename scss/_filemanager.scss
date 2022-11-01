@@ -137,6 +137,9 @@ div[data-fieldtype=filemanager] > p:nth-of-type(1) {
     background: url("[[pix:resource|icon]]") center no-repeat;
     background-size: 60px 60px;
     margin-top: 10px;
+    .fa-arrow-circle-o-down {
+        display: none; // Remove moodle core Drag and drop icon.
+    }
 }
 
 #page-badges-newbadge .dndupload-arrow {
