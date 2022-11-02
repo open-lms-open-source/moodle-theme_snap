@@ -180,6 +180,15 @@
  * Mod assignment.
  */
 #page-mod-assign-view {
+
+    .assign-grading-summary {
+        .btn-primary,
+        .btn-secondary,
+        #view_all_submissions_snap {
+            margin-right: 0.5em;
+        }
+    }
+
     .duedata {
         font-family: $font-family-system;
     }

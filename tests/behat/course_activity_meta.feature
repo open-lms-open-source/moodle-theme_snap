@@ -228,7 +228,7 @@ Feature: When the moodle theme is set to Snap, students see meta data against co
     And I am on "Course 1" course homepage
     And I follow "Topic 1"
     And I click on "//a[@class='mod-link']//p[text()='Test assignment name']" "xpath_element"
-    And I click on "#view_all_submissions_snap" "css_element"
+    And I follow "View all submissions"
     And I click on "Grade" "link" in the "Student 1" "table_row"
     And I set the following fields to these values:
       | Grade out of 100 | 50.0 |
@@ -236,7 +236,7 @@ Feature: When the moodle theme is set to Snap, students see meta data against co
       | Feedback comments | I'm the teacher first feedback |
     And I press "Save changes"
     And I follow "Assignment: Test assignment name"
-     And I click on "#view_all_submissions_snap" "css_element"
+    And I follow "View all submissions"
     Then I click on "Quick grading" "checkbox"
     And I set the field "User grade" to "60.0"
     And I press "Save all quick grading changes"
@@ -301,7 +301,7 @@ Feature: When the moodle theme is set to Snap, students see meta data against co
     And I should see "A1"
     And I am on activity "assign" "A1" page
     And I reload the page
-    When I follow "Add submission"
+    And I click on "//*[contains(text(),'Add submission')]" "xpath_element"
     And I set the following fields to these values:
       | Online text | I'm the student1 submission |
     And I press "Save changes"
@@ -313,7 +313,7 @@ Feature: When the moodle theme is set to Snap, students see meta data against co
     And I should see "A1"
     And I am on activity "assign" "A1" page
     And I reload the page
-    When I follow "Add submission"
+    And I click on "//*[contains(text(),'Add submission')]" "xpath_element"
     And I set the following fields to these values:
       | Online text | I'm the student2 submission |
     And I press "Save changes"

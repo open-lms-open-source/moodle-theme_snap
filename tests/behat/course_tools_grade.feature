@@ -59,11 +59,11 @@ Feature: When the moodle theme is set to Snap, a course tools section is availab
     And I should see "A1"
     And I follow "Not Submitted"
     And I reload the page
-    And I follow "Add submission"
+    And I click on "//*[contains(text(),'Add submission')]" "xpath_element"
     And I set the following fields to these values:
       | Online text | I'm the student1 submission |
     And I press "Save changes"
-    And I follow "Submit assignment"
+    And I click on "//*[contains(text(),'Submit assignment')]" "xpath_element"
     And I press "Continue"
     And I log out
    Then I log in as "student2"
@@ -73,11 +73,11 @@ Feature: When the moodle theme is set to Snap, a course tools section is availab
     And I should see "A1"
     And I follow "Not Submitted"
     And I reload the page
-    And I follow "Add submission"
+    And I click on "//*[contains(text(),'Add submission')]" "xpath_element"
     And I set the following fields to these values:
       | Online text | I'm the student2 submission |
     And I press "Save changes"
-    And I follow "Submit assignment"
+    And I click on "//*[contains(text(),'Submit assignment')]" "xpath_element"
     And I press "Continue"
     And I log out
    Then I log in as "teacher1"
@@ -203,11 +203,11 @@ Feature: When the moodle theme is set to Snap, a course tools section is availab
     And I should see "A1"
     And I follow "Not Submitted"
     And I reload the page
-    And I follow "Add submission"
+    And I click on "//*[contains(text(),'Add submission')]" "xpath_element"
     And I set the following fields to these values:
       | Online text | I'm the student1 submission |
     And I press "Save changes"
-    And I follow "Submit assignment"
+    And I click on "//*[contains(text(),'Submit assignment')]" "xpath_element"
     And I press "Continue"
     And I log out
     Then I log in as "teacher1"

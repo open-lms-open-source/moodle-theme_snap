@@ -73,6 +73,7 @@
 #page-user-profile #moodle-blocks,
 #page-my-index #moodle-blocks,
 #page-calendar-view #moodle-blocks,
+#page-mod-assign-editsubmission #moodle-blocks,
 #moodle-blocks.state-visible,
 .format-weeks.path-course-view.editing #moodle-blocks,
 .format-topics.path-course-view.editing #moodle-blocks {
@@ -303,6 +304,15 @@ body.path-site .block.block_settings {
     #region-main {
         padding-top: 4.25em;
     }
+}
+
+#page-mod-assign-editsubmission #mod_assign_timelimit_block {
+    width: inherit;
+    border-radius: 0.5rem;
+    box-shadow: 0 2px 3px 0 rgba(0, 0, 0, .2);
+    position: fixed;
+    right: 4%;
+    top: 46%;
 }
 
 /* My overview block */

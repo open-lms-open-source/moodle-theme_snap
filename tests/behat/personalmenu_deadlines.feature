@@ -63,12 +63,11 @@ Feature: When the moodle theme is set to Snap, students and teachers can find in
     And I wait until "#section-1" "css_element" is visible
     And I should see "Test assignment1"
     And I am on activity "assign" "Test assignment1" page
-    And I reload the page
-    When I follow "Add submission"
+    When I click on "//*[contains(text(),'Add submission')]" "xpath_element"
     And I set the following fields to these values:
       | Online text | I'm the student submission |
     And I press "Save changes"
-    And I follow "Submit assignment"
+    And I click on "//*[contains(text(),'Submit assignment')]" "xpath_element"
     And I press "Continue"
     And I <waitclause>
     And I open the personal menu
@@ -100,12 +99,11 @@ Feature: When the moodle theme is set to Snap, students and teachers can find in
     And I wait until "#section-1" "css_element" is visible
     And I should see "Test assignment1"
     And I am on activity "assign" "Test assignment1" page
-    And I reload the page
-    When I follow "Add submission"
+    And I click on "//*[contains(text(),'Add submission')]" "xpath_element"
     And I set the following fields to these values:
       | Online text | I'm the student submission |
     And I press "Save changes"
-    And I follow "Submit assignment"
+    And I click on "//*[contains(text(),'Submit assignment')]" "xpath_element"
     And I press "Continue"
     And I <waitclause>
     And I open the personal menu
@@ -157,12 +155,11 @@ Feature: When the moodle theme is set to Snap, students and teachers can find in
     And I wait until "#section-1" "css_element" is visible
     And I should see "Test assignment1"
     And I am on activity "assign" "Test assignment1" page
-    And I reload the page
-    When I follow "Add submission"
+    And I click on "//*[contains(text(),'Add submission')]" "xpath_element"
     And I set the following fields to these values:
       | Online text | I'm the student submission |
     And I press "Save changes"
-    And I follow "Submit assignment"
+    And I click on "//*[contains(text(),'Submit assignment')]" "xpath_element"
     And I press "Continue"
     And I <waitclause>
     And I open the personal menu

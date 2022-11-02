@@ -93,11 +93,11 @@ Feature: When the moodle theme is set to Snap, students and teachers can open a 
 
     And I follow "Not Submitted"
     And I reload the page
-   When I follow "Add submission"
+    And I click on "//*[contains(text(),'Add submission')]" "xpath_element"
     And I set the following fields to these values:
       | Online text | I'm the student submission |
     And I press "Save changes"
-    And I follow "Submit assignment"
+    And I click on "//*[contains(text(),'Submit assignment')]" "xpath_element"
     And I press "Continue"
     And I log out
     And I log in as "teacher1"
@@ -199,7 +199,7 @@ Feature: When the moodle theme is set to Snap, students and teachers can open a 
       And I should see "A1"
       And I am on activity "assign" "A1" page
       And I reload the page
-      When I follow "Add submission"
+      When I click on "//*[contains(text(),'Add submission')]" "xpath_element"
       And I set the following fields to these values:
         | Online text | I'm the student submission |
       And I press "Save changes"
@@ -279,7 +279,7 @@ Feature: When the moodle theme is set to Snap, students and teachers can open a 
       And I should see "A1"
       And I am on activity "assign" "A1" page
       And I reload the page
-     When I follow "Add submission"
+      And I click on "//*[contains(text(),'Add submission')]" "xpath_element"
       And I set the following fields to these values:
         | Online text | I'm the student1 submission |
       And I press "Save changes"
@@ -311,7 +311,7 @@ Feature: When the moodle theme is set to Snap, students and teachers can open a 
       And I should see "A1"
       And I follow "Not Submitted"
       And I reload the page
-     When I follow "Add submission"
+      And I click on "//*[contains(text(),'Add submission')]" "xpath_element"
       And I set the following fields to these values:
         | Online text | I'm the student2 submission |
       And I press "Save changes"
