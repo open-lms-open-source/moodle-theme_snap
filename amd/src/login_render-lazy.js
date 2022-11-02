@@ -33,6 +33,10 @@ define(['jquery'],
         self.enabledLoginOptions['ENABLED_LOGIN_MOODLE']      = '1';
         self.enabledLoginOptions['ENABLED_LOGIN_ALTERNATIVE'] = '2';
 
+        self.enabledLoginOrder = [];
+        self.enabledLoginOrder['ORDER_LOGIN_MOODLE_FIRST']      = '0';
+        self.enabledLoginOrder['ORDER_LOGIN_ALTERNATIVE_FIRST'] = '1';
+
         /**
          * AMD return object.
          */
@@ -54,11 +58,17 @@ define(['jquery'],
                         case self.enabledLoginOptions['ENABLED_LOGIN_ALTERNATIVE']:
                             $('.snap-login-option').show();
                             $('#login').hide();
+                            $('#snap_alt_login_hr_first').hide();
                             cb();
                             break;
 
                         default:
                             $('.snap-login-option').show();
+                            if (order == self.enabledLoginOrder['ORDER_LOGIN_ALTERNATIVE_FIRST']){
+                                $('#login').remove().insertAfter($('#snap-alt-login'));
+                                $('#snap_alt_login_hr_first').hide();
+                                $('#login_hr_first').show();
+                            }
                             cb();
                     }
                 };
