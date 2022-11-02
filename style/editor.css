@@ -10298,14 +10298,6 @@ li.section:focus {
     transform: scale(1.25);
 }
 
-/**
- * resourcelinkdetails = moodle putting filetype on screen if option selected
- * we do this by default in snap, so hide moodle version
- */
-.resourcelinkdetails {
-    display: none;
-}
-
 /* snap has its own implimentation of these, so hide moodles */
 .activityinstance .accesshide,
 .groupinglabel {
@@ -12530,7 +12522,6 @@ button.snap-icon-toggle.favoritetoggle:focus {
  * @copyright Copyright (c) 2015 Open LMS (https://www.openlms.net)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-body:not(.behat-site)#page-mod-resource-mod #id_optionssection,
 body:not(.behat-site)#page-mod-url-mod #id_optionssection {
     display: none;
 }

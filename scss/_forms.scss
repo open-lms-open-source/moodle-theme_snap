@@ -28,7 +28,6 @@
 // not hidden).
 body:not(.behat-site) {
     // Hide form elements.
-    &#page-mod-resource-mod #id_optionssection,
     &#page-mod-url-mod #id_optionssection {
         display: none;
     }
