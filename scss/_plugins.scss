@@ -1166,6 +1166,27 @@ section#snap-add-new-section #summary-editor_parent #summary-editor_tbl {
     }
 }
 
+// Styles on section Actions for format Tiles.
+body.format-tiles .section .snap-asset .actions {
+    width: unset;
+    left: unset;
+}
+body.format-tiles.editing .section .snap-asset .actions {
+    overflow: unset;
+    .dropdown-menu {
+        visibility: unset;
+        width: unset;
+        height: unset;
+        border: 1px solid $dropdown-border-color;
+        &:not(.show) {
+            display: none;
+        }
+    }
+}
+
+/**
+ * PLD styles.
+ */
 #page-local-pld-view.theme-snap {
     pld-main {
         ul#pld_tab {
