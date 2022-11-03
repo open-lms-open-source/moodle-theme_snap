@@ -1841,12 +1841,6 @@ form.togglecompletion {
     }
 }
 
-// Styles on section Actions for format Tiles.
-body.format-tiles .section .snap-asset .actions {
-    width: unset;
-    left: unset;
-}
-
 /* add bg colour for actions when editing */
 .editing .actions {
     background-color: rgba(255, 255, 255, 0.95);
