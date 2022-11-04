@@ -717,7 +717,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
         $userpicture = new user_picture($USER);
         $userpicture->link = false;
         $userpicture->alttext = false;
-        $userpicture->size = 100;
+        $userpicture->size = 90;
         $picture = $this->render($userpicture);
 
         // User name and link to profile.
