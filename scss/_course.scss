@@ -720,13 +720,7 @@ li.section:focus {
     }
 }
 
-/**
- * resourcelinkdetails = moodle putting filetype on screen if option selected
- * we do this by default in snap, so hide moodle version
- */
-.resourcelinkdetails {
-    display: none;
-}
+
 /* snap has its own implimentation of these, so hide moodles */
 .activityinstance .accesshide,
 .groupinglabel {
@@ -921,6 +915,13 @@ body.snap-resource-card li.snap-resource {
         .snap-asset-actions {
             display: flex;
         }
+    }
+    // Ajust size of moodle putting filetype on screen
+    .resourcelinkdetails {
+        font-size: .6em;
+    }
+    .snap-asset-meta {
+        line-height: .6em;
     }
 
     .activityicon {
