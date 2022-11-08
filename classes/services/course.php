@@ -106,8 +106,7 @@ class course {
         $fs = get_file_storage();
         $ext = strtolower(pathinfo($filename, PATHINFO_EXTENSION));
         $ext = $ext === 'jpeg' ? 'jpg' : $ext;
-
-        if (!in_array($ext, local::supported_coverimage_types())) {
+        if (!file_extension_in_typegroup($filename, 'web_image')) {
             return ['success' => false, 'warning' => get_string('unsupportedcoverimagetype', 'theme_snap', $ext)];
         }
 

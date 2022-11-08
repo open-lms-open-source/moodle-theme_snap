@@ -24,7 +24,6 @@
 Feature: When the moodle theme is set to Snap, cover image can be set for site and courses.
 
   Background:
-    Given I skip because "It will be reviewed in INT-18499"
     Given the following config values are set as admin:
       | defaulthomepage | 0 |
 
