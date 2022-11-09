@@ -730,7 +730,7 @@ trait format_section_trait {
             'data-sectionid' => $section,
         ]);
 
-        // We need to be sure not having the same ID for every modchooser if multiple sections exists.
+        // We need to be sure not having the same ID for every mod chooser if multiple sections exists.
         $modchooserid = "snap-create-activity-$section";
         $modchooser = html_writer::tag('div', $modchoosercontent, [
             'class' => 'col-sm-6 snap-modchooser',
@@ -738,14 +738,23 @@ trait format_section_trait {
         ]);
 
         // Add zone for quick uploading of files.
-        $upload = '<div class="col-sm-6">
-            <form class="snap-dropzone js-only">
-                <label tabindex="0" for="snap-drop-file-'.$section.'" class="snap-dropzone-label">';
-        $upload .= get_string('dropzonelabel', 'theme_snap').'</label>
-                <input type="file" multiple name="snap-drop-file-'.$section.'" id="snap-drop-file-'.$section;
-        $upload .= '" class="js-snap-drop-file sr-only"/>
-            </form>
-            </div>';
+        $dropfileicon = $OUTPUT->image_url('i/folderdropzone', 'theme_snap');
+        $dropzonelabel = get_string('dropzonelabel', 'theme_snap');
+        $snapdropfilesection = "snap-drop-file-'$section'";
+        $upload = '<div class="col-sm-6">';
+        $upload .= '<form class="snap-dropzone js-only">';
+        $upload .= '<label tabindex="0" for="'.$snapdropfilesection.'" class="snap-dropzone-label">';
+        $upload .= '<div>';
+        $upload .= '<div class="activityiconcontainer">';
+        $upload .= '<img src="'.$dropfileicon.'" alt="" class="iconlarge activityicon" role="presentation">';
+        $upload .= '</div>';
+        $upload .= '<div>'.$dropzonelabel.'</div>';
+        $upload .= '</div>';
+        $upload .= '</label>';
+        $upload .= '<input class="js-snap-drop-file sr-only" type="file" multiple
+         name="'.$snapdropfilesection.'" id="'.$snapdropfilesection.'">';
+        $upload .= '</form>';
+        $upload .= '</div>';
 
         return '<div class="row">'.$modchooser.$upload.'</div>';
     }

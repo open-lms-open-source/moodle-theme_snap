@@ -1193,8 +1193,11 @@ class course_renderer extends \core_course_renderer {
         $groupinglabel = $mod->get_grouping_label();
 
         $target = '';
+        $cmname = $mod->modname;
 
-        $activityimg = "<img class='iconlarge activityicon' alt='' role='presentation'  src='".$mod->get_icon_url()."' />";
+        $activityimg = "<div class='activityiconcontainer ".$cmname."'>";
+        $activityimg .= "<img class='iconlarge activityicon' alt='' role='presentation' src='".$mod->get_icon_url()."' />";
+        $activityimg .= "</div>";
 
         // Multimedia mods we want to open in the same window.
         $snapmultimedia = $this->snap_multimedia();

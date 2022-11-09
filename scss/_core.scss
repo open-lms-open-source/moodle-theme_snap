@@ -4297,6 +4297,11 @@ section#region-main {
             flex-wrap: wrap;
         }
     }
+
+    // We need to maintain the content blocks width for the /my Dashboard page.
+    .activityiconcontainer.content {
+        width: 45px !important;
+    }
 }
 
 .dashboard-card-deck {
