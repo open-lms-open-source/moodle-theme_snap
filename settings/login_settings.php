@@ -50,7 +50,7 @@ $templatedescription =
 
 $name = 'theme_snap/loginpagetemplate';
 $title = new lang_string('loginpagetemplate', 'theme_snap');
-$setting = new admin_setting_configselect($name, $title, $templatedescription, 'Snap template',
+$setting = new admin_setting_configselect($name, $title, $templatedescription, 'classic',
     array('classic' => get_string('classic_template', 'theme_snap'), 'stylish' => get_string('stylish_template', 'theme_snap')));
 $setting->set_updatedcallback('theme_reset_all_caches');
 $snapsettings->add($setting);
