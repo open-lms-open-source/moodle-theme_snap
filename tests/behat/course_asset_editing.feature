@@ -24,7 +24,6 @@
 Feature: When the moodle theme is set to Snap, teachers edit assets without entering edit mode.
 
   Background:
-    Given I skip because "It will be reviewed in INT-18499"
     Given the following "courses" exist:
       | fullname | shortname | category | format |
       | Course 1 | C1        | 0        | topics |
@@ -117,20 +116,20 @@ Feature: When the moodle theme is set to Snap, teachers edit assets without ente
     Then "#section-1" "css_element" should exist
     And "#snap-drop-file-1" "css_element" should exist
     And I upload file "test_text_file.txt" to section 1
-    Then ".snap-resource[data-type='text']" "css_element" should exist
-    And ".snap-resource[data-type='text'].draft" "css_element" should not exist
-    And I click on ".snap-resource[data-type='text'] button.snap-edit-asset-more" "css_element"
-    And I click on ".snap-resource[data-type='text'] a.js_snap_hide" "css_element"
-    Then I wait until ".snap-resource[data-type='text'].draft" "css_element" exists
+    Then ".snap-resource[data-type='txt']" "css_element" should exist
+    And ".snap-resource[data-type='txt'].draft" "css_element" should not exist
+    And I click on ".snap-resource[data-type='txt'] button.snap-edit-asset-more" "css_element"
+    And I click on ".snap-resource[data-type='txt'] a.js_snap_hide" "css_element"
+    Then I wait until ".snap-resource[data-type='txt'].draft" "css_element" exists
     # This is to test that the change persists.
     And I reload the page
-    And ".snap-resource[data-type='text'].draft" "css_element" should exist
-    And I click on ".snap-resource[data-type='text'] button.snap-edit-asset-more" "css_element"
-    And I click on ".snap-resource[data-type='text'] a.js_snap_show" "css_element"
-    Then I wait until ".snap-resource[data-type='text'].draft" "css_element" does not exist
+    And ".snap-resource[data-type='txt'].draft" "css_element" should exist
+    And I click on ".snap-resource[data-type='txt'] button.snap-edit-asset-more" "css_element"
+    And I click on ".snap-resource[data-type='txt'] a.js_snap_show" "css_element"
+    Then I wait until ".snap-resource[data-type='txt'].draft" "css_element" does not exist
     # This is to test that the change persists.
     And I reload the page
-    And ".snap-resource[data-type='text'].draft" "css_element" should not exist
+    And ".snap-resource[data-type='txt'].draft" "css_element" should not exist
     Then I wait until ".snap-activity[data-type='Assignment'].draft" "css_element" does not exist
   Examples:
   | Option     |
@@ -175,14 +174,14 @@ Feature: When the moodle theme is set to Snap, teachers edit assets without ente
    Then "#section-1" "css_element" should exist
     And "#snap-drop-file-1" "css_element" should exist
     When I upload file "test_text_file.txt" to section 1
-    Then ".snap-resource[data-type='text']" "css_element" should exist
-    And ".snap-resource[data-type='text'] + .snap-resource[data-type='text']" "css_element" should not exist
-    And I click on ".snap-resource[data-type='text'] button.snap-edit-asset-more" "css_element"
-    And I click on ".snap-resource[data-type='text'] a.js_snap_duplicate" "css_element"
-   Then I wait until ".snap-resource[data-type='text'] + .snap-resource[data-type='text']" "css_element" exists
+    Then ".snap-resource[data-type='txt']" "css_element" should exist
+    And ".snap-resource[data-type='txt'] + .snap-resource[data-type='txt']" "css_element" should not exist
+    And I click on ".snap-resource[data-type='txt'] button.snap-edit-asset-more" "css_element"
+    And I click on ".snap-resource[data-type='txt'] a.js_snap_duplicate" "css_element"
+   Then I wait until ".snap-resource[data-type='txt'] + .snap-resource[data-type='txt']" "css_element" exists
         # This is to test that the duplication persists.
     And I reload the page
-   Then ".snap-resource[data-type='text'] + .snap-resource[data-type='text']" "css_element" should exist
+   Then ".snap-resource[data-type='txt'] + .snap-resource[data-type='txt']" "css_element" should exist
     Examples:
       | Option     |
       | 0          |
