@@ -255,7 +255,7 @@ li.section:focus {
 }
 
 // -------------------------
-// Course sections
+// Course sections.
 // -------------------------
 
 .course-content ul li.section.main {
@@ -449,9 +449,7 @@ li.section:focus {
     .snap-dropzone-label {
         display: block;
         cursor: pointer;
-        background: transparent url("[[pix:resource|icon]]") 50% 1em no-repeat;
-        background-size: 2rem 2rem;
-        padding: 3em 0 1em 0;
+        padding: 0.5em 0;
         border: 3px dashed #eee;
         border-radius: $btn-border-radius;
 
@@ -463,6 +461,53 @@ li.section:focus {
                 text-decoration: underline;
             }
         }
+        .activityiconcontainer {
+            width: 40px;
+            height: 40px;
+            margin-bottom: 0.5rem;
+            padding: 0.5rem;
+        }
+    }
+}
+
+// ---------------------------------------
+// Mod chooser for Snap - Icon colors.
+// ---------------------------------------
+.theme-snap .modchoosercontainer {
+
+    div[data-internal="forum"] .modicon_forum,
+    div[data-internal="chat"] .modicon_chat,
+    div[data-internal="hsuforum"] .modicon_hsuforum {
+        background-color: $color-communication;
+    }
+
+    div[data-internal="assign"] .modicon_assign,
+    div[data-internal="assignment"] .modicon_assignment,
+    div[data-internal="workshop"] .modicon_workshop,
+    div[data-internal="journal"] .modicon_journal,
+    div[data-internal="hvp"] .modicon_hvp,
+    div[data-internal="attendance"] .modicon_attendance {
+        background-color: $color-assignment;
+    }
+
+    div[data-internal="choice"] .modicon_choice,
+    div[data-internal="feedback"] .modicon_feedback,
+    div[data-internal="quiz"] .modicon_quiz,
+    div[data-internal="survey"] .modicon_survey,
+    div[data-internal="questionnaire"] .modicon_questionnaire,
+    div[data-internal="lesson"] .modicon_lesson {
+        background-color: $color-quiz;
+    }
+
+    div[data-internal="data"] .modicon_data,
+    div[data-internal="glossary"] .modicon_glossary,
+    div[data-internal="wiki"] .modicon_wiki,
+    div[data-internal="choicegroup"] .modicon_choicegroup {
+        background-color: $color-wiki;
+    }
+
+    div[data-internal="hvp"] .modicon_hvp img.activityicon {
+        filter: brightness(0) invert(1);
     }
 }
 
@@ -575,7 +620,7 @@ li.section:focus {
 /* MODS & RESOURCES IN COURSE */
 
 // -------------------------
-// Reset moodle css mess
+// Reset Moodle css mess
 // -------------------------
 
 .path-site li.activity > div,
@@ -643,6 +688,7 @@ li.section:focus {
         background-color: #fff;
         border: 1px solid $gray-lighter;
         border-top-width: 0.3em;
+        transition: all 0.4s ease-in-out;
 
         // For editors add space for editong tools.
         &.snap-can-edit {
@@ -673,9 +719,8 @@ li.section:focus {
             @include clearfix;
 
             .activityicon {
-                float: left;
-                width: 38px;
-                height: 38px;
+                width: 33px;
+                height: 33px;
                 margin-top: -5px; // magic number.
                 margin-right: 0.5em;
                 @include alakazam;
@@ -701,6 +746,12 @@ li.section:focus {
             }
             .contentafterlink p a {
                 font-weight: 500;
+            }
+            // Size of the icons container.
+            .activityiconcontainer {
+                width: 45px;
+                height: 45px;
+                padding: 0.6rem;
             }
         }
     }
@@ -797,6 +848,12 @@ li.section:focus {
             display: none;
         }
     }
+    
+    // We need to hide the background color of the book activity, since this isn't a resource, this isn't
+    // being took by the proper styles from line 936.
+    &.modtype_book .activityiconcontainer.book {
+        background-color: transparent;
+    }
 }
 
 @include media-breakpoint-up(md) {
@@ -870,21 +927,19 @@ li.section:focus {
 
 
 // -------------------------
-// Snap resource
+// Snap resource as lists.
 // -------------------------
 
-.section li.snap-resource {
+body.snap-resource-list .section li.snap-resource {
     display: block;
     @include alakazam;
 
-    .activityinstance .activityicon {
-        height: 1.5em;
-        width: 1.5em;
-        margin-top: 0;
-    }
-
     .snap-asset-link {
         font-size: 1em;
+    }
+
+    .activityiconcontainer {
+        background-color: transparent;
     }
 }
 
@@ -900,7 +955,7 @@ body.snap-resource-card li.snap-resource {
     background-image: url([[pix:theme|file]]);
     background-repeat: no-repeat;
     background-position: 50% 70%;
-    background-size: 38px auto;
+    background-size: 33px auto;
 
     &:hover {
         background-size: 50px auto;
@@ -931,6 +986,10 @@ body.snap-resource-card li.snap-resource {
     .contentafterlink {
         font-size: small;
         padding-top: 0.5em;
+    }
+
+    .activityiconcontainer {
+        display: none;
     }
 
     &.snap-mime-document,
@@ -1000,15 +1059,14 @@ body.snap-resource-card li.snap-resource {
     &.modtype_imscp,
     &.modtype_scorm {
         border-top-color: #f7981d;
-        background-image: url([[pix:core|/f/book]]);
     }
 
     &.modtype_scorm {
-        background-image: url([[pix:scorm|icon]]);
+        background-image: url([[pix:core|/f/scorm]]);
     }
 
     &.modtype_imscp {
-        background-image: url([[pix:imscp|icon]]);
+        background-image: url([[pix:core|/f/imscp]]);
     }
 
     &.modtype_folder {
@@ -1249,25 +1307,75 @@ body.snap-resource-card {
     .snap-asset-actions {
         width: 250px;
     }
+
+    .activityiconcontainer,
+    .instancename {
+        display: inline-block;
+        margin-right: 1rem;
+    }
+
+    .activityicon {
+        display: inline-block;
+    }
+
+    // Override the black color of the icons from core.
+    .activityiconcontainer img.activityicon {
+        filter: opacity(0.5);
+    }
 }
 
-// -------------------------
-// Snap Activity
-// -------------------------
+// -----------------------------------------------------------
+// Color for Snap Activities borders and icons (no resources).
+// -----------------------------------------------------------
 .section li.snap-activity {
     margin: 1em 1%;
     padding-bottom: 2em;
+    img.activityicon {
+        filter: brightness(0) invert(1);
+    }
+
+    .activityiconcontainer,
+    .instancename {
+        display: inline-block;
+        margin-right: 1rem;
+    }
+
+    .activityicon {
+        display: inline-block;
+    }
 
     &.modtype_forum,
     &.modtype_chat,
     &.modtype_hsuforum {
         border-top-color: $color-communication;
+        .activityiconcontainer {
+            background-color: $color-communication;
+        }
     }
 
     &.modtype_assign,
     &.modtype_assignment,
-    &.modtype_workshop {
+    &.modtype_workshop,
+    &.modtype_journal,
+    &.modtype_attendance,
+    &.modtype_hvp,
+    &.modtype_h5pactivity {
         border-top-color: $color-assignment;
+        .activityiconcontainer {
+            background-color: $color-assignment;
+        }
+    }
+
+    //  We need that the filter color doesn't get applied to the plugins which we are changing it's icon.
+    &.modtype_questionnaire,
+    &.modtype_checklist,
+    &.modtype_certificate,
+    &.modtype_customcert,
+    &.modtype_hotpot,
+    &.modtype_ouwiki {
+        .activityiconcontainer img.activityicon {
+            filter: none;
+        }
     }
 
     &.modtype_choice,
@@ -1277,16 +1385,26 @@ body.snap-resource-card {
     &.modtype_questionnaire,
     &.modtype_lesson {
         border-top-color: $color-quiz;
+        .activityiconcontainer {
+            background-color: $color-quiz;
+        }
     }
 
     &.modtype_data,
     &.modtype_glossary,
-    &.modtype_wiki {
+    &.modtype_wiki,
+    &.modtype_choicegroup {
         border-top-color: $color-wiki;
+        .activityiconcontainer {
+            background-color: $color-wiki;
+        }
     }
 
     &.modtype_collaborate {
-        border-top-color: #c800a1;
+        border-top-color: $color-collab;
+        .activityiconcontainer {
+            background-color: $color-collab;
+        }
     }
 
     &.modtype_folder {
@@ -1295,7 +1413,7 @@ body.snap-resource-card {
 }
 
 // -------------------------
-// Snap extended resources
+// Snap extended resources.
 // -------------------------
 .section li.snap-extended-resource {
     margin: 1em 1%;
@@ -1398,7 +1516,7 @@ body.snap-resource-card {
 }
 
 // -------------------------
-// Editing resources/activites
+// Editing resources/activities.
 // -------------------------
 /* EDIT SUMMARY */
 /* Make it obvious that you can edit a summary - Add text and some styles to that gear thing */
@@ -1695,7 +1813,7 @@ form.togglecompletion {
 .section li.snap-activity {
     .contentafterlink,
     .hsuforum-recent {
-        margin-left: (38px + 9px); // icon size (38px + margin);
+        margin-left: (33px + 32px); // icon size (33px + margin);
     }
 }
 

@@ -134,8 +134,8 @@ div[data-fieldtype=filemanager] > p:nth-of-type(1) {
     cursor: pointer;
     // The upload file icon in the file managers had a repeat bug as a background image.
     // This prevents this for any file manager that uses this class in Snap.
-    background: url("[[pix:resource|icon]]") center no-repeat;
-    background-size: 60px 60px;
+    background: url("[[pix:core|/f/folder]]") center no-repeat;
+    background-size: 45px 45px;
     margin-top: 10px;
     .fa-arrow-circle-o-down {
         display: none; // Remove moodle core Drag and drop icon.

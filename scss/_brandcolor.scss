@@ -95,6 +95,29 @@ $custom-menu-text-color: rgb(255, 255, 255) !default; // Need to define this wit
         color: darken($brand-primary, 8%);
     }
 
+    .snap-dropzone .activityiconcontainer {
+        background-color: $brand-primary;
+        img.activityicon {
+            filter: brightness(0) invert(1);
+        }
+    }
+
+    li.activity {
+        &.modtype_checklist,
+        &.modtype_goone {
+            .activityiconcontainer {
+                background-color: $brand-primary;
+            }
+        }
+    }
+
+    .modchoosercontainer {
+        div[data-internal="checklist"] .modicon_checklist,
+        div[data-internal="goone"] .modicon_goone {
+            background-color: $brand-primary;
+        }
+    }
+
     // Focus outline for keyboard tab users
     a,
     .dropdown-toggle {
@@ -1086,6 +1109,7 @@ $custom-menu-text-color: rgb(255, 255, 255) !default; // Need to define this wit
     ngb-modal-window.modal {
         z-index: 1055;
     }
+
     #coursetools-list li {
         &:hover,
         &:focus {
