@@ -1491,7 +1491,7 @@ class local {
         if (!$coverurl) {
             return '';
         }
-        return "#page-site-index #page-header {background-image: url($coverurl);}";
+        return ".theme-snap#page-site-index #page-header {background-image: url($coverurl);}";
     }
 
     /**
