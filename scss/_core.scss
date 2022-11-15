@@ -4256,33 +4256,6 @@ section#region-main {
 
 // Fixes for course cards in the user dashboard.
 #page-my-index {
-    #region-main {
-        @media (max-width: 424px) {
-            form button.btn.btn-secondary {
-                margin-left: 1em;
-            }
-        }
-        @media (min-width: 425px) {
-            form button.btn.btn-secondary {
-                margin-left: 1.5em;
-            }
-        }
-        @media (min-width: 840px) {
-            form button.btn.btn-secondary {
-                margin-left: 2.5em;
-            }
-        }
-        @media (min-width: 1100px) {
-            form button.btn.btn-secondary {
-                margin-left: 3em;
-            }
-        }
-        @media (min-width: 1360px) {
-            form button.btn.btn-secondary {
-                margin-left: 4em;
-            }
-        }
-    }
 
     .card-footer.dashboard-card-footer.border-0.bg-white {
         background-color: transparent !important;
@@ -4292,15 +4265,34 @@ section#region-main {
         margin: 0 0.1em;
     }
 
-    #moodle-blocks .block_myoverview .block-cards{
-        [data-region="filter"] {
-            flex-wrap: wrap;
+    #moodle-blocks {
+        padding: 0;
+        .block_myoverview .block-cards {
+            [data-region="filter"] {
+                flex-wrap: wrap;
+            }
         }
     }
 
     // We need to maintain the content blocks width for the /my Dashboard page.
     .activityiconcontainer.content {
         width: 45px !important;
+    }
+
+    .snap-page-heading-button {
+        display: flex;
+        margin-bottom: 1.5rem;
+    }
+
+    @media (max-width: 1200px) {
+        #region-main,
+        #moodle-blocks {
+            padding: 0 4%;
+            section.block.card {
+                border-right: 1px solid rgba(0, 0, 0, .125);
+                border-left: 1px solid rgba(0, 0, 0, .125);
+            }
+        }
     }
 }
 
@@ -4571,15 +4563,19 @@ li.snap-activity.modtype_folder div[id^="folder_tree"] {
     }
 }
 
-.snap-page-heading-button {
-    float: right;
-    display: grid;
-    grid-gap: 0.5rem;
+#page-mod-forum-view {
+    .snap-page-heading-button {
+        float: right;
+        display: grid;
+        grid-gap: 0.5rem;
+    }
+
+    .snap-page-heading-button div {
+        float: right;
+    }
 }
 
-.snap-page-heading-button div {
-    float: right;
-}
+
 
 .theme-snap [data-region=right-hand-drawer].drawer {
     z-index: 12;
