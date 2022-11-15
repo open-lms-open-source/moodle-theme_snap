@@ -108,14 +108,25 @@
     }
 }
 
-.block,
-.block-region .block {
-    margin: 0 auto 1em;
-    padding: 0 2%;
-    border: 0;
-    box-shadow: none;
-    background-color: transparent;
-    max-width: 50.5em;
+// We need to modify the blocks styles to be modified where we need them.
+// These will be applied for the course and the front page mainly.
+body:not(#page-my-index) {
+    .block,
+    .block-region .block {
+        margin: 0 auto 1em;
+        padding: 0 2%;
+        border: 0;
+        box-shadow: none;
+        background-color: transparent;
+        max-width: 50.5em;
+    }
+}
+// These will be applied to the dashboard page.
+#page-my-index {
+    .block,
+    .block-region .block {
+        border-radius: 0.5rem;
+    }
 }
 
 body.path-site .block-region .block {
