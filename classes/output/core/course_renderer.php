@@ -135,17 +135,17 @@ class course_renderer extends \core_course_renderer {
     ) {
         $output = '';
         if ($modulehtml = $this->course_section_cm($course, $completioninfo, $mod, $sectionreturn, $displayoptions)) {
-            list($snapmodtype, $extension) = $this->get_mod_type($mod);
+            list($snapmodtype, $mimetype) = $this->get_mod_type($mod);
 
             if ($mod->modname === 'resource') {
                 // Default for resources/attatchments e.g. pdf, doc, etc.
-                $modclasses = array('snap-resource', 'snap-mime-'.$extension, 'snap-resource-long');
-                if (in_array($extension, $this->snap_multimedia())) {
+                $modclasses = array('snap-resource', 'snap-mime-'.$mimetype, 'snap-resource-long');
+                if (in_array($mimetype, $this->snap_multimedia())) {
                     $modclasses[] = 'js-snap-media';
                 }
                 // For images we overwrite with the native class.
                 if ($this->is_image_mod($mod)) {
-                    $modclasses = array('snap-native-image', 'snap-image', 'snap-mime-'.$extension);
+                    $modclasses = array('snap-native-image', 'snap-image', 'snap-mime-'.$mimetype);
                 }
             } else if ($mod->modname === 'folder' && !$mod->url) {
                 // Folder mod set to display on page.
@@ -778,28 +778,30 @@ class course_renderer extends \core_course_renderer {
      * @author Guy Thomas
      * @date 2014-06-16
      * @param cm_info $mod
-     * @return stdClass | string
+     * @return array
      */
-    protected function get_mod_type(cm_info $mod) {
-        if ($mod->modname === 'resource' && !empty($mod->icon)) {
-            // Get file type from icon
-            // (note, I also tried this using a combo of substr and strpos and preg_match was much faster!).
-            $matches = array();
-            preg_match ('#/(\w+)-#', $mod->icon, $matches);
-            $filetype = $matches[1];
-            $ext = $filetype;
-            $extension = array(
+    protected function get_mod_type(cm_info $mod): array {
+        if ($mod->modname === 'resource') {
+            $fs = get_file_storage();
+            $files = $fs->get_area_files($mod->context->id, 'mod_resource', 'content', 0, 'sortorder DESC, id ASC', false);
+            $mainfile = $files ? reset($files) : null;
+            $ext = strtolower(pathinfo($mainfile->get_filename(), PATHINFO_EXTENSION));
+            $filetypegroups = get_mimetypes_array();
+            $extension = [
                 'powerpoint' => 'ppt',
                 'document' => 'doc',
                 'spreadsheet' => 'xls',
                 'archive' => 'zip',
                 'pdf' => 'pdf',
-                'image' => get_string('image', 'theme_snap'),
-            );
-            if (in_array($filetype, array_keys($extension))) {
-                $filetype = $extension[$filetype];
+                'text' => 'txt',
+            ];
+            $mimetype = $ext;
+            if (isset($filetypegroups[$ext])) {
+                $mimetype = $filetypegroups[$ext];
+                $mimetype = $icon['string'] ?? $mimetype['icon'];
             }
-            return [$filetype, $ext];
+            $ext = $extension[$mimetype] ?? $ext;
+            return [$ext, $mimetype];
         } else {
             return [$mod->modfullname, null];
         }
@@ -811,12 +813,11 @@ class course_renderer extends \core_course_renderer {
      * @return bool
      */
     protected function is_image_mod(cm_info $mod) {
-        if ($mod->modname == 'resource' && !empty($mod->icon)) {
-            $matches = array();
-            preg_match ('#/(\w+)-#', $mod->icon, $matches);
-            $filetype = $matches[1];
-            $extension = array('jpg', 'jpeg', 'png', 'gif', 'svg', 'image');
-            if (in_array($filetype, $extension)) {
+        if ($mod->modname == 'resource') {
+            $fs = get_file_storage();
+            $files = $fs->get_area_files($mod->context->id, 'mod_resource', 'content', 0, 'sortorder DESC, id ASC', false);
+            $mainfile = $files ? reset($files) : null;
+            if (file_extension_in_typegroup($mainfile->get_filename(), 'web_image')) {
                 return true;
             }
             return false;
@@ -1206,7 +1207,7 @@ class course_renderer extends \core_course_renderer {
         $displaydescription = get_config('theme_snap', 'displaydescription');
         if ($mod->modname === 'resource') {
             $extension = $this->get_mod_type($mod)[1];
-            if (in_array($extension, $snapmultimedia) ) {
+            if (in_array($extension, $snapmultimedia)) {
                 // For multimedia we need to handle the popup setting.
                 // If popup add a redirect param to prevent the intermediate page.
                 if ($mod->onclick) {

@@ -25,7 +25,6 @@ Feature: When the moodle theme is set to Snap, teachers can upload files as reso
   course section from a simple file input element in either read or edit mode.
 
   Background:
-    Given I skip because "It will be reviewed in INT-18499"
     Given the following "courses" exist:
       | fullname | shortname | category | format | maxbytes |
       | Course 1 | C1        | 0        | topics | 500000   |
@@ -47,7 +46,7 @@ Feature: When the moodle theme is set to Snap, teachers can upload files as reso
     And "#snap-drop-file-1" "css_element" should exist
     And I upload file "test_text_file.txt" to section 1
     And I upload file "test_mp3_file.mp3" to section 1
-    Then ".snap-resource[data-type='text']" "css_element" should exist
+    Then ".snap-resource[data-type='txt']" "css_element" should exist
     And ".snap-resource[data-type='mp3']" "css_element" should exist
     # Make sure image uploads do not suffer from annoying prompt for label handler.
     And I upload file "testgif.gif" to section 1
@@ -71,7 +70,7 @@ Feature: When the moodle theme is set to Snap, teachers can upload files as reso
     And "#snap-drop-file-1" "css_element" should exist
     And I upload file "400KB_file.txt" to section 1
     And I upload file "600KB_file.mp3" to section 1
-    Then ".snap-resource[data-type='text']" "css_element" should exist
+    Then ".snap-resource[data-type='txt']" "css_element" should exist
     And ".snap-resource[data-type='mp3']" "css_element" should not exist
     And I should see "The file '600KB_file.mp3' is too large and cannot be uploaded"
     And I log out
@@ -90,6 +89,3 @@ Feature: When the moodle theme is set to Snap, teachers can upload files as reso
     And "#snap-drop-file-1" "css_element" should exist
     And I upload file "600KB_file.mp3" to section 1
     And ".snap-resource[data-type='mp3']" "css_element" should exist
-
-
-

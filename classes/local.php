@@ -1207,15 +1207,12 @@ class local {
      * @return array
      */
     public static function supported_coverimage_types() {
-        global $CFG;
-        $extsstr = strtolower($CFG->courseoverviewfilesext);
-
+        $filetype = (new \core_form\filetypes_util())->is_filetype_group('web_image');
         // Supported file extensions.
-        $extensions = explode(',', str_replace('.', '', $extsstr));
-        array_walk($extensions, function($s) {
-                trim($s);
-        }
-        );
+        $extensions = $filetype->extensions;
+        $extensions = array_map(function($s) {
+            return str_replace('.', '', $s);
+        }, $extensions);
 
         // Filter out any extensions that might be in the config but not image extensions.
         $imgextensions = ['jpg', 'png', 'gif', 'svg', 'webp'];
@@ -1494,7 +1491,7 @@ class local {
         if (!$coverurl) {
             return '';
         }
-        return "#page-site-index #page-header {background-image: url($coverurl);}";
+        return ".theme-snap#page-site-index #page-header {background-image: url($coverurl);}";
     }
 
     /**
