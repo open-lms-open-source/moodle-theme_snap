@@ -1127,6 +1127,14 @@ nodeToChange = $(selectorToChange);
                         $('.snap-form-advanced').append(savebuttonsformrequired);
                     }
 
+                    // Fix a position for the new 'Send content change notification' setting.
+                    const notificationCheck = document.getElementById('id_coursecontentnotification').closest(".form-group.fitem");
+                    if (notificationCheck !== null) {
+                        const submitButtons = $('.snap-form-required [data-groupname="buttonar"]');
+                        notificationCheck.classList.add('snap_content_notification_check');
+                        submitButtons.before(notificationCheck);
+                    }
+
                     waitForFullScreenButton();
                 });
                 accessibility.snapAxInit();

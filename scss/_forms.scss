@@ -67,6 +67,15 @@ body#page-mod-page-mod fieldset#id_general div.fcontainer:nth-child(2) div.form-
     }
 }
 
+.mform #id_general .form-group.fitem.snap_content_notification_check {
+    margin-top: 1rem;
+    padding: 0.5rem;
+
+    &:hover {
+        background-color: #efefef;
+    }
+}
+
 .mform .fitem {
     &.fitem_fcheckbox:not(#fitem_id_onlygraded) {
         .fitemtitle {
