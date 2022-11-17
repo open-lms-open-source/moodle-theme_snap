@@ -740,10 +740,9 @@ trait format_section_trait {
         // Add zone for quick uploading of files.
         $dropfileicon = $OUTPUT->image_url('i/folderdropzone', 'theme_snap');
         $dropzonelabel = get_string('dropzonelabel', 'theme_snap');
-        $snapdropfilesection = "snap-drop-file-'$section'";
         $upload = '<div class="col-sm-6">';
         $upload .= '<form class="snap-dropzone js-only">';
-        $upload .= '<label tabindex="0" for="'.$snapdropfilesection.'" class="snap-dropzone-label">';
+        $upload .= '<label tabindex="0" for="snap-drop-file-'.$section.'" class="snap-dropzone-label">';
         $upload .= '<div>';
         $upload .= '<div class="activityiconcontainer">';
         $upload .= '<img src="'.$dropfileicon.'" alt="" class="iconlarge activityicon" role="presentation">';
@@ -752,7 +751,7 @@ trait format_section_trait {
         $upload .= '</div>';
         $upload .= '</label>';
         $upload .= '<input class="js-snap-drop-file sr-only" type="file" multiple
-         name="'.$snapdropfilesection.'" id="'.$snapdropfilesection.'">';
+         name="snap-drop-file-'.$section.'" id="snap-drop-file-'.$section.'">';
         $upload .= '</form>';
         $upload .= '</div>';
 
