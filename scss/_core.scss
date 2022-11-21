@@ -5028,3 +5028,7 @@ body[id^="page-mod-"][id$="-view"] #region-main .tertiary-navigation .row .navit
 #page-mod-assign-view #region-main .tertiary-navigation .row {
     display: none;
 }
+
+#page-admin-tool-usertours-configure #id_description {
+    width: inherit;
+}
