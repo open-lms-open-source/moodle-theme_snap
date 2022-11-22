@@ -896,9 +896,9 @@ a.yui3-button,
     background-image: url("[[pix:theme|left-arrow]]");
 }
 
-// -------------------------
-// Snap theme elements n componants
-// -------------------------
+// -----------------------------------
+// Snap theme elements and components.
+// -----------------------------------
 
 #page-header,
 #page-login-index #page {
@@ -914,23 +914,12 @@ a.yui3-button,
         display: block;
     }
 
-    // media o media
-    > a > img,
-    > img {
-        float: left;
-        display: block;
-        width: 36px;
-        margin: .3em 1em 0 .3em;
-        height: auto;
-        vertical-align: baseline;
-    }
-
     // media o content
     .snap-media-body {
         overflow: hidden;
 
         // for personal menu updates - need to re-visit when we re-use more widley
-        // in the messaging system we ellispe text
+        // in the messaging system we ellipse text.
         p,
         small {
             white-space: nowrap;

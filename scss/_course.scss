@@ -1146,6 +1146,26 @@ body.snap-resource-card {
             }
         }
     }
+    // Modify the resource activity icon and card width.
+    li.modtype_resource {
+        .activityiconcontainer {
+            background-color: transparent;
+        }
+        .activityiconcontainer,
+        .instancename {
+            display: inline-block;
+            margin-right: 1rem;
+        }
+
+        .activityicon {
+            display: inline-block;
+            filter: opacity(0.5);
+        }
+        // The image activity is a special case and needs to override the normal behavior of the card icons.
+        .snap-header-card-icons {
+            width: 40% !important;
+        }
+    }
 }
 
 // We need to establish to 100% the width for the icons for these activities, because the asset type will not appear in the card.
@@ -1368,11 +1388,11 @@ body.snap-resource-card {
 
     //  We need that the filter color doesn't get applied to the plugins which we are changing it's icon.
     &.modtype_questionnaire,
-    &.modtype_checklist,
     &.modtype_certificate,
     &.modtype_customcert,
     &.modtype_hotpot,
-    &.modtype_ouwiki {
+    &.modtype_ouwiki,
+    &.modtype_bigbluebuttonbn {
         .activityiconcontainer img.activityicon {
             filter: none;
         }

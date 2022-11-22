@@ -312,3 +312,52 @@ body.path-site .block.block_settings {
         }
     }
 }
+
+/* Recently access items block */
+.block_recentlyaccesseditems {
+    .activityiconcontainer {
+        padding: 0.5rem;
+        &.align-self-center[activityname="Forum"],
+        &.align-self-center[activityname="Chat"],
+        &.align-self-center[activityname="Open Forum"] {
+            background-color: $color-communication;
+        }
+        &.align-self-center[activityname="Assignment"],
+        &.align-self-center[activityname="Assign"],
+        &.align-self-center[activityname="Workshop"],
+        &.align-self-center[activityname="Journal"],
+        &.align-self-center[activityname="H5P"],
+        &.align-self-center[activityname="Attendance"] {
+            background-color: $color-assignment;
+        }
+        &.align-self-center[activityname="Choice"],
+        &.align-self-center[activityname="Feedback"],
+        &.align-self-center[activityname="Quiz"],
+        &.align-self-center[activityname="Survey"],
+        &.align-self-center[activityname="Questionnaire"],
+        &.align-self-center[activityname="Lesson"] {
+            background-color: $color-quiz;
+        }
+        &.align-self-center[activityname="Data"],
+        &.align-self-center[activityname="Glossary"],
+        &.align-self-center[activityname="Wiki"],
+        &.align-self-center[activityname="Group choice"] {
+            background-color: $color-wiki;
+        }
+        &.align-self-center[activityname="Collaborate Ultra"] {
+            background-color: $color-collab;
+        }
+        &.align-self-center[activityname="HotPot module"],
+        &.align-self-center[activityname="Custom certificate"],
+        &.align-self-center[activityname="Certificate"],
+        &.align-self-center[activityname="OU WIKI"],
+        &.align-self-center[activityname="BigBlueButton"] {
+            img {
+                filter: none;
+            }
+        }
+        img.icon {
+            filter: brightness(0) invert(1);
+        }
+    }
+}

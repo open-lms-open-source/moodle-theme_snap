@@ -389,6 +389,84 @@ body.snap-pm-open {
         padding-bottom: .5em;
         width: 100%;
     }
+
+    #snap-personal-menu-feed-deadlines .snap-media-object,
+    #snap-personal-menu-feed-grading .snap-media-object {
+        .activityiconcontainer {
+            width: 35px;
+            height: 35px;
+            padding: 0.4rem;
+            float: left;
+            margin: 0.3em 1em 0 0.3em;
+            &.activity-feed[activity-type="Forum"],
+            &.activity-feed[activity-type="Chat"],
+            &.activity-feed[activity-type="Open Forum"] {
+                background-color: $color-communication;
+            }
+            &.activity-feed[activity-type="Assignment"],
+            &.activity-feed[activity-type="Assign"],
+            &.activity-feed[activity-type="Workshop"],
+            &.activity-feed[activity-type="Journal"],
+            &.activity-feed[activity-type="Interactive Content"],
+            &.activity-feed[activity-type="H5P"],
+            &.activity-feed[activity-type="Attendance"] {
+                background-color: $color-assignment;
+            }
+            &.activity-feed[activity-type="Choice"],
+            &.activity-feed[activity-type="Feedback"],
+            &.activity-feed[activity-type="Quiz"],
+            &.activity-feed[activity-type="Survey"],
+            &.activity-feed[activity-type="Questionnaire"],
+            &.activity-feed[activity-type="Lesson"] {
+                background-color: $color-quiz;
+            }
+            &.activity-feed[activity-type="Data"],
+            &.activity-feed[activity-type="Glossary"],
+            &.activity-feed[activity-type="Wiki"],
+            &.activity-feed[activity-type="Group choice"] {
+                background-color: $color-wiki;
+            }
+            &.activity-feed[activity-type="Collaborate Ultra"] {
+                background-color: $color-collab;
+            }
+            &.activity-feed[activity-type="Checklist"],
+            &.activity-feed[activity-type="GO1 content item"],
+            &.activity-feed[activity-type="Course certificate"],
+            &.activity-feed[activity-type="Adaptive Quiz"],
+            &.activity-feed[activity-type="Quizventure"],
+            &.activity-feed[activity-type="Zoom meeting"] {
+                background-color: $brand-primary;
+            }
+            & > img {
+                filter: brightness(0) invert(1);
+            }
+            &.activity-feed[activity-type="Questionnaire"],
+            &.activity-feed[activity-type="Go one"],
+            &.activity-feed[activity-type="HotPot module"],
+            &.activity-feed[activity-type="Custom certificate"],
+            &.activity-feed[activity-type="Certificate"],
+            &.activity-feed[activity-type="OU WIKI"],
+            &.activity-feed[activity-type="BigBlueButton"] {
+                img {
+                    filter: none;
+                }
+            }
+        }
+    }
+    #snap-personal-menu-feed-forumposts,
+    #snap-personal-menu-feed-messages {
+        .snap-media-object .activityiconcontainer {
+            background-color: transparent;
+            float: left;
+            margin: 0.3em 1em 0 0.3em;
+            width: 36px;
+            display: block;
+            padding: unset;
+            > img.userpicture {
+                filter: none;
+            }
+        }
+    }
 }
 
 // -------------------------
