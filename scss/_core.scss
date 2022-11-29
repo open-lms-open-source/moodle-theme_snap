@@ -2331,6 +2331,7 @@ ul.events-new + ul.events-underway {
         }
         .form-group {
             width: auto;
+            float: unset;
         }
         .form-check {
             display: inline-block;

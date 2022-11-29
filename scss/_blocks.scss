@@ -109,8 +109,9 @@
 }
 
 // We need to modify the blocks styles to be modified where we need them.
-// These will be applied for the course and the front page mainly.
-body:not(#page-my-index) {
+// These will be applied for the course and the front page only.
+body.pagelayout-course,
+#page-site-index {
     .block,
     .block-region .block {
         margin: 0 auto 1em;
