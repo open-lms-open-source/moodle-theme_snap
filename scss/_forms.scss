@@ -32,10 +32,10 @@ body:not(.behat-site) {
         display: none;
     }
 
-    // Hide meaningless 'General' legend on forms
+    // Hide meaningless 'General' legend on forms.
     #id_generalhdr .ftoggler,
     #id_general .ftoggler {
-        display: none;
+        display: none !important;
     }
 }
 
@@ -357,8 +357,6 @@ a[aria-controls="snap-collapse-help"] {
 
 #id_cancel {
     font-weight: 300;
-    margin-left: 2em;
-    border: none;
 }
 
 #fitem_id_outcomes .yui3-moodle-core_outcome-mapoutcome-content-wrapper ul {
@@ -441,18 +439,27 @@ a[aria-controls="snap-collapse-help"] {
     display: none;
 }
 
-// Allow for mod edit advanced options to appear at the side.
+// Allow for mod edit advanced options to appear at the side and stylize the options.
 form.mform {
     &[action*="modedit.php"] {
         clear: both;
     }
-    legend {
-        margin: 0;
-        font-size: 1.2rem;
-        a,
-        a:hover {
-            color: $body-color;
-            text-decoration: none;
+    .snap-form-advanced fieldset,
+    fieldset.clearfix {
+        margin-bottom: 1rem;
+        .ftoggler {
+            a:hover,
+            a:focus {
+                background-color: transparent;
+                box-shadow: none;
+            }
+            h3 {
+                font-size: 1.2rem;
+            }
+        }
+        .d-flex {
+            margin-bottom: 0 !important;
+            width: 100%;
         }
     }
 
@@ -502,7 +509,6 @@ form.mform {
             max-width: 250px !important;
         }
         .ftoggler {
-            background-color: $gray-lighter;
             padding: .3em .5em;
         }
         .collapsed .ftoggler {
@@ -510,6 +516,7 @@ form.mform {
         }
         fieldset > .fcontainer {
             border: 3px solid $gray-lighter;
+            border-radius: 5px;
         }
         // Make sure buttons fit container.
         button,
@@ -535,30 +542,15 @@ form.mform {
     }
 }
 
-@include media-breakpoint-down(lg) {
-
-    .snap-form-advanced {
-        select {
-            max-width: 140px !important;
-        }
-
-        input {
-            max-width: 140px !important;
-        }
-    }
-
-}
-
-@include media-breakpoint-down(sm) {
-
+// Make form advanced more mobile friendly with lower screen resolutions.
+@media (max-width: 992px) {
     .snap-form-required {
-        #id_cancel {
-            margin-left: 0;
-        }
-
-        // Only have enough width for one submit button and cancel.
-        #id_submitbutton2 + #id_submitbutton {
-            display: none;
+        max-width: 100%;
+    }
+    .snap-form-advanced {
+        max-width: 100%;
+        fieldset#id_reviewoptionshdr #id_reviewoptionshdrcontainer .form-group {
+            width: 20rem;
         }
     }
 }

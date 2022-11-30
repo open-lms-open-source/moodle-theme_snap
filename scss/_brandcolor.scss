@@ -1146,4 +1146,14 @@ $custom-menu-text-color: rgb(255, 255, 255) !default; // Need to define this wit
     &#page-mod-hsuforum-view .floating-label textarea:focus-visible {
         outline-color: $brand-primary;
     }
+
+    form.mform {
+        .snap-form-advanced fieldset .ftoggler,
+        fieldset.clearfix .ftoggler {
+            h3,
+            a.btn i.icon {
+                color: $brand-primary;
+            }
+        }
+    }
 }

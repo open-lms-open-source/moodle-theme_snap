@@ -105,9 +105,9 @@ define(['jquery', 'core/log', 'theme_snap/headroom', 'theme_snap/util', 'theme_s
             var savebuttonsformrequired = $('div[role=main] .mform div.snap-form-required fieldset > div.form-group.fitem');
             var savebuttonsformadvanced = $('div[role=main] .mform div.snap-form-advanced > div:nth-of-type(3)');
             var width = $(window).width();
-            if (width < 767) {
+            if (width < 992) {
                 $('.snap-form-advanced').append(savebuttonsformrequired);
-            } else if (width > 767) {
+            } else if (width > 992) {
                 $('.snap-form-required fieldset#id_general').append(savebuttonsformadvanced);
             }
         };
