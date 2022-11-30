@@ -849,10 +849,11 @@ li.section:focus {
         }
     }
     
-    // We need to hide the background color of the book activity, since this isn't a resource, this isn't
+    // We need to hide the container of the book and page activities, since this isn't a resource, this isn't
     // being took by the proper styles from line 936.
-    &.modtype_book .activityiconcontainer.book {
-        background-color: transparent;
+    &.modtype_book .activityiconcontainer.book,
+    &.modtype_page .activityiconcontainer.page, {
+        display: none;
     }
 }
 
@@ -1161,8 +1162,9 @@ body.snap-resource-card {
             display: inline-block;
             filter: opacity(0.5);
         }
-        // The image activity is a special case and needs to override the normal behavior of the card icons.
-        .snap-header-card-icons {
+        // The file/image activity is a special case and needs to override the normal behavior of the card icons,
+        // since it has the type of activity name in the card header.
+        &.snap-image .snap-header-card-icons {
             width: 40% !important;
         }
     }

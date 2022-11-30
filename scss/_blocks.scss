@@ -338,7 +338,7 @@ body.path-site .block.block_settings {
         &.align-self-center[activityname="Lesson"] {
             background-color: $color-quiz;
         }
-        &.align-self-center[activityname="Data"],
+        &.align-self-center[activityname="Database"],
         &.align-self-center[activityname="Glossary"],
         &.align-self-center[activityname="Wiki"],
         &.align-self-center[activityname="Group choice"] {
@@ -347,6 +347,7 @@ body.path-site .block.block_settings {
         &.align-self-center[activityname="Collaborate Ultra"] {
             background-color: $color-collab;
         }
+        &.align-self-center[activityname="Questionnaire"],
         &.align-self-center[activityname="HotPot module"],
         &.align-self-center[activityname="Custom certificate"],
         &.align-self-center[activityname="Certificate"],
