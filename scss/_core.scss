@@ -4266,7 +4266,8 @@ section#region-main {
 
     // We need to maintain the content blocks width for the /my Dashboard page.
     .activityiconcontainer.content {
-        width: 45px !important;
+        width: 40px !important;
+        margin: 0;
     }
 
     .snap-page-heading-button {

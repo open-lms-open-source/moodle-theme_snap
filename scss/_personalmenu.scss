@@ -420,13 +420,13 @@ body.snap-pm-open {
             &.activity-feed[activity-type="Lesson"] {
                 background-color: $color-quiz;
             }
-            &.activity-feed[activity-type="Data"],
+            &.activity-feed[activity-type="Database"],
             &.activity-feed[activity-type="Glossary"],
             &.activity-feed[activity-type="Wiki"],
             &.activity-feed[activity-type="Group choice"] {
                 background-color: $color-wiki;
             }
-            &.activity-feed[activity-type="Collaborate Ultra"] {
+            &.activity-feed[activity-type="Collaborate"] {
                 background-color: $color-collab;
             }
             &.activity-feed[activity-type="Checklist"],
@@ -434,7 +434,8 @@ body.snap-pm-open {
             &.activity-feed[activity-type="Course certificate"],
             &.activity-feed[activity-type="Adaptive Quiz"],
             &.activity-feed[activity-type="Quizventure"],
-            &.activity-feed[activity-type="Zoom meeting"] {
+            &.activity-feed[activity-type="Zoom meeting"],
+            &.activity-feed[activity-type="Dialogue"] {
                 background-color: $brand-primary;
             }
             & > img {
@@ -449,6 +450,21 @@ body.snap-pm-open {
             &.activity-feed[activity-type="BigBlueButton"] {
                 img {
                     filter: none;
+                }
+            }
+            &.activity-feed[activity-type="File"],
+            &.activity-feed[activity-type="IMS content package"],
+            &.activity-feed[activity-type="SCORM package"],
+            &.activity-feed[activity-type="Folder"],
+            &.activity-feed[activity-type="Lightbox Gallery"],
+            &.activity-feed[activity-type="URL"],
+            &.activity-feed[activity-type="Book"],
+            &.activity-feed[activity-type="Page"],
+            &.activity-feed[activity-type="Label"],
+            &.activity-feed[activity-type="File"], {
+                background-color: transparent;
+                img {
+                    filter: opacity(0.5);
                 }
             }
         }

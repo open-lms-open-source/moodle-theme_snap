@@ -108,7 +108,8 @@ $custom-menu-text-color: rgb(255, 255, 255) !default; // Need to define this wit
         &.modtype_coursecertificate,
         &.modtype_adaptivequiz,
         &.modtype_quizgame,
-        &.modtype_zoom, {
+        &.modtype_zoom,
+        &.modtype_dialogue {
             .activityiconcontainer {
                 background-color: $brand-primary;
             }
@@ -121,7 +122,8 @@ $custom-menu-text-color: rgb(255, 255, 255) !default; // Need to define this wit
         div[data-internal="adaptivequiz"] .modicon_adaptivequiz,
         div[data-internal="coursecertificate"] .modicon_coursecertificate,
         div[data-internal="quizgame"] .modicon_quizgame,
-        div[data-internal="zoom"] .modicon_zoom {
+        div[data-internal="zoom"] .modicon_zoom,
+        div[data-internal="dialogue"] .modicon_dialogue {
             background-color: $brand-primary;
         }
     }
@@ -134,7 +136,8 @@ $custom-menu-text-color: rgb(255, 255, 255) !default; // Need to define this wit
             &.align-self-center[activityname="Course certificate"],
             &.align-self-center[activityname="Adaptive Quiz"],
             &.align-self-center[activityname="Quizventure"],
-            &.align-self-center[activityname="Zoom meeting"] {
+            &.align-self-center[activityname="Zoom meeting"],
+            &.align-self-center[activityname="Dialogue"] {
                 background-color: $brand-primary;
             }
         }
