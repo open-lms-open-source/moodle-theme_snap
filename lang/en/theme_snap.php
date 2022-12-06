@@ -83,6 +83,7 @@ $string['courseactivitieslabel'] = 'Section activities';
 $string['coursetools'] = 'Course Dashboard';
 $string['coverdisplay'] = 'Cover display';
 $string['covercarousel'] = 'Cover carousel';
+$string['covercarousellabel'] = 'Carousel';
 $string['covercarouselon'] = 'Use Cover carousel';
 $string['covercarouseldescription'] = '<p>The carousel is a set of rotating banners, or a slideshow, that displays on the homepage of your site instead of the cover image.</p>
 <p>Add up to 3 images, a title for each slide, and an optional subtitle. Images of 1200 x 600 pixels work best.</p>';

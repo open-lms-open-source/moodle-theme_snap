@@ -1720,6 +1720,11 @@ header#page-header
     padding: 0 4% 4em;
     background-color: #f1f0ee;
     @include clearfix;
+    .text-center {
+        .btn-secondary {
+            margin-right: 1rem;
+        }
+    }
 }
 
 #news-articles {
@@ -3641,10 +3646,10 @@ div[data-rel=fatalerror] {
 
 .iconhelp {
     & > img {
-        background-color: #ddd;
+        background-color: $icons-color;
         height: 16px;
         width: 16px;
-        border: 4px solid #ddd;
+        border: 4px solid $icons-color;
         border-radius: 50%;
         vertical-align: middle;
         margin-bottom: 3px;
@@ -5066,6 +5071,7 @@ body[id^="page-mod-"][id$="-view"] #region-main .tertiary-navigation .row .navit
         width: inherit;
     }
 }
+
 // Fix header position in grader view.
 #page-mod-assign-grader.theme-snap {
     [data-region="grading-navigation-panel"] {
@@ -5165,4 +5171,14 @@ body[id^="page-mod-"][id$="-view"] #region-main .tertiary-navigation .row .navit
             }
         }
     }
+}
+
+// Fix for screen reader focusable element that skip to main content position.
+.sr-only-focusable[href="#maincontent"]:focus {
+    z-index: 1031;
+    position: fixed;
+    background: #fff;
+    padding: 7px;
+    left: 0;
+    top: 0;
 }

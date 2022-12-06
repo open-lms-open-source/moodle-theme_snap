@@ -1162,4 +1162,15 @@ $custom-menu-text-color: rgb(255, 255, 255) !default; // Need to define this wit
             }
         }
     }
+
+    .snap-asset-actions {
+        .snap-asset-move {
+            &:focus-within {
+                outline: 3px solid $brand-primary;
+            }
+        }
+        .snap-edit-asset-more:focus {
+            outline: 3px solid $brand-primary;
+        }
+    }
 }

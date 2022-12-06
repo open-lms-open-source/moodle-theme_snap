@@ -50,6 +50,9 @@ $brand-info:            #02567e;
 $body-bg:               #fff;
 $body-color:            #565656;
 
+// Color for the icons to improve accessibility with a darker gray color.
+$icons-color:            #6c757d;
+
 $font-family-system:      -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !default;
 $font-family-sans-serif:  "Roboto", $font-family-system;
 $font-family-feature:     "Roboto", $font-family-system;
@@ -141,7 +144,7 @@ $nav-login-color:                   $nav-button-color;
 // -------------------------
 
 $snap-featured-courses: #f1f0ee;
-$snap-carousel-buttons: #6c757d;
+$snap-carousel-buttons: $icons-color;
 
 /* https://github.com/twbs/bootstrap/issues/22222#issuecomment-292819959 */
 $cursor-disabled: not-allowed;
