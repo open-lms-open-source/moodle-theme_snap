@@ -26,10 +26,19 @@
     #region-main {
         max-width: 100%;
         padding: 1em 4%;
+        .snap-page-heading-button {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            .singlebutton {
+                margin-bottom: 20px;
+            }
+        }
     }
     // User image and name.
     .page-context-header {
         text-align: center;
+        display: block;
 
         .page-header-image,
         .page-header-headings,
