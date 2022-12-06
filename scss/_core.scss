@@ -3043,6 +3043,12 @@ table#user-grades tr.avg td.cell {
     section#region-main {
         display: grid;
     }
+    .gradeparent {
+        th.header.user,
+        #studentheader {
+            left: 0;
+        }
+    }
 }
 
 #page-local-joulegrader-view {
