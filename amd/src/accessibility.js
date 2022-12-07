@@ -210,8 +210,10 @@ define(['jquery', 'core/str', 'core/event'],
                         // Create an observer instance linked to the callback function
                         var observer = new MutationObserver(callback);
 
-                        // Start observing the target node for configured mutations
-                        observer.observe(targetNode, config);
+                        if (targetNode) {
+                            // Start observing the target node for configured mutations.
+                            observer.observe(targetNode, config);
+                        }
                     }
                     carouselAriaCurrentValue();
 
