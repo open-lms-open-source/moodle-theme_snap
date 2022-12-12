@@ -1135,6 +1135,17 @@ nodeToChange = $(selectorToChange);
                         submitButtons.before(notificationCheck);
                     }
 
+                    // Add container div to show Snap icons when creating and editing activities.
+                    if ( $('.path-mod.theme-snap').length ) {
+                        $( "#region-main h2 img.icon" ).each(function() {
+                            if($( this ).parent().attr('class') != "activityiconcontainer") {
+                                const newIconContainer = document.createElement("div");
+                                newIconContainer.classList.add("activityiconcontainer");
+                                $( this ).wrap(newIconContainer);
+                            }
+                        });
+                    }
+
                     waitForFullScreenButton();
                 });
                 accessibility.snapAxInit();
