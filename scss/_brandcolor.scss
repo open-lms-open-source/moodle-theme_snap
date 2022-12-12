@@ -112,6 +112,9 @@ $custom-menu-text-color: rgb(255, 255, 255) !default; // Need to define this wit
         &.modtype_dialogue {
             .activityiconcontainer {
                 background-color: $brand-primary;
+                img.activityicon {
+                    filter: brightness(0) invert(1);
+                }
             }
         }
     }

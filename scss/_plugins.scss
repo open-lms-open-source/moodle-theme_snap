@@ -927,6 +927,31 @@ section#snap-add-new-section #summary-editor_parent #summary-editor_tbl {
     flex: none;
     max-width: 100%;
 }
+body.format-tiles.editing {
+    li.activity-wrapper {
+        .editing_move {
+            float: left;
+        }
+        .description {
+            margin-left: 10%;
+        }
+    }
+
+    li.subtile {
+        .activitytype {
+            max-width: none !important;
+        }
+        .inplaceeditable a:nth-of-type(1) {
+            white-space: nowrap;
+            width: 150px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: block;
+        }
+    }
+
+
+}
 #page-course-view-tiles {
     // Styles for Dashboard, progress indicator, filter buttons and edit course content link.
     #headerabovetiles {

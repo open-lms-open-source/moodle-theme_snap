@@ -332,6 +332,9 @@ body.path-site .block.block_settings {
         &.align-self-center[activityname="Chat"],
         &.align-self-center[activityname="Open Forum"] {
             background-color: $color-communication;
+            img.icon {
+                filter: brightness(0) invert(1);
+            }
         }
         &.align-self-center[activityname="Assignment"],
         &.align-self-center[activityname="Assign"],
@@ -340,6 +343,9 @@ body.path-site .block.block_settings {
         &.align-self-center[activityname="H5P"],
         &.align-self-center[activityname="Attendance"] {
             background-color: $color-assignment;
+            img.icon {
+                filter: brightness(0) invert(1);
+            }
         }
         &.align-self-center[activityname="Choice"],
         &.align-self-center[activityname="Feedback"],
@@ -348,15 +354,24 @@ body.path-site .block.block_settings {
         &.align-self-center[activityname="Questionnaire"],
         &.align-self-center[activityname="Lesson"] {
             background-color: $color-quiz;
+            img.icon {
+                filter: brightness(0) invert(1);
+            }
         }
         &.align-self-center[activityname="Database"],
         &.align-self-center[activityname="Glossary"],
         &.align-self-center[activityname="Wiki"],
         &.align-self-center[activityname="Group choice"] {
             background-color: $color-wiki;
+            img.icon {
+                filter: brightness(0) invert(1);
+            }
         }
         &.align-self-center[activityname="Collaborate Ultra"] {
             background-color: $color-collab;
+            img.icon {
+                filter: brightness(0) invert(1);
+            }
         }
         &.align-self-center[activityname="Questionnaire"],
         &.align-self-center[activityname="HotPot module"],
@@ -367,9 +382,6 @@ body.path-site .block.block_settings {
             img {
                 filter: none;
             }
-        }
-        img.icon {
-            filter: brightness(0) invert(1);
         }
     }
 }

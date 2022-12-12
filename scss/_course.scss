@@ -719,8 +719,8 @@ li.section:focus {
             @include clearfix;
 
             .activityicon {
-                width: 33px;
-                height: 33px;
+                width: 24px;
+                height: 24px;
                 margin-top: -5px; // magic number.
                 margin-right: 0.5em;
                 @include alakazam;
@@ -989,6 +989,12 @@ body.snap-resource-card li.snap-resource {
         padding-top: 0.5em;
     }
 
+    &.modtype_resource {
+        .activityiconcontainer {
+            display: none !important;
+        }
+    }
+
     .activityiconcontainer {
         display: none;
     }
@@ -1173,18 +1179,11 @@ body.snap-resource-card {
 // We need to establish to 100% the width for the icons for these activities, because the asset type will not appear in the card.
 // This will happen in list and card views.
 body.snap-resource-list {
-    li.modtype_label,
-    li.modtype_resource,
-    li.modtype_url,
-    li.modtype_imscp,
-    li.modtype_lightboxgallery,
-    li.modtype_scorm {
+    .snap-resource-long,
+    li.modtype_label {
         .snap-header-card-icons {
             width: 100%;
         }
-    }
-    li.snap-resource-long.modtype_folder .snap-header-card-icons {
-        width: 100%;
     }
 }
 
@@ -1347,90 +1346,138 @@ body.snap-resource-card {
 }
 
 // -----------------------------------------------------------
-// Color for Snap Activities borders and icons (no resources).
+// Color for Snap Activities borders and icons (no resources), including Tiles format.
 // -----------------------------------------------------------
-.section li.snap-activity {
-    margin: 1em 1%;
-    padding-bottom: 2em;
-    img.activityicon {
-        filter: brightness(0) invert(1);
-    }
+.section li {
 
-    .activityiconcontainer,
-    .instancename {
-        display: inline-block;
-        margin-right: 1rem;
-    }
+    &.snap-activity,
+    &.launch-tiles-standard,
+    &.launch-tiles-module-modal,
+    &.activity-wrapper {
 
-    .activityicon {
-        display: inline-block;
-    }
+        margin: 1em 1%;
+        padding-bottom: 2em;
 
-    &.modtype_forum,
-    &.modtype_chat,
-    &.modtype_hsuforum {
-        border-top-color: $color-communication;
-        .activityiconcontainer {
-            background-color: $color-communication;
+        .activityiconcontainer,
+        .instancename {
+            display: inline-block;
+            margin-right: 1rem;
         }
-    }
 
-    &.modtype_assign,
-    &.modtype_assignment,
-    &.modtype_workshop,
-    &.modtype_journal,
-    &.modtype_attendance,
-    &.modtype_hvp,
-    &.modtype_h5pactivity {
-        border-top-color: $color-assignment;
-        .activityiconcontainer {
-            background-color: $color-assignment;
+        .activityicon {
+            display: inline-block;
         }
-    }
 
-    //  We need that the filter color doesn't get applied to the plugins which we are changing it's icon.
-    &.modtype_questionnaire,
-    &.modtype_certificate,
-    &.modtype_customcert,
-    &.modtype_hotpot,
-    &.modtype_ouwiki,
-    &.modtype_bigbluebuttonbn {
-        .activityiconcontainer img.activityicon {
-            filter: none;
+        &.modtype_forum,
+        &.modtype_chat,
+        &.modtype_hsuforum {
+            border-top-color: $color-communication;
+            .activityiconcontainer {
+                background-color: $color-communication;
+                img.activityicon {
+                    filter: brightness(0) invert(1);
+                }
+            }
         }
-    }
 
-    &.modtype_choice,
-    &.modtype_feedback,
-    &.modtype_quiz,
-    &.modtype_survey,
-    &.modtype_questionnaire,
-    &.modtype_lesson {
-        border-top-color: $color-quiz;
-        .activityiconcontainer {
-            background-color: $color-quiz;
+        &.modtype_assign,
+        &.modtype_assignment,
+        &.modtype_workshop,
+        &.modtype_journal,
+        &.modtype_attendance,
+        &.modtype_hvp,
+        &.modtype_h5pactivity {
+            border-top-color: $color-assignment;
+            .activityiconcontainer {
+                background-color: $color-assignment;
+                img.activityicon {
+                    filter: brightness(0) invert(1);
+                }
+            }
         }
-    }
 
-    &.modtype_data,
-    &.modtype_glossary,
-    &.modtype_wiki,
-    &.modtype_choicegroup {
-        border-top-color: $color-wiki;
-        .activityiconcontainer {
-            background-color: $color-wiki;
+        //  We need that the filter color doesn't get applied to the plugins which we are changing it's icon.
+        &.modtype_questionnaire,
+        &.modtype_certificate,
+        &.modtype_customcert,
+        &.modtype_hotpot,
+        &.modtype_ouwiki,
+        &.modtype_bigbluebuttonbn {
+            .activityiconcontainer img.activityicon {
+                filter: none;
+            }
         }
-    }
 
-    &.modtype_collaborate {
-        border-top-color: $color-collab;
-        .activityiconcontainer {
-            background-color: $color-collab;
+        &.modtype_choice,
+        &.modtype_feedback,
+        &.modtype_quiz,
+        &.modtype_survey,
+        &.modtype_lesson {
+            border-top-color: $color-quiz;
+            .activityiconcontainer {
+                background-color: $color-quiz;
+                img.activityicon {
+                    filter: brightness(0) invert(1);
+                }
+            }
         }
-    }
 
-    &.modtype_folder {
-        border-top-color: #fed859;
+        &.modtype_book,
+        &.modtype_lti,
+        &.modtype_resource,
+        &.modtype_folder,
+        &.modtype_page,
+        &.modtype_url,
+        &.modtype_lightboxgallery,
+        &.modtype_imscp {
+            border-top-color: $color-book;
+            .activityiconcontainer {
+                background-color: $color-book;
+                img.activityicon {
+                    filter: brightness(0) invert(1);
+                }
+            }
+        }
+
+        &.modtype_data,
+        &.modtype_glossary,
+        &.modtype_wiki,
+        &.modtype_choicegroup {
+            border-top-color: $color-wiki;
+            .activityiconcontainer {
+                background-color: $color-wiki;
+                img.activityicon {
+                    filter: brightness(0) invert(1);
+                }
+            }
+        }
+
+        &.modtype_collaborate {
+            border-top-color: $color-collab;
+            .activityiconcontainer {
+                background-color: $color-collab;
+                img.activityicon {
+                    filter: brightness(0) invert(1);
+                }
+            }
+        }
+
+        &.modtype_folder {
+            border-top-color: #fed859;
+        }
+
+        // Icon position in Tiles.
+        .activityicon {
+            width: 24px;
+            height: 24px;
+            margin-top: -5px;
+            margin-right: 0.5em;
+            @include alakazam;
+        }
+
+        .inplaceeditable-text .activityiconcontainer .activityicon {
+            margin-top: auto;
+        }
     }
 }
 
