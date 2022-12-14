@@ -5044,3 +5044,12 @@ body[id^="page-mod-"][id$="-view"] #region-main .tertiary-navigation .row .navit
         top: 7rem;
     }
 }
+
+.path-course-view.theme-snap .popover {
+    border-radius: 0.6rem;
+    .popover-header {
+        border-top-left-radius: calc(0.6rem - 1px);
+        border-top-right-radius: calc(0.6rem - 1px);
+        font-weight: bold;
+    }
+}
