@@ -5035,12 +5035,16 @@ body[id^="page-mod-"][id$="-view"] #region-main .tertiary-navigation .row .navit
 // Fix header position in grader view.
 #page-mod-assign-grader.theme-snap {
     [data-region="grading-navigation-panel"] {
-        height: 7rem;
-        position: fixed;
+        @media (min-width: 767px) {
+            height: 7rem;
+            top: 1rem;
+        }
     }
 
     [data-region="review-panel"],
     [data-region="grade-panel"] {
-        top: 7rem;
+        @media (min-width: 767px) {
+            top: 8rem;
+        }
     }
 }
