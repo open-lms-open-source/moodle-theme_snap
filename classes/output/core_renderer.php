@@ -1712,8 +1712,7 @@ HTML;
 
             // Remove links for Reports and Question Bank for INT-18042.
             $isreportslink = $item->key === 'coursereports';
-            $isquestionbanklink = $item->key === 'questionbank';
-            if ($isreportslink || $isquestionbanklink) {
+            if ($isreportslink) {
                 $item->action = null;
             }
 

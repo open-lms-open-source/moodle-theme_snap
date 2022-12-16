@@ -385,3 +385,7 @@ body.path-site .block.block_settings {
         }
     }
 }
+
+.block.block_calendar_month .maincalendar .calendartable.calendarmonth td.hasevent [data-region="day-content"] {
+    display: none;
+}
