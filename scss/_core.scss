@@ -5057,3 +5057,78 @@ body[id^="page-mod-"][id$="-view"] #region-main .tertiary-navigation .row .navit
         font-weight: bold;
     }
 }
+
+// Improve visualization of the tabs in the report builder edit mode.
+#page-admin-reportbuilder-edit {
+    .dynamictabs {
+        margin-top: 3em;
+        ul.nav {
+            position: fixed;
+            z-index: 1030;
+            width: calc(100%);
+            padding-top: 1.25rem;
+            background-color: #fff;
+            li a.nav-link {
+                border-top-left-radius: 0.5rem;
+                border-top-right-radius: 0.5rem;
+            }
+        }
+        #dynamictabs-content {
+            padding-top: 5.5rem;
+            .reportbuilder-editor-table-container {
+                overflow-x: auto;
+            }
+            #reportbuilder-sidebar-search {
+                border-top-left-radius: 0.5rem !important;
+                border-bottom-left-radius: 0.5rem !important;
+            }
+            .input-group-append .input-group-text {
+                border-top-right-radius: 0.5rem !important;
+                border-bottom-right-radius: 0.5rem !important;
+            }
+            .reportbuilder-sidebar-settings .list-group-item:first-child {
+                border-top-left-radius: 0.5rem !important;
+                border-top-right-radius: 0.5rem !important;
+            }
+            .reportbuilder-sidebar-settings .list-group-item:last-child {
+                border-bottom-left-radius: 0.5rem !important;
+                border-bottom-right-radius: 0.5rem !important;
+            }
+            .card.reportbuilder-toggle-card,
+            .reportbuilder-report-container .border,
+            .reportbuilder-sidebar-settings .custom-select {
+                border-radius: 0.5rem;
+            }
+            .reportbuilder-report .reportbuilder-wrapper {
+                .reportbuilder-sidebar-menu {
+                    position: fixed;
+                    width: 250px;
+                    flex-shrink: 0;
+                    .reportbuilder-sidebar-menu-cards {
+                        overflow-y: auto;
+                        max-height: calc(100vh - 163px - 52px);
+                    }
+                }
+                .reportbuilder-report-container {
+                    max-height: calc(100vh - 163px);
+                    overflow-y: auto;
+                    margin-left: calc(250px + 1rem);
+                    margin-right: calc(350px + 1rem);
+                    min-width: 0;
+                    flex: 1 1 auto;
+                }
+                .reportbuilder-sidebar-settings {
+                    position: fixed;
+                    right: 30px;
+                    max-height: calc(100vh - 163px);
+                    width: 350px;
+                    flex-shrink: 0;
+                    overflow-y: auto;
+                }
+            }
+            .card-header {
+                border-bottom: 0;
+            }
+        }
+    }
+}
