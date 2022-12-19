@@ -41,12 +41,12 @@ Feature: Users can see a button or link to download content when using snap.
 
   @javascript
   Scenario: Buttons is visible when allowing course download for students.
-    Given I skip because "Button is not appearing for students. Will be reviewed in ticket INT-18589"
     And I log in as "student1"
     And I am on "Course 1" course homepage
-    And "#page-mast div.singlebutton button[data-downloadcourse='1']" "css_element" should not exist
+    And I follow "Course Dashboard"
+    And I should not see "Download course content"
     And I am on "Course 2" course homepage
-    And "#page-mast div.singlebutton button[data-downloadcourse='1']" "css_element" should not exist
+    And I should not see "Download course content"
     And I log out
     # Teacher can't see the button yet.
     And I log in as "teacher1"
@@ -63,31 +63,32 @@ Feature: Users can see a button or link to download content when using snap.
     And I log in as "admin"
     And the following config values are set as admin:
       | downloadcoursecontentallowed | 1 |
-    And I am on site homepage
-    And I click on "#admin-menu-trigger" "css_element"
-    And I expand "Site administration" node
-    And I expand "Courses" node
-    And I follow "Course default settings"
+    And I am on "Course 1" course homepage
+    And I navigate to "Settings" in current page administration
     And I set the following fields to these values:
       |  Enable download course content | 1 |
-    And I click on "Save changes" "button"
+    And I click on "Save and display" "button"
+    And I am on "Course 2" course homepage
+    And I navigate to "Settings" in current page administration
+    And I set the following fields to these values:
+      |  Enable download course content | 1 |
+    And I click on "Save and display" "button"
     And I log out
     # Download content enabled.
     And I log in as "teacher1"
     And I am on "Course 1" course homepage
-    And "#page-mast div.singlebutton button[data-downloadcourse='1']" "css_element" should not exist
-    And I should not see "Download course content"
-    And I click on "#admin-menu-trigger" "css_element"
+    And I follow "Course Dashboard"
+    And I should see "Download course content"
     # Only visible in admin menu.
+    And I follow "Course Dashboard"
     And I should see "Download course content"
     And I am on "Course 2" course homepage
-    And I should not see "Download course content"
-    And I click on "#admin-menu-trigger" "css_element"
-    And I should see "Download course content"
-    And "#page-mast div.singlebutton button[data-downloadcourse='1']" "css_element" should not exist
     And I log out
     And I log in as "student1"
     And I am on "Course 1" course homepage
-    And "#page-mast div.singlebutton button[data-downloadcourse='1']" "css_element" should exist
+    And I follow "Course Dashboard"
+    And I should see "Download course content"
+    # Only visible in admin menu.
     And I am on "Course 2" course homepage
-    And "#page-mast div.singlebutton button[data-downloadcourse='1']" "css_element" should exist
+    And I follow "Course Dashboard"
+    And I should see "Download course content"
