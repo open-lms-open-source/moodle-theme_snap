@@ -863,6 +863,10 @@ EOF;
         } else {
             $o = '<h2>' . $coursetoolsicon . $coursetools . '</h2>';
         }
+
+        if ($downloaditem = self::get_download_content_link()) {
+            $links[] = $downloaditem;
+        }
         $o .= self::print_student_dashboard();
         $o .= '<ul id="coursetools-list">' .self::render_appendices($links). '</ul><hr>';
 
@@ -1028,5 +1032,26 @@ EOF;
         }
 
         return $renderer;
+    }
+
+    /**
+     * @param array $link
+     * @return array
+     */
+    private static function get_download_content_link(): array {
+        global $COURSE, $USER, $OUTPUT;
+        $coursecontext = context_course::instance($COURSE->id);
+        $link = [];
+        if (\core\content::can_export_context($coursecontext, $USER)) {
+            $linkattr = \core_course\output\content_export_link::get_attributes($coursecontext);
+            $iconurl = $OUTPUT->image_icon('fp/download_content', 'theme', 'theme_snap',
+                ['class' => 'iconlarge svg-icon', 'role' => 'presentation']);
+            $link = [
+                'link' => $linkattr->url,
+                'title' => $iconurl . $linkattr->displaystring,
+                'attributes' => $linkattr->elementattributes
+            ];
+        }
+        return $link;
     }
 }
