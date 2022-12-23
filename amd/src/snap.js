@@ -1055,6 +1055,7 @@ nodeToChange = $(selectorToChange);
                                     var selectNode = $('#id_appearancehdrcontainer');
                                     selectNode.append(html);
                                 });
+                            $('#id_showdescription').parent().parent().parent().hide();
                         }
                     }
 
