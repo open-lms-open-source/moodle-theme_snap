@@ -75,6 +75,7 @@ echo $OUTPUT->custom_menu_spacer();
         } // End else.
     ?>
 </div>
+<div id="region-main-box">
 <section id="region-main">
 <?php
 echo $OUTPUT->course_content_header();
@@ -149,6 +150,7 @@ if (stripos($PAGE->bodyclasses, 'format-singleactivity') !== false ) {
 ?>
 
 </section>
+</div>
 
 <?php require(__DIR__.'/moodle-blocks.php'); ?>
 </main>

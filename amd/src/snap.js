@@ -896,6 +896,18 @@ nodeToChange = $(selectorToChange);
                         }
                         $(mainForm).wrap('<div class="snap-form-required col-md-8" />');
 
+                        // Show the form buttons when adding multiple LTI activities.
+                        if ($('body#page-mod-lti-mod').length) {
+                            var multipleLTIActivities =
+                                document.querySelector('section#region-main form.mform > div[data-attribute="dynamic-import"]');
+                            var LTIObserver = new MutationObserver(function() {
+                                $('fieldset#id_general > :nth-child(5)').detach()
+                                    .appendTo('section#region-main > div[role="main"] > form.mform');
+                            });
+                            var LTIObserverConfig = {childList: true};
+                            LTIObserver.observe(multipleLTIActivities, LTIObserverConfig);
+                        }
+
                         var description = $('form[id^="mform1"] fieldset:first .fitem_feditor:not(.required)');
 
                         if (onModSettings && description) {
