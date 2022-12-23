@@ -12522,9 +12522,6 @@ button.snap-icon-toggle.favoritetoggle:focus {
  * @copyright Copyright (c) 2015 Open LMS (https://www.openlms.net)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-body:not(.behat-site)#page-mod-url-mod #id_optionssection {
-    display: none;
-}
 
 body:not(.behat-site) #id_generalhdr .ftoggler,
 body:not(.behat-site) #id_general .ftoggler {

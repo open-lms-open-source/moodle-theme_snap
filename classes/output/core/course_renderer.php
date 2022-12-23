@@ -1175,7 +1175,7 @@ class course_renderer extends \core_course_renderer {
      * @return string
      */
     public function course_section_cm_name(cm_info $mod, $displayoptions = array()) {
-
+        GLOBAL $DB, $CFG;
         $output = '';
 
         // Nothing to be displayed to the user.
@@ -1222,17 +1222,32 @@ class course_renderer extends \core_course_renderer {
                 }
             }
         }
-        if ($mod->modname === 'url') {
-            if ($resourcedisplay == 'card' && $displaydescription) {
-                // Set the url to forceview 1 to see intermediate page with description.
-                $url .= "&amp;forceview=1";
-            } else {
-                $url .= "&amp;redirect=1";
-                $target = "target='_blank'";
-            }
-        }
 
         $onclicklti = $this->theme_snap_lti_get_launch_container($mod);
+
+        if ($mod->modname === 'url') {
+            $urlmod = $DB->get_record('url', array('id' => $mod->instance), '*', MUST_EXIST);
+            $cm = get_coursemodule_from_instance('url', $urlmod->id);
+
+            if ($urlmod->display == "RESOURCELIB_DISPLAY_POPUP") {
+                $fullurl = "{$CFG->wwwroot}/mod/url/view.php?id={$cm->id}&amp;redirect=1";
+                $options = empty($urlmod->displayoptions) ? [] : (array)unserialize_array($urlmod->displayoptions);
+                $width = empty($options['popupwidth']) ? 620 : $options['popupwidth'];
+                $height = empty($options['popupheight']) ? 450 : $options['popupheight'];
+                $wh = "width=$width,height=$height,toolbar=no,location=no,menubar=no,copyhistory=no,status=no,";
+                $wh .= "directories=no,scrollbars=yes,resizable=yes";
+                $onclickurl = "event.preventDefault(); window.open('{$fullurl}', '', '{$wh}'); return false;";
+                $onclicklti = "onclick=\"{$onclickurl}\"";
+                $url = '';
+
+            } else if ($urlmod->display == "RESOURCELIB_DISPLAY_NEW") {
+                $fullurl = "{$CFG->wwwroot}/mod/url/view.php?id={$cm->id}&amp;redirect=1";
+                $onclickurl = "window.open('{$fullurl}'); return false;";
+                $onclicklti = "onclick=\"{$onclickurl}\"";
+            } else {
+                $url = "{$CFG->wwwroot}/mod/url/view.php?id={$cm->id}";
+            }
+        }
 
         if ($mod->uservisible) {
             $output .= "<a $target $onclicklti class='mod-link' href='$url'>"
