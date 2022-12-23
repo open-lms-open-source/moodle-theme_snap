@@ -46,3 +46,10 @@ Feature: When the moodle theme is set to Snap, and global search is enabled, use
     And I reload the page
     Then "div[id^='searchinput-navbar-']" "css_element" should not exist
 
+  @javascript
+  Scenario: Logged in user sees search interface.
+    Given I log in as "admin"
+    And I go to link "/admin/search.php"
+    And ".nav-tabs" "css_element" should exist
+    And ".simplesearchform" "css_element" should exist
+

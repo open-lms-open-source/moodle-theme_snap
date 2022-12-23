@@ -35,6 +35,9 @@ $mastimage = '';
 if ($COURSE->id != SITEID && !empty($coverimagecss)) {
     $mastimage = 'mast-image';
 }
+if ($PAGE->pagetype == 'admin-search') {
+    $PAGE->set_secondary_navigation(false);
+}
 ?>
 
 <!-- Moodle js hooks -->
@@ -73,7 +76,10 @@ echo $OUTPUT->custom_menu_spacer();
                 echo $OUTPUT->cover_image_selector();
             }
         } // End else.
-    ?>
+        if ($PAGE->pagetype == 'admin-search') {
+            echo implode('', $PAGE->get_header_actions());
+        }
+        ?>
 </div>
 <section id="region-main">
 <?php
