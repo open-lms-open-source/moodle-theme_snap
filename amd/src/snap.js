@@ -1140,11 +1140,14 @@ nodeToChange = $(selectorToChange);
                     }
 
                     // Fix a position for the new 'Send content change notification' setting.
-                    const notificationCheck = document.getElementById('id_coursecontentnotification').closest(".form-group.fitem");
-                    if (notificationCheck !== null) {
+                    if ( $('.path-mod.theme-snap #id_coursecontentnotification').length ) {
+                        const notificationCheck = document.getElementById('id_coursecontentnotification')
+                            .closest(".form-group.fitem");
                         const submitButtons = $('.snap-form-required [data-groupname="buttonar"]');
-                        notificationCheck.classList.add('snap_content_notification_check');
-                        submitButtons.before(notificationCheck);
+                        if (notificationCheck !== null && submitButtons.length) {
+                            notificationCheck.classList.add('snap_content_notification_check');
+                            submitButtons.before(notificationCheck);
+                        }
                     }
 
                     // Add container div to show Snap icons when creating and editing activities.
@@ -1156,6 +1159,12 @@ nodeToChange = $(selectorToChange);
                                 $( this ).wrap(newIconContainer);
                             }
                         });
+                    }
+
+                    // Hide Blocks editing on button from the Intelliboard Dashboard page in Snap.
+                    if ( $('#page-home.theme-snap .intelliboard-page').length && $('.snap-page-heading-button').length) {
+                        const blocksEditingOnButton = document.getElementsByClassName('snap-page-heading-button')[0];
+                        blocksEditingOnButton.classList.add("hidden");
                     }
 
                     waitForFullScreenButton();
