@@ -27,8 +27,9 @@ Feature: When the moodle theme is set to Snap, the users see an intermediate pag
     Given the following config values are set as admin:
       | theme           | snap |
     And the following config values are set as admin:
-      | resourcedisplay    | card | theme_snap |
-      | displaydescription | 1    | theme_snap |
+      | displayoptions     | 0,1,2,3,4,5,6 | url        |
+      | resourcedisplay    | card          | theme_snap |
+      | displaydescription | 1             | theme_snap |
     Given the following "users" exist:
       | username  | firstname  | lastname  | email                 |
       | teacher1  | Teacher    | 1         | teacher1@example.com  |
@@ -40,15 +41,10 @@ Feature: When the moodle theme is set to Snap, the users see an intermediate pag
       | teacher1  | C1      | editingteacher  |
     And the following "activities" exist:
       | activity   | name         | intro                       | course | idnumber  | section | showdescription |
-      | url        | Url 1        | Test url description        | C1     | url1      | 0       | 1               |
       | resource   | Resource 1   | Test resource description   | C1     | resource1 | 0       | 1               |
 
-  Scenario: As a teacher I should see an intermediate page with the description in mod_url.
+  Scenario: As a teacher I should see an intermediate page with the description in mod_resource.
     Given I log in as "teacher1"
-    And I am on "Course 1" course homepage
-    And I click on ".modtype_url a.mod-link" "css_element"
-    And I should see "Test url description"
-    And "http://moodle.org/" "link" should exist
     And I am on "Course 1" course homepage
     And I wait until the page is ready
     And I click on ".modtype_resource a.mod-link" "css_element"
@@ -58,7 +54,34 @@ Feature: When the moodle theme is set to Snap, the users see an intermediate pag
       | resourcedisplay | list | theme_snap |
     And I am on "Course 1" course homepage
     And I wait until the page is ready
+    And I click on ".modtype_resource a.mod-link" "css_element"
+    And I should not see "Test resource description"
+    And "resource1.txt" "link" should not exist
+
+  Scenario Outline: Add a URL and ensure it is displayed correctly.
+    Given the following "activity" exists:
+      | activity       | url                 |
+      | course         | C1                  |
+      | idnumber       | url1                |
+      | name           | Url 1               |
+      | intro          | URL description     |
+      | externalurl    | https://moodle.org/ |
+      | display        | <display>           |
+      | popupwidth     | 620                 |
+      | popupheight    | 450                 |
+      | printintro     | 1                   |
+    Given I log in as "teacher1"
+    And I am on "Course 1" course homepage
+    And I wait until the page is ready
     And I click on ".modtype_url a.mod-link" "css_element"
-    And I should not see "Test url description"
-    And "http://moodle.org/" "link" should not exist
-    
+    And I should <expect1> "URL description"
+    And "https://moodle.org/" "link" should <expect2>
+
+    Examples:
+      | display | description    | expect1  | expect2    |
+      | 0       | Automatic      | see      | exist      |
+      | 1       | Embed          | see      | exist      |
+      | 2       | In frame       | not see  | not exist  |
+      | 3       | New window     | not see  | not exist  |
+      | 5       | Open           | not see  | not exist  |
+      | 6       | In pop-up      | not see  | not exist  |

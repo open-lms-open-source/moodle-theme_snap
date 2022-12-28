@@ -40,6 +40,7 @@ use theme_snap\activity_meta;
 require_once($CFG->dirroot . "/mod/book/locallib.php");
 require_once($CFG->libdir . "/gradelib.php");
 require_once($CFG->dirroot . '/course/renderer.php');
+require_once("$CFG->libdir/resourcelib.php");
 
 class course_renderer extends \core_course_renderer {
 
@@ -1175,7 +1176,7 @@ class course_renderer extends \core_course_renderer {
      * @return string
      */
     public function course_section_cm_name(cm_info $mod, $displayoptions = array()) {
-        GLOBAL $DB, $CFG;
+        global $DB, $CFG;
         $output = '';
 
         // Nothing to be displayed to the user.
@@ -1228,24 +1229,28 @@ class course_renderer extends \core_course_renderer {
         if ($mod->modname === 'url') {
             $urlmod = $DB->get_record('url', array('id' => $mod->instance), '*', MUST_EXIST);
             $cm = get_coursemodule_from_instance('url', $urlmod->id);
+            $fullurl = new moodle_url('/mod/url/view.php', ['id' => $cm->id]);
 
-            if ($urlmod->display == "RESOURCELIB_DISPLAY_POPUP") {
-                $fullurl = "{$CFG->wwwroot}/mod/url/view.php?id={$cm->id}&amp;redirect=1";
+            if ($urlmod->display == RESOURCELIB_DISPLAY_POPUP) {
+                // In-pop display.
+                $fullurl .= "&amp;redirect=1";
                 $options = empty($urlmod->displayoptions) ? [] : (array)unserialize_array($urlmod->displayoptions);
                 $width = empty($options['popupwidth']) ? 620 : $options['popupwidth'];
                 $height = empty($options['popupheight']) ? 450 : $options['popupheight'];
-                $wh = "width=$width,height=$height,toolbar=no,location=no,menubar=no,copyhistory=no,status=no,";
+                $wh = "width={$width},height={$height},toolbar=no,location=no,menubar=no,copyhistory=no,status=no,";
                 $wh .= "directories=no,scrollbars=yes,resizable=yes";
                 $onclickurl = "event.preventDefault(); window.open('{$fullurl}', '', '{$wh}'); return false;";
                 $onclicklti = "onclick=\"{$onclickurl}\"";
                 $url = '';
 
-            } else if ($urlmod->display == "RESOURCELIB_DISPLAY_NEW") {
-                $fullurl = "{$CFG->wwwroot}/mod/url/view.php?id={$cm->id}&amp;redirect=1";
+            } else if ($urlmod->display == RESOURCELIB_DISPLAY_NEW) {
+                // New Window display.
+                $fullurl .= "&amp;redirect=1";
                 $onclickurl = "window.open('{$fullurl}'); return false;";
                 $onclicklti = "onclick=\"{$onclickurl}\"";
+                $url = '';
             } else {
-                $url = "{$CFG->wwwroot}/mod/url/view.php?id={$cm->id}";
+                $url = $fullurl;
             }
         }
 
