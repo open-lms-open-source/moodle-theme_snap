@@ -30,12 +30,23 @@ define(['jquery', 'core/ajax'],
         /**
          * Initialising function.
          * @param {int} userid The user id
+         * @param {int} conversationId The conversation to mark as read
          */
-        self.init = function(userid) {
+        self.init = function(userid, conversationId) {
             self.userid = userid;
             // Container.
             self.containerEl = $('.conversation_badge_count');
-            self.queryCount();
+            // Check if the request comes from a conversation element.
+            if (conversationId) {
+                $(document).ajaxComplete(function(event, xhr, settings) {
+                    if (settings.url.includes('core_message_mark_all_conversation_messages_as_read')) {
+                        self.queryCount();
+                        $(document).off('ajaxComplete');
+                    }
+                });
+            } else {
+                self.queryCount();
+            }
         };
 
         /**
