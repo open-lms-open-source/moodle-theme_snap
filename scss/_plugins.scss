@@ -421,6 +421,11 @@
             }
         }
     }
+
+    /* This Shadow is causing problems in snap and has not purpose right now*/
+    #id_autocontainer_userid_autocompletetext .yui-ac-shadow {
+        display: none;
+    }
 }
 
 .path-blocks-conduit {
