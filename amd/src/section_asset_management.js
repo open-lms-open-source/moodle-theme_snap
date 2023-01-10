@@ -524,9 +524,9 @@ define(['jquery', 'core/log', 'core/ajax', 'core/str', 'core/templates', 'core/n
             var getSectionTitle = function(section) {
                 // Get title from TOC.
                 if (self.courseConfig.partialrender) {
-                    return  $('#course-toc #chapters > li a[href="#section-' + section + '"]').text();
+                    return  $('#course-toc #chapters > h3 li a[href="#section-' + section + '"]').text();
                 } else {
-                    return $('#chapters li:nth-of-type(' + (section + 1) + ') .chapter-title').html();
+                    return $('#chapters h3:nth-of-type(' + (section + 1) + ') .chapter-title').html();
                 }
             };
 
@@ -540,7 +540,7 @@ define(['jquery', 'core/log', 'core/ajax', 'core/str', 'core/templates', 'core/n
                 var sections, totalSectionCount;
                 if (!selector) {
                     if (self.courseConfig.partialrender) {
-                        selector = '#course-toc #chapters > li a';
+                        selector = '#course-toc #chapters > h3 li a';
                     } else {
                         selector = '#region-main .course-content > ul li.section';
                     }
@@ -549,7 +549,7 @@ define(['jquery', 'core/log', 'core/ajax', 'core/str', 'core/templates', 'core/n
                 } else {
                     sections = $(selector);
                     if (self.courseConfig.partialrender) {
-                        var allSections = $('#course-toc #chapters > li a');
+                        var allSections = $('#course-toc #chapters > h3 li a');
                     } else {
                         var allSections = $('#region-main .course-content > ul li.section');
                     }
