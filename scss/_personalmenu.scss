@@ -395,13 +395,17 @@ body.snap-pm-open {
         .activityiconcontainer {
             width: 35px;
             height: 35px;
-            padding: 0.4rem;
+            padding: 0.3rem;
             float: left;
             margin: 0.3em 1em 0 0.3em;
             &.activity-feed[activity-type="Forum"],
             &.activity-feed[activity-type="Chat"],
             &.activity-feed[activity-type="Open Forum"] {
                 background-color: $color-communication;
+                padding: 0.4rem;
+                & > img {
+                    filter: brightness(0) invert(1);
+                }
             }
             &.activity-feed[activity-type="Assignment"],
             &.activity-feed[activity-type="Assign"],
@@ -411,6 +415,10 @@ body.snap-pm-open {
             &.activity-feed[activity-type="H5P"],
             &.activity-feed[activity-type="Attendance"] {
                 background-color: $color-assignment;
+                padding: 0.4rem;
+                & > img {
+                    filter: brightness(0) invert(1);
+                }
             }
             &.activity-feed[activity-type="Choice"],
             &.activity-feed[activity-type="Feedback"],
@@ -419,15 +427,34 @@ body.snap-pm-open {
             &.activity-feed[activity-type="Questionnaire"],
             &.activity-feed[activity-type="Lesson"] {
                 background-color: $color-quiz;
+                padding: 0.4rem;
+                & > img {
+                    filter: brightness(0) invert(1);
+                }
             }
             &.activity-feed[activity-type="Database"],
             &.activity-feed[activity-type="Glossary"],
             &.activity-feed[activity-type="Wiki"],
             &.activity-feed[activity-type="Group choice"] {
                 background-color: $color-wiki;
+                padding: 0.4rem;
+                & > img {
+                    filter: brightness(0) invert(1);
+                }
             }
             &.activity-feed[activity-type="Collaborate"] {
                 background-color: $color-collab;
+                padding: 0.4rem;
+                & > img {
+                    filter: brightness(0) invert(1);
+                }
+            }
+            &.activity-feed[activity-type="America's Professor Quiz"] {
+                background-color: #eb66a2;
+                padding: 0.4rem;
+                & > img {
+                    filter: brightness(0) invert(1);
+                }
             }
             &.activity-feed[activity-type="Checklist"],
             &.activity-feed[activity-type="GO1 content item"],
@@ -437,9 +464,10 @@ body.snap-pm-open {
             &.activity-feed[activity-type="Zoom meeting"],
             &.activity-feed[activity-type="Dialogue"] {
                 background-color: $brand-primary;
-            }
-            & > img {
-                filter: brightness(0) invert(1);
+                padding: 0.4rem;
+                & > img {
+                    filter: brightness(0) invert(1);
+                }
             }
             &.activity-feed[activity-type="Questionnaire"],
             &.activity-feed[activity-type="Go one"],
@@ -461,8 +489,10 @@ body.snap-pm-open {
             &.activity-feed[activity-type="Book"],
             &.activity-feed[activity-type="Page"],
             &.activity-feed[activity-type="Label"],
-            &.activity-feed[activity-type="File"], {
+            &.activity-feed[activity-type="File"],
+            &.activity-feed[activity-type="External tool"], {
                 background-color: transparent;
+                padding: 0.4rem;
                 img {
                     filter: opacity(0.5);
                 }
