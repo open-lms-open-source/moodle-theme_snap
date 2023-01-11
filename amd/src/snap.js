@@ -1070,6 +1070,18 @@ nodeToChange = $(selectorToChange);
                         );
                     }
 
+                    // Update Messages badge without reloading the site.
+                    $('.message-app .list-group').on('click', '.list-group-item.list-group-item-action', function(e) {
+                        require(
+                            [
+                                'theme_snap/conversation_badge_count-lazy'
+                            ], function(conversationBadgeCount) {
+                                let conversationId = e.currentTarget.attributes['data-conversation-id'].value;
+                                conversationBadgeCount.init(userId, conversationId);
+                            }
+                        );
+                    });
+
                     // Listen to cover image label key press for accessible usage.
                     var focustarget = $('#snap-coverimagecontrol label');
                     if (focustarget && focustarget.length) {

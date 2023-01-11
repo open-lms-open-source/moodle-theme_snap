@@ -101,24 +101,24 @@ define(['jquery', 'core/pubsub'],
                 // Listener for the page user profile to load messages URL.
                 } else if ($('#page-user-profile').length != 0 || $('.userprofile #message-user-button').length != 0) {
                     PubSub.subscribe("message-drawer-create-conversation-with-user", function (args) {
-                        this.redirectToMessage(args);
+                        redirectToMessage(args);
                     });
                     // The drawer in snap will always open in a new window
                     PubSub.subscribe("message-drawer-show-conversation", function (args) {
-                        this.redirectToMessage(args);
+                        redirectToMessage(args);
                     });
                 }
+                var redirectToMessage = function(args) {
+                    let processedId = '';
+                    if (typeof args === 'object' && args.userid) {
+                        processedId = parseInt(args.userid);
+                    } else {
+                        processedId = parseInt(args);
+                    }
+                    const moodleurl = M.cfg.wwwroot;
+                    window.location = moodleurl.concat('/message/index.php?id=', processedId);
+                };
             },
-            redirectToMessage : function(args) {
-                let processedId = '';
-                if (typeof args === 'object' && args.userid) {
-                    processedId = parseInt(args.userid);
-                } else {
-                    processedId = parseInt(args);
-                }
-                const moodleurl = M.cfg.wwwroot;
-                window.location = moodleurl.concat('/message/index.php?id=', processedId);
-            }
         };
     }
 );

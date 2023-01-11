@@ -105,7 +105,7 @@ Feature: Snap message send messages
     Then "//*[@data-region='unread-count']/span[contains(text(),'There are  unread messages')]" "xpath_element" should exist
     Then "//*[@data-region='section-unread-count']/span[contains(text(),'There are  unread conversations')]" "xpath_element" should exist
 
-  Scenario: Send a message to a private conversation via contacts in snap
+  Scenario: Send a message to a private conversation via contacts and check unread messages is updated in snap.
     Given the following "message contacts" exist:
       | user     | contact |
       | student1 | student2 |
@@ -142,11 +142,11 @@ Feature: Snap message send messages
     And I should see "Hello!" in the ".d-flex[data-region='day-messages-container']" "css_element"
     And I should see "How are you?" in the ".d-flex[data-region='day-messages-container']" "css_element"
     Then "//*[@data-region='unread-count']/span[contains(text(),'There are  unread messages')]" "xpath_element" should exist
-    Then I skip because "Unread count is not working properly and is an error from Moodle core"
-    And I should see "1" in the ".badge-primary[data-region='section-unread-count'][aria-label='There are 1 unread conversations']" "css_element"
+    Then ".badge-count-container .snap-message-count[title='Open messaging drawer. There are 1 unread conversations']" "css_element" should exist
+    And I should see "1" in the ".badge-count-container .snap-message-count" "css_element"
     And I click on ".rounded-circle[alt='Student 1']" "css_element"
     Then I should see "Hi!" in the ".d-flex[data-region='day-messages-container']" "css_element"
-    Then ".badge-primary.hidden[data-region='unread-count'][aria-label='There are 1 unread messages']" "css_element" should exist
+    Then ".badge-primary.hidden[data-region='unread-count']" "css_element" should exist
     Then ".badge-primary.hidden[data-region='section-unread-count'][aria-label='There are 2 unread conversations']" "css_element" should exist
 
   Scenario: Message bubble should have a specific color instead of site color.
