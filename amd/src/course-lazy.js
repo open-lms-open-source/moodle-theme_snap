@@ -137,6 +137,12 @@ define(
             if (tilesEditing) {
                 $(courseTools).removeClass('state-visible');
                 $(courseTools).addClass('d-none');
+
+                // Change duplicate data-action in label activities for Tiles.
+                let labelDuplicateButton = $('.launch-tiles-standard.modtype_label .actions .editing_duplicate');
+                if (labelDuplicateButton) {
+                    $(labelDuplicateButton).attr("data-action", "tiles-duplicate");
+                }
             }
             let sectionParameter = checkToolParameter('section-');
             let dashboardParameter = checkToolParameter('coursetools');

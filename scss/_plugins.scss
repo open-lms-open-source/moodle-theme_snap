@@ -940,6 +940,13 @@ body.format-tiles.editing {
         .description {
             margin-left: 10%;
         }
+        .activity-info {
+            margin-left: auto;
+            margin-right: 3rem;
+        }
+        .my-1 {
+            margin-left: 10%;
+        }
     }
 
     li.subtile {
@@ -1207,6 +1214,49 @@ body.format-tiles.editing {
             }
         }
     }
+
+    // Fix label content elements.
+    .modtype_label {
+
+        &.activity-wrapper {
+            .my-1 {
+                margin-left: 5%;
+            }
+        }
+        .mod-indent {
+            float: none;
+        }
+        .mod-indent-outer {
+            margin-right: 2rem;
+        }
+
+        .activity-information [data-action="toggle-manual-completion"] {
+            margin-bottom: 1rem;
+        }
+        &.dimmed {
+            opacity: 1;
+        }
+    }
+
+    // Prevent section buttons to overlap activities.
+    .sectionbuttons {
+        top: 0 !important;
+    }
+
+    // Prevent Tile and section to overlap header in Snap.
+    .tile-clickable,
+    .moveablesection {
+        z-index: 0 !important;
+    }
+
+    // Hide border in activities.
+    .section li {
+        &.activity,
+        .activitytitle {
+            border-bottom: none;
+        }
+    }
+
 }
 
 // Styles on section Actions for format Tiles.
