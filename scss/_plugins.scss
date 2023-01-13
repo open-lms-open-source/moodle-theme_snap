@@ -1246,7 +1246,12 @@ body.format-tiles.editing {
     // Prevent Tile and section to overlap header in Snap.
     .tile-clickable,
     .moveablesection {
-        z-index: 0 !important;
+        z-index: 11;
+    }
+
+    // Show modal in the back of the header.
+    .modal-backdrop.fade.in {
+        z-index: 10;
     }
 
     // Hide border in activities.
