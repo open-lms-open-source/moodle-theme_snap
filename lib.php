@@ -140,7 +140,7 @@ function theme_snap_set_logo($css, $logo) {
     if (is_null($logo)) {
         $replacement = '';
     } else {
-        $replacement = "#snap-home.logo, .snap-logo-sitename {background-image: url($logo);}";
+        $replacement = "#snap-home.logo, .snap-logo-sitename, .snap-logo-anim-pause {background-image: url($logo);}";
     }
     $css = str_replace($tag, $replacement, $css);
     return $css;

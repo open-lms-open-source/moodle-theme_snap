@@ -1771,6 +1771,40 @@ header#page-header
     padding: 2em 4%;
 }
 
+.paused-gif {
+    background-color: $nav-bg;
+    border-radius: 0.3em;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    .snap-logo-anim-pause {
+        text-indent: 100%;
+        white-space: nowrap;
+        overflow: hidden;
+        background-position: center center;
+        background-size: contain;
+        background-repeat: no-repeat;
+        padding: 0.5em 1.4em;
+
+        display: inline-block;
+        background-color: transparent;
+        height: 40px;
+        width: 40px;
+    }
+    .snap-sitename-anim-pause {
+        color: $nav-color;
+        padding: 0.5em 1em;
+    }
+    .resume-anim {
+        color: $nav-color;
+        padding: 0.5em 0;
+        i.icon {
+            padding-left: 0.5em;
+            color: inherit;
+        }
+    }
+}
+
 .state-expanded {
     .news-article-preview,
     .news-article-image {

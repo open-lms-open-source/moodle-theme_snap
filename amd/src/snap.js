@@ -424,8 +424,9 @@ define(['jquery', 'core/log', 'theme_snap/headroom', 'theme_snap/util', 'theme_s
          * Add listeners.
          *
          * just a wrapper for various snippets that add listeners
+         * @param {object} siteConfig
          */
-        var addListeners = function() {
+        var addListeners = function(siteConfig) {
             var selectors = [
                 '.chapters a',
                 '.section_footer a',
@@ -598,6 +599,36 @@ define(['jquery', 'core/log', 'theme_snap/headroom', 'theme_snap/util', 'theme_s
                 e.preventDefault();
             });
 
+            // Add listeners for pausing GIFs.
+            let imageList = [];
+            $(document).on('click', 'img[src$=".gif"], .paused-gif', function() {
+                let imageID = $(this).attr('id');
+                if (!(imageID in imageList)) {
+                    imageList[imageID] = $(this);
+                }
+
+                if ($(this).hasClass('paused-gif')) {
+                    $(this).replaceWith(imageList[imageID]);
+                } else {
+                    (function() {
+                        return str.get_strings([
+                            {key: 'resumegraphicsanim', component: 'theme_snap'},
+                        ]);
+                    })()
+                        .then(function(resumemessage) {
+                            return templates.render('theme_snap/animated_graphics_pause', {
+                                id: imageID,
+                                haslogo: siteConfig.hasLogo,
+                                sitename: siteConfig.shortname,
+                                resumemessage: resumemessage[0],
+                            });
+                        })
+                        .then(function(html) {
+                            $('#' + imageID).replaceWith(html);
+                        });
+                }
+            });
+
             // Initialise the scroll event listener.
             (new Scroll()).init();
 
@@ -663,10 +694,11 @@ define(['jquery', 'core/log', 'theme_snap/headroom', 'theme_snap/util', 'theme_s
              * @param {bool} inAlternativeRole
              * @param {string} brandColors
              * @param {int} gradingConstants
+             * @param {object} siteConfig
              */
             snapInit: function(courseConfig, pageHasCourseContent, siteMaxBytes, forcePassChange,
                                messageBadgeCountEnabled, userId, sitePolicyAcceptReqd, inAlternativeRole,
-                               brandColors, gradingConstants) {
+                               brandColors, gradingConstants, siteConfig) {
 
                 // Set up.
 
@@ -707,7 +739,7 @@ define(['jquery', 'core/log', 'theme_snap/headroom', 'theme_snap/util', 'theme_s
                 $(document).ready(function() {
                     movePHPErrorsToHeader(); // Boring
                     setForumStrings(); // Whatever
-                    addListeners(); // Essential
+                    addListeners(siteConfig); // Essential
                     applyBlockHash(); // Change location hash if necessary
                     bodyClasses(); // Add body classes
                     mobileFormChecker();
