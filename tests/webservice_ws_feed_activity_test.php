@@ -136,7 +136,7 @@ class webservice_ws_feed_activity_test extends \advanced_testcase {
         $this->assertCount(3, $deadlines);
         $this->assertEqualsIgnoringCase($assignactivityname, $deadlines[0]['iconDesc']);
         $this->assertEqualsIgnoringCase($quizmodulename, $deadlines[1]['iconDesc']);
-        $this->assertEqualsIgnoringCase($labelmodulename, $deadlines[2]['iconDesc']);
+        $this->assertEqualsIgnoringCase('Text and media area', $deadlines[2]['iconDesc']);
 
         // Disable the assign activity.
         $CFG->theme_snap_disable_deadline_mods = ['assign'];
@@ -144,10 +144,10 @@ class webservice_ws_feed_activity_test extends \advanced_testcase {
         $deadlinescache = \cache::make('theme_snap', 'activity_deadlines');
         $deadlinescache->purge();
         $deadlines = ws_feed::service('deadlines');
-
+        $labeldisplayname = 'Text and media area';
         $this->assertCount(2, $deadlines);
         $this->assertEqualsIgnoringCase($quizmodulename, $deadlines[0]['iconDesc']);
-        $this->assertEqualsIgnoringCase($labelmodulename, $deadlines[1]['iconDesc']);
+        $this->assertEqualsIgnoringCase($labeldisplayname, $deadlines[1]['iconDesc']);
 
         // Disable the quiz activity.
         $CFG->theme_snap_disable_deadline_mods = ['quiz'];
@@ -157,7 +157,7 @@ class webservice_ws_feed_activity_test extends \advanced_testcase {
 
         $this->assertCount(2, $deadlines);
         $this->assertEqualsIgnoringCase($assignactivityname, $deadlines[0]['iconDesc']);
-        $this->assertEqualsIgnoringCase($labelmodulename, $deadlines[1]['iconDesc']);
+        $this->assertEqualsIgnoringCase($labeldisplayname, $deadlines[1]['iconDesc']);
 
         // Disable the label activity.
         $CFG->theme_snap_disable_deadline_mods = ['label'];
@@ -176,7 +176,7 @@ class webservice_ws_feed_activity_test extends \advanced_testcase {
         $deadlines = ws_feed::service('deadlines');
 
         $this->assertCount(1, $deadlines);
-        $this->assertEqualsIgnoringCase($labelmodulename, $deadlines[0]['iconDesc']);
+        $this->assertEqualsIgnoringCase($labeldisplayname, $deadlines[0]['iconDesc']);
 
         // Disable the assign and label activities.
         $CFG->theme_snap_disable_deadline_mods = ['assign', 'label'];
