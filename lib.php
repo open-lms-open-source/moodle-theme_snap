@@ -436,7 +436,7 @@ function theme_snap_course_module_background_deletion_recommended() {
 function theme_snap_before_footer() {
     global $CFG, $PAGE;
 
-    if ($PAGE->theme->name != 'snap' || empty(get_config('theme_snap', 'personalmenuadvancedfeedsenable'))) {
+    if (empty(get_config('theme_snap', 'personalmenuadvancedfeedsenable'))) {
         return;
     }
 
