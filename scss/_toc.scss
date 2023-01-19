@@ -36,6 +36,11 @@
     #chapters {
         padding: 0;
 
+        h3 {
+            font-size: 1em;
+            margin-bottom: initial;
+        }
+
         li {
             padding-bottom: 0.3em;
             line-height: 1;
@@ -227,6 +232,21 @@
         width: 320px;
         background-color: white;
     }
+}
+
+label[for="toc-search-input"]{
+    display: none;
+}
+
+#toc-search-input.state-active ~ label[for="toc-search-input"] {
+    position: relative;
+    display: block;
+    top: -70px;
+    left: 15px;
+    background-color: white;
+    font-size: small;
+    padding:0 5px 0 5px;
+    width: fit-content;
 }
 
 // Hidden list - always.

@@ -46,29 +46,29 @@ Feature: When the moodle theme is set to Snap, teachers can toggle the currently
     And I am on the course main page for "C1"
     And I follow "Topic 2"
     Then "#section-2" "css_element" should exist
-    And "#chapters li:nth-of-type(3).snap-visible-section" "css_element" should exist
+    And "#chapters h3:nth-of-type(3) li.snap-visible-section" "css_element" should exist
 
     And I click on "#section-2 .snap-highlight" "css_element"
     And I wait until "#section-2 .snap-highlight" "css_element" exists
     # Note: nth-of-type(3) corresponds to the second section in the TOC.
-    And I should see "Current" in the "#chapters li:nth-of-type(3)" "css_element"
-    And "#chapters li:nth-of-type(3).snap-visible-section" "css_element" should exist
+    And I should see "Current" in the "#chapters h3:nth-of-type(3)" "css_element"
+    And "#chapters h3:nth-of-type(3) li.snap-visible-section" "css_element" should exist
     And I log out
     And I log in as "student1"
     And I am on the course main page for "C1"
-    Then I should see "Current" in the "#chapters li:nth-of-type(3)" "css_element"
+    Then I should see "Current" in the "#chapters h3:nth-of-type(3)" "css_element"
     And I log out
     And I log in as "teacher1"
     And I am on the course main page for "C1"
     And I follow "Topic 2"
     Given I click on "#section-2 .snap-highlight" "css_element"
     And I wait until "#section-2 .snap-highlight" "css_element" exists
-    Then I should not see "Current" in the "#chapters li:nth-of-type(3)" "css_element"
-    And "#chapters li:nth-of-type(3).snap-visible-section" "css_element" should exist
+    Then I should not see "Current" in the "#chapters h3:nth-of-type(3)" "css_element"
+    And "#chapters h3:nth-of-type(3) li.snap-visible-section" "css_element" should exist
     And I log out
     And I log in as "student1"
     And I am on the course main page for "C1"
-    Then I should not see "Current" in the "#chapters li:nth-of-type(3)" "css_element"
+    Then I should not see "Current" in the "#chapters h3:nth-of-type(3)" "css_element"
   Examples:
     | Option     |
     | 0          |

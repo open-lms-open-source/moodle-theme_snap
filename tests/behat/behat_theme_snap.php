@@ -848,7 +848,7 @@ class behat_theme_snap extends behat_base {
      */
     public function i_should_see_in_toc_item($text, $tocitem) {
         $tocitem++; // Ignore introduction item.
-        $element = '#chapters li:nth-of-type('.$tocitem.')';
+        $element = '#chapters h3:nth-of-type('.$tocitem.')';
         $this->execute('behat_general::assert_element_contains_text', [$text, $element, 'css_element']);
     }
 
@@ -859,7 +859,7 @@ class behat_theme_snap extends behat_base {
      */
     public function i_should_not_see_in_toc_item($text, $tocitem) {
         $tocitem++; // Ignore introduction item.
-        $element = '#chapters li:nth-of-type('.$tocitem.')';
+        $element = '#chapters h3:nth-of-type('.$tocitem.')';
         $this->execute('behat_general::assert_element_not_contains_text', [$text, $element, 'css_element']);
     }
 
@@ -1172,7 +1172,7 @@ class behat_theme_snap extends behat_base {
         $nth = intval($nth);
         /** @var behat_general $helper */
         $helper = behat_context_helper::get('behat_general');
-        $helper->i_click_on('#chapters li:nth-of-type(' . $nth . ')', 'css_element');
+        $helper->i_click_on('#chapters h3:nth-of-type(' . $nth . ')', 'css_element');
     }
 
     /**

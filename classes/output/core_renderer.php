@@ -1233,8 +1233,8 @@ class core_renderer extends \theme_boost\output\core_renderer {
 
             $message = format_text($message, $discussion->messageformat, ['context' => $context]);
 
-            $readmorebtn = "<a class='btn btn-secondary toggle' href='".
-                $CFG->wwwroot."/mod/forum/discuss.php?d=".$discussion->discussion."'>".
+            $readmorebtn = "<a role='button' aria-expanded='false' aria-controls='news-article-message-id-{$counter}'
+             class='btn btn-secondary toggle' href='".$CFG->wwwroot."/mod/forum/discuss.php?d=".$discussion->discussion."'>".
                 get_string('readmore', 'theme_snap')."</a>";
 
             $preview = '';
@@ -1244,7 +1244,8 @@ class core_renderer extends \theme_boost\output\core_renderer {
                 $preview = "<div class='news-article-preview'><p>".shorten_text($preview, 200)."</p>
                 <p class='text-right'>".$readmorebtn."</p></div>";
             } else {
-                $newsimage = '<div class="news-article-image toggle" role="button"'.$imagestyle.' title="'.
+                $newsimage = "<div class='news-article-image toggle' role='button'
+                aria-expanded='false' aria-controls='news-article-message-id-{$counter}'".$imagestyle.' title="'.
                     get_string('readmore', 'theme_snap').'"></div>';
             }
             $close = get_string('closebuttontitle', 'moodle');
@@ -1252,7 +1253,9 @@ class core_renderer extends \theme_boost\output\core_renderer {
             $newsinner = <<<HTML
     <div class="news-article-inner">
         <div class="news-article-content">
-            <h3 class='toggle'><a href="$CFG->wwwroot/mod/forum/discuss.php?d=$discussion->discussion">{$name}</a></h3>
+            <h3 class='toggle' aria-expanded="false" aria-controls="news-article-message-id-{$counter}">
+                <a role="button" href="$CFG->wwwroot/mod/forum/discuss.php?d=$discussion->discussion">{$name}</a>
+            </h3>
             <em class="news-article-date">{$date}</em>
         </div>
     </div>
@@ -1263,18 +1266,19 @@ HTML;
             } else {
                 $newsordered = $newsimage . $preview . $newsinner;
             }
-            $counter++;
 
             $output .= <<<HTML
 <div class="news-article clearfix">
     {$newsordered}
-    <div class="news-article-message" tabindex="-1">
+    <div id="news-article-message-id-{$counter}" class="news-article-message" tabindex="-1">
         {$message}
-        <div><hr><a class="snap-action-icon snap-icon-close toggle" href="#">
+        <div><hr><a role="button" aria-expanded="false" aria-controls="news-article-message-id-{$counter}"
+            class="snap-action-icon snap-icon-close toggle" href="#">
         <small>{$close}</small></a></div>
     </div>
 </div>
 HTML;
+            $counter++;
         }
         $actionlinks = html_writer::link(
             new moodle_url('/mod/forum/view.php', array('id' => $cm->id)),

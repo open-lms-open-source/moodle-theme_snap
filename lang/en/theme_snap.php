@@ -305,6 +305,7 @@ $string['released'] = 'Released: {$a}';
 $string['reopened'] = 'Reopened';
 $string['resourcedisplay'] = 'Resource display';
 $string['resourcedisplayhelp'] = 'Select how attachments and links appear in your course. The Snap theme doesn\'t support multimedia files in the small activity and resource cards\' description.';
+$string['resumegraphicsanim'] = 'Resume GIF';
 $string['displaydescription'] = 'Display description';
 $string['displaydescriptionhelp'] = 'Select to show a description of resource activities in a new page first. Students will access content from the description.';
 $string['search'] = 'Search contents';

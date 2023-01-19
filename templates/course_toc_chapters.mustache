@@ -21,6 +21,7 @@
 }}
 <ol id="chapters" class="chapters {{listlarge}}" start="0">
     {{#chapters}}
+    <h3>
     <li class="{{classes}}">
         {{#outputlink}}
             <a class="chapter-title" section-number="{{section}}" href="{{url}}">{{{title}}}</a>
@@ -49,5 +50,6 @@
             </span>
         {{/progress.total}}{{/progress}}
     </li>
+    </h3>
     {{/chapters}}
 </ol>
