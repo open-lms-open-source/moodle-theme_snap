@@ -33,6 +33,7 @@ use moodle_url;
 use stdClass;
 use theme_snap\local;
 use theme_snap\renderables\login_alternative_methods;
+use single_button;
 
 require_once($CFG->dirroot.'/grade/querylib.php');
 require_once($CFG->libdir.'/gradelib.php');
@@ -1058,5 +1059,32 @@ EOF;
             ];
         }
         return $link;
+    }
+
+    /**
+     * Grade reports edit button.
+     */
+    public static function get_grader_reports_edit_button() {
+        global $COURSE, $USER, $OUTPUT, $PAGE;
+        if ($COURSE->id === null || $USER->editing === null) {
+            return "";
+        }
+        $options = array (
+            'type' => 'report',
+            'plugin' => 'grader',
+            'id' => $COURSE->id,
+            'sesskey' => sesskey(),
+
+        );
+        if ($USER->editing == 1) {
+            $options['edit'] = 0;
+            $string = get_string('turneditingoff');
+        } else {
+            $options['edit'] = 1;
+            $string = get_string('turneditingon');
+        }
+        $url = new moodle_url('index.php', $options);
+        $button = $OUTPUT->single_button($url, $string, 'get', ['class' => 'grader_report_edit_button']);
+        $PAGE->set_button($button);
     }
 }

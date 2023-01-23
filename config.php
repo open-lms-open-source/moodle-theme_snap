@@ -50,6 +50,35 @@ if ($themeissnap && $notajaxscript) {
         $SESSION->theme_snap_last_course = $COURSE->id;
     }
 
+    // Reset the edition sessions before and after entering to the grader report page.
+    if ($PAGE !== null) {
+        if (!empty($SESSION->theme_snap_last_page)) {
+            $previousgraderreport =
+                $SESSION->theme_snap_last_page === "grade-report-grader-index" &&
+                $PAGE->pagetype !== "grade-report-grader-index";
+            $previousnotgraderreport =
+                $SESSION->theme_snap_last_page !== "grade-report-grader-index" &&
+                $PAGE->pagetype === "grade-report-grader-index";
+            $previousdifferenttocurrent = $SESSION->theme_snap_last_page !== $PAGE->pagetype;
+
+            if ($previousgraderreport) {
+                // Previous page was grader report and current page is not grader report.
+                $USER->editing = 0;
+                $SESSION->theme_snap_last_page = $PAGE->pagetype;
+            } else if ($previousnotgraderreport && $USER->editing === 1) {
+                // Previous page was not grader report and current page is grader report.
+                $USER->editing = 0;
+                $SESSION->theme_snap_last_page = $PAGE->pagetype;
+            } else if ($previousdifferenttocurrent) {
+                // Update theme_snap_last_page with current page.
+                $SESSION->theme_snap_last_page = $PAGE->pagetype;
+            }
+        } else {
+            // Initialize theme_snap_last_page with current page.
+            $SESSION->theme_snap_last_page = $PAGE->pagetype;
+        }
+    }
+
     if (isset($SESSION->wantsurl)) {
         // We are taking a backup of this because it can get unset later by core.
         $SESSION->snapwantsurl = $SESSION->wantsurl;

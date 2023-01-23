@@ -3069,6 +3069,10 @@ table#user-grades tr.avg td.cell {
     }
 }
 
+.grader_report_edit_button {
+    display:none;
+}
+
 // TODO short term fix for Snap disappearing header interfering with scrolling Gradebook
 #page-grade-report-grader-index {
     header#mr-nav {
@@ -3082,6 +3086,10 @@ table#user-grades tr.avg td.cell {
         #studentheader {
             left: 0;
         }
+    }
+    &.path-grade-report-grader .grader_report_edit_button {
+        display: block;
+        margin-bottom: 1.5rem;
     }
 }
 

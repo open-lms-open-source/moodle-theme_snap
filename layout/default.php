@@ -26,6 +26,7 @@ defined('MOODLE_INTERNAL') || die();
 require(__DIR__.'/header.php');
 
 use theme_snap\local;
+use theme_snap\output\shared;
 
 // @codingStandardsIgnoreStart
 // Note, coding standards ignore is required so that we can have more readable indentation under php tags.
@@ -37,6 +38,10 @@ if ($COURSE->id != SITEID && !empty($coverimagecss)) {
 }
 if ($PAGE->pagetype == 'admin-search') {
     $PAGE->set_secondary_navigation(false);
+}
+if ($PAGE->pagetype == "grade-report-grader-index" && $PAGE->user_allowed_editing()) {
+    // Show grader report edit button.
+    shared::get_grader_reports_edit_button();
 }
 ?>
 
