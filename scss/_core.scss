@@ -2813,49 +2813,6 @@ ul.events-new + ul.events-underway {
 }
 
 // -------------------------
-// Grade table
-// -------------------------
-
-table.boxaligncenter.generaltable.user-grade {
-    background-color: #fff;
-
-    th {
-        font-weight: 500;
-    }
-
-    thead {
-        border-bottom: 1px solid #eee;
-    }
-
-    img.icon {
-        width: 1.3em;
-        height: 1.3em;
-    }
-
-    td.feedbacktext {
-        font-size: 1.3em;
-    }
-
-    th a {
-        font-size: 1.2em;
-    }
-
-    th {
-        padding: 0.75em !important;
-        border-color: #fff !important;
-    }
-
-    td {
-        border-color: #fff !important;
-    }
-
-    // Kill ridiculously unprofessional colour scheme
-    * {
-        background-color: #fff !important;
-    }
-}
-
-// -------------------------
 // Joule mods
 // -------------------------
 // Reports
