@@ -232,6 +232,12 @@ body[class^="format-"].theme-snap {
 }
 
 .format-topics:not(.no-number-toc) {
+
+    // Fix section counter when coursepartialrender is disabled.
+    &.path-course-view .sections {
+        counter-reset: annotation-list -1;
+    }
+
     li.section .sectionname .sectionnumber:before {
         content: counter(annotation-list) ".\00a0";
     }
