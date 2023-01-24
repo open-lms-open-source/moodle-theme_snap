@@ -1217,7 +1217,7 @@ body.format-tiles.editing {
 
     // Fix label content elements.
     .modtype_label {
-
+        margin: 1em 1%;
         &.activity-wrapper {
             .my-1 {
                 margin-left: 5%;
@@ -1229,13 +1229,20 @@ body.format-tiles.editing {
         .mod-indent-outer {
             margin-right: 2rem;
         }
-
         .activity-information [data-action="toggle-manual-completion"] {
             margin-bottom: 1rem;
         }
         &.dimmed {
             opacity: 1;
         }
+        span.label_content.dimmed {
+            opacity: 0.7;
+        }
+    }
+
+    // Fix resource margin.
+    .modtype_resource:not(.subtile) {
+        margin: 1em 1%;
     }
 
     // Prevent section buttons to overlap activities.
