@@ -219,6 +219,57 @@ body.path-site .block.block_settings {
     max-width: 100%;
 }
 
+.block_calendar_month div.maincalendar {
+    .calendarwrapper {
+        .calendar-controls {
+            padding-bottom: 21pt;
+            a.arrow_link, h4.current {
+                font-size: 1rem;
+
+            }
+            a.previous {
+                width: 30%;
+            }
+            h4.current {
+                line-height: 1.5;
+                width: 40%;
+            }
+            a.next {
+                width: 30%;
+            }
+        }
+        .calendarmonth.calendartable {
+            th, td {
+                border: none;
+                text-align: center !important; // !important needed because of Bootstrap.
+                vertical-align: middle;
+            }
+            td {
+                font-size: .9rem;
+                height: 3.2em;
+                &.today span.day-number-circle {
+                    background-color: transparent;
+                    color: $brand-primary;
+                    border: 1px solid #dadada;
+                    height: 2.5em;
+                    width: 2.5em;
+                }
+            }
+            th {
+                font-size: .8rem;
+                font-weight: normal;
+                padding-left: initial;
+            }
+            .day .day {
+                border: initial;
+            }
+        }
+    }
+    & + .footer {
+        font-size: 1rem;
+    }
+}
+
 // hide this stuff from blocks when not viewing full page cal
 .eventskey,
 .block_calendar_month .calendar_filters {
