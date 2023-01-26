@@ -219,13 +219,12 @@ body.path-site .block.block_settings {
     max-width: 100%;
 }
 
-.block_calendar_month div.maincalendar {
+.block_calendar_month, body#page-calendar-view div.maincalendar {
     .calendarwrapper {
         .calendar-controls {
             padding-bottom: 21pt;
             a.arrow_link, h4.current {
                 font-size: 1rem;
-
             }
             a.previous {
                 width: 30%;
@@ -242,17 +241,22 @@ body.path-site .block.block_settings {
             th, td {
                 border: none;
                 text-align: center !important; // !important needed because of Bootstrap.
-                vertical-align: middle;
             }
             td {
                 font-size: .9rem;
                 height: 3.2em;
                 &.today span.day-number-circle {
-                    background-color: transparent;
-                    color: $brand-primary;
-                    border: 1px solid #dadada;
-                    height: 2.5em;
-                    width: 2.5em;
+                    background-color: $brand-primary;
+                }
+                li[data-action='view-more-events'] {
+                    a:focus {
+                        outline: none;
+                        display: inherit;
+                        background-color: inherit;
+                        box-shadow: initial;
+                        border-radius: initial;
+                        text-decoration: underline;
+                    }
                 }
             }
             th {
