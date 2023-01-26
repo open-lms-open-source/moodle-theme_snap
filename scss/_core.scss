@@ -582,6 +582,34 @@ li.modtype_page {
     }
 }
 
+// Adjust the mod resource view for In frame display option.
+body#page-mod-resource-view.path-mod-resource.pagelayout-frametop {
+
+    header#mr-nav,
+    .snap-custom-menu-spacer,
+    #page-mast,
+    footer#moodle-footer {
+        display:none;
+    }
+
+    #page-header {
+        padding-top: 1em;
+        padding-bottom: 0;
+    }
+
+    section#region-main {
+        padding-top: 0;
+        max-width: none;
+        .activity-header,
+        .activity-navigation {
+            display:none;
+        }
+    }
+    .snap-page-heading-button {
+        float: right;
+    }
+}
+
 .mediaplugin_videojs > div {
     max-width: none !important;
 }

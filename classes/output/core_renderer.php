@@ -2069,7 +2069,11 @@ HTML;
                 if (!empty($coverimage)) {
                     $attr = ['class' => 'mast-breadcrumb'];
                 }
-                $link = html_writer::link($item->action, $item->text, $attr);
+                if (!is_string($item->action) && !empty($item->action->url)) {
+                    $link = html_writer::link($item->action->url, $item->text, $attr);
+                } else {
+                    $link = html_writer::link($item->action, $item->text, $attr);
+                }
                 $breadcrumbs .= '<li class="breadcrumb-item">' .$link. '</li>';
             }
         }
