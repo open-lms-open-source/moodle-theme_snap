@@ -50,8 +50,7 @@ define(['jquery', 'core/str', 'core/event'],
                     {key: 'badges', component: 'core_badges'},
                     {key: 'coursereport', component: 'report_allylti'},
                     {key: 'pluginname', component: 'local_catalogue'},
-                    {key: 'experimental', component: 'block_reports'},
-                    {key: 'courseactivitieslabel', component: 'theme_snap'}
+                    {key: 'experimental', component: 'block_reports'}
                 ]).done(function(stringsjs) {
                     if ($("#page-mod-forum-discuss")) {
                         $("div[data-content='forum-discussion'] div.singleselect form.form-inline " +
@@ -129,8 +128,6 @@ define(['jquery', 'core/str', 'core/event'],
                     }
 
                     // Add ARIA attributes.
-                    $('[id^="page-course"] .course-content' +
-                        ' .content ul.section.img-text').attr('role', 'group').attr('aria-label', stringsjs[19]);
                     $('div[role="main"] div.sitetopic ul.section.img-text').attr('role', 'presentation');
                 });
 
@@ -152,10 +149,11 @@ define(['jquery', 'core/str', 'core/event'],
                     new Tabpanel("snap-pm-accessible-tab");
                     new Tabpanel("modchooser-accessible-tab");
 
-                    // Wrapping for dropdown elements in the actionable elements in an activity for PLD and Sharing cart.
+                    // Wrapping for dropdown elements in the actionable elements in an activity for PLD.
                     if( $(".dropdown-item.editing_pld").closest(".pld-dropdown").length == 0 ) {
                         $(".dropdown-item.editing_pld").wrap("<li class='pld-dropdown'></li>");
                     }
+                    $(".dropdown-item.editing_pld").attr("role","button");
 
                     /**
                      * Store the references outside the event handler.
