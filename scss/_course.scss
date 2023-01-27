@@ -2281,11 +2281,17 @@ form.togglecompletion {
         display: none;
     }
 
+    .snap-asset-move {
+        input.sr-only[type="checkbox"] {
+            display: inherit;
+        }
+    }
+
     label.snap-asset-move .icon,
     a.snap-edit-asset .icon,
     .dropdown-toggle .icon {
         font-size: 1.3em;
-        color: #6c757d;
+        color: $icons-color;
     }
 }
 

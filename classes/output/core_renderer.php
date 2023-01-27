@@ -1041,9 +1041,11 @@ class core_renderer extends \theme_boost\output\core_renderer {
         $carouselsronlytext = get_string('covercarouselsronly', 'theme_snap');
         $carouselplaybutton = get_string('covercarouselplaybutton', 'theme_snap');
         $carouselpausebutton = get_string('covercarouselpausebutton', 'theme_snap');
+        $covercarousellabel = get_string('covercarousellabel', 'theme_snap');
         $data = ['carouselsronlytext' => $carouselsronlytext,
                 'carouselplaybutton' => $carouselplaybutton,
                 'carouselpausebutton' => $carouselpausebutton,
+                'covercarousellabel' => $covercarousellabel,
                 'carouselhidecontrols' => $carouselhidecontrols];
         $data['slides'] = $slides;
         return $this->render_from_template('theme_snap/carousel', $data);
@@ -1209,8 +1211,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
             return $output.'</div>';
         }
 
-        $output .= html_writer::start_div('', array('id' => 'news-articles', 'role' => 'group',
-            'aria-label' => get_string('arialabelnewsarticle', 'theme_snap')));
+        $output .= html_writer::start_div('', array('id' => 'news-articles'));
 
         $counter = 0;
         foreach ($discussions as $discussion) {
@@ -1233,7 +1234,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
 
             $message = format_text($message, $discussion->messageformat, ['context' => $context]);
 
-            $readmorebtn = "<a role='button' aria-expanded='false' aria-controls='news-article-message-id-{$counter}'
+            $readmorebtn = "<a tabindex='0' role='button' aria-expanded='false' aria-controls='news-article-message-id-{$counter}'
              class='btn btn-secondary toggle' href='".$CFG->wwwroot."/mod/forum/discuss.php?d=".$discussion->discussion."'>".
                 get_string('readmore', 'theme_snap')."</a>";
 
@@ -1244,7 +1245,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
                 $preview = "<div class='news-article-preview'><p>".shorten_text($preview, 200)."</p>
                 <p class='text-right'>".$readmorebtn."</p></div>";
             } else {
-                $newsimage = "<div class='news-article-image toggle' role='button'
+                $newsimage = "<div class='news-article-image toggle' tabindex='0' role='button'
                 aria-expanded='false' aria-controls='news-article-message-id-{$counter}'".$imagestyle.' title="'.
                     get_string('readmore', 'theme_snap').'"></div>';
             }
@@ -1254,7 +1255,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
     <div class="news-article-inner">
         <div class="news-article-content">
             <h3 class='toggle' aria-expanded="false" aria-controls="news-article-message-id-{$counter}">
-                <a role="button" href="$CFG->wwwroot/mod/forum/discuss.php?d=$discussion->discussion">{$name}</a>
+                <a role="button" tabindex='0' href="$CFG->wwwroot/mod/forum/discuss.php?d=$discussion->discussion">{$name}</a>
             </h3>
             <em class="news-article-date">{$date}</em>
         </div>
@@ -1267,12 +1268,14 @@ HTML;
                 $newsordered = $newsimage . $preview . $newsinner;
             }
 
+            $arialabelnews = get_string('arialabelnewsarticle', 'theme_snap');
+
             $output .= <<<HTML
-<div class="news-article clearfix">
+<div class="news-article clearfix" role="group" tabindex="0" aria-label="$arialabelnews">
     {$newsordered}
     <div id="news-article-message-id-{$counter}" class="news-article-message" tabindex="-1">
         {$message}
-        <div><hr><a role="button" aria-expanded="false" aria-controls="news-article-message-id-{$counter}"
+        <div><hr><a role="button" tabindex='0' aria-expanded="false" aria-controls="news-article-message-id-{$counter}"
             class="snap-action-icon snap-icon-close toggle" href="#">
         <small>{$close}</small></a></div>
     </div>
@@ -1283,13 +1286,17 @@ HTML;
         $actionlinks = html_writer::link(
             new moodle_url('/mod/forum/view.php', array('id' => $cm->id)),
             get_string('morenews', 'theme_snap'),
-            array('class' => 'btn btn-secondary')
+            ['class' => 'btn btn-secondary',
+             'role' => 'button',
+             'tabindex' => 0]
         );
         if (forum_user_can_post_discussion($forum, $currentgroup, $groupmode, $cm, $context)) {
             $actionlinks .= html_writer::link(
                 new moodle_url('/mod/forum/post.php', array('forum' => $forum->id)),
                 get_string('addanewtopic', 'forum'),
-                array('class' => 'btn btn-primary')
+                ['class' => 'btn btn-primary',
+                    'role' => 'button',
+                    'tabindex' => 0]
             );
         }
         $output .= html_writer::end_div();
