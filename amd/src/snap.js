@@ -987,10 +987,8 @@ nodeToChange = $(selectorToChange);
                         $("#page-mod-resource-mod .snap-form-advanced #id_modstandardelshdr .fcontainer").append(description);
                         $("#page-mod-resource-mod .snap-form-advanced #id_modstandardelshdr .fcontainer").append(showdescription);
 
-                        // Assignment - put due date in required, and attatchments in common settings.
-                        var filemanager = $("#page-mod-assign-mod [data-fieldtype='filemanager']").closest('.form-group');
+                        // Assignment - put due date in required.
                         var duedate = $("#page-mod-assign-mod [for='id_duedate']").closest('.form-group');
-                        $("#page-mod-assign-mod .snap-form-advanced #id_modstandardelshdr .fcontainer").append(filemanager);
                         $("#page-mod-assign-mod .snap-form-required .fcontainer").append(duedate);
 
                         // Move availablity at the top of advanced settings.
