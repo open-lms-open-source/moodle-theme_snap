@@ -26,8 +26,8 @@ Feature: When the moodle theme is set to Snap, teachers can upload files as reso
 
   Background:
     Given the following "courses" exist:
-      | fullname | shortname | category | format | maxbytes |
-      | Course 1 | C1        | 0        | topics | 500000   |
+      | fullname | shortname | category | format | maxbytes | enablecompletion |
+      | Course 1 | C1        | 0        | topics | 500000   | 1                |
     And the following "users" exist:
       | username | firstname | lastname | email |
       | teacher1 | Teacher | 1 | teacher1@example.com |
@@ -89,3 +89,34 @@ Feature: When the moodle theme is set to Snap, teachers can upload files as reso
     And "#snap-drop-file-1" "css_element" should exist
     And I upload file "600KB_file.mp3" to section 1
     And ".snap-resource[data-type='mp3']" "css_element" should exist
+
+  @javascript
+  Scenario Outline: A user should see a header when viewing file depending on display options.
+    Given I log in as "admin"
+    And the following config values are set as admin:
+      | displayoptions | <display>  | resource |
+    And I am on "Course 1" course homepage
+    And I add a "File" to section "1"
+    And I expand all fieldsets
+    And I click on "id_completionexpected_enabled" "checkbox"
+    And I set the following fields to these values:
+      | Name                      | Myfile                                               |
+      | Expect completed on       | ##tomorrow##                                         |
+    And I upload "theme/snap/tests/fixtures/400KB_file.txt" file to "Select files" filemanager
+    And I press "Save and return to course"
+    And I log out
+    Given I log in as "student1"
+    And I wait until the page is ready
+    And I open the personal menu
+    And I follow "Myfile should be completed"
+    Then I <visible> "My courses"
+    And I log out
+
+    Examples:
+      | display | visible        |
+      | 0       | should not see |
+      | 1       | should see     |
+      | 2       | should not see |
+      | 3       | should see     |
+      | 5       | should not see |
+      | 6       | should see     |
