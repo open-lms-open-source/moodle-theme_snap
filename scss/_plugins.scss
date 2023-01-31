@@ -538,24 +538,35 @@
     white-space: normal;
 }
 
+// Print options for book resource.
 #page-mod-book-view {
     .snap-page-heading-button > .action-menu {
-        width: 25%;
         float: right;
-        .menubar{
-            flex-direction: row-reverse;
+    }
+    &.path-mod .activity-header:not(:empty),
+    .block_book_toc,
+    .action-menu-trigger .dropdown-menu {
+        border-radius: 0.5rem;
+    }
+    .dropdown-menu .dropdown-item {
+        padding-left: 1rem;
+        a {
+            &:focus,
+            &:hover {
+                text-decoration: none;
+                color: white;
+            }
+            img:first-child {
+                display: none;
+            }
         }
     }
-    #page > #page-content > #moodle-page > #region-main > h2 {
-        float: left;
-    }
-
-    .activity-header {
-        margin-top: 50px;
+    #moodle-blocks .block_book_toc {
+        padding: 1rem;
     }
 }
 
-// Print style guide for book
+// Print style guide for book.
 #page-mod-book-print {
     font-size: 18px !important;
     p, div.book_chapter {
