@@ -265,3 +265,26 @@ Feature: When the moodle theme is set to Snap, a course tools section is availab
     And I follow "Course Dashboard"
     And I should see "F" in the ".progressbar-text" "css_element"
     And I log out
+
+  @javascript
+  Scenario: Course grade report should have an edit button.
+    Given I log in as "admin"
+    And I am on "Course 1" course homepage
+    And I click on "Course Dashboard" "link"
+    And I click on "Edit blocks" "link"
+    And I should see "Turn editing off"
+    And I click on "#admin-menu-trigger" "css_element"
+    And I follow "Gradebook setup"
+    And I select "Grader report" from the "jump" singleselect
+    And I should see "Turn editing on"
+    And "Save changes" "button" should not exist
+    And I click on "Turn editing on" "button"
+    And I should see "Turn editing off"
+    And "Save changes" "button" should exist
+    And I click on "Turn editing off" "button"
+    And I should see "Turn editing on"
+    And "Save changes" "button" should not exist
+    And I click on "Turn editing on" "button"
+    And I am on "Course 1" course homepage
+    And I should not see "Turn editing off"
+    And I log out
