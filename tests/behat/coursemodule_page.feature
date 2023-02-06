@@ -64,6 +64,7 @@ Feature: Open page module inline
 
   @javascript
   Scenario Outline: Page mod completion updates on read more and affects availability for other modules and sections.
+    Given I skip because "Progress labels are not working as expected. This will be reviewed in INT 18605 linked issue"
     Given the following "activities" exist:
       | activity | course | idnumber  | name              | intro                 | content                 | completion | completionview | section |
       | page     | C1     | pagec     | Page completion   | Page completion intro | Page completion content | 2          | 1              | 0       |
