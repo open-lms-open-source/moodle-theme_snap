@@ -600,13 +600,9 @@ body#page-mod-resource-view.path-mod-resource.pagelayout-frametop {
     section#region-main {
         padding-top: 0;
         max-width: none;
-        .activity-header,
-        .activity-navigation {
-            display:none;
-        }
     }
     .snap-page-heading-button {
-        float: right;
+        display: none;
     }
 }
 
