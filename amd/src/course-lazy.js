@@ -216,6 +216,14 @@ define(
                 $('#tiles-section').addClass('state-visible').focus();
             }
 
+            // When usejsnavforsinglesection is enabled, tiles-section will be shown instead of single-section.
+            // We need to ensure that tiles-section is visible when course tools is not.
+            if (self.courseConfig.format == 'tiles') {
+                if (!$(courseTools).hasClass('state-visible') && !$('#tiles-section').hasClass('state-visible')) {
+                    $('#tiles-section').addClass('state-visible');
+                }
+            }
+
             // Store last activity/resource accessed on sessionStorage
             $('li.snap-activity:visible, li.snap-resource:visible').on('click', 'a.mod-link', function() {
                 sessionStorage.setItem('lastMod', $(this).parents('[id^=module]').attr('id'));
