@@ -460,10 +460,11 @@ EOF;
         $blockreports = array_key_exists('reports', core_component::get_plugin_list('block'));
         $allyreport = (\core_component::get_component_directory('report_allylti') !== null);
         $localcatalogue = array_key_exists('catalogue', $localplugins);
+        $disablesnapmycourses = isset($CFG->theme_snap_disable_my_courses) ? $CFG->theme_snap_disable_my_courses : true;
 
         $initvars = [$coursevars, $pagehascoursecontent, get_max_upload_file_size($CFG->maxbytes), $forcepwdchange,
                      $conversationbadgecountenabled, $userid, $sitepolicyacceptreqd, $inalternativerole, $brandcolors,
-                     $gradingconstants, $sitevars];
+                     $gradingconstants, $sitevars, $disablesnapmycourses];
         $initaxvars = [$localjoulegrader, $allyreport, $blockreports, $localcatalogue];
         $alternativelogins = new login_alternative_methods();
         if ($alternativelogins->potentialidps) {

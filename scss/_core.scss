@@ -5012,6 +5012,15 @@ div[id^=snap-create-activity-] .section-modchooser-link {
         margin-top: 2em;
     }
 }
+// Hide My Courses option from navigation settings.
+body#page-admin-setting-navigation.disable-my-courses #admin-defaulthomepage .custom-select option[value="3"],
+body#page-user-defaulthomepage.disable-my-courses select#id_defaulthomepage option[value="3"] {
+    display: none
+}
+// Block enabledashboard from navigation settings.
+body#page-admin-setting-navigation.disable-my-courses #admin-enabledashboard {
+    opacity: 0.7;
+}
 // -------------------------
 // Go to top button
 // -------------------------

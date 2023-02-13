@@ -33,7 +33,15 @@ use theme_snap\renderables\genius_dashboard_link;
 <header id='mr-nav' class='clearfix moodle-has-zindex'>
 <div id="snap-header">
 <?php
+// If the homepage is set to Dashboard, then the home icon link must redirect to dashboard.
+$homepage = get_home_page();
+if ($homepage === 1) {
+    $defaulthomeurl = $CFG->wwwroot.'/my';
+} else {
+    $defaulthomeurl = $CFG->wwwroot;
+}
 $sitefullname = format_string($SITE->fullname);
+
 $attrs = array(
     'aria-label' => get_string('home', 'theme_snap'),
     'id' => 'snap-home',
@@ -45,7 +53,7 @@ if (!empty($PAGE->theme->settings->logo)) {
     $attrs['class'] = 'logo';
 }
 
-echo html_writer::link($CFG->wwwroot, $sitefullname, $attrs);
+echo html_writer::link($defaulthomeurl, $sitefullname, $attrs);
 ?>
 
 <div class="pull-right js-only row">

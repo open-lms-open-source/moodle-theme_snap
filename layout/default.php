@@ -43,6 +43,12 @@ if ($PAGE->pagetype == "grade-report-grader-index" && $PAGE->user_allowed_editin
     // Show grader report edit button.
     shared::get_grader_reports_edit_button();
 }
+// Keep Dashboard enabled for Snap.
+$disablesnapmycourses = isset($CFG->theme_snap_disable_my_courses) ? $CFG->theme_snap_disable_my_courses : true;
+if ($disablesnapmycourses) {
+    global $CFG;
+    $CFG->enabledashboard = 1;
+}
 ?>
 
 <!-- Moodle js hooks -->
