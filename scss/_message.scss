@@ -231,8 +231,12 @@ body#page-user-profile .drawer .message-app {
     #page-content {
         height: 90%;
     }
-    #region-main .message-app .col-4 {
+    #region-main-box {
         height: 100%;
+        overflow: scroll;
+    }
+    #region-main .message-app .col-4 {
+        height: 90%;
         .panel-body-container {
             height: 90%;
             overflow: scroll;
