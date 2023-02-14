@@ -129,7 +129,9 @@ if ($hasadminbutton) {
     }
 }
 echo "<div class='snap-page-heading-button' >";
-echo $OUTPUT->page_heading_button();
+if ($PAGE->pagelayout !== 'admin') {
+    echo $OUTPUT->page_heading_button();
+}
 // Validation added to check if settings option should be displayed;
 $buildregionmainsettings = !$PAGE->include_region_main_settings_in_header_actions() && !local::show_setting_menu() ;
 $regionmainsettingsmenu = $buildregionmainsettings ? $OUTPUT->region_main_settings_menu() : false;
