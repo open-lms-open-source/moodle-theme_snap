@@ -109,3 +109,44 @@ Feature: When the moodle theme is set to Snap,
     And "#snap-pm" "css_element" should not be visible
     And I am on homepage
     And "#snap-pm" "css_element" should not be visible
+
+  @javascript
+  Scenario: User sees the home page that its configured in navigation settings.
+    Given I log in as "admin"
+    And the following config values are set as admin:
+      | defaulthomepage         | 0 |            |
+      | personalmenulogintoggle | 0 | theme_snap |
+    And I log out
+    And I log in as "admin"
+    Then "#page-site-index" "css_element" should be visible
+    And I click on "#snap-home" "css_element"
+    Then "#page-site-index" "css_element" should be visible
+    And the following config values are set as admin:
+      | defaulthomepage | 1 |
+    And I log out
+    And I log in as "admin"
+    Then "#page-my-index" "css_element" should be visible
+    And I click on "#snap-home" "css_element"
+    Then "#page-my-index" "css_element" should be visible
+    And the following config values are set as admin:
+      | defaulthomepage | 2 |
+    And I open the personal menu
+    And I follow "Preferences"
+    And I follow "Start page"
+    And I set the field with xpath "//select[@name='defaulthomepage']" to "Home"
+    And I press "Save changes"
+    And I log out
+    And I log in as "admin"
+    Then "#page-site-index" "css_element" should be visible
+    And I click on "#snap-home" "css_element"
+    Then "#page-site-index" "css_element" should be visible
+    And I open the personal menu
+    And I follow "Preferences"
+    And I follow "Start page"
+    And I set the field with xpath "//select[@name='defaulthomepage']" to "Dashboard"
+    And I press "Save changes"
+    And I log out
+    And I log in as "admin"
+    Then "#page-my-index" "css_element" should be visible
+    And I click on "#snap-home" "css_element"
+    Then "#page-my-index" "css_element" should be visible

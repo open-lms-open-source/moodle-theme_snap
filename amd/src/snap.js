@@ -695,10 +695,11 @@ define(['jquery', 'core/log', 'theme_snap/headroom', 'theme_snap/util', 'theme_s
              * @param {string} brandColors
              * @param {int} gradingConstants
              * @param {object} siteConfig
+             * @param {bool} disableSnapMyCourses
              */
             snapInit: function(courseConfig, pageHasCourseContent, siteMaxBytes, forcePassChange,
                                messageBadgeCountEnabled, userId, sitePolicyAcceptReqd, inAlternativeRole,
-                               brandColors, gradingConstants, siteConfig) {
+                               brandColors, gradingConstants, siteConfig, disableSnapMyCourses) {
 
                 // Set up.
 
@@ -808,7 +809,21 @@ nodeToChange = $(selectorToChange);
                             changeNodeVisibilityOnChecked(advFeedsCheckboxSelector, advFeedsLifeTimeSelector);
                         });
                     }
-
+                    // Disable enabledashboard and My courses options.
+                    if (disableSnapMyCourses) {
+                        var adminNavigationSettings = $('#page-admin-setting-navigation');
+                        if (adminNavigationSettings.length) {
+                            adminNavigationSettings.addClass("disable-my-courses");
+                            if ($('#admin-enabledashboard .form-checkbox').length) {
+                                $('#admin-enabledashboard .form-checkbox input[type="checkbox"]').attr("disabled", true);
+                                $('#admin-enabledashboard .form-checkbox input[type="hidden"]').attr("value", "1");
+                            }
+                        }
+                        var adminStartPageSetting = $('#page-user-defaulthomepage');
+                        if (adminStartPageSetting.length) {
+                            adminStartPageSetting.addClass("disable-my-courses");
+                        }
+                    }
                     // Add extra padding when the error validation message appears at the moment of enter a not valid
                     // URL for feature spots.
                     var firstlinkerror = $('#page-admin-setting-themesettingsnap #themesnapfeaturespots' +
