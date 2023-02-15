@@ -1719,6 +1719,34 @@ class activity_test extends snap_base_test {
         $this->assertCount(10, $deadlines);
     }
 
+    public function test_snap_deadlines_feed_lti_icon() {
+        $this->resetAfterTest();
+
+        activity::$phpunitallowcaching = true;
+
+        $dg = $this->getDataGenerator();
+        $teacher = $dg->create_user();
+        $course = $dg->create_course(['enablecompletion' => 1]);
+        $dg->enrol_user($teacher->id, $course->id, 'teacher');
+
+        $this->setUser($teacher);
+
+        $tz = new \DateTimeZone(\core_date::get_user_timezone($teacher));
+        $today = new \DateTime('today', $tz);
+        $todayts = $today->getTimestamp();
+
+        $lti1 = $this->getDataGenerator()->create_module('lti', ['course' => $course->id],
+            ['completionexpected' => $todayts + WEEKSECS, 'completion' => 2, 'completionview' => 1]);
+        $lti2 = $this->getDataGenerator()->create_module('lti', ['course' => $course->id,
+            'icon' => 'https://upload.wikimedia.org/wikipedia/commons/1/15/Wireless-icon.svg'],
+            ['completionexpected' => $todayts + WEEKSECS,
+                'completion' => 2, 'completionview' => 1]);
+
+        $deadlines = local::get_feed('deadlines');
+        $this->assertStringContainsString('boost/lti/1/icon', $deadlines[0]['iconUrl']);
+        $this->assertStringContainsString('upload.wikimedia.org', $deadlines[1]['iconUrl']);
+    }
+
     public function test_snap_deadlines_feed_url() {
         $this->resetAfterTest();
 
